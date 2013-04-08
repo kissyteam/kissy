@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Feb 26 11:49
+build time: Apr 9 11:19
 */
 /**
  * accordion aria support
@@ -1139,7 +1139,8 @@ KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
             contentContainer.insertBefore(panelDom, nextPanel);
             // 当trigger 跟panel一一对应时，插入对应的trigger
             if (self.config.steps == 1) {
-                nextTrigger = triggers[index];
+                // 修复ie下不加null的问题
+                nextTrigger = triggers[index] || null;
                 // 插入导航对应的位置
                 navContainer.insertBefore(triggerDom, nextTrigger);
                 // 插入集合

@@ -544,7 +544,8 @@ KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
             contentContainer.insertBefore(panelDom, nextPanel);
             // 当trigger 跟panel一一对应时，插入对应的trigger
             if (self.config.steps == 1) {
-                nextTrigger = triggers[index];
+                // 修复ie下不加null的问题
+                nextTrigger = triggers[index] || null;
                 // 插入导航对应的位置
                 navContainer.insertBefore(triggerDom, nextTrigger);
                 // 插入集合
