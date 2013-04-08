@@ -106,7 +106,7 @@ username 为你的 github 用户名
 
 可选： build KISSY
 
-    cd tools/
+    cd src/
     ant build-all
 
 build KISSY 时间很长，需要耐心等待
