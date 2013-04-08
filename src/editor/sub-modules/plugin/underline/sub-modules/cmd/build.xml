@@ -1,0 +1,11 @@
+<project name="editor/plugin/underline/cmd" default="build" basedir=".">
+        <property name="component.name"
+              value="editor/plugin/underline/cmd"/>
+
+    <property name="component.meta.dir" location="./ke-meta/"/>
+
+    <import file="../../../../../../common.xml"/>
+
+    <target name="build" depends="common-build.build">
+    </target>
+</project>

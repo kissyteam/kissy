@@ -1,2 +1,2 @@
-call ../../../kissy-tools/ant/bin/ant -v
+call ../../tools/ant/bin/ant -v
 pause

@@ -1,0 +1,12 @@
+<project name="editor/plugin/bold.build" default="build" basedir=".">
+    <description>editor/plugin/bold Build File</description>
+
+    <property name="component.name" value="editor/plugin/bold"/>
+
+    <property name="component.meta.dir" location="./ke-meta/"/>
+
+    <import file="../../../../common.xml"/>
+
+    <target name="build" depends="common-build.build">
+    </target>
+</project>

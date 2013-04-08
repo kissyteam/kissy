@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 3 14:29
+build time: Apr 8 21:58
 */
 /**
  * Common btn for list.
@@ -62,5 +62,5 @@ KISSY.add("editor/plugin/list-utils/btn", function (S, Editor) {
 
 
 }, {
-    requires: ['editor', '../button/', '../menubutton/']
+    requires: ['editor', '../button', '../menubutton']
 });

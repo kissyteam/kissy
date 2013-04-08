@@ -1,0 +1,13 @@
+<project name="editor/plugin/font/ui.build" default="build" basedir=".">
+    <description>editor/plugin/font/ui Build File</description>
+
+    <property name="component.name"
+              value="editor/plugin/font/ui"/>
+
+    <property name="component.meta.dir" location="./ke-meta/"/>
+
+    <import file="../../../../../../common.xml"/>
+
+    <target name="build" depends="common-build.build">
+    </target>
+</project>

@@ -3,13 +3,9 @@
 
     <property name="component.name" value="io"/>
 
-    <import file="../../tools/build-xml/common.xml"/>
+    <import file="../common.xml"/>
 
-    <target name="io-concat">
-        <copy file="${component.src.dir}/io.swf" tofile="${component.src.dir.tmp}/io.swf"/>
-    </target>
-
-    <target name="build" depends="io-concat,common-build.build">
+    <target name="build" depends="common-build.build">
     </target>
 </project>
 

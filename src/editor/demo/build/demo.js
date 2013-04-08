@@ -1,5 +1,5 @@
 (function () {
-    KISSY.use(window.EDITOR_MOD || "editor", function (S, Editor) {
+    KISSY.use("editor", function (S, Editor) {
 
         var cfg = S.mix({
             // 是否初始聚焦
@@ -58,7 +58,7 @@
         var fullPlugins = [];
 
         S.each(plugins, function (p, i) {
-            fullPlugins[i] = "editor/plugin/" + p + "/";
+            fullPlugins[i] = "editor/plugin/" + p;
         });
 
         var pluginConfig = {
@@ -143,7 +143,7 @@
                 }
             },
             "multiple-upload": {
-                serverUrl: "http://localhost/src/editor/demo/upload.jss",
+                serverUrl: "http://localhost/kissy_git/kissy/src/editor/demo/upload.php",
                 serverParams: {
                     waterMark: function () {
                         return S.one("#ke_img_up_watermark_2")[0].checked;

@@ -1,0 +1,11 @@
+<project name="editor/plugin/resize" default="build" basedir=".">
+        <property name="component.name"
+              value="editor/plugin/resize"/>
+
+    <property name="component.meta.dir" location="./ke-meta/"/>
+
+    <import file="../../../../common.xml"/>
+
+    <target name="build" depends="common-build.build">
+    </target>
+</project>

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 3 14:29
+build time: Apr 8 21:57
 */
 /**
  * image dialog (support upload and remote)
@@ -634,5 +634,5 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Dialog4E, Tabs,
 
     return ImageDialog;
 }, {
-    requires: ['io', 'editor', '../dialog/', 'tabs', '../menubutton/']
+    requires: ['io', 'editor', '../dialog', 'tabs', '../menubutton']
 });

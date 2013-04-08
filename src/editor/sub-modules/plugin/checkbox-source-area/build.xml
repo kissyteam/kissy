@@ -1,0 +1,12 @@
+<project name="editor/plugin/checkbox-source-area.build" default="build" basedir=".">
+    <description>editor/plugin/checkbox-source-area Build File</description>
+
+    <property name="component.name" value="editor/plugin/checkbox-source-area"/>
+
+    <property name="component.meta.dir" location="./ke-meta/"/>
+
+    <import file="../../../../common.xml"/>
+
+    <target name="build" depends="common-build.build">
+    </target>
+</project>

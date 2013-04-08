@@ -15,9 +15,7 @@ build example for kissy loader
     <!--项目文件编码-->
     <property name="charset" value="utf-8"/>
 
-    <!-- kissy tools 项目源码目录 -->
-    <!-- 注意：请用 kissy tools 中的 ant 运行此 xml -->
-    <property name="ks.tools" value="d:\code\kissy_git\kissy-tools\"/>
+    <property name="ks.tools" value="../../../../tools/"/>
    
     <property name="module.compiler" value="${ks.tools}\module-compiler\module-compiler.jar"/>    
 

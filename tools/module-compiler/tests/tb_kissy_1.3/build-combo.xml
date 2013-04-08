@@ -1,0 +1,58 @@
+﻿<!--
+build example for kissy loader
+@author yiminghe@gmail.com
+-->
+<project name="compressor.build" default="build" basedir="." xmlns:ac="antlib:net.sf.antcontrib">
+
+    <!--入口文件模块所在目录-->
+    <dirname property="current.dir" file="${ant.file.compressor.build}"/>
+    <property name="assets.dir" location="${current.dir}/src/"/>
+    <property name="build.dir" location="${current.dir}/build-combo/"/>
+    
+    <!--项目文件编码-->
+    <property name="charset" value="utf-8"/>
+
+    <property name="module.compiler" value="../../module-compiler.jar"/>
+
+    <!-- js 构建-->
+    <target name='jsrun' depends="combo">
+    </target>
+    
+    <target name='prepare'>
+        <mkdir dir="${build.dir}"></mkdir>
+        <copy encoding="${charset}" todir="${build.dir}">
+            <fileset dir="${assets.dir}" includes="**/*"/>
+        </copy>
+        <delete file="${build.dir}/deps.js"/>
+    </target>
+    
+    <!--js  combo 地址获取-->
+    <target name='combo' depends="prepare">
+        <java classname="com.taobao.f2e.ExtractDependency">
+            <arg value="-baseUrls"/>
+            <arg value="${build.dir}"/>
+
+            <arg value="-encodings"/>
+            <arg value="${charset}"/>
+
+            <arg value="-outputEncoding"/>
+            <arg value="utf-8"/>
+
+            <arg value="-output"/>
+            <arg value="${build.dir}/deps.js"/>
+
+            <arg value="-fixModuleName"/>
+            <!--自动 combo 需要补全文件名-->
+            <arg value="true"/>
+
+            <classpath>
+                <pathelement path="${module.compiler}"/>
+                <pathelement path="${java.class.path}"/>
+            </classpath>
+        </java>
+    </target>
+
+    <!--项目(js,css)构建-->
+    <target name="build" depends="jsrun"/>
+
+</project>

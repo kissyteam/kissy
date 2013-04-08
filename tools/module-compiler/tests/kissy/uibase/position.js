@@ -1,0 +1,2 @@
+KISSY.add(function(){
+});

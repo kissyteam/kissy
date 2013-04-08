@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 3 14:29
+build time: Apr 8 22:00
 */
 /**
  * table dialog
@@ -481,5 +481,5 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Dialog4E, MenuButto
 
     return TableDialog;
 }, {
-    requires: ['editor', '../dialog/', '../menubutton/']
+    requires: ['editor', '../dialog', '../menubutton']
 });

@@ -14,9 +14,10 @@ Legend of version history:
 History:
 ---------------------------
 
-### v1.3.0 -> Infinity
+### v1.3.0 -> v1.4.0
 
- - [!] 到对应模块文件夹查看
+ - [*] kissy-tools 对应工具合并到 tools 目录
+ - [!] 模块更新到对应模块文件夹查看
 
 ### Happy 3nd Anniversary (2012/10/26)
  - [!] Still Alive

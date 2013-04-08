@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 3 14:29
+build time: Apr 8 22:00
 */
 /**
  * video dialog
@@ -213,5 +213,5 @@ KISSY.add("editor/plugin/video/dialog", function (S, Editor, FlashDialog, MenuBu
 
     return VideoDialog;
 }, {
-    requires: ['editor', '../flash/dialog', '../menubutton/']
+    requires: ['editor', '../flash/dialog', '../menubutton']
 });

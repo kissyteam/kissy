@@ -101,6 +101,13 @@ S.use('xtemplate', function (S, XTemplate) {
 
         var codes = require('./tc.js')();
 
+        app.get('/crossdomain.xml', function (req, res) {
+            res.set('content-type', 'text/xml');
+            res.send('<cross-domain-policy>' +
+                '<allow-access-from domain="*"/>' +
+                '</cross-domain-policy>');
+        });
+
         app.get('/kissy/test', function (req, res) {
             res.send(testTpl.render({
                 tests: codes

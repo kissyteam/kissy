@@ -1,0 +1,12 @@
+<project name="editor/plugin/flash-bridge.build" default="build" basedir=".">
+    <description>editor/plugin/flash-bridge Build File</description>
+
+    <property name="component.name" value="editor/plugin/flash-bridge"/>
+
+    <property name="component.meta.dir" location="./ke-meta/"/>
+
+    <import file="../../../../common.xml"/>
+
+    <target name="build" depends="common-build.build">
+    </target>
+</project>

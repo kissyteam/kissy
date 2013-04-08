@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 3 14:29
+build time: Apr 8 21:55
 */
 /**
  * color button.
@@ -109,7 +109,7 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, Dia
             others.on("click", function (ev) {
                 ev.halt();
                 colorWin.hide();
-                DialogLoader.useDialog(editor, "color/color-picker", undefined, self);
+                DialogLoader.useDialog(editor, "color", undefined, self);
             });
             self._prepare = self._show;
             self._show();
@@ -208,5 +208,5 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, Dia
     return ColorButton;
 
 }, {
-    requires: ['editor', '../button/', '../overlay/', '../dialog-loader/']
+    requires: ['editor', '../button', '../overlay', '../dialog-loader']
 });

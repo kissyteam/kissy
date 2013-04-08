@@ -1,0 +1,89 @@
+﻿<!--
+build example for kissy loader
+@author yiminghe@gmail.com
+-->
+<project name="compressor.build" default="build" basedir="." xmlns:ac="antlib:net.sf.antcontrib">
+
+    <!--入口文件模块所在目录-->
+    <dirname property="current.dir" file="${ant.file.compressor.build}"/>
+    <property name="page.dir" location="${current.dir}/page/"/>
+    <property name="page.dir.tmp" location="${current.dir}/tmp/"/>
+    <property name="assets.dir" location="${current.dir}/"/>
+    
+    <!--项目文件编码-->
+    <property name="charset" value="utf-8"/>
+
+    <property name="module.compiler" value="../../module-compiler.jar"/>
+
+    <!-- js 构建-->
+    <target name='jsrun' depends="combo,deps">
+    </target>
+    
+    <!--js  combo 地址获取-->
+    <target name='combo'>
+        <ac:for param="page">
+            <!--入口模块文件所在目录的所有模块循环处理-->
+            <path>
+                <fileset dir="${page.dir}" includes="*.js" excludes="*.combo.js,*-min.js"/>
+            </path>
+            <sequential>
+                <ac:var name="var.modname" unset="true"/>
+                <basename property="var.modname" file="@{page}" suffix=".js"/>
+                <echo>
+                    build ${var.modname} in @{page}
+                </echo>
+                <java classname="com.taobao.f2e.Main">
+                    <arg value="-require"/>
+                    <!-- 入口模块 -->
+                    <arg value="page/${var.modname}"/>
+                    <arg value="-baseUrls"/>
+                    <arg value="${assets.dir}"/>
+
+                    <arg value="-encodings"/>
+                    <arg value="${charset}"/>
+
+
+                    <arg value="-outputEncoding"/>
+                    <arg value="utf-8"/>
+                    <arg value="-output"/>
+                    <arg value="${page.dir}/${var.modname}.combo.js"/>
+
+                    <arg value="-outputDependency"/>
+                    <arg value="${page.dir}/${var.modname}.dep.js"/>
+
+                    <classpath>
+                        <pathelement path="${module.compiler}"/>
+                        <pathelement path="${java.class.path}"/>
+                    </classpath>
+                </java>
+            </sequential>
+        </ac:for>
+    </target>
+
+    <!--依赖抽取-->
+    <target name='deps'>
+                <java classname="com.taobao.f2e.ExtractDependency">
+                    <arg value="-baseUrls"/>
+                    <arg value="${assets.dir}"/>
+
+                    <arg value="-encodings"/>
+                    <arg value="${charset}"/>
+
+                    <!--<arg value="-nameMap"/>-->
+                    <!--<arg value="event(/.*)?||event,,dom(/.*)?|dom"/>-->
+
+                    <arg value="-outputEncoding"/>
+                    <arg value="utf-8"/>
+                    <arg value="-output"/>
+                    <arg value="${assets.dir}/deps.js"/>
+                    <classpath>
+                        <pathelement path="${module.compiler}"/>
+                        <pathelement path="${java.class.path}"/>
+                    </classpath>
+                </java>
+    </target>
+
+    <!--项目(js,css)构建-->
+    <target name="build" depends="jsrun"/>
+
+</project>

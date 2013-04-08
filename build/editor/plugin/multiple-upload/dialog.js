@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 3 14:29
+build time: Apr 8 21:59
 */
 /**
  * multiple-upload dialog
@@ -21,7 +21,7 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor, DragPlugi
         PIC_SIZE_LIMIT = 1000,
         PIC_SIZE_LIMIT_WARNING = "图片太大，请压缩至 n M以下",
         KEY = "Multiple-Upload-Save",
-        swfSrc = Editor.Utils.debugUrl("plugin/uploader/uploader.longzang.swf"),
+        swfSrc = Editor.Utils.debugUrl("plugin/uploader/assets/uploader.longzang.swf"),
         name = "ks-editor-multipleUpload",
         FLASH_VERSION_REQUIRED = "10.0.0";
 
@@ -814,9 +814,9 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor, DragPlugi
 }, {
     requires: ['editor',
         'component/plugin/drag',
-        '../progressbar/',
-        '../dialog/',
-        '../flash-bridge/',
-        '../local-storage/',
+        '../progressbar',
+        '../dialog',
+        '../flash-bridge',
+        '../local-storage',
         'swf']
 });

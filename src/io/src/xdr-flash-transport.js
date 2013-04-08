@@ -49,7 +49,7 @@ KISSY.add('io/xdr-flash-transport', function (S, IO, DOM) {
                 c = io.config,
                 xdr = c['xdr'] || {};
             // 不提供则使用 cdn 默认的 flash
-            _swf(xdr.src || (S.Config.base + 'io/io.swf'), 1, 1);
+            _swf(xdr.src || (S.Config.base + 'io/assets/io.swf'), 1, 1);
             // 简便起见，用轮训
             if (!flash) {
                 // S.log('detect xdr flash');

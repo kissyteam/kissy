@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 3 14:29
+build time: Apr 8 22:00
 */
 /**
  * xiami-music dialog
@@ -363,5 +363,5 @@ KISSY.add("editor/plugin/xiami-music/dialog", function (S, Editor, FlashDialog, 
     return XiamiMusicDialog;
 
 }, {
-    requires: ['editor', '../flash/dialog', '../menubutton/']
+    requires: ['editor', '../flash/dialog', '../menubutton']
 });

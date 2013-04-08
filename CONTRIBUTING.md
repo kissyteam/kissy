@@ -63,10 +63,8 @@ KISSY 的开发依赖 nodejs 提供 web 环境，包括静态文件访问以及 
 
 - Node.js
 - JDK7
-- kissy-tools
 
-下载 [kissy-tools](https://github.com/kissyteam/kissy-tools/archive/master.zip) 放入和 kissy 项目平行的目录中，
-并将 kissy-tools/ant/bin 加入到环境变量 path 中
+将 tools/ant/bin 加入到环境变量 path 中
 
 ### 本地 KISSY 开发
 
@@ -93,6 +91,10 @@ username 为你的 github 用户名
 开始新 patch 前要和官方主干同步
 
     git pull remote master
+
+安装 node 依赖模块
+
+    npm install
 
 启动 web 环境
 

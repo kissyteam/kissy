@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <project name="event-build">
     <target name="build-all-event">
-        <subant target="" failonerror="false" inheritall="false">
+        <subant target="" failonerror="true" inheritall="false">
             <fileset dir="." includes="**/build.xml"/>
         </subant>
     </target>

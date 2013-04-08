@@ -1,0 +1,52 @@
+<project name="module-compiler" basedir="." default="jar">
+
+    <!-- define other variables -->
+    <property name="src.dir" value="${basedir}/src"/>
+    <property name="build.dir" value="${basedir}/out/build"/>
+    <property name="lib.dir" value="${basedir}/lib"/>
+    <property name="jarfile" value="${basedir}/${ant.project.name}.jar"/>
+    <property name="charset" value="utf-8"/>
+
+    <path id="classpath.path">
+        <fileset dir="${lib.dir}">
+            <include name="*.jar"/>
+        </fileset>
+    </path>
+
+    <target name="clean" description="delete generated files">
+        <delete dir="${build.dir}"/>
+    </target>
+
+    <target name="compile" description="compile the source code">
+        <mkdir dir="${build.dir}"/>
+        <javac srcdir="${src.dir}"
+               destdir="${build.dir}"
+               debug="on"
+               source="1.6"
+               target="1.6"
+               excludes=".svn">
+            <classpath refid="classpath.path"/>
+        </javac>
+        <copy todir="${build.dir}"
+              encoding="${charset}"
+              outputencoding="${charset}">
+            <fileset dir="${src.dir}"
+                     excludes="**/*.java"/>
+        </copy>
+    </target>
+
+    <target name="jar"
+            depends="compile"
+            description="package compiler as an executable jar">
+        <jar destfile="${jarfile}" update="true">
+            <fileset dir="${build.dir}"/>
+            <zipgroupfileset dir="${lib.dir}"/>
+            <manifest>
+                <attribute name="Main-Class"
+                           value="com.taobao.f2e.Main"/>
+            </manifest>
+        </jar>
+    </target>
+
+
+</project>

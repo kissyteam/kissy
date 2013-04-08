@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 3 14:29
+build time: Apr 8 22:00
 */
 /**
  * undo button
@@ -98,5 +98,5 @@ KISSY.add("editor/plugin/undo/btn", function (S, Editor, Button) {
     };
 
 }, {
-    requires: ['editor', '../button/']
+    requires: ['editor', '../button']
 });

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 3 14:29
+build time: Apr 8 21:57
 */
 /**
  * font formatting for kissy editor
@@ -96,5 +96,5 @@ KISSY.add("editor/plugin/font/ui", function (S, Editor, Button, MenuButton) {
         Select:FontSelect
     };
 }, {
-    requires:['editor', '../button/', '../menubutton/']
+    requires:['editor', '../button', '../menubutton']
 });

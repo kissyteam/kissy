@@ -1,0 +1,48 @@
+<project name="editor/theme.build" default="build" basedir=".">
+    <description>editor/theme Build File</description>
+
+    <property name="component.name" value="editor/theme"/>
+
+    <import file="../../../common.xml"/>
+
+    <property name="smart-sprites.basedir" location="${tools.dir}/smart-sprites/"/>
+
+    <taskdef resource="smartsprites.xml">
+        <classpath>
+            <fileset dir="${smart-sprites.basedir}/lib">
+                <include name="*.jar"/>
+            </fileset>
+        </classpath>
+    </taskdef>
+
+    <target name="concat">
+        <copy todir="${component.src.dir.tmp}">
+            <fileset dir="${component.src.dir}" includes="**/*"/>
+        </copy>
+
+        <concat destfile="${component.src.dir.tmp}/cool/editor-pkg.css"
+                encoding="${charset}" outputencoding="${charset}">
+            <path location="${component.src.dir.tmp}/editor-common.css"/>
+            <fileset dir="${component.src.dir.tmp}/cool" includes="**/*.css"/>
+            <filterchain>
+                <deletecharacters chars="${bom}"/>
+            </filterchain>
+        </concat>
+
+        <smartsprites cssfilesuffix="-sprite"
+                      spritepngie6="true"
+                      loglevel="info">
+            <fileset file="${component.src.dir.tmp}/cool/editor-pkg.css"/>
+        </smartsprites>
+
+        <move tofile="${component.src.dir.tmp}/cool/editor.css">
+            <path location="${component.src.dir.tmp}/cool/editor-pkg-sprite.css"/>
+        </move>
+
+        <delete dir="${component.src.dir.tmp}/cool/"
+                excludes="editor.css,cool.png,cool-ie6.png,text-bg.png"></delete>
+    </target>
+
+    <target name="build" depends="concat,common-build.process">
+    </target>
+</project>

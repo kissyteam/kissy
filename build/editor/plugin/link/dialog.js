@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 3 14:29
+build time: Apr 8 21:58
 */
 /**
  * link dialog
@@ -136,5 +136,5 @@ KISSY.add("editor/plugin/link/dialog", function (S, Editor, Dialog4E, Utils) {
     });
     return LinkDialog;
 }, {
-    requires:['editor', '../dialog/', './utils']
+    requires:['editor', '../dialog', './utils']
 });
