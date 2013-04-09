@@ -21,7 +21,8 @@ KISSY.add('anim/timer/manager', function (S, undefined) {
                 win[vendors[x] + 'CancelRequestAnimationFrame'];
         }
     }
-    if (requestAnimationFrameFn) {
+    // chrome is unstable....
+    if (requestAnimationFrameFn && !S.UA.chrome) {
         S.log('anim use requestAnimationFrame');
     } else {
         requestAnimationFrameFn = function (fn) {

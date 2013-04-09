@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 12 20:35
+build time: Apr 9 11:43
 */
 /**
  * @ignore
@@ -698,7 +698,7 @@ KISSY.add('anim/timer/manager', function (S, undefined) {
                 win[vendors[x] + 'CancelRequestAnimationFrame'];
         }
     }
-    if (requestAnimationFrameFn) {
+    if (requestAnimationFrameFn && !S.UA.chrome) {
         S.log('anim use requestAnimationFrame');
     } else {
         requestAnimationFrameFn = function (fn) {

@@ -1,12 +1,12 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 8 22:34
+build time: Apr 9 11:46
 */
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 8 22:34
+build time: Apr 9 11:46
 */
 /**
  * @ignore
@@ -44,11 +44,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130408223426' will replace with current timestamp when compressing.
+         * NOTICE: '20130409114554' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130408223426',
+        __BUILD_TIME: '20130409114554',
         /**
          * KISSY Environment.
          * @private
@@ -5938,7 +5938,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20130408223426'
+            tag: '20130409114554'
         }, getBaseInfo()));
     }
 
@@ -22483,7 +22483,7 @@ KISSY.add('anim/facade', function (S, DOM, AnimBase, TimerAnim, TransitionAnim) 
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 12 20:35
+build time: Apr 9 11:43
 */
 /**
  * @ignore
@@ -23180,7 +23180,7 @@ KISSY.add('anim/timer/manager', function (S, undefined) {
                 win[vendors[x] + 'CancelRequestAnimationFrame'];
         }
     }
-    if (requestAnimationFrameFn) {
+    if (requestAnimationFrameFn && !S.UA.chrome) {
         S.log('anim use requestAnimationFrame');
     } else {
         requestAnimationFrameFn = function (fn) {

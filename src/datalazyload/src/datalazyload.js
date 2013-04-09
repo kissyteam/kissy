@@ -688,7 +688,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
      * @param {HTMLElement[]} containers Containers with in which lazy loaded elements are loaded.
      * @param {String} type Type of lazy loaded element. "img" or "textarea"
      * @param {String} [flag] flag which will be searched to find lazy loaded elements from containers.
-     * @param {Array|Function} webpFilter, img src transformer when browser support webp image format
+     * @param {Array|Function} [webpFilter] img src transformer when browser support webp image format
      * Default "data-ks-lazyload-custom" for img attribute and "ks-lazyload-custom" for textarea css class.
      */
     function loadCustomLazyData(containers, type, flag, webpFilter) {
@@ -712,15 +712,26 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
                 areaFlag = flag || (AREA_DATA_CLS + CUSTOM);
 
             S.each(containers, function (container) {
+                var containerNodeName = DOM.nodeName(container);
                 // 遍历处理
                 if (type == 'img') {
-                    DOM.query('img', container).each(function (img) {
-                        loadImgSrc(img, imgFlag, webpFilter);
-                    });
+                    if (containerNodeName == 'img') {
+                        loadImgSrc(container, imgFlag, webpFilter);
+                    } else {
+                        DOM.query('img', container).each(function (img) {
+                            loadImgSrc(img, imgFlag, webpFilter);
+                        });
+                    }
                 } else {
-                    DOM.query('textarea.' + areaFlag, container).each(function (textarea) {
-                        loadAreaData(textarea, true);
-                    });
+                    if (containerNodeName == 'textarea') {
+                        if (DOM.hasClass(container, areaFlag)) {
+                            loadAreaData(container, true);
+                        }
+                    } else {
+                        DOM.query('textarea.' + areaFlag, container).each(function (textarea) {
+                            loadAreaData(textarea, true);
+                        });
+                    }
                 }
             });
         }
@@ -743,14 +754,11 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
 
             imgElem = DOM.create('<img>');
             Event.on(imgElem, 'load error', function (evt) {
-                if (evt.type == 'load') {
+                var type = String(evt.type);
+                if (type == 'load') {
                     // 图片大小检测
-                    if (this.width === 4) {
-                        webpSupportMeta.supported = true;
-                    } else {
-                        webpSupportMeta.supported = false;
-                    }
-                } else if (evt.type == 'error') {
+                    webpSupportMeta.supported = Number(this.width) === 4;
+                } else if (type == 'error') {
                     webpSupportMeta.supported = false;
                 }
 

@@ -1,34 +1,36 @@
 <!doctype html>
 <html>
 <head>
-<meta charset="utf-8"/>
+    <meta charset="utf-8"/>
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-touch-fullscreen" content="yes">
-<title>Carousel - 旋转木马</title>
-<script src="/kissy/build/seed.js"></script>
-<script src="../src/base.js"></script>
-<script src="../src/aria.js"></script>
-<script src="../src/accordion/base.js"></script>
-<script src="../src/accordion/aria.js"></script>
-<script src="../src/autoplay.js"></script>
+    <title>Carousel - 旋转木马</title>
+    <script src="/kissy/build/seed.js"></script>
+    <link href="/kissy/src/css/src/dpl/base.css" rel="stylesheet"/>
+    <script src="../src/base.js"></script>
+    <script src="../src/aria.js"></script>
+    <script src="../src/accordion/base.js"></script>
+    <script src="../src/accordion/aria.js"></script>
+    <script src="../src/autoplay.js"></script>
 
-<script src="../src/carousel/base.js"></script>
-<script src="../src/carousel/aria.js"></script>
-<script src="../src/circular.js"></script>
-<script src="../src/effect.js"></script>
-<script src="../src/lazyload.js"></script>
-<script src="../src/slide/base.js"></script>
-<script src="../src/tabs/base.js"></script>
-<script src="../src/tabs/aria.js"></script>
-<script src="../src/switchable.js"></script>
-<script src="../src/touch.js"></script>
+    <script src="../src/carousel/base.js"></script>
+    <script src="../src/carousel/aria.js"></script>
+    <script src="../src/circular.js"></script>
+    <script src="../src/effect.js"></script>
+    <script src="../src/lazyload.js"></script>
+    <script src="../src/slide/base.js"></script>
+    <script src="../src/tabs/base.js"></script>
+    <script src="../src/tabs/aria.js"></script>
+    <script src="../src/switchable.js"></script>
+    <script src="../src/touch.js"></script>
 
 </head>
 <body>
 <div id="header">
     <h1 class="logo"><a alt="KISSY" href="http://docs.kissyui.com/"></a></h1>
+
     <div class="sub-title">Switchable</div>
     <ul class="navigation">
         <li><a href="https://groups.google.com/group/kissy-ui">讨论组</a></li>
@@ -51,6 +53,12 @@
 
 <div class="s-section">
     <style>
+        ul, li {
+            margin: 0;
+            padding: 0;
+            list-style-type: none;
+        }
+
         .scrollable {
             position: relative;
             width: 820px;
@@ -118,6 +126,7 @@
     <div id="demo4" class="s-demo scrollable">
         <span id="scroller-prev" class="prev disable">&lsaquo; 上一页</span>
         <span id="scroller-next" class="next">下一页 &rsaquo;</span>
+
         <div class="scroller">
             <div class="ks-switchable-content">
                 <!-- 1-5 -->
@@ -151,15 +160,15 @@
 
                     S.ready(function (S) {
                         var carousel = new Carousel('#demo4', {
-                            effect:'scrollx',
-                            easing:'easeOutStrong',
-                            steps:5,
-                            viewSize:[680],
-                            circular:false,
-                            prevBtnCls:'prev',
-                            nextBtnCls:'next',
-                            disableBtnCls:'disable',
-                            lazyDataType:'img-src'
+                            effect: 'scrollx',
+                            easing: 'easeOutStrong',
+                            steps: 5,
+                            viewSize: [680],
+                            circular: false,
+                            prevBtnCls: 'prev',
+                            nextBtnCls: 'next',
+                            disableBtnCls: 'disable',
+                            lazyDataType: 'img-src'
                         });
 
                         carousel.on('itemSelected', function (ev) {
@@ -176,6 +185,7 @@
 </div>
 
 <h3 class="s-title">Carousel - 旋转木马(首页)</h3>
+
 <div class="s-section">
 <style>
     .tiny-slide-wrap {
@@ -327,6 +337,7 @@
         <a class="sk-title" href="http://try.taobao.com/index.htm?id=try2">
             <img src="http://a.tbcdn.cn/p/fp/2011a/assets/space.gif"/>
         </a>
+
         <h3>(18240件免费商品)</h3>
 
         <a title="上一页" href="javascript:void(0);" hidefocus="true" class="tiny-prev" id="J_TinyPrev"></a>
@@ -337,38 +348,70 @@
         <ol class="ks-switchable-content" style="position: absolute; width: 288px;left:0px; ">
 
             <li class="tiny-item" style="display: block; float: left;">
-                <a href="http://try.taobao.com/item/item_detail.htm?TBG=55010.103950.1&SPM=1.55010.103950.1.0.0.0&item_id=593722" class="tiny-pic"><img alt="欧美经典鳄鱼纹包" width="122" height="100" src="http://img03.taobaocdn.com/tps/i3/T14eycXeXXXXXXXXXX-122-100.jpg"></a>
+                <a href="http://try.taobao.com/item/item_detail.htm?TBG=55010.103950.1&SPM=1.55010.103950.1.0.0.0&item_id=593722"
+                   class="tiny-pic"><img alt="欧美经典鳄鱼纹包" width="122" height="100"
+                                         src="http://img03.taobaocdn.com/tps/i3/T14eycXeXXXXXXXXXX-122-100.jpg"></a>
+
                 <p class="des">欧美经典鳄鱼纹包</p>
+
                 <p class="price">原价:374</p>
 
-                <p class="full"><a class="btn" href="http://try.taobao.com/item/item_detail.htm?TBG=55010.103950.2&SPM=1.55010.103950.2.0.0.0&item_id=593722"></a></p>
+                <p class="full"><a class="btn"
+                                   href="http://try.taobao.com/item/item_detail.htm?TBG=55010.103950.2&SPM=1.55010.103950.2.0.0.0&item_id=593722"></a>
+                </p>
             </li>
             <li class="tiny-item" style="display: block; float: left;">
-                <a href="http://try.taobao.com/item/item_detail.htm?TBG=55010.103950.3&SPM=1.55010.103950.3.0.0.0&item_id=608713" class="tiny-pic"><img alt="新款无叶风扇" width="122" height="100" src="http://img02.taobaocdn.com/tps/i2/T1SeycXepXXXXXXXXX-122-100.jpg"></a>
+                <a href="http://try.taobao.com/item/item_detail.htm?TBG=55010.103950.3&SPM=1.55010.103950.3.0.0.0&item_id=608713"
+                   class="tiny-pic"><img alt="新款无叶风扇" width="122" height="100"
+                                         src="http://img02.taobaocdn.com/tps/i2/T1SeycXepXXXXXXXXX-122-100.jpg"></a>
+
                 <p class="des">新款无叶风扇</p>
+
                 <p class="price">原价:498</p>
-                <p class="full"><a class="btn" href="http://try.taobao.com/item/item_detail.htm?TBG=55010.103950.4&SPM=1.55010.103950.4.0.0.0&item_id=608713"></a></p>
+
+                <p class="full"><a class="btn"
+                                   href="http://try.taobao.com/item/item_detail.htm?TBG=55010.103950.4&SPM=1.55010.103950.4.0.0.0&item_id=608713"></a>
+                </p>
             </li>
 
             <li class="tiny-item" style="display: block; float: left;">
-                <a href="http://try.taobao.com/item/item_detail.htm?TBG=55010.103950.5&SPM=1.55010.103950.5.0.0.0&item_id=570730" class="tiny-pic"><img alt="波西米亚抹胸长裙" width="122" height="100" src="http://img04.taobaocdn.com/tps/i4/T17KycXd4XXXXXXXXX-122-100.jpg"></a>
+                <a href="http://try.taobao.com/item/item_detail.htm?TBG=55010.103950.5&SPM=1.55010.103950.5.0.0.0&item_id=570730"
+                   class="tiny-pic"><img alt="波西米亚抹胸长裙" width="122" height="100"
+                                         src="http://img04.taobaocdn.com/tps/i4/T17KycXd4XXXXXXXXX-122-100.jpg"></a>
+
                 <p class="des">波西米亚抹胸长裙</p>
+
                 <p class="price">原价:97</p>
-                <p class="full"><a class="btn" href="http://try.taobao.com/item/item_detail.htm?TBG=55010.103950.6&SPM=1.55010.103950.6.0.0.0&item_id=570730"></a></p>
+
+                <p class="full"><a class="btn"
+                                   href="http://try.taobao.com/item/item_detail.htm?TBG=55010.103950.6&SPM=1.55010.103950.6.0.0.0&item_id=570730"></a>
+                </p>
             </li>
             <li class="tiny-item" style="display: block; float: left;">
-                <a href="http://try.taobao.com/item/item_detail.htm?TBG=55010.103950.7&SPM=1.55010.103950.7.0.0.0&item_id=608721" class="tiny-pic"><img alt="触摸板无线键盘" width="122" height="100" src="http://img01.taobaocdn.com/tps/i1/T1XuCcXd0XXXXXXXXX-122-100.jpg"></a>
+                <a href="http://try.taobao.com/item/item_detail.htm?TBG=55010.103950.7&SPM=1.55010.103950.7.0.0.0&item_id=608721"
+                   class="tiny-pic"><img alt="触摸板无线键盘" width="122" height="100"
+                                         src="http://img01.taobaocdn.com/tps/i1/T1XuCcXd0XXXXXXXXX-122-100.jpg"></a>
 
                 <p class="des">触摸板无线键盘</p>
+
                 <p class="price">原价:348</p>
-                <p class="full"><a class="btn" href="http://try.taobao.com/item/item_detail.htm?TBG=55010.103950.8&SPM=1.55010.103950.8.0.0.0&item_id=608721"></a></p>
+
+                <p class="full"><a class="btn"
+                                   href="http://try.taobao.com/item/item_detail.htm?TBG=55010.103950.8&SPM=1.55010.103950.8.0.0.0&item_id=608721"></a>
+                </p>
             </li>
             <li class="tiny-item" style="display: block; float: left;">
-                <a href="http://try.taobao.com/item/item_detail.htm?TBG=55010.103950.9&SPM=1.55010.103950.9.0.0.0&item_id=546704" class="tiny-pic"><img alt="奕而乐笔记本冰座" width="122" height="100" src="http://img01.taobaocdn.com/tps/i1/T1RKycXepXXXXXXXXX-122-100.jpg"></a>
+                <a href="http://try.taobao.com/item/item_detail.htm?TBG=55010.103950.9&SPM=1.55010.103950.9.0.0.0&item_id=546704"
+                   class="tiny-pic"><img alt="奕而乐笔记本冰座" width="122" height="100"
+                                         src="http://img01.taobaocdn.com/tps/i1/T1RKycXepXXXXXXXXX-122-100.jpg"></a>
+
                 <p class="des">奕而乐笔记本冰座</p>
 
                 <p class="price">原价:59</p>
-                <p class="full"><a class="btn" href="http://try.taobao.com/item/item_detail.htm?TBG=55010.103950.10&SPM=1.55010.103950.10.0.0.0&item_id=546704"></a></p>
+
+                <p class="full"><a class="btn"
+                                   href="http://try.taobao.com/item/item_detail.htm?TBG=55010.103950.10&SPM=1.55010.103950.10.0.0.0&item_id=546704"></a>
+                </p>
             </li>
 
         </ol>
@@ -380,15 +423,15 @@
         KISSY.use("switchable", function (S, Switchable) {
             //右侧促销区slide切换
             var tiny_slide = new Switchable.Carousel('#J_TinySlide', {
-                activeIndex:0,
-                effect:'scrollx',
-                easing:'easeOutStrong',
-                viewSize:[274],
-                circular:true,
-                prevBtnCls:'tiny-prev',
-                nextBtnCls:'tiny-next',
-                interval:6,
-                lazyDataType:'img-src' //延迟加载图片？
+                activeIndex: 0,
+                effect: 'scrollx',
+                easing: 'easeOutStrong',
+                viewSize: [274],
+                circular: true,
+                prevBtnCls: 'tiny-prev',
+                nextBtnCls: 'tiny-next',
+                interval: 6,
+                lazyDataType: 'img-src' //延迟加载图片？
             });
         });
     </script>
@@ -397,6 +440,7 @@
 
 </div>
 <h3 class="s-title">键盘快捷键</h3>
+
 <div class="s-section">
     <ul class="s-list">
         <li><strong>当焦点在上一页 / 下一页时</strong>
@@ -441,6 +485,7 @@
 </div>
 
 <h3 class="s-title">Note</h3>
+
 <div class="s-section">chrome 不支持 Control + PgUp 以及 Control + PgDn</div>
 </div>
 </body>
