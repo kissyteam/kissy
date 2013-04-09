@@ -8,7 +8,8 @@
     <meta name="apple-touch-fullscreen" content="yes">
 <title>Tabs - 标签页</title>
 
-<script src="/kissy/build/seed.js"></script>
+<script src="../../../../build/seed.js"></script>
+<script src="../../../../build/node.js"></script>
 
 <script src="../../src/base.js"></script>
 <script src="../../src/aria.js"></script>
@@ -125,7 +126,7 @@
                 <button id="btnDestroy" type="button">销毁</button>
             </div>
             <script>
-                KISSY.use("switchable", function (S, Switchable) {
+                KISSY.use("switchable, node", function (S, Switchable) {
 
                     var Tabs = Switchable.Tabs,
                             btnAdd = S.one('#btnAdd'),

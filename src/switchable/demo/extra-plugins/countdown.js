@@ -1,5 +1,5 @@
 /**
- *  Switchable Countdown Plugin
+ * Switchable Countdown Plugin
  * @author  gonghao<gonghao@ghsky.com>
  */
 KISSY.add('switchable-ext/countdown', function (S, DOM, Event, Anim, Switchable, undefined) {

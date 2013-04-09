@@ -1,5 +1,5 @@
 /**
- *  common aria for switchable and stop autoplay if necessary
+ * common aria for switchable and stop autoplay if necessary
  * @author yiminghe@gmail.com
  */
 KISSY.add("switchable/aria", function(S, DOM, Event, Switchable) {

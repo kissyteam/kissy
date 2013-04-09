@@ -1,5 +1,5 @@
 /**
- *  Switchable autoplay Plugin
+ * Switchable autoplay Plugin
  */
 KISSY.add('switchable/autoplay', function (S, DOM, Event, Switchable, undefined) {
     var DURATION = 200,

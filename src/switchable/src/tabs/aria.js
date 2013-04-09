@@ -1,5 +1,5 @@
 /**
- *  Tabs aria support
+ * Tabs aria support
  * @author yiminghe@gmail.com
  */
 KISSY.add('switchable/tabs/aria', function (S, DOM, Event, Switchable, Aria, Tabs) {

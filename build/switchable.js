@@ -1,10 +1,10 @@
 ﻿/*
-Copyright 2012, KISSY UI Library v1.30
+Copyright 2013, KISSY UI Library v1.30
 MIT Licensed
-build time: Dec 20 22:28
+build time: Apr 9 11:24
 */
 /**
- * @fileOverview accordion aria support
+ * accordion aria support
  * @author yiminghe@gmail.com
  */
 KISSY.add('switchable/accordion/aria', function (S, DOM, Event, Aria, Accordion, Switchable) {
@@ -342,7 +342,7 @@ KISSY.add('switchable/accordion/aria', function (S, DOM, Event, Aria, Accordion,
  </ul>
  **/
 /**
- * @fileOverview Accordion Widget
+ * Accordion Widget
  * @author fool2fish@gmail.com, yiminghe@gmail.com
  */
 KISSY.add('switchable/accordion/base', function (S, DOM, Switchable) {
@@ -422,7 +422,7 @@ KISSY.add('switchable/accordion/base', function (S, DOM, Switchable) {
  *
  */
 /**
- * @fileOverview common aria for switchable and stop autoplay if necessary
+ * common aria for switchable and stop autoplay if necessary
  * @author yiminghe@gmail.com
  */
 KISSY.add("switchable/aria", function(S, DOM, Event, Switchable) {
@@ -481,7 +481,7 @@ KISSY.add("switchable/aria", function(S, DOM, Event, Switchable) {
     requires:['dom','event','./base']
 });
 /**
- * @fileOverview Switchable autoplay Plugin
+ * Switchable autoplay Plugin
  */
 KISSY.add('switchable/autoplay', function (S, DOM, Event, Switchable, undefined) {
     var DURATION = 200,
@@ -594,7 +594,7 @@ KISSY.add('switchable/autoplay', function (S, DOM, Event, Switchable, undefined)
  * - yiminghe@gmail.com：2011.06.02 review switchable
  */
 /**
- * @fileOverview Switchable
+ * Switchable
  */
 KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
 
@@ -1139,7 +1139,8 @@ KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
             contentContainer.insertBefore(panelDom, nextPanel);
             // 当trigger 跟panel一一对应时，插入对应的trigger
             if (self.config.steps == 1) {
-                nextTrigger = triggers[index];
+                // 修复ie下不加null的问题
+                nextTrigger = triggers[index] || null;
                 // 插入导航对应的位置
                 navContainer.insertBefore(triggerDom, nextTrigger);
                 // 插入集合
@@ -1517,7 +1518,7 @@ KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
  *  - jQuery Scrollable http://flowplayer.org/tools/scrollable.html
  */
 /**
- * @fileOverview aria support for carousel
+ * aria support for carousel
  * @author yiminghe@gmail.com
  */
 KISSY.add("switchable/carousel/aria", function (S, DOM, Event, Aria, Carousel, Switchable) {
@@ -1883,7 +1884,7 @@ KISSY.add("switchable/carousel/aria", function (S, DOM, Event, Aria, Carousel, S
  </ul>
  **/
 /**
- * @fileOverview Carousel Widget
+ * Carousel Widget
  * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
 KISSY.add('switchable/carousel/base', function (S, DOM, Event, Switchable) {
@@ -2015,7 +2016,7 @@ KISSY.add('switchable/carousel/base', function (S, DOM, Event, Switchable) {
  *  - itemSelected 时，自动居中的特性
  */
 /**
- * @fileOverview Switchable Circular Plugin
+ * Switchable Circular Plugin
  * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
 KISSY.add('switchable/circular', function (S, DOM, Anim, Switchable) {
@@ -2293,7 +2294,7 @@ KISSY.add('switchable/circular', function (S, DOM, Anim, Switchable) {
  *   - 是否需要考虑从 0 到 2（非最后一个） 的 'backward' 滚动？需要更灵活
  */
 /**
- * @fileOverview Switchable Effect Plugin
+ * Switchable Effect Plugin
  */
 KISSY.add('switchable/effect', function (S, DOM, Event, Anim, Switchable, undefined) {
 
@@ -2569,7 +2570,7 @@ KISSY.add('switchable/effect', function (S, DOM, Event, Anim, Switchable, undefi
  * yiminghe@gmail.com：2011.06.02 review switchable
  */
 /**
- * @fileOverview Switchable Lazyload Plugin
+ * Switchable Lazyload Plugin
  */
 KISSY.add('switchable/lazyload', function (S, DOM, Switchable) {
 
@@ -2678,7 +2679,7 @@ KISSY.add('switchable/lazyload', function (S, DOM, Switchable) {
  * yiminghe@gmail.com：2011.06.02 review switchable
  */
 /**
- * @fileOverview Tabs Widget
+ * Tabs Widget
  * @author lifesinger@gmail.com
  */
 KISSY.add('switchable/slide/base', function (S, Switchable) {
@@ -2715,7 +2716,7 @@ KISSY.add('switchable/slide/base', function (S, Switchable) {
  * yiminghe@gmail.com：2011.06.02 review switchable
  */
 /**
- * @fileOverview switchable
+ * switchable
  */
 KISSY.add("switchable", function (S, Switchable, Accordion, Carousel, Slide, Tabs) {
     var re = {
@@ -2748,7 +2749,7 @@ KISSY.add("switchable", function (S, Switchable, Accordion, Carousel, Slide, Tab
     ]
 });
 /**
- * @fileOverview Tabs aria support
+ * Tabs aria support
  * @author yiminghe@gmail.com
  */
 KISSY.add('switchable/tabs/aria', function (S, DOM, Event, Switchable, Aria, Tabs) {
@@ -3002,7 +3003,7 @@ KISSY.add('switchable/tabs/aria', function (S, DOM, Event, Switchable, Aria, Tab
  </ul>
  */
 /**
- * @fileOverview Tabs Widget
+ * Tabs Widget
  * @author lifesinger@gmail.com
  */
 KISSY.add('switchable/tabs/base', function(S, Switchable) {
@@ -3027,7 +3028,7 @@ KISSY.add('switchable/tabs/base', function(S, Switchable) {
     requires:["../base"]
 });
 /**
- * @fileOverview Touch support for switchable
+ * Touch support for switchable
  * @author yiminghe@gmail.com
  */
 KISSY.add("switchable/touch", function (S, DOM, Event, Switchable, DD) {
@@ -3154,7 +3155,7 @@ KISSY.add("switchable/touch", function (S, DOM, Event, Switchable, DD) {
                             } else if (activeIndex == 0) {
                                 Switchable.adjustPosition
                                     .call(self, self.panels,
-                                    threshold, prop, viewSize);
+                                        threshold, prop, viewSize);
                             }
                         }
 
@@ -3210,7 +3211,8 @@ KISSY.add("switchable/touch", function (S, DOM, Event, Switchable, DD) {
                 }
                 if (DD) {
                     var contentDD = new DD.Draggable({
-                        node: content
+                        node: content,
+                        groups: false
                     });
                     contentDD.on("dragstart", function () {
                         start();
