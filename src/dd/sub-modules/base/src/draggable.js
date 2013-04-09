@@ -36,6 +36,15 @@ KISSY.add('dd/base/draggable', function (S, Node, RichBase, DDM, Event) {
              */
 
             /**
+             * fired when need to get draggable 's position during dragging
+             * @event dragalign
+             * @member KISSY.DD.Draggable
+             * @param {KISSY.Event.CustomEventObject} e
+             * @param e.drag current draggable object
+             */
+
+
+            /**
              * fired during dragging
              * @event drag
              * @member KISSY.DD.DDM
@@ -48,6 +57,19 @@ KISSY.add('dd/base/draggable', function (S, Node, RichBase, DDM, Event) {
              */
 
             /**
+             * fired during dragging
+             * @event drag
+             * @member KISSY.DD.Draggable
+             * @param {KISSY.Event.CustomEventObject} e
+             * @param e.drag current draggable object
+             * @param e.left node 's supposed position left
+             * @param e.top node 's supposed position top
+             * @param e.pageX mouse position left
+             * @param e.pageY mouse position top
+             */
+
+
+            /**
              * fired after drop a draggable onto a droppable object
              * @event dragdrophit
              * @member KISSY.DD.DDM
@@ -55,6 +77,16 @@ KISSY.add('dd/base/draggable', function (S, Node, RichBase, DDM, Event) {
              * @param e.drag current draggable object
              * @param e.drop current droppable object
              */
+
+            /**
+             * fired after drop a draggable onto a droppable object
+             * @event dragdrophit
+             * @member KISSY.DD.Draggable
+             * @param {KISSY.Event.CustomEventObject} e
+             * @param e.drag current draggable object
+             * @param e.drop current droppable object
+             */
+
 
             /**
              * fired after drag
@@ -65,12 +97,30 @@ KISSY.add('dd/base/draggable', function (S, Node, RichBase, DDM, Event) {
              */
 
             /**
+             * fired after drag
+             * @event dragend
+             * @member KISSY.DD.Draggable
+             * @param {KISSY.Event.CustomEventObject} e
+             * @param e.drag current draggable object
+             */
+
+
+            /**
              * fired after drop a draggable onto nothing
              * @event dragdropmiss
              * @member KISSY.DD.DDM
              * @param {KISSY.Event.CustomEventObject} e
              * @param e.drag current draggable object
              */
+
+            /**
+             * fired after drop a draggable onto nothing
+             * @event dragdropmiss
+             * @member KISSY.DD.Draggable
+             * @param {KISSY.Event.CustomEventObject} e
+             * @param e.drag current draggable object
+             */
+
 
             /**
              * fired after a draggable leaves a droppable
@@ -82,8 +132,37 @@ KISSY.add('dd/base/draggable', function (S, Node, RichBase, DDM, Event) {
              */
 
             /**
+             * fired after a draggable leaves a droppable
+             * @event dragexit
+             * @member KISSY.DD.Draggable
+             * @param {KISSY.Event.CustomEventObject} e
+             * @param e.drag current draggable object
+             * @param e.drop current droppable object
+             */
+
+
+            /**
              * fired after a draggable object mouseenter a droppable object
              * @event dragenter
+             * @member KISSY.DD.DDM
+             * @param {KISSY.Event.CustomEventObject} e
+             * @param e.drag current draggable object
+             * @param e.drop current droppable object
+             */
+
+            /**
+             * fired after a draggable object mouseenter a droppable object
+             * @event dragenter
+             * @member KISSY.DD.Draggable
+             * @param {KISSY.Event.CustomEventObject} e
+             * @param e.drag current draggable object
+             * @param e.drop current droppable object
+             */
+
+
+            /**
+             * fired after a draggable object mouseover a droppable object
+             * @event dragover
              * @member KISSY.DD.DDM
              * @param {KISSY.Event.CustomEventObject} e
              * @param e.drag current draggable object
@@ -97,6 +176,15 @@ KISSY.add('dd/base/draggable', function (S, Node, RichBase, DDM, Event) {
              * @param {KISSY.Event.CustomEventObject} e
              * @param e.drag current draggable object
              * @param e.drop current droppable object
+             */
+
+
+            /**
+             * fired after a draggable object start to drag
+             * @event dragstart
+             * @member KISSY.DD.DDM
+             * @param {KISSY.Event.CustomEventObject} e
+             * @param e.drag current draggable object
              */
 
             /**
