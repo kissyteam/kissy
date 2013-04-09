@@ -13,7 +13,8 @@ KISSY.add("tabs/panel-render", function (S, Component) {
 
         _onSetSelected: function (v) {
             var el = this.get("el");
-            el[v ? "addClass" : "removeClass"](this.get("selectedCls"));
+            var selectedCls= this.get('prefixCls')+'tabs-panel-selected';
+            el[v ? "addClass" : "removeClass"](selectedCls);
             el.attr("aria-hidden", !v);
         }
 
@@ -21,17 +22,13 @@ KISSY.add("tabs/panel-render", function (S, Component) {
         ATTRS: {
             selected: {
                 value: false
-            },
-            selectedCls: {
-                valueFn:function(){
-                    return this.get('prefixCls')+'tabs-panel-selected';
-                }
             }
         },
 
         HTML_PARSER: {
             selected: function (el) {
-                return el.hasClass(this.get("selectedCls"));
+                var selectedCls= this.get('prefixCls')+'tabs-panel-selected';
+                return el.hasClass(selectedCls);
             }
         }
     });

@@ -60,7 +60,9 @@
             </filterchain>
         </concat>
         <copy todir="${component.src.dir.tmp}">
-            <fileset dir="${component.work.dir}" includes="assets/**/*"/>
+            <fileset dir="${component.work.dir}"
+                     excludes="**/*.less,**/*.sass"
+                     includes="assets/**/*"/>
         </copy>
     </target>
 

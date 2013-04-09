@@ -35,9 +35,6 @@ KISSY.add("tabs/tab", function (S, Button, TabRender) {
             selected: {
                 view: 1
             },
-            selectedCls: {
-                view: 1
-            },
             xrender: {
                 value: TabRender
             }

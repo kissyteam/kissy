@@ -284,8 +284,13 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
             renderChild: function (c, childIndex) {
                 var self = this,
                     elBefore,
+                    children = self.get('children'),
                     contentEl;
+                if (typeof childIndex === "undefined") {
+                    childIndex = S.indexOf(c, children);
+                }
                 c = Component.create(c, self);
+                children[childIndex] = c;
                 if (!c.get('rendered')) {
                     // 生成父组件的 dom 结构
                     self.create();
@@ -297,7 +302,6 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
                     } else {
                         c.set("render", contentEl);
                     }
-                    self.get('children')[childIndex] = c;
                     // 如果 parent 也没渲染，子组件 create 出来和 parent 节点关联
                     // 子组件和 parent 组件一起渲染
                     // 之前设好属性，view ，logic 同步还没 bind ,create 不是 render ，还没有 bindUI

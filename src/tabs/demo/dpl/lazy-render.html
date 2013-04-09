@@ -10,28 +10,26 @@
     <link href="../../../css/src/dpl/base.css" rel="stylesheet"/>
     <link href="../../../css/demo/dpl/assets/docs.css" rel="stylesheet"/>
     <link href="../../../button/assets/dpl.css" rel="stylesheet"/>
+    <link href="../../../toolbar/assets/dpl.css" rel="stylesheet"/>
     <link href="../../assets/dpl.css" rel="stylesheet"/>
-    <style>
-        .tab-active {
-            color: red;
-        }
-
-        .panel-active {
-            display: block !important;
-            color: red;
-        }
-    </style>
 </head>
 <body>
 
 <div class="container">
 
-    <h1>selectedCls 配置</h1>
+    <h1>lazy-render Tabs - click</h1>
 
     <div id="tabs">
 
 
     </div>
+
+
+    <p>
+
+        <button id="add">add</button>
+        <button id="add-select">add&select</button>
+    </p>
 
 </div>
 <script src="/kissy/build/seed.js"></script>
@@ -45,12 +43,10 @@
 <script src="../../src/tabs.js"></script>
 <script>
     KISSY.use("tabs", function (S, Tabs) {
-
-        var tabs = new Tabs({
-            barOrientation: Tabs.Orientation.BOTTOM,
+        var $ = S.all;
+        window.tabs = new Tabs({
             render: "#tabs",
-            tabSelectedCls: 'tab-active',
-            panelSelectedCls: 'panel-active',
+            lazyRender: true,
             items: [
                 {
                     title: 'tab-1',
@@ -61,8 +57,32 @@
                     title: 'tab-2',
                     content: '<p>panel-2</p>'
                 }
-            ]
+            ],
+            listeners: {
+                afterRenderUI: function (e) {
+                    if (e.target.isTabsPanel) {
+                        S.log(e.target.get('content'));
+                    }
+                }
+            }
         }).render();
+        var index = 2;
+        $('#add').on('click', function () {
+            ++index;
+            tabs.addItem({
+                title: 'tab-' + index,
+                content: '<p>panel-' + index + '</p>'
+            });
+        });
+        $('#add-select').on('click', function () {
+            ++index;
+            tabs.addItem({
+                title: 'tab-' + index,
+                selected: true,
+                content: '<p>panel-' + index + '</p>'
+            });
+        });
+
 
     });
 </script>

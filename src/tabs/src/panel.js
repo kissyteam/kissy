@@ -11,7 +11,7 @@ KISSY.add("tabs/panel", function (S, Component, PanelRender) {
      * @extends KISSY.Component.Controller
      */
     return Component.Controller.extend({
-
+        isTabsPanel: 1
     }, {
         ATTRS: {
             /**
@@ -29,9 +29,6 @@ KISSY.add("tabs/panel", function (S, Component, PanelRender) {
             },
             allowTextSelection: {
                 value: true
-            },
-            selectedCls: {
-                view: 1
             },
             xrender: {
                 value: PanelRender

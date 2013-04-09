@@ -3,34 +3,64 @@
  * Body for tab panels.
  * @author yiminghe@gmail.com
  */
-KISSY.add("tabs/body", function (S, Component) {
+KISSY.add("tabs/body", function (S, Component, undefined) {
 
-    return Component.Container.extend({
+    var TabBody = Component.Container.extend({
 
         renderUI: function () {
             var self = this,
                 children = self.get("children");
-            S.each(children, function (c) {
-                if (c.get("selected")) {
-                    self.set("selectedPanel", c);
+            S.each(children, function (c, i) {
+                if (c.isController && c.get("selected")) {
+                    self.set("selectedPanelIndex", i);
+                    return false;
                 }
+                return undefined;
             });
         },
 
+        renderChild: function (c) {
+            if (this.get('lazyRender')) {
+                if (c.isController && !c.get('selected')) {
+                    return c;
+                }
+                if (!c.isController && !c.selected) {
+                    return c;
+                }
+            }
+            return TabBody.superclass.renderChild.apply(this, arguments);
+        },
+
+        selectPanel: function (showPanel) {
+            if (showPanel.isController) {
+                showPanel.set("selected", true);
+            } else {
+                showPanel.selected = true;
+            }
+            if (this.get('lazyRender')) {
+                // lazy render
+                this.renderChild(showPanel);
+            }
+        },
+
         bindUI: function () {
-            this.on("afterSelectedPanelChange", function (e) {
-                if (e.newVal) {
-                    if (e.prevVal) {
-                        e.prevVal.set("selected", false);
+            var self = this;
+            self.on("afterSelectedPanelIndexChange", function (e) {
+                var showPanel,
+                    children = self.get('children'),
+                    hidePanel;
+                if (showPanel = children[e.newVal]) {
+                    if (hidePanel = children[e.prevVal]) {
+                        hidePanel.set("selected", false);
                     }
-                    e.newVal.set("selected", true);
+                    self.selectPanel(showPanel);
                 }
             });
         }
 
     }, {
         ATTRS: {
-            selectedPanel: {
+            selectedPanelIndex: {
             },
             allowTextSelection: {
                 value: true
@@ -38,6 +68,7 @@ KISSY.add("tabs/body", function (S, Component) {
             focusable: {
                 value: false
             },
+            lazyRender: {},
             handleMouseEvents: {
                 value: false
             },
@@ -46,7 +77,7 @@ KISSY.add("tabs/body", function (S, Component) {
             },
             defaultChildCfg: {
                 value: {
-                    xclass:'tabs-panel'
+                    xclass: 'tabs-panel'
                 }
             }
         }
@@ -54,6 +85,7 @@ KISSY.add("tabs/body", function (S, Component) {
         xclass: 'tabs-body'
     });
 
+    return TabBody;
 }, {
     requires: ['component/base']
 });
