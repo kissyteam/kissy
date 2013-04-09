@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 8 00:14
+build time: Apr 9 19:59
 */
 /**
  * root node represent a simple tree
@@ -552,9 +552,15 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
                 }
             },
 
+            bindUI: function () {
+                this.on('afterAddChild', onAddChild);
+                this.on('afterAddChild afterRemoveChild', syncAriaSetSize);
+            },
+
             syncUI: function () {
                 // 集中设置样式
                 refreshCss(this);
+                syncAriaSetSize.call(this);
             },
 
             _keyNav: function (e) {
@@ -690,22 +696,6 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
                 if (self === self.get('tree')) {
                     registerToTree(self, self, -1);
                 }
-            },
-
-            /**
-             * override controller 's addChild to apply depth and css recursively
-             */
-            addChild: function () {
-                var self = this,
-                    c;
-                c = TreeNode.superclass.addChild.apply(self, arguments);
-                // subTree == fragment
-                // node.add(subTree);
-                // only sync child sub tree if parent is rendered
-                if (self.get('rendered')) {
-                    registerToTree(self, c, self.get('depth'));
-                }
-                return c;
             },
 
             /**
@@ -883,6 +873,13 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
 
     // # ------------------- private start
 
+    function onAddChild(e) {
+        registerToTree(this, e.component, this.get('depth'));
+    }
+
+    function syncAriaSetSize() {
+        this.get('el')[0].setAttribute('aria-setsize', this.get('children').length);
+    }
 
     function isNodeSingleOrLast(self) {
         var parent = self.get('parent'),
@@ -974,14 +971,10 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
     }
 
     function refreshCssForSelfAndChildren(self) {
-        var children = self.get('children'),
-            len = self.get('children').length;
         refreshCss(self);
-        S.each(children, function (c, index) {
+        S.each(self.get('children'), function (c, index) {
             refreshCss(c);
-            var el = c.get("el");
-            el.attr("aria-posinset", index + 1);
-            el.attr("aria-setsize", len);
+            c.get("el")[0].setAttribute("aria-posinset", index + 1);
         });
     }
 

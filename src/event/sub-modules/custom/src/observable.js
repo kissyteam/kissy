@@ -47,20 +47,6 @@ KISSY.add('event/custom/observable', function (S, api, CustomEventObserver, Cust
             }
         },
 
-        checkMemory: function () {
-            var self = this,
-                currentTarget = self.currentTarget,
-                events = ObservableCustomEvent.getCustomEvents(currentTarget);
-            if (events) {
-                if (!self.hasObserver()) {
-                    delete events[self.type];
-                }
-                if (S.isEmptyObject(events)) {
-                    delete currentTarget[KS_CUSTOM_EVENTS];
-                }
-            }
-        },
-
         /**
          * notify current custom event 's observers and then bubble up if this event can bubble.
          * @param {KISSY.Event.CustomEventObject} eventData
@@ -140,7 +126,8 @@ KISSY.add('event/custom/observable', function (S, api, CustomEventObserver, Cust
          * return last value of custom event 's observers 's return value.
          */
         notify: function (event) {
-            var observers = this.observers,
+            // duplicate,in case detach itself in one observer
+            var observers = [].concat(this.observers),
                 ret,
                 gRet,
                 len = observers.length,
@@ -207,7 +194,9 @@ KISSY.add('event/custom/observable', function (S, api, CustomEventObserver, Cust
                 self.reset();
             }
 
-            self.checkMemory();
+            // does not need to clear memory if customEvent has no observer
+            // customEvent has defaultFn .....!
+            // self.checkMemory();
         }
     });
 

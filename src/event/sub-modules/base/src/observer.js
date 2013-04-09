@@ -55,7 +55,8 @@ KISSY.add('event/base/observer', function (S, undefined) {
          * @return {*} return value of current observer's user-defined function
          */
         simpleNotify: function (event, ce) {
-            var ret, self = this;
+            var ret,
+                self = this;
             ret = self.fn.call(self.context || ce.currentTarget, event, self.data);
             if (self.once) {
                 //noinspection JSUnresolvedFunction

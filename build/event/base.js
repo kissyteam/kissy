@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 27 17:36
+build time: Apr 9 19:42
 */
 /**
  * @ignore
@@ -310,7 +310,8 @@ KISSY.add('event/base/observer', function (S, undefined) {
          * @return {*} return value of current observer's user-defined function
          */
         simpleNotify: function (event, ce) {
-            var ret, self = this;
+            var ret,
+                self = this;
             ret = self.fn.call(self.context || ce.currentTarget, event, self.data);
             if (self.once) {
                 //noinspection JSUnresolvedFunction

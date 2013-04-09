@@ -35,10 +35,21 @@ KISSY.use("event/custom", function (S, Event) {
                 }
             });
 
+            t.on('click', {
+                once: 1,
+                fn: function () {
+                    ret.push(2);
+                }
+            });
+
+            t.fire('click');
             t.fire('click');
 
-            expect(Event._ObservableCustomEvent.getCustomEvents(t)).toBe(undefined);
+            expect(ret).toEqual([1,2]);
 
+            expect(Event._ObservableCustomEvent
+                .getCustomEvents(t)['click'].hasObserver())
+                .toBeFalsy();
         });
 
         // note 219
@@ -288,8 +299,9 @@ KISSY.use("event/custom", function (S, Event) {
             eventTarget.on("click", noop3);
             eventTarget.on("keydown", noop);
             (function () {
-                var events = Event._ObservableCustomEvent.getCustomEvents(eventTarget);
-                expect(events).not.toBeUndefined();
+                var events = Event._ObservableCustomEvent.
+                    getCustomEvents(eventTarget);
+
                 var num = 0;
                 for (i in events) {
                     expect(S.inArray(i, ["click", "keydown"]))
@@ -304,9 +316,9 @@ KISSY.use("event/custom", function (S, Event) {
             eventTarget.detach("click", noop);
 
             (function () {
-                var events = Event._ObservableCustomEvent.getCustomEvents(eventTarget);
+                var events = Event._ObservableCustomEvent
+                    .getCustomEvents(eventTarget);
                 var num = 0;
-                expect(events).not.toBeUndefined();
 
                 for (i in events) {
 
@@ -324,25 +336,21 @@ KISSY.use("event/custom", function (S, Event) {
 
             (function () {
                 var events = Event._ObservableCustomEvent.getCustomEvents(eventTarget);
-                var num = 0;
-                expect(events).not.toBeUndefined();
-                for (i in events) {
 
-                    expect(S.inArray(i, ["keydown"]))
-                        .toBe(true);
-                    num++;
-
-                }
-                expect(num).toBe(1);
+                expect(events['keydown'].hasObserver()).toBeTruthy();
                 var clickObserver = events["click"];
-                expect(clickObserver).toBeUndefined();
+                expect(clickObserver.hasObserver()).toBeFalsy();
             })();
 
             eventTarget.detach();
 
             (function () {
-                var events = Event._ObservableCustomEvent.getCustomEvents(eventTarget);
-                expect(events).toBe(undefined);
+                var events = Event._ObservableCustomEvent
+                    .getCustomEvents(eventTarget);
+                for(var o in events){
+                    expect(events[o].hasObserver()).toBeFalsy();
+                }
+
             })();
         });
 

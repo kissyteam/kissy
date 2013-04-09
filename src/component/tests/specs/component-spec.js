@@ -11,16 +11,142 @@ KISSY.use("component/base", function (S, Component) {
     describe("component", function () {
 
 
+        it('fire addChild/removeChild event', function () {
+            var c = new Component.Container({
+                content: "xx"
+            });
+
+            var child = new Component.Container({
+                content: "yy"
+            });
+
+            (function(){
+                var beforeCalled = 0,
+                    afterCalled = 0;
+
+                c.on('beforeAddChild', {
+                    fn: function (e) {
+                        expect(e.component).toBe(child);
+                        expect(e.index).toBe(0);
+                        e.preventDefault();
+                        beforeCalled = 1;
+                    },
+                    once: 1
+                });
+
+                c.on('afterAddChild', {
+                    fn: function (e) {
+                        afterCalled = 1;
+                    },
+                    once: 1
+                });
+
+                c.addChild(child);
+
+                expect(beforeCalled).toBe(1);
+                expect(afterCalled).toBe(0);
+                expect(c.get('children').length).toBe(0);
+
+                beforeCalled = 0;
+                afterCalled = 0;
+
+                c.on('beforeAddChild', {
+                    fn: function (e) {
+                        expect(e.component).toBe(child);
+                        expect(e.index).toBe(0);
+                        beforeCalled = 1;
+                    },
+                    once: 1
+                });
+
+                c.on('afterAddChild', {
+                    fn: function (e) {
+                        expect(e.component).toBe(child);
+                        expect(e.index).toBe(0);
+                        afterCalled = 1;
+                    },
+                    once: 1
+                });
+
+                c.addChild(child);
+
+                expect(beforeCalled).toBe(1);
+                expect(afterCalled).toBe(1);
+                expect(c.get('children').length).toBe(1);
+                expect(c.get('children')[0]).toBe(child);
+            })();
+
+            (function(){
+                var beforeCalled = 0,
+                    afterCalled = 0;
+
+                c.on('beforeRemoveChild', {
+                    fn: function (e) {
+                        expect(e.component).toBe(child);
+                        expect(e.index).toBe(0);
+                        e.preventDefault();
+                        beforeCalled = 1;
+                    },
+                    once: 1
+                });
+
+                c.on('afterRemoveChild', {
+                    fn: function (e) {
+                        afterCalled = 1;
+                    },
+                    once: 1
+                });
+
+                c.removeChild(child);
+
+                expect(beforeCalled).toBe(1);
+                expect(afterCalled).toBe(0);
+                expect(c.get('children').length).toBe(1);
+                expect(c.get('children')[0]).toBe(child);
+
+                beforeCalled = 0;
+                afterCalled = 0;
+
+                c.on('beforeRemoveChild', {
+                    fn: function (e) {
+                        expect(e.component).toBe(child);
+                        expect(e.index).toBe(0);
+                        beforeCalled = 1;
+                    },
+                    once: 1
+                });
+
+                c.on('afterRemoveChild', {
+                    fn: function (e) {
+                        expect(e.component).toBe(child);
+                        expect(e.index).toBe(0);
+                        afterCalled = 1;
+                    },
+                    once: 1
+                });
+
+                c.removeChild(child);
+
+                expect(beforeCalled).toBe(1);
+                expect(afterCalled).toBe(1);
+                expect(c.get('children').length).toBe(0);
+            })();
+
+
+        });
+
+
         describe("container", function () {
 
 
             it("should attach its methods", function () {
                 var c = new Component.Container({
-                    html: "xx"
+                    content: "xx"
                 });
                 c.render();
                 expect(c.getOwnerControl).not.toBeUndefined();
                 expect(c.get("el")[0].parentNode).toBe(document.body);
+                expect(c.get("el").html()).toBe("xx");
                 c.destroy();
                 expect(invalidNode(c.get("el")[0].parentNode)).toBe(true);
             });
@@ -30,11 +156,11 @@ KISSY.use("component/base", function (S, Component) {
             } else {
                 it("should delegate events", function () {
                     var c = new Component.Container({
-                        html: "xx"
+                        content: "xx"
                     });
 
                     var child1 = new Component.Controller({
-                        html: "yy",
+                        content: "yy",
                         handleMouseEvents: false,
                         focusable: false
                     });
@@ -42,7 +168,7 @@ KISSY.use("component/base", function (S, Component) {
                     c.addChild(child1);
 
                     var child2 = new Component.Controller({
-                        html: "yy",
+                        content: "yy",
                         handleMouseEvents: false,
                         focusable: false
                     });
@@ -98,77 +224,77 @@ KISSY.use("component/base", function (S, Component) {
         });
     });
 
-    describe("xclass",function(){
+    describe("xclass", function () {
 
         var A = Component.Controller.extend({
 
-        },{
-            ATTRS : {
-                defaultChildCfg : {
-                    value : {
-                        prefixXClass : 'a-b'
+        }, {
+            ATTRS: {
+                defaultChildCfg: {
+                    value: {
+                        prefixXClass: 'a-b'
                     }
                 }
             }
-        },{
-            xclass : 'a'
+        }, {
+            xclass: 'a'
         });
 
-        var B = Component.Controller.extend({},{
-            xclass : 'a-b'
+        var B = Component.Controller.extend({}, {
+            xclass: 'a-b'
         });
 
         var C = B.extend({
 
-        },{
-            xclass : 'a-b-c'
+        }, {
+            xclass: 'a-b-c'
         });
 
         var D = B.extend({
 
-        },{
-            xclass : 'a-b-d'
+        }, {
+            xclass: 'a-b-d'
         });
 
 
-        it('only xclass',function(){
+        it('only xclass', function () {
             var a = new A({
-                children : [
-                    {xclass : 'a-b-d'}
-                ]            
+                children: [
+                    {xclass: 'a-b-d'}
+                ]
             });
             a.render();
             var children = a.get('children');
             expect(children[0] instanceof D).toBe(true);
         });
 
-        it('only prefixXClass',function(){
+        it('only prefixXClass', function () {
             var a = new A({
-                children : [
+                children: [
                     {}
-                ]            
+                ]
             });
             a.render();
             var children = a.get('children');
             expect(children[0] instanceof B).toBe(true);
         });
 
-        it('prefixXClass + xtype',function(){
+        it('prefixXClass + xtype', function () {
             var a = new A({
-                children : [
-                    {xtype : 'c'}
-                ]            
+                children: [
+                    {xtype: 'c'}
+                ]
             });
             a.render();
             var children = a.get('children');
             expect(children[0] instanceof C).toBe(true);
         });
 
-        it('xclass and prefixXClass + xtype',function(){
+        it('xclass and prefixXClass + xtype', function () {
             var a = new A({
-                children : [
-                    {xtype : 'c',xclass : 'a-b-d'}
-                ]            
+                children: [
+                    {xtype: 'c', xclass: 'a-b-d'}
+                ]
             });
             a.render();
             var children = a.get('children');

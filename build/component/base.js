@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 9 12:57
+build time: Apr 9 19:47
 */
 /**
  * @ignore
@@ -507,6 +507,46 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
         };
     }
 
+    function defAddChild(e) {
+        var self = this;
+        if (e.target !== self) {
+            return;
+        }
+        var c = e.component,
+            children = self.get('children'),
+            index = e.index;
+        children.splice(index, 0, c);
+        if (self.get('rendered')) {
+            c = self.renderChild(c, index);
+        }
+        self.fire('afterAddChild', {
+            component: c,
+            index: index
+        });
+    }
+
+    function defRemoveChild(e) {
+        var self = this;
+        if (e.target !== self) {
+            return;
+        }
+        var c = e.component,
+            destroy = e.destroy,
+            children = self.get('children'),
+            index = e.index;
+        if (index != -1) {
+            children.splice(index, 1);
+        }
+        // c is still json
+        if (destroy && c['destroy']) {
+            c['destroy']();
+        }
+        self.fire('afterRemoveChild', {
+            component: c,
+            index: index
+        });
+    }
+
     /**
      * 不使用 valueFn，
      * 只有 render 时需要找到默认，其他时候不需要，防止莫名其妙初始化
@@ -522,7 +562,7 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
             Render = self.get('xrender');
 
         // 将渲染层初始化所需要的属性，直接构造器设置过去
-        attrs = self.getAttrs();
+        attrs = self['getAttrs']();
 
         // 整理属性，对纯属于 view 的属性，添加 getter setter 直接到 view
         for (attrName in attrs) {
@@ -617,6 +657,15 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
             initializer: function () {
                 var self = this,
                     defaultChildCfg = self.get('defaultChildCfg');
+
+                self.publish('beforeAddChild', {
+                    defaultFn: defAddChild
+                });
+
+                self.publish('beforeRemoveChild', {
+                    defaultFn: defRemoveChild
+                });
+
                 defaultChildCfg.prefixCls = defaultChildCfg.prefixCls ||
                     self.get('prefixCls');
                 // initialize view
@@ -634,7 +683,9 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
                 view.create();
                 el = view.getKeyEventTarget();
                 if (!self.get("allowTextSelection")) {
-                    el.unselectable();
+                    el.unselectable(/**
+                     @ignore
+                     @type HTMLElement*/undefined);
                 }
             },
 
@@ -749,10 +800,10 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
                     index = children.length;
                 }
                 c = Component.create(c, self);
-                children.splice(index, 0, c);
-                if (self.get('rendered')) {
-                    c = self.renderChild(c, index);
-                }
+                self.fire('beforeAddChild', {
+                    component: c,
+                    index: index
+                });
                 return c;
             },
 
@@ -796,20 +847,16 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
              * @param {KISSY.Component.Controller} c The child component to be removed.
              * @param {Boolean} [destroy=true] If true,
              * calls ``destroy()`` on the removed child component.
-             * @return {KISSY.Component.Controller} The removed component.
              */
             removeChild: function (c, destroy) {
-                var self = this,
-                    children = self.get("children"),
-                    index = S.indexOf(c, children);
-                if (index != -1) {
-                    children.splice(index, 1);
+                if (destroy === undefined) {
+                    destroy = true;
                 }
-                // c is still json
-                if ((destroy || destroy === undefined) && c['destroy']) {
-                    c['destroy']();
-                }
-                return c;
+                this.fire('beforeRemoveChild', {
+                    component: c,
+                    index: S.indexOf(c, this.get('children')),
+                    destroy: destroy
+                });
             },
 
             /**
@@ -925,7 +972,7 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
                         n = n && n.toLowerCase();
                         // do not prevent focus when click on editable element
                         if (n != "input" && n != "textarea") {
-                            ev.preventDefault();
+                            ev['preventDefault']();
                         }
                     }
                 }
@@ -941,7 +988,7 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
             handleMouseUp: function (ev) {
                 var self = this;
                 // 左键
-                if (self.get("active") && (ev.which == 1 || isTouchSupported)) {
+                if (self.get("active") && (ev['which'] == 1 || isTouchSupported)) {
                     self.set("active", false);
                 }
             },
@@ -952,6 +999,7 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
              * @param {KISSY.Event.DOMEventObject} ev DOM event to handle.
              */
             handleContextMenu: function (ev) {
+                S.log(ev);
             },
 
             /**
@@ -980,9 +1028,10 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
              * @param {KISSY.Event.DOMEventObject} ev DOM event to handle.
              */
             handleKeyEventInternal: function (ev) {
-                if (ev.keyCode == Event.KeyCodes.ENTER) {
+                if (ev['keyCode'] == Event.KeyCodes.ENTER) {
                     return this.performActionInternal(ev);
                 }
+                return undefined;
             },
 
             /**
@@ -994,9 +1043,10 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
             handleKeydown: function (ev) {
                 var self = this;
                 if (self.handleKeyEventInternal(ev)) {
-                    ev.halt();
+                    ev['halt']();
                     return true;
                 }
+                return undefined;
             },
 
             /**
@@ -1005,6 +1055,7 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
              * @param {KISSY.Event.DOMEventObject} ev DOM event to handle.
              */
             performActionInternal: function (ev) {
+                S.log(ev);
             },
 
             /**
