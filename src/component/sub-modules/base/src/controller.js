@@ -748,12 +748,7 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
                  * This component's xtype, xclass = prefixXClass + xtype.
                  * @cfg {String} prefixXClass
                  */
-                /**
-                 * @ignore
-                 */
-                xtype: {
 
-                },
                 /**
                  * This component's parent component.
                  * @type {KISSY.Component.Controller}
