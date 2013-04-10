@@ -1,0 +1,169 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <title>普通菜单 using json</title>
+    <link href="/kissy/build/css/dpl/base.css" rel="stylesheet"/>
+    <link href="../assets/menu.css" rel="stylesheet"/>
+    <link href="../assets/menuitem.css" rel="stylesheet"/>
+    <link href="../assets/submenu.css" rel="stylesheet"/>
+    <style>
+        .ks-menuitem-delete {
+            color: #000000;
+            left: auto;
+            padding-right: 6px;
+            position: absolute;
+            right: 0;
+            text-align: right;
+            border: 1px solid red;
+            margin-right: 5px;
+            padding: 0 5px;
+        }
+
+        .ks-menu-disabled .ks-menuitem-delete {
+            color: #ccc;
+            border: #ccc;
+        }
+    </style>
+    <style>
+        h1 {
+            font-size: 2em;
+            margin: 10px;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 1.5em;
+            margin: 10px;
+            text-align: center;
+        }
+
+        #wrap {
+            width: 90%;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+<div id="wrap">
+    <h1 id="describe">shared menuitem</h1>
+
+    <h2>menu1</h2>
+
+    <div id="menuitem_container1"
+         style="width:200px;position:relative;height:150px;">
+
+    </div>
+
+    <button id="rob">rob firstChild of menu1 to menu2</button>
+
+    <h2>menu2</h2>
+
+    <div id="menuitem_container2"
+         style="width:200px;position:relative;height:150px;">
+
+    </div>
+
+
+</div>
+<script src="/kissy/build/seed.js"></script>
+<script>
+    KISSY.use("node,menu,separator", function (S, Node, Menu) {
+
+        var $ = S.all;
+
+        var menu1 = new Menu({
+            render: "#menuitem_container1",
+            children: [
+                {
+                    xclass: 'submenu',
+                    content: "submenu1-1",
+                    menu: {
+                        // boolean，是否鼠标脱离菜单后自动隐藏
+                        autoHideOnMouseLeave: true,
+                        children: [
+                            {
+                                elStyle: {
+                                    color: "red"
+                                },
+                                content: "sub menuitem1-1"
+                            },
+                            {
+                                xclass: 'separator'
+                            },
+                            {
+                                content: "sub menuitem1-2"
+                            }
+                        ]
+                    }
+                },
+                {
+                    xclass: 'menuitem',
+                    content: "alone1-2"
+                }
+            ],
+            listeners: {
+                click: {
+                    fn: function (ev) {
+                        S.log("menu1 selected : " + ev.target.get("content"));
+                    }
+                }
+            }
+        }).render();
+
+
+        var menu2 = new Menu({
+            render: "#menuitem_container2",
+            children: [
+                {
+                    xclass: 'submenu',
+                    content: "submenu2-1",
+                    menu: {
+                        // boolean，是否鼠标脱离菜单后自动隐藏
+                        autoHideOnMouseLeave: true,
+                        children: [
+                            {
+                                elStyle: {
+                                    color: "red"
+                                },
+                                content: "sub menuitem2-1"
+                            },
+                            {
+                                xclass: 'separator'
+                            },
+                            {
+                                content: "sub menuitem2-2"
+                            }
+                        ]
+                    }
+                },
+                {
+                    xclass: 'menuitem',
+                    content: "alone2-2"
+                }
+            ],
+            listeners: {
+                click: {
+                    fn: function (ev) {
+                        S.log("menu2 selected : " + ev.target.get("content"));
+                    }
+                }
+            }
+        }).render();
+
+        $('#rob').on('click', function () {
+            var children1 = menu1.get('children')[0];
+            if (children1) {
+                menu1.removeChild(children1, false);
+                menu2.addChild(children1);
+            }
+        });
+
+    });
+</script>
+</body>
+</html>

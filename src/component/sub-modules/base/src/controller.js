@@ -56,15 +56,29 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
             return;
         }
         var c = e.component,
+            cEl,
+            cDOMParentEl,
+            cDOMEl,
             destroy = e.destroy,
             children = self.get('children'),
             index = e.index;
         if (index != -1) {
             children.splice(index, 1);
         }
-        // c is still json
-        if (destroy && c['destroy']) {
-            c['destroy']();
+        if (c.setInternal) {
+            c.setInternal('parent', null);
+        }
+        if (destroy) {
+            // c is still json
+            if (c.destroy)
+                c.destroy();
+        } else {
+            if (c.get && (cEl = c.get('el'))) {
+                cDOMEl = cEl[0];
+                if (cDOMParentEl = cDOMEl.parentNode) {
+                    cDOMParentEl.removeChild(cDOMEl);
+                }
+            }
         }
         self.fire('afterRemoveChild', {
             component: c,
@@ -335,18 +349,26 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
             renderChild: function (c, childIndex) {
                 var self = this,
                     elBefore,
+                    domContentEl,
                     children = self.get('children'),
+                    cEl,
                     contentEl;
                 if (typeof childIndex === "undefined") {
                     childIndex = S.indexOf(c, children);
                 }
                 c = Component.create(c, self);
                 children[childIndex] = c;
-                if (!c.get('rendered')) {
-                    // 生成父组件的 dom 结构
-                    self.create();
-                    contentEl = self.getContentElement();
-                    elBefore = contentEl[0].children[childIndex];
+                // 生成父组件的 dom 结构
+                self.create();
+                contentEl = self.getContentElement();
+                domContentEl = contentEl[0];
+                elBefore = domContentEl.children[childIndex] || null;
+                if (c.get('rendered')) {
+                    cEl = c.get('el')[0];
+                    if (cEl.parentNode != domContentEl) {
+                        domContentEl.insertBefore(cEl, elBefore);
+                    }
+                } else {
                     // set 通知 view 也更新对应属性
                     if (elBefore) {
                         c.set("elBefore", elBefore);
@@ -524,7 +546,8 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
              * @param {KISSY.Event.DOMEventObject} ev DOM event to handle.
              */
             handleContextMenu: function (ev) {
-                S.log(ev);
+                if (0)
+                    S.log(ev);
             },
 
             /**
@@ -580,7 +603,8 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
              * @param {KISSY.Event.DOMEventObject} ev DOM event to handle.
              */
             performActionInternal: function (ev) {
-                S.log(ev);
+                if (0)
+                    S.log(ev);
             },
 
             /**
@@ -763,9 +787,13 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
                  * @ignore
                  */
                 parent: {
-                    setter: function (p) {
-                        // 事件冒泡源
-                        this.addTarget(p);
+                    setter: function (p, prev) {
+                        if (prev = this.get('parent')) {
+                            this.removeTarget(prev);
+                        }
+                        if (p) {
+                            this.addTarget(p);
+                        }
                     }
                 },
 

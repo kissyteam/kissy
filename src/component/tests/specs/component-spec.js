@@ -168,6 +168,122 @@ KISSY.use("component/base", function (S, Component) {
             });
         });
 
+        describe('parent', function () {
+
+            it('parent can be changed', function () {
+
+                var c1 = new Component.Container({
+                    content: "xx"
+                });
+
+
+                var c2 = new Component.Container({
+                    content: "xx"
+                });
+
+                var child = new Component.Container({
+                    content: "yy"
+                });
+
+                var xxCalledC1, xxCalledC2;
+                xxCalledC1 = 0;
+                xxCalledC2 = 0;
+
+                c1.on('xx', function () {
+                    xxCalledC1 = 1;
+                });
+
+                c2.on('xx', function () {
+                    xxCalledC2 = 1;
+                });
+
+                expect(c1.get('children').length).toBe(0);
+                c1.addChild(child);
+                expect(c1.get('children').length).toBe(1);
+
+                child.fire('xx');
+
+                expect(xxCalledC1).toBe(1);
+                expect(xxCalledC2).toBe(0);
+
+                xxCalledC1 = 0;
+                xxCalledC2 = 0;
+
+                c1.removeChild(child, false);
+                c2.addChild(child);
+                expect(c1.get('children').length).toBe(0);
+                expect(c2.get('children').length).toBe(1);
+
+                child.fire('xx');
+
+                expect(xxCalledC1).toBe(0);
+                expect(xxCalledC2).toBe(1);
+
+                expect(c1.get('el')).toBeFalsy();
+            });
+
+
+            it('parent can be changed after render', function () {
+
+                var c1 = new Component.Container({
+                    content: "xx"
+                }).render();
+
+                var c2 = new Component.Container({
+                    content: "yy"
+                }).render();
+
+                var child = new Component.Container({
+                    content: "zz"
+                }).render();
+
+                var xxCalledC1, xxCalledC2;
+                xxCalledC1 = 0;
+                xxCalledC2 = 0;
+
+                c1.on('xx', function () {
+                    xxCalledC1 = 1;
+                });
+
+                c2.on('xx', function () {
+                    xxCalledC2 = 1;
+                });
+
+                expect(c1.get('children').length).toBe(0);
+                expect(c1.get('el')[0].children.length).toBe(0);
+                c1.addChild(child);
+                expect(c1.get('children').length).toBe(1);
+                expect(c1.get('el')[0].children[0]).toBe(child.get('el')[0]);
+                expect(c1.get('el')[0].children.length).toBe(1);
+
+
+                child.fire('xx');
+
+                expect(xxCalledC1).toBe(1);
+                expect(xxCalledC2).toBe(0);
+
+                xxCalledC1 = 0;
+                xxCalledC2 = 0;
+
+                c1.removeChild(child, false);
+                c2.addChild(child);
+                expect(c1.get('children').length).toBe(0);
+                expect(c2.get('children').length).toBe(1);
+                expect(c1.get('el')[0].children.length).toBe(0);
+                expect(c2.get('el')[0].children.length).toBe(1);
+                expect(c2.get('el')[0].children[0]).toBe(child.get('el')[0]);
+
+                child.fire('xx');
+
+                expect(xxCalledC1).toBe(0);
+                expect(xxCalledC2).toBe(1);
+
+                c1.destroy();
+                c2.destroy();
+            });
+
+        });
+
         describe("container", function () {
 
 
@@ -247,7 +363,6 @@ KISSY.use("component/base", function (S, Component) {
 
                     runs(function () {
                         c.destroy();
-
                         expect(invalidNode(child1.get("el")[0].parentNode)).toBe(true);
                     });
                 });
