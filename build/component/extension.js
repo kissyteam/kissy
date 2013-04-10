@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 27 15:18
+build time: Apr 10 22:21
 */
 /**
  * @ignore
@@ -466,12 +466,6 @@ KISSY.add('component/extension/content-box-render', function (S, Node, DOM) {
     function ContentBoxRender() {
     }
 
-    ContentBoxRender.ATTRS = {
-        contentEl: {
-            // 不写 valueFn, 留待 createDom 处理
-        }
-    };
-
     /*
      ! contentEl 只能由组件动态生成
      */
@@ -505,46 +499,16 @@ KISSY.add('component/extension/content-box-render', function (S, Node, DOM) {
     requires: ['node', 'dom']
 });/**
  * @ignore
- * 里层包裹层定义， 适合mask以及shim
- * @author yiminghe@gmail.com
- */
-KISSY.add("component/extension/content-box", function () {
-
-    /**
-     * @class KISSY.Component.Extension.ContentBox
-     * ContentBox extension class. Represent inner element of component's root element.
-     */
-    function ContentBox() {
-    }
-
-    ContentBox.ATTRS = {
-
-        /**
-         * content box's element of component.
-         * @type {KISSY.NodeList}
-         * @readonly
-         * @property contentEl
-         */
-        /**
-         * @ignore
-         */
-        contentEl: {
-            view: 1
-        }
-    };
-
-    return ContentBox;
-});/**
- * @ignore
  * uibase
  * @author yiminghe@gmail.com
  */
-KISSY.add("component/extension", function (S, Align, ContentBox, ContentBoxRender, Position, PositionRender, ShimRender) {
+KISSY.add("component/extension", function (S, Align, ContentBoxRender, Position, PositionRender, ShimRender) {
     Position.Render = PositionRender;
-    ContentBox.Render = ContentBoxRender;
     return {
         Align: Align,
-        ContentBox: ContentBox,
+        ContentBox: {
+            Render: ContentBoxRender
+        },
         Position: Position,
         Shim: {
             Render: ShimRender
@@ -553,7 +517,6 @@ KISSY.add("component/extension", function (S, Align, ContentBox, ContentBoxRende
 }, {
     requires: [
         "./extension/align",
-        "./extension/content-box",
         "./extension/content-box-render",
         "./extension/position",
         "./extension/position-render",

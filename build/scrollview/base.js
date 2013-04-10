@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 1 22:38
+build time: Apr 10 22:31
 */
 /**
  * scrollview controller
@@ -21,7 +21,7 @@ KISSY.add('scrollview/base', function (S, DOM, Component, Extension, Render, Eve
         return Math.min(Math.max(v, min), max);
     }
 
-    return Component.Controller.extend([Extension.ContentBox], {
+    return Component.Controller.extend({
 
         bindUI: function () {
             var self = this,

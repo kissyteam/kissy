@@ -18,7 +18,6 @@ KISSY.add("overlay/base", function (S, Component, Extension, Loading, Close, Mas
      * @mixins KISSY.Overlay.Extension.Mask
      */
     return Component.Controller.extend([
-        Extension.ContentBox,
         Extension.Position,
         Loading,
         Extension.Align,

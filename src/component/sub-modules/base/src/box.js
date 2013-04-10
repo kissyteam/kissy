@@ -156,6 +156,21 @@ KISSY.add('component/base/box', function () {
         },
 
         /**
+         * content element of current component.
+         * usually it is same with el.
+         * except eg: overlay, submenu
+         * @type {KISSY.NodeList}
+         * @readonly
+         * @property contentEl
+         */
+        /**
+         * @ignore
+         */
+        contentEl: {
+            view:1
+        },
+
+        /**
          * archor element where component append to
          * @cfg {KISSY.NodeList} render
          */

@@ -8,12 +8,6 @@ KISSY.add('component/extension/content-box-render', function (S, Node, DOM) {
     function ContentBoxRender() {
     }
 
-    ContentBoxRender.ATTRS = {
-        contentEl: {
-            // 不写 valueFn, 留待 createDom 处理
-        }
-    };
-
     /*
      ! contentEl 只能由组件动态生成
      */

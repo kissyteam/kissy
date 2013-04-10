@@ -16,7 +16,7 @@ KISSY.add('scrollview/base', function (S, DOM, Component, Extension, Render, Eve
         return Math.min(Math.max(v, min), max);
     }
 
-    return Component.Controller.extend([Extension.ContentBox], {
+    return Component.Controller.extend({
 
         bindUI: function () {
             var self = this,

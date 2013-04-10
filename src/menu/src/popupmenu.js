@@ -14,7 +14,6 @@ KISSY.add("menu/popupmenu", function (S, extension, Menu, PopupMenuRender) {
      * @mixins KISSY.Component.Extension.Align
      */
     var PopupMenu = Menu.extend([
-        extension.ContentBox,
         extension.Position,
         extension.Align
     ],

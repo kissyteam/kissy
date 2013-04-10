@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 10 13:17
+build time: Apr 10 22:31
 */
 /**
  * @ignore
@@ -40,7 +40,7 @@ KISSY.add('component/base/box-render', function (S) {
 
     var $ = S.all,
         UA = S.UA,
-        elTpl='<div class="{cls}"></div>',
+        elTpl = '<div class="{cls}"></div>',
         doc = S.Env.host.document;
 
     function BoxRender() {
@@ -69,8 +69,6 @@ KISSY.add('component/base/box-render', function (S) {
 
         visible: {},
 
-        // content 设置的内容节点,默认根节点
-        // 防止 content 节点和根节点不是同一个节点，例如 submenu
         contentEl: {
             valueFn: function () {
                 return this.get('el');
@@ -102,8 +100,8 @@ KISSY.add('component/base/box-render', function (S) {
                 contentEl;
             if (!(el = self.get('srcNode'))) {
                 contentEl = self.get('contentEl');
-                el = $(S.substitute(elTpl,{
-                    cls:cls
+                el = $(S.substitute(elTpl, {
+                    cls: cls
                 }));
                 if (contentEl) {
                     el.append(contentEl);
@@ -362,6 +360,21 @@ KISSY.add('component/base/box', function () {
                     v = $(v);
                 return v;
             }
+        },
+
+        /**
+         * content element of current component.
+         * usually it is same with el.
+         * except eg: overlay, submenu
+         * @type {KISSY.NodeList}
+         * @readonly
+         * @property contentEl
+         */
+        /**
+         * @ignore
+         */
+        contentEl: {
+            view:1
         },
 
         /**

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 27 18:24
+build time: Apr 10 22:22
 */
 /**
  * @ignore
@@ -23,7 +23,6 @@ KISSY.add("overlay/base", function (S, Component, Extension, Loading, Close, Mas
      * @mixins KISSY.Overlay.Extension.Mask
      */
     return Component.Controller.extend([
-        Extension.ContentBox,
         Extension.Position,
         Loading,
         Extension.Align,
@@ -283,7 +282,7 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node, StdMod, Di
         }
         // see if we are tabbing from the last focusable item
         else if (node.equals(lastFocusItem) && !e.shiftKey) {
-            el[0].focus(); // send focus to first item in dialog
+            self.focus(); // send focus to first item in dialog
             e.halt(); //stop the tab keypress event
         }
         else {

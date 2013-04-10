@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 10 11:10
+build time: Apr 10 22:22
 */
 /**
  * @ignore
@@ -922,7 +922,6 @@ KISSY.add("menu/popupmenu", function (S, extension, Menu, PopupMenuRender) {
      * @mixins KISSY.Component.Extension.Align
      */
     var PopupMenu = Menu.extend([
-        extension.ContentBox,
         extension.Position,
         extension.Align
     ],
