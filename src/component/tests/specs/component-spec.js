@@ -10,131 +10,163 @@ KISSY.use("component/base", function (S, Component) {
 
     describe("component", function () {
 
+        describe('addChild/removeChild event', function () {
 
-        it('fire addChild/removeChild event', function () {
-            var c = new Component.Container({
-                content: "xx"
-            });
-
-            var child = new Component.Container({
-                content: "yy"
-            });
-
-            (function(){
-                var beforeCalled = 0,
-                    afterCalled = 0;
-
-                c.on('beforeAddChild', {
-                    fn: function (e) {
-                        expect(e.component).toBe(child);
-                        expect(e.index).toBe(0);
-                        e.preventDefault();
-                        beforeCalled = 1;
-                    },
-                    once: 1
+            it('can listen and preventDefault', function () {
+                var c = new Component.Container({
+                    content: "xx"
                 });
 
-                c.on('afterAddChild', {
-                    fn: function (e) {
-                        afterCalled = 1;
-                    },
-                    once: 1
+                var child = new Component.Container({
+                    content: "yy"
+                });
+
+                (function () {
+                    var beforeCalled = 0,
+                        afterCalled = 0;
+
+                    c.on('beforeAddChild', {
+                        fn: function (e) {
+                            expect(e.component).toBe(child);
+                            expect(e.index).toBe(0);
+                            e.preventDefault();
+                            beforeCalled = 1;
+                        },
+                        once: 1
+                    });
+
+                    c.on('afterAddChild', {
+                        fn: function (e) {
+                            afterCalled = 1;
+                        },
+                        once: 1
+                    });
+
+                    c.addChild(child);
+
+                    expect(beforeCalled).toBe(1);
+                    expect(afterCalled).toBe(0);
+                    expect(c.get('children').length).toBe(0);
+
+                    beforeCalled = 0;
+                    afterCalled = 0;
+
+                    c.on('beforeAddChild', {
+                        fn: function (e) {
+                            expect(e.component).toBe(child);
+                            expect(e.index).toBe(0);
+                            beforeCalled = 1;
+                        },
+                        once: 1
+                    });
+
+                    c.on('afterAddChild', {
+                        fn: function (e) {
+                            expect(e.component).toBe(child);
+                            expect(e.index).toBe(0);
+                            afterCalled = 1;
+                        },
+                        once: 1
+                    });
+
+                    c.addChild(child);
+
+                    expect(beforeCalled).toBe(1);
+                    expect(afterCalled).toBe(1);
+                    expect(c.get('children').length).toBe(1);
+                    expect(c.get('children')[0]).toBe(child);
+                })();
+
+                (function () {
+                    var beforeCalled = 0,
+                        afterCalled = 0;
+
+                    c.on('beforeRemoveChild', {
+                        fn: function (e) {
+                            expect(e.component).toBe(child);
+                            expect(e.index).toBe(0);
+                            e.preventDefault();
+                            beforeCalled = 1;
+                        },
+                        once: 1
+                    });
+
+                    c.on('afterRemoveChild', {
+                        fn: function (e) {
+                            afterCalled = 1;
+                        },
+                        once: 1
+                    });
+
+                    c.removeChild(child);
+
+                    expect(beforeCalled).toBe(1);
+                    expect(afterCalled).toBe(0);
+                    expect(c.get('children').length).toBe(1);
+                    expect(c.get('children')[0]).toBe(child);
+
+                    beforeCalled = 0;
+                    afterCalled = 0;
+
+                    c.on('beforeRemoveChild', {
+                        fn: function (e) {
+                            expect(e.component).toBe(child);
+                            expect(e.index).toBe(0);
+                            beforeCalled = 1;
+                        },
+                        once: 1
+                    });
+
+                    c.on('afterRemoveChild', {
+                        fn: function (e) {
+                            expect(e.component).toBe(child);
+                            expect(e.index).toBe(0);
+                            afterCalled = 1;
+                        },
+                        once: 1
+                    });
+
+                    c.removeChild(child);
+
+                    expect(beforeCalled).toBe(1);
+                    expect(afterCalled).toBe(1);
+                    expect(c.get('children').length).toBe(0);
+                })();
+            });
+
+
+            it('can bubble', function () {
+                var c = new Component.Container({
+                    content: "xx"
+                });
+
+                var child = new Component.Container({
+                    content: "yy"
+                });
+
+                var grandChild = new Component.Container({
+                    content: "zz"
                 });
 
                 c.addChild(child);
 
-                expect(beforeCalled).toBe(1);
-                expect(afterCalled).toBe(0);
-                expect(c.get('children').length).toBe(0);
-
-                beforeCalled = 0;
-                afterCalled = 0;
-
-                c.on('beforeAddChild', {
-                    fn: function (e) {
-                        expect(e.component).toBe(child);
-                        expect(e.index).toBe(0);
-                        beforeCalled = 1;
-                    },
-                    once: 1
-                });
-
-                c.on('afterAddChild', {
-                    fn: function (e) {
-                        expect(e.component).toBe(child);
-                        expect(e.index).toBe(0);
-                        afterCalled = 1;
-                    },
-                    once: 1
-                });
-
-                c.addChild(child);
-
-                expect(beforeCalled).toBe(1);
-                expect(afterCalled).toBe(1);
-                expect(c.get('children').length).toBe(1);
-                expect(c.get('children')[0]).toBe(child);
-            })();
-
-            (function(){
                 var beforeCalled = 0,
                     afterCalled = 0;
 
-                c.on('beforeRemoveChild', {
-                    fn: function (e) {
-                        expect(e.component).toBe(child);
-                        expect(e.index).toBe(0);
-                        e.preventDefault();
-                        beforeCalled = 1;
-                    },
-                    once: 1
+                c.on('beforeAddChild', function () {
+                    beforeCalled++;
                 });
 
-                c.on('afterRemoveChild', {
-                    fn: function (e) {
-                        afterCalled = 1;
-                    },
-                    once: 1
+                c.on('afterAddChild', function () {
+                    afterCalled++;
                 });
 
-                c.removeChild(child);
-
-                expect(beforeCalled).toBe(1);
-                expect(afterCalled).toBe(0);
-                expect(c.get('children').length).toBe(1);
-                expect(c.get('children')[0]).toBe(child);
-
-                beforeCalled = 0;
-                afterCalled = 0;
-
-                c.on('beforeRemoveChild', {
-                    fn: function (e) {
-                        expect(e.component).toBe(child);
-                        expect(e.index).toBe(0);
-                        beforeCalled = 1;
-                    },
-                    once: 1
-                });
-
-                c.on('afterRemoveChild', {
-                    fn: function (e) {
-                        expect(e.component).toBe(child);
-                        expect(e.index).toBe(0);
-                        afterCalled = 1;
-                    },
-                    once: 1
-                });
-
-                c.removeChild(child);
+                child.addChild(grandChild);
 
                 expect(beforeCalled).toBe(1);
                 expect(afterCalled).toBe(1);
-                expect(c.get('children').length).toBe(0);
-            })();
-
-
+            });
         });
-
 
         describe("container", function () {
 

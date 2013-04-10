@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 9 19:59
+build time: Apr 10 10:46
 */
 /**
  * root node represent a simple tree
@@ -560,7 +560,9 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
             syncUI: function () {
                 // 集中设置样式
                 refreshCss(this);
-                syncAriaSetSize.call(this);
+                syncAriaSetSize.call(this, {
+                    target: this
+                });
             },
 
             _keyNav: function (e) {
@@ -874,11 +876,14 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
     // # ------------------- private start
 
     function onAddChild(e) {
-        registerToTree(this, e.component, this.get('depth'));
+        if (e.target == this) {
+            registerToTree(this, e.component, this.get('depth'));
+        }
     }
 
-    function syncAriaSetSize() {
-        this.get('el')[0].setAttribute('aria-setsize', this.get('children').length);
+    function syncAriaSetSize(e) {
+        if (e.target === this)
+            this.get('el')[0].setAttribute('aria-setsize', this.get('children').length);
     }
 
     function isNodeSingleOrLast(self) {
