@@ -143,7 +143,7 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node, StdMod, Di
         }
         // see if we are tabbing from the last focusable item
         else if (node.equals(lastFocusItem) && !e.shiftKey) {
-            el[0].focus(); // send focus to first item in dialog
+            self.focus(); // send focus to first item in dialog
             e.halt(); //stop the tab keypress event
         }
         else {

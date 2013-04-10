@@ -66,7 +66,7 @@ KISSY.add("editor/plugin/contextmenu", function (S, Editor, Menu, focusFix) {
                     window.focus();
                     document.body.focus();
                     // 防止焦点一直在 el，focus 无效
-                    menu.get("el")[0].focus();
+                    menu.focus();
                 }, 30);
             });
         });

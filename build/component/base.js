@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 10 12:24
+build time: Apr 10 13:17
 */
 /**
  * @ignore
@@ -771,8 +771,23 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
             },
 
             '_onSetFocused': function (v) {
+                var target = this.getKeyEventTarget()[0];
                 if (v) {
-                    this.getKeyEventTarget()[0].focus();
+                    target.focus();
+                } else {
+                    target.ownerDocument.body.focus();
+                }
+            },
+
+            focus: function () {
+                if (this.get('focusable')) {
+                    this.set('focused', true);
+                }
+            },
+
+            blur: function () {
+                if (this.get('focusable')) {
+                    this.set('focused', false);
                 }
             },
 
@@ -1180,8 +1195,7 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
                  * @ignore
                  */
                 focused: {
-                    view: 1,
-                    value: false
+                    view: 1
                 },
 
                 /**
@@ -1793,6 +1807,8 @@ KISSY.add("component/base/render", function (S, BoxRender, Component, UIBase, Ma
      * Base Render class for KISSY Component.
      */
     return UIBase.extend([BoxRender], {
+
+        isRender: 1,
 
         /**
          * Get all css class name to be applied to the root element of this component for given state.

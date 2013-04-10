@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 13 22:07
+build time: Apr 10 13:13
 */
 /**
  * @ignore
@@ -488,10 +488,12 @@ KISSY.add('rich-base', function (S, Base) {
     }
 
     function onSetAttrChange(e) {
+        var self = this,
+            method;
         // ignore bubbling
-        if (e.target == this) {
-            var m = ON_SET + e.type.slice(5).slice(0, -6);
-            this[m](e.newVal, e);
+        if (e.target == self) {
+            method = self[ON_SET + e.type.slice(5).slice(0, -6)];
+            method.call(self, e.newVal, e);
         }
     }
 

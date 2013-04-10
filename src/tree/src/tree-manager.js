@@ -2,7 +2,7 @@
  * tree management utils
  * @author yiminghe@gmail.com
  */
-KISSY.add("tree/tree-manager", function (S, Event) {
+KISSY.add("tree/tree-manager", function (S, Event, Component) {
 
     function TreeManager() {
     }
@@ -114,6 +114,7 @@ KISSY.add("tree/tree-manager", function (S, Event) {
 
         _onSetFocused: function (v) {
             var self = this;
+            Component.Controller.prototype._onSetFocused.apply(self, arguments);
             // 得到焦点时没有选择节点
             // 默认选择自己
             if (v && !self.get("selectedItem")) {
@@ -134,5 +135,5 @@ KISSY.add("tree/tree-manager", function (S, Event) {
 
     return TreeManager;
 }, {
-    requires: ['event']
+    requires: ['event', 'component/base']
 });

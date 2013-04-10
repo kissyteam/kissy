@@ -24,7 +24,8 @@ KISSY.add("editor/plugin/focus-fix", function (S, Editor) {
             window['focus']();
             document.body.focus();
 
-            var $selection = editor.get("document")[0].selection, $range;
+            var $selection = editor.get("document")[0].selection,
+                $range;
             // 中途更改了 domain，编辑器失去焦点，不能取得 range
             // 拒绝访问错误
             try {

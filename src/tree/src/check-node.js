@@ -27,7 +27,7 @@ KISSY.add("tree/check-node", function (S, Node, TreeNode, CheckNodeRender) {
                 target = $(e.target);
 
             // 需要通知 tree 获得焦点
-            tree.get("el")[0].focus();
+            tree.focus();
 
             // 点击在 +- 号，切换状态
             if (target.equals(expandIconEl)) {

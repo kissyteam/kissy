@@ -159,13 +159,15 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
                     target = $(e.target),
                     expanded = self.get("expanded"),
                     tree = self.get("tree");
-                tree.get("el")[0].focus();
+                tree.focus();
                 if (target.equals(self.get("expandIconEl"))) {
                     self.set("expanded", !expanded);
                 } else {
                     self.select();
                     self.fire("click");
                 }
+
+
             },
 
             /**

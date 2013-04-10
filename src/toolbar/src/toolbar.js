@@ -108,7 +108,7 @@ KISSY.add("toolbar", function (S, Component, Node, Separator, undefined) {
                 }
                 if (item) {
                     if (el[0].ownerDocument.activeElement != el[0]) {
-                        el[0].focus();
+                        self.focus();
                     }
                     itemEl = item.get('el');
                     id = itemEl.attr("id");

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 14 22:19
+build time: Apr 10 12:57
 */
 /**
  * Toolbar for KISSY.
@@ -113,7 +113,7 @@ KISSY.add("toolbar", function (S, Component, Node, Separator, undefined) {
                 }
                 if (item) {
                     if (el[0].ownerDocument.activeElement != el[0]) {
-                        el[0].focus();
+                        self.focus();
                     }
                     itemEl = item.get('el');
                     id = itemEl.attr("id");

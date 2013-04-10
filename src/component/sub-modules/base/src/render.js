@@ -12,6 +12,8 @@ KISSY.add("component/base/render", function (S, BoxRender, Component, UIBase, Ma
      */
     return UIBase.extend([BoxRender], {
 
+        isRender: 1,
+
         /**
          * Get all css class name to be applied to the root element of this component for given state.
          * the css class names are prefixed with component name.

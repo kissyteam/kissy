@@ -157,7 +157,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
                     input = self.get("input");
                     if (self.get('collapsed')) {
                         // fetch data
-                        input[0].focus();
+                        self.focus();
                         self.sendRequest('');
                     } else {
                         // switch from open to collapse
@@ -537,7 +537,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
     function onMenuMouseOver() {
         var self = this;
         // trigger el focus
-        self.get("input")[0].focus();
+        self.focus();
         // prevent menu from hiding
         clearDismissTimer.call(self);
     }

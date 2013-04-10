@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 10 10:46
+build time: Apr 10 13:26
 */
 /**
  * root node represent a simple tree
@@ -135,7 +135,7 @@ KISSY.add("tree/check-node", function (S, Node, TreeNode, CheckNodeRender) {
                 target = $(e.target);
 
             // 需要通知 tree 获得焦点
-            tree.get("el")[0].focus();
+            tree.focus();
 
             // 点击在 +- 号，切换状态
             if (target.equals(expandIconEl)) {
@@ -679,13 +679,15 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
                     target = $(e.target),
                     expanded = self.get("expanded"),
                     tree = self.get("tree");
-                tree.get("el")[0].focus();
+                tree.focus();
                 if (target.equals(self.get("expandIconEl"))) {
                     self.set("expanded", !expanded);
                 } else {
                     self.select();
                     self.fire("click");
                 }
+
+
             },
 
             /**
@@ -1027,7 +1029,7 @@ KISSY.add("tree/tree-manager-render", function (S) {
  * tree management utils
  * @author yiminghe@gmail.com
  */
-KISSY.add("tree/tree-manager", function (S, Event) {
+KISSY.add("tree/tree-manager", function (S, Event, Component) {
 
     function TreeManager() {
     }
@@ -1139,6 +1141,7 @@ KISSY.add("tree/tree-manager", function (S, Event) {
 
         _onSetFocused: function (v) {
             var self = this;
+            Component.Controller.prototype._onSetFocused.apply(self, arguments);
             // 得到焦点时没有选择节点
             // 默认选择自己
             if (v && !self.get("selectedItem")) {
@@ -1159,7 +1162,7 @@ KISSY.add("tree/tree-manager", function (S, Event) {
 
     return TreeManager;
 }, {
-    requires: ['event']
+    requires: ['event', 'component/base']
 });/**
  * root node render
  * @author yiminghe@gmail.com

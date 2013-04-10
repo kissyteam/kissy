@@ -87,7 +87,6 @@ KISSY.add('combobox/cursor', function (S, DOM) {
         supportInputScrollLeft = !!(input.scrollLeft > 0);
         DOM.remove(input);
         findSupportInputScrollLeft = S.noop;
-        alert(supportInputScrollLeft);
     };
 
     // firefox not support, chrome support

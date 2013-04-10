@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 8 21:56
+build time: Apr 10 12:55
 */
 /**
  * contextmenu for kissy editor
@@ -71,7 +71,7 @@ KISSY.add("editor/plugin/contextmenu", function (S, Editor, Menu, focusFix) {
                     window.focus();
                     document.body.focus();
                     // 防止焦点一直在 el，focus 无效
-                    menu.get("el")[0].focus();
+                    menu.focus();
                 }, 30);
             });
         });
