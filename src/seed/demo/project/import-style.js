@@ -1,18 +1,19 @@
 (function (S) {
 
     function importStyle(modNames) {
+        var now = S.now();
         if (typeof modNames == 'string') {
             modNames = modNames.split(',');
         }
-        var cssList = [],
-            cssCache = {},
-            stack = [],
-            stackCache={};
+        var cssList = [], cssCache = {};
+        var stack = [],
+            stackCache = {},
+            processed = {};
         var mods = S.Env.mods;
         S.each(modNames, function (modName) {
             var mod;
             if (mod = mods[modName]) {
-                collectCss(mod, cssList, stack, cssCache,stackCache);
+                collectCss(mod, cssList, stack, cssCache, stackCache, processed);
             }
         });
         if (cssList.length) {
@@ -32,7 +33,6 @@
                     var packagePath = currentPackage.getPrefixUriForCombo();
                     // map individual module
                     var fullpath = currentCss.getFullPath();
-
                     if (!currentPackage.isCombine() || !S.startsWith(fullpath, packagePath)) {
                         document.writeln('<link href="' + fullpath + '"  rel="stylesheet"/>');
                         continue;
@@ -67,29 +67,35 @@
                 });
             }
         }
+        alert(S.now() - now);
     }
 
-    function collectCss(mod, cssList, stack, cssCache,stackCache) {
-        if (stackCache[mod.name]) {
+    function collectCss(mod, cssList, stack, cssCache, stackCache, processed) {
+        var name = mod.getName();
+        if (stackCache[name]) {
             S.error('circular dependencies found: ' + stack);
             return;
         }
+        if (processed[name]) {
+            return;
+        }
+        processed[name] = 1;
         if (mod.getType() == 'css') {
-            if (!cssCache[mod.name]) {
+            if (!cssCache[name]) {
                 mod.status = 4;
                 cssList.push(mod);
-                cssCache[mod.name] = 1;
+                cssCache[name] = 1;
             }
             return;
         }
         var requires = mod.getRequiredMods();
-        stackCache[mod.name] = 1;
-        stack.push(mod.name);
+        stackCache[name] = 1;
+        stack.push(name);
         S.each(requires, function (r) {
-            collectCss(r, cssList, stack, cssCache,stackCache);
+            collectCss(r, cssList, stack, cssCache, stackCache, processed);
         });
         stack.pop();
-        delete stackCache[mod.name];
+        delete stackCache[name];
     }
 
     window.importStyle = importStyle;
