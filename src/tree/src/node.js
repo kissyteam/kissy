@@ -146,7 +146,7 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
                     tree = self.get("tree");
                 tree.get("el")[0].focus();
                 if (target.equals(self.get("expandIconEl"))) {
-                        self.set("expanded", !expanded);
+                    self.set("expanded", !expanded);
                 } else {
                     self.select();
                     self.fire("click");
@@ -164,16 +164,18 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
             /**
              * override controller 's addChild to apply depth and css recursively
              */
-            addChild: function () {
-                var self = this,
-                    c;
+            addChild: function (c, index) {
+                var self = this;
+                if (index === undefined) {
+                    index = self.get('children').length;
+                }
                 c = TreeNode.superclass.addChild.apply(self, S.makeArray(arguments));
                 // after default addChild then parent is accessible
                 // if first build a node subtree, no root is constructed yet!
                 var tree = self.get("tree");
                 if (tree) {
                     recursiveRegister(tree, c, "_register", self.get("depth") + 1);
-                    refreshCssForSelfAndChildren(self);
+                    refreshCssForSelfAndChildren(self, index);
                 }
                 return c;
             },
@@ -183,11 +185,13 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
              */
             removeChild: function (c) {
                 var self = this,
+                    index,
                     tree = self.get("tree");
                 if (tree) {
+                    index = S.indexOf(c, self.get('children'));
                     recursiveRegister(tree, c, "_unRegister");
                     TreeNode.superclass.removeChild.apply(self, S.makeArray(arguments));
-                    refreshCssForSelfAndChildren(self);
+                    refreshCssForSelfAndChildren(self, index);
                 }
                 return c;
             },
@@ -336,8 +340,8 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
                 },
 
                 decorateChildCls: {
-                    valueFn:function(){
-                        return this.get('prefixCls')+'tree-children';
+                    valueFn: function () {
+                        return this.get('prefixCls') + 'tree-children';
                     }
                 },
 
@@ -437,20 +441,23 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
         }
     }
 
-    function refreshCssForSelfAndChildren(self) {
+    function refreshCssForSelfAndChildren(self, index) {
         var children = self.get('children'),
-            len = self.get('children').length;
+            c,
+            len = children.length;
         refreshCss(self);
-        S.each(children, function (c, index) {
+        index = Math.max(0, index - 1);
+        self.get('el')[0].setAttribute("aria-setsize", len);
+        for (; index < len; index++) {
+            c = children[index];
             // 一个 c 初始化成功了
             // 可能其他 c 仍是 { xclass }
             if (c.get) {
                 refreshCss(c);
                 var el = c.get("el");
-                el.attr("aria-posinset", index + 1);
-                el.attr("aria-setsize", len);
+                el[0].setAttribute("aria-posinset", index + 1);
             }
-        });
+        }
     }
 
     // # ------------------- private end

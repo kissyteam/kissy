@@ -1,10 +1,10 @@
 ﻿/*
-Copyright 2012, KISSY UI Library v1.30
+Copyright 2013, KISSY UI Library v1.30
 MIT Licensed
-build time: Dec 20 22:28
+build time: Apr 11 16:52
 */
 /**
- * @fileOverview root node represent a simple tree
+ *  root node represent a simple tree
  * @author yiminghe@gmail.com
  */
 KISSY.add("tree/base", function (S, Component, TreeNode, TreeRender, TreeManager) {
@@ -68,7 +68,7 @@ KISSY.add("tree/base", function (S, Component, TreeNode, TreeRender, TreeManager
  home : 移动到根节点
  end : 移动到前序遍历最后一个节点
  *//**
- * @fileOverview check node render
+ *  check node render
  * @author yiminghe@gmail.com
  */
 KISSY.add("tree/check-node-render", function (S, Node, TreeNodeRender) {
@@ -106,7 +106,7 @@ KISSY.add("tree/check-node-render", function (S, Node, TreeNodeRender) {
 }, {
     requires:['node', './node-render']
 });/**
- * @fileOverview checkable tree node
+ *  checkable tree node
  * @author yiminghe@gmail.com
  */
 KISSY.add("tree/check-node", function (S, Node, TreeNode, CheckNodeRender) {
@@ -258,7 +258,7 @@ KISSY.add("tree/check-node", function (S, Node, TreeNode, CheckNodeRender) {
 }, {
     requires: ['node', './node', './check-node-render']
 });/**
- * @fileOverview root node render for check-tree
+ *  root node render for check-tree
  * @author yiminghe@gmail.com
  */
 KISSY.add("tree/check-tree-render", function (S, CheckNodeRender, TreeManagerRender) {
@@ -266,7 +266,7 @@ KISSY.add("tree/check-tree-render", function (S, CheckNodeRender, TreeManagerRen
 }, {
     requires:['./check-node-render', './tree-manager-render']
 });/**
- * @fileOverview root node represent a check tree
+ *  root node represent a check tree
  * @author yiminghe@gmail.com
  */
 KISSY.add("tree/check-tree", function (S, Component, CheckNode, CheckTreeRender, TreeManager) {
@@ -308,7 +308,7 @@ KISSY.add("tree/check-tree", function (S, Component, CheckNode, CheckTreeRender,
 }, {
     requires: ['component/base', './check-node', './check-tree-render', './tree-manager']
 });/**
- * @fileOverview common render for node
+ *  common render for node
  * @author yiminghe@gmail.com
  */
 KISSY.add("tree/node-render", function (S, Node, Component) {
@@ -517,7 +517,7 @@ KISSY.add("tree/node-render", function (S, Node, Component) {
 }, {
     requires: ['node', 'component/base']
 });/**
- * @fileOverview abstraction of tree node ,root and other node will extend it
+ *  abstraction of tree node ,root and other node will extend it
  * @author yiminghe@gmail.com
  */
 KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
@@ -664,7 +664,7 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
                     tree = self.get("tree");
                 tree.get("el")[0].focus();
                 if (target.equals(self.get("expandIconEl"))) {
-                        self.set("expanded", !expanded);
+                    self.set("expanded", !expanded);
                 } else {
                     self.select();
                     self.fire("click");
@@ -682,16 +682,18 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
             /**
              * override controller 's addChild to apply depth and css recursively
              */
-            addChild: function () {
-                var self = this,
-                    c;
+            addChild: function (c, index) {
+                var self = this;
+                if (index === undefined) {
+                    index = self.get('children').length;
+                }
                 c = TreeNode.superclass.addChild.apply(self, S.makeArray(arguments));
                 // after default addChild then parent is accessible
                 // if first build a node subtree, no root is constructed yet!
                 var tree = self.get("tree");
                 if (tree) {
                     recursiveRegister(tree, c, "_register", self.get("depth") + 1);
-                    refreshCssForSelfAndChildren(self);
+                    refreshCssForSelfAndChildren(self, index);
                 }
                 return c;
             },
@@ -701,11 +703,13 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
              */
             removeChild: function (c) {
                 var self = this,
+                    index,
                     tree = self.get("tree");
                 if (tree) {
+                    index = S.indexOf(c, self.get('children'));
                     recursiveRegister(tree, c, "_unRegister");
                     TreeNode.superclass.removeChild.apply(self, S.makeArray(arguments));
-                    refreshCssForSelfAndChildren(self);
+                    refreshCssForSelfAndChildren(self, index);
                 }
                 return c;
             },
@@ -799,7 +803,7 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
                 /**
                  * Whether current tree node is expanded.
                  * @type {Boolean.}
-                 * @default false.
+                 * Defaults to: false.
                  */
                 expanded: {
                     view: 1
@@ -808,7 +812,7 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
                 /**
                  * Whether current tree node is collapsed.
                  * @type {Boolean.}
-                 * @default true.
+                 * Defaults to: true.
                  */
                 collapsed: {
                     getter: function () {
@@ -854,8 +858,8 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
                 },
 
                 decorateChildCls: {
-                    valueFn:function(){
-                        return this.get('prefixCls')+'tree-children';
+                    valueFn: function () {
+                        return this.get('prefixCls') + 'tree-children';
                     }
                 },
 
@@ -955,20 +959,23 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
         }
     }
 
-    function refreshCssForSelfAndChildren(self) {
+    function refreshCssForSelfAndChildren(self, index) {
         var children = self.get('children'),
-            len = self.get('children').length;
+            c,
+            len = children.length;
         refreshCss(self);
-        S.each(children, function (c, index) {
+        index = Math.max(0, index - 1);
+        self.get('el')[0].setAttribute("aria-setsize", len);
+        for (; index < len; index++) {
+            c = children[index];
             // 一个 c 初始化成功了
             // 可能其他 c 仍是 { xclass }
             if (c.get) {
                 refreshCss(c);
                 var el = c.get("el");
-                el.attr("aria-posinset", index + 1);
-                el.attr("aria-setsize", len);
+                el[0].setAttribute("aria-posinset", index + 1);
             }
-        });
+        }
     }
 
     // # ------------------- private end
@@ -983,7 +990,7 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
  * 2012-09-25
  *  - 去除 dblclick 支持，该交互会重复触发 click 事件，可能会重复执行逻辑
  *//**
- * @fileOverview tree management utils render
+ *  tree management utils render
  * @author yiminghe@gmail.com
  */
 KISSY.add("tree/tree-manager-render", function (S) {
@@ -1012,7 +1019,7 @@ KISSY.add("tree/tree-manager-render", function (S) {
 
     return TreeManagerRender;
 });/**
- * @fileOverview tree management utils
+ *  tree management utils
  * @author yiminghe@gmail.com
  */
 KISSY.add("tree/tree-manager", function (S, Event) {
@@ -1032,7 +1039,7 @@ KISSY.add("tree/tree-manager", function (S, Event) {
 
         /**
          * Whether show root node.
-         * @defaulttrue.
+         * Defaults to:true.
          * @type {Boolean}
          */
         showRootNode: {
@@ -1068,7 +1075,7 @@ KISSY.add("tree/tree-manager", function (S, Event) {
             if (!c.__isRegisted) {
                 getAllNodes(this)[getIdFromNode(c)] = c;
                 c.__isRegisted = 1;
-                S.log("_register for " + c.get("content"));
+                //S.log("_register for " + c.get("content"));
             }
         },
 
@@ -1076,7 +1083,7 @@ KISSY.add("tree/tree-manager", function (S, Event) {
             if (c.__isRegisted) {
                 delete getAllNodes(this)[getIdFromNode(c)];
                 c.__isRegisted = 0;
-                S.log("_unRegister for " + c.get("content"));
+                //S.log("_unRegister for " + c.get("content"));
             }
         },
 
@@ -1144,7 +1151,7 @@ KISSY.add("tree/tree-manager", function (S, Event) {
 }, {
     requires: ['event']
 });/**
- * @fileOverview root node render
+ *  root node render
  * @author yiminghe@gmail.com
  */
 KISSY.add("tree/tree-render", function (S, TreeNodeRender, TreeManagerRender) {
@@ -1152,7 +1159,7 @@ KISSY.add("tree/tree-render", function (S, TreeNodeRender, TreeManagerRender) {
 }, {
     requires:['./node-render', './tree-manager-render']
 });/**
- * @fileOverview tree component for kissy
+ *  tree component for kissy
  * @author yiminghe@gmail.com
  */
 KISSY.add('tree', function (S, Tree, TreeNode, CheckNode, CheckTree) {

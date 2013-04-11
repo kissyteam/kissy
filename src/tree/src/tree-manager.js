@@ -55,7 +55,7 @@ KISSY.add("tree/tree-manager", function (S, Event) {
             if (!c.__isRegisted) {
                 getAllNodes(this)[getIdFromNode(c)] = c;
                 c.__isRegisted = 1;
-                S.log("_register for " + c.get("content"));
+                //S.log("_register for " + c.get("content"));
             }
         },
 
@@ -63,7 +63,7 @@ KISSY.add("tree/tree-manager", function (S, Event) {
             if (c.__isRegisted) {
                 delete getAllNodes(this)[getIdFromNode(c)];
                 c.__isRegisted = 0;
-                S.log("_unRegister for " + c.get("content"));
+                //S.log("_unRegister for " + c.get("content"));
             }
         },
 
