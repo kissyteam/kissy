@@ -19,6 +19,7 @@
 
     <a href="javascript:void(0)" id="expandAll" class="ks-button">展开全部</a>&nbsp;
     <a href="javascript:void(0)" id="collapseAll" class="ks-button">关闭全部</a>
+    <a href="javascript:void(0)" id="remove" class="ks-button">remove first child</a>
 
     <div id="treeContainer" style="width: 200px;margin: 20px 0;">
 
@@ -120,6 +121,10 @@
 
             $("#collapseAll").on("click", function () {
                 tree.collapseAll();
+            });
+
+            $("#remove").on("click", function () {
+                tree.removeChild(tree.getChildAt(0))
             });
         });
     </script>

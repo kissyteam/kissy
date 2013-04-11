@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 11 16:08
+build time: Apr 11 16:47
 */
 /**
  * root node represent a simple tree
@@ -699,7 +699,7 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
                 TreeNode.superclass.renderChildren.apply(self, arguments);
                 // only sync child sub tree at root node
                 if (self === self.get('tree')) {
-                    registerToTree(self, self, -1);
+                    registerToTree(self, self, -1, 0);
                 }
             },
 
@@ -871,8 +871,9 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
     }
 
     function onRemoveChild(e) {
-        if (e.target == this) {
-            recursiveRegister(this.get('tree'), e.component, "_unRegister");
+        var self = this;
+        if (e.target == self) {
+            recursiveRegister(self.get('tree'), e.component, "_unRegister");
             refreshCssForSelfAndChildren(self, e.index);
         }
     }
