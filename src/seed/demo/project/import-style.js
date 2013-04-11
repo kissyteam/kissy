@@ -4,13 +4,15 @@
         if (typeof modNames == 'string') {
             modNames = modNames.split(',');
         }
-        var cssList = [];
-        var stack = [];
+        var cssList = [],
+            cssCache = {},
+            stack = [],
+            stackCache={};
         var mods = S.Env.mods;
         S.each(modNames, function (modName) {
             var mod;
             if (mod = mods[modName]) {
-                collectCss(mod, cssList, stack);
+                collectCss(mod, cssList, stack, cssCache,stackCache);
             }
         });
         if (cssList.length) {
@@ -66,32 +68,28 @@
             }
         }
     }
-    
-    function getRequiredMods(self) {
-            var runtime = self.runtime;
-            return S.map(self.getNormalizedRequires(), function (r) {
-                return Utils.createModuleInfo(runtime, r);
-            });
-        },
 
-    function collectCss(mod, cssList, stack) {
-        if (S.inArray(mod, stack)) {
+    function collectCss(mod, cssList, stack, cssCache,stackCache) {
+        if (stackCache[mod.name]) {
             S.error('circular dependencies found: ' + stack);
             return;
         }
         if (mod.getType() == 'css') {
-            if (!S.inArray(mod, cssList)) {
+            if (!cssCache[mod.name]) {
                 mod.status = 4;
                 cssList.push(mod);
+                cssCache[mod.name] = 1;
             }
             return;
         }
-        var requires = getRequiredMods(mod);
-        stack.push(mod);
+        var requires = mod.getRequiredMods();
+        stackCache[mod.name] = 1;
+        stack.push(mod.name);
         S.each(requires, function (r) {
-            collectCss(r, cssList, stack);
+            collectCss(r, cssList, stack, cssCache,stackCache);
         });
         stack.pop();
+        delete stackCache[mod.name];
     }
 
     window.importStyle = importStyle;
