@@ -34,6 +34,7 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
 
             bindUI: function () {
                 this.on('afterAddChild', onAddChild);
+                this.on('afterRemoveChild', onRemoveChild);
                 this.on('afterAddChild afterRemoveChild', syncAriaSetSize);
             },
 
@@ -180,20 +181,6 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
                 if (self === self.get('tree')) {
                     registerToTree(self, self, -1);
                 }
-            },
-
-            /**
-             * override controller 's removeChild to apply depth and css recursively
-             */
-            removeChild: function (c) {
-                var self = this,
-                    tree = self.get("tree");
-                if (tree) {
-                    recursiveRegister(tree, c, "_unRegister");
-                    TreeNode.superclass.removeChild.apply(self, S.makeArray(arguments));
-                    refreshCssForSelfAndChildren(self);
-                }
-                return c;
             },
 
             _onSetExpanded: function (v) {
@@ -359,7 +346,14 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
 
     function onAddChild(e) {
         if (e.target == this) {
-            registerToTree(this, e.component, this.get('depth'));
+            registerToTree(this, e.component, this.get('depth'), e.index);
+        }
+    }
+
+    function onRemoveChild(e) {
+        if (e.target == this) {
+            recursiveRegister(this.get('tree'), e.component, "_unRegister");
+            refreshCssForSelfAndChildren(self, e.index);
         }
     }
 
@@ -435,11 +429,11 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
         }
     }
 
-    function registerToTree(self, c, depth) {
+    function registerToTree(self, c, depth, index) {
         var tree = self.get("tree");
         if (tree) {
             recursiveRegister(tree, c, "_register", depth + 1);
-            refreshCssForSelfAndChildren(self);
+            refreshCssForSelfAndChildren(self, index);
         }
     }
 
@@ -457,12 +451,17 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
         });
     }
 
-    function refreshCssForSelfAndChildren(self) {
+    function refreshCssForSelfAndChildren(self, index) {
         refreshCss(self);
-        S.each(self.get('children'), function (c, index) {
+        index = Math.max(0, index - 1);
+        var children = self.get('children'),
+            c,
+            len = children.length;
+        for (; index < len; index++) {
+            c = children[index];
             refreshCss(c);
             c.get("el")[0].setAttribute("aria-posinset", index + 1);
-        });
+        }
     }
 
     // # ------------------- private end

@@ -130,8 +130,8 @@ KISSY.add("tree/node-render", function (S, Node, Component) {
         },
 
         '_onSetDepth': function (v) {
-            S.log(this.get('content') + ' set depth: ' + v);
-            this.get("el").attr("aria-level", v);
+            //S.log(this.get('content') + ' set depth: ' + v);
+            this.get("el")[0].setAttribute("aria-level", v);
         },
 
         _onSetTooltip: function (v) {
