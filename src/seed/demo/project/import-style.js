@@ -1,7 +1,6 @@
 (function (S) {
 
     function importStyle(modNames) {
-        var now = S.now();
         if (typeof modNames == 'string') {
             modNames = modNames.split(',');
         }
@@ -67,7 +66,6 @@
                 });
             }
         }
-        alert(S.now() - now);
     }
 
     function collectCss(mod, cssList, stack, cssCache, stackCache, processed) {
