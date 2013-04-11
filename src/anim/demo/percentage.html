@@ -31,19 +31,47 @@
 </head>
 <body>
 <div>
-    <div id="t" style="height:100px;border:1px solid red;background:yellow;left:-100%;position: relative;">
+    <div id="t" style="height:100px;border:1px solid red;
+    background:yellow;left:-100%;position: relative;">
     </div>
+
+    <button id="error_chrome">chrome/ie678 error</button>
+    <button id="recommend">推荐</button>
+    <button id="ok">ok</button>
 </div>
 <script>
     KISSY.use("anim,node", function (S, Anim, Node) {
-        new Anim('#t', {
-            left: {
-                from: '-100%',
-                value: '0%'
-            }
-        }, {
-            duration: 5
-        }).run();
+        var $ = Node.all;
+        $('#ok').on('click', function () {
+            new Anim('#t', {
+                left: {
+                    // from,to 都写时请保证单位一致，内部不会做转单位操作
+                    from: '-100%',
+                    value: '0%'
+                }
+            }, {
+                duration: 5
+            }).run();
+        });
+
+        //chrome error %
+        $('#error_chrome').on('click', function () {
+            new Anim('#t', {
+                left: 0
+            }, {
+                duration: 5
+            }).run();
+        });
+
+        // % 时注明结束值单位
+        $('#recommend').on('click', function () {
+            new Anim('#t', {
+                left: '0%'
+            }, {
+                duration: 5
+            }).run();
+        });
+
     });
 </script>
 </body>

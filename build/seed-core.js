@@ -1,12 +1,12 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 9 11:46
+build time: Apr 12 01:19
 */
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 9 11:46
+build time: Apr 12 01:18
 */
 /**
  * @ignore
@@ -44,11 +44,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130409114554' will replace with current timestamp when compressing.
+         * NOTICE: '20130412011848' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130409114554',
+        __BUILD_TIME: '20130412011848',
         /**
          * KISSY Environment.
          * @private
@@ -5938,7 +5938,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20130409114554'
+            tag: '20130412011848'
         }, getBaseInfo()));
     }
 
@@ -12916,7 +12916,7 @@ KISSY.add('dom/selector', function (S, parser, DOM) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 27 17:36
+build time: Apr 9 19:42
 */
 /**
  * @ignore
@@ -13225,7 +13225,8 @@ KISSY.add('event/base/observer', function (S, undefined) {
          * @return {*} return value of current observer's user-defined function
          */
         simpleNotify: function (event, ce) {
-            var ret, self = this;
+            var ret,
+                self = this;
             ret = self.fn.call(self.context || ce.currentTarget, event, self.data);
             if (self.once) {
                 //noinspection JSUnresolvedFunction
@@ -13383,7 +13384,7 @@ KISSY.add('event/base/utils', function (S) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 19 11:12
+build time: Apr 9 19:42
 */
 /**
  * @ignore
@@ -13754,20 +13755,6 @@ KISSY.add('event/custom/observable', function (S, api, CustomEventObserver, Cust
             }
         },
 
-        checkMemory: function () {
-            var self = this,
-                currentTarget = self.currentTarget,
-                events = ObservableCustomEvent.getCustomEvents(currentTarget);
-            if (events) {
-                if (!self.hasObserver()) {
-                    delete events[self.type];
-                }
-                if (S.isEmptyObject(events)) {
-                    delete currentTarget[KS_CUSTOM_EVENTS];
-                }
-            }
-        },
-
         /**
          * notify current custom event 's observers and then bubble up if this event can bubble.
          * @param {KISSY.Event.CustomEventObject} eventData
@@ -13847,7 +13834,8 @@ KISSY.add('event/custom/observable', function (S, api, CustomEventObserver, Cust
          * return last value of custom event 's observers 's return value.
          */
         notify: function (event) {
-            var observers = this.observers,
+            // duplicate,in case detach itself in one observer
+            var observers = [].concat(this.observers),
                 ret,
                 gRet,
                 len = observers.length,
@@ -13914,7 +13902,9 @@ KISSY.add('event/custom/observable', function (S, api, CustomEventObserver, Cust
                 self.reset();
             }
 
-            self.checkMemory();
+            // does not need to clear memory if customEvent has no observer
+            // customEvent has defaultFn .....!
+            // self.checkMemory();
         }
     });
 
@@ -22483,7 +22473,7 @@ KISSY.add('anim/facade', function (S, DOM, AnimBase, TimerAnim, TransitionAnim) 
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 9 11:43
+build time: Apr 12 01:11
 */
 /**
  * @ignore
@@ -23180,6 +23170,7 @@ KISSY.add('anim/timer/manager', function (S, undefined) {
                 win[vendors[x] + 'CancelRequestAnimationFrame'];
         }
     }
+    // chrome is unstable....
     if (requestAnimationFrameFn && !S.UA.chrome) {
         S.log('anim use requestAnimationFrame');
     } else {
@@ -23419,8 +23410,16 @@ KISSY.add('anim/timer', function (S, DOM, Event, AnimBase, Easing, AM, Fx, SHORT
 
                     // 有单位但单位不是 px
                     if (!hasFrom && unit && unit !== 'px') {
-                        DOM.css(el, prop, val);
-                        from = (to / fx.cur()) * from;
+                        var tmpCur = 0,
+                            to2 = to;
+                        to2 -= 1;
+                        do {
+                            ++to2;
+                            DOM.css(el, prop, to2 + unit);
+                            // in case tmpCur==0
+                            tmpCur = fx.cur();
+                        } while (tmpCur == 0);
+                        from = (to2 / tmpCur) * from;
                         DOM.css(el, prop, from + unit);
                     }
 

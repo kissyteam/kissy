@@ -119,8 +119,16 @@ KISSY.add('anim/timer', function (S, DOM, Event, AnimBase, Easing, AM, Fx, SHORT
 
                     // 有单位但单位不是 px
                     if (!hasFrom && unit && unit !== 'px') {
-                        DOM.css(el, prop, val);
-                        from = (to / fx.cur()) * from;
+                        var tmpCur = 0,
+                            to2 = to;
+                        to2 -= 1;
+                        do {
+                            ++to2;
+                            DOM.css(el, prop, to2 + unit);
+                            // in case tmpCur==0
+                            tmpCur = fx.cur();
+                        } while (tmpCur == 0);
+                        from = (to2 / tmpCur) * from;
                         DOM.css(el, prop, from + unit);
                     }
 
