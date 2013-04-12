@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 12 12:13
+build time: Apr 12 16:36
 */
 /**
  * @ignore
@@ -2845,7 +2845,7 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
         R_UPPER = /([A-Z]|^ms)/g,
         EMPTY = '',
         DEFAULT_UNIT = 'px',
-        NO_PX_REG = /(?:\d(?!px)[a-z%]+)|(?:auto)$/i,
+        NO_PX_REG = /\d(?!px)[a-z%]+$/i,
         CUSTOM_STYLES = {},
         cssProps = {
             'float': 'cssFloat'
@@ -2853,8 +2853,8 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
         defaultDisplay = {},
         RE_DASH = /-([a-z])/ig;
 
-    function upperCase(m) {
-        return m.toUpperCase();
+    function upperCase() {
+        return arguments[1].toUpperCase();
     }
 
     function camelCase(name) {
@@ -3255,14 +3255,20 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
     });
 
     S.each(['left', 'top'], function (name) {
-
         CUSTOM_STYLES[ name ] = {
             get: function (el, computed) {
-                var val;
+                var val,
+                    position;
                 if (computed) {
                     val = DOM._getComputedStyle(el, name);
-                    if (NO_PX_REG.test(val)) {
-                        val = position(el)[name] + 'px';
+                    position = DOM.css(el,'position');
+                    if (val == 'auto') {
+                        if (position == 'static' || position == 'relative') {
+                            return 0 + 'px';
+                        }
+                    }
+                    if (NO_PX_REG.test(val) || val == 'auto') {
+                        val = getPosition(el)[name] + 'px';
                     }
                 }
                 return val;
@@ -3421,7 +3427,7 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
 
     var ROOT_REG = /^(?:body|html)$/i;
 
-    function position(el) {
+    function getPosition(el) {
         var offsetParent = getOffsetParent(el),
             offset = DOM.offset(el),
             parentOffset = DOM.offset(offsetParent);

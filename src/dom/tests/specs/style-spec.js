@@ -309,10 +309,12 @@ KISSY.use("dom,ua,core", function (S, DOM, UA) {
         });
 
         it("left works for auto in", function () {
-            var div = DOM.create("<div style='position:absolute;'></div>");
+            var div = DOM.create("<div style='position:absolute;padding: 20px'>" +
+                "<div style='position: absolute;'></div>" +
+                "</div>");
             DOM.append(div, document.body);
-            expect(DOM.css(div, "left"))
-                .toBe((div.offsetLeft - document.documentElement.clientLeft) + "px");
+            expect(DOM.css(div.firstChild, "left"))
+                .toBe("20px");
             DOM.remove(div);
         });
 

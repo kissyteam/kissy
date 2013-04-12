@@ -77,6 +77,7 @@ KISSY.use("dom,core", function (S, DOM) {
 
         describe('non-auto works', function () {
             it("scroll node to container at axis xy manually works", function () {
+                debugger
                 var nodeOffset = DOM.offset(node),
                     containerOffset = DOM.offset(container);
 
