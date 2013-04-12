@@ -4,7 +4,11 @@
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('dom/base/style', function (S, DOM, undefined) {
-    var WINDOW = S.Env.host,
+    var
+        WINDOW = /**
+         @ignore
+         @type window
+         */S.Env.host,
         UA = S.UA,
         getNodeName = DOM.nodeName,
         doc = WINDOW.document,
@@ -12,11 +16,9 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
         RE_MARGIN = /^margin/,
         WIDTH = 'width',
         HEIGHT = 'height',
-        AUTO = 'auto',
         DISPLAY = 'display',
         OLD_DISPLAY = DISPLAY + S.now(),
         NONE = 'none',
-        myParseInt = parseInt,
         cssNumber = {
             'fillOpacity': 1,
             'fontWeight': 1,
@@ -28,23 +30,25 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
             'zoom': 1
         },
         rmsPrefix = /^-ms-/,
-    // 考虑 ie9 ...
+    // ie9+
         R_UPPER = /([A-Z]|^ms)/g,
         EMPTY = '',
         DEFAULT_UNIT = 'px',
+        NO_PX_REG = /(?:\d(?!px)[a-z%]+)|(?:auto)$/i,
         CUSTOM_STYLES = {},
         cssProps = {
             'float': 'cssFloat'
         },
         defaultDisplay = {},
-        RE_DASH = /-([a-z])/ig,
-        CAMEL_CASE_FN = function (all, letter) {
-            return letter.toUpperCase();
-        };
+        RE_DASH = /-([a-z])/ig;
+
+    function upperCase(m) {
+        return m.toUpperCase();
+    }
 
     function camelCase(name) {
         // fix #92, ms!
-        return name.replace(rmsPrefix, 'ms-').replace(RE_DASH, CAMEL_CASE_FN);
+        return name.replace(rmsPrefix, 'ms-').replace(RE_DASH, upperCase);
     }
 
     function getDefaultDisplay(tagName) {
@@ -193,7 +197,7 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
                             ret = DOM._getComputedStyle(elem, name);
                         }
                     }
-                    return (ret === undefined) ? '' : ret;
+                    return (typeof ret == 'undefined') ? '' : ret;
                 }
                 // setter
                 else {
@@ -430,9 +434,11 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
              * @ignore
              */
             get: function (elem, computed) {
+                var val;
                 if (computed) {
-                    return getWHIgnoreDisplay(elem, name) + 'px';
+                    val = getWHIgnoreDisplay(elem, name) + 'px';
                 }
+                return val;
             }
         };
     });
@@ -440,37 +446,15 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
     S.each(['left', 'top'], function (name) {
 
         CUSTOM_STYLES[ name ] = {
-            get: function (elem, computed) {
+            get: function (el, computed) {
+                var val;
                 if (computed) {
-                    var val = DOM._getComputedStyle(elem, name), offset;
-
-                    // 1. 当没有设置 style.left 时，getComputedStyle 在不同浏览器下，返回值不同
-                    //    比如：firefox 返回 0, webkit/ie 返回 auto
-                    // 2. style.left 设置为百分比时，返回值为百分比
-                    // 对于第一种情况，如果是 relative 元素，值为 0. 如果是 absolute 元素，值为 offsetLeft - marginLeft
-                    // 对于第二种情况，大部分类库都未做处理，属于“明之而不 fix”的保留 bug
-                    if (val === AUTO) {
-                        val = 0;
-                        if (S.inArray(DOM.css(elem, 'position'), ['absolute', 'fixed'])) {
-                            offset = elem[name === 'left' ? 'offsetLeft' : 'offsetTop'];
-
-                            // old-ie 下，elem.offsetLeft 包含 offsetParent 的 border 宽度，需要减掉
-                            if (UA.ie && (doc['documentMode'] || 0) < 9 || UA['opera']) {
-                                // 类似 offset ie 下的边框处理
-                                // 如果 offsetParent 为 html ，需要减去默认 2 px == documentElement.clientTop
-                                // 否则减去 borderTop 其实也是 clientTop
-                                // http://msdn.microsoft.com/en-us/library/aa752288%28v=vs.85%29.aspx
-                                // ie<9 注意有时候 elem.offsetParent 为 null ...
-                                // 比如 DOM.append(DOM.create('<div class='position:absolute'></div>'),document.body)
-                                offset -= elem.offsetParent && elem.offsetParent['client' + (name == 'left' ? 'Left' : 'Top')]
-                                    || 0;
-                            }
-                            val = offset - (myParseInt(DOM.css(elem, 'margin-' + name)) || 0);
-                        }
-                        val += 'px';
+                    val = DOM._getComputedStyle(el, name);
+                    if (NO_PX_REG.test(val)) {
+                        val = position(el)[name] + 'px';
                     }
-                    return val;
                 }
+                return val;
             }
         };
     });
@@ -621,6 +605,37 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
         }
 
         return val;
+    }
+
+
+    var ROOT_REG = /^(?:body|html)$/i;
+
+    function position(el) {
+        var offsetParent = getOffsetParent(el),
+            offset = DOM.offset(el),
+            parentOffset = DOM.offset(offsetParent);
+
+        offset.top -= parseFloat(DOM.css(el, "marginTop")) || 0;
+        offset.left -= parseFloat(DOM.css(el, "marginLeft")) || 0;
+
+        parentOffset.top += parseFloat(DOM.css(offsetParent, "borderTopWidth")) || 0;
+        parentOffset.left += parseFloat(DOM.css(offsetParent, "borderLeftWidth")) || 0;
+
+        // known bug: if el is relative && offsetParent is document.body, left %
+        // should - document.body.paddingLeft
+        return {
+            top: offset.top - parentOffset.top,
+            left: offset.left - parentOffset.left
+        };
+    }
+
+    function getOffsetParent(el) {
+        var offsetParent = el.offsetParent || ( el.ownerDocument || doc).body;
+        while (offsetParent && !ROOT_REG.test(offsetParent.nodeName) &&
+            DOM.css(offsetParent, "position") === "static") {
+            offsetParent = offsetParent.offsetParent;
+        }
+        return offsetParent;
     }
 
     return DOM;

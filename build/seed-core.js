@@ -1,12 +1,12 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 12 01:19
+build time: Apr 12 12:14
 */
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 12 01:18
+build time: Apr 12 12:14
 */
 /**
  * @ignore
@@ -44,11 +44,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130412011848' will replace with current timestamp when compressing.
+         * NOTICE: '20130412121429' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130412011848',
+        __BUILD_TIME: '20130412121429',
         /**
          * KISSY Environment.
          * @private
@@ -5938,7 +5938,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20130412011848'
+            tag: '20130412121429'
         }, getBaseInfo()));
     }
 
@@ -6561,7 +6561,7 @@ config({
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 7 15:21
+build time: Apr 12 12:13
 */
 /**
  * @ignore
@@ -8579,457 +8579,461 @@ KISSY.add('dom/base/insertion', function (S, DOM) {
  */
 KISSY.add('dom/base/offset', function (S, DOM, undefined) {
 
-    var win = S.Env.host,
-        doc = win.document,
-        NodeType = DOM.NodeType,
-        docElem = doc && doc.documentElement,
-        getWin = DOM.getWindow,
-        CSS1Compat = 'CSS1Compat',
-        compatMode = 'compatMode',
-        MAX = Math.max,
-        myParseInt = parseInt,
-        POSITION = 'position',
-        RELATIVE = 'relative',
-        DOCUMENT = 'document',
-        BODY = 'body',
-        DOC_ELEMENT = 'documentElement',
-        OWNER_DOCUMENT = 'ownerDocument',
-        VIEWPORT = 'viewport',
-        SCROLL = 'scroll',
-        CLIENT = 'client',
-        LEFT = 'left',
-        TOP = 'top',
-        isNumber = S.isNumber,
-        SCROLL_LEFT = SCROLL + 'Left',
-        SCROLL_TOP = SCROLL + 'Top';
+        var win = S.Env.host,
+            doc = win.document,
+            NodeType = DOM.NodeType,
+            docElem = doc && doc.documentElement,
+            getWin = DOM.getWindow,
+            CSS1Compat = 'CSS1Compat',
+            compatMode = 'compatMode',
+            MAX = Math.max,
+            myParseInt = parseInt,
+            POSITION = 'position',
+            RELATIVE = 'relative',
+            DOCUMENT = 'document',
+            BODY = 'body',
+            DOC_ELEMENT = 'documentElement',
+            OWNER_DOCUMENT = 'ownerDocument',
+            VIEWPORT = 'viewport',
+            SCROLL = 'scroll',
+            CLIENT = 'client',
+            LEFT = 'left',
+            TOP = 'top',
+            isNumber = S.isNumber,
+            SCROLL_LEFT = SCROLL + 'Left',
+            SCROLL_TOP = SCROLL + 'Top';
 
-    S.mix(DOM,
-        /**
-         * @override KISSY.DOM
-         * @class
-         * @singleton
-         */
-        {
-
+        S.mix(DOM,
             /**
-             * Get the current coordinates of the first element in the set of matched elements, relative to the document.
-             * or
-             * Set the current coordinates of every element in the set of matched elements, relative to the document.
-             * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
-             * @param {Object} [coordinates ] An object containing the properties top and left,
-             * which are integers indicating the new top and left coordinates for the elements.
-             * @param {Number} [coordinates.left ] the new top and left coordinates for the elements.
-             * @param {Number} [coordinates.top ] the new top and top coordinates for the elements.
-             * @param {window} [relativeWin] The window to measure relative to. If relativeWin
-             *     is not in the ancestor frame chain of the element, we measure relative to
-             *     the top-most window.
-             * @return {Object|undefined} if Get, the format of returned value is same with coordinates.
+             * @override KISSY.DOM
+             * @class
+             * @singleton
              */
-            offset: function (selector, coordinates, relativeWin) {
-                // getter
-                if (coordinates === undefined) {
-                    var elem = DOM.get(selector), ret;
-                    if (elem) {
-                        ret = getOffset(elem, relativeWin);
-                    }
-                    return ret;
-                }
-                // setter
-                var els = DOM.query(selector), i;
-                for (i = els.length - 1; i >= 0; i--) {
-                    elem = els[i];
-                    setOffset(elem, coordinates);
-                }
-                return undefined;
-            },
+            {
 
-            /**
-             * scrolls the first of matched elements into container view
-             * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
-             * @param {String|HTMLElement|HTMLDocument} [container=window] Container element
-             * @param {Boolean|Object} [alignWithTop=true]If true, the scrolled element is aligned with the top of the scroll area.
-             * If false, it is aligned with the bottom.
-             * @param {Boolean} [alignWithTop.allowHorizontalScroll=true] Whether trigger horizontal scroll.
-             * @param {Boolean} [alignWithTop.onlyScrollIfNeeded=false] scrollIntoView when element is out of view
-             * and set top to false or true automatically if top is undefined
-             * @param {Boolean} [allowHorizontalScroll=true] Whether trigger horizontal scroll.
-             * refer: http://www.w3.org/TR/2009/WD-html5-20090423/editing.html#scrollIntoView
-             *        http://www.sencha.com/deploy/dev/docs/source/Element.scroll-more.html#scrollIntoView
-             *        http://yiminghe.javaeye.com/blog/390732
-             */
-            scrollIntoView: function (selector, container, alignWithTop, allowHorizontalScroll) {
-                var elem,
-                    onlyScrollIfNeeded;
-
-                if (!(elem = DOM.get(selector))) {
-                    return;
-                }
-
-                if (container) {
-                    container = DOM.get(container);
-                }
-
-                if (!container) {
-                    container = elem.ownerDocument;
-                }
-
-                // document 归一化到 window
-                if (container.nodeType == NodeType.DOCUMENT_NODE) {
-                    container = getWin(container);
-                }
-
-                if (S.isPlainObject(alignWithTop)) {
-                    allowHorizontalScroll = alignWithTop.allowHorizontalScroll;
-                    onlyScrollIfNeeded = alignWithTop.onlyScrollIfNeeded;
-                    alignWithTop = alignWithTop.alignWithTop;
-                }
-
-                allowHorizontalScroll = allowHorizontalScroll === undefined ? true : allowHorizontalScroll;
-
-                var isWin = !!getWin(container),
-                    elemOffset = DOM.offset(elem),
-                    eh = DOM.outerHeight(elem),
-                    ew = DOM.outerWidth(elem),
-                    containerOffset,
-                    ch,
-                    cw,
-                    containerScroll,
-                    diffTop,
-                    diffBottom,
-                    win,
-                    winScroll,
-                    ww,
-                    wh;
-
-                if (isWin) {
-                    win = container;
-                    wh = DOM.height(win);
-                    ww = DOM.width(win);
-                    winScroll = {
-                        left: DOM.scrollLeft(win),
-                        top: DOM.scrollTop(win)
-                    };
-                    // elem 相对 container 可视视窗的距离
-                    diffTop = {
-                        left: elemOffset[LEFT] - winScroll[LEFT],
-                        top: elemOffset[TOP] - winScroll[TOP]
-                    };
-                    diffBottom = {
-                        left: elemOffset[LEFT] + ew - (winScroll[LEFT] + ww),
-                        top: elemOffset[TOP] + eh - (winScroll[TOP] + wh)
-                    };
-                    containerScroll = winScroll;
-                }
-                else {
-                    containerOffset = DOM.offset(container);
-                    ch = container.clientHeight;
-                    cw = container.clientWidth;
-                    containerScroll = {
-                        left: DOM.scrollLeft(container),
-                        top: DOM.scrollTop(container)
-                    };
-                    // elem 相对 container 可视视窗的距离
-                    // 注意边框 , offset 是边框到根节点
-                    diffTop = {
-                        left: elemOffset[LEFT] - (containerOffset[LEFT] +
-                            (myParseInt(DOM.css(container, 'borderLeftWidth')) || 0)),
-                        top: elemOffset[TOP] - (containerOffset[TOP] +
-                            (myParseInt(DOM.css(container, 'borderTopWidth')) || 0))
-                    };
-                    diffBottom = {
-                        left: elemOffset[LEFT] + ew -
-                            (containerOffset[LEFT] + cw +
-                                (myParseInt(DOM.css(container, 'borderRightWidth')) || 0)),
-                        top: elemOffset[TOP] + eh -
-                            (containerOffset[TOP] + ch +
-                                (myParseInt(DOM.css(container, 'borderBottomWidth')) || 0))
-                    };
-                }
-
-                if (onlyScrollIfNeeded) {
-                    if (diffTop.top < 0 || diffBottom.top > 0) {
-                        // 强制向上
-                        if (alignWithTop === true) {
-                            DOM.scrollTop(container, containerScroll.top + diffTop.top);
-                        } else if (alignWithTop === false) {
-                            DOM.scrollTop(container, containerScroll.top + diffBottom.top);
-                        } else {
-                            // 自动调整
-                            if (diffTop.top < 0) {
-                                DOM.scrollTop(container, containerScroll.top + diffTop.top);
-                            } else {
-                                DOM.scrollTop(container, containerScroll.top + diffBottom.top);
-                            }
+                /**
+                 * Get the current coordinates of the first element in the set of matched elements, relative to the document.
+                 * or
+                 * Set the current coordinates of every element in the set of matched elements, relative to the document.
+                 * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
+                 * @param {Object} [coordinates ] An object containing the properties top and left,
+                 * which are integers indicating the new top and left coordinates for the elements.
+                 * @param {Number} [coordinates.left ] the new top and left coordinates for the elements.
+                 * @param {Number} [coordinates.top ] the new top and top coordinates for the elements.
+                 * @param {window} [relativeWin] The window to measure relative to. If relativeWin
+                 *     is not in the ancestor frame chain of the element, we measure relative to
+                 *     the top-most window.
+                 * @return {Object|undefined} if Get, the format of returned value is same with coordinates.
+                 */
+                offset: function (selector, coordinates, relativeWin) {
+                    // getter
+                    if (coordinates === undefined) {
+                        var elem = DOM.get(selector), ret;
+                        if (elem) {
+                            ret = getOffset(elem, relativeWin);
                         }
+                        return ret;
                     }
-                } else {
-                    alignWithTop = alignWithTop === undefined ? true : !!alignWithTop;
-                    if (alignWithTop) {
-                        DOM.scrollTop(container, containerScroll.top + diffTop.top);
-                    } else {
-                        DOM.scrollTop(container, containerScroll.top + diffBottom.top);
+                    // setter
+                    var els = DOM.query(selector), i;
+                    for (i = els.length - 1; i >= 0; i--) {
+                        elem = els[i];
+                        setOffset(elem, coordinates);
                     }
-                }
+                    return undefined;
+                },
 
-                if (allowHorizontalScroll) {
+                /**
+                 * scrolls the first of matched elements into container view
+                 * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
+                 * @param {String|HTMLElement|HTMLDocument} [container=window] Container element
+                 * @param {Boolean|Object} [alignWithTop=true]If true, the scrolled element is aligned with the top of the scroll area.
+                 * If false, it is aligned with the bottom.
+                 * @param {Boolean} [alignWithTop.allowHorizontalScroll=true] Whether trigger horizontal scroll.
+                 * @param {Boolean} [alignWithTop.onlyScrollIfNeeded=false] scrollIntoView when element is out of view
+                 * and set top to false or true automatically if top is undefined
+                 * @param {Boolean} [allowHorizontalScroll=true] Whether trigger horizontal scroll.
+                 * refer: http://www.w3.org/TR/2009/WD-html5-20090423/editing.html#scrollIntoView
+                 *        http://www.sencha.com/deploy/dev/docs/source/Element.scroll-more.html#scrollIntoView
+                 *        http://yiminghe.javaeye.com/blog/390732
+                 */
+                scrollIntoView: function (selector, container, alignWithTop, allowHorizontalScroll) {
+                    var elem,
+                        onlyScrollIfNeeded;
+
+                    if (!(elem = DOM.get(selector))) {
+                        return;
+                    }
+
+                    if (container) {
+                        container = DOM.get(container);
+                    }
+
+                    if (!container) {
+                        container = elem.ownerDocument;
+                    }
+
+                    // document 归一化到 window
+                    if (container.nodeType == NodeType.DOCUMENT_NODE) {
+                        container = getWin(container);
+                    }
+
+                    if (S.isPlainObject(alignWithTop)) {
+                        allowHorizontalScroll = alignWithTop.allowHorizontalScroll;
+                        onlyScrollIfNeeded = alignWithTop.onlyScrollIfNeeded;
+                        alignWithTop = alignWithTop.alignWithTop;
+                    }
+
+                    allowHorizontalScroll = allowHorizontalScroll === undefined ? true : allowHorizontalScroll;
+
+                    var isWin = !!getWin(container),
+                        elemOffset = DOM.offset(elem),
+                        eh = DOM.outerHeight(elem),
+                        ew = DOM.outerWidth(elem),
+                        containerOffset,
+                        ch,
+                        cw,
+                        containerScroll,
+                        diffTop,
+                        diffBottom,
+                        win,
+                        winScroll,
+                        ww,
+                        wh;
+
+                    if (isWin) {
+                        win = container;
+                        wh = DOM.height(win);
+                        ww = DOM.width(win);
+                        winScroll = {
+                            left: DOM.scrollLeft(win),
+                            top: DOM.scrollTop(win)
+                        };
+                        // elem 相对 container 可视视窗的距离
+                        diffTop = {
+                            left: elemOffset[LEFT] - winScroll[LEFT],
+                            top: elemOffset[TOP] - winScroll[TOP]
+                        };
+                        diffBottom = {
+                            left: elemOffset[LEFT] + ew - (winScroll[LEFT] + ww),
+                            top: elemOffset[TOP] + eh - (winScroll[TOP] + wh)
+                        };
+                        containerScroll = winScroll;
+                    }
+                    else {
+                        containerOffset = DOM.offset(container);
+                        ch = container.clientHeight;
+                        cw = container.clientWidth;
+                        containerScroll = {
+                            left: DOM.scrollLeft(container),
+                            top: DOM.scrollTop(container)
+                        };
+                        // elem 相对 container 可视视窗的距离
+                        // 注意边框 , offset 是边框到根节点
+                        diffTop = {
+                            left: elemOffset[LEFT] - (containerOffset[LEFT] +
+                                (myParseInt(DOM.css(container, 'borderLeftWidth')) || 0)),
+                            top: elemOffset[TOP] - (containerOffset[TOP] +
+                                (myParseInt(DOM.css(container, 'borderTopWidth')) || 0))
+                        };
+                        diffBottom = {
+                            left: elemOffset[LEFT] + ew -
+                                (containerOffset[LEFT] + cw +
+                                    (myParseInt(DOM.css(container, 'borderRightWidth')) || 0)),
+                            top: elemOffset[TOP] + eh -
+                                (containerOffset[TOP] + ch +
+                                    (myParseInt(DOM.css(container, 'borderBottomWidth')) || 0))
+                        };
+                    }
+
                     if (onlyScrollIfNeeded) {
-                        if (diffTop.left < 0 || diffBottom.left > 0) {
+                        if (diffTop.top < 0 || diffBottom.top > 0) {
                             // 强制向上
                             if (alignWithTop === true) {
-                                DOM.scrollLeft(container, containerScroll.left + diffTop.left);
+                                DOM.scrollTop(container, containerScroll.top + diffTop.top);
                             } else if (alignWithTop === false) {
-                                DOM.scrollLeft(container, containerScroll.left + diffBottom.left);
+                                DOM.scrollTop(container, containerScroll.top + diffBottom.top);
                             } else {
                                 // 自动调整
-                                if (diffTop.left < 0) {
-                                    DOM.scrollLeft(container, containerScroll.left + diffTop.left);
+                                if (diffTop.top < 0) {
+                                    DOM.scrollTop(container, containerScroll.top + diffTop.top);
                                 } else {
-                                    DOM.scrollLeft(container, containerScroll.left + diffBottom.left);
+                                    DOM.scrollTop(container, containerScroll.top + diffBottom.top);
                                 }
                             }
                         }
                     } else {
                         alignWithTop = alignWithTop === undefined ? true : !!alignWithTop;
                         if (alignWithTop) {
-                            DOM.scrollLeft(container, containerScroll.left + diffTop.left);
+                            DOM.scrollTop(container, containerScroll.top + diffTop.top);
                         } else {
-                            DOM.scrollLeft(container, containerScroll.left + diffBottom.left);
+                            DOM.scrollTop(container, containerScroll.top + diffBottom.top);
                         }
                     }
+
+                    if (allowHorizontalScroll) {
+                        if (onlyScrollIfNeeded) {
+                            if (diffTop.left < 0 || diffBottom.left > 0) {
+                                // 强制向上
+                                if (alignWithTop === true) {
+                                    DOM.scrollLeft(container, containerScroll.left + diffTop.left);
+                                } else if (alignWithTop === false) {
+                                    DOM.scrollLeft(container, containerScroll.left + diffBottom.left);
+                                } else {
+                                    // 自动调整
+                                    if (diffTop.left < 0) {
+                                        DOM.scrollLeft(container, containerScroll.left + diffTop.left);
+                                    } else {
+                                        DOM.scrollLeft(container, containerScroll.left + diffBottom.left);
+                                    }
+                                }
+                            }
+                        } else {
+                            alignWithTop = alignWithTop === undefined ? true : !!alignWithTop;
+                            if (alignWithTop) {
+                                DOM.scrollLeft(container, containerScroll.left + diffTop.left);
+                            } else {
+                                DOM.scrollLeft(container, containerScroll.left + diffBottom.left);
+                            }
+                        }
+                    }
+                },
+
+                /**
+                 * Get the width of document
+                 * @param {window} [win=window] Window to be referred.
+                 * @method
+                 */
+                docWidth: 0,
+                /**
+                 * Get the height of document
+                 * @param {window} [win=window] Window to be referred.
+                 * @method
+                 */
+                docHeight: 0,
+                /**
+                 * Get the height of window
+                 * @param {window} [win=window] Window to be referred.
+                 * @method
+                 */
+                viewportHeight: 0,
+                /**
+                 * Get the width of document
+                 * @param {window} [win=window] Window to be referred.
+                 * @method
+                 */
+                viewportWidth: 0,
+                /**
+                 * Get the current vertical position of the scroll bar for the first element in the set of matched elements.
+                 * or
+                 * Set the current vertical position of the scroll bar for each of the set of matched elements.
+                 * @param {HTMLElement[]|String|HTMLElement|window} selector matched elements
+                 * @param {Number} value An integer indicating the new position to set the scroll bar to.
+                 * @method
+                 */
+                scrollTop: 0,
+                /**
+                 * Get the current horizontal position of the scroll bar for the first element in the set of matched elements.
+                 * or
+                 * Set the current horizontal position of the scroll bar for each of the set of matched elements.
+                 * @param {HTMLElement[]|String|HTMLElement|window} selector matched elements
+                 * @param {Number} value An integer indicating the new position to set the scroll bar to.
+                 * @method
+                 */
+                scrollLeft: 0
+            });
+
+// http://old.jr.pl/www.quirksmode.org/viewport/compatibility.html
+// http://www.quirksmode.org/dom/w3c_cssom.html
+// add ScrollLeft/ScrollTop getter/setter methods
+        S.each(['Left', 'Top'], function (name, i) {
+            var method = SCROLL + name;
+
+            DOM[method] = function (elem, v) {
+                if (isNumber(elem)) {
+                    return arguments.callee(win, elem);
                 }
-            },
-            /**
-             * Get the width of document
-             * @param {window} [win=window] Window to be referred.
-             * @method
-             */
-            docWidth: 0,
-            /**
-             * Get the height of document
-             * @param {window} [win=window] Window to be referred.
-             * @method
-             */
-            docHeight: 0,
-            /**
-             * Get the height of window
-             * @param {window} [win=window] Window to be referred.
-             * @method
-             */
-            viewportHeight: 0,
-            /**
-             * Get the width of document
-             * @param {window} [win=window] Window to be referred.
-             * @method
-             */
-            viewportWidth: 0,
-            /**
-             * Get the current vertical position of the scroll bar for the first element in the set of matched elements.
-             * or
-             * Set the current vertical position of the scroll bar for each of the set of matched elements.
-             * @param {HTMLElement[]|String|HTMLElement|window} selector matched elements
-             * @param {Number} value An integer indicating the new position to set the scroll bar to.
-             * @method
-             */
-            scrollTop: 0,
-            /**
-             * Get the current horizontal position of the scroll bar for the first element in the set of matched elements.
-             * or
-             * Set the current horizontal position of the scroll bar for each of the set of matched elements.
-             * @param {HTMLElement[]|String|HTMLElement|window} selector matched elements
-             * @param {Number} value An integer indicating the new position to set the scroll bar to.
-             * @method
-             */
-            scrollLeft: 0
+                elem = DOM.get(elem);
+                var ret,
+                    left,
+                    top,
+                    w = getWin(elem),
+                    d;
+                if (w) {
+                    if (v !== undefined) {
+                        v = parseFloat(v);
+                        // 注意多 window 情况，不能简单取 win
+                        left = name == 'Left' ? v : DOM.scrollLeft(w);
+                        top = name == 'Top' ? v : DOM.scrollTop(w);
+                        w['scrollTo'](left, top);
+                    } else {
+                        //标准
+                        //chrome == body.scrollTop
+                        //firefox/ie9 == documentElement.scrollTop
+                        ret = w[ 'page' + (i ? 'Y' : 'X') + 'Offset'];
+                        if (!isNumber(ret)) {
+                            d = w[DOCUMENT];
+                            //ie6,7,8 standard mode
+                            ret = d[DOC_ELEMENT][method];
+                            if (!isNumber(ret)) {
+                                //quirks mode
+                                ret = d[BODY][method];
+                            }
+                        }
+                    }
+                } else if (elem.nodeType == NodeType.ELEMENT_NODE) {
+                    if (v !== undefined) {
+                        elem[method] = parseFloat(v)
+                    } else {
+                        ret = elem[method];
+                    }
+                }
+                return ret;
+            }
         });
 
-    // http://old.jr.pl/www.quirksmode.org/viewport/compatibility.html
-    // http://www.quirksmode.org/dom/w3c_cssom.html
-    // add ScrollLeft/ScrollTop getter/setter methods
-    S.each(['Left', 'Top'], function (name, i) {
-        var method = SCROLL + name;
-
-        DOM[method] = function (elem, v) {
-            if (isNumber(elem)) {
-                return arguments.callee(win, elem);
-            }
-            elem = DOM.get(elem);
-            var ret,
-                left,
-                top,
-                w = getWin(elem),
-                d;
-            if (w) {
-                if (v !== undefined) {
-                    v = parseFloat(v);
-                    // 注意多 window 情况，不能简单取 win
-                    left = name == 'Left' ? v : DOM.scrollLeft(w);
-                    top = name == 'Top' ? v : DOM.scrollTop(w);
-                    w['scrollTo'](left, top);
-                } else {
-                    //标准
-                    //chrome == body.scrollTop
-                    //firefox/ie9 == documentElement.scrollTop
-                    ret = w[ 'page' + (i ? 'Y' : 'X') + 'Offset'];
-                    if (!isNumber(ret)) {
-                        d = w[DOCUMENT];
-                        //ie6,7,8 standard mode
-                        ret = d[DOC_ELEMENT][method];
-                        if (!isNumber(ret)) {
-                            //quirks mode
-                            ret = d[BODY][method];
-                        }
-                    }
-                }
-            } else if (elem.nodeType == NodeType.ELEMENT_NODE) {
-                if (v !== undefined) {
-                    elem[method] = parseFloat(v)
-                } else {
-                    ret = elem[method];
-                }
-            }
-            return ret;
-        }
-    });
-
-    // add docWidth/Height, viewportWidth/Height getter methods
-    S.each(['Width', 'Height'], function (name) {
-        DOM['doc' + name] = function (refWin) {
-            refWin = DOM.get(refWin);
-            var w = getWin(refWin),
-                d = w[DOCUMENT];
-            return MAX(
-                //firefox chrome documentElement.scrollHeight< body.scrollHeight
-                //ie standard mode : documentElement.scrollHeight> body.scrollHeight
-                d[DOC_ELEMENT][SCROLL + name],
-                //quirks : documentElement.scrollHeight 最大等于可视窗口多一点？
-                d[BODY][SCROLL + name],
-                DOM[VIEWPORT + name](d));
-        };
-
-        DOM[VIEWPORT + name] = function (refWin) {
-            refWin = DOM.get(refWin);
-            var prop = CLIENT + name,
-                win = getWin(refWin),
-                doc = win[DOCUMENT],
-                body = doc[BODY],
-                documentElement = doc[DOC_ELEMENT],
-                documentElementProp = documentElement[prop];
-            // 标准模式取 documentElement
-            // backcompat 取 body
-            return doc[compatMode] === CSS1Compat
-                && documentElementProp ||
-                body && body[ prop ] || documentElementProp;
-        }
-    });
-
-    function getClientPosition(elem) {
-        var box, x , y ,
-            doc = elem.ownerDocument,
-            body = doc.body;
-
-        if (!elem.getBoundingClientRect) {
-            return {
-                left: 0,
-                top: 0
+// add docWidth/Height, viewportWidth/Height getter methods
+        S.each(['Width', 'Height'], function (name) {
+            DOM['doc' + name] = function (refWin) {
+                refWin = DOM.get(refWin);
+                var w = getWin(refWin),
+                    d = w[DOCUMENT];
+                return MAX(
+                    //firefox chrome documentElement.scrollHeight< body.scrollHeight
+                    //ie standard mode : documentElement.scrollHeight> body.scrollHeight
+                    d[DOC_ELEMENT][SCROLL + name],
+                    //quirks : documentElement.scrollHeight 最大等于可视窗口多一点？
+                    d[BODY][SCROLL + name],
+                    DOM[VIEWPORT + name](d));
             };
+
+            DOM[VIEWPORT + name] = function (refWin) {
+                refWin = DOM.get(refWin);
+                var prop = CLIENT + name,
+                    win = getWin(refWin),
+                    doc = win[DOCUMENT],
+                    body = doc[BODY],
+                    documentElement = doc[DOC_ELEMENT],
+                    documentElementProp = documentElement[prop];
+                // 标准模式取 documentElement
+                // backcompat 取 body
+                return doc[compatMode] === CSS1Compat
+                    && documentElementProp ||
+                    body && body[ prop ] || documentElementProp;
+            }
+        });
+
+        function getClientPosition(elem) {
+            var box, x , y ,
+                doc = elem.ownerDocument,
+                body = doc.body;
+
+            if (!elem.getBoundingClientRect) {
+                return {
+                    left: 0,
+                    top: 0
+                };
+            }
+
+            // 根据 GBS 最新数据，A-Grade Browsers 都已支持 getBoundingClientRect 方法，不用再考虑传统的实现方式
+            box = elem.getBoundingClientRect();
+
+            // 注：jQuery 还考虑减去 docElem.clientLeft/clientTop
+            // 但测试发现，这样反而会导致当 html 和 body 有边距/边框样式时，获取的值不正确
+            // 此外，ie6 会忽略 html 的 margin 值，幸运地是没有谁会去设置 html 的 margin
+
+            x = box[LEFT];
+            y = box[TOP];
+
+            // In IE, most of the time, 2 extra pixels are added to the top and left
+            // due to the implicit 2-pixel inset border.  In IE6/7 quirks mode and
+            // IE6 standards mode, this border can be overridden by setting the
+            // document element's border to zero -- thus, we cannot rely on the
+            // offset always being 2 pixels.
+
+            // In quirks mode, the offset can be determined by querying the body's
+            // clientLeft/clientTop, but in standards mode, it is found by querying
+            // the document element's clientLeft/clientTop.  Since we already called
+            // getClientBoundingRect we have already forced a reflow, so it is not
+            // too expensive just to query them all.
+
+            // ie 下应该减去窗口的边框吧，毕竟默认 absolute 都是相对窗口定位的
+            // 窗口边框标准是设 documentElement ,quirks 时设置 body
+            // 最好禁止在 body 和 html 上边框 ，但 ie < 9 html 默认有 2px ，减去
+            // 但是非 ie 不可能设置窗口边框，body html 也不是窗口 ,ie 可以通过 html,body 设置
+            // 标准 ie 下 docElem.clientTop 就是 border-top
+            // ie7 html 即窗口边框改变不了。永远为 2
+            // 但标准 firefox/chrome/ie9 下 docElem.clientTop 是窗口边框，即使设了 border-top 也为 0
+
+            x -= docElem.clientLeft || body.clientLeft || 0;
+            y -= docElem.clientTop || body.clientTop || 0;
+
+            return { left: x, top: y };
         }
 
-        // 根据 GBS 最新数据，A-Grade Browsers 都已支持 getBoundingClientRect 方法，不用再考虑传统的实现方式
-        box = elem.getBoundingClientRect();
 
-        // 注：jQuery 还考虑减去 docElem.clientLeft/clientTop
-        // 但测试发现，这样反而会导致当 html 和 body 有边距/边框样式时，获取的值不正确
-        // 此外，ie6 会忽略 html 的 margin 值，幸运地是没有谁会去设置 html 的 margin
-
-        x = box[LEFT];
-        y = box[TOP];
-
-        // In IE, most of the time, 2 extra pixels are added to the top and left
-        // due to the implicit 2-pixel inset border.  In IE6/7 quirks mode and
-        // IE6 standards mode, this border can be overridden by setting the
-        // document element's border to zero -- thus, we cannot rely on the
-        // offset always being 2 pixels.
-
-        // In quirks mode, the offset can be determined by querying the body's
-        // clientLeft/clientTop, but in standards mode, it is found by querying
-        // the document element's clientLeft/clientTop.  Since we already called
-        // getClientBoundingRect we have already forced a reflow, so it is not
-        // too expensive just to query them all.
-
-        // ie 下应该减去窗口的边框吧，毕竟默认 absolute 都是相对窗口定位的
-        // 窗口边框标准是设 documentElement ,quirks 时设置 body
-        // 最好禁止在 body 和 html 上边框 ，但 ie < 9 html 默认有 2px ，减去
-        // 但是非 ie 不可能设置窗口边框，body html 也不是窗口 ,ie 可以通过 html,body 设置
-        // 标准 ie 下 docElem.clientTop 就是 border-top
-        // ie7 html 即窗口边框改变不了。永远为 2
-        // 但标准 firefox/chrome/ie9 下 docElem.clientTop 是窗口边框，即使设了 border-top 也为 0
-
-        x -= docElem.clientLeft || body.clientLeft || 0;
-        y -= docElem.clientTop || body.clientTop || 0;
-
-        return { left: x, top: y };
-    }
-
-
-    function getPageOffset(el) {
-        var pos = getClientPosition(el),
-            w = getWin(el[OWNER_DOCUMENT]);
-        pos.left += DOM[SCROLL_LEFT](w);
-        pos.top += DOM[SCROLL_TOP](w);
-        return pos;
-    }
-
-    // 获取 elem 相对 elem.ownerDocument 的坐标
-    function getOffset(el, relativeWin) {
-        var position = {left: 0, top: 0},
-
-        // Iterate up the ancestor frame chain, keeping track of the current window
-        // and the current element in that window.
-            currentWin = getWin(el[OWNER_DOCUMENT]),
-            offset,
-            currentEl = el;
-        relativeWin = relativeWin || currentWin;
-
-        do {
-            // if we're at the top window, we want to get the page offset.
-            // if we're at an inner frame, we only want to get the window position
-            // so that we can determine the actual page offset in the context of
-            // the outer window.
-            offset = currentWin == relativeWin ?
-                getPageOffset(currentEl) :
-                getClientPosition(currentEl);
-            position.left += offset.left;
-            position.top += offset.top;
-        } while (currentWin &&
-            currentWin != relativeWin &&
-            (currentEl = currentWin['frameElement']) &&
-            (currentWin = currentWin.parent));
-
-        return position;
-    }
-
-    // 设置 elem 相对 elem.ownerDocument 的坐标
-    function setOffset(elem, offset) {
-        // set position first, in-case top/left are set even on static elem
-        if (DOM.css(elem, POSITION) === 'static') {
-            elem.style[POSITION] = RELATIVE;
+        function getPageOffset(el) {
+            var pos = getClientPosition(el),
+                w = getWin(el[OWNER_DOCUMENT]);
+            pos.left += DOM[SCROLL_LEFT](w);
+            pos.top += DOM[SCROLL_TOP](w);
+            return pos;
         }
 
-        var old = getOffset(elem),
-            ret = { },
-            current, key;
+// 获取 elem 相对 elem.ownerDocument 的坐标
+        function getOffset(el, relativeWin) {
+            var position = {left: 0, top: 0},
 
-        for (key in offset) {
-            current = myParseInt(DOM.css(elem, key), 10) || 0;
-            ret[key] = current + offset[key] - old[key];
+            // Iterate up the ancestor frame chain, keeping track of the current window
+            // and the current element in that window.
+                currentWin = getWin(el[OWNER_DOCUMENT]),
+                offset,
+                currentEl = el;
+            relativeWin = relativeWin || currentWin;
+
+            do {
+                // if we're at the top window, we want to get the page offset.
+                // if we're at an inner frame, we only want to get the window position
+                // so that we can determine the actual page offset in the context of
+                // the outer window.
+                offset = currentWin == relativeWin ?
+                    getPageOffset(currentEl) :
+                    getClientPosition(currentEl);
+                position.left += offset.left;
+                position.top += offset.top;
+            } while (currentWin &&
+                currentWin != relativeWin &&
+                (currentEl = currentWin['frameElement']) &&
+                (currentWin = currentWin.parent));
+
+            return position;
         }
-        DOM.css(elem, ret);
-    }
 
-    return DOM;
-}, {
-    requires: ['./api']
-});
+// 设置 elem 相对 elem.ownerDocument 的坐标
+        function setOffset(elem, offset) {
+            // set position first, in-case top/left are set even on static elem
+            if (DOM.css(elem, POSITION) === 'static') {
+                elem.style[POSITION] = RELATIVE;
+            }
+
+            var old = getOffset(elem),
+                ret = { },
+                current, key;
+
+            for (key in offset) {
+                current = myParseInt(DOM.css(elem, key), 10) || 0;
+                ret[key] = current + offset[key] - old[key];
+            }
+            DOM.css(elem, ret);
+        }
+
+        return DOM;
+    },
+    {
+        requires: ['./api']
+    }
+)
+;
 
 /*
  2012-03-30
@@ -9371,7 +9375,11 @@ KISSY.add('dom/base/selector', function (S, DOM) {
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('dom/base/style', function (S, DOM, undefined) {
-    var WINDOW = S.Env.host,
+    var
+        WINDOW = /**
+         @ignore
+         @type window
+         */S.Env.host,
         UA = S.UA,
         getNodeName = DOM.nodeName,
         doc = WINDOW.document,
@@ -9379,11 +9387,9 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
         RE_MARGIN = /^margin/,
         WIDTH = 'width',
         HEIGHT = 'height',
-        AUTO = 'auto',
         DISPLAY = 'display',
         OLD_DISPLAY = DISPLAY + S.now(),
         NONE = 'none',
-        myParseInt = parseInt,
         cssNumber = {
             'fillOpacity': 1,
             'fontWeight': 1,
@@ -9395,23 +9401,25 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
             'zoom': 1
         },
         rmsPrefix = /^-ms-/,
-    // 考虑 ie9 ...
+    // ie9+
         R_UPPER = /([A-Z]|^ms)/g,
         EMPTY = '',
         DEFAULT_UNIT = 'px',
+        NO_PX_REG = /(?:\d(?!px)[a-z%]+)|(?:auto)$/i,
         CUSTOM_STYLES = {},
         cssProps = {
             'float': 'cssFloat'
         },
         defaultDisplay = {},
-        RE_DASH = /-([a-z])/ig,
-        CAMEL_CASE_FN = function (all, letter) {
-            return letter.toUpperCase();
-        };
+        RE_DASH = /-([a-z])/ig;
+
+    function upperCase(m) {
+        return m.toUpperCase();
+    }
 
     function camelCase(name) {
         // fix #92, ms!
-        return name.replace(rmsPrefix, 'ms-').replace(RE_DASH, CAMEL_CASE_FN);
+        return name.replace(rmsPrefix, 'ms-').replace(RE_DASH, upperCase);
     }
 
     function getDefaultDisplay(tagName) {
@@ -9560,7 +9568,7 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
                             ret = DOM._getComputedStyle(elem, name);
                         }
                     }
-                    return (ret === undefined) ? '' : ret;
+                    return (typeof ret == 'undefined') ? '' : ret;
                 }
                 // setter
                 else {
@@ -9797,9 +9805,11 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
              * @ignore
              */
             get: function (elem, computed) {
+                var val;
                 if (computed) {
-                    return getWHIgnoreDisplay(elem, name) + 'px';
+                    val = getWHIgnoreDisplay(elem, name) + 'px';
                 }
+                return val;
             }
         };
     });
@@ -9807,37 +9817,15 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
     S.each(['left', 'top'], function (name) {
 
         CUSTOM_STYLES[ name ] = {
-            get: function (elem, computed) {
+            get: function (el, computed) {
+                var val;
                 if (computed) {
-                    var val = DOM._getComputedStyle(elem, name), offset;
-
-                    // 1. 当没有设置 style.left 时，getComputedStyle 在不同浏览器下，返回值不同
-                    //    比如：firefox 返回 0, webkit/ie 返回 auto
-                    // 2. style.left 设置为百分比时，返回值为百分比
-                    // 对于第一种情况，如果是 relative 元素，值为 0. 如果是 absolute 元素，值为 offsetLeft - marginLeft
-                    // 对于第二种情况，大部分类库都未做处理，属于“明之而不 fix”的保留 bug
-                    if (val === AUTO) {
-                        val = 0;
-                        if (S.inArray(DOM.css(elem, 'position'), ['absolute', 'fixed'])) {
-                            offset = elem[name === 'left' ? 'offsetLeft' : 'offsetTop'];
-
-                            // old-ie 下，elem.offsetLeft 包含 offsetParent 的 border 宽度，需要减掉
-                            if (UA.ie && (doc['documentMode'] || 0) < 9 || UA['opera']) {
-                                // 类似 offset ie 下的边框处理
-                                // 如果 offsetParent 为 html ，需要减去默认 2 px == documentElement.clientTop
-                                // 否则减去 borderTop 其实也是 clientTop
-                                // http://msdn.microsoft.com/en-us/library/aa752288%28v=vs.85%29.aspx
-                                // ie<9 注意有时候 elem.offsetParent 为 null ...
-                                // 比如 DOM.append(DOM.create('<div class='position:absolute'></div>'),document.body)
-                                offset -= elem.offsetParent && elem.offsetParent['client' + (name == 'left' ? 'Left' : 'Top')]
-                                    || 0;
-                            }
-                            val = offset - (myParseInt(DOM.css(elem, 'margin-' + name)) || 0);
-                        }
-                        val += 'px';
+                    val = DOM._getComputedStyle(el, name);
+                    if (NO_PX_REG.test(val)) {
+                        val = position(el)[name] + 'px';
                     }
-                    return val;
                 }
+                return val;
             }
         };
     });
@@ -9988,6 +9976,37 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
         }
 
         return val;
+    }
+
+
+    var ROOT_REG = /^(?:body|html)$/i;
+
+    function position(el) {
+        var offsetParent = getOffsetParent(el),
+            offset = DOM.offset(el),
+            parentOffset = DOM.offset(offsetParent);
+
+        offset.top -= parseFloat(DOM.css(el, "marginTop")) || 0;
+        offset.left -= parseFloat(DOM.css(el, "marginLeft")) || 0;
+
+        parentOffset.top += parseFloat(DOM.css(offsetParent, "borderTopWidth")) || 0;
+        parentOffset.left += parseFloat(DOM.css(offsetParent, "borderLeftWidth")) || 0;
+
+        // known bug: if el is relative && offsetParent is document.body, left %
+        // should - document.body.paddingLeft
+        return {
+            top: offset.top - parentOffset.top,
+            left: offset.left - parentOffset.left
+        };
+    }
+
+    function getOffsetParent(el) {
+        var offsetParent = el.offsetParent || ( el.ownerDocument || doc).body;
+        while (offsetParent && !ROOT_REG.test(offsetParent.nodeName) &&
+            DOM.css(offsetParent, "position") === "static") {
+            offsetParent = offsetParent.offsetParent;
+        }
+        return offsetParent;
     }
 
     return DOM;
@@ -22473,7 +22492,7 @@ KISSY.add('anim/facade', function (S, DOM, AnimBase, TimerAnim, TransitionAnim) 
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 12 01:11
+build time: Apr 12 12:13
 */
 /**
  * @ignore
@@ -23371,7 +23390,6 @@ KISSY.add('anim/timer', function (S, DOM, Event, AnimBase, Easing, AM, Fx, SHORT
             // 取得单位，并对单个属性构建 Fx 对象
             for (prop in _propsData) {
 
-
                 _propData = _propsData[prop];
 
                 // 自定义
@@ -23379,9 +23397,6 @@ KISSY.add('anim/timer', function (S, DOM, Event, AnimBase, Easing, AM, Fx, SHORT
                     _propData.fx.prop = prop;
                     continue;
                 }
-
-                // https://github.com/kissyteam/kissy/issues/310
-                var hasFrom = 'from' in _propData, fromValue = _propData.from, parsed;
 
                 val = _propData.value;
                 propCfg = {
@@ -23392,13 +23407,7 @@ KISSY.add('anim/timer', function (S, DOM, Event, AnimBase, Easing, AM, Fx, SHORT
                 fx = Fx.getFx(propCfg);
                 to = val;
 
-                if (hasFrom) {
-                    from = isNaN(parsed = parseFloat(fromValue)) ?
-                        !fromValue || fromValue === 'auto' ? 0 : fromValue
-                        : parsed;
-                } else {
-                    from = fx.cur();
-                }
+                from = fx.cur();
 
                 val += '';
                 unit = '';
@@ -23409,16 +23418,16 @@ KISSY.add('anim/timer', function (S, DOM, Event, AnimBase, Easing, AM, Fx, SHORT
                     unit = parts[3];
 
                     // 有单位但单位不是 px
-                    if (!hasFrom && unit && unit !== 'px') {
+                    if (unit && unit !== 'px' && from) {
                         var tmpCur = 0,
                             to2 = to;
-                        to2 -= 1;
                         do {
                             ++to2;
                             DOM.css(el, prop, to2 + unit);
                             // in case tmpCur==0
                             tmpCur = fx.cur();
                         } while (tmpCur == 0);
+                        // S.log(to2+' --- '+tmpCur);
                         from = (to2 / tmpCur) * from;
                         DOM.css(el, prop, from + unit);
                     }

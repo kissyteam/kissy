@@ -10,10 +10,16 @@
     <link href="/kissy/build/css/dpl/reset.css" rel="stylesheet"/>
 
     <script src="/kissy/build/seed.js"></script>
+    <script src="http://localhost:8888/kissy/tools/third-party/jquery.js"></script>
     <style>
-        body {
-            padding: 20px
+        html,body {
+            padding: 0;
+            margin:0;
         }
+
+        /*body{*/
+            /*padding: 20px;*/
+        /*}*/
 
         hr {
             height: 1px;
@@ -31,22 +37,76 @@
 </head>
 <body>
 <div>
-    <div id="t" style="height:100px;border:1px solid red;
-    background:yellow;left:-100%;position: relative;">
+    <div id="t_absolute" style="height:100px;border:1px solid red;
+    background:yellow;left:-100%;top:10%;position: absolute;margin-left:5%; ">
     </div>
 
-    <button id="error_chrome">chrome/ie678 error</button>
-    <button id="recommend">推荐</button>
-    <button id="ok">ok</button>
+    <div id="t" style="height:100px;border:1px solid red;
+    background:yellow;left:-100%;top:10%;position: relative;margin-left:5%; ">
+    </div>
+
+    <button id="error_chrome">px</button>
+    <button id="recommend">%</button>
+    <button id="ok">%</button>
+
+
+    <div style="position: relative;padding: 20px;
+    height: 100px;
+    border: 1px solid red;margin:5px;">
+        <div id="t2"
+             style="position: absolute;
+        height: 20px;
+        border: 1px solid #000000;
+        padding: 14px;
+        margin:4px;
+        left:0%;
+        top:5%;"></div>
+    </div>
 </div>
 <script>
     KISSY.use("anim,node", function (S, Anim, Node) {
-        var $ = Node.all;
+        var $ = Node.all,
+                jt2 = jQuery('#t2'),
+                t2 = $('#t2'),
+                jt_absolute = jQuery('#t_absolute'),
+                t_absolute = $('#t_absolute'),
+                jt = jQuery('#t'),
+                t = $('#t');
+
+        S.log('jt_absolute');
+        S.log('************************** kissy: ');
+        S.log('top: ' + t_absolute.css('top'));
+        S.log('left: ' + t_absolute.css('left'));
+
+        S.log('************************** jquery: ');
+        S.log('top: ' + jt_absolute.css('top'));
+        S.log('left: ' + jt_absolute.css('left'));
+
+
+        S.log('t2');
+        S.log('************************** kissy: ');
+        S.log('top: ' + t2.css('top'));
+        S.log('left: ' + t2.css('left'));
+
+        S.log('************************** jquery: ');
+        S.log('top: ' + jt2.css('top'));
+        S.log('left: ' + jt2.css('left'));
+
+        S.log('t');
+        S.log('************************** kissy: ');
+        S.log('left: ' + t.css('left'));
+        S.log('top: ' + t.css('top'));
+        S.log('margin-left: ' + t.css('margin-left'));
+
+
+        S.log('************************** jquery: ');
+        S.log('left: ' + jt.css('left'));
+        S.log('top: ' + jt.css('top'));
+        S.log('margin-left: ' + jt.css('margin-left'));
+
         $('#ok').on('click', function () {
             new Anim('#t', {
                 left: {
-                    // from,to 都写时请保证单位一致，内部不会做转单位操作
-                    from: '-100%',
                     value: '0%'
                 }
             }, {
@@ -54,7 +114,7 @@
             }).run();
         });
 
-        //chrome error %
+
         $('#error_chrome').on('click', function () {
             new Anim('#t', {
                 left: 0
@@ -63,7 +123,6 @@
             }).run();
         });
 
-        // % 时注明结束值单位
         $('#recommend').on('click', function () {
             new Anim('#t', {
                 left: '0%'
