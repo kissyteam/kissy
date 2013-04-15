@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.30
 MIT Licensed
-build time: Apr 2 18:06
+build time: Apr 15 11:57
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130402180552' will replace with current timestamp when compressing.
+         * NOTICE: '20130415115744' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130402180552',
+        __BUILD_TIME: '20130415115744',
         /**
          * KISSY Environment.
          * @private
@@ -3231,6 +3231,14 @@ var KISSY = (function (undefined) {
         s = div.getElementsByTagName('s');
     }
 
+    function getIEVersion(ua) {
+        var m;
+        if ((m = ua.match(/MSIE\s([^;]*)/)) && m[1]) {
+            return numberify(m[1]);
+        }
+        return 0;
+    }
+
     if (s.length > 0) {
 
         shell = 'ie';
@@ -3254,6 +3262,15 @@ var KISSY = (function (undefined) {
                 break;
             }
         }
+
+        var ieVersion;
+
+        // https://github.com/kissyteam/kissy/issues/321
+        // win8 embed app
+        if (!UA.ie && (ieVersion = getIEVersion(ua))) {
+            UA[shell = 'ie'] = ieVersion;
+        }
+
 
     } else {
 
@@ -5119,7 +5136,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20130402180552'
+            tag: '20130415115744'
         }, getBaseInfo()));
     }
 

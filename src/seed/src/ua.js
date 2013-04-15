@@ -168,6 +168,14 @@
         s = div.getElementsByTagName('s');
     }
 
+    function getIEVersion(ua) {
+        var m;
+        if ((m = ua.match(/MSIE\s([^;]*)/)) && m[1]) {
+            return numberify(m[1]);
+        }
+        return 0;
+    }
+
     if (s.length > 0) {
 
         shell = 'ie';
@@ -191,6 +199,15 @@
                 break;
             }
         }
+
+        var ieVersion;
+
+        // https://github.com/kissyteam/kissy/issues/321
+        // win8 embed app
+        if (!UA.ie && (ieVersion = getIEVersion(ua))) {
+            UA[shell = 'ie'] = ieVersion;
+        }
+
 
     } else {
 
