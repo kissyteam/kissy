@@ -89,20 +89,26 @@
     <button class="submit">submit</button>
 </script>
 
+
 <script
-src = "/kissy/build/seed.js"></script>
+src = "/kissy/build/seed.js" ></script>
+<script src="../../src/model.js"></script>
+<script src="../../src/sync.js"></script>
+<script src="../../src/collection.js"></script>
+<script src="../../src/router.js"></script>
+<script src="../../src/view.js"></script>
+<script src="../../src/mvc.js"></script>
 <script>
-    //KISSY.Config.debug=1;
     KISSY.config({
-        packages:[
+       packages:[
             {
                 name:'note',
                 tag:'201111211221',
-                path:'./'
+                path:'../'
             }
-        ]
+       ]
     });
-    KISSY.use("note/main2");
+    KISSY.use("note/main-html5");
 </script>
 </body>
 </html>

@@ -248,11 +248,11 @@ KISSY.add('mvc/router', function (S, Event, Base) {
         }
     }
 
-    /**
-     * transform route declaration to router reg
-     * @param str
-     *         /search/:q
-     *         /user/*path
+    /*
+      transform route declaration to router reg
+      @param str
+              /search/:q
+              /user/*path
      */
     function transformRouterReg(self, str, callback) {
         var name = str,
