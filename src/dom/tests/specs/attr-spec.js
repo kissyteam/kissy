@@ -178,12 +178,12 @@ KISSY.use("dom,core", function (S, DOM) {
 
                 expect(DOM.attr(a, 'href')).toBe('../kissy/');
 
-                DOM.attr(img, 'src', '../others/logo.png');
+                DOM.attr(img, 'src', '../others/space.gif');
 
                 expect(DOM.prop(img, 'src'))
-                    .toBe(new S.Uri(location.href).resolve('../others/logo.png').toString());
+                    .toBe(new S.Uri(location.href).resolve('../others/space.gif').toString());
 
-                expect(DOM.attr(img, 'src')).toBe('../others/logo.png');
+                expect(DOM.attr(img, 'src')).toBe('../others/space.gif');
 
                 // colspan / rowspan:
                 expect(DOM.attr(td, 'rowspan') + '').toBe('2');
