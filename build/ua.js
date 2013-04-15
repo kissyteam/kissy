@@ -1,7 +1,7 @@
 ﻿/*
-Copyright 2011, KISSY UI Library v1.20
+Copyright 2013, KISSY UI Library v1.20
 MIT Licensed
-build time: Nov 28 12:39
+build time: Apr 15 11:52
 */
 /**
  * @module  ua
@@ -42,6 +42,14 @@ KISSY.add('ua/base', function() {
             }));
         };
 
+    function getIEVersion(ua) {
+        var m;
+        if ((m = ua.match(/MSIE\s([^;]*)/)) && m[1]) {
+            return numberify(m[1]);
+        }
+        return 0;
+    }
+
     // try to use IE-Conditional-Comment detect IE more accurately
     // IE10 doesn't support this method, @ref: http://blogs.msdn.com/b/ie/archive/2011/07/06/html5-parsing-in-ie10.aspx
     div.innerHTML = IE_DETECT_TPL.replace(VERSION_PLACEHOLDER, '');
@@ -69,6 +77,14 @@ KISSY.add('ua/base', function() {
                 o[shell] = v;
                 break;
             }
+        }
+
+        var ieVersion;
+
+        // https://github.com/kissyteam/kissy/issues/321
+        // win8 embed app
+        if (!o.ie && (ieVersion = getIEVersion(ua))) {
+            o[shell = 'ie'] = ieVersion;
         }
 
     } else {

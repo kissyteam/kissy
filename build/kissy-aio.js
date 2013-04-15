@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.20
 MIT Licensed
-build time: Jan 28 17:15
+build time: Apr 15 11:53
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -92,7 +92,7 @@ build time: Jan 28 17:15
          */
         version:'1.20',
 
-        buildTime:'20130128171456',
+        buildTime:'20130415115317',
 
         /**
          * Returns a new object containing all of the properties of
@@ -3041,6 +3041,14 @@ KISSY.add('ua/base', function() {
             }));
         };
 
+    function getIEVersion(ua) {
+        var m;
+        if ((m = ua.match(/MSIE\s([^;]*)/)) && m[1]) {
+            return numberify(m[1]);
+        }
+        return 0;
+    }
+
     // try to use IE-Conditional-Comment detect IE more accurately
     // IE10 doesn't support this method, @ref: http://blogs.msdn.com/b/ie/archive/2011/07/06/html5-parsing-in-ie10.aspx
     div.innerHTML = IE_DETECT_TPL.replace(VERSION_PLACEHOLDER, '');
@@ -3068,6 +3076,14 @@ KISSY.add('ua/base', function() {
                 o[shell] = v;
                 break;
             }
+        }
+
+        var ieVersion;
+
+        // https://github.com/kissyteam/kissy/issues/321
+        // win8 embed app
+        if (!o.ie && (ieVersion = getIEVersion(ua))) {
+            o[shell = 'ie'] = ieVersion;
         }
 
     } else {
@@ -29543,15 +29559,15 @@ KISSY.add("menubutton/select", function(S, Node, UIBase, Component, MenuButton, 
         'menubutton/option']
 });
 /*
-Copyright 2011, KISSY UI Library v1.20
+Copyright 2013, KISSY UI Library v1.20
 MIT Licensed
-build time: Nov 28 12:39
+build time: Apr 11 16:35
 */
 /**
  * @fileOverview abstraction of tree node ,root and other node will extend it
  * @author yiminghe@gmail.com
  */
-KISSY.add("tree/basenode", function(S, Node, UIBase, Component, BaseNodeRender) {
+KISSY.add("tree/basenode", function (S, Node, UIBase, Component, BaseNodeRender) {
     var $ = Node.all,
         ITEM_CLS = BaseNodeRender.ITEM_CLS,
         KeyCodes = Node.KeyCodes;
@@ -29567,7 +29583,7 @@ KISSY.add("tree/basenode", function(S, Node, UIBase, Component, BaseNodeRender) 
          */
         [Component.DecorateChild],
         {
-            _keyNav:function(e) {
+            _keyNav: function (e) {
                 var self = this,
                     processed = true,
                     n,
@@ -29633,8 +29649,8 @@ KISSY.add("tree/basenode", function(S, Node, UIBase, Component, BaseNodeRender) 
                 return processed;
             },
 
-            getLastVisibleDescendant:function() {
-                var self = this,children = self.get("children");
+            getLastVisibleDescendant: function () {
+                var self = this, children = self.get("children");
                 // 没有展开或者根本没有儿子节点，可视的只有自己
                 if (!self.get("expanded") || !children.length) {
                     return self;
@@ -29643,7 +29659,7 @@ KISSY.add("tree/basenode", function(S, Node, UIBase, Component, BaseNodeRender) 
                 return children[children.length - 1].getLastVisibleDescendant();
             },
 
-            getNextVisibleNode:function() {
+            getNextVisibleNode: function () {
                 var self = this,
                     children = self.get("children"),
                     parent = self.get("parent");
@@ -29660,8 +29676,8 @@ KISSY.add("tree/basenode", function(S, Node, UIBase, Component, BaseNodeRender) 
                 return n;
             },
 
-            getPreviousVisibleNode:function() {
-                var self = this,prev = self.prev();
+            getPreviousVisibleNode: function () {
+                var self = this, prev = self.prev();
                 if (!prev) {
                     prev = self.get("parent");
                 } else {
@@ -29670,8 +29686,8 @@ KISSY.add("tree/basenode", function(S, Node, UIBase, Component, BaseNodeRender) 
                 return prev;
             },
 
-            next:function() {
-                var self = this,parent = self.get("parent");
+            next: function () {
+                var self = this, parent = self.get("parent");
                 if (!parent) {
                     return null;
                 }
@@ -29683,7 +29699,7 @@ KISSY.add("tree/basenode", function(S, Node, UIBase, Component, BaseNodeRender) 
                 return siblings[index + 1];
             },
 
-            prev:function() {
+            prev: function () {
                 var self = this, parent = self.get("parent");
                 if (!parent) {
                     return null;
@@ -29700,12 +29716,12 @@ KISSY.add("tree/basenode", function(S, Node, UIBase, Component, BaseNodeRender) 
              * 选中当前节点
              * @public
              */
-            select : function() {
+            select: function () {
                 var self = this;
                 self.get("tree").set("selectedItem", self);
             },
 
-            _performInternal:function(e) {
+            _performInternal: function (e) {
                 var self = this,
                     target = $(e.target),
                     tree = self.get("tree"),
@@ -29722,29 +29738,32 @@ KISSY.add("tree/basenode", function(S, Node, UIBase, Component, BaseNodeRender) 
                 else {
                     self.select();
                     tree.fire("click", {
-                        target:self
+                        target: self
                     });
                 }
             },
 
             // 默认 addChild，这里需要设置 tree 属性
-            decorateChildrenInternal:function(ui, c, cls) {
+            decorateChildrenInternal: function (ui, c, cls) {
                 var self = this;
                 self.addChild(new ui({
-                    srcNode:c,
-                    tree:self.get("tree"),
-                    prefixCls:cls
+                    srcNode: c,
+                    tree: self.get("tree"),
+                    prefixCls: cls
                 }));
             },
 
-            addChild:function(c) {
-                var self = this,tree = self.get("tree");
+            addChild: function (c, index) {
+                var self = this, tree = self.get("tree");
+                if (index === undefined) {
+                    index = this.get('children').length;
+                }
                 c.set("tree", tree);
                 c.set("depth", self.get('depth') + 1);
-                BaseNode.superclass.addChild.call(self, c);
-                self._updateRecursive();
+                BaseNode.superclass.addChild.apply(self, arguments);
+                self._updateRecursive(index);
                 tree._register(c);
-                S.each(c.get("children"), function(cc) {
+                S.each(c.get("children"), function (cc) {
                     tree._register(cc);
                 });
             },
@@ -29753,77 +29772,83 @@ KISSY.add("tree/basenode", function(S, Node, UIBase, Component, BaseNodeRender) 
              每次添加/删除节点，都检查自己以及自己子孙 class
              每次 expand/collapse，都检查
              */
-            _computeClass:function(cause) {
-                var self = this,view = self.get("view");
+            _computeClass: function (cause) {
+                var self = this, view = self.get("view");
                 view._computeClass(self.get('children'), self.get("parent"), cause);
             },
 
-            _updateRecursive:function() {
-                var self = this,len = self.get('children').length;
+            _updateRecursive: function (index) {
+                var self = this,
+                    c,
+                    children = self.get('children'),
+                    len = children.length;
                 self._computeClass("_updateRecursive");
-                S.each(self.get("children"), function(c, index) {
+                index = Math.max(index - 1, 0);
+                for (; index < len; index++) {
+                    c = children[index];
                     c._computeClass("_updateRecursive_children");
                     c.get("view").set("ariaPosInSet", index + 1);
                     c.get("view").set("ariaSize", len);
-                });
+                }
             },
 
-            removeChild:function(c) {
-                var self = this,tree = self.get("tree");
+            removeChild: function (c) {
+                var self = this, tree = self.get("tree");
                 tree._unregister(c);
-                S.each(c.get("children"), function(cc) {
+                S.each(c.get("children"), function (cc) {
                     tree._unregister(cc);
                 });
+                var index= S.indexOf(c,this.get('children'));
                 BaseNode.superclass.removeChild.apply(self, S.makeArray(arguments));
-                self._updateRecursive();
+                self._updateRecursive(index);
             },
 
-            _uiSetExpanded:function(v) {
+            _uiSetExpanded: function (v) {
                 var self = this,
                     tree = self.get("tree");
                 self._computeClass("expanded-" + v);
                 if (v) {
                     tree.fire("expand", {
-                        target:self
+                        target: self
                     });
                 } else {
                     tree.fire("collapse", {
-                        target:self
+                        target: self
                     });
                 }
             },
 
-            _uiSetSelected:function(v) {
+            _uiSetSelected: function (v) {
                 this._forwardSetAttrToView("selected", v);
             },
 
 
-            expandAll:function() {
+            expandAll: function () {
                 var self = this;
                 self.set("expanded", true);
-                S.each(self.get("children"), function(c) {
+                S.each(self.get("children"), function (c) {
                     c.expandAll();
                 });
             },
 
-            collapseAll:function() {
+            collapseAll: function () {
                 var self = this;
                 self.set("expanded", false);
-                S.each(self.get("children"), function(c) {
+                S.each(self.get("children"), function (c) {
                     c.collapseAll();
                 });
             }
         },
 
         {
-            DefaultRender:BaseNodeRender,
-            ATTRS:{
+            DefaultRender: BaseNodeRender,
+            ATTRS: {
                 /*事件代理*/
-                handleMouseEvents:{
-                    value:false
+                handleMouseEvents: {
+                    value: false
                 },
-                id:{
-                    getter:function() {
+                id: {
+                    getter: function () {
                         var self = this,
                             id = self.get("el").attr("id");
                         if (!id) {
@@ -29836,54 +29861,54 @@ KISSY.add("tree/basenode", function(S, Node, UIBase, Component, BaseNodeRender) 
                  * 节点字内容
                  * @type String
                  */
-                content:{view:true},
+                content: {view: true},
 
                 /**
                  * 强制指明该节点是否具备子孙，影响样式，不配置默认样式自动变化
                  * @type Boolean
                  */
-                isLeaf:{
-                    view:true
+                isLeaf: {
+                    view: true
                 },
 
-                expandIconEl:{ view:true},
+                expandIconEl: { view: true},
 
-                iconEl:{ view:true},
+                iconEl: { view: true},
 
                 /**
                  * 是否选中
                  * @type Boolean
                  */
-                selected:{},
+                selected: {},
 
-                expanded:{
-                    value:false,
-                    view:true
+                expanded: {
+                    value: false,
+                    view: true
                 },
 
                 /**
                  * html title
                  * @type String
                  */
-                tooltip:{view:true},
-                tree:{
+                tooltip: {view: true},
+                tree: {
                 },
 
                 /**
                  * depth of node
                  */
-                depth:{
-                    value:0,
-                    view:true
+                depth: {
+                    value: 0,
+                    view: true
                 },
-                focusable:{value:false},
-                decorateChildCls:{
-                    value:"tree-children"
+                focusable: {value: false},
+                decorateChildCls: {
+                    value: "tree-children"
                 }
             },
 
-            HTML_PARSER:{
-                expanded:function(el) {
+            HTML_PARSER: {
+                expanded: function (el) {
                     var children = el.one("." + this.getCls("tree-children"));
                     if (!children) {
                         return false;
@@ -29894,14 +29919,14 @@ KISSY.add("tree/basenode", function(S, Node, UIBase, Component, BaseNodeRender) 
         });
 
     Component.UIStore.setUIByClass(ITEM_CLS, {
-        priority:10,
-        ui:BaseNode
+        priority: 10,
+        ui: BaseNode
     });
 
     return BaseNode;
 
 }, {
-    requires:['node','uibase','component','./basenoderender']
+    requires: ['node', 'uibase', 'component', './basenoderender']
 });/**
  * common render for node
  * @author yiminghe@gmail.com
