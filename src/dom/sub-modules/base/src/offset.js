@@ -54,7 +54,8 @@ KISSY.add('dom/base/offset', function (S, DOM, undefined) {
                 offset: function (selector, coordinates, relativeWin) {
                     // getter
                     if (coordinates === undefined) {
-                        var elem = DOM.get(selector), ret;
+                        var elem = DOM.get(selector),
+                            ret;
                         if (elem) {
                             ret = getOffset(elem, relativeWin);
                         }

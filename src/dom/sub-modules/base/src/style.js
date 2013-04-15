@@ -447,16 +447,19 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
         CUSTOM_STYLES[ name ] = {
             get: function (el, computed) {
                 var val,
+                    isAutoPosition,
                     position;
                 if (computed) {
-                    val = DOM._getComputedStyle(el, name);
-                    position = DOM.css(el,'position');
-                    if (val == 'auto') {
-                        if (position == 'static' || position == 'relative') {
-                            return 0 + 'px';
-                        }
+                    position = DOM.css(el, 'position');
+                    if (position === "static") {
+                        return "auto";
                     }
-                    if (NO_PX_REG.test(val) || val == 'auto') {
+                    val = DOM._getComputedStyle(el, name);
+                    isAutoPosition = val === "auto";
+                    if (isAutoPosition && position === "relative") {
+                        return "0px";
+                    }
+                    if (isAutoPosition || NO_PX_REG.test(val)) {
                         val = getPosition(el)[name] + 'px';
                     }
                 }
@@ -613,19 +616,25 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
         return val;
     }
 
-
     var ROOT_REG = /^(?:body|html)$/i;
 
     function getPosition(el) {
-        var offsetParent = getOffsetParent(el),
-            offset = DOM.offset(el),
+        var offsetParent ,
+            offset ,
+            parentOffset = {top: 0, left: 0};
+
+        if (DOM.css(el, 'position') == 'fixed') {
+            offset = el.getBoundingClientRect();
+        } else {
+            offsetParent = getOffsetParent(el);
+            offset = DOM.offset(el);
             parentOffset = DOM.offset(offsetParent);
+            parentOffset.top += parseFloat(DOM.css(offsetParent, "borderTopWidth")) || 0;
+            parentOffset.left += parseFloat(DOM.css(offsetParent, "borderLeftWidth")) || 0;
+        }
 
         offset.top -= parseFloat(DOM.css(el, "marginTop")) || 0;
         offset.left -= parseFloat(DOM.css(el, "marginLeft")) || 0;
-
-        parentOffset.top += parseFloat(DOM.css(offsetParent, "borderTopWidth")) || 0;
-        parentOffset.left += parseFloat(DOM.css(offsetParent, "borderLeftWidth")) || 0;
 
         // known bug: if el is relative && offsetParent is document.body, left %
         // should - document.body.paddingLeft

@@ -308,14 +308,14 @@ KISSY.use("dom,ua,core", function (S, DOM, UA) {
             expect(d.innerHTML.toLowerCase()).toBe('<div></div>');
         });
 
-        it("left works for auto in", function () {
-            var div = DOM.create("<div style='position:absolute;padding: 20px'>" +
-                "<div style='position: absolute;'></div>" +
-                "</div>");
-            DOM.append(div, document.body);
-            expect(DOM.css(div.firstChild, "left"))
-                .toBe("20px");
-            DOM.remove(div);
+        it("left works for auto", function () {
+            var el = $("<div style='position: relative;padding: 20px;'>" +
+                "<div style='position: absolute'></div><span></span>" +
+                "<s style='position: fixed'></s></div>").appendTo('body');
+            expect(el.css("left")).toBe("0px");
+            expect(el.one("div").css("top")).toBe("20px");
+            expect(el.one("span").css("top")).toBe("auto");
+            expect(parseInt(el.one("s").css("top"))||1).toBe(parseInt(el.one("s")[0].getBoundingClientRect().top)||0);
         });
 
 
