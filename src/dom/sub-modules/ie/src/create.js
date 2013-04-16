@@ -52,6 +52,8 @@ KISSY.add('dom/ie/create', function (S, DOM) {
             // cloning other types of input fields
         } else if (nodeName === 'input' || nodeName === 'textarea') {
             dest.defaultValue = src.defaultValue;
+            // textarea will not keep value if not deep clone
+            dest.value = src.value;
         }
 
         // Event data gets referenced instead of copied if the expando

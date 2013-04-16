@@ -11,6 +11,35 @@ KISSY.use("dom,event,core", function (S, DOM, Event) {
             expect(cloned.checked).toBe(true);
             expect(DOM.data(cloned, "custom")).toBe(undefined);
             expect(DOM.val(cloned)).toBe("on");
+            DOM.remove(checkbox);
+        });
+
+        it('works for single textarea', function () {
+            var input = DOM.create("<textarea></textarea>");
+            DOM.append(input, "#test_cases");
+            input.defaultValue = "y";
+            input.value = "x";
+            var cloned = DOM.clone(input);
+            expect(cloned.defaultValue).toBe('y');
+            expect(cloned.value).toBe('x');
+            DOM.append(cloned, "#test_cases");
+            DOM.remove(input);
+            DOM.remove(cloned);
+        });
+
+
+        it('works for nested textarea', function () {
+            var input = DOM.create("<div><textarea></textarea></div>");
+            DOM.append(input, "#test_cases");
+            input=DOM.get('textarea',input);
+            input.defaultValue = "y";
+            input.value = "x";
+            var cloned = DOM.clone(input,true);
+            expect(cloned.defaultValue).toBe('y');
+            expect(cloned.value).toBe('x');
+            DOM.append(cloned, "#test_cases");
+            DOM.remove(input);
+            DOM.remove(cloned);
         });
 
         //http://msdn.microsoft.com/en-us/library/ms533718%28v=vs.85%29.aspx
@@ -22,6 +51,7 @@ KISSY.use("dom,event,core", function (S, DOM, Event) {
             var cloned = DOM.clone(input);
             expect(cloned.defaultValue).toBe('y');
             expect(cloned.value).toBe('x');
+            DOM.remove(input);
         });
 
         // ie

@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+<head>
+    <script src="/kissy/build/seed.js"></script>
+    <script src="/kissy/tools/third-party/jquery.js"></script>
+</head>
+<body>
+<div id="foo"></div>
+<div id="foo2"></div>
+<div id="cloned-id">
+    <textarea class="textarea-id"></textarea>
+    <input class="text-id" type="text">
+</div>
+<script>
+    var S = KISSY;
+    S.use('node', function () {
+        S.one('.textarea-id').val("textarea can't be cloned");
+        S.one('.text-id').val('text value can be cloned');
+        S.one('#foo').append(S.one('#cloned-id').clone(true));
+
+        $('#foo2').append($('#cloned-id').clone(true,true));
+        alert(S.one('#foo .textarea-id').val());
+    });
+</script>
+</body>
+</html>

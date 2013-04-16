@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 16 12:42
+build time: Apr 16 18:46
 */
 /**
  * @ignore
@@ -963,7 +963,6 @@ KISSY.add('dom/base/create', function (S, DOM, undefined) {
 
     var doc = S.Env.host.document,
         NodeType = DOM.NodeType,
-        slice = Array.prototype.slice,
         UA = S.UA,
         ie = UA['ie'],
         DIV = 'div',
@@ -1013,6 +1012,7 @@ KISSY.add('dom/base/create', function (S, DOM, undefined) {
              * @param {String} html A string of HTML to create on the fly. Note that this parses HTML, not XML.
              * @param {Object} [props] An map of attributes on the newly-created element.
              * @param {HTMLDocument} [ownerDoc] A document in which the new elements will be created
+             * @param {Boolean} [_trim]
              * @return {DocumentFragment|HTMLElement}
              */
             create: function (html, props, ownerDoc, _trim/*internal*/) {
@@ -1093,7 +1093,13 @@ KISSY.add('dom/base/create', function (S, DOM, undefined) {
                 return attachProps(ret, props);
             },
 
-            _fixCloneAttributes: null,
+            _fixCloneAttributes: function (src, dest) {
+                // value of textarea can not be clone in chrome/firefox??
+                if (DOM.nodeName(src) === 'textarea') {
+                    dest.defaultValue = src.defaultValue;
+                    dest.value = src.value;
+                }
+            },
 
             _creators: {
                 div: defaultCreator
@@ -1106,21 +1112,19 @@ KISSY.add('dom/base/create', function (S, DOM, undefined) {
              * or
              * Set the HTML contents of each element in the set of matched elements.
              * @param {HTMLElement|String|HTMLElement[]} selector matched elements
-             * @param {String} htmlString  A string of HTML to set as the content of each matched element.
+             * @param {String} [htmlString]  A string of HTML to set as the content of each matched element.
              * @param {Boolean} [loadScripts=false] True to look for and process scripts
              */
-            html: function (selector, htmlString, loadScripts, callback) {
+            html: function (selector, htmlString, loadScripts) {
                 // supports css selector/Node/NodeList
                 var els = DOM.query(selector),
                     el = els[0],
                     success = false,
                     valNode,
                     i, elem;
-
                 if (!el) {
-                    return
+                    return null;
                 }
-
                 // getter
                 if (htmlString === undefined) {
                     // only gets value on the first of element nodes
@@ -1160,8 +1164,8 @@ KISSY.add('dom/base/create', function (S, DOM, undefined) {
                         DOM.empty(els);
                         DOM.append(valNode, els, loadScripts);
                     }
-                    callback && callback();
                 }
+                return undefined;
             },
 
             /**
@@ -1169,7 +1173,7 @@ KISSY.add('dom/base/create', function (S, DOM, undefined) {
              * or
              * Set the outerHTML of each element in the set of matched elements.
              * @param {HTMLElement|String|HTMLElement[]} selector matched elements
-             * @param {String} htmlString  A string of HTML to set as outerHTML of each matched element.
+             * @param {String} [htmlString]  A string of HTML to set as outerHTML of each matched element.
              * @param {Boolean} [loadScripts=false] True to look for and process scripts
              */
             outerHTML: function (selector, htmlString, loadScripts) {
@@ -1181,7 +1185,7 @@ KISSY.add('dom/base/create', function (S, DOM, undefined) {
                     length = els.length,
                     el = els[0];
                 if (!el) {
-                    return
+                    return null;
                 }
                 // getter
                 if (htmlString === undefined) {
@@ -1214,6 +1218,7 @@ KISSY.add('dom/base/create', function (S, DOM, undefined) {
                         DOM.remove(els);
                     }
                 }
+                return undefined;
             },
 
             /**
@@ -1264,7 +1269,6 @@ KISSY.add('dom/base/create', function (S, DOM, undefined) {
              * @member KISSY.DOM
              */
             clone: function (selector, deep, withDataAndEvent, deepWithDataAndEvent) {
-
                 if (typeof deep === 'object') {
                     deepWithDataAndEvent = deep['deepWithDataAndEvent'];
                     withDataAndEvent = deep['withDataAndEvent'];
@@ -1286,7 +1290,9 @@ KISSY.add('dom/base/create', function (S, DOM, undefined) {
                 // ie bug :
                 // 1. ie<9 <script>xx</script> => <script></script>
                 // 2. ie will execute external script
-                clone = elem.cloneNode(deep);
+                clone = /**
+                 @type HTMLElement
+                 @ignore*/elem.cloneNode(deep);
 
                 if (elemNodeType == NodeType.ELEMENT_NODE ||
                     elemNodeType == NodeType.DOCUMENT_FRAGMENT_NODE) {
@@ -1376,7 +1382,7 @@ KISSY.add('dom/base/create', function (S, DOM, undefined) {
             // remove event data (but without dom attached listener) which is copied from above DOM.data
             Event._DOMUtils.removeData(dest);
             // attach src 's event data and dom attached listener to dest
-            Event._clone(src, dest);
+            Event['_clone'](src, dest);
         }
     }
 
