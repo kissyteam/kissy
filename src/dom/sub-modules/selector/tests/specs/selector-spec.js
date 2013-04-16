@@ -33,5 +33,14 @@ KISSY.use('dom/selector', function (S, engine) {
                 node.remove();
             });
         });
+
+        it('can deal with third-party iframe', function () {
+
+            var iframe = document.getElementById('t');
+            ///console.log(iframe.getAttribute('type'));
+            //console.log(iframe.getAttributeNode('type')&&iframe.getAttributeNode('type').value);
+            expect(select('iframe[src*="google"]').length).toBe(1);
+        });
+
     });
 });

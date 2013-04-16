@@ -20,12 +20,14 @@
     <script src="/kissy/build/seed.js"></script>
 </head>
 <body>
+
+<iframe src="http://www.google.com" id='t'></iframe>
 <script src="../../src/parser.js"></script>
 <script src="../../src/selector.js"></script>
 <script src="../specs/selector-spec.js"></script>
 
 <script>
-    window.onload = function () {
+    KISSY.ready(function () {
         // let tc run first
         setTimeout(function () {
             jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
@@ -34,6 +36,6 @@
                 jasmine.kissyNext(this.results().failedCount);
             });
         }, 100);
-    };
+    });
 </script>
 </body>
