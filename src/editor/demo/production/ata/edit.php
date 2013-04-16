@@ -174,7 +174,7 @@
                 "draft": {
                     interval: 5,
                     limit: 10,
-                    "helpHtml": "<div " +
+                    "helpHTML": "<div " +
                             "style='width:200px;'>" +
                             "<div style='padding:5px;'>草稿箱能够自动保存您最新编辑的内容，" +
                             "如果发现内容丢失，" +

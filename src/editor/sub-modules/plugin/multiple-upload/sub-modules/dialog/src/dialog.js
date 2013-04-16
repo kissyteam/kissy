@@ -177,8 +177,8 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor, DragPlugi
             if (!SWF.fpvGTE(FLASH_VERSION_REQUIRED)) {
                 return;
             }
-            if (uploadCfg['extraHtml']) {
-                listTableWrap.append(uploadCfg['extraHtml']);
+            if (uploadCfg['extraHTML']) {
+                listTableWrap.append(uploadCfg['extraHTML']);
             }
 
             self._list = list;

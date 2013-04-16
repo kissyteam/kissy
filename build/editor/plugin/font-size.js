@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 8 21:57
+build time: Apr 16 12:52
 */
 /**
  * font formatting for kissy editor
@@ -44,7 +44,7 @@ KISSY.add("editor/plugin/font-size", function (S, Editor, ui, cmd) {
                 cmdType:"fontSize",
                 defaultCaption:"大小",
                 width:"70px",
-                mode:Editor.WYSIWYG_MODE
+                mode:Editor.Mode.WYSIWYG_MODE
             }, fontSizeConfig), ui.Select);
         }
     });

@@ -39,7 +39,7 @@ KISSY.add("editor/plugin/font-size", function (S, Editor, ui, cmd) {
                 cmdType:"fontSize",
                 defaultCaption:"大小",
                 width:"70px",
-                mode:Editor.WYSIWYG_MODE
+                mode:Editor.Mode.WYSIWYG_MODE
             }, fontSizeConfig), ui.Select);
         }
     });

@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 10 11:10
+build time: Apr 16 13:00
 */
 KISSY.add("menubutton/base",function(d,e,i,p,j,k,h){function m(c){c.target.isMenuItem&&this.get("collapseOnClick")&&this.set("collapsed",!0)}function q(c){c.target.isMenu&&this.get("view").setAriaActiveDescendant(c.newVal)}function g(c,a){var b=c.get("menu");if(b&&!b.isController)if(a)b=k.create(b,c),c.setInternal("menu",b);else return null;return b}function n(){var c,a,f=g(this);f&&f.get("visible")&&(c=f.get("align"),a=c.node,delete c.node,c=d.clone(c),c.node=a||this.get("el"),d.mix(c,b,!1),f.set("align",
 c))}var o=e.all,l=o(d.Env.host),a=e.KeyCodes,b={points:["bl","tl"],overflow:{adjustX:1,adjustY:1}},f=i.extend([k.DecorateChild],{isMenuButton:1,_onSetCollapsed:function(c){if(c)(c=g(this))&&c.hide();else{var c=this.get("el"),a=g(this,1);a&&!a.get("visible")&&(this.get("matchElWidth")&&a.set("width",o(a.get("align").node||c).innerWidth()),a.show(),n.call(this),c.attr("aria-haspopup",a.get("el").attr("id")))}},bindUI:function(){this.on("afterHighlightedItemChange",q,this);l.on("resize",this.__repositionBuffer=

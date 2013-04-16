@@ -13,7 +13,7 @@ KISSY.add("editor/plugin/list-utils/btn", function (S, Editor) {
 
             var button = editor.addButton(buttonId, {
                 elCls: buttonId + 'Btn',
-                mode: Editor.WYSIWYG_MODE,
+                mode: Editor.Mode.WYSIWYG_MODE,
                 tooltip: "设置" + tooltip
             });
 
@@ -29,7 +29,7 @@ KISSY.add("editor/plugin/list-utils/btn", function (S, Editor) {
 
             var arrow = editor.addSelect(buttonId + 'Arrow', {
                 tooltip: "选择并设置" + tooltip,
-                mode: Editor.WYSIWYG_MODE,
+                mode: Editor.Mode.WYSIWYG_MODE,
                 menu: cfg.menu,
                 matchElWidth: false,
                 elCls: 'toolbar-' + buttonId + 'ArrowBtn'

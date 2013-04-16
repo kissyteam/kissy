@@ -105,7 +105,7 @@ KISSY.add("htmlparser/scanners/TagScanner", function (S, dtd, Tag, SpecialScanne
                         if (childNodes[i].tagName == currentChildName) {
                             pTag.appendChild(childNodes[i]);
                         } else if (childNodes[i].nodeType == 3 &&
-                            !S.trim(childNodes[i].toHtml())) {
+                            !S.trim(childNodes[i].toHTML())) {
                         }
                         // non-empty text leave it to outer loop
                         else if (childNodes[i].nodeType == 3) {

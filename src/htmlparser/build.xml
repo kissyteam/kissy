@@ -1,5 +1,5 @@
 <project name="htmlparser.build" default="build" basedir=".">
-    <description>HtmlParser Build File</description>
+    <description>HTMLParser Build File</description>
 
     <property name="component.name" value="htmlparser"/>
 

@@ -87,7 +87,7 @@ KISSY.add("editor/plugin/font-family", function (S, Editor, ui, cmd) {
                 cmdType:"fontFamily",
                 defaultCaption:"字体",
                 width:130,
-                mode:Editor.WYSIWYG_MODE
+                mode:Editor.Mode.WYSIWYG_MODE
             }, fontFamilies), ui.Select);
         }
     });

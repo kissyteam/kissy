@@ -113,7 +113,7 @@ KISSY.add("editor/plugin/video", function (S, Editor, flashUtils, FlashBaseClass
 
                     }
                 },
-                mode: Editor.WYSIWYG_MODE
+                mode: Editor.Mode.WYSIWYG_MODE
             });
         }
     });

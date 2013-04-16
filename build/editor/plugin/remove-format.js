@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 8 21:59
+build time: Apr 16 12:56
 */
 /**
  * removeFormat for selection.
@@ -22,7 +22,7 @@ KISSY.add("editor/plugin/remove-format", function (S, Editor, formatCmd) {
                         editor.execCommand("removeFormat");
                     }
                 },
-                mode:Editor.WYSIWYG_MODE
+                mode:Editor.Mode.WYSIWYG_MODE
             });
         }
     });

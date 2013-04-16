@@ -50,7 +50,7 @@ KISSY.add("editor/plugin/heading", function (S, Editor, headingCmd) {
                 menu: {
                     children: FORMAT_SELECTION_ITEMS
                 },
-                mode: Editor.WYSIWYG_MODE,
+                mode: Editor.Mode.WYSIWYG_MODE,
                 listeners: {
                     click: function (ev) {
                         var v = ev.target.get("value")
@@ -59,7 +59,7 @@ KISSY.add("editor/plugin/heading", function (S, Editor, headingCmd) {
                     afterSyncUI: function () {
                         var self = this;
                         editor.on("selectionChange", function () {
-                            if (editor.get("mode") == Editor.SOURCE_MODE) {
+                            if (editor.get("mode") == Editor.Mode.SOURCE_MODE) {
                                 return;
                             }
                             // For each element into the elements path.

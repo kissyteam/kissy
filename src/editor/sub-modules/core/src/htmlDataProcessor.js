@@ -12,9 +12,9 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor) {
         init: function (editor) {
             var Node = S.Node,
                 UA = S.UA,
-                HtmlParser = S.require("htmlparser"),
-                htmlFilter = new HtmlParser.Filter(),
-                dataFilter = new HtmlParser.Filter();
+                HTMLParser = S.require("htmlparser"),
+                htmlFilter = new HTMLParser.Filter(),
+                dataFilter = new HTMLParser.Filter();
 
             function filterSpan(element) {
                 if (((element.getAttribute('class') + "").match(/Apple-\w+-span/)) || !(element.attributes.length)) {
@@ -30,8 +30,8 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor) {
             (function () {
 
                 function wrapAsComment(element) {
-                    var html = HtmlParser.serialize(element);
-                    return new HtmlParser.Comment(protectedSourceMarker +
+                    var html = HTMLParser.serialize(element);
+                    return new HTMLParser.Comment(protectedSourceMarker +
                         encodeURIComponent(html).replace(/--/g,
                             "%2D%2D"));
                 }
@@ -56,7 +56,7 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor) {
                 };
 
                 // 将编辑区生成 html 最终化
-                var defaultHtmlFilterRules = {
+                var defaultHTMLFilterRules = {
                     tagNames: [
                         // Remove the "ke:" namespace prefix.
                         [ ( /^ke:/ ), '' ],
@@ -135,7 +135,7 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor) {
                         // If this is a comment for protected source.
                         if (contents.substr(0, protectedSourceMarker.length) == protectedSourceMarker) {
                             contents = S.trim(S.urlDecode(contents.substr(protectedSourceMarker.length)));
-                            return HtmlParser.parse(contents).childNodes[0];
+                            return HTMLParser.parse(contents).childNodes[0];
                         }
                     }
                 };
@@ -144,7 +144,7 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor) {
                     // them back to lower case.
                     // bug: style='background:url(www.G.cn)' =>  style='background:url(www.g.cn)'
                     // 只对 propertyName 小写
-                    defaultHtmlFilterRules.attributes.style = function (value // , element
+                    defaultHTMLFilterRules.attributes.style = function (value // , element
                         ) {
                         return value.replace(/(^|;)([^:]+)/g, function (match) {
                             return match.toLowerCase();
@@ -152,7 +152,7 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor) {
                     };
                 }
 
-                htmlFilter.addRules(defaultHtmlFilterRules);
+                htmlFilter.addRules(defaultHTMLFilterRules);
                 dataFilter.addRules(defaultDataFilterRules);
             })();
 
@@ -215,11 +215,11 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor) {
                     if (blockNeedsExtension(block)) {
                         // 任何浏览器都要加空格！否则空表格可能间隙太小，不能容下光标
                         if (UA['ie']) {
-                            block.appendChild(new HtmlParser.Text('\xa0'));
+                            block.appendChild(new HTMLParser.Text('\xa0'));
                         } else {
                             //其他浏览器需要加空格??
-                            block.appendChild(new HtmlParser.Text('&nbsp;'));
-                            block.appendChild(new HtmlParser.Tag('br'));
+                            block.appendChild(new HTMLParser.Text('&nbsp;'));
+                            block.appendChild(new HTMLParser.Tag('br'));
                         }
                     }
                 }
@@ -227,7 +227,7 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor) {
                 function extendBlockForOutput(block) {
                     trimFillers(block, false);
                     if (blockNeedsExtension(block)) {
-                        block.appendChild(new HtmlParser.Text('\xa0'));
+                        block.appendChild(new HTMLParser.Text('\xa0'));
                     }
                 }
 
@@ -250,15 +250,15 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor) {
                 // TODO: Support filler for <pre>, line break is also occupy line height.
                 delete blockLikeTags.pre;
                 var defaultDataBlockFilterRules = { tags: {} };
-                var defaultHtmlBlockFilterRules = { tags: {} };
+                var defaultHTMLBlockFilterRules = { tags: {} };
 
                 for (i in blockLikeTags) {
                     defaultDataBlockFilterRules.tags[ i ] = extendBlockForDisplay;
-                    defaultHtmlBlockFilterRules.tags[ i ] = extendBlockForOutput;
+                    defaultHTMLBlockFilterRules.tags[ i ] = extendBlockForOutput;
                 }
 
                 dataFilter.addRules(defaultDataBlockFilterRules);
-                htmlFilter.addRules(defaultHtmlBlockFilterRules);
+                htmlFilter.addRules(defaultHTMLBlockFilterRules);
             })();
 
 
@@ -331,15 +331,15 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor) {
                 htmlFilter: htmlFilter,
                 // 编辑器 html 到外部 html
                 // fixForBody , <body>t</body> => <body><p>t</p></body>
-                toHtml: function (html) {
+                toHTML: function (html) {
                     // fixForBody = fixForBody || "p";
                     // Now use our parser to make further fixes to the structure, as
                     // well as apply the filter.
                     //使用 htmlWriter 界面美观，加入额外文字节点\n,\t空白等
-                    var writer = new HtmlParser.BeautifyWriter(),
-                        n = new HtmlParser.Parser(html).parse();
-                    n.writeHtml(writer, htmlFilter);
-                    html = writer.getHtml();
+                    var writer = new HTMLParser.BeautifyWriter(),
+                        n = new HTMLParser.Parser(html).parse();
+                    n.writeHTML(writer, htmlFilter);
+                    html = writer.getHTML();
                     return html;
                 },
                 // 外部html进入编辑器
@@ -378,12 +378,12 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor) {
                     // fixForBody = fixForBody || "p";
                     // bug:qc #3710:使用 basicWriter ，去除无用的文字节点，标签间连续\n空白等
 
-                    var writer = new HtmlParser.BasicWriter(),
-                        n = new HtmlParser.Parser(html).parse();
+                    var writer = new HTMLParser.BasicWriter(),
+                        n = new HTMLParser.Parser(html).parse();
 
-                    n.writeHtml(writer, _dataFilter);
+                    n.writeHTML(writer, _dataFilter);
 
-                    html = writer.getHtml();
+                    html = writer.getHTML();
 
                     return html;
                 },
@@ -391,10 +391,10 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor) {
                  最精简html传送到server
                  */
                 toServer: function (html) {
-                    var writer = new HtmlParser.MinifyWriter(),
-                        n = new HtmlParser.Parser(html).parse();
-                    n.writeHtml(writer, htmlFilter);
-                    return writer.getHtml();
+                    var writer = new HTMLParser.MinifyWriter(),
+                        n = new HTMLParser.Parser(html).parse();
+                    n.writeHTML(writer, htmlFilter);
+                    return writer.getHTML();
                 }
             };
         }

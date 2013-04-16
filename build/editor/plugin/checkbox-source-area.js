@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 8 21:55
+build time: Apr 16 12:51
 */
 /**
  * checkbox source editor for kissy editor
@@ -10,8 +10,8 @@ build time: Apr 8 21:55
 KISSY.add("editor/plugin/checkbox-source-area", function (S, Editor) {
     var Node = S.Node;
 
-    var SOURCE_MODE = Editor.SOURCE_MODE ,
-        WYSIWYG_MODE = Editor.WYSIWYG_MODE;
+    var SOURCE_MODE = Editor.Mode.SOURCE_MODE ,
+        WYSIWYG_MODE = Editor.Mode.WYSIWYG_MODE;
 
     function CheckboxSourceArea(editor) {
         var self = this;

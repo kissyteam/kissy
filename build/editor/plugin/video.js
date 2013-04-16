@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 8 22:00
+build time: Apr 16 12:58
 */
 /**
  * video button.
@@ -118,7 +118,7 @@ KISSY.add("editor/plugin/video", function (S, Editor, flashUtils, FlashBaseClass
 
                     }
                 },
-                mode: Editor.WYSIWYG_MODE
+                mode: Editor.Mode.WYSIWYG_MODE
             });
         }
     });

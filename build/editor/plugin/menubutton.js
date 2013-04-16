@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 8 21:58
+build time: Apr 16 12:55
 */
 /**
  * select component for kissy editor.
@@ -35,7 +35,7 @@ KISSY.add("editor/plugin/menubutton", function (S, Editor, MenuButton) {
 
         s.get("el").unselectable();
 
-        if (cfg.mode == Editor.WYSIWYG_MODE) {
+        if (cfg.mode == Editor.Mode.WYSIWYG_MODE) {
             self.on("wysiwygMode", function () {
                 s.set('disabled', false);
             });

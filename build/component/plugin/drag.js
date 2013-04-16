@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 31 22:55
+build time: Apr 16 12:41
 */
 /**
  * @ignore
@@ -57,6 +57,9 @@ KISSY.add('component/plugin/drag', function (S, RichBase, DD) {
         ATTRS: {
             move: {
                 value: 1
+            },
+            groups: {
+                value: false
             }
         }
     });

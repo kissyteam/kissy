@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 8 21:58
+build time: Apr 16 12:54
 */
 /**
  * justifyRight button.
@@ -31,7 +31,7 @@ KISSY.add("editor/plugin/justify-right", function (S, Editor, justifyCenterCmd) 
                     afterSyncUI:function () {
                         var self = this;
                         editor.on("selectionChange", function () {
-                            if (editor.get("mode") == Editor.SOURCE_MODE) {
+                            if (editor.get("mode") == Editor.Mode.SOURCE_MODE) {
                                 return;
                             }
                             if (editor.queryCommandValue("justifyRight")) {
@@ -43,7 +43,7 @@ KISSY.add("editor/plugin/justify-right", function (S, Editor, justifyCenterCmd) 
                     }
 
                 },
-                mode:Editor.WYSIWYG_MODE
+                mode:Editor.Mode.WYSIWYG_MODE
             });
 
             editor.docReady(function () {

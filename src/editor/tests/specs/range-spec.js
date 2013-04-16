@@ -21,7 +21,7 @@ KISSY.use("editor", function (S, Editor) {
         }
     }
 
-    function myHtml(el) {
+    function myHTML(el) {
         trimNode(el[0]);
         return el.html().toLowerCase()
             .replace(/\s+</g, "<")
@@ -48,7 +48,7 @@ KISSY.use("editor", function (S, Editor) {
 
                 newDiv.append(f);
 
-                expect(myHtml(newDiv)).toBe("345");
+                expect(myHTML(newDiv)).toBe("345");
 
                 expect(div[0].childNodes.length).toBe(1);
 
@@ -111,7 +111,7 @@ KISSY.use("editor", function (S, Editor) {
 
                 newDiv.append(f);
 
-                expect(myHtml(newDiv)).toBe("<span>" +
+                expect(myHTML(newDiv)).toBe("<span>" +
                     "<span id=\"start\">" +
                     "3456789" +
                     "</span>" +
@@ -196,7 +196,7 @@ KISSY.use("editor", function (S, Editor) {
 
                 newDiv.append(f);
 
-                expect(myHtml(newDiv)).toBe("<span>" +
+                expect(myHTML(newDiv)).toBe("<span>" +
                     "<span id=\"start\">" +
                     "123456789" +
                     "</span>" +
@@ -233,12 +233,12 @@ KISSY.use("editor", function (S, Editor) {
                 var newDiv = $("<div>").appendTo("body");
 
                 newDiv.append(f);
-                expect(myHtml(newDiv)).toBe("345");
+                expect(myHTML(newDiv)).toBe("345");
 
                 // 节点不会合并的
                 // expect(div[0].childNodes.length).toBe(1);
 
-                expect(myHtml(div)).toBe("126789");
+                expect(myHTML(div)).toBe("126789");
 
                 // collapse to start
                 expect(range.startContainer[0]).toBe(div[0].firstChild);
@@ -302,7 +302,7 @@ KISSY.use("editor", function (S, Editor) {
 
                 newDiv.append(f);
 
-                expect(myHtml(newDiv)).toBe("<span>" +
+                expect(myHTML(newDiv)).toBe("<span>" +
                     "<span id=\"start\">" +
                     "3456789" +
                     "</span>" +
@@ -329,9 +329,9 @@ KISSY.use("editor", function (S, Editor) {
                     "</span>" +
                     "f" +
                     "</span>" +
-                    "g", ret2 = myHtml(div);
+                    "g", ret2 = myHTML(div);
 
-                expect(myHtml(div)).toBe(ret);
+                expect(myHTML(div)).toBe(ret);
 
 
                 expect(range.startContainer[0]).toBe(div[0]);
@@ -349,10 +349,10 @@ KISSY.use("editor", function (S, Editor) {
 
                 newDiv.append(f);
 
-                expect(myHtml(newDiv)).toBe("a<span>b<span id=\"start\">12" +
+                expect(myHTML(newDiv)).toBe("a<span>b<span id=\"start\">12" +
                     "</span></span>");
 
-                expect(myHtml(div)).toBe("<span id=\"endwrapper\">" +
+                expect(myHTML(div)).toBe("<span id=\"endwrapper\">" +
                     "<span id=\"end\">" +
                     "6789" +
                     "</span>" +
@@ -419,7 +419,7 @@ KISSY.use("editor", function (S, Editor) {
 
                 newDiv.append(f);
 
-                expect(myHtml(newDiv)).toBe("<span>" +
+                expect(myHTML(newDiv)).toBe("<span>" +
                     "<span id=\"start\">" +
                     "123456789" +
                     "</span>" +
@@ -434,7 +434,7 @@ KISSY.use("editor", function (S, Editor) {
                     "</span>");
 
 
-                expect(myHtml(div)).toBe("a<span>b</span><span>f</span>g");
+                expect(myHTML(div)).toBe("a<span>b</span><span>f</span>g");
 
                 expect(range.collapsed).toBe(true);
                 expect(range.startContainer[0]).toBe(div[0]);
@@ -466,7 +466,7 @@ KISSY.use("editor", function (S, Editor) {
                 // 节点不会合并的
                 // expect(div[0].childNodes.length).toBe(1);
 
-                expect(myHtml(div)).toBe("126789");
+                expect(myHTML(div)).toBe("126789");
 
                 // collapse to start
                 expect(range.startContainer[0]).toBe(div[0].firstChild);
@@ -540,9 +540,9 @@ KISSY.use("editor", function (S, Editor) {
                     "</span>" +
                     "f" +
                     "</span>" +
-                    "g", ret2 = myHtml(div);
+                    "g", ret2 = myHTML(div);
 
-                expect(myHtml(div)).toBe(ret);
+                expect(myHTML(div)).toBe(ret);
 
 
                 expect(range.startContainer[0]).toBe(div[0]);
@@ -605,7 +605,7 @@ KISSY.use("editor", function (S, Editor) {
                 expect(f).toBeUndefined();
 
 
-                expect(myHtml(div)).toBe("a<span>b</span><span>f</span>g");
+                expect(myHTML(div)).toBe("a<span>b</span><span>f</span>g");
 
                 expect(range.collapsed).toBe(true);
                 expect(range.startContainer[0]).toBe(div[0]);
@@ -1347,7 +1347,7 @@ KISSY.use("editor", function (S, Editor) {
 
             range.fixBlock(true, "p");
 
-            expect(myHtml(div)).toBe("<p>" +
+            expect(myHTML(div)).toBe("<p>" +
                 "<span>1<span>4</span></span>" +
                 "<span>2<span>3</span>4</span><span>2</span>" +
                 (UA.ie ? "" : "<br>") +
@@ -1368,7 +1368,7 @@ KISSY.use("editor", function (S, Editor) {
 
             range.fixBlock(false, "p");
 
-            expect(myHtml(div)).toBe("<p>" +
+            expect(myHTML(div)).toBe("<p>" +
                 "<span>1<span>4</span></span>" +
                 "<span>2<span>3</span>4</span><span>2</span>" +
                 (UA.ie ? "" : "<br>") +
@@ -1392,7 +1392,7 @@ KISSY.use("editor", function (S, Editor) {
 
             range.splitElement(div.first());
 
-            expect(myHtml(div))
+            expect(myHTML(div))
                 .toBe("<div><span>1<span>4</span></span><span>2<span>3</span>4</span></div>" +
                 "<div><span></span><span>2</span></div>");
 
@@ -1421,7 +1421,7 @@ KISSY.use("editor", function (S, Editor) {
 
                 var fake = UA.ie ? "" : "<br>";
 
-                expect(myHtml(div).replace(/\s/g, "")).toBe("<p>1</p><p>2" +
+                expect(myHTML(div).replace(/\s/g, "")).toBe("<p>1</p><p>2" +
                     fake +
                     "</p><p>45" +
                     fake +
@@ -1452,7 +1452,7 @@ KISSY.use("editor", function (S, Editor) {
 
                 var fake = UA.ie ? "" : "<br>";
 
-                expect(myHtml(div)).toBe("<p>1</p><p>2" +
+                expect(myHTML(div)).toBe("<p>1</p><p>2" +
                     // fake +
                     "</p>" +
                     "<p>" +
@@ -1484,7 +1484,7 @@ KISSY.use("editor", function (S, Editor) {
 
                 var fake = UA.ie ? "" : "<br>";
 
-                expect(myHtml(div)).toBe("<p>1</p><p>" +
+                expect(myHTML(div)).toBe("<p>1</p><p>" +
                     fake +
                     "</p><p>6" +
                     // fake +
@@ -1529,7 +1529,7 @@ KISSY.use("editor", function (S, Editor) {
                     is = div.all("i");
 
                 is.item(0)._4e_breakParent(div.first());
-                expect(myHtml(div)).toBe("<div><span>12" +
+                expect(myHTML(div)).toBe("<div><span>12" +
                     "</span>" +
                     "</div>" +
                     "<i></i>" +
@@ -1563,7 +1563,7 @@ KISSY.use("editor", function (S, Editor) {
 
                 range.insertNodeByDtd($("<p>3</p>"));
 
-                expect(myHtml(div).replace("<br>", "")).toBe("<p>" +
+                expect(myHTML(div).replace("<br>", "")).toBe("<p>" +
                     "<span class=\"text-wrapper\">12</span>" +
                     "</p>" +
                     "<p>" +
@@ -1592,7 +1592,7 @@ KISSY.use("editor", function (S, Editor) {
 
                 range.insertNodeByDtd($("<p>56</p>"));
 
-                expect(myHtml(div)).toBe("<p>56</p>");
+                expect(myHTML(div)).toBe("<p>56</p>");
 
                 div.remove();
             });

@@ -49,7 +49,7 @@ KISSY.add('calendar/time', function(S, Node,Calendar) {
 
              *
              */
-            this.parseSubHtml = function(a) {
+            this.parseSubHTML = function(a) {
                 var in_str = '';
                 for (var i = 0; i < a.length; i++) {
                     in_str += '<a href="javascript:void(0);" class="item">' + a[i] + '</a>';
@@ -229,21 +229,21 @@ KISSY.add('calendar/time', function(S, Node,Calendar) {
                 //弹出选择小时
 
                 self.ctime.one('.h').on('click', function() {
-                    var in_str = self.parseSubHtml(self.h_a);
+                    var in_str = self.parseSubHTML(self.h_a);
                     self.status = 'h';
                     self.showPopup(in_str);
                 });
                 //弹出选择分钟
 
                 self.ctime.one('.m').on('click', function() {
-                    var in_str = self.parseSubHtml(self.m_a);
+                    var in_str = self.parseSubHTML(self.m_a);
                     self.status = 'm';
                     self.showPopup(in_str);
                 });
                 //弹出选择秒
 
                 self.ctime.one('.s').on('click', function() {
-                    var in_str = self.parseSubHtml(self.s_a);
+                    var in_str = self.parseSubHTML(self.s_a);
                     self.status = 's';
                     self.showPopup(in_str);
                 });

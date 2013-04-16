@@ -116,7 +116,7 @@ KISSY.add("editor/plugin/color/dialog", function (S, Editor, Dialog4E) {
             + padding2(c[2].toString(16));
     }
 
-    var pickerHtml = "<ul>" +
+    var pickerHTML = "<ul>" +
             map(ColorGrads([ "red", "orange", "yellow", "green", "cyan", "blue", "purple" ], 5),
                 function (x) {
                     return map(ColorGrads([ "white", "rgb(" + x.join(",") + ")" , "black" ], 5),
@@ -124,10 +124,10 @@ KISSY.add("editor/plugin/color/dialog", function (S, Editor, Dialog4E) {
                             return "<li><a style='background-color" + ":" + hex(x) + "' href='#'></a></li>";
                         }).join("");
                 }).join("</ul><ul>") + "</ul>",
-        panelHtml = "<div class='{prefixCls}editor-color-advanced-picker'>" +
+        panelHTML = "<div class='{prefixCls}editor-color-advanced-picker'>" +
             "<div class='ks-clear'>" +
             "<div class='{prefixCls}editor-color-advanced-picker-left'>" +
-            pickerHtml +
+            pickerHTML +
             "</div>" +
             "<div class='{prefixCls}editor-color-advanced-picker-right'>" +
             "</div>" +
@@ -140,7 +140,7 @@ KISSY.add("editor/plugin/color/dialog", function (S, Editor, Dialog4E) {
             "<span class='{prefixCls}editor-color-advanced-indicator'></span>" +
             "</div>" +
             "</div>",
-        footHtml = "<div style='padding:5px 20px 20px;'>" +
+        footHTML = "<div style='padding:5px 20px 20px;'>" +
             "<a class='{prefixCls}editor-button {prefixCls}editor-color-advanced-ok ks-inline-block'>确定</a>" +
             "&nbsp;&nbsp;&nbsp;" +
             "<a class='{prefixCls}editor-button  {prefixCls}editor-color-advanced-cancel ks-inline-block'>取消</a>" +
@@ -162,10 +162,10 @@ KISSY.add("editor/plugin/color/dialog", function (S, Editor, Dialog4E) {
             self.dialog = new Dialog4E({
                 mask: true,
                 headerContent: "颜色拾取器",
-                bodyContent: S.substitute(panelHtml, {
+                bodyContent: S.substitute(panelHTML, {
                     prefixCls: prefixCls
                 }),
-                footerContent: S.substitute(footHtml, {
+                footerContent: S.substitute(footHTML, {
                     prefixCls: prefixCls
                 }),
                 width: "550px"

@@ -84,7 +84,7 @@ KISSY.add("editor/plugin/smiley", function (S, Editor, Overlay4E) {
                     }
 
                 },
-                mode: Editor.WYSIWYG_MODE
+                mode: Editor.Mode.WYSIWYG_MODE
             });
         }
     });

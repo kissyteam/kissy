@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 8 21:56
+build time: Apr 16 12:52
 */
 /**
  * save and restore focus when overlay shows or hides
@@ -29,7 +29,8 @@ KISSY.add("editor/plugin/focus-fix", function (S, Editor) {
             window['focus']();
             document.body.focus();
 
-            var $selection = editor.get("document")[0].selection, $range;
+            var $selection = editor.get("document")[0].selection,
+                $range;
             // 中途更改了 domain，编辑器失去焦点，不能取得 range
             // 拒绝访问错误
             try {

@@ -11,16 +11,16 @@ KISSY.add("htmlparser/nodes/CData", function (S, Text) {
     }
 
     S.extend(CData, Text, {
-        writeHtml:function (writer, filter) {
+        writeHTML:function (writer, filter) {
             var ret;
             if (!filter || (ret = filter.onCData(this)) !== false) {
                 if (ret) {
                     if (this !== ret) {
-                        ret.writeHtml(writer, filter);
+                        ret.writeHTML(writer, filter);
                         return;
                     }
                 }
-                writer.cdata(this.toHtml());
+                writer.cdata(this.toHTML());
             }
         }
     });

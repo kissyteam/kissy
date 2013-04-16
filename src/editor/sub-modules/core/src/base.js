@@ -2,7 +2,7 @@
  * Set up editor constructor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/core/base", function (S, HtmlParser, Component) {
+KISSY.add("editor/core/base", function (S, HTMLParser, Component) {
 
     /**
      * @class
@@ -25,7 +25,7 @@ KISSY.add("editor/core/base", function (S, HtmlParser, Component) {
 
         {
             Config: {},
-            XHTML_DTD: HtmlParser['DTD'],
+            XHTML_DTD: HTMLParser['DTD'],
             ATTRS: /**
              * @lends Editor#
              */

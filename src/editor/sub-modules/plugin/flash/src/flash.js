@@ -80,7 +80,7 @@ KISSY.add("editor/plugin/flash", function (S, Editor, FlashBaseClass, flashUtils
                         flashControl.show();
                     }
                 },
-                mode:Editor.WYSIWYG_MODE
+                mode:Editor.Mode.WYSIWYG_MODE
             });
         }
 //       ,

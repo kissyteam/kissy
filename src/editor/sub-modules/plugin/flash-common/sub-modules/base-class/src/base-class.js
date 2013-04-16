@@ -15,7 +15,7 @@ KISSY.add("editor/plugin/flash-common/base-class", function (S, Editor, ContextM
         this._init();
     }
 
-    var tipHtml = ' <a ' +
+    var tipHTML = ' <a ' +
         'class="{prefixCls}editor-bubble-url" ' +
         'target="_blank" ' +
         'href="#">{label}</a>   |   '
@@ -71,7 +71,7 @@ KISSY.add("editor/plugin/flash-common/base-class", function (S, Editor, ContextM
                         function () {
                             var bubble = this,
                                 el = bubble.get("contentEl");
-                            el.html(S.substitute(tipHtml, {
+                            el.html(S.substitute(tipHTML, {
                                 label:self.get("label"),
                                 prefixCls:prefixCls
                             }));

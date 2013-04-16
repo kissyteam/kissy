@@ -6,7 +6,7 @@ KISSY.add("editor/plugin/flash/dialog", function (S, Editor, flashUtils, Dialog4
     var CLS_FLASH = 'ke_flash',
         TYPE_FLASH = 'flash',
         TIP = "请输入如 http://www.xxx.com/xxx.swf",
-        bodyHtml = "<div style='padding:20px 20px 0 20px'>" +
+        bodyHTML = "<div style='padding:20px 20px 0 20px'>" +
             "<p>" +
             "<label>网址： " +
             "<input " +
@@ -61,7 +61,7 @@ KISSY.add("editor/plugin/flash/dialog", function (S, Editor, flashUtils, Dialog4
             "</td></tr>" +
             "</table>" +
             "</div>",
-        footHtml = "<div style='padding:10px 0 35px 20px;'>" +
+        footHTML = "<div style='padding:10px 0 35px 20px;'>" +
             "<a " +
             "class='{prefixCls}editor-flash-ok {prefixCls}editor-button ks-inline-block' " +
             "style='margin-left:40px;margin-right:20px;'>确定</a> " +
@@ -88,10 +88,10 @@ KISSY.add("editor/plugin/flash/dialog", function (S, Editor, flashUtils, Dialog4
             self._cls = CLS_FLASH;
             self._config_dwidth = "400px";
             self._title = "Flash";//属性";
-            self._bodyHtml = S.substitute(bodyHtml, {
+            self._bodyHTML = S.substitute(bodyHTML, {
                 prefixCls: prefixCls
             });
-            self._footHtml = S.substitute(footHtml, {
+            self._footHTML = S.substitute(footHTML, {
                 prefixCls: prefixCls
             });
         },
@@ -100,8 +100,8 @@ KISSY.add("editor/plugin/flash/dialog", function (S, Editor, flashUtils, Dialog4
             var self = this;
             self.dialog = new Dialog4E({
                 headerContent: self._title,
-                bodyContent: self._bodyHtml,
-                footerContent: self._footHtml,
+                bodyContent: self._bodyHTML,
+                footerContent: self._footHTML,
                 width: self._config_dwidth || "500px",
                 mask: true
             }).render();

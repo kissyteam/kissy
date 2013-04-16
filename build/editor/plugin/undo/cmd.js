@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 8 22:00
+build time: Apr 16 12:57
 */
 /**
  * undo,redo manager for kissy editor
@@ -114,7 +114,7 @@ KISSY.add("editor/plugin/undo/cmd", function (S, Editor) {
             self._keyMonitor();
             setTimeout(function () {
                 // 只初始化保存一次，切换模式不保存
-                if (editor.get('mode') == Editor.WYSIWYG_MODE) {
+                if (editor.get('mode') == Editor.Mode.WYSIWYG_MODE) {
                     if (editor.isDocReady()) {
                         self.save();
                     } else {
@@ -135,7 +135,7 @@ KISSY.add("editor/plugin/undo/cmd", function (S, Editor) {
             var editor = this.editor;
 
             // 代码模式下不和可视模式下混在一起
-            if (editor.get("mode") != Editor.WYSIWYG_MODE) {
+            if (editor.get("mode") != Editor.Mode.WYSIWYG_MODE) {
                 return;
             }
 
@@ -177,7 +177,7 @@ KISSY.add("editor/plugin/undo/cmd", function (S, Editor) {
         restore: function (d) {
 
             // 代码模式下不和可视模式下混在一起
-            if (this.editor.get("mode") != Editor.WYSIWYG_MODE) {
+            if (this.editor.get("mode") != Editor.Mode.WYSIWYG_MODE) {
                 return undefined;
             }
 

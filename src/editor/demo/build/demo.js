@@ -78,7 +78,7 @@
                     suffix: "png,jpg,jpeg,gif",
                     fileInput: "Filedata",
                     sizeLimit: 1000, //k
-                    extraHtml: "<p style='margin-top:10px;'><input type='checkbox' id='ke_img_up_watermark_1' checked='checked'> 图片加水印，防止别人盗用</p>"
+                    extraHTML: "<p style='margin-top:10px;'><input type='checkbox' id='ke_img_up_watermark_1' checked='checked'> 图片加水印，防止别人盗用</p>"
                 }
             },
             "flash": {
@@ -152,7 +152,7 @@
                 //previewSuffix:"_60x60",
                 "previewWidth": "80px",
                 sizeLimit: 1000, //k,, numberLimit:15,
-                extraHtml: "<p style='margin-top:10px;'>" +
+                extraHTML: "<p style='margin-top:10px;'>" +
                     "<input type='checkbox' " +
                     "style='vertical-align:middle;margin:0 5px;' " +
                     "id='ke_img_up_watermark_2'>" +
@@ -230,7 +230,7 @@
                 // saveKey:"xxx",
                 interval: 5,
                 limit: 10,
-                "helpHtml": "<div " +
+                "helpHTML": "<div " +
                     "style='width:200px;'>" +
                     "<div style='padding:5px;'>草稿箱能够自动保存您最新编辑的内容，" +
                     "如果发现内容丢失，" +

@@ -1,4 +1,4 @@
-KISSY.use("htmlparser,ua", function (S, HtmlParser,UA) {
+KISSY.use("htmlparser,ua", function (S, HTMLParser,UA) {
 
     function getTextSync(path, callback) {
         if (S.UA.nodejs) {
@@ -29,19 +29,19 @@ KISSY.use("htmlparser,ua", function (S, HtmlParser,UA) {
                 ]
             };
 
-            var filter = new HtmlParser.Filter();
+            var filter = new HTMLParser.Filter();
             filter.addRules(dataFilterRules);
 
-            var writer = new HtmlParser.BasicWriter(),
+            var writer = new HTMLParser.BasicWriter(),
                 before = '<script>alert(1);</script>x<link/>' +
                     '<?xml:namespace prefix = v ns = "urn:schemas-microsoft-com:vml" />' +
                     'y';
 
-            var n = new HtmlParser.Parser(before).parse();
+            var n = new HTMLParser.Parser(before).parse();
 
-            n.writeHtml(writer, filter);
+            n.writeHTML(writer, filter);
 
-            expect(writer.getHtml()).toBe("xy");
+            expect(writer.getHTML()).toBe("xy");
         });
 
 
@@ -74,10 +74,10 @@ KISSY.use("htmlparser,ua", function (S, HtmlParser,UA) {
                 }
             };
 
-            var filter = new HtmlParser.Filter();
+            var filter = new HTMLParser.Filter();
             filter.addRules(dataFilterRules);
 
-            var writer = new HtmlParser.BasicWriter();
+            var writer = new HTMLParser.BasicWriter();
 
             var before = "";
 
@@ -85,10 +85,10 @@ KISSY.use("htmlparser,ua", function (S, HtmlParser,UA) {
                 before = d;
             });
 
-            var n = new HtmlParser.Parser(before).parse();
-            n.writeHtml(writer, filter);
-            // S.log(writer.getHtml());
-            expect(writer.getHtml().indexOf('<img src="xx.jpg" title="me" />') != -1).toBe(true);
+            var n = new HTMLParser.Parser(before).parse();
+            n.writeHTML(writer, filter);
+            // S.log(writer.getHTML());
+            expect(writer.getHTML().indexOf('<img src="xx.jpg" title="me" />') != -1).toBe(true);
         });
 
         it("can filter attribute", function () {
@@ -187,19 +187,19 @@ KISSY.use("htmlparser,ua", function (S, HtmlParser,UA) {
                 }
             };
 
-            var filter = new HtmlParser.Filter();
+            var filter = new HTMLParser.Filter();
             filter.addRules(dataFilterRules);
 
-            var writer = new HtmlParser.BasicWriter(),
+            var writer = new HTMLParser.BasicWriter(),
                 before = '<div class="Mso-list">1</div>' +
                     '<b class="">2</b>' +
                     '<span style="mso-bidi-font-style: normal;-ms-k:1;">3</span>';
 
-            var n = new HtmlParser.Parser(before).parse();
+            var n = new HTMLParser.Parser(before).parse();
 
-            n.writeHtml(writer, filter);
+            n.writeHTML(writer, filter);
 
-            expect(writer.getHtml()).toBe("<div>1</div><" + "b>2</b><span>3</span>");
+            expect(writer.getHTML()).toBe("<div>1</div><" + "b>2</b><span>3</span>");
         });
 
         it("can modify html structure on fly", function () {
@@ -254,11 +254,11 @@ KISSY.use("htmlparser,ua", function (S, HtmlParser,UA) {
                 if (blockNeedsExtension(block)) {
                     //任何浏览器都要加空格！，否则空表格可能间隙太小，不能容下光标
                     if (UA['ie']) {
-                        block.appendChild(new HtmlParser.Text('\xa0'));
+                        block.appendChild(new HTMLParser.Text('\xa0'));
                     } else {
                         //其他浏览器需要加空格??
-                        block.appendChild(new HtmlParser.Text('&nbsp;'));
-                        block.appendChild(new HtmlParser.Tag('br'));
+                        block.appendChild(new HTMLParser.Text('&nbsp;'));
+                        block.appendChild(new HTMLParser.Tag('br'));
                     }
 
                 }
@@ -271,21 +271,21 @@ KISSY.use("htmlparser,ua", function (S, HtmlParser,UA) {
                 }
             };
 
-            var filter = new HtmlParser.Filter();
+            var filter = new HTMLParser.Filter();
 
             filter.addRules(dataFilterRules);
 
-            var writer = new HtmlParser.BasicWriter();
+            var writer = new HTMLParser.BasicWriter();
 
             var before = "<p></p><p>1</p>";
 
-            var n = new HtmlParser.Parser(before).parse();
+            var n = new HTMLParser.Parser(before).parse();
 
-            n.writeHtml(writer, filter);
+            n.writeHTML(writer, filter);
             if (UA['ie']) {
-                expect(writer.getHtml()).toBe("<p>\xa0</p><p>1</p>");
+                expect(writer.getHTML()).toBe("<p>\xa0</p><p>1</p>");
             } else {
-                expect(writer.getHtml()).toBe("<p>&nbsp;<br /></p><p>1</p>");
+                expect(writer.getHTML()).toBe("<p>&nbsp;<br /></p><p>1</p>");
             }
         });
 
@@ -302,23 +302,23 @@ KISSY.use("htmlparser,ua", function (S, HtmlParser,UA) {
             var rules2 = {
                 tags: {
                     p: function (el) {
-                        el.appendChild(new HtmlParser.Text("&nbsp;"));
+                        el.appendChild(new HTMLParser.Text("&nbsp;"));
                     }
                 }
             };
 
-            var filter = new HtmlParser.Filter();
+            var filter = new HTMLParser.Filter();
             filter.addRules(rules);
             filter.addRules(rules2);
 
-            var writer = new HtmlParser.BasicWriter();
+            var writer = new HTMLParser.BasicWriter();
 
             var before = "<p></p>";
 
-            var n = new HtmlParser.Parser(before).parse();
+            var n = new HTMLParser.Parser(before).parse();
 
-            n.writeHtml(writer, filter);
-            expect(writer.getHtml()).toBe("<p>&nbsp;</p>");
+            n.writeHTML(writer, filter);
+            expect(writer.getHTML()).toBe("<p>&nbsp;</p>");
 
         });
 
@@ -336,17 +336,17 @@ KISSY.use("htmlparser,ua", function (S, HtmlParser,UA) {
                 }
             };
 
-            var filter = new HtmlParser.Filter();
+            var filter = new HTMLParser.Filter();
             filter.addRules(rules);
 
-            var writer = new HtmlParser.BasicWriter();
+            var writer = new HTMLParser.BasicWriter();
 
             var before = "<p><span></span></p>";
 
-            var n = new HtmlParser.Parser(before).parse();
+            var n = new HTMLParser.Parser(before).parse();
 
-            n.writeHtml(writer, filter);
-            expect(writer.getHtml()).toBe("<p><span></span></p>");
+            n.writeHTML(writer, filter);
+            expect(writer.getHTML()).toBe("<p><span></span></p>");
             expect(count).toBe(1);
         });
 
@@ -365,17 +365,17 @@ KISSY.use("htmlparser,ua", function (S, HtmlParser,UA) {
                 ]
             };
 
-            var filter = new HtmlParser.Filter();
+            var filter = new HTMLParser.Filter();
             filter.addRules(rules);
 
-            var writer = new HtmlParser.BasicWriter();
+            var writer = new HTMLParser.BasicWriter();
 
             var before = "<p _ke_saved_src='y'>x</p>";
 
-            var n = new HtmlParser.Parser(before).parse();
+            var n = new HTMLParser.Parser(before).parse();
 
-            n.writeHtml(writer, filter);
-            expect(writer.getHtml()).toBe("<p src=\"y\">x</p>");
+            n.writeHTML(writer, filter);
+            expect(writer.getHTML()).toBe("<p src=\"y\">x</p>");
         });
 
     });

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 8 21:59
+build time: Apr 16 12:56
 */
 /**
  * preview for kissy editor
@@ -29,7 +29,7 @@ KISSY.add("editor/plugin/preview", function (S) {
                             iHeight = 420; // 600 * 0.7,
                             iLeft = 80;	// (800 - 0.8 * 800) /2 = 800 * 0.1.
                         }
-                        var sHTML = editor.getDocHtml()
+                        var sHTML = editor.getDocHTML()
                                 .replace(/\${title}/, "预览"),
                             sOpenUrl = '',
                             oWindow = win.open(sOpenUrl,

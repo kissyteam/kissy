@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 8 21:59
+build time: Apr 16 12:55
 */
 /**
  * multiple-upload dialog
@@ -182,8 +182,8 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor, DragPlugi
             if (!SWF.fpvGTE(FLASH_VERSION_REQUIRED)) {
                 return;
             }
-            if (uploadCfg['extraHtml']) {
-                listTableWrap.append(uploadCfg['extraHtml']);
+            if (uploadCfg['extraHTML']) {
+                listTableWrap.append(uploadCfg['extraHTML']);
             }
 
             self._list = list;

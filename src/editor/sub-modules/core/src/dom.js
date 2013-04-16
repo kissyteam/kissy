@@ -700,22 +700,6 @@ KISSY.add("editor/core/dom", function (S, Editor, Utils) {
             },
 
             /**
-             * 得到元素的 outerHTML
-             * @param el
-             */
-            _4e_outerHtml: function (el) {
-                if (el.outerHTML) {
-                    // IE includes the <?xml:namespace> tag in the outerHTML of
-                    // namespaced element. So, we must strip it here. (#3341)
-                    return el.outerHTML.replace(/<\?[^>]*>/, '');
-                }
-
-                var tmpDiv = el.ownerDocument.createElement('div');
-                tmpDiv.appendChild(el.cloneNode(TRUE));
-                return tmpDiv.innerHTML;
-            },
-
-            /**
              * 设置元素的自定义 data 值，并记录
              * @param element
              * @param database

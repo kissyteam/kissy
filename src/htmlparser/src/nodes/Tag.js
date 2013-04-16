@@ -221,8 +221,8 @@ KISSY.add("htmlparser/nodes/Tag", function (S, Node, Attribute, Dtd) {
             var self = this;
             if (!self.isChildrenFiltered) {
                 var writer = new (S.require('htmlparser/writer/basic'))();
-                self._writeChildrenHtml(writer);
-                var parser = new (S.require('htmlparser/Parser'))(writer.getHtml()),
+                self._writeChildrenHTML(writer);
+                var parser = new (S.require('htmlparser/Parser'))(writer.getHTML()),
                     children = parser.parse().childNodes;
                 self.empty();
                 S.each(children, function (c) {
@@ -237,7 +237,7 @@ KISSY.add("htmlparser/nodes/Tag", function (S, Node, Attribute, Dtd) {
          * @param writer
          * @param filter
          */
-        writeHtml:function (writer, filter) {
+        writeHTML:function (writer, filter) {
             var el = this,
                 tmp,
                 attrName,
@@ -245,7 +245,7 @@ KISSY.add("htmlparser/nodes/Tag", function (S, Node, Attribute, Dtd) {
 
             // special treat for doctype
             if (tagName == "!doctype") {
-                writer.append(this.toHtml() + "\n");
+                writer.append(this.toHTML() + "\n");
                 return;
             }
 
@@ -274,13 +274,13 @@ KISSY.add("htmlparser/nodes/Tag", function (S, Node, Attribute, Dtd) {
 
                 // replaced by other type of node
                 if (el.nodeType !== 1) {
-                    el.writeHtml(writer, filter);
+                    el.writeHTML(writer, filter);
                     return;
                 }
 
                 // preserve children but delete itself
                 if (!el.tagName) {
-                    el._writeChildrenHtml(writer);
+                    el._writeChildrenHTML(writer);
                     return;
                 }
             }
@@ -310,7 +310,7 @@ KISSY.add("htmlparser/nodes/Tag", function (S, Node, Attribute, Dtd) {
             writer.openTagClose(el);
 
             if (!el.isSelfClosed) {
-                el._writeChildrenHtml(writer);
+                el._writeChildrenHTML(writer);
                 // process its close tag
                 writer.closeTag(el);
             }
@@ -321,12 +321,12 @@ KISSY.add("htmlparser/nodes/Tag", function (S, Node, Attribute, Dtd) {
          * @param writer
          * @protected
          */
-        _writeChildrenHtml:function (writer) {
+        _writeChildrenHTML:function (writer) {
             var self = this,
                 filter = self.isChildrenFiltered ? 0 : self.__filter;
             // process its children recursively
             S.each(self.childNodes, function (child) {
-                child.writeHtml(writer, filter);
+                child.writeHTML(writer, filter);
             });
         }
 

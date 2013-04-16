@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 31 23:03
+build time: Apr 16 13:01
 */
 /**
  * SplitButton for KISSY. Combination of button and menubutton.

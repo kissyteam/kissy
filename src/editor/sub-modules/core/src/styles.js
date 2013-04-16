@@ -415,31 +415,31 @@ KISSY.add("editor/core/styles", function (S, Editor) {
      */
     function toPre(block, newBlock) {
         // First trim the block content.
-        var preHtml = block.html();
+        var preHTML = block.html();
 
         // 1. Trim head/tail spaces, they're not visible.
-        preHtml = replace(preHtml, /(?:^[ \t\n\r]+)|(?:[ \t\n\r]+$)/g, '');
+        preHTML = replace(preHTML, /(?:^[ \t\n\r]+)|(?:[ \t\n\r]+$)/g, '');
         // 2. Delete ANSI whitespaces immediately before and after <BR> because
         //    they are not visible.
-        preHtml = preHtml.replace(/[ \t\r\n]*(<br[^>]*>)[ \t\r\n]*/gi, '$1');
+        preHTML = preHTML.replace(/[ \t\r\n]*(<br[^>]*>)[ \t\r\n]*/gi, '$1');
         // 3. Compress other ANSI whitespaces since they're only visible as one
         //    single space previously.
         // 4. Convert &nbsp; to spaces since &nbsp; is no longer needed in <PRE>.
-        preHtml = preHtml.replace(/([ \t\n\r]+|&nbsp;)/g, ' ');
+        preHTML = preHTML.replace(/([ \t\n\r]+|&nbsp;)/g, ' ');
         // 5. Convert any <BR /> to \n. This must not be done earlier because
         //    the \n would then get compressed.
-        preHtml = preHtml.replace(/<br\b[^>]*>/gi, '\n');
+        preHTML = preHTML.replace(/<br\b[^>]*>/gi, '\n');
 
         // Krugle: IE normalizes innerHTML to <pre>, breaking whitespaces.
         if (UA['ie']) {
             var temp = block[0].ownerDocument.createElement('div');
             temp.appendChild(newBlock[0]);
-            newBlock[0].outerHTML = '<pre>' + preHtml + '</pre>';
+            newBlock[0].outerHTML = '<pre>' + preHTML + '</pre>';
             newBlock = new Node(temp.firstChild);
             newBlock._4e_remove();
         }
         else
-            newBlock.html(preHtml);
+            newBlock.html(preHTML);
 
         return newBlock;
     }
@@ -453,14 +453,14 @@ KISSY.add("editor/core/styles", function (S, Editor) {
         // and ignore bookmark content between them.
         var duoBrRegex = /(\S\s*)\n(?:\s|(<span[^>]+_ck_bookmark.*?\/span>))*\n(?!$)/gi,
         //blockName = preBlock.nodeName(),
-            splittedHtml = replace(preBlock._4e_outerHtml(),
+            splittedHTML = replace(preBlock.outerHTML(),
                 duoBrRegex,
                 function (match, charBefore, bookmark) {
                     return charBefore + '</pre>' + bookmark + '<pre>';
                 });
 
         var pres = [];
-        splittedHtml.replace(/<pre\b.*?>([\s\S]*?)<\/pre>/gi,
+        splittedHTML.replace(/<pre\b.*?>([\s\S]*?)<\/pre>/gi,
             function (match, preContent) {
                 pres.push(preContent);
             });
@@ -507,14 +507,14 @@ KISSY.add("editor/core/styles", function (S, Editor) {
         // a '\n' at the beginning, and previousBlock might contain a '\n'
         // towards the end. These new lines are not normally displayed but they
         // become visible after merging.
-        var mergedHtml = replace(previousBlock.html(), /\n$/, '') + '\n\n' +
+        var mergedHTML = replace(previousBlock.html(), /\n$/, '') + '\n\n' +
             replace(preBlock.html(), /^\n/, '');
 
         // Krugle: IE normalizes innerHTML from <pre>, breaking whitespaces.
         if (UA['ie'])
-            preBlock[0].outerHTML = '<pre>' + mergedHtml + '</pre>';
+            preBlock[0].outerHTML = '<pre>' + mergedHTML + '</pre>';
         else
-            preBlock.html(mergedHtml);
+            preBlock.html(mergedHTML);
 
         previousBlock._4e_remove();
     }
@@ -522,18 +522,18 @@ KISSY.add("editor/core/styles", function (S, Editor) {
     /**
      * Converting a list of <pre> into blocks with format well preserved.
      */
-    function fromPres(preHtmls, newBlock) {
+    function fromPres(preHTMLs, newBlock) {
         var docFrag = newBlock[0].ownerDocument.createDocumentFragment();
-        for (var i = 0; i < preHtmls.length; i++) {
-            var blockHtml = preHtmls[ i ];
+        for (var i = 0; i < preHTMLs.length; i++) {
+            var blockHTML = preHTMLs[ i ];
 
             // 1. Trim the first and last line-breaks immediately after and before <pre>,
             // they're not visible.
-            blockHtml = blockHtml.replace(/(\r\n|\r)/g, '\n');
-            blockHtml = replace(blockHtml, /^[ \t]*\n/, '');
-            blockHtml = replace(blockHtml, /\n$/, '');
+            blockHTML = blockHTML.replace(/(\r\n|\r)/g, '\n');
+            blockHTML = replace(blockHTML, /^[ \t]*\n/, '');
+            blockHTML = replace(blockHTML, /\n$/, '');
             // 2. Convert spaces or tabs at the beginning or at the end to &nbsp;
-            blockHtml = replace(blockHtml, /^[ \t]+|[ \t]+$/g, function (match, offset) {
+            blockHTML = replace(blockHTML, /^[ \t]+|[ \t]+$/g, function (match, offset) {
                 if (match.length == 1)    // one space, preserve it
                     return '&nbsp;';
                 else if (!offset)        // beginning of block
@@ -544,14 +544,14 @@ KISSY.add("editor/core/styles", function (S, Editor) {
 
             // 3. Convert \n to <BR>.
             // 4. Convert contiguous (i.e. non-singular) spaces or tabs to &nbsp;
-            blockHtml = blockHtml.replace(/\n/g, '<br>');
-            blockHtml = blockHtml.replace(/[ \t]{2,}/g,
+            blockHTML = blockHTML.replace(/\n/g, '<br>');
+            blockHTML = blockHTML.replace(/[ \t]{2,}/g,
                 function (match) {
                     return new Array(match.length).join('&nbsp;') + ' ';
                 });
 
             var newBlockClone = newBlock.clone();
-            newBlockClone.html(blockHtml);
+            newBlockClone.html(blockHTML);
             docFrag.appendChild(newBlockClone[0]);
         }
         return docFrag;

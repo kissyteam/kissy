@@ -1,5 +1,5 @@
 /*
- Combined modules by KISSY Module Compiler: 
+ Combined processedModules by KISSY Module Compiler: 
 
  biz/x
  biz/y
@@ -7,8 +7,8 @@
 */
 
 KISSY.add("biz/x", function() {
-  return"x + overlay"
-}, {requires:["overlay", "./x.css"]});
+  return"x + overlay +  switchable"
+}, {requires:["overlay", "switchable", "./x.css"]});
 KISSY.add("biz/y", function(S, x) {
   return"y + " + x
 }, {requires:["./x", "./y.css"]});

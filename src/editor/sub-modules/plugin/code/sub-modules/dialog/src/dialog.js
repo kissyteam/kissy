@@ -19,7 +19,7 @@ KISSY.add('editor/plugin/code/dialog', function (S, Editor, Dialog4E, MenuButton
             ['Diff', 'diff'],
             ['Erlang', 'erlang'],
             ['Groovy', 'groovy'],
-            ['Html', 'html'],
+            ['HTML', 'html'],
             ['Java', 'java'],
             ['JavaFx', 'jfx'],
             ['Javascript', 'js'],

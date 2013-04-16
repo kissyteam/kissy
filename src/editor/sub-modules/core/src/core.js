@@ -83,16 +83,12 @@ KISSY.add('editor/core', function (S, Editor, Utils, focusManager, Styles, zInde
             '</div>' +
             '<div class="' + KE_STATUSBAR_CLASS.substring(1) + '"></div>';
 
-    S.mix(Editor,
-        /**
-         * @lends Editor
-         */
-        {
-            SOURCE_MODE: 0,
-            WYSIWYG_MODE: 1
-        });
+    Editor.Mode={
+        SOURCE_MODE: 0,
+        WYSIWYG_MODE: 1
+    };
 
-    var WYSIWYG_MODE = Editor.WYSIWYG_MODE;
+    var WYSIWYG_MODE = 1;
 
     S.augment(Editor,
 
@@ -393,7 +389,7 @@ KISSY.add('editor/core', function (S, Editor, Utils, focusManager, Styles, zInde
                 }
                 //如果不需要要格式化，例如提交数据给服务器
                 if (format) {
-                    html = htmlDataProcessor.toHtml(html);
+                    html = htmlDataProcessor.toHTML(html);
                 } else {
                     html = htmlDataProcessor.toServer(html);
                 }
@@ -429,14 +425,14 @@ KISSY.add('editor/core', function (S, Editor, Utils, focusManager, Styles, zInde
              */
             getDocHTML: function () {
                 var self = this;
-                return prepareIFrameHtml(0, self.get('customStyle'),
+                return prepareIFrameHTML(0, self.get('customStyle'),
                     self.get('customLink'), self.get('formatData'));
             },
 
             /**
              * @deprecated
              */
-            getDocHtml: function () {
+            'getDocHtml': function () {
                 return this.getDocHTML();
             },
 
@@ -769,7 +765,7 @@ KISSY.add('editor/core', function (S, Editor, Utils, focusManager, Styles, zInde
             /**
              * @deprecated
              */
-            insertHtml: function (a, b) {
+            'insertHtml': function (a, b) {
                 this.insertHTML(a, b);
             }
         });
@@ -1111,7 +1107,7 @@ KISSY.add('editor/core', function (S, Editor, Utils, focusManager, Styles, zInde
 
     }
 
-    function prepareIFrameHtml(id, customStyle, customLink, data) {
+    function prepareIFrameHTML(id, customStyle, customLink, data) {
         var links = '',
             i,
             innerCssFile = Utils.debugUrl('theme/editor-iframe.css');
@@ -1154,7 +1150,7 @@ KISSY.add('editor/core', function (S, Editor, Utils, focusManager, Styles, zInde
 
     function setUpIFrame(self, data) {
         var iframe = self.get('iframe'),
-            html = prepareIFrameHtml(self._UUID,
+            html = prepareIFrameHTML(self._UUID,
                 self.get('customStyle'),
                 self.get('customLink'), data),
             iframeDom = iframe[0],

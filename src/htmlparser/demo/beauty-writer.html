@@ -35,15 +35,15 @@
 <script>
 
 
-    KISSY.use("htmlparser,core", function (S, HtmlParser) {
+    KISSY.use("htmlparser,core", function (S, HTMLParser) {
         var $ = S.all;
         $("#after").val("");
         var start = $("#start");
         start.on("click", function () {
-            var writer = new HtmlParser.BeautifyWriter(),
-                    filter = new HtmlParser.Filter(),
+            var writer = new HTMLParser.BeautifyWriter(),
+                    filter = new HTMLParser.Filter(),
                     before = S.trim($("#before").val()),
-                    n = new HtmlParser.Parser(before).parse();
+                    n = new HTMLParser.Parser(before).parse();
 
             filter.addRules({
                 tags:{
@@ -63,9 +63,9 @@
             });
             S.log(n);
 
-            n.writeHtml(writer, filter);
+            n.writeHTML(writer, filter);
 
-            $("#after").val(writer.getHtml());
+            $("#after").val(writer.getHTML());
         });
     });
 </script>

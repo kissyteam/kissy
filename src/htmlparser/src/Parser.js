@@ -7,7 +7,7 @@ KISSY.add("htmlparser/Parser", function (S, dtd, Tag, Fragment, Cursor, Lexer, D
     function Parser(html, opts) {
         // fake root node
         html = S.trim(html);
-        this.originalHtml = html;
+        this.originalHTML = html;
         // only allow condition
         // 1. start with <!doctype
         // 2. start with <!html
@@ -52,10 +52,10 @@ KISSY.add("htmlparser/Parser", function (S, dtd, Tag, Fragment, Cursor, Lexer, D
 
             post_process(doc);
 
-            var originalHtml = this.originalHtml,
+            var originalHTML = this.originalHTML,
                 fragment = new Fragment(), cs;
 
-            if (/^(<!doctype|<html|<body)/i.test(originalHtml)) {
+            if (/^(<!doctype|<html|<body)/i.test(originalHTML)) {
                 cs = doc.childNodes;
             } else {
                 cs = body.childNodes;
@@ -177,13 +177,13 @@ KISSY.add("htmlparser/Parser", function (S, dtd, Tag, Fragment, Cursor, Lexer, D
             if (childNodes[i].nodeName == "html") {
                 var html = childNodes[i];
                 for (var j = 0; j < i; j++) {
-                    if (childNodes[j].nodeType == 3 && !S.trim(childNodes[j].toHtml())) {
+                    if (childNodes[j].nodeType == 3 && !S.trim(childNodes[j].toHTML())) {
                         doc.removeChild(childNodes[j]);
                     }
                 }
                 while (html.firstChild &&
                     html.firstChild.nodeType == 3 &&
-                    !S.trim(html.firstChild.toHtml())) {
+                    !S.trim(html.firstChild.toHTML())) {
                     html.removeChild(html.firstChild);
                 }
                 break;

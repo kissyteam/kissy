@@ -30,7 +30,7 @@ KISSY.add("editor/plugin/menubutton", function (S, Editor, MenuButton) {
 
         s.get("el").unselectable();
 
-        if (cfg.mode == Editor.WYSIWYG_MODE) {
+        if (cfg.mode == Editor.Mode.WYSIWYG_MODE) {
             self.on("wysiwygMode", function () {
                 s.set('disabled', false);
             });

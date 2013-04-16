@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 8 21:57
+build time: Apr 16 12:53
 */
 /**
  * image dialog (support upload and remote)
@@ -68,7 +68,7 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Dialog4E, Tabs,
             "z-index:1;' " +
             "class='{prefixCls}image-up {prefixCls}button ks-inline-block'>浏览...</a>" +
             "</p>" +
-            "<div class='{prefixCls}img-up-extraHtml'>" +
+            "<div class='{prefixCls}img-up-extraHTML'>" +
             "</div>" +
             "</form>" +
             "</div>" +
@@ -396,9 +396,9 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Dialog4E, Tabs,
             });
 
             if (self.cfg) {
-                if (self.cfg['extraHtml']) {
-                    content.one("." + prefixCls + "img-up-extraHtml")
-                        .html(self.cfg['extraHtml']);
+                if (self.cfg['extraHTML']) {
+                    content.one("." + prefixCls + "img-up-extraHTML")
+                        .html(self.cfg['extraHTML']);
                 }
                 var ke_image_up = content.one("." + prefixCls + "image-up"),
                     sizeLimit = self.cfg && self.cfg['sizeLimit'];

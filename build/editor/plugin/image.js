@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 8 21:57
+build time: Apr 16 12:53
 */
 /**
  * insert image for kissy editor
@@ -21,7 +21,7 @@ KISSY.add("editor/plugin/image", function (S, Editor, Button, Bubble, ContextMen
                 return node;
             }
         },
-        tipHtml = '<a class="{prefixCls}editor-bubble-url" ' +
+        tipHTML = '<a class="{prefixCls}editor-bubble-url" ' +
             'target="_blank" href="#">在新窗口查看</a>  |  '
             + '<a class="{prefixCls}editor-bubble-link ' +
             '{prefixCls}editor-bubble-change" href="#">编辑</a>  |  '
@@ -55,7 +55,7 @@ KISSY.add("editor/plugin/image", function (S, Editor, Button, Bubble, ContextMen
 
                     }
                 },
-                mode: Editor.WYSIWYG_MODE
+                mode: Editor.Mode.WYSIWYG_MODE
             });
 
             var handlers = [
@@ -128,7 +128,7 @@ KISSY.add("editor/plugin/image", function (S, Editor, Button, Bubble, ContextMen
                     afterRenderUI: function () {
                         var bubble = this,
                             el = bubble.get("contentEl");
-                        el.html(S.substitute(tipHtml, {
+                        el.html(S.substitute(tipHTML, {
                             prefixCls: prefixCls
                         }));
                         var tipUrlEl = el.one("." + prefixCls + "editor-bubble-url"),

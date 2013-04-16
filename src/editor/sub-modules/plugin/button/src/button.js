@@ -43,7 +43,7 @@ KISSY.add("editor/plugin/button", function (S, Editor, Button) {
             });
         }
 
-        if (b.get("mode") == Editor.WYSIWYG_MODE) {
+        if (b.get("mode") == Editor.Mode.WYSIWYG_MODE) {
             self.on("wysiwygMode", function () {
                 b.set("disabled", false);
             });

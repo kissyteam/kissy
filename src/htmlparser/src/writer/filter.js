@@ -45,7 +45,7 @@ KISSY.add("htmlparser/writer/filter", function (S) {
             if (el && ret && ret != el) {
                 // text filter can return string value directly
                 if (typeof ret == 'string') {
-                    if (el.toHtml() == ret) {
+                    if (el.toHTML() == ret) {
                         return el;
                     }
                     el.nodeValue = ret;
@@ -124,11 +124,11 @@ KISSY.add("htmlparser/writer/filter", function (S) {
         },
 
         onText: function (el) {
-            return filterFn.call(this, this.text, [el.toHtml(), el], el);
+            return filterFn.call(this, this.text, [el.toHTML(), el], el);
         },
 
         onCData: function (el) {
-            return filterFn.call(this, this.cdata, [el.toHtml(), el], el);
+            return filterFn.call(this, this.cdata, [el.toHTML(), el], el);
         },
 
         onAttribute: function (attrNode, el) {
@@ -136,7 +136,7 @@ KISSY.add("htmlparser/writer/filter", function (S) {
         },
 
         onComment: function (el) {
-            return filterFn.call(this, this.comment, [el.toHtml(), el], el);
+            return filterFn.call(this, this.comment, [el.toHTML(), el], el);
         },
 
         onNode: function (el) {

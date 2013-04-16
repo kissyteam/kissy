@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 8 22:00
+build time: Apr 16 12:57
 */
 /**
  * undo button
@@ -16,13 +16,13 @@ KISSY.add("editor/plugin/undo", function (S, Editor, Btn, cmd) {
         pluginRenderUI: function (editor) {
             // 先 button 绑定事件
             editor.addButton("undo", {
-                mode: Editor.WYSIWYG_MODE,
+                mode: Editor.Mode.WYSIWYG_MODE,
                 tooltip: "撤销",
                 editor: editor
             }, Btn.UndoBtn);
 
             editor.addButton("redo", {
-                mode: Editor.WYSIWYG_MODE,
+                mode: Editor.Mode.WYSIWYG_MODE,
                 tooltip: "重做",
                 editor: editor
             }, Btn.RedoBtn);

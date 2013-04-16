@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 8 22:00
+build time: Apr 16 12:57
 */
 /**
  * table dialog
@@ -145,7 +145,7 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Dialog4E, MenuButto
             "</tr>" +
             "</table>" +
             "</div>",
-        footHtml = "<div style='padding:5px 20px 20px;'>" +
+        footHTML = "<div style='padding:5px 20px 20px;'>" +
             "<a " +
             "class='{prefixCls}editor-table-ok {prefixCls}editor-button ks-inline-block' " +
             "style='margin-right:20px;'>确定</a> " +
@@ -180,7 +180,7 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Dialog4E, MenuButto
                     mask: true,
                     headerContent: "表格", //属性",
                     bodyContent: replacePrefix(TABLE_HTML, prefixCls),
-                    footerContent: replacePrefix(footHtml, prefixCls)
+                    footerContent: replacePrefix(footHTML, prefixCls)
                 }).render(),
                 dbody = d.get("body"),
                 foot = d.get("footer");

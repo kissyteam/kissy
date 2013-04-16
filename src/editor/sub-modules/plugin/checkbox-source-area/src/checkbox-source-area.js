@@ -5,8 +5,8 @@
 KISSY.add("editor/plugin/checkbox-source-area", function (S, Editor) {
     var Node = S.Node;
 
-    var SOURCE_MODE = Editor.SOURCE_MODE ,
-        WYSIWYG_MODE = Editor.WYSIWYG_MODE;
+    var SOURCE_MODE = Editor.Mode.SOURCE_MODE ,
+        WYSIWYG_MODE = Editor.Mode.WYSIWYG_MODE;
 
     function CheckboxSourceArea(editor) {
         var self = this;

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 31 23:03
+build time: Apr 16 13:01
 */
 /**
  * @ignore
@@ -101,12 +101,10 @@ KISSY.add("stylesheet", function (S, DOM) {
          * @param {Object} css style declaration object. set value to "" to unset
          *
          * for example:
-         * <code>
          *      // set
          *      set("p",{color:'red'})
          *      // unset
          *      set("p",{color:''})
-         * </code>
          * @chainable
          */
         set: function (selectorText, css) {

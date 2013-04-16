@@ -28,7 +28,7 @@ KISSY.add("editor/plugin/undo/btn", function (S, Editor, Button) {
     }, {
         ATTRS: {
             mode: {
-                value: Editor.WYSIWYG_MODE
+                value: Editor.Mode.WYSIWYG_MODE
             },
             disabled: {
                 // 默认 disabled
@@ -70,7 +70,7 @@ KISSY.add("editor/plugin/undo/btn", function (S, Editor, Button) {
 
         ATTRS: {
             mode: {
-                value: Editor.WYSIWYG_MODE
+                value: Editor.Mode.WYSIWYG_MODE
             },
             disabled: {
                 // 默认 disabled

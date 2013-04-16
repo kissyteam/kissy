@@ -17,7 +17,7 @@ KISSY.add('editor/plugin/code', function (S, Editor,DialogLoader) {
                         DialogLoader.useDialog(editor, "code");
                     }
                 },
-                mode: Editor.WYSIWYG_MODE
+                mode: Editor.Mode.WYSIWYG_MODE
             });
         }
     });

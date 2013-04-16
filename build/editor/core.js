@@ -1,13 +1,13 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 16 12:15
+build time: Apr 16 12:50
 */
 /**
  * Set up editor constructor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/core/base", function (S, HtmlParser, Component) {
+KISSY.add("editor/core/base", function (S, HTMLParser, Component) {
 
     /**
      * @class
@@ -30,7 +30,7 @@ KISSY.add("editor/core/base", function (S, HtmlParser, Component) {
 
         {
             Config: {},
-            XHTML_DTD: HtmlParser['DTD'],
+            XHTML_DTD: HTMLParser['DTD'],
             ATTRS: /**
              * @lends Editor#
              */
@@ -298,10 +298,10 @@ KISSY.add("editor/core/clipboard", function (S, Editor, KERange, KES) {
                 if (/(class="?Mso|style="[^"]*\bmso\-|w:WordDocument)/.test(html)) {
                     // 动态载入 word 过滤规则
                     S.use("editor/plugin/word-filter", function (S, wordFilter) {
-                        editor.insertHtml(wordFilter.toDataFormat(html, editor));
+                        editor.insertHTML(wordFilter.toDataFormat(html, editor));
                     });
                 } else {
-                    editor.insertHtml(html);
+                    editor.insertHTML(html);
                 }
 
             }, 0);
@@ -537,16 +537,12 @@ KISSY.add('editor/core', function (S, Editor, Utils, focusManager, Styles, zInde
             '</div>' +
             '<div class="' + KE_STATUSBAR_CLASS.substring(1) + '"></div>';
 
-    S.mix(Editor,
-        /**
-         * @lends Editor
-         */
-        {
-            SOURCE_MODE: 0,
-            WYSIWYG_MODE: 1
-        });
+    Editor.Mode={
+        SOURCE_MODE: 0,
+        WYSIWYG_MODE: 1
+    };
 
-    var WYSIWYG_MODE = Editor.WYSIWYG_MODE;
+    var WYSIWYG_MODE = 1;
 
     S.augment(Editor,
 
@@ -847,7 +843,7 @@ KISSY.add('editor/core', function (S, Editor, Utils, focusManager, Styles, zInde
                 }
                 //如果不需要要格式化，例如提交数据给服务器
                 if (format) {
-                    html = htmlDataProcessor.toHtml(html);
+                    html = htmlDataProcessor.toHTML(html);
                 } else {
                     html = htmlDataProcessor.toServer(html);
                 }
@@ -883,14 +879,14 @@ KISSY.add('editor/core', function (S, Editor, Utils, focusManager, Styles, zInde
              */
             getDocHTML: function () {
                 var self = this;
-                return prepareIFrameHtml(0, self.get('customStyle'),
+                return prepareIFrameHTML(0, self.get('customStyle'),
                     self.get('customLink'), self.get('formatData'));
             },
 
             /**
              * @deprecated
              */
-            getDocHtml: function () {
+            'getDocHtml': function () {
                 return this.getDocHTML();
             },
 
@@ -1223,7 +1219,7 @@ KISSY.add('editor/core', function (S, Editor, Utils, focusManager, Styles, zInde
             /**
              * @deprecated
              */
-            insertHtml: function (a, b) {
+            'insertHtml': function (a, b) {
                 this.insertHTML(a, b);
             }
         });
@@ -1565,7 +1561,7 @@ KISSY.add('editor/core', function (S, Editor, Utils, focusManager, Styles, zInde
 
     }
 
-    function prepareIFrameHtml(id, customStyle, customLink, data) {
+    function prepareIFrameHTML(id, customStyle, customLink, data) {
         var links = '',
             i,
             innerCssFile = Utils.debugUrl('theme/editor-iframe.css');
@@ -1608,7 +1604,7 @@ KISSY.add('editor/core', function (S, Editor, Utils, focusManager, Styles, zInde
 
     function setUpIFrame(self, data) {
         var iframe = self.get('iframe'),
-            html = prepareIFrameHtml(self._UUID,
+            html = prepareIFrameHTML(self._UUID,
                 self.get('customStyle'),
                 self.get('customLink'), data),
             iframeDom = iframe[0],
@@ -2434,22 +2430,6 @@ KISSY.add("editor/core/dom", function (S, Editor, Utils) {
                     }
                     el.appendChild(bogus);
                 }
-            },
-
-            /**
-             * 得到元素的 outerHTML
-             * @param el
-             */
-            _4e_outerHtml: function (el) {
-                if (el.outerHTML) {
-                    // IE includes the <?xml:namespace> tag in the outerHTML of
-                    // namespaced element. So, we must strip it here. (#3341)
-                    return el.outerHTML.replace(/<\?[^>]*>/, '');
-                }
-
-                var tmpDiv = el.ownerDocument.createElement('div');
-                tmpDiv.appendChild(el.cloneNode(TRUE));
-                return tmpDiv.innerHTML;
             },
 
             /**
@@ -3435,9 +3415,9 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor) {
         init: function (editor) {
             var Node = S.Node,
                 UA = S.UA,
-                HtmlParser = S.require("htmlparser"),
-                htmlFilter = new HtmlParser.Filter(),
-                dataFilter = new HtmlParser.Filter();
+                HTMLParser = S.require("htmlparser"),
+                htmlFilter = new HTMLParser.Filter(),
+                dataFilter = new HTMLParser.Filter();
 
             function filterSpan(element) {
                 if (((element.getAttribute('class') + "").match(/Apple-\w+-span/)) || !(element.attributes.length)) {
@@ -3453,8 +3433,8 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor) {
             (function () {
 
                 function wrapAsComment(element) {
-                    var html = HtmlParser.serialize(element);
-                    return new HtmlParser.Comment(protectedSourceMarker +
+                    var html = HTMLParser.serialize(element);
+                    return new HTMLParser.Comment(protectedSourceMarker +
                         encodeURIComponent(html).replace(/--/g,
                             "%2D%2D"));
                 }
@@ -3479,7 +3459,7 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor) {
                 };
 
                 // 将编辑区生成 html 最终化
-                var defaultHtmlFilterRules = {
+                var defaultHTMLFilterRules = {
                     tagNames: [
                         // Remove the "ke:" namespace prefix.
                         [ ( /^ke:/ ), '' ],
@@ -3558,7 +3538,7 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor) {
                         // If this is a comment for protected source.
                         if (contents.substr(0, protectedSourceMarker.length) == protectedSourceMarker) {
                             contents = S.trim(S.urlDecode(contents.substr(protectedSourceMarker.length)));
-                            return HtmlParser.parse(contents).childNodes[0];
+                            return HTMLParser.parse(contents).childNodes[0];
                         }
                     }
                 };
@@ -3567,7 +3547,7 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor) {
                     // them back to lower case.
                     // bug: style='background:url(www.G.cn)' =>  style='background:url(www.g.cn)'
                     // 只对 propertyName 小写
-                    defaultHtmlFilterRules.attributes.style = function (value // , element
+                    defaultHTMLFilterRules.attributes.style = function (value // , element
                         ) {
                         return value.replace(/(^|;)([^:]+)/g, function (match) {
                             return match.toLowerCase();
@@ -3575,7 +3555,7 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor) {
                     };
                 }
 
-                htmlFilter.addRules(defaultHtmlFilterRules);
+                htmlFilter.addRules(defaultHTMLFilterRules);
                 dataFilter.addRules(defaultDataFilterRules);
             })();
 
@@ -3638,11 +3618,11 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor) {
                     if (blockNeedsExtension(block)) {
                         // 任何浏览器都要加空格！否则空表格可能间隙太小，不能容下光标
                         if (UA['ie']) {
-                            block.appendChild(new HtmlParser.Text('\xa0'));
+                            block.appendChild(new HTMLParser.Text('\xa0'));
                         } else {
                             //其他浏览器需要加空格??
-                            block.appendChild(new HtmlParser.Text('&nbsp;'));
-                            block.appendChild(new HtmlParser.Tag('br'));
+                            block.appendChild(new HTMLParser.Text('&nbsp;'));
+                            block.appendChild(new HTMLParser.Tag('br'));
                         }
                     }
                 }
@@ -3650,7 +3630,7 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor) {
                 function extendBlockForOutput(block) {
                     trimFillers(block, false);
                     if (blockNeedsExtension(block)) {
-                        block.appendChild(new HtmlParser.Text('\xa0'));
+                        block.appendChild(new HTMLParser.Text('\xa0'));
                     }
                 }
 
@@ -3673,15 +3653,15 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor) {
                 // TODO: Support filler for <pre>, line break is also occupy line height.
                 delete blockLikeTags.pre;
                 var defaultDataBlockFilterRules = { tags: {} };
-                var defaultHtmlBlockFilterRules = { tags: {} };
+                var defaultHTMLBlockFilterRules = { tags: {} };
 
                 for (i in blockLikeTags) {
                     defaultDataBlockFilterRules.tags[ i ] = extendBlockForDisplay;
-                    defaultHtmlBlockFilterRules.tags[ i ] = extendBlockForOutput;
+                    defaultHTMLBlockFilterRules.tags[ i ] = extendBlockForOutput;
                 }
 
                 dataFilter.addRules(defaultDataBlockFilterRules);
-                htmlFilter.addRules(defaultHtmlBlockFilterRules);
+                htmlFilter.addRules(defaultHTMLBlockFilterRules);
             })();
 
 
@@ -3754,15 +3734,15 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor) {
                 htmlFilter: htmlFilter,
                 // 编辑器 html 到外部 html
                 // fixForBody , <body>t</body> => <body><p>t</p></body>
-                toHtml: function (html) {
+                toHTML: function (html) {
                     // fixForBody = fixForBody || "p";
                     // Now use our parser to make further fixes to the structure, as
                     // well as apply the filter.
                     //使用 htmlWriter 界面美观，加入额外文字节点\n,\t空白等
-                    var writer = new HtmlParser.BeautifyWriter(),
-                        n = new HtmlParser.Parser(html).parse();
-                    n.writeHtml(writer, htmlFilter);
-                    html = writer.getHtml();
+                    var writer = new HTMLParser.BeautifyWriter(),
+                        n = new HTMLParser.Parser(html).parse();
+                    n.writeHTML(writer, htmlFilter);
+                    html = writer.getHTML();
                     return html;
                 },
                 // 外部html进入编辑器
@@ -3801,12 +3781,12 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor) {
                     // fixForBody = fixForBody || "p";
                     // bug:qc #3710:使用 basicWriter ，去除无用的文字节点，标签间连续\n空白等
 
-                    var writer = new HtmlParser.BasicWriter(),
-                        n = new HtmlParser.Parser(html).parse();
+                    var writer = new HTMLParser.BasicWriter(),
+                        n = new HTMLParser.Parser(html).parse();
 
-                    n.writeHtml(writer, _dataFilter);
+                    n.writeHTML(writer, _dataFilter);
 
-                    html = writer.getHtml();
+                    html = writer.getHTML();
 
                     return html;
                 },
@@ -3814,10 +3794,10 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor) {
                  最精简html传送到server
                  */
                 toServer: function (html) {
-                    var writer = new HtmlParser.MinifyWriter(),
-                        n = new HtmlParser.Parser(html).parse();
-                    n.writeHtml(writer, htmlFilter);
-                    return writer.getHtml();
+                    var writer = new HTMLParser.MinifyWriter(),
+                        n = new HTMLParser.Parser(html).parse();
+                    n.writeHTML(writer, htmlFilter);
+                    return writer.getHTML();
                 }
             };
         }
@@ -7106,7 +7086,7 @@ KISSY.add("editor/core/selectionFix", function (S, Editor) {
 
 
         function isBlankParagraph(block) {
-            return block._4e_outerHtml().match(emptyParagraphRegexp);
+            return block.outerHTML().match(emptyParagraphRegexp);
         }
 
         var isNotWhitespace = Editor.Walker.whitespaces(TRUE),
@@ -7656,31 +7636,31 @@ KISSY.add("editor/core/styles", function (S, Editor) {
      */
     function toPre(block, newBlock) {
         // First trim the block content.
-        var preHtml = block.html();
+        var preHTML = block.html();
 
         // 1. Trim head/tail spaces, they're not visible.
-        preHtml = replace(preHtml, /(?:^[ \t\n\r]+)|(?:[ \t\n\r]+$)/g, '');
+        preHTML = replace(preHTML, /(?:^[ \t\n\r]+)|(?:[ \t\n\r]+$)/g, '');
         // 2. Delete ANSI whitespaces immediately before and after <BR> because
         //    they are not visible.
-        preHtml = preHtml.replace(/[ \t\r\n]*(<br[^>]*>)[ \t\r\n]*/gi, '$1');
+        preHTML = preHTML.replace(/[ \t\r\n]*(<br[^>]*>)[ \t\r\n]*/gi, '$1');
         // 3. Compress other ANSI whitespaces since they're only visible as one
         //    single space previously.
         // 4. Convert &nbsp; to spaces since &nbsp; is no longer needed in <PRE>.
-        preHtml = preHtml.replace(/([ \t\n\r]+|&nbsp;)/g, ' ');
+        preHTML = preHTML.replace(/([ \t\n\r]+|&nbsp;)/g, ' ');
         // 5. Convert any <BR /> to \n. This must not be done earlier because
         //    the \n would then get compressed.
-        preHtml = preHtml.replace(/<br\b[^>]*>/gi, '\n');
+        preHTML = preHTML.replace(/<br\b[^>]*>/gi, '\n');
 
         // Krugle: IE normalizes innerHTML to <pre>, breaking whitespaces.
         if (UA['ie']) {
             var temp = block[0].ownerDocument.createElement('div');
             temp.appendChild(newBlock[0]);
-            newBlock[0].outerHTML = '<pre>' + preHtml + '</pre>';
+            newBlock[0].outerHTML = '<pre>' + preHTML + '</pre>';
             newBlock = new Node(temp.firstChild);
             newBlock._4e_remove();
         }
         else
-            newBlock.html(preHtml);
+            newBlock.html(preHTML);
 
         return newBlock;
     }
@@ -7694,14 +7674,14 @@ KISSY.add("editor/core/styles", function (S, Editor) {
         // and ignore bookmark content between them.
         var duoBrRegex = /(\S\s*)\n(?:\s|(<span[^>]+_ck_bookmark.*?\/span>))*\n(?!$)/gi,
         //blockName = preBlock.nodeName(),
-            splittedHtml = replace(preBlock._4e_outerHtml(),
+            splittedHTML = replace(preBlock.outerHTML(),
                 duoBrRegex,
                 function (match, charBefore, bookmark) {
                     return charBefore + '</pre>' + bookmark + '<pre>';
                 });
 
         var pres = [];
-        splittedHtml.replace(/<pre\b.*?>([\s\S]*?)<\/pre>/gi,
+        splittedHTML.replace(/<pre\b.*?>([\s\S]*?)<\/pre>/gi,
             function (match, preContent) {
                 pres.push(preContent);
             });
@@ -7748,14 +7728,14 @@ KISSY.add("editor/core/styles", function (S, Editor) {
         // a '\n' at the beginning, and previousBlock might contain a '\n'
         // towards the end. These new lines are not normally displayed but they
         // become visible after merging.
-        var mergedHtml = replace(previousBlock.html(), /\n$/, '') + '\n\n' +
+        var mergedHTML = replace(previousBlock.html(), /\n$/, '') + '\n\n' +
             replace(preBlock.html(), /^\n/, '');
 
         // Krugle: IE normalizes innerHTML from <pre>, breaking whitespaces.
         if (UA['ie'])
-            preBlock[0].outerHTML = '<pre>' + mergedHtml + '</pre>';
+            preBlock[0].outerHTML = '<pre>' + mergedHTML + '</pre>';
         else
-            preBlock.html(mergedHtml);
+            preBlock.html(mergedHTML);
 
         previousBlock._4e_remove();
     }
@@ -7763,18 +7743,18 @@ KISSY.add("editor/core/styles", function (S, Editor) {
     /**
      * Converting a list of <pre> into blocks with format well preserved.
      */
-    function fromPres(preHtmls, newBlock) {
+    function fromPres(preHTMLs, newBlock) {
         var docFrag = newBlock[0].ownerDocument.createDocumentFragment();
-        for (var i = 0; i < preHtmls.length; i++) {
-            var blockHtml = preHtmls[ i ];
+        for (var i = 0; i < preHTMLs.length; i++) {
+            var blockHTML = preHTMLs[ i ];
 
             // 1. Trim the first and last line-breaks immediately after and before <pre>,
             // they're not visible.
-            blockHtml = blockHtml.replace(/(\r\n|\r)/g, '\n');
-            blockHtml = replace(blockHtml, /^[ \t]*\n/, '');
-            blockHtml = replace(blockHtml, /\n$/, '');
+            blockHTML = blockHTML.replace(/(\r\n|\r)/g, '\n');
+            blockHTML = replace(blockHTML, /^[ \t]*\n/, '');
+            blockHTML = replace(blockHTML, /\n$/, '');
             // 2. Convert spaces or tabs at the beginning or at the end to &nbsp;
-            blockHtml = replace(blockHtml, /^[ \t]+|[ \t]+$/g, function (match, offset) {
+            blockHTML = replace(blockHTML, /^[ \t]+|[ \t]+$/g, function (match, offset) {
                 if (match.length == 1)    // one space, preserve it
                     return '&nbsp;';
                 else if (!offset)        // beginning of block
@@ -7785,14 +7765,14 @@ KISSY.add("editor/core/styles", function (S, Editor) {
 
             // 3. Convert \n to <BR>.
             // 4. Convert contiguous (i.e. non-singular) spaces or tabs to &nbsp;
-            blockHtml = blockHtml.replace(/\n/g, '<br>');
-            blockHtml = blockHtml.replace(/[ \t]{2,}/g,
+            blockHTML = blockHTML.replace(/\n/g, '<br>');
+            blockHTML = blockHTML.replace(/[ \t]{2,}/g,
                 function (match) {
                     return new Array(match.length).join('&nbsp;') + ' ';
                 });
 
             var newBlockClone = newBlock.clone();
-            newBlockClone.html(blockHtml);
+            newBlockClone.html(blockHTML);
             docFrag.appendChild(newBlockClone[0]);
         }
         return docFrag;

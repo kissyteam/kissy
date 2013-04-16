@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 8 21:56
+build time: Apr 16 12:52
 */
 /**
  * Add flash plugin.
@@ -85,7 +85,7 @@ KISSY.add("editor/plugin/flash", function (S, Editor, FlashBaseClass, flashUtils
                         flashControl.show();
                     }
                 },
-                mode:Editor.WYSIWYG_MODE
+                mode:Editor.Mode.WYSIWYG_MODE
             });
         }
 //       ,

@@ -90,7 +90,7 @@ KISSY.add("editor/plugin/page-break", function (S, Editor, fakeObjects) {
                     }
 
                 },
-                mode:Editor.WYSIWYG_MODE
+                mode:Editor.Mode.WYSIWYG_MODE
             });
         }
     });

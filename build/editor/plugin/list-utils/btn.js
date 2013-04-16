@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 8 21:58
+build time: Apr 16 12:55
 */
 /**
  * Common btn for list.
@@ -18,7 +18,7 @@ KISSY.add("editor/plugin/list-utils/btn", function (S, Editor) {
 
             var button = editor.addButton(buttonId, {
                 elCls: buttonId + 'Btn',
-                mode: Editor.WYSIWYG_MODE,
+                mode: Editor.Mode.WYSIWYG_MODE,
                 tooltip: "设置" + tooltip
             });
 
@@ -34,7 +34,7 @@ KISSY.add("editor/plugin/list-utils/btn", function (S, Editor) {
 
             var arrow = editor.addSelect(buttonId + 'Arrow', {
                 tooltip: "选择并设置" + tooltip,
-                mode: Editor.WYSIWYG_MODE,
+                mode: Editor.Mode.WYSIWYG_MODE,
                 menu: cfg.menu,
                 matchElWidth: false,
                 elCls: 'toolbar-' + buttonId + 'ArrowBtn'

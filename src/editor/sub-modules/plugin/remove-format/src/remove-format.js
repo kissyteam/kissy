@@ -17,7 +17,7 @@ KISSY.add("editor/plugin/remove-format", function (S, Editor, formatCmd) {
                         editor.execCommand("removeFormat");
                     }
                 },
-                mode:Editor.WYSIWYG_MODE
+                mode:Editor.Mode.WYSIWYG_MODE
             });
         }
     });

@@ -26,7 +26,7 @@ KISSY.add("editor/plugin/justify-right", function (S, Editor, justifyCenterCmd) 
                     afterSyncUI:function () {
                         var self = this;
                         editor.on("selectionChange", function () {
-                            if (editor.get("mode") == Editor.SOURCE_MODE) {
+                            if (editor.get("mode") == Editor.Mode.SOURCE_MODE) {
                                 return;
                             }
                             if (editor.queryCommandValue("justifyRight")) {
@@ -38,7 +38,7 @@ KISSY.add("editor/plugin/justify-right", function (S, Editor, justifyCenterCmd) 
                     }
 
                 },
-                mode:Editor.WYSIWYG_MODE
+                mode:Editor.Mode.WYSIWYG_MODE
             });
 
             editor.docReady(function () {

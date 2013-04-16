@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 8 21:56
+build time: Apr 16 12:52
 */
 /**
  * draft for kissy editor
@@ -181,7 +181,7 @@ KISSY.add("editor/plugin/draft", function (S, Editor, localStorage, Overlay, Men
             versions.on("click", self.recover, self);
             addRes.call(self, versions);
             self.holder = holder;
-            if (cfg.draft['helpHtml']) {
+            if (cfg.draft['helpHTML']) {
 
                 var help = new Node('<a ' +
                     'tabindex="0" ' +
@@ -215,7 +215,7 @@ KISSY.add("editor/plugin/draft", function (S, Editor, localStorage, Overlay, Men
                 prefixCls = editor.get('prefixCls'),
                 cfg = self.config,
                 draftCfg = cfg.draft,
-                help = new Node(draftCfg['helpHtml'] || "");
+                help = new Node(draftCfg['helpHTML'] || "");
             var arrowCss = "height:0;" +
                 "position:absolute;" +
                 "font-size:0;" +

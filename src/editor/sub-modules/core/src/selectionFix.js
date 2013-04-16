@@ -343,7 +343,7 @@ KISSY.add("editor/core/selectionFix", function (S, Editor) {
 
 
         function isBlankParagraph(block) {
-            return block._4e_outerHtml().match(emptyParagraphRegexp);
+            return block.outerHTML().match(emptyParagraphRegexp);
         }
 
         var isNotWhitespace = Editor.Walker.whitespaces(TRUE),

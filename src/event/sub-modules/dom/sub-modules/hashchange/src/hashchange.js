@@ -86,7 +86,7 @@ KISSY.add('event/dom/hashchange', function (S, Event, DOM) {
                     iframeDoc.open();
                 }
                 // 取时要用 innerText !!
-                // 否则取 innerHtml 会因为 escapeHtml 导置 body.innerHTMl != hash
+                // 否则取 innerHTML 会因为 escapeHTML 导置 body.innerHTMl != hash
                 iframeDoc.write(html);
                 iframeDoc.close();
                 // 立刻同步调用 onIframeLoad !!!!
@@ -172,7 +172,7 @@ KISSY.add('event/dom/hashchange', function (S, Event, DOM) {
                 function onIframeLoad() {
                     // S.log('iframe start load..');
 
-                    // 2011.11.02 note: 不能用 innerHtml 会自动转义！！
+                    // 2011.11.02 note: 不能用 innerHTML 会自动转义！！
                     // #/x?z=1&y=2 => #/x?z=1&amp;y=2
                     var c = S.trim(getIframeDoc(iframe).body.innerText),
                         ch = getHash();

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 8 21:56
+build time: Apr 16 12:52
 */
 /**
  * fakeObjects for music ,video,flash
@@ -12,7 +12,7 @@ KISSY.add("editor/plugin/fake-objects", function (S, Editor) {
         DOM = S.DOM,
         Utils = Editor.Utils,
         SPACER_GIF = Utils.debugUrl('theme/spacer.gif'),
-        HtmlParser = S.require("htmlparser");
+        HTMLParser = S.require("htmlparser");
 
     S.augment(Editor, {
         //ie6 ,object outHTML error
@@ -30,7 +30,7 @@ KISSY.add("editor/plugin/fake-objects", function (S, Editor) {
                 attributes = {
                     'class':className + " " + existClass,
                     src:SPACER_GIF,
-                    _ke_realelement:encodeURIComponent(outerHTML || realElement._4e_outerHtml(undefined)),
+                    _ke_realelement:encodeURIComponent(outerHTML || realElement.outerHTML(undefined)),
                     _ke_real_node_type:realElement[0].nodeType,
                     style:style
                 };
@@ -71,12 +71,12 @@ KISSY.add("editor/plugin/fake-objects", function (S, Editor) {
              * @param element
              */
             $:function (element) {
-                var realHtml = element.getAttribute("_ke_realelement");
+                var realHTML = element.getAttribute("_ke_realelement");
 
                 var realFragment;
 
-                if (realHtml) {
-                    realFragment = new HtmlParser.Parser(S.urlDecode(realHtml)).parse();
+                if (realHTML) {
+                    realFragment = new HTMLParser.Parser(S.urlDecode(realHTML)).parse();
                 }
 
                 var realElement = realFragment && realFragment.childNodes[ 0 ];
@@ -146,7 +146,7 @@ KISSY.add("editor/plugin/fake-objects", function (S, Editor) {
                  * @param [isResizable]
                  */
                 createFakeParserElement:function (realElement, className, realElementType, isResizable, attrs) {
-                    var html = HtmlParser.serialize(realElement);
+                    var html = HTMLParser.serialize(realElement);
                     var style = realElement.getAttribute("style") || '';
                     if (realElement.getAttribute("width")) {
                         style = "width:" + realElement.getAttribute("width") + "px;" + style;
@@ -177,7 +177,7 @@ KISSY.add("editor/plugin/fake-objects", function (S, Editor) {
                     if (isResizable) {
                         attributes._ke_resizable = "_ke_resizable";
                     }
-                    return new HtmlParser.Tag('img', attributes);
+                    return new HTMLParser.Tag('img', attributes);
                 }
             });
         }

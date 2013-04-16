@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 31 23:01
+build time: Apr 16 12:59
 */
 /**
  * parse html to a hierarchy dom tree
@@ -12,7 +12,7 @@ KISSY.add("htmlparser/Parser", function (S, dtd, Tag, Fragment, Cursor, Lexer, D
     function Parser(html, opts) {
         // fake root node
         html = S.trim(html);
-        this.originalHtml = html;
+        this.originalHTML = html;
         // only allow condition
         // 1. start with <!doctype
         // 2. start with <!html
@@ -57,10 +57,10 @@ KISSY.add("htmlparser/Parser", function (S, dtd, Tag, Fragment, Cursor, Lexer, D
 
             post_process(doc);
 
-            var originalHtml = this.originalHtml,
+            var originalHTML = this.originalHTML,
                 fragment = new Fragment(), cs;
 
-            if (/^(<!doctype|<html|<body)/i.test(originalHtml)) {
+            if (/^(<!doctype|<html|<body)/i.test(originalHTML)) {
                 cs = doc.childNodes;
             } else {
                 cs = body.childNodes;
@@ -182,13 +182,13 @@ KISSY.add("htmlparser/Parser", function (S, dtd, Tag, Fragment, Cursor, Lexer, D
             if (childNodes[i].nodeName == "html") {
                 var html = childNodes[i];
                 for (var j = 0; j < i; j++) {
-                    if (childNodes[j].nodeType == 3 && !S.trim(childNodes[j].toHtml())) {
+                    if (childNodes[j].nodeType == 3 && !S.trim(childNodes[j].toHTML())) {
                         doc.removeChild(childNodes[j]);
                     }
                 }
                 while (html.firstChild &&
                     html.firstChild.nodeType == 3 &&
-                    !S.trim(html.firstChild.toHtml())) {
+                    !S.trim(html.firstChild.toHTML())) {
                     html.removeChild(html.firstChild);
                 }
                 break;
@@ -601,7 +601,7 @@ KISSY.add("htmlparser/dtd", function(KY) {
     return ret;
 });
 /**
- * HtmlParser for KISSY (Editor)
+ * HTMLParser for KISSY (Editor)
  * @author yiminghe@gmail.com
  */
 KISSY.add("htmlparser", function (S, DTD, Lexer, Parser, BasicWriter, BeautifyWriter, MinifyWriter, Filter, CData, Comment, Node, Tag, Text) {
@@ -620,8 +620,8 @@ KISSY.add("htmlparser", function (S, DTD, Lexer, Parser, BasicWriter, BeautifyWr
         DTD:DTD,
         serialize:function (n, filter) {
             var basicWriter = new BasicWriter();
-            n.writeHtml(basicWriter, filter);
-            return basicWriter.getHtml();
+            n.writeHTML(basicWriter, filter);
+            return basicWriter.getHTML();
         },
         parse:function (html) {
             return new Parser(html).parse();
@@ -1623,16 +1623,16 @@ KISSY.add("htmlparser/nodes/CData", function (S, Text) {
     }
 
     S.extend(CData, Text, {
-        writeHtml:function (writer, filter) {
+        writeHTML:function (writer, filter) {
             var ret;
             if (!filter || (ret = filter.onCData(this)) !== false) {
                 if (ret) {
                     if (this !== ret) {
-                        ret.writeHtml(writer, filter);
+                        ret.writeHTML(writer, filter);
                         return;
                     }
                 }
-                writer.cdata(this.toHtml());
+                writer.cdata(this.toHTML());
             }
         }
     });
@@ -1653,23 +1653,23 @@ KISSY.add("htmlparser/nodes/Comment", function (S, Text) {
     }
 
     S.extend(Comment, Text, {
-        writeHtml:function (writer, filter) {
+        writeHTML:function (writer, filter) {
             var ret;
             if (!filter || (ret = filter.onComment(this)) !== false) {
                 if (ret) {
                     if (this !== ret) {
-                        ret.writeHtml(writer, filter);
+                        ret.writeHTML(writer, filter);
                         return;
                     }
                 }
-                writer.comment(this.toHtml());
+                writer.comment(this.toHTML());
             }
         },
-        toHtml:function () {
+        toHTML:function () {
             if (this.nodeValue) {
                 return this.nodeValue;
             } else {
-                var value = Text.superclass.toHtml.apply(this, arguments);
+                var value = Text.superclass.toHTML.apply(this, arguments);
                 // <!-- -->
                 return value.substring(4, value.length - 3);
             }
@@ -1691,9 +1691,9 @@ KISSY.add("htmlparser/nodes/Document", function (S, Tag) {
     }
 
     S.extend(Document, Tag, {
-        writeHtml:function (writer, filter) {
+        writeHTML:function (writer, filter) {
             this.__filter = filter;
-            this._writeChildrenHtml(writer);
+            this._writeChildrenHTML(writer);
         }
     });
 
@@ -1712,13 +1712,13 @@ KISSY.add("htmlparser/nodes/Fragment", function (S, Tag) {
     }
 
     S.extend(Fragment, Tag, {
-        writeHtml:function (writer, filter) {
+        writeHTML:function (writer, filter) {
             this.__filter = filter;
             this.isChildrenFiltered = 0;
             if (filter) {
                 filter.onFragment(this);
             }
-            this._writeChildrenHtml(writer);
+            this._writeChildrenHTML(writer);
         }
     });
 
@@ -1752,7 +1752,7 @@ KISSY.add("htmlparser/nodes/Node", function (S) {
             this.endLine = lineCount(this.page.getText(0, endPosition));
         }
         if (S.Config.debug) {
-            this.toHtmlContent = this.toHtml();
+            this.toHTMLContent = this.toHTML();
         }
     }
 
@@ -1760,7 +1760,7 @@ KISSY.add("htmlparser/nodes/Node", function (S) {
 
         constructor: Node,
 
-        toHtml: function () {
+        toHTML: function () {
             if (this.page && this.page.getText) {
                 return this.page.getText(this.startPosition, this.endPosition);
             }
@@ -1774,7 +1774,7 @@ KISSY.add("htmlparser/nodes/Node", function (S) {
                 " : " + self.endPosition +
                 "|" + self.endLine +
                 " ]\n");
-            ret.push(self.toHtml());
+            ret.push(self.toHTML());
             return ret.join("");
         }
     };
@@ -2003,8 +2003,8 @@ KISSY.add("htmlparser/nodes/Tag", function (S, Node, Attribute, Dtd) {
             var self = this;
             if (!self.isChildrenFiltered) {
                 var writer = new (S.require('htmlparser/writer/basic'))();
-                self._writeChildrenHtml(writer);
-                var parser = new (S.require('htmlparser/Parser'))(writer.getHtml()),
+                self._writeChildrenHTML(writer);
+                var parser = new (S.require('htmlparser/Parser'))(writer.getHTML()),
                     children = parser.parse().childNodes;
                 self.empty();
                 S.each(children, function (c) {
@@ -2019,7 +2019,7 @@ KISSY.add("htmlparser/nodes/Tag", function (S, Node, Attribute, Dtd) {
          * @param writer
          * @param filter
          */
-        writeHtml:function (writer, filter) {
+        writeHTML:function (writer, filter) {
             var el = this,
                 tmp,
                 attrName,
@@ -2027,7 +2027,7 @@ KISSY.add("htmlparser/nodes/Tag", function (S, Node, Attribute, Dtd) {
 
             // special treat for doctype
             if (tagName == "!doctype") {
-                writer.append(this.toHtml() + "\n");
+                writer.append(this.toHTML() + "\n");
                 return;
             }
 
@@ -2056,13 +2056,13 @@ KISSY.add("htmlparser/nodes/Tag", function (S, Node, Attribute, Dtd) {
 
                 // replaced by other type of node
                 if (el.nodeType !== 1) {
-                    el.writeHtml(writer, filter);
+                    el.writeHTML(writer, filter);
                     return;
                 }
 
                 // preserve children but delete itself
                 if (!el.tagName) {
-                    el._writeChildrenHtml(writer);
+                    el._writeChildrenHTML(writer);
                     return;
                 }
             }
@@ -2092,7 +2092,7 @@ KISSY.add("htmlparser/nodes/Tag", function (S, Node, Attribute, Dtd) {
             writer.openTagClose(el);
 
             if (!el.isSelfClosed) {
-                el._writeChildrenHtml(writer);
+                el._writeChildrenHTML(writer);
                 // process its close tag
                 writer.closeTag(el);
             }
@@ -2103,12 +2103,12 @@ KISSY.add("htmlparser/nodes/Tag", function (S, Node, Attribute, Dtd) {
          * @param writer
          * @protected
          */
-        _writeChildrenHtml:function (writer) {
+        _writeChildrenHTML:function (writer) {
             var self = this,
                 filter = self.isChildrenFiltered ? 0 : self.__filter;
             // process its children recursively
             S.each(self.childNodes, function (child) {
-                child.writeHtml(writer, filter);
+                child.writeHTML(writer, filter);
             });
         }
 
@@ -2139,30 +2139,30 @@ KISSY.add("htmlparser/nodes/Text", function (S, Node) {
             Text.superclass.constructor.apply(this, [null, -1, -1]);
         } else {
             Text.superclass.constructor.apply(this, arguments);
-            this.nodeValue = this.toHtml();
+            this.nodeValue = this.toHTML();
         }
         this.nodeType = 3;
         this.nodeName = "#text";
     }
 
     S.extend(Text, Node, {
-        writeHtml:function (writer, filter) {
+        writeHTML:function (writer, filter) {
             var ret;
             if (!filter || (ret = filter.onText(this)) !== false) {
                 if (ret) {
                     if (this !== ret) {
-                        ret.writeHtml(writer, filter);
+                        ret.writeHTML(writer, filter);
                         return;
                     }
                 }
-                writer.text(this.toHtml());
+                writer.text(this.toHTML());
             }
         },
-        toHtml:function () {
+        toHTML:function () {
             if (this.nodeValue) {
                 return this.nodeValue;
             } else {
-                return Text.superclass.toHtml.apply(this, arguments);
+                return Text.superclass.toHTML.apply(this, arguments);
             }
         }
     });
@@ -2330,7 +2330,7 @@ KISSY.add("htmlparser/scanners/TagScanner", function (S, dtd, Tag, SpecialScanne
                         if (childNodes[i].tagName == currentChildName) {
                             pTag.appendChild(childNodes[i]);
                         } else if (childNodes[i].nodeType == 3 &&
-                            !S.trim(childNodes[i].toHtml())) {
+                            !S.trim(childNodes[i].toHTML())) {
                         }
                         // non-empty text leave it to outer loop
                         else if (childNodes[i].nodeType == 3) {
@@ -2648,7 +2648,7 @@ KISSY.add("htmlparser/writer/basic", function () {
             this.append("<!--" + comment + "-->");
         },
 
-        getHtml: function () {
+        getHTML: function () {
             return this.output.join("");
         }
 
@@ -2896,7 +2896,7 @@ KISSY.add("htmlparser/writer/filter", function (S) {
             if (el && ret && ret != el) {
                 // text filter can return string value directly
                 if (typeof ret == 'string') {
-                    if (el.toHtml() == ret) {
+                    if (el.toHTML() == ret) {
                         return el;
                     }
                     el.nodeValue = ret;
@@ -2975,11 +2975,11 @@ KISSY.add("htmlparser/writer/filter", function (S) {
         },
 
         onText: function (el) {
-            return filterFn.call(this, this.text, [el.toHtml(), el], el);
+            return filterFn.call(this, this.text, [el.toHTML(), el], el);
         },
 
         onCData: function (el) {
-            return filterFn.call(this, this.cdata, [el.toHtml(), el], el);
+            return filterFn.call(this, this.cdata, [el.toHTML(), el], el);
         },
 
         onAttribute: function (attrNode, el) {
@@ -2987,7 +2987,7 @@ KISSY.add("htmlparser/writer/filter", function (S) {
         },
 
         onComment: function (el) {
-            return filterFn.call(this, this.comment, [el.toHtml(), el], el);
+            return filterFn.call(this, this.comment, [el.toHTML(), el], el);
         },
 
         onNode: function (el) {

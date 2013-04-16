@@ -2,8 +2,8 @@
  * parser of htmlparser tc
  * @author yiminghe@gmail.com
  */
-KISSY.use("htmlparser", function (S, HtmlParser) {
-    var Parser = HtmlParser.Parser;
+KISSY.use("htmlparser", function (S, HTMLParser) {
+    var Parser = HTMLParser.Parser;
     describe("htmlparser_parser", function () {
 
         it("works for valid html", function () {
@@ -21,11 +21,11 @@ KISSY.use("htmlparser", function (S, HtmlParser) {
 
             expect(childNode1[0].nodeName).toBe("span");
 
-            expect(childNode1[0].childNodes[0].toHtml()).toBe("1");
+            expect(childNode1[0].childNodes[0].toHTML()).toBe("1");
 
             expect(childNode1[1].nodeName).toBe("a");
 
-            expect(childNode1[1].childNodes[0].toHtml()).toBe("http://www.taobao.com");
+            expect(childNode1[1].childNodes[0].toHTML()).toBe("http://www.taobao.com");
         });
 
         it("works for none-valid html", function () {
@@ -46,11 +46,11 @@ KISSY.use("htmlparser", function (S, HtmlParser) {
 
             var childnode2 = childNode1[0].childNodes;
 
-            expect(childnode2[0].toHtml()).toBe("1");
+            expect(childnode2[0].toHTML()).toBe("1");
 
             expect(childnode2[1].nodeName).toBe("a");
 
-            expect(childnode2[1].childNodes[0].toHtml()).toBe("http://www.taobao.com");
+            expect(childnode2[1].childNodes[0].toHTML()).toBe("http://www.taobao.com");
         });
 
         it('works for textarea',function(){
@@ -84,7 +84,7 @@ KISSY.use("htmlparser", function (S, HtmlParser) {
 
             expect(script.childNodes.length).toBe(1);
 
-            expect(script.childNodes[0].toHtml()).toBe("var x='<a>b</a>';");
+            expect(script.childNodes[0].toHTML()).toBe("var x='<a>b</a>';");
 
         });
 
@@ -107,7 +107,7 @@ KISSY.use("htmlparser", function (S, HtmlParser) {
 
             expect(script.childNodes.length).toBe(1);
 
-            expect(script.childNodes[0].toHtml()).toBe("var x='<a>b</a>';</a>test");
+            expect(script.childNodes[0].toHTML()).toBe("var x='<a>b</a>';</a>test");
 
         });
 
@@ -120,7 +120,7 @@ KISSY.use("htmlparser", function (S, HtmlParser) {
             var nodes = parser.parse().childNodes;
             expect(nodes.length).toBe(1);
             expect(nodes[0].nodeName).toBe("a");
-            expect(nodes[0].childNodes[0].toHtml()).toBe("我");
+            expect(nodes[0].childNodes[0].toHTML()).toBe("我");
         });
 
 
@@ -133,9 +133,9 @@ KISSY.use("htmlparser", function (S, HtmlParser) {
                     fixByDtd: 1
                 }),
                 node = parser.parse(),
-                writer = new HtmlParser.BasicWriter();
-            node.writeHtml(writer);
-            expect(writer.getHtml()).toBe("<a>我</a><p><a>测试</a></p><a>一下</a>");
+                writer = new HTMLParser.BasicWriter();
+            node.writeHTML(writer);
+            expect(writer.getHTML()).toBe("<a>我</a><p><a>测试</a></p><a>一下</a>");
         });
 
 
@@ -146,17 +146,17 @@ KISSY.use("htmlparser", function (S, HtmlParser) {
                     autoParagraph: 1
                 }),
                 node = parser.parse(),
-                writer = new HtmlParser.BasicWriter();
-            node.writeHtml(writer);
-            expect(writer.getHtml()).toBe("<p><a>我</a></p><p><a>测试</a></p><p><a>一下</a></p>");
+                writer = new HTMLParser.BasicWriter();
+            node.writeHTML(writer);
+            expect(writer.getHTML()).toBe("<p><a>我</a></p><p><a>测试</a></p><p><a>一下</a></p>");
         });
 
         it("filterChildren should works", function () {
             var html = "<div class='ul'><div class='li'>1</div><div class='li'>2</div></div>",
                 parser = new Parser(html),
                 node = parser.parse(),
-                writer = new HtmlParser.BasicWriter(),
-                filter = new HtmlParser.Filter();
+                writer = new HTMLParser.BasicWriter(),
+                filter = new HTMLParser.Filter();
 
             filter.addRules({
                 tags: {
@@ -179,8 +179,8 @@ KISSY.use("htmlparser", function (S, HtmlParser) {
                     }
                 }
             });
-            node.writeHtml(writer, filter);
-            expect(writer.getHtml()).toBe("<ul><li>1</li><li>2</li></ul>");
+            node.writeHTML(writer, filter);
+            expect(writer.getHTML()).toBe("<ul><li>1</li><li>2</li></ul>");
         });
 
         it('can replace text', function () {
@@ -188,23 +188,23 @@ KISSY.use("htmlparser", function (S, HtmlParser) {
             var html = "<li>12</li><li>21</li>",
                 parser = new Parser(html),
                 node = parser.parse(),
-                writer = new HtmlParser.BasicWriter(),
-                filter = new HtmlParser.Filter();
+                writer = new HTMLParser.BasicWriter(),
+                filter = new HTMLParser.Filter();
 
             filter.addRules({
                 text: function (value) {
                     return value.replace(/2/g, '3');
                 }
             });
-            node.writeHtml(writer, filter);
-            expect(writer.getHtml()).toBe("<li>13</li><li>31</li>");
+            node.writeHTML(writer, filter);
+            expect(writer.getHTML()).toBe("<li>13</li><li>31</li>");
 
         });
 
         it("should parse nested li", function () {
             var html = "<ol><li><ol><li></li></ol></li></ol>";
-            var n = HtmlParser.parse(html).childNodes[0];
-            expect(HtmlParser.serialize(n)).toBe(html);
+            var n = HTMLParser.parse(html).childNodes[0];
+            expect(HTMLParser.serialize(n)).toBe(html);
         });
 
         describe('writer', function () {
@@ -214,18 +214,18 @@ KISSY.use("htmlparser", function (S, HtmlParser) {
                 var html = "<img alt='' />",
                     parser = new Parser(html),
                     node = parser.parse(),
-                    writer = new HtmlParser.BasicWriter();
-                node.writeHtml(writer);
-                expect(writer.getHtml()).toBe('<img alt="alt" />');
+                    writer = new HTMLParser.BasicWriter();
+                node.writeHTML(writer);
+                expect(writer.getHTML()).toBe('<img alt="alt" />');
 
 
-                var beatifyWriter = new HtmlParser.BeautifyWriter();
-                node.writeHtml(beatifyWriter);
-                expect(beatifyWriter.getHtml()).toBe('<img alt="alt" />');
+                var beatifyWriter = new HTMLParser.BeautifyWriter();
+                node.writeHTML(beatifyWriter);
+                expect(beatifyWriter.getHTML()).toBe('<img alt="alt" />');
 
-                var minifyWriter = new HtmlParser.MinifyWriter();
-                node.writeHtml(minifyWriter);
-                expect(minifyWriter.getHtml()).toBe('<img alt="" />');
+                var minifyWriter = new HTMLParser.MinifyWriter();
+                node.writeHTML(minifyWriter);
+                expect(minifyWriter.getHTML()).toBe('<img alt="" />');
             });
 
             it("does not lower case", function () {
@@ -233,15 +233,15 @@ KISSY.use("htmlparser", function (S, HtmlParser) {
                 var html = '<param NAME="1" VALUE="2" />',
                     parser = new Parser(html),
                     node = parser.parse(),
-                    writer = new HtmlParser.BasicWriter();
+                    writer = new HTMLParser.BasicWriter();
 
-                node.writeHtml(writer);
+                node.writeHTML(writer);
 
-                expect(writer.getHtml()).toBe(html);
+                expect(writer.getHTML()).toBe(html);
 
-                var beatifyWriter = new HtmlParser.BeautifyWriter();
-                node.writeHtml(beatifyWriter);
-                expect(beatifyWriter.getHtml()).toBe(html);
+                var beatifyWriter = new HTMLParser.BeautifyWriter();
+                node.writeHTML(beatifyWriter);
+                expect(beatifyWriter.getHTML()).toBe(html);
             });
 
 

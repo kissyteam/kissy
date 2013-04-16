@@ -2,11 +2,11 @@
  * clean html pasted from word. modified from ckeditor.
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/word-filter", function (S, HtmlParser) {
+KISSY.add("editor/plugin/word-filter", function (S, HTMLParser) {
     var $ = S.all,
         UA = S.UA,
-        dtd = HtmlParser.DTD,
-        wordFilter = new HtmlParser.Filter(),
+        dtd = HTMLParser.DTD,
+        wordFilter = new HTMLParser.Filter(),
         cssLengthRelativeUnit = /^([.\d]*)+(em|ex|px|gd|rem|vw|vh|vm|ch|mm|cm|in|pt|pc|deg|rad|ms|s|hz|khz){1}?/i,
     // e.g. 0px 0pt 0px
         emptyMarginRegex = /^(?:\b0[^\s]*\s*){1,4}$/,
@@ -419,12 +419,12 @@ KISSY.add("editor/plugin/word-filter", function (S, HtmlParser) {
 
                     // Start the list construction.
                     if (!list) {
-                        openedLists.push(list = new HtmlParser.Tag(listType));
+                        openedLists.push(list = new HTMLParser.Tag(listType));
                         list.appendChild(listItem);
                         element.replaceChild(list, children[i]);
                     } else {
                         if (listItemIndent > lastIndent) {
-                            openedLists.push(list = new HtmlParser.Tag(listType));
+                            openedLists.push(list = new HTMLParser.Tag(listType));
                             list.appendChild(listItem);
                             lastListItem.appendChild(list);
                         }
@@ -594,9 +594,9 @@ KISSY.add("editor/plugin/word-filter", function (S, HtmlParser) {
     var utils = {
         // Create a <ke:listbullet> which indicate an list item type.
         createListBulletMarker: function (bullet, bulletText) {
-            var marker = new HtmlParser.Tag('ke:listbullet');
+            var marker = new HTMLParser.Tag('ke:listbullet');
             marker.setAttribute("ke:listsymbol", bullet[ 0 ]);
-            marker.appendChild(new HtmlParser.Text(bulletText));
+            marker.appendChild(new HTMLParser.Text(bulletText));
             return marker;
         },
 
@@ -888,7 +888,7 @@ KISSY.add("editor/plugin/word-filter", function (S, HtmlParser) {
                             addStyle(singleChild, element.getAttribute("style"));
                         }
 
-                        var clearFloatDiv = new HtmlParser.Tag('div');
+                        var clearFloatDiv = new HTMLParser.Tag('div');
                         addStyle(clearFloatDiv, 'clear', 'both');
                         element.appendChild(clearFloatDiv);
                         element.setTagName(null);
@@ -1126,10 +1126,10 @@ KISSY.add("editor/plugin/word-filter", function (S, HtmlParser) {
 
                     // Reveal the <img> element in conditional comments for Firefox.
                     if (UA.gecko && imageInfo) {
-                        var img = new HtmlParser.Parser(imageInfo[0]).parse().childNodes[ 0 ],
+                        var img = new HTMLParser.Parser(imageInfo[0]).parse().childNodes[ 0 ],
                             previousComment = node.previousSibling,
                         // Try to dig the real image link from vml markup from previous comment text.
-                            imgSrcInfo = previousComment && previousComment.toHtml().match(/<v:imagedata[^>]*o:href=['"](.*?)['"]/),
+                            imgSrcInfo = previousComment && previousComment.toHTML().match(/<v:imagedata[^>]*o:href=['"](.*?)['"]/),
                             imgSrc = imgSrcInfo && imgSrcInfo[ 1 ];
 
                         // Is there a real 'src' url to be used?

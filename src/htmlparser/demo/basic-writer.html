@@ -26,14 +26,14 @@
 </label>
 <script>
 
-    KISSY.use("htmlparser,core", function (S, HtmlParser) {
+    KISSY.use("htmlparser,core", function (S, HTMLParser) {
         var $ = S.all;
         var start = $("#start");
         start.on("click", function () {
-            var basicWriter = new HtmlParser.BasicWriter(),
-                    filter = new HtmlParser.Filter(),
+            var basicWriter = new HTMLParser.BasicWriter(),
+                    filter = new HTMLParser.Filter(),
                     before = S.trim($("#before").val()),
-                    n = new HtmlParser.Parser(before).parse();
+                    n = new HTMLParser.Parser(before).parse();
 
             filter.addRules({
                 tags:{
@@ -48,9 +48,9 @@
                     S.log(v);
                 }
             });
-            n.writeHtml(basicWriter, filter);
+            n.writeHTML(basicWriter, filter);
 
-            $("#after").val(basicWriter.getHtml());
+            $("#after").val(basicWriter.getHTML());
         });
     });
 </script>

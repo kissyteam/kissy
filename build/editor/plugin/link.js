@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 8 21:58
+build time: Apr 16 12:54
 */
 /**
  * link editor support for kissy editor ,innovation from google doc and ckeditor
@@ -10,7 +10,7 @@ build time: Apr 8 21:58
 KISSY.add("editor/plugin/link", function (S, Editor, Bubble, Utils, DialogLoader) {
 
     var $ = S.all,
-        tipHtml = '<a ' +
+        tipHTML = '<a ' +
             'href="" '
             + ' target="_blank" ' +
             'class="{prefixCls}editor-bubble-url">' +
@@ -46,7 +46,7 @@ KISSY.add("editor/plugin/link", function (S, Editor, Bubble, Utils, DialogLoader
 
                     }
                 },
-                mode: Editor.WYSIWYG_MODE
+                mode: Editor.Mode.WYSIWYG_MODE
             });
 
             var self = this;
@@ -63,7 +63,7 @@ KISSY.add("editor/plugin/link", function (S, Editor, Bubble, Utils, DialogLoader
                         var bubble = this,
                             el = bubble.get("contentEl");
 
-                        el.html(S.substitute(tipHtml, {
+                        el.html(S.substitute(tipHTML, {
                             prefixCls: prefixCls
                         }));
 

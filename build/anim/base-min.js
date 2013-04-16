@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 8 12:08
+build time: Apr 16 12:40
 */
 KISSY.add("anim/base",function(c,e,h,i,g){function f(a){this.config=a;this.el=e.get(a.el);this._backupProps={};this._propsData={};if(a=a.complete)this.on("complete",a)}var b=e.NodeType,d={toggle:1,hide:1,show:1};c.augment(f,i.Target,{prepareFx:function(){},runInternal:function(){var a=this,l=a.config,k=a.el,g,f=a._backupProps,i=a._propsData,j=l.props,o=l.delay||0,p=l.duration;h.saveRunningAnim(a);if(!1===a.fire("beforeStart"))a.stop(0);else{c.each(j,function(a,b){c.isPlainObject(a)||(a={value:a});
 i[b]=c.mix({delay:o,easing:l.easing,frame:l.frame,duration:p},a)});if(k.nodeType==b.ELEMENT_NODE){if(j.width||j.height)j=k.style,c.mix(f,{overflow:j.overflow,"overflow-x":j.overflowX,"overflow-y":j.overflowY}),j.overflow="hidden","inline"===e.css(k,"display")&&"none"===e.css(k,"float")&&(c.UA.ie?j.zoom=1:j.display="inline-block");var n,m;m="none"===e.css(k,"display");c.each(i,function(b,c){g=b.value;if(d[g]){if("hide"==g&&m||"show"==g&&!m)return a.stop(1),n=!1;f[c]=e.style(k,c);"toggle"==g?g=m?"show":

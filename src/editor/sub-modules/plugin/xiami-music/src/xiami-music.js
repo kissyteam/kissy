@@ -120,7 +120,7 @@ KISSY.add("editor/plugin/xiami-music", function (S, Editor, FlashBaseClass, flas
                         xiamiMusic.show();
                     }
                 },
-                mode: Editor.WYSIWYG_MODE
+                mode: Editor.Mode.WYSIWYG_MODE
             });
 
         }

@@ -5,7 +5,7 @@
 KISSY.add("editor/plugin/link/dialog", function (S, Editor, Dialog4E, Utils) {
 
     var _ke_saved_href = Utils._ke_saved_href,
-        bodyHtml = "<div style='padding:20px 20px 0 20px'>" +
+        bodyHTML = "<div style='padding:20px 20px 0 20px'>" +
             "<p>" +
             "<label>" +
             "链接网址： " +
@@ -34,7 +34,7 @@ KISSY.add("editor/plugin/link/dialog", function (S, Editor, Dialog4E, Utils) {
             "</label>" +
             "</p>" +
             "</div>",
-        footHtml = "<div style='padding:5px 20px 20px;'>" +
+        footHTML = "<div style='padding:5px 20px 20px;'>" +
             "<a " +
             "href='javascript:void(\'确定\')' " +
             "class='{prefixCls}editor-link-ok {prefixCls}editor-button ks-inline-block' " +
@@ -59,10 +59,10 @@ KISSY.add("editor/plugin/link/dialog", function (S, Editor, Dialog4E, Utils) {
                 d = new Dialog4E({
                     width:500,
                     headerContent:"链接",
-                    bodyContent: S.substitute(bodyHtml,{
+                    bodyContent: S.substitute(bodyHTML,{
                         prefixCls:prefixCls
                         }),
-                    footerContent:S.substitute(footHtml,{
+                    footerContent:S.substitute(footHTML,{
                         prefixCls:prefixCls
                     }),
                     mask:true

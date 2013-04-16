@@ -19,7 +19,7 @@ KISSY.add("editor/plugin/multiple-upload", function (S, Editor, DialogLoader) {
 
                     }
                 },
-                mode:Editor.WYSIWYG_MODE
+                mode:Editor.Mode.WYSIWYG_MODE
             });
         }
     });

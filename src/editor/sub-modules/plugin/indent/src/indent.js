@@ -19,7 +19,7 @@ KISSY.add("editor/plugin/indent", function (S, Editor, indexCmd) {
                         editor.focus();
                     }
                 },
-                mode:Editor.WYSIWYG_MODE
+                mode:Editor.Mode.WYSIWYG_MODE
             });
         }
     });

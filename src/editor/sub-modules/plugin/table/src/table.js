@@ -367,7 +367,7 @@ KISSY.add("editor/plugin/table", function (S, Editor, DialogLoader) {
             }
         },
 
-        extraHtmlFilter = {
+        extraHTMLFilter = {
             tags:{
                 'table':function (table) {
                     var cssClass = table.getAttribute("class"), v;
@@ -403,7 +403,7 @@ KISSY.add("editor/plugin/table", function (S, Editor, DialogLoader) {
                 htmlFilter = dataProcessor && dataProcessor.htmlFilter;
 
             dataFilter.addRules(extraDataFilter);
-            htmlFilter.addRules(extraHtmlFilter);
+            htmlFilter.addRules(extraHTMLFilter);
 
             var self = this,
                 handlers = {
@@ -544,7 +544,7 @@ KISSY.add("editor/plugin/table", function (S, Editor, DialogLoader) {
             });
 
             editor.addButton("table", {
-                mode:Editor.WYSIWYG_MODE,
+                mode:Editor.Mode.WYSIWYG_MODE,
                 listeners:{
                     click:function () {
                         DialogLoader.useDialog(editor, "table",

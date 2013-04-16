@@ -10,30 +10,30 @@ KISSY.add("htmlparser/nodes/Text", function (S, Node) {
             Text.superclass.constructor.apply(this, [null, -1, -1]);
         } else {
             Text.superclass.constructor.apply(this, arguments);
-            this.nodeValue = this.toHtml();
+            this.nodeValue = this.toHTML();
         }
         this.nodeType = 3;
         this.nodeName = "#text";
     }
 
     S.extend(Text, Node, {
-        writeHtml:function (writer, filter) {
+        writeHTML:function (writer, filter) {
             var ret;
             if (!filter || (ret = filter.onText(this)) !== false) {
                 if (ret) {
                     if (this !== ret) {
-                        ret.writeHtml(writer, filter);
+                        ret.writeHTML(writer, filter);
                         return;
                     }
                 }
-                writer.text(this.toHtml());
+                writer.text(this.toHTML());
             }
         },
-        toHtml:function () {
+        toHTML:function () {
             if (this.nodeValue) {
                 return this.nodeValue;
             } else {
-                return Text.superclass.toHtml.apply(this, arguments);
+                return Text.superclass.toHTML.apply(this, arguments);
             }
         }
     });

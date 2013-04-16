@@ -11,23 +11,23 @@ KISSY.add("htmlparser/nodes/Comment", function (S, Text) {
     }
 
     S.extend(Comment, Text, {
-        writeHtml:function (writer, filter) {
+        writeHTML:function (writer, filter) {
             var ret;
             if (!filter || (ret = filter.onComment(this)) !== false) {
                 if (ret) {
                     if (this !== ret) {
-                        ret.writeHtml(writer, filter);
+                        ret.writeHTML(writer, filter);
                         return;
                     }
                 }
-                writer.comment(this.toHtml());
+                writer.comment(this.toHTML());
             }
         },
-        toHtml:function () {
+        toHTML:function () {
             if (this.nodeValue) {
                 return this.nodeValue;
             } else {
-                var value = Text.superclass.toHtml.apply(this, arguments);
+                var value = Text.superclass.toHTML.apply(this, arguments);
                 // <!-- -->
                 return value.substring(4, value.length - 3);
             }

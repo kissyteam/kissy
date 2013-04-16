@@ -124,13 +124,13 @@
                 return colour;
             }
 
-            var easingHtml = [];
+            var easingHTML = [];
 
             for (var j = 0; j < easings.length; j++) {
                 var color = nextColour(),
                         easing=easings[j],
                         path = "";
-                easingHtml.push(S.substitute("<span style='color:{color}'>{easing}</span>", {
+                easingHTML.push(S.substitute("<span style='color:{color}'>{easing}</span>", {
                     color: Raphael.getRGB(color).hex,
                     easing: easings[j]
                 }));
@@ -151,7 +151,7 @@
                 });
             }
 
-            $(container).prev("h2").html(easingHtml.join(" / "));
+            $(container).prev("h2").html(easingHTML.join(" / "));
         }
     });
 </script>

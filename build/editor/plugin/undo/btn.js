@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 8 22:00
+build time: Apr 16 12:57
 */
 /**
  * undo button
@@ -33,7 +33,7 @@ KISSY.add("editor/plugin/undo/btn", function (S, Editor, Button) {
     }, {
         ATTRS: {
             mode: {
-                value: Editor.WYSIWYG_MODE
+                value: Editor.Mode.WYSIWYG_MODE
             },
             disabled: {
                 // 默认 disabled
@@ -75,7 +75,7 @@ KISSY.add("editor/plugin/undo/btn", function (S, Editor, Button) {
 
         ATTRS: {
             mode: {
-                value: Editor.WYSIWYG_MODE
+                value: Editor.Mode.WYSIWYG_MODE
             },
             disabled: {
                 // 默认 disabled

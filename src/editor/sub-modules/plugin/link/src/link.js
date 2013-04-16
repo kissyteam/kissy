@@ -5,7 +5,7 @@
 KISSY.add("editor/plugin/link", function (S, Editor, Bubble, Utils, DialogLoader) {
 
     var $ = S.all,
-        tipHtml = '<a ' +
+        tipHTML = '<a ' +
             'href="" '
             + ' target="_blank" ' +
             'class="{prefixCls}editor-bubble-url">' +
@@ -41,7 +41,7 @@ KISSY.add("editor/plugin/link", function (S, Editor, Bubble, Utils, DialogLoader
 
                     }
                 },
-                mode: Editor.WYSIWYG_MODE
+                mode: Editor.Mode.WYSIWYG_MODE
             });
 
             var self = this;
@@ -58,7 +58,7 @@ KISSY.add("editor/plugin/link", function (S, Editor, Bubble, Utils, DialogLoader
                         var bubble = this,
                             el = bubble.get("contentEl");
 
-                        el.html(S.substitute(tipHtml, {
+                        el.html(S.substitute(tipHTML, {
                             prefixCls: prefixCls
                         }));
 

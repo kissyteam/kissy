@@ -24,7 +24,7 @@ KISSY.add("editor/plugin/outdent", function (S, Editor, indexCmd) {
                     afterSyncUI:function () {
                         var self = this;
                         editor.on("selectionChange", function () {
-                            if (editor.get("mode") == Editor.SOURCE_MODE) {
+                            if (editor.get("mode") == Editor.Mode.SOURCE_MODE) {
                                 return;
                             }
                             if (editor.queryCommandValue("outdent")) {
@@ -36,7 +36,7 @@ KISSY.add("editor/plugin/outdent", function (S, Editor, indexCmd) {
 
                     }
                 },
-                mode:Editor.WYSIWYG_MODE
+                mode:Editor.Mode.WYSIWYG_MODE
             });
         }
     });

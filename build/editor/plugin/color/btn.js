@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 8 21:55
+build time: Apr 16 12:51
 */
 /**
  * color button.
@@ -25,7 +25,7 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, Dia
     ], html;
 
 
-    function initHtml() {
+    function initHTML() {
         html = "<div class='{prefixCls}editor-color-panel'>" +
             "<a class='{prefixCls}editor-color-remove' " +
             "href=\"javascript:void('清除');\">" +
@@ -58,7 +58,7 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, Dia
             "</div>";
     }
 
-    initHtml();
+    initHTML();
 
     var ColorButton = Button.extend({
 
@@ -156,7 +156,7 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, Dia
                 value: true
             },
             mode: {
-                value: Editor.WYSIWYG_MODE
+                value: Editor.Mode.WYSIWYG_MODE
             }
         }
     });
@@ -184,7 +184,7 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, Dia
                 icon: prefix + 'item ' + prefix + cmdType,
                 indicator: prefix + 'color-indicator'
             }),
-            mode: Editor.WYSIWYG_MODE,
+            mode: Editor.Mode.WYSIWYG_MODE,
             tooltip: "设置" + tooltip
         });
 

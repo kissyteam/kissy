@@ -16,7 +16,7 @@ KISSY.add("editor/plugin/font/ui", function (S, Editor, Button, MenuButton) {
             });
 
             editor.on("selectionChange", function () {
-                if (editor.get("mode") == Editor.SOURCE_MODE) {
+                if (editor.get("mode") == Editor.Mode.SOURCE_MODE) {
                     return;
                 }
 
@@ -64,7 +64,7 @@ KISSY.add("editor/plugin/font/ui", function (S, Editor, Button, MenuButton) {
             });
             editor.on("selectionChange", function () {
 
-                if (editor.get("mode") == Editor.SOURCE_MODE) {
+                if (editor.get("mode") == Editor.Mode.SOURCE_MODE) {
                     return;
                 }
                 var cmdType = self.get("cmdType");
@@ -81,7 +81,7 @@ KISSY.add("editor/plugin/font/ui", function (S, Editor, Button, MenuButton) {
                 value:true
             },
             mode:{
-                value:Editor.WYSIWYG_MODE
+                value:Editor.Mode.WYSIWYG_MODE
             }
         }
     });

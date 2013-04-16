@@ -54,21 +54,21 @@
 
 <script src="/kissy/build/seed.js"></script>
 <script>
-    KISSY.use("htmlparser,core", function (S, HtmlParser) {
+    KISSY.use("htmlparser,core", function (S, HTMLParser) {
         var $ = S.all;
         $("#after").val("");
         var start = $("#start");
         start.on("click", function () {
-            var writer = new HtmlParser.MinifyWriter(),
+            var writer = new HTMLParser.MinifyWriter(),
                     before = S.trim($("#before").val()),
-                    n = new HtmlParser.Parser(before, {
+                    n = new HTMLParser.Parser(before, {
                         fixByDtd:$("#fixByDtd").prop("checked"),
                         autoParagraph:$("#autoParagraph").prop("checked")
                     }).parse();
 
-            n.writeHtml(writer);
+            n.writeHTML(writer);
 
-            $("#after").val(writer.getHtml());
+            $("#after").val(writer.getHTML());
         });
     });
 </script>

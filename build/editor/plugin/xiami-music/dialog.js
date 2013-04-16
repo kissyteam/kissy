@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 8 22:00
+build time: Apr 16 12:58
 */
 /**
  * xiami-music dialog
@@ -26,7 +26,7 @@ KISSY.add("editor/plugin/xiami-music/dialog", function (S, Editor, FlashDialog, 
     }
 
     var MARGIN_DEFAULT = 0,
-        bodyHtml = "<div style='padding:40px 0 70px 0;'>" +
+        bodyHTML = "<div style='padding:40px 0 70px 0;'>" +
             "<form action='#' class='{prefixCls}editor-xiami-form' style='margin:0 20px;'>" +
             "<p class='{prefixCls}editor-xiami-title'>" +
             "" +
@@ -67,7 +67,7 @@ KISSY.add("editor/plugin/xiami-music/dialog", function (S, Editor, FlashDialog, 
             "class='{prefixCls}editor-xiami-list'>" +
             "</div>" +
             "</div>",
-        footHtml = "<div style='padding:5px 20px 20px;'><a " +
+        footHTML = "<div style='padding:5px 20px 20px;'><a " +
             "class='{prefixCls}editor-xiami-ok {prefixCls}editor-button ks-inline-block' " +
             "style='margin-right:20px;'>确&nbsp;定</a>" +
             "<a class='{prefixCls}editor-xiami-cancel {prefixCls}editor-button ks-inline-block'>取&nbsp;消</a></div>";
@@ -84,10 +84,10 @@ KISSY.add("editor/plugin/xiami-music/dialog", function (S, Editor, FlashDialog, 
             self._cls = CLS_XIAMI;
             self._type = TYPE_XIAMI;
             self._title = "虾米音乐";//属性";
-            self._bodyHtml = S.substitute(bodyHtml, {
+            self._bodyHTML = S.substitute(bodyHTML, {
                 prefixCls: prefixCls
             });
-            self._footHtml = S.substitute(footHtml, {
+            self._footHTML = S.substitute(footHTML, {
                 prefixCls: prefixCls
             });
         },

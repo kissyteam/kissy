@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 8 21:56
+build time: Apr 16 12:52
 */
 /**
  * font formatting for kissy editor
@@ -92,7 +92,7 @@ KISSY.add("editor/plugin/font-family", function (S, Editor, ui, cmd) {
                 cmdType:"fontFamily",
                 defaultCaption:"字体",
                 width:130,
-                mode:Editor.WYSIWYG_MODE
+                mode:Editor.Mode.WYSIWYG_MODE
             }, fontFamilies), ui.Select);
         }
     });
