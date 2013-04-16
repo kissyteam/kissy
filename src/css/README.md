@@ -1,8 +1,6 @@
-New KISSY DPL
-=======================================
+# KISSY DPL
 
-Based on Bootstrap And KISSY CSS
-------------------------------------------------
+## Based on Bootstrap And KISSY CSS
 
 Includes:
 

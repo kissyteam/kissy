@@ -1,0 +1,3 @@
+# ImageZoom Class
+
+ImageZoom Component

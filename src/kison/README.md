@@ -1,10 +1,6 @@
-KISON
-=======================================
+# KISON
 
-KISSY parser generator version of Bison.
-
- Objective
--------------------------------------------------------------------
+## KISSY parser generator version of Bison.
 
 * Parse any code according to its grammar file.
 * A general-purpose parser generator that converts a grammar description

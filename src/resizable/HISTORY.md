@@ -1,4 +1,4 @@
-# Resizable
+# resizable
 
 ## 1.4
 

@@ -1,7 +1,7 @@
-Tabs
+Tabs Classes
 =======================================
 
-KISSY Tabs Component
+Tabs Component
 
 
 

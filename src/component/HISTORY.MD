@@ -1,4 +1,4 @@
-# Component
+# component
 
 ## 1.4
 

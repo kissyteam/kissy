@@ -1,7 +1,7 @@
-Toolbar For KISSY
+Toolbar Classes
 =======================================
 
-can use menubutton button select as child ...
+parent container for menubutton button select.
 
 
 

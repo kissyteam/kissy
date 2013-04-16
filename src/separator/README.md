@@ -1,6 +1,5 @@
-Separator
-=======================================
+# Separator Class
 
-Common Separator For Menu/Toolbar/Pagingbar
+Common Separator Component For Menu/Toolbar/Pagingbar
 
 
