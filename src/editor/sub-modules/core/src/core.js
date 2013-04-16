@@ -72,6 +72,8 @@ KISSY.add('editor/core', function (S, Editor, Utils, focusManager, Styles, zInde
             '>' +
             '</iframe>' ,
 
+        EMPTY_CONTENT_REG = /^(?:<(p)>)?(?:(?:&nbsp;)|\s)*(?:<\/\1>)?$/i,
+
         EDITOR_TPL = '<div class="' + KE_TOOLBAR_CLASS.substring(1) + '"></div>' +
             '<div class="' + KE_TEXTAREA_WRAP_CLASS.substring(1) + '" ' +
             // http://johanbrook.com/browsers/native-momentum-scrolling-ios-5/
@@ -399,7 +401,7 @@ KISSY.add('editor/core', function (S, Editor, Utils, focusManager, Styles, zInde
                 /*
                  如果内容为空，对 parser 自动加的空行滤掉
                  */
-                if (/^(?:<(p)>)?(?:(?:&nbsp;)|\s)*(?:<\/\1>)?$/.test(html)) {
+                if (EMPTY_CONTENT_REG.test(html)) {
                     html = '';
                 }
                 return html;
@@ -425,10 +427,17 @@ KISSY.add('editor/core', function (S, Editor, Utils, focusManager, Styles, zInde
             /**
              * Get full html content of editor 's iframe.
              */
-            getDocHtml: function () {
+            getDocHTML: function () {
                 var self = this;
                 return prepareIFrameHtml(0, self.get('customStyle'),
                     self.get('customLink'), self.get('formatData'));
+            },
+
+            /**
+             * @deprecated
+             */
+            getDocHtml: function () {
+                return this.getDocHTML();
             },
 
             /**
@@ -442,7 +451,7 @@ KISSY.add('editor/core', function (S, Editor, Utils, focusManager, Styles, zInde
              * Get selected html content of current editor
              * @return {undefined|String}
              */
-            'getSelectedHtml': function () {
+            'getSelectedHTML': function () {
                 var self = this,
                     range = self.getSelection().getRanges()[0],
                     contents,
@@ -478,7 +487,6 @@ KISSY.add('editor/core', function (S, Editor, Utils, focusManager, Styles, zInde
                 win && win.focus();
                 // ie and firefox need body focus
                 try {
-                    // 有时候 iframe 被隐藏了
                     doc.body.focus();
                 } catch (e) {
 
@@ -589,12 +597,11 @@ KISSY.add('editor/core', function (S, Editor, Utils, focusManager, Styles, zInde
                             currentPath = new Editor.ElementPath(startElement);
                         if (!self.__previousPath || !self.__previousPath.compare(currentPath)) {
                             self.__previousPath = currentPath;
-                            self.fire('selectionChange',
-                                {
-                                    selection: selection,
-                                    path: currentPath,
-                                    element: startElement
-                                });
+                            self.fire('selectionChange', {
+                                selection: selection,
+                                path: currentPath,
+                                element: startElement
+                            });
                         }
                     }
                 }, 100);
@@ -691,11 +698,11 @@ KISSY.add('editor/core', function (S, Editor, Utils, focusManager, Styles, zInde
             },
 
             /**
-             * Insert html string into current editor.
+             * insert html string into current editor.
              * @param {String} data
              * @param [dataFilter]
              */
-            insertHtml: function (data, dataFilter) {
+            insertHTML: function (data, dataFilter) {
                 var self = this,
                     htmlDataProcessor,
                     editorDoc = self.get('document')[0];
@@ -721,7 +728,7 @@ KISSY.add('editor/core', function (S, Editor, Utils, focusManager, Styles, zInde
                     try {
                         $sel.createRange().pasteHTML(data);
                     } catch (e) {
-                        S.log('insertHtml error in ie');
+                        S.log('insertHTML error in ie');
                     }
                 } else {
                     // ie9 仍然没有
@@ -757,6 +764,13 @@ KISSY.add('editor/core', function (S, Editor, Utils, focusManager, Styles, zInde
                     self.getSelection().scrollIntoView();
                 }, 50);
                 saveLater.call(self);
+            },
+
+            /**
+             * @deprecated
+             */
+            insertHtml: function (a, b) {
+                this.insertHTML(a, b);
             }
         });
 

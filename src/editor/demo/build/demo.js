@@ -12,7 +12,7 @@
             // customLink:["http://localhost/customLink.css","http://xx.com/y2.css"],
             // render:"#container",
             srcNode: '#container',
-            width: '100%',
+            width: '900px',
             height: "400px"
         }, window.EDITOR_CFG);
 

@@ -15,9 +15,9 @@ KISSY.add("editor/core/selection", function (S) {
      * @enum {number}
      */
     Editor.SELECTION = {
-        SELECTION_NONE:1,
-        SELECTION_TEXT:2,
-        SELECTION_ELEMENT:3
+        SELECTION_NONE: 1,
+        SELECTION_TEXT: 2,
+        SELECTION_ELEMENT: 3
 
     };
     var TRUE = true,
@@ -44,7 +44,7 @@ KISSY.add("editor/core/selection", function (S) {
         var self = this;
         self.document = document;
         self._ = {
-            cache:{}
+            cache: {}
         };
 
         /**
@@ -69,8 +69,8 @@ KISSY.add("editor/core/selection", function (S) {
     }
 
     var styleObjectElements = {
-        "img":1, "hr":1, "li":1, "table":1, "tr":1, "td":1, "th":1, "embed":1, "object":1, "ol":1, "ul":1,
-        "a":1, "input":1, "form":1, "select":1, "textarea":1, "button":1, "fieldset":1, "thead":1, "tfoot":1
+        "img": 1, "hr": 1, "li": 1, "table": 1, "tr": 1, "td": 1, "th": 1, "embed": 1, "object": 1, "ol": 1, "ul": 1,
+        "a": 1, "input": 1, "form": 1, "select": 1, "textarea": 1, "button": 1, "fieldset": 1, "thead": 1, "tfoot": 1
     };
 
     S.augment(KESelection, {
@@ -82,7 +82,7 @@ KISSY.add("editor/core/selection", function (S) {
          * @example
          * var selection = editor.getSelection().<b>getNative()</b>;
          */
-        getNative:!OLD_IE ?
+        getNative: !OLD_IE ?
             function () {
                 var self = this,
                     cache = self._.cache;
@@ -111,7 +111,7 @@ KISSY.add("editor/core/selection", function (S) {
          * if ( editor.getSelection().<b>getType()</b> == SELECTION_TEXT )
          *     alert( 'Text is selected' );
          */
-        getType:!OLD_IE ?
+        getType: !OLD_IE ?
             function () {
                 var self = this, cache = self._.cache;
                 if (cache.type)
@@ -170,7 +170,7 @@ KISSY.add("editor/core/selection", function (S) {
                 return ( cache.type = type );
             },
 
-        getRanges:OLD_IE ?
+        getRanges: OLD_IE ?
             (function () {
                 // Finds the container and offset for a specific boundary
                 // of an IE range.
@@ -207,9 +207,9 @@ KISSY.add("editor/core/selection", function (S) {
                             // our comparison will never shows an equality. (#4824)
                             else if (!comparisonStart
                                 || comparisonEnd == 1 && comparisonStart == -1)
-                                return { container:parent, offset:i };
+                                return { container: parent, offset: i };
                             else if (!comparisonEnd)
-                                return { container:parent, offset:i + 1 };
+                                return { container: parent, offset: i + 1 };
 
                             testRange = NULL;
                         }
@@ -243,14 +243,14 @@ KISSY.add("editor/core/selection", function (S) {
 
                     if (distance === 0) {
                         return {
-                            container:parent,
-                            offset:i
+                            container: parent,
+                            offset: i
                         };
                     }
                     else {
                         return {
-                            container:siblings[ i ],
-                            offset:-distance
+                            container: siblings[ i ],
+                            offset: -distance
                         };
                     }
                 };
@@ -337,7 +337,7 @@ KISSY.add("editor/core/selection", function (S) {
          * var element = editor.getSelection().<b>getStartElement()</b>;
          * alert( element.nodeName() );
          */
-        getStartElement:function () {
+        getStartElement: function () {
             var self = this, cache = self._.cache;
             if (cache.startElement !== undefined)
                 return cache.startElement;
@@ -422,7 +422,7 @@ KISSY.add("editor/core/selection", function (S) {
          * var element = editor.getSelection().<b>getSelectedElement()</b>;
          * alert( element.nodeName() );
          */
-        getSelectedElement:function () {
+        getSelectedElement: function () {
             var self = this,
                 node,
                 cache = self._.cache;
@@ -475,11 +475,11 @@ KISSY.add("editor/core/selection", function (S) {
         },
 
 
-        reset:function () {
+        reset: function () {
             this._.cache = {};
         },
 
-        selectElement:function (element) {
+        selectElement: function (element) {
             var range,
                 self = this,
                 doc = self.document;
@@ -513,7 +513,7 @@ KISSY.add("editor/core/selection", function (S) {
             }
         },
 
-        selectRanges:function (ranges) {
+        selectRanges: function (ranges) {
             var self = this;
             if (OLD_IE) {
                 if (ranges.length > 1) {
@@ -547,8 +547,7 @@ KISSY.add("editor/core/selection", function (S) {
                     // opera move out of this element
                     if (range.collapsed &&
                         (( UA.gecko && UA.gecko < 1.0900 ) || UA.opera || UA['webkit']) &&
-                        startContainer[0].nodeType == DOM.NodeType.ELEMENT_NODE &&
-                        !startContainer[0].childNodes.length) {
+                        startContainer[0].nodeType == DOM.NodeType.ELEMENT_NODE && !startContainer[0].childNodes.length) {
                         // webkit 光标停留不到在空元素内，要fill char，之后范围定在 fill char 之后
                         startContainer[0].appendChild(self.document.createTextNode(UA['webkit'] ? "\u200b" : ""));
                         range.startOffset++;
@@ -563,7 +562,7 @@ KISSY.add("editor/core/selection", function (S) {
                 self.reset();
             }
         },
-        createBookmarks2:function (normalized) {
+        createBookmarks2: function (normalized) {
             var bookmarks = [],
                 ranges = this.getRanges();
 
@@ -572,7 +571,7 @@ KISSY.add("editor/core/selection", function (S) {
 
             return bookmarks;
         },
-        createBookmarks:function (serializable, ranges) {
+        createBookmarks: function (serializable, ranges) {
             var self = this,
                 retval = [],
                 doc = self.document,
@@ -602,7 +601,7 @@ KISSY.add("editor/core/selection", function (S) {
             return retval;
         },
 
-        selectBookmarks:function (bookmarks) {
+        selectBookmarks: function (bookmarks) {
             var self = this, ranges = [];
             for (var i = 0; i < bookmarks.length; i++) {
                 var range = new KERange(self.document);
@@ -613,7 +612,7 @@ KISSY.add("editor/core/selection", function (S) {
             return self;
         },
 
-        getCommonAncestor:function () {
+        getCommonAncestor: function () {
             var ranges = this.getRanges(),
                 startNode = ranges[ 0 ].startContainer,
                 endNode = ranges[ ranges.length - 1 ].endContainer;
@@ -621,17 +620,17 @@ KISSY.add("editor/core/selection", function (S) {
         },
 
         // Moving scroll bar to the current selection's start position.
-        scrollIntoView:function () {
+        scrollIntoView: function () {
             // If we have split the block, adds a temporary span at the
             // range position and scroll relatively to it.
             var start = this.getStartElement();
-            start && start.scrollIntoView(undefined,{
-                alignWithTop:false,
-                allowHorizontalScroll:true,
-                onlyScrollIfNeeded:true
+            start && start.scrollIntoView(undefined, {
+                alignWithTop: false,
+                allowHorizontalScroll: true,
+                onlyScrollIfNeeded: true
             });
         },
-        removeAllRanges:function () {
+        removeAllRanges: function () {
             var sel = this.getNative();
             if (!OLD_IE) {
                 sel && sel.removeAllRanges();
@@ -642,7 +641,7 @@ KISSY.add("editor/core/selection", function (S) {
     });
 
 
-    var nonCells = { "table":1, "tbody":1, "tr":1 }, notWhitespaces = Walker.whitespaces(TRUE),
+    var nonCells = { "table": 1, "tbody": 1, "tr": 1 }, notWhitespaces = Walker.whitespaces(TRUE),
         fillerTextRegex = /\ufeff|\u00a0/;
     KERange.prototype["select"] =
         KERange.prototype.select =
@@ -736,19 +735,17 @@ KISSY.add("editor/core/selection", function (S) {
                         while (next && !notWhitespaces(next)) {
                             next = next.nextSibling;
                         }
-                        isStartMarkerAlone =
-                            (
-                                !( next && next.nodeValue && next.nodeValue.match(fillerTextRegex) )     // already a filler there?
-                                    && ( forceExpand
-                                    ||
-                                    !startNode[0].previousSibling
-                                    ||
+                        isStartMarkerAlone = (
+                            !( next && next.nodeValue && next.nodeValue.match(fillerTextRegex) )
+                                &&
+                                // already a filler there?
+                                ( forceExpand || !startNode[0].previousSibling ||
                                     (
                                         startNode[0].previousSibling &&
                                             DOM.nodeName(startNode[0].previousSibling) == 'br'
                                         )
                                     )
-                                );
+                            );
 
                         // Append a temporary <span>&#65279;</span> before the selection.
                         // This is needed to avoid IE destroying selections inside empty
@@ -784,13 +781,11 @@ KISSY.add("editor/core/selection", function (S) {
                             self.moveToPosition(dummySpan, KER.POSITION_BEFORE_START);
                             dummySpan._4e_remove();
                         }
-                    }
-                    else {
+                    } else {
                         self.setEndBefore(endNode);
                         endNode._4e_remove();
                         ieRange.select();
                     }
-                    // fire('selectionChange');
                 };
 
 
@@ -805,5 +800,5 @@ KISSY.add("editor/core/selection", function (S) {
 
     return KESelection;
 }, {
-    requires:['./base', './walker', './range', './dom']
+    requires: ['./base', './walker', './range', './dom']
 });

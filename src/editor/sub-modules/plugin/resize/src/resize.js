@@ -47,7 +47,7 @@ this.config=config||{};
                 }),
                 height = 0,
                 width = 0,
-                startNodePos,
+                dragStartMousePos,
                 heightEl = editor.get("el"),
                 widthEl = editor.get("el");
 
@@ -55,13 +55,12 @@ this.config=config||{};
                 height = heightEl.height();
                 width = widthEl.width();
                 editor.fire("resizeStart");
-                startNodePos=resizer.offset();
+                dragStartMousePos= d.get('dragStartMousePos');
             });
 
             d.on("drag", function (ev) {
-                var self = this,
-                    diffX = ev.left - startNodePos.left,
-                    diffY = ev.top - startNodePos.top;
+                var diffX = ev.pageX - dragStartMousePos.left,
+                    diffY = ev.pageY - dragStartMousePos.top;
                 if (S.inArray("y", direction)) {
                     editor.set("height", height + diffY);
                 }
