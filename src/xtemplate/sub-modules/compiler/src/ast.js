@@ -59,7 +59,7 @@ KISSY.add("xtemplate/compiler/ast", function (S) {
         self.escaped = true;
         // inside {{^}}
         // default: inside {{#}}
-        self.isInversed = false;
+        self.isInverted = false;
     };
 
     ast.TplNode.prototype.type = 'tpl';

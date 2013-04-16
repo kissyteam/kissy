@@ -8,6 +8,18 @@ KISSY.use('xtemplate', function (S, XTemplate) {
 
         describe('feature', function () {
 
+            it('support {{%%}}', function () {
+
+                var tpl = '{{%{{my}}%}}';
+
+                var render = new XTemplate(tpl).render({
+                    my: 1
+                });
+
+                expect(render).toBe('{{my}}');
+
+            });
+
             it('not allow empty content', function () {
                 var tpl = '';
 
@@ -42,6 +54,7 @@ KISSY.use('xtemplate', function (S, XTemplate) {
 
             describe("property", function () {
 
+
                 it('support sub property', function () {
 
                     var tpl = "{{data.x}}";
@@ -73,6 +86,21 @@ KISSY.use('xtemplate', function (S, XTemplate) {
 
                 });
 
+            });
+
+            it('support variable as index', function () {
+                var tpl = "{{data[d]}}";
+
+                var data = {
+                    data: {
+                        my: 1
+                    },
+                    d: 'my'
+                };
+
+                var render = new XTemplate(tpl).render(data);
+
+                expect(render).toBe('1');
             });
 
 
@@ -184,6 +212,22 @@ KISSY.use('xtemplate', function (S, XTemplate) {
                     render = new XTemplate(tpl).render(data);
 
                     expect(render).toBe('');
+                });
+
+                it('support variable as index', function () {
+
+                    var tpl = "{{#each data[d]}}{{.}}{{/each}}";
+
+                    var data = {
+                        data: {
+                            my: [1, 2]
+                        },
+                        d: 'my'
+                    };
+
+                    var render = new XTemplate(tpl).render(data);
+
+                    expect(render).toBe('12');
                 });
 
                 it('ignore if not found', function () {
@@ -783,6 +827,22 @@ KISSY.use('xtemplate', function (S, XTemplate) {
                     expect(render).toBe('h-2');
                 });
 
+
+                it('support variable as index', function () {
+                    // 不推荐！
+                    var tpl = "{{#data[d]}}{{.}}{{/data[d]}}";
+
+                    var data = {
+                        data: {
+                            my: [1, 2]
+                        },
+                        d: 'my'
+                    };
+
+                    var render = new XTemplate(tpl).render(data);
+
+                    expect(render).toBe('12');
+                });
 
                 it('support {{.}}', function () {
 

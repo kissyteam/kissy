@@ -117,6 +117,7 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
             var source = [],
                 depth = idNode.depth,
                 idString = idNode.string,
+                idParts = idNode.parts,
                 idName = guid('id'),
                 self = this,
                 foundNativeRuntimeCommand = 0,
@@ -154,8 +155,8 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
 
             // variable {{variable.subVariable}}
             if (!foundNativeRuntimeCommand) {
-
                 var tmp = guid('tmp');
+                idString = self.getIdStringFromIdParts(source, idParts);
 
                 source.push('var ' + tmp + '=getProperty("' + idString + '",scopes);');
 
@@ -338,7 +339,7 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
                 optionNameCode = self.genOption(tplNode),
                 optionName = optionNameCode[0],
                 commands = XTemplateRuntime.commands,
-                string = tplNode.path.string,
+                pathString = tplNode.path.string,
                 inverseFn,
                 existsNativeCommand,
                 variableName;
@@ -355,7 +356,7 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
 
             // support {{^
             // exchange fn with inverse
-            if (tplNode.isInversed) {
+            if (tplNode.isInverted) {
                 var tmp = guid('inverse');
                 source.push('var ' + tmp + '=' + optionName + '.fn;');
                 source.push(optionName + '.fn = ' + optionName + '.inverse;');
@@ -363,22 +364,26 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
             }
 
             // reduce generated code size
-            if (existsNativeCommand = commands[string]) {
-                tmpNameCommand = string + 'Command';
+            if (existsNativeCommand = commands[pathString]) {
+                tmpNameCommand = pathString + 'Command';
             } else {
                 tmpNameCommand = guid('command');
                 source.push('var ' + tmpNameCommand +
-                    ' = commands["' + string + '"];');
+                    ' = commands["' + pathString + '"];');
                 // {{#xx}}1{#xx} => xx is not command =>
                 // if xx => array => {{#each xx}}1{/each}}
                 // if xx => object => {{#with xx}}1{/with}}
                 // else => {{#if xx}}1{/if}}
                 if (!tplNode.hash && !tplNode.params) {
                     source.push('if(!' + tmpNameCommand + '){');
+                    pathString = self.getIdStringFromIdParts(source, tplNode.path.parts);
                     var propertyValueHolder = guid('propertyValueHolder');
-                    source.push('var ' + propertyValueHolder + ' = getProperty("' + string + '",scopes);');
+                    source.push('var ' + propertyValueHolder +
+                        ' = getProperty("' + pathString + '",scopes);');
                     variableName = guid('variableName');
-                    source.push('var ' + variableName + '=' + propertyValueHolder + '&&' + propertyValueHolder + '[0];');
+                    source.push('var ' + variableName +
+                        '=' + propertyValueHolder + '&&' +
+                        propertyValueHolder + '[0];');
                     source.push(optionName + '.params=[' + variableName + '];');
                     source.push('if(isArray(' + variableName + ')){');
                     source.push(tmpNameCommand + '=commands["each"];');
@@ -397,15 +402,15 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
             source.push('try{');
             source.push('buffer += ' + tmpNameCommand + '(scopes,' + optionName + ');');
             source.push('}catch(e){');
-            source.push('error(e.message+": \'' + string +
+            source.push('error(e.message+": \'' + pathString +
                 '\' at line ' + tplNode.path.lineNumber + '");');
             source.push('}');
 
             if (!existsNativeCommand) {
                 source.push('}');
-                source.push('if('+propertyValueHolder+'===false) {');
+                source.push('if(' + propertyValueHolder + '===false) {');
                 source.push('S[option.silent?"log":"error"]("can not find command: \'' +
-                    string + '\' at line ' + tplNode.path.lineNumber + '","warn");');
+                    pathString + '\' at line ' + tplNode.path.lineNumber + '","warn");');
                 source.push('}');
             }
             return source;
@@ -424,11 +429,11 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
             return source;
         },
 
-        tplExpression: function (e) {
+        'tplExpression': function (e) {
             var source = [],
                 escaped = e.escaped,
-                expressionOrVariable,
-                code = this[e.expression.type](e.expression);
+                expressionOrVariable;
+            var code = this[e.expression.type](e.expression);
             if (code[0]) {
                 pushToArray(source, code[1]);
                 expressionOrVariable = code[0];
@@ -438,6 +443,35 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
             }
             outputVariable(expressionOrVariable, escaped, source);
             return source;
+        },
+
+        // consider x[d]
+        'getIdStringFromIdParts': function (source, idParts) {
+            var idString = '',
+                self = this,
+                i,
+                p,
+                nextIdNameCode,
+                first = true;
+            for (i = 0; i < idParts.length; i++) {
+                p = idParts[i];
+                if (!first) {
+                    idString += '.';
+                }
+                if (p.type) {
+                    nextIdNameCode = self[p.type](p);
+                    if (nextIdNameCode[0]) {
+                        pushToArray(source, nextIdNameCode[1]);
+                        idString += '"+' + nextIdNameCode[0] + '+"';
+                        first = true
+                    }
+                } else {
+                    // number or string
+                    idString += p;
+                    first = false;
+                }
+            }
+            return idString;
         }
 
     };
