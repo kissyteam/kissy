@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 16 12:42
+build time: Apr 17 00:14
 */
 /**
  * @ignore
@@ -680,7 +680,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
             self._callbacks = {};
             self._images = [];
             self._textareas = [];
-            S.log("datalazyload is destroyed!");
+
             self.fire("destroy");
             self._destroyed = 1;
         }

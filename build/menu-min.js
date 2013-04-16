@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 16 12:59
+build time: Apr 17 00:22
 */
 KISSY.add("menu/base",function(h,b,e,f,c){function a(a){this.get("view").setAriaActiveDescendant(a.newVal)}var d=b.KeyCodes,g=e.Container.extend({isMenu:1,_onSetHighlightedItem:function(a,c){var d;a&&(d=c.prevVal)&&d.set("highlighted",!1,{data:{byPassSetHighlightedItem:1}})},_onSetVisible:function(a,c){g.superclass._onSetVisible.apply(this,arguments);var d;!a&&(d=this.get("highlightedItem"))&&d.set("highlighted",!1)},bindUI:function(){this.on("afterHighlightedItemChange",a,this)},getRootMenu:function(){return this},
 handleMouseEnter:function(){g.superclass.handleMouseEnter.apply(this,arguments);var a=this.getRootMenu();a&&a._popupAutoHideTimer&&(clearTimeout(a._popupAutoHideTimer),a._popupAutoHideTimer=null);this.get("focusable")&&this.set("focused",!0)},handleBlur:function(a){g.superclass.handleBlur.call(this,a);var d;(d=this.get("highlightedItem"))&&d.set("highlighted",!1)},_getNextEnabledHighlighted:function(a,d){var g=this.get("children"),e=g.length,i=a;do{var n=g[a];if(!n.get("disabled")&&!1!==n.get("visible"))return g[a];

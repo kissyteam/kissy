@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 16 22:29
+build time: Apr 17 00:24
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130416222903' will replace with current timestamp when compressing.
+         * NOTICE: '20130417002413' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130416222903',
+        __BUILD_TIME: '20130417002413',
         /**
          * KISSY Environment.
          * @private
@@ -1103,7 +1103,7 @@ var KISSY = (function (undefined) {
                     try {
                         val = decode(val);
                     } catch (e) {
-                        S.log(e + 'decodeURIComponent error : ' + val, 'error');
+
                     }
                     if (S.endsWith(key, '[]')) {
                         key = key.substring(0, key.length - 2);
@@ -1215,7 +1215,7 @@ var KISSY = (function (undefined) {
             }
 
             if (!m) {
-                S.error('method undefined');
+
             }
 
             f = function () {
@@ -1781,7 +1781,7 @@ var KISSY = (function (undefined) {
         if (promise instanceof Reject) {
             // if there is a rejected , should always has! see when()
             if (!rejected) {
-                S.error('no rejected callback!');
+
             }
             return rejected(promise[PROMISE_VALUE]);
         }
@@ -1963,7 +1963,7 @@ var KISSY = (function (undefined) {
         var self = this;
         Promise.apply(self, arguments);
         if (self[PROMISE_VALUE] instanceof Promise) {
-            S.error('assert.not(this.__promise_value instanceof promise) in Reject constructor');
+
         }
         return self;
     }
@@ -1989,7 +1989,7 @@ var KISSY = (function (undefined) {
                     value;
             } catch (e) {
                 // print stack info for firefox/chrome
-                S.log(e.stack || e, 'error');
+
                 return new Reject(e);
             }
         }
@@ -2003,18 +2003,18 @@ var KISSY = (function (undefined) {
                     new Reject(reason);
             } catch (e) {
                 // print stack info for firefox/chrome
-                S.log(e.stack || e, 'error');
+
                 return new Reject(e);
             }
         }
 
         function finalFulfill(value) {
             if (done) {
-                S.error('already done at fulfilled');
+
                 return;
             }
             if (value instanceof Promise) {
-                S.error('assert.not(value instanceof Promise) in when')
+
             }
             done = 1;
             defer.resolve(_fulfilled(value));
@@ -2023,7 +2023,7 @@ var KISSY = (function (undefined) {
         if (value instanceof  Promise) {
             promiseWhen(value, finalFulfill, function (reason) {
                 if (done) {
-                    S.error('already done at rejected');
+
                     return;
                 }
                 done = 1;
@@ -2744,7 +2744,7 @@ var KISSY = (function (undefined) {
                 try {
                     v = S.urlDecode(v);
                 } catch (e) {
-                    S.log(e + 'urlDecode error : ' + v, 'error');
+
                 }
                 // need to decode to get data structure in memory
                 self[key] = v;
@@ -3923,7 +3923,7 @@ var KISSY = (function (undefined) {
             if (S.Config.debug) {
                 if (S.inArray(modName, stack)) {
                     stack.push(modName);
-                    S.error('find cyclic dependency between mods: ' + stack);
+
                     return 0;
                 }
                 stack.push(modName);
@@ -4057,7 +4057,7 @@ var KISSY = (function (undefined) {
                 mod = mods[name];
 
             if (mod && mod.fn) {
-                S.log(name + ' is defined more than once');
+
                 return;
             }
 
@@ -4462,7 +4462,7 @@ var KISSY = (function (undefined) {
             }
 
             if (S.startsWith(S.Path.extname(url).toLowerCase(), '.css')) {
-                S.log('node js can not load css: ' + url, 'warn');
+
                 success && success();
                 return;
             }
@@ -4478,8 +4478,8 @@ var KISSY = (function (undefined) {
                 fn(S);
                 success && success();
             } catch (e) {
-                S.log('in file: ' + url);
-                S.log(e.stack, 'error');
+
+
                 error && error(e);
             }
 
@@ -4717,7 +4717,7 @@ var KISSY = (function (undefined) {
                     // http://groups.google.com/group/commonjs/browse_thread/thread/5a3358ece35e688e/43145ceccfb1dc02#43145ceccfb1dc02
                     // use onload to get module name is not right in ie
                     name = findModuleNameByInteractive(self);
-                    S.log('ie get modName by interactive: ' + name);
+
                     utils.registerModule(runtime, name, fn, config);
                     self.__startLoadModName = null;
                     self.__startLoadTime = 0;
@@ -4730,7 +4730,7 @@ var KISSY = (function (undefined) {
                 }
                 return;
             }
-            S.log('invalid format for KISSY.add !', 'error');
+
         }
     });
 
@@ -5036,7 +5036,7 @@ var KISSY = (function (undefined) {
         function checkHandler() {
             if (mod.fn) {
                 if (!remoteLoads[modName]) {
-                    S.log('load remote module: "' + modName + '" from: "' + url + '"', 'info');
+
                     remoteLoads[modName] = 1;
                 }
                 // 只在 LOADED 后加载依赖项一次
@@ -5228,7 +5228,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20130416222903'
+            tag: '20130417002413'
         }, getBaseInfo()));
     }
 
@@ -5326,12 +5326,12 @@ var KISSY = (function (undefined) {
                     xml.loadXML(data);
                 }
             } catch (e) {
-                S.log('parseXML error : ');
-                S.log(e);
+
+
                 xml = undefined;
             }
             if (!xml || !xml.documentElement || xml.getElementsByTagName('parsererror').length) {
-                S.error('Invalid XML: ' + data);
+
             }
             return xml;
         },

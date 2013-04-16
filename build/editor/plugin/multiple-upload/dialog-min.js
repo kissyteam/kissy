@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 16 12:55
+build time: Apr 17 00:19
 */
 KISSY.add("editor/plugin/multiple-upload/dialog",function(l,o,D,x,E,F,u,y,i){function r(a,c){this.editor=a;this.progressBars={};this.config=c;o.Utils.lazyRun(this,"_prepareShow","_realShow")}function h(a,c){return l.substitute(a,{prefixCls:c})}function z(a,c){var b=a.parentNode,d=c.nextSibling;b.insertBefore(c,a.nextSibling);b.insertBefore(a,d)}var G=l.UA,m=l.DOM,k=l.all,s=l.JSON,H=o.Utils.debugUrl("plugin/uploader/assets/uploader.longzang.swf");l.augment(r,{addRes:o.Utils.addRes,destroy:o.Utils.destroyRes,
 _prepareShow:function(){var a=this,c=a.editor,b=c.get("prefixCls"),d=a.config;a.addRes(function(){var b=a.progressBars,c;for(c in b)b[c].destroy()});a.dialog=(new E({headerContent:"\u6279\u91cf\u4e0a\u4f20",mask:!1,plugins:[new D({handlers:[".ks-editor-stdmod-header"]})],focus4e:!1,width:"600px"})).render();var f=a.dialog;f.on("beforeVisibleChange",function(a){if(!a.newVal)return f.set("xy",[-9999,-9999]),!1});a.addRes(f);var e=f.get("body"),g=k(h("<div class='{prefixCls}editor-upload-btn-wrap'><span style='margin:0 15px 0 0px;color:#969696;display:inline-block;vertical-align:middle;width:450px;'></span></div>",

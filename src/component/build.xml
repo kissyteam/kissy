@@ -1,0 +1,7 @@
+<project name="component.build" default="build-all" basedir=".">
+    <target name="build-all">
+        <subant target="" failonerror="true" inheritall="false">
+            <fileset dir="./sub-modules" includes="**/build.xml"/>
+        </subant>
+    </target>
+</project>

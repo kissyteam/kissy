@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 16 12:53
+build time: Apr 17 00:17
 */
 /**
  * image dialog (support upload and remote)
@@ -297,7 +297,7 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Dialog4E, Tabs,
                             file2 = fso['GetFile'](file.value);
                         return file2.size;
                     } catch (e) {
-                        S.log(e.message);
+
                     }
                 }
                 return 0;

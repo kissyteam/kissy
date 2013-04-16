@@ -42,7 +42,4 @@
         <delete dir="${component.src.dir.tmp}/cool/"
                 excludes="editor.css,cool.png,cool-ie6.png,text-bg.png"></delete>
     </target>
-
-    <target name="build" depends="concat,common-build.process">
-    </target>
 </project>

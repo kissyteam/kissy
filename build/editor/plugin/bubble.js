@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 16 12:51
+build time: Apr 17 00:15
 */
 /**
  * bubble or tip view for kissy editor
@@ -194,7 +194,7 @@ KISSY.add("editor/plugin/bubble", function (S, Overlay, Editor) {
                 if (!bubble.get("visible")) {
                     bubble.show();
                 } else {
-                    S.log("already show by selectionChange");
+
                 }
             }
         }

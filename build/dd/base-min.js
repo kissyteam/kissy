@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 16 12:42
+build time: Apr 17 00:14
 */
 KISSY.add("dd/base",function(e,h,c,f){e={Draggable:c,DDM:h,DraggableDelegate:f};return KISSY.DD=e},{requires:["./base/ddm","./base/draggable","./base/draggable-delegate"]});
 KISSY.add("dd/base/ddm",function(e,h,c,f,u){function o(){o.superclass.constructor.apply(this,arguments)}function s(b){var a;if(b=k._normalEvent(b))if(b.preventDefault(),a=this.__activeToDrag)a._move(b);else if(a=this.get("activeDrag"))a._move(b),this.__needDropCheck&&i(this,b,a)}function p(b){b.preventDefault();D.call(this,b)}function i(b,w,g){var d=b.get("validDrops"),i=g.get("mode"),c=0,f=0,m=l(g.get("node")),j=q(m);e.each(d,function(b){var d;if(d=b.getNodeFromTarget(w,g.get("dragNode")[0],g.get("node")[0]))if("point"==

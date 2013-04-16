@@ -5,9 +5,17 @@
 
     <import file="../common.xml"/>
 
-    <target name="css-concat">
+    <target name="concat">
         <copy todir="${component.src.dir.tmp}">
-            <fileset dir="${component.src.dir}/" includes="**/*.css"/>
+            <fileset dir="${component.src.dir}/"
+                     excludes="**/variables.css,
+                     **/reset-mixin.css,
+                     **/mixins.css,
+                     **/flying-swing.css,
+                     **/grids.css,
+                     **/common.css,
+                     **/icons-mixin.css"
+                     includes="**/*.css"/>
         </copy>
         <concat destfile="${component.src.dir.tmp}/dpl/base.css" encoding="${charset}" outputencoding="${charset}">
             <path location="${component.src.dir}/dpl/reset.css"/>
@@ -15,11 +23,11 @@
             <path location="${component.src.dir}/dpl/grids.css"/>
             <path location="${component.src.dir}/dpl/common.css"/>
             <filterchain>
-                <deletecharacters chars="${bom}" />
+                <deletecharacters chars="${bom}"/>
             </filterchain>
         </concat>
     </target>
 
-    <target name="build" depends="css-concat,common-build.build">
-    </target>
+    <target name="compress-js"/>
+    <target name="extract-dependency"/>
 </project>

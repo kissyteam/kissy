@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 16 18:46
+build time: Apr 17 00:15
 */
 /**
  * attr ie hack
@@ -513,7 +513,7 @@ KISSY.add('dom/ie/style', function (S, DOM) {
         }
     }
     catch (ex) {
-        S.log('IE filters ActiveX is disabled. ex = ' + ex);
+
     }
 
     /*

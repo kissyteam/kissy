@@ -5,7 +5,4 @@
     <property name="src.dir" location="./src/"/>
 
     <import file="../common.xml"/>
-
-    <target name="build" depends="common-build.build">
-    </target>
 </project>

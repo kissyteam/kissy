@@ -29,7 +29,7 @@
         <ant dir="${kissy.src.dir}/seed/" inheritall="false"/>
     </target>
 
-    <target name="combine-core" depends="build-seed">
+    <target name="concat" depends="build-seed">
         <!-- kissy: seed + core, 独立单文件 -->
         <concat destfile="${component.src.dir.tmp}/kissy-pkg.js"
                 encoding="${charset}" outputencoding="${charset}">
@@ -55,7 +55,9 @@
         </concat>
     </target>
 
-    <target name="build-core" depends="combine-core,common-build.process">
+    <target name="extract-dependency"/>
+
+    <target name="build-core" depends="common-build.build">
     </target>
 
     <!--
@@ -67,7 +69,7 @@
         // https://issues.apache.org/bugzilla/show_bug.cgi?id=33061 oom
         -->
         <subant target="" failonerror="true" inheritall="false">
-            <fileset dir="${kissy.src.dir}" includes="**/build.xml"/>
+            <fileset dir="${kissy.src.dir}" includes="*/build.xml"/>
         </subant>
         <subant target="build-core" buildpath="."
                 inheritall="false" inheritrefs="false"/>
@@ -82,10 +84,10 @@
         </input>
         <ac:if>
 
-            <not>
+            <ac:not>
                 <equals arg1="${git.commit.message}" arg2="">
                 </equals>
-            </not>
+            </ac:not>
 
             <ac:then>
 
@@ -134,10 +136,10 @@
         </input>
         <ac:if>
 
-            <not>
+            <ac:not>
                 <equals arg1="${git.commit.message}" arg2="">
                 </equals>
-            </not>
+            </ac:not>
 
             <ac:then>
 

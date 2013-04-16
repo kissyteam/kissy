@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 16 13:00
+build time: Apr 17 00:22
 */
 KISSY.add("scrollview/base",function(c,l,p,q,h,m){var b=b,n=c.all,c=c.Features.isTouchSupported(),j=m.KeyCodes;return p.Controller.extend({bindUI:function(){var a=this.get("el");a.on("mousewheel",this._onMouseWheel,this);a.on("scroll",this._onElScroll,this)},_onElScroll:function(){var a=this.get("el")[0],i=a.scrollTop,b=a.scrollLeft;i&&this.set("scrollTop",i+this.get("scrollTop"));b&&this.set("scrollLeft",b+this.get("scrollLeft"));a.scrollTop=a.scrollLeft=0},handleKeyEventInternal:function(a){var i=
 a.target,d=l.nodeName(i);if("input"==d||"textarea"==d||"select"==d||l.hasAttr(i,"contenteditable"))return b;var a=a.keyCode,o=this.isAxisEnabled("x"),e=this.isAxisEnabled("y"),i=this.minScroll,d=this.maxScroll,f=this.scrollStep,c,g=b;if(e){var h=f.top,n=this.clientHeight,k=this.get("scrollTop"),e=k==d.top;c=k==i.top;if(a==j.DOWN){if(e)return b;this.scrollTo(b,k+h);g=!0}else if(a==j.UP){if(c)return b;this.scrollTo(b,k-h);g=!0}else if(a==j.PAGE_DOWN){if(e)return b;this.scrollTo(b,k+n);g=!0}else if(a==

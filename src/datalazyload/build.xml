@@ -4,7 +4,4 @@
     <property name="component.name" value="datalazyload"/>
 
     <import file="../common.xml"/>
-
-    <target name="build" depends="common-build.build">
-    </target>
 </project>

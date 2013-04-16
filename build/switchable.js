@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 16 13:01
+build time: Apr 17 00:23
 */
 /**
  * accordion aria support
@@ -2354,7 +2354,7 @@ KISSY.add('switchable/effect', function (S, DOM, Event, Anim, Switchable, undefi
                 toPanels = panelInfo.toPanels;
 
             if (fromPanels && fromPanels.length !== 1) {
-                S.error('fade effect only supports steps == 1.');
+
             }
 
             var cfg = self.config,
@@ -2494,7 +2494,7 @@ KISSY.add('switchable/effect', function (S, DOM, Event, Anim, Switchable, undefi
                         ];
 
                         if (!host.viewSize[0]) {
-                            S.error('switchable must specify viewSize if there is no panels');
+
                         }
 
                         if (steps == 1 && panels0) {

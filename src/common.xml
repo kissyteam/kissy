@@ -3,7 +3,7 @@
  @author yiminghe@gmaill.com, lifesinger@gmail.com
  @refer http://ant.apache.org/manual/Tasks/subant.html
 -->
-<project name="common-build" basedir="." xmlns:ac="antlib:net.sf.antcontrib">
+<project name="common-build" xmlns:ac="antlib:net.sf.antcontrib">
     <description>Common Build File</description>
 
     <!-- kissy 主目录 -->
@@ -11,7 +11,7 @@
     <!-- kissy 工具目录 -->
     <property name="tools.dir" location="${kissy.dir}/tools/"/>
 
-    <property name="module-compiler" 
+    <property name="module-compiler"
               location="${tools.dir}/module-compiler/module-compiler.jar"/>
     <property name="closure-compiler"
               location="${tools.dir}/closure-compiler/closure-compiler.jar"/>
@@ -43,13 +43,11 @@
         <format property="timestamp.isoformat" pattern="yyyyMMddHHmmss" locale="en"/>
     </tstamp>
 
-    <!-- 清空与复制等准备工作 -->
-    <target name="prepare">
+    <target name="create-build.dir">
         <mkdir dir="${component.build.dir}"/>
-        <copy todir="${component.build.dir}">
-            <fileset dir="${component.src.dir.tmp}" includes="${component.files}"/>
-        </copy>
     </target>
+
+    <target name="before-concat"/>
 
     <target name="concat">
         <basename property="component.basename" file="${component.name}"/>
@@ -67,9 +65,16 @@
         </copy>
     </target>
 
+    <!-- copy to build dir -->
+    <target name="prepare">
+        <copy todir="${component.build.dir}">
+            <fileset dir="${component.src.dir.tmp}" includes="${component.files}"/>
+        </copy>
+        <delete dir="${component.src.dir.tmp}"/>
+    </target>
+
     <!-- 压缩代码 -->
     <target name="compress-css">
-        <mkdir dir="${component.build.dir}"></mkdir>
         <!-- 用 YUICompressor 压缩 CSS -->
         <apply executable="java" verbose="true"
                dest="${component.build.dir}">
@@ -86,8 +91,7 @@
     </target>
 
     <!-- 压缩代码 -->
-    <target name="compress" depends="compress-css">
-        <!-- remove console.log to prevent memory leak in chrome! -->
+    <target name="compress-js">
         <replaceregexp match="^\s*(S|KISSY)\.(log|error)\s*\(.+$"
                        replace=""
                        flags="g"
@@ -111,11 +115,130 @@
             <targetfile/>
             <mapper type="regexp" from="^(.*)\.(css|js)$" to="\1-min.\2"/>
         </apply>
+    </target>
 
-        <!-- 还原 debug 版本 -->
-        <move todir="${component.build.dir}">
-            <fileset dir="${component.src.dir.tmp}" includes="${component.files}"/>
+    <!-- 对 JS 文件 ASCII 化 -->
+    <target name="native2ascii">
+        <mkdir dir="${component.build.dir.tmp}"/>
+        <move todir="${component.build.dir.tmp}">
+            <fileset dir="${component.build.dir}" includes="**/*-min.js"/>
         </move>
+        <native2ascii encoding="${charset}"
+                      src="${component.build.dir.tmp}"
+                      dest="${component.build.dir}"
+                      includes="**/*.js"/>
+        <delete dir="${component.build.dir.tmp}"/>
+    </target>
+
+    <!-- 替换版本信息以及给文件加上版权信息以及加上 bom -->
+    <target name="copyright">
+        <tstamp>
+            <format property="stamp.time" pattern="MMM d HH:mm" locale="en,UK"/>
+            <format property="build.year" pattern="yyyy"/>
+        </tstamp>
+
+        <mkdir dir="${component.build.dir.tmp}"/>
+        <move todir="${component.build.dir.tmp}">
+            <fileset dir="${component.build.dir}" includes="${copyright.files}"/>
+        </move>
+
+        <ac:for param="file">
+            <ac:path>
+                <fileset dir="${component.build.dir.tmp}"/>
+            </ac:path>
+            <ac:sequential>
+                <!--如果不是压缩文件，就加上 bom 头，否则 ie 诡异问题-->
+                <ac:var name="copyright.bomOrEmpty" value=""/>
+                <ac:var name="copyright.file.name" unset="true"/>
+                <basename property="copyright.file.name" file="@{file}"/>
+                <ac:if>
+                    <not>
+                        <contains string="${copyright.file.name}" substring="-min." casesensitive="false"/>
+                    </not>
+                    <ac:then>
+                        <ac:var name="copyright.bomOrEmpty" value="${bom}"/>
+                    </ac:then>
+                </ac:if>
+                <concat destfile="@{file}.tmp" encoding="${charset}" outputencoding="${charset}">
+                    <!-- ie need bom , odd -->
+                    <header filtering="no" trimleading="yes">${copyright.bomOrEmpty}/*
+                        Copyright ${build.year}, KISSY UI Library v${version}
+                        MIT Licensed
+                        build time: ${stamp.time}
+                        */
+                    </header>
+                    <fileset file="@{file}"/>
+                    <filterchain>
+                        <deletecharacters chars="${bom}"/>
+                    </filterchain>
+                </concat>
+                <move file="@{file}.tmp" tofile="@{file}"/>
+            </ac:sequential>
+        </ac:for>
+
+        <move todir="${component.build.dir}">
+            <fileset dir="${component.build.dir.tmp}"/>
+        </move>
+
+        <delete dir="${component.build.dir.tmp}"/>
+    </target>
+
+    <target name="fill-var">
+        <replaceregexp match="@VERSION@"
+                       replace="${version}"
+                       flags="g"
+                       encoding="${charset}"
+                       byline="true">
+            <fileset dir="${component.build.dir}" includes="${js-css.files}"/>
+        </replaceregexp>
+
+        <replaceregexp match="@DEBUG@"
+                       replace=""
+                       flags="g"
+                       byline="true"
+                       encoding="${charset}">
+            <fileset dir="${component.build.dir}" includes="${js-css.min.files}"/>
+        </replaceregexp>
+
+        <replaceregexp match="@TIMESTAMP@"
+                       replace="${timestamp.isoformat}"
+                       flags="g"
+                       byline="true"
+                       encoding="${charset}">
+            <fileset dir="${component.build.dir}" includes="${js-css.files}"/>
+        </replaceregexp>
+    </target>
+
+    <target name="fix-cr-lf">
+        <fixcrlf srcdir="${component.build.dir}"
+                 tablength="4"
+                 includes="${js-css.files}"
+                 encoding="${charset}"/>
+    </target>
+
+    <target name="clear">
+        <!-- pkg 移到外围 -->
+        <move encoding="${charset}" todir="${component.build.dir}/..//">
+            <fileset dir="${component.build.dir}"
+                     includes="**/*-pkg.js,**/*-pkg-min.js"/>
+            <mapper type="regexp" from="(.*)-pkg(.*)"
+                    to="\1\2"/>
+        </move>
+
+
+        <!-- 空组件文件夹直接删除 -->
+        <condition property="empty.component.build.dir">
+            <length length="0">
+                <fileset dir="${component.build.dir}"/>
+            </length>
+        </condition>
+
+        <ac:if>
+            <ac:isset property="empty.component.build.dir"/>
+            <ac:then>
+                <delete dir="${component.build.dir}"/>
+            </ac:then>
+        </ac:if>
     </target>
 
     <target name="extract-dependency">
@@ -156,135 +279,11 @@
         </java>
     </target>
 
-    <!-- 对 JS 文件 ASCII 化 -->
-    <target name="native2ascii" depends="compress">
-        <mkdir dir="${component.build.dir.tmp}"/>
-        <move todir="${component.build.dir.tmp}">
-            <fileset dir="${component.build.dir}" includes="**/*-min.js"/>
-        </move>
-        <native2ascii encoding="${charset}"
-                      src="${component.build.dir.tmp}"
-                      dest="${component.build.dir}"
-                      includes="**/*.js"/>
-        <delete dir="${component.build.dir.tmp}"/>
-    </target>
-
-    <!-- 替换版本信息以及给文件加上版权信息以及加上 bom -->
-    <target name="copyright">
-        <tstamp>
-            <format property="stamp.time" pattern="MMM d HH:mm" locale="en,UK"/>
-            <format property="build.year" pattern="yyyy"/>
-        </tstamp>
-
-        <mkdir dir="${component.build.dir.tmp}"/>
-        <move todir="${component.build.dir.tmp}">
-            <fileset dir="${component.build.dir}" includes="${copyright.files}"/>
-        </move>
-
-        <ac:for param="file">
-            <path>
-                <fileset dir="${component.build.dir.tmp}"/>
-            </path>
-            <sequential>
-                <!--如果不是压缩文件，就加上 bom 头，否则 ie 诡异问题-->
-                <ac:var name="copyright.bomOrEmpty" value=""/>
-                <ac:var name="copyright.file.name" unset="true"/>
-                <basename property="copyright.file.name" file="@{file}"/>
-                <ac:if>
-                    <not>
-                        <contains string="${copyright.file.name}" substring="-min." casesensitive="false"/>
-                    </not>
-                    <then>
-                        <ac:var name="copyright.bomOrEmpty" value="${bom}"/>
-                    </then>
-                </ac:if>
-                <concat destfile="@{file}.tmp" encoding="${charset}" outputencoding="${charset}">
-                    <!-- ie need bom , odd -->
-                    <header filtering="no" trimleading="yes">${copyright.bomOrEmpty}/*
-                        Copyright ${build.year}, KISSY UI Library v${version}
-                        MIT Licensed
-                        build time: ${stamp.time}
-                        */
-                    </header>
-                    <fileset file="@{file}"/>
-                    <filterchain>
-                        <deletecharacters chars="${bom}"/>
-                    </filterchain>
-                </concat>
-                <move file="@{file}.tmp" tofile="@{file}"/>
-            </sequential>
-        </ac:for>
-
-        <move todir="${component.build.dir}">
-            <fileset dir="${component.build.dir.tmp}"/>
-        </move>
-
-        <delete dir="${component.build.dir.tmp}"/>
-
-        <replaceregexp match="@VERSION@"
-                       replace="${version}"
-                       flags="g"
-                       encoding="${charset}"
-                       byline="true">
-            <fileset dir="${component.build.dir}" includes="${js-css.files}"/>
-        </replaceregexp>
-
-        <replaceregexp match="@DEBUG@"
-                       replace=""
-                       flags="g"
-                       byline="true"
-                       encoding="${charset}">
-            <fileset dir="${component.build.dir}" includes="${js-css.min.files}"/>
-        </replaceregexp>
-
-        <replaceregexp match="@TIMESTAMP@"
-                       replace="${timestamp.isoformat}"
-                       flags="g"
-                       byline="true"
-                       encoding="${charset}">
-            <fileset dir="${component.build.dir}" includes="${js-css.files}"/>
-        </replaceregexp>
-
-    </target>
-
-
-    <target name="fix-cr-lf">
-        <fixcrlf srcdir="${component.build.dir}"
-                 tablength="4"
-                 includes="${js-css.files}"
-                 encoding="${charset}"/>
-    </target>
-
-    <target name="process" depends="prepare,compress,native2ascii,copyright,fix-cr-lf">
-
-        <!-- 1.2 不需要 pkg ,pkg 移到外围 -->
-        <move encoding="${charset}" todir="${component.build.dir}/..//">
-            <fileset dir="${component.build.dir}"
-                     includes="**/*-pkg.js,**/*-pkg-min.js"/>
-            <mapper type="regexp" from="(.*)-pkg(.*)"
-                    to="\1\2"/>
-        </move>
-
-        <delete dir="${component.src.dir.tmp}"/>
-
-        <!-- 空组件文件夹直接删除 -->
-        <condition property="empty.component.build.dir">
-            <length length="0">
-                <fileset dir="${component.build.dir}"/>
-            </length>
-        </condition>
-
-        <ac:if>
-            <isset property="empty.component.build.dir"/>
-            <ac:then>
-                <delete dir="${component.build.dir}"/>
-            </ac:then>
-        </ac:if>
-
-    </target>
-
-    <target name="build" depends="concat,process,extract-dependency">
-
+    <target name="build" depends="
+    create-build.dir,before-concat,concat,prepare,
+    compress-js,compress-css,native2ascii,
+    copyright,fill-var,fix-cr-lf,
+    extract-dependency,clear">
     </target>
 
     <target name="clean">

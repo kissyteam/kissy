@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 16 15:35
+build time: Apr 17 00:24
 */
 /**
  * Ast node class for xtemplate
@@ -38,7 +38,7 @@ KISSY.add("xtemplate/compiler/ast", function (S) {
                 tpl.path['parts'] +
                 "}} not {{/" +
                 closeParts + "}}");
-            S.error(e);
+
         }
         self.lineNumber = lineNumber;
         self.tpl = tpl;
@@ -963,7 +963,7 @@ KISSY.add("xtemplate/compiler/parser", function () {
                 }
             }
 
-            S.error("lex error at line " + self.lineNumber + ":\n" + self.showDebugInfo());
+
             return undefined;
         }
     };
@@ -2791,7 +2791,7 @@ KISSY.add("xtemplate/compiler/parser", function () {
             }
 
             if (!symbol) {
-                S.log("it is not a valid input: " + input, "error");
+
                 return false;
             }
 
@@ -2807,7 +2807,7 @@ KISSY.add("xtemplate/compiler/parser", function () {
                     });
                 }
                 error = "Syntax error at line " + lexer.lineNumber + ":\n" + lexer.showDebugInfo() + "\n" + "expect " + expected.join(", ");
-                S.error(error);
+
                 return false;
             }
 

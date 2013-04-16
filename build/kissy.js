@@ -1,12 +1,12 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 16 22:29
+build time: Apr 17 00:24
 */
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 16 22:29
+build time: Apr 17 00:24
 */
 /**
  * @ignore
@@ -44,11 +44,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130416222903' will replace with current timestamp when compressing.
+         * NOTICE: '20130417002413' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130416222903',
+        __BUILD_TIME: '20130417002413',
         /**
          * KISSY Environment.
          * @private
@@ -1108,7 +1108,7 @@ var KISSY = (function (undefined) {
                     try {
                         val = decode(val);
                     } catch (e) {
-                        S.log(e + 'decodeURIComponent error : ' + val, 'error');
+
                     }
                     if (S.endsWith(key, '[]')) {
                         key = key.substring(0, key.length - 2);
@@ -1220,7 +1220,7 @@ var KISSY = (function (undefined) {
             }
 
             if (!m) {
-                S.error('method undefined');
+
             }
 
             f = function () {
@@ -1786,7 +1786,7 @@ var KISSY = (function (undefined) {
         if (promise instanceof Reject) {
             // if there is a rejected , should always has! see when()
             if (!rejected) {
-                S.error('no rejected callback!');
+
             }
             return rejected(promise[PROMISE_VALUE]);
         }
@@ -1968,7 +1968,7 @@ var KISSY = (function (undefined) {
         var self = this;
         Promise.apply(self, arguments);
         if (self[PROMISE_VALUE] instanceof Promise) {
-            S.error('assert.not(this.__promise_value instanceof promise) in Reject constructor');
+
         }
         return self;
     }
@@ -1994,7 +1994,7 @@ var KISSY = (function (undefined) {
                     value;
             } catch (e) {
                 // print stack info for firefox/chrome
-                S.log(e.stack || e, 'error');
+
                 return new Reject(e);
             }
         }
@@ -2008,18 +2008,18 @@ var KISSY = (function (undefined) {
                     new Reject(reason);
             } catch (e) {
                 // print stack info for firefox/chrome
-                S.log(e.stack || e, 'error');
+
                 return new Reject(e);
             }
         }
 
         function finalFulfill(value) {
             if (done) {
-                S.error('already done at fulfilled');
+
                 return;
             }
             if (value instanceof Promise) {
-                S.error('assert.not(value instanceof Promise) in when')
+
             }
             done = 1;
             defer.resolve(_fulfilled(value));
@@ -2028,7 +2028,7 @@ var KISSY = (function (undefined) {
         if (value instanceof  Promise) {
             promiseWhen(value, finalFulfill, function (reason) {
                 if (done) {
-                    S.error('already done at rejected');
+
                     return;
                 }
                 done = 1;
@@ -2749,7 +2749,7 @@ var KISSY = (function (undefined) {
                 try {
                     v = S.urlDecode(v);
                 } catch (e) {
-                    S.log(e + 'urlDecode error : ' + v, 'error');
+
                 }
                 // need to decode to get data structure in memory
                 self[key] = v;
@@ -3928,7 +3928,7 @@ var KISSY = (function (undefined) {
             if (S.Config.debug) {
                 if (S.inArray(modName, stack)) {
                     stack.push(modName);
-                    S.error('find cyclic dependency between mods: ' + stack);
+
                     return 0;
                 }
                 stack.push(modName);
@@ -4062,7 +4062,7 @@ var KISSY = (function (undefined) {
                 mod = mods[name];
 
             if (mod && mod.fn) {
-                S.log(name + ' is defined more than once');
+
                 return;
             }
 
@@ -4501,24 +4501,24 @@ var KISSY = (function (undefined) {
             if (UA.webkit) {
                 // http://www.w3.org/TR/DOM-Level-2-Style/stylesheets.html
                 if (node['sheet']) {
-                    S.log('webkit loaded : ' + url);
+
                     loaded = 1;
                 }
             } else if (node['sheet']) {
                 try {
                     var cssRules = node['sheet'].cssRules;
                     if (cssRules) {
-                        S.log('same domain firefox loaded : ' + url);
+
                         loaded = 1;
                     }
                 } catch (ex) {
                     exName = ex.name;
-                    S.log('firefox getStyle : ' + exName + ' ' + ex.code + ' ' + url);
+
                     // http://www.w3.org/TR/dom/#dom-domexception-code
                     if (// exName == 'SecurityError' ||
                     // for old firefox
                         exName == 'NS_ERROR_DOM_SECURITY_ERR') {
-                        S.log(exName + ' firefox loaded : ' + url);
+
                         loaded = 1;
                     }
                 }
@@ -4966,7 +4966,7 @@ var KISSY = (function (undefined) {
                     // http://groups.google.com/group/commonjs/browse_thread/thread/5a3358ece35e688e/43145ceccfb1dc02#43145ceccfb1dc02
                     // use onload to get module name is not right in ie
                     name = findModuleNameByInteractive(self);
-                    S.log('ie get modName by interactive: ' + name);
+
                     utils.registerModule(runtime, name, fn, config);
                     self.__startLoadModName = null;
                     self.__startLoadTime = 0;
@@ -4979,7 +4979,7 @@ var KISSY = (function (undefined) {
                 }
                 return;
             }
-            S.log('invalid format for KISSY.add !', 'error');
+
         }
     });
 
@@ -5285,7 +5285,7 @@ var KISSY = (function (undefined) {
         function checkHandler() {
             if (mod.fn) {
                 if (!remoteLoads[modName]) {
-                    S.log('load remote module: "' + modName + '" from: "' + url + '"', 'info');
+
                     remoteLoads[modName] = 1;
                 }
                 // 只在 LOADED 后加载依赖项一次
@@ -5464,7 +5464,7 @@ var KISSY = (function (undefined) {
                 });
             }
             if (ms.length) {
-                S.log('load remote modules: "' + ms.join(', ') + '" from: "' + ps.join(', ') + '"');
+
             }
         }
     }
@@ -5946,7 +5946,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20130416222903'
+            tag: '20130417002413'
         }, getBaseInfo()));
     }
 
@@ -6044,12 +6044,12 @@ var KISSY = (function (undefined) {
                     xml.loadXML(data);
                 }
             } catch (e) {
-                S.log('parseXML error : ');
-                S.log(e);
+
+
                 xml = undefined;
             }
             if (!xml || !xml.documentElement || xml.getElementsByTagName('parsererror').length) {
-                S.error('Invalid XML: ' + data);
+
             }
             return xml;
         },
@@ -6569,7 +6569,7 @@ config({
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 16 18:46
+build time: Apr 17 00:15
 */
 /**
  * @ignore
@@ -7654,7 +7654,7 @@ KISSY.add('dom/base/create', function (S, DOM, undefined) {
                         // return multiple nodes as a fragment
                         ret = nodeListToFragment(nodes);
                     } else {
-                        S.error(html + ' : create node error');
+
                     }
                 }
 
@@ -7982,7 +7982,7 @@ KISSY.add('dom/base/create', function (S, DOM, undefined) {
                 ret.appendChild(nodes[i]);
             }
         } else {
-            S.log('Unable to convert ' + nodes + ' to fragment.');
+
         }
         return ret;
     }
@@ -9900,7 +9900,7 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
                     // EMPTY will unset style!
                     style[name] = val;
                 } catch (e) {
-                    S.log('css set error :' + e);
+
                 }
                 // #80 fix,font-family
                 if (val === EMPTY && style.removeAttribute) {
@@ -10402,7 +10402,7 @@ KISSY.add('dom/base/traversal', function (S, DOM, undefined) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 16 12:42
+build time: Apr 17 00:15
 */
 /**
  * implement class-list for ie<10
@@ -10511,7 +10511,7 @@ KISSY.add('dom/class-list', function (S, DOM) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 16 18:46
+build time: Apr 17 00:15
 */
 /**
  * attr ie hack
@@ -11023,7 +11023,7 @@ KISSY.add('dom/ie/style', function (S, DOM) {
         }
     }
     catch (ex) {
-        S.log('IE filters ActiveX is disabled. ex = ' + ex);
+
     }
 
     /*
@@ -11153,7 +11153,7 @@ KISSY.add('dom/ie/traversal', function (S, DOM) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 16 12:42
+build time: Apr 17 00:15
 */
 /*
   Generated by kissy-kison.*/
@@ -11374,7 +11374,7 @@ KISSY.add("dom/selector/parser", function () {
                 }
             }
 
-            S.error("lex error at line " + self.lineNumber + ":\n" + self.showDebugInfo());
+
             return undefined;
         }
     };
@@ -12182,7 +12182,7 @@ KISSY.add("dom/selector/parser", function () {
             }
 
             if (!symbol) {
-                S.log("it is not a valid input: " + input, "error");
+
                 return false;
             }
 
@@ -12198,7 +12198,7 @@ KISSY.add("dom/selector/parser", function () {
                     });
                 }
                 error = "Syntax error at line " + lexer.lineNumber + ":\n" + lexer.showDebugInfo() + "\n" + "expect " + expected.join(", ");
-                S.error(error);
+
                 return false;
             }
 
@@ -12277,7 +12277,7 @@ KISSY.add("dom/selector/parser", function () {
  */
 KISSY.add('dom/selector', function (S, parser, DOM) {
 
-    S.log('use KISSY css3 selector');
+
 
     // ident === identifier
 
@@ -12967,7 +12967,7 @@ KISSY.add('dom/selector', function (S, parser, DOM) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 16 12:58
+build time: Apr 17 00:21
 */
 /**
  * @ignore
@@ -13435,7 +13435,7 @@ KISSY.add('event/base/utils', function (S) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 16 12:58
+build time: Apr 17 00:21
 */
 /**
  * @ignore
@@ -14039,7 +14039,7 @@ KISSY.add('event/custom/observer', function (S, Event) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 16 12:58
+build time: Apr 17 00:21
 */
 /**
  * @ignore
@@ -15776,8 +15776,8 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
                         currentTarget[ eventType ]();
                     }
                 } catch (eError) {
-                    S.log('trigger action error: ');
-                    S.log(eError);
+
+
                 }
 
                 ObservableDOMEvent.triggeredEvent = '';
@@ -16270,7 +16270,7 @@ KISSY.add('event/dom/base/valuechange', function (S, Event, DOM, special) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 16 12:58
+build time: Apr 17 00:21
 */
 /**
  * @ignore
@@ -16332,7 +16332,7 @@ KISSY.add('event/dom/focusin', function (S, Event) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 16 12:59
+build time: Apr 17 00:21
 */
 /**
  * @ignore
@@ -16516,7 +16516,7 @@ KISSY.add('event/dom/hashchange', function (S, Event, DOM) {
                     // 后退时不等
                     // 定时器调用 hashChange() 修改 iframe 同步调用过来的(手动改变 location)则相等
                     if (c != ch) {
-                        S.log('set loc hash :' + c);
+
                         location.hash = c;
                         // 使 last hash 为 iframe 历史， 不然重新写iframe，
                         // 会导致最新状态（丢失前进状态）
@@ -16573,7 +16573,7 @@ KISSY.add('event/dom/hashchange', function (S, Event, DOM) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 16 12:59
+build time: Apr 17 00:21
 */
 /**
  * @ignore
@@ -16770,7 +16770,7 @@ KISSY.add('event/dom/ie/submit', function (S, Event, DOM) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 16 12:59
+build time: Apr 17 00:21
 */
 /**
  * @ignore
@@ -16864,7 +16864,7 @@ KISSY.add('event/dom/shake', function (S, EventDomBase, undefined) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 16 12:59
+build time: Apr 17 00:21
 */
 /**
  * @ignore
@@ -17259,7 +17259,7 @@ KISSY.add('event/dom/touch/multi-touch', function (S, DOM) {
                 }
                 t2 = t2.parentNode;
             }
-            S.error('getCommonTarget error!');
+
             return undefined;
         },
 
@@ -17885,7 +17885,7 @@ KISSY.add('event/dom/touch', function (S, EventDomBase, eventHandleMap, eventHan
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 16 12:59
+build time: Apr 17 00:22
 */
 /**
  * @ignore
@@ -18219,7 +18219,7 @@ KISSY.add("json/parser", function () {
                 }
             }
 
-            S.error("lex error at line " + self.lineNumber + ":\n" + self.showDebugInfo());
+
             return undefined;
         }
     };
@@ -18522,7 +18522,7 @@ KISSY.add("json/parser", function () {
             }
 
             if (!symbol) {
-                S.log("it is not a valid input: " + input, "error");
+
                 return false;
             }
 
@@ -18538,7 +18538,7 @@ KISSY.add("json/parser", function () {
                     });
                 }
                 error = "Syntax error at line " + lexer.lineNumber + ":\n" + lexer.showDebugInfo() + "\n" + "expect " + expected.join(", ");
-                S.error(error);
+
                 return false;
             }
 
@@ -18828,7 +18828,7 @@ KISSY.add('json/stringify', function (S,Quote) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 16 12:59
+build time: Apr 17 00:22
 */
 /**
  * @ignore
@@ -19296,11 +19296,11 @@ KISSY.add('io/base', function (S, JSON, Event, undefined) {
         } catch (e) {
             // Propagate exception as error if not done
             if (self.state < 2) {
-                S.log(e.stack || e, 'error');
+
                 self._ioReady(-1, e.message);
                 // Simply rethrow otherwise
             } else {
-                S.error(e);
+
             }
         }
 
@@ -19645,7 +19645,7 @@ KISSY.add('io/iframe-transport', function (S, DOM, Event, IO) {
 
     function IframeTransport(io) {
         this.io = io;
-        S.log('use IframeTransport for: ' + io.config.url);
+
     }
 
     S.augment(IframeTransport, {
@@ -20047,7 +20047,7 @@ KISSY.add('io/jsonp', function (S, IO) {
             // and KISSY will notify user by error callback
             converters.script.json = function () {
                 if (!response) {
-                    S.error(' not call jsonpCallback: ' + jsonpCallback)
+
                 }
                 return response[0];
             };
@@ -20265,7 +20265,7 @@ KISSY.add('io/methods', function (S, IO, undefined) {
                             statusText = 'success';
                             isSuccess = true;
                         } catch (e) {
-                            S.log(e.stack || e, 'error');
+
                             statusText = 'parser error';
                         }
                     }
@@ -20349,7 +20349,7 @@ KISSY.add('io/script-transport', function (S, IO, _, undefined) {
             return new (IO['getTransport']('*'))(io);
         }
         this.io = io;
-        S.log('use ScriptTransport for: ' + config.url);
+
         return this;
     }
 
@@ -20456,7 +20456,7 @@ KISSY.add('io/sub-domain-transport', function (S, XhrTransportBase, Event, DOM) 
             c = io.config;
         self.io = io;
         c.crossDomain = false;
-        S.log('use SubDomainTransport for: ' + c.url);
+
     }
 
 
@@ -20483,7 +20483,7 @@ KISSY.add('io/sub-domain-transport', function (S, XhrTransportBase, Event, DOM) 
                 if (self.nativeXhr) {
                     self.sendInternal();
                 } else {
-                    S.error('document.domain not set correctly!');
+
                 }
                 return;
             }
@@ -20566,7 +20566,7 @@ KISSY.add('io/xdr-flash-transport', function (S, IO, DOM) {
     }
 
     function XdrFlashTransport(io) {
-        S.log('use XdrFlashTransport for: ' + io.config.url);
+
         this.io = io;
     }
 
@@ -20696,7 +20696,7 @@ KISSY.add('io/xhr-transport-base', function (S, IO) {
         try {
             return new (refWin || win)['XMLHttpRequest']();
         } catch (e) {
-            S.log('createStandardXHR error: ' + _);
+
         }
         return undefined;
     }
@@ -20705,7 +20705,7 @@ KISSY.add('io/xhr-transport-base', function (S, IO) {
         try {
             return new (refWin || win)['ActiveXObject']('Microsoft.XMLHTTP');
         } catch (e) {
-            S.log('createActiveXHR error: ' + _);
+
         }
         return undefined;
     }
@@ -20946,8 +20946,8 @@ KISSY.add('io/xhr-transport-base', function (S, IO) {
                         try {
                             statusText = nativeXhr.statusText;
                         } catch (e) {
-                            S.log('xhr statusText error: ');
-                            S.log(e);
+
+
                             // We normalize with Webkit giving an empty statusText
                             statusText = '';
                         }
@@ -21029,7 +21029,7 @@ KISSY.add('io/xhr-transport', function (S, IO, XhrTransportBase, SubDomainTransp
         }
 
         xhr = self.nativeXhr = XhrTransportBase.nativeXhr(crossDomain);
-        S.log('crossDomain: ' + crossDomain + ', use ' + (_XDomainRequest && (xhr instanceof _XDomainRequest) ? 'XDomainRequest' : 'XhrTransport') + ' for: ' + c.url);
+
 
         return self;
     }
@@ -21060,7 +21060,7 @@ KISSY.add('io/xhr-transport', function (S, IO, XhrTransportBase, SubDomainTransp
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 16 12:41
+build time: Apr 17 00:14
 */
 /**
  * @ignore
@@ -21170,7 +21170,7 @@ KISSY.add('cookie', function (S) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 16 22:25
+build time: Apr 17 00:13
 */
 /**
  * @ignore
@@ -21859,7 +21859,7 @@ KISSY.add('base', function (S, Attribute, EventCustom) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 16 12:40
+build time: Apr 17 00:13
 */
 /**
  * base class for transition anim and timer anim
@@ -22370,7 +22370,7 @@ KISSY.add('anim/base/utils', function (S, DOM, Q,undefined) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 16 12:40
+build time: Apr 17 00:13
 */
 /**
  * anim facade between native and timer
@@ -22574,7 +22574,7 @@ KISSY.add('anim/facade', function (S, DOM, AnimBase, TimerAnim, TransitionAnim) 
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 16 12:41
+build time: Apr 17 00:13
 */
 /**
  * @ignore
@@ -22685,7 +22685,7 @@ KISSY.add('anim/timer/color', function (S, DOM, Fx,SHORT_HANDS) {
         }
 
         //transparent 或者颜色字符串返回
-        S.log('only allow rgb or hex color string : ' + val, 'warn');
+
         return [255, 255, 255];
     }
 
@@ -23165,7 +23165,7 @@ KISSY.add('anim/timer/fx', function (S, DOM, undefined) {
                 if (!self.finished) {
                     self.finished = 1;
                     DOM.css(el, prop, to);
-                    S.log(prop + ' update directly ! : ' + val + ' : ' + from + ' : ' + to);
+
                 }
             } else {
                 val += self.unit;
@@ -23273,7 +23273,7 @@ KISSY.add('anim/timer/manager', function (S, undefined) {
     }
     // chrome is unstable....
     if (requestAnimationFrameFn && !S.UA.chrome) {
-        S.log('anim use requestAnimationFrame');
+
     } else {
         requestAnimationFrameFn = function (fn) {
             return setTimeout(fn, INTERVAL);
@@ -23661,7 +23661,7 @@ KISSY.add('anim/timer', function (S, DOM, Event, AnimBase, Easing, AM, Fx, SHORT
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 16 12:41
+build time: Apr 17 00:13
 */
 /**
  * animation using css transition
@@ -23837,7 +23837,7 @@ KISSY.add('anim/transition', function (S, DOM, Event, AnimBase) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 16 13:00
+build time: Apr 17 00:22
 */
 /**
  * @ignore

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 16 12:59
+build time: Apr 17 00:21
 */
 /**
  * @ignore
@@ -38,7 +38,7 @@ KISSY.add('imagezoom', function (S, Node, Overlay, Zoomer, undefined) {
                 var self = this;
 
                 if (!self.get("bigImageWidth") || !self.get("bigImageHeight")) {
-                    S.error("bigImageWidth/bigImageHeight in ImageZoom must be set!");
+
                 }
 
                 imageZoomRenderUI(self);

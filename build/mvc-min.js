@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 16 13:00
+build time: Apr 17 00:22
 */
 KISSY.add("mvc/collection",function(c,j,g,i){function b(){b.superclass.constructor.apply(this,arguments)}b.ATTRS={model:{value:g},models:{setter:function(a){this.remove(this.get("models"),{silent:1});this.add(a,{silent:1});return this.get("models")},value:[]},url:{value:""},comparator:{},sync:{value:function(){c.require("mvc").sync.apply(this,arguments)}},parse:{value:function(a){return a}}};c.extend(b,i,{sort:function(){var a=this.get("comparator");a&&this.get("models").sort(function(k,b){return a(k)-
 a(b)})},toJSON:function(){return c.map(this.get("models"),function(a){return a.toJSON()})},add:function(a,b){var d=this,e=!0;if(c.isArray(a)){var f=[].concat(a);c.each(f,function(a){a=d._add(a,b);e=e&&a})}else e=d._add(a,b);return e},remove:function(a,b){var d=this;if(c.isArray(a)){var e=[].concat(a);c.each(e,function(a){d._remove(a,b)})}else a&&d._remove(a,b)},at:function(a){return this.get("models")[a]},_normModel:function(a){var b=!0;a instanceof g||(b=a,a=new (this.get("model")),b=a.set(b,{silent:1}));

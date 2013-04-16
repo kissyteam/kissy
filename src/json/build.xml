@@ -4,8 +4,5 @@
     <property name="component.name" value="json"/>
 
     <import file="../common.xml"/>
-
-    <target name="build" depends="common-build.build">
-    </target>
 </project>
 

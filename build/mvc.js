@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 16 13:00
+build time: Apr 17 00:22
 */
 /**
  * collection of models
@@ -1122,7 +1122,7 @@ KISSY.add('mvc/router', function (S, Event, Base) {
                                 history['replaceState']({}, "", getFullPath(hash));
                                 opts.triggerRoute = 1;
                             } else {
-                                S.error("location path must be same with urlRoot!");
+
                             }
                         }
                     }

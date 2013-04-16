@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 16 12:50
+build time: Apr 17 00:15
 */
 /**
  * Set up editor constructor
@@ -200,7 +200,7 @@ KISSY.add("editor/core/clipboard", function (S, Editor, KERange, KES) {
 
             // ie beforepaste 会触发两次，第一次 pastebin 为锚点内容，奇怪
             // chrome keydown 也会两次
-            S.log(ev.type + " : " + " paste event happen");
+
 
             var self = this,
                 editor = self.editor,
@@ -214,7 +214,7 @@ KISSY.add("editor/core/clipboard", function (S, Editor, KERange, KES) {
                 // 第二次 bms 是错的，但是内容是对的
                 // 这样返回刚好，用同一个 pastebin 得到最后的正确内容
                 // bms 第一次时创建成功
-                S.log(ev.type + " : trigger more than once ...");
+
                 return;
             }
 
@@ -282,7 +282,7 @@ KISSY.add("editor/core/clipboard", function (S, Editor, KERange, KES) {
                     return;
                 }
 
-                S.log("paste " + html);
+
 
                 var re = editor.fire("paste", {
                     html: html,
@@ -812,7 +812,7 @@ KISSY.add('editor/core', function (S, Editor, Utils, focusManager, Styles, zInde
                 if (cmd) {
                     return cmd.exec.apply(cmd, args);
                 } else {
-                    S.log(name + ': command not found');
+
                     return undefined;
                 }
             },
@@ -1178,7 +1178,7 @@ KISSY.add('editor/core', function (S, Editor, Utils, focusManager, Styles, zInde
                     try {
                         $sel.createRange().pasteHTML(data);
                     } catch (e) {
-                        S.log('insertHTML error in ie');
+
                     }
                 } else {
                     // ie9 仍然没有

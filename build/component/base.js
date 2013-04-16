@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 16 22:25
+build time: Apr 17 00:14
 */
 /**
  * @ignore
@@ -1050,7 +1050,7 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
              */
             handleContextMenu: function (ev) {
                 if (0) {
-                    S.log(ev);
+
                 }
             },
 
@@ -1108,7 +1108,7 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
              */
             performActionInternal: function (ev) {
                 if (0) {
-                    S.log(ev);
+
                 }
             },
 
@@ -1555,7 +1555,7 @@ KISSY.add("component/base/delegate-children", function (S, Event) {
                         control.handleDblClick(e);
                         break;
                     default:
-                        S.error(e.type + " unhandled!");
+
                 }
             }
         }
@@ -1662,7 +1662,7 @@ KISSY.add("component/base/impl", function (S, UIBase, Manager) {
             if (!component.isController && (xclass = component.xclass)) {
                 childConstructor = Manager.getConstructorByXClass(xclass);
                 if (!childConstructor) {
-                    S.error("can not find class by xclass desc : " + xclass);
+
                 }
                 component = new childConstructor(component);
             }

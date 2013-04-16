@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 16 12:55
+build time: Apr 17 00:19
 */
 /**
  * multiple-upload dialog
@@ -444,7 +444,7 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor, DragPlugi
                 uploader = self.uploader,
                 id = ev.id || (ev['file'] && ev['file'].id);
             if (!id) {
-                S.log(ev);
+
                 return;
             }
             var tr = self._getFileTr(id),
@@ -453,7 +453,7 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor, DragPlugi
 
             uploader['removeFile'](id);
             if (!ev._custom) {
-                S.log(status);
+
                 status = "服务器出错或格式不正确";
             }
             if (tr) {
@@ -503,8 +503,8 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor, DragPlugi
             try {
                 data = S.parseJSON(data);
             } catch (ex) {
-                S.log("multiUpload _onUploadCompleteData error :");
-                S.log(ex);
+
+
                 throw ex;
             }
             if (data.error) {

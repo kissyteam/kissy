@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 16 12:59
+build time: Apr 17 00:22
 */
 /**
  * LALR grammar parser
@@ -664,7 +664,7 @@ KISSY.add("kison/grammar", function (S, Base, Utils, Item, ItemSet, NonTerminal,
             }
 
             if (!symbol) {
-                S.log("it is not a valid input: " + input, "error");
+
                 return false;
             }
 
@@ -681,7 +681,7 @@ KISSY.add("kison/grammar", function (S, Base, Utils, Item, ItemSet, NonTerminal,
                 error = "Syntax error at line " + lexer.lineNumber +
                     ":\n" + lexer.showDebugInfo() +
                     "\n" + "expect " + expected.join(", ");
-                S.error(error);
+
                 return false;
             }
 
@@ -1225,7 +1225,7 @@ KISSY.add("kison/lexer", function (S, Utils) {
                 }
             }
 
-            S.error("lex error at line " + self.lineNumber + ":\n" + self.showDebugInfo());
+
             return undefined;
         }
     };

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 16 12:40
+build time: Apr 17 00:13
 */
 /**
  * base class for transition anim and timer anim

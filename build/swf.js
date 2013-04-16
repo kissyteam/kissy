@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 16 13:01
+build time: Apr 17 00:23
 */
 /**
  * @ignore
@@ -598,7 +598,7 @@ KISSY.add('swf/ua', function (S, undefined) {
             try {
                 ver = new ActiveXObject(SF + '.' + SF)['GetVariable']('$version');
             } catch (ex) {
-                S.log('getFlashVersion failed via ActiveXObject');
+
                 // nothing to do, just return undefined
             }
         }

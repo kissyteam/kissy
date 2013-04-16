@@ -20,8 +20,9 @@
         </concat>
     </target>
 
-    <target name="seed-concat">
-        <concat destfile="${component.src.dir.tmp}/seed-pkg.js" encoding="${charset}" outputencoding="${charset}">
+    <target name="concat" depends="merge-dependency">
+        <concat destfile="${component.src.dir.tmp}/seed-pkg.js"
+                encoding="${charset}" outputencoding="${charset}">
             <path location="${component.src.dir}/kissy.js"/>
 
 
@@ -108,7 +109,7 @@
         </concat>
     </target>
 
-    <target name="build" depends="merge-dependency,seed-concat,common-build.process">
+    <target name="compress-css"/>
 
-    </target>
+    <target name="extract-dependency"/>
 </project>
