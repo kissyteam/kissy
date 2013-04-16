@@ -561,8 +561,9 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
              * @param {KISSY.Event.DOMEventObject} ev DOM event to handle.
              */
             handleContextMenu: function (ev) {
-                if (0)
+                if (0) {
                     S.log(ev);
+                }
             },
 
             /**
@@ -618,8 +619,9 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
              * @param {KISSY.Event.DOMEventObject} ev DOM event to handle.
              */
             performActionInternal: function (ev) {
-                if (0)
+                if (0) {
                     S.log(ev);
+                }
             },
 
             /**

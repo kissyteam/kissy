@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 16 18:47
+build time: Apr 16 22:29
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130416184701' will replace with current timestamp when compressing.
+         * NOTICE: '20130416222903' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130416184701',
+        __BUILD_TIME: '20130416222903',
         /**
          * KISSY Environment.
          * @private
@@ -5059,6 +5059,7 @@ var KISSY = (function (undefined) {
 
     var Loader, data, utils, UA,
         remoteLoads = {},
+        win = S.Env.host,
         LOADING, LOADED, ERROR, ATTACHED;
 
     Loader = S.Loader;
@@ -5295,7 +5296,10 @@ var KISSY = (function (undefined) {
         }
 
         function _modError() {
-            S.log(modName + ' is not loaded! can not find module in path : ' + url, 'error');
+            if (win.console) {
+                win.console.error(modName +
+                    ' is not loaded! can not find module in path : ' + url);
+            }
             mod.status = ERROR;
         }
 
@@ -5331,6 +5335,7 @@ var KISSY = (function (undefined) {
     }
 
     var Loader = S.Loader,
+        win = S.Env.host,
         data = Loader.Status,
         utils = Loader.Utils;
 
@@ -5483,7 +5488,10 @@ var KISSY = (function (undefined) {
                         // fix #111
                         // https://github.com/kissyteam/kissy/issues/111
                         if (!mod.fn) {
-                            S.log(mod.name + ' is not loaded! can not find module in path : ' + jss[p], 'error');
+                            if (win.console) {
+                                win.console.error(mod.name +
+                                    ' is not loaded! can not find module in path : ' + jss[p]);
+                            }
                             mod.status = data.ERROR;
                             success = 0;
                             return false;
@@ -5933,7 +5941,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20130416184701'
+            tag: '20130416222903'
         }, getBaseInfo()));
     }
 

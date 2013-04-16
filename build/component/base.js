@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 16 12:41
+build time: Apr 16 22:25
 */
 /**
  * @ignore
@@ -1049,8 +1049,9 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
              * @param {KISSY.Event.DOMEventObject} ev DOM event to handle.
              */
             handleContextMenu: function (ev) {
-                if (0)
+                if (0) {
                     S.log(ev);
+                }
             },
 
             /**
@@ -1106,8 +1107,9 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
              * @param {KISSY.Event.DOMEventObject} ev DOM event to handle.
              */
             performActionInternal: function (ev) {
-                if (0)
+                if (0) {
                     S.log(ev);
+                }
             },
 
             /**

@@ -21,6 +21,7 @@
     }
 
     var Loader = S.Loader,
+        win = S.Env.host,
         data = Loader.Status,
         utils = Loader.Utils;
 
@@ -173,7 +174,10 @@
                         // fix #111
                         // https://github.com/kissyteam/kissy/issues/111
                         if (!mod.fn) {
-                            S.log(mod.name + ' is not loaded! can not find module in path : ' + jss[p], 'error');
+                            if (win.console) {
+                                win.console.error(mod.name +
+                                    ' is not loaded! can not find module in path : ' + jss[p]);
+                            }
                             mod.status = data.ERROR;
                             success = 0;
                             return false;

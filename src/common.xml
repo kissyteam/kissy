@@ -52,7 +52,8 @@
     </target>
 
     <target name="concat">
-        <concat destfile="${component.src.dir.tmp}/aio-pkg.js"
+        <basename property="component.basename" file="${component.name}"/>
+        <concat destfile="${component.src.dir.tmp}/${component.basename}-pkg.js"
                 encoding="${charset}" outputencoding="${charset}">
             <fileset dir="${component.src.dir}" includes="**/*.js"/>
             <filterchain>
@@ -257,11 +258,11 @@
     <target name="process" depends="prepare,compress,native2ascii,copyright,fix-cr-lf">
 
         <!-- 1.2 不需要 pkg ,pkg 移到外围 -->
-        <move encoding="${charset}" todir="${kissy.build.dir}/">
+        <move encoding="${charset}" todir="${component.build.dir}/..//">
             <fileset dir="${component.build.dir}"
                      includes="**/*-pkg.js,**/*-pkg-min.js"/>
             <mapper type="regexp" from="(.*)-pkg(.*)"
-                    to="${component.name}\2"/>
+                    to="\1\2"/>
         </move>
 
         <delete dir="${component.src.dir.tmp}"/>

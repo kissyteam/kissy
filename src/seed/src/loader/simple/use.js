@@ -7,6 +7,7 @@
 
     var Loader, data, utils, UA,
         remoteLoads = {},
+        win = S.Env.host,
         LOADING, LOADED, ERROR, ATTACHED;
 
     Loader = S.Loader;
@@ -243,7 +244,10 @@
         }
 
         function _modError() {
-            S.log(modName + ' is not loaded! can not find module in path : ' + url, 'error');
+            if (win.console) {
+                win.console.error(modName +
+                    ' is not loaded! can not find module in path : ' + url);
+            }
             mod.status = ERROR;
         }
 
