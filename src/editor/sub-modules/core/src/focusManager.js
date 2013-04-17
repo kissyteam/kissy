@@ -64,7 +64,7 @@ KISSY.add("editor/core/focusManager", function (S) {
         }
         timer = setTimeout(function () {
             editor.fire("focus");
-        }, 100);
+        }, 30);
     }
 
     function blur() {
@@ -75,12 +75,12 @@ KISSY.add("editor/core/focusManager", function (S) {
             clearTimeout(timer);
         }
         /*
-         Note that this functions acts asynchronously with a delay of 100ms to
+         Note that this functions acts asynchronously with a delay of 30ms to
          avoid subsequent blur/focus effects.
          */
         timer = setTimeout(function () {
             editor.fire("blur");
-        }, 100);
+        }, 30);
     }
 
     focusManager['refreshAll'] = focusManager.refreshAll;

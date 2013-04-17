@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="viewport" content="width = device-width,initial-scale = 1.0">
+    <title>KISSY Editor Test</title>
+    <link href="http://a.tbcdn.cn/s/kissy/1.3.0rc/css/base.css" rel="stylesheet"/>
+    <link href="/kissy/build/editor/theme/cool/editor.css" rel="stylesheet"/>
+
+</head>
+<body>
+<h1 style="font-size: 2em;text-align: center;margin: 2em;">Simple KISSY Editor</h1>
+
+
+<div style="width: 90%;margin: 20px auto;">
+    <p>
+        <label>标题: <input></label>
+    </p>
+
+    <div id="container" class="ks-editor">
+        <textarea class="ks-editor-textarea"></textarea>
+    </div>
+    <div style="margin: 20px 0;">
+        <button onclick="window.newEditor.destroy();">destroy</button>
+        <button onclick="preview();">预览</button>
+        <button onclick="getSelected();">获取选中 html</button>
+        <button onclick="insertHTML();">插入 html</button>
+        <button onclick="insertElement();">插入 element</button>
+    </div>
+    <div id="previewEl" style="margin: 20px 0;">
+
+    </div>
+</div>
+
+
+<script src="/kissy/build/seed.js"></script>
+<script src="../../../tools/third-party/syntaxhighlighter_3.0.83/scripts/shCore.js"></script>
+<script src="../../../tools/third-party/syntaxhighlighter_3.0.83/scripts/shBrushJScript.js"></script>
+<link type="text/css" rel="stylesheet"
+      href="../../../tools/third-party/syntaxhighlighter_3.0.83/styles/shCoreDefault.css"/>
+
+<script src="dev.js"></script>
+<script>
+    window.EDITOR_CFG = {
+        focused: false
+    };
+</script>
+<script src="./build/demo.js"></script>
+</body>
+</html>

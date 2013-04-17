@@ -83,7 +83,7 @@ KISSY.add('editor/core', function (S, Editor, Utils, focusManager, Styles, zInde
             '</div>' +
             '<div class="' + KE_STATUSBAR_CLASS.substring(1) + '"></div>';
 
-    Editor.Mode={
+    Editor.Mode = {
         SOURCE_MODE: 0,
         WYSIWYG_MODE: 1
     };
@@ -617,7 +617,6 @@ KISSY.add('editor/core', function (S, Editor, Utils, focusManager, Styles, zInde
              * @param {KISSY.NodeList} element
              */
             insertElement: function (element) {
-
                 var self = this;
 
                 if (self.get('mode') !== WYSIWYG_MODE) {
