@@ -45,6 +45,8 @@
 
     <target name="create-build.dir">
         <mkdir dir="${component.build.dir}"/>
+        <delete dir="${component.src.dir.tmp}"/>
+        <mkdir dir="${component.src.dir.tmp}"/>
     </target>
 
     <target name="before-concat"/>
@@ -70,7 +72,6 @@
         <copy todir="${component.build.dir}">
             <fileset dir="${component.src.dir.tmp}" includes="${component.files}"/>
         </copy>
-        <delete dir="${component.src.dir.tmp}"/>
     </target>
 
     <!-- 压缩代码 -->
@@ -99,7 +100,6 @@
                        encoding="${charset}">
             <fileset dir="${component.build.dir}" includes="**/*.js"/>
         </replaceregexp>
-
         <!-- 用 Closure Compiler 压缩 JS -->
         <apply executable="java" verbose="true" dest="${component.build.dir}">
             <fileset dir="${component.build.dir}"
@@ -115,6 +115,12 @@
             <targetfile/>
             <mapper type="regexp" from="^(.*)\.(css|js)$" to="\1-min.\2"/>
         </apply>
+        <!--
+            restore log
+        -->
+        <move todir="${component.build.dir}">
+            <fileset dir="${component.src.dir.tmp}" includes="**/*.js"/>
+        </move>
     </target>
 
     <!-- 对 JS 文件 ASCII 化 -->
@@ -239,6 +245,8 @@
                 <delete dir="${component.build.dir}"/>
             </ac:then>
         </ac:if>
+
+        <delete dir="${component.src.dir.tmp}"/>
     </target>
 
     <target name="extract-dependency">
