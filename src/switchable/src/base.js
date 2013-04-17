@@ -862,6 +862,8 @@ KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
             // 释放DOM,已经绑定的事件
             if (keepNode) {
                 Event.remove(self.container);
+                self.content && Event.remove(self.content);
+                self.nav && Event.remove(self.nav);
             } else {
                 DOM.remove(self.container);
             }

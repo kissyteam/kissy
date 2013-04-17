@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 17 00:23
+build time: Apr 17 15:44
 */
 /**
  * accordion aria support
@@ -1457,6 +1457,8 @@ KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
             // 释放DOM,已经绑定的事件
             if (keepNode) {
                 Event.remove(self.container);
+                self.content && Event.remove(self.content);
+                self.nav && Event.remove(self.nav);
             } else {
                 DOM.remove(self.container);
             }
@@ -1895,7 +1897,7 @@ KISSY.add('switchable/carousel/base', function (S, DOM, Event, Switchable) {
         EVENT_REMOVED = 'removed',
         PREV_BTN = 'prevBtn',
         NEXT_BTN = 'nextBtn',
-        DOM_EVENT = {originalEvent:{target:1}};
+        DOM_EVENT = {originalEvent: {target: 1}};
 
     /**
      * Carousel Class
@@ -1915,10 +1917,10 @@ KISSY.add('switchable/carousel/base', function (S, DOM, Event, Switchable) {
     }
 
     Carousel.Config = {
-        circular:true,
-        prevBtnCls:CLS_PREFIX + 'prev-btn',
-        nextBtnCls:CLS_PREFIX + 'next-btn',
-        disableBtnCls:CLS_PREFIX + 'disable-btn'
+        circular: true,
+        prevBtnCls: CLS_PREFIX + 'prev-btn',
+        nextBtnCls: CLS_PREFIX + 'next-btn',
+        disableBtnCls: CLS_PREFIX + 'disable-btn'
 
     };
 
@@ -1931,7 +1933,7 @@ KISSY.add('switchable/carousel/base', function (S, DOM, Event, Switchable) {
          *   self.prevBtn
          *   self.nextBtn
          */
-        _init:function () {
+        _init: function () {
             var self = this;
             Carousel.superclass._init.call(self);
             var cfg = self.config,
@@ -1985,15 +1987,28 @@ KISSY.add('switchable/carousel/base', function (S, DOM, Event, Switchable) {
             // 触发 itemSelected 事件
             Event.delegate(self.content, 'click', DOT + self._panelInternalCls, function (e) {
                 var item = e.currentTarget;
-                self.fire('itemSelected', { item:item });
+                self.fire('itemSelected', { item: item });
             });
+        },
+
+        destroy: function (keepNode) {
+            var self = this;
+            if (keepNode) {
+                if (self['nextBtn']) {
+                    Event.remove(self['nextBtn'])
+                }
+                if (self['prevBtn']) {
+                    Event.remove(self['prevBtn'])
+                }
+            }
+            Carousel.superclass.destroy.apply(self, arguments);
         }
     });
 
 
     return Carousel;
 
-}, { requires:["dom", "event", "../base"]});
+}, { requires: ["dom", "event", "../base"]});
 
 
 /**
@@ -2354,7 +2369,7 @@ KISSY.add('switchable/effect', function (S, DOM, Event, Anim, Switchable, undefi
                 toPanels = panelInfo.toPanels;
 
             if (fromPanels && fromPanels.length !== 1) {
-
+                S.error('fade effect only supports steps == 1.');
             }
 
             var cfg = self.config,
@@ -2494,7 +2509,7 @@ KISSY.add('switchable/effect', function (S, DOM, Event, Anim, Switchable, undefi
                         ];
 
                         if (!host.viewSize[0]) {
-
+                            S.error('switchable must specify viewSize if there is no panels');
                         }
 
                         if (steps == 1 && panels0) {

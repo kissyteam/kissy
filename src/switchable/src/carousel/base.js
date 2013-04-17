@@ -10,7 +10,7 @@ KISSY.add('switchable/carousel/base', function (S, DOM, Event, Switchable) {
         EVENT_REMOVED = 'removed',
         PREV_BTN = 'prevBtn',
         NEXT_BTN = 'nextBtn',
-        DOM_EVENT = {originalEvent:{target:1}};
+        DOM_EVENT = {originalEvent: {target: 1}};
 
     /**
      * Carousel Class
@@ -30,10 +30,10 @@ KISSY.add('switchable/carousel/base', function (S, DOM, Event, Switchable) {
     }
 
     Carousel.Config = {
-        circular:true,
-        prevBtnCls:CLS_PREFIX + 'prev-btn',
-        nextBtnCls:CLS_PREFIX + 'next-btn',
-        disableBtnCls:CLS_PREFIX + 'disable-btn'
+        circular: true,
+        prevBtnCls: CLS_PREFIX + 'prev-btn',
+        nextBtnCls: CLS_PREFIX + 'next-btn',
+        disableBtnCls: CLS_PREFIX + 'disable-btn'
 
     };
 
@@ -46,7 +46,7 @@ KISSY.add('switchable/carousel/base', function (S, DOM, Event, Switchable) {
          *   self.prevBtn
          *   self.nextBtn
          */
-        _init:function () {
+        _init: function () {
             var self = this;
             Carousel.superclass._init.call(self);
             var cfg = self.config,
@@ -100,15 +100,28 @@ KISSY.add('switchable/carousel/base', function (S, DOM, Event, Switchable) {
             // 触发 itemSelected 事件
             Event.delegate(self.content, 'click', DOT + self._panelInternalCls, function (e) {
                 var item = e.currentTarget;
-                self.fire('itemSelected', { item:item });
+                self.fire('itemSelected', { item: item });
             });
+        },
+
+        destroy: function (keepNode) {
+            var self = this;
+            if (keepNode) {
+                if (self['nextBtn']) {
+                    Event.remove(self['nextBtn'])
+                }
+                if (self['prevBtn']) {
+                    Event.remove(self['prevBtn'])
+                }
+            }
+            Carousel.superclass.destroy.apply(self, arguments);
         }
     });
 
 
     return Carousel;
 
-}, { requires:["dom", "event", "../base"]});
+}, { requires: ["dom", "event", "../base"]});
 
 
 /**
