@@ -15,25 +15,26 @@
 <body>
 <h1 style="font-size: 2em;text-align: center;margin: 2em;">Simple KISSY Editor</h1>
 
+<form id="f" method="post">
+    <div style="width: 90%;margin: 20px auto;">
+        <p>
+            <label>标题: <input></label>
+        </p>
 
-<div style="width: 90%;margin: 20px auto;">
-    <p>
-        <label>标题: <input></label>
-    </p>
+        <div id="container" class="ks-editor">
+            <textarea class="ks-editor-textarea" name="content"><p>我有初始值</p></textarea>
+        </div>
+        <div style="margin: 20px 0;">
+            <button onclick="window.newEditor.destroy();">destroy</button>
+            <button onclick="preview();">预览</button>
+            <button onclick="document.getElementById('f').submit();">submit</button>
+            <button onclick="getSelected();">获取选中 html</button>
+        </div>
+        <div id="previewEl" style="margin: 20px 0;">
 
-    <div id="container" class="ks-editor">
-        <textarea class="ks-editor-textarea"><p>我有初始值</p></textarea>
+        </div>
     </div>
-    <div style="margin: 20px 0;">
-        <button onclick="window.newEditor.destroy();">destroy</button>
-        <button onclick="preview();">预览</button>
-        <button onclick="getSelected();">获取选中 html</button>
-    </div>
-    <div id="previewEl" style="margin: 20px 0;">
-
-    </div>
-</div>
-
+</form>
 
 <script src="/kissy/build/seed.js"></script>
 <script src="../../../tools/third-party/syntaxhighlighter_3.0.83/scripts/shCore.js"></script>
