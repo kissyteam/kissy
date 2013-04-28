@@ -8,6 +8,9 @@
         packages: {
             gallery: {
                 base: S.Config.baseUri.resolve('../').toString()
+            },
+            mobile: {
+                base: S.Config.baseUri.resolve('../').toString()
             }
         },
         modules: {
