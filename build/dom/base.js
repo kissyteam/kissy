@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 6 15:13
+build time: May 6 23:55
 */
 /**
  * @ignore
@@ -556,6 +556,13 @@ KISSY.add('dom/base/attr', function (S, DOM, undefined) {
                         }
 
                         ret = el.getAttribute(name);
+
+                        if (ret === "") {
+                            var attrNode = el.getAttributeNode(name);
+                            if (!attrNode || !attrNode.specified) {
+                                return undefined;
+                            }
+                        }
 
                         // standard browser non-existing attribute return null
                         // ie<8 will return undefined , because it return property
@@ -2637,9 +2644,9 @@ KISSY.add('dom/base/selector', function (S, DOM) {
                 return a.compareDocumentPosition(b) & 4 ? -1 : 1;
             },
 
-            _isTag: isTag,
+            _getSimpleAttr:getAttr,
 
-            _getAttr: getAttr,
+            _isTag: isTag,
 
             _hasSingleClass: hasSingleClass,
 

@@ -9,12 +9,19 @@ KISSY.add('dom/selector', function (S, parser, DOM) {
     // ident === identifier
 
     var document = S.Env.host.document,
+        undefined = undefined,
         EXPANDO_SELECTOR_KEY = '_ks_data_selector_id_',
         caches = {},
         isContextXML,
         uuid = 0,
         subMatchesCache = {},
-        getAttr = DOM._getAttr,
+        getAttr = function (el, name) {
+            if (isContextXML) {
+                return DOM._getSimpleAttr(el, name);
+            } else {
+                return  DOM.attr(el, name);
+            }
+        },
         hasSingleClass = DOM._hasSingleClass,
         isTag = DOM._isTag,
         aNPlusB = /^(([+-]?(?:\d+)?)?n)?([+-]?\d+)?$/;
@@ -674,12 +681,19 @@ KISSY.add('dom/selector', function (S, parser, DOM) {
     DOM._selectInternal = select;
 
     return {
+        parse: function (str) {
+            return parser.parse(str);
+        },
         select: select,
         matches: matches
     };
 
 }, {
-    requires: ['./selector/parser', 'dom/base', 'dom/ie']
+    requires: [
+        './selector/parser',
+        'dom/base',
+        KISSY.Features.isIELessThan(9) ? 'dom/ie' : ''
+    ]
 });
 /**
  * note 2013-03-28

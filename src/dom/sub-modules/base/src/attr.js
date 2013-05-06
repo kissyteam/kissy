@@ -387,6 +387,13 @@ KISSY.add('dom/base/attr', function (S, DOM, undefined) {
 
                         ret = el.getAttribute(name);
 
+                        if (ret === "") {
+                            var attrNode = el.getAttributeNode(name);
+                            if (!attrNode || !attrNode.specified) {
+                                return undefined;
+                            }
+                        }
+
                         // standard browser non-existing attribute return null
                         // ie<8 will return undefined , because it return property
                         // so norm to undefined

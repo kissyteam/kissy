@@ -136,9 +136,9 @@ KISSY.add('dom/base/selector', function (S, DOM) {
                 return a.compareDocumentPosition(b) & 4 ? -1 : 1;
             },
 
-            _isTag: isTag,
+            _getSimpleAttr:getAttr,
 
-            _getAttr: getAttr,
+            _isTag: isTag,
 
             _hasSingleClass: hasSingleClass,
 

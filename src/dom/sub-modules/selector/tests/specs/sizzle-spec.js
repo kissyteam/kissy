@@ -12,9 +12,6 @@ KISSY.use('dom/selector', function (S, engine) {
         var self;
         window.it(name, function () {
             S.log('******************: ' + name);
-            if (name == 'input[type=search]0') {
-//                debugger
-            }
             fn.call(self);
         });
     };
@@ -135,6 +132,10 @@ KISSY.use('dom/selector', function (S, engine) {
 
         var form = document.getElementById("form");
 
+        it('fix href normalization', function () {
+            expect(select('a[href="test.html"]').length).toBe(1);
+        });
+
         it('Select all', function () {
 
             expect(select("*").length).toBeGreaterThan(30);
@@ -244,7 +245,7 @@ KISSY.use('dom/selector', function (S, engine) {
         });
 
         it("Attribute selector for class", function () {
-            expect(select("[class*=component]", xml).length).toBe(1);
+            expect(select("component[class*=component]", xml).length).toBe(1);
         });
 
         it("Attribute selector with name", function () {
