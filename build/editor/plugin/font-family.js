@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 17 00:17
+build time: May 6 17:56
 */
 /**
  * font formatting for kissy editor
@@ -44,7 +44,7 @@ KISSY.add("editor/plugin/font-family", function (S, Editor, ui, cmd) {
                     },
                     {
                         content:"微软雅黑",
-                        value:"Microsoft YaHei"
+                        value:"'Microsoft YaHei'"
                     },
                     {
                         content:"Georgia",
@@ -52,7 +52,7 @@ KISSY.add("editor/plugin/font-family", function (S, Editor, ui, cmd) {
                     },
                     {
                         content:"Times New Roman",
-                        value:"Times New Roman"
+                        value:"'Times New Roman'"
                     },
                     {
                         content:"Impact",
@@ -60,7 +60,7 @@ KISSY.add("editor/plugin/font-family", function (S, Editor, ui, cmd) {
                     },
                     {
                         content:"Courier New",
-                        value:"Courier New"
+                        value:"'Courier New'"
                     },
                     {
                         content:"Arial",
