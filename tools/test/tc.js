@@ -86,6 +86,8 @@ tests.push('/kissy/src/resizable/tests/runner/test.html');
 
 tests.push('/kissy/src/rich-base/tests/runner/test.html');
 
+tests.push('/kissy/src/seed/tests/runner/cache.jss');
+
 tests.push('/kissy/src/seed/tests/runner/clean-combo-loader.html');
 
 tests.push('/kissy/src/seed/tests/runner/combo-loader-core.html');

@@ -44,7 +44,7 @@
          * @param {Number} [success.timeout] timeout (s)
          * @param {String} [success.charset] charset of current resource
          * @param {String} [charset] charset of current resource
-         * @return {HTMLElement} script/style node
+         * @return {HTML} script/style node
          * @member KISSY
          */
         getScript: function (url, success, charset) {
@@ -96,6 +96,10 @@
                 });
             }
 
+            if (charset) {
+                node.charset = charset;
+            }
+
             if (css) {
                 node.href = url;
                 node.rel = 'stylesheet';
@@ -105,10 +109,6 @@
             }
 
             callbacks.node = node;
-
-            if (charset) {
-                node.charset = charset;
-            }
 
             var end = function (error) {
                     var index = error,
