@@ -4,18 +4,19 @@
  * @author yiminghe@gmail.com
  */
 (function (S) {
+    var parentUri = S.Config.baseUri.resolve('../').toString();
     S.config({
         packages: {
             gallery: {
-                base: S.Config.baseUri.resolve('../').toString()
+                base: parentUri
             },
             mobile: {
-                base: S.Config.baseUri.resolve('../').toString()
+                base: parentUri
             }
         },
         modules: {
             core: {
-                alias: ['dom', 'event', 'io', 'anim', 'base', 'node', 'json','ua']
+                alias: ['dom', 'event', 'io', 'anim', 'base', 'node', 'json', 'ua']
             }
         }
     });
