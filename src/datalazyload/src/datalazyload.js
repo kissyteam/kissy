@@ -156,20 +156,16 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
 
         DataLazyload.superclass.constructor.call(self, newConfig);
 
-
         // 需要延迟下载的图片
         // self._images
 
-
         // 需要延迟处理的 textarea
         // self._textareas
-
 
         // 和延迟项绑定的回调函数
         self._callbacks = {};
         self._containerIsNotDocument = self.get('container').nodeType != 9;
 
-        self['_filterItems']();
         self['_initLoadEvent']();
     }
 
@@ -361,15 +357,15 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
             // 加载函数
             self._loadFn = S.buffer(loadItems, DURATION, self);
 
-            self.resume();
-
             img.src = placeholder;
 
             function firstLoad() {
+                self['_filterItems']();
                 // 需要立即加载一次，以保证第一屏的延迟项可见
                 if (!self['_isLoadAllLazyElements']()) {
                     S.ready(loadItems);
                 }
+                self.resume();
             }
 
             if (img.complete) {
