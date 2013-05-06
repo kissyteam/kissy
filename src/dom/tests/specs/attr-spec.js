@@ -4,7 +4,7 @@
  */
 KISSY.use("dom,core", function (S, DOM) {
 
-    var $= S.all;
+    var $ = S.all;
     S.get = DOM.get;
     S.query = DOM.query;
 
@@ -120,6 +120,15 @@ KISSY.use("dom,core", function (S, DOM) {
             disabledTest;
 
         describe("getter/setter", function () {
+
+            it('works for placeholder', function () {
+                var n = DOM.create('<input placeholder="haha"/>');
+                DOM.append(n, 'body');
+                expect(DOM.attr(n, 'placeholder')).toBe('haha');
+                DOM.attr(n,'placeholder','hei');
+                expect(DOM.attr(n, 'placeholder')).toBe('hei');
+                DOM.remove(n);
+            });
 
             // kissy 里，对不存在的属性，统一返回 undefined
             it("should return undefined when get no-exist attribute", function () {

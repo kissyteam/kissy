@@ -1,12 +1,12 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 6 10:42
+build time: May 6 15:14
 */
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 6 10:42
+build time: May 6 15:14
 */
 /**
  * @ignore
@@ -44,11 +44,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130506104234' will replace with current timestamp when compressing.
+         * NOTICE: '20130506151351' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130506104234',
+        __BUILD_TIME: '20130506151351',
         /**
          * KISSY Environment.
          * @private
@@ -5946,7 +5946,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20130506104234'
+            tag: '20130506151351'
         }, getBaseInfo()));
     }
 
@@ -6573,7 +6573,7 @@ config({
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 17 00:15
+build time: May 6 15:13
 */
 /**
  * @ignore
@@ -7658,7 +7658,7 @@ KISSY.add('dom/base/create', function (S, DOM, undefined) {
                         // return multiple nodes as a fragment
                         ret = nodeListToFragment(nodes);
                     } else {
-
+                        S.error(html + ' : create node error');
                     }
                 }
 
@@ -7986,7 +7986,7 @@ KISSY.add('dom/base/create', function (S, DOM, undefined) {
                 ret.appendChild(nodes[i]);
             }
         } else {
-
+            S.log('Unable to convert ' + nodes + ' to fragment.');
         }
         return ret;
     }
@@ -9904,7 +9904,7 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
                     // EMPTY will unset style!
                     style[name] = val;
                 } catch (e) {
-
+                    S.log('css set error :' + e);
                 }
                 // #80 fix,font-family
                 if (val === EMPTY && style.removeAttribute) {

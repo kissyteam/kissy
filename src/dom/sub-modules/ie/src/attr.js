@@ -75,6 +75,12 @@ KISSY.add('dom/ie/attr', function (S, DOM) {
         // <button value='xx'>zzz</button>
         valHooks.button = attrHooks.value = attrNodeHook;
 
+        attrHooks.placeholder = {
+            get: function (elem, name) {
+                return elem[name] || attrNodeHook.get(elem, name);
+            }
+        };
+
         // 当没有设定 value 时，标准浏览器 option.value === option.text
         // ie7- 下，没有设定 value 时，option.value === '',
         // 需要用 el.attributes.value 来判断是否有设定 value

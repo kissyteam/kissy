@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 17 00:15
+build time: May 6 15:13
 */
 /**
  * @ignore
@@ -1086,7 +1086,7 @@ KISSY.add('dom/base/create', function (S, DOM, undefined) {
                         // return multiple nodes as a fragment
                         ret = nodeListToFragment(nodes);
                     } else {
-
+                        S.error(html + ' : create node error');
                     }
                 }
 
@@ -1414,7 +1414,7 @@ KISSY.add('dom/base/create', function (S, DOM, undefined) {
                 ret.appendChild(nodes[i]);
             }
         } else {
-
+            S.log('Unable to convert ' + nodes + ' to fragment.');
         }
         return ret;
     }
@@ -3332,7 +3332,7 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
                     // EMPTY will unset style!
                     style[name] = val;
                 } catch (e) {
-
+                    S.log('css set error :' + e);
                 }
                 // #80 fix,font-family
                 if (val === EMPTY && style.removeAttribute) {
