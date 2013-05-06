@@ -5,6 +5,7 @@
  */
 KISSY.add('imagezoom', function (S, Node, Overlay, Zoomer, undefined) {
     var $ = Node.all,
+        substitute = S.substitute,
         doc = $(S.Env.host.document),
         IMAGEZOOM_ICON_TMPL = "<span class='{iconClass}'></span>",
         undefinedNode = /**
@@ -16,7 +17,9 @@ KISSY.add('imagezoom', function (S, Node, Overlay, Zoomer, undefined) {
         groupEventForInnerAnim = '.ks-imagezoom-img-mouse',
         INNER = 'inner',
         ABSOLUTE_STYLE = ' style="position:absolute;top:-9999px;left:-9999px;" ',
-        BIG_IMG_TPL = '<img src=' + '{src} {style} />';
+        LENS_TPL = '<span ' + ABSOLUTE_STYLE +
+            ' class="{prefixCls}imagezoom-lens"></span>',
+        BIG_IMG_TPL = '<img src=' + '"{src}" ' + ABSOLUTE_STYLE + ' />';
 
     function constrain(v, l, r) {
         return Math.min(Math.max(v, l), r);
@@ -45,21 +48,18 @@ KISSY.add('imagezoom', function (S, Node, Overlay, Zoomer, undefined) {
                     image = self.get('imageNode'),
                     contentEl = self.get("contentEl");
 
-                self.bigImage = $(S.substitute(BIG_IMG_TPL, {
-                    src: self.get("bigImageSrc"),
-                    style: ABSOLUTE_STYLE
+                self.bigImage = $(substitute(BIG_IMG_TPL, {
+                    src: self.get("bigImageSrc")
                 })).appendTo(contentEl, undefined);
 
-                self.bigImageCopy = $(S.substitute(BIG_IMG_TPL, {
-                    src: image.attr('src'),
-                    style: ABSOLUTE_STYLE
+                self.bigImageCopy = $(substitute(BIG_IMG_TPL, {
+                    src: image.attr('src')
                 })).prependTo(contentEl, undefined);
 
                 if (self.get('type') != INNER) {
-                    self.lens = $('<span ' +
-                        ABSOLUTE_STYLE +
-                        ' class="' + self.get('prefixCls') + 'imagezoom-lens' + '"></span>')
-                        .appendTo(self.imageWrap, undefined);
+                    self.lens = $(substitute(LENS_TPL, {
+                        prefixCls: self.get('prefixCls')
+                    })).appendTo(self.imageWrap, undefined);
                 }
             },
 
@@ -354,12 +354,12 @@ KISSY.add('imagezoom', function (S, Node, Overlay, Zoomer, undefined) {
             icon,
             image = self.get('imageNode');
 
-        imageWrap = self.imageWrap = $(S.substitute(IMAGEZOOM_WRAP_TMPL, {
+        imageWrap = self.imageWrap = $(substitute(IMAGEZOOM_WRAP_TMPL, {
             wrapClass: self.get('prefixCls') + 'imagezoom-wrap'
         })).insertBefore(image, undefinedNode);
 
         imageWrap.prepend(image);
-        icon = self.icon = $(S.substitute(IMAGEZOOM_ICON_TMPL, {
+        icon = self.icon = $(substitute(IMAGEZOOM_ICON_TMPL, {
             iconClass: self.get('prefixCls') + 'imagezoom-icon'
         }));
         imageWrap.append(icon);
