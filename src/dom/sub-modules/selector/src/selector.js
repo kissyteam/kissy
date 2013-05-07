@@ -62,19 +62,32 @@ KISSY.add('dom/selector', function (S, parser, DOM) {
         return el;
     }
 
-    function getElementsByTagName(name, context) {
-        var nodes = context.getElementsByTagName(name),
-            needFilter = name == '*',
-            ret = [],
-            i = 0,
-            el;
-        while (el = nodes[i++]) {
-            if (!needFilter || el.nodeType === 1) {
-                ret.push(el);
-            }
+    var getElementsByTagName = function (name, context) {
+        return context.getElementsByTagName(name);
+    };
+
+    (function () {
+        var div = document.createElement("div");
+        div.appendChild(document.createComment(""));
+        if (div.getElementsByTagName("*").length) {
+            getElementsByTagName = function (name, context) {
+                var nodes = context.getElementsByTagName(name);
+                if (name == '*') {
+                    var ret = [],
+                        i = 0,
+                        el;
+                    while (el = nodes[i++]) {
+                        if (el.nodeType === 1) {
+                            ret.push(el);
+                        }
+                    }
+                    return ret;
+                } else {
+                    return nodes;
+                }
+            };
         }
-        return ret;
-    }
+    })();
 
     function getAb(param) {
         var a = 0,
@@ -272,7 +285,8 @@ KISSY.add('dom/selector', function (S, parser, DOM) {
                 child = childNodes[index];
                 nodeType = child.nodeType;
                 // only element nodes and content nodes
-                // (such as DOM [DOM-LEVEL-3-CORE] text nodes, CDATA nodes, and entity references
+                // (such as DOM [DOM-LEVEL-3-CORE] text nodes,
+                // CDATA nodes, and entity references
                 if (nodeType == 1 || nodeType == 3 || nodeType == 4 || nodeType == 5) {
                     return 0;
                 }
@@ -280,7 +294,8 @@ KISSY.add('dom/selector', function (S, parser, DOM) {
             return 1;
         },
         'root': function (el) {
-            return el === el.ownerDocument.documentElement;
+            return el.ownerDocument &&
+                el === el.ownerDocument.documentElement;
         },
         'first-child': function (el) {
             return pseudoFnExpr['nth-child'](el, 1);
@@ -295,15 +310,18 @@ KISSY.add('dom/selector', function (S, parser, DOM) {
             return pseudoFnExpr['nth-last-of-type'](el, 1);
         },
         'only-child': function (el) {
-            return pseudoIdentExpr['first-child'](el) && pseudoIdentExpr['last-child'](el);
+            return pseudoIdentExpr['first-child'](el) &&
+                pseudoIdentExpr['last-child'](el);
         },
         'only-of-type': function (el) {
-            return pseudoIdentExpr['first-of-type'](el) && pseudoIdentExpr['last-of-type'](el);
+            return pseudoIdentExpr['first-of-type'](el) &&
+                pseudoIdentExpr['last-of-type'](el);
         },
         'focus': function (el) {
             var doc = el.ownerDocument;
-            return el === doc.activeElement &&
-                (!doc['hasFocus'] || doc['hasFocus']()) && !!(el.type || el.href || el.tabIndex >= 0);
+            return doc && el === doc.activeElement &&
+                (!doc['hasFocus'] || doc['hasFocus']()) &&
+                !!(el.type || el.href || el.tabIndex >= 0);
         },
         'target': function (el) {
             var hash = location.hash;
@@ -317,7 +335,8 @@ KISSY.add('dom/selector', function (S, parser, DOM) {
         },
         'checked': function (el) {
             var nodeName = el.nodeName.toLowerCase();
-            return (nodeName === "input" && el.checked) || (nodeName === "option" && el.selected);
+            return (nodeName === "input" && el.checked) ||
+                (nodeName === "option" && el.selected);
         }
     };
 
@@ -554,7 +573,8 @@ KISSY.add('dom/selector', function (S, parser, DOM) {
         return subMatchesCache[matchKey] = matchSubInternal(el, match);
     }
 
-    // recursive match by sub selector string from right to left grouped by immediate selectors
+    // recursive match by sub selector string from right to left
+    // grouped by immediate selectors
     function matchSubInternal(el, match) {
         var matchImmediateRet = matchImmediate(el, match);
         if (matchImmediateRet === true) {
@@ -594,7 +614,6 @@ KISSY.add('dom/selector', function (S, parser, DOM) {
         isContextXML = isXML(context);
 
         for (; groupIndex < groupLen; groupIndex++) {
-
             resetStatus();
 
             group = selector[groupIndex];
@@ -623,7 +642,8 @@ KISSY.add('dom/selector', function (S, parser, DOM) {
                 if (id) {
                     // id bug
                     // https://github.com/kissyteam/kissy/issues/67
-                    var contextNotInDom = (context != contextDocument && !DOM._contains(contextDocument, context)),
+                    var contextNotInDom = (context != contextDocument &&
+                            !DOM._contains(contextDocument, context)),
                         tmp = contextNotInDom ? null : contextDocument.getElementById(id);
                     if (contextNotInDom || getAttr(tmp, 'id') != id) {
                         var tmps = getElementsByTagName('*', context),

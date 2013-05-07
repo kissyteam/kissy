@@ -1513,9 +1513,10 @@
     function elementMatcher(matchers) {
         return matchers.length > 1 ?
             function (elem, context, xml) {
-                var i = matchers.length;
+                var i = matchers.length, m;
                 while (i--) {
-                    if (!matchers[i](elem, context, xml)) {
+                    m = matchers[i];
+                    if (!m(elem, context, xml)) {
                         return false;
                     }
                 }

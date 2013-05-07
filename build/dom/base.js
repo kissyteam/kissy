@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 7 12:30
+build time: May 7 19:42
 */
 /**
  * @ignore
@@ -166,7 +166,7 @@ KISSY.add('dom/base/api', function (S) {
 
 /*
  2011-08
- - 添加键盘枚举值，方便依赖程序清晰
+ - 添加节点类型枚举值，方便依赖程序清晰
  */
 /**
  * @ignore
