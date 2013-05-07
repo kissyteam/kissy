@@ -3,7 +3,7 @@
  * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
 KISSY.use("dom,core", function (S, DOM) {
-    var $= S.all;
+    var $ = S.all;
 
     var tpl = '<div id="test-selector">\
         <div class="test-selector" id="test-selector-1">\
@@ -26,6 +26,11 @@ KISSY.use("dom,core", function (S, DOM) {
 
         afterEach(function () {
             $('#test-selector').remove();
+        });
+
+        it('test support disconnect node', function () {
+            var div = $('<div id="t"><span id="t2"></span></div>')[0].firstChild;
+            expect(DOM.test(div, '#t span')).toBe(true);
         });
 
         it("support #id", function () {
@@ -107,7 +112,7 @@ KISSY.use("dom,core", function (S, DOM) {
         });
     });
 
-    describe("1.2 selector context", function () {
+    describe("selector context", function () {
         var html = DOM.create(
             "<div><div id='context-test-1' class='context-test'>" +
                 "<div>" +
@@ -205,7 +210,7 @@ KISSY.use("dom,core", function (S, DOM) {
 
             // KISSY NodeList
             o = {
-                getDOMNodes: function(){
+                getDOMNodes: function () {
                     return o;
                 }
             };

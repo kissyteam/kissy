@@ -1,12 +1,12 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 7 10:39
+build time: May 7 12:32
 */
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 7 10:39
+build time: May 7 12:32
 */
 /**
  * @ignore
@@ -44,11 +44,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130507103920' will replace with current timestamp when compressing.
+         * NOTICE: '20130507123232' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130507103920',
+        __BUILD_TIME: '20130507123232',
         /**
          * KISSY Environment.
          * @private
@@ -5948,7 +5948,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20130507103920'
+            tag: '20130507123232'
         }, getBaseInfo()));
     }
 
@@ -6580,7 +6580,7 @@ config({
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 6 23:55
+build time: May 7 12:30
 */
 /**
  * @ignore
@@ -9093,6 +9093,12 @@ KISSY.add('dom/base/offset', function (S, DOM, undefined) {
 KISSY.add('dom/base/selector', function (S, DOM) {
 
     var doc = S.Env.host.document,
+        docElem = doc.documentElement,
+        matches = docElem.matches ||
+            docElem.webkitMatchesSelector ||
+            docElem.mozMatchesSelector ||
+            docElem.oMatchesSelector ||
+            docElem.msMatchesSelector,
         isArray = S.isArray,
         makeArray = S.makeArray,
         isNodeList = DOM._isNodeList,
@@ -9223,7 +9229,7 @@ KISSY.add('dom/base/selector', function (S, DOM) {
                 return a.compareDocumentPosition(b) & 4 ? -1 : 1;
             },
 
-            _getSimpleAttr:getAttr,
+            _getSimpleAttr: getAttr,
 
             _isTag: isTag,
 
@@ -9232,12 +9238,11 @@ KISSY.add('dom/base/selector', function (S, DOM) {
             _matchesInternal: function (str, seeds) {
                 var ret = [],
                     i = 0,
-                    matches = makeArray(doc.querySelectorAll(str)),
                     n,
                     len = seeds.length;
                 for (; i < len; i++) {
                     n = seeds[i];
-                    if (matches.indexOf(n) != -1) {
+                    if (matches.call(n, str)) {
                         ret.push(n);
                     }
                 }

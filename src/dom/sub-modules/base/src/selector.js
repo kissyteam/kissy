@@ -6,6 +6,12 @@
 KISSY.add('dom/base/selector', function (S, DOM) {
 
     var doc = S.Env.host.document,
+        docElem = doc.documentElement,
+        matches = docElem.matches ||
+            docElem.webkitMatchesSelector ||
+            docElem.mozMatchesSelector ||
+            docElem.oMatchesSelector ||
+            docElem.msMatchesSelector,
         isArray = S.isArray,
         makeArray = S.makeArray,
         isNodeList = DOM._isNodeList,
@@ -136,7 +142,7 @@ KISSY.add('dom/base/selector', function (S, DOM) {
                 return a.compareDocumentPosition(b) & 4 ? -1 : 1;
             },
 
-            _getSimpleAttr:getAttr,
+            _getSimpleAttr: getAttr,
 
             _isTag: isTag,
 
@@ -145,12 +151,11 @@ KISSY.add('dom/base/selector', function (S, DOM) {
             _matchesInternal: function (str, seeds) {
                 var ret = [],
                     i = 0,
-                    matches = makeArray(doc.querySelectorAll(str)),
                     n,
                     len = seeds.length;
                 for (; i < len; i++) {
                     n = seeds[i];
-                    if (matches.indexOf(n) != -1) {
+                    if (matches.call(n, str)) {
                         ret.push(n);
                     }
                 }
