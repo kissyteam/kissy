@@ -71,13 +71,15 @@ KISSY.add('dom/selector', function (S, parser, DOM) {
         div.appendChild(document.createComment(""));
         if (div.getElementsByTagName("*").length) {
             getElementsByTagName = function (name, context) {
-                var nodes = context.getElementsByTagName(name);
-                if (name == '*') {
+                var nodes = context.getElementsByTagName(name),
+                    needsFilter = name == '*';
+                // <input id='length'>
+                if (needsFilter || typeof nodes.length != 'number') {
                     var ret = [],
                         i = 0,
                         el;
                     while (el = nodes[i++]) {
-                        if (el.nodeType === 1) {
+                        if (!needsFilter || el.nodeType === 1) {
                             ret.push(el);
                         }
                     }
@@ -320,8 +322,7 @@ KISSY.add('dom/selector', function (S, parser, DOM) {
         'focus': function (el) {
             var doc = el.ownerDocument;
             return doc && el === doc.activeElement &&
-                (!doc['hasFocus'] || doc['hasFocus']()) &&
-                !!(el.type || el.href || el.tabIndex >= 0);
+                (!doc['hasFocus'] || doc['hasFocus']()) && !!(el.type || el.href || el.tabIndex >= 0);
         },
         'target': function (el) {
             var hash = location.hash;
@@ -642,8 +643,7 @@ KISSY.add('dom/selector', function (S, parser, DOM) {
                 if (id) {
                     // id bug
                     // https://github.com/kissyteam/kissy/issues/67
-                    var contextNotInDom = (context != contextDocument &&
-                            !DOM._contains(contextDocument, context)),
+                    var contextNotInDom = (context != contextDocument && !DOM._contains(contextDocument, context)),
                         tmp = contextNotInDom ? null : contextDocument.getElementById(id);
                     if (contextNotInDom || getAttr(tmp, 'id') != id) {
                         var tmps = getElementsByTagName('*', context),
