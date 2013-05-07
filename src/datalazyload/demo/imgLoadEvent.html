@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <title>KISSY DataLazyload 图片加载事件和性能</title>
+</head>
+<body>
+
+<div>
+请向下滚动……
+本范例演示图片加载事件的使用，用来监控图片的加载性能
+</div>
+
+<div id="container">
+</div>
+<script src="../../../build/seed.js"></script>
+<script src="../src/datalazyload.js"></script>
+<script>
+	var html=[""],time=new Date().valueOf();
+	for(var i=0;i<1000;i++)
+	{
+		html.push('<img width="135" height="65" data-ks-lazyload="http://a.tbcdn.cn/s/kissy/logo.png?'+time+"_"+i+'"/>');
+	}
+	document.getElementById("container").innerHTML=html.join("");
+    KISSY.use("datalazyload", function (S, DataLazyload) {
+        var DOM = S.DOM;
+        S.ready(function (S) {
+            var lazy=new DataLazyload("#container");
+            lazy.on("imgloadstart",function(e){
+            	S.log("start:"+e.src);
+            });
+            lazy.on("imgloadend",function(e){
+            	S.log("end :"+e.img.src);
+            });
+        });
+    });
+</script>
+</body>
+</html>
