@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 6 23:56
+build time: May 7 10:26
 */
 KISSY.add("dom/selector/parser",function(){var n={},s=KISSY,g=function(d){this.rules=[];s.mix(this,d);this.resetInput(this.input)};g.prototype={constructor:function(d){this.rules=[];s.mix(this,d);this.resetInput(this.input)},resetInput:function(d){s.mix(this,{input:d,matched:"",stateStack:[g.STATIC.INITIAL],match:"",text:"",firstLine:1,lineNumber:1,lastLine:1,firstColumn:1,lastColumn:1})},getCurrentRules:function(){var d=this.stateStack[this.stateStack.length-1],e=[],d=this.mapState(d);s.each(this.rules,
 function(f){var h=f.state||f[3];h?s.inArray(d,h)&&e.push(f):d==g.STATIC.INITIAL&&e.push(f)});return e},pushState:function(d){this.stateStack.push(d)},popState:function(){return this.stateStack.pop()},getStateStack:function(){return this.stateStack},showDebugInfo:function(){var d=g.STATIC.DEBUG_CONTEXT_LIMIT,e=this.matched,f=this.match,h=this.input,e=e.slice(0,e.length-f.length),e=(e.length>d?"...":"")+e.slice(-d).replace(/\n/," "),f=f+h,f=f.slice(0,d)+(f.length>d?"...":"");return e+f+"\n"+Array(e.length+
@@ -38,4 +38,4 @@ d.nodeType,1==d||3==d||4==d||5==d)return 0;return 1},root:function(a){return a==
 a.ownerDocument;return a===b.activeElement&&(!b.hasFocus||b.hasFocus())&&!(!a.type&&!(a.href||0<=a.tabIndex))},target:function(a){var b=location.hash;return b&&b.slice(1)===A(a,"id")},enabled:function(a){return!a.disabled},disabled:function(a){return a.disabled},checked:function(a){var b=a.nodeName.toLowerCase();return"input"===b&&a.checked||"option"===b&&a.selected}},M={"~=":function(a,b){return!b||-1<b.indexOf(" ")?0:-1!=(" "+a+" ").indexOf(" "+b+" ")},"|=":function(a,b){return-1!=(" "+a).indexOf(" "+
 b+"-")},"^=":function(a,b){return b&&n.startsWith(a,b)},"$=":function(a,b){return b&&n.endsWith(a,b)},"*=":function(a,b){return b&&-1!=a.indexOf(b)},"=":function(a,b){return a===b}},D={tag:L,cls:K,id:function(a,b){return A(a,"id")===b},attrib:function(a,b){var c=b.ident;t||(c=c.toLowerCase());var c=A(a,c),d=b.match;if(!d&&c!==l)return 1;if(d){if(c===l)return 0;if(d=M[d])return d(c+"",b.value+"")}return 0},pseudo:function(a,b){var c,d;if(d=b.fn){if(!(c=B[d]))throw new SyntaxError("Syntax error: not support pseudo: "+
 d);return c(a,b.param)}if(c=b.ident){if(!x[c])throw new SyntaxError("Syntax error: not support pseudo: "+c);return x[c](a)}return 0}},z={">":{dir:"parentNode",immediate:1}," ":{dir:"parentNode"},"+":{dir:"previousSibling",immediate:1},"~":{dir:"previousSibling"}};"sourceIndex"in u.documentElement&&(g._compareNodeOrder=function(a,b){return a.sourceIndex-b.sourceIndex});g._matchesInternal=y;g._selectInternal=j;return{parse:function(a){return s.parse(a)},select:j,matches:y}},{requires:["./selector/parser",
-"dom/base",KISSY.Features.isIELessThan(9)?"dom/ie":""]});
+"dom/basic"]});

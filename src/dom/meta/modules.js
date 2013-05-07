@@ -1,10 +1,15 @@
 config({
-    "dom": {
+    "dom/basic": {
         "alias": [
             'dom/base',
             Features.isIELessThan(9) ? 'dom/ie' : '',
-            !Features.isQuerySelectorSupported() ? 'dom/selector' : '',
             Features.isClassListSupported() ? '' : 'dom/class-list'
+        ]
+    },
+    "dom": {
+        "alias": [
+            'dom/basic',
+            !Features.isQuerySelectorSupported() ? 'dom/selector' : ''
         ]
     }
 });

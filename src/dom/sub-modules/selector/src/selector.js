@@ -691,8 +691,7 @@ KISSY.add('dom/selector', function (S, parser, DOM) {
 }, {
     requires: [
         './selector/parser',
-        'dom/base',
-        KISSY.Features.isIELessThan(9) ? 'dom/ie' : ''
+        'dom/basic'
     ]
 });
 /**
