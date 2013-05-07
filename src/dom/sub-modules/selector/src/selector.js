@@ -148,10 +148,10 @@ KISSY.add('dom/selector', function (S, parser, DOM) {
                     child = childNodes[count];
                     if (child.nodeType == 1) {
                         index++;
-                    }
-                    ret = matchIndexByAb(index, a, b, child === el);
-                    if (ret !== undefined) {
-                        return ret;
+                        ret = matchIndexByAb(index, a, b, child === el);
+                        if (ret !== undefined) {
+                            return ret;
+                        }
                     }
                 }
             }
@@ -176,10 +176,10 @@ KISSY.add('dom/selector', function (S, parser, DOM) {
                     child = childNodes[count];
                     if (child.nodeType == 1) {
                         index++;
-                    }
-                    ret = matchIndexByAb(index, a, b, child === el);
-                    if (ret !== undefined) {
-                        return ret;
+                        ret = matchIndexByAb(index, a, b, child === el);
+                        if (ret !== undefined) {
+                            return ret;
+                        }
                     }
                 }
             }
@@ -205,10 +205,10 @@ KISSY.add('dom/selector', function (S, parser, DOM) {
                     child = childNodes[count];
                     if (child.tagName == elType) {
                         index++;
-                    }
-                    ret = matchIndexByAb(index, a, b, child === el);
-                    if (ret !== undefined) {
-                        return ret;
+                        ret = matchIndexByAb(index, a, b, child === el);
+                        if (ret !== undefined) {
+                            return ret;
+                        }
                     }
                 }
             }
@@ -234,10 +234,10 @@ KISSY.add('dom/selector', function (S, parser, DOM) {
                     child = childNodes[count];
                     if (child.tagName == elType) {
                         index++;
-                    }
-                    ret = matchIndexByAb(index, a, b, child === el);
-                    if (ret !== undefined) {
-                        return ret;
+                        ret = matchIndexByAb(index, a, b, child === el);
+                        if (ret !== undefined) {
+                            return ret;
+                        }
                     }
                 }
             }
