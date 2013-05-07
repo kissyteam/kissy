@@ -101,7 +101,9 @@
         },
 
         'isQuerySelectorSupported': function () {
-            return isQuerySelectorSupportedState;
+            // force to use js selector engine
+            return !S.config('dom/selector') &&
+                isQuerySelectorSupportedState;
         },
 
         'isIELessThan': function (v) {
