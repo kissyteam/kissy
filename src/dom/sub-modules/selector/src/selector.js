@@ -580,6 +580,7 @@ KISSY.add('dom/selector', function (S, parser, DOM) {
         var selector = caches[str],
             groupIndex = 0,
             groupLen = selector.length,
+            contextDocument,
             group,
             ret = [];
 
@@ -587,6 +588,8 @@ KISSY.add('dom/selector', function (S, parser, DOM) {
             context = context || seeds[0].ownerDocument;
         }
         context = context || document;
+
+        contextDocument = context.ownerDocument || context;
 
         isContextXML = isXML(context);
 
@@ -620,8 +623,8 @@ KISSY.add('dom/selector', function (S, parser, DOM) {
                 if (id) {
                     // id bug
                     // https://github.com/kissyteam/kissy/issues/67
-                    var contextNotInDom = (context != document && !DOM._contains(document, context)),
-                        tmp = contextNotInDom ? null : document.getElementById(id);
+                    var contextNotInDom = (context != contextDocument && !DOM._contains(contextDocument, context)),
+                        tmp = contextNotInDom ? null : contextDocument.getElementById(id);
                     if (contextNotInDom || getAttr(tmp, 'id') != id) {
                         var tmps = getElementsByTagName('*', context),
                             tmpLen = tmps.length,
@@ -637,7 +640,7 @@ KISSY.add('dom/selector', function (S, parser, DOM) {
                             mySeeds = [];
                         }
                     } else {
-                        if (context !== document && tmp) {
+                        if (context !== contextDocument && tmp) {
                             tmp = DOM._contains(context, tmp) ? tmp : null;
                         }
                         if (tmp) {
