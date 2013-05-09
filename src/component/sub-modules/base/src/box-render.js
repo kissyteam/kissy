@@ -3,44 +3,121 @@
  * Box
  * @author yiminghe@gmail.com
  */
-KISSY.add('component/base/box-render', function (S) {
+KISSY.add('component/base/box-render', function (S, Node, XTemplate) {
+
+    var uuid = 0;
 
     var $ = S.all,
         UA = S.UA,
-        elTpl = '<div class="{cls}"></div>',
         doc = S.Env.host.document;
 
     function BoxRender() {
     }
 
     BoxRender.ATTRS = {
+
+        id: {
+            valueFn: function () {
+                return ++uuid;
+            }
+        },
+
         el: {},
 
         // 构建时批量生成，不需要执行单个
-        elCls: {},
+        elCls: {
+            sync: 0
+        },
 
-        elStyle: {},
+        elStyle: {
+            sync: 0
+        },
 
-        width: {},
+        width: {
+            sync: 0
+        },
 
-        height: {},
+        height: {
+            sync: 0
+        },
 
-        elAttrs: {},
-
-        content: {},
+        elAttrs: {
+            sync: 0
+        },
 
         // renderBefore
-        elBefore: {},
+        elBefore: {
+            sync: 0
+        },
 
         render: {},
 
-        visible: {},
+        visible: {
+            sync: 0
+        },
 
-        contentEl: {
+        clsTpl: {
+            value: '{{#if elCls}}' +
+                '{{#each elCls}}' +
+                ' {{.}} ' +
+                '{{/each}}' +
+                '{{/if}} '
+        },
+
+        styleTpl: {
+            value: '{{#if elStyle}}' +
+                '{{#each elStyle}}' +
+                ' {{xkey}}:{{.}}; ' +
+                '{{/each}}' +
+                '{{/if}} '
+        },
+
+        attrTpl: {
+            value: '{{#if elAttrs}}' +
+                '{{#each elAttrs}}' +
+                ' {{xkey}}="{{.}}" ' +
+                '{{/each}} ' +
+                '{{/if}}'
+        },
+
+        startTpl: {
             valueFn: function () {
-                return this.get('el');
+                return '<div id="ks-component{{id}}"' +
+                    ' class="{{getCssClassWithState ""}} ' +
+
+                    '{{#if visible}}' +
+                    '{{getCssClassWithState "shown"}} ' +
+                    '{{else}}' +
+                    '{{getCssClassWithState "hidden"}} ' +
+                    '{{/if}}' +
+
+                    this.get('clsTpl') + '"' +
+
+                    this.get('attrTpl') +
+
+                    'style="' +
+                    this.get('styleTpl') +
+
+                    '{{#if width}}' +
+                    'width:{{width}};' +
+                    '{{/if}}' +
+
+                    '{{#if height}}' +
+                    'height:{{height}};' +
+                    '{{/if}}' +
+
+                    '"' +
+                    '>';
             }
-        }
+        },
+
+        endTpl: {},
+
+        contentTpl: {
+            value: '{{content}}'
+        },
+
+        renderData: {}
     };
 
     BoxRender.HTML_PARSER = {
@@ -62,24 +139,23 @@ KISSY.add('component/base/box-render', function (S) {
          */
         __createDom: function () {
             var self = this,
-                el,
-                cls = self.getCssClassWithState(),
-                contentEl;
+                el, tpl, html;
             if (!(el = self.get('srcNode'))) {
-                contentEl = self.get('contentEl');
-                el = $(S.substitute(elTpl, {
-                    cls: cls
-                }));
-                if (contentEl) {
-                    el.append(contentEl);
-                }
+                tpl = self.get('startTpl') +
+                    self.get('contentTpl') +
+                    self.get('endTpl');
+                html = new XTemplate(tpl, {
+                    commands: {
+                        getCssClassWithState: function (scope, option) {
+                            return self.getCssClassWithState(option.params[0]);
+                        }
+                    }
+                }).render(self.get('renderData'));
+                el = $(html);
                 self.setInternal('el', el);
-                if (!contentEl) {
-                    // 没取到,这里设下值, uiSet 时可以 set('content')  取到
-                    self.setInternal('contentEl', el);
-                }
-            } else {
-                el.addClass(cls);
+                self.setInternal('contentEl', el);
+            } else if (!el.id) {
+                el.id = ('ks-component' + (++uuid));
             }
         },
 
@@ -129,14 +205,7 @@ KISSY.add('component/base/box-render', function (S) {
                 el = self.get('contentEl');
             // srcNode 时不重新渲染 content
             // 防止内部有改变，而 content 则是老的 html 内容
-            if (self.get('srcNode') && !self.get('rendered')) {
-            } else {
-                if (typeof c == 'string') {
-                    el.html(c);
-                } else if (c) {
-                    el.empty().append(c);
-                }
-            }
+            el.html(c);
             // ie needs to set unselectable attribute recursively
             if (UA.ie < 9 && !self.get('allowTextSelection')) {
                 el.unselectable(/**
@@ -170,5 +239,5 @@ KISSY.add('component/base/box-render', function (S) {
 
     return BoxRender;
 }, {
-    requires: ['node']
+    requires: ['node', 'xtemplate']
 });

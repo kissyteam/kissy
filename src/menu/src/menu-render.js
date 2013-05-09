@@ -3,20 +3,17 @@
  * render aria from menu according to current menuitem
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/menu-render", function(S, Component) {
+KISSY.add("menu/menu-render", function (S, Component) {
 
     return Component.Render.extend({
 
-        renderUI:function() {
-            var el = this.get("el");
-            el .attr("role", "menu")
-                .attr("aria-haspopup", true);
-            if (!el.attr("id")) {
-                el.attr("id", S.guid("ks-menu"));
-            }
+        initializer: function () {
+            this.set('attrTpl',
+                this.get('attrTpl') +
+                    ' role="menu" aria-haspopup="true" ');
         },
 
-        setAriaActiveDescendant:function(v) {
+        setAriaActiveDescendant: function (v) {
             var el = this.get("el");
             if (v) {
                 var menuItemEl = v.get("el"),
@@ -28,11 +25,11 @@ KISSY.add("menu/menu-render", function(S, Component) {
             }
         },
 
-        containsElement:function(element) {
+        containsElement: function (element) {
             var el = this.get("el");
             return el[0] === element || el.contains(element);
         }
     });
 }, {
-    requires:['component/base']
+    requires: ['component/base']
 });

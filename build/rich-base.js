@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 17 00:22
+build time: May 9 20:26
 */
 /**
  * @ignore
@@ -204,7 +204,7 @@ KISSY.add('rich-base', function (S, Base) {
                             if ((onSetMethod = self[onSetMethodName]) &&
                                 // 用户如果设置了显式不同步，就不同步，
                                 // 比如一些值从 html 中读取，不需要同步再次设置
-                                attrs[attributeName].sync !== false &&
+                                attrs[attributeName].sync !== 0 &&
                                 (attributeValue = self.get(attributeName)) !== undefined) {
                                 onSetMethod.call(self, attributeValue);
                             }

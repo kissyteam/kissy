@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 17 00:14
+build time: May 9 22:15
 */
 /**
  * @ignore
@@ -36,11 +36,10 @@ KISSY.add('component/base', function (S, Component, Controller, Render, Containe
  * Box
  * @author yiminghe@gmail.com
  */
-KISSY.add('component/base/box-render', function (S) {
+KISSY.add('component/base/box-render', function (S, Node, XTemplate) {
 
     var $ = S.all,
         UA = S.UA,
-        elTpl = '<div class="{cls}"></div>',
         doc = S.Env.host.document;
 
     function BoxRender() {
@@ -50,30 +49,98 @@ KISSY.add('component/base/box-render', function (S) {
         el: {},
 
         // 构建时批量生成，不需要执行单个
-        elCls: {},
+        elCls: {
+            sync: 0
+        },
 
-        elStyle: {},
+        elStyle: {
+            sync: 0
+        },
 
-        width: {},
+        width: {
+            sync: 0
+        },
 
-        height: {},
+        height: {
+            sync: 0
+        },
 
-        elAttrs: {},
-
-        content: {},
+        elAttrs: {
+            sync: 0
+        },
 
         // renderBefore
-        elBefore: {},
+        elBefore: {
+            sync: 0
+        },
 
         render: {},
 
-        visible: {},
+        visible: {
+            sync: 0
+        },
 
-        contentEl: {
+        clsTpl: {
+            value: '{{#if elCls}}' +
+                '{{#each elCls}}' +
+                ' {{.}} ' +
+                '{{/each}}' +
+                '{{/if}} '
+        },
+
+        styleTpl: {
+            value: '{{#if elStyle}}' +
+                '{{#each elStyle}}' +
+                ' {{xkey}}:{{.}}; ' +
+                '{{/each}}' +
+                '{{/if}} '
+        },
+
+        attrTpl: {
+            value: '{{#if elAttrs}}' +
+                '{{#each elAttrs}}' +
+                ' {{xkey}}="{{.}}" ' +
+                '{{/each}} ' +
+                '{{/if}}'
+        },
+
+        startTpl: {
             valueFn: function () {
-                return this.get('el');
+                return '<div class="{{getCssClassWithState ""}} ' +
+
+                    '{{#if visible}}' +
+                    '{{getCssClassWithState "shown"}} ' +
+                    '{{else}}' +
+                    '{{getCssClassWithState "hidden"}} ' +
+                    '{{/if}}' +
+
+                    this.get('clsTpl') + '"' +
+
+                    this.get('attrTpl') +
+
+                    'style="' +
+                    this.get('styleTpl') +
+
+                    '{{#if width}}' +
+                    'width:{{width}};' +
+                    '{{/if}}' +
+
+                    '{{#if height}}' +
+                    'height:{{height}};' +
+                    '{{/if}}' +
+
+                    '"' +
+                    '>';
             }
-        }
+        },
+
+        endTpl: {},
+
+        contentTpl: {
+            value: '{{content}}'
+        },
+
+        renderData: {}
     };
 
     BoxRender.HTML_PARSER = {
@@ -95,24 +162,21 @@ KISSY.add('component/base/box-render', function (S) {
          */
         __createDom: function () {
             var self = this,
-                el,
-                cls = self.getCssClassWithState(),
-                contentEl;
-            if (!(el = self.get('srcNode'))) {
-                contentEl = self.get('contentEl');
-                el = $(S.substitute(elTpl, {
-                    cls: cls
-                }));
-                if (contentEl) {
-                    el.append(contentEl);
-                }
+                el, tpl, html;
+            if (!self.get('srcNode')) {
+                tpl = self.get('startTpl') +
+                    self.get('contentTpl') +
+                    self.get('endTpl');
+                html = new XTemplate(tpl, {
+                    commands: {
+                        getCssClassWithState: function (scope, option) {
+                            return self.getCssClassWithState(option.params[0]);
+                        }
+                    }
+                }).render(self.get('renderData'));
+                el = $(html);
                 self.setInternal('el', el);
-                if (!contentEl) {
-                    // 没取到,这里设下值, uiSet 时可以 set('content')  取到
-                    self.setInternal('contentEl', el);
-                }
-            } else {
-                el.addClass(cls);
+                self.setInternal('contentEl', el);
             }
         },
 
@@ -162,14 +226,7 @@ KISSY.add('component/base/box-render', function (S) {
                 el = self.get('contentEl');
             // srcNode 时不重新渲染 content
             // 防止内部有改变，而 content 则是老的 html 内容
-            if (self.get('srcNode') && !self.get('rendered')) {
-            } else {
-                if (typeof c == 'string') {
-                    el.html(c);
-                } else if (c) {
-                    el.empty().append(c);
-                }
-            }
+            el.html(c);
             // ie needs to set unselectable attribute recursively
             if (UA.ie < 9 && !self.get('allowTextSelection')) {
                 el.unselectable(/**
@@ -203,7 +260,7 @@ KISSY.add('component/base/box-render', function (S) {
 
     return BoxRender;
 }, {
-    requires: ['node']
+    requires: ['node', 'xtemplate']
 });
 /**
  * @ignore
@@ -211,6 +268,8 @@ KISSY.add('component/base/box-render', function (S) {
  * @author yiminghe@gmail.com
  */
 KISSY.add('component/base/box', function () {
+
+    var autoId = 0;
 
     /**
      * Box extension class.Represent a dom element.
@@ -247,10 +306,32 @@ KISSY.add('component/base/box', function () {
          * fired after current component hides
          * @param {KISSY.Event.CustomEventObject} e
          */
+
+        var self = this,
+            attrs = self.getAttrs(),
+            a,
+            attr,
+            renderData = self.get('renderData');
+
+        for (a in attrs) {
+            attr = attrs[a];
+            if (attr.render && !(a in renderData)) {
+                renderData[a] = self.get(a);
+            }
+        }
+
     }
 
     Box.ATTRS =
     {
+
+        autoId: {
+            view: 1,
+            valueFn: function () {
+                return ++autoId;
+            }
+        },
+
         /**
          * component's html content. Note: content and srcNode can not be set both!
          * @type {String|KISSY.NodeList}
@@ -264,7 +345,38 @@ KISSY.add('component/base/box', function () {
          * @ignore
          */
         content: {
+            render: 1,
             view: 1
+        },
+
+        clsTpl: {
+            view: 1
+        },
+
+        styleTpl: {
+            view: 1
+        },
+
+        attrTpl: {
+            view: 1
+        },
+
+        startTpl: {
+            view: 1
+        },
+
+        endTpl: {
+            view: 1,
+            value: '</div>'
+        },
+
+        contentTpl: {
+            view: 1
+        },
+
+        renderData: {
+            view: 1,
+            value: {}
         },
 
         /**
@@ -280,6 +392,7 @@ KISSY.add('component/base/box', function () {
          * @ignore
          */
         width: {
+            render: 1,
             view: 1
         },
 
@@ -296,6 +409,7 @@ KISSY.add('component/base/box', function () {
          * @ignore
          */
         height: {
+            render: 1,
             view: 1
         },
 
@@ -307,6 +421,7 @@ KISSY.add('component/base/box', function () {
          * @ignore
          */
         elCls: {
+            render: 1,
             view: 1
         },
 
@@ -318,6 +433,7 @@ KISSY.add('component/base/box', function () {
          * @ignore
          */
         elStyle: {
+            render: 1,
             view: 1
         },
 
@@ -329,6 +445,7 @@ KISSY.add('component/base/box', function () {
          * @ignore
          */
         elAttrs: {
+            render: 1,
             view: 1
         },
 
@@ -374,7 +491,7 @@ KISSY.add('component/base/box', function () {
          * @ignore
          */
         contentEl: {
-            view:1
+            view: 1
         },
 
         /**
@@ -409,6 +526,8 @@ KISSY.add('component/base/box', function () {
          * @ignore
          */
         visible: {
+            sync: 0,
+            render: 1,
             value: true,
             view: 1
         },
@@ -434,9 +553,7 @@ KISSY.add('component/base/box', function () {
 
         _onSetVisible: function (v) {
             // do not fire event at render phrase
-            if (this.get('rendered')) {
-                this.fire(v ? "show" : "hide");
-            }
+            this.fire(v ? "show" : "hide");
         },
 
         /**
@@ -496,8 +613,6 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
     var ie = S.Env.host.document.documentMode || S.UA.ie,
         Features = S.Features,
         Gesture = Event.Gesture,
-        FOCUS_EVENT_GROUP = '.-ks-component-focus' + S.now(),
-        MOUSE_EVENT_GROUP = '.-ks-component-mouse' + S.now(),
         isTouchSupported = Features.isTouchSupported();
 
     function wrapperViewSetter(attrName) {
@@ -727,59 +842,46 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
                 self.renderChildren();
             },
 
+            bindUI: function () {
+                var self = this,
+                    el = self.getKeyEventTarget();
+                if (self.get('focusable')) {
+                    // remove smart outline in ie
+                    // set outline in style for other standard browser
+                    el.on("focus", wrapBehavior(self, "handleFocus"))
+                        .on("blur", wrapBehavior(self, "handleBlur"))
+                        .on("keydown", wrapBehavior(self, "handleKeydown"));
+                }
+
+                if (self.get('handleMouseEvents')) {
+
+                    if (!isTouchSupported) {
+                        el.on("mouseenter", wrapBehavior(self, "handleMouseEnter"))
+                            .on("mouseleave", wrapBehavior(self, "handleMouseLeave"))
+                            .on("contextmenu", wrapBehavior(self, "handleContextMenu"))
+                    }
+
+                    el.on(Gesture.start, wrapBehavior(self, "handleMouseDown"))
+                        .on(Gesture.end, wrapBehavior(self, "handleMouseUp"))
+                        .on('touchcancel', wrapBehavior(self, "handleMouseUp"))
+                        // consider touch environment
+                        .on(Gesture.tap, wrapBehavior(self, "performActionInternal"));
+
+                    // click quickly only trigger click and dblclick in ie<9
+                    // others click click dblclick
+                    if (ie && ie < 9) {
+                        el.on("dblclick", wrapBehavior(self, "handleDblClick"));
+                    }
+
+                }
+            },
+
             renderChildren: function () {
                 var i,
                     self = this,
                     children = self.get("children");
                 for (i = 0; i < children.length; i++) {
                     self.renderChild(children[i], i);
-                }
-            },
-
-            '_onSetFocusable': function (focusable) {
-                var self = this,
-                    el = self.getKeyEventTarget();
-                if (focusable) {
-                    el.attr("tabIndex", 0)
-                        // remove smart outline in ie
-                        // set outline in style for other standard browser
-                        .attr("hideFocus", true)
-                        .on("focus" + FOCUS_EVENT_GROUP, wrapBehavior(self, "handleFocus"))
-                        .on("blur" + FOCUS_EVENT_GROUP, wrapBehavior(self, "handleBlur"))
-                        .on("keydown" + FOCUS_EVENT_GROUP, wrapBehavior(self, "handleKeydown"));
-                } else {
-                    el.removeAttr("tabIndex");
-                    el.detach(FOCUS_EVENT_GROUP);
-                }
-            },
-
-            '_onSetHandleMouseEvents': function (handleMouseEvents) {
-
-                var self = this,
-                    el = self.get("el");
-
-                if (handleMouseEvents) {
-
-                    if (!isTouchSupported) {
-                        el.on("mouseenter" + MOUSE_EVENT_GROUP, wrapBehavior(self, "handleMouseEnter"))
-                            .on("mouseleave" + MOUSE_EVENT_GROUP, wrapBehavior(self, "handleMouseLeave"))
-                            .on("contextmenu" + MOUSE_EVENT_GROUP, wrapBehavior(self, "handleContextMenu"))
-                    }
-
-                    el.on(Gesture.start + MOUSE_EVENT_GROUP, wrapBehavior(self, "handleMouseDown"))
-                        .on(Gesture.end + MOUSE_EVENT_GROUP, wrapBehavior(self, "handleMouseUp"))
-                        .on('touchcancel' + MOUSE_EVENT_GROUP, wrapBehavior(self, "handleMouseUp"))
-                        // consider touch environment
-                        .on(Gesture.tap + MOUSE_EVENT_GROUP, wrapBehavior(self, "performActionInternal"));
-
-                    // click quickly only trigger click and dblclick in ie<9
-                    // others click click dblclick
-                    if (ie && ie < 9) {
-                        el.on("dblclick" + MOUSE_EVENT_GROUP, wrapBehavior(self, "handleDblClick"));
-                    }
-
-                } else {
-                    el.detach(MOUSE_EVENT_GROUP);
                 }
             },
 
@@ -1050,7 +1152,7 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
              */
             handleContextMenu: function (ev) {
                 if (0) {
-
+                    S.log(ev);
                 }
             },
 
@@ -1108,7 +1210,7 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
              */
             performActionInternal: function (ev) {
                 if (0) {
-
+                    S.log(ev);
                 }
             },
 
@@ -1159,6 +1261,7 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
                  * @ignore
                  */
                 focusable: {
+                    render: 1,
                     value: true,
                     view: 1
                 },
@@ -1210,7 +1313,9 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
                  * @ignore
                  */
                 focused: {
-                    view: 1
+                    view: 1,
+                    sync: 0,
+                    render: 1
                 },
 
                 /**
@@ -1223,6 +1328,7 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
                  */
                 active: {
                     view: 1,
+                    render: 1,
                     value: false
                 },
 
@@ -1236,6 +1342,7 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
                  */
                 highlighted: {
                     view: 1,
+                    render: 1,
                     value: false
                 },
 
@@ -1259,10 +1366,11 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
                  */
                 prefixCls: {
                     value: S.config('component/prefixCls') || 'ks-',
+                    render: 1,
                     view: 1
                 },
                 /**
-                 * This component's prefix xclass. Only be uesd in cfg.
+                 * This component's prefix xclass. Only be used in cfg.
                  * To use this property as 'xclass' when not specified 'xclass' and 'xtype'
                  * @cfg {String} prefixXClass
                  */
@@ -1315,6 +1423,7 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
                  */
                 disabled: {
                     view: 1,
+                    render: 1,
                     value: false
                 },
 
@@ -1555,7 +1664,7 @@ KISSY.add("component/base/delegate-children", function (S, Event) {
                         control.handleDblClick(e);
                         break;
                     default:
-
+                        S.error(e.type + " unhandled!");
                 }
             }
         }
@@ -1662,7 +1771,7 @@ KISSY.add("component/base/impl", function (S, UIBase, Manager) {
             if (!component.isController && (xclass = component.xclass)) {
                 childConstructor = Manager.getConstructorByXClass(xclass);
                 if (!childConstructor) {
-
+                    S.error("can not find class by xclass desc : " + xclass);
                 }
                 component = new childConstructor(component);
             }
@@ -1823,6 +1932,17 @@ KISSY.add("component/base/render", function (S, BoxRender, Component, UIBase, Ma
      */
     return UIBase.extend([BoxRender], {
 
+        initializer: function () {
+            this.set('clsTpl', this.get('clsTpl') +
+                '{{#if disabled}} {{getCssClassWithState "disabled"}} {{/if}}');
+            this.set('attrTpl', this.get('attrTpl') +
+                '{{#if disabled}} aria-disabled="true" {{/if}}' +
+                '{{#if focusable}} hideFocus="true" {{/if}}' +
+                '{{#if focusable}} ' +
+                'tabindex="{{#if disabled}}-1{{else}}0{{/if}}"' +
+                ' {{/if}}');
+        },
+
         isRender: 1,
 
         /**
@@ -1921,13 +2041,21 @@ KISSY.add("component/base/render", function (S, BoxRender, Component, UIBase, Ma
 
             focusable: {},
 
-            focused: {},
+            focused: {
+                sync: 0
+            },
 
-            active: {},
+            active: {
+                sync: 0
+            },
 
-            disabled: {},
+            disabled: {
+                sync: 0
+            },
 
-            highlighted: {}
+            highlighted: {
+                sync: 0
+            }
         },
         HTML_PARSER: {
             disabled: function (el) {

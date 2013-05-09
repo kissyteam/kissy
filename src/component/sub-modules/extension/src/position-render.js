@@ -6,20 +6,22 @@
 KISSY.add("component/extension/position-render", function () {
 
     function Position() {
+        this.set('styleTpl', this.get('styleTpl') +
+            'z-index:{{zIndex}};');
+        this.set('clsTpl', this.get('clsTpl') +
+            ' {{prefixCls}}-ext-position ');
     }
 
     Position.ATTRS = {
         x: {},
         y: {},
-        zIndex: {}
+        zIndex: {
+            sync: 0
+        }
     };
 
     // for augment, no need constructor
     Position.prototype = {
-        __createDom: function () {
-            this.get("el").addClass(this.get('prefixCls') + "ext-position");
-        },
-
         '_onSetZIndex': function (x) {
             this.get("el").css("z-index", x);
         },

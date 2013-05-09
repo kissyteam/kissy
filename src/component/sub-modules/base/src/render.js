@@ -12,6 +12,17 @@ KISSY.add("component/base/render", function (S, BoxRender, Component, UIBase, Ma
      */
     return UIBase.extend([BoxRender], {
 
+        initializer: function () {
+            this.set('clsTpl', this.get('clsTpl') +
+                '{{#if disabled}} {{getCssClassWithState "disabled"}} {{/if}}');
+            this.set('attrTpl', this.get('attrTpl') +
+                '{{#if disabled}} aria-disabled="true" {{/if}}' +
+                '{{#if focusable}} hideFocus="true" {{/if}}' +
+                '{{#if focusable}} ' +
+                'tabindex="{{#if disabled}}-1{{else}}0{{/if}}"' +
+                ' {{/if}}');
+        },
+
         isRender: 1,
 
         /**
@@ -110,13 +121,21 @@ KISSY.add("component/base/render", function (S, BoxRender, Component, UIBase, Ma
 
             focusable: {},
 
-            focused: {},
+            focused: {
+                sync: 0
+            },
 
-            active: {},
+            active: {
+                sync: 0
+            },
 
-            disabled: {},
+            disabled: {
+                sync: 0
+            },
 
-            highlighted: {}
+            highlighted: {
+                sync: 0
+            }
         },
         HTML_PARSER: {
             disabled: function (el) {

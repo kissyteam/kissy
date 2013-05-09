@@ -25,11 +25,9 @@ KISSY.add("menu/menuitem-render", function (S, Node, Component, undefined) {
 
     return Component.Render.extend({
 
-        createDom:function(){
-            this.get('el').attr({
-                role: "menuitem",
-                id: S.guid("ks-menuitem")
-            });
+        initializer:function(){
+            this.set('attrTpl',this.get('attrTpl')+' role="menuitem" ');
+            this.set('clsTpl',this.get('clsTpl'));
         },
 
         _onSetChecked: function (v) {

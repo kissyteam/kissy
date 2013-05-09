@@ -5,6 +5,8 @@
  */
 KISSY.add('component/base/box', function () {
 
+
+
     /**
      * Box extension class.Represent a dom element.
      * @class KISSY.Component.Extension.Box
@@ -40,10 +42,30 @@ KISSY.add('component/base/box', function () {
          * fired after current component hides
          * @param {KISSY.Event.CustomEventObject} e
          */
+
+        var self = this,
+            attrs = self.getAttrs(),
+            a,
+            attr,
+            renderData = self.get('renderData');
+
+        for (a in attrs) {
+            attr = attrs[a];
+            if (attr.render && !(a in renderData)) {
+                renderData[a] = self.get(a);
+            }
+        }
+
     }
 
     Box.ATTRS =
     {
+
+        id: {
+            view:1,
+            render: 1
+        },
+
         /**
          * component's html content. Note: content and srcNode can not be set both!
          * @type {String|KISSY.NodeList}
@@ -57,7 +79,38 @@ KISSY.add('component/base/box', function () {
          * @ignore
          */
         content: {
+            render: 1,
             view: 1
+        },
+
+        clsTpl: {
+            view: 1
+        },
+
+        styleTpl: {
+            view: 1
+        },
+
+        attrTpl: {
+            view: 1
+        },
+
+        startTpl: {
+            view: 1
+        },
+
+        endTpl: {
+            view: 1,
+            value: '</div>'
+        },
+
+        contentTpl: {
+            view: 1
+        },
+
+        renderData: {
+            view: 1,
+            value: {}
         },
 
         /**
@@ -73,6 +126,7 @@ KISSY.add('component/base/box', function () {
          * @ignore
          */
         width: {
+            render: 1,
             view: 1
         },
 
@@ -89,6 +143,7 @@ KISSY.add('component/base/box', function () {
          * @ignore
          */
         height: {
+            render: 1,
             view: 1
         },
 
@@ -100,6 +155,7 @@ KISSY.add('component/base/box', function () {
          * @ignore
          */
         elCls: {
+            render: 1,
             view: 1
         },
 
@@ -111,6 +167,7 @@ KISSY.add('component/base/box', function () {
          * @ignore
          */
         elStyle: {
+            render: 1,
             view: 1
         },
 
@@ -122,6 +179,7 @@ KISSY.add('component/base/box', function () {
          * @ignore
          */
         elAttrs: {
+            render: 1,
             view: 1
         },
 
@@ -167,7 +225,7 @@ KISSY.add('component/base/box', function () {
          * @ignore
          */
         contentEl: {
-            view:1
+            view: 1
         },
 
         /**
@@ -202,6 +260,8 @@ KISSY.add('component/base/box', function () {
          * @ignore
          */
         visible: {
+            sync: 0,
+            render: 1,
             value: true,
             view: 1
         },
@@ -227,9 +287,7 @@ KISSY.add('component/base/box', function () {
 
         _onSetVisible: function (v) {
             // do not fire event at render phrase
-            if (this.get('rendered')) {
-                this.fire(v ? "show" : "hide");
-            }
+            this.fire(v ? "show" : "hide");
         },
 
         /**

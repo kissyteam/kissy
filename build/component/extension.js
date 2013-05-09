@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 17 00:14
+build time: May 9 22:14
 */
 /**
  * @ignore
@@ -464,33 +464,17 @@ KISSY.add('component/extension/align', function (S, DOM, Node) {
 KISSY.add('component/extension/content-box-render', function (S, Node, DOM) {
 
     function ContentBoxRender() {
+        this.set('startTpl', this.get('startTpl') +
+            '<div class="{{prefixCls}}contentbox' +
+            ' {{getCssClassWithState "contentbox"}}">');
+        this.set('endTpl', '</div>' + this.get('endTpl'));
     }
 
-    /*
-     ! contentEl 只能由组件动态生成
-     */
-    // for augment, no need constructor
     ContentBoxRender.prototype = {
         __createDom: function () {
             var self = this,
-                contentEl,
-                el = self.get('el'),
-                contentCls = self.getCssClassWithState('contentbox'),
-                childNodes = el[0].childNodes,
-                css = self.getCssClassWithPrefix('contentbox') +
-                    (contentCls ? (' ' + contentCls) : contentCls),
-                c = childNodes.length && DOM._nodeListToFragment(childNodes);
-
-            // 产生新的 contentEl
-            contentEl = Node.all('<div class="' + css + '"></div>');
-
-            if (c) {
-                contentEl.append(c);
-            }
-
-            el.append(contentEl);
-
-            self.setInternal('contentEl', contentEl);
+                el = self.get('el');
+            self.setInternal('contentEl', el.first());
         }
     };
 
@@ -530,20 +514,22 @@ KISSY.add("component/extension", function (S, Align, ContentBoxRender, Position,
 KISSY.add("component/extension/position-render", function () {
 
     function Position() {
+        this.set('styleTpl', this.get('styleTpl') +
+            'z-index:{{zIndex}};');
+        this.set('clsTpl', this.get('clsTpl') +
+            ' {{prefixCls}}-ext-position ');
     }
 
     Position.ATTRS = {
         x: {},
         y: {},
-        zIndex: {}
+        zIndex: {
+            sync: 0
+        }
     };
 
     // for augment, no need constructor
     Position.prototype = {
-        __createDom: function () {
-            this.get("el").addClass(this.get('prefixCls') + "ext-position");
-        },
-
         '_onSetZIndex': function (x) {
             this.get("el").css("z-index", x);
         },
@@ -652,6 +638,7 @@ KISSY.add("component/extension/position", function (S) {
          * @ignore
          */
         zIndex: {
+            render: 1,
             view: 1
         },
         /**
@@ -692,26 +679,22 @@ KISSY.add("component/extension/position", function (S) {
  * @author yiminghe@gmail.com
  */
 KISSY.add("component/extension/shim-render", function () {
+    var shim = "<" + "iframe style='position: absolute;" +
+        "border: none;" +
+        // consider border
+        // bug fix: 2012-11-07
+        "width: expression(this.parentNode.clientWidth);" +
+        "top: 0;" +
+        "opacity: 0;" +
+        "filter: alpha(opacity=0);" +
+        "left: 0;" +
+        "z-index: -1;" +
+        "height: expression(this.parentNode.clientHeight);" + "'/>";
+
     // only for ie6!
     function Shim() {
+        this.set('startTpl', this.get('startTpl') + shim);
     }
-
-    // for augment, no need constructor
-    Shim.prototype = {
-        __createDom: function () {
-            this.get("el").prepend("<" + "iframe style='position: absolute;" +
-                "border: none;" +
-                // consider border
-                // bug fix: 2012-11-07
-                "width: expression(this.parentNode.clientWidth);" +
-                "top: 0;" +
-                "opacity: 0;" +
-                "filter: alpha(opacity=0);" +
-                "left: 0;" +
-                "z-index: -1;" +
-                "height: expression(this.parentNode.clientHeight);" + "'/>");
-        }
-    };
 
     return Shim;
 });

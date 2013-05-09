@@ -8,8 +8,6 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
     var ie = S.Env.host.document.documentMode || S.UA.ie,
         Features = S.Features,
         Gesture = Event.Gesture,
-        FOCUS_EVENT_GROUP = '.-ks-component-focus' + S.now(),
-        MOUSE_EVENT_GROUP = '.-ks-component-mouse' + S.now(),
         isTouchSupported = Features.isTouchSupported();
 
     function wrapperViewSetter(attrName) {
@@ -239,59 +237,46 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
                 self.renderChildren();
             },
 
+            bindUI: function () {
+                var self = this,
+                    el = self.getKeyEventTarget();
+                if (self.get('focusable')) {
+                    // remove smart outline in ie
+                    // set outline in style for other standard browser
+                    el.on("focus", wrapBehavior(self, "handleFocus"))
+                        .on("blur", wrapBehavior(self, "handleBlur"))
+                        .on("keydown", wrapBehavior(self, "handleKeydown"));
+                }
+
+                if (self.get('handleMouseEvents')) {
+
+                    if (!isTouchSupported) {
+                        el.on("mouseenter", wrapBehavior(self, "handleMouseEnter"))
+                            .on("mouseleave", wrapBehavior(self, "handleMouseLeave"))
+                            .on("contextmenu", wrapBehavior(self, "handleContextMenu"))
+                    }
+
+                    el.on(Gesture.start, wrapBehavior(self, "handleMouseDown"))
+                        .on(Gesture.end, wrapBehavior(self, "handleMouseUp"))
+                        .on('touchcancel', wrapBehavior(self, "handleMouseUp"))
+                        // consider touch environment
+                        .on(Gesture.tap, wrapBehavior(self, "performActionInternal"));
+
+                    // click quickly only trigger click and dblclick in ie<9
+                    // others click click dblclick
+                    if (ie && ie < 9) {
+                        el.on("dblclick", wrapBehavior(self, "handleDblClick"));
+                    }
+
+                }
+            },
+
             renderChildren: function () {
                 var i,
                     self = this,
                     children = self.get("children");
                 for (i = 0; i < children.length; i++) {
                     self.renderChild(children[i], i);
-                }
-            },
-
-            '_onSetFocusable': function (focusable) {
-                var self = this,
-                    el = self.getKeyEventTarget();
-                if (focusable) {
-                    el.attr("tabIndex", 0)
-                        // remove smart outline in ie
-                        // set outline in style for other standard browser
-                        .attr("hideFocus", true)
-                        .on("focus" + FOCUS_EVENT_GROUP, wrapBehavior(self, "handleFocus"))
-                        .on("blur" + FOCUS_EVENT_GROUP, wrapBehavior(self, "handleBlur"))
-                        .on("keydown" + FOCUS_EVENT_GROUP, wrapBehavior(self, "handleKeydown"));
-                } else {
-                    el.removeAttr("tabIndex");
-                    el.detach(FOCUS_EVENT_GROUP);
-                }
-            },
-
-            '_onSetHandleMouseEvents': function (handleMouseEvents) {
-
-                var self = this,
-                    el = self.get("el");
-
-                if (handleMouseEvents) {
-
-                    if (!isTouchSupported) {
-                        el.on("mouseenter" + MOUSE_EVENT_GROUP, wrapBehavior(self, "handleMouseEnter"))
-                            .on("mouseleave" + MOUSE_EVENT_GROUP, wrapBehavior(self, "handleMouseLeave"))
-                            .on("contextmenu" + MOUSE_EVENT_GROUP, wrapBehavior(self, "handleContextMenu"))
-                    }
-
-                    el.on(Gesture.start + MOUSE_EVENT_GROUP, wrapBehavior(self, "handleMouseDown"))
-                        .on(Gesture.end + MOUSE_EVENT_GROUP, wrapBehavior(self, "handleMouseUp"))
-                        .on('touchcancel' + MOUSE_EVENT_GROUP, wrapBehavior(self, "handleMouseUp"))
-                        // consider touch environment
-                        .on(Gesture.tap + MOUSE_EVENT_GROUP, wrapBehavior(self, "performActionInternal"));
-
-                    // click quickly only trigger click and dblclick in ie<9
-                    // others click click dblclick
-                    if (ie && ie < 9) {
-                        el.on("dblclick" + MOUSE_EVENT_GROUP, wrapBehavior(self, "handleDblClick"));
-                    }
-
-                } else {
-                    el.detach(MOUSE_EVENT_GROUP);
                 }
             },
 
@@ -671,6 +656,7 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
                  * @ignore
                  */
                 focusable: {
+                    render: 1,
                     value: true,
                     view: 1
                 },
@@ -722,7 +708,9 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
                  * @ignore
                  */
                 focused: {
-                    view: 1
+                    view: 1,
+                    sync: 0,
+                    render: 1
                 },
 
                 /**
@@ -735,6 +723,7 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
                  */
                 active: {
                     view: 1,
+                    render: 1,
                     value: false
                 },
 
@@ -748,6 +737,7 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
                  */
                 highlighted: {
                     view: 1,
+                    render: 1,
                     value: false
                 },
 
@@ -771,10 +761,11 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
                  */
                 prefixCls: {
                     value: S.config('component/prefixCls') || 'ks-',
+                    render: 1,
                     view: 1
                 },
                 /**
-                 * This component's prefix xclass. Only be uesd in cfg.
+                 * This component's prefix xclass. Only be used in cfg.
                  * To use this property as 'xclass' when not specified 'xclass' and 'xtype'
                  * @cfg {String} prefixXClass
                  */
@@ -827,6 +818,7 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
                  */
                 disabled: {
                     view: 1,
+                    render: 1,
                     value: false
                 },
 

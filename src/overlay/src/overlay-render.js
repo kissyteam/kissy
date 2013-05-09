@@ -8,10 +8,10 @@ KISSY.add("overlay/overlay-render", function (S, Component, Extension, Loading, 
     var UA = S.UA;
 
     return Component.Render.extend([
+        UA['ie'] === 6 ? Extension.Shim.Render : null,
         Extension.ContentBox.Render,
         Extension.Position.Render,
         Loading,
-        UA['ie'] === 6 ? Extension.Shim.Render : null,
         Close,
         Mask
     ]);

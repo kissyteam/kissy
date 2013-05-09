@@ -4,26 +4,22 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add("component/extension/shim-render", function () {
+    var shim = "<" + "iframe style='position: absolute;" +
+        "border: none;" +
+        // consider border
+        // bug fix: 2012-11-07
+        "width: expression(this.parentNode.clientWidth);" +
+        "top: 0;" +
+        "opacity: 0;" +
+        "filter: alpha(opacity=0);" +
+        "left: 0;" +
+        "z-index: -1;" +
+        "height: expression(this.parentNode.clientHeight);" + "'/>";
+
     // only for ie6!
     function Shim() {
+        this.set('startTpl', this.get('startTpl') + shim);
     }
-
-    // for augment, no need constructor
-    Shim.prototype = {
-        __createDom: function () {
-            this.get("el").prepend("<" + "iframe style='position: absolute;" +
-                "border: none;" +
-                // consider border
-                // bug fix: 2012-11-07
-                "width: expression(this.parentNode.clientWidth);" +
-                "top: 0;" +
-                "opacity: 0;" +
-                "filter: alpha(opacity=0);" +
-                "left: 0;" +
-                "z-index: -1;" +
-                "height: expression(this.parentNode.clientHeight);" + "'/>");
-        }
-    };
 
     return Shim;
 });
