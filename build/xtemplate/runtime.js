@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 9 13:32
+build time: May 9 13:44
 */
 /**
  * xtemplate base
@@ -194,7 +194,7 @@ KISSY.add("xtemplate/runtime/commands", function (S, includeCommand) {
                     for(var name in param0){
                         opScopes[0] = param0[name];
                         opScopes[1] = {
-                            xname: name
+                            xkey: name
                         };
                         buffer += option.fn(opScopes);
                     }

@@ -184,7 +184,7 @@ KISSY.use('xtemplate', function (S, XTemplate) {
             describe('each', function () {
 
                 it("support object",function(){
-                   var tpl='{{#each data}}{{xname}}:{{.}}{{/each}}';
+                   var tpl='{{#each data}}{{xkey}}:{{.}}{{/each}}';
                     var data={
                         data:{
                             x:1,

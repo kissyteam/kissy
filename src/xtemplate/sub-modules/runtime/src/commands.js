@@ -29,7 +29,7 @@ KISSY.add("xtemplate/runtime/commands", function (S, includeCommand) {
                     for(var name in param0){
                         opScopes[0] = param0[name];
                         opScopes[1] = {
-                            xname: name
+                            xkey: name
                         };
                         buffer += option.fn(opScopes);
                     }
