@@ -3,13 +3,15 @@
  * 里层包裹层定义， 适合mask以及shim
  * @author yiminghe@gmail.com
  */
-KISSY.add('component/extension/content-box-render', function (S, Node, DOM) {
+KISSY.add('component/extension/content-box-render', function () {
 
     function ContentBoxRender() {
         this.set('startTpl', this.get('startTpl') +
-            '<div class="{{prefixCls}}contentbox' +
+            '<div id="{{prefixCls}}contentbox{{id}}" ' +
+            'class="{{prefixCls}}contentbox' +
             ' {{getCssClassWithState "contentbox"}}">');
         this.set('endTpl', '</div>' + this.get('endTpl'));
+        this.get('childrenElSelectors')['contentEl']='#{prefixCls}contentbox{id}';
     }
 
     ContentBoxRender.prototype = {

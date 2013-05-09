@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 9 22:14
+build time: May 10 00:04
 */
 /**
  * @ignore
@@ -461,13 +461,15 @@ KISSY.add('component/extension/align', function (S, DOM, Node) {
  * 里层包裹层定义， 适合mask以及shim
  * @author yiminghe@gmail.com
  */
-KISSY.add('component/extension/content-box-render', function (S, Node, DOM) {
+KISSY.add('component/extension/content-box-render', function () {
 
     function ContentBoxRender() {
         this.set('startTpl', this.get('startTpl') +
-            '<div class="{{prefixCls}}contentbox' +
+            '<div id="{{prefixCls}}contentbox{{id}}" ' +
+            'class="{{prefixCls}}contentbox' +
             ' {{getCssClassWithState "contentbox"}}">');
         this.set('endTpl', '</div>' + this.get('endTpl'));
+        this.get('childrenElSelectors')['contentEl']='#{prefixCls}contentbox{id}';
     }
 
     ContentBoxRender.prototype = {
@@ -514,10 +516,8 @@ KISSY.add("component/extension", function (S, Align, ContentBoxRender, Position,
 KISSY.add("component/extension/position-render", function () {
 
     function Position() {
-        this.set('styleTpl', this.get('styleTpl') +
-            'z-index:{{zIndex}};');
-        this.set('clsTpl', this.get('clsTpl') +
-            ' {{prefixCls}}-ext-position ');
+        this.get('elStyle')['z-index'] = this.get('zIndex');
+        this.get('elCls').push(this.get('prefixCls') + '-ext-position ');
     }
 
     Position.ATTRS = {

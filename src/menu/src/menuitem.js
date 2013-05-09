@@ -36,10 +36,6 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
             if (self.get("selectable")) {
                 self.set("selected", true);
             }
-            // 可选中，取消选中
-            if (self.get("checkable")) {
-                self.set("checked", !self.get("checked"));
-            }
             self.fire("click");
             return true;
         },
@@ -100,18 +96,7 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
              * @ignore
              */
             selectable: {
-                view: 1
-            },
-
-            /**
-             * Whether the menu item is checkable or not.
-             * Set to true for checkbox option.
-             * @cfg {Boolean} checkable
-             */
-            /**
-             * @ignore
-             */
-            checkable: {
+                render:1,
                 view: 1
             },
 
@@ -134,16 +119,7 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
              * @type {Boolean}
              * @property checked
              */
-            /**
-             * Whether the menu item is checked.
-             * @cfg {Boolean} checked
-             */
-            /**
-             * @ignore
-             */
-            checked: {
-                view: 1
-            },
+
 
             /**
              * Whether the menu item is selected.
@@ -158,6 +134,7 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
              * @ignore
              */
             selected: {
+                render:1,
                 view: 1
             },
 

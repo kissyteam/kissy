@@ -3,8 +3,7 @@
  * Box
  * @author yiminghe@gmail.com
  */
-KISSY.add('component/base/box', function () {
-
+KISSY.add('component/base/box', function (S) {
 
 
     /**
@@ -62,8 +61,11 @@ KISSY.add('component/base/box', function () {
     {
 
         id: {
-            view:1,
-            render: 1
+            view: 1,
+            render: 1,
+            valueFn:function(){
+                return S.guid();
+            }
         },
 
         /**
@@ -83,25 +85,12 @@ KISSY.add('component/base/box', function () {
             view: 1
         },
 
-        clsTpl: {
-            view: 1
-        },
-
-        styleTpl: {
-            view: 1
-        },
-
-        attrTpl: {
-            view: 1
-        },
-
         startTpl: {
             view: 1
         },
 
         endTpl: {
-            view: 1,
-            value: '</div>'
+            view: 1
         },
 
         contentTpl: {
@@ -111,6 +100,10 @@ KISSY.add('component/base/box', function () {
         renderData: {
             view: 1,
             value: {}
+        },
+
+        childrenElSelectors: {
+            view: 1
         },
 
         /**
@@ -156,7 +149,8 @@ KISSY.add('component/base/box', function () {
          */
         elCls: {
             render: 1,
-            view: 1
+            view: 1,
+            value:[]
         },
 
         /**
@@ -168,7 +162,8 @@ KISSY.add('component/base/box', function () {
          */
         elStyle: {
             render: 1,
-            view: 1
+            view: 1,
+            value:{}
         },
 
         /**
@@ -180,7 +175,8 @@ KISSY.add('component/base/box', function () {
          */
         elAttrs: {
             render: 1,
-            view: 1
+            view: 1,
+            value:{}
         },
 
         /**
@@ -205,12 +201,7 @@ KISSY.add('component/base/box', function () {
          * @ignore
          */
         el: {
-            view: 1,
-            setter: function (v) {
-                if (!v.isNodeList)
-                    v = $(v);
-                return v;
-            }
+            view: 1
         },
 
         /**

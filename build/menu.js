@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 17 00:22
+build time: May 10 00:23
 */
 /**
  * @ignore
@@ -254,6 +254,76 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender, undefined) {
  * TODO
  *  - 去除 activeItem. done@2013-03-12
  **//**
+ * checkable menu item render
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('menu/check-menuitem-render', function (S, MenuItemRender) {
+    return MenuItemRender.extend({
+        initializer: function () {
+            if (this.get('checked')) {
+                this.get('elCls').push(self.getCssClassWithState("checked"));
+            }
+            this.get('childrenElSelectors')['contentEl'] =
+                '#{prefixCls}menuitem-content{id}';
+        },
+        _onSetChecked: function (v) {
+            var self = this,
+                el = self.get("el"),
+                cls = self.getCssClassWithState("checked");
+            el[v ? 'addClass' : 'removeClass'](cls);
+        }
+    }, {
+        ATTRS: {
+            contentTpl: {
+                value: '<div class="{{prefixCls}}menuitem-checkbox"></div>' +
+                    '<div id="{{prefixCls}}menuitem-content{{id}}"' +
+                    ' class="{{prefixCls}}menuitem-content">{{content}}</div>'
+            },
+            checked: {
+                sync: 0
+            }
+        }
+    })
+}, {
+    requires: ['./menuitem-render']
+});/**
+ * checkable menu item
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('menu/check-menuitem', function (S, MenuItem, CheckMenuItemRender) {
+    return MenuItem.extend({
+
+        performActionInternal: function () {
+            var self = this;
+            self.set("checked", !self.get("checked"));
+            self.fire('click');
+            return true;
+        }
+
+    }, {
+        ATTRS: {
+            /**
+             * Whether the menu item is checked.
+             * @cfg {Boolean} checked
+             */
+            /**
+             * @ignore
+             */
+            checked: {
+                render: 1,
+                view: 1
+            },
+            xrender: {
+                value: CheckMenuItemRender
+            }
+        }
+    }, {
+        xclass: "check-menuitem",
+        priority: 30
+    })
+}, {
+    requires: ['./menuitem', './check-menuitem-render']
+});/**
  * @ignore
  * filter menu render
  * 1.create filter input
@@ -573,20 +643,17 @@ KISSY.add("menu/filtermenu", function (S, Component, Menu, FilterMenuRender) {
  * render aria from menu according to current menuitem
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/menu-render", function(S, Component) {
+KISSY.add("menu/menu-render", function (S, Component) {
 
     return Component.Render.extend({
 
-        renderUI:function() {
-            var el = this.get("el");
-            el .attr("role", "menu")
-                .attr("aria-haspopup", true);
-            if (!el.attr("id")) {
-                el.attr("id", S.guid("ks-menu"));
-            }
+        initializer: function () {
+            this.set('attrTpl',
+                this.get('attrTpl') +
+                    ' role="menu" aria-haspopup="true" ');
         },
 
-        setAriaActiveDescendant:function(v) {
+        setAriaActiveDescendant: function (v) {
             var el = this.get("el");
             if (v) {
                 var menuItemEl = v.get("el"),
@@ -598,21 +665,23 @@ KISSY.add("menu/menu-render", function(S, Component) {
             }
         },
 
-        containsElement:function(element) {
+        containsElement: function (element) {
             var el = this.get("el");
             return el[0] === element || el.contains(element);
         }
     });
 }, {
-    requires:['component/base']
+    requires: ['component/base']
 });/**
  * @ignore
  * menu
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu", function (S, Menu, Render, Item, ItemRender, SubMenu, SubMenuRender, PopupMenu, PopupMenuRender, FilterMenu) {
+KISSY.add("menu", function (S, Menu, Render, Item, CheckItem, CheckItemRender, ItemRender, SubMenu, SubMenuRender, PopupMenu, PopupMenuRender, FilterMenu) {
     Menu.Render = Render;
     Menu.Item = Item;
+    Menu.CheckItem = CheckItem;
+    CheckItem.Render = CheckItemRender;
     Item.Render = ItemRender;
     Menu.SubMenu = SubMenu;
     SubMenu.Render = SubMenuRender;
@@ -621,10 +690,12 @@ KISSY.add("menu", function (S, Menu, Render, Item, ItemRender, SubMenu, SubMenuR
     Menu.FilterMenu = FilterMenu;
     return Menu;
 }, {
-    requires:[
+    requires: [
         'menu/base',
         'menu/menu-render',
         'menu/menuitem',
+        'menu/check-menuitem',
+        'menu/check-menuitem-render',
         'menu/menuitem-render',
         'menu/submenu',
         'menu/submenu-render',
@@ -637,40 +708,17 @@ KISSY.add("menu", function (S, Menu, Render, Item, ItemRender, SubMenu, SubMenuR
  * simple menuitem render
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/menuitem-render", function (S, Node, Component, undefined) {
-
-    var CHECK_CLS = "menuitem-checkbox";
-
-    function setUpCheckEl(self) {
-        var el = self.get("el"),
-            prefixCls = self.get('prefixCls'),
-            checkEl = el.one("." + prefixCls + CHECK_CLS);
-        if (!checkEl) {
-            checkEl = new Node("<div class='" + prefixCls + CHECK_CLS + "'/>")
-                .prependTo(el);
-            // if not ie will lose focus when click
-            checkEl.unselectable(/**
-             @type HTMLElement
-             @ignore
-             */undefined);
-        }
-        return checkEl;
-    }
+KISSY.add("menu/menuitem-render", function (S, Node, Component) {
 
     return Component.Render.extend({
 
-        createDom:function(){
-            this.get('el').attr({
-                role: "menuitem",
-                id: S.guid("ks-menuitem")
-            });
-        },
-
-        _onSetChecked: function (v) {
-            var self = this,
-                el = self.get("el"),
-                cls = self.getCssClassWithState("checked");
-            el[v ? 'addClass' : 'removeClass'](cls);
+        initializer: function () {
+            var renderData = this.get('renderData');
+            this.get('elAttrs')['role'] = renderData.selectable ?
+                'menuitemradio' : 'menuitem';
+            if (renderData.selected) {
+                this.get('elCls').push(this.getCssClassWithState('selected'));
+            }
         },
 
         _onSetSelected: function (v) {
@@ -680,35 +728,22 @@ KISSY.add("menu/menuitem-render", function (S, Node, Component, undefined) {
             el[v ? 'addClass' : 'removeClass'](cls);
         },
 
-        '_onSetSelectable': function (v) {
-            this.get("el").attr("role", v ? ('menuitem'+'radio') : 'menuitem');
-        },
-
-        '_onSetCheckable': function (v) {
-            if (v) {
-                setUpCheckEl(this);
-            }
-            this.get("el").attr("role", v ? ('menuitem'+'checkbox') : 'menuitem');
-        },
-
         containsElement: function (element) {
             var el = this.get("el");
             return el && ( el[0] == element || el.contains(element));
         }
     }, {
         ATTRS: {
-            checkable: {},
-            selected: {},
-            // 属性必须声明，否则无法和 _onSetChecked 绑定在一起
-            checked: {}
+            contentTpl: {
+                value: '{{content}}'
+            },
+            selected: {
+                sync: 0
+            }
         },
         HTML_PARSER: {
             selectable: function (el) {
                 var cls = this.getCssClassWithPrefix("menuitem-selectable");
-                return el.hasClass(cls);
-            },
-            checkable: function (el) {
-                var cls = this.getCssClassWithPrefix("menuitem-checkable");
                 return el.hasClass(cls);
             }
         }
@@ -752,10 +787,6 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
             // 可选
             if (self.get("selectable")) {
                 self.set("selected", true);
-            }
-            // 可选中，取消选中
-            if (self.get("checkable")) {
-                self.set("checked", !self.get("checked"));
             }
             self.fire("click");
             return true;
@@ -817,18 +848,7 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
              * @ignore
              */
             selectable: {
-                view: 1
-            },
-
-            /**
-             * Whether the menu item is checkable or not.
-             * Set to true for checkbox option.
-             * @cfg {Boolean} checkable
-             */
-            /**
-             * @ignore
-             */
-            checkable: {
+                render:1,
                 view: 1
             },
 
@@ -851,16 +871,7 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
              * @type {Boolean}
              * @property checked
              */
-            /**
-             * Whether the menu item is checked.
-             * @cfg {Boolean} checked
-             */
-            /**
-             * @ignore
-             */
-            checked: {
-                view: 1
-            },
+
 
             /**
              * Whether the menu item is selected.
@@ -875,6 +886,7 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
              * @ignore
              */
             selected: {
+                render:1,
                 view: 1
             },
 
@@ -1015,28 +1027,20 @@ KISSY.add("menu/popupmenu", function (S, extension, Menu, PopupMenuRender) {
  * @author yiminghe@gmail.com
  */
 KISSY.add("menu/submenu-render", function (S, MenuItemRender) {
-    var SubMenuRender,
-        CONTENT_TMPL = '<span class="{prefixCls}menuitem-content"><' + '/span>',
-        ARROW_TMPL = '<span class="{prefixCls}submenu-arrow">►<' + '/span>';
+    var CONTENT_TMPL = '<span id="{{prefixCls}}menuitem-content{{id}}" ' +
+            'class="{{prefixCls}}menuitem-content">{{content}}' +
+            '<' + '/span>',
+        ARROW_TMPL = '<span class="{{prefixCls}}submenu-arrow">►<' + '/span>';
 
-    SubMenuRender = MenuItemRender.extend({
-        createDom: function () {
-            var self = this,
-                el = self.get("el");
-            el.attr("aria-haspopup", "true")
-                .append(S.substitute(ARROW_TMPL, {
-                prefixCls: self.get('prefixCls')
-            }));
+    return MenuItemRender.extend({
+        initializer: function () {
+            this.get('childrenElSelectors')['contentEl'] =
+                '#{prefixCls}menuitem-content{id}';
         }
     }, {
         ATTRS: {
-            arrowEl: {},
-            contentEl: {
-                valueFn: function () {
-                    return S.all(S.substitute(CONTENT_TMPL, {
-                        prefixCls: this.get('prefixCls')
-                    }));
-                }
+            contentTpl: {
+                value: CONTENT_TMPL + ARROW_TMPL
             }
         },
         HTML_PARSER: {
@@ -1045,8 +1049,6 @@ KISSY.add("menu/submenu-render", function (S, MenuItemRender) {
             }
         }
     });
-
-    return SubMenuRender;
 }, {
     requires: ['./menuitem-render']
 });/**

@@ -6,30 +6,41 @@
 KISSY.add("button/buttonRender", function (S, Component) {
     // http://www.w3.org/TR/wai-aria-practices/
     return Component.Render.extend({
-        createDom:function () {
+        createDom: function () {
             // set wai-aria role
-            this.get("el")
-                .attr("role", "button");
+            var attrs = this.get('elAttrs');
+            attrs['role'] = 'button';
+            attrs['title'] = this.get('title');
+            attrs['aria-describedby'] = this.get('describedby');
+            if (this.get('checked')) {
+                this.get('elCls').push(self.getCssClassWithState("checked"));
+            }
         },
-        _onSetChecked:function (v) {
+        _onSetChecked: function (v) {
             var self = this,
                 el = self.get("el"),
                 cls = self.getCssClassWithState("checked");
             el[v ? 'addClass' : 'removeClass'](cls);
         },
-        _onSetTooltip:function (title) {
+        _onSetTooltip: function (title) {
             this.get("el").attr("title", title);
         },
-        '_onSetDescribedby':function (describedby) {
+        '_onSetDescribedby': function (describedby) {
             this.get("el").attr("aria-describedby", describedby);
         }
     }, {
-        ATTRS:{
-            describedby:{},
-            tooltip:{},
-            checked:{}
+        ATTRS: {
+            describedby: {
+                sync: 0
+            },
+            tooltip: {
+                sync: 0
+            },
+            checked: {
+                sync: 0
+            }
         }
     });
 }, {
-    requires:['component/base']
+    requires: ['component/base']
 });

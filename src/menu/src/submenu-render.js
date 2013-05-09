@@ -4,28 +4,20 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add("menu/submenu-render", function (S, MenuItemRender) {
-    var SubMenuRender,
-        CONTENT_TMPL = '<span class="{prefixCls}menuitem-content"><' + '/span>',
-        ARROW_TMPL = '<span class="{prefixCls}submenu-arrow">►<' + '/span>';
+    var CONTENT_TMPL = '<span id="{{prefixCls}}menuitem-content{{id}}" ' +
+            'class="{{prefixCls}}menuitem-content">{{content}}' +
+            '<' + '/span>',
+        ARROW_TMPL = '<span class="{{prefixCls}}submenu-arrow">►<' + '/span>';
 
-    SubMenuRender = MenuItemRender.extend({
-        createDom: function () {
-            var self = this,
-                el = self.get("el");
-            el.attr("aria-haspopup", "true")
-                .append(S.substitute(ARROW_TMPL, {
-                prefixCls: self.get('prefixCls')
-            }));
+    return MenuItemRender.extend({
+        initializer: function () {
+            this.get('childrenElSelectors')['contentEl'] =
+                '#{prefixCls}menuitem-content{id}';
         }
     }, {
         ATTRS: {
-            arrowEl: {},
-            contentEl: {
-                valueFn: function () {
-                    return S.all(S.substitute(CONTENT_TMPL, {
-                        prefixCls: this.get('prefixCls')
-                    }));
-                }
+            contentTpl: {
+                value: CONTENT_TMPL + ARROW_TMPL
             }
         },
         HTML_PARSER: {
@@ -34,8 +26,6 @@ KISSY.add("menu/submenu-render", function (S, MenuItemRender) {
             }
         }
     });
-
-    return SubMenuRender;
 }, {
     requires: ['./menuitem-render']
 });

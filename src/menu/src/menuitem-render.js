@@ -3,38 +3,17 @@
  * simple menuitem render
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/menuitem-render", function (S, Node, Component, undefined) {
-
-    var CHECK_CLS = "menuitem-checkbox";
-
-    function setUpCheckEl(self) {
-        var el = self.get("el"),
-            prefixCls = self.get('prefixCls'),
-            checkEl = el.one("." + prefixCls + CHECK_CLS);
-        if (!checkEl) {
-            checkEl = new Node("<div class='" + prefixCls + CHECK_CLS + "'/>")
-                .prependTo(el);
-            // if not ie will lose focus when click
-            checkEl.unselectable(/**
-             @type HTMLElement
-             @ignore
-             */undefined);
-        }
-        return checkEl;
-    }
+KISSY.add("menu/menuitem-render", function (S, Node, Component) {
 
     return Component.Render.extend({
 
-        initializer:function(){
-            this.set('attrTpl',this.get('attrTpl')+' role="menuitem" ');
-            this.set('clsTpl',this.get('clsTpl'));
-        },
-
-        _onSetChecked: function (v) {
-            var self = this,
-                el = self.get("el"),
-                cls = self.getCssClassWithState("checked");
-            el[v ? 'addClass' : 'removeClass'](cls);
+        initializer: function () {
+            var renderData = this.get('renderData');
+            this.get('elAttrs')['role'] = renderData.selectable ?
+                'menuitemradio' : 'menuitem';
+            if (renderData.selected) {
+                this.get('elCls').push(this.getCssClassWithState('selected'));
+            }
         },
 
         _onSetSelected: function (v) {
@@ -44,35 +23,22 @@ KISSY.add("menu/menuitem-render", function (S, Node, Component, undefined) {
             el[v ? 'addClass' : 'removeClass'](cls);
         },
 
-        '_onSetSelectable': function (v) {
-            this.get("el").attr("role", v ? ('menuitem'+'radio') : 'menuitem');
-        },
-
-        '_onSetCheckable': function (v) {
-            if (v) {
-                setUpCheckEl(this);
-            }
-            this.get("el").attr("role", v ? ('menuitem'+'checkbox') : 'menuitem');
-        },
-
         containsElement: function (element) {
             var el = this.get("el");
             return el && ( el[0] == element || el.contains(element));
         }
     }, {
         ATTRS: {
-            checkable: {},
-            selected: {},
-            // 属性必须声明，否则无法和 _onSetChecked 绑定在一起
-            checked: {}
+            contentTpl: {
+                value: '{{content}}'
+            },
+            selected: {
+                sync: 0
+            }
         },
         HTML_PARSER: {
             selectable: function (el) {
                 var cls = this.getCssClassWithPrefix("menuitem-selectable");
-                return el.hasClass(cls);
-            },
-            checkable: function (el) {
-                var cls = this.getCssClassWithPrefix("menuitem-checkable");
                 return el.hasClass(cls);
             }
         }

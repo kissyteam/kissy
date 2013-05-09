@@ -5,8 +5,6 @@
  */
 KISSY.add('component/base/box-render', function (S, Node, XTemplate) {
 
-    var uuid = 0;
-
     var $ = S.all,
         UA = S.UA,
         doc = S.Env.host.document;
@@ -17,16 +15,19 @@ KISSY.add('component/base/box-render', function (S, Node, XTemplate) {
     BoxRender.ATTRS = {
 
         id: {
-            valueFn: function () {
-                return ++uuid;
-            }
         },
 
         el: {},
 
         // 构建时批量生成，不需要执行单个
         elCls: {
-            sync: 0
+            sync: 0,
+            setter: function (v) {
+                if (typeof v == 'string') {
+                    v = v.split(/\s+/);
+                }
+                return v;
+            }
         },
 
         elStyle: {
@@ -56,30 +57,6 @@ KISSY.add('component/base/box-render', function (S, Node, XTemplate) {
             sync: 0
         },
 
-        clsTpl: {
-            value: '{{#if elCls}}' +
-                '{{#each elCls}}' +
-                ' {{.}} ' +
-                '{{/each}}' +
-                '{{/if}} '
-        },
-
-        styleTpl: {
-            value: '{{#if elStyle}}' +
-                '{{#each elStyle}}' +
-                ' {{xkey}}:{{.}}; ' +
-                '{{/each}}' +
-                '{{/if}} '
-        },
-
-        attrTpl: {
-            value: '{{#if elAttrs}}' +
-                '{{#each elAttrs}}' +
-                ' {{xkey}}="{{.}}" ' +
-                '{{/each}} ' +
-                '{{/if}}'
-        },
-
         startTpl: {
             valueFn: function () {
                 return '<div id="ks-component{{id}}"' +
@@ -91,12 +68,27 @@ KISSY.add('component/base/box-render', function (S, Node, XTemplate) {
                     '{{getCssClassWithState "hidden"}} ' +
                     '{{/if}}' +
 
-                    this.get('clsTpl') + '"' +
+                    '{{#if elCls}}' +
+                    '{{#each elCls}}' +
+                    ' {{.}} ' +
+                    '{{/each}}' +
+                    '{{/if}} ' +
 
-                    this.get('attrTpl') +
+                    '"' +
+
+                    '{{#if elAttrs}}' +
+                    '{{#each elAttrs}}' +
+                    ' {{xkey}}="{{.}}" ' +
+                    '{{/each}} ' +
+                    '{{/if}}' +
 
                     'style="' +
-                    this.get('styleTpl') +
+
+                    '{{#if elStyle}}' +
+                    '{{#each elStyle}}' +
+                    ' {{xkey}}:{{.}}; ' +
+                    '{{/each}}' +
+                    '{{/if}} ' +
 
                     '{{#if width}}' +
                     'width:{{width}};' +
@@ -111,22 +103,22 @@ KISSY.add('component/base/box-render', function (S, Node, XTemplate) {
             }
         },
 
-        endTpl: {},
+        endTpl: {
+            value: '</div>'
+        },
 
         contentTpl: {
             value: '{{content}}'
         },
 
-        renderData: {}
-    };
+        renderData: {},
 
-    BoxRender.HTML_PARSER = {
-        el: function (srcNode) {
-            return srcNode;
-        },
-        content: function (el) {
-            var contentEl = this.get('contentEl') || el;
-            return contentEl.html();
+        childrenElSelectors: {
+            value: {
+                contentEl: function (el) {
+                    return el;
+                }
+            }
         }
     };
 
@@ -152,19 +144,32 @@ KISSY.add('component/base/box-render', function (S, Node, XTemplate) {
                     }
                 }).render(self.get('renderData'));
                 el = $(html);
-                self.setInternal('el', el);
-                self.setInternal('contentEl', el);
-            } else if (!el.id) {
-                el.id = ('ks-component' + (++uuid));
+            } else if ((el = $(el)) && !el[0].id) {
+                el[0].id = ('ks-component' + S.guid());
             }
+            self.setInternal("el", el);
         },
 
         __renderUI: function () {
             var self = this;
+            var el = self.get('el');
+
+            var childrenElSelectors = self.get('childrenElSelectors');
+
+            for (var childName in childrenElSelectors) {
+                var selector = childrenElSelectors[childName];
+                if (typeof selector === "function") {
+                    self.setInternal(childName, selector(el));
+                } else {
+                    self.setInternal(childName,
+                        el.all(S.substitute(selector, this.get('renderData'))));
+                }
+            }
+
+
             // 新建的节点才需要摆放定位
             if (!self.get('srcNode')) {
                 var render = self.get('render'),
-                    el = self.get('el'),
                     renderBefore = self.get('elBefore');
                 if (renderBefore) {
                     el.insertBefore(renderBefore, /**
@@ -184,7 +189,7 @@ KISSY.add('component/base/box-render', function (S, Node, XTemplate) {
         },
 
         _onSetElCls: function (cls) {
-            this.get('el').addClass(cls);
+            this.get('el').addClass(cls.join(' '));
         },
 
         _onSetElStyle: function (style) {

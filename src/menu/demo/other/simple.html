@@ -62,7 +62,10 @@
     <label>禁用：<input type="checkbox" id='dis'/></label>
     <br>
     <label>隐藏：<input type="checkbox" id='hide'/></label>
-
+    <br>
+    <label>修改：
+        <button id="modify">修改</button>
+    </label>
 </div>
 <script src="/kissy/build/seed.js"></script>
 <script>
@@ -92,11 +95,11 @@
                         }
                     });
 
-                    sb.addChild(new Menu.Item({
+                    sb.addChild(new Menu.CheckItem({
                         content: "submenuitem1"
                     }));
 
-                    sb.addChild(new Menu.Item({
+                    sb.addChild(new Menu.CheckItem({
                         content: "submenuitem2"
                     }));
 
@@ -168,6 +171,10 @@
                     });
 
                     hide[0].checked = false;
+
+                    Node.one('#modify').on('click', function () {
+                        menu.getChildAt(0).set('content', 'modified');
+                    })
                 });
     })();
 </script>

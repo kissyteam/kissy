@@ -6,10 +6,8 @@
 KISSY.add("component/extension/position-render", function () {
 
     function Position() {
-        this.set('styleTpl', this.get('styleTpl') +
-            'z-index:{{zIndex}};');
-        this.set('clsTpl', this.get('clsTpl') +
-            ' {{prefixCls}}-ext-position ');
+        this.get('elStyle')['z-index'] = this.get('zIndex');
+        this.get('elCls').push(this.get('prefixCls') + '-ext-position ');
     }
 
     Position.ATTRS = {

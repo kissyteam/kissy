@@ -3,9 +3,11 @@
  * menu
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu", function (S, Menu, Render, Item, ItemRender, SubMenu, SubMenuRender, PopupMenu, PopupMenuRender, FilterMenu) {
+KISSY.add("menu", function (S, Menu, Render, Item, CheckItem, CheckItemRender, ItemRender, SubMenu, SubMenuRender, PopupMenu, PopupMenuRender, FilterMenu) {
     Menu.Render = Render;
     Menu.Item = Item;
+    Menu.CheckItem = CheckItem;
+    CheckItem.Render = CheckItemRender;
     Item.Render = ItemRender;
     Menu.SubMenu = SubMenu;
     SubMenu.Render = SubMenuRender;
@@ -14,10 +16,12 @@ KISSY.add("menu", function (S, Menu, Render, Item, ItemRender, SubMenu, SubMenuR
     Menu.FilterMenu = FilterMenu;
     return Menu;
 }, {
-    requires:[
+    requires: [
         'menu/base',
         'menu/menu-render',
         'menu/menuitem',
+        'menu/check-menuitem',
+        'menu/check-menuitem-render',
         'menu/menuitem-render',
         'menu/submenu',
         'menu/submenu-render',
