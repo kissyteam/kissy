@@ -183,6 +183,20 @@ KISSY.use('xtemplate', function (S, XTemplate) {
 
             describe('each', function () {
 
+                it("support object",function(){
+                   var tpl='{{#each data}}{{xname}}:{{.}}{{/each}}';
+                    var data={
+                        data:{
+                            x:1,
+                            y:2
+                        }
+                    };
+
+                    var render=new XTemplate(tpl).render(data);
+
+                    expect(render).toBe('x:1y:2');
+                });
+
                 it('allow empty content', function () {
                     var tpl = '{{#each l}}{{/each}}';
 

@@ -14,16 +14,27 @@ KISSY.add("xtemplate/runtime/commands", function (S, includeCommand) {
             if (param0) {
                 // skip array check for performance
                 var opScopes = [0, 0].concat(scopes);
-                xcount = param0.length;
-                for (var xindex = 0; xindex < xcount; xindex++) {
-                    // two more variable scope for array looping
-                    opScopes[0] = param0[xindex];
-                    opScopes[1] = {
-                        xcount: xcount,
-                        xindex: xindex
-                    };
-                    buffer += option.fn(opScopes);
+                if(S.isArray(param0)){
+                    xcount = param0.length;
+                    for (var xindex = 0; xindex < xcount; xindex++) {
+                        // two more variable scope for array looping
+                        opScopes[0] = param0[xindex];
+                        opScopes[1] = {
+                            xcount: xcount,
+                            xindex: xindex
+                        };
+                        buffer += option.fn(opScopes);
+                    }
+                }else{
+                    for(var name in param0){
+                        opScopes[0] = param0[name];
+                        opScopes[1] = {
+                            xname: name
+                        };
+                        buffer += option.fn(opScopes);
+                    }
                 }
+
             } else if (option.inverse) {
                 buffer = option.inverse(scopes);
             }
