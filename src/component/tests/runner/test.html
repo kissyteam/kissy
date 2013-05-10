@@ -23,6 +23,7 @@
 </head>
 <body>
 <h1>KISSY Component Test Cases</h1>
+<div id="t1"></div>
 
 <script src="/kissy/build/seed.js"></script>
 <script src="../../sub-modules/base/src/controller.js"></script>
@@ -37,6 +38,8 @@
 <script src="../../sub-modules/base/src/box-render.js"></script>
 <script src="../../sub-modules/base/src/box.js"></script>
 <script src="../../sub-modules/base/src/uibase.js"></script>
+<script src="../../sub-modules/base/src/tpl.js"></script>
+<script src="../../sub-modules/base/src/tpl-render.js"></script>
 
 <script src="../../sub-modules/extension/src/align.js"></script>
 <script src="../../sub-modules/extension/src/content-box-render.js"></script>
@@ -45,10 +48,13 @@
 <script src="../../sub-modules/extension/src/position.js"></script>
 <script src="../../sub-modules/extension/src/shim-render.js"></script>
 
-
+<!---->
 <script src="../specs/uibase-spec.js"></script>
 <script src="../specs/align-spec.js"></script>
 <script src="../specs/component-spec.js"></script>
+
+
+<script src="../specs/tpl-spec.js"></script>
 <script>
     KISSY.use('component/base,component/extension', function () {
 

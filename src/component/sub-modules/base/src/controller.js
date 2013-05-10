@@ -3,7 +3,7 @@
  * Base Controller class for KISSY Component.
  * @author yiminghe@gmail.com
  */
-KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBase, Manager, Render, undefined) {
+KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBase, Manager, Render, Tpl) {
 
     var ie = S.Env.host.document.documentMode || S.UA.ie,
         Features = S.Features,
@@ -164,7 +164,7 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
      * @mixins KISSY.Component.Extension.Box
      * @class KISSY.Component.Controller
      */
-    var Controller = UIBase.extend([Box], {
+    var Controller = UIBase.extend([Box,Tpl], {
 
             /**
              * mark current instance as controller instance.
@@ -860,7 +860,7 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
 
     return Controller;
 }, {
-    requires: ['./box', 'event', './impl', './uibase', './manager', './render']
+    requires: ['./box', 'event', './impl', './uibase', './manager', './render','./tpl']
 });
 /*
 
