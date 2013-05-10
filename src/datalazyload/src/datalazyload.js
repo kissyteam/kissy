@@ -22,9 +22,11 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
         };
 
     // 加载图片 src
-    var loadImgSrc = function (img, flag, webpFilter) {
-        flag = flag || IMG_SRC_DATA;
-        var dataSrc = img.getAttribute(flag),
+    var loadImgSrc = function (img, cfg) {
+        cfg = cfg || {};
+        var flag = cfg.flag || IMG_SRC_DATA,
+            webpFilter = cfg.webpFilter,
+            dataSrc = img.getAttribute(flag),
             realSrc = '';
 
         if (dataSrc && img.src != dataSrc) {
@@ -49,7 +51,12 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
             if (!realSrc) {
                 realSrc = dataSrc;
             }
-            img.src = realSrc;
+            cfg.onEnd && Event.on(img,"load error",cfg.onEnd);
+            if(!cfg.onStart || cfg.onStart(img,realSrc)!==false)
+            {//如果在onStart之中返回false，则不执行设置src操作，这样就可以自己在onStart之中设置src
+             //后续建议WEBP的支持通过这个方式实现，比较清晰
+                img.src = realSrc;
+            }
             img.removeAttribute(flag);
         }
     };
@@ -414,7 +421,15 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
             var self = this;
             self._images = S.filter(self._images, function (img) {
                 if (elementInViewport(img, windowRegion, containerRegion)) {
-                    return loadImgSrc(img, undefined, self.get('webpFilter'));
+                    return loadImgSrc(img, {
+                        onStart:function(img,src){
+                            return self.fire("imgloadstart",{img:img,src:src});
+                        },
+                        onEnd:function(e){
+                            self.fire("imgloadend",{img:img});
+                        },
+                        webpFilter:self.get('webpFilter')
+                    });
                 } else {
                     return true;
                 }
@@ -712,10 +727,10 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
                 // 遍历处理
                 if (type == 'img') {
                     if (containerNodeName == 'img') {
-                        loadImgSrc(container, imgFlag, webpFilter);
+                        loadImgSrc(container, {flag:imgFlag,webpFilter:webpFilter});
                     } else {
                         DOM.query('img', container).each(function (img) {
-                            loadImgSrc(img, imgFlag, webpFilter);
+                            loadImgSrc(img, {flag:imgFlag,webpFilter:webpFilter});
                         });
                     }
                 } else {
