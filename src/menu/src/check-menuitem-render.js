@@ -22,7 +22,7 @@ KISSY.add('menu/check-menuitem-render', function (S, MenuItemRender) {
             contentTpl: {
                 value: '<div class="{{prefixCls}}menuitem-checkbox"></div>' +
                     '<div id="{{prefixCls}}menuitem-content{{id}}"' +
-                    ' class="{{prefixCls}}menuitem-content">{{content}}</div>'
+                    ' class="{{prefixCls}}menuitem-content">{{{content}}}</div>'
             },
             checked: {
                 sync: 0

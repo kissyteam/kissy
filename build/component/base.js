@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 10 00:10
+build time: May 10 16:22
 */
 /**
  * @ignore
@@ -141,7 +141,7 @@ KISSY.add('component/base/box-render', function (S, Node, XTemplate) {
         },
 
         contentTpl: {
-            value: '{{content}}'
+            value: '{{{content}}}'
         },
 
         renderData: {},

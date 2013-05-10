@@ -108,7 +108,7 @@ KISSY.add('component/base/box-render', function (S, Node, XTemplate) {
         },
 
         contentTpl: {
-            value: '{{content}}'
+            value: '{{{content}}}'
         },
 
         renderData: {},

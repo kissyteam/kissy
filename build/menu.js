@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 10 00:23
+build time: May 10 16:22
 */
 /**
  * @ignore
@@ -277,7 +277,7 @@ KISSY.add('menu/check-menuitem-render', function (S, MenuItemRender) {
             contentTpl: {
                 value: '<div class="{{prefixCls}}menuitem-checkbox"></div>' +
                     '<div id="{{prefixCls}}menuitem-content{{id}}"' +
-                    ' class="{{prefixCls}}menuitem-content">{{content}}</div>'
+                    ' class="{{prefixCls}}menuitem-content">{{{content}}}</div>'
             },
             checked: {
                 sync: 0
@@ -735,7 +735,7 @@ KISSY.add("menu/menuitem-render", function (S, Node, Component) {
     }, {
         ATTRS: {
             contentTpl: {
-                value: '{{content}}'
+                value: '{{{content}}}'
             },
             selected: {
                 sync: 0
@@ -1028,7 +1028,7 @@ KISSY.add("menu/popupmenu", function (S, extension, Menu, PopupMenuRender) {
  */
 KISSY.add("menu/submenu-render", function (S, MenuItemRender) {
     var CONTENT_TMPL = '<span id="{{prefixCls}}menuitem-content{{id}}" ' +
-            'class="{{prefixCls}}menuitem-content">{{content}}' +
+            'class="{{prefixCls}}menuitem-content">{{{content}}}' +
             '<' + '/span>',
         ARROW_TMPL = '<span class="{{prefixCls}}submenu-arrow">►<' + '/span>';
 

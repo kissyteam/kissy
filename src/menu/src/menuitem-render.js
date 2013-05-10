@@ -30,7 +30,7 @@ KISSY.add("menu/menuitem-render", function (S, Node, Component) {
     }, {
         ATTRS: {
             contentTpl: {
-                value: '{{content}}'
+                value: '{{{content}}}'
             },
             selected: {
                 sync: 0

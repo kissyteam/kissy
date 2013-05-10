@@ -5,7 +5,7 @@
  */
 KISSY.add("menu/submenu-render", function (S, MenuItemRender) {
     var CONTENT_TMPL = '<span id="{{prefixCls}}menuitem-content{{id}}" ' +
-            'class="{{prefixCls}}menuitem-content">{{content}}' +
+            'class="{{prefixCls}}menuitem-content">{{{content}}}' +
             '<' + '/span>',
         ARROW_TMPL = '<span class="{{prefixCls}}submenu-arrow">►<' + '/span>';
 
