@@ -12,7 +12,7 @@
         },
         modules: {
             core: {
-                alias: ['dom', 'event', 'ajax', 'anim', 'base', 'node', 'json','ua']
+                alias: ['dom', 'event', 'ajax', 'anim', 'base', 'node', 'json','ua','cookie']
             }
         }
     });
