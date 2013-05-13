@@ -7,7 +7,15 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-touch-fullscreen" content="yes">
     <title>KISSY Dialog</title>
-    <script src="/kissy/build/css/dpl/base.css"></script>
+    <link rel="stylesheet" href="/kissy/build/css/dpl/base.css"/>
+    <link rel="stylesheet" href="assets/cool.css"/>
+    <style>
+        ul, li {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
     <script src="/kissy/build/seed.js"></script>
 </head>
 <body>
@@ -71,15 +79,17 @@
 <div class="s-section" id="detail">
     <div class="s-demo">
         <style>
-            .ks-overlay p{
+            .ks-overlay p {
                 margin: 0;
                 padding: 0;
             }
-            .ks-overlay ul,.ks-overlay li{
+
+            .ks-overlay ul, .ks-overlay li {
                 margin: 0;
                 padding: 0;
                 list-style-type: none;
             }
+
             #detail .tb-attention {
                 position: absolute;
                 left: -9999px;
@@ -173,6 +183,12 @@
         <button id="btn3" class="button">选择</button>
 
         <div class="tb-key tb-attention" id="choose">
+
+            <a href="javascript:void('close')"
+               class="ks-ext-close" role="button">
+                <span class="ks-ext-close-x">close</span>
+            </a>
+
             <p class="ks-stdmod-header tb-note-title">请选择您要的商品信息
             </p>
 
@@ -230,8 +246,8 @@
                 d.plug(new DragPlugin({
                     handlers: ['.ks-stdmod-header']
                 }).plug(new ConstrainPlugin({
-                    constrain: window
-                })));
+                            constrain: window
+                        })));
                 Node.one('#btn3').on('click', function () {
                     d.show();
                 });
@@ -273,7 +289,7 @@
                 var dialog = new O.Dialog({
                     width: 400,
                     bodyStyle: {
-                        height: 100
+                        height: '100px'
                     },
                     effect: {
                         effect: 'fade'
@@ -287,23 +303,25 @@
                 });
 
                 dialog.plug(new DragPlugin({
-                    handlers: ['.ks-stdmod-header']
-                }).plug(new ConstrainPlugin({
-                    constrain: '#c1'
-                }))).plug(new ResizePlugin({
-                    minWidth: 150,
-                    minHeight: 70,
-                    handlers: ["b", "t", "r", "l", "tr", "tl", "br", "bl"]
-                }));
+                            handlers: ['.ks-stdmod-header']
+                        }).plug(new ConstrainPlugin({
+                                    constrain: '#c1'
+                                }))).plug(new ResizePlugin({
+                            minWidth: 150,
+                            minHeight: 70,
+                            handlers: ["b", "t", "r", "l", "tr", "tl", "br", "bl"]
+                        }));
 
-                dialog.on('show', function () {
-                    if (stat) {
-                        this.set('bodyContent', '我的位置只能在容器中');
-                    } else {
-                        this.set('bodyContent', '我自由啦');
+                dialog.on('beforeVisibleChange', function (e) {
+                    if (e.newVal) {
+                        if (stat) {
+                            this.set('bodyContent', '我的位置只能在容器中');
+                        } else {
+                            this.set('bodyContent', '我自由啦');
+                        }
+                        Node.one('#btn6').html('隐藏');
+                        sh = 1;
                     }
-                    Node.one('#btn6').html('隐藏');
-                    sh = 1;
                 });
                 dialog.on('hide', function () {
                     Node.one('#btn6').html('显示');
@@ -334,7 +352,7 @@
                 Node.one('#btn8').on('click', function () {
                     dialog.getPlugin('component/plugin/drag')
                             .getPlugin('dd/plugin/constrain')
-                            .set('constrain','#c1');
+                            .set('constrain', '#c1');
                     dialog.set("align", {
                         node: '#c1',
                         points: ['cc', 'cc']

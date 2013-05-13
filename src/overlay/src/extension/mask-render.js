@@ -54,14 +54,8 @@ KISSY.add("overlay/extension/mask-render", function (S, Node) {
     }
 
     Mask.ATTRS = {
-
-        mask: {
-            value: false
-        },
-        maskNode: {
-
-        }
-
+        mask: {},
+        maskNode: {}
     };
 
     // for augment, no need constructor

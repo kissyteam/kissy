@@ -32,6 +32,10 @@
     border: 1px solid #BFBFBF;
 }
 
+.pix-popupmenu-hidden {
+    visibility: hidden;
+}
+
 .pix-popupmenu .pix-option {
     height: 34px;
     line-height: 34px;

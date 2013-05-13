@@ -4,15 +4,5 @@
     <property name="component.name" value="combobox"/>
 
     <import file="../common.xml"/>
-
-    <target name="tpl2mod">
-
-        <tpl2mod>
-
-            <fileset dir="${component.src.dir}" includes="**/*.tpl.html"/>
-
-
-        </tpl2mod>
-    </target>
 </project>
 

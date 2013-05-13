@@ -32,7 +32,8 @@ KISSY.add("overlay/extension/mask", function (S, Event) {
          * @ignore
          */
         mask: {
-            view: 1
+            view: 1,
+            value:false
         },
         /**
          * Mask node of current component.

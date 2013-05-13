@@ -116,7 +116,9 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
             handleFocus: function () {
                 var self = this,
                     placeholderEl;
-                setInvalid(self, false);
+                if (self.get('invalidEl')) {
+                    setInvalid(self, false);
+                }
                 if (placeholderEl = self.get("placeholderEl")) {
                     placeholderEl.hide();
                 }
@@ -128,16 +130,18 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
                     input;
                 ComboBox.superclass.handleBlur.apply(self, arguments);
                 delayHide.call(self);
-                input = self.get("input");
-                self.validate(function (error, val) {
-                    if (error) {
-                        if (!self.get("focused") && val == input.val()) {
-                            setInvalid(self, error);
+                if (self.get('invalidEl')) {
+                    input = self.get("input");
+                    self.validate(function (error, val) {
+                        if (error) {
+                            if (!self.get("focused") && val == input.val()) {
+                                setInvalid(self, error);
+                            }
+                        } else {
+                            setInvalid(self, false);
                         }
-                    } else {
-                        setInvalid(self, false);
-                    }
-                });
+                    });
+                }
                 if (placeholderEl && !input.val()) {
                     placeholderEl.show();
                 }
@@ -299,7 +303,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
                  * @ignore
                  */
                 inputValue: {
-                    render:1,
+                    value:'',
                     view: 1
                 },
 
@@ -319,7 +323,6 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
                  * @ignore
                  */
                 placeholder: {
-                    render:1,
                     view: 1
                 },
 
@@ -365,7 +368,6 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
                  * @ignore
                  */
                 hasTrigger: {
-                    render:1,
                     view: 1
                 },
 
@@ -405,7 +407,8 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
                  * @ignore
                  */
                 collapsed: {
-                    view: 1
+                    view: 1,
+                    sync: 0
                 },
 
                 /**
@@ -497,7 +500,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
             menu = self.get("menu");
         if (e.target == menu) {
             el = menu.get("el");
-            contentEl = menu.get("contentEl");
+            contentEl = menu.get("el");
             // menu has input!
             el.on("focusout", delayHide, self);
             el.on("focusin", clearDismissTimer, self);
@@ -626,6 +629,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
             children = [],
             val,
             matchVal,
+            highlightedItem,
             i,
             menu = getMenu(self, 1);
 
@@ -633,8 +637,8 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
 
         menu.removeChildren(true);
 
-        if (menu.get('highlightedItem')) {
-            menu.get('highlightedItem').set('highlighted', false);
+        if (highlightedItem = menu.get('highlightedItem')) {
+            highlightedItem.set('highlighted', false);
         }
 
         if (data && data.length) {

@@ -190,8 +190,7 @@ KISSY.add("menu/filtermenu", function (S, Component, Menu, FilterMenuRender) {
                  * @ignore
                  */
                 label: {
-                    view: 1,
-                    render:1
+                    view: 1
                 },
 
                 /**

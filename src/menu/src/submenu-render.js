@@ -3,11 +3,7 @@
  * submenu render for kissy ,extend menuitem render with arrow
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/submenu-render", function (S, MenuItemRender) {
-    var CONTENT_TMPL = '<span id="{{prefixCls}}menuitem-content{{id}}" ' +
-            'class="{{prefixCls}}menuitem-content">{{{content}}}' +
-            '<' + '/span>',
-        ARROW_TMPL = '<span class="{{prefixCls}}submenu-arrow">►<' + '/span>';
+KISSY.add("menu/submenu-render", function (S, MenuItemRender, SubMenuTpl) {
 
     return MenuItemRender.extend({
         initializer: function () {
@@ -21,7 +17,7 @@ KISSY.add("menu/submenu-render", function (S, MenuItemRender) {
     }, {
         ATTRS: {
             contentTpl: {
-                value: CONTENT_TMPL + ARROW_TMPL
+                value: SubMenuTpl
             }
         },
         HTML_PARSER: {
@@ -36,5 +32,5 @@ KISSY.add("menu/submenu-render", function (S, MenuItemRender) {
         }
     });
 }, {
-    requires: ['./menuitem-render']
+    requires: ['./menuitem-render', './submenu-tpl']
 });

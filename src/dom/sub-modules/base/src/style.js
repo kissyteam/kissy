@@ -418,14 +418,7 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
             }
             return ret;
         };
-    });
 
-    var cssShow = { position: 'absolute', visibility: 'hidden', display: 'block' };
-
-    /*
-     css height,width 永远都是计算值
-     */
-    S.each(['height', 'width'], function (name) {
         /**
          * @ignore
          */
@@ -442,6 +435,8 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
             }
         };
     });
+
+    var cssShow = { position: 'absolute', visibility: 'hidden', display: 'block' };
 
     S.each(['left', 'top'], function (name) {
         CUSTOM_STYLES[ name ] = {

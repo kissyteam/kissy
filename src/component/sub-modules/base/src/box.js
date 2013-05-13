@@ -41,20 +41,13 @@ KISSY.add('component/base/box', function (S) {
          * fired after current component hides
          * @param {KISSY.Event.CustomEventObject} e
          */
+    }
 
-        var self = this,
-            attrs = self.getAttrs(),
-            a,
-            attr,
-            renderData = self.get('renderData');
-
-        for (a in attrs) {
-            attr = attrs[a];
-            if (attr.render && !(a in renderData)) {
-                renderData[a] = self.get(a);
-            }
+    function pxSetter(v) {
+        if (typeof v == 'number') {
+            v += 'px';
         }
-
+        return v;
     }
 
     Box.ATTRS =
@@ -62,8 +55,7 @@ KISSY.add('component/base/box', function (S) {
 
         id: {
             view: 1,
-            render: 1,
-            valueFn:function(){
+            valueFn: function () {
                 return S.guid();
             }
         },
@@ -81,8 +73,8 @@ KISSY.add('component/base/box', function (S) {
          * @ignore
          */
         content: {
-            render: 1,
-            view: 1
+            view: 1,
+            value:''
         },
 
         contentTpl: {
@@ -111,8 +103,8 @@ KISSY.add('component/base/box', function (S) {
          * @ignore
          */
         width: {
-            render: 1,
-            view: 1
+            view: 1,
+            setter: pxSetter
         },
 
         /**
@@ -128,8 +120,8 @@ KISSY.add('component/base/box', function (S) {
          * @ignore
          */
         height: {
-            render: 1,
-            view: 1
+            view: 1,
+            setter: pxSetter
         },
 
         /**
@@ -140,9 +132,8 @@ KISSY.add('component/base/box', function (S) {
          * @ignore
          */
         elCls: {
-            render: 1,
             view: 1,
-            value:[]
+            value: []
         },
 
         /**
@@ -153,9 +144,8 @@ KISSY.add('component/base/box', function (S) {
          * @ignore
          */
         elStyle: {
-            render: 1,
             view: 1,
-            value:{}
+            value: {}
         },
 
         /**
@@ -166,9 +156,8 @@ KISSY.add('component/base/box', function (S) {
          * @ignore
          */
         elAttrs: {
-            render: 1,
             view: 1,
-            value:{}
+            value: {}
         },
 
         /**
@@ -229,7 +218,6 @@ KISSY.add('component/base/box', function (S) {
          */
         visible: {
             sync: 0,
-            render: 1,
             value: true,
             view: 1
         },

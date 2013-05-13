@@ -8,9 +8,7 @@ KISSY.add("menu/menu-render", function (S, Component) {
     return Component.Render.extend({
 
         initializer: function () {
-            this.set('attrTpl',
-                this.get('attrTpl') +
-                    ' role="menu" aria-haspopup="true" ');
+            this.get('elAttrs')['role']='menu';
         },
 
         setAriaActiveDescendant: function (v) {

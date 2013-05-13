@@ -22,7 +22,6 @@ KISSY.add('menu/check-menuitem', function (S, MenuItem, CheckMenuItemRender) {
              * @ignore
              */
             checked: {
-                render: 1,
                 view: 1
             },
             xrender: {

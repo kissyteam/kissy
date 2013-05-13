@@ -25,7 +25,7 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender, undefined) {
             // ignore v == null
             // do not use set('highlightedItem',null) for api
             // use this.get('highlightedItem').set('highlighted', false);
-            if (v && (highlightedItem = ev.prevVal)) {
+            if (v && ev && (highlightedItem = ev.prevVal)) {
                 // in case set highlightedItem null again
                 highlightedItem.set('highlighted', false, {
                     data: {
@@ -221,7 +221,7 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender, undefined) {
 
             defaultChildCfg: {
                 value: {
-                    xclass:'menuitem'
+                    xclass: 'menuitem'
                 }
             }
         }

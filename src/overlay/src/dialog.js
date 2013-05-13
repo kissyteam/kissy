@@ -3,7 +3,7 @@
  * KISSY.Dialog
  * @author yiminghe@gmail.com
  */
-KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node, StdMod, DialogEffect) {
+KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
 
     /**
      * @class KISSY.Overlay.Dialog
@@ -11,10 +11,23 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node, StdMod, Di
      * @extends KISSY.Overlay
      * @mixins KISSY.Overlay.Extension.StdMod
      */
-    var Dialog = Overlay.extend([
-        StdMod,
-        DialogEffect
-    ], {
+    var Dialog = Overlay.extend({
+            // also simplify body
+            __afterCreateEffectGhost: function (ghost) {
+                var self = this,
+                    body,
+                    elBody = self.get("body");
+
+                ghost.all('.' + self.get('prefixCls') + 'stdmod-body')
+                    .css({
+                        height: elBody.height(),
+                        width: elBody.width()
+                    })
+                    .html('');
+
+                return ghost;
+            },
+
             handleKeyEventInternal: function (e) {
                 if (this.get('escapeToClose') &&
                     e.keyCode === Node.KeyCodes.ESC) {
@@ -55,6 +68,109 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node, StdMod, Di
 
         {
             ATTRS: {
+
+                /**
+                 * Header element of dialog.
+                 * @type {KISSY.NodeList}
+                 * @property header
+                 * @readonly
+                 */
+                /**
+                 * @ignore
+                 */
+                header:{
+                    view:1
+                },
+                /**
+                 * Body element of dialog.
+                 * @type {KISSY.NodeList}
+                 * @property body
+                 * @readonly
+                 */
+                /**
+                 * @ignore
+                 */
+                body:{
+                    view:1
+                },
+                /**
+                 * Footer element of dialog.
+                 * @type {KISSY.NodeList}
+                 * @property footer
+                 * @readonly
+                 */
+                /**
+                 * @ignore
+                 */
+                footer:{
+                    view:1
+                },
+                /**
+                 * Key-value map of body element's style.
+                 * @cfg {Object} bodyStyle
+                 */
+                /**
+                 * @ignore
+                 */
+                bodyStyle:{
+                    value:{},
+                    view:1
+                },
+                /**
+                 * Key-value map of footer element's style.
+                 * @cfg {Object} footerStyle
+                 */
+                /**
+                 * @ignore
+                 */
+                footerStyle:{
+                    value:{},
+                    view:1
+                },
+                /**
+                 * Key-value map of header element's style.
+                 * @cfg {Object} headerStyle
+                 */
+                /**
+                 * @ignore
+                 */
+                headerStyle:{
+                    value:{},
+                    view:1
+                },
+                /**
+                 * html content of header element.
+                 * @cfg {KISSY.NodeList|String} headerContent
+                 */
+                /**
+                 * @ignore
+                 */
+                headerContent:{
+                    value:'',
+                    view:1
+                },
+                /**
+                 * html content of body element.
+                 * @cfg {KISSY.NodeList|String} bodyContent
+                 */
+                /**
+                 * @ignore
+                 */
+                bodyContent:{
+                    value:'',
+                    view:1
+                },
+                /**
+                 * html content of footer element.
+                 * @cfg {KISSY.NodeList|String} footerContent
+                 */
+                /**
+                 * @ignore
+                 */
+                footerContent:{
+                    value:'',
+                    view:1
+                },
 
                 /**
                  * whether this component can be closed.
@@ -162,9 +278,7 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node, StdMod, Di
     requires: [
         "./base",
         './dialog-render',
-        'node',
-        './extension/stdmod',
-        './extension/dialog-effect'
+        'node'
     ]
 });
 

@@ -9,7 +9,7 @@ KISSY.add("menubutton", function(S, MenuButton, MenuButtonRender, Select, Option
     return MenuButton;
 }, {
     requires:['menubutton/base',
-        'menubutton/baseRender',
+        'menubutton/base-render',
         'menubutton/select',
         'menubutton/option']
 });

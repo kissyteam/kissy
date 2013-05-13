@@ -120,26 +120,31 @@
 
             KISSY.use("menubutton,menu", function (S, MenuButton, Menu) {
                 var sb = new Menu.PopupMenu();
-                sb.addChild(new Menu.Item({
-                    content:"submenuitem1",
-                    checkable:true}));
-                sb.addChild(new Menu.Item({
-                    content:"submenuitem2",
-                    checkable:true}));
+
+                sb.addChild(new Menu.CheckItem({
+                    content:"submenuitem1"
+                }));
+
+                sb.addChild(new Menu.CheckItem({
+                    content:"submenuitem2"
+                }));
 
 
                 var sb2 = new Menu.PopupMenu();
-                sb2.addChild(new Menu.Item({
-                    content:"submenuitem11",
-                    checkable:true}));
-                sb2.addChild(new Menu.Item({
-                    content:"submenuitem22",
-                    checkable:true}));
+
+                sb2.addChild(new Menu.CheckItem({
+                    content:"submenuitem11"
+                }));
+
+                sb2.addChild(new Menu.CheckItem({
+                    content:"submenuitem22"
+                }));
                 var b2 = new Menu.SubMenu({
                     content:"sub-sub-menu",
 
                     menu:sb2
                 });
+
                 sb.addChild(b2);
 
                 var b = new Menu.SubMenu({
@@ -152,8 +157,8 @@
 
                     children:[
                         b,
-                        new Menu.Item({content:"alone",
-                            checkable:true
+                        new Menu.CheckItem({
+                            content:"alone"
                         })
                     ]
                 });

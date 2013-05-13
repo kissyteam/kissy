@@ -84,7 +84,6 @@ KISSY.add("component/extension/position", function (S) {
          * @ignore
          */
         zIndex: {
-            render: 1,
             view: 1
         },
         /**

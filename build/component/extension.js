@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 13 13:48
+build time: May 13 23:01
 */
 /**
  * @ignore
@@ -485,8 +485,9 @@ KISSY.add("component/extension", function (S, Align, Position, PositionRender, S
 KISSY.add("component/extension/position-render", function () {
 
     function Position() {
-        this.get('elStyle')['z-index'] = this.get('zIndex');
-        this.get('elCls').push(this.get('prefixCls') + '-ext-position ');
+        var renderData = this.get('renderData');
+        this.get('elStyle')['z-index'] = renderData.zIndex;
+        this.get('elCls').push(renderData.prefixCls + 'ext-position ');
     }
 
     Position.ATTRS = {
@@ -607,7 +608,6 @@ KISSY.add("component/extension/position", function (S) {
          * @ignore
          */
         zIndex: {
-            render: 1,
             view: 1
         },
         /**

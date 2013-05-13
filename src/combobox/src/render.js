@@ -8,12 +8,12 @@ KISSY.add("combobox/render", function (S, Component, ComboboxTpl) {
     var ComboboxRender = Component.Render.extend({
 
         initializer: function () {
-            var childElSelectors = this.get('childElSelectors');
-            S.mix(childElSelectors, {
-                input: '#ks-combobox-input{{id}}',
-                trigger: '#ks-combobox-trigger{{id}}',
-                invalidEl: '#ks-combobox-invalid-el{{id}}',
-                placeholderEl: '#ks-combobox-placeholder{{id}}'
+            var childrenElSelectors = this.get('childrenElSelectors');
+            S.mix(childrenElSelectors, {
+                input: '#ks-combobox-input{id}',
+                trigger: '#ks-combobox-trigger{id}',
+                invalidEl: '#ks-combobox-invalid-el{id}',
+                placeholderEl: '#ks-combobox-placeholder{id}'
             });
         },
 
@@ -22,7 +22,7 @@ KISSY.add("combobox/render", function (S, Component, ComboboxTpl) {
         },
 
         _onSetCollapsed: function (v) {
-            this.get("input").attr("aria-expanded", v);
+            this.get("input").attr("aria-expanded", !v);
         },
 
         _onSetDisabled: function (v) {
@@ -33,7 +33,8 @@ KISSY.add("combobox/render", function (S, Component, ComboboxTpl) {
     }, {
         ATTRS: {
             collapsed: {
-                value: true
+                value: true,
+                sync: 0
             },
 
             hasTrigger: {
@@ -42,6 +43,10 @@ KISSY.add("combobox/render", function (S, Component, ComboboxTpl) {
             },
 
             input: {
+            },
+
+            disabled: {
+                sync: 0
             },
 
             trigger: {

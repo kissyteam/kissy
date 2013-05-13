@@ -32,10 +32,6 @@
     </h2>
 </div>
 
-<div style="margin:10px auto; width:800px;text-align: center">
-    <label>trigger : <input type="checkbox" checked id="t"/></label>
-</div>
-
 <script src="/kissy/build/seed.js"></script>
 <script src="../../src/render.js"></script>
 <script src="../../src/base.js"></script>
@@ -45,6 +41,7 @@
 <script src="../../src/local-data-source.js"></script>
 <script src="../../src/remote-data-source.js"></script>
 <script src="../../src/multi-value-combobox.js"></script>
+<script src="../../src/render-tpl.js"></script>
 <script>
     KISSY.use("combobox", function (S, ComboBox) {
 
@@ -75,11 +72,8 @@
                     return ret;
                 }
             });
+
             basicComboBox.render();
-            var t;
-            t = S.all('#t').on("click", function () {
-                basicComboBox.set("hasTrigger", t.prop("checked"));
-            });
 
             basicComboBox.on("click", function (e) {
                 var item = e.target;

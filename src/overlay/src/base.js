@@ -3,8 +3,13 @@
  * controller for overlay
  * @author yiminghe@gmail.com
  */
-KISSY.add("overlay/base", function (S, Component, Extension, Loading, Close, Mask, OverlayRender, OverlayEffect) {
+KISSY.add("overlay/base", function (S, Component, Extension, Loading, Mask, OverlayRender, OverlayEffect) {
 
+    var HIDE = "hide",
+        actions = {
+            hide: HIDE,
+            destroy: "destroy"
+        };
     /**
      * KISSY Overlay Component.
      * xclass: 'overlay'.
@@ -21,11 +26,78 @@ KISSY.add("overlay/base", function (S, Component, Extension, Loading, Close, Mas
         Extension.Position,
         Loading,
         Extension.Align,
-        Close,
         Mask,
         OverlayEffect
-    ], {}, {
+    ], {
+        bindUI: function () {
+            var self = this,
+                closeBtn = self.get("closeBtn");
+            if (closeBtn) {
+                closeBtn.on("click", function (ev) {
+                    self.close();
+                    ev.preventDefault();
+                });
+            }
+        },
+        /**
+         * hide or destroy according to {@link KISSY.Overlay.Extension.Close#closeAction}
+         * @chainable
+         */
+        close: function () {
+            var self = this;
+            self[actions[self.get("closeAction")] || HIDE]();
+            return self;
+        }
+    }, {
         ATTRS: {
+
+            /**
+             * Whether close button is visible.
+             *
+             * Defaults to: true.
+             *
+             * @cfg {Boolean} closable
+             */
+            /**
+             * Whether close button is visible.
+             * @type {Boolean}
+             * @property closable
+             */
+            /**
+             * @ignore
+             */
+            closable: {
+                value: false,
+                view: 1
+            },
+
+            /**
+             * close button element.
+             * @type {KISSY.NodeList}
+             * @property closeBtn
+             * @readonly
+             */
+            /**
+             * @ignore
+             */
+            closeBtn: {
+                view: 1
+            },
+
+            /**
+             * Whether to destroy or hide current element when click close button.
+             * Can set "destroy" to destroy it when click close button.
+             *
+             * Defaults to: "hide".
+             *
+             * @cfg {String} closeAction
+             */
+            /**
+             * @ignore
+             */
+            closeAction: {
+                value: HIDE
+            },
 
             /**
              * overlay can not have focus.
@@ -58,20 +130,6 @@ KISSY.add("overlay/base", function (S, Component, Extension, Loading, Close, Mas
             },
 
             /**
-             * whether this component can be closed.
-             *
-             * Defaults to: false
-             *
-             * @cfg {Boolean} closable
-             */
-            /**
-             * @ignore
-             */
-            closable: {
-                value: false
-            },
-
-            /**
              * whether this component can be responsive to mouse.
              *
              * Defaults to: false
@@ -98,7 +156,6 @@ KISSY.add("overlay/base", function (S, Component, Extension, Loading, Close, Mas
         'component/base',
         'component/extension',
         "./extension/loading",
-        "./extension/close",
         "./extension/mask",
         './overlay-render',
         './extension/overlay-effect'

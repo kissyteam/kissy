@@ -205,8 +205,6 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
 
                 defaultChildCfg.prefixCls = defaultChildCfg.prefixCls ||
                     self.get('prefixCls');
-                // initialize view
-                self.setInternal("view", constructView(self));
             },
 
             /**
@@ -215,8 +213,10 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
              */
             createDom: function () {
                 var self = this,
-                    el,
-                    view = self.get("view");
+                    view,
+                    el;
+                // initialize view
+                self.setInternal("view", view = constructView(self));
                 view.create();
                 el = view.getKeyEventTarget();
                 if (!self.get("allowTextSelection")) {
@@ -249,6 +249,8 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
                 }
 
                 if (self.get('handleMouseEvents')) {
+
+                    el = self.get('el');
 
                     if (!isTouchSupported) {
                         el.on("mouseenter", wrapBehavior(self, "handleMouseEnter"))
@@ -616,12 +618,15 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
             destructor: function () {
                 var self = this,
                     i,
-                    view,
+                    view = self.get("view"),
                     children = self.get("children");
                 for (i = 0; i < children.length; i++) {
                     children[i].destroy && children[i].destroy();
                 }
-                self.get("view").destroy();
+                if (view) {
+                    view.destroy();
+                }
+
             }
         },
         {
@@ -656,7 +661,6 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
                  * @ignore
                  */
                 focusable: {
-                    render: 1,
                     value: true,
                     view: 1
                 },
@@ -709,8 +713,7 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
                  */
                 focused: {
                     view: 1,
-                    sync: 0,
-                    render: 1
+                    sync: 0
                 },
 
                 /**
@@ -723,7 +726,6 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
                  */
                 active: {
                     view: 1,
-                    render: 1,
                     value: false
                 },
 
@@ -737,7 +739,7 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
                  */
                 highlighted: {
                     view: 1,
-                    render: 1,
+                    sync: 0,
                     value: false
                 },
 
@@ -761,7 +763,6 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
                  */
                 prefixCls: {
                     value: S.config('component/prefixCls') || 'ks-',
-                    render: 1,
                     view: 1
                 },
                 /**
@@ -818,7 +819,6 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
                  */
                 disabled: {
                     view: 1,
-                    render: 1,
                     value: false
                 },
 

@@ -74,6 +74,13 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
          */
         containsElement: function (element) {
             return this.get('view') && this.get('view').containsElement(element);
+        },
+
+        syncUI: function () {
+            // highlighted is sync false
+            if (this.get('highlighted')) {
+                this.get('parent').set('highlightedItem', this);
+            }
         }
 
     }, {
@@ -96,7 +103,6 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
              * @ignore
              */
             selectable: {
-                render:1,
                 view: 1
             },
 
@@ -134,7 +140,6 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
              * @ignore
              */
             selected: {
-                render:1,
                 view: 1
             },
 

@@ -70,7 +70,7 @@ KISSY.add('overlay/extension/overlay-effect', function (S) {
             complete: function () {
                 self.__effectGhost = null;
                 ghost.remove();
-                el.css('visibility','');
+                el.css('visibility', '');
                 callback();
             }
         });
@@ -172,12 +172,10 @@ KISSY.add('overlay/extension/overlay-effect', function (S) {
          */
         _onSetVisible: function (v) {
             var self = this;
-            if (self.get('rendered')) {
-                // delay show and hide event after anim
-                processEffect(self, v, function () {
-                    self.fire(v ? 'show' : 'hide');
-                });
-            }
+            // delay show and hide event after anim
+            processEffect(self, v, function () {
+                self.fire(v ? 'show' : 'hide');
+            });
         }
 
     };

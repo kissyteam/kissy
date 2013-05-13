@@ -37,8 +37,10 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
 
             bindUI: function () {
                 var self = this;
-                self.on('afterHighlightedItemChange', onMenuAfterHighlightedItemChange, self);
-                win.on("resize", self.__repositionBuffer = S.buffer(reposition, 50), self);
+                self.on('afterHighlightedItemChange',
+                    onMenuAfterHighlightedItemChange, self);
+                win.on("resize",
+                    self.__repositionBuffer = S.buffer(reposition, 50), self);
                 self.on('click', onMenuItemClick, self);
             },
 
@@ -258,6 +260,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
                  * @type {Boolean}
                  */
                 collapsed: {
+                    sync:0,
                     view: 1
                 },
                 xrender: {
@@ -335,5 +338,5 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
 
     return MenuButton;
 }, {
-    requires: [ "node", "button", "./baseRender", "menu", "component/base"]
+    requires: [ "node", "button", "./base-render", "menu", "component/base"]
 });

@@ -32,7 +32,7 @@ KISSY.add("menu/popupmenu-render", function (S, extension, MenuRender) {
         ATTRS: {
             contentTpl: {
                 value: '<div ' +
-                    'id="{{prefixCls}}contentbox{{id}}" ' +
+                    'id="ks-contentbox{{id}}" ' +
                     'class="{{prefixCls}}contentbox ' +
                     '{{prefixCls}}popupmenu-contentbox">' +
                     '</div>'

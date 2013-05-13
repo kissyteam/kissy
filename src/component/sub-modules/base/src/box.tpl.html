@@ -1,0 +1,37 @@
+<div id="ks-component{{id}}" 
+ class="{{getCssClassWithState ""}}
+
+{{#if visible}} 
+{{getCssClassWithState "shown"}}  
+{{else}} 
+{{getCssClassWithState "hidden"}}  
+{{/if}} 
+
+{{#if elCls}} 
+{{#each elCls}} 
+ {{.}}  
+{{/each}} 
+{{/if}}
+"
+
+{{#if elAttrs}} 
+{{#each elAttrs}} 
+ {{xkey}}="{{.}}"  
+{{/each}}  
+{{/if}} 
+
+style=" 
+{{#if elStyle}}
+{{#each elStyle}} 
+ {{xkey}}:{{.}};  
+{{/each}} 
+{{/if}}  
+
+{{#if width}} 
+width:{{width}}; 
+{{/if}} 
+
+{{#if height}} 
+height:{{height}}; 
+{{/if}} 
+">

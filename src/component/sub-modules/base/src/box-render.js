@@ -3,55 +3,32 @@
  * Box
  * @author yiminghe@gmail.com
  */
-KISSY.add('component/base/box-render', function (S, Node, XTemplate) {
+KISSY.add('component/base/box-render', function (S, Node, XTemplate,BoxTpl) {
 
     var $ = S.all,
         UA = S.UA,
-        startTpl = '<div id="ks-component{{id}}"' +
-            ' class="{{getCssClassWithState ""}} ' +
-
-            '{{#if visible}}' +
-            '{{getCssClassWithState "shown"}} ' +
-            '{{else}}' +
-            '{{getCssClassWithState "hidden"}} ' +
-            '{{/if}}' +
-
-            '{{#if elCls}}' +
-            '{{#each elCls}}' +
-            ' {{.}} ' +
-            '{{/each}}' +
-            '{{/if}} ' +
-
-            '"' +
-
-            '{{#if elAttrs}}' +
-            '{{#each elAttrs}}' +
-            ' {{xkey}}="{{.}}" ' +
-            '{{/each}} ' +
-            '{{/if}}' +
-
-            'style="' +
-
-            '{{#if elStyle}}' +
-            '{{#each elStyle}}' +
-            ' {{xkey}}:{{.}}; ' +
-            '{{/each}}' +
-            '{{/if}} ' +
-
-            '{{#if width}}' +
-            'width:{{width}};' +
-            '{{/if}}' +
-
-            '{{#if height}}' +
-            'height:{{height}};' +
-            '{{/if}}' +
-
-            '"' +
-            '>',
+        startTpl = BoxTpl,
         endTpl = '</div>',
         doc = S.Env.host.document;
 
     function BoxRender() {
+
+        var self=this;
+
+        if (!self.get('srcNode')) {
+            var attrs = self.getAttrs(),
+                a,
+                attr,
+                renderData = self.get('renderData');
+
+            for (a in attrs) {
+                attr = attrs[a];
+                if (a != 'renderData' && !(a in renderData)) {
+                    renderData[a] = self.get(a);
+                }
+            }
+
+        }
     }
 
     BoxRender.ATTRS = {
@@ -125,18 +102,23 @@ KISSY.add('component/base/box-render', function (S, Node, XTemplate) {
          */
         __createDom: function () {
             var self = this,
+                renderData = self.get('renderData'),
                 el, tpl, html;
+
             if (!(el = self.get('srcNode'))) {
+
                 tpl = startTpl +
                     self.get('contentTpl') +
                     endTpl;
+
                 html = new XTemplate(tpl, {
                     commands: {
                         getCssClassWithState: function (scope, option) {
                             return self.getCssClassWithState(option.params[0]);
                         }
                     }
-                }).render(self.get('renderData'));
+                }).render(renderData);
+
                 el = $(html);
 
                 var childrenElSelectors = self.get('childrenElSelectors');
@@ -224,5 +206,5 @@ KISSY.add('component/base/box-render', function (S, Node, XTemplate) {
 
     return BoxRender;
 }, {
-    requires: ['node', 'xtemplate']
+    requires: ['node', 'xtemplate','./box-tpl']
 });

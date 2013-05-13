@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 10 00:04
+build time: May 13 20:46
 */
 /**
  * @ignore
@@ -72,7 +72,7 @@ KISSY.add("button/base", function (S, Event, Component, ButtonRender) {
              * @ignore
              */
             describedby: {
-                render:1,
+                value: '',
                 view: 1
             },
             /**
@@ -88,7 +88,7 @@ KISSY.add("button/base", function (S, Event, Component, ButtonRender) {
              * @ignore
              */
             tooltip: {
-                render:1,
+                value: '',
                 view: 1
             },
 
@@ -117,7 +117,6 @@ KISSY.add("button/base", function (S, Event, Component, ButtonRender) {
              * @ignore
              */
             checked: {
-                render:1,
                 view: 1
             },
 
@@ -158,10 +157,13 @@ KISSY.add("button/buttonRender", function (S, Component) {
         createDom: function () {
             // set wai-aria role
             var attrs = this.get('elAttrs');
-            attrs['role'] = 'button';
-            attrs['title'] = this.get('title');
-            attrs['aria-describedby'] = this.get('describedby');
-            if (this.get('checked')) {
+            var renderData = this.get('renderData');
+            S.mix(attrs, {
+                role: 'button',
+                title: renderData.tooltip,
+                'aria-describedby': renderData.describedby
+            });
+            if (renderData.checked) {
                 this.get('elCls').push(self.getCssClassWithState("checked"));
             }
         },

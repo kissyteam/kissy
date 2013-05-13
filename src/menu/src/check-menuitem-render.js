@@ -2,17 +2,17 @@
  * checkable menu item render
  * @author yiminghe@gmail.com
  */
-KISSY.add('menu/check-menuitem-render', function (S, MenuItemRender) {
+KISSY.add('menu/check-menuitem-render', function (S, MenuItemRender, CheckMenuItemTpl) {
     return MenuItemRender.extend({
         initializer: function () {
             if (this.get('checked')) {
                 this.get('elCls').push(self.getCssClassWithState("checked"));
             }
             this.get('childrenElSelectors')['contentEl'] =
-                '#{prefixCls}menuitem-content{id}';
+                '#ks-menuitem-content{id}';
         },
 
-        _onSetContent:function(v){
+        _onSetContent: function (v) {
             this.get('contentEl').html(v).unselectable();
         },
 
@@ -25,9 +25,7 @@ KISSY.add('menu/check-menuitem-render', function (S, MenuItemRender) {
     }, {
         ATTRS: {
             contentTpl: {
-                value: '<div class="{{prefixCls}}menuitem-checkbox"></div>' +
-                    '<div id="{{prefixCls}}menuitem-content{{id}}"' +
-                    ' class="{{prefixCls}}menuitem-content">{{{content}}}</div>'
+                value: CheckMenuItemTpl
             },
             checked: {
                 sync: 0
@@ -35,5 +33,5 @@ KISSY.add('menu/check-menuitem-render', function (S, MenuItemRender) {
         }
     })
 }, {
-    requires: ['./menuitem-render']
+    requires: ['./menuitem-render', './check-menuitem-tpl']
 });

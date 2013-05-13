@@ -1,0 +1,44 @@
+<div id="ks-contentbox{{id}}"
+        class="{{prefixCls}}contentbox {{prefixCls}}overlay-contentbox {{prefixCls}}dialog-contentbox">
+
+    <div class="{{prefixCls}}stdmod-header"
+         style="
+{{#if headerStyle}}
+{{#each headerStyle}} 
+ {{xkey}}:{{.}};  
+{{/each}} 
+{{/if}}
+"
+         id="ks-stdmod-header{{id}}">
+        {{{headerContent}}}
+    </div>
+
+    <div class="{{prefixCls}}stdmod-body"
+         style="
+{{#if bodyStyle}}
+{{#each bodyStyle}} 
+ {{xkey}}:{{.}};  
+{{/each}} 
+{{/if}}
+"
+         id="ks-stdmod-body{{id}}">
+        {{{bodyContent}}}
+    </div>
+
+    <div class="{{prefixCls}}stdmod-footer"
+         style="
+{{#if footerStyle}}
+{{#each footerStyle}} 
+ {{xkey}}:{{.}};  
+{{/each}} 
+{{/if}}
+"
+         id="ks-stdmod-footer{{id}}">
+        {{{footerContent}}}
+    </div>
+
+</div>
+
+<div tabindex="0"
+     style="position: absolute"></div>
+

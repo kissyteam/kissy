@@ -13,18 +13,20 @@ KISSY.add("component/base/render", function (S, BoxRender, Component, UIBase, Ma
     return UIBase.extend([BoxRender], {
 
         initializer: function () {
-            var renderData = this.get('renderData');
-            var cls = this.get('elCls');
-            if (renderData.disabled) {
-                cls.push(this.getCssClassWithState('disabled'));
-            }
-            var attrs = this.get('elAttrs');
-            if (renderData.disabled) {
+            var self = this;
+            var attrs = self.get('elAttrs');
+            var cls = self.get('elCls');
+            var disabled;
+            if (disabled = self.get('disabled')) {
+                cls.push(self.getCssClassWithState('disabled'));
                 attrs['aria-disabled'] = 'true';
             }
-            if (renderData.focusable) {
+            if (self.get('highlighted')) {
+                cls.push(self.getCssClassWithState('hover'));
+            }
+            if (self.get('focusable')) {
                 attrs['hideFocus'] = 'true';
-                attrs['tabindex'] = renderData.disabled ? '-1' : '0';
+                attrs['tabindex'] = disabled ? '-1' : '0';
             }
         },
 
