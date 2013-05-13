@@ -3,6 +3,11 @@ package com.taobao.f2e;
 
 import java.io.File;
 
+/**
+ * simple manual test
+ *
+ * @author yiminghe@gmail.com
+ */
 public class Test {
 
     public static void testKISSY1_3_Main() {

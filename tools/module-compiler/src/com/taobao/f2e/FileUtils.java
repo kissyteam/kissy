@@ -4,7 +4,11 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
-
+/**
+ * utils for file
+ *
+ * @author yiminghe@gmail.com
+ */
 public class FileUtils {
 
     static Pattern SUFFIX_REMOVE = Pattern.compile("\\.js$", Pattern.CASE_INSENSITIVE);
@@ -81,7 +85,7 @@ public class FileUtils {
             }
         }
         return ArrayUtils.join(re.toArray(new String[re.size()]), "/") +
-                // 避免本身 path 带 / 后缀
+                // in case xx/
                 (path.endsWith("/") ? "/" : "");
     }
 

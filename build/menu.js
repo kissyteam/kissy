@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 10 16:22
+build time: May 13 13:48
 */
 /**
  * @ignore
@@ -266,6 +266,11 @@ KISSY.add('menu/check-menuitem-render', function (S, MenuItemRender) {
             this.get('childrenElSelectors')['contentEl'] =
                 '#{prefixCls}menuitem-content{id}';
         },
+
+        _onSetContent:function(v){
+            this.get('contentEl').html(v).unselectable();
+        },
+
         _onSetChecked: function (v) {
             var self = this,
                 el = self.get("el"),
@@ -334,69 +339,68 @@ KISSY.add("menu/filtermenu-render", function (S, Node, MenuRender) {
     var $ = Node.all,
         MENU_FILTER = "menu-filter",
         MENU_FILTER_LABEL = "menu-filter-label",
+        MENU_FILTER_INPUT = "menu-filter-input",
         MENU_CONTENT = "menu-content";
 
     return MenuRender.extend({
-        getContentElement:function () {
+        initializer:function(){
+            var childrenElSelectors=this.get('childrenElSelectors');
+            S.mix(childrenElSelectors,{
+                labelEl:'#ks-menu-filter-label{id}',
+                filterWrap:'#ks-menu-filter{id}',
+                menuContent:'#ks-menu-content{id}',
+                filterInput:'#ks-menu-filter-input{id}'
+            });
+        },
+
+        getChildrenContainerEl: function () {
             return this.get("menuContent");
         },
 
-        getKeyEventTarget:function () {
+        getKeyEventTarget: function () {
             return this.get("filterInput");
         },
-        createDom:function () {
-            var self = this;
-            var prefixCls=self.get('prefixCls');
-            var el = self.get('el');
-            var filterWrap = self.get("filterWrap");
-            if (!filterWrap) {
-                self.set("filterWrap",
-                    filterWrap = $("<div class='" + prefixCls+MENU_FILTER + "'/>")
-                        .appendTo(el, undefined));
-            }
-            if (!this.get("labelEl")) {
-                this.set("labelEl",
-                    $("<div class='" + prefixCls+MENU_FILTER_LABEL + "'/>")
-                        .appendTo(filterWrap, undefined));
-            }
-            if (!self.get("filterInput")) {
-                self.set("filterInput", $("<input "+"autocomplete='off'/>")
-                    .appendTo(filterWrap, undefined));
-            }
-            if (!self.get("menuContent")) {
-                self.set("menuContent",
-                    $("<div class='" + prefixCls+MENU_CONTENT + "'/>")
-                        .appendTo(el, undefined));
-            }
-        },
-        '_onSetLabel':function (v) {
+
+        '_onSetLabel': function (v) {
             this.get("labelEl").html(v);
         }
     }, {
-        ATTRS:{
-            label:{}
+        ATTRS: {
+            label: {
+                sync:0
+            },
+            contentTpl: {
+                value: '<div id="ks-menu-filter{{id}}" class="{{prefixCls}}' + MENU_FILTER + '">' +
+                    '<div id="ks-menu-filter-label{{id}}" class="{{prefixCls}}' + MENU_FILTER_LABEL + '">' +
+                    '{{label}}' +
+                    '</div>' +
+                    '<input id="ks-menu-filter-input{{id}}" ' +
+                    'class="{{prefixCls}}' + MENU_FILTER_LABEL + '" ' +
+                    'autocomplete="off" />' +
+                    '</div>' +
+                    '<div id="ks-menu-content{{id}}" class="{{prefixCls}}' + MENU_CONTENT + '">' +
+                    '</div>'
+            }
         },
 
-        HTML_PARSER:{
-            labelEl:function (el) {
-                return el.one("." + this.get('prefixCls')+MENU_FILTER)
-                    .one("." + this.get('prefixCls')+MENU_FILTER_LABEL)
+        HTML_PARSER: {
+            labelEl: function (el) {
+                return el.one("." + this.get('prefixCls') + MENU_FILTER_LABEL)
             },
-            'filterWrap':function (el) {
-                return el.one("." + this.get('prefixCls')+MENU_FILTER);
+            'filterWrap': function (el) {
+                return el.one("." + this.get('prefixCls') + MENU_FILTER);
             },
-            menuContent:function (el) {
-                return el.one("." + this.get('prefixCls')+MENU_CONTENT);
+            menuContent: function (el) {
+                return el.one("." + this.get('prefixCls') + MENU_CONTENT);
             },
-            filterInput:function (el) {
-                return el.one("." + this.get('prefixCls')+MENU_FILTER)
-                    .one("input");
+            filterInput: function (el) {
+                return el.one("." + this.get('prefixCls') + MENU_FILTER_INPUT);
             }
         }
     });
 
 }, {
-    requires:['node', './menu-render']
+    requires: ['node', './menu-render']
 });/**
  * @ignore
  * menu where items can be filtered based on user keyboard input
@@ -912,10 +916,37 @@ KISSY.add("menu/popupmenu-render", function (S, extension, MenuRender) {
     var UA= S.UA;
 
     return MenuRender.extend([
-        extension.ContentBox.Render,
         extension.Position.Render,
         UA['ie'] === 6 ? extension.Shim.Render : null
-    ]);
+    ], {
+        initializer: function () {
+            this.get('childrenElSelectors')['contentEl'] = '#{prefixCls}contentbox{id}';
+        },
+        createDom: function () {
+            if (!this.get('contentEl')) {
+                var contentEl = S.all(new XTemplate(this.get('contentTpl')).render({
+                    prefixCls: this.get('prefixCls'),
+                    content: ''
+                }));
+                contentEl.append(this.get('el').contents());
+                this.setInternal('contentEl', contentEl);
+                this.get('el').append(contentEl);
+            }
+        },
+        getChildrenContainerEl: function () {
+            return this.get('contentEl');
+        }
+    }, {
+        ATTRS: {
+            contentTpl: {
+                value: '<div ' +
+                    'id="{{prefixCls}}contentbox{{id}}" ' +
+                    'class="{{prefixCls}}contentbox ' +
+                    '{{prefixCls}}popupmenu-contentbox">' +
+                    '</div>'
+            }
+        }
+    });
 }, {
     requires:['component/extension', './menu-render']
 });/**
@@ -1036,6 +1067,10 @@ KISSY.add("menu/submenu-render", function (S, MenuItemRender) {
         initializer: function () {
             this.get('childrenElSelectors')['contentEl'] =
                 '#{prefixCls}menuitem-content{id}';
+        },
+
+        _onSetContent: function (v) {
+            this.get('contentEl').html(v).unselectable();
         }
     }, {
         ATTRS: {

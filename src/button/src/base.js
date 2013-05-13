@@ -67,7 +67,8 @@ KISSY.add("button/base", function (S, Event, Component, ButtonRender) {
              * @ignore
              */
             describedby: {
-                render:1,
+                value: '',
+                render: 1,
                 view: 1
             },
             /**
@@ -83,7 +84,8 @@ KISSY.add("button/base", function (S, Event, Component, ButtonRender) {
              * @ignore
              */
             tooltip: {
-                render:1,
+                value: '',
+                render: 1,
                 view: 1
             },
 
@@ -112,7 +114,7 @@ KISSY.add("button/base", function (S, Event, Component, ButtonRender) {
              * @ignore
              */
             checked: {
-                render:1,
+                render: 1,
                 view: 1
             },
 

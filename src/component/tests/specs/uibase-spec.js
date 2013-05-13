@@ -279,8 +279,7 @@ KISSY.use("component/base,component/extension", function (S, Component, extensio
 
         describe("contentEl", function () {
 
-            var ContentEl = Component.Render.extend([,
-                extension.ContentBox.Render], {}, {
+            var ContentEl = Component.Render.extend( {}, {
                 ATTRS: {
                     prefixCls: {
                         value: 'ks-'

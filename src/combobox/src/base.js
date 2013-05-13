@@ -234,20 +234,6 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
                 return  undefined;
             },
 
-            syncUI: function () {
-                var self = this,
-                    input = self.get("input"),
-                    inputValue = self.get("inputValue");
-                if (inputValue != undefined) {
-                    input.val(inputValue);
-                }
-                if (self.get("placeholder")) {
-                    if (!input.val()) {
-                        self.get("placeholderEl").show();
-                    }
-                }
-            },
-
             validate: function (callback) {
                 var self = this,
                     validator = self.get('validator'),
@@ -313,6 +299,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
                  * @ignore
                  */
                 inputValue: {
+                    render:1,
                     view: 1
                 },
 
@@ -332,6 +319,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
                  * @ignore
                  */
                 placeholder: {
+                    render:1,
                     view: 1
                 },
 
@@ -377,6 +365,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
                  * @ignore
                  */
                 hasTrigger: {
+                    render:1,
                     view: 1
                 },
 

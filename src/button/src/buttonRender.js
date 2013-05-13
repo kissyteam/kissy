@@ -9,9 +9,11 @@ KISSY.add("button/buttonRender", function (S, Component) {
         createDom: function () {
             // set wai-aria role
             var attrs = this.get('elAttrs');
-            attrs['role'] = 'button';
-            attrs['title'] = this.get('title');
-            attrs['aria-describedby'] = this.get('describedby');
+            S.mix(attrs,{
+                role:'button',
+                title:this.get('tooltip'),
+                'aria-describedby':this.get('describedby')
+            });
             if (this.get('checked')) {
                 this.get('elCls').push(self.getCssClassWithState("checked"));
             }

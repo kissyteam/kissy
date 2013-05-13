@@ -21,9 +21,9 @@ KISSY.add('grid/header', function (S, Component, Column) {
             _self.set('tableEl', tableEl);
         },
         /**
-         * refer: {Component.Render#getContentElement}
+         * refer: {Component.Render#getChildrenContainerEl}
          */
-        getContentElement:function () {
+        getChildrenContainerEl:function () {
             return this.get('el').one('tr');
         },
         scrollTo:function (obj) {

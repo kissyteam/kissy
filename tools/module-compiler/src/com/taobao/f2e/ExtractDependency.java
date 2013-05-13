@@ -10,7 +10,6 @@ import java.util.regex.Pattern;
  * Extract dependencies from code files.
  *
  * @author yiminghe@gmail.com
- * @since 2012-08-07
  */
 public class ExtractDependency {
 

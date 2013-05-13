@@ -9,7 +9,6 @@ import java.util.regex.Pattern;
  * KISSY Packages config.
  *
  * @author yiminghe@gmail.com
- * @since 2012-08-06
  */
 public class Packages {
 

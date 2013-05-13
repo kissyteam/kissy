@@ -11,7 +11,6 @@ import java.util.regex.Pattern;
  * invoke module compiler for kissy
  *
  * @author yiminghe@gmail.com
- * @since 2011-01-18
  */
 public class Main {
 

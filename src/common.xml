@@ -43,6 +43,8 @@
         <format property="timestamp.isoformat" pattern="yyyyMMddHHmmss" locale="en"/>
     </tstamp>
 
+    <taskdef name="tpl2mod" classname="com.taobao.f2e.task.TplToModule" classpath="${module-compiler}"></taskdef>
+
     <target name="create-build.dir">
         <mkdir dir="${component.build.dir}"/>
         <delete dir="${component.src.dir.tmp}"/>

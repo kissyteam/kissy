@@ -13,6 +13,10 @@ KISSY.add("menu/submenu-render", function (S, MenuItemRender) {
         initializer: function () {
             this.get('childrenElSelectors')['contentEl'] =
                 '#{prefixCls}menuitem-content{id}';
+        },
+
+        _onSetContent: function (v) {
+            this.get('contentEl').html(v).unselectable();
         }
     }, {
         ATTRS: {
@@ -21,8 +25,13 @@ KISSY.add("menu/submenu-render", function (S, MenuItemRender) {
             }
         },
         HTML_PARSER: {
+            content: function () {
+                return el.children("." + this.get('prefixCls') +
+                    "menuitem-content").html();
+            },
             contentEl: function (el) {
-                return el.children("." + this.get('prefixCls') + "menuitem-content");
+                return el.children("." + this.get('prefixCls') +
+                    "menuitem-content");
             }
         }
     });

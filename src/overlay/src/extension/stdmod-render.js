@@ -78,7 +78,7 @@ KISSY.add("overlay/extension/stdmod-render", function (S, Node) {
             createUI(this, "footer");
         },
 
-        getContentElement: function () {
+        getChildrenContainerEl: function () {
             return this.get('body');
         },
 

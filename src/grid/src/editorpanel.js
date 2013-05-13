@@ -21,9 +21,9 @@ KISSY.add('grid/editorpanel', function (S, Component) {
 			new S.Node(tpl).appendTo(el);
 		},
 		/**
-         * refer: {Component.Render#getContentElement}
+         * refer: {Component.Render#getChildrenContainerEl}
          */
-        getContentElement:function () {
+        getChildrenContainerEl:function () {
 			return this.get('el').one('.' + CLS_EDITOR_CONTAINER);	
 		}
 	});

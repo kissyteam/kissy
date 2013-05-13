@@ -1,0 +1,55 @@
+package com.taobao.f2e.task;
+
+
+import com.taobao.f2e.FileUtils;
+import org.apache.tools.ant.Task;
+import org.apache.tools.ant.types.FileSet;
+import org.apache.tools.ant.types.resources.FileResource;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+/**
+ * ant task to transform template file to kissy module
+ *
+ * @author yiminghe@gmail.com
+ */
+public class TplToModule extends Task {
+
+    private List<FileSet> fs = new ArrayList<FileSet>();
+
+    public FileSet createFileSet() {
+        FileSet f = new FileSet();
+        fs.add(f);
+        return f;
+    }
+
+    private void transform2Mod(String toPath, String fromPath, String modName) {
+        String tplContent = FileUtils.getFileContent(fromPath, "utf-8").trim();
+        tplContent = tplContent.replaceAll("\\r?\\n", "\\\\n").replace("'", "\\'");
+        String moduleContent = "KISSY.add('" + modName +
+                "',function(){\n " +
+                "return '" + tplContent + "';" +
+                "\n});";
+        FileUtils.outputContent(moduleContent, toPath, "utf-8");
+        log("generate tpl in js: " + toPath);
+    }
+
+    public void execute() {
+        String componentName = getProject().getProperty("component.name");
+        for (FileSet f : fs) {
+            Iterator it = f.iterator();
+            while (it.hasNext()) {
+                FileResource fr = (FileResource) it.next();
+                String baseDir = fr.getBaseDir().toString();
+                String filePath = fr.getFile().toString();
+                String moduleName = componentName +
+                        filePath.substring(baseDir.length()).replace('\\', '/')
+                                .replaceAll("\\.tpl.html", "-tpl");
+                String modPath = filePath.replaceAll("\\.tpl.html", "-tpl.js");
+                transform2Mod(modPath, filePath, moduleName);
+            }
+        }
+    }
+}

@@ -85,14 +85,6 @@ KISSY.add('component/base/box', function (S) {
             view: 1
         },
 
-        startTpl: {
-            view: 1
-        },
-
-        endTpl: {
-            view: 1
-        },
-
         contentTpl: {
             view: 1
         },
@@ -201,21 +193,6 @@ KISSY.add('component/base/box', function (S) {
          * @ignore
          */
         el: {
-            view: 1
-        },
-
-        /**
-         * content element of current component.
-         * usually it is same with el.
-         * except eg: overlay, submenu
-         * @type {KISSY.NodeList}
-         * @readonly
-         * @property contentEl
-         */
-        /**
-         * @ignore
-         */
-        contentEl: {
             view: 1
         },
 

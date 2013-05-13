@@ -7,7 +7,6 @@ import com.google.javascript.rhino.Token;
  * KISSY Module Format.
  *
  * @author yiminghe@gmail.com
- * @since 2012-08-06
  */
 public class Module {
     /**

@@ -11,6 +11,11 @@ KISSY.add('menu/check-menuitem-render', function (S, MenuItemRender) {
             this.get('childrenElSelectors')['contentEl'] =
                 '#{prefixCls}menuitem-content{id}';
         },
+
+        _onSetContent:function(v){
+            this.get('contentEl').html(v).unselectable();
+        },
+
         _onSetChecked: function (v) {
             var self = this,
                 el = self.get("el"),

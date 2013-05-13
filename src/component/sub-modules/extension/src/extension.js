@@ -3,13 +3,10 @@
  * uibase
  * @author yiminghe@gmail.com
  */
-KISSY.add("component/extension", function (S, Align, ContentBoxRender, Position, PositionRender, ShimRender) {
+KISSY.add("component/extension", function (S, Align, Position, PositionRender, ShimRender) {
     Position.Render = PositionRender;
     return {
         Align: Align,
-        ContentBox: {
-            Render: ContentBoxRender
-        },
         Position: Position,
         Shim: {
             Render: ShimRender
@@ -18,7 +15,6 @@ KISSY.add("component/extension", function (S, Align, ContentBoxRender, Position,
 }, {
     requires: [
         "./extension/align",
-        "./extension/content-box-render",
         "./extension/position",
         "./extension/position-render",
         "./extension/shim-render"

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 10 00:04
+build time: May 13 13:48
 */
 /**
  * @ignore
@@ -458,43 +458,13 @@ KISSY.add('component/extension/align', function (S, DOM, Node) {
  *   - 增加智能对齐，以及大小调整选项
  **//**
  * @ignore
- * 里层包裹层定义， 适合mask以及shim
- * @author yiminghe@gmail.com
- */
-KISSY.add('component/extension/content-box-render', function () {
-
-    function ContentBoxRender() {
-        this.set('startTpl', this.get('startTpl') +
-            '<div id="{{prefixCls}}contentbox{{id}}" ' +
-            'class="{{prefixCls}}contentbox' +
-            ' {{getCssClassWithState "contentbox"}}">');
-        this.set('endTpl', '</div>' + this.get('endTpl'));
-        this.get('childrenElSelectors')['contentEl']='#{prefixCls}contentbox{id}';
-    }
-
-    ContentBoxRender.prototype = {
-        __createDom: function () {
-            var self = this,
-                el = self.get('el');
-            self.setInternal('contentEl', el.first());
-        }
-    };
-
-    return ContentBoxRender;
-}, {
-    requires: ['node', 'dom']
-});/**
- * @ignore
  * uibase
  * @author yiminghe@gmail.com
  */
-KISSY.add("component/extension", function (S, Align, ContentBoxRender, Position, PositionRender, ShimRender) {
+KISSY.add("component/extension", function (S, Align, Position, PositionRender, ShimRender) {
     Position.Render = PositionRender;
     return {
         Align: Align,
-        ContentBox: {
-            Render: ContentBoxRender
-        },
         Position: Position,
         Shim: {
             Render: ShimRender
@@ -503,7 +473,6 @@ KISSY.add("component/extension", function (S, Align, ContentBoxRender, Position,
 }, {
     requires: [
         "./extension/align",
-        "./extension/content-box-render",
         "./extension/position",
         "./extension/position-render",
         "./extension/shim-render"
@@ -679,7 +648,7 @@ KISSY.add("component/extension/position", function (S) {
  * @author yiminghe@gmail.com
  */
 KISSY.add("component/extension/shim-render", function () {
-    var shim = "<" + "iframe style='position: absolute;" +
+    var shimTpl = "<" + "iframe style='position: absolute;" +
         "border: none;" +
         // consider border
         // bug fix: 2012-11-07
@@ -693,8 +662,11 @@ KISSY.add("component/extension/shim-render", function () {
 
     // only for ie6!
     function Shim() {
-        this.set('startTpl', this.get('startTpl') + shim);
     }
+
+    Shim.prototype.__createDom = function () {
+        this.get('el').prepend(S.all(shimTpl));
+    };
 
     return Shim;
 });

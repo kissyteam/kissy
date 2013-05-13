@@ -1,5 +1,10 @@
 package com.taobao.f2e;
 
+/**
+ * utils for array
+ *
+ * @author yiminghe@gmail.com
+ */
 public class ArrayUtils {
 	public static int indexOf(String[] arr, String item) {
 		for (int i = 0; i < arr.length; i++) {

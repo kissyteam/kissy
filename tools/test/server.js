@@ -25,7 +25,7 @@ S.use('xtemplate', function (S, XTemplate) {
         app.use(express.bodyParser());
 
         // combo
-        app.use('/kissy', function (req, res, next) {
+        app.use('/kissy/', function (req, res, next) {
 
             var query = req.query, k,
                 combo = "",
@@ -65,7 +65,7 @@ S.use('xtemplate', function (S, XTemplate) {
 
         });
 
-        app.use('/kissy', function (req, res, next) {
+        app.use('/kissy/', function (req, res, next) {
             var path = req.path;
             if (S.endsWith(path, ".jss")) {
                 require(cwd + path)(req, res);
@@ -75,9 +75,9 @@ S.use('xtemplate', function (S, XTemplate) {
         });
 
         //app.use('/kissy', express.directory(cwd))
-        app.use('/kissy', express.static(cwd));
+        app.use('/kissy/', express.static(cwd));
 
-        app.use('/kissy', function (req, res, next) {
+        app.use('/kissy/', function (req, res, next) {
 
             var cur = cwd + req.path,
                 index = cur + '/index.jss';

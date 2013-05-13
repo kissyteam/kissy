@@ -115,8 +115,8 @@ KISSY.add("component/base/render", function (S, BoxRender, Component, UIBase, Ma
          * @return {KISSY.NodeList}
          * @ignore
          */
-        getContentElement: function () {
-            return this.get("contentEl") || this.get("el");
+        getChildrenContainerEl: function () {
+            return this.get("el");
         }
 
     }, {//  screen state

@@ -4,7 +4,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add("component/extension/shim-render", function () {
-    var shim = "<" + "iframe style='position: absolute;" +
+    var shimTpl = "<" + "iframe style='position: absolute;" +
         "border: none;" +
         // consider border
         // bug fix: 2012-11-07
@@ -18,8 +18,11 @@ KISSY.add("component/extension/shim-render", function () {
 
     // only for ie6!
     function Shim() {
-        this.set('startTpl', this.get('startTpl') + shim);
     }
+
+    Shim.prototype.__createDom = function () {
+        this.get('el').prepend(S.all(shimTpl));
+    };
 
     return Shim;
 });

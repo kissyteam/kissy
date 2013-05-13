@@ -306,8 +306,8 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
              * @protected
              * @return {KISSY.NodeList}
              */
-            getContentElement: function () {
-                return this.get('view').getContentElement();
+            getChildrenContainerEl: function () {
+                return this.get('view').getChildrenContainerEl();
             },
 
             /**
@@ -360,7 +360,7 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
                 children[childIndex] = c;
                 // 生成父组件的 dom 结构
                 self.create();
-                contentEl = self.getContentElement();
+                contentEl = self.getChildrenContainerEl();
                 domContentEl = contentEl[0];
                 elBefore = domContentEl.children[childIndex] || null;
                 if (c.get('rendered')) {
