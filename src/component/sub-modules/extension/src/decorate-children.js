@@ -62,8 +62,11 @@ KISSY.add("component/extension/decorate-children", function (S, Component) {
                 children = el.children();
             children.each(function (c) {
                 var ChildUI = self.findChildConstructorFromNode(prefixCls, c) ||
-                    defaultChildXClass && Manager.getConstructorByXClass(defaultChildXClass);
-                self.decorateChildrenInternal(ChildUI, c);
+                    defaultChildXClass &&
+                        Manager.getConstructorByXClass(defaultChildXClass);
+                if (ChildUI) {
+                    self.decorateChildrenInternal(ChildUI, c);
+                }
             });
         }
     });

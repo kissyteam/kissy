@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 14 18:12
+build time: May 14 21:02
 */
 /**
  * @ignore
@@ -28,6 +28,7 @@ KISSY.add("overlay/base", function (S, Component, Extension, Loading, Mask, Over
      * @mixins KISSY.Overlay.Extension.Mask
      */
     return Component.Controller.extend([
+        Extension.DecorateChild,
         Extension.Position,
         Loading,
         Extension.Align,
@@ -55,6 +56,9 @@ KISSY.add("overlay/base", function (S, Component, Extension, Loading, Mask, Over
         }
     }, {
         ATTRS: {
+            decorateChildCls: {
+                value: 'contentbox'
+            },
 
             contentEl: {
                 view: 1
