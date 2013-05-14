@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 14 20:40
+build time: May 14 20:53
 */
 /**
  * root node represent a simple tree
@@ -514,7 +514,7 @@ KISSY.add("tree/node", function (S, Node, Component,Extension, TreeNodeRender) {
     var TreeNode = Component.Controller.extend(
         [
             // 不是所有的子节点都是子组件
-            Component.DecorateChild
+            Extension.DecorateChild
         ],
         /**
          * @lends Tree.Node#

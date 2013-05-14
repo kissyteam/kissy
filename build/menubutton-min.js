@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 14 20:48
+build time: May 14 20:59
 */
 KISSY.add("menubutton/base-render",function(d,f,h){return f.Render.extend({initializer:function(){d.mix(this.get("elAttrs"),{"aria-expanded":!1,"aria-haspopup":!0});this.get("childrenElSelectors").contentEl="#ks-menu-button-caption{id}"},_onSetContent:function(d){this.get("contentEl").html(d).unselectable()},_onSetCollapsed:function(d){var f=this.get("el"),j=this.getCssClassWithPrefix("menu-button-open");f[d?"removeClass":"addClass"](j).attr("aria-expanded",!d)},setAriaActiveDescendant:function(d){this.get("el").attr("aria-activedescendant",
 d&&d.get("el").attr("id")||"")}},{ATTRS:{contentTpl:{value:h},collapsed:{value:!0,sync:0}},HTML_PARSER:{contentEl:function(d){return d.children("."+this.get("prefixCls")+"menu-button-caption")}}})},{requires:["button","./menubutton-tpl"]});
