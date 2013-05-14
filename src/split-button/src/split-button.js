@@ -4,7 +4,7 @@
  */
 KISSY.add("split-button", function (S, Component, Button, MenuButton) {
 
-    return Component.Controller.extend([], {
+    return Component.Controller.extend({
 
         renderUI: function () {
             var self = this,

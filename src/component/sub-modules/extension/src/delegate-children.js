@@ -3,7 +3,7 @@
  * delegate events for children
  * @author yiminghe@gmail.com
  */
-KISSY.add("component/base/delegate-children", function (S, Event) {
+KISSY.add("component/extension/delegate-children", function (S, Event) {
 
     var UA = S.UA,
         ie = S.Env.host.document.documentMode || UA.ie,
@@ -48,18 +48,11 @@ KISSY.add("component/base/delegate-children", function (S, Event) {
         }
     }
 
-    DelegateChildren.ATTRS = {
-        delegateChildren: {
-            value: true
-        }
-    };
-
     S.augment(DelegateChildren, {
 
         __bindUI: function () {
             var self = this,
                 events;
-            if (self.get("delegateChildren")) {
 
                 events = Gesture.start + " " + Gesture.end + " " + Gesture.tap + " touchcancel ";
 
@@ -69,13 +62,11 @@ KISSY.add("component/base/delegate-children", function (S, Event) {
                 }
 
                 self.get("el").on(events, handleChildMouseEvents, self);
-            }
         },
 
         /**
          * Get child component which contains current event target node.
          * @protected
-         * @member KISSY.Component.Container
          * @param {HTMLElement} target Current event target node.
          * @return {KISSY.Component.Controller}
          */

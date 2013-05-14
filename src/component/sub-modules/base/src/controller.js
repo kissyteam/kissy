@@ -25,8 +25,13 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
     function wrapperViewGetter(attrName) {
         return function (v) {
             var self = this,
+                ret,
                 view = self.get("view");
-            return v === undefined ? view.get(attrName) : v;
+            if (view) {
+                // 优先 view
+                ret = view.get(attrName);
+            }
+            return ret === undefined ? v : ret;
         };
     }
 
@@ -207,6 +212,10 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
                     self.get('prefixCls');
             },
 
+            'createChild': function (c) {
+                return Component.create(c, this);
+            },
+
             /**
              * Constructor(or get) view object to create ui elements.
              * @protected
@@ -220,9 +229,7 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
                 view.create();
                 el = view.getKeyEventTarget();
                 if (!self.get("allowTextSelection")) {
-                    el.unselectable(/**
-                     @ignore
-                     @type HTMLElement*/undefined);
+                    el.unselectable();
                 }
             },
 
@@ -712,8 +719,7 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
                  * @ignore
                  */
                 focused: {
-                    view: 1,
-                    sync: 0
+                    view: 1
                 },
 
                 /**
@@ -739,7 +745,6 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
                  */
                 highlighted: {
                     view: 1,
-                    sync: 0,
                     value: false
                 },
 
@@ -843,6 +848,7 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
                  * @ignore
                  */
                 defaultChildCfg: {
+                    view: 1,
                     value: {}
                 }
             }

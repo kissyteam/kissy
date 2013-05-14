@@ -2,7 +2,7 @@
  * abstraction of tree node ,root and other node will extend it
  * @author yiminghe@gmail.com
  */
-KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
+KISSY.add("tree/node", function (S, Node, Component,Extension, TreeNodeRender) {
     var $ = Node.all,
         KeyCodes = Node.KeyCodes;
 
@@ -23,15 +23,6 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
          * @lends Tree.Node#
          */
         {
-
-            _onSetSelected: function (v, e) {
-                var tree = this.get("tree");
-                if (e && e.byPassSetTreeSelectedItem) {
-                } else {
-                    tree.set('selectedItem', v ? this : null);
-                }
-            },
-
             bindUI: function () {
                 this.on('afterAddChild', onAddChild);
                 this.on('afterRemoveChild', onRemoveChild);
@@ -167,8 +158,6 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
                     self.select();
                     self.fire("click");
                 }
-
-
             },
 
             /**
@@ -184,11 +173,16 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
             },
 
             _onSetExpanded: function (v) {
-                var self = this,
-                    tree = self.get("tree");
-                if (self.get("rendered")) {
-                    refreshCss(self);
-                    self.fire(v ? "expand" : "collapse");
+                var self = this;
+                refreshCss(self);
+                self.fire(v ? "expand" : "collapse");
+            },
+
+            _onSetSelected: function (v, e) {
+                var tree = this.get("tree");
+                if (e && e.byPassSetTreeSelectedItem) {
+                } else {
+                    tree.set('selectedItem', v ? this : null);
                 }
             },
 
@@ -216,14 +210,7 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
         },
 
         {
-            ATTRS: /**
-             * @lends Tree.Node#
-             */
-            {
-                // 一般节点不需要代理事件，统统交给 root(tree) 代理
-                delegateChildren: {
-                    value: false
-                },
+            ATTRS: {
 
                 xrender: {
                     value: TreeNodeRender
@@ -242,6 +229,10 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
                  * @type {Boolean}
                  */
                 isLeaf: {
+                    view: 1
+                },
+
+                contentEl: {
                     view: 1
                 },
 
@@ -275,21 +266,9 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
                  * Defaults to: false.
                  */
                 expanded: {
+                    sync: 0,
+                    value: false,
                     view: 1
-                },
-
-                /**
-                 * Whether current tree node is collapsed.
-                 * @type {Boolean.}
-                 * Defaults to: true.
-                 */
-                collapsed: {
-                    getter: function () {
-                        return !this.get("expanded");
-                    },
-                    setter: function (v) {
-                        this.set("expanded", !v);
-                    }
                 },
 
                 /**
@@ -359,8 +338,11 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
     }
 
     function syncAriaSetSize(e) {
-        if (e.target === this)
-            this.get('el')[0].setAttribute('aria-setsize', this.get('children').length);
+        var self = this;
+        if (e.target === self) {
+            self.get('el')[0].setAttribute('aria-setsize',
+                self.get('children').length);
+        }
     }
 
     function isNodeSingleOrLast(self) {
@@ -470,7 +452,7 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
     return TreeNode;
 
 }, {
-    requires: ['node', 'component/base', './node-render']
+    requires: ['node', 'component/base', 'component/extension','./node-render']
 });
 
 /**

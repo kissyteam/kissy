@@ -5,11 +5,11 @@
 KISSY.add("separator/separator-render", function (S, Component) {
 
     return Component.Render.extend({
-        createDom:function () {
-            this.get("el").attr("role", "separator");
+        initializer: function () {
+            this.get('elAttrs')['role'] = 'separator';
         }
     });
 
 }, {
-    requires:['component/base']
+    requires: ['component/base']
 });

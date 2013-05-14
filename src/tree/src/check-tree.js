@@ -2,7 +2,7 @@
  * root node represent a check tree
  * @author yiminghe@gmail.com
  */
-KISSY.add("tree/check-tree", function (S, Component, CheckNode, CheckTreeRender, TreeManager) {
+KISSY.add("tree/check-tree", function (S, Component, CheckNode, TreeRender, TreeManager) {
     /**
      * @name CheckTree
      * @extends Tree.CheckNode
@@ -22,7 +22,7 @@ KISSY.add("tree/check-tree", function (S, Component, CheckNode, CheckTreeRender,
              * @type {Function}
              */
             xrender: {
-                value: CheckTreeRender
+                value: TreeRender
             },
 
             defaultChildCfg: {
@@ -36,5 +36,5 @@ KISSY.add("tree/check-tree", function (S, Component, CheckNode, CheckTreeRender,
         priority: 40
     });
 }, {
-    requires: ['component/base', './check-node', './check-tree-render', './tree-manager']
+    requires: ['component/base', './check-node', './tree-render', './tree-manager']
 });

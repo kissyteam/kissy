@@ -3,7 +3,7 @@
  * menu where items can be filtered based on user keyboard input
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/filtermenu", function (S, Component, Menu, FilterMenuRender) {
+KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender,Extension) {
 
     var HIT_CLS = "menuitem-hit";
 
@@ -13,7 +13,7 @@ KISSY.add("menu/filtermenu", function (S, Component, Menu, FilterMenuRender) {
      * @extends KISSY.Menu
      * @class KISSY.Menu.FilterMenu
      */
-    var FilterMenu = Menu.extend([Component.DecorateChild], {
+    var FilterMenu = Menu.extend([Extension.DecorateChild],{
             bindUI: function () {
                 var self = this,
                     view = self.get("view"),
@@ -178,6 +178,10 @@ KISSY.add("menu/filtermenu", function (S, Component, Menu, FilterMenuRender) {
         },
         {
             ATTRS: {
+                decorateChildCls: {
+                    value: 'menu-content'
+                },
+
                 allowTextSelection: {
                     value: true
                 },
@@ -223,10 +227,6 @@ KISSY.add("menu/filtermenu", function (S, Component, Menu, FilterMenuRender) {
                     value: false
                 },
 
-                decorateChildCls: {
-                    value: 'menu-content'
-                },
-
                 xrender: {
                     value: FilterMenuRender
                 }
@@ -238,5 +238,5 @@ KISSY.add("menu/filtermenu", function (S, Component, Menu, FilterMenuRender) {
 
     return FilterMenu;
 }, {
-    requires: ['component/base', './base', './filtermenu-render']
+    requires: ['./base', './filtermenu-render','component/extension']
 });

@@ -1,14 +1,14 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 14 11:20
+build time: May 14 20:35
 */
 /**
  * @ignore
  * menu controller for kissy,accommodate menu items
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/base", function (S, Event, Component, MenuRender, undefined) {
+KISSY.add("menu/base", function (S, Event, Component,Extension, MenuRender, undefined) {
 
     var KeyCodes = Event.KeyCodes;
 
@@ -16,9 +16,12 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender, undefined) {
      * KISSY Menu.
      * xclass: 'menu'.
      * @class KISSY.Menu
-     * @extends KISSY.Component.Container
+     * @extends KISSY.Component.Controller
      */
-    var Menu = Component.Container.extend({
+    var Menu = Component.Controller.extend([
+        Extension.DelegateChildren,
+    Extension.DecorateChildren
+    ],{
         isMenu: 1,
 
 
@@ -243,7 +246,7 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender, undefined) {
     return Menu;
 
 }, {
-    requires: ['event', 'component/base', './menu-render']
+    requires: ['event', 'component/base', 'component/extension','./menu-render']
 });
 
 /**
@@ -348,10 +351,10 @@ KISSY.add("menu/filtermenu-render", function (S, Node, MenuRender, FilterMenuTpl
         initializer: function () {
             var childrenElSelectors = this.get('childrenElSelectors');
             S.mix(childrenElSelectors, {
-                labelEl: '#' + MENU_FILTER_LABEL + '{id}',
-                filterWrap: '#' + MENU_FILTER + '{id}',
-                menuContent: '#' + MENU_CONTENT + '{id}',
-                filterInput: '#' + MENU_FILTER_INPUT + '{id}'
+                labelEl: '#ks-' + MENU_FILTER_LABEL + '{id}',
+                filterWrap: '#ks-' + MENU_FILTER + '{id}',
+                menuContent: '#ks-' + MENU_CONTENT + '{id}',
+                filterInput: '#ks-' + MENU_FILTER_INPUT + '{id}'
             });
         },
 
@@ -405,7 +408,7 @@ KISSY.add('menu/filtermenu-tpl',function(){
  * menu where items can be filtered based on user keyboard input
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/filtermenu", function (S, Component, Menu, FilterMenuRender) {
+KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender,Extension) {
 
     var HIT_CLS = "menuitem-hit";
 
@@ -415,7 +418,7 @@ KISSY.add("menu/filtermenu", function (S, Component, Menu, FilterMenuRender) {
      * @extends KISSY.Menu
      * @class KISSY.Menu.FilterMenu
      */
-    var FilterMenu = Menu.extend([Component.DecorateChild], {
+    var FilterMenu = Menu.extend([Extension.DecorateChild],{
             bindUI: function () {
                 var self = this,
                     view = self.get("view"),
@@ -580,6 +583,10 @@ KISSY.add("menu/filtermenu", function (S, Component, Menu, FilterMenuRender) {
         },
         {
             ATTRS: {
+                decorateChildCls: {
+                    value: 'menu-content'
+                },
+
                 allowTextSelection: {
                     value: true
                 },
@@ -625,10 +632,6 @@ KISSY.add("menu/filtermenu", function (S, Component, Menu, FilterMenuRender) {
                     value: false
                 },
 
-                decorateChildCls: {
-                    value: 'menu-content'
-                },
-
                 xrender: {
                     value: FilterMenuRender
                 }
@@ -640,7 +643,7 @@ KISSY.add("menu/filtermenu", function (S, Component, Menu, FilterMenuRender) {
 
     return FilterMenu;
 }, {
-    requires: ['component/base', './base', './filtermenu-render']
+    requires: ['./base', './filtermenu-render','component/extension']
 });/**
  * @ignore
  * render aria from menu according to current menuitem
@@ -910,32 +913,27 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
  * popup menu render
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/popupmenu-render", function (S, extension, MenuRender) {
+KISSY.add("menu/popupmenu-render", function (S, Extension, MenuRender) {
 
     var UA = S.UA;
 
     return MenuRender.extend([
-        extension.Position.Render,
-        UA['ie'] === 6 ? extension.Shim.Render : null
+
+        Extension.Position.Render,
+        UA['ie'] === 6 ? Extension.Shim.Render : null
     ], {
         initializer: function () {
-            this.get('childrenElSelectors')['contentEl'] = '#{prefixCls}contentbox{id}';
-        },
-        createDom: function () {
-            if (!this.get('contentEl')) {
-                var contentEl = S.all(new XTemplate(this.get('contentTpl')).render({
-                    prefixCls: this.get('prefixCls'),
-                    content: ''
-                }));
-                contentEl.append(this.get('el').contents());
-                this.setInternal('contentEl', contentEl);
-                this.get('el').append(contentEl);
-            }
+            this.get('childrenElSelectors')['contentEl'] = '#ks-contentbox{id}';
         },
         getChildrenContainerEl: function () {
             return this.get('contentEl');
         }
     }, {
+        HTML_PARSER: {
+            contentEl: function (el) {
+                return el.one('.' + this.get('prefixCls') + 'contentbox');
+            }
+        },
         ATTRS: {
             contentEl: {},
 
@@ -955,7 +953,7 @@ KISSY.add("menu/popupmenu-render", function (S, extension, MenuRender) {
  * positionable and not focusable menu
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/popupmenu", function (S, extension, Menu, PopupMenuRender) {
+KISSY.add("menu/popupmenu", function (S, Extension, Menu, PopupMenuRender) {
 
     /**
      * Popup Menu.
@@ -966,8 +964,9 @@ KISSY.add("menu/popupmenu", function (S, extension, Menu, PopupMenuRender) {
      * @mixins KISSY.Component.Extension.Align
      */
     var PopupMenu = Menu.extend([
-        extension.Position,
-        extension.Align
+        Extension.DecorateChild,
+        Extension.Position,
+        Extension.Align
     ],
         {
             // 根菜单 popupmenu 或者到中间的 menu 菜单
@@ -1017,6 +1016,9 @@ KISSY.add("menu/popupmenu", function (S, extension, Menu, PopupMenuRender) {
             }
         }, {
             ATTRS: {
+                decorateChildCls: {
+                    value: 'contentbox'
+                },
                 // 弹出菜单一般不可聚焦，焦点在使它弹出的元素上
                 /**
                  * Whether the popup menu is focusable.
@@ -1064,10 +1066,12 @@ KISSY.add("menu/popupmenu", function (S, extension, Menu, PopupMenuRender) {
  */
 KISSY.add("menu/submenu-render", function (S, MenuItemRender, SubMenuTpl) {
 
+
+
     return MenuItemRender.extend({
         initializer: function () {
             this.get('childrenElSelectors')['contentEl'] =
-                '#{prefixCls}menuitem-content{id}';
+                '#ks-menuitem-content{id}';
         },
 
         _onSetContent: function (v) {
@@ -1080,7 +1084,7 @@ KISSY.add("menu/submenu-render", function (S, MenuItemRender, SubMenuTpl) {
             }
         },
         HTML_PARSER: {
-            content: function () {
+            content: function (el) {
                 return el.children("." + this.get('prefixCls') +
                     "menuitem-content").html();
             },
@@ -1103,7 +1107,7 @@ KISSY.add('menu/submenu-tpl',function(){
  * submenu controller for kissy, transfer item's keyCode to menu
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender) {
+KISSY.add("menu/submenu", function (S, Event, MenuItem, SubMenuRender,Extension) {
 
     function afterHighlightedChange(e) {
         var target = e.target;
@@ -1136,13 +1140,16 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
     /* or precisely subMenuItem */
     var KeyCodes = Event.KeyCodes,
         MENU_DELAY = 0.15;
+
+    var DecorateChild = Extension.DecorateChild;
+
     /**
      * Class representing a submenu that can be added as an item to other menus.
      * xclass: 'submenu'.
      * @extends KISSY.Menu.Item
      * @class KISSY.Menu.SubMenu
      */
-    var SubMenu = MenuItem.extend([Component.DecorateChild], {
+    var SubMenu = MenuItem.extend([Extension.DecorateChild],{
 
             isSubMenu: 1,
 
@@ -1282,10 +1289,10 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
             decorateChildrenInternal: function (UI, el) {
                 // 不能用 display:none , menu 的隐藏是靠 visibility
                 // eg: menu.show(); menu.hide();
-                el.css("top", "-9999").prependTo(el[0].ownerDocument.body);
+                el.prependTo(el[0].ownerDocument.body);
                 var self = this;
-                self.setInternal("menu",
-                    Component.DecorateChild.prototype.decorateChildrenInternal.call(self, UI, el, self.get('menu')));
+                self.setInternal("menu", DecorateChild.prototype
+                    .decorateChildrenInternal.call(self, UI, el, self.get('menu')));
             },
 
             destructor: function () {
@@ -1301,6 +1308,10 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
         },
         {
             ATTRS: {
+                decorateChildCls: {
+                    value: 'popupmenu'
+                },
+
                 /**
                  * The delay before opening the sub menu in seconds.  (This number is
                  * arbitrary, it would be good to get some user studies or a designer to play
@@ -1340,9 +1351,6 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
                     }
                 },
 
-                decorateChildCls: {
-                    value: 'popupmenu'
-                },
                 xrender: {
                     value: SubMenuRender
                 }
@@ -1358,8 +1366,7 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
         var m = self.get("menu");
         if (m && !m.isController) {
             if (init) {
-                m = Component.create(m, self);
-                self.setInternal("menu", m);
+                self.setInternal("menu", m=self.createChild(m));
             } else {
                 return null;
             }
@@ -1402,5 +1409,5 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
 
     return SubMenu;
 }, {
-    requires: ['event', 'component/base', './menuitem', './submenu-render']
+    requires: ['event', './menuitem', './submenu-render','component/extension']
 });

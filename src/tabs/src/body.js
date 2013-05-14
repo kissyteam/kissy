@@ -3,9 +3,9 @@
  * Body for tab panels.
  * @author yiminghe@gmail.com
  */
-KISSY.add("tabs/body", function (S, Component, undefined) {
+KISSY.add("tabs/body", function (S, Component, Extension, undefined) {
 
-    var TabBody = Component.Container.extend({
+    var TabBody = Component.Controller.extend([Extension.DecorateChildren], {
 
         renderUI: function () {
             var self = this,
@@ -72,9 +72,6 @@ KISSY.add("tabs/body", function (S, Component, undefined) {
             handleMouseEvents: {
                 value: false
             },
-            delegateChildren: {
-                value: false
-            },
             defaultChildCfg: {
                 value: {
                     xclass: 'tabs-panel'
@@ -87,5 +84,5 @@ KISSY.add("tabs/body", function (S, Component, undefined) {
 
     return TabBody;
 }, {
-    requires: ['component/base']
+    requires: ['component/base', 'component/extension']
 });

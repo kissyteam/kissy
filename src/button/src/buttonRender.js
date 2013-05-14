@@ -6,7 +6,7 @@
 KISSY.add("button/buttonRender", function (S, Component) {
     // http://www.w3.org/TR/wai-aria-practices/
     return Component.Render.extend({
-        createDom: function () {
+        initializer: function () {
             // set wai-aria role
             var attrs = this.get('elAttrs');
             var renderData = this.get('renderData');

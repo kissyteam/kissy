@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 14 10:27
+build time: May 14 20:12
 */
 /**
  * @ignore
@@ -458,24 +458,232 @@ KISSY.add('component/extension/align', function (S, DOM, Node) {
  *   - 增加智能对齐，以及大小调整选项
  **//**
  * @ignore
+ * decorate its children from one element
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("component/extension/decorate-child", function (S, DecorateChildren) {
+    
+    function DecorateChild() {
+    }
+
+    S.augment(DecorateChild, DecorateChildren, {
+        decorateInternal: function (element) {
+            var self = this;
+            var prefixCls = self.get('defaultChildCfg').prefixCls,
+                child = element.one("." + (prefixCls + self.get("decorateChildCls")));
+            // 可以装饰?
+            if (child) {
+                var ChildUI = self.findChildConstructorFromNode(prefixCls, child);
+                if (ChildUI) {
+                    // 可以直接装饰
+                    self.decorateChildrenInternal(ChildUI, child);
+                } else {
+                    // 装饰其子节点集合
+                    self.decorateChildren(child);
+                }
+            }
+        }
+    });
+
+    return DecorateChild;
+}, {
+    requires: ['./decorate-children']
+});/**
+ * @ignore
+ * decorate function for children render from markup
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("component/extension/decorate-children", function (S, Component) {
+
+    var Manager = Component.Manager;
+
+    function DecorateChildren() {
+
+    }
+
+    S.augment(DecorateChildren, {
+        /**
+         * Generate child component from root element.
+         * @protected
+         * @param {KISSY.NodeList} el Root element of current component.
+         */
+        decorateInternal: function (el) {
+            var self = this;
+            self.decorateChildren(el);
+        },
+
+        /**
+         * Get component's constructor from KISSY Node.
+         * @protected
+         * @param prefixCls
+         * @param {KISSY.NodeList} childNode Child component's root node.
+         */
+        findChildConstructorFromNode: function (prefixCls, childNode) {
+            var cls = childNode[0].className || "";
+            // 过滤掉特定前缀
+            if (cls) {
+                cls = cls.replace(new RegExp("\\b" + prefixCls, "ig"), "");
+                return Manager.getConstructorByXClass(cls);
+            }
+            return null;
+        },
+
+        // 生成一个子组件
+        decorateChildrenInternal: function (ChildUI, childNode, childConfig) {
+            var self = this;
+            // html_parser 值优先
+            childConfig = S.merge(self.get('defaultChildCfg'), childConfig, {
+                srcNode: childNode
+            });
+            delete childConfig.xclass;
+            return self.addChild(new ChildUI(childConfig));
+        },
+
+        /**
+         * decorate child element from parent component's root element.
+         * @private
+         * @param {KISSY.NodeList} el component's root element.
+         */
+        decorateChildren: function (el) {
+            var self = this,
+                defaultChildCfg = self.get('defaultChildCfg'),
+                prefixCls = defaultChildCfg.prefixCls,
+                defaultChildXClass = self.get('defaultChildCfg').xclass,
+                children = el.children();
+            children.each(function (c) {
+                var ChildUI = self.findChildConstructorFromNode(prefixCls, c) ||
+                    defaultChildXClass && Manager.getConstructorByXClass(defaultChildXClass);
+                self.decorateChildrenInternal(ChildUI, c);
+            });
+        }
+    });
+
+    return DecorateChildren;
+
+}, {
+    requires: ['component/base']
+});/**
+ * @ignore
+ * delegate events for children
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("component/extension/delegate-children", function (S, Event) {
+
+    var UA = S.UA,
+        ie = S.Env.host.document.documentMode || UA.ie,
+        Features = S.Features,
+        Gesture = Event.Gesture,
+        isTouchSupported = Features.isTouchSupported();
+
+    function DelegateChildren() {
+    }
+
+    function handleChildMouseEvents(e) {
+        if (!this.get("disabled")) {
+            var control = this.getOwnerControl(e.target, e);
+            if (control && !control.get("disabled")) {
+                // Child control identified; forward the event.
+                switch (e.type) {
+                    case Gesture.start:
+                        control.handleMouseDown(e);
+                        break;
+                    case Gesture.end:
+                        control.handleMouseUp(e);
+                        break;
+                    case Gesture.tap:
+                        control.performActionInternal(e);
+                        break;
+                    case "mouseover":
+                        control.handleMouseOver(e);
+                        break;
+                    case "mouseout":
+                        control.handleMouseOut(e);
+                        break;
+                    case "contextmenu":
+                        control.handleContextMenu(e);
+                        break;
+                    case "dblclick":
+                        control.handleDblClick(e);
+                        break;
+                    default:
+                        S.error(e.type + " unhandled!");
+                }
+            }
+        }
+    }
+
+    S.augment(DelegateChildren, {
+
+        __bindUI: function () {
+            var self = this,
+                events;
+
+                events = Gesture.start + " " + Gesture.end + " " + Gesture.tap + " touchcancel ";
+
+                if (!isTouchSupported) {
+                    events += "mouseover mouseout contextmenu " +
+                        (ie && ie < 9 ? "dblclick " : "");
+                }
+
+                self.get("el").on(events, handleChildMouseEvents, self);
+        },
+
+        /**
+         * Get child component which contains current event target node.
+         * @protected
+         * @param {HTMLElement} target Current event target node.
+         * @return {KISSY.Component.Controller}
+         */
+        getOwnerControl: function (target) {
+            var self = this,
+                children = self.get("children"),
+                len = children.length,
+                elem = self.get("el")[0];
+            while (target && target !== elem) {
+                for (var i = 0; i < len; i++) {
+                    if (children[i].get("el")[0] === target) {
+                        return children[i];
+                    }
+                }
+                target = target.parentNode;
+            }
+            return null;
+        }
+    });
+
+    return DelegateChildren;
+}, {
+    requires: ['event']
+});/**
+ * @ignore
  * uibase
  * @author yiminghe@gmail.com
  */
-KISSY.add("component/extension", function (S, Align, Position, PositionRender, ShimRender) {
+KISSY.add("component/extension", function (S, Align, Position,
+                                           PositionRender, ShimRender,
+                                           DelegateChildren, DecorateChildren,
+                                           DecorateChild
+    ) {
     Position.Render = PositionRender;
     return {
         Align: Align,
         Position: Position,
         Shim: {
             Render: ShimRender
-        }
+        },
+        'DelegateChildren': DelegateChildren,
+        'DecorateChild': DecorateChild,
+        'DecorateChildren': DecorateChildren
     };
 }, {
     requires: [
         "./extension/align",
         "./extension/position",
         "./extension/position-render",
-        "./extension/shim-render"
+        "./extension/shim-render",
+        "./extension/delegate-children",
+        "./extension/decorate-children",
+        "./extension/decorate-child"
     ]
 });/**
  * @ignore

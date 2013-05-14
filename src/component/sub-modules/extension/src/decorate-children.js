@@ -3,8 +3,9 @@
  * decorate function for children render from markup
  * @author yiminghe@gmail.com
  */
-KISSY.add("component/base/decorate-children", function (S, Manager) {
+KISSY.add("component/extension/decorate-children", function (S, Component) {
 
+    var Manager = Component.Manager;
 
     function DecorateChildren() {
 
@@ -14,19 +15,15 @@ KISSY.add("component/base/decorate-children", function (S, Manager) {
         /**
          * Generate child component from root element.
          * @protected
-         * @member KISSY.Component.Container
          * @param {KISSY.NodeList} el Root element of current component.
          */
         decorateInternal: function (el) {
             var self = this;
-            // 不用 setInternal , 通知 view 更新
-            self.set("el", el);
             self.decorateChildren(el);
         },
 
         /**
          * Get component's constructor from KISSY Node.
-         * @member KISSY.Component.Container
          * @protected
          * @param prefixCls
          * @param {KISSY.NodeList} childNode Child component's root node.
@@ -55,7 +52,6 @@ KISSY.add("component/base/decorate-children", function (S, Manager) {
         /**
          * decorate child element from parent component's root element.
          * @private
-         * @member KISSY.Component.Container
          * @param {KISSY.NodeList} el component's root element.
          */
         decorateChildren: function (el) {
@@ -75,5 +71,5 @@ KISSY.add("component/base/decorate-children", function (S, Manager) {
     return DecorateChildren;
 
 }, {
-    requires: ['./manager']
+    requires: ['component/base']
 });

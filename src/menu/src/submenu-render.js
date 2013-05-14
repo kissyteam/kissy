@@ -5,10 +5,12 @@
  */
 KISSY.add("menu/submenu-render", function (S, MenuItemRender, SubMenuTpl) {
 
+
+
     return MenuItemRender.extend({
         initializer: function () {
             this.get('childrenElSelectors')['contentEl'] =
-                '#{prefixCls}menuitem-content{id}';
+                '#ks-menuitem-content{id}';
         },
 
         _onSetContent: function (v) {
@@ -21,7 +23,7 @@ KISSY.add("menu/submenu-render", function (S, MenuItemRender, SubMenuTpl) {
             }
         },
         HTML_PARSER: {
-            content: function () {
+            content: function (el) {
                 return el.children("." + this.get('prefixCls') +
                     "menuitem-content").html();
             },

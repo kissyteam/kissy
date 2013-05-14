@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 14 10:28
+build time: May 14 13:32
 */
 /**
  * @ignore
@@ -154,7 +154,7 @@ KISSY.add("button", function (S, Button, Render) {
 KISSY.add("button/buttonRender", function (S, Component) {
     // http://www.w3.org/TR/wai-aria-practices/
     return Component.Render.extend({
-        createDom: function () {
+        initializer: function () {
             // set wai-aria role
             var attrs = this.get('elAttrs');
             var renderData = this.get('renderData');

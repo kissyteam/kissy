@@ -3,7 +3,7 @@
  * positionable and not focusable menu
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/popupmenu", function (S, extension, Menu, PopupMenuRender) {
+KISSY.add("menu/popupmenu", function (S, Extension, Menu, PopupMenuRender) {
 
     /**
      * Popup Menu.
@@ -14,8 +14,9 @@ KISSY.add("menu/popupmenu", function (S, extension, Menu, PopupMenuRender) {
      * @mixins KISSY.Component.Extension.Align
      */
     var PopupMenu = Menu.extend([
-        extension.Position,
-        extension.Align
+        Extension.DecorateChild,
+        Extension.Position,
+        Extension.Align
     ],
         {
             // 根菜单 popupmenu 或者到中间的 menu 菜单
@@ -65,6 +66,9 @@ KISSY.add("menu/popupmenu", function (S, extension, Menu, PopupMenuRender) {
             }
         }, {
             ATTRS: {
+                decorateChildCls: {
+                    value: 'contentbox'
+                },
                 // 弹出菜单一般不可聚焦，焦点在使它弹出的元素上
                 /**
                  * Whether the popup menu is focusable.

@@ -2,7 +2,7 @@
  * common render for node
  * @author yiminghe@gmail.com
  */
-KISSY.add("tree/node-render", function (S, Node, Component) {
+KISSY.add("tree/node-render", function (S, Node, Component, TreeNodeTpl) {
 
     //<div class='ks-tree-node'>
     //<div class='ks-tree-node-row'>
@@ -13,9 +13,7 @@ KISSY.add("tree/node-render", function (S, Node, Component) {
     //</div>
     //</div>
 
-    var $ = Node.all,
-        SELECTED_CLS = "tree-node-selected",
-        ROW_CLS = "tree-node-row",
+    var SELECTED_CLS = "tree-node-selected",
         COMMON_EXPAND_EL_CLS = "tree-expand-icon-{t}",
 
     // refreshCss 实际使用顺序
@@ -42,15 +40,38 @@ KISSY.add("tree/node-render", function (S, Node, Component) {
         ].join(" "),
     // 实际使用，结束
 
+        ROW_EL_CLS = 'tree-node-row',
         CONTENT_EL_CLS = "tree-node-content",
         CHILDREN_CLS = "tree-children",
         CHILDREN_CLS_L = "tree-lchildren";
 
+    var CHECK_CLS = "tree-node-checked",
+        ALL_STATES_CLS = "tree-node-checked0 tree-node-checked1 tree-node-checked2";
+
     return Component.Render.extend({
+        initializer: function () {
+            var self = this,
+                renderData = self.get('renderData');
+            S.mix(self.get('elAttrs'), {
+                role: 'tree-node',
+                'aria-labelledby': 'ks-tree-node-content' + renderData.id,
+                'aria-expanded': renderData.expanded ? 'true' : 'false',
+                'aria-selected': renderData.selected ? 'true' : 'false',
+                'aria-level': renderData.depth,
+                'title': renderData.tooltip
+            });
+            S.mix(self.get('childrenElSelectors'), {
+                contentEl: '#ks-tree-node-content{id}',
+                expandIconEl: '#ks-tree-expand-icon{id}',
+                rowEl: '#ks-tree-node-row{id}',
+                iconEl: '#ks-tree-icon{id}',
+                childrenEl: '#ks-tree-children{id}',
+                checkIconEl: '#ks-tree-node-checked{id}'
+            });
+        },
 
         refreshCss: function (isNodeSingleOrLast, isNodeLeaf) {
             var self = this,
-                expanded = self.get("expanded"),
                 iconEl = self.get("iconEl"),
                 iconElCss,
                 expandElCss,
@@ -61,6 +82,7 @@ KISSY.add("tree/node-render", function (S, Node, Component) {
                 iconElCss = ICON_EL_FILE_CLS;
                 expandElCss = EXPAND_ICON_EL_FILE_CLS;
             } else {
+                var expanded = self.get("expanded");
                 if (expanded) {
                     iconElCss = ICON_EL_FOLDER_EXPAND_CLS;
                     expandElCss = EXPAND_ICON_EL_FOLDER_EXPAND_CLS;
@@ -70,55 +92,21 @@ KISSY.add("tree/node-render", function (S, Node, Component) {
                 }
             }
 
-            iconEl.attr("class", self.getCssClassWithPrefix(iconElCss));
-            expandIconEl.attr("class", self.getCssClassWithPrefix(S.substitute(expandElCss, {
-                "t": isNodeSingleOrLast ? "l" : "t"
-            })));
-            if (childrenEl) {
-                childrenEl.attr("class", self.getCssClassWithPrefix((isNodeSingleOrLast ? CHILDREN_CLS_L : CHILDREN_CLS)));
-            }
-        },
-
-        createDom: function () {
-            var self = this,
-                el = self.get("el"),
-                id,
-                rowEl,
-                expandIconEl,
-                iconEl,
-                contentEl = self.get("contentEl");
-
-            rowEl = $("<div class='" +
-                self.getCssClassWithPrefix(ROW_CLS) + "'/>");
-
-            id = contentEl.attr("id");
-
-            if (!id) {
-                contentEl.attr("id", id = S.guid("ks-tree-node"));
-            }
-
-            expandIconEl = $("<div>").appendTo(rowEl);
-
-            iconEl = $("<div>").appendTo(rowEl);
-
-            contentEl.appendTo(rowEl);
-
-            el.attr({
-                "role": "tree-node",
-                "aria-labelledby": id
-            }).prepend(rowEl);
-
-            self.setInternal("rowEl", rowEl);
-            self.setInternal("expandIconEl", expandIconEl);
-            self.setInternal("iconEl", iconEl);
+            iconEl[0].className = self.getCssClassWithPrefix(iconElCss);
+            expandIconEl[0].className = self.getCssClassWithPrefix(
+                S.substitute(expandElCss, {
+                    "t": isNodeSingleOrLast ? "l" : "t"
+                })
+            );
+            childrenEl[0].className =
+                self.getCssClassWithPrefix((isNodeSingleOrLast ?
+                    CHILDREN_CLS_L : CHILDREN_CLS));
         },
 
         _onSetExpanded: function (v) {
             var self = this,
                 childrenEl = self.get("childrenEl");
-            if (childrenEl) {
-                childrenEl[v ? "show" : "hide"]();
-            }
+            childrenEl[v ? "show" : "hide"]();
             self.get("el").attr("aria-expanded", v);
         },
 
@@ -130,12 +118,14 @@ KISSY.add("tree/node-render", function (S, Node, Component) {
         },
 
         '_onSetDepth': function (v) {
-            //S.log(this.get('content') + ' set depth: ' + v);
             this.get("el")[0].setAttribute("aria-level", v);
         },
 
-        _onSetTooltip: function (v) {
-            this.get("el").attr("title", v);
+        _onSetCheckState: function (s) {
+            var self = this,
+                checkIconEl = self.get("checkIconEl");
+            checkIconEl.removeClass(self.getCssClassWithPrefix(ALL_STATES_CLS))
+                .addClass(self.getCssClassWithPrefix(CHECK_CLS) + s);
         },
 
         /**
@@ -146,46 +136,48 @@ KISSY.add("tree/node-render", function (S, Node, Component) {
          * @return {KISSY.NodeList}
          */
         getChildrenContainerEl: function () {
-            var self = this, c;
-            if (c = self.get("childrenEl")) {
-                return c;
-            }
-            c = $("<div " + (self.get("expanded") ? "" : "style='display:none'")
-                + " role='group'><" + "/div>")
-                .appendTo(self.get("el"));
-            self.setInternal("childrenEl", c);
-            return c;
+            return this.get('childrenEl');
         }
     }, {
         ATTRS: {
+            contentTpl: {
+                value: TreeNodeTpl
+            },
             childrenEl: {},
             expandIconEl: {},
             tooltip: {},
             iconEl: {},
             expanded: {
-                value: false
+                sync: 0
             },
             rowEl: {},
-            depth: {},
-            contentEl: {
-                valueFn: function () {
-                    return $("<span id='" + S.guid("ks-tree-node") +
-                        "' class='" + this.getCssClassWithPrefix(CONTENT_EL_CLS) + "'/>");
-                }
+            depth: {
+                sync: 0
             },
+            contentEl: {},
             isLeaf: {},
-            selected: {}
+            selected: {
+                sync: 0
+            },
+            checkIconEl: {},
+            checkable: {},
+            checkState: {
+                sync: 0
+            }
         },
 
         HTML_PARSER: {
+            rowEl: function (el) {
+                return el.one('.' + this.getCssClassWithPrefix(ROW_EL_CLS))
+            },
             childrenEl: function (el) {
-                return el.children("." + this.getCssClassWithPrefix(CHILDREN_CLS));
+                return el.one("." + this.getCssClassWithPrefix(CHILDREN_CLS));
             },
             contentEl: function (el) {
-                return el.children("." + this.getCssClassWithPrefix(CONTENT_EL_CLS));
+                return el.one("." + this.getCssClassWithPrefix(CONTENT_EL_CLS));
             },
             content: function (el) {
-                return el.children("." + this.getCssClassWithPrefix(CONTENT_EL_CLS)).html();
+                return el.one("." + this.getCssClassWithPrefix(CONTENT_EL_CLS)).html();
             },
             isLeaf: function (el) {
                 var self = this;
@@ -197,16 +189,34 @@ KISSY.add("tree/node-render", function (S, Node, Component) {
                 return undefined;
             },
             expanded: function (el) {
-                var children = el.one("." + this.get('prefixCls') + "tree-children");
-                if (!children) {
-                    return false;
+                return el.one("." + this.getCssClassWithPrefix(CHILDREN_CLS))
+                    .css("display") != "none";
+            },
+            expandIconEl: function (el) {
+                return el.one('.' + this.getCssClassWithPrefix('tree-expand-icon'));
+            },
+            checkState: function (el) {
+                var checkIconEl = el.one('.' + this.getCssClassWithPrefix(CHECK_CLS));
+                if (checkIconEl) {
+                    var allStates = ALL_STATES_CLS.split(/\s+/);
+                    for (var i = 0; i < allStates.length; i++) {
+                        if (checkIconEl.hasClass(this.getCssClassWithPrefix(allStates[i]))) {
+                            return i;
+                        }
+                    }
                 }
-                return children.css("display") != "none";
+                return 0;
+            },
+            iconEl: function (el) {
+                return el.one('.' + this.getCssClassWithPrefix('tree-icon'));
+            },
+            checkIconEl: function (el) {
+                return el.one('.' + this.getCssClassWithPrefix(CHECK_CLS));
             }
         }
 
     });
 
 }, {
-    requires: ['node', 'component/base']
+    requires: ['node', 'component/base', './node-tpl']
 });

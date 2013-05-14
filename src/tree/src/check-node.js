@@ -2,7 +2,7 @@
  * checkable tree node
  * @author yiminghe@gmail.com
  */
-KISSY.add("tree/check-node", function (S, Node, TreeNode, CheckNodeRender) {
+KISSY.add("tree/check-node", function (S, Node, TreeNode) {
     var $ = Node.all,
         PARTIAL_CHECK = 2,
         CHECK = 1,
@@ -104,6 +104,11 @@ KISSY.add("tree/check-node", function (S, Node, TreeNode, CheckNodeRender) {
                 view: 1
             },
 
+            checkable: {
+                value: true,
+                view: 1
+            },
+
             /**
              * Enums for check states.
              * CheckNode.PARTIAL_CHECK: checked partly.
@@ -112,11 +117,13 @@ KISSY.add("tree/check-node", function (S, Node, TreeNode, CheckNodeRender) {
              * @type {Number}
              */
             checkState: {
+                // check 的三状态
+                // 0 一个不选
+                // 1 儿子有选择
+                // 2 全部都选了
+                value: 0,
+                sync: 0,
                 view: 1
-            },
-
-            xrender: {
-                value: CheckNodeRender
             },
 
             defaultChildCfg: {
@@ -151,5 +158,5 @@ KISSY.add("tree/check-node", function (S, Node, TreeNode, CheckNodeRender) {
 
     return CheckNode;
 }, {
-    requires: ['node', './node', './check-node-render']
+    requires: ['node', './node']
 });

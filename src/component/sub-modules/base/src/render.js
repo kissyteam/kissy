@@ -123,7 +123,6 @@ KISSY.add("component/base/render", function (S, BoxRender, Component, UIBase, Ma
 
     }, {//  screen state
         ATTRS: {
-
             prefixCls: {},
 
             focusable: {},
@@ -148,7 +147,7 @@ KISSY.add("component/base/render", function (S, BoxRender, Component, UIBase, Ma
             disabled: function (el) {
                 var self = this,
                     componentCls = self.getCssClassWithState("disabled");
-                return self.get("el").hasClass(componentCls);
+                return el.hasClass(componentCls);
             }
         }
     });

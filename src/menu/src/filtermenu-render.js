@@ -15,10 +15,10 @@ KISSY.add("menu/filtermenu-render", function (S, Node, MenuRender, FilterMenuTpl
         initializer: function () {
             var childrenElSelectors = this.get('childrenElSelectors');
             S.mix(childrenElSelectors, {
-                labelEl: '#' + MENU_FILTER_LABEL + '{id}',
-                filterWrap: '#' + MENU_FILTER + '{id}',
-                menuContent: '#' + MENU_CONTENT + '{id}',
-                filterInput: '#' + MENU_FILTER_INPUT + '{id}'
+                labelEl: '#ks-' + MENU_FILTER_LABEL + '{id}',
+                filterWrap: '#ks-' + MENU_FILTER + '{id}',
+                menuContent: '#ks-' + MENU_CONTENT + '{id}',
+                filterInput: '#ks-' + MENU_FILTER_INPUT + '{id}'
             });
         },
 

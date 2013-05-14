@@ -40,7 +40,7 @@ KISSY.add("overlay/base", function (S, Component, Extension, Loading, Mask, Over
             }
         },
         /**
-         * hide or destroy according to {@link KISSY.Overlay.Extension.Close#closeAction}
+         * hide or destroy according to {@link KISSY.Overlay#closeAction}
          * @chainable
          */
         close: function () {
@@ -50,6 +50,10 @@ KISSY.add("overlay/base", function (S, Component, Extension, Loading, Mask, Over
         }
     }, {
         ATTRS: {
+
+            contentEl: {
+                view: 1
+            },
 
             /**
              * Whether close button is visible.

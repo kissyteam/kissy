@@ -1,13 +1,14 @@
 <div id="ks-contentbox{{id}}"
-        class="{{prefixCls}}contentbox {{prefixCls}}overlay-contentbox {{prefixCls}}dialog-contentbox">
+        class="
+        {{prefixCls}}contentbox
+        {{getCssClassWithState "contentbox"}}
+        ">
 
     <div class="{{prefixCls}}stdmod-header"
          style="
-{{#if headerStyle}}
 {{#each headerStyle}} 
  {{xkey}}:{{.}};  
-{{/each}} 
-{{/if}}
+{{/each}}
 "
          id="ks-stdmod-header{{id}}">
         {{{headerContent}}}
@@ -15,11 +16,9 @@
 
     <div class="{{prefixCls}}stdmod-body"
          style="
-{{#if bodyStyle}}
 {{#each bodyStyle}} 
  {{xkey}}:{{.}};  
-{{/each}} 
-{{/if}}
+{{/each}}
 "
          id="ks-stdmod-body{{id}}">
         {{{bodyContent}}}
@@ -27,11 +26,9 @@
 
     <div class="{{prefixCls}}stdmod-footer"
          style="
-{{#if footerStyle}}
 {{#each footerStyle}} 
  {{xkey}}:{{.}};  
-{{/each}} 
-{{/if}}
+{{/each}}
 "
          id="ks-stdmod-footer{{id}}">
         {{{footerContent}}}

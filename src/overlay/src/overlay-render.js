@@ -18,24 +18,14 @@ KISSY.add("overlay/overlay-render", function (S, XTemplate, Component, Extension
                 closeBtn: '#ks-ext-close{id}'
             });
         },
-        createDom: function () {
-            if (!this.get('contentEl')) {
-                var contentEl = S.all(S.substitute('<div ' +
-                    'class="{cls2} {cls}"' +
-                    '></div>', {
-                    cls2: this.getCssClassWithPrefix('contentbox'),
-                    cls: this.getCssClassWithState('contentbox')
-                }));
-                contentEl.append(this.get('el').contents());
-                this.setInternal('contentEl', contentEl);
-                this.get('el').append(contentEl);
-            }
-        },
         getChildrenContainerEl: function () {
             return this.get('contentEl');
         }
     }, {
         HTML_PARSER: {
+            contentEl: function (el) {
+                return el.one('.' + this.get('prefixCls') + 'contentbox')
+            },
             closeBtn: function (el) {
                 return el.one("." + this.get('prefixCls') + 'ext-close');
             }

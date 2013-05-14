@@ -115,3 +115,7 @@
     background: #fff;
     font-weight: bold;
 }
+
+.nav-popupmenu-hidden {
+    visibility: hidden;
+}

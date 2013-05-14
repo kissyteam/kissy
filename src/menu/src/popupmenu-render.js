@@ -3,32 +3,27 @@
  * popup menu render
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/popupmenu-render", function (S, extension, MenuRender) {
+KISSY.add("menu/popupmenu-render", function (S, Extension, MenuRender) {
 
     var UA = S.UA;
 
     return MenuRender.extend([
-        extension.Position.Render,
-        UA['ie'] === 6 ? extension.Shim.Render : null
+
+        Extension.Position.Render,
+        UA['ie'] === 6 ? Extension.Shim.Render : null
     ], {
         initializer: function () {
-            this.get('childrenElSelectors')['contentEl'] = '#{prefixCls}contentbox{id}';
-        },
-        createDom: function () {
-            if (!this.get('contentEl')) {
-                var contentEl = S.all(new XTemplate(this.get('contentTpl')).render({
-                    prefixCls: this.get('prefixCls'),
-                    content: ''
-                }));
-                contentEl.append(this.get('el').contents());
-                this.setInternal('contentEl', contentEl);
-                this.get('el').append(contentEl);
-            }
+            this.get('childrenElSelectors')['contentEl'] = '#ks-contentbox{id}';
         },
         getChildrenContainerEl: function () {
             return this.get('contentEl');
         }
     }, {
+        HTML_PARSER: {
+            contentEl: function (el) {
+                return el.one('.' + this.get('prefixCls') + 'contentbox');
+            }
+        },
         ATTRS: {
             contentEl: {},
 

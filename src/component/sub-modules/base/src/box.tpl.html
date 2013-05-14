@@ -7,25 +7,20 @@
 {{getCssClassWithState "hidden"}}  
 {{/if}} 
 
-{{#if elCls}} 
+
 {{#each elCls}} 
  {{.}}  
-{{/each}} 
-{{/if}}
+{{/each}}
 "
 
-{{#if elAttrs}} 
 {{#each elAttrs}} 
  {{xkey}}="{{.}}"  
-{{/each}}  
-{{/if}} 
+{{/each}}
 
-style=" 
-{{#if elStyle}}
+style="
 {{#each elStyle}} 
  {{xkey}}:{{.}};  
-{{/each}} 
-{{/if}}  
+{{/each}}
 
 {{#if width}} 
 width:{{width}}; 

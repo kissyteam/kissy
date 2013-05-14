@@ -34,32 +34,27 @@ KISSY.add('component/base/uibase', function (S, RichBase, Node, Manager, undefin
     function applyParser(srcNode, parser) {
         var self = this,
             p, v,
-            ret,
-            userConfig = self.userConfig || {};
+            ret;
 
         // 从 parser 中，默默设置属性，不触发事件
-        // html parser 优先
+        // html parser 优先，超过 js 配置值
         for (p in parser) {
-            // 用户设置过那么这里不从 dom 节点取
-            // 用户设置 > html parser > default value
-            if (!(p in userConfig)) {
-                v = parser[p];
-                // 函数
-                if (S.isFunction(v)) {
-                    // html parser 放弃
-                    ret = v.call(self, srcNode);
-                    if (ret !== undefined) {
-                        self.setInternal(p, ret);
-                    }
+            v = parser[p];
+            // 函数
+            if (S.isFunction(v)) {
+                // html parser 放弃
+                ret = v.call(self, srcNode);
+                if (ret !== undefined) {
+                    self.setInternal(p, ret);
                 }
-                // 单选选择器
-                else if (typeof v == 'string') {
-                    self.setInternal(p, srcNode.one(v));
-                }
-                // 多选选择器
-                else if (S.isArray(v) && v[0]) {
-                    self.setInternal(p, srcNode.all(v[0]))
-                }
+            }
+            // 单选选择器
+            else if (typeof v == 'string') {
+                self.setInternal(p, srcNode.one(v));
+            }
+            // 多选选择器
+            else if (S.isArray(v) && v[0]) {
+                self.setInternal(p, srcNode.all(v[0]))
             }
         }
     }
@@ -92,7 +87,8 @@ KISSY.add('component/base/uibase', function (S, RichBase, Node, Manager, undefin
 
         initializer: function () {
             var self = this,
-                id, srcNode = S.one(self.get(SRC_NODE));
+                id,
+                srcNode = S.one(self.get(SRC_NODE));
 
             // register instance if config id
             if (id = self.get("id")) {
@@ -103,7 +99,6 @@ KISSY.add('component/base/uibase', function (S, RichBase, Node, Manager, undefin
                 // 根据 srcNode 设置属性值
                 // so initializer can not read attribute in case srcNode is set
                 initSrcNode(self, srcNode);
-
                 self.setInternal(SRC_NODE, srcNode);
             }
         },

@@ -2,7 +2,7 @@
  * Toolbar for KISSY.
  * @author yiminghe@gmail.com
  */
-KISSY.add("toolbar", function (S, Component, Node, Separator, undefined) {
+KISSY.add("toolbar", function (S, Component,Extension, Node, Separator, undefined) {
 
     var KeyCodes = Node.KeyCodes;
 
@@ -83,7 +83,8 @@ KISSY.add("toolbar", function (S, Component, Node, Separator, undefined) {
      * xclass: 'toolbar'.
      * @extends KISSY.Component.Container
      */
-    var Toolbar = Component.Container.extend(
+    var Toolbar = Component.Controller.extend(
+        [Extension.DecorateChildren,Extension.DelegateChildren],
         /**
          * @lends Toolbar#
          */
@@ -247,5 +248,5 @@ KISSY.add("toolbar", function (S, Component, Node, Separator, undefined) {
     return Toolbar;
 
 }, {
-    requires: ['component/base', 'node']
+    requires: ['component/base','component/extension', 'node']
 });

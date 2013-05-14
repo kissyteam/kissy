@@ -19,3 +19,5 @@
     .ks-overlay-mask-shown{
         display: block;
     }
+
+ [!] srcNode 时 html 结构必须包含 contentbox 节点

@@ -3,7 +3,7 @@
  * menu controller for kissy,accommodate menu items
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/base", function (S, Event, Component, MenuRender, undefined) {
+KISSY.add("menu/base", function (S, Event, Component,Extension, MenuRender, undefined) {
 
     var KeyCodes = Event.KeyCodes;
 
@@ -11,9 +11,12 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender, undefined) {
      * KISSY Menu.
      * xclass: 'menu'.
      * @class KISSY.Menu
-     * @extends KISSY.Component.Container
+     * @extends KISSY.Component.Controller
      */
-    var Menu = Component.Container.extend({
+    var Menu = Component.Controller.extend([
+        Extension.DelegateChildren,
+    Extension.DecorateChildren
+    ],{
         isMenu: 1,
 
 
@@ -238,7 +241,7 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender, undefined) {
     return Menu;
 
 }, {
-    requires: ['event', 'component/base', './menu-render']
+    requires: ['event', 'component/base', 'component/extension','./menu-render']
 });
 
 /**

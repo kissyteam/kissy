@@ -5,6 +5,7 @@
 KISSY.add("tree/tree-manager-render", function (S) {
 
     function TreeManagerRender() {
+        this.get('elAttrs')['role']='tree';
     }
 
     TreeManagerRender.ATTRS = {
@@ -15,12 +16,10 @@ KISSY.add("tree/tree-manager-render", function (S) {
     };
 
     S.augment(TreeManagerRender, {
-        __renderUI: function () {
+        __createDom: function () {
             var self = this;
-            self.get("el").attr("role", "tree");
             self.get("rowEl").addClass(self.get('prefixCls') + "tree-row");
         },
-
         '_onSetShowRootNode': function (v) {
             this.get("rowEl")[v ? "show" : "hide"]();
         }

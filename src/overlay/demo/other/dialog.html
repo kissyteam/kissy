@@ -183,47 +183,48 @@
         <button id="btn3" class="button">选择</button>
 
         <div class="tb-key tb-attention" id="choose">
+            <div class="ks-contentbox">
+                <a href="javascript:void('close')"
+                   class="ks-ext-close" role="button">
+                    <span class="ks-ext-close-x">close</span>
+                </a>
 
-            <a href="javascript:void('close')"
-               class="ks-ext-close" role="button">
-                <span class="ks-ext-close-x">close</span>
-            </a>
+                <p class="ks-stdmod-header tb-note-title">请选择您要的商品信息
+                </p>
 
-            <p class="ks-stdmod-header tb-note-title">请选择您要的商品信息
-            </p>
+                <div class="ks-stdmod-body tb-skin">
+                    <dl class="tb-prop ks-clear">
+                        <dt>尺　　码：</dt>
+                        <dd>
+                            <ul data-property="尺码" class="ks-clear J_TSaleProp  ">
+                                <li data-value="20503:3271530"><a href="#"><span>M</span></a></li>
 
-            <div class="ks-stdmod-body tb-skin">
-                <dl class="tb-prop ks-clear">
-                    <dt>尺　　码：</dt>
-                    <dd>
-                        <ul data-property="尺码" class="ks-clear J_TSaleProp  ">
-                            <li data-value="20503:3271530"><a href="#"><span>M</span></a></li>
+                                <li data-value="20503:3271531"><a href="#"><span>L</span></a></li>
+                                <li data-value="20503:3267945"><a href="#"><span>XL</span></a></li>
+                            </ul>
+                        </dd>
+                    </dl>
+                    <dl class="tb-prop ks-clear">
+                        <dt>颜　　色：</dt>
+                        <dd>
 
-                            <li data-value="20503:3271531"><a href="#"><span>L</span></a></li>
-                            <li data-value="20503:3267945"><a href="#"><span>XL</span></a></li>
-                        </ul>
-                    </dd>
-                </dl>
-                <dl class="tb-prop ks-clear">
-                    <dt>颜　　色：</dt>
-                    <dd>
-
-                        <ul data-property="颜色" class="ks-clear J_TSaleProp tb-img  ">
-                            <li data-value="1627207:3232483" title="TX043 白色">
-                                <a href="#"
-                                   style="background:url(http://img01.taobaocdn.com/bao/uploaded/i1/290649218/T2DaRjXllMXXXXXXXX_!!290649218.jpg_30x30.jpg) center no-repeat;">
-                                    <span>TX043 白色</span>
-                                </a>
-                            </li>
-                            <li data-value="1627207:3232484" title="TX043 蓝色">
-                                <a href="#"
-                                   style="background:url(http://img04.taobaocdn.com/bao/uploaded/i4/290649218/T2OqJjXlpMXXXXXXXX_!!290649218.jpg_30x30.jpg) center no-repeat;">
-                                    <span>TX043 蓝色</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </dd>
-                </dl>
+                            <ul data-property="颜色" class="ks-clear J_TSaleProp tb-img  ">
+                                <li data-value="1627207:3232483" title="TX043 白色">
+                                    <a href="#"
+                                       style="background:url(http://img01.taobaocdn.com/bao/uploaded/i1/290649218/T2DaRjXllMXXXXXXXX_!!290649218.jpg_30x30.jpg) center no-repeat;">
+                                        <span>TX043 白色</span>
+                                    </a>
+                                </li>
+                                <li data-value="1627207:3232484" title="TX043 蓝色">
+                                    <a href="#"
+                                       style="background:url(http://img04.taobaocdn.com/bao/uploaded/i4/290649218/T2OqJjXlpMXXXXXXXX_!!290649218.jpg_30x30.jpg) center no-repeat;">
+                                        <span>TX043 蓝色</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </dd>
+                    </dl>
+                </div>
             </div>
         </div>
         <script>
@@ -251,6 +252,8 @@
                 Node.one('#btn3').on('click', function () {
                     d.show();
                 });
+
+                window.srcNodeDialog=d;
 
             });
 

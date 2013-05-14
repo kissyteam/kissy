@@ -3,7 +3,7 @@
  * submenu controller for kissy, transfer item's keyCode to menu
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender) {
+KISSY.add("menu/submenu", function (S, Event, MenuItem, SubMenuRender,Extension) {
 
     function afterHighlightedChange(e) {
         var target = e.target;
@@ -36,13 +36,16 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
     /* or precisely subMenuItem */
     var KeyCodes = Event.KeyCodes,
         MENU_DELAY = 0.15;
+
+    var DecorateChild = Extension.DecorateChild;
+
     /**
      * Class representing a submenu that can be added as an item to other menus.
      * xclass: 'submenu'.
      * @extends KISSY.Menu.Item
      * @class KISSY.Menu.SubMenu
      */
-    var SubMenu = MenuItem.extend([Component.DecorateChild], {
+    var SubMenu = MenuItem.extend([Extension.DecorateChild],{
 
             isSubMenu: 1,
 
@@ -182,10 +185,10 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
             decorateChildrenInternal: function (UI, el) {
                 // 不能用 display:none , menu 的隐藏是靠 visibility
                 // eg: menu.show(); menu.hide();
-                el.css("top", "-9999").prependTo(el[0].ownerDocument.body);
+                el.prependTo(el[0].ownerDocument.body);
                 var self = this;
-                self.setInternal("menu",
-                    Component.DecorateChild.prototype.decorateChildrenInternal.call(self, UI, el, self.get('menu')));
+                self.setInternal("menu", DecorateChild.prototype
+                    .decorateChildrenInternal.call(self, UI, el, self.get('menu')));
             },
 
             destructor: function () {
@@ -201,6 +204,10 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
         },
         {
             ATTRS: {
+                decorateChildCls: {
+                    value: 'popupmenu'
+                },
+
                 /**
                  * The delay before opening the sub menu in seconds.  (This number is
                  * arbitrary, it would be good to get some user studies or a designer to play
@@ -240,9 +247,6 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
                     }
                 },
 
-                decorateChildCls: {
-                    value: 'popupmenu'
-                },
                 xrender: {
                     value: SubMenuRender
                 }
@@ -258,8 +262,7 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
         var m = self.get("menu");
         if (m && !m.isController) {
             if (init) {
-                m = Component.create(m, self);
-                self.setInternal("menu", m);
+                self.setInternal("menu", m=self.createChild(m));
             } else {
                 return null;
             }
@@ -302,5 +305,5 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
 
     return SubMenu;
 }, {
-    requires: ['event', 'component/base', './menuitem', './submenu-render']
+    requires: ['event', './menuitem', './submenu-render','component/extension']
 });

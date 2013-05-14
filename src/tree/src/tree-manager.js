@@ -2,7 +2,7 @@
  * tree management utils
  * @author yiminghe@gmail.com
  */
-KISSY.add("tree/tree-manager", function (S, Event, Component) {
+KISSY.add("tree/tree-manager", function (S, Event, Component,Extension) {
 
     function TreeManager() {
     }
@@ -12,11 +12,6 @@ KISSY.add("tree/tree-manager", function (S, Event, Component) {
      * @lends Tree#
      */
     {
-        // 覆盖 baseNode 处配置
-        delegateChildren: {
-            value: true
-        },
-
         /**
          * Whether show root node.
          * Defaults to: true.
@@ -48,7 +43,7 @@ KISSY.add("tree/tree-manager", function (S, Event, Component) {
         return id;
     }
 
-    S.augment(TreeManager, {
+    S.augment(TreeManager,Extension.DelegateChildren, {
 
         isTree: 1,
 
@@ -135,5 +130,5 @@ KISSY.add("tree/tree-manager", function (S, Event, Component) {
 
     return TreeManager;
 }, {
-    requires: ['event', 'component/base']
+    requires: ['event', 'component/base','component/extension']
 });

@@ -3,16 +3,14 @@
  * decorate its children from one element
  * @author yiminghe@gmail.com
  */
-KISSY.add("component/base/decorate-child", function (S, DecorateChildren) {
+KISSY.add("component/extension/decorate-child", function (S, DecorateChildren) {
+    
     function DecorateChild() {
-
     }
 
     S.augment(DecorateChild, DecorateChildren, {
         decorateInternal: function (element) {
             var self = this;
-            // 不用 setInternal , 通知 view 更新
-            self.set("el", element);
             var prefixCls = self.get('defaultChildCfg').prefixCls,
                 child = element.one("." + (prefixCls + self.get("decorateChildCls")));
             // 可以装饰?

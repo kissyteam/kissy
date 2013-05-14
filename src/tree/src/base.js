@@ -2,7 +2,7 @@
  * root node represent a simple tree
  * @author yiminghe@gmail.com
  */
-KISSY.add("tree/base", function (S, Component, TreeNode, TreeRender, TreeManager) {
+KISSY.add("tree/base", function (S, Component,TreeNode, TreeRender, TreeManager) {
 
     /*多继承
      1. 继承基节点（包括可装饰儿子节点功能）
