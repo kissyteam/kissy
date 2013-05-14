@@ -148,11 +148,10 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
             handleBlur: function () {
                 var self = this,
                     placeholderEl = self.get("placeholderEl"),
-                    input;
+                    input = self.get("input");
                 ComboBox.superclass.handleBlur.apply(self, arguments);
                 delayHide.call(self);
                 if (self.get('invalidEl')) {
-                    input = self.get("input");
                     self.validate(function (error, val) {
                         if (error) {
                             if (!self.get("focused") && val == input.val()) {
@@ -316,6 +315,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
                  */
                 inputValue: {
                     value: '',
+                    sync: 0,
                     view: 1
                 },
 

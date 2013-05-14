@@ -76,7 +76,7 @@ KISSY.add("combobox/render", function (S, Component, ComboboxTpl) {
                 return el.one("." + this.get('prefixCls') + "combobox-invalid-el");
             },
             placeholderEl: function (el) {
-                return el.one("." + this.get('prefixCls') + "combobox-invalid-el");
+                return el.one("." + this.get('prefixCls') + "combobox-placeholder");
             }
         }
     });
