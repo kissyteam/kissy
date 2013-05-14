@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.30
 MIT Licensed
-build time: May 14 12:27
+build time: May 14 21:53
 */
 /**
  * @ignore
@@ -526,6 +526,18 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
                 autoHighlightFirst: {
                 },
 
+                /**
+                 * whether highlight item when item content is same with user input.
+                 * Defaults to: true
+                 * @cfg {Boolean} highlightMatchItem
+                 */
+                /**
+                 * @ignore
+                 */
+                highlightMatchItem: {
+                    value: true
+                },
+
                 xrender: {
                     value: ComboBoxRender
                 }
@@ -662,15 +674,18 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
                 children.push(menu.addChild(v));
             }
 
-            // make menu item (which textContent is same as input) active
-            val = self['getValueInternal']();
-            for (i = 0; i < children.length; i++) {
-                if (children[i].get("textContent") == val) {
-                    menu.set("highlightedItem", children[i]);
-                    matchVal = true;
-                    break;
+            if (self.get('highlightMatchItem')) {
+                // make menu item (which textContent is same as input) active
+                val = self['getValueInternal']();
+                for (i = 0; i < children.length; i++) {
+                    if (children[i].get("textContent") == val) {
+                        menu.set("highlightedItem", children[i]);
+                        matchVal = true;
+                        break;
+                    }
                 }
             }
+
             // Whether or not the first row should be highlighted by default.
             if (!matchVal && self.get("autoHighlightFirst")) {
                 for (i = 0; i < children.length; i++) {
