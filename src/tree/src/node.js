@@ -14,10 +14,10 @@ KISSY.add("tree/node", function (S, Node, Component,Extension, TreeNodeRender) {
      * @member Tree
      * @extends KISSY.Component.Controller
      */
-    var TreeNode = Component.Container.extend(
+    var TreeNode = Component.Controller.extend(
         [
             // 不是所有的子节点都是子组件
-            Component.DecorateChild
+            Extension.DecorateChild
         ],
         /**
          * @lends Tree.Node#

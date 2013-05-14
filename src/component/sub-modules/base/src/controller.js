@@ -347,7 +347,7 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
                 if (index === undefined) {
                     index = children.length;
                 }
-                c = Component.create(c, self);
+                c = self.createChild(c);
                 self.fire('beforeAddChild', {
                     component: c,
                     index: index
@@ -365,7 +365,7 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
                 if (typeof childIndex === "undefined") {
                     childIndex = S.indexOf(c, children);
                 }
-                c = Component.create(c, self);
+                c = self.createChild(c);
                 children[childIndex] = c;
                 // 生成父组件的 dom 结构
                 self.create();

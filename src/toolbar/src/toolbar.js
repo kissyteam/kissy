@@ -81,7 +81,6 @@ KISSY.add("toolbar", function (S, Component,Extension, Node, Separator, undefine
      * @class
      * KISSY Toolbar.
      * xclass: 'toolbar'.
-     * @extends KISSY.Component.Container
      */
     var Toolbar = Component.Controller.extend(
         [Extension.DecorateChildren,Extension.DelegateChildren],

@@ -1,13 +1,13 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 14 17:52
+build time: May 14 20:40
 */
 /**
  * root node represent a simple tree
  * @author yiminghe@gmail.com
  */
-KISSY.add("tree/base", function (S, Component, TreeNode, TreeRender, TreeManager) {
+KISSY.add("tree/base", function (S, Component,TreeNode, TreeRender, TreeManager) {
 
     /*多继承
      1. 继承基节点（包括可装饰儿子节点功能）
@@ -499,7 +499,7 @@ KISSY.add('tree/node-tpl',function(){
  * abstraction of tree node ,root and other node will extend it
  * @author yiminghe@gmail.com
  */
-KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
+KISSY.add("tree/node", function (S, Node, Component,Extension, TreeNodeRender) {
     var $ = Node.all,
         KeyCodes = Node.KeyCodes;
 
@@ -511,7 +511,7 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
      * @member Tree
      * @extends KISSY.Component.Controller
      */
-    var TreeNode = Component.Container.extend(
+    var TreeNode = Component.Controller.extend(
         [
             // 不是所有的子节点都是子组件
             Component.DecorateChild
@@ -708,10 +708,6 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
 
         {
             ATTRS: {
-                // 一般节点不需要代理事件，统统交给 root(tree) 代理
-                delegateChildren: {
-                    value: false
-                },
 
                 xrender: {
                     value: TreeNodeRender
@@ -953,7 +949,7 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
     return TreeNode;
 
 }, {
-    requires: ['node', 'component/base', './node-render']
+    requires: ['node', 'component/base', 'component/extension','./node-render']
 });
 
 /**
@@ -991,7 +987,7 @@ KISSY.add("tree/tree-manager-render", function (S) {
  * tree management utils
  * @author yiminghe@gmail.com
  */
-KISSY.add("tree/tree-manager", function (S, Event, Component) {
+KISSY.add("tree/tree-manager", function (S, Event, Component,Extension) {
 
     function TreeManager() {
     }
@@ -1001,11 +997,6 @@ KISSY.add("tree/tree-manager", function (S, Event, Component) {
      * @lends Tree#
      */
     {
-        // 覆盖 baseNode 处配置
-        delegateChildren: {
-            value: true
-        },
-
         /**
          * Whether show root node.
          * Defaults to: true.
@@ -1037,7 +1028,7 @@ KISSY.add("tree/tree-manager", function (S, Event, Component) {
         return id;
     }
 
-    S.augment(TreeManager, {
+    S.augment(TreeManager,Extension.DelegateChildren, {
 
         isTree: 1,
 
@@ -1124,7 +1115,7 @@ KISSY.add("tree/tree-manager", function (S, Event, Component) {
 
     return TreeManager;
 }, {
-    requires: ['event', 'component/base']
+    requires: ['event', 'component/base','component/extension']
 });/**
  * root node render
  * @author yiminghe@gmail.com

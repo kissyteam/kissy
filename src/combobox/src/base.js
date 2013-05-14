@@ -563,7 +563,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
         var m = self.get("menu");
         if (m && !m.isController) {
             if (init) {
-                m = Component.create(m, self);
+                m = self.createChild(m);
                 self.setInternal("menu", m);
             } else {
                 return null;

@@ -2,7 +2,8 @@
  * combination of menu and button ,similar to native select
  * @author yiminghe@gmail.com
  */
-KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, Component, undefined) {
+KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender,
+                                       Menu, Extension,undefined) {
 
     var $ = Node.all,
         win = $(S.Env.host),
@@ -20,7 +21,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
      * @class KISSY.MenuButton
      * @extends KISSY.Button
      */
-    var MenuButton = Button.extend([Component.DecorateChild],
+    var MenuButton = Button.extend([Extension.DecorateChild],
         /**
          * @lends MenuButton.prototype
          */
@@ -183,10 +184,10 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
             decorateChildrenInternal: function (UI, el) {
                 // 不能用 display:none , menu 的隐藏是靠 visibility
                 // eg: menu.show(); menu.hide();
-                el.css("top", "-9999").prependTo(el[0].ownerDocument.body);
+                el.prependTo(el[0].ownerDocument.body);
                 var self = this;
                 self.setInternal("menu",
-                    Component.DecorateChild.prototype.decorateChildrenInternal.call(self, UI, el, self.get('menu')));
+                    Extension.DecorateChild.prototype.decorateChildrenInternal.call(self, UI, el, self.get('menu')));
             },
 
             destructor: function () {
@@ -288,7 +289,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
         var m = self.get("menu");
         if (m && !m.isController) {
             if (init) {
-                m = Component.create(m, self);
+                m = self.createChild(m);
                 self.setInternal("menu", m);
             } else {
                 return null;
@@ -338,5 +339,6 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
 
     return MenuButton;
 }, {
-    requires: [ "node", "button", "./base-render", "menu", "component/base"]
+    requires: [ "node", "button", "./base-render", "menu",
+        'component/extension']
 });
