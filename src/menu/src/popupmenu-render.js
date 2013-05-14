@@ -5,7 +5,7 @@
  */
 KISSY.add("menu/popupmenu-render", function (S, extension, MenuRender) {
 
-    var UA= S.UA;
+    var UA = S.UA;
 
     return MenuRender.extend([
         extension.Position.Render,
@@ -30,6 +30,8 @@ KISSY.add("menu/popupmenu-render", function (S, extension, MenuRender) {
         }
     }, {
         ATTRS: {
+            contentEl: {},
+
             contentTpl: {
                 value: '<div ' +
                     'id="ks-contentbox{{id}}" ' +
@@ -40,5 +42,5 @@ KISSY.add("menu/popupmenu-render", function (S, extension, MenuRender) {
         }
     });
 }, {
-    requires:['component/extension', './menu-render']
+    requires: ['component/extension', './menu-render']
 });

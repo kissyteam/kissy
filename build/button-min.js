@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 13 20:46
+build time: May 14 10:28
 */
 KISSY.add("button/base",function(d,b,a,c){var e=b.KeyCodes;return a.Controller.extend({isButton:1,bindUI:function(){this.get("el").on("keyup",this.handleKeyEventInternal,this)},handleKeyEventInternal:function(a){return a.keyCode==e.ENTER&&"keydown"==a.type||a.keyCode==e.SPACE&&"keyup"==a.type?this.performActionInternal(a):a.keyCode==e.SPACE},performActionInternal:function(){this.get("checkable")&&this.set("checked",!this.get("checked"));this.fire("click")}},{ATTRS:{value:{},describedby:{value:"",
 view:1},tooltip:{value:"",view:1},checkable:{},checked:{view:1},xrender:{value:c}}},{xclass:"button",priority:10})},{requires:["event","component/base","./buttonRender"]});KISSY.add("button",function(d,b,a){b.Render=a;return b},{requires:["button/base","button/buttonRender"]});

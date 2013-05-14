@@ -45,7 +45,7 @@
 <script src="../../src/local-data-source.js"></script>
 <script src="../../src/remote-data-source.js"></script>
 <script src="../../src/multi-value-combobox.js"></script>
-<script src="../../src/render-tpl.js"></script>
+<script src="../../src/combobox-tpl.js"></script>
 <script>
     KISSY.use("combobox", function (S, ComboBox) {
 
@@ -53,7 +53,12 @@
          local dataSource
          */
         (function () {
-            var data = ["a123456", "b12345", "c3464356", "d23434"];
+            var data = [
+                "a123456鞋子测试",
+                "b12345衣服测试",
+                "c3464356袜子测试",
+                "d23434手机测试"
+            ];
 
             var basicComboBox = new ComboBox({
                 width:100,

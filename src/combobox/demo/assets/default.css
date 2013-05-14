@@ -96,3 +96,16 @@
 .ks-menuitem-disabled {
     color: #808080;
 }
+
+.ks-combobox-placeholder {
+    position: absolute;
+    left: 2px;
+    top: 2px;
+    opacity: 0.6;
+    filter: alpha(opacity=60);
+    *zoom: 1;
+    opacity: 0.6;
+    filter: alpha(opacity=60);
+    *zoom: 1;
+    display: none;
+}

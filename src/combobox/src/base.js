@@ -24,10 +24,10 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
      */
     ComboBox = Component.Controller.extend({
 
-            // user's input text
+            // user's input text.
+            // for restore after press esc key
+            // if update input when press down or up key
             _savedInputValue: null,
-
-            _stopNotify: 0,
 
             /**
              * normalize returned data
@@ -96,6 +96,27 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
              */
             setValueInternal: function (value) {
                 this.get('input').val(value);
+            },
+
+            // buffer/bridge between check timer and change logic
+            '_onSetInputValue': function () {
+                var self = this,
+                    value;
+                value = self['getValueInternal']();
+                if (value === undefined) {
+                    self.set("collapsed", true);
+                    return;
+                }
+                self._savedInputValue = value;
+                // S.log("value change: " + value);
+                self.sendRequest(value);
+            },
+
+            // setValueInternal without trigger change logic
+            setValueInternalWithSilence: function (v) {
+                var self = this;
+                self.setValueInternal(v);
+                self.setInternal('inputValue', self.get('input').val());
             },
 
             /**
@@ -182,20 +203,6 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
                 input = self.get("input");
                 updateInputOnDownUp = self.get("updateInputOnDownUp");
 
-                if (updateInputOnDownUp) {
-                    // combobox will change input value
-                    // but it does not need to reload data
-                    if (S.inArray(e.keyCode, [
-                        KeyCodes.UP,
-                        KeyCodes.DOWN,
-                        KeyCodes.ESC
-                    ])) {
-                        self._stopNotify = 1;
-                    } else {
-                        self._stopNotify = 0;
-                    }
-                }
-
                 if (menu && menu.get("visible")) {
                     handledByMenu = menu['handleKeydown'](e);
 
@@ -203,8 +210,10 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
                     if (e.keyCode == KeyCodes.ESC) {
                         self.set("collapsed", true);
                         if (updateInputOnDownUp) {
+                            // combobox will change input value
+                            // but it does not need to reload data
                             // restore original user's input text
-                            self['setValueInternal'](self._savedInputValue);
+                            self.setValueInternalWithSilence(self._savedInputValue);
                         }
                         return true;
                     }
@@ -214,7 +223,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
                     if (updateInputOnDownUp &&
                         S.inArray(e.keyCode, [KeyCodes.DOWN, KeyCodes.UP])) {
                         // update menu's active value to input just for show
-                        this.setValueInternal(highlightedItem.get("textContent"));
+                        self.setValueInternalWithSilence(highlightedItem.get("textContent"));
                     }
 
                     // tab
@@ -232,8 +241,11 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
                 } else if (e.keyCode == KeyCodes.DOWN || e.keyCode == KeyCodes.UP) {
                     // re-fetch, consider multiple input
                     // S.log("refetch : " + getValue(self));
-                    self.sendRequest(this.getValueInternal());
-                    return true;
+                    var v = self.getValueInternal();
+                    if (v !== undefined) {
+                        self.sendRequest(v);
+                        return true;
+                    }
                 }
                 return  undefined;
             },
@@ -241,7 +253,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
             validate: function (callback) {
                 var self = this,
                     validator = self.get('validator'),
-                    val = self.get("input").val();
+                    val = self.getValueInternal();
 
                 if (validator) {
                     validator(val, function (error) {
@@ -303,7 +315,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
                  * @ignore
                  */
                 inputValue: {
-                    value:'',
+                    value: '',
                     view: 1
                 },
 
@@ -500,11 +512,16 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
             menu = self.get("menu");
         if (e.target == menu) {
             el = menu.get("el");
-            contentEl = menu.get("el");
+            contentEl = menu.get("contentEl");
             // menu has input!
             el.on("focusout", delayHide, self);
             el.on("focusin", clearDismissTimer, self);
             contentEl.on("mouseover", onMenuMouseOver, self);
+            // cause valuechange
+            // if click menuitem while chinese input is open(xu -> '')
+            contentEl.on('mousedown', function () {
+                self.setValueInternalWithSilence(self.getValueInternal());
+            });
         }
     }
 
@@ -514,15 +531,9 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
             textContent;
         if (item.isMenuItem) {
             textContent = item.get('textContent');
-            // stop valuechange event
-            self._stopNotify = 1;
-            self['setValueInternal'](textContent);
+            self.setValueInternalWithSilence(textContent);
             self._savedInputValue = textContent;
             self.set("collapsed", true);
-            // valuechange interval, hack
-            setTimeout(function () {
-                self._stopNotify = 0;
-            }, 50);
         }
     }
 
@@ -608,19 +619,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
     }
 
     function onValueChange() {
-        var self = this,
-            value;
-        if (self._stopNotify) {
-            return;
-        }
-        value = self['getValueInternal']();
-        if (value === undefined) {
-            self.set("collapsed", true);
-            return;
-        }
-        self._savedInputValue = value;
-        // S.log("value change: " + value);
-        self.sendRequest(value);
+        this.set('inputValue', this.get('input').val());
     }
 
     function renderData(data) {

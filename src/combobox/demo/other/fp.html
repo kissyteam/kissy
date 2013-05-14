@@ -58,7 +58,7 @@
 <script src="../../src/local-data-source.js"></script>
 <script src="../../src/remote-data-source.js"></script>
 <script src="../../src/multi-value-combobox.js"></script>
-<script src="../../src/render-tpl.js"></script>
+<script src="../../src/combobox-tpl.js"></script>
 <script>
     KISSY.use("event,combobox", function (S, Event, ComboBox) {
 
@@ -75,6 +75,7 @@
             var basicComboBox = new ComboBox({
                 render: S.one("#container"),
                 hasTrigger: false,
+                placeholder: '请输入',
                 width: 500,
                 dataSource: new ComboBox.RemoteDataSource({
                     xhrCfg: {
@@ -158,8 +159,7 @@
                     }
                     if (!footer.children().length) {
                         footer.append(html);
-                        var el = footer.one(".tdg-input"),
-                                oel = basicComboBox.get("el");
+                        var el = footer.one(".tdg-input");
                         el.on("keyup", function (e) {
                             if (e.keyCode != Event.KeyCodes.DOWN &&
                                     e.keyCode != Event.KeyCodes.UP) {
@@ -177,8 +177,8 @@
                 S.all('#search')[0].click();
             });
 
-            S.all('#search').on('click',function(){
-                location.hash='#!q='+basicComboBox.get('input').val();
+            S.all('#search').on('click', function () {
+                location.hash = '#!q=' + basicComboBox.get('input').val();
             });
         })();
     });
