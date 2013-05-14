@@ -95,11 +95,11 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
              * @member KISSY.ComboBox
              */
             setValueInternal: function (value) {
-                this.set('inputValue',value);
+                this.set('inputValue', value);
             },
 
             // buffer/bridge between check timer and change logic
-            '_onSetInputValue': function (v,e) {
+            '_onSetInputValue': function (v, e) {
                 // only trigger menu when timer cause change
                 if (e.causeByTimer) {
                     var self = this,
@@ -487,6 +487,18 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
                 autoHighlightFirst: {
                 },
 
+                /**
+                 * whether highlight item when item content is same with user input.
+                 * Defaults to: true
+                 * @cfg {Boolean} highlightMatchItem
+                 */
+                /**
+                 * @ignore
+                 */
+                highlightMatchItem: {
+                    value: true
+                },
+
                 xrender: {
                     value: ComboBoxRender
                 }
@@ -648,11 +660,13 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
 
             // make menu item (which textContent is same as input) active
             val = self['getValueInternal']();
-            for (i = 0; i < children.length; i++) {
-                if (children[i].get("textContent") == val) {
-                    children[i].set('highlighted', true);
-                    matchVal = true;
-                    break;
+            if (self.get('highlightMatchItem')) {
+                for (i = 0; i < children.length; i++) {
+                    if (children[i].get("textContent") == val) {
+                        children[i].set('highlighted', true);
+                        matchVal = true;
+                        break;
+                    }
                 }
             }
             // Whether or not the first row should be highlighted by default.
