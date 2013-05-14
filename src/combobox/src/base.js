@@ -95,28 +95,24 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
              * @member KISSY.ComboBox
              */
             setValueInternal: function (value) {
-                this.get('input').val(value);
+                this.set('inputValue',value);
             },
 
             // buffer/bridge between check timer and change logic
-            '_onSetInputValue': function () {
-                var self = this,
-                    value;
-                value = self['getValueInternal']();
-                if (value === undefined) {
-                    self.set("collapsed", true);
-                    return;
+            '_onSetInputValue': function (v,e) {
+                // only trigger menu when timer cause change
+                if (e.causeByTimer) {
+                    var self = this,
+                        value;
+                    value = self['getValueInternal']();
+                    if (value === undefined) {
+                        self.set("collapsed", true);
+                        return;
+                    }
+                    self._savedInputValue = value;
+                    // S.log("value change: " + value);
+                    self.sendRequest(value);
                 }
-                self._savedInputValue = value;
-                // S.log("value change: " + value);
-                self.sendRequest(value);
-            },
-
-            // setValueInternal without trigger change logic
-            setValueInternalWithSilence: function (v) {
-                var self = this;
-                self.setValueInternal(v);
-                self.setInternal('inputValue', self.get('input').val());
             },
 
             /**
@@ -212,7 +208,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
                             // combobox will change input value
                             // but it does not need to reload data
                             // restore original user's input text
-                            self.setValueInternalWithSilence(self._savedInputValue);
+                            self.setValueInternal(self._savedInputValue);
                         }
                         return true;
                     }
@@ -222,7 +218,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
                     if (updateInputOnDownUp &&
                         S.inArray(e.keyCode, [KeyCodes.DOWN, KeyCodes.UP])) {
                         // update menu's active value to input just for show
-                        self.setValueInternalWithSilence(highlightedItem.get("textContent"));
+                        self.setValueInternal(highlightedItem.get("textContent"));
                     }
 
                     // tab
@@ -520,7 +516,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
             // cause valuechange
             // if click menuitem while chinese input is open(xu -> '')
             contentEl.on('mousedown', function () {
-                self.setValueInternalWithSilence(self.getValueInternal());
+                self.setValueInternal(self.getValueInternal());
             });
         }
     }
@@ -531,7 +527,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
             textContent;
         if (item.isMenuItem) {
             textContent = item.get('textContent');
-            self.setValueInternalWithSilence(textContent);
+            self.setValueInternal(textContent);
             self._savedInputValue = textContent;
             self.set("collapsed", true);
         }
@@ -619,7 +615,11 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
     }
 
     function onValueChange() {
-        this.set('inputValue', this.get('input').val());
+        this.set('inputValue', this.get('input').val(), {
+            data: {
+                causeByTimer: 1
+            }
+        });
     }
 
     function renderData(data) {
