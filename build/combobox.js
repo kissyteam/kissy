@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.30
 MIT Licensed
-build time: Apr 3 12:50
+build time: May 14 12:27
 */
 /**
  * @ignore
@@ -291,6 +291,14 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
                 el.on("focusin", clearDismissTimer, self);
 
                 contentEl.on("mouseover", onMenuMouseOver, self);
+
+                contentEl.on('mousedown', function () {
+                    self._stopNotify = 1;
+                });
+
+                contentEl.on('mouseup', function () {
+                    self._stopNotify = 0;
+                });
 
                 self.bindMenu = S.noop;
             },

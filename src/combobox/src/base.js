@@ -287,6 +287,14 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
 
                 contentEl.on("mouseover", onMenuMouseOver, self);
 
+                contentEl.on('mousedown', function () {
+                    self._stopNotify = 1;
+                });
+
+                contentEl.on('mouseup', function () {
+                    self._stopNotify = 0;
+                });
+
                 self.bindMenu = S.noop;
             },
 
