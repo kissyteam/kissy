@@ -25,6 +25,7 @@ KISSY.add('menu/check-menuitem-render', function (S, MenuItemRender, CheckMenuIt
     }, {
         ATTRS: {
             contentTpl: {
+                // has menuitem-content wrapper!
                 value: CheckMenuItemTpl
             },
             checked: {
