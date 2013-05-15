@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.30
 MIT Licensed
-build time: Jan 9 16:12
+build time: May 15 15:40
 */
 /**
  * @ignore
@@ -666,13 +666,22 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
         S.each(containers, function (container) {
             // 遍历处理
             if (type == 'img') {
-                DOM.query('img', container).each(function (img) {
-                    loadImgSrc(img, imgFlag);
-                });
+                if (container.nodeName.toLowerCase() == 'img') {
+                    loadImgSrc(container, imgFlag);
+                } else {
+                    DOM.query('img', container).each(function (img) {
+                        loadImgSrc(img, imgFlag);
+                    });
+                }
             } else {
-                DOM.query('textarea.' + areaFlag, container).each(function (textarea) {
-                    loadAreaData(textarea, true);
-                });
+                if (container.nodeName.toLowerCase() == 'textarea' &&
+                    DOM.hasClass(container, areaFlag)) {
+                    loadAreaData(container, true);
+                } else {
+                    DOM.query('textarea.' + areaFlag, container).each(function (textarea) {
+                        loadAreaData(textarea, true);
+                    });
+                }
             }
         });
     }
