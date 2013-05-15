@@ -43,12 +43,6 @@ KISSY.add('component/base/box', function (S) {
          */
     }
 
-    function pxSetter(v) {
-        if (typeof v == 'number') {
-            v += 'px';
-        }
-        return v;
-    }
 
     Box.ATTRS =
     {
@@ -103,8 +97,7 @@ KISSY.add('component/base/box', function (S) {
          * @ignore
          */
         width: {
-            view: 1,
-            setter: pxSetter
+            view: 1
         },
 
         /**
@@ -120,8 +113,7 @@ KISSY.add('component/base/box', function (S) {
          * @ignore
          */
         height: {
-            view: 1,
-            setter: pxSetter
+            view: 1
         },
 
         /**

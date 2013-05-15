@@ -3,7 +3,7 @@
  * Box
  * @author yiminghe@gmail.com
  */
-KISSY.add('component/base/box-render', function (S, Node, XTemplate,BoxTpl) {
+KISSY.add('component/base/box-render', function (S, Node, XTemplate, BoxTpl) {
 
     var $ = S.all,
         UA = S.UA,
@@ -11,9 +11,21 @@ KISSY.add('component/base/box-render', function (S, Node, XTemplate,BoxTpl) {
         endTpl = '</div>',
         doc = S.Env.host.document;
 
+    function pxSetter(v) {
+        if (typeof v == 'number') {
+            v += 'px';
+        }
+        return v;
+    }
+
     function BoxRender() {
 
-        var self=this;
+        var self = this,
+            width,
+            height,
+            style = self.get('elStyle'),
+            elCls = self.get('elCls'),
+            visible;
 
         if (!self.get('srcNode')) {
             var attrs = self.getAttrs(),
@@ -27,8 +39,23 @@ KISSY.add('component/base/box-render', function (S, Node, XTemplate,BoxTpl) {
                     renderData[a] = self.get(a);
                 }
             }
+            width = renderData.width;
+            height = renderData.height;
+            visible = renderData.visible;
 
+            if (width) {
+                style.width = pxSetter(width);
+            }
+
+            if (height) {
+                style.height = pxSetter(height);
+            }
+
+            elCls.push(visible ?
+                self.getCssClassWithState('shown') :
+                self.getCssClassWithState('hidden'));
         }
+
     }
 
     BoxRender.ATTRS = {
@@ -200,5 +227,5 @@ KISSY.add('component/base/box-render', function (S, Node, XTemplate,BoxTpl) {
 
     return BoxRender;
 }, {
-    requires: ['node', 'xtemplate','./box-tpl']
+    requires: ['node', 'xtemplate', './box-tpl']
 });

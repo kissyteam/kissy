@@ -14,10 +14,6 @@ tests.push('/kissy/src/component/tests/runner/test.html');
 
 tests.push('/kissy/src/cookie/tests/runner/test.html');
 
-tests.push('/kissy/src/datalazyload/tests/runner/test-webp.html');
-
-tests.push('/kissy/src/datalazyload/tests/runner/test-window.html');
-
 tests.push('/kissy/src/dd/sub-modules/base/tests/runner/test.html');
 
 tests.push('/kissy/src/dd/sub-modules/droppable/tests/runner/test.html');

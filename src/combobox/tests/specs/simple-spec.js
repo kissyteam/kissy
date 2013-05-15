@@ -202,18 +202,24 @@ KISSY.use("combobox", function (S, ComboBox) {
             waits(100);
         });
 
-
         it("should response to keyboard and update input", function () {
 
-            t.value = "";
+
 
             t.focus();
 
             jasmine.simulate(t, "keydown");
+
+            runs(function(){
+                t.value = "";
+            });
+
             waits(100);
+
             runs(function () {
                 t.value = "1";
             });
+
             waits(100);
 
             runs(function () {
@@ -231,9 +237,10 @@ KISSY.use("combobox", function (S, ComboBox) {
                 jasmine.simulate(t, "keydown", {
                     keyCode: KeyCodes.DOWN
                 });
-
             });
+
             waits(100);
+
             runs(function () {
                 var menu = comboBox.get("menu");
                 var children = menu.get("children");
@@ -249,6 +256,7 @@ KISSY.use("combobox", function (S, ComboBox) {
             });
 
             waits(100);
+
             runs(function () {
                 var menu = comboBox.get("menu");
                 var children = menu.get("children");
@@ -259,6 +267,7 @@ KISSY.use("combobox", function (S, ComboBox) {
                 });
             });
             waits(100);
+
             // wrap
             runs(function () {
                 var menu = comboBox.get("menu");
@@ -267,6 +276,7 @@ KISSY.use("combobox", function (S, ComboBox) {
                 expect(S.indexOf(menu.get("highlightedItem"), children)).toBe(0);
                 t.blur();
             });
+
             waits(100);
         });
 
@@ -274,11 +284,16 @@ KISSY.use("combobox", function (S, ComboBox) {
         if (!S.UA.ios && !S.UA.android) {
             it("should response to mouse", function () {
 
-                t.value = "";
+
 
                 t.focus();
 
                 jasmine.simulate(t, "keydown");
+
+                runs(function(){
+                    t.value = "";
+                });
+
                 waits(100);
                 runs(function () {
                     t.value = "1";
@@ -316,12 +331,12 @@ KISSY.use("combobox", function (S, ComboBox) {
 
 
         it("should update selectedItem and hide menu", function () {
-
-            t.value = "";
-
             t.focus();
 
             jasmine.simulate(t, "keydown");
+            runs(function(){
+                t.value = "";
+            });
             waits(100);
             runs(function () {
                 t.value = "1";
@@ -366,11 +381,12 @@ KISSY.use("combobox", function (S, ComboBox) {
 
         it("esc should restore value to original and hide menu", function () {
 
-            t.value = "";
-
             t.focus();
 
             jasmine.simulate(t, "keydown");
+            runs(function(){
+                t.value = "";
+            });
             waits(100);
             runs(function () {
                 t.value = "1";

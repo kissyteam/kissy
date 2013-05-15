@@ -1,14 +1,6 @@
 <div id="ks-component{{id}}" 
  class="{{getCssClassWithState ""}}
-
-{{#if visible}} 
-{{getCssClassWithState "shown"}}  
-{{else}} 
-{{getCssClassWithState "hidden"}}  
-{{/if}} 
-
-
-{{#each elCls}} 
+{{#each elCls}}
  {{.}}  
 {{/each}}
 "
@@ -21,12 +13,4 @@ style="
 {{#each elStyle}} 
  {{xkey}}:{{.}};  
 {{/each}}
-
-{{#if width}} 
-width:{{width}}; 
-{{/if}} 
-
-{{#if height}} 
-height:{{height}}; 
-{{/if}} 
 ">

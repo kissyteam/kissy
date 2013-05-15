@@ -43,7 +43,7 @@ KISSY.add('imagezoom', function (S, Node, Overlay, Zoomer, undefined) {
                 imageZoomBindUI(self);
             },
 
-            renderUI: function () {
+            createDom: function () {
                 var self = this,
                     image = self.get('imageNode'),
                     contentEl = self.get("contentEl");
@@ -533,7 +533,7 @@ KISSY.add('imagezoom', function (S, Node, Overlay, Zoomer, undefined) {
  * NOTES:
  * 2012-12-17 yiminghe@gmail.com
  *  - refactor and document
- *  - TODO extend overlay ?? confused
+ *  - TODO extend overlay ?? confused, composition over inheritance!
  *
  * 20120504 by yiminghe@gmail.com
  *  - refactor

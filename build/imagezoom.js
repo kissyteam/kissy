@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 6 15:25
+build time: May 15 23:12
 */
 /**
  * @ignore
@@ -48,7 +48,7 @@ KISSY.add('imagezoom', function (S, Node, Overlay, Zoomer, undefined) {
                 imageZoomBindUI(self);
             },
 
-            renderUI: function () {
+            createDom: function () {
                 var self = this,
                     image = self.get('imageNode'),
                     contentEl = self.get("contentEl");
