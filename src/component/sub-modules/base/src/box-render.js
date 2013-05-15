@@ -168,17 +168,11 @@ KISSY.add('component/base/box-render', function (S, Node, XTemplate,BoxTpl) {
         },
 
         '_onSetContent': function (c) {
-            var self = this,
-                el = self.get('el');
-            // srcNode 时不重新渲染 content
-            // 防止内部有改变，而 content 则是老的 html 内容
+            var el = this.get('el');
             el.html(c);
             // ie needs to set unselectable attribute recursively
-            if (UA.ie < 9 && !self.get('allowTextSelection')) {
-                el.unselectable(/**
-                 @type HTMLElement
-                 @ignore
-                 */undefined);
+            if (UA.ie < 9 && !this.get('allowTextSelection')) {
+                el.unselectable();
             }
         },
 

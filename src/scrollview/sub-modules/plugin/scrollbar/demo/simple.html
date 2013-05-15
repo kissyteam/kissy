@@ -60,11 +60,12 @@
 
 <script src="../src/render.js"></script>
 <script src="../src/control.js"></script>
+<script src="../src/scrollbar-tpl.js"></script>
 <script src="../src/scrollbar.js"></script>
 
 <script>
 
-    KISSY.use('scrollview/drag,scrollview/plugin/scrollbar,dd/droppable', function (S, ScrollView, ScrollbarPlugin,Droppable) {
+    KISSY.use('scrollview,scrollview/plugin/scrollbar', function (S, ScrollView, ScrollbarPlugin) {
         S.ready(function () {
             var content = '';
             for (var i = 0; i < 23; i++) {
@@ -75,7 +76,6 @@
 
             window.scrollview = new ScrollView({
                 width: 320,
-                render: 'body',
                 height: 219,
                 plugins: [new ScrollbarPlugin({
                     autoHideX: true,
@@ -97,12 +97,20 @@
                 scrollview.set('disabled', false);
             });
 
-//            for(i=0;i<100;i++){
-//                var b= S.all('<div class="box"></div>').appendTo('body');
-//                new Droppable({
-//                    node:b
-//                });
-//            }
+            S.all('<div style="height:100px"></div>').appendTo('body');
+
+
+            new ScrollView({
+                width: 320,
+                scrollLeft:50,
+                scrollTop:400,
+                height: 219,
+                plugins: [new ScrollbarPlugin({
+                    autoHideX: true,
+                    autoHideY: false
+                })],
+                content: content
+            }).render();
 
             S.all('<div style="height:1000px"></div>').appendTo('body');
 

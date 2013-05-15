@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 14 20:35
+build time: May 15 20:32
 */
 /**
  * Menu DPL For KISSY.
@@ -113,6 +113,9 @@ build time: May 14 20:35
   color: #333333;
   white-space: nowrap;
   cursor: default;
+}
+.ks-menuitem-content {
+    display: inline;
 }
 .ks-menu .ks-menuitem-hover,
 .ks-menu .ks-menuitem-active {

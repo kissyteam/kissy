@@ -228,6 +228,9 @@ KISSY.add('scrollview/base', function (S, DOM, Component, Extension, Render, Eve
 
     }, {
         ATTRS: {
+            contentEl: {
+                view: 1
+            },
             scrollLeft: {
                 view: 1
             },

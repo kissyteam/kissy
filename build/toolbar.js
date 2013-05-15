@@ -1,13 +1,13 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 17 00:23
+build time: May 15 20:33
 */
 /**
  * Toolbar for KISSY.
  * @author yiminghe@gmail.com
  */
-KISSY.add("toolbar", function (S, Component, Node, Separator, undefined) {
+KISSY.add("toolbar", function (S, Component, Extension, Node, Separator, undefined) {
 
     var KeyCodes = Node.KeyCodes;
 
@@ -86,15 +86,15 @@ KISSY.add("toolbar", function (S, Component, Node, Separator, undefined) {
      * @class
      * KISSY Toolbar.
      * xclass: 'toolbar'.
-     * @extends KISSY.Component.Container
      */
-    var Toolbar = Component.Container.extend(
+    var Toolbar = Component.Controller.extend(
+        [Extension.DecorateChildren, Extension.DelegateChildren],
         /**
          * @lends Toolbar#
          */
         {
-            createDom: function () {
-                this.get("el").attr("role", "toolbar");
+            initializer: function () {
+                this.get('elAttrs')['role'] = 'toolbar';
             },
 
             _onSetHighlightedItem: function (item, e) {
@@ -231,11 +231,9 @@ KISSY.add("toolbar", function (S, Component, Node, Separator, undefined) {
              */
             {
                 // 当前的高亮项
-                highlightedItem: {
-                },
+                highlightedItem: {},
                 // 当前的扩展项，切换高亮项时如要把以前的扩展项收起，并展开当前的高亮项
-                expandedItem: {
-                },
+                expandedItem: {},
                 defaultChildCfg: {
                     value: {
                         xclass: 'button',
@@ -252,5 +250,5 @@ KISSY.add("toolbar", function (S, Component, Node, Separator, undefined) {
     return Toolbar;
 
 }, {
-    requires: ['component/base', 'node']
+    requires: ['component/base', 'component/extension', 'node']
 });

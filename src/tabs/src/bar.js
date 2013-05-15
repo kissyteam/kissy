@@ -3,15 +3,36 @@
  * TabBar for KISSY.
  * @author yiminghe@gmail.com
  */
-KISSY.add("tabs/bar", function (S, Toolbar) {
+KISSY.add("tabs/bar", function (S, Toolbar, undefined) {
 
     /**
      * @ignore
      */
     var TabBar = Toolbar.extend({
 
-        createDom: function () {
-            this.get("el").attr("role", "tablist");
+        initializer: function () {
+            this.get('elAttrs')['role'] = 'tablist';
+        },
+
+        bindUI: function () {
+            var self = this;
+            self.on("afterSelectedChange", function (e) {
+                if (e.newVal && e.target.isTabsTab) {
+                    self.set("selectedTab", e.target);
+                }
+            });
+        },
+
+        syncUI: function () {
+            var bar = this,
+                children = bar.get("children");
+            S.each(children, function (c) {
+                if (c.get("selected")) {
+                    bar.set("selectedTab", c);
+                    return false;
+                }
+                return undefined;
+            });
         },
 
         handleKeyEventInternal: function (e) {
@@ -24,17 +45,6 @@ KISSY.add("tabs/bar", function (S, Toolbar) {
                 next.set('selected', true);
                 return true;
             }
-        },
-
-
-        renderUI: function () {
-            var bar = this,
-                children = bar.get("children");
-            S.each(children, function (c) {
-                if (c.get("selected")) {
-                    bar.set("selectedTab", c);
-                }
-            });
         },
 
         _onSetSelectedTab: function (v, e) {
@@ -53,15 +63,6 @@ KISSY.add("tabs/bar", function (S, Toolbar) {
             if (self.get('changeType') == 'mouse') {
                 self._onSetSelectedTab.apply(self, arguments);
             }
-        },
-
-        bindUI: function () {
-            var self = this;
-            self.on("afterSelectedChange", function (e) {
-                if (e.newVal && e.target.isTabsTab) {
-                    self.set("selectedTab", e.target);
-                }
-            });
         }
 
     }, {
@@ -73,7 +74,7 @@ KISSY.add("tabs/bar", function (S, Toolbar) {
             },
             defaultChildCfg: {
                 value: {
-                    xclass:'tabs-tab'
+                    xclass: 'tabs-tab'
                 }
             }
         }

@@ -32,6 +32,7 @@
 
 <script src="../src/render.js"></script>
 <script src="../src/control.js"></script>
+<script src="../src/scrollbar-tpl.js"></script>
 <script src="../src/scrollbar.js"></script>
 
 <script>
@@ -39,7 +40,7 @@
     // 本 demo 会在 ie10 模拟 ie7 下白屏，原因不明，请设置
     // <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
-    KISSY.use('scrollview/drag,scrollview/plugin/scrollbar', function (S, ScrollView, ScrollbarPlugin) {
+    KISSY.use('scrollview,scrollview/plugin/scrollbar', function (S, ScrollView, ScrollbarPlugin) {
         S.ready(function () {
             var egg = 'http://img01.taobaocdn.com/tps/i1/T1I7N3XphaXXazKpz.-1920-1200.jpg';
             window.scrollview = new ScrollView({

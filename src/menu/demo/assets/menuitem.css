@@ -39,6 +39,7 @@
 }
 
 .ks-menuitem-content {
+    display: inline;
     font: normal 13px Arial, sans-serif;
 }
 

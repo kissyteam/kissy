@@ -3,36 +3,18 @@
  * submenu render for kissy ,extend menuitem render with arrow
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/submenu-render", function (S, MenuItemRender, SubMenuTpl) {
+KISSY.add("menu/submenu-render", function (S, MenuItemRender, Extension) {
 
-
-
-    return MenuItemRender.extend({
-        initializer: function () {
-            this.get('childrenElSelectors')['contentEl'] =
-                '#ks-menuitem-content{id}';
-        },
-
-        _onSetContent: function (v) {
-            this.get('contentEl').html(v).unselectable();
-        }
+    return MenuItemRender.extend([Extension.ContentRender], {
     }, {
         ATTRS: {
             contentTpl: {
-                value: SubMenuTpl
-            }
-        },
-        HTML_PARSER: {
-            content: function (el) {
-                return el.children("." + this.get('prefixCls') +
-                    "menuitem-content").html();
-            },
-            contentEl: function (el) {
-                return el.children("." + this.get('prefixCls') +
-                    "menuitem-content");
+                value: Extension.ContentRender.ContentTpl +
+                    '<span class="{{prefixCls}}submenu-arrow">►</span>'
             }
         }
     });
+
 }, {
-    requires: ['./menuitem-render', './submenu-tpl']
+    requires: ['./menuitem-render', 'component/extension']
 });

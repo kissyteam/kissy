@@ -10,8 +10,8 @@ KISSY.add("component/extension/decorate-child", function (S, DecorateChildren) {
 
     S.augment(DecorateChild, DecorateChildren, {
         decorateInternal: function (element) {
-            var self = this;
-            var prefixCls = self.get('defaultChildCfg').prefixCls,
+            var self = this,
+                prefixCls = self.get('defaultChildCfg').prefixCls,
                 child = element.one("." + (prefixCls + self.get("decorateChildCls")));
             // 可以装饰?
             if (child) {

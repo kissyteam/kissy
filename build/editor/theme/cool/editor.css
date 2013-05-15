@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 17 00:21
+build time: May 15 21:44
 */
 /**
 ks-editor-post ，编辑器内容外部包装容器
@@ -553,7 +553,7 @@ a.ks-editor-color-remove:hover {
     margin-right: 2px;
 }
 
-.ks-editor-draft .ks-editor-menu-button-caption {
+.ks-editor-draft .ks-editor-menu-button-content {
     padding-left: 4px;
     height: 20px;
     line-height: 20px;
@@ -761,8 +761,8 @@ ks-editor-toolbar-padding {
     margin-right: 0;
 }
 
-.ks-editor-tools .ks-editor-toolbar-unorderedListArrowBtn .ks-editor-menu-button-caption,
-.ks-editor-tools .ks-editor-toolbar-orderedListArrowBtn .ks-editor-menu-button-caption {
+.ks-editor-tools .ks-editor-toolbar-unorderedListArrowBtn .ks-editor-menu-button-content,
+.ks-editor-tools .ks-editor-toolbar-orderedListArrowBtn .ks-editor-menu-button-content {
     margin: 0;
     padding: 0;
     width: 0;
@@ -1079,7 +1079,7 @@ menu style for kissy editor ,include contextmenu and select menu
     vertical-align: middle;
 }
 
-.ks-editor-dialog .ks-editor-contentbox, .ks-editor-popup .ks-editor-contentbox {
+.ks-editor-dialog .ks-editor-content, .ks-editor-popup .ks-editor-content {
     background-color: #FBFBFB;
     border: 1px solid #ACB4BE;
 }
@@ -1266,7 +1266,7 @@ select style for kissy editor
     filter: none;
 }
 
-.ks-editor-tools .ks-editor-menu-button-caption {
+.ks-editor-tools .ks-editor-menu-button-content {
     padding-left: 4px;
     height: 20px;
     line-height: 20px;
@@ -1296,7 +1296,7 @@ select style for kissy editor
     background-image: url("text-bg.png");
 }
 
-.ks-editor-big-menu-button-caption {
+.ks-editor-big-menu-button-content {
     padding-left: 5px;
 }.ks-editor-smiley-sprite {
     background: url("http://a.tbcdn.cn/sys/wangwang/smiley/sprite.png") no-repeat scroll -1px 0 transparent;

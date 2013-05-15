@@ -123,3 +123,6 @@
 .nav-popupmenu-hidden {
     visibility: hidden;
 }
+.nav-menuitem-content {
+    display: inline;
+}

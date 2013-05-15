@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 15 13:14
+build time: May 15 20:33
 */
 /**
  * @ignore
@@ -457,6 +457,57 @@ KISSY.add('component/extension/align', function (S, DOM, Node) {
  *  2011-07-13 yiminghe@gmail.com note:
  *   - 增加智能对齐，以及大小调整选项
  **//**
+ * common content box render
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('component/extension/content-render', function (S) {
+
+    function ContentRender() {
+        S.mix(this.get('childrenElSelectors'), {
+            contentEl: '#ks-content{id}'
+        });
+    }
+
+    ContentRender.prototype = {
+        getChildrenContainerEl: function () {
+            return this.get('contentEl');
+        },
+        _onSetContent: function (v) {
+            var contentEl = this.get('contentEl');
+            contentEl.html(v);
+            // ie needs to set unselectable attribute recursively
+            if (S.UA.ie < 9 && !this.get('allowTextSelection')) {
+                contentEl.unselectable();
+            }
+        }
+    };
+
+    S.mix(ContentRender, {
+        ATTRS: {
+            contentTpl:{
+                value:'<div id="ks-content{{id}}" ' +
+                    'class="{{prefixCls}}content {{getCssClassWithState "content"}}">' +
+                    '{{{content}}}' +
+                    '</div>'
+            },
+            content: {
+                sync: 0
+            }
+        },
+        HTML_PARSER: {
+            content: function (el) {
+                return el.one('.' + this.get('prefixCls') + 'content').html();
+            },
+            contentEl: function (el) {
+                return el.one('.' + this.get('prefixCls') + 'content')
+            }
+        }
+    });
+
+    ContentRender.ContentTpl=ContentRender.ATTRS.contentTpl.value;
+
+    return ContentRender;
+});/**
  * @ignore
  * decorate its children from one element
  * @author yiminghe@gmail.com
@@ -468,8 +519,8 @@ KISSY.add("component/extension/decorate-child", function (S, DecorateChildren) {
 
     S.augment(DecorateChild, DecorateChildren, {
         decorateInternal: function (element) {
-            var self = this;
-            var prefixCls = self.get('defaultChildCfg').prefixCls,
+            var self = this,
+                prefixCls = self.get('defaultChildCfg').prefixCls,
                 child = element.one("." + (prefixCls + self.get("decorateChildCls")));
             // 可以装饰?
             if (child) {
@@ -508,8 +559,7 @@ KISSY.add("component/extension/decorate-children", function (S, Component) {
          * @param {KISSY.NodeList} el Root element of current component.
          */
         decorateInternal: function (el) {
-            var self = this;
-            self.decorateChildren(el);
+            this.decorateChildren(el);
         },
 
         /**
@@ -662,18 +712,13 @@ KISSY.add("component/extension/delegate-children", function (S, Event) {
  * uibase
  * @author yiminghe@gmail.com
  */
-KISSY.add("component/extension", function (S, Align, Position,
-                                           PositionRender, ShimRender,
-                                           DelegateChildren, DecorateChildren,
-                                           DecorateChild
-    ) {
-    Position.Render = PositionRender;
+KISSY.add("component/extension", function (S, Align, ContentRender, Position, PositionRender, ShimRender, DelegateChildren, DecorateChildren, DecorateChild) {
     return {
         Align: Align,
         Position: Position,
-        Shim: {
-            Render: ShimRender
-        },
+        PositionRender: PositionRender,
+        ContentRender: ContentRender,
+        ShimRender: S.UA === 6 ? ShimRender : null,
         'DelegateChildren': DelegateChildren,
         'DecorateChild': DecorateChild,
         'DecorateChildren': DecorateChildren
@@ -681,6 +726,7 @@ KISSY.add("component/extension", function (S, Align, Position,
 }, {
     requires: [
         "./extension/align",
+        "./extension/content-render",
         "./extension/position",
         "./extension/position-render",
         "./extension/shim-render",
@@ -872,12 +918,12 @@ KISSY.add("component/extension/shim-render", function () {
         "height: expression(this.parentNode.clientHeight);" + "'/>";
 
     // only for ie6!
-    function Shim() {
+    function ShimRender() {
     }
 
-    Shim.prototype.__createDom = function () {
+    ShimRender.prototype.__createDom = function () {
         this.get('el').prepend(S.all(shimTpl));
     };
 
-    return Shim;
+    return ShimRender;
 });

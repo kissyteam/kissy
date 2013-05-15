@@ -20,4 +20,6 @@
         display: block;
     }
 
- [!] srcNode 时 html 结构必须包含 contentbox 节点
+ [!] srcNode 时 html 结构必须包含 content 节点
+ [!] content/bodyContent/ 等属性值只允许字符串类型
+ [!] ks-contentbox 样式名更改为 ks-content

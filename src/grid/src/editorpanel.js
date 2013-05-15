@@ -7,7 +7,7 @@ KISSY.add('grid/editorpanel', function (S, Component) {
 	var CLS_EDITOR_CONTAINER = 'ks-grid-editor-container';
 	
 	var GridEditorPanelRender = Component.Render.extend([
-		Component.UIBase.Position.Render,
+		Component.UIBase.PositionRender,
 		Component.UIBase.Align.Render
 	],{
 	

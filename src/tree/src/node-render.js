@@ -2,16 +2,7 @@
  * common render for node
  * @author yiminghe@gmail.com
  */
-KISSY.add("tree/node-render", function (S, Node, Component, TreeNodeTpl) {
-
-    //<div class='ks-tree-node'>
-    //<div class='ks-tree-node-row'>
-    //<div class='ks-tree-expand-icon-t'></div>
-    //<div class='ks-tree-node-checked0'></div>
-    //<div class='ks-tree-file-icon'></div>
-    //<span class='ks-tree-node-content'></span>
-    //</div>
-    //</div>
+KISSY.add("tree/node-render", function (S, Node, Component, TreeNodeTpl, Extension) {
 
     var SELECTED_CLS = "tree-node-selected",
         COMMON_EXPAND_EL_CLS = "tree-expand-icon-{t}",
@@ -41,27 +32,25 @@ KISSY.add("tree/node-render", function (S, Node, Component, TreeNodeTpl) {
     // 实际使用，结束
 
         ROW_EL_CLS = 'tree-node-row',
-        CONTENT_EL_CLS = "tree-node-content",
         CHILDREN_CLS = "tree-children",
         CHILDREN_CLS_L = "tree-lchildren";
 
     var CHECK_CLS = "tree-node-checked",
         ALL_STATES_CLS = "tree-node-checked0 tree-node-checked1 tree-node-checked2";
 
-    return Component.Render.extend({
+    return Component.Render.extend([Extension.ContentRender],{
         initializer: function () {
             var self = this,
                 renderData = self.get('renderData');
             S.mix(self.get('elAttrs'), {
                 role: 'tree-node',
-                'aria-labelledby': 'ks-tree-node-content' + renderData.id,
+                'aria-labelledby': 'ks-content' + renderData.id,
                 'aria-expanded': renderData.expanded ? 'true' : 'false',
                 'aria-selected': renderData.selected ? 'true' : 'false',
                 'aria-level': renderData.depth,
                 'title': renderData.tooltip
             });
             S.mix(self.get('childrenElSelectors'), {
-                contentEl: '#ks-tree-node-content{id}',
                 expandIconEl: '#ks-tree-expand-icon{id}',
                 rowEl: '#ks-tree-node-row{id}',
                 iconEl: '#ks-tree-icon{id}',
@@ -128,13 +117,6 @@ KISSY.add("tree/node-render", function (S, Node, Component, TreeNodeTpl) {
                 .addClass(self.getCssClassWithPrefix(CHECK_CLS) + s);
         },
 
-        /**
-         * 内容容器节点，子树节点都插到这里
-         * 默认调用 Component.Render.prototype.getChildrenContainerEl 为当前节点的容器
-         * 而对于子树节点，它有自己的子树节点容器（单独的div），而不是儿子都直接放在自己的容器里面
-         * @protected
-         * @return {KISSY.NodeList}
-         */
         getChildrenContainerEl: function () {
             return this.get('childrenEl');
         }
@@ -154,7 +136,6 @@ KISSY.add("tree/node-render", function (S, Node, Component, TreeNodeTpl) {
             depth: {
                 sync: 0
             },
-            contentEl: {},
             isLeaf: {},
             selected: {
                 sync: 0
@@ -172,12 +153,6 @@ KISSY.add("tree/node-render", function (S, Node, Component, TreeNodeTpl) {
             },
             childrenEl: function (el) {
                 return el.one("." + this.getCssClassWithPrefix(CHILDREN_CLS));
-            },
-            contentEl: function (el) {
-                return el.one("." + this.getCssClassWithPrefix(CONTENT_EL_CLS));
-            },
-            content: function (el) {
-                return el.one("." + this.getCssClassWithPrefix(CONTENT_EL_CLS)).html();
             },
             isLeaf: function (el) {
                 var self = this;
@@ -218,5 +193,5 @@ KISSY.add("tree/node-render", function (S, Node, Component, TreeNodeTpl) {
     });
 
 }, {
-    requires: ['node', 'component/base', './node-tpl']
+    requires: ['node', 'component/base', './node-tpl','component/extension']
 });

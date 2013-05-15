@@ -2,18 +2,14 @@
  * checkable menu item render
  * @author yiminghe@gmail.com
  */
-KISSY.add('menu/check-menuitem-render', function (S, MenuItemRender, CheckMenuItemTpl) {
-    return MenuItemRender.extend({
+KISSY.add('menu/check-menuitem-render', function (S, MenuItemRender, Extension) {
+
+    return MenuItemRender.extend([Extension.ContentRender], {
+
         initializer: function () {
             if (this.get('checked')) {
                 this.get('elCls').push(self.getCssClassWithState("checked"));
             }
-            this.get('childrenElSelectors')['contentEl'] =
-                '#ks-menuitem-content{id}';
-        },
-
-        _onSetContent: function (v) {
-            this.get('contentEl').html(v).unselectable();
         },
 
         _onSetChecked: function (v) {
@@ -22,11 +18,12 @@ KISSY.add('menu/check-menuitem-render', function (S, MenuItemRender, CheckMenuIt
                 cls = self.getCssClassWithState("checked");
             el[v ? 'addClass' : 'removeClass'](cls);
         }
+
     }, {
         ATTRS: {
             contentTpl: {
-                // has menuitem-content wrapper!
-                value: CheckMenuItemTpl
+                value: '<div class="{{prefixCls}}menuitem-checkbox"></div>' +
+                    Extension.ContentRender.ContentTpl
             },
             checked: {
                 sync: 0
@@ -34,5 +31,5 @@ KISSY.add('menu/check-menuitem-render', function (S, MenuItemRender, CheckMenuIt
         }
     })
 }, {
-    requires: ['./menuitem-render', './check-menuitem-tpl']
+    requires: ['./menuitem-render', 'component/extension']
 });

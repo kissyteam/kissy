@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 14 21:02
+build time: May 15 20:58
 */
 /**
 * Variables to customize the look and feel from Bootstrap.
@@ -89,7 +89,7 @@ build time: May 14 21:02
   border-bottom: 1px solid #eeeeee;
   border-radius: 3px 3px 0 0;
 }
-.ks-popup-content {
+.ks-popup-inner-content {
   padding: 14px;
   background-color: #ffffff;
   border-radius: 0 0 3px 3px;

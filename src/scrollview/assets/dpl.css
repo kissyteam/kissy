@@ -6,10 +6,14 @@
     outline: none;
 }
 
-.ks-scrollview-contentbox {
+.ks-scrollview-content {
     position: relative;
     left: 0;
     top: 0;
+}
+
+.ks-scrollbar-hidden {
+    display: none;
 }
 
 .ks-scrollbar-y {

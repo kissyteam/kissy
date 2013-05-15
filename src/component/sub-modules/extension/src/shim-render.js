@@ -17,12 +17,12 @@ KISSY.add("component/extension/shim-render", function () {
         "height: expression(this.parentNode.clientHeight);" + "'/>";
 
     // only for ie6!
-    function Shim() {
+    function ShimRender() {
     }
 
-    Shim.prototype.__createDom = function () {
+    ShimRender.prototype.__createDom = function () {
         this.get('el').prepend(S.all(shimTpl));
     };
 
-    return Shim;
+    return ShimRender;
 });

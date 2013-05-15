@@ -7,7 +7,22 @@ KISSY.add("tabs/body", function (S, Component, Extension, undefined) {
 
     var TabBody = Component.Controller.extend([Extension.DecorateChildren], {
 
-        renderUI: function () {
+        bindUI: function () {
+            var self = this;
+            self.on("afterSelectedPanelIndexChange", function (e) {
+                var showPanel,
+                    children = self.get('children'),
+                    hidePanel;
+                if (showPanel = children[e.newVal]) {
+                    if (hidePanel = children[e.prevVal]) {
+                        hidePanel.set("selected", false);
+                    }
+                    self.selectPanel(showPanel);
+                }
+            });
+        },
+
+        syncUI: function () {
             var self = this,
                 children = self.get("children");
             S.each(children, function (c, i) {
@@ -41,27 +56,11 @@ KISSY.add("tabs/body", function (S, Component, Extension, undefined) {
                 // lazy render
                 this.renderChild(showPanel);
             }
-        },
-
-        bindUI: function () {
-            var self = this;
-            self.on("afterSelectedPanelIndexChange", function (e) {
-                var showPanel,
-                    children = self.get('children'),
-                    hidePanel;
-                if (showPanel = children[e.newVal]) {
-                    if (hidePanel = children[e.prevVal]) {
-                        hidePanel.set("selected", false);
-                    }
-                    self.selectPanel(showPanel);
-                }
-            });
         }
 
     }, {
         ATTRS: {
-            selectedPanelIndex: {
-            },
+            selectedPanelIndex: {},
             allowTextSelection: {
                 value: true
             },
@@ -83,6 +82,7 @@ KISSY.add("tabs/body", function (S, Component, Extension, undefined) {
     });
 
     return TabBody;
+
 }, {
     requires: ['component/base', 'component/extension']
 });

@@ -28,8 +28,6 @@ KISSY.add("editor/plugin/menubutton", function (S, Editor, MenuButton) {
             prefixCls: prefixCls
         }, cfg)).render();
 
-        s.get("el").unselectable();
-
         if (cfg.mode == Editor.Mode.WYSIWYG_MODE) {
             self.on("wysiwygMode", function () {
                 s.set('disabled', false);

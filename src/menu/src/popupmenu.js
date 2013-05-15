@@ -67,7 +67,7 @@ KISSY.add("menu/popupmenu", function (S, Extension, Menu, PopupMenuRender) {
         }, {
             ATTRS: {
                 decorateChildCls: {
-                    value: 'contentbox'
+                    value: 'content'
                 },
                 // 弹出菜单一般不可聚焦，焦点在使它弹出的元素上
                 /**

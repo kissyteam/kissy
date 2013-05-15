@@ -42,7 +42,7 @@
     border-color: #999 !important;
 }
 
-.ks-menu-button-disabled .ks-menu-button-caption,
+.ks-menu-button-disabled .ks-menu-button-content,
 .ks-menu-button-disabled .ks-menu-button-dropdown {
     color: #333 !important;
     border-color: #999 !important;
@@ -66,7 +66,7 @@
 }
 
 /* Caption style. */
-.ks-menu-button-caption {
+.ks-menu-button-content {
     display: inline-block;
     *display: inline;
     *zoom: 1;

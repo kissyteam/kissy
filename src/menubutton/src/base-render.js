@@ -2,20 +2,14 @@
  * render aria and drop arrow for menubutton
  * @author yiminghe@gmail.com
  */
-KISSY.add("menubutton/base-render", function (S, Button, MenuButtonTpl) {
+KISSY.add("menubutton/base-render", function (S, Button, Extension) {
 
-    return Button.Render.extend({
+    return Button.Render.extend([Extension.ContentRender], {
         initializer: function () {
             S.mix(this.get('elAttrs'), {
                 'aria-expanded': false,
                 'aria-haspopup': true
             });
-            this.get('childrenElSelectors')['contentEl'] =
-                '#ks-menu-button-caption{id}';
-        },
-
-        _onSetContent: function (v) {
-            this.get('contentEl').html(v).unselectable();
         },
 
         _onSetCollapsed: function (v) {
@@ -27,24 +21,22 @@ KISSY.add("menubutton/base-render", function (S, Button, MenuButtonTpl) {
 
         setAriaActiveDescendant: function (v) {
             this.get("el").attr("aria-activedescendant",
-                (v && v.get("el").attr("id")) || "");
+                (v && v.get("el")[0].id) || "");
         }
     }, {
         ATTRS: {
             contentTpl: {
-                value: MenuButtonTpl
+                value: Extension.ContentRender.ContentTpl +
+                    '<div class="{{prefixCls}}menu-button-dropdown">' +
+                    '<div class="{{prefixCls}}menu-button-dropdown-inner">' +
+                    '</div>'
             },
             collapsed: {
                 value: true,
                 sync: 0
             }
-        },
-        HTML_PARSER: {
-            contentEl: function (el) {
-                return el.children("." + this.get('prefixCls') + "menu-button-caption");
-            }
         }
     });
 }, {
-    requires: ['button', './menubutton-tpl']
+    requires: ['button','component/extension']
 });

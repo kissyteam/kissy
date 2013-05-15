@@ -18,8 +18,7 @@ KISSY.add("component/extension/decorate-children", function (S, Component) {
          * @param {KISSY.NodeList} el Root element of current component.
          */
         decorateInternal: function (el) {
-            var self = this;
-            self.decorateChildren(el);
+            this.decorateChildren(el);
         },
 
         /**

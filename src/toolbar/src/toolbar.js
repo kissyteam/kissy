@@ -2,7 +2,7 @@
  * Toolbar for KISSY.
  * @author yiminghe@gmail.com
  */
-KISSY.add("toolbar", function (S, Component,Extension, Node, Separator, undefined) {
+KISSY.add("toolbar", function (S, Component, Extension, Node, Separator, undefined) {
 
     var KeyCodes = Node.KeyCodes;
 
@@ -83,13 +83,13 @@ KISSY.add("toolbar", function (S, Component,Extension, Node, Separator, undefine
      * xclass: 'toolbar'.
      */
     var Toolbar = Component.Controller.extend(
-        [Extension.DecorateChildren,Extension.DelegateChildren],
+        [Extension.DecorateChildren, Extension.DelegateChildren],
         /**
          * @lends Toolbar#
          */
         {
-            createDom: function () {
-                this.get("el").attr("role", "toolbar");
+            initializer: function () {
+                this.get('elAttrs')['role'] = 'toolbar';
             },
 
             _onSetHighlightedItem: function (item, e) {
@@ -226,11 +226,9 @@ KISSY.add("toolbar", function (S, Component,Extension, Node, Separator, undefine
              */
             {
                 // 当前的高亮项
-                highlightedItem: {
-                },
+                highlightedItem: {},
                 // 当前的扩展项，切换高亮项时如要把以前的扩展项收起，并展开当前的高亮项
-                expandedItem: {
-                },
+                expandedItem: {},
                 defaultChildCfg: {
                     value: {
                         xclass: 'button',
@@ -247,5 +245,5 @@ KISSY.add("toolbar", function (S, Component,Extension, Node, Separator, undefine
     return Toolbar;
 
 }, {
-    requires: ['component/base','component/extension', 'node']
+    requires: ['component/base', 'component/extension', 'node']
 });

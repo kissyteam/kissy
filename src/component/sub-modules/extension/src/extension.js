@@ -3,18 +3,13 @@
  * uibase
  * @author yiminghe@gmail.com
  */
-KISSY.add("component/extension", function (S, Align, Position,
-                                           PositionRender, ShimRender,
-                                           DelegateChildren, DecorateChildren,
-                                           DecorateChild
-    ) {
-    Position.Render = PositionRender;
+KISSY.add("component/extension", function (S, Align, ContentRender, Position, PositionRender, ShimRender, DelegateChildren, DecorateChildren, DecorateChild) {
     return {
         Align: Align,
         Position: Position,
-        Shim: {
-            Render: ShimRender
-        },
+        PositionRender: PositionRender,
+        ContentRender: ContentRender,
+        ShimRender: S.UA === 6 ? ShimRender : null,
         'DelegateChildren': DelegateChildren,
         'DecorateChild': DecorateChild,
         'DecorateChildren': DecorateChildren
@@ -22,6 +17,7 @@ KISSY.add("component/extension", function (S, Align, Position,
 }, {
     requires: [
         "./extension/align",
+        "./extension/content-render",
         "./extension/position",
         "./extension/position-render",
         "./extension/shim-render",

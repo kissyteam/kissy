@@ -8,7 +8,7 @@
     -webkit-user-drag: none;
 }
 
-.ks-scrollview-contentbox {
+.ks-scrollview-content {
     position: relative;
     left: 0;
     top: 0;
@@ -136,6 +136,10 @@
     bottom: 0;
     width: 100%;
     z-index: 9;
+}
+
+.ks-scrollbar-hidden {
+    display: none;
 }
 
 .ks-scrollbar-x-track,

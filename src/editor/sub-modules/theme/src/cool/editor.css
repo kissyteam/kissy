@@ -140,8 +140,8 @@ ks-editor-toolbar-padding {
     margin-right: 0;
 }
 
-.ks-editor-tools .ks-editor-toolbar-unorderedListArrowBtn .ks-editor-menu-button-caption,
-.ks-editor-tools .ks-editor-toolbar-orderedListArrowBtn .ks-editor-menu-button-caption {
+.ks-editor-tools .ks-editor-toolbar-unorderedListArrowBtn .ks-editor-menu-button-content,
+.ks-editor-tools .ks-editor-toolbar-orderedListArrowBtn .ks-editor-menu-button-content {
     margin: 0;
     padding: 0;
     width: 0;

@@ -26,7 +26,7 @@ KISSY.use("ua,node,overlay,dd/plugin/constrain,component/plugin/drag",
 
                 var srcNode = $('<div class="ks-overlay ks-dialog"' +
                     ' style="width:200px">' +
-                    '<div class="ks-contentbox">' +
+                    '<div class="ks-content">' +
                     '<div class="ks-stdmod-header">header</div>' +
                     '<div class="ks-stdmod-body">body</div>' +
                     '<div class="ks-stdmod-footer">footer</div>' +

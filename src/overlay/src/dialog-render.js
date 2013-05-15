@@ -3,16 +3,11 @@
  * render for dialog
  * @author yiminghe@gmail.com
  */
-KISSY.add("overlay/dialog-render", function (S, OverlayRender, DialogTpl) {
+KISSY.add("overlay/dialog-render", function (S, OverlayRender, DialogTpl, CloseTpl) {
 
     function _setStdModRenderContent(self, part, v) {
         part = self.get(part);
-        if (typeof v == 'string') {
-            part.html(v);
-        } else {
-            part.html("")
-                .append(v);
-        }
+        part.html(v);
     }
 
     return OverlayRender.extend({
@@ -26,6 +21,10 @@ KISSY.add("overlay/dialog-render", function (S, OverlayRender, DialogTpl) {
                 body: '#ks-stdmod-body{id}',
                 footer: '#ks-stdmod-footer{id}'
             });
+        },
+
+        getChildrenContainerEl: function () {
+            return this.get('body');
         },
 
         '_onSetBodyStyle': function (v) {
@@ -57,9 +56,7 @@ KISSY.add("overlay/dialog-render", function (S, OverlayRender, DialogTpl) {
                 value: false
             },
             contentTpl: {
-                valueFn: function () {
-                    return DialogTpl + this.get('closeTpl');
-                }
+                value: DialogTpl + CloseTpl
             },
             headerContent: {
                 sync: 0
@@ -94,16 +91,17 @@ KISSY.add("overlay/dialog-render", function (S, OverlayRender, DialogTpl) {
             footer: function (el) {
                 return el.one("." + this.get('prefixCls') + "stdmod-footer");
             },
-            headerContent:function(el){
+            headerContent: function (el) {
                 return el.one("." + this.get('prefixCls') + "stdmod-header").html();
             },
-            bodyContent:function(el){
+            bodyContent: function (el) {
                 return el.one("." + this.get('prefixCls') + "stdmod-body").html();
             },
-            footerContent:function(el){
-                return el.one("." + this.get('prefixCls') + "stdmod-footer").html();
+            footerContent: function (el) {
+                var footer = el.one("." + this.get('prefixCls') + "stdmod-footer");
+                return footer && footer.html();
             }
         }});
 }, {
-    requires: ['./overlay-render', './dialog-tpl']
+    requires: ['./overlay-render', './dialog-tpl', './close-tpl']
 });

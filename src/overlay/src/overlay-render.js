@@ -3,32 +3,22 @@
  * KISSY Overlay
  * @author yiminghe@gmail.com
  */
-KISSY.add("overlay/overlay-render", function (S, XTemplate, Component, Extension, Loading, OverlayTpl, CloseTpl, Mask) {
-    var UA = S.UA;
+KISSY.add("overlay/overlay-render", function (S, XTemplate, Component, Extension, Loading, CloseTpl, Mask) {
 
     return Component.Render.extend([
-        UA['ie'] === 6 ? Extension.Shim.Render : null,
-        Extension.Position.Render,
+        Extension.ContentRender,
+        Extension.ShimRender,
+        Extension.PositionRender,
         Loading,
         Mask
     ], {
         initializer: function () {
             S.mix(this.get('childrenElSelectors'), {
-                contentEl: '#ks-contentbox{id}',
                 closeBtn: '#ks-ext-close{id}'
             });
-        },
-        getChildrenContainerEl: function () {
-            return this.get('contentEl');
         }
     }, {
         HTML_PARSER: {
-            content:function(el){
-                return el.one('.' + this.get('prefixCls') + 'contentbox').html();
-            },
-            contentEl: function (el) {
-                return el.one('.' + this.get('prefixCls') + 'contentbox')
-            },
             closeBtn: function (el) {
                 return el.one("." + this.get('prefixCls') + 'ext-close');
             }
@@ -36,10 +26,7 @@ KISSY.add("overlay/overlay-render", function (S, XTemplate, Component, Extension
         ATTRS: {
             closable: {},
             contentTpl: {
-                value: OverlayTpl + CloseTpl
-            },
-            closeTpl: {
-                value: CloseTpl
+                value: Extension.ContentRender.ContentTpl + CloseTpl
             }
         }
     });
@@ -50,7 +37,6 @@ KISSY.add("overlay/overlay-render", function (S, XTemplate, Component, Extension
         "component/base",
         'component/extension',
         './extension/loading-render',
-        './overlay-tpl',
         './close-tpl',
         './extension/mask-render'
     ]

@@ -15,7 +15,7 @@ KISSY.add("overlay/base", function (S, Component, Extension, Loading, Mask, Over
      * xclass: 'overlay'.
      * @class KISSY.Overlay
      * @extends KISSY.Component.Controller
-     * @mixins KISSY.Component.Extension.ContentBox
+     * @mixins KISSY.Component.Extension.Content
      * @mixins KISSY.Component.Extension.Position
      * @mixins KISSY.Overlay.Extension.Loading
      * @mixins KISSY.Component.Extension.Align
@@ -52,7 +52,7 @@ KISSY.add("overlay/base", function (S, Component, Extension, Loading, Mask, Over
     }, {
         ATTRS: {
             decorateChildCls: {
-                value: 'contentbox'
+                value: 'content'
             },
 
             contentEl: {

@@ -1,24 +1,24 @@
 <!doctype html>
 <html>
 <head>
-<meta charset="utf-8"/>
+    <meta charset="utf-8"/>
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-touch-fullscreen" content="yes">
-<title>Demo - DPL SplitButton</title>
-<link href="../../../css/src/dpl/base.css" rel="stylesheet"/>
-<link href="../../../css/src/dpl/tables.css" rel="stylesheet"/>
-<link href="../../../button/assets/dpl.css" rel="stylesheet"/>
-<link href="../../../menu/assets/dpl.css" rel="stylesheet"/>
-<link href="../../../menubutton/assets/dpl.css" rel="stylesheet"/>
-<link href="../../assets/dpl.css" rel="stylesheet"/>
-<link href="../../../css/demo/dpl/assets/docs.css" rel="stylesheet"/>
-<style>
-    .para {
-        margin: 1em 0;
-    }
-</style>
+    <title>Demo - DPL SplitButton</title>
+    <link href="../../../css/src/dpl/base.css" rel="stylesheet"/>
+    <link href="../../../css/src/dpl/tables.css" rel="stylesheet"/>
+    <link href="../../../button/assets/dpl.css" rel="stylesheet"/>
+    <link href="../../../menu/assets/dpl.css" rel="stylesheet"/>
+    <link href="../../../menubutton/assets/dpl.css" rel="stylesheet"/>
+    <link href="../../assets/dpl.css" rel="stylesheet"/>
+    <link href="../../../css/demo/dpl/assets/docs.css" rel="stylesheet"/>
+    <style>
+        .para {
+            margin: 1em 0;
+        }
+    </style>
 </head>
 <body>
 
@@ -30,216 +30,268 @@
     </h1>
 </div>
 <div id="split">
-    <h2>分离式下拉按钮</h2>
-    <div class="row">
-        <div class="span8">
-            <h3>概述和示例</h3>
-            <p>在分组按钮的样式和标签基础上我们可以很容易的创建分离式下拉按钮。分离式下拉按钮左边部分有标准的按钮功能，右边部分有一个下拉菜单。</p>
-            <div class="para">
-                <div class="ks-split-button">
-                    <div class="ks-button ks-split-button-left">Action</div>
-                    <div class="ks-menu-button ks-button ks-split-button-right">
-                        <div class="ks-menu-button-caption"></div>
-                        <div class="ks-popupmenu">
-                            <div class="ks-menuitem">Action</div>
-                            <div class="ks-menuitem">Another</div>
-                            <div class="ks-menuitem">else</div>
-                        </div>
-                    </div>
-                </div>
-                <!-- /ks-split-button -->
-                <div class="ks-split-button">
-                    <div class="ks-button ks-button-primary ks-split-button-left">Action</div>
-                    <div class="ks-menu-button ks-button ks-button-primary ks-split-button-right">
-                        <div class="ks-menu-button-caption"></div>
-                        <div class="ks-popupmenu">
-                            <div class="ks-menuitem">Action</div>
-                            <div class="ks-menuitem">Another</div>
-                            <div class="ks-menuitem">else</div>
-                        </div>
-                    </div>
+<h2>分离式下拉按钮</h2>
 
-                </div>
-                <!-- /ks-split-button -->
-                <div class="ks-split-button">
-                    <div class="ks-button ks-button-danger ks-split-button-left">Danger</div>
-                    <div class="ks-menu-button ks-button ks-button-danger ks-split-button-right">
-                        <div class="ks-menu-button-caption"></div>
-                        <div class="ks-popupmenu">
-                            <div class="ks-menuitem">Action</div>
-                            <div class="ks-menuitem">Another</div>
-                            <div class="ks-menuitem">else</div>
-                        </div>
-                    </div>
+<div class="row">
+<div class="span8">
+<h3>概述和示例</h3>
 
-                </div>
-                <!-- /ks-split-button -->
-            </div>
-            <div class="para">
-                <div class="ks-split-button">
-                    <div class="ks-button ks-button-warning ks-split-button-left">Warning</div>
-                    <div class="ks-menu-button ks-button ks-button-warning ks-split-button-right">
-                        <div class="ks-menu-button-caption"></div>
-                        <div class="ks-popupmenu">
-                            <div class="ks-menuitem">Action</div>
-                            <div class="ks-menuitem">Another</div>
-                            <div class="ks-menuitem">else</div>
-                        </div>
-                    </div>
+<p>在分组按钮的样式和标签基础上我们可以很容易的创建分离式下拉按钮。分离式下拉按钮左边部分有标准的按钮功能，右边部分有一个下拉菜单。</p>
 
-                </div>
-                <!-- /ks-split-button -->
-                <div class="ks-split-button">
-                    <div class="ks-button ks-button-success ks-split-button-left">Success</div>
-                    <div class="ks-menu-button ks-button ks-button-success ks-split-button-right">
-                        <div class="ks-menu-button-caption"></div>
-                        <div class="ks-popupmenu">
-                            <div class="ks-menuitem">Action</div>
-                            <div class="ks-menuitem">Another</div>
-                            <div class="ks-menuitem">else</div>
-                        </div>
-                    </div>
-
-                </div>
-                <!-- /ks-split-button -->
-                <div class="ks-split-button">
-                    <div class="ks-button ks-button-info ks-split-button-left">Info</div>
-                    <div class="ks-menu-button ks-button ks-button-info ks-split-button-right">
-                        <div class="ks-menu-button-caption"></div>
-                        <div class="ks-popupmenu">
-                            <div class="ks-menuitem">Action</div>
-                            <div class="ks-menuitem">Another</div>
-                            <div class="ks-menuitem">else</div>
-                        </div>
-                    </div>
-                </div>
-                <!-- /ks-split-button -->
-            </div>
-            <div class="para">
-                <div class="ks-split-button">
-                    <div class="ks-button ks-button-inverse ks-split-button-left">Inverse</div>
-                    <div class="ks-menu-button ks-button ks-button-inverse ks-split-button-right">
-                        <div class="ks-menu-button-caption"></div>
-                        <div class="ks-popupmenu">
-                            <div class="ks-menuitem">Action</div>
-                            <div class="ks-menuitem">Another</div>
-                            <div class="ks-menuitem">else</div>
-                        </div>
-                    </div>
-                </div>
-                <!-- /ks-split-button -->
-            </div>
-            <!-- /ks-button-toolbar -->
-            <h3>尺寸</h3>
-            <p>可以设置额外的按钮样式<code>.ks-button-mini</code>, <code>.ks-button-small</code>, 或者 <code>。ks-button-large</code> 来定义按钮的大小</p>
-            <div class="para">
-                <div class="ks-split-button">
-                    <div class="ks-button ks-button-large ks-split-button-left">Large action</div>
-                    <div class="ks-menu-button ks-button ks-button-large ks-split-button-right">
-                        <div class="ks-menu-button-caption"></div>
-                        <div class="ks-popupmenu">
-                            <div class="ks-menuitem">Action</div>
-                            <div class="ks-menuitem">Another</div>
-                            <div class="ks-menuitem">else</div>
-                        </div>
-                    </div>
-
-                </div>
-                <!-- /ks-split-button -->
-            </div>
-            <!-- /ks-button-toolbar -->
-            <div class="para">
-                <div class="ks-split-button">
-                    <div class="ks-button ks-button-small ks-split-button-left">Small action</div>
-                    <div class="ks-menu-button ks-button ks-button-small ks-split-button-right">
-                        <div class="ks-menu-button-caption"></div>
-                        <div class="ks-popupmenu">
-                            <div class="ks-menuitem">Action</div>
-                            <div class="ks-menuitem">Another</div>
-                            <div class="ks-menuitem">else</div>
-                        </div>
-                    </div>
-                </div>
-                <!-- /ks-split-button -->
-            </div>
-            <!-- /ks-button-toolbar -->
-            <div class="para">
-                <div class="ks-split-button">
-                    <div class="ks-button ks-button-mini ks-split-button-left">Mini action</div>
-                    <div class="ks-menu-button ks-button ks-button-mini ks-split-button-right">
-                        <div class="ks-menu-button-caption"></div>
-                        <div class="ks-popupmenu">
-                            <div class="ks-menuitem">Action</div>
-                            <div class="ks-menuitem">Another</div>
-                            <div class="ks-menuitem">else</div>
-                        </div>
-                    </div>
-                </div>
-                <!-- /ks-split-button -->
-            </div>
-            <!-- /ks-button-toolbar -->
-
+<div class="para">
+    <div class="ks-split-button">
+        <div class="ks-button ks-split-button-left"
+             tabindex="0">Action
         </div>
-        <div class="span16">
-            <h3>标签示例</h3>
-            <p>我们利用第二个按钮动作扩展了下拉按钮，点击右边图标时触发。</p>
-
-<pre class="prettyprint linenums">
-&lt;div class="ks-split-button"&gt;
-  &lt;div class="ks-button ks-button-mini"&gt;Mini action&lt;/div&gt;
-  &lt;div class="ks-menu-button ks-button-mini"&gt;
-        &lt;div class="ks-menu-button-caption"&gt;&lt;/div&gt;
-        &lt;div class="ks-popupmenu"&gt;
-          &lt;div class="ks-menuitem"&gt;Action&lt;/div&gt;
-          &lt;div class="ks-menuitem"&gt;Another action&lt;/div&gt;
-          &lt;div class="ks-menuitem"&gt;Something else here&lt;/div&gt;
-        &lt;/div&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-</pre>
-
+        <div class="ks-menu-button ks-button ks-split-button-right"
+             tabindex="0">
+            <div class="ks-content ks-menu-button-content"></div>
+            <div class="ks-menu-button-dropdown">
+                <div class="ks-menu-button-dropdown-inner"></div>
+            </div>
+            <div class="ks-popupmenu ks-menu">
+                <div class="ks-content">
+                    <div class="ks-menuitem">Action</div>
+                    <div class="ks-menuitem">Another</div>
+                    <div class="ks-menuitem">else</div>
+                </div>
+            </div>
         </div>
     </div>
+    <!-- /ks-split-button -->
+    <div class="ks-split-button">
+        <div class="ks-button ks-button-primary ks-split-button-left"
+             tabindex="0">Action
+        </div>
+        <div class="ks-menu-button ks-button ks-button-primary ks-split-button-right"
+             tabindex="0">
+            <div class="ks-content ks-menu-button-content"></div>
+            <div class="ks-menu-button-dropdown">
+                <div class="ks-menu-button-dropdown-inner"></div>
+            </div>
+            <div class="ks-popupmenu ks-menu">
+                <div class="ks-content">
+                    <div class="ks-menuitem">Action</div>
+                    <div class="ks-menuitem">Another</div>
+                    <div class="ks-menuitem">else</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- /ks-split-button -->
+    <div class="ks-split-button">
+        <div class="ks-button ks-button-danger ks-split-button-left"
+             tabindex="0">Danger
+        </div>
+        <div class="ks-menu-button ks-button ks-button-danger ks-split-button-right"
+             tabindex="0">
+            <div class="ks-content ks-menu-button-content"></div>
+            <div class="ks-menu-button-dropdown">
+                <div class="ks-menu-button-dropdown-inner"></div>
+            </div>
+            <div class="ks-popupmenu ks-menu">
+                <div class="ks-content">
+                    <div class="ks-menuitem">Action</div>
+                    <div class="ks-menuitem">Another</div>
+                    <div class="ks-menuitem">else</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- /ks-split-button -->
+</div>
+<div class="para">
+    <div class="ks-split-button">
+        <div class="ks-button ks-button-warning ks-split-button-left"
+             tabindex="0">Warning
+        </div>
+        <div class="ks-menu-button ks-button ks-button-warning ks-split-button-right"
+             tabindex="0">
+            <div class="ks-content ks-menu-button-content"></div>
+            <div class="ks-menu-button-dropdown">
+                <div class="ks-menu-button-dropdown-inner"></div>
+            </div>
+            <div class="ks-popupmenu ks-menu">
+                <div class="ks-content">
+                    <div class="ks-menuitem">Action</div>
+                    <div class="ks-menuitem">Another</div>
+                    <div class="ks-menuitem">else</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- /ks-split-button -->
+    <div class="ks-split-button">
+        <div class="ks-button ks-button-success ks-split-button-left"
+             tabindex="0">Success
+        </div>
+        <div class="ks-menu-button ks-button ks-button-success ks-split-button-right"
+             tabindex="0">
+            <div class="ks-content ks-menu-button-content"></div>
+            <div class="ks-menu-button-dropdown">
+                <div class="ks-menu-button-dropdown-inner"></div>
+            </div>
+            <div class="ks-popupmenu ks-menu">
+                <div class="ks-content">
+                    <div class="ks-menuitem">Action</div>
+                    <div class="ks-menuitem">Another</div>
+                    <div class="ks-menuitem">else</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- /ks-split-button -->
+    <div class="ks-split-button">
+        <div class="ks-button ks-button-info ks-split-button-left"
+             tabindex="0">Info
+        </div>
+        <div class="ks-menu-button ks-button ks-button-info ks-split-button-right"
+             tabindex="0">
+            <div class="ks-content ks-menu-button-content"></div>
+            <div class="ks-menu-button-dropdown">
+                <div class="ks-menu-button-dropdown-inner"></div>
+            </div>
+            <div class="ks-popupmenu ks-menu">
+                <div class="ks-content">
+                    <div class="ks-menuitem">Action</div>
+                    <div class="ks-menuitem">Another</div>
+                    <div class="ks-menuitem">else</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /ks-split-button -->
+</div>
+<div class="para">
+    <div class="ks-split-button">
+        <div class="ks-button ks-button-inverse ks-split-button-left"
+             tabindex="0">Inverse
+        </div>
+        <div class="ks-menu-button ks-button ks-button-inverse ks-split-button-right"
+             tabindex="0">
+            <div class="ks-content ks-menu-button-content"></div>
+            <div class="ks-menu-button-dropdown">
+                <div class="ks-menu-button-dropdown-inner"></div>
+            </div>
+            <div class="ks-popupmenu ks-menu">
+                <div class="ks-content">
+                    <div class="ks-menuitem">Action</div>
+                    <div class="ks-menuitem">Another</div>
+                    <div class="ks-menuitem">else</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /ks-split-button -->
+</div>
+<!-- /ks-button-toolbar -->
+<h3>尺寸</h3>
+
+<p>可以设置额外的按钮样式<code>.ks-button-mini</code>, <code>.ks-button-small</code>, 或者 <code>。ks-button-large</code> 来定义按钮的大小
+</p>
+
+<div class="para">
+    <div class="ks-split-button">
+        <div class="ks-button ks-button-large ks-split-button-left"
+             tabindex="0">Large action
+        </div>
+        <div class="ks-menu-button ks-button ks-button-large ks-split-button-right"
+             tabindex="0">
+            <div class="ks-content ks-menu-button-content"></div>
+            <div class="ks-menu-button-dropdown">
+                <div class="ks-menu-button-dropdown-inner"></div>
+            </div>
+            <div class="ks-popupmenu ks-menu">
+                <div class="ks-content">
+                    <div class="ks-menuitem">Action</div>
+                    <div class="ks-menuitem">Another</div>
+                    <div class="ks-menuitem">else</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- /ks-split-button -->
+</div>
+<!-- /ks-button-toolbar -->
+<div class="para">
+    <div class="ks-split-button">
+        <div class="ks-button ks-button-small ks-split-button-left"
+             tabindex="0">Small action
+        </div>
+        <div class="ks-menu-button ks-button ks-button-small ks-split-button-right"
+             tabindex="0">
+            <div class="ks-content ks-menu-button-content"></div>
+            <div class="ks-menu-button-dropdown">
+                <div class="ks-menu-button-dropdown-inner"></div>
+            </div>
+            <div class="ks-popupmenu ks-menu">
+                <div class="ks-content">
+                    <div class="ks-menuitem">Action</div>
+                    <div class="ks-menuitem">Another</div>
+                    <div class="ks-menuitem">else</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /ks-split-button -->
+</div>
+<!-- /ks-button-toolbar -->
+<div class="para">
+    <div class="ks-split-button">
+        <div class="ks-button ks-button-mini ks-split-button-left"
+             tabindex="0">Mini action
+        </div>
+        <div class="ks-menu-button ks-button ks-button-mini ks-split-button-right"
+             tabindex="0">
+            <div class="ks-content ks-menu-button-content"></div>
+            <div class="ks-menu-button-dropdown">
+                <div class="ks-menu-button-dropdown-inner"></div>
+            </div>
+            <div class="ks-popupmenu ks-menu">
+                <div class="ks-content">
+                    <div class="ks-menuitem">Action</div>
+                    <div class="ks-menuitem">Another</div>
+                    <div class="ks-menuitem">else</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /ks-split-button -->
+</div>
+<!-- /ks-button-toolbar -->
+
+</div>
+<div class="span16">
+    <h3>标签示例</h3>
+
+    <p>我们利用第二个按钮动作扩展了下拉按钮，点击右边图标时触发。</p>
+</div>
+</div>
 
 </div>
 
 <div id="split2">
     <h2>下拉菜单位置</h2>
+
     <div class="row">
         <div class="span8">
             <h3>概述和示例</h3>
+
             <p>可以通过 menu 配置控制下拉菜单的位置</p>
+
             <div class="para" id="para2">
             </div>
         </div>
 
         <div class="span16">
             <h3>实例</h3>
+
             <p>通过 menu 配置控制下拉菜单的位置</p>
-            <pre class="prettyprint linenums">
-                new SplitButton({
-            render:"#para2",
-            button:{
-                xclass:'button',
-                content:'action'
-            },
-            alignWithEl:false,
-            menuButton:{
-                xclass:'menu-button',
-                matchElWidth:false,
-                menu:{
-                    children:[
-                        {
-                            content:'some action'
-                        },
-                        {
-                            content:'more action'
-                        }
-                    ]
-                }
-            }
-        }).render();
-            </pre>
         </div>
     </div>
 </div>
@@ -254,31 +306,48 @@
         var $ = S.all;
         $(".ks-split-button").each(function (n) {
             new SplitButton({
-                srcNode:n
+                srcNode: n,
+                listeners: {
+                    'click': function (e) {
+                        S.log('click: ' + e.target.get('content'));
+                    }
+                }
             }).render();
         });
 
         new SplitButton({
-            render:"#para2",
-            button:{
-                xclass:'button',
-                content:'action'
+            render: "#para2",
+            button: {
+                xclass: 'button',
+                content: 'action'
             },
-            alignWithEl:false,
-            menuButton:{
-                xclass:'menu-button',
-                matchElWidth:false,
-                menu:{
-                    xclass:'popupmenu',
+            alignWithEl: false,
+            menuButton: {
+                xclass: 'menu-button',
+                matchElWidth: false,
+                collapseOnClick: true,
+                menu: {
+                    xclass: 'popupmenu',
 
-                    children:[
+                    children: [
                         {
-                            content:'some action'
+                            content: 'some action'
                         },
                         {
-                            content:'more action'
+                            content: 'more action'
                         }
                     ]
+                },
+                listeners: {
+                    'click': function (e) {
+                        this.get('parent').get('button')
+                                .set('content', e.target.get('content'));
+                    }
+                }
+            },
+            listeners: {
+                'click': function (e) {
+                    S.log('click: ' + e.target.get('content'));
                 }
             }
         }).render();

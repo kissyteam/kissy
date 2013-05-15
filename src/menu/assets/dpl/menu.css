@@ -109,6 +109,9 @@
   white-space: nowrap;
   cursor: default;
 }
+.ks-menuitem-content {
+    display: inline;
+}
 .ks-menu .ks-menuitem-hover,
 .ks-menu .ks-menuitem-active {
   color: #ffffff;
