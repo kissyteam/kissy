@@ -9,6 +9,7 @@ KISSY.use("ua,node,overlay", function (S, UA, Node, Overlay) {
             overlay.render();
             expect(overlay.get("visible")).toBe(false);
             expect(overlay.get("el").css('visibility')).toBe("hidden");
+            overlay.destroy();
         });
 
         it("should show after call hide after create", function () {
@@ -20,6 +21,7 @@ KISSY.use("ua,node,overlay", function (S, UA, Node, Overlay) {
             overlay.show();
             expect(overlay.get("visible")).toBe(true);
             expect(overlay.get("el").css('visibility')).toBe("visible");
+            overlay.destroy();
         });
     });
 });

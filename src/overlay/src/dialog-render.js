@@ -93,6 +93,15 @@ KISSY.add("overlay/dialog-render", function (S, OverlayRender, DialogTpl) {
             },
             footer: function (el) {
                 return el.one("." + this.get('prefixCls') + "stdmod-footer");
+            },
+            headerContent:function(el){
+                return el.one("." + this.get('prefixCls') + "stdmod-header").html();
+            },
+            bodyContent:function(el){
+                return el.one("." + this.get('prefixCls') + "stdmod-body").html();
+            },
+            footerContent:function(el){
+                return el.one("." + this.get('prefixCls') + "stdmod-footer").html();
             }
         }});
 }, {

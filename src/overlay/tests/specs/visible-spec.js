@@ -17,6 +17,7 @@ KISSY.use("ua,node,overlay", function (S, UA, Node, Overlay) {
             overlay.show();
             expect(show).toBe(1);
             expect(hide).toBe(0);
+            overlay.destroy();
         });
 
 
@@ -34,6 +35,7 @@ KISSY.use("ua,node,overlay", function (S, UA, Node, Overlay) {
             overlay.render();
             expect(show).toBe(0);
             expect(hide).toBe(0);
+            overlay.destroy();
         });
 
 
@@ -52,6 +54,7 @@ KISSY.use("ua,node,overlay", function (S, UA, Node, Overlay) {
             overlay.show();
             expect(show).toBe(1);
             expect(hide).toBe(0);
+            overlay.destroy();
         });
     });
 });

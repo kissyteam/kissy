@@ -23,6 +23,9 @@ KISSY.add("overlay/overlay-render", function (S, XTemplate, Component, Extension
         }
     }, {
         HTML_PARSER: {
+            content:function(el){
+                return el.one('.' + this.get('prefixCls') + 'contentbox').html();
+            },
             contentEl: function (el) {
                 return el.one('.' + this.get('prefixCls') + 'contentbox')
             },

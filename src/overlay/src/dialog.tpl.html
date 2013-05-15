@@ -4,35 +4,29 @@
         {{getCssClassWithState "contentbox"}}
         ">
 
-    <div class="{{prefixCls}}stdmod-header"
+    <div class="{{prefixCls}}stdmod-header {{prefixCls}}dialog-header"
          style="
 {{#each headerStyle}} 
  {{xkey}}:{{.}};  
 {{/each}}
 "
-         id="ks-stdmod-header{{id}}">
-        {{{headerContent}}}
-    </div>
+         id="ks-stdmod-header{{id}}">{{{headerContent}}}</div>
 
-    <div class="{{prefixCls}}stdmod-body"
+    <div class="{{prefixCls}}stdmod-body {{prefixCls}}dialog-body"
          style="
 {{#each bodyStyle}} 
  {{xkey}}:{{.}};  
 {{/each}}
 "
-         id="ks-stdmod-body{{id}}">
-        {{{bodyContent}}}
-    </div>
+         id="ks-stdmod-body{{id}}">{{{bodyContent}}}</div>
 
-    <div class="{{prefixCls}}stdmod-footer"
+    <div class="{{prefixCls}}stdmod-footer {{prefixCls}}dialog-footer"
          style="
 {{#each footerStyle}} 
  {{xkey}}:{{.}};  
 {{/each}}
 "
-         id="ks-stdmod-footer{{id}}">
-        {{{footerContent}}}
-    </div>
+         id="ks-stdmod-footer{{id}}">{{{footerContent}}}</div>
 
 </div>
 

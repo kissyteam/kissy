@@ -2,7 +2,7 @@
  * component tc
  * @author yiminghe@gmail.com
  */
-KISSY.use("component/base", function (S, Component) {
+KISSY.use("component/base,component/extension", function (S, Component,Extension) {
 
     function invalidNode(n) {
         return n == null || n.nodeType == 11;
@@ -13,11 +13,11 @@ KISSY.use("component/base", function (S, Component) {
         describe('addChild/removeChild event', function () {
 
             it('can listen and preventDefault', function () {
-                var c = new Component.Container({
+                var c = new Component.Controller({
                     content: "xx"
                 });
 
-                var child = new Component.Container({
+                var child = new Component.Controller({
                     content: "yy"
                 });
 
@@ -136,15 +136,15 @@ KISSY.use("component/base", function (S, Component) {
 
 
             it('can bubble', function () {
-                var c = new Component.Container({
+                var c = new Component.Controller({
                     content: "xx"
                 });
 
-                var child = new Component.Container({
+                var child = new Component.Controller({
                     content: "yy"
                 });
 
-                var grandChild = new Component.Container({
+                var grandChild = new Component.Controller({
                     content: "zz"
                 });
 
@@ -172,16 +172,16 @@ KISSY.use("component/base", function (S, Component) {
 
             it('parent can be changed', function () {
 
-                var c1 = new Component.Container({
+                var c1 = new Component.Controller({
                     content: "xx"
                 });
 
 
-                var c2 = new Component.Container({
+                var c2 = new Component.Controller({
                     content: "xx"
                 });
 
-                var child = new Component.Container({
+                var child = new Component.Controller({
                     content: "yy"
                 });
 
@@ -225,15 +225,15 @@ KISSY.use("component/base", function (S, Component) {
 
             it('parent can be changed after render', function () {
 
-                var c1 = new Component.Container({
+                var c1 = new Component.Controller({
                     content: "xx"
                 }).render();
 
-                var c2 = new Component.Container({
+                var c2 = new Component.Controller({
                     content: "yy"
                 }).render();
 
-                var child = new Component.Container({
+                var child = new Component.Controller({
                     content: "zz"
                 }).render();
 
@@ -284,11 +284,12 @@ KISSY.use("component/base", function (S, Component) {
 
         });
 
-        describe("container", function () {
+        describe("delegate children works", function () {
 
+            var Container=Component.Controller.extend([Extension.DelegateChildren]);
 
             it("should attach its methods", function () {
-                var c = new Component.Container({
+                var c = new Container({
                     content: "xx"
                 });
                 c.render();
@@ -303,7 +304,7 @@ KISSY.use("component/base", function (S, Component) {
 
             } else {
                 it("should delegate events", function () {
-                    var c = new Component.Container({
+                    var c = new Container({
                         content: "xx"
                     });
 
@@ -353,13 +354,14 @@ KISSY.use("component/base", function (S, Component) {
                     runs(function () {
                         jasmine.simulate(child1.get("el")[0], "mouseup");
                     });
+
                     waits(10);
+
                     runs(function () {
                         expect(c.get('active')).toBeFalsy();
                         expect(child1.get('active')).toBeFalsy();
                         expect(child2.get('active')).toBeFalsy();
                     });
-
 
                     runs(function () {
                         c.destroy();

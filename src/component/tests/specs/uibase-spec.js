@@ -233,13 +233,13 @@ KISSY.use("component/base,component/extension", function (S, Component, extensio
 
             });
 
-            it("will override attribute from node", function () {
+            it("will not override attribute from node", function () {
                 var node = $("<div data-contentAttr='x'></div>").appendTo("body");
                 var n = new SrcNode({
                     srcNode: node,
                     "contentAttr": 'y'
                 });
-                expect(n.get("contentAttr")).toBe('y');
+                expect(n.get("contentAttr")).toBe('x');
                 node.remove();
             });
 
@@ -249,7 +249,7 @@ KISSY.use("component/base,component/extension", function (S, Component, extensio
                 var node = $("<div>123</div>").appendTo("body");
                 var n = new BoxController({
                     srcNode: node
-                });
+                }).render();
                 expect(n.get("content")).toBe('123');
                 node.remove();
             });
@@ -261,92 +261,10 @@ KISSY.use("component/base,component/extension", function (S, Component, extensio
                     content: '4'
                 });
                 n.render();
-                expect(n.get("content")).toBe('4');
-                expect(node.html().toLowerCase()).toBe('123');
+                expect(n.get("content")).toBe(node.html());
                 node.remove();
             });
-
-            it("html can be node without srcNode", function () {
-                var n = new BoxController({
-                    content: $('<span>4</span>')
-                });
-                n.render();
-                expect(n.get("content").html()).toBe('4');
-                expect(n.get("el").html().toLowerCase()).toBe('<span>4</span>');
-                n.destroy();
-            });
         });
-
-        describe("contentEl", function () {
-
-            var ContentEl = Component.Render.extend( {}, {
-                ATTRS: {
-                    prefixCls: {
-                        value: 'ks-'
-                    }
-                }
-            }, {
-                xclass: 'contentELTest'
-            });
-
-            describe("srcNode", function () {
-
-                it('transform el without srcNode', function () {
-
-                    var el = $("<div>23</div>").appendTo("body");
-
-                    var content = new ContentEl({
-                        srcNode: el
-                    }).render();
-
-                    expect(content.get("content")).toBe("23");
-
-                    expect(el.html().toLowerCase().replace(/"/g, ""))
-                        .toBe("<div class=ks-contentbox>23</div>");
-
-                    el.remove();
-
-                });
-
-                it('can not transform el with string content', function () {
-                    var el = $("<div>23</div>").appendTo("body");
-
-                    var content = new ContentEl({
-                        srcNode: el,
-                        content: '4'
-                    }).render();
-
-                    expect(content.get("content")).toBe("4");
-
-                    expect(el.html().toLowerCase().replace(/"/g, ""))
-                        .toBe("<div class=ks-contentbox>23</div>");
-
-                    el.remove();
-                });
-
-                it('can not transform el with node content', function () {
-
-                    var el = $("<div>23</div>").appendTo("body");
-
-                    var content = new ContentEl({
-                        srcNode: el,
-                        content: $('<s>4</s>')
-                    }).render();
-
-                    expect(content.get("content").html()).toBe("4");
-
-                    expect(el.html().toLowerCase().replace(/"/g, ""))
-                        .toBe("<div class=ks-contentbox>23</div>");
-
-                    el.remove();
-
-                });
-
-            });
-
-
-        });
-
     });
 
 });

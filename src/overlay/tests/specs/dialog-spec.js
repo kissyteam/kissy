@@ -18,15 +18,27 @@ KISSY.use("ua,node,overlay,dd/plugin/constrain,component/plugin/drag",
                 });
             });
 
+            describe('srcNode',function(){
+
+            });
+
             it("头体尾已经渲染完毕", function () {
 
+                var srcNode = $('<div class="ks-overlay ks-dialog"' +
+                    ' style="width:200px">' +
+                    '<div class="ks-contentbox">' +
+                    '<div class="ks-stdmod-header">header</div>' +
+                    '<div class="ks-stdmod-body">body</div>' +
+                    '<div class="ks-stdmod-footer">footer</div>' +
+                    '</div>' +
+                    '</div>').prependTo('body');
+
                 var d = new Dialog({
-                    srcNode: "#drender",
-                    width: 200
+                    srcNode: srcNode
                 });
 
                 d.plug(new DragPlugin({
-                    handlers: ['.ks-stdmod-header']
+                    handlers: ['.ks-dialog-header']
                 }).plug(new ConstrainPlugin({
                         constrain: window
                     })));
@@ -35,31 +47,35 @@ KISSY.use("ua,node,overlay,dd/plugin/constrain,component/plugin/drag",
                 d.center();
                 d.show();
 
-                expect(d.get("header").html()).toBe("prerender header");
-                expect(d.get("body").html()).toBe("prerender body");
-                expect(d.get("footer").html()).toBe("prerender footer");
+                expect(d.get("header").html()).toBe("header");
+                expect(d.get("body").html()).toBe("body");
+                expect(d.get("footer").html()).toBe("footer");
+                expect(d.get("headerContent")).toBe("header");
+                expect(d.get("bodyContent")).toBe("body");
+                expect(d.get("footerContent")).toBe("footer");
                 d.destroy();
             });
 
-            it("create works", function () {
-                var d = new Dialog({
-                    width: 200,
-                    closable: true,
-                    bodyContent: "1",
-                    headerContent: "2"
-                });
-                d.create();
-                expect(d.get("header")).not.toBe(undefined);
-                if (d.get("header")) {
-                    expect(d.get("header").nodeName()).toBe("div");
-                }
-                expect(d.get("el").one(".ks-ext-close")).not.toBe(undefined);
-                d.destroy();
-            });
 
             describe("完全由 javascript 创建", function () {
 
                 var d;
+
+                it("create works", function () {
+                    var d = new Dialog({
+                        width: 200,
+                        closable: true,
+                        bodyContent: "1",
+                        headerContent: "2"
+                    });
+                    d.create();
+                    expect(d.get("header")).not.toBe(undefined);
+                    if (d.get("header")) {
+                        expect(d.get("header").nodeName()).toBe("div");
+                    }
+                    expect(d.get("el").one(".ks-ext-close")).not.toBe(undefined);
+                    d.destroy();
+                });
 
                 it("头体尾已经渲染完毕", function () {
                     d = new Dialog({

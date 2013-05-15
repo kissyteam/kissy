@@ -4,7 +4,7 @@
  */
 KISSY.use("u" +
     "a,node,overlay,component/plugin/resize", function (S, UA, Node, Overlay, ResizePlugin) {
-    var DOM = S.DOM, $ = Node.all,Gesture= S.Event.Gesture;
+    var DOM = S.DOM, $ = Node.all, Gesture = S.Event.Gesture;
 
     beforeEach(function () {
         this.addMatchers({
@@ -19,31 +19,47 @@ KISSY.use("u" +
 
         describe("从页面中取得已渲染元素", function () {
 
+            var o;
 
-            var o = new Overlay({
-                srcNode: "#render",
-                width: 400
+            beforeEach(function () {
+                var render = $('<div class="popup ks-overlay" style="width:400px">' +
+                    '<div class="ks-contentbox">pre-render</div>' +
+                    '</div>').prependTo('body');
+
+                o = new Overlay({
+                    srcNode: render
+                });
+            });
+
+            afterEach(function () {
+                if(o.get('rendered')){
+                    o.destroy();
+                }else{
+                    o.get('srcNode').remove();
+                }
             });
 
 //           srcNode 情况下可以了，恰好只能 el
-//            it("渲染前取不到 el 元素", function() {
-//                expect(o.get("el")).toBeUndefined();
-//            });
-
-
-            o.render();
+            it("渲染前取不到 el 元素", function () {
+                expect(o.get("el")).toBeUndefined();
+                expect(o.get('content')).toBeFalsy();
+            });
 
             it("渲染后可以取到元素", function () {
+                o.render();
                 expect(o.get("el")[0].nodeType).toBe(1);
+                expect(o.get('content')).toBe('pre-render');
             });
 
             it("渲染后元素会正确配置", function () {
+                o.render();
                 expect(o.get("el").css("left")).toBe("-9999px");
                 expect(o.get("el").css("top")).toBe("-9999px");
                 expect(o.get("el").css("width")).toBe("400px");
             });
 
             it("对齐居中有效", function () {
+
                 o.set("align", {
                     points: ['cc', 'cc']
                 });
@@ -52,52 +68,55 @@ KISSY.use("u" +
 
                 expect(parseInt(o.get("el").css("left")))
                     .toBeEqual(Math.ceil((DOM.viewportWidth()
-                    - o.get("el").outerWidth()) / 2));
+                        - o.get("el").outerWidth()) / 2));
 
                 expect(parseInt(o.get("el").css("top")))
                     .toBeEqual(Math.ceil((DOM.viewportHeight()
-                    - o.get("el").outerHeight()) / 2));
+                        - o.get("el").outerHeight()) / 2));
 
             });
 
             it("show/hide 事件顺利触发", function () {
 
-                var hideCall = jasmine.createSpy(),
-                    showCall = jasmine.createSpy();
-
-                o.show();
+                var hideCall = 0,
+                    showCall = 0;
 
                 o.on("hide", function () {
-                    hideCall();
+                    hideCall = 1;
                 });
                 o.on("show", function () {
-                    showCall();
+                    showCall = 1;
                 });
 
-                o.hide();
-                o.show();
-                expect(hideCall).toHaveBeenCalled();
-                expect(showCall).toHaveBeenCalled();
-                o.detach("show hide");
+                o.render();
 
+                expect(o.get('visible')).toBeFalsy();
+
+                expect(hideCall).toBe(0);
+                expect(showCall).toBe(0);
+
+                o.show();
+
+                expect(hideCall).toBe(0);
+                expect(showCall).toBe(1);
+
+                showCall = 0;
+
+                o.hide();
+                expect(hideCall).toBe(1);
+                expect(showCall).toBe(0);
             });
 
 
             it("应该能够设置坐标", function () {
 
-                // or o.move(100,150);
-
                 o.set("xy", [100, 150]);
 
-                //o.move(100, 150);
+                o.show();
 
                 expect(o.get("el").css("left")).toBeEqual("100px");
                 expect(Math.ceil(parseFloat(o.get("el").css("top")))).toBeEqual(150);
 
-            });
-
-            runs(function () {
-                o.destroy();
             });
 
         });
@@ -181,7 +200,7 @@ KISSY.use("u" +
                     height = o.get("el").outerHeight(),
                     hxy = h.offset();
 
-                jasmine.simulateForDrag(h[0],Gesture.start, {
+                jasmine.simulateForDrag(h[0], Gesture.start, {
                     clientX: hxy.left - 2,
                     clientY: hxy.top - 2
                 });
@@ -311,12 +330,12 @@ KISSY.use("u" +
 
                 expect(parseInt(o.get("el").css("left")))
                     .toBeEqual(Math.ceil((DOM.viewportWidth()
-                    - o.get("el").outerWidth()) / 2));
+                        - o.get("el").outerWidth()) / 2));
 
 
                 expect(parseInt(o.get("el").css("top")))
                     .toBeEqual(Math.ceil((DOM.viewportHeight()
-                    - o.get("el").outerHeight()) / 2));
+                        - o.get("el").outerHeight()) / 2));
 
                 o.destroy();
 
@@ -374,6 +393,7 @@ KISSY.use("u" +
                 });
                 o.render();
                 expect(o.get("el").css('position')).toBe('absolute');
+                o.destroy();
             });
 
         });
