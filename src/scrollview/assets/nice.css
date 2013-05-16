@@ -139,7 +139,7 @@
 }
 
 .ks-scrollbar-hidden {
-    display: none;
+   visibility: hidden;
 }
 
 .ks-scrollbar-x-track,

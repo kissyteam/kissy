@@ -66,6 +66,15 @@
             content: content
         }).render();
 
+        S.all('<h2>snap test</h2>').appendTo('body');
+
+        new ScrollView({
+            width: 320,
+            height: 219,
+            snap:'p',
+            content: content
+        }).render();
+
         S.all('#destroy').on('click', function () {
             scrollview.destroy();
             S.all('#destroy').attr('disabled', true);
