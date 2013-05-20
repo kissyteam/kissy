@@ -17,7 +17,7 @@
         }, window.EDITOR_CFG);
 
         var plugins = ("source-area" +
-            ",code"+
+            ",code" +
             ",separator" +
             ",bold" +
             ",italic," +
@@ -279,6 +279,10 @@
             });
 
             window.newEditor = editor;
+
+            editor.on('paste', function () {
+                return 'x';
+            });
         });
 
     });

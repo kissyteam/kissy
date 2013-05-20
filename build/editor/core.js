@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 20 23:13
+build time: May 21 00:44
 */
 /**
  * Set up editor constructor
@@ -150,7 +150,7 @@ KISSY.add("editor/core/base", function (S, HTMLParser, Component) {
     requires: ['htmlparser', 'component/base', 'core']
 });/**
  * monitor user's paste behavior.
- * Modified from CKEditor.
+ * modified from CKEditor.
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/core/clipboard", function (S, Editor, KERange, KES) {
@@ -181,13 +181,19 @@ KISSY.add("editor/core/clipboard", function (S, Editor, KERange, KES) {
                     var type = this.type;
                     editor.focus();
                     setTimeout(function () {
-                        if (type == 'cut') {
-                            fixCut(editor);
-                        } else if (UA.ie && type == 'paste') {
-                            self._preventPasteEvent();
-                            editor.get('document').one('body').fire(pasteEvent);
+                        if (UA.ie) {
+                            if (type == 'cut') {
+                                fixCut(editor);
+                            } else if (type == 'paste') {
+                                // ie prepares to get clipboard data
+                                // ie only can get data from beforepaste
+                                // non-ie paste
+                                self._preventPasteEvent();
+                                self._getClipboardDataFromPasteBin();
+                            }
                         }
-                        // Show cutError or copyError.
+                        // will trigger paste for all browsers
+                        // disable handle for ie
                         if (!tryToCutCopyPaste(editor, type)) {
                             alert(error_types[type]);
                         }
@@ -199,7 +205,7 @@ KISSY.add("editor/core/clipboard", function (S, Editor, KERange, KES) {
             // paste fire too later in ie, cause error
             // http://help.dottoro.com/ljxqbxkf.php
             // http://stackoverflow.com/questions/2176861/javascript-get-clipboard-data-on-paste-event-cross-browser
-            editorBody.on(pasteEvent, self._paste, self);
+            editorBody.on(pasteEvent, self._getClipboardDataFromPasteBin, self);
 
             if (UA.ie) {
                 editorBody.on('paste', self._iePaste, self);
@@ -263,7 +269,8 @@ KISSY.add("editor/core/clipboard", function (S, Editor, KERange, KES) {
             self._isPreventPaste = 1;
             self._preventPasteTimer = setTimeout(function () {
                 self._isPreventPaste = 0;
-            }, 100);
+                // wait beforepaste event handler done
+            }, 70);
         },
 
         // in case ie select paste from native menubar
@@ -272,6 +279,11 @@ KISSY.add("editor/core/clipboard", function (S, Editor, KERange, KES) {
             var self = this,
                 editor = self.editor;
             if (self._isPreventPaste) {
+                // allow user content pasted into pastebin
+
+                // impossible case
+                // quick enough ( in 70 ms)
+                // when pastebin is deleted and content is inserted in to editor and _isPreventPaste is still 1
                 return;
             }
             // prevent default paste action in ie
@@ -279,14 +291,12 @@ KISSY.add("editor/core/clipboard", function (S, Editor, KERange, KES) {
             editor.execCommand('paste');
         },
 
-        _paste: function (ev) {
+        _getClipboardDataFromPasteBin: function () {
             if (this._isPreventBeforePaste) {
                 return;
             }
 
-            // ie beforepaste 会触发两次，第一次 pastebin 为锚点内容，奇怪
-            // chrome keydown 也会两次
-            S.log(ev.type + ": " + " paste event happen");
+            S.log(pasteEvent + ": " + " paste event happen");
 
             var self = this,
                 editor = self.editor,
@@ -294,13 +304,7 @@ KISSY.add("editor/core/clipboard", function (S, Editor, KERange, KES) {
 
             // Avoid recursions on 'paste' event or consequent paste too fast. (#5730)
             if (doc.getElementById('ke_pastebin')) {
-                // ie beforepaste 会重复触发
-                // chrome keydown 也会重复触发
-                // 第一次 bms 是对的，但是 pasterbin 内容是错的
-                // 第二次 bms 是错的，但是内容是对的
-                // 这样返回刚好，用同一个 pastebin 得到最后的正确内容
-                // bms 第一次时创建成功
-                S.log(ev.type + ": trigger more than once ...");
+                S.log(pasteEvent + ": trigger more than once ...");
                 return;
             }
 
@@ -311,6 +315,7 @@ KISSY.add("editor/core/clipboard", function (S, Editor, KERange, KES) {
             var pastebin = $(UA['webkit'] ? '<body></body>' :
                 // ie6 must use create ...
                 doc.createElement('div'), null, doc);
+
             pastebin.attr('id', 'ke_pastebin');
             // Safari requires a filler node inside the div to have the content pasted into it. (#4882)
             UA['webkit'] && pastebin[0].appendChild(doc.createTextNode('\xa0'));
@@ -345,6 +350,7 @@ KISSY.add("editor/core/clipboard", function (S, Editor, KERange, KES) {
                 // a div wrapper if you copy/paste the body of the editor.
                 // Remove hidden div and restore selection.
                 var bogusSpan;
+                var oldPastebin = pastebin;
 
                 pastebin = ( UA['webkit']
                     && ( bogusSpan = pastebin.first() )
@@ -353,48 +359,47 @@ KISSY.add("editor/core/clipboard", function (S, Editor, KERange, KES) {
 
                 sel.selectBookmarks(bms);
 
-                pastebin.remove();
-
                 var html = pastebin.html();
 
-                doPasteAction(editor, html);
+                oldPastebin.remove();
 
+                //莫名其妙会有这个东西！，不知道
+                //去掉
+                if (!( html = S.trim(html
+                    .replace(/<span[^>]+_ke_bookmark[^<]*?<\/span>(&nbsp;)*/ig, '')) )) {
+                    // ie 第2次触发 beforepaste 会报错！
+                    // 第一次 bms 是对的，但是 pastebin 内容是错的
+                    // 第二次 bms 是错的，但是内容是对的
+                    return;
+                }
+
+                S.log("paste " + html);
+
+                var re = editor.fire("paste", {
+                    html: html
+                });
+
+                // cancel
+                if (re === false) {
+                    return;
+                }
+
+                if (re !== undefined) {
+                    html = re;
+                }
+
+                // MS-WORD format sniffing.
+                if (/(class="?Mso|style="[^"]*\bmso\-|w:WordDocument)/.test(html)) {
+                    // 动态载入 word 过滤规则
+                    S.use("editor/plugin/word-filter", function (S, wordFilter) {
+                        editor.insertHTML(wordFilter.toDataFormat(html, editor));
+                    });
+                } else {
+                    editor.insertHTML(html);
+                }
             }, 0);
         }
     });
-
-    function doPasteAction(editor, html) {
-
-        //莫名其妙会有这个东西！，不知道
-        //去掉
-        if (!( html = S.trim(html
-            .replace(/<span[^>]+_ke_bookmark[^<]*?<\/span>(&nbsp;)*/ig, '')) )) {
-            // ie 第2次触发 beforepaste 会报错！
-            // 第一次 bms 是对的，但是 pastebin 内容是错的
-            // 第二次 bms 是错的，但是内容是对的
-            return;
-        }
-
-        S.log("paste " + html);
-
-        var re = editor.fire("paste", {
-            html: html
-        });
-
-        if (re !== undefined) {
-            html = re;
-        }
-
-        // MS-WORD format sniffing.
-        if (/(class="?Mso|style="[^"]*\bmso\-|w:WordDocument)/.test(html)) {
-            // 动态载入 word 过滤规则
-            S.use("editor/plugin/word-filter", function (S, wordFilter) {
-                editor.insertHTML(wordFilter.toDataFormat(html, editor));
-            });
-        } else {
-            editor.insertHTML(html);
-        }
-    }
 
     // Tries to execute any of the paste, cut or copy commands in IE. Returns a
     // boolean indicating that the operation succeeded.
@@ -445,9 +450,6 @@ KISSY.add("editor/core/clipboard", function (S, Editor, KERange, KES) {
     // Cutting off control type element in IE standards breaks the selection entirely. (#4881)
     function fixCut(editor) {
         var editorDoc = editor.get("document")[0];
-        if (!UA['ie'] || editorDoc.compatMode == 'BackCompat')
-            return;
-
         var sel = editor.getSelection();
         var control;
         if (( sel.getType() == KES.SELECTION_ELEMENT ) &&
@@ -479,13 +481,13 @@ KISSY.add("editor/core/clipboard", function (S, Editor, KERange, KES) {
     return {
         init: function (editor) {
 
-
             var currentPaste;
 
             editor.docReady(function () {
                 currentPaste = new Paste(editor);
             });
 
+            // emulated context menu
             if (0) {
                 var defaultContextMenuFn;
 
@@ -506,7 +508,6 @@ KISSY.add("editor/core/clipboard", function (S, Editor, KERange, KES) {
                     });
                 });
             }
-
 
             var clipboardCommands = {
                 "copy": 1,
