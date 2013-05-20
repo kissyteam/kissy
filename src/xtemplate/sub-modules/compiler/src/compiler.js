@@ -158,7 +158,8 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
                 var tmp = guid('tmp');
                 idString = self.getIdStringFromIdParts(source, idParts);
 
-                source.push('var ' + tmp + '=getProperty("' + idString + '",scopes);');
+                source.push('var ' + tmp + ' = getProperty("' + idString +
+                    '",scopes,' + depth + ');');
 
                 source.push('if(' + tmp + '===false){');
                 source.push('S[option.silent?"log":"error"]("can not find property: \'' +
