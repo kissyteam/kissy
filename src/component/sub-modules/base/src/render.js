@@ -90,7 +90,7 @@ KISSY.add("component/base/render", function (S, BoxRender, Component, UIBase, Ma
                 .attr("aria-disabled", v);
             if (self.get("focusable")) {
                 //不能被 tab focus 到
-                self.getKeyEventTarget().attr("tabIndex", v ? -1 : 0);
+                self.getKeyEventTarget().attr("tabindex", v ? -1 : 0);
             }
         },
         /**

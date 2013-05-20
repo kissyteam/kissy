@@ -48,3 +48,9 @@ menu style for kissy editor ,include contextmenu and select menu
     text-decoration: none;
     color: black;
 }
+
+.ks-editor-menuitem-disabled{
+    opacity: 0.3;
+    -moz-opacity: 0.3;
+    filter: alpha(opacity = 30);
+}

@@ -31,7 +31,8 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
             handleKeyEventInternal: function (e) {
                 if (this.get('escapeToClose') &&
                     e.keyCode === Node.KeyCodes.ESC) {
-                    if (e.target.nodeName.toLowerCase() == 'select' && !e.target.disabled) {
+                    if (e.target.nodeName.toLowerCase() == 'select' &&
+                        !e.target.disabled) {
                         // escape at select
                     } else {
                         this.close();

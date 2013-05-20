@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 15 21:44
+build time: May 20 22:58
 */
 /**
 ks-editor-post ，编辑器内容外部包装容器
@@ -382,7 +382,7 @@ LoVe F HAte
     opacity: 0.3;
     /*ie7不支持透明属性*/
     /*ie8 标准模式也需要，不知为何透明度不能作用下层*/
-    filter: chroma(color = tomato) alpha(opacity = 30);
+    filter: alpha(opacity = 30);
 }
 
 /*ie9 标准模式 filter 形成黑框*/
@@ -845,8 +845,7 @@ ks-editor-toolbar-padding {
 }
 
 .ks-editor-toolbar-backColor {
-    position: relative;
-    left: -1px;
+    margin-left: 3px;
 }
 
 .ks-editor-toolbar-foreColor {
@@ -1049,6 +1048,12 @@ menu style for kissy editor ,include contextmenu and select menu
     background: #D6E9F8;
     text-decoration: none;
     color: black;
+}
+
+.ks-editor-menuitem-disabled{
+    opacity: 0.3;
+    -moz-opacity: 0.3;
+    filter: alpha(opacity = 30);
 }.ks-editor-dialog, .ks-editor-overlay {
     position: absolute;
     /*防止移位带来的闪烁*/

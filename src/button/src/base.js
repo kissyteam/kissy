@@ -127,5 +127,5 @@ KISSY.add("button/base", function (S, Event, Component, ButtonRender) {
     return Button;
 
 }, {
-    requires: ['event', 'component/base', './buttonRender']
+    requires: ['event', 'component/base', './render']
 });

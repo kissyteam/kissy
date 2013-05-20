@@ -287,7 +287,7 @@ KISSY.add("editor/core/utils", function (S) {
             preventFocus: function (el) {
                 if (UA['ie']) {
                     //ie 点击按钮不丢失焦点
-                    el.unselectable(undefined);
+                    el.unselectable();
                 } else {
                     el.attr("onmousedown", "return false;");
                 }

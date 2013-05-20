@@ -294,7 +294,11 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
                 if (v) {
                     target.focus();
                 } else {
-                    target.ownerDocument.body.focus();
+                    // force to move focus if just this.set('focused',false);
+                    // do not changed focus if changed by other component focus
+                    if (target.ownerDocument.activeElement == target) {
+                        target.ownerDocument.body.focus();
+                    }
                 }
             },
 

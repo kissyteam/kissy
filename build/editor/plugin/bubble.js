@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 17 00:15
+build time: May 20 22:58
 */
 /**
  * bubble or tip view for kissy editor
@@ -44,7 +44,7 @@ KISSY.add("editor/plugin/bubble", function (S, Overlay, Editor) {
             editor = self.get("editor"),
             myBubbles = editor.getControls();
         S.each(myBubbles, function (bubble) {
-            if (bubble.get && (bubble.get("elCls") || "").indexOf("bubble") != -1 &&
+            if (bubble.isKeBubble &&
                 bubble !== self &&
                 bubble.get("visible") &&
                 overlap(self, bubble)) {
@@ -141,6 +141,8 @@ KISSY.add("editor/plugin/bubble", function (S, Overlay, Editor) {
 
         bubble = new Overlay(cfg);
 
+        bubble.isKeBubble = 1;
+
         editor.addControl(id + "/bubble", bubble);
 
         // 借鉴google doc tip提示显示
@@ -194,7 +196,7 @@ KISSY.add("editor/plugin/bubble", function (S, Overlay, Editor) {
                 if (!bubble.get("visible")) {
                     bubble.show();
                 } else {
-
+                    S.log("already show by selectionChange");
                 }
             }
         }

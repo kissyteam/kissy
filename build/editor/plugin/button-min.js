@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 17 00:15
+build time: May 20 22:59
 */
-KISSY.add("editor/plugin/button",function(h,e,f){e.prototype.addButton=function(g,b,d){void 0===d&&(d=f);var c=this.get("prefixCls")+"editor-toolbar-";b.elCls&&(b.elCls=c+b.elCls);b.elCls=c+"button "+(b.elCls||"");var a=(new d(h.mix({render:this.get("toolBarEl"),content:'<span class="'+c+"item "+c+g+'"></span>',prefixCls:this.get("prefixCls")+"editor-",editor:this},b))).render();a.get("el").unselectable();if(!b.content){var i=a.get("el").one("span");a.on("afterContentClsChange",function(a){i[0].className=
-c+"item "+c+a.newVal})}a.get("mode")==e.Mode.WYSIWYG_MODE&&(this.on("wysiwygMode",function(){a.set("disabled",false)}),this.on("sourceMode",function(){a.set("disabled",true)}));this.addControl(g+"/button",a);return a};return f},{requires:["editor","button"]});
+KISSY.add("editor/plugin/button",function(h,e,f){e.prototype.addButton=function(g,a,d){void 0===d&&(d=f);var c=this.get("prefixCls")+"editor-toolbar-";a.elCls&&(a.elCls=c+a.elCls);a.elCls=c+"button "+(a.elCls||"");var b=(new d(h.mix({render:this.get("toolBarEl"),content:'<span class="'+c+"item "+c+g+'"></span>',prefixCls:this.get("prefixCls")+"editor-",editor:this},a))).render();if(!a.content){var i=b.get("el").one("span");b.on("afterContentClsChange",function(a){i[0].className=c+"item "+c+a.newVal})}b.get("mode")==
+e.Mode.WYSIWYG_MODE&&(this.on("wysiwygMode",function(){b.set("disabled",false)}),this.on("sourceMode",function(){b.set("disabled",true)}));this.addControl(g+"/button",b);return b};return f},{requires:["editor","button"]});

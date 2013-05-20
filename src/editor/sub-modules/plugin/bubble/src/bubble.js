@@ -39,7 +39,7 @@ KISSY.add("editor/plugin/bubble", function (S, Overlay, Editor) {
             editor = self.get("editor"),
             myBubbles = editor.getControls();
         S.each(myBubbles, function (bubble) {
-            if (bubble.get && (bubble.get("elCls") || "").indexOf("bubble") != -1 &&
+            if (bubble.isKeBubble &&
                 bubble !== self &&
                 bubble.get("visible") &&
                 overlap(self, bubble)) {
@@ -135,6 +135,8 @@ KISSY.add("editor/plugin/bubble", function (S, Overlay, Editor) {
         });
 
         bubble = new Overlay(cfg);
+
+        bubble.isKeBubble = 1;
 
         editor.addControl(id + "/bubble", bubble);
 

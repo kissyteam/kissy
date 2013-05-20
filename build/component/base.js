@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 15 23:15
+build time: May 20 22:58
 */
 /**
  * @ignore
@@ -820,7 +820,9 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
                 if (v) {
                     target.focus();
                 } else {
-                    target.ownerDocument.body.focus();
+                    if (target.ownerDocument.activeElement == target) {
+                        target.ownerDocument.body.focus();
+                    }
                 }
             },
 
@@ -1724,7 +1726,7 @@ KISSY.add("component/base/render", function (S, BoxRender, Component, UIBase, Ma
                 .attr("aria-disabled", v);
             if (self.get("focusable")) {
                 //不能被 tab focus 到
-                self.getKeyEventTarget().attr("tabIndex", v ? -1 : 0);
+                self.getKeyEventTarget().attr("tabindex", v ? -1 : 0);
             }
         },
         /**

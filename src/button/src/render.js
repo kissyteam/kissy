@@ -3,7 +3,7 @@
  * abstract view for button
  * @author yiminghe@gmail.com
  */
-KISSY.add("button/buttonRender", function (S, Component) {
+KISSY.add("button/render", function (S, Component) {
     // http://www.w3.org/TR/wai-aria-practices/
     return Component.Render.extend({
         initializer: function () {
@@ -25,7 +25,7 @@ KISSY.add("button/buttonRender", function (S, Component) {
                 cls = self.getCssClassWithState("checked");
             el[v ? 'addClass' : 'removeClass'](cls);
         },
-        _onSetTooltip: function (title) {
+        '_onSetTooltip': function (title) {
             this.get("el").attr("title", title);
         },
         '_onSetDescribedby': function (describedby) {

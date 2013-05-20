@@ -59,7 +59,7 @@ LoVe F HAte
     opacity: 0.3;
     /*ie7不支持透明属性*/
     /*ie8 标准模式也需要，不知为何透明度不能作用下层*/
-    filter: chroma(color = tomato) alpha(opacity = 30);
+    filter: alpha(opacity = 30);
 }
 
 /*ie9 标准模式 filter 形成黑框*/

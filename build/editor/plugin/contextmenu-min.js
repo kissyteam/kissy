@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 17 00:16
+build time: May 20 23:13
 */
-KISSY.add("editor/plugin/contextmenu",function(h,d,f,i){d.prototype.addContextMenu=function(j,k,a){var c=this,a=a||{};a.prefixCls=c.get("prefixCls")+"editor-";a.editor=c;a.focusable=1;a.zIndex=d.baseZIndex(d.zIndexManager.POPUP_MENU);var b=new f.PopupMenu(a);i.init(b);b.on("afterRenderUI",function(){b.get("el").on("keydown",function(a){a.keyCode==h.Event.KeyCodes.ESC&&b.hide()})});c.docReady(function(){var a=c.get("document");a.on("mousedown",function(a){1==a.which&&b.hide()});a.delegate("contextmenu",
-k,function(a){var f=h.all(a.target);a.halt();var e=a.pageX,g=a.pageY;e&&(a=d.Utils.getXY({left:e,top:g},c),e=a.left,g=a.top,setTimeout(function(){b.set("editorSelectedEl",f,{silent:1});b.set("xy",[e,g]);b.show();c.fire("contextmenu",{contextmenu:b});window.focus();document.body.focus();b.focus()},30))})});c.addControl(j+"/contextmenu",b);return b}},{requires:["editor","menu","./focus-fix"]});
+KISSY.add("editor/plugin/contextmenu",function(h,f,j,k){f.prototype.addContextMenu=function(l,m,a){function i(e){var a=h.all(e.target),g=e.pageX,d=e.pageY;g&&(e=f.Utils.getXY({left:g,top:d},c),g=e.left,d=e.top,setTimeout(function(){b.set("editorSelectedEl",a,{silent:1});b.set("xy",[g,d]);c.fire("contextmenu",{contextmenu:b});b.show();window.focus();document.body.focus();b.focus()},30))}var c=this,a=a||{},d=a.event;d&&delete a.event;a.prefixCls=c.get("prefixCls")+"editor-";a.editor=c;a.focusable=1;
+a.zIndex=f.baseZIndex(f.zIndexManager.POPUP_MENU);var b=new j.PopupMenu(a);k.init(b);b.on("afterRenderUI",function(){b.get("el").on("keydown",function(a){a.keyCode==h.Event.KeyCodes.ESC&&b.hide()})});c.docReady(function(){var a=c.get("document");a.on("mousedown",function(a){1==a.which&&b.hide()});a.delegate("contextmenu",m,function(a){a.halt();i(a)})});d&&i(d);c.addControl(l+"/contextmenu",b);return b}},{requires:["editor","menu","./focus-fix"]});

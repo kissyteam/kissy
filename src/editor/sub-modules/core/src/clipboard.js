@@ -1,12 +1,13 @@
 /**
- * monitor user's paste key ,clear user input,modified from ckeditor
+ * monitor user's paste behavior.
+ * Modified from CKEditor.
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/core/clipboard", function (S, Editor, KERange, KES) {
     var $ = S.all,
         UA = S.UA,
-        KER = Editor.RANGE,
-        Event = S.Event;
+        pasteEvent = UA.ie ? 'beforepaste' : 'paste',
+        KER = Editor.RANGE;
 
     function Paste(editor) {
         var self = this;
@@ -15,42 +16,127 @@ KISSY.add("editor/core/clipboard", function (S, Editor, KERange, KES) {
     }
 
     S.augment(Paste, {
+
         _init: function () {
             var self = this,
                 editor = self.editor,
-                editorBody = editor.get("document")[0].body;
-            // Event.on(editor.document.body, UA['ie'] ? "beforepaste" : "keydown", self._paste, self);
+                editorDoc = editor.get("document"),
+                editorBody = editorDoc.one('body'),
+                CutCopyPasteCmd = function (type) {
+                    this.type = type;
+                };
+
+            CutCopyPasteCmd.prototype = {
+                exec: function (editor) {
+                    var type = this.type;
+                    editor.focus();
+                    setTimeout(function () {
+                        if (type == 'cut') {
+                            fixCut(editor);
+                        } else if (UA.ie && type == 'paste') {
+                            self._preventPasteEvent();
+                            editor.get('document').one('body').fire(pasteEvent);
+                        }
+                        // Show cutError or copyError.
+                        if (!tryToCutCopyPaste(editor, type)) {
+                            alert(error_types[type]);
+                        }
+                    }, 0);
+                }
+            };
+
             // beforepaste not fire on webkit and firefox
-            // paste fire too later in ie ,cause error
-            // 奇怪哦
+            // paste fire too later in ie, cause error
             // http://help.dottoro.com/ljxqbxkf.php
-            // refer : http://stackoverflow.com/questions/2176861/javascript-get-clipboard-data-on-paste-event-cross-browser
-            Event.on(editorBody,
-                (UA.ie ? 'beforepaste' : 'paste'),
-                self._paste, self);
+            // http://stackoverflow.com/questions/2176861/javascript-get-clipboard-data-on-paste-event-cross-browser
+            editorBody.on(pasteEvent, self._paste, self);
 
-            // Dismiss the (wrong) 'beforepaste' event fired on context menu open. (#7953)
-            // Note: IE Bug: queryCommandEnabled('paste') fires also 'beforepaste(copy/cut)'
-            Event.on(editorBody, 'contextmenu', function () {
-                depressBeforeEvent = 1;
-                setTimeout(function () {
-                    depressBeforeEvent = 0;
-                }, 10);
-            });
-            editor.addCommand("copy", new cutCopyCmd("copy"));
-            editor.addCommand("cut", new cutCopyCmd("cut"));
-            editor.addCommand("paste", new cutCopyCmd("paste"));
+            if (UA.ie) {
+                editorBody.on('paste', self._iePaste, self);
+                editorDoc.on('keydown', self._onKeyDown, self);
+                editorDoc.on('contextmenu', function () {
+                    self._isPreventBeforePaste = 1;
+                    setTimeout(function () {
+                        self._isPreventBeforePaste = 0;
+                    }, 0);
+                })
+            }
 
+            editor.addCommand("copy", new CutCopyPasteCmd("copy"));
+            editor.addCommand("cut", new CutCopyPasteCmd("cut"));
+            editor.addCommand("paste", new CutCopyPasteCmd("paste"));
         },
-        _paste: function (ev) {
 
-            if (depressBeforeEvent) {
+        '_onKeyDown': function (e) {
+            var self = this,
+                editor = self.editor;
+            if (editor.get('mode') != Editor.Mode.WYSIWYG_MODE) {
+                return;
+            }
+            // ctrl+v
+            if (e.ctrlKey && e.keyCode == 86) {
+                self._preventPasteEvent();
+            }
+        },
+
+        _stateFromNamedCommand: function (command) {
+            var ret;
+            var self = this;
+            var editor = self.editor;
+
+            if (command == 'paste') {
+                // IE Bug: queryCommandEnabled('paste') fires also 'beforepaste(copy/cut)',
+                // guard to distinguish from the ordinary sources (either
+                // keyboard paste or execCommand) (#4874).
+                self._isPreventBeforePaste = 1;
+                try {
+                    ret = editor.get('document')[0].queryCommandEnabled(command);
+                } catch (e) {
+                }
+                self._isPreventBeforePaste = 0;
+            }
+            // Cut, Copy - check if the selection is not empty
+            else {
+                var sel = editor.getSelection(),
+                    ranges = sel && sel.getRanges();
+                ret = ranges && !( ranges.length == 1 && ranges[ 0 ].collapsed );
+            }
+
+            return ret;
+        },
+
+        '_preventPasteEvent': function () {
+            var self = this;
+            if (self._preventPasteTimer) {
+                clearTimeout(self._preventPasteTimer);
+            }
+            self._isPreventPaste = 1;
+            self._preventPasteTimer = setTimeout(function () {
+                self._isPreventPaste = 0;
+            }, 100);
+        },
+
+        // in case ie select paste from native menubar
+        // ie will not fire beforePaste but only paste
+        _iePaste: function (e) {
+            var self = this,
+                editor = self.editor;
+            if (self._isPreventPaste) {
+                return;
+            }
+            // prevent default paste action in ie
+            e.preventDefault();
+            editor.execCommand('paste');
+        },
+
+        _paste: function (ev) {
+            if (this._isPreventBeforePaste) {
                 return;
             }
 
             // ie beforepaste 会触发两次，第一次 pastebin 为锚点内容，奇怪
             // chrome keydown 也会两次
-            S.log(ev.type + " : " + " paste event happen");
+            S.log(ev.type + ": " + " paste event happen");
 
             var self = this,
                 editor = self.editor,
@@ -64,7 +150,7 @@ KISSY.add("editor/core/clipboard", function (S, Editor, KERange, KES) {
                 // 第二次 bms 是错的，但是内容是对的
                 // 这样返回刚好，用同一个 pastebin 得到最后的正确内容
                 // bms 第一次时创建成功
-                S.log(ev.type + " : trigger more than once ...");
+                S.log(ev.type + ": trigger more than once ...");
                 return;
             }
 
@@ -121,53 +207,54 @@ KISSY.add("editor/core/clipboard", function (S, Editor, KERange, KES) {
 
                 var html = pastebin.html();
 
-                //S.log("paster " + html);
-
-                //莫名其妙会有这个东西！，不知道
-                //去掉
-                if (!( html = S.trim(html.replace(/<span[^>]+_ke_bookmark[^<]*?<\/span>(&nbsp;)*/ig, '')) )) {
-                    // ie 第2次触发 beforepaste 会报错！
-                    // 第一次 bms 是对的，但是 pasterbin 内容是错的
-                    // 第二次 bms 是错的，但是内容是对的
-                    return;
-                }
-
-                S.log("paste " + html);
-
-                var re = editor.fire("paste", {
-                    html: html,
-                    holder: pastebin
-                });
-
-                if (re !== undefined) {
-                    html = re;
-                }
-
-
-                // MS-WORD format sniffing.
-                if (/(class="?Mso|style="[^"]*\bmso\-|w:WordDocument)/.test(html)) {
-                    // 动态载入 word 过滤规则
-                    S.use("editor/plugin/word-filter", function (S, wordFilter) {
-                        editor.insertHTML(wordFilter.toDataFormat(html, editor));
-                    });
-                } else {
-                    editor.insertHTML(html);
-                }
+                doPasteAction(editor, html);
 
             }, 0);
         }
     });
 
+    function doPasteAction(editor, html) {
+
+        //莫名其妙会有这个东西！，不知道
+        //去掉
+        if (!( html = S.trim(html
+            .replace(/<span[^>]+_ke_bookmark[^<]*?<\/span>(&nbsp;)*/ig, '')) )) {
+            // ie 第2次触发 beforepaste 会报错！
+            // 第一次 bms 是对的，但是 pastebin 内容是错的
+            // 第二次 bms 是错的，但是内容是对的
+            return;
+        }
+
+        S.log("paste " + html);
+
+        var re = editor.fire("paste", {
+            html: html
+        });
+
+        if (re !== undefined) {
+            html = re;
+        }
+
+        // MS-WORD format sniffing.
+        if (/(class="?Mso|style="[^"]*\bmso\-|w:WordDocument)/.test(html)) {
+            // 动态载入 word 过滤规则
+            S.use("editor/plugin/word-filter", function (S, wordFilter) {
+                editor.insertHTML(wordFilter.toDataFormat(html, editor));
+            });
+        } else {
+            editor.insertHTML(html);
+        }
+    }
+
     // Tries to execute any of the paste, cut or copy commands in IE. Returns a
     // boolean indicating that the operation succeeded.
     var execIECommand = function (editor, command) {
         var doc = editor.get("document")[0],
-            body = $(doc.body);
-
-        var enabled = false;
-        var onExec = function () {
-            enabled = true;
-        };
+            body = $(doc.body),
+            enabled = false,
+            onExec = function () {
+                enabled = true;
+            };
 
         // The following seems to be the only reliable way to detect that
         // clipboard commands are enabled in IE. It will fire the
@@ -184,7 +271,7 @@ KISSY.add("editor/core/clipboard", function (S, Editor, KERange, KES) {
     };
 
     // Attempts to execute the Cut and Copy operations.
-    var tryToCutCopy = UA['ie'] ?
+    var tryToCutCopyPaste = UA['ie'] ?
         function (editor, type) {
             return execIECommand(editor, type);
         }
@@ -205,35 +292,18 @@ KISSY.add("editor/core/clipboard", function (S, Editor, KERange, KES) {
         "paste": "您的浏览器安全设置不允许编辑器自动执行粘贴操作，请使用键盘快捷键(Ctrl/Cmd+V)来完成"
     };
 
-    // A class that represents one of the cut or copy commands.
-    var cutCopyCmd = function (type) {
-        this.type = type;
-    };
-
-    cutCopyCmd.prototype = {
-        constructor:cutCopyCmd,
-        exec: function (editor) {
-            this.type == 'cut' && fixCut(editor);
-
-            var success = tryToCutCopy(editor, this.type);
-
-            if (!success)
-                alert(error_types[this.type]);		// Show cutError or copyError.
-
-            return success;
-        }
-    };
-
     // Cutting off control type element in IE standards breaks the selection entirely. (#4881)
     function fixCut(editor) {
-        if (!UA['ie'] || editor.get("document")[0].compatMode == 'BackCompat')
+        var editorDoc = editor.get("document")[0];
+        if (!UA['ie'] || editorDoc.compatMode == 'BackCompat')
             return;
 
         var sel = editor.getSelection();
         var control;
-        if (( sel.getType() == KES.SELECTION_ELEMENT ) && ( control = sel.getSelectedElement() )) {
+        if (( sel.getType() == KES.SELECTION_ELEMENT ) &&
+            ( control = sel.getSelectedElement() )) {
             var range = sel.getRanges()[ 0 ];
-            var dummy = $(editor.get("document")[0].createTextNode(''));
+            var dummy = $(editorDoc.createTextNode(''));
             dummy.insertBefore(control);
             range.setStartBefore(dummy);
             range.setEndAfter(control);
@@ -256,15 +326,44 @@ KISSY.add("editor/core/clipboard", function (S, Editor, KERange, KES) {
         "cut": "剪切"
     };
 
-    var depressBeforeEvent;
-
     return {
         init: function (editor) {
+
+
+            var currentPaste;
+
             editor.docReady(function () {
-                new Paste(editor);
+                currentPaste = new Paste(editor);
             });
 
-            var pastes = {"copy": 1, "cut": 1, "paste": 1};
+            if (0) {
+                var defaultContextMenuFn;
+
+                // add default context menu
+                editor.docReady(defaultContextMenuFn = function () {
+                    editor.detach('docReady', defaultContextMenuFn);
+                    var firstFn;
+                    editor.get('document').on('contextmenu', firstFn = function (e) {
+                        e.preventDefault();
+                        editor.get('document').detach('contextmenu', firstFn);
+                        S.use('editor/plugin/contextmenu', function () {
+                            editor.addContextMenu('default', function () {
+                                return 1;
+                            }, {
+                                event: e
+                            });
+                        });
+                    });
+                });
+            }
+
+
+            var clipboardCommands = {
+                "copy": 1,
+                "cut": 1,
+                "paste": 1
+            };
+            var clipboardCommandsList = ["copy", "cut", "paste"];
 
             /**
              * 给所有右键都加入复制粘贴
@@ -272,33 +371,81 @@ KISSY.add("editor/core/clipboard", function (S, Editor, KERange, KES) {
             editor.on("contextmenu", function (ev) {
                 var contextmenu = ev.contextmenu;
 
-                if (contextmenu.__copy_fix) {
-                    return;
-                }
+                if (!contextmenu.__copy_fix) {
 
-                contextmenu.__copy_fix = 1;
+                    contextmenu.__copy_fix = 1;
+                    var i = 0;
+                    for (; i < clipboardCommandsList.length; i++) {
+                        contextmenu.addChild({
+                            content: lang[clipboardCommandsList[i]],
+                            value: clipboardCommandsList[i]
+                        });
+                    }
 
-                for (var i in pastes) {
-                    contextmenu.addChild({
-                        content: lang[i],
-                        value: i
+                    contextmenu.on('click', function (e) {
+                        var value = e.target.get("value");
+                        if (clipboardCommands[value]) {
+                            contextmenu.hide();
+                            // 给 ie 一点 hide() 中的事件触发 handler 运行机会，
+                            // 原编辑器获得焦点后再进行下步操作
+                            setTimeout(function () {
+                                editor.execCommand('save');
+                                editor.execCommand(value);
+                                setTimeout(function () {
+                                    editor.execCommand('save');
+                                }, 10);
+                            }, 30);
+                        }
                     });
                 }
 
-                contextmenu.on('click', function (e) {
-                    var value = e.target.get("value");
-                    if (pastes[value]) {
-                        this.hide();
-                        // 给 ie 一点 hide() 中的事件触发 handler 运行机会，
-                        // 原编辑器获得焦点后再进行下步操作
-                        setTimeout(function () {
-                            editor.execCommand(value);
-                        }, 30);
+                var menuChildren = contextmenu.get('children');
+
+                // must query paste first ...
+                for (i = menuChildren.length - 1; i--; i >= 0) {
+                    var c = menuChildren[i];
+                    var value;
+                    if (c.get) {
+                        value = c.get("value");
+                    } else {
+                        value = c.value;
                     }
-                });
+                    var v;
+                    if (clipboardCommands[value]) {
+                        v = !currentPaste._stateFromNamedCommand(value);
+                        if (c.set) {
+                            c.set('disabled', v);
+                        } else {
+                            c.disabled = v;
+                        }
+
+                    }
+                }
             });
         }
     };
 }, {
     requires: ['./base', './range', './selection']
 });
+/**
+ * yiminghe@gmail.com note:
+ *
+ * 1. chrome/ff 只会触发 paste 且不可阻止默认黏贴行为(ff 可以)
+ * ie 会触发 beforepaste 以及 paste 事件，paste 事件可以阻止默认黏贴行为
+ * 如果想改变 paste 的容器，ie 下只能用 beforepaste
+ *
+ * 2. ie 下 bug: queryCommandEnable 以及 contextmenu 会触发 beforepaste 事件
+ *
+ * 3. ie 下 menubar 的原生编辑菜单打开也会触发 beforepaste 事件，点击 paste 命令不会触发 beforepaste 命令，
+ * 而会直接触发 paste 命令
+ *
+ * ie 黏贴的四个方式以及 hack：
+ * 1. 右键菜单  => 原生可以同 menubar 处理，需要在 contextmenu 打开时不处理 beforepaste 事件。
+ *    模拟 fire beforepaste and exeCommand
+ * 2. menubar => 在 paste 处理事件中处理，禁用默认黏贴行为, fire beforepaste and exeCommand
+ * 3. ctrl v => 系统处理（fire beforepaste and exeCommand）
+ *
+ * 其他浏览器：
+ * 1.  右键菜单  => 原生会走系统处理(fire beforepaste and exeCommand)，模拟安全因素不可用（fire beforepaste and exeCommand）
+ * 2.
+ */

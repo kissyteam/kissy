@@ -1,13 +1,14 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 17 00:16
+build time: May 20 22:59
 */
 /**
  * custom dialog for kissy editor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/dialog", function (S, Editor, Overlay, focusFix, ConstrainPlugin, DragPlugin) {
+KISSY.add("editor/plugin/dialog", function (S, Editor, Overlay,
+                                            focusFix, ConstrainPlugin, DragPlugin) {
 
     var Dialog4E = Overlay.Dialog.extend({
 
@@ -25,6 +26,7 @@ KISSY.add("editor/plugin/dialog", function (S, Editor, Overlay, focusFix, Constr
         bindUI: function () {
             focusFix.init(this);
         },
+
         show: function () {
             var self = this;
             //在 show 之前调用
@@ -37,6 +39,7 @@ KISSY.add("editor/plugin/dialog", function (S, Editor, Overlay, focusFix, Constr
             }
             Dialog4E.superclass.show.call(self);
         }
+
     }, {
         ATTRS: {
             prefixCls: {

@@ -9,6 +9,6 @@ KISSY.add("button", function (S, Button, Render) {
 }, {
     requires:[
         'button/base',
-        'button/buttonRender'
+        'button/render'
     ]
 });

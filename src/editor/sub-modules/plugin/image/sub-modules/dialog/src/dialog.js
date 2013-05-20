@@ -39,7 +39,6 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Dialog4E, Tabs,
         return null;
     }
 
-
     function ImageDialog(editor, config) {
         var self = this;
         self.editor = editor;
@@ -427,7 +426,8 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Dialog4E, Tabs,
                 link = findAWithImg(selectedEl);
             } else {
                 var editor = self.editor;
-                var inElement = editor.getSelection().getCommonAncestor();
+                var editorSelection = editor.getSelection();
+                var inElement = editorSelection && editorSelection.getCommonAncestor();
                 if (inElement) {
                     link = findAWithImg(inElement);
                 }

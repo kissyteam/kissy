@@ -465,7 +465,8 @@ KISSY.add('editor/core', function (S, Editor, Utils, focusManager, Styles, zInde
              * Make current editor has focus
              */
             focus: function () {
-                var self = this, win = self.get('window');
+                var self = this,
+                    win = self.get('window');
                 // 刚开始就配置 mode 为 sourcecode
                 if (!win) {
                     return;
