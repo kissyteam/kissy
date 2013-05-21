@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 20 22:58
+build time: May 21 14:11
 */
 /**
 ks-editor-post ，编辑器内容外部包装容器
@@ -325,14 +325,10 @@ LoVe F HAte
 
 .ks-editor-button {
     display: inline-block;
-    *display: inline;
-    *zoom:1;
     margin: 2px;
     border-radius: 2px;
     padding: 3px 18px;
     border: 1px solid rgb(193, 200, 209);
-    _padding-bottom: 2px;
-    *padding-bottom: 2px;
     color: black;
     vertical-align: middle;
     white-space: nowrap;
@@ -343,6 +339,13 @@ LoVe F HAte
   background-position: left -0px;
 }
 
+.ks-ie6 .ks-editor-button,
+.ks-ie7 .ks-editor-button {
+    display: inline;
+    zoom: 1;
+    padding-bottom: 2px;
+}
+
 .ks-editor-tools .ks-editor-button {
     padding: 0;
     box-shadow: none;
@@ -351,10 +354,13 @@ LoVe F HAte
 
 .ks-editor-toolbar-button {
     border: 1px solid transparent;
-    /*透明边框 ie6 不支持 ,_hack*/
-    _border-color: tomato;
-    _filter: chroma(color = tomato);
     /*outline: none;*/
+}
+
+.ks-ie6 .ks-editor-toolbar-button {
+    /*透明边框 ie6 不支持 ,_hack*/
+    border-color: tomato;
+    filter: chroma(color=tomato);
 }
 
 .ks-editor-tools .ks-editor-button-checked {
@@ -380,14 +386,18 @@ LoVe F HAte
 
 .ks-editor-button-disabled {
     opacity: 0.3;
-    /*ie7不支持透明属性*/
-    /*ie8 标准模式也需要，不知为何透明度不能作用下层*/
-    filter: alpha(opacity = 30);
 }
 
 /*ie9 标准模式 filter 形成黑框*/
-.ks-ie9 .ks-editor-button-disabled {
-    filter: none;
+.ks-ie7 .ks-editor-button-disabled,
+.ks-ie8 .ks-editor-button-disabled{
+    /*ie7不支持透明属性*/
+    /*ie8 标准模式也需要，不知为何透明度不能作用下层*/
+    filter: alpha(opacity=30);
+}
+
+.ks-ie6 .ks-editor-button-disabled {
+    filter: chroma(color=tomato) alpha(opacity=30);
 }
 
 /**
