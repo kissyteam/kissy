@@ -100,18 +100,20 @@ KISSY.add('dom/ie/input-selection', function (S, DOM) {
         }
     }
 
-    // range.text will not contain "\r\n" if "\r\n" if "\r\n" is at end of this range
+    // range.text will not contain "\r\n" if "\r\n" is at end of this range
     function getRangeText(elem, range) {
         if (elem.type == "textarea") {
             var ret = range.text,
                 testRange = range.duplicate();
 
-            // consider end \r\n
+            // collapsed
             if (testRange.compareEndPoints('StartToEnd', testRange) == 0) {
                 return ret;
             }
 
             testRange.moveEnd('character', -1);
+
+            // consider end \r\n
             if (testRange.text == ret) {
                 ret += '\r\n';
             }
