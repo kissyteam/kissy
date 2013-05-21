@@ -33,6 +33,7 @@
 
         /**
          * Tag for package.
+         * tag can not contain ".", eg: Math.random() !
          * @return {String}
          */
         getTag: function () {
@@ -213,7 +214,8 @@
         },
 
         /**
-         * Get the tag of current module
+         * Get the tag of current module.
+         * tag can not contain ".", eg: Math.random() !
          * @return {String}
          */
         getTag: function () {
