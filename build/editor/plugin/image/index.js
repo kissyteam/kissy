@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.30
 MIT Licensed
-build time: May 6 18:23
+build time: May 21 14:19
 */
 /**
  * insert image for kissy editor
