@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 21 22:52
+build time: May 21 23:51
 */
 /**
  * allow body to drag
@@ -287,7 +287,6 @@ KISSY.add('scrollview/drag', function (S, ScrollViewBase, DD, Event) {
             },
 
             _onDragEnd: function (e) {
-
                 var self = this;
                 var count = 0;
                 var _dragStartMousePos = self._dragStartMousePos;

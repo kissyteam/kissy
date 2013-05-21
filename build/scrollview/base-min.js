@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 21 22:52
+build time: May 21 23:51
 */
 KISSY.add("scrollview/base",function(f,o,q,p,n,j){var e=e,r=f.all,f=f.Features.isTouchSupported(),l=j.KeyCodes;return q.Controller.extend({bindUI:function(){var a=this.get("el");a.on("mousewheel",this._onMouseWheel,this);a.on("scroll",this._onElScroll,this)},syncUI:function(){var a=this.get("el")[0],c=this.get("contentEl"),b=c[0],d=Math.max(a.scrollHeight,b.scrollHeight),g=Math.max(a.scrollWidth,b.scrollWidth),b=a.clientHeight,e,i=a.clientWidth;this.scrollHeight=d;this.scrollWidth=g;this.clientHeight=
 b;this.clientWidth=i;var h=c.offset();e=this._allowScroll={};d>b&&(e.top=1);g>i&&(e.left=1);this.minScroll={left:0,top:0};var f,j;this.maxScroll={left:f=g-i,top:j=d-b};a=r(a.ownerDocument);this.scrollStep={top:Math.max(0.7*b*b/a.height(),20),left:Math.max(0.7*i*i/a.width(),20)};b=this.get("snap");a=this.get("scrollLeft");d=this.get("scrollTop");if(b){var c=this._pages="string"==typeof b?c.all(b):c.children(),b=this.get("pageIndex"),m=this._pagesXY=[];c.each(function(a,b){var c=a.offset(),d=c.left-

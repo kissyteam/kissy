@@ -282,7 +282,6 @@ KISSY.add('scrollview/drag', function (S, ScrollViewBase, DD, Event) {
             },
 
             _onDragEnd: function (e) {
-
                 var self = this;
                 var count = 0;
                 var _dragStartMousePos = self._dragStartMousePos;

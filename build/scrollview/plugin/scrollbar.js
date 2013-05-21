@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 21 22:52
+build time: May 21 23:51
 */
 /**
  * scrollbar for KISSY scrollview
@@ -13,11 +13,12 @@ KISSY.add('scrollview/plugin/scrollbar/control', function (S, Event, DD, Compone
 
     var SCROLLBAR_EVENT_NS = '.ks-scrollbar';
 
+    var Gesture = Event.Gesture;
+
     return Component.Controller.extend({
 
         bindUI: function () {
             var self = this,
-                dd,
                 autoHide = self.get('autoHide'),
                 scrollview = self.get('scrollview');
             self._xAxis = self.get('axis') == 'x';
@@ -27,18 +28,16 @@ KISSY.add('scrollview/plugin/scrollbar/control', function (S, Event, DD, Compone
                 };
             } else {
                 S.each([self.get('downBtn'), self.get('upBtn')], function (b) {
-                    b.on('mousedown', self._onUpDownBtnMouseDown, self)
-                        .on('mouseup', self._onUpDownBtnMouseUp, self);
+                    b.on(Gesture.start, self._onUpDownBtnMouseDown, self)
+                        .on(Gesture.end, self._onUpDownBtnMouseUp, self);
                 });
-                self.get('trackEl').on(Event.Gesture.start,
-                    self._onTrackElMouseDown, self);
-                dd = self.dd = new DD.Draggable({
+                self.get('trackEl').on(Gesture.start, self._onTrackElMouseDown, self);
+                self.dd = new DD.Draggable({
                     node: self.get('dragEl'),
                     groups: false,
                     // allow nested scrollview
                     halt: true
-                });
-                dd.on('drag', self._onDrag, self)
+                }).on('drag', self._onDrag, self)
                     .on('dragstart', self._onDragStart, self);
             }
             scrollview
@@ -149,19 +148,26 @@ KISSY.add('scrollview/plugin/scrollbar/control', function (S, Event, DD, Compone
         },
 
         _onTrackElMouseDown: function (e) {
-            if (this.get('disabled')) {
+            var self = this;
+            if (self.get('disabled')) {
                 return;
             }
-            var self = this,
-                xAxis = self._xAxis,
+            var target = e.target;
+            var dragEl = self.get('dragEl');
+            if (dragEl[0] == target || dragEl.contains(target)) {
+                return;
+            }
+            var xAxis = self._xAxis,
                 leftTop = xAxis ? 'left' : 'top',
                 pageXY = xAxis ? 'pageX' : 'pageY',
                 trackEl = self.get('trackEl'),
-                dragEl = self.get('dragEl'),
+                positionObj = e.type.indexOf('touch') != -1 ? e.touches[0] : e,
                 scrollview = self.scrollview,
                 per = Math.max(0,
                     // align mouse with bar center
-                    (e[pageXY] - trackEl.offset()[leftTop] - self.barSize / 2) / self._trackElSize),
+                    (positionObj[pageXY] -
+                        trackEl.offset()[leftTop] -
+                        self.barSize / 2) / self._trackElSize),
                 v = per * self._scrollLength;
             if (xAxis) {
                 scrollview.scrollTo(v);
@@ -236,10 +242,6 @@ KISSY.add('scrollview/plugin/scrollbar/control', function (S, Event, DD, Compone
 
     }, {
         ATTRS: {
-
-            allowTextSelection: {
-                value: true
-            },
 
             minLength: {
                 value: MIN_BAR_LENGTH
