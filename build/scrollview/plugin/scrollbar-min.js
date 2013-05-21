@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 17 01:31
+build time: May 21 22:52
 */
 KISSY.add("scrollview/plugin/scrollbar/control",function(d,j,i,g,e){return g.Controller.extend({bindUI:function(){var a=this,b;b=a.get("autoHide");var c=a.get("scrollview");a._xAxis="x"==a.get("axis");b?a._hideFn=function(){a.hide()}:(d.each([a.get("downBtn"),a.get("upBtn")],function(b){b.on("mousedown",a._onUpDownBtnMouseDown,a).on("mouseup",a._onUpDownBtnMouseUp,a)}),a.get("trackEl").on(j.Gesture.start,a._onTrackElMouseDown,a),b=a.dd=new i.Draggable({node:a.get("dragEl"),groups:!1,halt:!0}),b.on("drag",
 a._onDrag,a).on("dragstart",a._onDragStart,a));c.on("afterScroll"+(a._xAxis?"Left":"Top")+"Change.ks-scrollbar",a.afterScrollChange,a).on("scrollEnd.ks-scrollbar",a._onScrollEnd,a).on("afterDisabledChange",a._onScrollViewDisabled,a)},syncUI:function(){var a=this.get("scrollview"),b=this.get("trackEl");this.get("dragEl");var c=this.get("rendered");this.scrollview=a;if(this._xAxis){if(c&&!a.isAxisEnabled("x")){this.hide();return}this._scrollLength=a.scrollWidth;b=this._trackElSize=b.width();a=a.clientWidth/

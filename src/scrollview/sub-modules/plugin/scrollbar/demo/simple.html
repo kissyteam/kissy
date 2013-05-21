@@ -67,49 +67,60 @@
 
     KISSY.use('scrollview,scrollview/plugin/scrollbar', function (S, ScrollView, ScrollbarPlugin) {
         S.ready(function () {
-            var content = '';
-            for (var i = 0; i < 23; i++) {
-                content += '<p class="row">' + i + ': ' + new Array(10).join(' long ') + '</p>';
+
+            if (1) {
+                var content = '';
+                for (var i = 0; i < 23; i++) {
+                    content += '<p class="row">' + i + ': ' + new Array(10).join(' long ') + '</p>';
+                }
+
+                S.all('#native').html(content);
+
+                window.scrollview = new ScrollView({
+                    width: 320,
+                    height: 219,
+                    plugins: [new ScrollbarPlugin({
+                        autoHideX: true,
+                        autoHideY: false
+                    })],
+                    content: content
+                }).render();
+
+                S.all('#destroy').on('click', function () {
+                    scrollview.destroy();
+                    S.all('#destroy').attr('disabled', true);
+                });
+
+                S.all('#disable').on('click', function () {
+                    scrollview.set('disabled', true);
+                });
+
+                S.all('#enable').on('click', function () {
+                    scrollview.set('disabled', false);
+                });
+
+                S.all('<div style="height:100px"></div>').appendTo('body');
+
+
+                new ScrollView({
+                    width: 320,
+                    scrollLeft: 50,
+                    scrollTop: 400,
+                    height: 219,
+                    plugins: [new ScrollbarPlugin({
+                        autoHideX: true,
+                        autoHideY: false
+                    })],
+                    content: content
+                }).render();
+
+                S.all('<h2>un-scrollable test</h2>').appendTo('body');
             }
-
-            S.all('#native').html(content);
-
-            window.scrollview = new ScrollView({
-                width: 320,
-                height: 219,
-                plugins: [new ScrollbarPlugin({
-                    autoHideX: true,
-                    autoHideY: false
-                })],
-                content: content
-            }).render();
-
-            S.all('#destroy').on('click', function () {
-                scrollview.destroy();
-                S.all('#destroy').attr('disabled', true);
-            });
-
-            S.all('#disable').on('click', function () {
-                scrollview.set('disabled', true);
-            });
-
-            S.all('#enable').on('click', function () {
-                scrollview.set('disabled', false);
-            });
-
-            S.all('<div style="height:100px"></div>').appendTo('body');
-
 
             new ScrollView({
                 width: 320,
-                scrollLeft:50,
-                scrollTop:400,
                 height: 219,
-                plugins: [new ScrollbarPlugin({
-                    autoHideX: true,
-                    autoHideY: false
-                })],
-                content: content
+                content: '<p>test</p>'
             }).render();
 
             S.all('<div style="height:1000px"></div>').appendTo('body');

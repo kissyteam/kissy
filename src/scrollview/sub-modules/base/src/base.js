@@ -278,17 +278,16 @@ KISSY.add('scrollview/base', function (S, DOM, Component, Extension, Render, Eve
 
         scrollTo: function (left, top, animCfg) {
             var self = this,
-                allowScroll = self._allowScroll,
                 setLeft,
                 setTop,
                 maxScroll = self.maxScroll,
                 minScroll = self.minScroll;
-            self.stopAnimation();
-            if (left != undefined && allowScroll.left) {
+
+            if (left != undefined) {
                 left = constrain(left, maxScroll.left, minScroll.left);
                 setLeft = 1;
             }
-            if (top != undefined && allowScroll.top) {
+            if (top != undefined) {
                 top = constrain(top, maxScroll.top, minScroll.top);
                 setTop = 1;
             }
@@ -313,7 +312,7 @@ KISSY.add('scrollview/base', function (S, DOM, Component, Extension, Render, Eve
                             }
                         }
                     };
-                contentEl.stop(0, 1).animate(anim, animCfg);
+                contentEl.animate(anim, animCfg);
             } else {
                 if (setLeft) {
                     self.set('scrollLeft', left);
