@@ -855,8 +855,7 @@ ks-editor-toolbar-padding {
 }
 
 .ks-editor-toolbar-backColor {
-    position: relative;
-    left: -1px;
+    margin-left: 3px;
 }
 
 .ks-editor-toolbar-foreColor {
