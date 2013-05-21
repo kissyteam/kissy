@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 21 00:44
+build time: May 21 10:33
 */
 /**
  * Set up editor constructor
@@ -230,7 +230,9 @@ KISSY.add("editor/core/clipboard", function (S, Editor, KERange, KES) {
                 return;
             }
             // ctrl+v
-            if (e.ctrlKey && e.keyCode == 86) {
+            if (e.ctrlKey && e.keyCode == 86 ||
+                // shift+insert
+              e.shiftKey && e.keyCode == 45 ) {
                 self._preventPasteEvent();
             }
         },

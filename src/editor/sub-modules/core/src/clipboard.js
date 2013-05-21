@@ -80,7 +80,9 @@ KISSY.add("editor/core/clipboard", function (S, Editor, KERange, KES) {
                 return;
             }
             // ctrl+v
-            if (e.ctrlKey && e.keyCode == 86) {
+            if (e.ctrlKey && e.keyCode == 86 ||
+                // shift+insert
+              e.shiftKey && e.keyCode == 45 ) {
                 self._preventPasteEvent();
             }
         },
