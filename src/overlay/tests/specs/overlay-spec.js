@@ -23,7 +23,7 @@ KISSY.use("u" +
 
             beforeEach(function () {
                 var render = $('<div class="popup ks-overlay" style="width:400px">' +
-                    '<div class="ks-content">pre-render</div>' +
+                    '<div class="ks-overlay-content">pre-render</div>' +
                     '</div>').prependTo('body');
 
                 o = new Overlay({

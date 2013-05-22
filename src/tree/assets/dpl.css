@@ -12,7 +12,7 @@
 *
 * @author yiminghe@gmail.com
 */
-.ks-tree-hide-root {
+.ks-tree-node-hide-root {
   display: none;
 }
 .ks-tree-node-focused {
@@ -24,15 +24,18 @@
   line-height: 16px;
   height: 16px;
 }
-.ks-tree-lchildren {
+.ks-tree-node-lchildren {
   padding-left: 19px;
 }
-.ks-tree-children {
+.ks-tree-node-children {
   padding-left: 19px;
   background-repeat: repeat-y;
   background-image: url("http://img03.taobaocdn.com/tps/i3/T1YUvFXoXcXXbVJQDa-19-16.png");
 }
-.ks-tree-expand-icon-plus {
+.ks-tree-node-children-collapsed {
+    display: none;
+}
+.ks-tree-node-expand-icon-plus {
   width: 19px;
   height: 16px;
   vertical-align: middle;
@@ -42,7 +45,7 @@
   *zoom: 1;
   background-position: 0 0;
 }
-.ks-tree-expand-icon-minus {
+.ks-tree-node-expand-icon-minus {
   width: 19px;
   height: 16px;
   vertical-align: middle;
@@ -52,7 +55,7 @@
   *zoom: 1;
   background-position: -222px 0;
 }
-.ks-tree-expand-icon-tplus {
+.ks-tree-node-expand-icon-tplus {
   width: 19px;
   height: 16px;
   vertical-align: middle;
@@ -62,7 +65,7 @@
   *zoom: 1;
   background-position: -246px 0;
 }
-.ks-tree-expand-icon-tminus {
+.ks-tree-node-expand-icon-tminus {
   width: 19px;
   height: 16px;
   vertical-align: middle;
@@ -72,7 +75,7 @@
   *zoom: 1;
   background-position: -270px 0;
 }
-.ks-tree-expand-icon-lplus {
+.ks-tree-node-expand-icon-lplus {
   width: 19px;
   height: 16px;
   vertical-align: middle;
@@ -82,7 +85,7 @@
   *zoom: 1;
   background-position: -294px 0;
 }
-.ks-tree-expand-icon-lminus {
+.ks-tree-node-expand-icon-lminus {
   width: 19px;
   height: 16px;
   vertical-align: middle;
@@ -92,7 +95,7 @@
   *zoom: 1;
   background-position: -318px 0;
 }
-.ks-tree-expand-icon-t {
+.ks-tree-node-expand-icon-t {
   width: 19px;
   height: 16px;
   vertical-align: middle;
@@ -102,7 +105,7 @@
   *zoom: 1;
   background-position: -342px 0;
 }
-.ks-tree-expand-icon-l {
+.ks-tree-node-expand-icon-l {
   width: 19px;
   height: 16px;
   vertical-align: middle;
@@ -112,7 +115,7 @@
   *zoom: 1;
   background-position: -366px 0;
 }
-.ks-tree-collapsed-folder-icon {
+.ks-tree-node-collapsed-folder-icon {
   width: 19px;
   height: 16px;
   vertical-align: middle;
@@ -123,7 +126,7 @@
   width: 16px;
   background-position: -198px -24px;
 }
-.ks-tree-expanded-folder-icon {
+.ks-tree-node-expanded-folder-icon {
   width: 19px;
   height: 16px;
   vertical-align: middle;
@@ -134,7 +137,7 @@
   width: 16px;
   background-position: -222px -24px;
 }
-.ks-tree-file-icon {
+.ks-tree-node-file-icon {
   width: 19px;
   height: 16px;
   vertical-align: middle;

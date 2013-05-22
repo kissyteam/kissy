@@ -29,10 +29,6 @@ menu style for kissy editor ,include contextmenu and select menu
     visibility: hidden;
 }
 
-.ks-editor-popupmenu-shown {
-    visibility: visible;
-}
-
 .ks-editor-menuitem {
     margin: 0;
     border-width: 0;

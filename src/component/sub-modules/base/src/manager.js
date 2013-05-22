@@ -48,18 +48,6 @@ KISSY.add("component/base/manager", function (S) {
         }
     }
 
-
-    function getCssClassWithPrefix(cls) {
-        var cs = S.trim(cls).split(/\s+/);
-        for (var i = 0; i < cs.length; i++) {
-            if (cs[i]) {
-                cs[i] = this.get("prefixCls") + cs[i];
-            }
-        }
-        return cs.join(" ");
-    }
-
-
     var componentInstances = {};
 
     /**
@@ -99,13 +87,6 @@ KISSY.add("component/base/manager", function (S) {
         },
 
         /**
-         * complete css by prefix prefixCls
-         * @return {String}
-         * @method
-         * @param {String} css
-         */
-        getCssClassWithPrefix:getCssClassWithPrefix,
-        /**
          * Get css class name for this component constructor.
          * @param {Function} constructor Component's constructor.
          * @return {String}
@@ -127,8 +108,6 @@ KISSY.add("component/base/manager", function (S) {
          */
         setConstructorByXClass:setConstructorByXClass
     };
-
-    Manager.getCssClassWithPrefix = getCssClassWithPrefix;
 
     return Manager;
 });

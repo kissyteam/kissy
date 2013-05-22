@@ -1,10 +1,8 @@
 <div id="ks-content{{id}}"
-        class="
-        {{prefixCls}}content
-        {{getCssClassWithState "content"}}
-        ">
+        class="{{getBaseCssClasses "content"}}">
 
-    <div class="{{prefixCls}}stdmod-header {{prefixCls}}dialog-header"
+    <div class="{{getBaseCssClasses "header"}}"
+
          style="
 {{#each headerStyle}} 
  {{xkey}}:{{.}};  
@@ -12,7 +10,8 @@
 "
          id="ks-stdmod-header{{id}}">{{{headerContent}}}</div>
 
-    <div class="{{prefixCls}}stdmod-body {{prefixCls}}dialog-body"
+    <div class="{{getBaseCssClasses "body"}}"
+
          style="
 {{#each bodyStyle}} 
  {{xkey}}:{{.}};  
@@ -20,7 +19,8 @@
 "
          id="ks-stdmod-body{{id}}">{{{bodyContent}}}</div>
 
-    <div class="{{prefixCls}}stdmod-footer {{prefixCls}}dialog-footer"
+    <div class="{{getBaseCssClasses "footer"}}"
+
          style="
 {{#each footerStyle}} 
  {{xkey}}:{{.}};  

@@ -99,7 +99,7 @@ KISSY.add('editor/core', function (S, Editor, Utils, focusManager, Styles, zInde
             createDom: function () {
                 var self = this,
                     wrap,
-                    prefixCls = self.get('prefixCls'),
+                    prefixCls = self.prefixCls,
                     textarea = self.get('textarea'),
                     editorEl;
 
@@ -168,7 +168,7 @@ KISSY.add('editor/core', function (S, Editor, Utils, focusManager, Styles, zInde
             bindUI: function () {
                 var self = this,
                     form,
-                    prefixCls = self.get('prefixCls'),
+                    prefixCls = self.prefixCls,
                     textarea = self.get('textarea');
 
                 if (self.get('attachForm') && (form = textarea[0].form)) {

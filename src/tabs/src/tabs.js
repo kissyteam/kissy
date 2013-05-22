@@ -17,7 +17,7 @@ KISSY.add("tabs", function (S, Component, Bar, Body, Tab, Panel, Render) {
             var self = this,
                 selected,
                 items,
-                prefixCls = self.get('prefixCls'),
+                prefixCls = self.prefixCls,
                 tabItem,
                 panelItem,
                 bar = {
@@ -279,7 +279,7 @@ KISSY.add("tabs", function (S, Component, Bar, Body, Tab, Panel, Render) {
          */
         decorateInternal: function (el) {
             var self = this,
-                prefixCls = self.get('prefixCls'),
+                prefixCls = self.prefixCls,
                 changeType = self.get('changeType'),
                 bar = el.children("." + prefixCls + "tabs-bar"),
                 body = el.children("." + prefixCls + "tabs-body");
@@ -375,7 +375,7 @@ KISSY.add("tabs", function (S, Component, Bar, Body, Tab, Panel, Render) {
                 valueFn: function () {
                     return Component.create({
                         xclass: 'tabs-bar',
-                        prefixCls: this.get('prefixCls')
+                        prefixCls: this.prefixCls
                     });
                 }
             },
@@ -389,7 +389,7 @@ KISSY.add("tabs", function (S, Component, Bar, Body, Tab, Panel, Render) {
                 valueFn: function () {
                     return Component.create({
                         xclass: 'tabs-body',
-                        prefixCls: this.get('prefixCls')
+                        prefixCls: this.prefixCls
                     });
                 }
             },

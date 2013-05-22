@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 20 22:59
+build time: May 22 23:40
 */
 /**
  * custom dialog for kissy editor
@@ -14,7 +14,7 @@ KISSY.add("editor/plugin/dialog", function (S, Editor, Overlay,
 
         initializer: function () {
             this.plug(new DragPlugin({
-                handlers: ['.ks-editor-stdmod-header'],
+                handlers: ['.ks-editor-dialog-header'],
                 plugins: [
                     new ConstrainPlugin({
                         constrain: window

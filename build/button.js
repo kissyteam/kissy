@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 15 20:33
+build time: May 22 23:37
 */
 /**
  * @ignore
@@ -132,7 +132,7 @@ KISSY.add("button/base", function (S, Event, Component, ButtonRender) {
     return Button;
 
 }, {
-    requires: ['event', 'component/base', './buttonRender']
+    requires: ['event', 'component/base', './render']
 });/**
  * @ignore
  * simulated button for kissy , inspired by goog button
@@ -144,14 +144,14 @@ KISSY.add("button", function (S, Button, Render) {
 }, {
     requires:[
         'button/base',
-        'button/buttonRender'
+        'button/render'
     ]
 });/**
  * @ignore
  * abstract view for button
  * @author yiminghe@gmail.com
  */
-KISSY.add("button/buttonRender", function (S, Component) {
+KISSY.add("button/render", function (S, Component) {
     // http://www.w3.org/TR/wai-aria-practices/
     return Component.Render.extend({
         initializer: function () {
@@ -164,16 +164,16 @@ KISSY.add("button/buttonRender", function (S, Component) {
                 'aria-describedby': renderData.describedby
             });
             if (renderData.checked) {
-                this.get('elCls').push(self.getCssClassWithState("checked"));
+                this.get('elCls').push(self.getBaseCssClasses("checked"));
             }
         },
         _onSetChecked: function (v) {
             var self = this,
                 el = self.get("el"),
-                cls = self.getCssClassWithState("checked");
+                cls = self.getBaseCssClasses("checked");
             el[v ? 'addClass' : 'removeClass'](cls);
         },
-        _onSetTooltip: function (title) {
+        '_onSetTooltip': function (title) {
             this.get("el").attr("title", title);
         },
         '_onSetDescribedby': function (describedby) {

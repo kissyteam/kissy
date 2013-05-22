@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 17 00:21
+build time: May 22 23:45
 */
 /**
  * video dialog
@@ -81,7 +81,7 @@ KISSY.add("editor/plugin/video/dialog", function (S, Editor, FlashDialog, MenuBu
         _config: function () {
             var self = this,
                 editor = self.editor,
-                prefixCls = editor.get('prefixCls'),
+                prefixCls = editor.prefixCls,
                 cfg = self.config;
             self._cls = CLS_VIDEO;
             self._type = TYPE_VIDEO;
@@ -99,7 +99,7 @@ KISSY.add("editor/plugin/video/dialog", function (S, Editor, FlashDialog, MenuBu
             var self = this,
                 d = self.dialog,
                 editor = self.editor,
-                prefixCls = editor.get('prefixCls'),
+                prefixCls = editor.prefixCls,
                 el = d.get("el");
             self.dUrl = el.one("." + prefixCls + "editor-video-url");
             self.dAlign = MenuButton.Select.decorate(el.one("." + prefixCls + "editor-video-align"), {

@@ -12,14 +12,7 @@
         display: none;
     }
 
-    .ks-overlay-shown {
-        visibility: visible;
-    }
-
-    .ks-overlay-mask-shown{
-        display: block;
-    }
-
  [!] srcNode 时 html 结构必须包含 content 节点
  [!] content/bodyContent/ 等属性值只允许字符串类型
- [!] ks-contentbox 样式名更改为 ks-content
+ [!] ks-contentbox 样式名更改为 ks-overlay-content ks-dialog-content
+ [!] 去除样式 ks-ext-position，ks-ext-close 为 ks-dialog-close

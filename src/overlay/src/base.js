@@ -51,9 +51,6 @@ KISSY.add("overlay/base", function (S, Component, Extension, Loading, Mask, Over
         }
     }, {
         ATTRS: {
-            decorateChildCls: {
-                value: 'content'
-            },
 
             contentEl: {
                 view: 1

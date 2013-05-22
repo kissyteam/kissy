@@ -4,19 +4,18 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add("tabs/render", function (S, Component) {
-    var CLS = "tabs-top tabs-bottom tabs-left tabs-right";
+    var CLS = "top bottom left right";
     return Component.Render.extend({
 
         initializer: function () {
-            this.get('elCls').push(this.getCssClassWithPrefix("tabs-" +
-                this.get('barOrientation')))
+            this.get('elCls').push(this.getBaseCssClass(this.get('barOrientation')))
         },
 
         '_onSetBarOrientation': function (v) {
             var self = this,
                 el = self.get("el");
-            el.removeClass(self.getCssClassWithPrefix(CLS))
-                .addClass(self.getCssClassWithPrefix("tabs-" + v));
+            el.removeClass(self.getBaseCssClass(CLS))
+                .addClass(self.getBaseCssClass(v));
         }
 
     }, {
@@ -28,7 +27,7 @@ KISSY.add("tabs/render", function (S, Component) {
         },
         HTML_PARSER: {
             barOrientation: function (el) {
-                var orientation = el[0].className.match(/tabs-(top|bottom|left|right)\b/);
+                var orientation = el[0].className.match(/(top|bottom|left|right)\b/);
                 return orientation && orientation[1] || "top";
             }
         }

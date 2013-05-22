@@ -18,8 +18,7 @@ KISSY.add("overlay/extension/mask-render", function (S, Node) {
     }
 
     function initMask(self) {
-        var maskCls = self.getCssClassWithPrefix('ext-mask')+' '+
-                self.getCssClassWithState('mask'),
+        var maskCls = self.getBaseCssClasses('mask'),
             mask = $("<div " +
                 " style='width:" + docWidth() + ";" +
                 "left:0;" +
@@ -77,13 +76,12 @@ KISSY.add("overlay/extension/mask-render", function (S, Node) {
 
         ksSetMaskVisible: function (shown) {
             var self = this,
-                shownCls = self.getCssClassWithState('mask-shown'),
                 maskNode = self.get('maskNode'),
-                hiddenCls = self.getCssClassWithState('mask-hidden');
+                hiddenCls = self.getBaseCssClasses('mask-hidden');
             if (shown) {
-                maskNode.removeClass(hiddenCls).addClass(shownCls);
+                maskNode.removeClass(hiddenCls);
             } else {
-                maskNode.removeClass(shownCls).addClass(hiddenCls);
+                maskNode.addClass(hiddenCls);
             }
         },
 

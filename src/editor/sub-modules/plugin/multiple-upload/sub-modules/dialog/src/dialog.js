@@ -53,7 +53,7 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor, DragPlugi
         _prepareShow: function () {
             var self = this,
                 editor = self.editor,
-                prefixCls = editor.get('prefixCls'),
+                prefixCls = editor.prefixCls,
                 uploadCfg = self.config;
 
             self.addRes(function () {
@@ -70,7 +70,7 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor, DragPlugi
                 mask: false,
                 plugins: [
                     new DragPlugin({
-                        handlers: ['.ks-editor-stdmod-header']
+                        handlers: ['.ks-editor-dialog-header']
                     })
                 ],
                 focus4e: false,
@@ -434,7 +434,7 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor, DragPlugi
         },
         _uploadError: function (ev) {
             var self = this,
-                prefixCls = self.editor.get('prefixCls'),
+                prefixCls = self.editor.prefixCls,
                 progressBars = self.progressBars,
                 uploader = self.uploader,
                 id = ev.id || (ev['file'] && ev['file'].id);
@@ -475,13 +475,13 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor, DragPlugi
             var self = this,
                 id = ev.id || (ev['file'] && ev['file'].id);
             var tr = this._getFileTr(id);
-            var prefixCls = self.editor.get('prefixCls');
+            var prefixCls = self.editor.prefixCls;
             tr[0].className = replacePrefix("{prefixCls}editor-upload-uploading", prefixCls);
         },
         _onUploadCompleteData: function (ev) {
             var self = this,
                 uploader = self.uploader,
-                prefixCls = self.editor.get('prefixCls'),
+                prefixCls = self.editor.prefixCls,
                 data = S.trim(ev.data).replace(/\r|\n/g, ""),
                 id = ev['file'].id;
             //S.log(data);
@@ -529,7 +529,7 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor, DragPlugi
         },
         ddisable: function () {
             var self = this;
-            var prefixCls = self.editor.get('prefixCls');
+            var prefixCls = self.editor.prefixCls;
             self.uploader['lock']();
             self.btn.addClass(replacePrefix("{prefixCls}editor-button-disabled", prefixCls), undefined);
             self.flashPos.offset({
@@ -539,7 +539,7 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor, DragPlugi
         },
         denable: function () {
             var self = this;
-            var prefixCls = self.editor.get('prefixCls');
+            var prefixCls = self.editor.prefixCls;
             self.uploader['unlock']();
             self.btn.removeClass(replacePrefix("{prefixCls}editor-button-disabled", prefixCls), undefined);
             self.flashPos.offset(self.btn.offset());
@@ -549,7 +549,7 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor, DragPlugi
                 list = self._list,
                 seq = 1,
                 trs = list.all("tr");
-            var prefixCls = self.editor.get('prefixCls');
+            var prefixCls = self.editor.prefixCls;
             if (trs.length == 0) {
                 self._listWrap.hide();
             } else {
@@ -589,7 +589,7 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor, DragPlugi
         },
         _tagComplete: function (tr, url) {
             var self = this;
-            var prefixCls = self.editor.get('prefixCls');
+            var prefixCls = self.editor.prefixCls;
             tr.attr("url", url);
             tr[0].className = replacePrefix("{prefixCls}editor-upload-complete", prefixCls);
         },
@@ -598,7 +598,7 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor, DragPlugi
                 list = self._list,
                 trs = list.all("tr"),
                 data = [];
-            var prefixCls = self.editor.get('prefixCls');
+            var prefixCls = self.editor.prefixCls;
             for (var i = 0; i < trs.length; i++) {
                 var tr = $(trs[i]),
                     url = tr.attr("url");
@@ -657,7 +657,7 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor, DragPlugi
                 progressBars = self.progressBars,
                 id = f.fid,
                 row = tbl.insertRow(-1);
-            var prefixCls = self.editor.get('prefixCls');
+            var prefixCls = self.editor.prefixCls;
             DOM.attr(row, "fid", id);
             var cell = row.insertCell(-1);
             DOM.attr(cell, "class", replacePrefix('{prefixCls}editor-upload-seq', prefixCls));
@@ -701,7 +701,7 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor, DragPlugi
                     container: rowNode.one(replacePrefix(".{prefixCls}editor-upload-progress", prefixCls)),
                     width: "100px",
                     height: "15px",
-                    prefixCls: editor.get('prefixCls')
+                    prefixCls: editor.prefixCls
                 });
                 if (f.complete) {
                     progressBars[id].set("progress", 100);
@@ -772,7 +772,7 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor, DragPlugi
                 btn = self.btn,
                 flashPos = self.flashPos,
                 normParams = Editor.Utils.normParams;
-            var prefixCls = self.editor.get('prefixCls');
+            var prefixCls = self.editor.prefixCls;
             if ("ready" != uploader['getReady']()) {
                 self.tipSpan.html("您的浏览器不支持该功能，" +
                     "请升级当前浏览器，" +

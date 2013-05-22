@@ -51,9 +51,9 @@ KISSY.add('component/base/box-render', function (S, Node, XTemplate, BoxTpl) {
                 style.height = pxSetter(height);
             }
 
-            elCls.push(visible ?
-                self.getCssClassWithState('shown') :
-                self.getCssClassWithState('hidden'));
+            if(!visible){
+                elCls.push(self.getBaseCssClasses('hidden'));
+            }
         }
 
     }
@@ -67,13 +67,8 @@ KISSY.add('component/base/box-render', function (S, Node, XTemplate, BoxTpl) {
 
         // 构建时批量生成，不需要执行单个
         elCls: {
-            sync: 0,
-            setter: function (v) {
-                if (typeof v == 'string') {
-                    v = v.split(/\s+/);
-                }
-                return v;
-            }
+            sync: 0
+
         },
 
         elStyle: {
@@ -140,8 +135,8 @@ KISSY.add('component/base/box-render', function (S, Node, XTemplate, BoxTpl) {
 
                 html = new XTemplate(tpl, {
                     commands: {
-                        getCssClassWithState: function (scope, option) {
-                            return self.getCssClassWithState(option.params[0]);
+                        getBaseCssClasses: function (scope, option) {
+                            return self.getBaseCssClasses(option.params[0]);
                         }
                     }
                 }).render(renderData);
@@ -206,13 +201,10 @@ KISSY.add('component/base/box-render', function (S, Node, XTemplate, BoxTpl) {
         _onSetVisible: function (visible) {
             var self = this,
                 el = self.get('el'),
-                shownCls = self.getCssClassWithState('shown'),
-                hiddenCls = self.getCssClassWithState('hidden');
+                hiddenCls = self.getBaseCssClasses('hidden');
             if (visible) {
                 el.removeClass(hiddenCls);
-                el.addClass(shownCls);
             } else {
-                el.removeClass(shownCls);
                 el.addClass(hiddenCls);
             }
         },

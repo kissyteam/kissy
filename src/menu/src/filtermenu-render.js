@@ -5,37 +5,28 @@
  * 2.change menu content element
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/filtermenu-render", function (S, Node, MenuRender, FilterMenuTpl) {
-    var MENU_FILTER = "menu-filter",
-        MENU_FILTER_LABEL = "menu-filter-label",
-        MENU_FILTER_INPUT = "menu-filter-input",
-        MENU_CONTENT = "menu-content";
+KISSY.add("menu/filtermenu-render", function (S, Node, MenuRender, FilterMenuTpl, Extension) {
 
-    return MenuRender.extend({
+    return MenuRender.extend([Extension.ContentRender], {
         initializer: function () {
             var childrenElSelectors = this.get('childrenElSelectors');
             S.mix(childrenElSelectors, {
-                labelEl: '#ks-' + MENU_FILTER_LABEL + '{id}',
-                filterWrap: '#ks-' + MENU_FILTER + '{id}',
-                menuContent: '#ks-' + MENU_CONTENT + '{id}',
-                filterInput: '#ks-' + MENU_FILTER_INPUT + '{id}'
+                placeholderEl: '#ks-filter-menu-placeholder{id}',
+                filterInputWrap: '#ks-filter-menu-input-wrap{id}',
+                filterInput: '#ks-filter-menu-input{id}'
             });
-        },
-
-        getChildrenContainerEl: function () {
-            return this.get("menuContent");
         },
 
         getKeyEventTarget: function () {
             return this.get("filterInput");
         },
 
-        '_onSetLabel': function (v) {
-            this.get("labelEl").html(v);
+        '_onSetPlaceholder': function (v) {
+            this.get("placeholderEl").html(v);
         }
     }, {
         ATTRS: {
-            label: {
+            placeholder: {
                 sync: 0
             },
             contentTpl: {
@@ -44,21 +35,18 @@ KISSY.add("menu/filtermenu-render", function (S, Node, MenuRender, FilterMenuTpl
         },
 
         HTML_PARSER: {
-            labelEl: function (el) {
-                return el.one("." + this.get('prefixCls') + MENU_FILTER_LABEL)
+            placeholderEl: function (el) {
+                return el.one("." + this.getBaseCssClass('placeholder'))
             },
-            'filterWrap': function (el) {
-                return el.one("." + this.get('prefixCls') + MENU_FILTER);
-            },
-            menuContent: function (el) {
-                return el.one("." + this.get('prefixCls') + MENU_CONTENT);
+            'filterInputWrap': function (el) {
+                return el.one("." + this.getBaseCssClass('input-wrap'));
             },
             filterInput: function (el) {
-                return el.one("." + this.get('prefixCls') + MENU_FILTER_INPUT);
+                return el.one("." + this.getBaseCssClass('input'));
             }
         }
     });
 
 }, {
-    requires: ['node', './menu-render', './filtermenu-tpl']
+    requires: ['node', './menu-render', './filtermenu-tpl', 'component/extension']
 });

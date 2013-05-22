@@ -17,6 +17,9 @@
     <property name="git.dev" value="dev"/>
 
 
+    <target name="tpl2mod">
+    </target>
+
     <target name="build-seed">
         <!--
         build seed first，刷新 seed 的时间戳到最新

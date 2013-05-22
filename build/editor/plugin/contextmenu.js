@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 20 23:13
+build time: May 22 23:39
 */
 /**
  * contextmenu for kissy editor
@@ -20,7 +20,7 @@ KISSY.add("editor/plugin/contextmenu", function (S, Editor, Menu, focusFix) {
             delete  cfg.event;
         }
 
-        cfg.prefixCls = self.get("prefixCls") + "editor-";
+        cfg.prefixCls = self.prefixCls + "editor-";
         cfg.editor = self;
         cfg.focusable = 1;
         cfg.zIndex = Editor.baseZIndex(Editor.zIndexManager.POPUP_MENU);

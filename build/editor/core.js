@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 21 10:33
+build time: May 22 23:38
 */
 /**
  * Set up editor constructor
@@ -702,7 +702,7 @@ KISSY.add('editor/core', function (S, Editor, Utils, focusManager, Styles, zInde
             createDom: function () {
                 var self = this,
                     wrap,
-                    prefixCls = self.get('prefixCls'),
+                    prefixCls = self.prefixCls,
                     textarea = self.get('textarea'),
                     editorEl;
 
@@ -771,7 +771,7 @@ KISSY.add('editor/core', function (S, Editor, Utils, focusManager, Styles, zInde
             bindUI: function () {
                 var self = this,
                     form,
-                    prefixCls = self.get('prefixCls'),
+                    prefixCls = self.prefixCls,
                     textarea = self.get('textarea');
 
                 if (self.get('attachForm') && (form = textarea[0].form)) {

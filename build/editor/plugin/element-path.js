@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 17 00:16
+build time: May 22 23:40
 */
 /**
  * ElementPath for debug.
@@ -38,7 +38,7 @@ KISSY.add("editor/plugin/element-path", function (S, Editor) {
             var self = this,
                 cfg = self.cfg,
                 editor = cfg.editor,
-                prefixCls=editor.get('prefixCls'),
+                prefixCls=editor.prefixCls,
                 statusDom = self.holder,
                 elementPath = ev.path,
                 elements = elementPath.elements,

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 20 22:58
+build time: May 22 23:39
 */
 /**
  * bubble or tip view for kissy editor
@@ -122,7 +122,7 @@ KISSY.add("editor/plugin/bubble", function (S, Overlay, Editor) {
 
     Editor.prototype.addBubble = function (id, filter, cfg) {
         var editor = this,
-            prefixCls = editor.get('prefixCls'),
+            prefixCls = editor.prefixCls,
             bubble;
 
         cfg = cfg || {};

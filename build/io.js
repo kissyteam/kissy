@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 17 00:22
+build time: May 22 23:46
 */
 /**
  * @ignore
@@ -469,11 +469,11 @@ KISSY.add('io/base', function (S, JSON, Event, undefined) {
         } catch (e) {
             // Propagate exception as error if not done
             if (self.state < 2) {
-
+                S.log(e.stack || e, 'error');
                 self._ioReady(-1, e.message);
                 // Simply rethrow otherwise
             } else {
-
+                S.error(e);
             }
         }
 
@@ -818,7 +818,7 @@ KISSY.add('io/iframe-transport', function (S, DOM, Event, IO) {
 
     function IframeTransport(io) {
         this.io = io;
-
+        S.log('use IframeTransport for: ' + io.config.url);
     }
 
     S.augment(IframeTransport, {
@@ -1220,7 +1220,7 @@ KISSY.add('io/jsonp', function (S, IO) {
             // and KISSY will notify user by error callback
             converters.script.json = function () {
                 if (!response) {
-
+                    S.error(' not call jsonpCallback: ' + jsonpCallback)
                 }
                 return response[0];
             };
@@ -1438,7 +1438,7 @@ KISSY.add('io/methods', function (S, IO, undefined) {
                             statusText = 'success';
                             isSuccess = true;
                         } catch (e) {
-
+                            S.log(e.stack || e, 'error');
                             statusText = 'parser error';
                         }
                     }
@@ -1522,7 +1522,7 @@ KISSY.add('io/script-transport', function (S, IO, _, undefined) {
             return new (IO['getTransport']('*'))(io);
         }
         this.io = io;
-
+        S.log('use ScriptTransport for: ' + config.url);
         return this;
     }
 
@@ -1629,7 +1629,7 @@ KISSY.add('io/sub-domain-transport', function (S, XhrTransportBase, Event, DOM) 
             c = io.config;
         self.io = io;
         c.crossDomain = false;
-
+        S.log('use SubDomainTransport for: ' + c.url);
     }
 
 
@@ -1656,7 +1656,7 @@ KISSY.add('io/sub-domain-transport', function (S, XhrTransportBase, Event, DOM) 
                 if (self.nativeXhr) {
                     self.sendInternal();
                 } else {
-
+                    S.error('document.domain not set correctly!');
                 }
                 return;
             }
@@ -1739,7 +1739,7 @@ KISSY.add('io/xdr-flash-transport', function (S, IO, DOM) {
     }
 
     function XdrFlashTransport(io) {
-
+        S.log('use XdrFlashTransport for: ' + io.config.url);
         this.io = io;
     }
 
@@ -1869,7 +1869,7 @@ KISSY.add('io/xhr-transport-base', function (S, IO) {
         try {
             return new (refWin || win)['XMLHttpRequest']();
         } catch (e) {
-
+            S.log('createStandardXHR error: ' + _);
         }
         return undefined;
     }
@@ -1878,7 +1878,7 @@ KISSY.add('io/xhr-transport-base', function (S, IO) {
         try {
             return new (refWin || win)['ActiveXObject']('Microsoft.XMLHTTP');
         } catch (e) {
-
+            S.log('createActiveXHR error: ' + _);
         }
         return undefined;
     }
@@ -2119,8 +2119,8 @@ KISSY.add('io/xhr-transport-base', function (S, IO) {
                         try {
                             statusText = nativeXhr.statusText;
                         } catch (e) {
-
-
+                            S.log('xhr statusText error: ');
+                            S.log(e);
                             // We normalize with Webkit giving an empty statusText
                             statusText = '';
                         }
@@ -2202,7 +2202,7 @@ KISSY.add('io/xhr-transport', function (S, IO, XhrTransportBase, SubDomainTransp
         }
 
         xhr = self.nativeXhr = XhrTransportBase.nativeXhr(crossDomain);
-
+        S.log('crossDomain: ' + crossDomain + ', use ' + (_XDomainRequest && (xhr instanceof _XDomainRequest) ? 'XDomainRequest' : 'XhrTransport') + ' for: ' + c.url);
 
         return self;
     }

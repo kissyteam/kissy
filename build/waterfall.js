@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 17 00:23
+build time: May 22 23:48
 */
 /**
  * @ignore
@@ -510,7 +510,7 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
          * Callback function to be called after adjust.
          */
         adjust: function (callback) {
-
+            S.log("waterfall:adjust");
             var self = this,
                 items = self.get("container").all(".ks-waterfall");
             /* 正在加，直接开始这次调整，剩余的加和正在调整的一起处理 */
@@ -584,7 +584,7 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
             var onResize = self.__onResize;
             $(win).detach("resize", onResize);
             onResize.stop();
-
+            S.log('waterfall is destroyed!');
             self.fire('destroy');
             self.__destroyed = 1;
         }
@@ -632,7 +632,7 @@ KISSY.add("waterfall/loader", function (S, Node, Waterfall) {
 
     function doScroll() {
         var self = this;
-
+        S.log("waterfall:doScroll");
         if (self.__loading) {
             return;
         }
@@ -658,7 +658,7 @@ KISSY.add("waterfall/loader", function (S, Node, Waterfall) {
         // 动态载
         // 最小高度(或被用户看到了)低于预加载线
         if (diff + $(win).scrollTop() + $(win).height() >= colHeight) {
-
+            S.log("waterfall:loading");
             loadData.call(self);
         }
     }

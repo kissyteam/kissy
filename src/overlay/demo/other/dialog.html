@@ -170,12 +170,12 @@
                 *zoom: 1;
             }
 
-            #detail .tb-attention .ks-ext-close .ks-ext-close-x {
+            #detail .tb-attention .ks-overlay-close .ks-overlay-close-x {
                 background: transparent url("http://img01.taobaocdn.com/tps/i1/T1krl0Xk8zXXXXXXXX-194-382.png") -75px -99px no-repeat;
                 height: 8px;
             }
 
-            #detail .tb-attention .ks-ext-close, #detail .tb-attention .ks-ext-close:hover {
+            #detail .tb-attention .ks-overlay-close, #detail .tb-attention .ks-overlay-close:hover {
                 background: none;
                 border: none;
             }
@@ -183,16 +183,16 @@
         <button id="btn3" class="button">选择</button>
 
         <div class="tb-key tb-attention" id="choose">
-            <div class="ks-content">
+            <div class="ks-dialog-content">
                 <a href="javascript:void('close')"
                    class="ks-ext-close" role="button">
                     <span class="ks-ext-close-x">close</span>
                 </a>
 
-                <p class="ks-stdmod-header tb-note-title">请选择您要的商品信息
+                <p class="ks-dialog-header tb-note-title">请选择您要的商品信息
                 </p>
 
-                <div class="ks-stdmod-body tb-skin">
+                <div class="ks-dialog-body tb-skin">
                     <dl class="tb-prop ks-clear">
                         <dt>尺　　码：</dt>
                         <dd>
@@ -245,7 +245,7 @@
                     }
                 });
                 d.plug(new DragPlugin({
-                    handlers: ['.ks-stdmod-header']
+                    handlers: ['.ks-dialog-header']
                 }).plug(new ConstrainPlugin({
                             constrain: window
                         })));
@@ -306,7 +306,7 @@
                 });
 
                 dialog.plug(new DragPlugin({
-                            handlers: ['.ks-stdmod-header']
+                            handlers: ['.ks-dialog-header']
                         }).plug(new ConstrainPlugin({
                                     constrain: '#c1'
                                 }))).plug(new ResizePlugin({
@@ -375,11 +375,11 @@
 <div class="s-section">
     <div class="s-demo">
         <style>
-            .my .ks-stdmod-header, .my .ks-stdmod-footer {
+            .my .ks-dialog-header, .my .ks-dialog-footer {
                 display: none;
             }
 
-            .my .ks-stdmod-body {
+            .my .ks-dialog-body {
                 line-height: 0;
             }
         </style>

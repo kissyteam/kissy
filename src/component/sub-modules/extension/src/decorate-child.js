@@ -4,7 +4,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add("component/extension/decorate-child", function (S, DecorateChildren) {
-    
+
     function DecorateChild() {
     }
 
@@ -12,7 +12,7 @@ KISSY.add("component/extension/decorate-child", function (S, DecorateChildren) {
         decorateInternal: function (element) {
             var self = this,
                 prefixCls = self.get('defaultChildCfg').prefixCls,
-                child = element.one("." + (prefixCls + self.get("decorateChildCls")));
+                child = element.one("." + self.get("decorateChildCls"));
             // 可以装饰?
             if (child) {
                 var ChildUI = self.findChildConstructorFromNode(prefixCls, child);
@@ -26,6 +26,14 @@ KISSY.add("component/extension/decorate-child", function (S, DecorateChildren) {
             }
         }
     });
+
+    DecorateChild.ATTRS = {
+        decorateChildCls: {
+            valueFn: function () {
+               return this.getBaseCssClass('content');
+            }
+        }
+    };
 
     return DecorateChild;
 }, {

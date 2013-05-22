@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 17 00:13
+build time: May 22 23:37
 */
 /**
  * @ignore
@@ -112,7 +112,7 @@ KISSY.add('anim/timer/color', function (S, DOM, Fx,SHORT_HANDS) {
         }
 
         //transparent 或者颜色字符串返回
-
+        S.log('only allow rgb or hex color string : ' + val, 'warn');
         return [255, 255, 255];
     }
 
@@ -592,7 +592,7 @@ KISSY.add('anim/timer/fx', function (S, DOM, undefined) {
                 if (!self.finished) {
                     self.finished = 1;
                     DOM.css(el, prop, to);
-
+                    S.log(prop + ' update directly ! : ' + val + ' : ' + from + ' : ' + to);
                 }
             } else {
                 val += self.unit;
@@ -700,7 +700,7 @@ KISSY.add('anim/timer/manager', function (S, undefined) {
     }
     // chrome is unstable....
     if (requestAnimationFrameFn && !S.UA.chrome) {
-
+        S.log('anim use requestAnimationFrame');
     } else {
         requestAnimationFrameFn = function (fn) {
             return setTimeout(fn, INTERVAL);

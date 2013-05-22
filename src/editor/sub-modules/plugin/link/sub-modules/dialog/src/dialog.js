@@ -55,7 +55,7 @@ KISSY.add("editor/plugin/link/dialog", function (S, Editor, Dialog4E, Utils) {
         _prepareShow:function () {
             var self = this,
                 editor=self.editor,
-                prefixCls=editor.get('prefixCls'),
+                prefixCls=editor.prefixCls,
                 d = new Dialog4E({
                     width:500,
                     headerContent:"链接",

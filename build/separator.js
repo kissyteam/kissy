@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 17 00:23
+build time: May 22 23:47
 */
 /**
  * separator render def
@@ -10,13 +10,13 @@ build time: Apr 17 00:23
 KISSY.add("separator/separator-render", function (S, Component) {
 
     return Component.Render.extend({
-        createDom:function () {
-            this.get("el").attr("role", "separator");
+        initializer: function () {
+            this.get('elAttrs')['role'] = 'separator';
         }
     });
 
 }, {
-    requires:['component/base']
+    requires: ['component/base']
 });/**
  * separator def
  * @author yiminghe@gmail.com

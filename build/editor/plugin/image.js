@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 17 00:17
+build time: May 22 23:41
 */
 /**
  * insert image for kissy editor
@@ -38,7 +38,7 @@ KISSY.add("editor/plugin/image", function (S, Editor, Button, Bubble, ContextMen
 
             var self = this;
 
-            var prefixCls = editor.get('prefixCls');
+            var prefixCls = editor.prefixCls;
 
             function showImageEditor(selectedEl) {
                 DialogLoader.useDialog(editor, "image",

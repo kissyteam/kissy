@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 17 00:19
+build time: May 22 23:43
 */
 /**
  * Add maximizeWindow/restoreWindow to Editor.
@@ -115,7 +115,7 @@ KISSY.add("editor/plugin/maximize/cmd", function (S, Editor) {
 
             if (ie < 8) {
                 editor.get("toolBarEl").removeClass(
-                    editor.get('prefixCls') + MAXIMIZE_TOOLBAR_CLASS, undefined);
+                    editor.prefixCls + MAXIMIZE_TOOLBAR_CLASS, undefined);
             }
         },
         /**
@@ -153,7 +153,7 @@ KISSY.add("editor/plugin/maximize/cmd", function (S, Editor) {
             //ie6,7 图标到了窗口边界，不可点击，给个padding
             if (ie < 8) {
                 editor.get("toolBarEl").addClass(
-                    editor.get('prefixCls') + MAXIMIZE_TOOLBAR_CLASS, undefined);
+                    editor.prefixCls + MAXIMIZE_TOOLBAR_CLASS, undefined);
             }
         },
 

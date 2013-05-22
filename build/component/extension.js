@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 15 20:33
+build time: May 22 23:37
 */
 /**
  * @ignore
@@ -486,7 +486,7 @@ KISSY.add('component/extension/content-render', function (S) {
         ATTRS: {
             contentTpl:{
                 value:'<div id="ks-content{{id}}" ' +
-                    'class="{{prefixCls}}content {{getCssClassWithState "content"}}">' +
+                    'class="{{getBaseCssClasses "content"}}">' +
                     '{{{content}}}' +
                     '</div>'
             },
@@ -496,10 +496,10 @@ KISSY.add('component/extension/content-render', function (S) {
         },
         HTML_PARSER: {
             content: function (el) {
-                return el.one('.' + this.get('prefixCls') + 'content').html();
+                return el.one('.'+this.getBaseCssClass('content')).html();
             },
             contentEl: function (el) {
-                return el.one('.' + this.get('prefixCls') + 'content')
+                return el.one('.'+this.getBaseCssClass('content'));
             }
         }
     });
@@ -513,7 +513,7 @@ KISSY.add('component/extension/content-render', function (S) {
  * @author yiminghe@gmail.com
  */
 KISSY.add("component/extension/decorate-child", function (S, DecorateChildren) {
-    
+
     function DecorateChild() {
     }
 
@@ -521,7 +521,7 @@ KISSY.add("component/extension/decorate-child", function (S, DecorateChildren) {
         decorateInternal: function (element) {
             var self = this,
                 prefixCls = self.get('defaultChildCfg').prefixCls,
-                child = element.one("." + (prefixCls + self.get("decorateChildCls")));
+                child = element.one("." + self.get("decorateChildCls"));
             // 可以装饰?
             if (child) {
                 var ChildUI = self.findChildConstructorFromNode(prefixCls, child);
@@ -535,6 +535,14 @@ KISSY.add("component/extension/decorate-child", function (S, DecorateChildren) {
             }
         }
     });
+
+    DecorateChild.ATTRS = {
+        decorateChildCls: {
+            valueFn: function () {
+               return this.getBaseCssClass('content');
+            }
+        }
+    };
 
     return DecorateChild;
 }, {
@@ -744,7 +752,6 @@ KISSY.add("component/extension/position-render", function () {
     function Position() {
         var renderData = this.get('renderData');
         this.get('elStyle')['z-index'] = renderData.zIndex;
-        this.get('elCls').push(renderData.prefixCls + 'ext-position ');
     }
 
     Position.ATTRS = {

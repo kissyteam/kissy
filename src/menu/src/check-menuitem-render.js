@@ -8,21 +8,21 @@ KISSY.add('menu/check-menuitem-render', function (S, MenuItemRender, Extension) 
 
         initializer: function () {
             if (this.get('checked')) {
-                this.get('elCls').push(self.getCssClassWithState("checked"));
+                this.get('elCls').push(self.getBaseCssClasses("checked"));
             }
         },
 
         _onSetChecked: function (v) {
             var self = this,
                 el = self.get("el"),
-                cls = self.getCssClassWithState("checked");
+                cls = self.getBaseCssClasses("checked");
             el[v ? 'addClass' : 'removeClass'](cls);
         }
 
     }, {
         ATTRS: {
             contentTpl: {
-                value: '<div class="{{prefixCls}}menuitem-checkbox"></div>' +
+                value: '<div class="{{getBaseCssClasses "checkbox"}}"></div>' +
                     Extension.ContentRender.ContentTpl
             },
             checked: {

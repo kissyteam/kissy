@@ -26,10 +26,10 @@ KISSY.use("ua,node,overlay,dd/plugin/constrain,component/plugin/drag",
 
                 var srcNode = $('<div class="ks-overlay ks-dialog"' +
                     ' style="width:200px">' +
-                    '<div class="ks-content">' +
-                    '<div class="ks-stdmod-header">header</div>' +
-                    '<div class="ks-stdmod-body">body</div>' +
-                    '<div class="ks-stdmod-footer">footer</div>' +
+                    '<div class="ks-dialog-content">' +
+                    '<div class="ks-dialog-header">header</div>' +
+                    '<div class="ks-dialog-body">body</div>' +
+                    '<div class="ks-dialog-footer">footer</div>' +
                     '</div>' +
                     '</div>').prependTo('body');
 
@@ -73,7 +73,7 @@ KISSY.use("ua,node,overlay,dd/plugin/constrain,component/plugin/drag",
                     if (d.get("header")) {
                         expect(d.get("header").nodeName()).toBe("div");
                     }
-                    expect(d.get("el").one(".ks-ext-close")).not.toBe(undefined);
+                    expect(d.get("el").one(".ks-overlay-close")).not.toBe(undefined);
                     d.destroy();
                 });
 
@@ -85,7 +85,7 @@ KISSY.use("ua,node,overlay,dd/plugin/constrain,component/plugin/drag",
                         width: 200,
                         plugins: [
                             new DragPlugin({
-                                handlers: ['.ks-stdmod-header'],
+                                handlers: ['.ks-dialog-header'],
                                 plugins: [new ConstrainPlugin({
                                     constrain: true
                                 })]

@@ -40,15 +40,15 @@
   -moz-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
   box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
 }
-.ks-stdmod-header {
+.ks-dialog-header {
   padding: 9px 15px;
   border-bottom: 1px solid #eeeeee;
 }
-.ks-stdmod-body {
+.ks-dialog-body {
   overflow-y: auto;
   padding: 15px;
 }
-.ks-stdmod-footer {
+.ks-dialog-footer {
   padding: 14px 15px 15px;
   margin-bottom: 0;
   text-align: right;
@@ -60,18 +60,18 @@
   box-shadow: inset 0 1px 0 #ffffff;
   *zoom: 1;
 }
-.ks-stdmod-footer:before,
-.ks-stdmod-footer:after {
+.ks-dialog-footer:before,
+.ks-dialog-footer:after {
   display: table;
   content: "";
 }
-.ks-stdmod-footer:after {
+.ks-dialog-footer:after {
   clear: both;
 }
-.ks-stdmod-footer .ks-button + .ks-button {
+.ks-dialog-footer .ks-button + .ks-button {
   margin-left: 5px;
   margin-bottom: 0;
 }
-.ks-stdmod-footer .ks-button-group .ks-button + .ks-button {
+.ks-dialog-footer .ks-button-group .ks-button + .ks-button {
   margin-left: -1px;
 }

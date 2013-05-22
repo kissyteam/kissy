@@ -1,27 +1,25 @@
 <div id="ks-tree-node-row{{id}}"
-     class="{{prefixCls}}tree-node-row
+     class="{{getBaseCssClasses "row"}}
      {{#if selected}}
-        {{prefixCls}}tree-node-selected
+        {{getBaseCssClasses "selected"}}
      {{/if}}
      ">
-    <div id="ks-tree-expand-icon{{id}}"
-         class="{{prefixCls}}tree-expand-icon">
+    <div id="ks-tree-node-expand-icon{{id}}"
+         class="{{getBaseCssClasses "expand-icon"}}">
     </div>
     {{#if checkable}}
     <div id="ks-tree-node-checked{{id}}"
-            class="{{prefixCls}}tree-node-check
-    {{prefixCls}}tree-node-checked{{checkState}}"></div>
+            class="{{getBaseCssClasses "checked"+checkState}}"></div>
     {{/if}}
-    <div id="ks-tree-icon{{id}}"
-         class="{{prefixCls}}tree-icon">
+    <div id="ks-tree-node-icon{{id}}"
+         class="{{getBaseCssClasses "icon"}}">
 
     </div>
-    <div id="ks-content{{id}}"
-          class="{{prefixCls}}content
-          {{getCssClassWithState "content"}}">{{{content}}}</div>
+    <span id="ks-content{{id}}"
+          class="{{getBaseCssClasses "content"}}">{{{content}}}</span>
 </div>
-<div id="ks-tree-children{{id}}"
-     class="{{prefixCls}}tree-children"
+<div id="ks-tree-node-children{{id}}"
+     class="{{getBaseCssClasses "children"}}"
 {{#if expanded}}
 {{else}}
 style="display:none"

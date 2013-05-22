@@ -38,7 +38,7 @@ KISSY.add("editor/plugin/flash-common/base-class", function (S, Editor, ContextM
             var self = this,
                 cls = self.get("cls"),
                 editor = self.get("editor"),
-                prefixCls=editor.get('prefixCls'),
+                prefixCls=editor.prefixCls,
                 children = [],
                 bubbleId = self.get("bubbleId"),
                 contextMenuId = self.get("contextMenuId"),

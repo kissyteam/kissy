@@ -2,8 +2,7 @@
  * combination of menu and button ,similar to native select
  * @author yiminghe@gmail.com
  */
-KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender,
-                                       Menu, Extension,undefined) {
+KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, Extension, undefined) {
 
     var $ = Node.all,
         win = $(S.Env.host),
@@ -235,7 +234,9 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender,
                  * @private
                  */
                 decorateChildCls: {
-                    value: 'popupmenu'
+                    valueFn: function () {
+                        return this.prefixCls + 'popupmenu';
+                    }
                 },
                 /**
                  * Drop down menu associated with this menubutton.
@@ -261,7 +262,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender,
                  * @type {Boolean}
                  */
                 collapsed: {
-                    sync:0,
+                    sync: 0,
                     view: 1
                 },
                 xrender: {

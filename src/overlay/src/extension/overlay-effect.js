@@ -19,7 +19,7 @@ KISSY.add('overlay/extension/overlay-effect', function (S) {
         ghost.css({
             visibility: 'visible',
             overflow: HIDDEN
-        }).addClass(self.get('prefixCls') + 'overlay-ghost');
+        }).addClass(self.prefixCls + 'overlay-ghost');
 
         return self.__afterCreateEffectGhost(ghost);
     }

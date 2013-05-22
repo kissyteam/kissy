@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 15 20:33
+build time: May 22 23:46
 */
 /**
  * render aria and drop arrow for menubutton
@@ -20,7 +20,7 @@ KISSY.add("menubutton/base-render", function (S, Button, Extension) {
         _onSetCollapsed: function (v) {
             var self = this,
                 el = self.get("el"),
-                cls = self.getCssClassWithPrefix("menu-button-open");
+                cls = self.getBaseCssClass("open");
             el[v ? 'removeClass' : 'addClass'](cls).attr("aria-expanded", !v);
         },
 
@@ -32,8 +32,8 @@ KISSY.add("menubutton/base-render", function (S, Button, Extension) {
         ATTRS: {
             contentTpl: {
                 value: Extension.ContentRender.ContentTpl +
-                    '<div class="{{prefixCls}}menu-button-dropdown">' +
-                    '<div class="{{prefixCls}}menu-button-dropdown-inner">' +
+                    '<div class="{{getBaseCssClasses "dropdown"}}">' +
+                    '<div class="{{getBaseCssClasses "dropdown-inner"}}">' +
                     '</div>'
             },
             collapsed: {
@@ -48,8 +48,7 @@ KISSY.add("menubutton/base-render", function (S, Button, Extension) {
  * combination of menu and button ,similar to native select
  * @author yiminghe@gmail.com
  */
-KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender,
-                                       Menu, Extension,undefined) {
+KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, Extension, undefined) {
 
     var $ = Node.all,
         win = $(S.Env.host),
@@ -281,7 +280,9 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender,
                  * @private
                  */
                 decorateChildCls: {
-                    value: 'popupmenu'
+                    valueFn: function () {
+                        return this.prefixCls + 'popupmenu';
+                    }
                 },
                 /**
                  * Drop down menu associated with this menubutton.
@@ -307,7 +308,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender,
                  * @type {Boolean}
                  */
                 collapsed: {
-                    sync:0,
+                    sync: 0,
                     view: 1
                 },
                 xrender: {

@@ -20,13 +20,13 @@ KISSY.add("overlay/overlay-render", function (S, XTemplate, Component, Extension
     }, {
         HTML_PARSER: {
             closeBtn: function (el) {
-                return el.one("." + this.get('prefixCls') + 'ext-close');
+                return el.one("." + this.getBaseCssClass('close'));
             }
         },
         ATTRS: {
             closable: {},
             contentTpl: {
-                value: Extension.ContentRender.ContentTpl + CloseTpl
+                value: CloseTpl + Extension.ContentRender.ContentTpl
             }
         }
     });

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 17 00:15
+build time: May 22 23:38
 */
 /**
  * attr ie hack
@@ -79,6 +79,12 @@ KISSY.add('dom/ie/attr', function (S, DOM) {
         // button 元素的 value 属性和其内容冲突
         // <button value='xx'>zzz</button>
         valHooks.button = attrHooks.value = attrNodeHook;
+
+        attrHooks.placeholder = {
+            get: function (elem, name) {
+                return elem[name] || attrNodeHook.get(elem, name);
+            }
+        };
 
         // 当没有设定 value 时，标准浏览器 option.value === option.text
         // ie7- 下，没有设定 value 时，option.value === '',
@@ -349,18 +355,20 @@ KISSY.add('dom/ie/input-selection', function (S, DOM) {
         }
     }
 
-    // range.text will not contain "\r\n" if "\r\n" if "\r\n" is at end of this range
+    // range.text will not contain "\r\n" if "\r\n" is at end of this range
     function getRangeText(elem, range) {
         if (elem.type == "textarea") {
             var ret = range.text,
                 testRange = range.duplicate();
 
-            // consider end \r\n
+            // collapsed
             if (testRange.compareEndPoints('StartToEnd', testRange) == 0) {
                 return ret;
             }
 
             testRange.moveEnd('character', -1);
+
+            // consider end \r\n
             if (testRange.text == ret) {
                 ret += '\r\n';
             }
@@ -513,7 +521,7 @@ KISSY.add('dom/ie/style', function (S, DOM) {
         }
     }
     catch (ex) {
-
+        S.log('IE filters ActiveX is disabled. ex = ' + ex);
     }
 
     /*

@@ -33,7 +33,7 @@ KISSY.add("editor/plugin/element-path", function (S, Editor) {
             var self = this,
                 cfg = self.cfg,
                 editor = cfg.editor,
-                prefixCls=editor.get('prefixCls'),
+                prefixCls=editor.prefixCls,
                 statusDom = self.holder,
                 elementPath = ev.path,
                 elements = elementPath.elements,

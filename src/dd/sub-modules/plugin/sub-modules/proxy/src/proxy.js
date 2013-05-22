@@ -134,7 +134,7 @@ KISSY.add('dd/plugin/proxy', function (S, Node, Base, DD) {
                 }
                 drag['setInternal']('node', dragNode);
                 if (hideNodeOnDrag) {
-                    dragNode.css('visibility', 'visible');
+                    dragNode.css('visibility', '');
                 }
             }
 

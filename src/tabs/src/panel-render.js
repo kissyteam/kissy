@@ -12,7 +12,7 @@ KISSY.add("tabs/panel-render", function (S, Component) {
                 attrs = self.get('elAttrs');
             attrs['role'] = 'tabpanel';
             if (self.get('selected')) {
-                self.get('elCls').push(self.getCssClassWithState('selected'));
+                self.get('elCls').push(self.getBaseCssClasses('selected'));
             } else {
                 attrs['aria-hidden'] = false;
             }
@@ -20,7 +20,7 @@ KISSY.add("tabs/panel-render", function (S, Component) {
 
         _onSetSelected: function (v) {
             var el = this.get("el");
-            var selectedCls = this.getCssClassWithState('selected');
+            var selectedCls = this.getBaseCssClasses('selected');
             el[v ? "addClass" : "removeClass"](selectedCls);
             el.attr("aria-hidden", !v);
         }
@@ -35,7 +35,7 @@ KISSY.add("tabs/panel-render", function (S, Component) {
 
         HTML_PARSER: {
             selected: function (el) {
-                return el.hasClass(this.get('prefixCls') + 'tabs-panel-selected');
+                return el.hasClass(this.getBaseCssClass('selected'));
             }
         }
     });

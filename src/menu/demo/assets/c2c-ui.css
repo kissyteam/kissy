@@ -124,10 +124,6 @@
     top: -9999px;
 }
 
-.c2c-popupmenu-shown{
-    visibility: visible;
-}
-
 .c2c-popupmenu-hidden{
     visibility: hidden;
 }

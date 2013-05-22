@@ -24,10 +24,6 @@
     white-space: nowrap;
 }
 
-.ks-popupmenu-shown{
-    visibility: visible;
-}
-
 .ks-popupmenu-hidden{
     visibility: hidden;
 }

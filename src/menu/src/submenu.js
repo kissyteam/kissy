@@ -3,15 +3,16 @@
  * submenu controller for kissy, transfer item's keyCode to menu
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/submenu", function (S, Event, MenuItem, SubMenuRender,Extension) {
+KISSY.add("menu/submenu", function (S, Event, MenuItem, SubMenuRender, Extension) {
 
     function afterHighlightedChange(e) {
-        var target = e.target;
+        var target = e.target,
+            self = this;
         // hover 子菜单，保持该菜单项高亮
-        if (target !== this && target.isMenuItem && e.newVal) {
-            clearSubMenuTimers(this);
-            if (!this.get('highlighted')) {
-                this.set('highlighted', true);
+        if (target !== self && target.isMenuItem && e.newVal) {
+            clearSubMenuTimers(self);
+            if (!self.get('highlighted')) {
+                self.set('highlighted', true);
                 // refresh highlightedItem of parent menu
                 target.set('highlighted', false);
                 target.set('highlighted', true);
@@ -45,7 +46,7 @@ KISSY.add("menu/submenu", function (S, Event, MenuItem, SubMenuRender,Extension)
      * @extends KISSY.Menu.Item
      * @class KISSY.Menu.SubMenu
      */
-    var SubMenu = MenuItem.extend([Extension.DecorateChild],{
+    var SubMenu = MenuItem.extend([Extension.DecorateChild], {
 
             isSubMenu: 1,
 
@@ -68,7 +69,8 @@ KISSY.add("menu/submenu", function (S, Event, MenuItem, SubMenuRender,Extension)
                 var menu = getMenu(self);
                 if (menu && menu.get('visible')) {
                     // 延迟 highlighted
-                    self.dismissTimer_ = S.later(hideMenu, self.get("menuDelay") * 1000, false, self);
+                    self.dismissTimer_ = S.later(hideMenu,
+                        self.get("menuDelay") * 1000, false, self);
                 }
             },
 
@@ -205,7 +207,9 @@ KISSY.add("menu/submenu", function (S, Event, MenuItem, SubMenuRender,Extension)
         {
             ATTRS: {
                 decorateChildCls: {
-                    value: 'popupmenu'
+                    valueFn: function(){
+                        return this.prefixCls+'popupmenu';
+                    }
                 },
 
                 /**
@@ -262,7 +266,7 @@ KISSY.add("menu/submenu", function (S, Event, MenuItem, SubMenuRender,Extension)
         var m = self.get("menu");
         if (m && !m.isController) {
             if (init) {
-                self.setInternal("menu", m=self.createChild(m));
+                self.setInternal("menu", m = self.createChild(m));
             } else {
                 return null;
             }
@@ -305,5 +309,5 @@ KISSY.add("menu/submenu", function (S, Event, MenuItem, SubMenuRender,Extension)
 
     return SubMenu;
 }, {
-    requires: ['event', './menuitem', './submenu-render','component/extension']
+    requires: ['event', './menuitem', './submenu-render', 'component/extension']
 });

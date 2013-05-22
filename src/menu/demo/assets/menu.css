@@ -45,10 +45,6 @@
     top: -9999px;
 }
 
-.ks-popupmenu-shown {
-    visibility: visible;
-}
-
 .ks-popupmenu-hidden {
     visibility: hidden;
 }

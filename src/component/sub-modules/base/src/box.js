@@ -125,7 +125,13 @@ KISSY.add('component/base/box', function (S) {
          */
         elCls: {
             view: 1,
-            value: []
+            value: [],
+            setter: function (v) {
+                if (typeof v == 'string') {
+                    v = v.split(/\s+/);
+                }
+                return v||[];
+            }
         },
 
         /**
@@ -191,16 +197,14 @@ KISSY.add('component/base/box', function (S) {
         /**
          * whether this component is visible after created.
          *
-         * will add css class {prefix}{component}-hidden
-         * or {prefix}{component}-shown to component's root el.
+         * will add/remove css class {prefix}{component}-hidden to component's root el.
          *
          * @cfg {Boolean} visible
          */
         /**
          * whether this component is visible.
          *
-         * will add css class {prefix}{component}-hidden
-         * or {prefix}{component}-shown to component's root el.
+         * will add/remove css class {prefix}{component}-hidden to component's root el.
          *
          * @type {Boolean}
          * @property visible

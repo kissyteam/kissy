@@ -1,20 +1,20 @@
-<div id="ks-scrollbar-{{axis}}-track{{id}}"
-        class="{{prefixCls}}scrollbar-{{axis}}-track">
-    <div id="ks-scrollbar-{{axis}}-drag{{id}}"
-            class="{{prefixCls}}scrollbar-{{axis}}-drag">
-        <div class="{{prefixCls}}scrollbar-{{axis}}-drag-top">
+<div id="ks-scrollbar-track{{id}}"
+        class="{{getBaseCssClasses axis+"-track"}}">
+    <div id="ks-scrollbar-drag{{id}}"
+            class="{{getBaseCssClasses axis+"-drag"}}">
+        <div class="{{getBaseCssClasses axis+"-drag-top"}}">
         </div>
-        <div class="{{prefixCls}}scrollbar-{{axis}}-drag-center">
+        <div class="{{getBaseCssClasses axis+"-drag-center"}}">
         </div>
-        <div class="{{prefixCls}}scrollbar-{{axis}}-drag-bottom">
+        <div class="{{getBaseCssClasses axis+"-drag-bottom"}}">
         </div>
     </div>
 </div>
-<div id="ks-scrollbar-{{axis}}-arrow-up{{id}}"
-        class="{{prefixCls}}scrollbar-{{axis}}-arrow-up">
+<div id="ks-scrollbar-arrow-up{{id}}"
+        class="{{getBaseCssClasses axis+"-arrow-up"}}">
     <a href="javascript:void('up')">up</a>
 </div>
-<div id="ks-scrollbar-{{axis}}-arrow-down{{id}}"
-        class="{{prefixCls}}scrollbar-{{axis}}-arrow-down">
+<div id="ks-scrollbar-arrow-down{{id}}"
+        class="{{getBaseCssClasses axis+"-arrow-down"}}">
     <a href="javascript:void('down')">down</a>
 </div>

@@ -13,13 +13,13 @@ KISSY.add('scrollview/plugin/scrollbar/render', function (S, Component, ScrollBa
         initializer: function () {
             var self = this,
                 axis = self.get('axis'),
-                prefixCls = self.get('prefixCls');
+                prefixCls = self.prefixCls;
             self.get('elCls').push(prefixCls + 'scrollbar-' + axis);
             S.mix(self.get('childrenElSelectors'), {
-                'dragEl': '#ks-scrollbar-{axis}-drag{id}',
-                'downBtn': '#ks-scrollbar-{axis}-arrow-down{id}',
-                'upBtn': '#ks-scrollbar-{axis}-arrow-up{id}',
-                'trackEl': '#ks-scrollbar-{axis}-track{id}'
+                'dragEl': '#ks-scrollbar-drag{id}',
+                'downBtn': '#ks-scrollbar-arrow-down{id}',
+                'upBtn': '#ks-scrollbar-arrow-up{id}',
+                'trackEl': '#ks-scrollbar-track{id}'
             });
         },
 

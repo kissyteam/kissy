@@ -11,16 +11,8 @@
     visibility: hidden;
 }
 
-.ks-editor-overlay-shown{
-    visibility: visible;
-}
-
 .ks-editor-overlay-mask-hidden {
     visibility: hidden;
-}
-
-.ks-editor-overlay-mask-shown {
-    visibility: visible;
 }
 
 .ks-editor-dialog label,
@@ -28,12 +20,12 @@
     vertical-align: middle;
 }
 
-.ks-editor-dialog .ks-editor-content, .ks-editor-popup .ks-editor-content {
+.ks-editor-dialog-content, .ks-editor-popup-content {
     background-color: #FBFBFB;
     border: 1px solid #ACB4BE;
 }
 
-.ks-editor-dialog .ks-editor-stdmod-header {
+.ks-editor-dialog-header {
     background: repeat-x scroll 0 0 #D6DBE2;
     background-image: url("overlay-hd.png"); /** sprite-ref: cool; sprite-alignment: repeat; */
     border-bottom: 1px solid #ACB4BE;
@@ -44,7 +36,7 @@
     padding: 0 0 0 18px;
 }
 
-.ks-editor-dialog .ks-editor-ext-close {
+.ks-editor-dialog-close {
     height: 18px;
     width: 18px;
     border: 1px solid transparent;
@@ -60,7 +52,7 @@
     cursor: pointer;
 }
 
-.ks-editor-dialog .ks-editor-ext-close .ks-editor-ext-close-x {
+.ks-editor-dialog-close-x {
     display: block;
     background: no-repeat;
     background-image: url("close.png"); /** sprite-ref: cool; */
@@ -70,24 +62,24 @@
     margin: 2.5px;
 }
 
-.ks-editor-dialog .ks-editor-ext-close:hover {
+.ks-editor-dialog-close:hover {
     border: 1px solid #CED5E0;
     background: white;
 }
 
-.ks-editor-ext-mask, .ks-editor-ext-mask {
+.ks-editor-overlay-mask {
     background-color: #000;
     opacity: 0.3;
     filter: alpha(opacity = 15);
 }
 
-.ks-editor-overlay .ks-editor-ext-loading {
+.ks-editor-overlay-loading {
     opacity: 0.6;
     filter: alpha(opacity = 60);
     background: #eee center center no-repeat scroll;
     background-image: url("../tao-loading.gif");
 }
 
-.ks-editor-global-loading .ks-editor-ext-loading {
+.ks-editor-global-loading .ks-editor-overlay-loading {
     background-attachment: fixed;
 }

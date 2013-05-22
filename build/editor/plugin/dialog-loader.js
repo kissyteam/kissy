@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 17 00:16
+build time: May 22 23:39
 */
 /**
  * load editor's dialog dynamically
@@ -36,7 +36,7 @@ KISSY.add("editor/plugin/dialog-loader", function (S, Overlay, Editor) {
             // restore focus in editor
             // make dialog remember
             editor.focus();
-            var prefixCls=editor.get('prefixCls');
+            var prefixCls=editor.prefixCls;
             if (editor.getControl(name + "/dialog")) {
                 setTimeout(function () {
                     editor.showDialog(name, args);

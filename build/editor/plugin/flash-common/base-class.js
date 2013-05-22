@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 17 00:16
+build time: May 22 23:40
 */
 /**
  *  BaseClass for Flash Based plugin.
@@ -43,7 +43,7 @@ KISSY.add("editor/plugin/flash-common/base-class", function (S, Editor, ContextM
             var self = this,
                 cls = self.get("cls"),
                 editor = self.get("editor"),
-                prefixCls=editor.get('prefixCls'),
+                prefixCls=editor.prefixCls,
                 children = [],
                 bubbleId = self.get("bubbleId"),
                 contextMenuId = self.get("contextMenuId"),

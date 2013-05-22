@@ -16,10 +16,6 @@ KISSY.add("tree/tree-manager-render", function (S) {
     };
 
     S.augment(TreeManagerRender, {
-        __createDom: function () {
-            var self = this;
-            self.get("rowEl").addClass(self.get('prefixCls') + "tree-row");
-        },
         '_onSetShowRootNode': function (v) {
             this.get("rowEl")[v ? "show" : "hide"]();
         }

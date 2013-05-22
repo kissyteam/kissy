@@ -53,11 +53,11 @@
 <h2>从已知元素生成</h2>
 
 <div id="filterMenuExist" class="ks-filter-menu ks-menu">
-    <div class='ks-menu-filter'>
-        <div class="ks-menu-filter-label">from markup</div>
-        <input autocomplete="off" class="ks-menu-filter-input"/>
+    <div class='ks-filter-menu-input-wrap'>
+        <div class="ks-filter-menu-placeholder">from markup</div>
+        <input autocomplete="off" class="ks-filter-menu-input"/>
     </div>
-    <div class="ks-menu-content" style="height: 200px;overflow: auto;">
+    <div class="ks-filter-menu-content" style="height: 200px;overflow: auto;">
         <div class="ks-menuitem-selectable ks-menuitem">女鞋1</div>
         <div class="ks-menuitem-selectable ks-menuitem">家居服务2</div>
         <div class="ks-menuitem-selectable ks-menuitem">手机3</div>
@@ -153,8 +153,7 @@
                     render:"#container",
                     width:200,
                     allowMultiple:true,
-
-                    label:"请输入"
+                    placeholder:"请输入"
                 });
                 filterMenu.addChild(m1);
                 filterMenu.addChild(m2);
@@ -172,7 +171,7 @@
                 filterMenu.filterItems = function(str) {
                     var self = this,
                             view = self.get("view"),
-                            _labelEl = view.get("labelEl"),
+                            _labelEl = view.get("placeholderEl"),
                             filterInput = view.get("filterInput");
 
                     // 有过滤条件提示隐藏，否则提示显示

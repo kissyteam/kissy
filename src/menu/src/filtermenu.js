@@ -3,7 +3,7 @@
  * menu where items can be filtered based on user keyboard input
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender,Extension) {
+KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender, Extension) {
 
     var HIT_CLS = "menuitem-hit";
 
@@ -13,7 +13,7 @@ KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender,Extension) {
      * @extends KISSY.Menu
      * @class KISSY.Menu.FilterMenu
      */
-    var FilterMenu = Menu.extend([Extension.DecorateChild],{
+    var FilterMenu = Menu.extend([Extension.DecorateChild], {
             bindUI: function () {
                 var self = this,
                     view = self.get("view"),
@@ -68,13 +68,13 @@ KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender,Extension) {
              */
             filterItems: function (str) {
                 var self = this,
-                    prefixCls = self.get('prefixCls'),
+                    prefixCls = self.prefixCls,
                     view = self.get("view"),
-                    _labelEl = view.get("labelEl"),
+                    _placeholderEl = view.get("placeholderEl"),
                     filterInput = view.get("filterInput");
 
                 // 有过滤条件提示隐藏,否则提示显示
-                _labelEl[str ? "hide" : "show"]();
+                _placeholderEl[str ? "hide" : "show"]();
 
                 if (self.get("allowMultiple")) {
                     var enteredItems = [],
@@ -144,7 +144,7 @@ KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender,Extension) {
                             // 如果符合过滤项
                             // 显示
                             c.set("visible", true);
-                            // 匹配子串着重 wrap
+                            // 匹配子串着重 input-wrap
                             c.get("el").html(content.replace(strExp, function (m) {
                                 return "<span class='" + prefixCls + HIT_CLS + "'>" + m + "<" + "/span>";
                             }));
@@ -178,8 +178,9 @@ KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender,Extension) {
         },
         {
             ATTRS: {
-                decorateChildCls: {
-                    value: 'menu-content'
+
+                contentEl: {
+                    view: true
                 },
 
                 allowTextSelection: {
@@ -188,12 +189,12 @@ KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender,Extension) {
 
                 /**
                  * Hit info string
-                 * @cfg {String} label
+                 * @cfg {String} placeholder
                  */
                 /**
                  * @ignore
                  */
-                label: {
+                placeholder: {
                     view: 1
                 },
 
@@ -238,5 +239,5 @@ KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender,Extension) {
 
     return FilterMenu;
 }, {
-    requires: ['./base', './filtermenu-render','component/extension']
+    requires: ['./base', './filtermenu-render', 'component/extension']
 });

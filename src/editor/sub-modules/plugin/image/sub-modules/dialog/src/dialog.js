@@ -54,7 +54,7 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Dialog4E, Tabs,
         _prepare: function () {
             var self = this;
             var editor = self.editor,
-                prefixCls = editor.get('prefixCls') + 'editor-';
+                prefixCls = editor.prefixCls + 'editor-';
             self.dialog = self.d = new Dialog4E({
                 width: 500,
                 headerContent: "图片",

@@ -31,7 +31,7 @@ KISSY.add("editor/plugin/dialog-loader", function (S, Overlay, Editor) {
             // restore focus in editor
             // make dialog remember
             editor.focus();
-            var prefixCls=editor.get('prefixCls');
+            var prefixCls=editor.prefixCls;
             if (editor.getControl(name + "/dialog")) {
                 setTimeout(function () {
                     editor.showDialog(name, args);

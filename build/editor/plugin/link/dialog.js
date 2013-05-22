@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 17 00:18
+build time: May 22 23:42
 */
 /**
  * link dialog
@@ -60,7 +60,7 @@ KISSY.add("editor/plugin/link/dialog", function (S, Editor, Dialog4E, Utils) {
         _prepareShow:function () {
             var self = this,
                 editor=self.editor,
-                prefixCls=editor.get('prefixCls'),
+                prefixCls=editor.prefixCls,
                 d = new Dialog4E({
                     width:500,
                     headerContent:"链接",

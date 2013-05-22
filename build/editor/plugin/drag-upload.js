@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 17 00:16
+build time: May 22 23:40
 */
 /**
  * drag file support for html5 file&dd
@@ -147,7 +147,7 @@ KISSY.add("editor/plugin/drag-upload", function (S, Editor) {
                             } else {
                                 alert("服务器端出错！");
                                 img.remove();
-
+                                S.log(xhr);
                             }
                             xhr.onreadystatechange = null;
                         }

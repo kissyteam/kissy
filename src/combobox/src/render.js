@@ -78,16 +78,16 @@ KISSY.add("combobox/render", function (S, Component, ComboboxTpl) {
         },
         HTML_PARSER: {
             input: function (el) {
-                return el.one("." + this.get('prefixCls') + "combobox-input");
+                return el.one("." + this.getBaseCssClass('input'));
             },
             trigger: function (el) {
-                return el.one("." + this.get('prefixCls') + "combobox-trigger");
+                return el.one("." + this.getBaseCssClass('trigger'));
             },
             invalidEl: function (el) {
-                return el.one("." + this.get('prefixCls') + "combobox-invalid-el");
+                return el.one("." + this.getBaseCssClass('invalid-el'));
             },
             placeholderEl: function (el) {
-                return el.one("." + this.get('prefixCls') + "combobox-placeholder");
+                return el.one("." + this.getBaseCssClass('placeholder'));
             }
         }
     });

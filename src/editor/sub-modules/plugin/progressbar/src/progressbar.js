@@ -32,7 +32,7 @@ KISSY.add("editor/plugin/progressbar", function(S) {
         _init:function() {
             var self = this,
                 h = self.get("height"),
-                prefixCls=self.get('prefixCls'),
+                prefixCls=self.prefixCls,
                 el = new Node(
 
                     S.substitute("<div" +

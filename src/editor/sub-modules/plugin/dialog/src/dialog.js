@@ -9,7 +9,7 @@ KISSY.add("editor/plugin/dialog", function (S, Editor, Overlay,
 
         initializer: function () {
             this.plug(new DragPlugin({
-                handlers: ['.ks-editor-stdmod-header'],
+                handlers: ['.ks-editor-dialog-header'],
                 plugins: [
                     new ConstrainPlugin({
                         constrain: window

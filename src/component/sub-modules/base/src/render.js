@@ -4,13 +4,39 @@
  * @author yiminghe@gmail.com
  * refer: http://martinfowler.com/eaaDev/uiArchs.html
  */
-KISSY.add("component/base/render", function (S, BoxRender, Component, UIBase, Manager) {
+KISSY.add("component/base/render", function (S, BoxRender, Component, UIBase) {
+
+    var trim = S.trim, Render;
+
+    function normalExtras(extras) {
+        if (!extras) {
+            extras = [''];
+        }
+        if (typeof extras == "string") {
+            extras = extras.split(/\s+/);
+        }
+        return extras;
+    }
+
+    function prefixExtra(prefixCls, componentCls, extras) {
+        var cls = '',
+            i = 0,
+            l = extras.length,
+            e,
+            prefix = prefixCls + componentCls;
+        for (; i < l; i++) {
+            e = extras[i];
+            e = e ? ('-' + e) : e;
+            cls += ' ' + prefix + e;
+        }
+        return cls;
+    }
 
     /**
      * @ignore
      * Base Render class for KISSY Component.
      */
-    return UIBase.extend([BoxRender], {
+    return Render = UIBase.extend([BoxRender], {
 
         initializer: function () {
             var self = this;
@@ -18,11 +44,11 @@ KISSY.add("component/base/render", function (S, BoxRender, Component, UIBase, Ma
             var cls = self.get('elCls');
             var disabled;
             if (disabled = self.get('disabled')) {
-                cls.push(self.getCssClassWithState('disabled'));
+                cls.push(self.getBaseCssClasses('disabled'));
                 attrs['aria-disabled'] = 'true';
             }
             if (self.get('highlighted')) {
-                cls.push(self.getCssClassWithState('hover'));
+                cls.push(self.getBaseCssClasses('hover'));
             }
             if (self.get('focusable')) {
                 attrs['hideFocus'] = 'true';
@@ -33,32 +59,25 @@ KISSY.add("component/base/render", function (S, BoxRender, Component, UIBase, Ma
         isRender: 1,
 
         /**
-         * Get all css class name to be applied to the root element of this component for given state.
+         * Get all css class name to be applied to the root element of this component for given extra class names.
          * the css class names are prefixed with component name.
-         * @param {String} [state] This component's state info.
-         * @ignore
+         * @param extras {String[]|String} class names without prefixCls and current component class name.
+         * @protected
          */
-        getCssClassWithState: function (state) {
-            var self = this,
-                componentCls = self.get("ksComponentCss");
-            if (!componentCls) {
-                return '';
-            }
-            state = state || "";
-            if (state) {
-                state = "-" + state;
-            }
-            return self.getCssClassWithPrefix(componentCls.join(state + " ") + state);
+        getBaseCssClasses: function (extras) {
+            return Render.getBaseCssClasses(this, extras);
         },
 
         /**
          * Get full class name (with prefix) for current component
-         * @param classes {String} class names without prefixCls. Separated by space.
+         * @param extras {String[]|String} class names without prefixCls and current component class name.
          * @method
-         * @return {String} class name with prefixCls
-         * @ignore
+         * @return {String} class name with prefixCls and current component class name.
+         * @protected
          */
-        getCssClassWithPrefix: Manager.getCssClassWithPrefix,
+        getBaseCssClass: function (extras) {
+            return Render.getBaseCssClass(this, extras);
+        },
 
         /**
          * Returns the dom element which is responsible for listening keyboard events.
@@ -74,7 +93,7 @@ KISSY.add("component/base/render", function (S, BoxRender, Component, UIBase, Ma
          */
         _onSetHighlighted: function (v) {
             var self = this,
-                componentCls = self.getCssClassWithState("hover"),
+                componentCls = self.getBaseCssClasses("hover"),
                 el = self.get("el");
             el[v ? 'addClass' : 'removeClass'](componentCls);
         },
@@ -84,7 +103,7 @@ KISSY.add("component/base/render", function (S, BoxRender, Component, UIBase, Ma
          */
         _onSetDisabled: function (v) {
             var self = this,
-                componentCls = self.getCssClassWithState("disabled"),
+                componentCls = self.getBaseCssClasses("disabled"),
                 el = self.get("el");
             el[v ? 'addClass' : 'removeClass'](componentCls)
                 .attr("aria-disabled", v);
@@ -98,7 +117,7 @@ KISSY.add("component/base/render", function (S, BoxRender, Component, UIBase, Ma
          */
         '_onSetActive': function (v) {
             var self = this,
-                componentCls = self.getCssClassWithState("active");
+                componentCls = self.getBaseCssClasses("active");
             self.get("el")[v ? 'addClass' : 'removeClass'](componentCls)
                 .attr("aria-pressed", !!v);
         },
@@ -108,7 +127,7 @@ KISSY.add("component/base/render", function (S, BoxRender, Component, UIBase, Ma
         _onSetFocused: function (v) {
             var self = this,
                 el = self.get("el"),
-                componentCls = self.getCssClassWithState("focused");
+                componentCls = self.getBaseCssClasses("focused");
             el[v ? 'addClass' : 'removeClass'](componentCls);
         },
 
@@ -121,9 +140,44 @@ KISSY.add("component/base/render", function (S, BoxRender, Component, UIBase, Ma
             return this.get("el");
         }
 
-    }, {//  screen state
+    }, {
+
+        getBaseCssClasses: function (component, extras) {
+            extras = normalExtras(extras);
+            var componentCssClasses = component.componentCssClasses,
+                i = 0,
+                cls = '',
+                l = componentCssClasses.length,
+                prefixCls = component.prefixCls;
+            for (; i < l; i++) {
+                cls += prefixExtra(prefixCls, componentCssClasses[i], extras);
+            }
+            return trim(cls);
+        },
+
+        getBaseCssClass: function (component, extras) {
+            return trim(
+                prefixExtra(
+                    component.prefixCls,
+                    component.componentCssClasses[0],
+                    normalExtras(extras)
+                ));
+        },
+
+        //  screen state
         ATTRS: {
-            prefixCls: {},
+            prefixCls: {
+                setter: function (v) {
+                    // shortcut
+                    this.prefixCls = v;
+                }
+            },
+
+            componentCssClasses: {
+                setter: function (v) {
+                    this.componentCssClasses = v;
+                }
+            },
 
             focusable: {},
 
@@ -145,12 +199,10 @@ KISSY.add("component/base/render", function (S, BoxRender, Component, UIBase, Ma
         },
         HTML_PARSER: {
             disabled: function (el) {
-                var self = this,
-                    componentCls = self.getCssClassWithState("disabled");
-                return el.hasClass(componentCls);
+                return el.hasClass(this.getBaseCssClass("disabled"));
             }
         }
     });
 }, {
-    requires: ['./box-render', './impl', './uibase', './manager']
+    requires: ['./box-render', './impl', './uibase']
 });

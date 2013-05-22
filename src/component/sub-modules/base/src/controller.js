@@ -126,11 +126,10 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
                 attrCfg.getter = wrapperViewGetter(attrName);
             }
         }
-        cfg.ksComponentCss = getComponentCss(self);
         return new Render(cfg);
     }
 
-    function getComponentCss(self) {
+    function getComponentCssClasses(self) {
         var constructor = self.constructor,
             cls,
             re = [];
@@ -183,14 +182,9 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
              */
             isController: true,
 
-            /**
-             * Get full class name for current component.
-             * @param {String} classes class names without prefixCls. Separated by space.
-             * @method
-             * @protected
-             * @return {String} class name with prefixCls
-             */
-            getCssClassWithPrefix: Manager.getCssClassWithPrefix,
+            getBaseCssClass: function (extras) {
+                return Render.getBaseCssClass(this, extras);
+            },
 
             /**
              * Initialize this component.
@@ -198,7 +192,11 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
              */
             initializer: function () {
                 var self = this,
+                    prefixCls,
                     defaultChildCfg = self.get('defaultChildCfg');
+
+                prefixCls = self.prefixCls = self.get('prefixCls');
+                self.componentCssClasses = self.get('componentCssClasses');
 
                 self.publish('beforeAddChild', {
                     defaultFn: defAddChild
@@ -208,8 +206,7 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
                     defaultFn: defRemoveChild
                 });
 
-                defaultChildCfg.prefixCls = defaultChildCfg.prefixCls ||
-                    self.get('prefixCls');
+                defaultChildCfg.prefixCls = defaultChildCfg.prefixCls || prefixCls;
             },
 
             'createChild': function (c) {
@@ -841,6 +838,13 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
                  */
                 xrender: {
                     value: Render
+                },
+
+                componentCssClasses: {
+                    view: 1,
+                    valueFn: function () {
+                        return getComponentCssClasses(this);
+                    }
                 },
 
                 /**

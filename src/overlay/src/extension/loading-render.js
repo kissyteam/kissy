@@ -15,7 +15,7 @@ KISSY.add("overlay/extension/loading-render", function (S, Node) {
             if (!self._loadingExtEl) {
                 self._loadingExtEl = new Node("<div " +
                     "class='" +
-                    self.get('prefixCls') + "ext-loading'" +
+                    self.prefixCls + "ext-loading'" +
                     " style='position: absolute;" +
                     "border: none;" +
                     "width: 100%;" +

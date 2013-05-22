@@ -28,7 +28,7 @@ KISSY.add('component/extension/content-render', function (S) {
         ATTRS: {
             contentTpl:{
                 value:'<div id="ks-content{{id}}" ' +
-                    'class="{{prefixCls}}content {{getCssClassWithState "content"}}">' +
+                    'class="{{getBaseCssClasses "content"}}">' +
                     '{{{content}}}' +
                     '</div>'
             },
@@ -38,10 +38,10 @@ KISSY.add('component/extension/content-render', function (S) {
         },
         HTML_PARSER: {
             content: function (el) {
-                return el.one('.' + this.get('prefixCls') + 'content').html();
+                return el.one('.'+this.getBaseCssClass('content')).html();
             },
             contentEl: function (el) {
-                return el.one('.' + this.get('prefixCls') + 'content')
+                return el.one('.'+this.getBaseCssClass('content'));
             }
         }
     });

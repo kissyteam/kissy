@@ -169,7 +169,7 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Dialog4E, MenuButto
     S.augment(TableDialog, {
         _tableInit: function () {
             var self = this,
-                prefixCls = self.editor.get('prefixCls'),
+                prefixCls = self.editor.prefixCls,
                 d = new Dialog4E({
                     width: "500px",
                     mask: true,
@@ -439,7 +439,7 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Dialog4E, MenuButto
         },
         _realTableShow: function () {
             var self = this,
-                prefixCls = self.editor.get('prefixCls'),
+                prefixCls = self.editor.prefixCls,
                 d = self.dialog;
 
             if (self.selectedTable) {

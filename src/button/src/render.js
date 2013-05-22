@@ -16,13 +16,13 @@ KISSY.add("button/render", function (S, Component) {
                 'aria-describedby': renderData.describedby
             });
             if (renderData.checked) {
-                this.get('elCls').push(self.getCssClassWithState("checked"));
+                this.get('elCls').push(self.getBaseCssClasses("checked"));
             }
         },
         _onSetChecked: function (v) {
             var self = this,
                 el = self.get("el"),
-                cls = self.getCssClassWithState("checked");
+                cls = self.getBaseCssClasses("checked");
             el[v ? 'addClass' : 'removeClass'](cls);
         },
         '_onSetTooltip': function (title) {

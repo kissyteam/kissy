@@ -12,14 +12,14 @@ KISSY.add("menu/menuitem-render", function (S, Node, Component) {
             this.get('elAttrs')['role'] = renderData.selectable ?
                 'menuitemradio' : 'menuitem';
             if (renderData.selected) {
-                this.get('elCls').push(this.getCssClassWithState('selected'));
+                this.get('elCls').push(this.getBaseCssClasses('selected'));
             }
         },
 
         _onSetSelected: function (v) {
             var self = this,
                 el = self.get("el"),
-                cls = self.getCssClassWithState("selected");
+                cls = self.getBaseCssClasses("selected");
             el[v ? 'addClass' : 'removeClass'](cls);
         },
 
@@ -35,8 +35,7 @@ KISSY.add("menu/menuitem-render", function (S, Node, Component) {
         },
         HTML_PARSER: {
             selectable: function (el) {
-                var cls = this.getCssClassWithPrefix("menuitem-selectable");
-                return el.hasClass(cls);
+                return el.hasClass(this.getBaseCssClass("selectable"));
             }
         }
     });

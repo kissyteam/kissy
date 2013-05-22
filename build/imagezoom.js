@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 15 23:12
+build time: May 22 23:46
 */
 /**
  * @ignore
@@ -63,7 +63,7 @@ KISSY.add('imagezoom', function (S, Node, Overlay, Zoomer, undefined) {
 
                 if (self.get('type') != INNER) {
                     self.lens = $(substitute(LENS_TPL, {
-                        prefixCls: self.get('prefixCls')
+                        prefixCls: self.prefixCls
                     })).appendTo(self.imageWrap, undefined);
                 }
             },
@@ -360,12 +360,12 @@ KISSY.add('imagezoom', function (S, Node, Overlay, Zoomer, undefined) {
             image = self.get('imageNode');
 
         imageWrap = self.imageWrap = $(substitute(IMAGEZOOM_WRAP_TMPL, {
-            wrapClass: self.get('prefixCls') + 'imagezoom-wrap'
+            wrapClass: self.prefixCls + 'imagezoom-wrap'
         })).insertBefore(image, undefinedNode);
 
         imageWrap.prepend(image);
         icon = self.icon = $(substitute(IMAGEZOOM_ICON_TMPL, {
-            iconClass: self.get('prefixCls') + 'imagezoom-icon'
+            iconClass: self.prefixCls + 'imagezoom-icon'
         }));
         imageWrap.append(icon);
     }
@@ -538,7 +538,7 @@ KISSY.add('imagezoom', function (S, Node, Overlay, Zoomer, undefined) {
  * NOTES:
  * 2012-12-17 yiminghe@gmail.com
  *  - refactor and document
- *  - TODO extend overlay ?? confused
+ *  - TODO extend overlay ?? confused, composition over inheritance!
  *
  * 20120504 by yiminghe@gmail.com
  *  - refactor

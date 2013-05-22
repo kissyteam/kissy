@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 17 00:15
+build time: May 22 23:38
 */
 /**
  * @ignore
@@ -139,7 +139,7 @@ KISSY.add('dd/plugin/proxy', function (S, Node, Base, DD) {
                 }
                 drag['setInternal']('node', dragNode);
                 if (hideNodeOnDrag) {
-                    dragNode.css('visibility', 'visible');
+                    dragNode.css('visibility', '');
                 }
             }
 

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 20 22:59
+build time: May 22 23:39
 */
 /**
  * Encapsulate KISSY toggle button for kissy editor
@@ -17,7 +17,7 @@ KISSY.add("editor/plugin/button", function (S, Editor, Button) {
             ButtonType = Button;
         }
         var self = this,
-            prefixCls = self.get("prefixCls") + "editor-toolbar-";
+            prefixCls = self.prefixCls + "editor-toolbar-";
 
         if (cfg.elCls) {
             cfg.elCls = prefixCls + cfg.elCls;
@@ -32,7 +32,7 @@ KISSY.add("editor/plugin/button", function (S, Editor, Button) {
                 prefixCls + id +
                 '"></span' +
                 '>',
-            prefixCls: self.get("prefixCls") + "editor-",
+            prefixCls: self.prefixCls + "editor-",
             editor: self
         }, cfg)).render();
 

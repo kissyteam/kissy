@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 17 00:16
+build time: May 22 23:39
 */
 /**
  * insert program code dialog
@@ -90,7 +90,7 @@ KISSY.add('editor/plugin/code/dialog', function (S, Editor, Dialog4E, MenuButton
     S.augment(CodeDialog, {
         initDialog: function () {
             var self = this,
-                prefixCls = self.editor.get('prefixCls') + 'editor-',
+                prefixCls = self.editor.prefixCls + 'editor-',
                 el,
                 d;
             d = self.dialog = new Dialog4E({

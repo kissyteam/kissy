@@ -56,7 +56,7 @@ KISSY.add("overlay/dialog-render", function (S, OverlayRender, DialogTpl, CloseT
                 value: false
             },
             contentTpl: {
-                value: DialogTpl + CloseTpl
+                value: CloseTpl+DialogTpl
             },
             headerContent: {
                 sync: 0
@@ -83,22 +83,22 @@ KISSY.add("overlay/dialog-render", function (S, OverlayRender, DialogTpl, CloseT
 
         HTML_PARSER: {
             header: function (el) {
-                return el.one("." + this.get('prefixCls') + "stdmod-header");
+                return el.one("." + this.getBaseCssClass('header'));
             },
             body: function (el) {
-                return el.one("." + this.get('prefixCls') + "stdmod-body");
+                return el.one("." + this.getBaseCssClass('body'));
             },
             footer: function (el) {
-                return el.one("." + this.get('prefixCls') + "stdmod-footer");
+                return el.one("." + this.getBaseCssClass('footer'));
             },
             headerContent: function (el) {
-                return el.one("." + this.get('prefixCls') + "stdmod-header").html();
+                return el.one("." + this.getBaseCssClass('header')).html();
             },
             bodyContent: function (el) {
-                return el.one("." + this.get('prefixCls') + "stdmod-body").html();
+                return el.one("." + this.getBaseCssClass('body')).html();
             },
             footerContent: function (el) {
-                var footer = el.one("." + this.get('prefixCls') + "stdmod-footer");
+                var footer = el.one("." + this.getBaseCssClass('footer'));
                 return footer && footer.html();
             }
         }});

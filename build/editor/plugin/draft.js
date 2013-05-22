@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 17 00:16
+build time: May 22 23:40
 */
 /**
  * draft for kissy editor
@@ -86,7 +86,7 @@ KISSY.add("editor/plugin/draft", function (S, Editor, localStorage, Overlay, Men
 
             var self = this,
                 editor = self.editor,
-                prefixCls = editor.get('prefixCls'),
+                prefixCls = editor.prefixCls,
                 statusbar = editor.get("statusBarEl"),
                 cfg = this.config;
             cfg.draft = cfg.draft || {};
@@ -212,7 +212,7 @@ KISSY.add("editor/plugin/draft", function (S, Editor, localStorage, Overlay, Men
         _prepareHelp: function () {
             var self = this,
                 editor = self.editor,
-                prefixCls = editor.get('prefixCls'),
+                prefixCls = editor.prefixCls,
                 cfg = self.config,
                 draftCfg = cfg.draft,
                 help = new Node(draftCfg['helpHTML'] || "");

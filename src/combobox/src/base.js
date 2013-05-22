@@ -555,7 +555,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
 
     function setInvalid(self, error) {
         var el = self.get("el"),
-            cls = self.get("prefixCls") + "combobox-invalid",
+            cls = self.get('view').getBaseCssClasses('invalid'),
             invalidEl = self.get("invalidEl");
         if (error) {
             el.addClass(cls);

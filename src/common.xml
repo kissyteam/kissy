@@ -296,7 +296,9 @@
     </target>
 
     <target name="build" depends="
-    create-build.dir,before-concat,concat,prepare,
+    create-build.dir,
+    tpl2mod,
+    before-concat,concat,prepare,
     compress-js,compress-css,native2ascii,
     copyright,fill-var,fix-cr-lf,
     extract-dependency,clear">

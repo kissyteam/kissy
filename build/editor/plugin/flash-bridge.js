@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 17 00:16
+build time: May 22 23:40
 */
 /**
  * simplified flash bridge for yui swf
@@ -85,7 +85,7 @@ KISSY.add("editor/plugin/flash-bridge", function (S, SWF, Editor) {
                 type = event.type;
 
             if (type === 'log') {
-
+                S.log(event.message);
             } else if (type) {
                 self.fire(type, event);
             }
@@ -105,7 +105,7 @@ KISSY.add("editor/plugin/flash-bridge", function (S, SWF, Editor) {
     });
 
     FlashBridge.EventHandler = function (id, event) {
-
+        S.log("flash fire event : " + event.type);
         var instance = instances[id];
         if (instance) {
             //防止ie同步触发事件，后面还没on呢，另外给 swf 喘息机会

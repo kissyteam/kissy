@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 17 00:22
+build time: May 22 23:47
 */
 /**
  * @ignore
@@ -83,7 +83,7 @@ KISSY.add("resizable", function (S, Node, RichBase, DD, undefined) {
             node = self.get('node'),
             handlers = self.get('handlers'),
             preserveRatio,
-            prefixCls = self.get('prefixCls'),
+            prefixCls = self.prefixCls,
             prefix = prefixCls + CLS_PREFIX;
         for (i = 0; i < handlers.length; i++) {
             var hc = handlers[i],

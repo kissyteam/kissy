@@ -85,7 +85,7 @@ KISSY.add('editor/plugin/code/dialog', function (S, Editor, Dialog4E, MenuButton
     S.augment(CodeDialog, {
         initDialog: function () {
             var self = this,
-                prefixCls = self.editor.get('prefixCls') + 'editor-',
+                prefixCls = self.editor.prefixCls + 'editor-',
                 el,
                 d;
             d = self.dialog = new Dialog4E({

@@ -306,7 +306,9 @@ KISSY.add("tree/node", function (S, Node, Component,Extension, TreeNodeRender) {
                 },
 
                 decorateChildCls: {
-                    value: 'tree-children'
+                    valueFn: function(){
+                        return this.getBaseCssClass('children');
+                    }
                 },
 
                 defaultChildCfg: {

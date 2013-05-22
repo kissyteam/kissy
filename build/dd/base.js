@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 17 00:14
+build time: May 22 23:38
 */
 /**
  * @ignore
@@ -505,8 +505,8 @@ KISSY.add('dd/base/ddm', function (S, DOM, Event, Node, Base) {
     function region(node) {
         var offset = node.offset();
         if (!node.__dd_cached_width) {
-
-
+            S.log('no cache in dd!');
+            S.log(node[0]);
         }
         return {
             left: offset.left,

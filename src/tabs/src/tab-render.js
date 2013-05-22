@@ -11,12 +11,12 @@ KISSY.add("tabs/tab-render", function (S, Button) {
             attrs.role = 'tab';
             if (this.get('selected')) {
                 attrs['aria-selected'] = true;
-                this.get('elCls').push(this.getCssClassWithState('selected'));
+                this.get('elCls').push(this.getBaseCssClasses('selected'));
             }
         },
         _onSetSelected: function (v) {
             var el = this.get("el");
-            var selectedCls = this.getCssClassWithState('selected');
+            var selectedCls = this.getBaseCssClasses('selected');
             el[v ? 'addClass' : 'removeClass'](selectedCls);
             el.attr('aria-selected', !!v);
         }
@@ -29,8 +29,7 @@ KISSY.add("tabs/tab-render", function (S, Button) {
         },
         HTML_PARSER: {
             selected: function (el) {
-                var selectedCls = this.get('prefixCls') + 'tabs-tab-selected';
-                return el.hasClass(selectedCls);
+                return el.hasClass(this.getBaseCssClass('selected'));
             }
         }
     });

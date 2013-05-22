@@ -32,7 +32,7 @@ KISSY.add("editor/plugin/link", function (S, Editor, Bubble, Utils, DialogLoader
     S.augment(LinkPlugin, {
         pluginRenderUI: function (editor) {
 
-            var prefixCls = editor.get('prefixCls');
+            var prefixCls = editor.prefixCls;
             editor.addButton("link", {
                 tooltip: "插入链接",
                 listeners: {

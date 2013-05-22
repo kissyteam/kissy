@@ -157,7 +157,7 @@ KISSY.add("editor/plugin/color/dialog", function (S, Editor, Dialog4E) {
         _init: function () {
             var self = this,
                 editor = self.editor,
-                prefixCls = editor.get('prefixCls');
+                prefixCls = editor.prefixCls;
 
             self.dialog = new Dialog4E({
                 mask: true,
@@ -233,7 +233,7 @@ KISSY.add("editor/plugin/color/dialog", function (S, Editor, Dialog4E) {
                 win = self.dialog,
                 body = win.get("body"),
                 editor = self.editor,
-                prefixCls = editor.get('prefixCls'),
+                prefixCls = editor.prefixCls,
                 detailPanel = body.one("." + prefixCls + "editor-color-advanced-picker-right");
 
             detailPanel.html(map(ColorGrads(["#ffffff", color, "#000000"], 40),
