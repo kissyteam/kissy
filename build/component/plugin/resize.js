@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 22 23:38
+build time: May 23 00:08
 */
 /**
  * @ignore
@@ -35,6 +35,7 @@ KISSY.add('component/plugin/resize', function (S, Resize) {
             var el = component.get('el'),
                 self = this;
             self.set('node', el);
+            self.set('prefixCls',component.get('prefixCls'));
             // sync
             self.on('resizeEnd', function () {
                 var offset = el.offset();

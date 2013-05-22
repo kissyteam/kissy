@@ -30,6 +30,7 @@ KISSY.add('component/plugin/resize', function (S, Resize) {
             var el = component.get('el'),
                 self = this;
             self.set('node', el);
+            self.set('prefixCls',component.get('prefixCls'));
             // sync
             self.on('resizeEnd', function () {
                 var offset = el.offset();
