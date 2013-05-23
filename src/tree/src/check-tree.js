@@ -32,8 +32,7 @@ KISSY.add("tree/check-tree", function (S, Component, CheckNode, TreeRender, Tree
             }
         }
     }, {
-        xclass: 'check-tree',
-        priority: 40
+        xclass: 'check-tree'
     });
 }, {
     requires: ['component/base', './check-node', './tree-render', './tree-manager']

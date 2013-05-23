@@ -29,8 +29,7 @@ KISSY.add('menu/check-menuitem', function (S, MenuItem, CheckMenuItemRender) {
             }
         }
     }, {
-        xclass: "check-menuitem",
-        priority: 30
+        xclass: "check-menuitem"
     })
 }, {
     requires: ['./menuitem', './check-menuitem-render']

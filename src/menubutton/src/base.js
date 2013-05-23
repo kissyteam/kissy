@@ -270,8 +270,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
                 }
             }
         }, {
-            xclass: 'menu-button',
-            priority: 20
+            xclass: 'menu-button'
         });
 
     function onMenuItemClick(e) {

@@ -31,8 +31,7 @@ KISSY.add("menubutton/option", function (S, Menu) {
             }
         }
     }, {
-        xclass: 'option',
-        priority: 10
+        xclass: 'option'
     });
 }, {
     requires: ['menu']

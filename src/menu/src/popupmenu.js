@@ -97,8 +97,7 @@ KISSY.add("menu/popupmenu", function (S, Extension, Menu, PopupMenuRender) {
                 }
             }
         }, {
-            xclass: 'popupmenu',
-            priority: 20
+            xclass: 'popupmenu'
         });
 
     return PopupMenu;

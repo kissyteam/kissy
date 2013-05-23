@@ -224,8 +224,7 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
                 }
             }
         }, {
-            xclass: 'dialog',
-            priority: 20
+            xclass: 'dialog'
         });
 
 

@@ -201,8 +201,7 @@ KISSY.add('grid/numberpagingbar', function (S,Component,PBar,Bar) {
 			}
 		}
 	},{
-		xclass : 'grid-pagingbar-number',
-		priority : 3	
+		xclass : 'grid-pagingbar-number'
 	});
 
 

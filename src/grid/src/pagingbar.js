@@ -424,8 +424,7 @@ KISSY.add('grid/pagingbar', function (S, Component, Bar, Bindable) {
             ID_CURRENT_PAGE:ID_CURRENT_PAGE,
             ID_TOTAL_COUNT:ID_TOTAL_COUNT
         }, {
-            xclass:'grid-pagingbar',
-            priority:2
+            xclass:'grid-pagingbar'
         });
 
     return PagingBar;

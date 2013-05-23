@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 22 23:37
+build time: May 23 00:42
 */
 KISSY.add("anim/timer/color",function(h,i,j,e){function k(b){var b=b+"",d;if(d=b.match(m))return[parseInt(d[1]),parseInt(d[2]),parseInt(d[3])];if(d=b.match(a))return[parseInt(d[1]),parseInt(d[2]),parseInt(d[3]),parseInt(d[4])];if(d=b.match(l)){for(b=1;b<d.length;b++)2>d[b].length&&(d[b]+=d[b]);return[parseInt(d[1],g),parseInt(d[2],g),parseInt(d[3],g)]}return f[b=b.toLowerCase()]?f[b]:[255,255,255]}function b(){b.superclass.constructor.apply(this,arguments)}var g=16,c=Math.floor,f={black:[0,0,0],silver:[192,
 192,192],gray:[128,128,128],white:[255,255,255],maroon:[128,0,0],red:[255,0,0],purple:[128,0,128],fuchsia:[255,0,255],green:[0,128,0],lime:[0,255,0],olive:[128,128,0],yellow:[255,255,0],navy:[0,0,128],blue:[0,0,255],teal:[0,128,128],aqua:[0,255,255]},m=/^rgb\(([0-9]+)\s*,\s*([0-9]+)\s*,\s*([0-9]+)\)$/i,a=/^rgba\(([0-9]+)\s*,\s*([0-9]+)\s*,\s*([0-9]+),\s*([0-9]+)\)$/i,l=/^#?([0-9A-F]{1,2})([0-9A-F]{1,2})([0-9A-F]{1,2})$/i;e.background.push("backgroundColor");e.borderColor=["borderBottomColor","borderLeftColor",

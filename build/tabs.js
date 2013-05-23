@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 22 23:48
+build time: May 23 00:55
 */
 /**
  * @ignore
@@ -84,8 +84,7 @@ KISSY.add("tabs/bar", function (S, Toolbar, undefined) {
             }
         }
     }, {
-        xclass: 'tabs-bar',
-        priority: 30
+        xclass: 'tabs-bar'
     });
 
     /**
@@ -396,8 +395,7 @@ KISSY.add("tabs/tab", function (S, Button, TabRender) {
             }
         }
     }, {
-        xclass: 'tabs-tab',
-        priority: 30
+        xclass: 'tabs-tab'
     });
 
 }, {

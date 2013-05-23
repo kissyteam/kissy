@@ -3,21 +3,28 @@
  * storage for component
  * @author yiminghe@gmail.com
  */
-KISSY.add("component/base/manager", function (S) {
-    var uis = {
-        // 不带前缀 prefixCls
-        /*
-         "menu" :{
-         priority:0,
-         constructor:Menu
-         }
-         */
-    };
+KISSY.add("component/base/manager", function () {
+
+    var basePriority = 0,
+        uis = {
+            // 不带前缀 prefixCls
+            /*
+             "menu" :{
+             priority:0,
+             constructor:Menu
+             }
+             */
+        };
 
     function getConstructorByXClass(cls) {
-        var cs = cls.split(/\s+/), p = -1, t, ui = null;
-        for (var i = 0; i < cs.length; i++) {
-            var uic = uis[cs[i]];
+        var cs = cls.split(/\s+/),
+            p = -1,
+            t,
+            i,
+            uic,
+            ui = null;
+        for (i = 0; i < cs.length; i++) {
+            uic = uis[cs[i]];
             if (uic && (t = uic.priority) > p) {
                 p = t;
                 ui = uic.constructor;
@@ -36,16 +43,12 @@ KISSY.add("component/base/manager", function (S) {
         return 0;
     }
 
+    // later registered component has high priority
     function setConstructorByXClass(cls, uic) {
-        if (S.isFunction(uic)) {
-            uis[cls] = {
-                constructor:uic,
-                priority:0
-            };
-        } else {
-            uic.priority = uic.priority || 0;
-            uis[cls] = uic;
-        }
+        uis[cls] = {
+            constructor: uic,
+            priority: basePriority++
+        };
     }
 
     var componentInstances = {};
@@ -56,16 +59,16 @@ KISSY.add("component/base/manager", function (S) {
      * @singleton
      * Manage component metadata.
      */
-    var Manager =  {
+    var Manager = {
 
-        __instances:componentInstances,
+        __instances: componentInstances,
 
         /**
          * associate id with component
          * @param {String} id
          * @param {KISSY.Component.Controller} component
          */
-        addComponent:function (id, component) {
+        addComponent: function (id, component) {
             componentInstances[id] = component;
         },
 
@@ -73,7 +76,7 @@ KISSY.add("component/base/manager", function (S) {
          * remove association id with component
          * @param {String} id
          */
-        removeComponent:function (id) {
+        removeComponent: function (id) {
             delete componentInstances[id];
         },
 
@@ -82,7 +85,7 @@ KISSY.add("component/base/manager", function (S) {
          * @param {String} id
          * @return {KISSY.Component.Controller}
          */
-        'getComponent':function (id) {
+        'getComponent': function (id) {
             return componentInstances[id];
         },
 
@@ -92,21 +95,21 @@ KISSY.add("component/base/manager", function (S) {
          * @return {String}
          * @method
          */
-        getXClassByConstructor:getXClassByConstructor,
+        getXClassByConstructor: getXClassByConstructor,
         /**
          * Get component constructor by css class name.
          * @param {String} classNames Class names separated by space.
          * @return {Function}
          * @method
          */
-        getConstructorByXClass:getConstructorByXClass,
+        getConstructorByXClass: getConstructorByXClass,
         /**
          * Associate css class with component constructor.
          * @param {String} className Component's class name.
          * @param {Function} componentConstructor Component's constructor.
          * @method
          */
-        setConstructorByXClass:setConstructorByXClass
+        setConstructorByXClass: setConstructorByXClass
     };
 
     return Manager;

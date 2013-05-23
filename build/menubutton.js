@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 22 23:46
+build time: May 23 00:53
 */
 /**
  * render aria and drop arrow for menubutton
@@ -316,8 +316,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
                 }
             }
         }, {
-            xclass: 'menu-button',
-            priority: 20
+            xclass: 'menu-button'
         });
 
     function onMenuItemClick(e) {
@@ -435,8 +434,7 @@ KISSY.add("menubutton/option", function (S, Menu) {
             }
         }
     }, {
-        xclass: 'option',
-        priority: 10
+        xclass: 'option'
     });
 }, {
     requires: ['menu']
@@ -685,8 +683,7 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
             }
 
         }, {
-            xclass: 'select',
-            priority: 30
+            xclass: 'select'
         });
 
     return Select;

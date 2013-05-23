@@ -318,8 +318,7 @@ KISSY.add("tree/node", function (S, Node, Component,Extension, TreeNodeRender) {
                 }
             }
         }, {
-            xclass: 'tree-node',
-            priority: 10
+            xclass: 'tree-node'
         });
 
 

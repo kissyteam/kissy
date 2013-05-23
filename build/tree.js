@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 22 23:48
+build time: May 23 00:55
 */
 /**
  * root node represent a simple tree
@@ -34,8 +34,7 @@ KISSY.add("tree/base", function (S, Component,TreeNode, TreeRender, TreeManager)
             }
         }
     }, {
-        xclass: 'tree',
-        priority: 30
+        xclass: 'tree'
     });
 
 }, {
@@ -203,8 +202,7 @@ KISSY.add("tree/check-node", function (S, Node, TreeNode) {
             }
         }
     }, {
-        xclass: "check-tree-node",
-        priority: 20
+        xclass: "check-tree-node"
     });
 
     S.mix(CheckNode,
@@ -263,8 +261,7 @@ KISSY.add("tree/check-tree", function (S, Component, CheckNode, TreeRender, Tree
             }
         }
     }, {
-        xclass: 'check-tree',
-        priority: 40
+        xclass: 'check-tree'
     });
 }, {
     requires: ['component/base', './check-node', './tree-render', './tree-manager']
@@ -782,8 +779,7 @@ KISSY.add("tree/node", function (S, Node, Component,Extension, TreeNodeRender) {
                 }
             }
         }, {
-            xclass: 'tree-node',
-            priority: 10
+            xclass: 'tree-node'
         });
 
 

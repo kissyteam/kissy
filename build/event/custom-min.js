@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 22 23:45
+build time: May 23 00:52
 */
 KISSY.add("event/custom/api-impl",function(e,h,c,j){var g=c._Utils,k=g.splitAndRun;return e.mix(h,{fire:function(d,a,b){var f=void 0,l=h.getTargets(d,1),n=l&&l.length,b=b||{};k(a,function(a){var l;g.fillGroupsForEvent(a,b);a=b.type;if((l=j.getCustomEvent(d,a))||n){if(l){if(!l.hasObserver()&&!l.defaultFn&&(l.bubbles&&!n||!l.bubbles))return}else l=new j({currentTarget:d,type:a});a=l.fire(b);!1!==f&&(f=a)}});return f},publish:function(d,a,b){var f;k(a,function(a){f=j.getCustomEvent(d,a,1);e.mix(f,b)});
 return d},getCustomEvent:function(d,a,b){return j.getCustomEvent(d,a,b)},addTarget:function(d,a){var b=h.getTargets(d);e.inArray(a,b)||b.push(a);return d},removeTarget:function(d,a){var b=h.getTargets(d),f=e.indexOf(a,b);-1!=f&&b.splice(f,1);return d},getTargets:function(d,a){a||(d["__~ks_bubble_targets"]=d["__~ks_bubble_targets"]||[]);return d["__~ks_bubble_targets"]},on:function(d,a,b,f){g.batchForType(function(a,b,f){b=g.normalizeParam(a,b,f);a=b.type;if(a=j.getCustomEvent(d,a,1))a.on(b)},0,a,

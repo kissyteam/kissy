@@ -153,8 +153,7 @@ KISSY.add("overlay/base", function (S, Component, Extension, Loading, Mask, Over
             }
         }
     }, {
-        xclass: 'overlay',
-        priority: 10
+        xclass: 'overlay'
     });
 }, {
     requires: [

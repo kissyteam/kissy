@@ -29,8 +29,7 @@ KISSY.add("tree/base", function (S, Component,TreeNode, TreeRender, TreeManager)
             }
         }
     }, {
-        xclass: 'tree',
-        priority: 30
+        xclass: 'tree'
     });
 
 }, {

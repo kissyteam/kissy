@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 22 23:48
+build time: May 23 00:55
 */
 /**
  * Toolbar for KISSY.
@@ -243,8 +243,7 @@ KISSY.add("toolbar", function (S, Component, Extension, Node, Separator, undefin
                 }
             }
         }, {
-            xclass: 'toolbar',
-            priority: 10
+            xclass: 'toolbar'
         });
 
     return Toolbar;

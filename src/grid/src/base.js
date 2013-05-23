@@ -443,8 +443,7 @@ KISSY.add('grid/base', function (S, Component, Header, GridBody, Util) {
             }
         }
     }, {
-        xclass:'grid',
-        priority:1
+        xclass:'grid'
     });
     return grid;
 }, {

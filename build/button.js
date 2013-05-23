@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 22 23:37
+build time: May 23 00:42
 */
 /**
  * @ignore
@@ -125,8 +125,7 @@ KISSY.add("button/base", function (S, Event, Component, ButtonRender) {
             }
         }
     }, {
-        xclass: 'button',
-        priority: 10
+        xclass: 'button'
     });
 
     return Button;

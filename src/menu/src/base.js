@@ -229,8 +229,7 @@ KISSY.add("menu/base", function (S, Event, Component,Extension, MenuRender, unde
             }
         }
     }, {
-        xclass: 'menu',
-        priority: 10
+        xclass: 'menu'
     });
 
     // capture bubbling

@@ -187,8 +187,7 @@ KISSY.add('overlay/popup', function (S, Overlay, undefined) {
             }
         }
     }, {
-        xclass: 'popup',
-        priority: 20
+        xclass: 'popup'
     });
 }, {
     requires: ["./base"]

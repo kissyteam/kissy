@@ -120,8 +120,7 @@ KISSY.add("button/base", function (S, Event, Component, ButtonRender) {
             }
         }
     }, {
-        xclass: 'button',
-        priority: 10
+        xclass: 'button'
     });
 
     return Button;

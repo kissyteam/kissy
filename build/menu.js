@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 22 23:46
+build time: May 23 00:53
 */
 /**
  * @ignore
@@ -234,8 +234,7 @@ KISSY.add("menu/base", function (S, Event, Component,Extension, MenuRender, unde
             }
         }
     }, {
-        xclass: 'menu',
-        priority: 10
+        xclass: 'menu'
     });
 
     // capture bubbling
@@ -321,8 +320,7 @@ KISSY.add('menu/check-menuitem', function (S, MenuItem, CheckMenuItemRender) {
             }
         }
     }, {
-        xclass: "check-menuitem",
-        priority: 30
+        xclass: "check-menuitem"
     })
 }, {
     requires: ['./menuitem', './check-menuitem-render']
@@ -618,8 +616,7 @@ KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender, Extension) {
                 }
             }
         }, {
-            xclass: 'filter-menu',
-            priority: 20
+            xclass: 'filter-menu'
         });
 
     return FilterMenu;
@@ -881,8 +878,7 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
             }
         }
     }, {
-        xclass: "menuitem",
-        priority: 10
+        xclass: "menuitem"
     });
 
     return MenuItem;
@@ -1002,8 +998,7 @@ KISSY.add("menu/popupmenu", function (S, Extension, Menu, PopupMenuRender) {
                 }
             }
         }, {
-            xclass: 'popupmenu',
-            priority: 20
+            xclass: 'popupmenu'
         });
 
     return PopupMenu;
@@ -1294,8 +1289,7 @@ KISSY.add("menu/submenu", function (S, Event, MenuItem, SubMenuRender, Extension
                 }
             }
         }, {
-            xclass: 'submenu',
-            priority: 20
+            xclass: 'submenu'
         });
 
     // # -------------------------------- private start

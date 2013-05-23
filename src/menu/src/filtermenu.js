@@ -233,8 +233,7 @@ KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender, Extension) {
                 }
             }
         }, {
-            xclass: 'filter-menu',
-            priority: 20
+            xclass: 'filter-menu'
         });
 
     return FilterMenu;

@@ -133,8 +133,7 @@ KISSY.add("tree/check-node", function (S, Node, TreeNode) {
             }
         }
     }, {
-        xclass: "check-tree-node",
-        priority: 20
+        xclass: "check-tree-node"
     });
 
     S.mix(CheckNode,

@@ -79,8 +79,7 @@ KISSY.add("tabs/bar", function (S, Toolbar, undefined) {
             }
         }
     }, {
-        xclass: 'tabs-bar',
-        priority: 30
+        xclass: 'tabs-bar'
     });
 
     /**

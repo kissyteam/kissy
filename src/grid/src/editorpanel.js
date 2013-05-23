@@ -119,8 +119,7 @@ KISSY.add('grid/editorpanel', function (S, Component) {
 		}
 	}, 
 	{
-            xclass:'grid-editor-panel',
-            priority:1
+            xclass:'grid-editor-panel'
     });
 	
 	return GridEditorPanel;

@@ -424,8 +424,7 @@ KISSY.add('grid/header', function (S, Component, Column) {
                 }
             }
         }, {
-            xclass:'grid-header',
-            priority:1
+            xclass:'grid-header'
         });
 
     return header;

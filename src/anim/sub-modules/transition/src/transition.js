@@ -5,19 +5,11 @@
  */
 KISSY.add('anim/transition', function (S, DOM, Event, AnimBase) {
 
-    function hypen(str) {
-        return str.replace(/[A-Z]/g, function (m) {
-            return '-' + (m.toLowerCase());
-        })
-    }
-
     var vendorPrefix = S.Features.getTransitionPrefix();
     var TRANSITION_END_EVENT = vendorPrefix ?
         (vendorPrefix.toLowerCase() + 'TransitionEnd') :
         'transitionend';
-
-    vendorPrefix = vendorPrefix ? (hypen(vendorPrefix) + '-') : '';
-    var TRANSITION = vendorPrefix + 'transition';
+    var TRANSITION = vendorPrefix ? (vendorPrefix + 'Transition') : 'transition';
 //    var TRANSITION_PROPERTY = vendorPrefix + 'transition-property';
 //    var TRANSITION_DURATION = vendorPrefix + 'transition-duration';
 //    var TRANSITION_TIMING_FUNCTION = vendorPrefix + 'transition-timing-function';

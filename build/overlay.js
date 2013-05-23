@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 22 23:47
+build time: May 23 00:53
 */
 /**
  * @ignore
@@ -158,8 +158,7 @@ KISSY.add("overlay/base", function (S, Component, Extension, Loading, Mask, Over
             }
         }
     }, {
-        xclass: 'overlay',
-        priority: 10
+        xclass: 'overlay'
     });
 }, {
     requires: [
@@ -514,8 +513,7 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
                 }
             }
         }, {
-            xclass: 'dialog',
-            priority: 20
+            xclass: 'dialog'
         });
 
 
@@ -1313,8 +1311,7 @@ KISSY.add('overlay/popup', function (S, Overlay, undefined) {
             }
         }
     }, {
-        xclass: 'popup',
-        priority: 20
+        xclass: 'popup'
     });
 }, {
     requires: ["./base"]

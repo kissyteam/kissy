@@ -238,8 +238,7 @@ KISSY.add("toolbar", function (S, Component, Extension, Node, Separator, undefin
                 }
             }
         }, {
-            xclass: 'toolbar',
-            priority: 10
+            xclass: 'toolbar'
         });
 
     return Toolbar;

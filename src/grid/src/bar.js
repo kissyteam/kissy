@@ -53,8 +53,7 @@ KISSY.add("grid/bar", function (S,Toolbar,BarRender,BarItem) {
 		},
 		BarItem : BarItem
 	},{
-		xclass : 'grid-bar',
-		priority : 1	
+		xclass : 'grid-bar'
 	});
 
 	return Bar;

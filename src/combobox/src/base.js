@@ -505,8 +505,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
             }
         },
         {
-            xclass: 'combobox',
-            priority: 10
+            xclass: 'combobox'
         }
     );
 

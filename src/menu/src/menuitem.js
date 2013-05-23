@@ -148,8 +148,7 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
             }
         }
     }, {
-        xclass: "menuitem",
-        priority: 10
+        xclass: "menuitem"
     });
 
     return MenuItem;

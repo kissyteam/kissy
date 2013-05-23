@@ -842,8 +842,7 @@ KISSY.add('grid/gridbody', function (S, Component, Template, Bindable) {
             }
 
         }, {
-            xclass:'grid-body',
-            priority:1
+            xclass:'grid-body'
         });
 
     return GridBody;

@@ -40,8 +40,7 @@ KISSY.add('grid/baritem',function(S,Component,Button,Node){
 			}
 		}
 	},{
-		xclass : 'grid-bar-item',
-		priority : 1	
+		xclass : 'grid-bar-item'
 	});
 	/**
      * A simple class that adds button to toolbar
@@ -119,8 +118,7 @@ KISSY.add('grid/baritem',function(S,Component,Button,Node){
 			}
 		}
 	},{
-		xclass : 'grid-bar-item-button',
-		priority : 2	
+		xclass : 'grid-bar-item-button'
 	});
 	
 	/**
@@ -140,8 +138,7 @@ KISSY.add('grid/baritem',function(S,Component,Button,Node){
             el .attr("role", "separator");
         }
 	},{
-		xclass : 'grid-bar-item-separator',
-		priority : 2	
+		xclass : 'grid-bar-item-separator'
 	});
 
 	
@@ -166,8 +163,7 @@ KISSY.add('grid/baritem',function(S,Component,Button,Node){
 			}
 		}
 	},{
-		xclass : 'grid-bar-item-spacer',
-		priority : 2	
+		xclass : 'grid-bar-item-spacer'
 	});
 	
 
@@ -196,8 +192,7 @@ KISSY.add('grid/baritem',function(S,Component,Button,Node){
 			}
 		}
 	},{
-		xclass : 'grid-bar-item-text',
-		priority : 2	
+		xclass : 'grid-bar-item-text'
 	});
 	
 

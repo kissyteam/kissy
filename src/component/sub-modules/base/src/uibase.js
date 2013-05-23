@@ -375,10 +375,7 @@ KISSY.add('component/base/uibase', function (S, RichBase, Node, Manager, undefin
             }
 
             if (xclass) {
-                Manager.setConstructorByXClass(xclass, {
-                    constructor: newClass,
-                    priority: last.priority
-                });
+                Manager.setConstructorByXClass(xclass, newClass);
             }
 
             newClass.extend = extend;

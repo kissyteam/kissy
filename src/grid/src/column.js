@@ -315,8 +315,7 @@ KISSY.add('grid/column', function (S, Component, Template) {
 
             }
         }, {
-            xclass:'grid-hd',
-            priority:1
+            xclass:'grid-hd'
         });
 
     column.Empty = column.extend({
@@ -339,8 +338,7 @@ KISSY.add('grid/column', function (S, Component, Template) {
             }
         }
     }, {
-        xclass:'grid-hd-empty',
-        priority:1
+        xclass:'grid-hd-empty'
     });
 
     return column;

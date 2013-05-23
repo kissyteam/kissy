@@ -243,8 +243,7 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
             }
 
         }, {
-            xclass: 'select',
-            priority: 30
+            xclass: 'select'
         });
 
     return Select;

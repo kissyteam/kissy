@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 22 23:37
+build time: May 23 00:43
 */
 /**
  * @ignore
@@ -510,8 +510,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
             }
         },
         {
-            xclass: 'combobox',
-            priority: 10
+            xclass: 'combobox'
         }
     );
 
@@ -1201,8 +1200,7 @@ KISSY.add("combobox/multi-value-combobox", function (S, getCursor, ComboBox) {
                 }
             }
         }, {
-            xclass: 'multi-value-combobox',
-            priority: 20
+            xclass: 'multi-value-combobox'
         });
 
     // #----------------------- private start

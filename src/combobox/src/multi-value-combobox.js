@@ -165,8 +165,7 @@ KISSY.add("combobox/multi-value-combobox", function (S, getCursor, ComboBox) {
                 }
             }
         }, {
-            xclass: 'multi-value-combobox',
-            priority: 20
+            xclass: 'multi-value-combobox'
         });
 
     // #----------------------- private start

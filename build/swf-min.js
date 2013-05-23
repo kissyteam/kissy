@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 22 23:47
+build time: May 23 00:55
 */
 KISSY.add("swf",function(h,e,r,s,k,p){function i(a){i.superclass.constructor.apply(this,arguments);var b=this.get("expressInstall"),l,d,g=this.get("htmlMode");d=this.get("params");var f=this.get("attrs"),q=this.get("document"),j=e.create("<span>",p,q),o=this.get("elBefore"),m=this.get("src"),k=this.get("version");l=f.id=f.id||h.guid("ks-swf-");if(A()){if(k&&!y(k)&&(this.set("status",i.Status.TOO_LOW),b)){m=b;if(!("width"in f)||!/%$/.test(f.width)&&310>parseInt(f.width,10))f.width="310";if(!("height"in
 f)||!/%$/.test(f.height)&&137>parseInt(f.height,10))f.height="137";b=d.flashVars=d.flashVars||{};h.mix(b,{MMredirectURL:location.href,MMplayerType:n.ie?"ActiveX":"PlugIn",MMdoctitle:q.title.slice(0,47)+" - Flash Player Installation"})}"full"==g?(n.ie?(b=c(m,f,d,1),delete f.id,delete f.style,k=c(m,f,d,0)):(k=c(m,f,d,0),delete f.id,delete f.style,b=c(m,f,d,1)),d=b+k+t+"/"+u+v+t+"/"+u+v):d=c(m,f,d,n.ie)+t+"/"+u+v;this.set("html",d);o?e.insertBefore(j,o):e.append(j,this.get("render"));"outerHTML"in j?

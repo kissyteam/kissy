@@ -195,7 +195,7 @@ KISSY.use("u" +
                 if (UA.ie == 9) {
                     return;
                 }
-                
+
                 var h = o.get("el").one(".ks-resizable-handler-t"),
                     height = o.get("el").outerHeight(),
                     hxy = h.offset();

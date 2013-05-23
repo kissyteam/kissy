@@ -409,8 +409,7 @@ KISSY.add('grid/editor', function (S, Component) {
             }
         }
     }, {
-        xclass:'grid-editor',
-        priority:1
+        xclass:'grid-editor'
     });
 
 	/**
@@ -420,8 +419,7 @@ KISSY.add('grid/editor', function (S, Component) {
      * @extends KISSY.Component.Controller
      */
 	var textEditor = GridEditor.extend({},{
-		xclass:'grid-text-editor',
-        priority:2
+		xclass:'grid-text-editor'
 	});
 	
 	var numberEditor = GridEditor.extend({
@@ -452,8 +450,7 @@ KISSY.add('grid/editor', function (S, Component) {
 		}
 	
 	},{
-		xclass:'grid-number-editor',
-        priority:2
+		xclass:'grid-number-editor'
 	});
 	
     return GridEditor;

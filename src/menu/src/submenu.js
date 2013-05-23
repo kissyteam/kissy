@@ -256,8 +256,7 @@ KISSY.add("menu/submenu", function (S, Event, MenuItem, SubMenuRender, Extension
                 }
             }
         }, {
-            xclass: 'submenu',
-            priority: 20
+            xclass: 'submenu'
         });
 
     // # -------------------------------- private start
