@@ -21,6 +21,11 @@
 * @author yiminghe@gmail.com
 */
 
+.ks-scrollbar {
+    z-index: 9;
+    position: absolute;
+}
+
 /*轨道*/
 .ks-scrollbar-y-track,
 .ks-scrollbar-y-arrow-up,
@@ -34,8 +39,6 @@
 }
 
 .ks-scrollbar-y {
-    position: absolute;
-    z-index: 10;
     top: 0;
     right: 0;
     bottom: 0;
@@ -46,7 +49,6 @@
 
 /*轨道*/
 .ks-scrollbar-y-track {
-    z-index: 10;
     position: absolute;
     top: 14px;
     bottom: 14px;
@@ -132,10 +134,8 @@
 }
 
 .ks-scrollbar-x {
-    position: absolute;
     bottom: 0;
     width: 100%;
-    z-index: 9;
 }
 
 .ks-scrollbar-hidden {

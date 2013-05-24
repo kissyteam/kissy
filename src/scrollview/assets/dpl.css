@@ -12,15 +12,18 @@
     top: 0;
 }
 
+.ks-scrollbar {
+    z-index: 9;
+    position: absolute;
+}
+
 .ks-scrollbar-hidden {
     visibility: hidden;
 }
 
 .ks-scrollbar-y {
-    position: absolute;
     right: 0;
     height: 100%;
-    z-index: 9;
 }
 
 .ks-scrollbar-y-track,
@@ -60,10 +63,8 @@
 }
 
 .ks-scrollbar-x {
-    position: absolute;
     bottom: 0;
     width: 100%;
-    z-index: 9;
 }
 
 .ks-scrollbar-x-track,
