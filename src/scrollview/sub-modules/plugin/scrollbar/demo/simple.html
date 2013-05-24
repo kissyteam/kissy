@@ -86,6 +86,11 @@
                     content: content
                 }).render();
 
+                // notice: swipe can trigger too
+                scrollview.get('el').on('swipe', function (e) {
+                    S.log(e.direction);
+                });
+
                 S.all('#destroy').on('click', function () {
                     scrollview.destroy();
                     S.all('#destroy').attr('disabled', true);
@@ -113,9 +118,10 @@
                     })],
                     content: content
                 }).render();
-
-                S.all('<h2>un-scrollable test</h2>').appendTo('body');
             }
+
+            S.all('<h2>un-scrollable test</h2>').appendTo('body');
+
 
             new ScrollView({
                 width: 320,

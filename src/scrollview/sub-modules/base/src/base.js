@@ -12,10 +12,6 @@ KISSY.add('scrollview/base', function (S, DOM, Component, Extension, Render, Eve
 
     var KeyCodes = Event.KeyCodes;
 
-    function constrain(v, max, min) {
-        return Math.min(Math.max(v, min), max);
-    }
-
     return Component.Controller.extend({
 
         bindUI: function () {
@@ -277,20 +273,7 @@ KISSY.add('scrollview/base', function (S, DOM, Component, Extension, Render, Eve
         },
 
         scrollTo: function (left, top, animCfg) {
-            var self = this,
-                setLeft,
-                setTop,
-                maxScroll = self.maxScroll,
-                minScroll = self.minScroll;
-
-            if (left != undefined) {
-                left = constrain(left, maxScroll.left, minScroll.left);
-                setLeft = 1;
-            }
-            if (top != undefined) {
-                top = constrain(top, maxScroll.top, minScroll.top);
-                setTop = 1;
-            }
+            var self = this;
 
             if (animCfg) {
                 var scrollLeft = self.get('scrollLeft'),
@@ -300,11 +283,11 @@ KISSY.add('scrollview/base', function (S, DOM, Component, Extension, Render, Eve
                         xx: {
                             fx: {
                                 frame: function (anim, fx) {
-                                    if (setLeft) {
+                                    if (left!==undefined) {
                                         self.set('scrollLeft',
                                             scrollLeft + fx.pos * (left - scrollLeft));
                                     }
-                                    if (setTop) {
+                                    if (top!==undefined) {
                                         self.set('scrollTop',
                                             scrollTop + fx.pos * (top - scrollTop));
                                     }
@@ -314,10 +297,10 @@ KISSY.add('scrollview/base', function (S, DOM, Component, Extension, Render, Eve
                     };
                 contentEl.animate(anim, animCfg);
             } else {
-                if (setLeft) {
+                if (left!==undefined) {
                     self.set('scrollLeft', left);
                 }
-                if (setTop) {
+                if (top!==undefined) {
                     self.set('scrollTop', top);
                 }
             }
