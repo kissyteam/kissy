@@ -52,7 +52,7 @@ KISSY.add('scrollview/plugin/pull-to-refresh', function (S, Base) {
             var b = this.scrollview.get('scrollTop');
             if (-b > this.elHeight) {
                 this.set('state', 'releasing');
-            } else {
+            } else if(b<0){
                 this.set('state', 'pulling');
             }
         },

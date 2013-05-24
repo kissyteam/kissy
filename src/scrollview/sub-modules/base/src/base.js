@@ -83,10 +83,10 @@ KISSY.add('scrollview/base', function (S, DOM, Component, Extension, Render, Eve
                     var offset = p.offset(),
                         x = offset.left - elOffset.left,
                         y = offset.top - elOffset.top;
-                    if (x<= maxScrollX && y <= maxScrollY) {
+                    if (x <= maxScrollX && y <= maxScrollY) {
                         pagesXY[i] = {
-                            x:x,
-                            y:y,
+                            x: x,
+                            y: y,
                             index: i
                         };
                     }
@@ -233,6 +233,14 @@ KISSY.add('scrollview/base', function (S, DOM, Component, Extension, Render, Eve
 
         stopAnimation: function () {
             this.get('contentEl').stop();
+            var maxScroll = this.maxScroll;
+            var minScroll = this.minScroll;
+            this.set('scrollTop',
+                Math.min(Math.max(this.get('scrollTop'), minScroll.top),
+                    maxScroll.top));
+            this.set('scrollLeft',
+                Math.min(Math.max(this.get('scrollLeft'), minScroll.left),
+                    maxScroll.left));
         },
 
         '_uiSetPageIndex': function (v) {
@@ -283,11 +291,11 @@ KISSY.add('scrollview/base', function (S, DOM, Component, Extension, Render, Eve
                         xx: {
                             fx: {
                                 frame: function (anim, fx) {
-                                    if (left!==undefined) {
+                                    if (left !== undefined) {
                                         self.set('scrollLeft',
                                             scrollLeft + fx.pos * (left - scrollLeft));
                                     }
-                                    if (top!==undefined) {
+                                    if (top !== undefined) {
                                         self.set('scrollTop',
                                             scrollTop + fx.pos * (top - scrollTop));
                                     }
@@ -297,10 +305,10 @@ KISSY.add('scrollview/base', function (S, DOM, Component, Extension, Render, Eve
                     };
                 contentEl.animate(anim, animCfg);
             } else {
-                if (left!==undefined) {
+                if (left !== undefined) {
                     self.set('scrollLeft', left);
                 }
-                if (top!==undefined) {
+                if (top !== undefined) {
                     self.set('scrollTop', top);
                 }
             }

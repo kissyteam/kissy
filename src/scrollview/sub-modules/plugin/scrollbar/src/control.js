@@ -96,12 +96,18 @@ KISSY.add('scrollview/plugin/scrollbar/control', function (S, Event, DD, Compone
                 pageXY = xAxis ? 'pageX' : 'pageY',
                 diff = e[pageXY] - self._startMousePos,
                 scrollview = self.scrollview,
+                minScroll = scrollview.minScroll,
+                maxScroll = scrollview.maxScroll,
                 scroll = self._startScroll +
                     diff / self._trackElSize * self._scrollLength;
             if (xAxis) {
-                scrollview.scrollTo(scroll);
+                scrollview.scrollTo(Math.min(
+                    maxScroll.left,
+                    Math.max(scroll, minScroll.left)));
             } else {
-                scrollview.scrollTo(undefined, scroll);
+                scrollview.scrollTo(undefined, Math.min(
+                    maxScroll.top,
+                    Math.max(scroll, minScroll.top)));
             }
         },
 
