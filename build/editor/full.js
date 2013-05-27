@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.30
 MIT Licensed
-build time: May 21 14:19
+build time: May 27 12:27
 */
 /**
  * Set up editor constructor
@@ -2770,6 +2770,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
                 '<meta http-equiv="X-UA-Compatible" content="IE=7" />' :
                 "",
             title: "${title}",
+            links:links,
             href: innerCssFile,
             style: customStyle,
             // firefox 必须里面有东西，否则编辑前不能删除!
