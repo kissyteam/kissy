@@ -759,13 +759,6 @@ KISSY.add('editor/core', function (S, Editor, Utils, focusManager, Styles, zInde
                     self.getSelection().scrollIntoView();
                 }, 50);
                 saveLater.call(self);
-            },
-
-            /**
-             * @deprecated
-             */
-            'insertHtml': function (a, b) {
-                this.insertHTML(a, b);
             }
         });
 
