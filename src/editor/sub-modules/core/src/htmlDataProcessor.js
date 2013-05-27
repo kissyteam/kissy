@@ -40,8 +40,8 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor) {
                     allEmpty = 1;
                     for (i = 0; i < l; i++) {
                         child = childNodes[i];
-                        if(child.nodeType == S.DOM.NodeType.TEXT_NODE && !child.nodeValue){
-                        }else{
+                        if (child.nodeType == S.DOM.NodeType.TEXT_NODE && !child.nodeValue) {
+                        } else {
                             allEmpty = 0;
                             break;
                         }
@@ -189,9 +189,11 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor) {
              * 以及其他浏览器段落末尾添加的占位符
              */
             (function () {
-                // Regex to scan for &nbsp; at the end of blocks, which are actually placeholders.
+                // Regex to scan for &nbsp; at the end of blocks,
+                // which are actually placeholders.
                 // Safari transforms the &nbsp; to \xa0. (#4172)
-                var tailNbspRegex = /^[\t\r\n ]*(?:&nbsp;|\xa0)$/;
+                // html will auto indent by kissy htmlparser to add \r \n at the end of line
+                var tailNbspRegex = /^[\t\r\n ]*(?:&nbsp;|\xa0)[\t\r\n ]*$/;
 
                 // Return the last non-space child node of the block (#4344).
                 function lastNoneSpaceChild(block) {
@@ -204,20 +206,13 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor) {
                     return last;
                 }
 
-                function trimFillers(block, fromSource) {
-                    // If the current node is a block, and if we're converting from source or
-                    // we're not in IE then search for and remove any tailing BR node.
-                    // Also, any &nbsp; at the end of blocks are fillers, remove them as well.
-                    // (#2886)
+                function trimFillers(block) {
                     var lastChild = lastNoneSpaceChild(block);
                     if (lastChild) {
-                        if (( fromSource || !UA['ie'] ) &&
-                            lastChild.nodeType == 1 &&
-                            lastChild.nodeName == 'br') {
+                        if (lastChild.nodeType == 1 && lastChild.nodeName == 'br') {
                             block.removeChild(lastChild);
                         }
-                        else if (lastChild.nodeType == 3 &&
-                            tailNbspRegex.test(lastChild.nodeValue)) {
+                        else if (lastChild.nodeType == 3 && tailNbspRegex.test(lastChild.nodeValue)) {
                             block.removeChild(lastChild);
                         }
                     }
@@ -225,34 +220,32 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor) {
 
                 function blockNeedsExtension(block) {
                     var lastChild = lastNoneSpaceChild(block);
-
+                    // empty block <p></p> <td></td>
                     return !lastChild
-                        || lastChild.nodeType == 1 &&
-                        lastChild.nodeName == 'br'
                         // Some of the controls in form needs extension too,
                         // to move cursor at the end of the form. (#4791)
                         || block.nodeName == 'form' &&
                         lastChild.nodeName == 'input';
                 }
 
+                // 外部 html 到编辑器 html
                 function extendBlockForDisplay(block) {
-                    trimFillers(block, true);
-
+                    trimFillers(block);
                     if (blockNeedsExtension(block)) {
-                        // 任何浏览器都要加空格！否则空表格可能间隙太小，不能容下光标
-                        if (UA['ie']) {
-                            block.appendChild(new HTMLParser.Text('\xa0'));
-                        } else {
-                            //其他浏览器需要加空格??
-                            block.appendChild(new HTMLParser.Text('&nbsp;'));
+                        // non-ie need br for cursor and height
+                        // ie does not need!
+                        if (!UA['ie']) {
                             block.appendChild(new HTMLParser.Tag('br'));
                         }
                     }
                 }
 
+                // 编辑器 html 到外部 html
                 function extendBlockForOutput(block) {
-                    trimFillers(block, false);
+                    trimFillers(block);
                     if (blockNeedsExtension(block)) {
+                        // allow browser need!
+                        // <p></p> does not has height!
                         block.appendChild(new HTMLParser.Text('\xa0'));
                     }
                 }
@@ -268,9 +261,6 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor) {
                         delete blockLikeTags[i];
                     }
                 }
-
-                // table 布局需要，不要自动往 td 中加东西
-                delete blockLikeTags.td;
 
                 // We just avoid filler in <pre> right now.
                 // TODO: Support filler for <pre>, line break is also occupy line height.
@@ -358,9 +348,9 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor) {
                 // 编辑器 html 到外部 html
                 // fixForBody , <body>t</body> => <body><p>t</p></body>
                 toHTML: function (html) {
-                    if(UA.webkit){
+                    if (UA.webkit) {
                         // remove filling char for webkit
-                        html=html.replace(/\u200b/g,'');
+                        html = html.replace(/\u200b/g, '');
                     }
                     // fixForBody = fixForBody || "p";
                     // Now use our parser to make further fixes to the structure, as

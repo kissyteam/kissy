@@ -82,7 +82,7 @@ KISSY.add("editor/core/clipboard", function (S, Editor, KERange, KES) {
             // ctrl+v
             if (e.ctrlKey && e.keyCode == 86 ||
                 // shift+insert
-              e.shiftKey && e.keyCode == 45 ) {
+                e.shiftKey && e.keyCode == 45) {
                 self._preventPasteEvent();
             }
         },
@@ -170,7 +170,9 @@ KISSY.add("editor/core/clipboard", function (S, Editor, KERange, KES) {
 
             pastebin.attr('id', 'ke_pastebin');
             // Safari requires a filler node inside the div to have the content pasted into it. (#4882)
-            UA['webkit'] && pastebin[0].appendChild(doc.createTextNode('\xa0'));
+            if (UA['webkit']) {
+                pastebin[0].appendChild(doc.createTextNode('\u200b'));
+            }
 
             doc.body.appendChild(pastebin[0]);
 

@@ -280,9 +280,9 @@
 
             window.newEditor = editor;
 
-            editor.on('paste', function () {
-                return 'x';
-            });
+//            editor.on('paste', function () {
+//                return 'x';
+//            });
         });
 
     });

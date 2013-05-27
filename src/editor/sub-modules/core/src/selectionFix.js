@@ -47,8 +47,7 @@ KISSY.add("editor/core/selectionFix", function (S, Editor) {
             var rng = doc.selection.createRange();
 
             // If the range is collapsed then use the last start range
-            if (startRng &&
-                !rng.item && rng.compareEndPoints('StartToEnd', rng) === 0) {
+            if (startRng && !rng.item && rng.compareEndPoints('StartToEnd', rng) === 0) {
                 startRng.select();
             }
             Event.remove(doc, 'mouseup', endSelection);
@@ -393,9 +392,7 @@ KISSY.add("editor/core/selectionFix", function (S, Editor) {
                 }
             }
 
-            if (!range ||
-                !range.collapsed ||
-                path.block) {
+            if (!range || !range.collapsed || path.block) {
                 return;
             }
 
@@ -445,7 +442,7 @@ KISSY.add("editor/core/selectionFix", function (S, Editor) {
             // 最后的编辑地方
             lastRange
                 .moveToElementEditablePosition(body,
-                TRUE);
+                    TRUE);
             lastPath = new Editor.ElementPath(lastRange.startContainer);
             // 不位于 <body><p>^</p></body>
             if (lastPath.blockLimit.nodeName() !== 'body') {

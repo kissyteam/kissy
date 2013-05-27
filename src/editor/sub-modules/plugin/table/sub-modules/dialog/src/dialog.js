@@ -5,7 +5,6 @@
 KISSY.add("editor/plugin/table/dialog", function (S, Editor, Dialog4E, MenuButton) {
     var Node = S.Node,
         DOM = S.DOM,
-        UA = S.UA,
         trim = S.trim,
         showBorderClassName = "ke_show_border",
         collapseTableClass = "k-e-collapse-table",
@@ -322,7 +321,8 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Dialog4E, MenuButto
                 cols = parseInt(d.tcols.val()) || 1,
                 rows = parseInt(d.trows.val()) || 1,
             //firefox 需要 br 才能得以放置焦点
-                cellpad = UA['ie'] ? "&nbsp;" : "&nbsp;<br/>",
+            //cellPad = UA['ie'] ? "&nbsp;" : "&nbsp;<br/>",
+                cellPad = S.UA.ie ? '' : '<br/>',
                 editor = self.editor;
 
             if (valid(d.talign.get("value")))
@@ -370,7 +370,7 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Dialog4E, MenuButto
                 html += "<thead>";
                 html += "<tr>";
                 for (i = 0; i < cols; i++) {
-                    html += "<th>" + cellpad + "</th>";
+                    html += "<th>" + cellPad + "</th>";
                 }
                 html += "</tr>";
                 html += "</thead>";
@@ -381,7 +381,7 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Dialog4E, MenuButto
             for (var r = 0; r < rows; r++) {
                 html += "<tr>";
                 for (i = 0; i < cols; i++) {
-                    html += "<td>" + cellpad + "</td>";
+                    html += "<td>" + cellPad + "</td>";
                 }
                 html += "</tr>";
             }

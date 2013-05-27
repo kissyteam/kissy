@@ -71,7 +71,7 @@ KISSY.add('editor/core', function (S, Editor, Utils, focusManager, Styles, zInde
             '>' +
             '</iframe>' ,
 
-        EMPTY_CONTENT_REG = /^(?:<(p)>)?(?:(?:&nbsp;)|\s)*(?:<\/\1>)?$/i,
+        EMPTY_CONTENT_REG = /^(?:<(p)>)?(?:(?:&nbsp;)|\s|<br[^>]*>)*(?:<\/\1>)?$/i,
 
         EDITOR_TPL = '<div class="' + KE_TOOLBAR_CLASS.substring(1) + '"></div>' +
             '<div class="' + KE_TEXTAREA_WRAP_CLASS.substring(1) + '" ' +
@@ -1128,7 +1128,7 @@ KISSY.add('editor/core', function (S, Editor, Utils, focusManager, Styles, zInde
             links: links,
             style: customStyle,
             // firefox 必须里面有东西，否则编辑前不能删除!
-            data: data || '&nbsp;',
+            data: data || '',
             script: id ?
                 // The script that launches the bootstrap logic on 'domReady', so the document
                 // is fully editable even before the editing iframe is fully loaded (#4455).

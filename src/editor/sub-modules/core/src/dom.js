@@ -692,9 +692,9 @@ KISSY.add("editor/core/dom", function (S, Editor, Utils) {
                     bogus = UA.opera ?
                         el.ownerDocument.createTextNode('') :
                         el.ownerDocument.createElement('br');
-                    if (UA.gecko) {
-                        bogus.setAttribute('type', '_moz');
-                    }
+//                    if (UA.gecko) {
+//                        bogus.setAttribute('type', '_moz');
+//                    }
                     el.appendChild(bogus);
                 }
             },
