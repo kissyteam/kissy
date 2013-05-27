@@ -258,6 +258,12 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
             // clone event
                 observer = cfg instanceof DOMEventObserver ? cfg : new DOMEventObserver(cfg);
 
+            if (S.Config.debug) {
+                if (!observer.fn) {
+                    S.error('lack event handler for ' + self.type);
+                }
+            }
+
             if (self.findObserver(/**@type KISSY.Event.DOMEventObserver*/observer) == -1) {
                 // 增加 listener
                 if (observer.selector) {

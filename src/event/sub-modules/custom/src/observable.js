@@ -42,6 +42,11 @@ KISSY.add('event/custom/observable', function (S, api, CustomEventObserver, Cust
          */
         on: function (cfg) {
             var observer = new CustomEventObserver(cfg);
+            if (S.Config.debug) {
+                if (!observer.fn) {
+                    S.error('lack event handler for ' + this.type);
+                }
+            }
             if (this.findObserver(observer) == -1) {
                 this.observers.push(observer);
             }

@@ -1,12 +1,12 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 23 00:56
+build time: May 27 13:07
 */
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 23 00:56
+build time: May 27 13:07
 */
 /**
  * @ignore
@@ -44,11 +44,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130523005555' will replace with current timestamp when compressing.
+         * NOTICE: '20130527130651' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130523005555',
+        __BUILD_TIME: '20130527130651',
         /**
          * KISSY Environment.
          * @private
@@ -5950,7 +5950,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20130523005555'
+            tag: '20130527130651'
         }, getBaseInfo()));
     }
 
@@ -13020,7 +13020,7 @@ KISSY.add('dom/selector', function (S, parser, DOM) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 23 00:52
+build time: May 27 13:03
 */
 /**
  * @ignore
@@ -13488,7 +13488,7 @@ KISSY.add('event/base/utils', function (S) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 23 00:52
+build time: May 27 13:04
 */
 /**
  * @ignore
@@ -13854,6 +13854,11 @@ KISSY.add('event/custom/observable', function (S, api, CustomEventObserver, Cust
          */
         on: function (cfg) {
             var observer = new CustomEventObserver(cfg);
+            if (S.Config.debug) {
+                if (!observer.fn) {
+                    S.error('lack event handler for ' + this.type);
+                }
+            }
             if (this.findObserver(observer) == -1) {
                 this.observers.push(observer);
             }
@@ -14092,7 +14097,7 @@ KISSY.add('event/custom/observer', function (S, Event) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 23 00:52
+build time: May 27 13:04
 */
 /**
  * @ignore
@@ -15848,6 +15853,12 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
                 s = special[self.type] || {},
             // clone event
                 observer = cfg instanceof DOMEventObserver ? cfg : new DOMEventObserver(cfg);
+
+            if (S.Config.debug) {
+                if (!observer.fn) {
+                    S.error('lack event handler for ' + self.type);
+                }
+            }
 
             if (self.findObserver(/**@type KISSY.Event.DOMEventObserver*/observer) == -1) {
                 // 增加 listener
@@ -23714,7 +23725,7 @@ KISSY.add('anim/timer', function (S, DOM, Event, AnimBase, Easing, AM, Fx, SHORT
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 23 00:42
+build time: May 23 11:49
 */
 /**
  * animation using css transition
@@ -23723,19 +23734,11 @@ build time: May 23 00:42
  */
 KISSY.add('anim/transition', function (S, DOM, Event, AnimBase) {
 
-    function hypen(str) {
-        return str.replace(/[A-Z]/g, function (m) {
-            return '-' + (m.toLowerCase());
-        })
-    }
-
     var vendorPrefix = S.Features.getTransitionPrefix();
     var TRANSITION_END_EVENT = vendorPrefix ?
         (vendorPrefix.toLowerCase() + 'TransitionEnd') :
         'transitionend';
-
-    vendorPrefix = vendorPrefix ? (hypen(vendorPrefix) + '-') : '';
-    var TRANSITION = vendorPrefix + 'transition';
+    var TRANSITION = vendorPrefix ? (vendorPrefix + 'Transition') : 'transition';
 //    var TRANSITION_PROPERTY = vendorPrefix + 'transition-property';
 //    var TRANSITION_DURATION = vendorPrefix + 'transition-duration';
 //    var TRANSITION_TIMING_FUNCTION = vendorPrefix + 'transition-timing-function';
