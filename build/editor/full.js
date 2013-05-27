@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.30
 MIT Licensed
-build time: May 27 12:27
+build time: May 27 22:02
 */
 /**
  * Set up editor constructor
@@ -2334,10 +2334,10 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
                 // http://code.google.com/p/kissy/issues/detail?can=1&start=100&id=121
                 // only tag can scroll
                 if (clone && clone[0].nodeType == 1) {
-                    clone.scrollIntoView(undefined,{
-                        alignWithTop:false,
-                        allowHorizontalScroll:true,
-                        onlyScrollIfNeeded:true
+                    clone.scrollIntoView(undefined, {
+                        alignWithTop: false,
+                        allowHorizontalScroll: true,
+                        onlyScrollIfNeeded: true
                     });
                 }
                 saveLater.call(self);
@@ -2411,6 +2411,10 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
                     self.getSelection().scrollIntoView();
                 }, 50);
                 saveLater.call(self);
+            },
+
+            'insertHTML': function (data, dataFilter) {
+                return this.insertHtml(data, dataFilter);
             }
         });
 
@@ -2770,7 +2774,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
                 '<meta http-equiv="X-UA-Compatible" content="IE=7" />' :
                 "",
             title: "${title}",
-            links:links,
+            links: links,
             href: innerCssFile,
             style: customStyle,
             // firefox 必须里面有东西，否则编辑前不能删除!

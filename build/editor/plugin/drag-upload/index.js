@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.30
 MIT Licensed
-build time: May 27 12:27
+build time: May 27 22:02
 */
 /**
  * drag file support for html5 file&dd
