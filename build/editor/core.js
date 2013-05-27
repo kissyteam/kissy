@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 23 00:44
+build time: May 27 12:19
 */
 /**
  * Set up editor constructor
@@ -652,7 +652,6 @@ KISSY.add('editor/core', function (S, Editor, Utils, focusManager, Styles, zInde
         IFRAME_HTML_TPL = HTML5_DTD + '<html>' +
             '<head>{doctype}' +
             '<title>{title}</title>' +
-            '<link href="' + '{href}" rel="stylesheet" />' +
             '<style>' +
             '{style}' +
             '</style>' +
@@ -1134,7 +1133,7 @@ KISSY.add('editor/core', function (S, Editor, Utils, focusManager, Styles, zInde
              */
             addCustomLink: function (link) {
                 var self = this,
-                    customLink = self.get('customLink') || [],
+                    customLink = self.get('customLink'),
                     doc = self.get('document')[0];
                 customLink.push(link);
                 self.set('customLink', customLink);
@@ -1157,7 +1156,7 @@ KISSY.add('editor/core', function (S, Editor, Utils, focusManager, Styles, zInde
                         DOM.remove(links[i]);
                     }
                 }
-                var cls = self.get('customLink') || [],
+                var cls = self.get('customLink'),
                     ind = S.indexOf(link, cls);
                 if (ind != -1) {
                     cls.splice(ind, 1);
@@ -1714,13 +1713,13 @@ KISSY.add('editor/core', function (S, Editor, Utils, focusManager, Styles, zInde
         var links = '',
             i,
             innerCssFile = Utils.debugUrl('theme/editor-iframe.css');
-
+        customLink = customLink.concat([]);
+        customLink.unshift(innerCssFile);
         for (i = 0; i < customLink.length; i++) {
             links += S.substitute('<link href="' + '{href}" rel="stylesheet" />', {
                 href: customLink[i]
             });
         }
-
         return S.substitute(IFRAME_HTML_TPL, {
             // kissy-editor #12
             // IE8 doesn't support carets behind images(empty content after image's block)
@@ -1729,7 +1728,7 @@ KISSY.add('editor/core', function (S, Editor, Utils, focusManager, Styles, zInde
                 '<meta http-equiv="X-UA-Compatible" content="IE=7" />' :
                 '',
             title: '${title}',
-            href: innerCssFile,
+            links: links,
             style: customStyle,
             // firefox 必须里面有东西，否则编辑前不能删除!
             data: data || '&nbsp;',
