@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.30
 MIT Licensed
-build time: Apr 9 11:24
+build time: May 27 12:51
 */
 /**
  * accordion aria support
@@ -2973,7 +2973,14 @@ KISSY.add('switchable/tabs/aria', function (S, DOM, Event, Switchable, Aria, Tab
 
         // move focus to current trigger if invoked by dom event
         if (domEvent) {
-            trigger.focus();
+            // in case  trigger is invisible in ie
+            // eg: tabs in tabs
+            try{
+                trigger.focus();
+            }catch (e){
+
+            }
+
         }
         if (lastPanel) {
             lastPanel.setAttribute("aria-hidden", "true");
