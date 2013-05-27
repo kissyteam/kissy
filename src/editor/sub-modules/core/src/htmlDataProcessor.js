@@ -15,16 +15,41 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor) {
                 HTMLParser = S.require("htmlparser"),
                 htmlFilter = new HTMLParser.Filter(),
                 dataFilter = new HTMLParser.Filter();
+            /*
+             function filterSpan(element) {
+             if (((element.getAttribute('class') + "").match(/Apple-\w+-span/)) ||
+             !(element.attributes.length)) {
+             element.setTagName(null);
+             return undefined;
+             }
+             if (!(element.childNodes.length) && !(element.attributes.length)) {
+             return false;
+             }
+             return undefined;
+             }
+             */
 
-            function filterSpan(element) {
-                if (((element.getAttribute('class') + "").match(/Apple-\w+-span/)) || !(element.attributes.length)) {
-                    element.setTagName(null);
-                    return undefined;
-                }
-                if (!(element.childNodes.length) && !(element.attributes.length)) {
+            // remove empty inline element
+            function filterInline(element) {
+                var childNodes = element.childNodes,
+                    i,
+                    child,
+                    allEmpty,
+                    l = childNodes.length;
+                if (l) {
+                    allEmpty = 1;
+                    for (i = 0; i < l; i++) {
+                        child = childNodes[i];
+                        if(child.nodeType == S.DOM.NodeType.TEXT_NODE && !child.nodeValue){
+                        }else{
+                            allEmpty = 0;
+                            break;
+                        }
+                    }
+                    return allEmpty ? false : undefined;
+                } else {
                     return false;
                 }
-                return undefined;
             }
 
             (function () {
@@ -51,7 +76,7 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor) {
                     tags: {
                         script: wrapAsComment,
                         noscript: wrapAsComment,
-                        span: filterSpan
+                        span: filterInline
                     }
                 };
 
@@ -103,8 +128,13 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor) {
                             if (!(element.childNodes.length) && !(element.attributes.length)) {
                                 return false;
                             }
+                            return undefined;
                         },
-                        span: filterSpan
+                        span: filterInline,
+                        strong: filterInline,
+                        em: filterInline,
+                        del: filterInline,
+                        u: filterInline
                     },
                     attributes: {
                         // 清除空style
@@ -112,6 +142,7 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor) {
                             if (!S.trim(v)) {
                                 return false;
                             }
+                            return undefined;
                         }
                     },
                     attributeNames: [
@@ -125,18 +156,13 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor) {
                         // kissy 相关
                         [ ( /^_ks.*/ ), '' ]
                     ],
-                    text: function (text) {
-                        // remove fill char for webkit
-                        if (UA.webkit) {
-                            return text.replace(/\u200b/g, "");
-                        }
-                    },
                     comment: function (contents) {
                         // If this is a comment for protected source.
                         if (contents.substr(0, protectedSourceMarker.length) == protectedSourceMarker) {
                             contents = S.trim(S.urlDecode(contents.substr(protectedSourceMarker.length)));
                             return HTMLParser.parse(contents).childNodes[0];
                         }
+                        return undefined;
                     }
                 };
                 if (UA['ie']) {
@@ -332,6 +358,10 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor) {
                 // 编辑器 html 到外部 html
                 // fixForBody , <body>t</body> => <body><p>t</p></body>
                 toHTML: function (html) {
+                    if(UA.webkit){
+                        // remove filling char for webkit
+                        html=html.replace(/\u200b/g,'');
+                    }
                     // fixForBody = fixForBody || "p";
                     // Now use our parser to make further fixes to the structure, as
                     // well as apply the filter.

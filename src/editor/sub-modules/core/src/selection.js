@@ -549,7 +549,9 @@ KISSY.add("editor/core/selection", function (S) {
                         (( UA.gecko && UA.gecko < 1.0900 ) || UA.opera || UA['webkit']) &&
                         startContainer[0].nodeType == DOM.NodeType.ELEMENT_NODE && !startContainer[0].childNodes.length) {
                         // webkit 光标停留不到在空元素内，要fill char，之后范围定在 fill char 之后
-                        startContainer[0].appendChild(self.document.createTextNode(UA['webkit'] ? "\u200b" : ""));
+                        startContainer[0].appendChild(
+                            self.document.createTextNode(UA['webkit'] ? "\u200b" : "")
+                        );
                         range.startOffset++;
                         range.endOffset++;
                     }
@@ -650,8 +652,16 @@ KISSY.add("editor/core/selection", function (S) {
 
                 // If we have a collapsed range, inside an empty element, we must add
                 // something to it, otherwise the caret will not be visible.
-                if (self.collapsed && startContainer[0].nodeType == DOM.NodeType.ELEMENT_NODE && !startContainer[0].childNodes.length)
-                    startContainer[0].appendChild(self.document.createTextNode(""));
+                if (self.collapsed &&
+                    startContainer[0].nodeType == DOM.NodeType.ELEMENT_NODE && !startContainer[0].childNodes.length) {
+                    startContainer[0].appendChild(
+                        // webkit need filling char
+                        self.document.createTextNode(UA.webkit ? '\u200b' : '')
+                    );
+                    self.startOffset++;
+                    self.endOffset++;
+                }
+
 
                 var nativeRange = self.document.createRange();
                 nativeRange.setStart(startContainer[0], self.startOffset);
