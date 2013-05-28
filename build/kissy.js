@@ -1,12 +1,12 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 27 13:07
+build time: May 28 17:15
 */
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 27 13:07
+build time: May 28 17:15
 */
 /**
  * @ignore
@@ -44,11 +44,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130527130651' will replace with current timestamp when compressing.
+         * NOTICE: '20130528171457' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130527130651',
+        __BUILD_TIME: '20130528171457',
         /**
          * KISSY Environment.
          * @private
@@ -5950,7 +5950,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20130527130651'
+            tag: '20130528171457'
         }, getBaseInfo()));
     }
 
@@ -18892,7 +18892,7 @@ KISSY.add('json/stringify', function (S,Quote) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 23 00:53
+build time: May 28 17:05
 */
 /**
  * @ignore
@@ -20776,7 +20776,7 @@ KISSY.add('io/xhr-transport-base', function (S, IO) {
 
     XhrTransportBase.nativeXhr = win['ActiveXObject'] ? function (crossDomain, refWin) {
         // consider ie10
-        if (!XhrTransportBase.supportCORS && crossDomain && _XDomainRequest) {
+        if (!supportCORS && crossDomain && _XDomainRequest) {
             return new _XDomainRequest();
         }
         // ie7 XMLHttpRequest 不能访问本地文件
@@ -20785,7 +20785,10 @@ KISSY.add('io/xhr-transport-base', function (S, IO) {
     } : createStandardXHR;
 
     XhrTransportBase._XDomainRequest = _XDomainRequest;
-    XhrTransportBase.supportCORS = ('withCredentials' in XhrTransportBase.nativeXhr());
+
+    var supportCORS = XhrTransportBase.supportCORS =
+        ('withCredentials' in XhrTransportBase.nativeXhr());
+
     function isInstanceOfXDomainRequest(xhr) {
         return _XDomainRequest && (xhr instanceof _XDomainRequest);
     }
@@ -20845,20 +20848,19 @@ KISSY.add('io/xhr-transport-base', function (S, IO) {
                 nativeXhr.open(type, url, async);
             }
 
-            var withCredentials = 0;
+            xhrFields = c['xhrFields'] || {};
 
-            if (xhrFields = c['xhrFields']) {
-                for (i in xhrFields) {
-                    if (i == 'withCredentials') {
-                        withCredentials = 1;
-                    }
-                    nativeXhr[ i ] = xhrFields[ i ];
+            if ('withCredentials' in xhrFields) {
+                if (!supportCORS) {
+                    delete xhrFields.withCredentials;
                 }
+            } else if (supportCORS) {
+                // withCredentials defaults to true
+                xhrFields.withCredentials = true;
             }
 
-            // withCredentials defaults to true
-            if (!withCredentials) {
-                nativeXhr.withCredentials = true;
+            for (i in xhrFields) {
+                nativeXhr[ i ] = xhrFields[ i ];
             }
 
             // Override mime type if supported
