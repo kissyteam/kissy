@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 23 00:53
+build time: May 28 17:05
 */
 /**
  * @ignore
@@ -1885,7 +1885,7 @@ KISSY.add('io/xhr-transport-base', function (S, IO) {
 
     XhrTransportBase.nativeXhr = win['ActiveXObject'] ? function (crossDomain, refWin) {
         // consider ie10
-        if (!XhrTransportBase.supportCORS && crossDomain && _XDomainRequest) {
+        if (!supportCORS && crossDomain && _XDomainRequest) {
             return new _XDomainRequest();
         }
         // ie7 XMLHttpRequest 不能访问本地文件
@@ -1894,7 +1894,10 @@ KISSY.add('io/xhr-transport-base', function (S, IO) {
     } : createStandardXHR;
 
     XhrTransportBase._XDomainRequest = _XDomainRequest;
-    XhrTransportBase.supportCORS = ('withCredentials' in XhrTransportBase.nativeXhr());
+
+    var supportCORS = XhrTransportBase.supportCORS =
+        ('withCredentials' in XhrTransportBase.nativeXhr());
+
     function isInstanceOfXDomainRequest(xhr) {
         return _XDomainRequest && (xhr instanceof _XDomainRequest);
     }
@@ -1954,20 +1957,19 @@ KISSY.add('io/xhr-transport-base', function (S, IO) {
                 nativeXhr.open(type, url, async);
             }
 
-            var withCredentials = 0;
+            xhrFields = c['xhrFields'] || {};
 
-            if (xhrFields = c['xhrFields']) {
-                for (i in xhrFields) {
-                    if (i == 'withCredentials') {
-                        withCredentials = 1;
-                    }
-                    nativeXhr[ i ] = xhrFields[ i ];
+            if ('withCredentials' in xhrFields) {
+                if (!supportCORS) {
+                    delete xhrFields.withCredentials;
                 }
+            } else if (supportCORS) {
+                // withCredentials defaults to true
+                xhrFields.withCredentials = true;
             }
 
-            // withCredentials defaults to true
-            if (!withCredentials) {
-                nativeXhr.withCredentials = true;
+            for (i in xhrFields) {
+                nativeXhr[ i ] = xhrFields[ i ];
             }
 
             // Override mime type if supported
