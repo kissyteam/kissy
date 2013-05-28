@@ -1,14 +1,21 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 23 00:42
+build time: May 28 23:44
 */
+/*
+ Combined processedModules by KISSY Module Compiler: 
+
+ base/attribute
+ base
+*/
+
 /**
  * @ignore
  * attribute management
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
-KISSY.add('base/attribute', function (S, EventCustom, undefined) {
+KISSY.add('base/attribute',function (S, EventCustom, undefined) {
 
     // atomic flag
     Attribute.INVALID = {};
@@ -601,7 +608,7 @@ KISSY.add('base/attribute', function (S, EventCustom, undefined) {
  * attribute management and event in one
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
-KISSY.add('base', function (S, Attribute, EventCustom) {
+KISSY.add('base',function (S, Attribute, EventCustom) {
 
     /**
      * @class KISSY.Base
@@ -687,3 +694,4 @@ KISSY.add('base', function (S, Attribute, EventCustom) {
 }, {
     requires: ['base/attribute', 'event/custom']
 });
+

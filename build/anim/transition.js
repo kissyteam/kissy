@@ -1,8 +1,14 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 23 11:49
+build time: May 28 23:59
 */
+/*
+ Combined processedModules by KISSY Module Compiler: 
+
+ anim/transition
+*/
+
 /**
  * animation using css transition
  * @author yiminghe@gmail.com
@@ -166,3 +172,4 @@ KISSY.add('anim/transition', function (S, DOM, Event, AnimBase) {
 }, {
     requires: ['dom', 'event', './base']
 });
+

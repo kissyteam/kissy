@@ -6,7 +6,7 @@
     <import file="../../../common.xml"/>
 
     <target name="merge-editor-dependency">
-        <concat destfile="${component.src.dir}/modules.js"
+        <concat destfile="${component.src.dir}/deps.js"
                 encoding="${charset}" outputencoding="${charset}">
             <header filtering="no" trimleading="yes">
                 (function(config,Features,UA){

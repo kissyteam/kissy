@@ -14,7 +14,7 @@ KISSY.add("combobox", function (S, ComboBox, MultiValueComboBox, FilterSelect, L
         'combobox/base',
         'combobox/multi-value-combobox',
         'combobox/filter-select',
-        'combobox/LocalDataSource',
-        'combobox/RemoteDataSource'
+        'combobox/local-data-source',
+        'combobox/remote-data-source'
     ]
 });

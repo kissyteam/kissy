@@ -24,6 +24,7 @@
                debug="on"
                source="1.6"
                target="1.6"
+               includeantruntime="true"
                excludes=".svn">
             <classpath refid="classpath.path"/>
         </javac>

@@ -3,7 +3,7 @@
  * attribute management and event in one
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
-KISSY.add('base', function (S, Attribute, EventCustom) {
+KISSY.add('base',function (S, Attribute, EventCustom) {
 
     /**
      * @class KISSY.Base

@@ -1,8 +1,14 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 23 00:42
+build time: May 28 23:57
 */
+/*
+ Combined processedModules by KISSY Module Compiler: 
+
+ anim/facade
+*/
+
 /**
  * anim facade between native and timer
  * @author yiminghe@gmail.com
@@ -202,3 +208,4 @@ KISSY.add('anim/facade', function (S, DOM, AnimBase, TimerAnim, TransitionAnim) 
         KISSY.Features.isTransitionSupported() ? 'anim/transition' : '']
 
 });
+

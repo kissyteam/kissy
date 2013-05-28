@@ -1,176 +1,20 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 23 00:42
+build time: May 28 23:58
 */
-/**
- * @ignore
- * special patch for making color gradual change
- * @author yiminghe@gmail.com
- */
-KISSY.add('anim/timer/color', function (S, DOM, Fx,SHORT_HANDS) {
-
-    var HEX_BASE = 16,
-        floor = Math.floor,
-        KEYWORDS = {
-            'black':[0, 0, 0],
-            'silver':[192, 192, 192],
-            'gray':[128, 128, 128],
-            'white':[255, 255, 255],
-            'maroon':[128, 0, 0],
-            'red':[255, 0, 0],
-            'purple':[128, 0, 128],
-            'fuchsia':[255, 0, 255],
-            'green':[0, 128, 0],
-            'lime':[0, 255, 0],
-            'olive':[128, 128, 0],
-            'yellow':[255, 255, 0],
-            'navy':[0, 0, 128],
-            'blue':[0, 0, 255],
-            'teal':[0, 128, 128],
-            'aqua':[0, 255, 255]
-        },
-        re_RGB = /^rgb\(([0-9]+)\s*,\s*([0-9]+)\s*,\s*([0-9]+)\)$/i,
-        re_RGBA = /^rgba\(([0-9]+)\s*,\s*([0-9]+)\s*,\s*([0-9]+),\s*([0-9]+)\)$/i,
-        re_hex = /^#?([0-9A-F]{1,2})([0-9A-F]{1,2})([0-9A-F]{1,2})$/i,
-
-        COLORS = [
-            'backgroundColor' ,
-            'borderBottomColor' ,
-            'borderLeftColor' ,
-            'borderRightColor' ,
-            'borderTopColor' ,
-            'color' ,
-            'outlineColor'
-        ];
-
-    SHORT_HANDS['background'].push('backgroundColor');
-
-    SHORT_HANDS['borderColor'] = [
-        'borderBottomColor',
-        'borderLeftColor',
-        'borderRightColor',
-        'borderTopColor'
-    ];
-
-    SHORT_HANDS['border'].push(
-        'borderBottomColor',
-        'borderLeftColor',
-        'borderRightColor',
-        'borderTopColor'
-    );
-
-    SHORT_HANDS['borderBottom'].push(
-        'borderBottomColor'
-    );
-
-    SHORT_HANDS['borderLeft'].push(
-        'borderLeftColor'
-    );
-
-    SHORT_HANDS['borderRight'].push(
-        'borderRightColor'
-    );
-
-    SHORT_HANDS['borderTop'].push(
-        'borderTopColor'
-    );
-
-    //得到颜色的数值表示，红绿蓝数字数组
-    function numericColor(val) {
-        val = (val + '');
-        var match;
-        if (match = val.match(re_RGB)) {
-            return [
-                parseInt(match[1]),
-                parseInt(match[2]),
-                parseInt(match[3])
-            ];
-        }
-        else if (match = val.match(re_RGBA)) {
-            return [
-                parseInt(match[1]),
-                parseInt(match[2]),
-                parseInt(match[3]),
-                parseInt(match[4])
-            ];
-        }
-        else if (match = val.match(re_hex)) {
-            for (var i = 1; i < match.length; i++) {
-                if (match[i].length < 2) {
-                    match[i] += match[i];
-                }
-            }
-            return [
-                parseInt(match[1], HEX_BASE),
-                parseInt(match[2], HEX_BASE),
-                parseInt(match[3], HEX_BASE)
-            ];
-        }
-        if (KEYWORDS[val = val.toLowerCase()]) {
-            return KEYWORDS[val];
-        }
-
-        //transparent 或者颜色字符串返回
-        S.log('only allow rgb or hex color string : ' + val, 'warn');
-        return [255, 255, 255];
-    }
-
-    function ColorFx() {
-        ColorFx.superclass.constructor.apply(this, arguments);
-    }
-
-    S.extend(ColorFx, Fx, {
-
-        load:function () {
-            var self = this;
-            ColorFx.superclass.load.apply(self, arguments);
-            if (self.from) {
-                self.from = numericColor(self.from);
-            }
-            if (self.to) {
-                self.to = numericColor(self.to);
-            }
-        },
-
-        interpolate:function (from, to, pos) {
-            var interpolate = ColorFx.superclass.interpolate;
-            if (from.length == 3 && to.length == 3) {
-                return 'rgb(' + [
-                    floor(interpolate(from[0], to[0], pos)),
-                    floor(interpolate(from[1], to[1], pos)),
-                    floor(interpolate(from[2], to[2], pos))
-                ].join(', ') + ')';
-            } else if (from.length == 4 || to.length == 4) {
-                return 'rgba(' + [
-                    floor(interpolate(from[0], to[0], pos)),
-                    floor(interpolate(from[1], to[1], pos)),
-                    floor(interpolate(from[2], to[2], pos)),
-                    // 透明度默认 1
-                    floor(interpolate(from[3] || 1, to[3] || 1, pos))
-                ].join(', ') + ')';
-            } else {
-                return S.log('anim/color unknown value : ' + from);
-            }
-        }
-
-    });
-
-    S.each(COLORS, function (color) {
-        Fx.Factories[color] = ColorFx;
-    });
-
-    return ColorFx;
-
-}, {
-    requires:['dom','./fx','./short-hand']
-});
-
 /*
-  TODO
-  支持 hsla
-   - https://github.com/jquery/jquery-color/blob/master/jquery.color.js
-*//**
+ Combined processedModules by KISSY Module Compiler: 
+
+ anim/timer/easing
+ anim/timer/manager
+ anim/timer/fx
+ anim/timer/short-hand
+ anim/timer/color
+ anim/timer
+*/
+
+/**
  * @ignore
  * Easing equation from yui3 and css3
  * @author yiminghe@gmail.com, lifesinger@gmail.com
@@ -514,6 +358,108 @@ KISSY.add('anim/timer/easing', function () {
  */
 /**
  * @ignore
+ * single timer for the whole anim module
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('anim/timer/manager', function (S, undefined) {
+    var stamp = S.stamp;
+    var win = S.Env.host;
+    // note in background tab, interval is set to 1s in chrome/firefox
+    // no interval change in ie for 15, if interval is less than 15
+    // then in background tab interval is changed to 15
+    var INTERVAL = 15;
+    // https://gist.github.com/paulirish/1579671
+    var requestAnimationFrameFn = win['requestAnimationFrame'],
+        cancelAnimationFrameFn = win['cancelAnimationFrame'];
+    if (!requestAnimationFrameFn) {
+        var vendors = ['ms', 'moz', 'webkit', 'o'];
+        for (var x = 0; x < vendors.length && !requestAnimationFrameFn; ++x) {
+            requestAnimationFrameFn = win[vendors[x] + 'RequestAnimationFrame'];
+            cancelAnimationFrameFn = win[vendors[x] + 'CancelAnimationFrame'] ||
+                win[vendors[x] + 'CancelRequestAnimationFrame'];
+        }
+    }
+    // chrome is unstable....
+    if (requestAnimationFrameFn && !S.UA.chrome) {
+        S.log('anim use requestAnimationFrame');
+    } else {
+        requestAnimationFrameFn = function (fn) {
+            return setTimeout(fn, INTERVAL);
+        };
+        cancelAnimationFrameFn = function (timer) {
+            clearTimeout(timer);
+        };
+    }
+
+    return {
+        runnings: {},
+        timer: null,
+        start: function (anim) {
+            var self = this,
+                kv = stamp(anim);
+            if (self.runnings[kv]) {
+                return;
+            }
+            self.runnings[kv] = anim;
+            self.startTimer();
+        },
+        stop: function (anim) {
+            this.notRun(anim);
+        },
+        notRun: function (anim) {
+            var self = this,
+                kv = stamp(anim);
+            delete self.runnings[kv];
+            if (S.isEmptyObject(self.runnings)) {
+                self.stopTimer();
+            }
+        },
+        pause: function (anim) {
+            this.notRun(anim);
+        },
+        resume: function (anim) {
+            this.start(anim);
+        },
+        startTimer: function () {
+            var self = this;
+            if (!self.timer) {
+                self.timer = requestAnimationFrameFn(function run() {
+                    if (self.runFrames()) {
+                        self.stopTimer();
+                    } else {
+                        self.timer = requestAnimationFrameFn(run);
+                    }
+                });
+            }
+        },
+        stopTimer: function () {
+            var self = this,
+                t = self.timer;
+            if (t) {
+                cancelAnimationFrameFn(t);
+                self.timer = 0;
+            }
+        },
+        runFrames: function () {
+            var self = this,
+                r,
+                flag,
+                runnings = self.runnings;
+            for (r in runnings) {
+                runnings[r].frame();
+                flag = 0;
+            }
+            return flag === undefined;
+        }
+    };
+});
+/**
+ * @ignore
+ *
+ * !TODO: deal with https://developers.google.com/chrome/whitepapers/pagevisibility
+ */
+/**
+ * @ignore
  * animate on single property
  * @author yiminghe@gmail.com
  */
@@ -675,108 +621,8 @@ KISSY.add('anim/timer/fx', function (S, DOM, undefined) {
  - ie: http://www.useragentman.com/IETransformsTranslator/
  - wiki: http://en.wikipedia.org/wiki/Transformation_matrix
  - jq 插件: http://plugins.jquery.com/project/2d-transform
- *//**
- * @ignore
- * single timer for the whole anim module
- * @author yiminghe@gmail.com
  */
-KISSY.add('anim/timer/manager', function (S, undefined) {
-    var stamp = S.stamp;
-    var win = S.Env.host;
-    // note in background tab, interval is set to 1s in chrome/firefox
-    // no interval change in ie for 15, if interval is less than 15
-    // then in background tab interval is changed to 15
-    var INTERVAL = 15;
-    // https://gist.github.com/paulirish/1579671
-    var requestAnimationFrameFn = win['requestAnimationFrame'],
-        cancelAnimationFrameFn = win['cancelAnimationFrame'];
-    if (!requestAnimationFrameFn) {
-        var vendors = ['ms', 'moz', 'webkit', 'o'];
-        for (var x = 0; x < vendors.length && !requestAnimationFrameFn; ++x) {
-            requestAnimationFrameFn = win[vendors[x] + 'RequestAnimationFrame'];
-            cancelAnimationFrameFn = win[vendors[x] + 'CancelAnimationFrame'] ||
-                win[vendors[x] + 'CancelRequestAnimationFrame'];
-        }
-    }
-    // chrome is unstable....
-    if (requestAnimationFrameFn && !S.UA.chrome) {
-        S.log('anim use requestAnimationFrame');
-    } else {
-        requestAnimationFrameFn = function (fn) {
-            return setTimeout(fn, INTERVAL);
-        };
-        cancelAnimationFrameFn = function (timer) {
-            clearTimeout(timer);
-        };
-    }
-
-    return {
-        runnings: {},
-        timer: null,
-        start: function (anim) {
-            var self = this,
-                kv = stamp(anim);
-            if (self.runnings[kv]) {
-                return;
-            }
-            self.runnings[kv] = anim;
-            self.startTimer();
-        },
-        stop: function (anim) {
-            this.notRun(anim);
-        },
-        notRun: function (anim) {
-            var self = this,
-                kv = stamp(anim);
-            delete self.runnings[kv];
-            if (S.isEmptyObject(self.runnings)) {
-                self.stopTimer();
-            }
-        },
-        pause: function (anim) {
-            this.notRun(anim);
-        },
-        resume: function (anim) {
-            this.start(anim);
-        },
-        startTimer: function () {
-            var self = this;
-            if (!self.timer) {
-                self.timer = requestAnimationFrameFn(function run() {
-                    if (self.runFrames()) {
-                        self.stopTimer();
-                    } else {
-                        self.timer = requestAnimationFrameFn(run);
-                    }
-                });
-            }
-        },
-        stopTimer: function () {
-            var self = this,
-                t = self.timer;
-            if (t) {
-                cancelAnimationFrameFn(t);
-                self.timer = 0;
-            }
-        },
-        runFrames: function () {
-            var self = this,
-                r,
-                flag,
-                runnings = self.runnings;
-            for (r in runnings) {
-                runnings[r].frame();
-                flag = 0;
-            }
-            return flag === undefined;
-        }
-    };
-});
 /**
- * @ignore
- *
- * !TODO: deal with https://developers.google.com/chrome/whitepapers/pagevisibility
- *//**
  * short-hand css properties
  * @author yiminghe@gmail.com
  * @ignore
@@ -817,7 +663,176 @@ KISSY.add('anim/timer/short-hand', function () {
             'paddingTop'
         ]
     };
-});/**
+});
+/**
+ * @ignore
+ * special patch for making color gradual change
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('anim/timer/color', function (S, DOM, Fx,SHORT_HANDS) {
+
+    var HEX_BASE = 16,
+        floor = Math.floor,
+        KEYWORDS = {
+            'black':[0, 0, 0],
+            'silver':[192, 192, 192],
+            'gray':[128, 128, 128],
+            'white':[255, 255, 255],
+            'maroon':[128, 0, 0],
+            'red':[255, 0, 0],
+            'purple':[128, 0, 128],
+            'fuchsia':[255, 0, 255],
+            'green':[0, 128, 0],
+            'lime':[0, 255, 0],
+            'olive':[128, 128, 0],
+            'yellow':[255, 255, 0],
+            'navy':[0, 0, 128],
+            'blue':[0, 0, 255],
+            'teal':[0, 128, 128],
+            'aqua':[0, 255, 255]
+        },
+        re_RGB = /^rgb\(([0-9]+)\s*,\s*([0-9]+)\s*,\s*([0-9]+)\)$/i,
+        re_RGBA = /^rgba\(([0-9]+)\s*,\s*([0-9]+)\s*,\s*([0-9]+),\s*([0-9]+)\)$/i,
+        re_hex = /^#?([0-9A-F]{1,2})([0-9A-F]{1,2})([0-9A-F]{1,2})$/i,
+
+        COLORS = [
+            'backgroundColor' ,
+            'borderBottomColor' ,
+            'borderLeftColor' ,
+            'borderRightColor' ,
+            'borderTopColor' ,
+            'color' ,
+            'outlineColor'
+        ];
+
+    SHORT_HANDS['background'].push('backgroundColor');
+
+    SHORT_HANDS['borderColor'] = [
+        'borderBottomColor',
+        'borderLeftColor',
+        'borderRightColor',
+        'borderTopColor'
+    ];
+
+    SHORT_HANDS['border'].push(
+        'borderBottomColor',
+        'borderLeftColor',
+        'borderRightColor',
+        'borderTopColor'
+    );
+
+    SHORT_HANDS['borderBottom'].push(
+        'borderBottomColor'
+    );
+
+    SHORT_HANDS['borderLeft'].push(
+        'borderLeftColor'
+    );
+
+    SHORT_HANDS['borderRight'].push(
+        'borderRightColor'
+    );
+
+    SHORT_HANDS['borderTop'].push(
+        'borderTopColor'
+    );
+
+    //得到颜色的数值表示，红绿蓝数字数组
+    function numericColor(val) {
+        val = (val + '');
+        var match;
+        if (match = val.match(re_RGB)) {
+            return [
+                parseInt(match[1]),
+                parseInt(match[2]),
+                parseInt(match[3])
+            ];
+        }
+        else if (match = val.match(re_RGBA)) {
+            return [
+                parseInt(match[1]),
+                parseInt(match[2]),
+                parseInt(match[3]),
+                parseInt(match[4])
+            ];
+        }
+        else if (match = val.match(re_hex)) {
+            for (var i = 1; i < match.length; i++) {
+                if (match[i].length < 2) {
+                    match[i] += match[i];
+                }
+            }
+            return [
+                parseInt(match[1], HEX_BASE),
+                parseInt(match[2], HEX_BASE),
+                parseInt(match[3], HEX_BASE)
+            ];
+        }
+        if (KEYWORDS[val = val.toLowerCase()]) {
+            return KEYWORDS[val];
+        }
+
+        //transparent 或者颜色字符串返回
+        S.log('only allow rgb or hex color string : ' + val, 'warn');
+        return [255, 255, 255];
+    }
+
+    function ColorFx() {
+        ColorFx.superclass.constructor.apply(this, arguments);
+    }
+
+    S.extend(ColorFx, Fx, {
+
+        load:function () {
+            var self = this;
+            ColorFx.superclass.load.apply(self, arguments);
+            if (self.from) {
+                self.from = numericColor(self.from);
+            }
+            if (self.to) {
+                self.to = numericColor(self.to);
+            }
+        },
+
+        interpolate:function (from, to, pos) {
+            var interpolate = ColorFx.superclass.interpolate;
+            if (from.length == 3 && to.length == 3) {
+                return 'rgb(' + [
+                    floor(interpolate(from[0], to[0], pos)),
+                    floor(interpolate(from[1], to[1], pos)),
+                    floor(interpolate(from[2], to[2], pos))
+                ].join(', ') + ')';
+            } else if (from.length == 4 || to.length == 4) {
+                return 'rgba(' + [
+                    floor(interpolate(from[0], to[0], pos)),
+                    floor(interpolate(from[1], to[1], pos)),
+                    floor(interpolate(from[2], to[2], pos)),
+                    // 透明度默认 1
+                    floor(interpolate(from[3] || 1, to[3] || 1, pos))
+                ].join(', ') + ')';
+            } else {
+                return S.log('anim/color unknown value : ' + from);
+            }
+        }
+
+    });
+
+    S.each(COLORS, function (color) {
+        Fx.Factories[color] = ColorFx;
+    });
+
+    return ColorFx;
+
+}, {
+    requires:['dom','./fx','./short-hand']
+});
+
+/*
+  TODO
+  支持 hsla
+   - https://github.com/jquery/jquery-color/blob/master/jquery.color.js
+*/
+/**
  * animation using js timer
  * @author yiminghe@gmail.com
  * @ignore
@@ -1085,3 +1100,4 @@ KISSY.add('anim/timer', function (S, DOM, Event, AnimBase, Easing, AM, Fx, SHORT
  - api 借鉴了 YUI, jQuery 以及 http://www.w3.org/TR/css3-transitions/
  - 代码实现了借鉴了 Emile.js: http://github.com/madrobby/emile *
  */
+

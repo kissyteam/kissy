@@ -1,6 +1,6 @@
 <!--
  各个组件的公用构建文件
- @author yiminghe@gmaill.com, lifesinger@gmail.com
+ @author yiminghe@gmaill.com
  @refer http://ant.apache.org/manual/Tasks/subant.html
 -->
 <project name="common-build" xmlns:ac="antlib:net.sf.antcontrib">
@@ -36,6 +36,9 @@
     <!-- 需要组件覆盖的属性 -->
     <property name="component.name" value="component.name.need.override"/>
 
+    <basename property="component.basename" file="${component.name}"/>
+
+
     <!-- 本 xml 需要的属性 -->
     <property name="component.build.dir" value="${kissy.build.dir}/${component.name}/"/>
     <property name="component.build.dir.tmp" value="${kissy.build.dir}/${component.name}/tmp/"/>
@@ -43,7 +46,7 @@
         <format property="timestamp.isoformat" pattern="yyyyMMddHHmmss" locale="en"/>
     </tstamp>
 
-    <taskdef name="tpl2mod" classname="com.taobao.f2e.task.TplToModule" classpath="${module-compiler}"></taskdef>
+    <taskdef name="tpl2mod" classname="com.taobao.f2e.task.Tpl2Module" classpath="${module-compiler}"/>
 
     <target name="tpl2mod">
         <tpl2mod>
@@ -53,26 +56,48 @@
 
     <target name="create-build.dir">
         <mkdir dir="${component.build.dir}"/>
+        <mkdir dir="${component.meta.dir}"/>
         <delete dir="${component.src.dir.tmp}"/>
         <mkdir dir="${component.src.dir.tmp}"/>
     </target>
 
     <target name="before-concat"/>
 
-    <target name="concat">
-        <basename property="component.basename" file="${component.name}"/>
-        <concat destfile="${component.src.dir.tmp}/${component.basename}-pkg.js"
-                encoding="${charset}" outputencoding="${charset}">
-            <fileset dir="${component.src.dir}" includes="**/*.js"/>
-            <filterchain>
-                <deletecharacters chars="${bom}"/>
-            </filterchain>
-        </concat>
+    <target name="concat-css">
         <copy todir="${component.src.dir.tmp}">
             <fileset dir="${component.work.dir}"
                      excludes="**/*.less,**/*.sass"
                      includes="assets/**/*"/>
         </copy>
+    </target>
+
+    <!-- 打包本模块并抽取依赖 -->
+    <target name="concat">
+        <java classname="com.taobao.f2e.Main" fork="true">
+            <arg value="-packageUrls"/>
+
+            <arg value="${component.name}=${component.src.dir}/${component.basename}"/>
+
+            <arg value="-encodings"/>
+            <arg value="${charset}"/>
+
+            <arg value="-require"/>
+            <arg value="${component.name}"/>
+
+            <arg value="-compact"/>
+            <arg value="true"/>
+
+            <arg value="-output"/>
+            <arg value="${component.src.dir.tmp}/${component.basename}-pkg.js"/>
+
+            <arg value="-outputDependency"/>
+            <arg value="${component.meta.dir}/deps.js"/>
+
+            <classpath>
+                <pathelement path="${module-compiler}"/>
+                <pathelement path="${java.class.path}"/>
+            </classpath>
+        </java>
     </target>
 
     <!-- copy to build dir -->
@@ -82,7 +107,7 @@
         </copy>
     </target>
 
-    <!-- 压缩代码 -->
+    <!-- 压缩 css -->
     <target name="compress-css">
         <!-- 用 YUICompressor 压缩 CSS -->
         <apply executable="java" verbose="true"
@@ -99,7 +124,7 @@
         </apply>
     </target>
 
-    <!-- 压缩代码 -->
+    <!-- 压缩 js -->
     <target name="compress-js">
         <replaceregexp match="^\s*(S|KISSY)\.(log|error)\s*\(.+$"
                        replace=""
@@ -257,51 +282,13 @@
         <delete dir="${component.src.dir.tmp}"/>
     </target>
 
-    <target name="extract-dependency">
-
-        <mkdir dir="${component.meta.dir}"/>
-
-        <delete file="${component.meta.dir}/modules.js"/>
-
-        <java classname="com.taobao.f2e.ExtractDependency" fork="true">
-
-            <arg value="-baseUrls"/>
-            <!--
-            换行被转成空格 xml spec
-            http://stackoverflow.com/questions/2004386/
-            how-to-save-newlines-in-xml-attribute-->
-            <arg value="${component.src.dir}"/>
-
-
-            <arg value="-encodings"/>
-            <arg value="${charset}"/>
-
-            <arg value="-nameMap"/>
-            <arg value="(${component.name})(?:/.*)?||$1"/>
-
-            <arg value="-outputEncoding"/>
-            <arg value="utf-8"/>
-
-            <arg value="-compact"/>
-            <arg value="true"/>
-
-            <arg value="-output"/>
-            <arg value="${component.meta.dir}/modules.js"/>
-
-            <classpath>
-                <pathelement path="${module-compiler}"/>
-                <pathelement path="${java.class.path}"/>
-            </classpath>
-        </java>
-    </target>
-
     <target name="build" depends="
-    create-build.dir,
-    tpl2mod,
-    before-concat,concat,prepare,
+    create-build.dir, tpl2mod,
+    before-concat,concat,concat-css,
+    prepare,
     compress-js,compress-css,native2ascii,
     copyright,fill-var,fix-cr-lf,
-    extract-dependency,clear">
+    clear">
     </target>
 
     <target name="clean">

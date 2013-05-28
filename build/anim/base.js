@@ -1,8 +1,226 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 23 00:42
+build time: May 28 23:56
 */
+/*
+ Combined processedModules by KISSY Module Compiler: 
+
+ anim/base/queue
+ anim/base/utils
+ anim/base
+*/
+
+/**
+ * @ignore queue data structure
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('anim/base/queue', function (S, DOM) {
+
+    var // 队列集合容器
+        queueCollectionKey = S.guid('ks-queue-' + S.now() + '-'),
+    // 默认队列
+        queueKey = S.guid('ks-queue-' + S.now() + '-'),
+        Q;
+
+    function getQueue(el, name, readOnly) {
+        name = name || queueKey;
+
+        var qu,
+            quCollection = DOM.data(el, queueCollectionKey);
+
+        if (!quCollection && !readOnly) {
+            DOM.data(el, queueCollectionKey, quCollection = {});
+        }
+
+        if (quCollection) {
+            qu = quCollection[name];
+            if (!qu && !readOnly) {
+                qu = quCollection[name] = [];
+            }
+        }
+
+        return qu;
+    }
+
+    return Q = {
+
+        queueCollectionKey: queueCollectionKey,
+
+        queue: function (el, queue, item) {
+            var qu = getQueue(el, queue);
+            qu.push(item);
+            return qu;
+        },
+
+        remove: function (el, queue, item) {
+            var qu = getQueue(el, queue, 1),
+                index;
+            if (qu) {
+                index = S.indexOf(item, qu);
+                if (index > -1) {
+                    qu.splice(index, 1);
+                }
+            }
+            if (qu && !qu.length) {
+                // remove queue data
+                Q.clearQueue(el, queue);
+            }
+            return qu;
+        },
+
+        'clearQueues': function (el) {
+            DOM.removeData(el, queueCollectionKey);
+        },
+
+        clearQueue: function clearQueue(el, queue) {
+            queue = queue || queueKey;
+            var quCollection = DOM.data(el, queueCollectionKey);
+            if (quCollection) {
+                delete quCollection[queue];
+            }
+            if (S.isEmptyObject(quCollection)) {
+                DOM.removeData(el, queueCollectionKey);
+            }
+        },
+
+        dequeue: function (el, queue) {
+            var qu = getQueue(el, queue, 1);
+            if (qu) {
+                qu.shift();
+                if (!qu.length) {
+                    // remove queue data
+                    Q.clearQueue(el, queue);
+                }
+            }
+            return qu;
+        }
+
+    };
+}, {
+    requires: ['dom']
+});
+/**
+ * utils for anim
+ * @author yiminghe@gmail.com
+ * @ignore
+ */
+KISSY.add('anim/base/utils', function (S, DOM, Q,undefined) {
+
+    var runningKey = S.guid('ks-anim-unqueued-' + S.now() + '-');
+
+    function saveRunningAnim(anim) {
+        var el = anim.el,
+            allRunning = DOM.data(el, runningKey);
+        if (!allRunning) {
+            DOM.data(el, runningKey, allRunning = {});
+        }
+        allRunning[S.stamp(anim)] = anim;
+    }
+
+    function removeRunningAnim(anim) {
+        var el = anim.el,
+            allRunning = DOM.data(el, runningKey);
+        if (allRunning) {
+            delete allRunning[S.stamp(anim)];
+            if (S.isEmptyObject(allRunning)) {
+                DOM.removeData(el, runningKey);
+            }
+        }
+    }
+
+    function isAnimRunning(anim) {
+        var el = anim.el,
+            allRunning = DOM.data(el, runningKey);
+        if (allRunning) {
+            return !!allRunning[S.stamp(anim)];
+        }
+        return 0;
+    }
+
+    var pausedKey = S.guid('ks-anim-paused-' + S.now() + '-');
+
+    function savePausedAnim(anim) {
+        var el = anim.el,
+            paused = DOM.data(el, pausedKey);
+        if (!paused) {
+            DOM.data(el, pausedKey, paused = {});
+        }
+        paused[S.stamp(anim)] = anim;
+    }
+
+    function removePausedAnim(anim) {
+        var el = anim.el,
+            paused = DOM.data(el, pausedKey);
+        if (paused) {
+            delete paused[S.stamp(anim)];
+            if (S.isEmptyObject(paused)) {
+                DOM.removeData(el, pausedKey);
+            }
+        }
+    }
+
+    function isAnimPaused(anim) {
+        var el = anim.el,
+            paused = DOM.data(el, pausedKey);
+        if (paused) {
+            return !!paused[S.stamp(anim)];
+        }
+        return 0;
+    }
+
+    function pauseOrResumeQueue(el, queue, action) {
+        var allAnims = DOM.data(el, action == 'resume' ? pausedKey : runningKey),
+        // can not stop in for/in , stop will modified allRunning too
+            anims = S.merge(allAnims);
+
+        S.each(anims, function (anim) {
+            if (queue === undefined ||
+                anim.config.queue == queue) {
+                anim[action]();
+            }
+        });
+    }
+
+    return {
+        saveRunningAnim: saveRunningAnim,
+        removeRunningAnim: removeRunningAnim,
+        isAnimPaused: isAnimPaused,
+        removePausedAnim: removePausedAnim,
+        savePausedAnim: savePausedAnim,
+        isAnimRunning: isAnimRunning,
+        // whether el has paused anim
+        'isElPaused': function (el) {
+            var paused = DOM.data(el, pausedKey);
+            return paused && !S.isEmptyObject(paused);
+        },
+        // whether el is running anim
+        'isElRunning': function (el) {
+            var allRunning = DOM.data(el, runningKey);
+            return allRunning && !S.isEmptyObject(allRunning);
+        },
+        pauseOrResumeQueue: pauseOrResumeQueue,
+        stopEl: function (el, end, clearQueue, queue) {
+            if (clearQueue) {
+                if (queue === undefined) {
+                    Q.clearQueues(el);
+                } else if (queue !== false) {
+                    Q.clearQueue(el, queue);
+                }
+            }
+            var allRunning = DOM.data(el, runningKey),
+            // can not stop in for/in , stop will modified allRunning too
+                anims = S.merge(allRunning);
+            S.each(anims, function (anim) {
+                if (queue === undefined || anim.config.queue == queue) {
+                    anim.stop(end);
+                }
+            });
+        }
+    }
+}, {
+    requires: ['dom', './queue']
+});
 /**
  * base class for transition anim and timer anim
  * @author yiminghe@gmail.com
@@ -300,212 +518,5 @@ KISSY.add('anim/base', function (S, DOM, Utils, EventCustom, Q) {
     return AnimBase;
 }, {
     requires: ['dom', './base/utils', 'event/custom', './base/queue']
-});/**
- * @ignore queue data structure
- * @author yiminghe@gmail.com
- */
-KISSY.add('anim/base/queue', function (S, DOM) {
-
-    var // 队列集合容器
-        queueCollectionKey = S.guid('ks-queue-' + S.now() + '-'),
-    // 默认队列
-        queueKey = S.guid('ks-queue-' + S.now() + '-'),
-        Q;
-
-    function getQueue(el, name, readOnly) {
-        name = name || queueKey;
-
-        var qu,
-            quCollection = DOM.data(el, queueCollectionKey);
-
-        if (!quCollection && !readOnly) {
-            DOM.data(el, queueCollectionKey, quCollection = {});
-        }
-
-        if (quCollection) {
-            qu = quCollection[name];
-            if (!qu && !readOnly) {
-                qu = quCollection[name] = [];
-            }
-        }
-
-        return qu;
-    }
-
-    return Q = {
-
-        queueCollectionKey: queueCollectionKey,
-
-        queue: function (el, queue, item) {
-            var qu = getQueue(el, queue);
-            qu.push(item);
-            return qu;
-        },
-
-        remove: function (el, queue, item) {
-            var qu = getQueue(el, queue, 1),
-                index;
-            if (qu) {
-                index = S.indexOf(item, qu);
-                if (index > -1) {
-                    qu.splice(index, 1);
-                }
-            }
-            if (qu && !qu.length) {
-                // remove queue data
-                Q.clearQueue(el, queue);
-            }
-            return qu;
-        },
-
-        'clearQueues': function (el) {
-            DOM.removeData(el, queueCollectionKey);
-        },
-
-        clearQueue: function clearQueue(el, queue) {
-            queue = queue || queueKey;
-            var quCollection = DOM.data(el, queueCollectionKey);
-            if (quCollection) {
-                delete quCollection[queue];
-            }
-            if (S.isEmptyObject(quCollection)) {
-                DOM.removeData(el, queueCollectionKey);
-            }
-        },
-
-        dequeue: function (el, queue) {
-            var qu = getQueue(el, queue, 1);
-            if (qu) {
-                qu.shift();
-                if (!qu.length) {
-                    // remove queue data
-                    Q.clearQueue(el, queue);
-                }
-            }
-            return qu;
-        }
-
-    };
-}, {
-    requires: ['dom']
-});/**
- * utils for anim
- * @author yiminghe@gmail.com
- * @ignore
- */
-KISSY.add('anim/base/utils', function (S, DOM, Q,undefined) {
-
-    var runningKey = S.guid('ks-anim-unqueued-' + S.now() + '-');
-
-    function saveRunningAnim(anim) {
-        var el = anim.el,
-            allRunning = DOM.data(el, runningKey);
-        if (!allRunning) {
-            DOM.data(el, runningKey, allRunning = {});
-        }
-        allRunning[S.stamp(anim)] = anim;
-    }
-
-    function removeRunningAnim(anim) {
-        var el = anim.el,
-            allRunning = DOM.data(el, runningKey);
-        if (allRunning) {
-            delete allRunning[S.stamp(anim)];
-            if (S.isEmptyObject(allRunning)) {
-                DOM.removeData(el, runningKey);
-            }
-        }
-    }
-
-    function isAnimRunning(anim) {
-        var el = anim.el,
-            allRunning = DOM.data(el, runningKey);
-        if (allRunning) {
-            return !!allRunning[S.stamp(anim)];
-        }
-        return 0;
-    }
-
-    var pausedKey = S.guid('ks-anim-paused-' + S.now() + '-');
-
-    function savePausedAnim(anim) {
-        var el = anim.el,
-            paused = DOM.data(el, pausedKey);
-        if (!paused) {
-            DOM.data(el, pausedKey, paused = {});
-        }
-        paused[S.stamp(anim)] = anim;
-    }
-
-    function removePausedAnim(anim) {
-        var el = anim.el,
-            paused = DOM.data(el, pausedKey);
-        if (paused) {
-            delete paused[S.stamp(anim)];
-            if (S.isEmptyObject(paused)) {
-                DOM.removeData(el, pausedKey);
-            }
-        }
-    }
-
-    function isAnimPaused(anim) {
-        var el = anim.el,
-            paused = DOM.data(el, pausedKey);
-        if (paused) {
-            return !!paused[S.stamp(anim)];
-        }
-        return 0;
-    }
-
-    function pauseOrResumeQueue(el, queue, action) {
-        var allAnims = DOM.data(el, action == 'resume' ? pausedKey : runningKey),
-        // can not stop in for/in , stop will modified allRunning too
-            anims = S.merge(allAnims);
-
-        S.each(anims, function (anim) {
-            if (queue === undefined ||
-                anim.config.queue == queue) {
-                anim[action]();
-            }
-        });
-    }
-
-    return {
-        saveRunningAnim: saveRunningAnim,
-        removeRunningAnim: removeRunningAnim,
-        isAnimPaused: isAnimPaused,
-        removePausedAnim: removePausedAnim,
-        savePausedAnim: savePausedAnim,
-        isAnimRunning: isAnimRunning,
-        // whether el has paused anim
-        'isElPaused': function (el) {
-            var paused = DOM.data(el, pausedKey);
-            return paused && !S.isEmptyObject(paused);
-        },
-        // whether el is running anim
-        'isElRunning': function (el) {
-            var allRunning = DOM.data(el, runningKey);
-            return allRunning && !S.isEmptyObject(allRunning);
-        },
-        pauseOrResumeQueue: pauseOrResumeQueue,
-        stopEl: function (el, end, clearQueue, queue) {
-            if (clearQueue) {
-                if (queue === undefined) {
-                    Q.clearQueues(el);
-                } else if (queue !== false) {
-                    Q.clearQueue(el, queue);
-                }
-            }
-            var allRunning = DOM.data(el, runningKey),
-            // can not stop in for/in , stop will modified allRunning too
-                anims = S.merge(allRunning);
-            S.each(anims, function (anim) {
-                if (queue === undefined || anim.config.queue == queue) {
-                    anim.stop(end);
-                }
-            });
-        }
-    }
-}, {
-    requires: ['dom', './queue']
 });
+

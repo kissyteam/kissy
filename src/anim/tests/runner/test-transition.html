@@ -10,21 +10,26 @@
     <script src="/kissy/tools/jasmine/event-simulate.js"></script>
 
     <script src="/kissy/build/seed.js"></script>
-
-    <script src="../../sub-modules/base/src/base.js"></script>
-    <script src="../../sub-modules/base/src/queue.js"></script>
-    <script src="../../sub-modules/base/src/utils.js"></script>
-
-    <script src="../../sub-modules/facade/src/facade.js"></script>
-
-    <script src="../../sub-modules/timer/src/timer.js"></script>
-    <script src="../../sub-modules/timer/src/color.js"></script>
-    <script src="../../sub-modules/timer/src/easing.js"></script>
-    <script src="../../sub-modules/timer/src/fx.js"></script>
-    <script src="../../sub-modules/timer/src/manager.js"></script>
-    <script src="../../sub-modules/timer/src/short-hand.js"></script>
-
-    <script src="../../sub-modules/transition/src/transition.js"></script>
+    <script>
+        KISSY.config('packages',{
+            'anim/base':{
+                base:'../../sub-modules/base/src/base',
+                ignorePackageNameInUri:true
+            },
+            'anim/facade':{
+                base:'../../sub-modules/facade/src/facade',
+                ignorePackageNameInUri:true
+            },
+            'anim/timer':{
+                base:'../../sub-modules/timer/src/timer',
+                ignorePackageNameInUri:true
+            },
+            'anim/transition':{
+                base:'../../sub-modules/transition/src/transition',
+                ignorePackageNameInUri:true
+            }
+        });
+    </script>
 </head>
 <body>
 <h1>KISSY.Anim Transition Test Cases</h1>

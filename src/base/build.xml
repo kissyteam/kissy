@@ -4,5 +4,9 @@
     <property name="component.name" value="base"/>
 
     <import file="../common.xml"/>
+
+    <target name="concat" depends="concat-modules">
+
+    </target>
 </project>
 

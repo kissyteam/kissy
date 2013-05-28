@@ -1,8 +1,65 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 23 00:42
+build time: May 29 00:07
 */
+/*
+ Combined processedModules by KISSY Module Compiler: 
+
+ button/render
+ button/base
+ button
+*/
+
+/**
+ * @ignore
+ * abstract view for button
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("button/render", function (S, Component) {
+    // http://www.w3.org/TR/wai-aria-practices/
+    return Component.Render.extend({
+        initializer: function () {
+            // set wai-aria role
+            var attrs = this.get('elAttrs');
+            var renderData = this.get('renderData');
+            S.mix(attrs, {
+                role: 'button',
+                title: renderData.tooltip,
+                'aria-describedby': renderData.describedby
+            });
+            if (renderData.checked) {
+                this.get('elCls').push(self.getBaseCssClasses("checked"));
+            }
+        },
+        _onSetChecked: function (v) {
+            var self = this,
+                el = self.get("el"),
+                cls = self.getBaseCssClasses("checked");
+            el[v ? 'addClass' : 'removeClass'](cls);
+        },
+        '_onSetTooltip': function (title) {
+            this.get("el").attr("title", title);
+        },
+        '_onSetDescribedby': function (describedby) {
+            this.get("el").attr("aria-describedby", describedby);
+        }
+    }, {
+        ATTRS: {
+            describedby: {
+                sync: 0
+            },
+            tooltip: {
+                sync: 0
+            },
+            checked: {
+                sync: 0
+            }
+        }
+    });
+}, {
+    requires: ['component/base']
+});
 /**
  * @ignore
  * Button control for KISSY.
@@ -132,7 +189,8 @@ KISSY.add("button/base", function (S, Event, Component, ButtonRender) {
 
 }, {
     requires: ['event', 'component/base', './render']
-});/**
+});
+/**
  * @ignore
  * simulated button for kissy , inspired by goog button
  * @author yiminghe@gmail.com
@@ -145,52 +203,5 @@ KISSY.add("button", function (S, Button, Render) {
         'button/base',
         'button/render'
     ]
-});/**
- * @ignore
- * abstract view for button
- * @author yiminghe@gmail.com
- */
-KISSY.add("button/render", function (S, Component) {
-    // http://www.w3.org/TR/wai-aria-practices/
-    return Component.Render.extend({
-        initializer: function () {
-            // set wai-aria role
-            var attrs = this.get('elAttrs');
-            var renderData = this.get('renderData');
-            S.mix(attrs, {
-                role: 'button',
-                title: renderData.tooltip,
-                'aria-describedby': renderData.describedby
-            });
-            if (renderData.checked) {
-                this.get('elCls').push(self.getBaseCssClasses("checked"));
-            }
-        },
-        _onSetChecked: function (v) {
-            var self = this,
-                el = self.get("el"),
-                cls = self.getBaseCssClasses("checked");
-            el[v ? 'addClass' : 'removeClass'](cls);
-        },
-        '_onSetTooltip': function (title) {
-            this.get("el").attr("title", title);
-        },
-        '_onSetDescribedby': function (describedby) {
-            this.get("el").attr("aria-describedby", describedby);
-        }
-    }, {
-        ATTRS: {
-            describedby: {
-                sync: 0
-            },
-            tooltip: {
-                sync: 0
-            },
-            checked: {
-                sync: 0
-            }
-        }
-    });
-}, {
-    requires: ['component/base']
 });
+

@@ -39,11 +39,6 @@ public class ExtractDependency {
     private String output;
 
     /**
-     * dependency 's output file encoding.
-     */
-    private String outputEncoding = "utf-8";
-
-    /**
      * whether output compact module desc
      */
     private boolean compact = false;
@@ -87,10 +82,6 @@ public class ExtractDependency {
 
     public void setOutput(String output) {
         this.output = output;
-    }
-
-    public void setOutputEncoding(String outputEncoding) {
-        this.outputEncoding = outputEncoding;
     }
 
     private boolean processSingle(String path) {
@@ -212,7 +203,6 @@ public class ExtractDependency {
     public static void commandRunnerCLI(String[] args) throws Exception {
 
         Options options = new Options();
-        options.addOption("encodings", true, "baseUrls 's encodings");
         options.addOption("baseUrls", true, "baseUrls");
         options.addOption("packageUrls", true, "packageUrls");
         options.addOption("excludeReg", true, "excludeReg");
@@ -220,7 +210,6 @@ public class ExtractDependency {
         options.addOption("nameMap", true, "nameMap");
         options.addOption("output", true, "output");
         options.addOption("v", "version", false, "version");
-        options.addOption("outputEncoding", true, "outputEncoding");
         options.addOption("compact", true, "compact mode");
         options.addOption("fixModuleName", true, "fixModuleName");
 
@@ -240,20 +229,15 @@ public class ExtractDependency {
 
         Packages packages = extractDependency.getPackages();
 
-        String encodingStr = line.getOptionValue("encodings");
-        if (encodingStr != null) {
-            packages.setEncodings(encodingStr.split(","));
-        }
-
         String baseUrlStr = line.getOptionValue("baseUrls");
         if (baseUrlStr != null) {
-            packages.setBaseUrls(baseUrlStr.split(","));
+            packages.initByBaseUrls(baseUrlStr);
         }
 
 
         String packageUrlStr = line.getOptionValue("packageUrls");
         if (packageUrlStr != null) {
-            packages.setPackageUrls(packageUrlStr.split(","));
+            packages.initByPackageUrls(packageUrlStr);
         }
 
         String compact = line.getOptionValue("compact");
@@ -280,11 +264,6 @@ public class ExtractDependency {
 
         extractDependency.setOutput(line.getOptionValue("output"));
 
-        String outputEncoding = line.getOptionValue("outputEncoding");
-        if (outputEncoding != null) {
-            extractDependency.setOutputEncoding(outputEncoding);
-        }
-
         String nameMapStr = line.getOptionValue("nameMap");
 
         if (nameMapStr != null) {
@@ -298,15 +277,15 @@ public class ExtractDependency {
     public void run() {
         long start = System.currentTimeMillis();
         boolean success = true;
-        String[] baseUrls = packages.getBaseUrls();
 
-        if (baseUrls.length == 0) {
-            baseUrls = packages.getPackageUrls();
-        }
+        Map<String, Package> ps = packages.getPackages();
 
-        for (String baseUrl : baseUrls) {
-            Collection<File> files = org.apache.commons.io.FileUtils.listFiles(new File(baseUrl),
-                    new String[]{"js"}, true);
+        for (String pName : ps.keySet()) {
+            Package p = ps.get(pName);
+            Collection<File> files = org.apache.commons.io.FileUtils.listFiles(
+                    new File(p.getPath()),
+                    new String[]{"js"},
+                    true);
 
             for (File f : files) {
                 success = processSingle(f.getPath()) && success;
@@ -321,6 +300,10 @@ public class ExtractDependency {
 
         if (codes.size() > 0) {
             // serialize to file
+            /*
+      dependency 's output file encoding.
+     */
+            String outputEncoding = "utf-8";
             FileUtils.outputContent(
                     (this.compact ? COMPACT_CODE_PREFIX : CODE_PREFIX) +
                             ArrayUtils.join(codes.toArray(new String[codes.size()]), ",\n")
