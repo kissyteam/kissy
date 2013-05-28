@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 23 00:44
+build time: May 28 17:44
 */
 /**
  * @ignore
@@ -2460,6 +2460,10 @@ KISSY.add('dom/base/offset', function (S, DOM, undefined) {
             (currentEl = currentWin['frameElement']) &&
             (currentWin = currentWin.parent));
 
+        // decimal fraction is not stable
+        position.left = myParseInt(position.left);
+        position.top = myParseInt(position.top);
+
         return position;
     }
 
@@ -2476,7 +2480,7 @@ KISSY.add('dom/base/offset', function (S, DOM, undefined) {
 
         for (key in offset) {
             current = myParseInt(DOM.css(elem, key), 10) || 0;
-            ret[key] = current + offset[key] - old[key];
+            ret[key] = myParseInt(current + offset[key] - old[key]);
         }
         DOM.css(elem, ret);
     }
