@@ -1,17 +1,17 @@
 ﻿/*
-Copyright 2012, KISSY UI Library v1.30
+Copyright 2013, KISSY UI Library v1.30
 MIT Licensed
-build time: Dec 20 22:24
+build time: May 28 17:22
 */
 /**
  * @ignore
- * @fileOverview Component.Extension.Align
+ * Component.Extension.Align
  * @author yiminghe@gmail.com, qiaohua@taobao.com
  */
 KISSY.add('component/extension/align', function (S, DOM, Node) {
 
     var win = S.Env.host,
-        UA= S.UA;
+        UA = S.UA;
 
     // var ieMode = document.documentMode || UA.ie;
 
@@ -65,10 +65,10 @@ KISSY.add('component/extension/align', function (S, DOM, Node) {
      */
     function getVisibleRectForElement(element) {
         var visibleRect = {
-                left:0,
-                right:Infinity,
-                top:0,
-                bottom:Infinity
+                left: 0,
+                right: Infinity,
+                top: 0,
+                bottom: Infinity
             },
             el,
             scrollX,
@@ -108,8 +108,8 @@ KISSY.add('component/extension/align', function (S, DOM, Node) {
         visibleRect.left = Math.max(visibleRect.left, scrollX);
         visibleRect.top = Math.max(visibleRect.top, scrollY);
         winSize = {
-            width:DOM.viewportWidth(),
-            height:DOM.viewportHeight()
+            width: DOM.viewportWidth(),
+            height: DOM.viewportHeight()
         };
         visibleRect.right = Math.min(visibleRect.right, scrollX + winSize.width);
         visibleRect.bottom = Math.min(visibleRect.bottom, scrollY + winSize.height);
@@ -126,8 +126,8 @@ KISSY.add('component/extension/align', function (S, DOM, Node) {
             p2;
 
         xy = {
-            left:elRegion.left,
-            top:elRegion.top
+            left: elRegion.left,
+            top: elRegion.top
         };
 
         p1 = getAlignOffset(refNodeRegion, points[0]);
@@ -136,8 +136,8 @@ KISSY.add('component/extension/align', function (S, DOM, Node) {
         diff = [p2.left - p1.left, p2.top - p1.top];
 
         return {
-            left:xy.left - diff[0] + (+offset[0]),
-            top:xy.top - diff[1] + (+offset[1])
+            left: xy.left - diff[0] + (+offset[0]),
+            top: xy.top - diff[1] + (+offset[1])
         };
     }
 
@@ -154,8 +154,8 @@ KISSY.add('component/extension/align', function (S, DOM, Node) {
     function adjustForViewport(elFuturePos, elRegion, visibleRect, overflow) {
         var pos = S.clone(elFuturePos),
             size = {
-                width:elRegion.width,
-                height:elRegion.height
+                width: elRegion.width,
+                height: elRegion.height
             };
 
         if (overflow.adjustX && pos.left < visibleRect.left) {
@@ -260,8 +260,8 @@ KISSY.add('component/extension/align', function (S, DOM, Node) {
         /**
          * @ignore
          */
-        align:{
-            value:{}
+        align: {
+            value: {}
         }
     };
 
@@ -272,7 +272,7 @@ KISSY.add('component/extension/align', function (S, DOM, Node) {
             w = node.outerWidth();
             h = node.outerHeight();
         } else {
-            offset = { left:DOM.scrollLeft(), top:DOM.scrollTop() };
+            offset = { left: DOM.scrollLeft(), top: DOM.scrollTop() };
             w = DOM.viewportWidth();
             h = DOM.viewportHeight();
         }
@@ -309,12 +309,12 @@ KISSY.add('component/extension/align', function (S, DOM, Node) {
             x += w;
         }
 
-        return { left:x, top:y };
+        return { left: x, top: y };
     }
 
-    Align.prototype =    {
+    Align.prototype = {
 
-        '_onSetAlign':function (v) {
+        '_onSetAlign': function (v) {
             if (v && v.points) {
                 this.align(v.node, v.points, v.offset, v.overflow);
             }
@@ -328,7 +328,7 @@ KISSY.add('component/extension/align', function (S, DOM, Node) {
          * @param {Number[]} [offset] 偏移
          * @chainable
          */
-        align:function (refNode, points, offset, overflow) {
+        align: function (refNode, points, offset, overflow) {
             refNode = Node.one(refNode || win);
             offset = offset && [].concat(offset) || [0, 0];
             overflow = overflow || {};
@@ -355,8 +355,8 @@ KISSY.add('component/extension/align', function (S, DOM, Node) {
                     fail = 1;
                     // 对齐位置反下
                     points = flip(points, /[lr]/ig, {
-                        l:"r",
-                        r:"l"
+                        l: "r",
+                        r: "l"
                     });
                     // 偏移量也反下
                     offset = flipOffset(offset, 0);
@@ -367,8 +367,8 @@ KISSY.add('component/extension/align', function (S, DOM, Node) {
                     fail = 1;
                     // 对齐位置反下
                     points = flip(points, /[tb]/ig, {
-                        t:"b",
-                        b:"t"
+                        t: "b",
+                        b: "t"
                     });
                     // 偏移量也反下
                     offset = flipOffset(offset, 1);
@@ -401,7 +401,7 @@ KISSY.add('component/extension/align', function (S, DOM, Node) {
             if (newElRegion.left != elRegion.left) {
                 self.setInternal("x", null);
                 self.get("view").setInternal("x", null);
-                self.set("x", newElRegion.left);
+                self.set("x", Math.floor(newElRegion.left));
             }
 
             if (newElRegion.top != elRegion.top) {
@@ -411,7 +411,7 @@ KISSY.add('component/extension/align', function (S, DOM, Node) {
                 // el.align(div)
                 self.setInternal("y", null);
                 self.get("view").setInternal("y", null);
-                self.set("y", newElRegion.top);
+                self.set("y", Math.floor(newElRegion.top));
             }
 
             // 新区域高宽发生了变化
@@ -431,12 +431,12 @@ KISSY.add('component/extension/align', function (S, DOM, Node) {
          * Same as node config of {@link KISSY.Component.Extension.Align#cfg-align}
          * @chainable
          */
-        center:function (node) {
+        center: function (node) {
             var self = this;
             self.set('align', {
-                node:node,
-                points:["cc", "cc"],
-                offset:[0, 0]
+                node: node,
+                points: ["cc", "cc"],
+                offset: [0, 0]
             });
             return self;
         }
@@ -444,7 +444,7 @@ KISSY.add('component/extension/align', function (S, DOM, Node) {
 
     return Align;
 }, {
-    requires:["dom", "node"]
+    requires: ["dom", "node"]
 });
 /**
  * @ignore
@@ -457,7 +457,7 @@ KISSY.add('component/extension/align', function (S, DOM, Node) {
  *   - 增加智能对齐，以及大小调整选项
  **//**
  * @ignore
- * @fileOverview 里层包裹层定义， 适合mask以及shim
+ * 里层包裹层定义， 适合mask以及shim
  * @author yiminghe@gmail.com
  */
 KISSY.add("component/extension/content-box-render", function (S, Node, DOM) {
@@ -478,14 +478,18 @@ KISSY.add("component/extension/content-box-render", function (S, Node, DOM) {
         __createDom: function () {
             var self = this,
                 contentEl,
-                el = self.get("el");
-
-            var childNodes = el[0].childNodes,
+                el = self.get("el"),
+                childNodes = el[0].childNodes,
                 c = childNodes.length && DOM._nodeListToFragment(childNodes);
 
             // 产生新的 contentEl
-            contentEl = Node.all("<div class='" + self.get('prefixCls') + "contentbox'>" +
-                "</div>").append(c);
+            contentEl = Node.all("<div class='" +
+                self.get('prefixCls') + "contentbox'>" +
+                "</div>");
+
+            if (c) {
+                contentEl.append(c);
+            }
 
             el.append(contentEl);
 
@@ -498,7 +502,7 @@ KISSY.add("component/extension/content-box-render", function (S, Node, DOM) {
     requires: ["node", 'dom']
 });/**
  * @ignore
- * @fileOverview 里层包裹层定义， 适合mask以及shim
+ * 里层包裹层定义， 适合mask以及shim
  * @author yiminghe@gmail.com
  */
 KISSY.add("component/extension/content-box", function () {
@@ -529,7 +533,7 @@ KISSY.add("component/extension/content-box", function () {
     return ContentBox;
 });/**
  * @ignore
- * @fileOverview uibase
+ * uibase
  * @author yiminghe@gmail.com
  */
 KISSY.add("component/extension", function (S, Align, ContentBox, ContentBoxRender, Position, PositionRender, ShimRender) {
@@ -554,7 +558,7 @@ KISSY.add("component/extension", function (S, Align, ContentBox, ContentBoxRende
     ]
 });/**
  * @ignore
- * @fileOverview position and visible extension，可定位的隐藏层
+ * position and visible extension，可定位的隐藏层
  * @author yiminghe@gmail.com
  */
 KISSY.add("component/extension/position-render", function () {
@@ -574,7 +578,7 @@ KISSY.add("component/extension/position-render", function () {
         /**
          * @ignore
          * see {@link KISSY.Component.Extension.Box#cfg-visibleMode}.
-         * @default "visibility"
+         * Defaults to: "visibility"
          */
         visibleMode: {
             value: "visibility"
@@ -612,7 +616,7 @@ KISSY.add("component/extension/position-render", function () {
     return Position;
 });/**
  * @ignore
- * @fileOverview position and visible extension，可定位的隐藏层
+ * position and visible extension，可定位的隐藏层
  * @author yiminghe@gmail.com
  */
 KISSY.add("component/extension/position", function (S) {
@@ -732,7 +736,7 @@ KISSY.add("component/extension/position", function (S) {
     return Position;
 });/**
  * @ignore
- * @fileOverview shim for ie6 ,require box-ext
+ * shim for ie6 ,require box-ext
  * @author yiminghe@gmail.com
  */
 KISSY.add("component/extension/shim-render", function () {
