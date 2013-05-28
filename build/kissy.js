@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.30
 MIT Licensed
-build time: May 23 19:53
+build time: May 28 17:37
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130523195333' will replace with current timestamp when compressing.
+         * NOTICE: '20130528173717' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130523195333',
+        __BUILD_TIME: '20130528173717',
         /**
          * KISSY Environment.
          * @private
@@ -5845,7 +5845,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20130523195333'
+            tag: '20130528173717'
         }, getBaseInfo()));
     }
 
@@ -6376,7 +6376,7 @@ config({
 /*
 Copyright 2013, KISSY UI Library v1.30
 MIT Licensed
-build time: Jan 29 20:38
+build time: May 28 17:37
 */
 /**
  * @ignore
@@ -8852,6 +8852,9 @@ KISSY.add('dom/base/offset', function (S, DOM, undefined) {
             (currentEl = currentWin['frameElement']) &&
             (currentWin = currentWin.parent));
 
+        position.left = myParseInt(position.left);
+        position.top = myParseInt(position.top);
+
         return position;
     }
 
@@ -8868,7 +8871,7 @@ KISSY.add('dom/base/offset', function (S, DOM, undefined) {
 
         for (key in offset) {
             current = myParseInt(DOM.css(elem, key), 10) || 0;
-            ret[key] = current + offset[key] - old[key];
+            ret[key] = myParseInt(current + offset[key] - old[key]);
         }
         DOM.css(elem, ret);
     }
