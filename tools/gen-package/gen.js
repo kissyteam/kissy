@@ -1,9 +1,11 @@
-var startDir = 'D:/code/kissy_git/kissy/kissy/src/';
-var saveTo = 'D:/code/kissy_git/kissy/kissy/src/package.js';
-var base = '/kissy/src/';
-var baseDir = 'D:/code/kissy_git/kissy';
-var fs = require('fs');
+var cwd = process.cwd();
 var path = require('path');
+var startDir = path.resolve(cwd, 'src')+'/';
+var saveTo = startDir+'/package.js';
+var base = '/kissy/src/';
+var baseDir = path.resolve(cwd, '../');
+var fs = require('fs');
+
 
 function collectSrcDir(dir, allSrc) {
     var files = fs.readdirSync(dir);
