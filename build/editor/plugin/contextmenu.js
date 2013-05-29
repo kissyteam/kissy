@@ -1,8 +1,14 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 23 00:45
+build time: May 30 01:35
 */
+/*
+ Combined processedModules by KISSY Module Compiler: 
+
+ editor/plugin/contextmenu
+*/
+
 /**
  * contextmenu for kissy editor
  * @author yiminghe@gmail.com
@@ -97,3 +103,4 @@ KISSY.add("editor/plugin/contextmenu", function (S, Editor, Menu, focusFix) {
 }, {
     requires: ['editor', 'menu', './focus-fix']
 });
+

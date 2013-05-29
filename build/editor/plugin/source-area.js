@@ -1,8 +1,14 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 23 00:50
+build time: May 30 01:40
 */
+/*
+ Combined processedModules by KISSY Module Compiler: 
+
+ editor/plugin/source-area
+*/
+
 /**
  * source editor for kissy editor
  * @author yiminghe@gmail.com
@@ -49,3 +55,4 @@ KISSY.add("editor/plugin/source-area", function (S, Editor) {
 }, {
     requires:['editor', './button']
 });
+

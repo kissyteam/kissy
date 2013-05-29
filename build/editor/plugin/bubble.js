@@ -1,8 +1,14 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 23 00:44
+build time: May 30 01:34
 */
+/*
+ Combined processedModules by KISSY Module Compiler: 
+
+ editor/plugin/bubble
+*/
+
 /**
  * bubble or tip view for kissy editor
  * @author yiminghe@gmail.com
@@ -221,3 +227,4 @@ KISSY.add("editor/plugin/bubble", function (S, Overlay, Editor) {
 }, {
     requires: ['overlay', 'editor']
 });
+

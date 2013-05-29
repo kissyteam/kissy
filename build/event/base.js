@@ -1,48 +1,125 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 27 13:03
+build time: May 30 01:41
 */
+/*
+ Combined processedModules by KISSY Module Compiler: 
+
+ event/base/utils
+ event/base/object
+ event/base/observer
+ event/base/observable
+ event/base
+*/
+
 /**
  * @ignore
- * scalable event framework for kissy (refer DOM3 Events)
+ * utils for event
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/base', function (S, Utils, Object, Observer, ObservableEvent) {
-    /**
-     * The event utility provides functions to add and remove event listeners.
-     * @class KISSY.Event
-     * @singleton
-     */
-    return S.Event = {
-        _Utils: Utils,
-        _Object: Object,
-        _Observer: Observer,
-        _ObservableEvent: ObservableEvent
+KISSY.add('event/base/utils', function (S) {
+
+    var splitAndRun, getGroupsRe;
+
+    function getTypedGroups(type) {
+        if (type.indexOf('.') < 0) {
+            return [type, ''];
+        }
+        var m = type.match(/([^.]+)?(\..+)?$/),
+            t = m[1],
+            ret = [t],
+            gs = m[2];
+        if (gs) {
+            gs = gs.split('.').sort();
+            ret.push(gs.join('.'));
+        } else {
+            ret.push('');
+        }
+        return ret;
+    }
+
+    return {
+
+        splitAndRun: splitAndRun = function (type, fn) {
+            if (S.isArray(type)) {
+                S.each(type, fn);
+                return;
+            }
+            type = S.trim(type);
+            if (type.indexOf(' ') == -1) {
+                fn(type);
+            } else {
+                S.each(type.split(/\s+/), fn);
+            }
+        },
+
+        normalizeParam: function (type, fn, context) {
+            var cfg = fn || {};
+
+            if (S.isFunction(fn)) {
+                cfg = {
+                    fn: fn,
+                    context: context
+                };
+            } else {
+                // copy
+                cfg = S.merge(cfg);
+            }
+
+            var typedGroups = getTypedGroups(type);
+
+            type = typedGroups[0];
+
+            cfg.groups = typedGroups[1];
+
+            cfg.type = type;
+
+            return cfg;
+        },
+
+        batchForType: function (fn, num) {
+            var args = S.makeArray(arguments),
+                types = args[2 + num];
+            // in case null
+            if (types && typeof types == 'object') {
+                S.each(types, function (value, type) {
+                    var args2 = [].concat(args);
+                    args2.splice(0, 2);
+                    args2[num] = type;
+                    args2[num + 1] = value;
+                    fn.apply(null, args2);
+                });
+            } else {
+                splitAndRun(types, function (type) {
+                    var args2 = [].concat(args);
+                    args2.splice(0, 2);
+                    args2[num] = type;
+                    fn.apply(null, args2);
+                });
+            }
+        },
+
+        fillGroupsForEvent: function (type, eventData) {
+            var typedGroups = getTypedGroups(type),
+                _ks_groups = typedGroups[1];
+
+            if (_ks_groups) {
+                _ks_groups = getGroupsRe(_ks_groups);
+                eventData._ks_groups = _ks_groups;
+            }
+
+            eventData.type = typedGroups[0];
+        },
+
+        getGroupsRe: getGroupsRe = function (groups) {
+            return new RegExp(groups.split('.').join('.*\\.') + '(?:\\.|$)');
+        }
+
     };
-}, {
-    requires: ['./base/utils', './base/object', './base/observer', './base/observable']
+
 });
-
-
-/*
- yiminghe@gmail.com: 2012-10-24
- - 重构，新架构，自定义事件，DOM 事件分离
-
- yiminghe@gmail.com: 2011-12-15
- - 重构，粒度更细，新的架构
-
- 2011-11-24
- - 自定义事件和 dom 事件操作彻底分离
- - TODO: group event from DOM3 Event
-
- 2011-06-07
- - refer : http://www.w3.org/TR/2001/WD-DOM-Level-3-Events-20010823/events.html
- - 重构
- - eventHandler 一个元素一个而不是一个元素一个事件一个，节省内存
- - 减少闭包使用，prevent ie 内存泄露？
- - 增加 fire ，模拟冒泡处理 dom 事件
- *//**
+/**
  * @ignore
  * base event object for custom and dom event.
  * @author yiminghe@gmail.com
@@ -155,105 +232,8 @@ KISSY.add('event/base/object', function (S, undefined) {
 
     return EventObject;
 
-});/**
- * @ignore
- * base custom event mechanism for kissy
- * @author yiminghe@gmail.com
- */
-KISSY.add('event/base/observable', function (S) {
-
-    /**
-     * base custom event for registering and un-registering observer for specified event.
-     * @class KISSY.Event.ObservableEvent
-     * @private
-     * @param {Object} cfg custom event's attribute
-     */
-    function ObservableEvent(cfg) {
-        var self = this;
-        self.currentTarget = null;
-        S.mix(self, cfg);
-        self.reset();
-        /**
-         * current event type
-         * @cfg {String} type
-         */
-    }
-
-    ObservableEvent.prototype = {
-
-        constructor: ObservableEvent,
-
-        /**
-         * whether current event has observers
-         * @return {Boolean}
-         */
-        hasObserver: function () {
-            return !!this.observers.length;
-        },
-
-        /**
-         * reset current event's status
-         */
-        reset: function () {
-            var self = this;
-            self.observers = [];
-        },
-
-        /**
-         * remove one observer from current event's observers
-         * @param {KISSY.Event.Observer} s
-         * @memberOf KISSY.Event.ObservableEvent.prototype
-         */
-        removeObserver: function (s) {
-            var self = this,
-                i,
-                observers = self.observers,
-                len = observers.length;
-            for (i = 0; i < len; i++) {
-                if (observers[i] == s) {
-                    observers.splice(i, 1);
-                    break;
-                }
-            }
-            self.checkMemory();
-        },
-
-        /**
-         * check memory after detach
-         * @private
-         */
-        checkMemory: function () {
-
-        },
-
-        /**
-         * Search for a specified observer within current event's observers
-         * @param {KISSY.Event.Observer} observer
-         * @return {Number} observer's index in observers
-         */
-        findObserver: function (observer) {
-            var observers = this.observers, i;
-
-            for (i = observers.length - 1; i >= 0; --i) {
-                /*
-                 If multiple identical EventListeners are registered on the same EventTarget
-                 with the same parameters the duplicate instances are discarded.
-                 They do not cause the EventListener to be called twice
-                 and since they are discarded
-                 they do not need to be removed with the removeEventListener method.
-                 */
-                if (observer.equals(observers[i])) {
-                    return i;
-                }
-            }
-
-            return -1;
-        }
-    };
-
-    return ObservableEvent;
-
-});/**
+});
+/**
  * @ignore
  * observer for event.
  * @author yiminghe@gmail.com
@@ -360,109 +340,144 @@ KISSY.add('event/base/observer', function (S, undefined) {
 
     return Observer;
 
-});/**
+});
+/**
  * @ignore
- * utils for event
+ * base custom event mechanism for kissy
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/base/utils', function (S) {
+KISSY.add('event/base/observable', function (S) {
 
-    var splitAndRun, getGroupsRe;
-
-    function getTypedGroups(type) {
-        if (type.indexOf('.') < 0) {
-            return [type, ''];
-        }
-        var m = type.match(/([^.]+)?(\..+)?$/),
-            t = m[1],
-            ret = [t],
-            gs = m[2];
-        if (gs) {
-            gs = gs.split('.').sort();
-            ret.push(gs.join('.'));
-        } else {
-            ret.push('');
-        }
-        return ret;
+    /**
+     * base custom event for registering and un-registering observer for specified event.
+     * @class KISSY.Event.ObservableEvent
+     * @private
+     * @param {Object} cfg custom event's attribute
+     */
+    function ObservableEvent(cfg) {
+        var self = this;
+        self.currentTarget = null;
+        S.mix(self, cfg);
+        self.reset();
+        /**
+         * current event type
+         * @cfg {String} type
+         */
     }
 
-    return {
+    ObservableEvent.prototype = {
 
-        splitAndRun: splitAndRun = function (type, fn) {
-            if (S.isArray(type)) {
-                S.each(type, fn);
-                return;
-            }
-            type = S.trim(type);
-            if (type.indexOf(' ') == -1) {
-                fn(type);
-            } else {
-                S.each(type.split(/\s+/), fn);
-            }
+        constructor: ObservableEvent,
+
+        /**
+         * whether current event has observers
+         * @return {Boolean}
+         */
+        hasObserver: function () {
+            return !!this.observers.length;
         },
 
-        normalizeParam: function (type, fn, context) {
-            var cfg = fn || {};
-
-            if (S.isFunction(fn)) {
-                cfg = {
-                    fn: fn,
-                    context: context
-                };
-            } else {
-                // copy
-                cfg = S.merge(cfg);
-            }
-
-            var typedGroups = getTypedGroups(type);
-
-            type = typedGroups[0];
-
-            cfg.groups = typedGroups[1];
-
-            cfg.type = type;
-
-            return cfg;
+        /**
+         * reset current event's status
+         */
+        reset: function () {
+            var self = this;
+            self.observers = [];
         },
 
-        batchForType: function (fn, num) {
-            var args = S.makeArray(arguments),
-                types = args[2 + num];
-            // in case null
-            if (types && typeof types == 'object') {
-                S.each(types, function (value, type) {
-                    var args2 = [].concat(args);
-                    args2.splice(0, 2);
-                    args2[num] = type;
-                    args2[num + 1] = value;
-                    fn.apply(null, args2);
-                });
-            } else {
-                splitAndRun(types, function (type) {
-                    var args2 = [].concat(args);
-                    args2.splice(0, 2);
-                    args2[num] = type;
-                    fn.apply(null, args2);
-                });
+        /**
+         * remove one observer from current event's observers
+         * @param {KISSY.Event.Observer} s
+         * @memberOf KISSY.Event.ObservableEvent.prototype
+         */
+        removeObserver: function (s) {
+            var self = this,
+                i,
+                observers = self.observers,
+                len = observers.length;
+            for (i = 0; i < len; i++) {
+                if (observers[i] == s) {
+                    observers.splice(i, 1);
+                    break;
+                }
             }
+            self.checkMemory();
         },
 
-        fillGroupsForEvent: function (type, eventData) {
-            var typedGroups = getTypedGroups(type),
-                _ks_groups = typedGroups[1];
+        /**
+         * check memory after detach
+         * @private
+         */
+        checkMemory: function () {
 
-            if (_ks_groups) {
-                _ks_groups = getGroupsRe(_ks_groups);
-                eventData._ks_groups = _ks_groups;
-            }
-
-            eventData.type = typedGroups[0];
         },
 
-        getGroupsRe: getGroupsRe = function (groups) {
-            return new RegExp(groups.split('.').join('.*\\.') + '(?:\\.|$)');
+        /**
+         * Search for a specified observer within current event's observers
+         * @param {KISSY.Event.Observer} observer
+         * @return {Number} observer's index in observers
+         */
+        findObserver: function (observer) {
+            var observers = this.observers, i;
+
+            for (i = observers.length - 1; i >= 0; --i) {
+                /*
+                 If multiple identical EventListeners are registered on the same EventTarget
+                 with the same parameters the duplicate instances are discarded.
+                 They do not cause the EventListener to be called twice
+                 and since they are discarded
+                 they do not need to be removed with the removeEventListener method.
+                 */
+                if (observer.equals(observers[i])) {
+                    return i;
+                }
+            }
+
+            return -1;
         }
-
     };
 
+    return ObservableEvent;
+
 });
+/**
+ * @ignore
+ * scalable event framework for kissy (refer DOM3 Events)
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('event/base', function (S, Utils, Object, Observer, ObservableEvent) {
+    /**
+     * The event utility provides functions to add and remove event listeners.
+     * @class KISSY.Event
+     * @singleton
+     */
+    return S.Event = {
+        _Utils: Utils,
+        _Object: Object,
+        _Observer: Observer,
+        _ObservableEvent: ObservableEvent
+    };
+}, {
+    requires: ['./base/utils', './base/object', './base/observer', './base/observable']
+});
+
+
+/*
+ yiminghe@gmail.com: 2012-10-24
+ - 重构，新架构，自定义事件，DOM 事件分离
+
+ yiminghe@gmail.com: 2011-12-15
+ - 重构，粒度更细，新的架构
+
+ 2011-11-24
+ - 自定义事件和 dom 事件操作彻底分离
+ - TODO: group event from DOM3 Event
+
+ 2011-06-07
+ - refer : http://www.w3.org/TR/2001/WD-DOM-Level-3-Events-20010823/events.html
+ - 重构
+ - eventHandler 一个元素一个而不是一个元素一个事件一个，节省内存
+ - 减少闭包使用，prevent ie 内存泄露？
+ - 增加 fire ，模拟冒泡处理 dom 事件
+ */
+

@@ -1,8 +1,14 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 23 00:49
+build time: May 30 01:39
 */
+/*
+ Combined processedModules by KISSY Module Compiler: 
+
+ editor/plugin/page-break
+*/
+
 /**
  * pagebreak functionality
  * @author yiminghe@gmail.com
@@ -104,3 +110,4 @@ KISSY.add("editor/plugin/page-break", function (S, Editor, fakeObjects) {
 }, {
     "requires":["editor", "./fake-objects"]
 });
+

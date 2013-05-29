@@ -1,33 +1,8 @@
 <!doctype html>
 <html>
 <head>
-<script src="/kissy/build/seed.js"></script>
-<!--
-core
--->
-
-<script src="../../../src/editor/core/src/base.js"></script>
-<script src="../../../src/editor/core/src/dom.js"></script>
-<script src="../../../src/editor/core/src/domIterator.js"></script>
-<script src="../../../src/editor/core/src/elementPath.js"></script>
-<script src="../../../src/editor/core/src/focusManager.js"></script>
-<script src="../../../src/editor/core/src/range.js"></script>
-<script src="../../../src/editor/core/src/selection.js"></script>
-<script src="../../../src/editor/core/src/styles.js"></script>
-<script src="../../../src/editor/core/src/utils.js"></script>
-<script src="../../../src/editor/core/src/walker.js"></script>
-<script src="../../../src/editor/core/src/zIndexManager.js"></script>
-<script src="../../../src/editor/core/src/editor.js"></script>
-<!--
-core plugins
--->
-<script src="../../../src/editor/core/src/clipboard.js"></script>
-<script src="../../../src/editor/core/src/enterKey.js"></script>
-<script src="../../../src/editor/core/src/htmlDataProcessor.js"></script>
-<script src="../../../src/editor/core/src/selectionFix.js"></script>
-<!--
-other plugins
--->
+    <script src="/kissy/build/seed.js"></script>
+    <script src="/kissy/src/package.js"></script>
 </head>
 <body>
 <div id="d1">
@@ -44,12 +19,12 @@ other plugins
 </div>
 <script>
 
-        S.use("editor", function () {
-            var DOM = S.DOM;
-            var s2 = DOM.get("#s2");
-            var d2 = DOM.get("#d2");
-            DOM._4e_breakParent(s2, d2);
-        });
+    KISSY.use("editor", function () {
+        var DOM = S.DOM;
+        var s2 = DOM.get("#s2");
+        var d2 = DOM.get("#d2");
+        DOM._4e_breakParent(s2, d2);
+    });
 
 </script>
 </body>

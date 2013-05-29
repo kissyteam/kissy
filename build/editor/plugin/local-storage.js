@@ -1,8 +1,14 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 23 00:49
+build time: May 30 01:38
 */
+/*
+ Combined processedModules by KISSY Module Compiler: 
+
+ editor/plugin/local-storage
+*/
+
 /**
  * localStorage support for ie<8
  * @author yiminghe@gmail.com
@@ -114,3 +120,4 @@ KISSY.add("editor/plugin/local-storage", function (S, Editor, Overlay, FlashBrid
     //导致：operation aborted
     "requires": ["editor", "overlay", "./flash-bridge"]
 });
+

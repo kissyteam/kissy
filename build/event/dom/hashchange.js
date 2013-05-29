@@ -1,8 +1,14 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 23 00:52
+build time: May 30 01:41
 */
+/*
+ Combined processedModules by KISSY Module Compiler: 
+
+ event/dom/hashchange
+*/
+
 /**
  * @ignore
  * hashchange event for non-standard browser
@@ -239,3 +245,4 @@ KISSY.add('event/dom/hashchange', function (S, Event, DOM) {
  refer : http://yiminghe.javaeye.com/blog/377867
  https://github.com/cowboy/jquery-hashchange
  */
+

@@ -1,8 +1,14 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 23 00:52
+build time: May 30 01:42
 */
+/*
+ Combined processedModules by KISSY Module Compiler: 
+
+ event/dom/shake
+*/
+
 /**
  * @ignore
  * simulate shake gesture by listening devicemotion event
@@ -92,3 +98,4 @@ KISSY.add('event/dom/shake', function (S, EventDomBase, undefined) {
  *  - http://www.eleqtriq.com/2010/05/css-3d-matrix-transformations/
  *  - http://dev.w3.org/geo/api/spec-source-orientation
  */
+

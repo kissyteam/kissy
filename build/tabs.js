@@ -1,8 +1,21 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 23 00:55
+build time: May 30 01:44
 */
+/*
+ Combined processedModules by KISSY Module Compiler: 
+
+ tabs/bar
+ tabs/body
+ tabs/tab-render
+ tabs/tab
+ tabs/panel-render
+ tabs/panel
+ tabs/render
+ tabs
+*/
+
 /**
  * @ignore
  * TabBar for KISSY.
@@ -106,7 +119,8 @@ KISSY.add("tabs/bar", function (S, Toolbar, undefined) {
 
 }, {
     requires: ['toolbar']
-});/**
+});
+/**
  * @ignore
  * Body for tab panels.
  * @author yiminghe@gmail.com
@@ -193,129 +207,8 @@ KISSY.add("tabs/body", function (S, Component, Extension, undefined) {
 
 }, {
     requires: ['component/base', 'component/extension']
-});/**
- * @ignore
- * single tab panel render.
- * @author yiminghe@gmail.com
- */
-KISSY.add("tabs/panel-render", function (S, Component) {
-
-    return Component.Render.extend({
-
-        initializer: function () {
-            var self = this,
-                attrs = self.get('elAttrs');
-            attrs['role'] = 'tabpanel';
-            if (self.get('selected')) {
-                self.get('elCls').push(self.getBaseCssClasses('selected'));
-            } else {
-                attrs['aria-hidden'] = false;
-            }
-        },
-
-        _onSetSelected: function (v) {
-            var el = this.get("el");
-            var selectedCls = this.getBaseCssClasses('selected');
-            el[v ? "addClass" : "removeClass"](selectedCls);
-            el.attr("aria-hidden", !v);
-        }
-
-    }, {
-        ATTRS: {
-            selected: {
-                sync: 0,
-                value: false
-            }
-        },
-
-        HTML_PARSER: {
-            selected: function (el) {
-                return el.hasClass(this.getBaseCssClass('selected'));
-            }
-        }
-    });
-
-}, {
-    requires: ['component/base']
-});/**
- * @ignore
- * single tab panel.
- * @author yiminghe@gmail.com
- */
-KISSY.add("tabs/panel", function (S, Component, PanelRender) {
-
-    /**
-     * KISSY.Tabs.Panel
-     * @class  KISSY.Tabs.Panel
-     * @extends KISSY.Component.Controller
-     */
-    return Component.Controller.extend({
-        isTabsPanel: 1
-    }, {
-        ATTRS: {
-            /**
-             * whether selected
-             * @cfg {Boolean} selected
-             */
-            /**
-             * @ignore
-             */
-            selected: {
-                view: 1
-            },
-            focusable: {
-                value: false
-            },
-            allowTextSelection: {
-                value: true
-            },
-            xrender: {
-                value: PanelRender
-            }
-        }
-    }, {
-        xclass: 'tabs-panel'
-    })
-
-}, {
-    requires: ['component/base', './panel-render']
-});/**
- * @ignore
- * Tabs render.
- * @author yiminghe@gmail.com
- */
-KISSY.add("tabs/render", function (S, Component) {
-    var CLS = "top bottom left right";
-    return Component.Render.extend({
-
-        initializer: function () {
-            this.get('elCls').push(this.getBaseCssClass(this.get('barOrientation')))
-        },
-
-        '_onSetBarOrientation': function (v) {
-            var self = this,
-                el = self.get("el");
-            el.removeClass(self.getBaseCssClass(CLS))
-                .addClass(self.getBaseCssClass(v));
-        }
-
-    }, {
-        ATTRS: {
-            barOrientation: {
-                sync: 0,
-                value: 'top'
-            }
-        },
-        HTML_PARSER: {
-            barOrientation: function (el) {
-                var orientation = el[0].className.match(/(top|bottom|left|right)\b/);
-                return orientation && orientation[1] || "top";
-            }
-        }
-    });
-}, {
-    requires: ['component/base']
-});/**
+});
+/**
  * @ignore
  * Single tab render in tab bar.
  * @author yiminghe@gmail.com
@@ -353,7 +246,8 @@ KISSY.add("tabs/tab-render", function (S, Button) {
 
 }, {
     requires: ['button']
-});/**
+});
+/**
  * @ignore
  * Single tab in tab bar.
  * @author yiminghe@gmail.com
@@ -400,7 +294,133 @@ KISSY.add("tabs/tab", function (S, Button, TabRender) {
 
 }, {
     requires: ['button', './tab-render']
-});/**
+});
+/**
+ * @ignore
+ * single tab panel render.
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("tabs/panel-render", function (S, Component) {
+
+    return Component.Render.extend({
+
+        initializer: function () {
+            var self = this,
+                attrs = self.get('elAttrs');
+            attrs['role'] = 'tabpanel';
+            if (self.get('selected')) {
+                self.get('elCls').push(self.getBaseCssClasses('selected'));
+            } else {
+                attrs['aria-hidden'] = false;
+            }
+        },
+
+        _onSetSelected: function (v) {
+            var el = this.get("el");
+            var selectedCls = this.getBaseCssClasses('selected');
+            el[v ? "addClass" : "removeClass"](selectedCls);
+            el.attr("aria-hidden", !v);
+        }
+
+    }, {
+        ATTRS: {
+            selected: {
+                sync: 0,
+                value: false
+            }
+        },
+
+        HTML_PARSER: {
+            selected: function (el) {
+                return el.hasClass(this.getBaseCssClass('selected'));
+            }
+        }
+    });
+
+}, {
+    requires: ['component/base']
+});
+/**
+ * @ignore
+ * single tab panel.
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("tabs/panel", function (S, Component, PanelRender) {
+
+    /**
+     * KISSY.Tabs.Panel
+     * @class  KISSY.Tabs.Panel
+     * @extends KISSY.Component.Controller
+     */
+    return Component.Controller.extend({
+        isTabsPanel: 1
+    }, {
+        ATTRS: {
+            /**
+             * whether selected
+             * @cfg {Boolean} selected
+             */
+            /**
+             * @ignore
+             */
+            selected: {
+                view: 1
+            },
+            focusable: {
+                value: false
+            },
+            allowTextSelection: {
+                value: true
+            },
+            xrender: {
+                value: PanelRender
+            }
+        }
+    }, {
+        xclass: 'tabs-panel'
+    })
+
+}, {
+    requires: ['component/base', './panel-render']
+});
+/**
+ * @ignore
+ * Tabs render.
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("tabs/render", function (S, Component) {
+    var CLS = "top bottom left right";
+    return Component.Render.extend({
+
+        initializer: function () {
+            this.get('elCls').push(this.getBaseCssClass(this.get('barOrientation')))
+        },
+
+        '_onSetBarOrientation': function (v) {
+            var self = this,
+                el = self.get("el");
+            el.removeClass(self.getBaseCssClass(CLS))
+                .addClass(self.getBaseCssClass(v));
+        }
+
+    }, {
+        ATTRS: {
+            barOrientation: {
+                sync: 0,
+                value: 'top'
+            }
+        },
+        HTML_PARSER: {
+            barOrientation: function (el) {
+                var orientation = el[0].className.match(/(top|bottom|left|right)\b/);
+                return orientation && orientation[1] || "top";
+            }
+        }
+    });
+}, {
+    requires: ['component/base']
+});
+/**
  * @ignore
  * KISSY Tabs Component.
  * @author yiminghe@gmail.com
@@ -846,3 +866,4 @@ KISSY.add("tabs", function (S, Component, Bar, Body, Tab, Panel, Render) {
 }, {
     requires: ['component/base', 'tabs/bar', 'tabs/body', 'tabs/tab', 'tabs/panel', 'tabs/render']
 });
+

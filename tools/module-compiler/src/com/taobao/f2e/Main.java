@@ -5,6 +5,7 @@ import org.apache.commons.cli.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.regex.Pattern;
 
 /**
@@ -24,6 +25,8 @@ public class Main {
     static String DEP_SUFFIX = "\n});";
 
     private boolean compact = false;
+
+    private HashMap<String, String> warned = new HashMap<String, String>();
 
     /**
      * packages.
@@ -174,8 +177,11 @@ public class Main {
         }
 
         if (!packages.isModuleExists(requiredModuleName)) {
-            System.out.println("warning: module not found: " + requiredModuleName);
-            this.addDependency(requiredModuleName);
+            if (!warned.containsKey(requiredModuleName)) {
+                System.out.println("warning: module not found: " + requiredModuleName);
+                this.addDependency(requiredModuleName);
+                warned.put(requiredModuleName, "");
+            }
             return;
         }
 

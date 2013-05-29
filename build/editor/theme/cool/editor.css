@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 23 00:52
+build time: May 30 01:41
 */
 /**
 ks-editor-post ，编辑器内容外部包装容器
@@ -1069,6 +1069,8 @@ menu style for kissy editor ,include contextmenu and select menu
     overflow: hidden;
 }
 
+
+
 .ks-editor-overlay-hidden{
     visibility: hidden;
 }
@@ -1082,7 +1084,7 @@ menu style for kissy editor ,include contextmenu and select menu
     vertical-align: middle;
 }
 
-.ks-editor-dialog-content, .ks-editor-popup-content {
+.ks-editor-dialog, .ks-editor-popup {
     background-color: #FBFBFB;
     border: 1px solid #ACB4BE;
 }

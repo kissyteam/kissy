@@ -1,8 +1,16 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 23 00:55
+build time: May 30 01:44
 */
+/*
+ Combined processedModules by KISSY Module Compiler: 
+
+ waterfall/base
+ waterfall/loader
+ waterfall
+*/
+
 /**
  * @ignore
  * Make Elements flow like waterfall.
@@ -606,7 +614,8 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
  * 2012-03-21 yiminghe@gmail.com
  *  - 增加动画特效
  *  - 增加删除/调整接口
- **//**
+ **/
+/**
  * @ignore
  * Dynamic load waterfall items by monitor window scroll.
  * @author yiminghe@gmail.com
@@ -758,7 +767,8 @@ KISSY.add("waterfall/loader", function (S, Node, Waterfall) {
 
 }, {
     requires: ['node', './base']
-});/**
+});
+/**
  * @ignore
  * waterfall
  * @author yiminghe@gmail.com
@@ -769,3 +779,4 @@ KISSY.add("waterfall", function (S, Waterfall, Loader) {
 }, {
     requires:['waterfall/base', 'waterfall/loader']
 });
+

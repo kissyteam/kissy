@@ -1,271 +1,30 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 23 00:55
+build time: May 30 01:44
 */
-/**
- * root node represent a simple tree
- * @author yiminghe@gmail.com
- */
-KISSY.add("tree/base", function (S, Component,TreeNode, TreeRender, TreeManager) {
+/*
+ Combined processedModules by KISSY Module Compiler: 
 
-    /*多继承
-     1. 继承基节点（包括可装饰儿子节点功能）
-     2. 继承 mixin 树管理功能
-     3. 继承 mixin 儿子事件代理功能
-     */
-
-    /**
-     * @name Tree
-     * @class
-     * KISSY Tree.
-     * xclass: 'tree'.
-     * @extends Tree.Node
-     */
-    return TreeNode.extend([TreeManager], {}, {
-        ATTRS: {
-            xrender: {
-                value: TreeRender
-            },
-            defaultChildCfg: {
-                value: {
-                    xclass:'tree-node'
-                }
-            }
-        }
-    }, {
-        xclass: 'tree'
-    });
-
-}, {
-    requires: ['component/base', './node', './tree-render', './tree-manager']
-});
+ tree/node-tpl
+ tree/node-render
+ tree/node
+ tree/tree-manager-render
+ tree/tree-render
+ tree/tree-manager
+ tree/base
+ tree/check-node
+ tree/check-tree
+ tree
+*/
 
 /*
- Refer:
- - http://www.w3.org/TR/wai-aria-practices/#TreeView
-
- note bug:
- 1. checked tree 根节点总是 selected ！
- 2. 根节点 hover 后取消不了了
-
-
-
- 支持 aria
- 重用组件框架
- 键盘操作指南
-
- tab 到树，自动选择根节点
-
- 上下键在可视节点间深度遍历
- 左键
- 已展开节点：关闭节点
- 已关闭节点: 移动到父亲节点
- 右键
- 已展开节点：移动到该节点的第一个子节点
- 已关闭节点: 无效
- enter : 触发 click 事件
- home : 移动到根节点
- end : 移动到前序遍历最后一个节点
- *//**
- * checkable tree node
- * @author yiminghe@gmail.com
- */
-KISSY.add("tree/check-node", function (S, Node, TreeNode) {
-    var $ = Node.all,
-        PARTIAL_CHECK = 2,
-        CHECK = 1,
-        EMPTY = 0;
-
-    /**
-     * @name CheckNode
-     * @member Tree
-     * @class
-     * Checked tree node.
-     * xclass: 'check-tree-node'.
-     * @extends Tree.Node
-     */
-    var CheckNode = TreeNode.extend({
-        performActionInternal: function (e) {
-
-            var self = this,
-                checkState,
-                expanded = self.get("expanded"),
-                expandIconEl = self.get("expandIconEl"),
-                tree = self.get("tree"),
-                target = $(e.target);
-
-            // 需要通知 tree 获得焦点
-            tree.focus();
-
-            // 点击在 +- 号，切换状态
-            if (target.equals(expandIconEl)) {
-                self.set("expanded", !expanded);
-                return;
-            }
-
-            // 单击任何其他地方都切换 check 状态
-            checkState = self.get("checkState");
-
-            if (checkState == CHECK) {
-                checkState = EMPTY;
-            } else {
-                checkState = CHECK;
-            }
-
-            self.set("checkState", checkState);
-
-            self.fire("click");
-        },
-
-        _onSetCheckState: function (s) {
-            var self = this,
-                parent = self.get('parent'),
-                checkCount,
-                i,
-                c,
-                cState,
-                cs;
-
-            if (s == CHECK || s == EMPTY) {
-                S.each(self.get("children"), function (c) {
-                    c.set("checkState", s);
-                });
-            }
-
-            // 每次状态变化都通知 parent 沿链检查，一层层向上通知
-            // 效率不高，但是结构清晰
-            if (parent) {
-                checkCount = 0;
-                cs = parent.get("children");
-                for (i = 0; i < cs.length; i++) {
-                    c = cs[i];
-                    cState = c.get("checkState");
-                    // 一个是部分选，父亲必定是部分选，立即结束
-                    if (cState == PARTIAL_CHECK) {
-                        parent.set("checkState", PARTIAL_CHECK);
-                        return;
-                    } else if (cState == CHECK) {
-                        checkCount++;
-                    }
-                }
-
-                // 儿子都没选，父亲也不选
-                if (checkCount === 0) {
-                    parent.set("checkState", EMPTY);
-                } else
-                // 儿子全都选了，父亲也全选
-                if (checkCount == cs.length) {
-                    parent.set("checkState", CHECK);
-                }
-                // 有的儿子选了，有的没选，父亲部分选
-                else {
-                    parent.set("checkState", PARTIAL_CHECK);
-                }
-            }
-        }
-    }, {
-        ATTRS: /**
-         * @lends Tree.CheckNode#
-         */
-        {
-            checkIconEl: {
-                view: 1
-            },
-
-            checkable: {
-                value: true,
-                view: 1
-            },
-
-            /**
-             * Enums for check states.
-             * CheckNode.PARTIAL_CHECK: checked partly.
-             * CheckNode.CHECK: checked completely.
-             * CheckNode.EMPTY: not checked.
-             * @type {Number}
-             */
-            checkState: {
-                // check 的三状态
-                // 0 一个不选
-                // 1 儿子有选择
-                // 2 全部都选了
-                value: 0,
-                sync: 0,
-                view: 1
-            },
-
-            defaultChildCfg: {
-                value: {
-                    xclass: 'check-tree-node'
-                }
-            }
-        }
-    }, {
-        xclass: "check-tree-node"
-    });
-
-    S.mix(CheckNode,
-        /**
-         * @lends Tree.CheckNode
-         */
-        {
-            /**
-             * checked partly.
-             */
-            PARTIAL_CHECK: PARTIAL_CHECK,
-            /**
-             * checked completely.
-             */
-            CHECK: CHECK,
-            /**
-             * not checked at all.
-             */
-            EMPTY: EMPTY
-        });
-
-    return CheckNode;
-}, {
-    requires: ['node', './node']
-});/**
- * root node represent a check tree
- * @author yiminghe@gmail.com
- */
-KISSY.add("tree/check-tree", function (S, Component, CheckNode, TreeRender, TreeManager) {
-    /**
-     * @name CheckTree
-     * @extends Tree.CheckNode
-     * @class
-     * KISSY Checked Tree.
-     * xclass: 'check-tree'.
-     * @member Tree
-     */
-    return  CheckNode.extend([TreeManager], {
-    }, {
-        ATTRS: /**
-         * @lends Tree.CheckTree#
-         */
-        {
-            /**
-             * Readonly. Render class.
-             * @type {Function}
-             */
-            xrender: {
-                value: TreeRender
-            },
-
-            defaultChildCfg: {
-                value: {
-                    xclass:'check-tree-node'
-                }
-            }
-        }
-    }, {
-        xclass: 'check-tree'
-    });
-}, {
-    requires: ['component/base', './check-node', './tree-render', './tree-manager']
-});/**
+  Generated by kissy-tpl2mod.
+*/
+KISSY.add('tree/node-tpl',function(){
+ return '<div id="ks-tree-node-row{{id}}" class="{{getBaseCssClasses "row"}} {{#if selected}} {{getBaseCssClasses "selected"}} {{/if}} "> <div id="ks-tree-node-expand-icon{{id}}" class="{{getBaseCssClasses "expand-icon"}}"> </div> {{#if checkable}} <div id="ks-tree-node-checked{{id}}" class="{{getBaseCssClasses "checked"+checkState}}"></div> {{/if}} <div id="ks-tree-node-icon{{id}}" class="{{getBaseCssClasses "icon"}}"> </div> <span id="ks-content{{id}}" class="{{getBaseCssClasses "content"}}">{{{content}}}</span> </div> <div id="ks-tree-node-children{{id}}" class="{{getBaseCssClasses "children"}}" {{#if expanded}} {{else}} style="display:none" {{/if}} > </div>';
+});
+/**
  * common render for node
  * @author yiminghe@gmail.com
  */
@@ -453,11 +212,6 @@ KISSY.add("tree/node-render", function (S, Node, Component, TreeNodeTpl, Extensi
 
 }, {
     requires: ['node', 'component/base', './node-tpl','component/extension']
-});/*
-  Generated by kissy-tpl2mod.
-*/
-KISSY.add('tree/node-tpl',function(){
- return '<div id="ks-tree-node-row{{id}}" class="{{getBaseCssClasses "row"}} {{#if selected}} {{getBaseCssClasses "selected"}} {{/if}} "> <div id="ks-tree-node-expand-icon{{id}}" class="{{getBaseCssClasses "expand-icon"}}"> </div> {{#if checkable}} <div id="ks-tree-node-checked{{id}}" class="{{getBaseCssClasses "checked"+checkState}}"></div> {{/if}} <div id="ks-tree-node-icon{{id}}" class="{{getBaseCssClasses "icon"}}"> </div> <span id="ks-content{{id}}" class="{{getBaseCssClasses "content"}}">{{{content}}}</span> </div> <div id="ks-tree-node-children{{id}}" class="{{getBaseCssClasses "children"}}" {{#if expanded}} {{else}} style="display:none" {{/if}} > </div>';
 });
 /**
  * abstraction of tree node ,root and other node will extend it
@@ -920,7 +674,8 @@ KISSY.add("tree/node", function (S, Node, Component,Extension, TreeNodeRender) {
 /**
  * 2012-09-25
  *  - 去除 dblclick 支持，该交互会重复触发 click 事件，可能会重复执行逻辑
- *//**
+ */
+/**
  * tree management utils render
  * @author yiminghe@gmail.com
  */
@@ -944,7 +699,17 @@ KISSY.add("tree/tree-manager-render", function (S) {
     });
 
     return TreeManagerRender;
-});/**
+});
+/**
+ * root node render
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("tree/tree-render", function (S, TreeNodeRender, TreeManagerRender) {
+    return TreeNodeRender.extend([TreeManagerRender]);
+}, {
+    requires:['./node-render', './tree-manager-render']
+});
+/**
  * tree management utils
  * @author yiminghe@gmail.com
  */
@@ -1077,15 +842,273 @@ KISSY.add("tree/tree-manager", function (S, Event, Component,Extension) {
     return TreeManager;
 }, {
     requires: ['event', 'component/base','component/extension']
-});/**
- * root node render
+});
+/**
+ * root node represent a simple tree
  * @author yiminghe@gmail.com
  */
-KISSY.add("tree/tree-render", function (S, TreeNodeRender, TreeManagerRender) {
-    return TreeNodeRender.extend([TreeManagerRender]);
+KISSY.add("tree/base", function (S, Component,TreeNode, TreeRender, TreeManager) {
+
+    /*多继承
+     1. 继承基节点（包括可装饰儿子节点功能）
+     2. 继承 mixin 树管理功能
+     3. 继承 mixin 儿子事件代理功能
+     */
+
+    /**
+     * @name Tree
+     * @class
+     * KISSY Tree.
+     * xclass: 'tree'.
+     * @extends Tree.Node
+     */
+    return TreeNode.extend([TreeManager], {}, {
+        ATTRS: {
+            xrender: {
+                value: TreeRender
+            },
+            defaultChildCfg: {
+                value: {
+                    xclass:'tree-node'
+                }
+            }
+        }
+    }, {
+        xclass: 'tree'
+    });
+
 }, {
-    requires:['./node-render', './tree-manager-render']
-});/**
+    requires: ['component/base', './node', './tree-render', './tree-manager']
+});
+
+/*
+ Refer:
+ - http://www.w3.org/TR/wai-aria-practices/#TreeView
+
+ note bug:
+ 1. checked tree 根节点总是 selected ！
+ 2. 根节点 hover 后取消不了了
+
+
+
+ 支持 aria
+ 重用组件框架
+ 键盘操作指南
+
+ tab 到树，自动选择根节点
+
+ 上下键在可视节点间深度遍历
+ 左键
+ 已展开节点：关闭节点
+ 已关闭节点: 移动到父亲节点
+ 右键
+ 已展开节点：移动到该节点的第一个子节点
+ 已关闭节点: 无效
+ enter : 触发 click 事件
+ home : 移动到根节点
+ end : 移动到前序遍历最后一个节点
+ */
+/**
+ * checkable tree node
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("tree/check-node", function (S, Node, TreeNode) {
+    var $ = Node.all,
+        PARTIAL_CHECK = 2,
+        CHECK = 1,
+        EMPTY = 0;
+
+    /**
+     * @name CheckNode
+     * @member Tree
+     * @class
+     * Checked tree node.
+     * xclass: 'check-tree-node'.
+     * @extends Tree.Node
+     */
+    var CheckNode = TreeNode.extend({
+        performActionInternal: function (e) {
+
+            var self = this,
+                checkState,
+                expanded = self.get("expanded"),
+                expandIconEl = self.get("expandIconEl"),
+                tree = self.get("tree"),
+                target = $(e.target);
+
+            // 需要通知 tree 获得焦点
+            tree.focus();
+
+            // 点击在 +- 号，切换状态
+            if (target.equals(expandIconEl)) {
+                self.set("expanded", !expanded);
+                return;
+            }
+
+            // 单击任何其他地方都切换 check 状态
+            checkState = self.get("checkState");
+
+            if (checkState == CHECK) {
+                checkState = EMPTY;
+            } else {
+                checkState = CHECK;
+            }
+
+            self.set("checkState", checkState);
+
+            self.fire("click");
+        },
+
+        _onSetCheckState: function (s) {
+            var self = this,
+                parent = self.get('parent'),
+                checkCount,
+                i,
+                c,
+                cState,
+                cs;
+
+            if (s == CHECK || s == EMPTY) {
+                S.each(self.get("children"), function (c) {
+                    c.set("checkState", s);
+                });
+            }
+
+            // 每次状态变化都通知 parent 沿链检查，一层层向上通知
+            // 效率不高，但是结构清晰
+            if (parent) {
+                checkCount = 0;
+                cs = parent.get("children");
+                for (i = 0; i < cs.length; i++) {
+                    c = cs[i];
+                    cState = c.get("checkState");
+                    // 一个是部分选，父亲必定是部分选，立即结束
+                    if (cState == PARTIAL_CHECK) {
+                        parent.set("checkState", PARTIAL_CHECK);
+                        return;
+                    } else if (cState == CHECK) {
+                        checkCount++;
+                    }
+                }
+
+                // 儿子都没选，父亲也不选
+                if (checkCount === 0) {
+                    parent.set("checkState", EMPTY);
+                } else
+                // 儿子全都选了，父亲也全选
+                if (checkCount == cs.length) {
+                    parent.set("checkState", CHECK);
+                }
+                // 有的儿子选了，有的没选，父亲部分选
+                else {
+                    parent.set("checkState", PARTIAL_CHECK);
+                }
+            }
+        }
+    }, {
+        ATTRS: /**
+         * @lends Tree.CheckNode#
+         */
+        {
+            checkIconEl: {
+                view: 1
+            },
+
+            checkable: {
+                value: true,
+                view: 1
+            },
+
+            /**
+             * Enums for check states.
+             * CheckNode.PARTIAL_CHECK: checked partly.
+             * CheckNode.CHECK: checked completely.
+             * CheckNode.EMPTY: not checked.
+             * @type {Number}
+             */
+            checkState: {
+                // check 的三状态
+                // 0 一个不选
+                // 1 儿子有选择
+                // 2 全部都选了
+                value: 0,
+                sync: 0,
+                view: 1
+            },
+
+            defaultChildCfg: {
+                value: {
+                    xclass: 'check-tree-node'
+                }
+            }
+        }
+    }, {
+        xclass: "check-tree-node"
+    });
+
+    S.mix(CheckNode,
+        /**
+         * @lends Tree.CheckNode
+         */
+        {
+            /**
+             * checked partly.
+             */
+            PARTIAL_CHECK: PARTIAL_CHECK,
+            /**
+             * checked completely.
+             */
+            CHECK: CHECK,
+            /**
+             * not checked at all.
+             */
+            EMPTY: EMPTY
+        });
+
+    return CheckNode;
+}, {
+    requires: ['node', './node']
+});
+/**
+ * root node represent a check tree
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("tree/check-tree", function (S, Component, CheckNode, TreeRender, TreeManager) {
+    /**
+     * @name CheckTree
+     * @extends Tree.CheckNode
+     * @class
+     * KISSY Checked Tree.
+     * xclass: 'check-tree'.
+     * @member Tree
+     */
+    return  CheckNode.extend([TreeManager], {
+    }, {
+        ATTRS: /**
+         * @lends Tree.CheckTree#
+         */
+        {
+            /**
+             * Readonly. Render class.
+             * @type {Function}
+             */
+            xrender: {
+                value: TreeRender
+            },
+
+            defaultChildCfg: {
+                value: {
+                    xclass:'check-tree-node'
+                }
+            }
+        }
+    }, {
+        xclass: 'check-tree'
+    });
+}, {
+    requires: ['component/base', './check-node', './tree-render', './tree-manager']
+});
+/**
  * tree component for kissy
  * @author yiminghe@gmail.com
  */
@@ -1097,3 +1120,4 @@ KISSY.add('tree', function (S, Tree, TreeNode, CheckNode, CheckTree) {
 }, {
     requires: ["tree/base", "tree/node", "tree/check-node", "tree/check-tree"]
 });
+

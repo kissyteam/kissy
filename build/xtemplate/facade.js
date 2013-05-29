@@ -1,8 +1,14 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 23 00:55
+build time: May 30 01:44
 */
+/*
+ Combined processedModules by KISSY Module Compiler: 
+
+ xtemplate/facade
+*/
+
 /**
  * @ignore
  * simple facade for runtime and compiler
@@ -158,3 +164,4 @@ KISSY.add('xtemplate/facade', function (S, XTemplateRuntime, compiler) {
  xtemplate/compiler depends on xtemplate/runtime,
  because compiler needs to know about runtime to generate corresponding codes.
  */
+

@@ -1,423 +1,25 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 27 13:04
+build time: May 30 01:41
 */
-/**
- * @ignore
- * setup event/dom api module
- * @author yiminghe@gmail.com
- */
-KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, ObservableDOMEvent, DOMEventObject) {
-    var _Utils = Event._Utils;
-
-    function fixType(cfg, type) {
-        var s = special[type] || {},
-            typeFix;
-
-        // in case overwritten by typeFix in special events
-        // (mouseenter/leave,focusin/out)
-        if (!cfg.originalType && (typeFix = s.typeFix)) {
-            // when on mouseenter, it's actually on mouseover,
-            // and observers is saved with mouseover!
-            cfg.originalType = type;
-            type = typeFix;
-        }
-
-        return type;
-    }
-
-    function addInternal(currentTarget, type, cfg) {
-        var eventDesc,
-            customEvent,
-            events,
-            handle;
-
-        cfg = S.merge(cfg);
-        type = fixType(cfg, type);
-
-        // 获取事件描述
-        eventDesc = ObservableDOMEvent.getCustomEvents(currentTarget, 1);
-
-        if (!(handle = eventDesc.handle)) {
-            handle = eventDesc.handle = function (event) {
-                // 是经过 fire 手动调用而浏览器同步触发导致的，就不要再次触发了，
-                // 已经在 fire 中 bubble 过一次了
-                // in case after page has unloaded
-                var type = event.type,
-                    customEvent,
-                    currentTarget = handle.currentTarget;
-                if (ObservableDOMEvent.triggeredEvent == type ||
-                    typeof KISSY == 'undefined') {
-                    return undefined;
-                }
-                customEvent = ObservableDOMEvent.getCustomEvent(currentTarget, type);
-                if (customEvent) {
-                    event.currentTarget = currentTarget;
-                    event = new DOMEventObject(event);
-                    return customEvent.notify(event);
-                }
-                return undefined;
-            };
-            handle.currentTarget = currentTarget;
-        }
-
-        if (!(events = eventDesc.events)) {
-            events = eventDesc.events = {};
-        }
-
-        //事件 listeners , similar to eventListeners in DOM3 Events
-        customEvent = events[type];
-
-        if (!customEvent) {
-            customEvent = events[type] = new ObservableDOMEvent({
-                type: type,
-                currentTarget: currentTarget
-            });
-
-            customEvent.setup();
-        }
-
-        customEvent.on(cfg);
-
-        currentTarget = null;
-    }
-
-    function removeInternal(currentTarget, type, cfg) {
-        // copy
-        cfg = S.merge(cfg);
-
-        var customEvent;
-
-        type = fixType(cfg, type);
-
-        var eventDesc = ObservableDOMEvent.getCustomEvents(currentTarget),
-            events = (eventDesc || {}).events;
-
-        if (!eventDesc || !events) {
-            return;
-        }
-
-        // remove all types of event
-        if (!type) {
-            for (type in events) {
-                events[type].detach(cfg);
-            }
-            return;
-        }
-
-        customEvent = events[type];
-
-        if (customEvent) {
-            customEvent.detach(cfg);
-        }
-    }
-
-    S.mix(Event, {
-        /**
-         * Adds an event listener.similar to addEventListener in DOM3 Events
-         * @param targets KISSY selector
-         * @member KISSY.Event
-         * @param type {String} The type of event to append.
-         * use space to separate multiple event types.
-         * @param fn {Function|Object} The event listener or event description object.
-         * @param {Function} fn.fn The event listener
-         * @param {Function} fn.context The context (this reference) in which the handler function is executed.
-         * @param {String|Function} fn.selector filter selector string or function to find right element
-         * @param {Boolean} fn.once whether fn will be removed once after it is executed.
-         * @param {Object} [context] The context (this reference) in which the handler function is executed.
-         */
-        add: function (targets, type, fn, context) {
-            // data : 附加在回调后面的数据，delegate 检查使用
-            // remove 时 data 相等(指向同一对象或者定义了 equals 比较函数)
-            targets = DOM.query(targets);
-
-            _Utils.batchForType(function (targets, type, fn, context) {
-                var cfg = _Utils.normalizeParam(type, fn, context), i, t;
-                type = cfg.type;
-                for (i = targets.length - 1; i >= 0; i--) {
-                    t = targets[i];
-                    addInternal(t, type, cfg);
-                }
-            }, 1, targets, type, fn, context);
-
-            return targets;
-        },
-
-        /**
-         * Detach an event or set of events from an element. similar to removeEventListener in DOM3 Events
-         * @param targets KISSY selector
-         * @member KISSY.Event
-         * @param {String|Boolean} [type] The type of event to remove.
-         * use space to separate multiple event types.
-         * or
-         * whether to remove all events from descendants nodes.
-         * @param [fn] {Function|Object} The event listener or event description object.
-         * @param {Function} fn.fn The event listener
-         * @param {Function} [fn.context] The context (this reference) in which the handler function is executed.
-         * @param {String|Function} [fn.selector] filter selector string or function to find right element
-         * @param {Boolean} [fn.once] whether fn will be removed once after it is executed.
-         * @param {Object} [context] The context (this reference) in which the handler function is executed.
-         */
-        remove: function (targets, type, fn, context) {
-
-            targets = DOM.query(targets);
-
-            _Utils.batchForType(function (targets, singleType, fn, context) {
-
-                var cfg = _Utils.normalizeParam(singleType, fn, context),
-                    i,
-                    j,
-                    elChildren,
-                    t;
-
-                singleType = cfg.type;
-
-                for (i = targets.length - 1; i >= 0; i--) {
-                    t = targets[i];
-                    removeInternal(t, singleType, cfg);
-                    // deep remove
-                    if (cfg.deep && t.getElementsByTagName) {
-                        elChildren = t.getElementsByTagName('*');
-                        for (j = elChildren.length - 1; j >= 0; j--) {
-                            removeInternal(elChildren[j], singleType, cfg);
-                        }
-                    }
-                }
-
-            }, 1, targets, type, fn, context);
-
-            return targets;
-
-        },
-
-        /**
-         * Delegate event.
-         * @param targets KISSY selector
-         * @param {String|Function} selector filter selector string or function to find right element
-         * @param {String} [eventType] The type of event to delegate.
-         * use space to separate multiple event types.
-         * @param {Function} [fn] The event listener.
-         * @param {Object} [context] The context (this reference) in which the handler function is executed.
-         * @member KISSY.Event
-         */
-        delegate: function (targets, eventType, selector, fn, context) {
-            return Event.add(targets, eventType, {
-                fn: fn,
-                context: context,
-                selector: selector
-            });
-        },
-        /**
-         * undelegate event.
-         * @param targets KISSY selector
-         * @param {String} [eventType] The type of event to undelegate.
-         * use space to separate multiple event types.
-         * @param {String|Function} [selector] filter selector string or function to find right element
-         * @param {Function} [fn] The event listener.
-         * @param {Object} [context] The context (this reference) in which the handler function is executed.
-         * @member KISSY.Event
-         */
-        undelegate: function (targets, eventType, selector, fn, context) {
-            return Event.remove(targets, eventType, {
-                fn: fn,
-                context: context,
-                selector: selector
-            });
-        },
-
-        /**
-         * fire event,simulate bubble in browser. similar to dispatchEvent in DOM3 Events
-         * @param targets html nodes
-         * @member KISSY.Event
-         * @param {String} eventType event type
-         * @param [eventData] additional event data
-         * @param {Boolean} [onlyHandlers] for internal usage
-         * @return {*} return false if one of custom event 's observers (include bubbled) else
-         * return last value of custom event 's observers (include bubbled) 's return value.
-         */
-        fire: function (targets, eventType, eventData, onlyHandlers/*internal usage*/) {
-            var ret = undefined;
-            // custom event firing moved to target.js
-            eventData = eventData || {};
-
-            /**
-             * identify event as fired manually
-             * @ignore
-             */
-            eventData.synthetic = 1;
-
-            _Utils.splitAndRun(eventType, function (eventType) {
-
-                var r,
-                    i,
-                    target,
-                    customEvent;
-
-                _Utils.fillGroupsForEvent(eventType, eventData);
-
-                // mouseenter
-                eventType = eventData.type;
-                var s = special[eventType];
-
-                var originalType = eventType;
-
-                // where observers lie
-                // mouseenter observer lies on mouseover
-                if (s && s.typeFix) {
-                    // mousemove
-                    originalType = s.typeFix;
-                }
-
-                targets = DOM.query(targets);
-
-                for (i = targets.length - 1; i >= 0; i--) {
-                    target = targets[i];
-                    customEvent = ObservableDOMEvent.getCustomEvent(target, originalType);
-                    // bubbling
-                    // html dom event defaults to bubble
-                    if (!onlyHandlers && !customEvent) {
-                        customEvent = new ObservableDOMEvent({
-                            type: originalType,
-                            currentTarget: target
-                        });
-                    }
-                    if (customEvent) {
-                        r = customEvent.fire(eventData, onlyHandlers);
-                        if (ret !== false) {
-                            ret = r;
-                        }
-                    }
-                }
-            });
-
-            return ret;
-        },
-
-        /**
-         * same with fire but:
-         * - does not cause default behavior to occur.
-         * - does not bubble up the DOM hierarchy.
-         * @param targets html nodes
-         * @member KISSY.Event
-         * @param {String} eventType event type
-         * @param [eventData] additional event data
-         * @return {*} return false if one of custom event 's observers (include bubbled) else
-         * return last value of custom event 's observers (include bubbled) 's return value.
-         */
-        fireHandler: function (targets, eventType, eventData) {
-            return Event.fire(targets, eventType, eventData, 1);
-        },
-
-
-        /**
-         * copy event from src to dest
-         * @member KISSY.Event
-         * @param {HTMLElement} src srcElement
-         * @param {HTMLElement} dest destElement
-         * @private
-         */
-        _clone: function (src, dest) {
-            var eventDesc, events;
-            if (!(eventDesc = ObservableDOMEvent.getCustomEvents(src))) {
-                return;
-            }
-            events = eventDesc.events;
-            S.each(events, function (customEvent, type) {
-                S.each(customEvent.observers, function (observer) {
-                    // context undefined
-                    // 不能 this 写死在 handlers 中
-                    // 否则不能保证 clone 时的 this
-                    addInternal(dest, type, observer);
-                });
-            });
-        },
-
-        _ObservableDOMEvent: ObservableDOMEvent
-    });
-
-    /**
-     * Same with {@link KISSY.Event#add}
-     * @method
-     * @member KISSY.Event
-     */
-    Event.on = Event.add;
-    /**
-     * Same with {@link KISSY.Event#remove}
-     * @method
-     * @member KISSY.Event
-     */
-    Event.detach = Event.remove;
-
-    return Event;
-}, {
-    requires: ['event/base', 'dom', './special', './utils', './observable', './object']
-});
 /*
- 2012-02-12 yiminghe@gmail.com note:
- - 普通 remove() 不管 selector 都会查，如果 fn context 相等就移除
- - undelegate() selector 为 ''，那么去除所有委托绑定的 handler
- */
-/**
- * @ignore
- * dom event facade
- * @author yiminghe@gmail.com
- */
-KISSY.add('event/dom/base', function (S, Event, KeyCodes, _DOMUtils, Gesture, Special) {
-    S.mix(Event, {
-        KeyCodes: KeyCodes,
-        _DOMUtils: _DOMUtils,
-        Gesture: Gesture,
-        _Special: Special
-    });
+ Combined processedModules by KISSY Module Compiler: 
 
-    return Event;
-}, {
-    requires: ['event/base',
-        './base/key-codes',
-        './base/utils',
-        './base/gesture',
-        './base/special',
-        './base/api',
-        './base/mouseenter',
-        './base/valuechange']
-});
+ event/dom/base/key-codes
+ event/dom/base/utils
+ event/dom/base/gesture
+ event/dom/base/special
+ event/dom/base/observer
+ event/dom/base/object
+ event/dom/base/observable
+ event/dom/base/api
+ event/dom/base/mouseenter
+ event/dom/base/valuechange
+ event/dom/base
+*/
 
 /**
- * @ignore
- * gesture normalization for pc and touch.
- * @author yiminghe@gmail.com
- */
-KISSY.add('event/dom/base/gesture', function (S) {
-
-    /**
-     * gesture for event
-     * @enum {String} KISSY.Event.Gesture
-     */
-    return {
-        /**
-         * start gesture
-         */
-        start: 'mousedown',
-        /**
-         * move gesture
-         */
-        move: 'mousemove',
-        /**
-         * end gesture
-         */
-        end: 'mouseup',
-        /**
-         * tap gesture
-         */
-        tap: 'click',
-        /**
-         * doubleTap gesture, it is not same with dblclick
-         */
-        doubleTap:'dblclick'
-    };
-
-});/**
  * @ignore
  * some key-codes definition and utils from closure-library
  * @author yiminghe@gmail.com
@@ -949,57 +551,232 @@ KISSY.add('event/dom/base/key-codes', function (S) {
 
     return KeyCodes;
 
-});/**
+});
+/**
  * @ignore
- * event-mouseenter
+ * utils for event
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/base/mouseenter', function (S, Event, DOM, special) {
-
-    S.each([
-        { name: 'mouseenter', fix: 'mouseover' },
-        { name: 'mouseleave', fix: 'mouseout' }
-    ], function (o) {
-        special[o.name] = {
-            // fix #75
-            typeFix: o.fix,
-            handle: function (event, observer, ce) {
-                var currentTarget = event.currentTarget,
-                    relatedTarget = event.relatedTarget;
-                // 在自身外边就触发
-                // self === document,parent === null
-                // relatedTarget 与 currentTarget 之间就是 mouseenter/leave
-                if (!relatedTarget ||
-                    (relatedTarget !== currentTarget &&
-                        !DOM.contains(currentTarget, relatedTarget))) {
-                    // http://msdn.microsoft.com/en-us/library/ms536945(v=vs.85).aspx
-                    // does not bubble
-                    // 2012-04-12 把 mouseover 阻止冒泡有问题！
-                    // <div id='0'><div id='1'><div id='2'><div id='3'></div></div></div></div>
-                    // 2 mouseover 停止冒泡
-                    // 然后快速 2,1 飞过，可能 1 的 mouseover 是 2 冒泡过来的
-                    // mouseover 采样时跳跃的，可能 2,1 的 mouseover 事件
-                    // target 都是 3,而 relatedTarget 都是 0
-                    // event.stopPropagation();
-                    return [observer.simpleNotify(event, ce)];
+KISSY.add('event/dom/base/utils', function (S, DOM) {
+    var EVENT_GUID = 'ksEventTargetId_1.30',
+        doc = S.Env.host.document,
+        simpleAdd = doc && doc.addEventListener ?
+            function (el, type, fn, capture) {
+                if (el.addEventListener) {
+                    el.addEventListener(type, fn, !!capture);
                 }
+            } :
+            function (el, type, fn) {
+                if (el.attachEvent) {
+                    el.attachEvent('on' + type, fn);
+                }
+            },
+        simpleRemove = doc && doc.removeEventListener ?
+            function (el, type, fn, capture) {
+                if (el.removeEventListener) {
+                    el.removeEventListener(type, fn, !!capture);
+                }
+            } :
+            function (el, type, fn) {
+                if (el.detachEvent) {
+                    el.detachEvent('on' + type, fn);
+                }
+            };
+
+    return {
+        simpleAdd: simpleAdd,
+
+        simpleRemove: simpleRemove,
+
+        data: function (elem, v) {
+            return DOM.data(elem, EVENT_GUID, v);
+        },
+
+        removeData: function (elem) {
+            return DOM.removeData(elem, EVENT_GUID);
+        }
+    };
+
+}, {
+    requires: ['dom']
+});
+/**
+ * @ignore
+ * gesture normalization for pc and touch.
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('event/dom/base/gesture', function (S) {
+
+    /**
+     * gesture for event
+     * @enum {String} KISSY.Event.Gesture
+     */
+    return {
+        /**
+         * start gesture
+         */
+        start: 'mousedown',
+        /**
+         * move gesture
+         */
+        move: 'mousemove',
+        /**
+         * end gesture
+         */
+        end: 'mouseup',
+        /**
+         * tap gesture
+         */
+        tap: 'click',
+        /**
+         * doubleTap gesture, it is not same with dblclick
+         */
+        doubleTap:'dblclick'
+    };
+
+});
+/**
+ * @ignore
+ * special house for special events
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('event/dom/base/special', function (S, Event) {
+    var undefined = undefined,
+        UA = S.UA,
+        MOUSE_WHEEL = UA.gecko ? 'DOMMouseScroll' : 'mousewheel';
+
+    return {
+
+        mousewheel: {
+            typeFix: MOUSE_WHEEL
+        },
+
+        load: {
+            // defaults to bubbles as custom event
+            bubbles: false
+        },
+        click: {
+            // use native click for correct check state order
+            fire: function (onlyHandlers) {
+                var target = this;
+                if (!onlyHandlers && String(target.type) === "checkbox" &&
+                    target.click && target.nodeName.toLowerCase() == 'input') {
+                    target.click();
+                    return false;
+                }
+                return undefined;
             }
-        };
+        },
+        focus: {
+            bubbles: false,
+            // guarantee fire focusin first
+            preFire: function (event, onlyHandlers) {
+                if (!onlyHandlers) {
+                    Event.fire(this, 'focusin');
+                }
+            },
+            // guarantee fire blur first
+            fire: function (onlyHandlers) {
+                var target = this;
+                if (!onlyHandlers && target.ownerDocument) {
+                    if (target !== target.ownerDocument.activeElement && target.focus) {
+                        target.focus();
+                        return false;
+                    }
+                }
+                return undefined;
+            }
+        },
+        blur: {
+            bubbles: false,
+            // guarantee fire focusout first
+            preFire: function (event, onlyHandlers) {
+                if (!onlyHandlers) {
+                    Event.fire(this, 'focusout');
+                }
+            },
+            // guarantee fire blur first
+            fire: function (onlyHandlers) {
+                var target = this;
+                if (!onlyHandlers && target.ownerDocument) {
+                    if (target === target.ownerDocument.activeElement && target.blur) {
+                        target.blur();
+                        return false;
+                    }
+                }
+                return undefined;
+            }
+        }
+
+    };
+}, {
+    requires: ['event/base']
+});
+/**
+ * @ignore
+ * observer for dom event.
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('event/dom/base/observer', function (S, special, Event) {
+
+    /**
+     * observer for dom event
+     * @class KISSY.Event.DOMEventObserver
+     * @extends KISSY.Event.Observer
+     * @private
+     */
+    function DOMEventObserver(cfg) {
+        DOMEventObserver.superclass.constructor.apply(this, arguments);
+        /**
+         * filter selector string or function to find right element
+         * @cfg {String} selector
+         */
+        /**
+         * extra data as second parameter of listener
+         * @cfg {*} data
+         */
+    }
+
+    S.extend(DOMEventObserver, Event._Observer, {
+
+        keys: ['fn', 'selector', 'data', 'context', 'originalType', 'groups', 'last'],
+
+        notifyInternal: function (event, ce) {
+            var self = this,
+                s, t, ret,
+                type = event.type,
+                originalType;
+
+            if (originalType = self.originalType) {
+                event.type = originalType;
+            } else {
+                originalType = type;
+            }
+
+            // context undefined 时不能写死在 listener 中，否则不能保证 clone 时的 this
+            if ((s = special[originalType]) && s.handle) {
+                t = s.handle(event, self, ce);
+                // can handle
+                if (t && t.length > 0) {
+                    ret = t[0];
+                }
+            } else {
+                ret = self.simpleNotify(event, ce);
+            }
+
+            // notify other mousemove listener
+            event.type = type;
+
+            return ret;
+        }
+
     });
 
-    return Event;
+    return DOMEventObserver;
+
 }, {
-    requires: ['./api', 'dom', './special']
+    requires: ['./special', 'event/base']
 });
-
-/*
- yiminghe@gmail.com:2011-12-15
- - 借鉴 jq 1.7 新的架构
-
- yiminghe@gmail.com：2011-06-07
- - 根据新结构，调整 mouseenter 兼容处理
- - fire('mouseenter') 可以的，直接执行 mouseenter 的 handlers 用户回调数组
- */
 /**
  * @ignore
  * event object for dom
@@ -1498,7 +1275,8 @@ KISSY.add('event/dom/base/object', function (S, Event, undefined) {
  http://plugins.jquery.com/project/mousewheel
  http://www.cnblogs.com/aiyuchen/archive/2011/04/19/2020843.html
  http://www.w3.org/TR/DOM-Level-3-Events/#events-mousewheelevents
- *//**
+ */
+/**
  * @ignore
  * custom event for dom.
  * @author yiminghe@gmail.com
@@ -1933,194 +1711,414 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
 
 }, {
     requires: ['dom', './special', './utils', './observer', './object', 'event/base']
-});/**
+});
+/**
  * @ignore
- * observer for dom event.
+ * setup event/dom api module
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/base/observer', function (S, special, Event) {
+KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, ObservableDOMEvent, DOMEventObject) {
+    var _Utils = Event._Utils;
 
-    /**
-     * observer for dom event
-     * @class KISSY.Event.DOMEventObserver
-     * @extends KISSY.Event.Observer
-     * @private
-     */
-    function DOMEventObserver(cfg) {
-        DOMEventObserver.superclass.constructor.apply(this, arguments);
-        /**
-         * filter selector string or function to find right element
-         * @cfg {String} selector
-         */
-        /**
-         * extra data as second parameter of listener
-         * @cfg {*} data
-         */
+    function fixType(cfg, type) {
+        var s = special[type] || {},
+            typeFix;
+
+        // in case overwritten by typeFix in special events
+        // (mouseenter/leave,focusin/out)
+        if (!cfg.originalType && (typeFix = s.typeFix)) {
+            // when on mouseenter, it's actually on mouseover,
+            // and observers is saved with mouseover!
+            cfg.originalType = type;
+            type = typeFix;
+        }
+
+        return type;
     }
 
-    S.extend(DOMEventObserver, Event._Observer, {
+    function addInternal(currentTarget, type, cfg) {
+        var eventDesc,
+            customEvent,
+            events,
+            handle;
 
-        keys: ['fn', 'selector', 'data', 'context', 'originalType', 'groups', 'last'],
+        cfg = S.merge(cfg);
+        type = fixType(cfg, type);
 
-        notifyInternal: function (event, ce) {
-            var self = this,
-                s, t, ret,
-                type = event.type,
-                originalType;
+        // 获取事件描述
+        eventDesc = ObservableDOMEvent.getCustomEvents(currentTarget, 1);
 
-            if (originalType = self.originalType) {
-                event.type = originalType;
-            } else {
-                originalType = type;
-            }
-
-            // context undefined 时不能写死在 listener 中，否则不能保证 clone 时的 this
-            if ((s = special[originalType]) && s.handle) {
-                t = s.handle(event, self, ce);
-                // can handle
-                if (t && t.length > 0) {
-                    ret = t[0];
+        if (!(handle = eventDesc.handle)) {
+            handle = eventDesc.handle = function (event) {
+                // 是经过 fire 手动调用而浏览器同步触发导致的，就不要再次触发了，
+                // 已经在 fire 中 bubble 过一次了
+                // in case after page has unloaded
+                var type = event.type,
+                    customEvent,
+                    currentTarget = handle.currentTarget;
+                if (ObservableDOMEvent.triggeredEvent == type ||
+                    typeof KISSY == 'undefined') {
+                    return undefined;
                 }
-            } else {
-                ret = self.simpleNotify(event, ce);
-            }
+                customEvent = ObservableDOMEvent.getCustomEvent(currentTarget, type);
+                if (customEvent) {
+                    event.currentTarget = currentTarget;
+                    event = new DOMEventObject(event);
+                    return customEvent.notify(event);
+                }
+                return undefined;
+            };
+            handle.currentTarget = currentTarget;
+        }
 
-            // notify other mousemove listener
-            event.type = type;
+        if (!(events = eventDesc.events)) {
+            events = eventDesc.events = {};
+        }
+
+        //事件 listeners , similar to eventListeners in DOM3 Events
+        customEvent = events[type];
+
+        if (!customEvent) {
+            customEvent = events[type] = new ObservableDOMEvent({
+                type: type,
+                currentTarget: currentTarget
+            });
+
+            customEvent.setup();
+        }
+
+        customEvent.on(cfg);
+
+        currentTarget = null;
+    }
+
+    function removeInternal(currentTarget, type, cfg) {
+        // copy
+        cfg = S.merge(cfg);
+
+        var customEvent;
+
+        type = fixType(cfg, type);
+
+        var eventDesc = ObservableDOMEvent.getCustomEvents(currentTarget),
+            events = (eventDesc || {}).events;
+
+        if (!eventDesc || !events) {
+            return;
+        }
+
+        // remove all types of event
+        if (!type) {
+            for (type in events) {
+                events[type].detach(cfg);
+            }
+            return;
+        }
+
+        customEvent = events[type];
+
+        if (customEvent) {
+            customEvent.detach(cfg);
+        }
+    }
+
+    S.mix(Event, {
+        /**
+         * Adds an event listener.similar to addEventListener in DOM3 Events
+         * @param targets KISSY selector
+         * @member KISSY.Event
+         * @param type {String} The type of event to append.
+         * use space to separate multiple event types.
+         * @param fn {Function|Object} The event listener or event description object.
+         * @param {Function} fn.fn The event listener
+         * @param {Function} fn.context The context (this reference) in which the handler function is executed.
+         * @param {String|Function} fn.selector filter selector string or function to find right element
+         * @param {Boolean} fn.once whether fn will be removed once after it is executed.
+         * @param {Object} [context] The context (this reference) in which the handler function is executed.
+         */
+        add: function (targets, type, fn, context) {
+            // data : 附加在回调后面的数据，delegate 检查使用
+            // remove 时 data 相等(指向同一对象或者定义了 equals 比较函数)
+            targets = DOM.query(targets);
+
+            _Utils.batchForType(function (targets, type, fn, context) {
+                var cfg = _Utils.normalizeParam(type, fn, context), i, t;
+                type = cfg.type;
+                for (i = targets.length - 1; i >= 0; i--) {
+                    t = targets[i];
+                    addInternal(t, type, cfg);
+                }
+            }, 1, targets, type, fn, context);
+
+            return targets;
+        },
+
+        /**
+         * Detach an event or set of events from an element. similar to removeEventListener in DOM3 Events
+         * @param targets KISSY selector
+         * @member KISSY.Event
+         * @param {String|Boolean} [type] The type of event to remove.
+         * use space to separate multiple event types.
+         * or
+         * whether to remove all events from descendants nodes.
+         * @param [fn] {Function|Object} The event listener or event description object.
+         * @param {Function} fn.fn The event listener
+         * @param {Function} [fn.context] The context (this reference) in which the handler function is executed.
+         * @param {String|Function} [fn.selector] filter selector string or function to find right element
+         * @param {Boolean} [fn.once] whether fn will be removed once after it is executed.
+         * @param {Object} [context] The context (this reference) in which the handler function is executed.
+         */
+        remove: function (targets, type, fn, context) {
+
+            targets = DOM.query(targets);
+
+            _Utils.batchForType(function (targets, singleType, fn, context) {
+
+                var cfg = _Utils.normalizeParam(singleType, fn, context),
+                    i,
+                    j,
+                    elChildren,
+                    t;
+
+                singleType = cfg.type;
+
+                for (i = targets.length - 1; i >= 0; i--) {
+                    t = targets[i];
+                    removeInternal(t, singleType, cfg);
+                    // deep remove
+                    if (cfg.deep && t.getElementsByTagName) {
+                        elChildren = t.getElementsByTagName('*');
+                        for (j = elChildren.length - 1; j >= 0; j--) {
+                            removeInternal(elChildren[j], singleType, cfg);
+                        }
+                    }
+                }
+
+            }, 1, targets, type, fn, context);
+
+            return targets;
+
+        },
+
+        /**
+         * Delegate event.
+         * @param targets KISSY selector
+         * @param {String|Function} selector filter selector string or function to find right element
+         * @param {String} [eventType] The type of event to delegate.
+         * use space to separate multiple event types.
+         * @param {Function} [fn] The event listener.
+         * @param {Object} [context] The context (this reference) in which the handler function is executed.
+         * @member KISSY.Event
+         */
+        delegate: function (targets, eventType, selector, fn, context) {
+            return Event.add(targets, eventType, {
+                fn: fn,
+                context: context,
+                selector: selector
+            });
+        },
+        /**
+         * undelegate event.
+         * @param targets KISSY selector
+         * @param {String} [eventType] The type of event to undelegate.
+         * use space to separate multiple event types.
+         * @param {String|Function} [selector] filter selector string or function to find right element
+         * @param {Function} [fn] The event listener.
+         * @param {Object} [context] The context (this reference) in which the handler function is executed.
+         * @member KISSY.Event
+         */
+        undelegate: function (targets, eventType, selector, fn, context) {
+            return Event.remove(targets, eventType, {
+                fn: fn,
+                context: context,
+                selector: selector
+            });
+        },
+
+        /**
+         * fire event,simulate bubble in browser. similar to dispatchEvent in DOM3 Events
+         * @param targets html nodes
+         * @member KISSY.Event
+         * @param {String} eventType event type
+         * @param [eventData] additional event data
+         * @param {Boolean} [onlyHandlers] for internal usage
+         * @return {*} return false if one of custom event 's observers (include bubbled) else
+         * return last value of custom event 's observers (include bubbled) 's return value.
+         */
+        fire: function (targets, eventType, eventData, onlyHandlers/*internal usage*/) {
+            var ret = undefined;
+            // custom event firing moved to target.js
+            eventData = eventData || {};
+
+            /**
+             * identify event as fired manually
+             * @ignore
+             */
+            eventData.synthetic = 1;
+
+            _Utils.splitAndRun(eventType, function (eventType) {
+
+                var r,
+                    i,
+                    target,
+                    customEvent;
+
+                _Utils.fillGroupsForEvent(eventType, eventData);
+
+                // mouseenter
+                eventType = eventData.type;
+                var s = special[eventType];
+
+                var originalType = eventType;
+
+                // where observers lie
+                // mouseenter observer lies on mouseover
+                if (s && s.typeFix) {
+                    // mousemove
+                    originalType = s.typeFix;
+                }
+
+                targets = DOM.query(targets);
+
+                for (i = targets.length - 1; i >= 0; i--) {
+                    target = targets[i];
+                    customEvent = ObservableDOMEvent.getCustomEvent(target, originalType);
+                    // bubbling
+                    // html dom event defaults to bubble
+                    if (!onlyHandlers && !customEvent) {
+                        customEvent = new ObservableDOMEvent({
+                            type: originalType,
+                            currentTarget: target
+                        });
+                    }
+                    if (customEvent) {
+                        r = customEvent.fire(eventData, onlyHandlers);
+                        if (ret !== false) {
+                            ret = r;
+                        }
+                    }
+                }
+            });
 
             return ret;
-        }
+        },
 
+        /**
+         * same with fire but:
+         * - does not cause default behavior to occur.
+         * - does not bubble up the DOM hierarchy.
+         * @param targets html nodes
+         * @member KISSY.Event
+         * @param {String} eventType event type
+         * @param [eventData] additional event data
+         * @return {*} return false if one of custom event 's observers (include bubbled) else
+         * return last value of custom event 's observers (include bubbled) 's return value.
+         */
+        fireHandler: function (targets, eventType, eventData) {
+            return Event.fire(targets, eventType, eventData, 1);
+        },
+
+
+        /**
+         * copy event from src to dest
+         * @member KISSY.Event
+         * @param {HTMLElement} src srcElement
+         * @param {HTMLElement} dest destElement
+         * @private
+         */
+        _clone: function (src, dest) {
+            var eventDesc, events;
+            if (!(eventDesc = ObservableDOMEvent.getCustomEvents(src))) {
+                return;
+            }
+            events = eventDesc.events;
+            S.each(events, function (customEvent, type) {
+                S.each(customEvent.observers, function (observer) {
+                    // context undefined
+                    // 不能 this 写死在 handlers 中
+                    // 否则不能保证 clone 时的 this
+                    addInternal(dest, type, observer);
+                });
+            });
+        },
+
+        _ObservableDOMEvent: ObservableDOMEvent
     });
 
-    return DOMEventObserver;
+    /**
+     * Same with {@link KISSY.Event#add}
+     * @method
+     * @member KISSY.Event
+     */
+    Event.on = Event.add;
+    /**
+     * Same with {@link KISSY.Event#remove}
+     * @method
+     * @member KISSY.Event
+     */
+    Event.detach = Event.remove;
 
+    return Event;
 }, {
-    requires: ['./special', 'event/base']
-});/**
+    requires: ['event/base', 'dom', './special', './utils', './observable', './object']
+});
+/*
+ 2012-02-12 yiminghe@gmail.com note:
+ - 普通 remove() 不管 selector 都会查，如果 fn context 相等就移除
+ - undelegate() selector 为 ''，那么去除所有委托绑定的 handler
+ */
+/**
  * @ignore
- * special house for special events
+ * event-mouseenter
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/base/special', function (S, Event) {
-    var undefined = undefined,
-        UA = S.UA,
-        MOUSE_WHEEL = UA.gecko ? 'DOMMouseScroll' : 'mousewheel';
+KISSY.add('event/dom/base/mouseenter', function (S, Event, DOM, special) {
 
-    return {
-
-        mousewheel: {
-            typeFix: MOUSE_WHEEL
-        },
-
-        load: {
-            // defaults to bubbles as custom event
-            bubbles: false
-        },
-        click: {
-            // use native click for correct check state order
-            fire: function (onlyHandlers) {
-                var target = this;
-                if (!onlyHandlers && String(target.type) === "checkbox" &&
-                    target.click && target.nodeName.toLowerCase() == 'input') {
-                    target.click();
-                    return false;
+    S.each([
+        { name: 'mouseenter', fix: 'mouseover' },
+        { name: 'mouseleave', fix: 'mouseout' }
+    ], function (o) {
+        special[o.name] = {
+            // fix #75
+            typeFix: o.fix,
+            handle: function (event, observer, ce) {
+                var currentTarget = event.currentTarget,
+                    relatedTarget = event.relatedTarget;
+                // 在自身外边就触发
+                // self === document,parent === null
+                // relatedTarget 与 currentTarget 之间就是 mouseenter/leave
+                if (!relatedTarget ||
+                    (relatedTarget !== currentTarget &&
+                        !DOM.contains(currentTarget, relatedTarget))) {
+                    // http://msdn.microsoft.com/en-us/library/ms536945(v=vs.85).aspx
+                    // does not bubble
+                    // 2012-04-12 把 mouseover 阻止冒泡有问题！
+                    // <div id='0'><div id='1'><div id='2'><div id='3'></div></div></div></div>
+                    // 2 mouseover 停止冒泡
+                    // 然后快速 2,1 飞过，可能 1 的 mouseover 是 2 冒泡过来的
+                    // mouseover 采样时跳跃的，可能 2,1 的 mouseover 事件
+                    // target 都是 3,而 relatedTarget 都是 0
+                    // event.stopPropagation();
+                    return [observer.simpleNotify(event, ce)];
                 }
-                return undefined;
             }
-        },
-        focus: {
-            bubbles: false,
-            // guarantee fire focusin first
-            preFire: function (event, onlyHandlers) {
-                if (!onlyHandlers) {
-                    Event.fire(this, 'focusin');
-                }
-            },
-            // guarantee fire blur first
-            fire: function (onlyHandlers) {
-                var target = this;
-                if (!onlyHandlers && target.ownerDocument) {
-                    if (target !== target.ownerDocument.activeElement && target.focus) {
-                        target.focus();
-                        return false;
-                    }
-                }
-                return undefined;
-            }
-        },
-        blur: {
-            bubbles: false,
-            // guarantee fire focusout first
-            preFire: function (event, onlyHandlers) {
-                if (!onlyHandlers) {
-                    Event.fire(this, 'focusout');
-                }
-            },
-            // guarantee fire blur first
-            fire: function (onlyHandlers) {
-                var target = this;
-                if (!onlyHandlers && target.ownerDocument) {
-                    if (target === target.ownerDocument.activeElement && target.blur) {
-                        target.blur();
-                        return false;
-                    }
-                }
-                return undefined;
-            }
-        }
+        };
+    });
 
-    };
+    return Event;
 }, {
-    requires: ['event/base']
-});/**
- * @ignore
- * utils for event
- * @author yiminghe@gmail.com
+    requires: ['./api', 'dom', './special']
+});
+
+/*
+ yiminghe@gmail.com:2011-12-15
+ - 借鉴 jq 1.7 新的架构
+
+ yiminghe@gmail.com：2011-06-07
+ - 根据新结构，调整 mouseenter 兼容处理
+ - fire('mouseenter') 可以的，直接执行 mouseenter 的 handlers 用户回调数组
  */
-KISSY.add('event/dom/base/utils', function (S, DOM) {
-    var EVENT_GUID = 'ksEventTargetId_1.30',
-        doc = S.Env.host.document,
-        simpleAdd = doc && doc.addEventListener ?
-            function (el, type, fn, capture) {
-                if (el.addEventListener) {
-                    el.addEventListener(type, fn, !!capture);
-                }
-            } :
-            function (el, type, fn) {
-                if (el.attachEvent) {
-                    el.attachEvent('on' + type, fn);
-                }
-            },
-        simpleRemove = doc && doc.removeEventListener ?
-            function (el, type, fn, capture) {
-                if (el.removeEventListener) {
-                    el.removeEventListener(type, fn, !!capture);
-                }
-            } :
-            function (el, type, fn) {
-                if (el.detachEvent) {
-                    el.detachEvent('on' + type, fn);
-                }
-            };
-
-    return {
-        simpleAdd: simpleAdd,
-
-        simpleRemove: simpleRemove,
-
-        data: function (elem, v) {
-            return DOM.data(elem, EVENT_GUID, v);
-        },
-
-        removeData: function (elem) {
-            return DOM.removeData(elem, EVENT_GUID);
-        }
-    };
-
-}, {
-    requires: ['dom']
-});/**
+/**
  * @ignore
  * inspired by yui3
  * Synthetic event that fires when the <code>value</code> property of an input
@@ -2235,3 +2233,29 @@ KISSY.add('event/dom/base/valuechange', function (S, Event, DOM, special) {
  第二次：
  -> mousedown -> blur -> webkitspeechchange -> focus
  */
+/**
+ * @ignore
+ * dom event facade
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('event/dom/base', function (S, Event, KeyCodes, _DOMUtils, Gesture, Special) {
+    S.mix(Event, {
+        KeyCodes: KeyCodes,
+        _DOMUtils: _DOMUtils,
+        Gesture: Gesture,
+        _Special: Special
+    });
+
+    return Event;
+}, {
+    requires: ['event/base',
+        './base/key-codes',
+        './base/utils',
+        './base/gesture',
+        './base/special',
+        './base/api',
+        './base/mouseenter',
+        './base/valuechange']
+});
+
+

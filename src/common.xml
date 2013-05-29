@@ -49,9 +49,17 @@
     <taskdef name="tpl2mod" classname="com.taobao.f2e.task.Tpl2Module" classpath="${module-compiler}"/>
 
     <target name="tpl2mod">
-        <tpl2mod>
-            <fileset dir="${component.src.dir}" includes="**/*.tpl.html"/>
-        </tpl2mod>
+        <condition property="component.src.dir.exists">
+            <available file="${component.src.dir}" type="dir"/>
+        </condition>
+        <ac:if>
+            <ac:isset property="component.src.dir.exists"/>
+            <ac:then>
+                <tpl2mod>
+                    <fileset dir="${component.src.dir}" includes="**/*.tpl.html"/>
+                </tpl2mod>
+            </ac:then>
+        </ac:if>
     </target>
 
     <target name="create-build.dir">
@@ -73,31 +81,39 @@
 
     <!-- 打包本模块并抽取依赖 -->
     <target name="concat">
-        <java classname="com.taobao.f2e.Main" fork="true">
-            <arg value="-packageUrls"/>
+        <condition property="component.src.dir.exists">
+            <available file="${component.src.dir}" type="dir"/>
+        </condition>
+        <ac:if>
+            <ac:isset property="component.src.dir.exists"/>
+            <ac:then>
+                <java classname="com.taobao.f2e.Main" fork="true">
+                    <arg value="-packageUrls"/>
 
-            <arg value="${component.name}=${component.src.dir}/${component.basename}"/>
+                    <arg value="${component.name}=${component.src.dir}/${component.basename}"/>
 
-            <arg value="-encodings"/>
-            <arg value="${charset}"/>
+                    <arg value="-encodings"/>
+                    <arg value="${charset}"/>
 
-            <arg value="-require"/>
-            <arg value="${component.name}"/>
+                    <arg value="-require"/>
+                    <arg value="${component.name}"/>
 
-            <arg value="-compact"/>
-            <arg value="true"/>
+                    <arg value="-compact"/>
+                    <arg value="true"/>
 
-            <arg value="-output"/>
-            <arg value="${component.src.dir.tmp}/${component.basename}-pkg.js"/>
+                    <arg value="-output"/>
+                    <arg value="${component.src.dir.tmp}/${component.basename}-pkg.js"/>
 
-            <arg value="-outputDependency"/>
-            <arg value="${component.meta.dir}/deps.js"/>
+                    <arg value="-outputDependency"/>
+                    <arg value="${component.meta.dir}/deps.js"/>
 
-            <classpath>
-                <pathelement path="${module-compiler}"/>
-                <pathelement path="${java.class.path}"/>
-            </classpath>
-        </java>
+                    <classpath>
+                        <pathelement path="${module-compiler}"/>
+                        <pathelement path="${java.class.path}"/>
+                    </classpath>
+                </java>
+            </ac:then>
+        </ac:if>
     </target>
 
     <!-- copy to build dir -->
@@ -266,16 +282,31 @@
 
 
         <!-- 空组件文件夹直接删除 -->
-        <condition property="empty.component.build.dir">
+        <condition property="component.build.dir.empty">
             <length length="0">
                 <fileset dir="${component.build.dir}"/>
             </length>
         </condition>
 
         <ac:if>
-            <ac:isset property="empty.component.build.dir"/>
+            <ac:isset property="component.build.dir.empty"/>
             <ac:then>
                 <delete dir="${component.build.dir}"/>
+            </ac:then>
+        </ac:if>
+
+
+        <!-- 空组件文件夹直接删除 -->
+        <condition property="component.meta.dir.empty">
+            <length length="0">
+                <fileset dir="${component.meta.dir}"/>
+            </length>
+        </condition>
+
+        <ac:if>
+            <ac:isset property="component.meta.dir.empty"/>
+            <ac:then>
+                <delete dir="${component.meta.dir}"/>
             </ac:then>
         </ac:if>
 

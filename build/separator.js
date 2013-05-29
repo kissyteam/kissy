@@ -1,13 +1,20 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 23 00:54
+build time: May 30 01:43
 */
+/*
+ Combined processedModules by KISSY Module Compiler: 
+
+ separator/render
+ separator
+*/
+
 /**
  * separator render def
  * @author yiminghe@gmail.com
  */
-KISSY.add("separator/separator-render", function (S, Component) {
+KISSY.add("separator/render", function (S, Component) {
 
     return Component.Render.extend({
         initializer: function () {
@@ -17,7 +24,8 @@ KISSY.add("separator/separator-render", function (S, Component) {
 
 }, {
     requires: ['component/base']
-});/**
+});
+/**
  * separator def
  * @author yiminghe@gmail.com
  */
@@ -65,5 +73,6 @@ KISSY.add("separator", function (S, Component, SeparatorRender) {
     return Separator;
 
 }, {
-    requires:['component/base', 'separator/separator-render']
+    requires:['component/base', 'separator/render']
 });
+

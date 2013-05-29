@@ -18,11 +18,11 @@ tests.push('/kissy/src/dd/sub-modules/base/tests/runner/test.html');
 
 tests.push('/kissy/src/dd/sub-modules/droppable/tests/runner/test.html');
 
-tests.push('/kissy/src/dd/sub-modules/plugin/sub-modules/constrain/tests/runner/test.html');
+tests.push('/kissy/src/dd/sub-modules/plugin/constrain/tests/runner/test.html');
 
-tests.push('/kissy/src/dd/sub-modules/plugin/sub-modules/proxy/tests/runner/test.html');
+tests.push('/kissy/src/dd/sub-modules/plugin/proxy/tests/runner/test.html');
 
-tests.push('/kissy/src/dd/sub-modules/plugin/sub-modules/scroll/tests/runner/test.html');
+tests.push('/kissy/src/dd/sub-modules/plugin/scroll/tests/runner/test.html');
 
 tests.push('/kissy/src/dom/sub-modules/selector/tests/runner/selector.html');
 

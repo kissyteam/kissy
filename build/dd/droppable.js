@@ -1,8 +1,16 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 23 00:43
+build time: May 30 01:33
 */
+/*
+ Combined processedModules by KISSY Module Compiler: 
+
+ dd/droppable/base
+ dd/droppable/delegate
+ dd/droppable
+*/
+
 /**
  * @ignore
  * droppable for kissy
@@ -248,7 +256,8 @@ KISSY.add('dd/droppable/base', function (S, Node, RichBase, DD) {
         });
 
     },
-    { requires: ['node', 'rich-base', 'dd/base'] });/**
+    { requires: ['node', 'rich-base', 'dd/base'] });
+/**
  * @ignore
  * only one droppable instance for multiple droppable nodes
  * @author yiminghe@gmail.com
@@ -405,7 +414,8 @@ KISSY.add('dd/droppable/delegate', function (S, DD, Droppable, DOM, Node) {
     return DroppableDelegate;
 }, {
     requires: ['dd/base', './base', 'dom', 'node']
-});/**
+});
+/**
  * @ignore
  * droppable for kissy
  * @author yiminghe@gmail.com
@@ -416,3 +426,4 @@ KISSY.add('dd/droppable', function (S, DD, Droppable, DroppableDelegate) {
     DD.DroppableDelegate = DroppableDelegate;
     return Droppable;
 }, { requires: ['dd/base', './droppable/base', './droppable/delegate'] });
+

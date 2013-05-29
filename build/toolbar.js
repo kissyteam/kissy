@@ -1,8 +1,14 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 23 00:55
+build time: May 30 01:44
 */
+/*
+ Combined processedModules by KISSY Module Compiler: 
+
+ toolbar
+*/
+
 /**
  * Toolbar for KISSY.
  * @author yiminghe@gmail.com
@@ -251,3 +257,4 @@ KISSY.add("toolbar", function (S, Component, Extension, Node, Separator, undefin
 }, {
     requires: ['component/base', 'component/extension', 'node']
 });
+

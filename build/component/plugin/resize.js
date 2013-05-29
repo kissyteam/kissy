@@ -1,8 +1,14 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 23 00:43
+build time: May 30 01:33
 */
+/*
+ Combined processedModules by KISSY Module Compiler: 
+
+ component/plugin/resize
+*/
+
 /**
  * @ignore
  * resize plugin for kissy component
@@ -52,3 +58,4 @@ KISSY.add('component/plugin/resize', function (S, Resize) {
 }, {
     requires: ['resizable']
 });
+

@@ -6,14 +6,14 @@
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-touch-fullscreen" content="yes">
-    <link rel="stylesheet" href="../../css/src/dpl/base.css"/>
-    <link rel="stylesheet" href="../../css/src/dpl/forms.css"/>
+    <link rel="stylesheet" href="../../css/assets/dpl/base.css"/>
+    <link rel="stylesheet" href="../../css/assets/dpl/forms.css"/>
     <link rel="stylesheet" href="../../button/assets/dpl.css"/>
-    <script src="../../../tools/third-party/syntaxhighlighter_3.0.83/scripts/shCore.js"></script>
-    <script src="../../../tools/third-party/syntaxhighlighter_3.0.83/scripts/shBrushJScript.js"></script>
+    <script src="/kissy/tools/third-party/syntaxhighlighter_3.0.83/scripts/shCore.js"></script>
+    <script src="/kissy/tools/third-party/syntaxhighlighter_3.0.83/scripts/shBrushJScript.js"></script>
     <link type="text/css" rel="stylesheet"
-          href="../../../tools/third-party/syntaxhighlighter_3.0.83/styles/shCoreDefault.css"/>
-    <script src="../../../tools/third-party/beautify.js"></script>
+          href="/kissy/tools/third-party/syntaxhighlighter_3.0.83/styles/shCoreDefault.css"/>
+    <script src="/kissy/tools/third-party/beautify.js"></script>
     <title> simple xtemplate </title>
 </head>
 <body>
@@ -53,15 +53,10 @@
 
 
 <script src="/kissy/build/seed.js"></script>
-<script src="../src/ast.js"></script>
-<script src="../src/compiler.js"></script>
-<script src="../src/parser.js"></script>
-<script src="../src/base.js"></script>
-<script src="../src/commands.js"></script>
-<script src="../src/xtemplate.js"></script>
+<script src="/kissy/src/package.js"></script>
 <script>
 
-    KISSY.use("xtemplate", function (S, XTemplate) {
+    KISSY.use("xtemplate,node", function (S, XTemplate) {
         var $ = S.all;
         $('#parse').on('click', function () {
             var g = XTemplate.compiler.parse($('#tpl').val());

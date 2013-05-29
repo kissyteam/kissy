@@ -1,8 +1,14 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 23 00:46
+build time: May 30 01:35
 */
+/*
+ Combined processedModules by KISSY Module Compiler: 
+
+ editor/plugin/flash/dialog
+*/
+
 /**
  * flash dialog
  * @author yiminghe@gmail.com
@@ -254,3 +260,4 @@ KISSY.add("editor/plugin/flash/dialog", function (S, Editor, flashUtils, Dialog4
 }, {
     requires: ['editor', '../flash-common/utils', '../dialog', '../menubutton']
 });
+

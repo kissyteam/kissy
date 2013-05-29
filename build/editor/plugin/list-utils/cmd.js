@@ -1,8 +1,14 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 23 00:48
+build time: May 30 01:38
 */
+/*
+ Combined processedModules by KISSY Module Compiler: 
+
+ editor/plugin/list-utils/cmd
+*/
+
 /**
  * Add ul and ol command identifier for KISSY Editor.
  * @author yiminghe@gmail.com
@@ -395,3 +401,4 @@ KISSY.add("editor/plugin/list-utils/cmd", function (S, Editor, ListUtils, undefi
 }, {
     requires: ['editor', '../list-utils']
 });
+

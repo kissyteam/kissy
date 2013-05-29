@@ -1,9 +1,10 @@
-<?xml version="1.0"?>
 <!--
   kissy 构建文件，开启每个组件的构建
-  @author lifesinger@gmail.com , yiminghe@gmail.com
+  @author yiminghe@gmail.com
 -->
-<project name="kissy-project-build" xmlns:ac="antlib:net.sf.antcontrib">
+<project name="kissy-project-build"
+         xmlns:ac="antlib:net.sf.antcontrib"
+         default="build-all">
     <description>KISSY Project Build File</description>
 
     <property name="component.name" value="kissy"/>
@@ -75,6 +76,7 @@
             <fileset dir="${kissy.src.dir}" includes="*/build.xml"/>
         </subant>
         <subant target="build-core" buildpath="."
+                failonerror="true"
                 inheritall="false" inheritrefs="false"/>
     </target>
 

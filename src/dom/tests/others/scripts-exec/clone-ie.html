@@ -1,13 +1,15 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<meta charset="utf-8">
-<title>clone script in ie</title>
-<script src="/kissy/build/seed.js"></script>
-<script src='/kissy/tools/third-party/jquery.js'></script>
+    <meta charset="utf-8">
+    <title>clone script in ie</title>
+    <script src="/kissy/build/seed.js"></script>
+    <script src="/kissy/src/package.js"></script>
+    <script src='/kissy/tools/third-party/jquery.js'></script>
 </head>
 <body>
 <h1>clone script test in ie</h1>
+
 <div id="cloneTest">
     ---
     <script id="haha">
@@ -42,7 +44,7 @@
 
 
 <script>
-    KISSY.use('core',function(S) {
+    KISSY.use('core', function (S) {
 
         // S.one('#haha').text('alert(2)');
         S.one('<div>3<script>alert("bug inline")<' + '/script>3</div>').clone(true).prependTo('body');
@@ -61,33 +63,33 @@
                 cloneJQ = $k('#cloneJQ'),
                 cloneInsertJQ = $k('#cloneInsertJQ');
 
-        clone.on("click", function() {
+        clone.on("click", function () {
             // clone ie 会执行 external script
             cloneTest[0].cloneNode(true);
         });
 
-        cloneInsert.on("click", function() {
+        cloneInsert.on("click", function () {
             // insert 后 ie9 会执行 inline script
             holder[0].appendChild(cloneTest[0].cloneNode(true));
         });
 
-        cloneKISSY.on("click", function() {
+        cloneKISSY.on("click", function () {
             cloneTest.clone(true);
         });
 
-        cloneInsertKISSY.on("click", function() {
+        cloneInsertKISSY.on("click", function () {
             cloneTest.clone(true).appendTo(holder);
         });
 
-        cloneInsertKISSYExec.on("click", function() {
+        cloneInsertKISSYExec.on("click", function () {
             cloneTest.clone(true).appendTo(holder, true);
         });
 
-        cloneJQ.on("click", function() {
+        cloneJQ.on("click", function () {
             $(cloneTest[0]).clone(true);
         });
 
-        cloneInsertJQ.on("click", function() {
+        cloneInsertJQ.on("click", function () {
             $(cloneTest[0]).clone(true).appendTo(holder[0]);
         });
 

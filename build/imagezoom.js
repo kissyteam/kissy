@@ -1,8 +1,14 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 23 00:53
+build time: May 30 01:42
 */
+/*
+ Combined processedModules by KISSY Module Compiler: 
+
+ imagezoom
+*/
+
 /**
  * @ignore
  * ImageZoom.
@@ -547,4 +553,5 @@ KISSY.add('imagezoom', function (S, Node, Overlay, Zoomer, undefined) {
  * 201101 by qiaohua@taobao.com
  *  - 重构代码, 基于 UIBase
  */
+
 

@@ -1,8 +1,14 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 23 00:45
+build time: May 30 01:35
 */
+/*
+ Combined processedModules by KISSY Module Compiler: 
+
+ editor/plugin/element-path
+*/
+
 /**
  * ElementPath for debug.
  * @author yiminghe@gmail.com
@@ -98,3 +104,4 @@ KISSY.add("editor/plugin/element-path", function (S, Editor) {
 }, {
     requires:['editor']
 });
+

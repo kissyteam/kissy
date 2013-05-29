@@ -1,8 +1,648 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 23 00:53
+build time: May 30 01:42
 */
+/*
+ Combined processedModules by KISSY Module Compiler: 
+
+ kison/utils
+ kison/item
+ kison/item-set
+ kison/non-terminal
+ kison/lexer
+ kison/production
+ kison/grammar
+ kison
+*/
+
+/**
+ * utils for kison.
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("kison/utils", function (S) {
+
+    var doubleReg = /"/g, single = /'/g, escapeString;
+
+    return {
+
+        escapeString: escapeString = function (str, quote) {
+            var regexp = single;
+            if (quote == '"') {
+                regexp = doubleReg;
+            } else {
+                quote = "'";
+            }
+            return str.replace(/\\/g, '\\\\')
+                .replace(/\r/g, '\\r')
+                .replace(/\n/g, '\\n')
+                .replace(/\t/g, '\\t')
+                .replace(regexp, '\\' + quote);
+        },
+
+        serializeObject: function serializeObject(obj, excludeReg) {
+
+            var r;
+
+            if (excludeReg &&
+                S.isFunction(excludeReg) &&
+                (r = excludeReg(obj)) === false) {
+                return false;
+            }
+
+            if (r !== undefined) {
+                obj = r;
+            }
+
+            var ret = [];
+
+            if (typeof obj == 'string') {
+                return "'" + escapeString(obj) + "'";
+            } else if (S.isNumber(obj)) {
+                return obj + "";
+            } else if (S.isRegExp(obj)) {
+                return '/' +
+                    obj.source + '/' +
+                    (obj.global ? 'g' : '') +
+                    (obj.ignoreCase ? 'i' : '') +
+                    (obj.multiline ? 'm' : '');
+            } else if (S.isArray(obj)) {
+                ret.push('[');
+                var sub = [];
+                S.each(obj, function (v) {
+                    var t = serializeObject(v, excludeReg);
+                    if (t !== false) {
+                        sub.push(t);
+                    }
+                });
+                ret.push(sub.join(', '));
+                ret.push(']');
+                return ret.join("");
+            } else if (S.isObject(obj)) {
+                ret = ['{'];
+                var start = 1;
+                for (var i in obj) {
+                    var v = obj[i];
+                    if (excludeReg && S.isRegExp(excludeReg) && i.match(excludeReg)) {
+                        continue;
+                    }
+                    var t = serializeObject(v, excludeReg);
+                    if (t === false) {
+                        continue;
+                    }
+                    var key = "'" + escapeString(i) + "'";
+                    ret.push((start ? '' : ',') + key + ': ' + t);
+                    start = 0;
+                }
+                ret.push('}');
+                return ret.join('\n');
+            } else {
+                return obj + '';
+            }
+        }
+    };
+
+});
+/**
+ * Item for KISON
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("kison/item", function (S, Base) {
+
+    function Item() {
+        Item.superclass.constructor.apply(this, arguments);
+    }
+
+
+    S.extend(Item, Base, {
+
+        equals: function (other, ignoreLookAhead) {
+            var self = this;
+            if (!other.get("production").equals(self.get("production"))) {
+                return false;
+            }
+            if (other.get("dotPosition") != self.get("dotPosition")) {
+                return false;
+            }
+            if (!ignoreLookAhead) {
+                if (!S.equals(self.get("lookAhead"), other.get("lookAhead"))) {
+                    return false;
+                }
+            }
+            return true;
+        },
+
+        toString: function (ignoreLookAhead) {
+            return this.get("production")
+                .toString(this.get("dotPosition"))
+                + (ignoreLookAhead ? "" :
+                ("," + S.keys(this.get("lookAhead")).join("/")));
+        },
+
+        addLookAhead: function (ls) {
+            var lookAhead = this.get("lookAhead"), ret = 0;
+            S.each(ls, function (_, l) {
+                if (!lookAhead[l]) {
+                    lookAhead[l] = 1;
+                    ret = 1;
+                }
+            });
+            return ret;
+        }
+
+    }, {
+        ATTRS: {
+            production: {},
+            dotPosition: {
+                value: 0
+            },
+            lookAhead: {
+                /*
+                 2012-07-27
+                 improve performance,use object to compare( equal )
+                 and find( indexOf )
+                 instead of array
+                 */
+                value: {}
+            }
+        }
+    });
+
+    return Item;
+}, {
+    requires: ['base']
+});
+/**
+ * Item Set for KISON
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("kison/item-set", function (S, Base) {
+    function ItemSet() {
+        ItemSet.superclass.constructor.apply(this, arguments);
+    }
+
+    S.extend(ItemSet, Base, {
+
+        /**
+         * Insert item by order
+         * @param item
+         */
+        addItem:function (item) {
+            var items = this.get("items");
+            for (var i = 0; i < items.length; i++) {
+                if (items[i].get("production").toString() > item.get("production").toString()) {
+                    break;
+                }
+            }
+            items.splice(i, 0, item);
+        },
+
+        size:function () {
+            return this.get("items").length;
+        },
+
+        findItemIndex:function (item, ignoreLookAhead) {
+            var oneItems = this.get("items");
+            for (var i = 0; i < oneItems.length; i++) {
+                if (oneItems[i].equals(item, ignoreLookAhead)) {
+                    return i;
+                }
+            }
+            return -1;
+        },
+
+        getItemAt:function (index) {
+            return this.get("items")[index];
+        },
+
+        equals:function (other, ignoreLookAhead) {
+            var oneItems = this.get("items"),
+                i,
+                otherItems = other.get("items");
+            if (oneItems.length != otherItems.length) {
+                return false;
+            }
+            for (i = 0; i < oneItems.length; i++) {
+                if (!oneItems[i].equals(otherItems[i], ignoreLookAhead)) {
+                    return false;
+                }
+            }
+            return true;
+        },
+        toString:function () {
+            var ret = [];
+            S.each(this.get("items"), function (item) {
+                ret.push(item.toString());
+            });
+            return ret.join("\n");
+        },
+
+        addReverseGoto:function (symbol, item) {
+            var reverseGotos = this.get("reverseGotos");
+            reverseGotos[symbol] = reverseGotos[symbol] || [];
+            reverseGotos[symbol].push(item);
+        }
+
+    }, {
+        ATTRS:{
+            items:{
+                value:[]
+            },
+            gotos:{
+                value:{}
+            },
+            reverseGotos:{
+                // 多个来源同一个symbol指向自己
+                //{ c: [x,y]}
+                value:{}
+            }
+        }
+    });
+
+    return ItemSet;
+}, {
+    requires:['base']
+});
+/**
+ * NonTerminal Set for KISON
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("kison/non-terminal", function (S, Base) {
+
+    function NonTerminal() {
+        NonTerminal.superclass.constructor.apply(this, arguments);
+    }
+
+    S.extend(NonTerminal, Base, {
+
+    }, {
+        ATTRS:{
+            productions:{
+                value:[]
+            },
+            firsts:{
+                value:{}
+            },
+            symbol:{
+
+            },
+            nullAble:{
+                value:false
+            }
+        }
+    });
+
+    return NonTerminal;
+
+}, {
+    requires:['base']
+});
+/**
+ * Lexer to scan token.
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("kison/lexer", function (S, Utils) {
+
+    var serializeObject = Utils.serializeObject,
+
+        Lexer = function (cfg) {
+
+            var self = this;
+
+            /*
+             lex rules.
+             @type {Object[]}
+             @example
+             [
+             {
+             regexp:'\\w+',
+             state:['xx'],
+             token:'c',
+             // this => lex
+             action:function(){}
+             }
+             ]
+             */
+            self.rules = [];
+
+            S.mix(self, cfg);
+
+            /*
+             Input languages
+             @type {String}
+             */
+
+            self.resetInput(self.input);
+
+        };
+
+    Lexer.STATIC = {
+        INITIAL: 'I',
+        DEBUG_CONTEXT_LIMIT: 20,
+        END_TAG: '$EOF'
+    };
+
+    Lexer.prototype = {
+
+        constructor: Lexer,
+
+        resetInput: function (input) {
+            S.mix(this, {
+                input: input,
+                matched: "",
+                stateStack: [Lexer.STATIC.INITIAL],
+                match: "",
+                text: "",
+                firstLine: 1,
+                lineNumber: 1,
+                lastLine: 1,
+                firstColumn: 1,
+                lastColumn: 1
+            });
+        },
+
+        genCode: function (cfg) {
+
+            var STATIC = Lexer.STATIC,
+                self = this,
+                compressSymbol = cfg.compressSymbol,
+                compressState = cfg.compressLexerState,
+                code = [],
+                stateMap;
+
+            self.symbolId = self.stateId = 0;
+
+            if (compressSymbol) {
+                self.symbolMap = {};
+                self.mapSymbol(STATIC.END_TAG);
+            }
+
+            if (compressState) {
+                stateMap = self.stateMap = {};
+            }
+
+            code.push("var Lexer = " + Lexer.toString() + ';');
+
+            code.push("Lexer.prototype= " + serializeObject(Lexer.prototype, /genCode/) + ";");
+
+            code.push("Lexer.STATIC= " + serializeObject(STATIC) + ";");
+
+            var newCfg = serializeObject({rules: self.rules},
+                (compressState || compressSymbol) ? function (v) {
+                    if (v && v.regexp) {
+                        var state = v.state,
+                            ret,
+                            action = v.action,
+                            token = v.token || 0;
+                        if (token) {
+                            token = self.mapSymbol(token);
+                        }
+                        ret = [
+                            token,
+                            v.regexp,
+                            action || 0
+                        ];
+                        if (compressState && state) {
+                            state = S.map(state, function (s) {
+                                return self.mapState(s);
+                            });
+                        }
+                        if (state) {
+                            ret.push(state);
+                        }
+                        return ret;
+                    }
+                    return undefined;
+                } : 0);
+
+            code.push("var lexer = new Lexer(" + newCfg + ");");
+
+            if (compressState || compressSymbol) {
+                // for grammar
+                self.rules = eval('(' + newCfg + ')').rules;
+                if (compressState) {
+                    code.push('lexer.stateMap = ' + serializeObject(stateMap) + ';');
+                }
+            }
+
+            return code.join("\n");
+        },
+
+        getCurrentRules: function () {
+            var self = this,
+                currentState = self.stateStack[self.stateStack.length - 1],
+                rules = [];
+            currentState = self.mapState(currentState);
+            S.each(self.rules, function (r) {
+                var state = r.state || r[3];
+                if (!state) {
+                    if (currentState == Lexer.STATIC.INITIAL) {
+                        rules.push(r);
+                    }
+                } else if (S.inArray(currentState, state)) {
+                    rules.push(r);
+                }
+            });
+            return rules;
+        },
+
+        pushState: function (state) {
+            this.stateStack.push(state);
+        },
+
+        popState: function () {
+            return this.stateStack.pop();
+        },
+
+        getStateStack: function () {
+            return this.stateStack;
+        },
+
+        showDebugInfo: function () {
+            var self = this,
+                DEBUG_CONTEXT_LIMIT = Lexer.STATIC.DEBUG_CONTEXT_LIMIT,
+                matched = self.matched,
+                match = self.match,
+                input = self.input;
+            matched = matched.slice(0, matched.length - match.length);
+            var past = (matched.length > DEBUG_CONTEXT_LIMIT ? "..." : "") +
+                    matched.slice(-DEBUG_CONTEXT_LIMIT).replace(/\n/, " "),
+                next = match + input;
+            next = next.slice(0, DEBUG_CONTEXT_LIMIT) +
+                (next.length > DEBUG_CONTEXT_LIMIT ? "..." : "");
+            return past + next + "\n" + new Array(past.length + 1).join("-") + "^";
+        },
+
+        mapSymbol: function (t) {
+            var self = this,
+                symbolMap = self.symbolMap;
+            if (!symbolMap) {
+                return t;
+            }
+            return symbolMap[t] || (symbolMap[t] = (++self.symbolId));
+        },
+
+        mapReverseSymbol: function (rs) {
+            var self = this,
+                symbolMap = self.symbolMap,
+                i,
+                reverseSymbolMap = self.reverseSymbolMap;
+            if (!reverseSymbolMap && symbolMap) {
+                reverseSymbolMap = self.reverseSymbolMap = {};
+                for (i in symbolMap) {
+                    reverseSymbolMap[symbolMap[i]] = i;
+                }
+            }
+            if (reverseSymbolMap) {
+                return reverseSymbolMap[rs];
+            } else {
+                return rs;
+            }
+        },
+
+        mapState: function (s) {
+            var self = this,
+                stateMap = self.stateMap;
+            if (!stateMap) {
+                return s;
+            }
+            return stateMap[s] || (stateMap[s] = (++self.stateId));
+        },
+
+        lex: function () {
+            var self = this,
+                input = self.input,
+                i,
+                rule,
+                m,
+                ret,
+                lines,
+                rules = self.getCurrentRules();
+
+            self.match = self.text = "";
+
+            if (!input) {
+                return self.mapSymbol(Lexer.STATIC.END_TAG);
+            }
+
+            for (i = 0; i < rules.length; i++) {
+                rule = rules[i];
+                var regexp = rule.regexp || rule[1],
+                    token = rule.token || rule[0],
+                    action = rule.action || rule[2] || undefined;
+                if (m = input.match(regexp)) {
+                    lines = m[0].match(/\n.*/g);
+                    if (lines) {
+                        self.lineNumber += lines.length;
+                    }
+                    S.mix(self, {
+                        firstLine: self.lastLine,
+                        lastLine: self.lineNumber + 1,
+                        firstColumn: self.lastColumn,
+                        lastColumn: lines ?
+                            lines[lines.length - 1].length - 1 :
+                            self.lastColumn + m[0].length
+                    });
+                    var match;
+                    // for error report
+                    match = self.match = m[0];
+
+                    // all matches
+                    self.matches = m;
+                    // may change by user
+                    self.text = match;
+                    // matched content utils now
+                    self.matched += match;
+                    ret = action && action.call(self);
+                    if (ret == undefined) {
+                        ret = token;
+                    } else {
+                        ret = self.mapSymbol(ret);
+                    }
+                    input = input.slice(match.length);
+                    self.input = input;
+
+                    if (ret) {
+                        return ret;
+                    } else {
+                        // ignore
+                        return self.lex();
+                    }
+                }
+            }
+
+            S.error("lex error at line " + self.lineNumber + ":\n" + self.showDebugInfo());
+            return undefined;
+        }
+    };
+
+    return Lexer;
+
+}, {
+    requires: ['./utils']
+});
+/**
+ * Production for KISON
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("kison/production", function (S, Base) {
+
+    function Production() {
+        Production.superclass.constructor.apply(this, arguments);
+    }
+
+    S.extend(Production, Base, {
+
+        equals: function (other) {
+            var self = this;
+            if (!S.equals(other.get("rhs"), self.get("rhs"))) {
+                return false;
+            }
+            return other.get("symbol") == self.get("symbol");
+
+        },
+
+        toString: function (dot) {
+            var rhsStr = "";
+            var rhs = this.get("rhs");
+            S.each(rhs, function (r, index) {
+                if (index == dot) {
+                    rhsStr += ".";
+                }
+                rhsStr += r;
+            });
+            if (dot == rhs.length) {
+                rhsStr += ".";
+            }
+            return this.get("symbol") + "=>" + rhsStr;
+        }
+
+    }, {
+        ATTRS: {
+            firsts: {
+                value: {}
+            },
+            follows: {
+                value: []
+            },
+            symbol: {},
+            rhs: {
+                value: []
+            },
+            nullAble: {
+                value: false
+            },
+            action: {
+                // action for this production
+            }
+        }
+    });
+
+    return Production;
+
+}, {
+    requires: ['base']
+});
 /**
  * LALR grammar parser
  * @author yiminghe@gmail.com
@@ -774,165 +1414,8 @@ KISSY.add("kison/grammar", function (S, Base, Utils, Item, ItemSet, NonTerminal,
  *   - Compilers: Principles,Techniques and Tools.
  *   - http://zaach.github.com/jison/
  *   - http://www.gnu.org/software/bison/
- *//**
- * Item Set for KISON
- * @author yiminghe@gmail.com
  */
-KISSY.add("kison/item-set", function (S, Base) {
-    function ItemSet() {
-        ItemSet.superclass.constructor.apply(this, arguments);
-    }
-
-    S.extend(ItemSet, Base, {
-
-        /**
-         * Insert item by order
-         * @param item
-         */
-        addItem:function (item) {
-            var items = this.get("items");
-            for (var i = 0; i < items.length; i++) {
-                if (items[i].get("production").toString() > item.get("production").toString()) {
-                    break;
-                }
-            }
-            items.splice(i, 0, item);
-        },
-
-        size:function () {
-            return this.get("items").length;
-        },
-
-        findItemIndex:function (item, ignoreLookAhead) {
-            var oneItems = this.get("items");
-            for (var i = 0; i < oneItems.length; i++) {
-                if (oneItems[i].equals(item, ignoreLookAhead)) {
-                    return i;
-                }
-            }
-            return -1;
-        },
-
-        getItemAt:function (index) {
-            return this.get("items")[index];
-        },
-
-        equals:function (other, ignoreLookAhead) {
-            var oneItems = this.get("items"),
-                i,
-                otherItems = other.get("items");
-            if (oneItems.length != otherItems.length) {
-                return false;
-            }
-            for (i = 0; i < oneItems.length; i++) {
-                if (!oneItems[i].equals(otherItems[i], ignoreLookAhead)) {
-                    return false;
-                }
-            }
-            return true;
-        },
-        toString:function () {
-            var ret = [];
-            S.each(this.get("items"), function (item) {
-                ret.push(item.toString());
-            });
-            return ret.join("\n");
-        },
-
-        addReverseGoto:function (symbol, item) {
-            var reverseGotos = this.get("reverseGotos");
-            reverseGotos[symbol] = reverseGotos[symbol] || [];
-            reverseGotos[symbol].push(item);
-        }
-
-    }, {
-        ATTRS:{
-            items:{
-                value:[]
-            },
-            gotos:{
-                value:{}
-            },
-            reverseGotos:{
-                // 多个来源同一个symbol指向自己
-                //{ c: [x,y]}
-                value:{}
-            }
-        }
-    });
-
-    return ItemSet;
-}, {
-    requires:['base']
-});/**
- * Item for KISON
- * @author yiminghe@gmail.com
- */
-KISSY.add("kison/item", function (S, Base) {
-
-    function Item() {
-        Item.superclass.constructor.apply(this, arguments);
-    }
-
-
-    S.extend(Item, Base, {
-
-        equals: function (other, ignoreLookAhead) {
-            var self = this;
-            if (!other.get("production").equals(self.get("production"))) {
-                return false;
-            }
-            if (other.get("dotPosition") != self.get("dotPosition")) {
-                return false;
-            }
-            if (!ignoreLookAhead) {
-                if (!S.equals(self.get("lookAhead"), other.get("lookAhead"))) {
-                    return false;
-                }
-            }
-            return true;
-        },
-
-        toString: function (ignoreLookAhead) {
-            return this.get("production")
-                .toString(this.get("dotPosition"))
-                + (ignoreLookAhead ? "" :
-                ("," + S.keys(this.get("lookAhead")).join("/")));
-        },
-
-        addLookAhead: function (ls) {
-            var lookAhead = this.get("lookAhead"), ret = 0;
-            S.each(ls, function (_, l) {
-                if (!lookAhead[l]) {
-                    lookAhead[l] = 1;
-                    ret = 1;
-                }
-            });
-            return ret;
-        }
-
-    }, {
-        ATTRS: {
-            production: {},
-            dotPosition: {
-                value: 0
-            },
-            lookAhead: {
-                /*
-                 2012-07-27
-                 improve performance,use object to compare( equal )
-                 and find( indexOf )
-                 instead of array
-                 */
-                value: {}
-            }
-        }
-    });
-
-    return Item;
-}, {
-    requires: ['base']
-});/**
+/**
  * Parser generator for kissy.
  * @author yiminghe@gmail.com
  */
@@ -951,467 +1434,5 @@ KISSY.add("kison", function (S, Grammar, Production, Lexer, Utils) {
 
 }, {
     requires: ['kison/grammar', 'kison/production', 'kison/lexer', 'kison/utils']
-});/**
- * Lexer to scan token.
- * @author yiminghe@gmail.com
- */
-KISSY.add("kison/lexer", function (S, Utils) {
-
-    var serializeObject = Utils.serializeObject,
-
-        Lexer = function (cfg) {
-
-            var self = this;
-
-            /*
-             lex rules.
-             @type {Object[]}
-             @example
-             [
-             {
-             regexp:'\\w+',
-             state:['xx'],
-             token:'c',
-             // this => lex
-             action:function(){}
-             }
-             ]
-             */
-            self.rules = [];
-
-            S.mix(self, cfg);
-
-            /*
-             Input languages
-             @type {String}
-             */
-
-            self.resetInput(self.input);
-
-        };
-
-    Lexer.STATIC = {
-        INITIAL: 'I',
-        DEBUG_CONTEXT_LIMIT: 20,
-        END_TAG: '$EOF'
-    };
-
-    Lexer.prototype = {
-
-        constructor: Lexer,
-
-        resetInput: function (input) {
-            S.mix(this, {
-                input: input,
-                matched: "",
-                stateStack: [Lexer.STATIC.INITIAL],
-                match: "",
-                text: "",
-                firstLine: 1,
-                lineNumber: 1,
-                lastLine: 1,
-                firstColumn: 1,
-                lastColumn: 1
-            });
-        },
-
-        genCode: function (cfg) {
-
-            var STATIC = Lexer.STATIC,
-                self = this,
-                compressSymbol = cfg.compressSymbol,
-                compressState = cfg.compressLexerState,
-                code = [],
-                stateMap;
-
-            self.symbolId = self.stateId = 0;
-
-            if (compressSymbol) {
-                self.symbolMap = {};
-                self.mapSymbol(STATIC.END_TAG);
-            }
-
-            if (compressState) {
-                stateMap = self.stateMap = {};
-            }
-
-            code.push("var Lexer = " + Lexer.toString() + ';');
-
-            code.push("Lexer.prototype= " + serializeObject(Lexer.prototype, /genCode/) + ";");
-
-            code.push("Lexer.STATIC= " + serializeObject(STATIC) + ";");
-
-            var newCfg = serializeObject({rules: self.rules},
-                (compressState || compressSymbol) ? function (v) {
-                    if (v && v.regexp) {
-                        var state = v.state,
-                            ret,
-                            action = v.action,
-                            token = v.token || 0;
-                        if (token) {
-                            token = self.mapSymbol(token);
-                        }
-                        ret = [
-                            token,
-                            v.regexp,
-                            action || 0
-                        ];
-                        if (compressState && state) {
-                            state = S.map(state, function (s) {
-                                return self.mapState(s);
-                            });
-                        }
-                        if (state) {
-                            ret.push(state);
-                        }
-                        return ret;
-                    }
-                    return undefined;
-                } : 0);
-
-            code.push("var lexer = new Lexer(" + newCfg + ");");
-
-            if (compressState || compressSymbol) {
-                // for grammar
-                self.rules = eval('(' + newCfg + ')').rules;
-                if (compressState) {
-                    code.push('lexer.stateMap = ' + serializeObject(stateMap) + ';');
-                }
-            }
-
-            return code.join("\n");
-        },
-
-        getCurrentRules: function () {
-            var self = this,
-                currentState = self.stateStack[self.stateStack.length - 1],
-                rules = [];
-            currentState = self.mapState(currentState);
-            S.each(self.rules, function (r) {
-                var state = r.state || r[3];
-                if (!state) {
-                    if (currentState == Lexer.STATIC.INITIAL) {
-                        rules.push(r);
-                    }
-                } else if (S.inArray(currentState, state)) {
-                    rules.push(r);
-                }
-            });
-            return rules;
-        },
-
-        pushState: function (state) {
-            this.stateStack.push(state);
-        },
-
-        popState: function () {
-            return this.stateStack.pop();
-        },
-
-        getStateStack: function () {
-            return this.stateStack;
-        },
-
-        showDebugInfo: function () {
-            var self = this,
-                DEBUG_CONTEXT_LIMIT = Lexer.STATIC.DEBUG_CONTEXT_LIMIT,
-                matched = self.matched,
-                match = self.match,
-                input = self.input;
-            matched = matched.slice(0, matched.length - match.length);
-            var past = (matched.length > DEBUG_CONTEXT_LIMIT ? "..." : "") +
-                    matched.slice(-DEBUG_CONTEXT_LIMIT).replace(/\n/, " "),
-                next = match + input;
-            next = next.slice(0, DEBUG_CONTEXT_LIMIT) +
-                (next.length > DEBUG_CONTEXT_LIMIT ? "..." : "");
-            return past + next + "\n" + new Array(past.length + 1).join("-") + "^";
-        },
-
-        mapSymbol: function (t) {
-            var self = this,
-                symbolMap = self.symbolMap;
-            if (!symbolMap) {
-                return t;
-            }
-            return symbolMap[t] || (symbolMap[t] = (++self.symbolId));
-        },
-
-        mapReverseSymbol: function (rs) {
-            var self = this,
-                symbolMap = self.symbolMap,
-                i,
-                reverseSymbolMap = self.reverseSymbolMap;
-            if (!reverseSymbolMap && symbolMap) {
-                reverseSymbolMap = self.reverseSymbolMap = {};
-                for (i in symbolMap) {
-                    reverseSymbolMap[symbolMap[i]] = i;
-                }
-            }
-            if (reverseSymbolMap) {
-                return reverseSymbolMap[rs];
-            } else {
-                return rs;
-            }
-        },
-
-        mapState: function (s) {
-            var self = this,
-                stateMap = self.stateMap;
-            if (!stateMap) {
-                return s;
-            }
-            return stateMap[s] || (stateMap[s] = (++self.stateId));
-        },
-
-        lex: function () {
-            var self = this,
-                input = self.input,
-                i,
-                rule,
-                m,
-                ret,
-                lines,
-                rules = self.getCurrentRules();
-
-            self.match = self.text = "";
-
-            if (!input) {
-                return self.mapSymbol(Lexer.STATIC.END_TAG);
-            }
-
-            for (i = 0; i < rules.length; i++) {
-                rule = rules[i];
-                var regexp = rule.regexp || rule[1],
-                    token = rule.token || rule[0],
-                    action = rule.action || rule[2] || undefined;
-                if (m = input.match(regexp)) {
-                    lines = m[0].match(/\n.*/g);
-                    if (lines) {
-                        self.lineNumber += lines.length;
-                    }
-                    S.mix(self, {
-                        firstLine: self.lastLine,
-                        lastLine: self.lineNumber + 1,
-                        firstColumn: self.lastColumn,
-                        lastColumn: lines ?
-                            lines[lines.length - 1].length - 1 :
-                            self.lastColumn + m[0].length
-                    });
-                    var match;
-                    // for error report
-                    match = self.match = m[0];
-
-                    // all matches
-                    self.matches = m;
-                    // may change by user
-                    self.text = match;
-                    // matched content utils now
-                    self.matched += match;
-                    ret = action && action.call(self);
-                    if (ret == undefined) {
-                        ret = token;
-                    } else {
-                        ret = self.mapSymbol(ret);
-                    }
-                    input = input.slice(match.length);
-                    self.input = input;
-
-                    if (ret) {
-                        return ret;
-                    } else {
-                        // ignore
-                        return self.lex();
-                    }
-                }
-            }
-
-            S.error("lex error at line " + self.lineNumber + ":\n" + self.showDebugInfo());
-            return undefined;
-        }
-    };
-
-    return Lexer;
-
-}, {
-    requires: ['./utils']
-});/**
- * NonTerminal Set for KISON
- * @author yiminghe@gmail.com
- */
-KISSY.add("kison/non-terminal", function (S, Base) {
-
-    function NonTerminal() {
-        NonTerminal.superclass.constructor.apply(this, arguments);
-    }
-
-    S.extend(NonTerminal, Base, {
-
-    }, {
-        ATTRS:{
-            productions:{
-                value:[]
-            },
-            firsts:{
-                value:{}
-            },
-            symbol:{
-
-            },
-            nullAble:{
-                value:false
-            }
-        }
-    });
-
-    return NonTerminal;
-
-}, {
-    requires:['base']
-});/**
- * Production for KISON
- * @author yiminghe@gmail.com
- */
-KISSY.add("kison/production", function (S, Base) {
-
-    function Production() {
-        Production.superclass.constructor.apply(this, arguments);
-    }
-
-    S.extend(Production, Base, {
-
-        equals: function (other) {
-            var self = this;
-            if (!S.equals(other.get("rhs"), self.get("rhs"))) {
-                return false;
-            }
-            return other.get("symbol") == self.get("symbol");
-
-        },
-
-        toString: function (dot) {
-            var rhsStr = "";
-            var rhs = this.get("rhs");
-            S.each(rhs, function (r, index) {
-                if (index == dot) {
-                    rhsStr += ".";
-                }
-                rhsStr += r;
-            });
-            if (dot == rhs.length) {
-                rhsStr += ".";
-            }
-            return this.get("symbol") + "=>" + rhsStr;
-        }
-
-    }, {
-        ATTRS: {
-            firsts: {
-                value: {}
-            },
-            follows: {
-                value: []
-            },
-            symbol: {},
-            rhs: {
-                value: []
-            },
-            nullAble: {
-                value: false
-            },
-            action: {
-                // action for this production
-            }
-        }
-    });
-
-    return Production;
-
-}, {
-    requires: ['base']
-});/**
- * utils for kison.
- * @author yiminghe@gmail.com
- */
-KISSY.add("kison/utils", function (S) {
-
-    var doubleReg = /"/g, single = /'/g, escapeString;
-
-    return {
-
-        escapeString: escapeString = function (str, quote) {
-            var regexp = single;
-            if (quote == '"') {
-                regexp = doubleReg;
-            } else {
-                quote = "'";
-            }
-            return str.replace(/\\/g, '\\\\')
-                .replace(/\r/g, '\\r')
-                .replace(/\n/g, '\\n')
-                .replace(/\t/g, '\\t')
-                .replace(regexp, '\\' + quote);
-        },
-
-        serializeObject: function serializeObject(obj, excludeReg) {
-
-            var r;
-
-            if (excludeReg &&
-                S.isFunction(excludeReg) &&
-                (r = excludeReg(obj)) === false) {
-                return false;
-            }
-
-            if (r !== undefined) {
-                obj = r;
-            }
-
-            var ret = [];
-
-            if (typeof obj == 'string') {
-                return "'" + escapeString(obj) + "'";
-            } else if (S.isNumber(obj)) {
-                return obj + "";
-            } else if (S.isRegExp(obj)) {
-                return '/' +
-                    obj.source + '/' +
-                    (obj.global ? 'g' : '') +
-                    (obj.ignoreCase ? 'i' : '') +
-                    (obj.multiline ? 'm' : '');
-            } else if (S.isArray(obj)) {
-                ret.push('[');
-                var sub = [];
-                S.each(obj, function (v) {
-                    var t = serializeObject(v, excludeReg);
-                    if (t !== false) {
-                        sub.push(t);
-                    }
-                });
-                ret.push(sub.join(', '));
-                ret.push(']');
-                return ret.join("");
-            } else if (S.isObject(obj)) {
-                ret = ['{'];
-                var start = 1;
-                for (var i in obj) {
-                    var v = obj[i];
-                    if (excludeReg && S.isRegExp(excludeReg) && i.match(excludeReg)) {
-                        continue;
-                    }
-                    var t = serializeObject(v, excludeReg);
-                    if (t === false) {
-                        continue;
-                    }
-                    var key = "'" + escapeString(i) + "'";
-                    ret.push((start ? '' : ',') + key + ': ' + t);
-                    start = 0;
-                }
-                ret.push('}');
-                return ret.join('\n');
-            } else {
-                return obj + '';
-            }
-        }
-    };
-
 });
+

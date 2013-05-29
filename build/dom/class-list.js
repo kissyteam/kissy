@@ -1,8 +1,14 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 23 00:44
+build time: May 30 01:33
 */
+/*
+ Combined processedModules by KISSY Module Compiler: 
+
+ dom/class-list
+*/
+
 /**
  * implement class-list for ie<10
  * @ignore
@@ -107,3 +113,4 @@ KISSY.add('dom/class-list', function (S, DOM) {
 }, {
     requires: ['dom/base']
 });
+

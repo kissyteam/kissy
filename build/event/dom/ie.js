@@ -1,8 +1,16 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 23 00:52
+build time: May 30 01:41
 */
+/*
+ Combined processedModules by KISSY Module Compiler: 
+
+ event/dom/ie/change
+ event/dom/ie/submit
+ event/dom/ie
+*/
+
 /**
  * @ignore
  *  change bubble and checkbox/radio fix patch for ie<9
@@ -111,15 +119,8 @@ KISSY.add('event/dom/ie/change', function (S, Event, DOM) {
     }
 }, {
     requires: ['event/dom/base', 'dom']
-});/**
- * patch collection for ie<9
- * @author yiminghe@gmail.com
- */
-KISSY.add('event/dom/ie', function () {
-
-}, {
-    requires: ['./ie/change', './ie/submit']
-});/**
+});
+/**
  * @ignore
  * patch for ie<9 submit: does not bubble !
  * @author yiminghe@gmail.com
@@ -195,3 +196,13 @@ KISSY.add('event/dom/ie/submit', function (S, Event, DOM) {
  modified from jq, fix submit in ie<9
  - http://bugs.jquery.com/ticket/11049
  */
+/**
+ * patch collection for ie<9
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('event/dom/ie', function () {
+
+}, {
+    requires: ['./ie/change', './ie/submit']
+});
+

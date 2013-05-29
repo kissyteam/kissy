@@ -1,8 +1,17 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 23 00:55
+build time: May 30 01:44
 */
+/*
+ Combined processedModules by KISSY Module Compiler: 
+
+ xtemplate/runtime/base
+ xtemplate/runtime/include-command
+ xtemplate/runtime/commands
+ xtemplate/runtime
+*/
+
 /**
  * xtemplate base
  * @author yiminghe@gmail.com
@@ -163,7 +172,45 @@ KISSY.add('xtemplate/runtime/base', function (S) {
     };
 
     return XTemplateRuntime;
-});/**
+});
+/**
+ * include command
+ * @author yiminghe@gmail.com
+ * @ignore
+ */
+KISSY.add('xtemplate/runtime/include-command', function (S, XTemplateRuntime) {
+
+    var include = {
+
+        invokeEngine: function (tpl, scopes, option) {
+            return new XTemplateRuntime(tpl, S.merge(option)).render(scopes, true);
+        },
+
+        include: function (scopes, option) {
+            var params = option.params;
+            if (!params || params.length != 1) {
+                S[option.silent ? 'log' : 'error']('include must has one param');
+                return '';
+            }
+            var param0 = params[0], tpl;
+            var subTpls = option.subTpls;
+            if (!(tpl = subTpls[param0])) {
+                S[option.silent ? 'log' : 'error']('does not include sub template "' + param0 + '"');
+                return '';
+            }
+            // template file name
+            option.name = param0;
+            return include.invokeEngine(tpl, scopes, option)
+        }
+
+    };
+
+    return include;
+
+}, {
+    requires: ['./base']
+});
+/**
  * native commands for xtemplate.
  * @author yiminghe@gmail.com
  * @ignore
@@ -251,43 +298,8 @@ KISSY.add("xtemplate/runtime/commands", function (S, includeCommand) {
 
 }, {
     requires: ['./include-command']
-});/**
- * include command
- * @author yiminghe@gmail.com
- * @ignore
- */
-KISSY.add('xtemplate/runtime/include-command', function (S, XTemplateRuntime) {
-
-    var include = {
-
-        invokeEngine: function (tpl, scopes, option) {
-            return new XTemplateRuntime(tpl, S.merge(option)).render(scopes, true);
-        },
-
-        include: function (scopes, option) {
-            var params = option.params;
-            if (!params || params.length != 1) {
-                S[option.silent ? 'log' : 'error']('include must has one param');
-                return '';
-            }
-            var param0 = params[0], tpl;
-            var subTpls = option.subTpls;
-            if (!(tpl = subTpls[param0])) {
-                S[option.silent ? 'log' : 'error']('does not include sub template "' + param0 + '"');
-                return '';
-            }
-            // template file name
-            option.name = param0;
-            return include.invokeEngine(tpl, scopes, option)
-        }
-
-    };
-
-    return include;
-
-}, {
-    requires: ['./base']
-});/**
+});
+/**
  * xtemplate runtime
  * @author yiminghe@gmail.com
  * @ignore
@@ -385,3 +397,4 @@ KISSY.add('xtemplate/runtime', function (S, XTemplateRuntime, commands, includeC
  *      - 不支持 js 语法
  *
  */
+

@@ -42,13 +42,22 @@ public class Tpl2Module extends Task {
     }
 
     public void execute() {
+        String componentName = getProject().getProperty("component.name");
+        int slashIndex;
+        if ((slashIndex = componentName.lastIndexOf("/")) == -1) {
+            componentName = "";
+        } else {
+            componentName = componentName.substring(0, slashIndex + 1);
+        }
         for (FileSet f : fs) {
             Iterator it = f.iterator();
             while (it.hasNext()) {
                 FileResource fr = (FileResource) it.next();
-                String baseDir = fr.getBaseDir().toString();
-                String filePath = fr.getFile().toString();
-                String moduleName = filePath.substring(baseDir.length()+1).replace('\\', '/')
+                String baseDir = fr.getBaseDir().getAbsolutePath();
+                String filePath = fr.getFile().getAbsolutePath();
+                String moduleName = componentName +
+                        filePath.substring(baseDir.length() + 1)
+                                .replace('\\', '/')
                                 .replaceAll("\\.tpl.html", "-tpl");
                 String modPath = filePath.replaceAll("\\.tpl.html", "-tpl.js");
                 transform2Mod(modPath, filePath, moduleName);

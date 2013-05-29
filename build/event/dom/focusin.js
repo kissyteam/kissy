@@ -1,8 +1,14 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 23 00:52
+build time: May 30 01:41
 */
+/*
+ Combined processedModules by KISSY Module Compiler: 
+
+ event/dom/focusin
+*/
+
 /**
  * @ignore
  * event-focusin
@@ -60,3 +66,4 @@ KISSY.add('event/dom/focusin', function (S, Event) {
  yiminghe@gmail.com:2011-06-07
  - 更加合理的模拟冒泡顺序，子元素先出触发，父元素后触发
  */
+

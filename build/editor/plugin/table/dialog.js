@@ -1,8 +1,14 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 27 18:23
+build time: May 30 01:40
 */
+/*
+ Combined processedModules by KISSY Module Compiler: 
+
+ editor/plugin/table/dialog
+*/
+
 /**
  * table dialog
  * @author yiminghe@gmail.com
@@ -483,3 +489,4 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Dialog4E, MenuButto
 }, {
     requires: ['editor', '../dialog', '../menubutton']
 });
+

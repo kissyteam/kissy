@@ -1,8 +1,14 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 23 00:49
+build time: May 30 01:38
 */
+/*
+ Combined processedModules by KISSY Module Compiler: 
+
+ editor/plugin/maximize/cmd
+*/
+
 /**
  * Add maximizeWindow/restoreWindow to Editor.
  * @author yiminghe@gmail.com
@@ -336,3 +342,4 @@ KISSY.add("editor/plugin/maximize/cmd", function (S, Editor) {
 }, {
     requires: ['editor']
 });
+

@@ -1,8 +1,14 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 23 00:47
+build time: May 30 01:37
 */
+/*
+ Combined processedModules by KISSY Module Compiler: 
+
+ editor/plugin/italic
+*/
+
 /**
  * italic button.
  * @author yiminghe@gmail.com
@@ -37,3 +43,4 @@ KISSY.add("editor/plugin/italic", function (S, Editor, ui, cmd) {
 }, {
     requires:['editor', './font/ui', './italic/cmd']
 });
+

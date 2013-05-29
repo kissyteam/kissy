@@ -1,8 +1,14 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 23 00:46
+build time: May 30 01:36
 */
+/*
+ Combined processedModules by KISSY Module Compiler: 
+
+ editor/plugin/fore-color
+*/
+
 /**
  * foreColor button.
  * @author yiminghe@gmail.com
@@ -28,3 +34,4 @@ KISSY.add("editor/plugin/fore-color", function (S, Editor, Button, cmd) {
 }, {
     requires: ['editor', './color/btn', './fore-color/cmd']
 });
+

@@ -58,8 +58,7 @@
             <!--kissy loader end-->
 
             <path location="${component.src.dir}/web.js"/>
-            <path location="${component.src.dir}/meta.js"/>
-            <path location="${component.src.dir}/modules.js"/>
+            <fileset dir="${component.src.dir}/meta/" includes="**/*.js"/>
             <path location="${component.src.dir}/exports.js"/>
             <filterchain>
                 <deletecharacters chars="${bom}"/>
@@ -101,7 +100,7 @@
             <!--kissy loader end-->
 
             <path location="${component.src.dir}/web.js"/>
-            <path location="${component.src.dir}/modules.js"/>
+            <fileset dir="${component.src.dir}/meta/" includes="**/*.js"/>
             <path location="${component.src.dir}/exports.js"/>
             <filterchain>
                 <deletecharacters chars="${bom}"/>

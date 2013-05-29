@@ -1,8 +1,14 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 23 00:54
+build time: May 30 01:43
 */
+/*
+ Combined processedModules by KISSY Module Compiler: 
+
+ rich-base
+*/
+
 /**
  * @ignore
  * infrastructure for create plugin/extension-enabled class
@@ -504,3 +510,4 @@ KISSY.add('rich-base', function (S, Base) {
 }, {
     requires: ['base']
 });
+

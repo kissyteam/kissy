@@ -1,8 +1,69 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 23 00:54
+build time: May 30 01:43
 */
+/*
+ Combined processedModules by KISSY Module Compiler: 
+
+ scrollview/base/render
+ scrollview/base
+*/
+
+/**
+ * scrollview render
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('scrollview/base/render', function (S, Component, Extension) {
+
+    // http://www.html5rocks.com/en/tutorials/speed/html5/
+    var supportCss3 = S.Features.isTransformSupported(),
+        transformProperty;
+
+    var methods = {
+
+        '_onSetScrollLeft': function (v) {
+            this.get('contentEl')[0].style.left = -v + 'px';
+        },
+
+        '_onSetScrollTop': function (v) {
+            this.get('contentEl')[0].style.top = -v + 'px';
+        }
+
+    };
+
+    if (supportCss3) {
+
+        var css3Prefix = S.Features.getTransformPrefix();
+
+        transformProperty = css3Prefix ? css3Prefix + 'Transform' : 'transform';
+
+        methods._onSetScrollLeft = function (v) {
+            var scrollTop = this.get('scrollTop');
+            this.get('contentEl')[0].style[transformProperty] = 'translate3d(' + -v + 'px,' + -scrollTop + 'px,0)';
+        };
+
+        methods._onSetScrollTop = function (v) {
+            var scrollLeft = this.get('scrollLeft');
+            this.get('contentEl')[0].style[transformProperty] = 'translate3d(' + -scrollLeft + 'px,' + -v + 'px,0)';
+        };
+
+    }
+
+    return Component.Render.extend([Extension.ContentRender], methods, {
+        ATTRS: {
+            scrollLeft: {
+                value: 0
+            },
+            scrollTop: {
+                value: 0
+            }
+        }
+    });
+
+}, {
+    requires: ['component/base', 'component/extension']
+});
 /**
  * scrollview controller
  * @author yiminghe@gmail.com
@@ -16,10 +77,6 @@ KISSY.add('scrollview/base', function (S, DOM, Component, Extension, Render, Eve
     var isTouchSupported = S.Features.isTouchSupported();
 
     var KeyCodes = Event.KeyCodes;
-
-    function constrain(v, max, min) {
-        return Math.min(Math.max(v, min), max);
-    }
 
     return Component.Controller.extend({
 
@@ -92,10 +149,10 @@ KISSY.add('scrollview/base', function (S, DOM, Component, Extension, Render, Eve
                     var offset = p.offset(),
                         x = offset.left - elOffset.left,
                         y = offset.top - elOffset.top;
-                    if (x<= maxScrollX && y <= maxScrollY) {
+                    if (x <= maxScrollX && y <= maxScrollY) {
                         pagesXY[i] = {
-                            x:x,
-                            y:y,
+                            x: x,
+                            y: y,
                             index: i
                         };
                     }
@@ -242,6 +299,14 @@ KISSY.add('scrollview/base', function (S, DOM, Component, Extension, Render, Eve
 
         stopAnimation: function () {
             this.get('contentEl').stop();
+            var maxScroll = this.maxScroll;
+            var minScroll = this.minScroll;
+            this.set('scrollTop',
+                Math.min(Math.max(this.get('scrollTop'), minScroll.top),
+                    maxScroll.top));
+            this.set('scrollLeft',
+                Math.min(Math.max(this.get('scrollLeft'), minScroll.left),
+                    maxScroll.left));
         },
 
         '_uiSetPageIndex': function (v) {
@@ -282,20 +347,7 @@ KISSY.add('scrollview/base', function (S, DOM, Component, Extension, Render, Eve
         },
 
         scrollTo: function (left, top, animCfg) {
-            var self = this,
-                setLeft,
-                setTop,
-                maxScroll = self.maxScroll,
-                minScroll = self.minScroll;
-
-            if (left != undefined) {
-                left = constrain(left, maxScroll.left, minScroll.left);
-                setLeft = 1;
-            }
-            if (top != undefined) {
-                top = constrain(top, maxScroll.top, minScroll.top);
-                setTop = 1;
-            }
+            var self = this;
 
             if (animCfg) {
                 var scrollLeft = self.get('scrollLeft'),
@@ -305,11 +357,11 @@ KISSY.add('scrollview/base', function (S, DOM, Component, Extension, Render, Eve
                         xx: {
                             fx: {
                                 frame: function (anim, fx) {
-                                    if (setLeft) {
+                                    if (left !== undefined) {
                                         self.set('scrollLeft',
                                             scrollLeft + fx.pos * (left - scrollLeft));
                                     }
-                                    if (setTop) {
+                                    if (top !== undefined) {
                                         self.set('scrollTop',
                                             scrollTop + fx.pos * (top - scrollTop));
                                     }
@@ -319,10 +371,10 @@ KISSY.add('scrollview/base', function (S, DOM, Component, Extension, Render, Eve
                     };
                 contentEl.animate(anim, animCfg);
             } else {
-                if (setLeft) {
+                if (left !== undefined) {
                     self.set('scrollLeft', left);
                 }
-                if (setTop) {
+                if (top !== undefined) {
                     self.set('scrollTop', top);
                 }
             }
@@ -371,57 +423,5 @@ KISSY.add('scrollview/base', function (S, DOM, Component, Extension, Render, Eve
 
 }, {
     requires: ['dom', 'component/base', 'component/extension', './base/render', 'event']
-});/**
- * scrollview render
- * @author yiminghe@gmail.com
- */
-KISSY.add('scrollview/base/render', function (S, Component, Extension) {
-
-    // http://www.html5rocks.com/en/tutorials/speed/html5/
-    var supportCss3 = S.Features.isTransformSupported(),
-        transformProperty;
-
-    var methods = {
-
-        '_onSetScrollLeft': function (v) {
-            this.get('contentEl')[0].style.left = -v + 'px';
-        },
-
-        '_onSetScrollTop': function (v) {
-            this.get('contentEl')[0].style.top = -v + 'px';
-        }
-
-    };
-
-    if (supportCss3) {
-
-        var css3Prefix = S.Features.getTransformPrefix();
-
-        transformProperty = css3Prefix ? css3Prefix + 'Transform' : 'transform';
-
-        methods._onSetScrollLeft = function (v) {
-            var scrollTop = this.get('scrollTop');
-            this.get('contentEl')[0].style[transformProperty] = 'translate3d(' + -v + 'px,' + -scrollTop + 'px,0)';
-        };
-
-        methods._onSetScrollTop = function (v) {
-            var scrollLeft = this.get('scrollLeft');
-            this.get('contentEl')[0].style[transformProperty] = 'translate3d(' + -scrollLeft + 'px,' + -v + 'px,0)';
-        };
-
-    }
-
-    return Component.Render.extend([Extension.ContentRender], methods, {
-        ATTRS: {
-            scrollLeft: {
-                value: 0
-            },
-            scrollTop: {
-                value: 0
-            }
-        }
-    });
-
-}, {
-    requires: ['component/base', 'component/extension']
 });
+

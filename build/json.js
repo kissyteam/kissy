@@ -1,122 +1,234 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 23 00:53
+build time: May 30 01:42
 */
+/*
+ Combined processedModules by KISSY Module Compiler: 
+
+ json/quote
+ json/stringify
+ json/parser
+ json/parse
+ json
+*/
+
 /**
  * @ignore
- * JSON emulator for KISSY
+ * quote and unQuote for json
  * @author yiminghe@gmail.com
  */
-KISSY.add('json', function (S, stringify, parse) {
+KISSY.add('json/quote', function (S) {
 
-    /**
-     * The JSON object contains methods for converting values to JavaScript Object Notation (JSON)
-     * and for converting JSON to values.
-     * @class KISSY.JSON
-     * @singleton
-     */
-    return S.JSON = {
-        /**
-         * Convert a value to JSON, optionally replacing values if a replacer function is specified,
-         * or optionally including only the specified properties if a replacer array is specified.
-         * @method
-         * @param value The value to convert to a JSON string.
-         * @param [replacer]
-         * The replacer parameter can be either a function or an array. As a function, it takes two parameters, the key and the value being stringified. Initially it gets called with an empty key representing the object being stringified, and it then gets called for each property on the object or array being stringified. It should return the value that should be added to the JSON string, as follows:
+    var CONTROL_MAP = {
+            '\b': '\\b',
+            '\f': '\\f',
+            '\n': '\\n',
+            '\r': '\\r',
+            '\t': '\\t',
+            '"': '\\"'
+        },
+        REVERSE_CONTROL_MAP = {},
+        QUOTE_REG = /["\b\f\n\r\t\x00-\x1f]/g,
+        UN_QUOTE_REG = /\\b|\\f|\\n|\\r|\\t|\\"|\\u[0-9a-zA-Z]{4}/g;
 
-         * - If you return a Number, the string corresponding to that number is used as the value for the property when added to the JSON string.
-         * - If you return a String, that string is used as the property's value when adding it to the JSON string.
-         * - If you return a Boolean, "true" or "false" is used as the property's value, as appropriate, when adding it to the JSON string.
-         * - If you return any other object, the object is recursively stringified into the JSON string, calling the replacer function on each property, unless the object is a function, in which case nothing is added to the JSON string.
-         * - If you return undefined, the property is not included in the output JSON string.
-         *
-         * **Note:** You cannot use the replacer function to remove values from an array. If you return undefined or a function then null is used instead.
-         *
-         * @param [space] space Causes the resulting string to be pretty-printed.
-         * The space argument may be used to control spacing in the final string.
-         * If it is a number, successive levels in the stringification will each be indented by this many space characters (up to 10).
-         * If it is a string, successive levels will indented by this string (or the first ten characters of it).
-         * @return {String}
-         */
-        stringify: stringify,
-        /**
-         * Parse a string as JSON, optionally transforming the value produced by parsing.
-         * @param {String} text The string to parse as JSON.
-         * @param {Function} [reviver] If a function, prescribes how the value originally produced by parsing is transformed,
-         * before being returned.
-         */
-        parse: parse
+    S.each(CONTROL_MAP, function (original, encoded) {
+        REVERSE_CONTROL_MAP[encoded] = original
+    });
+
+    REVERSE_CONTROL_MAP['\\/']='/';
+
+    return {
+        quote: function (value) {
+            return '"' + value.replace(QUOTE_REG, function (m) {
+                var v;
+                if (!(v = CONTROL_MAP[m])) {
+                    v = '\\u' + ('0000' + m.charCodeAt(0).toString(16)).slice(-4);
+                }
+                return v;
+            }) + '"';
+        },
+        unQuote:function(value){
+            return value.slice(1,value.length-1).replace(UN_QUOTE_REG,function(m){
+                var v;
+                if (!(v = REVERSE_CONTROL_MAP[m])) {
+                    v =String.fromCharCode(parseInt(m.slice(2),16));
+                }
+                return v;
+            });
+        }
     };
-
-}, {
-    requires: ['./json/stringify', './json/parse']
-});/**
+});
+/**
  * @ignore
- * JSON.parse for KISSY
+ * JSON.stringify for KISSY
  * @author yiminghe@gmail.com
  */
-KISSY.add('json/parse', function (S, parser, Quote) {
-    parser.yy = {
-        unQuote: Quote.unQuote
-    };
+KISSY.add('json/stringify', function (S,Quote) {
 
-    function walk(holder, name, reviver) {
-        var val = holder[name],
-            i, len, newElement;
+    function padding2(n) {
+        return n < 10 ? '0' + n : n;
+    }
 
-        if (typeof val === 'object') {
-            if (S.isArray(val)) {
-                i = 0;
-                len = val.length;
-                var newVal = [];
-                while (i < len) {
-                    newElement = walk(val, String(i), reviver);
-                    if (newElement !== undefined) {
-                        newVal[newVal.length] = newElement;
-                    }
+    function str(key, holder, replacerFunction, propertyList, gap, stack, indent) {
+        var value = holder[key];
+        if (value && typeof value === 'object') {
+            if (typeof value.toJSON === 'function') {
+                value = value.toJSON(key);
+            } else if (value instanceof Date) {
+                value = isFinite(value.valueOf()) ?
+                    value.getUTCFullYear() + '-' +
+                        padding2(value.getUTCMonth() + 1) + '-' +
+                        padding2(value.getUTCDate()) + 'T' +
+                        padding2(value.getUTCHours()) + ':' +
+                        padding2(value.getUTCMinutes()) + ':' +
+                        padding2(value.getUTCSeconds()) + 'Z' : null;
+            } else if (value instanceof  String || value instanceof  Number || value instanceof Boolean) {
+                value = value.valueOf();
+            }
+        }
+        if (replacerFunction !== undefined) {
+            value = replacerFunction.call(holder, key, value);
+        }
+
+        switch (typeof value) {
+            case 'number':
+                return isFinite(value) ? String(value) : 'null';
+            case 'string':
+                return Quote.quote(value);
+            case 'boolean':
+                return String(value);
+            case 'object':
+                if (!value) {
+                    return 'null';
                 }
-                val = newVal;
+                if (S.isArray(value)) {
+                    return ja(value, replacerFunction, propertyList, gap, stack, indent);
+                }
+                return jo(value, replacerFunction, propertyList, gap, stack, indent);
+        }
+
+        return undefined;
+    }
+
+    function jo(value, replacerFunction, propertyList, gap, stack, indent) {
+        if (S.inArray(value, stack)) {
+            throw new TypeError('cyclic json');
+        }
+        stack[stack.length] = value;
+        var stepBack = indent;
+        indent += gap;
+        var k, kl, i, p;
+        if (propertyList !== undefined) {
+            k = propertyList;
+        } else {
+            k = S.keys(value);
+        }
+        var partial = [];
+        for (i = 0, kl = k.length; i < kl; i++) {
+            p = k[i];
+            var strP = str(p, value, replacerFunction, propertyList, gap, stack, indent);
+            if (strP !== undefined) {
+                var member = Quote.quote(p);
+                member += ':';
+                if (gap) {
+                    member += ' ';
+                }
+                member += strP;
+                partial[partial.length] = member;
+            }
+        }
+        var ret;
+        if (!partial.length) {
+            ret = '{}';
+        } else {
+            if (!gap) {
+                ret = '{' + partial.join(',') + '}';
             } else {
-                var keys = S.keys(val);
-                for (i = 0, len = keys.length; i < len; i++) {
-                    var p = keys[i];
-                    newElement = walk(val, p, reviver);
-                    if (newElement === undefined) {
-                        delete val[p];
-                    } else {
-                        val[p] = newElement;
-                    }
-                }
+                var separator = ",\n" + indent;
+                var properties = partial.join(separator);
+                ret = '{\n' + indent + properties + '\n' + stepBack + '}';
             }
         }
 
-        return reviver.call(holder, name, val);
+        stack.pop();
+        return ret;
     }
 
-    return function (str, reviver) {
-        var root = parser.parse(String(str));
-        if (reviver) {
-            return walk({
-                '': root
-            }, '', reviver);
-        } else {
-            return root;
+    function ja(value, replacerFunction, propertyList, gap, stack, indent) {
+        if (S.inArray(value, stack)) {
+            throw new TypeError('cyclic json');
         }
-    };
+        stack[stack.length] = value;
+        var stepBack = indent;
+        indent += gap;
+        var partial = [];
+        var len = value.length;
+        var index = 0;
+        while (index < len) {
+            var strP = str(String(index), value, replacerFunction, propertyList, gap, stack, indent);
+            if (strP === undefined) {
+                partial[partial.length] = 'null';
+            } else {
+                partial[partial.length] = strP;
+            }
+            ++index;
+        }
+        var ret;
+        if (!partial.length) {
+            ret = '[]';
+        } else {
+            if (!gap) {
+                ret = '[' + partial.join(',') + ']';
+            } else {
+                var separator = '\n,' + indent;
+                var properties = partial.join(separator);
+                ret = '[\n' + indent + properties + '\n' + stepBack + ']';
+            }
+        }
 
-}, {
-    requires: ['./parser', './quote']
+        stack.pop();
+
+        return ret;
+    }
+
+    function stringify(value, replacer, space) {
+        var gap = '';
+        var propertyList, replacerFunction;
+        if (replacer) {
+            if (typeof replacer === 'function') {
+                replacerFunction = replacer;
+            } else if (S.isArray(replacer)) {
+                propertyList = replacer
+            }
+        }
+
+        if (typeof space === 'number') {
+            space = Math.min(10, space);
+            gap = new Array(space + 1).join(' ');
+        } else if (typeof space === 'string') {
+            gap = space.slice(0, 10);
+        }
+
+        return str('', {
+            '': value
+        }, replacerFunction, propertyList, gap, [], '');
+    }
+
+    return stringify;
+
+},{
+    requires:['./quote']
 });
 /**
  * @ignore
  * refer:
- *  - kison
  *  - http://www.ecma-international.org/publications/standards/Ecma-262.htm
  *  - https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/JSON/stringify
  *  - http://www.json.org/
  *  - http://www.ietf.org/rfc/rfc4627.txt
- *//*
+ */
+/*
   Generated by kissy-kison.*/
 KISSY.add("json/parser", function () {
     /* Generated by kison from KISSY */
@@ -727,217 +839,120 @@ KISSY.add("json/parser", function () {
 
     };
     return parser;;
-});/**
+});
+/**
  * @ignore
- * quote and unQuote for json
+ * JSON.parse for KISSY
  * @author yiminghe@gmail.com
  */
-KISSY.add('json/quote', function (S) {
+KISSY.add('json/parse', function (S, parser, Quote) {
+    parser.yy = {
+        unQuote: Quote.unQuote
+    };
 
-    var CONTROL_MAP = {
-            '\b': '\\b',
-            '\f': '\\f',
-            '\n': '\\n',
-            '\r': '\\r',
-            '\t': '\\t',
-            '"': '\\"'
-        },
-        REVERSE_CONTROL_MAP = {},
-        QUOTE_REG = /["\b\f\n\r\t\x00-\x1f]/g,
-        UN_QUOTE_REG = /\\b|\\f|\\n|\\r|\\t|\\"|\\u[0-9a-zA-Z]{4}/g;
+    function walk(holder, name, reviver) {
+        var val = holder[name],
+            i, len, newElement;
 
-    S.each(CONTROL_MAP, function (original, encoded) {
-        REVERSE_CONTROL_MAP[encoded] = original
-    });
-
-    REVERSE_CONTROL_MAP['\\/']='/';
-
-    return {
-        quote: function (value) {
-            return '"' + value.replace(QUOTE_REG, function (m) {
-                var v;
-                if (!(v = CONTROL_MAP[m])) {
-                    v = '\\u' + ('0000' + m.charCodeAt(0).toString(16)).slice(-4);
+        if (typeof val === 'object') {
+            if (S.isArray(val)) {
+                i = 0;
+                len = val.length;
+                var newVal = [];
+                while (i < len) {
+                    newElement = walk(val, String(i), reviver);
+                    if (newElement !== undefined) {
+                        newVal[newVal.length] = newElement;
+                    }
                 }
-                return v;
-            }) + '"';
-        },
-        unQuote:function(value){
-            return value.slice(1,value.length-1).replace(UN_QUOTE_REG,function(m){
-                var v;
-                if (!(v = REVERSE_CONTROL_MAP[m])) {
-                    v =String.fromCharCode(parseInt(m.slice(2),16));
+                val = newVal;
+            } else {
+                var keys = S.keys(val);
+                for (i = 0, len = keys.length; i < len; i++) {
+                    var p = keys[i];
+                    newElement = walk(val, p, reviver);
+                    if (newElement === undefined) {
+                        delete val[p];
+                    } else {
+                        val[p] = newElement;
+                    }
                 }
-                return v;
-            });
+            }
+        }
+
+        return reviver.call(holder, name, val);
+    }
+
+    return function (str, reviver) {
+        var root = parser.parse(String(str));
+        if (reviver) {
+            return walk({
+                '': root
+            }, '', reviver);
+        } else {
+            return root;
         }
     };
-});/**
- * @ignore
- * JSON.stringify for KISSY
- * @author yiminghe@gmail.com
- */
-KISSY.add('json/stringify', function (S,Quote) {
 
-    function padding2(n) {
-        return n < 10 ? '0' + n : n;
-    }
-
-    function str(key, holder, replacerFunction, propertyList, gap, stack, indent) {
-        var value = holder[key];
-        if (value && typeof value === 'object') {
-            if (typeof value.toJSON === 'function') {
-                value = value.toJSON(key);
-            } else if (value instanceof Date) {
-                value = isFinite(value.valueOf()) ?
-                    value.getUTCFullYear() + '-' +
-                        padding2(value.getUTCMonth() + 1) + '-' +
-                        padding2(value.getUTCDate()) + 'T' +
-                        padding2(value.getUTCHours()) + ':' +
-                        padding2(value.getUTCMinutes()) + ':' +
-                        padding2(value.getUTCSeconds()) + 'Z' : null;
-            } else if (value instanceof  String || value instanceof  Number || value instanceof Boolean) {
-                value = value.valueOf();
-            }
-        }
-        if (replacerFunction !== undefined) {
-            value = replacerFunction.call(holder, key, value);
-        }
-
-        switch (typeof value) {
-            case 'number':
-                return isFinite(value) ? String(value) : 'null';
-            case 'string':
-                return Quote.quote(value);
-            case 'boolean':
-                return String(value);
-            case 'object':
-                if (!value) {
-                    return 'null';
-                }
-                if (S.isArray(value)) {
-                    return ja(value, replacerFunction, propertyList, gap, stack, indent);
-                }
-                return jo(value, replacerFunction, propertyList, gap, stack, indent);
-        }
-
-        return undefined;
-    }
-
-    function jo(value, replacerFunction, propertyList, gap, stack, indent) {
-        if (S.inArray(value, stack)) {
-            throw new TypeError('cyclic json');
-        }
-        stack[stack.length] = value;
-        var stepBack = indent;
-        indent += gap;
-        var k, kl, i, p;
-        if (propertyList !== undefined) {
-            k = propertyList;
-        } else {
-            k = S.keys(value);
-        }
-        var partial = [];
-        for (i = 0, kl = k.length; i < kl; i++) {
-            p = k[i];
-            var strP = str(p, value, replacerFunction, propertyList, gap, stack, indent);
-            if (strP !== undefined) {
-                var member = Quote.quote(p);
-                member += ':';
-                if (gap) {
-                    member += ' ';
-                }
-                member += strP;
-                partial[partial.length] = member;
-            }
-        }
-        var ret;
-        if (!partial.length) {
-            ret = '{}';
-        } else {
-            if (!gap) {
-                ret = '{' + partial.join(',') + '}';
-            } else {
-                var separator = ",\n" + indent;
-                var properties = partial.join(separator);
-                ret = '{\n' + indent + properties + '\n' + stepBack + '}';
-            }
-        }
-
-        stack.pop();
-        return ret;
-    }
-
-    function ja(value, replacerFunction, propertyList, gap, stack, indent) {
-        if (S.inArray(value, stack)) {
-            throw new TypeError('cyclic json');
-        }
-        stack[stack.length] = value;
-        var stepBack = indent;
-        indent += gap;
-        var partial = [];
-        var len = value.length;
-        var index = 0;
-        while (index < len) {
-            var strP = str(String(index), value, replacerFunction, propertyList, gap, stack, indent);
-            if (strP === undefined) {
-                partial[partial.length] = 'null';
-            } else {
-                partial[partial.length] = strP;
-            }
-            ++index;
-        }
-        var ret;
-        if (!partial.length) {
-            ret = '[]';
-        } else {
-            if (!gap) {
-                ret = '[' + partial.join(',') + ']';
-            } else {
-                var separator = '\n,' + indent;
-                var properties = partial.join(separator);
-                ret = '[\n' + indent + properties + '\n' + stepBack + ']';
-            }
-        }
-
-        stack.pop();
-
-        return ret;
-    }
-
-    function stringify(value, replacer, space) {
-        var gap = '';
-        var propertyList, replacerFunction;
-        if (replacer) {
-            if (typeof replacer === 'function') {
-                replacerFunction = replacer;
-            } else if (S.isArray(replacer)) {
-                propertyList = replacer
-            }
-        }
-
-        if (typeof space === 'number') {
-            space = Math.min(10, space);
-            gap = new Array(space + 1).join(' ');
-        } else if (typeof space === 'string') {
-            gap = space.slice(0, 10);
-        }
-
-        return str('', {
-            '': value
-        }, replacerFunction, propertyList, gap, [], '');
-    }
-
-    return stringify;
-
-},{
-    requires:['./quote']
+}, {
+    requires: ['./parser', './quote']
 });
 /**
  * @ignore
  * refer:
+ *  - kison
  *  - http://www.ecma-international.org/publications/standards/Ecma-262.htm
  *  - https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/JSON/stringify
  *  - http://www.json.org/
  *  - http://www.ietf.org/rfc/rfc4627.txt
  */
+/**
+ * @ignore
+ * JSON emulator for KISSY
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('json', function (S, stringify, parse) {
+
+    /**
+     * The JSON object contains methods for converting values to JavaScript Object Notation (JSON)
+     * and for converting JSON to values.
+     * @class KISSY.JSON
+     * @singleton
+     */
+    return S.JSON = {
+        /**
+         * Convert a value to JSON, optionally replacing values if a replacer function is specified,
+         * or optionally including only the specified properties if a replacer array is specified.
+         * @method
+         * @param value The value to convert to a JSON string.
+         * @param [replacer]
+         * The replacer parameter can be either a function or an array. As a function, it takes two parameters, the key and the value being stringified. Initially it gets called with an empty key representing the object being stringified, and it then gets called for each property on the object or array being stringified. It should return the value that should be added to the JSON string, as follows:
+
+         * - If you return a Number, the string corresponding to that number is used as the value for the property when added to the JSON string.
+         * - If you return a String, that string is used as the property's value when adding it to the JSON string.
+         * - If you return a Boolean, "true" or "false" is used as the property's value, as appropriate, when adding it to the JSON string.
+         * - If you return any other object, the object is recursively stringified into the JSON string, calling the replacer function on each property, unless the object is a function, in which case nothing is added to the JSON string.
+         * - If you return undefined, the property is not included in the output JSON string.
+         *
+         * **Note:** You cannot use the replacer function to remove values from an array. If you return undefined or a function then null is used instead.
+         *
+         * @param [space] space Causes the resulting string to be pretty-printed.
+         * The space argument may be used to control spacing in the final string.
+         * If it is a number, successive levels in the stringification will each be indented by this many space characters (up to 10).
+         * If it is a string, successive levels will indented by this string (or the first ten characters of it).
+         * @return {String}
+         */
+        stringify: stringify,
+        /**
+         * Parse a string as JSON, optionally transforming the value produced by parsing.
+         * @param {String} text The string to parse as JSON.
+         * @param {Function} [reviver] If a function, prescribes how the value originally produced by parsing is transformed,
+         * before being returned.
+         */
+        parse: parse
+    };
+
+}, {
+    requires: ['./json/stringify', './json/parse']
+});
+

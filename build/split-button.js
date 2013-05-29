@@ -1,8 +1,14 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 23 00:54
+build time: May 30 01:43
 */
+/*
+ Combined processedModules by KISSY Module Compiler: 
+
+ split-button
+*/
+
 /**
  * SplitButton for KISSY. Combination of button and menubutton.
  * @author yiminghe@gmail.com
@@ -84,3 +90,4 @@ KISSY.add("split-button", function (S, Component, Button, MenuButton) {
 }, {
     requires: ['component/base', 'button', 'menubutton']
 });
+

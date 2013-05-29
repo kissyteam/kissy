@@ -1,8 +1,18 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 23 00:53
+build time: May 30 01:42
 */
+/*
+ Combined processedModules by KISSY Module Compiler: 
+
+ menubutton/base-render
+ menubutton/base
+ menubutton/option
+ menubutton/select
+ menubutton
+*/
+
 /**
  * render aria and drop arrow for menubutton
  * @author yiminghe@gmail.com
@@ -44,7 +54,8 @@ KISSY.add("menubutton/base-render", function (S, Button, Extension) {
     });
 }, {
     requires: ['button','component/extension']
-});/**
+});
+/**
  * combination of menu and button ,similar to native select
  * @author yiminghe@gmail.com
  */
@@ -387,21 +398,8 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
 }, {
     requires: [ "node", "button", "./base-render", "menu",
         'component/extension']
-});/**
- * menubutton
- * @author yiminghe@gmail.com
- */
-KISSY.add("menubutton", function(S, MenuButton, MenuButtonRender, Select, Option) {
-    MenuButton.Render = MenuButtonRender;
-    MenuButton.Select = Select;
-    MenuButton.Option = Option;
-    return MenuButton;
-}, {
-    requires:['menubutton/base',
-        'menubutton/base-render',
-        'menubutton/select',
-        'menubutton/option']
-});/**
+});
+/**
  * represent a menu option , just make it selectable and can have select status
  * @author yiminghe@gmail.com
  */
@@ -438,7 +436,8 @@ KISSY.add("menubutton/option", function (S, Menu) {
     });
 }, {
     requires: ['menu']
-});/**
+});
+/**
  * manage a list of single-select options
  * @author yiminghe@gmail.com
  */
@@ -696,3 +695,19 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
  * TODO
  *  how to emulate multiple ?
  **/
+/**
+ * menubutton
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("menubutton", function(S, MenuButton, MenuButtonRender, Select, Option) {
+    MenuButton.Render = MenuButtonRender;
+    MenuButton.Select = Select;
+    MenuButton.Option = Option;
+    return MenuButton;
+}, {
+    requires:['menubutton/base',
+        'menubutton/base-render',
+        'menubutton/select',
+        'menubutton/option']
+});
+

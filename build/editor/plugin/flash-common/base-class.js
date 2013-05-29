@@ -1,8 +1,14 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 23 00:46
+build time: May 30 01:35
 */
+/*
+ Combined processedModules by KISSY Module Compiler: 
+
+ editor/plugin/flash-common/base-class
+*/
+
 /**
  *  BaseClass for Flash Based plugin.
  *  @author yiminghe@gmail.com
@@ -179,3 +185,4 @@ KISSY.add("editor/plugin/flash-common/base-class", function (S, Editor, ContextM
     requires:['editor', '../contextmenu',
         '../bubble', '../dialog-loader', './utils']
 });
+

@@ -1,0 +1,10 @@
+<project name="editor/plugin/font/cmd.build" default="build" basedir="">
+    <description>editor/plugin/font/cmd Build File</description>
+
+    <property name="component.name"
+              value="editor/plugin/font/cmd"/>
+
+    <property name="component.meta.dir" location="./ke-meta/"/>
+
+    <import file="../../../../../common.xml"/>
+</project>

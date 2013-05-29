@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 29 00:21
+build time: May 30 01:32
 */
 KISSY.add("combobox/combobox-tpl",function(){return'<div id="ks-combobox-invalid-el{{id}}" class="{{getBaseCssClasses "invalid-el"}}"> <div class="{{getBaseCssClasses "invalid-inner"}}"></div> </div> {{#if hasTrigger}} <div id="ks-combobox-trigger{{id}}" class="{{getBaseCssClasses "trigger"}}"> <div class="{{getBaseCssClasses "trigger-inner"}}">&#x25BC;</div> </div> {{/if}} <div class="{{getBaseCssClasses "input-wrap"}}"> <input id="ks-combobox-input{{id}}" aria-haspopup="true" aria-autocomplete="list" aria-haspopup="true" role="autocomplete" aria-expanded="false" {{#if disabled}} disabled {{/if}} autocomplete="off" class="{{getBaseCssClasses "input"}}" value="{{inputValue}}" /> <label id="ks-combobox-placeholder{{id}}" for="ks-combobox-input{{id}}" style=\'display:{{#if inputValue}}none{{else}}block{{/if}};\' class="{{getBaseCssClasses "placeholder"}}"> {{placeholder}} </label> </div>'});
 KISSY.add("combobox/render",function(i,d,g){var j=d.Render.extend({initializer:function(){var c=this.get("childrenElSelectors");i.mix(c,{input:"#ks-combobox-input{id}",trigger:"#ks-combobox-trigger{id}",invalidEl:"#ks-combobox-invalid-el{id}",placeholderEl:"#ks-combobox-placeholder{id}"})},getKeyEventTarget:function(){return this.get("input")},_onSetCollapsed:function(c){this.get("input").attr("aria-expanded",!c)},_onSetInputValue:function(c,d){d.causeByTimer||this.get("input").val(c)},_onSetDisabled:function(c){j.superclass._onSetDisabled.apply(this,

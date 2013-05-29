@@ -269,11 +269,10 @@
 </div>
 </dl>
 <br id="last"/>
-<script src="../../src/parser.js"></script>
-<script src="../../src/selector.js"></script>
+<script src="/kissy/src/package.js"></script>
 <script src="../specs/sizzle-spec.js"></script>
 <script>
-    window.onload = function () {
+    KISSY.use('dom/selector', function () {
         // let tc run first
         setTimeout(function () {
             jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
@@ -282,6 +281,6 @@
                 jasmine.kissyNext(this.results().failedCount);
             });
         }, 100);
-    };
+    });
 </script>
 </body>

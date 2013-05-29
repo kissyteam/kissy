@@ -1,8 +1,14 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 23 00:51
+build time: May 30 01:41
 */
+/*
+ Combined processedModules by KISSY Module Compiler: 
+
+ editor/plugin/word-filter
+*/
+
 /**
  * clean html pasted from word. modified from ckeditor.
  * @author yiminghe@gmail.com
@@ -1184,3 +1190,4 @@ KISSY.add("editor/plugin/word-filter", function (S, HTMLParser) {
 }, {
     requires: ['htmlparser']
 });
+

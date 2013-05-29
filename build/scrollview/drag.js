@@ -1,8 +1,14 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 23 00:54
+build time: May 30 01:43
 */
+/*
+ Combined processedModules by KISSY Module Compiler: 
+
+ scrollview/drag
+*/
+
 /**
  * allow body to drag
  * @author yiminghe@gmail.com
@@ -284,6 +290,10 @@ KISSY.add('scrollview/drag', function (S, ScrollViewBase, DD, Event) {
                 onDragAxis(self, e, 'left', dragStartMousePos);
                 onDragAxis(self, e, 'top', dragStartMousePos);
                 // touchmove frequency is slow on android
+                self.fire('scrollMove', {
+                    pageX: e.pageX,
+                    pageY: e.pageY
+                });
             },
 
             _onDragEnd: function (e) {
@@ -297,6 +307,11 @@ KISSY.add('scrollview/drag', function (S, ScrollViewBase, DD, Event) {
                 var yValid = Math.abs(yDirection) > snapThreshold;
                 var allowX = self._allowScroll.left;
                 var allowY = self._allowScroll.top;
+
+                self.fire('dragend', {
+                    pageX: e.pageX,
+                    pageY: e.pageY
+                });
 
                 function endCallback() {
                     count++;
@@ -469,3 +484,4 @@ KISSY.add('scrollview/drag', function (S, ScrollViewBase, DD, Event) {
  * - http://cubiq.org/iscroll-4
  * - http://developer.apple.com/library/ios/#documentation/uikit/reference/UIScrollView_Class/Reference/UIScrollView.html
  */
+

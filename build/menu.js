@@ -1,8 +1,60 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 23 00:53
+build time: May 30 01:42
 */
+/*
+ Combined processedModules by KISSY Module Compiler: 
+
+ menu/menu-render
+ menu/base
+ menu/menuitem-render
+ menu/menuitem
+ menu/check-menuitem-render
+ menu/check-menuitem
+ menu/submenu-render
+ menu/submenu
+ menu/popupmenu-render
+ menu/popupmenu
+ menu/filtermenu-tpl
+ menu/filtermenu-render
+ menu/filtermenu
+ menu
+*/
+
+/**
+ * @ignore
+ * render aria from menu according to current menuitem
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("menu/menu-render", function (S, Component) {
+
+    return Component.Render.extend({
+
+        initializer: function () {
+            this.get('elAttrs')['role']='menu';
+        },
+
+        setAriaActiveDescendant: function (v) {
+            var el = this.get("el");
+            if (v) {
+                var menuItemEl = v.get("el"),
+                    id = menuItemEl.attr("id");
+                el.attr("aria-activedescendant", id);
+                // 会打印重复 ，每个子菜单都会打印，然后冒泡至父菜单，再打印，和该 menuitem 所处层次有关系
+            } else {
+                el.attr("aria-activedescendant", "");
+            }
+        },
+
+        containsElement: function (element) {
+            var el = this.get("el");
+            return el[0] === element || el.contains(element);
+        }
+    });
+}, {
+    requires: ['component/base']
+});
 /**
  * @ignore
  * menu controller for kissy,accommodate menu items
@@ -255,437 +307,8 @@ KISSY.add("menu/base", function (S, Event, Component,Extension, MenuRender, unde
  *
  * TODO
  *  - 去除 activeItem. done@2013-03-12
- **//**
- * checkable menu item render
- * @author yiminghe@gmail.com
- */
-KISSY.add('menu/check-menuitem-render', function (S, MenuItemRender, Extension) {
-
-    return MenuItemRender.extend([Extension.ContentRender], {
-
-        initializer: function () {
-            if (this.get('checked')) {
-                this.get('elCls').push(self.getBaseCssClasses("checked"));
-            }
-        },
-
-        _onSetChecked: function (v) {
-            var self = this,
-                el = self.get("el"),
-                cls = self.getBaseCssClasses("checked");
-            el[v ? 'addClass' : 'removeClass'](cls);
-        }
-
-    }, {
-        ATTRS: {
-            contentTpl: {
-                value: '<div class="{{getBaseCssClasses "checkbox"}}"></div>' +
-                    Extension.ContentRender.ContentTpl
-            },
-            checked: {
-                sync: 0
-            }
-        }
-    })
-}, {
-    requires: ['./menuitem-render', 'component/extension']
-});/**
- * checkable menu item
- * @author yiminghe@gmail.com
- */
-KISSY.add('menu/check-menuitem', function (S, MenuItem, CheckMenuItemRender) {
-    return MenuItem.extend({
-
-        performActionInternal: function () {
-            var self = this;
-            self.set("checked", !self.get("checked"));
-            self.fire('click');
-            return true;
-        }
-
-    }, {
-        ATTRS: {
-            /**
-             * Whether the menu item is checked.
-             * @cfg {Boolean} checked
-             */
-            /**
-             * @ignore
-             */
-            checked: {
-                view: 1
-            },
-            xrender: {
-                value: CheckMenuItemRender
-            }
-        }
-    }, {
-        xclass: "check-menuitem"
-    })
-}, {
-    requires: ['./menuitem', './check-menuitem-render']
-});/**
- * @ignore
- * filter menu render
- * 1.create filter input
- * 2.change menu content element
- * @author yiminghe@gmail.com
- */
-KISSY.add("menu/filtermenu-render", function (S, Node, MenuRender, FilterMenuTpl, Extension) {
-
-    return MenuRender.extend([Extension.ContentRender], {
-        initializer: function () {
-            var childrenElSelectors = this.get('childrenElSelectors');
-            S.mix(childrenElSelectors, {
-                placeholderEl: '#ks-filter-menu-placeholder{id}',
-                filterInputWrap: '#ks-filter-menu-input-wrap{id}',
-                filterInput: '#ks-filter-menu-input{id}'
-            });
-        },
-
-        getKeyEventTarget: function () {
-            return this.get("filterInput");
-        },
-
-        '_onSetPlaceholder': function (v) {
-            this.get("placeholderEl").html(v);
-        }
-    }, {
-        ATTRS: {
-            placeholder: {
-                sync: 0
-            },
-            contentTpl: {
-                value: FilterMenuTpl
-            }
-        },
-
-        HTML_PARSER: {
-            placeholderEl: function (el) {
-                return el.one("." + this.getBaseCssClass('placeholder'))
-            },
-            'filterInputWrap': function (el) {
-                return el.one("." + this.getBaseCssClass('input-wrap'));
-            },
-            filterInput: function (el) {
-                return el.one("." + this.getBaseCssClass('input'));
-            }
-        }
-    });
-
-}, {
-    requires: ['node', './menu-render', './filtermenu-tpl', 'component/extension']
-});/*
-  Generated by kissy-tpl2mod.
-*/
-KISSY.add('menu/filtermenu-tpl',function(){
- return '<div id="ks-filter-menu-input-wrap{{id}}" class="{{getBaseCssClasses "input-wrap"}}"> <div id="ks-filter-menu-placeholder{{id}}" class="{{getBaseCssClasses "placeholder"}}"> {{placeholder}} </div> <input id="ks-filter-menu-input{{id}}" class="{{getBaseCssClasses "input"}}" autocomplete="off"/> </div> <div id="ks-content{{id}}" class="{{getBaseCssClasses "content"}}"> </div>';
-});
+ **/
 /**
- * @ignore
- * menu where items can be filtered based on user keyboard input
- * @author yiminghe@gmail.com
- */
-KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender, Extension) {
-
-    var HIT_CLS = "menuitem-hit";
-
-    /**
-     * Filter Menu for KISSY.
-     * xclass: 'filter-menu'.
-     * @extends KISSY.Menu
-     * @class KISSY.Menu.FilterMenu
-     */
-    var FilterMenu = Menu.extend([Extension.DecorateChild], {
-            bindUI: function () {
-                var self = this,
-                    view = self.get("view"),
-                    filterInput = view.get("filterInput");
-                /*监控键盘事件*/
-                filterInput.on("valuechange", self.handleFilterEvent, self);
-            },
-
-            handleMouseEnter: function () {
-                var self = this;
-                FilterMenu.superclass.handleMouseEnter.apply(self, arguments);
-                // 权益解决,filter input focus 后会滚动到牌聚焦处,select 则不会
-                // 如果 filtermenu 的菜单项被滚轮滚到后面,点击触发不了,会向前滚动到 filter input
-                self.getKeyEventTarget()[0].select();
-            },
-
-            handleFilterEvent: function () {
-                var self = this,
-                    view = self.get("view"),
-                    str,
-                    filterInput = view.get("filterInput"),
-                    highlightedItem = self.get("highlightedItem");
-                /* 根据用户输入过滤 */
-                self.set("filterStr", filterInput.val());
-                str = filterInput.val();
-                if (self.get('allowMultiple')) {
-                    str = str.replace(/^.+,/, '');
-                }
-
-                if (!str && highlightedItem) {
-                    highlightedItem.set('highlighted', false);
-                }
-                // 尽量保持原始高亮
-                // 如果没有高亮项或者高亮项因为过滤被隐藏了
-                // 默认选择符合条件的第一项
-                else if (str && (!highlightedItem || !highlightedItem.get("visible"))) {
-                    highlightedItem = self._getNextEnabledHighlighted(0, 1);
-                    if (highlightedItem) {
-                        highlightedItem.set('highlighted', true);
-                    }
-                }
-            },
-
-            '_onSetFilterStr': function (v) {
-                // 过滤条件变了立即过滤
-                this.filterItems(v);
-            },
-
-            /**
-             * Specify how to filter items.
-             * @param {String} str User input.
-             */
-            filterItems: function (str) {
-                var self = this,
-                    prefixCls = self.prefixCls,
-                    view = self.get("view"),
-                    _placeholderEl = view.get("placeholderEl"),
-                    filterInput = view.get("filterInput");
-
-                // 有过滤条件提示隐藏,否则提示显示
-                _placeholderEl[str ? "hide" : "show"]();
-
-                if (self.get("allowMultiple")) {
-                    var enteredItems = [],
-                        lastWord;
-                    // \uff0c => ，
-                    var match = str.match(/(.+)[,\uff0c]\s*([^\uff0c,]*)/);
-                    // 已经确认的项
-                    // , 号之前的项必定确认
-
-                    var items = [];
-
-                    if (match) {
-                        items = match[1].split(/[,\uff0c]/);
-                    }
-
-                    // 逗号结尾
-                    // 如果可以补全,那么补全最后一项为第一个高亮项
-                    if (/[,\uff0c]$/.test(str)) {
-                        enteredItems = [];
-                        if (match) {
-                            enteredItems = items;
-                            //待补全的项
-                            lastWord = items[items.length - 1];
-                            var item = self.get("highlightedItem"),
-                                content = item && item.get("content");
-                            // 有高亮而且最后一项不为空补全
-                            if (content && content.indexOf(lastWord) > -1 && lastWord) {
-                                enteredItems[enteredItems.length - 1] = content;
-                            }
-                            filterInput.val(enteredItems.join(",") + ",");
-                        }
-                        str = '';
-                    } else {
-                        // 需要菜单过滤的过滤词,在最后一个 , 后面
-                        if (match) {
-                            str = match[2] || "";
-                        }
-                        // 没有 , 则就是当前输入的
-                        // else{ str=str}
-
-                        //记录下
-                        enteredItems = items;
-                    }
-                    var oldEnteredItems = self.get("enteredItems");
-                    // 发生变化,长度变化和内容变化等同
-                    if (oldEnteredItems.length != enteredItems.length) {
-                        // S.log("enteredItems : ");
-                        // S.log(enteredItems);
-                        self.set("enteredItems", enteredItems);
-                    }
-                }
-
-                var children = self.get("children"),
-                    strExp = str && new RegExp(S.escapeRegExp(str), "ig");
-
-                // 过滤所有子组件
-                S.each(children, function (c) {
-                    var content = c.get("content");
-                    if (!str) {
-                        // 没有过滤条件
-                        // 恢复原有内容
-                        // 显示出来
-                        c.get("el").html(content);
-                        c.set("visible", true);
-                    } else {
-                        if (content.indexOf(str) > -1) {
-                            // 如果符合过滤项
-                            // 显示
-                            c.set("visible", true);
-                            // 匹配子串着重 input-wrap
-                            c.get("el").html(content.replace(strExp, function (m) {
-                                return "<span class='" + prefixCls + HIT_CLS + "'>" + m + "<" + "/span>";
-                            }));
-                        } else {
-                            // 不符合
-                            // 隐藏
-                            c.set("visible", false);
-                        }
-                    }
-                });
-            },
-
-            /**
-             * Reset user input.
-             */
-            reset: function () {
-                var self = this,
-                    view = self.get("view");
-                self.set("filterStr", "");
-                self.set("enteredItems", []);
-                var filterInput = view && view.get("filterInput");
-                filterInput && filterInput.val("");
-            },
-
-            destructor: function () {
-                var view = this.get("view");
-                var filterInput = view && view.get("filterInput");
-                filterInput && filterInput.detach();
-            }
-
-        },
-        {
-            ATTRS: {
-
-                contentEl: {
-                    view: true
-                },
-
-                allowTextSelection: {
-                    value: true
-                },
-
-                /**
-                 * Hit info string
-                 * @cfg {String} placeholder
-                 */
-                /**
-                 * @ignore
-                 */
-                placeholder: {
-                    view: 1
-                },
-
-                /**
-                 * Filter string
-                 * @cfg {String} filterStr
-                 */
-                /**
-                 * @ignore
-                 */
-                filterStr: {
-                },
-
-                /**
-                 * user entered string list when allowMultiple.
-                 * @type {String[]}
-                 * @ignore
-                 */
-                enteredItems: {
-                    value: []
-                },
-
-                /**
-                 * Whether to allow input multiple.
-                 * @cfg {Boolean} allowMultiple
-                 */
-                /**
-                 * @ignore
-                 */
-                allowMultiple: {
-                    value: false
-                },
-
-                xrender: {
-                    value: FilterMenuRender
-                }
-            }
-        }, {
-            xclass: 'filter-menu'
-        });
-
-    return FilterMenu;
-}, {
-    requires: ['./base', './filtermenu-render', 'component/extension']
-});/**
- * @ignore
- * render aria from menu according to current menuitem
- * @author yiminghe@gmail.com
- */
-KISSY.add("menu/menu-render", function (S, Component) {
-
-    return Component.Render.extend({
-
-        initializer: function () {
-            this.get('elAttrs')['role']='menu';
-        },
-
-        setAriaActiveDescendant: function (v) {
-            var el = this.get("el");
-            if (v) {
-                var menuItemEl = v.get("el"),
-                    id = menuItemEl.attr("id");
-                el.attr("aria-activedescendant", id);
-                // 会打印重复 ，每个子菜单都会打印，然后冒泡至父菜单，再打印，和该 menuitem 所处层次有关系
-            } else {
-                el.attr("aria-activedescendant", "");
-            }
-        },
-
-        containsElement: function (element) {
-            var el = this.get("el");
-            return el[0] === element || el.contains(element);
-        }
-    });
-}, {
-    requires: ['component/base']
-});/**
- * @ignore
- * menu
- * @author yiminghe@gmail.com
- */
-KISSY.add("menu", function (S, Menu, Render, Item, CheckItem, CheckItemRender, ItemRender, SubMenu, SubMenuRender, PopupMenu, PopupMenuRender, FilterMenu) {
-    Menu.Render = Render;
-    Menu.Item = Item;
-    Menu.CheckItem = CheckItem;
-    CheckItem.Render = CheckItemRender;
-    Item.Render = ItemRender;
-    Menu.SubMenu = SubMenu;
-    SubMenu.Render = SubMenuRender;
-    Menu.PopupMenu = PopupMenu;
-    PopupMenu.Render = PopupMenuRender;
-    Menu.FilterMenu = FilterMenu;
-    return Menu;
-}, {
-    requires: [
-        'menu/base',
-        'menu/menu-render',
-        'menu/menuitem',
-        'menu/check-menuitem',
-        'menu/check-menuitem-render',
-        'menu/menuitem-render',
-        'menu/submenu',
-        'menu/submenu-render',
-        'menu/popupmenu',
-        'menu/popupmenu-render',
-        'menu/filtermenu'
-    ]
-});/**
  * @ignore
  * simple menuitem render
  * @author yiminghe@gmail.com
@@ -728,7 +351,8 @@ KISSY.add("menu/menuitem-render", function (S, Node, Component) {
     });
 }, {
     requires: ['node', 'component/base']
-});/**
+});
+/**
  * @ignore
  * menu item ,child component for menu
  * @author yiminghe@gmail.com
@@ -884,129 +508,79 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
     return MenuItem;
 }, {
     requires: ['component/base', './menuitem-render']
-});/**
- * @ignore
- * popup menu render
+});
+/**
+ * checkable menu item render
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/popupmenu-render", function (S, Extension, MenuRender) {
+KISSY.add('menu/check-menuitem-render', function (S, MenuItemRender, Extension) {
 
-    return MenuRender.extend([
-        Extension.ContentRender,
-        Extension.PositionRender,
-        Extension.ShimRender
-    ]);
+    return MenuItemRender.extend([Extension.ContentRender], {
 
+        initializer: function () {
+            if (this.get('checked')) {
+                this.get('elCls').push(self.getBaseCssClasses("checked"));
+            }
+        },
+
+        _onSetChecked: function (v) {
+            var self = this,
+                el = self.get("el"),
+                cls = self.getBaseCssClasses("checked");
+            el[v ? 'addClass' : 'removeClass'](cls);
+        }
+
+    }, {
+        ATTRS: {
+            contentTpl: {
+                value: '<div class="{{getBaseCssClasses "checkbox"}}"></div>' +
+                    Extension.ContentRender.ContentTpl
+            },
+            checked: {
+                sync: 0
+            }
+        }
+    })
 }, {
-    requires: ['component/extension', './menu-render']
-});/**
- * @ignore
- * positionable and not focusable menu
+    requires: ['./menuitem-render', 'component/extension']
+});
+/**
+ * checkable menu item
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/popupmenu", function (S, Extension, Menu, PopupMenuRender) {
+KISSY.add('menu/check-menuitem', function (S, MenuItem, CheckMenuItemRender) {
+    return MenuItem.extend({
 
-    /**
-     * Popup Menu.
-     * xclass: 'popupmenu'.
-     * @class KISSY.Menu.PopupMenu
-     * @extends KISSY.Menu
-     * @mixins KISSY.Component.Extension.Position
-     * @mixins KISSY.Component.Extension.Align
-     */
-    var PopupMenu = Menu.extend([
-        Extension.DecorateChild,
-        Extension.Position,
-        Extension.Align
-    ],
-        {
-            // 根菜单 popupmenu 或者到中间的 menu 菜单
-            'getRootMenu': function () {
-                var cur = this,
-                    last;
-                do {
-                    // 沿着 menu，menuitem 链
-                    last = cur;
-                    cur = cur.get('parent');
-                } while (cur && (cur.isMenuItem || cur.isMenu));
-                return last === this ? null : last;
-            },
+        performActionInternal: function () {
+            var self = this;
+            self.set("checked", !self.get("checked"));
+            self.fire('click');
+            return true;
+        }
 
-            handleMouseLeave: function (e) {
-                PopupMenu.superclass.handleMouseLeave.apply(this, arguments);
-                // sub menuitem 有时不灵敏
-                var parent = this.get('parent');
-                if (parent && parent.isSubMenu) {
-                    parent.clearSubMenuTimers();
-                }
-                if (this.get('autoHideOnMouseLeave')) {
-                    var rootMenu = this.getRootMenu();
-                    if (rootMenu) {
-                        clearTimeout(rootMenu._popupAutoHideTimer);
-                        rootMenu._popupAutoHideTimer = setTimeout(function () {
-                            var item;
-                            if (item = rootMenu.get('highlightedItem')) {
-                                item.set('highlighted', false);
-                            }
-                        }, this.get('parent').get('menuDelay') * 1000);
-                    }
-                }
-            },
-
-            isPopupMenu: 1,
-
+    }, {
+        ATTRS: {
             /**
-             * Suppose it has focus (as a context menu), then it must hide when lose focus.
-             * Protected, should only be overridden by subclasses.
-             * @protected
+             * Whether the menu item is checked.
+             * @cfg {Boolean} checked
              */
-            handleBlur: function () {
-                var self = this;
-                PopupMenu.superclass.handleBlur.apply(self, arguments);
-                self.hide();
+            /**
+             * @ignore
+             */
+            checked: {
+                view: 1
+            },
+            xrender: {
+                value: CheckMenuItemRender
             }
-        }, {
-            ATTRS: {
-                // 弹出菜单一般不可聚焦，焦点在使它弹出的元素上
-                /**
-                 * Whether the popup menu is focusable.
-                 * Defaults to: false.
-                 * @type {Boolean}
-                 * @ignore
-                 */
-                focusable: {
-                    value: false
-                },
-
-                /**
-                 * Whether the whole menu tree which contains popup menu hides when mouseleave.
-                 * Only valid for submenu 's popupmenu.
-                 * Defaults to: false.
-                 * @cfg {Boolean} autoHideOnMouseLeave
-                 */
-                /**
-                 * @ignore
-                 */
-                autoHideOnMouseLeave: {},
-
-                contentEl: {
-                    view: 1
-                },
-
-                xrender: {
-                    value: PopupMenuRender
-                }
-            }
-        }, {
-            xclass: 'popupmenu'
-        });
-
-    return PopupMenu;
-
+        }
+    }, {
+        xclass: "check-menuitem"
+    })
 }, {
-    requires: ['component/extension',
-        './base', './popupmenu-render']
-});/**
+    requires: ['./menuitem', './check-menuitem-render']
+});
+/**
  * @ignore
  * submenu render for kissy ,extend menuitem render with arrow
  * @author yiminghe@gmail.com
@@ -1025,11 +599,6 @@ KISSY.add("menu/submenu-render", function (S, MenuItemRender, Extension) {
 
 }, {
     requires: ['./menuitem-render', 'component/extension']
-});/*
-  Generated by kissy-tpl2mod.
-*/
-KISSY.add('menu/submenu-tpl',function(){
- return '<span id="ks-menuitem-content{{id}}" class="{{getBaseCssClasses "content"}}"> {{{content}}} </span> <span class="{{getBaseCssClasses "arrow"}}">►</span>';
 });
 /**
  * @ignore
@@ -1343,3 +912,460 @@ KISSY.add("menu/submenu", function (S, Event, MenuItem, SubMenuRender, Extension
 }, {
     requires: ['event', './menuitem', './submenu-render', 'component/extension']
 });
+/**
+ * @ignore
+ * popup menu render
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("menu/popupmenu-render", function (S, Extension, MenuRender) {
+
+    return MenuRender.extend([
+        Extension.ContentRender,
+        Extension.PositionRender,
+        Extension.ShimRender
+    ]);
+
+}, {
+    requires: ['component/extension', './menu-render']
+});
+/**
+ * @ignore
+ * positionable and not focusable menu
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("menu/popupmenu", function (S, Extension, Menu, PopupMenuRender) {
+
+    /**
+     * Popup Menu.
+     * xclass: 'popupmenu'.
+     * @class KISSY.Menu.PopupMenu
+     * @extends KISSY.Menu
+     * @mixins KISSY.Component.Extension.Position
+     * @mixins KISSY.Component.Extension.Align
+     */
+    var PopupMenu = Menu.extend([
+        Extension.DecorateChild,
+        Extension.Position,
+        Extension.Align
+    ],
+        {
+            // 根菜单 popupmenu 或者到中间的 menu 菜单
+            'getRootMenu': function () {
+                var cur = this,
+                    last;
+                do {
+                    // 沿着 menu，menuitem 链
+                    last = cur;
+                    cur = cur.get('parent');
+                } while (cur && (cur.isMenuItem || cur.isMenu));
+                return last === this ? null : last;
+            },
+
+            handleMouseLeave: function (e) {
+                PopupMenu.superclass.handleMouseLeave.apply(this, arguments);
+                // sub menuitem 有时不灵敏
+                var parent = this.get('parent');
+                if (parent && parent.isSubMenu) {
+                    parent.clearSubMenuTimers();
+                }
+                if (this.get('autoHideOnMouseLeave')) {
+                    var rootMenu = this.getRootMenu();
+                    if (rootMenu) {
+                        clearTimeout(rootMenu._popupAutoHideTimer);
+                        rootMenu._popupAutoHideTimer = setTimeout(function () {
+                            var item;
+                            if (item = rootMenu.get('highlightedItem')) {
+                                item.set('highlighted', false);
+                            }
+                        }, this.get('parent').get('menuDelay') * 1000);
+                    }
+                }
+            },
+
+            isPopupMenu: 1,
+
+            /**
+             * Suppose it has focus (as a context menu), then it must hide when lose focus.
+             * Protected, should only be overridden by subclasses.
+             * @protected
+             */
+            handleBlur: function () {
+                var self = this;
+                PopupMenu.superclass.handleBlur.apply(self, arguments);
+                self.hide();
+            }
+        }, {
+            ATTRS: {
+                // 弹出菜单一般不可聚焦，焦点在使它弹出的元素上
+                /**
+                 * Whether the popup menu is focusable.
+                 * Defaults to: false.
+                 * @type {Boolean}
+                 * @ignore
+                 */
+                focusable: {
+                    value: false
+                },
+
+                /**
+                 * Whether the whole menu tree which contains popup menu hides when mouseleave.
+                 * Only valid for submenu 's popupmenu.
+                 * Defaults to: false.
+                 * @cfg {Boolean} autoHideOnMouseLeave
+                 */
+                /**
+                 * @ignore
+                 */
+                autoHideOnMouseLeave: {},
+
+                contentEl: {
+                    view: 1
+                },
+
+                xrender: {
+                    value: PopupMenuRender
+                }
+            }
+        }, {
+            xclass: 'popupmenu'
+        });
+
+    return PopupMenu;
+
+}, {
+    requires: ['component/extension',
+        './base', './popupmenu-render']
+});
+/*
+  Generated by kissy-tpl2mod.
+*/
+KISSY.add('menu/filtermenu-tpl',function(){
+ return '<div id="ks-filter-menu-input-wrap{{id}}" class="{{getBaseCssClasses "input-wrap"}}"> <div id="ks-filter-menu-placeholder{{id}}" class="{{getBaseCssClasses "placeholder"}}"> {{placeholder}} </div> <input id="ks-filter-menu-input{{id}}" class="{{getBaseCssClasses "input"}}" autocomplete="off"/> </div> <div id="ks-content{{id}}" class="{{getBaseCssClasses "content"}}"> </div>';
+});
+/**
+ * @ignore
+ * filter menu render
+ * 1.create filter input
+ * 2.change menu content element
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("menu/filtermenu-render", function (S, Node, MenuRender, FilterMenuTpl, Extension) {
+
+    return MenuRender.extend([Extension.ContentRender], {
+        initializer: function () {
+            var childrenElSelectors = this.get('childrenElSelectors');
+            S.mix(childrenElSelectors, {
+                placeholderEl: '#ks-filter-menu-placeholder{id}',
+                filterInputWrap: '#ks-filter-menu-input-wrap{id}',
+                filterInput: '#ks-filter-menu-input{id}'
+            });
+        },
+
+        getKeyEventTarget: function () {
+            return this.get("filterInput");
+        },
+
+        '_onSetPlaceholder': function (v) {
+            this.get("placeholderEl").html(v);
+        }
+    }, {
+        ATTRS: {
+            placeholder: {
+                sync: 0
+            },
+            contentTpl: {
+                value: FilterMenuTpl
+            }
+        },
+
+        HTML_PARSER: {
+            placeholderEl: function (el) {
+                return el.one("." + this.getBaseCssClass('placeholder'))
+            },
+            'filterInputWrap': function (el) {
+                return el.one("." + this.getBaseCssClass('input-wrap'));
+            },
+            filterInput: function (el) {
+                return el.one("." + this.getBaseCssClass('input'));
+            }
+        }
+    });
+
+}, {
+    requires: ['node', './menu-render', './filtermenu-tpl', 'component/extension']
+});
+/**
+ * @ignore
+ * menu where items can be filtered based on user keyboard input
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender, Extension) {
+
+    var HIT_CLS = "menuitem-hit";
+
+    /**
+     * Filter Menu for KISSY.
+     * xclass: 'filter-menu'.
+     * @extends KISSY.Menu
+     * @class KISSY.Menu.FilterMenu
+     */
+    var FilterMenu = Menu.extend([Extension.DecorateChild], {
+            bindUI: function () {
+                var self = this,
+                    view = self.get("view"),
+                    filterInput = view.get("filterInput");
+                /*监控键盘事件*/
+                filterInput.on("valuechange", self.handleFilterEvent, self);
+            },
+
+            handleMouseEnter: function () {
+                var self = this;
+                FilterMenu.superclass.handleMouseEnter.apply(self, arguments);
+                // 权益解决,filter input focus 后会滚动到牌聚焦处,select 则不会
+                // 如果 filtermenu 的菜单项被滚轮滚到后面,点击触发不了,会向前滚动到 filter input
+                self.getKeyEventTarget()[0].select();
+            },
+
+            handleFilterEvent: function () {
+                var self = this,
+                    view = self.get("view"),
+                    str,
+                    filterInput = view.get("filterInput"),
+                    highlightedItem = self.get("highlightedItem");
+                /* 根据用户输入过滤 */
+                self.set("filterStr", filterInput.val());
+                str = filterInput.val();
+                if (self.get('allowMultiple')) {
+                    str = str.replace(/^.+,/, '');
+                }
+
+                if (!str && highlightedItem) {
+                    highlightedItem.set('highlighted', false);
+                }
+                // 尽量保持原始高亮
+                // 如果没有高亮项或者高亮项因为过滤被隐藏了
+                // 默认选择符合条件的第一项
+                else if (str && (!highlightedItem || !highlightedItem.get("visible"))) {
+                    highlightedItem = self._getNextEnabledHighlighted(0, 1);
+                    if (highlightedItem) {
+                        highlightedItem.set('highlighted', true);
+                    }
+                }
+            },
+
+            '_onSetFilterStr': function (v) {
+                // 过滤条件变了立即过滤
+                this.filterItems(v);
+            },
+
+            /**
+             * Specify how to filter items.
+             * @param {String} str User input.
+             */
+            filterItems: function (str) {
+                var self = this,
+                    prefixCls = self.prefixCls,
+                    view = self.get("view"),
+                    _placeholderEl = view.get("placeholderEl"),
+                    filterInput = view.get("filterInput");
+
+                // 有过滤条件提示隐藏,否则提示显示
+                _placeholderEl[str ? "hide" : "show"]();
+
+                if (self.get("allowMultiple")) {
+                    var enteredItems = [],
+                        lastWord;
+                    // \uff0c => ，
+                    var match = str.match(/(.+)[,\uff0c]\s*([^\uff0c,]*)/);
+                    // 已经确认的项
+                    // , 号之前的项必定确认
+
+                    var items = [];
+
+                    if (match) {
+                        items = match[1].split(/[,\uff0c]/);
+                    }
+
+                    // 逗号结尾
+                    // 如果可以补全,那么补全最后一项为第一个高亮项
+                    if (/[,\uff0c]$/.test(str)) {
+                        enteredItems = [];
+                        if (match) {
+                            enteredItems = items;
+                            //待补全的项
+                            lastWord = items[items.length - 1];
+                            var item = self.get("highlightedItem"),
+                                content = item && item.get("content");
+                            // 有高亮而且最后一项不为空补全
+                            if (content && content.indexOf(lastWord) > -1 && lastWord) {
+                                enteredItems[enteredItems.length - 1] = content;
+                            }
+                            filterInput.val(enteredItems.join(",") + ",");
+                        }
+                        str = '';
+                    } else {
+                        // 需要菜单过滤的过滤词,在最后一个 , 后面
+                        if (match) {
+                            str = match[2] || "";
+                        }
+                        // 没有 , 则就是当前输入的
+                        // else{ str=str}
+
+                        //记录下
+                        enteredItems = items;
+                    }
+                    var oldEnteredItems = self.get("enteredItems");
+                    // 发生变化,长度变化和内容变化等同
+                    if (oldEnteredItems.length != enteredItems.length) {
+                        // S.log("enteredItems : ");
+                        // S.log(enteredItems);
+                        self.set("enteredItems", enteredItems);
+                    }
+                }
+
+                var children = self.get("children"),
+                    strExp = str && new RegExp(S.escapeRegExp(str), "ig");
+
+                // 过滤所有子组件
+                S.each(children, function (c) {
+                    var content = c.get("content");
+                    if (!str) {
+                        // 没有过滤条件
+                        // 恢复原有内容
+                        // 显示出来
+                        c.get("el").html(content);
+                        c.set("visible", true);
+                    } else {
+                        if (content.indexOf(str) > -1) {
+                            // 如果符合过滤项
+                            // 显示
+                            c.set("visible", true);
+                            // 匹配子串着重 input-wrap
+                            c.get("el").html(content.replace(strExp, function (m) {
+                                return "<span class='" + prefixCls + HIT_CLS + "'>" + m + "<" + "/span>";
+                            }));
+                        } else {
+                            // 不符合
+                            // 隐藏
+                            c.set("visible", false);
+                        }
+                    }
+                });
+            },
+
+            /**
+             * Reset user input.
+             */
+            reset: function () {
+                var self = this,
+                    view = self.get("view");
+                self.set("filterStr", "");
+                self.set("enteredItems", []);
+                var filterInput = view && view.get("filterInput");
+                filterInput && filterInput.val("");
+            },
+
+            destructor: function () {
+                var view = this.get("view");
+                var filterInput = view && view.get("filterInput");
+                filterInput && filterInput.detach();
+            }
+
+        },
+        {
+            ATTRS: {
+
+                contentEl: {
+                    view: true
+                },
+
+                allowTextSelection: {
+                    value: true
+                },
+
+                /**
+                 * Hit info string
+                 * @cfg {String} placeholder
+                 */
+                /**
+                 * @ignore
+                 */
+                placeholder: {
+                    view: 1
+                },
+
+                /**
+                 * Filter string
+                 * @cfg {String} filterStr
+                 */
+                /**
+                 * @ignore
+                 */
+                filterStr: {
+                },
+
+                /**
+                 * user entered string list when allowMultiple.
+                 * @type {String[]}
+                 * @ignore
+                 */
+                enteredItems: {
+                    value: []
+                },
+
+                /**
+                 * Whether to allow input multiple.
+                 * @cfg {Boolean} allowMultiple
+                 */
+                /**
+                 * @ignore
+                 */
+                allowMultiple: {
+                    value: false
+                },
+
+                xrender: {
+                    value: FilterMenuRender
+                }
+            }
+        }, {
+            xclass: 'filter-menu'
+        });
+
+    return FilterMenu;
+}, {
+    requires: ['./base', './filtermenu-render', 'component/extension']
+});
+/**
+ * @ignore
+ * menu
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("menu", function (S, Menu, Render, Item, CheckItem, CheckItemRender, ItemRender, SubMenu, SubMenuRender, PopupMenu, PopupMenuRender, FilterMenu) {
+    Menu.Render = Render;
+    Menu.Item = Item;
+    Menu.CheckItem = CheckItem;
+    CheckItem.Render = CheckItemRender;
+    Item.Render = ItemRender;
+    Menu.SubMenu = SubMenu;
+    SubMenu.Render = SubMenuRender;
+    Menu.PopupMenu = PopupMenu;
+    PopupMenu.Render = PopupMenuRender;
+    Menu.FilterMenu = FilterMenu;
+    return Menu;
+}, {
+    requires: [
+        'menu/base',
+        'menu/menu-render',
+        'menu/menuitem',
+        'menu/check-menuitem',
+        'menu/check-menuitem-render',
+        'menu/menuitem-render',
+        'menu/submenu',
+        'menu/submenu-render',
+        'menu/popupmenu',
+        'menu/popupmenu-render',
+        'menu/filtermenu'
+    ]
+});
+

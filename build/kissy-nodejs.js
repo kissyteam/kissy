@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 28 17:44
+build time: May 30 01:44
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130528174432' will replace with current timestamp when compressing.
+         * NOTICE: '20130530014444' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130528174432',
+        __BUILD_TIME: '20130530014444',
         /**
          * KISSY Environment.
          * @private
@@ -5232,7 +5232,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20130528174432'
+            tag: '20130530014444'
         }, getBaseInfo()));
     }
 
@@ -5486,6 +5486,29 @@ var KISSY = (function (undefined) {
     }
 
 })(KISSY, undefined);
+/**
+ * @ignore
+ * Default KISSY Gallery and core alias.
+ * @author yiminghe@gmail.com
+ */
+(function (S) {
+    var parentUri = S.Config.baseUri.resolve('../').toString();
+    S.config({
+        packages: {
+            gallery: {
+                base: parentUri
+            },
+            mobile: {
+                base: parentUri
+            }
+        },
+        modules: {
+            core: {
+                alias: ['dom', 'event', 'io', 'anim', 'base', 'node', 'json', 'ua','cookie']
+            }
+        }
+    });
+})(KISSY);
 
 (function(config,Features,UA){
 config({

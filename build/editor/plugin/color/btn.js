@@ -1,8 +1,14 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 23 00:45
+build time: May 30 01:34
 */
+/*
+ Combined processedModules by KISSY Module Compiler: 
+
+ editor/plugin/color/btn
+*/
+
 /**
  * color button.
  * @author yiminghe@gmail.com
@@ -210,3 +216,4 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, Dia
 }, {
     requires: ['editor', '../button', '../overlay', '../dialog-loader']
 });
+

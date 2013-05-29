@@ -1,8 +1,14 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 23 00:46
+build time: May 30 01:36
 */
+/*
+ Combined processedModules by KISSY Module Compiler: 
+
+ editor/plugin/font/ui
+*/
+
 /**
  * font formatting for kissy editor
  * @author yiminghe@gmail.com
@@ -98,3 +104,4 @@ KISSY.add("editor/plugin/font/ui", function (S, Editor, Button, MenuButton) {
 }, {
     requires:['editor', '../button', '../menubutton']
 });
+
