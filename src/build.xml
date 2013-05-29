@@ -59,8 +59,6 @@
         </concat>
     </target>
 
-    <target name="extract-dependency"/>
-
     <target name="build-core" depends="common-build.build">
     </target>
 
@@ -95,6 +93,11 @@
             </ac:not>
 
             <ac:then>
+
+                <exec executable="cmd"
+                      failonerror="true">
+                    <arg line="/c cd ../"/>
+                </exec>
 
                 <exec executable="cmd"
                       failonerror="true">

@@ -109,6 +109,4 @@
     </target>
 
     <target name="compress-css"/>
-
-    <target name="extract-dependency"/>
 </project>
