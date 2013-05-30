@@ -1,11 +1,14 @@
 var cwd = process.cwd();
 var path = require('path');
-var startDir = path.resolve(cwd, 'src')+'/';
-var saveTo = startDir+'/package.js';
+var startDir = normalizeSlash(path.resolve(cwd, 'src') + '/');
+var saveTo = startDir + '/package.js';
 var base = '/kissy/src/';
-var baseDir = path.resolve(cwd, '../');
+var baseDir = normalizeSlash(path.resolve(cwd, '../'));
 var fs = require('fs');
 
+function normalizeSlash(str) {
+    return str.replace(/\\/g, '/');
+}
 
 function collectSrcDir(dir, allSrc) {
     var files = fs.readdirSync(dir);
