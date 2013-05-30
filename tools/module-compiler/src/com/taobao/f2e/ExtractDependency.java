@@ -53,17 +53,6 @@ public class ExtractDependency {
 
     static String CODE_SUFFIX = "\n});";
 
-    /**
-     * dom/src -> dom
-     * event/src -> event
-     */
-    private ArrayList<RegReplace> nameMap = new ArrayList<RegReplace>();
-
-    private static class RegReplace {
-        Pattern reg;
-        String replace;
-    }
-
     public void setFixModuleName(boolean fixModuleName) {
         this.fixModuleName = fixModuleName;
     }
@@ -137,69 +126,6 @@ public class ExtractDependency {
         return codes;
     }
 
-    private void putToDependency(HashMap<String, ArrayList<String>> dependencyCode2,
-                                 String name, ArrayList<String> requires) {
-        ArrayList<String> old = dependencyCode2.get(name);
-
-        if (old == null) {
-            old = new ArrayList<String>();
-        }
-
-        for (String require : requires) {
-            if (!old.contains(require) &&
-                    // 防止循环引用
-                    !require.equals(name)) {
-                old.add(require);
-            }
-        }
-
-        dependencyCode2.put(name, old);
-    }
-
-    private String transformByNameMap(String name) {
-        for (RegReplace rr : nameMap) {
-            Pattern matchReg = rr.reg;
-            if (matchReg.matcher(name).matches()) {
-                return matchReg.matcher(name).replaceAll(rr.replace);
-            }
-        }
-        return name;
-    }
-
-    private ArrayList<String> transformByNameMap(ArrayList<String> requires) {
-        for (int i = 0; i < requires.size(); i++) {
-            requires.set(i, transformByNameMap(requires.get(i)));
-        }
-        return requires;
-    }
-
-    /**
-     * merge dependency within nameMap
-     */
-    private void mergeNameMap() {
-        if (nameMap != null) {
-            HashMap<String, ArrayList<String>> dependencyCode2 = new HashMap<String, ArrayList<String>>();
-            Set<String> keys = dependencyCode.keySet();
-            for (String name : keys) {
-                putToDependency(dependencyCode2, transformByNameMap(name),
-                        transformByNameMap(dependencyCode.get(name)));
-            }
-
-            this.dependencyCode = dependencyCode2;
-        }
-    }
-
-    private void constructNameMapFromString(String nameMapStr) {
-        String[] names = nameMapStr.split(",");
-        for (String n : names) {
-            String[] ns = n.split("\\|\\|");
-            RegReplace rr = new RegReplace();
-            rr.reg = Pattern.compile(ns[0]);
-            rr.replace = ns[1];
-            nameMap.add(rr);
-        }
-    }
-
     public static void commandRunnerCLI(String[] args) throws Exception {
 
         Options options = new Options();
@@ -207,7 +133,6 @@ public class ExtractDependency {
         options.addOption("packageUrls", true, "packageUrls");
         options.addOption("excludeReg", true, "excludeReg");
         options.addOption("includeReg", true, "includeReg");
-        options.addOption("nameMap", true, "nameMap");
         options.addOption("output", true, "output");
         options.addOption("v", "version", false, "version");
         options.addOption("compact", true, "compact mode");
@@ -264,12 +189,6 @@ public class ExtractDependency {
 
         extractDependency.setOutput(line.getOptionValue("output"));
 
-        String nameMapStr = line.getOptionValue("nameMap");
-
-        if (nameMapStr != null) {
-            extractDependency.constructNameMapFromString(nameMapStr);
-        }
-
         extractDependency.run();
 
     }
@@ -292,20 +211,15 @@ public class ExtractDependency {
             }
         }
 
-        // merge by name map
-        mergeNameMap();
-
         // get code list
         ArrayList<String> codes = formCodeList();
 
         if (codes.size() > 0) {
-            // serialize to file
             /*
-      dependency 's output file encoding.
-     */
+                dependency 's output file encoding.
+            */
             String outputEncoding = "utf-8";
-            FileUtils.outputContent(
-                    (this.compact ? COMPACT_CODE_PREFIX : CODE_PREFIX) +
+            FileUtils.outputContent((this.compact ? COMPACT_CODE_PREFIX : CODE_PREFIX) +
                             ArrayUtils.join(codes.toArray(new String[codes.size()]), ",\n")
                             + CODE_SUFFIX
                     , output, outputEncoding);

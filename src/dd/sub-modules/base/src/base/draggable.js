@@ -395,7 +395,7 @@ KISSY.add('dd/base/draggable', function (S, Node, RichBase, DDM, Event) {
          * force to stop this drag operation
          * @member KISSY.DD.Draggable
          */
-        stopDrag: function () {
+        'stopDrag': function () {
             DDM._end();
         },
 
@@ -838,6 +838,8 @@ KISSY.add('dd/base/draggable', function (S, Node, RichBase, DDM, Event) {
          */
         STRICT: 'strict'
     };
+
+    S.mix(Draggable, Draggable.DropMode);
 
     var _ieSelectBack;
 
