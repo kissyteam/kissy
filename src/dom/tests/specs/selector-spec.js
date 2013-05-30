@@ -7,13 +7,13 @@ KISSY.use("dom,core", function (S, DOM) {
 
     var tpl = '<div id="test-selector">\
         <div class="test-selector" id="test-selector-1">\
-        <div class="test-selector">\
-            <s id="test-selector-tag"></s>\
-        </div>\
+            <div class="test-selector">\
+                <s id="test-selector-tag"></s>\
+            </div>\
         </div>\
     <div class="test-selector" id="test-selector-2">\
         <p class="test-selector">\
-            <s></s>\
+        <S></S>\
         </p>\
     </div>\
     </div>';
@@ -46,10 +46,10 @@ KISSY.use("dom,core", function (S, DOM) {
         });
 
         it("support tag ignore case", function () {
-            expect(S.get("s").id).toBe("test-selector-tag");
-            expect(S.query("s").length).toBe(2);
+            expect(S.get("#test-selector-1 s").id).toBe("test-selector-tag");
+            expect(S.query("#test-selector-1 s").length).toBe(1);
 
-            expect(S.query("S").length).toBe(2);
+            expect(S.query("#test-selector-1 S").length).toBe(1);
 
             expect(S.get("sub")).toBe(null);
             expect(S.query("sub").length).toBe(0);
