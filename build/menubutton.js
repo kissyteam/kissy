@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 30 01:42
+build time: May 30 17:47
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -386,7 +386,13 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
         if (menu && !menu.get("visible")) {
             // 根据对齐的 el 自动调整大小
             if (self.get("matchElWidth")) {
-                menu.set("width", $(menu.get("align").node || el).innerWidth());
+                menu.render();
+                var menuEl = menu.get('el');
+                var borderWidth =
+                    (parseInt(menuEl.css('borderLeftWidth')) || 0) +
+                        (parseInt(menuEl.css('borderRightWidth')) || 0);
+                var align = menu.get("align").node || el;
+                menu.set("width", align[0].offsetWidth - borderWidth);
             }
             menu.show();
             reposition.call(self);

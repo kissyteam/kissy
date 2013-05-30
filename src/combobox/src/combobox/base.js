@@ -618,7 +618,12 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
 
         if (menu && !menu.get("visible")) {
             if (self.get("matchElWidth")) {
-                menu.set("width", el.innerWidth());
+                menu.render();
+                var menuEl = menu.get('el');
+                var borderWidth =
+                    (parseInt(menuEl.css('borderLeftWidth')) || 0) +
+                        (parseInt(menuEl.css('borderRightWidth')) || 0);
+                menu.set("width", el[0].offsetWidth - borderWidth);
             }
             menu.show();
             self.get("input").attr("aria-owns", menu.get("el").attr('id'));
