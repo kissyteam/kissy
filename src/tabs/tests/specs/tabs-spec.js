@@ -66,7 +66,7 @@ KISSY.use("tabs", function (S, Tabs) {
                     run_ed = 1;
                 });
 
-                if (S.Features.isTouchSupported()) {
+                if (S.Features.isTouchEventSupported()) {
                     jasmine.simulateForDrag(tabB[0], "touchstart");
                     jasmine.simulateForDrag(tabB[0], "touchend");
                 } else {

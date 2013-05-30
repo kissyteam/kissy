@@ -8,7 +8,7 @@ KISSY.add('scrollview/base', function (S, DOM, Component, Extension, Render, Eve
 
     var $ = S.all;
 
-    var isTouchSupported = S.Features.isTouchSupported();
+    var isTouchEventSupported = S.Features.isTouchEventSupported();
 
     var KeyCodes = Event.KeyCodes;
 
@@ -327,7 +327,7 @@ KISSY.add('scrollview/base', function (S, DOM, Component, Extension, Render, Eve
             },
             focusable: {
                 // need process keydown
-                value: !isTouchSupported
+                value: !isTouchEventSupported
             },
             allowTextSelection: {
                 value: true

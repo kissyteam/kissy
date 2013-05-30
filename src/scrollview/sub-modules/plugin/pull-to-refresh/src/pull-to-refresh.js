@@ -7,7 +7,7 @@ KISSY.add('scrollview/plugin/pull-to-refresh', function (S, Base) {
     var substitute = S.substitute;
 
 
-    var prefix = S.Features.getTransformPrefix();
+    var transform = S.Features.getTransformProperty();
 
     function ScrollBarPlugin() {
         ScrollBarPlugin.superclass.constructor.apply(this, arguments);
@@ -52,7 +52,7 @@ KISSY.add('scrollview/plugin/pull-to-refresh', function (S, Base) {
             var b = this.scrollview.get('scrollTop');
             if (-b > this.elHeight) {
                 this.set('state', 'releasing');
-            } else if(b<0){
+            } else if (b < 0) {
                 this.set('state', 'pulling');
             }
         },
@@ -85,7 +85,7 @@ KISSY.add('scrollview/plugin/pull-to-refresh', function (S, Base) {
         _onAfterScrollTopChange: function (v) {
             v = v.newVal;
             if (v < 0) {
-                this.get('el').css(prefix + '-transform', 'translate3d(0,' + -v + 'px,0)');
+                this.get('el')[0].style[transform] = 'translate3d(0,' + -v + 'px,0)';
             }
 
         },

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 30 01:41
+build time: May 30 23:14
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -890,7 +890,7 @@ KISSY.add('event/dom/base/object', function (S, Event, undefined) {
                 }
             },
             {
-                reg: /^mouse|contextmenu|click/,
+                reg: /^mouse|contextmenu|click|mspointer/i,
                 props: [
                     'buttons', 'clientX', 'clientY', 'button',
                     'offsetX', 'relatedTarget', 'which',

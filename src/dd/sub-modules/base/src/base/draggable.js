@@ -8,10 +8,11 @@ KISSY.add('dd/base/draggable', function (S, Node, RichBase, DDM, Event) {
     var UA = S.UA,
         $ = Node.all,
         Features = S.Features,
-        isTouchSupported = Features.isTouchSupported(),
+        useGestureEvent = Features.isTouchEventSupported() ||
+            Features.isMsPointerSupported(),
         each = S.each,
     // !! use singleTouchStart in touch to normalize gesture event
-        DRAG_START_EVENT = isTouchSupported ? 'singleTouchStart' : Event.Gesture.start,
+        DRAG_START_EVENT = useGestureEvent ? 'singleTouchStart' : Event.Gesture.start,
         ie = UA['ie'],
         NULL = null,
         PREFIX_CLS = DDM.PREFIX_CLS,
@@ -282,7 +283,7 @@ KISSY.add('dd/base/draggable', function (S, Node, RichBase, DDM, Event) {
             // in touch device
             // prevent touchdown
             // will prevent text selection and link click
-            // if (!isTouchSupported) {
+            // if (!useGestureEvent) {
             ev.preventDefault();
             // }
 
@@ -573,7 +574,7 @@ KISSY.add('dd/base/draggable', function (S, Node, RichBase, DDM, Event) {
              * @ignore
              */
             shim: {
-                value: !isTouchSupported
+                value: !useGestureEvent
             },
 
             /**

@@ -27,3 +27,5 @@
                 deep:true
             }
         });
+
+ - [*] support windows8 touch

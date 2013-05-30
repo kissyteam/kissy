@@ -9,7 +9,7 @@ KISSY.add('anim/transition', function (S, DOM, Event, AnimBase) {
     var TRANSITION_END_EVENT = vendorPrefix ?
         (vendorPrefix.toLowerCase() + 'TransitionEnd') :
         'transitionend';
-    var TRANSITION = vendorPrefix ? (vendorPrefix + 'Transition') : 'transition';
+    var TRANSITION = S.Features.getTransitionProperty();
 //    var TRANSITION_PROPERTY = vendorPrefix + 'transition-property';
 //    var TRANSITION_DURATION = vendorPrefix + 'transition-duration';
 //    var TRANSITION_TIMING_FUNCTION = vendorPrefix + 'transition-timing-function';

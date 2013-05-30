@@ -5,8 +5,7 @@
  */
 KISSY.add('event/dom/touch/multi-touch', function (S, DOM) {
 
-    function MultiTouch() {
-    }
+    function MultiTouch() {}
 
     MultiTouch.prototype = {
 
@@ -65,6 +64,10 @@ KISSY.add('event/dom/touch/multi-touch', function (S, DOM) {
 
         end: function (e) {
             var self = this;
+            // finger1 down, finger2 down -> start multi touch
+            // move finger1 or finger2 -> multi-touch move
+            // finger2 up -> end multi touch
+            // finger1 move -> ignore
             if (self.isTracking) {
                 self.isTracking = false;
 

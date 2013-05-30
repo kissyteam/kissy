@@ -1,6 +1,3 @@
-[refer](http://www.zoojs.org/doc/a-mobile-touch-events.html)
-[origin](http://www.lukew.com/ff/entry.asp?1071)
-
 # touch-events
 
 ## tap类
@@ -54,3 +51,15 @@
 ![5](http://img01.taobaocdn.com/tps/i1/T19S3pXo4bXXcJ.Yjw-900-1177.jpg)
 
 ![6](http://img02.taobaocdn.com/tps/i2/T1dx24XXNlXXcJ.Yjw-900-1177.jpg)
+
+
+# refer
+
+- http://www.zoojs.org/doc/a-mobile-touch-events.html
+- http://www.lukew.com/ff/entry.asp?1071
+- http://msdn.microsoft.com/zh-cn/library/ie/hh673557(v=vs.85).aspx
+- http://blogs.msdn.com/b/ie/archive/2011/10/19/handling-multi-touch-and-mouse-input-in-all-browsers.aspx
+- http://jessefreeman.com/articles/from-webkit-to-windows-8-touch-events/
+- http://blogs.msdn.com/b/eternalcoding/archive/2013/01/16/hand-js-a-polyfill-for-supporting-pointer-events-on-every-browser.aspx
+- http://blogs.msdn.com/b/davrous/archive/2013/02/20/handling-touch-in-your-html5-apps-thanks-to-the-pointer-events-of-ie10-and-windows-8.aspx
+- http://blogs.msdn.com/b/davrous/archive/2013/02/20/handling-touch-in-your-html5-apps-thanks-to-the-pointer-events-of-ie10-and-windows-8.aspx

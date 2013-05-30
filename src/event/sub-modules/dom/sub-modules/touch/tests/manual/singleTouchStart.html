@@ -40,7 +40,7 @@
             log(e.target.id + ": " + e.type);
         });
 
-        Event.on(document, "singleTouchStart", t = function (e) {
+        Event.on(document, "singleTouchStart",  function (e) {
             log("document: " + e.type);
         });
 

@@ -22,9 +22,7 @@ KISSY.add('scrollview/base/render', function (S, Component, Extension) {
 
     if (supportCss3) {
 
-        var css3Prefix = S.Features.getTransformPrefix();
-
-        transformProperty = css3Prefix ? css3Prefix + 'Transform' : 'transform';
+        transformProperty =  S.Features.getTransformProperty();
 
         methods._onSetScrollLeft = function (v) {
             var scrollTop = this.get('scrollTop');

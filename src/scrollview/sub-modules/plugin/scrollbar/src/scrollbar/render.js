@@ -6,7 +6,6 @@ KISSY.add('scrollview/plugin/scrollbar/render', function (S, Component, ScrollBa
 
     // http://www.html5rocks.com/en/tutorials/speed/html5/
     var supportCss3 = S.Features.isTransformSupported();
-    var css3Prefix = S.Features.getTransformPrefix();
 
     var methods = {
 
@@ -41,7 +40,7 @@ KISSY.add('scrollview/plugin/scrollbar/render', function (S, Component, ScrollBa
 
     };
 
-    var transformProperty = css3Prefix ? css3Prefix + 'Transform' : 'transform';
+    var transformProperty = S.Features.getTransformProperty();
 
     if (supportCss3) {
 

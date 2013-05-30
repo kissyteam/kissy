@@ -21,7 +21,11 @@ KISSY.add('dd/base/ddm', function (S, DOM, Event, Node, Base) {
         Gesture = Event.Gesture,
         CURRENT_TARGET = 'currentTarget',
         DRAG_MOVE_EVENT = Gesture.move,
-        DRAG_END_EVENT = Gesture.end + ' touchcancel';
+        DRAG_END_EVENT = Gesture.end;
+
+    if (Gesture.cancel) {
+        DRAG_END_EVENT += ' ' + Gesture.cancel;
+    }
 
     /**
      * @class KISSY.DD.DDM
@@ -163,7 +167,8 @@ KISSY.add('dd/base/ddm', function (S, DOM, Event, Node, Base) {
     // 同一时刻只可能有个 drag 元素，只能有一次 move 被注册，不需要每个实例一个 throttle
     // 一个应用一个 document 只需要注册一个 move
     // 2013-01-24 更灵敏 for scroller in webkit
-    var throttleMove = UA.ie < 8 ? S.throttle(move, MOVE_DELAY) : move;
+    var throttleMove = UA.ie && UA.ie < 8 ?
+        S.throttle(move, MOVE_DELAY) : move;
 
     function throttleMoveHandle(e) {
         // android can not throttle
@@ -317,6 +322,9 @@ KISSY.add('dd/base/ddm', function (S, DOM, Event, Node, Base) {
      */
     function registerEvent(self) {
         Event.on(doc, DRAG_END_EVENT, self._end, self);
+        if (Gesture.cancel) {
+            Event.on(doc, Gesture.cancel, self._end, self);
+        }
         Event.on(doc, DRAG_MOVE_EVENT, throttleMoveHandle, self);
         // ie6 will not response to event when cursor is out of window.
         if (UA.ie === 6) {
@@ -330,6 +338,9 @@ KISSY.add('dd/base/ddm', function (S, DOM, Event, Node, Base) {
     function unRegisterEvent(self) {
         Event.remove(doc, DRAG_MOVE_EVENT, throttleMoveHandle, self);
         Event.remove(doc, DRAG_END_EVENT, self._end, self);
+        if (Gesture.cancel) {
+            Event.remove(doc, Gesture.cancel, self._end, self);
+        }
         if (UA.ie === 6) {
             doc.body.releaseCapture();
         }
@@ -539,19 +550,24 @@ KISSY.add('dd/base/ddm', function (S, DOM, Event, Node, Base) {
      */
     ddm._normalEvent = function (e) {
         var type = String(e.type),
-            touches = type == 'touchend' || type == 'touchcancel' ? e.changedTouches : e.touches,
+            touches = type == Gesture.end || type == Gesture.cancel ?
+                e.changedTouches : e.touches,
             touch;
-        if (Features.isTouchSupported() && touches) {
+        touches = touches || [];
+        // add which for touch/pointer event
+        // add pageX for touch event
+        if ((Features.isTouchEventSupported() ||
+            Features.isMsPointerSupported()) && touches.length) {
             if (touches.length != 1) {
                 return undefined;
             }
             touch = touches[0];
             e[TARGET] = e[TARGET] || touch[TARGET];
             e[CURRENT_TARGET] = e[CURRENT_TARGET] || touch[CURRENT_TARGET];
-            e.which = 1;
             e.pageX = touch.pageX;
             e.pageY = touch.pageY;
         }
+        e.which = 1;
         return e;
     };
 

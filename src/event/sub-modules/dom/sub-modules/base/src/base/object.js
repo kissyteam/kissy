@@ -111,7 +111,7 @@ KISSY.add('event/dom/base/object', function (S, Event, undefined) {
                 }
             },
             {
-                reg: /^mouse|contextmenu|click/,
+                reg: /^mouse|contextmenu|click|mspointer/i,
                 props: [
                     'buttons', 'clientX', 'clientY', 'button',
                     'offsetX', 'relatedTarget', 'which',

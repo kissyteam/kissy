@@ -30,6 +30,8 @@
 
     KISSY.use('event', function (S, Event) {
 
+        var transform = S.Features.getTransformProperty();
+
         Event.on('#t', "pinch pinchStart pinchEnd", function (e) {
             console.log(e.originalEvent && e.originalEvent.type);
             log(e.type + ' : ' + e.scale);
@@ -42,13 +44,13 @@
 
         Event.on('#t', 'pinchStart', function () {
             o = 1;
-            if (t.style.webkitTransform) {
-                o = parseFloat(t.style.webkitTransform.replace(/scale\(/, ''));
+            if (t.style[transform]) {
+                o = parseFloat(t.style[transform].replace(/scale\(/, ''));
             }
         });
 
         Event.on('#t', 'pinch', function (e) {
-            t.style.webkitTransform = 'scale(' + (o * e.scale) + ')';
+            t.style[transform] = 'scale(' + (o * e.scale) + ')';
         });
 
     });

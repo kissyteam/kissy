@@ -18,6 +18,9 @@
     // nodejs
         doc = win.document || {},
         documentMode = doc.documentMode,
+        isMsPointerSupported,
+        transitionProperty,
+        transformProperty,
         isTransitionSupportedState = false,
         transitionPrefix = '',
         isTransformSupportedState = false,
@@ -27,7 +30,7 @@
         isClassListSupportedState = true,
         isQuerySelectorSupportedState = false,
     // phantomjs issue: http://code.google.com/p/phantomjs/issues/detail?id=375
-        isTouchSupportedState = ('ontouchstart' in doc) && !(UA.phantomjs),
+        isTouchEventSupportedState = ('ontouchstart' in doc) && !(UA.phantomjs),
         ie = documentMode || UA.ie;
 
     if (documentElement) {
@@ -43,15 +46,18 @@
                 transform = val ? val + 'Transform' : 'transform';
             if (transition in documentElementStyle) {
                 transitionPrefix = val;
+                transitionProperty = transition;
                 isTransitionSupportedState = true;
             }
             if (transform in documentElementStyle) {
                 transformPrefix = val;
+                transformProperty = transform;
                 isTransformSupportedState = true;
             }
         });
 
         isClassListSupportedState = 'classList' in documentElement;
+        isMsPointerSupported = "msPointerEnabled" in (win.navigator || {});
     }
 
     /**
@@ -67,14 +73,17 @@
          * whether support win8 pointer event.
          * @type {Boolean}
          */
-        // isMsPointerEnabled: "msPointerEnabled" in (win.navigator || {}),
+        isMsPointerSupported: function () {
+            return isMsPointerSupported;
+        },
+
         /**
          * whether support touch event.
          * @method
          * @return {Boolean}
          */
-        isTouchSupported: function () {
-            return isTouchSupportedState;
+        isTouchEventSupported: function () {
+            return isTouchEventSupportedState;
         },
 
         isDeviceMotionSupported: function () {
@@ -113,8 +122,17 @@
         'getTransitionPrefix': function () {
             return transitionPrefix;
         },
+
         'getTransformPrefix': function () {
             return transformPrefix;
+        },
+
+        'getTransitionProperty': function () {
+            return transformProperty;
+        },
+
+        'getTransformProperty': function () {
+            return transformProperty;
         }
     };
 })(KISSY);

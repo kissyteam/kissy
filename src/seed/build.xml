@@ -7,11 +7,12 @@
     <import file="../common.xml"/>
 
     <target name="merge-dependency">
-        <concat destfile="${component.src.dir}/modules.js" encoding="${charset}" outputencoding="${charset}">
+        <concat destfile="${component.src.dir}/meta/modules.js" encoding="${charset}" outputencoding="${charset}">
             <header filtering="no" trimleading="yes">
                 (function(config,Features,UA){
             </header>
-            <fileset dir="${kissy.src.dir}" includes="**/meta/*.js"/>
+            <fileset dir="${kissy.src.dir}" includes="**/meta/*.js"
+                     excludes="seed/**/*"/>
             <footer>
                 })(function(c){
                 KISSY.config('modules', c);

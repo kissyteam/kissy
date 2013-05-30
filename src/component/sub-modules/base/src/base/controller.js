@@ -8,7 +8,7 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
     var ie = S.Env.host.document.documentMode || S.UA.ie,
         Features = S.Features,
         Gesture = Event.Gesture,
-        isTouchSupported = Features.isTouchSupported();
+        isTouchEventSupported = Features.isTouchEventSupported();
 
     function wrapperViewSetter(attrName) {
         return function (ev) {
@@ -256,7 +256,7 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
 
                     el = self.get('el');
 
-                    if (!isTouchSupported) {
+                    if (!isTouchEventSupported) {
                         el.on("mouseenter", wrapBehavior(self, "handleMouseEnter"))
                             .on("mouseleave", wrapBehavior(self, "handleMouseLeave"))
                             .on("contextmenu", wrapBehavior(self, "handleContextMenu"))
@@ -264,9 +264,11 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
 
                     el.on(Gesture.start, wrapBehavior(self, "handleMouseDown"))
                         .on(Gesture.end, wrapBehavior(self, "handleMouseUp"))
-                        .on('touchcancel', wrapBehavior(self, "handleMouseUp"))
                         // consider touch environment
                         .on(Gesture.tap, wrapBehavior(self, "performActionInternal"));
+                    if (Gesture.cancel) {
+                        el.on(Gesture.cancel, wrapBehavior(self, "handleMouseUp"));
+                    }
 
                     // click quickly only trigger click and dblclick in ie<9
                     // others click click dblclick
@@ -513,7 +515,7 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
                     n,
                     isMouseActionButton = ev['which'] == 1,
                     el;
-                if (isMouseActionButton || isTouchSupported) {
+                if (isMouseActionButton || isTouchEventSupported) {
                     el = self.getKeyEventTarget();
                     if (self.get("activeable")) {
                         self.set("active", true);
@@ -545,7 +547,7 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
             handleMouseUp: function (ev) {
                 var self = this;
                 // 左键
-                if (self.get("active") && (ev['which'] == 1 || isTouchSupported)) {
+                if (self.get("active") && (ev['which'] == 1 || isTouchEventSupported)) {
                     self.set("active", false);
                 }
             },

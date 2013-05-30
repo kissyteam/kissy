@@ -27,19 +27,19 @@
 <div style="height: 900px;"></div>
 <script>
 
-    KISSY.use('event', function (S, Event) {
+    KISSY.use('event,dom', function (S, Event) {
+
+        var transform = S.Features.getTransformProperty();
 
         Event.on('#t', "rotateEnd", function (e) {
             log(e.type + ' : ' +
                     e.originalEvent.type + ' : ' +
-                    e.originalEvent.changedTouches[0].target.nodeName + ' : ' +
                     e.rotation + ' : ' + e.angle);
             //S.log(e.type + ' : ' + e.rotation);
         });
 
         Event.on('#t', "rotate rotateStart", function (e) {
             log(e.type + ' : ' +
-                    e.originalEvent.touches.length + ' : ' +
                     e.rotation + ' : ' + e.angle);
             //S.log(e.type + ' : ' + e.rotation);
         });
@@ -47,12 +47,12 @@
         var o;
         Event.on('#t', 'rotateStart', function (e) {
             o = 0;
-            if (t.style.WebkitTransform) {
-                o = parseInt(t.style.WebkitTransform.replace(/rotate\(/, ''));
+            if (t.style[transform]) {
+                o = parseInt(t.style[transform].replace(/rotate\(/, ''));
             }
         });
         Event.on('#t', 'rotate', function (e) {
-            t.style.WebkitTransform = 'rotate(' + (o + parseInt(e.rotation)) % 360 + 'deg)';
+            t.style[transform] = 'rotate(' + (o + parseInt(e.rotation)) % 360 + 'deg)';
         });
 
 
