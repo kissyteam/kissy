@@ -600,10 +600,6 @@ if (location.href.indexOf('__build') == -1) {
             "base": "/kissy/src/tree/src/tree",
             "ignorePackageNameInUri": 1
         },
-        "waterfall": {
-            "base": "/kissy/src/waterfall/src/waterfall",
-            "ignorePackageNameInUri": 1
-        },
         "xtemplate/compiler": {
             "base": "/kissy/src/xtemplate/sub-modules/compiler/src/compiler",
             "ignorePackageNameInUri": 1

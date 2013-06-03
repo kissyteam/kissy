@@ -225,9 +225,6 @@ config({
 'tree': {requires: ['component/base','node','component/extension','event']}
 });
 config({
-'waterfall': {requires: ['node','base']}
-});
-config({
     xtemplate: {
         alias: ['xtemplate/facade']
     }
