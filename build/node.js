@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 3 14:14
+build time: Jun 3 16:30
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -142,7 +142,7 @@ KISSY.add('node/base', function (S, DOM, undefined) {
          */
         slice: function (start, end) {
             // ie<9 : [1,2].slice(-2,undefined) => []
-            // ie<9 : [1,2].slice(-2) => []
+            // ie<9 : [1,2].slice(-2) => [1,2]
             // fix #85
             return new NodeList(slice.apply(this, arguments));
         },
@@ -191,12 +191,22 @@ KISSY.add('node/base', function (S, DOM, undefined) {
         },
 
         /**
+         * return new NodeList which contains only nodes which passes filter
+         * @param {String|Function} filter
+         * @return {KISSY.NodeList}
+         */
+        filter: function (filter) {
+            return new NodeList(DOM.filter(this, filter));
+        },
+
+        /**
          * Get node list which are descendants of current node list.
          * @param {String} selector Selector string
          * @return {KISSY.NodeList}
          */
         all: function (selector) {
-            var ret, self = this;
+            var ret,
+                self = this;
             if (self.length > 0) {
                 ret = NodeList.all(selector, self);
             } else {
@@ -212,7 +222,8 @@ KISSY.add('node/base', function (S, DOM, undefined) {
          * @return {KISSY.NodeList}
          */
         one: function (selector) {
-            var self = this, all = self.all(selector),
+            var self = this,
+                all = self.all(selector),
                 ret = all.length ? all.slice(0, 1) : null;
             if (ret) {
                 ret.__parent = self;
@@ -234,13 +245,11 @@ KISSY.add('node/base', function (S, DOM, undefined) {
         all: function (selector, context) {
             // are we dealing with html string ?
             // TextNode 仍需要自己 new Node
-
-            if (typeof selector == 'string'
-                && (selector = S.trim(selector))
-                && selector.length >= 3
-                && S.startsWith(selector, '<')
-                && S.endsWith(selector, '>')
-                ) {
+            if (typeof selector == 'string' &&
+                (selector = S.trim(selector)) &&
+                selector.length >= 3 &&
+                S.startsWith(selector, '<') &&
+                S.endsWith(selector, '>')) {
                 if (context) {
                     if (context['getDOMNode']) {
                         context = context[0];

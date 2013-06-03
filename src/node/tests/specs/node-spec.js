@@ -11,14 +11,28 @@ KISSY.use("dom,node", function (S, DOM, Node) {
     //DOM 已经测试通过，通过 DOM 测 Node
     describe("node", function () {
 
+        it('support filter', function () {
+            var nodes = new Node('<div class="x" id="x"></div>' +
+                '<div class="y" id="y"></div>' +
+                '<div class="z" id="z"></div>');
+
+            var ret = nodes.filter(function (n, i) {
+                return $(n).hasClass('z') && i == 2;
+            });
+
+            expect(ret.length).toBe(1);
+            expect(ret.attr('id')).toBe('z');
+
+            ret = nodes.filter('.x');
+            expect(ret.attr('id')).toBe('x');
+
+            expect(ret.length).toBe(1);
+        });
 
         it('node is not plainObject', function () {
-
             expect(S.isPlainObject($('body'))).toBe(false);
             expect(S.isPlainObject($('#ee'))).toBe(false);
-
             expect(S.isPlainObject($(document.body))).toBe(false);
-
         });
 
         it("add works", function () {
@@ -40,7 +54,7 @@ KISSY.use("dom,node", function (S, DOM, Node) {
             expect($("#testDiv")[0]).not.toBe(undefined);
             expect($("#testDiv2")[0]).toBe(undefined);
 
-            var n2 = new Node("<div id='testDiv3' class='test-div'>ok3</div>").appendTo(n);
+            new Node("<div id='testDiv3' class='test-div'>ok3</div>").appendTo(n);
             expect($("#testDiv3")[0]).not.toBe(null);
             expect(S.one("#testDiv3").parent().equals(n)).toBe(true);
 
@@ -63,13 +77,10 @@ KISSY.use("dom,node", function (S, DOM, Node) {
             expect(n.attr("test", "xx")).toBe(n);
             expect(n.attr("test")).toBe("xx");
             expect(n.hasAttr("test")).toBe(true);
-
-
         });
 
 
         it("should invoke dom method correctly on nodelist", function () {
-
             var nl = S.all(".test-div");
 
             //chain
@@ -81,23 +92,17 @@ KISSY.use("dom,node", function (S, DOM, Node) {
             nl.each(function (n) {
                 expect(n.css("height")).toBe("200px");
             });
-
-
         });
 
 
         it("should invoke method on window or document correctly", function () {
             var win = S.one(window), doc = S.one(document);
 
-            var e = DOM.viewportHeight();
-
             expect(win.height()).toBe(DOM.viewportHeight());
             expect(win.width()).toBe(DOM.viewportWidth());
 
-
             expect(doc.height()).toBe(DOM.docHeight());
             expect(doc.width()).toBe(DOM.docWidth());
-
         });
 
         it("should append/prepend correctly on node", function () {
@@ -109,7 +114,7 @@ KISSY.use("dom,node", function (S, DOM, Node) {
 
             expect(DOM.get("#testDiv4")).not.toBe(null);
 
-            var n2 = $("#foo").prepend("<div class='test-div' id='testDiv5'>ok5</div>");
+            $("#foo").prepend("<div class='test-div' id='testDiv5'>ok5</div>");
 
             expect(DOM.get("#testDiv5")).not.toBe(null);
         });

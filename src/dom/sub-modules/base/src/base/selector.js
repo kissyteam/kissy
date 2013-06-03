@@ -259,7 +259,8 @@ KISSY.add('dom/base/selector', function (S, DOM) {
                     cls,
                     ret = [];
 
-                if (typeof filter == 'string' && (filter = trim(filter)) &&
+                if (typeof filter == 'string' &&
+                    (filter = trim(filter)) &&
                     (match = RE_QUERY.exec(filter))) {
                     id = match[1];
                     tag = match[2];
