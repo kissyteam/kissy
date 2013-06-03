@@ -33,7 +33,6 @@
                     />
         </div>
     </div>
-
 </div>
 
 <h1>全新产生新节点</h1>
@@ -47,7 +46,6 @@
 <script src="/kissy/src/package.js"></script>
 <script>
     KISSY.use("combobox", function (S, ComboBox) {
-
         /*
          local dataSource
          */
@@ -72,10 +70,13 @@
             });
             basicComboBox.render();
 
-            // 得到焦点时展示全部
-            S.one("#inp").on("focus", function () {
-                basicComboBox.sendRequest('');
-            });
+            // ie needs setTimeout 0
+            setTimeout(function () {
+                // 得到焦点时展示全部
+                S.one("#inp").on("focus", function () {
+                    basicComboBox.sendRequest('');
+                });
+            }, 0);
         })();
 
 
@@ -108,7 +109,6 @@
             });
             basicComboBox.render();
 
-            //basicComboBox.set('width',140);
 
             basicComboBox.on("click", function (e) {
                 var item = e.target;

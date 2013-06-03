@@ -61,7 +61,7 @@ KISSY.add("component/extension/delegate-children", function (S, Event) {
             }
 
             if (!isTouchEventSupported) {
-                events += "mouseover mouseout contextmenu " +
+                events += " mouseover mouseout contextmenu " +
                     (ie && ie < 9 ? "dblclick " : "");
             }
 

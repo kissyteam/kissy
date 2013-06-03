@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 30 01:32
+build time: Jun 3 15:51
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -728,7 +728,7 @@ KISSY.add("component/extension/delegate-children", function (S, Event) {
         ie = S.Env.host.document.documentMode || UA.ie,
         Features = S.Features,
         Gesture = Event.Gesture,
-        isTouchSupported = Features.isTouchSupported();
+        isTouchEventSupported = Features.isTouchEventSupported();
 
     function DelegateChildren() {
     }
@@ -771,16 +771,20 @@ KISSY.add("component/extension/delegate-children", function (S, Event) {
 
         __bindUI: function () {
             var self = this,
-                events;
+                events = Gesture.start +
+                    " " + Gesture.end +
+                    " " + Gesture.tap;
 
-                events = Gesture.start + " " + Gesture.end + " " + Gesture.tap + " touchcancel ";
+            if (Gesture.cancel) {
+                events += ' ' + Gesture.cancel;
+            }
 
-                if (!isTouchSupported) {
-                    events += "mouseover mouseout contextmenu " +
-                        (ie && ie < 9 ? "dblclick " : "");
-                }
+            if (!isTouchEventSupported) {
+                events += " mouseover mouseout contextmenu " +
+                    (ie && ie < 9 ? "dblclick " : "");
+            }
 
-                self.get("el").on(events, handleChildMouseEvents, self);
+            self.get("el").on(events, handleChildMouseEvents, self);
         },
 
         /**
