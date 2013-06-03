@@ -68,7 +68,7 @@ KISSY.add('anim/timer/fx', function (S, DOM, undefined) {
             var self = this,
                 anim = self.anim,
                 prop = self.prop,
-                el = anim.el,
+                node = anim.node,
                 from = self.from,
                 to = self.to,
                 val = self.interpolate(from, to, self.pos);
@@ -77,16 +77,16 @@ KISSY.add('anim/timer/fx', function (S, DOM, undefined) {
                 // 插值出错，直接设置为最终值
                 if (!self.finished) {
                     self.finished = 1;
-                    DOM.css(el, prop, to);
+                    DOM.css(node, prop, to);
                     S.log(prop + ' update directly ! : ' + val + ' : ' + from + ' : ' + to);
                 }
             } else {
                 val += self.unit;
-                if (isAttr(el, prop)) {
-                    DOM.attr(el, prop, val, 1);
+                if (isAttr(node, prop)) {
+                    DOM.attr(node, prop, val, 1);
                 } else {
                     // S.log(self.prop + ' update: ' + val);
-                    DOM.css(el, prop, val);
+                    DOM.css(node, prop, val);
                 }
             }
         },
@@ -98,12 +98,12 @@ KISSY.add('anim/timer/fx', function (S, DOM, undefined) {
         cur: function () {
             var self = this,
                 prop = self.prop,
-                el = self.anim.el;
-            if (isAttr(el, prop)) {
-                return DOM.attr(el, prop, undefined, 1);
+                node = self.anim.node;
+            if (isAttr(node, prop)) {
+                return DOM.attr(node, prop, undefined, 1);
             }
             var parsed,
-                r = DOM.css(el, prop);
+                r = DOM.css(node, prop);
             // Empty strings, null, undefined and 'auto' are converted to 0,
             // complex values such as 'rotate(1rad)' or '0px 10px' are returned as is,
             // simple values such as '10px' are parsed to Float.
@@ -113,10 +113,10 @@ KISSY.add('anim/timer/fx', function (S, DOM, undefined) {
         }
     };
 
-    function isAttr(el, prop) {
+    function isAttr(node, prop) {
         // support scrollTop/Left now!
-        if ((!el.style || el.style[ prop ] == null) &&
-            DOM.attr(el, prop, undefined, 1) != null) {
+        if ((!node.style || node.style[ prop ] == null) &&
+            DOM.attr(node, prop, undefined, 1) != null) {
             return 1;
         }
         return 0;

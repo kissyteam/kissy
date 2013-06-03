@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 30 01:43
+build time: Jun 3 14:14
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -584,8 +584,8 @@ KISSY.add('node/anim', function (S, DOM, Anim, Node, undefined) {
             S.each(self, function (elem) {
                 var args = S.clone(originArgs),
                     arg0 = args[0];
-                if (arg0.props) {
-                    arg0.el = elem;
+                if (arg0.to) {
+                    arg0.node = elem;
                     Anim(arg0).run();
                 } else {
                     Anim.apply(undefined, [elem].concat(args)).run();

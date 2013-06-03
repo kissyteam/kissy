@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 30 01:32
+build time: Jun 3 15:03
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -528,7 +528,7 @@ KISSY.add('anim/timer/fx', function (S, DOM, undefined) {
             var self = this,
                 anim = self.anim,
                 prop = self.prop,
-                el = anim.el,
+                node = anim.node,
                 from = self.from,
                 to = self.to,
                 val = self.interpolate(from, to, self.pos);
@@ -537,16 +537,16 @@ KISSY.add('anim/timer/fx', function (S, DOM, undefined) {
                 // 插值出错，直接设置为最终值
                 if (!self.finished) {
                     self.finished = 1;
-                    DOM.css(el, prop, to);
+                    DOM.css(node, prop, to);
                     S.log(prop + ' update directly ! : ' + val + ' : ' + from + ' : ' + to);
                 }
             } else {
                 val += self.unit;
-                if (isAttr(el, prop)) {
-                    DOM.attr(el, prop, val, 1);
+                if (isAttr(node, prop)) {
+                    DOM.attr(node, prop, val, 1);
                 } else {
                     // S.log(self.prop + ' update: ' + val);
-                    DOM.css(el, prop, val);
+                    DOM.css(node, prop, val);
                 }
             }
         },
@@ -558,12 +558,12 @@ KISSY.add('anim/timer/fx', function (S, DOM, undefined) {
         cur: function () {
             var self = this,
                 prop = self.prop,
-                el = self.anim.el;
-            if (isAttr(el, prop)) {
-                return DOM.attr(el, prop, undefined, 1);
+                node = self.anim.node;
+            if (isAttr(node, prop)) {
+                return DOM.attr(node, prop, undefined, 1);
             }
             var parsed,
-                r = DOM.css(el, prop);
+                r = DOM.css(node, prop);
             // Empty strings, null, undefined and 'auto' are converted to 0,
             // complex values such as 'rotate(1rad)' or '0px 10px' are returned as is,
             // simple values such as '10px' are parsed to Float.
@@ -573,10 +573,10 @@ KISSY.add('anim/timer/fx', function (S, DOM, undefined) {
         }
     };
 
-    function isAttr(el, prop) {
+    function isAttr(node, prop) {
         // support scrollTop/Left now!
-        if ((!el.style || el.style[ prop ] == null) &&
-            DOM.attr(el, prop, undefined, 1) != null) {
+        if ((!node.style || node.style[ prop ] == null) &&
+            DOM.attr(node, prop, undefined, 1) != null) {
             return 1;
         }
         return 0;
@@ -844,14 +844,14 @@ KISSY.add('anim/timer', function (S, DOM, Event, AnimBase, Easing, AM, Fx, SHORT
 
     function Anim() {
         var self = this,
-            props;
+            to;
         Anim.superclass.constructor.apply(self, arguments);
         // camel case uniformity
-        S.each(props = self.props, function (v, prop) {
+        S.each(to = self.to, function (v, prop) {
             var camelProp = camelCase(prop);
             if (prop != camelProp) {
-                props[camelProp] = props[prop];
-                delete props[prop];
+                to[camelProp] = to[prop];
+                delete to[prop];
             }
         });
     }
@@ -860,7 +860,7 @@ KISSY.add('anim/timer', function (S, DOM, Event, AnimBase, Easing, AM, Fx, SHORT
 
         prepareFx: function () {
             var self = this,
-                el = self.el,
+                node = self.node,
                 _propsData = self._propsData;
 
             S.each(_propsData, function (_propData) {
@@ -883,18 +883,18 @@ KISSY.add('anim/timer', function (S, DOM, Event, AnimBase, Easing, AM, Fx, SHORT
                     origin = {};
                     S.each(shortHands, function (sh) {
                         // 得到原始分属性之前值
-                        origin[sh] = DOM.css(el, sh);
+                        origin[sh] = DOM.css(node, sh);
                     });
-                    DOM.css(el, p, val);
+                    DOM.css(node, p, val);
                     S.each(origin, function (val, sh) {
                         // 如果分属性没有显式设置过，得到期待的分属性最后值
                         if (!(sh in _propsData)) {
                             _propsData[sh] = S.merge(_propData, {
-                                value: DOM.css(el, sh)
+                                value: DOM.css(node, sh)
                             });
                         }
                         // 还原
-                        DOM.css(el, sh, val);
+                        DOM.css(node, sh, val);
                     });
                     // 删除复合属性
                     delete _propsData[p];
@@ -947,13 +947,13 @@ KISSY.add('anim/timer', function (S, DOM, Event, AnimBase, Easing, AM, Fx, SHORT
                             to2 = to;
                         do {
                             ++to2;
-                            DOM.css(el, prop, to2 + unit);
+                            DOM.css(node, prop, to2 + unit);
                             // in case tmpCur==0
                             tmpCur = fx.cur();
                         } while (tmpCur == 0);
                         // S.log(to2+' --- '+tmpCur);
                         from = (to2 / tmpCur) * from;
-                        DOM.css(el, prop, from + unit);
+                        DOM.css(node, prop, from + unit);
                     }
 
                     // 相对

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 30 23:14
+build time: Jun 3 13:08
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -729,7 +729,7 @@ KISSY.add('event/dom/base/observer', function (S, special, Event) {
         DOMEventObserver.superclass.constructor.apply(this, arguments);
         /**
          * filter selector string or function to find right element
-         * @cfg {String} selector
+         * @cfg {String} filter
          */
         /**
          * extra data as second parameter of listener
@@ -739,7 +739,7 @@ KISSY.add('event/dom/base/observer', function (S, special, Event) {
 
     S.extend(DOMEventObserver, Event._Observer, {
 
-        keys: ['fn', 'selector', 'data', 'context', 'originalType', 'groups', 'last'],
+        keys: ['fn', 'filter', 'data', 'context', 'originalType', 'groups', 'last'],
 
         notifyInternal: function (event, ce) {
             var self = this,
@@ -1368,15 +1368,15 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
                 while (target != currentTarget) {
                     if (target.disabled !== true || eventType !== "click") {
                         var cachedMatch = {},
-                            matched, key, selector;
+                            matched, key, filter;
                         currentTargetObservers = [];
                         for (i = 0; i < delegateCount; i++) {
                             observer = observers[i];
-                            selector = observer.selector;
-                            key = selector + '';
+                            filter = observer.filter;
+                            key = filter + '';
                             matched = cachedMatch[key];
                             if (matched === undefined) {
-                                matched = cachedMatch[key] = DOM.test(target, selector);
+                                matched = cachedMatch[key] = DOM.test(target, filter);
                             }
                             if (matched) {
                                 currentTargetObservers.push(observer);
@@ -1544,7 +1544,7 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
 
             if (self.findObserver(/**@type KISSY.Event.DOMEventObserver*/observer) == -1) {
                 // 增加 listener
-                if (observer.selector) {
+                if (observer.filter) {
                     observers.splice(self.delegateCount, 0, observer);
                     self.delegateCount++;
                 } else {
@@ -1570,8 +1570,8 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
             var groupsRe,
                 self = this,
                 s = special[self.type] || {},
-                hasSelector = 'selector' in cfg,
-                selector = cfg.selector,
+                hasFilter = 'filter' in cfg,
+                filter = cfg.filter,
                 context = cfg.context,
                 fn = cfg.fn,
                 currentTarget = self.currentTarget,
@@ -1589,7 +1589,7 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
             var i, j, t, observer, observerContext, len = observers.length;
 
             // 移除 fn
-            if (fn || hasSelector || groupsRe) {
+            if (fn || hasFilter || groupsRe) {
                 context = context || currentTarget;
 
                 for (i = 0, j = 0, t = []; i < len; ++i) {
@@ -1614,10 +1614,10 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
                             // 2.3 指定选择器,字符串不为空,字符串相等,删掉  else
                             // 2.4 指定选择器,字符串不为空,字符串不相等,保留
                             (
-                                hasSelector &&
+                                hasFilter &&
                                     (
-                                        (selector && selector != observer.selector) ||
-                                            (!selector && !observer.selector)
+                                        (filter && filter != observer.filter) ||
+                                            (!filter && !observer.filter)
                                         )
                                 ) ||
 
@@ -1626,7 +1626,7 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
                         ) {
                         t[j++] = observer;
                     } else {
-                        if (observer.selector && self.delegateCount) {
+                        if (observer.filter && self.delegateCount) {
                             self.delegateCount--;
                         }
                         if (observer.last && self.lastCount) {
@@ -1832,7 +1832,7 @@ KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, Observa
          * @param fn {Function|Object} The event listener or event description object.
          * @param {Function} fn.fn The event listener
          * @param {Function} fn.context The context (this reference) in which the handler function is executed.
-         * @param {String|Function} fn.selector filter selector string or function to find right element
+         * @param {String|Function} fn.filter filter selector string or function to find right element
          * @param {Boolean} fn.once whether fn will be removed once after it is executed.
          * @param {Object} [context] The context (this reference) in which the handler function is executed.
          */
@@ -1864,7 +1864,7 @@ KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, Observa
          * @param [fn] {Function|Object} The event listener or event description object.
          * @param {Function} fn.fn The event listener
          * @param {Function} [fn.context] The context (this reference) in which the handler function is executed.
-         * @param {String|Function} [fn.selector] filter selector string or function to find right element
+         * @param {String|Function} [fn.filter] filter selector string or function to find right element
          * @param {Boolean} [fn.once] whether fn will be removed once after it is executed.
          * @param {Object} [context] The context (this reference) in which the handler function is executed.
          */
@@ -1903,18 +1903,18 @@ KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, Observa
         /**
          * Delegate event.
          * @param targets KISSY selector
-         * @param {String|Function} selector filter selector string or function to find right element
+         * @param {String|Function} filter filter selector string or function to find right element
          * @param {String} [eventType] The type of event to delegate.
          * use space to separate multiple event types.
          * @param {Function} [fn] The event listener.
          * @param {Object} [context] The context (this reference) in which the handler function is executed.
          * @member KISSY.Event
          */
-        delegate: function (targets, eventType, selector, fn, context) {
+        delegate: function (targets, eventType, filter, fn, context) {
             return Event.add(targets, eventType, {
                 fn: fn,
                 context: context,
-                selector: selector
+                filter: filter
             });
         },
         /**
@@ -1922,16 +1922,16 @@ KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, Observa
          * @param targets KISSY selector
          * @param {String} [eventType] The type of event to undelegate.
          * use space to separate multiple event types.
-         * @param {String|Function} [selector] filter selector string or function to find right element
+         * @param {String|Function} [filter] filter selector string or function to find right element
          * @param {Function} [fn] The event listener.
          * @param {Object} [context] The context (this reference) in which the handler function is executed.
          * @member KISSY.Event
          */
-        undelegate: function (targets, eventType, selector, fn, context) {
+        undelegate: function (targets, eventType, filter, fn, context) {
             return Event.remove(targets, eventType, {
                 fn: fn,
                 context: context,
-                selector: selector
+                filter: filter
             });
         },
 
@@ -2064,8 +2064,8 @@ KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, Observa
 });
 /*
  2012-02-12 yiminghe@gmail.com note:
- - 普通 remove() 不管 selector 都会查，如果 fn context 相等就移除
- - undelegate() selector 为 ''，那么去除所有委托绑定的 handler
+ - 普通 remove() 不管 filter 都会查，如果 fn context 相等就移除
+ - undelegate() filter 为 ''，那么去除所有委托绑定的 handler
  */
 /**
  * @ignore

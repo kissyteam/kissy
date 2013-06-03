@@ -131,7 +131,7 @@ KISSY.use("dom,event/dom/base", function (S, DOM, Event) {
             });
         });
 
-        it("should undelegate specified selector with eventType only delegates", function () {
+        it("should undelegate specified filter with eventType only delegates", function () {
             var ret = [];
             Event.delegate("#delegateAdvanced", "click", "input", function () {
                 ret.push(1);
@@ -153,7 +153,7 @@ KISSY.use("dom,event/dom/base", function (S, DOM, Event) {
             });
         });
 
-        it("should undelegate specified selector only delegates", function () {
+        it("should undelegate specified filter only delegates", function () {
             var ret = [];
             Event.delegate("#delegateAdvanced", "click", "input", function () {
                 ret.push(1);

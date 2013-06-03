@@ -10,14 +10,14 @@ KISSY.add('anim/timer', function (S, DOM, Event, AnimBase, Easing, AM, Fx, SHORT
 
     function Anim() {
         var self = this,
-            props;
+            to;
         Anim.superclass.constructor.apply(self, arguments);
         // camel case uniformity
-        S.each(props = self.props, function (v, prop) {
+        S.each(to = self.to, function (v, prop) {
             var camelProp = camelCase(prop);
             if (prop != camelProp) {
-                props[camelProp] = props[prop];
-                delete props[prop];
+                to[camelProp] = to[prop];
+                delete to[prop];
             }
         });
     }
@@ -26,7 +26,7 @@ KISSY.add('anim/timer', function (S, DOM, Event, AnimBase, Easing, AM, Fx, SHORT
 
         prepareFx: function () {
             var self = this,
-                el = self.el,
+                node = self.node,
                 _propsData = self._propsData;
 
             S.each(_propsData, function (_propData) {
@@ -49,18 +49,18 @@ KISSY.add('anim/timer', function (S, DOM, Event, AnimBase, Easing, AM, Fx, SHORT
                     origin = {};
                     S.each(shortHands, function (sh) {
                         // 得到原始分属性之前值
-                        origin[sh] = DOM.css(el, sh);
+                        origin[sh] = DOM.css(node, sh);
                     });
-                    DOM.css(el, p, val);
+                    DOM.css(node, p, val);
                     S.each(origin, function (val, sh) {
                         // 如果分属性没有显式设置过，得到期待的分属性最后值
                         if (!(sh in _propsData)) {
                             _propsData[sh] = S.merge(_propData, {
-                                value: DOM.css(el, sh)
+                                value: DOM.css(node, sh)
                             });
                         }
                         // 还原
-                        DOM.css(el, sh, val);
+                        DOM.css(node, sh, val);
                     });
                     // 删除复合属性
                     delete _propsData[p];
@@ -113,13 +113,13 @@ KISSY.add('anim/timer', function (S, DOM, Event, AnimBase, Easing, AM, Fx, SHORT
                             to2 = to;
                         do {
                             ++to2;
-                            DOM.css(el, prop, to2 + unit);
+                            DOM.css(node, prop, to2 + unit);
                             // in case tmpCur==0
                             tmpCur = fx.cur();
                         } while (tmpCur == 0);
                         // S.log(to2+' --- '+tmpCur);
                         from = (to2 / tmpCur) * from;
-                        DOM.css(el, prop, from + unit);
+                        DOM.css(node, prop, from + unit);
                     }
 
                     // 相对

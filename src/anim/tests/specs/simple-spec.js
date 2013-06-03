@@ -156,8 +156,8 @@ KISSY.use("dom,anim,node", function (S, DOM, Anim, Node) {
             // ie6 需要设置 overflow:hidden
             // 否则动画不对
             div.css({
-                height: "0px",
-                width: "0px",
+                height: 0,
+                width: 0,
                 overflow: 'hidden'
             }).animate({
                     height: 100,
@@ -171,7 +171,9 @@ KISSY.use("dom,anim,node", function (S, DOM, Anim, Node) {
 
             expect(div.height()).toBe(0);
             expect(div.width()).toBe(0);
+
             waits(100);
+
             runs(function () {
                 // overflow hidden ie6 没设好
                 // https://github.com/kissyteam/kissy/issues/146
@@ -180,7 +182,9 @@ KISSY.use("dom,anim,node", function (S, DOM, Anim, Node) {
                 expect(div.height()).not.toBe(0);
                 expect(div.width()).not.toBe(0);
             });
+
             waits(200);
+
             runs(function () {
                 expect(div.height()).toBe(100);
                 expect(div.width()).toBe(100);

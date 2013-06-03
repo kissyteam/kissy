@@ -15,7 +15,7 @@ KISSY.add('event/dom/base/observer', function (S, special, Event) {
         DOMEventObserver.superclass.constructor.apply(this, arguments);
         /**
          * filter selector string or function to find right element
-         * @cfg {String} selector
+         * @cfg {String} filter
          */
         /**
          * extra data as second parameter of listener
@@ -25,7 +25,7 @@ KISSY.add('event/dom/base/observer', function (S, special, Event) {
 
     S.extend(DOMEventObserver, Event._Observer, {
 
-        keys: ['fn', 'selector', 'data', 'context', 'originalType', 'groups', 'last'],
+        keys: ['fn', 'filter', 'data', 'context', 'originalType', 'groups', 'last'],
 
         notifyInternal: function (event, ce) {
             var self = this,

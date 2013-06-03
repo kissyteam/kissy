@@ -3,11 +3,9 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add('scrollview/plugin/pull-to-refresh', function (S, Base) {
-
     var substitute = S.substitute;
 
-
-    var transform = S.Features.getTransformProperty();
+    var transformProperty = S.Features.getTransformProperty();
 
     function ScrollBarPlugin() {
         ScrollBarPlugin.superclass.constructor.apply(this, arguments);
@@ -85,9 +83,8 @@ KISSY.add('scrollview/plugin/pull-to-refresh', function (S, Base) {
         _onAfterScrollTopChange: function (v) {
             v = v.newVal;
             if (v < 0) {
-                this.get('el')[0].style[transform] = 'translate3d(0,' + -v + 'px,0)';
+                this.get('el')[0].style[transformProperty] = 'translate3d(0,' + -v + 'px,0)';
             }
-
         },
 
         pluginRenderUI: function (scrollview) {

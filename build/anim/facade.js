@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 30 01:32
+build time: Jun 3 15:03
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -26,7 +26,7 @@ KISSY.add('anim/facade', function (S, DOM, AnimBase, TimerAnim, TransitionAnim) 
      * @class KISSY.Anim
      * A class for constructing animation instances.
      * @mixins KISSY.Event.Target
-     * @cfg {HTMLElement|window} el html dom node or window
+     * @cfg {HTMLElement|window} node html dom node or window
      * (window can only animate scrollTop/scrollLeft)
      * @cfg {Object} props end css style value.
      * @cfg {Number} [duration=1] duration(second) or anim config
@@ -34,26 +34,26 @@ KISSY.add('anim/facade', function (S, DOM, AnimBase, TimerAnim, TransitionAnim) 
      * @cfg {Function} [complete] callback function when this animation is complete
      * @cfg {String|Boolean} [queue] current animation's queue, if false then no queue
      */
-    function Anim(el, props, duration, easing, complete) {
+    function Anim(node, to, duration, easing, complete) {
         var config;
-        if (el.el) {
-            config = el;
+        if (node.node) {
+            config = node;
         } else {
             // the transition properties
-            if (typeof props == 'string') {
-                props = S.unparam(String(props), ';', ':');
-                S.each(props, function (value, prop) {
+            if (typeof to == 'string') {
+                to = S.unparam(String(to), ';', ':');
+                S.each(to, function (value, prop) {
                     var trimProp = S.trim(prop);
                     if (trimProp) {
-                        props[trimProp] = S.trim(value);
+                        to[trimProp] = S.trim(value);
                     }
                     if (!trimProp || trimProp != prop) {
-                        delete props[prop];
+                        delete to[prop];
                     }
                 });
             } else {
                 // clone to prevent collision within multiple instance
-                props = S.clone(props);
+                to = S.clone(to);
             }
             // animation config
             if (S.isPlainObject(duration)) {
@@ -69,8 +69,8 @@ KISSY.add('anim/facade', function (S, DOM, AnimBase, TimerAnim, TransitionAnim) 
                     config.easing = easing;
                 }
             }
-            config.el = el;
-            config.props = props;
+            config.node = node;
+            config.to = to;
         }
         config = S.merge(defaultConfig, config, {
             // default anim mode for whole kissy application
@@ -88,7 +88,7 @@ KISSY.add('anim/facade', function (S, DOM, AnimBase, TimerAnim, TransitionAnim) 
 
     /**
      * pause all the anims currently running
-     * @param {HTMLElement} el element which anim belongs to
+     * @param {HTMLElement} node element which anim belongs to
      * @param {String|Boolean} queue current queue's name to be cleared
      * @method pause
      * @member KISSY.Anim
@@ -97,7 +97,7 @@ KISSY.add('anim/facade', function (S, DOM, AnimBase, TimerAnim, TransitionAnim) 
 
     /**
      * resume all the anims currently running
-     * @param {HTMLElement} el element which anim belongs to
+     * @param {HTMLElement} node element which anim belongs to
      * @param {String|Boolean} queue current queue's name to be cleared
      * @method resume
      * @member KISSY.Anim
@@ -150,7 +150,7 @@ KISSY.add('anim/facade', function (S, DOM, AnimBase, TimerAnim, TransitionAnim) 
      */
 
     S.each(['pause', 'resume'], function (action) {
-        Anim[action] = function (el, queue) {
+        Anim[action] = function (node, queue) {
             if (
             // default queue
                 queue === null ||
@@ -159,25 +159,25 @@ KISSY.add('anim/facade', function (S, DOM, AnimBase, TimerAnim, TransitionAnim) 
                     // anims not belong to any queue
                     queue === false
                 ) {
-                return Utils.pauseOrResumeQueue(el, queue, action);
+                return Utils.pauseOrResumeQueue(node, queue, action);
             }
-            return Utils.pauseOrResumeQueue(el, undefined, action);
+            return Utils.pauseOrResumeQueue(node, undefined, action);
         };
     });
 
     /**
-     * whether el is running anim
+     * whether node is running anim
      * @method
-     * @param {HTMLElement} el
+     * @param {HTMLElement} node
      * @return {Boolean}
      * @static
      */
     Anim.isRunning = Utils.isElRunning;
 
     /**
-     * whether el has paused anim
+     * whether node has paused anim
      * @method
-     * @param {HTMLElement} el
+     * @param {HTMLElement} node
      * @return {Boolean}
      * @static
      */
@@ -188,7 +188,7 @@ KISSY.add('anim/facade', function (S, DOM, AnimBase, TimerAnim, TransitionAnim) 
      * @static
      * @method stop
      * @member KISSY.Anim
-     * @param {HTMLElement} el element which anim belongs to
+     * @param {HTMLElement} node element which anim belongs to
      * @param {Boolean} end whether jump to last position
      * @param {Boolean} clearQueue whether clean current queue
      * @param {String|Boolean} queueName current queue's name to be cleared

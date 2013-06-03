@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 30 01:32
+build time: Jun 3 15:03
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -18,16 +18,10 @@ KISSY.add('anim/transition', function (S, DOM, Event, AnimBase) {
 
     var vendorPrefix = S.Features.getTransitionPrefix();
     var TRANSITION_END_EVENT = vendorPrefix ?
+        // webkitTransitionEnd !
         (vendorPrefix.toLowerCase() + 'TransitionEnd') :
         'transitionend';
-    var TRANSITION = vendorPrefix ? (vendorPrefix + 'Transition') : 'transition';
-//    var TRANSITION_PROPERTY = vendorPrefix + 'transition-property';
-//    var TRANSITION_DURATION = vendorPrefix + 'transition-duration';
-//    var TRANSITION_TIMING_FUNCTION = vendorPrefix + 'transition-timing-function';
-//    var TRANSITION_DELAY = vendorPrefix + 'transition-delay';
-
-    // firefox set transition
-    // set transition-property/duration is unstable
+    var TRANSITION = S.Features.getTransitionProperty();
 
     function genTransition(propsData) {
         var str = '';
@@ -49,15 +43,15 @@ KISSY.add('anim/transition', function (S, DOM, Event, AnimBase) {
 
         doStart: function () {
             var self = this,
-                el = self.el,
-                elStyle = el.style,
+                node = self.node,
+                elStyle = node.style,
                 _propsData = self._propsData,
                 original = elStyle[TRANSITION],
                 propsCss = {};
 
             S.each(_propsData, function (propData, prop) {
                 var v = propData.value,
-                    currentValue = DOM.css(el, prop);
+                    currentValue = DOM.css(node, prop);
                 if (typeof v == 'number') {
                     currentValue = parseFloat(currentValue);
                 }
@@ -85,9 +79,9 @@ KISSY.add('anim/transition', function (S, DOM, Event, AnimBase) {
             elStyle[TRANSITION] = original + genTransition(_propsData);
             // S.log('after start: '+elStyle[TRANSITION]);
 
-            Event.on(el, TRANSITION_END_EVENT, self._onTransitionEnd, self);
+            Event.on(node, TRANSITION_END_EVENT, self._onTransitionEnd, self);
 
-            DOM.css(el, propsCss);
+            DOM.css(node, propsCss);
         },
 
         beforeResume: function () {
@@ -137,17 +131,17 @@ KISSY.add('anim/transition', function (S, DOM, Event, AnimBase) {
 
         doStop: function (finish) {
             var self = this,
-                el = self.el,
-                elStyle = el.style,
+                node = self.node,
+                elStyle = node.style,
                 _propsData = self._propsData,
                 propList = [],
                 clear,
                 propsCss = {};
 
-            Event.detach(el, TRANSITION_END_EVENT, self._onTransitionEnd, self);
+            Event.detach(node, TRANSITION_END_EVENT, self._onTransitionEnd, self);
             S.each(_propsData, function (propData, prop) {
                 if (!finish) {
-                    propsCss[prop] = DOM.css(el, prop);
+                    propsCss[prop] = DOM.css(node, prop);
                 }
                 propList.push(prop);
             });
@@ -163,7 +157,7 @@ KISSY.add('anim/transition', function (S, DOM, Event, AnimBase) {
             // S.log('after end: '+elStyle[TRANSITION]);
 
 
-            DOM.css(el, propsCss);
+            DOM.css(node, propsCss);
         }
     });
 

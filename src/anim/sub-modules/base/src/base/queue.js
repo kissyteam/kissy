@@ -10,14 +10,14 @@ KISSY.add('anim/base/queue', function (S, DOM) {
         queueKey = S.guid('ks-queue-' + S.now() + '-'),
         Q;
 
-    function getQueue(el, name, readOnly) {
+    function getQueue(node, name, readOnly) {
         name = name || queueKey;
 
         var qu,
-            quCollection = DOM.data(el, queueCollectionKey);
+            quCollection = DOM.data(node, queueCollectionKey);
 
         if (!quCollection && !readOnly) {
-            DOM.data(el, queueCollectionKey, quCollection = {});
+            DOM.data(node, queueCollectionKey, quCollection = {});
         }
 
         if (quCollection) {
@@ -34,14 +34,14 @@ KISSY.add('anim/base/queue', function (S, DOM) {
 
         queueCollectionKey: queueCollectionKey,
 
-        queue: function (el, queue, item) {
-            var qu = getQueue(el, queue);
+        queue: function (node, queue, item) {
+            var qu = getQueue(node, queue);
             qu.push(item);
             return qu;
         },
 
-        remove: function (el, queue, item) {
-            var qu = getQueue(el, queue, 1),
+        remove: function (node, queue, item) {
+            var qu = getQueue(node, queue, 1),
                 index;
             if (qu) {
                 index = S.indexOf(item, qu);
@@ -51,33 +51,33 @@ KISSY.add('anim/base/queue', function (S, DOM) {
             }
             if (qu && !qu.length) {
                 // remove queue data
-                Q.clearQueue(el, queue);
+                Q.clearQueue(node, queue);
             }
             return qu;
         },
 
-        'clearQueues': function (el) {
-            DOM.removeData(el, queueCollectionKey);
+        'clearQueues': function (node) {
+            DOM.removeData(node, queueCollectionKey);
         },
 
-        clearQueue: function clearQueue(el, queue) {
+        clearQueue: function clearQueue(node, queue) {
             queue = queue || queueKey;
-            var quCollection = DOM.data(el, queueCollectionKey);
+            var quCollection = DOM.data(node, queueCollectionKey);
             if (quCollection) {
                 delete quCollection[queue];
             }
             if (S.isEmptyObject(quCollection)) {
-                DOM.removeData(el, queueCollectionKey);
+                DOM.removeData(node, queueCollectionKey);
             }
         },
 
-        dequeue: function (el, queue) {
-            var qu = getQueue(el, queue, 1);
+        dequeue: function (node, queue) {
+            var qu = getQueue(node, queue, 1);
             if (qu) {
                 qu.shift();
                 if (!qu.length) {
                     // remove queue data
-                    Q.clearQueue(el, queue);
+                    Q.clearQueue(node, queue);
                 }
             }
             return qu;

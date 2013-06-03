@@ -3,7 +3,7 @@
  * detect if current browser supports various features.
  * @author yiminghe@gmail.com
  */
-(function (S) {
+(function (S, undefined) {
 
     var Env = S.Env,
         win = Env.host,
@@ -21,10 +21,8 @@
         isMsPointerSupported,
         transitionProperty,
         transformProperty,
-        isTransitionSupportedState = false,
-        transitionPrefix = '',
-        isTransformSupportedState = false,
-        transformPrefix = '',
+        transitionPrefix,
+        transformPrefix,
         documentElement = doc.documentElement,
         documentElementStyle,
         isClassListSupportedState = true,
@@ -44,15 +42,15 @@
         S.each(VENDORS, function (val) {
             var transition = val ? val + 'Transition' : 'transition',
                 transform = val ? val + 'Transform' : 'transform';
-            if (transition in documentElementStyle) {
+            if (transitionPrefix === undefined &&
+                transition in documentElementStyle) {
                 transitionPrefix = val;
                 transitionProperty = transition;
-                isTransitionSupportedState = true;
             }
-            if (transform in documentElementStyle) {
+            if (transformPrefix === undefined &&
+                transform in documentElementStyle) {
                 transformPrefix = val;
                 transformProperty = transform;
-                isTransformSupportedState = true;
             }
         });
 
@@ -98,11 +96,11 @@
         },
 
         'isTransitionSupported': function () {
-            return isTransitionSupportedState;
+            return transitionPrefix !== undefined;
         },
 
         'isTransformSupported': function () {
-            return isTransformSupportedState;
+            return transformPrefix !== undefined;
         },
 
         'isClassListSupported': function () {
@@ -128,7 +126,7 @@
         },
 
         'getTransitionProperty': function () {
-            return transformProperty;
+            return transitionProperty;
         },
 
         'getTransformProperty': function () {

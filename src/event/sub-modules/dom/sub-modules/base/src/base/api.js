@@ -118,7 +118,7 @@ KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, Observa
          * @param fn {Function|Object} The event listener or event description object.
          * @param {Function} fn.fn The event listener
          * @param {Function} fn.context The context (this reference) in which the handler function is executed.
-         * @param {String|Function} fn.selector filter selector string or function to find right element
+         * @param {String|Function} fn.filter filter selector string or function to find right element
          * @param {Boolean} fn.once whether fn will be removed once after it is executed.
          * @param {Object} [context] The context (this reference) in which the handler function is executed.
          */
@@ -150,7 +150,7 @@ KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, Observa
          * @param [fn] {Function|Object} The event listener or event description object.
          * @param {Function} fn.fn The event listener
          * @param {Function} [fn.context] The context (this reference) in which the handler function is executed.
-         * @param {String|Function} [fn.selector] filter selector string or function to find right element
+         * @param {String|Function} [fn.filter] filter selector string or function to find right element
          * @param {Boolean} [fn.once] whether fn will be removed once after it is executed.
          * @param {Object} [context] The context (this reference) in which the handler function is executed.
          */
@@ -189,18 +189,18 @@ KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, Observa
         /**
          * Delegate event.
          * @param targets KISSY selector
-         * @param {String|Function} selector filter selector string or function to find right element
+         * @param {String|Function} filter filter selector string or function to find right element
          * @param {String} [eventType] The type of event to delegate.
          * use space to separate multiple event types.
          * @param {Function} [fn] The event listener.
          * @param {Object} [context] The context (this reference) in which the handler function is executed.
          * @member KISSY.Event
          */
-        delegate: function (targets, eventType, selector, fn, context) {
+        delegate: function (targets, eventType, filter, fn, context) {
             return Event.add(targets, eventType, {
                 fn: fn,
                 context: context,
-                selector: selector
+                filter: filter
             });
         },
         /**
@@ -208,16 +208,16 @@ KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, Observa
          * @param targets KISSY selector
          * @param {String} [eventType] The type of event to undelegate.
          * use space to separate multiple event types.
-         * @param {String|Function} [selector] filter selector string or function to find right element
+         * @param {String|Function} [filter] filter selector string or function to find right element
          * @param {Function} [fn] The event listener.
          * @param {Object} [context] The context (this reference) in which the handler function is executed.
          * @member KISSY.Event
          */
-        undelegate: function (targets, eventType, selector, fn, context) {
+        undelegate: function (targets, eventType, filter, fn, context) {
             return Event.remove(targets, eventType, {
                 fn: fn,
                 context: context,
-                selector: selector
+                filter: filter
             });
         },
 
@@ -350,6 +350,6 @@ KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, Observa
 });
 /*
  2012-02-12 yiminghe@gmail.com note:
- - 普通 remove() 不管 selector 都会查，如果 fn context 相等就移除
- - undelegate() selector 为 ''，那么去除所有委托绑定的 handler
+ - 普通 remove() 不管 filter 都会查，如果 fn context 相等就移除
+ - undelegate() filter 为 ''，那么去除所有委托绑定的 handler
  */
