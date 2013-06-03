@@ -162,7 +162,6 @@ KISSY.add('anim/timer/color', function (S, DOM, Fx,SHORT_HANDS) {
 });
 
 /*
-  TODO
-  支持 hsla
-   - https://github.com/jquery/jquery-color/blob/master/jquery.color.js
+ refer
+   - https://developer.mozilla.org/en-US/docs/Web/CSS/color_value
 */
