@@ -138,7 +138,7 @@
                     waitingModules.notifyAll();
                 }, 0);
             }
-            return self;
+            return S;
         },
 
         /**

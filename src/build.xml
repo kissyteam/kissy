@@ -51,7 +51,7 @@
                      includes="**/*.js" excludes="**/*-min.js"/>
             <path path="${kissy.build.dir}/node.js"/>
             <footer filtering="no" trimleading="yes">
-                KISSY.use("ua,dom,event,node,json,io,anim,base,cookie",0,1);
+                KISSY.use("core", {sync: 1});
             </footer>
             <filterchain>
                 <deletecharacters chars="${bom}"/>
