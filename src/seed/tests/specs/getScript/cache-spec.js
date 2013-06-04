@@ -4,7 +4,7 @@ describe("getScript when cache", function () {
     it('can solve getScript error when cache', function () {
         var ok = 0;
         window.x=0;
-        var js='../specs/getScript/x.jss';
+        var js='/kissy/src/seed/tests/specs/getScript/x.jss';
         S.getScript(js, {
             charset: 'utf-8',
             success: function () {

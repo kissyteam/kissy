@@ -11,23 +11,14 @@
 <script src="/kissy/tools/jasmine/jasmine.js"></script>
 <script src="/kissy/tools/jasmine/jasmine-html.js"></script>
     <script src="/kissy/tools/jasmine/jasmine.console_reporter.js"></script>
-<script src="/kissy/build/seed.js"></script>
+
+<script src="/kissy/build/seed.js" charset="utf-8" data-config="{combine:true}">
+
+</script>
     <script src="../../others/clear.js"></script>
 </head>
 <body>
-<h1>KISSY Seed Test Cases</h1>
-
-<div id='special'>
-    33px
-</div>
-<div id='special2'>
-    44px
-</div>
-
-<script>
-    window.ALIAS_PATH='./';
-</script>
-<script src="alias-spec.js"></script>
+<script src="timestamp-combo-spec.js"></script>
 <script>
     jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
         jasmine.getEnv().addReporter(new jasmine.ConsoleReporter());

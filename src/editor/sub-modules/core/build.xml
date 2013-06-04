@@ -6,17 +6,19 @@
     <import file="../../../common.xml"/>
 
     <target name="merge-editor-dependency">
-        <concat destfile="${component.src.dir}/deps.js"
+        <concat destfile="${component.src.dir}/core/plugin-meta.js"
                 encoding="${charset}" outputencoding="${charset}">
             <header filtering="no" trimleading="yes">
-                (function(config,Features,UA){
+                KISSY.add('editor/core/plugin-meta',function(){
+                    (function(config,Features,UA){
             </header>
             <fileset dir="${kissy.src.dir}/editor/sub-modules/plugin/"
                      includes="**/ke-meta/*.js"/>
             <footer>
-                })(function(c){
-                KISSY.config('modules', c);
-                },KISSY.Features,KISSY.UA);
+                    })(function(c){
+                    KISSY.config('modules', c);
+                    },KISSY.Features,KISSY.UA);
+                });
             </footer>
         </concat>
     </target>

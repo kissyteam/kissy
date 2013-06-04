@@ -45,17 +45,15 @@
             <path location="${component.src.dir}/features.js"/>
 
             <!--kissy loader start-->
-            <path location="${component.src.dir}/loader/base.js"/>
-            <path location="${component.src.dir}/loader/target.js"/>
+            <path location="${component.src.dir}/loader/setup.js"/>
             <path location="${component.src.dir}/loader/utils.js"/>
-            <path location="${component.src.dir}/loader/base-ext.js"/>
+            <path location="${component.src.dir}/loader/data-structure.js"/>
             <path location="${component.src.dir}/loader/css-onload.js"/>
             <path location="${component.src.dir}/loader/get-script.js"/>
             <path location="${component.src.dir}/loader/configs.js"/>
-            <path location="${component.src.dir}/loader/simple/add.js"/>
-            <path location="${component.src.dir}/loader/simple/use.js"/>
-            <path location="${component.src.dir}/loader/combo/loader.js"/>
-            <path location="${component.src.dir}/loader/init.js"/>
+            <path location="${component.src.dir}/loader/simple-loader.js"/>
+            <path location="${component.src.dir}/loader/combo-loader.js"/>
+            <path location="${component.src.dir}/loader/loader.js"/>
             <!--kissy loader end-->
 
             <path location="${component.src.dir}/web.js"/>
@@ -89,15 +87,15 @@
             <path location="${component.src.dir}/features.js"/>
 
             <!--kissy loader start-->
-            <path location="${component.src.dir}/loader/base.js"/>
-            <path location="${component.src.dir}/loader/target.js"/>
+            <path location="${component.src.dir}/loader/setup.js"/>
             <path location="${component.src.dir}/loader/utils.js"/>
-            <path location="${component.src.dir}/loader/base-ext.js"/>
+            <path location="${component.src.dir}/loader/data-structure.js"/>
+            <path location="${component.src.dir}/loader/css-onload.js"/>
             <path location="${component.src.dir}/loader/get-script-nodejs.js"/>
             <path location="${component.src.dir}/loader/configs.js"/>
-            <path location="${component.src.dir}/loader/simple/add.js"/>
-            <path location="${component.src.dir}/loader/simple/use.js"/>
-            <path location="${component.src.dir}/loader/init.js"/>
+            <path location="${component.src.dir}/loader/simple-loader.js"/>
+            <path location="${component.src.dir}/loader/combo-loader.js"/>
+            <path location="${component.src.dir}/loader/loader.js"/>
             <!--kissy loader end-->
 
             <path location="${component.src.dir}/web.js"/>

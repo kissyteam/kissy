@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 3 16:40
+build time: Jun 4 20:43
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130603164039' will replace with current timestamp when compressing.
+         * NOTICE: '20130604204338' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130603164039',
+        __BUILD_TIME: '20130604204338',
         /**
          * KISSY Environment.
          * @private
@@ -3615,21 +3615,7 @@ var KISSY = (function (undefined) {
  */
 (function (S) {
 
-    /**
-     * @class KISSY.Loader
-     * @private
-     * @mixins KISSY.Loader.Target
-     * This class should not be instantiated manually.
-     */
-    function Loader(runtime) {
-        this.runtime = runtime;
-        /**
-         * @event afterModAttached
-         * fired after a module is attached
-         * @param e
-         * @param {KISSY.Loader.Module} e.mod current module object
-         */
-    }
+    var Loader = S.Loader = {};
 
     /**
      * Loader Status Enum
@@ -3647,96 +3633,6 @@ var KISSY = (function (undefined) {
         /** attached */
         'ATTACHED': 4
     };
-
-    S.Loader = Loader;
-
-    S.Loader.Status = Loader.Status;
-
-})(KISSY);
-/*
- TODO: implement conditional loader
- *//**
- * @ignore
- * simple event target for loader
- * @author yiminghe@gmail.com
- */
-(function (S) {
-
-    // in case current code runs on nodejs
-    S.namespace("Loader");
-
-    var time = S.now(),
-        p = '__events__' + time;
-
-    function getHolder(self) {
-        return self[p] || (self[p] = {});
-    }
-
-    function getEventHolder(self, name, create) {
-        var holder = getHolder(self);
-        if (create) {
-            holder[name] = holder[name] || [];
-        }
-        return holder[name];
-    }
-
-    /**
-     * @class KISSY.Loader.Target
-     * Event Target For KISSY Loader.
-     * @private
-     * @singleton
-     */
-    KISSY.Loader.Target = {
-        /**
-         * register callback for specified eventName from loader
-         * @param {String} eventName event name from kissy loader
-         * @param {Function} callback function to be executed when event of eventName is fired
-         */
-        on: function (eventName, callback) {
-            getEventHolder(this, eventName, 1).push(callback);
-        },
-
-        /**
-         * remove callback for specified eventName from loader
-         * @param {String} [eventName] eventName from kissy loader.
-         * if undefined remove all callbacks for all events
-         * @param {Function } [callback] function to be executed when event of eventName is fired.
-         * if undefined remove all callbacks fro this event
-         */
-        detach: function (eventName, callback) {
-            var self = this, fns, index;
-            if (!eventName) {
-                delete self[p];
-                return;
-            }
-            fns = getEventHolder(self, eventName);
-            if (fns) {
-                if (callback) {
-                    index = S.indexOf(callback, fns);
-                    if (index != -1) {
-                        fns.splice(index, 1);
-                    }
-                }
-                if (!callback || !fns.length) {
-                    delete getHolder(self)[eventName];
-                }
-            }
-        },
-
-        /**
-         * Fire specified event.
-         * @param eventName
-         * @param obj
-         */
-        fire: function (eventName, obj) {
-            var fns = getEventHolder(this, eventName) || [],
-                i,
-                l = fns.length;
-            for (i = 0; i < l; i++) {
-                fns[i].call(null, obj);
-            }
-        }
-    };
 })(KISSY);/**
  * @ignore
  * Utils for kissy loader
@@ -3751,13 +3647,15 @@ var KISSY = (function (undefined) {
         data = Loader.Status,
         ATTACHED = data.ATTACHED,
         LOADED = data.LOADED,
+        ERROR = data.ERROR,
+        LOADING = data.LOADING,
         /**
          * @class KISSY.Loader.Utils
          * Utils for KISSY Loader
          * @singleton
          * @private
          */
-            Utils = S.Loader.Utils = {},
+            Utils = Loader.Utils = {},
         doc = host.document;
 
     // http://wiki.commonjs.org/wiki/Packages/Mappings/A
@@ -3880,6 +3778,27 @@ var KISSY = (function (undefined) {
         },
 
         /**
+         * Whether modNames is error.
+         * @param runtime
+         * @param modNames
+         * @return {Boolean}
+         */
+        isLoaded: function (runtime, modNames) {
+            return isStatus(runtime, modNames, ERROR);
+        },
+
+
+        /**
+         * Whether modNames is loading.
+         * @param runtime
+         * @param modNames
+         * @return {Boolean}
+         */
+        isLoading: function (runtime, modNames) {
+            return isStatus(runtime, modNames, LOADING);
+        },
+
+        /**
          * Get module values
          * @param runtime
          * @param modNames
@@ -3911,20 +3830,20 @@ var KISSY = (function (undefined) {
             return mods;
         },
 
-        attachModsRecursively: function (modNames, runtime, stack) {
+        attachModsRecursively: function (modNames, runtime, stack, errorList) {
             stack = stack || [];
             var i,
                 s = 1,
                 l = modNames.length,
                 stackDepth = stack.length;
             for (i = 0; i < l; i++) {
-                s = Utils.attachModRecursively(modNames[i], runtime, stack) && s;
+                s = Utils.attachModRecursively(modNames[i], runtime, stack, errorList) && s;
                 stack.length = stackDepth;
             }
             return s;
         },
 
-        attachModRecursively: function (modName, runtime, stack) {
+        attachModRecursively: function (modName, runtime, stack, errorList) {
             var mods = runtime.Env.mods,
                 status,
                 m = mods[modName];
@@ -3935,10 +3854,13 @@ var KISSY = (function (undefined) {
             if (status == ATTACHED) {
                 return 1;
             }
+            if (status == ERROR) {
+                errorList.push(m);
+            }
             if (status != LOADED) {
                 return 0;
             }
-            if (S.Config.debug) {
+            if ('@DEBUG@') {
                 if (S.inArray(modName, stack)) {
                     stack.push(modName);
                     S.error('find cyclic dependency between mods: ' + stack);
@@ -3946,7 +3868,8 @@ var KISSY = (function (undefined) {
                 }
                 stack.push(modName);
             }
-            if (Utils.attachModsRecursively(m.getNormalizedRequires(), runtime, stack)) {
+            if (Utils.attachModsRecursively(m.getNormalizedRequires(),
+                runtime, stack, errorList)) {
                 Utils.attachMod(runtime, m);
                 return 1;
             }
@@ -3972,10 +3895,6 @@ var KISSY = (function (undefined) {
             }
 
             mod.status = ATTACHED;
-
-            runtime.getLoader().fire('afterModAttached', {
-                mod: mod
-            });
         },
 
         /**
@@ -4140,8 +4059,8 @@ var KISSY = (function (undefined) {
  */
 (function (S) {
 
-    var Path = S.Path,
-        Loader = S.Loader,
+    var Loader = S.Loader,
+        Path = S.Path,
         IGNORE_PACKAGE_NAME_IN_URI = 'ignorePackageNameInUri',
         Utils = Loader.Utils;
 
@@ -4252,9 +4171,32 @@ var KISSY = (function (undefined) {
     function Module(cfg) {
         this.status = Loader.Status.INIT;
         S.mix(this, cfg);
+        this.callbacks = [];
     }
 
     S.augment(Module, {
+
+        addCallback: function (callback) {
+            this.callbacks.push(callback);
+        },
+
+        notifyAll: function () {
+            var callback;
+            var len = this.callbacks.length,
+                i = 0;
+            for (; i < len; i++) {
+                callback = this.callbacks[i];
+                try {
+                    callback(this);
+                } catch (e) {
+                    setTimeout(function () {
+                        throw e;
+                    }, 0);
+                }
+            }
+            this.callbacks = [];
+        },
+
         /**
          * Set the value of current module
          * @param v value to be set
@@ -4454,11 +4396,121 @@ var KISSY = (function (undefined) {
         return packages[pName] || systemPackage;
     }
 
-
 })(KISSY);
 /*
  TODO: implement conditional loader
  *//**
+ * @ignore
+ * script/css load across browser
+ * @author yiminghe@gmail.com
+ */
+(function (S) {
+
+    var CSS_POLL_INTERVAL = 30,
+        UA= S.UA,
+        Utils = S.Loader.Utils,
+    // central poll for link node
+        timer = 0,
+        monitors = {
+            // node.id:{callback:callback,node:node}
+        };
+
+
+    /**
+     * @ignore
+     * References:
+     *  - http://unixpapa.com/js/dyna.html
+     *  - http://www.blaze.io/technical/ies-premature-execution-problem/
+     *
+     * `onload` event is supported in WebKit since 535.23
+     *  - https://bugs.webkit.org/show_activity.cgi?id=38995
+     * `onload/onerror` event is supported since Firefox 9.0
+     *  - https://bugzilla.mozilla.org/show_bug.cgi?id=185236
+     *  - https://developer.mozilla.org/en/HTML/Element/link#Stylesheet_load_events
+     *
+     * monitor css onload across browsers.issue about 404 failure.
+     *
+     *  - firefox not ok（4 is wrong）：
+     *    - http://yearofmoo.com/2011/03/cross-browser-stylesheet-preloading/
+     *  - all is ok
+     *    - http://lifesinger.org/lab/2011/load-js-css/css-preload.html
+     *  - others
+     *    - http://www.zachleat.com/web/load-css-dynamically/
+     */
+
+    function startCssTimer() {
+        if (!timer) {
+            // S.log('start css polling');
+            cssPoll();
+        }
+    }
+
+    // single thread is ok
+    function cssPoll() {
+
+        for (var url in monitors) {
+
+            var callbackObj = monitors[url],
+                node = callbackObj.node,
+                exName,
+                loaded = 0;
+            if (UA.webkit) {
+                // http://www.w3.org/TR/DOM-Level-2-Style/stylesheets.html
+                if (node['sheet']) {
+                    S.log('webkit loaded : ' + url);
+                    loaded = 1;
+                }
+            } else if (node['sheet']) {
+                try {
+                    var cssRules = node['sheet'].cssRules;
+                    if (cssRules) {
+                        S.log('same domain firefox loaded : ' + url);
+                        loaded = 1;
+                    }
+                } catch (ex) {
+                    exName = ex.name;
+                    S.log('firefox getStyle : ' + exName + ' ' + ex.code + ' ' + url);
+                    // http://www.w3.org/TR/dom/#dom-domexception-code
+                    if (// exName == 'SecurityError' ||
+                    // for old firefox
+                        exName == 'NS_ERROR_DOM_SECURITY_ERR') {
+                        S.log(exName + ' firefox loaded : ' + url);
+                        loaded = 1;
+                    }
+                }
+            }
+
+            if (loaded) {
+                if (callbackObj.callback) {
+                    callbackObj.callback.call(node);
+                }
+                delete monitors[url];
+            }
+
+        }
+
+        if (S.isEmptyObject(monitors)) {
+            timer = 0;
+            // S.log('end css polling');
+        } else {
+            timer = setTimeout(cssPoll, CSS_POLL_INTERVAL);
+        }
+    }
+
+    S.mix(Utils, {
+        pollCss: // refer : http://lifesinger.org/lab/2011/load-js-css/css-preload.html
+        // 暂时不考虑如何判断失败，如 404 等
+            function (node, callback) {
+                var href = node.href,
+                    arr;
+                arr = monitors[href] = {};
+                arr.node = node;
+                arr.callback = callback;
+                startCssTimer();
+            }
+
+    });
+})(KISSY);/**
  * @ignore
  * implement getScript for nodejs.
  *  so loader need not to be changed.
@@ -4515,7 +4567,7 @@ var KISSY = (function (undefined) {
 (function (S, undefined) {
 
     var Loader = S.Loader,
-        utils = Loader.Utils,
+        Utils = Loader.Utils,
         host = S.Env.host,
         location = host.location,
         simulatedLocation,
@@ -4625,7 +4677,7 @@ var KISSY = (function (undefined) {
             Env = self.Env;
         if (modules) {
             S.each(modules, function (modCfg, modName) {
-                utils.createModuleInfo(self, modName, modCfg);
+                Utils.createModuleInfo(self, modName, modCfg);
                 S.mix(Env.mods[modName], modCfg);
             });
         }
@@ -4667,97 +4719,199 @@ var KISSY = (function (undefined) {
     }
 
 })(KISSY);/**
+ * simple loader for KISSY. one module on request.
  * @ignore
- * add module to kissy simple loader
- * @author yiminghe@gmail.com, lifesinger@gmail.com
+ * @author yiminghe@gmail.com
  */
-(function (S) {
+(function (S, undefined) {
 
-    var Loader = S.Loader,
-        UA = S.UA,
-        utils = Loader.Utils;
+    var Loader, Status, Utils, UA,
+    // standard browser 如果 add 没有模块名，模块定义先暂存这里
+        currentMod = undefined,
+    // ie 开始载入脚本的时间
+        startLoadTime = 0,
+    // ie6,7,8开始载入脚本对应的模块名
+        startLoadModName,
+        LOADING, LOADED, ERROR, ATTACHED;
 
-    S.augment(Loader, Loader.Target, {
+    Loader = S.Loader;
+    Status = Loader.Status;
+    Utils = Loader.Utils;
+    UA = S.UA;
+    LOADING = Status.LOADING;
+    LOADED = Status.LOADED;
+    ERROR = Status.ERROR;
+    ATTACHED = Status.ATTACHED;
 
-        // standard browser 如果 add 没有模块名，模块定义先暂存这里
-        __currentMod: null,
+    /**
+     * @class KISSY.Loader.SimpleLoader
+     * one module one request
+     * @param runtime KISSY
+     * @param waitingModules load checker
+     * @private
+     */
+    function SimpleLoader(runtime, waitingModules) {
+        S.mix(this, {
+            runtime: runtime,
+            requireLoadedMods: {},
+            waitingModules: waitingModules
+        });
+    }
 
-        // ie 开始载入脚本的时间
-        __startLoadTime: 0,
+    S.augment(SimpleLoader, {
 
-        // ie6,7,8开始载入脚本对应的模块名
-        __startLoadModName: null,
+        use: function (normalizedModNames) {
+            var i,
+                l = normalizedModNames.length;
+            for (i = 0; i < l; i++) {
+                this.loadModule(normalizedModNames[i]);
+            }
+        },
 
-        /**
-         * Registers a module.
-         * @param {String|Object} [name] module name
-         * @param {Function|Object} [fn] entry point into the module that is used to bind module to KISSY
-         * @param {Object} [config] special config for this add
-         * @param {String[]} [config.requires] array of mod 's name that current module requires
-         * @member KISSY.Loader
-         *
-         * for example:
-         *      @example
-         *      KISSY.add('package-name/module-name', function(S){ }, {requires: ['mod1']});
-         */
-        add: function (name, fn, config) {
+        // only load mod requires once
+        // prevent looping dependency sub tree more than once for one use()
+        loadModRequires: function (mod) {
+            // 根据每次 use 缓存子树
             var self = this,
-                runtime = self.runtime;
+                requireLoadedMods = self.requireLoadedMods,
+                modName = mod.name,
+                requires;
+            if (!requireLoadedMods[modName]) {
+                requireLoadedMods[modName] = 1;
+                requires = mod.getNormalizedRequires();
+                self.use(requires);
+            }
+        },
 
-            // S.add(name[, fn[, config]])
-            if (typeof name == 'string') {
-                utils.registerModule(runtime, name, fn, config);
+        loadModule: function (modName) {
+            var self = this,
+                waitingModules = self.waitingModules,
+                runtime = self.runtime,
+                status,
+                isWait,
+                mod = Utils.createModuleInfo(runtime, modName);
+
+            status = mod.status;
+
+            if (status == ATTACHED || status == ERROR) {
                 return;
             }
-            // S.add(fn,config);
-            else if (S.isFunction(name)) {
-                config = fn;
-                fn = name;
-                if (UA.ie) {
-                    /*
-                     Kris Zyp
-                     2010年10月21日, 上午11时34分
-                     We actually had some discussions off-list, as it turns out the required
-                     technique is a little different than described in this thread. Briefly,
-                     to identify anonymous modules from scripts:
-                     * In non-IE browsers, the onload event is sufficient, it always fires
-                     immediately after the script is executed.
-                     * In IE, if the script is in the cache, it actually executes *during*
-                     the DOM insertion of the script tag, so you can keep track of which
-                     script is being requested in case define() is called during the DOM
-                     insertion.
-                     * In IE, if the script is not in the cache, when define() is called you
-                     can iterate through the script tags and the currently executing one will
-                     have a script.readyState == 'interactive'
-                     See RequireJS source code if you need more hints.
-                     Anyway, the bottom line from a spec perspective is that it is
-                     implemented, it works, and it is possible. Hope that helps.
-                     Kris
-                     */
-                    // http://groups.google.com/group/commonjs/browse_thread/thread/5a3358ece35e688e/43145ceccfb1dc02#43145ceccfb1dc02
-                    // use onload to get module name is not right in ie
-                    name = findModuleNameByInteractive(self);
-                    S.log('ie get modName by interactive: ' + name);
-                    utils.registerModule(runtime, name, fn, config);
-                    self.__startLoadModName = null;
-                    self.__startLoadTime = 0;
-                } else {
-                    // 其他浏览器 onload 时，关联模块名与模块定义
-                    self.__currentMod = {
-                        fn: fn,
-                        config: config
-                    };
+
+            // 已经静态存在在页面上
+            // 或者该模块不是根据自身模块名动态加载来的(io.js包含 io/base,io/form)
+            if (status === LOADED) {
+                self.loadModRequires(mod);
+            } else {
+                isWait = waitingModules.contains(modName);
+
+                // prevent duplicate listen for this use
+                //  use('a,a') or
+                //  user('a,c') a require b, c require b
+                // listen b only once
+                // already waiting, will notify loadReady in the future
+                if (isWait) {
+                    return;
                 }
-                return;
+
+                mod.addCallback(function () {
+                    // 只在 LOADED 后加载依赖项一次
+                    // 防止 config('modules') requires 和模块中 requires 不一致
+                    self.loadModRequires(mod);
+                    waitingModules.remove(modName);
+                    // notify current loader instance
+                    waitingModules.notifyAll();
+                });
+
+                waitingModules.add(modName);
+
+                // in case parallel use (more than one use)
+                if (status < LOADING) {
+                    // load and attach this module
+                    self.fetchModule(mod);
+                }
             }
-            S.log('invalid format for KISSY.add !', 'error');
+        },
+
+        // Load a single module.
+        fetchModule: function (mod) {
+
+            var self = this,
+                runtime = self.runtime,
+                modName = mod.getName(),
+                charset = mod.getCharset(),
+                url = mod.getFullPath(),
+                ie = UA.ie,
+                isCss = mod.getType() == 'css';
+
+            mod.status = LOADING;
+
+            if (ie && !isCss) {
+                startLoadModName = modName;
+                startLoadTime = Number(+new Date());
+            }
+
+            S.getScript(url, {
+                attrs: ie ? {
+                    'data-mod-name': modName
+                } : undefined,
+                // syntaxError in all browser will trigger this
+                // same as #111 : https://github.com/kissyteam/kissy/issues/111
+                success: function () {
+
+                    if (isCss) {
+                        // css does not set LOADED because no add for css! must be set manually
+                        Utils.registerModule(runtime, modName, S.noop);
+                    } else {
+                        // does not need this step for css
+                        // standard browser(except ie9) fire load after KISSY.add immediately
+                        if (currentMod) {
+                            // S.log('standard browser get mod name after load : ' + modName);
+                            Utils.registerModule(runtime,
+                                modName, currentMod.fn,
+                                currentMod.config);
+                            currentMod = undefined;
+                        }
+                    }
+
+                    // nodejs is synchronous,
+                    // use('x,y')
+                    // need x,y filled into waitingMods first
+                    // x,y waiting -> x -> load -> y -> load -> check
+                    S.later(checkHandler);
+                },
+                error: checkHandler,
+                // source:mod.name + '-init',
+                charset: charset
+            });
+
+            function checkHandler() {
+                if (mod.fn) {
+                    var msg = 'load remote module: "' + modName +
+                        '" from: "' + url + '"';
+                    S.log(msg, 'info');
+                } else {
+                    // ie will call success even when getScript error(404)
+                    _modError();
+                }
+                // notify all loader instance
+                mod.notifyAll();
+            }
+
+            function _modError() {
+                var msg = modName +
+                    ' is not loaded! can not find module in path : ' +
+                    url;
+                S.log(msg, 'error');
+                mod.status = ERROR;
+            }
+
         }
+
     });
 
-
-    // ie 特有，找到当前正在交互的脚本，根据脚本名确定模块名
-    // 如果找不到，返回发送前那个脚本
-    function findModuleNameByInteractive(self) {
+// ie 特有，找到当前正在交互的脚本，根据脚本名确定模块名
+// 如果找不到，返回发送前那个脚本
+    function findModuleNameByInteractive() {
         var scripts = S.Env.host.document.getElementsByTagName('script'),
             re,
             i,
@@ -4781,392 +4935,527 @@ var KISSY = (function (undefined) {
             // then get it back here
             // S.log('can not find interactive script,time diff : ' + (+new Date() - self.__startLoadTime), 'error');
             // S.log('old_ie get mod name from cache : ' + self.__startLoadModName);
-            name = self.__startLoadModName;
+            name = startLoadModName;
         }
         return name;
     }
 
-})(KISSY);
-
-/*
- 2012-02-21 yiminghe@gmail.com refactor:
-
- 拆分 ComboLoader 与 Loader
-
- 2011-01-04 chengyu<yiminghe@gmail.com> refactor:
-
- adopt requirejs :
-
- 1. packages(cfg) , cfg :{
- name : 包名，用于指定业务模块前缀
- path: 前缀包名对应的路径
- charset: 该包下所有文件的编码
-
- 2. add(moduleName,function(S,depModule){return function(){}},{requires:['depModuleName']});
- moduleName add 时可以不写
- depModuleName 可以写相对地址 (./ , ../)，相对于 moduleName
-
- 3. S.use(['dom'],function(S,DOM){
- });
- 依赖注入，发生于 add 和 use 时期
-
- 4. add,use 不支持 css loader ,getScript 仍然保留支持
-
- 5. 部分更新模块文件代码 x/y?t=2011 ，加载过程中注意去除事件戳，仅在载入文件时使用
-
- demo : http://lite-ext.googlecode.com/svn/trunk/lite-ext/playground/module_package/index.html
-
- 2011-03-01 yiminghe@gmail.com note:
-
- compatibility
-
- 1. 保持兼容性
- 如果 requires 都已经 attached，支持 add 后立即 attach
- 支持 { attach : false } 显示控制 add 时是否 attach
-
- 2011-05-04 初步拆分文件，tmd 乱了
- */
-/**
- * @ignore
- * use and attach mod for kissy simple loader
- * @author yiminghe@gmail.com, lifesinger@gmail.com
- */
-(function (S, undefined) {
-
-    var Loader, data, utils, UA,
-        remoteLoads = {},
-        win = S.Env.host,
-        LOADING, LOADED, ERROR, ATTACHED;
-
-    Loader = S.Loader;
-    data = Loader.Status;
-    utils = Loader.Utils;
-    UA = S.UA;
-    LOADING = data.LOADING;
-    LOADED = data.LOADED;
-    ERROR = data.ERROR;
-    ATTACHED = data.ATTACHED;
-
-    function LoadChecker(fn) {
-        S.mix(this, {
-            fn: fn,
-            waitMods: {},
-            requireLoadedMods: {}
-        });
-    }
-
-    LoadChecker.prototype = {
-
-        constructor: LoadChecker,
-
-        check: function () {
-            var self = this,
-                fn = self.fn;
-            if (fn && S.isEmptyObject(self.waitMods)) {
-                fn();
-                self.fn = null;
-            }
-        },
-
-        addWaitMod: function (modName) {
-            this.waitMods[modName] = 1;
-        },
-
-        removeWaitMod: function (modName) {
-            delete this.waitMods[modName];
-        },
-
-        isModWait: function (modName) {
-            return this.waitMods[modName];
-        },
-
-        // only load mod requires once
-        // prevent looping dependency sub tree more than once for one use()
-        loadModRequires: function (loader, mod) {
-            // 根据每次 use 缓存子树
-            var self = this,
-                requireLoadedMods = self.requireLoadedMods,
-                modName = mod.name,
-                requires;
-            if (!requireLoadedMods[modName]) {
-                requireLoadedMods[modName] = 1;
-                requires = mod.getNormalizedRequires();
-                loadModules(loader, requires, self);
+    SimpleLoader.add = function (name, fn, config, runtime) {
+        if (S.isFunction(name)) {
+            config = fn;
+            fn = name;
+            if (UA.ie) {
+                // http://groups.google.com/group/commonjs/browse_thread/thread/5a3358ece35e688e/43145ceccfb1dc02#43145ceccfb1dc02
+                name = findModuleNameByInteractive();
+                // S.log('ie get modName by interactive: ' + name);
+                Utils.registerModule(runtime, name, fn, config);
+                startLoadModName = null;
+                startLoadTime = 0;
+            } else {
+                // 其他浏览器 onload 时，关联模块名与模块定义
+                currentMod = {
+                    fn: fn,
+                    config: config
+                };
             }
         }
-
     };
 
+    Loader.SimpleLoader = SimpleLoader;
 
-    S.augment(Loader, {
-        /**
-         * Start load specific mods, and fire callback when these mods and requires are attached.
-         * @member KISSY.Loader
-         *
-         * for example:
-         *      @example
-         *      S.use('mod-name', callback);
-         *      S.use('mod1,mod2', callback);
-         *
-         * @param {String|String[]} modNames names of mods to be loaded,if string then separated by space
-         * @param {Function} callback callback when modNames are all loaded,
-         * with KISSY as first argument and mod 's value as the following arguments
-         * @param _forceSync internal use, do not set
-         * @chainable
-         */
-        use: function (modNames, callback, /* for internal */_forceSync) {
-            var self = this,
-                normalizedModNames,
-                loadChecker = new LoadChecker(loadReady),
-                runtime = self.runtime;
-
-            modNames = utils.getModNamesAsArray(modNames);
-            modNames = utils.normalizeModNamesWithAlias(runtime, modNames);
-
-            normalizedModNames = utils.unalias(runtime, modNames);
-
-            function loadReady() {
-                utils.attachModsRecursively(normalizedModNames, runtime);
-                callback && callback.apply(runtime, utils.getModules(runtime, modNames));
-            }
-
-            loadModules(self, normalizedModNames, loadChecker);
-
-            // in case modules is loaded statically
-            // synchronous check
-            // but always async for loader
-            if (_forceSync) {
-                loadChecker.check();
-            } else {
-                setTimeout(function () {
-                    loadChecker.check();
-                }, 0);
-            }
-            return self;
-        }
-    });
-
-    function loadModules(self, modNames, loadChecker) {
-        var i,
-            l = modNames.length;
-        for (i = 0; i < l; i++) {
-            loadModule(self, modNames[i], loadChecker);
-        }
-    }
-
-    function loadModule(self, modName, loadChecker) {
-        var runtime = self.runtime,
-            status,
-            isWait,
-            mods = runtime.Env.mods,
-            mod = mods[modName];
-
-        if (!mod) {
-            utils.createModuleInfo(runtime, modName);
-            mod = mods[modName];
-        }
-
-        status = mod.status;
-
-        if (status == ATTACHED) {
-            return;
-        }
-
-        // 已经静态存在在页面上
-        // 或者该模块不是根据自身模块名动态加载来的(io.js包含 io/base,io/form)
-        if (status === LOADED) {
-            loadChecker.loadModRequires(self, mod);
-        } else {
-            isWait = loadChecker.isModWait(modName);
-            // prevent duplicate listen for this use
-            //  use('a,a') or
-            //  user('a,c') a require b, c require b
-            // listen b only once
-            // already waiting, will notify loadReady in the future
-            if (isWait) {
-                return;
-            }
-            // error or init or loading
-            loadChecker.addWaitMod(modName);
-            // in case parallel use (more than one use)
-            if (status <= LOADING) {
-                // load and attach this module
-                fetchModule(self, mod, loadChecker);
-            }
-
-        }
-    }
-
-    // Load a single module.
-    function fetchModule(self, mod, loadChecker) {
-
-        var runtime = self.runtime,
-            modName = mod.getName(),
-            charset = mod.getCharset(),
-            url = mod.getFullPath(),
-            currentModule = 0,
-            ie = UA.ie,
-            isCss = mod.getType() == 'css';
-
-        mod.status = LOADING;
-
-        if (ie && !isCss) {
-            self.__startLoadModName = modName;
-            self.__startLoadTime = Number(+new Date());
-        }
-
-        S.getScript(url, {
-            attrs: ie ? {
-                'data-mod-name': modName
-            } : undefined,
-            // syntaxError in all browser will trigger this
-            // same as #111 : https://github.com/kissyteam/kissy/issues/111
-            success: function () {
-                // parallel use
-                // 只设置第一个 use 处
-                if (mod.status == LOADING) {
-                    if (isCss) {
-                        // css does not set LOADED because no add for css! must be set manually
-                        utils.registerModule(runtime, modName, S.noop);
-                    } else {
-                        // does not need this step for css
-                        // standard browser(except ie9) fire load after KISSY.add immediately
-                        if (currentModule = self.__currentMod) {
-                            // S.log('standard browser get mod name after load : ' + modName);
-                            utils.registerModule(runtime,
-                                modName, currentModule.fn,
-                                currentModule.config);
-                            self.__currentMod = null;
-                        }
-                    }
-                }
-
-                // nodejs is synchronous,
-                // use('x,y')
-                // need x,y filled into waitingMods first
-                // x,y waiting -> x -> load -> y -> load -> check
-
-                S.later(checkHandler);
-            },
-            error: checkHandler,
-            // source:mod.name + '-init',
-            charset: charset
-        });
-
-        function checkHandler() {
-            if (mod.fn) {
-                if (!remoteLoads[modName]) {
-                    S.log('load remote module: "' + modName + '" from: "' + url + '"', 'info');
-                    remoteLoads[modName] = 1;
-                }
-                // 只在 LOADED 后加载依赖项一次
-                // 防止 config('modules') requires 和模块中 requires 不一致
-                loadChecker.loadModRequires(self, mod);
-                loadChecker.removeWaitMod(modName);
-                // a mod is loaded, need to check globally
-                loadChecker.check();
-            } else {
-                // ie will call success even when getScript error(404)
-                _modError();
-            }
-        }
-
-        function _modError() {
-            if (win.console) {
-                win.console.error(modName +
-                    ' is not loaded! can not find module in path : ' + url);
-            }
-            mod.status = ERROR;
-        }
-
-    }
 })(KISSY);
 
 /*
+ 2013-06-04 yiminghe@gmail.com
+ - refactor merge combo loader and simple loader
+ - support error callback
+
  2012-10-08 yiminghe@gmail.com refactor
  - use 调用先统一 load 再统一 attach
 
  2012-09-20 yiminghe@gmail.com refactor
  - 参考 async 重构，去除递归回调
  *//**
+ * combo loader for KISSY. using combo to load module files.
  * @ignore
- * mix loader into S and infer KISSy baseUrl if not set
- * @author yiminghe@gmail.com, lifesinger@gmail.com
+ * @author yiminghe@gmail.com
+ */
+(function (S) {
+
+    function loadScripts(rss, callback, charset) {
+        var count = rss && rss.length,
+            errorList = [],
+            successList = [];
+
+        function complete() {
+            if (!(--count)) {
+                callback(successList, errorList);
+            }
+        }
+
+        S.each(rss, function (rs) {
+            S.getScript(rs.fullpath, {
+                success: function () {
+                    successList.push(rs);
+                    complete();
+                },
+                error: function () {
+                    errorList.push(rs);
+                    complete();
+                },
+                charset: charset
+            });
+        });
+    }
+
+    var Loader = S.Loader,
+        Status = Loader.Status,
+        Utils = Loader.Utils,
+        LOADING = Status.LOADING,
+        LOADED = Status.LOADED,
+        ERROR = Status.ERROR,
+        ATTACHED = Status.ATTACHED;
+
+    /**
+     * @class KISSY.Loader.ComboLoader
+     * using combo to load module files
+     * @param runtime KISSY
+     * @param waitingModules
+     * @private
+     */
+    function ComboLoader(runtime, waitingModules) {
+        S.mix(this, {
+            runtime: runtime,
+            waitingModules: waitingModules
+        });
+    }
+
+    function debugRemoteModules(rss) {
+        S.each(rss, function (rs) {
+            var ms = [];
+            S.each(rs.mods, function (m) {
+                if (m.status == LOADED) {
+                    ms.push(m.name);
+                }
+            });
+            if (ms.length) {
+                S.log('load remote modules: "' + ms.join(', ') + '" from: "' + rs.fullpath + '"');
+            }
+        });
+    }
+
+    // ----------------------- private end
+    S.augment(ComboLoader, {
+
+        /**
+         * use, _forceSync for kissy.js, initialize dom,event sync
+         */
+        use: function (normalizedModNames) {
+            var self = this,
+                allModNames,
+                comboUrls,
+                runtime = self.runtime;
+
+            allModNames = S.keys(self.calculate(normalizedModNames));
+
+            Utils.createModulesInfo(runtime, allModNames);
+
+            comboUrls = self.getComboUrls(allModNames);
+
+            // load css first to avoid page blink
+            S.each(comboUrls.css, function (cssOne) {
+                loadScripts(cssOne, function (success, error) {
+
+                    if ('@DEBUG@') {
+                        debugRemoteModules(success);
+                    }
+
+                    S.each(success, function (one) {
+                        S.each(one.mods, function (mod) {
+                            Utils.registerModule(runtime, mod.getName(), S.noop);
+                            // notify all loader instance
+                            mod.notifyAll();
+                        });
+                    });
+
+                    S.each(error, function (one) {
+                        S.each(one.mods, function (mod) {
+                            var msg = mod.name +
+                                ' is not loaded! can not find module in path : ' +
+                                one.fullpath;
+                            S.log(msg, 'error');
+                            mod.status = ERROR;
+                            // notify all loader instance
+                            mod.notifyAll();
+                        });
+                    });
+
+                }, cssOne.charset);
+            });
+
+            // jss css download in parallel
+            S.each(comboUrls.js, function (jsOne) {
+                loadScripts(jsOne, function (success) {
+
+                    if ('@DEBUG@') {
+                        debugRemoteModules(success);
+                    }
+
+                    S.each(jsOne, function (one) {
+                        S.each(one.mods, function (mod) {
+                            // fix #111
+                            // https://github.com/kissyteam/kissy/issues/111
+                            if (!mod.fn) {
+                                var msg = mod.name +
+                                    ' is not loaded! can not find module in path : ' +
+                                    one.fullpath;
+                                S.log(msg, 'error');
+                                mod.status = ERROR;
+                            }
+                            // notify all loader instance
+                            mod.notifyAll();
+                        });
+                    });
+
+                }, jsOne.charset);
+            });
+        },
+
+        /**
+         * calculate dependency
+         * @param modNames
+         * @param [cache]
+         * @param ret
+         * @return {Array}
+         */
+        calculate: function (modNames, cache, ret) {
+            var i,
+                m,
+                mod,
+                modStatus,
+                self = this,
+                waitingModules = self.waitingModules,
+                runtime = self.runtime;
+
+            ret = ret || {};
+            // 提高性能，不用每个模块都再次全部依赖计算
+            // 做个缓存，每个模块对应的待动态加载模块
+            cache = cache || {};
+
+            for (i = 0; i < modNames.length; i++) {
+                m = modNames[i];
+                if (cache[m]) {
+                    continue;
+                }
+                cache[m] = 1;
+                mod = Utils.createModuleInfo(runtime, m);
+                modStatus = mod.status;
+                if (modStatus === ERROR) {
+                    continue;
+                }
+                if (modStatus != LOADED && modStatus != ATTACHED) {
+                    if (!waitingModules.contains(m)) {
+                        if (modStatus != LOADING) {
+                            mod.status = LOADING;
+                            ret[m] = 1;
+                        }
+                        mod.addCallback(function (mod) {
+                            waitingModules.remove(mod.getName());
+                            // notify current loader instance
+                            waitingModules.notifyAll();
+                        });
+                        waitingModules.add(m);
+                    }
+                }
+                self.calculate(mod.getNormalizedRequires(), cache, ret);
+            }
+
+            return ret;
+        },
+
+        /**
+         * Get combo urls
+         * @param modNames
+         * @return {Object}
+         */
+        getComboUrls: function (modNames) {
+
+            var self = this,
+                i,
+                runtime = self.runtime,
+                Config = runtime.Config,
+                combos = {};
+
+            S.each(modNames, function (modName) {
+                var mod = Utils.createModuleInfo(runtime, modName),
+                    packageInfo = mod.getPackage(),
+                    type = mod.getType(),
+                    mods,
+                    packageName = packageInfo.getName();
+                combos[packageName] = combos[packageName] || {};
+                if (!(mods = combos[packageName][type])) {
+                    mods = combos[packageName][type] = combos[packageName][type] || [];
+                    mods.packageInfo = packageInfo;
+                }
+                mods.push(mod);
+            });
+
+            var res = {
+                    js: {},
+                    css: {}
+                },
+                t,
+                tMods,
+                packageName,
+                type,
+                comboPrefix = Config.comboPrefix,
+                comboSep = Config.comboSep,
+                maxFileNum = Config.comboMaxFileNum,
+                maxUrlLength = Config.comboMaxUrlLength;
+
+            for (packageName in combos) {
+
+                for (type in combos[packageName]) {
+
+                    t = [];
+                    tMods = [];
+
+                    var jss = combos[packageName][type],
+                        packageInfo = jss.packageInfo,
+                        tag = packageInfo.getTag(),
+                        suffix = (tag ? ('?t=' + encodeURIComponent(tag)) : ''),
+                        suffixLength = suffix.length,
+                        prefix,
+                        path,
+                        fullpath,
+                        l,
+                        rss,
+                        packagePath = packageInfo.getPrefixUriForCombo();
+
+                    rss = res[type][packageName] = [];
+                    rss.charset = packageInfo.getCharset();
+                    // add packageName to common prefix
+                    // combo grouped by package
+                    prefix = packagePath + comboPrefix;
+                    l = prefix.length;
+
+                    function pushComboUrl() {
+                        // map the whole combo path
+                        //noinspection JSReferencingMutableVariableFromClosure
+                        rss.push({
+                            fullpath: Utils.getMappedPath(
+                                runtime,
+                                prefix + t.join(comboSep) + suffix,
+                                Config.mappedComboRules),
+                            mods: tMods
+                        });
+                    }
+
+                    for (i = 0; i < jss.length; i++) {
+
+                        // map individual module
+                        fullpath = jss[i].getFullPath();
+
+                        if (!packageInfo.isCombine() || !S.startsWith(fullpath, packagePath)) {
+                            rss.push({
+                                fullpath: fullpath,
+                                mods: [jss[i]]
+                            });
+                            continue;
+                        }
+
+                        // ignore query parameter
+                        path = fullpath.slice(packagePath.length).replace(/\?.*$/, '');
+
+                        t.push(path);
+                        tMods.push(jss[i]);
+
+                        if ((t.length > maxFileNum) ||
+                            (l + t.join(comboSep).length + suffixLength > maxUrlLength)) {
+                            t.pop();
+                            tMods.pop();
+                            pushComboUrl();
+                            t = [];
+                            tMods = [];
+                            i--;
+                        }
+                    }
+                    if (t.length) {
+                        pushComboUrl();
+                    }
+
+                }
+
+            }
+
+            return res;
+        }
+    });
+
+
+    Loader.ComboLoader = ComboLoader;
+
+})(KISSY);
+/*
+ 2013-06-04 yiminghe@gmail.com
+ - refactor merge combo loader and simple loader
+ - support error callback
+
+ 2012-02-20 yiminghe note:
+ - three status
+ 0: initialized
+ LOADED: load into page
+ ATTACHED: fn executed
+ *//**
+ * @ignore
+ * mix loader into S and infer KISSY baseUrl if not set
+ * @author yiminghe@gmail.com
  */
 (function (S, undefined) {
 
-    S.mix(S,
-        {
-            /**
-             * Registers a module with the KISSY global.
-             * @param {String} name module name.
-             * it must be set if combine is true in {@link KISSY#config}
-             * @param {Function} fn module definition function that is used to return
-             * this module value
-             * @param {KISSY} fn.S KISSY global instance
-             * @param {Object} [cfg] module optional config data
-             * @param {String[]} cfg.requires this module's required module name list
-             * @member KISSY
-             *
-             * for example:
-             *      @example
-             *      // dom module's definition
-             *      KISSY.add('dom', function(S, xx){
+    var Loader = KISSY.Loader,
+        Env = S.Env,
+        Utils = Loader.Utils,
+        SimpleLoader = Loader.SimpleLoader,
+        ComboLoader = Loader.ComboLoader;
+
+    function WaitingModules(fn) {
+        S.mix(this, {
+            fn: fn,
+            waitMods: {}
+        });
+    }
+
+    WaitingModules.prototype = {
+
+        constructor: WaitingModules,
+
+        notifyAll: function () {
+            var self = this,
+                fn = self.fn;
+            if (fn && S.isEmptyObject(self.waitMods)) {
+                self.fn = null;
+                fn();
+            }
+        },
+
+        add: function (modName) {
+            this.waitMods[modName] = 1;
+        },
+
+        remove: function (modName) {
+            delete this.waitMods[modName];
+        },
+
+        contains: function (modName) {
+            return this.waitMods[modName];
+        }
+
+    };
+
+    Loader.WaitingModules = WaitingModules;
+
+    S.mix(S, {
+        /**
+         * Registers a module with the KISSY global.
+         * @param {String} name module name.
+         * it must be set if combine is true in {@link KISSY#config}
+         * @param {Function} fn module definition function that is used to return
+         * this module value
+         * @param {KISSY} fn.S KISSY global instance
+         * @param {Object} [cfg] module optional config data
+         * @param {String[]} cfg.requires this module's required module name list
+         * @member KISSY
+         *
+         * for example:
+         *      @example
+         *      // dom module's definition
+         *      KISSY.add('dom', function(S, xx){
              *          return {css: function(el, name, val){}};
              *      },{
              *          requires:['xx']
              *      });
-             */
-            add: function (name, fn, cfg) {
-                this.getLoader().add(name, fn, cfg);
-            },
-            /**
-             * Attached one or more modules to global KISSY instance.
-             * @param {String|String[]} names moduleNames. 1-n modules to bind(use comma to separate)
-             * @param {Function} callback callback function executed
-             * when KISSY has the required functionality.
-             * @param {KISSY} callback.S KISSY instance
-             * @param callback.x... used module values
-             * @member KISSY
-             *
-             * for example:
-             *      @example
-             *      // loads and attached overlay,dd and its dependencies
-             *      KISSY.use('overlay,dd', function(S, Overlay){});
-             */
-            use: function (names, callback) {
-                var loader = this.getLoader();
-                loader.use.apply(loader, arguments);
-            },
-            /**
-             * get KISSY 's loader instance
-             * @member KISSY
-             * @return {KISSY.Loader}
-             */
-            getLoader: function () {
-                var self = this,
-                    Config = self.Config,
-                    Env = self.Env;
-                if (Config.combine && !S.UA.nodejs) {
-                    return Env._comboLoader;
-                } else {
-                    return Env._loader;
-                }
-            },
-            /**
-             * get module value defined by define function
-             * @param {string} moduleName
-             * @member KISSY
-             */
-            require: function (moduleName) {
-                return utils.getModules(this, [moduleName])[1];
+         */
+        add: function (name, fn, cfg) {
+            if (typeof name == 'string') {
+                Utils.registerModule(S, name, fn, cfg);
+            } else {
+                SimpleLoader.add(name, fn, cfg, S);
             }
-        });
+        },
+        /**
+         * Attached one or more modules to global KISSY instance.
+         * @param {String|String[]} modNames moduleNames. 1-n modules to bind(use comma to separate)
+         * @param {Function} success callback function executed
+         * when KISSY has the required functionality.
+         * @param {KISSY} success.S KISSY instance
+         * @param success.x... used module values
+         * @member KISSY
+         *
+         * for example:
+         *      @example
+         *      // loads and attached overlay,dd and its dependencies
+         *      KISSY.use('overlay,dd', function(S, Overlay){});
+         */
+        use: function (modNames, success) {
+            var Config = S.Config,
+                normalizedModNames,
+                loader,
+                error,
+                sync,
+                waitingModules = new WaitingModules(loadReady);
 
-    var Loader = S.Loader,
-        Env = S.Env,
-        utils = Loader.Utils,
-        ComboLoader = S.Loader.Combo;
+            if (S.isPlainObject(success)) {
+                sync = success.sync;
+                error = success.error;
+                success = success.success;
+            }
+
+            modNames = Utils.getModNamesAsArray(modNames);
+            modNames = Utils.normalizeModNamesWithAlias(S, modNames);
+
+            normalizedModNames = Utils.unalias(S, modNames);
+
+            function loadReady() {
+                var errorList = [],
+                    ret;
+                ret = Utils.attachModsRecursively(normalizedModNames, S, undefined, errorList);
+                if (ret) {
+                    success && success.apply(S, Utils.getModules(S, modNames));
+                } else if (errorList.length) {
+                    error && error.apply(S, errorList);
+                } else {
+                    waitingModules.fn = loadReady;
+                    loader.use(normalizedModNames);
+                }
+            }
+
+            if (Config.combine && !S.UA.nodejs) {
+                loader = new ComboLoader(S, waitingModules);
+            } else {
+                loader = new SimpleLoader(S, waitingModules);
+            }
+
+            // in case modules is loaded statically
+            // synchronous check
+            // but always async for loader
+            if (sync) {
+                waitingModules.notifyAll();
+            } else {
+                setTimeout(function () {
+                    waitingModules.notifyAll();
+                }, 0);
+            }
+            return self;
+        },
+
+        /**
+         * @deprecated
+         */
+        require: function (name) {
+            return Utils.getModules(S, [name])[1];
+        }
+    });
 
     function returnJson(s) {
         return (new Function('return ' + s))();
@@ -5248,19 +5537,20 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20130603164039'
+            tag: '20130604204338'
         }, getBaseInfo()));
     }
 
     // Initializes loader.
     Env.mods = {}; // all added mods
-    Env._loader = new Loader(S);
 
-    if (ComboLoader) {
-        Env._comboLoader = new ComboLoader(S);
-    }
+})(KISSY);
 
-})(KISSY);/**
+/*
+ 2013-06-04 yiminghe@gmail.com
+ - refactor merge combo loader and simple loader
+ - support error callback
+ *//**
  * @ignore
  * web.js
  * @author lifesinger@gmail.com, yiminghe@gmail.com
@@ -5520,7 +5810,7 @@ var KISSY = (function (undefined) {
         },
         modules: {
             core: {
-                alias: ['dom', 'event', 'io', 'anim', 'base', 'node', 'json', 'ua','cookie']
+                alias: ['dom', 'event', 'io', 'anim', 'base', 'node', 'json', 'cookie']
             }
         }
     });
@@ -5636,7 +5926,8 @@ config({
 });
 config({
     'editor': {alias: ['editor/core']}
-});config({
+});/*Generated By KISSY Module Compiler*/
+config({
 'editor/core': {requires: ['htmlparser','component/base','core']}
 });
 config({

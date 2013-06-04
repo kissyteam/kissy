@@ -5,8 +5,8 @@
  */
 (function (S) {
 
-    var Path = S.Path,
-        Loader = S.Loader,
+    var Loader = S.Loader,
+        Path = S.Path,
         IGNORE_PACKAGE_NAME_IN_URI = 'ignorePackageNameInUri',
         Utils = Loader.Utils;
 
@@ -117,9 +117,32 @@
     function Module(cfg) {
         this.status = Loader.Status.INIT;
         S.mix(this, cfg);
+        this.callbacks = [];
     }
 
     S.augment(Module, {
+
+        addCallback: function (callback) {
+            this.callbacks.push(callback);
+        },
+
+        notifyAll: function () {
+            var callback;
+            var len = this.callbacks.length,
+                i = 0;
+            for (; i < len; i++) {
+                callback = this.callbacks[i];
+                try {
+                    callback(this);
+                } catch (e) {
+                    setTimeout(function () {
+                        throw e;
+                    }, 0);
+                }
+            }
+            this.callbacks = [];
+        },
+
         /**
          * Set the value of current module
          * @param v value to be set
@@ -318,7 +341,6 @@
 
         return packages[pName] || systemPackage;
     }
-
 
 })(KISSY);
 /*

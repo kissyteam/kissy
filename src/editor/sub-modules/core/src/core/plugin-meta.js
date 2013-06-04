@@ -1,4 +1,5 @@
 
+KISSY.add('editor/core/plugin-meta',function(){
 (function(config,Features,UA){
 config({
 'editor/plugin/back-color': {requires: ['editor','editor/plugin/color/btn','editor/plugin/back-color/cmd']}
@@ -268,7 +269,8 @@ config({
 'editor/plugin/xiami-music/dialog': {requires: ['editor','editor/plugin/flash/dialog','editor/plugin/menubutton']}
 });
 
-                })(function(c){
-                KISSY.config('modules', c);
-                },KISSY.Features,KISSY.UA);
+                    })(function(c){
+                    KISSY.config('modules', c);
+                    },KISSY.Features,KISSY.UA);
+                });
             

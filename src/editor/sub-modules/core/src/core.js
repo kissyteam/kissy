@@ -1238,7 +1238,8 @@ KISSY.add('editor/core', function (S, Editor, Utils, focusManager, Styles, zInde
         'editor/core/clipboard',
         'editor/core/enterKey',
         'editor/core/htmlDataProcessor',
-        'editor/core/selectionFix'
+        'editor/core/selectionFix',
+        'editor/core/plugin-meta'
     ]
 });
 /**

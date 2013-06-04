@@ -12,13 +12,15 @@
         data = Loader.Status,
         ATTACHED = data.ATTACHED,
         LOADED = data.LOADED,
+        ERROR = data.ERROR,
+        LOADING = data.LOADING,
         /**
          * @class KISSY.Loader.Utils
          * Utils for KISSY Loader
          * @singleton
          * @private
          */
-            Utils = S.Loader.Utils = {},
+            Utils = Loader.Utils = {},
         doc = host.document;
 
     // http://wiki.commonjs.org/wiki/Packages/Mappings/A
@@ -141,6 +143,27 @@
         },
 
         /**
+         * Whether modNames is error.
+         * @param runtime
+         * @param modNames
+         * @return {Boolean}
+         */
+        isLoaded: function (runtime, modNames) {
+            return isStatus(runtime, modNames, ERROR);
+        },
+
+
+        /**
+         * Whether modNames is loading.
+         * @param runtime
+         * @param modNames
+         * @return {Boolean}
+         */
+        isLoading: function (runtime, modNames) {
+            return isStatus(runtime, modNames, LOADING);
+        },
+
+        /**
          * Get module values
          * @param runtime
          * @param modNames
@@ -172,20 +195,20 @@
             return mods;
         },
 
-        attachModsRecursively: function (modNames, runtime, stack) {
+        attachModsRecursively: function (modNames, runtime, stack, errorList) {
             stack = stack || [];
             var i,
                 s = 1,
                 l = modNames.length,
                 stackDepth = stack.length;
             for (i = 0; i < l; i++) {
-                s = Utils.attachModRecursively(modNames[i], runtime, stack) && s;
+                s = Utils.attachModRecursively(modNames[i], runtime, stack, errorList) && s;
                 stack.length = stackDepth;
             }
             return s;
         },
 
-        attachModRecursively: function (modName, runtime, stack) {
+        attachModRecursively: function (modName, runtime, stack, errorList) {
             var mods = runtime.Env.mods,
                 status,
                 m = mods[modName];
@@ -196,10 +219,13 @@
             if (status == ATTACHED) {
                 return 1;
             }
+            if (status == ERROR) {
+                errorList.push(m);
+            }
             if (status != LOADED) {
                 return 0;
             }
-            if (S.Config.debug) {
+            if ('@DEBUG@') {
                 if (S.inArray(modName, stack)) {
                     stack.push(modName);
                     S.error('find cyclic dependency between mods: ' + stack);
@@ -207,7 +233,8 @@
                 }
                 stack.push(modName);
             }
-            if (Utils.attachModsRecursively(m.getNormalizedRequires(), runtime, stack)) {
+            if (Utils.attachModsRecursively(m.getNormalizedRequires(),
+                runtime, stack, errorList)) {
                 Utils.attachMod(runtime, m);
                 return 1;
             }
@@ -233,10 +260,6 @@
             }
 
             mod.status = ATTACHED;
-
-            runtime.getLoader().fire('afterModAttached', {
-                mod: mod
-            });
         },
 
         /**

@@ -6,7 +6,7 @@
 (function (S, undefined) {
 
     var Loader = S.Loader,
-        utils = Loader.Utils,
+        Utils = Loader.Utils,
         host = S.Env.host,
         location = host.location,
         simulatedLocation,
@@ -116,7 +116,7 @@
             Env = self.Env;
         if (modules) {
             S.each(modules, function (modCfg, modName) {
-                utils.createModuleInfo(self, modName, modCfg);
+                Utils.createModuleInfo(self, modName, modCfg);
                 S.mix(Env.mods[modName], modCfg);
             });
         }

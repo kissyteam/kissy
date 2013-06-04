@@ -16,7 +16,7 @@
         },
         modules: {
             core: {
-                alias: ['dom', 'event', 'io', 'anim', 'base', 'node', 'json', 'ua','cookie']
+                alias: ['dom', 'event', 'io', 'anim', 'base', 'node', 'json', 'cookie']
             }
         }
     });

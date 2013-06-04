@@ -25,8 +25,6 @@ describe("KISSY Loader alias", function () {
         var ret = 0;
 
         KISSY.use('alias-a/x', function (S, X) {
-            var r = S.require('alias-a/x');
-            expect(r).toBe('alias-a/b');
             expect(X).toBe('alias-a/b');
             ret = 1;
         });

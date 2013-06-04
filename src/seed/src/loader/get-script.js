@@ -1,13 +1,13 @@
 /**
  * @ignore
  * getScript support for css and js callback after load
- * @author yiminghe@gmail.com, lifesinger@gmail.com
+ * @author yiminghe@gmail.com
  */
 (function (S) {
 
     var MILLISECONDS_OF_SECOND = 1000,
         doc = S.Env.host.document,
-        utils = S.Loader.Utils,
+        Utils = S.Loader.Utils,
         Path = S.Path,
         jsCssCallbacks = {},
         UA = S.UA,
@@ -81,7 +81,7 @@
                 // S.log('init getScript : by ' + config.source);
             }
 
-            var head = utils.docHead(),
+            var head = Utils.docHead(),
                 node = doc.createElement(css ? 'link' : 'script'),
                 clearTimer = function () {
                     if (timer) {
@@ -147,7 +147,7 @@
             }
             // old chrome/firefox for css
             else if (css) {
-                utils.pollCss(node, function () {
+                Utils.pollCss(node, function () {
                     end(0);
                 });
             } else {

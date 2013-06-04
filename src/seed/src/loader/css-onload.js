@@ -7,7 +7,7 @@
 
     var CSS_POLL_INTERVAL = 30,
         UA= S.UA,
-        utils = S.Loader.Utils,
+        Utils = S.Loader.Utils,
     // central poll for link node
         timer = 0,
         monitors = {
@@ -96,7 +96,7 @@
         }
     }
 
-    S.mix(utils, {
+    S.mix(Utils, {
         pollCss: // refer : http://lifesinger.org/lab/2011/load-js-css/css-preload.html
         // 暂时不考虑如何判断失败，如 404 等
             function (node, callback) {
