@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 30 01:32
+build time: Jun 5 22:25
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -65,9 +65,9 @@ KISSY.add("button/render", function (S, Component) {
  * Button control for KISSY.
  * @author yiminghe@gmail.com
  */
-KISSY.add("button/base", function (S, Event, Component, ButtonRender) {
+KISSY.add("button/base", function (S, Node, Component, ButtonRender) {
 
-    var KeyCodes = Event.KeyCodes;
+    var KeyCode = Node.KeyCode;
     /**
      * KISSY Button.
      * @extends KISSY.Component.Controller
@@ -82,16 +82,16 @@ KISSY.add("button/base", function (S, Event, Component, ButtonRender) {
         },
 
         handleKeyEventInternal: function (e) {
-            if (e.keyCode == KeyCodes.ENTER &&
+            if (e.keyCode == KeyCode.ENTER &&
                 e.type == "keydown" ||
-                e.keyCode == KeyCodes.SPACE &&
+                e.keyCode == KeyCode.SPACE &&
                     e.type == "keyup") {
                 return this.performActionInternal(e);
             }
             // Return true for space keypress (even though the event is handled on keyup)
             // as preventDefault needs to be called up keypress to take effect in IE and
             // WebKit.
-            return e.keyCode == KeyCodes.SPACE;
+            return e.keyCode == KeyCode.SPACE;
         },
 
         performActionInternal: function () {
@@ -188,7 +188,7 @@ KISSY.add("button/base", function (S, Event, Component, ButtonRender) {
     return Button;
 
 }, {
-    requires: ['event', 'component/base', './render']
+    requires: ['node', 'component/base', './render']
 });
 /**
  * @ignore

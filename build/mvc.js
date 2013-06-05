@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 30 01:42
+build time: Jun 5 22:37
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -318,7 +318,7 @@ KISSY.add("mvc/model", function (S, Base) {
  * collection of models
  * @author yiminghe@gmail.com
  */
-KISSY.add("mvc/collection", function (S, Event, Model, Base) {
+KISSY.add("mvc/collection", function (S, Model, Base) {
 
     function findModelIndex(mods, mod, comparator) {
         var i = mods.length;
@@ -622,7 +622,7 @@ KISSY.add("mvc/collection", function (S, Event, Model, Base) {
     return Collection;
 
 }, {
-    requires:['event', './model', 'base']
+    requires:['./model', 'base']
 });
 /**
  * view for kissy mvc : event delegation,el generator
@@ -762,7 +762,7 @@ KISSY.add("mvc/view", function (S, Node, Base) {
  * simple router to get path parameter and query parameter from hash(old ie) or url(html5)
  * @author yiminghe@gmail.com
  */
-KISSY.add('mvc/router', function (S, Event, Base) {
+KISSY.add('mvc/router', function (S, Node, Base) {
     var each = S.each,
     // take a breath to avoid duplicate hashchange
         BREATH_INTERVAL = 100,
@@ -770,6 +770,7 @@ KISSY.add('mvc/router', function (S, Event, Base) {
     // all registered route instance
         allRoutes = [],
         win = S.Env.host,
+        $win = $(win),
         ie = win.document.documentMode || S.UA.ie,
         history = win.history ,
         supportNativeHistory = !!(history && history['pushState']),
@@ -1009,10 +1010,10 @@ KISSY.add('mvc/router', function (S, Event, Base) {
     }
 
     /*
-      transform route declaration to router reg
-      @param str
-              /search/:q
-              /user/*path
+     transform route declaration to router reg
+     @param str
+     /search/:q
+     /user/*path
      */
     function transformRouterReg(self, str, callback) {
         var name = str,
@@ -1198,7 +1199,7 @@ KISSY.add('mvc/router', function (S, Event, Base) {
                         if (replaceHistory) {
                             // add history hack
                             location.replace(normalizedPath +
-                                (ie && ie < 8 ? Event.REPLACE_HISTORY : ''));
+                                (ie && ie < 8 ? Node.REPLACE_HISTORY : ''));
                         } else {
                             location.hash = normalizedPath;
                         }
@@ -1268,11 +1269,11 @@ KISSY.add('mvc/router', function (S, Event, Base) {
                 setTimeout(function () {
 
                     if (nativeHistory && supportNativeHistory) {
-                        Event.on(win, 'popstate', dispatch);
+                        $win.on('popstate', dispatch);
                         // html5 triggerRoute is leaved to user decision
                         // if provide no #! hash
                     } else {
-                        Event.on(win, "hashchange", dispatch);
+                        $win.on("hashchange", dispatch);
                         // hash-based browser is forced to trigger route
                         opts.triggerRoute = 1;
                     }
@@ -1294,7 +1295,7 @@ KISSY.add('mvc/router', function (S, Event, Base) {
     return Router;
 
 }, {
-    requires: ['event', 'base']
+    requires: ['node', 'base']
 });
 
 /**

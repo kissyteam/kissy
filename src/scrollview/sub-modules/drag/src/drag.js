@@ -2,9 +2,11 @@
  * allow body to drag
  * @author yiminghe@gmail.com
  */
-KISSY.add('scrollview/drag', function (S, ScrollViewBase, DD, Event) {
+KISSY.add('scrollview/drag', function (S, ScrollViewBase, DD, Node) {
 
     var OUT_OF_BOUND_FACTOR = 0.5;
+
+    var Gesture=Node.Gesture;
 
     var SWIPE_SAMPLE_INTERVAL = 300;
 
@@ -221,8 +223,8 @@ KISSY.add('scrollview/drag', function (S, ScrollViewBase, DD, Event) {
                     .on('drag', self._onDrag, self)
                     .on('dragend', self._onDragEnd, self);
 
-                self.get('el').on(Event.Gesture.start, self._onGestureStart, self);
-                contentEl.on(Event.Gesture.start, self._onGestureStart, self);
+                self.get('el').on(Gesture.start, self._onGestureStart, self);
+                contentEl.on(Gesture.start, self._onGestureStart, self);
             },
 
 
@@ -461,7 +463,7 @@ KISSY.add('scrollview/drag', function (S, ScrollViewBase, DD, Event) {
     );
 
 }, {
-    requires: ['./base', 'dd/base', 'event']
+    requires: ['./base', 'dd/base', 'node']
 });
 
 /**

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 30 01:40
+build time: Jun 5 22:34
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -29,7 +29,7 @@ KISSY.add("editor/plugin/underline", function (S, Editor, ui, cmd) {
 
             editor.docReady(function () {
                 editor.get("document").on("keydown", function (e) {
-                    if (e.ctrlKey && e.keyCode == S.Node.KeyCodes.U) {
+                    if (e.ctrlKey && e.keyCode == S.Node.KeyCode.U) {
                         editor.execCommand("underline");
                         e.preventDefault();
                     }

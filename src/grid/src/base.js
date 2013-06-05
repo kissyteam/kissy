@@ -1,6 +1,6 @@
 /**
  * This class specifies the definition for whow grid
- * @author dxq613@gmail.com, yiminghe@gmail.com
+ * @author dxq613@gmail.com
  */
 KISSY.add('grid/base', function (S, Component, Header, GridBody, Util) {
 
@@ -447,5 +447,5 @@ KISSY.add('grid/base', function (S, Component, Header, GridBody, Util) {
     });
     return grid;
 }, {
-    requires:['component', './header', './gridbody', './util']
+    requires:['component/base', './header', './gridbody', './util']
 });

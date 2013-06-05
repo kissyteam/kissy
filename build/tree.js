@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 30 01:44
+build time: Jun 5 22:38
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -219,7 +219,7 @@ KISSY.add("tree/node-render", function (S, Node, Component, TreeNodeTpl, Extensi
  */
 KISSY.add("tree/node", function (S, Node, Component,Extension, TreeNodeRender) {
     var $ = Node.all,
-        KeyCodes = Node.KeyCodes;
+        KeyCode = Node.KeyCode;
 
     /**
      * @class
@@ -266,31 +266,31 @@ KISSY.add("tree/node", function (S, Node, Component,Extension, TreeNodeRender) {
                 switch (keyCode) {
                     // home
                     // 移到树的顶层节点
-                    case KeyCodes.HOME:
+                    case KeyCode.HOME:
                         nodeToBeSelected = tree;
                         break;
 
                     // end
                     // 移到最后一个可视节点
-                    case KeyCodes.END:
+                    case KeyCode.END:
                         nodeToBeSelected = getLastVisibleDescendant(tree);
                         break;
 
                     // 上
                     // 当前节点的上一个兄弟节点的最后一个可显示节点
-                    case KeyCodes.UP:
+                    case KeyCode.UP:
                         nodeToBeSelected = getPreviousVisibleNode(self);
                         break;
 
                     // 下
                     // 当前节点的下一个可显示节点
-                    case KeyCodes.DOWN:
+                    case KeyCode.DOWN:
                         nodeToBeSelected = getNextVisibleNode(self);
                         break;
 
                     // 左
                     // 选择父节点或 collapse 当前节点
-                    case KeyCodes.LEFT:
+                    case KeyCode.LEFT:
                         if (expanded && (children.length || isLeaf === false)) {
                             self.set("expanded", false);
                         } else {
@@ -300,7 +300,7 @@ KISSY.add("tree/node", function (S, Node, Component,Extension, TreeNodeRender) {
 
                     // 右
                     // expand 当前节点
-                    case KeyCodes.RIGHT:
+                    case KeyCode.RIGHT:
                         if (children.length || isLeaf === false) {
                             if (!expanded) {
                                 self.set("expanded", true);
@@ -713,7 +713,9 @@ KISSY.add("tree/tree-render", function (S, TreeNodeRender, TreeManagerRender) {
  * tree management utils
  * @author yiminghe@gmail.com
  */
-KISSY.add("tree/tree-manager", function (S, Event, Component,Extension) {
+KISSY.add("tree/tree-manager", function (S, Node, Component,Extension) {
+
+    var KeyCode=Node.KeyCode;
 
     function TreeManager() {
     }
@@ -776,7 +778,7 @@ KISSY.add("tree/tree-manager", function (S, Event, Component,Extension) {
 
         handleKeyEventInternal: function (e) {
             var current = this.get("selectedItem");
-            if (e.keyCode == Event.KeyCodes.ENTER) {
+            if (e.keyCode == KeyCode.ENTER) {
                 // 传递给真正的单个子节点
                 return current.performActionInternal(e);
             }
@@ -841,7 +843,7 @@ KISSY.add("tree/tree-manager", function (S, Event, Component,Extension) {
 
     return TreeManager;
 }, {
-    requires: ['event', 'component/base','component/extension']
+    requires: ['node', 'component/base','component/extension']
 });
 /**
  * root node represent a simple tree

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 3 13:08
+build time: Jun 5 22:35
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -26,11 +26,11 @@ build time: Jun 3 13:08
  */
 KISSY.add('event/dom/base/key-codes', function (S) {
     /**
-     * @enum {Number} KISSY.Event.KeyCodes
+     * @enum {Number} KISSY.Event.KeyCode
      * All key codes.
      */
     var UA = S.UA,
-        KeyCodes = {
+        KeyCode = {
             /**
              * MAC_ENTER
              */
@@ -458,41 +458,41 @@ KISSY.add('event/dom/base/key-codes', function (S) {
      * @param {KISSY.Event.DOMEventObject} e event object
      * @return {Boolean}
      */
-    KeyCodes.isTextModifyingKeyEvent = function (e) {
+    KeyCode.isTextModifyingKeyEvent = function (e) {
         if (e.altKey && !e.ctrlKey ||
             e.metaKey ||
             // Function keys don't generate text
-            e.keyCode >= KeyCodes.F1 &&
-                e.keyCode <= KeyCodes.F12) {
+            e.keyCode >= KeyCode.F1 &&
+                e.keyCode <= KeyCode.F12) {
             return false;
         }
 
         // The following keys are quite harmless, even in combination with
         // CTRL, ALT or SHIFT.
         switch (e.keyCode) {
-            case KeyCodes.ALT:
-            case KeyCodes.CAPS_LOCK:
-            case KeyCodes.CONTEXT_MENU:
-            case KeyCodes.CTRL:
-            case KeyCodes.DOWN:
-            case KeyCodes.END:
-            case KeyCodes.ESC:
-            case KeyCodes.HOME:
-            case KeyCodes.INSERT:
-            case KeyCodes.LEFT:
-            case KeyCodes.MAC_FF_META:
-            case KeyCodes.META:
-            case KeyCodes.NUMLOCK:
-            case KeyCodes.NUM_CENTER:
-            case KeyCodes.PAGE_DOWN:
-            case KeyCodes.PAGE_UP:
-            case KeyCodes.PAUSE:
-            case KeyCodes.PRINT_SCREEN:
-            case KeyCodes.RIGHT:
-            case KeyCodes.SHIFT:
-            case KeyCodes.UP:
-            case KeyCodes.WIN_KEY:
-            case KeyCodes.WIN_KEY_RIGHT:
+            case KeyCode.ALT:
+            case KeyCode.CAPS_LOCK:
+            case KeyCode.CONTEXT_MENU:
+            case KeyCode.CTRL:
+            case KeyCode.DOWN:
+            case KeyCode.END:
+            case KeyCode.ESC:
+            case KeyCode.HOME:
+            case KeyCode.INSERT:
+            case KeyCode.LEFT:
+            case KeyCode.MAC_FF_META:
+            case KeyCode.META:
+            case KeyCode.NUMLOCK:
+            case KeyCode.NUM_CENTER:
+            case KeyCode.PAGE_DOWN:
+            case KeyCode.PAGE_UP:
+            case KeyCode.PAUSE:
+            case KeyCode.PRINT_SCREEN:
+            case KeyCode.RIGHT:
+            case KeyCode.SHIFT:
+            case KeyCode.UP:
+            case KeyCode.WIN_KEY:
+            case KeyCode.WIN_KEY_RIGHT:
                 return false;
             default:
                 return true;
@@ -501,22 +501,22 @@ KISSY.add('event/dom/base/key-codes', function (S) {
 
     /**
      * whether character is entered.
-     * @param {KISSY.Event.KeyCodes} keyCode
+     * @param {KISSY.Event.KeyCode} keyCode
      * @return {Boolean}
      */
-    KeyCodes.isCharacterKey = function (keyCode) {
-        if (keyCode >= KeyCodes.ZERO &&
-            keyCode <= KeyCodes.NINE) {
+    KeyCode.isCharacterKey = function (keyCode) {
+        if (keyCode >= KeyCode.ZERO &&
+            keyCode <= KeyCode.NINE) {
             return true;
         }
 
-        if (keyCode >= KeyCodes.NUM_ZERO &&
-            keyCode <= KeyCodes.NUM_MULTIPLY) {
+        if (keyCode >= KeyCode.NUM_ZERO &&
+            keyCode <= KeyCode.NUM_MULTIPLY) {
             return true;
         }
 
-        if (keyCode >= KeyCodes.A &&
-            keyCode <= KeyCodes.Z) {
+        if (keyCode >= KeyCode.A &&
+            keyCode <= KeyCode.Z) {
             return true;
         }
 
@@ -526,30 +526,30 @@ KISSY.add('event/dom/base/key-codes', function (S) {
         }
 
         switch (keyCode) {
-            case KeyCodes.SPACE:
-            case KeyCodes.QUESTION_MARK:
-            case KeyCodes.NUM_PLUS:
-            case KeyCodes.NUM_MINUS:
-            case KeyCodes.NUM_PERIOD:
-            case KeyCodes.NUM_DIVISION:
-            case KeyCodes.SEMICOLON:
-            case KeyCodes.DASH:
-            case KeyCodes.EQUALS:
-            case KeyCodes.COMMA:
-            case KeyCodes.PERIOD:
-            case KeyCodes.SLASH:
-            case KeyCodes.APOSTROPHE:
-            case KeyCodes.SINGLE_QUOTE:
-            case KeyCodes.OPEN_SQUARE_BRACKET:
-            case KeyCodes.BACKSLASH:
-            case KeyCodes.CLOSE_SQUARE_BRACKET:
+            case KeyCode.SPACE:
+            case KeyCode.QUESTION_MARK:
+            case KeyCode.NUM_PLUS:
+            case KeyCode.NUM_MINUS:
+            case KeyCode.NUM_PERIOD:
+            case KeyCode.NUM_DIVISION:
+            case KeyCode.SEMICOLON:
+            case KeyCode.DASH:
+            case KeyCode.EQUALS:
+            case KeyCode.COMMA:
+            case KeyCode.PERIOD:
+            case KeyCode.SLASH:
+            case KeyCode.APOSTROPHE:
+            case KeyCode.SINGLE_QUOTE:
+            case KeyCode.OPEN_SQUARE_BRACKET:
+            case KeyCode.BACKSLASH:
+            case KeyCode.CLOSE_SQUARE_BRACKET:
                 return true;
             default:
                 return false;
         }
     };
 
-    return KeyCodes;
+    return KeyCode;
 
 });
 /**
@@ -2238,9 +2238,9 @@ KISSY.add('event/dom/base/valuechange', function (S, Event, DOM, special) {
  * dom event facade
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/base', function (S, Event, KeyCodes, _DOMUtils, Gesture, Special) {
+KISSY.add('event/dom/base', function (S, Event, KeyCode, _DOMUtils, Gesture, Special) {
     S.mix(Event, {
-        KeyCodes: KeyCodes,
+        KeyCode: KeyCode,
         _DOMUtils: _DOMUtils,
         Gesture: Gesture,
         _Special: Special

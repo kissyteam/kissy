@@ -3,12 +3,15 @@
  * dd support for kissy , dd objects central management module
  * @author yiminghe@gmail.com
  */
-KISSY.add('dd/base/ddm', function (S, DOM, Event, Node, Base) {
+KISSY.add('dd/base/ddm', function (S, Node, Base) {
 
     var UA = S.UA,
+        $ = Node.all,
         Features = S.Features,
         win = S.Env.host,
         doc = win.document,
+        $doc=$(doc),
+        $win=$(win),
         ie6 = UA['ie'] === 6,
     // prevent collision with click , only start when move
         PIXEL_THRESH = 3,
@@ -18,7 +21,7 @@ KISSY.add('dd/base/ddm', function (S, DOM, Event, Node, Base) {
         SHIM_Z_INDEX = 999999;
 
     var TARGET = 'target',
-        Gesture = Event.Gesture,
+        Gesture = Node.Gesture,
         CURRENT_TARGET = 'currentTarget',
         DRAG_MOVE_EVENT = Gesture.move,
         DRAG_END_EVENT = Gesture.end;
@@ -280,7 +283,7 @@ KISSY.add('dd/base/ddm', function (S, DOM, Event, Node, Base) {
             // ie6 不支持 fixed 以及 width/height 100%
             // support dd-scroll
             // prevent empty when scroll outside initial window
-            Event.on(win, 'resize scroll', adjustShimSize, self);
+            $win.on('resize scroll', adjustShimSize, self);
         }
 
         showShim(self);
@@ -292,8 +295,8 @@ KISSY.add('dd/base/ddm', function (S, DOM, Event, Node, Base) {
         if ((activeDrag = self.get('activeDrag')) &&
             activeDrag.get('shim')) {
             self._shim.css({
-                width: DOM.docWidth(),
-                height: DOM.docHeight()
+                width: $doc.width(),
+                height: $doc.height()
             });
         }
     }, MOVE_DELAY);
@@ -321,11 +324,11 @@ KISSY.add('dd/base/ddm', function (S, DOM, Event, Node, Base) {
      开始时注册全局监听事件
      */
     function registerEvent(self) {
-        Event.on(doc, DRAG_END_EVENT, self._end, self);
+        $doc.on(DRAG_END_EVENT, self._end, self);
         if (Gesture.cancel) {
-            Event.on(doc, Gesture.cancel, self._end, self);
+            $doc.on( Gesture.cancel, self._end, self);
         }
-        Event.on(doc, DRAG_MOVE_EVENT, throttleMoveHandle, self);
+        $doc.on(DRAG_MOVE_EVENT, throttleMoveHandle, self);
         // ie6 will not response to event when cursor is out of window.
         if (UA.ie === 6) {
             doc.body.setCapture();
@@ -336,10 +339,10 @@ KISSY.add('dd/base/ddm', function (S, DOM, Event, Node, Base) {
      结束时需要取消掉，防止平时无谓的监听
      */
     function unRegisterEvent(self) {
-        Event.remove(doc, DRAG_MOVE_EVENT, throttleMoveHandle, self);
-        Event.remove(doc, DRAG_END_EVENT, self._end, self);
+        $doc.detach(DRAG_MOVE_EVENT, throttleMoveHandle, self);
+        $doc.detach(DRAG_END_EVENT, self._end, self);
         if (Gesture.cancel) {
-            Event.remove(doc, Gesture.cancel, self._end, self);
+            $doc.detach(Gesture.cancel, self._end, self);
         }
         if (UA.ie === 6) {
             doc.body.releaseCapture();
@@ -573,5 +576,5 @@ KISSY.add('dd/base/ddm', function (S, DOM, Event, Node, Base) {
 
     return ddm;
 }, {
-    requires: ['dom', 'event', 'node', 'base']
+    requires: ['node', 'base']
 });

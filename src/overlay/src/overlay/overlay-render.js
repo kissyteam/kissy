@@ -3,7 +3,7 @@
  * KISSY Overlay
  * @author yiminghe@gmail.com
  */
-KISSY.add("overlay/overlay-render", function (S, XTemplate, Component, Extension, Loading, CloseTpl, Mask) {
+KISSY.add("overlay/overlay-render", function (S, Component, Extension, Loading, CloseTpl, Mask) {
 
     return Component.Render.extend([
         Extension.ContentRender,
@@ -33,7 +33,6 @@ KISSY.add("overlay/overlay-render", function (S, XTemplate, Component, Extension
 
 }, {
     requires: [
-        'xtemplate',
         "component/base",
         'component/extension',
         './extension/loading-render',

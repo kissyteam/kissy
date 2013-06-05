@@ -1,6 +1,6 @@
 /**
  * grid component for kissy
- * @author dxq613@gmail.com, yiminghe@gmail.com
+ * @author dxq613@gmail.com
  */
 KISSY.add('grid', function(S, Grid,Bar,Store,PagingBar,NumberPagingBar,Plugins,Editing,Util) {
 	Grid.Bar = Bar;
@@ -18,7 +18,7 @@ KISSY.add('grid', function(S, Grid,Bar,Store,PagingBar,NumberPagingBar,Plugins,E
 		"grid/bar",
 		"grid/store",
 		"grid/pagingbar",
-		"grid/numberpagingbar",
+		"grid/number-pagingbar",
 		"grid/plugins",
 		"grid/editing",
 		"grid/util"

@@ -3,9 +3,10 @@
  * delegate all draggable nodes to one draggable object
  * @author yiminghe@gmail.com
  */
-KISSY.add('dd/base/draggable-delegate', function (S, DDM, Draggable, DOM, Node, Event) {
+KISSY.add('dd/base/draggable-delegate', function (S, DDM, Draggable, Node) {
 
     var PREFIX_CLS = DDM.PREFIX_CLS,
+        $ = Node.all,
         DRAG_START_EVENT = Draggable.DRAG_START_EVENT;
 
     /*
@@ -28,7 +29,7 @@ KISSY.add('dd/base/draggable-delegate', function (S, DDM, Draggable, DOM, Node, 
         }
 
         var handlers = self.get('handlers'),
-            target = new Node(ev.target);
+            target = $(ev.target);
 
         // 不需要像 Draggable 一样，判断 target 是否在 handler 内
         // 委托时，直接从 target 开始往上找 handler
@@ -69,7 +70,7 @@ KISSY.add('dd/base/draggable-delegate', function (S, DDM, Draggable, DOM, Node, 
 
             },
 
-            _onSetContainer: function () {
+            '_onSetContainer': function () {
                 this.bindDragEvent();
             },
 
@@ -102,10 +103,11 @@ KISSY.add('dd/base/draggable-delegate', function (S, DDM, Draggable, DOM, Node, 
                     handlers = self.get('handlers');
                 while (target && target[0] !== node[0]) {
                     S.each(handlers, function (h) {
-                        if (DOM.test(target[0], h)) {
+                        if (target.test(h)) {
                             ret = target;
                             return false;
                         }
+                        return undefined;
                     });
                     if (ret) {
                         break;
@@ -134,7 +136,7 @@ KISSY.add('dd/base/draggable-delegate', function (S, DDM, Draggable, DOM, Node, 
                  */
                 container: {
                     setter: function (v) {
-                        return Node.one(v);
+                        return $(v);
                     }
                 },
 
@@ -166,5 +168,5 @@ KISSY.add('dd/base/draggable-delegate', function (S, DDM, Draggable, DOM, Node, 
             }
         });
 }, {
-    requires: ['./ddm', './draggable', 'dom', 'node', 'event']
+    requires: ['./ddm', './draggable', 'node']
 });

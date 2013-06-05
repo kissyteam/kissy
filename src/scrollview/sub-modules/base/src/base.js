@@ -2,7 +2,7 @@
  * scrollview controller
  * @author yiminghe@gmail.com
  */
-KISSY.add('scrollview/base', function (S, DOM, Component, Extension, Render, Event) {
+KISSY.add('scrollview/base', function (S, Node, Component, Extension, Render) {
 
     var undefined = undefined;
 
@@ -10,7 +10,7 @@ KISSY.add('scrollview/base', function (S, DOM, Component, Extension, Render, Eve
 
     var isTouchEventSupported = S.Features.isTouchEventSupported();
 
-    var KeyCode = Event.KeyCode;
+    var KeyCode = Node.KeyCode;
 
     return Component.Controller.extend({
 
@@ -119,12 +119,13 @@ KISSY.add('scrollview/base', function (S, DOM, Component, Extension, Render, Eve
         handleKeyEventInternal: function (e) {
             // no need to process disabled (already processed by Component)
             var target = e.target,
-                nodeName = DOM.nodeName(target);
+                $target=$(target),
+                nodeName = $target.nodeName();
             // editable element
             if (nodeName == 'input' ||
                 nodeName == 'textarea' ||
                 nodeName == 'select' ||
-                DOM.hasAttr(target, 'contenteditable')) {
+                $target.hasAttr('contenteditable')) {
                 return undefined;
             }
             var self = this,
@@ -356,5 +357,6 @@ KISSY.add('scrollview/base', function (S, DOM, Component, Extension, Render, Eve
     });
 
 }, {
-    requires: ['dom', 'component/base', 'component/extension', './base/render', 'event']
+    requires: ['node', 'component/base', 'component/extension',
+        './base/render']
 });

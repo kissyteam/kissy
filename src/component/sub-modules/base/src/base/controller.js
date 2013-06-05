@@ -3,11 +3,11 @@
  * Base Controller class for KISSY Component.
  * @author yiminghe@gmail.com
  */
-KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBase, Manager, Render, undefined) {
+KISSY.add("component/base/controller", function (S, Box, Node, Component, UIBase, Manager, Render, undefined) {
 
     var ie = S.Env.host.document.documentMode || S.UA.ie,
         Features = S.Features,
-        Gesture = Event.Gesture,
+        Gesture = Node.Gesture,
         isTouchEventSupported = Features.isTouchEventSupported();
 
     function wrapperViewSetter(attrName) {
@@ -868,7 +868,7 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
 
     return Controller;
 }, {
-    requires: ['./box', 'event', './impl', './uibase', './manager', './render']
+    requires: ['./box', 'node', './impl', './uibase', './manager', './render']
 });
 /*
 

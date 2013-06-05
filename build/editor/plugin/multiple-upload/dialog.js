@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 30 01:39
+build time: Jun 5 22:32
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -13,7 +13,8 @@ build time: May 30 01:39
  * multiple-upload dialog
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor, DragPlugin,
+KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor,
+                                                            Overlay,DragPlugin,
                                                             ProgressBar, Dialog4E,
                                                             FlashBridge, localStorage,
                                                             SWF, undefined) {
@@ -366,7 +367,7 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor, DragPlugi
             var previewSuffix = uploadCfg['previewSuffix'];
             if (previewWidth) {
 
-                var previewWin = new (S.require("overlay"))({
+                var previewWin = new Overlay({
                     mask: false,
                     prefixCls: replacePrefix('{prefixCls}editor-', prefixCls),
                     width: previewWidth,
@@ -819,6 +820,7 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor, DragPlugi
     return MultiUploadDialog;
 }, {
     requires: ['editor',
+        'overlay',
         'component/plugin/drag',
         '../progressbar',
         '../dialog',

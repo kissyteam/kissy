@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 30 01:37
+build time: Jun 5 22:30
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -30,7 +30,7 @@ KISSY.add("editor/plugin/italic", function (S, Editor, ui, cmd) {
 
             editor.docReady(function () {
                 editor.get("document").on("keydown", function (e) {
-                    if (e.ctrlKey && e.keyCode == S.Node.KeyCodes.I) {
+                    if (e.ctrlKey && e.keyCode == S.Node.KeyCode.I) {
                         editor.execCommand("italic");
                         e.preventDefault();
                     }

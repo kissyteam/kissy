@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 3 16:30
+build time: Jun 5 22:37
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -18,7 +18,7 @@ build time: Jun 3 16:30
  * definition for node and nodelist
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
-KISSY.add('node/base', function (S, DOM, undefined) {
+KISSY.add('node/base', function (S, DOM, Event, undefined) {
 
     var AP = Array.prototype,
         slice = AP.slice,
@@ -284,9 +284,15 @@ KISSY.add('node/base', function (S, DOM, undefined) {
      */
     NodeList.NodeType = NodeType;
 
+    NodeList.KeyCode = Event.KeyCode;
+
+    NodeList.Gesture = Event.Gesture;
+
+    NodeList.REPLACE_HISTORY = Event.REPLACE_HISTORY;
+
     return NodeList;
 }, {
-    requires: ['dom']
+    requires: ['dom', 'event/dom']
 });
 
 
@@ -401,7 +407,7 @@ KISSY.add('node/attach', function (S, DOM, Event, NodeList, undefined) {
             'undelegate'
         ];
 
-    NodeList.KeyCodes = Event.KeyCodes;
+    NodeList.KeyCode = Event.KeyCode;
 
     function accessNorm(fn, self, args) {
         args.unshift(self);

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 30 17:47
+build time: Jun 5 22:37
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -63,7 +63,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
 
     var $ = Node.all,
         win = $(S.Env.host),
-        KeyCodes = Node.KeyCodes,
+        KeyCode = Node.KeyCode,
         ALIGN = {
             points: ["bl", "tl"],
             overflow: {
@@ -117,7 +117,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
                     menu = getMenu(self);
 
                 // space 只在 keyup 时处理
-                if (keyCode == KeyCodes.SPACE) {
+                if (keyCode == KeyCode.SPACE) {
                     // Prevent page scrolling in Chrome.
                     e.preventDefault();
                     if (type != "keyup") {
@@ -130,7 +130,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
                 if (menu && menu.get("visible")) {
                     var handledByMenu = menu.handleKeydown(e);
                     // esc
-                    if (keyCode == KeyCodes.ESC) {
+                    if (keyCode == KeyCode.ESC) {
                         self.set("collapsed", true);
                         return true;
                     }
@@ -138,9 +138,9 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
                 }
 
                 // Menu is closed, and the user hit the down/up/space key; open menu.
-                if (keyCode == KeyCodes.SPACE ||
-                    keyCode == KeyCodes.DOWN ||
-                    keyCode == KeyCodes.UP) {
+                if (keyCode == KeyCode.SPACE ||
+                    keyCode == KeyCode.DOWN ||
+                    keyCode == KeyCode.UP) {
                     self.set("collapsed", false);
                     return true;
                 }

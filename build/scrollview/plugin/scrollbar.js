@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 30 01:43
+build time: Jun 5 22:37
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -26,7 +26,6 @@ KISSY.add('scrollview/plugin/scrollbar/render', function (S, Component, ScrollBa
 
     // http://www.html5rocks.com/en/tutorials/speed/html5/
     var supportCss3 = S.Features.isTransformSupported();
-    var css3Prefix = S.Features.getTransformPrefix();
 
     var methods = {
 
@@ -61,7 +60,7 @@ KISSY.add('scrollview/plugin/scrollbar/render', function (S, Component, ScrollBa
 
     };
 
-    var transformProperty = css3Prefix ? css3Prefix + 'Transform' : 'transform';
+    var transformProperty = S.Features.getTransformProperty();
 
     if (supportCss3) {
 
@@ -100,13 +99,13 @@ KISSY.add('scrollview/plugin/scrollbar/render', function (S, Component, ScrollBa
  * scrollbar for KISSY scrollview
  * @author yiminghe@gmail.com
  */
-KISSY.add('scrollview/plugin/scrollbar/control', function (S, Event, DD, Component, ScrollBarRender) {
+KISSY.add('scrollview/plugin/scrollbar/control', function (S, Node, DD, Component, ScrollBarRender) {
 
     var MIN_BAR_LENGTH = 20;
 
     var SCROLLBAR_EVENT_NS = '.ks-scrollbar';
 
-    var Gesture = Event.Gesture;
+    var Gesture = Node.Gesture;
 
     return Component.Controller.extend({
 
@@ -443,7 +442,7 @@ KISSY.add('scrollview/plugin/scrollbar/control', function (S, Event, DD, Compone
     });
 
 }, {
-    requires: ['event', 'dd/base', 'component/base', './render']
+    requires: ['node', 'dd/base', 'component/base', './render']
 });
 /**
  * scrollbar plugin for KISSY scrollview

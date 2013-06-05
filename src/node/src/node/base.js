@@ -271,6 +271,10 @@ KISSY.add('node/base', function (S, DOM, Event, undefined) {
 
     NodeList.KeyCode = Event.KeyCode;
 
+    NodeList.Gesture = Event.Gesture;
+
+    NodeList.REPLACE_HISTORY = Event.REPLACE_HISTORY;
+
     return NodeList;
 }, {
     requires: ['dom', 'event/dom']

@@ -374,5 +374,5 @@ KISSY.add('grid/editing',function(S,Component,EditorPanel,Overlay){
     return Editing;
 
 },{
-    requires:['component','grid/editorpanel','overlay']
+    requires:['component/base','grid/editor-panel','overlay']
 });

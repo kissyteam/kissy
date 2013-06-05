@@ -1,6 +1,6 @@
 /**
  * bindable extension class.
- * @author dxq613@gmail.com, yiminghe@gmail.com
+ * @author dxq613@gmail.com
  */
 KISSY.add('grid/bindable',function(S){
 	

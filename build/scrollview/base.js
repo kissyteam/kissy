@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 30 01:43
+build time: Jun 5 22:37
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -34,9 +34,7 @@ KISSY.add('scrollview/base/render', function (S, Component, Extension) {
 
     if (supportCss3) {
 
-        var css3Prefix = S.Features.getTransformPrefix();
-
-        transformProperty = css3Prefix ? css3Prefix + 'Transform' : 'transform';
+        transformProperty =  S.Features.getTransformProperty();
 
         methods._onSetScrollLeft = function (v) {
             var scrollTop = this.get('scrollTop');
@@ -68,15 +66,15 @@ KISSY.add('scrollview/base/render', function (S, Component, Extension) {
  * scrollview controller
  * @author yiminghe@gmail.com
  */
-KISSY.add('scrollview/base', function (S, DOM, Component, Extension, Render, Event) {
+KISSY.add('scrollview/base', function (S, Node, Component, Extension, Render) {
 
     var undefined = undefined;
 
     var $ = S.all;
 
-    var isTouchSupported = S.Features.isTouchSupported();
+    var isTouchEventSupported = S.Features.isTouchEventSupported();
 
-    var KeyCodes = Event.KeyCodes;
+    var KeyCode = Node.KeyCode;
 
     return Component.Controller.extend({
 
@@ -185,12 +183,13 @@ KISSY.add('scrollview/base', function (S, DOM, Component, Extension, Render, Eve
         handleKeyEventInternal: function (e) {
             // no need to process disabled (already processed by Component)
             var target = e.target,
-                nodeName = DOM.nodeName(target);
+                $target=$(target),
+                nodeName = $target.nodeName();
             // editable element
             if (nodeName == 'input' ||
                 nodeName == 'textarea' ||
                 nodeName == 'select' ||
-                DOM.hasAttr(target, 'contenteditable')) {
+                $target.hasAttr('contenteditable')) {
                 return undefined;
             }
             var self = this,
@@ -208,25 +207,25 @@ KISSY.add('scrollview/base', function (S, DOM, Component, Extension, Render, Eve
                     scrollTop = self.get('scrollTop');
                 isMax = scrollTop == maxScroll.top;
                 isMin = scrollTop == minScroll.top;
-                if (keyCode == KeyCodes.DOWN) {
+                if (keyCode == KeyCode.DOWN) {
                     if (isMax) {
                         return undefined;
                     }
                     self.scrollTo(undefined, scrollTop + scrollStepY);
                     ok = true;
-                } else if (keyCode == KeyCodes.UP) {
+                } else if (keyCode == KeyCode.UP) {
                     if (isMin) {
                         return undefined;
                     }
                     self.scrollTo(undefined, scrollTop - scrollStepY);
                     ok = true;
-                } else if (keyCode == KeyCodes.PAGE_DOWN) {
+                } else if (keyCode == KeyCode.PAGE_DOWN) {
                     if (isMax) {
                         return undefined;
                     }
                     self.scrollTo(undefined, scrollTop + clientHeight);
                     ok = true;
-                } else if (keyCode == KeyCodes.PAGE_UP) {
+                } else if (keyCode == KeyCode.PAGE_UP) {
                     if (isMin) {
                         return undefined;
                     }
@@ -239,13 +238,13 @@ KISSY.add('scrollview/base', function (S, DOM, Component, Extension, Render, Eve
                     scrollLeft = self.get('scrollLeft');
                 isMax = scrollLeft == maxScroll.left;
                 isMin = scrollLeft == minScroll.left;
-                if (keyCode == KeyCodes.RIGHT) {
+                if (keyCode == KeyCode.RIGHT) {
                     if (isMax) {
                         return undefined;
                     }
                     self.scrollTo(scrollLeft + scrollStepX);
                     ok = true;
-                } else if (keyCode == KeyCodes.LEFT) {
+                } else if (keyCode == KeyCode.LEFT) {
                     if (isMin) {
                         return undefined;
                     }
@@ -393,7 +392,7 @@ KISSY.add('scrollview/base', function (S, DOM, Component, Extension, Render, Eve
             },
             focusable: {
                 // need process keydown
-                value: !isTouchSupported
+                value: !isTouchEventSupported
             },
             allowTextSelection: {
                 value: true
@@ -422,6 +421,7 @@ KISSY.add('scrollview/base', function (S, DOM, Component, Extension, Render, Eve
     });
 
 }, {
-    requires: ['dom', 'component/base', 'component/extension', './base/render', 'event']
+    requires: ['node', 'component/base', 'component/extension',
+        './base/render']
 });
 

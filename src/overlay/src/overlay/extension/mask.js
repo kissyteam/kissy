@@ -3,7 +3,7 @@
  * mask extension for kissy
  * @author yiminghe@gmail.com
  */
-KISSY.add("overlay/extension/mask", function (S, Event) {
+KISSY.add("overlay/extension/mask", function (S, Node) {
 
     /**
      * @class KISSY.Overlay.Extension.Mask
@@ -93,7 +93,7 @@ KISSY.add("overlay/extension/mask", function (S, Event) {
             if (mask = self.get("mask")) {
                 maskNode = self.get('maskNode');
                 if (mask['closeOnClick']) {
-                    maskNode.on(Event.Gesture.tap, self.close, self);
+                    maskNode.on(Node.Gesture.tap, self.close, self);
                 }
                 self.on('afterVisibleChange', function (e) {
                     var v;
@@ -109,4 +109,5 @@ KISSY.add("overlay/extension/mask", function (S, Event) {
 
 
     return Mask;
-}, {requires: ["event"]});
+},
+    {requires: ["node"]});

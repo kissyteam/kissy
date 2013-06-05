@@ -1,8 +1,8 @@
 /**
  * This class specifies the definition for the body of grid.
- * @author dxq613@gmail.com, yiminghe@gmail.com
+ * @author dxq613@gmail.com
  */
-KISSY.add('grid/gridbody', function (S, Component, Template, Bindable) {
+KISSY.add('grid/gridbody', function (S, Component, XTemplate, Bindable) {
 
     var CLS_GRID_ROW = 'ks-grid-row',
         CLS_ROW_ODD = 'ks-grid-row-odd',
@@ -228,7 +228,7 @@ KISSY.add('grid/gridbody', function (S, Component, Template, Bindable) {
                 cellsTpl.push(_self._getCellTpl(column, dataIndex, record));
             });
             cellsTpl.push(_self._getEmptyCellTpl());
-            rowTpl = Template(rowTpl).render({cellsTpl:cellsTpl.join(''), oddCls:oddCls});
+            rowTpl = new XTemplate(rowTpl).render({cellsTpl:cellsTpl.join(''), oddCls:oddCls});
             rowEl = new S.Node(rowTpl).appendTo(tbodyEl);
             //append record to the dom
             rowEl.data(DATA_ELEMENT, record);
@@ -252,7 +252,7 @@ KISSY.add('grid/gridbody', function (S, Component, Template, Bindable) {
 
             //if this component set width,add a empty column to fit row width
             cellsTpl.push(_self._getEmptyCellTpl());
-            rowTpl = Template(rowTpl).render({cellsTpl:cellsTpl.join('')});
+            rowTpl = new XTemplate(rowTpl).render({cellsTpl:cellsTpl.join('')});
             rowEl = S.Node(rowTpl).appendTo(tbodyEl);
             return rowEl;
         },
@@ -281,14 +281,14 @@ KISSY.add('grid/gridbody', function (S, Component, Template, Bindable) {
                 dataIndex = column.get('dataIndex'),
                 renderer = column.get('renderer'),
                 text = renderer ? renderer(record[dataIndex], record) : record[dataIndex];
-            return Template(textTpl).render({text:text, tips:_self._getTips(column, dataIndex, record)});
+            return new XTemplate(textTpl).render({text:text, tips:_self._getTips(column, dataIndex, record)});
         },
         //get cell template by config and record
         _getCellTpl:function (column, dataIndex, record) {
             var _self = this,
                 cellText = _self._getCellText(column, record),
                 cellTpl = _self.get('cellTpl');
-            return Template(cellTpl)
+            return new XTemplate(cellTpl)
                 .render({
                     id:column.get('id'),
                     dataIndex:dataIndex,
@@ -311,7 +311,7 @@ KISSY.add('grid/gridbody', function (S, Component, Template, Bindable) {
         _getHeaderCellTpl:function (column) {
             var _self = this,
                 headerCellTpl = _self.get('headerCellTpl');
-            return Template(headerCellTpl).render({
+            return new XTemplate(headerCellTpl).render({
                 id:column.get('id'),
                 width:column.get('width'),
                 hide:!column.get('visible')
@@ -325,7 +325,7 @@ KISSY.add('grid/gridbody', function (S, Component, Template, Bindable) {
             var _self = this,
                 attrs = _self.getAttrVals(),
                 tpl = _self.get('tpl');
-            return Template(tpl).render(attrs);
+            return new XTemplate(tpl).render(attrs);
         }
     }, {
         ATTRS:{
@@ -847,5 +847,5 @@ KISSY.add('grid/gridbody', function (S, Component, Template, Bindable) {
 
     return GridBody;
 }, {
-    requires:['component', 'template', './bindable']
+    requires:['component/base', 'xtemplate', './bindable']
 });

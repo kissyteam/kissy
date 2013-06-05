@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 30 01:35
+build time: Jun 5 22:27
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -37,7 +37,7 @@ KISSY.add("editor/plugin/contextmenu", function (S, Editor, Menu, focusFix) {
 
         menu.on("afterRenderUI", function () {
             menu.get("el").on("keydown", function (e) {
-                if (e.keyCode == S.Event.KeyCodes.ESC) {
+                if (e.keyCode == S.Event.KeyCode.ESC) {
                     menu.hide();
                 }
             });

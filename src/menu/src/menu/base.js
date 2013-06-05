@@ -3,9 +3,9 @@
  * menu controller for kissy,accommodate menu items
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/base", function (S, Event, Component,Extension, MenuRender, undefined) {
+KISSY.add("menu/base", function (S, Node, Component,Extension, MenuRender, undefined) {
 
-    var KeyCode = Event.KeyCode;
+    var KeyCode = Node.KeyCode;
 
     /**
      * KISSY Menu.
@@ -240,7 +240,7 @@ KISSY.add("menu/base", function (S, Event, Component,Extension, MenuRender, unde
     return Menu;
 
 }, {
-    requires: ['event', 'component/base', 'component/extension','./menu-render']
+    requires: ['node', 'component/base', 'component/extension','./menu-render']
 });
 
 /**

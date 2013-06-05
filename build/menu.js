@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 5 18:12
+build time: Jun 5 22:37
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -60,9 +60,9 @@ KISSY.add("menu/menu-render", function (S, Component) {
  * menu controller for kissy,accommodate menu items
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/base", function (S, Event, Component,Extension, MenuRender, undefined) {
+KISSY.add("menu/base", function (S, Node, Component,Extension, MenuRender, undefined) {
 
-    var KeyCode = Event.KeyCode;
+    var KeyCode = Node.KeyCode;
 
     /**
      * KISSY Menu.
@@ -297,7 +297,7 @@ KISSY.add("menu/base", function (S, Event, Component,Extension, MenuRender, unde
     return Menu;
 
 }, {
-    requires: ['event', 'component/base', 'component/extension','./menu-render']
+    requires: ['node', 'component/base', 'component/extension','./menu-render']
 });
 
 /**
@@ -605,7 +605,7 @@ KISSY.add("menu/submenu-render", function (S, MenuItemRender, Extension) {
  * submenu controller for kissy, transfer item's keyCode to menu
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/submenu", function (S, Event, MenuItem, SubMenuRender, Extension) {
+KISSY.add("menu/submenu", function (S, Node, MenuItem, SubMenuRender, Extension) {
 
     function afterHighlightedChange(e) {
         var target = e.target,
@@ -637,7 +637,7 @@ KISSY.add("menu/submenu", function (S, Event, MenuItem, SubMenuRender, Extension
     }
 
     /* or precisely subMenuItem */
-    var KeyCode = Event.KeyCode,
+    var KeyCode = Node.KeyCode,
         MENU_DELAY = 0.15;
 
     var DecorateChild = Extension.DecorateChild;
@@ -755,7 +755,7 @@ KISSY.add("menu/submenu", function (S, Event, MenuItem, SubMenuRender, Extension
                         }
                     }
                     // enter as click
-                    else if (e.keyCode == Event.KeyCode.ENTER) {
+                    else if (e.keyCode == KeyCode.ENTER) {
                         return this.performActionInternal(e);
                     }
                     else {
@@ -910,7 +910,7 @@ KISSY.add("menu/submenu", function (S, Event, MenuItem, SubMenuRender, Extension
 
     return SubMenu;
 }, {
-    requires: ['event', './menuitem', './submenu-render', 'component/extension']
+    requires: ['node', './menuitem', './submenu-render', 'component/extension']
 });
 /**
  * @ignore

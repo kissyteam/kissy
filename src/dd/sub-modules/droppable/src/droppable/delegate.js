@@ -3,7 +3,7 @@
  * only one droppable instance for multiple droppable nodes
  * @author yiminghe@gmail.com
  */
-KISSY.add('dd/droppable/delegate', function (S, DD, Droppable, DOM, Node) {
+KISSY.add('dd/droppable/delegate', function (S, DD, Droppable, Node) {
 
 
     var DDM = DD.DDM;
@@ -154,5 +154,5 @@ KISSY.add('dd/droppable/delegate', function (S, DD, Droppable, DOM, Node) {
 
     return DroppableDelegate;
 }, {
-    requires: ['dd/base', './base', 'dom', 'node']
+    requires: ['dd/base', './base', 'node']
 });

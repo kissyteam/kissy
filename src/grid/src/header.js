@@ -1,6 +1,6 @@
 /**
  * This class specifies the definition for a header of a grid.
- * @author dxq613@gmail.com, yiminghe@gmail.com
+ * @author dxq613@gmail.com
  */
 KISSY.add('grid/header', function (S, Component, Column) {
 
@@ -429,5 +429,5 @@ KISSY.add('grid/header', function (S, Component, Column) {
 
     return header;
 }, {
-    requires:['component', './column']
+    requires:['component/base', './column']
 });

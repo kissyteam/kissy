@@ -1,6 +1,6 @@
 /**
  * A collection of commonly used function buttons or controls represented in compact visual form.
- * @author dxq613@gmail.com, yiminghe@gmail.com
+ * @author dxq613@gmail.com
  */
 KISSY.add("grid/bar", function (S,Toolbar,BarRender,BarItem) {
 

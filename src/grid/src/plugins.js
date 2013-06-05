@@ -1,6 +1,6 @@
 /**
  * There are some plugins in this class
- * @author dxq613@gmail.com, yiminghe@gmail.com
+ * @author dxq613@gmail.com
  */
 KISSY.add('grid/plugins',function(S){
 

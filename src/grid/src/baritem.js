@@ -1,6 +1,6 @@
 /**
  * buttons or controls of toolbar
- * @author dxq613@gmail.com, yiminghe@gmail.com
+ * @author dxq613@gmail.com
  */
 KISSY.add('grid/baritem',function(S,Component,Button,Node){
 
@@ -206,5 +206,5 @@ KISSY.add('grid/baritem',function(S,Component,Button,Node){
 
 	return	BarItem;
 },{
-	requires:['component','button','node']
+	requires:['component/base','button','node']
 });

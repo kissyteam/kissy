@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 3 15:51
+build time: Jun 5 22:25
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -1307,11 +1307,11 @@ KISSY.add("component/base/render", function (S, BoxRender, Component, UIBase) {
  * Base Controller class for KISSY Component.
  * @author yiminghe@gmail.com
  */
-KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBase, Manager, Render, undefined) {
+KISSY.add("component/base/controller", function (S, Box, Node, Component, UIBase, Manager, Render, undefined) {
 
     var ie = S.Env.host.document.documentMode || S.UA.ie,
         Features = S.Features,
-        Gesture = Event.Gesture,
+        Gesture = Node.Gesture,
         isTouchEventSupported = Features.isTouchEventSupported();
 
     function wrapperViewSetter(attrName) {
@@ -1893,7 +1893,7 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
              * @param {KISSY.Event.DOMEventObject} ev DOM event to handle.
              */
             handleKeyEventInternal: function (ev) {
-                if (ev['keyCode'] == Event.KeyCodes.ENTER) {
+                if (ev['keyCode'] == Event.KeyCode.ENTER) {
                     return this.performActionInternal(ev);
                 }
                 return undefined;
@@ -2172,7 +2172,7 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
 
     return Controller;
 }, {
-    requires: ['./box', 'event', './impl', './uibase', './manager', './render']
+    requires: ['./box', 'node', './impl', './uibase', './manager', './render']
 });
 /*
 

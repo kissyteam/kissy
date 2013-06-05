@@ -2,7 +2,7 @@
  * This class specifies the definition for a container of grid editor.
  * @author dxq613@gmail.com
  */
-KISSY.add('grid/editorpanel', function (S, Component) {
+KISSY.add('grid/editor-panel', function (S, Component) {
 
 	var CLS_EDITOR_CONTAINER = 'ks-grid-editor-container';
 	
@@ -124,5 +124,5 @@ KISSY.add('grid/editorpanel', function (S, Component) {
 	
 	return GridEditorPanel;
 },{
-    requires:['component','grid/editor']
+    requires:['component/base','grid/editor']
 });

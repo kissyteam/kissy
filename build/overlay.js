@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 30 01:43
+build time: Jun 5 22:37
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -65,7 +65,7 @@ KISSY.add("overlay/extension/loading", function () {
  * mask extension for kissy
  * @author yiminghe@gmail.com
  */
-KISSY.add("overlay/extension/mask", function (S, Event) {
+KISSY.add("overlay/extension/mask", function (S, Node) {
 
     /**
      * @class KISSY.Overlay.Extension.Mask
@@ -155,7 +155,7 @@ KISSY.add("overlay/extension/mask", function (S, Event) {
             if (mask = self.get("mask")) {
                 maskNode = self.get('maskNode');
                 if (mask['closeOnClick']) {
-                    maskNode.on(Event.Gesture.tap, self.close, self);
+                    maskNode.on(Node.Gesture.tap, self.close, self);
                 }
                 self.on('afterVisibleChange', function (e) {
                     var v;
@@ -171,7 +171,8 @@ KISSY.add("overlay/extension/mask", function (S, Event) {
 
 
     return Mask;
-}, {requires: ["event"]});
+},
+    {requires: ["node"]});
 /**
  * @ignore
  * loading mask support for overlay
@@ -325,7 +326,7 @@ KISSY.add("overlay/extension/mask-render", function (S, Node) {
  * KISSY Overlay
  * @author yiminghe@gmail.com
  */
-KISSY.add("overlay/overlay-render", function (S, XTemplate, Component, Extension, Loading, CloseTpl, Mask) {
+KISSY.add("overlay/overlay-render", function (S, Component, Extension, Loading, CloseTpl, Mask) {
 
     return Component.Render.extend([
         Extension.ContentRender,
@@ -355,7 +356,6 @@ KISSY.add("overlay/overlay-render", function (S, XTemplate, Component, Extension
 
 }, {
     requires: [
-        'xtemplate',
         "component/base",
         'component/extension',
         './extension/loading-render',
@@ -865,7 +865,7 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
 
             handleKeyEventInternal: function (e) {
                 if (this.get('escapeToClose') &&
-                    e.keyCode === Node.KeyCodes.ESC) {
+                    e.keyCode === Node.KeyCode.ESC) {
                     if (e.target.nodeName.toLowerCase() == 'select' &&
                         !e.target.disabled) {
                         // escape at select
@@ -1063,7 +1063,7 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
         });
 
 
-    var KEY_TAB = Node.KeyCodes.TAB;
+    var KEY_TAB = Node.KeyCode.TAB;
 
     // 不完美的方案，窗体末尾空白 tab 占位符，多了 tab 操作一次
     function trapFocus(e) {

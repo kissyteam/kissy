@@ -2,7 +2,7 @@
  * collection of models
  * @author yiminghe@gmail.com
  */
-KISSY.add("mvc/collection", function (S, Event, Model, Base) {
+KISSY.add("mvc/collection", function (S, Model, Base) {
 
     function findModelIndex(mods, mod, comparator) {
         var i = mods.length;
@@ -306,5 +306,5 @@ KISSY.add("mvc/collection", function (S, Event, Model, Base) {
     return Collection;
 
 }, {
-    requires:['event', './model', 'base']
+    requires:['./model', 'base']
 });

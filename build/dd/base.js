@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 3 15:52
+build time: Jun 5 22:25
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -17,12 +17,15 @@ build time: Jun 3 15:52
  * dd support for kissy , dd objects central management module
  * @author yiminghe@gmail.com
  */
-KISSY.add('dd/base/ddm', function (S, DOM, Event, Node, Base) {
+KISSY.add('dd/base/ddm', function (S, Node, Base) {
 
     var UA = S.UA,
+        $ = Node.all,
         Features = S.Features,
         win = S.Env.host,
         doc = win.document,
+        $doc=$(doc),
+        $win=$(win),
         ie6 = UA['ie'] === 6,
     // prevent collision with click , only start when move
         PIXEL_THRESH = 3,
@@ -32,7 +35,7 @@ KISSY.add('dd/base/ddm', function (S, DOM, Event, Node, Base) {
         SHIM_Z_INDEX = 999999;
 
     var TARGET = 'target',
-        Gesture = Event.Gesture,
+        Gesture = Node.Gesture,
         CURRENT_TARGET = 'currentTarget',
         DRAG_MOVE_EVENT = Gesture.move,
         DRAG_END_EVENT = Gesture.end;
@@ -294,7 +297,7 @@ KISSY.add('dd/base/ddm', function (S, DOM, Event, Node, Base) {
             // ie6 不支持 fixed 以及 width/height 100%
             // support dd-scroll
             // prevent empty when scroll outside initial window
-            Event.on(win, 'resize scroll', adjustShimSize, self);
+            $win.on('resize scroll', adjustShimSize, self);
         }
 
         showShim(self);
@@ -306,8 +309,8 @@ KISSY.add('dd/base/ddm', function (S, DOM, Event, Node, Base) {
         if ((activeDrag = self.get('activeDrag')) &&
             activeDrag.get('shim')) {
             self._shim.css({
-                width: DOM.docWidth(),
-                height: DOM.docHeight()
+                width: $doc.width(),
+                height: $doc.height()
             });
         }
     }, MOVE_DELAY);
@@ -335,11 +338,11 @@ KISSY.add('dd/base/ddm', function (S, DOM, Event, Node, Base) {
      开始时注册全局监听事件
      */
     function registerEvent(self) {
-        Event.on(doc, DRAG_END_EVENT, self._end, self);
+        $doc.on(DRAG_END_EVENT, self._end, self);
         if (Gesture.cancel) {
-            Event.on(doc, Gesture.cancel, self._end, self);
+            $doc.on( Gesture.cancel, self._end, self);
         }
-        Event.on(doc, DRAG_MOVE_EVENT, throttleMoveHandle, self);
+        $doc.on(DRAG_MOVE_EVENT, throttleMoveHandle, self);
         // ie6 will not response to event when cursor is out of window.
         if (UA.ie === 6) {
             doc.body.setCapture();
@@ -350,10 +353,10 @@ KISSY.add('dd/base/ddm', function (S, DOM, Event, Node, Base) {
      结束时需要取消掉，防止平时无谓的监听
      */
     function unRegisterEvent(self) {
-        Event.remove(doc, DRAG_MOVE_EVENT, throttleMoveHandle, self);
-        Event.remove(doc, DRAG_END_EVENT, self._end, self);
+        $doc.detach(DRAG_MOVE_EVENT, throttleMoveHandle, self);
+        $doc.detach(DRAG_END_EVENT, self._end, self);
         if (Gesture.cancel) {
-            Event.remove(doc, Gesture.cancel, self._end, self);
+            $doc.detach(Gesture.cancel, self._end, self);
         }
         if (UA.ie === 6) {
             doc.body.releaseCapture();
@@ -587,14 +590,14 @@ KISSY.add('dd/base/ddm', function (S, DOM, Event, Node, Base) {
 
     return ddm;
 }, {
-    requires: ['dom', 'event', 'node', 'base']
+    requires: ['node', 'base']
 });
 /**
  * @ignore
  * dd support for kissy, drag for dd
  * @author yiminghe@gmail.com
  */
-KISSY.add('dd/base/draggable', function (S, Node, RichBase, DDM, Event) {
+KISSY.add('dd/base/draggable', function (S, Node, RichBase, DDM) {
 
     var UA = S.UA,
         $ = Node.all,
@@ -603,7 +606,9 @@ KISSY.add('dd/base/draggable', function (S, Node, RichBase, DDM, Event) {
             Features.isMsPointerSupported(),
         each = S.each,
     // !! use singleTouchStart in touch to normalize gesture event
-        DRAG_START_EVENT = useGestureEvent ? 'singleTouchStart' : Event.Gesture.start,
+        DRAG_START_EVENT = useGestureEvent ?
+            'singleTouchStart' :
+            Node.Gesture.start,
         ie = UA['ie'],
         NULL = null,
         PREFIX_CLS = DDM.PREFIX_CLS,
@@ -1499,9 +1504,10 @@ KISSY.add('dd/base/draggable', function (S, Node, RichBase, DDM, Event) {
  * delegate all draggable nodes to one draggable object
  * @author yiminghe@gmail.com
  */
-KISSY.add('dd/base/draggable-delegate', function (S, DDM, Draggable, DOM, Node, Event) {
+KISSY.add('dd/base/draggable-delegate', function (S, DDM, Draggable, Node) {
 
     var PREFIX_CLS = DDM.PREFIX_CLS,
+        $ = Node.all,
         DRAG_START_EVENT = Draggable.DRAG_START_EVENT;
 
     /*
@@ -1524,7 +1530,7 @@ KISSY.add('dd/base/draggable-delegate', function (S, DDM, Draggable, DOM, Node, 
         }
 
         var handlers = self.get('handlers'),
-            target = new Node(ev.target);
+            target = $(ev.target);
 
         // 不需要像 Draggable 一样，判断 target 是否在 handler 内
         // 委托时，直接从 target 开始往上找 handler
@@ -1565,7 +1571,7 @@ KISSY.add('dd/base/draggable-delegate', function (S, DDM, Draggable, DOM, Node, 
 
             },
 
-            _onSetContainer: function () {
+            '_onSetContainer': function () {
                 this.bindDragEvent();
             },
 
@@ -1598,10 +1604,11 @@ KISSY.add('dd/base/draggable-delegate', function (S, DDM, Draggable, DOM, Node, 
                     handlers = self.get('handlers');
                 while (target && target[0] !== node[0]) {
                     S.each(handlers, function (h) {
-                        if (DOM.test(target[0], h)) {
+                        if (target.test(h)) {
                             ret = target;
                             return false;
                         }
+                        return undefined;
                     });
                     if (ret) {
                         break;
@@ -1630,7 +1637,7 @@ KISSY.add('dd/base/draggable-delegate', function (S, DDM, Draggable, DOM, Node, 
                  */
                 container: {
                     setter: function (v) {
-                        return Node.one(v);
+                        return $(v);
                     }
                 },
 
@@ -1662,7 +1669,7 @@ KISSY.add('dd/base/draggable-delegate', function (S, DDM, Draggable, DOM, Node, 
             }
         });
 }, {
-    requires: ['./ddm', './draggable', 'dom', 'node', 'event']
+    requires: ['./ddm', './draggable', 'node']
 });
 /**
  * @ignore

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 30 01:37
+build time: Jun 5 22:30
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -51,7 +51,7 @@ KISSY.add("editor/plugin/justify-left", function (S, Editor, justifyCenterCmd) {
 
             editor.docReady(function () {
                 editor.get("document").on("keydown", function (e) {
-                    if (e.ctrlKey && e.keyCode == S.Node.KeyCodes.L) {
+                    if (e.ctrlKey && e.keyCode == S.Node.KeyCode.L) {
                         editor.execCommand("justifyLeft");
                         e.preventDefault();
                     }

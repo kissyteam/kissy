@@ -1,6 +1,6 @@
 /**
  *  a specialized toolbar that is bound to a Grid.Store and provides automatic paging control.
- * @author dxq613@gmail.com, yiminghe@gmail.com
+ * @author dxq613@gmail.com
  */
 KISSY.add('grid/pagingbar', function (S, Component, Bar, Bindable) {
 
@@ -430,5 +430,5 @@ KISSY.add('grid/pagingbar', function (S, Component, Bar, Bindable) {
     return PagingBar;
 
 }, {
-    requires:['component', './bar', './bindable']
+    requires:['component/base', './bar', './bindable']
 });

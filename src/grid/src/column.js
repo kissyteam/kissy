@@ -1,6 +1,6 @@
 /**
  * This class specifies the definition for a column of a grid.
- * @author dxq613@gmail.com, yiminghe@gmail.com
+ * @author dxq613@gmail.com
  */
 KISSY.add('grid/column', function (S, Component, Template) {
 
@@ -344,6 +344,6 @@ KISSY.add('grid/column', function (S, Component, Template) {
     return column;
 
 }, {
-    requires:['component', 'template']
+    requires:['component/base', 'template']
 });
 	

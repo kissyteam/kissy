@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 5 17:04
+build time: Jun 5 22:25
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -22,9 +22,11 @@ build time: Jun 5 17:04
  * Component.Extension.Align
  * @author yiminghe@gmail.com, qiaohua@taobao.com
  */
-KISSY.add('component/extension/align', function (S, DOM, Node) {
+KISSY.add('component/extension/align', function (S, Node) {
 
     var win = S.Env.host,
+        $ = Node.all,
+        $win=$(win),
         UA = S.UA;
 
     // var ieMode = document.documentMode || UA.ie;
@@ -57,7 +59,7 @@ KISSY.add('component/extension/align', function (S, DOM, Node) {
         var doc = element.ownerDocument,
             body = doc.body,
             parent,
-            positionStyle = DOM.css(element, 'position'),
+            positionStyle = $(element).css('position'),
             skipStatic = positionStyle == 'fixed' || positionStyle == 'absolute';
 
         if (!skipStatic) {
@@ -65,7 +67,7 @@ KISSY.add('component/extension/align', function (S, DOM, Node) {
         }
 
         for (parent = element.parentNode; parent && parent != body; parent = parent.parentNode) {
-            positionStyle = DOM.css(parent, 'position');
+            positionStyle = $(parent).css('position');
             if (positionStyle != "static") {
                 return parent;
             }
@@ -100,8 +102,10 @@ KISSY.add('component/extension/align', function (S, DOM, Node) {
                 // body may have overflow set on it, yet we still get the entire
                 // viewport. In some browsers, el.offsetParent may be
                 // document.documentElement, so check for that too.
-                (el != body && el != documentElement && DOM.css(el, 'overflow') != 'visible')) {
-                var pos = DOM.offset(el);
+                (el != body &&
+                    el != documentElement &&
+                    $(el).css('overflow') != 'visible')) {
+                var pos = $(el).offset();
                 // add border
                 pos.left += el.clientLeft;
                 pos.top += el.clientTop;
@@ -117,13 +121,13 @@ KISSY.add('component/extension/align', function (S, DOM, Node) {
         }
 
         // Clip by window's viewport.
-        scrollX = DOM.scrollLeft();
-        scrollY = DOM.scrollTop();
+        scrollX = $win.scrollLeft();
+        scrollY = $win.scrollTop();
         visibleRect.left = Math.max(visibleRect.left, scrollX);
         visibleRect.top = Math.max(visibleRect.top, scrollY);
         winSize = {
-            width: DOM.viewportWidth(),
-            height: DOM.viewportHeight()
+            width: $win.width(),
+            height: $win.height()
         };
         visibleRect.right = Math.min(visibleRect.right, scrollX + winSize.width);
         visibleRect.bottom = Math.min(visibleRect.bottom, scrollY + winSize.height);
@@ -286,9 +290,12 @@ KISSY.add('component/extension/align', function (S, DOM, Node) {
             w = node.outerWidth();
             h = node.outerHeight();
         } else {
-            offset = { left: DOM.scrollLeft(), top: DOM.scrollTop() };
-            w = DOM.viewportWidth();
-            h = DOM.viewportHeight();
+            offset = {
+                left: $win.scrollLeft(),
+                top: $win.scrollTop()
+            };
+            w = $win.width();
+            h = $win.height();
         }
         offset.width = w;
         offset.height = h;
@@ -458,7 +465,7 @@ KISSY.add('component/extension/align', function (S, DOM, Node) {
 
     return Align;
 }, {
-    requires: ["dom", "node"]
+    requires: ["node"]
 });
 /**
  * @ignore
@@ -717,12 +724,12 @@ KISSY.add("component/extension/shim-render", function () {
  * delegate events for children
  * @author yiminghe@gmail.com
  */
-KISSY.add("component/extension/delegate-children", function (S, Event) {
+KISSY.add("component/extension/delegate-children", function (S, Node) {
 
     var UA = S.UA,
         ie = S.Env.host.document.documentMode || UA.ie,
         Features = S.Features,
-        Gesture = Event.Gesture,
+        Gesture = Node.Gesture,
         isTouchEventSupported = Features.isTouchEventSupported();
 
     function DelegateChildren() {
@@ -807,7 +814,7 @@ KISSY.add("component/extension/delegate-children", function (S, Event) {
 
     return DelegateChildren;
 }, {
-    requires: ['event']
+    requires: ['node']
 });
 /**
  * @ignore

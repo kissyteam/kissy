@@ -2,7 +2,9 @@
  * tree management utils
  * @author yiminghe@gmail.com
  */
-KISSY.add("tree/tree-manager", function (S, Event, Component,Extension) {
+KISSY.add("tree/tree-manager", function (S, Node, Component,Extension) {
+
+    var KeyCode=Node.KeyCode;
 
     function TreeManager() {
     }
@@ -65,7 +67,7 @@ KISSY.add("tree/tree-manager", function (S, Event, Component,Extension) {
 
         handleKeyEventInternal: function (e) {
             var current = this.get("selectedItem");
-            if (e.keyCode == Event.KeyCode.ENTER) {
+            if (e.keyCode == KeyCode.ENTER) {
                 // 传递给真正的单个子节点
                 return current.performActionInternal(e);
             }
@@ -130,5 +132,5 @@ KISSY.add("tree/tree-manager", function (S, Event, Component,Extension) {
 
     return TreeManager;
 }, {
-    requires: ['event', 'component/base','component/extension']
+    requires: ['node', 'component/base','component/extension']
 });

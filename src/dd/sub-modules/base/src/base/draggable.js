@@ -3,7 +3,7 @@
  * dd support for kissy, drag for dd
  * @author yiminghe@gmail.com
  */
-KISSY.add('dd/base/draggable', function (S, Node, RichBase, DDM, Event) {
+KISSY.add('dd/base/draggable', function (S, Node, RichBase, DDM) {
 
     var UA = S.UA,
         $ = Node.all,
@@ -12,7 +12,9 @@ KISSY.add('dd/base/draggable', function (S, Node, RichBase, DDM, Event) {
             Features.isMsPointerSupported(),
         each = S.each,
     // !! use singleTouchStart in touch to normalize gesture event
-        DRAG_START_EVENT = useGestureEvent ? 'singleTouchStart' : Event.Gesture.start,
+        DRAG_START_EVENT = useGestureEvent ?
+            'singleTouchStart' :
+            Node.Gesture.start,
         ie = UA['ie'],
         NULL = null,
         PREFIX_CLS = DDM.PREFIX_CLS,

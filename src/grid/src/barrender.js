@@ -1,6 +1,6 @@
 /**
  * bar aria from bar according to current baritem
- * @author dxq613@gmail.com, yiminghe@gmail.com
+ * @author dxq613@gmail.com
  */
 KISSY.add("grid/barrender", function(S,  Component) {
 
@@ -17,5 +17,5 @@ KISSY.add("grid/barrender", function(S,  Component) {
 
 	},"Grid_Bar_Render"); 
 },{
-	requires:['component']
+	requires:['component/base']
 });

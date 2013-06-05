@@ -3,7 +3,7 @@
  * submenu controller for kissy, transfer item's keyCode to menu
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/submenu", function (S, Event, MenuItem, SubMenuRender, Extension) {
+KISSY.add("menu/submenu", function (S, Node, MenuItem, SubMenuRender, Extension) {
 
     function afterHighlightedChange(e) {
         var target = e.target,
@@ -35,7 +35,7 @@ KISSY.add("menu/submenu", function (S, Event, MenuItem, SubMenuRender, Extension
     }
 
     /* or precisely subMenuItem */
-    var KeyCode = Event.KeyCode,
+    var KeyCode = Node.KeyCode,
         MENU_DELAY = 0.15;
 
     var DecorateChild = Extension.DecorateChild;
@@ -153,7 +153,7 @@ KISSY.add("menu/submenu", function (S, Event, MenuItem, SubMenuRender, Extension
                         }
                     }
                     // enter as click
-                    else if (e.keyCode == Event.KeyCode.ENTER) {
+                    else if (e.keyCode == KeyCode.ENTER) {
                         return this.performActionInternal(e);
                     }
                     else {
@@ -308,5 +308,5 @@ KISSY.add("menu/submenu", function (S, Event, MenuItem, SubMenuRender, Extension
 
     return SubMenu;
 }, {
-    requires: ['event', './menuitem', './submenu-render', 'component/extension']
+    requires: ['node', './menuitem', './submenu-render', 'component/extension']
 });

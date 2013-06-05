@@ -2,13 +2,13 @@
  * scrollbar for KISSY scrollview
  * @author yiminghe@gmail.com
  */
-KISSY.add('scrollview/plugin/scrollbar/control', function (S, Event, DD, Component, ScrollBarRender) {
+KISSY.add('scrollview/plugin/scrollbar/control', function (S, Node, DD, Component, ScrollBarRender) {
 
     var MIN_BAR_LENGTH = 20;
 
     var SCROLLBAR_EVENT_NS = '.ks-scrollbar';
 
-    var Gesture = Event.Gesture;
+    var Gesture = Node.Gesture;
 
     return Component.Controller.extend({
 
@@ -345,5 +345,5 @@ KISSY.add('scrollview/plugin/scrollbar/control', function (S, Event, DD, Compone
     });
 
 }, {
-    requires: ['event', 'dd/base', 'component/base', './render']
+    requires: ['node', 'dd/base', 'component/base', './render']
 });

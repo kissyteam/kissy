@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 3 13:08
+build time: Jun 5 22:36
 */
 KISSY.add("event/dom/touch/handle-map",function(){return{}});KISSY.add("event/dom/touch/gesture",function(f,b){var c=b.Gesture,e=f.Features,a,h,i,k;e.isTouchEventSupported()?(a="touchstart",h="touchmove",k="touchend",i="touchcancel"):e.isMsPointerSupported()&&(a="MSPointerDown",h="MSPointerMove",k="MSPointerUp",i="MSPointerCancel");a&&(c.start=a,c.move=h,c.end=k,c.cancel=i,c.tap="tap",c.doubleTap="doubleTap");return c},{requires:["event/dom/base"]});
 KISSY.add("event/dom/touch/single-touch",function(f){function b(){}b.prototype={constructor:b,requiredTouchCount:1,onTouchStart:function(c){if(c.touches.length!=this.requiredTouchCount)return!1;this.lastTouches=c.touches},onTouchMove:f.noop,onTouchEnd:f.noop};return b});

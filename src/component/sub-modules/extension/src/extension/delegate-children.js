@@ -3,12 +3,12 @@
  * delegate events for children
  * @author yiminghe@gmail.com
  */
-KISSY.add("component/extension/delegate-children", function (S, Event) {
+KISSY.add("component/extension/delegate-children", function (S, Node) {
 
     var UA = S.UA,
         ie = S.Env.host.document.documentMode || UA.ie,
         Features = S.Features,
-        Gesture = Event.Gesture,
+        Gesture = Node.Gesture,
         isTouchEventSupported = Features.isTouchEventSupported();
 
     function DelegateChildren() {
@@ -93,5 +93,5 @@ KISSY.add("component/extension/delegate-children", function (S, Event) {
 
     return DelegateChildren;
 }, {
-    requires: ['event']
+    requires: ['node']
 });

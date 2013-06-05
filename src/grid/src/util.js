@@ -1,6 +1,6 @@
 /**
  * this class details some util tools of grid,like loadMask, formatter for grid's cell render
- * @author dxq613@gmail.com, yiminghe@gmail.com
+ * @author dxq613@gmail.com
  */
 KISSY.add('grid/util', function (S) {
     var DOM = S.DOM,

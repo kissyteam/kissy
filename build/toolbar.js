@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 30 01:44
+build time: Jun 5 22:38
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -15,7 +15,7 @@ build time: May 30 01:44
  */
 KISSY.add("toolbar", function (S, Component, Extension, Node, Separator, undefined) {
 
-    var KeyCodes = Node.KeyCodes;
+    var KeyCode = Node.KeyCode;
 
     function getNextEnabledItem(index, direction, self) {
         var children = self.get("children"),
@@ -181,31 +181,31 @@ KISSY.add("toolbar", function (S, Component, Extension, Node, Separator, undefin
                 // Either nothing is highlighted, or the highlighted control didn't handle
                 // the key event, so attempt to handle it here.
                 switch (e.keyCode) {
-                    case KeyCodes.ESC:
+                    case KeyCode.ESC:
                         self.getKeyEventTarget().fire("blur");
                         return true;
 
-                    case KeyCodes.HOME:
+                    case KeyCode.HOME:
                         current = getNextEnabledItem(undefined, 1, self);
                         break;
 
-                    case KeyCodes.END:
+                    case KeyCode.END:
                         current = getNextEnabledItem(undefined, -1, self);
                         break;
 
-                    case KeyCodes.UP:
+                    case KeyCode.UP:
                         current = getNextEnabledItem(childIndex, -1, self);
                         break;
 
-                    case KeyCodes.LEFT:
+                    case KeyCode.LEFT:
                         current = getNextEnabledItem(childIndex, -1, self);
                         break;
 
-                    case KeyCodes.DOWN:
+                    case KeyCode.DOWN:
                         current = getNextEnabledItem(childIndex, 1, self);
                         break;
 
-                    case KeyCodes.RIGHT:
+                    case KeyCode.RIGHT:
                         current = getNextEnabledItem(childIndex, 1, self);
                         break;
 
