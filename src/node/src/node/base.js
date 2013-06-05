@@ -3,7 +3,7 @@
  * definition for node and nodelist
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
-KISSY.add('node/base', function (S, DOM, undefined) {
+KISSY.add('node/base', function (S, DOM, Event, undefined) {
 
     var AP = Array.prototype,
         slice = AP.slice,
@@ -269,9 +269,11 @@ KISSY.add('node/base', function (S, DOM, undefined) {
      */
     NodeList.NodeType = NodeType;
 
+    NodeList.KeyCode = Event.KeyCode;
+
     return NodeList;
 }, {
-    requires: ['dom']
+    requires: ['dom', 'event/dom']
 });
 
 

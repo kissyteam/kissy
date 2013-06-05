@@ -5,7 +5,7 @@
 KISSY.use("menu", function (S, Menu) {
 
     var $ = S.all,
-        KeyCodes = S.Node.KeyCodes;
+        KeyCode = S.Node.KeyCode;
 
     describe('menu', function () {
 
@@ -75,10 +75,10 @@ KISSY.use("menu", function (S, Menu) {
 
                     runs(function () {
                         jasmine.simulate(menuEl[0], "keydown", {
-                            keyCode: KeyCodes.UP
+                            keyCode: KeyCode.UP
                         });
                         jasmine.simulate(menuEl[0], "keyup", {
-                            keyCode: KeyCodes.UP
+                            keyCode: KeyCode.UP
                         });
                     });
 
@@ -95,10 +95,10 @@ KISSY.use("menu", function (S, Menu) {
 
                     runs(function () {
                         jasmine.simulate(menuEl[0], "keydown", {
-                            keyCode: KeyCodes.UP
+                            keyCode: KeyCode.UP
                         });
                         jasmine.simulate(menuEl[0], "keyup", {
-                            keyCode: KeyCodes.UP
+                            keyCode: KeyCode.UP
                         });
                     });
 
@@ -151,10 +151,10 @@ KISSY.use("menu", function (S, Menu) {
 
                     runs(function () {
                         jasmine.simulate(menuEl[0], "keydown", {
-                            keyCode: KeyCodes.ENTER
+                            keyCode: KeyCode.ENTER
                         });
                         jasmine.simulate(menuEl[0], "keyup", {
-                            keyCode: KeyCodes.ENTER
+                            keyCode: KeyCode.ENTER
                         });
                     });
 
@@ -171,10 +171,10 @@ KISSY.use("menu", function (S, Menu) {
 
                     runs(function () {
                         jasmine.simulate(menuEl[0], "keydown", {
-                            keyCode: KeyCodes.ENTER
+                            keyCode: KeyCode.ENTER
                         });
                         jasmine.simulate(menuEl[0], "keyup", {
-                            keyCode: KeyCodes.ENTER
+                            keyCode: KeyCode.ENTER
                         });
                     });
 

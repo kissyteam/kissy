@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 30 01:42
+build time: Jun 5 18:12
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -62,7 +62,7 @@ KISSY.add("menu/menu-render", function (S, Component) {
  */
 KISSY.add("menu/base", function (S, Event, Component,Extension, MenuRender, undefined) {
 
-    var KeyCodes = Event.KeyCodes;
+    var KeyCode = Event.KeyCode;
 
     /**
      * KISSY Menu.
@@ -183,7 +183,7 @@ KISSY.add("menu/base", function (S, Event, Component,Extension, MenuRender, unde
             //自己处理了，不要向上处理，嵌套菜单情况
             switch (e.keyCode) {
                 // esc
-                case KeyCodes.ESC:
+                case KeyCode.ESC:
                     // 清除所有菜单
                     if (highlightedItem = this.get('highlightedItem')) {
                         highlightedItem.set('highlighted', false);
@@ -191,15 +191,15 @@ KISSY.add("menu/base", function (S, Event, Component,Extension, MenuRender, unde
                     break;
 
                 // home
-                case KeyCodes.HOME:
+                case KeyCode.HOME:
                     nextHighlighted = this._getNextEnabledHighlighted(0, 1);
                     break;
                 // end
-                case KeyCodes.END:
+                case KeyCode.END:
                     nextHighlighted = this._getNextEnabledHighlighted(len - 1, -1);
                     break;
                 // up
-                case KeyCodes.UP:
+                case KeyCode.UP:
                     if (!highlightedItem) {
                         destIndex = len - 1;
                     } else {
@@ -209,7 +209,7 @@ KISSY.add("menu/base", function (S, Event, Component,Extension, MenuRender, unde
                     nextHighlighted = this._getNextEnabledHighlighted(destIndex, -1);
                     break;
                 //down
-                case KeyCodes.DOWN:
+                case KeyCode.DOWN:
                     if (!highlightedItem) {
                         destIndex = 0;
                     } else {
@@ -400,7 +400,14 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
             if (e && e.byPassSetHighlightedItem) {
 
             } else {
-                this.get('parent').set('highlightedItem', v ? this : null);
+                if (this.get('rendered')) {
+                    this.get('parent').set('highlightedItem', v ? this : null);
+                } else {
+                    if (v) {
+                        // do not set null on initializer
+                        this.get('parent').set('highlightedItem', this);
+                    }
+                }
             }
             // 是否要滚动到当前菜单项(横向，纵向)
             if (v) {
@@ -428,13 +435,6 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
          */
         containsElement: function (element) {
             return this.get('view') && this.get('view').containsElement(element);
-        },
-
-        syncUI: function () {
-            // highlighted is sync false
-            if (this.get('highlighted')) {
-                this.get('parent').set('highlightedItem', this);
-            }
         }
 
     }, {
@@ -637,7 +637,7 @@ KISSY.add("menu/submenu", function (S, Event, MenuItem, SubMenuRender, Extension
     }
 
     /* or precisely subMenuItem */
-    var KeyCodes = Event.KeyCodes,
+    var KeyCode = Event.KeyCode,
         MENU_DELAY = 0.15;
 
     var DecorateChild = Extension.DecorateChild;
@@ -740,7 +740,7 @@ KISSY.add("menu/submenu", function (S, Event, MenuItem, SubMenuRender, Extension
 
                 if (!hasKeyboardControl_) {
                     // right
-                    if (keyCode == KeyCodes.RIGHT) {
+                    if (keyCode == KeyCode.RIGHT) {
                         showMenu.call(self);
                         menu = getMenu(self);
                         if (menu) {
@@ -755,7 +755,7 @@ KISSY.add("menu/submenu", function (S, Event, MenuItem, SubMenuRender, Extension
                         }
                     }
                     // enter as click
-                    else if (e.keyCode == Event.KeyCodes.ENTER) {
+                    else if (e.keyCode == Event.KeyCode.ENTER) {
                         return this.performActionInternal(e);
                     }
                     else {
@@ -766,7 +766,7 @@ KISSY.add("menu/submenu", function (S, Event, MenuItem, SubMenuRender, Extension
                 // The menu has control and the key hasn't yet been handled, on left arrow
                 // we turn off key control.
                 // left
-                else if (keyCode == KeyCodes.LEFT) {
+                else if (keyCode == KeyCode.LEFT) {
                     // refresh highlightedItem of parent menu
                     self.set('highlighted', false);
                     self.set('highlighted', true, {

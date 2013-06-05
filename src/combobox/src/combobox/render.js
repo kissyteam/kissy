@@ -39,6 +39,7 @@ KISSY.add("combobox/render", function (S, Component, ComboboxTpl) {
 
     }, {
         ATTRS: {
+
             collapsed: {
                 value: true,
                 sync: 0

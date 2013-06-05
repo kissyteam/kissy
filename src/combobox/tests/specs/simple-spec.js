@@ -22,7 +22,7 @@ KISSY.use("combobox", function (S, ComboBox) {
         var data = ["1", "21", "31"];
         var DOM = S.DOM;
         var Event = S.Event;
-        var KeyCodes = Event.KeyCodes;
+        var KeyCode = Event.KeyCode;
 
         var comboBox = new ComboBox({
             width: 200,
@@ -51,7 +51,7 @@ KISSY.use("combobox", function (S, ComboBox) {
             expect(t.value).toBe("2");
 
             jasmine.simulate(t, "keydown", {
-                keyCode: KeyCodes.DOWN
+                keyCode: KeyCode.DOWN
             });
 
 
@@ -235,7 +235,7 @@ KISSY.use("combobox", function (S, ComboBox) {
                 expect(S.indexOf(menu.get("highlightedItem"), children)).toBe(0);
 
                 jasmine.simulate(t, "keydown", {
-                    keyCode: KeyCodes.DOWN
+                    keyCode: KeyCode.DOWN
                 });
             });
 
@@ -251,7 +251,7 @@ KISSY.use("combobox", function (S, ComboBox) {
                 expect(t.value).toBe(children[1].get("textContent"));
 
                 jasmine.simulate(t, "keydown", {
-                    keyCode: KeyCodes.DOWN
+                    keyCode: KeyCode.DOWN
                 });
             });
 
@@ -263,7 +263,7 @@ KISSY.use("combobox", function (S, ComboBox) {
                 // 第3个高亮
                 expect(S.indexOf(menu.get("highlightedItem"), children)).toBe(2);
                 jasmine.simulate(t, "keydown", {
-                    keyCode: KeyCodes.DOWN
+                    keyCode: KeyCode.DOWN
                 });
             });
             waits(100);
@@ -353,7 +353,7 @@ KISSY.use("combobox", function (S, ComboBox) {
                 var menu = comboBox.get("menu");
                 var children = menu.get("children");
                 jasmine.simulate(t, "keydown", {
-                    keyCode: KeyCodes.DOWN
+                    keyCode: KeyCode.DOWN
                 });
 
             });
@@ -365,7 +365,7 @@ KISSY.use("combobox", function (S, ComboBox) {
                 expect(S.indexOf(menu.get("highlightedItem"), children)).toBe(1);
 
                 jasmine.simulate(t, "keydown", {
-                    keyCode: KeyCodes.ENTER
+                    keyCode: KeyCode.ENTER
                 });
             });
 
@@ -403,7 +403,7 @@ KISSY.use("combobox", function (S, ComboBox) {
                 var menu = comboBox.get("menu");
                 var children = menu.get("children");
                 jasmine.simulate(t, "keydown", {
-                    keyCode: KeyCodes.DOWN
+                    keyCode: KeyCode.DOWN
                 });
 
             });
@@ -415,7 +415,7 @@ KISSY.use("combobox", function (S, ComboBox) {
                 expect(S.indexOf(menu.get("highlightedItem"), children)).toBe(1);
                 expect(t.value).toBe(children[1].get("textContent"));
                 jasmine.simulate(t, "keydown", {
-                    keyCode: KeyCodes.ESC
+                    keyCode: KeyCode.ESC
                 });
             });
 

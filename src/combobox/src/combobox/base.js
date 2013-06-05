@@ -6,7 +6,7 @@
 KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, undefined) {
     var ComboBox,
         $ = Node.all,
-        KeyCodes = Node.KeyCodes,
+        KeyCode = Node.KeyCode,
         ALIGN = {
             points: ["bl", "tl"],
             overflow: {
@@ -206,11 +206,12 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
                     // https://github.com/kissyteam/kissy/issues/371
                     // combobox: input should be involved in key press sequence
                     if (updateInputOnDownUp && highlightedItem) {
-                        if (keyCode == KeyCodes.DOWN &&
-                            highlightedItem == menu.getChildAt(menu.get('children').length - 1)
+                        var menuChildren = menu.get('children');
+                        if (keyCode == KeyCode.DOWN &&
+                            highlightedItem == getFirstEnabledItem(menuChildren.concat().reverse())
                             ||
-                            keyCode == KeyCodes.UP &&
-                                highlightedItem == menu.getChildAt(0)
+                            keyCode == KeyCode.UP &&
+                                highlightedItem == getFirstEnabledItem(menuChildren)
                             ) {
                             self.setValueInternal(self._savedInputValue);
                             highlightedItem.set('highlighted', false);
@@ -223,7 +224,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
                     highlightedItem = menu.get("highlightedItem");
 
                     // esc
-                    if (keyCode == KeyCodes.ESC) {
+                    if (keyCode == KeyCode.ESC) {
                         self.set("collapsed", true);
                         if (updateInputOnDownUp) {
                             // combobox will change input value
@@ -235,14 +236,14 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
                     }
 
                     if (updateInputOnDownUp &&
-                        S.inArray(keyCode, [KeyCodes.DOWN, KeyCodes.UP])) {
+                        S.inArray(keyCode, [KeyCode.DOWN, KeyCode.UP])) {
                         // update menu's active value to input just for show
                         self.setValueInternal(highlightedItem.get("textContent"));
                     }
 
                     // tab
                     // if menu is open and an menuitem is highlighted, see as click/enter
-                    if (keyCode == KeyCodes.TAB && highlightedItem) {
+                    if (keyCode == KeyCode.TAB && highlightedItem) {
                         // click highlightedItem
                         highlightedItem.performActionInternal();
                         // only prevent focus change in multiple mode
@@ -252,7 +253,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
                     }
 
                     return handledByMenu;
-                } else if (keyCode == KeyCodes.DOWN || keyCode == KeyCodes.UP) {
+                } else if (keyCode == KeyCode.DOWN || keyCode == KeyCode.UP) {
                     // re-fetch, consider multiple input
                     // S.log("refetch : " + getValue(self));
                     var v = self.getValueInternal();
@@ -531,6 +532,15 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
 
     // #----------------------- private start
 
+    function getFirstEnabledItem(children) {
+        for (var i = 0; i < children.length; i++) {
+            if (!children[i].get('disabled')) {
+                return children[i];
+            }
+        }
+        return null;
+    }
+
     function onMenuAfterRenderUI(e) {
         var self = this,
             el,
@@ -658,6 +668,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
     }
 
     function renderData(data) {
+
         var self = this,
             v,
             children = [],

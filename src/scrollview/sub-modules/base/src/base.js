@@ -10,7 +10,7 @@ KISSY.add('scrollview/base', function (S, DOM, Component, Extension, Render, Eve
 
     var isTouchEventSupported = S.Features.isTouchEventSupported();
 
-    var KeyCodes = Event.KeyCodes;
+    var KeyCode = Event.KeyCode;
 
     return Component.Controller.extend({
 
@@ -142,25 +142,25 @@ KISSY.add('scrollview/base', function (S, DOM, Component, Extension, Render, Eve
                     scrollTop = self.get('scrollTop');
                 isMax = scrollTop == maxScroll.top;
                 isMin = scrollTop == minScroll.top;
-                if (keyCode == KeyCodes.DOWN) {
+                if (keyCode == KeyCode.DOWN) {
                     if (isMax) {
                         return undefined;
                     }
                     self.scrollTo(undefined, scrollTop + scrollStepY);
                     ok = true;
-                } else if (keyCode == KeyCodes.UP) {
+                } else if (keyCode == KeyCode.UP) {
                     if (isMin) {
                         return undefined;
                     }
                     self.scrollTo(undefined, scrollTop - scrollStepY);
                     ok = true;
-                } else if (keyCode == KeyCodes.PAGE_DOWN) {
+                } else if (keyCode == KeyCode.PAGE_DOWN) {
                     if (isMax) {
                         return undefined;
                     }
                     self.scrollTo(undefined, scrollTop + clientHeight);
                     ok = true;
-                } else if (keyCode == KeyCodes.PAGE_UP) {
+                } else if (keyCode == KeyCode.PAGE_UP) {
                     if (isMin) {
                         return undefined;
                     }
@@ -173,13 +173,13 @@ KISSY.add('scrollview/base', function (S, DOM, Component, Extension, Render, Eve
                     scrollLeft = self.get('scrollLeft');
                 isMax = scrollLeft == maxScroll.left;
                 isMin = scrollLeft == minScroll.left;
-                if (keyCode == KeyCodes.RIGHT) {
+                if (keyCode == KeyCode.RIGHT) {
                     if (isMax) {
                         return undefined;
                     }
                     self.scrollTo(scrollLeft + scrollStepX);
                     ok = true;
-                } else if (keyCode == KeyCodes.LEFT) {
+                } else if (keyCode == KeyCode.LEFT) {
                     if (isMin) {
                         return undefined;
                     }

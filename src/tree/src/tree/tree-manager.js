@@ -65,7 +65,7 @@ KISSY.add("tree/tree-manager", function (S, Event, Component,Extension) {
 
         handleKeyEventInternal: function (e) {
             var current = this.get("selectedItem");
-            if (e.keyCode == Event.KeyCodes.ENTER) {
+            if (e.keyCode == Event.KeyCode.ENTER) {
                 // 传递给真正的单个子节点
                 return current.performActionInternal(e);
             }

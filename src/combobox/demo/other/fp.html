@@ -153,8 +153,8 @@
                         footer.append(html);
                         var el = footer.one(".tdg-input");
                         el.on("keyup", function (e) {
-                            if (e.keyCode != Event.KeyCodes.DOWN &&
-                                    e.keyCode != Event.KeyCodes.UP) {
+                            if (e.keyCode != Event.KeyCode.DOWN &&
+                                    e.keyCode != Event.KeyCode.UP) {
                                 el.val(el.val());
                             }
                         });

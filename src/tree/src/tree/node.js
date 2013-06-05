@@ -4,7 +4,7 @@
  */
 KISSY.add("tree/node", function (S, Node, Component,Extension, TreeNodeRender) {
     var $ = Node.all,
-        KeyCodes = Node.KeyCodes;
+        KeyCode = Node.KeyCode;
 
     /**
      * @class
@@ -51,31 +51,31 @@ KISSY.add("tree/node", function (S, Node, Component,Extension, TreeNodeRender) {
                 switch (keyCode) {
                     // home
                     // 移到树的顶层节点
-                    case KeyCodes.HOME:
+                    case KeyCode.HOME:
                         nodeToBeSelected = tree;
                         break;
 
                     // end
                     // 移到最后一个可视节点
-                    case KeyCodes.END:
+                    case KeyCode.END:
                         nodeToBeSelected = getLastVisibleDescendant(tree);
                         break;
 
                     // 上
                     // 当前节点的上一个兄弟节点的最后一个可显示节点
-                    case KeyCodes.UP:
+                    case KeyCode.UP:
                         nodeToBeSelected = getPreviousVisibleNode(self);
                         break;
 
                     // 下
                     // 当前节点的下一个可显示节点
-                    case KeyCodes.DOWN:
+                    case KeyCode.DOWN:
                         nodeToBeSelected = getNextVisibleNode(self);
                         break;
 
                     // 左
                     // 选择父节点或 collapse 当前节点
-                    case KeyCodes.LEFT:
+                    case KeyCode.LEFT:
                         if (expanded && (children.length || isLeaf === false)) {
                             self.set("expanded", false);
                         } else {
@@ -85,7 +85,7 @@ KISSY.add("tree/node", function (S, Node, Component,Extension, TreeNodeRender) {
 
                     // 右
                     // expand 当前节点
-                    case KeyCodes.RIGHT:
+                    case KeyCode.RIGHT:
                         if (children.length || isLeaf === false) {
                             if (!expanded) {
                                 self.set("expanded", true);

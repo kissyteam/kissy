@@ -95,7 +95,7 @@ KISSY.add('node/attach', function (S, DOM, Event, NodeList, undefined) {
             'undelegate'
         ];
 
-    NodeList.KeyCodes = Event.KeyCodes;
+    NodeList.KeyCode = Event.KeyCode;
 
     function accessNorm(fn, self, args) {
         args.unshift(self);

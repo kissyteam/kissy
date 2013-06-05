@@ -40,7 +40,7 @@ KISSY.add("editor/plugin/justify-left", function (S, Editor, justifyCenterCmd) {
 
             editor.docReady(function () {
                 editor.get("document").on("keydown", function (e) {
-                    if (e.ctrlKey && e.keyCode == S.Node.KeyCodes.L) {
+                    if (e.ctrlKey && e.keyCode == S.Node.KeyCode.L) {
                         editor.execCommand("justifyLeft");
                         e.preventDefault();
                     }

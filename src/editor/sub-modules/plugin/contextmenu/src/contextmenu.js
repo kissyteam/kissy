@@ -26,7 +26,7 @@ KISSY.add("editor/plugin/contextmenu", function (S, Editor, Menu, focusFix) {
 
         menu.on("afterRenderUI", function () {
             menu.get("el").on("keydown", function (e) {
-                if (e.keyCode == S.Event.KeyCodes.ESC) {
+                if (e.keyCode == S.Event.KeyCode.ESC) {
                     menu.hide();
                 }
             });

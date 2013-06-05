@@ -35,7 +35,7 @@ KISSY.add("menu/submenu", function (S, Event, MenuItem, SubMenuRender, Extension
     }
 
     /* or precisely subMenuItem */
-    var KeyCodes = Event.KeyCodes,
+    var KeyCode = Event.KeyCode,
         MENU_DELAY = 0.15;
 
     var DecorateChild = Extension.DecorateChild;
@@ -138,7 +138,7 @@ KISSY.add("menu/submenu", function (S, Event, MenuItem, SubMenuRender, Extension
 
                 if (!hasKeyboardControl_) {
                     // right
-                    if (keyCode == KeyCodes.RIGHT) {
+                    if (keyCode == KeyCode.RIGHT) {
                         showMenu.call(self);
                         menu = getMenu(self);
                         if (menu) {
@@ -153,7 +153,7 @@ KISSY.add("menu/submenu", function (S, Event, MenuItem, SubMenuRender, Extension
                         }
                     }
                     // enter as click
-                    else if (e.keyCode == Event.KeyCodes.ENTER) {
+                    else if (e.keyCode == Event.KeyCode.ENTER) {
                         return this.performActionInternal(e);
                     }
                     else {
@@ -164,7 +164,7 @@ KISSY.add("menu/submenu", function (S, Event, MenuItem, SubMenuRender, Extension
                 // The menu has control and the key hasn't yet been handled, on left arrow
                 // we turn off key control.
                 // left
-                else if (keyCode == KeyCodes.LEFT) {
+                else if (keyCode == KeyCode.LEFT) {
                     // refresh highlightedItem of parent menu
                     self.set('highlighted', false);
                     self.set('highlighted', true, {

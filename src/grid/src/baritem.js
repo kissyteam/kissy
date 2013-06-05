@@ -5,7 +5,7 @@
 KISSY.add('grid/baritem',function(S,Component,Button,Node){
 
 
-    var KeyCodes=Node.KeyCodes;
+    var KeyCode=Node.KeyCode;
 
 	/**
      * BarItem class a control used in toolbar ,for example button,select,text,input an so on
@@ -62,16 +62,16 @@ KISSY.add('grid/baritem',function(S,Component,Button,Node){
 
 		},
 		handleKeyEventInternal:function (e) {
-			if (e.keyCode == KeyCodes.ENTER &&
+			if (e.keyCode == KeyCode.ENTER &&
 				e.type == "keydown" ||
-				e.keyCode == KeyCodes.SPACE &&
+				e.keyCode == KeyCode.SPACE &&
 					e.type == "keyup") {
 				return this.performActionInternal.call(this,e);
 			}
 			// Return true for space keypress (even though the event is handled on keyup)
 			// as preventDefault needs to be called up keypress to take effect in IE and
 			// WebKit.
-			return e.keyCode == KeyCodes.SPACE;
+			return e.keyCode == KeyCode.SPACE;
 		},
 		performActionInternal:function () {
 			var self = this;

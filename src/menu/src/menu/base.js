@@ -5,7 +5,7 @@
  */
 KISSY.add("menu/base", function (S, Event, Component,Extension, MenuRender, undefined) {
 
-    var KeyCodes = Event.KeyCodes;
+    var KeyCode = Event.KeyCode;
 
     /**
      * KISSY Menu.
@@ -126,7 +126,7 @@ KISSY.add("menu/base", function (S, Event, Component,Extension, MenuRender, unde
             //自己处理了，不要向上处理，嵌套菜单情况
             switch (e.keyCode) {
                 // esc
-                case KeyCodes.ESC:
+                case KeyCode.ESC:
                     // 清除所有菜单
                     if (highlightedItem = this.get('highlightedItem')) {
                         highlightedItem.set('highlighted', false);
@@ -134,15 +134,15 @@ KISSY.add("menu/base", function (S, Event, Component,Extension, MenuRender, unde
                     break;
 
                 // home
-                case KeyCodes.HOME:
+                case KeyCode.HOME:
                     nextHighlighted = this._getNextEnabledHighlighted(0, 1);
                     break;
                 // end
-                case KeyCodes.END:
+                case KeyCode.END:
                     nextHighlighted = this._getNextEnabledHighlighted(len - 1, -1);
                     break;
                 // up
-                case KeyCodes.UP:
+                case KeyCode.UP:
                     if (!highlightedItem) {
                         destIndex = len - 1;
                     } else {
@@ -152,7 +152,7 @@ KISSY.add("menu/base", function (S, Event, Component,Extension, MenuRender, unde
                     nextHighlighted = this._getNextEnabledHighlighted(destIndex, -1);
                     break;
                 //down
-                case KeyCodes.DOWN:
+                case KeyCode.DOWN:
                     if (!highlightedItem) {
                         destIndex = 0;
                     } else {

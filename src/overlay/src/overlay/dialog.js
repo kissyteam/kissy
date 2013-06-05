@@ -30,7 +30,7 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
 
             handleKeyEventInternal: function (e) {
                 if (this.get('escapeToClose') &&
-                    e.keyCode === Node.KeyCodes.ESC) {
+                    e.keyCode === Node.KeyCode.ESC) {
                     if (e.target.nodeName.toLowerCase() == 'select' &&
                         !e.target.disabled) {
                         // escape at select
@@ -228,7 +228,7 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
         });
 
 
-    var KEY_TAB = Node.KeyCodes.TAB;
+    var KEY_TAB = Node.KeyCode.TAB;
 
     // 不完美的方案，窗体末尾空白 tab 占位符，多了 tab 操作一次
     function trapFocus(e) {

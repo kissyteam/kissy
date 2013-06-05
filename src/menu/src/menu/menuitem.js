@@ -46,7 +46,14 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
             if (e && e.byPassSetHighlightedItem) {
 
             } else {
-                this.get('parent').set('highlightedItem', v ? this : null);
+                if (this.get('rendered')) {
+                    this.get('parent').set('highlightedItem', v ? this : null);
+                } else {
+                    if (v) {
+                        // do not set null on initializer
+                        this.get('parent').set('highlightedItem', this);
+                    }
+                }
             }
             // 是否要滚动到当前菜单项(横向，纵向)
             if (v) {
@@ -74,13 +81,6 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
          */
         containsElement: function (element) {
             return this.get('view') && this.get('view').containsElement(element);
-        },
-
-        syncUI: function () {
-            // highlighted is sync false
-            if (this.get('highlighted')) {
-                this.get('parent').set('highlightedItem', this);
-            }
         }
 
     }, {

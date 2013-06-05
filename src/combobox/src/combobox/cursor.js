@@ -3,9 +3,10 @@
  * get cursor position of input
  * @author yiminghe@gmail.com
  */
-KISSY.add('combobox/cursor', function (S, DOM) {
+KISSY.add('combobox/cursor', function (S, Node) {
 
-    var FAKE_DIV_HTML = "<div style='" +
+    var $ = Node.all,
+        FAKE_DIV_HTML = "<div style='" +
             "z-index:-9999;" +
             "overflow:hidden;" +
             "position: fixed;" +
@@ -51,22 +52,21 @@ KISSY.add('combobox/cursor', function (S, DOM) {
         findSupportInputScrollLeft;
 
     function getFakeDiv(elem) {
-        var fake = FAKE_DIV, body;
+        var fake = FAKE_DIV;
         if (!fake) {
-            fake = DOM.create(FAKE_DIV_HTML);
+            fake = $(FAKE_DIV_HTML);
         }
         if (String(elem.type) == 'textarea') {
-            DOM.css(fake, "width", DOM.css(elem, "width"));
+            fake.css("width", elem.css("width"));
         } else {
             // input does not wrap at all
-            DOM.css(fake, "width", 9999);
+            fake.css("width", 9999);
         }
         S.each(STYLES, function (s) {
-            DOM.css(fake, s, DOM.css(elem, s));
+            fake.css(s, elem.css(s));
         });
         if (!FAKE_DIV) {
-            body = elem.ownerDocument.body;
-            body.insertBefore(fake, body.firstChild);
+            fake.insertBefore(elem[0].ownerDocument.body.firstChild);
         }
         FAKE_DIV = fake;
         return fake;
@@ -74,18 +74,18 @@ KISSY.add('combobox/cursor', function (S, DOM) {
 
     findSupportInputScrollLeft = function () {
         var doc = document,
-            input = DOM.create("<input>");
-        DOM.css(input, {
+            input = $("<input>");
+        input.css({
             width: 1,
             position: "absolute",
             left: -9999,
             top: -9999
         });
-        input.value = "123456789";
-        doc.body.appendChild(input);
-        input.focus();
-        supportInputScrollLeft = !!(input.scrollLeft > 0);
-        DOM.remove(input);
+        input.val("123456789");
+        input.appendTo(doc.body);
+        input[0].focus();
+        supportInputScrollLeft = !!(input[0].scrollLeft > 0);
+        input.remove();
         findSupportInputScrollLeft = S.noop;
     };
 
@@ -93,8 +93,10 @@ KISSY.add('combobox/cursor', function (S, DOM) {
     supportInputScrollLeft = false;
 
     return function (elem) {
-        elem = DOM.get(elem);
+        var $elem = $(elem);
+        elem = $elem[0];
         var doc = elem.ownerDocument,
+            $doc = $(doc),
             elemOffset,
             range,
             fake,
@@ -108,12 +110,14 @@ KISSY.add('combobox/cursor', function (S, DOM) {
             return {
                 // http://msdn.microsoft.com/en-us/library/ie/ms533540(v=vs.85).aspx
                 // or simple range.offsetLeft for textarea
-                left: range.boundingLeft + elemScrollLeft + DOM.scrollLeft(),
-                top: range.boundingTop + elemScrollTop + range.boundingHeight + DOM.scrollTop()
+                left: range.boundingLeft + elemScrollLeft +
+                    $doc.scrollLeft(),
+                top: range.boundingTop + elemScrollTop +
+                    range.boundingHeight + $doc.scrollTop()
             };
         }
 
-        elemOffset = DOM.offset(elem);
+        elemOffset = $elem.offset();
 
         // input does not has scrollLeft
         // so just get the position of the beginning of input
@@ -122,13 +126,13 @@ KISSY.add('combobox/cursor', function (S, DOM) {
             return elemOffset;
         }
 
-        fake = getFakeDiv(elem);
+        fake = getFakeDiv($elem);
 
         selectionStart = elem.selectionStart;
 
-        fake.innerHTML = S.escapeHTML(elem.value.substring(0, selectionStart - 1)) +
+        fake.html(S.escapeHTML(elem.value.substring(0, selectionStart - 1)) +
             // marker
-            MARKER;
+            MARKER);
 
         // can not set fake to scrollTop，marker is always at bottom of marker
         // when cursor at the middle of textarea , error occurs
@@ -137,13 +141,13 @@ KISSY.add('combobox/cursor', function (S, DOM) {
         offset = elemOffset;
 
         // offset.left += 500;
-        DOM.offset(fake, offset);
-        marker = fake.lastChild;
-        offset = DOM.offset(marker);
-        offset.top += DOM.height(marker);
+        fake.offset(offset);
+        marker = fake.last();
+        offset = marker.offset();
+        offset.top += marker.height();
         // at the start of textarea , just fetch marker's left
         if (selectionStart > 0) {
-            offset.left += DOM.width(marker);
+            offset.left += marker.width();
         }
 
         // so minus scrollTop/Left
@@ -153,6 +157,7 @@ KISSY.add('combobox/cursor', function (S, DOM) {
         // offset.left -= 500;
         return offset;
     };
+
 }, {
-    requires: ['dom']
+    requires: ['node']
 });

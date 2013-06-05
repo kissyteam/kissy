@@ -3,9 +3,9 @@
  * dom event facade
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/base', function (S, Event, KeyCodes, _DOMUtils, Gesture, Special) {
+KISSY.add('event/dom/base', function (S, Event, KeyCode, _DOMUtils, Gesture, Special) {
     S.mix(Event, {
-        KeyCodes: KeyCodes,
+        KeyCode: KeyCode,
         _DOMUtils: _DOMUtils,
         Gesture: Gesture,
         _Special: Special
