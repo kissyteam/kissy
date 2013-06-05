@@ -191,6 +191,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
                 var self = this,
                     updateInputOnDownUp,
                     input,
+                    keyCode = e.keyCode,
                     highlightedItem,
                     handledByMenu,
                     menu = getMenu(self);
@@ -199,10 +200,30 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
                 updateInputOnDownUp = self.get("updateInputOnDownUp");
 
                 if (menu && menu.get("visible")) {
+
+                    highlightedItem = menu.get("highlightedItem");
+
+                    // https://github.com/kissyteam/kissy/issues/371
+                    // combobox: input should be involved in key press sequence
+                    if (updateInputOnDownUp && highlightedItem) {
+                        if (keyCode == KeyCodes.DOWN &&
+                            highlightedItem == menu.getChildAt(menu.get('children').length - 1)
+                            ||
+                            keyCode == KeyCodes.UP &&
+                                highlightedItem == menu.getChildAt(0)
+                            ) {
+                            self.setValueInternal(self._savedInputValue);
+                            highlightedItem.set('highlighted', false);
+                            return true;
+                        }
+                    }
+
                     handledByMenu = menu['handleKeydown'](e);
 
+                    highlightedItem = menu.get("highlightedItem");
+
                     // esc
-                    if (e.keyCode == KeyCodes.ESC) {
+                    if (keyCode == KeyCodes.ESC) {
                         self.set("collapsed", true);
                         if (updateInputOnDownUp) {
                             // combobox will change input value
@@ -213,17 +234,15 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
                         return true;
                     }
 
-                    highlightedItem = menu.get("highlightedItem");
-
                     if (updateInputOnDownUp &&
-                        S.inArray(e.keyCode, [KeyCodes.DOWN, KeyCodes.UP])) {
+                        S.inArray(keyCode, [KeyCodes.DOWN, KeyCodes.UP])) {
                         // update menu's active value to input just for show
                         self.setValueInternal(highlightedItem.get("textContent"));
                     }
 
                     // tab
                     // if menu is open and an menuitem is highlighted, see as click/enter
-                    if (e.keyCode == KeyCodes.TAB && highlightedItem) {
+                    if (keyCode == KeyCodes.TAB && highlightedItem) {
                         // click highlightedItem
                         highlightedItem.performActionInternal();
                         // only prevent focus change in multiple mode
@@ -233,7 +252,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
                     }
 
                     return handledByMenu;
-                } else if (e.keyCode == KeyCodes.DOWN || e.keyCode == KeyCodes.UP) {
+                } else if (keyCode == KeyCodes.DOWN || keyCode == KeyCodes.UP) {
                     // re-fetch, consider multiple input
                     // S.log("refetch : " + getValue(self));
                     var v = self.getValueInternal();
