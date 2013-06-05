@@ -25,19 +25,15 @@ KISSY.add("component/extension/position-render", function () {
         },
 
         '_onSetX': function (x) {
-            if (x != null) {
-                this.get("el").offset({
-                    left: x
-                });
-            }
+            this.get("el").offset({
+                left: x
+            });
         },
 
         '_onSetY': function (y) {
-            if (y != null) {
-                this.get("el").offset({
-                    top: y
-                });
-            }
+            this.get("el").offset({
+                top: y
+            });
         }
     };
 
