@@ -162,6 +162,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
                 var self = this,
                     updateInputOnDownUp,
                     input,
+                    keyCode = e.keyCode,
                     activeItem,
                     handledByMenu,
                     menu = getMenu(self);
@@ -184,6 +185,24 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
                 }
 
                 if (menu && menu.get("visible")) {
+
+                    activeItem = menu.get("activeItem");
+
+                    // https://github.com/kissyteam/kissy/issues/371
+                    // combobox: input should be involved in key press sequence
+                    if (updateInputOnDownUp && activeItem) {
+                        if (keyCode == KeyCodes.DOWN &&
+                            activeItem == menu.getChildAt(menu.get('children').length - 1)
+                            ||
+                            keyCode == KeyCodes.UP &&
+                                activeItem == menu.getChildAt(0)
+                            ) {
+                            self.setValueInternal(self._savedInputValue);
+                            menu.set('highlightedItem', null);
+                            return true;
+                        }
+                    }
+
                     handledByMenu = menu['handleKeydown'](e);
 
                     // esc
