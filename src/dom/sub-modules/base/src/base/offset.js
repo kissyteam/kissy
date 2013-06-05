@@ -6,6 +6,7 @@
 KISSY.add('dom/base/offset', function (S, DOM, undefined) {
 
     var win = S.Env.host,
+        UA = S.UA,
         doc = win.document,
         NodeType = DOM.NodeType,
         docElem = doc && doc.documentElement,
@@ -336,8 +337,13 @@ KISSY.add('dom/base/offset', function (S, DOM, undefined) {
 
         DOM[VIEWPORT + name] = function (refWin) {
             refWin = DOM.get(refWin);
+            var win = getWin(refWin);
+            var ret = win['inner' + name];
+            if (UA.mobile && ret) {
+                return ret;
+            }
+            // pc browser includes scrollbar in window.innerWidth
             var prop = CLIENT + name,
-                win = getWin(refWin),
                 doc = win[DOCUMENT],
                 body = doc[BODY],
                 documentElement = doc[DOC_ELEMENT],
@@ -347,7 +353,7 @@ KISSY.add('dom/base/offset', function (S, DOM, undefined) {
             return doc[compatMode] === CSS1Compat
                 && documentElementProp ||
                 body && body[ prop ] || documentElementProp;
-        }
+        };
     });
 
     function getClientPosition(elem) {

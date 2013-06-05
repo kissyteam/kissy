@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: May 30 01:33
+build time: Jun 5 15:36
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -2025,6 +2025,7 @@ KISSY.add('dom/base/insertion', function (S, DOM) {
 KISSY.add('dom/base/offset', function (S, DOM, undefined) {
 
     var win = S.Env.host,
+        UA = S.UA,
         doc = win.document,
         NodeType = DOM.NodeType,
         docElem = doc && doc.documentElement,
@@ -2355,8 +2356,13 @@ KISSY.add('dom/base/offset', function (S, DOM, undefined) {
 
         DOM[VIEWPORT + name] = function (refWin) {
             refWin = DOM.get(refWin);
+            var win = getWin(refWin);
+            var ret = win['inner' + name];
+            if (UA.mobile && ret) {
+                return ret;
+            }
+            // pc browser includes scrollbar in window.innerWidth
             var prop = CLIENT + name,
-                win = getWin(refWin),
                 doc = win[DOCUMENT],
                 body = doc[BODY],
                 documentElement = doc[DOC_ELEMENT],
@@ -2366,7 +2372,7 @@ KISSY.add('dom/base/offset', function (S, DOM, undefined) {
             return doc[compatMode] === CSS1Compat
                 && documentElementProp ||
                 body && body[ prop ] || documentElementProp;
-        }
+        };
     });
 
     function getClientPosition(elem) {
@@ -3438,7 +3444,8 @@ KISSY.add('dom/base/selector', function (S, DOM) {
                     cls,
                     ret = [];
 
-                if (typeof filter == 'string' && (filter = trim(filter)) &&
+                if (typeof filter == 'string' &&
+                    (filter = trim(filter)) &&
                     (match = RE_QUERY.exec(filter))) {
                     id = match[1];
                     tag = match[2];
