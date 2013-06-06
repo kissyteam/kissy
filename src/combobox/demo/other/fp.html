@@ -1,54 +1,593 @@
 <!doctype html>
 <html>
 <head>
-    <meta charset="utf-8"/>
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-touch-fullscreen" content="yes">
-    <title>淘宝首页模式</title>
-    <link href="/kissy/build/css/dpl/base.css" rel="stylesheet"/>
-    <link href="../assets/default.css" rel="stylesheet"/>
-    <style>
-        h5 {
-            margin: 0;
-            padding: 0;
-            font-size: 100%;
-        }
+<meta charset="utf-8"/>
+<title>demo标题</title>
+<style>
+body {
+    font: 12px/1.5 tahoma, arial;
+}
 
-        .item-wrapper {
-            overflow: hidden;
-            zoom: 1;
-        }
+.search {
+    margin: 50px;
+}
 
-        .item-text {
-            float: left;
-            text-align: left;
-            padding-left: 5px;
-        }
+a {
+    color: #3e3e3e;
+    font-size: 12px;
+    text-decoration: none;
+}
 
-        .item-count {
-            float: right;
-            text-align: right;
-            padding-right: 5px;
-            color: green;
-        }
+ul {
+    margin: 0;
+    padding: 0;
+}
 
-        .ks-menuitem-highlight .item-count,
-        .ks-menuitem-hover .item-count {
-            color: white;
-        }
-    </style>
+li {
+    list-style-type: none;
+}
+
+.search-panel button, .search-panel-fields s, .search-fix, .help-guest a, .product-list, .tmall-interlayer-title, .tmall-slide-left, a.tmall-slide-left:hover, .tmall-slide-right, a.tmall-slide-right:hover, .guang-topics ol, p.hotsale-free-sent {
+    background: url(http://img03.taobaocdn.com/tps/i3/T1ZeuRXaFtXXXXXXXX-300-429.png) no-repeat;
+}
+
+.search {
+    width: 666px;
+    float: left;
+    height: 113px
+}
+
+.search-triggers ul {
+    overflow: hidden;
+    zoom: 1
+}
+
+.search-triggers li {
+    position: relative;
+    zoom: 1;
+    float: left
+}
+
+.search-triggers li a {
+    float: left;
+    height: 23px;
+    line-height: 23px;
+    padding: 0 12px
+}
+
+.search-triggers li a:hover span {
+    color: #F60 !important
+}
+
+.search-triggers li.selected a {
+    background: #f27b04;
+    font-weight: bold;
+    padding: 0 15px;
+    color: #fff;
+    border-radius: 3px 3px 0 0
+}
+
+.search-triggers li.selected a span {
+    color: #fff !important
+}
+
+.search-triggers li.selected a:hover span {
+    color: #fff !important
+}
+
+.search-triggers li.selected a:hover {
+    color: #fff !important;
+    text-decoration: none
+}
+
+.search-triggers .search-fix {
+    display: none
+}
+
+.search-triggers li.selected .search-fix {
+    display: block
+}
+
+.search-panel {
+    position: relative;
+    zoom: 1;
+    float: left;
+    width: 603px
+}
+
+.search-panel-fields {
+    width: 470px;
+    height: 34px;
+    float: left;
+    position: relative;
+    zoom: 1;
+    background: #f27b04;
+    border-radius: 0 0 0 3px
+}
+
+.search-panel-fields s {
+    position: absolute;
+    left: 14px;
+    top: 12px;
+    background-position: -134px -349px;
+    width: 12px;
+    height: 13px
+}
+
+.search-panel-fields label {
+    position: absolute;
+    left: 32px;
+    top: 8px;
+    z-index: 1;
+    color: #bbb
+}
+
+.search-panel-fields input {
+    font-size: 14px;
+    position: absolute;
+    left: 3px;
+    top: 3px;
+    width: 457px;
+    height: 18px;
+    line-height: 18px;
+    padding: 5px;
+    background: #fff;
+    vertical-align: middle;
+    border: 0;
+    border-radius: 3px 0 0 0
+}
+
+.search-panel button {
+    float: left;
+    width: 133px;
+    height: 34px;
+    cursor: pointer;
+    border: 0;
+    font-size: 18px;
+    color: #fff;
+    background-color: #f27b04;
+    background-position: 0 -327px;
+    text-indent: -999em
+}
+
+.search-panel button:hover {
+    background-position: 0 -361px
+}
+
+.search-panel button:active {
+    background-position: 0 -395px
+}
+
+.search-tips {
+    float: left;
+    width: 60px;
+    height: 34px;
+    overflow: hidden;
+    text-align: right;
+    margin-top: -1px
+}
+
+.search-hots {
+    clear: both;
+    font: 12px/1.5 arial;
+    padding: 10px 5px 5px;
+    color: #3f3f3f;
++ padding-top : 5 px
+}
+
+.search-hots a {
+    color: #646464;
+    margin-right: 6px
+}
+
+.search-hots .more {
+    margin-left: 6px;
+    _padding-top: 2px
+}
+
+.search-fix {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    font-size: 0
+}
+
+.search-fix-panellt {
+    left: 3px;
+    top: 3px;
+    background-position: -148px -349px
+}
+
+.search-fix-panellb {
+    left: 0;
+    bottom: 0;
+    background-position: -146px -349px
+}
+
+.search-fix-triggerlt {
+    left: 0;
+    top: 0;
+    background-position: -146px -351px
+}
+
+.search-fix-triggerrt {
+    right: 0;
+    top: 0;
+    background-position: -148px -351px
+}
+
+.search-status-focus label, .search-status-focus .search-panel-fields s {
+    display: none
+}
+
+.search-panel-fields label,
+.search-panel-fields s {
+    display: none;
+}
+
+.search-menu {
+    background: #fff;
+    border-color: #999;
+    border-style: solid;
+    border-width: 1px;
+    cursor: default;
+    margin: 0;
+    outline: none;
+    position: absolute;
+    z-index: 99999;
+}
+.search-popupmenu-hidden {
+    visibility: hidden;
+}
+
+
+.search-menuitem {
+    color: #404040;
+    list-style: none;
+    margin: 0;
+    font-size: 12px;
+    line-height: 22px;
+    white-space: nowrap;
+    height: 24px;
+}
+
+.search-menuitem-disabled .search-menuitem-content {
+    color: #ccc !important;
+}
+
+.search-combobox {
+    /*clear float*/
+    zoom: 1;
+    font-size: 12px;
+}
+
+.search-combobox-trigger {
+    text-decoration: none;
+    color: #000000;
+    float: right;
+    text-align: center;
+    border-left: 1px solid #b5b6b5;
+}
+
+.search-combobox-trigger-inner {
+    float: left;
+    line-height: 18px;
+    height: 18px;
+    margin: 0 4px;
+    vertical-align: middle;
+}
+
+.search-combobox-input-wrap {
+    vertical-align: middle;
+    position: relative;
+    overflow: hidden;
+    height: 31px;
+}
+
+.search-combobox-input {
+    font-size: 12px;
+    width: 100%;
+    vertical-align: middle;
+    vertical-align: middle;
+    background-color: #fff;
+    border: 0;
+    color: #000;
+}
+
+.search-combobox-input {
+    line-height: 18px;
+    height: 18px;
+    overflow-y: visible;
+    font-size: 100%;
+}
+
+.search-menuitem-disabled {
+    color: #808080;
+}
+
+.search-menuitem .item-text {
+    float: left;
+    padding-left: 5px;
+}
+
+.search-menuitem .item-count {
+    float: right;
+    padding-right: 5px;
+    color: #999;
+}
+
+.search-menuitem-highlight,
+.search-menuitem-hover {
+    background-color: #39F;
+    color: white;
+}
+
+.search-menuitem-hover .item-count {
+    color: white;
+}
+
+.search-combobox-menu-footer {
+    background: #f1f1f1;
+    border-top: 1px solid #e5e5e5;
+    padding: 5px !important;
+    zoom: 1;
+}
+
+.search-contentbox .search-menu-key {
+    float: left;
+    text-align: left;
+    padding-left: 5px;
+}
+
+.search-contentbox .search-menu-cate {
+    color: #7e7e7e;
+    margin-left: 8px;
+}
+
+.search-contentbox .search-menuitem-hover .search-menu-cate {
+    color: white;
+}
+
+    /* 手机充值 */
+.search-contentbox .search-menu-extras-cz {
+    padding-left: 30px;
+    background-image: url(http://img03.taobaocdn.com/tps/i3/T18K9gXlBzXXXXXXXX-16-36.png);
+    background-position: 8px 3px;
+    background-repeat: no-repeat;
+}
+
+.search-contentbox .search-menuitem-hover .search-menu-extras-cz {
+    background-position: 8px -17px;
+}
+
+.search-contentbox .search-menu-extras-cz .search-menu-key {
+    padding: 0 2px;
+}
+
+    /* 历史记录 */
+.history-box {
+    line-height: 20px;
+    overflow: hidden;
+}
+
+.search-combobox-menu-header .history-box {
+    color: #a5a5a5;
+    line-height: 24px;
+    padding-left: 5px;
+}
+
+.search-menu-history-clean {
+    color: #666666;
+    float: right;
+    padding-right: 4px;
+}
+
+.search-menu-history-footer .history-box {
+    height: 25px;
+    background-color: #f1f1f1
+}
+
+.search-contentbox .search-menu-history-delete {
+    text-decoration: none;
+    color: #fff;
+    float: right;
+    padding-right: 5px;
+    cursor: pointer;
+}
+
+.search-contentbox .search-menu-history-key {
+    float: left;
+    color: #7a77c8;
+    padding-left: 5px;
+}
+
+.search-menuitem-hover .search-menu-history-key {
+    color: white;
+}
+
+    /* 新品搜索 */
+.search-contentbox .search-menu-extras-xp .search-menu-xp-tag,
+.search-contentbox .search-menu-extras-dp .search-menu-dp-tag {
+    float: right;
+    width: 80px;
+    text-align: center;
+    border-left: 1px solid #E5E5E5;
+}
+
+.search-contentbox .search-menu-extras-xp .search-menu-xp-icon,
+.search-contentbox .search-menu-extras-dp .search-menu-dp-icon {
+    float: left;
+    width: 25px;
+    height: 24px;
+    font-size: 0px;
+    background: url(http://img04.taobaocdn.com/tps/i4/T1Fg6QXg4bXXaTNmze-40-14.png) no-repeat;
+}
+
+.search-contentbox .search-menu-extras-xp .search-menu-xp-icon {
+    background-position: 5px 5px;
+}
+
+.search-contentbox .search-menu-extras-dp .search-menu-dp-icon {
+    background-position: -15px 5px;
+}
+
+.search-contentbox .search-menu-extras-xp,
+.search-contentbox .search-menu-extras-dp {
+    border-top: 1px solid #E5E5E5;
+}
+
+    /* 机票搜索 */
+.search-combobox-menu-footer .jipiao-box {
+    height: 22px;
+    overflow: hidden;
+}
+
+.search-combobox-menu-footer .jipiao-box input {
+    width: 60px;
+    color: #333;
+    border: 1px solid #A6A6A6;
+    padding: 1px;
+    height: 18px;
+}
+
+.search-combobox-menu-footer .jipiao-box .input-date {
+    width: 72px;
+}
+
+.search-combobox-menu-footer .jipiao-box em {
+    font-size: 12px;
+    font-weight: normal;
+    line-height: 18px;
+}
+
+.search-combobox-menu-footer .jipiao-box h5 {
+    background: url(http://img02.taobaocdn.com/tps/i2/T1QQOXXnlqXXXXXXXX-73-15.png) no-repeat;
+    width: 73px;
+    height: 15px;
+    margin-top: 3px;
+}
+
+.search-combobox-menu-footer .jipiao-box h5 a {
+    display: block;
+    width: 73px;
+    height: 15px;
+}
+
+    /* 同店购的 样式 */
+.search-combobox-menu-footer .tdg-box {
+    height: 22px;
+    overflow: hidden;
+}
+
+.search-combobox-menu-footer h5,
+.search-combobox-menu-footer em,
+.search-combobox-menu-footer input {
+    float: left;
+}
+
+.search-combobox-menu-footer h5,
+.search-combobox-menu-footer .tdg-btn,
+.search-combobox-menu-footer .jp-btn {
+    background: transparent url(http://img04.taobaocdn.com/tps/i4/T1NpJOXiVpXXXXXXXX.png) no-repeat 999em 0;
+    text-indent: -999em;
+}
+
+.search-combobox-menu-footer h5 {
+    float: left;
+    width: 49px;
+    height: 20px;
+    background-position: 0 0;
+    margin: 0 11px 0 0;
+}
+
+.search-combobox-menu-footer em {
+    font: bold 14px tahoma;
+    color: #a7a7a7;
+    padding: 2px 3px;
+}
+
+.search-combobox-menu-footer .tdg-btn,
+.search-combobox-menu-footer .jp-btn {
+    width: 60px;
+    height: 20px;
+    border: none;
+    background-position: -49px 0;
+    position: absolute;
+    right: 5px;
+    cursor: pointer;
+}
+
+.search-combobox-menu-footer .tdg-input {
+    border: 1px solid #a6a6a6;
+    padding: 1px;
+    width: 16%;
+    height: 18px;
+}
+</style>
 </head>
 <body>
+<h2>demo标题</h2>
 
-<div style="margin:10px auto; width:800px;text-align: center" id="container">
-    <h1>taobao 首页模式</h1>
+<div class="search" id="J_Search" role="search">
+    <div class="search-triggers">
+        <ul class="ks-switchable-nav" id="J_SearchTab">
+            <li data-searchtype="item" data-defaultpage="http://list.taobao.com/browse/cat-0.htm" class="selected"><a
+                    href="" data-spm-anchor-id="1.1000386.0.34">宝贝</a><!--[if lt IE 9]><s
+                    class="search-fix search-fix-triggerlt"></s><s class="search-fix search-fix-triggerrt"></s>
+                <![endif]--></li>
+            <li data-searchtype="mall" data-action="http://list.tmall.com/search_product.htm"><a href=""
+                                                                                                 data-spm-anchor-id="1.1000386.0.35">天猫</a>
+                <!--[if lt IE 9]><s class="search-fix search-fix-triggerlt"></s><s
+                        class="search-fix search-fix-triggerrt"></s><![endif]--></li>
+            <li data-searchtype="shop" data-action="http://shopsearch.taobao.com/browse/shop_search.htm"><a
+                    href="">店铺</a><!--[if lt IE 9]><s class="search-fix search-fix-triggerlt"></s><s
+                    class="search-fix search-fix-triggerrt"></s><![endif]--></li>
+        </ul>
+    </div>
+    <div class="search-panel ks-switchable-content">
+        <form target="_top" action="http://s.taobao.com/search" name="search" id="J_TSearchForm">
+            <div class="search-panel-fields">
+                <label for="q">搜“<span>家装节</span>”试试，3折起盛宴！</label>
+
+                <div class="search-combobox" id="combobox">
+                    <div class="search-combobox-input-wrap">
+                        <input id="q" name="q" accesskey="s"
+                               class="search-combobox-input"
+                               autofocus="true" autocomplete="off"
+                               x-webkit-speech=""
+                               x-webkit-grammar="builtin:translate">
+                    </div>
+                </div>
+            </div>
+            <button type="submit">搜 索</button>
+            <input type="hidden" name="commend" value="all">
+            <input type="hidden" name="ssid" value="s5-e" autocomplete="off">
+            <input type="hidden" name="search_type" value="mall" autocomplete="off">
+            <input type="hidden" name="sourceId" value="tb.index">
+            <input type="hidden" name="spm" value="1.1000386.5803581.d4908513">
+            <!--[if lt IE 9]><s class="search-fix search-fix-panellt"></s><s class="search-fix search-fix-panellb"></s>
+            <![endif]-->
+        </form>
+    </div>
+    <div class="search-tips">
+        <a href="http://list.taobao.com/browse/ad_search.htm?spm=1.1000386.0.39.xmo2di">高级搜索</a><br>
+        <a href="http://service.taobao.com/support/help-10020.htm">使用帮助</a>
+    </div>
+    <!-- TMS fp2012/search_hot.php -->
+    <div class="search-hots" data-spm="1.186823.220544">
+        <a href="http://s.taobao.com/search?spm=1.186823.220544.1&amp;initiative_id=staobaoz_20130520&amp;tab=all&amp;q=%C1%B9%D0%AC+%C5%AE&amp;style=grid&amp;cps=yes&amp;promote=0&amp;v=auction&amp;cd=false&amp;refpid=420460_1006&amp;source=tbsy&amp;pdc=true&amp;style=grid">凉鞋</a>
+        <a href="http://s.taobao.com/search?spm=1.186823.220544.2&amp;q=%B6%F9%CD%AF%BD%DA&amp;refpid=420461_1006&amp;source=tbsy&amp;pdc=true&amp;style=grid">儿童节礼品</a>
+        <a href="http://s.taobao.com/search?spm=1.186823.220544.3&amp;q=%D1%A9%B7%C4%C9%C0%20%B6%CC%D0%E4&amp;refpid=420462_1006&amp;source=tbsy&amp;pdc=true&amp;style=grid"
+           class="h">清凉雪纺</a>
+        <a href="http://s.taobao.com/search?spm=1.186823.220544.4&amp;q=%C5%AEt%D0%F4%B6%CC%D0%E4&amp;refpid=420463_1006&amp;source=tbsy&amp;pdc=true&amp;style=grid">短袖T恤</a>
+        <a href="http://s.taobao.com/search?spm=1.186823.220544.5&amp;q=%B6%CC%BF%E3+%CF%C4+%C5%AE&amp;refpid=420464_1006&amp;source=tbsy&amp;pdc=true&amp;style=grid">夏季短裤</a>
+        <a href="http://s.taobao.com/search?spm=1.186823.220544.6&amp;q=%CD%AF%D7%B0&amp;refpid=420465_1006&amp;source=tbsy&amp;pdc=true&amp;style=grid">童装新品</a>
+        <a href="http://s.taobao.com/search?spm=1.186823.220544.7&amp;q=%CD%CF%D0%AC&amp;refpid=420466_1006&amp;source=tbsy&amp;style=grid">拖鞋</a>
+        <a href="http://s.taobao.com/search?spm=1.186823.220544.8&amp;q=%C4%D0%CA%BF%B6%CC%D0%E4%B3%C4%C9%C0&amp;refpid=420467_1006&amp;source=tbsy&amp;style=grid&amp;tab=all">男士短袖衬衫</a>
+        <a class="more more-with-border" href="http://top.taobao.com/index.php?from=tbsy">更多<s
+                class="arrow arrow-rthin"><s></s></s></a>
+    </div>
 </div>
-<p style="margin:10px auto; width:800px;text-align: center">
-    <button id="search">search</button>
-</p>
-
 <script src="/kissy/build/seed.js"></script>
 <script src="/kissy/src/package.js"></script>
 <script>
@@ -65,10 +604,9 @@
                     "</div>";
 
             var basicComboBox = new ComboBox({
-                render: S.one("#container"),
-                hasTrigger: false,
-                placeholder: '请输入',
-                width: 500,
+                prefixCls: 'search-',
+                srcNode: S.one("#combobox"),
+                // width: 500,
                 dataSource: new ComboBox.RemoteDataSource({
                     xhrCfg: {
                         url: 'http://suggest.taobao.com/sug',
@@ -102,62 +640,29 @@
             });
             basicComboBox.render();
 
-            S.DOM.addStyleSheet(
-                    // 搜索同店购
-                    '.ks-combobox-menu-footer { background: #f4f8fb; ' +
-                            'border-top: 1px solid #dfeffc; padding: 5px !important;zoom: 1;}' +
-                            '.ks-combobox-menu-footer .tdg-box {height:22px;}' +
-                            '.ks-combobox-menu-footer h5,' +
-                            '.ks-combobox-menu-footer em,' +
-                            '.ks-combobox-menu-footer input { float: left;}' +
-                            '.ks-combobox-menu-footer h5,' +
-                            '.ks-combobox-menu-footer ' +
-                            '.tdg-btn {' +
-                            'background: transparent ' +
-                            'url(http://img04.taobaocdn.com/tps/i4/T1NpJOXiVpXXXXXXXX.png) ' +
-                            'no-repeat 999em 0; text-indent: -999em;}' +
-                            '.ks-combobox-menu-footer h5 ' +
-                            '{float: left; width: 49px; height: 20px; ' +
-                            'background-position: 0 0; margin-right: 11px;}' +
-                            '.ks-combobox-menu-footer em ' +
-                            '{font: bold 14px tahoma; color: #a7a7a7;padding: 2px 3px;}' +
-                            '.ks-combobox-menu-footer .tdg-btn ' +
-                            '{width: 60px;height: 20px; border: none; ' +
-                            'background-position: -49.5px 0; position: absolute;right: 5px;' +
-                            ' cursor: pointer;}' +
-                            '.ks-combobox-menu-footer .tdg-input ' +
-                            '{border: 1px solid #a6a6a6;padding: 1px; width: 80px; height: 18px;}'
-            );
-
-            var html = '<div class="tdg-box">' +
-                    '<h5>同店购：</h5>' +
-                    '<input type="text" class="tdg-input" ' +
-                    'placeholder="第一件宝贝" >' +
-                    '<em>+</em><input type="text" ' +
-                    ' class="tdg-input" placeholder="另一宝贝">' +
-                    '<em>+</em><input type="text" placeholder="另一宝贝"' +
-                    ' class="tdg-input" ' +
-                    'placeholder="另一宝贝"><button class="tdg-btn" ' +
-                    'type="submit" onclick="return false">搜索</button>' +
-                    '</div>';
+            var html = '<div class="item-wrapper tdg-box">' +
+                    '<form method="get" action="http://s.taobao.com/search" class="clearfix">' +
+                    '<input type="hidden" class="tdg-query" name="q" value="gs">' +
+                    '<input type="hidden" value="tdg1" name="from"><h5>同店购：</h5>' +
+                    '<input type="text" value="gs" class="tdg-input" tabindex="0"' +
+                    ' placeholder="第一件宝贝"><em>+</em>' +
+                    '<input type="text" value="" class="tdg-input" ' +
+                    'tabindex="1" placeholder="另一宝贝"><em>+</em>' +
+                    '<input type="text" value="" class="tdg-input" tabindex="2"' +
+                    ' placeholder="另一宝贝">' +
+                    '<button class="tdg-btn" type="submit" ' +
+                    'tabindex="3">搜索</button></form></div>';
 
             basicComboBox.on("afterCollapsedChange", function (e) {
                 var self = this;
                 if (!e.newVal) {
                     var menu = self.get("menu");
                     var menuEl = menu.get("el"), footer;
-                    if (!(footer = menuEl.one(".ks-combobox-menu-footer"))) {
-                        footer = new S.Node("<div class='ks-combobox-menu-footer'></div>").appendTo(menuEl);
+                    if (!(footer = menuEl.one(".search-combobox-menu-footer"))) {
+                        footer = new S.Node("<div class='search-combobox-menu-footer'></div>").appendTo(menuEl);
                     }
                     if (!footer.children().length) {
                         footer.append(html);
-                        var el = footer.one(".tdg-input");
-                        el.on("keyup", function (e) {
-                            if (e.keyCode != Event.KeyCode.DOWN &&
-                                    e.keyCode != Event.KeyCode.UP) {
-                                el.val(el.val());
-                            }
-                        });
                     }
                     footer.one(".tdg-input")
                             .val(basicComboBox.get("input").val())

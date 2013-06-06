@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 5 22:25
+build time: Jun 6 13:49
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -296,8 +296,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
                 ComboBox.superclass.handleMouseDown.apply(self, arguments);
                 target = e.target;
                 trigger = self.get("trigger");
-                hasTrigger = self.get('hasTrigger');
-                if (hasTrigger && (trigger[0] == target || trigger.contains(target))) {
+                if (trigger && (trigger[0] == target || trigger.contains(target))) {
                     input = self.get("input");
                     if (self.get('collapsed')) {
                         // fetch data
