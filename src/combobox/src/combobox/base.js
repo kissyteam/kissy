@@ -257,7 +257,6 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
                     var v = self.getValueInternal();
                     if (v !== undefined) {
                         self.sendRequest(v);
-                        return true;
                     }
                 }
                 return  undefined;
