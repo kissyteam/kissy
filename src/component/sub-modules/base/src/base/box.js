@@ -50,7 +50,7 @@ KISSY.add('component/base/box', function (S) {
         id: {
             view: 1,
             valueFn: function () {
-                return S.guid();
+                return S.guid('ks-component');
             }
         },
 

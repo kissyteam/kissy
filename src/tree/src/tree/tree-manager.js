@@ -2,9 +2,15 @@
  * tree management utils
  * @author yiminghe@gmail.com
  */
-KISSY.add("tree/tree-manager", function (S, Node, Component,Extension) {
+KISSY.add("tree/tree-manager", function (S, Node, Component, Extension) {
 
-    var KeyCode=Node.KeyCode;
+    var KeyCode = Node.KeyCode;
+
+    var UA = S.UA,
+        ie = S.Env.host.document.documentMode || UA.ie,
+        Features = S.Features,
+        Gesture = Node.Gesture,
+        isTouchEventSupported = Features.isTouchEventSupported();
 
     function TreeManager() {
     }
@@ -45,9 +51,27 @@ KISSY.add("tree/tree-manager", function (S, Node, Component,Extension) {
         return id;
     }
 
-    S.augment(TreeManager,Extension.DelegateChildren, {
+    S.augment(TreeManager, Extension.DelegateChildren, {
 
         isTree: 1,
+
+        __bindUI: function () {
+
+            var self = this,
+                events = Gesture.start +
+                    " " + Gesture.end +
+                    " " + Gesture.tap;
+
+            if (Gesture.cancel) {
+                events += ' ' + Gesture.cancel;
+            }
+
+            if (!isTouchEventSupported) {
+                events += (ie && ie < 9 ? "dblclick " : "");
+            }
+
+            self.get("el").on(events, self.handleChildrenEvents, self);
+        },
 
         _register: function (c) {
             if (!c.__isRegisted) {
@@ -79,10 +103,11 @@ KISSY.add("tree/tree-manager", function (S, Node, Component,Extension) {
          * Get tree child node by comparing cached child nodes.
          * Faster than default mechanism.
          * @protected
-         * @param target
+         * @param e
          */
-        getOwnerControl: function (target) {
+        getOwnerControl: function (e) {
             var self = this,
+                target = e.target,
                 n,
                 allNodes = getAllNodes(self),
                 elem = self.get("el")[0];
@@ -132,5 +157,5 @@ KISSY.add("tree/tree-manager", function (S, Node, Component,Extension) {
 
     return TreeManager;
 }, {
-    requires: ['node', 'component/base','component/extension']
+    requires: ['node', 'component/base', 'component/extension']
 });

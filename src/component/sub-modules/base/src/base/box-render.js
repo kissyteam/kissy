@@ -51,7 +51,7 @@ KISSY.add('component/base/box-render', function (S, Node, XTemplate, BoxTpl) {
                 style.height = pxSetter(height);
             }
 
-            if(!visible){
+            if (!visible) {
                 elCls.push(self.getBaseCssClasses('hidden'));
             }
         }
@@ -110,6 +110,10 @@ KISSY.add('component/base/box-render', function (S, Node, XTemplate, BoxTpl) {
     };
 
     BoxRender.HTML_PARSER = {
+        id: function (el) {
+            var id = el[0].id;
+            return id ? id : undefined;
+        },
         content: function (el) {
             return el.html();
         }

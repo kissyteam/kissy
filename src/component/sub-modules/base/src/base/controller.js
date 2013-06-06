@@ -143,14 +143,6 @@ KISSY.add("component/base/controller", function (S, Box, Node, Component, UIBase
         return re;
     }
 
-    function isMouseEventWithinElement(e, elem) {
-        var relatedTarget = e.relatedTarget;
-        // 在里面或等于自身都不算 mouseenter/leave
-        return relatedTarget &&
-            ( relatedTarget === elem[0] ||
-                elem.contains(relatedTarget) );
-    }
-
     function wrapBehavior(self, action) {
         return function (e) {
             if (!self.get("disabled")) {
@@ -392,6 +384,10 @@ KISSY.add("component/base/controller", function (S, Box, Node, Component, UIBase
                     // 之前设好属性，view ，logic 同步还没 bind ,create 不是 render ，还没有 bindUI
                     c.render();
                 }
+                self.fire('afterRenderChild',{
+                    component:c,
+                    index:childIndex
+                });
                 return c;
             },
 
@@ -454,32 +450,6 @@ KISSY.add("component/base/controller", function (S, Box, Node, Component, UIBase
              */
             handleDblClick: function (ev) {
                 this.performActionInternal(ev);
-            },
-
-            /**
-             * Called by it's container component to dispatch mouseenter event.
-             * @private
-             * @param {KISSY.Event.DOMEventObject} ev DOM event to handle.
-             */
-            handleMouseOver: function (ev) {
-                var self = this,
-                    el = self.get("el");
-                if (!isMouseEventWithinElement(ev, el)) {
-                    self.handleMouseEnter(ev);
-                }
-            },
-
-            /**
-             * Called by it's container component to dispatch mouseleave event.
-             * @private
-             * @param {KISSY.Event.DOMEventObject} ev DOM event to handle.
-             */
-            handleMouseOut: function (ev) {
-                var self = this,
-                    el = self.get("el");
-                if (!isMouseEventWithinElement(ev, el)) {
-                    self.handleMouseLeave(ev);
-                }
             },
 
             /**
