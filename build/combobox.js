@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.30
 MIT Licensed
-build time: Jun 5 15:56
+build time: Jun 6 14:50
 */
 /**
  * @ignore
@@ -196,11 +196,12 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
                     // https://github.com/kissyteam/kissy/issues/371
                     // combobox: input should be involved in key press sequence
                     if (updateInputOnDownUp && activeItem) {
+                        var menuChildren = menu.get('children');
                         if (keyCode == KeyCodes.DOWN &&
-                            activeItem == menu.getChildAt(menu.get('children').length - 1)
+                            activeItem == getFirstEnabledItem(menuChildren.concat().reverse())
                             ||
                             keyCode == KeyCodes.UP &&
-                                activeItem == menu.getChildAt(0)
+                                activeItem == getFirstEnabledItem(menuChildren)
                             ) {
                             self.setValueInternal(self._savedInputValue);
                             menu.set('highlightedItem', null);
@@ -571,6 +572,15 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
 
     // #----------------------- private start
 
+    function getFirstEnabledItem(children) {
+        for (var i = 0; i < children.length; i++) {
+            if (!children[i].get('disabled')) {
+                return children[i];
+            }
+        }
+        return null;
+    }
+
     function onMenuMouseOver() {
         var self = this;
         // trigger el focus
@@ -630,10 +640,12 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
 
     function clearDismissTimer() {
         var self = this, t;
-        if (t = self._focusoutDismissTimer) {
-            clearTimeout(t);
-            self._focusoutDismissTimer = null;
-        }
+        setTimeout(function () {
+            if (t = self._focusoutDismissTimer) {
+                clearTimeout(t);
+                self._focusoutDismissTimer = null;
+            }
+        }, 10);
     }
 
     function showMenu(self) {
