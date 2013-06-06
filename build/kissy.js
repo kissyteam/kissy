@@ -1,12 +1,12 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 5 22:39
+build time: Jun 6 18:59
 */
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 5 22:39
+build time: Jun 6 18:59
 */
 /**
  * @ignore
@@ -44,11 +44,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130605223908' will replace with current timestamp when compressing.
+         * NOTICE: '20130606185914' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130605223908',
+        __BUILD_TIME: '20130606185914',
         /**
          * KISSY Environment.
          * @private
@@ -5675,7 +5675,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20130605223908'
+            tag: '20130606185914'
         }, getBaseInfo()));
     }
 
@@ -6300,7 +6300,7 @@ config({
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 5 22:26
+build time: Jun 6 18:59
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -8332,7 +8332,6 @@ KISSY.add('dom/base/offset', function (S, DOM, undefined) {
         CSS1Compat = 'CSS1Compat',
         compatMode = 'compatMode',
         MAX = Math.max,
-        myParseInt = parseInt,
         POSITION = 'position',
         RELATIVE = 'relative',
         DOCUMENT = 'document',
@@ -8478,17 +8477,17 @@ KISSY.add('dom/base/offset', function (S, DOM, undefined) {
                     // 注意边框 , offset 是边框到根节点
                     diffTop = {
                         left: elemOffset[LEFT] - (containerOffset[LEFT] +
-                            (myParseInt(DOM.css(container, 'borderLeftWidth')) || 0)),
+                            (parseFloat(DOM.css(container, 'borderLeftWidth')) || 0)),
                         top: elemOffset[TOP] - (containerOffset[TOP] +
-                            (myParseInt(DOM.css(container, 'borderTopWidth')) || 0))
+                            (parseFloat(DOM.css(container, 'borderTopWidth')) || 0))
                     };
                     diffBottom = {
                         left: elemOffset[LEFT] + ew -
                             (containerOffset[LEFT] + cw +
-                                (myParseInt(DOM.css(container, 'borderRightWidth')) || 0)),
+                                (parseFloat(DOM.css(container, 'borderRightWidth')) || 0)),
                         top: elemOffset[TOP] + eh -
                             (containerOffset[TOP] + ch +
-                                (myParseInt(DOM.css(container, 'borderBottomWidth')) || 0))
+                                (parseFloat(DOM.css(container, 'borderBottomWidth')) || 0))
                     };
                 }
 
@@ -8757,10 +8756,6 @@ KISSY.add('dom/base/offset', function (S, DOM, undefined) {
             (currentEl = currentWin['frameElement']) &&
             (currentWin = currentWin.parent));
 
-        // decimal fraction is not stable
-        position.left = myParseInt(position.left);
-        position.top = myParseInt(position.top);
-
         return position;
     }
 
@@ -8776,8 +8771,8 @@ KISSY.add('dom/base/offset', function (S, DOM, undefined) {
             current, key;
 
         for (key in offset) {
-            current = myParseInt(DOM.css(elem, key), 10) || 0;
-            ret[key] = myParseInt(current + offset[key] - old[key]);
+            current = parseFloat(DOM.css(elem, key)) || 0;
+            ret[key] = current + offset[key] - old[key];
         }
         DOM.css(elem, ret);
     }
