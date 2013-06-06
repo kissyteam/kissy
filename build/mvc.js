@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 5 22:37
+build time: Jun 6 10:51
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -770,6 +770,7 @@ KISSY.add('mvc/router', function (S, Node, Base) {
     // all registered route instance
         allRoutes = [],
         win = S.Env.host,
+        $ = Node.all,
         $win = $(win),
         ie = win.document.documentMode || S.UA.ie,
         history = win.history ,

@@ -10,6 +10,7 @@ KISSY.add('mvc/router', function (S, Node, Base) {
     // all registered route instance
         allRoutes = [],
         win = S.Env.host,
+        $ = Node.all,
         $win = $(win),
         ie = win.document.documentMode || S.UA.ie,
         history = win.history ,
