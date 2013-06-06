@@ -589,7 +589,7 @@ KISSY.add("component/base/controller", function (S, Box, Node, Component, UIBase
              * @param {KISSY.Event.DOMEventObject} ev DOM event to handle.
              */
             handleKeyEventInternal: function (ev) {
-                if (ev['keyCode'] == Event.KeyCode.ENTER) {
+                if (ev['keyCode'] == Node.KeyCode.ENTER) {
                     return this.performActionInternal(ev);
                 }
                 return undefined;

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 5 22:25
+build time: Jun 6 11:11
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -1893,7 +1893,7 @@ KISSY.add("component/base/controller", function (S, Box, Node, Component, UIBase
              * @param {KISSY.Event.DOMEventObject} ev DOM event to handle.
              */
             handleKeyEventInternal: function (ev) {
-                if (ev['keyCode'] == Event.KeyCode.ENTER) {
+                if (ev['keyCode'] == Node.KeyCode.ENTER) {
                     return this.performActionInternal(ev);
                 }
                 return undefined;
