@@ -3,6 +3,7 @@
  * @author yiminghe@gmail.com
  */
 (function (S) {
+
     var log_div;
 
     function log(str) {
@@ -22,4 +23,5 @@
     }
 
     window.log = log;
+
 })(KISSY);
