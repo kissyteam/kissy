@@ -167,8 +167,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
                 var self = this,
                     input,
                     target,
-                    trigger ,
-                    hasTrigger;
+                    trigger;
                 ComboBox.superclass.handleMouseDown.apply(self, arguments);
                 target = e.target;
                 trigger = self.get("trigger");
@@ -630,11 +629,14 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
     }
 
     function clearDismissTimer() {
-        var self = this, t;
-        if (t = self._focusoutDismissTimer) {
-            clearTimeout(t);
-            self._focusoutDismissTimer = null;
-        }
+        var self = this,
+            t;
+        setTimeout(function () {
+            if (t = self._focusoutDismissTimer) {
+                clearTimeout(t);
+                self._focusoutDismissTimer = null;
+            }
+        }, 10);
     }
 
     function showMenu(self) {
