@@ -631,6 +631,9 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
     function clearDismissTimer() {
         var self = this,
             t;
+        // different event sequence
+        // ie fire focusin blur
+        // others fire blur focusin
         setTimeout(function () {
             if (t = self._focusoutDismissTimer) {
                 clearTimeout(t);
