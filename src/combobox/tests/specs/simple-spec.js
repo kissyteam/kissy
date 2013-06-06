@@ -204,20 +204,20 @@ KISSY.use("combobox", function (S, ComboBox) {
 
         it("should response to keyboard and update input", function () {
 
-
+            var originalValue = '1';
 
             t.focus();
 
             jasmine.simulate(t, "keydown");
 
-            runs(function(){
+            runs(function () {
                 t.value = "";
             });
 
             waits(100);
 
             runs(function () {
-                t.value = "1";
+                t.value = originalValue;
             });
 
             waits(100);
@@ -268,12 +268,24 @@ KISSY.use("combobox", function (S, ComboBox) {
             });
             waits(100);
 
+            // include input in key sequence
+            runs(function () {
+                var menu = comboBox.get("menu");
+                // restore to original value
+                expect(t.value).toBe(originalValue);
+                expect(menu.get("highlightedItem")).toBeFalsy();
+                jasmine.simulate(t, "keydown", {
+                    keyCode: KeyCode.DOWN
+                });
+            });
+
             // wrap
             runs(function () {
                 var menu = comboBox.get("menu");
                 var children = menu.get("children");
                 // 第1个高亮
                 expect(S.indexOf(menu.get("highlightedItem"), children)).toBe(0);
+                expect(t.value).toBe(menu.get("highlightedItem").get('textContent'));
                 t.blur();
             });
 
@@ -285,12 +297,11 @@ KISSY.use("combobox", function (S, ComboBox) {
             it("should response to mouse", function () {
 
 
-
                 t.focus();
 
                 jasmine.simulate(t, "keydown");
 
-                runs(function(){
+                runs(function () {
                     t.value = "";
                 });
 
@@ -334,7 +345,7 @@ KISSY.use("combobox", function (S, ComboBox) {
             t.focus();
 
             jasmine.simulate(t, "keydown");
-            runs(function(){
+            runs(function () {
                 t.value = "";
             });
             waits(100);
@@ -384,7 +395,7 @@ KISSY.use("combobox", function (S, ComboBox) {
             t.focus();
 
             jasmine.simulate(t, "keydown");
-            runs(function(){
+            runs(function () {
                 t.value = "";
             });
             waits(100);

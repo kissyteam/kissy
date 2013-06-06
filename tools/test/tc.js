@@ -94,8 +94,6 @@ tests.push('/kissy/src/seed/tests/runner/lang.html');
 
 tests.push('/kissy/src/seed/tests/runner/simple-loader-core.html');
 
-tests.push('/kissy/src/seed/tests/runner/simple-loader-native.html');
-
 tests.push('/kissy/src/seed/tests/runner/simple-loader.html');
 
 tests.push('/kissy/src/stylesheet/tests/runner/test.html');
