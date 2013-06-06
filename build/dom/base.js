@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.30
 MIT Licensed
-build time: May 28 17:37
+build time: Jun 6 19:04
 */
 /**
  * @ignore
@@ -2059,7 +2059,7 @@ KISSY.add('dom/base/offset', function (S, DOM, undefined) {
         CSS1Compat = 'CSS1Compat',
         compatMode = 'compatMode',
         MAX = Math.max,
-        myParseInt = parseInt,
+        myParseFloat = parseFloat,
         POSITION = 'position',
         RELATIVE = 'relative',
         DOCUMENT = 'document',
@@ -2204,17 +2204,17 @@ KISSY.add('dom/base/offset', function (S, DOM, undefined) {
                     // 注意边框 , offset 是边框到根节点
                     diffTop = {
                         left: elemOffset[LEFT] - (containerOffset[LEFT] +
-                            (myParseInt(DOM.css(container, 'borderLeftWidth')) || 0)),
+                            (myParseFloat(DOM.css(container, 'borderLeftWidth')) || 0)),
                         top: elemOffset[TOP] - (containerOffset[TOP] +
-                            (myParseInt(DOM.css(container, 'borderTopWidth')) || 0))
+                            (myParseFloat(DOM.css(container, 'borderTopWidth')) || 0))
                     };
                     diffBottom = {
                         left: elemOffset[LEFT] + ew -
                             (containerOffset[LEFT] + cw +
-                                (myParseInt(DOM.css(container, 'borderRightWidth')) || 0)),
+                                (myParseFloat(DOM.css(container, 'borderRightWidth')) || 0)),
                         top: elemOffset[TOP] + eh -
                             (containerOffset[TOP] + ch +
-                                (myParseInt(DOM.css(container, 'borderBottomWidth')) || 0))
+                                (myParseFloat(DOM.css(container, 'borderBottomWidth')) || 0))
                     };
                 }
 
@@ -2477,9 +2477,6 @@ KISSY.add('dom/base/offset', function (S, DOM, undefined) {
             (currentEl = currentWin['frameElement']) &&
             (currentWin = currentWin.parent));
 
-        position.left = myParseInt(position.left);
-        position.top = myParseInt(position.top);
-
         return position;
     }
 
@@ -2495,8 +2492,8 @@ KISSY.add('dom/base/offset', function (S, DOM, undefined) {
             current, key;
 
         for (key in offset) {
-            current = myParseInt(DOM.css(elem, key), 10) || 0;
-            ret[key] = myParseInt(current + offset[key] - old[key]);
+            current = myParseFloat(DOM.css(elem, key)) || 0;
+            ret[key] = myParseFloat(current + offset[key] - old[key]);
         }
         DOM.css(elem, ret);
     }

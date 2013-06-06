@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.30
 MIT Licensed
-build time: Jun 6 14:50
+build time: Jun 6 19:02
 */
 /**
  * @ignore
@@ -245,7 +245,6 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
                     // re-fetch, consider multiple input
                     // S.log("refetch : " + getValue(self));
                     self.sendRequest(this.getValueInternal());
-                    return true;
                 }
                 return  undefined;
             },
