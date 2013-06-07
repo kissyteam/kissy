@@ -104,7 +104,7 @@ KISSY.add('date/base', function (S, defaultLocale) {
          * Enum indicating the day of the week
          * @type Number
          */
-        DAY_OF_WEAK: 7,
+        DAY_OF_WEEK: 7,
         /**
          * Enum indicating the day of the ordinal number of the day of the week
          * @type Number
@@ -274,9 +274,9 @@ KISSY.add('date/base', function (S, defaultLocale) {
     DISPLAY_MAP[Date.MONTH] = {};
     DISPLAY_MAP[Date.MONTH][Date.SHORT] = 'shortMonths';
     DISPLAY_MAP[Date.MONTH][Date.LONG] = 'months';
-    DISPLAY_MAP[Date.DAY_OF_WEAK] = {};
-    DISPLAY_MAP[Date.DAY_OF_WEAK][Date.SHORT] = 'shortWeekdays';
-    DISPLAY_MAP[Date.DAY_OF_WEAK][Date.LONG] = 'weekdays';
+    DISPLAY_MAP[Date.DAY_OF_WEEK] = {};
+    DISPLAY_MAP[Date.DAY_OF_WEEK][Date.SHORT] = 'shortWeekdays';
+    DISPLAY_MAP[Date.DAY_OF_WEEK][Date.LONG] = 'weekdays';
 
     var MONTH_LENGTH = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]; // 0-based
     var LEAP_MONTH_LENGTH = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]; // 0-based
@@ -286,12 +286,299 @@ KISSY.add('date/base', function (S, defaultLocale) {
     var ONE_HOUR = 60 * ONE_MINUTE;
     var ONE_DAY = 24 * ONE_HOUR;
     var ONE_WEEK = 7 * ONE_DAY;
+    var BASE_YEAR = 1970;
+
+    var FIXED_DATES = [
+        719163, // 1970
+        719528, // 1971
+        719893, // 1972
+        720259, // 1973
+        720624, // 1974
+        720989, // 1975
+        721354, // 1976
+        721720, // 1977
+        722085, // 1978
+        722450, // 1979
+        722815, // 1980
+        723181, // 1981
+        723546, // 1982
+        723911, // 1983
+        724276, // 1984
+        724642, // 1985
+        725007, // 1986
+        725372, // 1987
+        725737, // 1988
+        726103, // 1989
+        726468, // 1990
+        726833, // 1991
+        727198, // 1992
+        727564, // 1993
+        727929, // 1994
+        728294, // 1995
+        728659, // 1996
+        729025, // 1997
+        729390, // 1998
+        729755, // 1999
+        730120, // 2000
+        730486, // 2001
+        730851, // 2002
+        731216, // 2003
+        731581, // 2004
+        731947, // 2005
+        732312, // 2006
+        732677, // 2007
+        733042, // 2008
+        733408, // 2009
+        733773, // 2010
+        734138, // 2011
+        734503, // 2012
+        734869, // 2013
+        735234, // 2014
+        735599, // 2015
+        735964, // 2016
+        736330, // 2017
+        736695, // 2018
+        737060, // 2019
+        737425, // 2020
+        737791, // 2021
+        738156, // 2022
+        738521, // 2023
+        738886, // 2024
+        739252, // 2025
+        739617, // 2026
+        739982, // 2027
+        740347, // 2028
+        740713, // 2029
+        741078, // 2030
+        741443, // 2031
+        741808, // 2032
+        742174, // 2033
+        742539, // 2034
+        742904, // 2035
+        743269, // 2036
+        743635, // 2037
+        744000, // 2038
+        744365 // 2039
+    ];
+
+    var ACCUMULATED_DAYS_IN_MONTH
+        //   1/1 2/1 3/1 4/1 5/1 6/1 7/1 8/1 9/1 10/1 11/1 12/1
+        = [  0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
+
+    var ACCUMULATED_DAYS_IN_MONTH_LEAP
+        //   1/1 2/1   3/1   4/1   5/1   6/1   7/1   8/1   9/1   10/1   11/1   12/1
+        = [   0, 31, 59 + 1, 90 + 1, 120 + 1, 151 + 1, 181 + 1, 212 + 1, 243 + 1, 273 + 1, 304 + 1, 334 + 1];
+
+
+    var EPOCH_OFFSET = 719163; // Fixed date of January 1, 1970 (Gregorian)
+    /**
+     * @ignore
+     * @param n
+     * @param d
+     * @param [r]
+     * @returns {number}
+     */
+    function floorDivide(n, d, r) {
+        if (n >= 0) {
+            if (r) {
+                r[0] = n % d;
+            }
+
+            return n / d;
+        }
+        var q = ((n + 1) / d) - 1;
+        if (r) {
+            r[0] = n - (q * d);
+        }
+        return q;
+    }
+
+    function mod(x, y) {
+        return (x - y * floorDivide(x, y));
+    }
 
     Date.prototype = {
         constructor: Date,
 
+        isSet: function (field) {
+            return this.fields[field] !== undefined;
+        },
+
         computeFields: function () {
 
+        },
+
+        computeTime: function () {
+            var year = this.get(Date.YEAR);
+            var era = this.get(Date.ERA);
+            if (era == Date.BC) {
+                year = 1 - year;
+            }
+            var timeOfDay = 0;
+            if (this.isSet(Date.HOUR_OF_DAY)) {
+                timeOfDay += this.get(Date.HOUR_OF_DAY);
+            } else {
+                timeOfDay += this.get(Date.HOUR);
+                if (this.isSet(Date.AM_PM)) {
+                    timeOfDay += 12 * this.get(Date.AM_PM);
+                }
+            }
+            timeOfDay *= 60;
+            timeOfDay += this.get(Date.MINUTE);
+            timeOfDay *= 60;
+            timeOfDay += this.get(Date.SECOND);
+            timeOfDay *= 1000;
+            timeOfDay += this.get(Date.MILLISECOND);
+
+            var fixedDate = 0;
+
+            fixedDate = fixedDate + this.getFixedDate(year);
+
+            // millis represents local wall-clock time in milliseconds.
+            var millis = (fixedDate - EPOCH_OFFSET) * ONE_DAY + timeOfDay;
+
+            millis -= this.timezoneOffset;
+
+            this.time = millis;
+
+            this.computeFields();
+        },
+
+        getDayOfWeekDateOnOrBefore: function (fixedDate, dayOfWeek) {
+            var fd = fixedDate - (dayOfWeek - 1);
+            if (fd >= 0) {
+                return fixedDate - (fd % 7);
+            }
+            return fixedDate - mod(fd, 7);
+        },
+
+        monthLength: function (month, year) {
+            return Date.isLeapYear(year) ? LEAP_MONTH_LENGTH[month] : MONTH_LENGTH[month];
+        },
+
+        getFixedDate: function (year) {
+            var month = Date.JANUARY;
+
+            if (this.isSet(Date.MONTH)) {
+                month = this.get(Date.MONTH);
+                if (month > Date.DECEMBER) {
+                    year += month / 12;
+                    month %= 12;
+                } else if (month < Date.JANUARY) {
+                    var rem = [];
+                    year += floorDivide(month, 12, rem);
+                    month = rem[0];
+                }
+            }
+
+            // Get the fixed date since Jan 1, 1 (Gregorian). We are on
+            // the first day of either `month' or January in 'year'.
+            var fixedDate = this.getFixedDate2(year, month, 1);
+
+            if (this.isSet(Date.MONTH)) {
+                if (this.isSet(Date.DAY_OF_MONTH)) {
+                    fixedDate += this.get(Date.DAY_OF_MONTH) - 1;
+                } else {
+                    if (this.isSet(Date.WEEK_OF_MONTH)) {
+                        var firstDayOfWeek = this.getDayOfWeekDateOnOrBefore(fixedDate + 6,
+                            this.firstDayOfWeek);
+
+                        // If we have enough days in the first week, then
+                        // move to the previous week.
+                        if ((firstDayOfWeek - fixedDate) >= this.minimalDaysInFirstWeek) {
+                            firstDayOfWeek -= 7;
+                        }
+
+                        if (this.isSet(Date.DAY_OF_WEEK)) {
+                            firstDayOfWeek = this.getDayOfWeekDateOnOrBefore(firstDayOfWeek + 6,
+                                this.get(Date.DAY_OF_WEEK));
+                        }
+
+                        fixedDate = firstDayOfWeek + 7 * (this.get(Date.WEEK_OF_MONTH) - 1);
+                    } else {
+                        var dayOfWeek;
+                        if (this.isSet(Date.DAY_OF_WEEK)) {
+                            dayOfWeek = this.get(Date.DAY_OF_WEEK);
+                        } else {
+                            dayOfWeek = this.firstDayOfWeek;
+                        }
+                        var dowim;
+                        if (this.isSet(Date.DAY_OF_WEEK_IN_MONTH)) {
+                            dowim = this.get(Date.DAY_OF_WEEK_IN_MONTH);
+                        } else {
+                            dowim = 1;
+                        }
+
+                        if (dowim >= 0) {
+                            fixedDate = this.getDayOfWeekDateOnOrBefore(fixedDate + (7 * dowim) - 1,
+                                dayOfWeek);
+                        } else {
+                            // Go to the first day of the next week of
+                            // the specified week boundary.
+                            var lastDate = this.monthLength(month, year) + (7 * (dowim + 1));
+                            // Then, get the day of week date on or before the last date.
+                            fixedDate = this.getDayOfWeekDateOnOrBefore(fixedDate + lastDate - 1,
+                                dayOfWeek);
+                        }
+                    }
+                }
+            } else {
+                // We are on the first day of the year.
+                if (this.isSet(Date.DAY_OF_YEAR)) {
+                    fixedDate += this.get(Date.DAY_OF_YEAR) - 1;
+                } else {
+                    firstDayOfWeek = this.getDayOfWeekDateOnOrBefore(fixedDate + 6,
+                        this.firstDayOfWeek);
+                    // If we have enough days in the first week, then move
+                    // to the previous week.
+                    if ((firstDayOfWeek - fixedDate) >= this.minimalDaysInFirstWeek) {
+                        firstDayOfWeek -= 7;
+                    }
+                    if (this.isSet(Date.DAY_OF_WEEK)) {
+                        dayOfWeek = this.get(Date.DAY_OF_WEEK);
+                        if (dayOfWeek != this.firstDayOfWeek) {
+                            firstDayOfWeek = this.getDayOfWeekDateOnOrBefore(firstDayOfWeek + 6,
+                                dayOfWeek);
+                        }
+                    }
+                    fixedDate = firstDayOfWeek + 7 * (this.get(Date.WEEK_OF_YEAR) - 1);
+                }
+            }
+
+            return fixedDate;
+
+        },
+
+        getFixedDate2: function (year, month, dayOfMonth) {
+            var isJan1 = month == Date.JANUARY && dayOfMonth == 1;
+            var n = year - BASE_YEAR;
+            if (n >= 0 && n < FIXED_DATES.length) {
+                var jan1 = FIXED_DATES[n];
+                return isJan1 ? jan1 : jan1 + this.getDayOfYear(year, month, dayOfMonth) - 1;
+            }
+            var prevYear = year - 1;
+            var days = dayOfMonth;
+
+            if (prevYear >= 0) {
+                days += 365 * prevYear + prevYear / 4 - prevYear / 100 + prevYear / 400
+                    + ((367 * month - 362) / 12);
+            } else {
+                days += (365 * prevYear)
+                    + floorDivide(prevYear, 4)
+                    - floorDivide(prevYear, 100)
+                    + floorDivide(prevYear, 400)
+                    + floorDivide((367 * month - 362), 12);
+            }
+            if (month > Date.FEBRUARY) {
+                days -= Date.isLeapYear(year) ? 1 : 2;
+            }
+            return days;
+        },
+
+        getDayOfYear: function (year, month, dayOfMonth) {
+            return dayOfMonth + (Date.isLeapYear(year) ?
+                ACCUMULATED_DAYS_IN_MONTH_LEAP[month] :
+                ACCUMULATED_DAYS_IN_MONTH[month]);
         },
 
         getTime: function () {
