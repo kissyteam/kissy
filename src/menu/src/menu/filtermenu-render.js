@@ -11,9 +11,9 @@ KISSY.add("menu/filtermenu-render", function (S, Node, MenuRender, FilterMenuTpl
         initializer: function () {
             var childrenElSelectors = this.get('childrenElSelectors');
             S.mix(childrenElSelectors, {
-                placeholderEl: '#ks-filter-menu-placeholder{id}',
-                filterInputWrap: '#ks-filter-menu-input-wrap{id}',
-                filterInput: '#ks-filter-menu-input{id}'
+                placeholderEl: '#ks-filter-menu-placeholder-{id}',
+                filterInputWrap: '#ks-filter-menu-input-wrap-{id}',
+                filterInput: '#ks-filter-menu-input-{id}'
             });
         },
 

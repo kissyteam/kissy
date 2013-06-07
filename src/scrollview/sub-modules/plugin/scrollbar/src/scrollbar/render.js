@@ -15,10 +15,10 @@ KISSY.add('scrollview/plugin/scrollbar/render', function (S, Component, ScrollBa
                 prefixCls = self.prefixCls;
             self.get('elCls').push(prefixCls + 'scrollbar-' + axis);
             S.mix(self.get('childrenElSelectors'), {
-                'dragEl': '#ks-scrollbar-drag{id}',
-                'downBtn': '#ks-scrollbar-arrow-down{id}',
-                'upBtn': '#ks-scrollbar-arrow-up{id}',
-                'trackEl': '#ks-scrollbar-track{id}'
+                'dragEl': '#ks-scrollbar-drag-{id}',
+                'downBtn': '#ks-scrollbar-arrow-down-{id}',
+                'upBtn': '#ks-scrollbar-arrow-up-{id}',
+                'trackEl': '#ks-scrollbar-track-{id}'
             });
         },
 

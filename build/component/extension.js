@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 5 22:25
+build time: Jun 7 13:42
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -485,7 +485,7 @@ KISSY.add('component/extension/content-render', function (S) {
 
     function ContentRender() {
         S.mix(this.get('childrenElSelectors'), {
-            contentEl: '#ks-content{id}'
+            contentEl: '#ks-content-{id}'
         });
     }
 
@@ -506,7 +506,7 @@ KISSY.add('component/extension/content-render', function (S) {
     S.mix(ContentRender, {
         ATTRS: {
             contentTpl:{
-                value:'<div id="ks-content{{id}}" ' +
+                value:'<div id="ks-content-{{id}}" ' +
                     'class="{{getBaseCssClasses "content"}}">' +
                     '{{{content}}}' +
                     '</div>'
@@ -733,45 +733,66 @@ KISSY.add("component/extension/delegate-children", function (S, Node) {
         isTouchEventSupported = Features.isTouchEventSupported();
 
     function DelegateChildren() {
-    }
-
-    function handleChildMouseEvents(e) {
-        if (!this.get("disabled")) {
-            var control = this.getOwnerControl(e.target, e);
-            if (control && !control.get("disabled")) {
-                // Child control identified; forward the event.
-                switch (e.type) {
-                    case Gesture.start:
-                        control.handleMouseDown(e);
-                        break;
-                    case Gesture.end:
-                        control.handleMouseUp(e);
-                        break;
-                    case Gesture.tap:
-                        control.performActionInternal(e);
-                        break;
-                    case "mouseover":
-                        control.handleMouseOver(e);
-                        break;
-                    case "mouseout":
-                        control.handleMouseOut(e);
-                        break;
-                    case "contextmenu":
-                        control.handleContextMenu(e);
-                        break;
-                    case "dblclick":
-                        control.handleDblClick(e);
-                        break;
-                    default:
-                        S.error(e.type + " unhandled!");
-                }
-            }
-        }
+        var self = this;
+        self.__childrenIdMap = {};
+        self.__childClsTag = S.guid('ks-component-child');
+        self.on('afterRenderChild', self._processRenderChildForDelegate, self)
+            .on('afterRemoveChild', self._processRemoveChildForDelegate, self);
     }
 
     S.augment(DelegateChildren, {
 
+        handleChildrenEvents: function (e) {
+            if (!this.get("disabled")) {
+                var control = this.getOwnerControl(e);
+                if (control && !control.get("disabled")) {
+                    // Child control identified; forward the event.
+                    switch (e.type) {
+                        case Gesture.start:
+                            control.handleMouseDown(e);
+                            break;
+                        case Gesture.end:
+                            control.handleMouseUp(e);
+                            break;
+                        case Gesture.tap:
+                            control.performActionInternal(e);
+                            break;
+                        case "mouseenter":
+                            control.handleMouseEnter(e);
+                            break;
+                        case "mouseleave":
+                            control.handleMouseLeave(e);
+                            break;
+                        case "contextmenu":
+                            control.handleContextMenu(e);
+                            break;
+                        case "dblclick":
+                            control.handleDblClick(e);
+                            break;
+                        default:
+                            S.error(e.type + " unhandled!");
+                    }
+                }
+            }
+        },
+
+        _processRenderChildForDelegate: function (e) {
+            if (e.target == this) {
+                var child = e.component,
+                    el = child.get('el');
+                el.addClass(this.__childClsTag);
+                this.__childrenIdMap[child.get('id')] = child;
+            }
+        },
+
+        _processRemoveChildForDelegate: function (e) {
+            if (e.target == this) {
+                delete this.__childrenIdMap[e.component.get('id')];
+            }
+        },
+
         __bindUI: function () {
+
             var self = this,
                 events = Gesture.start +
                     " " + Gesture.end +
@@ -782,33 +803,21 @@ KISSY.add("component/extension/delegate-children", function (S, Node) {
             }
 
             if (!isTouchEventSupported) {
-                events += " mouseover mouseout contextmenu " +
+                events += " mouseenter mouseleave contextmenu " +
                     (ie && ie < 9 ? "dblclick " : "");
             }
 
-            self.get("el").on(events, handleChildMouseEvents, self);
+            self.get("el").delegate(events, '.' + self.__childClsTag, self.handleChildrenEvents, self);
         },
 
         /**
          * Get child component which contains current event target node.
          * @protected
-         * @param {HTMLElement} target Current event target node.
+         * @param {KISSY.Event.DOMEventObject} e event
          * @return {KISSY.Component.Controller}
          */
-        getOwnerControl: function (target) {
-            var self = this,
-                children = self.get("children"),
-                len = children.length,
-                elem = self.get("el")[0];
-            while (target && target !== elem) {
-                for (var i = 0; i < len; i++) {
-                    if (children[i].get("el")[0] === target) {
-                        return children[i];
-                    }
-                }
-                target = target.parentNode;
-            }
-            return null;
+        getOwnerControl: function (e) {
+            return this.__childrenIdMap[e.currentTarget.id];
         }
     });
 

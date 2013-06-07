@@ -14,7 +14,7 @@ KISSY.add("overlay/overlay-render", function (S, Component, Extension, Loading, 
     ], {
         initializer: function () {
             S.mix(this.get('childrenElSelectors'), {
-                closeBtn: '#ks-ext-close{id}'
+                closeBtn: '#ks-ext-close-{id}'
             });
         }
     }, {

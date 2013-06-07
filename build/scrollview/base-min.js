@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 5 22:37
+build time: Jun 7 13:54
 */
 KISSY.add("scrollview/base/render",function(f,o,p){var n,l={_onSetScrollLeft:function(d){this.get("contentEl")[0].style.left=-d+"px"},_onSetScrollTop:function(d){this.get("contentEl")[0].style.top=-d+"px"}};f.Features.isTransformSupported()&&(n=f.Features.getTransformProperty(),l._onSetScrollLeft=function(d){var f=this.get("scrollTop");this.get("contentEl")[0].style[n]="translate3d("+-d+"px,"+-f+"px,0)"},l._onSetScrollTop=function(d){var f=this.get("scrollLeft");this.get("contentEl")[0].style[n]=
 "translate3d("+-f+"px,"+-d+"px,0)"});return o.Render.extend([p.ContentRender],l,{ATTRS:{scrollLeft:{value:0},scrollTop:{value:0}}})},{requires:["component/base","component/extension"]});

@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 5 22:38
+build time: Jun 7 13:55
 */
 KISSY.add("toolbar",function(h,k,j,l,o,i){function g(a,b,c){var c=c.get("children"),d=0,e=c.length;if(a==i&&(a=1==b?0:e-1,!c[a].get("disabled")))return c[a];do d++,a=(a+e+b)%e;while(d<e&&c[a].get("disabled"));return d!=e?c[a]:null}function m(a){a.newVal?this.set("expandedItem",null):this.set("expandedItem",a.target)}function n(a){var b=a.target;if(this!==b&&(b.isMenuItem||b.isButton))a.newVal?(a=this.get("children"),this.get("expandedItem")&&h.inArray(b,a)&&this.set("expandedItem",b.isMenuButton?
 b:null),this.set("highlightedItem",b)):a.byPassSetToolbarHighlightedItem||this.set("highlightedItem",null)}var f=l.KeyCode;return k.Controller.extend([j.DecorateChildren,j.DelegateChildren],{initializer:function(){this.get("elAttrs").role="toolbar"},_onSetHighlightedItem:function(a,b){var c,d;c=b&&b.prevVal;d=this.get("children");var e=this.get("el");c&&h.inArray(c,d)&&c.set("highlighted",!1,{data:{byPassSetToolbarHighlightedItem:1}});a?(e[0].ownerDocument.activeElement!=e[0]&&this.focus(),d=a.get("el"),

@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 5 22:38
+build time: Jun 7 13:55
 */
 KISSY.add("tabs/bar",function(b,d,a){var h=d.extend({initializer:function(){this.get("elAttrs").role="tablist"},bindUI:function(){var a=this;a.on("afterSelectedChange",function(e){e.newVal&&e.target.isTabsTab&&a.set("selectedTab",e.target)})},syncUI:function(){var g=this,e=g.get("children");b.each(e,function(e){return e.get("selected")?(g.set("selectedTab",e),!1):a})},handleKeyEventInternal:function(a){var e=this.get("selectedTab"),a=this.getNextItemByKeyEventInternal(a,e);if(b.isBoolean(a))return a;
 a.set("selected",!0);return!0},_onSetSelectedTab:function(a,e){var b;a&&(e&&(b=e.prevVal)&&b.set("selected",!1),a.set("selected",!0))},_onSetHighlightedItem:function(){h.superclass._onSetHighlightedItem.apply(this,arguments);"mouse"==this.get("changeType")&&this._onSetSelectedTab.apply(this,arguments)}},{ATTRS:{selectedTab:{},changeType:{value:"click"},defaultChildCfg:{value:{xclass:"tabs-tab"}}}},{xclass:"tabs-bar"});h.ChangeType={CLICK:"click",MOUSE:"mouse"};return h},{requires:["toolbar"]});

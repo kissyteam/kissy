@@ -729,7 +729,7 @@ KISSY.add('grid/gridbody', function (S, Component, XTemplate, Bindable) {
                  * @type {String}
                  * Defaults to:
                  * <pre>
-                 *     '&lt;td  class="' + CLS_GRID_CELL + ' grid-td-{{id}}" data-column-id="{{id}}" data-column-field = {{dataIndex}}&gt;'+
+                 *     '&lt;td  class="' + CLS_GRID_CELL + ' grid-td{{id}}" data-column-id="{{id}}" data-column-field = {{dataIndex}}&gt;'+
                  *        '&lt;div class="' + CLS_GRID_CELL_INNER + '" &gt;{{cellText}}&lt;/div&gt;'+
                  *    '&lt;/td&gt;'
                  *</pre>

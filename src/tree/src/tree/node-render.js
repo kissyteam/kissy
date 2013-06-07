@@ -43,11 +43,11 @@ KISSY.add("tree/node-render", function (S, Node, Component, TreeNodeTpl, Extensi
                 'title': renderData.tooltip
             });
             S.mix(self.get('childrenElSelectors'), {
-                expandIconEl: '#ks-tree-node-expand-icon{id}',
-                rowEl: '#ks-tree-node-row{id}',
-                iconEl: '#ks-tree-node-icon{id}',
-                childrenEl: '#ks-tree-node-children{id}',
-                checkIconEl: '#ks-tree-node-checked{id}'
+                expandIconEl: '#ks-tree-node-expand-icon-{id}',
+                rowEl: '#ks-tree-node-row-{id}',
+                iconEl: '#ks-tree-node-icon-{id}',
+                childrenEl: '#ks-tree-node-children-{id}',
+                checkIconEl: '#ks-tree-node-checked-{id}'
             });
         },
 

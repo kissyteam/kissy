@@ -17,9 +17,9 @@ KISSY.add("overlay/dialog-render", function (S, OverlayRender, DialogTpl, CloseT
                 'aria-labelledby': 'ks-stdmod-header' + this.get('id')
             });
             S.mix(this.get('childrenElSelectors'), {
-                header: '#ks-stdmod-header{id}',
-                body: '#ks-stdmod-body{id}',
-                footer: '#ks-stdmod-footer{id}'
+                header: '#ks-stdmod-header-{id}',
+                body: '#ks-stdmod-body-{id}',
+                footer: '#ks-stdmod-footer-{id}'
             });
         },
 

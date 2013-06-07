@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 5 22:36
+build time: Jun 7 13:53
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -63,7 +63,12 @@ KISSY.add('event/dom/focusin', function (S, Event) {
 });
 
 /*
- yiminghe@gmail.com:2011-06-07
- - 更加合理的模拟冒泡顺序，子元素先出触发，父元素后触发
+ yiminghe@gmail.com: 2013-06-06
+  - focusin blur 顺序注意 <input1 /><div2><input2 /></div2>, focus from input1 to input2
+  - ie: div2 focusin input1 blur
+  - others: input1 blur div2 focusin
+
+ yiminghe@gmail.com: 2011-06-07
+  - 更加合理的模拟冒泡顺序，子元素先出触发，父元素后触发
  */
 

@@ -6,7 +6,7 @@ KISSY.add('component/extension/content-render', function (S) {
 
     function ContentRender() {
         S.mix(this.get('childrenElSelectors'), {
-            contentEl: '#ks-content{id}'
+            contentEl: '#ks-content-{id}'
         });
     }
 
@@ -27,7 +27,7 @@ KISSY.add('component/extension/content-render', function (S) {
     S.mix(ContentRender, {
         ATTRS: {
             contentTpl:{
-                value:'<div id="ks-content{{id}}" ' +
+                value:'<div id="ks-content-{{id}}" ' +
                     'class="{{getBaseCssClasses "content"}}">' +
                     '{{{content}}}' +
                     '</div>'

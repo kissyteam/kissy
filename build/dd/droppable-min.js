@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 5 22:25
+build time: Jun 7 13:43
 */
 KISSY.add("dd/droppable/base",function(i,e,f,g){var d=g.DDM,b=d.PREFIX_CLS;return f.extend({initializer:function(){this.addTarget(d);d._regDrop(this)},getNodeFromTarget:function(a,c,h){var a=this.get("node"),b=a[0];return b==c||b==h?null:a},_active:function(){var a=d.get("activeDrag"),c=this.get("node"),h=this.get("groups"),a=a.get("groups");a:if(!0===a)h=1;else{for(var f in h)if(a[f]){h=1;break a}h=0}h?(d._addValidDrop(this),c&&(c.addClass(b+"drop-active-valid"),d.cacheWH(c))):c&&c.addClass(b+"drop-active-invalid")},
 _deActive:function(){var a=this.get("node");a&&a.removeClass(b+"drop-active-valid").removeClass(b+"drop-active-invalid")},__getCustomEvt:function(a){return i.mix({drag:d.get("activeDrag"),drop:this},a)},_handleOut:function(){var a=this.__getCustomEvt();this.get("node").removeClass(b+"drop-over");this.fire("dropexit",a)},_handleEnter:function(a){a=this.__getCustomEvt(a);a.drag._handleEnter(a);this.get("node").addClass(b+"drop-over");this.fire("dropenter",a)},_handleOver:function(a){a=this.__getCustomEvt(a);

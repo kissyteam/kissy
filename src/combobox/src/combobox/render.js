@@ -10,10 +10,10 @@ KISSY.add("combobox/render", function (S, Component, ComboboxTpl) {
         initializer: function () {
             var childrenElSelectors = this.get('childrenElSelectors');
             S.mix(childrenElSelectors, {
-                input: '#ks-combobox-input{id}',
-                trigger: '#ks-combobox-trigger{id}',
-                invalidEl: '#ks-combobox-invalid-el{id}',
-                placeholderEl: '#ks-combobox-placeholder{id}'
+                input: '#ks-combobox-input-{id}',
+                trigger: '#ks-combobox-trigger-{id}',
+                invalidEl: '#ks-combobox-invalid-el-{id}',
+                placeholderEl: '#ks-combobox-placeholder-{id}'
             });
         },
 

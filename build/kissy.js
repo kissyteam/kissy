@@ -1,12 +1,12 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 6 18:59
+build time: Jun 7 13:56
 */
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 6 18:59
+build time: Jun 7 13:56
 */
 /**
  * @ignore
@@ -44,11 +44,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130606185914' will replace with current timestamp when compressing.
+         * NOTICE: '20130607135611' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130606185914',
+        __BUILD_TIME: '20130607135611',
         /**
          * KISSY Environment.
          * @private
@@ -5675,7 +5675,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20130606185914'
+            tag: '20130607135611'
         }, getBaseInfo()));
     }
 
@@ -6300,7 +6300,7 @@ config({
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 6 18:59
+build time: Jun 7 13:43
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -10163,7 +10163,7 @@ KISSY.add('dom/base', function (S, DOM) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 5 22:26
+build time: Jun 7 13:43
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -10279,7 +10279,7 @@ KISSY.add('dom/class-list', function (S, DOM) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 5 22:26
+build time: Jun 7 13:43
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -10947,7 +10947,7 @@ KISSY.add('dom/ie', function (S, DOM) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 5 22:26
+build time: Jun 7 13:43
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -12806,7 +12806,7 @@ KISSY.add('dom/selector', function (S, parser, DOM) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 5 22:35
+build time: Jun 7 13:52
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -13289,7 +13289,7 @@ KISSY.add('event/base', function (S, Utils, Object, Observer, ObservableEvent) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 5 22:35
+build time: Jun 7 13:52
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -13915,7 +13915,7 @@ KISSY.add('event/custom', function (S, Event, api, ObservableCustomEvent) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 5 22:35
+build time: Jun 7 13:52
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -16176,7 +16176,7 @@ KISSY.add('event/dom/base', function (S, Event, KeyCode, _DOMUtils, Gesture, Spe
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 5 22:36
+build time: Jun 7 13:53
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -16238,14 +16238,19 @@ KISSY.add('event/dom/focusin', function (S, Event) {
 });
 
 /*
- yiminghe@gmail.com:2011-06-07
- - 更加合理的模拟冒泡顺序，子元素先出触发，父元素后触发
+ yiminghe@gmail.com: 2013-06-06
+  - focusin blur 顺序注意 <input1 /><div2><input2 /></div2>, focus from input1 to input2
+  - ie: div2 focusin input1 blur
+  - others: input1 blur div2 focusin
+
+ yiminghe@gmail.com: 2011-06-07
+  - 更加合理的模拟冒泡顺序，子元素先出触发，父元素后触发
  */
 
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 5 22:36
+build time: Jun 7 13:53
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -16493,7 +16498,7 @@ KISSY.add('event/dom/hashchange', function (S, Event, DOM) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 5 22:36
+build time: Jun 7 13:53
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -16701,7 +16706,7 @@ KISSY.add('event/dom/ie', function () {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 5 22:36
+build time: Jun 7 13:53
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -16802,7 +16807,7 @@ KISSY.add('event/dom/shake', function (S, EventDomBase, undefined) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 5 22:36
+build time: Jun 7 13:53
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -17943,7 +17948,7 @@ KISSY.add('event/dom/touch', function (S, EventDomBase, eventHandleMap, eventHan
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 5 22:36
+build time: Jun 7 13:53
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -18901,7 +18906,7 @@ KISSY.add('json', function (S, stringify, parse) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 5 22:36
+build time: Jun 7 13:53
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -21163,7 +21168,7 @@ KISSY.add('io', function (S, serializer, IO) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 5 22:25
+build time: Jun 7 13:43
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -21280,7 +21285,7 @@ KISSY.add('cookie', function (S) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 5 22:24
+build time: Jun 7 13:42
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -21977,7 +21982,7 @@ KISSY.add('base',function (S, Attribute, EventCustom) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 5 22:24
+build time: Jun 7 13:41
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -22499,7 +22504,7 @@ KISSY.add('anim/base', function (S, DOM, Utils, EventCustom, Q) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 5 22:24
+build time: Jun 7 13:41
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -22710,7 +22715,7 @@ KISSY.add('anim/facade', function (S, DOM, AnimBase, TimerAnim, TransitionAnim) 
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 5 22:24
+build time: Jun 7 13:41
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -23812,7 +23817,7 @@ KISSY.add('anim/timer', function (S, DOM, Event, AnimBase, Easing, AM, Fx, SHORT
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 5 22:24
+build time: Jun 7 13:41
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -23985,7 +23990,7 @@ KISSY.add('anim/transition', function (S, DOM, Event, AnimBase) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 5 22:37
+build time: Jun 7 13:54
 */
 /*
  Combined processedModules by KISSY Module Compiler: 

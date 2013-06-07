@@ -159,7 +159,7 @@ KISSY.add('component/base/box-render', function (S, Node, XTemplate, BoxTpl) {
                     }
                 }
             } else if ((el = $(el)) && !el[0].id) {
-                el[0].id = ('ks-component' + S.guid());
+                el[0].id = self.get('id');
             }
             self.setInternal("el", el);
         },
