@@ -142,11 +142,12 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
             },
 
             handleBlur: function () {
+                // S.log('blur');
                 var self = this,
                     placeholderEl = self.get("placeholderEl"),
                     input = self.get("input");
                 ComboBox.superclass.handleBlur.apply(self, arguments);
-                delayHide.call(self);
+                delayHide(self);
                 if (self.get('invalidEl')) {
                     self.validate(function (error, val) {
                         if (error) {
@@ -547,8 +548,19 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
             el = menu.get("el");
             contentEl = menu.get("contentEl");
             // menu has input!
-            el.on("focusout", delayHide, self);
-            el.on("focusin", clearDismissTimer, self);
+            el.on("focusout", function () {
+                // S.log('focusout');
+                delayHide(self);
+            });
+            el.on("focusin", function () {
+                // S.log('focusin');
+                // different event sequence
+                // ie fire focusin blur
+                // others fire blur focusin
+                setTimeout(function () {
+                    clearDismissTimer(self);
+                }, 0);
+            });
             contentEl.on("mouseover", onMenuMouseOver, self);
             // cause valuechange
             // if click menuitem while chinese input is open(xu -> '')
@@ -575,7 +587,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
         // trigger el focus
         self.focus();
         // prevent menu from hiding
-        clearDismissTimer.call(self);
+        clearDismissTimer(self);
     }
 
     function setInvalid(self, error) {
@@ -620,25 +632,29 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
         }
     }
 
-    function delayHide() {
-        var self = this;
+    function delayHide(self) {
+        if (self._focusoutDismissTimer) {
+            return;
+        }
         self._focusoutDismissTimer = setTimeout(function () {
-            self.set("collapsed", true);
-        }, 30);
+            // S.log('hide by delay ' + self._focusoutDismissTimer);
+            // ie6 bug
+            if (self._focusoutDismissTimer) {
+                self.set("collapsed", true);
+            }
+        },
+            // ie6 needs longer timeout
+            50);
+        // S.log('delayHide ' + self._focusoutDismissTimer);
     }
 
-    function clearDismissTimer() {
-        var self = this,
-            t;
-        // different event sequence
-        // ie fire focusin blur
-        // others fire blur focusin
-        setTimeout(function () {
-            if (t = self._focusoutDismissTimer) {
-                clearTimeout(t);
-                self._focusoutDismissTimer = null;
-            }
-        }, 10);
+    function clearDismissTimer(self) {
+        var t;
+        if (t = self._focusoutDismissTimer) {
+            // S.log('clearDismissTimer ' + t);
+            clearTimeout(t);
+            self._focusoutDismissTimer = null;
+        }
     }
 
     function showMenu(self) {
@@ -646,7 +662,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
             menu = getMenu(self, 1);
 
         // 保证显示前已经 bind 好 menu 事件
-        clearDismissTimer.call(self);
+        clearDismissTimer(self);
 
         if (menu && !menu.get("visible")) {
             if (self.get("matchElWidth")) {
