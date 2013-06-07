@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.30
 MIT Licensed
-build time: Jun 6 19:02
+build time: Jun 7 13:04
 */
 /**
  * @ignore
@@ -307,7 +307,11 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
 
                 // menu has input!
                 el.on("focusout", delayHide, self);
-                el.on("focusin", clearDismissTimer, self);
+                el.on("focusin", function () {
+                    setTimeout(function () {
+                        clearDismissTimer.call(self);
+                    }, 0);
+                }, self);
 
                 contentEl.on("mouseover", onMenuMouseOver, self);
 
@@ -633,18 +637,19 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
     function delayHide() {
         var self = this;
         self._focusoutDismissTimer = setTimeout(function () {
-            self.set("collapsed", true);
-        }, 30);
+            if (self._focusoutDismissTimer) {
+                self.set("collapsed", true);
+            }
+        }, 50);
     }
 
     function clearDismissTimer() {
-        var self = this, t;
-        setTimeout(function () {
-            if (t = self._focusoutDismissTimer) {
-                clearTimeout(t);
-                self._focusoutDismissTimer = null;
-            }
-        }, 10);
+        var self = this,
+            t;
+        if (t = self._focusoutDismissTimer) {
+            clearTimeout(t);
+            self._focusoutDismissTimer = null;
+        }
     }
 
     function showMenu(self) {

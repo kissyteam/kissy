@@ -20,7 +20,6 @@ KISSY.use("combobox", function (S, ComboBox) {
         });
 
         var data = ["1", "21", "31"];
-        var DOM = S.DOM;
         var Event = S.Event;
         var KeyCode = Event.KeyCodes;
 
