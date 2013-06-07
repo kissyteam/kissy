@@ -6,8 +6,8 @@ KISSY.add('date/base', function (S, defaultLocale) {
 
     /**
      * GregorianCalendar Date class.
-     * @param [time] currently set time for this date.
-     * @param [locale] currently locale for this date.
+     * @param [time]  time for this date.
+     * @param [locale] locale for this date.
      * @class KISSY.Date
      */
     function Date(time, locale) {
@@ -285,7 +285,7 @@ KISSY.add('date/base', function (S, defaultLocale) {
     var ONE_MINUTE = 60 * ONE_SECOND;
     var ONE_HOUR = 60 * ONE_MINUTE;
     var ONE_DAY = 24 * ONE_HOUR;
-    var ONE_WEEK = 7 * ONE_DAY;
+    // var ONE_WEEK = 7 * ONE_DAY;
     var BASE_YEAR = 1970;
 
     var FIXED_DATES = [
@@ -371,6 +371,8 @@ KISSY.add('date/base', function (S, defaultLocale) {
 
 
     var EPOCH_OFFSET = 719163; // Fixed date of January 1, 1970 (Gregorian)
+    // var EPOCH_YEAR = 1970;
+
     /**
      * @ignore
      * @param n
@@ -404,11 +406,195 @@ KISSY.add('date/base', function (S, defaultLocale) {
             return this.fields[field] !== undefined;
         },
 
-        computeFields: function () {
+        getGregorianYearFromFixedDate: function (fixedDate) {
+            var d0;
+            var d1, d2, d3;//, d4;
+            var n400, n100, n4, n1;
+            var year;
 
+            if (fixedDate > 0) {
+                d0 = fixedDate - 1;
+                n400 = (d0 / 146097);
+                d1 = (d0 % 146097);
+                n100 = d1 / 36524;
+                d2 = d1 % 36524;
+                n4 = d2 / 1461;
+                d3 = d2 % 1461;
+                n1 = d3 / 365;
+                //d4 = (d3 % 365) + 1;
+            } else {
+                d0 = fixedDate - 1;
+                n400 = floorDivide(d0, 146097);
+                d1 = mod(d0, 146097);
+                n100 = floorDivide(d1, 36524);
+                d2 = mod(d1, 36524);
+                n4 = floorDivide(d2, 1461);
+                d3 = mod(d2, 1461);
+                n1 = floorDivide(d3, 365);
+                //d4 = mod(d3, 365) + 1;
+            }
+            year = 400 * n400 + 100 * n100 + 4 * n4 + n1;
+            if (!(n100 == 4 || n1 == 4)) {
+                ++year;
+            }
+
+            return year;
         },
 
-        computeTime: function () {
+        getDayOfWeekFromFixedDate: function (fixedDate) {
+            // The fixed day 1 (January 1, 1 Gregorian) is Monday.
+            if (fixedDate >= 0) {
+                // 1 -> sunday
+                return (fixedDate % 7) + 1;
+            }
+            return mod(fixedDate, 7) + 1;
+        },
+
+        getCalendarDateFromFixedDate: function (fixedDate) {
+            var year = this.getGregorianYearFromFixedDate(fixedDate);
+            var jan1 = this.getFixedDate2(year, Date.JANUARY, 1);
+            var isLeap = Date.isLeapYear(year);
+            var priorDays = fixedDate - jan1;
+            var mar1 = jan1 + 31 + 28;
+            if (isLeap) {
+                mar1++;
+            }
+            if (fixedDate >= mar1) {
+                priorDays += isLeap ? 1 : 2;
+            }
+            var month = 12 * priorDays + 373;
+            if (month > 0) {
+                month /= 367;
+            } else {
+                month = floorDivide(month, 367);
+
+            }
+
+            var month1 = jan1 + ACCUMULATED_DAYS_IN_MONTH[month];
+
+            if (isLeap && month >= Date.MARCH) {
+                ++month1;
+            }
+
+            var dayOfMonth = fixedDate - month1 + 1;
+            var dayOfWeek = this.getDayOfWeekFromFixedDate(fixedDate);
+
+            return {
+                year: year,
+                month: month,
+                dayOfMonth: dayOfMonth,
+                dayOfWeek: dayOfWeek,
+                isLeap: isLeap
+            };
+        },
+
+        computeFields: function () {
+
+            var time = this.time;
+            var timezoneOffset = this.timezoneOffset;
+            var fixedDate = timezoneOffset / ONE_DAY;
+            var timeOfDay = timezoneOffset % ONE_DAY;
+            fixedDate += time / ONE_DAY;
+            timeOfDay += time % ONE_DAY;
+            if (timeOfDay >= ONE_DAY) {
+                timeOfDay -= ONE_DAY;
+                fixedDate++;
+            } else {
+                while (timeOfDay < 0) {
+                    timeOfDay += ONE_DAY;
+                    fixedDate--;
+                }
+            }
+
+            fixedDate += EPOCH_OFFSET;
+
+            var era = Date.AD;
+
+            var date = this.getCalendarDateFromFixedDate(fixedDate);
+
+            var year = date.year;
+
+            if (year <= 0) {
+                year = 1 - year;
+                era = Date.BC;
+            }
+
+            var fields = this.fields;
+            fields[Date.ERA] = era;
+            fields[Date.YEAR] = year;
+            fields[Date.MONTH] = date.month - 1;
+            fields[Date.DAY_OF_MONTH] = date.dayOfMonth;
+            fields[Date.DAY_OF_WEEK] = date.dayOfWeek;
+
+            if (timeOfDay != 0) {
+                var hours = timeOfDay / ONE_HOUR;
+                fields[Date.HOUR_OF_DAY] = hours;
+                fields[Date.AM_PM] = hours / 12;
+                fields[Date.HOUR] = hours % 12;
+                var r = timeOfDay % ONE_HOUR;
+                fields[Date.MINUTE] = r / ONE_MINUTE;
+                r %= ONE_MINUTE;
+                fields[Date.SECOND] = r / ONE_SECOND;
+                fields[Date.MILLISECOND] = r % ONE_SECOND;
+            } else {
+                fields[Date.HOUR_OF_DAY] =
+                    fields[Date.AM_PM] =
+                        fields[Date.HOUR] =
+                            fields[Date.MINUTE] =
+                                fields[Date.SECOND] =
+                                    fields[Date.MILLISECOND] = 0;
+            }
+
+
+            var fixedDateJan1 = this.getFixedDate2(year, Date.JANUARY, 1);
+            var dayOfYear = fixedDate - fixedDateJan1 + 1;
+            var fixDateMonth1 = fixedDate = date.dayOfMonth + 1;
+
+            fields[Date.DAY_OF_YEAR] = dayOfYear;
+            fields[Date.DAY_OF_WEEK_IN_MONTH] = (date.dayOfMonth - 1) / 7 + 1;
+
+            var weekOfYear = this.getWeekNumber(fixedDateJan1, fixedDate);
+
+            if (weekOfYear == 0) {
+                var fixedDec31 = fixedDateJan1 - 1;
+                var prevJan1 = fixedDateJan1 - 365;
+                if (Date.isLeapYear(year - 1)) {
+                    prevJan1--;
+                }
+                weekOfYear = this.getWeekNumber(prevJan1, fixedDec31);
+            } else {
+                if (weekOfYear > 52) {
+                    var nextJan1 = fixedDateJan1 + 365;
+                    if (Date.isLeapYear(year)) {
+                        nextJan1++;
+                    }
+                    var nextJan1st = this.getDayOfWeekDateOnOrBefore(nextJan1 + 6, this.firstDayOfWeek);
+                    var nDays = nextJan1st - nextJan1;
+                    if (nDays > this.minimalDaysInFirstWeek && fixedDate >= (nextJan1st - 7)) {
+                        weekOfYear = 1;
+                    }
+                }
+            }
+
+            fields[Date.WEEK_OF_YEAR] = weekOfYear;
+            fields[Date.WEEK_OF_MONTH] = this.getWeekNumber(fixDateMonth1, fixedDate);
+        },
+
+        getWeekNumber: function (fixedDay1, fixedDate) {
+            var fixedDay1st = this.getDayOfWeekDateOnOrBefore(fixedDay1 + 6,
+                this.firstDayOfWeek);
+            var nDays = (fixedDay1st - fixedDay1);
+            if (nDays >= this.minimalDaysInFirstWeek) {
+                fixedDay1st -= 7;
+            }
+            var normalizedDayOfPeriod = (fixedDate - fixedDay1st);
+            if (normalizedDayOfPeriod >= 0) {
+                return normalizedDayOfPeriod / 7 + 1;
+            }
+            return floorDivide(normalizedDayOfPeriod, 7) + 1;
+        },
+
+        'computeTime': function () {
             var year = this.get(Date.YEAR);
             var era = this.get(Date.ERA);
             if (era == Date.BC) {
