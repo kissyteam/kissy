@@ -211,7 +211,7 @@ KISSY.add('date/gregorian/utils', function (S) {
                     toInt(prevYear / 4) -
                     toInt(prevYear / 100) +
                     toInt(prevYear / 400) +
-                    ((367 * month - 362) / 12);
+                    toInt((367 * month - 362) / 12);
             } else {
                 days += (365 * prevYear) +
                     floorDivide(prevYear, 4) -

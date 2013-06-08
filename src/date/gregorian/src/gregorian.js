@@ -415,17 +415,17 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, undefined) {
             if (this.isSet(GregorianDate.HOUR_OF_DAY)) {
                 timeOfDay += fields[GregorianDate.HOUR_OF_DAY];
             } else {
-                timeOfDay += fields[GregorianDate.HOUR];
+                timeOfDay += fields[GregorianDate.HOUR]||0;
                 if (this.isSet(GregorianDate.AM_PM)) {
                     timeOfDay += 12 * fields[GregorianDate.AM_PM];
                 }
             }
             timeOfDay *= 60;
-            timeOfDay += fields[GregorianDate.MINUTE];
+            timeOfDay += fields[GregorianDate.MINUTE]||0;
             timeOfDay *= 60;
-            timeOfDay += fields[GregorianDate.SECOND];
+            timeOfDay += fields[GregorianDate.SECOND]||0;
             timeOfDay *= 1000;
-            timeOfDay += fields[GregorianDate.MILLISECOND];
+            timeOfDay += fields[GregorianDate.MILLISECOND]||0;
 
             var fixedDate = 0;
 
@@ -444,7 +444,9 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, undefined) {
         },
 
         getDayOfWeekDateOnOrBefore: function (fixedDate, dayOfWeek) {
-            var fd = fixedDate - (dayOfWeek - 1);
+            var fd = fixedDate -
+                // SUNDAY is 1!
+                (dayOfWeek - 1);
             if (fd >= 0) {
                 return fixedDate - (fd % 7);
             }
