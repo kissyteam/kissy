@@ -193,6 +193,7 @@
                 }
                 fullpathUri = packageBaseUri.resolve(path);
                 if (t = self.getTag()) {
+                    t += '.' + self.getType();
                     fullpathUri.query.set('t', t);
                 }
                 self.fullpath = Utils.getMappedPath(self.runtime, fullpathUri.toString());

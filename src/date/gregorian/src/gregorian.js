@@ -1,20 +1,16 @@
 /**
- * GregorianCalendar Date class for KISSY.
+ * GregorianCalendar GregorianDate class for KISSY.
  * @author yiminghe@gmail.com
  */
-KISSY.add('date/base', function (S, defaultLocale) {
+KISSY.add('date/gregorian', function (S, defaultLocale, Utils, undefined) {
+
+    var toInt = parseInt;
 
     /**
-     * GregorianCalendar Date class.
-     * @param [time]  time for this date.
-     * @param [locale] locale for this date.
-     * @class KISSY.Date
+     * GregorianCalendar GregorianDate class.
+     * @class KISSY.GregorianDate
      */
-    function Date(time, locale) {
-        if (!time) {
-            time = S.now()
-        }
-
+    function GregorianDate(time, locale) {
         locale = locale || defaultLocale;
 
         this.locale = locale;
@@ -24,9 +20,9 @@ KISSY.add('date/base', function (S, defaultLocale) {
         /**
          * The currently set time for this date.
          * @protected
-         * @type Number
+         * @type Number|undefined
          */
-        this.time = time;
+        this.time = time || S.now();
         /**
          * The timezoneOffset used by this date.
          * @type Number
@@ -47,9 +43,12 @@ KISSY.add('date/base', function (S, defaultLocale) {
          * @type Number
          */
         this.minimalDaysInFirstWeek = locale.minimalDaysInFirstWeek;
+
+        this.fieldsComputed = false;
     }
 
-    S.mix(Date, {
+    S.mix(GregorianDate, {
+        Utils: Utils,
         /**
          * Enum indicating era field of date
          * @type Number
@@ -59,12 +58,12 @@ KISSY.add('date/base', function (S, defaultLocale) {
          * Enum indicating common era
          * @type Number
          */
-        AD: 0,
+        AD: 1,
         /**
          * Enum indicating before common era
          * @type Number
          */
-        BC: 1,
+        BC: 0,
         /**
          * Enum indicating year field of date
          * @type Number
@@ -76,70 +75,72 @@ KISSY.add('date/base', function (S, defaultLocale) {
          */
         MONTH: 2,
         /**
-         * Enum indicating the week number within the current year
-         * @type Number
-         */
-        WEEK_OF_YEAR: 3,
-        /**
-         * Enum indicating the week number within the current month
-         * @type Number
-         */
-        WEEK_OF_MONTH: 4,
-        /**
          * Enum indicating the day of the month
          * @type Number
          */
-        DATE: 5,
+        DATE: 3,
         /**
          * Enum indicating the day of the month.same as DATE
          * @type Number
          */
-        DAY_OF_MONTH: 5,
-        /**
-         * Enum indicating the day of the day number within the current year
-         * @type Number
-         */
-        DAY_OF_YEAR: 6,
-        /**
-         * Enum indicating the day of the week
-         * @type Number
-         */
-        DAY_OF_WEEK: 7,
-        /**
-         * Enum indicating the day of the ordinal number of the day of the week
-         * @type Number
-         */
-        DAY_OF_WEEK_IN_MONTH: 8,
-        /**
-         * Enum indicating whether the HOUR is before or after noon.
-         * @type Number
-         */
-        AM_PM: 9,
-        /**
-         * Enum indicating the hour of the morning or afternoon.
-         * @type Number
-         */
-        HOUR: 10,
+        DAY_OF_MONTH: 3,
         /**
          * Enum indicating the hour of the day
          * @type Number
          */
-        HOUR_OF_DAY: 11,
+        HOUR_OF_DAY: 4,
         /**
          * Enum indicating the minute of the day
          * @type Number
          */
-        MINUTE: 11,
+        MINUTE: 5,
         /**
          * Enum indicating the second of the day
          * @type Number
          */
-        SECOND: 11,
+        SECOND: 6,
         /**
          * Enum indicating the millisecond of the day
          * @type Number
          */
-        MILLISECOND: 11,
+        MILLISECOND: 7,
+        /**
+         * Enum indicating the week number within the current year
+         * @type Number
+         */
+        WEEK_OF_YEAR: 8,
+        /**
+         * Enum indicating the week number within the current month
+         * @type Number
+         */
+        WEEK_OF_MONTH: 9,
+
+        /**
+         * Enum indicating the day of the day number within the current year
+         * @type Number
+         */
+        DAY_OF_YEAR: 10,
+        /**
+         * Enum indicating the day of the week
+         * @type Number
+         */
+        DAY_OF_WEEK: 11,
+        /**
+         * Enum indicating the day of the ordinal number of the day of the week
+         * @type Number
+         */
+        DAY_OF_WEEK_IN_MONTH: 12,
+        /**
+         * Enum indicating whether the HOUR is before or after noon.
+         * @type Number
+         */
+        AM_PM: 13,
+        /**
+         * Enum indicating the hour of the morning or afternoon.
+         * @type Number
+         */
+        HOUR: 14,
+
         /**
          * Enum indicating sunday
          * @type Number
@@ -254,29 +255,19 @@ KISSY.add('date/base', function (S, defaultLocale) {
          * Enum indicating long display name for field
          * @type Number
          */
-        LONG: 1,
-
-
-        'isLeapYear': function (year) {
-            if ((year & 3) != 0) {
-                return false;
-            }
-            return (year % 100 != 0) || (year % 400 == 0);
-        }
-
-
+        LONG: 1
     });
 
     var DISPLAY_MAP = {};
 
-    DISPLAY_MAP[Date.ERA] = 'era';
-    DISPLAY_MAP[Date.AM_PM] = 'am_pm';
-    DISPLAY_MAP[Date.MONTH] = {};
-    DISPLAY_MAP[Date.MONTH][Date.SHORT] = 'shortMonths';
-    DISPLAY_MAP[Date.MONTH][Date.LONG] = 'months';
-    DISPLAY_MAP[Date.DAY_OF_WEEK] = {};
-    DISPLAY_MAP[Date.DAY_OF_WEEK][Date.SHORT] = 'shortWeekdays';
-    DISPLAY_MAP[Date.DAY_OF_WEEK][Date.LONG] = 'weekdays';
+    DISPLAY_MAP[GregorianDate.ERA] = 'era';
+    DISPLAY_MAP[GregorianDate.AM_PM] = 'am_pm';
+    DISPLAY_MAP[GregorianDate.MONTH] = {};
+    DISPLAY_MAP[GregorianDate.MONTH][GregorianDate.SHORT] = 'shortMonths';
+    DISPLAY_MAP[GregorianDate.MONTH][GregorianDate.LONG] = 'months';
+    DISPLAY_MAP[GregorianDate.DAY_OF_WEEK] = {};
+    DISPLAY_MAP[GregorianDate.DAY_OF_WEEK][GregorianDate.SHORT] = 'shortWeekdays';
+    DISPLAY_MAP[GregorianDate.DAY_OF_WEEK][GregorianDate.LONG] = 'weekdays';
 
     var MONTH_LENGTH = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]; // 0-based
     var LEAP_MONTH_LENGTH = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]; // 0-based
@@ -286,215 +277,27 @@ KISSY.add('date/base', function (S, defaultLocale) {
     var ONE_HOUR = 60 * ONE_MINUTE;
     var ONE_DAY = 24 * ONE_HOUR;
     // var ONE_WEEK = 7 * ONE_DAY;
-    var BASE_YEAR = 1970;
-
-    var FIXED_DATES = [
-        719163, // 1970
-        719528, // 1971
-        719893, // 1972
-        720259, // 1973
-        720624, // 1974
-        720989, // 1975
-        721354, // 1976
-        721720, // 1977
-        722085, // 1978
-        722450, // 1979
-        722815, // 1980
-        723181, // 1981
-        723546, // 1982
-        723911, // 1983
-        724276, // 1984
-        724642, // 1985
-        725007, // 1986
-        725372, // 1987
-        725737, // 1988
-        726103, // 1989
-        726468, // 1990
-        726833, // 1991
-        727198, // 1992
-        727564, // 1993
-        727929, // 1994
-        728294, // 1995
-        728659, // 1996
-        729025, // 1997
-        729390, // 1998
-        729755, // 1999
-        730120, // 2000
-        730486, // 2001
-        730851, // 2002
-        731216, // 2003
-        731581, // 2004
-        731947, // 2005
-        732312, // 2006
-        732677, // 2007
-        733042, // 2008
-        733408, // 2009
-        733773, // 2010
-        734138, // 2011
-        734503, // 2012
-        734869, // 2013
-        735234, // 2014
-        735599, // 2015
-        735964, // 2016
-        736330, // 2017
-        736695, // 2018
-        737060, // 2019
-        737425, // 2020
-        737791, // 2021
-        738156, // 2022
-        738521, // 2023
-        738886, // 2024
-        739252, // 2025
-        739617, // 2026
-        739982, // 2027
-        740347, // 2028
-        740713, // 2029
-        741078, // 2030
-        741443, // 2031
-        741808, // 2032
-        742174, // 2033
-        742539, // 2034
-        742904, // 2035
-        743269, // 2036
-        743635, // 2037
-        744000, // 2038
-        744365 // 2039
-    ];
-
-    var ACCUMULATED_DAYS_IN_MONTH
-        //   1/1 2/1 3/1 4/1 5/1 6/1 7/1 8/1 9/1 10/1 11/1 12/1
-        = [  0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
-
-    var ACCUMULATED_DAYS_IN_MONTH_LEAP
-        //   1/1 2/1   3/1   4/1   5/1   6/1   7/1   8/1   9/1   10/1   11/1   12/1
-        = [   0, 31, 59 + 1, 90 + 1, 120 + 1, 151 + 1, 181 + 1, 212 + 1, 243 + 1, 273 + 1, 304 + 1, 334 + 1];
-
 
     var EPOCH_OFFSET = 719163; // Fixed date of January 1, 1970 (Gregorian)
     // var EPOCH_YEAR = 1970;
 
-    /**
-     * @ignore
-     * @param n
-     * @param d
-     * @param [r]
-     * @returns {number}
-     */
-    function floorDivide(n, d, r) {
-        if (n >= 0) {
-            if (r) {
-                r[0] = n % d;
-            }
+    var mod = Utils.mod,
+        isLeapYear = Utils.isLeapYear,
+        floorDivide = Utils.floorDivide;
 
-            return n / d;
-        }
-        var q = ((n + 1) / d) - 1;
-        if (r) {
-            r[0] = n - (q * d);
-        }
-        return q;
-    }
-
-    function mod(x, y) {
-        return (x - y * floorDivide(x, y));
-    }
-
-    Date.prototype = {
-        constructor: Date,
+    GregorianDate.prototype = {
+        constructor: GregorianDate,
 
         isSet: function (field) {
             return this.fields[field] !== undefined;
         },
 
-        getGregorianYearFromFixedDate: function (fixedDate) {
-            var d0;
-            var d1, d2, d3;//, d4;
-            var n400, n100, n4, n1;
-            var year;
-
-            if (fixedDate > 0) {
-                d0 = fixedDate - 1;
-                n400 = (d0 / 146097);
-                d1 = (d0 % 146097);
-                n100 = d1 / 36524;
-                d2 = d1 % 36524;
-                n4 = d2 / 1461;
-                d3 = d2 % 1461;
-                n1 = d3 / 365;
-                //d4 = (d3 % 365) + 1;
-            } else {
-                d0 = fixedDate - 1;
-                n400 = floorDivide(d0, 146097);
-                d1 = mod(d0, 146097);
-                n100 = floorDivide(d1, 36524);
-                d2 = mod(d1, 36524);
-                n4 = floorDivide(d2, 1461);
-                d3 = mod(d2, 1461);
-                n1 = floorDivide(d3, 365);
-                //d4 = mod(d3, 365) + 1;
-            }
-            year = 400 * n400 + 100 * n100 + 4 * n4 + n1;
-            if (!(n100 == 4 || n1 == 4)) {
-                ++year;
-            }
-
-            return year;
-        },
-
-        getDayOfWeekFromFixedDate: function (fixedDate) {
-            // The fixed day 1 (January 1, 1 Gregorian) is Monday.
-            if (fixedDate >= 0) {
-                // 1 -> sunday
-                return (fixedDate % 7) + 1;
-            }
-            return mod(fixedDate, 7) + 1;
-        },
-
-        getCalendarDateFromFixedDate: function (fixedDate) {
-            var year = this.getGregorianYearFromFixedDate(fixedDate);
-            var jan1 = this.getFixedDate2(year, Date.JANUARY, 1);
-            var isLeap = Date.isLeapYear(year);
-            var priorDays = fixedDate - jan1;
-            var mar1 = jan1 + 31 + 28;
-            if (isLeap) {
-                mar1++;
-            }
-            if (fixedDate >= mar1) {
-                priorDays += isLeap ? 1 : 2;
-            }
-            var month = 12 * priorDays + 373;
-            if (month > 0) {
-                month /= 367;
-            } else {
-                month = floorDivide(month, 367);
-
-            }
-
-            var month1 = jan1 + ACCUMULATED_DAYS_IN_MONTH[month];
-
-            if (isLeap && month >= Date.MARCH) {
-                ++month1;
-            }
-
-            var dayOfMonth = fixedDate - month1 + 1;
-            var dayOfWeek = this.getDayOfWeekFromFixedDate(fixedDate);
-
-            return {
-                year: year,
-                month: month,
-                dayOfMonth: dayOfMonth,
-                dayOfWeek: dayOfWeek,
-                isLeap: isLeap
-            };
-        },
-
         computeFields: function () {
-
             var time = this.time;
             var timezoneOffset = this.timezoneOffset;
-            var fixedDate = timezoneOffset / ONE_DAY;
+            var fixedDate = toInt(timezoneOffset / ONE_DAY);
             var timeOfDay = timezoneOffset % ONE_DAY;
-            fixedDate += time / ONE_DAY;
+            fixedDate += toInt(time / ONE_DAY);
             timeOfDay += time % ONE_DAY;
             if (timeOfDay >= ONE_DAY) {
                 timeOfDay -= ONE_DAY;
@@ -508,64 +311,64 @@ KISSY.add('date/base', function (S, defaultLocale) {
 
             fixedDate += EPOCH_OFFSET;
 
-            var era = Date.AD;
+            var era = GregorianDate.AD;
 
-            var date = this.getCalendarDateFromFixedDate(fixedDate);
+            var date = Utils.getGregorianDateFromFixedDate(fixedDate);
 
             var year = date.year;
 
             if (year <= 0) {
                 year = 1 - year;
-                era = Date.BC;
+                era = GregorianDate.BC;
             }
 
             var fields = this.fields;
-            fields[Date.ERA] = era;
-            fields[Date.YEAR] = year;
-            fields[Date.MONTH] = date.month - 1;
-            fields[Date.DAY_OF_MONTH] = date.dayOfMonth;
-            fields[Date.DAY_OF_WEEK] = date.dayOfWeek;
+            fields[GregorianDate.ERA] = era;
+            fields[GregorianDate.YEAR] = year;
+            fields[GregorianDate.MONTH] = date.month;
+            fields[GregorianDate.DAY_OF_MONTH] = date.dayOfMonth;
+            fields[GregorianDate.DAY_OF_WEEK] = date.dayOfWeek;
 
             if (timeOfDay != 0) {
-                var hours = timeOfDay / ONE_HOUR;
-                fields[Date.HOUR_OF_DAY] = hours;
-                fields[Date.AM_PM] = hours / 12;
-                fields[Date.HOUR] = hours % 12;
+                var hours = toInt(timeOfDay / ONE_HOUR);
+                fields[GregorianDate.HOUR_OF_DAY] = hours;
+                fields[GregorianDate.AM_PM] = toInt(hours / 12);
+                fields[GregorianDate.HOUR] = toInt(hours % 12);
                 var r = timeOfDay % ONE_HOUR;
-                fields[Date.MINUTE] = r / ONE_MINUTE;
+                fields[GregorianDate.MINUTE] = toInt(r / ONE_MINUTE);
                 r %= ONE_MINUTE;
-                fields[Date.SECOND] = r / ONE_SECOND;
-                fields[Date.MILLISECOND] = r % ONE_SECOND;
+                fields[GregorianDate.SECOND] = toInt(r / ONE_SECOND);
+                fields[GregorianDate.MILLISECOND] = r % ONE_SECOND;
             } else {
-                fields[Date.HOUR_OF_DAY] =
-                    fields[Date.AM_PM] =
-                        fields[Date.HOUR] =
-                            fields[Date.MINUTE] =
-                                fields[Date.SECOND] =
-                                    fields[Date.MILLISECOND] = 0;
+                fields[GregorianDate.HOUR_OF_DAY] =
+                    fields[GregorianDate.AM_PM] =
+                        fields[GregorianDate.HOUR] =
+                            fields[GregorianDate.MINUTE] =
+                                fields[GregorianDate.SECOND] =
+                                    fields[GregorianDate.MILLISECOND] = 0;
             }
 
 
-            var fixedDateJan1 = this.getFixedDate2(year, Date.JANUARY, 1);
+            var fixedDateJan1 = Utils.getFixedDate(year, GregorianDate.JANUARY, 1);
             var dayOfYear = fixedDate - fixedDateJan1 + 1;
-            var fixDateMonth1 = fixedDate = date.dayOfMonth + 1;
+            var fixDateMonth1 = fixedDate - date.dayOfMonth + 1;
 
-            fields[Date.DAY_OF_YEAR] = dayOfYear;
-            fields[Date.DAY_OF_WEEK_IN_MONTH] = (date.dayOfMonth - 1) / 7 + 1;
+            fields[GregorianDate.DAY_OF_YEAR] = dayOfYear;
+            fields[GregorianDate.DAY_OF_WEEK_IN_MONTH] = toInt(date.dayOfMonth / 7) + 1;
 
             var weekOfYear = this.getWeekNumber(fixedDateJan1, fixedDate);
 
             if (weekOfYear == 0) {
                 var fixedDec31 = fixedDateJan1 - 1;
                 var prevJan1 = fixedDateJan1 - 365;
-                if (Date.isLeapYear(year - 1)) {
+                if (isLeapYear(year - 1)) {
                     prevJan1--;
                 }
                 weekOfYear = this.getWeekNumber(prevJan1, fixedDec31);
             } else {
                 if (weekOfYear > 52) {
                     var nextJan1 = fixedDateJan1 + 365;
-                    if (Date.isLeapYear(year)) {
+                    if (isLeapYear(year)) {
                         nextJan1++;
                     }
                     var nextJan1st = this.getDayOfWeekDateOnOrBefore(nextJan1 + 6, this.firstDayOfWeek);
@@ -576,8 +379,10 @@ KISSY.add('date/base', function (S, defaultLocale) {
                 }
             }
 
-            fields[Date.WEEK_OF_YEAR] = weekOfYear;
-            fields[Date.WEEK_OF_MONTH] = this.getWeekNumber(fixDateMonth1, fixedDate);
+            fields[GregorianDate.WEEK_OF_YEAR] = weekOfYear;
+            fields[GregorianDate.WEEK_OF_MONTH] = this.getWeekNumber(fixDateMonth1, fixedDate);
+
+            this.fieldsComputed = true;
         },
 
         getWeekNumber: function (fixedDay1, fixedDate) {
@@ -589,36 +394,42 @@ KISSY.add('date/base', function (S, defaultLocale) {
             }
             var normalizedDayOfPeriod = (fixedDate - fixedDay1st);
             if (normalizedDayOfPeriod >= 0) {
-                return normalizedDayOfPeriod / 7 + 1;
+                return toInt(normalizedDayOfPeriod / 7) + 1;
             }
             return floorDivide(normalizedDayOfPeriod, 7) + 1;
         },
 
         'computeTime': function () {
-            var year = this.get(Date.YEAR);
-            var era = this.get(Date.ERA);
-            if (era == Date.BC) {
+            if (!this.isSet(GregorianDate.YEAR)) {
+                throw new Error('year must be set for KISSY GregorianDate');
+            }
+
+            var year = this.get(GregorianDate.YEAR);
+            var era = this.get(GregorianDate.ERA);
+            if (era == GregorianDate.BC) {
                 year = 1 - year;
             }
             var timeOfDay = 0;
-            if (this.isSet(Date.HOUR_OF_DAY)) {
-                timeOfDay += this.get(Date.HOUR_OF_DAY);
+            if (this.isSet(GregorianDate.HOUR_OF_DAY)) {
+                timeOfDay += this.get(GregorianDate.HOUR_OF_DAY);
             } else {
-                timeOfDay += this.get(Date.HOUR);
-                if (this.isSet(Date.AM_PM)) {
-                    timeOfDay += 12 * this.get(Date.AM_PM);
+                timeOfDay += this.get(GregorianDate.HOUR);
+                if (this.isSet(GregorianDate.AM_PM)) {
+                    timeOfDay += 12 * this.get(GregorianDate.AM_PM);
                 }
             }
             timeOfDay *= 60;
-            timeOfDay += this.get(Date.MINUTE);
+            timeOfDay += this.get(GregorianDate.MINUTE);
             timeOfDay *= 60;
-            timeOfDay += this.get(Date.SECOND);
+            timeOfDay += this.get(GregorianDate.SECOND);
             timeOfDay *= 1000;
-            timeOfDay += this.get(Date.MILLISECOND);
+            timeOfDay += this.get(GregorianDate.MILLISECOND);
 
             var fixedDate = 0;
 
-            fixedDate = fixedDate + this.getFixedDate(year);
+            this.fields[GregorianDate.YEAR] = year;
+
+            fixedDate = fixedDate + this.getFixedDate();
 
             // millis represents local wall-clock time in milliseconds.
             var millis = (fixedDate - EPOCH_OFFSET) * ONE_DAY + timeOfDay;
@@ -639,18 +450,21 @@ KISSY.add('date/base', function (S, defaultLocale) {
         },
 
         monthLength: function (month, year) {
-            return Date.isLeapYear(year) ? LEAP_MONTH_LENGTH[month] : MONTH_LENGTH[month];
+            return isLeapYear(year) ? LEAP_MONTH_LENGTH[month] : MONTH_LENGTH[month];
         },
 
-        getFixedDate: function (year) {
-            var month = Date.JANUARY;
+        getFixedDate: function () {
 
-            if (this.isSet(Date.MONTH)) {
-                month = this.get(Date.MONTH);
-                if (month > Date.DECEMBER) {
-                    year += month / 12;
+            var year = this.get(GregorianDate.YEAR);
+
+            var month = GregorianDate.JANUARY;
+
+            if (this.isSet(GregorianDate.MONTH)) {
+                month = this.get(GregorianDate.MONTH);
+                if (month > GregorianDate.DECEMBER) {
+                    year += toInt(month / 12);
                     month %= 12;
-                } else if (month < Date.JANUARY) {
+                } else if (month < GregorianDate.JANUARY) {
                     var rem = [];
                     year += floorDivide(month, 12, rem);
                     month = rem[0];
@@ -659,13 +473,13 @@ KISSY.add('date/base', function (S, defaultLocale) {
 
             // Get the fixed date since Jan 1, 1 (Gregorian). We are on
             // the first day of either `month' or January in 'year'.
-            var fixedDate = this.getFixedDate2(year, month, 1);
+            var fixedDate = Utils.getFixedDate(year, month, 1);
 
-            if (this.isSet(Date.MONTH)) {
-                if (this.isSet(Date.DAY_OF_MONTH)) {
-                    fixedDate += this.get(Date.DAY_OF_MONTH) - 1;
+            if (this.isSet(GregorianDate.MONTH)) {
+                if (this.isSet(GregorianDate.DAY_OF_MONTH)) {
+                    fixedDate += this.get(GregorianDate.DAY_OF_MONTH) - 1;
                 } else {
-                    if (this.isSet(Date.WEEK_OF_MONTH)) {
+                    if (this.isSet(GregorianDate.WEEK_OF_MONTH)) {
                         var firstDayOfWeek = this.getDayOfWeekDateOnOrBefore(fixedDate + 6,
                             this.firstDayOfWeek);
 
@@ -675,22 +489,22 @@ KISSY.add('date/base', function (S, defaultLocale) {
                             firstDayOfWeek -= 7;
                         }
 
-                        if (this.isSet(Date.DAY_OF_WEEK)) {
+                        if (this.isSet(GregorianDate.DAY_OF_WEEK)) {
                             firstDayOfWeek = this.getDayOfWeekDateOnOrBefore(firstDayOfWeek + 6,
-                                this.get(Date.DAY_OF_WEEK));
+                                this.get(GregorianDate.DAY_OF_WEEK));
                         }
 
-                        fixedDate = firstDayOfWeek + 7 * (this.get(Date.WEEK_OF_MONTH) - 1);
+                        fixedDate = firstDayOfWeek + 7 * (this.get(GregorianDate.WEEK_OF_MONTH) - 1);
                     } else {
                         var dayOfWeek;
-                        if (this.isSet(Date.DAY_OF_WEEK)) {
-                            dayOfWeek = this.get(Date.DAY_OF_WEEK);
+                        if (this.isSet(GregorianDate.DAY_OF_WEEK)) {
+                            dayOfWeek = this.get(GregorianDate.DAY_OF_WEEK);
                         } else {
                             dayOfWeek = this.firstDayOfWeek;
                         }
                         var dowim;
-                        if (this.isSet(Date.DAY_OF_WEEK_IN_MONTH)) {
-                            dowim = this.get(Date.DAY_OF_WEEK_IN_MONTH);
+                        if (this.isSet(GregorianDate.DAY_OF_WEEK_IN_MONTH)) {
+                            dowim = this.get(GregorianDate.DAY_OF_WEEK_IN_MONTH);
                         } else {
                             dowim = 1;
                         }
@@ -710,8 +524,8 @@ KISSY.add('date/base', function (S, defaultLocale) {
                 }
             } else {
                 // We are on the first day of the year.
-                if (this.isSet(Date.DAY_OF_YEAR)) {
-                    fixedDate += this.get(Date.DAY_OF_YEAR) - 1;
+                if (this.isSet(GregorianDate.DAY_OF_YEAR)) {
+                    fixedDate += this.get(GregorianDate.DAY_OF_YEAR) - 1;
                 } else {
                     firstDayOfWeek = this.getDayOfWeekDateOnOrBefore(fixedDate + 6,
                         this.firstDayOfWeek);
@@ -720,51 +534,18 @@ KISSY.add('date/base', function (S, defaultLocale) {
                     if ((firstDayOfWeek - fixedDate) >= this.minimalDaysInFirstWeek) {
                         firstDayOfWeek -= 7;
                     }
-                    if (this.isSet(Date.DAY_OF_WEEK)) {
-                        dayOfWeek = this.get(Date.DAY_OF_WEEK);
+                    if (this.isSet(GregorianDate.DAY_OF_WEEK)) {
+                        dayOfWeek = this.get(GregorianDate.DAY_OF_WEEK);
                         if (dayOfWeek != this.firstDayOfWeek) {
                             firstDayOfWeek = this.getDayOfWeekDateOnOrBefore(firstDayOfWeek + 6,
                                 dayOfWeek);
                         }
                     }
-                    fixedDate = firstDayOfWeek + 7 * (this.get(Date.WEEK_OF_YEAR) - 1);
+                    fixedDate = firstDayOfWeek + 7 * (this.get(GregorianDate.WEEK_OF_YEAR) - 1);
                 }
             }
 
             return fixedDate;
-
-        },
-
-        getFixedDate2: function (year, month, dayOfMonth) {
-            var isJan1 = month == Date.JANUARY && dayOfMonth == 1;
-            var n = year - BASE_YEAR;
-            if (n >= 0 && n < FIXED_DATES.length) {
-                var jan1 = FIXED_DATES[n];
-                return isJan1 ? jan1 : jan1 + this.getDayOfYear(year, month, dayOfMonth) - 1;
-            }
-            var prevYear = year - 1;
-            var days = dayOfMonth;
-
-            if (prevYear >= 0) {
-                days += 365 * prevYear + prevYear / 4 - prevYear / 100 + prevYear / 400
-                    + ((367 * month - 362) / 12);
-            } else {
-                days += (365 * prevYear)
-                    + floorDivide(prevYear, 4)
-                    - floorDivide(prevYear, 100)
-                    + floorDivide(prevYear, 400)
-                    + floorDivide((367 * month - 362), 12);
-            }
-            if (month > Date.FEBRUARY) {
-                days -= Date.isLeapYear(year) ? 1 : 2;
-            }
-            return days;
-        },
-
-        getDayOfYear: function (year, month, dayOfMonth) {
-            return dayOfMonth + (Date.isLeapYear(year) ?
-                ACCUMULATED_DAYS_IN_MONTH_LEAP[month] :
-                ACCUMULATED_DAYS_IN_MONTH[month]);
         },
 
         getTime: function () {
@@ -773,10 +554,16 @@ KISSY.add('date/base', function (S, defaultLocale) {
 
         setTime: function (time) {
             this.time = time;
-            this.computeFields();
+            this.fieldsComputed = false;
         },
 
         get: function (field) {
+            if (this.time === undefined) {
+                this.computeTime();
+            }
+            if (!this.fieldsComputed) {
+                this.computeFields();
+            }
             return this.fields[field];
         },
 
@@ -784,11 +571,14 @@ KISSY.add('date/base', function (S, defaultLocale) {
             var len = arguments.length;
             if (len == 2) {
                 this.fields[field] = v;
-            } else {
+            } else if (len < GregorianDate.MILLISECOND + 1) {
                 for (var i = 0; i < len; i++) {
-                    this.fields[Date.YEAR + i] = arguments[i];
+                    this.fields[GregorianDate.YEAR + i] = arguments[i];
                 }
+            } else {
+                throw  new Error('illegal arguments for KISSY GregorianDate set');
             }
+            this.time = undefined;
             return this;
         },
 
@@ -802,6 +592,7 @@ KISSY.add('date/base', function (S, defaultLocale) {
 
         'setFirstDayOfWeek': function (firstDayOfWeek) {
             this.firstDayOfWeek = firstDayOfWeek;
+            this.fieldsComputed = false;
         },
 
         'getFirstDayOfWeek': function () {
@@ -810,6 +601,7 @@ KISSY.add('date/base', function (S, defaultLocale) {
 
         'setMinimalDaysInFirstWeek': function (minimalDaysInFirstWeek) {
             this.minimalDaysInFirstWeek = minimalDaysInFirstWeek;
+            this.fieldsComputed = false;
         },
 
         'getMinimalDaysInFirstWeek': function () {
@@ -856,10 +648,10 @@ KISSY.add('date/base', function (S, defaultLocale) {
         }
     };
 
-    return Date;
+    return GregorianDate;
 
 }, {
-    requires: ['date/i18n/zh-cn']
+    requires: ['date/i18n/zh-cn', './gregorian/utils']
 });
 
 /*

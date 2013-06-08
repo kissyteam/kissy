@@ -246,7 +246,7 @@
                     var jss = combos[packageName][type],
                         packageInfo = jss.packageInfo,
                         tag = packageInfo.getTag(),
-                        suffix = (tag ? ('?t=' + encodeURIComponent(tag)) : ''),
+                        suffix = (tag ? ('?t=' + encodeURIComponent(tag)) + '.' + type : ''),
                         suffixLength = suffix.length,
                         prefix,
                         path,

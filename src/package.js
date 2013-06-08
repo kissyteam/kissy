@@ -60,6 +60,14 @@ if (location.href.indexOf('__build') == -1) {
             "base": "/kissy/src/cookie/src/cookie",
             "ignorePackageNameInUri": 1
         },
+        "date/gregorian": {
+            "base": "/kissy/src/date/gregorian/src/gregorian",
+            "ignorePackageNameInUri": 1
+        },
+        "date/i18n": {
+            "base": "/kissy/src/date/i18n/src/i18n",
+            "ignorePackageNameInUri": 1
+        },
         "dd/base": {
             "base": "/kissy/src/dd/sub-modules/base/src/base",
             "ignorePackageNameInUri": 1
