@@ -1,6 +1,4 @@
 <project name="imagezoom.build" default="build" basedir=".">
-    <description>ImageZoom Build File</description>
-
     <property name="component.name" value="imagezoom"/>
 
     <import file="../common.xml"/>

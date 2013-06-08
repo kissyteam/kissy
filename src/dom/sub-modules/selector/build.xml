@@ -1,6 +1,4 @@
 <project name="dom/selector.build" default="build" basedir=".">
-    <description>dom/selector Build File</description>
-
     <property name="component.name" value="dom/selector"/>
 
     <import file="../../../common.xml"/>

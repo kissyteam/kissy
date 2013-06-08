@@ -5,7 +5,6 @@
 <project name="kissy-project-build"
          xmlns:ac="antlib:net.sf.antcontrib"
          default="build-all">
-    <description>KISSY Project Build File</description>
 
     <property name="component.name" value="kissy"/>
 

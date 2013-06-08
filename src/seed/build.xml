@@ -1,7 +1,5 @@
 <?xml version="1.0"?>
 <project name="seed.build" default="build" basedir=".">
-    <description>Seed Build File</description>
-
     <property name="component.name" value="seed"/>
 
     <import file="../common.xml"/>

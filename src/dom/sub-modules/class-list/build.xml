@@ -1,6 +1,4 @@
 <project name="dom/class-list.build" default="build" basedir=".">
-    <description>dom/class-list Build File</description>
-
     <property name="component.name" value="dom/class-list"/>
 
     <import file="../../../common.xml"/>

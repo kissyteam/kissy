@@ -104,6 +104,21 @@ username 为你的 github 用户名
 
 你也可以测试单个模块，例如动画： [http://localhost:8888/kissy/src/anim/tests/runner/test.html](http://localhost:8888/kissy/src/anim/tests/runner/test.html)
 
+#### 新增模块
+
+新增模块请复制已有模块的目录结构后，清楚 src，demo 等子目录的内容后添加模块（TODO 增加新增模块模版）。
+
+在 src 目录下编写源码，
+demo 目录增加 demo ，
+tests/runner/test.html 中引用 tests/specs/ 中的测试代码文件，
+修改 build.xml 中的当前模块名，
+sub-modules 中增加子模块。
+
+最后在 kissy 项目根目录下运行
+
+    node tools/gen-package/gen-package.js
+
+
 可选： build KISSY
 
     cd src/
@@ -160,7 +175,7 @@ $module$ 为你修改的模块名
 最后到的 github 界面，点击 pull request 即可
 
 
-**pull request 前清确保代码符合规范并且单元测试通过**
+**pull request 前请确保代码符合规范并且单元测试通过**
 
 ## 浏览器支持列表
 

@@ -7,8 +7,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-touch-fullscreen" content="yes">
     <title>S.IO Demo</title>
-    <script src="/kissy/build/seed.js"></script>
-    <script src="/kissy/src/package.js"></script>
+
 
 </head>
 <body style="padding: 20px">
@@ -21,7 +20,8 @@
 
 <div id="console" style="margin: 20px; padding: 10px; border: 1px solid #ccc"></div>
 
-
+<script src="/kissy/build/seed.js"></script>
+<script src="/kissy/src/package.js"></script>
 <script>
     KISSY.use("node,io,json", function (S, Node, IO, JSON) {
         var $ = Node.all;

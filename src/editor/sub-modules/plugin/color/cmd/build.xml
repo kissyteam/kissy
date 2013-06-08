@@ -1,6 +1,4 @@
 <project name="editor/plugin/color/cmd.build" default="build" basedir="">
-    <description>editor/plugin/color/cmd Build File</description>
-
     <property name="component.name" value="editor/plugin/color/cmd"/>
 
     <property name="component.meta.dir" location="./ke-meta/"/>

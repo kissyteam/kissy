@@ -1,6 +1,4 @@
 <project name="xtemplate/runtime.build" default="build" basedir=".">
-    <description>xtemplate runtime Build File</description>
-
     <property name="component.name" value="xtemplate/runtime"/>
 
     <import file="../../../common.xml"/>

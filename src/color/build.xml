@@ -1,6 +1,4 @@
 <project name="color.build" default="build" basedir=".">
-    <description>color Build File</description>
-
     <property name="component.name" value="color"/>
 
     <import file="../common.xml"/>

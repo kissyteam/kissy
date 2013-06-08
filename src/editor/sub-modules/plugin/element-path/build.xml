@@ -1,6 +1,4 @@
 <project name="editor/plugin/element-path.build" default="build" basedir=".">
-    <description>editor/plugin/element-path Build File</description>
-
     <property name="component.name" value="editor/plugin/element-path"/>
 
     <property name="component.meta.dir" location="./ke-meta/"/>

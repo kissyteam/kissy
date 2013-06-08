@@ -1,6 +1,4 @@
 <project name="editor/plugin/contextmenu.build" default="build" basedir=".">
-    <description>editor/plugin/contextmenu Build File</description>
-
     <property name="component.name" value="editor/plugin/contextmenu"/>
 
     <property name="component.meta.dir" location="./ke-meta/"/>

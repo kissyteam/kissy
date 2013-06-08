@@ -1,6 +1,4 @@
 <project name="swf.build" default="build" basedir=".">
-    <description>swf Build File</description>
-
     <property name="component.name" value="swf"/>
 
     <import file="../common.xml"/>

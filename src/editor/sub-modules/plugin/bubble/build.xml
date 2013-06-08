@@ -1,6 +1,4 @@
 <project name="editor/plugin/bubble.build" default="build" basedir=".">
-    <description>editor/plugin/bubble Build File</description>
-
     <property name="component.name" value="editor/plugin/bubble"/>
 
     <property name="component.meta.dir" location="./ke-meta/"/>

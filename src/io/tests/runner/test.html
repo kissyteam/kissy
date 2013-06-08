@@ -8,14 +8,12 @@
     <meta name="apple-touch-fullscreen" content="yes">
     <title>IO Test Runner</title>
     <link rel="stylesheet" href="/kissy/tools/jasmine/jasmine.css">
+    <script src="/kissy/tools/third-party/jquery.js"></script>
+
     <script src="/kissy/tools/jasmine/jasmine.js"></script>
     <script src="/kissy/tools/jasmine/jasmine-html.js"></script>
     <script src="/kissy/tools/jasmine/jasmine.console_reporter.js"></script>
-
-    <script src="/kissy/tools/third-party/jquery.js"></script>
-
     <script src="/kissy/build/seed.js"></script>
-
     <script src="/kissy/src/package.js"></script>
     <script src="../specs/un-encode/un-encode-spec.js"></script>
     <script src="../specs/serialize-spec.js"></script>
@@ -26,7 +24,7 @@
 <body>
 <h1>KISSY IO Advanced Test Cases</h1>
 <script>
-    KISSY.use('core', function (S) {
+    KISSY.use('core,io', function (S) {
         setTimeout(function () {
             S.ready(function () {
                 jasmine.getEnv().addReporter(new jasmine.TrivialReporter());

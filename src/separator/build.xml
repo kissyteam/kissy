@@ -1,6 +1,4 @@
 <project name="separator.build" default="build" basedir=".">
-    <description>Separator Build File</description>
-
     <property name="component.name" value="separator"/>
 
     <import file="../common.xml"/>

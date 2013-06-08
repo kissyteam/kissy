@@ -4,7 +4,6 @@
  @refer http://ant.apache.org/manual/Tasks/subant.html
 -->
 <project name="common-build" xmlns:ac="antlib:net.sf.antcontrib">
-    <description>Common Build File</description>
 
     <!-- kissy 主目录 -->
     <property name="kissy.dir" location="${ant.file.common-build}/../../"/>

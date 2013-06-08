@@ -1,6 +1,4 @@
 <project name="scrollview/plugin/scrollbar.build" default="build" basedir=".">
-    <description>scrollview/plugin/scrollbar Build File</description>
-
     <property name="component.name" value="scrollview/plugin/scrollbar"/>
 
     <import file="../../../../common.xml"/>

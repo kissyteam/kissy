@@ -1,6 +1,4 @@
 <project name="split-button.build" default="build" basedir=".">
-    <description>split-button Build File</description>
-
     <property name="component.name" value="split-button"/>
 
     <import file="../common.xml"/>

@@ -4,12 +4,9 @@
  **/
 KISSY.use("ua,json,io,node", function (S, UA, JSON, io, Node) {
     var $ = Node.all;
-
     var pageUri = new S.Uri(location.href);
 
     describe("Advanced IO", function () {
-
-        S.log("Advanced IO");
 
         it('support custom contentType', function () {
             var done = 0, ok = 0;
