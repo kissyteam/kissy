@@ -35,8 +35,8 @@ describe("loader", function () {
             });
 
             runs(function () {
-                expect(S.endsWith(mods["timestamp/x"].fullpath, "b")).toBe(true);
-                expect(S.endsWith(mods["timestamp/z"].fullpath, "z")).toBe(true);
+                expect(S.endsWith(mods["timestamp/x"].fullpath, "b.js")).toBe(true);
+                expect(S.endsWith(mods["timestamp/z"].fullpath, "z.js")).toBe(true);
                 expect(mods["timestamp/x"].getTag()).toBe("b");
                 expect(mods["timestamp/z"].getTag()).toBe("z");
                 expect(window.TIMESTAMP_X).toBe(1);
@@ -104,8 +104,8 @@ describe("loader", function () {
             });
 
             runs(function () {
-                expect(S.endsWith(mods["timestamp/x"].fullpath, "q")).toBe(true);
-                expect(S.endsWith(mods["timestamp/z"].fullpath, "z")).toBe(true);
+                expect(S.endsWith(mods["timestamp/x"].fullpath, "q.js")).toBe(true);
+                expect(S.endsWith(mods["timestamp/z"].fullpath, "z.js")).toBe(true);
                 expect(mods["timestamp/x"].getTag()).toBe("q");
                 expect(mods["timestamp/z"].getTag()).toBe("z");
                 expect(window.TIMESTAMP_X).toBe(1);
