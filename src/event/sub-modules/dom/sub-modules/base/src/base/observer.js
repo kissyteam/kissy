@@ -3,7 +3,7 @@
  * observer for dom event.
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/base/observer', function (S, special, Event) {
+KISSY.add('event/dom/base/observer', function (S, Special, BaseEvent) {
 
     /**
      * observer for dom event
@@ -23,7 +23,7 @@ KISSY.add('event/dom/base/observer', function (S, special, Event) {
          */
     }
 
-    S.extend(DOMEventObserver, Event._Observer, {
+    S.extend(DOMEventObserver, BaseEvent.Observer, {
 
         keys: ['fn', 'filter', 'data', 'context', 'originalType', 'groups', 'last'],
 
@@ -40,7 +40,7 @@ KISSY.add('event/dom/base/observer', function (S, special, Event) {
             }
 
             // context undefined 时不能写死在 listener 中，否则不能保证 clone 时的 this
-            if ((s = special[originalType]) && s.handle) {
+            if ((s = Special[originalType]) && s.handle) {
                 t = s.handle(event, self, ce);
                 // can handle
                 if (t && t.length > 0) {

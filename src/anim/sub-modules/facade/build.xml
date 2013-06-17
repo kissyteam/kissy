@@ -1,5 +1,0 @@
-<project name="anim/facade.build" default="build" basedir=".">
-    <property name="component.name" value="anim/facade"/>
-
-    <import file="../../../common.xml"/>
-</project>

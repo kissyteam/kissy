@@ -3,7 +3,7 @@
  * touch event logic module
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/touch', function (S, EventDomBase, eventHandleMap, eventHandle) {
+KISSY.add('event/dom/touch', function (S, DOMEvent, eventHandleMap, eventHandle) {
 
     var Features = S.Features;
 
@@ -52,7 +52,7 @@ KISSY.add('event/dom/touch', function (S, EventDomBase, eventHandleMap, eventHan
         eventHandle.removeDocumentHandle(this, event);
     }
 
-    var Special = EventDomBase._Special,
+    var Special = DOMEvent.Special,
         specialEvent, e, eventHandleValue;
 
     for (e in eventHandleMap) {

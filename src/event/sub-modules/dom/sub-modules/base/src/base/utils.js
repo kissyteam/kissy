@@ -4,7 +4,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/dom/base/utils', function (S, DOM) {
-    var EVENT_GUID = 'ksEventTargetId_1.30',
+    var EVENT_GUID = 'ksEventTargetId_'+ S.now(),
         doc = S.Env.host.document,
         simpleAdd = doc && doc.addEventListener ?
             function (el, type, fn, capture) {

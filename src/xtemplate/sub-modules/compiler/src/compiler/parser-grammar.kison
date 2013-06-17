@@ -4,11 +4,15 @@
  */
 (function () {
 
+    function popState(){
+        this.popState();
+    }
+
     return {
         productions: [
             {
                 symbol: 'program',
-                rhs: ['statements', 'inverse', 'statements'],
+                rhs: ['statements', 'INVERSE', 'statements'],
                 action: function () {
                     return new this.yy.ProgramNode(this.lexer.lineNumber, this.$1, this.$3);
                 }
@@ -52,9 +56,24 @@
                     return new this.yy.ContentNode(this.lexer.lineNumber, this.$1);
                 }
             },
+
+
+            // block tpl start
+            {
+                // block does not allow expression
+                symbol: 'inBlockTpl',
+                rhs: ['path'],
+                action: function () {
+                    return new this.yy.TplNode(this.lexer.lineNumber, this.$1);
+                }
+            },
+            {
+                symbol: 'inBlockTpl',
+                rhs: ['inTpl']
+            },
             {
                 symbol: 'openBlock',
-                rhs: ['OPEN_BLOCK', 'inTpl', 'CLOSE'],
+                rhs: ['OPEN_BLOCK', 'inBlockTpl', 'CLOSE'],
                 action: function () {
                     if (this.$1.charAt(this.$1.length - 1) == '^') {
                         this.$2['isInverted'] = 1;
@@ -64,47 +83,35 @@
             },
             {
                 symbol: 'closeBlock',
-                rhs: ['OPEN_END_BLOCK', 'path', 'CLOSE'],
+                rhs: ['OPEN_CLOSE_BLOCK', 'path', 'CLOSE'],
+                action: function () {
+                    return this.$2;
+                }
+            },
+            // block tpl end
+
+
+            // inline tpl start
+            {
+                symbol: 'tpl',
+                rhs: ['OPEN_TPL', 'inTpl', 'CLOSE'],
                 action: function () {
                     return this.$2;
                 }
             },
             {
+                // inline tpl allow expression
+                // expression is super set of path
                 symbol: 'tpl',
-                rhs: ['OPEN', 'inTpl', 'CLOSE'],
-                action: function () {
-                    return this.$2;
-                }
-            },
-            {
-                symbol: 'tpl',
-                rhs: ['OPEN_UN_ESCAPED', 'inTpl', 'CLOSE'],
-                action: function () {
-                    this.$2['escaped'] = false;
-                    return this.$2;
-                }
-            },
-            {
-                symbol: 'tpl',
-                rhs: ['OPEN', 'Expression', 'CLOSE'],
-                action: function () {
-                    return new this.yy.TplExpressionNode(this.lexer.lineNumber,
-                        this.$2);
-                }
-            },
-            {
-                symbol: 'tpl',
-                rhs: ['OPEN_UN_ESCAPED', 'Expression', 'CLOSE'],
+                rhs: ['OPEN_TPL', 'Expression', 'CLOSE'],
                 action: function () {
                     var tpl = new this.yy.TplExpressionNode(this.lexer.lineNumber,
                         this.$2);
-                    tpl.escaped = false;
+                    if (this.$1.length === 3) {
+                        tpl.escaped = false;
+                    }
                     return tpl;
                 }
-            },
-            {
-                symbol: 'inverse',
-                rhs: ['OPEN_INVERSE', 'CLOSE']
             },
             {
                 symbol: 'inTpl',
@@ -127,13 +134,10 @@
                     return new this.yy.TplNode(this.lexer.lineNumber, this.$1, null, this.$2);
                 }
             },
-            {
-                symbol: 'inTpl',
-                rhs: ['path'],
-                action: function () {
-                    return new this.yy.TplNode(this.lexer.lineNumber, this.$1);
-                }
-            },
+            // inline tpl end
+
+
+            // params start
             {
                 symbol: 'params',
                 rhs: ['params', 'param'],
@@ -152,15 +156,14 @@
                 symbol: 'param',
                 rhs: ['Expression']
             },
+            // params end
 
-        /**
-         * expression start
-         */
+
+            // expression start
             {
                 symbol: 'Expression',
                 rhs: ['ConditionalOrExpression']
             },
-
             {
                 symbol: 'ConditionalOrExpression',
                 rhs: ['ConditionalAndExpression']
@@ -172,7 +175,6 @@
                     return new this.yy.ConditionalOrExpression(this.$1, this.$3);
                 }
             },
-
             {
                 symbol: 'ConditionalAndExpression',
                 rhs: ['EqualityExpression']
@@ -184,7 +186,6 @@
                     return new this.yy.ConditionalAndExpression(this.$1, this.$3);
                 }
             },
-
             {
                 symbol: 'EqualityExpression',
                 rhs: ['RelationalExpression']
@@ -203,7 +204,6 @@
                     return new this.yy.EqualityExpression(this.$1, '!==', this.$3);
                 }
             },
-
             {
                 symbol: 'RelationalExpression',
                 rhs: ['AdditiveExpression']
@@ -236,7 +236,6 @@
                     return new this.yy.RelationalExpression(this.$1, '>=', this.$3);
                 }
             },
-
             {
                 symbol: 'AdditiveExpression',
                 rhs: ['MultiplicativeExpression']
@@ -255,8 +254,6 @@
                     return new this.yy.AdditiveExpression(this.$1, '-', this.$3);
                 }
             },
-
-
             {
                 symbol: 'MultiplicativeExpression',
                 rhs: ['UnaryExpression']
@@ -282,7 +279,6 @@
                     return new this.yy.MultiplicativeExpression(this.$1, '%', this.$3);
                 }
             },
-
             {
                 symbol: 'UnaryExpression',
                 rhs: ['NOT', 'UnaryExpression'],
@@ -290,12 +286,10 @@
                     return new this.yy.UnaryExpression(this.$1);
                 }
             },
-
             {
                 symbol: 'UnaryExpression',
                 rhs: ['PrimaryExpression']
             },
-
             {
                 symbol: 'PrimaryExpression',
                 rhs: ['STRING'],
@@ -303,7 +297,6 @@
                     return new this.yy.StringNode(this.lexer.lineNumber, this.$1);
                 }
             },
-
             {
                 symbol: 'PrimaryExpression',
                 rhs: ['NUMBER'],
@@ -311,15 +304,6 @@
                     return new this.yy.NumberNode(this.lexer.lineNumber, this.$1);
                 }
             },
-
-            {
-                symbol: 'PrimaryExpression',
-                rhs: ['MINUS', 'NUMBER'],
-                action: function () {
-                    return new this.yy.NumberNode(this.lexer.lineNumber, 0 - this.$2);
-                }
-            },
-
             {
                 symbol: 'PrimaryExpression',
                 rhs: ['BOOLEAN'],
@@ -327,12 +311,10 @@
                     return new this.yy.BooleanNode(this.lexer.lineNumber, this.$1);
                 }
             },
-
             {
                 symbol: 'PrimaryExpression',
                 rhs: ['path']
             },
-
             {
                 symbol: 'PrimaryExpression',
                 rhs: ['LPAREN', 'Expression', 'RPAREN'],
@@ -340,10 +322,10 @@
                     return this.$2;
                 }
             },
+            // expression end
 
-        /**
-         * expression end
-         */
+
+            // hash start
             {
                 symbol: 'hash',
                 rhs: ['hashSegments'],
@@ -372,6 +354,10 @@
                     return [this.$1, this.$3];
                 }
             },
+            // hash end
+
+
+            // path start
             {
                 symbol: 'path',
                 rhs: ['pathSegments'],
@@ -388,7 +374,7 @@
             },
             {
                 symbol: 'pathSegments',
-                rhs: ['pathSegments', 'REF_START', 'Expression','REF_END'],
+                rhs: ['pathSegments', 'REF_START', 'Expression', 'REF_END'],
                 action: function () {
                     this.$1.push(this.$3);
                 }
@@ -407,10 +393,12 @@
                     return [this.$1];
                 }
             }
-
+            // path end
         ],
         lexer: {
-            // states: t et
+            // states:
+            // t: in tpl mode
+            // et: escaped tpl
             rules: [
                 {
                     // "\n".match(/./)
@@ -443,9 +431,7 @@
                     state: ['et'],
                     token: 'CONTENT',
                     regexp: /^[\s\S]{2,}?(?:(?={{)|$)/,
-                    action: function () {
-                        this.popState();
-                    }
+                    action: popState
                 },
                 {
                     state: ['t'],
@@ -457,30 +443,22 @@
                 {
                     state: ['t'],
                     regexp: /^{{\//,
-                    token: 'OPEN_END_BLOCK'
+                    token: 'OPEN_CLOSE_BLOCK'
                 },
                 {
                     state: ['t'],
-                    regexp: /^{{\s*else/,
-                    token: 'OPEN_INVERSE'
+                    regexp: /^{{\s*else\s*}}/,
+                    token: 'INVERSE',
+                    action: popState
                 },
                 {
                     state: ['t'],
-                    regexp: /^{{{/,
-                    token: 'OPEN_UN_ESCAPED'
-                },
-                {
-                    state: ['t'],
-                    regexp: /^{{![\s\S]*?}}/,
-                    action: function () {
-                        // return to content mode
-                        this.popState();
-                    }
                     // ignore comment
-                    // ,token: 'COMMENT'
+                    regexp: /^{{![\s\S]*?}}/,
+                    action: popState
                 },
-                // plain mode
                 {
+                    // plain mode
                     state: ['t'],
                     regexp: /^{{%([\s\S]*?)%}}/,
                     action: function () {
@@ -490,30 +468,20 @@
                     },
                     token: 'CONTENT'
                 },
-
                 {
                     state: ['t'],
-                    regexp: /^{{/,
-                    token: 'OPEN'
+                    regexp: /^{{{?/,
+                    token: 'OPEN_TPL'
                 },
                 {
+                    // ignore white space
                     state: ['t'],
                     regexp: /^\s+/
                 },
                 {
                     state: ['t'],
-                    regexp: /^}}}/,
-                    action: function () {
-                        this.popState();
-                    },
-                    token: 'CLOSE'
-                },
-                {
-                    state: ['t'],
-                    regexp: /^}}/,
-                    action: function () {
-                        this.popState();
-                    },
+                    regexp: /^}}}?/,
+                    action: popState,
                     token: 'CLOSE'
                 },
                 {
@@ -548,23 +516,23 @@
                 },
                 {
                     state: ['t'],
-                    regexp: /^>/,
-                    token: 'GT'
-                },
-                {
-                    state: ['t'],
                     regexp: /^>=/,
                     token: 'GE'
                 },
                 {
                     state: ['t'],
-                    regexp: /^</,
-                    token: 'LT'
+                    regexp: /^<=/,
+                    token: 'LE'
                 },
                 {
                     state: ['t'],
-                    regexp: /^<=/,
-                    token: 'LE'
+                    regexp: /^>/,
+                    token: 'GT'
+                },
+                {
+                    state: ['t'],
+                    regexp: /^</,
+                    token: 'LT'
                 },
                 {
                     state: ['t'],
@@ -653,9 +621,7 @@
                     state: ['ws'],
                     regexp: /^\//,
                     token: 'SEP',
-                    action: function () {
-                        this.popState();
-                    }
+                    action: popState
                 },
                 {
                     state: ['t'],
@@ -674,7 +640,7 @@
                 },
                 {
                     state: ['t'],
-                    regexp: /^[a-zA-Z0-9_$-]+/,
+                    regexp: /^[a-zA-Z0-9_$]+/,
                     token: 'ID'
                 },
                 {
@@ -687,3 +653,13 @@
 
     }
 })();
+
+/**
+ * issues:
+ *
+ *  2013-06-17 reduce shift conflicts!
+ *   {{n - 1}} expression: n-1
+ *   {{n -1}} param n(-1)
+ *   remove support for -1
+ *
+ */

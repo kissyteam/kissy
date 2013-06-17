@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 7 13:42
+build time: Jun 17 23:50
 */
 KISSY.add("component/base/manager",function(){var f=0,e={},c={};return{__instances:c,addComponent:function(a,f){c[a]=f},removeComponent:function(a){delete c[a]},getComponent:function(a){return c[a]},getXClassByConstructor:function(a){for(var f in e)if(e[f].constructor==a)return f;return 0},getConstructorByXClass:function(a){var a=a.split(/\s+/),f=-1,c,k,i,h=null;for(k=0;k<a.length;k++)if((i=e[a[k]])&&(c=i.priority)>f)f=c,h=i.constructor;return h},setConstructorByXClass:function(a,c){e[a]={constructor:c,
 priority:f++}}}});

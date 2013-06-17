@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 7 13:41
+build time: Jun 17 23:49
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -226,7 +226,7 @@ KISSY.add('anim/base/utils', function (S, DOM, Q,undefined) {
  * @author yiminghe@gmail.com
  * @ignore
  */
-KISSY.add('anim/base', function (S, DOM, Utils, EventCustom, Q) {
+KISSY.add('anim/base', function (S, DOM, Utils, CustomEvent, Q) {
 
     var NodeType = DOM.NodeType;
     var specialVals = {
@@ -266,7 +266,7 @@ KISSY.add('anim/base', function (S, DOM, Utils, EventCustom, Q) {
         }
     }
 
-    S.augment(AnimBase, EventCustom.Target, {
+    S.augment(AnimBase, CustomEvent.Target, {
         /**
          * prepare fx hook
          * @protected

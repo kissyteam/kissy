@@ -463,7 +463,7 @@ KISSY.add('scrollview/drag', function (S, ScrollViewBase, DD, Node) {
     );
 
 }, {
-    requires: ['./base', 'dd/base', 'node']
+    requires: ['./base', 'dd', 'node']
 });
 
 /**

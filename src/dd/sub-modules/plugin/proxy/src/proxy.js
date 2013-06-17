@@ -153,5 +153,5 @@ KISSY.add('dd/plugin/proxy', function (S, Node, Base, DD) {
 
     return Proxy;
 }, {
-    requires: ['node', 'base', 'dd/base']
+    requires: ['node', 'base', 'dd']
 });

@@ -2,7 +2,8 @@
  * test tap hold by simulating touch event for ios/android
  * @author yiminghe@gmail.com
  */
-if (!phantomjs && document.createTouch) {
+if (!phantomjs && (KISSY.Features.isTouchEventSupported() || KISSY.Features.isMsPointerSupported() )) {
+
 
     KISSY.use('core', function (S) {
 

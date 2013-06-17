@@ -3,7 +3,7 @@
  * simple custom event object for custom event mechanism.
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/custom/object', function (S, Event) {
+KISSY.add('event/custom/object', function (S, BaseEvent) {
 
     /**
      * Do not new by yourself.
@@ -28,7 +28,7 @@ KISSY.add('event/custom/object', function (S, Event) {
          */
     }
 
-    S.extend(CustomEventObject, Event._Object);
+    S.extend(CustomEventObject, BaseEvent.Object);
 
     return CustomEventObject;
 

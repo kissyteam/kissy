@@ -12,7 +12,7 @@
  *
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/base/valuechange', function (S, Event, DOM, special) {
+KISSY.add('event/dom/base/valuechange', function (S, DOMEvent, DOM, Special) {
     var VALUE_CHANGE = 'valuechange',
         getNodeName = DOM.nodeName,
         KEY = 'event/valuechange',
@@ -42,7 +42,7 @@ KISSY.add('event/dom/base/valuechange', function (S, Event, DOM, special) {
             h = DOM.data(target, HISTORY_KEY);
         if (v !== h) {
             // allow delegate
-            Event.fireHandler(target, VALUE_CHANGE, {
+            DOMEvent.fireHandler(target, VALUE_CHANGE, {
                 prevVal: h,
                 newVal: v
             });
@@ -75,21 +75,21 @@ KISSY.add('event/dom/base/valuechange', function (S, Event, DOM, special) {
 
     function monitor(target) {
         unmonitored(target);
-        Event.on(target, 'blur', stopPollHandler);
+        DOMEvent.on(target, 'blur', stopPollHandler);
         // fix #94
         // see note 2012-02-08
-        Event.on(target, 'webkitspeechchange', webkitSpeechChangeHandler);
-        Event.on(target, 'mousedown keyup keydown focus', startPollHandler);
+        DOMEvent.on(target, 'webkitspeechchange', webkitSpeechChangeHandler);
+        DOMEvent.on(target, 'mousedown keyup keydown focus', startPollHandler);
     }
 
     function unmonitored(target) {
         stopPoll(target);
-        Event.remove(target, 'blur', stopPollHandler);
-        Event.remove(target, 'webkitspeechchange', webkitSpeechChangeHandler);
-        Event.remove(target, 'mousedown keyup keydown focus', startPollHandler);
+        DOMEvent.detach(target, 'blur', stopPollHandler);
+        DOMEvent.detach(target, 'webkitspeechchange', webkitSpeechChangeHandler);
+        DOMEvent.detach(target, 'mousedown keyup keydown focus', startPollHandler);
     }
 
-    special[VALUE_CHANGE] = {
+    Special[VALUE_CHANGE] = {
         setup: function () {
             var target = this, nodeName = getNodeName(target);
             if (nodeName == 'input' || nodeName == 'textarea') {
@@ -101,9 +101,9 @@ KISSY.add('event/dom/base/valuechange', function (S, Event, DOM, special) {
             unmonitored(target);
         }
     };
-    return Event;
+    return DOMEvent;
 }, {
-    requires: ['./api', 'dom', './special']
+    requires: ['./dom-event', 'dom', './special']
 });
 
 /*

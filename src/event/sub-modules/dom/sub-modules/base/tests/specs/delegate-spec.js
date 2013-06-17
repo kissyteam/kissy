@@ -7,6 +7,8 @@ KISSY.use("dom,event/dom/base", function (S, DOM, Event) {
     S.get = DOM.get;
     S.query = DOM.query;
 
+    var DOMEventUtils= S.require('event/dom/base/utils');
+
     var tpl = '<div \
     id="event-test-data" \
     style="border: 1px solid #ccc;\
@@ -89,7 +91,7 @@ KISSY.use("dom,event/dom/base", function (S, DOM, Event) {
             waits(10);
             runs(function () {
                 expect(ret).toEqual([]);
-                var eventDesc = Event._DOMUtils.data(S.get('#test-delegate'), undefined, false);
+                var eventDesc = DOMEventUtils.data(S.get('#test-delegate'), undefined, false);
                 expect(eventDesc).toBe(undefined);
             });
         });
@@ -137,7 +139,7 @@ KISSY.use("dom,event/dom/base", function (S, DOM, Event) {
             waits(10);
             runs(function () {
                 expect(ret + "").toBe([] + "");
-                var eventDesc = Event._DOMUtils.data(S.get('#test-delegate'), undefined, false);
+                var eventDesc = DOMEventUtils.data(S.get('#test-delegate'), undefined, false);
                 expect(eventDesc).toBe(undefined);
             });
         });

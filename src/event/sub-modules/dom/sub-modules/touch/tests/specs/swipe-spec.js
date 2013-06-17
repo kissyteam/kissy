@@ -2,18 +2,27 @@
  * test swipe gesture by simulating touch event for ios/android
  * @author yiminghe@gmail.com
  */
-if (!phantomjs && document.createTouch) {
+if (!phantomjs && (KISSY.Features.isTouchEventSupported() || KISSY.Features.isMsPointerSupported() )) {
+
 
     KISSY.use('core', function (S) {
 
         var $ = S.all, step = 10;
+
 
         describe('swipe', function () {
 
             var t;
 
             beforeEach(function () {
-                t = $('<div style="border:1px solid red;' +
+                t = $('<div style="' +
+                    '-webkit-user-drag:none;' +
+                    '-webkit-user-select:none;' +
+                    '-webkit-tap-highlight-color:rgba(0,0,0,0);' +
+                    '-webkit-touch-callout:none;' +
+                    '-webkit-touch-action:none;' +
+
+                    'border:1px solid red;' +
                     'width:100px;' +
                     'height:100px;"></div>').prependTo('body');
             });
@@ -22,88 +31,16 @@ if (!phantomjs && document.createTouch) {
                 t.remove();
             });
 
-            it('fires vertical', function () {
+            function swipe(p) {
 
-                var called = 0, start = 90, end = 10;
-
-                t.on('swipe', function (e) {
-                    var touch = e.touch;
-                    expect(touch.pageX).toBe(start);
-                    expect(touch.pageY).toBe(end);
-                    expect(e.direction).toBe('up');
-                    expect(e.distance).toBe(start - end);
-                    expect(Math.abs(e.duration * 1000 - 30 * (step + 2))).toBeLessThan(200);
-                    called = 1;
-                });
-
-                var touches = [
-                    {
-                        pageX: start,
-                        pageY: start
-                    }
-                ];
-
-                jasmine.simulate(t[0], 'touchstart', {
-                    touches: touches,
-                    changedTouches: touches,
-                    targetTouches: touches
-                });
-
-                for (var i = 0; i < step; i++) {
-                    waits(30);
-                    (function (i) {
-                        runs(function () {
-                            touches[0].pageY = start - (start - end) / step * i;
-                            jasmine.simulate(t[0], 'touchmove', {
-                                touches: touches,
-                                changedTouches: touches,
-                                targetTouches: touches
-                            });
-
-                        });
-                    })(i);
-                }
-
-                waits(30);
-                (function (i) {
-                    runs(function () {
-                        touches[0].pageY = end;
-                        jasmine.simulate(t[0], 'touchmove', {
-                            touches: touches,
-                            changedTouches: touches,
-                            targetTouches: touches
-                        });
-
-                    });
-                })(i);
-
-                waits(30);
-
-                runs(function () {
-                    jasmine.simulate(t[0], 'touchend', {
-                        touches: [],
-                        changedTouches: touches,
-                        targetTouches: []
-                    });
-                });
-
-                waits(30);
-
-                runs(function () {
-                    expect(called).toBe(1);
-                });
-            });
-
-
-            it('fires Horizontal', function () {
-
+                var d = p === 'pageX' ? 'left' : 'top';
                 var called = 0, start = 90, end = 10;
 
                 t.on('swipe', function (e) {
                     var touch = e.touch;
                     expect(touch.pageX).toBe(end);
                     expect(touch.pageY).toBe(start);
-                    expect(e.direction).toBe('left');
+                    expect(e.direction).toBe(d);
                     expect(e.distance).toBe(start - end);
                     called = 1;
                 });
@@ -125,7 +62,7 @@ if (!phantomjs && document.createTouch) {
                     waits(30);
                     (function (i) {
                         runs(function () {
-                            touches[0].pageX = start - (start - end) / step * i;
+                            touches[0][p] = start - (start - end) / step * i;
                             jasmine.simulate(t[0], 'touchmove', {
                                 touches: touches,
                                 changedTouches: touches,
@@ -137,17 +74,16 @@ if (!phantomjs && document.createTouch) {
                 }
 
                 waits(30);
-                (function (i) {
-                    runs(function () {
-                        touches[0].pageX = end;
-                        jasmine.simulate(t[0], 'touchmove', {
-                            touches: touches,
-                            changedTouches: touches,
-                            targetTouches: touches
-                        });
 
+                runs(function () {
+                    touches[0][p] = end;
+                    jasmine.simulate(t[0], 'touchmove', {
+                        touches: touches,
+                        changedTouches: touches,
+                        targetTouches: touches
                     });
-                })(i);
+
+                });
 
                 waits(30);
 
@@ -164,6 +100,17 @@ if (!phantomjs && document.createTouch) {
                 runs(function () {
                     expect(called).toBe(1);
                 });
+            }
+
+            // chrome emulate bug
+            if (!S.UA.chrome) {
+                it('fires vertical', function () {
+                    swipe('pageY');
+                });
+            }
+
+            it('fires Horizontal', function () {
+                swipe('pageX');
             });
 
 

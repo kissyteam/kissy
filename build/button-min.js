@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 7 13:42
+build time: Jun 17 23:50
 */
 KISSY.add("button/render",function(d,b){return b.Render.extend({initializer:function(){var a=this.get("elAttrs"),c=this.get("renderData");d.mix(a,{role:"button",title:c.tooltip,"aria-describedby":c.describedby});c.checked&&this.get("elCls").push(self.getBaseCssClasses("checked"))},_onSetChecked:function(a){var c=this.get("el"),b=this.getBaseCssClasses("checked");c[a?"addClass":"removeClass"](b)},_onSetTooltip:function(a){this.get("el").attr("title",a)},_onSetDescribedby:function(a){this.get("el").attr("aria-describedby",
 a)}},{ATTRS:{describedby:{sync:0},tooltip:{sync:0},checked:{sync:0}}})},{requires:["component/base"]});

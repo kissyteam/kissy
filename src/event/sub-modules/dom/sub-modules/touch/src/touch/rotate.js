@@ -3,7 +3,7 @@
  * fired when rotate using two fingers
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/touch/rotate', function (S, eventHandleMap, MultiTouch, Event, Gesture, undefined) {
+KISSY.add('event/dom/touch/rotate', function (S, eventHandleMap, MultiTouch, DOMEvent, Gesture, undefined) {
     var ROTATE_START = 'rotateStart',
         ROTATE = 'rotate',
         RAD_2_DEG = 180 / Math.PI,
@@ -56,13 +56,13 @@ KISSY.add('event/dom/touch/rotate', function (S, eventHandleMap, MultiTouch, Eve
 
                 self.target = self.getCommonTarget(e);
 
-                Event.fire(self.target, ROTATE_START, S.mix(e, {
+                DOMEvent.fire(self.target, ROTATE_START, S.mix(e, {
                     angle: angle,
                     rotation: 0
                 }));
 
             } else {
-                Event.fire(self.target, ROTATE, S.mix(e, {
+                DOMEvent.fire(self.target, ROTATE, S.mix(e, {
                     angle: angle,
                     rotation: angle - self.startAngle
                 }));
@@ -77,7 +77,7 @@ KISSY.add('event/dom/touch/rotate', function (S, eventHandleMap, MultiTouch, Eve
 
         fireEnd: function (e) {
             var self = this;
-            Event.fire(self.target, ROTATE_END, S.mix(e, {
+            DOMEvent.fire(self.target, ROTATE_END, S.mix(e, {
                 touches: self.lastTouches
             }));
         }
@@ -101,10 +101,10 @@ KISSY.add('event/dom/touch/rotate', function (S, eventHandleMap, MultiTouch, Eve
     eventHandleMap[ROTATE] = {
         handle: r,
         add: function () {
-            Event.on(this, Gesture.move, prevent);
+            DOMEvent.on(this, Gesture.move, prevent);
         },
         remove: function () {
-            Event.detach(this, Gesture.move, prevent);
+            DOMEvent.detach(this, Gesture.move, prevent);
         }
     };
 

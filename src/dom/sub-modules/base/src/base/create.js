@@ -27,9 +27,9 @@ KISSY.add('dom/base/create', function (S, DOM, undefined) {
     }
 
     function cleanData(els) {
-        var Event = S.require('event/dom/base');
-        if (Event) {
-            Event.detach(els);
+        var DOMEvent = S.require('event/dom');
+        if (DOMEvent) {
+            DOMEvent.detach(els);
         }
         DOM.removeData(els);
     }
@@ -275,7 +275,7 @@ KISSY.add('dom/base/create', function (S, DOM, undefined) {
                     els = DOM.query(selector),
                     all,
                     parent,
-                    Event = S.require('event/dom/base'),
+                    DOMEvent = S.require('event/dom'),
                     i;
                 for (i = els.length - 1; i >= 0; i--) {
                     el = els[i];
@@ -283,8 +283,8 @@ KISSY.add('dom/base/create', function (S, DOM, undefined) {
                         all = S.makeArray(getElementsByTagName(el, '*'));
                         all.push(el);
                         DOM.removeData(all);
-                        if (Event) {
-                            Event.detach(all);
+                        if (DOMEvent) {
+                            DOMEvent.detach(all);
                         }
                     }
                     if (parent = el.parentNode) {
@@ -406,7 +406,7 @@ KISSY.add('dom/base/create', function (S, DOM, undefined) {
 
     // 克隆除了事件的 data
     function cloneWithDataAndEvent(src, dest) {
-        var Event = S.require('event/dom'),
+        var DOMEvent = S.require('event/dom'),
             srcData,
             d;
 
@@ -422,11 +422,9 @@ KISSY.add('dom/base/create', function (S, DOM, undefined) {
         }
 
         // 事件要特殊点
-        if (Event) {
-            // remove event data (but without dom attached listener) which is copied from above DOM.data
-            Event._DOMUtils.removeData(dest);
+        if (DOMEvent) {
             // attach src 's event data and dom attached listener to dest
-            Event['_clone'](src, dest);
+            DOMEvent.clone(src, dest);
         }
     }
 

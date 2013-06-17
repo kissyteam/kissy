@@ -345,5 +345,5 @@ KISSY.add('scrollview/plugin/scrollbar/control', function (S, Node, DD, Componen
     });
 
 }, {
-    requires: ['node', 'dd/base', 'component/base', './render']
+    requires: ['node', 'dd', 'component/base', './render']
 });

@@ -3,7 +3,7 @@
  * singleTouchStart event
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/touch/single-touch-start', function (S, eventHandleMap, Event, SingleTouch) {
+KISSY.add('event/dom/touch/single-touch-start', function (S, eventHandleMap, DOMEvent, SingleTouch) {
 
     var event = 'singleTouchStart';
 
@@ -14,7 +14,7 @@ KISSY.add('event/dom/touch/single-touch-start', function (S, eventHandleMap, Eve
 
         onTouchStart: function (e) {
             if (SingleTouchStart.superclass.onTouchStart.apply(this, arguments) !== false) {
-                Event.fire(e.target, event, {
+                DOMEvent.fire(e.target, event, {
                     touch: e.touches[0],
                     touches: e.touches
                 });

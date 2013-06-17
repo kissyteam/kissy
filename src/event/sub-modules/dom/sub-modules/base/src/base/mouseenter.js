@@ -3,13 +3,13 @@
  * event-mouseenter
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/base/mouseenter', function (S, Event, DOM, special) {
+KISSY.add('event/dom/base/mouseenter', function (S, DOM, Special) {
 
     S.each([
         { name: 'mouseenter', fix: 'mouseover' },
         { name: 'mouseleave', fix: 'mouseout' }
     ], function (o) {
-        special[o.name] = {
+        Special[o.name] = {
             // fix #75
             typeFix: o.fix,
             handle: function (event, observer, ce) {
@@ -35,10 +35,8 @@ KISSY.add('event/dom/base/mouseenter', function (S, Event, DOM, special) {
             }
         };
     });
-
-    return Event;
 }, {
-    requires: ['./api', 'dom', './special']
+    requires: [ 'dom', './special']
 });
 
 /*

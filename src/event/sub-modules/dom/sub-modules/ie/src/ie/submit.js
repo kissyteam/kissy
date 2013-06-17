@@ -3,12 +3,12 @@
  * patch for ie<9 submit: does not bubble !
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/ie/submit', function (S, Event, DOM) {
+KISSY.add('event/dom/ie/submit', function (S, DOMEvent, DOM) {
 
-    var special = Event._Special,
+    var Special = DOMEvent.Special,
         getNodeName = DOM.nodeName;
 
-    special['submit'] = {
+    Special['submit'] = {
         setup: function () {
             var el = this;
             // form use native
@@ -18,7 +18,7 @@ KISSY.add('event/dom/ie/submit', function (S, Event, DOM) {
             // lazy add submit for inside forms
             // note event order : click/keypress -> submit
             // key point : find the forms
-            Event.on(el, 'click keypress', detector);
+            DOMEvent.on(el, 'click keypress', detector);
         },
         tearDown: function () {
             var el = this;
@@ -26,11 +26,11 @@ KISSY.add('event/dom/ie/submit', function (S, Event, DOM) {
             if (getNodeName(el) == 'form') {
                 return false;
             }
-            Event.remove(el, 'click keypress', detector);
+            DOMEvent.remove(el, 'click keypress', detector);
             S.each(DOM.query('form', el), function (form) {
                 if (form.__submit__fix) {
                     form.__submit__fix = 0;
-                    Event.remove(form, 'submit', {
+                    DOMEvent.remove(form, 'submit', {
                         fn: submitBubble,
                         last: 1
                     });
@@ -47,7 +47,7 @@ KISSY.add('event/dom/ie/submit', function (S, Event, DOM) {
 
         if (form && !form.__submit__fix) {
             form.__submit__fix = 1;
-            Event.on(form, 'submit', {
+            DOMEvent.on(form, 'submit', {
                 fn: submitBubble,
                 last: 1
             });
@@ -63,7 +63,7 @@ KISSY.add('event/dom/ie/submit', function (S, Event, DOM) {
             !e.synthetic) {
             // simulated bubble for submit
             // fire from parentNode. if form.on('submit') , this logic is never run!
-            Event.fire(form.parentNode, 'submit', e);
+            DOMEvent.fire(form.parentNode, 'submit', e);
         }
     }
 

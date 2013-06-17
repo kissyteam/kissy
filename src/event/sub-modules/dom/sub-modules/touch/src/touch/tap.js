@@ -1,9 +1,9 @@
 /**
  * @ignore
- * gesture tap or click for pc
+ * gesture tap
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/touch/tap', function (S, eventHandleMap, Event, SingleTouch) {
+KISSY.add('event/dom/touch/tap', function (S, eventHandleMap, DOMEvent, SingleTouch) {
 
     var event = 'tap';
 
@@ -17,7 +17,7 @@ KISSY.add('event/dom/touch/tap', function (S, eventHandleMap, Event, SingleTouch
         },
 
         onTouchEnd: function (e) {
-            Event.fire(e.target, event, {
+            DOMEvent.fire(e.target, event, {
                 touch: e.changedTouches[0]
             });
         }

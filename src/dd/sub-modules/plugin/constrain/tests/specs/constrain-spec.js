@@ -2,7 +2,7 @@
  * @module  scroll-spec
  * @author yiminghe@gmail.com
  */
-KISSY.use("dd/base,dd/plugin/constrain", function (S, DD, Constrain) {
+KISSY.use("dd,dd/plugin/constrain", function (S, DD, Constrain) {
     var Draggable = DD.Draggable,
         Gesture= S.Event.Gesture,
         $ = S.all;

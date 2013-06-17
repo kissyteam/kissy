@@ -4,14 +4,14 @@
  * refer: http://www.w3.org/TR/domcore/#interface-customevent
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/custom/observable', function (S, api, CustomEventObserver, CustomEventObject, Event) {
+KISSY.add('event/custom/observable', function (S, CustomEventObserver, CustomEventObject, BaseEvent) {
 
-    var _Utils = Event._Utils;
+    var Utils = BaseEvent.Utils;
 
     /**
      * custom event for registering and un-registering observer for specified event on normal object.
      * @class KISSY.Event.ObservableCustomEvent
-     * @extends KISSY.Event.ObservableEvent
+     * @extends KISSY.Event.Observable
      * @private
      */
     function ObservableCustomEvent() {
@@ -32,7 +32,7 @@ KISSY.add('event/custom/observable', function (S, api, CustomEventObserver, Cust
          */
     }
 
-    S.extend(ObservableCustomEvent, Event._ObservableEvent, {
+    S.extend(ObservableCustomEvent, BaseEvent.Observable, {
 
         constructor: ObservableCustomEvent,
 
@@ -91,13 +91,13 @@ KISSY.add('event/custom/observable', function (S, api, CustomEventObserver, Cust
             // gRet === false prevent
             if (bubbles && !customEventObject.isPropagationStopped()) {
 
-                parents = api.getTargets(currentTarget, 1);
+                parents = currentTarget.getTargets(1);
 
                 parentsLen = parents && parents.length || 0;
 
                 for (i = 0; i < parentsLen && !customEventObject.isPropagationStopped(); i++) {
 
-                    ret = api.fire(parents[i], type, customEventObject);
+                    ret = parents[i].fire(type, customEventObject);
 
                     // false 优先返回
                     if (gRet !== false) {
@@ -170,7 +170,7 @@ KISSY.add('event/custom/observable', function (S, api, CustomEventObserver, Cust
             }
 
             if (groups) {
-                groupsRe = _Utils.getGroupsRe(groups);
+                groupsRe = Utils.getGroupsRe(groups);
             }
 
             var i, j, t, observer, observerContext, len = observers.length;
@@ -248,7 +248,7 @@ KISSY.add('event/custom/observable', function (S, api, CustomEventObserver, Cust
     return ObservableCustomEvent;
 
 }, {
-    requires: ['./api', './observer', './object', 'event/base']
+    requires: [ './observer', './object', 'event/base']
 });
 /**
  * @ignore

@@ -1,35 +1,24 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 7 13:52
+build time: Jun 17 23:57
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
 
- event/custom/api
  event/custom/observer
  event/custom/object
  event/custom/observable
- event/custom/api-impl
+ event/custom/target
  event/custom
 */
 
 /**
  * @ignore
- * custom event target for publish and subscribe
- * @author yiminghe@gmail.com
- */
-KISSY.add('event/custom/api', function () {
-    return {
-
-    };
-});
-/**
- * @ignore
  * Observer for custom event
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/custom/observer', function (S, Event) {
+KISSY.add('event/custom/observer', function (S, BaseEvent) {
 
     /**
      * Observer for custom event
@@ -41,7 +30,7 @@ KISSY.add('event/custom/observer', function (S, Event) {
         CustomEventObserver.superclass.constructor.apply(this, arguments);
     }
 
-    S.extend(CustomEventObserver, Event._Observer, {
+    S.extend(CustomEventObserver, BaseEvent.Observer, {
 
         keys:['fn','context','groups']
 
@@ -57,7 +46,7 @@ KISSY.add('event/custom/observer', function (S, Event) {
  * simple custom event object for custom event mechanism.
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/custom/object', function (S, Event) {
+KISSY.add('event/custom/object', function (S, BaseEvent) {
 
     /**
      * Do not new by yourself.
@@ -82,7 +71,7 @@ KISSY.add('event/custom/object', function (S, Event) {
          */
     }
 
-    S.extend(CustomEventObject, Event._Object);
+    S.extend(CustomEventObject, BaseEvent.Object);
 
     return CustomEventObject;
 
@@ -95,14 +84,14 @@ KISSY.add('event/custom/object', function (S, Event) {
  * refer: http://www.w3.org/TR/domcore/#interface-customevent
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/custom/observable', function (S, api, CustomEventObserver, CustomEventObject, Event) {
+KISSY.add('event/custom/observable', function (S, CustomEventObserver, CustomEventObject, BaseEvent) {
 
-    var _Utils = Event._Utils;
+    var Utils = BaseEvent.Utils;
 
     /**
      * custom event for registering and un-registering observer for specified event on normal object.
      * @class KISSY.Event.ObservableCustomEvent
-     * @extends KISSY.Event.ObservableEvent
+     * @extends KISSY.Event.Observable
      * @private
      */
     function ObservableCustomEvent() {
@@ -123,7 +112,7 @@ KISSY.add('event/custom/observable', function (S, api, CustomEventObserver, Cust
          */
     }
 
-    S.extend(ObservableCustomEvent, Event._ObservableEvent, {
+    S.extend(ObservableCustomEvent, BaseEvent.Observable, {
 
         constructor: ObservableCustomEvent,
 
@@ -182,13 +171,13 @@ KISSY.add('event/custom/observable', function (S, api, CustomEventObserver, Cust
             // gRet === false prevent
             if (bubbles && !customEventObject.isPropagationStopped()) {
 
-                parents = api.getTargets(currentTarget, 1);
+                parents = currentTarget.getTargets(1);
 
                 parentsLen = parents && parents.length || 0;
 
                 for (i = 0; i < parentsLen && !customEventObject.isPropagationStopped(); i++) {
 
-                    ret = api.fire(parents[i], type, customEventObject);
+                    ret = parents[i].fire(type, customEventObject);
 
                     // false 优先返回
                     if (gRet !== false) {
@@ -261,7 +250,7 @@ KISSY.add('event/custom/observable', function (S, api, CustomEventObserver, Cust
             }
 
             if (groups) {
-                groupsRe = _Utils.getGroupsRe(groups);
+                groupsRe = Utils.getGroupsRe(groups);
             }
 
             var i, j, t, observer, observerContext, len = observers.length;
@@ -339,7 +328,7 @@ KISSY.add('event/custom/observable', function (S, api, CustomEventObserver, Cust
     return ObservableCustomEvent;
 
 }, {
-    requires: ['./api', './observer', './object', 'event/base']
+    requires: [ './observer', './object', 'event/base']
 });
 /**
  * @ignore
@@ -351,176 +340,179 @@ KISSY.add('event/custom/observable', function (S, api, CustomEventObserver, Cust
  * custom event target for publish and subscribe
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/custom/api-impl', function (S, api, Event, ObservableCustomEvent) {
-    var _Utils = Event._Utils,
-        splitAndRun = _Utils.splitAndRun,
+KISSY.add('event/custom/target', function (S, BaseEvent, ObservableCustomEvent) {
+    var Utils = BaseEvent.Utils,
+        splitAndRun = Utils.splitAndRun,
         KS_BUBBLE_TARGETS = '__~ks_bubble_targets';
 
 
-    return S.mix(api,
+    /**
+     * @class KISSY.Event.Target
+     * @singleton
+     * EventTarget provides the implementation for any object to publish, subscribe and fire to custom events,
+     * and also allows other EventTargets to target the object with events sourced from the other object.
+     *
+     * EventTarget is designed to be used with S.augment to allow events to be listened to and fired by name.
+     *
+     * This makes it possible for implementing code to subscribe to an event that either has not been created yet,
+     * or will not be created at all.
+     */
+    return {
+
+        isTarget: 1,
+
         /**
-         * @class KISSY.Event.Target
-         * @singleton
-         * EventTarget provides the implementation for any object to publish, subscribe and fire to custom events,
-         * and also allows other EventTargets to target the object with events sourced from the other object.
-         *
-         * EventTarget is designed to be used with S.augment to allow events to be listened to and fired by name.
-         *
-         * This makes it possible for implementing code to subscribe to an event that either has not been created yet,
-         * or will not be created at all.
+         * @ignore
          */
-        {
+        fire: function (type, eventData) {
+            var self = this,
+                ret = undefined,
+                targets = self.getTargets(1),
+                hasTargets = targets && targets.length;
 
-            /**
-             * @ignore
-             */
-            fire: function (target, type, eventData) {
-                var self = target,
-                    ret = undefined,
-                    targets = api.getTargets(self, 1),
-                    hasTargets = targets && targets.length;
+            eventData = eventData || {};
 
-                eventData = eventData || {};
+            splitAndRun(type, function (type) {
 
-                splitAndRun(type, function (type) {
+                var r2, customEvent;
 
-                    var r2, customEvent;
+                Utils.fillGroupsForEvent(type, eventData);
 
-                    _Utils.fillGroupsForEvent(type,eventData);
+                type = eventData.type;
 
-                    type = eventData.type;
+                // default bubble true
+                // if bubble false, it must has customEvent structure set already
+                customEvent = ObservableCustomEvent.getCustomEvent(self, type);
 
-                    // default bubble true
-                    // if bubble false, it must has customEvent structure set already
-                    customEvent = ObservableCustomEvent.getCustomEvent(self, type);
+                // optimize performance for empty event listener
+                if (!customEvent && !hasTargets) {
+                    return;
+                }
 
-                    // optimize performance for empty event listener
-                    if (!customEvent && !hasTargets) {
-                        return;
-                    }
+                if (customEvent) {
 
-                    if (customEvent) {
+                    if (!customEvent.hasObserver() && !customEvent.defaultFn) {
 
-                        if (!customEvent.hasObserver() && !customEvent.defaultFn) {
-
-                            if (customEvent.bubbles && !hasTargets || !customEvent.bubbles) {
-                                return;
-                            }
-
+                        if (customEvent.bubbles && !hasTargets || !customEvent.bubbles) {
+                            return;
                         }
 
-                    } else {
-                        // in case no publish custom event but we need bubble
-                        // because bubbles defaults to true!
-                        customEvent = new ObservableCustomEvent({
-                            currentTarget: self,
-                            type: type
-                        });
                     }
 
-                    r2 = customEvent.fire(eventData);
-
-                    if (ret !== false) {
-                        ret = r2;
-                    }
-
-                });
-
-                return ret;
-            },
-
-            /**
-             * @ignore
-             */
-            publish: function (target, type, cfg) {
-                var customEvent;
-
-                splitAndRun(type, function (t) {
-                    customEvent = ObservableCustomEvent.getCustomEvent(target, t, 1);
-                    S.mix(customEvent, cfg)
-                });
-
-                return target;
-            },
-
-            getCustomEvent:function(target,type,create){
-                return ObservableCustomEvent.getCustomEvent(target,type,create);
-            },
-
-            /**
-             * @ignore
-             */
-            addTarget: function (target, anotherTarget) {
-                var targets = api.getTargets(target);
-                if (!S.inArray(anotherTarget, targets)) {
-                    targets.push(anotherTarget);
+                } else {
+                    // in case no publish custom event but we need bubble
+                    // because bubbles defaults to true!
+                    customEvent = new ObservableCustomEvent({
+                        currentTarget: self,
+                        type: type
+                    });
                 }
-                return target;
-            },
 
-            /**
-             * @ignore
-             */
-            removeTarget: function (target, anotherTarget) {
-                var targets = api.getTargets(target),
-                    index = S.indexOf(anotherTarget, targets);
-                if (index != -1) {
-                    targets.splice(index, 1);
+                r2 = customEvent.fire(eventData);
+
+                if (ret !== false) {
+                    ret = r2;
                 }
-                return target;
-            },
 
-            /**
-             * @ignore
-             */
-            getTargets: function (target, readOnly) {
-                if (!readOnly) {
-                    target[KS_BUBBLE_TARGETS] = target[KS_BUBBLE_TARGETS] || [];
-                }
-                return target[KS_BUBBLE_TARGETS];
-            },
+            });
 
-            /**
-             * @ignore
-             */
-            on: function (target, type, fn, context) {
-                _Utils.batchForType(function (type, fn, context) {
-                    var cfg = _Utils.normalizeParam(type, fn, context),
-                        customEvent;
-                    type = cfg.type;
-                    customEvent = ObservableCustomEvent.getCustomEvent(target, type, 1);
-                    if (customEvent) {
-                        customEvent.on(cfg);
-                    }
-                }, 0, type, fn, context);
-                return target; // chain
-            },
+            return ret;
+        },
 
-            /**
-             * @ignore
-             */
-            detach: function (target, type, fn, context) {
-                _Utils.batchForType(function (type, fn, context) {
-                    var cfg = _Utils.normalizeParam(type, fn, context),
-                        customEvents,
-                        customEvent;
-                    type = cfg.type;
-                    if (type) {
-                        customEvent = ObservableCustomEvent.getCustomEvent(target, type, 1);
-                        if (customEvent) {
-                            customEvent.detach(cfg);
-                        }
-                    } else {
-                        customEvents = ObservableCustomEvent.getCustomEvents(target);
-                        S.each(customEvents, function (customEvent) {
-                            customEvent.detach(cfg);
-                        });
-                    }
-                }, 0, type, fn, context);
+        /**
+         * @ignore
+         */
+        publish: function (type, cfg) {
+            var customEvent,
+                self = this;
 
-                return target; // chain
+            splitAndRun(type, function (t) {
+                customEvent = ObservableCustomEvent.getCustomEvent(self, t, 1);
+                S.mix(customEvent, cfg)
+            });
+
+            return self;
+        },
+
+        /**
+         * @ignore
+         */
+        addTarget: function (anotherTarget) {
+            var self = this,
+                targets = self.getTargets();
+            if (!S.inArray(anotherTarget, targets)) {
+                targets.push(anotherTarget);
             }
-        });
+            return self;
+        },
+
+        /**
+         * @ignore
+         */
+        removeTarget: function (anotherTarget) {
+            var self = this,
+                targets = self.getTargets(),
+                index = S.indexOf(anotherTarget, targets);
+            if (index != -1) {
+                targets.splice(index, 1);
+            }
+            return self;
+        },
+
+        /**
+         * @ignore
+         */
+        getTargets: function (readOnly) {
+            var self = this;
+            if (!readOnly) {
+                self[KS_BUBBLE_TARGETS] = self[KS_BUBBLE_TARGETS] || [];
+            }
+            return self[KS_BUBBLE_TARGETS];
+        },
+
+        /**
+         * @ignore
+         */
+        on: function (type, fn, context) {
+            var self = this;
+            Utils.batchForType(function (type, fn, context) {
+                var cfg = Utils.normalizeParam(type, fn, context),
+                    customEvent;
+                type = cfg.type;
+                customEvent = ObservableCustomEvent.getCustomEvent(self, type, 1);
+                if (customEvent) {
+                    customEvent.on(cfg);
+                }
+            }, 0, type, fn, context);
+            return self; // chain
+        },
+
+        /**
+         * @ignore
+         */
+        detach: function (type, fn, context) {
+            var self = this;
+            Utils.batchForType(function (type, fn, context) {
+                var cfg = Utils.normalizeParam(type, fn, context),
+                    customEvents,
+                    customEvent;
+                type = cfg.type;
+                if (type) {
+                    customEvent = ObservableCustomEvent.getCustomEvent(self, type, 1);
+                    if (customEvent) {
+                        customEvent.detach(cfg);
+                    }
+                } else {
+                    customEvents = ObservableCustomEvent.getCustomEvents(self);
+                    S.each(customEvents, function (customEvent) {
+                        customEvent.detach(cfg);
+                    });
+                }
+            }, 0, type, fn, context);
+
+            return self; // chain
+        }
+    };
 
     /**
      * Fire a custom event by name.
@@ -581,7 +573,7 @@ KISSY.add('event/custom/api-impl', function (S, api, Event, ObservableCustomEven
      * @chainable
      */
 }, {
-    requires: ['./api', 'event/base', './observable']
+    requires: ['event/base', './observable']
 });
 /*
  yiminghe: 2012-10-24
@@ -595,32 +587,13 @@ KISSY.add('event/custom/api-impl', function (S, api, Event, ObservableCustomEven
  * custom facade
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/custom', function (S, Event, api, ObservableCustomEvent) {
-    var Target = {};
+KISSY.add('event/custom', function (S, Target) {
 
-    S.each(api, function (fn, name) {
-        Target[name] = function () {
-            var args = S.makeArray(arguments);
-            args.unshift(this);
-            return fn.apply(null, args);
-        }
-    });
-
-    var Custom = S.mix({
-        _ObservableCustomEvent: ObservableCustomEvent,
+    return {
         Target: Target
-    }, api);
+    };
 
-    S.mix(Event, {
-        Target: Target,
-        Custom: Custom
-    });
-
-    // compatibility
-    S.EventTarget = Target;
-
-    return Custom;
 }, {
-    requires: ['./base', './custom/api-impl', './custom/observable']
+    requires: ['./custom/target']
 });
 

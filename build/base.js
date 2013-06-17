@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 7 13:42
+build time: Jun 17 23:49
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -15,7 +15,7 @@ build time: Jun 7 13:42
  * attribute management
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
-KISSY.add('base/attribute',function (S, EventCustom, undefined) {
+KISSY.add('base/attribute', function (S, CustomEvent, undefined) {
 
     // atomic flag
     Attribute.INVALID = {};
@@ -46,10 +46,10 @@ KISSY.add('base/attribute',function (S, EventCustom, undefined) {
         }, data));
     }
 
-    function ensureNonEmpty(obj, name, create) {
-        var ret = obj[name] || {};
-        if (create) {
-            obj[name] = ret;
+    function ensureNonEmpty(obj, name) {
+        var ret = obj[name];
+        if (!ret) {
+            obj[name] = ret = {};
         }
         return ret;
     }
@@ -67,7 +67,7 @@ KISSY.add('base/attribute',function (S, EventCustom, undefined) {
          }
          }
          */
-        return ensureNonEmpty(self, '__attrs', true);
+        return ensureNonEmpty(self, '__attrs');
     }
 
 
@@ -78,7 +78,7 @@ KISSY.add('base/attribute',function (S, EventCustom, undefined) {
          attrName: attrVal
          }
          */
-        return ensureNonEmpty(self, '__attrVals', true);
+        return ensureNonEmpty(self, '__attrVals');
     }
 
     /*
@@ -140,11 +140,15 @@ KISSY.add('base/attribute',function (S, EventCustom, undefined) {
     }
 
     function prepareDefaultSetFn(self, name) {
-        var beforeChangeEventName = whenAttrChangeEventName('before', name),
-            customEvent = EventCustom.getCustomEvent(self, beforeChangeEventName, 1);
-        if (!customEvent.defaultFn) {
-            customEvent.defaultFn = defaultSetFn;
+        var defaultBeforeFns = ensureNonEmpty(self, '__defaultBeforeFns');
+        if (defaultBeforeFns[name]) {
+            return;
         }
+        defaultBeforeFns[name] = 1;
+        var beforeChangeEventName = whenAttrChangeEventName('before', name);
+        self.publish(beforeChangeEventName, {
+            defaultFn: defaultSetFn
+        });
     }
 
     function setInternal(self, name, value, opts, attrs) {
@@ -200,7 +204,7 @@ KISSY.add('base/attribute',function (S, EventCustom, undefined) {
     function defaultSetFn(e) {
         // only consider itself, not bubbling!
         if (e.target !== this) {
-            return;
+            return undefined;
         }
         var self = this,
             value = e.newVal,
@@ -268,7 +272,7 @@ KISSY.add('base/attribute',function (S, EventCustom, undefined) {
     }
 
     // for S.augment, no need to specify constructor
-    Attribute.prototype = {
+    S.augment(Attribute, CustomEvent.Target, {
 
         /**
          * get un-cloned attr config collections
@@ -446,7 +450,7 @@ KISSY.add('base/attribute',function (S, EventCustom, undefined) {
             // then register on demand in order to collect all data meta info
             // 一定要注册属性元数据，否则其他模块通过 _attrs 不能枚举到所有有效属性
             // 因为属性在声明注册前可以直接设置值
-                attrConfig = ensureNonEmpty(getAttrs(self), name, true),
+                attrConfig = ensureNonEmpty(getAttrs(self), name),
                 setter = attrConfig['setter'];
 
             // if setter has effect
@@ -546,8 +550,7 @@ KISSY.add('base/attribute',function (S, EventCustom, undefined) {
             self.set(values, opts);
             return self;
         }
-    };
-
+    });
 
     // get default attribute value from valueFn/value
     function getDefAttrVal(self, name) {
@@ -558,7 +561,10 @@ KISSY.add('base/attribute',function (S, EventCustom, undefined) {
 
         if (valFn && (valFn = normalFn(self, valFn))) {
             val = valFn.call(self);
-            if (val !== undefined) {
+            if (val !== /**
+             @ignore
+             @type Function
+             */undefined) {
                 attrConfig.value = val;
             }
             delete attrConfig.valueFn;
@@ -580,7 +586,7 @@ KISSY.add('base/attribute',function (S, EventCustom, undefined) {
             prevVal = self.get(name);
             value = getValueBySubValue(prevVal, path, value);
         }
-        var attrConfig = ensureNonEmpty(getAttrs(self), name, true),
+        var attrConfig = ensureNonEmpty(getAttrs(self), name),
             e,
             validator = attrConfig['validator'];
         if (validator && (validator = normalFn(self, validator))) {
@@ -608,7 +614,7 @@ KISSY.add('base/attribute',function (S, EventCustom, undefined) {
  * attribute management and event in one
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
-KISSY.add('base',function (S, Attribute, EventCustom) {
+KISSY.add('base',function (S, Attribute) {
 
     /**
      * @class KISSY.Base
@@ -684,7 +690,7 @@ KISSY.add('base',function (S, Attribute, EventCustom) {
         }
     }
 
-    S.augment(Base, EventCustom.Target, Attribute);
+    S.augment(Base,Attribute);
 
     Base.Attribute = Attribute;
 

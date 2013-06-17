@@ -1,13 +1,13 @@
 /**
  * @ignore
- * gesture swipe inspired by sencha touch
+ * gesture swipe
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, Event, SingleTouch) {
+KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, DOMEvent, SingleTouch) {
 
-    var event = 'swipe', ingEvent = 'swiping';
-
-    var MAX_DURATION = 1000,
+    var event = 'swipe',
+        ingEvent = 'swiping',
+        MAX_DURATION = 1000,
         MAX_OFFSET = 35,
         MIN_DISTANCE = 50;
 
@@ -51,14 +51,14 @@ KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, Event, SingleTou
             return false;
         }
 
-        Event.fire(e.target, ing ? ingEvent : event, {
+        DOMEvent.fire(e.target, ing ? ingEvent : event, {
             originalEvent: e.originalEvent,
             /**
              *
              * native touch property **only for touch event**.
              *
              * @property touch
-             * @member KISSY.Event.DOMEventObject
+             * @member KISSY.DOMEvent.DOMEventObject
              */
             touch: touch,
             /**
@@ -67,7 +67,7 @@ KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, Event, SingleTou
              *
              * can be one of 'up' 'down' 'left' 'right'
              * @property {String} direction
-             * @member KISSY.Event.DOMEventObject
+             * @member KISSY.DOMEvent.DOMEventObject
              */
             direction: direction,
             /**
@@ -76,7 +76,7 @@ KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, Event, SingleTou
              *
              * the distance swipe gesture costs
              * @property {Number} distance
-             * @member KISSY.Event.DOMEventObject
+             * @member KISSY.DOMEvent.DOMEventObject
              */
             distance: distance,
             /**
@@ -85,7 +85,7 @@ KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, Event, SingleTou
              *
              * the duration swipe gesture costs
              * @property {Number} duration
-             * @member KISSY.Event.DOMEventObject
+             * @member KISSY.DOMEvent.DOMEventObject
              */
             duration: (e.timeStamp - self.startTime) / 1000
         });
@@ -149,7 +149,6 @@ KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, Event, SingleTou
             if (self.onTouchMove(e) === false) {
                 return false;
             }
-
             return fire(self, e, 0);
         }
 

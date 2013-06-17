@@ -3,7 +3,7 @@
  * attribute management and event in one
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
-KISSY.add('base',function (S, Attribute, EventCustom) {
+KISSY.add('base',function (S, Attribute) {
 
     /**
      * @class KISSY.Base
@@ -79,7 +79,7 @@ KISSY.add('base',function (S, Attribute, EventCustom) {
         }
     }
 
-    S.augment(Base, EventCustom.Target, Attribute);
+    S.augment(Base,Attribute);
 
     Base.Attribute = Attribute;
 

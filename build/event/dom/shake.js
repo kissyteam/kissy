@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 7 13:53
+build time: Jun 17 23:58
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -14,8 +14,8 @@ build time: Jun 7 13:53
  * simulate shake gesture by listening devicemotion event
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/shake', function (S, EventDomBase, undefined) {
-    var Special = EventDomBase._Special,
+KISSY.add('event/dom/shake', function (S, DOMEvent, undefined) {
+    var Special = DOMEvent.Special,
         start = 5,
         enough = 20,
         shaking = 0,
@@ -26,7 +26,7 @@ KISSY.add('event/dom/shake', function (S, EventDomBase, undefined) {
         devicemotion = 'devicemotion',
         checkShake = S.buffer(function () {
             if (shaking) {
-                EventDomBase.fireHandler(win, 'shake', {
+                DOMEvent.fireHandler(win, 'shake', {
                     accelerationIncludingGravity: {
                         x: lastX,
                         y: lastY,

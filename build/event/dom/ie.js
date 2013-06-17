@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 7 13:53
+build time: Jun 17 23:57
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -16,8 +16,8 @@ build time: Jun 7 13:53
  *  change bubble and checkbox/radio fix patch for ie<9
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/ie/change', function (S, Event, DOM) {
-    var special = Event._Special,
+KISSY.add('event/dom/ie/change', function (S, DOMEvent, DOM) {
+    var Special = DOMEvent.Special,
         R_FORM_EL = /^(?:textarea|input|select)$/i;
 
     function isFormElement(n) {
@@ -29,7 +29,7 @@ KISSY.add('event/dom/ie/change', function (S, Event, DOM) {
         return type == 'checkbox' || type == 'radio';
     }
 
-    special['change'] = {
+    Special['change'] = {
         setup: function () {
             var el = this;
             if (isFormElement(el)) {
@@ -38,9 +38,9 @@ KISSY.add('event/dom/ie/change', function (S, Event, DOM) {
                 if (isCheckBoxOrRadio(el)) {
                     // change in ie<9
                     // change = propertychange -> click
-                    Event.on(el, 'propertychange', propertyChange);
+                    DOMEvent.on(el, 'propertychange', propertyChange);
                     // click may not cause change! (eg: radio)
-                    Event.on(el, 'click', onClick);
+                    DOMEvent.on(el, 'click', onClick);
                 } else {
                     // other form elements use native , do not bubble
                     return false;
@@ -49,24 +49,24 @@ KISSY.add('event/dom/ie/change', function (S, Event, DOM) {
                 // if bind on parentNode ,lazy bind change event to its form elements
                 // note event order : beforeactivate -> change
                 // note 2: checkbox/radio is exceptional
-                Event.on(el, 'beforeactivate', beforeActivate);
+                DOMEvent.on(el, 'beforeactivate', beforeActivate);
             }
         },
         tearDown: function () {
             var el = this;
             if (isFormElement(el)) {
                 if (isCheckBoxOrRadio(el)) {
-                    Event.remove(el, 'propertychange', propertyChange);
-                    Event.remove(el, 'click', onClick);
+                    DOMEvent.remove(el, 'propertychange', propertyChange);
+                    DOMEvent.remove(el, 'click', onClick);
                 } else {
                     return false;
                 }
             } else {
-                Event.remove(el, 'beforeactivate', beforeActivate);
+                DOMEvent.remove(el, 'beforeactivate', beforeActivate);
                 S.each(DOM.query('textarea,input,select', el), function (fel) {
                     if (fel.__changeHandler) {
                         fel.__changeHandler = 0;
-                        Event.remove(fel, 'change', {fn: changeHandler, last: 1});
+                        DOMEvent.remove(fel, 'change', {fn: changeHandler, last: 1});
                     }
                 });
             }
@@ -86,7 +86,7 @@ KISSY.add('event/dom/ie/change', function (S, Event, DOM) {
         if (this.__changed) {
             this.__changed = 0;
             // fire from itself
-            Event.fire(this, 'change', e);
+            DOMEvent.fire(this, 'change', e);
         }
     }
 
@@ -95,7 +95,7 @@ KISSY.add('event/dom/ie/change', function (S, Event, DOM) {
         if (isFormElement(t) && !t.__changeHandler) {
             t.__changeHandler = 1;
             // lazy bind change , always as last handler among user's handlers
-            Event.on(t, 'change', {fn: changeHandler, last: 1});
+            DOMEvent.on(t, 'change', {fn: changeHandler, last: 1});
         }
     }
 
@@ -114,7 +114,7 @@ KISSY.add('event/dom/ie/change', function (S, Event, DOM) {
         var p;
         if (p = fel.parentNode) {
             // fire from parent , itself is handled natively
-            Event.fire(p, 'change', e);
+            DOMEvent.fire(p, 'change', e);
         }
     }
 }, {
@@ -125,12 +125,12 @@ KISSY.add('event/dom/ie/change', function (S, Event, DOM) {
  * patch for ie<9 submit: does not bubble !
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/ie/submit', function (S, Event, DOM) {
+KISSY.add('event/dom/ie/submit', function (S, DOMEvent, DOM) {
 
-    var special = Event._Special,
+    var Special = DOMEvent.Special,
         getNodeName = DOM.nodeName;
 
-    special['submit'] = {
+    Special['submit'] = {
         setup: function () {
             var el = this;
             // form use native
@@ -140,7 +140,7 @@ KISSY.add('event/dom/ie/submit', function (S, Event, DOM) {
             // lazy add submit for inside forms
             // note event order : click/keypress -> submit
             // key point : find the forms
-            Event.on(el, 'click keypress', detector);
+            DOMEvent.on(el, 'click keypress', detector);
         },
         tearDown: function () {
             var el = this;
@@ -148,11 +148,11 @@ KISSY.add('event/dom/ie/submit', function (S, Event, DOM) {
             if (getNodeName(el) == 'form') {
                 return false;
             }
-            Event.remove(el, 'click keypress', detector);
+            DOMEvent.remove(el, 'click keypress', detector);
             S.each(DOM.query('form', el), function (form) {
                 if (form.__submit__fix) {
                     form.__submit__fix = 0;
-                    Event.remove(form, 'submit', {
+                    DOMEvent.remove(form, 'submit', {
                         fn: submitBubble,
                         last: 1
                     });
@@ -169,7 +169,7 @@ KISSY.add('event/dom/ie/submit', function (S, Event, DOM) {
 
         if (form && !form.__submit__fix) {
             form.__submit__fix = 1;
-            Event.on(form, 'submit', {
+            DOMEvent.on(form, 'submit', {
                 fn: submitBubble,
                 last: 1
             });
@@ -185,7 +185,7 @@ KISSY.add('event/dom/ie/submit', function (S, Event, DOM) {
             !e.synthetic) {
             // simulated bubble for submit
             // fire from parentNode. if form.on('submit') , this logic is never run!
-            Event.fire(form.parentNode, 'submit', e);
+            DOMEvent.fire(form.parentNode, 'submit', e);
         }
     }
 

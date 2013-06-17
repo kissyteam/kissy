@@ -3,7 +3,7 @@
  * @author yiminghe@gmail.com
  * @ignore
  */
-KISSY.add('anim/base', function (S, DOM, Utils, EventCustom, Q) {
+KISSY.add('anim/base', function (S, DOM, Utils, CustomEvent, Q) {
 
     var NodeType = DOM.NodeType;
     var specialVals = {
@@ -43,7 +43,7 @@ KISSY.add('anim/base', function (S, DOM, Utils, EventCustom, Q) {
         }
     }
 
-    S.augment(AnimBase, EventCustom.Target, {
+    S.augment(AnimBase, CustomEvent.Target, {
         /**
          * prepare fx hook
          * @protected

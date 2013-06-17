@@ -3,7 +3,7 @@
  * base handle for touch gesture
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/touch/handle', function (S, DOM, eventHandleMap, Event, Gesture) {
+KISSY.add('event/dom/touch/handle', function (S, DOM, eventHandleMap, DOMEvent, Gesture) {
 
     var key = S.guid('touch-handle'),
         Features = S.Features,
@@ -72,7 +72,7 @@ KISSY.add('event/dom/touch/handle', function (S, DOM, eventHandleMap, Event, Ges
 
             for (e in touchEvents) {
                 h = touchEvents[e];
-                Event.on(doc, e, self[h], self);
+                DOMEvent.on(doc, e, self[h], self);
             }
         },
 
@@ -190,7 +190,7 @@ KISSY.add('event/dom/touch/handle', function (S, DOM, eventHandleMap, Event, Ges
                 e, h;
             for (e in touchEvents) {
                 h = touchEvents[e];
-                Event.detach(doc, e, self[h], self);
+                DOMEvent.detach(doc, e, self[h], self);
             }
         }
 

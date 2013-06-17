@@ -3,19 +3,20 @@
  * custom event for dom.
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEventObserver, DOMEventObject, Event) {
+KISSY.add('event/dom/base/observable', function (S, DOM, Special, DOMEventUtils,
+                                                 DOMEventObserver, DOMEventObject, BaseEvent) {
 
     // 记录手工 fire(domElement,type) 时的 type
     // 再在浏览器通知的系统 eventHandler 中检查
     // 如果相同，那么证明已经 fire 过了，不要再次触发了
-    var _Utils = Event._Utils;
+    var BaseUtils = BaseEvent.Utils;
 
     /**
      * custom event for dom
      * @param {Object} cfg
      * @private
      * @class KISSY.Event.ObservableDOMEvent
-     * @extends KISSY.Event.ObservableEvent
+     * @extends KISSY.Event.Observable
      */
     function ObservableDOMEvent(cfg) {
         var self = this;
@@ -27,18 +28,18 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
          */
     }
 
-    S.extend(ObservableDOMEvent, Event._ObservableEvent, {
+    S.extend(ObservableDOMEvent, BaseEvent.Observable, {
 
         setup: function () {
             var self = this,
                 type = self.type,
-                s = special[type] || {},
+                s = Special[type] || {},
                 currentTarget = self.currentTarget,
-                eventDesc = Utils.data(currentTarget),
+                eventDesc = DOMEventUtils.data(currentTarget),
                 handle = eventDesc.handle;
             // 第一次注册该事件，dom 节点才需要注册 dom 事件
             if (!s.setup || s.setup.call(currentTarget, type) === false) {
-                Utils.simpleAdd(currentTarget, type, handle)
+                DOMEventUtils.simpleAdd(currentTarget, type, handle)
             }
         },
 
@@ -169,7 +170,7 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
                 eventType = String(self.type),
                 customEvent,
                 eventData,
-                specialEvent = special[eventType] || {},
+                specialEvent = Special[eventType] || {},
                 bubbles = specialEvent.bubbles !== false,
                 currentTarget = self.currentTarget;
 
@@ -254,7 +255,7 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
         on: function (cfg) {
             var self = this,
                 observers = self.observers,
-                s = special[self.type] || {},
+                s = Special[self.type] || {},
             // clone event
                 observer = cfg instanceof DOMEventObserver ? cfg : new DOMEventObserver(cfg);
 
@@ -291,7 +292,7 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
         detach: function (cfg) {
             var groupsRe,
                 self = this,
-                s = special[self.type] || {},
+                s = Special[self.type] || {},
                 hasFilter = 'filter' in cfg,
                 filter = cfg.filter,
                 context = cfg.context,
@@ -305,7 +306,7 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
             }
 
             if (groups) {
-                groupsRe = _Utils.getGroupsRe(groups);
+                groupsRe = BaseUtils.getGroupsRe(groups);
             }
 
             var i, j, t, observer, observerContext, len = observers.length;
@@ -374,9 +375,9 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
                 type = self.type,
                 events,
                 handle,
-                s = special[type] || {},
+                s = Special[type] || {},
                 currentTarget = self.currentTarget,
-                eventDesc = Utils.data(currentTarget);
+                eventDesc = DOMEventUtils.data(currentTarget);
             if (eventDesc) {
                 events = eventDesc.events;
                 if (!self.hasObserver()) {
@@ -384,7 +385,7 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
                     // remove(el, type) or fn 已移除光
                     // dom node need to detach handler from dom node
                     if ((!s['tearDown'] || s['tearDown'].call(currentTarget, type) === false)) {
-                        Utils.simpleRemove(currentTarget, type, handle);
+                        DOMEventUtils.simpleRemove(currentTarget, type, handle);
                     }
                     // remove currentTarget's single event description
                     delete events[type];
@@ -393,7 +394,7 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
                 // remove currentTarget's  all events description
                 if (S.isEmptyObject(events)) {
                     eventDesc.handle = null;
-                    Utils.removeData(currentTarget);
+                    DOMEventUtils.removeData(currentTarget);
                 }
             }
         }
@@ -409,7 +410,7 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
      */
     ObservableDOMEvent.getCustomEvent = function (node, type) {
 
-        var eventDesc = Utils.data(node), events;
+        var eventDesc = DOMEventUtils.data(node), events;
         if (eventDesc) {
             events = eventDesc.events;
         }
@@ -422,9 +423,9 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
 
 
     ObservableDOMEvent.getCustomEvents = function (node, create) {
-        var eventDesc = Utils.data(node);
+        var eventDesc = DOMEventUtils.data(node);
         if (!eventDesc && create) {
-            Utils.data(node, eventDesc = {});
+            DOMEventUtils.data(node, eventDesc = {});
         }
         return eventDesc;
     };

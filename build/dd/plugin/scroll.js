@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 7 13:43
+build time: Jun 17 23:51
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -280,6 +280,6 @@ KISSY.add('dd/plugin/scroll', function (S, DD, Base, Node) {
 
     return Scroll;
 }, {
-    requires: ['dd/base', 'base', 'node']
+    requires: ['dd', 'base', 'node']
 });
 

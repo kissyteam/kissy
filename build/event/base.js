@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 7 13:52
+build time: Jun 17 23:57
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -286,7 +286,7 @@ KISSY.add('event/base/observer', function (S, undefined) {
         /**
          * simple run current observer's user-defined function
          * @param {KISSY.Event.Object} event
-         * @param {KISSY.Event.ObservableEvent} ce
+         * @param {KISSY.Event.Observable} ce
          * @return {*} return value of current observer's user-defined function
          */
         simpleNotify: function (event, ce) {
@@ -304,7 +304,7 @@ KISSY.add('event/base/observer', function (S, undefined) {
          * current observer's notification.
          * @protected
          * @param {KISSY.Event.Object} event
-         * @param {KISSY.Event.ObservableEvent} ce
+         * @param {KISSY.Event.Observable} ce
          */
         notifyInternal: function (event, ce) {
             return this.simpleNotify(event, ce);
@@ -350,11 +350,11 @@ KISSY.add('event/base/observable', function (S) {
 
     /**
      * base custom event for registering and un-registering observer for specified event.
-     * @class KISSY.Event.ObservableEvent
+     * @class KISSY.Event.Observable
      * @private
      * @param {Object} cfg custom event's attribute
      */
-    function ObservableEvent(cfg) {
+    function Observable(cfg) {
         var self = this;
         self.currentTarget = null;
         S.mix(self, cfg);
@@ -365,9 +365,9 @@ KISSY.add('event/base/observable', function (S) {
          */
     }
 
-    ObservableEvent.prototype = {
+    Observable.prototype = {
 
-        constructor: ObservableEvent,
+        constructor: Observable,
 
         /**
          * whether current event has observers
@@ -388,7 +388,7 @@ KISSY.add('event/base/observable', function (S) {
         /**
          * remove one observer from current event's observers
          * @param {KISSY.Event.Observer} s
-         * @memberOf KISSY.Event.ObservableEvent.prototype
+         * @memberOf KISSY.Event.Observable.prototype
          */
         removeObserver: function (s) {
             var self = this,
@@ -437,7 +437,7 @@ KISSY.add('event/base/observable', function (S) {
         }
     };
 
-    return ObservableEvent;
+    return Observable;
 
 });
 /**
@@ -445,17 +445,17 @@ KISSY.add('event/base/observable', function (S) {
  * scalable event framework for kissy (refer DOM3 Events)
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/base', function (S, Utils, Object, Observer, ObservableEvent) {
+KISSY.add('event/base', function (S, Utils, Object, Observer, Observable) {
     /**
      * The event utility provides functions to add and remove event listeners.
      * @class KISSY.Event
      * @singleton
      */
-    return S.Event = {
-        _Utils: Utils,
-        _Object: Object,
-        _Observer: Observer,
-        _ObservableEvent: ObservableEvent
+    return {
+        Utils: Utils,
+        Object: Object,
+        Observer: Observer,
+        Observable: Observable
     };
 }, {
     requires: ['./base/utils', './base/object', './base/observer', './base/observable']

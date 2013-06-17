@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 7 13:45
+build time: Jun 17 23:52
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -298,9 +298,16 @@ KISSY.add("editor/plugin/draft", function (S, Editor, localStorage, Overlay, Men
                 tip = (draft.auto ? "自动" : "手动") + "保存于 : "
                     + date(draft.date);
                 versions.addItem({
-                    xclass: 'menuitem',
                     content: tip,
                     value: i
+                });
+            }
+
+            if(!drafts.length){
+                versions.addItem({
+                    disabled:true,
+                    content: '尚无历史',
+                    value: ''
                 });
             }
 

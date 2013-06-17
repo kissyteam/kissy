@@ -287,9 +287,16 @@ KISSY.add("editor/plugin/draft", function (S, Editor, localStorage, Overlay, Men
                 tip = (draft.auto ? "自动" : "手动") + "保存于 : "
                     + date(draft.date);
                 versions.addItem({
-                    xclass: 'menuitem',
                     content: tip,
                     value: i
+                });
+            }
+
+            if(!drafts.length){
+                versions.addItem({
+                    disabled:true,
+                    content: '尚无历史',
+                    value: ''
                 });
             }
 

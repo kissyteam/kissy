@@ -4,12 +4,12 @@
 */
 if (location.href.indexOf('__build') == -1) {
     KISSY.config('packages', {
-        "anim/base": {
-            "base": "/kissy/src/anim/sub-modules/base/src/base",
+        "anim": {
+            "base": "/kissy/src/anim/src/anim",
             "ignorePackageNameInUri": 1
         },
-        "anim/facade": {
-            "base": "/kissy/src/anim/sub-modules/facade/src/facade",
+        "anim/base": {
+            "base": "/kissy/src/anim/sub-modules/base/src/base",
             "ignorePackageNameInUri": 1
         },
         "anim/timer": {
@@ -68,12 +68,8 @@ if (location.href.indexOf('__build') == -1) {
             "base": "/kissy/src/date/i18n/src/i18n",
             "ignorePackageNameInUri": 1
         },
-        "dd/base": {
-            "base": "/kissy/src/dd/sub-modules/base/src/base",
-            "ignorePackageNameInUri": 1
-        },
-        "dd/droppable": {
-            "base": "/kissy/src/dd/sub-modules/droppable/src/droppable",
+        "dd": {
+            "base": "/kissy/src/dd/src/dd",
             "ignorePackageNameInUri": 1
         },
         "dd/plugin/constrain": {
@@ -104,8 +100,8 @@ if (location.href.indexOf('__build') == -1) {
             "base": "/kissy/src/dom/sub-modules/selector/src/selector",
             "ignorePackageNameInUri": 1
         },
-        "editor/core": {
-            "base": "/kissy/src/editor/sub-modules/core/src/core",
+        "editor": {
+            "base": "/kissy/src/editor/src/editor",
             "ignorePackageNameInUri": 1
         },
         "editor/plugin/back-color": {
@@ -472,6 +468,10 @@ if (location.href.indexOf('__build') == -1) {
             "base": "/kissy/src/editor/sub-modules/plugin/xiami-music/sub-modules/dialog/src/dialog",
             "ignorePackageNameInUri": 1
         },
+        "event": {
+            "base": "/kissy/src/event/src/event",
+            "ignorePackageNameInUri": 1
+        },
         "event/base": {
             "base": "/kissy/src/event/sub-modules/base/src/base",
             "ignorePackageNameInUri": 1
@@ -572,10 +572,6 @@ if (location.href.indexOf('__build') == -1) {
             "base": "/kissy/src/scrollview/sub-modules/plugin/scrollbar/src/scrollbar",
             "ignorePackageNameInUri": 1
         },
-        "seed/demo/project": {
-            "base": "/kissy/src/seed/demo/project/src/project",
-            "ignorePackageNameInUri": 1
-        },
         "seed": {
             "base": "/kissy/src/seed/src/seed",
             "ignorePackageNameInUri": 1
@@ -608,12 +604,12 @@ if (location.href.indexOf('__build') == -1) {
             "base": "/kissy/src/tree/src/tree",
             "ignorePackageNameInUri": 1
         },
-        "xtemplate/compiler": {
-            "base": "/kissy/src/xtemplate/sub-modules/compiler/src/compiler",
+        "xtemplate": {
+            "base": "/kissy/src/xtemplate/src/xtemplate",
             "ignorePackageNameInUri": 1
         },
-        "xtemplate/facade": {
-            "base": "/kissy/src/xtemplate/sub-modules/facade/src/facade",
+        "xtemplate/compiler": {
+            "base": "/kissy/src/xtemplate/sub-modules/compiler/src/compiler",
             "ignorePackageNameInUri": 1
         },
         "xtemplate/runtime": {

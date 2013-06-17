@@ -2,7 +2,7 @@
  * @module  scroll-spec
  * @author yiminghe@gmail.com
  */
-KISSY.use("dom,ua,node,dd/base,dd/plugin/scroll", function (S, DOM, UA, Node, DD, Scroll) {
+KISSY.use("dom,ua,node,dd,dd/plugin/scroll", function (S, DOM, UA, Node, DD, Scroll) {
     var Draggable = DD.Draggable,
         Gesture= S.Event.Gesture,
         $ = Node.all;

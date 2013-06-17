@@ -51,7 +51,7 @@ KISSY.add('event/base/observer', function (S, undefined) {
         /**
          * simple run current observer's user-defined function
          * @param {KISSY.Event.Object} event
-         * @param {KISSY.Event.ObservableEvent} ce
+         * @param {KISSY.Event.Observable} ce
          * @return {*} return value of current observer's user-defined function
          */
         simpleNotify: function (event, ce) {
@@ -69,7 +69,7 @@ KISSY.add('event/base/observer', function (S, undefined) {
          * current observer's notification.
          * @protected
          * @param {KISSY.Event.Object} event
-         * @param {KISSY.Event.ObservableEvent} ce
+         * @param {KISSY.Event.Observable} ce
          */
         notifyInternal: function (event, ce) {
             return this.simpleNotify(event, ce);

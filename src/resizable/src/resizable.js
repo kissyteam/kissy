@@ -345,4 +345,4 @@ KISSY.add("resizable", function (S, Node, RichBase, DD, undefined) {
     return Resizable;
 
 },
-    { requires: ["node", "rich-base", "dd/base"] });
+    { requires: ["node", "rich-base", "dd"] });

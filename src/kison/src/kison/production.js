@@ -24,14 +24,14 @@ KISSY.add("kison/production", function (S, Base) {
             var rhs = this.get("rhs");
             S.each(rhs, function (r, index) {
                 if (index == dot) {
-                    rhsStr += ".";
+                    rhsStr += " . ";
                 }
-                rhsStr += r;
+                rhsStr += r+' ';
             });
             if (dot == rhs.length) {
-                rhsStr += ".";
+                rhsStr += " . ";
             }
-            return this.get("symbol") + "=>" + rhsStr;
+            return this.get("symbol") + " => " + rhsStr;
         }
 
     }, {
@@ -46,7 +46,7 @@ KISSY.add("kison/production", function (S, Base) {
             rhs: {
                 value: []
             },
-            nullAble: {
+            nullable: {
                 value: false
             },
             action: {

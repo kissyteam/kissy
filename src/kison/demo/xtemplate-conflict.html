@@ -1,0 +1,110 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../../css/assets/dpl/base.css"/>
+    <link rel="stylesheet" href="../../css/assets/dpl/forms.css"/>
+    <link rel="stylesheet" href="../../button/assets/dpl.css"/>
+    <script src="/kissy/tools/third-party/syntaxhighlighter_3.0.83/scripts/shCore.js"></script>
+    <script src="/kissy/tools/third-party/syntaxhighlighter_3.0.83/scripts/shBrushJScript.js"></script>
+    <link type="text/css" rel="stylesheet"
+          href="/kissy/tools/third-party/syntaxhighlighter_3.0.83/styles/shCoreDefault.css"/>
+    <script src="/kissy/tools/third-party/beautify.js"></script>
+    <title> kison </title>
+</head>
+<body>
+<div class="container">
+
+    <div class="row">
+        <div class="span8">
+            <h2>LALR Grammar</h2>
+
+            <textarea id="grammar" rows="25" class="span8" readonly>
+            </textarea>
+        </div>
+
+        <div class="span6">
+            <h2>Code</h2>
+
+            <div>
+                <p>
+                    <textarea id="source" rows="8" class="span6" >{{n-10}}
+                    {{n+10}}</textarea>
+                </p>
+
+                <button id="p" class="ks-button">Parse using kison from KISSY</button>
+            </div>
+        </div>
+
+
+    </div>
+
+    <div class="row">
+        <h2>Generated Parser</h2>
+
+        <div>
+            <div id="gen">
+
+            </div>
+        </div>
+    </div>
+
+
+</div>
+<script src="/kissy/build/seed.js"></script>
+<script src="/kissy/src/package.js"></script>
+<script src="xtemplate-ast.js"></script>
+<script>
+    var MAPS = {},
+            FNS = {};
+
+    function js_beauty(str) {
+        var opts = {
+            "indent_size": "4",
+            "indent_char": " ",
+            "preserve_newlines": true,
+            "brace_style": "collapse",
+            "keep_array_indentation": false,
+            "space_after_anon_function": true
+        };
+        return js_beautify(str, opts);
+    }
+
+    KISSY.use("kison,io,node", function (S, KISON, IO) {
+
+        IO({
+            url: 'xtemplate-grammar-conflict.kison',
+            dataType: 'text',
+            success: function (data) {
+                $("#grammar").val(data);
+            }
+        });
+
+        var $ = S.all;
+
+        var gen = $('#gen');
+
+        $("#p").on("click", function () {
+            var grammar = S.trim($("#grammar").val());
+            var g = MAPS[grammar];
+            if (!g) {
+                var start = S.now();
+                var grammarObj = eval(grammar);
+                g = (MAPS[grammar] = new KISON.Grammar(grammarObj).genCode());
+                S.log("生成代码耗时: " + (S.now() - start) + "毫秒");
+            }
+            gen.html('<pre class="brush: js;">' + S.escapeHTML(js_beauty(g)) + '</pre>');
+            SyntaxHighlighter.highlight({}, gen.one("pre")[0]);
+            var parser = FNS[grammar] || (FNS[grammar] = new Function(g)());
+            start = S.now();
+            parser.yy = ast;
+            var ret = parser.parse($("#source").val());
+            S.log("parse 表达式耗时: " + (S.now() - start) + "毫秒");
+            S.log("最终结果：");
+            S.log(ret);
+        });
+
+    });
+</script>
+</body>
+</html>

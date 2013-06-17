@@ -60,5 +60,5 @@ KISSY.add('component/plugin/drag', function (S, RichBase, DD) {
     });
 
 }, {
-    requires: ['rich-base', 'dd/base']
+    requires: ['rich-base', 'dd']
 });

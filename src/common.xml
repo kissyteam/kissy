@@ -39,7 +39,8 @@
 
 
     <!-- 本 xml 需要的属性 -->
-    <property name="component.build.dir" value="${kissy.build.dir}/${component.name}/"/>
+    <property name="component.build.dir" value="${kissy.build.dir}/${component.name}/build"/>
+    <property name="build.component.dir" value="${kissy.build.dir}/${component.name}/"/>
     <property name="component.build.dir.tmp" value="${kissy.build.dir}/${component.name}/tmp/"/>
     <tstamp>
         <format property="timestamp.isoformat" pattern="yyyyMMddHHmmss" locale="en"/>
@@ -272,28 +273,33 @@
 
     <target name="clear">
         <!-- pkg 移到外围 -->
-        <move encoding="${charset}" todir="${component.build.dir}/..//">
+        <move encoding="${charset}" todir="${build.component.dir}/../">
             <fileset dir="${component.build.dir}"
                      includes="**/*-pkg.js,**/*-pkg-min.js"/>
             <mapper type="regexp" from="(.*)-pkg(.*)"
                     to="\1\2"/>
         </move>
 
+        <move todir="${build.component.dir}/">
+            <fileset dir="${component.build.dir}"
+                     includes="**/*"/>
+        </move>
+
+        <delete dir="${component.build.dir}"/>
 
         <!-- 空组件文件夹直接删除 -->
-        <condition property="component.build.dir.empty">
+        <condition property="build.component.dir.empty">
             <length length="0">
-                <fileset dir="${component.build.dir}"/>
+                <fileset dir="${build.component.dir}"/>
             </length>
         </condition>
 
         <ac:if>
-            <ac:isset property="component.build.dir.empty"/>
+            <ac:isset property="build.component.dir.empty"/>
             <ac:then>
-                <delete dir="${component.build.dir}"/>
+                <delete dir="${build.component.dir}"/>
             </ac:then>
         </ac:if>
-
 
         <!-- 空组件文件夹直接删除 -->
         <condition property="component.meta.dir.empty">

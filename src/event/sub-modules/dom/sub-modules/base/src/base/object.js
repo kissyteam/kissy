@@ -3,7 +3,7 @@
  * event object for dom
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/base/object', function (S, Event, undefined) {
+KISSY.add('event/dom/base/object', function (S, BaseEvent, undefined) {
 
     var DOCUMENT = S.Env.host.document,
         TRUE = true,
@@ -431,7 +431,7 @@ KISSY.add('event/dom/base/object', function (S, Event, undefined) {
 
     }
 
-    S.extend(DOMEventObject, Event._Object, {
+    S.extend(DOMEventObject, BaseEvent.Object, {
 
         constructor: DOMEventObject,
 
@@ -467,8 +467,6 @@ KISSY.add('event/dom/base/object', function (S, Event, undefined) {
             DOMEventObject.superclass.stopPropagation.call(self);
         }
     });
-
-    Event.DOMEventObject = DOMEventObject;
 
     return DOMEventObject;
 

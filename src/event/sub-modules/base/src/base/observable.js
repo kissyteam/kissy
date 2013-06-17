@@ -7,11 +7,11 @@ KISSY.add('event/base/observable', function (S) {
 
     /**
      * base custom event for registering and un-registering observer for specified event.
-     * @class KISSY.Event.ObservableEvent
+     * @class KISSY.Event.Observable
      * @private
      * @param {Object} cfg custom event's attribute
      */
-    function ObservableEvent(cfg) {
+    function Observable(cfg) {
         var self = this;
         self.currentTarget = null;
         S.mix(self, cfg);
@@ -22,9 +22,9 @@ KISSY.add('event/base/observable', function (S) {
          */
     }
 
-    ObservableEvent.prototype = {
+    Observable.prototype = {
 
-        constructor: ObservableEvent,
+        constructor: Observable,
 
         /**
          * whether current event has observers
@@ -45,7 +45,7 @@ KISSY.add('event/base/observable', function (S) {
         /**
          * remove one observer from current event's observers
          * @param {KISSY.Event.Observer} s
-         * @memberOf KISSY.Event.ObservableEvent.prototype
+         * @memberOf KISSY.Event.Observable.prototype
          */
         removeObserver: function (s) {
             var self = this,
@@ -94,6 +94,6 @@ KISSY.add('event/base/observable', function (S) {
         }
     };
 
-    return ObservableEvent;
+    return Observable;
 
 });

@@ -6,7 +6,7 @@ build example for kissy loader
 
     <!--入口文件模块所在目录-->
     <dirname property="current.dir" file="${ant.file.compressor.build}"/>
-    <property name="assets.dir" location="${current.dir}/src/"/>
+    <property name="assets.dir" location="${current.dir}/source/"/>
     <property name="build.dir" location="${current.dir}/build-combo/"/>
     
     <!--项目文件编码-->

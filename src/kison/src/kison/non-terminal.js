@@ -21,7 +21,7 @@ KISSY.add("kison/non-terminal", function (S, Base) {
             symbol:{
 
             },
-            nullAble:{
+            nullable:{
                 value:false
             }
         }

@@ -3,6 +3,9 @@
  * @author yiminghe@gmail.com
  */
 KISSY.use("dom,event/dom/base", function (S, DOM, Event) {
+
+    var ObservableDOMEvent= S.require('event/dom/base/observable');
+
     describe("fire", function () {
 
         it('support once', function () {
@@ -23,7 +26,7 @@ KISSY.use("dom,event/dom/base", function (S, DOM, Event) {
 
             expect(ret).toBe(1);
 
-            expect(Event._ObservableDOMEvent.getCustomEvents(n)).toBe(undefined);
+            expect(ObservableDOMEvent.getCustomEvents(n)).toBe(undefined);
 
         });
 

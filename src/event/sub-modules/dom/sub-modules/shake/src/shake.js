@@ -3,8 +3,8 @@
  * simulate shake gesture by listening devicemotion event
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/shake', function (S, EventDomBase, undefined) {
-    var Special = EventDomBase._Special,
+KISSY.add('event/dom/shake', function (S, DOMEvent, undefined) {
+    var Special = DOMEvent.Special,
         start = 5,
         enough = 20,
         shaking = 0,
@@ -15,7 +15,7 @@ KISSY.add('event/dom/shake', function (S, EventDomBase, undefined) {
         devicemotion = 'devicemotion',
         checkShake = S.buffer(function () {
             if (shaking) {
-                EventDomBase.fireHandler(win, 'shake', {
+                DOMEvent.fireHandler(win, 'shake', {
                     accelerationIncludingGravity: {
                         x: lastX,
                         y: lastY,

@@ -4,6 +4,8 @@
  */
 KISSY.use("event/custom", function (S, Event) {
 
+    var ObservableCustomEvent= S.require('event/custom/observable');
+
     var FIRST = '1', SECOND = '2', SEP = '=';
 
     describe("custom_event", function () {
@@ -47,8 +49,8 @@ KISSY.use("event/custom", function (S, Event) {
 
             expect(ret).toEqual([1,2]);
 
-            expect(Event._ObservableCustomEvent
-                .getCustomEvents(t)['click'].hasObserver())
+            expect(ObservableCustomEvent
+                .getCustomEvents(t,1)['click'].hasObserver())
                 .toBeFalsy();
         });
 
@@ -299,8 +301,8 @@ KISSY.use("event/custom", function (S, Event) {
             eventTarget.on("click", noop3);
             eventTarget.on("keydown", noop);
             (function () {
-                var events = Event._ObservableCustomEvent.
-                    getCustomEvents(eventTarget);
+                var events = ObservableCustomEvent.
+                    getCustomEvents(eventTarget,1);
 
                 var num = 0;
                 for (i in events) {
@@ -316,8 +318,8 @@ KISSY.use("event/custom", function (S, Event) {
             eventTarget.detach("click", noop);
 
             (function () {
-                var events = Event._ObservableCustomEvent
-                    .getCustomEvents(eventTarget);
+                var events = ObservableCustomEvent
+                    .getCustomEvents(eventTarget,1);
                 var num = 0;
 
                 for (i in events) {
@@ -335,7 +337,7 @@ KISSY.use("event/custom", function (S, Event) {
             eventTarget.detach("click");
 
             (function () {
-                var events = Event._ObservableCustomEvent.getCustomEvents(eventTarget);
+                var events = ObservableCustomEvent.getCustomEvents(eventTarget,1);
 
                 expect(events['keydown'].hasObserver()).toBeTruthy();
                 var clickObserver = events["click"];
@@ -345,8 +347,8 @@ KISSY.use("event/custom", function (S, Event) {
             eventTarget.detach();
 
             (function () {
-                var events = Event._ObservableCustomEvent
-                    .getCustomEvents(eventTarget);
+                var events = ObservableCustomEvent
+                    .getCustomEvents(eventTarget,1);
                 for(var o in events){
                     expect(events[o].hasObserver()).toBeFalsy();
                 }

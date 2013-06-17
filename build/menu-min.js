@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 7 13:54
+build time: Jun 17 23:58
 */
 KISSY.add("menu/menu-render",function(h,b){return b.Render.extend({initializer:function(){this.get("elAttrs").role="menu"},setAriaActiveDescendant:function(b){var c=this.get("el");b?(b=b.get("el").attr("id"),c.attr("aria-activedescendant",b)):c.attr("aria-activedescendant","")},containsElement:function(b){var c=this.get("el");return c[0]===b||c.contains(b)}})},{requires:["component/base"]});
 KISSY.add("menu/base",function(h,b,f,c,e,a){function i(a){this.get("view").setAriaActiveDescendant(a.newVal)}var g=b.KeyCode,d=f.Controller.extend([c.DelegateChildren,c.DecorateChildren],{isMenu:1,_onSetHighlightedItem:function(a,b){var c;a&&b&&(c=b.prevVal)&&c.set("highlighted",!1,{data:{byPassSetHighlightedItem:1}})},_onSetVisible:function(a,b){d.superclass._onSetVisible.apply(this,arguments);var c;!a&&(c=this.get("highlightedItem"))&&c.set("highlighted",!1)},bindUI:function(){this.on("afterHighlightedItemChange",

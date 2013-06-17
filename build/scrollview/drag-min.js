@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 7 13:54
+build time: Jun 17 23:59
 */
 KISSY.add("scrollview/drag",function(s,C,D,E){function t(b,c,a){var c=c.timeStamp,g=b.get("scroll"+s.ucfirst(a));b._startScroll[a]=g;b._swipe[a].startTime=c;b._swipe[a].scroll=g}function v(b,c,a,g){if(!w(b,a)){var d="left"==a?"pageX":"pageY",h=b._lastPageXY,j,f=b._startScroll[a]-(c[d]-g[a]),g=c.timeStamp,i=b.minScroll,e=b.maxScroll,k=b._lastDirection,m=b._swipe,l;h[d]&&(j=c[d]==h[d],l=0<c[d]-h[d]);f<i[a]?(f=i[a]-f,f*=x,f=i[a]-f):f>e[a]&&(f-=e[a],f*=x,f=e[a]+f);i=g-m[a].startTime;if(!j&&void 0!==k[a]&&
 k[a]!==l||i>F)m[a].startTime=g,m[a].scroll=f;b.set("left"==a?"scrollLeft":"scrollTop",f);k[a]=l;h[d]=c[d]}}function w(b,c){return!b._allowScroll[c]&&b.get("left"==c?"lockX":"lockY")?1:0}function y(b,c,a,g){if(w(b,a))g();else{var d="left"==a,h="scroll"+(d?"Left":"Top"),j=b.get("contentEl"),f=b.get(h),i={},e=b.minScroll,k=b.maxScroll,m=c.timeStamp,c=b._swipe,l;f<e[a]?l=e[a]:f>k[a]&&(l=k[a]);void 0!==l?(a=[void 0,void 0,{duration:b.get("bounceDuration"),easing:b.get("bounceEasing"),queue:!1,complete:g}],
@@ -11,4 +11,4 @@ this.stopAnimation()},_onGestureStart:function(b){this.stopAnimation();if(this._
 1},_onDrag:function(b){var c=this._dragStartMousePos;v(this,b,"left",c);v(this,b,"top",c);this.fire("scrollMove",{pageX:b.pageX,pageY:b.pageY})},_onDragEnd:function(b){function c(){g++;if(2==g){var c=function(){a.fire("scrollEnd",{pageX:b.pageX,pageY:b.pageY,fromPageIndex:t,pageIndex:a.get("pageIndex")})};if(a._pagesXY){a.get("snapThreshold");var d=a.get("snapDuration"),n=a.get("snapEasing"),t=a.get("pageIndex"),u=a.get("scrollLeft"),o=a.get("scrollTop"),d={duration:d,easing:n,complete:c},n=a._pagesXY.concat([]);
 a.__scrolling=0;if(e||k)if(e&&k&&f&&i){var p=[],q=void 0;s.each(n,function(a){a&&(0<h&&a.x>u?p.push(a):0>h&&a.x<u&&p.push(a))});var r;0<j?(r=Number.MAX_VALUE,s.each(p,function(a){a.y>o&&r<a.y-o&&(r=a.y-o,q=p.index)})):(r=Number.MAX_VALUE,s.each(p,function(a){a.y<o&&r<o-a.y&&(r=o-a.y,q=p.index)}));void 0!=q?q!=t?a.scrollToPage(q,d):(a.scrollToPage(q),c()):c()}else e&&f||k&&i?(c=a._getPageIndexFromXY(e?u:o,e,e?h:j),a.scrollToPage(c,d)):(a.scrollToPage(a.get("pageIndex")),c())}else c()}}var a=this,g=
 0,d=a._dragStartMousePos,h=d.left-b.pageX,j=d.top-b.pageY,d=a.get("snapThreshold"),f=Math.abs(h)>d,i=Math.abs(j)>d,e=a._allowScroll.left,k=a._allowScroll.top;a.fire("dragend",{pageX:b.pageX,pageY:b.pageY});y(a,b,"left",c);y(a,b,"top",c)},_initStates:function(){this._lastPageXY={};this._lastDirection={};this._swipe={left:{},top:{}};this._startScroll={}},_onSetDisabled:function(b){this.dd.set("disabled",b)}},{ATTRS:{lockX:{value:!0},lockY:{value:!1},snapThreshold:{value:5},bounceDuration:{value:0.4},
-bounceEasing:{value:"easeOut"}}})},{requires:["./base","dd/base","node"]});
+bounceEasing:{value:"easeOut"}}})},{requires:["./base","dd","node"]});

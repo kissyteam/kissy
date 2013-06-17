@@ -3,10 +3,10 @@
  * hashchange event for non-standard browser
  * @author yiminghe@gmail.com, xiaomacji@gmail.com
  */
-KISSY.add('event/dom/hashchange', function (S, Event, DOM) {
+KISSY.add('event/dom/hashchange', function (S, DOMEvent, DOM) {
 
     var UA = S.UA,
-        special = Event._Special,
+        Special = DOMEvent.Special,
         win = S.Env.host,
         doc = win.document,
         docMode = doc && doc['documentMode'],
@@ -14,7 +14,7 @@ KISSY.add('event/dom/hashchange', function (S, Event, DOM) {
         ie = docMode || UA['ie'],
         HASH_CHANGE = 'hashchange';
 
-    Event.REPLACE_HISTORY = REPLACE_HISTORY;
+    DOMEvent.REPLACE_HISTORY = REPLACE_HISTORY;
 
     // 1. 不支持 hashchange 事件，支持 hash 历史导航(opera??)：定时器监控
     // 2. 不支持 hashchange 事件，不支持 hash 历史导航(ie67) : iframe + 定时器
@@ -101,7 +101,7 @@ KISSY.add('event/dom/hashchange', function (S, Event, DOM) {
         notifyHashChange = function () {
             // S.log('hash changed : ' + getHash());
             // does not need bubbling
-            Event.fireHandler(win, HASH_CHANGE);
+            DOMEvent.fireHandler(win, HASH_CHANGE);
         },
         setup = function () {
             if (!timer) {
@@ -139,13 +139,13 @@ KISSY.add('event/dom/hashchange', function (S, Event, DOM) {
                 DOM.prepend(iframe, doc.documentElement);
 
                 // init，第一次触发，以后都是 onIframeLoad
-                Event.add(iframe, 'load', function () {
-                    Event.remove(iframe, 'load');
+                DOMEvent.add(iframe, 'load', function () {
+                    DOMEvent.remove(iframe, 'load');
                     // Update the iframe with the initial location hash, if any. This
                     // will create an initial history entry that the user can return to
                     // after the state has changed.
                     hashChange(getHash());
-                    Event.add(iframe, 'load', onIframeLoad);
+                    DOMEvent.add(iframe, 'load', onIframeLoad);
                     poll();
                 });
 
@@ -197,13 +197,13 @@ KISSY.add('event/dom/hashchange', function (S, Event, DOM) {
         tearDown = function () {
             timer && clearTimeout(timer);
             timer = 0;
-            Event.detach(iframe);
+            DOMEvent.detach(iframe);
             DOM.remove(iframe);
             iframe = 0;
         };
     }
 
-    special[HASH_CHANGE] = {
+    Special[HASH_CHANGE] = {
         setup: function () {
             if (this !== win) {
                 return;

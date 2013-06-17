@@ -25,6 +25,8 @@ KISSY.use("dom,event/dom/base,ua", function (S, DOM, Event, UA) {
         </div>\
     </div>';
 
+    var DOMEventUtils= S.require('event/dom/base/utils');
+
     describe('event', function () {
 
         var doc = document,
@@ -532,7 +534,7 @@ KISSY.use("dom,event/dom/base,ua", function (S, DOM, Event, UA) {
             Event.on(domNode, "keydown", noop);
 
             (function () {
-                var eventDesc = Event._DOMUtils.data(domNode);
+                var eventDesc = DOMEventUtils.data(domNode);
                 var num = 0;
                 for (i in eventDesc) {
                     expect(S.inArray(i, ["handle", "events"]))
@@ -559,7 +561,7 @@ KISSY.use("dom,event/dom/base,ua", function (S, DOM, Event, UA) {
             Event.remove(domNode, "click", noop);
 
             (function () {
-                var eventDesc = Event._DOMUtils.data(domNode);
+                var eventDesc = DOMEventUtils.data(domNode);
                 var num = 0;
                 for (i in eventDesc) {
 
@@ -587,7 +589,7 @@ KISSY.use("dom,event/dom/base,ua", function (S, DOM, Event, UA) {
             Event.remove(domNode, "click");
 
             (function () {
-                var eventDesc = Event._DOMUtils.data(domNode);
+                var eventDesc = DOMEventUtils.data(domNode);
                 var num = 0;
                 for (i in eventDesc) {
 
@@ -615,7 +617,7 @@ KISSY.use("dom,event/dom/base,ua", function (S, DOM, Event, UA) {
             Event.remove(domNode);
 
             (function () {
-                var eventDesc = Event._DOMUtils.data(domNode);
+                var eventDesc = DOMEventUtils.data(domNode);
                 expect(eventDesc).toBe(undefined);
             })();
 

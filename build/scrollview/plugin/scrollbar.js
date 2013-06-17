@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 7 13:54
+build time: Jun 17 23:59
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -442,7 +442,7 @@ KISSY.add('scrollview/plugin/scrollbar/control', function (S, Node, DD, Componen
     });
 
 }, {
-    requires: ['node', 'dd/base', 'component/base', './render']
+    requires: ['node', 'dd', 'component/base', './render']
 });
 /**
  * scrollbar plugin for KISSY scrollview

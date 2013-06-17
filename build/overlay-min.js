@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 7 13:54
+build time: Jun 17 23:59
 */
 KISSY.add("overlay/extension/loading",function(){function e(){}e.prototype={loading:function(){this.get("view").loading();return this},unloading:function(){this.get("view").unloading();return this}};return e});
 KISSY.add("overlay/extension/mask",function(e,d){function c(){}function a(a,c,e,d){var k=a.effect||b;if(k==b)d.ksSetMaskVisible(e);else{d.ksSetMaskVisible(e);var d=a.duration,a=a.easing,o=e?1:0;c.stop(1,1);c.css("display",e?b:"block");c[k+f[k][o]](d,function(){c.css("display","")},a)}}c.ATTRS={mask:{view:1,value:!1},maskNode:{view:1}};var b="none",f={fade:["Out","In"],slide:["Up","Down"]};c.prototype={__bindUI:function(){var b,c,e=this.get("el"),f=this.get("view");if(c=this.get("mask")){b=this.get("maskNode");

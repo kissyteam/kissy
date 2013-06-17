@@ -144,8 +144,8 @@ KISSY.use('xtemplate', function (S, XTemplate) {
                     'not has title2');
             });
 
-            it('support negative for if args', function () {
-                var tpl = '{{#if n===-1}}-1{{else}}1{{/if}}';
+            it('does not support negative number', function () {
+                var tpl = '{{#if n===0-1}}-1{{else}}1{{/if}}';
 
                 var data = {
                     n: -1
@@ -155,20 +155,7 @@ KISSY.use('xtemplate', function (S, XTemplate) {
 
                 expect(render).toBe('-1');
 
-                tpl = '{{#if n===--1}}-1{{else}}1{{/if}}';
-
-                data = {
-                    n: 1
-                };
-
-                try {
-                    new XTemplate(tpl).render(data);
-                } catch (e) {
-                    expect(e.message.indexOf('Syntax error') > -1).toBeTruthy();
-                }
-
-
-                tpl = '{{#if n===0--1}}1{{else}}-1{{/if}}';
+                tpl = '{{#if n===1}}-1{{else}}1{{/if}}';
 
                 data = {
                     n: 1
@@ -183,16 +170,16 @@ KISSY.use('xtemplate', function (S, XTemplate) {
 
             describe('each', function () {
 
-                it("support object",function(){
-                   var tpl='{{#each data}}{{xkey}}:{{.}}{{/each}}';
-                    var data={
-                        data:{
-                            x:1,
-                            y:2
+                it("support object", function () {
+                    var tpl = '{{#each data}}{{xkey}}:{{.}}{{/each}}';
+                    var data = {
+                        data: {
+                            x: 1,
+                            y: 2
                         }
                     };
 
-                    var render=new XTemplate(tpl).render(data);
+                    var render = new XTemplate(tpl).render(data);
 
                     expect(render).toBe('x:1y:2');
                 });
@@ -364,37 +351,37 @@ KISSY.use('xtemplate', function (S, XTemplate) {
 
             });
 
-            describe('parent scope',function(){
+            describe('parent scope', function () {
 
-               it('support for with',function(){
+                it('support for with', function () {
 
-                   var tpl = '{{#with data}}' +
-                       '{{#with p}}' +
-                       '{{name}}-{{age}}-{{../l2}}-{{../../l1}}' +
-                       '{{/with}}' +
-                       '{{/with}}';
+                    var tpl = '{{#with data}}' +
+                        '{{#with p}}' +
+                        '{{name}}-{{age}}-{{../l2}}-{{../../l1}}' +
+                        '{{/with}}' +
+                        '{{/with}}';
 
-                   var data = {
-                       l1: 'l1',
-                       l2:'l1_2',
-                       data: {
-                           l1:'l2_1',
-                           l2: 'l2',
-                           p: {
-                               l1:'l3_1',
-                               l2: 'l3_2',
-                               name: 'h',
-                               age: 2
-                           }
+                    var data = {
+                        l1: 'l1',
+                        l2: 'l1_2',
+                        data: {
+                            l1: 'l2_1',
+                            l2: 'l2',
+                            p: {
+                                l1: 'l3_1',
+                                l2: 'l3_2',
+                                name: 'h',
+                                age: 2
+                            }
 
-                       }
-                   };
+                        }
+                    };
 
-                   var render = new XTemplate(tpl).render(data);
+                    var render = new XTemplate(tpl).render(data);
 
-                   expect(render).toBe('h-2-l2-l1');
+                    expect(render).toBe('h-2-l2-l1');
 
-               });
+                });
 
                 it('support for each', function () {
 
@@ -676,6 +663,16 @@ KISSY.use('xtemplate', function (S, XTemplate) {
 
             describe('expression', function () {
 
+                it('differentiate negative number and minus', function () {
+                    var tpl = '{{n-1}}';
+
+                    var data = {
+                        n: 10
+                    };
+
+                    expect(new XTemplate(tpl).render(data)).toBe('9');
+                });
+
                 it('support expression for variable', function () {
 
                     var tpl = '{{n+3*4/2}}';
@@ -750,6 +747,7 @@ KISSY.use('xtemplate', function (S, XTemplate) {
 
                     var tpl5 = '{{#if n<5}}0{{else}}1{{/if}}';
 
+                    var tpl6 = '{{#if n>=4}}1{{else}}0{{/if}}';
 
                     var data = {
                             n: 5,
@@ -772,6 +770,8 @@ KISSY.use('xtemplate', function (S, XTemplate) {
                     expect(new XTemplate(tpl4).render(data3)).toBe('3');
 
                     expect(new XTemplate(tpl5).render({n: 5})).toBe('1');
+
+                    expect(new XTemplate(tpl6).render({n: 4})).toBe('1');
                 });
 
 

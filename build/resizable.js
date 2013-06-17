@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 7 13:54
+build time: Jun 17 23:59
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -356,5 +356,5 @@ KISSY.add("resizable", function (S, Node, RichBase, DD, undefined) {
     return Resizable;
 
 },
-    { requires: ["node", "rich-base", "dd/base"] });
+    { requires: ["node", "rich-base", "dd"] });
 

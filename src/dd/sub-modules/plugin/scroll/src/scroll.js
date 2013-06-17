@@ -269,5 +269,5 @@ KISSY.add('dd/plugin/scroll', function (S, DD, Base, Node) {
 
     return Scroll;
 }, {
-    requires: ['dd/base', 'base', 'node']
+    requires: ['dd', 'base', 'node']
 });

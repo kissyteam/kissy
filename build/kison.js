@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 7 13:53
+build time: Jun 17 23:58
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -187,7 +187,7 @@ KISSY.add("kison/item-set", function (S, Base) {
          * Insert item by order
          * @param item
          */
-        addItem:function (item) {
+        addItem: function (item) {
             var items = this.get("items");
             for (var i = 0; i < items.length; i++) {
                 if (items[i].get("production").toString() > item.get("production").toString()) {
@@ -197,11 +197,11 @@ KISSY.add("kison/item-set", function (S, Base) {
             items.splice(i, 0, item);
         },
 
-        size:function () {
+        size: function () {
             return this.get("items").length;
         },
 
-        findItemIndex:function (item, ignoreLookAhead) {
+        findItemIndex: function (item, ignoreLookAhead) {
             var oneItems = this.get("items");
             for (var i = 0; i < oneItems.length; i++) {
                 if (oneItems[i].equals(item, ignoreLookAhead)) {
@@ -211,11 +211,11 @@ KISSY.add("kison/item-set", function (S, Base) {
             return -1;
         },
 
-        getItemAt:function (index) {
+        getItemAt: function (index) {
             return this.get("items")[index];
         },
 
-        equals:function (other, ignoreLookAhead) {
+        equals: function (other, ignoreLookAhead) {
             var oneItems = this.get("items"),
                 i,
                 otherItems = other.get("items");
@@ -229,39 +229,48 @@ KISSY.add("kison/item-set", function (S, Base) {
             }
             return true;
         },
-        toString:function () {
-            var ret = [];
+        toString: function (withGoto) {
+            var ret = [],
+                gotos = this.get('gotos');
             S.each(this.get("items"), function (item) {
                 ret.push(item.toString());
             });
+            if (withGoto) {
+                ret.push('start gotos:');
+                S.each(gotos, function (itemSet, symbol) {
+                    ret.push(symbol + ' -> ');
+                    ret.push(itemSet.toString())
+                });
+                ret.push('end gotos:');
+            }
             return ret.join("\n");
         },
 
-        addReverseGoto:function (symbol, item) {
+        addReverseGoto: function (symbol, item) {
             var reverseGotos = this.get("reverseGotos");
             reverseGotos[symbol] = reverseGotos[symbol] || [];
             reverseGotos[symbol].push(item);
         }
 
     }, {
-        ATTRS:{
-            items:{
-                value:[]
+        ATTRS: {
+            items: {
+                value: []
             },
-            gotos:{
-                value:{}
+            gotos: {
+                value: {}
             },
-            reverseGotos:{
+            reverseGotos: {
                 // 多个来源同一个symbol指向自己
                 //{ c: [x,y]}
-                value:{}
+                value: {}
             }
         }
     });
 
     return ItemSet;
 }, {
-    requires:['base']
+    requires: ['base']
 });
 /**
  * NonTerminal Set for KISON
@@ -286,7 +295,7 @@ KISSY.add("kison/non-terminal", function (S, Base) {
             symbol:{
 
             },
-            nullAble:{
+            nullable:{
                 value:false
             }
         }
@@ -607,14 +616,14 @@ KISSY.add("kison/production", function (S, Base) {
             var rhs = this.get("rhs");
             S.each(rhs, function (r, index) {
                 if (index == dot) {
-                    rhsStr += ".";
+                    rhsStr += " . ";
                 }
-                rhsStr += r;
+                rhsStr += r+' ';
             });
             if (dot == rhs.length) {
-                rhsStr += ".";
+                rhsStr += " . ";
             }
-            return this.get("symbol") + "=>" + rhsStr;
+            return this.get("symbol") + " => " + rhsStr;
         }
 
     }, {
@@ -629,7 +638,7 @@ KISSY.add("kison/production", function (S, Base) {
             rhs: {
                 value: []
             },
-            nullAble: {
+            nullable: {
                 value: false
             },
             action: {
@@ -658,7 +667,9 @@ KISSY.add("kison/grammar", function (S, Base, Utils, Item, ItemSet, NonTerminal,
             TO_INDEX: 2
         },
         serializeObject = Utils.serializeObject,
-        mix = S.mix, END_TAG = Lexer.STATIC.END_TAG, START_TAG = '$START';
+        mix = S.mix,
+        END_TAG = Lexer.STATIC.END_TAG,
+        START_TAG = '$START';
 
     function setSize(set3) {
         var count = 0, i;
@@ -670,21 +681,43 @@ KISSY.add("kison/grammar", function (S, Base, Utils, Item, ItemSet, NonTerminal,
 
     function indexOf(obj, array) {
         for (var i = 0; i < array.length; i++) {
-
             if (obj.equals(array[i])) {
                 return i;
             }
-
         }
         return -1;
     }
 
+    function visualizeAction(action, productions, itemSets) {
+        switch (action[GrammarConst.TYPE_INDEX]) {
+            case GrammarConst.SHIFT_TYPE:
+                S.log('shift');
+                break;
+            case GrammarConst.REDUCE_TYPE:
+                S.log('reduce');
+                break;
+            case GrammarConst.ACCEPT_TYPE:
+                S.log('accept');
+                break;
+        }
+        S.log('from production:');
+        if (action[GrammarConst.PRODUCTION_INDEX] != undefined) {
+            S.log(productions[action[GrammarConst.PRODUCTION_INDEX]] + '');
+        } else {
+            S.log('undefined');
+        }
+        S.log('to itemSet:');
+        if (action[GrammarConst.TO_INDEX] != undefined) {
+            S.log(itemSets[action[GrammarConst.TO_INDEX]].toString(1));
+        } else {
+            S.log('undefined');
+        }
+    }
 
     function Grammar() {
         var self = this;
         Grammar.superclass.constructor.apply(self, arguments);
     }
-
 
     S.extend(Grammar, Base, {
 
@@ -709,12 +742,11 @@ KISSY.add("kison/grammar", function (S, Base, Utils, Item, ItemSet, NonTerminal,
 
             self.buildTerminals();
             self.buildNonTerminals();
-            self.buildNullAble();
+            self.buildNullable();
             self.buildFirsts();
             self.buildItemSet();
             self.buildLalrItemSets();
             self.buildTable();
-
         },
 
         buildTerminals: function () {
@@ -759,7 +791,7 @@ KISSY.add("kison/grammar", function (S, Base, Utils, Item, ItemSet, NonTerminal,
             });
         },
 
-        buildNullAble: function () {
+        buildNullable: function () {
             var self = this,
                 i,
                 rhs,
@@ -777,19 +809,17 @@ KISSY.add("kison/grammar", function (S, Base, Utils, Item, ItemSet, NonTerminal,
                 // 传递
                 // S -> T
                 // T -> t
-
-
                 // check if each production is null able
                 S.each(self.get("productions"), function (production) {
-                    if (!production.get("nullAble")) {
+                    if (!production.get("nullable")) {
                         rhs = production.get("rhs");
                         for (i = 0, n = 0; t = rhs[i]; ++i) {
-                            if (self.isNullAble(t)) {
+                            if (self.isNullable(t)) {
                                 n++;
                             }
                         }
                         if (n === i) { // production is null able if all tokens are null able
-                            production.set("nullAble", cont = true);
+                            production.set("nullable", cont = true);
                         }
                     }
                 });
@@ -797,11 +827,11 @@ KISSY.add("kison/grammar", function (S, Base, Utils, Item, ItemSet, NonTerminal,
                 //check if each symbol is null able
                 for (symbol in nonTerminals) {
 
-                    if (!nonTerminals[symbol].get("nullAble")) {
+                    if (!nonTerminals[symbol].get("nullable")) {
                         productions = nonTerminals[symbol].get("productions");
                         for (i = 0; production = productions[i]; i++) {
-                            if (production.get("nullAble")) {
-                                nonTerminals[symbol].set("nullAble", cont = true);
+                            if (production.get("nullable")) {
+                                nonTerminals[symbol].set("nullable", cont = true);
                                 break;
                             }
                         }
@@ -811,13 +841,13 @@ KISSY.add("kison/grammar", function (S, Base, Utils, Item, ItemSet, NonTerminal,
             }
         },
 
-        isNullAble: function (symbol) {
+        isNullable: function (symbol) {
             var self = this,
                 nonTerminals = self.get("nonTerminals");
             // rhs
             if (symbol instanceof Array) {
                 for (var i = 0, t; t = symbol[i]; ++i) {
-                    if (!self.isNullAble(t)) {
+                    if (!self.isNullable(t)) {
                         return false;
                     }
                 }
@@ -827,7 +857,7 @@ KISSY.add("kison/grammar", function (S, Base, Utils, Item, ItemSet, NonTerminal,
                 return false;
                 // non terminal
             } else {
-                return nonTerminals[symbol].get("nullAble");
+                return nonTerminals[symbol].get("nullable");
             }
         },
 
@@ -845,7 +875,7 @@ KISSY.add("kison/grammar", function (S, Base, Utils, Item, ItemSet, NonTerminal,
                     } else {
                         mix(firsts, nonTerminals[t].get("firsts"));
                     }
-                    if (!self.isNullAble(t))
+                    if (!self.isNullable(t))
                         break;
                 }
                 return firsts;
@@ -948,8 +978,10 @@ KISSY.add("kison/grammar", function (S, Base, Utils, Item, ItemSet, NonTerminal,
                                 itemSet.addItem(newItem);
                                 cont = true;
                             }
+
                         }
                     });
+
                 });
             }
 
@@ -1064,7 +1096,8 @@ KISSY.add("kison/grammar", function (S, Base, Utils, Item, ItemSet, NonTerminal,
         },
 
         buildLalrItemSets: function () {
-            var itemSets = this.get("itemSets"), i, j, one, two;
+            var itemSets = this.get("itemSets"),
+                i, j, one, two;
 
             for (i = 0; i < itemSets.length; i++) {
                 one = itemSets[i];
@@ -1104,40 +1137,45 @@ KISSY.add("kison/grammar", function (S, Base, Utils, Item, ItemSet, NonTerminal,
                 table = self.get("table"),
                 itemSets = self.get("itemSets"),
                 productions = self.get("productions"),
+                mappedStartTag = lexer.mapSymbol(START_TAG),
+                mappedEndTag = lexer.mapSymbol(END_TAG),
                 gotos = {},
                 action = {},
                 nonTerminals,
                 i,
                 itemSet,
                 t;
+
             table.gotos = gotos;
             table.action = action;
             nonTerminals = self.get("nonTerminals");
-            for (i = 0; i < itemSets.length; i++) {
-                itemSet = itemSets[i];
 
-                S.each(itemSet.get("gotos"), function (anotherItemSet, symbol) {
-                    if (!nonTerminals[symbol]) {
-                        action[i] = action[i] || {};
-                        t = action[i][symbol] = [];
-                        t[GrammarConst.TYPE_INDEX] = GrammarConst.SHIFT_TYPE;
-                        t[GrammarConst.PRODUCTION_INDEX] = 0;
-                        t[GrammarConst.TO_INDEX] = indexOf(anotherItemSet, itemSets);
-                    } else {
-                        gotos[i] = gotos[i] || {};
-                        gotos[i][symbol] = indexOf(anotherItemSet, itemSets);
-                    }
-                });
+            for (i = 0; i < itemSets.length; i++) {
+
+                itemSet = itemSets[i];
 
                 S.each(itemSet.get("items"), function (item) {
                     var production = item.get("production");
+                    var val;
                     if (item.get("dotPosition") == production.get("rhs").length) {
-                        if (production.get("symbol") == lexer.mapSymbol(START_TAG)) {
-                            if (item.get("lookAhead")[lexer.mapSymbol(END_TAG)]) {
+                        if (production.get("symbol") == mappedStartTag) {
+                            if (item.get("lookAhead")[mappedEndTag]) {
                                 action[i] = action[i] || {};
-                                t = action[i][lexer.mapSymbol(END_TAG)] = [];
-                                t[GrammarConst.TYPE_INDEX] = GrammarConst.ACCEPT_TYPE;
-                                t[GrammarConst.TO_INDEX] = t[GrammarConst.PRODUCTION_INDEX] = 0;
+                                t = action[i][mappedEndTag];
+                                val = [];
+                                val[GrammarConst.TYPE_INDEX] = GrammarConst.ACCEPT_TYPE;
+                                if (t && t.toString() != val.toString()) {
+                                    S.log(new Array(29).join('*'));
+                                    S.log('***** conflict in reduce: action already defined ->',
+                                        'warn');
+                                    S.log('***** current item:', 'info');
+                                    S.log(item.toString());
+                                    S.log('***** current action:', 'info');
+                                    visualizeAction(t, productions, itemSets);
+                                    S.log('***** will be overwritten ->', 'info');
+                                    visualizeAction(val, productions, itemSets);
+                                }
+                                action[i][mappedEndTag] = val;
                             }
                         } else {
                             action[i] = action[i] || {};
@@ -1146,14 +1184,75 @@ KISSY.add("kison/grammar", function (S, Base, Utils, Item, ItemSet, NonTerminal,
                             // 2 -> f, f 's lookahead contains *
                             // f !-> e, e 's lookahead does not contain *
                             S.each(item.get("lookAhead"), function (_, l) {
-                                t = action[i][l] = [];
-                                t[GrammarConst.TYPE_INDEX] = GrammarConst.REDUCE_TYPE;
-                                t[GrammarConst.TO_INDEX] = 0;
-                                t[GrammarConst.PRODUCTION_INDEX] = S.indexOf(production, productions);
+                                t = action[i][l];
+                                val = [];
+                                val[GrammarConst.TYPE_INDEX] = GrammarConst.REDUCE_TYPE;
+                                val[GrammarConst.PRODUCTION_INDEX] = S.indexOf(production, productions);
+                                if (t && t.toString() != val.toString()) {
+                                    S.log(new Array(29).join('*'));
+                                    S.log('conflict in reduce: action already defined ->',
+                                        'warn');
+                                    S.log('***** current item:', 'info');
+                                    S.log(item.toString());
+                                    S.log('***** current action:', 'info');
+                                    visualizeAction(t, productions, itemSets);
+                                    S.log('***** will be overwritten ->', 'info');
+                                    visualizeAction(val, productions, itemSets);
+                                }
+                                action[i][l] = val;
                             });
                         }
                     }
                 });
+
+                // shift over reduce
+                S.each(itemSet.get("gotos"), function (anotherItemSet, symbol) {
+                    var val;
+                    if (!nonTerminals[symbol]) {
+                        action[i] = action[i] || {};
+                        val = [];
+                        val[GrammarConst.TYPE_INDEX] = GrammarConst.SHIFT_TYPE;
+                        val[GrammarConst.TO_INDEX] = indexOf(anotherItemSet, itemSets);
+                        t = action[i][symbol];
+                        if (t && t.toString() != val.toString()) {
+                            S.log(new Array(29).join('*'));
+                            S.log('conflict in shift: action already defined ->',
+                                'warn');
+                            S.log('***** current itemSet:', 'info');
+                            S.log(itemSet.toString(1));
+                            S.log('***** current symbol:', 'info');
+                            S.log(symbol);
+                            S.log('***** goto itemSet:', 'info');
+                            S.log(anotherItemSet.toString(1));
+                            S.log('***** current action:', 'info');
+                            visualizeAction(t, productions, itemSets);
+                            S.log('***** will be overwritten ->', 'info');
+                            visualizeAction(val, productions, itemSets);
+                        }
+                        action[i][symbol] = val;
+                    } else {
+                        gotos[i] = gotos[i] || {};
+                        t = gotos[i][symbol];
+                        val = indexOf(anotherItemSet, itemSets);
+                        if (t && val != t) {
+                            S.log(new Array(29).join('*'));
+                            S.log('conflict in shift: goto already defined ->',
+                                'warn');
+                            S.log('***** current itemSet:', 'info');
+                            S.log(itemSet.toString(1));
+                            S.log('***** current symbol:', 'info');
+                            S.log(symbol);
+                            S.log('***** goto itemSet:', 'info');
+                            S.log(anotherItemSet.toString(1));
+                            S.log('***** current goto state:', 'info');
+                            S.log(t);
+                            S.log('***** will be overwritten ->', 'info');
+                            S.log(val);
+                        }
+                        gotos[i][symbol] = val;
+                    }
+                });
+
             }
         },
 

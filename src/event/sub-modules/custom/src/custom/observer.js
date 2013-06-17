@@ -3,7 +3,7 @@
  * Observer for custom event
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/custom/observer', function (S, Event) {
+KISSY.add('event/custom/observer', function (S, BaseEvent) {
 
     /**
      * Observer for custom event
@@ -15,7 +15,7 @@ KISSY.add('event/custom/observer', function (S, Event) {
         CustomEventObserver.superclass.constructor.apply(this, arguments);
     }
 
-    S.extend(CustomEventObserver, Event._Observer, {
+    S.extend(CustomEventObserver, BaseEvent.Observer, {
 
         keys:['fn','context','groups']
 

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 7 13:42
+build time: Jun 17 23:50
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -71,6 +71,6 @@ KISSY.add('component/plugin/drag', function (S, RichBase, DD) {
     });
 
 }, {
-    requires: ['rich-base', 'dd/base']
+    requires: ['rich-base', 'dd']
 });
 
