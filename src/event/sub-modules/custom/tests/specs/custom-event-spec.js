@@ -1,8 +1,10 @@
 /**
  * custom bubble mechanism tc
- * @author yiminghe@gmail.com *
+ * @author yiminghe@gmail.com
  */
 KISSY.use("event/custom", function (S, Event) {
+    
+    var EventTarget=Event.Target;
 
     var ObservableCustomEvent= S.require('event/custom/observable');
 
@@ -16,7 +18,7 @@ KISSY.use("event/custom", function (S, Event) {
             var x = S.mix({
                 item: 1,
                 length: 10
-            }, S.EventTarget);
+            }, EventTarget);
 
             x.on("my", function () {
                 r = 1
@@ -59,7 +61,7 @@ KISSY.use("event/custom", function (S, Event) {
             var S = KISSY,
                 haha = 0,
                 haha2 = 0,
-                obj = S.mix({}, S.EventTarget);
+                obj = S.mix({}, EventTarget);
 
             obj.on('haha', function (ev) {
                 haha++;
@@ -235,11 +237,11 @@ KISSY.use("event/custom", function (S, Event) {
 
             it("can bubble more than one level", function () {
 
-                var r1 = S.mix({}, S.EventTarget);
+                var r1 = S.mix({}, EventTarget);
 
-                var r2 = S.mix({}, S.EventTarget);
+                var r2 = S.mix({}, EventTarget);
 
-                var r3 = S.mix({}, S.EventTarget);
+                var r3 = S.mix({}, EventTarget);
 
                 r2.addTarget(r1);
                 r3.addTarget(r2);
@@ -259,11 +261,11 @@ KISSY.use("event/custom", function (S, Event) {
 
             it("can not bubble if middle level does not allow", function () {
 
-                var r1 = S.mix({}, S.EventTarget);
+                var r1 = S.mix({}, EventTarget);
 
-                var r2 = S.mix({}, S.EventTarget);
+                var r2 = S.mix({}, EventTarget);
 
-                var r3 = S.mix({}, S.EventTarget);
+                var r3 = S.mix({}, EventTarget);
 
                 r2.addTarget(r1);
                 r3.addTarget(r2);
@@ -421,7 +423,7 @@ KISSY.use("event/custom", function (S, Event) {
             });
 
             it('can get defaultFn value as final value', function () {
-                var o = S.mix({}, S.EventTarget);
+                var o = S.mix({}, EventTarget);
 
                 o.publish('t', {
                     defaultFn: function () {

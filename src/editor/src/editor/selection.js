@@ -31,7 +31,6 @@ KISSY.add("editor/selection", function (S) {
         KER = Editor.RANGE,
     // ie9 仍然采用老的 range api，发现新的不稳定
         OLD_IE = UA['ie'], //!window.getSelection,
-    //EventTarget = S.EventTarget,
         Walker = Editor.Walker,
     //ElementPath = Editor.ElementPath,
         KERange = Editor.Range;
