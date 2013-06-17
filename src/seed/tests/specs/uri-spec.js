@@ -45,6 +45,11 @@ describe("uri", function () {
     describe('query', function () {
 
 
+        it('count works',function(){
+            var query = new Uri.Query("x=1&y=2");
+            expect(query.count()).toBe(2);
+        });
+
         it('works', function () {
             var query = new Uri.Query("x=1&y=2");
 

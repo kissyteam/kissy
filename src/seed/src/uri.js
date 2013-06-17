@@ -120,10 +120,12 @@
          * @return {Number}
          */
         count: function () {
-            var self = this, count = 0,
-                _queryMap = self._queryMap,
+            var self = this,
+                _queryMap,
+                count = 0,
                 k;
             parseQuery(self);
+            _queryMap = self._queryMap;
             for (k in _queryMap) {
 
                 if (S.isArray(_queryMap[k])) {
