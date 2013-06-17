@@ -523,23 +523,23 @@
                 },
                 {
                     state: ['t'],
-                    regexp: /^>/,
-                    token: 'GT'
-                },
-                {
-                    state: ['t'],
                     regexp: /^>=/,
                     token: 'GE'
                 },
                 {
                     state: ['t'],
-                    regexp: /^</,
-                    token: 'LT'
+                    regexp: /^<=/,
+                    token: 'LE'
                 },
                 {
                     state: ['t'],
-                    regexp: /^<=/,
-                    token: 'LE'
+                    regexp: /^>/,
+                    token: 'GT'
+                },
+                {
+                    state: ['t'],
+                    regexp: /^</,
+                    token: 'LT'
                 },
                 {
                     state: ['t'],
