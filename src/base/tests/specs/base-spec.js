@@ -7,7 +7,7 @@ KISSY.use("base", function (S, Base) {
 
     describe('base', function () {
 
-        it('拥有 S.EventTarget 上的方法', function () {
+        it('拥有 EventTarget 上的方法', function () {
 
             function A() {
                 Base.call(this);
@@ -25,7 +25,7 @@ KISSY.use("base", function (S, Base) {
             expect(fired).toBeTruthy();
         });
 
-        it('拥有 S.Attribute 上的方法', function () {
+        it('拥有 Attribute 上的方法', function () {
 
             function A() {
                 Base.call(this);
@@ -104,7 +104,7 @@ KISSY.use("base", function (S, Base) {
             expect(b.hasAttr('attr2')).toBeFalsy();
         });
 
-        it('能正确触发 S.Attribute 的事件', function () {
+        it('能正确触发 Attribute 的事件', function () {
 
             function A() {
                 Base.call(this);

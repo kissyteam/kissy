@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 17 23:49
+build time: Jun 18 01:53
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -46,12 +46,19 @@ KISSY.add('base/attribute', function (S, CustomEvent, undefined) {
         }, data));
     }
 
-    function ensureNonEmpty(obj, name) {
+    /**
+     * @ignore
+     * @param obj
+     * @param name
+     * @param [doNotCreate]
+     * @returns {*}
+     */
+    function ensureNonEmpty(obj, name, doNotCreate) {
         var ret = obj[name];
-        if (!ret) {
+        if (!doNotCreate && !ret) {
             obj[name] = ret = {};
         }
-        return ret;
+        return ret||{};
     }
 
     function getAttrs(self) {
@@ -490,7 +497,7 @@ KISSY.add('base/attribute', function (S, CustomEvent, undefined) {
                 name = path.shift();
             }
 
-            attrConfig = ensureNonEmpty(getAttrs(self), name);
+            attrConfig = ensureNonEmpty(getAttrs(self), name, 1);
             getter = attrConfig['getter'];
 
             // get user-set value or default value
@@ -555,7 +562,7 @@ KISSY.add('base/attribute', function (S, CustomEvent, undefined) {
     // get default attribute value from valueFn/value
     function getDefAttrVal(self, name) {
         var attrs = getAttrs(self),
-            attrConfig = ensureNonEmpty(attrs, name),
+            attrConfig = ensureNonEmpty(attrs, name,1),
             valFn = attrConfig.valueFn,
             val;
 

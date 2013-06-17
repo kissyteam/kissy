@@ -1,12 +1,12 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 18 00:00
+build time: Jun 18 01:55
 */
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 18 00:00
+build time: Jun 18 01:54
 */
 /**
  * @ignore
@@ -44,11 +44,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130618000036' will replace with current timestamp when compressing.
+         * NOTICE: '20130618015445' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130618000036',
+        __BUILD_TIME: '20130618015445',
         /**
          * KISSY Environment.
          * @private
@@ -5678,7 +5678,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20130618000036'
+            tag: '20130618015445'
         }, getBaseInfo()));
     }
 
@@ -21237,7 +21237,7 @@ KISSY.add('cookie', function (S) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 17 23:49
+build time: Jun 18 01:53
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -21282,12 +21282,19 @@ KISSY.add('base/attribute', function (S, CustomEvent, undefined) {
         }, data));
     }
 
-    function ensureNonEmpty(obj, name) {
+    /**
+     * @ignore
+     * @param obj
+     * @param name
+     * @param [doNotCreate]
+     * @returns {*}
+     */
+    function ensureNonEmpty(obj, name, doNotCreate) {
         var ret = obj[name];
-        if (!ret) {
+        if (!doNotCreate && !ret) {
             obj[name] = ret = {};
         }
-        return ret;
+        return ret||{};
     }
 
     function getAttrs(self) {
@@ -21726,7 +21733,7 @@ KISSY.add('base/attribute', function (S, CustomEvent, undefined) {
                 name = path.shift();
             }
 
-            attrConfig = ensureNonEmpty(getAttrs(self), name);
+            attrConfig = ensureNonEmpty(getAttrs(self), name, 1);
             getter = attrConfig['getter'];
 
             // get user-set value or default value
@@ -21791,7 +21798,7 @@ KISSY.add('base/attribute', function (S, CustomEvent, undefined) {
     // get default attribute value from valueFn/value
     function getDefAttrVal(self, name) {
         var attrs = getAttrs(self),
-            attrConfig = ensureNonEmpty(attrs, name),
+            attrConfig = ensureNonEmpty(attrs, name,1),
             valFn = attrConfig.valueFn,
             val;
 
@@ -21940,7 +21947,7 @@ KISSY.add('base',function (S, Attribute) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 17 23:49
+build time: Jun 18 01:54
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -22462,7 +22469,7 @@ KISSY.add('anim/base', function (S, DOM, Utils, CustomEvent, Q) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 17 23:49
+build time: Jun 18 01:54
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -23564,7 +23571,7 @@ KISSY.add('anim/timer', function (S, DOM, Event, AnimBase, Easing, AM, Fx, SHORT
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 17 23:49
+build time: Jun 18 01:54
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
