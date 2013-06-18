@@ -35,6 +35,8 @@ KISSY.add("button/render", function (S, Component) {
         '_onSetDescribedby': function (describedby) {
             this.el.attr("aria-describedby", describedby);
         }
+    },{
+        name:'ButtonRender'
     });
 }, {
     requires: ['component/base']

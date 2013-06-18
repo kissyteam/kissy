@@ -67,6 +67,8 @@ KISSY.add('component/base/container-render', function (S, Render, Manager) {
         getChildrenContainerEl: function () {
             return this.el;
         }
+    },{
+        name:'ContainerRender'
     });
 
 }, {

@@ -455,7 +455,8 @@ KISSY.add("component/base/render", function (S, Manager, RenderProcess, XTemplat
             disabled: function (el) {
                 return el.hasClass(this.getBaseCssClass("disabled"));
             }
-        }
+        },
+        name:'render'
     });
 
     /**

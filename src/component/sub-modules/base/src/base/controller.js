@@ -338,6 +338,8 @@ KISSY.add("component/base/controller", function (S, Node, RenderProcess, Manager
             }
         },
         {
+            name: 'controller',
+
             ATTRS: {
 
                 id: {

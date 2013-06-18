@@ -282,7 +282,8 @@ KISSY.add('component/base/container', function (S, Controller, createComponent, 
             xrender: {
                 value: ContainerRender
             }
-        }
+        },
+        name:'container'
     });
 }, {
     requires: ['./controller', './create', './container-render']
