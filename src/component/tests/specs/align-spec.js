@@ -2,7 +2,7 @@ KISSY.use("component/extension", function (S, extension) {
     var Align = extension.Align;
     var DOM = S.DOM;
     var $ = S.all;
-    describe("uibase-align", function () {
+    describe("extension-align", function () {
 
         beforeEach(function () {
             this.addMatchers({

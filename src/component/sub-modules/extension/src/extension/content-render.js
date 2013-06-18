@@ -12,13 +12,14 @@ KISSY.add('component/extension/content-render', function (S) {
 
     ContentRender.prototype = {
         getChildrenContainerEl: function () {
-            return this.get('contentEl');
+            return this.controller.get('contentEl');
         },
         _onSetContent: function (v) {
-            var contentEl = this.get('contentEl');
+            var controller=this.controller,
+                contentEl = controller.get('contentEl');
             contentEl.html(v);
             // ie needs to set unselectable attribute recursively
-            if (S.UA.ie < 9 && !this.get('allowTextSelection')) {
+            if (S.UA.ie < 9 && !controller.get('allowTextSelection')) {
                 contentEl.unselectable();
             }
         }

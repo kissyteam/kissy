@@ -168,7 +168,7 @@ KISSY.add("tree/node", function (S, Node, Component,Extension, TreeNodeRender) {
                 TreeNode.superclass.renderChildren.apply(self, arguments);
                 // only sync child sub tree at root node
                 if (self === self.get('tree')) {
-                    registerToTree(self, self, -1, 0);
+                    updateSubTreeStatus(self, self, -1, 0);
                 }
             },
 
@@ -325,15 +325,16 @@ KISSY.add("tree/node", function (S, Node, Component,Extension, TreeNodeRender) {
     // # ------------------- private start
 
     function onAddChild(e) {
-        if (e.target == this) {
-            registerToTree(this, e.component, this.get('depth'), e.index);
+        var self = this;
+        if (e.target == self) {
+            updateSubTreeStatus(self, e.component, self.get('depth'), e.index);
         }
     }
 
     function onRemoveChild(e) {
         var self = this;
         if (e.target == self) {
-            recursiveRegister(self.get('tree'), e.component, "_unRegister");
+            recursiveSetDepth(self.get('tree'), e.component);
             refreshCssForSelfAndChildren(self, e.index);
         }
     }
@@ -350,7 +351,6 @@ KISSY.add("tree/node", function (S, Node, Component,Extension, TreeNodeRender) {
         var parent = self.get('parent'),
             children = parent && parent.get("children"),
             lastChild = children && children[children.length - 1];
-
         // 根节点
         // or
         // 父亲的最后一个子节点
@@ -361,7 +361,6 @@ KISSY.add("tree/node", function (S, Node, Component,Extension, TreeNodeRender) {
         var isLeaf = self.get("isLeaf");
         // 强制指定了 isLeaf，否则根据儿子节点集合自动判断
         return !(isLeaf === false || (isLeaf === undefined && self.get("children").length));
-
     }
 
     function getLastVisibleDescendant(self) {
@@ -413,24 +412,23 @@ KISSY.add("tree/node", function (S, Node, Component,Extension, TreeNodeRender) {
         }
     }
 
-    function registerToTree(self, c, depth, index) {
+    function updateSubTreeStatus(self, c, depth, index) {
         var tree = self.get("tree");
         if (tree) {
-            recursiveRegister(tree, c, "_register", depth + 1);
+            recursiveSetDepth(tree, c, depth + 1);
             refreshCssForSelfAndChildren(self, index);
         }
     }
 
-    function recursiveRegister(tree, c, action, setDepth) {
-        tree[action](c);
+    function recursiveSetDepth(tree, c, setDepth) {
         if (setDepth !== undefined) {
             c.set("depth", setDepth);
         }
         S.each(c.get("children"), function (child) {
             if (typeof setDepth == 'number') {
-                recursiveRegister(tree, child, action, setDepth + 1);
+                recursiveSetDepth(tree, child,  setDepth + 1);
             } else {
-                recursiveRegister(tree, child, action);
+                recursiveSetDepth(tree, child);
             }
         });
     }

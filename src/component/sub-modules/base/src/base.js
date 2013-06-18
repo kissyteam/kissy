@@ -3,19 +3,25 @@
  * mvc based component framework for kissy
  * @author yiminghe@gmail.com
  */
-KISSY.add('component/base', function (S, Component, Controller, Render) {
+KISSY.add('component/base', function (S, createComponent, Controller, Render, Manager) {
 
-    S.mix(Component, {
+    /**
+     * @class KISSY.Component
+     * @singleton
+     * Component infrastructure.
+     */
+    return {
+        create: createComponent,
+        Manager: Manager,
         Controller: Controller,
         'Render': Render
-    });
-
-    return Component;
+    };
 
 }, {
     requires: [
-        './base/impl',
+        './base/create',
         './base/controller',
-        './base/render'
+        './base/render',
+        './base/manager'
     ]
 });

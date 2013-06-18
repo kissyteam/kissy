@@ -21,7 +21,7 @@ KISSY.add("component/extension/shim-render", function () {
     }
 
     ShimRender.prototype.__createDom = function () {
-        this.get('el').prepend(S.all(shimTpl));
+        this.el.prepend(shimTpl);
     };
 
     return ShimRender;

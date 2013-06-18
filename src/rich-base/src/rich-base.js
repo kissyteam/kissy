@@ -450,7 +450,7 @@ KISSY.add('rich-base', function (S, Base) {
                 C.prototype.constructor = C;
             }
 
-            C.extend = extend;
+            C.extend = C.extend || extend;
 
             return C;
         }

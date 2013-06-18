@@ -265,7 +265,7 @@ KISSY.add("menu/submenu", function (S, Node, MenuItem, SubMenuRender, Extension)
         var m = self.get("menu");
         if (m && !m.isController) {
             if (init) {
-                self.setInternal("menu", m = self.createChild(m));
+                self.setInternal("menu", m = self.deriveComponent(m));
             } else {
                 return null;
             }

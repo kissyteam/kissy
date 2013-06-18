@@ -3,7 +3,7 @@
  * delegate events for children
  * @author yiminghe@gmail.com
  */
-KISSY.add("component/extension/delegate-children", function (S, Node) {
+KISSY.add("component/extension/delegate-children", function (S, Node, Component) {
 
     var UA = S.UA,
         ie = S.Env.host.document.documentMode || UA.ie,
@@ -13,10 +13,8 @@ KISSY.add("component/extension/delegate-children", function (S, Node) {
 
     function DelegateChildren() {
         var self = this;
-        self.__childrenIdMap = {};
         self.__childClsTag = S.guid('ks-component-child');
-        self.on('afterRenderChild', self._processRenderChildForDelegate, self)
-            .on('afterRemoveChild', self._processRemoveChildForDelegate, self);
+        self.on('afterRenderChild', self._processRenderChildForDelegate, self);
     }
 
     S.augment(DelegateChildren, {
@@ -25,6 +23,8 @@ KISSY.add("component/extension/delegate-children", function (S, Node) {
             if (!this.get("disabled")) {
                 var control = this.getOwnerControl(e);
                 if (control && !control.get("disabled")) {
+                    // stop here!
+                    e.stopPropagation();
                     // Child control identified; forward the event.
                     switch (e.type) {
                         case Gesture.start:
@@ -60,18 +60,10 @@ KISSY.add("component/extension/delegate-children", function (S, Node) {
                 var child = e.component,
                     el = child.get('el');
                 el.addClass(this.__childClsTag);
-                this.__childrenIdMap[child.get('id')] = child;
-            }
-        },
-
-        _processRemoveChildForDelegate: function (e) {
-            if (e.target == this) {
-                delete this.__childrenIdMap[e.component.get('id')];
             }
         },
 
         __bindUI: function () {
-
             var self = this,
                 events = Gesture.start +
                     " " + Gesture.end +
@@ -86,7 +78,8 @@ KISSY.add("component/extension/delegate-children", function (S, Node) {
                     (ie && ie < 9 ? "dblclick " : "");
             }
 
-            self.get("el").delegate(events, '.' + self.__childClsTag, self.handleChildrenEvents, self);
+            self.get("el").delegate(events, '.' + self.__childClsTag,
+                self.handleChildrenEvents, self);
         },
 
         /**
@@ -96,11 +89,11 @@ KISSY.add("component/extension/delegate-children", function (S, Node) {
          * @return {KISSY.Component.Controller}
          */
         getOwnerControl: function (e) {
-            return this.__childrenIdMap[e.currentTarget.id];
+            return Component.Manager.getComponent(e.currentTarget.id);
         }
     });
 
     return DelegateChildren;
 }, {
-    requires: ['node']
+    requires: ['node','component/base']
 });

@@ -3,16 +3,8 @@
  * Setup component namespace.
  * @author yiminghe@gmail.com
  */
-KISSY.add("component/base/impl", function (S, UIBase, Manager) {
-    /**
-     * @class KISSY.Component
-     * @singleton
-     * Component infrastructure.
-     */
-    var Component = {
-        Manager: Manager,
-        UIBase: UIBase
-    };
+KISSY.add("component/base/create", function (S,Manager) {
+   
 
     /**
      * Create a component instance using json with xclass.
@@ -32,8 +24,8 @@ KISSY.add("component/base/impl", function (S, UIBase, Manager) {
      *          }]
      *      })
      */
-    Component.create = function (component, parent) {
-        var childConstructor,
+    return function (component, parent) {
+        var ChildConstructor,
             xclass;
         if (component) {
             if (!component.isController && parent) {
@@ -46,11 +38,11 @@ KISSY.add("component/base/impl", function (S, UIBase, Manager) {
                 }
             }
             if (!component.isController && (xclass = component.xclass)) {
-                childConstructor = Manager.getConstructorByXClass(xclass);
-                if (!childConstructor) {
+                ChildConstructor = Manager.getConstructorByXClass(xclass);
+                if (!ChildConstructor) {
                     S.error("can not find class by xclass desc : " + xclass);
                 }
-                component = new childConstructor(component);
+                component = new ChildConstructor(component);
             }
             if (component.isController && parent) {
                 component.setInternal('parent', parent);
@@ -58,8 +50,6 @@ KISSY.add("component/base/impl", function (S, UIBase, Manager) {
         }
         return component;
     };
-
-    return Component;
-}, {
-    requires: ['./uibase', './manager']
+},{
+    requires:['./manager']
 });

@@ -4,18 +4,9 @@
  */
 KISSY.use("component/base,component/extension", function (S, Component, extension) {
 
-    var UIBase = Component.UIBase, $ = S.all;
+    var RenderProcess = Component.UIBase, $ = S.all;
 
-    describe('uibase', function () {
-
-
-        it('override rich-base constructor', function () {
-
-            expect(UIBase.prototype.constructor.toString().indexOf('decorateInternal'))
-                .toBeGreaterThan(-1);
-
-        });
-
+    describe('render-process', function () {
         it(" will works as multi-inheritance", function () {
 
             var x = 0, y = 0, z = 0;
@@ -28,7 +19,7 @@ KISSY.use("component/base,component/extension", function (S, Component, extensio
                 x = 1;
             };
 
-            var h2 = UIBase.extend({});
+            var h2 = RenderProcess.extend({});
 
             h2.prototype.yy = function () {
                 y = 1;
@@ -58,7 +49,7 @@ KISSY.use("component/base,component/extension", function (S, Component, extensio
             var order = [];
 
 
-            var h1 = UIBase.extend([], {
+            var h1 = RenderProcess.extend([], {
                 _onSetA: function () {
                     order.push('a');
                 },
@@ -146,7 +137,7 @@ KISSY.use("component/base,component/extension", function (S, Component, extensio
                     }
                 };
 
-                var x2 = UIBase.extend([x, x3], {
+                var x2 = RenderProcess.extend([x, x3], {
 
                 }, {
                     ATTRS: {
@@ -195,7 +186,7 @@ KISSY.use("component/base,component/extension", function (S, Component, extensio
                     }
                 };
 
-                var x2 = UIBase.extend([x, x3], {
+                var x2 = RenderProcess.extend([x, x3], {
                     renderUI: function () {
                         ret.push(3);
                     }
@@ -211,7 +202,7 @@ KISSY.use("component/base,component/extension", function (S, Component, extensio
 
         describe("srcNode", function () {
 
-            var SrcNode = UIBase.extend({}, {
+            var SrcNode = RenderProcess.extend({}, {
                 HTML_PARSER: {
                     contentAttr: function (el) {
                         return el.attr("data-contentAttr")

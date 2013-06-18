@@ -289,7 +289,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
         var m = self.get("menu");
         if (m && !m.isController) {
             if (init) {
-                m = self.createChild(m);
+                m = self.deriveComponent(m);
                 self.setInternal("menu", m);
             } else {
                 return null;

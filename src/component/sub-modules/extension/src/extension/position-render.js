@@ -6,32 +6,24 @@
 KISSY.add("component/extension/position-render", function () {
 
     function Position() {
-        var renderData = this.get('renderData');
-        this.get('elStyle')['z-index'] = renderData.zIndex;
+        var renderData = this.renderData;
+        this.controller.get('elStyle')['z-index'] = renderData.zIndex;
     }
-
-    Position.ATTRS = {
-        x: {},
-        y: {},
-        zIndex: {
-            sync: 0
-        }
-    };
 
     // for augment, no need constructor
     Position.prototype = {
         '_onSetZIndex': function (x) {
-            this.get("el").css("z-index", x);
+            this.el.css("z-index", x);
         },
 
         '_onSetX': function (x) {
-            this.get("el").offset({
+            this.el.offset({
                 left: x
             });
         },
 
         '_onSetY': function (y) {
-            this.get("el").offset({
+            this.el.offset({
                 top: y
             });
         }

@@ -33,7 +33,7 @@ KISSY.add("tree/node-render", function (S, Node, Component, TreeNodeTpl, Extensi
     return Component.Render.extend([Extension.ContentRender],{
         initializer: function () {
             var self = this,
-                renderData = self.get('renderData');
+                renderData = self.renderData;
             S.mix(self.get('elAttrs'), {
                 role: 'tree-node',
                 'aria-labelledby': 'ks-content' + renderData.id,

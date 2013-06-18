@@ -3,7 +3,7 @@
  * Button control for KISSY.
  * @author yiminghe@gmail.com
  */
-KISSY.add("button/base", function (S, Node, Component, ButtonRender) {
+KISSY.add("button/controller", function (S, Node, Component, ButtonRender) {
 
     var KeyCode = Node.KeyCode;
     /**
@@ -11,7 +11,7 @@ KISSY.add("button/base", function (S, Node, Component, ButtonRender) {
      * @extends KISSY.Component.Controller
      * @class KISSY.Button
      */
-    var Button = Component.Controller.extend({
+    return Component.Controller.extend({
 
         isButton: 1,
 
@@ -122,8 +122,6 @@ KISSY.add("button/base", function (S, Node, Component, ButtonRender) {
     }, {
         xclass: 'button'
     });
-
-    return Button;
 
 }, {
     requires: ['node', 'component/base', './render']

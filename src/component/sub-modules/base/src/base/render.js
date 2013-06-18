@@ -4,9 +4,67 @@
  * @author yiminghe@gmail.com
  * refer: http://martinfowler.com/eaaDev/uiArchs.html
  */
-KISSY.add("component/base/render", function (S, BoxRender, Component, UIBase) {
+KISSY.add("component/base/render", function (S, Manager, RenderProcess, XTemplate, RenderTpl) {
 
-    var trim = S.trim, Render;
+    var ON_SET = '_onSet',
+        trim = S.trim,
+        $ = S.all,
+        UA = S.UA,
+        startTpl = RenderTpl,
+        endTpl = '</div>',
+        doc = S.Env.host.document,
+        SRC_NODE = 'srcNode',
+        HTML_PARSER = 'HTML_PARSER';
+
+    function pxSetter(v) {
+        if (typeof v == 'number') {
+            v += 'px';
+        }
+        return v;
+    }
+
+    function initSrcNode(self, srcNode) {
+        var c = self.constructor,
+            controller = self.controller,
+            len, p, constructorChains;
+
+        constructorChains = self['collectConstructorChains']();
+
+        // 从父类到子类开始从 html 读取属性
+        for (len = constructorChains.length - 1; len >= 0; len--) {
+            c = constructorChains[len];
+            if (p = c[HTML_PARSER]) {
+                applyParser.call(self, srcNode, p, controller);
+            }
+        }
+    }
+
+    function applyParser(srcNode, parser, controller) {
+        var view = this,
+            p, v, ret;
+
+        // 从 parser 中，默默设置属性，不触发事件
+        // html parser 优先，超过 js 配置值
+        for (p in parser) {
+            v = parser[p];
+            // 函数
+            if (S.isFunction(v)) {
+                // html parser 放弃
+                ret = v.call(view, srcNode);
+                if (ret !== undefined) {
+                    controller.setInternal(p, ret);
+                }
+            }
+            // 单选选择器
+            else if (typeof v == 'string') {
+                controller.setInternal(p, srcNode.one(v));
+            }
+            // 多选选择器
+            else if (S.isArray(v) && v[0]) {
+                controller.setInternal(p, srcNode.all(v[0]))
+            }
+        }
+    }
 
     function normalExtras(extras) {
         if (!extras) {
@@ -32,40 +90,214 @@ KISSY.add("component/base/render", function (S, BoxRender, Component, UIBase) {
         return cls;
     }
 
+    function onSetAttrChange(e) {
+        var self = this,
+            method;
+        // ignore bubbling
+        if (e.target == self.controller) {
+            method = self[ON_SET + e.type.slice(5).slice(0, -6)];
+            method.call(self, e.newVal, e);
+        }
+    }
+
     /**
      * @ignore
      * Base Render class for KISSY Component.
      */
-    return Render = UIBase.extend([BoxRender], {
+    return RenderProcess.extend({
+
+        isDecorate: function () {
+            return !!this.controller.get('srcNode');
+        },
 
         initializer: function () {
-            var self = this;
-            var attrs = self.get('elAttrs');
-            var cls = self.get('elCls');
-            var disabled;
-            if (disabled = self.get('disabled')) {
-                cls.push(self.getBaseCssClasses('disabled'));
-                attrs['aria-disabled'] = 'true';
-            }
-            if (self.get('highlighted')) {
-                cls.push(self.getBaseCssClasses('hover'));
-            }
-            if (self.get('focusable')) {
-                attrs['hideFocus'] = 'true';
-                attrs['tabindex'] = disabled ? '-1' : '0';
+            var self = this,
+                controller = self.controller;
+
+            if (!self.isDecorate()) {
+                var width,
+                    height,
+                    visible,
+                    elAttrs = controller.get('elAttrs'),
+                    cls = controller.get('elCls'),
+                    disabled,
+                    attrs = controller['getAttrs'](),
+                    a,
+                    attr,
+                    renderData = self.renderData = {},
+                    style = controller.get('elStyle'),
+                    elCls = controller.get('elCls');
+
+                for (a in attrs) {
+                    attr = attrs[a];
+                    if (attr.view) {
+                        renderData[a] = controller.get(a);
+                    }
+                }
+
+                width = renderData.width;
+                height = renderData.height;
+                visible = renderData.visible;
+
+                if (width) {
+                    style.width = pxSetter(width);
+                }
+
+                if (height) {
+                    style.height = pxSetter(height);
+                }
+
+                if (!visible) {
+                    elCls.push(self.getBaseCssClasses('hidden'));
+                }
+
+                if (disabled = controller.get('disabled')) {
+                    cls.push(self.getBaseCssClasses('disabled'));
+                    elAttrs['aria-disabled'] = 'true';
+                }
+                if (controller.get('highlighted')) {
+                    cls.push(self.getBaseCssClasses('hover'));
+                }
+                if (controller.get('focusable')) {
+                    elAttrs['hideFocus'] = 'true';
+                    elAttrs['tabindex'] = disabled ? '-1' : '0';
+                }
             }
         },
 
         isRender: 1,
 
         /**
+         * @ignore
+         * 只负责建立节点，如果是 decorate 过来的，甚至内容会丢失
+         * 通过 render 来重建原有的内容
+         */
+        createDom: function () {
+            var self = this,
+                controller = self.controller,
+                renderData = self.renderData,
+                el, tpl, html;
+
+            if (el = controller.get(SRC_NODE)) {
+                // 根据 srcNode 设置属性值
+                // so initializer can not read attribute in case srcNode is set
+                initSrcNode(self, el);
+                if (!el.attr('id')) {
+                    el.attr('id', self.get('id'));
+                }
+            } else {
+                tpl = startTpl +
+                    self.get('contentTpl') +
+                    endTpl;
+
+                html = new XTemplate(tpl, {
+                    commands: {
+                        getBaseCssClasses: function (scope, option) {
+                            return self.getBaseCssClasses(option.params[0]);
+                        }
+                    }
+                }).render(renderData);
+
+                el = $(html);
+
+                var childrenElSelectors = self.get('childrenElSelectors'),
+                    childName,
+                    selector;
+
+                for (childName in childrenElSelectors) {
+                    selector = childrenElSelectors[childName];
+                    if (typeof selector === "function") {
+                        controller.setInternal(childName, selector(el));
+                    } else {
+                        controller.setInternal(childName,
+                            el.all(S.substitute(selector, self.renderData)));
+                    }
+                }
+            }
+            controller.setInternal("el", el);
+            controller.el = self.el = el;
+        },
+
+        renderUI: function () {
+            var self = this;
+            var controller = self.controller;
+            // 新建的节点才需要摆放定位
+            if (!self.isDecorate()) {
+                var render = controller.get('render'),
+                    el = controller.get('el'),
+                    renderBefore = controller.get('elBefore');
+                if (renderBefore) {
+                    el.insertBefore(renderBefore, /**
+                     @type Node
+                     @ignore
+                     */undefined);
+                } else if (render) {
+                    el.appendTo(render, undefined);
+                } else {
+                    el.appendTo(doc.body, undefined);
+                }
+            }
+        },
+
+        bindUI: function () {
+            var self = this;
+            var controller = self.controller;
+            var attrs = controller['getAttrs']();
+            var attrName, attrCfg;
+            for (attrName in attrs) {
+                attrCfg = attrs[attrName];
+                var ucName = S.ucfirst(attrName);
+                var attrChangeFn = self[ON_SET + ucName];
+                if (attrCfg.view && attrChangeFn) {
+                    // 通知 render 处理
+                    controller.on("after" + ucName + "Change", onSetAttrChange, self);
+                }
+            }
+        },
+
+        destructor: function () {
+            var el = this.el;
+            if (el) {
+                el.remove();
+            }
+        },
+
+        getComponentCssClasses: function () {
+            var self = this;
+            if (self.componentCssClasses) {
+                return self.componentCssClasses;
+            }
+            var controller = self.controller,
+                constructor = controller.constructor,
+                cls,
+                re = [];
+            while (constructor && !constructor.isController) {
+                cls = Manager.getXClassByConstructor(constructor);
+                if (cls) {
+                    re.push(cls);
+                }
+                constructor = constructor.superclass && constructor.superclass.constructor;
+            }
+            return self.componentCssClasses = re;
+        },
+
+        /**
          * Get all css class name to be applied to the root element of this component for given extra class names.
          * the css class names are prefixed with component name.
          * @param extras {String[]|String} class names without prefixCls and current component class name.
-         * @protected
          */
         getBaseCssClasses: function (extras) {
-            return Render.getBaseCssClasses(this, extras);
+            extras = normalExtras(extras);
+            var componentCssClasses = this.getComponentCssClasses(),
+                i = 0,
+                controller = this.get('controller'),
+                cls = '',
+                l = componentCssClasses.length,
+                prefixCls = controller.prefixCls;
+            for (; i < l; i++) {
+                cls += prefixExtra(prefixCls, componentCssClasses[i], extras);
+            }
+            return trim(cls);
         },
 
         /**
@@ -73,10 +305,13 @@ KISSY.add("component/base/render", function (S, BoxRender, Component, UIBase) {
          * @param extras {String[]|String} class names without prefixCls and current component class name.
          * @method
          * @return {String} class name with prefixCls and current component class name.
-         * @protected
          */
         getBaseCssClass: function (extras) {
-            return Render.getBaseCssClass(this, extras);
+            return trim(prefixExtra(
+                this.controller.prefixCls,
+                this.getComponentCssClasses()[0],
+                normalExtras(extras)
+            ));
         },
 
         /**
@@ -85,7 +320,35 @@ KISSY.add("component/base/render", function (S, BoxRender, Component, UIBase) {
          * @ignore
          */
         getKeyEventTarget: function () {
-            return this.get("el");
+            return this.el;
+        },
+
+        '_onSetWidth': function (w) {
+            this.el.width(w);
+        },
+
+        _onSetHeight: function (h) {
+            this.el.height(h);
+        },
+
+        '_onSetContent': function (c) {
+            var el = this.el;
+            el.html(c);
+            // ie needs to set unselectable attribute recursively
+            if (UA.ie < 9 && !this.get('allowTextSelection')) {
+                el.unselectable();
+            }
+        },
+
+        _onSetVisible: function (visible) {
+            var self = this,
+                el = self.el,
+                hiddenCls = self.getBaseCssClasses('hidden');
+            if (visible) {
+                el.removeClass(hiddenCls);
+            } else {
+                el.addClass(hiddenCls);
+            }
         },
 
         /**
@@ -94,7 +357,7 @@ KISSY.add("component/base/render", function (S, BoxRender, Component, UIBase) {
         _onSetHighlighted: function (v) {
             var self = this,
                 componentCls = self.getBaseCssClasses("hover"),
-                el = self.get("el");
+                el = self.el;
             el[v ? 'addClass' : 'removeClass'](componentCls);
         },
 
@@ -103,11 +366,12 @@ KISSY.add("component/base/render", function (S, BoxRender, Component, UIBase) {
          */
         _onSetDisabled: function (v) {
             var self = this,
+                controller = self.controller,
                 componentCls = self.getBaseCssClasses("disabled"),
-                el = self.get("el");
+                el = self.el;
             el[v ? 'addClass' : 'removeClass'](componentCls)
                 .attr("aria-disabled", v);
-            if (self.get("focusable")) {
+            if (controller.get("focusable")) {
                 //不能被 tab focus 到
                 self.getKeyEventTarget().attr("tabindex", v ? -1 : 0);
             }
@@ -118,7 +382,7 @@ KISSY.add("component/base/render", function (S, BoxRender, Component, UIBase) {
         '_onSetActive': function (v) {
             var self = this,
                 componentCls = self.getBaseCssClasses("active");
-            self.get("el")[v ? 'addClass' : 'removeClass'](componentCls)
+            self.el[v ? 'addClass' : 'removeClass'](componentCls)
                 .attr("aria-pressed", !!v);
         },
         /**
@@ -126,83 +390,90 @@ KISSY.add("component/base/render", function (S, BoxRender, Component, UIBase) {
          */
         _onSetFocused: function (v) {
             var self = this,
-                el = self.get("el"),
+                el = self.el,
                 componentCls = self.getBaseCssClasses("focused");
             el[v ? 'addClass' : 'removeClass'](componentCls);
-        },
-
-        /**
-         * Return the dom element into which child component to be rendered.
-         * @return {KISSY.NodeList}
-         * @ignore
-         */
-        getChildrenContainerEl: function () {
-            return this.get("el");
         }
-
     }, {
 
-        getBaseCssClasses: function (component, extras) {
-            extras = normalExtras(extras);
-            var componentCssClasses = component.componentCssClasses,
-                i = 0,
-                cls = '',
-                l = componentCssClasses.length,
-                prefixCls = component.prefixCls;
-            for (; i < l; i++) {
-                cls += prefixExtra(prefixCls, componentCssClasses[i], extras);
-            }
-            return trim(cls);
-        },
+        /**
+         * Create a new class which extends RenderProcess .
+         * @param {Function[]} extensions Class constructors for extending.
+         * @param {Object} px Object to be mixed into new class 's prototype.
+         * @param {Object} sx Object to be mixed into new class.
+         * @static
+         * @return {KISSY.Component.RenderProcess} A new class which extends RenderProcess .
+         */
+        extend: function extend(extensions, px, sx) {
+            var baseClass = this,
+                parsers = {};
 
-        getBaseCssClass: function (component, extras) {
-            return trim(
-                prefixExtra(
-                    component.prefixCls,
-                    component.componentCssClasses[0],
-                    normalExtras(extras)
-                ));
+            var newClass = RenderProcess.extend.apply(baseClass, arguments);
+
+            if (S.isArray(extensions)) {
+                // [ex1,ex2]，扩展类后面的优先，ex2 定义的覆盖 ex1 定义的
+                // 主类最优先
+                S.each(extensions['concat'](newClass), function (ext) {
+                    if (ext) {
+                        // 合并 HTML_PARSER 到主类
+                        S.each(ext.HTML_PARSER, function (v, name) {
+                            parsers[name] = v;
+                        });
+                    }
+                });
+                newClass[HTML_PARSER] = parsers;
+            }
+
+            newClass.extend = extend;
+
+            return newClass;
         },
 
         //  screen state
         ATTRS: {
-            prefixCls: {
+            controller: {
                 setter: function (v) {
-                    // shortcut
-                    this.prefixCls = v;
+                    this.controller = v;
                 }
             },
-
-            componentCssClasses: {
-                setter: function (v) {
-                    this.componentCssClasses = v;
-                }
+            contentTpl: {
+                value: '{{{content}}}'
             },
 
-            focusable: {},
-
-            focused: {
-                sync: 0
-            },
-
-            active: {
-                sync: 0
-            },
-
-            disabled: {
-                sync: 0
-            },
-
-            highlighted: {
-                sync: 0
+            childrenElSelectors: {
+                value: {}
             }
         },
         HTML_PARSER: {
+            id: function (el) {
+                var id = el[0].id;
+                return id ? id : undefined;
+            },
+            content: function (el) {
+                return el.html();
+            },
             disabled: function (el) {
                 return el.hasClass(this.getBaseCssClass("disabled"));
             }
         }
     });
+
+    /**
+     * Parse attribute from existing dom node.
+     * @static
+     * @protected
+     * @property HTML_PARSER
+     * @member KISSY.Component
+     *
+     * for example:
+     *     @example
+     *     Overlay.HTML_PARSER={
+     *          // el: root element of current component.
+     *          "isRed":function(el){
+     *              return el.hasClass("ks-red");
+     *          }
+     *      };
+     */
 }, {
-    requires: ['./box-render', './impl', './uibase']
+    requires: [ './manager', './render-process', 'xtemplate', './render-tpl']
 });

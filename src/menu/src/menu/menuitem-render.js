@@ -8,7 +8,7 @@ KISSY.add("menu/menuitem-render", function (S, Node, Component) {
     return Component.Render.extend({
 
         initializer: function () {
-            var renderData = this.get('renderData');
+            var renderData = this.renderData;
             this.get('elAttrs')['role'] = renderData.selectable ?
                 'menuitemradio' : 'menuitem';
             if (renderData.selected) {

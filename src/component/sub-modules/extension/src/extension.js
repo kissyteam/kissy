@@ -1,6 +1,5 @@
 /**
  * @ignore
- * uibase
  * @author yiminghe@gmail.com
  */
 KISSY.add("component/extension", function (S, Align, ContentRender, Position, PositionRender, ShimRender, DelegateChildren, DecorateChildren, DecorateChild) {

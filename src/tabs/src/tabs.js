@@ -364,7 +364,7 @@ KISSY.add("tabs", function (S, Component, Bar, Body, Tab, Panel, Render) {
             bar: {
                 setter: function (v) {
                     if (v && !v.isController) {
-                        v = this.createChild(v);
+                        v = this.deriveComponent(v);
                     }
                     if (v) {
                         // allow afterSelectedTabChange to bubble
@@ -382,7 +382,7 @@ KISSY.add("tabs", function (S, Component, Bar, Body, Tab, Panel, Render) {
             body: {
                 setter: function (v) {
                     if (v && !v.isController) {
-                        return this.createChild(v);
+                        return this.deriveComponent(v);
                     }
                     return v;
                 },
