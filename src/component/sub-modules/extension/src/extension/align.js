@@ -7,7 +7,7 @@ KISSY.add('component/extension/align', function (S, Node) {
 
     var win = S.Env.host,
         $ = Node.all,
-        $win=$(win),
+        $win = $(win),
         UA = S.UA;
 
     // var ieMode = document.documentMode || UA.ie;
@@ -400,29 +400,21 @@ KISSY.add('component/extension/align', function (S, Node) {
                 }
             }
 
-            var newXY = {};
-
-            // 新区域位置发生了变化
-            if (newElRegion.left != elRegion.left) {
-                self.set("x", newXY.left = newElRegion.left);
-            }
-
-            if (newElRegion.top != elRegion.top) {
-                self.set("y", newXY.top = newElRegion.top);
-            }
-
             // https://github.com/kissyteam/kissy/issues/190
+            // http://localhost:8888/kissy/src/overlay/demo/other/relative_align/align.html
             // 相对于屏幕位置没变，而 left/top 变了
             // 例如 <div 'relative'><el absolute></div>
-            el.offset(newXY);
+            self.set({
+                "x": newElRegion.left,
+                "y": newElRegion.top
+            }, {
+                force: 1
+            });
 
-            // 新区域高宽发生了变化
-            if (newElRegion.width != elRegion.width) {
-                el.width(el.width() + newElRegion.width - elRegion.width);
-            }
-            if (newElRegion.height != elRegion.height) {
-                el.height(el.height() + newElRegion.height - elRegion.height);
-            }
+            self.set({
+                width: el.width() + newElRegion.width - elRegion.width,
+                height: el.height() + newElRegion.height - elRegion.height
+            });
 
             return self;
         },

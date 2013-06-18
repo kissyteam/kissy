@@ -17,7 +17,10 @@ KISSY.add("component/base/controller", function (S, Box, Node, Component, UIBase
             if (self == ev.target) {
                 var value = ev.newVal,
                     view = self.get("view");
-                view.set(attrName, value);
+                // force view update dom
+                view.set(attrName, value, {
+                    force: 1
+                });
             }
         };
     }
@@ -384,9 +387,9 @@ KISSY.add("component/base/controller", function (S, Box, Node, Component, UIBase
                     // 之前设好属性，view ，logic 同步还没 bind ,create 不是 render ，还没有 bindUI
                     c.render();
                 }
-                self.fire('afterRenderChild',{
-                    component:c,
-                    index:childIndex
+                self.fire('afterRenderChild', {
+                    component: c,
+                    index: childIndex
                 });
                 return c;
             },

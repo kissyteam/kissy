@@ -330,6 +330,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
                  */
                 value: {
                     value: '',
+                    view: 1,
                     sync: 0
                 },
 

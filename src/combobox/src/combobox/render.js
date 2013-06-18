@@ -46,6 +46,9 @@ KISSY.add("combobox/render", function (S, Component, ComboboxTpl) {
             input: {
             },
 
+            value: {
+            },
+
             disabled: {
                 sync: 0
             },

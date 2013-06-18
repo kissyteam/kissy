@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 18 19:31
+build time: Jun 18 19:59
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -69,6 +69,9 @@ KISSY.add("combobox/render", function (S, Component, ComboboxTpl) {
             },
 
             input: {
+            },
+
+            value: {
             },
 
             disabled: {
@@ -443,6 +446,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
                  */
                 value: {
                     value: '',
+                    view: 1,
                     sync: 0
                 },
 
