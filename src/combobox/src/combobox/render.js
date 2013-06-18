@@ -25,13 +25,6 @@ KISSY.add("combobox/render", function (S, Component, ComboboxTpl) {
             this.get("input").attr("aria-expanded", !v);
         },
 
-        _onSetInputValue:function(v,e){
-            // no need
-            if(!e.causeByTimer){
-                this.get('input').val(v);
-            }
-        },
-
         _onSetDisabled: function (v) {
             ComboboxRender.superclass._onSetDisabled.apply(this, arguments);
             this.get("input").attr("disabled", v);
@@ -48,10 +41,6 @@ KISSY.add("combobox/render", function (S, Component, ComboboxTpl) {
             hasTrigger: {
                 value: true,
                 sync: 0
-            },
-
-            inputValue:{
-                sync:0
             },
 
             input: {

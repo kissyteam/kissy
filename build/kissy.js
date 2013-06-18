@@ -1,12 +1,12 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 18 01:55
+build time: Jun 18 19:32
 */
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 18 01:54
+build time: Jun 18 19:32
 */
 /**
  * @ignore
@@ -44,11 +44,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130618015445' will replace with current timestamp when compressing.
+         * NOTICE: '20130618193157' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130618015445',
+        __BUILD_TIME: '20130618193157',
         /**
          * KISSY Environment.
          * @private
@@ -5678,7 +5678,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20130618015445'
+            tag: '20130618193157'
         }, getBaseInfo()));
     }
 
@@ -21237,7 +21237,7 @@ KISSY.add('cookie', function (S) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 18 01:53
+build time: Jun 18 19:31
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -21294,7 +21294,7 @@ KISSY.add('base/attribute', function (S, CustomEvent, undefined) {
         if (!doNotCreate && !ret) {
             obj[name] = ret = {};
         }
-        return ret||{};
+        return ret || {};
     }
 
     function getAttrs(self) {
@@ -21412,10 +21412,13 @@ KISSY.add('base/attribute', function (S, CustomEvent, undefined) {
         }
 
         // if no change, just return
-        if (!path && prevVal === value) {
-            return undefined;
-        } else if (path && subVal === value) {
-            return undefined;
+        // pass equal check to fire change event
+        if (!opts.force) {
+            if (!path && prevVal === value) {
+                return undefined;
+            } else if (path && subVal === value) {
+                return undefined;
+            }
         }
 
         value = getValueBySubValue(prevVal, path, value);
@@ -21798,7 +21801,7 @@ KISSY.add('base/attribute', function (S, CustomEvent, undefined) {
     // get default attribute value from valueFn/value
     function getDefAttrVal(self, name) {
         var attrs = getAttrs(self),
-            attrConfig = ensureNonEmpty(attrs, name,1),
+            attrConfig = ensureNonEmpty(attrs, name, 1),
             valFn = attrConfig.valueFn,
             val;
 

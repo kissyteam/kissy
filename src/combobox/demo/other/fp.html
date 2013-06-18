@@ -671,13 +671,13 @@ li {
                 }
             });
 
-
             basicComboBox.on('click', function (e) {
-                S.all('#search')[0].click();
+                S.log('search: '+basicComboBox.get('value'));
+                //S.all('#search')[0].click();
             });
 
             S.all('#search').on('click', function () {
-                location.hash = '#!q=' + basicComboBox.get('input').val();
+                //location.hash = '#!q=' + basicComboBox.get('input').val();
             });
         })();
     });

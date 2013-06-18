@@ -26,13 +26,13 @@
     autocomplete="off"
     class="{{getBaseCssClasses "input"}}"
 
-    value="{{inputValue}}"
+    value="{{value}}"
     />
 
 
     <label id="ks-combobox-placeholder-{{id}}"
            for="ks-combobox-input-{{id}}"
-            style='display:{{#if inputValue}}none{{else}}block{{/if}};'
+            style='display:{{#if value}}none{{else}}block{{/if}};'
     class="{{getBaseCssClasses "placeholder"}}">
     {{placeholder}}
     </label>

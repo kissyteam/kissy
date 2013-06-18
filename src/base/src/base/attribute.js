@@ -46,7 +46,7 @@ KISSY.add('base/attribute', function (S, CustomEvent, undefined) {
         if (!doNotCreate && !ret) {
             obj[name] = ret = {};
         }
-        return ret||{};
+        return ret || {};
     }
 
     function getAttrs(self) {
@@ -164,10 +164,13 @@ KISSY.add('base/attribute', function (S, CustomEvent, undefined) {
         }
 
         // if no change, just return
-        if (!path && prevVal === value) {
-            return undefined;
-        } else if (path && subVal === value) {
-            return undefined;
+        // pass equal check to fire change event
+        if (!opts.force) {
+            if (!path && prevVal === value) {
+                return undefined;
+            } else if (path && subVal === value) {
+                return undefined;
+            }
         }
 
         value = getValueBySubValue(prevVal, path, value);
@@ -550,7 +553,7 @@ KISSY.add('base/attribute', function (S, CustomEvent, undefined) {
     // get default attribute value from valueFn/value
     function getDefAttrVal(self, name) {
         var attrs = getAttrs(self),
-            attrConfig = ensureNonEmpty(attrs, name,1),
+            attrConfig = ensureNonEmpty(attrs, name, 1),
             valFn = attrConfig.valueFn,
             val;
 

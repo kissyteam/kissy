@@ -19,9 +19,9 @@ KISSY.add("combobox/multi-value-combobox", function (S, getCursor, ComboBox) {
      */
     return ComboBox.extend({
 
-            getValueInternal: function () {
+            getValueForAutocomplete: function () {
+
                 var self = this,
-                    input = self.get("input"),
                     inputDesc = getInputDesc(self),
                     tokens = inputDesc.tokens,
                     tokenIndex = inputDesc.tokenIndex,
@@ -44,9 +44,10 @@ KISSY.add("combobox/multi-value-combobox", function (S, getCursor, ComboBox) {
                 }
 
                 return token;
+
             },
 
-            setValueInternal: function (value) {
+            setValueFromAutocomplete: function (value,setCfg) {
                 var self = this,
                     input = self.get("input"),
                     inputDesc = getInputDesc(self),
@@ -62,7 +63,7 @@ KISSY.add("combobox/multi-value-combobox", function (S, getCursor, ComboBox) {
                 if (separatorType != SUFFIX) {
                     tokens[tokenIndex] = token.charAt(0) + value;
                     if (nextToken && rWhitespace.test(nextToken.charAt(0))) {
-                    } else {
+                    } else if (value) {
                         // 自动加空白间隔
                         tokens[tokenIndex] += ' ';
                     }
@@ -80,36 +81,24 @@ KISSY.add("combobox/multi-value-combobox", function (S, getCursor, ComboBox) {
 
                 cursorPosition = tokens.slice(0, tokenIndex + 1).join("").length;
 
-                input.val(tokens.join(""));
+                self.set('value', tokens.join(""),setCfg);
 
                 input.prop("selectionStart", cursorPosition);
                 input.prop("selectionEnd", cursorPosition);
             },
 
             'alignInternal': function () {
-                if (!this.get('alignWithCursor')) {
-                    ComboBox.prototype.alignInternal.apply(this, arguments);
+                var self = this;
+                if (!self.get('alignWithCursor')) {
+                    ComboBox.prototype.alignInternal.apply(self, arguments);
                     return;
                 }
-                var self = this,
-                    inputDesc = getInputDesc(self),
-                    tokens = inputDesc.tokens,
-                    menu = self.get("menu"),
-                    cursorPosition = inputDesc.cursorPosition,
-                    tokenIndex = inputDesc.tokenIndex,
-                    tokenCursorPosition,
+                // does not support align with separator
+                // will cause ime error
+                var menu = self.get("menu"),
                     cursorOffset,
                     input = self.get("input");
-                tokenCursorPosition = tokens.slice(0, tokenIndex).join("").length;
-                if (tokenCursorPosition > 0) {
-                    // behind separator
-                    ++tokenCursorPosition;
-                }
-                input.prop("selectionStart", tokenCursorPosition);
-                input.prop("selectionEnd", tokenCursorPosition);
                 cursorOffset = getCursor(input);
-                input.prop("selectionStart", cursorPosition);
-                input.prop("selectionEnd", cursorPosition);
                 menu.set("xy", [cursorOffset.left, cursorOffset.top]);
             }
         },
@@ -172,7 +161,7 @@ KISSY.add("combobox/multi-value-combobox", function (S, getCursor, ComboBox) {
 
     function getInputDesc(self) {
         var input = self.get("input"),
-            inputVal = input.val(),
+            inputVal = self.get('value'),
             tokens = [],
             cache = [],
             literal = self.get("literal"),

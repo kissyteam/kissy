@@ -30,7 +30,7 @@ KISSY.use("combobox", function (S, ComboBox) {
             dataSource: new ComboBox.LocalDataSource({
                 data: data
             }),
-            inputValue: '2',
+            value: '2',
             format: function (q, data) {
                 var ret = [];
                 S.each(data, function (d) {
