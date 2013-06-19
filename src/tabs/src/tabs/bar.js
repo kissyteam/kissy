@@ -3,16 +3,12 @@
  * TabBar for KISSY.
  * @author yiminghe@gmail.com
  */
-KISSY.add("tabs/bar", function (S, Toolbar, undefined) {
+KISSY.add("tabs/bar", function (S, Toolbar, BarRender, undefined) {
 
     /**
      * @ignore
      */
     var TabBar = Toolbar.extend({
-
-        initializer: function () {
-            this.get('elAttrs')['role'] = 'tablist';
-        },
 
         bindUI: function () {
             var self = this;
@@ -28,7 +24,7 @@ KISSY.add("tabs/bar", function (S, Toolbar, undefined) {
                 children = bar.get("children");
             S.each(children, function (c) {
                 if (c.get("selected")) {
-                    bar.set("selectedTab", c);
+                    bar.setInternal("selectedTab", c);
                     return false;
                 }
                 return undefined;
@@ -76,9 +72,11 @@ KISSY.add("tabs/bar", function (S, Toolbar, undefined) {
                 value: {
                     xclass: 'tabs-tab'
                 }
+            },
+            xrender: {
+                value: BarRender
             }
-        }
-    }, {
+        },
         xclass: 'tabs-bar'
     });
 
@@ -100,5 +98,5 @@ KISSY.add("tabs/bar", function (S, Toolbar, undefined) {
     return TabBar;
 
 }, {
-    requires: ['toolbar']
+    requires: ['toolbar', './bar-render']
 });

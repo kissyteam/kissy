@@ -2,7 +2,7 @@
  * separator def
  * @author yiminghe@gmail.com
  */
-KISSY.add("separator", function (S, Component, SeparatorRender) {
+KISSY.add("separator", function (S, Controller, SeparatorRender) {
 
     /**
      * @extends KISSY.Component.Controller
@@ -11,40 +11,34 @@ KISSY.add("separator", function (S, Component, SeparatorRender) {
      * xclass: 'separator'.
      * @name Separator
      */
-    var Separator = Component.Controller.extend({
+    return Controller.extend({
     }, {
-        ATTRS:/**
-         * @lends Separator#
-         */
-        {
+        ATTRS: {
 
             /**
              * Un-focusable.
              * readonly.
              * Defaults to: false.
              */
-            focusable:{
-                value:false
+            focusable: {
+                value: false
             },
 
-            disabled:{
-                value:true
+            disabled: {
+                value: true
             },
 
-            handleMouseEvents:{
-                value:false
+            handleMouseEvents: {
+                value: false
             },
 
-            xrender:{
-                value:SeparatorRender
+            xrender: {
+                value: SeparatorRender
             }
-        }
-    }, {
-        xclass:'separator'
+        },
+        xclass: 'separator'
     });
 
-    return Separator;
-
 }, {
-    requires:['component/base', 'separator/render']
+    requires: ['component/controller', 'separator/render']
 });

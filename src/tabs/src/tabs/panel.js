@@ -3,14 +3,14 @@
  * single tab panel.
  * @author yiminghe@gmail.com
  */
-KISSY.add("tabs/panel", function (S, Component, PanelRender) {
+KISSY.add("tabs/panel", function (S, Container, PanelRender) {
 
     /**
      * KISSY.Tabs.Panel
      * @class  KISSY.Tabs.Panel
      * @extends KISSY.Component.Controller
      */
-    return Component.Controller.extend({
+    return Container.extend({
         isTabsPanel: 1
     }, {
         ATTRS: {
@@ -33,11 +33,10 @@ KISSY.add("tabs/panel", function (S, Component, PanelRender) {
             xrender: {
                 value: PanelRender
             }
-        }
-    }, {
+        },
         xclass: 'tabs-panel'
     })
 
 }, {
-    requires: ['component/base', './panel-render']
+    requires: ['component/container', './panel-render']
 });

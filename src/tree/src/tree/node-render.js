@@ -31,10 +31,9 @@ KISSY.add("tree/node-render", function (S, Node, Component, TreeNodeTpl, Extensi
         ALL_STATES_CLS = "checked0 checked1 checked2";
 
     return Component.Render.extend([Extension.ContentRender],{
-        initializer: function () {
-            var self = this,
-                renderData = self.renderData;
-            S.mix(self.get('elAttrs'), {
+
+        beforeCreateDom:function(renderData,childrenElSelectors){
+            S.mix(renderData.elAttrs, {
                 role: 'tree-node',
                 'aria-labelledby': 'ks-content' + renderData.id,
                 'aria-expanded': renderData.expanded ? 'true' : 'false',
@@ -42,7 +41,7 @@ KISSY.add("tree/node-render", function (S, Node, Component, TreeNodeTpl, Extensi
                 'aria-level': renderData.depth,
                 'title': renderData.tooltip
             });
-            S.mix(self.get('childrenElSelectors'), {
+            S.mix(childrenElSelectors, {
                 expandIconEl: '#ks-tree-node-expand-icon-{id}',
                 rowEl: '#ks-tree-node-row-{id}',
                 iconEl: '#ks-tree-node-icon-{id}',

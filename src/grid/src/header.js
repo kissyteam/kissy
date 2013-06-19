@@ -184,7 +184,7 @@ KISSY.add('grid/header', function (S, Component, Column) {
              * @param {Object} obj the scroll object which has two value:top(scrollTop),left(scrollLeft)
              */
             scrollTo:function (obj) {
-                this.get('view').scrollTo(obj);
+                this.view.scrollTo(obj);
             },
             //when column's event fire ,this header must handle them.
             _bindColumnsEvent:function () {

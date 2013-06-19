@@ -5,28 +5,22 @@
  */
 KISSY.add("tabs/tab-render", function (S, Button) {
 
-    return Button.Render.extend({
-        initializer: function () {
-            var attrs = this.get('elAttrs');
+    return Button.ATTRS.xrender.value.extend({
+        beforeCreateDom: function (renderData) {
+            var attrs = renderData.elAttrs;
             attrs.role = 'tab';
-            if (this.get('selected')) {
+            if (renderData.selected) {
                 attrs['aria-selected'] = true;
-                this.get('elCls').push(this.getBaseCssClasses('selected'));
+                renderData.elCls.push(this.getBaseCssClasses('selected'));
             }
         },
         _onSetSelected: function (v) {
-            var el = this.get("el");
+            var el = this.el;
             var selectedCls = this.getBaseCssClasses('selected');
             el[v ? 'addClass' : 'removeClass'](selectedCls);
             el.attr('aria-selected', !!v);
         }
     }, {
-        ATTRS: {
-            selected: {
-                value: false,
-                sync: 0
-            }
-        },
         HTML_PARSER: {
             selected: function (el) {
                 return el.hasClass(this.getBaseCssClass('selected'));

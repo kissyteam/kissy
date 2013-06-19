@@ -18,11 +18,7 @@ KISSY.add("editor/utils", function (S) {
          * @name Utils
          * @member Editor
          */
-            Utils =
-        /**
-         * @lends Editor.Utils
-         */
-        {
+            Utils ={
             /**
              *
              * @param url

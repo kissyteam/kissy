@@ -38,8 +38,7 @@ KISSY.add("tabs/tab", function (S, Button, TabRender) {
             xrender: {
                 value: TabRender
             }
-        }
-    }, {
+        },
         xclass: 'tabs-tab'
     });
 

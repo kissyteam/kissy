@@ -89,7 +89,7 @@ KISSY.add("overlay/extension/mask", function (S, Node) {
                 maskNode,
                 mask,
                 el = self.get('el'),
-                view = self.get("view");
+                view = self.view;
             if (mask = self.get("mask")) {
                 maskNode = self.get('maskNode');
                 if (mask['closeOnClick']) {

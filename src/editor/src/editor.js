@@ -89,12 +89,7 @@ KISSY.add('editor', function (S, Editor, Utils, focusManager, Styles, zIndexMang
 
     var WYSIWYG_MODE = 1;
 
-    S.augment(Editor,
-
-        /**
-         * @lends Editor#
-         */
-        {
+    S.augment(Editor,{
             createDom: function () {
                 var self = this,
                     wrap,

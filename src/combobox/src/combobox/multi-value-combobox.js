@@ -13,7 +13,6 @@ KISSY.add("combobox/multi-value-combobox", function (S, getCursor, ComboBox) {
 
     /**
      * KISSY MultiValueComboBox.
-     * xclass: 'multi-value-combobox'.
      * @extends KISSY.ComboBox
      * @class KISSY.ComboBox.MultiValueComboBox
      */
@@ -152,8 +151,7 @@ KISSY.add("combobox/multi-value-combobox", function (S, getCursor, ComboBox) {
                  */
                 alignWithCursor: {
                 }
-            }
-        }, {
+            },
             xclass: 'multi-value-combobox'
         });
 

@@ -27,8 +27,7 @@ KISSY.add('menu/check-menuitem', function (S, MenuItem, CheckMenuItemRender) {
             xrender: {
                 value: CheckMenuItemRender
             }
-        }
-    }, {
+        },
         xclass: "check-menuitem"
     })
 }, {

@@ -9,12 +9,12 @@ KISSY.add('scrollview/plugin/scrollbar/render', function (S, Component, ScrollBa
 
     var methods = {
 
-        initializer: function () {
+        beforeCreateDom:function(renderData,childrenElSelectors){
             var self = this,
                 axis = self.get('axis'),
                 prefixCls = self.prefixCls;
-            self.get('elCls').push(prefixCls + 'scrollbar-' + axis);
-            S.mix(self.get('childrenElSelectors'), {
+            renderData.elCls.push(prefixCls + 'scrollbar-' + axis);
+            S.mix(childrenElSelectors, {
                 'dragEl': '#ks-scrollbar-drag-{id}',
                 'downBtn': '#ks-scrollbar-arrow-down-{id}',
                 'upBtn': '#ks-scrollbar-arrow-up-{id}',

@@ -194,11 +194,7 @@ KISSY.add("editor/walker", function (S, Editor) {
     }
 
 
-    S.augment(Walker,
-        /**
-         * @lends Editor.Walker#
-         */
-        {
+    S.augment(Walker,{
             /**
              * Stop walking. No more nodes are retrieved if this function gets
              * called.
@@ -276,11 +272,7 @@ KISSY.add("editor/walker", function (S, Editor) {
         });
 
 
-    S.mix(Walker,
-        /**
-         * @lends Editor.Walker
-         */
-        {
+    S.mix(Walker,{
             /**
              * Whether the to-be-evaluated node is not a block node and does not match given node name map.
              * @param {Object} customNodeNames Given node name map.

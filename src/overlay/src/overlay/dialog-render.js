@@ -11,12 +11,13 @@ KISSY.add("overlay/dialog-render", function (S, OverlayRender, DialogTpl, CloseT
     }
 
     return OverlayRender.extend({
-        initializer: function () {
-            S.mix(this.get('elAttrs'), {
+
+        beforeCreateDom: function (renderData,childrenElSelectors) {
+            S.mix(renderData.elAttrs, {
                 role: 'dialog',
                 'aria-labelledby': 'ks-stdmod-header' + this.get('id')
             });
-            S.mix(this.get('childrenElSelectors'), {
+            S.mix(childrenElSelectors, {
                 header: '#ks-stdmod-header-{id}',
                 body: '#ks-stdmod-body-{id}',
                 footer: '#ks-stdmod-footer-{id}'
@@ -56,7 +57,7 @@ KISSY.add("overlay/dialog-render", function (S, OverlayRender, DialogTpl, CloseT
                 value: false
             },
             contentTpl: {
-                value: CloseTpl+DialogTpl
+                value: CloseTpl + DialogTpl
             },
             headerContent: {
                 sync: 0

@@ -3,7 +3,7 @@
  * menu where items can be filtered based on user keyboard input
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender, Extension) {
+KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender) {
 
     var HIT_CLS = "menuitem-hit";
 
@@ -13,11 +13,10 @@ KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender, Extension) {
      * @extends KISSY.Menu
      * @class KISSY.Menu.FilterMenu
      */
-    var FilterMenu = Menu.extend([Extension.DecorateChild], {
+    var FilterMenu = Menu.extend({
             bindUI: function () {
                 var self = this,
-                    view = self.get("view"),
-                    filterInput = view.get("filterInput");
+                    filterInput = self.get("filterInput");
                 /*监控键盘事件*/
                 filterInput.on("valuechange", self.handleFilterEvent, self);
             },
@@ -27,14 +26,13 @@ KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender, Extension) {
                 FilterMenu.superclass.handleMouseEnter.apply(self, arguments);
                 // 权益解决,filter input focus 后会滚动到牌聚焦处,select 则不会
                 // 如果 filtermenu 的菜单项被滚轮滚到后面,点击触发不了,会向前滚动到 filter input
-                self.getKeyEventTarget()[0].select();
+                self.view.getKeyEventTarget()[0].select();
             },
 
             handleFilterEvent: function () {
                 var self = this,
-                    view = self.get("view"),
                     str,
-                    filterInput = view.get("filterInput"),
+                    filterInput = self.get("filterInput"),
                     highlightedItem = self.get("highlightedItem");
                 /* 根据用户输入过滤 */
                 self.set("filterStr", filterInput.val());
@@ -69,9 +67,8 @@ KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender, Extension) {
             filterItems: function (str) {
                 var self = this,
                     prefixCls = self.prefixCls,
-                    view = self.get("view"),
-                    _placeholderEl = view.get("placeholderEl"),
-                    filterInput = view.get("filterInput");
+                    _placeholderEl = self.get("placeholderEl"),
+                    filterInput = self.get("filterInput");
 
                 // 有过滤条件提示隐藏,否则提示显示
                 _placeholderEl[str ? "hide" : "show"]();
@@ -161,28 +158,15 @@ KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender, Extension) {
              * Reset user input.
              */
             reset: function () {
-                var self = this,
-                    view = self.get("view");
+                var self = this;
                 self.set("filterStr", "");
                 self.set("enteredItems", []);
-                var filterInput = view && view.get("filterInput");
-                filterInput && filterInput.val("");
-            },
-
-            destructor: function () {
-                var view = this.get("view");
-                var filterInput = view && view.get("filterInput");
-                filterInput && filterInput.detach();
+                self.get("filterInput").val("");
             }
 
         },
         {
             ATTRS: {
-
-                contentEl: {
-                    view: true
-                },
-
                 allowTextSelection: {
                     value: true
                 },
@@ -231,12 +215,11 @@ KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender, Extension) {
                 xrender: {
                     value: FilterMenuRender
                 }
-            }
-        }, {
+            },
             xclass: 'filter-menu'
         });
 
     return FilterMenu;
 }, {
-    requires: ['./base', './filtermenu-render', 'component/extension']
+    requires: ['./base', './filtermenu-render']
 });

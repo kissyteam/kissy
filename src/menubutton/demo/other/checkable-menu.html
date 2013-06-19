@@ -159,6 +159,11 @@
                     render:"#exist",
                     content:"多选菜单",
                     width:200,
+                    listeners: {
+                        click: function (e) {
+                            S.log(e.target.get('content'));
+                        }
+                    },
                     menu:menu
                 });
                 exist.render();

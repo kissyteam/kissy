@@ -3,12 +3,11 @@
  * Render aria properties to input element.
  * @author yiminghe@gmail.com
  */
-KISSY.add("combobox/render", function (S, Component, ComboboxTpl) {
+KISSY.add("combobox/render", function (S, Controller, ComboboxTpl) {
 
-    var ComboboxRender = Component.Render.extend({
+    var ComboboxRender = Controller.ATTRS.xrender.value.extend({
 
-        initializer: function () {
-            var childrenElSelectors = this.get('childrenElSelectors');
+        beforeCreateDom: function (renderData, childrenElSelectors) {
             S.mix(childrenElSelectors, {
                 input: '#ks-combobox-input-{id}',
                 trigger: '#ks-combobox-trigger-{id}',
@@ -18,58 +17,28 @@ KISSY.add("combobox/render", function (S, Component, ComboboxTpl) {
         },
 
         getKeyEventTarget: function () {
-            return this.get("input");
+            return this.controller.get("input");
         },
 
         _onSetCollapsed: function (v) {
-            this.get("input").attr("aria-expanded", !v);
+            this.controller.get("input").attr("aria-expanded", !v);
         },
 
         _onSetDisabled: function (v) {
             ComboboxRender.superclass._onSetDisabled.apply(this, arguments);
-            this.get("input").attr("disabled", v);
+            this.controller.get("input").attr("disabled", v);
         }
 
     }, {
         ATTRS: {
-
-            collapsed: {
-                value: true,
-                sync: 0
-            },
-
-            hasTrigger: {
-                value: true,
-                sync: 0
-            },
-
-            input: {
-            },
-
-            value: {
-            },
-
-            disabled: {
-                sync: 0
-            },
-
-            trigger: {
-            },
-
-            placeholder: {
-            },
-
-            placeholderEl: {
-            },
-
-            invalidEl: {
-            },
-
             contentTpl: {
                 value: ComboboxTpl
             }
         },
         HTML_PARSER: {
+            value: function (el) {
+                return el.one("." + this.getBaseCssClass('input')).val();
+            },
             input: function (el) {
                 return el.one("." + this.getBaseCssClass('input'));
             },
@@ -87,5 +56,5 @@ KISSY.add("combobox/render", function (S, Component, ComboboxTpl) {
 
     return ComboboxRender;
 }, {
-    requires: ['component/base', './combobox-tpl']
+    requires: ['component/controller', './combobox-tpl']
 });

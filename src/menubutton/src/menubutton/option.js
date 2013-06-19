@@ -11,8 +11,7 @@ KISSY.add("menubutton/option", function (S, Menu) {
      * @extends KISSY.Menu.Item
      */
     return MenuItem.extend({}, {
-        ATTRS:
-        {
+        ATTRS:{
             /**
              * Whether this option can be selected.
              * Defaults to: true.
@@ -27,10 +26,8 @@ KISSY.add("menubutton/option", function (S, Menu) {
              * @type {String}
              */
             textContent: {
-
             }
-        }
-    }, {
+        },
         xclass: 'option'
     });
 }, {

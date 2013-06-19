@@ -3,24 +3,18 @@
  * abstract view for button
  * @author yiminghe@gmail.com
  */
-KISSY.add("button/render", function (S, Component) {
+KISSY.add("button/render", function (S, Controller) {
     // http://www.w3.org/TR/wai-aria-practices/
-    return Component.Render.extend({
-        initializer: function () {
-            // set wai-aria role
+    return Controller.ATTRS.xrender.value.extend({
+        beforeCreateDom: function (renderData) {
             var self = this;
-            var renderData = self.renderData;
-            if (renderData) {
-                var controller = self.controller;
-                var attrs = controller.get('elAttrs');
-                S.mix(attrs, {
-                    role: 'button',
-                    title: renderData.tooltip,
-                    'aria-describedby': renderData.describedby
-                });
-                if (renderData.checked) {
-                    controller.get('elCls').push(self.getBaseCssClasses("checked"));
-                }
+            S.mix(renderData.elAttrs, {
+                role: 'button',
+                title: renderData.tooltip,
+                'aria-describedby': renderData.describedby
+            });
+            if (renderData.checked) {
+                renderData.elCls.push(self.getBaseCssClasses("checked"));
             }
         },
         _onSetChecked: function (v) {
@@ -35,9 +29,9 @@ KISSY.add("button/render", function (S, Component) {
         '_onSetDescribedby': function (describedby) {
             this.el.attr("aria-describedby", describedby);
         }
-    },{
-        name:'ButtonRender'
+    }, {
+        name: 'ButtonRender'
     });
 }, {
-    requires: ['component/base']
+    requires: ['component/controller']
 });

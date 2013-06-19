@@ -3,16 +3,16 @@
  * render aria from menu according to current menuitem
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/menu-render", function (S, Component) {
+KISSY.add("menu/menu-render", function (S, Container) {
 
-    return Component.Render.extend({
+    return Container.ATTRS.xrender.value.extend({
 
-        initializer: function () {
-            this.get('elAttrs')['role']='menu';
+        beforeCreateDom: function (renderData) {
+            renderData.elAttrs.role = 'menu';
         },
 
         setAriaActiveDescendant: function (v) {
-            var el = this.get("el");
+            var el = this.el;
             if (v) {
                 var menuItemEl = v.get("el"),
                     id = menuItemEl.attr("id");
@@ -24,10 +24,10 @@ KISSY.add("menu/menu-render", function (S, Component) {
         },
 
         containsElement: function (element) {
-            var el = this.get("el");
+            var el = this.el;
             return el[0] === element || el.contains(element);
         }
     });
 }, {
-    requires: ['component/base']
+    requires: ['component/container']
 });

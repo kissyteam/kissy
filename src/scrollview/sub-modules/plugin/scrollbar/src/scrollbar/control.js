@@ -339,8 +339,7 @@ KISSY.add('scrollview/plugin/scrollbar/control', function (S, Node, DD, Componen
             xrender: {
                 value: ScrollBarRender
             }
-        }
-    }, {
+        },
         xclass: 'scrollbar'
     });
 

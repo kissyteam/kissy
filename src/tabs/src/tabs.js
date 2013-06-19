@@ -3,39 +3,50 @@
  * KISSY Tabs Component.
  * @author yiminghe@gmail.com
  */
-KISSY.add("tabs", function (S, Component, Bar, Body, Tab, Panel, Render) {
+KISSY.add("tabs", function (S, Container, Bar, Body, Tab, Panel, Render) {
 
+    function setBar(children, barOrientation, bar) {
+        children[BarIndexMap[barOrientation]] = bar;
+    }
+
+    function setBody(children, barOrientation, body) {
+        children[1 - BarIndexMap[barOrientation]] = body;
+    }
 
     /**
      * Tabs for KISSY
      * @class KISSY.Tabs
      * @extends KISSY.Component.Controller
      */
-    var Tabs = Component.Controller.extend({
+    var Tabs = Container.extend({
 
         initializer: function () {
             var self = this,
-                selected,
-                items,
-                prefixCls = self.prefixCls,
-                tabItem,
-                panelItem,
-                bar = {
-                    prefixCls: prefixCls,
-                    xclass: 'tabs-bar',
-                    changeType: self.get("changeType"),
-                    children: []
-                },
-                body = {
-                    prefixCls: prefixCls,
-                    xclass: 'tabs-body',
-                    lazyRender: self.get('lazyRender'),
-                    children: []
-                },
-                barChildren = bar.children,
-                panels = body.children;
+                items = self.get('items');
 
-            if (items = self.get("items")) {
+            // items sugar
+            if (items) {
+                var children = self.get('children'),
+                    barOrientation = self.get('barOrientation'),
+                    selected,
+                    prefixCls = self.prefixCls,
+                    tabItem,
+                    panelItem,
+                    bar = {
+                        prefixCls: prefixCls,
+                        xclass: 'tabs-bar',
+                        changeType: self.get("changeType"),
+                        children: []
+                    },
+                    body = {
+                        prefixCls: prefixCls,
+                        xclass: 'tabs-body',
+                        lazyRender: self.get('lazyRender'),
+                        children: []
+                    },
+                    barChildren = bar.children,
+                    panels = body.children;
+
                 S.each(items, function (item) {
                     selected = selected || item.selected;
                     barChildren.push(tabItem = {
@@ -48,15 +59,15 @@ KISSY.add("tabs", function (S, Component, Bar, Body, Tab, Panel, Render) {
                     });
 
                 });
-            }
 
-            if (!selected && barChildren.length) {
-                barChildren[0].selected = true;
-                panels[0].selected = true;
-            }
+                if (!selected && barChildren.length) {
+                    barChildren[0].selected = true;
+                    panels[0].selected = true;
+                }
 
-            self.set("bar", bar);
-            self.set("body", body);
+                setBar(children, barOrientation, bar);
+                setBody(children, barOrientation, body);
+            }
         },
 
 
@@ -256,47 +267,6 @@ KISSY.add("tabs", function (S, Component, Bar, Body, Tab, Panel, Render) {
         /**
          * @ignore
          */
-        renderUI: function () {
-            var self = this,
-                barOrientation = self.get("barOrientation"),
-                el = self.get("el"),
-                body = self.get("body"),
-                bar = self.get("bar");
-            bar.set("render", el);
-            body.set("render", el);
-
-            if (barOrientation == 'bottom') {
-                body.render();
-                bar.render();
-            } else {
-                bar.render();
-                body.render();
-            }
-        },
-
-        /**
-         * @ignore
-         */
-        decorateInternal: function (el) {
-            var self = this,
-                prefixCls = self.prefixCls,
-                changeType = self.get('changeType'),
-                bar = el.children("." + prefixCls + "tabs-bar"),
-                body = el.children("." + prefixCls + "tabs-body");
-            self.set("bar", new Bar({
-                srcNode: bar,
-                changeType: changeType,
-                prefixCls: prefixCls
-            }));
-            self.set("body", new Body({
-                srcNode: body,
-                prefixCls: prefixCls
-            }));
-        },
-
-        /**
-         * @ignore
-         */
         bindUI: function () {
             this.on("afterSelectedTabChange", function (e) {
                 this.setSelectedTab(e.newVal);
@@ -341,6 +311,7 @@ KISSY.add("tabs", function (S, Component, Bar, Body, Tab, Panel, Render) {
              */
             changeType: {
             },
+
             /**
              * tabs trigger event type, mouse or click
              * @cfg {String} changeType
@@ -351,46 +322,28 @@ KISSY.add("tabs", function (S, Component, Bar, Body, Tab, Panel, Render) {
             lazyRender: {
                 value: false
             },
+
             // real attribute
             handleMouseEvents: {
                 value: false
             },
+
             allowTextSelection: {
                 value: true
             },
+
             focusable: {
                 value: false
             },
+
             bar: {
-                setter: function (v) {
-                    if (v && !v.isController) {
-                        v = this.deriveComponent(v);
-                    }
-                    if (v) {
-                        // allow afterSelectedTabChange to bubble
-                        v.addTarget(this);
-                    }
-                    return v;
-                },
-                valueFn: function () {
-                    return Component.create({
-                        xclass: 'tabs-bar',
-                        prefixCls: this.prefixCls
-                    });
+                getter: function () {
+                    return this.get('children')[BarIndexMap[this.get('barOrientation')]];
                 }
             },
             body: {
-                setter: function (v) {
-                    if (v && !v.isController) {
-                        return this.deriveComponent(v);
-                    }
-                    return v;
-                },
-                valueFn: function () {
-                    return Component.create({
-                        xclass: 'tabs-body',
-                        prefixCls: this.prefixCls
-                    });
+                getter: function () {
+                    return this.get('children')[1 - BarIndexMap[this.get('barOrientation')]];
                 }
             },
 
@@ -400,14 +353,14 @@ KISSY.add("tabs", function (S, Component, Bar, Body, Tab, Panel, Render) {
              * @cfg {String} barOrientation
              */
             barOrientation: {
-                view: 1
+                view: 1,
+                value: 'top'
             },
 
             xrender: {
                 value: Render
             }
-        }
-    }, {
+        },
         xclass: 'tabs'
     });
 
@@ -434,6 +387,13 @@ KISSY.add("tabs", function (S, Component, Bar, Body, Tab, Panel, Render) {
         RIGHT: 'right'
     };
 
+    var BarIndexMap = {
+        top: 0,
+        left: 0,
+        bottom: 1,
+        right: 0
+    };
+
     Tabs.ChangeType = Bar.ChangeType;
 
     Tabs.Bar = Bar;
@@ -442,5 +402,5 @@ KISSY.add("tabs", function (S, Component, Bar, Body, Tab, Panel, Render) {
 
     return Tabs;
 }, {
-    requires: ['component/base', 'tabs/bar', 'tabs/body', 'tabs/tab', 'tabs/panel', 'tabs/render']
+    requires: ['component/container', 'tabs/bar', 'tabs/body', 'tabs/tab', 'tabs/panel', 'tabs/render']
 });

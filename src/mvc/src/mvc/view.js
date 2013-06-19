@@ -30,11 +30,7 @@ KISSY.add("mvc/view", function (S, Node, Base) {
         }
     }
 
-    View.ATTRS =
-    /**
-     * @lends MVC.View#
-     */
-    {
+    View.ATTRS ={
         /**
          * Get root element for current view instance.
          * @type {String}
@@ -75,11 +71,7 @@ KISSY.add("mvc/view", function (S, Node, Base) {
     };
 
 
-    S.extend(View, Base,
-        /**
-         * @lends MVC.View#
-         */
-        {
+    S.extend(View, Base,{
 
             _afterEventsChange: function (e) {
                 var prevVal = e.prevVal;

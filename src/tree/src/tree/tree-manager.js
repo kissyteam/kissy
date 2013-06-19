@@ -15,11 +15,7 @@ KISSY.add("tree/tree-manager", function (S, Node, Component, Extension) {
     function TreeManager() {
     }
 
-    TreeManager.ATTRS =
-    /**
-     * @lends Tree#
-     */
-    {
+    TreeManager.ATTRS = {
         /**
          * Whether show root node.
          * Defaults to: true.

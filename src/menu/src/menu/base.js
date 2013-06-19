@@ -3,7 +3,7 @@
  * menu controller for kissy,accommodate menu items
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/base", function (S, Node, Component,Extension, MenuRender, undefined) {
+KISSY.add("menu/base", function (S, Node, Container, DelegateChildrenExtension, MenuRender, undefined) {
 
     var KeyCode = Node.KeyCode;
 
@@ -13,10 +13,9 @@ KISSY.add("menu/base", function (S, Node, Component,Extension, MenuRender, undef
      * @class KISSY.Menu
      * @extends KISSY.Component.Controller
      */
-    var Menu = Component.Controller.extend([
-        Extension.DelegateChildren,
-    Extension.DecorateChildren
-    ],{
+    var Menu = Container.extend([
+        DelegateChildrenExtension
+    ], {
         isMenu: 1,
 
 
@@ -63,9 +62,7 @@ KISSY.add("menu/base", function (S, Node, Component,Extension, MenuRender, undef
                 clearTimeout(rootMenu._popupAutoHideTimer);
                 rootMenu._popupAutoHideTimer = null;
             }
-            if (this.get('focusable')) {
-                this.set('focused', true);
-            }
+            this.focus();
         },
 
         handleBlur: function (e) {
@@ -108,14 +105,18 @@ KISSY.add("menu/base", function (S, Node, Component,Extension, MenuRender, undef
          */
         handleKeyEventInternal: function (e) {
 
+            var self = this;
+
             // Give the highlighted control the chance to handle the key event.
-            var highlightedItem = this.get("highlightedItem");
+            var highlightedItem = self.get("highlightedItem");
+
             // 先看当前活跃 menuitem 是否要处理
             if (highlightedItem && highlightedItem.handleKeydown(e)) {
                 return true;
             }
 
-            var children = this.get("children"), len = children.length;
+            var children = self.get("children"),
+                len = children.length;
 
             if (len === 0) {
                 return undefined;
@@ -128,18 +129,18 @@ KISSY.add("menu/base", function (S, Node, Component,Extension, MenuRender, undef
                 // esc
                 case KeyCode.ESC:
                     // 清除所有菜单
-                    if (highlightedItem = this.get('highlightedItem')) {
+                    if (highlightedItem = self.get('highlightedItem')) {
                         highlightedItem.set('highlighted', false);
                     }
                     break;
 
                 // home
                 case KeyCode.HOME:
-                    nextHighlighted = this._getNextEnabledHighlighted(0, 1);
+                    nextHighlighted = self._getNextEnabledHighlighted(0, 1);
                     break;
                 // end
                 case KeyCode.END:
-                    nextHighlighted = this._getNextEnabledHighlighted(len - 1, -1);
+                    nextHighlighted = self._getNextEnabledHighlighted(len - 1, -1);
                     break;
                 // up
                 case KeyCode.UP:
@@ -149,7 +150,7 @@ KISSY.add("menu/base", function (S, Node, Component,Extension, MenuRender, undef
                         index = S.indexOf(highlightedItem, children);
                         destIndex = (index - 1 + len) % len;
                     }
-                    nextHighlighted = this._getNextEnabledHighlighted(destIndex, -1);
+                    nextHighlighted = self._getNextEnabledHighlighted(destIndex, -1);
                     break;
                 //down
                 case KeyCode.DOWN:
@@ -159,7 +160,7 @@ KISSY.add("menu/base", function (S, Node, Component,Extension, MenuRender, undef
                         index = S.indexOf(highlightedItem, children);
                         destIndex = (index + 1 + len) % len;
                     }
-                    nextHighlighted = this._getNextEnabledHighlighted(destIndex, 1);
+                    nextHighlighted = self._getNextEnabledHighlighted(destIndex, 1);
                     break;
             }
             if (nextHighlighted) {
@@ -185,11 +186,11 @@ KISSY.add("menu/base", function (S, Node, Component,Extension, MenuRender, undef
 
             // 隐藏当然不包含了
             // self.get("visible") === undefined 相当于 true
-            if (self.get("visible") === false || !self.get("view")) {
+            if (self.get("visible") === false || !self.view) {
                 return false;
             }
 
-            if (self.get("view").containsElement(element)) {
+            if (self.view.containsElement(element)) {
                 return true;
             }
 
@@ -227,20 +228,20 @@ KISSY.add("menu/base", function (S, Node, Component,Extension, MenuRender, undef
                     xclass: 'menuitem'
                 }
             }
-        }
-    }, {
+        },
         xclass: 'menu'
     });
 
     // capture bubbling
     function afterHighlightedItemChange(e) {
-        this.get('view').setAriaActiveDescendant(e.newVal);
+        this.view.setAriaActiveDescendant(e.newVal);
     }
 
     return Menu;
 
 }, {
-    requires: ['node', 'component/base', 'component/extension','./menu-render']
+    requires: ['node', 'component/container',
+        'component/extension/delegate-children', './menu-render']
 });
 
 /**

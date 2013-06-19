@@ -133,7 +133,12 @@
             //return;
             new MenuButton({
                 srcNode: "#exist",
-                matchElWidth: false
+                matchElWidth: false,
+                listeners: {
+                    click: function (e) {
+                        S.log(e.target.get('content'));
+                    }
+                }
             }).render();
         });
 

@@ -3,36 +3,28 @@
  * single tab panel render.
  * @author yiminghe@gmail.com
  */
-KISSY.add("tabs/panel-render", function (S, Component) {
+KISSY.add("tabs/panel-render", function (S, Container) {
 
-    return Component.Render.extend({
+    return Container.ATTRS.xrender.value.extend({
 
-        initializer: function () {
-            var self = this,
-                attrs = self.get('elAttrs');
-            attrs['role'] = 'tabpanel';
-            if (self.get('selected')) {
-                self.get('elCls').push(self.getBaseCssClasses('selected'));
+        beforeCreateDom: function (renderData) {
+            var self = this;
+            renderData.elAttrs.role = 'tabpanel';
+            if (renderData.selected) {
+                renderData.elCls.push(self.getBaseCssClasses('selected'));
             } else {
-                attrs['aria-hidden'] = false;
+                renderData.elAttrs['aria-hidden'] = false;
             }
         },
 
         _onSetSelected: function (v) {
-            var el = this.get("el");
+            var el = this.el;
             var selectedCls = this.getBaseCssClasses('selected');
             el[v ? "addClass" : "removeClass"](selectedCls);
             el.attr("aria-hidden", !v);
         }
 
     }, {
-        ATTRS: {
-            selected: {
-                sync: 0,
-                value: false
-            }
-        },
-
         HTML_PARSER: {
             selected: function (el) {
                 return el.hasClass(this.getBaseCssClass('selected'));
@@ -41,5 +33,5 @@ KISSY.add("tabs/panel-render", function (S, Component) {
     });
 
 }, {
-    requires: ['component/base']
+    requires: ['component/container']
 });

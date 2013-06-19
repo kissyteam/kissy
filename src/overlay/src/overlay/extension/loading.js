@@ -20,7 +20,7 @@ KISSY.add("overlay/extension/loading", function () {
          */
         loading: function () {
             var self=this;
-            self.get("view").loading();
+            self.view.loading();
             return self;
         },
 
@@ -29,7 +29,7 @@ KISSY.add("overlay/extension/loading", function () {
          * @chainable
          */
         unloading: function () {
-            this.get("view").unloading();
+            this.view.unloading();
             return this;
         }
     };

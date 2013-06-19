@@ -7,7 +7,6 @@ KISSY.add("combobox/local-data-source", function (S) {
 
     /**
      * Local dataSource for comboBox.
-     * xclass: 'combobox-LocalDataSource'.
      * @extends KISSY.Base
      * @class KISSY.ComboBox.LocalDataSource
      */
@@ -68,6 +67,4 @@ KISSY.add("combobox/local-data-source", function (S) {
     });
 
     return LocalDataSource;
-}, {
-    requires:['component/base']
 });

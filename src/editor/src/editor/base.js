@@ -11,25 +11,16 @@ KISSY.add("editor/base", function (S, HTMLParser, Component) {
      * @extends KISSY.Component.Controller
      * @name Editor
      */
-    var Editor = Component.Controller.extend(
-        /**
-         * @lends Editor#
-         */
-        {
+    var Editor = Component.Controller.extend({
             initializer: function () {
                 var self = this;
                 self.__commands = {};
                 self.__controls = {};
             }
-        },
-
-        {
+        }, {
             Config: {},
             XHTML_DTD: HTMLParser['DTD'],
-            ATTRS: /**
-             * @lends Editor#
-             */
-            {
+            ATTRS: {
                 /**
                  * textarea
                  * @type {KISSY.NodeList}
@@ -119,8 +110,7 @@ KISSY.add("editor/base", function (S, HTMLParser, Component) {
                 customLink: {
                     value: []
                 }
-            }
-        }, {
+            },
             xclass: 'editor'
         });
 

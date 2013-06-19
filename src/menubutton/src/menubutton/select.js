@@ -113,11 +113,7 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
      * @member MenuButton
      * @extends MenuButton
      */
-    var Select = MenuButton.extend(
-        /**
-         * @lends MenuButton.Select.prototype
-         */
-        {
+    var Select = MenuButton.extend({
             bindUI: function () {
                 this.on("click", handleMenuClick, this);
                 this.on('show', _handleMenuShow, this);
@@ -158,10 +154,7 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
             }
         },
         {
-            ATTRS: /**
-             * @lends MenuButton.Select.prototype
-             */
-            {
+            ATTRS: {
 
                 /**
                  * Get current select 's value.
@@ -240,10 +233,9 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
 
                 element.remove();
                 return select;
-            }
-
-        }, {
+            },
             xclass: 'select'
+
         });
 
     return Select;

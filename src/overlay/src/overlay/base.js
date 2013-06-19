@@ -3,7 +3,8 @@
  * controller for overlay
  * @author yiminghe@gmail.com
  */
-KISSY.add("overlay/base", function (S, Component, Extension, Loading, Mask, OverlayRender, OverlayEffect) {
+KISSY.add("overlay/base", function (S, Controller, AlignExtension,
+                                    Loading, Mask, OverlayRender, OverlayEffect) {
 
     var HIDE = "hide",
         actions = {
@@ -22,11 +23,9 @@ KISSY.add("overlay/base", function (S, Component, Extension, Loading, Mask, Over
      * @mixins KISSY.Overlay.Extension.Close
      * @mixins KISSY.Overlay.Extension.Mask
      */
-    return Component.Controller.extend([
-        Extension.DecorateChild,
-        Extension.Position,
+    return Controller.extend([
         Loading,
-        Extension.Align,
+        AlignExtension,
         Mask,
         OverlayEffect
     ], {
@@ -148,17 +147,21 @@ KISSY.add("overlay/base", function (S, Component, Extension, Loading, Mask, Over
             handleMouseEvents: {
                 value: false
             },
+
+            visible: {
+                value: false
+            },
+
             xrender: {
                 value: OverlayRender
             }
-        }
-    }, {
+        },
         xclass: 'overlay'
     });
 }, {
     requires: [
-        'component/base',
-        'component/extension',
+        'component/controller',
+        'component/extension/align',
         "./extension/loading",
         "./extension/mask",
         './overlay-render',

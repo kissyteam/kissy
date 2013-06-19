@@ -29,11 +29,7 @@ KISSY.add("mvc/model", function (S, Base) {
         self.collections = {};
     }
 
-    S.extend(Model, Base,
-        /**
-         * @lends MVC.Model#
-         */
-        {
+    S.extend(Model, Base,{
 
             /**
              * Add current model instance to a specified collection.
@@ -200,10 +196,7 @@ KISSY.add("mvc/model", function (S, Base) {
             }
 
         }, {
-            ATTRS:/**
-             * @lends MVC.Model#
-             */
-            {
+            ATTRS:{
                 /**
                  * Attribute name used to store id from server.
                  * Defaults to: "id".

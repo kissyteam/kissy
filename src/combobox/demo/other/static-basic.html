@@ -50,6 +50,7 @@
          local dataSource
          */
         (function () {
+
             var data = [
                 '1243',
                 "a123456鞋子测试ceshi",
@@ -70,11 +71,19 @@
             });
             basicComboBox.render();
 
+            var x = 1;
+
+            S.all(window).on('beforeunload', function () {
+                x = 0;
+            });
+
             // ie needs setTimeout 0
             setTimeout(function () {
                 // 得到焦点时展示全部
                 S.one("#inp").on("focus", function () {
-                    basicComboBox.sendRequest('');
+                    if (x) {
+                        basicComboBox.sendRequest('');
+                    }
                 });
             }, 0);
         })();

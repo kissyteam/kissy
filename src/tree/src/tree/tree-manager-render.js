@@ -5,7 +5,6 @@
 KISSY.add("tree/tree-manager-render", function (S) {
 
     function TreeManagerRender() {
-        this.get('elAttrs')['role']='tree';
     }
 
     TreeManagerRender.ATTRS = {
@@ -16,6 +15,9 @@ KISSY.add("tree/tree-manager-render", function (S) {
     };
 
     S.augment(TreeManagerRender, {
+        __beforeCreateDom:function(renderData){
+            renderData.elAttrs.role='tree';
+        },
         '_onSetShowRootNode': function (v) {
             this.get("rowEl")[v ? "show" : "hide"]();
         }

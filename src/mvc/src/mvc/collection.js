@@ -29,11 +29,7 @@ KISSY.add("mvc/collection", function (S, Model, Base) {
         Collection.superclass.constructor.apply(this, arguments);
     }
 
-    Collection.ATTRS =
-    /**
-     * @lends MVC.Collection#
-     */
-    {
+    Collection.ATTRS =  {
         /**
          * Model constructor with in current collection.
          * @type {MVC.Model}
@@ -93,11 +89,7 @@ KISSY.add("mvc/collection", function (S, Model, Base) {
         }
     };
 
-    S.extend(Collection, Base,
-        /**
-         * @lends MVC.Collection#
-         */
-        {
+    S.extend(Collection, Base,{
             /**
              * Sort model list according {@link MVC.Collection#comparator}.
              */

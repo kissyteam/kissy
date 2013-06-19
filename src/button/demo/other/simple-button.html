@@ -55,7 +55,7 @@
 <script src="/kissy/src/log.js"></script>
 <script>
 
-    KISSY.use("node,button,component/base", function (S, Node, Button, Component) {
+    KISSY.use("node,button,component/manager", function (S, Node, Button, Manager) {
         // view
         // render to container : button_container
         // controller
@@ -70,7 +70,7 @@
 
         b.on("click", function () {
             setTimeout(function () {
-                log("button click");
+                log("by new click");
             }, 0);
         });
 
@@ -105,7 +105,7 @@
             log("渐进增强 click");
         });
 
-        Component.create({
+        Manager.createComponent({
             xclass: 'button',
             content: 'json',
             render: "#button_container3",

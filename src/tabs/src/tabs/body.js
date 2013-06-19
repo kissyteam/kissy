@@ -3,9 +3,9 @@
  * Body for tab panels.
  * @author yiminghe@gmail.com
  */
-KISSY.add("tabs/body", function (S, Component, Extension, undefined) {
+KISSY.add("tabs/body", function (S, Container, Extension, undefined) {
 
-    var TabBody = Component.Controller.extend([Extension.DecorateChildren], {
+    var TabBody = Container.extend({
 
         bindUI: function () {
             var self = this;
@@ -26,7 +26,7 @@ KISSY.add("tabs/body", function (S, Component, Extension, undefined) {
             var self = this,
                 children = self.get("children");
             S.each(children, function (c, i) {
-                if (c.isController && c.get("selected")) {
+                if (c.get("selected")) {
                     self.set("selectedPanelIndex", i);
                     return false;
                 }
@@ -34,12 +34,10 @@ KISSY.add("tabs/body", function (S, Component, Extension, undefined) {
             });
         },
 
-        renderChild: function (c) {
+        renderChild: function (index) {
             if (this.get('lazyRender')) {
-                if (c.isController && !c.get('selected')) {
-                    return c;
-                }
-                if (!c.isController && !c.selected) {
+                var c = this.get('children')[index];
+                if (!c.get('selected')) {
                     return c;
                 }
             }
@@ -47,11 +45,7 @@ KISSY.add("tabs/body", function (S, Component, Extension, undefined) {
         },
 
         selectPanel: function (showPanel) {
-            if (showPanel.isController) {
-                showPanel.set("selected", true);
-            } else {
-                showPanel.selected = true;
-            }
+            showPanel.set("selected", true);
             if (this.get('lazyRender')) {
                 // lazy render
                 this.renderChild(showPanel);
@@ -60,14 +54,16 @@ KISSY.add("tabs/body", function (S, Component, Extension, undefined) {
 
     }, {
         ATTRS: {
-            selectedPanelIndex: {},
+            selectedPanelIndex: {
+            },
             allowTextSelection: {
                 value: true
             },
             focusable: {
                 value: false
             },
-            lazyRender: {},
+            lazyRender: {
+            },
             handleMouseEvents: {
                 value: false
             },
@@ -76,13 +72,12 @@ KISSY.add("tabs/body", function (S, Component, Extension, undefined) {
                     xclass: 'tabs-panel'
                 }
             }
-        }
-    }, {
+        },
         xclass: 'tabs-body'
     });
 
     return TabBody;
 
 }, {
-    requires: ['component/base', 'component/extension']
+    requires: ['component/container']
 });

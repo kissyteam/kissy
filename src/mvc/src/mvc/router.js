@@ -327,11 +327,7 @@ KISSY.add('mvc/router', function (S, Node, Base) {
         allRoutes.push(self);
     }
 
-    Router.ATTRS =
-    /**
-     * @lends MVC.Router#
-     */
-    {
+    Router.ATTRS ={
         /**
          * Route and action config.
          * @type {Object}
@@ -350,11 +346,7 @@ KISSY.add('mvc/router', function (S, Node, Base) {
         routes: {}
     };
 
-    S.extend(Router, Base,
-        /**
-         * @lends MVC.Router#
-         */
-        {
+    S.extend(Router, Base, {
             /**
              * Add config to current router.
              * @param {Object} routes Route config.
@@ -376,11 +368,7 @@ KISSY.add('mvc/router', function (S, Node, Base) {
                     self[ROUTER_MAP][name] = transformRouterReg(self, name, normFn(self, callback));
                 });
             }
-        },
-        /**
-         * @lends MVC.Router
-         */
-        {
+        }, {
 
             /**
              * whether Router can process path

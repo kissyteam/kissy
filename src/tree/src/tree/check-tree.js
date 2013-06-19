@@ -13,10 +13,7 @@ KISSY.add("tree/check-tree", function (S, Component, CheckNode, TreeRender, Tree
      */
     return  CheckNode.extend([TreeManager], {
     }, {
-        ATTRS: /**
-         * @lends Tree.CheckTree#
-         */
-        {
+        ATTRS: {
             /**
              * Readonly. Render class.
              * @type {Function}
@@ -30,8 +27,7 @@ KISSY.add("tree/check-tree", function (S, Component, CheckNode, TreeRender, Tree
                     xclass:'check-tree-node'
                 }
             }
-        }
-    }, {
+        },
         xclass: 'check-tree'
     });
 }, {

@@ -3,36 +3,30 @@
  * simple menuitem render
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/menuitem-render", function (S, Node, Component) {
+KISSY.add("menu/menuitem-render", function (S, Node, Controller) {
 
-    return Component.Render.extend({
+    return Controller.ATTRS.xrender.value.extend({
 
-        initializer: function () {
-            var renderData = this.renderData;
-            this.get('elAttrs')['role'] = renderData.selectable ?
+        beforeCreateDom: function (renderData) {
+            renderData.elAttrs.role= renderData.selectable ?
                 'menuitemradio' : 'menuitem';
             if (renderData.selected) {
-                this.get('elCls').push(this.getBaseCssClasses('selected'));
+                renderData.elCls.push(this.getBaseCssClasses('selected'));
             }
         },
 
         _onSetSelected: function (v) {
             var self = this,
-                el = self.get("el"),
+                el = self.el,
                 cls = self.getBaseCssClasses("selected");
             el[v ? 'addClass' : 'removeClass'](cls);
         },
 
         containsElement: function (element) {
-            var el = this.get("el");
+            var el = this.el;
             return el && ( el[0] == element || el.contains(element));
         }
     }, {
-        ATTRS: {
-            selected: {
-                sync: 0
-            }
-        },
         HTML_PARSER: {
             selectable: function (el) {
                 return el.hasClass(this.getBaseCssClass("selectable"));
@@ -40,5 +34,5 @@ KISSY.add("menu/menuitem-render", function (S, Node, Component) {
         }
     });
 }, {
-    requires: ['node', 'component/base']
+    requires: ['node', 'component/controller']
 });

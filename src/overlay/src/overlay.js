@@ -3,9 +3,7 @@
  * overlay
  * @author yiminghe@gmail.com
  */
-KISSY.add("overlay", function (S, O, OR, D, DR, P) {
-    O.Render = OR;
-    D.Render = DR;
+KISSY.add("overlay", function (S, O, D, P) {
     O.Dialog = D;
     S.Dialog = D;
     O.Popup = P;
@@ -14,9 +12,7 @@ KISSY.add("overlay", function (S, O, OR, D, DR, P) {
 }, {
     requires:[
         "overlay/base",
-        "overlay/overlay-render",
         "overlay/dialog",
-        "overlay/dialog-render",
         "overlay/popup"
     ]
 });

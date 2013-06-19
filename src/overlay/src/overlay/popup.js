@@ -7,7 +7,8 @@ KISSY.add('overlay/popup', function (S, Overlay, undefined) {
 
     /**
      * @class KISSY.Overlay.Popup
-     * KISSY Popup Component. xclass: 'popup'.
+     * KISSY Popup Component.
+     * xclass: 'popup'.
      * @extends KISSY.Overlay
      */
     return Overlay.extend({
@@ -137,7 +138,7 @@ KISSY.add('overlay/popup', function (S, Overlay, undefined) {
             /**
              * @ignore
              */
-            trigger: {                          // 触发器
+            trigger: {
                 setter: function (v) {
                     return S.all(v);
                 }
@@ -153,7 +154,6 @@ KISSY.add('overlay/popup', function (S, Overlay, undefined) {
              * @ignore
              */
             triggerType: {
-                // 触发类型
                 value: 'click'
             },
             currentTrigger: {},
@@ -185,8 +185,7 @@ KISSY.add('overlay/popup', function (S, Overlay, undefined) {
                 // triggerType 为 click 时, Popup 是否有toggle功能
                 value: false
             }
-        }
-    }, {
+        },
         xclass: 'popup'
     });
 }, {

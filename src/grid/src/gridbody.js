@@ -364,14 +364,14 @@ KISSY.add('grid/gridbody', function (S, Component, XTemplate, Bindable) {
              */
             clearData:function () {
                 var _self = this;
-                _self.get('view').clearData();
+                _self.view.clearData();
             },
             /**
              * clear rows' selection
              */
             clearSelection:function () {
                 var _self = this,
-                    selectedRows = _self.get('view').getSelectedRows();
+                    selectedRows = _self.view.getSelectedRows();
                 selectedRows.each(function (row) {
                     _self.onRowSelected(row, false);
                 });
@@ -391,7 +391,7 @@ KISSY.add('grid/gridbody', function (S, Component, XTemplate, Bindable) {
                     rowEl = _self.findRow(record);
                 }
                 if (rowEl) {
-                    return _self.get('view').findCell(id, rowEl);
+                    return _self.view.findCell(id, rowEl);
                 }
                 return null;
             },
@@ -402,14 +402,14 @@ KISSY.add('grid/gridbody', function (S, Component, XTemplate, Bindable) {
              */
             findRow:function (record) {
                 var _self = this;
-                return _self.get('view').findRow(record);
+                return _self.view.findRow(record);
             },
             /**
              * show or hide the column
              * @param {Grid.Column} column the column changed visible status.
              */
             setColumnVisible:function (column) {
-                this.get('view').setColumnVisible(column);
+                this.view.setColumnVisible(column);
             },
             /**
              * @private
@@ -440,7 +440,7 @@ KISSY.add('grid/gridbody', function (S, Component, XTemplate, Bindable) {
                     data = e.data,
                     removedRow = null;
                 S.each(data, function (record) {
-                    removedRow = _self.get('view').removeRow(record);
+                    removedRow = _self.view.removeRow(record);
                     if (removedRow) {
                         _self.fire('rowremoved', {record:record, row:removedRow[0]});
                     }
@@ -452,7 +452,7 @@ KISSY.add('grid/gridbody', function (S, Component, XTemplate, Bindable) {
             onUpdate:function (e) {
                 var _self = this,
                     record = e.record;
-                _self.get('view').updateRow(record);
+                _self.view.updateRow(record);
             },
             /**
              * @private
@@ -466,7 +466,7 @@ KISSY.add('grid/gridbody', function (S, Component, XTemplate, Bindable) {
              */
             onRowSelected:function (rowEl, selected) {
                 var _self = this,
-                    view = _self.get('view'),
+                    view = _self.view,
                 //isSelected = view.isRowSelected(rowEl),
                     event;
                 //if(isSelected != selected){
@@ -482,7 +482,7 @@ KISSY.add('grid/gridbody', function (S, Component, XTemplate, Bindable) {
              */
             setSelection:function (records) {
                 var _self = this,
-                    view = _self.get('view');
+                    view = _self.view;
 
                 if (!records) {
                     return;
@@ -516,7 +516,7 @@ KISSY.add('grid/gridbody', function (S, Component, XTemplate, Bindable) {
                 //remove the rows of this table
                 //_self.clearData();
                 //recreate the header row
-                _self.get('view').resetHeaderRow();
+                _self.view.resetHeaderRow();
                 //show data
                 if (store) {
                     _self.onLoad();
@@ -528,14 +528,14 @@ KISSY.add('grid/gridbody', function (S, Component, XTemplate, Bindable) {
              * @param {Grid.Column} column a column in config
              */
             resetColumnsWidth:function (column) {
-                this.get('view').setColumnsWidth(column);
+                this.view.setColumnsWidth(column);
             },
             /**
              * set all rows selected
              */
             setAllSelection:function () {
                 var _self = this,
-                    rows = _self.get('view').getAllRows();
+                    rows = _self.view.getAllRows();
                 rows.each(function (row) {
                     _self.onRowSelected(row, true);
                 });
@@ -549,14 +549,14 @@ KISSY.add('grid/gridbody', function (S, Component, XTemplate, Bindable) {
                 if (_self.get('forceFit')) {
                     _self.resetColumns();
                 }
-                this.get('view').setTableWidth(width);
+                this.view.setTableWidth(width);
             },
             //add data to table
             _addData:function (data, position) {
                 position = position || 0;
                 var _self = this;
                 S.each(data, function (record, index) {
-                    var rowEl = _self.get('view')._createRow(record, position + index);
+                    var rowEl = _self.view._createRow(record, position + index);
                     _self.fire('rowcreated', {record:record, data:record, row:rowEl[0]});
                 });
             },
@@ -592,7 +592,7 @@ KISSY.add('grid/gridbody', function (S, Component, XTemplate, Bindable) {
                 var _self = this,
                     multiSelect = _self.get('multiSelect'),
                     sender = S.one(event.currentTarget),
-                    view = _self.get('view'),
+                    view = _self.view,
                     record = sender.data(DATA_ELEMENT),
                     cell = S.one(event.target).closest("." + CLS_GRID_CELL),
                     selected = view.isRowSelected(sender);

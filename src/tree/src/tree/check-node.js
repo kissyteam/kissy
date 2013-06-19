@@ -96,10 +96,7 @@ KISSY.add("tree/check-node", function (S, Node, TreeNode) {
             }
         }
     }, {
-        ATTRS: /**
-         * @lends Tree.CheckNode#
-         */
-        {
+        ATTRS:{
             checkIconEl: {
                 view: 1
             },
@@ -131,16 +128,11 @@ KISSY.add("tree/check-node", function (S, Node, TreeNode) {
                     xclass: 'check-tree-node'
                 }
             }
-        }
-    }, {
+        },
         xclass: "check-tree-node"
     });
 
-    S.mix(CheckNode,
-        /**
-         * @lends Tree.CheckNode
-         */
-        {
+    S.mix(CheckNode,{
             /**
              * checked partly.
              */

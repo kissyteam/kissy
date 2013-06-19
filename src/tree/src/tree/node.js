@@ -18,11 +18,7 @@ KISSY.add("tree/node", function (S, Node, Component,Extension, TreeNodeRender) {
         [
             // 不是所有的子节点都是子组件
             Extension.DecorateChild
-        ],
-        /**
-         * @lends Tree.Node#
-         */
-        {
+        ],{
             bindUI: function () {
                 this.on('afterAddChild', onAddChild);
                 this.on('afterRemoveChild', onRemoveChild);
@@ -316,8 +312,7 @@ KISSY.add("tree/node", function (S, Node, Component,Extension, TreeNodeRender) {
                         xclass: 'tree-node'
                     }
                 }
-            }
-        }, {
+            },
             xclass: 'tree-node'
         });
 
@@ -407,8 +402,8 @@ KISSY.add("tree/node", function (S, Node, Component,Extension, TreeNodeRender) {
      每次 expand/collapse，都检查
      */
     function refreshCss(self) {
-        if (self.get && self.get("view")) {
-            self.get("view").refreshCss(isNodeSingleOrLast(self), isNodeLeaf(self));
+        if (self.get && self.view) {
+            self.view.refreshCss(isNodeSingleOrLast(self), isNodeLeaf(self));
         }
     }
 

@@ -48,7 +48,7 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
                     el = self.get('el');
                 if (v) {
                     self.__lastActive = el[0].ownerDocument.activeElement;
-                    self.set('focused', true);
+                    self.focus();
                     // if d.show(); d.hide();
                     // async -> focus event -> handleFocus
                     // -> set('focused') -> el.focus() -> ie error
@@ -222,8 +222,7 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
                 escapeToClose: {
                     value: true
                 }
-            }
-        }, {
+            },
             xclass: 'dialog'
         });
 

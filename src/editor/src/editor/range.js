@@ -421,11 +421,7 @@ KISSY.add("editor/range", function (S, Editor, Utils, Walker, ElementPath) {
         self.document = document;
     }
 
-    S.augment(KERange,
-        /**
-         * @lends Editor.Range
-         */
-        {
+    S.augment(KERange, {
 
             /**
              * Range string representation.

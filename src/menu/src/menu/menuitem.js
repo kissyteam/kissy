@@ -3,7 +3,7 @@
  * menu item ,child component for menu
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
+KISSY.add("menu/menuitem", function (S, Controller, MenuItemRender) {
 
     var $ = S.all;
 
@@ -13,7 +13,7 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
      * xclass: 'menuitem'.
      * @extends KISSY.Component.Controller
      */
-    var MenuItem = Component.Controller.extend({
+    var MenuItem = Controller.extend({
 
         isMenuItem: 1,
 
@@ -80,7 +80,7 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
          * @protected
          */
         containsElement: function (element) {
-            return this.get('view') && this.get('view').containsElement(element);
+            return this.view && this.view.containsElement(element);
         }
 
     }, {
@@ -146,12 +146,11 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
             xrender: {
                 value: MenuItemRender
             }
-        }
-    }, {
+        },
         xclass: "menuitem"
     });
 
     return MenuItem;
 }, {
-    requires: ['component/base', './menuitem-render']
+    requires: ['component/controller', './menuitem-render']
 });

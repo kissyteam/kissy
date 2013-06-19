@@ -41,12 +41,32 @@ if (location.href.indexOf('__build') == -1) {
             "base": "/kissy/src/combobox/src/combobox",
             "ignorePackageNameInUri": 1
         },
-        "component/base": {
-            "base": "/kissy/src/component/sub-modules/base/src/base",
+        "component/container": {
+            "base": "/kissy/src/component/sub-modules/container/src/container",
             "ignorePackageNameInUri": 1
         },
-        "component/extension": {
-            "base": "/kissy/src/component/sub-modules/extension/src/extension",
+        "component/controller": {
+            "base": "/kissy/src/component/sub-modules/controller/src/controller",
+            "ignorePackageNameInUri": 1
+        },
+        "component/extension/align": {
+            "base": "/kissy/src/component/sub-modules/extension/align/src/align",
+            "ignorePackageNameInUri": 1
+        },
+        "component/extension/content-render": {
+            "base": "/kissy/src/component/sub-modules/extension/content-render/src/content-render",
+            "ignorePackageNameInUri": 1
+        },
+        "component/extension/delegate-children": {
+            "base": "/kissy/src/component/sub-modules/extension/delegate-children/src/delegate-children",
+            "ignorePackageNameInUri": 1
+        },
+        "component/extension/shim-render": {
+            "base": "/kissy/src/component/sub-modules/extension/shim-render/src/shim-render",
+            "ignorePackageNameInUri": 1
+        },
+        "component/manager": {
+            "base": "/kissy/src/component/sub-modules/manager/src/manager",
             "ignorePackageNameInUri": 1
         },
         "component/plugin/drag": {
@@ -511,10 +531,6 @@ if (location.href.indexOf('__build') == -1) {
         },
         "htmlparser": {
             "base": "/kissy/src/htmlparser/src/htmlparser",
-            "ignorePackageNameInUri": 1
-        },
-        "imagezoom": {
-            "base": "/kissy/src/imagezoom/src/imagezoom",
             "ignorePackageNameInUri": 1
         },
         "io": {

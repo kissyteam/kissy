@@ -7,7 +7,6 @@ KISSY.add("combobox/remote-data-source", function (S, IO) {
 
     /**
      * dataSource which wrap {@link KISSY.IO} utility.
-     * xclass: 'combobox-RemoteDataSource'.
      * @class KISSY.ComboBox.RemoteDataSource
      * @extends KISSY.Base
      */

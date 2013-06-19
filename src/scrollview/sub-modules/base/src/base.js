@@ -351,8 +351,7 @@ KISSY.add('scrollview/base', function (S, Node, Component, Extension, Render) {
             xrender: {
                 value: Render
             }
-        }
-    }, {
+        },
         xclass: 'scrollview'
     });
 
