@@ -11,7 +11,7 @@ KISSY.add('dom/ie/attr', function (S, DOM) {
         propFix = DOM._propFix,
         HREF = 'href',
         hrefFix,
-        IE_VERSION = S.UA.ie;
+        IE_VERSION = document.documentMode || S.UA.ie;
 
 
     if (IE_VERSION < 8) {

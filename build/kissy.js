@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.30
 MIT Licensed
-build time: Jun 19 19:22
+build time: Jun 19 19:28
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130619192219' will replace with current timestamp when compressing.
+         * NOTICE: '20130619192836' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130619192219',
+        __BUILD_TIME: '20130619192836',
         /**
          * KISSY Environment.
          * @private
@@ -5847,7 +5847,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20130619192219'
+            tag: '20130619192836'
         }, getBaseInfo()));
     }
 
@@ -10435,9 +10435,9 @@ KISSY.add('dom/base/traversal', function (S, DOM, undefined) {
  遵循 8/2 原则，用尽可能少的代码满足用户最常用的功能。
  */
 /*
-Copyright 2012, KISSY UI Library v1.30
+Copyright 2013, KISSY UI Library v1.30
 MIT Licensed
-build time: Dec 26 18:09
+build time: Jun 19 19:28
 */
 /**
  * attr ie hack
@@ -10452,7 +10452,7 @@ KISSY.add('dom/ie/attr', function (S, DOM) {
         propFix = DOM._propFix,
         HREF = 'href',
         hrefFix,
-        IE_VERSION = S.UA.ie;
+        IE_VERSION = document.documentMode || S.UA.ie;
 
 
     if (IE_VERSION < 8) {
@@ -10567,6 +10567,8 @@ KISSY.add('dom/ie/attr', function (S, DOM) {
  */
 KISSY.add('dom/ie/create', function (S, DOM) {
 
+    var IE_VERSION = document.documentMode || S.UA.ie;
+
     // wierd ie cloneNode fix from jq
     DOM._fixCloneAttributes = function (src, dest) {
 
@@ -10628,7 +10630,7 @@ KISSY.add('dom/ie/create', function (S, DOM) {
         R_TBODY = /<tbody/i;
 
     // IE7- adds TBODY when creating thead/tfoot/caption/col/colgroup elements
-    if (S.UA.ie < 8) {
+    if (IE_VERSION < 8) {
         // fix #88
         // https://github.com/kissyteam/kissy/issues/88 : spurious tbody in ie<8
         creators.table = function (html, ownerDoc) {
@@ -10796,9 +10798,9 @@ KISSY.add('dom/ie/input-selection', function (S, DOM) {
  */
 KISSY.add('dom/ie/insertion', function (S, DOM) {
 
-    var UA = S.UA;
+    var IE_VERSION = document.documentMode || S.UA.ie;
 
-    if (UA.ie < 8) {
+    if (IE_VERSION < 8) {
 
         /*
          ie 6,7 lose checked status when append to dom
@@ -10909,7 +10911,7 @@ KISSY.add('dom/ie/selector', function (S, DOM) {
 KISSY.add('dom/ie/style', function (S, DOM) {
 
     var cssProps = DOM._cssProps,
-        UA = S.UA,
+        IE_VERSION = document.documentMode || S.UA.ie,
         HUNDRED = 100,
         doc = S.Env.host.document,
         docElem = doc && doc.documentElement,
@@ -11005,7 +11007,7 @@ KISSY.add('dom/ie/style', function (S, DOM) {
      ie 不设置数值，则 computed style 不返回数值，只返回 thick? medium ...
      (default is 'medium')
      */
-    var IE8 = UA['ie'] == 8,
+    var IE8 = IE_VERSION == 8,
         BORDER_MAP = {
         },
         BORDERS = ['', 'Top', 'Left', 'Right', 'Bottom'];

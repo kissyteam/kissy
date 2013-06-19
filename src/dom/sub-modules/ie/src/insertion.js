@@ -4,9 +4,9 @@
  */
 KISSY.add('dom/ie/insertion', function (S, DOM) {
 
-    var UA = S.UA;
+    var IE_VERSION = document.documentMode || S.UA.ie;
 
-    if (UA.ie < 8) {
+    if (IE_VERSION < 8) {
 
         /*
          ie 6,7 lose checked status when append to dom

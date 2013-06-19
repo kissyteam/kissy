@@ -4,6 +4,8 @@
  */
 KISSY.add('dom/ie/create', function (S, DOM) {
 
+    var IE_VERSION = document.documentMode || S.UA.ie;
+
     // wierd ie cloneNode fix from jq
     DOM._fixCloneAttributes = function (src, dest) {
 
@@ -65,7 +67,7 @@ KISSY.add('dom/ie/create', function (S, DOM) {
         R_TBODY = /<tbody/i;
 
     // IE7- adds TBODY when creating thead/tfoot/caption/col/colgroup elements
-    if (S.UA.ie < 8) {
+    if (IE_VERSION < 8) {
         // fix #88
         // https://github.com/kissyteam/kissy/issues/88 : spurious tbody in ie<8
         creators.table = function (html, ownerDoc) {

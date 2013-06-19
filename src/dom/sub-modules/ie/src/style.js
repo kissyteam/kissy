@@ -5,7 +5,7 @@
 KISSY.add('dom/ie/style', function (S, DOM) {
 
     var cssProps = DOM._cssProps,
-        UA = S.UA,
+        IE_VERSION = document.documentMode || S.UA.ie,
         HUNDRED = 100,
         doc = S.Env.host.document,
         docElem = doc && doc.documentElement,
@@ -101,7 +101,7 @@ KISSY.add('dom/ie/style', function (S, DOM) {
      ie 不设置数值，则 computed style 不返回数值，只返回 thick? medium ...
      (default is 'medium')
      */
-    var IE8 = UA['ie'] == 8,
+    var IE8 = IE_VERSION == 8,
         BORDER_MAP = {
         },
         BORDERS = ['', 'Top', 'Left', 'Right', 'Bottom'];
