@@ -112,6 +112,7 @@ KISSY.add("button", function (S, Node, Controller, ButtonRender) {
              * @ignore
              */
             checked: {
+                value:false,
                 view: 1
             },
 
