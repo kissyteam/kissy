@@ -1,5 +1,7 @@
+// consider documentMode
+var oldIE = UA.ie && (UA.ie < 9 || document.documentMode < 9);
 config({
     "dom": {
-        "alias": ['dom/base', UA.ie < 9 ? 'dom/ie' : '']
+        "alias": ['dom/base', oldIE ? 'dom/ie' : '']
     }
 });
