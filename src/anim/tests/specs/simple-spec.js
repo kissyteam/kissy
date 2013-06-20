@@ -2,7 +2,7 @@
  * test case for simple anim
  * @author yiminghe@gmail.com
  */
-KISSY.use("dom,anim,node", function (S, DOM, Anim, Node) {
+KISSY.use("dom,anim,node", function (S, Dom, Anim, Node) {
     var $ = Node.all;
 
     describe("anim-simple", function () {
@@ -42,11 +42,11 @@ KISSY.use("dom,anim,node", function (S, DOM, Anim, Node) {
         }
 
         it("should start and end anim properly", function () {
-            var test1 = DOM.create('<div style="position: absolute;' +
+            var test1 = Dom.create('<div style="position: absolute;' +
                 ' text-align: center;' +
                 'overflow: hidden">^o^</div>');
-            DOM.append(test1, 'body');
-            DOM.css(test1, {
+            Dom.append(test1, 'body');
+            Dom.css(test1, {
                 //'border-color':"#000",
                 width: "10px",
                 height: "20px",
@@ -54,7 +54,7 @@ KISSY.use("dom,anim,node", function (S, DOM, Anim, Node) {
                 top: "20px",
                 color: "#000"
             });
-            var initColor = normalizeColor(DOM.css(test1, "border-color"));
+            var initColor = normalizeColor(Dom.css(test1, "border-color"));
 
             var anim = new Anim(test1, {
                     'background-color': '#fcc',
@@ -81,25 +81,25 @@ KISSY.use("dom,anim,node", function (S, DOM, Anim, Node) {
             runs(function () {
 
 
-                expect(normalizeColor(DOM.css(test1, "borderTopColor")))
+                expect(normalizeColor(Dom.css(test1, "borderTopColor")))
                     .not.toBe(initColor);
-                expect(DOM.css(test1, "width")).not.toBe("10px");
-                expect(DOM.css(test1, "height")).not.toBe("20px");
-                expect(DOM.css(test1, "left")).not.toBe("120px");
-                expect(DOM.css(test1, "top")).not.toBe("20px");
+                expect(Dom.css(test1, "width")).not.toBe("10px");
+                expect(Dom.css(test1, "height")).not.toBe("20px");
+                expect(Dom.css(test1, "left")).not.toBe("120px");
+                expect(Dom.css(test1, "top")).not.toBe("20px");
 
 
             });
 
             waits(800);
             runs(function () {
-                expect(normalizeColor(DOM.style(test1, "border-color")))
+                expect(normalizeColor(Dom.style(test1, "border-color")))
                     .toBe("#999999");
-                expect(parseInt(DOM.css(test1, "width"))).toBeEqual(100);
-                expect(parseInt(DOM.css(test1, "height"))).toBeEqual(50);
-                expect(DOM.css(test1, "left")).toBe("900px");
-                expect(DOM.css(test1, "top")).toBe("285px");
-                DOM.remove(test1);
+                expect(parseInt(Dom.css(test1, "width"))).toBeEqual(100);
+                expect(parseInt(Dom.css(test1, "height"))).toBeEqual(50);
+                expect(Dom.css(test1, "left")).toBe("900px");
+                expect(Dom.css(test1, "top")).toBe("285px");
+                Dom.remove(test1);
             });
 
         });

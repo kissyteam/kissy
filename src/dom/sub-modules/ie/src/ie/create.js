@@ -2,10 +2,10 @@
  * ie create hack
  * @author yiminghe@gmail.com
  */
-KISSY.add('dom/ie/create', function (S, DOM) {
+KISSY.add('dom/ie/create', function (S, Dom) {
 
     // wierd ie cloneNode fix from jq
-    DOM._fixCloneAttributes = function (src, dest) {
+    Dom._fixCloneAttributes = function (src, dest) {
 
         // clearAttributes removes the attributes, which we don't want,
         // but also removes the attachEvent events, which we *do* want
@@ -59,11 +59,11 @@ KISSY.add('dom/ie/create', function (S, DOM) {
         // Event data gets referenced instead of copied if the expando
         // gets copied too
         // 自定义 data 根据参数特殊处理，expando 只是个用于引用的属性
-        dest.removeAttribute(DOM.__EXPANDO);
+        dest.removeAttribute(Dom.__EXPANDO);
     };
 
-    var creators = DOM._creators,
-        defaultCreator = DOM._defaultCreator,
+    var creators = Dom._creators,
+        defaultCreator = Dom._defaultCreator,
         R_TBODY = /<tbody/i;
 
     // IE7- adds TBODY when creating thead/tfoot/caption/col/colgroup elements
@@ -79,7 +79,7 @@ KISSY.add('dom/ie/create', function (S, DOM) {
             var table = frag.firstChild,
                 tableChildren = S.makeArray(table.childNodes);
             S.each(tableChildren, function (c) {
-                if (DOM.nodeName(c) == 'tbody' && !c.childNodes.length) {
+                if (Dom.nodeName(c) == 'tbody' && !c.childNodes.length) {
                     table.removeChild(c);
                 }
             });

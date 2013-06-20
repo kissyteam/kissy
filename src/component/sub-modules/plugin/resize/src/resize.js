@@ -27,7 +27,7 @@ KISSY.add('component/plugin/resize', function (S, Resize) {
      */
     return Resize.extend({
         pluginBindUI: function (component) {
-            var el = component.get('el'),
+            var el = component.el,
                 self = this;
             self.set('node', el);
             self.set('prefixCls',component.get('prefixCls'));

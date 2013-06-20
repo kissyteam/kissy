@@ -54,7 +54,7 @@ KISSY.add("tree/tree-manager", function (S, Node, Component, Extension) {
                 events += (ie && ie < 9 ? "dblclick " : "");
             }
 
-            self.get("el").delegate(events, '.'+delegateCls,
+            self.el.delegate(events, '.'+delegateCls,
                 self.handleChildrenEvents, self);
         },
 

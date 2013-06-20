@@ -6,7 +6,7 @@
  *         qiaohua@taobao.com,
  *
  */
-KISSY.add('node/anim', function (S, DOM, Anim, Node, undefined) {
+KISSY.add('node/anim', function (S, Dom, Anim, Node, undefined) {
 
     var FX = [
         // height animations
@@ -228,9 +228,9 @@ KISSY.add('node/anim', function (S, DOM, Anim, Node, undefined) {
         function (v, k) {
             Node.prototype[k] = function (duration, complete, easing) {
                 var self = this;
-                // 没有参数时，调用 DOM 中的对应方法
-                if (DOM[k] && !duration) {
-                    DOM[k](self);
+                // 没有参数时，调用 Dom 中的对应方法
+                if (Dom[k] && !duration) {
+                    Dom[k](self);
                 } else {
                     S.each(self, function (elem) {
                         Anim(elem, v, duration, easing, complete).run();

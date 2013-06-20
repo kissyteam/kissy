@@ -68,7 +68,7 @@
 
             KISSY.use("core", function (S, Core) {
                 // alias to be first
-                expect(Core).toBe(S.DOM);
+                expect(Core).toBe(S.Dom);
                 ret = 1;
             });
 
@@ -78,7 +78,7 @@
 
             runs(function () {
                 expect(ret).toBe(1);
-                expect(S.DOM).not.toBeFalsy();
+                expect(S.Dom).not.toBeFalsy();
                 expect(S.Event).not.toBeFalsy();
             });
 

@@ -28,8 +28,8 @@ KISSY.add("editor/plugin/dialog", function (S, Editor, Overlay,
             self.center();
             var y = self.get("y");
             //居中有点偏下
-            if (y - S.DOM.scrollTop() > 200) {
-                y = S.DOM.scrollTop() + 200;
+            if (y - S.Dom.scrollTop() > 200) {
+                y = S.Dom.scrollTop() + 200;
                 self.set("y", y);
             }
             Dialog4E.superclass.show.call(self);

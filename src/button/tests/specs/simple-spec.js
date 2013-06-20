@@ -2,7 +2,7 @@
  * @overview test case for button
  * @author shiran<shiran@taobao.com>
  */
-KISSY.use('dom, button,node', function (S, DOM, Button, Node) {
+KISSY.use('dom, button,node', function (S, Dom, Button, Node) {
 
     var $ = Node.all;
 
@@ -25,21 +25,21 @@ KISSY.use('dom, button,node', function (S, DOM, Button, Node) {
             waits(100);
 
             runs(function () {
-                var bEl = DOM.get('.ks-button', '#b1');
-                expect(DOM.attr(bEl, 'title')).toBe('test1 tip');
+                var bEl = Dom.get('.ks-button', '#b1');
+                expect(Dom.attr(bEl, 'title')).toBe('test1 tip');
                 // api test
                 expect(button.get('checked')).toBe(false);
                 // 模拟点击
                 jasmine.simulate(bEl, 'click');
-                expect(DOM.hasClass(bEl, 'ks-button-checked')).toBeTruthy();
+                expect(Dom.hasClass(bEl, 'ks-button-checked')).toBeTruthy();
                 expect(button.get('checked')).toBe(true);
                 // 模拟 enter 按键
                 jasmine.simulate(bEl, 'keydown', { keyCode: 13 });
-                expect(DOM.hasClass(bEl, 'ks-button-checked')).toBeFalsy();
+                expect(Dom.hasClass(bEl, 'ks-button-checked')).toBeFalsy();
                 expect(button.get('checked')).toBe(false);
                 // 模拟 space 按键
                 jasmine.simulate(bEl, 'keyup', { keyCode: 32 });
-                expect(DOM.hasClass(bEl, 'ks-button-checked')).toBeTruthy();
+                expect(Dom.hasClass(bEl, 'ks-button-checked')).toBeTruthy();
                 expect(button.get('checked')).toBe(true);
             });
 
@@ -66,17 +66,17 @@ KISSY.use('dom, button,node', function (S, DOM, Button, Node) {
 
                 expect(button.get('content')).toBe('1');
 
-                var bEl = DOM.get('#b2');
-                expect(!DOM.attr(bEl, 'title')).toBeTruthy();
+                var bEl = Dom.get('#b2');
+                expect(!Dom.attr(bEl, 'title')).toBeTruthy();
                 // 模拟点击
                 jasmine.simulate(bEl, 'click');
-                expect(DOM.hasClass(bEl, 'ks-button-checked')).toBeFalsy();
+                expect(Dom.hasClass(bEl, 'ks-button-checked')).toBeFalsy();
 
                 expect(button.get('checked')).toBe(false);
                 // 设置可选
                 button.set('checkable', true);
                 jasmine.simulate(bEl, 'click');
-                expect(DOM.hasClass(bEl, 'ks-button-checked')).toBeTruthy();
+                expect(Dom.hasClass(bEl, 'ks-button-checked')).toBeTruthy();
                 expect(button.get('checked')).toBe(true);
             });
 

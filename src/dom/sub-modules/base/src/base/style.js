@@ -3,14 +3,14 @@
  * dom/style
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
-KISSY.add('dom/base/style', function (S, DOM, undefined) {
+KISSY.add('dom/base/style', function (S, Dom, undefined) {
     var
         WINDOW = /**
          @ignore
          @type window
          */S.Env.host,
         UA = S.UA,
-        getNodeName = DOM.nodeName,
+        getNodeName = Dom.nodeName,
         doc = WINDOW.document,
         STYLE = 'style',
         RE_MARGIN = /^margin/,
@@ -59,8 +59,8 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
             body = doc.body || doc.documentElement;
             elem = doc.createElement(tagName);
             // note: do not change default tag display!
-            DOM.prepend(elem, body);
-            oldDisplay = DOM.css(elem, 'display');
+            Dom.prepend(elem, body);
+            oldDisplay = Dom.css(elem, 'display');
             body.removeChild(elem);
             // Store the correct default display
             defaultDisplay[ tagName ] = oldDisplay;
@@ -68,9 +68,9 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
         return oldDisplay;
     }
 
-    S.mix(DOM,
+    S.mix(Dom,
         /**
-         * @override KISSY.DOM
+         * @override KISSY.Dom
          * @class
          * @singleton
          */
@@ -98,13 +98,13 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
                 }
 
                 // 还没有加入到 document，就取行内
-                if (val === '' && !DOM.contains(d, elem)) {
+                if (val === '' && !Dom.contains(d, elem)) {
                     name = cssProps[name] || name;
                     val = elem[STYLE][name];
                 }
 
                 // Safari 5.1 returns percentage for margin
-                if (DOM._RE_NUM_NO_PX.test(val) && RE_MARGIN.test(name)) {
+                if (Dom._RE_NUM_NO_PX.test(val) && RE_MARGIN.test(name)) {
                     style = elem.style;
                     width = style.width;
                     minWidth = style.minWidth;
@@ -131,7 +131,7 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
              *  @return {undefined|String}
              */
             style: function (selector, name, val) {
-                var els = DOM.query(selector),
+                var els = Dom.query(selector),
                     k,
                     ret,
                     elem = els[0], i;
@@ -168,7 +168,7 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
              * @return {undefined|String}
              */
             css: function (selector, name, val) {
-                var els = DOM.query(selector),
+                var els = Dom.query(selector),
                     elem = els[0],
                     k,
                     hook,
@@ -194,7 +194,7 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
                         // If a hook was provided get the computed value from there
                         if (hook && 'get' in hook && (ret = hook.get(elem, true)) !== undefined) {
                         } else {
-                            ret = DOM._getComputedStyle(elem, name);
+                            ret = Dom._getComputedStyle(elem, name);
                         }
                     }
                     return (typeof ret == 'undefined') ? '' : ret;
@@ -213,18 +213,18 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements.
              */
             show: function (selector) {
-                var els = DOM.query(selector),
+                var els = Dom.query(selector),
                     tagName,
                     old,
                     elem, i;
                 for (i = els.length - 1; i >= 0; i--) {
                     elem = els[i];
-                    elem[STYLE][DISPLAY] = DOM.data(elem, OLD_DISPLAY) || EMPTY;
+                    elem[STYLE][DISPLAY] = Dom.data(elem, OLD_DISPLAY) || EMPTY;
                     // 可能元素还处于隐藏状态，比如 css 里设置了 display: none
-                    if (DOM.css(elem, DISPLAY) === NONE) {
+                    if (Dom.css(elem, DISPLAY) === NONE) {
                         tagName = elem.tagName.toLowerCase();
                         old = getDefaultDisplay(tagName);
-                        DOM.data(elem, OLD_DISPLAY, old);
+                        Dom.data(elem, OLD_DISPLAY, old);
                         elem[STYLE][DISPLAY] = old;
                     }
                 }
@@ -235,7 +235,7 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements.
              */
             hide: function (selector) {
-                var els = DOM.query(selector),
+                var els = Dom.query(selector),
                     elem, i;
                 for (i = els.length - 1; i >= 0; i--) {
                     elem = els[i];
@@ -243,7 +243,7 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
                         old = style[DISPLAY];
                     if (old !== NONE) {
                         if (old) {
-                            DOM.data(elem, OLD_DISPLAY, old);
+                            Dom.data(elem, OLD_DISPLAY, old);
                         }
                         style[DISPLAY] = NONE;
                     }
@@ -255,14 +255,14 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements.
              */
             toggle: function (selector) {
-                var els = DOM.query(selector),
+                var els = Dom.query(selector),
                     elem, i;
                 for (i = els.length - 1; i >= 0; i--) {
                     elem = els[i];
-                    if (DOM.css(elem, DISPLAY) === NONE) {
-                        DOM.show(elem);
+                    if (Dom.css(elem, DISPLAY) === NONE) {
+                        Dom.show(elem);
                     } else {
-                        DOM.hide(elem);
+                        Dom.hide(elem);
                     }
                 }
             },
@@ -270,13 +270,12 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
             /**
              * Creates a stylesheet from a text blob of rules.
              * These rules will be wrapped in a STYLE tag and appended to the HEAD of the document.
-             * if cssText does not contain css hacks, u can just use DOM.create('<style>xx</style>')
+             * if cssText does not contain css hacks, u can just use Dom.create('<style>xx</style>')
              * @param {window} [refWin=window] Window which will accept this stylesheet
              * @param {String} [cssText] The text containing the css rules
              * @param {String} [id] An id to add to the stylesheet for later removal
              */
             addStyleSheet: function (refWin, cssText, id) {
-                refWin = refWin || WINDOW;
 
                 if (typeof refWin == 'string') {
                     id = cssText;
@@ -285,14 +284,11 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
                     refWin = WINDOW;
                 }
 
-                refWin = DOM.get(refWin);
-
-                var win = DOM.getWindow(refWin),
-                    doc = win.document,
+                var doc = Dom.getDocument(refWin),
                     elem;
 
                 if (id && (id = id.replace('#', EMPTY))) {
-                    elem = DOM.get('#' + id, doc);
+                    elem = Dom.get('#' + id, doc);
                 }
 
                 // 仅添加一次，不重复添加
@@ -300,10 +296,10 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
                     return;
                 }
 
-                elem = DOM.create('<style>', { id: id }, doc);
+                elem = Dom.create('<style>', { id: id }, doc);
 
-                // 先添加到 DOM 树中，再给 cssText 赋值，否则 css hack 会失效
-                DOM.get('head', doc).appendChild(elem);
+                // 先添加到 Dom 树中，再给 cssText 赋值，否则 css hack 会失效
+                Dom.get('head', doc).appendChild(elem);
 
                 if (elem.styleSheet) { // IE
                     elem.styleSheet.cssText = cssText;
@@ -317,7 +313,7 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
              * @param {HTMLElement[]|String|HTMLElement} selector  Matched elements.
              */
             unselectable: function (selector) {
-                var _els = DOM.query(selector),
+                var _els = Dom.query(selector),
                     elem,
                     j,
                     e,
@@ -401,18 +397,18 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
         });
 
     S.each([WIDTH, HEIGHT], function (name) {
-        DOM['inner' + S.ucfirst(name)] = function (selector) {
-            var el = DOM.get(selector);
+        Dom['inner' + S.ucfirst(name)] = function (selector) {
+            var el = Dom.get(selector);
             return el && getWHIgnoreDisplay(el, name, 'padding');
         };
 
-        DOM['outer' + S.ucfirst(name)] = function (selector, includeMargin) {
-            var el = DOM.get(selector);
+        Dom['outer' + S.ucfirst(name)] = function (selector, includeMargin) {
+            var el = Dom.get(selector);
             return el && getWHIgnoreDisplay(el, name, includeMargin ? 'margin' : 'border');
         };
 
-        DOM[name] = function (selector, val) {
-            var ret = DOM.css(selector, name, val);
+        Dom[name] = function (selector, val) {
+            var ret = Dom.css(selector, name, val);
             if (ret) {
                 ret = parseFloat(ret);
             }
@@ -445,11 +441,11 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
                     isAutoPosition,
                     position;
                 if (computed) {
-                    position = DOM.css(el, 'position');
+                    position = Dom.css(el, 'position');
                     if (position === "static") {
                         return "auto";
                     }
-                    val = DOM._getComputedStyle(el, name);
+                    val = Dom._getComputedStyle(el, name);
                     isAutoPosition = val === "auto";
                     if (isAutoPosition && position === "relative") {
                         return "0px";
@@ -563,9 +559,9 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
      */
     function getWH(elem, name, extra) {
         if (S.isWindow(elem)) {
-            return name == WIDTH ? DOM.viewportWidth(elem) : DOM.viewportHeight(elem);
+            return name == WIDTH ? Dom.viewportWidth(elem) : Dom.viewportHeight(elem);
         } else if (elem.nodeType == 9) {
-            return name == WIDTH ? DOM.docWidth(elem) : DOM.docHeight(elem);
+            return name == WIDTH ? Dom.docWidth(elem) : Dom.docHeight(elem);
         }
         var which = name === WIDTH ? ['Left', 'Right'] : ['Top', 'Bottom'],
             val = name === WIDTH ? elem.offsetWidth : elem.offsetHeight;
@@ -574,12 +570,12 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
             if (extra !== 'border') {
                 S.each(which, function (w) {
                     if (!extra) {
-                        val -= parseFloat(DOM.css(elem, 'padding' + w)) || 0;
+                        val -= parseFloat(Dom.css(elem, 'padding' + w)) || 0;
                     }
                     if (extra === 'margin') {
-                        val += parseFloat(DOM.css(elem, extra + w)) || 0;
+                        val += parseFloat(Dom.css(elem, extra + w)) || 0;
                     } else {
-                        val -= parseFloat(DOM.css(elem, 'border' + w + 'Width')) || 0;
+                        val -= parseFloat(Dom.css(elem, 'border' + w + 'Width')) || 0;
                     }
                 });
             }
@@ -588,7 +584,7 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
         }
 
         // Fall back to computed then un computed css if necessary
-        val = DOM._getComputedStyle(elem, name);
+        val = Dom._getComputedStyle(elem, name);
         if (val == null || (Number(val)) < 0) {
             val = elem.style[ name ] || 0;
         }
@@ -598,12 +594,12 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
         // Add padding, border, margin
         if (extra) {
             S.each(which, function (w) {
-                val += parseFloat(DOM.css(elem, 'padding' + w)) || 0;
+                val += parseFloat(Dom.css(elem, 'padding' + w)) || 0;
                 if (extra !== 'padding') {
-                    val += parseFloat(DOM.css(elem, 'border' + w + 'Width')) || 0;
+                    val += parseFloat(Dom.css(elem, 'border' + w + 'Width')) || 0;
                 }
                 if (extra === 'margin') {
-                    val += parseFloat(DOM.css(elem, extra + w)) || 0;
+                    val += parseFloat(Dom.css(elem, extra + w)) || 0;
                 }
             });
         }
@@ -618,18 +614,18 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
             offset ,
             parentOffset = {top: 0, left: 0};
 
-        if (DOM.css(el, 'position') == 'fixed') {
+        if (Dom.css(el, 'position') == 'fixed') {
             offset = el.getBoundingClientRect();
         } else {
             offsetParent = getOffsetParent(el);
-            offset = DOM.offset(el);
-            parentOffset = DOM.offset(offsetParent);
-            parentOffset.top += parseFloat(DOM.css(offsetParent, "borderTopWidth")) || 0;
-            parentOffset.left += parseFloat(DOM.css(offsetParent, "borderLeftWidth")) || 0;
+            offset = Dom.offset(el);
+            parentOffset = Dom.offset(offsetParent);
+            parentOffset.top += parseFloat(Dom.css(offsetParent, "borderTopWidth")) || 0;
+            parentOffset.left += parseFloat(Dom.css(offsetParent, "borderLeftWidth")) || 0;
         }
 
-        offset.top -= parseFloat(DOM.css(el, "marginTop")) || 0;
-        offset.left -= parseFloat(DOM.css(el, "marginLeft")) || 0;
+        offset.top -= parseFloat(Dom.css(el, "marginTop")) || 0;
+        offset.left -= parseFloat(Dom.css(el, "marginLeft")) || 0;
 
         // known bug: if el is relative && offsetParent is document.body, left %
         // should - document.body.paddingLeft
@@ -642,13 +638,13 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
     function getOffsetParent(el) {
         var offsetParent = el.offsetParent || ( el.ownerDocument || doc).body;
         while (offsetParent && !ROOT_REG.test(offsetParent.nodeName) &&
-            DOM.css(offsetParent, "position") === "static") {
+            Dom.css(offsetParent, "position") === "static") {
             offsetParent = offsetParent.offsetParent;
         }
         return offsetParent;
     }
 
-    return DOM;
+    return Dom;
 }, {
     requires: ['./api']
 });

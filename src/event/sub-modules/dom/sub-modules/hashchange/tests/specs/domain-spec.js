@@ -2,7 +2,7 @@
  * domain spec for event
  * @author yiminghe@gmail.com
  */
-KISSY.use("event/dom,dom", function (S, Event, DOM) {
+KISSY.use("event/dom,dom", function (S, Event, Dom) {
 
     describe("domain in event", function () {
         it("hashchange should consider domain", function () {
@@ -15,7 +15,7 @@ KISSY.use("event/dom,dom", function (S, Event, DOM) {
             document.domain = location.hostname;
 
             // document.domain does not contain port
-            DOM.isCustomDomain = function () {
+            Dom.isCustomDomain = function () {
                 return true;
             };
 

@@ -7,10 +7,10 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-touch-fullscreen" content="yes">
     <title>filtermenu 测试</title>
-    <link href="../assets/menu.css" rel="stylesheet"/>
-    <link href="../assets/menuitem.css" rel="stylesheet"/>
-    <link href="../assets/submenu.css" rel="stylesheet"/>
-    <link href="../assets/filtermenu.css" rel="stylesheet"/>
+    <link href="../../menu/demo/assets/menu.css" rel="stylesheet"/>
+    <link href="../../menu/demo/assets/menuitem.css" rel="stylesheet"/>
+    <link href="../../menu/demo/assets/submenu.css" rel="stylesheet"/>
+    <link href="../../menu/demo/assets/filtermenu.css" rel="stylesheet"/>
     <style>
         .hasChildren .ks-menuitem-content {
             background: url("http://a.tbcdn.cn/apps/sell/1.0/img/ic_bg.png") no-repeat scroll 500px 500px transparent;
@@ -109,7 +109,7 @@
 <script>
 
     KISSY.ready(function (S) {
-        S.use("menu", function (S, Menu) {
+        S.use("menu,filter-menu", function (S, Menu,FilterMenu) {
             if (1)(function () {
 
                 var m1 = new Menu.Item({
@@ -136,7 +136,7 @@
                     elCls: "hasChildren",
                     pinyin: "sj"
                 });
-                var filterMenu = new Menu.FilterMenu({
+                var filterMenu = new FilterMenu({
                     render: "#container",
                     width: 500,
                     allowMultiple: true,
@@ -215,7 +215,7 @@
                 /**
                  *  从 html 生成
                  */
-                var filterMenu = new Menu.FilterMenu({
+                var filterMenu = new FilterMenu({
                     srcNode: '#filterMenuExist',
                     width: 200
                 });

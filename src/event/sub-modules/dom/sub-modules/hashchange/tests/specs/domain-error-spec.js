@@ -2,7 +2,7 @@
  * domain error spec for event
  * @author yiminghe@gmail.com
  */
-KISSY.use("event/dom,ua,dom", function (S, Event, UA, DOM) {
+KISSY.use("event/dom,ua,dom", function (S, Event, UA, Dom) {
     var ie = document.documentMode || UA.ie;
     describe("domain in event", function () {
         it("hashchange does not work for ie<8 " +
@@ -26,7 +26,7 @@ KISSY.use("event/dom,ua,dom", function (S, Event, UA, DOM) {
             runs(function () {
                 document.domain = location.hostname;
                 window.location.hash = hash;
-                DOM.isCustomDomain = function () {
+                Dom.isCustomDomain = function () {
                     return true;
                 };
             });

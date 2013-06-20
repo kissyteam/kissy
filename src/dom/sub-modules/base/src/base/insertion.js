@@ -3,12 +3,12 @@
  * dom-insertion
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
-KISSY.add('dom/base/insertion', function (S, DOM) {
+KISSY.add('dom/base/insertion', function (S, Dom) {
 
     var PARENT_NODE = 'parentNode',
-        NodeType = DOM.NodeType,
+        NodeType = Dom.NodeType,
         RE_FORM_EL = /^(?:button|input|object|select|textarea)$/i,
-        getNodeName = DOM.nodeName,
+        getNodeName = Dom.nodeName,
         makeArray = S.makeArray,
         splice = [].splice,
         NEXT_SIBLING = 'nextSibling',
@@ -70,7 +70,7 @@ KISSY.add('dom/base/insertion', function (S, DOM) {
 
     // fragment is easier than nodelist
     function insertion(newNodes, refNodes, fn, scripts) {
-        newNodes = DOM.query(newNodes);
+        newNodes = Dom.query(newNodes);
 
         if (scripts) {
             scripts = [];
@@ -80,12 +80,12 @@ KISSY.add('dom/base/insertion', function (S, DOM) {
         newNodes = filterScripts(newNodes, scripts);
 
         // Resets defaultChecked for any radios and checkboxes
-        // about to be appended to the DOM in IE 6/7
-        if (DOM._fixInsertionChecked) {
-            DOM._fixInsertionChecked(newNodes);
+        // about to be appended to the Dom in IE 6/7
+        if (Dom._fixInsertionChecked) {
+            Dom._fixInsertionChecked(newNodes);
         }
 
-        refNodes = DOM.query(refNodes);
+        refNodes = Dom.query(refNodes);
 
         var newNodesLength = newNodes.length,
             newNode,
@@ -101,11 +101,11 @@ KISSY.add('dom/base/insertion', function (S, DOM) {
 
         // fragment 插入速度快点
         // 而且能够一个操作达到批量插入
-        // refer: http://www.w3.org/TR/REC-DOM-Level-1/level-one-core.html#ID-B63ED1A3
-        newNode = DOM._nodeListToFragment(newNodes);
+        // refer: http://www.w3.org/TR/REC-Dom-Level-1/level-one-core.html#ID-B63ED1A3
+        newNode = Dom._nodeListToFragment(newNodes);
         //fragment 一旦插入里面就空了，先复制下
         if (refNodesLength > 1) {
-            clonedNode = DOM.clone(newNode, true);
+            clonedNode = Dom.clone(newNode, true);
             refNodes = S.makeArray(refNodes)
         }
 
@@ -113,7 +113,7 @@ KISSY.add('dom/base/insertion', function (S, DOM) {
             refNode = refNodes[i];
             if (newNode) {
                 //refNodes 超过一个，clone
-                node = i > 0 ? DOM.clone(clonedNode, true) : newNode;
+                node = i > 0 ? Dom.clone(clonedNode, true) : newNode;
                 fn(node, refNode);
             }
             if (scripts && scripts.length) {
@@ -123,9 +123,9 @@ KISSY.add('dom/base/insertion', function (S, DOM) {
     }
 
     // loadScripts default to false to prevent xss
-    S.mix(DOM,
+    S.mix(Dom,
         /**
-         * @override KISSY.DOM
+         * @override KISSY.Dom
          * @class
          * @singleton
          */
@@ -192,16 +192,16 @@ KISSY.add('dom/base/insertion', function (S, DOM) {
              */
             wrapAll: function (wrappedNodes, wrapperNode) {
                 // deep clone
-                wrapperNode = DOM.clone(DOM.get(wrapperNode), true);
-                wrappedNodes = DOM.query(wrappedNodes);
+                wrapperNode = Dom.clone(Dom.get(wrapperNode), true);
+                wrappedNodes = Dom.query(wrappedNodes);
                 if (wrappedNodes[0].parentNode) {
-                    DOM.insertBefore(wrapperNode, wrappedNodes[0]);
+                    Dom.insertBefore(wrapperNode, wrappedNodes[0]);
                 }
                 var c;
                 while ((c = wrapperNode.firstChild) && c.nodeType == 1) {
                     wrapperNode = c;
                 }
-                DOM.appendTo(wrappedNodes, wrapperNode);
+                Dom.appendTo(wrappedNodes, wrapperNode);
             },
 
             /**
@@ -210,10 +210,10 @@ KISSY.add('dom/base/insertion', function (S, DOM) {
              * @param {HTMLElement|String} wrapperNode html node or selector to get the node wrapper
              */
             wrap: function (wrappedNodes, wrapperNode) {
-                wrappedNodes = DOM.query(wrappedNodes);
-                wrapperNode = DOM.get(wrapperNode);
+                wrappedNodes = Dom.query(wrappedNodes);
+                wrapperNode = Dom.get(wrapperNode);
                 S.each(wrappedNodes, function (w) {
-                    DOM.wrapAll(w, wrapperNode);
+                    Dom.wrapAll(w, wrapperNode);
                 });
             },
 
@@ -223,12 +223,12 @@ KISSY.add('dom/base/insertion', function (S, DOM) {
              * @param {HTMLElement|String} wrapperNode html node or selector to get the node wrapper
              */
             wrapInner: function (wrappedNodes, wrapperNode) {
-                wrappedNodes = DOM.query(wrappedNodes);
-                wrapperNode = DOM.get(wrapperNode);
+                wrappedNodes = Dom.query(wrappedNodes);
+                wrapperNode = Dom.get(wrapperNode);
                 S.each(wrappedNodes, function (w) {
                     var contents = w.childNodes;
                     if (contents.length) {
-                        DOM.wrapAll(contents, wrapperNode);
+                        Dom.wrapAll(contents, wrapperNode);
                     } else {
                         w.appendChild(wrapperNode);
                     }
@@ -236,15 +236,15 @@ KISSY.add('dom/base/insertion', function (S, DOM) {
             },
 
             /**
-             * Remove the parents of the set of matched elements from the DOM,
+             * Remove the parents of the set of matched elements from the Dom,
              * leaving the matched elements in their place.
              * @param {HTMLElement|HTMLElement[]|String} wrappedNodes set of matched elements
              */
             unwrap: function (wrappedNodes) {
-                wrappedNodes = DOM.query(wrappedNodes);
+                wrappedNodes = Dom.query(wrappedNodes);
                 S.each(wrappedNodes, function (w) {
                     var p = w.parentNode;
-                    DOM.replaceWith(p, p.childNodes);
+                    Dom.replaceWith(p, p.childNodes);
                 });
             },
 
@@ -254,11 +254,11 @@ KISSY.add('dom/base/insertion', function (S, DOM) {
              * @param {HTMLElement|HTMLElement[]|String} newNodes new nodes to replace the matched elements
              */
             replaceWith: function (selector, newNodes) {
-                var nodes = DOM.query(selector);
-                newNodes = DOM.query(newNodes);
-                DOM.remove(newNodes, true);
-                DOM.insertBefore(newNodes, nodes);
-                DOM.remove(nodes);
+                var nodes = Dom.query(selector);
+                newNodes = Dom.query(newNodes);
+                Dom.remove(newNodes, true);
+                Dom.insertBefore(newNodes, nodes);
+                Dom.remove(nodes);
             }
         });
     S.each({
@@ -267,9 +267,9 @@ KISSY.add('dom/base/insertion', function (S, DOM) {
         'before': 'insertBefore',
         'after': 'insertAfter'
     }, function (value, key) {
-        DOM[key] = DOM[value];
+        Dom[key] = Dom[value];
     });
-    return DOM;
+    return Dom;
 }, {
     requires: ['./api']
 });
@@ -280,6 +280,6 @@ KISSY.add('dom/base/insertion', function (S, DOM) {
 
  2011-05-25
  - yiminghe@gmail.com：参考 jquery 处理多对多的情形 :http://api.jquery.com/append/
- DOM.append('.multi1','.multi2');
+ Dom.append('.multi1','.multi2');
 
  */

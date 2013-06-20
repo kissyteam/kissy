@@ -2,9 +2,9 @@
  * style hack for ie
  * @author yiminghe@gmail.com
  */
-KISSY.add('dom/ie/style', function (S, DOM) {
+KISSY.add('dom/ie/style', function (S, Dom) {
 
-    var cssProps = DOM._cssProps,
+    var cssProps = Dom._cssProps,
         UA = S.UA,
         HUNDRED = 100,
         doc = S.Env.host.document,
@@ -17,7 +17,7 @@ KISSY.add('dom/ie/style', function (S, DOM) {
         RUNTIME_STYLE = 'runtimeStyle',
         LEFT = 'left',
         PX = 'px',
-        CUSTOM_STYLES = DOM._CUSTOM_STYLES,
+        CUSTOM_STYLES = Dom._CUSTOM_STYLES,
         backgroundPosition = 'backgroundPosition',
         R_OPACITY = /opacity\s*=\s*([^)]*)/,
         R_ALPHA = /alpha\([^)]*\)/i;
@@ -133,7 +133,7 @@ KISSY.add('dom/ie/style', function (S, DOM) {
         };
     });
 
-    DOM._getComputedStyle = function (elem, name) {
+    Dom._getComputedStyle = function (elem, name) {
         name = cssProps[name] || name;
         // currentStyle maybe null
         // http://msdn.microsoft.com/en-us/library/ms535231.aspx
@@ -149,7 +149,7 @@ KISSY.add('dom/ie/style', function (S, DOM) {
         // If we're not dealing with a regular pixel number
         // but a number that has a weird ending, we need to convert it to pixels
         // exclude left right for relativity
-        if (DOM._RE_NUM_NO_PX.test(ret) && !RE_POS.test(name)) {
+        if (Dom._RE_NUM_NO_PX.test(ret) && !RE_POS.test(name)) {
             // Remember the original values
             var style = elem[STYLE],
                 left = style[LEFT],

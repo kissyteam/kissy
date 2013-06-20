@@ -2,7 +2,7 @@
  * tc for focusin event
  * @author yiminghe@gmail.com
  */
-KISSY.use('event/dom,dom', function (S, Event, DOM) {
+KISSY.use('event/dom,dom', function (S, Event, Dom) {
     var tpl = ' <div id="test-focusin">\
         test focusin: <input type="text" value="点击我"/>\
         </div>\
@@ -15,18 +15,18 @@ KISSY.use('event/dom,dom', function (S, Event, DOM) {
     describe('focusin and focusout', function () {
 
         beforeEach(function () {
-            DOM.prepend(DOM.create(tpl), 'body');
+            Dom.prepend(Dom.create(tpl), 'body');
         });
 
         afterEach(function () {
-            DOM.remove('#test-focusin');
+            Dom.remove('#test-focusin');
         });
 
         it('should trigger the focusin/focusout event on the proper element, ' +
             'and support bubbling with correct order.', function () {
 
-            var container = DOM.get('#test-focusin'),
-                input = DOM.get('input', container),
+            var container = Dom.get('#test-focusin'),
+                input = Dom.get('input', container),
                 result = [];
 
             // In non-IE, the simulation of focusin/focusout behavior do not correspond with IE exactly,
@@ -76,7 +76,7 @@ KISSY.use('event/dom,dom', function (S, Event, DOM) {
         });
 
         it('should trigger the focusin/focusout event and focus event in order.', function () {
-            var input = DOM.get('#test-focusin-input');
+            var input = Dom.get('#test-focusin-input');
             var result = [];
 
             Event.on(input, 'focusin focusout', function () {
@@ -112,8 +112,8 @@ KISSY.use('event/dom,dom', function (S, Event, DOM) {
 
 
         it("should delegate focus/blur properly", function () {
-            var container = DOM.get('#test-focusin'),
-                input = DOM.get('input', container),
+            var container = Dom.get('#test-focusin'),
+                input = Dom.get('input', container),
                 result = [];
 
             // In non-IE, the simulation of focusin/focusout behavior do not correspond with IE exactly,

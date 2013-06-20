@@ -3,7 +3,7 @@
  * solve io between sub domains using proxy page
  * @author yiminghe@gmail.com
  */
-KISSY.add('io/sub-domain-transport', function (S, XhrTransportBase, Event, DOM) {
+KISSY.add('io/sub-domain-transport', function (S, XhrTransportBase, Event, Dom) {
 
     var PROXY_PAGE = '/sub_domain_proxy.html',
         doc = S.Env.host.document,
@@ -51,12 +51,12 @@ KISSY.add('io/sub-domain-transport', function (S, XhrTransportBase, Event, DOM) 
             if (!iframeDesc) {
                 iframeDesc = iframeMap[hostname] = {};
                 iframe = iframeDesc.iframe = doc.createElement('iframe');
-                DOM.css(iframe, {
+                Dom.css(iframe, {
                     position: 'absolute',
                     left: '-9999px',
                     top: '-9999px'
                 });
-                DOM.prepend(iframe, doc.body || doc.documentElement);
+                Dom.prepend(iframe, doc.body || doc.documentElement);
                 iframeUri = new S.Uri();
                 iframeUri.setScheme(uri.getScheme());
                 iframeUri.setPort(uri.getPort());

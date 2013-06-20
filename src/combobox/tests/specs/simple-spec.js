@@ -20,7 +20,7 @@ KISSY.use("combobox", function (S, ComboBox) {
         });
 
         var data = ["1", "21", "31"];
-        var DOM = S.DOM;
+        var Dom = S.Dom;
         var Event = S.Event;
         var KeyCode = Event.KeyCode;
 
@@ -93,7 +93,7 @@ KISSY.use("combobox", function (S, ComboBox) {
                 var menuEl = comboBox.get("menu").get("el");
                 expect(comboBox.get("menu").get("visible")).toBe(true);
                 var offsetT = comboBox.get("el").offset();
-                // var width=DOM.outerWidth(t);
+                // var width=Dom.outerWidth(t);
                 var height = comboBox.get("el").outerHeight();
                 var expectLeft = offsetT.left;
                 var expectTop = offsetT.top + height;

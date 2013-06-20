@@ -50,7 +50,7 @@ KISSY.add('component/container', function (S, Controller, ContainerRender) {
             if (c.destroy)
                 c.destroy();
         } else {
-            if (c.get && (cEl = c.get('el'))) {
+            if (c.get && (cEl = c.el)) {
                 cDOMEl = cEl[0];
                 if (cDOMParentEl = cDOMEl.parentNode) {
                     cDOMParentEl.removeChild(cDOMEl);
@@ -170,7 +170,7 @@ KISSY.add('component/container', function (S, Controller, ContainerRender) {
             domContentEl = contentEl[0];
             elBefore = domContentEl.children[childIndex] || null;
             if (c.get('rendered')) {
-                cEl = c.get('el')[0];
+                cEl = c.el[0];
                 if (cEl.parentNode != domContentEl) {
                     domContentEl.insertBefore(cEl, elBefore);
                 }
@@ -194,9 +194,9 @@ KISSY.add('component/container', function (S, Controller, ContainerRender) {
          * Removed the given child from this component,and returns it.
          *
          * If destroy is true, calls ``destroy()`` on the removed child component,
-         * and subsequently detaches the child's DOM from the document.
+         * and subsequently detaches the child's Dom from the document.
          * Otherwise it is the caller's responsibility to
-         * clean up the child component's DOM.
+         * clean up the child component's Dom.
          *
          * @param {KISSY.Component.Controller} c The child component to be removed.
          * @param {Boolean} [destroy=true] If true,

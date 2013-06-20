@@ -4,7 +4,7 @@
  */
 KISSY.add("editor/plugin/table/dialog", function (S, Editor, Dialog4E, MenuButton) {
     var Node = S.Node,
-        DOM = S.DOM,
+        Dom = S.Dom,
         trim = S.trim,
         showBorderClassName = "ke_show_border",
         collapseTableClass = "k-e-collapse-table",
@@ -302,7 +302,7 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Dialog4E, MenuButto
                     //不能使用dom操作了, ie6 table 报错
                     //http://msdn.microsoft.com/en-us/library/ms532998(VS.85).aspx
                     var c = selectedTable[0].createCaption();
-                    DOM.html(c, "<span>"
+                    Dom.html(c, "<span>"
                         + tcv
                         + "</span>");
                     // new Node("<caption><span>" + tcv + "</span></caption>");

@@ -3,10 +3,10 @@
  * patch for ie<9 submit: does not bubble !
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/ie/submit', function (S, DOMEvent, DOM) {
+KISSY.add('event/dom/ie/submit', function (S, DOMEvent, Dom) {
 
     var Special = DOMEvent.Special,
-        getNodeName = DOM.nodeName;
+        getNodeName = Dom.nodeName;
 
     Special['submit'] = {
         setup: function () {
@@ -27,7 +27,7 @@ KISSY.add('event/dom/ie/submit', function (S, DOMEvent, DOM) {
                 return false;
             }
             DOMEvent.remove(el, 'click keypress', detector);
-            S.each(DOM.query('form', el), function (form) {
+            S.each(Dom.query('form', el), function (form) {
                 if (form.__submit__fix) {
                     form.__submit__fix = 0;
                     DOMEvent.remove(form, 'submit', {

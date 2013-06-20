@@ -3,7 +3,7 @@
  * multi-touch base
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/touch/multi-touch', function (S, DOM) {
+KISSY.add('event/dom/touch/multi-touch', function (S, Dom) {
 
     function MultiTouch() {}
 
@@ -48,12 +48,12 @@ KISSY.add('event/dom/touch/multi-touch', function (S, DOM) {
             if (t1 == t2) {
                 return t1;
             }
-            if (DOM.contains(t1, t2)) {
+            if (Dom.contains(t1, t2)) {
                 return t1;
             }
 
             while (1) {
-                if (DOM.contains(t2, t1)) {
+                if (Dom.contains(t2, t1)) {
                     return t2;
                 }
                 t2 = t2.parentNode;

@@ -188,7 +188,7 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, Dia
             elCls: cmdType + 'ArrowBtn'
         }, ColorButton);
 
-        var indicator = button.get('el').one('.' + prefix + 'color-indicator');
+        var indicator = button.el.one('.' + prefix + 'color-indicator');
 
         arrow.on('selectColor', function (e) {
             indicator.css('background-color', e.color);

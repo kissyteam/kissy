@@ -88,7 +88,7 @@ KISSY.add("toolbar", function (S, Container, DelegateChildrenExtension, ToolbarR
                 self = this,
                 prevVal = e && e.prevVal,
                 children = self.get('children'),
-                el = self.get('el');
+                el = self.el;
             // only clear children's status
             if (prevVal && S.inArray(prevVal, children)) {
                 prevVal.set('highlighted', false, {
@@ -101,7 +101,7 @@ KISSY.add("toolbar", function (S, Container, DelegateChildrenExtension, ToolbarR
                 if (el[0].ownerDocument.activeElement != el[0]) {
                     self.focus();
                 }
-                itemEl = item.get('el');
+                itemEl = item.el;
                 id = itemEl.attr("id");
                 if (!id) {
                     itemEl.attr("id", id = S.guid("ks-toolbar-item"));

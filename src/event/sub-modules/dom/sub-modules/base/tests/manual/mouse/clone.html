@@ -25,16 +25,16 @@
     </div>
 </div>
 <script>
-    KISSY.use("dom,event/dom", function (S, DOM, Event) {
+    KISSY.use("dom,event/dom", function (S, Dom, Event) {
         S.ready(function () {
             Event.on(".t", "mouseenter", function (e) {
                 S.log("**********************");
                 S.log("mousenter : " + e.target.className + " - " + e.relatedTarget.className);
             });
             var n;
-            DOM.append(n = DOM.clone(".t", 1, 1, 1), document.body);
+            Dom.append(n = Dom.clone(".t", 1, 1, 1), document.body);
             n.id = "";
-            Event.remove(DOM.get("#t"))
+            Event.remove(Dom.get("#t"))
         });
     });
 </script>

@@ -214,7 +214,7 @@ KISSY.add("component/controller/render", function (S, RenderProcess, XTemplate, 
             // 新建的节点才需要摆放定位
             if (!controller.get('srcNode')) {
                 var render = controller.get('render'),
-                    el = controller.get('el'),
+                    el = controller.el,
                     renderBefore = controller.get('elBefore');
                 if (renderBefore) {
                     el.insertBefore(renderBefore, /**

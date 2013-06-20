@@ -4,11 +4,18 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add("combobox/multi-value-combobox", function (S, getCursor, ComboBox) {
+
     var SUFFIX = 'suffix',
         rWhitespace = /\s|\xa0/;
 
     function strContainsChar(str, c) {
         return c && str.indexOf(c) != -1;
+    }
+
+    function beforeVisibleChange(e) {
+        if (e.newVal && e.target == this.get('menu')) {
+            this.alignWithCursor();
+        }
     }
 
     /**
@@ -17,6 +24,16 @@ KISSY.add("combobox/multi-value-combobox", function (S, getCursor, ComboBox) {
      * @class KISSY.ComboBox.MultiValueComboBox
      */
     return ComboBox.extend({
+
+            syncUI: function () {
+                var self = this,
+                    menu;
+                if (self.get('alignWithCursor')) {
+                    menu = self.get('menu');
+                    menu.setInternal('align',null);
+                    menu.on('beforeVisibleChange', beforeVisibleChange, this);
+                }
+            },
 
             getValueForAutocomplete: function () {
 
@@ -46,7 +63,7 @@ KISSY.add("combobox/multi-value-combobox", function (S, getCursor, ComboBox) {
 
             },
 
-            setValueFromAutocomplete: function (value,setCfg) {
+            setValueFromAutocomplete: function (value, setCfg) {
                 var self = this,
                     input = self.get("input"),
                     inputDesc = getInputDesc(self),
@@ -80,18 +97,14 @@ KISSY.add("combobox/multi-value-combobox", function (S, getCursor, ComboBox) {
 
                 cursorPosition = tokens.slice(0, tokenIndex + 1).join("").length;
 
-                self.set('value', tokens.join(""),setCfg);
+                self.set('value', tokens.join(""), setCfg);
 
                 input.prop("selectionStart", cursorPosition);
                 input.prop("selectionEnd", cursorPosition);
             },
 
-            'alignInternal': function () {
+            'alignWithCursor': function () {
                 var self = this;
-                if (!self.get('alignWithCursor')) {
-                    ComboBox.prototype.alignInternal.apply(self, arguments);
-                    return;
-                }
                 // does not support align with separator
                 // will cause ime error
                 var menu = self.get("menu"),

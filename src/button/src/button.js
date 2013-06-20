@@ -16,7 +16,7 @@ KISSY.add("button", function (S, Node, Controller, ButtonRender) {
         isButton: 1,
 
         bindUI: function () {
-            this.get("el").on("keyup", this.handleKeyEventInternal, this);
+            this.el.on("keyup", this.handleKeyEventInternal, this);
         },
 
         handleKeyEventInternal: function (e) {

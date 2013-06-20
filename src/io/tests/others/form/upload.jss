@@ -17,7 +17,7 @@ module.exports = function (req, res) {
     if (query.test5) {
         t.test5 = query.test5;
     }
-    res.send(JSON.stringify(t));
+    res.send(Json.stringify(t));
 
     //},
     // >10 will error for phantomjs!

@@ -3,7 +3,7 @@
  * base for xhr and subdomain
  * @author yiminghe@gmail.com
  */
-KISSY.add('io/xhr-transport-base', function (S, IO) {
+KISSY.add('io/xhr-transport-base', function (S, Io) {
     var OK_CODE = 200,
         win = S.Env.host,
     // http://msdn.microsoft.com/en-us/library/cc288060(v=vs.85).aspx
@@ -16,8 +16,8 @@ KISSY.add('io/xhr-transport-base', function (S, IO) {
         }, lastModifiedCached = {},
         eTagCached = {};
 
-    IO.__lastModifiedCached = lastModifiedCached;
-    IO.__eTagCached = eTagCached;
+    Io.__lastModifiedCached = lastModifiedCached;
+    Io.__eTagCached = eTagCached;
 
     function createStandardXHR(_, refWin) {
         try {
@@ -43,7 +43,7 @@ KISSY.add('io/xhr-transport-base', function (S, IO) {
             return new _XDomainRequest();
         }
         // ie7 XMLHttpRequest 不能访问本地文件
-        return !IO.isLocal && createStandardXHR(crossDomain, refWin) ||
+        return !Io.isLocal && createStandardXHR(crossDomain, refWin) ||
             createActiveXHR(crossDomain, refWin);
     } : createStandardXHR;
 
@@ -285,7 +285,7 @@ KISSY.add('io/xhr-transport-base', function (S, IO) {
                         // If the request is local and we have data: assume a success
                         // (success with no data won't get notified, that's the best we
                         // can do given current implementations)
-                        if (!status && IO.isLocal && !c.crossDomain) {
+                        if (!status && Io.isLocal && !c.crossDomain) {
                             status = io.responseText ? OK_CODE : NOT_FOUND_CODE;
                             // IE - #1450: sometimes returns 1223 when it should be 204
                         } else if (status === NO_CONTENT_CODE2) {

@@ -24,7 +24,7 @@ KISSY.add("editor/selection", function (S) {
         FALSE = false,
         NULL = null,
         UA = S.UA,
-        DOM = S.DOM,
+        Dom = S.Dom,
     //tryThese = Editor.Utils.tryThese,
         Node = S.Node,
         KES = Editor.SELECTION,
@@ -85,7 +85,7 @@ KISSY.add("editor/selection", function (S) {
             function () {
                 var self = this,
                     cache = self._.cache;
-                return cache.nativeSel || ( cache.nativeSel = DOM.getWindow(self.document).getSelection() );
+                return cache.nativeSel || ( cache.nativeSel = Dom.getWindow(self.document).getSelection() );
             }
             :
             function () {
@@ -129,7 +129,7 @@ KISSY.add("editor/selection", function (S) {
                         startContainer = range.startContainer;
 
                     if (startContainer == range.endContainer
-                        && startContainer.nodeType == DOM.NodeType.ELEMENT_NODE
+                        && startContainer.nodeType == Dom.NodeType.ELEMENT_NODE
                         && Number(range.endOffset - range.startOffset) == 1
                         && styleObjectElements[ startContainer.childNodes[ range.startOffset ].nodeName.toLowerCase() ]) {
                         type = KES.SELECTION_ELEMENT;
@@ -190,7 +190,7 @@ KISSY.add("editor/selection", function (S) {
                     for (var i = 0; i < siblings.length; i++) {
                         var child = siblings[ i ];
 
-                        if (child.nodeType == DOM.NodeType.ELEMENT_NODE) {
+                        if (child.nodeType == Dom.NodeType.ELEMENT_NODE) {
                             testRange = range.duplicate();
 
                             testRange.moveToElementText(child);
@@ -329,7 +329,7 @@ KISSY.add("editor/selection", function (S) {
             },
 
         /**
-         * Gets the DOM element in which the selection starts.
+         * Gets the Dom element in which the selection starts.
          * @return The element at the beginning of the
          *        selection.
          * @example
@@ -363,7 +363,7 @@ KISSY.add("editor/selection", function (S) {
                                 var startContainer = range.startContainer,
                                     startOffset = range.startOffset;
                                 // Limit the fix only to non-block elements.(#3950)
-                                if (startOffset == ( startContainer[0].nodeType === DOM.NodeType.ELEMENT_NODE ?
+                                if (startOffset == ( startContainer[0].nodeType === Dom.NodeType.ELEMENT_NODE ?
                                     startContainer[0].childNodes.length : startContainer[0].nodeValue.length )
                                     && !startContainer._4e_isBlockBoundary()) {
                                     range.setStartAfter(startContainer);
@@ -374,18 +374,18 @@ KISSY.add("editor/selection", function (S) {
 
                             node = range.startContainer;
 
-                            if (node[0].nodeType != DOM.NodeType.ELEMENT_NODE) {
+                            if (node[0].nodeType != Dom.NodeType.ELEMENT_NODE) {
                                 return node.parent();
                             }
 
                             node = new Node(node[0].childNodes[range.startOffset]);
 
-                            if (!node[0] || node[0].nodeType != DOM.NodeType.ELEMENT_NODE) {
+                            if (!node[0] || node[0].nodeType != Dom.NodeType.ELEMENT_NODE) {
                                 return range.startContainer;
                             }
 
                             var child = node[0].firstChild;
-                            while (child && child.nodeType == DOM.NodeType.ELEMENT_NODE) {
+                            while (child && child.nodeType == Dom.NodeType.ELEMENT_NODE) {
                                 node = new Node(child);
                                 child = child.firstChild;
                             }
@@ -400,7 +400,7 @@ KISSY.add("editor/selection", function (S) {
                     }
                     else {
                         node = sel.anchorNode;
-                        if (node && node.nodeType != DOM.NodeType.ELEMENT_NODE) {
+                        if (node && node.nodeType != Dom.NodeType.ELEMENT_NODE) {
                             node = node.parentNode;
                         }
                         if (node) {
@@ -451,7 +451,7 @@ KISSY.add("editor/selection", function (S) {
                     // <div><span>^<img/>^</span></div>
                     for (var i = 2;
                          i && !(( enclosed = range.getEnclosedNode() ) &&
-                             ( enclosed[0].nodeType == DOM.NodeType.ELEMENT_NODE ) &&
+                             ( enclosed[0].nodeType == Dom.NodeType.ELEMENT_NODE ) &&
                              // 某些值得这么多的元素？？
                              styleObjectElements[ enclosed.nodeName() ] &&
                              ( selected = enclosed ));
@@ -546,7 +546,7 @@ KISSY.add("editor/selection", function (S) {
                     // opera move out of this element
                     if (range.collapsed &&
                         (( UA.gecko && UA.gecko < 1.0900 ) || UA.opera || UA['webkit']) &&
-                        startContainer[0].nodeType == DOM.NodeType.ELEMENT_NODE && !startContainer[0].childNodes.length) {
+                        startContainer[0].nodeType == Dom.NodeType.ELEMENT_NODE && !startContainer[0].childNodes.length) {
                         // webkit 光标停留不到在空元素内，要fill char，之后范围定在 fill char 之后
                         startContainer[0].appendChild(
                             self.document.createTextNode(UA['webkit'] ? "\u200b" : "")
@@ -592,10 +592,10 @@ KISSY.add("editor/selection", function (S) {
                         rangeStart = dirtyRange.startContainer,
                         rangeEnd = dirtyRange.endContainer;
 
-                    DOM.equals(rangeStart, bookmarkStart.parent()) && dirtyRange.startOffset++;
-                    DOM.equals(rangeStart, bookmarkEnd.parent()) && dirtyRange.startOffset++;
-                    DOM.equals(rangeEnd, bookmarkStart.parent()) && dirtyRange.endOffset++;
-                    DOM.equals(rangeEnd, bookmarkEnd.parent()) && dirtyRange.endOffset++;
+                    Dom.equals(rangeStart, bookmarkStart.parent()) && dirtyRange.startOffset++;
+                    Dom.equals(rangeStart, bookmarkEnd.parent()) && dirtyRange.startOffset++;
+                    Dom.equals(rangeEnd, bookmarkStart.parent()) && dirtyRange.endOffset++;
+                    Dom.equals(rangeEnd, bookmarkEnd.parent()) && dirtyRange.endOffset++;
                 }
             }
 
@@ -652,7 +652,7 @@ KISSY.add("editor/selection", function (S) {
                 // If we have a collapsed range, inside an empty element, we must add
                 // something to it, otherwise the caret will not be visible.
                 if (self.collapsed &&
-                    startContainer[0].nodeType == DOM.NodeType.ELEMENT_NODE && !startContainer[0].childNodes.length) {
+                    startContainer[0].nodeType == Dom.NodeType.ELEMENT_NODE && !startContainer[0].childNodes.length) {
                     startContainer[0].appendChild(
                         // webkit need filling char
                         self.document.createTextNode(UA.webkit ? '\u200b' : '')
@@ -697,16 +697,16 @@ KISSY.add("editor/selection", function (S) {
                         self.startContainer[0] === self.endContainer[0]
                             && self.endOffset - self.startOffset == 1) {
                         var selEl = self.startContainer[0].childNodes[self.startOffset];
-                        if (selEl.nodeType == DOM.NodeType.ELEMENT_NODE) {
+                        if (selEl.nodeType == Dom.NodeType.ELEMENT_NODE) {
                             new KESelection(self.document).selectElement(new Node(selEl));
                             return;
                         }
                     }
                     // IE doesn't support selecting the entire table row/cell, move the selection into cells, e.g.
                     // <table><tbody><tr>[<td>cell</b></td>... => <table><tbody><tr><td>[cell</td>...
-                    if (self.startContainer[0].nodeType == DOM.NodeType.ELEMENT_NODE &&
+                    if (self.startContainer[0].nodeType == Dom.NodeType.ELEMENT_NODE &&
                         self.startContainer.nodeName() in nonCells
-                        || self.endContainer[0].nodeType == DOM.NodeType.ELEMENT_NODE &&
+                        || self.endContainer[0].nodeType == Dom.NodeType.ELEMENT_NODE &&
                         self.endContainer.nodeName() in nonCells) {
                         self.shrink(KER.SHRINK_ELEMENT, TRUE);
                     }
@@ -751,7 +751,7 @@ KISSY.add("editor/selection", function (S) {
                                 ( forceExpand || !startNode[0].previousSibling ||
                                     (
                                         startNode[0].previousSibling &&
-                                            DOM.nodeName(startNode[0].previousSibling) == 'br'
+                                            Dom.nodeName(startNode[0].previousSibling) == 'br'
                                         )
                                     )
                             );
@@ -769,11 +769,11 @@ KISSY.add("editor/selection", function (S) {
                             // instead to have any char, which will be later deleted using the
                             // selection.
                             // \ufeff = Zero Width No-Break Space (U+FEFF). (#1359)
-                            DOM.insertBefore(self.document.createTextNode('\ufeff'), startNode[0] || startNode);
+                            Dom.insertBefore(self.document.createTextNode('\ufeff'), startNode[0] || startNode);
                         }
                     }
 
-                    // Remove the markers (reset the position, because of the changes in the DOM tree).
+                    // Remove the markers (reset the position, because of the changes in the Dom tree).
                     self.setStartBefore(startNode);
                     startNode._4e_remove();
 

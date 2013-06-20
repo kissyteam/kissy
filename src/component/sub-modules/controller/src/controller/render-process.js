@@ -3,20 +3,13 @@
  * render process for component
  * @author yiminghe@gmail.com
  */
-KISSY.add('component/controller/render-process', function (S, RichBase) {
-
-    var ATTRS = 'ATTRS',
-        noop = S.noop;
+KISSY.add('component/controller/render-process', function (S, CommonProcess) {
 
     /**
      * @class KISSY.Component.RenderProcess
-     * @extends KISSY.RichBase
+     * @extends KISSY.Component.CommonProcess
      */
-    var RenderProcess = RichBase.extend({
-
-        bindInternal: noop,
-
-        syncInternal: noop,
+    var RenderProcess = CommonProcess.extend({
 
         /**
          * Create dom structure of this component.
@@ -27,80 +20,36 @@ KISSY.add('component/controller/render-process', function (S, RichBase) {
             if (!self.get("created")) {
                 self.callMethodByHierarchy("beforeCreateDom",
                     "__beforeCreateDom",
-                    [self.renderData = {},self.childrenElSelectors={}]);
+                    [self.renderData = {}, self.childrenElSelectors = {}]);
                 self.callMethodByHierarchy("createDom", "__createDom");
+                self.callPluginsMethod("createDom");
+
                 self.setInternal("created", true);
             }
             return self;
         },
 
+        /**
+         * decorate from existing dom structure
+         * @param srcNode
+         * @returns {*}
+         */
         decorate: function (srcNode) {
             var self = this;
             if (!self.get("created")) {
                 self.callMethodByHierarchy("decorateDom", "__decorateDom",
                     [srcNode]);
+                self.callPluginsMethod("createDom");
+
                 self.setInternal("created", true);
             }
             return self;
-        },
-
-
-        /**
-         * Put dom structure of this component to document, bind event and sync attribute.
-         * @chainable
-         */
-        render: function () {
-            var self = this;
-            // 是否已经渲染过
-            if (!self.get("rendered")) {
-                self.callMethodByHierarchy("renderUI", "__renderUI");
-                self.callMethodByHierarchy("bindUI", "__bindUI");
-                self.sync();
-                self.setInternal("rendered", true);
-            }
-            return self;
-        },
-
-        /**
-         * sync attribute value
-         */
-        sync: function () {
-            var self = this;
-            self.callMethodByHierarchy("syncUI", "__syncUI");
         }
     }, {
-
-        name: 'RenderProcess',
-
-        ATTRS: {
-            /**
-             * Whether this component is rendered.
-             * @type {Boolean}
-             * @property rendered
-             * @readonly
-             */
-            /**
-             * @ignore
-             */
-            rendered: {
-                value: false
-            },
-            /**
-             * Whether this component 's dom structure is created.
-             * @type {Boolean}
-             * @property created
-             * @readonly
-             */
-            /**
-             * @ignore
-             */
-            created: {
-                value: false
-            }
-        }
+        name: 'RenderProcess'
     });
 
     return RenderProcess;
 }, {
-    requires: ["rich-base"]
+    requires: ['./common-process']
 });

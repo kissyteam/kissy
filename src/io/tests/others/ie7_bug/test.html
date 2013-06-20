@@ -3,12 +3,12 @@
 <script src="/kissy/src/package.js"></script>
 
 <script >
-    KISSY.use("io,json", function (S, io, JSON) {
+    KISSY.use("io,json", function (S, io, Json) {
         io({
             url:'//'+location.hostname+':8888/kissy/src/io/tests/io-json.jss',
             dataType:'json',
             success:function (d) {
-                alert(JSON.stringify(d));
+                alert(Json.stringify(d));
             },
             error:function (d, s) {
                 alert(s.message);

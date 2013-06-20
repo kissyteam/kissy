@@ -2,7 +2,7 @@
  * test cases for scroll sub module of dom module
  * @author yiminghe@gmail.com
  */
-KISSY.use("dom,core", function (S, DOM) {
+KISSY.use("dom,core", function (S, Dom) {
 
     var $ = S.all;
 
@@ -47,9 +47,9 @@ KISSY.use("dom,core", function (S, DOM) {
 
         beforeEach(function () {
             $('body').append(tpl);
-            container = DOM.get('#scroll-container');
-            node = DOM.get('#scroll-el');
-            container_border_width = parseInt(DOM.css(container,
+            container = Dom.get('#scroll-container');
+            node = Dom.get('#scroll-el');
+            container_border_width = parseInt(Dom.css(container,
                 "border-top-width"));
             container_client_height = container.clientHeight;
             node_height = node.offsetHeight;
@@ -71,58 +71,58 @@ KISSY.use("dom,core", function (S, DOM) {
         });
 
         afterEach(function () {
-            DOM.scrollTop(0);
-            DOM.scrollTop(container, 0);
+            Dom.scrollTop(0);
+            Dom.scrollTop(container, 0);
         });
 
         describe('non-auto works', function () {
             it("scroll node to container at axis xy manually works", function () {
 
-                var nodeOffset = DOM.offset(node),
-                    containerOffset = DOM.offset(container);
+                var nodeOffset = Dom.offset(node),
+                    containerOffset = Dom.offset(container);
 
                 var scrollTop = nodeOffset.top - containerOffset.top - container_border_width;
                 var scrollLeft = nodeOffset.left - containerOffset.left - container_border_width;
 
-                DOM.scrollIntoView(node, container);
+                Dom.scrollIntoView(node, container);
 
-                nodeOffset = DOM.offset(node);
-                containerOffset = DOM.offset(container);
+                nodeOffset = Dom.offset(node);
+                containerOffset = Dom.offset(container);
 
-                expect(DOM.scrollTop()).toBeAbsEqual(0);
+                expect(Dom.scrollTop()).toBeAbsEqual(0);
 
-                expect(DOM.scrollTop(container)).toBeAbsEqual(scrollTop);
-                expect(DOM.scrollLeft(container)).toBeAbsEqual(scrollLeft);
+                expect(Dom.scrollTop(container)).toBeAbsEqual(scrollTop);
+                expect(Dom.scrollLeft(container)).toBeAbsEqual(scrollLeft);
 
                 expect(nodeOffset.top - containerOffset.top).toBeAbsEqual(container_border_width);
 
-                expect(DOM.scrollLeft()).toBeAbsEqual(0);
+                expect(Dom.scrollLeft()).toBeAbsEqual(0);
                 expect(nodeOffset.left - containerOffset.left).toBeAbsEqual(container_border_width);
             });
 
 
             it("scroll node to container at axis y manually works", function () {
-                var nodeOffset = DOM.offset(node),
-                    containerOffset = DOM.offset(container);
+                var nodeOffset = Dom.offset(node),
+                    containerOffset = Dom.offset(container);
 
                 var scrollTop = nodeOffset.top - containerOffset.top - container_border_width;
 
-                DOM.scrollIntoView(node, container, {
+                Dom.scrollIntoView(node, container, {
                     alignWithTop:true,
                     allowHorizontalScroll:false
                 });
 
-                nodeOffset = DOM.offset(node);
-                containerOffset = DOM.offset(container);
+                nodeOffset = Dom.offset(node);
+                containerOffset = Dom.offset(container);
 
-                expect(DOM.scrollTop()).toBeAbsEqual(0);
+                expect(Dom.scrollTop()).toBeAbsEqual(0);
 
-                expect(DOM.scrollTop(container)).toBeAbsEqual(scrollTop);
-                expect(DOM.scrollLeft(container)).toBeAbsEqual(0);
+                expect(Dom.scrollTop(container)).toBeAbsEqual(scrollTop);
+                expect(Dom.scrollLeft(container)).toBeAbsEqual(0);
 
                 expect(nodeOffset.top - containerOffset.top).toBeAbsEqual(container_border_width);
 
-                expect(DOM.scrollLeft()).toBeAbsEqual(0);
+                expect(Dom.scrollLeft()).toBeAbsEqual(0);
                 expect(nodeOffset.left - containerOffset.left).toBeAbsEqual(105);
             });
 
@@ -135,9 +135,9 @@ KISSY.use("dom,core", function (S, DOM) {
 
                 $(iframe).on('load', function () {
                     var inner = S.get('#test-inner', iframe.contentWindow.document);
-                    DOM.scrollIntoView(inner, iframe.contentWindow);
-                    var nt = Math.round(DOM.offset(inner).top);
-                    expect(nt).toBeAbsEqual(DOM.scrollTop(iframe.contentWindow));
+                    Dom.scrollIntoView(inner, iframe.contentWindow);
+                    var nt = Math.round(Dom.offset(inner).top);
+                    expect(nt).toBeAbsEqual(Dom.scrollTop(iframe.contentWindow));
                     setTimeout(function () {
                         ok = 1;
                     }, 100);
@@ -150,11 +150,11 @@ KISSY.use("dom,core", function (S, DOM) {
 
 
             it("scroll node to container at bottom", function () {
-                DOM.scrollIntoView(node, container, {
+                Dom.scrollIntoView(node, container, {
                     alignWithTop:false
                 });
-                var nt = Math.round(DOM.offset(node).top);
-                var ct = Math.round(DOM.offset(container).top);
+                var nt = Math.round(Dom.offset(node).top);
+                var ct = Math.round(Dom.offset(container).top);
 
                 // 注意容器边框
                 //  --------
@@ -173,9 +173,9 @@ KISSY.use("dom,core", function (S, DOM) {
 
             } else {
                 it("scroll node into top view of window", function () {
-                    DOM.scrollIntoView(container);
-                    var ct = Math.round(DOM.offset(container).top);
-                    expect(ct).toBeAbsEqual(DOM.scrollTop());
+                    Dom.scrollIntoView(container);
+                    var ct = Math.round(Dom.offset(container).top);
+                    expect(ct).toBeAbsEqual(Dom.scrollTop());
                 });
             }
         });
@@ -184,101 +184,101 @@ KISSY.use("dom,core", function (S, DOM) {
 
             it('will not scroll if node is inside container', function () {
 
-                DOM.scrollIntoView(node, container);
+                Dom.scrollIntoView(node, container);
 
-                DOM.scrollTop(container, DOM.scrollTop(container) - 10);
+                Dom.scrollTop(container, Dom.scrollTop(container) - 10);
 
-                var scrollTop = DOM.scrollTop(container);
+                var scrollTop = Dom.scrollTop(container);
 
-                DOM.scrollIntoView(node, container, {
+                Dom.scrollIntoView(node, container, {
                     onlyScrollIfNeeded:true
                 });
 
-                expect(DOM.scrollTop(container)).toBe(scrollTop);
+                expect(Dom.scrollTop(container)).toBe(scrollTop);
 
             });
 
 
             it('will scroll and adjust top to true if node is outside container', function () {
 
-                DOM.scrollIntoView(node, container);
+                Dom.scrollIntoView(node, container);
 
-                var scrollTop = DOM.scrollTop(container);
+                var scrollTop = Dom.scrollTop(container);
 
-                DOM.scrollTop(container, DOM.scrollTop(container) + 10);
+                Dom.scrollTop(container, Dom.scrollTop(container) + 10);
 
-                DOM.scrollIntoView(node, container,{
+                Dom.scrollIntoView(node, container,{
                     onlyScrollIfNeeded:true
                 });
 
-                expect(DOM.scrollTop(container)).toBe(scrollTop);
+                expect(Dom.scrollTop(container)).toBe(scrollTop);
 
             });
 
 
             it('will scroll and adjust top to false if node is outside container', function () {
 
-                DOM.scrollIntoView(node, container, {
+                Dom.scrollIntoView(node, container, {
                     alignWithTop:false
                 });
 
-                var scrollTop = DOM.scrollTop(container);
+                var scrollTop = Dom.scrollTop(container);
 
-                DOM.scrollTop(container, DOM.scrollTop(container) - 10);
+                Dom.scrollTop(container, Dom.scrollTop(container) - 10);
 
-                DOM.scrollIntoView(node, container, {
+                Dom.scrollIntoView(node, container, {
                     onlyScrollIfNeeded:true
                 });
 
-                expect(DOM.scrollTop(container)).toBe(scrollTop);
+                expect(Dom.scrollTop(container)).toBe(scrollTop);
 
             });
 
 
             it('will scroll and adjust top to true if node is outside container', function () {
 
-                DOM.scrollIntoView(node, container, {
+                Dom.scrollIntoView(node, container, {
                     alignWithTop:true
                 });
 
-                var scrollTop = DOM.scrollTop(container);
+                var scrollTop = Dom.scrollTop(container);
 
-                DOM.scrollIntoView(node, container,  {
+                Dom.scrollIntoView(node, container,  {
                     alignWithTop:false
                 });
 
-                DOM.scrollTop(container, DOM.scrollTop(container) - 10);
+                Dom.scrollTop(container, Dom.scrollTop(container) - 10);
 
-                DOM.scrollIntoView(node, container,   {
+                Dom.scrollIntoView(node, container,   {
                     alignWithTop:true,
                     onlyScrollIfNeeded:true
                 });
 
-                expect(DOM.scrollTop(container)).toBe(scrollTop);
+                expect(Dom.scrollTop(container)).toBe(scrollTop);
 
             });
 
 
             it('will scroll to top false if node is outside container', function () {
 
-                DOM.scrollIntoView(node, container, {
+                Dom.scrollIntoView(node, container, {
                     alignWithTop:false
                 });
 
-                var scrollTop = DOM.scrollTop(container);
+                var scrollTop = Dom.scrollTop(container);
 
-                DOM.scrollIntoView(node, container, {
+                Dom.scrollIntoView(node, container, {
                     alignWithTop:true
                 });
 
-                DOM.scrollTop(container, DOM.scrollTop(container) + 10);
+                Dom.scrollTop(container, Dom.scrollTop(container) + 10);
 
-                DOM.scrollIntoView(node, container,{
+                Dom.scrollIntoView(node, container,{
                     alignWithTop:false,
                     onlyScrollIfNeeded:true
                 });
 
-                expect(DOM.scrollTop(container)).toBe(scrollTop);
+                expect(Dom.scrollTop(container)).toBe(scrollTop);
 
             });
 

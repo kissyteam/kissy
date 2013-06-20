@@ -4,7 +4,7 @@
  * ie9 模式下 mousemove 触发事件有问题，无法测试
  */
 KISSY.use("ua,node,dd", function (S, UA, Node, DD) {
-    var Draggable = DD.Draggable, DOM = S.DOM;
+    var Draggable = DD.Draggable, Dom = S.Dom;
     var Event = S.Event;
     var Gesture = Event.Gesture;
     var ie = document['documentMode'] || UA['ie'];
@@ -34,8 +34,8 @@ KISSY.use("ua,node,dd", function (S, UA, Node, DD) {
                     handlers: [dragHeader],
                     groups:false
                 }),
-                scrollLeft = DOM.scrollLeft(),
-                scrollTop = DOM.scrollTop();
+                scrollLeft = Dom.scrollLeft(),
+                scrollTop = Dom.scrollTop();
 
             waits(300);
             runs(function () {
@@ -59,8 +59,8 @@ KISSY.use("ua,node,dd", function (S, UA, Node, DD) {
 
             var drag = Node.one("#drag"),
                 dragHeader = Node.one("#dragHeader"),
-                scrollLeft = DOM.scrollLeft(),
-                scrollTop = DOM.scrollTop();
+                scrollLeft = Dom.scrollLeft(),
+                scrollTop = Dom.scrollTop();
             var action = new Draggable({
                 node: drag,
                 move:1,
@@ -138,8 +138,8 @@ KISSY.use("ua,node,dd", function (S, UA, Node, DD) {
 
             runs(function () {
                 jasmine.simulateForDrag(dragHeader[0], Gesture.start, {
-                    clientX: xy.left - DOM.scrollLeft(),
-                    clientY: xy.top - DOM.scrollTop()
+                    clientX: xy.left - Dom.scrollLeft(),
+                    clientY: xy.top - Dom.scrollTop()
                 });
             });
 
@@ -149,8 +149,8 @@ KISSY.use("ua,node,dd", function (S, UA, Node, DD) {
             runs(function () {
 
                 jasmine.simulateForDrag(document, Gesture.move, {
-                    clientX: xy.left + 100 - DOM.scrollLeft(),
-                    clientY: xy.top + 100 - DOM.scrollTop()
+                    clientX: xy.left + 100 - Dom.scrollLeft(),
+                    clientY: xy.top + 100 - Dom.scrollTop()
                 });
             });
 
@@ -158,8 +158,8 @@ KISSY.use("ua,node,dd", function (S, UA, Node, DD) {
 
             runs(function () {
                 jasmine.simulateForDrag(document, Gesture.end, {
-                    clientX: xy.left + 100 - DOM.scrollLeft(),
-                    clientY: xy.top + 100 - DOM.scrollTop()
+                    clientX: xy.left + 100 - Dom.scrollLeft(),
+                    clientY: xy.top + 100 - Dom.scrollTop()
                 });
             });
 
@@ -188,8 +188,8 @@ KISSY.use("ua,node,dd", function (S, UA, Node, DD) {
 
             runs(function () {
                 jasmine.simulateForDrag(dragHeader[0], Gesture.start, {
-                    clientX: xy.left - DOM.scrollLeft(),
-                    clientY: xy.top - DOM.scrollTop()
+                    clientX: xy.left - Dom.scrollLeft(),
+                    clientY: xy.top - Dom.scrollTop()
                 });
             });
             waits(100);
@@ -197,31 +197,31 @@ KISSY.use("ua,node,dd", function (S, UA, Node, DD) {
             // 10px move to start
             runs(function () {
                 jasmine.simulateForDrag(document, Gesture.move, {
-                    clientX: xy.left - 10 - DOM.scrollLeft(),
-                    clientY: xy.top - 10 - DOM.scrollTop()
+                    clientX: xy.left - 10 - Dom.scrollLeft(),
+                    clientY: xy.top - 10 - Dom.scrollTop()
                 });
             });
 
             waits(100);
             runs(function () {
                 jasmine.simulateForDrag(document, Gesture.move, {
-                    clientX: xy.left + 100 - DOM.scrollLeft(),
-                    clientY: xy.top + 100 - DOM.scrollTop()
+                    clientX: xy.left + 100 - Dom.scrollLeft(),
+                    clientY: xy.top + 100 - Dom.scrollTop()
                 });
             });
             waits(300);
 
             runs(function () {
                 jasmine.simulateForDrag(document, Gesture.end, {
-                    clientX: xy.left + 100 - DOM.scrollLeft(),
-                    clientY: xy.top + 100 - DOM.scrollTop()
+                    clientX: xy.left + 100 - Dom.scrollLeft(),
+                    clientY: xy.top + 100 - Dom.scrollTop()
                 });
             });
             waits(300);
             runs(function () {
                 jasmine.simulateForDrag(document, Gesture.move, {
-                    clientX: xy.left - 300 - DOM.scrollLeft(),
-                    clientY: xy.top - 300 - DOM.scrollTop()
+                    clientX: xy.left - 300 - Dom.scrollLeft(),
+                    clientY: xy.top - 300 - Dom.scrollTop()
                 });
             });
             runs(function () {
@@ -252,8 +252,8 @@ KISSY.use("ua,node,dd", function (S, UA, Node, DD) {
 
             runs(function () {
                 jasmine.simulateForDrag(dragHeader[0], Gesture.start, {
-                    clientX: xy.left - DOM.scrollLeft(),
-                    clientY: xy.top - DOM.scrollTop()
+                    clientX: xy.left - Dom.scrollLeft(),
+                    clientY: xy.top - Dom.scrollTop()
                 });
             });
 
@@ -263,8 +263,8 @@ KISSY.use("ua,node,dd", function (S, UA, Node, DD) {
             runs(function () {
 
                 jasmine.simulateForDrag(document, Gesture.move, {
-                    clientX: xy.left + 100 - DOM.scrollLeft(),
-                    clientY: xy.top + 100 - DOM.scrollTop()
+                    clientX: xy.left + 100 - Dom.scrollLeft(),
+                    clientY: xy.top + 100 - Dom.scrollTop()
                 });
             });
 
@@ -272,8 +272,8 @@ KISSY.use("ua,node,dd", function (S, UA, Node, DD) {
 
             runs(function () {
                 jasmine.simulateForDrag(document, Gesture.end, {
-                    clientX: xy.left + 100 - DOM.scrollLeft(),
-                    clientY: xy.top + 100 - DOM.scrollTop()
+                    clientX: xy.left + 100 - Dom.scrollLeft(),
+                    clientY: xy.top + 100 - Dom.scrollTop()
                 });
             });
 

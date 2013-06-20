@@ -35,7 +35,7 @@
          *      });
          *
          * Note 404/500 status in ie<9 will trigger success callback.
-         * If you want a jsonp operation, please use {@link KISSY.IO} instead.
+         * If you want a jsonp operation, please use {@link KISSY.Io} instead.
          *
          * @param {String} url resource's url
          * @param {Function|Object} [success] success callback or config

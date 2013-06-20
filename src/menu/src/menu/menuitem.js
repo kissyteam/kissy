@@ -57,12 +57,12 @@ KISSY.add("menu/menuitem", function (S, Controller, MenuItemRender) {
             }
             // 是否要滚动到当前菜单项(横向，纵向)
             if (v) {
-                var el = this.get("el"),
+                var el = this.el,
                 // 找到向上路径上第一个可以滚动的容器，直到父组件节点（包括）
                 // 找不到就放弃，为效率考虑不考虑 parent 的嵌套可滚动 div
                     p = el.parent(function (e) {
                         return $(e).css("overflow") != "visible";
-                    }, this.get('parent').get("el").parent());
+                    }, this.get('parent').el.parent());
                 if (!p) {
                     return;
                 }

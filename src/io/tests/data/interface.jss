@@ -12,7 +12,7 @@ module.exports = function (req, res) {
                 'name': 'test',
                 'birth': '2010/11/23',
                 'email': 'test@gmail.com'
-            }, query,req.body), dataStr = JSON.stringify(data),
+            }, query,req.body), dataStr = Json.stringify(data),
             t;
 
         if (t = (query['customCallback'] || query.callback)) {

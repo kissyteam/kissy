@@ -337,7 +337,7 @@ KISSY.add("tree/node", function (S, Node, Component,Extension, TreeNodeRender) {
     function syncAriaSetSize(e) {
         var self = this;
         if (e.target === self) {
-            self.get('el')[0].setAttribute('aria-setsize',
+            self.el.attr('aria-setsize',
                 self.get('children').length);
         }
     }
@@ -437,7 +437,7 @@ KISSY.add("tree/node", function (S, Node, Component,Extension, TreeNodeRender) {
         for (; index < len; index++) {
             c = children[index];
             refreshCss(c);
-            c.get("el")[0].setAttribute("aria-posinset", index + 1);
+            c.el.attr("aria-posinset", index + 1);
         }
     }
 

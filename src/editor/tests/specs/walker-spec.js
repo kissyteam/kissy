@@ -3,7 +3,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.use("editor", function (S, Editor) {
-    var DOM = S.DOM, $ = S.all;
+    var Dom = S.Dom, $ = S.all;
     var Walker = Editor.Walker;
     var Range = Editor.Range;
 

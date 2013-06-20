@@ -3,7 +3,7 @@
  * @author dxq613@gmail.com
  */
 KISSY.add('grid/util', function (S) {
-    var DOM = S.DOM,
+    var Dom = S.Dom,
         UA = S.UA,
         CLS_MASK = 'ks-ext-mask',
         CLS_MASK_MSG = CLS_MASK + '-msg';
@@ -33,14 +33,14 @@ KISSY.add('grid/util', function (S) {
                 top = null,
                 left = null;
             if (!maskDiv) {
-                maskDiv = S.one(DOM.create('<div class="' + CLS_MASK + '"></div>')).appendTo(maskedNode);
+                maskDiv = S.one(Dom.create('<div class="' + CLS_MASK + '"></div>')).appendTo(maskedNode);
                 maskedEl.addClass('x-masked-relative x-masked');
                 if (UA.ie === 6) {
                     maskDiv.height(maskedEl.height());
                 }
                 if (msg) {
                     tpl = ['<div class="' + CLS_MASK_MSG + '"><div>', msg, '</div></div>'].join('');
-                    msgDiv = S.one(DOM.create(tpl)).appendTo(maskedNode);
+                    msgDiv = S.one(Dom.create(tpl)).appendTo(maskedNode);
                     if (msgCls) {
                         msgDiv.addClass(msgCls);
                     }
@@ -218,8 +218,8 @@ KISSY.add('grid/util', function (S) {
      * 屏蔽指定元素，并显示加载信息
      * @member Grid.Util
      * @class 加载屏蔽类
-     * @property {String|DOM|Node} el 要屏蔽的元素，选择器、Dom元素或Node元素
-     * @param {String|DOM|Node} element 要屏蔽的元素，选择器、Dom元素或Node元素
+     * @property {String|Dom|Node} el 要屏蔽的元素，选择器、Dom元素或Node元素
+     * @param {String|Dom|Node} element 要屏蔽的元素，选择器、Dom元素或Node元素
      * @param {Object} config 配置信息<br>
      * 1) msg :加载时显示的加载信息<br>
      * 2) msgCls : 加载时显示信息的样式

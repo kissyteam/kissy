@@ -3,13 +3,13 @@
  * dom-attr
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
-KISSY.add('dom/base/attr', function (S, DOM, undefined) {
+KISSY.add('dom/base/attr', function (S, Dom, undefined) {
 
     var doc = S.Env.host.document,
-        NodeType = DOM.NodeType,
+        NodeType = Dom.NodeType,
         docElement = doc && doc.documentElement,
         EMPTY = '',
-        nodeName = DOM.nodeName,
+        nodeName = Dom.nodeName,
         R_BOOLEAN = /^(?:autofocus|autoplay|async|checked|controls|defer|disabled|hidden|loop|multiple|open|readonly|required|scoped|selected)$/i,
         R_FOCUSABLE = /^(?:button|input|object|select|textarea)$/i,
         R_CLICKABLE = /^a(?:rea)?$/i,
@@ -72,7 +72,7 @@ KISSY.add('dom/base/attr', function (S, DOM, undefined) {
         boolHook = {
             get: function (elem, name) {
                 // 转发到 prop 方法
-                return DOM.prop(elem, name) ?
+                return Dom.prop(elem, name) ?
                     // 根据 w3c attribute , true 时返回属性名字符串
                     name.toLowerCase() :
                     undefined;
@@ -81,7 +81,7 @@ KISSY.add('dom/base/attr', function (S, DOM, undefined) {
                 var propName;
                 if (value === false) {
                     // Remove boolean attributes when set to false
-                    DOM.removeAttr(elem, name);
+                    Dom.removeAttr(elem, name);
                 } else {
                     // 直接设置 true,因为这是 bool 类属性
                     propName = propFix[ name ] || name;
@@ -118,7 +118,7 @@ KISSY.add('dom/base/attr', function (S, DOM, undefined) {
                     if (index < 0) {
                         return null;
                     } else if (one) {
-                        return DOM.val(options[index]);
+                        return Dom.val(options[index]);
                     }
 
                     // Loop through all the selected options
@@ -127,7 +127,7 @@ KISSY.add('dom/base/attr', function (S, DOM, undefined) {
                     len = options.length;
                     for (; i < len; ++i) {
                         if (options[i].selected) {
-                            ret.push(DOM.val(options[i]));
+                            ret.push(Dom.val(options[i]));
                         }
                     }
                     // Multi-Selects return an array
@@ -138,7 +138,7 @@ KISSY.add('dom/base/attr', function (S, DOM, undefined) {
                     var values = S.makeArray(value),
                         opts = elem.options;
                     S.each(opts, function (opt) {
-                        opt.selected = S.inArray(DOM.val(opt), values);
+                        opt.selected = S.inArray(Dom.val(opt), values);
                     });
 
                     if (!values.length) {
@@ -160,7 +160,7 @@ KISSY.add('dom/base/attr', function (S, DOM, undefined) {
             },
             set: function (elem, value) {
                 if (S.isArray(value)) {
-                    return elem.checked = S.inArray(DOM.val(elem), value);
+                    return elem.checked = S.inArray(Dom.val(elem), value);
                 }
                 return undefined;
             }
@@ -185,9 +185,9 @@ KISSY.add('dom/base/attr', function (S, DOM, undefined) {
         }
     }
 
-    S.mix(DOM,
+    S.mix(Dom,
         /**
-         * @override KISSY.DOM
+         * @override KISSY.Dom
          * @class
          * @singleton
          */
@@ -218,7 +218,7 @@ KISSY.add('dom/base/attr', function (S, DOM, undefined) {
              * @return {String|undefined|Boolean}
              */
             prop: function (selector, name, value) {
-                var elems = DOM.query(selector),
+                var elems = Dom.query(selector),
                     i,
                     elem,
                     hook;
@@ -226,7 +226,7 @@ KISSY.add('dom/base/attr', function (S, DOM, undefined) {
                 // supports hash
                 if (S.isPlainObject(name)) {
                     S.each(name, function (v, k) {
-                        DOM.prop(elems, k, v);
+                        Dom.prop(elems, k, v);
                     });
                     return undefined;
                 }
@@ -258,7 +258,7 @@ KISSY.add('dom/base/attr', function (S, DOM, undefined) {
              * @return {Boolean}
              */
             hasProp: function (selector, name) {
-                var elems = DOM.query(selector),
+                var elems = Dom.query(selector),
                     i,
                     len = elems.length,
                     el;
@@ -278,7 +278,7 @@ KISSY.add('dom/base/attr', function (S, DOM, undefined) {
              */
             removeProp: function (selector, name) {
                 name = propFix[ name ] || name;
-                var elems = DOM.query(selector),
+                var elems = Dom.query(selector),
                     i,
                     el;
                 for (i = elems.length - 1; i >= 0; i--) {
@@ -335,7 +335,7 @@ KISSY.add('dom/base/attr', function (S, DOM, undefined) {
                  error.  In IE[678] and Opera 10, it fails without an error.
                  */
 
-                var els = DOM.query(selector),
+                var els = Dom.query(selector),
                     attrNormalizer,
                     i,
                     el = els[0],
@@ -345,21 +345,21 @@ KISSY.add('dom/base/attr', function (S, DOM, undefined) {
                 if (S.isPlainObject(name)) {
                     pass = val;
                     for (var k in name) {
-                        DOM.attr(els, k, name[k], pass);
+                        Dom.attr(els, k, name[k], pass);
                     }
                     return undefined;
                 }
 
                 // attr functions
                 if (pass && attrFn[name]) {
-                    return DOM[name](selector, val);
+                    return Dom[name](selector, val);
                 }
 
                 // scrollLeft
                 name = name.toLowerCase();
 
                 if (pass && attrFn[name]) {
-                    return DOM[name](selector, val);
+                    return Dom[name](selector, val);
                 }
 
                 // custom attrs
@@ -426,7 +426,7 @@ KISSY.add('dom/base/attr', function (S, DOM, undefined) {
             removeAttr: function (selector, name) {
                 name = name.toLowerCase();
                 name = attrFix[name] || name;
-                var els = DOM.query(selector),
+                var els = Dom.query(selector),
                     propName,
                     el, i;
                 for (i = els.length - 1; i >= 0; i--) {
@@ -451,7 +451,7 @@ KISSY.add('dom/base/attr', function (S, DOM, undefined) {
             hasAttr: docElement && !docElement.hasAttribute ?
                 function (selector, name) {
                     name = name.toLowerCase();
-                    var elems = DOM.query(selector),
+                    var elems = Dom.query(selector),
                         i, el,
                         attrNode;
                     // from ppk :http://www.quirksmode.org/dom/w3c_core.html
@@ -467,7 +467,7 @@ KISSY.add('dom/base/attr', function (S, DOM, undefined) {
                     return false;
                 } :
                 function (selector, name) {
-                    var elems = DOM.query(selector), i,
+                    var elems = Dom.query(selector), i,
                         len = elems.length;
                     for (i = 0; i < len; i++) {
                         //使用原生实现
@@ -492,7 +492,7 @@ KISSY.add('dom/base/attr', function (S, DOM, undefined) {
                 //getter
                 if (value === undefined) {
 
-                    elem = DOM.get(selector);
+                    elem = Dom.get(selector);
 
                     if (elem) {
                         hook = valHooks[ nodeName(elem) ] || valHooks[ elem.type ];
@@ -514,7 +514,7 @@ KISSY.add('dom/base/attr', function (S, DOM, undefined) {
                     return undefined;
                 }
 
-                els = DOM.query(selector);
+                els = Dom.query(selector);
                 for (i = els.length - 1; i >= 0; i--) {
                     elem = els[i];
                     if (elem.nodeType !== 1) {
@@ -557,15 +557,15 @@ KISSY.add('dom/base/attr', function (S, DOM, undefined) {
                 // getter
                 if (val === undefined) {
                     // supports css selector/Node/NodeList
-                    el = DOM.get(selector);
-                    return DOM._getText(el);
+                    el = Dom.get(selector);
+                    return Dom._getText(el);
                 } else {
-                    els = DOM.query(selector);
+                    els = Dom.query(selector);
                     for (i = els.length - 1; i >= 0; i--) {
                         el = els[i];
                         nodeType = el.nodeType;
                         if (nodeType == NodeType.ELEMENT_NODE) {
-                            DOM.empty(el);
+                            Dom.empty(el);
                             el.appendChild(el.ownerDocument.createTextNode(val));
                         }
                         else if (nodeType == NodeType.TEXT_NODE || nodeType == NodeType.CDATA_SECTION_NODE) {
@@ -581,7 +581,7 @@ KISSY.add('dom/base/attr', function (S, DOM, undefined) {
             }
         });
 
-    return DOM;
+    return Dom;
 }, {
     requires: ['./api']
 });

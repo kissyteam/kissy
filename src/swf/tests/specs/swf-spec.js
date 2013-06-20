@@ -7,18 +7,18 @@ if (KISSY.UA.mobile || KISSY.UA.phantomjs || location.protocol === 'file:') {
 } else {
 
 
-    KISSY.use("ua,swf,dom", function (S, UA, SWF, DOM) {
+    KISSY.use("ua,swf,dom", function (S, UA, SWF, Dom) {
 
         function getFlashVars(swf) {
-            if (DOM.nodeName(swf) == 'embed') {
+            if (Dom.nodeName(swf) == 'embed') {
                 return S.unparam(swf.getAttribute('flashvars'));
             } else {
                 var params = swf.childNodes, i;
                 for (i = 0; i < params.length; i++) {
                     var param = params[i];
                     if (param.nodeType == 1) {
-                        if (DOM.attr(params[i], 'name').toLowerCase() == "flashvars") {
-                            return S.unparam(DOM.attr(param, "value"));
+                        if (Dom.attr(params[i], 'name').toLowerCase() == "flashvars") {
+                            return S.unparam(Dom.attr(param, "value"));
                         }
                     }
                 }
@@ -71,20 +71,20 @@ if (KISSY.UA.mobile || KISSY.UA.phantomjs || location.protocol === 'file:') {
 
                     expect(swf1.get('status')).toBe(SWF.Status.SUCCESS);
 
-                    expect(DOM.last(document.body)).toBe(swf1.get('swfObject'));
+                    expect(Dom.last(document.body)).toBe(swf1.get('swfObject'));
                     expect(swf1.get('swfObject').nodeName.toLowerCase()).toBe('object');
                     swf1.destroy();
                     waits(300);
                     runs(function () {
-                        expect(DOM.contains(document, swf1.get('swfObject'))).toBe(false);
+                        expect(Dom.contains(document, swf1.get('swfObject'))).toBe(false);
                     });
 
                 });
 
 
                 it('can specify existing container', function () {
-                    var render = DOM.create('<div class="test"></div>');
-                    DOM.prepend(render, document.body);
+                    var render = Dom.create('<div class="test"></div>');
+                    Dom.prepend(render, document.body);
                     var swf1 = new SWF({
                         src: '../assets/test.swf',
                         render: render,
@@ -100,9 +100,9 @@ if (KISSY.UA.mobile || KISSY.UA.phantomjs || location.protocol === 'file:') {
 
                     expect(swf1.get('status')).toBe(SWF.Status.SUCCESS);
 
-                    expect(DOM.hasClass(swf1.get('swfObject').parentNode, 'test')).toBe(true);
+                    expect(Dom.hasClass(swf1.get('swfObject').parentNode, 'test')).toBe(true);
 
-                    expect(DOM.first(document.body)).toBe(render);
+                    expect(Dom.first(document.body)).toBe(render);
                     expect(render.innerHTML.toLowerCase().indexOf('object')).toBeGreaterThan(0);
                     swf1.destroy();
                     waits(300);

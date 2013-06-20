@@ -3,7 +3,7 @@
  * setup event/dom api module
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/base/dom-event', function (S, BaseEvent, DOMEventUtils, DOM, Special, ObservableDOMEvent, DOMEventObject) {
+KISSY.add('event/dom/base/dom-event', function (S, BaseEvent, DOMEventUtils, Dom, Special, ObservableDOMEvent, DOMEventObject) {
 
     var BaseUtils = BaseEvent.Utils;
 
@@ -128,7 +128,7 @@ KISSY.add('event/dom/base/dom-event', function (S, BaseEvent, DOMEventUtils, DOM
         on: function (targets, type, fn, context) {
             // data : 附加在回调后面的数据，delegate 检查使用
             // remove 时 data 相等(指向同一对象或者定义了 equals 比较函数)
-            targets = DOM.query(targets);
+            targets = Dom.query(targets);
 
             BaseUtils.batchForType(function (targets, type, fn, context) {
                 var cfg = BaseUtils.normalizeParam(type, fn, context), i, t;
@@ -159,7 +159,7 @@ KISSY.add('event/dom/base/dom-event', function (S, BaseEvent, DOMEventUtils, DOM
          */
         detach: function (targets, type, fn, context) {
 
-            targets = DOM.query(targets);
+            targets = Dom.query(targets);
 
             BaseUtils.batchForType(function (targets, singleType, fn, context) {
 
@@ -267,7 +267,7 @@ KISSY.add('event/dom/base/dom-event', function (S, BaseEvent, DOMEventUtils, DOM
                     originalType = s.typeFix;
                 }
 
-                targets = DOM.query(targets);
+                targets = Dom.query(targets);
 
                 for (i = targets.length - 1; i >= 0; i--) {
                     target = targets[i];
@@ -295,7 +295,7 @@ KISSY.add('event/dom/base/dom-event', function (S, BaseEvent, DOMEventUtils, DOM
         /**
          * same with fire but:
          * - does not cause default behavior to occur.
-         * - does not bubble up the DOM hierarchy.
+         * - does not bubble up the Dom hierarchy.
          * @param targets html nodes
          * @member KISSY.Event
          * @param {String} eventType event type
@@ -324,7 +324,7 @@ KISSY.add('event/dom/base/dom-event', function (S, BaseEvent, DOMEventUtils, DOM
             var srcData = DOMEventUtils.data(src);
             if (srcData && srcData === DOMEventUtils.data(dest)) {
                 // remove event data (but without dom attached listener)
-                // which is copied from above DOM.data
+                // which is copied from above Dom.data
                 DOMEventUtils.removeData(dest);
             }
             events = eventDesc.events;

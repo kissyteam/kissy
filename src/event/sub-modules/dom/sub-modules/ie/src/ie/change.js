@@ -3,7 +3,7 @@
  *  change bubble and checkbox/radio fix patch for ie<9
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/ie/change', function (S, DOMEvent, DOM) {
+KISSY.add('event/dom/ie/change', function (S, DOMEvent, Dom) {
     var Special = DOMEvent.Special,
         R_FORM_EL = /^(?:textarea|input|select)$/i;
 
@@ -50,7 +50,7 @@ KISSY.add('event/dom/ie/change', function (S, DOMEvent, DOM) {
                 }
             } else {
                 DOMEvent.remove(el, 'beforeactivate', beforeActivate);
-                S.each(DOM.query('textarea,input,select', el), function (fel) {
+                S.each(Dom.query('textarea,input,select', el), function (fel) {
                     if (fel.__changeHandler) {
                         fel.__changeHandler = 0;
                         DOMEvent.remove(fel, 'change', {fn: changeHandler, last: 1});

@@ -2,16 +2,16 @@
  * @module  delegation-spec
  * @author yiminghe@gmail.com
  */
-KISSY.use("dom,event/dom/base", function (S, DOM, Event) {
+KISSY.use("dom,event/dom/base", function (S, Dom, Event) {
 
-    S.get = DOM.get;
+    S.get = Dom.get;
     var DOMEventUtils= S.require('event/dom/base/utils');
-    S.query = DOM.query;
+    S.query = Dom.query;
 
     describe('delegate-advanced', function () {
 
         beforeEach(function () {
-            DOM.append(DOM.create("<div id='delegateAdvanced' class='a'>" +
+            Dom.append(Dom.create("<div id='delegateAdvanced' class='a'>" +
                 "<div id='delegateAdvanced0' class='b'>" +
                 "<div id='delegateAdvanced1' class='c'>" +
                 "<input id='delegateAdvanced2' class='d' type='button'/>" +
@@ -21,7 +21,7 @@ KISSY.use("dom,event/dom/base", function (S, DOM, Event) {
         });
 
         afterEach(function () {
-            DOM.remove("#delegateAdvanced");
+            Dom.remove("#delegateAdvanced");
         });
 
         it("should call delegate before on", function () {
@@ -32,7 +32,7 @@ KISSY.use("dom,event/dom/base", function (S, DOM, Event) {
             Event.delegate("#delegateAdvanced", "click", "input", function () {
                 ret.push(1);
             });
-            DOM.get("#delegateAdvanced2").click();
+            Dom.get("#delegateAdvanced2").click();
             waits(100);
             runs(function () {
                 expect(ret).toEqual([1, 2]);
@@ -51,7 +51,7 @@ KISSY.use("dom,event/dom/base", function (S, DOM, Event) {
             Event.delegate("#delegateAdvanced", "click", "input", function () {
                 ret.push(2);
             });
-            DOM.get("#delegateAdvanced2").click();
+            Dom.get("#delegateAdvanced2").click();
             waits(100);
             runs(function () {
                 expect(ret).toEqual([1]);
@@ -73,7 +73,7 @@ KISSY.use("dom,event/dom/base", function (S, DOM, Event) {
             Event.delegate("#delegateAdvanced", "click", ".c", function () {
                 ret.push(3);
             });
-            DOM.get("#delegateAdvanced2").click();
+            Dom.get("#delegateAdvanced2").click();
             waits(100);
             runs(function () {
                 expect(ret).toEqual([1, 2]);
@@ -95,7 +95,7 @@ KISSY.use("dom,event/dom/base", function (S, DOM, Event) {
             Event.delegate("#delegateAdvanced", "click", ".c", function () {
                 ret.push(3);
             });
-            DOM.get("#delegateAdvanced2").click();
+            Dom.get("#delegateAdvanced2").click();
             waits(100);
             runs(function () {
                 expect(ret).toEqual([1]);
@@ -117,14 +117,14 @@ KISSY.use("dom,event/dom/base", function (S, DOM, Event) {
                 ret.push(3);
             });
             Event.undelegate("#delegateAdvanced");
-            DOM.get("#delegateAdvanced2").click();
+            Dom.get("#delegateAdvanced2").click();
             waits(100);
             runs(function () {
                 expect(ret).toEqual([3]);
             });
             runs(function () {
                 ret = [];
-                DOM.get("#delegateAdvanced2").focus();
+                Dom.get("#delegateAdvanced2").focus();
             });
             waits(100);
             runs(function () {
@@ -147,7 +147,7 @@ KISSY.use("dom,event/dom/base", function (S, DOM, Event) {
                 ret.push(3);
             });
             Event.undelegate("#delegateAdvanced", "click", "input");
-            DOM.get("#delegateAdvanced2").click();
+            Dom.get("#delegateAdvanced2").click();
             waits(100);
             runs(function () {
                 expect(ret).toEqual([2, 3]);
@@ -173,14 +173,14 @@ KISSY.use("dom,event/dom/base", function (S, DOM, Event) {
             });
 
             Event.undelegate("#delegateAdvanced", null, "input");
-            DOM.get("#delegateAdvanced2").click();
+            Dom.get("#delegateAdvanced2").click();
             waits(100);
             runs(function () {
                 expect(ret).toEqual([2, 3]);
             });
             runs(function () {
                 ret = [];
-                DOM.get("#delegateAdvanced2").focus();
+                Dom.get("#delegateAdvanced2").focus();
             });
             waits(100);
             runs(function () {
@@ -201,7 +201,7 @@ KISSY.use("dom,event/dom/base", function (S, DOM, Event) {
                 ret.push(3);
             });
             Event.undelegate("#delegateAdvanced", "click", "input", t);
-            DOM.get("#delegateAdvanced2").click();
+            Dom.get("#delegateAdvanced2").click();
             waits(100);
             runs(function () {
                 expect(ret).toEqual([2, 3]);
@@ -224,14 +224,14 @@ KISSY.use("dom,event/dom/base", function (S, DOM, Event) {
                 ret.push(3);
             });
             Event.undelegate("#delegateAdvanced", "click");
-            DOM.get("#delegateAdvanced2").click();
+            Dom.get("#delegateAdvanced2").click();
             waits(100);
             runs(function () {
                 expect(ret).toEqual([3]);
             });
             runs(function () {
                 ret = [];
-                DOM.get("#delegateAdvanced2").focus();
+                Dom.get("#delegateAdvanced2").focus();
             });
             waits(100);
             runs(function () {
@@ -245,7 +245,7 @@ KISSY.use("dom,event/dom/base", function (S, DOM, Event) {
                 ret.push(1);
             });
             Event.remove("#delegateAdvanced");
-            DOM.get("#delegateAdvanced2").click();
+            Dom.get("#delegateAdvanced2").click();
             waits(100);
             runs(function () {
                 expect(ret).toEqual([]);
@@ -258,7 +258,7 @@ KISSY.use("dom,event/dom/base", function (S, DOM, Event) {
                 ret.push(1);
             });
             Event.remove("#delegateAdvanced","click");
-            DOM.get("#delegateAdvanced2").click();
+            Dom.get("#delegateAdvanced2").click();
             waits(100);
             runs(function () {
                 expect(ret).toEqual([]);
@@ -271,7 +271,7 @@ KISSY.use("dom,event/dom/base", function (S, DOM, Event) {
                 ret.push(1);
             });
             Event.remove("#delegateAdvanced",undefined,t);
-            DOM.get("#delegateAdvanced2").click();
+            Dom.get("#delegateAdvanced2").click();
             waits(100);
             runs(function () {
                 expect(ret).toEqual([]);
@@ -284,7 +284,7 @@ KISSY.use("dom,event/dom/base", function (S, DOM, Event) {
                 ret.push(1);
             });
             Event.remove("#delegateAdvanced","click",t);
-            DOM.get("#delegateAdvanced2").click();
+            Dom.get("#delegateAdvanced2").click();
             waits(100);
             runs(function () {
                 expect(ret).toEqual([]);

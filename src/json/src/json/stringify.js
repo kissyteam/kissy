@@ -1,6 +1,6 @@
 /**
  * @ignore
- * JSON.stringify for KISSY
+ * Json.stringify for KISSY
  * @author yiminghe@gmail.com
  */
 KISSY.add('json/stringify', function (S,Quote) {
@@ -163,7 +163,7 @@ KISSY.add('json/stringify', function (S,Quote) {
  * @ignore
  * refer:
  *  - http://www.ecma-international.org/publications/standards/Ecma-262.htm
- *  - https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/JSON/stringify
+ *  - https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Json/stringify
  *  - http://www.json.org/
  *  - http://www.ietf.org/rfc/rfc4627.txt
  */

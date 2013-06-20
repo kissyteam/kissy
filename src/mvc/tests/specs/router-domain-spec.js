@@ -2,7 +2,7 @@
  * Domain spec for mvc
  * @author yiminghe@gmail.com
  */
-KISSY.use('dom,mvc', function (S, DOM, MVC) {
+KISSY.use('dom,mvc', function (S, Dom, MVC) {
 
     var Router = MVC.Router;
 
@@ -28,7 +28,7 @@ KISSY.use('dom,mvc', function (S, DOM, MVC) {
             });
 
             document.domain = location.hostname;
-            DOM.isCustomDomain = function () {
+            Dom.isCustomDomain = function () {
                 return true;
             };
 

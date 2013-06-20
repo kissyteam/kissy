@@ -3,9 +3,9 @@
  * @author yiminghe@gmail.com
  * @ignore
  */
-KISSY.add('anim/base', function (S, DOM, Utils, CustomEvent, Q) {
+KISSY.add('anim/base', function (S, Dom, Utils, CustomEvent, Q) {
 
-    var NodeType = DOM.NodeType;
+    var NodeType = Dom.NodeType;
     var specialVals = {
         toggle: 1,
         hide: 1,
@@ -24,7 +24,7 @@ KISSY.add('anim/base', function (S, DOM, Utils, CustomEvent, Q) {
          * @type {Object}
          */
         self.config = config;
-        self.node = self.el = DOM.get(config.node);
+        self.node = self.el = Dom.get(config.node);
         // 实例属性
         self._backupProps = {};
         self._propsData = {};
@@ -39,7 +39,7 @@ KISSY.add('anim/base', function (S, DOM, Utils, CustomEvent, Q) {
 
         // only recover after complete anim
         if (!S.isEmptyObject(_backupProps = self._backupProps)) {
-            DOM.css(self.node, _backupProps);
+            Dom.css(self.node, _backupProps);
         }
     }
 
@@ -105,8 +105,8 @@ KISSY.add('anim/base', function (S, DOM, Utils, CustomEvent, Q) {
                     });
                     elStyle.overflow = 'hidden';
                     // inline element should has layout/inline-block
-                    if (DOM.css(node, 'display') === 'inline' &&
-                        DOM.css(node, 'float') === 'none') {
+                    if (Dom.css(node, 'display') === 'inline' &&
+                        Dom.css(node, 'float') === 'none') {
                         if (S.UA['ie']) {
                             elStyle.zoom = 1;
                         } else {
@@ -116,7 +116,7 @@ KISSY.add('anim/base', function (S, DOM, Utils, CustomEvent, Q) {
                 }
 
                 var exit, hidden;
-                hidden = (DOM.css(node, 'display') === 'none');
+                hidden = (Dom.css(node, 'display') === 'none');
                 S.each(_propsData, function (_propData, prop) {
                     val = _propData.value;
                     // 直接结束
@@ -127,7 +127,7 @@ KISSY.add('anim/base', function (S, DOM, Utils, CustomEvent, Q) {
                             return exit = false;
                         }
                         // backup original inline css value
-                        _backupProps[prop] = DOM.style(node, prop);
+                        _backupProps[prop] = Dom.style(node, prop);
                         if (val == 'toggle') {
                             val = hidden ? 'show' : 'hide';
                         }
@@ -136,10 +136,10 @@ KISSY.add('anim/base', function (S, DOM, Utils, CustomEvent, Q) {
                             // 执行完后隐藏
                             _backupProps.display = 'none';
                         } else {
-                            _propData.value = DOM.css(node, prop);
+                            _propData.value = Dom.css(node, prop);
                             // prevent flash of content
-                            DOM.css(node, prop, 0);
-                            DOM.show(node);
+                            Dom.css(node, prop, 0);
+                            Dom.show(node);
                         }
                     }
                     return undefined;

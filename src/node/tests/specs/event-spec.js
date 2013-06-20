@@ -44,7 +44,7 @@ KISSY.use("node", function(S, Node) {
                 expect(ret.text()).toBe('link for test this');
             });
 
-            // DOM Element
+            // Dom Element
             runs(function() {
                 $('#link-test-this-dom').on('click', function() {
                     ret = $(this);

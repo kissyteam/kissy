@@ -2,9 +2,9 @@
  * fakeObjects for music ,video,flash
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/fake-objects", function (S, Editor, HTMLParser) {
+KISSY.add("editor/plugin/fake-objects", function (S, Editor, HtmlParser) {
     var Node = S.Node,
-        DOM = S.DOM,
+        Dom = S.Dom,
         Utils = Editor.Utils,
         SPACER_GIF = Utils.debugUrl('theme/spacer.gif');
 
@@ -24,7 +24,7 @@ KISSY.add("editor/plugin/fake-objects", function (S, Editor, HTMLParser) {
                 attributes = {
                     'class': className + " " + existClass,
                     src: SPACER_GIF,
-                    _ke_realelement: encodeURIComponent(outerHTML || realElement.outerHTML(undefined)),
+                    _ke_realelement: encodeURIComponent(outerHTML || realElement.outerHtml()),
                     _ke_real_node_type: realElement[0].nodeType,
                     style: style
                 };
@@ -44,7 +44,7 @@ KISSY.add("editor/plugin/fake-objects", function (S, Editor, HTMLParser) {
         },
 
         restoreRealElement: function (fakeElement) {
-            if (fakeElement.attr('_ke_real_node_type') != DOM.NodeType.ELEMENT_NODE) {
+            if (fakeElement.attr('_ke_real_node_type') != Dom.NodeType.ELEMENT_NODE) {
                 return null;
             }
 
@@ -70,7 +70,7 @@ KISSY.add("editor/plugin/fake-objects", function (S, Editor, HTMLParser) {
                 var realFragment;
 
                 if (realHTML) {
-                    realFragment = new HTMLParser.Parser(S.urlDecode(realHTML)).parse();
+                    realFragment = new HtmlParser.Parser(S.urlDecode(realHTML)).parse();
                 }
 
                 var realElement = realFragment && realFragment.childNodes[ 0 ];
@@ -120,7 +120,7 @@ KISSY.add("editor/plugin/fake-objects", function (S, Editor, HTMLParser) {
             S.mix(dataProcessor, {
 
                 restoreRealElement: function (fakeElement) {
-                    if (fakeElement.attr('_ke_real_node_type') != DOM.NodeType.ELEMENT_NODE) {
+                    if (fakeElement.attr('_ke_real_node_type') != Dom.NodeType.ELEMENT_NODE) {
                         return null;
                     }
 
@@ -140,7 +140,7 @@ KISSY.add("editor/plugin/fake-objects", function (S, Editor, HTMLParser) {
                  * @param [isResizable]
                  */
                 createFakeParserElement: function (realElement, className, realElementType, isResizable, attrs) {
-                    var html = HTMLParser.serialize(realElement);
+                    var html = HtmlParser.serialize(realElement);
                     var style = realElement.getAttribute("style") || '';
                     if (realElement.getAttribute("width")) {
                         style = "width:" + realElement.getAttribute("width") + "px;" + style;
@@ -171,11 +171,11 @@ KISSY.add("editor/plugin/fake-objects", function (S, Editor, HTMLParser) {
                     if (isResizable) {
                         attributes._ke_resizable = "_ke_resizable";
                     }
-                    return new HTMLParser.Tag('img', attributes);
+                    return new HtmlParser.Tag('img', attributes);
                 }
             });
         }
     };
 }, {
-    requires: ["editor", 'htmlparser']
+    requires: ["editor", 'html-parser']
 });

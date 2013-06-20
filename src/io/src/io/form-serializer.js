@@ -3,7 +3,7 @@
  * form data  serialization util
  * @author yiminghe@gmail.com
  */
-KISSY.add('io/form-serializer', function (S, DOM) {
+KISSY.add('io/form-serializer', function (S, Dom) {
     var rselectTextarea = /^(?:select|textarea)/i,
         rCRLF = /\r?\n/g,
         FormSerializer,
@@ -20,7 +20,7 @@ KISSY.add('io/form-serializer', function (S, DOM) {
          * @param {HTMLElement[]|HTMLElement|KISSY.NodeList} forms form elements
          * @return {String} serialized string represent form elements
          * @param {Boolean}[serializeArray=false] See {@link KISSY#method-param} 同名参数
-         * @member KISSY.IO
+         * @member KISSY.Io
          * @static
          */
         serialize: function (forms, serializeArray) {
@@ -31,7 +31,7 @@ KISSY.add('io/form-serializer', function (S, DOM) {
 
         getFormData: function (forms) {
             var elements = [], data = {};
-            S.each(DOM.query(forms), function (el) {
+            S.each(Dom.query(forms), function (el) {
                 // form 取其表单元素集合
                 // 其他直接取自身
                 var subs = el.elements ? S.makeArray(el.elements) : [el];
@@ -55,7 +55,7 @@ KISSY.add('io/form-serializer', function (S, DOM) {
                 // 这样子才取值
             });
             S.each(elements, function (el) {
-                var val = DOM.val(el), vs;
+                var val = Dom.val(el), vs;
 
                 // <select></select> select nothing!
                 // #297

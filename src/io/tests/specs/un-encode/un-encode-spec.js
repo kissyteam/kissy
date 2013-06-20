@@ -1,5 +1,5 @@
 KISSY.use('io', function (S, io) {
-    describe('IO', function () {
+    describe('Io', function () {
         it('does not encode url query and encode data query', function () {
 
             var ok = 0;

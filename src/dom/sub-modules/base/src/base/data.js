@@ -3,7 +3,7 @@
  * dom-data
  * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
-KISSY.add('dom/base/data', function (S, DOM, undefined) {
+KISSY.add('dom/base/data', function (S, Dom, undefined) {
 
     var win = S.Env.host,
         EXPANDO = '_ks_data_' + S.now(), // 让每一份 kissy 的 expando 都不同
@@ -152,9 +152,9 @@ KISSY.add('dom/base/data', function (S, DOM, undefined) {
     };
 
 
-    S.mix(DOM,
+    S.mix(Dom,
         /**
-         * @override KISSY.DOM
+         * @override KISSY.Dom
          * @class
          * @singleton
          */
@@ -170,7 +170,7 @@ KISSY.add('dom/base/data', function (S, DOM, undefined) {
              */
             hasData: function (selector, name) {
                 var ret = false,
-                    elems = DOM.query(selector);
+                    elems = Dom.query(selector);
                 for (var i = 0; i < elems.length; i++) {
                     var elem = elems[i];
                     if (elem.nodeType) {
@@ -199,12 +199,12 @@ KISSY.add('dom/base/data', function (S, DOM, undefined) {
              */
             data: function (selector, name, data) {
 
-                var elems = DOM.query(selector), elem = elems[0];
+                var elems = Dom.query(selector), elem = elems[0];
 
                 // supports hash
                 if (S.isPlainObject(name)) {
                     for (var k in name) {
-                        DOM.data(elems, k, name[k]);
+                        Dom.data(elems, k, name[k]);
                     }
                     return undefined;
                 }
@@ -243,7 +243,7 @@ KISSY.add('dom/base/data', function (S, DOM, undefined) {
              * @param {String} [name] A string naming the piece of data to delete.
              */
             removeData: function (selector, name) {
-                var els = DOM.query(selector), elem, i;
+                var els = Dom.query(selector), elem, i;
                 for (i = els.length - 1; i >= 0; i--) {
                     elem = els[i];
                     if (elem.nodeType) {
@@ -256,7 +256,7 @@ KISSY.add('dom/base/data', function (S, DOM, undefined) {
             }
         });
 
-    return DOM;
+    return Dom;
 
 }, {
     requires: ['./api']

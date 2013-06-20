@@ -3,13 +3,13 @@
  * process form config
  * @author yiminghe@gmail.com
  */
-KISSY.add('io/form', function (S, IO, DOM, FormSerializer) {
+KISSY.add('io/form', function (S, Io, Dom, FormSerializer) {
 
     var win = S.Env.host,
         slice = Array.prototype.slice,
         FormData = win['FormData'];
 
-    IO.on('start', function (e) {
+    Io.on('start', function (e) {
         var io = e.io,
             form,
             d,
@@ -21,12 +21,12 @@ KISSY.add('io/form', function (S, IO, DOM, FormSerializer) {
 
         // serialize form if needed
         if (tmpForm = c.form) {
-            form = DOM.get(tmpForm);
+            form = Dom.get(tmpForm);
             data = c.data;
             var isUpload = false;
             var files = {};
 
-            var inputs = DOM.query('input', form);
+            var inputs = Dom.query('input', form);
             for (var i = 0, l = inputs.length; i < l; i++) {
                 var input = inputs[i];
                 if (input.type.toLowerCase() == 'file') {
@@ -35,7 +35,7 @@ KISSY.add('io/form', function (S, IO, DOM, FormSerializer) {
                         break;
                     }
                     var selected = slice.call(input.files, 0);
-                    files[DOM.attr(input, 'name')] = selected.length > 1 ? selected : (selected[0]||null);
+                    files[Dom.attr(input, 'name')] = selected.length > 1 ? selected : (selected[0]||null);
                 }
             }
 
@@ -76,7 +76,7 @@ KISSY.add('io/form', function (S, IO, DOM, FormSerializer) {
         }
     });
 
-    return IO;
+    return Io;
 
 }, {
     requires: ['./base', 'dom', './form-serializer']

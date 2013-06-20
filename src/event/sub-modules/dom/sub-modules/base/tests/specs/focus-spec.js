@@ -2,21 +2,21 @@
  * fire focus in correct order
  * @author yiminghe@gmail.com
  */
-KISSY.use("dom,event/dom/base", function (S, DOM, Event) {
+KISSY.use("dom,event/dom/base", function (S, Dom, Event) {
     describe("focus", function () {
 
         it('fired in correct order', function () {
 
-            var outer = DOM.create("<div class='outer'>" +
+            var outer = Dom.create("<div class='outer'>" +
                 "<div class='inner'>" +
                 "<input type='input'/>" +
                 "</div>" +
                 "</div>");
 
-            DOM.append(outer, 'body');
+            Dom.append(outer, 'body');
 
-            var inner = DOM.get('.inner', outer);
-            var input = DOM.get('input', inner);
+            var inner = Dom.get('.inner', outer);
+            var input = Dom.get('input', inner);
 
             var ret = [];
 
@@ -54,7 +54,7 @@ KISSY.use("dom,event/dom/base", function (S, DOM, Event) {
                 expect(document.activeElement).toBe(input);
                 expect(ret).toEqual(['input focusin', 'inner', 'outer', 'input focus']);
                 ret = [];
-                DOM.remove(outer);
+                Dom.remove(outer);
             });
 
         });
@@ -62,16 +62,16 @@ KISSY.use("dom,event/dom/base", function (S, DOM, Event) {
 
         it('fired handlers in correct order', function () {
 
-            var outer = DOM.create("<div class='outer'>" +
+            var outer = Dom.create("<div class='outer'>" +
                 "<div class='inner'>" +
                 "<input type='input'/>" +
                 "</div>" +
                 "</div>");
 
-            DOM.append(outer, 'body');
+            Dom.append(outer, 'body');
 
-            var inner = DOM.get('.inner', outer);
-            var input = DOM.get('input', inner);
+            var inner = Dom.get('.inner', outer);
+            var input = Dom.get('input', inner);
 
             var ret = [];
 
@@ -111,7 +111,7 @@ KISSY.use("dom,event/dom/base", function (S, DOM, Event) {
                 expect(document.activeElement).not.toBe(input);
                 expect(ret).toEqual(['input focus']);
                 ret = [];
-                DOM.remove(outer);
+                Dom.remove(outer);
             });
 
         });

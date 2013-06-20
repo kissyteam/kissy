@@ -5,13 +5,13 @@
 KISSY.use("editor", function (S, Editor) {
     var $ = S.all,
         UA = S.UA,
-        DOM = S.DOM,
+        Dom = S.Dom,
         RANGE = Editor.RANGE,
         Node = S.Node;
     var Range = Editor.Range;
 
     function trimNode(t) {
-        if (t.nodeType == DOM.NodeType.TEXT_NODE) {
+        if (t.nodeType == Dom.NodeType.TEXT_NODE) {
             t.nodeValue = S.trim(t.nodeValue);
         } else {
             var cs = t.childNodes || [];

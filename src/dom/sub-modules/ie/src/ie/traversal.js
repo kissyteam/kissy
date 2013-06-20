@@ -2,10 +2,10 @@
  * traversal ie hack
  * @author yiminghe@gmail.com
  */
-KISSY.add('dom/ie/traversal', function (S, DOM) {
+KISSY.add('dom/ie/traversal', function (S, Dom) {
 
-    DOM._contains = function (a, b) {
-        if (a.nodeType == DOM.NodeType.DOCUMENT_NODE) {
+    Dom._contains = function (a, b) {
+        if (a.nodeType == Dom.NodeType.DOCUMENT_NODE) {
             a = a.documentElement;
         }
         // !a.contains => a===document || text
@@ -17,7 +17,7 @@ KISSY.add('dom/ie/traversal', function (S, DOM) {
         }
 
         // when b is document, a.contains(b) 不支持的接口 in ie
-        if (b && b.nodeType == DOM.NodeType.ELEMENT_NODE) {
+        if (b && b.nodeType == Dom.NodeType.ELEMENT_NODE) {
             return a.contains && a.contains(b);
         } else {
             return false;

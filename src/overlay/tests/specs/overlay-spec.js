@@ -4,7 +4,7 @@
  */
 KISSY.use("u" +
     "a,node,overlay,component/plugin/resize", function (S, UA, Node, Overlay, ResizePlugin) {
-    var DOM = S.DOM, $ = Node.all, Gesture = S.Event.Gesture;
+    var Dom = S.Dom, $ = Node.all, Gesture = S.Event.Gesture;
 
     beforeEach(function () {
         this.addMatchers({
@@ -67,11 +67,11 @@ KISSY.use("u" +
                 o.show();
 
                 expect(parseInt(o.get("el").css("left")))
-                    .toBeEqual(Math.ceil((DOM.viewportWidth()
+                    .toBeEqual(Math.ceil((Dom.viewportWidth()
                         - o.get("el").outerWidth()) / 2));
 
                 expect(parseInt(o.get("el").css("top")))
-                    .toBeEqual(Math.ceil((DOM.viewportHeight()
+                    .toBeEqual(Math.ceil((Dom.viewportHeight()
                         - o.get("el").outerHeight()) / 2));
 
             });
@@ -329,12 +329,12 @@ KISSY.use("u" +
                 o.show();
 
                 expect(parseInt(o.get("el").css("left")))
-                    .toBeEqual(Math.ceil((DOM.viewportWidth()
+                    .toBeEqual(Math.ceil((Dom.viewportWidth()
                         - o.get("el").outerWidth()) / 2));
 
 
                 expect(parseInt(o.get("el").css("top")))
-                    .toBeEqual(Math.ceil((DOM.viewportHeight()
+                    .toBeEqual(Math.ceil((Dom.viewportHeight()
                         - o.get("el").outerHeight()) / 2));
 
                 o.destroy();
@@ -385,8 +385,8 @@ KISSY.use("u" +
             });
 
             it('attribute has order', function () {
-                var DOM = S.DOM;
-                DOM.addStyleSheet('.overlay1522 {position:absolute;}');
+                var Dom = S.Dom;
+                Dom.addStyleSheet('.overlay1522 {position:absolute;}');
                 var o = new Overlay({
                     prefixCls: 'kk-',
                     elCls: 'overlay1522'

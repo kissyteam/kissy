@@ -3,10 +3,10 @@
  * dom-create
  * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
-KISSY.add('dom/base/create', function (S, DOM, undefined) {
+KISSY.add('dom/base/create', function (S, Dom, undefined) {
 
     var doc = S.Env.host.document,
-        NodeType = DOM.NodeType,
+        NodeType = Dom.NodeType,
         UA = S.UA,
         ie = UA['ie'],
         DIV = 'div',
@@ -31,7 +31,7 @@ KISSY.add('dom/base/create', function (S, DOM, undefined) {
         if (DOMEvent) {
             DOMEvent.detach(els);
         }
-        DOM.removeData(els);
+        Dom.removeData(els);
     }
 
     function defaultCreator(html, ownerDoc) {
@@ -43,16 +43,16 @@ KISSY.add('dom/base/create', function (S, DOM, undefined) {
         return frag.lastChild;
     }
 
-    S.mix(DOM,
+    S.mix(Dom,
         /**
-         * @override KISSY.DOM
+         * @override KISSY.Dom
          * @class
          * @singleton
          */
         {
 
             /**
-             * Creates DOM elements on the fly from the provided string of raw HTML.
+             * Creates Dom elements on the fly from the provided string of raw HTML.
              * @param {String} html A string of HTML to create on the fly. Note that this parses HTML, not XML.
              * @param {Object} [props] An map of attributes on the newly-created element.
              * @param {HTMLDocument} [ownerDoc] A document in which the new elements will be created
@@ -68,7 +68,7 @@ KISSY.add('dom/base/create', function (S, DOM, undefined) {
                 }
 
                 if (html.nodeType) {
-                    return DOM.clone(html);
+                    return Dom.clone(html);
                 }
 
 
@@ -84,7 +84,7 @@ KISSY.add('dom/base/create', function (S, DOM, undefined) {
                     html = S.trim(html);
                 }
 
-                var creators = DOM._creators,
+                var creators = Dom._creators,
                     holder,
                     whitespaceMatch,
                     context = ownerDoc || doc,
@@ -96,11 +96,11 @@ KISSY.add('dom/base/create', function (S, DOM, undefined) {
                 if (!R_HTML.test(html)) {
                     ret = context.createTextNode(html);
                 }
-                // 简单 tag, 比如 DOM.create('<p>')
+                // 简单 tag, 比如 Dom.create('<p>')
                 else if ((m = RE_SIMPLE_TAG.exec(html))) {
                     ret = context.createElement(m[1]);
                 }
-                // 复杂情况，比如 DOM.create('<img src='sprite.png' />')
+                // 复杂情况，比如 Dom.create('<img src='sprite.png' />')
                 else {
                     // Fix 'XHTML'-style tags in all browsers
                     html = html.replace(R_XHTML_TAG, '<$1><' + '/$2>');
@@ -139,7 +139,7 @@ KISSY.add('dom/base/create', function (S, DOM, undefined) {
 
             _fixCloneAttributes: function (src, dest) {
                 // value of textarea can not be clone in chrome/firefox??
-                if (DOM.nodeName(src) === 'textarea') {
+                if (Dom.nodeName(src) === 'textarea') {
                     dest.defaultValue = src.defaultValue;
                     dest.value = src.value;
                 }
@@ -161,7 +161,7 @@ KISSY.add('dom/base/create', function (S, DOM, undefined) {
              */
             html: function (selector, htmlString, loadScripts) {
                 // supports css selector/Node/NodeList
-                var els = DOM.query(selector),
+                var els = Dom.query(selector),
                     el = els[0],
                     success = false,
                     valNode,
@@ -204,9 +204,9 @@ KISSY.add('dom/base/create', function (S, DOM, undefined) {
                     }
 
                     if (!success) {
-                        valNode = DOM.create(htmlString, 0, el.ownerDocument, 0);
-                        DOM.empty(els);
-                        DOM.append(valNode, els, loadScripts);
+                        valNode = Dom.create(htmlString, 0, el.ownerDocument, 0);
+                        Dom.empty(els);
+                        Dom.append(valNode, els, loadScripts);
                     }
                 }
                 return undefined;
@@ -220,8 +220,8 @@ KISSY.add('dom/base/create', function (S, DOM, undefined) {
              * @param {String} [htmlString]  A string of HTML to set as outerHTML of each matched element.
              * @param {Boolean} [loadScripts=false] True to look for and process scripts
              */
-            outerHTML: function (selector, htmlString, loadScripts) {
-                var els = DOM.query(selector),
+            outerHtml: function (selector, htmlString, loadScripts) {
+                var els = Dom.query(selector),
                     holder,
                     i,
                     valNode,
@@ -241,8 +241,8 @@ KISSY.add('dom/base/create', function (S, DOM, undefined) {
                             ownerDoc.createElement(DIV) :
                             DEFAULT_DIV;
                         holder.innerHTML = '';
-                        holder.appendChild(DOM.clone(el, true));
-                        holder.appendChild(DOM.clone(el, true));
+                        holder.appendChild(Dom.clone(el, true));
+                        holder.appendChild(Dom.clone(el, true));
                         return holder.innerHTML;
                     }
                 } else {
@@ -257,22 +257,22 @@ KISSY.add('dom/base/create', function (S, DOM, undefined) {
                             }
                         }
                     } else {
-                        valNode = DOM.create(htmlString, 0, el.ownerDocument, 0);
-                        DOM.insertBefore(valNode, els, loadScripts);
-                        DOM.remove(els);
+                        valNode = Dom.create(htmlString, 0, el.ownerDocument, 0);
+                        Dom.insertBefore(valNode, els, loadScripts);
+                        Dom.remove(els);
                     }
                 }
                 return undefined;
             },
 
             /**
-             * Remove the set of matched elements from the DOM.
+             * Remove the set of matched elements from the Dom.
              * @param {HTMLElement|String|HTMLElement[]} selector matched elements
              * @param {Boolean} [keepData=false] whether keep bound events and jQuery data associated with the elements from removed.
              */
             remove: function (selector, keepData) {
                 var el,
-                    els = DOM.query(selector),
+                    els = Dom.query(selector),
                     all,
                     parent,
                     DOMEvent = S.require('event/dom'),
@@ -282,7 +282,7 @@ KISSY.add('dom/base/create', function (S, DOM, undefined) {
                     if (!keepData && el.nodeType == NodeType.ELEMENT_NODE) {
                         all = S.makeArray(getElementsByTagName(el, '*'));
                         all.push(el);
-                        DOM.removeData(all);
+                        Dom.removeData(all);
                         if (DOMEvent) {
                             DOMEvent.detach(all);
                         }
@@ -308,9 +308,9 @@ KISSY.add('dom/base/create', function (S, DOM, undefined) {
              * @param {Boolean} [deepWithDataAndEvent=false]
              * A Boolean indicating whether event handlers and data for all children of the cloned element should be copied.
              * if set true then deep argument must be set true as well.
-             * refer: https://developer.mozilla.org/En/DOM/Node.cloneNode
+             * refer: https://developer.mozilla.org/En/Dom/Node.cloneNode
              * @return {HTMLElement}
-             * @member KISSY.DOM
+             * @member KISSY.Dom
              */
             clone: function (selector, deep, withDataAndEvent, deepWithDataAndEvent) {
                 if (typeof deep === 'object') {
@@ -319,9 +319,9 @@ KISSY.add('dom/base/create', function (S, DOM, undefined) {
                     deep = deep['deep'];
                 }
 
-                var elem = DOM.get(selector),
+                var elem = Dom.get(selector),
                     clone,
-                    _fixCloneAttributes = DOM._fixCloneAttributes,
+                    _fixCloneAttributes = Dom._fixCloneAttributes,
                     elemNodeType;
 
                 if (!elem) {
@@ -364,20 +364,23 @@ KISSY.add('dom/base/create', function (S, DOM, undefined) {
             },
 
             /**
-             * Remove(include data and event handlers) all child nodes of the set of matched elements from the DOM.
+             * Remove(include data and event handlers) all child nodes of the set of matched elements from the Dom.
              * @param {HTMLElement|String|HTMLElement[]} selector matched elements
              */
             empty: function (selector) {
-                var els = DOM.query(selector),
+                var els = Dom.query(selector),
                     el, i;
                 for (i = els.length - 1; i >= 0; i--) {
                     el = els[i];
-                    DOM.remove(el.childNodes);
+                    Dom.remove(el.childNodes);
                 }
             },
 
             _nodeListToFragment: nodeListToFragment
         });
+
+    // compatibility
+    Dom.outerHTML=Dom.outerHtml;
 
     function processAll(fn, elem, clone) {
         var elemNodeType = elem.nodeType;
@@ -410,15 +413,15 @@ KISSY.add('dom/base/create', function (S, DOM, undefined) {
             srcData,
             d;
 
-        if (dest.nodeType == NodeType.ELEMENT_NODE && !DOM.hasData(src)) {
+        if (dest.nodeType == NodeType.ELEMENT_NODE && !Dom.hasData(src)) {
             return;
         }
 
-        srcData = DOM.data(src);
+        srcData = Dom.data(src);
 
         // 浅克隆，data 也放在克隆节点上
         for (d in srcData) {
-            DOM.data(dest, d, srcData[d]);
+            Dom.data(dest, d, srcData[d]);
         }
 
         // 事件要特殊点
@@ -432,11 +435,11 @@ KISSY.add('dom/base/create', function (S, DOM, undefined) {
     function attachProps(elem, props) {
         if (S.isPlainObject(props)) {
             if (elem.nodeType == NodeType.ELEMENT_NODE) {
-                DOM.attr(elem, props, true);
+                Dom.attr(elem, props, true);
             }
             // document fragment
             else if (elem.nodeType == NodeType.DOCUMENT_FRAGMENT_NODE) {
-                DOM.attr(elem.childNodes, props, true);
+                Dom.attr(elem.childNodes, props, true);
             }
         }
         return elem;
@@ -462,8 +465,8 @@ KISSY.add('dom/base/create', function (S, DOM, undefined) {
     }
 
     // 残缺元素处理
-    var creators = DOM._creators,
-        create = DOM.create,
+    var creators = Dom._creators,
+        create = Dom.create,
         creatorsMap = {
             option: 'select',
             optgroup: 'select',
@@ -490,7 +493,7 @@ KISSY.add('dom/base/create', function (S, DOM, undefined) {
         })(creatorsMap[p]);
     }
 
-    return DOM;
+    return Dom;
 }, {
     requires: ['./api']
 });

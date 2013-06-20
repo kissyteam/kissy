@@ -20,9 +20,9 @@ KISSY.add('editor', function (S, Editor, Utils, focusManager, Styles, zIndexMang
 
         IS_IE = UA['ie'],
 
-        DOM = S.DOM,
+        Dom = S.Dom,
 
-        NodeType = DOM.NodeType,
+        NodeType = Dom.NodeType,
 
         Node = S.Node,
 
@@ -112,7 +112,7 @@ KISSY.add('editor', function (S, Editor, Utils, focusManager, Styles, zIndexMang
                     }
                 }
 
-                editorEl = self.get('el');
+                editorEl = self.el;
 
                 editorEl.html(S.substitute(EDITOR_TPL, {
                     prefixCls: prefixCls
@@ -185,11 +185,11 @@ KISSY.add('editor', function (S, Editor, Utils, focusManager, Styles, zIndexMang
                 self.on('docReady', docReady);
 
                 self.on('blur', function () {
-                    self.get('el').removeClass(prefixCls + 'editor-focused');
+                    self.el.removeClass(prefixCls + 'editor-focused');
                 });
 
                 self.on('focus', function () {
-                    self.get('el').addClass(prefixCls + 'editor-focused');
+                    self.el.addClass(prefixCls + 'editor-focused');
                 });
             },
 
@@ -507,7 +507,7 @@ KISSY.add('editor', function (S, Editor, Utils, focusManager, Styles, zIndexMang
                 customStyle += "\n" + cssText;
                 self.set('customStyle', customStyle);
                 if (win) {
-                    DOM.addStyleSheet(win, cssText, id);
+                    Dom.addStyleSheet(win, cssText, id);
                 }
             },
 
@@ -516,7 +516,7 @@ KISSY.add('editor', function (S, Editor, Utils, focusManager, Styles, zIndexMang
              * @param id
              */
             removeCustomStyle: function (id) {
-                DOM.remove(DOM.get('#' + id, this.get('window')[0]));
+                Dom.remove(Dom.get('#' + id, this.get('window')[0]));
             },
 
             /**
@@ -542,10 +542,10 @@ KISSY.add('editor', function (S, Editor, Utils, focusManager, Styles, zIndexMang
             removeCustomLink: function (link) {
                 var self = this,
                     doc = self.get('document')[0],
-                    links = DOM.query('link', doc);
+                    links = Dom.query('link', doc);
                 for (var i = 0; i < links.length; i++) {
-                    if (DOM.attr(links[i], 'href') == link) {
-                        DOM.remove(links[i]);
+                    if (Dom.attr(links[i], 'href') == link) {
+                        Dom.remove(links[i]);
                     }
                 }
                 var cls = self.get('customLink'),
@@ -692,7 +692,7 @@ KISSY.add('editor', function (S, Editor, Utils, focusManager, Styles, zIndexMang
              * @param {String} data
              * @param [dataFilter]
              */
-            insertHTML: function (data, dataFilter) {
+            insertHtml: function (data, dataFilter) {
                 var self = this,
                     htmlDataProcessor,
                     editorDoc = self.get('document')[0];
@@ -718,7 +718,7 @@ KISSY.add('editor', function (S, Editor, Utils, focusManager, Styles, zIndexMang
                     try {
                         $sel.createRange().pasteHTML(data);
                     } catch (e) {
-                        S.log('insertHTML error in ie');
+                        S.log('insertHtml error in ie');
                     }
                 } else {
                     // ie9 仍然没有
@@ -733,8 +733,8 @@ KISSY.add('editor', function (S, Editor, Utils, focusManager, Styles, zIndexMang
                             // 手动选择 body 的第一个节点
                             if (self.getSelection().getRanges().length == 0) {
                                 var r = new Editor.Range(editorDoc),
-                                    node = DOM.first(editorDoc.body, function (el) {
-                                        return el.nodeType == 1 && DOM.nodeName(el) != 'br';
+                                    node = Dom.first(editorDoc.body, function (el) {
+                                        return el.nodeType == 1 && Dom.nodeName(el) != 'br';
                                     });
                                 if (!node) {
                                     node = new Node(editorDoc.createElement('p'));
@@ -767,10 +767,10 @@ KISSY.add('editor', function (S, Editor, Utils, focusManager, Styles, zIndexMang
 
         var self = focusManager.getInstance(id),
             doc = self.get('document')[0],
-        // Remove bootstrap script from the DOM.
+        // Remove bootstrap script from the Dom.
             script = doc.getElementById('ke_active_script');
 
-        DOM.remove(script);
+        Dom.remove(script);
 
         fixByBindIframeDoc(self);
 
@@ -935,12 +935,12 @@ KISSY.add('editor', function (S, Editor, Utils, focusManager, Styles, zIndexMang
                 }, 50);
             },
             function () {
-                // The above call is known to fail when parent DOM
+                // The above call is known to fail when parent Dom
                 // tree layout changes may break design mode. (#5782)
                 // Refresh the 'contentEditable' is a cue to this.
                 doc['designMode'] = 'off';
-                DOM.attr(body, 'contentEditable', FALSE);
-                DOM.attr(body, 'contentEditable', TRUE);
+                Dom.attr(body, 'contentEditable', FALSE);
+                Dom.attr(body, 'contentEditable', TRUE);
                 // Try it again once..
                 !retry && blinkCursor(doc, 1);
             }
@@ -1124,7 +1124,7 @@ KISSY.add('editor', function (S, Editor, Utils, focusManager, Styles, zIndexMang
                 ('<script id="ke_active_script">' +
                     // ie 特有，即使自己创建的空 iframe 也要设置 domain （如果外层设置了）
                     // 否则下面的 parent.KISSY.Editor._initIFrame 不能执行
-                    ( DOM.isCustomDomain() ? ( 'document.domain="' + DOC.domain + '";' ) : '' ) +
+                    ( Dom.isCustomDomain() ? ( 'document.domain="' + DOC.domain + '";' ) : '' ) +
                     'parent.KISSY.Editor._initIFrame("' + id + '");' +
                     '</script>') :
                 ''
@@ -1182,7 +1182,7 @@ KISSY.add('editor', function (S, Editor, Utils, focusManager, Styles, zIndexMang
         // With IE, the custom domain has to be taken care at first,
         // for other browsers, the 'src' attribute should be left empty to
         // trigger iframe 's 'load' event.
-        var iframeSrc = DOM.getEmptyIframeSrc() || '';
+        var iframeSrc = Dom.getEmptyIframeSrc() || '';
         if (iframeSrc) {
             iframeSrc = ' src="' + iframeSrc + '" ';
         }
@@ -1254,7 +1254,7 @@ KISSY.add('editor', function (S, Editor, Utils, focusManager, Styles, zIndexMang
  *
  *      - iframe 内的 window 的一些属性 (frameElement) 都不能访问了， 但是 focus 还是可以的.
  *
- *  因此 DOM.getEmptyIframeSrc 要用时再取不能缓存.
+ *  因此 Dom.getEmptyIframeSrc 要用时再取不能缓存.
  *
  *  ie 不能访问 window 的属性（ ie 也不需要，还好 document 是可以的）
  *

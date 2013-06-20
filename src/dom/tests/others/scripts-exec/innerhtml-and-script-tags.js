@@ -1,1 +1,1 @@
-alert('KISSY.DOM.html load external script');
+alert('KISSY.Dom.html load external script');

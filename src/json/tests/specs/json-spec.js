@@ -1,27 +1,27 @@
-KISSY.use("json", function (S, JSON) {
+KISSY.use("json", function (S, Json) {
 
-    var J = ((S.UA.nodejs && typeof global === 'object') ? global : S.Env.host).JSON;
+    var J = ((S.UA.nodejs && typeof global === 'object') ? global : S.Env.host).Json;
 
     describe('json', function () {
         describe('stringify', function () {
-            it('should convert an arbitrary value to a JSON string representation', function () {
-                expect(JSON.stringify({'a': true})).toBe('{"a":true}');
+            it('should convert an arbitrary value to a Json string representation', function () {
+                expect(Json.stringify({'a': true})).toBe('{"a":true}');
 
-                expect(JSON.stringify(true)).toBe('true');
+                expect(Json.stringify(true)).toBe('true');
 
-                expect(JSON.stringify(null)).toBe('null');
-                expect(JSON.stringify(undefined)).toBe(undefined);
-                expect(JSON.stringify(NaN)).toBe('null');
+                expect(Json.stringify(null)).toBe('null');
+                expect(Json.stringify(undefined)).toBe(undefined);
+                expect(Json.stringify(NaN)).toBe('null');
 
 
                 if (J) {
-                    expect(JSON.stringify({'a': true})).toBe(J.stringify({'a': true}));
+                    expect(Json.stringify({'a': true})).toBe(J.stringify({'a': true}));
 
-                    expect(JSON.stringify(true)).toBe(J.stringify(true));
+                    expect(Json.stringify(true)).toBe(J.stringify(true));
 
-                    expect(JSON.stringify(null)).toBe(J.stringify(null));
-                    expect(JSON.stringify(undefined)).toBe(J.stringify(undefined));
-                    expect(JSON.stringify(NaN)).toBe(J.stringify(NaN));
+                    expect(Json.stringify(null)).toBe(J.stringify(null));
+                    expect(Json.stringify(undefined)).toBe(J.stringify(undefined));
+                    expect(Json.stringify(NaN)).toBe(J.stringify(NaN));
                 }
             });
 
@@ -30,7 +30,7 @@ KISSY.use("json", function (S, JSON) {
 
                     var gap = ' ';
                     var space = ' ';
-                    var ret = JSON.stringify({
+                    var ret = Json.stringify({
                         'a': {
                             b: 1
                         }
@@ -58,7 +58,7 @@ KISSY.use("json", function (S, JSON) {
                     var gap = ' ';
                     var space = ' ';
 
-                    var ret = JSON.stringify({
+                    var ret = Json.stringify({
                         'a': [1]
                     }, null, gap);
 
@@ -81,7 +81,7 @@ KISSY.use("json", function (S, JSON) {
 
                     var gap = '  ';
                     var space = ' ';
-                    var ret = JSON.stringify({
+                    var ret = Json.stringify({
                         'a': {
                             b: 1
                         }
@@ -109,7 +109,7 @@ KISSY.use("json", function (S, JSON) {
                     var gap = '  ';
                     var space = ' ';
 
-                    var ret = JSON.stringify({
+                    var ret = Json.stringify({
                         'a': [1]
                     }, null, 2);
 
@@ -133,7 +133,7 @@ KISSY.use("json", function (S, JSON) {
                 it('works for object', function () {
                     var gap = '  ';
                     var space = ' ';
-                    var ret = JSON.stringify({
+                    var ret = Json.stringify({
                         'a': {
                             b: {
                                 z: 1
@@ -177,7 +177,7 @@ KISSY.use("json", function (S, JSON) {
                     var gap = '  ';
                     var space = ' ';
 
-                    var ret = JSON.stringify({
+                    var ret = Json.stringify({
                         'a': [
                             {
                                 z: 1
@@ -222,7 +222,7 @@ KISSY.use("json", function (S, JSON) {
             it('allow whitespace', function () {
                 var t = '{"test": 1,"t":2}',
                     r = {test: 1, t: 2};
-                expect(JSON.parse(t)).toEqual(r);
+                expect(Json.parse(t)).toEqual(r);
                 if (J) {
                     expect(J.parse(t)).toEqual(r);
                 }
@@ -231,7 +231,7 @@ KISSY.use("json", function (S, JSON) {
             it('works for array', function () {
                 var t = "{\"test\":[\"t1\",\"t2\"]}" ,
                     r = {test: ['t1', 't2']};
-                expect(JSON.parse(t)).toEqual(r);
+                expect(Json.parse(t)).toEqual(r);
                 if (J) {
                     expect(J.parse(t)).toEqual(r);
                 }
@@ -240,7 +240,7 @@ KISSY.use("json", function (S, JSON) {
             it('should throw exception when encounter non-whitespace', function () {
                 var t = '{"x": x"2"}';
                 expect(function () {
-                    JSON.parse(t);
+                    Json.parse(t);
                 }).toThrow();
                 if (J) {
                     expect(function () {
@@ -249,45 +249,45 @@ KISSY.use("json", function (S, JSON) {
                 }
             });
 
-            it('should parse a JSON string to the native JavaScript representation', function () {
+            it('should parse a Json string to the native JavaScript representation', function () {
 
                 var r, t;
-                expect(JSON.parse(t = '{"test":1}')).toEqual(r = {test: 1});
+                expect(Json.parse(t = '{"test":1}')).toEqual(r = {test: 1});
                 if (J) {
                     expect(J.parse(t)).toEqual(r);
                 }
-                expect(JSON.parse(t = '{}')).toEqual(r = {});
+                expect(Json.parse(t = '{}')).toEqual(r = {});
                 if (J) {
                     expect(J.parse(t)).toEqual(r);
                 }
-                expect(JSON.parse(t = '\n{"test":1}')).toEqual(r = {test: 1}); // 去除空白
+                expect(Json.parse(t = '\n{"test":1}')).toEqual(r = {test: 1}); // 去除空白
                 if (J) {
                     expect(J.parse(t)).toEqual(r);
                 }
-                expect(JSON.parse(t = null)).toBeNull(r = null);
+                expect(Json.parse(t = null)).toBeNull(r = null);
                 if (J) {
                     expect(J.parse(t)).toEqual(r);
                 }
-                expect(JSON.parse(t = 'true')).toBe(r = true);
+                expect(Json.parse(t = 'true')).toBe(r = true);
                 if (J) {
                     expect(J.parse(t)).toEqual(r);
                 }
-                expect(JSON.parse(t = true)).toBe(r = true);
+                expect(Json.parse(t = true)).toBe(r = true);
                 if (J) {
                     expect(J.parse(t)).toEqual(r);
                 }
-                expect(JSON.parse(t = 'null')).toBe(r = null);
+                expect(Json.parse(t = 'null')).toBe(r = null);
                 if (J) {
                     expect(J.parse(t)).toEqual(r);
                 }
                 expect(
                     function () {
-                        JSON.parse(t = '{a:1}');
+                        Json.parse(t = '{a:1}');
                     }).toThrow();
                 if (J) {
                     expect(
                         function () {
-                            JSON.parse(t);
+                            Json.parse(t);
                         }).toThrow();
                 }
 
@@ -295,7 +295,7 @@ KISSY.use("json", function (S, JSON) {
 
             it('reviver works', function () {
                 var t, f, r;
-                expect(JSON.parse(t = '{"test": 1,"t":2}', f = function (key, v) {
+                expect(Json.parse(t = '{"test": 1,"t":2}', f = function (key, v) {
                     if (key == 't') {
                         return v + 1;
                     }
@@ -305,7 +305,7 @@ KISSY.use("json", function (S, JSON) {
                     expect(J.parse(t, f)).toEqual(r);
                 }
 
-                expect(JSON.parse(t = '{"test": 1,"t":2}', f = function (key, v) {
+                expect(Json.parse(t = '{"test": 1,"t":2}', f = function (key, v) {
                     if (key == 't') {
                         return undefined;
                     }
@@ -315,7 +315,7 @@ KISSY.use("json", function (S, JSON) {
                     expect(J.parse(t, f)).toEqual(r);
                 }
 
-                expect(JSON.parse(t = '{"test": {"t":{ "t3":4},"t2":4}}', f = function (key, v) {
+                expect(Json.parse(t = '{"test": {"t":{ "t3":4},"t2":4}}', f = function (key, v) {
                     if (key == 't') {
                         return 1;
                     }
@@ -337,12 +337,12 @@ KISSY.use("json", function (S, JSON) {
             it('should throw exception when encounter control character', function () {
                 var r;
                 expect(function () {
-                    JSON.parse(t = '{"x":"\t"}');
+                    Json.parse(t = '{"x":"\t"}');
                 }).toThrow();
                 if (J) {
                     expect(
                         function () {
-                            JSON.parse(t);
+                            Json.parse(t);
                         }).toThrow();
                 }
             });

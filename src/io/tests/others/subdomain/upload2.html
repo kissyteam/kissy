@@ -20,7 +20,7 @@
 
     KISSY.use("core", function (S) {
 
-        var DOM = S.DOM, Event = S.Event, UA = S.UA;
+        var Dom = S.Dom, Event = S.Event, UA = S.UA;
 
         function isCustomDomain() {
             var win = window;
@@ -54,20 +54,20 @@
 
             var form = o.form,
                     buf = {
-                        target: DOM.attr(form, "target"),
-                        method: DOM.attr(form, "method"),
-                        encoding: DOM.attr(form, "encoding"),
-                        enctype: DOM.attr(form, "enctype"),
-                        "action": DOM.attr(form, "action")
+                        target: Dom.attr(form, "target"),
+                        method: Dom.attr(form, "method"),
+                        encoding: Dom.attr(form, "encoding"),
+                        enctype: Dom.attr(form, "enctype"),
+                        "action": Dom.attr(form, "action")
                     };
-            DOM.attr(form, {
+            Dom.attr(form, {
                 target: id,
                 "method": "post",
                 enctype: 'multipart/form-data',
                 encoding: 'multipart/form-data'
             });
             if (url) {
-                DOM.attr(form, "action", url);
+                Dom.attr(form, "action", url);
             }
             var hiddens, hd;
             if (ps) { // add dynamic params
@@ -100,7 +100,7 @@
                     }
 
                     if (doc && doc.body) {
-                        r.responseText = S.trim(DOM.text(doc.body));
+                        r.responseText = S.trim(Dom.text(doc.body));
                     }
                     if (doc && doc['XMLDocument']) {
                         r.responseXML = doc['XMLDocument'];
@@ -120,7 +120,7 @@
                 o.callback && o.callback(r);
 
                 setTimeout(function () {
-                    DOM.remove(frame);
+                    Dom.remove(frame);
                 }, 100);
 
             }
@@ -132,11 +132,11 @@
 
                 form.submit();
 
-                DOM.attr(form, buf);
+                Dom.attr(form, buf);
 
                 if (hiddens) { // remove dynamic params
                     for (var i = 0, len = hiddens.length; i < len; i++) {
-                        DOM.remove(hiddens[i]);
+                        Dom.remove(hiddens[i]);
                     }
                 }
             }, 10);

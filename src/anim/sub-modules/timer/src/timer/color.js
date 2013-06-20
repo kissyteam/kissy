@@ -3,7 +3,7 @@
  * special patch for making color gradual change
  * @author yiminghe@gmail.com
  */
-KISSY.add('anim/timer/color', function (S, DOM, Fx,SHORT_HANDS) {
+KISSY.add('anim/timer/color', function (S, Dom, Fx,SHORT_HANDS) {
 
     var HEX_BASE = 16,
         floor = Math.floor,

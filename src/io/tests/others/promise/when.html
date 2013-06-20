@@ -20,16 +20,16 @@
     (function (S) {
 
         KISSY.use('io,dom', function () {
-            var template = KISSY.DOM.html('#template') || KISSY.io.get('template.html');
+            var template = KISSY.Dom.html('#template') || KISSY.io.get('template.html');
             KISSY.Promise.when(template).then(function (html) {
-                KISSY.DOM.html('#kissy-result', html);
+                KISSY.Dom.html('#kissy-result', html);
             })
         });
 
         KISSY.use('io,dom', function () {
-            var template = KISSY.DOM.html('#template1') || KISSY.io.get('template1.html');
+            var template = KISSY.Dom.html('#template1') || KISSY.io.get('template1.html');
             KISSY.Promise.when(template).then(function (html) {
-                KISSY.DOM.html('#kissy-result1', html);
+                KISSY.Dom.html('#kissy-result1', html);
             })
         });
 

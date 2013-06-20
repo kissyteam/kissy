@@ -49,25 +49,25 @@
     var UA = KISSY.UA,
             ieMode = document.documentMode || UA.ie,
 
-            DOM = KISSY.DOM;
+            Dom = KISSY.Dom;
 
 
     KISSY.use("component/uibase/align", function (S, Align) {
         var getOffsetParent = Align.__getOffsetParent;
 
-        var offsetParent = getOffsetParent(DOM.get("#d3"));
+        var offsetParent = getOffsetParent(Dom.get("#d3"));
         KISSY.log(offsetParent.id || offsetParent.nodeName);
 
-        offsetParent = getOffsetParent(DOM.get("#d6"));
+        offsetParent = getOffsetParent(Dom.get("#d6"));
         KISSY.log(offsetParent.id || offsetParent.nodeName);
 
-        offsetParent = DOM.get("#d6").offsetParent;
+        offsetParent = Dom.get("#d6").offsetParent;
         KISSY.log(offsetParent.id || offsetParent.nodeName);
 
-        offsetParent = getOffsetParent(DOM.get("#d10")) || {id:'fake'};
+        offsetParent = getOffsetParent(Dom.get("#d10")) || {id:'fake'};
         KISSY.log(offsetParent.id || offsetParent.nodeName);
 
-        offsetParent = DOM.get("#d10").offsetParent;
+        offsetParent = Dom.get("#d10").offsetParent;
         KISSY.log(offsetParent.id || offsetParent.nodeName);
     });
 

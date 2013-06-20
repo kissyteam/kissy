@@ -2,7 +2,7 @@
  * @module  scroll-spec
  * @author yiminghe@gmail.com
  */
-KISSY.use("dom,ua,node,dd,dd/plugin/scroll", function (S, DOM, UA, Node, DD, Scroll) {
+KISSY.use("dom,ua,node,dd,dd/plugin/scroll", function (S, Dom, UA, Node, DD, Scroll) {
     var Draggable = DD.Draggable,
         Gesture= S.Event.Gesture,
         $ = Node.all;
@@ -36,8 +36,8 @@ KISSY.use("dom,ua,node,dd,dd/plugin/scroll", function (S, DOM, UA, Node, DD, Scr
 
             runs(function () {
                 jasmine.simulateForDrag(dragNode[0], Gesture.start, {
-                    clientX: dragOffset.left + 20 - DOM.scrollLeft(),
-                    clientY: dragOffset.top + 20 - DOM.scrollTop()
+                    clientX: dragOffset.left + 20 - Dom.scrollLeft(),
+                    clientY: dragOffset.top + 20 - Dom.scrollTop()
                 });
             });
 
@@ -46,8 +46,8 @@ KISSY.use("dom,ua,node,dd,dd/plugin/scroll", function (S, DOM, UA, Node, DD, Scr
             // 10px move to start
             runs(function () {
                 jasmine.simulateForDrag(document, Gesture.move, {
-                    clientX: dragOffset.left + 25 - DOM.scrollLeft(),
-                    clientY: dragOffset.top + 25 - DOM.scrollTop()
+                    clientX: dragOffset.left + 25 - Dom.scrollLeft(),
+                    clientY: dragOffset.top + 25 - Dom.scrollTop()
                 });
             });
 
@@ -56,9 +56,9 @@ KISSY.use("dom,ua,node,dd,dd/plugin/scroll", function (S, DOM, UA, Node, DD, Scr
             runs(function () {
 
                 jasmine.simulateForDrag(document, Gesture.move, {
-                    clientX: containerOffset.left + 50 - DOM.scrollLeft(),
+                    clientX: containerOffset.left + 50 - Dom.scrollLeft(),
                     clientY: containerOffset.top + dragContainer[0].offsetHeight - 10
-                        + 2 - DOM.scrollTop()
+                        + 2 - Dom.scrollTop()
                 });
 
 
@@ -68,9 +68,9 @@ KISSY.use("dom,ua,node,dd,dd/plugin/scroll", function (S, DOM, UA, Node, DD, Scr
             waits(300);
             runs(function () {
                 jasmine.simulateForDrag(document, Gesture.end, {
-                    clientX: containerOffset.left + 50 - DOM.scrollLeft(),
+                    clientX: containerOffset.left + 50 - Dom.scrollLeft(),
                     clientY: containerOffset.top + dragContainer[0].offsetHeight - 10
-                        + 2 - DOM.scrollTop()
+                        + 2 - Dom.scrollTop()
                 });
             });
 

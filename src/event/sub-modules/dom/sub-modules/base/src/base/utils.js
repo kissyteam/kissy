@@ -3,7 +3,7 @@
  * utils for event
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/base/utils', function (S, DOM) {
+KISSY.add('event/dom/base/utils', function (S, Dom) {
     var EVENT_GUID = 'ksEventTargetId_'+ S.now(),
         doc = S.Env.host.document,
         simpleAdd = doc && doc.addEventListener ?
@@ -35,11 +35,11 @@ KISSY.add('event/dom/base/utils', function (S, DOM) {
         simpleRemove: simpleRemove,
 
         data: function (elem, v) {
-            return DOM.data(elem, EVENT_GUID, v);
+            return Dom.data(elem, EVENT_GUID, v);
         },
 
         removeData: function (elem) {
-            return DOM.removeData(elem, EVENT_GUID);
+            return Dom.removeData(elem, EVENT_GUID);
         }
     };
 

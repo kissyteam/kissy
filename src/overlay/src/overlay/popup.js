@@ -15,7 +15,7 @@ KISSY.add('overlay/popup', function (S, Overlay, undefined) {
 
         initializer: function () {
             var self = this,
-            // 获取相关联的 DOM 节点
+            // 获取相关联的 Dom 节点
                 trigger = self.get("trigger");
             if (trigger) {
                 if (self.get("triggerType") === 'mouse') {
@@ -57,7 +57,7 @@ KISSY.add('overlay/popup', function (S, Overlay, undefined) {
 
         _bindContainerMouse: function () {
             var self = this;
-            self.get('el')
+            self.el
                 .on('mouseleave', self._setHiddenTimer, self)
                 .on('mouseenter', self._clearHiddenTimer, self);
         },
@@ -124,7 +124,7 @@ KISSY.add('overlay/popup', function (S, Overlay, undefined) {
 
                 }
             }
-            if (root = self.get('el')) {
+            if (root = self.el) {
                 root.detach('mouseleave', self._setHiddenTimer, self)
                     .detach('mouseenter', self._clearHiddenTimer, self);
             }

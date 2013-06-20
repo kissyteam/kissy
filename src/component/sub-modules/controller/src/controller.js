@@ -52,14 +52,17 @@ KISSY.add("component/controller", function (S, Node, ControllerProcess, Manager,
             createDom: function () {
                 var self = this,
                     Render = self.get('xrender'),
-                    view,
+                    view = self.get('view'),
                     srcNode = self.get('srcNode'),
                     id = self.get("id"),
                     el;
                 // initialize view
-                self.view = view = new Render({
-                    controller: self
-                });
+                // allow custom view instance
+                if (!view) {
+                    self.set('view', view = new Render({
+                        controller: self
+                    }));
+                }
                 if (srcNode) {
                     view.decorate(srcNode);
                 } else {
@@ -95,7 +98,7 @@ KISSY.add("component/controller", function (S, Node, ControllerProcess, Manager,
 
                 if (self.get('handleMouseEvents')) {
 
-                    el = self.get('el');
+                    el = self.el;
 
                     if (!isTouchEventSupported) {
                         el.on("mouseenter", wrapBehavior(self, "handleMouseEnter"))
@@ -180,7 +183,7 @@ KISSY.add("component/controller", function (S, Node, ControllerProcess, Manager,
              * By default, this performs its associated action by calling
              * {@link KISSY.Component.Controller#performActionInternal}.
              * @protected
-             * @param {KISSY.Event.DOMEventObject} ev DOM event to handle.
+             * @param {KISSY.Event.DOMEventObject} ev Dom event to handle.
              */
             handleDblClick: function (ev) {
                 this.performActionInternal(ev);
@@ -189,7 +192,7 @@ KISSY.add("component/controller", function (S, Node, ControllerProcess, Manager,
             /**
              * Handle mouseenter events. If the component is not disabled, highlights it.
              * @protected
-             * @param {KISSY.Event.DOMEventObject} ev DOM event to handle.
+             * @param {KISSY.Event.DOMEventObject} ev Dom event to handle.
              */
             handleMouseEnter: function (ev) {
                 this.set("highlighted", !!ev);
@@ -198,7 +201,7 @@ KISSY.add("component/controller", function (S, Node, ControllerProcess, Manager,
             /**
              * Handle mouseleave events. If the component is not disabled, de-highlights it.
              * @protected
-             * @param {KISSY.Event.DOMEventObject} ev DOM event to handle.
+             * @param {KISSY.Event.DOMEventObject} ev Dom event to handle.
              */
             handleMouseLeave: function (ev) {
                 var self = this;
@@ -212,7 +215,7 @@ KISSY.add("component/controller", function (S, Node, ControllerProcess, Manager,
              * If the component is focusable, then focus it,
              * else prevent it from receiving keyboard focus.
              * @protected
-             * @param {KISSY.Event.DOMEventObject} ev DOM event to handle.
+             * @param {KISSY.Event.DOMEventObject} ev Dom event to handle.
              */
             handleMouseDown: function (ev) {
                 var self = this,
@@ -242,7 +245,7 @@ KISSY.add("component/controller", function (S, Node, ControllerProcess, Manager,
              * If this component is not disabled, performs its associated action by calling
              * {@link KISSY.Component.Controller#performActionInternal}, then deactivates it.
              * @protected
-             * @param {KISSY.Event.DOMEventObject} ev DOM event to handle.
+             * @param {KISSY.Event.DOMEventObject} ev Dom event to handle.
              */
             handleMouseUp: function (ev) {
                 var self = this;
@@ -255,7 +258,7 @@ KISSY.add("component/controller", function (S, Node, ControllerProcess, Manager,
             /**
              * Handles context menu.
              * @protected
-             * @param {KISSY.Event.DOMEventObject} ev DOM event to handle.
+             * @param {KISSY.Event.DOMEventObject} ev Dom event to handle.
              */
             handleContextMenu: function (ev) {
                 if (0) {
@@ -284,7 +287,7 @@ KISSY.add("component/controller", function (S, Node, ControllerProcess, Manager,
             /**
              * Handle enter keydown event to {@link KISSY.Component.Controller#performActionInternal}.
              * @protected
-             * @param {KISSY.Event.DOMEventObject} ev DOM event to handle.
+             * @param {KISSY.Event.DOMEventObject} ev Dom event to handle.
              */
             handleKeyEventInternal: function (ev) {
                 if (ev['keyCode'] == Node.KeyCode.ENTER) {
@@ -297,7 +300,7 @@ KISSY.add("component/controller", function (S, Node, ControllerProcess, Manager,
              * Handle keydown events.
              * If the component is not disabled, call {@link KISSY.Component.Controller#handleKeyEventInternal}
              * @protected
-             * @param {KISSY.Event.DOMEventObject} ev DOM event to handle.
+             * @param {KISSY.Event.DOMEventObject} ev Dom event to handle.
              */
             handleKeydown: function (ev) {
                 var self = this;
@@ -311,7 +314,7 @@ KISSY.add("component/controller", function (S, Node, ControllerProcess, Manager,
             /**
              * Performs the appropriate action when this component is activated by the user.
              * @protected
-             * @param {KISSY.Event.DOMEventObject} ev DOM event to handle.
+             * @param {KISSY.Event.DOMEventObject} ev Dom event to handle.
              */
             performActionInternal: function (ev) {
             },
@@ -766,6 +769,12 @@ KISSY.add("component/controller", function (S, Node, ControllerProcess, Manager,
                  */
                 xrender: {
                     value: Render
+                },
+
+                view: {
+                    setter: function (v) {
+                        this.view = v;
+                    }
                 }
             }
         });

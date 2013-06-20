@@ -3,7 +3,7 @@
  * @author yiminghe@gmail.com
  * need to be completed
  */
-KISSY.use("dom,core", function (S, DOM) {
+KISSY.use("dom,core", function (S, Dom) {
 
     var $= S.all;
 
@@ -31,10 +31,10 @@ KISSY.use("dom,core", function (S, DOM) {
         });
 
         it("should works", function () {
-            var test_offset = DOM.get("#test-offset");
-            var o = DOM.offset(test_offset);
-            DOM.offset(test_offset, o);
-            var o2 = DOM.offset(test_offset);
+            var test_offset = Dom.get("#test-offset");
+            var o = Dom.offset(test_offset);
+            Dom.offset(test_offset, o);
+            var o2 = Dom.offset(test_offset);
             expect(o2.top).toBe(o.top);
             expect(o2.left).toBe(o.left);
             expect(test_offset.style.position).toBe("relative");
@@ -53,19 +53,19 @@ KISSY.use("dom,core", function (S, DOM) {
 
             var a;
 
-            DOM.append(a = DOM.create("<div style='position: absolute;top:0;'/>"), "body");
+            Dom.append(a = Dom.create("<div style='position: absolute;top:0;'/>"), "body");
 
             // ie < 9 相对于 document.documentElement 即窗口
-            expect(DOM.offset(a).top).toBe(0);
-            DOM.offset(a, {
+            expect(Dom.offset(a).top).toBe(0);
+            Dom.offset(a, {
                 top: 0
             });
 
-            expect(parseInt(DOM.css(a, "top"))).toBe(0);
+            expect(parseInt(Dom.css(a, "top"))).toBe(0);
 
             document.documentElement.style.borderTop = "";
 
-            DOM.remove(a);
+            Dom.remove(a);
         });
 
 
@@ -73,16 +73,16 @@ KISSY.use("dom,core", function (S, DOM) {
             var div = $('<div>').appendTo('body');
             div[0].innerHTML = iframeTpl;
 
-            var iframe = DOM.get("#test-iframe");
+            var iframe = Dom.get("#test-iframe");
 
             var ok = 0;
 
             $(iframe).on('load',function () {
                 var win = iframe.contentWindow;
-                var inner = DOM.get("#test-inner", win.document);
-                var innerOffsetTop = DOM.offset(inner).top - DOM.scrollTop(win);
-                var iframeTop = DOM.offset(iframe).top;
-                var totalTop = DOM.offset(inner, undefined, window).top;
+                var inner = Dom.get("#test-inner", win.document);
+                var innerOffsetTop = Dom.offset(inner).top - Dom.scrollTop(win);
+                var iframeTop = Dom.offset(iframe).top;
+                var totalTop = Dom.offset(inner, undefined, window).top;
                 expect(innerOffsetTop + iframeTop).toBe(totalTop);
 
                 setTimeout(function () {
@@ -99,11 +99,11 @@ KISSY.use("dom,core", function (S, DOM) {
         });
 
         it("should not change after get and set", function () {
-            var scrollTop = DOM.scrollTop();
+            var scrollTop = Dom.scrollTop();
             window.scrollTo(0, 100);
-            var div = DOM.create("<div style='position: absolute;top:200px;'></div>");
-            DOM.append(div, document.body);
-            var originalOffset = DOM.offset(div);
+            var div = Dom.create("<div style='position: absolute;top:200px;'></div>");
+            Dom.append(div, document.body);
+            var originalOffset = Dom.offset(div);
             expect(Math.abs(originalOffset.top - 200) < 5).toBe(true);
             window.scrollTo(0, scrollTop);
         });

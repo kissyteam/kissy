@@ -525,12 +525,16 @@ if (location.href.indexOf('__build') == -1) {
             "base": "/kissy/src/event/sub-modules/dom/sub-modules/touch/src/touch",
             "ignorePackageNameInUri": 1
         },
+        "filter-menu": {
+            "base": "/kissy/src/filter-menu/src/filter-menu",
+            "ignorePackageNameInUri": 1
+        },
         "grid": {
             "base": "/kissy/src/grid/src/grid",
             "ignorePackageNameInUri": 1
         },
-        "htmlparser": {
-            "base": "/kissy/src/htmlparser/src/htmlparser",
+        "html-parser": {
+            "base": "/kissy/src/html-parser/src/html-parser",
             "ignorePackageNameInUri": 1
         },
         "io": {

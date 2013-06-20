@@ -2,11 +2,11 @@
  * advanced io tc
  * @author yiminghe@gmail.com
  **/
-KISSY.use("ua,json,io,node", function (S, UA, JSON, io, Node) {
+KISSY.use("ua,json,io,node", function (S, UA, Json, io, Node) {
     var $ = Node.all;
     var pageUri = new S.Uri(location.href);
 
-    describe("Advanced IO", function () {
+    describe("Advanced Io", function () {
 
         it('support custom contentType', function () {
             var done = 0, ok = 0;
@@ -15,7 +15,7 @@ KISSY.use("ua,json,io,node", function (S, UA, JSON, io, Node) {
                 dataType: 'json',
                 type: 'post',
                 contentType: 'application/json',
-                data: S.JSON.stringify({
+                data: S.Json.stringify({
                     x: 1
                 }),
                 success: function (t) {

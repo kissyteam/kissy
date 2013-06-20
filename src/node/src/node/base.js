@@ -3,17 +3,17 @@
  * definition for node and nodelist
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
-KISSY.add('node/base', function (S, DOM, Event, undefined) {
+KISSY.add('node/base', function (S, Dom, Event, undefined) {
 
     var AP = Array.prototype,
         slice = AP.slice,
-        NodeType = DOM.NodeType,
+        NodeType = Dom.NodeType,
         push = AP.push,
         makeArray = S.makeArray,
-        isNodeList = DOM._isNodeList;
+        isNodeList = Dom.isDomNodeList;
 
     /**
-     * The NodeList class provides a {@link KISSY.DOM} wrapper for manipulating DOM Node.
+     * The NodeList class provides a {@link KISSY.Dom} wrapper for manipulating Dom Node.
      * use KISSY.all/one to retrieve NodeList instances.
      *
      *  for example:
@@ -22,7 +22,7 @@ KISSY.add('node/base', function (S, DOM, Event, undefined) {
      *
      * is equal to
      *      @example
-     *      KISSY.DOM.attr('a','href','http://docs.kissyui.com');
+     *      KISSY.Dom.attr('a','href','http://docs.kissyui.com');
      *
      * @class KISSY.NodeList
      */
@@ -41,7 +41,7 @@ KISSY.add('node/base', function (S, DOM, Event, undefined) {
 
         else if (typeof html == 'string') {
             // create from html
-            domNode = DOM.create(html, props, ownerDocument);
+            domNode = Dom.create(html, props, ownerDocument);
             // ('<p>1</p><p>2</p>') 转换为 NodeList
             if (domNode.nodeType === NodeType.DOCUMENT_FRAGMENT_NODE) { // fragment
                 push.apply(this, makeArray(domNode.childNodes));
@@ -181,7 +181,7 @@ KISSY.add('node/base', function (S, DOM, Event, undefined) {
          * @return {KISSY.NodeList}
          */
         filter: function (filter) {
-            return new NodeList(DOM.filter(this, filter));
+            return new NodeList(Dom.filter(this, filter));
         },
 
         /**
@@ -243,7 +243,7 @@ KISSY.add('node/base', function (S, DOM, Event, undefined) {
                 }
                 return new NodeList(selector, undefined, context);
             }
-            return new NodeList(DOM.query(selector, context));
+            return new NodeList(Dom.query(selector, context));
         },
 
         /**
@@ -262,7 +262,7 @@ KISSY.add('node/base', function (S, DOM, Event, undefined) {
     });
 
     /**
-     * Same with {@link KISSY.DOM.NodeType}
+     * Same with {@link KISSY.Dom.NodeType}
      * @member KISSY.NodeList
      * @property NodeType
      * @static

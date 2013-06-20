@@ -2,7 +2,7 @@
  * Set up editor constructor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/base", function (S, HTMLParser, Component) {
+KISSY.add("editor/base", function (S, HtmlParser, Component) {
 
     /**
      * @class
@@ -19,7 +19,7 @@ KISSY.add("editor/base", function (S, HTMLParser, Component) {
             }
         }, {
             Config: {},
-            XHTML_DTD: HTMLParser['DTD'],
+            XHTML_DTD: HtmlParser['DTD'],
             ATTRS: {
                 /**
                  * textarea
@@ -129,5 +129,5 @@ KISSY.add("editor/base", function (S, HTMLParser, Component) {
 
     return Editor;
 }, {
-    requires: ['htmlparser', 'component/base']
+    requires: ['html-parser', 'component/base']
 });

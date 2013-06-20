@@ -83,7 +83,7 @@ overflow: auto;">
 
         KISSY.use("component/uibase/align,core", function (S, Align) {
 
-            var DOM = S.DOM,
+            var Dom = S.Dom,
                     UA = S.UA,
                     Event = S.Event,
                     Node = S.Node;
@@ -96,7 +96,7 @@ overflow: auto;">
                 var index = ev.keyCode - 48;
                 if (index > 0 && index < 7) {
                     var id = 'd' + index;
-                    var rect = getVisibleRectForElement(DOM.get("#" + id));
+                    var rect = getVisibleRectForElement(Dom.get("#" + id));
                     if (rect) {
                         S.log(rect);
                         var d = map[id];

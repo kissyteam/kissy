@@ -3,7 +3,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/plugin/xiami-music/dialog", function (S, Editor, FlashDialog, MenuButton) {
-    var DOM = S.DOM,
+    var Dom = S.Dom,
         Node = S.Node,
         Utils = Editor.Utils,
         loading = Utils.debugUrl("theme/tao-loading.gif"),
@@ -194,11 +194,11 @@ KISSY.add("editor/plugin/xiami-music/dialog", function (S, Editor, FlashDialog, 
                 var t = new Node(ev.target),
                     add = t.closest(function (node) {
                         return self._xiamia_list.contains(node) &&
-                            DOM.hasClass(node, prefixCls + "editor-xiami-add");
+                            Dom.hasClass(node, prefixCls + "editor-xiami-add");
                     }, undefined),
                     paging = t.closest(function (node) {
                         return self._xiamia_list.contains(node) &&
-                            DOM.hasClass(node, prefixCls + "editor-xiami-page-item");
+                            Dom.hasClass(node, prefixCls + "editor-xiami-page-item");
                     }, undefined);
                 if (add) {
                     self._dinfo = {

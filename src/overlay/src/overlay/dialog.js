@@ -45,7 +45,7 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
 
             _onSetVisible: function (v) {
                 var self = this,
-                    el = self.get('el');
+                    el = self.el;
                 if (v) {
                     self.__lastActive = el[0].ownerDocument.activeElement;
                     self.focus();
@@ -238,7 +238,7 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
         if (keyCode != KEY_TAB) {
             return;
         }
-        var el = self.get("el");
+        var el = self.el;
         // summary:
         // Handles the keyboard events for accessibility reasons
 

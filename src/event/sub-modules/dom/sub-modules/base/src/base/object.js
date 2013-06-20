@@ -482,7 +482,7 @@ KISSY.add('event/dom/base/object', function (S, BaseEvent, undefined) {
  - merge with mousewheel: not perfect in osx : accelerated scroll
 
  2010.04
- - http://www.w3.org/TR/2003/WD-DOM-Level-3-Events-20030331/ecma-script-binding.html
+ - http://www.w3.org/TR/2003/WD-Dom-Level-3-Events-20030331/ecma-script-binding.html
 
  - refer:
  https://github.com/brandonaaron/jquery-mousewheel/blob/master/jquery.mousewheel.js
@@ -493,5 +493,5 @@ KISSY.add('event/dom/base/object', function (S, BaseEvent, undefined) {
  http://www.adomas.org/javascript-mouse-wheel/
  http://plugins.jquery.com/project/mousewheel
  http://www.cnblogs.com/aiyuchen/archive/2011/04/19/2020843.html
- http://www.w3.org/TR/DOM-Level-3-Events/#events-mousewheelevents
+ http://www.w3.org/TR/Dom-Level-3-Events/#events-mousewheelevents
  */

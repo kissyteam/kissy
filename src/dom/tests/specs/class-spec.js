@@ -2,10 +2,10 @@
  * test cases for class sub module of dom module
  * @author yiminghe@gmail.com
  */
-KISSY.use("dom,core", function (S, DOM) {
+KISSY.use("dom,core", function (S, Dom) {
     var $= S.all;
-    S.get = DOM.get;
-    S.query = DOM.query;
+    S.get = Dom.get;
+    S.query = Dom.query;
     describe("class", function () {
 
         var tpl = '<div id="test-data-class">\
@@ -87,32 +87,32 @@ KISSY.use("dom,core", function (S, DOM) {
 
         it("hasClass works", function () {
             a.className = 'link link2\t' + 'link9 link3';
-            expect(DOM.hasClass(a, 'link')).toBe(true);
-            expect(DOM.hasClass(a, '.link')).toBe(true);
-            expect(DOM.hasClass(a, 'link4')).toBe(false);
-            expect(DOM.hasClass(a, 'link link3')).toBe(true);
-            expect(DOM.hasClass(a, '.link .link3')).toBe(true);
-            expect(DOM.hasClass(a, 'link link4')).toBe(false);
-            expect(DOM.hasClass(a, 'link link4')).toBe(false);
-            expect(DOM.hasClass(a, '.link .link4')).toBe(false);
-            expect(DOM.hasClass(a, 'link9')).toBe(true);
+            expect(Dom.hasClass(a, 'link')).toBe(true);
+            expect(Dom.hasClass(a, '.link')).toBe(true);
+            expect(Dom.hasClass(a, 'link4')).toBe(false);
+            expect(Dom.hasClass(a, 'link link3')).toBe(true);
+            expect(Dom.hasClass(a, '.link .link3')).toBe(true);
+            expect(Dom.hasClass(a, 'link link4')).toBe(false);
+            expect(Dom.hasClass(a, 'link link4')).toBe(false);
+            expect(Dom.hasClass(a, '.link .link4')).toBe(false);
+            expect(Dom.hasClass(a, 'link9')).toBe(true);
         });
 
         it("addClass works", function () {
-            DOM.addClass(a, 'link-added');
-            expect(DOM.hasClass(a, 'link-added')).toBe(true);
-            DOM.addClass(a, '.cls-a cls-b');
-            expect(DOM.hasClass(a, 'cls-a')).toBe(true);
-            expect(DOM.hasClass(a, 'cls-b')).toBe(true);
+            Dom.addClass(a, 'link-added');
+            expect(Dom.hasClass(a, 'link-added')).toBe(true);
+            Dom.addClass(a, '.cls-a cls-b');
+            expect(Dom.hasClass(a, 'cls-a')).toBe(true);
+            expect(Dom.hasClass(a, 'cls-b')).toBe(true);
         });
 
         it("removeClass works", function () {
             a.className = 'link link2 link3 link4 link5';
 
-            DOM.removeClass(a, 'link');
-            expect(DOM.hasClass(a, 'link')).toBe(false);
-            DOM.removeClass(a, 'link2 link4');
-            DOM.removeClass(a, '.link3');
+            Dom.removeClass(a, 'link');
+            expect(Dom.hasClass(a, 'link')).toBe(false);
+            Dom.removeClass(a, 'link2 link4');
+            Dom.removeClass(a, '.link3');
             expect(a.className).toBe('link5');
         });
 
@@ -120,12 +120,12 @@ KISSY.use("dom,core", function (S, DOM) {
         it("replaceClass works", function () {
             a.className = 'link link3';
             // oldCls 有的话替换
-            DOM.replaceClass(a, '.link', 'link2');
-            expect(DOM.hasClass(a, 'link')).toBe(false);
-            expect(DOM.hasClass(a, 'link2')).toBe(true);
+            Dom.replaceClass(a, '.link', 'link2');
+            expect(Dom.hasClass(a, 'link')).toBe(false);
+            expect(Dom.hasClass(a, 'link2')).toBe(true);
 
             // oldCls 没有的话，仅添加
-            DOM.replaceClass(a, 'link4', 'link');
+            Dom.replaceClass(a, 'link4', 'link');
 
             expect(a.className).toBe('link3 link2 link');
         });
@@ -134,18 +134,18 @@ KISSY.use("dom,core", function (S, DOM) {
         it("toggleClass works", function () {
             a.className = 'link link2';
 
-            DOM.toggleClass(a, 'link2');
-            expect(DOM.hasClass(a, 'link2')).toBe(false);
+            Dom.toggleClass(a, 'link2');
+            expect(Dom.hasClass(a, 'link2')).toBe(false);
 
-            //DOM.toggleClass(a, '.link2',false);
-            //expect(DOM.hasClass(a, 'link2')).toBe(false);
+            //Dom.toggleClass(a, '.link2',false);
+            //expect(Dom.hasClass(a, 'link2')).toBe(false);
 
 
-            DOM.toggleClass(a, '.link2');
-            expect(DOM.hasClass(a, 'link2')).toBe(true);
+            Dom.toggleClass(a, '.link2');
+            expect(Dom.hasClass(a, 'link2')).toBe(true);
 
-            // DOM.toggleClass(a, '.link2',true);
-            // expect(DOM.hasClass(a, 'link2')).toBe(true);
+            // Dom.toggleClass(a, '.link2',true);
+            // expect(Dom.hasClass(a, 'link2')).toBe(true);
         });
     });
 });

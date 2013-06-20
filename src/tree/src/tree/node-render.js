@@ -87,18 +87,18 @@ KISSY.add("tree/node-render", function (S, Node, Component, TreeNodeTpl, Extensi
             var self = this,
                 childrenEl = self.get("childrenEl");
             childrenEl[v ? "show" : "hide"]();
-            self.get("el").attr("aria-expanded", v);
+            self.el.attr("aria-expanded", v);
         },
 
         _onSetSelected: function (v) {
             var self = this,
                 rowEl = self.get("rowEl");
             rowEl[v ? "addClass" : "removeClass"](self.getBaseCssClass(SELECTED_CLS));
-            self.get("el").attr("aria-selected", v);
+            self.el.attr("aria-selected", v);
         },
 
         '_onSetDepth': function (v) {
-            this.get("el")[0].setAttribute("aria-level", v);
+            this.el.attr("aria-level", v);
         },
 
         _onSetCheckState: function (s) {

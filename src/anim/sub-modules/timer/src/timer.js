@@ -3,9 +3,9 @@
  * @author yiminghe@gmail.com
  * @ignore
  */
-KISSY.add('anim/timer', function (S, DOM, Event, AnimBase, Easing, AM, Fx, SHORT_HANDS) {
+KISSY.add('anim/timer', function (S, Dom, Event, AnimBase, Easing, AM, Fx, SHORT_HANDS) {
 
-    var camelCase = DOM._camelCase,
+    var camelCase = Dom._camelCase,
         NUMBER_REG = /^([+\-]=)?([\d+.\-]+)([a-z%]*)$/i;
 
     function Anim() {
@@ -49,18 +49,18 @@ KISSY.add('anim/timer', function (S, DOM, Event, AnimBase, Easing, AM, Fx, SHORT
                     origin = {};
                     S.each(shortHands, function (sh) {
                         // 得到原始分属性之前值
-                        origin[sh] = DOM.css(node, sh);
+                        origin[sh] = Dom.css(node, sh);
                     });
-                    DOM.css(node, p, val);
+                    Dom.css(node, p, val);
                     S.each(origin, function (val, sh) {
                         // 如果分属性没有显式设置过，得到期待的分属性最后值
                         if (!(sh in _propsData)) {
                             _propsData[sh] = S.merge(_propData, {
-                                value: DOM.css(node, sh)
+                                value: Dom.css(node, sh)
                             });
                         }
                         // 还原
-                        DOM.css(node, sh, val);
+                        Dom.css(node, sh, val);
                     });
                     // 删除复合属性
                     delete _propsData[p];
@@ -113,13 +113,13 @@ KISSY.add('anim/timer', function (S, DOM, Event, AnimBase, Easing, AM, Fx, SHORT
                             to2 = to;
                         do {
                             ++to2;
-                            DOM.css(node, prop, to2 + unit);
+                            Dom.css(node, prop, to2 + unit);
                             // in case tmpCur==0
                             tmpCur = fx.cur();
                         } while (tmpCur == 0);
                         // S.log(to2+' --- '+tmpCur);
                         from = (to2 / tmpCur) * from;
-                        DOM.css(node, prop, from + unit);
+                        Dom.css(node, prop, from + unit);
                     }
 
                     // 相对

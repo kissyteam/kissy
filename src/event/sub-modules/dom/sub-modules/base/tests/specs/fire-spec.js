@@ -2,7 +2,7 @@
  * tc about fire function
  * @author yiminghe@gmail.com
  */
-KISSY.use("dom,event/dom/base", function (S, DOM, Event) {
+KISSY.use("dom,event/dom/base", function (S, Dom, Event) {
 
     var ObservableDOMEvent= S.require('event/dom/base/observable');
 
@@ -10,7 +10,7 @@ KISSY.use("dom,event/dom/base", function (S, DOM, Event) {
 
         it('support once', function () {
 
-            var n = DOM.create("<div/>"), ret;
+            var n = Dom.create("<div/>"), ret;
 
             Event.on(n, "mouseenter", {
                 fn: function (e) {
@@ -32,15 +32,15 @@ KISSY.use("dom,event/dom/base", function (S, DOM, Event) {
 
         it('bubble event remove element/fn in the middle', function () {
 
-            var n = DOM.create("<div>" +
+            var n = Dom.create("<div>" +
                 "<div class='l1'><div class='l2'></div></div>" +
                 "</div>"), ret = [], dfn, winFn;
 
-            DOM.append(n, 'body');
+            Dom.append(n, 'body');
 
-            var l1 = DOM.get('.l1', n);
+            var l1 = Dom.get('.l1', n);
 
-            var l2 = DOM.get('.l2', n);
+            var l2 = Dom.get('.l2', n);
 
             Event.on(l1, 'click', function () {
                 ret.push(1);
@@ -52,7 +52,7 @@ KISSY.use("dom,event/dom/base", function (S, DOM, Event) {
             });
 
             Event.on(l2, 'click', function () {
-                DOM.append(l2, n);
+                Dom.append(l2, n);
                 ret.push(22);
             });
 
@@ -78,7 +78,7 @@ KISSY.use("dom,event/dom/base", function (S, DOM, Event) {
 
             Event.detach(window, 'click', winFn);
 
-            DOM.remove(n);
+            Dom.remove(n);
         });
 
     });

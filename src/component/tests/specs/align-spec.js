@@ -1,6 +1,6 @@
 KISSY.use("component/extension", function (S, extension) {
     var Align = extension.Align;
-    var DOM = S.DOM;
+    var Dom = S.Dom;
     var $ = S.all;
     describe("extension-align", function () {
 
@@ -51,8 +51,8 @@ KISSY.use("component/extension", function (S, extension) {
             var dom = [];
 
             for (var i = 0; i < 4; i++) {
-                dom[i] = DOM.create(test[i]);
-                DOM.append(dom[i], "body");
+                dom[i] = Dom.create(test[i]);
+                Dom.append(dom[i], "body");
             }
 
             expect(getOffsetParent(dom[0].firstChild)).toBe(dom[0]);
@@ -61,7 +61,7 @@ KISSY.use("component/extension", function (S, extension) {
             expect(getOffsetParent(dom[3].firstChild.firstChild)).toBe(dom[3]);
 
             for (i = 0; i < 4; i++) {
-                DOM.remove(dom[i]);
+                Dom.remove(dom[i]);
             }
         });
 
@@ -71,8 +71,8 @@ KISSY.use("component/extension", function (S, extension) {
             it("getVisibleRectForElement works", function () {
 
 
-                var gap = DOM.create("<div style='height: 1500px;width: 100000px;'></div>");
-                DOM.append(gap, "body");
+                var gap = Dom.create("<div style='height: 1500px;width: 100000px;'></div>");
+                Dom.append(gap, "body");
 
                 var getVisibleRectForElement = Align.__getVisibleRectForElement,
                     test = [];
@@ -98,17 +98,17 @@ KISSY.use("component/extension", function (S, extension) {
                 var dom = [];
 
                 for (var i = 3; i >= 0; i--) {
-                    dom[i] = DOM.create(test[i]);
-                    DOM.prepend(dom[i], "body");
+                    dom[i] = Dom.create(test[i]);
+                    Dom.prepend(dom[i], "body");
                 }
 
                 // 1
                 window.scrollTo(10, 10);
 
 
-                var right = 10 + DOM.viewportWidth(),
+                var right = 10 + Dom.viewportWidth(),
                     rect,
-                    bottom = 10 + DOM.viewportHeight();
+                    bottom = 10 + Dom.viewportHeight();
 
                 rect = getVisibleRectForElement(dom[0].firstChild);
 
@@ -121,11 +121,11 @@ KISSY.use("component/extension", function (S, extension) {
                 rect = getVisibleRectForElement(dom[0].firstChild);
 
                 expect(rect.left).toEqual(200);
-                expect(rect.bottom).toEqual(200 + DOM.viewportHeight());
+                expect(rect.bottom).toEqual(200 + Dom.viewportHeight());
                 expect(rect.top).toEqual(200);
-                expect(rect.right).toEqual(200 + DOM.viewportWidth());
+                expect(rect.right).toEqual(200 + Dom.viewportWidth());
 
-                DOM.remove(dom[0]);
+                Dom.remove(dom[0]);
 
 
                 // 2
@@ -141,7 +141,7 @@ KISSY.use("component/extension", function (S, extension) {
                 window.scrollTo(200, 200);
                 rect = getVisibleRectForElement(dom[1].firstChild);
                 expect(rect).toBe(null);
-                DOM.remove(dom[1]);
+                Dom.remove(dom[1]);
 
 
                 // 3
@@ -157,7 +157,7 @@ KISSY.use("component/extension", function (S, extension) {
                 window.scrollTo(200, 200);
                 rect = getVisibleRectForElement(dom[2].firstChild);
                 expect(rect).toBe(null);
-                DOM.remove(dom[2]);
+                Dom.remove(dom[2]);
 
 
                 // 4
@@ -173,10 +173,10 @@ KISSY.use("component/extension", function (S, extension) {
                 window.scrollTo(200, 200);
                 rect = getVisibleRectForElement(dom[3].firstChild);
                 expect(rect).toBe(null);
-                DOM.remove(dom[3]);
+                Dom.remove(dom[3]);
 
 
-                DOM.remove(gap);
+                Dom.remove(gap);
 
 
                 waits(200);

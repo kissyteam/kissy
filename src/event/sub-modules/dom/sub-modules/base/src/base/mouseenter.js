@@ -3,7 +3,7 @@
  * event-mouseenter
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/base/mouseenter', function (S, DOM, Special) {
+KISSY.add('event/dom/base/mouseenter', function (S, Dom, Special) {
 
     S.each([
         { name: 'mouseenter', fix: 'mouseover' },
@@ -20,7 +20,7 @@ KISSY.add('event/dom/base/mouseenter', function (S, DOM, Special) {
                 // relatedTarget 与 currentTarget 之间就是 mouseenter/leave
                 if (!relatedTarget ||
                     (relatedTarget !== currentTarget &&
-                        !DOM.contains(currentTarget, relatedTarget))) {
+                        !Dom.contains(currentTarget, relatedTarget))) {
                     // http://msdn.microsoft.com/en-us/library/ms536945(v=vs.85).aspx
                     // does not bubble
                     // 2012-04-12 把 mouseover 阻止冒泡有问题！

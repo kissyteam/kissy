@@ -2,29 +2,29 @@
  * submit spec for supporting bubbling in ie<9
  * @author yiminghe@gmail.com
  */
-KISSY.use("dom,event/dom/base", function (S, DOM, Event) {
+KISSY.use("dom,event/dom/base", function (S, Dom, Event) {
     describe("submit event", function () {
 
         var div,
             form,
-            inp = DOM.get("input", div);
+            inp = Dom.get("input", div);
 
         beforeEach(function(){
-             div = DOM.create("<div>" +
+             div = Dom.create("<div>" +
                 "<form action='http://www.g.cn' onsubmit='return false'>" +
                 "<input type='submit' id='s'>" +
                 "</form>" +
                 "</div>");
 
-            DOM.append(div, document.body);
+            Dom.append(div, document.body);
 
-             form = DOM.get("form", div);
-             inp = DOM.get("input", div);
+             form = Dom.get("form", div);
+             inp = Dom.get("input", div);
         });
 
         afterEach(function () {
-            DOM.remove(div);
-            DOM.remove(form);
+            Dom.remove(div);
+            Dom.remove(form);
         });
 
         it("should works and target is right", function () {

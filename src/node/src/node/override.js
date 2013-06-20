@@ -3,7 +3,7 @@
  * overrides methods in NodeList.prototype
  * @author yiminghe@gmail.com
  */
-KISSY.add('node/override', function (S, DOM,NodeList) {
+KISSY.add('node/override', function (S, Dom,NodeList) {
 
     var NLP = NodeList.prototype;
 
@@ -31,10 +31,10 @@ KISSY.add('node/override', function (S, DOM,NodeList) {
             var newNode = html, self = this;
             // 创建
             if (typeof newNode == 'string') {
-                newNode = DOM.create(newNode);
+                newNode = Dom.create(newNode);
             }
             if (newNode) {
-                DOM[insertType](newNode, self);
+                Dom[insertType](newNode, self);
             }
             return self;
         };
@@ -63,6 +63,6 @@ KISSY.add('node/override', function (S, DOM,NodeList) {
  - yiminghe@gmail.com：
  - 重写 NodeList 的某些方法
  - 添加 one ,all ，从当前 NodeList 往下开始选择节点
- - 处理 append ,prepend 和 DOM 的参数实际上是反过来的
+ - 处理 append ,prepend 和 Dom 的参数实际上是反过来的
  - append/prepend 参数是节点时，如果当前 NodeList 数量 > 1 需要经过 clone，因为同一节点不可能被添加到多个节点中去（NodeList）
  */

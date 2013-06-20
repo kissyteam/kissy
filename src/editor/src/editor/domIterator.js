@@ -17,7 +17,7 @@ KISSY.add("editor/domIterator", function (S) {
         KER = Editor.RANGE,
         ElementPath = Editor.ElementPath,
         Node = S.Node,
-        DOM = S.DOM;
+        Dom = S.Dom;
 
     /**
      * @constructor
@@ -91,7 +91,7 @@ KISSY.add("editor/domIterator", function (S) {
                 // If that node is the lastNode, it would cause our logic to leak to the
                 // next block.(#3887)
                 if (self._.lastNode &&
-                    self._.lastNode[0].nodeType == DOM.NodeType.TEXT_NODE &&
+                    self._.lastNode[0].nodeType == Dom.NodeType.TEXT_NODE &&
                     !S.trim(self._.lastNode[0].nodeValue) &&
                     self._.lastNode.parent()._4e_isBlockBoundary()) {
                     var testRange = new KERange(range.document);
@@ -106,7 +106,7 @@ KISSY.add("editor/domIterator", function (S) {
                 // Probably the document end is reached, we need a marker node.
                 if (!self._.lastNode) {
                     self._.lastNode = self._.docEndMarker = new Node(range.document.createTextNode(''));
-                    DOM.insertAfter(self._.lastNode[0], lastNode[0]);
+                    Dom.insertAfter(self._.lastNode[0], lastNode[0]);
                 }
 
                 // Let's reuse self variable.
@@ -124,7 +124,7 @@ KISSY.add("editor/domIterator", function (S) {
 
                 // includeNode indicates that the current node is good to be part
                 // of the range. By default, any non-element node is ok for it.
-                var includeNode = ( currentNode[0].nodeType != DOM.NodeType.ELEMENT_NODE ),
+                var includeNode = ( currentNode[0].nodeType != Dom.NodeType.ELEMENT_NODE ),
                     continueFromSibling = FALSE;
 
                 // If it is an element node, let's check if it can be part of the
@@ -172,7 +172,7 @@ KISSY.add("editor/domIterator", function (S) {
                         includeNode = TRUE;
                     }
                 }
-                else if (currentNode[0].nodeType == DOM.NodeType.TEXT_NODE) {
+                else if (currentNode[0].nodeType == Dom.NodeType.TEXT_NODE) {
                     // Ignore normal whitespaces (i.e. not including &nbsp; or
                     // other unicode whitespaces) before/after a block node.
                     if (beginWhitespaceRegex.test(currentNode[0].nodeValue))
@@ -247,7 +247,7 @@ KISSY.add("editor/domIterator", function (S) {
                     // Move the contents of the temporary range to the fixed block.
                     block[0].appendChild(range.extractContents());
                     block._4e_trim();
-                    // Insert the fixed block into the DOM.
+                    // Insert the fixed block into the Dom.
                     range.insertNode(block);
                     removePreviousBr = removeLastBr = TRUE;
                 }
@@ -270,7 +270,7 @@ KISSY.add("editor/domIterator", function (S) {
                         removePreviousBr = !splitInfo.wasStartOfBlock;
                         removeLastBr = !splitInfo.wasEndOfBlock;
 
-                        // Insert the new block into the DOM.
+                        // Insert the new block into the Dom.
                         range.insertNode(block);
                     }
                 }
@@ -287,11 +287,11 @@ KISSY.add("editor/domIterator", function (S) {
 
             if (removePreviousBr) {
                 var previousSibling = new Node(block[0].previousSibling);
-                if (previousSibling[0] && previousSibling[0].nodeType == DOM.NodeType.ELEMENT_NODE) {
+                if (previousSibling[0] && previousSibling[0].nodeType == Dom.NodeType.ELEMENT_NODE) {
                     if (previousSibling.nodeName() == 'br')
                         previousSibling._4e_remove();
-                    else if (previousSibling[0].lastChild && DOM.nodeName(previousSibling[0].lastChild) == 'br')
-                        DOM._4e_remove(previousSibling[0].lastChild);
+                    else if (previousSibling[0].lastChild && Dom.nodeName(previousSibling[0].lastChild) == 'br')
+                        Dom._4e_remove(previousSibling[0].lastChild);
                 }
             }
 
@@ -300,7 +300,7 @@ KISSY.add("editor/domIterator", function (S) {
                 var bookmarkGuard = Walker.bookmark(FALSE, TRUE);
 
                 var lastChild = new Node(block[0].lastChild);
-                if (lastChild[0] && lastChild[0].nodeType == DOM.NodeType.ELEMENT_NODE && lastChild.nodeName() == 'br') {
+                if (lastChild[0] && lastChild[0].nodeType == Dom.NodeType.ELEMENT_NODE && lastChild.nodeName() == 'br') {
                     // Take care not to remove the block expanding <br> in non-IE browsers.
                     if (UA['ie']
                         || lastChild.prev(bookmarkGuard, 1)

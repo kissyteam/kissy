@@ -5,9 +5,9 @@
  * 2.change menu content element
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/filtermenu-render", function (S, Node, MenuRender, FilterMenuTpl, ContentRenderExtension) {
+KISSY.add("filter-menu/render", function (S, Node, Menu, FilterMenuTpl, ContentRenderExtension) {
 
-    return MenuRender.extend([ContentRenderExtension], {
+    return Menu.ATTRS.xrender.value.extend([ContentRenderExtension], {
 
         beforeCreateDom:function(renderData,childrenElSelectors){
             S.mix(childrenElSelectors, {
@@ -45,5 +45,5 @@ KISSY.add("menu/filtermenu-render", function (S, Node, MenuRender, FilterMenuTpl
     });
 
 }, {
-    requires: ['node', './menu-render', './filtermenu-tpl', 'component/extension/content-render']
+    requires: ['node', 'menu', './render-tpl', 'component/extension/content-render']
 });

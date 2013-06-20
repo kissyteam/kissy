@@ -2,7 +2,7 @@
  * @ignore queue data structure
  * @author yiminghe@gmail.com
  */
-KISSY.add('anim/base/queue', function (S, DOM) {
+KISSY.add('anim/base/queue', function (S, Dom) {
 
     var // 队列集合容器
         queueCollectionKey = S.guid('ks-queue-' + S.now() + '-'),
@@ -14,10 +14,10 @@ KISSY.add('anim/base/queue', function (S, DOM) {
         name = name || queueKey;
 
         var qu,
-            quCollection = DOM.data(node, queueCollectionKey);
+            quCollection = Dom.data(node, queueCollectionKey);
 
         if (!quCollection && !readOnly) {
-            DOM.data(node, queueCollectionKey, quCollection = {});
+            Dom.data(node, queueCollectionKey, quCollection = {});
         }
 
         if (quCollection) {
@@ -57,17 +57,17 @@ KISSY.add('anim/base/queue', function (S, DOM) {
         },
 
         'clearQueues': function (node) {
-            DOM.removeData(node, queueCollectionKey);
+            Dom.removeData(node, queueCollectionKey);
         },
 
         clearQueue: function clearQueue(node, queue) {
             queue = queue || queueKey;
-            var quCollection = DOM.data(node, queueCollectionKey);
+            var quCollection = Dom.data(node, queueCollectionKey);
             if (quCollection) {
                 delete quCollection[queue];
             }
             if (S.isEmptyObject(quCollection)) {
-                DOM.removeData(node, queueCollectionKey);
+                Dom.removeData(node, queueCollectionKey);
             }
         },
 

@@ -1,6 +1,6 @@
 /**
  * modified from ckeditor for kissy editor ,walker implementation
- * refer: http://www.w3.org/TR/DOM-Level-2-Traversal-Range/traversal#TreeWalker
+ * refer: http://www.w3.org/TR/Dom-Level-2-Traversal-Range/traversal#TreeWalker
  * @author yiminghe@gmail.com
  */
 /*
@@ -13,7 +13,7 @@ KISSY.add("editor/walker", function (S, Editor) {
         FALSE = false,
         NULL = null,
         UA = S.UA,
-        DOM = S.DOM,
+        Dom = S.Dom,
         dtd = Editor.XHTML_DTD,
         Node = S.Node;
 
@@ -36,7 +36,7 @@ KISSY.add("editor/walker", function (S, Editor) {
         if (!self._.start) {
             self._.start = 1;
 
-            // Trim text nodes and optimize the range boundaries. DOM changes
+            // Trim text nodes and optimize the range boundaries. Dom changes
             // may happen at this point.
             range.trim();
 
@@ -55,7 +55,7 @@ KISSY.add("editor/walker", function (S, Editor) {
             // 从左到右保证在 range 区间内获取 nextSourceNode
             this._.guardLTR = function (node, movingOut) {
                 // 从endContainer移出去，失败返回false
-                if (movingOut && (limitLTR == node || DOM.nodeName(node) == "body")) {
+                if (movingOut && (limitLTR == node || Dom.nodeName(node) == "body")) {
                     return false;
                 }
                 // 达到边界的下一个节点,注意 null 的情况
@@ -74,7 +74,7 @@ KISSY.add("editor/walker", function (S, Editor) {
 
             self._.guardRTL = function (node, movingOut) {
                 // 从endContainer移出去，失败返回false
-                if (movingOut && (limitRTL == node || DOM.nodeName(node) == "body")) {
+                if (movingOut && (limitRTL == node || Dom.nodeName(node) == "body")) {
                     return false;
                 }
                 // 达到边界的下一个节点,注意 null 的情况
@@ -161,7 +161,7 @@ KISSY.add("editor/walker", function (S, Editor) {
      * @name Walker
      * @param {Editor.Range} range
      * @class
-     * Walker for DOM.
+     * Walker for Dom.
      * @member Editor
      */
     function Walker(range) {
@@ -280,8 +280,8 @@ KISSY.add("editor/walker", function (S, Editor) {
              */
             blockBoundary:function (customNodeNames) {
                 return function (node) {
-                    return !(node.nodeType == DOM.NodeType.ELEMENT_NODE &&
-                        DOM._4e_isBlockBoundary(node, customNodeNames) );
+                    return !(node.nodeType == Dom.NodeType.ELEMENT_NODE &&
+                        Dom._4e_isBlockBoundary(node, customNodeNames) );
                 };
             },
 
@@ -296,14 +296,14 @@ KISSY.add("editor/walker", function (S, Editor) {
              */
             bookmark:function (contentOnly, isReject) {
                 function isBookmarkNode(node) {
-                    return  DOM.nodeName(node) == 'span' &&
-                        DOM.attr(node, '_ke_bookmark');
+                    return  Dom.nodeName(node) == 'span' &&
+                        Dom.attr(node, '_ke_bookmark');
                 }
 
                 return function (node) {
                     var isBookmark, parent;
                     // Is bookmark inner text node?
-                    isBookmark = ( node.nodeType == DOM.NodeType.TEXT_NODE &&
+                    isBookmark = ( node.nodeType == Dom.NodeType.TEXT_NODE &&
                         ( parent = node.parentNode ) &&
                         isBookmarkNode(parent) );
                     // Is bookmark node?
@@ -320,7 +320,7 @@ KISSY.add("editor/walker", function (S, Editor) {
              */
             whitespaces:function (isReject) {
                 return function (node) {
-                    var isWhitespace = node.nodeType == DOM.NodeType.TEXT_NODE &&
+                    var isWhitespace = node.nodeType == Dom.NodeType.TEXT_NODE &&
                         !S.trim(node.nodeValue);
                     return !!(isReject ^ isWhitespace);
                 };
@@ -338,7 +338,7 @@ KISSY.add("editor/walker", function (S, Editor) {
                     // 'offsetHeight' instead of 'offsetWidth' for properly excluding
                     // all sorts of empty paragraph, e.g. <br />.
                     var isInvisible = whitespace(node) ||
-                        node.nodeType == DOM.NodeType.ELEMENT_NODE && !node.offsetHeight;
+                        node.nodeType == Dom.NodeType.ELEMENT_NODE && !node.offsetHeight;
                     return !!(isReject ^ isInvisible);
                 };
             }
@@ -348,7 +348,7 @@ KISSY.add("editor/walker", function (S, Editor) {
         isWhitespaces = Walker.whitespaces(),
         isBookmark = Walker.bookmark(),
         toSkip = function (node) {
-            var name = DOM.nodeName(node);
+            var name = Dom.nodeName(node);
             return isBookmark(node) ||
                 isWhitespaces(node) ||
                 node.nodeType == 1 &&

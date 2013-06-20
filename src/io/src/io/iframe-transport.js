@@ -3,13 +3,13 @@
  * non-refresh upload file with form by iframe
  * @author yiminghe@gmail.com
  */
-KISSY.add('io/iframe-transport', function (S, DOM, Event, IO) {
+KISSY.add('io/iframe-transport', function (S, Dom, Event, Io) {
 
     var doc = S.Env.host.document,
         OK_CODE = 200,
         ERROR_CODE = 500,
         BREATH_INTERVAL = 30,
-        iframeConverter = S.clone(IO.getConfig().converters.text);
+        iframeConverter = S.clone(Io.getConfig().converters.text);
 
     // https://github.com/kissyteam/kissy/issues/304
     // returned data must be escaped by server for json dataType
@@ -27,7 +27,7 @@ KISSY.add('io/iframe-transport', function (S, DOM, Event, IO) {
     };
 
     // iframe 内的内容就是 body.innerText
-    IO.setupConfig({
+    Io.setupConfig({
         converters: {
             // iframe 到其他类型的转化和 text 一样
             iframe: iframeConverter,
@@ -50,9 +50,9 @@ KISSY.add('io/iframe-transport', function (S, DOM, Event, IO) {
         var id = S.guid('io-iframe'),
             iframe,
         // empty src, so no history
-            src = DOM.getEmptyIframeSrc();
+            src = Dom.getEmptyIframeSrc();
 
-        iframe = xhr.iframe = DOM.create('<iframe ' +
+        iframe = xhr.iframe = Dom.create('<iframe ' +
             // ie6 need this when cross domain
             (src ? (' src="' + src + '" ') : '') +
             ' id="' + id + '"' +
@@ -60,7 +60,7 @@ KISSY.add('io/iframe-transport', function (S, DOM, Event, IO) {
             ' name="' + id + '"' +
             ' style="position:absolute;left:-9999px;top:-9999px;"/>');
 
-        DOM.prepend(iframe, doc.body || doc.documentElement);
+        Dom.prepend(iframe, doc.body || doc.documentElement);
         return iframe;
     }
 
@@ -75,7 +75,7 @@ KISSY.add('io/iframe-transport', function (S, DOM, Event, IO) {
                 e.type = 'hidden';
                 e.name = k + (isArray && serializeArray ? '[]' : '');
                 e.value = vs[i];
-                DOM.append(e, form);
+                Dom.append(e, form);
                 ret.push(e);
             }
         });
@@ -83,7 +83,7 @@ KISSY.add('io/iframe-transport', function (S, DOM, Event, IO) {
     }
 
     function removeFieldsFromData(fields) {
-        DOM.remove(fields);
+        Dom.remove(fields);
     }
 
     function IframeTransport(io) {
@@ -101,22 +101,22 @@ KISSY.add('io/iframe-transport', function (S, DOM, Event, IO) {
                 iframe,
                 query,
                 data = c.data,
-                form = DOM.get(c.form);
+                form = Dom.get(c.form);
 
             self.attrs = {
-                target: DOM.attr(form, 'target') || '',
-                action: DOM.attr(form, 'action') || '',
+                target: Dom.attr(form, 'target') || '',
+                action: Dom.attr(form, 'action') || '',
                 // enctype 区分 iframe 与 serialize
-                encoding:DOM.attr(form, 'encoding'),
-                enctype:DOM.attr(form, 'enctype'),
-                method: DOM.attr(form, 'method')
+                encoding:Dom.attr(form, 'encoding'),
+                enctype:Dom.attr(form, 'enctype'),
+                method: Dom.attr(form, 'method')
             };
             self.form = form;
 
             iframe = createIframe(io);
 
             // set target to iframe to avoid main page refresh
-            DOM.attr(form, {
+            Dom.attr(form, {
                 target: iframe.id,
                 action: io._getUrlForSend(),
                 method: 'post',
@@ -167,10 +167,10 @@ KISSY.add('io/iframe-transport', function (S, DOM, Event, IO) {
             // ie6 立即设置 action 设置为空导致白屏
             if (eventType == 'abort' && S.UA.ie == 6) {
                 setTimeout(function () {
-                    DOM.attr(form, self.attrs);
+                    Dom.attr(form, self.attrs);
                 }, 0);
             } else {
-                DOM.attr(form, self.attrs);
+                Dom.attr(form, self.attrs);
             }
 
             removeFieldsFromData(this.fields);
@@ -179,7 +179,7 @@ KISSY.add('io/iframe-transport', function (S, DOM, Event, IO) {
 
             setTimeout(function () {
                 // firefox will keep loading if not set timeout
-                DOM.remove(iframe);
+                Dom.remove(iframe);
             }, BREATH_INTERVAL);
 
             // nullify to prevent memory leak?
@@ -192,7 +192,7 @@ KISSY.add('io/iframe-transport', function (S, DOM, Event, IO) {
                     // ie<9
                     if (iframeDoc && iframeDoc.body) {
                         // https://github.com/kissyteam/kissy/issues/304
-                        io.responseText = DOM.html(iframeDoc.body);
+                        io.responseText = Dom.html(iframeDoc.body);
                         // ie still can retrieve xml 's responseText
                         if (S.startsWith(io.responseText, '<?xml')) {
                             io.responseText = undefined;
@@ -240,9 +240,9 @@ KISSY.add('io/iframe-transport', function (S, DOM, Event, IO) {
         }
     });
 
-    IO['setupTransport']('iframe', IframeTransport);
+    Io['setupTransport']('iframe', IframeTransport);
 
-    return IO;
+    return Io;
 
 }, {
     requires: ['dom', 'event', './base']

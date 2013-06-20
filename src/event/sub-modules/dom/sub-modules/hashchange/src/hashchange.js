@@ -3,7 +3,7 @@
  * hashchange event for non-standard browser
  * @author yiminghe@gmail.com, xiaomacji@gmail.com
  */
-KISSY.add('event/dom/hashchange', function (S, DOMEvent, DOM) {
+KISSY.add('event/dom/hashchange', function (S, DOMEvent, Dom) {
 
     var UA = S.UA,
         Special = DOMEvent.Special,
@@ -70,7 +70,7 @@ KISSY.add('event/dom/hashchange', function (S, DOMEvent, DOM) {
                     // 后面通过 innerText，相当于 unEscapeHTML
                     hash: S.escapeHTML(hash),
                     // 一定要加哦
-                    head: DOM.isCustomDomain() ? ("<script>" +
+                    head: Dom.isCustomDomain() ? ("<script>" +
                         "document." +
                         "domain = '" +
                         doc.domain
@@ -124,9 +124,9 @@ KISSY.add('event/dom/hashchange', function (S, DOMEvent, DOM) {
          */
         setup = function () {
             if (!iframe) {
-                var iframeSrc = DOM.getEmptyIframeSrc();
+                var iframeSrc = Dom.getEmptyIframeSrc();
                 //http://www.paciellogroup.com/blog/?p=604
-                iframe = DOM.create('<iframe ' +
+                iframe = Dom.create('<iframe ' +
                     (iframeSrc ? 'src="' + iframeSrc + '"' : '') +
                     ' style="display: none" ' +
                     'height="0" ' +
@@ -136,7 +136,7 @@ KISSY.add('event/dom/hashchange', function (S, DOMEvent, DOM) {
                 // Append the iframe to the documentElement rather than the body.
                 // Keeping it outside the body prevents scrolling on the initial
                 // page load
-                DOM.prepend(iframe, doc.documentElement);
+                Dom.prepend(iframe, doc.documentElement);
 
                 // init，第一次触发，以后都是 onIframeLoad
                 DOMEvent.add(iframe, 'load', function () {
@@ -198,7 +198,7 @@ KISSY.add('event/dom/hashchange', function (S, DOMEvent, DOM) {
             timer && clearTimeout(timer);
             timer = 0;
             DOMEvent.detach(iframe);
-            DOM.remove(iframe);
+            Dom.remove(iframe);
             iframe = 0;
         };
     }

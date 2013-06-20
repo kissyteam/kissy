@@ -2,10 +2,10 @@
  * @module  delegation-spec
  * @author yiminghe@gmail.com
  */
-KISSY.use("dom,event/dom/base", function (S, DOM, Event) {
+KISSY.use("dom,event/dom/base", function (S, Dom, Event) {
 
-    S.get = DOM.get;
-    S.query = DOM.query;
+    S.get = Dom.get;
+    S.query = Dom.query;
 
     var DOMEventUtils= S.require('event/dom/base/utils');
 
@@ -33,11 +33,11 @@ KISSY.use("dom,event/dom/base", function (S, DOM, Event) {
     </div>';
 
     beforeEach(function () {
-        DOM.prepend(DOM.create(tpl), 'body');
+        Dom.prepend(Dom.create(tpl), 'body');
     });
 
     afterEach(function () {
-        DOM.remove('#event-test-data');
+        Dom.remove('#event-test-data');
     });
 
     describe('delegate', function () {
@@ -172,9 +172,9 @@ KISSY.use("dom,event/dom/base", function (S, DOM, Event) {
         });
 
         it("should undelegate properly", function () {
-            var d = DOM.create("<div><button>xxxx</button></div>");
+            var d = Dom.create("<div><button>xxxx</button></div>");
             document.body.appendChild(d);
-            var s = DOM.get('button', d);
+            var s = Dom.get('button', d);
             var ret = [];
             Event.on(d, 'click', function () {
                 ret.push(9);
@@ -226,7 +226,7 @@ KISSY.use("dom,event/dom/base", function (S, DOM, Event) {
             waits(10);
             runs(function () {
                 expect(ret).toEqual([9]);
-                DOM.remove(d);
+                Dom.remove(d);
             });
         });
     });

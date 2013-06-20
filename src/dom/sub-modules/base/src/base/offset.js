@@ -3,14 +3,14 @@
  * dom-offset
  * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
-KISSY.add('dom/base/offset', function (S, DOM, undefined) {
+KISSY.add('dom/base/offset', function (S, Dom, undefined) {
 
     var win = S.Env.host,
         UA = S.UA,
         doc = win.document,
-        NodeType = DOM.NodeType,
+        NodeType = Dom.NodeType,
         docElem = doc && doc.documentElement,
-        getWin = DOM.getWindow,
+        getWindow = Dom.getWindow,
         CSS1Compat = 'CSS1Compat',
         compatMode = 'compatMode',
         MAX = Math.max,
@@ -19,7 +19,6 @@ KISSY.add('dom/base/offset', function (S, DOM, undefined) {
         DOCUMENT = 'document',
         BODY = 'body',
         DOC_ELEMENT = 'documentElement',
-        OWNER_DOCUMENT = 'ownerDocument',
         VIEWPORT = 'viewport',
         SCROLL = 'scroll',
         CLIENT = 'client',
@@ -29,9 +28,9 @@ KISSY.add('dom/base/offset', function (S, DOM, undefined) {
         SCROLL_LEFT = SCROLL + 'Left',
         SCROLL_TOP = SCROLL + 'Top';
 
-    S.mix(DOM,
+    S.mix(Dom,
         /**
-         * @override KISSY.DOM
+         * @override KISSY.Dom
          * @class
          * @singleton
          */
@@ -54,7 +53,7 @@ KISSY.add('dom/base/offset', function (S, DOM, undefined) {
             offset: function (selector, coordinates, relativeWin) {
                 // getter
                 if (coordinates === undefined) {
-                    var elem = DOM.get(selector),
+                    var elem = Dom.get(selector),
                         ret;
                     if (elem) {
                         ret = getOffset(elem, relativeWin);
@@ -62,7 +61,7 @@ KISSY.add('dom/base/offset', function (S, DOM, undefined) {
                     return ret;
                 }
                 // setter
-                var els = DOM.query(selector), i;
+                var els = Dom.query(selector), i;
                 for (i = els.length - 1; i >= 0; i--) {
                     elem = els[i];
                     setOffset(elem, coordinates);
@@ -88,12 +87,12 @@ KISSY.add('dom/base/offset', function (S, DOM, undefined) {
                 var elem,
                     onlyScrollIfNeeded;
 
-                if (!(elem = DOM.get(selector))) {
+                if (!(elem = Dom.get(selector))) {
                     return;
                 }
 
                 if (container) {
-                    container = DOM.get(container);
+                    container = Dom.get(container);
                 }
 
                 if (!container) {
@@ -102,7 +101,7 @@ KISSY.add('dom/base/offset', function (S, DOM, undefined) {
 
                 // document 归一化到 window
                 if (container.nodeType == NodeType.DOCUMENT_NODE) {
-                    container = getWin(container);
+                    container = getWindow(container);
                 }
 
                 if (S.isPlainObject(alignWithTop)) {
@@ -113,10 +112,10 @@ KISSY.add('dom/base/offset', function (S, DOM, undefined) {
 
                 allowHorizontalScroll = allowHorizontalScroll === undefined ? true : allowHorizontalScroll;
 
-                var isWin = !!getWin(container),
-                    elemOffset = DOM.offset(elem),
-                    eh = DOM.outerHeight(elem),
-                    ew = DOM.outerWidth(elem),
+                var isWin = S.isWindow(container),
+                    elemOffset = Dom.offset(elem),
+                    eh = Dom.outerHeight(elem),
+                    ew = Dom.outerWidth(elem),
                     containerOffset,
                     ch,
                     cw,
@@ -130,11 +129,11 @@ KISSY.add('dom/base/offset', function (S, DOM, undefined) {
 
                 if (isWin) {
                     win = container;
-                    wh = DOM.height(win);
-                    ww = DOM.width(win);
+                    wh = Dom.height(win);
+                    ww = Dom.width(win);
                     winScroll = {
-                        left: DOM.scrollLeft(win),
-                        top: DOM.scrollTop(win)
+                        left: Dom.scrollLeft(win),
+                        top: Dom.scrollTop(win)
                     };
                     // elem 相对 container 可视视窗的距离
                     diffTop = {
@@ -148,28 +147,28 @@ KISSY.add('dom/base/offset', function (S, DOM, undefined) {
                     containerScroll = winScroll;
                 }
                 else {
-                    containerOffset = DOM.offset(container);
+                    containerOffset = Dom.offset(container);
                     ch = container.clientHeight;
                     cw = container.clientWidth;
                     containerScroll = {
-                        left: DOM.scrollLeft(container),
-                        top: DOM.scrollTop(container)
+                        left: Dom.scrollLeft(container),
+                        top: Dom.scrollTop(container)
                     };
                     // elem 相对 container 可视视窗的距离
                     // 注意边框 , offset 是边框到根节点
                     diffTop = {
                         left: elemOffset[LEFT] - (containerOffset[LEFT] +
-                            (parseFloat(DOM.css(container, 'borderLeftWidth')) || 0)),
+                            (parseFloat(Dom.css(container, 'borderLeftWidth')) || 0)),
                         top: elemOffset[TOP] - (containerOffset[TOP] +
-                            (parseFloat(DOM.css(container, 'borderTopWidth')) || 0))
+                            (parseFloat(Dom.css(container, 'borderTopWidth')) || 0))
                     };
                     diffBottom = {
                         left: elemOffset[LEFT] + ew -
                             (containerOffset[LEFT] + cw +
-                                (parseFloat(DOM.css(container, 'borderRightWidth')) || 0)),
+                                (parseFloat(Dom.css(container, 'borderRightWidth')) || 0)),
                         top: elemOffset[TOP] + eh -
                             (containerOffset[TOP] + ch +
-                                (parseFloat(DOM.css(container, 'borderBottomWidth')) || 0))
+                                (parseFloat(Dom.css(container, 'borderBottomWidth')) || 0))
                     };
                 }
 
@@ -177,24 +176,24 @@ KISSY.add('dom/base/offset', function (S, DOM, undefined) {
                     if (diffTop.top < 0 || diffBottom.top > 0) {
                         // 强制向上
                         if (alignWithTop === true) {
-                            DOM.scrollTop(container, containerScroll.top + diffTop.top);
+                            Dom.scrollTop(container, containerScroll.top + diffTop.top);
                         } else if (alignWithTop === false) {
-                            DOM.scrollTop(container, containerScroll.top + diffBottom.top);
+                            Dom.scrollTop(container, containerScroll.top + diffBottom.top);
                         } else {
                             // 自动调整
                             if (diffTop.top < 0) {
-                                DOM.scrollTop(container, containerScroll.top + diffTop.top);
+                                Dom.scrollTop(container, containerScroll.top + diffTop.top);
                             } else {
-                                DOM.scrollTop(container, containerScroll.top + diffBottom.top);
+                                Dom.scrollTop(container, containerScroll.top + diffBottom.top);
                             }
                         }
                     }
                 } else {
                     alignWithTop = alignWithTop === undefined ? true : !!alignWithTop;
                     if (alignWithTop) {
-                        DOM.scrollTop(container, containerScroll.top + diffTop.top);
+                        Dom.scrollTop(container, containerScroll.top + diffTop.top);
                     } else {
-                        DOM.scrollTop(container, containerScroll.top + diffBottom.top);
+                        Dom.scrollTop(container, containerScroll.top + diffBottom.top);
                     }
                 }
 
@@ -203,24 +202,24 @@ KISSY.add('dom/base/offset', function (S, DOM, undefined) {
                         if (diffTop.left < 0 || diffBottom.left > 0) {
                             // 强制向上
                             if (alignWithTop === true) {
-                                DOM.scrollLeft(container, containerScroll.left + diffTop.left);
+                                Dom.scrollLeft(container, containerScroll.left + diffTop.left);
                             } else if (alignWithTop === false) {
-                                DOM.scrollLeft(container, containerScroll.left + diffBottom.left);
+                                Dom.scrollLeft(container, containerScroll.left + diffBottom.left);
                             } else {
                                 // 自动调整
                                 if (diffTop.left < 0) {
-                                    DOM.scrollLeft(container, containerScroll.left + diffTop.left);
+                                    Dom.scrollLeft(container, containerScroll.left + diffTop.left);
                                 } else {
-                                    DOM.scrollLeft(container, containerScroll.left + diffBottom.left);
+                                    Dom.scrollLeft(container, containerScroll.left + diffBottom.left);
                                 }
                             }
                         }
                     } else {
                         alignWithTop = alignWithTop === undefined ? true : !!alignWithTop;
                         if (alignWithTop) {
-                            DOM.scrollLeft(container, containerScroll.left + diffTop.left);
+                            Dom.scrollLeft(container, containerScroll.left + diffTop.left);
                         } else {
-                            DOM.scrollLeft(container, containerScroll.left + diffBottom.left);
+                            Dom.scrollLeft(container, containerScroll.left + diffBottom.left);
                         }
                     }
                 }
@@ -276,22 +275,29 @@ KISSY.add('dom/base/offset', function (S, DOM, undefined) {
     S.each(['Left', 'Top'], function (name, i) {
         var method = SCROLL + name;
 
-        DOM[method] = function (elem, v) {
+        Dom[method] = function (elem, v) {
             if (isNumber(elem)) {
                 return arguments.callee(win, elem);
             }
-            elem = DOM.get(elem);
+            elem = Dom.get(elem);
             var ret,
                 left,
                 top,
-                w = getWin(elem),
+                w,
                 d;
-            if (w) {
+            if (elem && elem.nodeType == NodeType.ELEMENT_NODE) {
+                if (v !== undefined) {
+                    elem[method] = parseFloat(v)
+                } else {
+                    ret = elem[method];
+                }
+            } else {
+                w = getWindow(elem);
                 if (v !== undefined) {
                     v = parseFloat(v);
                     // 注意多 window 情况，不能简单取 win
-                    left = name == 'Left' ? v : DOM.scrollLeft(w);
-                    top = name == 'Top' ? v : DOM.scrollTop(w);
+                    left = name == 'Left' ? v : Dom.scrollLeft(w);
+                    top = name == 'Top' ? v : Dom.scrollTop(w);
                     w['scrollTo'](left, top);
                 } else {
                     //标准
@@ -308,12 +314,6 @@ KISSY.add('dom/base/offset', function (S, DOM, undefined) {
                         }
                     }
                 }
-            } else if (elem.nodeType == NodeType.ELEMENT_NODE) {
-                if (v !== undefined) {
-                    elem[method] = parseFloat(v)
-                } else {
-                    ret = elem[method];
-                }
             }
             return ret;
         }
@@ -321,22 +321,21 @@ KISSY.add('dom/base/offset', function (S, DOM, undefined) {
 
 // add docWidth/Height, viewportWidth/Height getter methods
     S.each(['Width', 'Height'], function (name) {
-        DOM['doc' + name] = function (refWin) {
-            refWin = DOM.get(refWin);
-            var w = getWin(refWin),
-                d = w[DOCUMENT];
+        Dom['doc' + name] = function (refWin) {
+            refWin = Dom.get(refWin);
+            var d = Dom.getDocument(refWin);
             return MAX(
                 //firefox chrome documentElement.scrollHeight< body.scrollHeight
                 //ie standard mode : documentElement.scrollHeight> body.scrollHeight
                 d[DOC_ELEMENT][SCROLL + name],
                 //quirks : documentElement.scrollHeight 最大等于可视窗口多一点？
                 d[BODY][SCROLL + name],
-                DOM[VIEWPORT + name](d));
+                Dom[VIEWPORT + name](d));
         };
 
-        DOM[VIEWPORT + name] = function (refWin) {
-            refWin = DOM.get(refWin);
-            var win = getWin(refWin);
+        Dom[VIEWPORT + name] = function (refWin) {
+            refWin = Dom.get(refWin);
+            var win = getWindow(refWin);
             var ret = win['inner' + name];
             if (UA.mobile && ret) {
                 return ret;
@@ -406,9 +405,9 @@ KISSY.add('dom/base/offset', function (S, DOM, undefined) {
 
     function getPageOffset(el) {
         var pos = getClientPosition(el),
-            w = getWin(el[OWNER_DOCUMENT]);
-        pos.left += DOM[SCROLL_LEFT](w);
-        pos.top += DOM[SCROLL_TOP](w);
+            w = getWindow(el);
+        pos.left += Dom[SCROLL_LEFT](w);
+        pos.top += Dom[SCROLL_TOP](w);
         return pos;
     }
 
@@ -418,7 +417,7 @@ KISSY.add('dom/base/offset', function (S, DOM, undefined) {
 
         // Iterate up the ancestor frame chain, keeping track of the current window
         // and the current element in that window.
-            currentWin = getWin(el[OWNER_DOCUMENT]),
+            currentWin = getWindow(el),
             offset,
             currentEl = el;
         relativeWin = relativeWin || currentWin;
@@ -444,7 +443,7 @@ KISSY.add('dom/base/offset', function (S, DOM, undefined) {
 // 设置 elem 相对 elem.ownerDocument 的坐标
     function setOffset(elem, offset) {
         // set position first, in-case top/left are set even on static elem
-        if (DOM.css(elem, POSITION) === 'static') {
+        if (Dom.css(elem, POSITION) === 'static') {
             elem.style[POSITION] = RELATIVE;
         }
 
@@ -453,13 +452,13 @@ KISSY.add('dom/base/offset', function (S, DOM, undefined) {
             current, key;
 
         for (key in offset) {
-            current = parseFloat(DOM.css(elem, key)) || 0;
+            current = parseFloat(Dom.css(elem, key)) || 0;
             ret[key] = current + offset[key] - old[key];
         }
-        DOM.css(elem, ret);
+        Dom.css(elem, ret);
     }
 
-    return DOM;
+    return Dom;
 }, {
     requires: ['./api']
 });
@@ -474,7 +473,7 @@ KISSY.add('dom/base/offset', function (S, DOM, undefined) {
  - yiminghe@gmail.com：
  - 调整 docWidth , docHeight ,
  viewportHeight , viewportWidth ,scrollLeft,scrollTop 参数，
- 便于放置到 Node 中去，可以完全摆脱 DOM，完全使用 Node
+ 便于放置到 Node 中去，可以完全摆脱 Dom，完全使用 Node
 
 
  TODO:

@@ -3,14 +3,14 @@
  * dom-traversal
  * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
-KISSY.add('dom/base/traversal', function (S, DOM, undefined) {
+KISSY.add('dom/base/traversal', function (S, Dom, undefined) {
 
-    var NodeType = DOM.NodeType,
+    var NodeType = Dom.NodeType,
         CONTAIN_MASK = 16;
 
-    S.mix(DOM,
+    S.mix(Dom,
         /**
-         * @override KISSY.DOM
+         * @override KISSY.Dom
          * @class
          * @singleton
          */
@@ -22,7 +22,7 @@ KISSY.add('dom/base/traversal', function (S, DOM, undefined) {
 
             /**
              * Get the first element that matches the filter,
-             * beginning at the first element of matched elements and progressing up through the DOM tree.
+             * beginning at the first element of matched elements and progressing up through the Dom tree.
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
              * @param {String|Function|String[]|Function[]} filter Selector string or filter function or array
              * @param {HTMLElement|String|HTMLDocument|HTMLElement[]} [context] Search bound element
@@ -59,7 +59,7 @@ KISSY.add('dom/base/traversal', function (S, DOM, undefined) {
              * @return {HTMLElement}
              */
             first: function (selector, filter, allowTextNode) {
-                var elem = DOM.get(selector);
+                var elem = Dom.get(selector);
                 return nth(elem && elem.firstChild, filter, 'nextSibling',
                     undefined, undefined, true, allowTextNode);
             },
@@ -72,7 +72,7 @@ KISSY.add('dom/base/traversal', function (S, DOM, undefined) {
              * @return {HTMLElement}
              */
             last: function (selector, filter, allowTextNode) {
-                var elem = DOM.get(selector);
+                var elem = Dom.get(selector);
                 return nth(elem && elem.lastChild, filter, 'previousSibling',
                     undefined, undefined, true, allowTextNode);
             },
@@ -133,16 +133,16 @@ KISSY.add('dom/base/traversal', function (S, DOM, undefined) {
             },
 
             /**
-             * Check to see if a DOM node is within another DOM node.
-             * @param {HTMLElement|String} container The DOM element that may contain the other element.
-             * @param {HTMLElement|String} contained The DOM element that may be contained by the other element.
+             * Check to see if a Dom node is within another Dom node.
+             * @param {HTMLElement|String} container The Dom element that may contain the other element.
+             * @param {HTMLElement|String} contained The Dom element that may be contained by the other element.
              * @return {Boolean}
              */
             contains: function (container, contained) {
-                container = DOM.get(container);
-                contained = DOM.get(contained);
+                container = Dom.get(container);
+                contained = Dom.get(contained);
                 if (container && contained) {
-                    return DOM._contains(container, contained);
+                    return Dom._contains(container, contained);
                 }
                 return false;
             },
@@ -152,7 +152,7 @@ KISSY.add('dom/base/traversal', function (S, DOM, undefined) {
              * @param {HTMLElement|String} s2 elements or selector string to find matched elements.
              */
             index: function (selector, s2) {
-                var els = DOM.query(selector),
+                var els = Dom.query(selector),
                     c,
                     n = 0,
                     p,
@@ -173,7 +173,7 @@ KISSY.add('dom/base/traversal', function (S, DOM, undefined) {
                     return n;
                 }
 
-                els2 = DOM.query(s2);
+                els2 = Dom.query(s2);
 
                 if (typeof s2 === 'string') {
                     return S.indexOf(el, els2);
@@ -183,15 +183,15 @@ KISSY.add('dom/base/traversal', function (S, DOM, undefined) {
             },
 
             /**
-             * Check to see if a DOM node is equal with another DOM node.
+             * Check to see if a Dom node is equal with another Dom node.
              * @param {HTMLElement|String} n1
              * @param {HTMLElement|String} n2
              * @return {Boolean}
-             * @member KISSY.DOM
+             * @member KISSY.Dom
              */
             equals: function (n1, n2) {
-                n1 = DOM.query(n1);
-                n2 = DOM.query(n2);
+                n1 = Dom.query(n1);
+                n2 = Dom.query(n2);
                 if (n1.length != n2.length) {
                     return false;
                 }
@@ -209,7 +209,7 @@ KISSY.add('dom/base/traversal', function (S, DOM, undefined) {
     // direction 可为 parentNode, nextSibling, previousSibling
     // context : 到某个阶段不再查找直接返回
     function nth(elem, filter, direction, extraFilter, context, includeSef, allowTextNode) {
-        if (!(elem = DOM.get(elem))) {
+        if (!(elem = Dom.get(elem))) {
             return null;
         }
         if (filter === 0) {
@@ -221,7 +221,7 @@ KISSY.add('dom/base/traversal', function (S, DOM, undefined) {
         if (!elem) {
             return null;
         }
-        context = (context && DOM.get(context)) || null;
+        context = (context && Dom.get(context)) || null;
 
         if (filter === undefined) {
             // 默认取 1
@@ -269,11 +269,11 @@ KISSY.add('dom/base/traversal', function (S, DOM, undefined) {
                 return true;
             }
             for (i = 0; i < l; i++) {
-                if (DOM.test(elem, filter[i])) {
+                if (Dom.test(elem, filter[i])) {
                     return true;
                 }
             }
-        } else if (DOM.test(elem, filter)) {
+        } else if (Dom.test(elem, filter)) {
             return true;
         }
         return false;
@@ -285,7 +285,7 @@ KISSY.add('dom/base/traversal', function (S, DOM, undefined) {
             tmp,
             i,
             el,
-            elem = DOM.get(selector),
+            elem = Dom.get(selector),
             parentNode = elem;
 
         if (elem && parent) {
@@ -305,14 +305,14 @@ KISSY.add('dom/base/traversal', function (S, DOM, undefined) {
                 ret.push(el);
             }
             if (filter) {
-                ret = DOM.filter(ret, filter);
+                ret = Dom.filter(ret, filter);
             }
         }
 
         return ret;
     }
 
-    return DOM;
+    return Dom;
 }, {
     requires: ['./api']
 });

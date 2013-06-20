@@ -3,7 +3,7 @@
  * selector
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
-KISSY.add('dom/base/selector', function (S, DOM) {
+KISSY.add('dom/base/selector', function (S, Dom) {
 
     var doc = S.Env.host.document,
         docElem = doc.documentElement,
@@ -14,7 +14,7 @@ KISSY.add('dom/base/selector', function (S, DOM) {
             docElem.msMatchesSelector,
         isArray = S.isArray,
         makeArray = S.makeArray,
-        isNodeList = DOM._isNodeList,
+        isDomNodeList = Dom.isDomNodeList,
         SPACE = ' ',
         push = Array.prototype.push,
         RE_QUERY = /^(?:#([\w-]+))?\s*([\w-]+|\*)?\.?([\w-]+)?$/,
@@ -51,18 +51,18 @@ KISSY.add('dom/base/selector', function (S, DOM) {
             } else {
                 ret = [];
                 for (i = 0; i < contextsLen; i++) {
-                    push.apply(ret, DOM._selectInternal(selector, contexts[i]));
+                    push.apply(ret, Dom._selectInternal(selector, contexts[i]));
                 }
                 // multiple contexts unique
                 if (ret.length > 1 && contextsLen > 1) {
-                    DOM.unique(ret);
+                    Dom.unique(ret);
                 }
             }
         }
         // 不写 context，就是包装一下
         else {
             // 1.常见的单个元素
-            // DOM.query(document.getElementById('xx'))
+            // Dom.query(document.getElementById('xx'))
             if (selector['nodeType'] || selector['setTimeout']) {
                 ret = [selector];
             }
@@ -71,17 +71,17 @@ KISSY.add('dom/base/selector', function (S, DOM) {
                 ret = selector['getDOMNodes']();
             }
             // 3.常见的数组
-            // var x=DOM.query('.l');
-            // DOM.css(x,'color','red');
+            // var x=Dom.query('.l');
+            // Dom.css(x,'color','red');
             else if (isArray(selector)) {
                 ret = selector;
             }
             // 4.selector.item
-            // DOM.query(document.getElementsByTagName('a'))
+            // Dom.query(document.getElementsByTagName('a'))
             // note:
             // document.createElement('select').item 已经在 1 处理了
             // S.all().item 已经在 2 处理了
-            else if (isNodeList(selector)) {
+            else if (isDomNodeList(selector)) {
                 ret = makeArray(selector);
             } else {
                 ret = [ selector ];
@@ -94,7 +94,7 @@ KISSY.add('dom/base/selector', function (S, DOM) {
                 ret = [];
                 for (i = 0; i < len; i++) {
                     for (ci = 0; ci < contextsLen; ci++) {
-                        if (DOM._contains(contexts[ci], tmp[i])) {
+                        if (Dom._contains(contexts[ci], tmp[i])) {
                             ret.push(tmp[i]);
                             break;
                         }
@@ -127,9 +127,9 @@ KISSY.add('dom/base/selector', function (S, DOM) {
         return value == '*' || el.nodeName.toLowerCase() === value.toLowerCase();
     }
 
-    S.mix(DOM,
+    S.mix(Dom,
         /**
-         * @override KISSY.DOM
+         * @override KISSY.Dom
          * @class
          * @singleton
          */
@@ -192,12 +192,12 @@ KISSY.add('dom/base/selector', function (S, DOM) {
             },
 
             /**
-             * Sorts an array of DOM elements, in place, with the duplicates removed.
-             * Note that this only works on arrays of DOM elements, not strings or numbers.
-             * @param {HTMLElement[]} The Array of DOM elements.
+             * Sorts an array of Dom elements, in place, with the duplicates removed.
+             * Note that this only works on arrays of Dom elements, not strings or numbers.
+             * @param {HTMLElement[]} The Array of Dom elements.
              * @method
              * @return {HTMLElement[]}
-             * @member KISSY.DOM
+             * @member KISSY.Dom
              */
             unique: (function () {
                 var hasDuplicate,
@@ -218,7 +218,7 @@ KISSY.add('dom/base/selector', function (S, DOM) {
                         return 0;
                     }
 
-                    return DOM._compareNodeOrder(a, b);
+                    return Dom._compareNodeOrder(a, b);
                 }
 
                 // 排序去重
@@ -249,7 +249,7 @@ KISSY.add('dom/base/selector', function (S, DOM) {
              * @param {String|Function} filter Selector string or filter function
              * @param {String|HTMLElement[]|HTMLDocument} [context] Context under which to find matched elements
              * @return {HTMLElement[]}
-             * @member KISSY.DOM
+             * @member KISSY.Dom
              */
             filter: function (selector, filter, context) {
                 var elems = query(selector, context),
@@ -292,7 +292,7 @@ KISSY.add('dom/base/selector', function (S, DOM) {
                 if (S.isFunction(filter)) {
                     ret = S.filter(elems, filter);
                 } else {
-                    ret = DOM._matchesInternal(filter, elems);
+                    ret = Dom._matchesInternal(filter, elems);
                 }
 
                 return ret;
@@ -303,16 +303,16 @@ KISSY.add('dom/base/selector', function (S, DOM) {
              * @param {String|HTMLElement[]} selector Matched elements
              * @param {String|Function} filter Selector string or filter function
              * @param {String|HTMLElement[]|HTMLDocument} [context] Context under which to find matched elements
-             * @member KISSY.DOM
+             * @member KISSY.Dom
              * @return {Boolean}
              */
             test: function (selector, filter, context) {
                 var elements = query(selector, context);
-                return elements.length && (DOM.filter(elements, filter, context).length === elements.length);
+                return elements.length && (Dom.filter(elements, filter, context).length === elements.length);
             }
         });
 
-    return DOM;
+    return Dom;
 }, {
     requires: ['./api']
 });

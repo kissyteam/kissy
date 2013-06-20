@@ -4,7 +4,7 @@
  */
 KISSY.use("ua,node,overlay,dd/plugin/constrain,component/plugin/drag",
     function (S, UA, Node, Overlay, ConstrainPlugin, DragPlugin) {
-        var DOM = S.DOM, $ = Node.all;
+        var Dom = S.Dom, $ = Node.all;
         var Gesture = S.Event.Gesture;
         var Dialog = Overlay.Dialog;
 
@@ -184,8 +184,8 @@ KISSY.use("ua,node,overlay,dd/plugin/constrain,component/plugin/drag",
 
                         jasmine.simulateForDrag(document, Gesture.move, {
 
-                            clientX: xy[0] + DOM.viewportWidth(),
-                            clientY: xy[1] + DOM.viewportHeight()
+                            clientX: xy[0] + Dom.viewportWidth(),
+                            clientY: xy[1] + Dom.viewportHeight()
                         });
 
                     });
@@ -195,8 +195,8 @@ KISSY.use("ua,node,overlay,dd/plugin/constrain,component/plugin/drag",
                     runs(function () {
                         jasmine.simulateForDrag(document, Gesture.end, {
 
-                            clientX: xy[0] + DOM.viewportWidth(),
-                            clientY: xy[1] + DOM.viewportHeight()
+                            clientX: xy[0] + Dom.viewportWidth(),
+                            clientY: xy[1] + Dom.viewportHeight()
                         });
                     });
                     waits(100);
@@ -206,8 +206,8 @@ KISSY.use("ua,node,overlay,dd/plugin/constrain,component/plugin/drag",
                             width = d.get("el").outerWidth(),
                             height = d.get("el").outerHeight();
 
-                        expect(DOM.viewportWidth() - width).toBeEqual(dxy[0]);
-                        expect(DOM.viewportHeight() - height).toBeEqual(dxy[1]);
+                        expect(Dom.viewportWidth() - width).toBeEqual(dxy[0]);
+                        expect(Dom.viewportHeight() - height).toBeEqual(dxy[1]);
                     });
 
                     runs(function () {

@@ -2,7 +2,7 @@
  * tc about script exec when clone and insert
  * @author yiminghe@gmail.com
  */
-KISSY.use("dom,core", function (S, DOM) {
+KISSY.use("dom,core", function (S, Dom) {
     var $= S.all;
     var div = $('<div style="display:none"></div>').prependTo("body");
 
@@ -24,13 +24,13 @@ KISSY.use("dom,core", function (S, DOM) {
         o1 = window.scriptTest1 = 1;
         o2 = window.scriptTest2 = 1;
 
-        var scriptTestHolder = DOM.get("#scriptTestHolder");
+        var scriptTestHolder = Dom.get("#scriptTestHolder");
 
         it("behave right", function () {
 
             expect(o1).toBe(1);
             expect(o2).toBe(1);
-            scriptTestHolder2 = DOM.clone(scriptTestHolder, true);
+            scriptTestHolder2 = Dom.clone(scriptTestHolder, true);
 
             waits(10);
 
@@ -49,7 +49,7 @@ KISSY.use("dom,core", function (S, DOM) {
 
             runs(function () {
                 // div.prepend(scriptTestHolder2);
-                DOM.prepend(scriptTestHolder2, div);
+                Dom.prepend(scriptTestHolder2, div);
             });
 
             waits(10);

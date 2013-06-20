@@ -151,7 +151,7 @@ KISSY.add("menu/submenu", function (S, Node, MenuItem, SubMenuRender) {
                         }
                     }
                     // enter as click
-                    else if (e.keyCode == KeyCode.ENTER) {
+                    else if (keyCode == KeyCode.ENTER) {
                         return this.performActionInternal(e);
                     }
                     else {
@@ -190,12 +190,6 @@ KISSY.add("menu/submenu", function (S, Node, MenuItem, SubMenuRender) {
         },
         {
             ATTRS: {
-                decorateChildCls: {
-                    valueFn: function () {
-                        return this.prefixCls + 'popupmenu';
-                    }
-                },
-
                 /**
                  * The delay before opening the sub menu in seconds.  (This number is
                  * arbitrary, it would be good to get some user studies or a designer to play
@@ -234,6 +228,15 @@ KISSY.add("menu/submenu", function (S, Node, MenuItem, SubMenuRender) {
                     setter: function (m) {
                         if (m.isController) {
                             m.setInternal('parent', this);
+                            var align = {
+                                node: this.el,
+                                points: ['tr', 'tl'],
+                                overflow: {
+                                    adjustX: 1,
+                                    adjustY: 1
+                                }
+                            };
+                            S.mix(m.get('align'), align, false);
                         }
                     }
                 },
@@ -253,7 +256,7 @@ KISSY.add("menu/submenu", function (S, Node, MenuItem, SubMenuRender) {
             align,
             menu = self.get('menu');
 
-        el = self.get('el');
+        el = self.el;
         align = menu.get("align");
         delete align.node;
         align = S.clone(align);
@@ -267,7 +270,7 @@ KISSY.add("menu/submenu", function (S, Node, MenuItem, SubMenuRender) {
          to allow the assist technology to follow the menu hierarchy
          and assist the user in determining context during menu navigation.
          */
-        el.attr("aria-haspopup", menu.get("el").attr("id"));
+        el.attr("aria-haspopup", menu.el.attr("id"));
 
     }
 

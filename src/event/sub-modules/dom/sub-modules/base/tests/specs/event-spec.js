@@ -2,7 +2,7 @@
  * @module  event-spec
  * @author yiminghe@gmail.com, gonghao@ghsky.com
  */
-KISSY.use("dom,event/dom/base,ua", function (S, DOM, Event, UA) {
+KISSY.use("dom,event/dom/base,ua", function (S, Dom, Event, UA) {
 
     var tpl = '<div id="event-test-data" \
     style="border: 1px solid #ccc; height: 50px; overflow-y: \
@@ -38,23 +38,23 @@ KISSY.use("dom,event/dom/base,ua", function (S, DOM, Event, UA) {
         // simulate mouse event on any element
             simulate = function (target, type, relatedTarget) {
                 if (typeof target === 'string') {
-                    target = DOM.get(target);
+                    target = Dom.get(target);
                 }
                 jasmine.simulate(target, type, { relatedTarget: relatedTarget });
             };
 
         beforeEach(function () {
-            DOM.prepend(DOM.create(tpl), 'body');
+            Dom.prepend(Dom.create(tpl), 'body');
         });
 
         afterEach(function () {
-            DOM.remove('#event-test-data');
+            Dom.remove('#event-test-data');
         });
 
         describe('add event', function () {
 
             it('should support batch adding.', function () {
-                var lis = DOM.query('#bar li'), total = lis.length, count = 0;
+                var lis = Dom.query('#bar li'), total = lis.length, count = 0;
 
                 Event.on(lis, 'click', function () {
                     count++;
@@ -71,7 +71,7 @@ KISSY.use("dom,event/dom/base,ua", function (S, DOM, Event, UA) {
             });
 
             it('should execute in order.', function () {
-                var a = DOM.get('#link-a');
+                var a = Dom.get('#link-a');
                 var result = [];
                 Event.on(a, 'click', function () {
                     result.push(FIRST);
@@ -92,7 +92,7 @@ KISSY.use("dom,event/dom/base,ua", function (S, DOM, Event, UA) {
             });
 
             it("should support data bind when on and unbind when remove", function () {
-                var a = DOM.get('#link-a'), data;
+                var a = Dom.get('#link-a'), data;
                 Event.on(a, "click", {
                     fn: function (e, d) {
                         data = d;
@@ -118,7 +118,7 @@ KISSY.use("dom,event/dom/base,ua", function (S, DOM, Event, UA) {
             });
 
             it('should prevent default behavior (do nothing if using "return false;").', function () {
-                var cb1 = DOM.get('#checkbox-1'), cb2 = DOM.get('#checkbox-2');
+                var cb1 = Dom.get('#checkbox-1'), cb2 = Dom.get('#checkbox-2');
 
                 // init
                 cb1.checked = false;
@@ -142,7 +142,7 @@ KISSY.use("dom,event/dom/base,ua", function (S, DOM, Event, UA) {
             });
 
             it('should stop event\'s propagation.', function () {
-                var li_c = DOM.get('#li-c'), c1 = DOM.get('#link-c1'), c2 = DOM.get('#link-c2');
+                var li_c = Dom.get('#li-c'), c1 = Dom.get('#link-c1'), c2 = Dom.get('#link-c2');
                 var result;
                 Event.on(c2, 'click', function (evt) {
                     evt.stopPropagation();
@@ -173,7 +173,7 @@ KISSY.use("dom,event/dom/base,ua", function (S, DOM, Event, UA) {
             });
 
             it("should stop event's propagation immediately.", function () {
-                var li_d = DOM.get('#li-d'), d1 = DOM.get('#link-d1'), d2 = DOM.get('#link-d2');
+                var li_d = Dom.get('#li-d'), d1 = Dom.get('#link-d1'), d2 = Dom.get('#link-d2');
                 var result = [];
                 Event.on(d1, 'click', function () {
                     result.push(FIRST);
@@ -216,7 +216,7 @@ KISSY.use("dom,event/dom/base,ua", function (S, DOM, Event, UA) {
             });
 
             it('should do nothing else to event\'s propagation if using "return false;".', function () {
-                var li_e = DOM.get('#li-e'), e1 = DOM.get('#link-e1'), e2 = DOM.get('#link-e2');
+                var li_e = Dom.get('#li-e'), e1 = Dom.get('#link-e1'), e2 = Dom.get('#link-e2');
                 var result = [];
                 Event.on(e1, 'click', function () {
                     result.push(FIRST);
@@ -264,7 +264,7 @@ KISSY.use("dom,event/dom/base,ua", function (S, DOM, Event, UA) {
         describe('remove event', function () {
 
             it('should remove the specified event handler function.', function () {
-                var f = DOM.get('#link-f');
+                var f = Dom.get('#link-f');
                 var result = [];
 
                 function foo() {
@@ -288,7 +288,7 @@ KISSY.use("dom,event/dom/base,ua", function (S, DOM, Event, UA) {
 
 
             it('should remove the specified event handler function and context.', function () {
-                var f = DOM.get('#link-f');
+                var f = Dom.get('#link-f');
 
                 Event.detach(f);
 
@@ -312,7 +312,7 @@ KISSY.use("dom,event/dom/base,ua", function (S, DOM, Event, UA) {
             });
 
             it('should remove all the event handlers of the specified event type.', function () {
-                var g = DOM.get('#link-g');
+                var g = Dom.get('#link-g');
                 var result = [];
                 Event.on(g, 'click', function () {
                     result.push(FIRST);
@@ -333,7 +333,7 @@ KISSY.use("dom,event/dom/base,ua", function (S, DOM, Event, UA) {
             });
 
             it('should remove all the event handler of the specified element', function () {
-                var h = DOM.get('#link-h');
+                var h = Dom.get('#link-h');
 
                 var result = [];
 
@@ -359,8 +359,8 @@ KISSY.use("dom,event/dom/base,ua", function (S, DOM, Event, UA) {
 
             it('call remove event from descendants', function () {
 
-                var bar = DOM.get('#bar'),
-                    foo = DOM.get('#foo'),
+                var bar = Dom.get('#bar'),
+                    foo = Dom.get('#foo'),
                     bard = 0,
                     bard1 = 0,
                     food = 0,
@@ -455,7 +455,7 @@ KISSY.use("dom,event/dom/base,ua", function (S, DOM, Event, UA) {
 
             it('should treat the element itself as the context.', function () {
 
-                var foo = DOM.get('#foo');
+                var foo = Dom.get('#foo');
 
                 Event.on(foo, 'click', function () {
                     expect(this).toBe(foo);
@@ -467,7 +467,7 @@ KISSY.use("dom,event/dom/base,ua", function (S, DOM, Event, UA) {
 
             it('should support using custom object as the context.', function () {
 
-                var bar = DOM.get('#bar'),
+                var bar = Dom.get('#bar'),
                     TEST = {
                         foo: 'only for tesing'
                     };
@@ -523,7 +523,7 @@ KISSY.use("dom,event/dom/base,ua", function (S, DOM, Event, UA) {
 
         it('should no memory leak for dom node', function () {
 
-            var domNode = DOM.create("<div></div>"), i, noop = function () {
+            var domNode = Dom.create("<div></div>"), i, noop = function () {
             }, noop2 = function () {
             }, noop3 = function () {
             };

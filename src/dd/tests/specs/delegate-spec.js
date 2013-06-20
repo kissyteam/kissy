@@ -2,7 +2,7 @@
  * @module  delegate-spec
  * @author yiminghe@gmail.com
  */
-KISSY.use("ua,node,dd,dom,dd/plugin/proxy,dd/droppable", function (S, UA, Node, DD, DOM, Proxy) {
+KISSY.use("ua,node,dd,dom,dd/plugin/proxy,dd/droppable", function (S, UA, Node, DD, Dom, Proxy) {
     var $ = Node.all,
         Gesture = S.Event.Gesture,
         DraggableDelegate = DD.DraggableDelegate,
@@ -72,8 +72,8 @@ KISSY.use("ua,node,dd,dom,dd/plugin/proxy,dd/droppable", function (S, UA, Node, 
 
             runs(function () {
                 jasmine.simulateForDrag(c2.one(".cheader")[0], Gesture.start, {
-                    clientX: c2.offset().left + 5 - DOM.scrollLeft(),
-                    clientY: c2.offset().top + 5 - DOM.scrollTop()
+                    clientX: c2.offset().left + 5 - Dom.scrollLeft(),
+                    clientY: c2.offset().top + 5 - Dom.scrollTop()
                 });
             });
 
@@ -82,16 +82,16 @@ KISSY.use("ua,node,dd,dom,dd/plugin/proxy,dd/droppable", function (S, UA, Node, 
             // 10px move to start
             runs(function () {
                 jasmine.simulateForDrag(document, Gesture.move, {
-                    clientX: c2.offset().left + 15 - DOM.scrollLeft(),
-                    clientY: c2.offset().top + 15 - DOM.scrollTop()
+                    clientX: c2.offset().left + 15 - Dom.scrollLeft(),
+                    clientY: c2.offset().top + 15 - Dom.scrollTop()
                 });
             });
 
             waits(100);
             runs(function () {
                 jasmine.simulateForDrag(document, Gesture.move, {
-                    clientX: c1.offset().left + 5 - DOM.scrollLeft(),
-                    clientY: c1.offset().top + 5 - DOM.scrollTop()
+                    clientX: c1.offset().left + 5 - Dom.scrollLeft(),
+                    clientY: c1.offset().top + 5 - Dom.scrollTop()
                 });
             });
 
@@ -99,8 +99,8 @@ KISSY.use("ua,node,dd,dom,dd/plugin/proxy,dd/droppable", function (S, UA, Node, 
             waits(100);
             runs(function () {
                 jasmine.simulateForDrag(document, Gesture.move, {
-                    clientX: c1.offset().left + 6 - DOM.scrollLeft(),
-                    clientY: c1.offset().top + 6 - DOM.scrollTop()
+                    clientX: c1.offset().left + 6 - Dom.scrollLeft(),
+                    clientY: c1.offset().top + 6 - Dom.scrollTop()
                 });
             });
 
@@ -108,8 +108,8 @@ KISSY.use("ua,node,dd,dom,dd/plugin/proxy,dd/droppable", function (S, UA, Node, 
             waits(100);
             runs(function () {
                 jasmine.simulateForDrag(document, Gesture.end, {
-                    clientX: c1.offset().left + 6 - DOM.scrollLeft(),
-                    clientY: c1.offset().top + 6 - DOM.scrollTop()
+                    clientX: c1.offset().left + 6 - Dom.scrollLeft(),
+                    clientY: c1.offset().top + 6 - Dom.scrollTop()
                 });
             });
 
@@ -184,8 +184,8 @@ KISSY.use("ua,node,dd,dom,dd/plugin/proxy,dd/droppable", function (S, UA, Node, 
 
             runs(function () {
                 jasmine.simulateForDrag(c2.one(".cheader")[0], Gesture.start, {
-                    clientX: c2.offset().left + 5 - DOM.scrollLeft(),
-                    clientY: c2.offset().top + 5 - DOM.scrollTop()
+                    clientX: c2.offset().left + 5 - Dom.scrollLeft(),
+                    clientY: c2.offset().top + 5 - Dom.scrollTop()
                 });
             });
 
@@ -194,16 +194,16 @@ KISSY.use("ua,node,dd,dom,dd/plugin/proxy,dd/droppable", function (S, UA, Node, 
             // 10px move to start
             runs(function () {
                 jasmine.simulateForDrag(document, Gesture.move, {
-                    clientX: c2.offset().left + 15 - DOM.scrollLeft(),
-                    clientY: c2.offset().top + 15 - DOM.scrollTop()
+                    clientX: c2.offset().left + 15 - Dom.scrollLeft(),
+                    clientY: c2.offset().top + 15 - Dom.scrollTop()
                 });
             });
 
             waits(100);
             runs(function () {
                 jasmine.simulateForDrag(document, Gesture.move, {
-                    clientX: c1.offset().left + 5 - DOM.scrollLeft(),
-                    clientY: c1.offset().top + 5 - DOM.scrollTop()
+                    clientX: c1.offset().left + 5 - Dom.scrollLeft(),
+                    clientY: c1.offset().top + 5 - Dom.scrollTop()
                 });
             });
 
@@ -211,8 +211,8 @@ KISSY.use("ua,node,dd,dom,dd/plugin/proxy,dd/droppable", function (S, UA, Node, 
             waits(100);
             runs(function () {
                 jasmine.simulateForDrag(document, Gesture.move, {
-                    clientX: c1.offset().left + 6 - DOM.scrollLeft(),
-                    clientY: c1.offset().top + 6 - DOM.scrollTop()
+                    clientX: c1.offset().left + 6 - Dom.scrollLeft(),
+                    clientY: c1.offset().top + 6 - Dom.scrollTop()
                 });
             });
 
@@ -220,8 +220,8 @@ KISSY.use("ua,node,dd,dom,dd/plugin/proxy,dd/droppable", function (S, UA, Node, 
             waits(100);
             runs(function () {
                 jasmine.simulateForDrag(document, Gesture.end, {
-                    clientX: c1.offset().left + 6 - DOM.scrollLeft(),
-                    clientY: c1.offset().top + 6 - DOM.scrollTop()
+                    clientX: c1.offset().left + 6 - Dom.scrollLeft(),
+                    clientY: c1.offset().top + 6 - Dom.scrollTop()
                 });
             });
 

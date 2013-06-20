@@ -17,7 +17,7 @@
 <input type="file" id="test" name='test'/>
 
 <script>
-    KISSY.use("node,io", function (S, Node, IO) {
+    KISSY.use("node,io", function (S, Node, Io) {
         var $ = Node.all;
         var f = $("#test"), domF = f[0];
 
@@ -25,7 +25,7 @@
             var formData = new FormData();
             formData.append(domF.name, domF.files[0]);
 
-            var xhr = IO({
+            var xhr = Io({
                 url:'./upload.jss',
                 type:"post",
                 processData:false,

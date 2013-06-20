@@ -14,7 +14,7 @@ KISSY.add("editor/selectionFix", function (S, Editor) {
         NULL = null,
         UA = S.UA,
         Event = S.Event,
-        DOM = S.DOM,
+        Dom = S.Dom,
         Node = S.Node,
         KES = Editor.SELECTION;
 
@@ -342,7 +342,7 @@ KISSY.add("editor/selectionFix", function (S, Editor) {
 
 
         function isBlankParagraph(block) {
-            return block.outerHTML().match(emptyParagraphRegexp);
+            return block.outerHtml().match(emptyParagraphRegexp);
         }
 
         var isNotWhitespace = Editor.Walker.whitespaces(TRUE),
@@ -408,14 +408,14 @@ KISSY.add("editor/selectionFix", function (S, Editor) {
                     if (isBlankParagraph(fixedBlock)) {
                         var element = fixedBlock.next(nextValidEl, 1);
                         if (element &&
-                            element[0].nodeType == DOM.NodeType.ELEMENT_NODE &&
+                            element[0].nodeType == Dom.NodeType.ELEMENT_NODE &&
                             !cannotCursorPlaced[ element ]) {
                             range.moveToElementEditablePosition(element);
                             fixedBlock._4e_remove();
                         } else {
                             element = fixedBlock.prev(nextValidEl, 1);
                             if (element &&
-                                element[0].nodeType == DOM.NodeType.ELEMENT_NODE &&
+                                element[0].nodeType == Dom.NodeType.ELEMENT_NODE &&
                                 !cannotCursorPlaced[element]) {
                                 range.moveToElementEditablePosition(element,
                                     // 空行的话还是要移到开头的

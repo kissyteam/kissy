@@ -246,10 +246,10 @@ KISSY.add("editor/clipboard", function (S, Editor, KERange, KES) {
                 if (/(class="?Mso|style="[^"]*\bmso\-|w:WordDocument)/.test(html)) {
                     // 动态载入 word 过滤规则
                     S.use("editor/plugin/word-filter", function (S, wordFilter) {
-                        editor.insertHTML(wordFilter.toDataFormat(html, editor));
+                        editor.insertHtml(wordFilter.toDataFormat(html, editor));
                     });
                 } else {
-                    editor.insertHTML(html);
+                    editor.insertHtml(html);
                 }
             }, 0);
         }

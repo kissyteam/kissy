@@ -284,7 +284,7 @@ describe('lang.js', function () {
         expect(S.isPlainObject(new Date)).toBe(false);
         expect(S.isPlainObject(fn)).toBe(false);
 
-        // DOM Element
+        // Dom Element
         if (web) {
             expect(S.isPlainObject(doc.createElement('div'))).toBe(false);
         }

@@ -5,7 +5,7 @@
 KISSY.use("ua,node,dd,dd/plugin/proxy", function (S, UA, Node, DD,Proxy) {
     var Draggable = DD.Draggable,
         Gesture= S.Event.Gesture,
-        DOM = S.DOM;
+        Dom = S.Dom;
     var ie = document['documentMode'] || UA['ie'];
 
 
@@ -35,8 +35,8 @@ KISSY.use("ua,node,dd,dd/plugin/proxy", function (S, UA, Node, DD,Proxy) {
 
             dragXy = dragNode.offset();
             jasmine.simulateForDrag(dragNode[0], Gesture.start, {
-                clientX: dragXy.left + 10 - DOM.scrollLeft(),
-                clientY: dragXy.top + 10 - DOM.scrollTop()
+                clientX: dragXy.left + 10 - Dom.scrollLeft(),
+                clientY: dragXy.top + 10 - Dom.scrollTop()
             });
 
 
@@ -45,8 +45,8 @@ KISSY.use("ua,node,dd,dd/plugin/proxy", function (S, UA, Node, DD,Proxy) {
             // 10px move to start
             runs(function () {
                 jasmine.simulateForDrag(document, Gesture.move, {
-                    clientX: dragXy.left + 15 - DOM.scrollLeft(),
-                    clientY: dragXy.top + 15 - DOM.scrollTop()
+                    clientX: dragXy.left + 15 - Dom.scrollLeft(),
+                    clientY: dragXy.top + 15 - Dom.scrollTop()
                 });
             });
 
@@ -58,8 +58,8 @@ KISSY.use("ua,node,dd,dd/plugin/proxy", function (S, UA, Node, DD,Proxy) {
 
             runs(function () {
                 jasmine.simulateForDrag(document, Gesture.end, {
-                    clientX: dragXy.left + 15 - DOM.scrollLeft(),
-                    clientY: dragXy.top + 15 - DOM.scrollTop()
+                    clientX: dragXy.left + 15 - Dom.scrollLeft(),
+                    clientY: dragXy.top + 15 - Dom.scrollTop()
                 });
             });
 

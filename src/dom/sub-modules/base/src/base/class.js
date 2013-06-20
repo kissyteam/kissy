@@ -3,10 +3,10 @@
  * @ignore
  * @author yiminghe@gmail.com
  */
-KISSY.add('dom/base/class', function (S, DOM) {
+KISSY.add('dom/base/class', function (S, Dom) {
 
     var slice = [].slice,
-        NodeType = DOM.NodeType,
+        NodeType = Dom.NodeType,
         RE_SPLIT = /[\.\s]\s*\.?/;
 
     function strToArray(str) {
@@ -41,17 +41,17 @@ KISSY.add('dom/base/class', function (S, DOM) {
         return function (selector, className) {
             var classNames = strToArray(className),
                 extraArgs = slice.call(arguments, 2);
-            DOM.query(selector).each(function (elem) {
+            Dom.query(selector).each(function (elem) {
                 if (elem.nodeType == NodeType.ELEMENT_NODE) {
-                    DOM[method].apply(DOM, [elem, classNames].concat(extraArgs));
+                    Dom[method].apply(Dom, [elem, classNames].concat(extraArgs));
                 }
             });
         }
     }
 
-    S.mix(DOM,
+    S.mix(Dom,
         /**
-         * @override KISSY.DOM
+         * @override KISSY.Dom
          * @class
          * @singleton
          */
@@ -85,8 +85,8 @@ KISSY.add('dom/base/class', function (S, DOM) {
              * @return {Boolean}
              */
             hasClass: function (selector, className) {
-                var elem = DOM.get(selector);
-                return elem && elem.nodeType == NodeType.ELEMENT_NODE && DOM._hasClass(elem, strToArray(className));
+                var elem = Dom.get(selector);
+                return elem && elem.nodeType == NodeType.ELEMENT_NODE && Dom._hasClass(elem, strToArray(className));
             },
 
             /**
@@ -100,8 +100,8 @@ KISSY.add('dom/base/class', function (S, DOM) {
              * multiple class names is separated by space
              */
             replaceClass: function (selector, oldClassName, newClassName) {
-                DOM.removeClass(selector, oldClassName);
-                DOM.addClass(selector, newClassName);
+                Dom.removeClass(selector, oldClassName);
+                Dom.addClass(selector, newClassName);
             },
 
             /**
@@ -137,7 +137,7 @@ KISSY.add('dom/base/class', function (S, DOM) {
             // latest firefox/ie10 does not support
         });
 
-    return DOM;
+    return Dom;
 
 }, {
     requires: ['./api']

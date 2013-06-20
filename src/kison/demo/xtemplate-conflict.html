@@ -70,9 +70,9 @@
         return js_beautify(str, opts);
     }
 
-    KISSY.use("kison,io,node", function (S, KISON, IO) {
+    KISSY.use("kison,io,node", function (S, KISON, Io) {
 
-        IO({
+        Io({
             url: 'xtemplate-grammar-conflict.kison',
             dataType: 'text',
             success: function (data) {

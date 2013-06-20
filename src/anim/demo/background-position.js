@@ -3,7 +3,7 @@
  * special patch for anim backgroundPosition
  * @author yiminghe@gmail.com
  */
-KISSY.add('anim/background-position', function (S, DOM, Anim, Fx) {
+KISSY.add('anim/background-position', function (S, Dom, Anim, Fx) {
 
     function numeric(bp) {
         bp = bp.replace(/left|top/g, '0px')
@@ -53,7 +53,7 @@ KISSY.add('anim/background-position', function (S, DOM, Anim, Fx) {
         },
 
         cur:function () {
-            return DOM.css(this.anim.config.node, 'backgroundPosition');
+            return Dom.css(this.anim.config.node, 'backgroundPosition');
         },
 
         update:function () {
@@ -63,7 +63,7 @@ KISSY.add('anim/background-position', function (S, DOM, Anim, Fx) {
                 from = self.from,
                 to = self.to,
                 val = self.interpolate(from, to, self.pos);
-            DOM.css(node, prop, val);
+            Dom.css(node, prop, val);
         }
 
     });

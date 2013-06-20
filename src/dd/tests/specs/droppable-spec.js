@@ -3,7 +3,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.use("ua,node,dd,dd/droppable", function (S, UA, Node, DD, Droppable) {
-    var DOM = S.DOM,
+    var Dom = S.Dom,
         DDM = DD.DDM,
         Gesture = S.Event.Gesture,
         Draggable = DD.Draggable;
@@ -32,8 +32,8 @@ KISSY.use("ua,node,dd,dd/droppable", function (S, UA, Node, DD, Droppable) {
             it("should fire dragenter properly", function () {
 
                 jasmine.simulateForDrag(dragNode[0], Gesture.start, {
-                    clientX: dragXy.left + 10 - DOM.scrollLeft(),
-                    clientY: dragXy.top + 10 - DOM.scrollTop()
+                    clientX: dragXy.left + 10 - Dom.scrollLeft(),
+                    clientY: dragXy.top + 10 - Dom.scrollTop()
                 });
 
                 waits(100);
@@ -41,8 +41,8 @@ KISSY.use("ua,node,dd,dd/droppable", function (S, UA, Node, DD, Droppable) {
                 // 10px move to start
                 runs(function () {
                     jasmine.simulateForDrag(document, Gesture.move, {
-                        clientX: dragXy.left + 15 - DOM.scrollLeft(),
-                        clientY: dragXy.top + 15 - DOM.scrollTop()
+                        clientX: dragXy.left + 15 - Dom.scrollLeft(),
+                        clientY: dragXy.top + 15 - Dom.scrollTop()
                     });
                 });
 
@@ -58,8 +58,8 @@ KISSY.use("ua,node,dd,dd/droppable", function (S, UA, Node, DD, Droppable) {
 
                 runs(function () {
                     jasmine.simulateForDrag(document, Gesture.move, {
-                        clientX: dropXy.left + 10 - DOM.scrollLeft(),
-                        clientY: dropXy.top + 10 - DOM.scrollTop()
+                        clientX: dropXy.left + 10 - Dom.scrollLeft(),
+                        clientY: dropXy.top + 10 - Dom.scrollTop()
                     });
                 });
 
@@ -76,8 +76,8 @@ KISSY.use("ua,node,dd,dd/droppable", function (S, UA, Node, DD, Droppable) {
 
                 runs(function () {
                     jasmine.simulateForDrag(document, Gesture.move, {
-                        clientX: dropXy.left + 20 - DOM.scrollLeft(),
-                        clientY: dropXy.top + 20 - DOM.scrollTop()
+                        clientX: dropXy.left + 20 - Dom.scrollLeft(),
+                        clientY: dropXy.top + 20 - Dom.scrollTop()
                     });
                 });
                 waits(100);
@@ -101,8 +101,8 @@ KISSY.use("ua,node,dd,dd/droppable", function (S, UA, Node, DD, Droppable) {
                 drag.on("dragover", dragoverSpy);
 
                 jasmine.simulateForDrag(document, Gesture.move, {
-                    clientX: dropXy.left + 25 - DOM.scrollLeft(),
-                    clientY: dropXy.top + 25 - DOM.scrollTop()
+                    clientX: dropXy.left + 25 - Dom.scrollLeft(),
+                    clientY: dropXy.top + 25 - Dom.scrollTop()
                 });
 
                 waits(100);
@@ -112,8 +112,8 @@ KISSY.use("ua,node,dd,dd/droppable", function (S, UA, Node, DD, Droppable) {
                 });
                 runs(function () {
                     jasmine.simulateForDrag(document, Gesture.move, {
-                        clientX: dropXy.left + 20 - DOM.scrollLeft(),
-                        clientY: dropXy.top + 20 - DOM.scrollTop()
+                        clientX: dropXy.left + 20 - Dom.scrollLeft(),
+                        clientY: dropXy.top + 20 - Dom.scrollTop()
                     });
                 });
                 waits(100);
@@ -129,8 +129,8 @@ KISSY.use("ua,node,dd,dd/droppable", function (S, UA, Node, DD, Droppable) {
                 var dragExit = jasmine.createSpy();
                 drag.on("dragexit", dragExit);
                 jasmine.simulateForDrag(document, Gesture.move, {
-                    clientX: dropXy.left + 150 - DOM.scrollLeft(),
-                    clientY: dropXy.top + 150 - DOM.scrollTop()
+                    clientX: dropXy.left + 150 - Dom.scrollLeft(),
+                    clientY: dropXy.top + 150 - Dom.scrollTop()
                 });
                 waits(100);
                 runs(function () {
@@ -144,8 +144,8 @@ KISSY.use("ua,node,dd,dd/droppable", function (S, UA, Node, DD, Droppable) {
                 drag.on("dragdrophit", dragdropHit);
                 runs(function () {
                     jasmine.simulateForDrag(document, Gesture.move, {
-                        clientX: dropXy.left + 10 - DOM.scrollLeft(),
-                        clientY: dropXy.top + 10 - DOM.scrollTop()
+                        clientX: dropXy.left + 10 - Dom.scrollLeft(),
+                        clientY: dropXy.top + 10 - Dom.scrollTop()
                     });
                 });
 
@@ -153,8 +153,8 @@ KISSY.use("ua,node,dd,dd/droppable", function (S, UA, Node, DD, Droppable) {
 
                 runs(function () {
                     jasmine.simulateForDrag(document, Gesture.end, {
-                        clientX: dropXy.left + 10 - DOM.scrollLeft(),
-                        clientY: dropXy.top + 10 - DOM.scrollTop()
+                        clientX: dropXy.left + 10 - Dom.scrollLeft(),
+                        clientY: dropXy.top + 10 - Dom.scrollTop()
                     });
                 });
                 waits(100);
@@ -170,8 +170,8 @@ KISSY.use("ua,node,dd,dd/droppable", function (S, UA, Node, DD, Droppable) {
 
                 dragXy = dragNode.offset();
                 jasmine.simulateForDrag(dragNode[0], Gesture.start, {
-                    clientX: dragXy.left + 10 - DOM.scrollLeft(),
-                    clientY: dragXy.top + 10 - DOM.scrollTop()
+                    clientX: dragXy.left + 10 - Dom.scrollLeft(),
+                    clientY: dragXy.top + 10 - Dom.scrollTop()
                 });
 
                 waits(100);
@@ -179,8 +179,8 @@ KISSY.use("ua,node,dd,dd/droppable", function (S, UA, Node, DD, Droppable) {
                 // 10px move to start
                 runs(function () {
                     jasmine.simulateForDrag(document, Gesture.move, {
-                        clientX: dragXy.left + 15 - DOM.scrollLeft(),
-                        clientY: dragXy.top + 15 - DOM.scrollTop()
+                        clientX: dragXy.left + 15 - Dom.scrollLeft(),
+                        clientY: dragXy.top + 15 - Dom.scrollTop()
                     });
                 });
 
@@ -189,8 +189,8 @@ KISSY.use("ua,node,dd,dd/droppable", function (S, UA, Node, DD, Droppable) {
                 runs(function () {
                     drag.on("dragdropmiss", dragdropMiss);
                     jasmine.simulateForDrag(document, Gesture.move, {
-                        clientX: dropXy.left + 150 - DOM.scrollLeft(),
-                        clientY: dropXy.top + 150 - DOM.scrollTop()
+                        clientX: dropXy.left + 150 - Dom.scrollLeft(),
+                        clientY: dropXy.top + 150 - Dom.scrollTop()
                     });
                 });
 
@@ -198,8 +198,8 @@ KISSY.use("ua,node,dd,dd/droppable", function (S, UA, Node, DD, Droppable) {
 
                 runs(function () {
                     jasmine.simulateForDrag(document, Gesture.end, {
-                        clientX: dropXy.left + 150 - DOM.scrollLeft(),
-                        clientY: dropXy.top + 150 - DOM.scrollTop()
+                        clientX: dropXy.left + 150 - Dom.scrollLeft(),
+                        clientY: dropXy.top + 150 - Dom.scrollTop()
                     });
                 });
 

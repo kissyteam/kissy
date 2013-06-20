@@ -1,0 +1,5 @@
+<project name="filter-menu.build" default="build" basedir=".">
+    <property name="component.name" value="filter-menu"/>
+
+    <import file="../common.xml"/>
+</project>

@@ -3,33 +3,33 @@
  * @author yiminghe@gmail.com
  * @ignore
  */
-KISSY.add('anim/base/utils', function (S, DOM, Q,undefined) {
+KISSY.add('anim/base/utils', function (S, Dom, Q,undefined) {
 
     var runningKey = S.guid('ks-anim-unqueued-' + S.now() + '-');
 
     function saveRunningAnim(anim) {
         var node = anim.node,
-            allRunning = DOM.data(node, runningKey);
+            allRunning = Dom.data(node, runningKey);
         if (!allRunning) {
-            DOM.data(node, runningKey, allRunning = {});
+            Dom.data(node, runningKey, allRunning = {});
         }
         allRunning[S.stamp(anim)] = anim;
     }
 
     function removeRunningAnim(anim) {
         var node = anim.node,
-            allRunning = DOM.data(node, runningKey);
+            allRunning = Dom.data(node, runningKey);
         if (allRunning) {
             delete allRunning[S.stamp(anim)];
             if (S.isEmptyObject(allRunning)) {
-                DOM.removeData(node, runningKey);
+                Dom.removeData(node, runningKey);
             }
         }
     }
 
     function isAnimRunning(anim) {
         var node = anim.node,
-            allRunning = DOM.data(node, runningKey);
+            allRunning = Dom.data(node, runningKey);
         if (allRunning) {
             return !!allRunning[S.stamp(anim)];
         }
@@ -40,27 +40,27 @@ KISSY.add('anim/base/utils', function (S, DOM, Q,undefined) {
 
     function savePausedAnim(anim) {
         var node = anim.node,
-            paused = DOM.data(node, pausedKey);
+            paused = Dom.data(node, pausedKey);
         if (!paused) {
-            DOM.data(node, pausedKey, paused = {});
+            Dom.data(node, pausedKey, paused = {});
         }
         paused[S.stamp(anim)] = anim;
     }
 
     function removePausedAnim(anim) {
         var node = anim.node,
-            paused = DOM.data(node, pausedKey);
+            paused = Dom.data(node, pausedKey);
         if (paused) {
             delete paused[S.stamp(anim)];
             if (S.isEmptyObject(paused)) {
-                DOM.removeData(node, pausedKey);
+                Dom.removeData(node, pausedKey);
             }
         }
     }
 
     function isAnimPaused(anim) {
         var node = anim.node,
-            paused = DOM.data(node, pausedKey);
+            paused = Dom.data(node, pausedKey);
         if (paused) {
             return !!paused[S.stamp(anim)];
         }
@@ -68,7 +68,7 @@ KISSY.add('anim/base/utils', function (S, DOM, Q,undefined) {
     }
 
     function pauseOrResumeQueue(node, queue, action) {
-        var allAnims = DOM.data(node, action == 'resume' ? pausedKey : runningKey),
+        var allAnims = Dom.data(node, action == 'resume' ? pausedKey : runningKey),
         // can not stop in for/in , stop will modified allRunning too
             anims = S.merge(allAnims);
 
@@ -89,12 +89,12 @@ KISSY.add('anim/base/utils', function (S, DOM, Q,undefined) {
         isAnimRunning: isAnimRunning,
         // whether node has paused anim
         'isElPaused': function (node) {
-            var paused = DOM.data(node, pausedKey);
+            var paused = Dom.data(node, pausedKey);
             return paused && !S.isEmptyObject(paused);
         },
         // whether node is running anim
         'isElRunning': function (node) {
-            var allRunning = DOM.data(node, runningKey);
+            var allRunning = Dom.data(node, runningKey);
             return allRunning && !S.isEmptyObject(allRunning);
         },
         pauseOrResumeQueue: pauseOrResumeQueue,
@@ -106,7 +106,7 @@ KISSY.add('anim/base/utils', function (S, DOM, Q,undefined) {
                     Q.clearQueue(node, queue);
                 }
             }
-            var allRunning = DOM.data(node, runningKey),
+            var allRunning = Dom.data(node, runningKey),
             // can not stop in for/in , stop will modified allRunning too
                 anims = S.merge(allRunning);
             S.each(anims, function (anim) {

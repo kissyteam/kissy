@@ -2,12 +2,12 @@
  * tc about event group support
  * @author yiminghe@gmail.com
  */
-KISSY.use("dom,node", function (S, DOM, Node) {
+KISSY.use("dom,node", function (S, Dom, Node) {
 
     var $ = Node.all,
     // simulate mouse event on any element
         simulate = function (target, type, relatedTarget) {
-            target = DOM.get(target);
+            target = Dom.get(target);
             jasmine.simulate(target, type, { relatedTarget: relatedTarget });
         };
 

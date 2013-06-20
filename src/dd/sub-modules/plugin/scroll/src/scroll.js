@@ -76,8 +76,8 @@ KISSY.add('dd/plugin/scroll', function (S, DD, Base, Node) {
         getRegion: function (node) {
             if (isWin(node[0])) {
                 return {
-                    width: $win.width(),
-                    height: $win.height()
+                    width: node.width(),
+                    height: node.height()
                 };
             } else {
                 return {
@@ -94,8 +94,8 @@ KISSY.add('dd/plugin/scroll', function (S, DD, Base, Node) {
         getOffset: function (node) {
             if (isWin(node[0])) {
                 return {
-                    left: $win.scrollLeft(),
-                    top: $win.scrollTop()
+                    left: node.scrollLeft(),
+                    top: node.scrollTop()
                 };
             } else {
                 return node.offset();

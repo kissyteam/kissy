@@ -7,13 +7,11 @@ KISSY.add("menu", function (S, Menu,
                             Item, CheckItem,
 
                              SubMenu,
-                             PopupMenu,
-                             FilterMenu) {
+                             PopupMenu) {
     Menu.Item = Item;
     Menu.CheckItem = CheckItem;
     Menu.SubMenu = SubMenu;
     Menu.PopupMenu = PopupMenu;
-    Menu.FilterMenu = FilterMenu;
     return Menu;
 }, {
     requires: [
@@ -21,7 +19,6 @@ KISSY.add("menu", function (S, Menu,
         'menu/menuitem',
         'menu/check-menuitem',
         'menu/submenu',
-        'menu/popupmenu',
-        'menu/filtermenu'
+        'menu/popupmenu'
     ]
 });

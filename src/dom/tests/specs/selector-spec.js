@@ -2,7 +2,7 @@
  * simple selector test
  * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
-KISSY.use("dom,core", function (S, DOM) {
+KISSY.use("dom,core", function (S, Dom) {
     var $ = S.all;
 
     var tpl = '<div id="test-selector">\
@@ -30,7 +30,7 @@ KISSY.use("dom,core", function (S, DOM) {
 
         it('test support disconnect node', function () {
             var div = $('<div id="t"><span id="t2"></span></div>')[0].firstChild;
-            expect(DOM.test(div, '#t span')).toBe(true);
+            expect(Dom.test(div, '#t span')).toBe(true);
         });
 
         it("support #id", function () {
@@ -100,20 +100,20 @@ KISSY.use("dom,core", function (S, DOM) {
 
         it("does not confuse name with id", function () {
             var id = "id" + S.now();
-            var input = DOM.create("<input name='" + id + "'/>");
-            var div = DOM.create("<div id='" + id + "'></div>");
-            DOM.append(input, document.body);
-            DOM.append(div, document.body);
+            var input = Dom.create("<input name='" + id + "'/>");
+            var div = Dom.create("<div id='" + id + "'></div>");
+            Dom.append(input, document.body);
+            Dom.append(div, document.body);
 
-            expect(DOM.get("#" + id).nodeName.toLowerCase()).toBe("div");
+            expect(Dom.get("#" + id).nodeName.toLowerCase()).toBe("div");
 
-            DOM.remove([input, div]);
+            Dom.remove([input, div]);
 
         });
     });
 
     describe("selector context", function () {
-        var html = DOM.create(
+        var html = Dom.create(
             "<div><div id='context-test-1' class='context-test'>" +
                 "<div>" +
                 "<div class='context-test-3' id='context-test-2'></div>" +
@@ -130,7 +130,7 @@ KISSY.use("dom,core", function (S, DOM) {
                 "</div>" +
                 "</div></div>");
 
-        DOM.prepend(html, document.body);
+        Dom.prepend(html, document.body);
 
 
         it("should attach each properly", function () {
@@ -142,7 +142,7 @@ KISSY.use("dom,core", function (S, DOM) {
                 a[i] = v;
             });
             expect(a.length).toBe(3);
-            expect(DOM.equals(a, c3));
+            expect(Dom.equals(a, c3));
         });
 
         it("should support #id", function () {
@@ -206,7 +206,7 @@ KISSY.use("dom,core", function (S, DOM) {
         it("support other format as first parameter", function () {
             // 普通对象
             var o = {length: 1};
-            expect(DOM.query(o)[0]).toBe(o);
+            expect(Dom.query(o)[0]).toBe(o);
 
             // KISSY NodeList
             o = {
@@ -214,15 +214,15 @@ KISSY.use("dom,core", function (S, DOM) {
                     return o;
                 }
             };
-            expect(DOM.query(o)).toBe(o);
+            expect(Dom.query(o)).toBe(o);
 
             // 数组
             o = [1];
-            expect(DOM.query(o)).toBe(o);
+            expect(Dom.query(o)).toBe(o);
 
             // NodeList
             o = document.getElementsByTagName("div");
-            var ret = DOM.query(o);
+            var ret = Dom.query(o);
             expect(ret.length).toBe(o.length);
             expect(ret[0]).toBe(o[0]);
             expect(S.isArray(ret)).toBe(true);
@@ -230,23 +230,23 @@ KISSY.use("dom,core", function (S, DOM) {
 
 
         it('id selector should constrain to context', function () {
-            var t = DOM.append(DOM.create('<div id="tt"></div><div id="tt2"></div>'),
+            var t = Dom.append(Dom.create('<div id="tt"></div><div id="tt2"></div>'),
                 'body');
 
-            expect(DOM.query('#tt', DOM.get('#tt2')).length).toBe(0);
+            expect(Dom.query('#tt', Dom.get('#tt2')).length).toBe(0);
 
             expect($('#tt', '#tt2').length).toBe(0);
 
-            DOM.remove('#tt,#tt2');
+            Dom.remove('#tt,#tt2');
 
-            expect(DOM.get('#tt')).toBe(null);
-            expect(DOM.get('#tt2')).toBe(null);
+            expect(Dom.get('#tt')).toBe(null);
+            expect(Dom.get('#tt2')).toBe(null);
         });
 
         it('should get child element by id selector ' +
             'even node is not in the document', function () {
-            var t = DOM.create('<div id="tt"><div id="tt2"></div></div>');
-            expect(DOM.query('#tt2', t).length).toBe(1);
+            var t = Dom.create('<div id="tt"><div id="tt2"></div></div>');
+            expect(Dom.query('#tt2', t).length).toBe(1);
             expect($('#tt2', t).length).toBe(1);
         });
     });

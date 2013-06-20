@@ -3,7 +3,7 @@
  * custom event for dom.
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/base/observable', function (S, DOM, Special, DOMEventUtils,
+KISSY.add('event/dom/base/observable', function (S, Dom, Special, DOMEventUtils,
                                                  DOMEventObserver, DOMEventObject, BaseEvent) {
 
     // 记录手工 fire(domElement,type) 时的 type
@@ -66,7 +66,7 @@ KISSY.add('event/dom/base/observable', function (S, DOM, Special, DOMEventUtils,
              sure we'll call all of them.
              */
             /*
-             DOM3 Events: EventListenerList objects in the DOM are live. ??
+             DOM3 Events: EventListenerList objects in the Dom are live. ??
              */
             var target = event.target,
                 eventType = event['type'],
@@ -99,7 +99,7 @@ KISSY.add('event/dom/base/observable', function (S, DOM, Special, DOMEventUtils,
                             key = filter + '';
                             matched = cachedMatch[key];
                             if (matched === undefined) {
-                                matched = cachedMatch[key] = DOM.test(target, filter);
+                                matched = cachedMatch[key] = Dom.test(target, filter);
                             }
                             if (matched) {
                                 currentTargetObservers.push(observer);
@@ -197,7 +197,7 @@ KISSY.add('event/dom/base/observable', function (S, DOM, Special, DOMEventUtils,
             // but we can not call event.halt()
             // because handle will check event.isPropagationStopped
             var cur = currentTarget,
-                win = DOM.getWindow(cur.ownerDocument || cur),
+                win = Dom.getWindow(cur),
                 curDocument = win.document,
                 eventPath = [],
                 eventPathIndex = 0;
@@ -226,7 +226,7 @@ KISSY.add('event/dom/base/observable', function (S, DOM, Special, DOMEventUtils,
 
             if (!onlyHandlers && !event.isDefaultPrevented()) {
                 // now all browser support click
-                // https://developer.mozilla.org/en-US/docs/DOM/element.click
+                // https://developer.mozilla.org/en-US/docs/Dom/element.click
                 try {
                     // execute default action on dom node
                     // exclude window

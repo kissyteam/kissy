@@ -3,7 +3,7 @@
  * base handle for touch gesture
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/touch/handle', function (S, DOM, eventHandleMap, DOMEvent, Gesture) {
+KISSY.add('event/dom/touch/handle', function (S, Dom, eventHandleMap, DOMEvent, Gesture) {
 
     var key = S.guid('touch-handle'),
         Features = S.Features,
@@ -199,24 +199,22 @@ KISSY.add('event/dom/touch/handle', function (S, DOM, eventHandleMap, DOMEvent, 
     return {
 
         addDocumentHandle: function (el, event) {
-            var win = DOM.getWindow(el.ownerDocument || el),
-                doc = win.document,
-                handle = DOM.data(doc, key);
+            var doc = Dom.getDocument(el),
+                handle = Dom.data(doc, key);
             if (!handle) {
-                DOM.data(doc, key, handle = new DocumentHandler(doc));
+                Dom.data(doc, key, handle = new DocumentHandler(doc));
             }
             handle.addEventHandle(event);
         },
 
         removeDocumentHandle: function (el, event) {
-            var win = DOM.getWindow(el.ownerDocument || el),
-                doc = win.document,
-                handle = DOM.data(doc, key);
+            var doc = Dom.getDocument(el),
+                handle = Dom.data(doc, key);
             if (handle) {
                 handle.removeEventHandle(event);
                 if (S.isEmptyObject(handle.eventHandle)) {
                     handle.destroy();
-                    DOM.removeData(doc, key);
+                    Dom.removeData(doc, key);
                 }
             }
         }

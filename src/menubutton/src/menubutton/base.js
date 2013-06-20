@@ -259,7 +259,7 @@ KISSY.add("menubutton/base", function (S, Node, Button,
             alignNode = alignCfg.node;
             delete alignCfg.node;
             align = S.clone(alignCfg);
-            align.node = alignNode || self.get("el");
+            align.node = alignNode || self.el;
             S.mix(align, ALIGN, false);
             menu.set("align", align);
         }
@@ -273,14 +273,14 @@ KISSY.add("menubutton/base", function (S, Node, Button,
     }
 
     function showMenu(self) {
-        var el = self.get("el"),
+        var el = self.el,
             menu = self.get("menu");
         // 保证显示前已经 bind 好 menu 事件
         if (!menu.get("visible")) {
             // 根据对齐的 el 自动调整大小
             if (self.get("matchElWidth")) {
                 menu.render();
-                var menuEl = menu.get('el');
+                var menuEl = menu.el;
                 var borderWidth =
                     (parseInt(menuEl.css('borderLeftWidth')) || 0) +
                         (parseInt(menuEl.css('borderRightWidth')) || 0);
@@ -289,7 +289,7 @@ KISSY.add("menubutton/base", function (S, Node, Button,
             }
             menu.show();
             reposition.call(self);
-            el.attr("aria-haspopup", menu.get("el").attr("id"));
+            el.attr("aria-haspopup", menu.el.attr("id"));
         }
     }
 

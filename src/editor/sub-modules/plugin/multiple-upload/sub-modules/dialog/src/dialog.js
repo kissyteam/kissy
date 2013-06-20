@@ -9,9 +9,9 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor,
                                                             SWF, undefined) {
 
     var UA = S.UA,
-        DOM = S.DOM,
+        Dom = S.Dom,
         $ = S.all,
-        JSON = S.JSON,
+        Json = S.Json,
         PIC_NUM_LIMIT = 15,
         PIC_NUM_LIMIT_WARNING = "系统将只保留 n 张",
         PIC_SIZE_LIMIT = 1000,
@@ -388,7 +388,7 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor,
                                     "src='" +
                                     url + "' />")
                             }
-                            var offset = DOM.offset(td);
+                            var offset = Dom.offset(td);
                             offset.left += td[0].offsetWidth;
                             previewWin.set("xy", [offset.left, offset.top]);
                             previewWin.show();
@@ -575,7 +575,7 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor,
                 data = localStorage.getItem(KEY),
                 tbl = self._list[0];
             if (!data) return;
-            data = JSON.parse(S.urlDecode(data));
+            data = Json.parse(S.urlDecode(data));
             for (var i = 0; i < data.length; i++) {
                 var d = data[i];
                 d.complete = 1;
@@ -614,7 +614,7 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor,
                 }
             }
 
-            localStorage.setItem(KEY, encodeURIComponent(JSON.stringify(data)));
+            localStorage.setItem(KEY, encodeURIComponent(Json.stringify(data)));
 
         },
         _getFilesSize: function (files) {
@@ -659,22 +659,22 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor,
                 id = f.fid,
                 row = tbl.insertRow(-1);
             var prefixCls = self.editor.prefixCls;
-            DOM.attr(row, "fid", id);
+            Dom.attr(row, "fid", id);
             var cell = row.insertCell(-1);
-            DOM.attr(cell, "class", replacePrefix('{prefixCls}editor-upload-seq', prefixCls));
+            Dom.attr(cell, "class", replacePrefix('{prefixCls}editor-upload-seq', prefixCls));
             cell = row.insertCell(-1);
             if (f.name.length > 18) {
                 f.name = f.name.substring(0, 18) + "...";
             }
-            DOM.html(cell, "<div style='width:160px;overflow:hidden;'><div style='width:9999px;text-align:left;'>" + f.name + "</div></div>");
-            DOM.attr(cell, "class", replacePrefix('{prefixCls}editor-upload-filename', prefixCls));
+            Dom.html(cell, "<div style='width:160px;overflow:hidden;'><div style='width:9999px;text-align:left;'>" + f.name + "</div></div>");
+            Dom.attr(cell, "class", replacePrefix('{prefixCls}editor-upload-filename', prefixCls));
             cell = row.insertCell(-1);
-            DOM.html(cell, f.size);
-            DOM.attr(cell, "class", replacePrefix('{prefixCls}editor-upload-filesize', prefixCls));
+            Dom.html(cell, f.size);
+            Dom.attr(cell, "class", replacePrefix('{prefixCls}editor-upload-filesize', prefixCls));
             cell = row.insertCell(-1);
-            DOM.attr(cell, "class", replacePrefix('{prefixCls}editor-upload-progress', prefixCls));
+            Dom.attr(cell, "class", replacePrefix('{prefixCls}editor-upload-progress', prefixCls));
             cell = row.insertCell(-1);
-            DOM.html(cell, replacePrefix("<a class='{prefixCls}editor-upload-moveup' href='#'>[上移]</a> &nbsp; " +
+            Dom.html(cell, replacePrefix("<a class='{prefixCls}editor-upload-moveup' href='#'>[上移]</a> &nbsp; " +
                 "<a class='{prefixCls}editor-upload-movedown' href='#'>[下移]</a> &nbsp; " +
                 "<a href='#' class='{prefixCls}editor-upload-insert' style='" +
                 (f.complete ? "" : "display:none;") +
@@ -724,7 +724,7 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor,
                 //去除已经 ui 显示出来的
                 var trs = list.children("tr");
                 for (i = 0; i < trs.length; i++) {
-                    var tr = trs[i], fid = DOM.attr(tr, "fid");
+                    var tr = trs[i], fid = Dom.attr(tr, "fid");
                     fid && files[fid] && (delete files[fid]);
                 }
                 //限额-目前ui的

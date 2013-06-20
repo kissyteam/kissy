@@ -6,7 +6,7 @@
 KISSY.use("ua,io,node", function (S, UA,  io, Node) {
     var $ = Node.all;
 
-    describe("Xdr IO", function () {
+    describe("Xdr Io", function () {
 
         var host = window.location.hostname;
         // ie6 不能设置和 hostname 一致。。。

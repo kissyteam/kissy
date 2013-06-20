@@ -12,24 +12,24 @@
  *
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/base/valuechange', function (S, DOMEvent, DOM, Special) {
+KISSY.add('event/dom/base/valuechange', function (S, DOMEvent, Dom, Special) {
     var VALUE_CHANGE = 'valuechange',
-        getNodeName = DOM.nodeName,
+        getNodeName = Dom.nodeName,
         KEY = 'event/valuechange',
         HISTORY_KEY = KEY + '/history',
         POLL_KEY = KEY + '/poll',
         interval = 50;
 
     function clearPollTimer(target) {
-        if (DOM.hasData(target, POLL_KEY)) {
-            var poll = DOM.data(target, POLL_KEY);
+        if (Dom.hasData(target, POLL_KEY)) {
+            var poll = Dom.data(target, POLL_KEY);
             clearTimeout(poll);
-            DOM.removeData(target, POLL_KEY);
+            Dom.removeData(target, POLL_KEY);
         }
     }
 
     function stopPoll(target) {
-        DOM.removeData(target, HISTORY_KEY);
+        Dom.removeData(target, HISTORY_KEY);
         clearPollTimer(target);
     }
 
@@ -39,24 +39,24 @@ KISSY.add('event/dom/base/valuechange', function (S, DOMEvent, DOM, Special) {
 
     function checkChange(target) {
         var v = target.value,
-            h = DOM.data(target, HISTORY_KEY);
+            h = Dom.data(target, HISTORY_KEY);
         if (v !== h) {
             // allow delegate
             DOMEvent.fireHandler(target, VALUE_CHANGE, {
                 prevVal: h,
                 newVal: v
             });
-            DOM.data(target, HISTORY_KEY, v);
+            Dom.data(target, HISTORY_KEY, v);
         }
     }
 
     function startPoll(target) {
-        if (DOM.hasData(target, POLL_KEY)) {
+        if (Dom.hasData(target, POLL_KEY)) {
             return;
         }
-        DOM.data(target, POLL_KEY, setTimeout(function () {
+        Dom.data(target, POLL_KEY, setTimeout(function () {
             checkChange(target);
-            DOM.data(target, POLL_KEY, setTimeout(arguments.callee, interval));
+            Dom.data(target, POLL_KEY, setTimeout(arguments.callee, interval));
         }, interval));
     }
 
@@ -64,7 +64,7 @@ KISSY.add('event/dom/base/valuechange', function (S, DOMEvent, DOM, Special) {
         var target = ev.target;
         // when focus ,record its current value immediately
         if (ev.type == 'focus') {
-            DOM.data(target, HISTORY_KEY, target.value);
+            Dom.data(target, HISTORY_KEY, target.value);
         }
         startPoll(target);
     }

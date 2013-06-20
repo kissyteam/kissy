@@ -2,11 +2,11 @@
  * mouseenter tc
  * @author yiminghe@gmail.com
  */
-KISSY.use("dom,event/dom/base", function (S, DOM, Event) {
+KISSY.use("dom,event/dom/base", function (S, Dom, Event) {
 
     var simulate = function (target, type, relatedTarget) {
         if (typeof target === 'string') {
-            target = DOM.get(target);
+            target = Dom.get(target);
         }
         jasmine.simulate(target, type, { relatedTarget: relatedTarget });
     };
@@ -35,18 +35,18 @@ KISSY.use("dom,event/dom/base", function (S, DOM, Event) {
     describe('mouseenter', function () {
 
         beforeEach(function () {
-            DOM.prepend(DOM.create(tpl), 'body');
+            Dom.prepend(Dom.create(tpl), 'body');
         });
 
         afterEach(function () {
-            DOM.remove('#event-test-data');
+            Dom.remove('#event-test-data');
         });
 
         describe('on simply works', function () {
 
             it('should trigger the mouseenter event on the proper element.', function () {
-                var outer = DOM.get('#outer'),
-                    inner = DOM.get('#inner'),
+                var outer = Dom.get('#outer'),
+                    inner = Dom.get('#inner'),
                     container = outer.parentNode;
 
                 var outerCount = 0, innerCount = 0, type = 'mouseover';
@@ -80,8 +80,8 @@ KISSY.use("dom,event/dom/base", function (S, DOM, Event) {
             });
 
             it('should trigger the mouseleave event on the proper element.', function () {
-                var outer = DOM.get('#outer'),
-                    inner = DOM.get('#inner'),
+                var outer = Dom.get('#outer'),
+                    inner = Dom.get('#inner'),
                     container = outer.parentNode;
 
                 var outerCount = 0, innerCount = 0, type = 'mouseout';
@@ -112,7 +112,7 @@ KISSY.use("dom,event/dom/base", function (S, DOM, Event) {
 
                 var enter=[],
                     leave=[],
-                    mouseTests=DOM.query('.mouse-test');
+                    mouseTests=Dom.query('.mouse-test');
 
                 Event.on('.mouse-test','mouseenter',function(e){
                     expect(e.type).toBe('mouseenter');
@@ -165,7 +165,7 @@ KISSY.use("dom,event/dom/base", function (S, DOM, Event) {
                     ' </div>' +
                     ' </div>';
 
-                DOM.append(DOM.create(html), document.body);
+                Dom.append(Dom.create(html), document.body);
 
                 var ret = [];
 
@@ -176,15 +176,15 @@ KISSY.use("dom,event/dom/base", function (S, DOM, Event) {
 
                 var n;
 
-                DOM.append(n = DOM.clone("#t89561", 1, 1, 1), document.body);
+                Dom.append(n = Dom.clone("#t89561", 1, 1, 1), document.body);
 
                 n.id = "";
 
-                DOM.remove(DOM.get("#t89561"));
+                Dom.remove(Dom.get("#t89561"));
 
                 n.id = "t89561";
 
-                var v = DOM.children("#t89561")[0];
+                var v = Dom.children("#t89561")[0];
 
                 // 2012-03-31 bug : clone does not clone originalType
                 // lose check
@@ -195,7 +195,7 @@ KISSY.use("dom,event/dom/base", function (S, DOM, Event) {
                 runs(function () {
                     expect(ret.length).toBe(0);
 
-                    DOM.remove('#t89561');
+                    Dom.remove('#t89561');
                 });
             });
         });
@@ -210,10 +210,10 @@ KISSY.use("dom,event/dom/base", function (S, DOM, Event) {
                     "</div>" +
                     "</div>" +
                     "</div>";
-                DOM.append(DOM.create(code), document.body);
-                var d1 = DOM.get("#d1" + t),
-                    d2 = DOM.get("#d2" + t),
-                    d3 = DOM.get("#d3" + t);
+                Dom.append(Dom.create(code), document.body);
+                var d1 = Dom.get("#d1" + t),
+                    d2 = Dom.get("#d2" + t),
+                    d3 = Dom.get("#d3" + t);
 
                 t = "";
                 var type = "";
@@ -250,7 +250,7 @@ KISSY.use("dom,event/dom/base", function (S, DOM, Event) {
                 runs(function () {
                     expect(t).toBe("");
                     expect(type).toBe("");
-                    DOM.remove(d1);
+                    Dom.remove(d1);
                 });
             });
         });
@@ -258,7 +258,7 @@ KISSY.use("dom,event/dom/base", function (S, DOM, Event) {
         describe('fire', function () {
             it("works for mouseenter/leave", function () {
 
-                var n = DOM.create("<div/>"), ret=0;
+                var n = Dom.create("<div/>"), ret=0;
                 Event.on(n, "mouseenter", function (e) {
                     expect(e.type).toBe('mouseenter');
                     ret = 1

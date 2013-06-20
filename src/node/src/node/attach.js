@@ -1,14 +1,14 @@
 /**
  * @ignore
- * import methods from DOM to NodeList.prototype
+ * import methods from Dom to NodeList.prototype
  * @author yiminghe@gmail.com
  */
-KISSY.add('node/attach', function (S, DOM, Event, NodeList, undefined) {
+KISSY.add('node/attach', function (S, Dom, Event, NodeList, undefined) {
 
     var NLP = NodeList.prototype,
         makeArray = S.makeArray,
-    // DOM 添加到 NP 上的方法
-    // if DOM methods return undefined , Node methods need to transform result to itself
+    // Dom 添加到 NP 上的方法
+    // if Dom methods return undefined , Node methods need to transform result to itself
         DOM_INCLUDES_NORM = [
             'nodeName',
             'equals',
@@ -59,6 +59,8 @@ KISSY.add('node/attach', function (S, DOM, Event, NodeList, undefined) {
         ],
     // if return array ,need transform to nodelist
         DOM_INCLUDES_NORM_NODE_LIST = [
+            'getWindow',
+            'getDocument',
             'filter',
             'first',
             'last',
@@ -83,6 +85,7 @@ KISSY.add('node/attach', function (S, DOM, Event, NodeList, undefined) {
             'offset': 0,
             'html': 0,
             'outerHTML': 0,
+            'outerHtml': 0,
             'data': 1
         },
     // Event 添加到 NP 上的方法
@@ -99,7 +102,7 @@ KISSY.add('node/attach', function (S, DOM, Event, NodeList, undefined) {
 
     function accessNorm(fn, self, args) {
         args.unshift(self);
-        var ret = DOM[fn].apply(DOM, args);
+        var ret = Dom[fn].apply(Dom, args);
         if (ret === undefined) {
             return self;
         }
@@ -108,7 +111,7 @@ KISSY.add('node/attach', function (S, DOM, Event, NodeList, undefined) {
 
     function accessNormList(fn, self, args) {
         args.unshift(self);
-        var ret = DOM[fn].apply(DOM, args);
+        var ret = Dom[fn].apply(Dom, args);
         if (ret === undefined) {
             return self;
         }
@@ -125,7 +128,7 @@ KISSY.add('node/attach', function (S, DOM, Event, NodeList, undefined) {
             // 并且第一个参数不是对象，否则可能是批量设置写
             && !S.isObject(args[0])) {
             args.unshift(self);
-            return DOM[fn].apply(DOM, args);
+            return Dom[fn].apply(Dom, args);
         }
         // set
         return accessNorm(fn, self, args);
@@ -169,9 +172,9 @@ KISSY.add('node/attach', function (S, DOM, Event, NodeList, undefined) {
 /*
  2011-05-24
  - yiminghe@gmail.com：
- - 将 DOM 中的方法包装成 NodeList 方法
+ - 将 Dom 中的方法包装成 NodeList 方法
  - Node 方法调用参数中的 KISSY NodeList 要转换成第一个 HTML Node
- - 要注意链式调用，如果 DOM 方法返回 undefined （无返回值），则 NodeList 对应方法返回 this
- - 实际上可以完全使用 NodeList 来代替 DOM，不和节点关联的方法如：viewportHeight 等，在 window，document 上调用
+ - 要注意链式调用，如果 Dom 方法返回 undefined （无返回值），则 NodeList 对应方法返回 this
+ - 实际上可以完全使用 NodeList 来代替 Dom，不和节点关联的方法如：viewportHeight 等，在 window，document 上调用
  - 存在 window/document 虚节点，通过 S.one(window)/new Node(window) ,S.one(document)/new NodeList(document) 获得
  */

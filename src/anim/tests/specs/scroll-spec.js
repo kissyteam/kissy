@@ -2,7 +2,7 @@
  * test case for anim scroll
  * @author yiminghe@gmail.com
  */
-KISSY.use("dom,anim", function (S, DOM, Anim) {
+KISSY.use("dom,anim", function (S, Dom, Anim) {
 
     describe("anim-scroll", function () {
 
@@ -20,7 +20,7 @@ KISSY.use("dom,anim", function (S, DOM, Anim) {
         });
 
         it("should animate scroll correctly", function () {
-            var test = DOM.create('<div style="width:100px;overflow:hidden;' +
+            var test = Dom.create('<div style="width:100px;overflow:hidden;' +
                 'border:1px solid red;">'+
             '<div style="width:500px;">' +
                 '1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,' +
@@ -32,7 +32,7 @@ KISSY.use("dom,anim", function (S, DOM, Anim) {
                 '3,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,9,0,' +
                 '</div>' +
             '</div>');
-            DOM.append(test, 'body');
+            Dom.append(test, 'body');
             test.scrollLeft = 500;
             var scrollLimit = test.scrollLeft;
             test.scrollLeft = 0;
@@ -53,8 +53,8 @@ KISSY.use("dom,anim", function (S, DOM, Anim) {
         // hhttp://www.google.nl/search?q=ipad+iframe+scrolling
         if (!S.UA.ios || !window.frameElement) {
             it("should animate scroll correctly for window", function () {
-                DOM.append(DOM.create("<div style='height:2000px'/>"), document.body);
-                DOM.scrollTop(window, 0);
+                Dom.append(Dom.create("<div style='height:2000px'/>"), document.body);
+                Dom.scrollTop(window, 0);
 
                 waits(300);
 
@@ -69,14 +69,14 @@ KISSY.use("dom,anim", function (S, DOM, Anim) {
                 waits(100);
 
                 runs(function () {
-                    expect(DOM.scrollTop(window)).not.toBe(0);
+                    expect(Dom.scrollTop(window)).not.toBe(0);
                 });
                 waits(600);
                 runs(function () {
-                    expect(DOM.scrollTop(window)).toBe(100);
+                    expect(Dom.scrollTop(window)).toBe(100);
                 });
                 runs(function () {
-                    DOM.scrollTop(window, 0);
+                    Dom.scrollTop(window, 0);
                     anim = Anim(window, {
                         scrollTop: 100
                     }, 0.5).run();
@@ -85,18 +85,18 @@ KISSY.use("dom,anim", function (S, DOM, Anim) {
 
                 waits(100);
                 runs(function () {
-                    expect(DOM.scrollTop(window)).not.toBe(0);
+                    expect(Dom.scrollTop(window)).not.toBe(0);
                     anim.stop();
                 });
                 waits(600);
                 runs(function () {
-                    expect(DOM.scrollTop(window)).not.toBe(100);
-                    expect(DOM.scrollTop(window)).not.toBe(0);
+                    expect(Dom.scrollTop(window)).not.toBe(100);
+                    expect(Dom.scrollTop(window)).not.toBe(0);
                 });
 
 
                 runs(function () {
-                    DOM.scrollTop(window, 0);
+                    Dom.scrollTop(window, 0);
                     anim = Anim(window, {
                         scrollTop: 100
                     }, 0.5).run();
@@ -105,10 +105,10 @@ KISSY.use("dom,anim", function (S, DOM, Anim) {
 
                 waits(100);
                 runs(function () {
-                    expect(DOM.scrollTop(window)).not.toBe(0);
+                    expect(Dom.scrollTop(window)).not.toBe(0);
                     anim.stop(true);
-                    expect(DOM.scrollTop(window)).toBe(100);
-                    expect(DOM.scrollTop(window)).not.toBe(0);
+                    expect(Dom.scrollTop(window)).toBe(100);
+                    expect(Dom.scrollTop(window)).not.toBe(0);
                 });
             });
         }

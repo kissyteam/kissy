@@ -2,13 +2,13 @@
  * test cases for node about chained call and return value
  * @author yiminghe@gmail.com
  */
-KISSY.use("dom,node", function (S, DOM, Node) {
+KISSY.use("dom,node", function (S, Dom, Node) {
     S.one = Node.one;
     S.all = Node.all;
     var jq = jQuery;
     var $ = S.all;
     var NodeList = Node;
-    //DOM 已经测试通过，通过 DOM 测 Node
+    //Dom 已经测试通过，通过 Dom 测 Node
     describe("node", function () {
 
         it('support filter', function () {
@@ -98,11 +98,11 @@ KISSY.use("dom,node", function (S, DOM, Node) {
         it("should invoke method on window or document correctly", function () {
             var win = S.one(window), doc = S.one(document);
 
-            expect(win.height()).toBe(DOM.viewportHeight());
-            expect(win.width()).toBe(DOM.viewportWidth());
+            expect(win.height()).toBe(Dom.viewportHeight());
+            expect(win.width()).toBe(Dom.viewportWidth());
 
-            expect(doc.height()).toBe(DOM.docHeight());
-            expect(doc.width()).toBe(DOM.docWidth());
+            expect(doc.height()).toBe(Dom.docHeight());
+            expect(doc.width()).toBe(Dom.docWidth());
         });
 
         it("should append/prepend correctly on node", function () {
@@ -112,11 +112,11 @@ KISSY.use("dom,node", function (S, DOM, Node) {
 
             expect(n).toBe(body);
 
-            expect(DOM.get("#testDiv4")).not.toBe(null);
+            expect(Dom.get("#testDiv4")).not.toBe(null);
 
             $("#foo").prepend("<div class='test-div' id='testDiv5'>ok5</div>");
 
-            expect(DOM.get("#testDiv5")).not.toBe(null);
+            expect(Dom.get("#testDiv5")).not.toBe(null);
         });
 
 
@@ -124,20 +124,20 @@ KISSY.use("dom,node", function (S, DOM, Node) {
             var body = S.one(document.body);
             new Node("<div id='testDiv7' class='test-div'>ok7</div>" +
                 "<div id='testDiv8' class='test-div'>ok8</div>").appendTo(body);
-            expect(DOM.get("#testDiv7")).not.toBe(null);
-            expect(DOM.get("#testDiv8")).not.toBe(null);
+            expect(Dom.get("#testDiv7")).not.toBe(null);
+            expect(Dom.get("#testDiv8")).not.toBe(null);
 
             var newNode = new Node("<div class='test-nodelist'>test-nodelist</div>" +
                 "<div class='test-nodelist'>test-nodelist2</div>");
             var testDivs = S.all(".test-div");
 
             testDivs = testDivs.append(newNode);
-            expect(testDivs.length * 2).toBe(DOM.query(".test-nodelist").length);
+            expect(testDivs.length * 2).toBe(Dom.query(".test-nodelist").length);
 
 
             testDivs.append("<div class='test-nodelist2'>test-nodelist3</div>" +
                 "<div class='test-nodelist2'>test-nodelist4</div>");
-            expect(testDivs.length * 2).toBe(DOM.query(".test-nodelist2").length);
+            expect(testDivs.length * 2).toBe(Dom.query(".test-nodelist2").length);
 
 
             S.all("#testDiv7").append(S.all("#testDiv8"));
@@ -147,8 +147,8 @@ KISSY.use("dom,node", function (S, DOM, Node) {
             testDivs.prepend("<div class='test-nodelist3-pre'>test-nodelist5-pre</div>" +
                 "<div class='test-nodelist3-last'>test-nodelist6-last</div>");
 
-            expect(testDivs.length).toBe(DOM.query(".test-nodelist3-pre").length);
-            expect(testDivs.length).toBe(DOM.query(".test-nodelist3-last").length);
+            expect(testDivs.length).toBe(Dom.query(".test-nodelist3-pre").length);
+            expect(testDivs.length).toBe(Dom.query(".test-nodelist3-last").length);
 
 
             var pres = S.all(".test-nodelist3-pre"),
@@ -202,8 +202,8 @@ KISSY.use("dom,node", function (S, DOM, Node) {
             var wrappedCls = "f" + time;
             var wrapperCls = "x" + time;
             var body = document.body;
-            var foo = body.appendChild(DOM.create("<div class='" + wrappedCls + "'></div>"));
-            var foo2 = body.appendChild(DOM.create("<div class='" + wrappedCls + "'></div>"));
+            var foo = body.appendChild(Dom.create("<div class='" + wrappedCls + "'></div>"));
+            var foo2 = body.appendChild(Dom.create("<div class='" + wrappedCls + "'></div>"));
             $("." + wrappedCls).wrapAll("<div class='" + wrapperCls + "'>" +
                 "<div class='x" + wrapperCls + "'></div>" +
                 "</div>");
@@ -211,7 +211,7 @@ KISSY.use("dom,node", function (S, DOM, Node) {
             expect(foo.parentNode.childNodes.length).toBe(2);
             expect(foo.parentNode.className).toBe("x" + wrapperCls);
             expect(foo.parentNode.parentNode.className).toBe(wrapperCls);
-            DOM.remove([foo, foo2]);
+            Dom.remove([foo, foo2]);
             $("." + wrapperCls).remove();
         });
 
@@ -220,7 +220,7 @@ KISSY.use("dom,node", function (S, DOM, Node) {
             var body = S.one(document.body);
 
 
-            var doms = DOM.query(".test-div");
+            var doms = Dom.query(".test-div");
 
             var testDivs = S.all(".test-div");
             expect(testDivs instanceof NodeList).toBe(true);
@@ -242,7 +242,7 @@ KISSY.use("dom,node", function (S, DOM, Node) {
 
         it("children should return nodelist", function () {
             var body = S.one(document.body);
-            var dbivs = DOM.children(body[0], "div");
+            var dbivs = Dom.children(body[0], "div");
             var bdivnodes = body.children("div");
             expect(bdivnodes instanceof NodeList).toBe(true);
             expect(dbivs.length).toBe(bdivnodes.length);
@@ -267,7 +267,7 @@ KISSY.use("dom,node", function (S, DOM, Node) {
 
             expect(S.all(".test-div", S.all("#context-wrapper")).length).toBe(1);
 
-            expect(S.all(".test-div", DOM.get("#context-wrapper")).length).toBe(1);
+            expect(S.all(".test-div", Dom.get("#context-wrapper")).length).toBe(1);
         });
 
         it("should on/detach event properly", function () {

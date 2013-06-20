@@ -7,7 +7,7 @@ KISSY.add("editor/plugin/draft", function (S, Editor, localStorage, Overlay, Men
         LIMIT = 5,
         Event = S.Event,
         INTERVAL = 5,
-        JSON = S['JSON'],
+        Json = S['Json'],
         DRAFT_SAVE = "ks-editor-draft-save20110503";
 
     function padding(n, l, p) {
@@ -71,7 +71,7 @@ KISSY.add("editor/plugin/draft", function (S, Editor, localStorage, Overlay, Men
                      * 原生 localStorage 必须串行化
                      */
                     drafts = (localStorage == window.localStorage) ?
-                        JSON.parse(S.urlDecode(str)) : str;
+                        Json.parse(S.urlDecode(str)) : str;
                 }
                 self.drafts = drafts;
             }
@@ -303,7 +303,7 @@ KISSY.add("editor/plugin/draft", function (S, Editor, localStorage, Overlay, Men
             timeTip.html(tip);
             localStorage.setItem(self._getSaveKey(),
                 (localStorage == window.localStorage) ?
-                    encodeURIComponent(JSON.stringify(drafts))
+                    encodeURIComponent(Json.stringify(drafts))
                     : drafts);
         },
 

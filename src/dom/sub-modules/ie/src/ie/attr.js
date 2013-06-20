@@ -2,13 +2,13 @@
  * attr ie hack
  * @author yiminghe@gmail.com
  */
-KISSY.add('dom/ie/attr', function (S, DOM) {
+KISSY.add('dom/ie/attr', function (S, Dom) {
 
-    var attrHooks = DOM._attrHooks,
-        attrNodeHook = DOM._attrNodeHook,
-        NodeType = DOM.NodeType,
-        valHooks = DOM._valHooks,
-        propFix = DOM._propFix,
+    var attrHooks = Dom._attrHooks,
+        attrNodeHook = Dom._attrNodeHook,
+        NodeType = Dom.NodeType,
+        valHooks = Dom._valHooks,
+        propFix = Dom._propFix,
         HREF = 'href',
         hrefFix,
         IE_VERSION = S.UA.ie;
@@ -55,7 +55,7 @@ KISSY.add('dom/ie/attr', function (S, DOM) {
         });
 
         // ie6,7 不区分 attribute 与 property
-        S.mix(DOM._attrFix, propFix);
+        S.mix(Dom._attrFix, propFix);
 
         // http://fluidproject.org/blog/2008/01/09/getting-setting-and-removing-tabindex-values-with-javascript/
         attrHooks.tabIndex = attrHooks.tabindex;
@@ -124,7 +124,7 @@ KISSY.add('dom/ie/attr', function (S, DOM) {
         var ret = "",
             nodeType = el.nodeType;
 
-        if (nodeType === DOM.NodeType.ELEMENT_NODE) {
+        if (nodeType === Dom.NodeType.ELEMENT_NODE) {
             for (el = el.firstChild; el; el = el.nextSibling) {
                 ret += getText(el);
             }
@@ -134,9 +134,9 @@ KISSY.add('dom/ie/attr', function (S, DOM) {
         return ret;
     }
 
-    DOM._getText = getText;
+    Dom._getText = getText;
 
-    return DOM;
+    return Dom;
 }, {
     requires: ['dom/base']
 });

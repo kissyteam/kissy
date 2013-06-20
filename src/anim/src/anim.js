@@ -3,7 +3,7 @@
  * @author yiminghe@gmail.com
  * @ignore
  */
-KISSY.add('anim', function (S, DOM, AnimBase, TimerAnim, TransitionAnim) {
+KISSY.add('anim', function (S, Dom, AnimBase, TimerAnim, TransitionAnim) {
 
     var Utils = AnimBase.Utils,
         defaultConfig = {

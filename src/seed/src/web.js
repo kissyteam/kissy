@@ -109,8 +109,8 @@
         },
 
         /**
-         * Specify a function to execute when the DOM is fully loaded.
-         * @param fn {Function} A function to execute after the DOM is ready
+         * Specify a function to execute when the Dom is fully loaded.
+         * @param fn {Function} A function to execute after the Dom is ready
          *
          * for example:
          *      @example

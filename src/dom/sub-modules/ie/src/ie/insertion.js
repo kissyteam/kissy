@@ -2,7 +2,7 @@
  * ie create hack
  * @author yiminghe@gmail.com
  */
-KISSY.add('dom/ie/insertion', function (S, DOM) {
+KISSY.add('dom/ie/insertion', function (S, Dom) {
 
     var UA = S.UA;
 
@@ -16,14 +16,14 @@ KISSY.add('dom/ie/insertion', function (S, DOM) {
          S.all('#t').append(c);
          alert(c[0].checked);
          */
-        DOM._fixInsertionChecked = function fixChecked(ret) {
+        Dom._fixInsertionChecked = function fixChecked(ret) {
             for (var i = 0; i < ret.length; i++) {
                 var el = ret[i];
-                if (el.nodeType == DOM.NodeType.DOCUMENT_FRAGMENT_NODE) {
+                if (el.nodeType == Dom.NodeType.DOCUMENT_FRAGMENT_NODE) {
                     fixChecked(el.childNodes);
-                } else if (DOM.nodeName(el) == 'input') {
+                } else if (Dom.nodeName(el) == 'input') {
                     fixCheckedInternal(el);
-                } else if (el.nodeType == DOM.NodeType.ELEMENT_NODE) {
+                } else if (el.nodeType == Dom.NodeType.ELEMENT_NODE) {
                     var cs = el.getElementsByTagName('input');
                     for (var j = 0; j < cs.length; j++) {
                         fixChecked(cs[j]);

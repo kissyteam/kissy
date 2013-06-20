@@ -6,20 +6,20 @@
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-touch-fullscreen" content="yes">
-    <title>KISSY JSON Demo</title>
+    <title>KISSY Json Demo</title>
     <link href="/kissy/src/css/assets/dpl/base.css" rel="stylesheet"/>
     <link href="/kissy/src/css/assets/dpl/forms.css" rel="stylesheet"/>
     <link href="/kissy/src/button/assets/dpl.css" rel="stylesheet"/>
     <link href="/kissy/src/css/demo/dpl/assets/docs.css" rel="stylesheet"/>
 </head>
 <body>
-<h1 style="text-align: center">JSON demo</h1>
+<h1 style="text-align: center">Json demo</h1>
 
 <div class="container">
     <div class="row">
         <div class="span12">
             <form class="form-vertical well">
-                <label>JSON 字符串</label>
+                <label>Json 字符串</label>
                 <textarea type="text" class="input-xlarge" rows="10" style="width: 100%" id="original">
 
                     {
@@ -46,15 +46,15 @@
 
 <script src="/kissy/build/seed.js"></script>
 <script>
-    KISSY.use('node,json', function (S, Node, JSON) {
+    KISSY.use('node,json', function (S, Node, Json) {
         var $ = Node.all;
         $('#parse').on('click', function (e) {
             e.halt();
             var jsonText = $('#original').val();
-            var json = JSON.parse(jsonText);
+            var json = Json.parse(jsonText);
             S.log('**************************');
             S.log(json);
-            $('#code').text(JSON.stringify(json, null, '    '));
+            $('#code').text(Json.stringify(json, null, '    '));
         });
     });
 </script>

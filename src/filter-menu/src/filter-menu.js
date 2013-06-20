@@ -3,7 +3,7 @@
  * menu where items can be filtered based on user keyboard input
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender) {
+KISSY.add("filter-menu", function (S, Menu, FilterMenuRender) {
 
     var HIT_CLS = "menuitem-hit";
 
@@ -134,7 +134,7 @@ KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender) {
                         // 没有过滤条件
                         // 恢复原有内容
                         // 显示出来
-                        c.get("el").html(content);
+                        c.el.html(content);
                         c.set("visible", true);
                     } else {
                         if (content.indexOf(str) > -1) {
@@ -142,7 +142,7 @@ KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender) {
                             // 显示
                             c.set("visible", true);
                             // 匹配子串着重 input-wrap
-                            c.get("el").html(content.replace(strExp, function (m) {
+                            c.el.html(content.replace(strExp, function (m) {
                                 return "<span class='" + prefixCls + HIT_CLS + "'>" + m + "<" + "/span>";
                             }));
                         } else {
@@ -221,5 +221,5 @@ KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender) {
 
     return FilterMenu;
 }, {
-    requires: ['./base', './filtermenu-render']
+    requires: ['menu', 'filter-menu/render']
 });

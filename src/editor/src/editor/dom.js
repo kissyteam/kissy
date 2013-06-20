@@ -13,8 +13,8 @@ KISSY.add("editor/dom", function (S, Editor, Utils) {
         FALSE = false,
         NULL = null,
         xhtml_dtd = Editor.XHTML_DTD,
-        DOM = S.DOM,
-        NodeType = DOM.NodeType,
+        Dom = S.Dom,
+        NodeType = Dom.NodeType,
         UA = S.UA,
         Node = S.Node,
         REMOVE_EMPTY = {
@@ -116,7 +116,7 @@ KISSY.add("editor/dom", function (S, Editor, Utils) {
              */
             _4e_isBlockBoundary: function (el, customNodeNames) {
                 var nodeNameMatches = S.merge(blockBoundaryNodeNameMatch, customNodeNames);
-                return !!(blockBoundaryDisplayMatch[ DOM.css(el, 'display') ] || nodeNameMatches[ DOM.nodeName(el) ]);
+                return !!(blockBoundaryDisplayMatch[ Dom.css(el, 'display') ] || nodeNameMatches[ Dom.nodeName(el) ]);
             },
 
             /**
@@ -176,7 +176,7 @@ KISSY.add("editor/dom", function (S, Editor, Utils) {
 
                 otherElement = normalElDom(otherElement);
 
-                if (DOM.nodeName(thisElement) != DOM.nodeName(otherElement)) {
+                if (Dom.nodeName(thisElement) != Dom.nodeName(otherElement)) {
                     return FALSE;
                 }
 
@@ -194,20 +194,20 @@ KISSY.add("editor/dom", function (S, Editor, Utils) {
                     var attribute = thisAttributes[i],
                         name = attribute.name;
                     if (attribute.specified &&
-                        DOM.attr(thisElement, name) != DOM.attr(otherElement, name)) {
+                        Dom.attr(thisElement, name) != Dom.attr(otherElement, name)) {
                         return FALSE;
                     }
                 }
 
                 // For IE, we have to for both elements, because it's difficult to
-                // know how the atttibutes collection is organized in its DOM.
+                // know how the atttibutes collection is organized in its Dom.
                 // ie 使用版本 < 8
                 if (Utils.ieEngine < 8) {
                     for (i = 0; i < otherLength; i++) {
                         attribute = otherAttributes[ i ];
                         name = attribute.name;
                         if (attribute.specified &&
-                            DOM.attr(thisElement, name) != DOM.attr(otherElement, name)) {
+                            Dom.attr(thisElement, name) != Dom.attr(otherElement, name)) {
                             return FALSE;
                         }
                     }
@@ -221,7 +221,7 @@ KISSY.add("editor/dom", function (S, Editor, Utils) {
              * @param thisElement
              */
             _4e_isEmptyInlineRemovable: function (thisElement) {
-                if (!xhtml_dtd.$removeEmpty[DOM.nodeName(thisElement)]) {
+                if (!xhtml_dtd.$removeEmpty[Dom.nodeName(thisElement)]) {
                     return false;
                 }
                 var children = thisElement.childNodes;
@@ -234,8 +234,8 @@ KISSY.add("editor/dom", function (S, Editor, Utils) {
                         continue;
                     }
 
-                    if (nodeType == NodeType.ELEMENT_NODE && !DOM._4e_isEmptyInlineRemovable(child) ||
-                        nodeType == DOM.NodeType.TEXT_NODE && S.trim(child.nodeValue)) {
+                    if (nodeType == NodeType.ELEMENT_NODE && !Dom._4e_isEmptyInlineRemovable(child) ||
+                        nodeType == Dom.NodeType.TEXT_NODE && S.trim(child.nodeValue)) {
                         return FALSE;
                     }
                 }
@@ -295,22 +295,22 @@ KISSY.add("editor/dom", function (S, Editor, Utils) {
             _4e_splitText: function (el, offset) {
                 var doc = el.ownerDocument;
 
-                if (el.nodeType != DOM.NodeType.TEXT_NODE) {
+                if (el.nodeType != Dom.NodeType.TEXT_NODE) {
                     return;
                 }
                 // If the offset is after the last char, IE creates the text node
-                // on split, but don't include it into the DOM. So, we have to do
+                // on split, but don't include it into the Dom. So, we have to do
                 // that manually here.
                 if (UA['ie'] && offset == el.nodeValue.length) {
                     var next = doc.createTextNode("");
-                    DOM.insertAfter(next, el);
+                    Dom.insertAfter(next, el);
                     return next;
                 }
 
                 var ret = el.splitText(offset);
 
-                // IE BUG: IE8 does not update the childNodes array in DOM after splitText(),
-                // we need to make some DOM changes to make it update. (#3436)
+                // IE BUG: IE8 does not update the childNodes array in Dom after splitText(),
+                // we need to make some Dom changes to make it update. (#3436)
                 // UA['ie']==8 不对，
                 // 判断不出来:UA['ie']==7 && doc.documentMode==7
                 // 浏览器模式：当ie8处于兼容视图以及ie7时，UA['ie']==7
@@ -318,8 +318,8 @@ KISSY.add("editor/dom", function (S, Editor, Utils) {
                 // ie8 浏览器有问题，而不在于是否哪个模式
                 if (!!(doc.documentMode)) {
                     var workaround = doc.createTextNode("");
-                    DOM.insertAfter(workaround, ret);
-                    DOM.remove(workaround);
+                    Dom.insertAfter(workaround, ret);
+                    Dom.remove(workaround);
                 }
 
                 return ret;
@@ -386,7 +386,7 @@ KISSY.add("editor/dom", function (S, Editor, Utils) {
                 }
 
                 if (nodeType && nodeType != node.nodeType) {
-                    return DOM._4e_nextSourceNode(node, FALSE, nodeType, guard);
+                    return Dom._4e_nextSourceNode(node, FALSE, nodeType, guard);
                 }
 
                 return node;
@@ -437,7 +437,7 @@ KISSY.add("editor/dom", function (S, Editor, Utils) {
                 }
 
                 if (nodeType && node.nodeType != nodeType) {
-                    return DOM._4e_previousSourceNode(node, FALSE, nodeType, guard);
+                    return Dom._4e_previousSourceNode(node, FALSE, nodeType, guard);
                 }
 
                 return node;
@@ -456,14 +456,14 @@ KISSY.add("editor/dom", function (S, Editor, Utils) {
                     return el;
                 }
 
-                if (DOM.contains(node, el)) {
+                if (Dom.contains(node, el)) {
                     return node;
                 }
 
                 var start = el;
 
                 do {
-                    if (DOM.contains(start, node)) {
+                    if (Dom.contains(start, node)) {
                         return start;
                     }
                 } while (start = start.parentNode);
@@ -508,7 +508,7 @@ KISSY.add("editor/dom", function (S, Editor, Utils) {
 
             /**
              * 得到两个元素的位置关系，参见
-             * <a href='https://developer.mozilla.org/en/DOM/Node.compareDocumentPosition'>
+             * <a href='https://developer.mozilla.org/en/Dom/Node.compareDocumentPosition'>
              *     compareDocumentPosition
              * </a>
              * 注意：这里的 following 和 preceding 和 mdc 相反！
@@ -531,11 +531,11 @@ KISSY.add("editor/dom", function (S, Editor, Utils) {
                 // Only element nodes support contains and sourceIndex.
                 if (el.nodeType == NodeType.ELEMENT_NODE &&
                     $other.nodeType == NodeType.ELEMENT_NODE) {
-                    if (DOM.contains(el, $other)) {
+                    if (Dom.contains(el, $other)) {
                         return KEP.POSITION_CONTAINS + KEP.POSITION_PRECEDING;
                     }
 
-                    if (DOM.contains($other, el)) {
+                    if (Dom.contains($other, el)) {
                         return KEP.POSITION_IS_CONTAINED + KEP.POSITION_FOLLOWING;
                     }
 
@@ -550,8 +550,8 @@ KISSY.add("editor/dom", function (S, Editor, Utils) {
 
                 // For nodes that don't support compareDocumentPosition, contains
                 // or sourceIndex, their "address" is compared.
-                var addressOfThis = DOM._4e_address(el),
-                    addressOfOther = DOM._4e_address($other),
+                var addressOfThis = Dom._4e_address(el),
+                    addressOfOther = Dom._4e_address($other),
                     minLevel = Math.min(addressOfThis.length, addressOfOther.length);
 
                 // Determinate preceed/follow relationship.
@@ -579,7 +579,7 @@ KISSY.add("editor/dom", function (S, Editor, Utils) {
                     node = el;
 
                 while (node && node != $documentElement) {
-                    address.unshift(DOM._4e_index(node, normalized));
+                    address.unshift(Dom._4e_index(node, normalized));
                     node = node.parentNode;
                 }
 
@@ -610,8 +610,8 @@ KISSY.add("editor/dom", function (S, Editor, Utils) {
              * @param el
              */
             _4e_trim: function (el) {
-                DOM._4e_ltrim(el);
-                DOM._4e_rtrim(el);
+                Dom._4e_ltrim(el);
+                Dom._4e_rtrim(el);
             },
 
             /**
@@ -621,7 +621,7 @@ KISSY.add("editor/dom", function (S, Editor, Utils) {
             _4e_ltrim: function (el) {
                 var child;
                 while (child = el.firstChild) {
-                    if (child.nodeType == DOM.NodeType.TEXT_NODE) {
+                    if (child.nodeType == Dom.NodeType.TEXT_NODE) {
                         var trimmed = Utils.ltrim(child.nodeValue),
                             originalLength = child.nodeValue.length;
 
@@ -630,7 +630,7 @@ KISSY.add("editor/dom", function (S, Editor, Utils) {
                             continue;
                         }
                         else if (trimmed.length < originalLength) {
-                            DOM._4e_splitText(child, originalLength - trimmed.length);
+                            Dom._4e_splitText(child, originalLength - trimmed.length);
                             // IE BUG: child.remove() may raise JavaScript errors here. (#81)
                             el.removeChild(el.firstChild);
                         }
@@ -646,14 +646,14 @@ KISSY.add("editor/dom", function (S, Editor, Utils) {
             _4e_rtrim: function (el) {
                 var child;
                 while (child = el.lastChild) {
-                    if (child.type == DOM.NodeType.TEXT_NODE) {
+                    if (child.type == Dom.NodeType.TEXT_NODE) {
                         var trimmed = Utils.rtrim(child.nodeValue),
                             originalLength = child.nodeValue.length;
                         if (!trimmed) {
                             el.removeChild(child);
                             continue;
                         } else if (trimmed.length < originalLength) {
-                            DOM._4e_splitText(child, trimmed.length);
+                            Dom._4e_splitText(child, trimmed.length);
                             // IE BUG: child.getNext().remove() may raise JavaScript errors here.
                             // (#81)
                             el.removeChild(el.lastChild);
@@ -666,7 +666,7 @@ KISSY.add("editor/dom", function (S, Editor, Utils) {
                     child = el.lastChild;
                     if (child &&
                         child.nodeType == 1 &&
-                        DOM.nodeName(child) == 'br') {
+                        Dom.nodeName(child) == 'br') {
                         el.removeChild(child);
                     }
                 }
@@ -681,14 +681,14 @@ KISSY.add("editor/dom", function (S, Editor, Utils) {
 
                 // Ignore empty/spaces text.
                 while (lastChild &&
-                    lastChild.nodeType == DOM.NodeType.TEXT_NODE &&
+                    lastChild.nodeType == Dom.NodeType.TEXT_NODE &&
                     !S.trim(lastChild.nodeValue)) {
                     lastChild = lastChild.previousSibling;
                 }
 
                 if (!lastChild ||
-                    lastChild.nodeType == DOM.NodeType.TEXT_NODE ||
-                    DOM.nodeName(lastChild) !== 'br') {
+                    lastChild.nodeType == Dom.NodeType.TEXT_NODE ||
+                    Dom.nodeName(lastChild) !== 'br') {
                     bogus = UA.opera ?
                         el.ownerDocument.createTextNode('') :
                         el.ownerDocument.createElement('br');
@@ -760,13 +760,13 @@ KISSY.add("editor/dom", function (S, Editor, Utils) {
                         continue;
                     }
 
-                    if (attrName == 'checked' && ( attrValue = DOM.attr(el, attrName) )) {
+                    if (attrName == 'checked' && ( attrValue = Dom.attr(el, attrName) )) {
                         target.attr(attrName, attrValue);
                     }
                     // IE BUG: value attribute is never specified even if it exists.
                     else if (attribute.specified ||
                         ( UA['ie'] && attribute.value && attrName == 'value' )) {
-                        attrValue = DOM.attr(el, attrName);
+                        attrValue = Dom.attr(el, attrName);
                         if (attrValue === NULL) {
                             attrValue = attribute.nodeValue;
                         }
@@ -786,7 +786,7 @@ KISSY.add("editor/dom", function (S, Editor, Utils) {
              */
             _4e_isEditable: function (el) {
                 // Get the element DTD (defaults to span for unknown elements).
-                var name = DOM.nodeName(el),
+                var name = Dom.nodeName(el),
                     dtd = !xhtml_dtd.$nonEditable[ name ] &&
                         ( xhtml_dtd[ name ] || xhtml_dtd["span"] );
                 // In the DTD # == text node.

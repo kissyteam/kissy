@@ -2,8 +2,8 @@
  * handle input selection and cursor position ie hack
  * @author yiminghe@gmail.com
  */
-KISSY.add('dom/ie/input-selection', function (S, DOM) {
-    var propHooks = DOM._propHooks;
+KISSY.add('dom/ie/input-selection', function (S, Dom) {
+    var propHooks = Dom._propHooks;
     // S.log("fix selectionEnd/Start !");
     // note :
     // in ie textarea can not set selectionStart or selectionEnd between '\r' and '\n'

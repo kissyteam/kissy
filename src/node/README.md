@@ -1,4 +1,4 @@
 # Node Class
 
-Wrapper around DOM Node
+Wrapper around Dom Node
 

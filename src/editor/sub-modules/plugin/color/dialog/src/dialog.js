@@ -3,7 +3,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/plugin/color/dialog", function (S, Editor, Dialog4E) {
-    var map = S.map, DOM = S.DOM;
+    var map = S.map, Dom = S.Dom;
 
     //获取颜色数组
     function getData(color) {
@@ -65,7 +65,7 @@ KISSY.add("editor/plugin/color/dialog", function (S, Editor, Dialog4E) {
                 if (!frag) {
                     frag = document.createElement("textarea");
                     frag.style.display = "none";
-                    DOM.prepend(frag, document.body);
+                    Dom.prepend(frag, document.body);
                 }
                 try {
                     frag.style.color = color;

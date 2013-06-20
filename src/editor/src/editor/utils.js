@@ -9,7 +9,7 @@ KISSY.add("editor/utils", function (S) {
         FALSE = false,
         NULL = null,
         Node = S.Node,
-        DOM = S.DOM,
+        Dom = S.Dom,
         UA = S.UA,
 
         /**
@@ -63,8 +63,8 @@ KISSY.add("editor/utils", function (S) {
                     y = offset.top,
                     currentWindow = editor.get("window")[0];
                 //x,y相对于当前iframe文档,防止当前iframe有滚动条
-                x -= DOM.scrollLeft(currentWindow);
-                y -= DOM.scrollTop(currentWindow);
+                x -= Dom.scrollLeft(currentWindow);
+                y -= Dom.scrollTop(currentWindow);
 
                 //note:when iframe is static ,still some mistake
                 var iframePosition = editor.get("iframe").offset();
@@ -293,7 +293,7 @@ KISSY.add("editor/utils", function (S) {
              *
              */
             injectDom: function (editorDom) {
-                S.mix(DOM, editorDom);
+                S.mix(Dom, editorDom);
                 for (var dm in editorDom) {
                     (function (dm) {
                         Node.prototype[dm] = function () {

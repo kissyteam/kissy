@@ -5,14 +5,14 @@
  * add abort ability
  * @author yiminghe@gmail.com
  */
-KISSY.add('io/script-transport', function (S, IO, _, undefined) {
+KISSY.add('io/script-transport', function (S, Io, _, undefined) {
 
     var win = S.Env.host,
         doc = win.document,
         OK_CODE = 200,
         ERROR_CODE = 500;
 
-    IO.setupConfig({
+    Io.setupConfig({
         accepts: {
             script: 'text/javascript, ' +
                 'application/javascript, ' +
@@ -40,7 +40,7 @@ KISSY.add('io/script-transport', function (S, IO, _, undefined) {
         var config = io.config;
         // 优先使用 xhr+eval 来执行脚本, ie 下可以探测到（更多）失败状态
         if (!config.crossDomain) {
-            return new (IO['getTransport']('*'))(io);
+            return new (Io['getTransport']('*'))(io);
         }
         this.io = io;
         S.log('use ScriptTransport for: ' + config.url);
@@ -126,9 +126,9 @@ KISSY.add('io/script-transport', function (S, IO, _, undefined) {
         }
     });
 
-    IO['setupTransport']('script', ScriptTransport);
+    Io['setupTransport']('script', ScriptTransport);
 
-    return IO;
+    return Io;
 
 }, {
     requires: ['./base', './xhr-transport']

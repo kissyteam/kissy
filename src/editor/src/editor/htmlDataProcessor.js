@@ -6,14 +6,14 @@
  Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.html or http://ckeditor.com/license
  */
-KISSY.add("editor/htmlDataProcessor", function (S, Editor, HTMLParser) {
+KISSY.add("editor/htmlDataProcessor", function (S, Editor, HtmlParser) {
 
     return {
         init: function (editor) {
             var Node = S.Node,
                 UA = S.UA,
-                htmlFilter = new HTMLParser.Filter(),
-                dataFilter = new HTMLParser.Filter();
+                htmlFilter = new HtmlParser.Filter(),
+                dataFilter = new HtmlParser.Filter();
             /*
              function filterSpan(element) {
              if (((element.getAttribute('class') + "").match(/Apple-\w+-span/)) ||
@@ -39,7 +39,7 @@ KISSY.add("editor/htmlDataProcessor", function (S, Editor, HTMLParser) {
                     allEmpty = 1;
                     for (i = 0; i < l; i++) {
                         child = childNodes[i];
-                        if (child.nodeType == S.DOM.NodeType.TEXT_NODE && !child.nodeValue) {
+                        if (child.nodeType == S.Dom.NodeType.TEXT_NODE && !child.nodeValue) {
                         } else {
                             allEmpty = 0;
                             break;
@@ -54,8 +54,8 @@ KISSY.add("editor/htmlDataProcessor", function (S, Editor, HTMLParser) {
             (function () {
 
                 function wrapAsComment(element) {
-                    var html = HTMLParser.serialize(element);
-                    return new HTMLParser.Comment(protectedSourceMarker +
+                    var html = HtmlParser.serialize(element);
+                    return new HtmlParser.Comment(protectedSourceMarker +
                         encodeURIComponent(html).replace(/--/g,
                             "%2D%2D"));
                 }
@@ -159,7 +159,7 @@ KISSY.add("editor/htmlDataProcessor", function (S, Editor, HTMLParser) {
                         // If this is a comment for protected source.
                         if (contents.substr(0, protectedSourceMarker.length) == protectedSourceMarker) {
                             contents = S.trim(S.urlDecode(contents.substr(protectedSourceMarker.length)));
-                            return HTMLParser.parse(contents).childNodes[0];
+                            return HtmlParser.parse(contents).childNodes[0];
                         }
                         return undefined;
                     }
@@ -191,7 +191,7 @@ KISSY.add("editor/htmlDataProcessor", function (S, Editor, HTMLParser) {
                 // Regex to scan for &nbsp; at the end of blocks,
                 // which are actually placeholders.
                 // Safari transforms the &nbsp; to \xa0. (#4172)
-                // html will auto indent by kissy htmlparser to add \r \n at the end of line
+                // html will auto indent by kissy html-parser to add \r \n at the end of line
                 var tailNbspRegex = /^[\t\r\n ]*(?:&nbsp;|\xa0)[\t\r\n ]*$/;
 
                 // Return the last non-space child node of the block (#4344).
@@ -234,7 +234,7 @@ KISSY.add("editor/htmlDataProcessor", function (S, Editor, HTMLParser) {
                         // non-ie need br for cursor and height
                         // ie does not need!
                         if (!UA['ie']) {
-                            block.appendChild(new HTMLParser.Tag('br'));
+                            block.appendChild(new HtmlParser.Tag('br'));
                         }
                     }
                 }
@@ -245,7 +245,7 @@ KISSY.add("editor/htmlDataProcessor", function (S, Editor, HTMLParser) {
                     if (blockNeedsExtension(block)) {
                         // allow browser need!
                         // <p></p> does not has height!
-                        block.appendChild(new HTMLParser.Text('\xa0'));
+                        block.appendChild(new HtmlParser.Text('\xa0'));
                     }
                 }
 
@@ -277,7 +277,7 @@ KISSY.add("editor/htmlDataProcessor", function (S, Editor, HTMLParser) {
             })();
 
 
-            // htmlparser fragment 中的 entities 处理
+            // html-parser fragment 中的 entities 处理
             // el.innerHTML="&nbsp;"
             // http://yiminghe.javaeye.com/blog/788929
             htmlFilter.addRules({
@@ -355,8 +355,8 @@ KISSY.add("editor/htmlDataProcessor", function (S, Editor, HTMLParser) {
                     // Now use our parser to make further fixes to the structure, as
                     // well as apply the filter.
                     //使用 htmlWriter 界面美观，加入额外文字节点\n,\t空白等
-                    var writer = new HTMLParser.BeautifyWriter(),
-                        n = new HTMLParser.Parser(html).parse();
+                    var writer = new HtmlParser.BeautifyWriter(),
+                        n = new HtmlParser.Parser(html).parse();
                     n.writeHTML(writer, htmlFilter);
                     html = writer.getHTML();
                     return html;
@@ -373,7 +373,7 @@ KISSY.add("editor/htmlDataProcessor", function (S, Editor, HTMLParser) {
 
                     html = protectAttributes(html);
 
-                    // Certain elements has problem to go through DOM operation, protect
+                    // Certain elements has problem to go through Dom operation, protect
                     // them by prefixing 'ke' namespace. (#3591)
                     html = protectElementsNames(html);
 
@@ -397,8 +397,8 @@ KISSY.add("editor/htmlDataProcessor", function (S, Editor, HTMLParser) {
                     // fixForBody = fixForBody || "p";
                     // bug:qc #3710:使用 basicWriter ，去除无用的文字节点，标签间连续\n空白等
 
-                    var writer = new HTMLParser.BasicWriter(),
-                        n = new HTMLParser.Parser(html).parse();
+                    var writer = new HtmlParser.BasicWriter(),
+                        n = new HtmlParser.Parser(html).parse();
 
                     n.writeHTML(writer, _dataFilter);
 
@@ -410,8 +410,8 @@ KISSY.add("editor/htmlDataProcessor", function (S, Editor, HTMLParser) {
                  最精简html传送到server
                  */
                 toServer: function (html) {
-                    var writer = new HTMLParser.MinifyWriter(),
-                        n = new HTMLParser.Parser(html).parse();
+                    var writer = new HtmlParser.MinifyWriter(),
+                        n = new HtmlParser.Parser(html).parse();
                     n.writeHTML(writer, htmlFilter);
                     return writer.getHTML();
                 }
@@ -419,5 +419,5 @@ KISSY.add("editor/htmlDataProcessor", function (S, Editor, HTMLParser) {
         }
     };
 }, {
-    requires: ['./base', 'htmlparser']
+    requires: ['./base', 'html-parser']
 });

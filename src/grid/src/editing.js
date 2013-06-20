@@ -1,6 +1,6 @@
 KISSY.add('grid/editing',function(S,Component,EditorPanel,Overlay){
 
-    var DOM = S.DOM,
+    var Dom = S.Dom,
         Event = S.Event,
         doc = document,
         CLS_EDITOR_OVERLAY = 'ks-grid-editor-overlay';
@@ -248,7 +248,7 @@ KISSY.add('grid/editing',function(S,Component,EditorPanel,Overlay){
         _beforeShowEditor : function(editorPanel,cell){
             var editor = editorPanel.get('children')[0];
 
-            editor.set('width',DOM.width(cell));
+            editor.set('width',Dom.width(cell));
         },
         /**
          * @protect
@@ -344,7 +344,7 @@ KISSY.add('grid/editing',function(S,Component,EditorPanel,Overlay){
             var editors = editorPanel.get('children');
 
             S.each(editors,function(editor){
-                editor.set('width',DOM.width(cell));
+                editor.set('width',Dom.width(cell));
             });
 
         },

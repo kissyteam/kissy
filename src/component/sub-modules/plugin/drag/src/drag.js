@@ -34,7 +34,7 @@ KISSY.add('component/plugin/drag', function (S, RichBase, DD) {
         pluginId: 'component/plugin/drag',
 
         pluginBindUI: function (component) {
-            var el = component.get('el'),
+            var el = component.el,
                 self = this;
             self.set('node', el);
             // sync
