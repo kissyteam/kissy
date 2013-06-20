@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 17 23:57
+build time: Jun 21 02:13
 */
 /**
 ks-editor-post ，编辑器内容外部包装容器
@@ -15,14 +15,14 @@ from : resource://gre/res/html.css
 /*
 清除编辑器内容里面的浮动
  */
-.ks-clear:after, .ks-editor-post:after {
+.ks-editor-post:after {
     content: '\20';
     display: block;
     height: 0;
     clear: both;
 }
 
-.ks-editor-post, .ks-clear {
+.ks-editor-post {
     *zoom: 1;
 }
 

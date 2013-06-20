@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 17 23:50
+build time: Jun 21 01:17
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -19,7 +19,7 @@ build time: Jun 17 23:50
  */
 KISSY.add('calendar/base', function (S, Node, Event, undefined) {
     var EventTarget = Event.Target,
-        DOM= S.DOM,
+        Dom= S.Dom,
         UA = S.UA,
         $ = Node.all;
 
@@ -314,9 +314,9 @@ KISSY.add('calendar/base', function (S, Node, Event, undefined) {
                 w = node.outerWidth();
                 h = node.outerHeight();
             } else {
-                offset = { left: DOM.scrollLeft(), top: DOM.scrollTop() };
-                w = DOM.viewportWidth();
-                h = DOM.viewportHeight();
+                offset = { left: Dom.scrollLeft(), top: Dom.scrollTop() };
+                w = Dom.viewportWidth();
+                h = Dom.viewportHeight();
             }
 
             x = offset.left;

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 18 01:54
+build time: Jun 21 01:16
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -15,7 +15,7 @@ build time: Jun 18 01:54
  * @ignore queue data structure
  * @author yiminghe@gmail.com
  */
-KISSY.add('anim/base/queue', function (S, DOM) {
+KISSY.add('anim/base/queue', function (S, Dom) {
 
     var // 队列集合容器
         queueCollectionKey = S.guid('ks-queue-' + S.now() + '-'),
@@ -27,10 +27,10 @@ KISSY.add('anim/base/queue', function (S, DOM) {
         name = name || queueKey;
 
         var qu,
-            quCollection = DOM.data(node, queueCollectionKey);
+            quCollection = Dom.data(node, queueCollectionKey);
 
         if (!quCollection && !readOnly) {
-            DOM.data(node, queueCollectionKey, quCollection = {});
+            Dom.data(node, queueCollectionKey, quCollection = {});
         }
 
         if (quCollection) {
@@ -70,17 +70,17 @@ KISSY.add('anim/base/queue', function (S, DOM) {
         },
 
         'clearQueues': function (node) {
-            DOM.removeData(node, queueCollectionKey);
+            Dom.removeData(node, queueCollectionKey);
         },
 
         clearQueue: function clearQueue(node, queue) {
             queue = queue || queueKey;
-            var quCollection = DOM.data(node, queueCollectionKey);
+            var quCollection = Dom.data(node, queueCollectionKey);
             if (quCollection) {
                 delete quCollection[queue];
             }
             if (S.isEmptyObject(quCollection)) {
-                DOM.removeData(node, queueCollectionKey);
+                Dom.removeData(node, queueCollectionKey);
             }
         },
 
@@ -105,33 +105,33 @@ KISSY.add('anim/base/queue', function (S, DOM) {
  * @author yiminghe@gmail.com
  * @ignore
  */
-KISSY.add('anim/base/utils', function (S, DOM, Q,undefined) {
+KISSY.add('anim/base/utils', function (S, Dom, Q,undefined) {
 
     var runningKey = S.guid('ks-anim-unqueued-' + S.now() + '-');
 
     function saveRunningAnim(anim) {
         var node = anim.node,
-            allRunning = DOM.data(node, runningKey);
+            allRunning = Dom.data(node, runningKey);
         if (!allRunning) {
-            DOM.data(node, runningKey, allRunning = {});
+            Dom.data(node, runningKey, allRunning = {});
         }
         allRunning[S.stamp(anim)] = anim;
     }
 
     function removeRunningAnim(anim) {
         var node = anim.node,
-            allRunning = DOM.data(node, runningKey);
+            allRunning = Dom.data(node, runningKey);
         if (allRunning) {
             delete allRunning[S.stamp(anim)];
             if (S.isEmptyObject(allRunning)) {
-                DOM.removeData(node, runningKey);
+                Dom.removeData(node, runningKey);
             }
         }
     }
 
     function isAnimRunning(anim) {
         var node = anim.node,
-            allRunning = DOM.data(node, runningKey);
+            allRunning = Dom.data(node, runningKey);
         if (allRunning) {
             return !!allRunning[S.stamp(anim)];
         }
@@ -142,27 +142,27 @@ KISSY.add('anim/base/utils', function (S, DOM, Q,undefined) {
 
     function savePausedAnim(anim) {
         var node = anim.node,
-            paused = DOM.data(node, pausedKey);
+            paused = Dom.data(node, pausedKey);
         if (!paused) {
-            DOM.data(node, pausedKey, paused = {});
+            Dom.data(node, pausedKey, paused = {});
         }
         paused[S.stamp(anim)] = anim;
     }
 
     function removePausedAnim(anim) {
         var node = anim.node,
-            paused = DOM.data(node, pausedKey);
+            paused = Dom.data(node, pausedKey);
         if (paused) {
             delete paused[S.stamp(anim)];
             if (S.isEmptyObject(paused)) {
-                DOM.removeData(node, pausedKey);
+                Dom.removeData(node, pausedKey);
             }
         }
     }
 
     function isAnimPaused(anim) {
         var node = anim.node,
-            paused = DOM.data(node, pausedKey);
+            paused = Dom.data(node, pausedKey);
         if (paused) {
             return !!paused[S.stamp(anim)];
         }
@@ -170,7 +170,7 @@ KISSY.add('anim/base/utils', function (S, DOM, Q,undefined) {
     }
 
     function pauseOrResumeQueue(node, queue, action) {
-        var allAnims = DOM.data(node, action == 'resume' ? pausedKey : runningKey),
+        var allAnims = Dom.data(node, action == 'resume' ? pausedKey : runningKey),
         // can not stop in for/in , stop will modified allRunning too
             anims = S.merge(allAnims);
 
@@ -191,12 +191,12 @@ KISSY.add('anim/base/utils', function (S, DOM, Q,undefined) {
         isAnimRunning: isAnimRunning,
         // whether node has paused anim
         'isElPaused': function (node) {
-            var paused = DOM.data(node, pausedKey);
+            var paused = Dom.data(node, pausedKey);
             return paused && !S.isEmptyObject(paused);
         },
         // whether node is running anim
         'isElRunning': function (node) {
-            var allRunning = DOM.data(node, runningKey);
+            var allRunning = Dom.data(node, runningKey);
             return allRunning && !S.isEmptyObject(allRunning);
         },
         pauseOrResumeQueue: pauseOrResumeQueue,
@@ -208,7 +208,7 @@ KISSY.add('anim/base/utils', function (S, DOM, Q,undefined) {
                     Q.clearQueue(node, queue);
                 }
             }
-            var allRunning = DOM.data(node, runningKey),
+            var allRunning = Dom.data(node, runningKey),
             // can not stop in for/in , stop will modified allRunning too
                 anims = S.merge(allRunning);
             S.each(anims, function (anim) {
@@ -226,9 +226,9 @@ KISSY.add('anim/base/utils', function (S, DOM, Q,undefined) {
  * @author yiminghe@gmail.com
  * @ignore
  */
-KISSY.add('anim/base', function (S, DOM, Utils, CustomEvent, Q) {
+KISSY.add('anim/base', function (S, Dom, Utils, CustomEvent, Q) {
 
-    var NodeType = DOM.NodeType;
+    var NodeType = Dom.NodeType;
     var specialVals = {
         toggle: 1,
         hide: 1,
@@ -247,7 +247,7 @@ KISSY.add('anim/base', function (S, DOM, Utils, CustomEvent, Q) {
          * @type {Object}
          */
         self.config = config;
-        self.node = self.el = DOM.get(config.node);
+        self.node = self.el = Dom.get(config.node);
         // 实例属性
         self._backupProps = {};
         self._propsData = {};
@@ -262,7 +262,7 @@ KISSY.add('anim/base', function (S, DOM, Utils, CustomEvent, Q) {
 
         // only recover after complete anim
         if (!S.isEmptyObject(_backupProps = self._backupProps)) {
-            DOM.css(self.node, _backupProps);
+            Dom.css(self.node, _backupProps);
         }
     }
 
@@ -328,8 +328,8 @@ KISSY.add('anim/base', function (S, DOM, Utils, CustomEvent, Q) {
                     });
                     elStyle.overflow = 'hidden';
                     // inline element should has layout/inline-block
-                    if (DOM.css(node, 'display') === 'inline' &&
-                        DOM.css(node, 'float') === 'none') {
+                    if (Dom.css(node, 'display') === 'inline' &&
+                        Dom.css(node, 'float') === 'none') {
                         if (S.UA['ie']) {
                             elStyle.zoom = 1;
                         } else {
@@ -339,7 +339,7 @@ KISSY.add('anim/base', function (S, DOM, Utils, CustomEvent, Q) {
                 }
 
                 var exit, hidden;
-                hidden = (DOM.css(node, 'display') === 'none');
+                hidden = (Dom.css(node, 'display') === 'none');
                 S.each(_propsData, function (_propData, prop) {
                     val = _propData.value;
                     // 直接结束
@@ -350,7 +350,7 @@ KISSY.add('anim/base', function (S, DOM, Utils, CustomEvent, Q) {
                             return exit = false;
                         }
                         // backup original inline css value
-                        _backupProps[prop] = DOM.style(node, prop);
+                        _backupProps[prop] = Dom.style(node, prop);
                         if (val == 'toggle') {
                             val = hidden ? 'show' : 'hide';
                         }
@@ -359,10 +359,10 @@ KISSY.add('anim/base', function (S, DOM, Utils, CustomEvent, Q) {
                             // 执行完后隐藏
                             _backupProps.display = 'none';
                         } else {
-                            _propData.value = DOM.css(node, prop);
+                            _propData.value = Dom.css(node, prop);
                             // prevent flash of content
-                            DOM.css(node, prop, 0);
-                            DOM.show(node);
+                            Dom.css(node, prop, 0);
+                            Dom.show(node);
                         }
                     }
                     return undefined;

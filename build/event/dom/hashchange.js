@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 17 23:57
+build time: Jun 21 01:26
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -14,7 +14,7 @@ build time: Jun 17 23:57
  * hashchange event for non-standard browser
  * @author yiminghe@gmail.com, xiaomacji@gmail.com
  */
-KISSY.add('event/dom/hashchange', function (S, DOMEvent, DOM) {
+KISSY.add('event/dom/hashchange', function (S, DOMEvent, Dom) {
 
     var UA = S.UA,
         Special = DOMEvent.Special,
@@ -78,10 +78,10 @@ KISSY.add('event/dom/hashchange', function (S, DOMEvent, DOM) {
             // S.log('set iframe html :' + hash);
             var html = S.substitute(IFRAME_TEMPLATE, {
                     // 防止 hash 里有代码造成 xss
-                    // 后面通过 innerText，相当于 unEscapeHTML
-                    hash: S.escapeHTML(hash),
+                    // 后面通过 innerText，相当于 unEscapeHtml
+                    hash: S.escapeHtml(hash),
                     // 一定要加哦
-                    head: DOM.isCustomDomain() ? ("<script>" +
+                    head: Dom.isCustomDomain() ? ("<script>" +
                         "document." +
                         "domain = '" +
                         doc.domain
@@ -97,7 +97,7 @@ KISSY.add('event/dom/hashchange', function (S, DOMEvent, DOM) {
                     iframeDoc.open();
                 }
                 // 取时要用 innerText !!
-                // 否则取 innerHTML 会因为 escapeHTML 导置 body.innerHTMl != hash
+                // 否则取 innerHTML 会因为 escapeHtml 导置 body.innerHTMl != hash
                 iframeDoc.write(html);
                 iframeDoc.close();
                 // 立刻同步调用 onIframeLoad !!!!
@@ -135,9 +135,9 @@ KISSY.add('event/dom/hashchange', function (S, DOMEvent, DOM) {
          */
         setup = function () {
             if (!iframe) {
-                var iframeSrc = DOM.getEmptyIframeSrc();
+                var iframeSrc = Dom.getEmptyIframeSrc();
                 //http://www.paciellogroup.com/blog/?p=604
-                iframe = DOM.create('<iframe ' +
+                iframe = Dom.create('<iframe ' +
                     (iframeSrc ? 'src="' + iframeSrc + '"' : '') +
                     ' style="display: none" ' +
                     'height="0" ' +
@@ -147,7 +147,7 @@ KISSY.add('event/dom/hashchange', function (S, DOMEvent, DOM) {
                 // Append the iframe to the documentElement rather than the body.
                 // Keeping it outside the body prevents scrolling on the initial
                 // page load
-                DOM.prepend(iframe, doc.documentElement);
+                Dom.prepend(iframe, doc.documentElement);
 
                 // init，第一次触发，以后都是 onIframeLoad
                 DOMEvent.add(iframe, 'load', function () {
@@ -209,7 +209,7 @@ KISSY.add('event/dom/hashchange', function (S, DOMEvent, DOM) {
             timer && clearTimeout(timer);
             timer = 0;
             DOMEvent.detach(iframe);
-            DOM.remove(iframe);
+            Dom.remove(iframe);
             iframe = 0;
         };
     }

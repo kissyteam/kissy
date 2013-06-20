@@ -11,6 +11,8 @@ KISSY.add('node/attach', function (S, Dom, Event, NodeList, undefined) {
     // if Dom methods return undefined , Node methods need to transform result to itself
         DOM_INCLUDES_NORM = [
             'nodeName',
+            'isCustomDomain',
+            'getEmptyIframeSrc',
             'equals',
             'contains',
             'index',

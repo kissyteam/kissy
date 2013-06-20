@@ -652,13 +652,17 @@ KISSY.add("combobox/base", function (S, Node, Controller, ComboBoxRender, Menu, 
         }
 
         if (data && data.length) {
+
             for (i = 0; i < data.length; i++) {
                 v = data[i];
-                children.push(menu.addChild(v));
+                menu.addChild(v);
             }
+
+            children = menu.get('children');
 
             // make menu item (which textContent is same as input) active
             val = self['getValueForAutocomplete']();
+
             if (self.get('highlightMatchItem')) {
                 for (i = 0; i < children.length; i++) {
                     if (children[i].get("textContent") == val) {
@@ -668,6 +672,7 @@ KISSY.add("combobox/base", function (S, Node, Controller, ComboBoxRender, Menu, 
                     }
                 }
             }
+
             // Whether or not the first row should be highlighted by default.
             if (!matchVal && self.get("autoHighlightFirst")) {
                 for (i = 0; i < children.length; i++) {
@@ -677,7 +682,9 @@ KISSY.add("combobox/base", function (S, Node, Controller, ComboBoxRender, Menu, 
                     }
                 }
             }
+
             self.set("collapsed", false);
+
         } else {
             self.set("collapsed", true);
         }

@@ -359,17 +359,19 @@ KISSY.add('component/extension/align', function (S, Node) {
 
             var self = this,
                 el = self.el,
-                fail = 0,
+                fail = 0;
+
             // 当前节点可以被放置的显示区域
-                visibleRect = getVisibleRectForElement(el[0]),
+            var visibleRect = getVisibleRectForElement(el[0]);
             // 当前节点所占的区域, left/top/width/height
-                elRegion = getRegion(el),
+            var elRegion = getRegion(el);
             // 参照节点所占的区域, left/top/width/height
-                refNodeRegion = getRegion(refNode),
+            var refNodeRegion = getRegion(refNode);
             // 当前节点将要被放置的位置
-                elFuturePos = getElFuturePos(elRegion, refNodeRegion, points, offset),
+            var elFuturePos = getElFuturePos(elRegion,
+                refNodeRegion, points, offset);
             // 当前节点将要所处的区域
-                newElRegion = S.merge(elRegion, elFuturePos);
+            var newElRegion = S.merge(elRegion, elFuturePos);
 
             // 如果可视区域不能完全放置当前节点时允许调整
             if (visibleRect && (overflow.adjustX || overflow.adjustY)) {
@@ -433,11 +435,11 @@ KISSY.add('component/extension/align', function (S, Node) {
             });
 
             // need judge to in case set fixed with in css on height auto element
-            if (newElRegion.width - elRegion.width) {
+            if (newElRegion.width != elRegion.width) {
                 self.set('width', el.width() + newElRegion.width - elRegion.width);
             }
 
-            if (newElRegion.height - elRegion.height) {
+            if (newElRegion.height != elRegion.height) {
                 self.set('height', el.height() + newElRegion.height - elRegion.height);
             }
 
@@ -461,7 +463,9 @@ KISSY.add('component/extension/align', function (S, Node) {
         },
 
         __destructor: function () {
-            this.el.getWindow().detach('resize', realign, this);
+            if (this.el) {
+                this.el.getWindow().detach('resize', realign, this);
+            }
         }
     };
 

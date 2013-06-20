@@ -2,7 +2,13 @@
  * component tc
  * @author yiminghe@gmail.com
  */
-KISSY.use("component/base,component/extension", function (S, Component,Extension) {
+KISSY.use("component/controller," +
+    "component/container," +
+    "component/extension/delegate-children", function (S,
+    Controller,
+    Container,
+    DelegateChildrenExtension
+    ) {
 
     function invalidNode(n) {
         return n == null || n.nodeType == 11;
@@ -13,11 +19,11 @@ KISSY.use("component/base,component/extension", function (S, Component,Extension
         describe('addChild/removeChild event', function () {
 
             it('can listen and preventDefault', function () {
-                var c = new Component.Controller({
+                var c = new Container({
                     content: "xx"
                 });
 
-                var child = new Component.Controller({
+                var child = new Container({
                     content: "yy"
                 });
 
@@ -36,7 +42,7 @@ KISSY.use("component/base,component/extension", function (S, Component,Extension
                     });
 
                     c.on('afterAddChild', {
-                        fn: function (e) {
+                        fn: function () {
                             afterCalled = 1;
                         },
                         once: 1
@@ -92,7 +98,7 @@ KISSY.use("component/base,component/extension", function (S, Component,Extension
                     });
 
                     c.on('afterRemoveChild', {
-                        fn: function (e) {
+                        fn: function () {
                             afterCalled = 1;
                         },
                         once: 1
@@ -136,15 +142,15 @@ KISSY.use("component/base,component/extension", function (S, Component,Extension
 
 
             it('can bubble', function () {
-                var c = new Component.Controller({
+                var c = new Container({
                     content: "xx"
                 });
 
-                var child = new Component.Controller({
+                var child = new Container({
                     content: "yy"
                 });
 
-                var grandChild = new Component.Controller({
+                var grandChild = new Container({
                     content: "zz"
                 });
 
@@ -172,16 +178,16 @@ KISSY.use("component/base,component/extension", function (S, Component,Extension
 
             it('parent can be changed', function () {
 
-                var c1 = new Component.Controller({
+                var c1 = new Container({
                     content: "xx"
                 });
 
 
-                var c2 = new Component.Controller({
+                var c2 = new Container({
                     content: "xx"
                 });
 
-                var child = new Component.Controller({
+                var child = new Container({
                     content: "yy"
                 });
 
@@ -225,15 +231,15 @@ KISSY.use("component/base,component/extension", function (S, Component,Extension
 
             it('parent can be changed after render', function () {
 
-                var c1 = new Component.Controller({
+                var c1 = new Container({
                     content: "xx"
                 }).render();
 
-                var c2 = new Component.Controller({
+                var c2 = new Container({
                     content: "yy"
                 }).render();
 
-                var child = new Component.Controller({
+                var child = new Container({
                     content: "zz"
                 }).render();
 
@@ -286,10 +292,10 @@ KISSY.use("component/base,component/extension", function (S, Component,Extension
 
         describe("delegate children works", function () {
 
-            var Container=Component.Controller.extend([Extension.DelegateChildren]);
+            var MyContainer=Container.extend([DelegateChildrenExtension]);
 
             it("should attach its methods", function () {
-                var c = new Container({
+                var c = new MyContainer({
                     content: "xx"
                 });
                 c.render();
@@ -304,11 +310,11 @@ KISSY.use("component/base,component/extension", function (S, Component,Extension
 
             } else {
                 it("should delegate events", function () {
-                    var c = new Container({
+                    var c = new MyContainer({
                         content: "xx"
                     });
 
-                    var child1 = new Component.Controller({
+                    var child1 = new Controller({
                         content: "yy",
                         handleMouseEvents: false,
                         focusable: false
@@ -316,7 +322,7 @@ KISSY.use("component/base,component/extension", function (S, Component,Extension
 
                     c.addChild(child1);
 
-                    var child2 = new Component.Controller({
+                    var child2 = new Controller({
                         content: "yy",
                         handleMouseEvents: false,
                         focusable: false
@@ -347,7 +353,8 @@ KISSY.use("component/base,component/extension", function (S, Component,Extension
                     });
                     waits(10);
                     runs(function () {
-                        expect(c.get('active')).toBe(true);
+                        // stop bubble
+                        expect(c.get('active')).toBe(false);
                         expect(child1.get('active')).toBe(true);
                         expect(child2.get('active')).toBeFalsy();
                     });
@@ -375,7 +382,7 @@ KISSY.use("component/base,component/extension", function (S, Component,Extension
 
     describe("xclass", function () {
 
-        var A = Component.Controller.extend({
+        var A = Container.extend({
 
         }, {
             ATTRS: {
@@ -389,7 +396,7 @@ KISSY.use("component/base,component/extension", function (S, Component,Extension
             xclass: 'a'
         });
 
-        var B = Component.Controller.extend({}, {
+        var B = Container.extend({}, {
             xclass: 'a-b'
         });
 

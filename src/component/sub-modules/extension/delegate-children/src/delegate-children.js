@@ -11,10 +11,30 @@ KISSY.add("component/extension/delegate-children", function (S, Node, Manager) {
         Gesture = Node.Gesture,
         isTouchEventSupported = Features.isTouchEventSupported();
 
+    function onRenderChild(e) {
+        if (e.target == this) {
+            var child = e.component,
+                el = child.el;
+            el.addClass(this.__childClsTag);
+        }
+    }
+
+    function onRemoveChild(e) {
+        if (e.target == this) {
+            var child = e.component,
+                el = child.el;
+            if (el) {
+                el.removeClass(this.__childClsTag);
+            }
+        }
+    }
+
     function DelegateChildren() {
         var self = this;
         self.__childClsTag = S.guid('ks-component-child');
-        self.on('afterRenderChild', self._processRenderChildForDelegate, self);
+        self.on('afterRenderChild', onRenderChild, self)
+            .on('afterRemoveChild', onRemoveChild, self);
+
     }
 
     S.augment(DelegateChildren, {
@@ -51,14 +71,6 @@ KISSY.add("component/extension/delegate-children", function (S, Node, Manager) {
                             S.error(e.type + " unhandled!");
                     }
                 }
-            }
-        },
-
-        _processRenderChildForDelegate: function (e) {
-            if (e.target == this) {
-                var child = e.component,
-                    el = child.el;
-                el.addClass(this.__childClsTag);
             }
         },
 

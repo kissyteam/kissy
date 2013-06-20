@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 17 23:51
+build time: Jun 21 01:18
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -1131,7 +1131,7 @@ KISSY.add("dom/selector/parser", function () {
  * css3 selector engine for ie6-8
  * @author yiminghe@gmail.com
  */
-KISSY.add('dom/selector', function (S, parser, DOM) {
+KISSY.add('dom/selector', function (S, parser, Dom) {
 
     S.log('use KISSY css3 selector');
 
@@ -1146,13 +1146,13 @@ KISSY.add('dom/selector', function (S, parser, DOM) {
         subMatchesCache = {},
         getAttr = function (el, name) {
             if (isContextXML) {
-                return DOM._getSimpleAttr(el, name);
+                return Dom._getSimpleAttr(el, name);
             } else {
-                return  DOM.attr(el, name);
+                return  Dom.attr(el, name);
             }
         },
-        hasSingleClass = DOM._hasSingleClass,
-        isTag = DOM._isTag,
+        hasSingleClass = Dom._hasSingleClass,
+        isTag = Dom._isTag,
         aNPlusB = /^(([+-]?(?:\d+)?)?n)?([+-]?\d+)?$/;
 
     // CSS escapes http://www.w3.org/TR/CSS21/syndata.html#escaped-characters
@@ -1416,7 +1416,7 @@ KISSY.add('dom/selector', function (S, parser, DOM) {
                 child = childNodes[index];
                 nodeType = child.nodeType;
                 // only element nodes and content nodes
-                // (such as DOM [DOM-LEVEL-3-CORE] text nodes,
+                // (such as Dom [Dom-LEVEL-3-CORE] text nodes,
                 // CDATA nodes, and entity references
                 if (nodeType == 1 || nodeType == 3 || nodeType == 4 || nodeType == 5) {
                     return 0;
@@ -1556,16 +1556,16 @@ KISSY.add('dom/selector', function (S, parser, DOM) {
     };
 
     if ('sourceIndex' in document.documentElement) {
-        DOM._compareNodeOrder = function (a, b) {
+        Dom._compareNodeOrder = function (a, b) {
             return a.sourceIndex - b.sourceIndex;
         };
     }
 
     function matches(str, seeds) {
-        return DOM._selectInternal(str, null, seeds);
+        return Dom._selectInternal(str, null, seeds);
     }
 
-    DOM._matchesInternal = matches;
+    Dom._matchesInternal = matches;
 
     function singleMatch(el, match) {
         if (!match) {
@@ -1772,7 +1772,7 @@ KISSY.add('dom/selector', function (S, parser, DOM) {
                 if (id) {
                     // id bug
                     // https://github.com/kissyteam/kissy/issues/67
-                    var contextNotInDom = (context != contextDocument && !DOM._contains(contextDocument, context)),
+                    var contextNotInDom = (context != contextDocument && !Dom._contains(contextDocument, context)),
                         tmp = contextNotInDom ? null : contextDocument.getElementById(id);
                     if (contextNotInDom || getAttr(tmp, 'id') != id) {
                         var tmps = getElementsByTagName('*', context),
@@ -1790,7 +1790,7 @@ KISSY.add('dom/selector', function (S, parser, DOM) {
                         }
                     } else {
                         if (context !== contextDocument && tmp) {
-                            tmp = DOM._contains(context, tmp) ? tmp : null;
+                            tmp = Dom._contains(context, tmp) ? tmp : null;
                         }
                         if (tmp) {
                             mySeeds = [tmp];
@@ -1824,13 +1824,13 @@ KISSY.add('dom/selector', function (S, parser, DOM) {
         }
 
         if (groupLen > 1) {
-            ret = DOM.unique(ret);
+            ret = Dom.unique(ret);
         }
 
         return ret;
     }
 
-    DOM._selectInternal = select;
+    Dom._selectInternal = select;
 
     return {
         parse: function (str) {

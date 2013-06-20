@@ -2535,7 +2535,7 @@ jasmine.version_ = {
 
 jasmine.kissyNext = function (failedCount) {
     if (!failedCount && parent != window) {
-        if ('postMessage' in parent) {
+        if ('postMessage' in parent && parent.addEventListener) {
             parent.postMessage('next', '*');
         } else {
             parent.name = 'next';

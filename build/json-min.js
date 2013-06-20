@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 17 23:58
+build time: Jun 21 01:26
 */
 KISSY.add("json/quote",function(i){var k={"":"\\b","":"\\f","\n":"\\n","\r":"\\r","\t":"\\t",'"':'\\"'},f={},m=/["\b\f\n\r\t\x00-\x1f]/g,a=/\\b|\\f|\\n|\\r|\\t|\\"|\\u[0-9a-zA-Z]{4}/g;i.each(k,function(b,a){f[a]=b});f["\\/"]="/";return{quote:function(a){return'"'+a.replace(m,function(a){var b;if(!(b=k[a]))b="\\u"+("0000"+a.charCodeAt(0).toString(16)).slice(-4);return b})+'"'},unQuote:function(b){return b.slice(1,b.length-1).replace(a,function(a){var b;if(!(b=f[a]))b=String.fromCharCode(parseInt(a.slice(2),
 16));return b})}}});
@@ -20,4 +20,4 @@ memberList:20};i.productions=[[13,[14]],[14,[15],function(){return this.$1}],[15
 b.table,f=h.gotos,h=h.action,d=b.productions,i=[null],l=[0];for(c.resetInput(a);;){a=l[l.length-1];e||(e=c.lex());if(!e)return!1;g=h[a]&&h[a][e];if(!g){var m=[];h[a]&&k.each(h[a],function(a,c){m.push(b.lexer.mapReverseSymbol(c))});c.showDebugInfo();m.join(", ");return!1}switch(g[0]){case 1:l.push(e);i.push(c.text);l.push(g[2]);e=null;break;case 2:var j=d[g[1]],a=j.symbol||j[0];g=j.action||j[2];var o=(j.rhs||j[1]).length,q=0,s=void 0,j=i[i.length-o];for(b.$$=j;q<o;q++)b["$"+(o-q)]=i[i.length-1-q];
 g&&(s=g.call(b));j=void 0!==s?s:b.$$;o&&(l=l.slice(0,-2*o),i=i.slice(0,-1*o));l.push(a);i.push(j);l.push(f[l[l.length-2]][l[l.length-1]]);break;case 0:return j}}};return i});
 KISSY.add("json/parse",function(i,k,f){function m(a,b,c){var e=a[b],g,h,f;if("object"===typeof e)if(i.isArray(e)){g=0;h=e.length;for(var d=[];g<h;)f=m(e,""+g,c),void 0!==f&&(d[d.length]=f);e=d}else{d=i.keys(e);g=0;for(h=d.length;g<h;g++){var k=d[g];f=m(e,k,c);void 0===f?delete e[k]:e[k]=f}}return c.call(a,b,e)}k.yy={unQuote:f.unQuote};return function(a,b){var c=k.parse(""+a);return b?m({"":c},"",b):c}},{requires:["./parser","./quote"]});
-KISSY.add("json",function(i,k,f){return i.JSON={stringify:k,parse:f}},{requires:["./json/stringify","./json/parse"]});
+KISSY.add("json",function(i,k,f){return i.JSON=i.Json={stringify:k,parse:f}},{requires:["./json/stringify","./json/parse"]});

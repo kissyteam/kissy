@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 17 23:51
+build time: Jun 21 01:18
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -14,7 +14,7 @@ build time: Jun 17 23:51
  * @ignore
  * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
-KISSY.add('dom/class-list', function (S, DOM) {
+KISSY.add('dom/class-list', function (S, Dom) {
     var SPACE = ' ',
         RE_CLASS = /[\n\t]/g;
 
@@ -22,7 +22,7 @@ KISSY.add('dom/class-list', function (S, DOM) {
         return (SPACE + elemClass + SPACE).replace(RE_CLASS, SPACE);
     }
 
-    return S.mix(DOM, {
+    return S.mix(Dom, {
 
         _hasClass: function (elem, classNames) {
             var elemClass = elem.className,

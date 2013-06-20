@@ -28,17 +28,17 @@ KISSY.add("html-parser", function (S, DTD, Lexer, Parser, BasicWriter, BeautifyW
 }, {
     requires:[
         'html-parser/dtd',
-        'html-parser/lexer/Lexer',
-        'html-parser/Parser',
+        'html-parser/lexer/lexer',
+        'html-parser/parser',
         'html-parser/writer/basic',
         'html-parser/writer/beautify',
         'html-parser/writer/minify',
         'html-parser/writer/filter',
-        'html-parser/nodes/CData',
-        'html-parser/nodes/Comment',
-        'html-parser/nodes/Node',
-        'html-parser/nodes/Tag',
-        'html-parser/nodes/Text'
+        'html-parser/nodes/cdata',
+        'html-parser/nodes/comment',
+        'html-parser/nodes/node',
+        'html-parser/nodes/tag',
+        'html-parser/nodes/text'
     ]
 });
 

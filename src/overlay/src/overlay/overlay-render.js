@@ -10,10 +10,14 @@ KISSY.add("overlay/overlay-render", function (S, Container, ContentRenderExtensi
         ShimRenderExtension
     ], {
         createDom: function () {
-            this.controller.get('contentEl').append(this.renderTpl(CloseTpl));
-            this.fillChildrenElsBySelectors({
-                closeBtn: '#ks-ext-close-{id}'
-            });
+            var self = this;
+            if (self.controller.get('closable')) {
+                self.controller.get('contentEl')
+                    .append(self.renderTpl(CloseTpl));
+                self.fillChildrenElsBySelectors({
+                    closeBtn: '#ks-ext-close-{id}'
+                });
+            }
         }
     }, {
         HTML_PARSER: {

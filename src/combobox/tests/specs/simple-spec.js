@@ -20,7 +20,6 @@ KISSY.use("combobox", function (S, ComboBox) {
         });
 
         var data = ["1", "21", "31"];
-        var Dom = S.Dom;
         var Event = S.Event;
         var KeyCode = Event.KeyCode;
 
@@ -208,25 +207,27 @@ KISSY.use("combobox", function (S, ComboBox) {
 
             t.focus();
 
+            waits(200);
+
             jasmine.simulate(t, "keydown");
 
             runs(function () {
                 t.value = "";
             });
 
-            waits(100);
+            waits(200);
 
             runs(function () {
                 t.value = originalValue;
             });
 
-            waits(100);
+            waits(200);
 
             runs(function () {
                 jasmine.simulate(t, "keyup");
             });
 
-            waits(100);
+            waits(200);
 
             runs(function () {
                 var menu = comboBox.get("menu");
@@ -299,9 +300,10 @@ KISSY.use("combobox", function (S, ComboBox) {
 
                 t.focus();
 
-                jasmine.simulate(t, "keydown");
+                waits(100);
 
                 runs(function () {
+                    jasmine.simulate(t, "keydown");
                     t.value = "";
                 });
 
@@ -321,17 +323,12 @@ KISSY.use("combobox", function (S, ComboBox) {
                     var menu = comboBox.get("menu");
                     var children = menu.get("children");
                     // 第一个高亮
-                    expect(S.indexOf(menu.get("highlightedItem"), children)).toBe(0);
+                    expect(S.indexOf(menu.get("highlightedItem"),
+                        children)).toBe(0);
 
                     jasmine.simulate(children[1].get("el")[0], "mouseover", {
                         relatedTarget: children[0].get("el")[0]
                     });
-
-                });
-                waits(100);
-                runs(function () {
-                    var menu = comboBox.get("menu");
-                    var children = menu.get("children");
                     // 第二个高亮
                     expect(S.indexOf(menu.get("highlightedItem"), children)).toBe(1);
                     t.blur();
@@ -344,8 +341,10 @@ KISSY.use("combobox", function (S, ComboBox) {
         it("should update selectedItem and hide menu", function () {
             t.focus();
 
-            jasmine.simulate(t, "keydown");
+            waits(100);
+
             runs(function () {
+                jasmine.simulate(t, "keydown");
                 t.value = "";
             });
             waits(100);

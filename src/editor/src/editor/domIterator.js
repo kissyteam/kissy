@@ -6,11 +6,10 @@
  Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.html or http://ckeditor.com/license
  */
-KISSY.add("editor/domIterator", function (S) {
+KISSY.add("editor/domIterator", function (S,Editor) {
     var TRUE = true,
         FALSE = false,
         NULL = null,
-        Editor = S.Editor,
         UA = S.UA,
         Walker = Editor.Walker,
         KERange = Editor.Range,

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 17 23:57
+build time: Jun 21 01:25
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -25,7 +25,7 @@ build time: Jun 17 23:57
  * utils for event
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/base/utils', function (S, DOM) {
+KISSY.add('event/dom/base/utils', function (S, Dom) {
     var EVENT_GUID = 'ksEventTargetId_'+ S.now(),
         doc = S.Env.host.document,
         simpleAdd = doc && doc.addEventListener ?
@@ -57,11 +57,11 @@ KISSY.add('event/dom/base/utils', function (S, DOM) {
         simpleRemove: simpleRemove,
 
         data: function (elem, v) {
-            return DOM.data(elem, EVENT_GUID, v);
+            return Dom.data(elem, EVENT_GUID, v);
         },
 
         removeData: function (elem) {
-            return DOM.removeData(elem, EVENT_GUID);
+            return Dom.removeData(elem, EVENT_GUID);
         }
     };
 
@@ -626,7 +626,7 @@ KISSY.add('event/dom/base/object', function (S, BaseEvent, undefined) {
  - merge with mousewheel: not perfect in osx : accelerated scroll
 
  2010.04
- - http://www.w3.org/TR/2003/WD-DOM-Level-3-Events-20030331/ecma-script-binding.html
+ - http://www.w3.org/TR/2003/WD-Dom-Level-3-Events-20030331/ecma-script-binding.html
 
  - refer:
  https://github.com/brandonaaron/jquery-mousewheel/blob/master/jquery.mousewheel.js
@@ -637,14 +637,14 @@ KISSY.add('event/dom/base/object', function (S, BaseEvent, undefined) {
  http://www.adomas.org/javascript-mouse-wheel/
  http://plugins.jquery.com/project/mousewheel
  http://www.cnblogs.com/aiyuchen/archive/2011/04/19/2020843.html
- http://www.w3.org/TR/DOM-Level-3-Events/#events-mousewheelevents
+ http://www.w3.org/TR/Dom-Level-3-Events/#events-mousewheelevents
  */
 /**
  * @ignore
  * custom event for dom.
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/base/observable', function (S, DOM, Special, DOMEventUtils,
+KISSY.add('event/dom/base/observable', function (S, Dom, Special, DOMEventUtils,
                                                  DOMEventObserver, DOMEventObject, BaseEvent) {
 
     // 记录手工 fire(domElement,type) 时的 type
@@ -707,7 +707,7 @@ KISSY.add('event/dom/base/observable', function (S, DOM, Special, DOMEventUtils,
              sure we'll call all of them.
              */
             /*
-             DOM3 Events: EventListenerList objects in the DOM are live. ??
+             DOM3 Events: EventListenerList objects in the Dom are live. ??
              */
             var target = event.target,
                 eventType = event['type'],
@@ -740,7 +740,7 @@ KISSY.add('event/dom/base/observable', function (S, DOM, Special, DOMEventUtils,
                             key = filter + '';
                             matched = cachedMatch[key];
                             if (matched === undefined) {
-                                matched = cachedMatch[key] = DOM.test(target, filter);
+                                matched = cachedMatch[key] = Dom.test(target, filter);
                             }
                             if (matched) {
                                 currentTargetObservers.push(observer);
@@ -838,7 +838,7 @@ KISSY.add('event/dom/base/observable', function (S, DOM, Special, DOMEventUtils,
             // but we can not call event.halt()
             // because handle will check event.isPropagationStopped
             var cur = currentTarget,
-                win = DOM.getWindow(cur.ownerDocument || cur),
+                win = Dom.getWindow(cur),
                 curDocument = win.document,
                 eventPath = [],
                 eventPathIndex = 0;
@@ -867,7 +867,7 @@ KISSY.add('event/dom/base/observable', function (S, DOM, Special, DOMEventUtils,
 
             if (!onlyHandlers && !event.isDefaultPrevented()) {
                 // now all browser support click
-                // https://developer.mozilla.org/en-US/docs/DOM/element.click
+                // https://developer.mozilla.org/en-US/docs/Dom/element.click
                 try {
                     // execute default action on dom node
                     // exclude window
@@ -1081,7 +1081,7 @@ KISSY.add('event/dom/base/observable', function (S, DOM, Special, DOMEventUtils,
  * setup event/dom api module
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/base/dom-event', function (S, BaseEvent, DOMEventUtils, DOM, Special, ObservableDOMEvent, DOMEventObject) {
+KISSY.add('event/dom/base/dom-event', function (S, BaseEvent, DOMEventUtils, Dom, Special, ObservableDOMEvent, DOMEventObject) {
 
     var BaseUtils = BaseEvent.Utils;
 
@@ -1206,7 +1206,7 @@ KISSY.add('event/dom/base/dom-event', function (S, BaseEvent, DOMEventUtils, DOM
         on: function (targets, type, fn, context) {
             // data : 附加在回调后面的数据，delegate 检查使用
             // remove 时 data 相等(指向同一对象或者定义了 equals 比较函数)
-            targets = DOM.query(targets);
+            targets = Dom.query(targets);
 
             BaseUtils.batchForType(function (targets, type, fn, context) {
                 var cfg = BaseUtils.normalizeParam(type, fn, context), i, t;
@@ -1237,7 +1237,7 @@ KISSY.add('event/dom/base/dom-event', function (S, BaseEvent, DOMEventUtils, DOM
          */
         detach: function (targets, type, fn, context) {
 
-            targets = DOM.query(targets);
+            targets = Dom.query(targets);
 
             BaseUtils.batchForType(function (targets, singleType, fn, context) {
 
@@ -1345,7 +1345,7 @@ KISSY.add('event/dom/base/dom-event', function (S, BaseEvent, DOMEventUtils, DOM
                     originalType = s.typeFix;
                 }
 
-                targets = DOM.query(targets);
+                targets = Dom.query(targets);
 
                 for (i = targets.length - 1; i >= 0; i--) {
                     target = targets[i];
@@ -1373,7 +1373,7 @@ KISSY.add('event/dom/base/dom-event', function (S, BaseEvent, DOMEventUtils, DOM
         /**
          * same with fire but:
          * - does not cause default behavior to occur.
-         * - does not bubble up the DOM hierarchy.
+         * - does not bubble up the Dom hierarchy.
          * @param targets html nodes
          * @member KISSY.Event
          * @param {String} eventType event type
@@ -1402,7 +1402,7 @@ KISSY.add('event/dom/base/dom-event', function (S, BaseEvent, DOMEventUtils, DOM
             var srcData = DOMEventUtils.data(src);
             if (srcData && srcData === DOMEventUtils.data(dest)) {
                 // remove event data (but without dom attached listener)
-                // which is copied from above DOM.data
+                // which is copied from above Dom.data
                 DOMEventUtils.removeData(dest);
             }
             events = eventDesc.events;
@@ -2077,7 +2077,7 @@ KISSY.add('event/dom/base/special-events', function (S, DOMEvent,Special) {
  * event-mouseenter
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/base/mouseenter', function (S, DOM, Special) {
+KISSY.add('event/dom/base/mouseenter', function (S, Dom, Special) {
 
     S.each([
         { name: 'mouseenter', fix: 'mouseover' },
@@ -2094,7 +2094,7 @@ KISSY.add('event/dom/base/mouseenter', function (S, DOM, Special) {
                 // relatedTarget 与 currentTarget 之间就是 mouseenter/leave
                 if (!relatedTarget ||
                     (relatedTarget !== currentTarget &&
-                        !DOM.contains(currentTarget, relatedTarget))) {
+                        !Dom.contains(currentTarget, relatedTarget))) {
                     // http://msdn.microsoft.com/en-us/library/ms536945(v=vs.85).aspx
                     // does not bubble
                     // 2012-04-12 把 mouseover 阻止冒泡有问题！
@@ -2135,24 +2135,24 @@ KISSY.add('event/dom/base/mouseenter', function (S, DOM, Special) {
  *
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/base/valuechange', function (S, DOMEvent, DOM, Special) {
+KISSY.add('event/dom/base/valuechange', function (S, DOMEvent, Dom, Special) {
     var VALUE_CHANGE = 'valuechange',
-        getNodeName = DOM.nodeName,
+        getNodeName = Dom.nodeName,
         KEY = 'event/valuechange',
         HISTORY_KEY = KEY + '/history',
         POLL_KEY = KEY + '/poll',
         interval = 50;
 
     function clearPollTimer(target) {
-        if (DOM.hasData(target, POLL_KEY)) {
-            var poll = DOM.data(target, POLL_KEY);
+        if (Dom.hasData(target, POLL_KEY)) {
+            var poll = Dom.data(target, POLL_KEY);
             clearTimeout(poll);
-            DOM.removeData(target, POLL_KEY);
+            Dom.removeData(target, POLL_KEY);
         }
     }
 
     function stopPoll(target) {
-        DOM.removeData(target, HISTORY_KEY);
+        Dom.removeData(target, HISTORY_KEY);
         clearPollTimer(target);
     }
 
@@ -2162,24 +2162,24 @@ KISSY.add('event/dom/base/valuechange', function (S, DOMEvent, DOM, Special) {
 
     function checkChange(target) {
         var v = target.value,
-            h = DOM.data(target, HISTORY_KEY);
+            h = Dom.data(target, HISTORY_KEY);
         if (v !== h) {
             // allow delegate
             DOMEvent.fireHandler(target, VALUE_CHANGE, {
                 prevVal: h,
                 newVal: v
             });
-            DOM.data(target, HISTORY_KEY, v);
+            Dom.data(target, HISTORY_KEY, v);
         }
     }
 
     function startPoll(target) {
-        if (DOM.hasData(target, POLL_KEY)) {
+        if (Dom.hasData(target, POLL_KEY)) {
             return;
         }
-        DOM.data(target, POLL_KEY, setTimeout(function () {
+        Dom.data(target, POLL_KEY, setTimeout(function () {
             checkChange(target);
-            DOM.data(target, POLL_KEY, setTimeout(arguments.callee, interval));
+            Dom.data(target, POLL_KEY, setTimeout(arguments.callee, interval));
         }, interval));
     }
 
@@ -2187,7 +2187,7 @@ KISSY.add('event/dom/base/valuechange', function (S, DOMEvent, DOM, Special) {
         var target = ev.target;
         // when focus ,record its current value immediately
         if (ev.type == 'focus') {
-            DOM.data(target, HISTORY_KEY, target.value);
+            Dom.data(target, HISTORY_KEY, target.value);
         }
         startPoll(target);
     }

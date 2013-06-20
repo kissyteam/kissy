@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 17 23:58
+build time: Jun 21 01:27
 */
 KISSY.add("mvc/model",function(d,i){function h(){h.superclass.constructor.apply(this,arguments);this.collections={}}var f="idAttribute,clientId,urlRoot,url,parse,sync".split(",");d.extend(h,i,{addToCollection:function(a){this.collections[d.stamp(a)]=a;this.addTarget(a)},removeFromCollection:function(a){delete this.collections[d.stamp(a)];this.removeTarget(a)},getId:function(){return this.get(this.get("idAttribute"))},setId:function(a){return this.set(this.get("idAttribute"),a)},setInternal:function(){this.__isModified=
 1;return h.superclass.setInternal.apply(this,arguments)},isNew:function(){return!this.getId()},isModified:function(){return!(!this.isNew()&&!this.__isModified)},destroy:function(a){var b=this,a=a||{},c=a.success;a.success=function(e){var g=b.collections;if(e){var d=b.get("parse").call(b,e);d&&b.set(d,a)}for(var f in g)g[f].remove(b,a);b.fire("destroy");c&&c.apply(this,arguments)};!b.isNew()&&a["delete"]?b.get("sync").call(b,b,"delete",a):(a.success(),a.complete&&a.complete());return b},load:function(a){var b=

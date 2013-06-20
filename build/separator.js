@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 17 23:59
+build time: Jun 21 01:28
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -14,22 +14,22 @@ build time: Jun 17 23:59
  * separator render def
  * @author yiminghe@gmail.com
  */
-KISSY.add("separator/render", function (S, Component) {
+KISSY.add("separator/render", function (S, Controller) {
 
-    return Component.Render.extend({
-        initializer: function () {
-            this.get('elAttrs')['role'] = 'separator';
+    return Controller.ATTRS.xrender.value.extend({
+        beforeCreateDom: function (renderData) {
+            renderData.elAttrs.role = 'separator';
         }
     });
 
 }, {
-    requires: ['component/base']
+    requires: ['component/controller']
 });
 /**
  * separator def
  * @author yiminghe@gmail.com
  */
-KISSY.add("separator", function (S, Component, SeparatorRender) {
+KISSY.add("separator", function (S, Controller, SeparatorRender) {
 
     /**
      * @extends KISSY.Component.Controller
@@ -38,41 +38,35 @@ KISSY.add("separator", function (S, Component, SeparatorRender) {
      * xclass: 'separator'.
      * @name Separator
      */
-    var Separator = Component.Controller.extend({
+    return Controller.extend({
     }, {
-        ATTRS:/**
-         * @lends Separator#
-         */
-        {
+        ATTRS: {
 
             /**
              * Un-focusable.
              * readonly.
              * Defaults to: false.
              */
-            focusable:{
-                value:false
+            focusable: {
+                value: false
             },
 
-            disabled:{
-                value:true
+            disabled: {
+                value: true
             },
 
-            handleMouseEvents:{
-                value:false
+            handleMouseEvents: {
+                value: false
             },
 
-            xrender:{
-                value:SeparatorRender
+            xrender: {
+                value: SeparatorRender
             }
-        }
-    }, {
-        xclass:'separator'
+        },
+        xclass: 'separator'
     });
 
-    return Separator;
-
 }, {
-    requires:['component/base', 'separator/render']
+    requires: ['component/controller', 'separator/render']
 });
 

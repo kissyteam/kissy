@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 17 23:57
+build time: Jun 21 01:25
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -14,7 +14,7 @@ build time: Jun 17 23:57
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/plugin/xiami-music/dialog", function (S, Editor, FlashDialog, MenuButton) {
-    var DOM = S.DOM,
+    var Dom = S.Dom,
         Node = S.Node,
         Utils = Editor.Utils,
         loading = Utils.debugUrl("theme/tao-loading.gif"),
@@ -182,21 +182,23 @@ KISSY.add("editor/plugin/xiami-music/dialog", function (S, Editor, FlashDialog, 
                     "<p style='width: 130px; margin: 15px auto 0; color: rgb(150, 150, 150);'>正在搜索，请稍候......</p>");
                 self._xiamia_list.show();
 
-                S.io({
-                    cache: false,
-                    url: req,
-                    dataType: 'jsonp',
-                    success: function (data) {
-                        data.page = page;
-                        self._listSearch(data);
-                    },
-                    error: function () {
-                        self._xiami_submit.removeClass(prefixCls + "editor-button-disabled", undefined);
-                        var html = "<p style='text-align:center;margin:10px 0;'>" +
-                            "不好意思，超时了，请重试！" +
-                            "</p>";
-                        self._xiamia_list.html(html);
-                    }
+                S.use('io',function(S,Io){
+                    new Io({
+                        cache: false,
+                        url: req,
+                        dataType: 'jsonp',
+                        success: function (data) {
+                            data.page = page;
+                            self._listSearch(data);
+                        },
+                        error: function () {
+                            self._xiami_submit.removeClass(prefixCls + "editor-button-disabled", undefined);
+                            var html = "<p style='text-align:center;margin:10px 0;'>" +
+                                "不好意思，超时了，请重试！" +
+                                "</p>";
+                            self._xiamia_list.html(html);
+                        }
+                    });
                 });
             }
 
@@ -205,11 +207,11 @@ KISSY.add("editor/plugin/xiami-music/dialog", function (S, Editor, FlashDialog, 
                 var t = new Node(ev.target),
                     add = t.closest(function (node) {
                         return self._xiamia_list.contains(node) &&
-                            DOM.hasClass(node, prefixCls + "editor-xiami-add");
+                            Dom.hasClass(node, prefixCls + "editor-xiami-add");
                     }, undefined),
                     paging = t.closest(function (node) {
                         return self._xiamia_list.contains(node) &&
-                            DOM.hasClass(node, prefixCls + "editor-xiami-page-item");
+                            Dom.hasClass(node, prefixCls + "editor-xiami-page-item");
                     }, undefined);
                 if (add) {
                     self._dinfo = {
@@ -369,6 +371,9 @@ KISSY.add("editor/plugin/xiami-music/dialog", function (S, Editor, FlashDialog, 
     return XiamiMusicDialog;
 
 }, {
-    requires: ['editor', '../flash/dialog', '../menubutton']
+    requires: [
+        'editor',
+        '../flash/dialog',
+        '../menubutton']
 });
 

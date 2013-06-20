@@ -2,10 +2,9 @@
  * common utils for kissy editor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/utils", function (S) {
+KISSY.add("editor/utils", function (S,Editor) {
 
-    var Editor = S.Editor,
-        TRUE = true,
+    var TRUE = true,
         FALSE = false,
         NULL = null,
         Node = S.Node,

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 19 14:00
+build time: Jun 21 01:47
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -18,7 +18,6 @@ KISSY.add('component/extension/align', function (S, Node) {
 
     var win = S.Env.host,
         $ = Node.all,
-        $win = $(win),
         UA = S.UA;
 
 
@@ -79,6 +78,7 @@ KISSY.add('component/extension/align', function (S, Node) {
             scrollY,
             winSize,
             doc = element.ownerDocument,
+            $win = $(doc).getWindow(),
             body = doc.body,
             documentElement = doc.documentElement;
 
@@ -272,12 +272,14 @@ KISSY.add('component/extension/align', function (S, Node) {
     };
 
     function getRegion(node) {
-        var offset, w, h;
-        if (!S.isWindow(node[0])) {
+        var offset, w, h,
+            domNode = node[0];
+        if (!S.isWindow(domNode)) {
             offset = node.offset();
             w = node.outerWidth();
             h = node.outerHeight();
         } else {
+            var $win = $(domNode).getWindow();
             offset = {
                 left: $win.scrollLeft(),
                 top: $win.scrollTop()
@@ -321,8 +323,31 @@ KISSY.add('component/extension/align', function (S, Node) {
         return { left: x, top: y };
     }
 
+    function beforeVisibleChange(e) {
+        if (e.target == this && e.newVal) {
+            realign.call(this);
+        }
+    }
+
+    function onResize() {
+        if (this.get('visible')) {
+            realign.call(this);
+        }
+    }
+
+    function realign() {
+        this._onSetAlign(this.get('align'));
+    }
+
     // for augment, no need constructor
     Align.prototype = {
+
+        __bindUI: function () {
+            // auto align on window resize or before el show
+            var self = this;
+            self.on('beforeVisibleChange', beforeVisibleChange, self);
+            self.el.getWindow().on('resize', onResize, self);
+        },
 
         '_onSetAlign': function (v) {
             if (v && v.points) {
@@ -344,18 +369,20 @@ KISSY.add('component/extension/align', function (S, Node) {
             overflow = overflow || {};
 
             var self = this,
-                el = self.get("el"),
-                fail = 0,
+                el = self.el,
+                fail = 0;
+
             // 当前节点可以被放置的显示区域
-                visibleRect = getVisibleRectForElement(el[0]),
+            var visibleRect = getVisibleRectForElement(el[0]);
             // 当前节点所占的区域, left/top/width/height
-                elRegion = getRegion(el),
+            var elRegion = getRegion(el);
             // 参照节点所占的区域, left/top/width/height
-                refNodeRegion = getRegion(refNode),
+            var refNodeRegion = getRegion(refNode);
             // 当前节点将要被放置的位置
-                elFuturePos = getElFuturePos(elRegion, refNodeRegion, points, offset),
+            var elFuturePos = getElFuturePos(elRegion,
+                refNodeRegion, points, offset);
             // 当前节点将要所处的区域
-                newElRegion = S.merge(elRegion, elFuturePos);
+            var newElRegion = S.merge(elRegion, elFuturePos);
 
             // 如果可视区域不能完全放置当前节点时允许调整
             if (visibleRect && (overflow.adjustX || overflow.adjustY)) {
@@ -418,10 +445,14 @@ KISSY.add('component/extension/align', function (S, Node) {
                 force: 1
             });
 
-            self.set({
-                width: el.width() + newElRegion.width - elRegion.width,
-                height: el.height() + newElRegion.height - elRegion.height
-            });
+            // need judge to in case set fixed with in css on height auto element
+            if (newElRegion.width != elRegion.width) {
+                self.set('width', el.width() + newElRegion.width - elRegion.width);
+            }
+
+            if (newElRegion.height != elRegion.height) {
+                self.set('height', el.height() + newElRegion.height - elRegion.height);
+            }
 
             return self;
         },
@@ -440,6 +471,12 @@ KISSY.add('component/extension/align', function (S, Node) {
                 offset: [0, 0]
             });
             return self;
+        },
+
+        __destructor: function () {
+            if (this.el) {
+                this.el.getWindow().detach('resize', realign, this);
+            }
         }
     };
 

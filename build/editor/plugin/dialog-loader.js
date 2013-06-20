@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 17 23:52
+build time: Jun 21 01:19
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -20,7 +20,7 @@ KISSY.add("editor/plugin/dialog-loader", function (S, Overlay, Editor) {
                 if (!globalMask) {
                     globalMask = new Overlay({
                         x:0,
-                        width:S.UA['ie'] == 6 ? S.DOM.docWidth() : "100%",
+                        width:S.UA['ie'] == 6 ? S.Dom.docWidth() : "100%",
                         y:0,
                         // 指定全局 loading zIndex 值
                         "zIndex":Editor.baseZIndex(Editor.zIndexManager.LOADING),
@@ -28,7 +28,7 @@ KISSY.add("editor/plugin/dialog-loader", function (S, Overlay, Editor) {
                         elCls:prefixCls+"editor-global-loading"
                     });
                 }
-                globalMask.set("height", S.DOM.docHeight());
+                globalMask.set("height", S.Dom.docHeight());
                 globalMask.show();
                 globalMask.loading();
             },

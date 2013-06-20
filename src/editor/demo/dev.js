@@ -1,13 +1,12 @@
-var $ = KISSY.all;
 
 function preview() {
-    $('#previewEl').html(window.newEditor.get('data'));
+    KISSY.all('#previewEl').html(window.newEditor.getData(1));
     SyntaxHighlighter.highlight();
 }
 
 function getSelected() {
     var editor = window.newEditor;
-    alert(editor.getSelectedHTML());
+    alert(editor.getSelectedHtml());
 }
 
 function insertElement() {
@@ -17,9 +16,9 @@ function insertElement() {
     }, 50);
 }
 
-function insertHTML() {
+function insertHtml() {
     newEditor.focus();
     setTimeout(function () {
-        newEditor.insertHTML('<div>1</div>');
+        newEditor.insertHtml('<div>1</div>');
     }, 50);
 }

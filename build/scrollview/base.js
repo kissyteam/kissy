@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 17 23:59
+build time: Jun 21 01:27
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -180,7 +180,7 @@ KISSY.add('scrollview/base', function (S, Node, Component, Extension, Render) {
             domEl.scrollTop = domEl.scrollLeft = 0;
         },
 
-        handleKeyEventInternal: function (e) {
+        handleKeyDownInternal: function (e) {
             // no need to process disabled (already processed by Component)
             var target = e.target,
                 $target=$(target),
@@ -415,8 +415,7 @@ KISSY.add('scrollview/base', function (S, Node, Component, Extension, Render) {
             xrender: {
                 value: Render
             }
-        }
-    }, {
+        },
         xclass: 'scrollview'
     });
 

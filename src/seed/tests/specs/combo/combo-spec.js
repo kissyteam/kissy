@@ -37,7 +37,7 @@ describe("KISSY ComboLoader", function () {
             });
             setTimeout(function () {
                 ret = a;
-            }, 0);
+            }, 10);
             ret2 = a;
         });
 

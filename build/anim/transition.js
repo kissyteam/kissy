@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 18 01:54
+build time: Jun 21 01:16
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -14,7 +14,7 @@ build time: Jun 18 01:54
  * @author yiminghe@gmail.com
  * @ignore
  */
-KISSY.add('anim/transition', function (S, DOM, Event, AnimBase) {
+KISSY.add('anim/transition', function (S, Dom, Event, AnimBase) {
 
     var vendorPrefix = S.Features.getTransitionPrefix();
     var TRANSITION_END_EVENT = vendorPrefix ?
@@ -51,7 +51,7 @@ KISSY.add('anim/transition', function (S, DOM, Event, AnimBase) {
 
             S.each(_propsData, function (propData, prop) {
                 var v = propData.value,
-                    currentValue = DOM.css(node, prop);
+                    currentValue = Dom.css(node, prop);
                 if (typeof v == 'number') {
                     currentValue = parseFloat(currentValue);
                 }
@@ -81,7 +81,7 @@ KISSY.add('anim/transition', function (S, DOM, Event, AnimBase) {
 
             Event.on(node, TRANSITION_END_EVENT, self._onTransitionEnd, self);
 
-            DOM.css(node, propsCss);
+            Dom.css(node, propsCss);
         },
 
         beforeResume: function () {
@@ -141,7 +141,7 @@ KISSY.add('anim/transition', function (S, DOM, Event, AnimBase) {
             Event.detach(node, TRANSITION_END_EVENT, self._onTransitionEnd, self);
             S.each(_propsData, function (propData, prop) {
                 if (!finish) {
-                    propsCss[prop] = DOM.css(node, prop);
+                    propsCss[prop] = Dom.css(node, prop);
                 }
                 propList.push(prop);
             });
@@ -157,7 +157,7 @@ KISSY.add('anim/transition', function (S, DOM, Event, AnimBase) {
             // S.log('after end: '+elStyle[TRANSITION]);
 
 
-            DOM.css(node, propsCss);
+            Dom.css(node, propsCss);
         }
     });
 

@@ -7,10 +7,13 @@
     overflow: hidden;
 }
 
-
-
-.ks-editor-overlay-hidden{
+.ks-editor-overlay-hidden {
     visibility: hidden;
+    /*
+        chrome will leave black when flash in page
+    */
+    left: -9999px !important;
+    top: -9999px !important;
 }
 
 .ks-editor-overlay-mask-hidden {
@@ -18,7 +21,7 @@
 }
 
 .ks-editor-dialog label,
-.ks-editor-dialog input{
+.ks-editor-dialog input {
     vertical-align: middle;
 }
 
@@ -49,7 +52,7 @@
     text-decoration: none;
     outline: none;
     _border-color: tomato;
-    _filter: chroma(color = tomato);
+    _filter: chroma(color=tomato);
     overflow: hidden;
     cursor: pointer;
 }
@@ -72,12 +75,12 @@
 .ks-editor-overlay-mask {
     background-color: #000;
     opacity: 0.3;
-    filter: alpha(opacity = 15);
+    filter: alpha(opacity=15);
 }
 
 .ks-editor-overlay-loading {
     opacity: 0.6;
-    filter: alpha(opacity = 60);
+    filter: alpha(opacity=60);
     background: #eee center center no-repeat scroll;
     background-image: url("../tao-loading.gif");
 }

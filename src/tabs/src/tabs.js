@@ -85,10 +85,11 @@ KISSY.add("tabs", function (S, Container, Bar, Body, Tab, Panel, Render) {
                 selectedTab,
                 tabItem,
                 panelItem,
+                barChildren = bar.get('children'),
                 body = self.get("body");
 
             if (typeof index == 'undefined') {
-                index = bar.get('children').length;
+                index = barChildren.length;
             }
 
             tabItem = {
@@ -99,7 +100,9 @@ KISSY.add("tabs", function (S, Container, Bar, Body, Tab, Panel, Render) {
                 content: item.content
             };
 
-            selectedTab = bar.addChild(tabItem, index);
+            bar.addChild(tabItem, index);
+
+            selectedTab = barChildren[index];
 
             body.addChild(panelItem, index);
 

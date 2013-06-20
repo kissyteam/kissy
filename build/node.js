@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 17 23:58
+build time: Jun 21 01:27
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -18,17 +18,17 @@ build time: Jun 17 23:58
  * definition for node and nodelist
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
-KISSY.add('node/base', function (S, DOM, Event, undefined) {
+KISSY.add('node/base', function (S, Dom, Event, undefined) {
 
     var AP = Array.prototype,
         slice = AP.slice,
-        NodeType = DOM.NodeType,
+        NodeType = Dom.NodeType,
         push = AP.push,
         makeArray = S.makeArray,
-        isNodeList = DOM._isNodeList;
+        isNodeList = Dom.isDomNodeList;
 
     /**
-     * The NodeList class provides a {@link KISSY.DOM} wrapper for manipulating DOM Node.
+     * The NodeList class provides a {@link KISSY.Dom} wrapper for manipulating Dom Node.
      * use KISSY.all/one to retrieve NodeList instances.
      *
      *  for example:
@@ -37,7 +37,7 @@ KISSY.add('node/base', function (S, DOM, Event, undefined) {
      *
      * is equal to
      *      @example
-     *      KISSY.DOM.attr('a','href','http://docs.kissyui.com');
+     *      KISSY.Dom.attr('a','href','http://docs.kissyui.com');
      *
      * @class KISSY.NodeList
      */
@@ -56,7 +56,7 @@ KISSY.add('node/base', function (S, DOM, Event, undefined) {
 
         else if (typeof html == 'string') {
             // create from html
-            domNode = DOM.create(html, props, ownerDocument);
+            domNode = Dom.create(html, props, ownerDocument);
             // ('<p>1</p><p>2</p>') 转换为 NodeList
             if (domNode.nodeType === NodeType.DOCUMENT_FRAGMENT_NODE) { // fragment
                 push.apply(this, makeArray(domNode.childNodes));
@@ -196,7 +196,7 @@ KISSY.add('node/base', function (S, DOM, Event, undefined) {
          * @return {KISSY.NodeList}
          */
         filter: function (filter) {
-            return new NodeList(DOM.filter(this, filter));
+            return new NodeList(Dom.filter(this, filter));
         },
 
         /**
@@ -258,7 +258,7 @@ KISSY.add('node/base', function (S, DOM, Event, undefined) {
                 }
                 return new NodeList(selector, undefined, context);
             }
-            return new NodeList(DOM.query(selector, context));
+            return new NodeList(Dom.query(selector, context));
         },
 
         /**
@@ -277,7 +277,7 @@ KISSY.add('node/base', function (S, DOM, Event, undefined) {
     });
 
     /**
-     * Same with {@link KISSY.DOM.NodeType}
+     * Same with {@link KISSY.Dom.NodeType}
      * @member KISSY.NodeList
      * @property NodeType
      * @static
@@ -312,17 +312,19 @@ KISSY.add('node/base', function (S, DOM, Event, undefined) {
  */
 /**
  * @ignore
- * import methods from DOM to NodeList.prototype
+ * import methods from Dom to NodeList.prototype
  * @author yiminghe@gmail.com
  */
-KISSY.add('node/attach', function (S, DOM, Event, NodeList, undefined) {
+KISSY.add('node/attach', function (S, Dom, Event, NodeList, undefined) {
 
     var NLP = NodeList.prototype,
         makeArray = S.makeArray,
-    // DOM 添加到 NP 上的方法
-    // if DOM methods return undefined , Node methods need to transform result to itself
+    // Dom 添加到 NP 上的方法
+    // if Dom methods return undefined , Node methods need to transform result to itself
         DOM_INCLUDES_NORM = [
             'nodeName',
+            'isCustomDomain',
+            'getEmptyIframeSrc',
             'equals',
             'contains',
             'index',
@@ -371,6 +373,8 @@ KISSY.add('node/attach', function (S, DOM, Event, NodeList, undefined) {
         ],
     // if return array ,need transform to nodelist
         DOM_INCLUDES_NORM_NODE_LIST = [
+            'getWindow',
+            'getDocument',
             'filter',
             'first',
             'last',
@@ -395,6 +399,7 @@ KISSY.add('node/attach', function (S, DOM, Event, NodeList, undefined) {
             'offset': 0,
             'html': 0,
             'outerHTML': 0,
+            'outerHtml': 0,
             'data': 1
         },
     // Event 添加到 NP 上的方法
@@ -411,7 +416,7 @@ KISSY.add('node/attach', function (S, DOM, Event, NodeList, undefined) {
 
     function accessNorm(fn, self, args) {
         args.unshift(self);
-        var ret = DOM[fn].apply(DOM, args);
+        var ret = Dom[fn].apply(Dom, args);
         if (ret === undefined) {
             return self;
         }
@@ -420,7 +425,7 @@ KISSY.add('node/attach', function (S, DOM, Event, NodeList, undefined) {
 
     function accessNormList(fn, self, args) {
         args.unshift(self);
-        var ret = DOM[fn].apply(DOM, args);
+        var ret = Dom[fn].apply(Dom, args);
         if (ret === undefined) {
             return self;
         }
@@ -437,7 +442,7 @@ KISSY.add('node/attach', function (S, DOM, Event, NodeList, undefined) {
             // 并且第一个参数不是对象，否则可能是批量设置写
             && !S.isObject(args[0])) {
             args.unshift(self);
-            return DOM[fn].apply(DOM, args);
+            return Dom[fn].apply(Dom, args);
         }
         // set
         return accessNorm(fn, self, args);
@@ -481,10 +486,10 @@ KISSY.add('node/attach', function (S, DOM, Event, NodeList, undefined) {
 /*
  2011-05-24
  - yiminghe@gmail.com：
- - 将 DOM 中的方法包装成 NodeList 方法
+ - 将 Dom 中的方法包装成 NodeList 方法
  - Node 方法调用参数中的 KISSY NodeList 要转换成第一个 HTML Node
- - 要注意链式调用，如果 DOM 方法返回 undefined （无返回值），则 NodeList 对应方法返回 this
- - 实际上可以完全使用 NodeList 来代替 DOM，不和节点关联的方法如：viewportHeight 等，在 window，document 上调用
+ - 要注意链式调用，如果 Dom 方法返回 undefined （无返回值），则 NodeList 对应方法返回 this
+ - 实际上可以完全使用 NodeList 来代替 Dom，不和节点关联的方法如：viewportHeight 等，在 window，document 上调用
  - 存在 window/document 虚节点，通过 S.one(window)/new Node(window) ,S.one(document)/new NodeList(document) 获得
  */
 /**
@@ -492,7 +497,7 @@ KISSY.add('node/attach', function (S, DOM, Event, NodeList, undefined) {
  * overrides methods in NodeList.prototype
  * @author yiminghe@gmail.com
  */
-KISSY.add('node/override', function (S, DOM,NodeList) {
+KISSY.add('node/override', function (S, Dom,NodeList) {
 
     var NLP = NodeList.prototype;
 
@@ -520,10 +525,10 @@ KISSY.add('node/override', function (S, DOM,NodeList) {
             var newNode = html, self = this;
             // 创建
             if (typeof newNode == 'string') {
-                newNode = DOM.create(newNode);
+                newNode = Dom.create(newNode);
             }
             if (newNode) {
-                DOM[insertType](newNode, self);
+                Dom[insertType](newNode, self);
             }
             return self;
         };
@@ -552,7 +557,7 @@ KISSY.add('node/override', function (S, DOM,NodeList) {
  - yiminghe@gmail.com：
  - 重写 NodeList 的某些方法
  - 添加 one ,all ，从当前 NodeList 往下开始选择节点
- - 处理 append ,prepend 和 DOM 的参数实际上是反过来的
+ - 处理 append ,prepend 和 Dom 的参数实际上是反过来的
  - append/prepend 参数是节点时，如果当前 NodeList 数量 > 1 需要经过 clone，因为同一节点不可能被添加到多个节点中去（NodeList）
  */
 /**
@@ -563,7 +568,7 @@ KISSY.add('node/override', function (S, DOM,NodeList) {
  *         qiaohua@taobao.com,
  *
  */
-KISSY.add('node/anim', function (S, DOM, Anim, Node, undefined) {
+KISSY.add('node/anim', function (S, Dom, Anim, Node, undefined) {
 
     var FX = [
         // height animations
@@ -785,9 +790,9 @@ KISSY.add('node/anim', function (S, DOM, Anim, Node, undefined) {
         function (v, k) {
             Node.prototype[k] = function (duration, complete, easing) {
                 var self = this;
-                // 没有参数时，调用 DOM 中的对应方法
-                if (DOM[k] && !duration) {
-                    DOM[k](self);
+                // 没有参数时，调用 Dom 中的对应方法
+                if (Dom[k] && !duration) {
+                    Dom[k](self);
                 } else {
                     S.each(self, function (elem) {
                         Anim(elem, v, duration, easing, complete).run();

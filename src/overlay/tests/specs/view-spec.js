@@ -20,7 +20,7 @@ KISSY.use("ua,node,overlay", function (S, UA, Node, Overlay) {
             overlay.hide();
             overlay.show();
             expect(overlay.get("visible")).toBe(true);
-            expect(overlay.get("el").css('visibility')).toBe("visible");
+            expect(overlay.get("el").css('visibility')).not.toBe('hidden');
             overlay.destroy();
         });
     });

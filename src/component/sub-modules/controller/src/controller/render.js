@@ -225,10 +225,12 @@ KISSY.add("component/controller/render", function (S, RenderProcess, XTemplate, 
             }
         },
 
+        syncUI:function(){
+
+        },
+
         destructor: function () {
-            if (this.el) {
                 this.el.remove();
-            }
         },
 
         fillChildrenElsBySelectors: function (childrenElSelectors) {
@@ -415,19 +417,8 @@ KISSY.add("component/controller/render", function (S, RenderProcess, XTemplate, 
 
         '_onSetZIndex': function (x) {
             this.el.css("z-index", x);
-        },
-
-        '_onSetX': function (x) {
-            this.el.offset({
-                left: x
-            });
-        },
-
-        '_onSetY': function (y) {
-            this.el.offset({
-                top: y
-            });
         }
+
     }, {
 
         /**

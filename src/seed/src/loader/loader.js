@@ -114,15 +114,24 @@
                 ret = Utils.attachModsRecursively(normalizedModNames, S, undefined, errorList);
                 if (ret) {
                     if (success) {
-                        setTimeout(function () {
+                        if (sync) {
                             success.apply(S, Utils.getModules(S, modNames));
-                        }, 0);
+                        } else {
+                            // standalone error trace
+                            setTimeout(function () {
+                                success.apply(S, Utils.getModules(S, modNames));
+                            }, 0);
+                        }
                     }
                 } else if (errorList.length) {
                     if (error) {
-                        setTimeout(function () {
+                        if (sync) {
                             error.apply(S, errorList);
-                        }, 0);
+                        } else {
+                            setTimeout(function () {
+                                error.apply(S, errorList);
+                            }, 0);
+                        }
                     }
                 } else {
                     waitingModules.fn = loadReady;

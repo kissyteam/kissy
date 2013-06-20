@@ -38,6 +38,12 @@ KISSY.add('component/controller/process', function (S, CommonProcess) {
                 self.setInternal("created", true);
             }
             return self;
+        },
+
+        destroy: function () {
+            if (this.get('created')) {
+                ControllerProcess.superclass.destroy.apply(this, arguments);
+            }
         }
 
     }, {

@@ -32,11 +32,7 @@ KISSY.use("u" +
             });
 
             afterEach(function () {
-                if(o.get('rendered')){
-                    o.destroy();
-                }else{
-                    o.get('srcNode').remove();
-                }
+                o.destroy();
             });
 
 //           srcNode 情况下可以了，恰好只能 el
@@ -110,7 +106,7 @@ KISSY.use("u" +
 
             it("应该能够设置坐标", function () {
 
-                o.set("xy", [100, 150]);
+                o.move(100, 150);
 
                 o.show();
 
@@ -178,11 +174,7 @@ KISSY.use("u" +
 
             it("应该能够设置坐标", function () {
 
-                // or o.move(100,150);
-
-                o.set("xy", [300, 350]);
-
-                //o.move(100, 150);
+                o.move(300, 350);
 
                 expect(o.get("el").css("left")).toBeEqual("300px");
                 expect(Math.ceil(parseFloat(o.get("el").css("top")))).toBeEqual(350);

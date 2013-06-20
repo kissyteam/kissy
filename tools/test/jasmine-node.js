@@ -37,7 +37,7 @@ var mods = [
     'kison',
     'json',
     'base',
-    'htmlparser',
+    'html-parser',
     'event/custom'
 ];
 

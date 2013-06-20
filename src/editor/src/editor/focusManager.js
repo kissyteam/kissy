@@ -4,9 +4,9 @@
  * 2.窗口隐藏后能够恢复焦点
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/focusManager", function (S) {
-    var Editor = S.Editor,
-        INSTANCES = {},
+KISSY.add("editor/focusManager", function (S,Editor) {
+
+    var INSTANCES = {},
         timer,
     //当前焦点所在处
         currentInstance,
@@ -39,10 +39,10 @@ KISSY.add("editor/focusManager", function (S) {
                     .on( "blur", blur, editor);
             },
             register: function (editor) {
-                INSTANCES[editor._UUID] = editor;
+                INSTANCES[editor.get('id')] = editor;
             },
             remove: function (editor) {
-                delete INSTANCES[editor._UUID];
+                delete INSTANCES[editor.get('id')];
                 editor.get("window").detach("focus", focus, editor)
                     .detach("blur", blur, editor);
             }

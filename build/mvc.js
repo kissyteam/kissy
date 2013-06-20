@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 17 23:58
+build time: Jun 21 01:27
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -45,11 +45,7 @@ KISSY.add("mvc/model", function (S, Base) {
         self.collections = {};
     }
 
-    S.extend(Model, Base,
-        /**
-         * @lends MVC.Model#
-         */
-        {
+    S.extend(Model, Base,{
 
             /**
              * Add current model instance to a specified collection.
@@ -216,10 +212,7 @@ KISSY.add("mvc/model", function (S, Base) {
             }
 
         }, {
-            ATTRS:/**
-             * @lends MVC.Model#
-             */
-            {
+            ATTRS:{
                 /**
                  * Attribute name used to store id from server.
                  * Defaults to: "id".
@@ -345,11 +338,7 @@ KISSY.add("mvc/collection", function (S, Model, Base) {
         Collection.superclass.constructor.apply(this, arguments);
     }
 
-    Collection.ATTRS =
-    /**
-     * @lends MVC.Collection#
-     */
-    {
+    Collection.ATTRS =  {
         /**
          * Model constructor with in current collection.
          * @type {MVC.Model}
@@ -409,11 +398,7 @@ KISSY.add("mvc/collection", function (S, Model, Base) {
         }
     };
 
-    S.extend(Collection, Base,
-        /**
-         * @lends MVC.Collection#
-         */
-        {
+    S.extend(Collection, Base,{
             /**
              * Sort model list according {@link MVC.Collection#comparator}.
              */
@@ -656,11 +641,7 @@ KISSY.add("mvc/view", function (S, Node, Base) {
         }
     }
 
-    View.ATTRS =
-    /**
-     * @lends MVC.View#
-     */
-    {
+    View.ATTRS ={
         /**
          * Get root element for current view instance.
          * @type {String}
@@ -701,11 +682,7 @@ KISSY.add("mvc/view", function (S, Node, Base) {
     };
 
 
-    S.extend(View, Base,
-        /**
-         * @lends MVC.View#
-         */
-        {
+    S.extend(View, Base,{
 
             _afterEventsChange: function (e) {
                 var prevVal = e.prevVal;
@@ -1087,11 +1064,7 @@ KISSY.add('mvc/router', function (S, Node, Base) {
         allRoutes.push(self);
     }
 
-    Router.ATTRS =
-    /**
-     * @lends MVC.Router#
-     */
-    {
+    Router.ATTRS ={
         /**
          * Route and action config.
          * @type {Object}
@@ -1110,11 +1083,7 @@ KISSY.add('mvc/router', function (S, Node, Base) {
         routes: {}
     };
 
-    S.extend(Router, Base,
-        /**
-         * @lends MVC.Router#
-         */
-        {
+    S.extend(Router, Base, {
             /**
              * Add config to current router.
              * @param {Object} routes Route config.
@@ -1136,11 +1105,7 @@ KISSY.add('mvc/router', function (S, Node, Base) {
                     self[ROUTER_MAP][name] = transformRouterReg(self, name, normFn(self, callback));
                 });
             }
-        },
-        /**
-         * @lends MVC.Router
-         */
-        {
+        }, {
 
             /**
              * whether Router can process path
@@ -1311,7 +1276,7 @@ KISSY.add('mvc/router', function (S, Node, Base) {
  * default sync for model
  * @author yiminghe@gmail.com
  */
-KISSY.add("mvc/sync", function (S, io, JSON) {
+KISSY.add("mvc/sync", function (S, io, Json) {
     var methodMap = {
         'create': 'POST',
         'update': 'POST', //'PUT'
@@ -1321,11 +1286,11 @@ KISSY.add("mvc/sync", function (S, io, JSON) {
 
     /**
      * Default sync mechanism.
-     * Sync data with server using {@link IO} .
+     * Sync data with server using {@link Io} .
      * @member MVC
      * @param {MVC.Model|MVC.Collection} self Model or Collection instance to sync with server.
      * @param {String} method Create or update or delete or read.
-     * @param {Object} options IO options
+     * @param {Object} options Io options
      */
     function sync(self, method, options) {
         var type = methodMap[method],
@@ -1347,7 +1312,7 @@ KISSY.add("mvc/sync", function (S, io, JSON) {
         }
 
         if (method == 'create' || method == 'update') {
-            data.model = JSON.stringify(self.toJSON());
+            data.model = Json.stringify(self.toJSON());
         }
 
         return io(ioParam);

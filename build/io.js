@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 17 23:58
+build time: Jun 21 01:26
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -25,7 +25,7 @@ build time: Jun 17 23:58
  * form data  serialization util
  * @author yiminghe@gmail.com
  */
-KISSY.add('io/form-serializer', function (S, DOM) {
+KISSY.add('io/form-serializer', function (S, Dom) {
     var rselectTextarea = /^(?:select|textarea)/i,
         rCRLF = /\r?\n/g,
         FormSerializer,
@@ -42,7 +42,7 @@ KISSY.add('io/form-serializer', function (S, DOM) {
          * @param {HTMLElement[]|HTMLElement|KISSY.NodeList} forms form elements
          * @return {String} serialized string represent form elements
          * @param {Boolean}[serializeArray=false] See {@link KISSY#method-param} 同名参数
-         * @member KISSY.IO
+         * @member KISSY.Io
          * @static
          */
         serialize: function (forms, serializeArray) {
@@ -53,7 +53,7 @@ KISSY.add('io/form-serializer', function (S, DOM) {
 
         getFormData: function (forms) {
             var elements = [], data = {};
-            S.each(DOM.query(forms), function (el) {
+            S.each(Dom.query(forms), function (el) {
                 // form 取其表单元素集合
                 // 其他直接取自身
                 var subs = el.elements ? S.makeArray(el.elements) : [el];
@@ -77,7 +77,7 @@ KISSY.add('io/form-serializer', function (S, DOM) {
                 // 这样子才取值
             });
             S.each(elements, function (el) {
-                var val = DOM.val(el), vs;
+                var val = Dom.val(el), vs;
 
                 // <select></select> select nothing!
                 // #297
@@ -114,7 +114,7 @@ KISSY.add('io/form-serializer', function (S, DOM) {
  * a scalable client io framework
  * @author yiminghe@gmail.com
  */
-KISSY.add('io/base', function (S, JSON, Event, undefined) {
+KISSY.add('io/base', function (S, Json, Event, undefined) {
 
     var rlocalProtocol = /^(?:about|app|app\-storage|.+\-extension|file|widget)$/,
         rspace = /\s+/,
@@ -145,7 +145,7 @@ KISSY.add('io/base', function (S, JSON, Event, undefined) {
             },
             converters: {
                 text: {
-                    json: S.parseJSON,
+                    json: S.parseJson,
                     html: mirror,
                     text: mirror,
                     xml: S.parseXML
@@ -213,30 +213,30 @@ KISSY.add('io/base', function (S, JSON, Event, undefined) {
         /**
          * fired after request completes (success or error)
          * @event complete
-         * @member KISSY.IO
+         * @member KISSY.Io
          * @static
          * @param {KISSY.Event.CustomEventObject} e
-         * @param {KISSY.IO} e.io current io
+         * @param {KISSY.Io} e.io current io
          */
 
         /**
          * fired after request succeeds
          * @event success
-         * @member KISSY.IO
+         * @member KISSY.Io
          * @static
          * @param {KISSY.Event.CustomEventObject} e
-         * @param {KISSY.IO} e.io current io
+         * @param {KISSY.Io} e.io current io
          */
 
         /**
          * fired after request occurs error
          * @event error
-         * @member KISSY.IO
+         * @member KISSY.Io
          * @static
          * @param {KISSY.Event.CustomEventObject} e
-         * @param {KISSY.IO} e.io current io
+         * @param {KISSY.Io} e.io current io
          */
-        IO.fire(eventType, {
+        Io.fire(eventType, {
             // 兼容
             ajaxConfig: self.config,
             io: self
@@ -246,7 +246,7 @@ KISSY.add('io/base', function (S, JSON, Event, undefined) {
     /**
      * Return a io object and send request by config.
      *
-     * @class KISSY.IO
+     * @class KISSY.Io
      * @extends KISSY.Promise
      *
      * @cfg {String} url
@@ -264,7 +264,7 @@ KISSY.add('io/base', function (S, JSON, Event, undefined) {
      * Default to: depends on DataType.
      * The content type sent in request header that tells the server
      * what kind of response it will accept in return.
-     * It is recommended to do so once in the {@link KISSY.IO#method-setupConfig}
+     * It is recommended to do so once in the {@link KISSY.Io#method-setupConfig}
      *
      * @cfg {Boolean} async
      * Default to: true
@@ -276,15 +276,15 @@ KISSY.add('io/base', function (S, JSON, Event, undefined) {
      *
      * @cfg {Object} contents
      * a name-regexp map to determine request data's dataType
-     * It is recommended to do so once in the {@link KISSY.IO#method-setupConfig}
+     * It is recommended to do so once in the {@link KISSY.Io#method-setupConfig}
      *
      * @cfg {Object} context
      * specify the context of this request 's callback (success,error,complete)
      *
      * @cfg {Object} converters
-     * Default to: {text:{json:JSON.parse,html:mirror,text:mirror,xml:KISSY.parseXML}}
+     * Default to: {text:{json:Json.parse,html:mirror,text:mirror,xml:KISSY.parseXML}}
      * specified how to transform one dataType to another dataType
-     * It is recommended to do so once in the {@link KISSY.IO#method-setupConfig}
+     * It is recommended to do so once in the {@link KISSY.Io#method-setupConfig}
      *
      * @cfg {Boolean} crossDomain
      * Default to: false for same-domain request,true for cross-domain request
@@ -352,7 +352,7 @@ KISSY.add('io/base', function (S, JSON, Event, undefined) {
      *
      * 2. status of this request with type String
      *
-     * 3. io object of this request , for details {@link KISSY.IO}
+     * 3. io object of this request , for details {@link KISSY.Io}
      *
      * @cfg {Function} error
      * success(data,textStatus,xhr)
@@ -362,7 +362,7 @@ KISSY.add('io/base', function (S, JSON, Event, undefined) {
      *
      * 2. status of this request with type String,such as 'timeout','Not Found','parsererror:...'
      *
-     * 3. io object of this request , for details {@link KISSY.IO}
+     * 3. io object of this request , for details {@link KISSY.Io}
      *
      * @cfg {Function} complete
      * success(data,textStatus,xhr)
@@ -373,7 +373,7 @@ KISSY.add('io/base', function (S, JSON, Event, undefined) {
      * 2. status of this request with type String,such as success:'ok',
      * error:'timeout','Not Found','parsererror:...'
      *
-     * 3. io object of this request , for details {@link KISSY.IO}
+     * 3. io object of this request , for details {@link KISSY.Io}
      *
      * @cfg {Number} timeout
      * Set a timeout(in seconds) for this request.if will call error when timeout
@@ -412,15 +412,15 @@ KISSY.add('io/base', function (S, JSON, Event, undefined) {
      *
      * 2. b.t.cn/proxy.htm 's content is <code> &lt;script>document.domain='t.cn'&lt;/script> </code>
      *
-     * 3. in a.htm , call <code> IO({xdr:{subDomain:{proxy:'/proxy.htm'}}}) </code>
+     * 3. in a.htm , call <code> Io({xdr:{subDomain:{proxy:'/proxy.htm'}}}) </code>
      *
      */
-    function IO(c) {
+    function Io(c) {
 
         var self = this;
 
-        if (!(self instanceof IO)) {
-            return new IO(c);
+        if (!(self instanceof Io)) {
+            return new Io(c);
         }
 
         Promise.call(self);
@@ -431,8 +431,8 @@ KISSY.add('io/base', function (S, JSON, Event, undefined) {
             // 结构化数据，如 json
             responseData: null,
             /**
-             * config of current IO instance.
-             * @member KISSY.IO
+             * config of current Io instance.
+             * @member KISSY.Io
              * @property config
              * @type Object
              */
@@ -486,10 +486,10 @@ KISSY.add('io/base', function (S, JSON, Event, undefined) {
         /**
          * fired before generating request object
          * @event start
-         * @member KISSY.IO
+         * @member KISSY.Io
          * @static
          * @param {KISSY.Event.CustomEventObject} e
-         * @param {KISSY.IO} e.io current io
+         * @param {KISSY.Io} e.io current io
          */
 
         fire('start', self);
@@ -553,10 +553,10 @@ KISSY.add('io/base', function (S, JSON, Event, undefined) {
         /**
          * fired before sending request
          * @event send
-         * @member KISSY.IO
+         * @member KISSY.Io
          * @static
          * @param {KISSY.Event.CustomEventObject} e
-         * @param {KISSY.IO} e.io current io
+         * @param {KISSY.Io} e.io current io
          */
 
         fire('send', self);
@@ -586,22 +586,22 @@ KISSY.add('io/base', function (S, JSON, Event, undefined) {
         return self;
     }
 
-    S.mix(IO, Event.Target);
+    S.mix(Io, Event.Target);
 
-    S.mix(IO,
+    S.mix(Io,
         {
             /**
              * whether current application is a local application
              * (protocal is file://,widget://,about://)
              * @type {Boolean}
-             * @member KISSY.IO
+             * @member KISSY.Io
              * @static
              */
             isLocal: isLocal,
             /**
              * name-value object that set default config value for io class
              * @param {Object} setting
-             * @member KISSY.IO
+             * @member KISSY.Io
              * @static
              */
             setupConfig: function (setting) {
@@ -611,7 +611,7 @@ KISSY.add('io/base', function (S, JSON, Event, undefined) {
             },
             /**
              * @private
-             * @member KISSY.IO
+             * @member KISSY.Io
              * @static
              */
             'setupTransport': function (name, fn) {
@@ -619,7 +619,7 @@ KISSY.add('io/base', function (S, JSON, Event, undefined) {
             },
             /**
              * @private
-             * @member KISSY.IO
+             * @member KISSY.Io
              * @static
              */
             'getTransport': function (name) {
@@ -628,7 +628,7 @@ KISSY.add('io/base', function (S, JSON, Event, undefined) {
             /**
              * get default config value for io request
              * @return {Object}
-             * @member KISSY.IO
+             * @member KISSY.Io
              * @static
              */
             getConfig: function () {
@@ -636,7 +636,7 @@ KISSY.add('io/base', function (S, JSON, Event, undefined) {
             }
         });
 
-    return IO;
+    return Io;
 }, {
     requires: ['json', 'event']
 });
@@ -645,11 +645,11 @@ KISSY.add('io/base', function (S, JSON, Event, undefined) {
 
  // !TODO
  // 去除 event/custom 依赖，用户不载入就不能监听
- // 载入后通过 custom.on(IO,type) 监听
+ // 载入后通过 custom.on(Io,type) 监听
 
 
  2012-08-16
- - transform IO to class, remove XhrObject class.
+ - transform Io to class, remove XhrObject class.
  - support ifModified
  - http://bugs.jquery.com/ticket/8394
  - http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
@@ -670,7 +670,7 @@ KISSY.add('io/base', function (S, JSON, Event, undefined) {
  * base for xhr and subdomain
  * @author yiminghe@gmail.com
  */
-KISSY.add('io/xhr-transport-base', function (S, IO) {
+KISSY.add('io/xhr-transport-base', function (S, Io) {
     var OK_CODE = 200,
         win = S.Env.host,
     // http://msdn.microsoft.com/en-us/library/cc288060(v=vs.85).aspx
@@ -683,8 +683,8 @@ KISSY.add('io/xhr-transport-base', function (S, IO) {
         }, lastModifiedCached = {},
         eTagCached = {};
 
-    IO.__lastModifiedCached = lastModifiedCached;
-    IO.__eTagCached = eTagCached;
+    Io.__lastModifiedCached = lastModifiedCached;
+    Io.__eTagCached = eTagCached;
 
     function createStandardXHR(_, refWin) {
         try {
@@ -710,7 +710,7 @@ KISSY.add('io/xhr-transport-base', function (S, IO) {
             return new _XDomainRequest();
         }
         // ie7 XMLHttpRequest 不能访问本地文件
-        return !IO.isLocal && createStandardXHR(crossDomain, refWin) ||
+        return !Io.isLocal && createStandardXHR(crossDomain, refWin) ||
             createActiveXHR(crossDomain, refWin);
     } : createStandardXHR;
 
@@ -934,7 +934,7 @@ KISSY.add('io/xhr-transport-base', function (S, IO) {
                                 text = text.slice(bodyIndex + 6, lastBodyIndex);
                             }
                             // same with old-ie logic
-                            io.responseText = S.unEscapeHTML(text);
+                            io.responseText = S.unEscapeHtml(text);
                         }
 
                         // Firefox throws an exception when accessing
@@ -952,7 +952,7 @@ KISSY.add('io/xhr-transport-base', function (S, IO) {
                         // If the request is local and we have data: assume a success
                         // (success with no data won't get notified, that's the best we
                         // can do given current implementations)
-                        if (!status && IO.isLocal && !c.crossDomain) {
+                        if (!status && Io.isLocal && !c.crossDomain) {
                             status = io.responseText ? OK_CODE : NOT_FOUND_CODE;
                             // IE - #1450: sometimes returns 1223 when it should be 204
                         } else if (status === NO_CONTENT_CODE2) {
@@ -981,7 +981,7 @@ KISSY.add('io/xhr-transport-base', function (S, IO) {
  * solve io between sub domains using proxy page
  * @author yiminghe@gmail.com
  */
-KISSY.add('io/sub-domain-transport', function (S, XhrTransportBase, Event, DOM) {
+KISSY.add('io/sub-domain-transport', function (S, XhrTransportBase, Event, Dom) {
 
     var PROXY_PAGE = '/sub_domain_proxy.html',
         doc = S.Env.host.document,
@@ -1029,12 +1029,12 @@ KISSY.add('io/sub-domain-transport', function (S, XhrTransportBase, Event, DOM) 
             if (!iframeDesc) {
                 iframeDesc = iframeMap[hostname] = {};
                 iframe = iframeDesc.iframe = doc.createElement('iframe');
-                DOM.css(iframe, {
+                Dom.css(iframe, {
                     position: 'absolute',
                     left: '-9999px',
                     top: '-9999px'
                 });
-                DOM.prepend(iframe, doc.body || doc.documentElement);
+                Dom.prepend(iframe, doc.body || doc.documentElement);
                 iframeUri = new S.Uri();
                 iframeUri.setScheme(uri.getScheme());
                 iframeUri.setPort(uri.getPort());
@@ -1071,7 +1071,7 @@ KISSY.add('io/sub-domain-transport', function (S, XhrTransportBase, Event, DOM) 
  * use flash to accomplish cross domain request, usage scenario ? why not jsonp ?
  * @author yiminghe@gmail.com
  */
-KISSY.add('io/xdr-flash-transport', function (S, IO, DOM) {
+KISSY.add('io/xdr-flash-transport', function (S, Io, Dom) {
 
     var // current running request instances
         maps = {},
@@ -1096,11 +1096,11 @@ KISSY.add('io/xdr-flash-transport', function (S, IO, DOM) {
                 '<param name="FlashVars" value="yid=' +
                 _ + '&uid=' +
                 uid +
-                '&host=KISSY.IO" />' +
+                '&host=KISSY.Io" />' +
                 '<param name="allowScriptAccess" value="always" />' +
                 '</object>',
             c = doc.createElement('div');
-        DOM.prepend(c, doc.body || doc.documentElement);
+        Dom.prepend(c, doc.body || doc.documentElement);
         c.innerHTML = o;
     }
 
@@ -1181,10 +1181,10 @@ KISSY.add('io/xdr-flash-transport', function (S, IO, DOM) {
     });
 
     /*called by flash*/
-    IO['applyTo'] = function (_, cmd, args) {
+    Io['applyTo'] = function (_, cmd, args) {
         // S.log(cmd + ' execute');
         var cmds = cmd.split('.').slice(1),
-            func = IO;
+            func = Io;
         S.each(cmds, function (c) {
             func = func[c];
         });
@@ -1192,7 +1192,7 @@ KISSY.add('io/xdr-flash-transport', function (S, IO, DOM) {
     };
 
     // when flash is loaded
-    IO['xdrReady'] = function () {
+    Io['xdrReady'] = function () {
         flash = doc.getElementById(ID);
     };
 
@@ -1201,7 +1201,7 @@ KISSY.add('io/xdr-flash-transport', function (S, IO, DOM) {
      @param e response status
      @param o internal data
      */
-    IO['xdrResponse'] = function (e, o) {
+    Io['xdrResponse'] = function (e, o) {
         var xhr = maps[o.uid];
         xhr && xhr._xdrResponse(e, o);
     };
@@ -1216,7 +1216,7 @@ KISSY.add('io/xdr-flash-transport', function (S, IO, DOM) {
  * io xhr transport class, route subdomain, xdr
  * @author yiminghe@gmail.com
  */
-KISSY.add('io/xhr-transport', function (S, IO, XhrTransportBase, SubDomainTransport, XdrFlashTransport) {
+KISSY.add('io/xhr-transport', function (S, Io, XhrTransportBase, SubDomainTransport, XdrFlashTransport) {
 
     var win = S.Env.host,
         doc = win.document,
@@ -1274,9 +1274,9 @@ KISSY.add('io/xhr-transport', function (S, IO, XhrTransportBase, SubDomainTransp
 
     });
 
-    IO['setupTransport']('*', XhrTransport);
+    Io['setupTransport']('*', XhrTransport);
 
-    return IO;
+    return Io;
 }, {
     requires: ['./base', './xhr-transport-base', './sub-domain-transport', './xdr-flash-transport']
 });
@@ -1296,14 +1296,14 @@ KISSY.add('io/xhr-transport', function (S, IO, XhrTransportBase, SubDomainTransp
  * add abort ability
  * @author yiminghe@gmail.com
  */
-KISSY.add('io/script-transport', function (S, IO, _, undefined) {
+KISSY.add('io/script-transport', function (S, Io, _, undefined) {
 
     var win = S.Env.host,
         doc = win.document,
         OK_CODE = 200,
         ERROR_CODE = 500;
 
-    IO.setupConfig({
+    Io.setupConfig({
         accepts: {
             script: 'text/javascript, ' +
                 'application/javascript, ' +
@@ -1331,7 +1331,7 @@ KISSY.add('io/script-transport', function (S, IO, _, undefined) {
         var config = io.config;
         // 优先使用 xhr+eval 来执行脚本, ie 下可以探测到（更多）失败状态
         if (!config.crossDomain) {
-            return new (IO['getTransport']('*'))(io);
+            return new (Io['getTransport']('*'))(io);
         }
         this.io = io;
         S.log('use ScriptTransport for: ' + config.url);
@@ -1417,9 +1417,9 @@ KISSY.add('io/script-transport', function (S, IO, _, undefined) {
         }
     });
 
-    IO['setupTransport']('script', ScriptTransport);
+    Io['setupTransport']('script', ScriptTransport);
 
-    return IO;
+    return Io;
 
 }, {
     requires: ['./base', './xhr-transport']
@@ -1429,9 +1429,9 @@ KISSY.add('io/script-transport', function (S, IO, _, undefined) {
  * jsonp transport based on script transport
  * @author yiminghe@gmail.com
  */
-KISSY.add('io/jsonp', function (S, IO) {
+KISSY.add('io/jsonp', function (S, Io) {
     var win = S.Env.host;
-    IO.setupConfig({
+    Io.setupConfig({
         jsonp: 'callback',
         jsonpCallback: function () {
             // 不使用 now() ，极端情况下可能重复
@@ -1439,7 +1439,7 @@ KISSY.add('io/jsonp', function (S, IO) {
         }
     });
 
-    IO.on('start', function (e) {
+    Io.on('start', function (e) {
         var io = e.io,
             c = io.config,
             dataType = c.dataType;
@@ -1505,7 +1505,7 @@ KISSY.add('io/jsonp', function (S, IO) {
         }
     });
 
-    return IO;
+    return Io;
 }, {
     requires: ['./base']
 });
@@ -1514,13 +1514,13 @@ KISSY.add('io/jsonp', function (S, IO) {
  * process form config
  * @author yiminghe@gmail.com
  */
-KISSY.add('io/form', function (S, IO, DOM, FormSerializer) {
+KISSY.add('io/form', function (S, Io, Dom, FormSerializer) {
 
     var win = S.Env.host,
         slice = Array.prototype.slice,
         FormData = win['FormData'];
 
-    IO.on('start', function (e) {
+    Io.on('start', function (e) {
         var io = e.io,
             form,
             d,
@@ -1532,12 +1532,12 @@ KISSY.add('io/form', function (S, IO, DOM, FormSerializer) {
 
         // serialize form if needed
         if (tmpForm = c.form) {
-            form = DOM.get(tmpForm);
+            form = Dom.get(tmpForm);
             data = c.data;
             var isUpload = false;
             var files = {};
 
-            var inputs = DOM.query('input', form);
+            var inputs = Dom.query('input', form);
             for (var i = 0, l = inputs.length; i < l; i++) {
                 var input = inputs[i];
                 if (input.type.toLowerCase() == 'file') {
@@ -1546,7 +1546,7 @@ KISSY.add('io/form', function (S, IO, DOM, FormSerializer) {
                         break;
                     }
                     var selected = slice.call(input.files, 0);
-                    files[DOM.attr(input, 'name')] = selected.length > 1 ? selected : (selected[0]||null);
+                    files[Dom.attr(input, 'name')] = selected.length > 1 ? selected : (selected[0]||null);
                 }
             }
 
@@ -1587,7 +1587,7 @@ KISSY.add('io/form', function (S, IO, DOM, FormSerializer) {
         }
     });
 
-    return IO;
+    return Io;
 
 }, {
     requires: ['./base', 'dom', './form-serializer']
@@ -1597,13 +1597,13 @@ KISSY.add('io/form', function (S, IO, DOM, FormSerializer) {
  * non-refresh upload file with form by iframe
  * @author yiminghe@gmail.com
  */
-KISSY.add('io/iframe-transport', function (S, DOM, Event, IO) {
+KISSY.add('io/iframe-transport', function (S, Dom, Event, Io) {
 
     var doc = S.Env.host.document,
         OK_CODE = 200,
         ERROR_CODE = 500,
         BREATH_INTERVAL = 30,
-        iframeConverter = S.clone(IO.getConfig().converters.text);
+        iframeConverter = S.clone(Io.getConfig().converters.text);
 
     // https://github.com/kissyteam/kissy/issues/304
     // returned data must be escaped by server for json dataType
@@ -1617,11 +1617,11 @@ KISSY.add('io/iframe-transport', function (S, DOM, Event, IO) {
     // text or html dataType is of same effect.
     // same as normal ajax or html5 FileData
     iframeConverter.json = function (str) {
-        return S.parseJSON(S.unEscapeHTML(str));
+        return S.parseJson(S.unEscapeHtml(str));
     };
 
     // iframe 内的内容就是 body.innerText
-    IO.setupConfig({
+    Io.setupConfig({
         converters: {
             // iframe 到其他类型的转化和 text 一样
             iframe: iframeConverter,
@@ -1644,9 +1644,9 @@ KISSY.add('io/iframe-transport', function (S, DOM, Event, IO) {
         var id = S.guid('io-iframe'),
             iframe,
         // empty src, so no history
-            src = DOM.getEmptyIframeSrc();
+            src = Dom.getEmptyIframeSrc();
 
-        iframe = xhr.iframe = DOM.create('<iframe ' +
+        iframe = xhr.iframe = Dom.create('<iframe ' +
             // ie6 need this when cross domain
             (src ? (' src="' + src + '" ') : '') +
             ' id="' + id + '"' +
@@ -1654,7 +1654,7 @@ KISSY.add('io/iframe-transport', function (S, DOM, Event, IO) {
             ' name="' + id + '"' +
             ' style="position:absolute;left:-9999px;top:-9999px;"/>');
 
-        DOM.prepend(iframe, doc.body || doc.documentElement);
+        Dom.prepend(iframe, doc.body || doc.documentElement);
         return iframe;
     }
 
@@ -1669,7 +1669,7 @@ KISSY.add('io/iframe-transport', function (S, DOM, Event, IO) {
                 e.type = 'hidden';
                 e.name = k + (isArray && serializeArray ? '[]' : '');
                 e.value = vs[i];
-                DOM.append(e, form);
+                Dom.append(e, form);
                 ret.push(e);
             }
         });
@@ -1677,7 +1677,7 @@ KISSY.add('io/iframe-transport', function (S, DOM, Event, IO) {
     }
 
     function removeFieldsFromData(fields) {
-        DOM.remove(fields);
+        Dom.remove(fields);
     }
 
     function IframeTransport(io) {
@@ -1695,22 +1695,22 @@ KISSY.add('io/iframe-transport', function (S, DOM, Event, IO) {
                 iframe,
                 query,
                 data = c.data,
-                form = DOM.get(c.form);
+                form = Dom.get(c.form);
 
             self.attrs = {
-                target: DOM.attr(form, 'target') || '',
-                action: DOM.attr(form, 'action') || '',
+                target: Dom.attr(form, 'target') || '',
+                action: Dom.attr(form, 'action') || '',
                 // enctype 区分 iframe 与 serialize
-                encoding:DOM.attr(form, 'encoding'),
-                enctype:DOM.attr(form, 'enctype'),
-                method: DOM.attr(form, 'method')
+                encoding:Dom.attr(form, 'encoding'),
+                enctype:Dom.attr(form, 'enctype'),
+                method: Dom.attr(form, 'method')
             };
             self.form = form;
 
             iframe = createIframe(io);
 
             // set target to iframe to avoid main page refresh
-            DOM.attr(form, {
+            Dom.attr(form, {
                 target: iframe.id,
                 action: io._getUrlForSend(),
                 method: 'post',
@@ -1761,10 +1761,10 @@ KISSY.add('io/iframe-transport', function (S, DOM, Event, IO) {
             // ie6 立即设置 action 设置为空导致白屏
             if (eventType == 'abort' && S.UA.ie == 6) {
                 setTimeout(function () {
-                    DOM.attr(form, self.attrs);
+                    Dom.attr(form, self.attrs);
                 }, 0);
             } else {
-                DOM.attr(form, self.attrs);
+                Dom.attr(form, self.attrs);
             }
 
             removeFieldsFromData(this.fields);
@@ -1773,7 +1773,7 @@ KISSY.add('io/iframe-transport', function (S, DOM, Event, IO) {
 
             setTimeout(function () {
                 // firefox will keep loading if not set timeout
-                DOM.remove(iframe);
+                Dom.remove(iframe);
             }, BREATH_INTERVAL);
 
             // nullify to prevent memory leak?
@@ -1786,7 +1786,7 @@ KISSY.add('io/iframe-transport', function (S, DOM, Event, IO) {
                     // ie<9
                     if (iframeDoc && iframeDoc.body) {
                         // https://github.com/kissyteam/kissy/issues/304
-                        io.responseText = DOM.html(iframeDoc.body);
+                        io.responseText = Dom.html(iframeDoc.body);
                         // ie still can retrieve xml 's responseText
                         if (S.startsWith(io.responseText, '<?xml')) {
                             io.responseText = undefined;
@@ -1834,9 +1834,9 @@ KISSY.add('io/iframe-transport', function (S, DOM, Event, IO) {
         }
     });
 
-    IO['setupTransport']('iframe', IframeTransport);
+    Io['setupTransport']('iframe', IframeTransport);
 
-    return IO;
+    return Io;
 
 }, {
     requires: ['dom', 'event', './base']
@@ -1846,7 +1846,7 @@ KISSY.add('io/iframe-transport', function (S, DOM, Event, IO) {
  * encapsulation of io object. as transaction object in yui3
  * @author yiminghe@gmail.com
  */
-KISSY.add('io/methods', function (S, IO, undefined) {
+KISSY.add('io/methods', function (S, Io, undefined) {
 
     var OK_CODE = 200,
         Promise = S.Promise,
@@ -1940,7 +1940,7 @@ KISSY.add('io/methods', function (S, IO, undefined) {
         io.responseData = responseData;
     }
 
-    S.extend(IO, Promise,
+    S.extend(Io, Promise,
         {
             // Caches the header
             setRequestHeader: function (name, value) {
@@ -1951,7 +1951,7 @@ KISSY.add('io/methods', function (S, IO, undefined) {
 
             /**
              * get all response headers as string after request is completed.
-             * @member KISSY.IO
+             * @member KISSY.Io
              * @return {String}
              */
             getAllResponseHeaders: function () {
@@ -1963,7 +1963,7 @@ KISSY.add('io/methods', function (S, IO, undefined) {
              * get header value in response to specified header name
              * @param {String} name header name
              * @return {String} header value
-             * @member KISSY.IO
+             * @member KISSY.Io
              */
             getResponseHeader: function (name) {
                 var match, self = this, responseHeaders;
@@ -1990,7 +1990,7 @@ KISSY.add('io/methods', function (S, IO, undefined) {
 
             /**
              * cancel this request
-             * @member KISSY.IO
+             * @member KISSY.Io
              * @param {String} [statusText=abort] error reason as current request object's statusText
              * @chainable
              */
@@ -2006,7 +2006,7 @@ KISSY.add('io/methods', function (S, IO, undefined) {
 
             /**
              * get native XMLHttpRequest
-             * @member KISSY.IO
+             * @member KISSY.Io
              * @return {XMLHttpRequest}
              */
             getNativeXhr: function () {
@@ -2088,7 +2088,7 @@ KISSY.add('io/methods', function (S, IO, undefined) {
  * io shortcut
  * @author yiminghe@gmail.com
  */
-KISSY.add('io', function (S, serializer, IO) {
+KISSY.add('io', function (S, serializer, Io) {
     var undef = undefined;
 
     function get(url, data, callback, dataType, type) {
@@ -2099,7 +2099,7 @@ KISSY.add('io', function (S, serializer, IO) {
             data = undef;
         }
 
-        return IO({
+        return Io({
             type: type || 'get',
             url: url,
             data: data,
@@ -2109,7 +2109,7 @@ KISSY.add('io', function (S, serializer, IO) {
     }
 
     // some shortcut
-    S.mix(IO,
+    S.mix(Io,
         {
 
             serialize: serializer.serialize,
@@ -2122,11 +2122,11 @@ KISSY.add('io', function (S, serializer, IO) {
              * @param {Function} [callback] success callback when this request is done
              * @param callback.data returned from this request with type specified by dataType
              * @param {String} callback.status status of this request with type String
-             * @param {KISSY.IO} callback.io io object of this request
+             * @param {KISSY.Io} callback.io io object of this request
              * @param {String} [dataType] the type of data returns from this request
              * ('xml' or 'json' or 'text')
-             * @return {KISSY.IO}
-             * @member KISSY.IO
+             * @return {KISSY.Io}
+             * @member KISSY.Io
              * @static
              */
             get: get,
@@ -2138,11 +2138,11 @@ KISSY.add('io', function (S, serializer, IO) {
              * @param {Function} [callback] success callback when this request is done.
              * @param callback.data returned from this request with type specified by dataType
              * @param {String} callback.status status of this request with type String
-             * @param {KISSY.IO} callback.io io object of this request
+             * @param {KISSY.Io} callback.io io object of this request
              * @param {String} [dataType] the type of data returns from this request
              * ('xml' or 'json' or 'text')
-             * @return {KISSY.IO}
-             * @member KISSY.IO
+             * @return {KISSY.Io}
+             * @member KISSY.Io
              * @static
              */
             post: function (url, data, callback, dataType) {
@@ -2163,9 +2163,9 @@ KISSY.add('io', function (S, serializer, IO) {
              * @param {Function} [callback] success callback when this request is done.
              * @param callback.data returned from this request with type specified by dataType
              * @param {String} callback.status status of this request with type String
-             * @param {KISSY.IO} callback.io io object of this request
-             * @return {KISSY.IO}
-             * @member KISSY.IO
+             * @param {KISSY.Io} callback.io io object of this request
+             * @return {KISSY.Io}
+             * @member KISSY.Io
              * @static
              */
             jsonp: function (url, data, callback) {
@@ -2179,7 +2179,7 @@ KISSY.add('io', function (S, serializer, IO) {
             // 和 S.getScript 保持一致
             // 更好的 getScript 可以用
             /*
-             IO({
+             Io({
              dataType:'script'
              });
              */
@@ -2191,9 +2191,9 @@ KISSY.add('io', function (S, serializer, IO) {
              * @param {Object} [data] name-value object associated with this request
              * @param {Function} [callback] success callback when this request is done.@param callback.data returned from this request with type specified by dataType
              * @param {String} callback.status status of this request with type String
-             * @param {KISSY.IO} callback.io io object of this request
-             * @return {KISSY.IO}
-             * @member KISSY.IO
+             * @param {KISSY.Io} callback.io io object of this request
+             * @return {KISSY.Io}
+             * @member KISSY.Io
              * @static
              */
             getJSON: function (url, data, callback) {
@@ -2211,11 +2211,11 @@ KISSY.add('io', function (S, serializer, IO) {
              * @param {Object} [data] name-value object associated with this request
              * @param {Function} [callback]  success callback when this request is done.@param callback.data returned from this request with type specified by dataType
              * @param {String} callback.status status of this request with type String
-             * @param {KISSY.IO} callback.io io object of this request
+             * @param {KISSY.Io} callback.io io object of this request
              * @param {String} [dataType] the type of data returns from this request
              * ('xml' or 'json' or 'text')
-             * @return {KISSY.IO}
-             * @member KISSY.IO
+             * @return {KISSY.Io}
+             * @member KISSY.Io
              * @static
              */
             upload: function (url, form, data, callback, dataType) {
@@ -2227,7 +2227,7 @@ KISSY.add('io', function (S, serializer, IO) {
                     callback = data;
                     data = undef;
                 }
-                return IO({
+                return Io({
                     url: url,
                     type: 'post',
                     dataType: dataType,
@@ -2240,14 +2240,15 @@ KISSY.add('io', function (S, serializer, IO) {
 
     S.mix(S, {
         // compatibility
-        'Ajax': IO,
-        'IO': IO,
-        ajax: IO,
-        io: IO,
-        jsonp: IO.jsonp
+        'Ajax': Io,
+        'Io': Io,
+        'IO': Io,
+        ajax: Io,
+        io: Io,
+        jsonp: Io.jsonp
     });
 
-    return IO;
+    return Io;
 }, {
     requires: [
         'io/form-serializer',

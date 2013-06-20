@@ -79,6 +79,7 @@ KISSY.add('dom/base/api', function (S) {
              */
             isCustomDomain: function (win) {
                 win = win || WINDOW;
+                win = Dom.get(win);
                 var domain = win.document.domain,
                     hostname = win.location.hostname;
                 return domain != hostname &&
@@ -93,6 +94,7 @@ KISSY.add('dom/base/api', function (S) {
              */
             getEmptyIframeSrc: function (win) {
                 win = win || WINDOW;
+                win = Dom.get(win);
                 if (UA['ie'] && Dom.isCustomDomain(win)) {
                     return  'javascript:void(function(){' + encodeURIComponent(
                         'document.open();' +

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 17 23:59
+build time: Jun 21 01:27
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -20,13 +20,14 @@ KISSY.add('rich-base', function (S, Base) {
         ucfirst = S.ucfirst,
         ON_SET = '_onSet',
         noop = S.noop,
-        RE_DASH = /(?:^|-)([a-z])/ig,
-        CAMEL_CASE_FN = function (all, letter) {
-            return letter.toUpperCase();
-        };
+        RE_DASH = /(?:^|-)([a-z])/ig;
+
+    function replaceToUpper(all, letter) {
+        return letter.toUpperCase();
+    }
 
     function CamelCase(name) {
-        return name.replace(RE_DASH, CAMEL_CASE_FN);
+        return name.replace(RE_DASH, replaceToUpper);
     }
 
     /**
@@ -79,8 +80,9 @@ KISSY.add('rich-base', function (S, Base) {
          * @protected
          * @param mainMethod method name of main class.
          * @param extMethod method name of extension class
+         * @param {Array} args arguments
          */
-        callMethodByHierarchy: function (mainMethod, extMethod) {
+        callMethodByHierarchy: function (mainMethod, extMethod, args) {
             var self = this,
                 c = self.constructor,
                 extChains = [],
@@ -89,6 +91,8 @@ KISSY.add('rich-base', function (S, Base) {
                 i,
                 exts,
                 t;
+
+            args = args || [];
 
             // define
             while (c) {
@@ -130,7 +134,7 @@ KISSY.add('rich-base', function (S, Base) {
             // 初始化函数
             // 顺序：父类的所有扩展类函数 -> 父类对应函数 -> 子类的所有扩展函数 -> 子类对应函数
             for (i = extChains.length - 1; i >= 0; i--) {
-                extChains[i] && extChains[i].call(self);
+                extChains[i] && extChains[i].apply(self, args);
             }
         },
 
@@ -138,13 +142,16 @@ KISSY.add('rich-base', function (S, Base) {
          * call plugin method
          * @protected
          * @param method method name of plugin
+         * @param {Array} args arguments
          */
-        callPluginsMethod: function (method) {
+        callPluginsMethod: function (method, args) {
             var self = this;
+            args = args || [];
             method = 'plugin' + ucfirst(method);
             S.each(self.get('plugins'), function (plugin) {
+                var myArgs = [self].concat(args);
                 if (plugin[method]) {
-                    plugin[method](self);
+                    plugin[method].apply(plugin, myArgs);
                 }
             });
         },
@@ -461,7 +468,7 @@ KISSY.add('rich-base', function (S, Base) {
                 C.prototype.constructor = C;
             }
 
-            C.extend = extend;
+            C.extend = C.extend || extend;
 
             return C;
         }

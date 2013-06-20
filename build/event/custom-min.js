@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 17 23:57
+build time: Jun 21 01:25
 */
 KISSY.add("event/custom/observer",function(i,m){function f(){f.superclass.constructor.apply(this,arguments)}i.extend(f,m.Observer,{keys:["fn","context","groups"]});return f},{requires:["event/base"]});KISSY.add("event/custom/object",function(i,m){function f(j){f.superclass.constructor.call(this);i.mix(this,j)}i.extend(f,m.Object);return f},{requires:["event/base"]});
 KISSY.add("event/custom/observable",function(i,m,f,j){function g(){g.superclass.constructor.apply(this,arguments);this.defaultFn=null;this.defaultTargetOnly=!1;this.bubbles=!0}var b=j.Utils;i.extend(g,j.Observable,{constructor:g,on:function(a){a=new m(a);-1==this.findObserver(a)&&this.observers.push(a)},fire:function(a){var a=a||{},c=this.bubbles,d=this.currentTarget,e,l=this.type,k=this.defaultFn,n,h=a,b;a.type=l;h instanceof f||(h.target=d,h=new f(h));h.currentTarget=d;a=this.notify(h);!1!==b&&

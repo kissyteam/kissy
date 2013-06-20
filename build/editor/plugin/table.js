@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 17 23:56
+build time: Jun 21 01:24
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -16,7 +16,7 @@ build time: Jun 17 23:56
 KISSY.add("editor/plugin/table", function (S, Editor, DialogLoader) {
 
     var UA = S.UA,
-        DOM = S.DOM,
+        Dom = S.Dom,
         Node = S.Node,
         tableRules = ["tr", "th", "td", "tbody", "table"],
         cellNodeRegex = /^(?:td|th)$/;
@@ -36,7 +36,7 @@ KISSY.add("editor/plugin/table", function (S, Editor, DialogLoader) {
             }
             // If we are exiting from the first </td>, then the td should definitely be
             // included.
-            if (node[0].nodeType == DOM.NodeType.ELEMENT_NODE &&
+            if (node[0].nodeType == Dom.NodeType.ELEMENT_NODE &&
                 cellNodeRegex.test(node.nodeName()) &&
                 !node.data('selected_cell')) {
                 node._4e_setMarker(database, 'selected_cell', true, undefined);
@@ -300,11 +300,11 @@ KISSY.add("editor/plugin/table", function (S, Editor, DialogLoader) {
         if (!table)
             return undefined;
         var td = startElement.closest(function (n) {
-            var name = DOM.nodeName(n);
+            var name = Dom.nodeName(n);
             return table.contains(n) && (name == "td" || name == "th");
         }, undefined);
         var tr = startElement.closest(function (n) {
-            var name = DOM.nodeName(n);
+            var name = Dom.nodeName(n);
             return table.contains(n) && name == "tr";
         }, undefined);
         return {
@@ -521,7 +521,7 @@ KISSY.add("editor/plugin/table", function (S, Editor, DialogLoader) {
             });
 
             editor.addContextMenu("table", function (node) {
-                if (S.inArray(DOM.nodeName(node), tableRules)) {
+                if (S.inArray(Dom.nodeName(node), tableRules)) {
                     return true;
                 }
             }, {

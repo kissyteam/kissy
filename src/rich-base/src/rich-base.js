@@ -9,13 +9,14 @@ KISSY.add('rich-base', function (S, Base) {
         ucfirst = S.ucfirst,
         ON_SET = '_onSet',
         noop = S.noop,
-        RE_DASH = /(?:^|-)([a-z])/ig,
-        CAMEL_CASE_FN = function (all, letter) {
-            return letter.toUpperCase();
-        };
+        RE_DASH = /(?:^|-)([a-z])/ig;
+
+    function replaceToUpper(all, letter) {
+        return letter.toUpperCase();
+    }
 
     function CamelCase(name) {
-        return name.replace(RE_DASH, CAMEL_CASE_FN);
+        return name.replace(RE_DASH, replaceToUpper);
     }
 
     /**

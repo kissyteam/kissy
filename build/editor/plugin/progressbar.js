@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 17 23:55
+build time: Jun 21 01:23
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -15,7 +15,7 @@ build time: Jun 17 23:55
  */
 KISSY.add("editor/plugin/progressbar", function(S) {
 
-    var DOM = S.DOM,Node = S.Node;
+    var Dom = S.Dom,Node = S.Node;
 
     function ProgressBar() {
         ProgressBar.superclass.constructor.apply(this, arguments);

@@ -84,7 +84,7 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor,
             // 所以不设置 visibility ，漂移大法
             d.on("beforeVisibleChange", function (ev) {
                 if (!ev.newVal) {
-                    d.set("xy", [-9999, -9999]);
+                    d.move(-9999, -9999);
                     return false;
                 }
             });
@@ -390,7 +390,7 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor,
                             }
                             var offset = Dom.offset(td);
                             offset.left += td[0].offsetWidth;
-                            previewWin.set("xy", [offset.left, offset.top]);
+                            previewWin.move(offset.left, offset.top);
                             previewWin.show();
                         }
                     } else {

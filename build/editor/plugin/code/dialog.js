@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 17 23:52
+build time: Jun 21 01:19
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -16,7 +16,7 @@ build time: Jun 17 23:52
 KISSY.add('editor/plugin/code/dialog', function (S, Editor, Dialog4E, MenuButton) {
 
     var xhtml_dtd = Editor.XHTML_DTD;
-    var NodeType = S.DOM.NodeType;
+    var NodeType = S.Dom.NodeType;
     var notWhitespaceEval = Editor.Walker.whitespaces(true);
 
     var codeTypes = [
@@ -110,7 +110,7 @@ KISSY.add('editor/plugin/code/dialog', function (S, Editor, Dialog4E, MenuButton
                     prefixCls: prefixCls
                 })
             }).render();
-            el = d.get('el');
+            el = d.el;
 
             self.insert = el.one('.' + prefixCls + 'code-insert');
             self.cancel = el.one('.' + prefixCls + 'code-cancel');
@@ -142,7 +142,7 @@ KISSY.add('editor/plugin/code/dialog', function (S, Editor, Dialog4E, MenuButton
             }
             var codeEl = S.all(S.substitute(codeTpl, {
                 type: self.type.get('value'),
-                code: S.escapeHTML(val)
+                code: S.escapeHtml(val)
             }), editor.get('document')[0]);
             self.dialog.hide();
             // chrome:

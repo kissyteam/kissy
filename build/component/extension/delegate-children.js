@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 19 14:00
+build time: Jun 21 01:47
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -22,10 +22,30 @@ KISSY.add("component/extension/delegate-children", function (S, Node, Manager) {
         Gesture = Node.Gesture,
         isTouchEventSupported = Features.isTouchEventSupported();
 
+    function onRenderChild(e) {
+        if (e.target == this) {
+            var child = e.component,
+                el = child.el;
+            el.addClass(this.__childClsTag);
+        }
+    }
+
+    function onRemoveChild(e) {
+        if (e.target == this) {
+            var child = e.component,
+                el = child.el;
+            if (el) {
+                el.removeClass(this.__childClsTag);
+            }
+        }
+    }
+
     function DelegateChildren() {
         var self = this;
         self.__childClsTag = S.guid('ks-component-child');
-        self.on('afterRenderChild', self._processRenderChildForDelegate, self);
+        self.on('afterRenderChild', onRenderChild, self)
+            .on('afterRemoveChild', onRemoveChild, self);
+
     }
 
     S.augment(DelegateChildren, {
@@ -34,7 +54,6 @@ KISSY.add("component/extension/delegate-children", function (S, Node, Manager) {
             if (!this.get("disabled")) {
                 var control = this.getOwnerControl(e);
                 if (control && !control.get("disabled")) {
-                    // stop here!
                     e.stopPropagation();
                     // Child control identified; forward the event.
                     switch (e.type) {
@@ -45,7 +64,7 @@ KISSY.add("component/extension/delegate-children", function (S, Node, Manager) {
                             control.handleMouseUp(e);
                             break;
                         case Gesture.tap:
-                            control.performActionInternal(e);
+                            control.handleClick(e);
                             break;
                         case "mouseenter":
                             control.handleMouseEnter(e);
@@ -66,14 +85,6 @@ KISSY.add("component/extension/delegate-children", function (S, Node, Manager) {
             }
         },
 
-        _processRenderChildForDelegate: function (e) {
-            if (e.target == this) {
-                var child = e.component,
-                    el = child.get('el');
-                el.addClass(this.__childClsTag);
-            }
-        },
-
         __bindUI: function () {
             var self = this,
                 events = Gesture.start +
@@ -89,7 +100,7 @@ KISSY.add("component/extension/delegate-children", function (S, Node, Manager) {
                     (ie && ie < 9 ? "dblclick " : "");
             }
 
-            self.get("el").delegate(events, '.' + self.__childClsTag,
+            self.el.delegate(events, '.' + self.__childClsTag,
                 self.handleChildrenEvents, self);
         },
 
@@ -106,6 +117,6 @@ KISSY.add("component/extension/delegate-children", function (S, Node, Manager) {
 
     return DelegateChildren;
 }, {
-    requires: ['node','component/manager']
+    requires: ['node', 'component/manager']
 });
 

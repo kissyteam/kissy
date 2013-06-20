@@ -133,6 +133,18 @@ KISSY.add("component/controller", function (S, Node, ControllerProcess, Manager,
                 }
             },
 
+            '_onSetX': function (x) {
+                this.el.offset({
+                    left: x
+                });
+            },
+
+            '_onSetY': function (y) {
+                this.el.offset({
+                    top: y
+                });
+            },
+
             _onSetVisible: function (v) {
                 // do not fire event at render phrase
                 this.fire(v ? "show" : "hide");
@@ -171,6 +183,12 @@ KISSY.add("component/controller", function (S, Node, ControllerProcess, Manager,
                 }
             },
 
+            move: function (x, y) {
+                this.set({
+                    x: x,
+                    y: y
+                });
+            },
 
             handleDblClick: function (ev) {
                 if (!this.get('disabled')) {
@@ -368,14 +386,9 @@ KISSY.add("component/controller", function (S, Node, ControllerProcess, Manager,
              * @protected
              */
             destructor: function () {
-                var self = this,
-                    view = self.view,
-                    id = self.get("id");
                 // remove instance from manager
-                Manager.removeComponent(id);
-                if (view) {
-                    view.destroy();
-                }
+                Manager.removeComponent(this.get('id'));
+                this.view.destroy();
             }
         },
         {
@@ -517,7 +530,6 @@ KISSY.add("component/controller", function (S, Node, ControllerProcess, Manager,
                  * @ignore
                  */
                 x: {
-                    view: 1
                 },
 
                 /**
@@ -533,30 +545,26 @@ KISSY.add("component/controller", function (S, Node, ControllerProcess, Manager,
                  * @ignore
                  */
                 y: {
-                    view: 1
                 },
+
                 /**
                  * Horizontal and vertical axis.
                  * @ignore
                  * @type {Number[]}
                  */
+                /**
+                 * @ignore
+                 */
                 xy: {
-                    // 相对 page 定位, 有效值为 [n, m], 为 null 时, 选 align 设置
                     setter: function (v) {
                         var self = this,
                             xy = S.makeArray(v);
-                        /*
-                         属性内分发特别注意：
-                         xy -> x,y
-                         */
                         if (xy.length) {
                             xy[0] && self.set("x", xy[0]);
                             xy[1] && self.set("y", xy[1]);
                         }
                         return v;
                     },
-
-                    // xy 纯中转作用
                     getter: function () {
                         return [this.get("x"), this.get("y")];
                     }

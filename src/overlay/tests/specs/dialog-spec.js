@@ -1,5 +1,5 @@
 /**
- * testcases for dialog
+ * test cases for dialog
  * @author yiminghe@gmail.com
  */
 KISSY.use("ua,node,overlay,dd/plugin/constrain,component/plugin/drag",
@@ -103,7 +103,7 @@ KISSY.use("ua,node,overlay,dd/plugin/constrain,component/plugin/drag",
 
                 if (UA.ie !== 9) {
                     it("应该可以拖动", function () {
-                        var xy = d.get("xy");
+                        var xy = [d.get('x'), d.get('y')];
 
                         waits(100);
 
@@ -138,15 +138,13 @@ KISSY.use("ua,node,overlay,dd/plugin/constrain,component/plugin/drag",
 
                         runs(function () {
                             jasmine.simulateForDrag(document, Gesture.end, {
-
                                 clientX: xy[0] + 100,
                                 clientY: xy[1] + 100
                             });
                         });
 
                         runs(function () {
-                            var dxy = d.get("xy");
-
+                            var dxy = [d.get('x'), d.get('y')];
                             expect(dxy[0] - xy[0]).toBeEqual(90);
                             expect(dxy[1] - xy[1]).toBeEqual(90);
                         });
@@ -202,7 +200,7 @@ KISSY.use("ua,node,overlay,dd/plugin/constrain,component/plugin/drag",
                     waits(100);
 
                     runs(function () {
-                        var dxy = d.get("xy"),
+                        var dxy = [d.get('x'), d.get('y')],
                             width = d.get("el").outerWidth(),
                             height = d.get("el").outerHeight();
 

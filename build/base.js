@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 18 19:31
+build time: Jun 21 01:16
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -451,6 +451,7 @@ KISSY.add('base/attribute', function (S, CustomEvent, undefined) {
 
         /**
          * internal use, no event involved, just set.
+         * override by model
          * @protected
          */
         setInternal: function (name, value) {

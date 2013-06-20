@@ -27,11 +27,12 @@
 <script src="/kissy/build/seed.js"></script>
 <script src="/kissy/src/package.js"></script>
 
-<script src="../specs/render-process-spec.js"></script>
 <script src="../specs/align-spec.js"></script>
 <script src="../specs/component-spec.js"></script>
 <script>
-    KISSY.use('component/base,component/extension', function () {
+    KISSY.use('component/controller,' +
+            'component/container,' +
+            'component/extension/align', function () {
 
         setTimeout(function () {
             jasmine.getEnv().addReporter(new jasmine.TrivialReporter());

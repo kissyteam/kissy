@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 18 00:00
+build time: Jun 21 01:28
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -2279,7 +2279,7 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
             source.push('var buffer = ""' + (global ? ',' : ';'));
             if (global) {
                 source.push('S = KISSY,' +
-                    'escapeHTML = S.escapeHTML,' +
+                    'escapeHtml = S.escapeHtml,' +
                     'isArray = S.isArray,' +
                     'isObject = S.isObject,' +
                     'log = S.log,' +
@@ -2689,7 +2689,7 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
         var tmp = guid('tmp');
         // in case it is expression, avoid duplicate computation
         source.push('var ' + tmp + ' = ' + expressionOrVariable + ';');
-        source.push('buffer+=' + (escaped ? 'escapeHTML(' : '') +
+        source.push('buffer+=' + (escaped ? 'escapeHtml(' : '') +
             // when render undefined => ''
             '(' + tmp + '===undefined?"":' + tmp + ')' + '+""' +
             (escaped ? ')' : '') +

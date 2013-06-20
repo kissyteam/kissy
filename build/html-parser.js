@@ -1,37 +1,37 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 17 23:58
+build time: Jun 21 01:26
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
 
- htmlparser/dtd
- htmlparser/lexer/Cursor
- htmlparser/lexer/Index
- htmlparser/lexer/Page
- htmlparser/nodes/Node
- htmlparser/nodes/Text
- htmlparser/nodes/CData
- htmlparser/Utils
- htmlparser/nodes/Attribute
- htmlparser/nodes/Tag
- htmlparser/nodes/Comment
- htmlparser/lexer/Lexer
- htmlparser/nodes/Fragment
- htmlparser/nodes/Document
- htmlparser/scanners/SpecialScanners
- htmlparser/scanners/TagScanner
- htmlparser/scanners/CDataScanner
- htmlparser/scanners/QuoteCdataScanner
- htmlparser/scanners/TextareaScanner
- htmlparser/Scanner
- htmlparser/Parser
- htmlparser/writer/basic
- htmlparser/writer/beautify
- htmlparser/writer/minify
- htmlparser/writer/filter
- htmlparser
+ html-parser/dtd
+ html-parser/lexer/cursor
+ html-parser/lexer/index
+ html-parser/lexer/page
+ html-parser/nodes/node
+ html-parser/nodes/text
+ html-parser/nodes/cdata
+ html-parser/utils
+ html-parser/nodes/attribute
+ html-parser/nodes/tag
+ html-parser/nodes/comment
+ html-parser/lexer/lexer
+ html-parser/nodes/fragment
+ html-parser/nodes/document
+ html-parser/scanners/special-scanners
+ html-parser/scanners/tag-scanner
+ html-parser/scanners/cdata-scanner
+ html-parser/scanners/quote-cdata-scanner
+ html-parser/scanners/textarea-scanner
+ html-parser/scanner
+ html-parser/parser
+ html-parser/writer/basic
+ html-parser/writer/beautify
+ html-parser/writer/minify
+ html-parser/writer/filter
+ html-parser
 */
 
 /**
@@ -42,7 +42,7 @@ build time: Jun 17 23:58
  Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.html or http://ckeditor.com/license
  */
-KISSY.add("htmlparser/dtd", function(KY) {
+KISSY.add("html-parser/dtd", function(KY) {
     /**
      * Holds and object representation of the HTML DTD to be used by the editor in
      * its internal operations.
@@ -371,7 +371,7 @@ KISSY.add("htmlparser/dtd", function(KY) {
  * represent a cursor of page , it can advance and retreat
  * @author yiminghe@gmail.com
  */
-KISSY.add("htmlparser/lexer/Cursor",function() {
+KISSY.add("html-parser/lexer/cursor",function() {
     function Cursor(offset) {
         this.position = offset || 0;
     }
@@ -395,7 +395,7 @@ KISSY.add("htmlparser/lexer/Cursor",function() {
  * represent line index of each line
  * @author yiminghe@gmail.com
  */
-KISSY.add("htmlparser/lexer/Index", function () {
+KISSY.add("html-parser/lexer/index", function () {
 
     function Index() {
         this.lineCursors = [];
@@ -461,7 +461,7 @@ KISSY.add("htmlparser/lexer/Index", function () {
  * represent html source
  * @author yiminghe@gmail.com
  */
-KISSY.add("htmlparser/lexer/Page", function (S, Index) {
+KISSY.add("html-parser/lexer/page", function (S, Index) {
     function Page(source) {
         this.source = source;
         this.lineIndex = new Index();
@@ -533,13 +533,13 @@ KISSY.add("htmlparser/lexer/Page", function (S, Index) {
 
     return Page;
 }, {
-    requires: ['./Index']
+    requires: ['./index']
 });
 /**
  * abstract class for tag and text , comment .. etc
  * @author yiminghe@gmail.com
  */
-KISSY.add("htmlparser/nodes/Node", function (S) {
+KISSY.add("html-parser/nodes/node", function (S) {
 
     function lineCount(str) {
         var i = 0;
@@ -595,7 +595,7 @@ KISSY.add("htmlparser/nodes/Node", function (S) {
  * dom text node
  * @author yiminghe@gmail.com
  */
-KISSY.add("htmlparser/nodes/Text", function (S, Node) {
+KISSY.add("html-parser/nodes/text", function (S, Node) {
 
     function Text(v) {
         if (typeof v == 'string') {
@@ -633,13 +633,13 @@ KISSY.add("htmlparser/nodes/Text", function (S, Node) {
 
     return Text;
 }, {
-    requires:['./Node']
+    requires:['./node']
 });
 /**
  * dom text node
  * @author yiminghe@gmail.com
  */
-KISSY.add("htmlparser/nodes/CData", function (S, Text) {
+KISSY.add("html-parser/nodes/cdata", function (S, Text) {
 
     function CData() {
         CData.superclass.constructor.apply(this, arguments);
@@ -664,13 +664,13 @@ KISSY.add("htmlparser/nodes/CData", function (S, Text) {
 
     return CData;
 }, {
-    requires:['./Text']
+    requires:['./text']
 });
 /**
  * utils about language for html parser
  * @author yiminghe@gmail.com
  */
-KISSY.add("htmlparser/Utils", function() {
+KISSY.add("html-parser/utils", function() {
     return {
         collapseWhitespace:function (str) {
             return str.replace(/[\s\xa0]+/g, ' ');
@@ -714,7 +714,7 @@ KISSY.add("htmlparser/Utils", function() {
  * represent attribute node in tag node
  * @author yiminghe@gmail.com
  */
-KISSY.add("htmlparser/nodes/Attribute", function(S) {
+KISSY.add("html-parser/nodes/attribute", function(S) {
     function Attribute(name, assignMent, value, quote) {
         this.nodeType = 2;
         this.name = name;
@@ -744,7 +744,7 @@ KISSY.add("htmlparser/nodes/Attribute", function(S) {
  * represent tag, it can nest other tag
  * @author yiminghe@gmail.com
  */
-KISSY.add("htmlparser/nodes/Tag", function (S, Node, Attribute, Dtd) {
+KISSY.add("html-parser/nodes/tag", function (S, Node, Attribute, Dtd) {
 
     function createTag(self, tagName, attrs) {
         self.nodeName = self.tagName = tagName.toLowerCase();
@@ -962,9 +962,9 @@ KISSY.add("htmlparser/nodes/Tag", function (S, Node, Attribute, Dtd) {
         filterChildren:function () {
             var self = this;
             if (!self.isChildrenFiltered) {
-                var writer = new (S.require('htmlparser/writer/basic'))();
+                var writer = new (S.require('html-parser/writer/basic'))();
                 self._writeChildrenHTML(writer);
-                var parser = new (S.require('htmlparser/Parser'))(writer.getHTML()),
+                var parser = new (S.require('html-parser/parser'))(writer.getHTML()),
                     children = parser.parse().childNodes;
                 self.empty();
                 S.each(children, function (c) {
@@ -1086,13 +1086,13 @@ KISSY.add("htmlparser/nodes/Tag", function (S, Node, Attribute, Dtd) {
     return Tag;
 
 }, {
-    requires:['./Node', './Attribute', '../dtd']
+    requires:['./node', './attribute', '../dtd']
 });
 /**
  * comment node (<!-- content -->)
  * @author yiminghe@gmail.com
  */
-KISSY.add("htmlparser/nodes/Comment", function (S, Text) {
+KISSY.add("html-parser/nodes/comment", function (S, Text) {
 
     function Comment() {
         Comment.superclass.constructor.apply(this, arguments);
@@ -1126,13 +1126,13 @@ KISSY.add("htmlparser/nodes/Comment", function (S, Text) {
 
     return Comment;
 }, {
-    requires:['./Text']
+    requires:['./text']
 });
 /**
  * parse html string into Nodes
  * @author yiminghe@gmail.com
  */
-KISSY.add("htmlparser/lexer/Lexer", function (S, Cursor, Page, TextNode, CData, Utils, Attribute, TagNode, CommentNode) {
+KISSY.add("html-parser/lexer/lexer", function (S, Cursor, Page, TextNode, CData, Utils, Attribute, TagNode, CommentNode) {
 
     function Lexer(text) {
         var self = this;
@@ -1527,7 +1527,7 @@ KISSY.add("htmlparser/lexer/Lexer", function (S, Cursor, Page, TextNode, CData, 
                                 // stay in state 4
                             }
                             else {
-                                // bug #1345049 HTMLParser should not terminate a comment with --->
+                                // bug #1345049 HtmlParser should not terminate a comment with --->
                                 // should maybe issue a warning mentioning STRICT_REMARKS
                                 state = 2;
                             }
@@ -1884,20 +1884,20 @@ KISSY.add("htmlparser/lexer/Lexer", function (S, Cursor, Page, TextNode, CData, 
 
 }, {
     requires: [
-        './Cursor',
-        './Page',
-        '../nodes/Text',
-        '../nodes/CData',
-        '../Utils',
-        '../nodes/Attribute',
-        '../nodes/Tag',
-        '../nodes/Comment'
+        './cursor',
+        './page',
+        '../nodes/text',
+        '../nodes/cdata',
+        '../utils',
+        '../nodes/attribute',
+        '../nodes/tag',
+        '../nodes/comment'
     ]});
 /**
  * fake document fragment
  * @author yiminghe@gmail.com
  */
-KISSY.add("htmlparser/nodes/Fragment", function (S, Tag) {
+KISSY.add("html-parser/nodes/fragment", function (S, Tag) {
     function Fragment() {
         this.childNodes = [];
         this.nodeType = 9;
@@ -1917,13 +1917,13 @@ KISSY.add("htmlparser/nodes/Fragment", function (S, Tag) {
 
     return Fragment;
 }, {
-    requires:['./Tag']
+    requires:['./tag']
 });
 /**
  * fake document node
  * @author yiminghe@gmail.com
  */
-KISSY.add("htmlparser/nodes/Document", function (S, Tag) {
+KISSY.add("html-parser/nodes/document", function (S, Tag) {
     function Document() {
         this.childNodes = [];
         this.nodeType = 9;
@@ -1939,20 +1939,20 @@ KISSY.add("htmlparser/nodes/Document", function (S, Tag) {
 
     return Document;
 }, {
-    requires:['./Tag']
+    requires:['./tag']
 });
 /**
  * special scanners holder (textarea/style/script)
  * @author yiminghe@gmail.com
  */
-KISSY.add('htmlparser/scanners/SpecialScanners', function() {
+KISSY.add('html-parser/scanners/special-scanners', function() {
     return {};
 });
 /**
  * nest tag scanner recursively
  * @author yiminghe@gmail.com
  */
-KISSY.add("htmlparser/scanners/TagScanner", function (S, dtd, Tag, SpecialScanners) {
+KISSY.add("html-parser/scanners/tag-scanner", function (S, dtd, Tag, SpecialScanners) {
 
     var /**
      * will create ul when encounter li and li's parent is not ul
@@ -2288,13 +2288,13 @@ KISSY.add("htmlparser/scanners/TagScanner", function (S, dtd, Tag, SpecialScanne
         }
     };
 }, {
-    requires:["../dtd", "../nodes/Tag", "./SpecialScanners"]
+    requires:["../dtd", "../nodes/tag", "./special-scanners"]
 });
 /**
  * scanner cdata (script/textarea/style)
  * @author yiminghe@gmail.com
  */
-KISSY.add("htmlparser/scanners/CDataScanner", function () {
+KISSY.add("html-parser/scanners/cdata-scanner", function () {
     return {
         scan:function (tag, lexer, opts) {
             // only terminate when encounter </tag>
@@ -2322,7 +2322,7 @@ KISSY.add("htmlparser/scanners/CDataScanner", function () {
  * scanner cdata (script/textarea/style) with quote smart
  * @author yiminghe@gmail.com
  */
-KISSY.add("htmlparser/scanners/QuoteCdataScanner", function(S, CDataScanner, Dtd, SpecialScanners) {
+KISSY.add("html-parser/scanners/quote-cdata-scanner", function(S, CDataScanner, Dtd, SpecialScanners) {
     var ret = {
         scan:function(tag, lexer, opts) {
             opts = opts || {};
@@ -2337,13 +2337,13 @@ KISSY.add("htmlparser/scanners/QuoteCdataScanner", function(S, CDataScanner, Dtd
     }
     return ret;
 }, {
-    requires:["./CDataScanner",'../dtd','./SpecialScanners']
+    requires:["./cdata-scanner",'../dtd','./special-scanners']
 });
 /**
  * textarea data scanner
  * @author yiminghe@gmail.com
  */
-KISSY.add("htmlparser/scanners/TextareaScanner", function(S, CDataScanner, SpecialScanners) {
+KISSY.add("html-parser/scanners/textarea-scanner", function(S, CDataScanner, SpecialScanners) {
     return SpecialScanners["textarea"] = {
         scan:function(tag, lexer, opts) {
             opts = opts || {};
@@ -2351,13 +2351,13 @@ KISSY.add("htmlparser/scanners/TextareaScanner", function(S, CDataScanner, Speci
         }
     };
 }, {
-    requires:["./CDataScanner","./SpecialScanners"]
+    requires:["./cdata-scanner","./special-scanners"]
 });
 /**
  * declare and initiate sub scanners
  * @author yiminghe@gmail.com
  */
-KISSY.add('htmlparser/Scanner', function(S, TagScanner, SpecialScanners) {
+KISSY.add('html-parser/scanner', function(S, TagScanner, SpecialScanners) {
     return {
         getScanner:function(nodeName) {
             return SpecialScanners[nodeName] || TagScanner;
@@ -2365,17 +2365,17 @@ KISSY.add('htmlparser/Scanner', function(S, TagScanner, SpecialScanners) {
     };
 }, {
     requires:[
-        './scanners/TagScanner',
-        './scanners/SpecialScanners',
-        './scanners/QuoteCdataScanner',
-        './scanners/TextareaScanner'
+        './scanners/tag-scanner',
+        './scanners/special-scanners',
+        './scanners/quote-cdata-scanner',
+        './scanners/textarea-scanner'
     ]
-})
+});
 /**
  * parse html to a hierarchy dom tree
  * @author yiminghe@gmail.com
  */
-KISSY.add("htmlparser/Parser", function (S, dtd, Tag, Fragment, Cursor, Lexer, Document, Scanner) {
+KISSY.add("html-parser/parser", function (S, dtd, Tag, Fragment, Cursor, Lexer, Document, Scanner) {
 
     function Parser(html, opts) {
         // fake root node
@@ -2568,19 +2568,19 @@ KISSY.add("htmlparser/Parser", function (S, dtd, Tag, Fragment, Cursor, Lexer, D
 }, {
     requires:[
         './dtd',
-        './nodes/Tag',
-        './nodes/Fragment',
-        './lexer/Cursor',
-        './lexer/Lexer',
-        './nodes/Document',
-        './Scanner'
+        './nodes/tag',
+        './nodes/fragment',
+        './lexer/cursor',
+        './lexer/lexer',
+        './nodes/document',
+        './scanner'
     ]
 });
 /**
  * basic writer for inheritance
  * @author yiminghe@gmail.com
  */
-KISSY.add("htmlparser/writer/basic", function () {
+KISSY.add("html-parser/writer/basic", function () {
 
     function escapeAttrValue(str) {
         return String(str).replace(/"/g, "&quote;");
@@ -2660,7 +2660,7 @@ KISSY.add("htmlparser/writer/basic", function () {
  * format html prettily
  * @author yiminghe@gmail.com
  */
-KISSY.add("htmlparser/writer/beautify", function (S, BasicWriter, dtd, Utils) {
+KISSY.add("html-parser/writer/beautify", function (S, BasicWriter, dtd, Utils) {
 
     function BeautifyWriter() {
         var self = this;
@@ -2848,13 +2848,13 @@ KISSY.add("htmlparser/writer/beautify", function (S, BasicWriter, dtd, Utils) {
     return BeautifyWriter;
 
 }, {
-    requires:['./basic', '../dtd', '../Utils']
+    requires:['./basic', '../dtd', '../utils']
 });
 /**
  * write html into its minified form,thanks to kangax where minify algorithm comes from
  * @author yiminghe@gmail.com
  */
-KISSY.add("htmlparser/writer/minify", function (S, BasicWriter, Utils) {
+KISSY.add("html-parser/writer/minify", function (S, BasicWriter, Utils) {
 
     var trim = S.trim,
         collapseWhitespace = Utils.collapseWhitespace,
@@ -3084,7 +3084,7 @@ KISSY.add("htmlparser/writer/minify", function (S, BasicWriter, Utils) {
     return Minifier;
 
 }, {
-    requires: ['./basic', '../Utils']
+    requires: ['./basic', '../utils']
 });
 
 /**
@@ -3095,7 +3095,7 @@ KISSY.add("htmlparser/writer/minify", function (S, BasicWriter, Utils) {
  * filter dom tree to html string form,api designed by ckeditor
  * @author yiminghe@gmail.com
  */
-KISSY.add("htmlparser/writer/filter", function (S) {
+KISSY.add("html-parser/writer/filter", function (S) {
     function Filter() {
         // {priority: ?, value:?}
         this.tagNames = [];
@@ -3280,10 +3280,10 @@ KISSY.add("htmlparser/writer/filter", function (S) {
     return Filter;
 });
 /**
- * HTMLParser for KISSY (Editor)
+ * HtmlParser for KISSY (Editor)
  * @author yiminghe@gmail.com
  */
-KISSY.add("htmlparser", function (S, DTD, Lexer, Parser, BasicWriter, BeautifyWriter, MinifyWriter, Filter, CData, Comment, Node, Tag, Text) {
+KISSY.add("html-parser", function (S, DTD, Lexer, Parser, BasicWriter, BeautifyWriter, MinifyWriter, Filter, CData, Comment, Node, Tag, Text) {
     return {
         CData:CData,
         Comment:Comment,
@@ -3308,24 +3308,24 @@ KISSY.add("htmlparser", function (S, DTD, Lexer, Parser, BasicWriter, BeautifyWr
     };
 }, {
     requires:[
-        'htmlparser/dtd',
-        'htmlparser/lexer/Lexer',
-        'htmlparser/Parser',
-        'htmlparser/writer/basic',
-        'htmlparser/writer/beautify',
-        'htmlparser/writer/minify',
-        'htmlparser/writer/filter',
-        'htmlparser/nodes/CData',
-        'htmlparser/nodes/Comment',
-        'htmlparser/nodes/Node',
-        'htmlparser/nodes/Tag',
-        'htmlparser/nodes/Text'
+        'html-parser/dtd',
+        'html-parser/lexer/lexer',
+        'html-parser/parser',
+        'html-parser/writer/basic',
+        'html-parser/writer/beautify',
+        'html-parser/writer/minify',
+        'html-parser/writer/filter',
+        'html-parser/nodes/cdata',
+        'html-parser/nodes/comment',
+        'html-parser/nodes/node',
+        'html-parser/nodes/tag',
+        'html-parser/nodes/text'
     ]
 });
 
 /**
  * refer
- *  - http://htmlparser.sourceforge.net/
+ *  - http://html-parser.sourceforge.net/
  *  - http://www.w3.org/TR/html5/syntax.html
  *  - http://www.w3.org/TR/html5/parsing.html
  *

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 17 23:57
+build time: Jun 21 01:26
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -16,7 +16,7 @@ build time: Jun 17 23:57
  *  change bubble and checkbox/radio fix patch for ie<9
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/ie/change', function (S, DOMEvent, DOM) {
+KISSY.add('event/dom/ie/change', function (S, DOMEvent, Dom) {
     var Special = DOMEvent.Special,
         R_FORM_EL = /^(?:textarea|input|select)$/i;
 
@@ -63,7 +63,7 @@ KISSY.add('event/dom/ie/change', function (S, DOMEvent, DOM) {
                 }
             } else {
                 DOMEvent.remove(el, 'beforeactivate', beforeActivate);
-                S.each(DOM.query('textarea,input,select', el), function (fel) {
+                S.each(Dom.query('textarea,input,select', el), function (fel) {
                     if (fel.__changeHandler) {
                         fel.__changeHandler = 0;
                         DOMEvent.remove(fel, 'change', {fn: changeHandler, last: 1});
@@ -125,10 +125,10 @@ KISSY.add('event/dom/ie/change', function (S, DOMEvent, DOM) {
  * patch for ie<9 submit: does not bubble !
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/ie/submit', function (S, DOMEvent, DOM) {
+KISSY.add('event/dom/ie/submit', function (S, DOMEvent, Dom) {
 
     var Special = DOMEvent.Special,
-        getNodeName = DOM.nodeName;
+        getNodeName = Dom.nodeName;
 
     Special['submit'] = {
         setup: function () {
@@ -149,7 +149,7 @@ KISSY.add('event/dom/ie/submit', function (S, DOMEvent, DOM) {
                 return false;
             }
             DOMEvent.remove(el, 'click keypress', detector);
-            S.each(DOM.query('form', el), function (form) {
+            S.each(Dom.query('form', el), function (form) {
                 if (form.__submit__fix) {
                     form.__submit__fix = 0;
                     DOMEvent.remove(form, 'submit', {

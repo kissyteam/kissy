@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 17 23:52
+build time: Jun 21 01:19
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -80,7 +80,7 @@ KISSY.add("editor/plugin/contextmenu", function (S, Editor, Menu, focusFix) {
                 menu.set("editorSelectedEl", t, {
                     silent: 1
                 });
-                menu.set("xy", [x, y]);
+                menu.move(x, y);
                 self.fire("contextmenu", {
                     contextmenu: menu
                 });

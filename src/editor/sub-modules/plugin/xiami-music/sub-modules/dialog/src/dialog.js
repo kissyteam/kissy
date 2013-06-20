@@ -171,21 +171,23 @@ KISSY.add("editor/plugin/xiami-music/dialog", function (S, Editor, FlashDialog, 
                     "<p style='width: 130px; margin: 15px auto 0; color: rgb(150, 150, 150);'>正在搜索，请稍候......</p>");
                 self._xiamia_list.show();
 
-                S.io({
-                    cache: false,
-                    url: req,
-                    dataType: 'jsonp',
-                    success: function (data) {
-                        data.page = page;
-                        self._listSearch(data);
-                    },
-                    error: function () {
-                        self._xiami_submit.removeClass(prefixCls + "editor-button-disabled", undefined);
-                        var html = "<p style='text-align:center;margin:10px 0;'>" +
-                            "不好意思，超时了，请重试！" +
-                            "</p>";
-                        self._xiamia_list.html(html);
-                    }
+                S.use('io',function(S,Io){
+                    new Io({
+                        cache: false,
+                        url: req,
+                        dataType: 'jsonp',
+                        success: function (data) {
+                            data.page = page;
+                            self._listSearch(data);
+                        },
+                        error: function () {
+                            self._xiami_submit.removeClass(prefixCls + "editor-button-disabled", undefined);
+                            var html = "<p style='text-align:center;margin:10px 0;'>" +
+                                "不好意思，超时了，请重试！" +
+                                "</p>";
+                            self._xiamia_list.html(html);
+                        }
+                    });
                 });
             }
 
@@ -358,5 +360,8 @@ KISSY.add("editor/plugin/xiami-music/dialog", function (S, Editor, FlashDialog, 
     return XiamiMusicDialog;
 
 }, {
-    requires: ['editor', '../flash/dialog', '../menubutton']
+    requires: [
+        'editor',
+        '../flash/dialog',
+        '../menubutton']
 });

@@ -111,7 +111,7 @@ KISSY.add("combobox/multi-value-combobox", function (S, getCursor, ComboBox) {
                     cursorOffset,
                     input = self.get("input");
                 cursorOffset = getCursor(input);
-                menu.set("xy", [cursorOffset.left, cursorOffset.top]);
+                menu.move(cursorOffset.left, cursorOffset.top);
             }
         },
         {

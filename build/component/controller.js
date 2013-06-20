@@ -1,12 +1,13 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 19 14:05
+build time: Jun 21 01:47
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
 
- component/render/process
+ component/controller/common-process
+ component/controller/process
  component/controller/render-process
  component/controller/render-tpl
  component/controller/render
@@ -15,50 +16,35 @@ build time: Jun 19 14:05
 
 /**
  * @ignore
- * ControllerProcess for component
+ * common process for controller and render
  * @author yiminghe@gmail.com
  */
-KISSY.add('component/render/process', function (S, RichBase) {
+KISSY.add('component/controller/common-process', function (S, RichBase, Promise) {
 
-    var ATTRS = 'ATTRS',
+    var Defer = Promise.Defer,
         noop = S.noop;
 
     /**
-     * @class KISSY.Component.ControllerProcess
+     * @class KISSY.Component.CommonProcess
      * @extends KISSY.RichBase
      */
-    var ControllerProcess = RichBase.extend({
+    var CommonProcess = RichBase.extend({
 
         bindInternal: noop,
 
         syncInternal: noop,
 
-        /**
-         * Create dom structure of this component.
-         * @chainable
-         */
-        create: function () {
-            var self = this;
-            // 是否生成过节点
-            if (!self.get("created")) {
-                /**
-                 * @event beforeCreateDom
-                 * fired before root node is created
-                 * @param {KISSY.Event.CustomEventObject} e
-                 */
-                self.fire('beforeCreateDom');
-                self.callMethodByHierarchy("createDom", "__createDom");
-                self.setInternal("created", true);
+        initializer: function () {
+            this._createdDefer = new Defer();
+            this._renderedDefer = new Defer();
+        },
 
-                /**
-                 * @event afterCreateDom
-                 * fired when root node is created
-                 * @param {KISSY.Event.CustomEventObject} e
-                 */
-                self.fire('afterCreateDom');
-                self.callPluginsMethod("createDom");
-            }
-            return self;
+        'onCreated': function (fn) {
+            return this._createdDefer.promise.then(fn);
+        },
+
+        onRendered: function (fn) {
+            return this._renderedDefer.promise.then(fn);
         },
 
         /**
@@ -69,6 +55,7 @@ KISSY.add('component/render/process', function (S, RichBase) {
             var self = this;
             // 是否已经渲染过
             if (!self.get("rendered")) {
+
                 self.create();
 
                 /**
@@ -79,15 +66,14 @@ KISSY.add('component/render/process', function (S, RichBase) {
 
                 self.fire('beforeRenderUI');
                 self.callMethodByHierarchy("renderUI", "__renderUI");
+                self.callPluginsMethod("renderUI");
 
                 /**
                  * @event afterRenderUI
                  * fired after root node is rendered into dom
                  * @param {KISSY.Event.CustomEventObject} e
                  */
-
                 self.fire('afterRenderUI');
-                self.callPluginsMethod("renderUI");
 
                 /**
                  * @event beforeBindUI
@@ -96,19 +82,18 @@ KISSY.add('component/render/process', function (S, RichBase) {
                  */
 
                 self.fire('beforeBindUI');
-                RenderProcess.superclass.bindInternal.call(self);
+                CommonProcess.superclass.bindInternal.call(self);
                 self.callMethodByHierarchy("bindUI", "__bindUI");
+                self.callPluginsMethod("bindUI");
 
                 /**
                  * @event afterBindUI
                  * fired when component 's internal event is bind.
                  * @param {KISSY.Event.CustomEventObject} e
                  */
-
                 self.fire('afterBindUI');
-                self.callPluginsMethod("bindUI");
 
-                RenderProcess.superclass.syncInternal.call(self);
+                CommonProcess.superclass.syncInternal.call(self);
                 self.sync();
 
                 self.setInternal("rendered", true);
@@ -129,50 +114,21 @@ KISSY.add('component/render/process', function (S, RichBase) {
 
             self.fire('beforeSyncUI');
             self.callMethodByHierarchy("syncUI", "__syncUI");
+            self.callPluginsMethod("syncUI");
 
             /**
              * @event afterSyncUI
              * fired after component 's internal state is synchronized.
              * @param {KISSY.Event.CustomEventObject} e
              */
-
             self.fire('afterSyncUI');
-            self.callPluginsMethod("syncUI");
         },
-
-        /**
-         * For overridden. DOM creation logic of subclass component.
-         * @protected
-         * @method
-         */
-        createDom: noop,
-
-        /**
-         * For overridden. Render logic of subclass component.
-         * @protected
-         * @method
-         */
-        renderUI: noop,
-
-        /**
-         * For overridden. Bind logic for subclass component.
-         * @protected
-         * @method
-         */
-        bindUI: noop,
-
-        /**
-         * For overridden. Sync attribute with ui.
-         * @protected
-         * @method
-         */
-        syncUI: noop,
 
         plug: function () {
             var self = this,
                 p,
                 plugins = self.get('plugins');
-            ControllerProcess.superclass.plug.apply(self, arguments);
+            CommonProcess.superclass.plug.apply(self, arguments);
             p = plugins[plugins.length - 1];
             if (self.get('rendered')) {
                 // plugin does not support decorate
@@ -185,9 +141,10 @@ KISSY.add('component/render/process', function (S, RichBase) {
             }
             return self;
         }
+
     }, {
 
-        name: 'ControllerProcess',
+        name: 'CommonProcess',
 
         ATTRS: {
             /**
@@ -200,7 +157,12 @@ KISSY.add('component/render/process', function (S, RichBase) {
              * @ignore
              */
             rendered: {
-                value: false
+                value: false,
+                setter: function (v) {
+                    if (v) {
+                        this._renderedDefer.resolve(this);
+                    }
+                }
             },
             /**
              * Whether this component 's dom structure is created.
@@ -212,14 +174,75 @@ KISSY.add('component/render/process', function (S, RichBase) {
              * @ignore
              */
             created: {
-                value: false
+                value: false,
+                setter: function (v) {
+                    if (v) {
+                        this._createdDefer.resolve(this);
+                    }
+                }
             }
         }
     });
 
+    return CommonProcess;
+}, {
+    requires: ['rich-base', 'promise']
+});
+/**
+ * @ignore
+ * ControllerProcess for component
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('component/controller/process', function (S, CommonProcess) {
+
+    /**
+     * @class KISSY.Component.ControllerProcess
+     * @extends KISSY.Component.CommonProcess
+     */
+    var ControllerProcess = CommonProcess.extend({
+
+        /**
+         * create dom structure of this component (delegate to render).
+         * @chainable
+         */
+        create: function () {
+            var self = this;
+            // 是否生成过节点
+            if (!self.get("created")) {
+                /**
+                 * @event beforeCreateDom
+                 * fired before root node is created
+                 * @param {KISSY.Event.CustomEventObject} e
+                 */
+                self.fire('beforeCreateDom');
+                self.callMethodByHierarchy("createDom", "__createDom");
+                self.callPluginsMethod("createDom");
+
+                /**
+                 * @event afterCreateDom
+                 * fired when root node is created
+                 * @param {KISSY.Event.CustomEventObject} e
+                 */
+                self.fire('afterCreateDom');
+
+                self.setInternal("created", true);
+            }
+            return self;
+        },
+
+        destroy: function () {
+            if (this.get('created')) {
+                ControllerProcess.superclass.destroy.apply(this, arguments);
+            }
+        }
+
+    }, {
+        name: 'ControllerProcess'
+    });
+
     return ControllerProcess;
 }, {
-    requires: ["rich-base"]
+    requires: ['./common-process']
 });
 /**
  * @ignore
@@ -239,20 +262,13 @@ KISSY.add('component/render/process', function (S, RichBase) {
  * render process for component
  * @author yiminghe@gmail.com
  */
-KISSY.add('component/controller/render-process', function (S, RichBase) {
-
-    var ATTRS = 'ATTRS',
-        noop = S.noop;
+KISSY.add('component/controller/render-process', function (S, CommonProcess) {
 
     /**
      * @class KISSY.Component.RenderProcess
-     * @extends KISSY.RichBase
+     * @extends KISSY.Component.CommonProcess
      */
-    var RenderProcess = RichBase.extend({
-
-        bindInternal: noop,
-
-        syncInternal: noop,
+    var RenderProcess = CommonProcess.extend({
 
         /**
          * Create dom structure of this component.
@@ -261,81 +277,40 @@ KISSY.add('component/controller/render-process', function (S, RichBase) {
         create: function () {
             var self = this;
             if (!self.get("created")) {
-                self.callMethodByHierarchy("prepareRenderData", "__prepareRenderData",
-                    [self.renderData = {}]);
+                self.callMethodByHierarchy("beforeCreateDom",
+                    "__beforeCreateDom",
+                    [self.renderData = {}, self.childrenElSelectors = {}]);
                 self.callMethodByHierarchy("createDom", "__createDom");
+                self.callPluginsMethod("createDom");
+
                 self.setInternal("created", true);
             }
             return self;
         },
 
+        /**
+         * decorate from existing dom structure
+         * @param srcNode
+         * @returns {*}
+         */
         decorate: function (srcNode) {
             var self = this;
             if (!self.get("created")) {
-                self.callMethodByHierarchy("decorateDom", "__decorateDom", srcNode);
+                self.callMethodByHierarchy("decorateDom", "__decorateDom",
+                    [srcNode]);
+                self.callPluginsMethod("createDom");
+
                 self.setInternal("created", true);
             }
             return self;
-        },
-
-
-        /**
-         * Put dom structure of this component to document, bind event and sync attribute.
-         * @chainable
-         */
-        render: function () {
-            var self = this;
-            // 是否已经渲染过
-            if (!self.get("rendered")) {
-                self.callMethodByHierarchy("renderUI", "__renderUI");
-                self.sync();
-                self.setInternal("rendered", true);
-            }
-            return self;
-        },
-
-        /**
-         * sync attribute value
-         */
-        sync: function () {
-            var self = this;
-            self.callMethodByHierarchy("syncUI", "__syncUI");
         }
     }, {
-
-        name: 'RenderProcess',
-
-        ATTRS: {
-            /**
-             * Whether this component is rendered.
-             * @type {Boolean}
-             * @property rendered
-             * @readonly
-             */
-            /**
-             * @ignore
-             */
-            rendered: {
-                value: false
-            },
-            /**
-             * Whether this component 's dom structure is created.
-             * @type {Boolean}
-             * @property created
-             * @readonly
-             */
-            /**
-             * @ignore
-             */
-            created: {
-                value: false
-            }
-        }
+        name: 'RenderProcess'
     });
 
     return RenderProcess;
 }, {
-    requires: ["rich-base"]
+    requires: ['./common-process']
 });
 /*
   Generated by kissy-tpl2mod.
@@ -349,7 +324,7 @@ KISSY.add('component/controller/render-tpl',function(){
  * @author yiminghe@gmail.com
  * refer: http://martinfowler.com/eaaDev/uiArchs.html
  */
-KISSY.add("component/controller/render", function (S, Manager, RenderProcess, XTemplate, RenderTpl) {
+KISSY.add("component/controller/render", function (S, RenderProcess, XTemplate, RenderTpl, Manager) {
 
     var ON_SET = '_onSet',
         trim = S.trim,
@@ -436,7 +411,7 @@ KISSY.add("component/controller/render", function (S, Manager, RenderProcess, XT
 
         isRender: 1,
 
-        prepareRenderData: function (renderData) {
+        beforeCreateDom: function (renderData) {
             var self = this,
                 controller = self.controller,
                 width,
@@ -499,40 +474,20 @@ KISSY.add("component/controller/render", function (S, Manager, RenderProcess, XT
         createDom: function () {
             var self = this,
                 controller = self.controller,
-                renderData = self.renderData,
                 el, tpl, html;
 
             tpl = startTpl + self.get('contentTpl') + endTpl;
 
-            html = new XTemplate(tpl, {
-                commands: {
-                    getBaseCssClasses: function (scope, option) {
-                        return self.getBaseCssClasses(option.params[0]);
-                    }
-                }
-            }).render(renderData);
+            html = self.renderTpl(tpl);
 
-            el = $(html);
+            controller.setInternal("el", el = controller.el = self.el = $(html));
 
-            var childrenElSelectors = self.get('childrenElSelectors'),
-                childName,
-                selector;
-
-            for (childName in childrenElSelectors) {
-                selector = childrenElSelectors[childName];
-                if (typeof selector === "function") {
-                    controller.setInternal(childName, selector(el));
-                } else {
-                    controller.setInternal(childName,
-                        el.all(S.substitute(selector, self.renderData)));
-                }
-            }
-
-            controller.setInternal("el", controller.el = self.el = el);
+            this.fillChildrenElsBySelectors();
         },
 
         decorateDom: function (srcNode) {
-            var c = self.constructor,
+            var self = this,
+                c = self.constructor,
                 controller = self.controller,
                 len, p, constructorChains;
 
@@ -553,12 +508,13 @@ KISSY.add("component/controller/render", function (S, Manager, RenderProcess, XT
         },
 
         renderUI: function () {
-            var self = this;
-            var controller = self.controller;
+            var self = this,
+                controller = self.controller,
+                el = self.el;
+
             // 新建的节点才需要摆放定位
             if (!controller.get('srcNode')) {
                 var render = controller.get('render'),
-                    el = controller.get('el'),
                     renderBefore = controller.get('elBefore');
                 if (renderBefore) {
                     el.insertBefore(renderBefore, /**
@@ -589,10 +545,60 @@ KISSY.add("component/controller/render", function (S, Manager, RenderProcess, XT
             }
         },
 
+        syncUI:function(){
+
+        },
+
         destructor: function () {
-            if (this.el) {
                 this.el.remove();
+        },
+
+        fillChildrenElsBySelectors: function (childrenElSelectors) {
+            var self = this,
+                el = self.el,
+                controller = self.controller,
+                childName,
+                selector;
+
+            childrenElSelectors = childrenElSelectors || self.childrenElSelectors;
+
+            for (childName in childrenElSelectors) {
+                selector = childrenElSelectors[childName];
+                if (typeof selector === "function") {
+                    controller.setInternal(childName, selector(el));
+                } else {
+                    controller.setInternal(childName,
+                        el.all(S.substitute(selector, self.renderData)));
+                }
+                delete childrenElSelectors[childName];
             }
+        },
+
+        renderTpl: function (tpl, renderData) {
+            var self = this;
+            renderData = renderData || self.renderData;
+            return new XTemplate(tpl, {
+                commands: {
+                    getBaseCssClasses: function (scope, option) {
+                        return self.getBaseCssClasses(option.params[0]);
+                    }
+                }
+            }).render(renderData);
+        },
+
+        /**
+         * Get component's constructor from KISSY Node.
+         * @param prefixCls
+         * @param {KISSY.NodeList} childNode Child component's root node.
+         */
+        'getComponentConstructorByNode': function (prefixCls, childNode) {
+            var cls = childNode[0].className;
+            // 过滤掉特定前缀
+            if (cls) {
+                cls = cls.replace(new RegExp("\\b" + prefixCls, "ig"), "");
+                return Manager.getConstructorByXClass(cls);
+            }
+            return null;
         },
 
         getComponentCssClasses: function () {
@@ -602,14 +608,15 @@ KISSY.add("component/controller/render", function (S, Manager, RenderProcess, XT
             }
             var controller = self.controller,
                 constructor = controller.constructor,
-                cls,
+                xclass,
                 re = [];
-            while (constructor && !constructor.isController) {
-                cls = Manager.getXClassByConstructor(constructor);
-                if (cls) {
-                    re.push(cls);
+            while (constructor && !constructor.prototype.hasOwnProperty('isController')) {
+                xclass = constructor.xclass;
+                if (xclass) {
+                    re.push(xclass);
                 }
-                constructor = constructor.superclass && constructor.superclass.constructor;
+                constructor = constructor.superclass &&
+                    constructor.superclass.constructor;
             }
             return self.componentCssClasses = re;
         },
@@ -730,19 +737,8 @@ KISSY.add("component/controller/render", function (S, Manager, RenderProcess, XT
 
         '_onSetZIndex': function (x) {
             this.el.css("z-index", x);
-        },
-
-        '_onSetX': function (x) {
-            this.el.offset({
-                left: x
-            });
-        },
-
-        '_onSetY': function (y) {
-            this.el.offset({
-                top: y
-            });
         }
+
     }, {
 
         /**
@@ -787,9 +783,6 @@ KISSY.add("component/controller/render", function (S, Manager, RenderProcess, XT
             },
             contentTpl: {
                 value: '{{{content}}}'
-            },
-            childrenElSelectors: {
-                value: {}
             }
         },
         HTML_PARSER: {
@@ -824,7 +817,8 @@ KISSY.add("component/controller/render", function (S, Manager, RenderProcess, XT
      *      };
      */
 }, {
-    requires: [ 'component/manager', './render-process', 'xtemplate', './render-tpl']
+    requires: ['./render-process', 'xtemplate',
+        './render-tpl', 'component/manager']
 });
 /**
  * @ignore
@@ -837,14 +831,6 @@ KISSY.add("component/controller", function (S, Node, ControllerProcess, Manager,
         Features = S.Features,
         Gesture = Node.Gesture,
         isTouchEventSupported = Features.isTouchEventSupported();
-
-    function wrapBehavior(self, action) {
-        return function (e) {
-            if (!self.get("disabled")) {
-                self[action](e);
-            }
-        };
-    }
 
     /**
      * Base Controller class for KISSY Component.
@@ -880,14 +866,17 @@ KISSY.add("component/controller", function (S, Node, ControllerProcess, Manager,
             createDom: function () {
                 var self = this,
                     Render = self.get('xrender'),
-                    view,
+                    view = self.get('view'),
                     srcNode = self.get('srcNode'),
                     id = self.get("id"),
                     el;
                 // initialize view
-                self.view = view = new Render({
-                    controller: self
-                });
+                // allow custom view instance
+                if (!view) {
+                    self.set('view', view = new Render({
+                        controller: self
+                    }));
+                }
                 if (srcNode) {
                     view.decorate(srcNode);
                 } else {
@@ -912,44 +901,49 @@ KISSY.add("component/controller", function (S, Node, ControllerProcess, Manager,
 
             bindUI: function () {
                 var self = this,
-                    el = self.getKeyEventTarget();
+                    el = self.view.getKeyEventTarget();
+
                 if (self.get('focusable')) {
                     // remove smart outline in ie
                     // set outline in style for other standard browser
-                    el.on("focus", wrapBehavior(self, "handleFocus"))
-                        .on("blur", wrapBehavior(self, "handleBlur"))
-                        .on("keydown", wrapBehavior(self, "handleKeydown"));
+                    el.on("focus", self.handleFocus, self)
+                        .on("blur", self.handleBlur, self)
+                        .on("keydown", self.handleKeydown, self);
                 }
 
                 if (self.get('handleMouseEvents')) {
 
-                    el = self.get('el');
+                    el = self.el;
 
                     if (!isTouchEventSupported) {
-                        el.on("mouseenter", wrapBehavior(self, "handleMouseEnter"))
-                            .on("mouseleave", wrapBehavior(self, "handleMouseLeave"))
-                            .on("contextmenu", wrapBehavior(self, "handleContextMenu"))
+                        el.on("mouseenter", self.handleMouseEnter, self)
+                            .on("mouseleave", self.handleMouseLeave, self)
+                            .on("contextmenu", self.handleContextMenu, self)
                     }
 
-                    el.on(Gesture.start, wrapBehavior(self, "handleMouseDown"))
-                        .on(Gesture.end, wrapBehavior(self, "handleMouseUp"))
+                    el.on(Gesture.start, self.handleMouseDown, self)
+                        .on(Gesture.end, self.handleMouseUp, self)
                         // consider touch environment
-                        .on(Gesture.tap, wrapBehavior(self, "performActionInternal"));
+                        .on(Gesture.tap, self.handleClick, self);
                     if (Gesture.cancel) {
-                        el.on(Gesture.cancel, wrapBehavior(self, "handleMouseUp"));
+                        el.on(Gesture.cancel, self.handleMouseUp, self);
                     }
 
                     // click quickly only trigger click and dblclick in ie<9
                     // others click click dblclick
                     if (ie && ie < 9) {
-                        el.on("dblclick", wrapBehavior(self, "handleDblClick"));
+                        el.on("dblclick", self.handleDblClick, self);
                     }
 
                 }
             },
 
+            createComponent: function (cfg, parent) {
+                return Manager.createComponent(cfg, parent || this);
+            },
+
             '_onSetFocused': function (v) {
-                var target = this.getKeyEventTarget()[0];
+                var target = this.view.getKeyEventTarget()[0];
                 if (v) {
                     target.focus();
                 } else {
@@ -959,6 +953,18 @@ KISSY.add("component/controller", function (S, Node, ControllerProcess, Manager,
                         target.ownerDocument.body.focus();
                     }
                 }
+            },
+
+            '_onSetX': function (x) {
+                this.el.offset({
+                    left: x
+                });
+            },
+
+            '_onSetY': function (y) {
+                this.el.offset({
+                    top: y
+                });
             },
 
             _onSetVisible: function (v) {
@@ -999,44 +1005,68 @@ KISSY.add("component/controller", function (S, Node, ControllerProcess, Manager,
                 }
             },
 
-            /**
-             * focusable element of component.
-             * @protected
-             * @return {KISSY.NodeList}
-             */
-            getKeyEventTarget: function () {
-                return this.view.getKeyEventTarget();
+            move: function (x, y) {
+                this.set({
+                    x: x,
+                    y: y
+                });
+            },
+
+            handleDblClick: function (ev) {
+                if (!this.get('disabled')) {
+                    this.handleDblClickInternal(ev);
+                }
             },
 
             /**
              * Hack click in ie<9 by handling dblclick events.
              * By default, this performs its associated action by calling
-             * {@link KISSY.Component.Controller#performActionInternal}.
+             * {@link KISSY.Component.Controller#handleClickInternal}.
              * @protected
-             * @param {KISSY.Event.DOMEventObject} ev DOM event to handle.
+             * @param {KISSY.Event.DOMEventObject} ev Dom event to handle.
              */
-            handleDblClick: function (ev) {
-                this.performActionInternal(ev);
+            handleDblClickInternal: function (ev) {
+                this.handleClickInternal(ev);
             },
+
+            handleMouseEnter: function (ev) {
+                if (!this.get('disabled')) {
+                    this.handleMouseEnterInternal(ev);
+                }
+            },
+
 
             /**
              * Handle mouseenter events. If the component is not disabled, highlights it.
              * @protected
-             * @param {KISSY.Event.DOMEventObject} ev DOM event to handle.
+             * @param {KISSY.Event.DOMEventObject} ev Dom event to handle.
              */
-            handleMouseEnter: function (ev) {
+            handleMouseEnterInternal: function (ev) {
                 this.set("highlighted", !!ev);
+            },
+
+            handleMouseLeave: function (ev) {
+                if (!this.get('disabled')) {
+                    this.handleMouseLeaveInternal(ev);
+                }
             },
 
             /**
              * Handle mouseleave events. If the component is not disabled, de-highlights it.
              * @protected
-             * @param {KISSY.Event.DOMEventObject} ev DOM event to handle.
+             * @param {KISSY.Event.DOMEventObject} ev Dom event to handle.
              */
-            handleMouseLeave: function (ev) {
+            handleMouseLeaveInternal: function (ev) {
                 var self = this;
                 self.set("active", false);
                 self.set("highlighted", !ev);
+            },
+
+            handleMouseDown: function (ev) {
+                if (!this.get('disabled')) {
+
+                    this.handleMouseDownInternal(ev);
+                }
             },
 
             /**
@@ -1045,23 +1075,19 @@ KISSY.add("component/controller", function (S, Node, ControllerProcess, Manager,
              * If the component is focusable, then focus it,
              * else prevent it from receiving keyboard focus.
              * @protected
-             * @param {KISSY.Event.DOMEventObject} ev DOM event to handle.
+             * @param {KISSY.Event.DOMEventObject} ev Dom event to handle.
              */
-            handleMouseDown: function (ev) {
+            handleMouseDownInternal: function (ev) {
                 var self = this,
                     n,
-                    isMouseActionButton = ev['which'] == 1,
-                    el;
+                    isMouseActionButton = ev['which'] == 1;
                 if (isMouseActionButton || isTouchEventSupported) {
-                    el = self.getKeyEventTarget();
                     if (self.get("activeable")) {
                         self.set("active", true);
                     }
                     if (self.get("focusable")) {
-                        el[0].focus();
-                        self.set("focused", true);
+                        self.focus();
                     }
-
                     if (!self.get("allowTextSelection")) {
                         // firefox /chrome 不会引起焦点转移
                         n = ev.target.nodeName;
@@ -1074,14 +1100,21 @@ KISSY.add("component/controller", function (S, Node, ControllerProcess, Manager,
                 }
             },
 
+            handleMouseUp: function (ev) {
+                if (!this.get('disabled')) {
+
+                    this.handleMouseUpInternal(ev);
+                }
+            },
+
             /**
              * Handles mouseup events.
              * If this component is not disabled, performs its associated action by calling
-             * {@link KISSY.Component.Controller#performActionInternal}, then deactivates it.
+             * {@link KISSY.Component.Controller#handleClickInternal}, then deactivates it.
              * @protected
-             * @param {KISSY.Event.DOMEventObject} ev DOM event to handle.
+             * @param {KISSY.Event.DOMEventObject} ev Dom event to handle.
              */
-            handleMouseUp: function (ev) {
+            handleMouseUpInternal: function (ev) {
                 var self = this;
                 // 左键
                 if (self.get("active") && (ev['which'] == 1 || isTouchEventSupported)) {
@@ -1089,58 +1122,56 @@ KISSY.add("component/controller", function (S, Node, ControllerProcess, Manager,
                 }
             },
 
+            handleContextMenu: function (ev) {
+                if (!this.get('disabled')) {
+
+                    this.handleContextMenuInternal(ev);
+                }
+            },
+
             /**
              * Handles context menu.
              * @protected
-             * @param {KISSY.Event.DOMEventObject} ev DOM event to handle.
+             * @param {KISSY.Event.DOMEventObject} ev Dom event to handle.
              */
-            handleContextMenu: function (ev) {
-                if (0) {
-                    S.log(ev);
+            handleContextMenuInternal: function (ev) {
+            },
+
+            handleFocus: function () {
+                if (!this.get('disabled')) {
+
+                    this.handleFocusInternal();
                 }
             },
 
             /**
              * Handles focus events. Style focused class.
              * @protected
-             * @param {KISSY.Event.DOMEventObject} ev DOM event to handle.
              */
-            handleFocus: function (ev) {
-                this.set("focused", !!ev);
+            handleFocusInternal: function () {
+                this.focus();
                 this.fire("focus");
+            },
+
+            handleBlur: function () {
+                if (!this.get('disabled')) {
+
+                    this.handleBlurInternal();
+                }
             },
 
             /**
              * Handles blur events. Remove focused class.
              * @protected
-             * @param {KISSY.Event.DOMEventObject} ev DOM event to handle.
              */
-            handleBlur: function (ev) {
-                this.set("focused", !ev);
+            handleBlurInternal: function () {
+                this.blur();
                 this.fire("blur");
             },
 
-            /**
-             * Handle enter keydown event to {@link KISSY.Component.Controller#performActionInternal}.
-             * @protected
-             * @param {KISSY.Event.DOMEventObject} ev DOM event to handle.
-             */
-            handleKeyEventInternal: function (ev) {
-                if (ev['keyCode'] == Node.KeyCode.ENTER) {
-                    return this.performActionInternal(ev);
-                }
-                return undefined;
-            },
-
-            /**
-             * Handle keydown events.
-             * If the component is not disabled, call {@link KISSY.Component.Controller#handleKeyEventInternal}
-             * @protected
-             * @param {KISSY.Event.DOMEventObject} ev DOM event to handle.
-             */
             handleKeydown: function (ev) {
                 var self = this;
-                if (self.handleKeyEventInternal(ev)) {
+                if (!this.get('disabled') && self.handleKeyDownInternal(ev)) {
                     ev['halt']();
                     return true;
                 }
@@ -1148,25 +1179,38 @@ KISSY.add("component/controller", function (S, Node, ControllerProcess, Manager,
             },
 
             /**
+             * Handle enter keydown event to {@link KISSY.Component.Controller#handleClickInternal}.
+             * @protected
+             * @param {KISSY.Event.DOMEventObject} ev Dom event to handle.
+             */
+            handleKeyDownInternal: function (ev) {
+                if (ev['keyCode'] == Node.KeyCode.ENTER) {
+                    return this.handleClickInternal(ev);
+                }
+                return undefined;
+            },
+
+            handleClick: function (ev) {
+                if (!this.get('disabled')) {
+                    this.handleClickInternal(ev);
+                }
+            },
+
+            /**
              * Performs the appropriate action when this component is activated by the user.
              * @protected
-             * @param {KISSY.Event.DOMEventObject} ev DOM event to handle.
+             * @param {KISSY.Event.DOMEventObject} ev Dom event to handle.
              */
-            performActionInternal: function (ev) {
+            handleClickInternal: function (ev) {
             },
 
             /**
              * @protected
              */
             destructor: function () {
-                var self = this,
-                    view = self.view,
-                    id = self.get("id");
                 // remove instance from manager
-                Manager.removeComponent(id);
-                if (view) {
-                    view.destroy();
-                }
+                Manager.removeComponent(this.get('id'));
+                this.view.destroy();
             }
         },
         {
@@ -1308,7 +1352,6 @@ KISSY.add("component/controller", function (S, Node, ControllerProcess, Manager,
                  * @ignore
                  */
                 x: {
-                    view: 1
                 },
 
                 /**
@@ -1324,30 +1367,26 @@ KISSY.add("component/controller", function (S, Node, ControllerProcess, Manager,
                  * @ignore
                  */
                 y: {
-                    view: 1
                 },
+
                 /**
                  * Horizontal and vertical axis.
                  * @ignore
                  * @type {Number[]}
                  */
+                /**
+                 * @ignore
+                 */
                 xy: {
-                    // 相对 page 定位, 有效值为 [n, m], 为 null 时, 选 align 设置
                     setter: function (v) {
                         var self = this,
                             xy = S.makeArray(v);
-                        /*
-                         属性内分发特别注意：
-                         xy -> x,y
-                         */
                         if (xy.length) {
                             xy[0] && self.set("x", xy[0]);
                             xy[1] && self.set("y", xy[1]);
                         }
                         return v;
                     },
-
-                    // xy 纯中转作用
                     getter: function () {
                         return [this.get("x"), this.get("y")];
                     }
@@ -1605,11 +1644,15 @@ KISSY.add("component/controller", function (S, Node, ControllerProcess, Manager,
                  */
                 xrender: {
                     value: Render
+                },
+
+                view: {
+                    setter: function (v) {
+                        this.view = v;
+                    }
                 }
             }
         });
-
-    Controller.Render = Render;
 
     Controller.extend = function extend(extensions, px, sx) {
         var args = S.makeArray(arguments),

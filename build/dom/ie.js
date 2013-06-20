@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 17 23:51
+build time: Jun 21 01:18
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -19,13 +19,13 @@ build time: Jun 17 23:51
  * attr ie hack
  * @author yiminghe@gmail.com
  */
-KISSY.add('dom/ie/attr', function (S, DOM) {
+KISSY.add('dom/ie/attr', function (S, Dom) {
 
-    var attrHooks = DOM._attrHooks,
-        attrNodeHook = DOM._attrNodeHook,
-        NodeType = DOM.NodeType,
-        valHooks = DOM._valHooks,
-        propFix = DOM._propFix,
+    var attrHooks = Dom._attrHooks,
+        attrNodeHook = Dom._attrNodeHook,
+        NodeType = Dom.NodeType,
+        valHooks = Dom._valHooks,
+        propFix = Dom._propFix,
         HREF = 'href',
         hrefFix,
         IE_VERSION = S.UA.ie;
@@ -72,7 +72,7 @@ KISSY.add('dom/ie/attr', function (S, DOM) {
         });
 
         // ie6,7 不区分 attribute 与 property
-        S.mix(DOM._attrFix, propFix);
+        S.mix(Dom._attrFix, propFix);
 
         // http://fluidproject.org/blog/2008/01/09/getting-setting-and-removing-tabindex-values-with-javascript/
         attrHooks.tabIndex = attrHooks.tabindex;
@@ -141,7 +141,7 @@ KISSY.add('dom/ie/attr', function (S, DOM) {
         var ret = "",
             nodeType = el.nodeType;
 
-        if (nodeType === DOM.NodeType.ELEMENT_NODE) {
+        if (nodeType === Dom.NodeType.ELEMENT_NODE) {
             for (el = el.firstChild; el; el = el.nextSibling) {
                 ret += getText(el);
             }
@@ -151,9 +151,9 @@ KISSY.add('dom/ie/attr', function (S, DOM) {
         return ret;
     }
 
-    DOM._getText = getText;
+    Dom._getText = getText;
 
-    return DOM;
+    return Dom;
 }, {
     requires: ['dom/base']
 });
@@ -165,10 +165,10 @@ KISSY.add('dom/ie/attr', function (S, DOM) {
  * ie create hack
  * @author yiminghe@gmail.com
  */
-KISSY.add('dom/ie/create', function (S, DOM) {
+KISSY.add('dom/ie/create', function (S, Dom) {
 
     // wierd ie cloneNode fix from jq
-    DOM._fixCloneAttributes = function (src, dest) {
+    Dom._fixCloneAttributes = function (src, dest) {
 
         // clearAttributes removes the attributes, which we don't want,
         // but also removes the attachEvent events, which we *do* want
@@ -222,11 +222,11 @@ KISSY.add('dom/ie/create', function (S, DOM) {
         // Event data gets referenced instead of copied if the expando
         // gets copied too
         // 自定义 data 根据参数特殊处理，expando 只是个用于引用的属性
-        dest.removeAttribute(DOM.__EXPANDO);
+        dest.removeAttribute(Dom.__EXPANDO);
     };
 
-    var creators = DOM._creators,
-        defaultCreator = DOM._defaultCreator,
+    var creators = Dom._creators,
+        defaultCreator = Dom._defaultCreator,
         R_TBODY = /<tbody/i;
 
     // IE7- adds TBODY when creating thead/tfoot/caption/col/colgroup elements
@@ -242,7 +242,7 @@ KISSY.add('dom/ie/create', function (S, DOM) {
             var table = frag.firstChild,
                 tableChildren = S.makeArray(table.childNodes);
             S.each(tableChildren, function (c) {
-                if (DOM.nodeName(c) == 'tbody' && !c.childNodes.length) {
+                if (Dom.nodeName(c) == 'tbody' && !c.childNodes.length) {
                     table.removeChild(c);
                 }
             });
@@ -256,7 +256,7 @@ KISSY.add('dom/ie/create', function (S, DOM) {
  * ie create hack
  * @author yiminghe@gmail.com
  */
-KISSY.add('dom/ie/insertion', function (S, DOM) {
+KISSY.add('dom/ie/insertion', function (S, Dom) {
 
     var UA = S.UA;
 
@@ -270,14 +270,14 @@ KISSY.add('dom/ie/insertion', function (S, DOM) {
          S.all('#t').append(c);
          alert(c[0].checked);
          */
-        DOM._fixInsertionChecked = function fixChecked(ret) {
+        Dom._fixInsertionChecked = function fixChecked(ret) {
             for (var i = 0; i < ret.length; i++) {
                 var el = ret[i];
-                if (el.nodeType == DOM.NodeType.DOCUMENT_FRAGMENT_NODE) {
+                if (el.nodeType == Dom.NodeType.DOCUMENT_FRAGMENT_NODE) {
                     fixChecked(el.childNodes);
-                } else if (DOM.nodeName(el) == 'input') {
+                } else if (Dom.nodeName(el) == 'input') {
                     fixCheckedInternal(el);
-                } else if (el.nodeType == DOM.NodeType.ELEMENT_NODE) {
+                } else if (el.nodeType == Dom.NodeType.ELEMENT_NODE) {
                     var cs = el.getElementsByTagName('input');
                     for (var j = 0; j < cs.length; j++) {
                         fixChecked(cs[j]);
@@ -303,9 +303,9 @@ KISSY.add('dom/ie/insertion', function (S, DOM) {
  * style hack for ie
  * @author yiminghe@gmail.com
  */
-KISSY.add('dom/ie/style', function (S, DOM) {
+KISSY.add('dom/ie/style', function (S, Dom) {
 
-    var cssProps = DOM._cssProps,
+    var cssProps = Dom._cssProps,
         UA = S.UA,
         HUNDRED = 100,
         doc = S.Env.host.document,
@@ -318,7 +318,7 @@ KISSY.add('dom/ie/style', function (S, DOM) {
         RUNTIME_STYLE = 'runtimeStyle',
         LEFT = 'left',
         PX = 'px',
-        CUSTOM_STYLES = DOM._CUSTOM_STYLES,
+        CUSTOM_STYLES = Dom._CUSTOM_STYLES,
         backgroundPosition = 'backgroundPosition',
         R_OPACITY = /opacity\s*=\s*([^)]*)/,
         R_ALPHA = /alpha\([^)]*\)/i;
@@ -434,7 +434,7 @@ KISSY.add('dom/ie/style', function (S, DOM) {
         };
     });
 
-    DOM._getComputedStyle = function (elem, name) {
+    Dom._getComputedStyle = function (elem, name) {
         name = cssProps[name] || name;
         // currentStyle maybe null
         // http://msdn.microsoft.com/en-us/library/ms535231.aspx
@@ -450,7 +450,7 @@ KISSY.add('dom/ie/style', function (S, DOM) {
         // If we're not dealing with a regular pixel number
         // but a number that has a weird ending, we need to convert it to pixels
         // exclude left right for relativity
-        if (DOM._RE_NUM_NO_PX.test(ret) && !RE_POS.test(name)) {
+        if (Dom._RE_NUM_NO_PX.test(ret) && !RE_POS.test(name)) {
             // Remember the original values
             var style = elem[STYLE],
                 left = style[LEFT],
@@ -496,10 +496,10 @@ KISSY.add('dom/ie/style', function (S, DOM) {
  * traversal ie hack
  * @author yiminghe@gmail.com
  */
-KISSY.add('dom/ie/traversal', function (S, DOM) {
+KISSY.add('dom/ie/traversal', function (S, Dom) {
 
-    DOM._contains = function (a, b) {
-        if (a.nodeType == DOM.NodeType.DOCUMENT_NODE) {
+    Dom._contains = function (a, b) {
+        if (a.nodeType == Dom.NodeType.DOCUMENT_NODE) {
             a = a.documentElement;
         }
         // !a.contains => a===document || text
@@ -511,7 +511,7 @@ KISSY.add('dom/ie/traversal', function (S, DOM) {
         }
 
         // when b is document, a.contains(b) 不支持的接口 in ie
-        if (b && b.nodeType == DOM.NodeType.ELEMENT_NODE) {
+        if (b && b.nodeType == Dom.NodeType.ELEMENT_NODE) {
             return a.contains && a.contains(b);
         } else {
             return false;
@@ -525,8 +525,8 @@ KISSY.add('dom/ie/traversal', function (S, DOM) {
  * handle input selection and cursor position ie hack
  * @author yiminghe@gmail.com
  */
-KISSY.add('dom/ie/input-selection', function (S, DOM) {
-    var propHooks = DOM._propHooks;
+KISSY.add('dom/ie/input-selection', function (S, Dom) {
+    var propHooks = Dom._propHooks;
     // S.log("fix selectionEnd/Start !");
     // note :
     // in ie textarea can not set selectionStart or selectionEnd between '\r' and '\n'
@@ -653,8 +653,8 @@ KISSY.add('dom/ie/input-selection', function (S, DOM) {
  * dirty hack for ie
  * @author yiminghe@gmail.com
  */
-KISSY.add('dom/ie', function (S, DOM) {
-    return DOM;
+KISSY.add('dom/ie', function (S, Dom) {
+    return Dom;
 }, {
     requires: [
         './ie/attr',

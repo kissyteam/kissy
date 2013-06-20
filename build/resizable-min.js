@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 17 23:59
+build time: Jun 21 01:27
 */
 KISSY.add("resizable",function(s,f,g,i,t){function u(a){var b=a.dds,l=a.get("node"),h=a.get("handlers"),m,n=a.get("prefixCls")+v;for(d=0;d<h.length;d++){var c=h[d],e=p("<div class='"+n+" "+n+"-"+c+"'></div>").prependTo(l,t),e=b[c]=new w({node:e,cursor:null,groups:!1});(function(b,c){var e;c.on("drag",function(c){var h=c.target,n=a._width,f=a._height,j=a.get("minWidth"),g=a.get("maxWidth"),i=a.get("minHeight"),p=a.get("maxHeight"),c=o[b](j,g,i,p,a._top,a._left,n,f,c.pageY-e.top,c.pageX-e.left,m);for(d=
 0;d<q.length;d++)c[d]&&l.css(q[d],c[d]);a.fire("resize",{handler:b,dd:h})});c.on("dragstart",function(){e=c.get("startMousePos");m=a.get("preserveRatio");a._width=l.width();a._top=parseInt(l.css("top"));a._left=parseInt(l.css("left"));a._height=l.height();a.fire("resizeStart",{handler:b,dd:c})});c.on("dragend",function(){a.fire("resizeEnd",{handler:b,dd:c})})})(c,e)}}var p=f.all,d,w=i.Draggable,v="resizable-handler",i=["l","r"],r=["t","b"],q=["width","height","top","left"],o={t:function(a,b,d,h,m,

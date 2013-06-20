@@ -15,26 +15,29 @@
 <body>
 <h1 style="font-size: 2em;text-align: center;margin: 2em;">Simple KISSY Editor</h1>
 
-<form id="f" method="post">
-    <div style="width: 90%;margin: 20px auto;">
-        <p>
-            <label>标题: <input></label>
-        </p>
 
-        <div id="container" class="ks-editor">
-            <textarea class="ks-editor-textarea" name="content"><p>我有初始值</p></textarea>
-        </div>
-        <div style="margin: 20px 0;">
-            <button onclick="window.newEditor.destroy();">destroy</button>
-            <button onclick="preview();">预览</button>
-            <button onclick="document.getElementById('f').submit();">submit</button>
-            <button onclick="getSelected();">获取选中 html</button>
-        </div>
-        <div id="previewEl" style="margin: 20px 0;">
+<div style="width: 90%;margin: 20px auto;">
+    <p>
+        <label>标题: <input></label>
+    </p>
 
-        </div>
+
+        <textarea id="ks-editor-textarea" style='width:600px;height:400px'>
+            o
+        </textarea>
+
+    <div style="margin: 20px 0;">
+        <button onclick="window.newEditor.destroy();">destroy</button>
+        <button onclick="preview();">预览</button>
+        <button onclick="getSelected();">获取选中 html</button>
+        <button onclick="insertHtml();">插入 html</button>
+        <button onclick="insertElement();">插入 element</button>
     </div>
-</form>
+    <div id="previewEl" style="margin: 20px 0;">
+
+    </div>
+</div>
+
 
 <script src="/kissy/build/seed.js"></script>
 <script src="/kissy/src/package.js"></script>
@@ -44,6 +47,12 @@
       href="/kissy/tools/third-party/syntaxhighlighter_3.0.83/styles/shCoreDefault.css"/>
 
 <script src="dev.js"></script>
+<script>
+    window.EDITOR_CFG = {
+        focused: false,
+        fromTextarea:'#ks-editor-textarea'
+    };
+</script>
 <script src="./build/demo.js"></script>
 </body>
 </html>

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 17 23:52
+build time: Jun 21 01:19
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -21,7 +21,7 @@ KISSY.add("editor/plugin/dent-cmd", function (S, Editor, ListUtils) {
 
     var listNodeNames = {ol:1, ul:1},
         Walker = Editor.Walker,
-        DOM = S.DOM,
+        Dom = S.Dom,
         Node = S.Node,
         UA = S.UA,
         isNotWhitespaces = Walker.whitespaces(true),
@@ -31,7 +31,7 @@ KISSY.add("editor/plugin/dent-cmd", function (S, Editor, ListUtils) {
         isNotBookmark = Walker.bookmark(false, true);
 
     function isListItem(node) {
-        return node.nodeType == DOM.NodeType.ELEMENT_NODE && DOM.nodeName(node) == 'li';
+        return node.nodeType == Dom.NodeType.ELEMENT_NODE && Dom.nodeName(node) == 'li';
     }
 
     function indentList(range, listNode, type) {
@@ -64,7 +64,7 @@ KISSY.add("editor/plugin/dent-cmd", function (S, Editor, ListUtils) {
             return;
 
         // Do indent or outdent operations on the array model of the list, not the
-        // list's DOM tree itself. The array model demands that it knows as much as
+        // list's Dom tree itself. The array model demands that it knows as much as
         // possible about the surrounding lists, we need to feed it the further
         // ancestor node that is still a list.
         var listParents = listNode._4e_parents(true, undefined);
@@ -84,7 +84,7 @@ KISSY.add("editor/plugin/dent-cmd", function (S, Editor, ListUtils) {
             lastItem = itemsToMove[ itemsToMove.length - 1 ],
             database = {};
 
-        // Convert the list DOM tree into a one dimensional array.
+        // Convert the list Dom tree into a one dimensional array.
         var listArray = ListUtils.listToArray(listNode, database);
 
         // Apply indenting or outdenting on the array.
@@ -115,7 +115,7 @@ KISSY.add("editor/plugin/dent-cmd", function (S, Editor, ListUtils) {
              i < listArray.length && listArray[i].indent > baseIndent; i++)
             listArray[i].indent += indentOffset;
 
-        // Convert the array back to a DOM forest (yes we might have a few subtrees now).
+        // Convert the array back to a Dom forest (yes we might have a few subtrees now).
         // And replace the old list with the new forest.
         var newList = ListUtils.arrayToList(listArray, database, null, "p");
 
@@ -139,7 +139,7 @@ KISSY.add("editor/plugin/dent-cmd", function (S, Editor, ListUtils) {
         }
 
         if (newList) {
-            DOM.insertBefore(newList.listNode[0] || newList.listNode,
+            Dom.insertBefore(newList.listNode[0] || newList.listNode,
                 listNode[0] || listNode);
             listNode.remove();
         }
@@ -162,7 +162,7 @@ KISSY.add("editor/plugin/dent-cmd", function (S, Editor, ListUtils) {
                     }
                     li[0].appendChild(followingList[0]);
                 }
-                DOM.insertAfter(li[0], parentLiElement[0]);
+                Dom.insertAfter(li[0], parentLiElement[0]);
             }
         }
 
@@ -213,7 +213,7 @@ KISSY.add("editor/plugin/dent-cmd", function (S, Editor, ListUtils) {
             nearestListBlock = rangeRoot;
 
         while (nearestListBlock &&
-            !( nearestListBlock[0].nodeType == DOM.NodeType.ELEMENT_NODE &&
+            !( nearestListBlock[0].nodeType == Dom.NodeType.ELEMENT_NODE &&
                 listNodeNames[ nearestListBlock.nodeName() ] )) {
             nearestListBlock = nearestListBlock.parent();
         }
@@ -223,7 +223,7 @@ KISSY.add("editor/plugin/dent-cmd", function (S, Editor, ListUtils) {
         //注：firefox 永远不会出现
         //注2：哪种情况会出现？
         if (nearestListBlock
-            && startContainer[0].nodeType == DOM.NodeType.ELEMENT_NODE
+            && startContainer[0].nodeType == Dom.NodeType.ELEMENT_NODE
             && startContainer.nodeName() in listNodeNames) {
             //S.log("indent from ul/ol");
             var walker = new Walker(range);
@@ -232,7 +232,7 @@ KISSY.add("editor/plugin/dent-cmd", function (S, Editor, ListUtils) {
         }
 
         if (nearestListBlock
-            && endContainer[0].nodeType == DOM.NodeType.ELEMENT_NODE
+            && endContainer[0].nodeType == Dom.NodeType.ELEMENT_NODE
             && endContainer.nodeName() in listNodeNames) {
             walker = new Walker(range);
             walker.evaluator = isListItem;

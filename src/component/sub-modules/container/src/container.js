@@ -15,11 +15,18 @@ KISSY.add('component/container', function (S, Controller, ContainerRender) {
 
         children.splice(index, 0, c);
 
+        // construct
+        children = self.get('children');
+
+        c = children[index];
+
+        c.setInternal('parent', self);
+
         if (self.get('rendered')) {
             self.renderChild(index);
         }
         self.fire('afterAddChild', {
-            component: children[index],
+            component: c,
             index: index
         });
     }
@@ -126,7 +133,6 @@ KISSY.add('component/container', function (S, Controller, ContainerRender) {
          * @param {Number} [index]  0-based index at which
          * the new child component is to be inserted;
          * If not specified , the new child component will be inserted at last position.
-         * @return {KISSY.Component.Controller} this
          */
         addChild: function (c, index) {
             var self = this,
@@ -138,11 +144,6 @@ KISSY.add('component/container', function (S, Controller, ContainerRender) {
                 component: c,
                 index: index
             });
-            // make create component in getter
-            children = self.get("children");
-            c = children[index];
-            c.setInternal('parent', self);
-            return children[index];
         },
 
         renderChild: function (childIndex) {

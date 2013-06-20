@@ -1,12 +1,12 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 19 14:00
+build time: Jun 21 01:47
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
 
- component/base/manager
+ component/manager
 */
 
 /**
@@ -14,9 +14,10 @@ build time: Jun 19 14:00
  * storage for component
  * @author yiminghe@gmail.com
  */
-KISSY.add("component/base/manager", function () {
+KISSY.add("component/manager", function (S) {
 
     var basePriority = 0,
+        Manager,
         uis = {
             // 不带前缀 prefixCls
             /*
@@ -34,7 +35,7 @@ KISSY.add("component/base/manager", function () {
      * @singleton
      * Manage component metadata.
      */
-    return {
+    return Manager = {
 
         __instances: componentInstances,
 
@@ -83,12 +84,14 @@ KISSY.add("component/base/manager", function () {
      *          }]
      *      })
          */
-        'createComponent':function(component, parent){
+        'createComponent': function (component, parent) {
             var ChildConstructor,
                 xclass;
             if (component) {
                 if (!component.isController && parent) {
-                    S.mix(component, parent.get('defaultChildCfg'), false);
+                    if (!component.prefixCls) {
+                        component.prefixCls = parent.get('prefixCls');
+                    }
                     if (!component.xclass && component.prefixXClass) {
                         component.xclass = component.prefixXClass;
                         if (component.xtype) {
@@ -97,7 +100,7 @@ KISSY.add("component/base/manager", function () {
                     }
                 }
                 if (!component.isController && (xclass = component.xclass)) {
-                    ChildConstructor = getConstructorByXClass(xclass);
+                    ChildConstructor = Manager.getConstructorByXClass(xclass);
                     if (!ChildConstructor) {
                         S.error("can not find class by xclass desc : " + xclass);
                     }
@@ -109,29 +112,13 @@ KISSY.add("component/base/manager", function () {
             }
             return component;
         },
-
-        /**
-         * Get css class name for this component constructor.
-         * @param {Function} constructor Component's constructor.
-         * @return {String}
-         * @method
-         */
-        getXClassByConstructor:  function (constructor) {
-            for (var u in uis) {
-                var ui = uis[u];
-                if (ui.constructor == constructor) {
-                    return u;
-                }
-            }
-            return '';
-        },
         /**
          * Get component constructor by css class name.
          * @param {String} classNames Class names separated by space.
          * @return {Function}
          * @method
          */
-        getConstructorByXClass: function getConstructorByXClass(classNames) {
+        getConstructorByXClass: function (classNames) {
             var cs = classNames.split(/\s+/),
                 p = -1,
                 t,

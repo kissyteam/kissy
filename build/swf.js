@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 18 00:00
+build time: Jun 21 01:28
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -145,7 +145,7 @@ KISSY.add('swf/ua', function (S, undefined) {
  * insert swf into document in an easy way
  * @author yiminghe@gmail.com, oicuicu@gmail.com
  */
-KISSY.add('swf', function (S, DOM, JSON, Base, FlashUA, undefined) {
+KISSY.add('swf', function (S, Dom, Json, Base, FlashUA, undefined) {
 
     var UA = S.UA,
         TYPE = 'application/x-shockwave-flash',
@@ -165,7 +165,7 @@ KISSY.add('swf', function (S, DOM, JSON, Base, FlashUA, undefined) {
 
     // flash player 的参数范围
         PARAMS = {
-            // swf 传入的第三方数据。支持复杂的 Object / XML 数据 / JSON 字符串
+            // swf 传入的第三方数据。支持复杂的 Object / XML 数据 / Json 字符串
             // flashvars: EMPTY,
             wmode: EMPTY,
             allowscriptaccess: EMPTY,
@@ -206,7 +206,7 @@ KISSY.add('swf', function (S, DOM, JSON, Base, FlashUA, undefined) {
             params = self.get('params'),
             attrs = self.get('attrs'),
             doc = self.get('document'),
-            placeHolder = DOM.create('<span>', undefined, doc),
+            placeHolder = Dom.create('<span>', undefined, doc),
             elBefore = self.get('elBefore'),
             installedSrc = self.get('src'),
             version = self.get('version');
@@ -258,18 +258,18 @@ KISSY.add('swf', function (S, DOM, JSON, Base, FlashUA, undefined) {
         self.set('html', html);
 
         if (elBefore) {
-            DOM.insertBefore(placeHolder, elBefore);
+            Dom.insertBefore(placeHolder, elBefore);
         } else {
-            DOM.append(placeHolder, self.get('render'));
+            Dom.append(placeHolder, self.get('render'));
         }
 
         if ('outerHTML' in placeHolder) {
             placeHolder.outerHTML = html;
         } else {
-            placeHolder.parentNode.replaceChild(DOM.create(html),placeHolder);
+            placeHolder.parentNode.replaceChild(Dom.create(html),placeHolder);
         }
 
-        swf = DOM.get('#' + id, doc);
+        swf = Dom.get('#' + id, doc);
 
         self.set('swfObject', swf);
 
@@ -412,7 +412,7 @@ KISSY.add('swf', function (S, DOM, JSON, Base, FlashUA, undefined) {
             render: {
                 setter: function (v) {
                     if (typeof v == 'string') {
-                        v = DOM.get(v, this.get('document'));
+                        v = Dom.get(v, this.get('document'));
                     }
                     return v;
                 },
@@ -430,7 +430,7 @@ KISSY.add('swf', function (S, DOM, JSON, Base, FlashUA, undefined) {
             elBefore: {
                 setter: function (v) {
                     if (typeof v == 'string') {
-                        v = DOM.get(v, this.get('document'));
+                        v = Dom.get(v, this.get('document'));
                     }
                     return v;
                 }
@@ -526,9 +526,9 @@ KISSY.add('swf', function (S, DOM, JSON, Base, FlashUA, undefined) {
         var url = "",
             params, i, param,
             elements = [],
-            nodeName = DOM.nodeName(swf);
+            nodeName = Dom.nodeName(swf);
         if (nodeName == "object") {
-            url = DOM.attr(swf, "data");
+            url = Dom.attr(swf, "data");
             if (url) {
                 elements.push(swf);
             }
@@ -536,11 +536,11 @@ KISSY.add('swf', function (S, DOM, JSON, Base, FlashUA, undefined) {
             for (i = 0; i < params.length; i++) {
                 param = params[i];
                 if (param.nodeType == 1) {
-                    if ((DOM.attr(param, "name") || "").toLowerCase() == "movie") {
+                    if ((Dom.attr(param, "name") || "").toLowerCase() == "movie") {
                         elements.push(param);
-                    } else if (DOM.nodeName(param) == "embed") {
+                    } else if (Dom.nodeName(param) == "embed") {
                         elements.push(param);
-                    } else if (DOM.nodeName(params[i]) == "object") {
+                    } else if (Dom.nodeName(params[i]) == "object") {
                         elements.push(param);
                     }
                 }
@@ -559,16 +559,16 @@ KISSY.add('swf', function (S, DOM, JSON, Base, FlashUA, undefined) {
      * @static
      */
     SWF.getSrc = function (swf) {
-        swf = DOM.get(swf);
+        swf = Dom.get(swf);
         var srcElement = getSrcElements(swf)[0],
             src,
-            nodeName = srcElement && DOM.nodeName(srcElement);
+            nodeName = srcElement && Dom.nodeName(srcElement);
         if (nodeName == 'embed') {
-            return DOM.attr(srcElement, 'src');
+            return Dom.attr(srcElement, 'src');
         } else if (nodeName == 'object') {
-            return DOM.attr(srcElement, 'data');
+            return Dom.attr(srcElement, 'data');
         } else if (nodeName == 'param') {
-            return DOM.attr(srcElement, 'value');
+            return Dom.attr(srcElement, 'value');
         }
         return null;
     };
@@ -651,7 +651,7 @@ KISSY.add('swf', function (S, DOM, JSON, Base, FlashUA, undefined) {
 
         S.each(obj, function (data, prop) {
             if (typeof data != 'string') {
-                data = JSON.stringify(data);
+                data = Json.stringify(data);
             }
             if (data) {
                 arr.push(prop + '=' + encode(data));

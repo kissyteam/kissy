@@ -6,9 +6,8 @@
  Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.html or http://ckeditor.com/license
  */
-KISSY.add("editor/elementPath", function (S) {
-    var Editor = S.Editor,
-        Dom = S.Dom,
+KISSY.add("editor/elementPath", function (S,Editor) {
+    var Dom = S.Dom,
         dtd = Editor.XHTML_DTD,
         TRUE = true,
         FALSE = false,

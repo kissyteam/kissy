@@ -1,16 +1,14 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 17 23:59
+build time: Jun 21 01:27
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
 
  overlay/extension/loading
  overlay/extension/mask
- overlay/extension/loading-render
  overlay/close-tpl
- overlay/extension/mask-render
  overlay/overlay-render
  overlay/extension/overlay-effect
  overlay/base
@@ -26,7 +24,7 @@ build time: Jun 17 23:59
  * loading mask support for overlay
  * @author yiminghe@gmail.com
  */
-KISSY.add("overlay/extension/loading", function () {
+KISSY.add("overlay/extension/loading", function (S, Node) {
 
     /**
      * @class KISSY.Overlay.Extension.Loading
@@ -42,150 +40,6 @@ KISSY.add("overlay/extension/loading", function () {
          * @chainable
          */
         loading: function () {
-            var self=this;
-            self.get("view").loading();
-            return self;
-        },
-
-        /**
-         * unmask component as loading
-         * @chainable
-         */
-        unloading: function () {
-            this.get("view").unloading();
-            return this;
-        }
-    };
-
-    return Loading;
-
-});
-/**
- * @ignore
- * mask extension for kissy
- * @author yiminghe@gmail.com
- */
-KISSY.add("overlay/extension/mask", function (S, Node) {
-
-    /**
-     * @class KISSY.Overlay.Extension.Mask
-     * Mask extension class. Make component to be able to show with mask.
-     */
-    function Mask() {
-    }
-
-    Mask.ATTRS = {
-        /**
-         * Whether show mask layer when component shows and effect
-         *
-         * for example:
-         *
-         *      {
-         *          // whether hide current component when click on mask
-         *          closeOnClick: false,
-         *          effect: 'fade', // slide
-         *          duration: 0.5,
-         *          easing: 'easingNone'
-         *      }
-         *
-         * @cfg {Boolean|Object} mask
-         */
-        /**
-         * @ignore
-         */
-        mask: {
-            view: 1,
-            value:false
-        },
-        /**
-         * Mask node of current component.
-         * @type {KISSY.NodeList}
-         * @property maskNode
-         * @readonly
-         */
-        /**
-         * @ignore
-         */
-        maskNode: {
-            view: 1
-        }
-    };
-
-    var NONE = 'none',
-        effects = {fade: ["Out", "In"], slide: ["Up", "Down"]};
-
-    function processMask(mask, el, show, view) {
-
-        var effect = mask.effect || NONE;
-
-        if (effect == NONE) {
-            view.ksSetMaskVisible(show);
-            return;
-        }
-
-        // no inline style, leave it to anim(fadeIn/Out)
-        view.ksSetMaskVisible(show);
-
-        var duration = mask.duration,
-            easing = mask.easing,
-            m,
-            index = show ? 1 : 0;
-
-        // run complete fn to restore window's original height
-        el.stop(1, 1);
-
-        el.css('display', show ? NONE : 'block');
-
-        m = effect + effects[effect][index];
-
-        el[m](duration, function () {
-            el.css('display', '');
-        }, easing);
-    }
-
-    // for augment, no need constructor
-    Mask.prototype = {
-
-        __bindUI: function () {
-            var self = this,
-                maskNode,
-                mask,
-                el = self.get('el'),
-                view = self.get("view");
-            if (mask = self.get("mask")) {
-                maskNode = self.get('maskNode');
-                if (mask['closeOnClick']) {
-                    maskNode.on(Node.Gesture.tap, self.close, self);
-                }
-                self.on('afterVisibleChange', function (e) {
-                    var v;
-                    if (v = e.newVal) {
-                        var elZIndex = parseInt(el.css('z-index')) || 1;
-                        maskNode.css('z-index', elZIndex - 1);
-                    }
-                    processMask(mask, maskNode, v, view)
-                });
-            }
-        }
-    };
-
-
-    return Mask;
-},
-    {requires: ["node"]});
-/**
- * @ignore
- * loading mask support for overlay
- * @author yiminghe@gmail.com
- */
-KISSY.add("overlay/extension/loading-render", function (S, Node) {
-
-    function Loading() {
-    }
-
-    // for augment, no need constructor
-    Loading.prototype = {
-        loading: function () {
             var self = this;
             if (!self._loadingExtEl) {
                 self._loadingExtEl = new Node("<div " +
@@ -199,11 +53,15 @@ KISSY.add("overlay/extension/loading-render", function (S, Node) {
                     "z-index: 99999;" +
                     "height:100%;" +
                     "*height: expression(this.parentNode.offsetHeight);" + "'/>")
-                    .appendTo(self.get("el"));
+                    .appendTo(self.el);
             }
             self._loadingExtEl.show();
         },
 
+        /**
+         * unmask component as loading
+         * @chainable
+         */
         unloading: function () {
             var lel = this._loadingExtEl;
             lel && lel.hide();
@@ -215,152 +73,226 @@ KISSY.add("overlay/extension/loading-render", function (S, Node) {
 }, {
     requires: ['node']
 });
-/*
-  Generated by kissy-tpl2mod.
-*/
-KISSY.add('overlay/close-tpl',function(){
- return '{{#if closable}} <a href="javascript:void(\'close\')" id="ks-ext-close-{{id}}" class="{{getBaseCssClasses "close"}}" role=\'button\'> <span class="{{getBaseCssClasses "close-x"}}">close</span> </a> {{/if}}';
-});
 /**
  * @ignore
  * mask extension for kissy
  * @author yiminghe@gmail.com
  */
-KISSY.add("overlay/extension/mask-render", function (S, Node) {
+KISSY.add("overlay/extension/mask", function (S, Node) {
 
-    var UA = S.UA,
-        ie6 = (UA['ie'] === 6),
-        $ = Node.all;
+        var UA = S.UA,
+            ie6 = (UA['ie'] === 6),
+            $ = Node.all;
 
-    function docWidth() {
-        return  ie6 ? ("expression(KISSY.DOM.docWidth())") : "100%";
-    }
+        function docWidth() {
+            return  ie6 ? ("expression(KISSY.Dom.docWidth())") : "100%";
+        }
 
-    function docHeight() {
-        return ie6 ? ("expression(KISSY.DOM.docHeight())") : "100%";
-    }
+        function docHeight() {
+            return ie6 ? ("expression(KISSY.Dom.docHeight())") : "100%";
+        }
 
-    function initMask(self) {
-        var maskCls = self.getBaseCssClasses('mask'),
-            mask = $("<div " +
-                " style='width:" + docWidth() + ";" +
-                "left:0;" +
-                "top:0;" +
-                "height:" + docHeight() + ";" +
-                "position:" + (ie6 ? "absolute" : "fixed") + ";'" +
-                " class='" +
-                maskCls +
-                "'>" +
-                (ie6 ? "<" + "iframe " +
-                    "style='position:absolute;" +
-                    "left:" + "0" + ";" +
-                    "top:" + "0" + ";" +
-                    "background:red;" +
-                    "width: expression(this.parentNode.offsetWidth);" +
-                    "height: expression(this.parentNode.offsetHeight);" +
-                    "filter:alpha(opacity=0);" +
-                    "z-index:-1;'></iframe>" : "") +
-                "</div>")
-                .prependTo("body");
-        /*
-         点 mask 焦点不转移
+        function initMask(self) {
+            var maskCls = self.view.getBaseCssClasses('mask'),
+                mask = $("<div " +
+                    " style='width:" + docWidth() + ";" +
+                    "left:0;" +
+                    "top:0;" +
+                    "height:" + docHeight() + ";" +
+                    "position:" + (ie6 ? "absolute" : "fixed") + ";'" +
+                    " class='" +
+                    maskCls +
+                    "'>" +
+                    (ie6 ? "<" + "iframe " +
+                        "style='position:absolute;" +
+                        "left:" + "0" + ";" +
+                        "top:" + "0" + ";" +
+                        "background:red;" +
+                        "width: expression(this.parentNode.offsetWidth);" +
+                        "height: expression(this.parentNode.offsetHeight);" +
+                        "filter:alpha(opacity=0);" +
+                        "z-index:-1;'></iframe>" : "") +
+                    "</div>")
+                    .prependTo("body");
+            /*
+             点 mask 焦点不转移
+             */
+            mask['unselectable']();
+            mask.on("mousedown", function (e) {
+                e.preventDefault();
+            });
+            return mask;
+        }
+
+        /**
+         * @class KISSY.Overlay.Extension.Mask
+         * Mask extension class. Make component to be able to show with mask.
          */
-        mask['unselectable']();
-        mask.on("mousedown", function (e) {
-            e.preventDefault();
-        });
-        return mask;
-    }
+        function Mask() {
+        }
 
-    function Mask() {
-    }
-
-    Mask.ATTRS = {
-        mask: {},
-        maskNode: {}
-    };
-
-    // for augment, no need constructor
-    Mask.prototype = {
-
-        __renderUI: function () {
-            var self = this;
-            if (self.get('mask')) {
-                self.set('maskNode', initMask(self));
+        Mask.ATTRS = {
+            /**
+             * Whether show mask layer when component shows and effect
+             *
+             * for example:
+             *
+             *      {
+         *          // whether hide current component when click on mask
+         *          closeOnClick: false,
+         *          effect: 'fade', // slide
+         *          duration: 0.5,
+         *          easing: 'easingNone'
+         *      }
+             *
+             * @cfg {Boolean|Object} mask
+             */
+            /**
+             * @ignore
+             */
+            mask: {
+                value: false
+            },
+            /**
+             * Mask node of current component.
+             * @type {KISSY.NodeList}
+             * @property maskNode
+             * @readonly
+             */
+            /**
+             * @ignore
+             */
+            maskNode: {
             }
-        },
+        };
 
-        __syncUI: function () {
-            var self = this;
-            if (self.get('mask')) {
-                self.ksSetMaskVisible(self.get('visible'));
-            }
-        },
+        var NONE = 'none',
+            effects = {fade: ["Out", "In"], slide: ["Up", "Down"]};
 
-        ksSetMaskVisible: function (shown) {
-            var self = this,
-                maskNode = self.get('maskNode'),
-                hiddenCls = self.getBaseCssClasses('mask-hidden');
+        function setMaskVisible(self, shown) {
+            var maskNode = self.get('maskNode'),
+                hiddenCls = self.view.getBaseCssClasses('mask-hidden');
             if (shown) {
                 maskNode.removeClass(hiddenCls);
             } else {
                 maskNode.addClass(hiddenCls);
             }
-        },
-
-        __destructor: function () {
-            var self = this, mask;
-            if (mask = self.get("maskNode")) {
-                mask.remove();
-            }
         }
 
-    };
+        function processMask(mask, el, show, self) {
 
-    return Mask;
-}, {
-    requires: ["node"]
+            var effect = mask.effect || NONE;
+
+            setMaskVisible(self, show);
+
+            if (effect == NONE) {
+                return;
+            }
+
+            var duration = mask.duration,
+                easing = mask.easing,
+                m,
+                index = show ? 1 : 0;
+
+            // run complete fn to restore window's original height
+            el.stop(1, 1);
+
+            el.css('display', show ? NONE : 'block');
+
+            m = effect + effects[effect][index];
+
+            el[m](duration, function () {
+                el.css('display', '');
+            }, easing);
+        }
+
+        function afterVisibleChange(e) {
+            var v,
+                self = this,
+                maskNode = self.get('maskNode');
+            if (v = e.newVal) {
+                var elZIndex = parseInt(self.el.css('z-index')) || 1;
+                maskNode.css('z-index', elZIndex - 1);
+            }
+            processMask(self.get('mask'), maskNode, v, self);
+        }
+
+        // for augment, no need constructor
+        Mask.prototype = {
+
+            __renderUI: function () {
+                var self = this;
+                if (self.get('mask')) {
+                    self.set('maskNode', initMask(self));
+                }
+            },
+
+            __bindUI: function () {
+                var self = this,
+                    maskNode,
+                    mask;
+                if (mask = self.get("mask")) {
+                    maskNode = self.get('maskNode');
+                    if (mask['closeOnClick']) {
+                        maskNode.on(Node.Gesture.tap, self.close, self);
+                    }
+                    self.on('afterVisibleChange', afterVisibleChange);
+                }
+            },
+
+            __destructor: function () {
+                var mask;
+                if (mask = this.get("maskNode")) {
+                    mask.remove();
+                }
+            }
+        };
+
+
+        return Mask;
+    },
+    {requires: ["node"]});
+/*
+  Generated by kissy-tpl2mod.
+*/
+KISSY.add('overlay/close-tpl',function(){
+ return '<a href="javascript:void(\'close\')" id="ks-ext-close-{{id}}" class="{{getBaseCssClasses "close"}}" role=\'button\'> <span class="{{getBaseCssClasses "close-x"}}">close</span> </a>';
 });
 /**
  * @ignore
  * KISSY Overlay
  * @author yiminghe@gmail.com
  */
-KISSY.add("overlay/overlay-render", function (S, Component, Extension, Loading, CloseTpl, Mask) {
+KISSY.add("overlay/overlay-render", function (S, Container, ContentRenderExtension, ShimRenderExtension, CloseTpl) {
 
-    return Component.Render.extend([
-        Extension.ContentRender,
-        Extension.ShimRender,
-        Extension.PositionRender,
-        Loading,
-        Mask
+    return Container.ATTRS.xrender.value.extend([
+        ContentRenderExtension,
+        ShimRenderExtension
     ], {
-        initializer: function () {
-            S.mix(this.get('childrenElSelectors'), {
-                closeBtn: '#ks-ext-close-{id}'
-            });
+        createDom: function () {
+            var self = this;
+            if (self.controller.get('closable')) {
+                self.controller.get('contentEl')
+                    .append(self.renderTpl(CloseTpl));
+                self.fillChildrenElsBySelectors({
+                    closeBtn: '#ks-ext-close-{id}'
+                });
+            }
         }
     }, {
         HTML_PARSER: {
             closeBtn: function (el) {
                 return el.one("." + this.getBaseCssClass('close'));
             }
-        },
-        ATTRS: {
-            closable: {},
-            contentTpl: {
-                value: CloseTpl + Extension.ContentRender.ContentTpl
-            }
         }
     });
 
 }, {
     requires: [
-        "component/base",
-        'component/extension',
-        './extension/loading-render',
-        './close-tpl',
-        './extension/mask-render'
+        "component/container",
+        'component/extension/content-render',
+        'component/extension/shim-render',
+        './close-tpl'
     ]
 });
 
@@ -383,7 +315,7 @@ KISSY.add('overlay/extension/overlay-effect', function (S) {
         effects = {fade: ["Out", "In"], slide: ["Up", "Down"]};
 
     function getGhost(self) {
-        var el = self.get("el"),
+        var el = self.el,
             ghost = el.clone(true);
 
         ghost.css({
@@ -400,7 +332,7 @@ KISSY.add('overlay/extension/overlay-effect', function (S) {
             self.__effectGhost.stop(1, 1);
         }
 
-        var el = self.get("el"),
+        var el = self.el,
             $ = S.all,
             effectCfg = self.get("effect"),
             target = $(effectCfg.target),
@@ -448,7 +380,7 @@ KISSY.add('overlay/extension/overlay-effect', function (S) {
     }
 
     function processEffect(self, show, callback) {
-        var el = self.get("el"),
+        var el = self.el,
             effectCfg = self.get("effect"),
             effect = effectCfg.effect || NONE,
             target = effectCfg.target;
@@ -558,7 +490,8 @@ KISSY.add('overlay/extension/overlay-effect', function (S) {
  * controller for overlay
  * @author yiminghe@gmail.com
  */
-KISSY.add("overlay/base", function (S, Component, Extension, Loading, Mask, OverlayRender, OverlayEffect) {
+KISSY.add("overlay/base", function (S, Container, AlignExtension,
+                                    Loading, Mask, OverlayRender, OverlayEffect) {
 
     var HIDE = "hide",
         actions = {
@@ -577,11 +510,9 @@ KISSY.add("overlay/base", function (S, Component, Extension, Loading, Mask, Over
      * @mixins KISSY.Overlay.Extension.Close
      * @mixins KISSY.Overlay.Extension.Mask
      */
-    return Component.Controller.extend([
-        Extension.DecorateChild,
-        Extension.Position,
+    return Container.extend([
         Loading,
-        Extension.Align,
+        AlignExtension,
         Mask,
         OverlayEffect
     ], {
@@ -703,17 +634,21 @@ KISSY.add("overlay/base", function (S, Component, Extension, Loading, Mask, Over
             handleMouseEvents: {
                 value: false
             },
+
+            visible: {
+                value: false
+            },
+
             xrender: {
                 value: OverlayRender
             }
-        }
-    }, {
+        },
         xclass: 'overlay'
     });
 }, {
     requires: [
-        'component/base',
-        'component/extension',
+        'component/container',
+        'component/extension/align',
         "./extension/loading",
         "./extension/mask",
         './overlay-render',
@@ -724,27 +659,34 @@ KISSY.add("overlay/base", function (S, Component, Extension, Loading, Mask, Over
   Generated by kissy-tpl2mod.
 */
 KISSY.add('overlay/dialog-tpl',function(){
- return '<div id="ks-content-{{id}}" class="{{getBaseCssClasses "content"}}"> <div class="{{getBaseCssClasses "header"}}" style=" {{#each headerStyle}} {{xkey}}:{{.}}; {{/each}} " id="ks-stdmod-header-{{id}}">{{{headerContent}}}</div> <div class="{{getBaseCssClasses "body"}}" style=" {{#each bodyStyle}} {{xkey}}:{{.}}; {{/each}} " id="ks-stdmod-body-{{id}}">{{{bodyContent}}}</div> <div class="{{getBaseCssClasses "footer"}}" style=" {{#each footerStyle}} {{xkey}}:{{.}}; {{/each}} " id="ks-stdmod-footer-{{id}}">{{{footerContent}}}</div> </div> <div tabindex="0" style="position: absolute"></div>';
+ return '<div class="{{getBaseCssClasses "header"}}" style=" {{#each headerStyle}} {{xkey}}:{{.}}; {{/each}} " id="ks-stdmod-header-{{id}}">{{{headerContent}}}</div> <div class="{{getBaseCssClasses "body"}}" style=" {{#each bodyStyle}} {{xkey}}:{{.}}; {{/each}} " id="ks-stdmod-body-{{id}}">{{{bodyContent}}}</div> <div class="{{getBaseCssClasses "footer"}}" style=" {{#each footerStyle}} {{xkey}}:{{.}}; {{/each}} " id="ks-stdmod-footer-{{id}}">{{{footerContent}}}</div>';
 });
 /**
  * @ignore
  * render for dialog
  * @author yiminghe@gmail.com
  */
-KISSY.add("overlay/dialog-render", function (S, OverlayRender, DialogTpl, CloseTpl) {
+KISSY.add("overlay/dialog-render", function (S, OverlayRender, DialogTpl) {
 
     function _setStdModRenderContent(self, part, v) {
-        part = self.get(part);
+        part = self.controller.get(part);
         part.html(v);
     }
 
     return OverlayRender.extend({
-        initializer: function () {
-            S.mix(this.get('elAttrs'), {
+
+        beforeCreateDom: function (renderData) {
+            S.mix(renderData.elAttrs, {
                 role: 'dialog',
                 'aria-labelledby': 'ks-stdmod-header' + this.get('id')
             });
-            S.mix(this.get('childrenElSelectors'), {
+        },
+
+        createDom: function () {
+            this.controller.get('contentEl').append(this.renderTpl(DialogTpl));
+            // sentinel
+            this.el.append('<div tabindex="0"></div>');
+            this.fillChildrenElsBySelectors({
                 header: '#ks-stdmod-header-{id}',
                 body: '#ks-stdmod-body-{id}',
                 footer: '#ks-stdmod-footer-{id}'
@@ -752,18 +694,18 @@ KISSY.add("overlay/dialog-render", function (S, OverlayRender, DialogTpl, CloseT
         },
 
         getChildrenContainerEl: function () {
-            return this.get('body');
+            return this.controller.get('body');
         },
 
         '_onSetBodyStyle': function (v) {
-            this.get("body").css(v);
+            this.controller.get("body").css(v);
         },
 
         '_onSetHeaderStyle': function (v) {
-            this.get("header").css(v);
+            this.controller.get("header").css(v);
         },
         '_onSetFooterStyle': function (v) {
-            this.get("footer").css(v);
+            this.controller.get("footer").css(v);
         },
 
         '_onSetBodyContent': function (v) {
@@ -778,37 +720,6 @@ KISSY.add("overlay/dialog-render", function (S, OverlayRender, DialogTpl, CloseT
             _setStdModRenderContent(this, "footer", v);
         }
     }, {
-
-        ATTRS: {
-            closable: {
-                value: false
-            },
-            contentTpl: {
-                value: CloseTpl+DialogTpl
-            },
-            headerContent: {
-                sync: 0
-            },
-            bodyContent: {
-                sync: 0
-            },
-            footerContent: {
-                sync: 0
-            },
-            headerStyle: {
-                sync: 0
-            },
-            bodyStyle: {
-                sync: 0
-            },
-            footerStyle: {
-                sync: 0
-            },
-            body: {},
-            header: {},
-            footer: {}
-        },
-
         HTML_PARSER: {
             header: function (el) {
                 return el.one("." + this.getBaseCssClass('header'));
@@ -829,7 +740,8 @@ KISSY.add("overlay/dialog-render", function (S, OverlayRender, DialogTpl, CloseT
                 var footer = el.one("." + this.getBaseCssClass('footer'));
                 return footer && footer.html();
             }
-        }});
+        }
+    });
 }, {
     requires: ['./overlay-render', './dialog-tpl', './close-tpl']
 });
@@ -863,7 +775,7 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
                 return ghost;
             },
 
-            handleKeyEventInternal: function (e) {
+            handleKeyDownInternal: function (e) {
                 if (this.get('escapeToClose') &&
                     e.keyCode === Node.KeyCode.ESC) {
                     if (e.target.nodeName.toLowerCase() == 'select' &&
@@ -880,12 +792,12 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
 
             _onSetVisible: function (v) {
                 var self = this,
-                    el = self.get('el');
+                    el = self.el;
                 if (v) {
                     self.__lastActive = el[0].ownerDocument.activeElement;
-                    self.set('focused', true);
+                    self.focus();
                     // if d.show(); d.hide();
-                    // async -> focus event -> handleFocus
+                    // async -> focus event -> handleFocusInternal
                     // -> set('focused') -> el.focus() -> ie error
                     // el[0].focus && el[0].focus();
                     el.attr("aria-hidden", "false");
@@ -1057,8 +969,7 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
                 escapeToClose: {
                     value: true
                 }
-            }
-        }, {
+            },
             xclass: 'dialog'
         });
 
@@ -1074,7 +985,7 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
         if (keyCode != KEY_TAB) {
             return;
         }
-        var el = self.get("el");
+        var el = self.el;
         // summary:
         // Handles the keyboard events for accessibility reasons
 
@@ -1136,14 +1047,15 @@ KISSY.add('overlay/popup', function (S, Overlay, undefined) {
 
     /**
      * @class KISSY.Overlay.Popup
-     * KISSY Popup Component. xclass: 'popup'.
+     * KISSY Popup Component.
+     * xclass: 'popup'.
      * @extends KISSY.Overlay
      */
     return Overlay.extend({
 
         initializer: function () {
             var self = this,
-            // 获取相关联的 DOM 节点
+            // 获取相关联的 Dom 节点
                 trigger = self.get("trigger");
             if (trigger) {
                 if (self.get("triggerType") === 'mouse') {
@@ -1185,7 +1097,7 @@ KISSY.add('overlay/popup', function (S, Overlay, undefined) {
 
         _bindContainerMouse: function () {
             var self = this;
-            self.get('el')
+            self.el
                 .on('mouseleave', self._setHiddenTimer, self)
                 .on('mouseenter', self._clearHiddenTimer, self);
         },
@@ -1232,8 +1144,9 @@ KISSY.add('overlay/popup', function (S, Overlay, undefined) {
 
         destructor: function () {
             var self = this,
-                root,
+                root = self.el,
                 t = self.get("trigger");
+
             if (t) {
                 if (self.__clickPopup) {
 
@@ -1252,10 +1165,10 @@ KISSY.add('overlay/popup', function (S, Overlay, undefined) {
 
                 }
             }
-            if (root = self.get('el')) {
-                root.detach('mouseleave', self._setHiddenTimer, self)
-                    .detach('mouseenter', self._clearHiddenTimer, self);
-            }
+
+            root.detach('mouseleave', self._setHiddenTimer, self)
+                .detach('mouseenter', self._clearHiddenTimer, self);
+
         }
     }, {
         ATTRS: {
@@ -1266,7 +1179,7 @@ KISSY.add('overlay/popup', function (S, Overlay, undefined) {
             /**
              * @ignore
              */
-            trigger: {                          // 触发器
+            trigger: {
                 setter: function (v) {
                     return S.all(v);
                 }
@@ -1282,7 +1195,6 @@ KISSY.add('overlay/popup', function (S, Overlay, undefined) {
              * @ignore
              */
             triggerType: {
-                // 触发类型
                 value: 'click'
             },
             currentTrigger: {},
@@ -1314,8 +1226,7 @@ KISSY.add('overlay/popup', function (S, Overlay, undefined) {
                 // triggerType 为 click 时, Popup 是否有toggle功能
                 value: false
             }
-        }
-    }, {
+        },
         xclass: 'popup'
     });
 }, {
@@ -1332,9 +1243,7 @@ KISSY.add('overlay/popup', function (S, Overlay, undefined) {
  * overlay
  * @author yiminghe@gmail.com
  */
-KISSY.add("overlay", function (S, O, OR, D, DR, P) {
-    O.Render = OR;
-    D.Render = DR;
+KISSY.add("overlay", function (S, O, D, P) {
     O.Dialog = D;
     S.Dialog = D;
     O.Popup = P;
@@ -1343,9 +1252,7 @@ KISSY.add("overlay", function (S, O, OR, D, DR, P) {
 }, {
     requires:[
         "overlay/base",
-        "overlay/overlay-render",
         "overlay/dialog",
-        "overlay/dialog-render",
         "overlay/popup"
     ]
 });

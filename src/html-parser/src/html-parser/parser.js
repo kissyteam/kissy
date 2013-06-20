@@ -2,7 +2,7 @@
  * parse html to a hierarchy dom tree
  * @author yiminghe@gmail.com
  */
-KISSY.add("html-parser/Parser", function (S, dtd, Tag, Fragment, Cursor, Lexer, Document, Scanner) {
+KISSY.add("html-parser/parser", function (S, dtd, Tag, Fragment, Cursor, Lexer, Document, Scanner) {
 
     function Parser(html, opts) {
         // fake root node
@@ -195,11 +195,11 @@ KISSY.add("html-parser/Parser", function (S, dtd, Tag, Fragment, Cursor, Lexer, 
 }, {
     requires:[
         './dtd',
-        './nodes/Tag',
-        './nodes/Fragment',
-        './lexer/Cursor',
-        './lexer/Lexer',
-        './nodes/Document',
-        './Scanner'
+        './nodes/tag',
+        './nodes/fragment',
+        './lexer/cursor',
+        './lexer/lexer',
+        './nodes/document',
+        './scanner'
     ]
 });

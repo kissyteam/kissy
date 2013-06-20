@@ -13,13 +13,15 @@
     var uri = new S.Uri(location.href);
 
     if (!uri.getQuery().has('once')) {
-        if ('onmessage' in window) {
+        if (('onmessage' in window) && window.addEventListener) {
             S.log('using onmessage');
-            S.Event.on(window, "message", function (e) {
-                if (e.originalEvent.data == "next") {
+
+            window.addEventListener("message", function (e) {
+                if (e.data == "next") {
                     SNext();
                 }
-            });
+            }, false);
+
         } else {
             S.log('window.name');
             setInterval(function () {

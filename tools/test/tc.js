@@ -8,6 +8,8 @@ tests.push('/kissy/src/anim/tests/runner/test.html');
 
 tests.push('/kissy/src/base/tests/runner/test.html');
 
+tests.push('/kissy/src/button/tests/runner/test.html');
+
 tests.push('/kissy/src/combobox/tests/runner/test.html');
 
 tests.push('/kissy/src/component/tests/runner/test.html');
@@ -50,9 +52,7 @@ tests.push('/kissy/src/event/sub-modules/dom/sub-modules/shake/tests/runner/test
 
 tests.push('/kissy/src/event/sub-modules/dom/sub-modules/touch/tests/runner/test.html');
 
-tests.push('/kissy/src/htmlparser/tests/runner/test.html');
-
-tests.push('/kissy/src/imagezoom/tests/runner/test.html');
+tests.push('/kissy/src/html-parser/tests/runner/test.html');
 
 tests.push('/kissy/src/io/tests/runner/test-basic.html');
 

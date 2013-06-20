@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 17 23:51
+build time: Jun 21 01:19
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -193,11 +193,11 @@ KISSY.add("editor/plugin/bubble", function (S, Overlay, Editor) {
 
             var xy = getXy(bubble);
             if (xy) {
-                bubble.set("xy", xy);
+                bubble.move(xy[0],xy[1]);
                 var archor = getTopPosition(bubble);
                 if (archor) {
                     xy[1] = archor.get("y") + archor.get("el").outerHeight();
-                    bubble.set("xy", xy);
+                    bubble.move(xy[0],xy[1]);
                 }
                 if (!bubble.get("visible")) {
                     bubble.show();

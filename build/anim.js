@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 18 01:54
+build time: Jun 21 01:16
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -14,7 +14,7 @@ build time: Jun 18 01:54
  * @author yiminghe@gmail.com
  * @ignore
  */
-KISSY.add('anim', function (S, DOM, AnimBase, TimerAnim, TransitionAnim) {
+KISSY.add('anim', function (S, Dom, AnimBase, TimerAnim, TransitionAnim) {
 
     var Utils = AnimBase.Utils,
         defaultConfig = {

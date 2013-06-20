@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 17 23:56
+build time: Jun 21 01:23
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -16,7 +16,7 @@ build time: Jun 17 23:56
 KISSY.add("editor/plugin/remove-format/cmd", function (S, Editor) {
     var KER = Editor.RANGE,
         ElementPath = Editor.ElementPath,
-        DOM = S.DOM,
+        Dom = S.Dom,
         /**
          * A comma separated list of elements to be removed
          * when executing the "remove format" command.
@@ -106,7 +106,7 @@ KISSY.add("editor/plugin/remove-format/cmd", function (S, Editor) {
                             // Navigate through all nodes between the bookmarks.
                             var currentNode = startNode
                                 // start from sibling , because obvious bookmark has no children
-                                ._4e_nextSourceNode(true, DOM.NodeType.ELEMENT_NODE, undefined, undefined);
+                                ._4e_nextSourceNode(true, Dom.NodeType.ELEMENT_NODE, undefined, undefined);
 
                             while (currentNode) {
                                 // If we have reached the end of the selection, stop looping.
@@ -117,7 +117,7 @@ KISSY.add("editor/plugin/remove-format/cmd", function (S, Editor) {
                                 // Cache the next node to be processed. Do it now, because
                                 // currentNode may be removed.
                                 var nextNode = currentNode.
-                                    _4e_nextSourceNode(false, DOM.NodeType.ELEMENT_NODE, undefined, undefined);
+                                    _4e_nextSourceNode(false, Dom.NodeType.ELEMENT_NODE, undefined, undefined);
 
                                 // This node must not be a fake element.
                                 if (!( currentNode.nodeName() == 'img' &&

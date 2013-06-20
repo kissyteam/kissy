@@ -222,7 +222,7 @@ KISSY.add("html-parser/nodes/tag", function (S, Node, Attribute, Dtd) {
             if (!self.isChildrenFiltered) {
                 var writer = new (S.require('html-parser/writer/basic'))();
                 self._writeChildrenHTML(writer);
-                var parser = new (S.require('html-parser/Parser'))(writer.getHTML()),
+                var parser = new (S.require('html-parser/parser'))(writer.getHTML()),
                     children = parser.parse().childNodes;
                 self.empty();
                 S.each(children, function (c) {

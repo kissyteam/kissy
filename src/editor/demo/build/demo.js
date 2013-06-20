@@ -10,10 +10,7 @@
             // customStyle:"p{line-height: 1.4;margin: 1.12em 0;padding: 0;}",
             // 自定义外部样式
             // customLink:["http://localhost/customLink.css","http://xx.com/y2.css"],
-            // render:"#container",
-            srcNode: '#container',
-            width: '900px',
-            height: "400px"
+
         }, window.EDITOR_CFG);
 
         var plugins = ("source-area" +
@@ -266,8 +263,13 @@
             });
 
             cfg.plugins = args;
-            var editor = new Editor(cfg);
-            editor.render();
+            var editor;
+            if (cfg.fromTextarea) {
+                editor = Editor.decorate(cfg.fromTextarea, cfg);
+            } else {
+                editor = new Editor(cfg);
+                editor.render();
+            }
             editor.on("blur", function () {
                 S.log("editor blur");
             });

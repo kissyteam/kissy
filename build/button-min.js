@@ -1,9 +1,8 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 17 23:50
+build time: Jun 21 01:16
 */
-KISSY.add("button/render",function(d,b){return b.Render.extend({initializer:function(){var a=this.get("elAttrs"),c=this.get("renderData");d.mix(a,{role:"button",title:c.tooltip,"aria-describedby":c.describedby});c.checked&&this.get("elCls").push(self.getBaseCssClasses("checked"))},_onSetChecked:function(a){var c=this.get("el"),b=this.getBaseCssClasses("checked");c[a?"addClass":"removeClass"](b)},_onSetTooltip:function(a){this.get("el").attr("title",a)},_onSetDescribedby:function(a){this.get("el").attr("aria-describedby",
-a)}},{ATTRS:{describedby:{sync:0},tooltip:{sync:0},checked:{sync:0}}})},{requires:["component/base"]});
-KISSY.add("button/base",function(d,b,a,c){var e=b.KeyCode;return a.Controller.extend({isButton:1,bindUI:function(){this.get("el").on("keyup",this.handleKeyEventInternal,this)},handleKeyEventInternal:function(a){return a.keyCode==e.ENTER&&"keydown"==a.type||a.keyCode==e.SPACE&&"keyup"==a.type?this.performActionInternal(a):a.keyCode==e.SPACE},performActionInternal:function(){this.get("checkable")&&this.set("checked",!this.get("checked"));this.fire("click")}},{ATTRS:{value:{},describedby:{value:"",view:1},
-tooltip:{value:"",view:1},checkable:{},checked:{view:1},xrender:{value:c}}},{xclass:"button"})},{requires:["node","component/base","./render"]});KISSY.add("button",function(d,b,a){b.Render=a;return b},{requires:["button/base","button/render"]});
+KISSY.add("button/render",function(d,b){return b.ATTRS.xrender.value.extend({beforeCreateDom:function(a){d.mix(a.elAttrs,{role:"button",title:a.tooltip,"aria-describedby":a.describedby});a.checked&&a.elCls.push(this.getBaseCssClasses("checked"))},_onSetChecked:function(a){var b=this.el,c=this.getBaseCssClasses("checked");b[a?"addClass":"removeClass"](c)},_onSetTooltip:function(a){this.el.attr("title",a)},_onSetDescribedby:function(a){this.el.attr("aria-describedby",a)}},{name:"ButtonRender"})},{requires:["component/controller"]});
+KISSY.add("button",function(d,b,a,e){var c=b.KeyCode;return a.extend({isButton:1,bindUI:function(){this.el.on("keyup",this.handleKeyDownInternal,this)},handleKeyDownInternal:function(a){return a.keyCode==c.ENTER&&"keydown"==a.type||a.keyCode==c.SPACE&&"keyup"==a.type?this.handleClickInternal(a):a.keyCode==c.SPACE},handleClickInternal:function(){this.get("checkable")&&this.set("checked",!this.get("checked"));this.fire("click")}},{ATTRS:{value:{},describedby:{value:"",view:1},tooltip:{value:"",view:1},
+checkable:{},checked:{value:!1,view:1},xrender:{value:e}},xclass:"button"})},{requires:["node","component/controller","button/render"]});

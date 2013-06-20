@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 17 23:55
+build time: Jun 21 01:23
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -35,7 +35,7 @@ KISSY.add("editor/plugin/preview", function (S) {
                             iHeight = 420; // 600 * 0.7,
                             iLeft = 80;	// (800 - 0.8 * 800) /2 = 800 * 0.1.
                         }
-                        var sHTML = editor.getDocHTML()
+                        var sHTML = editor.getDocHtml()
                                 .replace(/\${title}/, "预览"),
                             sOpenUrl = '',
                             oWindow = win.open(sOpenUrl,

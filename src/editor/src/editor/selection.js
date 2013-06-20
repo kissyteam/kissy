@@ -6,9 +6,8 @@
  Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.html or http://ckeditor.com/license
  */
-KISSY.add("editor/selection", function (S) {
+KISSY.add("editor/selection", function (S,Editor) {
 
-    var Editor = S.Editor;
 
     /**
      * selection type enum

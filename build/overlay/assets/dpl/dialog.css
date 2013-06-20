@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 17 23:59
+build time: Jun 21 01:27
 */
 /**
 * Variables to customize the look and feel from Bootstrap.
@@ -18,7 +18,7 @@ build time: Jun 17 23:59
 *
 * @author yiminghe@gmail.com
 */
-.ks-ext-mask {
+.ks-overlay-mask {
   position: fixed;
   top: 0;
   right: 0;

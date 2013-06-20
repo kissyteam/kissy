@@ -104,8 +104,9 @@ KISSY.add('overlay/popup', function (S, Overlay, undefined) {
 
         destructor: function () {
             var self = this,
-                root,
+                root = self.el,
                 t = self.get("trigger");
+
             if (t) {
                 if (self.__clickPopup) {
 
@@ -124,10 +125,10 @@ KISSY.add('overlay/popup', function (S, Overlay, undefined) {
 
                 }
             }
-            if (root = self.el) {
-                root.detach('mouseleave', self._setHiddenTimer, self)
-                    .detach('mouseenter', self._clearHiddenTimer, self);
-            }
+
+            root.detach('mouseleave', self._setHiddenTimer, self)
+                .detach('mouseenter', self._clearHiddenTimer, self);
+
         }
     }, {
         ATTRS: {

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 19 14:00
+build time: Jun 21 01:47
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -38,7 +38,7 @@ KISSY.add('component/plugin/resize', function (S, Resize) {
      */
     return Resize.extend({
         pluginBindUI: function (component) {
-            var el = component.get('el'),
+            var el = component.el,
                 self = this;
             self.set('node', el);
             self.set('prefixCls',component.get('prefixCls'));
