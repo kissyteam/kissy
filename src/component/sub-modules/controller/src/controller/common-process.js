@@ -24,11 +24,11 @@ KISSY.add('component/controller/common-process', function (S, RichBase, Promise)
         },
 
         'onCreated': function (fn) {
-            this._createdDefer.promise.then(fn);
+            return this._createdDefer.promise.then(fn);
         },
 
         onRendered: function (fn) {
-            this._renderedDefer.promise.then(fn);
+            return this._renderedDefer.promise.then(fn);
         },
 
         /**
