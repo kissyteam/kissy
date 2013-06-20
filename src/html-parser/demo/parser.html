@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+<title>KISSY html Parser</title>
+</head>
+<body>
+<script src="/kissy/build/seed.js"></script>
+<script src="/kissy/src/package.js"></script>
+<script>
+
+
+    KISSY.use("html-parser,core", function(S, HtmlParser) {
+        var Parser = HtmlParser.Parser;
+        // valid html is fine
+        // var html = "<div id='5'><span>1</span><a href=\"http://www.g.cn\">http://www.taobao.com</a></div>";
+
+        // not valid html is fine too
+        // var html = "<div id='5'><span>1<a href=\"http://www.g.cn\">http://www.taobao.com</div>";
+
+        // valid script ok
+        // var html = "<div><script>var x='<a>b</a>';<\/script></div>";
+
+
+        // not valid script ok ,but truncated
+        // var html = "<div><script>var x='<a>b</a>';</a><\/script></div>";
+
+        // invalid nest
+        var html = "<a>我<p>测试</p>一下</a>";
+        var parser = new Parser(html),
+                node;
+
+        var nodes = parser.parse();
+        S.log(nodes.length);
+        S.log(nodes);
+    });
+</script>
+</body>
+</html>
