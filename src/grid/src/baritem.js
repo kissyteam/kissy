@@ -61,19 +61,19 @@ KISSY.add('grid/baritem',function(S,Component,Button,Node){
 			}));
 
 		},
-		handleKeyEventInternal:function (e) {
+		handleKeyDownInternal:function (e) {
 			if (e.keyCode == KeyCode.ENTER &&
 				e.type == "keydown" ||
 				e.keyCode == KeyCode.SPACE &&
 					e.type == "keyup") {
-				return this.performActionInternal.call(this,e);
+				return this.handleClickInternal.call(this,e);
 			}
 			// Return true for space keypress (even though the event is handled on keyup)
 			// as preventDefault needs to be called up keypress to take effect in IE and
 			// WebKit.
 			return e.keyCode == KeyCode.SPACE;
 		},
-		performActionInternal:function () {
+		handleClickInternal:function () {
 			var self = this;
 			// button 的默认行为就是触发 click
 			self.fire("click");

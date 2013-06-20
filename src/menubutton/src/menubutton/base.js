@@ -2,19 +2,9 @@
  * combination of menu and button ,similar to native select
  * @author yiminghe@gmail.com
  */
-KISSY.add("menubutton/base", function (S, Node, Button,
-                                       MenuButtonRender, Menu, undefined) {
+KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, undefined) {
 
-    var $ = Node.all,
-        win = $(S.Env.host),
-        KeyCode = Node.KeyCode,
-        ALIGN = {
-            points: ["bl", "tl"],
-            overflow: {
-                adjustX: 1,
-                adjustY: 1
-            }
-        };
+    var KeyCode = Node.KeyCode;
     /**
      * A menu button component, consist of a button and a drop down popup menu.
      * xclass: 'menu-button'.
@@ -26,10 +16,35 @@ KISSY.add("menubutton/base", function (S, Node, Button,
         isMenuButton: 1,
 
         _onSetCollapsed: function (v) {
+            var self = this,
+                menu = self.get("menu");
             if (v) {
-                hideMenu(this);
+                menu.hide();
             } else {
-                showMenu(this);
+                var el = self.el;
+                if (!menu.get("visible")) {
+                    // same as submenu
+                    // in case menu is changed after menubutton is rendered
+                    var align = {
+                        node: el,
+                        points: ["bl", "tl"],
+                        overflow: {
+                            adjustX: 1,
+                            adjustY: 1
+                        }
+                    };
+                    S.mix(menu.get('align'), align, false);
+                    if (self.get("matchElWidth")) {
+                        menu.render();
+                        var menuEl = menu.el;
+                        var borderWidth =
+                            (parseInt(menuEl.css('borderLeftWidth')) || 0) +
+                                (parseInt(menuEl.css('borderRightWidth')) || 0);
+                        menu.set("width", menu.get("align").node[0].offsetWidth - borderWidth);
+                    }
+                    menu.show();
+                    el.attr("aria-haspopup", menu.el.attr("id"));
+                }
             }
         },
 
@@ -37,8 +52,6 @@ KISSY.add("menubutton/base", function (S, Node, Button,
             var self = this;
             self.on('afterHighlightedItemChange',
                 onMenuAfterHighlightedItemChange, self);
-            win.on("resize",
-                self.__repositionBuffer = S.buffer(reposition, 50), self);
             self.on('click', onMenuItemClick, self);
         },
 
@@ -51,7 +64,7 @@ KISSY.add("menubutton/base", function (S, Node, Button,
          * @return {Boolean|undefined} True Whether the key event was handled.
          * @protected
          */
-        handleKeyEventInternal: function (e) {
+        handleKeyDownInternal: function (e) {
             var self = this,
                 keyCode = e.keyCode,
                 type = String(e.type),
@@ -69,7 +82,7 @@ KISSY.add("menubutton/base", function (S, Node, Button,
             }
             //转发给 menu 处理
             if (menu.get('rendered') && menu.get("visible")) {
-                var handledByMenu = menu.handleKeydown(e);
+                var handledByMenu = menu.handleKeyDownInternal(e);
                 // esc
                 if (keyCode == KeyCode.ESC) {
                     self.set("collapsed", true);
@@ -95,7 +108,7 @@ KISSY.add("menubutton/base", function (S, Node, Button,
          * @protected
          *
          */
-        performActionInternal: function () {
+        handleClickInternal: function () {
             var self = this;
             self.set("collapsed", !self.get("collapsed"));
         },
@@ -108,9 +121,9 @@ KISSY.add("menubutton/base", function (S, Node, Button,
          * @protected
          *
          */
-        handleBlur: function (e) {
+        handleBlurInternal: function (e) {
             var self = this;
-            MenuButton.superclass.handleBlur.call(self, e);
+            MenuButton.superclass.handleBlurInternal.call(self, e);
             // such as : click the document
             self.set("collapsed", true);
         },
@@ -167,16 +180,7 @@ KISSY.add("menubutton/base", function (S, Node, Button,
         },
 
         destructor: function () {
-            var self = this,
-                menu,
-                repositionBuffer = self.__repositionBuffer;
-            if (repositionBuffer) {
-                $(win).detach("resize", repositionBuffer, self);
-                repositionBuffer.stop();
-            }
-            menu = self.get("menu");
-
-            menu.destroy();
+            this.get('menu').destroy();
         }
 
     }, {
@@ -245,51 +249,6 @@ KISSY.add("menubutton/base", function (S, Node, Button,
     function onMenuAfterHighlightedItemChange(e) {
         if (e.target.isMenu) {
             this.view.setAriaActiveDescendant(e.newVal);
-        }
-    }
-
-    function reposition() {
-        var self = this,
-            alignCfg,
-            alignNode,
-            align,
-            menu = self.get("menu");
-        if (menu.get('rendered') && menu.get("visible")) {
-            alignCfg = menu.get("align");
-            alignNode = alignCfg.node;
-            delete alignCfg.node;
-            align = S.clone(alignCfg);
-            align.node = alignNode || self.el;
-            S.mix(align, ALIGN, false);
-            menu.set("align", align);
-        }
-    }
-
-    function hideMenu(self) {
-        var menu = self.get("menu");
-        if (menu.get('rendered')) {
-            menu.hide();
-        }
-    }
-
-    function showMenu(self) {
-        var el = self.el,
-            menu = self.get("menu");
-        // 保证显示前已经 bind 好 menu 事件
-        if (!menu.get("visible")) {
-            // 根据对齐的 el 自动调整大小
-            if (self.get("matchElWidth")) {
-                menu.render();
-                var menuEl = menu.el;
-                var borderWidth =
-                    (parseInt(menuEl.css('borderLeftWidth')) || 0) +
-                        (parseInt(menuEl.css('borderRightWidth')) || 0);
-                var align = menu.get("align").node || el;
-                menu.set("width", align[0].offsetWidth - borderWidth);
-            }
-            menu.show();
-            reposition.call(self);
-            el.attr("aria-haspopup", menu.el.attr("id"));
         }
     }
 

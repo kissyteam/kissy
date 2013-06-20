@@ -54,8 +54,8 @@ KISSY.add("menu/base", function (S, Node, Container, DelegateChildrenExtension, 
             return this;
         },
 
-        handleMouseEnter: function () {
-            Menu.superclass.handleMouseEnter.apply(this, arguments);
+        handleMouseEnterInternal: function () {
+            Menu.superclass.handleMouseEnterInternal.apply(this, arguments);
             var rootMenu = this.getRootMenu();
             // maybe called by popupmenu, no submenu
             if (rootMenu && rootMenu._popupAutoHideTimer) {
@@ -65,8 +65,8 @@ KISSY.add("menu/base", function (S, Node, Container, DelegateChildrenExtension, 
             this.focus();
         },
 
-        handleBlur: function (e) {
-            Menu.superclass.handleBlur.call(this, e);
+        handleBlurInternal: function (e) {
+            Menu.superclass.handleBlurInternal.call(this, e);
             var highlightedItem;
             if (highlightedItem = this.get('highlightedItem')) {
                 highlightedItem.set('highlighted', false);
@@ -103,7 +103,7 @@ KISSY.add("menu/base", function (S, Node, Container, DelegateChildrenExtension, 
          * @protected
          *
          */
-        handleKeyEventInternal: function (e) {
+        handleKeyDownInternal: function (e) {
 
             var self = this;
 
@@ -111,7 +111,7 @@ KISSY.add("menu/base", function (S, Node, Container, DelegateChildrenExtension, 
             var highlightedItem = self.get("highlightedItem");
 
             // 先看当前活跃 menuitem 是否要处理
-            if (highlightedItem && highlightedItem.handleKeydown(e)) {
+            if (highlightedItem && highlightedItem.handleKeyDownInternal(e)) {
                 return true;
             }
 
@@ -185,8 +185,7 @@ KISSY.add("menu/base", function (S, Node, Container, DelegateChildrenExtension, 
             var self = this;
 
             // 隐藏当然不包含了
-            // self.get("visible") === undefined 相当于 true
-            if (self.get("visible") === false || !self.view) {
+            if (!self.get("visible") || !self.el) {
                 return false;
             }
 

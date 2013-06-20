@@ -28,8 +28,8 @@ KISSY.add("menu/popupmenu", function (S, AlignExtension, Menu, PopupMenuRender) 
             return last === this ? null : last;
         },
 
-        handleMouseLeave: function (e) {
-            PopupMenu.superclass.handleMouseLeave.apply(this, arguments);
+        handleMouseLeaveInternal: function (e) {
+            PopupMenu.superclass.handleMouseLeaveInternal.apply(this, arguments);
             // sub menuitem 有时不灵敏
             // var parent = this.get('parent');
             // if (parent && parent.isSubMenu) {
@@ -56,9 +56,9 @@ KISSY.add("menu/popupmenu", function (S, AlignExtension, Menu, PopupMenuRender) 
          * Protected, should only be overridden by subclasses.
          * @protected
          */
-        handleBlur: function () {
+        handleBlurInternal: function () {
             var self = this;
-            PopupMenu.superclass.handleBlur.apply(self, arguments);
+            PopupMenu.superclass.handleBlurInternal.apply(self, arguments);
             self.hide();
         }
     }, {

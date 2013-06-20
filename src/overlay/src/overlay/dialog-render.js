@@ -3,21 +3,27 @@
  * render for dialog
  * @author yiminghe@gmail.com
  */
-KISSY.add("overlay/dialog-render", function (S, OverlayRender, DialogTpl, CloseTpl) {
+KISSY.add("overlay/dialog-render", function (S, OverlayRender, DialogTpl) {
 
     function _setStdModRenderContent(self, part, v) {
-        part = self.get(part);
+        part = self.controller.get(part);
         part.html(v);
     }
 
     return OverlayRender.extend({
 
-        beforeCreateDom: function (renderData,childrenElSelectors) {
+        beforeCreateDom: function (renderData) {
             S.mix(renderData.elAttrs, {
                 role: 'dialog',
                 'aria-labelledby': 'ks-stdmod-header' + this.get('id')
             });
-            S.mix(childrenElSelectors, {
+        },
+
+        createDom: function () {
+            this.controller.get('contentEl').append(this.renderTpl(DialogTpl));
+            // sentinel
+            this.el.append('<div tabindex="0"></div>');
+            this.fillChildrenElsBySelectors({
                 header: '#ks-stdmod-header-{id}',
                 body: '#ks-stdmod-body-{id}',
                 footer: '#ks-stdmod-footer-{id}'
@@ -25,18 +31,18 @@ KISSY.add("overlay/dialog-render", function (S, OverlayRender, DialogTpl, CloseT
         },
 
         getChildrenContainerEl: function () {
-            return this.get('body');
+            return this.controller.get('body');
         },
 
         '_onSetBodyStyle': function (v) {
-            this.get("body").css(v);
+            this.controller.get("body").css(v);
         },
 
         '_onSetHeaderStyle': function (v) {
-            this.get("header").css(v);
+            this.controller.get("header").css(v);
         },
         '_onSetFooterStyle': function (v) {
-            this.get("footer").css(v);
+            this.controller.get("footer").css(v);
         },
 
         '_onSetBodyContent': function (v) {
@@ -51,37 +57,6 @@ KISSY.add("overlay/dialog-render", function (S, OverlayRender, DialogTpl, CloseT
             _setStdModRenderContent(this, "footer", v);
         }
     }, {
-
-        ATTRS: {
-            closable: {
-                value: false
-            },
-            contentTpl: {
-                value: CloseTpl + DialogTpl
-            },
-            headerContent: {
-                sync: 0
-            },
-            bodyContent: {
-                sync: 0
-            },
-            footerContent: {
-                sync: 0
-            },
-            headerStyle: {
-                sync: 0
-            },
-            bodyStyle: {
-                sync: 0
-            },
-            footerStyle: {
-                sync: 0
-            },
-            body: {},
-            header: {},
-            footer: {}
-        },
-
         HTML_PARSER: {
             header: function (el) {
                 return el.one("." + this.getBaseCssClass('header'));
@@ -102,7 +77,8 @@ KISSY.add("overlay/dialog-render", function (S, OverlayRender, DialogTpl, CloseT
                 var footer = el.one("." + this.getBaseCssClass('footer'));
                 return footer && footer.html();
             }
-        }});
+        }
+    });
 }, {
     requires: ['./overlay-render', './dialog-tpl', './close-tpl']
 });

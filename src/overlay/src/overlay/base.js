@@ -3,7 +3,7 @@
  * controller for overlay
  * @author yiminghe@gmail.com
  */
-KISSY.add("overlay/base", function (S, Controller, AlignExtension,
+KISSY.add("overlay/base", function (S, Container, AlignExtension,
                                     Loading, Mask, OverlayRender, OverlayEffect) {
 
     var HIDE = "hide",
@@ -23,7 +23,7 @@ KISSY.add("overlay/base", function (S, Controller, AlignExtension,
      * @mixins KISSY.Overlay.Extension.Close
      * @mixins KISSY.Overlay.Extension.Mask
      */
-    return Controller.extend([
+    return Container.extend([
         Loading,
         AlignExtension,
         Mask,
@@ -160,7 +160,7 @@ KISSY.add("overlay/base", function (S, Controller, AlignExtension,
     });
 }, {
     requires: [
-        'component/controller',
+        'component/container',
         'component/extension/align',
         "./extension/loading",
         "./extension/mask",

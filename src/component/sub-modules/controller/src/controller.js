@@ -10,14 +10,6 @@ KISSY.add("component/controller", function (S, Node, ControllerProcess, Manager,
         Gesture = Node.Gesture,
         isTouchEventSupported = Features.isTouchEventSupported();
 
-    function wrapBehavior(self, action) {
-        return function (e) {
-            if (!self.get("disabled")) {
-                self[action](e);
-            }
-        };
-    }
-
     /**
      * Base Controller class for KISSY Component.
      * @extends KISSY.Component.RenderProcess
@@ -88,12 +80,13 @@ KISSY.add("component/controller", function (S, Node, ControllerProcess, Manager,
             bindUI: function () {
                 var self = this,
                     el = self.view.getKeyEventTarget();
+
                 if (self.get('focusable')) {
                     // remove smart outline in ie
                     // set outline in style for other standard browser
-                    el.on("focus", wrapBehavior(self, "handleFocus"))
-                        .on("blur", wrapBehavior(self, "handleBlur"))
-                        .on("keydown", wrapBehavior(self, "handleKeydown"));
+                    el.on("focus", self.handleFocus, self)
+                        .on("blur", self.handleBlur, self)
+                        .on("keydown", self.handleKeydown, self);
                 }
 
                 if (self.get('handleMouseEvents')) {
@@ -101,23 +94,23 @@ KISSY.add("component/controller", function (S, Node, ControllerProcess, Manager,
                     el = self.el;
 
                     if (!isTouchEventSupported) {
-                        el.on("mouseenter", wrapBehavior(self, "handleMouseEnter"))
-                            .on("mouseleave", wrapBehavior(self, "handleMouseLeave"))
-                            .on("contextmenu", wrapBehavior(self, "handleContextMenu"))
+                        el.on("mouseenter", self.handleMouseEnter, self)
+                            .on("mouseleave", self.handleMouseLeave, self)
+                            .on("contextmenu", self.handleContextMenu, self)
                     }
 
-                    el.on(Gesture.start, wrapBehavior(self, "handleMouseDown"))
-                        .on(Gesture.end, wrapBehavior(self, "handleMouseUp"))
+                    el.on(Gesture.start, self.handleMouseDown, self)
+                        .on(Gesture.end, self.handleMouseUp, self)
                         // consider touch environment
-                        .on(Gesture.tap, wrapBehavior(self, "performActionInternal"));
+                        .on(Gesture.tap, self.handleClick, self);
                     if (Gesture.cancel) {
-                        el.on(Gesture.cancel, wrapBehavior(self, "handleMouseUp"));
+                        el.on(Gesture.cancel, self.handleMouseUp, self);
                     }
 
                     // click quickly only trigger click and dblclick in ie<9
                     // others click click dblclick
                     if (ie && ie < 9) {
-                        el.on("dblclick", wrapBehavior(self, "handleDblClick"));
+                        el.on("dblclick", self.handleDblClick, self);
                     }
 
                 }
@@ -178,24 +171,44 @@ KISSY.add("component/controller", function (S, Node, ControllerProcess, Manager,
                 }
             },
 
+
+            handleDblClick: function (ev) {
+                if (!this.get('disabled')) {
+                    this.handleDblClickInternal(ev);
+                }
+            },
+
             /**
              * Hack click in ie<9 by handling dblclick events.
              * By default, this performs its associated action by calling
-             * {@link KISSY.Component.Controller#performActionInternal}.
+             * {@link KISSY.Component.Controller#handleClickInternal}.
              * @protected
              * @param {KISSY.Event.DOMEventObject} ev Dom event to handle.
              */
-            handleDblClick: function (ev) {
-                this.performActionInternal(ev);
+            handleDblClickInternal: function (ev) {
+                this.handleClickInternal(ev);
             },
+
+            handleMouseEnter: function (ev) {
+                if (!this.get('disabled')) {
+                    this.handleMouseEnterInternal(ev);
+                }
+            },
+
 
             /**
              * Handle mouseenter events. If the component is not disabled, highlights it.
              * @protected
              * @param {KISSY.Event.DOMEventObject} ev Dom event to handle.
              */
-            handleMouseEnter: function (ev) {
+            handleMouseEnterInternal: function (ev) {
                 this.set("highlighted", !!ev);
+            },
+
+            handleMouseLeave: function (ev) {
+                if (!this.get('disabled')) {
+                    this.handleMouseLeaveInternal(ev);
+                }
             },
 
             /**
@@ -203,10 +216,17 @@ KISSY.add("component/controller", function (S, Node, ControllerProcess, Manager,
              * @protected
              * @param {KISSY.Event.DOMEventObject} ev Dom event to handle.
              */
-            handleMouseLeave: function (ev) {
+            handleMouseLeaveInternal: function (ev) {
                 var self = this;
                 self.set("active", false);
                 self.set("highlighted", !ev);
+            },
+
+            handleMouseDown: function (ev) {
+                if (!this.get('disabled')) {
+
+                    this.handleMouseDownInternal(ev);
+                }
             },
 
             /**
@@ -217,7 +237,7 @@ KISSY.add("component/controller", function (S, Node, ControllerProcess, Manager,
              * @protected
              * @param {KISSY.Event.DOMEventObject} ev Dom event to handle.
              */
-            handleMouseDown: function (ev) {
+            handleMouseDownInternal: function (ev) {
                 var self = this,
                     n,
                     isMouseActionButton = ev['which'] == 1;
@@ -240,18 +260,32 @@ KISSY.add("component/controller", function (S, Node, ControllerProcess, Manager,
                 }
             },
 
+            handleMouseUp: function (ev) {
+                if (!this.get('disabled')) {
+
+                    this.handleMouseUpInternal(ev);
+                }
+            },
+
             /**
              * Handles mouseup events.
              * If this component is not disabled, performs its associated action by calling
-             * {@link KISSY.Component.Controller#performActionInternal}, then deactivates it.
+             * {@link KISSY.Component.Controller#handleClickInternal}, then deactivates it.
              * @protected
              * @param {KISSY.Event.DOMEventObject} ev Dom event to handle.
              */
-            handleMouseUp: function (ev) {
+            handleMouseUpInternal: function (ev) {
                 var self = this;
                 // 左键
                 if (self.get("active") && (ev['which'] == 1 || isTouchEventSupported)) {
                     self.set("active", false);
+                }
+            },
+
+            handleContextMenu: function (ev) {
+                if (!this.get('disabled')) {
+
+                    this.handleContextMenuInternal(ev);
                 }
             },
 
@@ -260,9 +294,13 @@ KISSY.add("component/controller", function (S, Node, ControllerProcess, Manager,
              * @protected
              * @param {KISSY.Event.DOMEventObject} ev Dom event to handle.
              */
-            handleContextMenu: function (ev) {
-                if (0) {
-                    S.log(ev);
+            handleContextMenuInternal: function (ev) {
+            },
+
+            handleFocus: function () {
+                if (!this.get('disabled')) {
+
+                    this.handleFocusInternal();
                 }
             },
 
@@ -270,41 +308,30 @@ KISSY.add("component/controller", function (S, Node, ControllerProcess, Manager,
              * Handles focus events. Style focused class.
              * @protected
              */
-            handleFocus: function () {
+            handleFocusInternal: function () {
                 this.focus();
                 this.fire("focus");
+            },
+
+            handleBlur: function () {
+                if (!this.get('disabled')) {
+
+                    this.handleBlurInternal();
+                }
             },
 
             /**
              * Handles blur events. Remove focused class.
              * @protected
              */
-            handleBlur: function () {
+            handleBlurInternal: function () {
                 this.blur();
                 this.fire("blur");
             },
 
-            /**
-             * Handle enter keydown event to {@link KISSY.Component.Controller#performActionInternal}.
-             * @protected
-             * @param {KISSY.Event.DOMEventObject} ev Dom event to handle.
-             */
-            handleKeyEventInternal: function (ev) {
-                if (ev['keyCode'] == Node.KeyCode.ENTER) {
-                    return this.performActionInternal(ev);
-                }
-                return undefined;
-            },
-
-            /**
-             * Handle keydown events.
-             * If the component is not disabled, call {@link KISSY.Component.Controller#handleKeyEventInternal}
-             * @protected
-             * @param {KISSY.Event.DOMEventObject} ev Dom event to handle.
-             */
             handleKeydown: function (ev) {
                 var self = this;
-                if (self.handleKeyEventInternal(ev)) {
+                if (!this.get('disabled') && self.handleKeyDownInternal(ev)) {
                     ev['halt']();
                     return true;
                 }
@@ -312,11 +339,29 @@ KISSY.add("component/controller", function (S, Node, ControllerProcess, Manager,
             },
 
             /**
+             * Handle enter keydown event to {@link KISSY.Component.Controller#handleClickInternal}.
+             * @protected
+             * @param {KISSY.Event.DOMEventObject} ev Dom event to handle.
+             */
+            handleKeyDownInternal: function (ev) {
+                if (ev['keyCode'] == Node.KeyCode.ENTER) {
+                    return this.handleClickInternal(ev);
+                }
+                return undefined;
+            },
+
+            handleClick: function (ev) {
+                if (!this.get('disabled')) {
+                    this.handleClickInternal(ev);
+                }
+            },
+
+            /**
              * Performs the appropriate action when this component is activated by the user.
              * @protected
              * @param {KISSY.Event.DOMEventObject} ev Dom event to handle.
              */
-            performActionInternal: function (ev) {
+            handleClickInternal: function (ev) {
             },
 
             /**

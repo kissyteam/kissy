@@ -2,9 +2,7 @@
  * tree management utils
  * @author yiminghe@gmail.com
  */
-KISSY.add("tree/tree-manager", function (S, Node, Component, Extension) {
-
-    var KeyCode = Node.KeyCode;
+KISSY.add("tree/tree-manager", function (S, Node, DelegateChildrenExtension) {
 
     var UA = S.UA,
         ie = S.Env.host.document.documentMode || UA.ie,
@@ -35,17 +33,21 @@ KISSY.add("tree/tree-manager", function (S, Node, Component, Extension) {
         // only root node is focusable
         focusable: {
             value: true
+        },
+
+        handleMouseEvents: {
+            value: true
         }
     };
 
-    S.augment(TreeManager, Extension.DelegateChildren, {
+    S.augment(TreeManager, DelegateChildrenExtension, {
 
         isTree: 1,
 
         __bindUI: function () {
             var self = this,
-                prefixCls=self.get('prefixCls'),
-                delegateCls=prefixCls+'tree-node',
+                prefixCls = self.get('prefixCls'),
+                delegateCls = prefixCls + 'tree-node',
                 events = Gesture.tap;
 
             events += ' ';
@@ -54,17 +56,8 @@ KISSY.add("tree/tree-manager", function (S, Node, Component, Extension) {
                 events += (ie && ie < 9 ? "dblclick " : "");
             }
 
-            self.el.delegate(events, '.'+delegateCls,
+            self.el.delegate(events, '.' + delegateCls,
                 self.handleChildrenEvents, self);
-        },
-
-        handleKeyEventInternal: function (e) {
-            var current = this.get("selectedItem");
-            if (e.keyCode == KeyCode.ENTER) {
-                // 传递给真正的单个子节点
-                return current.performActionInternal(e);
-            }
-            return current._keyNav(e);
         },
 
         // 单选
@@ -79,18 +72,16 @@ KISSY.add("tree/tree-manager", function (S, Node, Component, Extension) {
             }
         },
 
-        _onSetFocused: function (v) {
-            var self = this;
-            Component.Controller.prototype._onSetFocused.apply(self, arguments);
-            // 得到焦点时没有选择节点
-            // 默认选择自己
-            if (v && !self.get("selectedItem")) {
-                self.select();
-            }
+        '_onSetShowRootNode': function (v) {
+            this.get("rowEl")[v ? "show" : "hide"]();
         }
     });
 
     return TreeManager;
+
 }, {
-    requires: ['node', 'component/base', 'component/extension']
+    requires: [
+        'node',
+        'component/extension/delegate-children'
+    ]
 });

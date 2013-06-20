@@ -118,10 +118,10 @@ KISSY.add('grid/column', function (S, Component, Template) {
             },
 
             /**
-             * {Component.Controller#performActionInternal}
+             * {Component.Controller#handleClickInternal}
              * @private
              */
-            performActionInternal:function (ev) {
+            handleClickInternal:function (ev) {
                 var _self = this,
                     sender = S.one(ev.target),
                     prefix = _self.prefixCls;

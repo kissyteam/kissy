@@ -154,36 +154,15 @@ KISSY.add("component/controller/render", function (S, RenderProcess, XTemplate, 
         createDom: function () {
             var self = this,
                 controller = self.controller,
-                renderData = self.renderData,
                 el, tpl, html;
 
             tpl = startTpl + self.get('contentTpl') + endTpl;
 
-            html = new XTemplate(tpl, {
-                commands: {
-                    getBaseCssClasses: function (scope, option) {
-                        return self.getBaseCssClasses(option.params[0]);
-                    }
-                }
-            }).render(renderData);
+            html = self.renderTpl(tpl);
 
-            el = $(html);
+            controller.setInternal("el", el = controller.el = self.el = $(html));
 
-            var childrenElSelectors = self.childrenElSelectors,
-                childName,
-                selector;
-
-            for (childName in childrenElSelectors) {
-                selector = childrenElSelectors[childName];
-                if (typeof selector === "function") {
-                    controller.setInternal(childName, selector(el));
-                } else {
-                    controller.setInternal(childName,
-                        el.all(S.substitute(selector, self.renderData)));
-                }
-            }
-
-            controller.setInternal("el", controller.el = self.el = el);
+            this.fillChildrenElsBySelectors();
         },
 
         decorateDom: function (srcNode) {
@@ -209,12 +188,13 @@ KISSY.add("component/controller/render", function (S, RenderProcess, XTemplate, 
         },
 
         renderUI: function () {
-            var self = this;
-            var controller = self.controller;
+            var self = this,
+                controller = self.controller,
+                el = self.el;
+
             // 新建的节点才需要摆放定位
             if (!controller.get('srcNode')) {
                 var render = controller.get('render'),
-                    el = controller.el,
                     renderBefore = controller.get('elBefore');
                 if (renderBefore) {
                     el.insertBefore(renderBefore, /**
@@ -249,6 +229,39 @@ KISSY.add("component/controller/render", function (S, RenderProcess, XTemplate, 
             if (this.el) {
                 this.el.remove();
             }
+        },
+
+        fillChildrenElsBySelectors: function (childrenElSelectors) {
+            var self = this,
+                el = self.el,
+                controller = self.controller,
+                childName,
+                selector;
+
+            childrenElSelectors = childrenElSelectors || self.childrenElSelectors;
+
+            for (childName in childrenElSelectors) {
+                selector = childrenElSelectors[childName];
+                if (typeof selector === "function") {
+                    controller.setInternal(childName, selector(el));
+                } else {
+                    controller.setInternal(childName,
+                        el.all(S.substitute(selector, self.renderData)));
+                }
+                delete childrenElSelectors[childName];
+            }
+        },
+
+        renderTpl: function (tpl, renderData) {
+            var self = this;
+            renderData = renderData || self.renderData;
+            return new XTemplate(tpl, {
+                commands: {
+                    getBaseCssClasses: function (scope, option) {
+                        return self.getBaseCssClasses(option.params[0]);
+                    }
+                }
+            }).render(renderData);
         },
 
         /**

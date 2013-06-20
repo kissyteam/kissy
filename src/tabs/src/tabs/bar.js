@@ -31,10 +31,10 @@ KISSY.add("tabs/bar", function (S, Toolbar, BarRender, undefined) {
             });
         },
 
-        handleKeyEventInternal: function (e) {
+        handleKeyDownInternal: function (e) {
             var self = this;
             var current = self.get('selectedTab');
-            var next = self.getNextItemByKeyEventInternal(e, current);
+            var next = self.getNextItemByKeyDown(e, current);
             if (S.isBoolean(next)) {
                 return next;
             } else {

@@ -12,12 +12,13 @@ KISSY.add("tabs/body", function (S, Container, Extension, undefined) {
             self.on("afterSelectedPanelIndexChange", function (e) {
                 var showPanel,
                     children = self.get('children'),
+                    newIndex = e.newVal,
                     hidePanel;
-                if (showPanel = children[e.newVal]) {
+                if (children[newIndex]) {
                     if (hidePanel = children[e.prevVal]) {
                         hidePanel.set("selected", false);
                     }
-                    self.selectPanel(showPanel);
+                    self.selectPanelByIndex(newIndex);
                 }
             });
         },
@@ -34,21 +35,19 @@ KISSY.add("tabs/body", function (S, Container, Extension, undefined) {
             });
         },
 
-        renderChild: function (index) {
-            if (this.get('lazyRender')) {
-                var c = this.get('children')[index];
-                if (!c.get('selected')) {
-                    return c;
-                }
-            }
-            return TabBody.superclass.renderChild.apply(this, arguments);
+        createChild: function (index) {
+            return checkLazy(this, 'createChild', index);
         },
 
-        selectPanel: function (showPanel) {
-            showPanel.set("selected", true);
+        renderChild: function (index) {
+            return checkLazy(this, 'renderChild', index);
+        },
+
+        selectPanelByIndex: function (newIndex) {
+            this.get('children')[newIndex].set("selected", true);
             if (this.get('lazyRender')) {
                 // lazy render
-                this.renderChild(showPanel);
+                this.renderChild(newIndex);
             }
         }
 
@@ -75,6 +74,16 @@ KISSY.add("tabs/body", function (S, Container, Extension, undefined) {
         },
         xclass: 'tabs-body'
     });
+
+    function checkLazy(self, method, index) {
+        if (self.get('lazyRender')) {
+            var c = self.get('children')[index];
+            if (!c.get('selected')) {
+                return c;
+            }
+        }
+        return TabBody.superclass[method].call(self, index);
+    }
 
     return TabBody;
 

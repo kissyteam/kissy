@@ -65,8 +65,8 @@ KISSY.add("combobox/base", function (S, Node, Controller, ComboBoxRender, Menu, 
 
                 self.on('click', onMenuItemClick, self);
 
-                self.get('menu').onRendered(function () {
-                    onMenuAfterRenderUI(self);
+                self.get('menu').onRendered(function (menu) {
+                    onMenuAfterRenderUI(self, menu);
                 });
             },
 
@@ -109,7 +109,7 @@ KISSY.add("combobox/base", function (S, Node, Controller, ComboBoxRender, Menu, 
                 }
             },
 
-            handleFocus: function () {
+            handleFocusInternal: function () {
                 var self = this,
                     placeholderEl;
                 if (self.get('invalidEl')) {
@@ -120,11 +120,11 @@ KISSY.add("combobox/base", function (S, Node, Controller, ComboBoxRender, Menu, 
                 }
             },
 
-            handleBlur: function () {
+            handleBlurInternal: function () {
                 // S.log('blur');
                 var self = this,
                     placeholderEl = self.get("placeholderEl");
-                ComboBox.superclass.handleBlur.apply(self, arguments);
+                ComboBox.superclass.handleBlurInternal.apply(self, arguments);
                 delayHide(self);
                 if (self.get('invalidEl')) {
                     self.validate(function (error, val) {
@@ -142,11 +142,11 @@ KISSY.add("combobox/base", function (S, Node, Controller, ComboBoxRender, Menu, 
                 }
             },
 
-            handleMouseDown: function (e) {
+            handleMouseDownInternal: function (e) {
                 var self = this,
                     target,
                     trigger;
-                ComboBox.superclass.handleMouseDown.apply(self, arguments);
+                ComboBox.superclass.handleMouseDownInternal.apply(self, arguments);
                 target = e.target;
                 trigger = self.get("trigger");
                 if (trigger && (trigger[0] == target || trigger.contains(target))) {
@@ -162,7 +162,7 @@ KISSY.add("combobox/base", function (S, Node, Controller, ComboBoxRender, Menu, 
                 }
             },
 
-            handleKeyEventInternal: function (e) {
+            handleKeyDownInternal: function (e) {
                 var self = this,
                     updateInputOnDownUp,
                     input,
@@ -194,7 +194,7 @@ KISSY.add("combobox/base", function (S, Node, Controller, ComboBoxRender, Menu, 
                         }
                     }
 
-                    handledByMenu = menu['handleKeydown'](e);
+                    handledByMenu = menu.handleKeyDownInternal(e);
 
                     highlightedItem = menu.get("highlightedItem");
 
@@ -220,7 +220,7 @@ KISSY.add("combobox/base", function (S, Node, Controller, ComboBoxRender, Menu, 
                     // if menu is open and an menuitem is highlighted, see as click/enter
                     if (keyCode == KeyCode.TAB && highlightedItem) {
                         // click highlightedItem
-                        highlightedItem.performActionInternal();
+                        highlightedItem.handleClickInternal();
                         // only prevent focus change in multiple mode
                         if (self.get("multiple")) {
                             return true;
@@ -559,9 +559,8 @@ KISSY.add("combobox/base", function (S, Node, Controller, ComboBoxRender, Menu, 
         });
     }
 
-    function onMenuAfterRenderUI(self) {
+    function onMenuAfterRenderUI(self, menu) {
         var contentEl;
-        var menu = self.get("menu");
         var input = self.get('input');
         var el = menu.el;
         contentEl = menu.get("contentEl");

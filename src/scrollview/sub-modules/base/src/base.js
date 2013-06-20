@@ -116,7 +116,7 @@ KISSY.add('scrollview/base', function (S, Node, Component, Extension, Render) {
             domEl.scrollTop = domEl.scrollLeft = 0;
         },
 
-        handleKeyEventInternal: function (e) {
+        handleKeyDownInternal: function (e) {
             // no need to process disabled (already processed by Component)
             var target = e.target,
                 $target=$(target),

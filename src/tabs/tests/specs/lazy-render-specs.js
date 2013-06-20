@@ -27,7 +27,7 @@ KISSY.use("tabs", function (S, Tabs) {
 
             expect(tabs.getSelectedPanel().get('content')).toBe('c1');
 
-            expect(tabs.getPanelAt(1).isController).toBeFalsy();
+            expect(tabs.getPanelAt(1).get('rendered')).toBeFalsy();
 
             tabs.on('afterRenderUI', function (e) {
                 var t = e.target;

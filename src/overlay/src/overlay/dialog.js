@@ -28,7 +28,7 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
                 return ghost;
             },
 
-            handleKeyEventInternal: function (e) {
+            handleKeyDownInternal: function (e) {
                 if (this.get('escapeToClose') &&
                     e.keyCode === Node.KeyCode.ESC) {
                     if (e.target.nodeName.toLowerCase() == 'select' &&
@@ -50,7 +50,7 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
                     self.__lastActive = el[0].ownerDocument.activeElement;
                     self.focus();
                     // if d.show(); d.hide();
-                    // async -> focus event -> handleFocus
+                    // async -> focus event -> handleFocusInternal
                     // -> set('focused') -> el.focus() -> ie error
                     // el[0].focus && el[0].focus();
                     el.attr("aria-hidden", "false");

@@ -18,8 +18,8 @@ KISSY.add("menu/menuitem", function (S, Controller, MenuItemRender) {
         isMenuItem: 1,
 
         // for ios, ios only has touchdown
-        handleMouseDown: function (e) {
-            MenuItem.superclass.handleMouseDown.call(this, e);
+        handleMouseDownInternal: function (e) {
+            MenuItem.superclass.handleMouseDownInternal.call(this, e);
             this.set("highlighted", true);
         },
 
@@ -30,7 +30,7 @@ KISSY.add("menu/menuitem", function (S, Controller, MenuItemRender) {
          * Finally fire click on its parent menu.
          * @protected
          */
-        performActionInternal: function () {
+        handleClickInternal: function () {
             var self = this;
             // 可选
             if (self.get("selectable")) {
@@ -80,7 +80,7 @@ KISSY.add("menu/menuitem", function (S, Controller, MenuItemRender) {
          * @protected
          */
         containsElement: function (element) {
-            return this.view && this.view.containsElement(element);
+            return this.view.containsElement(element);
         }
 
     }, {

@@ -3,16 +3,15 @@
  * KISSY Overlay
  * @author yiminghe@gmail.com
  */
-KISSY.add("overlay/overlay-render", function (S, Controller, ContentRenderExtension, ShimRenderExtension, Loading, CloseTpl, Mask) {
+KISSY.add("overlay/overlay-render", function (S, Container, ContentRenderExtension, ShimRenderExtension, CloseTpl) {
 
-    return Controller.ATTRS.xrender.value.extend([
+    return Container.ATTRS.xrender.value.extend([
         ContentRenderExtension,
-        ShimRenderExtension,
-        Loading,
-        Mask
+        ShimRenderExtension
     ], {
-        beforeCreateDom: function (renderData, childrenElSelectors) {
-            S.mix(childrenElSelectors, {
+        createDom: function () {
+            this.controller.get('contentEl').append(this.renderTpl(CloseTpl));
+            this.fillChildrenElsBySelectors({
                 closeBtn: '#ks-ext-close-{id}'
             });
         }
@@ -21,23 +20,15 @@ KISSY.add("overlay/overlay-render", function (S, Controller, ContentRenderExtens
             closeBtn: function (el) {
                 return el.one("." + this.getBaseCssClass('close'));
             }
-        },
-        ATTRS: {
-            closable: {},
-            contentTpl: {
-                value: CloseTpl + ContentRenderExtension.ContentTpl
-            }
         }
     });
 
 }, {
     requires: [
-        "component/controller",
+        "component/container",
         'component/extension/content-render',
         'component/extension/shim-render',
-        './extension/loading-render',
-        './close-tpl',
-        './extension/mask-render'
+        './close-tpl'
     ]
 });
 

@@ -17,8 +17,8 @@ KISSY.add("tree/check-node", function (S, Node, TreeNode) {
      * @extends Tree.Node
      */
     var CheckNode = TreeNode.extend({
-        performActionInternal: function (e) {
 
+        handleClickInternal: function (e) {
             var self = this,
                 checkState,
                 expanded = self.get("expanded"),
@@ -44,9 +44,11 @@ KISSY.add("tree/check-node", function (S, Node, TreeNode) {
                 checkState = CHECK;
             }
 
+
             self.set("checkState", checkState);
 
-            self.fire("click");
+           self.fire("click");
+            return true;
         },
 
         _onSetCheckState: function (s) {
@@ -98,7 +100,6 @@ KISSY.add("tree/check-node", function (S, Node, TreeNode) {
     }, {
         ATTRS:{
             checkIconEl: {
-                view: 1
             },
 
             checkable: {

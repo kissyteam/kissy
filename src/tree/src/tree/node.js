@@ -2,7 +2,7 @@
  * abstraction of tree node ,root and other node will extend it
  * @author yiminghe@gmail.com
  */
-KISSY.add("tree/node", function (S, Node, Component,Extension, TreeNodeRender) {
+KISSY.add("tree/node", function (S, Node, Container, TreeNodeRender) {
     var $ = Node.all,
         KeyCode = Node.KeyCode;
 
@@ -14,307 +14,296 @@ KISSY.add("tree/node", function (S, Node, Component,Extension, TreeNodeRender) {
      * @member Tree
      * @extends KISSY.Component.Controller
      */
-    var TreeNode = Component.Controller.extend(
-        [
-            // 不是所有的子节点都是子组件
-            Extension.DecorateChild
-        ],{
-            bindUI: function () {
-                this.on('afterAddChild', onAddChild);
-                this.on('afterRemoveChild', onRemoveChild);
-                this.on('afterAddChild afterRemoveChild', syncAriaSetSize);
-            },
+    var TreeNode = Container.extend({
 
-            syncUI: function () {
-                // 集中设置样式
-                refreshCss(this);
-                syncAriaSetSize.call(this, {
-                    target: this
-                });
-            },
+        bindUI: function () {
+            this.on('afterAddChild', onAddChild);
+            this.on('afterRemoveChild', onRemoveChild);
+            this.on('afterAddChild afterRemoveChild', syncAriaSetSize);
+        },
 
-            _keyNav: function (e) {
-                var self = this,
-                    processed = true,
-                    tree = self.get("tree"),
-                    expanded = self.get("expanded"),
-                    nodeToBeSelected,
-                    isLeaf = self.get("isLeaf"),
-                    children = self.get("children"),
-                    keyCode = e.keyCode;
+        syncUI: function () {
+            // 集中设置样式
+            refreshCss(this);
+            syncAriaSetSize.call(this, {
+                target: this
+            });
+        },
 
-                // 顺序统统为前序遍历顺序
-                switch (keyCode) {
-                    // home
-                    // 移到树的顶层节点
-                    case KeyCode.HOME:
-                        nodeToBeSelected = tree;
-                        break;
+        handleKeyDownInternal: function (e) {
+            var self = this,
+                processed = true,
+                tree = self.get("tree"),
+                expanded = self.get("expanded"),
+                nodeToBeSelected,
+                isLeaf = self.get("isLeaf"),
+                children = self.get("children"),
+                keyCode = e.keyCode;
 
-                    // end
-                    // 移到最后一个可视节点
-                    case KeyCode.END:
-                        nodeToBeSelected = getLastVisibleDescendant(tree);
-                        break;
+            // 顺序统统为前序遍历顺序
+            switch (keyCode) {
 
-                    // 上
-                    // 当前节点的上一个兄弟节点的最后一个可显示节点
-                    case KeyCode.UP:
-                        nodeToBeSelected = getPreviousVisibleNode(self);
-                        break;
+                case KeyCode.ENTER:
+                    return self.handleClickInternal(e);
+                    break;
 
-                    // 下
-                    // 当前节点的下一个可显示节点
-                    case KeyCode.DOWN:
-                        nodeToBeSelected = getNextVisibleNode(self);
-                        break;
+                // home
+                // 移到树的顶层节点
+                case KeyCode.HOME:
+                    nodeToBeSelected = tree;
+                    break;
 
-                    // 左
-                    // 选择父节点或 collapse 当前节点
-                    case KeyCode.LEFT:
-                        if (expanded && (children.length || isLeaf === false)) {
-                            self.set("expanded", false);
+                // end
+                // 移到最后一个可视节点
+                case KeyCode.END:
+                    nodeToBeSelected = getLastVisibleDescendant(tree);
+                    break;
+
+                // 上
+                // 当前节点的上一个兄弟节点的最后一个可显示节点
+                case KeyCode.UP:
+                    nodeToBeSelected = getPreviousVisibleNode(self);
+                    break;
+
+                // 下
+                // 当前节点的下一个可显示节点
+                case KeyCode.DOWN:
+                    nodeToBeSelected = getNextVisibleNode(self);
+                    break;
+
+                // 左
+                // 选择父节点或 collapse 当前节点
+                case KeyCode.LEFT:
+                    if (expanded && (children.length || isLeaf === false)) {
+                        self.set("expanded", false);
+                    } else {
+                        nodeToBeSelected = self.get('parent');
+                    }
+                    break;
+
+                // 右
+                // expand 当前节点
+                case KeyCode.RIGHT:
+                    if (children.length || isLeaf === false) {
+                        if (!expanded) {
+                            self.set("expanded", true);
                         } else {
-                            nodeToBeSelected = self.get('parent');
+                            nodeToBeSelected = children[0];
                         }
-                        break;
+                    }
+                    break;
 
-                    // 右
-                    // expand 当前节点
-                    case KeyCode.RIGHT:
-                        if (children.length || isLeaf === false) {
-                            if (!expanded) {
-                                self.set("expanded", true);
-                            } else {
-                                nodeToBeSelected = children[0];
-                            }
-                        }
-                        break;
+                default:
+                    processed = false;
+                    break;
+            }
 
-                    default:
-                        processed = false;
-                        break;
-                }
+            if (nodeToBeSelected) {
+                nodeToBeSelected.select();
+            }
 
-                if (nodeToBeSelected) {
-                    nodeToBeSelected.select();
-                }
+            return processed;
+        },
 
-                return processed;
-            },
+        next: function () {
+            var self = this,
+                parent = self.get('parent'),
+                siblings,
+                index;
+            if (!parent) {
+                return null;
+            }
+            siblings = parent.get('children');
+            index = S.indexOf(self, siblings);
+            if (index == siblings.length - 1) {
+                return null;
+            }
+            return siblings[index + 1];
+        },
 
-            next: function () {
-                var self = this,
-                    parent = self.get('parent'),
-                    siblings,
-                    index;
-                if (!parent) {
-                    return null;
-                }
-                siblings = parent.get('children');
-                index = S.indexOf(self, siblings);
-                if (index == siblings.length - 1) {
-                    return null;
-                }
-                return siblings[index + 1];
-            },
+        prev: function () {
+            var self = this,
+                parent = self.get('parent'),
+                siblings,
+                index;
+            if (!parent) {
+                return null;
+            }
+            siblings = parent.get('children');
+            index = S.indexOf(self, siblings);
+            if (index === 0) {
+                return null;
+            }
+            return siblings[index - 1];
+        },
 
-            prev: function () {
-                var self = this,
-                    parent = self.get('parent'),
-                    siblings,
-                    index;
-                if (!parent) {
-                    return null;
-                }
-                siblings = parent.get('children');
-                index = S.indexOf(self, siblings);
-                if (index === 0) {
-                    return null;
-                }
-                return siblings[index - 1];
-            },
+        /**
+         * Select current tree node.
+         */
+        select: function () {
+            this.set('selected', true);
+        },
 
-            /**
-             * Select current tree node.
-             */
-            select: function () {
-                this.set('selected', true);
-            },
+        handleClickInternal: function (e) {
+            var self = this,
+                target = $(e.target),
+                expanded = self.get("expanded"),
+                tree = self.get("tree");
+            tree.focus();
+            if (target.equals(self.get("expandIconEl"))) {
+                self.set("expanded", !expanded);
+            } else {
+                self.select();
+                self.fire("click");
+            }
+            return true;
+        },
 
-            performActionInternal: function (e) {
-                var self = this,
-                    target = $(e.target),
-                    expanded = self.get("expanded"),
-                    tree = self.get("tree");
-                tree.focus();
-                if (target.equals(self.get("expandIconEl"))) {
-                    self.set("expanded", !expanded);
-                } else {
-                    self.select();
-                    self.fire("click");
-                }
-            },
-
-            /**
-             * override root 's renderChildren to apply depth and css recursively
-             */
-            renderChildren: function () {
-                var self = this;
-                TreeNode.superclass.renderChildren.apply(self, arguments);
-                // only sync child sub tree at root node
-                if (self === self.get('tree')) {
-                    updateSubTreeStatus(self, self, -1, 0);
-                }
-            },
-
-            _onSetExpanded: function (v) {
-                var self = this;
-                refreshCss(self);
-                self.fire(v ? "expand" : "collapse");
-            },
-
-            _onSetSelected: function (v, e) {
-                var tree = this.get("tree");
-                if (e && e.byPassSetTreeSelectedItem) {
-                } else {
-                    tree.set('selectedItem', v ? this : null);
-                }
-            },
-
-            /**
-             * Expand all descend nodes of current node
-             */
-            expandAll: function () {
-                var self = this;
-                self.set("expanded", true);
-                S.each(self.get("children"), function (c) {
-                    c.expandAll();
-                });
-            },
-
-            /**
-             * Collapse all descend nodes of current node
-             */
-            collapseAll: function () {
-                var self = this;
-                self.set("expanded", false);
-                S.each(self.get("children"), function (c) {
-                    c.collapseAll();
-                });
+        /**
+         * override root 's renderChildren to apply depth and css recursively
+         */
+        createChildren: function () {
+            var self = this;
+            TreeNode.superclass.renderChildren.apply(self, arguments);
+            // only sync child sub tree at root node
+            if (self === self.get('tree')) {
+                updateSubTreeStatus(self, self, -1, 0);
             }
         },
 
-        {
-            ATTRS: {
+        _onSetExpanded: function (v) {
+            var self = this;
+            refreshCss(self);
+            self.fire(v ? "expand" : "collapse");
+        },
 
-                xrender: {
-                    value: TreeNodeRender
-                },
+        _onSetSelected: function (v, e) {
+            var tree = this.get("tree");
+            if (e && e.byPassSetTreeSelectedItem) {
+            } else {
+                tree.set('selectedItem', v ? this : null);
+            }
+        },
 
-                // 事件代理
-                handleMouseEvents: {
-                    value: false
-                },
+        /**
+         * Expand all descend nodes of current node
+         */
+        expandAll: function () {
+            var self = this;
+            self.set("expanded", true);
+            S.each(self.get("children"), function (c) {
+                c.expandAll();
+            });
+        },
 
-                /**
-                 * Only For Config.
-                 * Whether to force current tree node as a leaf.                 *
-                 * It will change as children are added.
-                 *
-                 * @type {Boolean}
-                 */
-                isLeaf: {
-                    view: 1
-                },
+        /**
+         * Collapse all descend nodes of current node
+         */
+        collapseAll: function () {
+            var self = this;
+            self.set("expanded", false);
+            S.each(self.get("children"), function (c) {
+                c.collapseAll();
+            });
+        }
+    }, {
+        ATTRS: {
 
-                contentEl: {
-                    view: 1
-                },
+            xrender: {
+                value: TreeNodeRender
+            },
 
-                /**
-                 * Element for expand icon.
-                 * @type {KISSY.NodeList}
-                 */
-                expandIconEl: {
-                    view: 1
-                },
+            // 事件代理
+            handleMouseEvents: {
+                value: false
+            },
 
-                /**
-                 * Element for icon.
-                 * @type {KISSY.NodeList}
-                 */
-                iconEl: {
-                    view: 1
-                },
+            /**
+             * Only For Config.
+             * Whether to force current tree node as a leaf.                 *
+             * It will change as children are added.
+             *
+             * @type {Boolean}
+             */
+            isLeaf: {
+                view: 1
+            },
 
-                /**
-                 * Whether current tree node is selected.
-                 * @type {Boolean}
-                 */
-                selected: {
-                    view: 1
-                },
+            /**
+             * Element for expand icon.
+             * @type {KISSY.NodeList}
+             */
+            expandIconEl: {
+            },
 
-                /**
-                 * Whether current tree node is expanded.
-                 * @type {Boolean.}
-                 * Defaults to: false.
-                 */
-                expanded: {
-                    sync: 0,
-                    value: false,
-                    view: 1
-                },
+            /**
+             * Element for icon.
+             * @type {KISSY.NodeList}
+             */
+            iconEl: {
+            },
 
-                /**
-                 * html title for current tree node.
-                 * @type {String}
-                 */
-                tooltip: {
-                    view: 1
-                },
+            /**
+             * Whether current tree node is selected.
+             * @type {Boolean}
+             */
+            selected: {
+                view: 1
+            },
 
-                /**
-                 * Tree instance current tree node belongs to.
-                 * @type {Tree}
-                 */
-                tree: {
-                    getter: function () {
-                        var from = this;
-                        while (from && !from.isTree) {
-                            from = from.get('parent');
-                        }
-                        return from;
+            /**
+             * Whether current tree node is expanded.
+             * @type {Boolean.}
+             * Defaults to: false.
+             */
+            expanded: {
+                sync: 0,
+                value: false,
+                view: 1
+            },
+
+            /**
+             * html title for current tree node.
+             * @type {String}
+             */
+            tooltip: {
+                view: 1
+            },
+
+            /**
+             * Tree instance current tree node belongs to.
+             * @type {Tree}
+             */
+            tree: {
+                getter: function () {
+                    var from = this;
+                    while (from && !from.isTree) {
+                        from = from.get('parent');
                     }
-                },
-
-                /**
-                 * depth of node.
-                 * @type {Number}
-                 */
-                depth: {
-                    view: 1
-                },
-
-                focusable: {
-                    value: false
-                },
-
-                decorateChildCls: {
-                    valueFn: function(){
-                        return this.getBaseCssClass('children');
-                    }
-                },
-
-                defaultChildCfg: {
-                    value: {
-                        xclass: 'tree-node'
-                    }
+                    return from;
                 }
             },
-            xclass: 'tree-node'
-        });
+
+            /**
+             * depth of node.
+             * @type {Number}
+             */
+            depth: {
+                view: 1
+            },
+
+            focusable: {
+                value: false
+            },
+
+            defaultChildCfg: {
+                value: {
+                    xclass: 'tree-node'
+                }
+            }
+        },
+        xclass: 'tree-node'
+    });
 
 
     // # ------------------- private start
@@ -421,7 +410,7 @@ KISSY.add("tree/node", function (S, Node, Component,Extension, TreeNodeRender) {
         }
         S.each(c.get("children"), function (child) {
             if (typeof setDepth == 'number') {
-                recursiveSetDepth(tree, child,  setDepth + 1);
+                recursiveSetDepth(tree, child, setDepth + 1);
             } else {
                 recursiveSetDepth(tree, child);
             }
@@ -446,7 +435,7 @@ KISSY.add("tree/node", function (S, Node, Component,Extension, TreeNodeRender) {
     return TreeNode;
 
 }, {
-    requires: ['node', 'component/base', 'component/extension','./node-render']
+    requires: ['node', 'component/container', './node-render']
 });
 
 /**

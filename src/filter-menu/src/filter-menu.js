@@ -21,9 +21,9 @@ KISSY.add("filter-menu", function (S, Menu, FilterMenuRender) {
                 filterInput.on("valuechange", self.handleFilterEvent, self);
             },
 
-            handleMouseEnter: function () {
+            handleMouseEnterInternal: function () {
                 var self = this;
-                FilterMenu.superclass.handleMouseEnter.apply(self, arguments);
+                FilterMenu.superclass.handleMouseEnterInternal.apply(self, arguments);
                 // 权益解决,filter input focus 后会滚动到牌聚焦处,select 则不会
                 // 如果 filtermenu 的菜单项被滚轮滚到后面,点击触发不了,会向前滚动到 filter input
                 self.view.getKeyEventTarget()[0].select();

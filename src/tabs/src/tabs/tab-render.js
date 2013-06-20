@@ -21,6 +21,7 @@ KISSY.add("tabs/tab-render", function (S, Button) {
             el.attr('aria-selected', !!v);
         }
     }, {
+        name:'TabsTabRender',
         HTML_PARSER: {
             selected: function (el) {
                 return el.hasClass(this.getBaseCssClass('selected'));

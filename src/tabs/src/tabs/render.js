@@ -16,7 +16,7 @@ KISSY.add("tabs/render", function (S, Container) {
 
         decorateDom: function () {
             var controller = this.controller;
-            controller.get('bar').set('changeType', this.get('changeType'));
+            controller.get('bar').set('changeType', controller.get('changeType'));
         },
 
         '_onSetBarOrientation': function (v) {
@@ -27,6 +27,7 @@ KISSY.add("tabs/render", function (S, Container) {
         }
 
     }, {
+        name:'TabsRender',
         HTML_PARSER: {
             barOrientation: function (el) {
                 var orientation = el[0].className.match(/(top|bottom|left|right)\b/);

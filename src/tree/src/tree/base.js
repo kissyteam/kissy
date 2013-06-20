@@ -2,7 +2,9 @@
  * root node represent a simple tree
  * @author yiminghe@gmail.com
  */
-KISSY.add("tree/base", function (S, Component,TreeNode, TreeRender, TreeManager) {
+KISSY.add("tree/base", function (S, TreeNode, TreeManager) {
+
+    var Tree;
 
     /*多继承
      1. 继承基节点（包括可装饰儿子节点功能）
@@ -17,14 +19,31 @@ KISSY.add("tree/base", function (S, Component,TreeNode, TreeRender, TreeManager)
      * xclass: 'tree'.
      * @extends Tree.Node
      */
-    return TreeNode.extend([TreeManager], {}, {
+    return Tree = TreeNode.extend([TreeManager], {
+
+        handleKeyDownInternal: function (e) {
+            var current = this.get("selectedItem");
+            if (current === this) {
+                return Tree.superclass.handleKeyDownInternal.call(current, e);
+            }
+            return current && current.handleKeyDownInternal(e);
+        },
+
+        _onSetFocused: function (v) {
+            var self = this;
+            Tree.superclass._onSetFocused.apply(self, arguments);
+            // 得到焦点时没有选择节点
+            // 默认选择自己
+            if (v && !self.get("selectedItem")) {
+                self.select();
+            }
+        }
+
+    }, {
         ATTRS: {
-            xrender: {
-                value: TreeRender
-            },
             defaultChildCfg: {
                 value: {
-                    xclass:'tree-node'
+                    xclass: 'tree-node'
                 }
             }
         },
@@ -32,7 +51,7 @@ KISSY.add("tree/base", function (S, Component,TreeNode, TreeRender, TreeManager)
     });
 
 }, {
-    requires: ['component/base', './node', './tree-render', './tree-manager']
+    requires: ['./node', './tree-manager']
 });
 
 /*

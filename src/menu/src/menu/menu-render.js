@@ -25,7 +25,7 @@ KISSY.add("menu/menu-render", function (S, Container) {
 
         containsElement: function (element) {
             var el = this.el;
-            return el[0] === element || el.contains(element);
+            return el && (el[0] === element || el.contains(element));
         }
     });
 }, {

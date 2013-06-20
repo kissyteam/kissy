@@ -2,7 +2,7 @@
  * common render for node
  * @author yiminghe@gmail.com
  */
-KISSY.add("tree/node-render", function (S, Node, Component, TreeNodeTpl, Extension) {
+KISSY.add("tree/node-render", function (S, Node, Container, TreeNodeTpl, ContentRenderExtension) {
 
     var SELECTED_CLS = "selected",
         COMMON_EXPAND_EL_CLS = "expand-icon-{t}",
@@ -30,9 +30,9 @@ KISSY.add("tree/node-render", function (S, Node, Component, TreeNodeTpl, Extensi
         CHECK_CLS = "checked",
         ALL_STATES_CLS = "checked0 checked1 checked2";
 
-    return Component.Render.extend([Extension.ContentRender],{
+    return Container.ATTRS.xrender.value.extend([ContentRenderExtension], {
 
-        beforeCreateDom:function(renderData,childrenElSelectors){
+        beforeCreateDom: function (renderData, childrenElSelectors) {
             S.mix(renderData.elAttrs, {
                 role: 'tree-node',
                 'aria-labelledby': 'ks-content' + renderData.id,
@@ -52,17 +52,18 @@ KISSY.add("tree/node-render", function (S, Node, Component, TreeNodeTpl, Extensi
 
         refreshCss: function (isNodeSingleOrLast, isNodeLeaf) {
             var self = this,
-                iconEl = self.get("iconEl"),
+                controller = self.controller,
+                iconEl = controller.get("iconEl"),
                 iconElCss,
                 expandElCss,
-                expandIconEl = self.get("expandIconEl"),
-                childrenEl = self.get("childrenEl");
+                expandIconEl = controller.get("expandIconEl"),
+                childrenEl = controller.get("childrenEl");
 
             if (isNodeLeaf) {
                 iconElCss = ICON_EL_FILE_CLS;
                 expandElCss = EXPAND_ICON_EL_FILE_CLS;
             } else {
-                var expanded = self.get("expanded");
+                var expanded = controller.get("expanded");
                 if (expanded) {
                     iconElCss = ICON_EL_FOLDER_EXPAND_CLS;
                     expandElCss = EXPAND_ICON_EL_FOLDER_EXPAND_CLS;
@@ -85,15 +86,15 @@ KISSY.add("tree/node-render", function (S, Node, Component, TreeNodeTpl, Extensi
 
         _onSetExpanded: function (v) {
             var self = this,
-                childrenEl = self.get("childrenEl");
+                childrenEl = self.controller.get("childrenEl");
             childrenEl[v ? "show" : "hide"]();
             self.el.attr("aria-expanded", v);
         },
 
         _onSetSelected: function (v) {
             var self = this,
-                rowEl = self.get("rowEl");
-            rowEl[v ? "addClass" : "removeClass"](self.getBaseCssClass(SELECTED_CLS));
+                rowEl = self.controller.get("rowEl");
+            rowEl[v ? "addClass" : "removeClass"](self.getBaseCssClasses(SELECTED_CLS));
             self.el.attr("aria-selected", v);
         },
 
@@ -103,38 +104,19 @@ KISSY.add("tree/node-render", function (S, Node, Component, TreeNodeTpl, Extensi
 
         _onSetCheckState: function (s) {
             var self = this,
-                checkIconEl = self.get("checkIconEl");
-            checkIconEl.removeClass(self.getBaseCssClass(ALL_STATES_CLS))
-                .addClass(self.getBaseCssClass(CHECK_CLS) + s);
+                checkCls = self.getBaseCssClasses(CHECK_CLS).split(/\s+/).join(s + ' ') + s,
+                checkIconEl = self.controller.get("checkIconEl");
+            checkIconEl.removeClass(self.getBaseCssClasses(ALL_STATES_CLS))
+                .addClass(checkCls);
         },
 
         getChildrenContainerEl: function () {
-            return this.get('childrenEl');
+            return this.controller.get('childrenEl');
         }
     }, {
         ATTRS: {
             contentTpl: {
                 value: TreeNodeTpl
-            },
-            childrenEl: {},
-            expandIconEl: {},
-            tooltip: {},
-            iconEl: {},
-            expanded: {
-                sync: 0
-            },
-            rowEl: {},
-            depth: {
-                sync: 0
-            },
-            isLeaf: {},
-            selected: {
-                sync: 0
-            },
-            checkIconEl: {},
-            checkable: {},
-            checkState: {
-                sync: 0
             }
         },
 
@@ -184,5 +166,5 @@ KISSY.add("tree/node-render", function (S, Node, Component, TreeNodeTpl, Extensi
     });
 
 }, {
-    requires: ['node', 'component/base', './node-tpl','component/extension']
+    requires: ['node', 'component/container', './node-tpl', 'component/extension/content-render']
 });

@@ -130,7 +130,7 @@ KISSY.add("toolbar", function (S, Container, DelegateChildrenExtension, ToolbarR
             self.on("afterHighlightedChange", afterHighlightedChange, self);
         },
 
-        handleBlur: function () {
+        handleBlurInternal: function () {
             var self = this,
                 highlightedItem,
                 expandedItem;
@@ -141,14 +141,14 @@ KISSY.add("toolbar", function (S, Container, DelegateChildrenExtension, ToolbarR
             }
         },
 
-        getNextItemByKeyEventInternal: function (e, current) {
+        getNextItemByKeyDown: function (e, current) {
             var self = this,
                 orientation = self.get("orientation"),
                 children = self.get("children"),
                 childIndex = current && S.indexOf(current, children);
 
             if (current) {
-                if (current.handleKeyEventInternal(e)) {
+                if (current.handleKeyDownInternal(e)) {
                     return true;
                 }
             }
@@ -195,10 +195,10 @@ KISSY.add("toolbar", function (S, Container, DelegateChildrenExtension, ToolbarR
             return current;
         },
 
-        handleKeyEventInternal: function (e) {
+        handleKeyDownInternal: function (e) {
             var self = this,
                 currentChild = getChildByHighlightedItem(self),
-                nextHighlightedItem = self.getNextItemByKeyEventInternal(e, currentChild);
+                nextHighlightedItem = self.getNextItemByKeyDown(e, currentChild);
 
             if (typeof nextHighlightedItem == 'boolean') {
                 return nextHighlightedItem;

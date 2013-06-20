@@ -3,6 +3,8 @@ KISSY.add('tabs/bar-render', function (S, Toolbar) {
         beforeCreateDom: function (renderData) {
             renderData.elAttrs.role = 'tablist';
         }
+    },{
+        name:'TabsBarRender'
     });
 },{
     requires:['toolbar']

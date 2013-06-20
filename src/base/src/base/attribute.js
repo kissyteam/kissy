@@ -439,6 +439,7 @@ KISSY.add('base/attribute', function (S, CustomEvent, undefined) {
 
         /**
          * internal use, no event involved, just set.
+         * override by model
          * @protected
          */
         setInternal: function (name, value) {

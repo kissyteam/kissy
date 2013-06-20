@@ -23,8 +23,7 @@ KISSY.add("component/extension/delegate-children", function (S, Node, Manager) {
             if (!this.get("disabled")) {
                 var control = this.getOwnerControl(e);
                 if (control && !control.get("disabled")) {
-                    // can not stop!
-                    // e.stopPropagation();
+                    e.stopPropagation();
                     // Child control identified; forward the event.
                     switch (e.type) {
                         case Gesture.start:
@@ -34,7 +33,7 @@ KISSY.add("component/extension/delegate-children", function (S, Node, Manager) {
                             control.handleMouseUp(e);
                             break;
                         case Gesture.tap:
-                            control.performActionInternal(e);
+                            control.handleClick(e);
                             break;
                         case "mouseenter":
                             control.handleMouseEnter(e);
@@ -95,5 +94,5 @@ KISSY.add("component/extension/delegate-children", function (S, Node, Manager) {
 
     return DelegateChildren;
 }, {
-    requires: ['node','component/manager']
+    requires: ['node', 'component/manager']
 });

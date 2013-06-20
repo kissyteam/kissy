@@ -25,6 +25,7 @@ KISSY.add("tabs/panel-render", function (S, Container) {
         }
 
     }, {
+        name: 'TabsPanelRender',
         HTML_PARSER: {
             selected: function (el) {
                 return el.hasClass(this.getBaseCssClass('selected'));

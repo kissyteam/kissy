@@ -5,6 +5,9 @@
  */
 KISSY.add("menu/submenu", function (S, Node, MenuItem, SubMenuRender) {
 
+    var KeyCode = Node.KeyCode,
+        MENU_DELAY = 0.15;
+
     function afterHighlightedChange(e) {
         var target = e.target,
             self = this;
@@ -19,10 +22,6 @@ KISSY.add("menu/submenu", function (S, Node, MenuItem, SubMenuRender) {
             }
         }
     }
-
-    /* or precisely subMenuItem */
-    var KeyCode = Node.KeyCode,
-        MENU_DELAY = 0.15;
 
     /**
      * Class representing a submenu that can be added as an item to other menus.
@@ -56,10 +55,11 @@ KISSY.add("menu/submenu", function (S, Node, MenuItem, SubMenuRender) {
             },
 
             bindUI: function () {
-                this.on('afterHighlightedChange', afterHighlightedChange, this);
+                var self = this;
+                self.on('afterHighlightedChange', afterHighlightedChange, self);
             },
 
-            handleMouseLeave: function () {
+            handleMouseLeaveInternal: function () {
                 var self = this;
                 self.set('highlighted', false, {
                     data: {
@@ -68,14 +68,14 @@ KISSY.add("menu/submenu", function (S, Node, MenuItem, SubMenuRender) {
                 });
                 self.clearSubMenuTimers();
                 var menu = self.get('menu');
-                if (menu.get('rendered') && menu.get('visible')) {
+                if (menu.get('visible')) {
                     // 延迟 highlighted
                     self._dismissTimer = S.later(hideMenu,
                         self.get("menuDelay") * 1000, false, self);
                 }
             },
 
-            handleMouseEnter: function () {
+            handleMouseEnterInternal: function () {
                 var self = this;
                 self.set('highlighted', true, {
                     data: {
@@ -84,7 +84,7 @@ KISSY.add("menu/submenu", function (S, Node, MenuItem, SubMenuRender) {
                 });
                 self.clearSubMenuTimers();
                 var menu = self.get('menu');
-                if (!menu.get('rendered') || !menu.get('visible')) {
+                if (!menu.get('visible')) {
                     self._showTimer = S.later(showMenu, self.get("menuDelay") * 1000, false, self);
                 }
             },
@@ -112,11 +112,11 @@ KISSY.add("menu/submenu", function (S, Node, MenuItem, SubMenuRender) {
             },
 
             // click ，立即显示
-            performActionInternal: function () {
+            handleClickInternal: function () {
                 var self = this;
                 showMenu.call(self);
                 //  trigger click event from menuitem
-                SubMenu.superclass.performActionInternal.apply(self, arguments);
+                SubMenu.superclass.handleClickInternal.apply(self, arguments);
             },
 
             /**
@@ -129,12 +129,12 @@ KISSY.add("menu/submenu", function (S, Node, MenuItem, SubMenuRender) {
              * @protected
              * @return {Boolean|undefined} Whether the event was handled.
              */
-            handleKeyEventInternal: function (e) {
+            handleKeyDownInternal: function (e) {
                 var self = this,
                     menu = self.get('menu'),
                     menuChildren,
                     menuChild,
-                    hasKeyboardControl_ = menu.get('rendered') && menu.get("visible"),
+                    hasKeyboardControl_ = menu.get("visible"),
                     keyCode = e.keyCode;
 
                 if (!hasKeyboardControl_) {
@@ -152,12 +152,12 @@ KISSY.add("menu/submenu", function (S, Node, MenuItem, SubMenuRender) {
                     }
                     // enter as click
                     else if (keyCode == KeyCode.ENTER) {
-                        return this.performActionInternal(e);
+                        return self.handleClickInternal(e);
                     }
                     else {
                         return undefined;
                     }
-                } else if (menu.handleKeydown(e)) {
+                } else if (menu.handleKeyDownInternal(e)) {
                 }
                 // The menu has control and the key hasn't yet been handled, on left arrow
                 // we turn off key control.
@@ -177,8 +177,7 @@ KISSY.add("menu/submenu", function (S, Node, MenuItem, SubMenuRender) {
             },
 
             containsElement: function (element) {
-                var menu = this.get('menu');
-                return menu.get('rendered') && menu.containsElement(element);
+                return this.get('menu').containsElement(element);
             },
 
             destructor: function () {
@@ -228,15 +227,6 @@ KISSY.add("menu/submenu", function (S, Node, MenuItem, SubMenuRender) {
                     setter: function (m) {
                         if (m.isController) {
                             m.setInternal('parent', this);
-                            var align = {
-                                node: this.el,
-                                points: ['tr', 'tl'],
-                                overflow: {
-                                    adjustX: 1,
-                                    adjustY: 1
-                                }
-                            };
-                            S.mix(m.get('align'), align, false);
                         }
                     }
                 },
@@ -252,33 +242,24 @@ KISSY.add("menu/submenu", function (S, Node, MenuItem, SubMenuRender) {
 
     function showMenu() {
         var self = this,
-            el,
-            align,
             menu = self.get('menu');
-
-        el = self.el;
-        align = menu.get("align");
-        delete align.node;
-        align = S.clone(align);
-        align.node = el;
-        align.points = align.points || ['tr', 'tl'];
-        menu.set("align", align);
+        // does not put this into setter
+        // in case set menu before submenu item is  rendered
+        var align = {
+            node: this.el,
+            points: ['tr', 'tl'],
+            overflow: {
+                adjustX: 1,
+                adjustY: 1
+            }
+        };
+        S.mix(menu.get('align'), align, false);
         menu.show();
-        /*
-         If activation of your menuitem produces a popup menu,
-         then the menuitem should have aria-haspopup set to the ID of the corresponding menu
-         to allow the assist technology to follow the menu hierarchy
-         and assist the user in determining context during menu navigation.
-         */
-        el.attr("aria-haspopup", menu.el.attr("id"));
-
+        self.el.attr("aria-haspopup", menu.el.attr("id"));
     }
 
     function hideMenu() {
-        var menu = this.get('menu');
-        if (menu.get('rendered')) {
-            menu.hide();
-        }
+        this.get('menu').hide();
     }
 
     // # ------------------------------------ private end

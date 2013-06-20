@@ -19,9 +19,22 @@ KISSY.add("overlay/extension/loading", function () {
          * @chainable
          */
         loading: function () {
-            var self=this;
-            self.view.loading();
-            return self;
+            var self = this;
+            if (!self._loadingExtEl) {
+                self._loadingExtEl = new Node("<div " +
+                    "class='" +
+                    self.prefixCls + "ext-loading'" +
+                    " style='position: absolute;" +
+                    "border: none;" +
+                    "width: 100%;" +
+                    "top: 0;" +
+                    "left: 0;" +
+                    "z-index: 99999;" +
+                    "height:100%;" +
+                    "*height: expression(this.parentNode.offsetHeight);" + "'/>")
+                    .appendTo(self.el);
+            }
+            self._loadingExtEl.show();
         },
 
         /**
@@ -29,8 +42,8 @@ KISSY.add("overlay/extension/loading", function () {
          * @chainable
          */
         unloading: function () {
-            this.view.unloading();
-            return this;
+            var lel = this._loadingExtEl;
+            lel && lel.hide();
         }
     };
 

@@ -2,7 +2,9 @@
  * root node represent a check tree
  * @author yiminghe@gmail.com
  */
-KISSY.add("tree/check-tree", function (S, Component, CheckNode, TreeRender, TreeManager) {
+KISSY.add("tree/check-tree", function (S, CheckNode, TreeManager) {
+
+    var CheckTree;
     /**
      * @name CheckTree
      * @extends Tree.CheckNode
@@ -11,25 +13,36 @@ KISSY.add("tree/check-tree", function (S, Component, CheckNode, TreeRender, Tree
      * xclass: 'check-tree'.
      * @member Tree
      */
-    return  CheckNode.extend([TreeManager], {
+    return  CheckTree = CheckNode.extend([TreeManager], {
+
+        handleKeyDownInternal: function (e) {
+            var current = this.get("selectedItem");
+            if (current === this) {
+                return CheckTree.superclass.handleKeyDownInternal.call(current, e);
+            }
+            return current && current.handleKeyDownInternal(e);
+        },
+
+        _onSetFocused: function (v) {
+            var self = this;
+            CheckTree.superclass._onSetFocused.apply(self, arguments);
+            // 得到焦点时没有选择节点
+            // 默认选择自己
+            if (v && !self.get("selectedItem")) {
+                self.select();
+            }
+        }
+
     }, {
         ATTRS: {
-            /**
-             * Readonly. Render class.
-             * @type {Function}
-             */
-            xrender: {
-                value: TreeRender
-            },
-
             defaultChildCfg: {
                 value: {
-                    xclass:'check-tree-node'
+                    xclass: 'check-tree-node'
                 }
             }
         },
         xclass: 'check-tree'
     });
 }, {
-    requires: ['component/base', './check-node', './tree-render', './tree-manager']
+    requires: ['./check-node', './tree-manager']
 });
