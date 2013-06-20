@@ -29,20 +29,20 @@
         win = Env.host,
         doc = win.document || {},
         documentMode = doc.documentMode,
-        nativeJSON = ((UA.nodejs && typeof global === 'object') ? global : win).Json;
+        nativeJson = ((UA.nodejs && typeof global === 'object') ? global : win).JSON;
 
     // ie 8.0.7600.16315@win7 json bug!
     if (documentMode && documentMode < 9) {
-        nativeJSON = null;
+        nativeJson = null;
     }
 
-    if (nativeJSON) {
+    if (nativeJson) {
         S.add('json', function () {
-            return S.Json =S.JSON = nativeJSON;
+            return S.Json =S.JSON = nativeJson;
         });
         // light weight json parse
-        S.parseJSON = function (data) {
-            return nativeJSON.parse(data);
+        S.parseJson = function (data) {
+            return nativeJson.parse(data);
         };
     } else {
         // Json RegExp
@@ -50,7 +50,7 @@
             INVALID_BRACES_REG = /(?:^|:|,)(?:\s*\[)+/g,
             INVALID_ESCAPES_REG = /\\(?:["\\\/bfnrt]|u[\da-fA-F]{4})/g,
             INVALID_TOKENS_REG = /"[^"\\\r\n]*"|true|false|null|-?(?:\d+\.|)\d+(?:[eE][+-]?\d+|)/g;
-        S.parseJSON = function (data) {
+        S.parseJson = function (data) {
             if (data === null) {
                 return data;
             }

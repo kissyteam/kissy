@@ -141,7 +141,7 @@ if (KISSY.UA.mobile || KISSY.UA.phantomjs || location.protocol === 'file:') {
                     var swf = new SWF(config);
                     var flashvars = getFlashVars(swf.get('el'));
                     expect(flashvars.name1).toBe('http://taobao.com/?x=1&z=2');
-                    expect(S.parseJSON(flashvars.name2).cpx.s).toBe('string');
+                    expect(S.parseJson(flashvars.name2).cpx.s).toBe('string');
                     expect(swf.get('el').id).toEqual('test-flash-vars');
 
                     swf.destroy();

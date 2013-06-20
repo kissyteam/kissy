@@ -71,7 +71,7 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
             source.push('var buffer = ""' + (global ? ',' : ';'));
             if (global) {
                 source.push('S = KISSY,' +
-                    'escapeHTML = S.escapeHTML,' +
+                    'escapeHtml = S.escapeHtml,' +
                     'isArray = S.isArray,' +
                     'isObject = S.isObject,' +
                     'log = S.log,' +
@@ -481,7 +481,7 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
         var tmp = guid('tmp');
         // in case it is expression, avoid duplicate computation
         source.push('var ' + tmp + ' = ' + expressionOrVariable + ';');
-        source.push('buffer+=' + (escaped ? 'escapeHTML(' : '') +
+        source.push('buffer+=' + (escaped ? 'escapeHtml(' : '') +
             // when render undefined => ''
             '(' + tmp + '===undefined?"":' + tmp + ')' + '+""' +
             (escaped ? ')' : '') +

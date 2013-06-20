@@ -34,7 +34,7 @@ KISSY.add('io/base', function (S, Json, Event, undefined) {
             },
             converters: {
                 text: {
-                    json: S.parseJSON,
+                    json: S.parseJson,
                     html: mirror,
                     text: mirror,
                     xml: S.parseXML

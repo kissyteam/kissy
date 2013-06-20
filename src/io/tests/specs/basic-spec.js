@@ -341,7 +341,7 @@ KISSY.use("io", function (S,  Io) {
                 Io.post('../data/interface.jss?t=post', function (data, status, xhr) {
                     ok = true;
                     expect(typeof data).toBe('string');
-                    var o = S.parseJSON(data);
+                    var o = S.parseJson(data);
                     expect(o).not.toBe(undefined);
                     expect(o['name']).toBe('test');
                     expect(xhr.responseText).toBe(data);
@@ -364,7 +364,7 @@ KISSY.use("io", function (S,  Io) {
                     exp: '>,?/\%."`~'
                 }, function (data, textStatus, xhr) {
                     ok = true;
-                    var o = S.parseJSON(data);
+                    var o = S.parseJson(data);
                     expect(o).not.toBe(undefined);
                     expect(o['name']).toBe('test');
                     expect(o['company']).toBe('www.taobao.com');
@@ -387,7 +387,7 @@ KISSY.use("io", function (S,  Io) {
                     function (data, textStatus, xhr) {
                         ok = true;
 
-                        var o = S.parseJSON(data);
+                        var o = S.parseJson(data);
                         expect(o).not.toBe(undefined);
                         expect(o['name']).toBe('test');
                         expect(o['company']).toBe('www.taobao.com');
@@ -682,7 +682,7 @@ KISSY.use("io", function (S,  Io) {
                 Io.get('../data/interface.jss?t=get', function (data, textStatus, xhr) {
                     ok = true;
 
-                    var o = S.parseJSON(data);
+                    var o = S.parseJson(data);
                     expect(o).not.toBe(undefined);
                     expect(o['t']).toBe('get');
                     expect(o['name']).toBe('test');
@@ -703,7 +703,7 @@ KISSY.use("io", function (S,  Io) {
 
                 Io.get('../data/interface.jss?t=get', {'data': 'hello'}, function (data) {
                     ok = true;
-                    var o = S.parseJSON(data);
+                    var o = S.parseJson(data);
                     expect(o['data']).toBe('hello');
                 });
 

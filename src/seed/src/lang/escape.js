@@ -111,7 +111,7 @@
          * @member KISSY
          * @return {String} escaped html
          */
-        escapeHTML: function (str) {
+        escapeHtml: function (str) {
             return (str + '').replace(getEscapeReg(), function (m) {
                 return reverseEntities[m];
             });
@@ -135,7 +135,7 @@
          * @member KISSY
          * @return {String} un-escaped html
          */
-        unEscapeHTML: function (str) {
+        unEscapeHtml: function (str) {
             return str.replace(getUnEscapeReg(), function (m, n) {
                 return htmlEntities[m] || String.fromCharCode(+n);
             });
@@ -261,4 +261,7 @@
             return ret;
         }
     });
+
+    S.escapeHTML = S.escapeHtml;
+    S.unEscapeHTML = S.unEscapeHtml;
 })(KISSY);

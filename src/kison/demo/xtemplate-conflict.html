@@ -93,7 +93,7 @@
                 g = (MAPS[grammar] = new KISON.Grammar(grammarObj).genCode());
                 S.log("生成代码耗时: " + (S.now() - start) + "毫秒");
             }
-            gen.html('<pre class="brush: js;">' + S.escapeHTML(js_beauty(g)) + '</pre>');
+            gen.html('<pre class="brush: js;">' + S.escapeHtml(js_beauty(g)) + '</pre>');
             SyntaxHighlighter.highlight({}, gen.one("pre")[0]);
             var parser = FNS[grammar] || (FNS[grammar] = new Function(g)());
             start = S.now();

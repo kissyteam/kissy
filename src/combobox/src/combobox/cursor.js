@@ -130,7 +130,7 @@ KISSY.add('combobox/cursor', function (S, Node) {
 
         selectionStart = elem.selectionStart;
 
-        fake.html(S.escapeHTML(elem.value.substring(0, selectionStart - 1)) +
+        fake.html(S.escapeHtml(elem.value.substring(0, selectionStart - 1)) +
             // marker
             MARKER);
 

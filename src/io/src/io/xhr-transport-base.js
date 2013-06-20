@@ -267,7 +267,7 @@ KISSY.add('io/xhr-transport-base', function (S, Io) {
                                 text = text.slice(bodyIndex + 6, lastBodyIndex);
                             }
                             // same with old-ie logic
-                            io.responseText = S.unEscapeHTML(text);
+                            io.responseText = S.unEscapeHtml(text);
                         }
 
                         // Firefox throws an exception when accessing

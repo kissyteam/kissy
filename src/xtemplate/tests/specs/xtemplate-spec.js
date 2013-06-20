@@ -455,7 +455,7 @@ KISSY.use('xtemplate', function (S, XTemplate) {
 
                 });
 
-                it('support escapeHTML', function () {
+                it('support escapeHtml', function () {
 
                     var tpl = 'my {{title}} is {{{title}}}';
 

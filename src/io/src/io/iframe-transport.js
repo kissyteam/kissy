@@ -23,7 +23,7 @@ KISSY.add('io/iframe-transport', function (S, Dom, Event, Io) {
     // text or html dataType is of same effect.
     // same as normal ajax or html5 FileData
     iframeConverter.json = function (str) {
-        return S.parseJSON(S.unEscapeHTML(str));
+        return S.parseJson(S.unEscapeHtml(str));
     };
 
     // iframe 内的内容就是 body.innerText

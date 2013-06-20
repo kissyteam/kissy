@@ -497,7 +497,7 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor,
 
             if (!data) return;
             try {
-                data = S.parseJSON(data);
+                data = S.parseJson(data);
             } catch (ex) {
                 S.log("multiUpload _onUploadCompleteData error :");
                 S.log(ex);

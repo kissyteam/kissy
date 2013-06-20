@@ -67,8 +67,8 @@ KISSY.add('event/dom/hashchange', function (S, DOMEvent, Dom) {
             // S.log('set iframe html :' + hash);
             var html = S.substitute(IFRAME_TEMPLATE, {
                     // 防止 hash 里有代码造成 xss
-                    // 后面通过 innerText，相当于 unEscapeHTML
-                    hash: S.escapeHTML(hash),
+                    // 后面通过 innerText，相当于 unEscapeHtml
+                    hash: S.escapeHtml(hash),
                     // 一定要加哦
                     head: Dom.isCustomDomain() ? ("<script>" +
                         "document." +
@@ -86,7 +86,7 @@ KISSY.add('event/dom/hashchange', function (S, DOMEvent, Dom) {
                     iframeDoc.open();
                 }
                 // 取时要用 innerText !!
-                // 否则取 innerHTML 会因为 escapeHTML 导置 body.innerHTMl != hash
+                // 否则取 innerHTML 会因为 escapeHtml 导置 body.innerHTMl != hash
                 iframeDoc.write(html);
                 iframeDoc.close();
                 // 立刻同步调用 onIframeLoad !!!!

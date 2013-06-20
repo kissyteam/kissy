@@ -234,7 +234,7 @@
 
         config = elem.getAttribute('data-widget-config');
         if (config) config = config.replace(/'/g, '"');
-        config = S.parseJSON(config);
+        config = S.parseJson(config);
 
         // 兼容之前没有markupType时的写法
         if (!('type' in config)) {

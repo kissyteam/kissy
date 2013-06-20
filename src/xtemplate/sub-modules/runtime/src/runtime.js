@@ -86,7 +86,7 @@ KISSY.add('xtemplate/runtime', function (S, XTemplateRuntime, commands, includeC
  *      - 更容易扩展 command,sub-tpl
  *      - 支持子模板
  *      - 支持作用域链: ..\x ..\..\y
- *      - 内置 escapeHTML 支持
+ *      - 内置 escapeHtml 支持
  *      - 支持预编译
  *      - 支持简单表达式 +-/%* ()
  *      - 支持简单比较 === !===

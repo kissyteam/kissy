@@ -136,9 +136,9 @@
             });
 
             color.on("*Change", function (e) {
-                hsl.html(S.escapeHTML(color.toHSL()));
-                rgb.html(S.escapeHTML(color.toRGB()));
-                hex.html(S.escapeHTML(color.toHex()));
+                hsl.html(S.escapeHtml(color.toHSL()));
+                rgb.html(S.escapeHtml(color.toRGB()));
+                hex.html(S.escapeHtml(color.toHex()));
                 preview.css("background", color.toHex());
             });
 

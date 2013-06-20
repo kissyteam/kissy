@@ -105,7 +105,7 @@
         $('#parse').on('click', function () {
             var g = XTemplate.compiler.compileToStr($('#tpl').val());
             $('#gen').html('<pre class="brush: js;">' +
-                    S.escapeHTML(js_beauty(g)) + '</pre>');
+                    S.escapeHtml(js_beauty(g)) + '</pre>');
             SyntaxHighlighter.highlight({}, $('#gen').one("pre")[0]);
         });
     });

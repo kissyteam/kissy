@@ -176,8 +176,8 @@ kison 支持在每个语法规则项中添加动作函数，通过工具在识�
 
     visitor.tplNode=function(node){
 
-        if(node.escapeHTML){
-            codes.push("if("+node.id+" in data) { ret.push(KISSY.escapeHTML(data."+node.js+");) }"+
+        if(node.escapeHtml){
+            codes.push("if("+node.id+" in data) { ret.push(KISSY.escapeHtml(data."+node.js+");) }"+
             " else { KISSY.warn('not found')!; }");
         }else{
         }

@@ -76,7 +76,7 @@
         $('#check').on('click', function () {
             var g = new XTemplate($('#tpl').val()).compile().toString();
             $('#gen').html('<pre class="brush: js;">' +
-                    S.escapeHTML(js_beauty(g)) + '</pre>');
+                    S.escapeHtml(js_beauty(g)) + '</pre>');
             SyntaxHighlighter.highlight({}, $('#gen').one("pre")[0]);
         });
     });
