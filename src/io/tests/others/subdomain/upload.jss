@@ -21,7 +21,7 @@ module.exports = function (req, res) {
         var data = '<!doctype html><html><head>' +
             '<script>document.domain=window.location.hostname.split(".").slice(-3).join(".");</script>' +
             '</head><body>';
-        data += Json.stringify(t);
+        data += JSON.stringify(t);
         data += '</body></html>';
         res.set('Expires', 'Mon, 26 Jul 1997 05:00:00 GMT');
         res.set('Cache-Control', 'no-cache');

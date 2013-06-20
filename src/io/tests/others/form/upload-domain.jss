@@ -17,7 +17,7 @@ module.exports = function (req, res) {
     if (query.test5) {
         t.test5 = query.test5;
     }
-    res.send('<script>document.domain="'+req.host+'";</script>' + Json.stringify(t));
+    res.send('<script>document.domain="'+req.host+'";</script>' + JSON.stringify(t));
     //}, 10);
 
 
