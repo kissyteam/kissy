@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 21 01:18
+build time: Jun 21 17:33
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -3209,7 +3209,7 @@ KISSY.add('dom/base/style', function (S, Dom, undefined) {
  * selector
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
-KISSY.add('dom/base/selector', function (S, Dom) {
+KISSY.add('dom/base/selector', function (S, Dom, undefined) {
 
     var doc = S.Env.host.document,
         docElem = doc.documentElement,
@@ -3243,7 +3243,7 @@ KISSY.add('dom/base/selector', function (S, Dom) {
             i,
             simpleContext,
             isSelectorString = typeof selector == 'string',
-            contexts = context ? query(context) : (simpleContext = 1) && [doc],
+            contexts = context !== undefined ? query(context) : (simpleContext = 1) && [doc],
             contextsLen = contexts.length;
 
         // 常见的空

@@ -28,6 +28,10 @@ KISSY.use("dom,core", function (S, Dom) {
             $('#test-selector').remove();
         });
 
+        it('should return empty when context is null',function(){
+            expect(S.query("#test-selector",null).length).toBe(0);
+        });
+
         it('test support disconnect node', function () {
             var div = $('<div id="t"><span id="t2"></span></div>')[0].firstChild;
             expect(Dom.test(div, '#t span')).toBe(true);

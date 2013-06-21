@@ -1,12 +1,12 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 21 12:55
+build time: Jun 21 17:35
 */
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 21 12:54
+build time: Jun 21 17:34
 */
 /**
  * @ignore
@@ -44,11 +44,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130621125443' will replace with current timestamp when compressing.
+         * NOTICE: '20130621173443' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130621125443',
+        __BUILD_TIME: '20130621173443',
         /**
          * KISSY Environment.
          * @private
@@ -5698,7 +5698,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20130621125443'
+            tag: '20130621173443'
         }, getBaseInfo()));
     }
 
@@ -6313,7 +6313,7 @@ config({
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 21 01:18
+build time: Jun 21 17:33
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -9521,7 +9521,7 @@ KISSY.add('dom/base/style', function (S, Dom, undefined) {
  * selector
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
-KISSY.add('dom/base/selector', function (S, Dom) {
+KISSY.add('dom/base/selector', function (S, Dom, undefined) {
 
     var doc = S.Env.host.document,
         docElem = doc.documentElement,
@@ -9555,7 +9555,7 @@ KISSY.add('dom/base/selector', function (S, Dom) {
             i,
             simpleContext,
             isSelectorString = typeof selector == 'string',
-            contexts = context ? query(context) : (simpleContext = 1) && [doc],
+            contexts = context !== undefined ? query(context) : (simpleContext = 1) && [doc],
             contextsLen = contexts.length;
 
         // 常见的空
@@ -10204,7 +10204,7 @@ KISSY.add('dom/base', function (S, Dom) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 21 01:18
+build time: Jun 21 17:33
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -10320,7 +10320,7 @@ KISSY.add('dom/class-list', function (S, Dom) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 21 01:18
+build time: Jun 21 17:33
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -10988,7 +10988,7 @@ KISSY.add('dom/ie', function (S, Dom) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 21 01:18
+build time: Jun 21 17:33
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
