@@ -198,20 +198,56 @@ KISSY.use('xtemplate', function (S, XTemplate) {
 
                 });
 
-                it('support parent scope', function () {
 
-                    var tpl = '{{#each data}}{{this}}-{{../total}}|{{/each}}';
 
-                    var data = {
-                        data: [1, 2],
-                        total: 3
-                    };
+                describe('parent scope', function () {
 
-                    var render = new XTemplate(tpl).render(data);
+                    it('support for with', function () {
 
-                    expect(render).toBe('1-3|2-3|');
+                        var tpl = '{{#with data}}' +
+                            '{{#with p}}' +
+                            '{{name}}-{{age}}-{{../l2}}-{{../../l1}}' +
+                            '{{/with}}' +
+                            '{{/with}}';
 
+                        var data = {
+                            l1: 'l1',
+                            l2: 'l1_2',
+                            data: {
+                                l1: 'l2_1',
+                                l2: 'l2',
+                                p: {
+                                    l1: 'l3_1',
+                                    l2: 'l3_2',
+                                    name: 'h',
+                                    age: 2
+                                }
+
+                            }
+                        };
+
+                        var render = new XTemplate(tpl).render(data);
+
+                        expect(render).toBe('h-2-l2-l1');
+
+                    });
+
+                    it('support for each', function () {
+
+                        var tpl = '{{#each data}}{{this}}-{{../total}}|{{/each}}';
+
+                        var data = {
+                            data: [1, 2],
+                            total: 3
+                        };
+
+                        var render = new XTemplate(tpl).render(data);
+
+                        expect(render).toBe('1-3|2-3|');
+
+                    });
                 });
+
             });
 
 

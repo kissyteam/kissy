@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.30
 MIT Licensed
-build time: Feb 28 18:33
+build time: Jun 21 12:59
 */
 /**
  * xtemplate base
@@ -56,7 +56,7 @@ KISSY.add('xtemplate/runtime/base', function (S) {
          */
         name: '',
         utils: {
-            'getProperty': function (parts, scopes) {
+            'getProperty': function (parts, scopes, depth) {
                 // this refer to current scope object
                 if (parts == 'this' || parts == '.') {
                     if (scopes.length) {
@@ -68,12 +68,12 @@ KISSY.add('xtemplate/runtime/base', function (S) {
                 parts = parts.split('.');
                 var len = parts.length,
                     i,
-                    j,
+                    j = depth || 0,
                     v,
                     p,
                     valid,
                     sl = scopes.length;
-                for (j = 0; j < sl; j++) {
+                for (; j < sl; j++) {
                     v = scopes[j];
                     valid = 1;
                     for (i = 0; i < len; i++) {

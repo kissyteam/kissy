@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.30
 MIT Licensed
-build time: Jun 17 20:32
+build time: Jun 21 12:59
 */
 /**
  * Ast node class for xtemplate
@@ -357,7 +357,8 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
 
                 var tmp = guid('tmp');
 
-                source.push('var ' + tmp + '=getProperty("' + idString + '",scopes);');
+                source.push('var ' + tmp + ' = getProperty("' + idString +
+                    '",scopes,' + depth + ');');
 
                 source.push('if(' + tmp + '===false){');
                 source.push('S[option.silent?"log":"error"]("can not find property: \'' +
