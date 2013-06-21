@@ -249,7 +249,11 @@ KISSY.use('xtemplate', function (S, XTemplate) {
 
 
                 it('support {{^', function () {
-                    var tpl = '{{^each x}}wrong{{else}}{{title}}{{/each}}';
+                    var tpl = '{{^each x}}wrong{{else}}{{title}}{{/each}}' +
+                        '{{#if y === 0}}0{{/if}}' +
+                        '{{^if z===0}}1{{/if}}' +
+                        '{{^if a!==1}}1{{/if}}' +
+                        '{{#if a!==0}}1{{/if}}';
 
                     var data = {
                         x: [
@@ -259,12 +263,16 @@ KISSY.use('xtemplate', function (S, XTemplate) {
                             {
                                 title: 6
                             }
-                        ]
+                        ],
+
+                        y: 0,
+                        z: 1,
+                        a: 1
                     };
 
                     var render = new XTemplate(tpl).render(data);
 
-                    expect(render).toBe('56');
+                    expect(render).toBe('560111');
                 });
 
                 it('support else', function () {
@@ -455,17 +463,37 @@ KISSY.use('xtemplate', function (S, XTemplate) {
 
                 });
 
-                it('support escapeHtml', function () {
+                describe('escapeHtml', function () {
 
-                    var tpl = 'my {{title}} is {{{title}}}';
+                    it('default to escapeHtml', function () {
 
-                    var data = {
-                        title: '<a>'
-                    };
+                        var tpl = 'my {{title}} is {{{title}}}';
 
-                    var render = new XTemplate(tpl).render(data);
+                        var data = {
+                            title: '<a>'
+                        };
 
-                    expect(render).toBe('my &lt;a&gt; is <a>');
+                        var render = new XTemplate(tpl).render(data);
+
+                        expect(render).toBe('my &lt;a&gt; is <a>');
+
+                    });
+
+                    it('can turn off default escapeHtml', function () {
+
+                        var tpl = 'my {{title}} is {{{title}}}';
+
+                        var data = {
+                            title: '<a>'
+                        };
+
+                        var render = new XTemplate(tpl, {
+                            escapeHtml: false
+                        }).render(data);
+
+                        expect(render).toBe('my <a> is <a>');
+
+                    });
 
                 });
 
@@ -510,8 +538,8 @@ KISSY.use('xtemplate', function (S, XTemplate) {
 
                 it('support global command for variable', function () {
 
-                    XTemplate.addCommand('global', function (scopes, option) {
-                        return 'global-' + option.params[0];
+                    XTemplate.addCommand('global', function (scopes, config) {
+                        return 'global-' + config.params[0];
                     });
 
                     var tpl = 'my {{global title}}';
@@ -529,8 +557,8 @@ KISSY.use('xtemplate', function (S, XTemplate) {
 
                 it('support global command for block', function () {
 
-                    XTemplate.addCommand('global2', function (scopes, option) {
-                        return 'global2-' + option.fn(scopes);
+                    XTemplate.addCommand('global2', function (scopes, config) {
+                        return 'global2-' + config.fn(scopes);
                     });
 
                     var tpl = 'my {{#global2}}{{title}}{{/global2}}';
@@ -556,8 +584,8 @@ KISSY.use('xtemplate', function (S, XTemplate) {
 
                     var render = new XTemplate(tpl, {
                         commands: {
-                            'global3': function (scopes, option) {
-                                return 'global3-' + option.params[0];
+                            'global3': function (scopes, config) {
+                                return 'global3-' + config.params[0];
                             }
                         }
                     }).render(data);
@@ -577,8 +605,8 @@ KISSY.use('xtemplate', function (S, XTemplate) {
 
                     var render = new XTemplate(tpl, {
                         commands: {
-                            'global4': function (scopes, option) {
-                                return 'global4-' + option.fn(scopes);
+                            'global4': function (scopes, config) {
+                                return 'global4-' + config.fn(scopes);
                             }
                         }
                     }).render(data);

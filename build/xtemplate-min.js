@@ -1,7 +1,6 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 21 01:28
+build time: Jun 21 15:26
 */
-KISSY.add("xtemplate",function(f,c,h){function a(b,d){d=f.merge(j,d);if("string"==typeof b){var a=b,g=d,e;if(!g.cache||!(e=i[a]))e=h.compileToFn(a,g),g.cache&&(i[a]=e);b=e}this.option=d;this.tpl=b;this.runtime=new c(b,d)}var i=a.cache={};c.includeCommand.invokeEngine=function(b,d,c){return(new a(b,f.merge(c))).render(d,!0)};var j={cache:!0};f.augment(a,{removeSubTpl:function(b){this.runtime.removeSubTpl(b)},removeCommand:function(b){this.runtime.removeCommand(b)},addSubTpl:function(b,a){this.runtime.addSubTpl(b,
-a)},addCommand:function(a,c){this.runtime.addCommand(a,c)},render:function(a){return this.runtime.render.apply(this.runtime,arguments)}});a.compiler=h;a.RunTime=c;a.addCommand=c.addCommand;a.addSubTpl=c.addSubTpl;a.removeCommand=c.removeCommand;a.removeSubTpl=c.removeSubTpl;return a},{requires:["xtemplate/runtime","xtemplate/compiler"]});
+KISSY.add("xtemplate",function(g,a,h){function b(a,c){c=g.merge(j,c);if("string"==typeof a){var e=a,f=c,d;if(!f.cache||!(d=i[e]))d=h.compileToFn(e,f),f.cache&&(i[e]=d);a=d}b.superclass.constructor.call(this,a,c)}var i=b.cache={},j={cache:!0};g.extend(b,a,{},{compiler:h,RunTime:a,addCommand:a.addCommand,addSubTpl:a.addSubTpl,removeCommand:a.removeCommand,removeSubTpl:a.removeSubTpl});return b},{requires:["xtemplate/runtime","xtemplate/compiler"]});

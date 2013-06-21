@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 21 01:28
+build time: Jun 21 15:26
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -18,28 +18,28 @@ KISSY.add('xtemplate', function (S, XTemplateRuntime, compiler) {
 
     var cache = XTemplate.cache = {};
 
-    function compile(tpl, option) {
+    function compile(tpl, config) {
         var fn;
 
-        if (option.cache && (fn = cache[tpl])) {
+        if (config.cache && (fn = cache[tpl])) {
             return fn;
         }
 
-        fn = compiler.compileToFn(tpl, option);
+        fn = compiler.compileToFn(tpl, config);
 
-        if (option.cache) {
+        if (config.cache) {
             cache[tpl] = fn;
         }
 
         return fn;
     }
 
-    // allow str sub template
-    XTemplateRuntime.includeCommand.invokeEngine = function (tpl, scopes, option) {
-        return new XTemplate(tpl, S.merge(option)).render(scopes, true);
-    };
-
     var defaultCfg = {
+        /**
+         * whether cache template string
+         * @member KISSY.XTemplate
+         * @cfg {Boolean} cache
+         */
         cache: true
     };
 
@@ -52,100 +52,58 @@ KISSY.add('xtemplate', function (S, XTemplateRuntime, compiler) {
      *      new XTemplate(tplFunction, config);
      *
      * @class KISSY.XTemplate
+     * @extends KISSY.XTemplate.Runtime
      */
-    function XTemplate(tpl, option) {
-        /**
-         * whether cache template string
-         * @cfg {Boolean} cache
-         */
+    function XTemplate(tpl, config) {
+
         var self = this;
-        option = S.merge(defaultCfg, option);
+        config = S.merge(defaultCfg, config);
+
         if (typeof tpl == 'string') {
-            tpl = compile(tpl, option);
+            tpl = compile(tpl, config);
         }
-        self.option = option;
-        self.tpl = tpl;
-        self.runtime = new XTemplateRuntime(tpl, option);
+
+        XTemplate.superclass.constructor.call(self, tpl, config);
     }
 
-    S.augment(XTemplate, {
+    S.extend(XTemplate, XTemplateRuntime, {}, {
+        compiler: compiler,
+
+        RunTime: XTemplateRuntime,
         /**
-         * remove sub template by name
-         * @param subTplName
+         * add command to all template
+         * @method
+         * @static
+         * @param {String} commandName
+         * @param {Function} fn
          */
-        'removeSubTpl': function (subTplName) {
-            this.runtime.removeSubTpl(subTplName);
-        },
+        addCommand: XTemplateRuntime.addCommand,
+
         /**
-         * remove command by name
-         * @param commandName
+         * add sub template definition to all template
+         * @method
+         * @static
+         * @param {String} subName
+         * @param {Function|String} def
          */
-        'removeCommand': function (commandName) {
-            this.runtime.removeCommand(commandName);
-        },
+        addSubTpl: XTemplateRuntime.addSubTpl,
+
         /**
-         * add sub template definition to current template
-         * @param subTplName
-         * @param {String|Function}def
+         * remove command from all template by name
+         * @method
+         * @static
+         * @param {String} commandName
          */
-        addSubTpl: function (subTplName, def) {
-            this.runtime.addSubTpl(subTplName, def);
-        },
+        removeCommand: XTemplateRuntime.removeCommand,
+
         /**
-         * add command definition to current template
-         * @param commandName
-         * @param {Function} fn command definition
+         * remove sub template definition from all template by name
+         * @method
+         * @static
+         * @param {String} subName
          */
-        addCommand: function (commandName, fn) {
-            this.runtime.addCommand(commandName, fn);
-        },
-        /**
-         * get result by merge data with template
-         * @param data
-         * @return {String}
-         */
-        render: function (data) {
-            return this.runtime.render.apply(this.runtime, arguments);
-        }
+        removeSubTpl: XTemplateRuntime.removeSubTpl
     });
-
-    XTemplate.compiler = compiler;
-
-    XTemplate.RunTime = XTemplateRuntime;
-
-    /**
-     * add command to all template
-     * @method
-     * @static
-     * @param {String} commandName
-     * @param {Function} fn
-     */
-    XTemplate.addCommand = XTemplateRuntime.addCommand;
-
-    /**
-     * add sub template definition to all template
-     * @method
-     * @static
-     * @param {String} subName
-     * @param {Function|String} def
-     */
-    XTemplate.addSubTpl = XTemplateRuntime.addSubTpl;
-
-    /**
-     * remove command from all template by name
-     * @method
-     * @static
-     * @param {String} commandName
-     */
-    XTemplate.removeCommand = XTemplateRuntime.removeCommand;
-
-    /**
-     * remove sub template definition from all template by name
-     * @method
-     * @static
-     * @param {String} subName
-     */
-    XTemplate.removeSubTpl = XTemplateRuntime.removeSubTpl;
 
     return XTemplate;
 

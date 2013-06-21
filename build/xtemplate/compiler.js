@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 21 01:28
+build time: Jun 21 15:26
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -2215,10 +2215,7 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
 
     parser.yy = ast;
 
-    var utils = {
-            'getProperty': 1
-        },
-        doubleReg = /\\*"/g,
+    var doubleReg = /\\*"/g,
         singleReg = /\\*'/g,
         arrayPush = [].push,
         variableId = 0,
@@ -2227,17 +2224,6 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
     function guid(str) {
         return str + (variableId++);
     }
-
-    // consider str compiler
-    XTemplateRuntime.includeCommand.invokeEngine = function (tpl, scopes, option) {
-        if (typeof tpl == 'string') {
-            tpl = compiler.compileToFn(/**
-             @type String
-             @ignore
-             */tpl, option);
-        }
-        return new XTemplateRuntime(tpl, S.merge(option)).render(scopes);
-    };
 
     /**
      * @ignore
@@ -2279,16 +2265,19 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
             source.push('var buffer = ""' + (global ? ',' : ';'));
             if (global) {
                 source.push('S = KISSY,' +
-                    'escapeHtml = S.escapeHtml,' +
+                    'escapeHtml = config.escapeHtml && S.escapeHtml,' +
                     'isArray = S.isArray,' +
                     'isObject = S.isObject,' +
                     'log = S.log,' +
-                    'commands = option.commands,' +
-                    'utils = option.utils,' +
+                    // current xtemplate instance
+                    'instance = config.instance, ' +
+                    'commands = config.commands,' +
+                    'utils = config.utils,' +
                     'error = S.error;');
 
                 var natives = '',
                     c,
+                    utils = XTemplateRuntime.utils,
                 // shortcut for global commands
                     commands = XTemplateRuntime.commands;
 
@@ -2297,7 +2286,7 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
                 }
 
                 for (c in utils) {
-                    natives += c + ' = utils["' + c + '"],';
+                    natives += c + 'Util = utils["' + c + '"],';
                 }
 
                 if (natives) {
@@ -2315,7 +2304,7 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
                 return source;
             } else {
                 return {
-                    params: ['scopes', 'option', 'undefined'],
+                    params: ['scopes', 'config', 'undefined'],
                     source: source
                 };
             }
@@ -2336,8 +2325,8 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
 
             // {{#each variable}} {{variable}}
             if (tplNode && depth == 0) {
-                var optionNameCode = self.genOption(tplNode);
-                pushToArray(source, optionNameCode[1]);
+                var configNameCode = self.genConfig(tplNode);
+                pushToArray(source, configNameCode[1]);
                 // skip if for global commands before current template's render
                 if (foundNativeRuntimeCommand = commands[idString]) {
                     tmpNameCommand = idString + 'Command';
@@ -2349,7 +2338,7 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
                 }
                 source.push('try{');
                 source.push(idName + ' = ' + tmpNameCommand +
-                    '(scopes,' + optionNameCode[0] + ');');
+                    '.call(instance, scopes, ' + configNameCode[0] + ');');
                 source.push('}catch(e){');
                 source.push('error(e.message+": \'' +
                     idString + '\' at line ' + idNode.lineNumber + '");');
@@ -2366,11 +2355,11 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
                 var tmp = guid('tmp');
                 idString = self.getIdStringFromIdParts(source, idParts);
 
-                source.push('var ' + tmp + ' = getProperty("' + idString +
+                source.push('var ' + tmp + ' = getPropertyUtil("' + idString +
                     '",scopes,' + depth + ');');
 
                 source.push('if(' + tmp + '===false){');
-                source.push('S[option.silent?"log":"error"]("can not find property: \'' +
+                source.push('S[config.silent?"log":"error"]("can not find property: \'' +
                     idString + '\' at line ' + idNode.lineNumber + '", "warn");');
                 // only normalize when render
                 // source.push(idName + ' = "";');
@@ -2437,13 +2426,13 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
             return undefined;
         },
 
-        genOption: function (tplNode) {
+        genConfig: function (tplNode) {
             var source = [],
-                optionName = guid('option'),
+                configName = guid('config'),
                 params, hash,
                 self = this;
 
-            source.push('var ' + optionName + ' = S.merge(option);');
+            source.push('var ' + configName + ' = S.merge(config);');
 
             if (tplNode) {
                 if (params = tplNode.params) {
@@ -2460,7 +2449,7 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
                             source.push(paramsName + '.push(' + lastOfArray(nextIdNameCode[1]) + ');')
                         }
                     });
-                    source.push(optionName + '.params=' + paramsName + ';');
+                    source.push(configName + '.params=' + paramsName + ';');
                 }
 
                 if (hash = tplNode.hash) {
@@ -2476,11 +2465,11 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
                             source.push(hashName + '["' + key + '"] = ' + lastOfArray(nextIdNameCode[1]) + ';')
                         }
                     });
-                    source.push(optionName + '.hash=' + hashName + ';');
+                    source.push(configName + '.hash=' + hashName + ';');
                 }
             }
 
-            return [optionName, source];
+            return [configName, source];
         },
 
         // ------------ helper generation function end
@@ -2545,31 +2534,31 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
                 self = this,
                 tmpNameCommand,
                 tplNode = block.tpl,
-                optionNameCode = self.genOption(tplNode),
-                optionName = optionNameCode[0],
+                configNameCode = self.genConfig(tplNode),
+                configName = configNameCode[0],
                 commands = XTemplateRuntime.commands,
                 pathString = tplNode.path.string,
                 inverseFn,
                 existsNativeCommand,
                 variableName;
 
-            pushToArray(source, optionNameCode[1]);
+            pushToArray(source, configNameCode[1]);
 
-            source.push(optionName + '.fn=' +
+            source.push(configName + '.fn=' +
                 self.genFunction(programNode.statements).join('\n') + ';');
 
             if (programNode.inverse) {
                 inverseFn = self.genFunction(programNode.inverse).join('\n');
-                source.push(optionName + '.inverse=' + inverseFn + ';');
+                source.push(configName + '.inverse=' + inverseFn + ';');
             }
 
             // support {{^
             // exchange fn with inverse
             if (tplNode.isInverted) {
                 var tmp = guid('inverse');
-                source.push('var ' + tmp + '=' + optionName + '.fn;');
-                source.push(optionName + '.fn = ' + optionName + '.inverse;');
-                source.push(optionName + '.inverse = ' + tmp + ';');
+                source.push('var ' + tmp + '=' + configName + '.fn;');
+                source.push(configName + '.fn = ' + configName + '.inverse;');
+                source.push(configName + '.inverse = ' + tmp + ';');
             }
 
             // reduce generated code size
@@ -2588,12 +2577,12 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
                     pathString = self.getIdStringFromIdParts(source, tplNode.path.parts);
                     var propertyValueHolder = guid('propertyValueHolder');
                     source.push('var ' + propertyValueHolder +
-                        ' = getProperty("' + pathString + '",scopes);');
+                        ' = getPropertyUtil("' + pathString + '",scopes);');
                     variableName = guid('variableName');
                     source.push('var ' + variableName +
                         '=' + propertyValueHolder + '&&' +
                         propertyValueHolder + '[0];');
-                    source.push(optionName + '.params=[' + variableName + '];');
+                    source.push(configName + '.params=[' + variableName + '];');
                     source.push('if(isArray(' + variableName + ')){');
                     source.push(tmpNameCommand + '=commands["each"];');
                     source.push('}');
@@ -2609,7 +2598,8 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
             }
 
             source.push('try{');
-            source.push('buffer += ' + tmpNameCommand + '(scopes,' + optionName + ');');
+            source.push('buffer += ' + tmpNameCommand +
+                '.call(instance, scopes, ' + configName + ');');
             source.push('}catch(e){');
             source.push('error(e.message+": \'' + pathString +
                 '\' at line ' + tplNode.path.lineNumber + '");');
@@ -2618,7 +2608,7 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
             if (!existsNativeCommand) {
                 source.push('}');
                 source.push('if(' + propertyValueHolder + '===false) {');
-                source.push('S[option.silent?"log":"error"]("can not find command: \'' +
+                source.push('S[config.silent?"log":"error"]("can not find command: \'' +
                     pathString + '\' at line ' + tplNode.path.lineNumber + '","warn");');
                 source.push('}');
             }
@@ -2659,16 +2649,18 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
             var idString = '',
                 self = this,
                 i,
-                p,
+                idPart,
+                idPartType,
                 nextIdNameCode,
                 first = true;
             for (i = 0; i < idParts.length; i++) {
-                p = idParts[i];
+                idPart = idParts[i];
+                idPartType = idPart.type;
                 if (!first) {
                     idString += '.';
                 }
-                if (p.type) {
-                    nextIdNameCode = self[p.type](p);
+                if (idPartType) {
+                    nextIdNameCode = self[idPartType](idPart);
                     if (nextIdNameCode[0]) {
                         pushToArray(source, nextIdNameCode[1]);
                         idString += '"+' + nextIdNameCode[0] + '+"';
@@ -2676,7 +2668,7 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
                     }
                 } else {
                     // number or string
-                    idString += p;
+                    idString += idPart;
                     first = false;
                 }
             }
@@ -2689,11 +2681,11 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
         var tmp = guid('tmp');
         // in case it is expression, avoid duplicate computation
         source.push('var ' + tmp + ' = ' + expressionOrVariable + ';');
-        source.push('buffer+=' + (escaped ? 'escapeHtml(' : '') +
-            // when render undefined => ''
-            '(' + tmp + '===undefined?"":' + tmp + ')' + '+""' +
-            (escaped ? ')' : '') +
-            ';');
+        // when render undefined => ''
+        source.push(tmp + ' = ' +
+            '(' + tmp + ' === undefined ? "" : ' + tmp + ')' + ' + "";');
+        source.push('buffer += ' + (escaped ? ('escapeHtml ? ' +
+            'escapeHtml(' + tmp + ') : ' + tmp) : tmp) + ';');
     }
 
     var compiler;
@@ -2736,22 +2728,27 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
         /**
          * get template function
          * @param {String} tpl
-         * @param {Object} option
-         * @param {String} option.name template file name
+         * @param {Object} config
+         * @param {String} config.name template file name
          * @return {Function}
          */
-        compileToFn: function (tpl, option) {
+        compileToFn: function (tpl, config) {
             var code = compiler.compile(tpl);
-            option = option || {};
+            config = config || {};
             // eval is not ok for eval("(function(){})") ie
             return (Function.apply(null, []
                 .concat(code.params)
                 .concat(code.source.join('\n') + '//@ sourceURL=' +
-                    (option.name ? option.name : ('xtemplate' + (xtemplateId++))) + '.js')));
+                    (config.name ? config.name : ('xtemplate' + (xtemplateId++))) + '.js')));
         }
     };
 
 }, {
     requires: ['./compiler/parser', './compiler/ast', 'xtemplate/runtime']
 });
+
+/*
+ todo:
+ need oop, new Source().gen()
+ */
 
