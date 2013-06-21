@@ -458,7 +458,7 @@
                     action: popState
                 },
                 {
-                    // plain mode
+                    // literal mode
                     state: ['t'],
                     regexp: /^{{%([\s\S]*?)%}}/,
                     action: function () {
