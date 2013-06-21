@@ -3,7 +3,7 @@
  * attribute management and event in one
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
-KISSY.add('base',function (S, Attribute) {
+KISSY.add('base', function (S, Attribute) {
 
     /**
      * @class KISSY.Base
@@ -18,6 +18,9 @@ KISSY.add('base',function (S, Attribute) {
     function Base(config) {
         var self = this,
             c = self.constructor;
+        if (!(self instanceof Base)) {
+            S.error('should use new to create class instance');
+        }
         // save user config
         self.userConfig = config;
         // define
@@ -79,7 +82,7 @@ KISSY.add('base',function (S, Attribute) {
         }
     }
 
-    S.augment(Base,Attribute);
+    S.augment(Base, Attribute);
 
     Base.Attribute = Attribute;
 

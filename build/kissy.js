@@ -1,12 +1,12 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 21 02:18
+build time: Jun 21 12:55
 */
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 21 02:18
+build time: Jun 21 12:54
 */
 /**
  * @ignore
@@ -44,11 +44,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130621021818' will replace with current timestamp when compressing.
+         * NOTICE: '20130621125443' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130621021818',
+        __BUILD_TIME: '20130621125443',
         /**
          * KISSY Environment.
          * @private
@@ -5698,7 +5698,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20130621021818'
+            tag: '20130621125443'
         }, getBaseInfo()));
     }
 
@@ -21297,7 +21297,7 @@ KISSY.add('cookie', function (S) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 21 01:16
+build time: Jun 21 12:53
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -21921,7 +21921,7 @@ KISSY.add('base/attribute', function (S, CustomEvent, undefined) {
  * attribute management and event in one
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
-KISSY.add('base',function (S, Attribute) {
+KISSY.add('base', function (S, Attribute) {
 
     /**
      * @class KISSY.Base
@@ -21936,6 +21936,9 @@ KISSY.add('base',function (S, Attribute) {
     function Base(config) {
         var self = this,
             c = self.constructor;
+        if (!(self instanceof Base)) {
+            S.error('should use new to create class instance');
+        }
         // save user config
         self.userConfig = config;
         // define
@@ -21997,7 +22000,7 @@ KISSY.add('base',function (S, Attribute) {
         }
     }
 
-    S.augment(Base,Attribute);
+    S.augment(Base, Attribute);
 
     Base.Attribute = Attribute;
 
