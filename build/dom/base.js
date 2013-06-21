@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.30
 MIT Licensed
-build time: Jun 6 19:04
+build time: Jun 21 17:38
 */
 /**
  * @ignore
@@ -2560,9 +2560,7 @@ KISSY.add('dom/base/selector', function (S, DOM, undefined) {
             i,
             simpleContext,
             isSelectorString = typeof selector == 'string',
-        // optimize common usage
-        // consider context == null
-            contexts = (context == undefined && (simpleContext = 1)) ?
+            contexts = (context === undefined && (simpleContext = 1)) ?
                 [doc] :
                 query(context);
         // 常见的空

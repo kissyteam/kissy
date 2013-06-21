@@ -28,6 +28,10 @@ KISSY.use("dom,core", function (S, DOM) {
             $('#test-selector').remove();
         });
 
+        it('should return empty when context is null',function(){
+            expect(S.query("#test-selector",null).length).toBe(0);
+        });
+
         it("support #id", function () {
 
             expect(S.get("#test-selector").id).toBe("test-selector");
