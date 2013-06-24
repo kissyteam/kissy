@@ -3,7 +3,7 @@
  * menu control for kissy,accommodate menu items
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/base", function (S, Node, Container, DelegateChildrenExtension, MenuRender, undefined) {
+KISSY.add("menu/control", function (S, Node, Container, DelegateChildrenExtension, MenuRender, undefined) {
 
     var KeyCode = Node.KeyCode;
 

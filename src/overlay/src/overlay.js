@@ -11,7 +11,7 @@ KISSY.add("overlay", function (S, O, D, P) {
     return O;
 }, {
     requires:[
-        "overlay/base",
+        "overlay/control",
         "overlay/dialog",
         "overlay/popup"
     ]

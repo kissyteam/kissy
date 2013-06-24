@@ -54,5 +54,5 @@ KISSY.add("combobox/filter-select", function (S, Combobox) {
     return FilterSelect;
 
 }, {
-    requires: ['./base']
+    requires: ['./control']
 });

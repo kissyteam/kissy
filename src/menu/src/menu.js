@@ -15,7 +15,7 @@ KISSY.add("menu", function (S, Menu,
     return Menu;
 }, {
     requires: [
-        'menu/base',
+        'menu/control',
         'menu/menuitem',
         'menu/check-menuitem',
         'menu/submenu',

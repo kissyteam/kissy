@@ -7,7 +7,7 @@ KISSY.add("menubutton", function(S, MenuButton, Select, Option) {
     MenuButton.Option = Option;
     return MenuButton;
 }, {
-    requires:['menubutton/base',
+    requires:['menubutton/control',
         'menubutton/select',
         'menubutton/option']
 });

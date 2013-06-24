@@ -103,5 +103,5 @@ KISSY.add("menu/popupmenu", function (S, AlignExtension, Menu, PopupMenuRender) 
 
 }, {
     requires: ['component/extension/align',
-        './base', './popupmenu-render']
+        './control', './popupmenu-render']
 });

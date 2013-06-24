@@ -241,7 +241,7 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
     return Select;
 
 }, {
-    requires: ['node', './base', 'menu', './option']
+    requires: ['node', './control', 'menu', './option']
 });
 
 /**

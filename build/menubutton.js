@@ -1,13 +1,13 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 24 21:50
+build time: Jun 24 22:35
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
 
  menubutton/render
- menubutton/base
+ menubutton/control
  menubutton/option
  menubutton/select
  menubutton
@@ -65,7 +65,7 @@ KISSY.add("menubutton/render", function (S, Button, ContentRenderExtension) {
  * combination of menu and button ,similar to native select
  * @author yiminghe@gmail.com
  */
-KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, undefined) {
+KISSY.add("menubutton/control", function (S, Node, Button, MenuButtonRender, Menu, undefined) {
 
     var KeyCode = Node.KeyCode;
     /**
@@ -599,7 +599,7 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
     return Select;
 
 }, {
-    requires: ['node', './base', 'menu', './option']
+    requires: ['node', './control', 'menu', './option']
 });
 
 /**
@@ -615,7 +615,7 @@ KISSY.add("menubutton", function(S, MenuButton, Select, Option) {
     MenuButton.Option = Option;
     return MenuButton;
 }, {
-    requires:['menubutton/base',
+    requires:['menubutton/control',
         'menubutton/select',
         'menubutton/option']
 });

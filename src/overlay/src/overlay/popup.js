@@ -183,7 +183,7 @@ KISSY.add('overlay/popup', function (S, Overlay, undefined) {
         xclass: 'popup'
     });
 }, {
-    requires: ["./base"]
+    requires: ["./control"]
 });
 
 /**

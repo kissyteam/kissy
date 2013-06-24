@@ -11,7 +11,7 @@ KISSY.add("combobox", function (S, ComboBox, MultiValueComboBox, FilterSelect, L
     return ComboBox;
 }, {
     requires: [
-        'combobox/base',
+        'combobox/control',
         'combobox/multi-value-combobox',
         'combobox/filter-select',
         'combobox/local-data-source',

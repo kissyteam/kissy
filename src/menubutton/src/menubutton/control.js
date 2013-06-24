@@ -2,7 +2,7 @@
  * combination of menu and button ,similar to native select
  * @author yiminghe@gmail.com
  */
-KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, undefined) {
+KISSY.add("menubutton/control", function (S, Node, Button, MenuButtonRender, Menu, undefined) {
 
     var KeyCode = Node.KeyCode;
     /**

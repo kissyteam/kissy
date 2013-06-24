@@ -3,7 +3,7 @@
  * control for overlay
  * @author yiminghe@gmail.com
  */
-KISSY.add("overlay/base", function (S, Container, AlignExtension,
+KISSY.add("overlay/control", function (S, Container, AlignExtension,
                                     Loading, Mask, OverlayRender, OverlayEffect) {
 
     var HIDE = "hide",

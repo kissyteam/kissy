@@ -275,7 +275,7 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
 
 }, {
     requires: [
-        "./base",
+        "./control",
         './dialog-render',
         'node'
     ]

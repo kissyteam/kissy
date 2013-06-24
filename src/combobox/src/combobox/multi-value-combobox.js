@@ -257,7 +257,7 @@ KISSY.add("combobox/multi-value-combobox", function (S, getCursor, ComboBox) {
 }, {
     requires: [
         './cursor',
-        './base'
+        './control'
     ]
 });
 

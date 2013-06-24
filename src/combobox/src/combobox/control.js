@@ -3,7 +3,7 @@
  * Input wrapper for ComboBox component.
  * @author yiminghe@gmail.com
  */
-KISSY.add("combobox/base", function (S, Node, Control, ComboBoxRender, Menu, undefined) {
+KISSY.add("combobox/control", function (S, Node, Control, ComboBoxRender, Menu, undefined) {
     var ComboBox,
         KeyCode = Node.KeyCode;
 
@@ -562,7 +562,7 @@ KISSY.add("combobox/base", function (S, Node, Control, ComboBoxRender, Menu, und
     function onMenuAfterRenderUI(self, menu) {
         var contentEl;
         var input = self.get('input');
-        var el = menu..get('el');
+        var el = menu.get('el');
         contentEl = menu.get("contentEl");
         input.attr("aria-owns", el.attr('id'));
         // menu has input!

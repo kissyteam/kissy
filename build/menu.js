@@ -1,13 +1,13 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 24 21:50
+build time: Jun 24 22:35
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
 
  menu/menu-render
- menu/base
+ menu/control
  menu/menuitem-render
  menu/menuitem
  menu/check-menuitem-render
@@ -45,7 +45,7 @@ KISSY.add("menu/menu-render", function (S, Container) {
  * menu control for kissy,accommodate menu items
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/base", function (S, Node, Container, DelegateChildrenExtension, MenuRender, undefined) {
+KISSY.add("menu/control", function (S, Node, Container, DelegateChildrenExtension, MenuRender, undefined) {
 
     var KeyCode = Node.KeyCode;
 
@@ -985,7 +985,7 @@ KISSY.add("menu/popupmenu", function (S, AlignExtension, Menu, PopupMenuRender) 
 
 }, {
     requires: ['component/extension/align',
-        './base', './popupmenu-render']
+        './control', './popupmenu-render']
 });
 /**
  * @ignore
@@ -1004,7 +1004,7 @@ KISSY.add("menu", function (S, Menu,
     return Menu;
 }, {
     requires: [
-        'menu/base',
+        'menu/control',
         'menu/menuitem',
         'menu/check-menuitem',
         'menu/submenu',

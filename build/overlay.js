@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 24 21:50
+build time: Jun 24 22:35
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -11,7 +11,7 @@ build time: Jun 24 21:50
  overlay/close-tpl
  overlay/overlay-render
  overlay/extension/overlay-effect
- overlay/base
+ overlay/control
  overlay/dialog-tpl
  overlay/dialog-render
  overlay/dialog
@@ -490,7 +490,7 @@ KISSY.add('overlay/extension/overlay-effect', function (S) {
  * control for overlay
  * @author yiminghe@gmail.com
  */
-KISSY.add("overlay/base", function (S, Container, AlignExtension,
+KISSY.add("overlay/control", function (S, Container, AlignExtension,
                                     Loading, Mask, OverlayRender, OverlayEffect) {
 
     var HIDE = "hide",
@@ -1022,7 +1022,7 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
 
 }, {
     requires: [
-        "./base",
+        "./control",
         './dialog-render',
         'node'
     ]
@@ -1223,7 +1223,7 @@ KISSY.add('overlay/popup', function (S, Overlay, undefined) {
         xclass: 'popup'
     });
 }, {
-    requires: ["./base"]
+    requires: ["./control"]
 });
 
 /**
@@ -1244,7 +1244,7 @@ KISSY.add("overlay", function (S, O, D, P) {
     return O;
 }, {
     requires:[
-        "overlay/base",
+        "overlay/control",
         "overlay/dialog",
         "overlay/popup"
     ]
