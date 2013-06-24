@@ -2,10 +2,10 @@
  * component tc
  * @author yiminghe@gmail.com
  */
-KISSY.use("component/controller," +
+KISSY.use("component/control," +
     "component/container," +
     "component/extension/delegate-children", function (S,
-    Controller,
+    Control,
     Container,
     DelegateChildrenExtension
     ) {
@@ -314,7 +314,7 @@ KISSY.use("component/controller," +
                         content: "xx"
                     });
 
-                    var child1 = new Controller({
+                    var child1 = new Control({
                         content: "yy",
                         handleMouseEvents: false,
                         focusable: false
@@ -322,7 +322,7 @@ KISSY.use("component/controller," +
 
                     c.addChild(child1);
 
-                    var child2 = new Controller({
+                    var child2 = new Control({
                         content: "yy",
                         handleMouseEvents: false,
                         focusable: false

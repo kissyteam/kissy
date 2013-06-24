@@ -99,7 +99,7 @@ KISSY.add('editor/plugin/code/dialog', function (S, Editor, Dialog4E, MenuButton
                     prefixCls: prefixCls
                 })
             }).render();
-            el = d.el;
+            el = d.get('el');
 
             self.insert = el.one('.' + prefixCls + 'code-insert');
             self.cancel = el.one('.' + prefixCls + 'code-cancel');

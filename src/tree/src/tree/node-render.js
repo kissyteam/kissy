@@ -52,18 +52,18 @@ KISSY.add("tree/node-render", function (S, Node, Container, TreeNodeTpl, Content
 
         refreshCss: function (isNodeSingleOrLast, isNodeLeaf) {
             var self = this,
-                controller = self.controller,
-                iconEl = controller.get("iconEl"),
+                control = self.control,
+                iconEl = control.get("iconEl"),
                 iconElCss,
                 expandElCss,
-                expandIconEl = controller.get("expandIconEl"),
-                childrenEl = controller.get("childrenEl");
+                expandIconEl = control.get("expandIconEl"),
+                childrenEl = control.get("childrenEl");
 
             if (isNodeLeaf) {
                 iconElCss = ICON_EL_FILE_CLS;
                 expandElCss = EXPAND_ICON_EL_FILE_CLS;
             } else {
-                var expanded = controller.get("expanded");
+                var expanded = control.get("expanded");
                 if (expanded) {
                     iconElCss = ICON_EL_FOLDER_EXPAND_CLS;
                     expandElCss = EXPAND_ICON_EL_FOLDER_EXPAND_CLS;
@@ -86,32 +86,32 @@ KISSY.add("tree/node-render", function (S, Node, Container, TreeNodeTpl, Content
 
         _onSetExpanded: function (v) {
             var self = this,
-                childrenEl = self.controller.get("childrenEl");
+                childrenEl = self.control.get("childrenEl");
             childrenEl[v ? "show" : "hide"]();
-            self.el.attr("aria-expanded", v);
+            self.el.setAttribute("aria-expanded", v);
         },
 
         _onSetSelected: function (v) {
             var self = this,
-                rowEl = self.controller.get("rowEl");
+                rowEl = self.control.get("rowEl");
             rowEl[v ? "addClass" : "removeClass"](self.getBaseCssClasses(SELECTED_CLS));
-            self.el.attr("aria-selected", v);
+            self.el.setAttribute("aria-selected", v);
         },
 
         '_onSetDepth': function (v) {
-            this.el.attr("aria-level", v);
+            this.el.setAttribute("aria-level", v);
         },
 
         _onSetCheckState: function (s) {
             var self = this,
                 checkCls = self.getBaseCssClasses(CHECK_CLS).split(/\s+/).join(s + ' ') + s,
-                checkIconEl = self.controller.get("checkIconEl");
+                checkIconEl = self.control.get("checkIconEl");
             checkIconEl.removeClass(self.getBaseCssClasses(ALL_STATES_CLS))
                 .addClass(checkCls);
         },
 
         getChildrenContainerEl: function () {
-            return this.controller.get('childrenEl');
+            return this.control.get('childrenEl');
         }
     }, {
         ATTRS: {

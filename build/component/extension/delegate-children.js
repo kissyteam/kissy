@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 21 01:47
+build time: Jun 24 21:41
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -25,7 +25,7 @@ KISSY.add("component/extension/delegate-children", function (S, Node, Manager) {
     function onRenderChild(e) {
         if (e.target == this) {
             var child = e.component,
-                el = child.el;
+                el = child.$el;
             el.addClass(this.__childClsTag);
         }
     }
@@ -33,7 +33,7 @@ KISSY.add("component/extension/delegate-children", function (S, Node, Manager) {
     function onRemoveChild(e) {
         if (e.target == this) {
             var child = e.component,
-                el = child.el;
+                el = child.$el;
             if (el) {
                 el.removeClass(this.__childClsTag);
             }
@@ -100,7 +100,7 @@ KISSY.add("component/extension/delegate-children", function (S, Node, Manager) {
                     (ie && ie < 9 ? "dblclick " : "");
             }
 
-            self.el.delegate(events, '.' + self.__childClsTag,
+            self.$el.delegate(events, '.' + self.__childClsTag,
                 self.handleChildrenEvents, self);
         },
 
@@ -108,7 +108,7 @@ KISSY.add("component/extension/delegate-children", function (S, Node, Manager) {
          * Get child component which contains current event target node.
          * @protected
          * @param {KISSY.Event.DOMEventObject} e event
-         * @return {KISSY.Component.Controller}
+         * @return {KISSY.Component.Control}
          */
         getOwnerControl: function (e) {
             return Manager.getComponent(e.currentTarget.id);

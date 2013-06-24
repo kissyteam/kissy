@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 21 01:19
+build time: Jun 24 21:43
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -110,7 +110,7 @@ KISSY.add('editor/plugin/code/dialog', function (S, Editor, Dialog4E, MenuButton
                     prefixCls: prefixCls
                 })
             }).render();
-            el = d.el;
+            el = d.get('el');
 
             self.insert = el.one('.' + prefixCls + 'code-insert');
             self.cancel = el.one('.' + prefixCls + 'code-cancel');

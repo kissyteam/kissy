@@ -12,7 +12,7 @@ KISSY.add("split-button", function (S, Container) {
                 menuButton = self.get("children")[1],
                 menu = menuButton.get("menu");
             if (alignWithEl) {
-                menu.get("align").node = self.el;
+                menu.get("align").node = self.$el;
             }
         }
 

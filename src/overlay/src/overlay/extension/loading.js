@@ -32,7 +32,7 @@ KISSY.add("overlay/extension/loading", function (S, Node) {
                     "z-index: 99999;" +
                     "height:100%;" +
                     "*height: expression(this.parentNode.offsetHeight);" + "'/>")
-                    .appendTo(self.el);
+                    .appendTo(self.$el);
             }
             self._loadingExtEl.show();
         },

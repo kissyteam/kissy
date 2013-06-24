@@ -1,0 +1,6 @@
+<project name="scroll-view/base.build" default="build" basedir=".">
+    <property name="component.name" value="scroll-view/base"/>
+
+    <import file="../../../common.xml"/>
+</project>
+

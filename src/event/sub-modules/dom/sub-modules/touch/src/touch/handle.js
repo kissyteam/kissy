@@ -44,8 +44,7 @@ KISSY.add('event/dom/touch/handle', function (S, Dom, eventHandleMap, DOMEvent, 
         removeTouch: function (t) {
             var touches = this.touches;
             S.each(touches, function (tt, index) {
-                if (tt.pointerId ==
-                    t.pointerId) {
+                if (tt.pointerId == t.pointerId) {
                     touches.splice(index, 1);
                     return false;
                 }
@@ -56,8 +55,7 @@ KISSY.add('event/dom/touch/handle', function (S, Dom, eventHandleMap, DOMEvent, 
         updateTouch: function (t) {
             var touches = this.touches;
             S.each(touches, function (tt, index) {
-                if (tt.pointerId ==
-                    t.pointerId) {
+                if (tt.pointerId == t.pointerId) {
                     touches[index] = t;
                     return false;
                 }
@@ -82,7 +80,8 @@ KISSY.add('event/dom/touch/handle', function (S, Dom, eventHandleMap, DOMEvent, 
                 touchList;
             if (Features.isTouchEventSupported()) {
                 touchList = (type == 'touchend' || type == 'touchcancel') ?
-                    e.changedTouches : e.touches;
+                    e.changedTouches :
+                    e.touches;
                 if (touchList.length == 1) {
                     e.which = 1;
                     e.pageX = touchList.pageX;

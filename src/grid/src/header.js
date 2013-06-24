@@ -49,9 +49,9 @@ KISSY.add('grid/header', function (S, Component, Column) {
      * the header container is responsible for triggering changes within the view.
      * @name Grid.Header
      * @constructor
-     * @extends KISSY.Component.Controller
+     * @extends KISSY.Component.Control
      */
-    var header = Component.Controller.extend(
+    var header = Component.Control.extend(
         /**
          * @lends Grid.Header.prototype
          */
@@ -91,7 +91,7 @@ KISSY.add('grid/header', function (S, Component, Column) {
             },
             /**
              * For overridden.
-             * refer: Component.Controller#bindUI
+             * refer: Component.Control#bindUI
              */
             bindUI:function () {
                 var _self = this;

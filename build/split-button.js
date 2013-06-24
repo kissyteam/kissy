@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 21 01:28
+build time: Jun 24 21:51
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -23,7 +23,7 @@ KISSY.add("split-button", function (S, Container) {
                 menuButton = self.get("children")[1],
                 menu = menuButton.get("menu");
             if (alignWithEl) {
-                menu.get("align").node = self.el;
+                menu.get("align").node = self.$el;
             }
         }
 

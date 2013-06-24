@@ -17,8 +17,12 @@ KISSY.add('event/dom/touch/tap', function (S, eventHandleMap, DOMEvent, SingleTo
         },
 
         onTouchEnd: function (e) {
+            var touch = e.changedTouches[0];
             DOMEvent.fire(e.target, event, {
-                touch: e.changedTouches[0]
+                pageX: touch.pageX,
+                pageY: touch.pageY,
+                which: 1,
+                touch: touch
             });
         }
 

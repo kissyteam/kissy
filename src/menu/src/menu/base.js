@@ -1,6 +1,6 @@
 /**
  * @ignore
- * menu controller for kissy,accommodate menu items
+ * menu control for kissy,accommodate menu items
  * @author yiminghe@gmail.com
  */
 KISSY.add("menu/base", function (S, Node, Container, DelegateChildrenExtension, MenuRender, undefined) {
@@ -11,7 +11,7 @@ KISSY.add("menu/base", function (S, Node, Container, DelegateChildrenExtension, 
      * KISSY Menu.
      * xclass: 'menu'.
      * @class KISSY.Menu
-     * @extends KISSY.Component.Controller
+     * @extends KISSY.Component.Control
      */
     var Menu = Container.extend([
         DelegateChildrenExtension
@@ -94,7 +94,7 @@ KISSY.add("menu/base", function (S, Node, Container, DelegateChildrenExtension, 
          * returns true if the event was handled,
          * false otherwise.
          * If the container is enabled, and a child is highlighted,
-         * calls the child controller's {@code handleKeydown} method to give the control
+         * calls the child control's {@code handleKeydown} method to give the control
          * a chance to handle the event first.
          * Protected, should only be overridden by subclasses.
          * @param {KISSY.Event.DOMEventObject} e Key event to handle.
@@ -185,7 +185,7 @@ KISSY.add("menu/base", function (S, Node, Container, DelegateChildrenExtension, 
             var self = this;
 
             // 隐藏当然不包含了
-            if (!self.get("visible") || !self.el) {
+            if (!self.get("visible") || !self.$el) {
                 return false;
             }
 
@@ -233,7 +233,11 @@ KISSY.add("menu/base", function (S, Node, Container, DelegateChildrenExtension, 
 
     // capture bubbling
     function afterHighlightedItemChange(e) {
-        this.view.setAriaActiveDescendant(e.newVal);
+        if (e.target.isMenu) {
+            var el = this.el,
+                menuItem = e.newVal;
+            el.setAttribute("aria-activedescendant", menuItem && menuItem.el.id || '');
+        }
     }
 
     return Menu;

@@ -1,6 +1,0 @@
-<project name="scrollview/drag.build" default="build" basedir=".">
-    <property name="component.name" value="scrollview/drag"/>
-
-    <import file="../../../common.xml"/>
-</project>
-

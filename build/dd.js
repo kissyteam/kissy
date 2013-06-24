@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 21 01:18
+build time: Jun 24 21:42
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -26,8 +26,8 @@ KISSY.add('dd/ddm', function (S, Node, Base) {
         Features = S.Features,
         win = S.Env.host,
         doc = win.document,
-        $doc=$(doc),
-        $win=$(win),
+        $doc = $(doc),
+        $win = $(win),
         ie6 = UA['ie'] === 6,
     // prevent collision with click , only start when move
         PIXEL_THRESH = 3,
@@ -158,9 +158,10 @@ KISSY.add('dd/ddm', function (S, Node, Base) {
             __activeToDrag ,
             activeDrag;
 
-        ev = ddm._normalEvent(ev);
+        ev = normalEvent(ev);
 
         if (!ev) {
+            DDM._end();
             return;
         }
 
@@ -342,7 +343,7 @@ KISSY.add('dd/ddm', function (S, Node, Base) {
     function registerEvent(self) {
         $doc.on(DRAG_END_EVENT, self._end, self);
         if (Gesture.cancel) {
-            $doc.on( Gesture.cancel, self._end, self);
+            $doc.on(Gesture.cancel, self._end, self);
         }
         $doc.on(DRAG_MOVE_EVENT, throttleMoveHandle, self);
         // ie6 will not response to event when cursor is out of window.
@@ -475,7 +476,7 @@ KISSY.add('dd/ddm', function (S, Node, Base) {
                 activeDrop = self.get('activeDrop');
 
             // 最后通知 move 一次，防止 touch 设备触发 touchmove 不灵敏
-            e = ddm._normalEvent(e);
+            e = e && normalEvent(e);
             if (__activeToDrag) {
                 __activeToDrag._move(e);
             }
@@ -566,8 +567,9 @@ KISSY.add('dd/ddm', function (S, Node, Base) {
 
     /*
      normal event between devices
+     TODO: merge with event/dom/touch
      */
-    ddm._normalEvent = function (e) {
+    function normalEvent(e) {
         var type = String(e.type),
             touches = type == Gesture.end || type == Gesture.cancel ?
                 e.changedTouches : e.touches,
@@ -588,7 +590,7 @@ KISSY.add('dd/ddm', function (S, Node, Base) {
         }
         e.which = 1;
         return e;
-    };
+    }
 
     return ddm;
 }, {
@@ -1476,22 +1478,12 @@ KISSY.add('dd/draggable', function (S, Node, RichBase, DDM) {
      通知全局管理器开始作用
      */
     var handlePreDragStart = function (ev) {
-
-        ev = DDM._normalEvent(ev);
-
-        if (!ev) {
-            return;
-        }
-
         var self = this,
             t = ev.target;
-
         if (self._checkDragStartValid(ev)) {
-
             if (!self._checkHandler(t)) {
                 return;
             }
-
             self._prepare(ev);
         }
     };
@@ -1516,13 +1508,6 @@ KISSY.add('dd/draggable-delegate', function (S, DDM, Draggable, Node) {
      父容器监听 mousedown，找到合适的拖动 handlers 以及拖动节点
      */
     var handlePreDragStart = function (ev) {
-
-        ev = DDM._normalEvent(ev);
-
-        if (!ev) {
-            return;
-        }
-
         var self = this,
             handler,
             node;

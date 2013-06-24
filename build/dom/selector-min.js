@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 21 17:33
+build time: Jun 24 21:42
 */
 KISSY.add("dom/selector/parser",function(){var m={},s=KISSY,i=function(e){this.rules=[];s.mix(this,e);this.resetInput(this.input)};i.prototype={constructor:function(e){this.rules=[];s.mix(this,e);this.resetInput(this.input)},resetInput:function(e){s.mix(this,{input:e,matched:"",stateStack:[i.STATIC.INITIAL],match:"",text:"",firstLine:1,lineNumber:1,lastLine:1,firstColumn:1,lastColumn:1})},getCurrentRules:function(){var e=this.stateStack[this.stateStack.length-1],d=[],e=this.mapState(e);s.each(this.rules,
 function(f){var g=f.state||f[3];g?s.inArray(e,g)&&d.push(f):e==i.STATIC.INITIAL&&d.push(f)});return d},pushState:function(e){this.stateStack.push(e)},popState:function(){return this.stateStack.pop()},getStateStack:function(){return this.stateStack},showDebugInfo:function(){var e=i.STATIC.DEBUG_CONTEXT_LIMIT,d=this.matched,f=this.match,g=this.input,d=d.slice(0,d.length-f.length),d=(d.length>e?"...":"")+d.slice(-e).replace(/\n/," "),f=f+g,f=f.slice(0,e)+(f.length>e?"...":"");return d+f+"\n"+Array(d.length+

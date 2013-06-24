@@ -880,22 +880,12 @@ KISSY.add('dd/draggable', function (S, Node, RichBase, DDM) {
      通知全局管理器开始作用
      */
     var handlePreDragStart = function (ev) {
-
-        ev = DDM._normalEvent(ev);
-
-        if (!ev) {
-            return;
-        }
-
         var self = this,
             t = ev.target;
-
         if (self._checkDragStartValid(ev)) {
-
             if (!self._checkHandler(t)) {
                 return;
             }
-
             self._prepare(ev);
         }
     };

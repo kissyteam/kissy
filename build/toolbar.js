@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 21 01:28
+build time: Jun 24 21:51
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -119,17 +119,17 @@ KISSY.add("toolbar", function (S, Container, DelegateChildrenExtension, ToolbarR
                 });
             }
             if (item) {
-                if (el[0].ownerDocument.activeElement != el[0]) {
+                if (el.ownerDocument.activeElement != el) {
                     self.focus();
                 }
                 itemEl = item.el;
-                id = itemEl.attr("id");
+                id = itemEl.id;
                 if (!id) {
-                    itemEl.attr("id", id = S.guid("ks-toolbar-item"));
+                    itemEl.id=id = S.guid("ks-toolbar-item");
                 }
-                el.attr("aria-activedescendant", id);
+                el.setAttribute("aria-activedescendant", id);
             } else {
-                el.attr("aria-activedescendant", "");
+                el.setAttribute("aria-activedescendant", "");
             }
         },
 

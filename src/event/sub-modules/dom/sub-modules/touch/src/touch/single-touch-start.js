@@ -14,8 +14,12 @@ KISSY.add('event/dom/touch/single-touch-start', function (S, eventHandleMap, DOM
 
         onTouchStart: function (e) {
             if (SingleTouchStart.superclass.onTouchStart.apply(this, arguments) !== false) {
+                var touch= e.touches[0];
                 DOMEvent.fire(e.target, event, {
-                    touch: e.touches[0],
+                    touch: touch[0],
+                    pageX:touch.pageX,
+                    pageY:touch.pageY,
+                    which: 1,
                     touches: e.touches
                 });
                 return undefined;

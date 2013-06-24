@@ -2,16 +2,16 @@
  * Set up editor constructor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/base", function (S, HtmlParser, Controller, EditorRender) {
+KISSY.add("editor/base", function (S, HtmlParser, Control, EditorRender) {
 
     /**
      * @class
      * KISSY Editor.
      * xclass: 'editor'.
-     * @extends KISSY.Component.Controller
+     * @extends KISSY.Component.Control
      * @name Editor
      */
-    return Controller.extend({
+    return Control.extend({
     }, {
 
         Config: {},
@@ -118,5 +118,5 @@ KISSY.add("editor/base", function (S, HtmlParser, Controller, EditorRender) {
     });
 
 }, {
-    requires: ['html-parser', 'component/controller', './render']
+    requires: ['html-parser', 'component/control', './render']
 });

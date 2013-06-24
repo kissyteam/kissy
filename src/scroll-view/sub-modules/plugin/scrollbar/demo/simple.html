@@ -1,0 +1,131 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <title>KISSY ScrollView</title>
+    <script src="/kissy/build/seed.js"></script>
+    <link rel="stylesheet" href="../../../../assets/nice.css">
+    <style>
+        .ks-scroll-view {
+            border: 1px solid red;
+            margin: 0 auto;
+        }
+
+        .ks-scroll-view .row {
+            height: 20px;
+            border: 1px solid green;
+            margin: 0;
+            padding: 10px;
+            width: 600px;
+        }
+
+        h1 {
+            text-align: center;
+            /*margin-bottom: 20px;*/
+        }
+
+        #native {
+            width: 320px;
+            height: 219px;
+            overflow: auto;
+            border: 1px solid red;
+            margin: 0 auto;
+            position: relative;
+            white-space: nowrap;
+        }
+
+        .box {
+            width: 100px;
+            height: 100px;
+            border: 1px solid red;
+        }
+    </style>
+</head>
+<body>
+<h1>KISSY ScrollView</h1>
+
+<div id="native"></div>
+
+<button id="destroy">destroy</button>
+<button id="disable">disable</button>
+<button id="enable">enable</button>
+
+<script src="/kissy/src/package.js"></script>
+
+<script>
+
+    KISSY.use('scroll-view,scroll-view/plugin/scrollbar', function (S, ScrollView, ScrollbarPlugin) {
+        S.ready(function () {
+
+            if (1) {
+                var content = '';
+                for (var i = 0; i < 23; i++) {
+                    content += '<p class="row">' + i + ': ' + new Array(10).join(' long ') + '</p>';
+                }
+
+                S.all('#native').html(content);
+
+                window.scrollView = new ScrollView({
+                    width: 320,
+                    height: 219,
+                    plugins: [new ScrollbarPlugin({
+                        autoHideX: true,
+                        autoHideY: false
+                    })],
+                    content: content
+                }).render();
+
+                // notice: swipe can trigger too
+                scrollView.get('el').on('swipe', function (e) {
+                    S.log(e.direction);
+                });
+
+                S.all('#destroy').on('click', function () {
+                    scrollView.destroy();
+                    S.all('#destroy').attr('disabled', true);
+                });
+
+                S.all('#disable').on('click', function () {
+                    scrollView.set('disabled', true);
+                });
+
+                S.all('#enable').on('click', function () {
+                    scrollView.set('disabled', false);
+                });
+
+                S.all('<div style="height:100px"></div>').appendTo('body');
+
+
+                new ScrollView({
+                    width: 320,
+                    scrollLeft: 50,
+                    scrollTop: 400,
+                    height: 219,
+                    plugins: [new ScrollbarPlugin({
+                        autoHideX: true,
+                        autoHideY: false
+                    })],
+                    content: content
+                }).render();
+            }
+
+            S.all('<h2>un-scrollable test</h2>').appendTo('body');
+
+
+            new ScrollView({
+                width: 320,
+                height: 219,
+                content: '<p>test</p>'
+            }).render();
+
+            S.all('<div style="height:1000px"></div>').appendTo('body');
+
+        });
+    });
+</script>
+</body>
+</html>

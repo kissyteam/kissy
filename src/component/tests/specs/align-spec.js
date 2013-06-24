@@ -1,9 +1,9 @@
-KISSY.use("component/extension/align,component/controller",
-    function (S, AlignExtension, Controller) {
+KISSY.use("component/extension/align,component/control",
+    function (S, AlignExtension, Control) {
         var Dom = S.Dom;
         var $ = S.all;
 
-        var AlignController = Controller.extend([AlignExtension]);
+        var AlignControl = Control.extend([AlignExtension]);
 
         describe("extension-align", function () {
 
@@ -211,7 +211,7 @@ KISSY.use("component/extension/align,component/controller",
                         //upper = node.children().item(1),
                             lower = node.children().item(2);
 
-                        var obj=new AlignController({
+                        var obj=new AlignControl({
                             srcNode:target
                         });
 
@@ -277,7 +277,7 @@ KISSY.use("component/extension/align,component/controller",
                         //upper = node.children().item(1),
                             lower = node.children().item(2);
 
-                        var obj=new AlignController({
+                        var obj=new AlignControl({
                             srcNode:target
                         });
 

@@ -103,9 +103,9 @@ KISSY.add('grid/column', function (S, Component, Template) {
      * In general, this class will not be created directly, rather an array of column configurations will be passed to the grid
      * @name Grid.Column
      * @constructor
-     * @extends KISSY.Component.Controller
+     * @extends KISSY.Component.Control
      */
-    var column = Component.Controller.extend(
+    var column = Component.Control.extend(
         /**
          * @lends Grid.Column.prototype
          */
@@ -118,7 +118,7 @@ KISSY.add('grid/column', function (S, Component, Template) {
             },
 
             /**
-             * {Component.Controller#handleClickInternal}
+             * {Component.Control#handleClickInternal}
              * @private
              */
             handleClickInternal:function (ev) {

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 21 01:28
+build time: Jun 24 21:51
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -14,31 +14,31 @@ build time: Jun 21 01:28
  * separator render def
  * @author yiminghe@gmail.com
  */
-KISSY.add("separator/render", function (S, Controller) {
+KISSY.add("separator/render", function (S, Control) {
 
-    return Controller.ATTRS.xrender.value.extend({
+    return Control.ATTRS.xrender.value.extend({
         beforeCreateDom: function (renderData) {
             renderData.elAttrs.role = 'separator';
         }
     });
 
 }, {
-    requires: ['component/controller']
+    requires: ['component/control']
 });
 /**
  * separator def
  * @author yiminghe@gmail.com
  */
-KISSY.add("separator", function (S, Controller, SeparatorRender) {
+KISSY.add("separator", function (S, Control, SeparatorRender) {
 
     /**
-     * @extends KISSY.Component.Controller
+     * @extends KISSY.Component.Control
      * @class
      * separator.
      * xclass: 'separator'.
      * @name Separator
      */
-    return Controller.extend({
+    return Control.extend({
     }, {
         ATTRS: {
 
@@ -67,6 +67,6 @@ KISSY.add("separator", function (S, Controller, SeparatorRender) {
     });
 
 }, {
-    requires: ['component/controller', 'separator/render']
+    requires: ['component/control', 'separator/render']
 });
 

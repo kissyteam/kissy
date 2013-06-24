@@ -86,7 +86,6 @@ KISSY.add("menu/popupmenu", function (S, AlignExtension, Menu, PopupMenuRender) 
             autoHideOnMouseLeave: {},
 
             contentEl: {
-                view: 1
             },
 
             visible: {

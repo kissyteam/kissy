@@ -33,10 +33,10 @@ KISSY.add('grid/editor-panel', function (S, Component) {
 	 * @private
      * @name Grid.GridEditorPanel
      * @constructor
-     * @extends KISSY.Component.Controller
+     * @extends KISSY.Component.Control
 	 * @extends KISSY.Component.Extension.Align
      */
-	var GridEditorPanel = Component.Controller.extend([
+	var GridEditorPanel = Component.Control.extend([
 			Component.UIBase.Position,
 			Component.UIBase.Align
 		],{

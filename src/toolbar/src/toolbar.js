@@ -98,17 +98,17 @@ KISSY.add("toolbar", function (S, Container, DelegateChildrenExtension, ToolbarR
                 });
             }
             if (item) {
-                if (el[0].ownerDocument.activeElement != el[0]) {
+                if (el.ownerDocument.activeElement != el) {
                     self.focus();
                 }
                 itemEl = item.el;
-                id = itemEl.attr("id");
+                id = itemEl.id;
                 if (!id) {
-                    itemEl.attr("id", id = S.guid("ks-toolbar-item"));
+                    itemEl.id=id = S.guid("ks-toolbar-item");
                 }
-                el.attr("aria-activedescendant", id);
+                el.setAttribute("aria-activedescendant", id);
             } else {
-                el.attr("aria-activedescendant", "");
+                el.setAttribute("aria-activedescendant", "");
             }
         },
 

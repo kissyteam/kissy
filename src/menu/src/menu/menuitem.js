@@ -3,7 +3,7 @@
  * menu item ,child component for menu
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/menuitem", function (S, Controller, MenuItemRender) {
+KISSY.add("menu/menuitem", function (S, Control, MenuItemRender) {
 
     var $ = S.all;
 
@@ -11,9 +11,9 @@ KISSY.add("menu/menuitem", function (S, Controller, MenuItemRender) {
      * @class KISSY.Menu.Item
      * A menu item component which menu is consisted of.
      * xclass: 'menuitem'.
-     * @extends KISSY.Component.Controller
+     * @extends KISSY.Component.Control
      */
-    var MenuItem = Controller.extend({
+    var MenuItem = Control.extend({
 
         isMenuItem: 1,
 
@@ -43,26 +43,29 @@ KISSY.add("menu/menuitem", function (S, Controller, MenuItemRender) {
         // 只允许调用 menuItem 的 set('highlighted')
         // 不允许调用 menu 的 set('highlightedItem')
         _onSetHighlighted: function (v, e) {
+            var self = this,
+                parent = self.get('parent');
+
             if (e && e.byPassSetHighlightedItem) {
 
             } else {
-                if (this.get('rendered')) {
-                    this.get('parent').set('highlightedItem', v ? this : null);
+                if (self.get('rendered')) {
+                    parent.set('highlightedItem', v ? self : null);
                 } else {
                     if (v) {
                         // do not set null on initializer
-                        this.get('parent').set('highlightedItem', this);
+                        parent.set('highlightedItem', self);
                     }
                 }
             }
             // 是否要滚动到当前菜单项(横向，纵向)
             if (v) {
-                var el = this.el,
+                var el = self.$el,
                 // 找到向上路径上第一个可以滚动的容器，直到父组件节点（包括）
                 // 找不到就放弃，为效率考虑不考虑 parent 的嵌套可滚动 div
                     p = el.parent(function (e) {
                         return $(e).css("overflow") != "visible";
-                    }, this.get('parent').el.parent());
+                    }, parent.get('el').parent());
                 if (!p) {
                     return;
                 }
@@ -152,5 +155,5 @@ KISSY.add("menu/menuitem", function (S, Controller, MenuItemRender) {
 
     return MenuItem;
 }, {
-    requires: ['component/controller', './menuitem-render']
+    requires: ['component/control', './menuitem-render']
 });

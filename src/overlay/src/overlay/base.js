@@ -1,6 +1,6 @@
 /**
  * @ignore
- * controller for overlay
+ * control for overlay
  * @author yiminghe@gmail.com
  */
 KISSY.add("overlay/base", function (S, Container, AlignExtension,
@@ -15,7 +15,7 @@ KISSY.add("overlay/base", function (S, Container, AlignExtension,
      * KISSY Overlay Component.
      * xclass: 'overlay'.
      * @class KISSY.Overlay
-     * @extends KISSY.Component.Controller
+     * @extends KISSY.Component.Control
      * @mixins KISSY.Component.Extension.Content
      * @mixins KISSY.Component.Extension.Position
      * @mixins KISSY.Overlay.Extension.Loading
@@ -52,7 +52,6 @@ KISSY.add("overlay/base", function (S, Container, AlignExtension,
         ATTRS: {
 
             contentEl: {
-                view: 1
             },
 
             /**

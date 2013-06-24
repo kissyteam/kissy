@@ -37,6 +37,7 @@ KISSY.add('event/dom/touch/gesture', function (S, DOMEvent) {
         Gesture.cancel = cancelEvent;
         Gesture.tap = 'tap';
         Gesture.doubleTap = 'doubleTap';
+        Gesture.singleTouchStart = 'singleTouchStart';
     }
 
     return Gesture;

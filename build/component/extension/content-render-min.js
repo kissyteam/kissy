@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 21 01:47
+build time: Jun 24 21:41
 */
-KISSY.add("component/extension/content-render",function(b){function a(){}a.prototype={__beforeCreateDom:function(e,a){b.mix(a,{contentEl:"#ks-content-{id}"})},getChildrenContainerEl:function(){return this.controller.get("contentEl")},_onSetContent:function(a){var c=this.controller,d=c.get("contentEl");d.html(a);9>b.UA.ie&&!c.get("allowTextSelection")&&d.unselectable()}};b.mix(a,{ATTRS:{contentTpl:{value:'<div id="ks-content-{{id}}" class="{{getBaseCssClasses "content"}}">{{{content}}}</div>'}},HTML_PARSER:{content:function(a){return a.one("."+
-this.getBaseCssClass("content")).html()},contentEl:function(a){return a.one("."+this.getBaseCssClass("content"))}}});a.ContentTpl=a.ATTRS.contentTpl.value;return a});
+KISSY.add("component/extension/content-render",function(d){function f(a){var b=a.control,c=b.get("contentEl");a.$contentEl=b.$contentEl=c;a.contentEl=b.contentEl=c[0]}function e(){}e.prototype={__beforeCreateDom:function(a,b){d.mix(b,{contentEl:"#ks-content-{id}"})},__createDom:function(){f(this)},__decorateDom:function(){f(this)},getChildrenContainerEl:function(){return this.control.get("contentEl")},_onSetContent:function(a){var b=this.control,c=b.get("contentEl");c.html(a);9>d.UA.ie&&!b.get("allowTextSelection")&&
+c.unselectable()}};d.mix(e,{ATTRS:{contentTpl:{value:'<div id="ks-content-{{id}}" class="{{getBaseCssClasses "content"}}">{{{content}}}</div>'}},HTML_PARSER:{content:function(a){return a.one("."+this.getBaseCssClass("content")).html()},contentEl:function(a){return a.one("."+this.getBaseCssClass("content"))}}});return e});

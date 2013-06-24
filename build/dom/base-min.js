@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 21 17:33
+build time: Jun 24 21:42
 */
 KISSY.add("dom/base/api",function(d){var a=d.Env.host||{},h=a.document,o=d.UA,j={ELEMENT_NODE:1,ATTRIBUTE_NODE:2,TEXT_NODE:3,CDATA_SECTION_NODE:4,ENTITY_REFERENCE_NODE:5,ENTITY_NODE:6,PROCESSING_INSTRUCTION_NODE:7,COMMENT_NODE:8,DOCUMENT_NODE:9,DOCUMENT_TYPE_NODE:10,DOCUMENT_FRAGMENT_NODE:11,NOTATION_NODE:12},m={isCustomDomain:function(d){var d=d||a,d=m.get(d),g=d.document.domain,d=d.location.hostname;return g!=d&&g!="["+d+"]"},getEmptyIframeSrc:function(d){d=d||a;d=m.get(d);return o.ie&&m.isCustomDomain(d)?
 "javascript:void(function(){"+encodeURIComponent("document.open();document.domain='"+d.document.domain+"';document.close();")+"}())":""},NodeType:j,getWindow:function(h){if(!h)return a;h=m.get(h);if(d.isWindow(h))return h;var g=h;g.nodeType!==j.DOCUMENT_NODE&&(g=h.ownerDocument);return g.defaultView||g.parentWindow},getDocument:function(a){if(!a)return h;a=m.get(a);return d.isWindow(a)?a.document:a.nodeType==j.DOCUMENT_NODE?a:a.ownerDocument},isDomNodeList:function(a){return a&&!a.nodeType&&a.item&&

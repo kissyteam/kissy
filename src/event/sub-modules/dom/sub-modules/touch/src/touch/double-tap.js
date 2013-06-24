@@ -64,6 +64,9 @@ KISSY.add('event/dom/touch/double-tap',
                 if (duration > MAX_DURATION) {
                     DOMEvent.fire(target, SINGLE_TAP, {
                         touch: touch,
+                        pageX:touch.pageX,
+                        which: 1,
+                        pageY:touch.pageY,
                         duration: duration / 1000
                     })
                 } else {
@@ -72,6 +75,9 @@ KISSY.add('event/dom/touch/double-tap',
                     self.singleTapTimer = setTimeout(function () {
                         DOMEvent.fire(target, SINGLE_TAP, {
                             touch: touch,
+                            pageX:touch.pageX,
+                            which: 1,
+                            pageY:touch.pageY,
                             duration: duration / 1000
                         });
                     }, MAX_DURATION);

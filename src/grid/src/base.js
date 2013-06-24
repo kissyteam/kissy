@@ -15,10 +15,10 @@ KISSY.add('grid/base', function (S, Component, Header, GridBody, Util) {
      * This class specifies the definition for the grid which contains {@link Grid.Header},{@link Grid.GridBody}
      * @name Grid
      * @constructor
-     * @extends KISSY.Component.Controller
+     * @extends KISSY.Component.Control
      * @extends Grid.Bindable
      */
-    var grid = Component.Controller.extend({
+    var grid = Component.Control.extend({
 
         createDom:function () {
             var _self = this;

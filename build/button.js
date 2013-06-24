@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 21 01:16
+build time: Jun 24 21:41
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -15,9 +15,9 @@ build time: Jun 21 01:16
  * abstract view for button
  * @author yiminghe@gmail.com
  */
-KISSY.add("button/render", function (S, Controller) {
+KISSY.add("button/render", function (S, Control) {
     // http://www.w3.org/TR/wai-aria-practices/
-    return Controller.ATTRS.xrender.value.extend({
+    return Control.ATTRS.xrender.value.extend({
         beforeCreateDom: function (renderData) {
             var self = this;
             S.mix(renderData.elAttrs, {
@@ -31,41 +31,40 @@ KISSY.add("button/render", function (S, Controller) {
         },
         _onSetChecked: function (v) {
             var self = this,
-                el = self.el,
                 cls = self.getBaseCssClasses("checked");
-            el[v ? 'addClass' : 'removeClass'](cls);
+            self.$el[v ? 'addClass' : 'removeClass'](cls);
         },
         '_onSetTooltip': function (title) {
-            this.el.attr("title", title);
+            this.el.setAttribute("title", title);
         },
         '_onSetDescribedby': function (describedby) {
-            this.el.attr("aria-describedby", describedby);
+            this.el.setAttribute("aria-describedby", describedby);
         }
     }, {
         name: 'ButtonRender'
     });
 }, {
-    requires: ['component/controller']
+    requires: ['component/control']
 });
 /**
  * @ignore
  * Button control for KISSY.
  * @author yiminghe@gmail.com
  */
-KISSY.add("button", function (S, Node, Controller, ButtonRender) {
+KISSY.add("button", function (S, Node, Control, ButtonRender) {
 
     var KeyCode = Node.KeyCode;
     /**
      * KISSY Button.
-     * @extends KISSY.Component.Controller
+     * @extends KISSY.Component.Control
      * @class KISSY.Button
      */
-    return Controller.extend({
+    return Control.extend({
 
         isButton: 1,
 
         bindUI: function () {
-            this.el.on("keyup", this.handleKeyDownInternal, this);
+            this.$el.on("keyup", this.handleKeyDownInternal, this);
         },
 
         handleKeyDownInternal: function (e) {
@@ -173,6 +172,6 @@ KISSY.add("button", function (S, Node, Controller, ButtonRender) {
     });
 
 }, {
-    requires: ['node', 'component/controller', 'button/render']
+    requires: ['node', 'component/control', 'button/render']
 });
 

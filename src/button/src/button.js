@@ -3,20 +3,20 @@
  * Button control for KISSY.
  * @author yiminghe@gmail.com
  */
-KISSY.add("button", function (S, Node, Controller, ButtonRender) {
+KISSY.add("button", function (S, Node, Control, ButtonRender) {
 
     var KeyCode = Node.KeyCode;
     /**
      * KISSY Button.
-     * @extends KISSY.Component.Controller
+     * @extends KISSY.Component.Control
      * @class KISSY.Button
      */
-    return Controller.extend({
+    return Control.extend({
 
         isButton: 1,
 
         bindUI: function () {
-            this.el.on("keyup", this.handleKeyDownInternal, this);
+            this.$el.on("keyup", this.handleKeyDownInternal, this);
         },
 
         handleKeyDownInternal: function (e) {
@@ -124,5 +124,5 @@ KISSY.add("button", function (S, Node, Controller, ButtonRender) {
     });
 
 }, {
-    requires: ['node', 'component/controller', 'button/render']
+    requires: ['node', 'component/control', 'button/render']
 });

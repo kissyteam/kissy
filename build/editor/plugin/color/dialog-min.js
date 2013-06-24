@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 21 01:19
+build time: Jun 24 21:43
 */
 KISSY.add("editor/plugin/color/dialog",function(d,o,q){function h(a){if(d.isArray(a))return a;var b=RegExp;if(/^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i.test(a))return f([b.$1,b.$2,b.$3],function(a){return parseInt(a,16)});if(/^#([0-9a-f])([0-9a-f])([0-9a-f])$/i.test(a))return f([b.$1,b.$2,b.$3],function(a){return parseInt(a+a,16)});if(/^rgb\((.*),(.*),(.*)\)$/i.test(a))return f([b.$1,b.$2,b.$3],function(a){return 0<a.indexOf("%")?2.55*parseFloat(a,10):a|0})}function j(a){var a="0"+a,b=a.length;
 return a.slice(b-2,b)}function m(a){a=h(a);return"#"+j(a[0].toString(16))+j(a[1].toString(16))+j(a[2].toString(16))}function p(a){this.editor=a;this._init()}var f=d.map,r=d.Dom,n=function(){function a(a,i,g){for(var e=[],a=b(a),i=b(i),c=(i[0]-a[0])/g,k=(i[1]-a[1])/g,d=(i[2]-a[2])/g,l=0,h=a[0],j=a[1],a=a[2];l<g;l++)e[l]=[h,j,a],h+=c,j+=k,a+=d;e[l]=i;return f(e,function(a){return f(a,function(a){return Math.min(Math.max(0,Math.floor(a)),255)})})}function b(a){var b=h(a);if(void 0===b){c||(c=document.createElement("textarea"),

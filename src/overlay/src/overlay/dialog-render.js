@@ -6,7 +6,7 @@
 KISSY.add("overlay/dialog-render", function (S, OverlayRender, DialogTpl) {
 
     function _setStdModRenderContent(self, part, v) {
-        part = self.controller.get(part);
+        part = self.control.get(part);
         part.html(v);
     }
 
@@ -20,10 +20,11 @@ KISSY.add("overlay/dialog-render", function (S, OverlayRender, DialogTpl) {
         },
 
         createDom: function () {
-            this.controller.get('contentEl').append(this.renderTpl(DialogTpl));
+            var self=this;
+            self.$contentEl.html(self.renderTpl(DialogTpl));
             // sentinel
-            this.el.append('<div tabindex="0"></div>');
-            this.fillChildrenElsBySelectors({
+            self.$el.append('<div tabindex="0"></div>');
+            self.fillChildrenElsBySelectors({
                 header: '#ks-stdmod-header-{id}',
                 body: '#ks-stdmod-body-{id}',
                 footer: '#ks-stdmod-footer-{id}'
@@ -31,18 +32,18 @@ KISSY.add("overlay/dialog-render", function (S, OverlayRender, DialogTpl) {
         },
 
         getChildrenContainerEl: function () {
-            return this.controller.get('body');
+            return this.control.get('body');
         },
 
         '_onSetBodyStyle': function (v) {
-            this.controller.get("body").css(v);
+            this.control.get("body").css(v);
         },
 
         '_onSetHeaderStyle': function (v) {
-            this.controller.get("header").css(v);
+            this.control.get("header").css(v);
         },
         '_onSetFooterStyle': function (v) {
-            this.controller.get("footer").css(v);
+            this.control.get("footer").css(v);
         },
 
         '_onSetBodyContent': function (v) {

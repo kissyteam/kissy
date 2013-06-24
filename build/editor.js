@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 21 02:17
+build time: Jun 24 21:48
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -44,9 +44,9 @@ KISSY.add('editor/render-tpl',function(){
  * render for editor
  * @author yiminghe@gmail.com
  */
-KISSY.add('editor/render',function(S,Controller,RenderTpl){
+KISSY.add('editor/render',function(S,Control,RenderTpl){
 
-    return Controller.ATTRS.xrender.value.extend({
+    return Control.ATTRS.xrender.value.extend({
 
         beforeCreateDom:function(renderData,childrenElSelectors){
             S.mix(renderData,{
@@ -69,22 +69,22 @@ KISSY.add('editor/render',function(S,Controller,RenderTpl){
     });
 
 },{
-    requires:['component/controller','./render-tpl']
+    requires:['component/control','./render-tpl']
 });
 /**
  * Set up editor constructor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/base", function (S, HtmlParser, Controller, EditorRender) {
+KISSY.add("editor/base", function (S, HtmlParser, Control, EditorRender) {
 
     /**
      * @class
      * KISSY Editor.
      * xclass: 'editor'.
-     * @extends KISSY.Component.Controller
+     * @extends KISSY.Component.Control
      * @name Editor
      */
-    return Controller.extend({
+    return Control.extend({
     }, {
 
         Config: {},
@@ -191,7 +191,7 @@ KISSY.add("editor/base", function (S, HtmlParser, Controller, EditorRender) {
     });
 
 }, {
-    requires: ['html-parser', 'component/controller', './render']
+    requires: ['html-parser', 'component/control', './render']
 });
 /**
  * common utils for kissy editor
@@ -8408,11 +8408,11 @@ KISSY.add('editor', function (S, Node, iframeContentTpl, Editor, Utils, focusMan
             self.on('docReady', docReady);
 
             self.on('blur', function () {
-                self.el.removeClass(prefixCls + 'editor-focused');
+                self.$el.removeClass(prefixCls + 'editor-focused');
             });
 
             self.on('focus', function () {
-                self.el.addClass(prefixCls + 'editor-focused');
+                self.$el.addClass(prefixCls + 'editor-focused');
             });
         },
 
@@ -8452,7 +8452,7 @@ KISSY.add('editor', function (S, Node, iframeContentTpl, Editor, Utils, focusMan
             }
         },
 
-        // 覆盖 controller
+        // 覆盖 control
         _onSetFocused: function (v) {
             var self = this;
             // docReady 后才能调用

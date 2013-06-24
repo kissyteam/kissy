@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 21 01:47
+build time: Jun 24 21:41
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -346,7 +346,7 @@ KISSY.add('component/extension/align', function (S, Node) {
             // auto align on window resize or before el show
             var self = this;
             self.on('beforeVisibleChange', beforeVisibleChange, self);
-            self.el.getWindow().on('resize', onResize, self);
+            self.$el.getWindow().on('resize', onResize, self);
         },
 
         '_onSetAlign': function (v) {
@@ -369,7 +369,7 @@ KISSY.add('component/extension/align', function (S, Node) {
             overflow = overflow || {};
 
             var self = this,
-                el = self.el,
+                el = self.$el,
                 fail = 0;
 
             // 当前节点可以被放置的显示区域
@@ -474,8 +474,8 @@ KISSY.add('component/extension/align', function (S, Node) {
         },
 
         __destructor: function () {
-            if (this.el) {
-                this.el.getWindow().detach('resize', realign, this);
+            if (this.$el) {
+                this.$el.getWindow().detach('resize', realign, this);
             }
         }
     };

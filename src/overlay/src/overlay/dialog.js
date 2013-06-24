@@ -47,15 +47,15 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
                 var self = this,
                     el = self.el;
                 if (v) {
-                    self.__lastActive = el[0].ownerDocument.activeElement;
+                    self.__lastActive = el.ownerDocument.activeElement;
                     self.focus();
                     // if d.show(); d.hide();
                     // async -> focus event -> handleFocusInternal
                     // -> set('focused') -> el.focus() -> ie error
                     // el[0].focus && el[0].focus();
-                    el.attr("aria-hidden", "false");
+                    el.setAttribute("aria-hidden", "false");
                 } else {
-                    el.attr("aria-hidden", "true");
+                    el.setAttribute("aria-hidden", "true");
                     try {
                         self.__lastActive && self.__lastActive.focus();
                     } catch (e) {
@@ -238,7 +238,7 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
         if (keyCode != KEY_TAB) {
             return;
         }
-        var el = self.el;
+        var $el = self.$el;
         // summary:
         // Handles the keyboard events for accessibility reasons
 
@@ -247,7 +247,7 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
         // find the first and last tab focusable items in the hierarchy of the dialog container node
         // do this every time if the items may be added / removed from the the dialog may change visibility or state
 
-        var lastFocusItem = el.last();
+        var lastFocusItem = $el.last();
 
         // assumes el and lastFocusItem maintained by dialog object
 
@@ -263,7 +263,7 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
         }
         else {
             // see if the key is for the dialog
-            if (node.equals(el) || el.contains(node)) {
+            if (node.equals($el) || $el.contains(node)) {
                 return;
             }
         }

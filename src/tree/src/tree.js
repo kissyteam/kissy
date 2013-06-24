@@ -8,5 +8,5 @@ KISSY.add('tree', function (S, Tree, TreeNode, CheckNode, CheckTree) {
     Tree.CheckTree = CheckTree;
     return Tree;
 }, {
-    requires: ["tree/base", "tree/node", "tree/check-node", "tree/check-tree"]
+    requires: ["tree/control", "tree/node", "tree/check-node", "tree/check-tree"]
 });

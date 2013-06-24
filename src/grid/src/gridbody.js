@@ -21,7 +21,7 @@ KISSY.add('grid/gridbody', function (S, Component, XTemplate, Bindable) {
 
     var GridBodyRender = Component.Render.extend({
         /**
-         * refer: {Component.Controller#renderUI}
+         * refer: {Component.Control#renderUI}
          */
         renderUI:function () {
             var _self = this,
@@ -339,17 +339,17 @@ KISSY.add('grid/gridbody', function (S, Component, XTemplate, Bindable) {
      * In general, this class will not be instanced directly, instead a viewConfig option is passed to the grid
      * @name Grid.GridBody
      * @constructor
-     * @extends KISSY.Component.Controller
+     * @extends KISSY.Component.Control
      * @extends Grid.Bindable
      */
-    var GridBody = Component.Controller.extend([Bindable],
+    var GridBody = Component.Control.extend([Bindable],
         /**
          * @lends Grid.GridBody.prototype
          */
         {
 
             /**
-             * refer: Component.Controller#bindUI
+             * refer: Component.Control#bindUI
              */
             bindUI:function () {
                 var _self = this;
@@ -498,7 +498,7 @@ KISSY.add('grid/gridbody', function (S, Component, XTemplate, Bindable) {
                 });
             },
             /**
-             * show data in this controller
+             * show data in this control
              * @param {Array} data show the given data in table
              */
             showData:function (data) {

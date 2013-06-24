@@ -1,0 +1,83 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <title>KISSY ScrollView</title>
+    <script src="/kissy/build/seed.js"></script>
+    <script src="/kissy/src/package.js"></script>
+    <link rel="stylesheet" href="../../../assets/nice.css">
+    <style>
+        .ks-scroll-view {
+            border: 1px solid red;
+            margin: 0 auto;
+        }
+
+        .ks-scroll-view p {
+            height: 20px;
+            border: 1px solid green;
+            margin: 0;
+            padding: 10px;
+        }
+
+        h1 {
+            text-align: center;
+            /*margin-bottom: 20px;*/
+        }
+
+        #native {
+            width: 320px;
+            height: 219px;
+            overflow: auto;
+            border: 1px solid red;
+            margin: 0 auto;
+            position: relative;
+            white-space: nowrap;
+        }
+    </style>
+</head>
+<body>
+<h1>KISSY ScrollView</h1>
+
+<div id="native"></div>
+<button id="destroy">destroy</button>
+
+<script>
+    KISSY.use('scroll-view/drag', function (S, ScrollView) {
+        var content = '';
+        for (var i = 0; i < 10; i++) {
+            content += '<p>' + i + '</p>';
+        }
+        content += '<textarea rows="10" cols="20"></textarea>';
+        for (i = 11; i < 23; i++) {
+            content += '<p>' + i + '</p>';
+        }
+
+        S.all('#native').html(content);
+
+        var scrollView = new ScrollView({
+            width: 320,
+            height: 219,
+            content: content
+        }).render();
+
+        S.all('<h2>snap test</h2>').appendTo('body');
+
+        new ScrollView({
+            width: 320,
+            height: 219,
+            snap:'p',
+            content: content
+        }).render();
+
+        S.all('#destroy').on('click', function () {
+            scrollView.destroy();
+            S.all('#destroy').attr('disabled', true);
+        });
+    });
+</script>
+</body>
+</html>

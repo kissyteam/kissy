@@ -18,10 +18,10 @@ KISSY.add("tabs/panel-render", function (S, Container) {
         },
 
         _onSetSelected: function (v) {
-            var el = this.el;
+            var el = this.$el;
             var selectedCls = this.getBaseCssClasses('selected');
-            el[v ? "addClass" : "removeClass"](selectedCls);
-            el.attr("aria-hidden", !v);
+            el[v ? "addClass" : "removeClass"](selectedCls)
+                .attr("aria-hidden", !v);
         }
 
     }, {

@@ -13,13 +13,6 @@ KISSY.add('dd/draggable-delegate', function (S, DDM, Draggable, Node) {
      父容器监听 mousedown，找到合适的拖动 handlers 以及拖动节点
      */
     var handlePreDragStart = function (ev) {
-
-        ev = DDM._normalEvent(ev);
-
-        if (!ev) {
-            return;
-        }
-
         var self = this,
             handler,
             node;

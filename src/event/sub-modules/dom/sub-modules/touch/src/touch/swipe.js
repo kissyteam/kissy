@@ -53,6 +53,9 @@ KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, DOMEvent, Single
 
         DOMEvent.fire(e.target, ing ? ingEvent : event, {
             originalEvent: e.originalEvent,
+            pageX:touch.pageX,
+            pageY:touch.pageY,
+            which: 1,
             /**
              *
              * native touch property **only for touch event**.

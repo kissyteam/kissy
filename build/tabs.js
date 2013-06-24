@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 21 01:28
+build time: Jun 24 21:51
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -239,10 +239,10 @@ KISSY.add("tabs/tab-render", function (S, Button) {
             }
         },
         _onSetSelected: function (v) {
-            var el = this.el;
+            var el = this.$el;
             var selectedCls = this.getBaseCssClasses('selected');
-            el[v ? 'addClass' : 'removeClass'](selectedCls);
-            el.attr('aria-selected', !!v);
+            el[v ? 'addClass' : 'removeClass'](selectedCls)
+                .attr('aria-selected', !!v);
         }
     }, {
         name:'TabsTabRender',
@@ -323,10 +323,10 @@ KISSY.add("tabs/panel-render", function (S, Container) {
         },
 
         _onSetSelected: function (v) {
-            var el = this.el;
+            var el = this.$el;
             var selectedCls = this.getBaseCssClasses('selected');
-            el[v ? "addClass" : "removeClass"](selectedCls);
-            el.attr("aria-hidden", !v);
+            el[v ? "addClass" : "removeClass"](selectedCls)
+                .attr("aria-hidden", !v);
         }
 
     }, {
@@ -351,7 +351,7 @@ KISSY.add("tabs/panel", function (S, Container, PanelRender) {
     /**
      * KISSY.Tabs.Panel
      * @class  KISSY.Tabs.Panel
-     * @extends KISSY.Component.Controller
+     * @extends KISSY.Component.Control
      */
     return Container.extend({
         isTabsPanel: 1
@@ -396,17 +396,17 @@ KISSY.add("tabs/render", function (S, Container) {
 
         beforeCreateDom: function (renderData) {
             renderData.elCls
-                .push(this.getBaseCssClass(this.controller.get('barOrientation')))
+                .push(this.getBaseCssClass(this.control.get('barOrientation')))
         },
 
         decorateDom: function () {
-            var controller = this.controller;
-            controller.get('bar').set('changeType', controller.get('changeType'));
+            var control = this.control;
+            control.get('bar').set('changeType', control.get('changeType'));
         },
 
         '_onSetBarOrientation': function (v) {
             var self = this,
-                el = self.el;
+                el = self.$el;
             el.removeClass(self.getBaseCssClass(CLS))
                 .addClass(self.getBaseCssClass(v));
         }
@@ -441,7 +441,7 @@ KISSY.add("tabs", function (S, Container, Bar, Body, Tab, Panel, Render) {
     /**
      * Tabs for KISSY
      * @class KISSY.Tabs
-     * @extends KISSY.Component.Controller
+     * @extends KISSY.Component.Control
      */
     var Tabs = Container.extend({
 
@@ -549,13 +549,13 @@ KISSY.add("tabs", function (S, Container, Bar, Body, Tab, Panel, Render) {
             var tabs = this,
                 bar = /**
                  @ignore
-                 @type KISSY.Component.Controller
+                 @type KISSY.Component.Control
                  */tabs.get("bar"),
                 barCs = bar.get("children"),
                 tab = bar.getChildAt(index),
                 body = /**
                  @ignore
-                 @type KISSY.Component.Controller
+                 @type KISSY.Component.Control
                  */tabs.get("body");
             if (tab.get("selected")) {
                 if (barCs.length == 1) {

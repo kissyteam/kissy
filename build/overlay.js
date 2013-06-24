@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 21 01:27
+build time: Jun 24 21:50
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -53,7 +53,7 @@ KISSY.add("overlay/extension/loading", function (S, Node) {
                     "z-index: 99999;" +
                     "height:100%;" +
                     "*height: expression(this.parentNode.offsetHeight);" + "'/>")
-                    .appendTo(self.el);
+                    .appendTo(self.$el);
             }
             self._loadingExtEl.show();
         },
@@ -211,7 +211,7 @@ KISSY.add("overlay/extension/mask", function (S, Node) {
                 self = this,
                 maskNode = self.get('maskNode');
             if (v = e.newVal) {
-                var elZIndex = parseInt(self.el.css('z-index')) || 1;
+                var elZIndex = parseInt(self.$el.css('z-index')) || 1;
                 maskNode.css('z-index', elZIndex - 1);
             }
             processMask(self.get('mask'), maskNode, v, self);
@@ -271,8 +271,8 @@ KISSY.add("overlay/overlay-render", function (S, Container, ContentRenderExtensi
     ], {
         createDom: function () {
             var self = this;
-            if (self.controller.get('closable')) {
-                self.controller.get('contentEl')
+            if (self.control.get('closable')) {
+                self.control.get('contentEl')
                     .append(self.renderTpl(CloseTpl));
                 self.fillChildrenElsBySelectors({
                     closeBtn: '#ks-ext-close-{id}'
@@ -315,7 +315,7 @@ KISSY.add('overlay/extension/overlay-effect', function (S) {
         effects = {fade: ["Out", "In"], slide: ["Up", "Down"]};
 
     function getGhost(self) {
-        var el = self.el,
+        var el = self.$el,
             ghost = el.clone(true);
 
         ghost.css({
@@ -332,7 +332,7 @@ KISSY.add('overlay/extension/overlay-effect', function (S) {
             self.__effectGhost.stop(1, 1);
         }
 
-        var el = self.el,
+        var el = self.$el,
             $ = S.all,
             effectCfg = self.get("effect"),
             target = $(effectCfg.target),
@@ -380,7 +380,7 @@ KISSY.add('overlay/extension/overlay-effect', function (S) {
     }
 
     function processEffect(self, show, callback) {
-        var el = self.el,
+        var el = self.$el,
             effectCfg = self.get("effect"),
             effect = effectCfg.effect || NONE,
             target = effectCfg.target;
@@ -487,7 +487,7 @@ KISSY.add('overlay/extension/overlay-effect', function (S) {
 });
 /**
  * @ignore
- * controller for overlay
+ * control for overlay
  * @author yiminghe@gmail.com
  */
 KISSY.add("overlay/base", function (S, Container, AlignExtension,
@@ -502,7 +502,7 @@ KISSY.add("overlay/base", function (S, Container, AlignExtension,
      * KISSY Overlay Component.
      * xclass: 'overlay'.
      * @class KISSY.Overlay
-     * @extends KISSY.Component.Controller
+     * @extends KISSY.Component.Control
      * @mixins KISSY.Component.Extension.Content
      * @mixins KISSY.Component.Extension.Position
      * @mixins KISSY.Overlay.Extension.Loading
@@ -539,7 +539,6 @@ KISSY.add("overlay/base", function (S, Container, AlignExtension,
         ATTRS: {
 
             contentEl: {
-                view: 1
             },
 
             /**
@@ -669,7 +668,7 @@ KISSY.add('overlay/dialog-tpl',function(){
 KISSY.add("overlay/dialog-render", function (S, OverlayRender, DialogTpl) {
 
     function _setStdModRenderContent(self, part, v) {
-        part = self.controller.get(part);
+        part = self.control.get(part);
         part.html(v);
     }
 
@@ -683,10 +682,11 @@ KISSY.add("overlay/dialog-render", function (S, OverlayRender, DialogTpl) {
         },
 
         createDom: function () {
-            this.controller.get('contentEl').append(this.renderTpl(DialogTpl));
+            var self=this;
+            self.$contentEl.html(self.renderTpl(DialogTpl));
             // sentinel
-            this.el.append('<div tabindex="0"></div>');
-            this.fillChildrenElsBySelectors({
+            self.$el.append('<div tabindex="0"></div>');
+            self.fillChildrenElsBySelectors({
                 header: '#ks-stdmod-header-{id}',
                 body: '#ks-stdmod-body-{id}',
                 footer: '#ks-stdmod-footer-{id}'
@@ -694,18 +694,18 @@ KISSY.add("overlay/dialog-render", function (S, OverlayRender, DialogTpl) {
         },
 
         getChildrenContainerEl: function () {
-            return this.controller.get('body');
+            return this.control.get('body');
         },
 
         '_onSetBodyStyle': function (v) {
-            this.controller.get("body").css(v);
+            this.control.get("body").css(v);
         },
 
         '_onSetHeaderStyle': function (v) {
-            this.controller.get("header").css(v);
+            this.control.get("header").css(v);
         },
         '_onSetFooterStyle': function (v) {
-            this.controller.get("footer").css(v);
+            this.control.get("footer").css(v);
         },
 
         '_onSetBodyContent': function (v) {
@@ -794,15 +794,15 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
                 var self = this,
                     el = self.el;
                 if (v) {
-                    self.__lastActive = el[0].ownerDocument.activeElement;
+                    self.__lastActive = el.ownerDocument.activeElement;
                     self.focus();
                     // if d.show(); d.hide();
                     // async -> focus event -> handleFocusInternal
                     // -> set('focused') -> el.focus() -> ie error
                     // el[0].focus && el[0].focus();
-                    el.attr("aria-hidden", "false");
+                    el.setAttribute("aria-hidden", "false");
                 } else {
-                    el.attr("aria-hidden", "true");
+                    el.setAttribute("aria-hidden", "true");
                     try {
                         self.__lastActive && self.__lastActive.focus();
                     } catch (e) {
@@ -985,7 +985,7 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
         if (keyCode != KEY_TAB) {
             return;
         }
-        var el = self.el;
+        var $el = self.$el;
         // summary:
         // Handles the keyboard events for accessibility reasons
 
@@ -994,7 +994,7 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
         // find the first and last tab focusable items in the hierarchy of the dialog container node
         // do this every time if the items may be added / removed from the the dialog may change visibility or state
 
-        var lastFocusItem = el.last();
+        var lastFocusItem = $el.last();
 
         // assumes el and lastFocusItem maintained by dialog object
 
@@ -1010,7 +1010,7 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
         }
         else {
             // see if the key is for the dialog
-            if (node.equals(el) || el.contains(node)) {
+            if (node.equals($el) || $el.contains(node)) {
                 return;
             }
         }
@@ -1097,7 +1097,7 @@ KISSY.add('overlay/popup', function (S, Overlay, undefined) {
 
         _bindContainerMouse: function () {
             var self = this;
-            self.el
+            self.$el
                 .on('mouseleave', self._setHiddenTimer, self)
                 .on('mouseenter', self._clearHiddenTimer, self);
         },
@@ -1144,29 +1144,22 @@ KISSY.add('overlay/popup', function (S, Overlay, undefined) {
 
         destructor: function () {
             var self = this,
-                root = self.el,
+                $el = self.$el,
                 t = self.get("trigger");
 
             if (t) {
                 if (self.__clickPopup) {
-
                     t.detach('click', self.__clickPopup);
-
                 }
                 if (self.__mouseEnterPopup) {
-
                     t.detach('mouseenter', self.__mouseEnterPopup);
-
                 }
-
                 if (self._mouseLeavePopup) {
-
                     t.detach('mouseleave', self._mouseLeavePopup);
-
                 }
             }
 
-            root.detach('mouseleave', self._setHiddenTimer, self)
+            $el.detach('mouseleave', self._setHiddenTimer, self)
                 .detach('mouseenter', self._clearHiddenTimer, self);
 
         }

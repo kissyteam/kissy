@@ -13,7 +13,7 @@ KISSY.add('overlay/extension/overlay-effect', function (S) {
         effects = {fade: ["Out", "In"], slide: ["Up", "Down"]};
 
     function getGhost(self) {
-        var el = self.el,
+        var el = self.$el,
             ghost = el.clone(true);
 
         ghost.css({
@@ -30,7 +30,7 @@ KISSY.add('overlay/extension/overlay-effect', function (S) {
             self.__effectGhost.stop(1, 1);
         }
 
-        var el = self.el,
+        var el = self.$el,
             $ = S.all,
             effectCfg = self.get("effect"),
             target = $(effectCfg.target),
@@ -78,7 +78,7 @@ KISSY.add('overlay/extension/overlay-effect', function (S) {
     }
 
     function processEffect(self, show, callback) {
-        var el = self.el,
+        var el = self.$el,
             effectCfg = self.get("effect"),
             effect = effectCfg.effect || NONE,
             target = effectCfg.target;

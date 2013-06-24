@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 21 01:20
+build time: Jun 24 21:43
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -303,9 +303,9 @@ KISSY.add("editor/plugin/draft", function (S, Editor, localStorage, Overlay, Men
                 });
             }
 
-            if(!drafts.length){
+            if (!drafts.length) {
                 versions.addItem({
-                    disabled:true,
+                    disabled: true,
                     content: '尚无历史',
                     value: ''
                 });
@@ -327,7 +327,7 @@ KISSY.add("editor/plugin/draft", function (S, Editor, localStorage, Overlay, Men
             //可视区域内代码！= 最终代码
             //代码模式也要支持草稿功能
             //统一获得最终代码
-                data = editor.get("formatData");
+                data = editor.getData(1);
 
             //如果当前内容为空，不保存版本
             if (!data) {
@@ -353,7 +353,7 @@ KISSY.add("editor/plugin/draft", function (S, Editor, localStorage, Overlay, Men
                 v = ev.target.get("value");
             if (confirm("确认恢复 " + date(drafts[v].date) + " 的编辑历史？")) {
                 editor.execCommand("save");
-                editor.set("data", drafts[v].content);
+                editor.setData(drafts[v].content);
                 editor.execCommand("save");
             }
             ev.halt();

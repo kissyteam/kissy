@@ -136,7 +136,7 @@ KISSY.add("overlay/extension/mask", function (S, Node) {
                 self = this,
                 maskNode = self.get('maskNode');
             if (v = e.newVal) {
-                var elZIndex = parseInt(self.el.css('z-index')) || 1;
+                var elZIndex = parseInt(self.$el.css('z-index')) || 1;
                 maskNode.css('z-index', elZIndex - 1);
             }
             processMask(self.get('mask'), maskNode, v, self);

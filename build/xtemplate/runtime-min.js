@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 21 15:26
+build time: Jun 24 21:51
 */
 KISSY.add("xtemplate/runtime/commands",function(g){return{each:function(d,a){var b=a.params[0],e="",c;if(b){var f=[0,0].concat(d);if(g.isArray(b)){c=b.length;for(var h=0;h<c;h++)f[0]=b[h],f[1]={xcount:c,xindex:h},e+=a.fn(f)}else for(c in b)f[0]=b[c],f[1]={xkey:c},e+=a.fn(f)}else a.inverse&&(e=a.inverse(d));return e},"with":function(d,a){var b=a.params[0],e=[0].concat(d),c="";b?(e[0]=b,c=a.fn(e)):a.inverse&&(c=a.inverse(d));return c},"if":function(d,a){var b="";a.params[0]?a.fn&&(b=a.fn(d)):a.inverse&&
 (b=a.inverse(d));return b},set:function(d,a){for(var b=d.length-1;0<=b;b--)if("object"==typeof d[b]){g.mix(d[b],a.hash);break}return""},include:function(d,a){var b=a.params;if(!b||1!=b.length)return g[a.silent?"log":"error"]("include must has one param"),"";var b=b[0],e;if(!(e=a.subTpls[b]))return g[a.silent?"log":"error"]('does not include sub template "'+b+'"'),"";a=g.merge(a);a.name=b;return this.invokeEngine(e,d,a)}}});

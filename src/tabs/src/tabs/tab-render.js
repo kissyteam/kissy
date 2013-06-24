@@ -15,10 +15,10 @@ KISSY.add("tabs/tab-render", function (S, Button) {
             }
         },
         _onSetSelected: function (v) {
-            var el = this.el;
+            var el = this.$el;
             var selectedCls = this.getBaseCssClasses('selected');
-            el[v ? 'addClass' : 'removeClass'](selectedCls);
-            el.attr('aria-selected', !!v);
+            el[v ? 'addClass' : 'removeClass'](selectedCls)
+                .attr('aria-selected', !!v);
         }
     }, {
         name:'TabsTabRender',

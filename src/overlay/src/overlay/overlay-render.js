@@ -11,8 +11,8 @@ KISSY.add("overlay/overlay-render", function (S, Container, ContentRenderExtensi
     ], {
         createDom: function () {
             var self = this;
-            if (self.controller.get('closable')) {
-                self.controller.get('contentEl')
+            if (self.control.get('closable')) {
+                self.control.get('contentEl')
                     .append(self.renderTpl(CloseTpl));
                 self.fillChildrenElsBySelectors({
                     closeBtn: '#ks-ext-close-{id}'

@@ -14,16 +14,16 @@ KISSY.add('menu/check-menuitem-render', function (S, MenuItemRender, ContentRend
 
         _onSetChecked: function (v) {
             var self = this,
-                el = self.el,
                 cls = self.getBaseCssClasses("checked");
-            el[v ? 'addClass' : 'removeClass'](cls);
+            self.$el[v ? 'addClass' : 'removeClass'](cls);
         }
 
     }, {
         ATTRS: {
             contentTpl: {
-                value: '<div class="{{getBaseCssClasses "checkbox"}}"></div>' +
-                    ContentRenderExtension.ContentTpl
+                value: '<div class="{{getBaseCssClasses "checkbox"}}">' +
+                    '</div>' +
+                    ContentRenderExtension.ATTRS.contentTpl.value
             }
         }
     })

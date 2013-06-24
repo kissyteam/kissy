@@ -45,8 +45,8 @@ if (location.href.indexOf('__build') == -1) {
             "base": "/kissy/src/component/sub-modules/container/src/container",
             "ignorePackageNameInUri": 1
         },
-        "component/controller": {
-            "base": "/kissy/src/component/sub-modules/controller/src/controller",
+        "component/control": {
+            "base": "/kissy/src/component/sub-modules/control/src/control",
             "ignorePackageNameInUri": 1
         },
         "component/extension/align": {
@@ -577,20 +577,20 @@ if (location.href.indexOf('__build') == -1) {
             "base": "/kissy/src/rich-base/src/rich-base",
             "ignorePackageNameInUri": 1
         },
-        "scrollview/base": {
-            "base": "/kissy/src/scrollview/sub-modules/base/src/base",
+        "scroll-view/base": {
+            "base": "/kissy/src/scroll-view/sub-modules/base/src/base",
             "ignorePackageNameInUri": 1
         },
-        "scrollview/drag": {
-            "base": "/kissy/src/scrollview/sub-modules/drag/src/drag",
+        "scroll-view/drag": {
+            "base": "/kissy/src/scroll-view/sub-modules/drag/src/drag",
             "ignorePackageNameInUri": 1
         },
-        "scrollview/plugin/pull-to-refresh": {
-            "base": "/kissy/src/scrollview/sub-modules/plugin/pull-to-refresh/src/pull-to-refresh",
+        "scroll-view/plugin/pull-to-refresh": {
+            "base": "/kissy/src/scroll-view/sub-modules/plugin/pull-to-refresh/src/pull-to-refresh",
             "ignorePackageNameInUri": 1
         },
-        "scrollview/plugin/scrollbar": {
-            "base": "/kissy/src/scrollview/sub-modules/plugin/scrollbar/src/scrollbar",
+        "scroll-view/plugin/scrollbar": {
+            "base": "/kissy/src/scroll-view/sub-modules/plugin/scrollbar/src/scrollbar",
             "ignorePackageNameInUri": 1
         },
         "seed": {

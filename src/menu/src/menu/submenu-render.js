@@ -7,14 +7,14 @@ KISSY.add("menu/submenu-render", function (S, MenuItemRender, ContentRenderExten
 
     return MenuItemRender.extend([ContentRenderExtension], {
         decorateDom: function (el) {
-            var controller = this.controller,
-                prefixCls = controller.prefixCls;
+            var control = this.control,
+                prefixCls = control.prefixCls;
             var popupMenuEl = el.one('.' + prefixCls + 'popupmenu');
             var docBody = popupMenuEl[0].ownerDocument.body;
             docBody.insertBefore(popupMenuEl[0], docBody.firstChild);
             var PopupMenuClass =
                 this.getComponentConstructorByNode(prefixCls, popupMenuEl);
-            controller.setInternal('menu', new PopupMenuClass({
+            control.setInternal('menu', new PopupMenuClass({
                 srcNode: popupMenuEl,
                 prefixCls: prefixCls
             }));
@@ -22,7 +22,7 @@ KISSY.add("menu/submenu-render", function (S, MenuItemRender, ContentRenderExten
     }, {
         ATTRS: {
             contentTpl: {
-                value: ContentRenderExtension.ContentTpl +
+                value: ContentRenderExtension.ATTRS.contentTpl.value +
                     '<span class="{{prefixCls}}submenu-arrow">►</span>'
             }
         }

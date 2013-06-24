@@ -2,9 +2,9 @@
  * render for container
  * @author yiminghe@gmail.com
  */
-KISSY.add('component/container/render', function (S, Controller, Manager) {
+KISSY.add('component/container/render', function (S, Control, Manager) {
 
-    return Controller.ATTRS.xrender.value.extend([], {
+    return Control.ATTRS.xrender.value.extend([], {
 
         /**
          * decorate child element from parent component's root element.
@@ -12,8 +12,8 @@ KISSY.add('component/container/render', function (S, Controller, Manager) {
         decorateDom: function () {
             var self = this,
                 childrenContainerEl = self.getChildrenContainerEl(),
-                controller = self.controller,
-                defaultChildCfg = controller.get('defaultChildCfg'),
+                control = self.control,
+                defaultChildCfg = control.get('defaultChildCfg'),
                 prefixCls = defaultChildCfg.prefixCls,
                 defaultChildXClass = defaultChildCfg.xclass,
                 childrenComponents = [],
@@ -28,19 +28,19 @@ KISSY.add('component/container/render', function (S, Controller, Manager) {
                     })));
                 }
             });
-            controller.set('children', childrenComponents);
+            control.set('children', childrenComponents);
         },
         /**
          * Return the dom element into which child component to be rendered.
          * @return {KISSY.NodeList}
          */
         getChildrenContainerEl: function () {
-            return this.el;
+            return this.$el;
         }
     }, {
         name: 'ContainerRender'
     });
 
 }, {
-    requires: ['component/controller', 'component/manager']
+    requires: ['component/control', 'component/manager']
 });

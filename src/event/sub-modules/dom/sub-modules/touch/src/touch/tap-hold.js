@@ -18,8 +18,12 @@ KISSY.add('event/dom/touch/tap-hold', function (S, eventHandleMap, SingleTouch, 
                 return false;
             }
             self.timer = setTimeout(function () {
+                var touch= e.touches[0];
                 DOMEvent.fire(e.target, event, {
-                    touch: e.touches[0],
+                    touch: touch,
+                    pageX:touch.pageX,
+                    pageY:touch.pageY,
+                    which: 1,
                     duration: (S.now() - e.timeStamp) / 1000
                 });
             }, duration);

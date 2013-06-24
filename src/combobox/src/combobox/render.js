@@ -3,9 +3,9 @@
  * Render aria properties to input element.
  * @author yiminghe@gmail.com
  */
-KISSY.add("combobox/render", function (S, Controller, ComboboxTpl) {
+KISSY.add("combobox/render", function (S, Control, ComboboxTpl) {
 
-    var ComboboxRender = Controller.ATTRS.xrender.value.extend({
+    var ComboboxRender = Control.ATTRS.xrender.value.extend({
 
         beforeCreateDom: function (renderData, childrenElSelectors) {
             S.mix(childrenElSelectors, {
@@ -17,16 +17,16 @@ KISSY.add("combobox/render", function (S, Controller, ComboboxTpl) {
         },
 
         getKeyEventTarget: function () {
-            return this.controller.get("input");
+            return this.control.get("input");
         },
 
         _onSetCollapsed: function (v) {
-            this.controller.get("input").attr("aria-expanded", !v);
+            this.control.get("input").attr("aria-expanded", !v);
         },
 
         _onSetDisabled: function (v) {
             ComboboxRender.superclass._onSetDisabled.apply(this, arguments);
-            this.controller.get("input").attr("disabled", v);
+            this.control.get("input").attr("disabled", v);
         }
 
     }, {
@@ -56,5 +56,5 @@ KISSY.add("combobox/render", function (S, Controller, ComboboxTpl) {
 
     return ComboboxRender;
 }, {
-    requires: ['component/controller', './combobox-tpl']
+    requires: ['component/control', './combobox-tpl']
 });

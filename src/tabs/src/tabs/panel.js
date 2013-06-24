@@ -8,7 +8,7 @@ KISSY.add("tabs/panel", function (S, Container, PanelRender) {
     /**
      * KISSY.Tabs.Panel
      * @class  KISSY.Tabs.Panel
-     * @extends KISSY.Component.Controller
+     * @extends KISSY.Component.Control
      */
     return Container.extend({
         isTabsPanel: 1

@@ -3,17 +3,17 @@
  * Input wrapper for ComboBox component.
  * @author yiminghe@gmail.com
  */
-KISSY.add("combobox/base", function (S, Node, Controller, ComboBoxRender, Menu, undefined) {
+KISSY.add("combobox/base", function (S, Node, Control, ComboBoxRender, Menu, undefined) {
     var ComboBox,
         KeyCode = Node.KeyCode;
 
     /**
      * KISSY ComboBox.
      * xclass: 'combobox'.
-     * @extends KISSY.Component.Controller
+     * @extends KISSY.Component.Control
      * @class KISSY.ComboBox
      */
-    ComboBox = Controller.extend({
+    ComboBox = Control.extend({
 
             // user's input text.
             // for restore after press esc key
@@ -264,7 +264,7 @@ KISSY.add("combobox/base", function (S, Node, Controller, ComboBoxRender, Menu, 
 
             _onSetCollapsed: function (v) {
                 var self = this,
-                    el = self.el,
+                    el = self.$el,
                     menu = self.get('menu');
                 if (v) {
                     menu.hide();
@@ -274,7 +274,7 @@ KISSY.add("combobox/base", function (S, Node, Controller, ComboBoxRender, Menu, 
                     if (!menu.get("visible")) {
                         if (self.get("matchElWidth")) {
                             menu.render();
-                            var menuEl = menu.el;
+                            var menuEl = menu.get('el');
                             var borderWidth =
                                 (parseInt(menuEl.css('borderLeftWidth')) || 0) +
                                     (parseInt(menuEl.css('borderRightWidth')) || 0);
@@ -389,7 +389,7 @@ KISSY.add("combobox/base", function (S, Node, Controller, ComboBoxRender, Menu, 
                     value: {
                     },
                     getter: function (v) {
-                        if (!v.isController) {
+                        if (!v.isControl) {
                             v.xclass = v.xclass || 'popupmenu';
                             v = this.createComponent(v);
                             this.setInternal('menu', v);
@@ -397,10 +397,10 @@ KISSY.add("combobox/base", function (S, Node, Controller, ComboBoxRender, Menu, 
                         return v;
                     },
                     setter: function (m) {
-                        if (m.isController) {
+                        if (m.isControl) {
                             m.setInternal('parent', this);
                             var align = {
-                                node: this.el,
+                                node: this.$el,
                                 points: ["bl", "tl"],
                                 overflow: {
                                     adjustX: 1,
@@ -562,7 +562,7 @@ KISSY.add("combobox/base", function (S, Node, Controller, ComboBoxRender, Menu, 
     function onMenuAfterRenderUI(self, menu) {
         var contentEl;
         var input = self.get('input');
-        var el = menu.el;
+        var el = menu..get('el');
         contentEl = menu.get("contentEl");
         input.attr("aria-owns", el.attr('id'));
         // menu has input!
@@ -587,15 +587,15 @@ KISSY.add("combobox/base", function (S, Node, Controller, ComboBoxRender, Menu, 
     }
 
     function setInvalid(self, error) {
-        var el = self.el,
+        var $el = self.$el,
             cls = self.view.getBaseCssClasses('invalid'),
             invalidEl = self.get("invalidEl");
         if (error) {
-            el.addClass(cls);
+            $el.addClass(cls);
             invalidEl.attr("title", error);
             invalidEl.show();
         } else {
-            el.removeClass(cls);
+            $el.removeClass(cls);
             invalidEl.hide();
         }
     }
@@ -696,7 +696,7 @@ KISSY.add("combobox/base", function (S, Node, Controller, ComboBoxRender, Menu, 
 }, {
     requires: [
         'node',
-        'component/controller',
+        'component/control',
         './render',
         'menu'
     ]

@@ -3,9 +3,9 @@
  * simple menuitem render
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/menuitem-render", function (S, Node, Controller) {
+KISSY.add("menu/menuitem-render", function (S, Node, Control) {
 
-    return Controller.ATTRS.xrender.value.extend({
+    return Control.ATTRS.xrender.value.extend({
 
         beforeCreateDom: function (renderData) {
             renderData.elAttrs.role= renderData.selectable ?
@@ -17,14 +17,13 @@ KISSY.add("menu/menuitem-render", function (S, Node, Controller) {
 
         _onSetSelected: function (v) {
             var self = this,
-                el = self.el,
                 cls = self.getBaseCssClasses("selected");
-            el[v ? 'addClass' : 'removeClass'](cls);
+            self.$el[v ? 'addClass' : 'removeClass'](cls);
         },
 
         containsElement: function (element) {
-            var el = this.el;
-            return el && ( el[0] == element || el.contains(element));
+            var $el = this.$el;
+            return $el && ( $el[0] == element || $el.contains(element));
         }
     }, {
         HTML_PARSER: {
@@ -34,5 +33,5 @@ KISSY.add("menu/menuitem-render", function (S, Node, Controller) {
         }
     });
 }, {
-    requires: ['node', 'component/controller']
+    requires: ['node', 'component/control']
 });

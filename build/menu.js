@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 21 01:27
+build time: Jun 24 21:50
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -32,21 +32,9 @@ KISSY.add("menu/menu-render", function (S, Container) {
             renderData.elAttrs.role = 'menu';
         },
 
-        setAriaActiveDescendant: function (v) {
-            var el = this.el;
-            if (v) {
-                var menuItemEl = v.el,
-                    id = menuItemEl.attr("id");
-                el.attr("aria-activedescendant", id);
-                // 会打印重复 ，每个子菜单都会打印，然后冒泡至父菜单，再打印，和该 menuitem 所处层次有关系
-            } else {
-                el.attr("aria-activedescendant", "");
-            }
-        },
-
         containsElement: function (element) {
-            var el = this.el;
-            return el && (el[0] === element || el.contains(element));
+            var $el = this.$el;
+            return $el && ($el[0] === element || $el.contains(element));
         }
     });
 }, {
@@ -54,7 +42,7 @@ KISSY.add("menu/menu-render", function (S, Container) {
 });
 /**
  * @ignore
- * menu controller for kissy,accommodate menu items
+ * menu control for kissy,accommodate menu items
  * @author yiminghe@gmail.com
  */
 KISSY.add("menu/base", function (S, Node, Container, DelegateChildrenExtension, MenuRender, undefined) {
@@ -65,7 +53,7 @@ KISSY.add("menu/base", function (S, Node, Container, DelegateChildrenExtension, 
      * KISSY Menu.
      * xclass: 'menu'.
      * @class KISSY.Menu
-     * @extends KISSY.Component.Controller
+     * @extends KISSY.Component.Control
      */
     var Menu = Container.extend([
         DelegateChildrenExtension
@@ -148,7 +136,7 @@ KISSY.add("menu/base", function (S, Node, Container, DelegateChildrenExtension, 
          * returns true if the event was handled,
          * false otherwise.
          * If the container is enabled, and a child is highlighted,
-         * calls the child controller's {@code handleKeydown} method to give the control
+         * calls the child control's {@code handleKeydown} method to give the control
          * a chance to handle the event first.
          * Protected, should only be overridden by subclasses.
          * @param {KISSY.Event.DOMEventObject} e Key event to handle.
@@ -239,7 +227,7 @@ KISSY.add("menu/base", function (S, Node, Container, DelegateChildrenExtension, 
             var self = this;
 
             // 隐藏当然不包含了
-            if (!self.get("visible") || !self.el) {
+            if (!self.get("visible") || !self.$el) {
                 return false;
             }
 
@@ -287,7 +275,11 @@ KISSY.add("menu/base", function (S, Node, Container, DelegateChildrenExtension, 
 
     // capture bubbling
     function afterHighlightedItemChange(e) {
-        this.view.setAriaActiveDescendant(e.newVal);
+        if (e.target.isMenu) {
+            var el = this.el,
+                menuItem = e.newVal;
+            el.setAttribute("aria-activedescendant", menuItem && menuItem.el.id || '');
+        }
     }
 
     return Menu;
@@ -310,9 +302,9 @@ KISSY.add("menu/base", function (S, Node, Container, DelegateChildrenExtension, 
  * simple menuitem render
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/menuitem-render", function (S, Node, Controller) {
+KISSY.add("menu/menuitem-render", function (S, Node, Control) {
 
-    return Controller.ATTRS.xrender.value.extend({
+    return Control.ATTRS.xrender.value.extend({
 
         beforeCreateDom: function (renderData) {
             renderData.elAttrs.role= renderData.selectable ?
@@ -324,14 +316,13 @@ KISSY.add("menu/menuitem-render", function (S, Node, Controller) {
 
         _onSetSelected: function (v) {
             var self = this,
-                el = self.el,
                 cls = self.getBaseCssClasses("selected");
-            el[v ? 'addClass' : 'removeClass'](cls);
+            self.$el[v ? 'addClass' : 'removeClass'](cls);
         },
 
         containsElement: function (element) {
-            var el = this.el;
-            return el && ( el[0] == element || el.contains(element));
+            var $el = this.$el;
+            return $el && ( $el[0] == element || $el.contains(element));
         }
     }, {
         HTML_PARSER: {
@@ -341,14 +332,14 @@ KISSY.add("menu/menuitem-render", function (S, Node, Controller) {
         }
     });
 }, {
-    requires: ['node', 'component/controller']
+    requires: ['node', 'component/control']
 });
 /**
  * @ignore
  * menu item ,child component for menu
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/menuitem", function (S, Controller, MenuItemRender) {
+KISSY.add("menu/menuitem", function (S, Control, MenuItemRender) {
 
     var $ = S.all;
 
@@ -356,9 +347,9 @@ KISSY.add("menu/menuitem", function (S, Controller, MenuItemRender) {
      * @class KISSY.Menu.Item
      * A menu item component which menu is consisted of.
      * xclass: 'menuitem'.
-     * @extends KISSY.Component.Controller
+     * @extends KISSY.Component.Control
      */
-    var MenuItem = Controller.extend({
+    var MenuItem = Control.extend({
 
         isMenuItem: 1,
 
@@ -388,26 +379,29 @@ KISSY.add("menu/menuitem", function (S, Controller, MenuItemRender) {
         // 只允许调用 menuItem 的 set('highlighted')
         // 不允许调用 menu 的 set('highlightedItem')
         _onSetHighlighted: function (v, e) {
+            var self = this,
+                parent = self.get('parent');
+
             if (e && e.byPassSetHighlightedItem) {
 
             } else {
-                if (this.get('rendered')) {
-                    this.get('parent').set('highlightedItem', v ? this : null);
+                if (self.get('rendered')) {
+                    parent.set('highlightedItem', v ? self : null);
                 } else {
                     if (v) {
                         // do not set null on initializer
-                        this.get('parent').set('highlightedItem', this);
+                        parent.set('highlightedItem', self);
                     }
                 }
             }
             // 是否要滚动到当前菜单项(横向，纵向)
             if (v) {
-                var el = this.el,
+                var el = self.$el,
                 // 找到向上路径上第一个可以滚动的容器，直到父组件节点（包括）
                 // 找不到就放弃，为效率考虑不考虑 parent 的嵌套可滚动 div
                     p = el.parent(function (e) {
                         return $(e).css("overflow") != "visible";
-                    }, this.get('parent').el.parent());
+                    }, parent.get('el').parent());
                 if (!p) {
                     return;
                 }
@@ -497,7 +491,7 @@ KISSY.add("menu/menuitem", function (S, Controller, MenuItemRender) {
 
     return MenuItem;
 }, {
-    requires: ['component/controller', './menuitem-render']
+    requires: ['component/control', './menuitem-render']
 });
 /**
  * checkable menu item render
@@ -515,16 +509,16 @@ KISSY.add('menu/check-menuitem-render', function (S, MenuItemRender, ContentRend
 
         _onSetChecked: function (v) {
             var self = this,
-                el = self.el,
                 cls = self.getBaseCssClasses("checked");
-            el[v ? 'addClass' : 'removeClass'](cls);
+            self.$el[v ? 'addClass' : 'removeClass'](cls);
         }
 
     }, {
         ATTRS: {
             contentTpl: {
-                value: '<div class="{{getBaseCssClasses "checkbox"}}"></div>' +
-                    ContentRenderExtension.ContentTpl
+                value: '<div class="{{getBaseCssClasses "checkbox"}}">' +
+                    '</div>' +
+                    ContentRenderExtension.ATTRS.contentTpl.value
             }
         }
     })
@@ -575,14 +569,14 @@ KISSY.add("menu/submenu-render", function (S, MenuItemRender, ContentRenderExten
 
     return MenuItemRender.extend([ContentRenderExtension], {
         decorateDom: function (el) {
-            var controller = this.controller,
-                prefixCls = controller.prefixCls;
+            var control = this.control,
+                prefixCls = control.prefixCls;
             var popupMenuEl = el.one('.' + prefixCls + 'popupmenu');
             var docBody = popupMenuEl[0].ownerDocument.body;
             docBody.insertBefore(popupMenuEl[0], docBody.firstChild);
             var PopupMenuClass =
                 this.getComponentConstructorByNode(prefixCls, popupMenuEl);
-            controller.setInternal('menu', new PopupMenuClass({
+            control.setInternal('menu', new PopupMenuClass({
                 srcNode: popupMenuEl,
                 prefixCls: prefixCls
             }));
@@ -590,7 +584,7 @@ KISSY.add("menu/submenu-render", function (S, MenuItemRender, ContentRenderExten
     }, {
         ATTRS: {
             contentTpl: {
-                value: ContentRenderExtension.ContentTpl +
+                value: ContentRenderExtension.ATTRS.contentTpl.value +
                     '<span class="{{prefixCls}}submenu-arrow">►</span>'
             }
         }
@@ -601,7 +595,7 @@ KISSY.add("menu/submenu-render", function (S, MenuItemRender, ContentRenderExten
 });
 /**
  * @ignore
- * submenu controller for kissy, transfer item's keyCode to menu
+ * submenu control for kissy, transfer item's keyCode to menu
  * @author yiminghe@gmail.com
  */
 KISSY.add("menu/submenu", function (S, Node, MenuItem, SubMenuRender) {
@@ -818,7 +812,7 @@ KISSY.add("menu/submenu", function (S, Node, MenuItem, SubMenuRender) {
                 menu: {
                     value: {},
                     getter: function (v) {
-                        if (!v.isController) {
+                        if (!v.isControl) {
                             v.xclass = v.xclass || 'popupmenu';
                             v = this.createComponent(v);
                             this.setInternal('menu', v);
@@ -826,7 +820,7 @@ KISSY.add("menu/submenu", function (S, Node, MenuItem, SubMenuRender) {
                         return v;
                     },
                     setter: function (m) {
-                        if (m.isController) {
+                        if (m.isControl) {
                             m.setInternal('parent', this);
                         }
                     }
@@ -847,7 +841,7 @@ KISSY.add("menu/submenu", function (S, Node, MenuItem, SubMenuRender) {
         // does not put this into setter
         // in case set menu before submenu item is  rendered
         var align = {
-            node: this.el,
+            node: this.$el,
             points: ['tr', 'tl'],
             overflow: {
                 adjustX: 1,
@@ -856,7 +850,7 @@ KISSY.add("menu/submenu", function (S, Node, MenuItem, SubMenuRender) {
         };
         S.mix(menu.get('align'), align, false);
         menu.show();
-        self.el.attr("aria-haspopup", menu.el.attr("id"));
+        self.el.setAttribute("aria-haspopup", menu.get('el').attr("id"));
     }
 
     function hideMenu() {
@@ -974,7 +968,6 @@ KISSY.add("menu/popupmenu", function (S, AlignExtension, Menu, PopupMenuRender) 
             autoHideOnMouseLeave: {},
 
             contentEl: {
-                view: 1
             },
 
             visible: {

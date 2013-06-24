@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 21 01:26
+build time: Jun 24 21:49
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -37,11 +37,11 @@ KISSY.add("filter-menu/render", function (S, Node, Menu, FilterMenuTpl, ContentR
         },
 
         getKeyEventTarget: function () {
-            return this.controller.get("filterInput");
+            return this.control.get("filterInput");
         },
 
         '_onSetPlaceholder': function (v) {
-            this.controller.get("placeholderEl").html(v);
+            this.control.get("placeholderEl").html(v);
         }
     }, {
         ATTRS: {
@@ -202,7 +202,7 @@ KISSY.add("filter-menu", function (S, Menu, FilterMenuRender) {
                         // 没有过滤条件
                         // 恢复原有内容
                         // 显示出来
-                        c.el.html(content);
+                        c.get('el').html(content);
                         c.set("visible", true);
                     } else {
                         if (content.indexOf(str) > -1) {
@@ -210,7 +210,7 @@ KISSY.add("filter-menu", function (S, Menu, FilterMenuRender) {
                             // 显示
                             c.set("visible", true);
                             // 匹配子串着重 input-wrap
-                            c.el.html(content.replace(strExp, function (m) {
+                            c.get('el').html(content.replace(strExp, function (m) {
                                 return "<span class='" + prefixCls + HIT_CLS + "'>" + m + "<" + "/span>";
                             }));
                         } else {

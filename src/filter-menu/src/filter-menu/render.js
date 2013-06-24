@@ -18,11 +18,11 @@ KISSY.add("filter-menu/render", function (S, Node, Menu, FilterMenuTpl, ContentR
         },
 
         getKeyEventTarget: function () {
-            return this.controller.get("filterInput");
+            return this.control.get("filterInput");
         },
 
         '_onSetPlaceholder': function (v) {
-            this.controller.get("placeholderEl").html(v);
+            this.control.get("placeholderEl").html(v);
         }
     }, {
         ATTRS: {

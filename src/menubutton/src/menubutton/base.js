@@ -21,7 +21,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
             if (v) {
                 menu.hide();
             } else {
-                var el = self.el;
+                var el = self.$el;
                 if (!menu.get("visible")) {
                     // same as submenu
                     // in case menu is changed after menubutton is rendered
@@ -36,14 +36,14 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
                     S.mix(menu.get('align'), align, false);
                     if (self.get("matchElWidth")) {
                         menu.render();
-                        var menuEl = menu.el;
+                        var menuEl = menu.get('el');
                         var borderWidth =
                             (parseInt(menuEl.css('borderLeftWidth')) || 0) +
                                 (parseInt(menuEl.css('borderRightWidth')) || 0);
                         menu.set("width", menu.get("align").node[0].offsetWidth - borderWidth);
                     }
                     menu.show();
-                    el.attr("aria-haspopup", menu.el.attr("id"));
+                    el.attr("aria-haspopup", menu.get('el').attr("id"));
                 }
             }
         },
@@ -211,7 +211,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
             menu: {
                 value: {},
                 getter: function (v) {
-                    if (!v.isController) {
+                    if (!v.isControl) {
                         v.xclass = v.xclass || 'popupmenu';
                         v = this.createComponent(v);
                         this.setInternal('menu', v);
@@ -219,7 +219,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
                     return v;
                 },
                 setter: function (m) {
-                    if (m.isController) {
+                    if (m.isControl) {
                         m.setInternal('parent', this);
                     }
                 }
@@ -248,7 +248,9 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
 
     function onMenuAfterHighlightedItemChange(e) {
         if (e.target.isMenu) {
-            this.view.setAriaActiveDescendant(e.newVal);
+            var el = this.el,
+                menuItem = e.newVal;
+            el.setAttribute("aria-activedescendant", menuItem && menuItem.el.id || '');
         }
     }
 

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 21 01:26
+build time: Jun 24 21:49
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -72,6 +72,7 @@ KISSY.add('event/dom/touch/gesture', function (S, DOMEvent) {
         Gesture.cancel = cancelEvent;
         Gesture.tap = 'tap';
         Gesture.doubleTap = 'doubleTap';
+        Gesture.singleTouchStart = 'singleTouchStart';
     }
 
     return Gesture;
@@ -126,8 +127,12 @@ KISSY.add('event/dom/touch/tap', function (S, eventHandleMap, DOMEvent, SingleTo
         },
 
         onTouchEnd: function (e) {
+            var touch = e.changedTouches[0];
             DOMEvent.fire(e.target, event, {
-                touch: e.changedTouches[0]
+                pageX: touch.pageX,
+                pageY: touch.pageY,
+                which: 1,
+                touch: touch
             });
         }
 
@@ -217,6 +222,9 @@ KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, DOMEvent, Single
 
         DOMEvent.fire(e.target, ing ? ingEvent : event, {
             originalEvent: e.originalEvent,
+            pageX:touch.pageX,
+            pageY:touch.pageY,
+            which: 1,
             /**
              *
              * native touch property **only for touch event**.
@@ -393,6 +401,9 @@ KISSY.add('event/dom/touch/double-tap',
                 if (duration > MAX_DURATION) {
                     DOMEvent.fire(target, SINGLE_TAP, {
                         touch: touch,
+                        pageX:touch.pageX,
+                        which: 1,
+                        pageY:touch.pageY,
                         duration: duration / 1000
                     })
                 } else {
@@ -401,6 +412,9 @@ KISSY.add('event/dom/touch/double-tap',
                     self.singleTapTimer = setTimeout(function () {
                         DOMEvent.fire(target, SINGLE_TAP, {
                             touch: touch,
+                            pageX:touch.pageX,
+                            which: 1,
+                            pageY:touch.pageY,
                             duration: duration / 1000
                         });
                     }, MAX_DURATION);
@@ -616,8 +630,12 @@ KISSY.add('event/dom/touch/tap-hold', function (S, eventHandleMap, SingleTouch, 
                 return false;
             }
             self.timer = setTimeout(function () {
+                var touch= e.touches[0];
                 DOMEvent.fire(e.target, event, {
-                    touch: e.touches[0],
+                    touch: touch,
+                    pageX:touch.pageX,
+                    pageY:touch.pageY,
+                    which: 1,
                     duration: (S.now() - e.timeStamp) / 1000
                 });
             }, duration);
@@ -786,8 +804,12 @@ KISSY.add('event/dom/touch/single-touch-start', function (S, eventHandleMap, DOM
 
         onTouchStart: function (e) {
             if (SingleTouchStart.superclass.onTouchStart.apply(this, arguments) !== false) {
+                var touch= e.touches[0];
                 DOMEvent.fire(e.target, event, {
-                    touch: e.touches[0],
+                    touch: touch[0],
+                    pageX:touch.pageX,
+                    pageY:touch.pageY,
+                    which: 1,
                     touches: e.touches
                 });
                 return undefined;
@@ -857,8 +879,7 @@ KISSY.add('event/dom/touch/handle', function (S, Dom, eventHandleMap, DOMEvent, 
         removeTouch: function (t) {
             var touches = this.touches;
             S.each(touches, function (tt, index) {
-                if (tt.pointerId ==
-                    t.pointerId) {
+                if (tt.pointerId == t.pointerId) {
                     touches.splice(index, 1);
                     return false;
                 }
@@ -869,8 +890,7 @@ KISSY.add('event/dom/touch/handle', function (S, Dom, eventHandleMap, DOMEvent, 
         updateTouch: function (t) {
             var touches = this.touches;
             S.each(touches, function (tt, index) {
-                if (tt.pointerId ==
-                    t.pointerId) {
+                if (tt.pointerId == t.pointerId) {
                     touches[index] = t;
                     return false;
                 }
@@ -895,7 +915,8 @@ KISSY.add('event/dom/touch/handle', function (S, Dom, eventHandleMap, DOMEvent, 
                 touchList;
             if (Features.isTouchEventSupported()) {
                 touchList = (type == 'touchend' || type == 'touchcancel') ?
-                    e.changedTouches : e.touches;
+                    e.changedTouches :
+                    e.touches;
                 if (touchList.length == 1) {
                     e.which = 1;
                     e.pageX = touchList.pageX;

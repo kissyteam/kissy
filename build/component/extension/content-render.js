@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 21 01:47
+build time: Jun 24 21:41
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -15,24 +15,41 @@ build time: Jun 21 01:47
  */
 KISSY.add('component/extension/content-render', function (S) {
 
+    function shortcut(self) {
+        var control = self.control;
+        var contentEl = control.get('contentEl');
+        self.$contentEl=control.$contentEl = contentEl;
+        self.contentEl=control.contentEl = contentEl[0];
+    }
+
     function ContentRender() {
     }
 
     ContentRender.prototype = {
-        __beforeCreateDom:function(renderData,childrenElSelectors){
+        __beforeCreateDom: function (renderData, childrenElSelectors) {
             S.mix(childrenElSelectors, {
                 contentEl: '#ks-content-{id}'
             });
         },
-        getChildrenContainerEl: function () {
-            return this.controller.get('contentEl');
+
+        __createDom: function () {
+            shortcut(this);
         },
+
+        __decorateDom: function () {
+            shortcut(this);
+        },
+
+        getChildrenContainerEl: function () {
+            return this.control.get('contentEl');
+        },
+
         _onSetContent: function (v) {
-            var controller=this.controller,
-                contentEl = controller.get('contentEl');
+            var control = this.control,
+                contentEl = control.get('contentEl');
             contentEl.html(v);
             // ie needs to set unselectable attribute recursively
-            if (S.UA.ie < 9 && !controller.get('allowTextSelection')) {
+            if (S.UA.ie < 9 && !control.get('allowTextSelection')) {
                 contentEl.unselectable();
             }
         }
@@ -40,8 +57,8 @@ KISSY.add('component/extension/content-render', function (S) {
 
     S.mix(ContentRender, {
         ATTRS: {
-            contentTpl:{
-                value:'<div id="ks-content-{{id}}" ' +
+            contentTpl: {
+                value: '<div id="ks-content-{{id}}" ' +
                     'class="{{getBaseCssClasses "content"}}">' +
                     '{{{content}}}' +
                     '</div>'
@@ -49,15 +66,13 @@ KISSY.add('component/extension/content-render', function (S) {
         },
         HTML_PARSER: {
             content: function (el) {
-                return el.one('.'+this.getBaseCssClass('content')).html();
+                return el.one('.' + this.getBaseCssClass('content')).html();
             },
             contentEl: function (el) {
-                return el.one('.'+this.getBaseCssClass('content'));
+                return el.one('.' + this.getBaseCssClass('content'));
             }
         }
     });
-
-    ContentRender.ContentTpl=ContentRender.ATTRS.contentTpl.value;
 
     return ContentRender;
 });

@@ -57,7 +57,7 @@ KISSY.add('overlay/popup', function (S, Overlay, undefined) {
 
         _bindContainerMouse: function () {
             var self = this;
-            self.el
+            self.$el
                 .on('mouseleave', self._setHiddenTimer, self)
                 .on('mouseenter', self._clearHiddenTimer, self);
         },
@@ -104,29 +104,22 @@ KISSY.add('overlay/popup', function (S, Overlay, undefined) {
 
         destructor: function () {
             var self = this,
-                root = self.el,
+                $el = self.$el,
                 t = self.get("trigger");
 
             if (t) {
                 if (self.__clickPopup) {
-
                     t.detach('click', self.__clickPopup);
-
                 }
                 if (self.__mouseEnterPopup) {
-
                     t.detach('mouseenter', self.__mouseEnterPopup);
-
                 }
-
                 if (self._mouseLeavePopup) {
-
                     t.detach('mouseleave', self._mouseLeavePopup);
-
                 }
             }
 
-            root.detach('mouseleave', self._setHiddenTimer, self)
+            $el.detach('mouseleave', self._setHiddenTimer, self)
                 .detach('mouseenter', self._clearHiddenTimer, self);
 
         }

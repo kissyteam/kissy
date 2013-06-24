@@ -2,16 +2,16 @@
  * separator def
  * @author yiminghe@gmail.com
  */
-KISSY.add("separator", function (S, Controller, SeparatorRender) {
+KISSY.add("separator", function (S, Control, SeparatorRender) {
 
     /**
-     * @extends KISSY.Component.Controller
+     * @extends KISSY.Component.Control
      * @class
      * separator.
      * xclass: 'separator'.
      * @name Separator
      */
-    return Controller.extend({
+    return Control.extend({
     }, {
         ATTRS: {
 
@@ -40,5 +40,5 @@ KISSY.add("separator", function (S, Controller, SeparatorRender) {
     });
 
 }, {
-    requires: ['component/controller', 'separator/render']
+    requires: ['component/control', 'separator/render']
 });

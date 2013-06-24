@@ -12,7 +12,7 @@ KISSY.add("tree/node", function (S, Node, Container, TreeNodeRender) {
      * xclass: 'tree-node'.
      * @name Node
      * @member Tree
-     * @extends KISSY.Component.Controller
+     * @extends KISSY.Component.Control
      */
     var TreeNode = Container.extend({
 
@@ -326,7 +326,7 @@ KISSY.add("tree/node", function (S, Node, Container, TreeNodeRender) {
     function syncAriaSetSize(e) {
         var self = this;
         if (e.target === self) {
-            self.el.attr('aria-setsize',
+            self.el.setAttribute('aria-setsize',
                 self.get('children').length);
         }
     }
@@ -426,7 +426,7 @@ KISSY.add("tree/node", function (S, Node, Container, TreeNodeRender) {
         for (; index < len; index++) {
             c = children[index];
             refreshCss(c);
-            c.el.attr("aria-posinset", index + 1);
+            c.el.setAttribute("aria-posinset", index + 1);
         }
     }
 

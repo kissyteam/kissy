@@ -94,11 +94,11 @@ KISSY.add('editor', function (S, Node, iframeContentTpl, Editor, Utils, focusMan
             self.on('docReady', docReady);
 
             self.on('blur', function () {
-                self.el.removeClass(prefixCls + 'editor-focused');
+                self.$el.removeClass(prefixCls + 'editor-focused');
             });
 
             self.on('focus', function () {
-                self.el.addClass(prefixCls + 'editor-focused');
+                self.$el.addClass(prefixCls + 'editor-focused');
             });
         },
 
@@ -138,7 +138,7 @@ KISSY.add('editor', function (S, Node, iframeContentTpl, Editor, Utils, focusMan
             }
         },
 
-        // 覆盖 controller
+        // 覆盖 control
         _onSetFocused: function (v) {
             var self = this;
             // docReady 后才能调用

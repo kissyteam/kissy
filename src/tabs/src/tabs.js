@@ -16,7 +16,7 @@ KISSY.add("tabs", function (S, Container, Bar, Body, Tab, Panel, Render) {
     /**
      * Tabs for KISSY
      * @class KISSY.Tabs
-     * @extends KISSY.Component.Controller
+     * @extends KISSY.Component.Control
      */
     var Tabs = Container.extend({
 
@@ -124,13 +124,13 @@ KISSY.add("tabs", function (S, Container, Bar, Body, Tab, Panel, Render) {
             var tabs = this,
                 bar = /**
                  @ignore
-                 @type KISSY.Component.Controller
+                 @type KISSY.Component.Control
                  */tabs.get("bar"),
                 barCs = bar.get("children"),
                 tab = bar.getChildAt(index),
                 body = /**
                  @ignore
-                 @type KISSY.Component.Controller
+                 @type KISSY.Component.Control
                  */tabs.get("body");
             if (tab.get("selected")) {
                 if (barCs.length == 1) {

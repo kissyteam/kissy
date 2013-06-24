@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 21 01:19
+build time: Jun 24 21:43
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -199,7 +199,7 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, Dia
             elCls: cmdType + 'ArrowBtn'
         }, ColorButton);
 
-        var indicator = button.el.one('.' + prefix + 'color-indicator');
+        var indicator = button.get('el').one('.' + prefix + 'color-indicator');
 
         arrow.on('selectColor', function (e) {
             indicator.css('background-color', e.color);

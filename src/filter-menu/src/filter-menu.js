@@ -134,7 +134,7 @@ KISSY.add("filter-menu", function (S, Menu, FilterMenuRender) {
                         // 没有过滤条件
                         // 恢复原有内容
                         // 显示出来
-                        c.el.html(content);
+                        c.get('el').html(content);
                         c.set("visible", true);
                     } else {
                         if (content.indexOf(str) > -1) {
@@ -142,7 +142,7 @@ KISSY.add("filter-menu", function (S, Menu, FilterMenuRender) {
                             // 显示
                             c.set("visible", true);
                             // 匹配子串着重 input-wrap
-                            c.el.html(content.replace(strExp, function (m) {
+                            c.get('el').html(content.replace(strExp, function (m) {
                                 return "<span class='" + prefixCls + HIT_CLS + "'>" + m + "<" + "/span>";
                             }));
                         } else {

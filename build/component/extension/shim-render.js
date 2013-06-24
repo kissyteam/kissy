@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 21 01:47
+build time: Jun 24 21:41
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -32,7 +32,7 @@ KISSY.add("component/extension/shim-render", function () {
     }
 
     ShimRender.prototype.__createDom = function () {
-        this.el.prepend(shimTpl);
+        this.$el.prepend(shimTpl);
     };
 
     return ShimRender;

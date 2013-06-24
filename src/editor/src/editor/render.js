@@ -2,9 +2,9 @@
  * render for editor
  * @author yiminghe@gmail.com
  */
-KISSY.add('editor/render',function(S,Controller,RenderTpl){
+KISSY.add('editor/render',function(S,Control,RenderTpl){
 
-    return Controller.ATTRS.xrender.value.extend({
+    return Control.ATTRS.xrender.value.extend({
 
         beforeCreateDom:function(renderData,childrenElSelectors){
             S.mix(renderData,{
@@ -27,5 +27,5 @@ KISSY.add('editor/render',function(S,Controller,RenderTpl){
     });
 
 },{
-    requires:['component/controller','./render-tpl']
+    requires:['component/control','./render-tpl']
 });

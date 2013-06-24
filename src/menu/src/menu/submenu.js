@@ -1,6 +1,6 @@
 /**
  * @ignore
- * submenu controller for kissy, transfer item's keyCode to menu
+ * submenu control for kissy, transfer item's keyCode to menu
  * @author yiminghe@gmail.com
  */
 KISSY.add("menu/submenu", function (S, Node, MenuItem, SubMenuRender) {
@@ -217,7 +217,7 @@ KISSY.add("menu/submenu", function (S, Node, MenuItem, SubMenuRender) {
                 menu: {
                     value: {},
                     getter: function (v) {
-                        if (!v.isController) {
+                        if (!v.isControl) {
                             v.xclass = v.xclass || 'popupmenu';
                             v = this.createComponent(v);
                             this.setInternal('menu', v);
@@ -225,7 +225,7 @@ KISSY.add("menu/submenu", function (S, Node, MenuItem, SubMenuRender) {
                         return v;
                     },
                     setter: function (m) {
-                        if (m.isController) {
+                        if (m.isControl) {
                             m.setInternal('parent', this);
                         }
                     }
@@ -246,7 +246,7 @@ KISSY.add("menu/submenu", function (S, Node, MenuItem, SubMenuRender) {
         // does not put this into setter
         // in case set menu before submenu item is  rendered
         var align = {
-            node: this.el,
+            node: this.$el,
             points: ['tr', 'tl'],
             overflow: {
                 adjustX: 1,
@@ -255,7 +255,7 @@ KISSY.add("menu/submenu", function (S, Node, MenuItem, SubMenuRender) {
         };
         S.mix(menu.get('align'), align, false);
         menu.show();
-        self.el.attr("aria-haspopup", menu.el.attr("id"));
+        self.el.setAttribute("aria-haspopup", menu.get('el').attr("id"));
     }
 
     function hideMenu() {

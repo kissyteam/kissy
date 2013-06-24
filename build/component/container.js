@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 21 01:47
+build time: Jun 24 21:41
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -14,9 +14,9 @@ build time: Jun 21 01:47
  * render for container
  * @author yiminghe@gmail.com
  */
-KISSY.add('component/container/render', function (S, Controller, Manager) {
+KISSY.add('component/container/render', function (S, Control, Manager) {
 
-    return Controller.ATTRS.xrender.value.extend([], {
+    return Control.ATTRS.xrender.value.extend([], {
 
         /**
          * decorate child element from parent component's root element.
@@ -24,8 +24,8 @@ KISSY.add('component/container/render', function (S, Controller, Manager) {
         decorateDom: function () {
             var self = this,
                 childrenContainerEl = self.getChildrenContainerEl(),
-                controller = self.controller,
-                defaultChildCfg = controller.get('defaultChildCfg'),
+                control = self.control,
+                defaultChildCfg = control.get('defaultChildCfg'),
                 prefixCls = defaultChildCfg.prefixCls,
                 defaultChildXClass = defaultChildCfg.xclass,
                 childrenComponents = [],
@@ -40,27 +40,27 @@ KISSY.add('component/container/render', function (S, Controller, Manager) {
                     })));
                 }
             });
-            controller.set('children', childrenComponents);
+            control.set('children', childrenComponents);
         },
         /**
          * Return the dom element into which child component to be rendered.
          * @return {KISSY.NodeList}
          */
         getChildrenContainerEl: function () {
-            return this.el;
+            return this.$el;
         }
     }, {
         name: 'ContainerRender'
     });
 
 }, {
-    requires: ['component/controller', 'component/manager']
+    requires: ['component/control', 'component/manager']
 });
 /**
  * component hierarchy management
  * @author yiminghe@gmail.com
  */
-KISSY.add('component/container', function (S, Controller, ContainerRender) {
+KISSY.add('component/container', function (S, Control, ContainerRender) {
 
     function defAddChild(e) {
         var self = this;
@@ -97,7 +97,6 @@ KISSY.add('component/container', function (S, Controller, ContainerRender) {
         }
 
         var c = e.component,
-            cEl,
             cDOMParentEl,
             cDOMEl,
             destroy = e.destroy,
@@ -115,8 +114,7 @@ KISSY.add('component/container', function (S, Controller, ContainerRender) {
             if (c.destroy)
                 c.destroy();
         } else {
-            if (c.get && (cEl = c.el)) {
-                cDOMEl = cEl[0];
+            if (c.get && (cDOMEl = c.el)) {
                 if (cDOMParentEl = cDOMEl.parentNode) {
                     cDOMParentEl.removeChild(cDOMEl);
                 }
@@ -131,10 +129,10 @@ KISSY.add('component/container', function (S, Controller, ContainerRender) {
 
     /**
      * Base Container class for KISSY Component.
-     * @extends KISSY.Component.Controller
+     * @extends KISSY.Component.Control
      * @class KISSY.Component.Container
      */
-    return Controller.extend({
+    return Control.extend({
 
         isContainer: true,
 
@@ -183,7 +181,7 @@ KISSY.add('component/container', function (S, Controller, ContainerRender) {
         /**
          * Add the specified component as a child of current component
          * at the given 0-based index.
-         * @param {KISSY.Component.Controller|Object} c
+         * @param {KISSY.Component.Control|Object} c
          * Child component instance to be added
          * or
          * Object describe child component
@@ -229,7 +227,7 @@ KISSY.add('component/container', function (S, Controller, ContainerRender) {
             domContentEl = contentEl[0];
             elBefore = domContentEl.children[childIndex] || null;
             if (c.get('rendered')) {
-                cEl = c.el[0];
+                cEl = c.el;
                 if (cEl.parentNode != domContentEl) {
                     domContentEl.insertBefore(cEl, elBefore);
                 }
@@ -257,7 +255,7 @@ KISSY.add('component/container', function (S, Controller, ContainerRender) {
          * Otherwise it is the caller's responsibility to
          * clean up the child component's Dom.
          *
-         * @param {KISSY.Component.Controller} c The child component to be removed.
+         * @param {KISSY.Component.Control} c The child component to be removed.
          * @param {Boolean} [destroy=true] If true,
          * calls ``destroy()`` on the removed child component.
          */
@@ -274,7 +272,7 @@ KISSY.add('component/container', function (S, Controller, ContainerRender) {
 
         /**
          * Removes every child component attached to current component.
-         * see {@link KISSY.Component.Controller#removeChild}
+         * see {@link KISSY.Component.Control#removeChild}
          * @param {Boolean} [destroy] If true,
          * calls ``destroy()`` on the removed child component.
          * @chainable
@@ -292,7 +290,7 @@ KISSY.add('component/container', function (S, Controller, ContainerRender) {
         /**
          * Returns the child at the given index, or null if the index is out of bounds.
          * @param {Number} index 0-based index.
-         * @return {KISSY.Component.Controller} The child at the given index; null if none.
+         * @return {KISSY.Component.Control} The child at the given index; null if none.
          */
         getChildAt: function (index) {
             var children = this.get("children");
@@ -314,7 +312,7 @@ KISSY.add('component/container', function (S, Controller, ContainerRender) {
         ATTRS: {
             /**
              * Array of child components
-             * @cfg {KISSY.Component.Controller[]} children
+             * @cfg {KISSY.Component.Control[]} children
              */
             /**
              * @ignore
@@ -328,7 +326,7 @@ KISSY.add('component/container', function (S, Controller, ContainerRender) {
                         self = this;
                     for (i = 0; i < v.length; i++) {
                         c = v[i];
-                        if (!c.isController) {
+                        if (!c.isControl) {
                             defaultChildCfg = defaultChildCfg ||
                                 self.get('defaultChildCfg');
                             S.mix(c, defaultChildCfg, false);
@@ -343,7 +341,7 @@ KISSY.add('component/container', function (S, Controller, ContainerRender) {
                         c;
                     for (i = 0; i < v.length; i++) {
                         c = v[i];
-                        if (c.isController) {
+                        if (c.isControl) {
                             c.setInternal('parent', this);
                         }
                     }
@@ -368,6 +366,6 @@ KISSY.add('component/container', function (S, Controller, ContainerRender) {
         name: 'container'
     });
 }, {
-    requires: ['component/controller', './container/render']
+    requires: ['component/control', './container/render']
 });
 

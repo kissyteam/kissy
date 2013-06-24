@@ -31,7 +31,7 @@ KISSY.add("component/manager", function (S) {
         /**
          * associate id with component
          * @param {String} id
-         * @param {KISSY.Component.Controller} component
+         * @param {KISSY.Component.Control} component
          */
         addComponent: function (id, component) {
             componentInstances[id] = component;
@@ -48,7 +48,7 @@ KISSY.add("component/manager", function (S) {
         /**
          * get component by id
          * @param {String} id
-         * @return {KISSY.Component.Controller}
+         * @return {KISSY.Component.Control}
          */
         'getComponent': function (id) {
             return componentInstances[id];
@@ -56,12 +56,12 @@ KISSY.add("component/manager", function (S) {
 
         /**
          * Create a component instance using json with xclass.
-         * @param {Object|KISSY.Component.Controller} component Component's json notation with xclass attribute.
+         * @param {Object|KISSY.Component.Control} component Component's json notation with xclass attribute.
          * @param {String} component.xclass Component to be newed 's xclass.
-         * @param {KISSY.Component.Controller} parent Component From which new component generated will inherit prefixCls
+         * @param {KISSY.Component.Control} parent Component From which new component generated will inherit prefixCls
          * if component 's prefixCls is undefined.
          * @member KISSY.Component
-         * @return KISSY.Component.Controller
+         * @return KISSY.Component.Control
          *
          *  for example:
          *
@@ -77,7 +77,7 @@ KISSY.add("component/manager", function (S) {
             var ChildConstructor,
                 xclass;
             if (component) {
-                if (!component.isController && parent) {
+                if (!component.isControl && parent) {
                     if (!component.prefixCls) {
                         component.prefixCls = parent.get('prefixCls');
                     }
@@ -88,14 +88,14 @@ KISSY.add("component/manager", function (S) {
                         }
                     }
                 }
-                if (!component.isController && (xclass = component.xclass)) {
+                if (!component.isControl && (xclass = component.xclass)) {
                     ChildConstructor = Manager.getConstructorByXClass(xclass);
                     if (!ChildConstructor) {
                         S.error("can not find class by xclass desc : " + xclass);
                     }
                     component = new ChildConstructor(component);
                 }
-                if (component.isController && parent) {
+                if (component.isControl && parent) {
                     component.setInternal('parent', parent);
                 }
             }

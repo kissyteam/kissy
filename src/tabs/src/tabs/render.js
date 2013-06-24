@@ -11,17 +11,17 @@ KISSY.add("tabs/render", function (S, Container) {
 
         beforeCreateDom: function (renderData) {
             renderData.elCls
-                .push(this.getBaseCssClass(this.controller.get('barOrientation')))
+                .push(this.getBaseCssClass(this.control.get('barOrientation')))
         },
 
         decorateDom: function () {
-            var controller = this.controller;
-            controller.get('bar').set('changeType', controller.get('changeType'));
+            var control = this.control;
+            control.get('bar').set('changeType', control.get('changeType'));
         },
 
         '_onSetBarOrientation': function (v) {
             var self = this,
-                el = self.el;
+                el = self.$el;
             el.removeClass(self.getBaseCssClass(CLS))
                 .addClass(self.getBaseCssClass(v));
         }
