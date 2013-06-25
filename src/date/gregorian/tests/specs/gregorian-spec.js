@@ -73,7 +73,8 @@ KISSY.use('date/gregorian', function (S, GregorianDate) {
                 gregorianDate.set(GregorianDate.YEAR,1);
                 gregorianDate.set(GregorianDate.DAY_OF_WEEK,GregorianDate.TUESDAY);
                 gregorianDate.set(GregorianDate.WEEK_OF_YEAR,1);
-
+                expect(gregorianDate.get((GregorianDate.YEAR))).toBe(1);
+                expect(gregorianDate.get((GregorianDate.DAY_OF_WEEK))).toBe(GregorianDate.TUESDAY);
                 expect(gregorianDate.get((GregorianDate.DATE))).toBe(2);
             });
 
