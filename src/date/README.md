@@ -1,5 +1,5 @@
 # Date Classes
 
-## GregorianDate
+## GregorianCalendar
 
-GregorianDate Class inspired by JDK GregorianCalendar Class
+GregorianCalendar Class inspired by JDK GregorianCalendar Class

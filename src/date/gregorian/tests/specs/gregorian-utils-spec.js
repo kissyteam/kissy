@@ -2,7 +2,7 @@
  * tests for gregorian gregorianDate
  * @author yiminghe@gmail.com
  */
-KISSY.use('date/gregorian', function (S, GregorianDate) {
+KISSY.use('date/gregorian', function (S, GregorianCalendar) {
 
     var ONE_SECOND = 1000;
     var ONE_MINUTE = 60 * ONE_SECOND;
@@ -10,7 +10,7 @@ KISSY.use('date/gregorian', function (S, GregorianDate) {
     var ONE_DAY = 24 * ONE_HOUR;
     // var ONE_WEEK = 7 * ONE_DAY;
 
-    var Utils = GregorianDate.Utils;
+    var Utils = GregorianCalendar.Utils;
 
     var day1 = new Date(1, 0, 1);
     day1.setFullYear(1);
@@ -19,7 +19,7 @@ KISSY.use('date/gregorian', function (S, GregorianDate) {
         return parseInt((day2.getTime() - day1.getTime()) / ONE_DAY) + 1;
     }
 
-    describe('GregorianDate Utils', function () {
+    describe('GregorianCalendar Utils', function () {
         it('floorDivide works', function () {
             expect(Utils.floorDivide(8, 7)).toBe(1);
             expect(Utils.floorDivide(7, 7)).toBe(1);
