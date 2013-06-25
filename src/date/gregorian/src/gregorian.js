@@ -1,5 +1,5 @@
 /**
- * GregorianCalendar GregorianCalendar class for KISSY.
+ * GregorianCalendar class for KISSY.
  * @author yiminghe@gmail.com
  */
 KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined) {
@@ -7,7 +7,7 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
     var toInt = parseInt;
 
     /**
-     * GregorianCalendar GregorianCalendar class.
+     * GregorianCalendar class.
      * @class KISSY.GregorianCalendar
      */
     function GregorianCalendar(time, locale) {
@@ -135,23 +135,23 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
         LONG: 1
     });
 
-    var YEAR=GregorianCalendar.YEAR;
-    var MONTH=GregorianCalendar.MONTH;
-    var DAY_OF_MONTH=GregorianCalendar.DAY_OF_MONTH;
-    var HOUR_OF_DAY=GregorianCalendar.HOUR_OF_DAY;
-    var MINUTE=GregorianCalendar.MINUTE;
-    var SECOND=GregorianCalendar.SECOND;
+    var YEAR = GregorianCalendar.YEAR;
+    var MONTH = GregorianCalendar.MONTH;
+    var DAY_OF_MONTH = GregorianCalendar.DAY_OF_MONTH;
+    var HOUR_OF_DAY = GregorianCalendar.HOUR_OF_DAY;
+    var MINUTE = GregorianCalendar.MINUTE;
+    var SECOND = GregorianCalendar.SECOND;
 
-    var MILLISECOND=GregorianCalendar.MILLISECOND;
-    var DAY_OF_WEEK_IN_MONTH=GregorianCalendar.DAY_OF_WEEK_IN_MONTH;
-    var DAY_OF_YEAR=GregorianCalendar.DAY_OF_YEAR;
-    var DAY_OF_WEEK=GregorianCalendar.DAY_OF_WEEK;
+    var MILLISECOND = GregorianCalendar.MILLISECOND;
+    var DAY_OF_WEEK_IN_MONTH = GregorianCalendar.DAY_OF_WEEK_IN_MONTH;
+    var DAY_OF_YEAR = GregorianCalendar.DAY_OF_YEAR;
+    var DAY_OF_WEEK = GregorianCalendar.DAY_OF_WEEK;
 
-    var WEEK_OF_MONTH=GregorianCalendar.WEEK_OF_MONTH;
-    var WEEK_OF_YEAR=GregorianCalendar.WEEK_OF_YEAR;
+    var WEEK_OF_MONTH = GregorianCalendar.WEEK_OF_MONTH;
+    var WEEK_OF_YEAR = GregorianCalendar.WEEK_OF_YEAR;
 
-    var SHORT=GregorianCalendar.SHORT;
-    var LONG=GregorianCalendar.LONG;
+    var SHORT = GregorianCalendar.SHORT;
+    var LONG = GregorianCalendar.LONG;
 
 
     var DISPLAY_MAP = {};
@@ -177,8 +177,90 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
         isLeapYear = Utils.isLeapYear,
         floorDivide = Utils.floorDivide;
 
+
+    var MIN_VALUES = [
+        undefined,
+        1,              // YEAR
+        GregorianCalendar.JANUARY,        // MONTH
+        1,              // DAY_OF_MONTH
+        0,              // HOUR_OF_DAY
+        0,              // MINUTE
+        0,              // SECOND
+        0,              // MILLISECOND
+
+        1,              // WEEK_OF_YEAR
+        1,              // WEEK_OF_MONTH
+
+        1,              // DAY_OF_YEAR
+        GregorianCalendar.SUNDAY,         // DAY_OF_WEEK
+        undefined             // DAY_OF_WEEK_IN_MONTH
+    ];
+
+    var MAX_VALUES = [
+        undefined,
+        292278994,      // YEAR
+        GregorianCalendar.DECEMBER,       // MONTH
+        undefined, // DAY_OF_MONTH
+        23,             // HOUR_OF_DAY
+        59,             // MINUTE
+        59,             // SECOND
+        999,            // MILLISECOND
+        undefined,             // WEEK_OF_YEAR
+        undefined,              // WEEK_OF_MONTH
+        undefined,            // DAY_OF_YEAR
+        GregorianCalendar.SATURDAY,       // DAY_OF_WEEK
+        undefined              // DAY_OF_WEEK_IN_MONTH
+    ];
+
     GregorianCalendar.prototype = {
         constructor: GregorianCalendar,
+
+        getMinimum: function (field) {
+            if (MIN_VALUES[field] === undefined) {
+                throw new Error('minimum value not defined!');
+            }
+            return MIN_VALUES[field];
+        },
+
+        getMaximum: function (field) {
+            if (MAX_VALUES[field]) {
+                return MAX_VALUES[field];
+            }
+            var value,
+                fields = this.fields;
+            switch (field) {
+                case DAY_OF_MONTH:
+                    value = getMonthLength(fields[YEAR], fields[MONTH]);
+                    break;
+
+                case WEEK_OF_YEAR:
+                    var endOfYear = new GregorianCalendar();
+                    endOfYear.set(fields[YEAR], GregorianCalendar.DECEMBER, 31);
+                    value = endOfYear.get(WEEK_OF_YEAR);
+                    if (value == 1) {
+                        value = 52;
+                    }
+                    break;
+
+                case WEEK_OF_MONTH:
+                    var endOfMonth = new GregorianCalendar();
+                    endOfMonth.set(fields[YEAR], fields[MONTH], getMonthLength(fields[YEAR], fields[MONTH]));
+                    value = endOfMonth.get(WEEK_OF_MONTH);
+                    break;
+
+                case DAY_OF_YEAR:
+                    value = isLeapYear(fields[YEAR]) ? 366 : 365;
+                    break;
+
+                case DAY_OF_WEEK_IN_MONTH:
+                    value = toInt((getMonthLength(fields[YEAR], fields[MONTH]) - 1) / 7) + 1;
+                    break;
+            }
+            if (value === undefined) {
+                throw new Error('maximum value not defined!');
+            }
+            return value;
+        },
 
         isSet: function (field) {
             return this.fields[field] !== undefined;
@@ -214,17 +296,17 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
             fields[DAY_OF_WEEK] = date.dayOfWeek;
 
             if (timeOfDay != 0) {
-                fields[HOUR_OF_DAY] =toInt(timeOfDay / ONE_HOUR);
+                fields[HOUR_OF_DAY] = toInt(timeOfDay / ONE_HOUR);
                 var r = timeOfDay % ONE_HOUR;
                 fields[MINUTE] = toInt(r / ONE_MINUTE);
                 r %= ONE_MINUTE;
                 fields[SECOND] = toInt(r / ONE_SECOND);
                 fields[MILLISECOND] = r % ONE_SECOND;
             } else {
-                        fields[HOUR_OF_DAY] =
-                                fields[MINUTE] =
-                                    fields[SECOND] =
-                                        fields[MILLISECOND] = 0;
+                fields[HOUR_OF_DAY] =
+                    fields[MINUTE] =
+                        fields[SECOND] =
+                            fields[MILLISECOND] = 0;
             }
 
 
@@ -233,7 +315,7 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
             var fixDateMonth1 = fixedDate - date.dayOfMonth + 1;
 
             fields[DAY_OF_YEAR] = dayOfYear;
-            fields[DAY_OF_WEEK_IN_MONTH] = toInt(date.dayOfMonth / 7) + 1;
+            fields[DAY_OF_WEEK_IN_MONTH] = toInt((date.dayOfMonth - 1) / 7) + 1;
 
             var weekOfYear = getWeekNumber(this, fixedDateJan1, fixedDate);
 
@@ -351,7 +433,7 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
                         }
                         var lastDate = (7 * dowim);
                         if (dowim < 0) {
-                            lastDate = getMonthLength(month, year) + (7 * (dowim + 1));
+                            lastDate = getMonthLength(year, month) + (7 * (dowim + 1));
                         }
                         fixedDate = getDayOfWeekDateOnOrBefore(fixedDate + lastDate - 1, dayOfWeek);
                     }
@@ -403,6 +485,7 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
             var len = arguments.length;
             if (len == 2) {
                 this.fields[field] = v;
+                this.updateFieldsBySet(field);
             } else if (len < MILLISECOND + 1) {
                 for (var i = 0; i < len; i++) {
                     this.fields[YEAR + i] = arguments[i];
@@ -416,14 +499,14 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
 
         /**
          * add for specified field based on two rules:
-         * 
+         *
          *  - Add rule 1. The value of field after the call minus the value of field before the
          *  call is amount, modulo any overflow that has occurred in field
          *  Overflow occurs when a field value exceeds its range and,
-         *  as a result, the next larger field is incremented or 
+         *  as a result, the next larger field is incremented or
          *  decremented and the field value is adjusted back into its range.
-         *  
-         *  - Add rule 2. If a smaller field is expected to be invariant, 
+         *
+         *  - Add rule 2. If a smaller field is expected to be invariant,
          *  but it is impossible for it to be equal to its
          *  prior value because of changes in its minimum or maximum after
          *  field is changed, then its value is adjusted to be as close
@@ -432,14 +515,15 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
          *  DAY_OF_MONTH. No adjustment is made to smaller fields
          *  that are not expected to be invariant. The calendar system
          *  determines what fields are expected to be invariant.</p>
-         *  
-         *  
+         *
+         *
          *
          *  @example
          *
-         *      var d=new Gregorian(2012,0,31);
+         *      var d = new GregorianCalendar();
+         *      d.set(2012, GregorianCalendar.JANUARY, 31);
          *      d.add(Gregorian.MONTH,1);
-         *      // 2012-2-28
+         *      // 2012-2-29
          *      d.add(Gregorian.MONTH,12);
          *      // 2013-2-28
          *
@@ -494,9 +578,81 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
                         throw new Error('illegal field for add');
                         break;
                 }
-                self.setTime(self.time+amount);
+                self.setTime(self.time + amount);
             }
 
+        },
+
+        getRolledValue: function (value, amount, min, max) {
+            var diff = value - min;
+            var range = max - min + 1;
+            amount %= range;
+            return min + (diff + amount + range) % range;
+        },
+
+        /**
+         * Adds a signed amount to the specified calendar field without changing larger fields.
+         * A negative roll amount means to subtract from field without changing
+         * larger fields. If the specified amount is 0, this method performs nothing.
+         *
+         *
+         *
+         *   @example
+         *
+         *      var d = new GregorianCalendar();
+         *      d.set(1999, GregorianCalendar.AUGUST, 31);
+         *      // 1999-4-30
+         *      // Tuesday June 1, 1999
+         *      d.set(1999, GregorianCalendar.JUNE, 1);
+         *      d.add(Gregorian.WEEK_OF_MONTH,-1); // == d.add(Gregorian.WEEK_OF_MONTH,
+         *      d.get(Gregorian.WEEK_OF_MONTH));
+         *      // 1999-06-29
+         *
+         *
+         * @param field date field enum
+         * @param {Number} amount  added unit
+         */
+        roll: function (field, amount) {
+            if (!amount) {
+                return;
+            }
+            var self = this;
+            // computer and retrieve original value
+            var value = self.get(field);
+            var min = self.getMinimum(field);
+            var max = self.getMaximum(field);
+            value = self.getRolledValue(value, amount, min, max);
+
+            self.set(field, value);
+
+            // consider compute time priority
+            switch (field) {
+                case MONTH:
+                    adjustDayOfMonth(self);
+                    break;
+                default:
+                    self.updateFieldsBySet(field);
+                    break;
+            }
+        },
+
+        updateFieldsBySet: function (field) {
+            var fields = this.fields;
+            switch (field) {
+                case WEEK_OF_MONTH:
+                    fields[DAY_OF_MONTH] = undefined;
+                    break;
+                case DAY_OF_YEAR:
+                    fields[MONTH] = undefined;
+                    break;
+                case DAY_OF_WEEK:
+                    fields[DAY_OF_MONTH] = undefined;
+                    break;
+                case WEEK_OF_YEAR:
+                    fields[DAY_OF_YEAR] = undefined;
+                    fields[MONTH] = undefined;
+                    break;
+            }
         },
 
         getTimezoneOffset: function () {
@@ -560,7 +716,7 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
         }
     }
 
-    function getMonthLength(month, year) {
+    function getMonthLength(year, month) {
         return isLeapYear(year) ? LEAP_MONTH_LENGTH[month] : MONTH_LENGTH[month];
     }
 
@@ -607,4 +763,5 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
  TODO
  - day saving time
  - i18n
+ - julian calendar
  */

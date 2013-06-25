@@ -5,12 +5,7 @@
  */
 KISSY.add('overlay/extension/overlay-effect', function (S) {
 
-    var NONE = 'none',
-        BLOCK = 'block',
-        HIDDEN = 'hidden',
-        VISIBLE = 'visible',
-        DURATION = 0.5,
-        effects = {fade: ["Out", "In"], slide: ["Up", "Down"]};
+    var effects = {fade: ["Out", "In"], slide: ["Up", "Down"]};
 
     function getGhost(self) {
         var el = self.$el,
@@ -18,14 +13,13 @@ KISSY.add('overlay/extension/overlay-effect', function (S) {
 
         ghost.css({
             visibility: 'visible',
-            overflow: HIDDEN
+            overflow: 'hidden'
         }).addClass(self.prefixCls + 'overlay-ghost');
 
         return self.__afterCreateEffectGhost(ghost);
     }
 
     function processTarget(self, show, callback) {
-
         if (self.__effectGhost) {
             self.__effectGhost.stop(1, 1);
         }
@@ -47,10 +41,7 @@ KISSY.add('overlay/extension/overlay-effect', function (S) {
             ghost = getGhost(self),
             easing = effectCfg.easing;
 
-
         ghost.insertAfter(el);
-
-        el.css('visibility', HIDDEN);
 
         if (show) {
             from = targetBox;
@@ -60,6 +51,7 @@ KISSY.add('overlay/extension/overlay-effect', function (S) {
             to = targetBox;
         }
 
+        el.css('visibility', 'hidden');
         ghost.css(from);
 
         self.__effectGhost = ghost;
@@ -74,15 +66,14 @@ KISSY.add('overlay/extension/overlay-effect', function (S) {
                 callback();
             }
         });
-
     }
 
     function processEffect(self, show, callback) {
         var el = self.$el,
             effectCfg = self.get("effect"),
-            effect = effectCfg.effect || NONE,
+            effect = effectCfg.effect || 'none',
             target = effectCfg.target;
-        if (effect == NONE && !target) {
+        if (effect == 'none' && !target) {
             callback();
             return;
         }
@@ -98,15 +89,15 @@ KISSY.add('overlay/extension/overlay-effect', function (S) {
         el.stop(1, 1);
         el.css({
             // must show, override box-render _onSetVisible
-            "visibility": VISIBLE,
+            "visibility": 'visible',
             // fadeIn need display none, fadeOut need display block
-            "display": show ? NONE : BLOCK
+            "display": show ? 'none' : 'block'
         });
         var m = effect + effects[effect][index];
         el[m](duration, function () {
             el.css({
                 // need compute coordinates when show, so do not use display none for hide
-                "display": BLOCK,
+                "display": 'block',
                 // restore to box-render _onSetVisible
                 "visibility": ''
             });
@@ -144,7 +135,7 @@ KISSY.add('overlay/extension/overlay-effect', function (S) {
             value: {
                 effect: '',
                 target: null,
-                duration: DURATION,
+                duration: 0.5,
                 easing: 'easeOut'
             },
             setter: function (v) {

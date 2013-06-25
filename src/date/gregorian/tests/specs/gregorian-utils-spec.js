@@ -1,5 +1,5 @@
 /**
- * tests for gregorian gregorianDate
+ * tests for gregorian gregorianCalendar
  * @author yiminghe@gmail.com
  */
 KISSY.use('date/gregorian', function (S, GregorianCalendar) {
