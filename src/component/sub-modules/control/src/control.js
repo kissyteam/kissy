@@ -50,7 +50,9 @@ KISSY.add("component/control", function (S, Node, ControlProcess, Manager, Rende
                     el;
                 // initialize view
                 // allow custom view instance
-                if (!view) {
+                if (view) {
+                    view.set('control', self);
+                } else {
                     self.set('view', view = new Render({
                         control: self
                     }));
