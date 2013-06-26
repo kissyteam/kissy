@@ -17,8 +17,8 @@ KISSY.use('date/gregorian', function (S, GregorianCalendar) {
             var gregorianCalendar;
 
             beforeEach(function () {
-                gregorianCalendar = new GregorianCalendar();
-                gregorianCalendar.set(2013, GregorianCalendar.JUNE, 8, 18, 0, 0, 0);
+                gregorianCalendar = new GregorianCalendar(2013,
+                    GregorianCalendar.JUNE, 8, 18, 0, 0, 0);
             });
 
             it('time works', function () {
@@ -72,6 +72,7 @@ KISSY.use('date/gregorian', function (S, GregorianCalendar) {
                     gregorianCalendar.set(GregorianCalendar.MONTH, 11);
                     gregorianCalendar.set(GregorianCalendar.DAY_OF_MONTH, 31);
                     expect(gregorianCalendar.get(GregorianCalendar.WEEK_OF_YEAR)).toBe(1);
+                    expect(gregorianCalendar.getWeekYear()).toBe(2013);
                 });
 
                 it('works for ISO 8601', function () {
@@ -80,6 +81,7 @@ KISSY.use('date/gregorian', function (S, GregorianCalendar) {
                     gregorianCalendar.set(GregorianCalendar.DAY_OF_MONTH, 1);
                     gregorianCalendar.setMinimalDaysInFirstWeek(4);
                     expect(gregorianCalendar.get(GregorianCalendar.WEEK_OF_YEAR)).toBe(52);
+                    expect(gregorianCalendar.getWeekYear()).toBe(2011);
                 });
 
             });
@@ -157,14 +159,14 @@ KISSY.use('date/gregorian', function (S, GregorianCalendar) {
             });
 
 
-            it('getTime works', function () {
+            it('getTimeInMillis works', function () {
                 var jsDate = new Date(2013, GregorianCalendar.JUNE, 8, 18, 0, 0, 0);
-                expect(jsDate.getTime() === gregorianCalendar.getTime());
+                expect(jsDate.getTime() === gregorianCalendar.getTimeInMillis());
             });
 
             it('DAY_OF_YEAR works', function () {
                 var jan1Date = new Date(2013, GregorianCalendar.JANUARY, 1, 0, 0, 0, 0);
-                var jsDate = new Date(gregorianCalendar.getTime());
+                var jsDate = new Date(gregorianCalendar.getTimeInMillis());
                 var expected = parseInt((jsDate.getTime() - jan1Date.getTime()) / ONE_DAY) + 1;
                 expect(gregorianCalendar.get(GregorianCalendar.DAY_OF_YEAR)).toBe(expected);
             });

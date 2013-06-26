@@ -8,9 +8,41 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
 
     /**
      * GregorianCalendar class.
+     * - no arguments:
+     *  Constructs a default GregorianCalendar using the current time
+     *  in the default time zone with the default locale.
+     * - one argument timezoneOffset:
+     *  Constructs a GregorianCalendar based on the current time
+     *  in the given timezoneOffset with the default locale.
+     * - one argument locale:
+     *  Constructs a GregorianCalendar
+     *  based on the current time in the default time zone with the given locale.
+     * - two arguments:
+     *  - zone - the given time zone.
+     *  - aLocale - the given locale.
+     *  Constructs a GregorianCalendar
+     *  based on the current time in the given time zone with the given locale.
+     * - 3 to 6 arguments:
+     *  - year - the value used to set the YEAR calendar field in the calendar.
+     *  - month - the value used to set the MONTH calendar field in the calendar. Month value is 0-based. e.g., 0 for January.
+     *  - dayOfMonth - the value used to set the DAY_OF_MONTH calendar field in the calendar.
+     *  - hourOfDay - the value used to set the HOUR_OF_DAY calendar field in the calendar.
+     *  - minute - the value used to set the MINUTE calendar field in the calendar.
+     *  - second - the value used to set the SECOND calendar field in the calendar.
+     *  Constructs a GregorianCalendar with the given date and time set for the default time zone with the default locale.
      * @class KISSY.GregorianCalendar
      */
-    function GregorianCalendar(time, locale) {
+    function GregorianCalendar(timezoneOffset, locale) {
+
+        var args = S.makeArray(arguments);
+
+        if (S.isObject(timezoneOffset)) {
+            locale = timezoneOffset;
+            timezoneOffset = locale.timezoneOffset;
+        } else if (args.length >= 3) {
+            timezoneOffset = locale = null;
+        }
+
         locale = locale || defaultLocale;
 
         this.locale = locale;
@@ -22,13 +54,13 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
          * @protected
          * @type Number|undefined
          */
-        this.time = time || S.now();
+        this.time = undefined;
         /**
          * The timezoneOffset in minutes used by this date.
          * @type Number
          * @protected
          */
-        this.timezoneOffset = locale.timezoneOffset;
+        this.timezoneOffset = timezoneOffset || locale.timezoneOffset;
         /**
          * The first day of the week
          * @type Number
@@ -45,12 +77,27 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
         this.minimalDaysInFirstWeek = locale.minimalDaysInFirstWeek;
 
         this.fieldsComputed = false;
+
+        if (arguments.length >= 3) {
+            this.set.apply(this, args);
+        }
     }
 
     S.mix(GregorianCalendar, Const);
 
     S.mix(GregorianCalendar, {
-        Utils: Utils,
+
+        /**
+         * Determines if the given year is a leap year.
+         * Returns true if the given year is a leap year. To specify BC year numbers,
+         * 1 - year number must be given. For example, year BC 4 is specified as -3.
+         * @param {Number} year the given year.
+         * @returns {Boolean} true if the given year is a leap year; false otherwise.
+         * @static
+         * @method
+         */
+        isLeapYear: Utils.isLeapYear,
+
         /**
          * Enum indicating year field of date
          * @type Number
@@ -215,22 +262,40 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
     GregorianCalendar.prototype = {
         constructor: GregorianCalendar,
 
-        getMinimum: function (field) {
+        /**
+         * Returns the minimum value for
+         * the given calendar field of this GregorianCalendar instance.
+         * The minimum value is defined as the smallest value
+         * returned by the get method for any possible time value,
+         * taking into consideration the current values of the getFirstDayOfWeek,
+         * getMinimalDaysInFirstWeek.
+         * @param field the calendar field.
+         * @returns {Number} the minimum value for the given calendar field.
+         */
+        getActualMinimum: function (field) {
             if (MIN_VALUES[field] !== undefined) {
                 return MIN_VALUES[field];
             }
 
             var fields = this.fields;
             if (field === WEEK_OF_MONTH) {
-                var cal = new GregorianCalendar();
-                cal.set(fields[YEAR], fields[MONTH], 1);
+                var cal = new GregorianCalendar(fields[YEAR], fields[MONTH], 1);
                 return cal.get(WEEK_OF_MONTH);
             }
 
             throw new Error('minimum value not defined!');
         },
 
-        getMaximum: function (field) {
+        /**
+         * Returns the maximum value for the given calendar field
+         * of this GregorianCalendar instance.
+         * The maximum value is defined as the largest value returned
+         * by the get method for any possible time value, taking into consideration
+         * the current values of the getFirstDayOfWeek, getMinimalDaysInFirstWeek methods.
+         * @param field the calendar field.
+         * @returns {Number} the maximum value for the given calendar field.
+         */
+        getActualMaximum: function (field) {
             if (MAX_VALUES[field] !== undefined) {
                 return MAX_VALUES[field];
             }
@@ -242,8 +307,7 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
                     break;
 
                 case WEEK_OF_YEAR:
-                    var endOfYear = new GregorianCalendar();
-                    endOfYear.set(fields[YEAR], GregorianCalendar.DECEMBER, 31);
+                    var endOfYear = new GregorianCalendar(fields[YEAR], GregorianCalendar.DECEMBER, 31);
                     value = endOfYear.get(WEEK_OF_YEAR);
                     if (value == 1) {
                         value = 52;
@@ -251,8 +315,7 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
                     break;
 
                 case WEEK_OF_MONTH:
-                    var endOfMonth = new GregorianCalendar();
-                    endOfMonth.set(fields[YEAR], fields[MONTH], getMonthLength(fields[YEAR], fields[MONTH]));
+                    var endOfMonth = new GregorianCalendar(fields[YEAR], fields[MONTH], getMonthLength(fields[YEAR], fields[MONTH]));
                     value = endOfMonth.get(WEEK_OF_MONTH);
                     break;
 
@@ -270,10 +333,22 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
             return value;
         },
 
+        /**
+         * Determines if the given calendar field has a value set,
+         * including cases that the value has been set by internal fields calculations
+         * triggered by a get method call.
+         * @param field the calendar field to be cleared.
+         * @returns {boolean} true if the given calendar field has a value set; false otherwise.
+         */
         isSet: function (field) {
             return this.fields[field] !== undefined;
         },
 
+        /**
+         * Converts the time value (millisecond offset from the Epoch)
+         * to calendar field values.
+         * @protected
+         */
         computeFields: function () {
             var time = this.time;
             var timezoneOffset = this.timezoneOffset * ONE_MINUTE;
@@ -356,6 +431,11 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
             this.fieldsComputed = true;
         },
 
+        /**
+         * Converts calendar field values to the time value
+         * (millisecond offset from the Epoch).
+         * @protected
+         */
         'computeTime': function () {
             if (!this.isSet(YEAR)) {
                 throw new Error('year must be set for KISSY GregorianCalendar');
@@ -389,6 +469,21 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
             this.time = millis;
 
             this.computeFields();
+        },
+
+        /**
+         * Fills in any unset fields in the calendar fields. First,
+         * the computeTime() method is called if the time value (millisecond offset from the Epoch)
+         * has not been calculated from calendar field values.
+         * Then, the computeFields() method is called to calculate all calendar field values.
+         */
+        complete: function () {
+            if (this.time === undefined) {
+                this.computeTime();
+            }
+            if (!this.fieldsComputed) {
+                this.computeFields();
+            }
         },
 
         getFixedDate: function () {
@@ -477,28 +572,42 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
             return fixedDate;
         },
 
-        getTime: function () {
+        /**
+         * Returns this Calendar's time value in milliseconds
+         * @member KISSY.GregorianCalendar
+         * @returns {Number} the current time as UTC milliseconds from the epoch.
+         */
+        getTimeInMillis: function () {
             if (this.time === undefined) {
                 this.computeTime();
             }
             return this.time;
         },
 
-        setTime: function (time) {
+        /**
+         * Sets this Calendar's current time from the given long value.
+         * @param time the new time in UTC milliseconds from the epoch.
+         */
+        'setTimeInMillis': function (time) {
             this.time = time;
             this.fieldsComputed = false;
         },
 
+        /**
+         * Returns the value of the given calendar field.
+         * @param field the given calendar field.
+         * @returns {Number} the value for the given calendar field.
+         */
         get: function (field) {
-            if (this.time === undefined) {
-                this.computeTime();
-            }
-            if (!this.fieldsComputed) {
-                this.computeFields();
-            }
+            this.complete();
             return this.fields[field];
         },
 
+        /**
+         * Sets the given calendar field to the given value.
+         * @param field the given calendar field.
+         * @param v the value to be set for the given calendar field.
+         */
         set: function (field, v) {
             var len = arguments.length;
             if (len == 2) {
@@ -512,7 +621,6 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
                 throw  new Error('illegal arguments for KISSY GregorianCalendar set');
             }
             this.time = undefined;
-            return this;
         },
 
         /**
@@ -545,8 +653,8 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
          *      d.add(Gregorian.MONTH,12);
          *      // 2013-2-28
          *
-         * @param field date field enum
-         * @param {Number} amount  added unit
+         * @param field the calendar field.
+         * @param {Number} amount he amount of date or time to be added to the field.
          */
         add: function (field, amount) {
             if (!amount) {
@@ -627,8 +735,8 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
          *      // 1999-06-29
          *
          *
-         * @param field date field enum
-         * @param {Number} amount  added unit
+         * @param field the calendar field.
+         * @param {Number} amount the signed amount to add to field.
          */
         roll: function (field, amount) {
             if (!amount) {
@@ -637,8 +745,8 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
             var self = this;
             // computer and retrieve original value
             var value = self.get(field);
-            var min = self.getMinimum(field);
-            var max = self.getMaximum(field);
+            var min = self.getActualMinimum(field);
+            var max = self.getActualMaximum(field);
             value = self.getRolledValue(value, amount, min, max);
 
             self.set(field, value);
@@ -691,10 +799,21 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
             }
         },
 
+        /**
+         * Gets what the first day of the week is; e.g., SUNDAY in the U.S., MONDAY in France.
+         * @returns {Number} the first day of the week.
+         */
         'getFirstDayOfWeek': function () {
             return this.firstDayOfWeek;
         },
 
+        /**
+         * Sets what the minimal days required in the first week of the year are; For example,
+         * if the first week is defined as one that contains the first day of the first month of a year,
+         * call this method with value 1.
+         * If it must be a full week, use value 7.
+         * @param minimalDaysInFirstWeek the given minimal days required in the first week of the year.
+         */
         'setMinimalDaysInFirstWeek': function (minimalDaysInFirstWeek) {
             if (this.minimalDaysInFirstWeek != minimalDaysInFirstWeek) {
                 this.minimalDaysInFirstWeek = minimalDaysInFirstWeek;
@@ -702,21 +821,145 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
             }
         },
 
+        /**
+         * Gets what the minimal days required in the first week of the year are; e.g.,
+         * if the first week is defined as one that contains the first day of the first month of a year,
+         * this method returns 1.
+         * If the minimal days required must be a full week, this method returns 7.
+         * @returns {Number} the minimal days required in the first week of the year.
+         */
         'getMinimalDaysInFirstWeek': function () {
             return this.minimalDaysInFirstWeek;
         },
 
-        'getDisplayName': function (field, style, locale) {
-            var v = this.get(field);
-            var strings = getFieldStrings(field, style, locale || this.locale);
-            return strings[v];
+        /**
+         * Returns the number of weeks in the week year
+         * represented by this GregorianCalendar.
+         *
+         * For example, if this GregorianCalendar's date is
+         * December 31, 2008 with the ISO
+         * 8601 compatible setting, this method will return 53 for the
+         * period: December 29, 2008 to January 3, 2010
+         * while getActualMaximum(WEEK_OF_YEAR) will return
+         * 52 for the period: December 31, 2007 to December 28, 2008.
+         *
+         * @return {Number} the number of weeks in the week year.
+         */
+        'getWeeksInWeekYear': function () {
+            var weekYear = this.getWeekYear();
+            if (weekYear == this.get(YEAR)) {
+                return this.getActualMaximum(WEEK_OF_YEAR);
+            }
+            // Use the 2nd week for calculating the max of WEEK_OF_YEAR
+            var gc = this.clone();
+            gc.setWeekDate(weekYear, 2, this.get(DAY_OF_WEEK));
+            return gc.getActualMaximum(WEEK_OF_YEAR);
         },
 
-        equals: function (that) {
-            return this.time == that.getTime() &&
-                this.firstDayOfWeek == that.firstDayOfWeek &&
-                this.timezoneOffset == that.timezoneOffset &&
-                this.minimalDaysInFirstWeek == that.minimalDaysInFirstWeek;
+        /**
+         * Returns the week year represented by this GregorianCalendar.
+         * The dates in the weeks between 1 and the
+         * maximum week number of the week year have the same week year value
+         * that may be one year before or after the calendar year value.
+         *
+         * @return {Number} the week year represented by this GregorianCalendar.
+         */
+        getWeekYear: function () {
+            var year = this.get(YEAR); // implicitly  complete
+            var weekOfYear = this.get(WEEK_OF_YEAR);
+            var month = this.get(MONTH);
+            if (month == GregorianCalendar.JANUARY) {
+                if (weekOfYear >= 52) {
+                    --year;
+                }
+            } else if (month == GregorianCalendar.DECEMBER) {
+                if (weekOfYear == 1) {
+                    ++year;
+                }
+            }
+            return year;
+        },
+        /**
+         * Sets this GregorianCalendar to the date given by the date specifiers - weekYear,
+         * weekOfYear, and dayOfWeek. weekOfYear follows the WEEK_OF_YEAR numbering.
+         * The dayOfWeek value must be one of the DAY_OF_WEEK values: SUNDAY to SATURDAY.
+         *
+         * @param weekYear    the week year
+         * @param weekOfYear  the week number based on weekYear
+         * @param dayOfWeek   the day of week value: one of the constants
+         *                    for the {@link DAY_OF_WEEK} field:
+         */
+        'setWeekDate': function (weekYear, weekOfYear, dayOfWeek) {
+            if (dayOfWeek < GregorianCalendar.SUNDAY || dayOfWeek > GregorianCalendar.SATURDAY) {
+                throw new Error("invalid dayOfWeek: " + dayOfWeek);
+            }
+            var fields = this.fields;
+            // To avoid changing the time of day fields by date
+            // calculations, use a clone with the GMT time zone.
+            var gc = this.clone();
+            gc.clear();
+            gc.setTimezoneOffset(0);
+            gc.set(YEAR, weekYear);
+            gc.set(WEEK_OF_YEAR, 1);
+            gc.set(DAY_OF_WEEK, this.getFirstDayOfWeek());
+            var days = dayOfWeek - this.getFirstDayOfWeek();
+            if (days < 0) {
+                days += 7;
+            }
+            days += 7 * (weekOfYear - 1);
+            if (days != 0) {
+                gc.add(DAY_OF_YEAR, days);
+            } else {
+                gc.complete();
+            }
+            fields[YEAR] = gc.get(YEAR);
+            fields[MONTH] = gc.get(MONTH);
+            fields[DAY_OF_MONTH] = gc.get(DAY_OF_MONTH);
+            this.complete();
+        },
+        /**
+         * Creates and returns a copy of this object.
+         * @returns {KISSY.GregorianCalendar}
+         */
+        clone: function () {
+            if (this.time === undefined) {
+                this.computeTime();
+            }
+            var cal = new GregorianCalendar(this.timezoneOffset, this.locale);
+            cal.setTime(this.time);
+            return cal;
+        },
+
+        /**
+         * Compares this GregorianCalendar to the specified Object.
+         * The result is true if and only if the argument is a GregorianCalendar object
+         * that represents the same time value (millisecond offset from the Epoch)
+         * under the same Calendar parameters and Gregorian change date as this object.
+         * @param {KISSY.GregorianCalendar} obj the object to compare with.
+         * @returns {boolean} true if this object is equal to obj; false otherwise.
+         */
+        equals: function (obj) {
+            return this.getTimeInMillis() == obj.getTimeInMillis() &&
+                this.firstDayOfWeek == obj.firstDayOfWeek &&
+                this.timezoneOffset == obj.timezoneOffset &&
+                this.minimalDaysInFirstWeek == obj.minimalDaysInFirstWeek;
+        },
+
+        /**
+         * Sets all the calendar field values or specified field and the time value
+         * (millisecond offset from the Epoch) of this Calendar undefined.
+         * This means that isSet() will return false for all the calendar fields,
+         * and the date and time calculations will treat the fields as if they had never been set.
+         * @param [field] the calendar field to be cleared.
+         */
+        clear: function (field) {
+            if (field === undefined) {
+                this.field = [];
+            } else {
+                this.fields[field] = undefined;
+            }
+            this.time = undefined;
+            this.fieldsComputed = false;
         }
     };
 
