@@ -2,9 +2,7 @@
  * component tc
  * @author yiminghe@gmail.com
  */
-KISSY.use("component/control," +
-    "component/container," +
-    "component/extension/delegate-children", function (S,
+KISSY.add(function (S,
     Control,
     Container,
     DelegateChildrenExtension
@@ -458,4 +456,7 @@ KISSY.use("component/control," +
         });
     });
 
+},{
+    requires:['component/control','component/container',
+    'component/extension/delegate-children']
 });

@@ -1,4 +1,4 @@
-KISSY.use("component/extension/align,component/control",
+KISSY.add(
     function (S, AlignExtension, Control) {
         var Dom = S.Dom;
         var $ = S.all;
@@ -331,4 +331,7 @@ KISSY.use("component/extension/align,component/control",
             });
 
         });
+    },{
+        requires:['component/extension/align',
+        'component/control']
     });

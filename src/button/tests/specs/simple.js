@@ -2,7 +2,7 @@
  * @overview test case for button
  * @author shiran<shiran@taobao.com>
  */
-KISSY.use('dom, button,node', function (S, Dom, Button, Node) {
+KISSY.add(function (S, Dom, Button, Node) {
 
     var $ = Node.all;
 
@@ -89,4 +89,6 @@ KISSY.use('dom, button,node', function (S, Dom, Button, Node) {
 
     });
 
+},{
+    requires:['dom','button','node']
 });

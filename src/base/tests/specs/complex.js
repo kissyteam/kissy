@@ -2,7 +2,7 @@
  *  complex tc for base and attribute
  *  @author yiminghe@gmail.com
  */
-KISSY.use("base", function (S, Base) {
+KISSY.add(function (S, Base) {
     describe("base_complex", function () {
 
         it("can merge property value object from parent class", function () {
@@ -358,4 +358,6 @@ KISSY.use("base", function (S, Base) {
 
 
     });
+},{
+    requires:['base']
 });

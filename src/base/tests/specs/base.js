@@ -2,7 +2,7 @@
  * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
 
-KISSY.use("base", function (S, Base) {
+KISSY.add(function (S, Base) {
 
 
     describe('base', function () {
@@ -230,4 +230,6 @@ KISSY.use("base", function (S, Base) {
         });
 
     });
+},{
+    requires:['base']
 });

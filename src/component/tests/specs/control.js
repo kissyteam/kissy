@@ -1,4 +1,4 @@
-KISSY.use("component/control",function (S,Control) {
+KISSY.add(function (S,Control) {
   
   describe('测试控件生命周期',function(){
 
@@ -169,4 +169,6 @@ KISSY.use("component/control",function (S,Control) {
   });
 
 
+},{
+    requires:['component/control']
 });

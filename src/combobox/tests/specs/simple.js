@@ -2,7 +2,7 @@
  * Simple TC for KISSY ComboBox
  * @author yiminghe@gmail.com
  */
-KISSY.use("combobox", function (S, ComboBox) {
+KISSY.add(function (S, ComboBox) {
 
     window.focus();
     document.body.focus();
@@ -439,4 +439,6 @@ KISSY.use("combobox", function (S, ComboBox) {
         });
 
     });
+},{
+    requires:['combobox']
 });
