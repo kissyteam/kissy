@@ -88,30 +88,74 @@ KISSY.use('date/gregorian', function (S, GregorianCalendar) {
                 expect(gregorianCalendar.get(GregorianCalendar.DAY_OF_WEEK)).toBe(GregorianCalendar.SATURDAY);
             });
 
-            it('WEEK_OF_MONTH works', function () {
-                expect(gregorianCalendar.get(GregorianCalendar.WEEK_OF_MONTH)).toBe(2);
-                gregorianCalendar.set(GregorianCalendar.DAY_OF_MONTH, 1);
-                expect(gregorianCalendar.get(GregorianCalendar.WEEK_OF_MONTH)).toBe(1);
-                gregorianCalendar.set(GregorianCalendar.DAY_OF_MONTH, 3);
-                expect(gregorianCalendar.get(GregorianCalendar.WEEK_OF_MONTH)).toBe(2);
+
+            describe('WEEK_OF_MONTH', function () {
+                it('simply works', function () {
+                    expect(gregorianCalendar.get(GregorianCalendar.WEEK_OF_MONTH)).toBe(2);
+                    gregorianCalendar.set(GregorianCalendar.DAY_OF_MONTH, 1);
+                    expect(gregorianCalendar.get(GregorianCalendar.WEEK_OF_MONTH)).toBe(1);
+                    gregorianCalendar.set(GregorianCalendar.DAY_OF_MONTH, 3);
+                    expect(gregorianCalendar.get(GregorianCalendar.WEEK_OF_MONTH)).toBe(2);
 
 
-                gregorianCalendar.set(GregorianCalendar.YEAR, 2011);
-                gregorianCalendar.set(GregorianCalendar.MONTH, 11);
-                gregorianCalendar.set(GregorianCalendar.DAY_OF_MONTH, 31);
-                gregorianCalendar.setFirstDayOfWeek(GregorianCalendar.MONDAY);
-                expect(gregorianCalendar.get(GregorianCalendar.WEEK_OF_MONTH)).toBe(5);
-                gregorianCalendar.setFirstDayOfWeek(GregorianCalendar.THURSDAY);
-                expect(gregorianCalendar.get(GregorianCalendar.WEEK_OF_MONTH)).toBe(5);
+                    gregorianCalendar.set(GregorianCalendar.YEAR, 2011);
+                    gregorianCalendar.set(GregorianCalendar.MONTH, 11);
+                    gregorianCalendar.set(GregorianCalendar.DAY_OF_MONTH, 31);
+                    gregorianCalendar.setFirstDayOfWeek(GregorianCalendar.MONDAY);
+                    expect(gregorianCalendar.get(GregorianCalendar.WEEK_OF_MONTH)).toBe(5);
+                    gregorianCalendar.setFirstDayOfWeek(GregorianCalendar.THURSDAY);
+                    expect(gregorianCalendar.get(GregorianCalendar.WEEK_OF_MONTH)).toBe(5);
+                });
+
+                //For example, if getFirstDayOfWeek() is SUNDAY and getMinimalDaysInFirstWeek() is 4,
+                // then the first week of January 1998 is Sunday, January 4 through Saturday, January 10.
+                // These days have a WEEK_OF_MONTH of 1.
+                // Thursday, January 1 through Saturday, January 3 have a WEEK_OF_MONTH of 0.
+                // If getMinimalDaysInFirstWeek() is changed to 3,
+                // then January 1 through January 3 have a WEEK_OF_MONTH of 1.
+
+                it('getMinimalDaysInFirstWeek 1', function () {
+                    gregorianCalendar.set(1998, GregorianCalendar.JANUARY, 1);
+                    gregorianCalendar.setFirstDayOfWeek(GregorianCalendar.SUNDAY);
+                    gregorianCalendar.setMinimalDaysInFirstWeek(4);
+                    expect(gregorianCalendar.get(GregorianCalendar.WEEK_OF_MONTH)).toBe(0);
+                });
+
+                it('getMinimalDaysInFirstWeek 1', function () {
+                    gregorianCalendar.set(1998, GregorianCalendar.JANUARY, 1);
+                    gregorianCalendar.setFirstDayOfWeek(GregorianCalendar.SUNDAY);
+                    gregorianCalendar.setMinimalDaysInFirstWeek(3);
+                    expect(gregorianCalendar.get(GregorianCalendar.WEEK_OF_MONTH)).toBe(1);
+                });
             });
 
-            it('DAY_OF_WEEK_IN_MONTH works', function () {
-                expect(gregorianCalendar.get(GregorianCalendar.DAY_OF_WEEK_IN_MONTH)).toBe(2);
+            describe('DAY_OF_WEEK_IN_MONTH', function () {
 
-                gregorianCalendar.set(2013, GregorianCalendar.APRIL, 7, 18, 0, 0);
+                it('simply works', function () {
+                    expect(gregorianCalendar.get(GregorianCalendar.DAY_OF_WEEK_IN_MONTH)).toBe(2);
 
-                expect(gregorianCalendar.get(GregorianCalendar.DAY_OF_WEEK_IN_MONTH)).toBe(1);
+                    gregorianCalendar.set(2013, GregorianCalendar.APRIL, 7, 18, 0, 0);
+
+                    expect(gregorianCalendar.get(GregorianCalendar.DAY_OF_WEEK_IN_MONTH)).toBe(1);
+                });
+
+                // does not affect DAY_OF_WEEK_IN_MONTH
+                it('getMinimalDaysInFirstWeek 1', function () {
+                    gregorianCalendar.set(1998, GregorianCalendar.JANUARY, 1);
+                    gregorianCalendar.setFirstDayOfWeek(GregorianCalendar.SUNDAY);
+                    gregorianCalendar.setMinimalDaysInFirstWeek(4);
+                    expect(gregorianCalendar.get(GregorianCalendar.DAY_OF_WEEK_IN_MONTH)).toBe(1);
+                });
+
+                it('getMinimalDaysInFirstWeek 1', function () {
+                    gregorianCalendar.set(1998, GregorianCalendar.JANUARY, 1);
+                    gregorianCalendar.setFirstDayOfWeek(GregorianCalendar.SUNDAY);
+                    gregorianCalendar.setMinimalDaysInFirstWeek(3);
+                    expect(gregorianCalendar.get(GregorianCalendar.DAY_OF_WEEK_IN_MONTH)).toBe(1);
+                });
+
             });
+
 
             it('getTime works', function () {
                 var jsDate = new Date(2013, GregorianCalendar.JUNE, 8, 18, 0, 0, 0);

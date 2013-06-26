@@ -189,11 +189,11 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
         0,              // MILLISECOND
 
         1,              // WEEK_OF_YEAR
-        1,              // WEEK_OF_MONTH
+        undefined,              // WEEK_OF_MONTH
 
         1,              // DAY_OF_YEAR
         GregorianCalendar.SUNDAY,         // DAY_OF_WEEK
-        undefined             // DAY_OF_WEEK_IN_MONTH
+        1             // DAY_OF_WEEK_IN_MONTH
     ];
 
     var MAX_VALUES = [
@@ -216,14 +216,22 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
         constructor: GregorianCalendar,
 
         getMinimum: function (field) {
-            if (MIN_VALUES[field] === undefined) {
-                throw new Error('minimum value not defined!');
+            if (MIN_VALUES[field] !== undefined) {
+                return MIN_VALUES[field];
             }
-            return MIN_VALUES[field];
+
+            var fields = this.fields;
+            if (field === WEEK_OF_MONTH) {
+                var cal = new GregorianCalendar();
+                cal.set(fields[YEAR], fields[MONTH], 1);
+                return cal.get(WEEK_OF_MONTH);
+            }
+
+            throw new Error('minimum value not defined!');
         },
 
         getMaximum: function (field) {
-            if (MAX_VALUES[field]) {
+            if (MAX_VALUES[field] !== undefined) {
                 return MAX_VALUES[field];
             }
             var value,
