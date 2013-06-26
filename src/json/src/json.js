@@ -8,10 +8,10 @@ KISSY.add('json', function (S, stringify, parse) {
     /**
      * The Json object contains methods for converting values to JavaScript Object Notation (Json)
      * and for converting Json to values.
-     * @class KISSY.Json
+     * @class KISSY.JSON
      * @singleton
      */
-    return S.JSON = S.Json = {
+    return S.JSON = {
         /**
          * Convert a value to Json, optionally replacing values if a replacer function is specified,
          * or optionally including only the specified properties if a replacer array is specified.

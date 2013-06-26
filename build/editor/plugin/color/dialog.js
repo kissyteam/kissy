@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 24 21:43
+build time: Jun 27 03:34
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -14,7 +14,7 @@ build time: Jun 24 21:43
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/plugin/color/dialog", function (S, Editor, Dialog4E) {
-    var map = S.map, Dom = S.Dom;
+    var map = S.map, Dom = S.DOM;
 
     //获取颜色数组
     function getData(color) {

@@ -3,7 +3,7 @@
  * a scalable client io framework
  * @author yiminghe@gmail.com
  */
-KISSY.add('io/base', function (S, Json, Event, undefined) {
+KISSY.add('io/base', function (S, Event, undefined) {
 
     var rlocalProtocol = /^(?:about|app|app\-storage|.+\-extension|file|widget)$/,
         rspace = /\s+/,
@@ -102,30 +102,30 @@ KISSY.add('io/base', function (S, Json, Event, undefined) {
         /**
          * fired after request completes (success or error)
          * @event complete
-         * @member KISSY.Io
+         * @member KISSY.IO
          * @static
          * @param {KISSY.Event.CustomEventObject} e
-         * @param {KISSY.Io} e.io current io
+         * @param {KISSY.IO} e.io current io
          */
 
         /**
          * fired after request succeeds
          * @event success
-         * @member KISSY.Io
+         * @member KISSY.IO
          * @static
          * @param {KISSY.Event.CustomEventObject} e
-         * @param {KISSY.Io} e.io current io
+         * @param {KISSY.IO} e.io current io
          */
 
         /**
          * fired after request occurs error
          * @event error
-         * @member KISSY.Io
+         * @member KISSY.IO
          * @static
          * @param {KISSY.Event.CustomEventObject} e
-         * @param {KISSY.Io} e.io current io
+         * @param {KISSY.IO} e.io current io
          */
-        Io.fire(eventType, {
+        IO.fire(eventType, {
             // 兼容
             ajaxConfig: self.config,
             io: self
@@ -135,7 +135,7 @@ KISSY.add('io/base', function (S, Json, Event, undefined) {
     /**
      * Return a io object and send request by config.
      *
-     * @class KISSY.Io
+     * @class KISSY.IO
      * @extends KISSY.Promise
      *
      * @cfg {String} url
@@ -153,7 +153,7 @@ KISSY.add('io/base', function (S, Json, Event, undefined) {
      * Default to: depends on DataType.
      * The content type sent in request header that tells the server
      * what kind of response it will accept in return.
-     * It is recommended to do so once in the {@link KISSY.Io#method-setupConfig}
+     * It is recommended to do so once in the {@link KISSY.IO#method-setupConfig}
      *
      * @cfg {Boolean} async
      * Default to: true
@@ -165,7 +165,7 @@ KISSY.add('io/base', function (S, Json, Event, undefined) {
      *
      * @cfg {Object} contents
      * a name-regexp map to determine request data's dataType
-     * It is recommended to do so once in the {@link KISSY.Io#method-setupConfig}
+     * It is recommended to do so once in the {@link KISSY.IO#method-setupConfig}
      *
      * @cfg {Object} context
      * specify the context of this request 's callback (success,error,complete)
@@ -173,7 +173,7 @@ KISSY.add('io/base', function (S, Json, Event, undefined) {
      * @cfg {Object} converters
      * Default to: {text:{json:Json.parse,html:mirror,text:mirror,xml:KISSY.parseXML}}
      * specified how to transform one dataType to another dataType
-     * It is recommended to do so once in the {@link KISSY.Io#method-setupConfig}
+     * It is recommended to do so once in the {@link KISSY.IO#method-setupConfig}
      *
      * @cfg {Boolean} crossDomain
      * Default to: false for same-domain request,true for cross-domain request
@@ -241,7 +241,7 @@ KISSY.add('io/base', function (S, Json, Event, undefined) {
      *
      * 2. status of this request with type String
      *
-     * 3. io object of this request , for details {@link KISSY.Io}
+     * 3. io object of this request , for details {@link KISSY.IO}
      *
      * @cfg {Function} error
      * success(data,textStatus,xhr)
@@ -251,7 +251,7 @@ KISSY.add('io/base', function (S, Json, Event, undefined) {
      *
      * 2. status of this request with type String,such as 'timeout','Not Found','parsererror:...'
      *
-     * 3. io object of this request , for details {@link KISSY.Io}
+     * 3. io object of this request , for details {@link KISSY.IO}
      *
      * @cfg {Function} complete
      * success(data,textStatus,xhr)
@@ -262,7 +262,7 @@ KISSY.add('io/base', function (S, Json, Event, undefined) {
      * 2. status of this request with type String,such as success:'ok',
      * error:'timeout','Not Found','parsererror:...'
      *
-     * 3. io object of this request , for details {@link KISSY.Io}
+     * 3. io object of this request , for details {@link KISSY.IO}
      *
      * @cfg {Number} timeout
      * Set a timeout(in seconds) for this request.if will call error when timeout
@@ -301,15 +301,15 @@ KISSY.add('io/base', function (S, Json, Event, undefined) {
      *
      * 2. b.t.cn/proxy.htm 's content is <code> &lt;script>document.domain='t.cn'&lt;/script> </code>
      *
-     * 3. in a.htm , call <code> Io({xdr:{subDomain:{proxy:'/proxy.htm'}}}) </code>
+     * 3. in a.htm , call <code> IO({xdr:{subDomain:{proxy:'/proxy.htm'}}}) </code>
      *
      */
-    function Io(c) {
+    function IO(c) {
 
         var self = this;
 
-        if (!(self instanceof Io)) {
-            return new Io(c);
+        if (!(self instanceof IO)) {
+            return new IO(c);
         }
 
         Promise.call(self);
@@ -320,8 +320,8 @@ KISSY.add('io/base', function (S, Json, Event, undefined) {
             // 结构化数据，如 json
             responseData: null,
             /**
-             * config of current Io instance.
-             * @member KISSY.Io
+             * config of current IO instance.
+             * @member KISSY.IO
              * @property config
              * @type Object
              */
@@ -375,10 +375,10 @@ KISSY.add('io/base', function (S, Json, Event, undefined) {
         /**
          * fired before generating request object
          * @event start
-         * @member KISSY.Io
+         * @member KISSY.IO
          * @static
          * @param {KISSY.Event.CustomEventObject} e
-         * @param {KISSY.Io} e.io current io
+         * @param {KISSY.IO} e.io current io
          */
 
         fire('start', self);
@@ -442,10 +442,10 @@ KISSY.add('io/base', function (S, Json, Event, undefined) {
         /**
          * fired before sending request
          * @event send
-         * @member KISSY.Io
+         * @member KISSY.IO
          * @static
          * @param {KISSY.Event.CustomEventObject} e
-         * @param {KISSY.Io} e.io current io
+         * @param {KISSY.IO} e.io current io
          */
 
         fire('send', self);
@@ -475,22 +475,22 @@ KISSY.add('io/base', function (S, Json, Event, undefined) {
         return self;
     }
 
-    S.mix(Io, Event.Target);
+    S.mix(IO, Event.Target);
 
-    S.mix(Io,
+    S.mix(IO,
         {
             /**
              * whether current application is a local application
              * (protocal is file://,widget://,about://)
              * @type {Boolean}
-             * @member KISSY.Io
+             * @member KISSY.IO
              * @static
              */
             isLocal: isLocal,
             /**
              * name-value object that set default config value for io class
              * @param {Object} setting
-             * @member KISSY.Io
+             * @member KISSY.IO
              * @static
              */
             setupConfig: function (setting) {
@@ -500,7 +500,7 @@ KISSY.add('io/base', function (S, Json, Event, undefined) {
             },
             /**
              * @private
-             * @member KISSY.Io
+             * @member KISSY.IO
              * @static
              */
             'setupTransport': function (name, fn) {
@@ -508,7 +508,7 @@ KISSY.add('io/base', function (S, Json, Event, undefined) {
             },
             /**
              * @private
-             * @member KISSY.Io
+             * @member KISSY.IO
              * @static
              */
             'getTransport': function (name) {
@@ -517,7 +517,7 @@ KISSY.add('io/base', function (S, Json, Event, undefined) {
             /**
              * get default config value for io request
              * @return {Object}
-             * @member KISSY.Io
+             * @member KISSY.IO
              * @static
              */
             getConfig: function () {
@@ -525,20 +525,20 @@ KISSY.add('io/base', function (S, Json, Event, undefined) {
             }
         });
 
-    return Io;
+    return IO;
 }, {
-    requires: ['json', 'event']
+    requires: ['event']
 });
 
 /*
 
  // !TODO
  // 去除 event/custom 依赖，用户不载入就不能监听
- // 载入后通过 custom.on(Io,type) 监听
+ // 载入后通过 custom.on(IO,type) 监听
 
 
  2012-08-16
- - transform Io to class, remove XhrObject class.
+ - transform IO to class, remove XhrObject class.
  - support ifModified
  - http://bugs.jquery.com/ticket/8394
  - http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html

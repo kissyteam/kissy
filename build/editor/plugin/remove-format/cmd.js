@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 24 21:47
+build time: Jun 27 03:37
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -16,7 +16,7 @@ build time: Jun 24 21:47
 KISSY.add("editor/plugin/remove-format/cmd", function (S, Editor) {
     var KER = Editor.RANGE,
         ElementPath = Editor.ElementPath,
-        Dom = S.Dom,
+        Dom = S.DOM,
         /**
          * A comma separated list of elements to be removed
          * when executing the "remove format" command.

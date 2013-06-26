@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 24 21:51
+build time: Jun 27 03:42
 */
 KISSY.add("tabs/bar-render",function(c,b){return b.ATTRS.xrender.value.extend({beforeCreateDom:function(a){a.elAttrs.role="tablist"}},{name:"TabsBarRender"})},{requires:["toolbar"]});
 KISSY.add("tabs/bar",function(c,b,a,g){var f=b.extend({bindUI:function(){var a=this;a.on("afterSelectedChange",function(d){d.newVal&&d.target.isTabsTab&&a.set("selectedTab",d.target)})},syncUI:function(){var a=this,d=a.get("children");c.each(d,function(d){return d.get("selected")?(a.setInternal("selectedTab",d),!1):g})},handleKeyDownInternal:function(a){var d=this.get("selectedTab"),a=this.getNextItemByKeyDown(a,d);if(c.isBoolean(a))return a;a.set("selected",!0);return!0},_onSetSelectedTab:function(a,

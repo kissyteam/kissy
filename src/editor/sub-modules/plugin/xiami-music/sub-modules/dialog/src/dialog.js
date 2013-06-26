@@ -3,7 +3,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/plugin/xiami-music/dialog", function (S, Editor, FlashDialog, MenuButton) {
-    var Dom = S.Dom,
+    var Dom = S.DOM,
         Node = S.Node,
         Utils = Editor.Utils,
         loading = Utils.debugUrl("theme/tao-loading.gif"),
@@ -171,8 +171,8 @@ KISSY.add("editor/plugin/xiami-music/dialog", function (S, Editor, FlashDialog, 
                     "<p style='width: 130px; margin: 15px auto 0; color: rgb(150, 150, 150);'>正在搜索，请稍候......</p>");
                 self._xiamia_list.show();
 
-                S.use('io',function(S,Io){
-                    new Io({
+                S.use('io',function(S,IO){
+                    new IO({
                         cache: false,
                         url: req,
                         dataType: 'jsonp',

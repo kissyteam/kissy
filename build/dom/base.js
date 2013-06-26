@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 24 21:42
+build time: Jun 27 03:33
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -32,7 +32,7 @@ KISSY.add('dom/base/api', function (S) {
         RE_NUM = /[\-+]?(?:\d*\.|)\d+(?:[eE][\-+]?\d+|)/.source,
         /**
          * Dom Element node type.
-         * @enum {Number} KISSY.Dom.NodeType
+         * @enum {Number} KISSY.DOM.NodeType
          */
             NodeType = {
             /**
@@ -87,7 +87,7 @@ KISSY.add('dom/base/api', function (S) {
         /**
          * KISSY Dom Utils.
          * Provides Dom helper methods.
-         * @class KISSY.Dom
+         * @class KISSY.DOM
          * @singleton
          */
             Dom = {
@@ -403,7 +403,7 @@ KISSY.add('dom/base/attr', function (S, Dom, undefined) {
 
     S.mix(Dom,
         /**
-         * @override KISSY.Dom
+         * @override KISSY.DOM
          * @class
          * @singleton
          */
@@ -882,7 +882,7 @@ KISSY.add('dom/base/class', function (S, Dom) {
 
     S.mix(Dom,
         /**
-         * @override KISSY.Dom
+         * @override KISSY.DOM
          * @class
          * @singleton
          */
@@ -1029,7 +1029,7 @@ KISSY.add('dom/base/create', function (S, Dom, undefined) {
 
     S.mix(Dom,
         /**
-         * @override KISSY.Dom
+         * @override KISSY.DOM
          * @class
          * @singleton
          */
@@ -1294,7 +1294,7 @@ KISSY.add('dom/base/create', function (S, Dom, undefined) {
              * if set true then deep argument must be set true as well.
              * refer: https://developer.mozilla.org/En/Dom/Node.cloneNode
              * @return {HTMLElement}
-             * @member KISSY.Dom
+             * @member KISSY.DOM
              */
             clone: function (selector, deep, withDataAndEvent, deepWithDataAndEvent) {
                 if (typeof deep === 'object') {
@@ -1652,7 +1652,7 @@ KISSY.add('dom/base/data', function (S, Dom, undefined) {
 
     S.mix(Dom,
         /**
-         * @override KISSY.Dom
+         * @override KISSY.DOM
          * @class
          * @singleton
          */
@@ -1890,7 +1890,7 @@ KISSY.add('dom/base/insertion', function (S, Dom) {
     // loadScripts default to false to prevent xss
     S.mix(Dom,
         /**
-         * @override KISSY.Dom
+         * @override KISSY.DOM
          * @class
          * @singleton
          */
@@ -2080,7 +2080,7 @@ KISSY.add('dom/base/offset', function (S, Dom, undefined) {
 
     S.mix(Dom,
         /**
-         * @override KISSY.Dom
+         * @override KISSY.DOM
          * @class
          * @singleton
          */
@@ -2602,7 +2602,7 @@ KISSY.add('dom/base/style', function (S, Dom, undefined) {
 
     S.mix(Dom,
         /**
-         * @override KISSY.Dom
+         * @override KISSY.DOM
          * @class
          * @singleton
          */
@@ -3335,7 +3335,7 @@ KISSY.add('dom/base/selector', function (S, Dom, undefined) {
 
     S.mix(Dom,
         /**
-         * @override KISSY.Dom
+         * @override KISSY.DOM
          * @class
          * @singleton
          */
@@ -3403,7 +3403,7 @@ KISSY.add('dom/base/selector', function (S, Dom, undefined) {
              * @param {HTMLElement[]} The Array of Dom elements.
              * @method
              * @return {HTMLElement[]}
-             * @member KISSY.Dom
+             * @member KISSY.DOM
              */
             unique: (function () {
                 var hasDuplicate,
@@ -3455,7 +3455,7 @@ KISSY.add('dom/base/selector', function (S, Dom, undefined) {
              * @param {String|Function} filter Selector string or filter function
              * @param {String|HTMLElement[]|HTMLDocument} [context] Context under which to find matched elements
              * @return {HTMLElement[]}
-             * @member KISSY.Dom
+             * @member KISSY.DOM
              */
             filter: function (selector, filter, context) {
                 var elems = query(selector, context),
@@ -3509,7 +3509,7 @@ KISSY.add('dom/base/selector', function (S, Dom, undefined) {
              * @param {String|HTMLElement[]} selector Matched elements
              * @param {String|Function} filter Selector string or filter function
              * @param {String|HTMLElement[]|HTMLDocument} [context] Context under which to find matched elements
-             * @member KISSY.Dom
+             * @member KISSY.DOM
              * @return {Boolean}
              */
             test: function (selector, filter, context) {
@@ -3539,7 +3539,7 @@ KISSY.add('dom/base/traversal', function (S, Dom, undefined) {
 
     S.mix(Dom,
         /**
-         * @override KISSY.Dom
+         * @override KISSY.DOM
          * @class
          * @singleton
          */
@@ -3716,7 +3716,7 @@ KISSY.add('dom/base/traversal', function (S, Dom, undefined) {
              * @param {HTMLElement|String} n1
              * @param {HTMLElement|String} n2
              * @return {Boolean}
-             * @member KISSY.Dom
+             * @member KISSY.DOM
              */
             equals: function (n1, n2) {
                 n1 = Dom.query(n1);
@@ -3868,7 +3868,6 @@ KISSY.add('dom/base', function (S, Dom) {
     S.mix(S, {
         // compatibility
         DOM:Dom,
-        Dom: Dom,
         get: Dom.get,
         query: Dom.query
     });

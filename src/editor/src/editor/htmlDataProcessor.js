@@ -39,7 +39,7 @@ KISSY.add("editor/htmlDataProcessor", function (S, Editor, HtmlParser) {
                     allEmpty = 1;
                     for (i = 0; i < l; i++) {
                         child = childNodes[i];
-                        if (child.nodeType == S.Dom.NodeType.TEXT_NODE && !child.nodeValue) {
+                        if (child.nodeType == S.DOM.NodeType.TEXT_NODE && !child.nodeValue) {
                         } else {
                             allEmpty = 0;
                             break;

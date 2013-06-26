@@ -3,7 +3,7 @@
  * @author dxq613@gmail.com
  */
 KISSY.add('grid/util', function (S) {
-    var Dom = S.Dom,
+    var Dom = S.DOM,
         UA = S.UA,
         CLS_MASK = 'ks-ext-mask',
         CLS_MASK_MSG = CLS_MASK + '-msg';

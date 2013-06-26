@@ -23,7 +23,7 @@ KISSY.add("editor/selection", function (S,Editor) {
         FALSE = false,
         NULL = null,
         UA = S.UA,
-        Dom = S.Dom,
+        Dom = S.DOM,
     //tryThese = Editor.Utils.tryThese,
         Node = S.Node,
         KES = Editor.SELECTION,

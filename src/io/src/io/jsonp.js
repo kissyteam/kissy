@@ -3,9 +3,9 @@
  * jsonp transport based on script transport
  * @author yiminghe@gmail.com
  */
-KISSY.add('io/jsonp', function (S, Io) {
+KISSY.add('io/jsonp', function (S, IO) {
     var win = S.Env.host;
-    Io.setupConfig({
+    IO.setupConfig({
         jsonp: 'callback',
         jsonpCallback: function () {
             // 不使用 now() ，极端情况下可能重复
@@ -13,7 +13,7 @@ KISSY.add('io/jsonp', function (S, Io) {
         }
     });
 
-    Io.on('start', function (e) {
+    IO.on('start', function (e) {
         var io = e.io,
             c = io.config,
             dataType = c.dataType;
@@ -79,7 +79,7 @@ KISSY.add('io/jsonp', function (S, Io) {
         }
     });
 
-    return Io;
+    return IO;
 }, {
     requires: ['./base']
 });

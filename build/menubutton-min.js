@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 24 22:35
+build time: Jun 27 03:40
 */
 KISSY.add("menubutton/render",function(d,b,g){return b.ATTRS.xrender.value.extend([g],{decorateDom:function(e){var d=this.control,f=d.prefixCls,e=e.one("."+f+"popupmenu"),b=e[0].ownerDocument.body;b.insertBefore(e[0],b.firstChild);b=this.getComponentConstructorByNode(f,e);d.setInternal("menu",new b({srcNode:e,prefixCls:f}))},beforeCreateDom:function(b){d.mix(b.elAttrs,{"aria-expanded":!1,"aria-haspopup":!0})},_onSetCollapsed:function(b){var d=this.$el,f=this.getBaseCssClass("open");d[b?"removeClass":
 "addClass"](f).attr("aria-expanded",!b)}},{ATTRS:{contentTpl:{value:g.ATTRS.contentTpl.value+'<div class="{{getBaseCssClasses "dropdown"}}"><div class="{{getBaseCssClasses "dropdown-inner"}}"></div>'}}})},{requires:["button","component/extension/content-render"]});

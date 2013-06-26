@@ -1,0 +1,42 @@
+.dh {
+    border-bottom: 1px solid red;
+}
+
+.container {
+    border: 1px solid red;
+    height: 200px;
+    padding: 10px;
+    position: relative;
+    overflow: auto;
+}
+
+.component {
+    margin: 50px 10px;
+    width: 100px;
+    height: 100px;
+    line-height: 100px;
+    border: 1px solid black;
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    overflow: hidden;
+}
+
+.cheader {
+    cursor: move;
+    border: 1px solid black;
+    height: 20px;
+    line-height: 20px;
+}
+
+.component .cheader {
+    cursor: move;
+}
+
+.ks-dd-dragging * {
+    visibility: hidden;
+}
+
+.ks-dd-dragging {
+    border: 2px blue dashed;
+}

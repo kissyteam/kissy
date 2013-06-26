@@ -5,7 +5,7 @@
 KISSY.add('editor/plugin/code/dialog', function (S, Editor, Dialog4E, MenuButton) {
 
     var xhtml_dtd = Editor.XHTML_DTD;
-    var NodeType = S.Dom.NodeType;
+    var NodeType = S.DOM.NodeType;
     var notWhitespaceEval = Editor.Walker.whitespaces(true);
 
     var codeTypes = [

@@ -6,7 +6,7 @@
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-touch-fullscreen" content="yes">
-    <title>S.Io Demo</title>
+    <title>S.IO Demo</title>
 
 
 </head>
@@ -23,7 +23,7 @@
 <script src="/kissy/build/seed.js"></script>
 <script src="/kissy/src/package.js"></script>
 <script>
-    KISSY.use("node,io,json", function (S, Node, Io, Json) {
+    KISSY.use("node,io,json", function (S, Node, IO, Json) {
         var $ = Node.all;
 
         var _log = S.log,
@@ -35,11 +35,11 @@
 
 
         // 全局事件
-        Io.on('start', function () {
+        IO.on('start', function () {
             $('#console').html('<p><img src="http://img04.taobaocdn.com/tps/i4/T1CntDXh8hXXXXXXXX-32-32.gif" /></p>');
         });
 
-        Io.on('complete', function () {
+        IO.on('complete', function () {
             var p = $('#console p');
             if (p) {
                 p.remove();
@@ -49,14 +49,14 @@
         //普通 get 请求
         $('#get').on('click', function () {
             var s = "http://localhost:9999/kissy/src/io/";
-            Io.get('' + '../tests/data/interface.jss?t=get', function (data) {
+            IO.get('' + '../tests/data/interface.jss?t=get', function (data) {
                 log('GET ' + data);
             });
         });
 
         //普通 post 请求
         $('#post').on('click', function () {
-            Io.post('../tests/data/interface.jss?t=post', {
+            IO.post('../tests/data/interface.jss?t=post', {
                 type: 'post',
                 name: 'jayli',
                 company: 'cn.yahoo.com',
@@ -68,7 +68,7 @@
 
         // Json
         $('#json').on('click', function () {
-            Io.get('../tests/data/interface.jss?t=get', function (data) {
+            IO.get('../tests/data/interface.jss?t=get', function (data) {
                 log('json ' + Json.stringify(data));
             }, 'json');
 
@@ -77,7 +77,7 @@
         // JSONP
         $('#jsonp').on('click', function () {
 
-            Io.jsonp('http://query.yahooapis.com/v1/public/yql?q=select%20title%2Clink%2Cdescription%20from%20rss%20where%20url%3D%22http%3A%2F%2Fued.taobao.com%2Fblog%2Ffeed%2F%22&format=json&diagnostics=true',
+            IO.jsonp('http://query.yahooapis.com/v1/public/yql?q=select%20title%2Clink%2Cdescription%20from%20rss%20where%20url%3D%22http%3A%2F%2Fued.taobao.com%2Fblog%2Ffeed%2F%22&format=json&diagnostics=true',
                     function (data) {
                         log(Json.stringify(data));
                     }
@@ -86,7 +86,7 @@
 
         // 同步
         $('#sync').on('click', function () {
-            var str = Io({
+            var str = IO({
                 type: 'get',
                 url: '../tests/data/interface.jss?t=get',
                 async: false,

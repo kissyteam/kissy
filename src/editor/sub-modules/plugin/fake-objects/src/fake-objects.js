@@ -4,7 +4,7 @@
  */
 KISSY.add("editor/plugin/fake-objects", function (S, Editor, HtmlParser) {
     var Node = S.Node,
-        Dom = S.Dom,
+        Dom = S.DOM,
         Utils = Editor.Utils,
         SPACER_GIF = Utils.debugUrl('theme/spacer.gif');
 

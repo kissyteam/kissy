@@ -1,0 +1,16 @@
+KISSY.add(KISSY.noop,{
+    requires:[
+        './attr',
+        './class',
+        './clone',
+        './create',
+        './data','./input-selection',
+        './insertion',
+        './offset',
+        './script',
+        './scroll',
+        './selector',
+        './style',
+        './traversal'
+    ]
+});

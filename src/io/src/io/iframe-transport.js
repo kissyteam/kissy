@@ -3,13 +3,13 @@
  * non-refresh upload file with form by iframe
  * @author yiminghe@gmail.com
  */
-KISSY.add('io/iframe-transport', function (S, Dom, Event, Io) {
+KISSY.add('io/iframe-transport', function (S, Dom, Event, IO) {
 
     var doc = S.Env.host.document,
         OK_CODE = 200,
         ERROR_CODE = 500,
         BREATH_INTERVAL = 30,
-        iframeConverter = S.clone(Io.getConfig().converters.text);
+        iframeConverter = S.clone(IO.getConfig().converters.text);
 
     // https://github.com/kissyteam/kissy/issues/304
     // returned data must be escaped by server for json dataType
@@ -27,7 +27,7 @@ KISSY.add('io/iframe-transport', function (S, Dom, Event, Io) {
     };
 
     // iframe 内的内容就是 body.innerText
-    Io.setupConfig({
+    IO.setupConfig({
         converters: {
             // iframe 到其他类型的转化和 text 一样
             iframe: iframeConverter,
@@ -240,9 +240,9 @@ KISSY.add('io/iframe-transport', function (S, Dom, Event, Io) {
         }
     });
 
-    Io['setupTransport']('iframe', IframeTransport);
+    IO['setupTransport']('iframe', IframeTransport);
 
-    return Io;
+    return IO;
 
 }, {
     requires: ['dom', 'event', './base']

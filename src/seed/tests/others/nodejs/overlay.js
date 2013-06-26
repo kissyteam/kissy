@@ -30,7 +30,7 @@ S.use("overlay", function(S, Overlay) {
     console.log(d.get("el").offset());
     console.log(d.get("x"));
 
-    var Dom = S.Dom,offset = { left: Dom.scrollLeft(), top: Dom.scrollTop() },
+    var Dom = S.DOM,offset = { left: Dom.scrollLeft(), top: Dom.scrollTop() },
         w = Dom['viewportWidth'](),
         h = Dom['viewportHeight']();
 

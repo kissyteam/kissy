@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 24 21:41
+build time: Jun 27 03:31
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -19,7 +19,7 @@ build time: Jun 24 21:41
  */
 KISSY.add('calendar/base', function (S, Node, Event, undefined) {
     var EventTarget = Event.Target,
-        Dom= S.Dom,
+        Dom= S.DOM,
         UA = S.UA,
         $ = Node.all;
 

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 24 21:44
+build time: Jun 27 03:34
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -14,7 +14,7 @@ build time: Jun 24 21:44
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/plugin/flash-common/utils", function (S, SWF) {
-    var Dom = S.Dom,
+    var Dom = S.DOM,
 
         flashUtils = {
 

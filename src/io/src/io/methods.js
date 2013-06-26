@@ -3,7 +3,7 @@
  * encapsulation of io object. as transaction object in yui3
  * @author yiminghe@gmail.com
  */
-KISSY.add('io/methods', function (S, Io, undefined) {
+KISSY.add('io/methods', function (S, IO, undefined) {
 
     var OK_CODE = 200,
         Promise = S.Promise,
@@ -97,7 +97,7 @@ KISSY.add('io/methods', function (S, Io, undefined) {
         io.responseData = responseData;
     }
 
-    S.extend(Io, Promise,
+    S.extend(IO, Promise,
         {
             // Caches the header
             setRequestHeader: function (name, value) {
@@ -108,7 +108,7 @@ KISSY.add('io/methods', function (S, Io, undefined) {
 
             /**
              * get all response headers as string after request is completed.
-             * @member KISSY.Io
+             * @member KISSY.IO
              * @return {String}
              */
             getAllResponseHeaders: function () {
@@ -120,7 +120,7 @@ KISSY.add('io/methods', function (S, Io, undefined) {
              * get header value in response to specified header name
              * @param {String} name header name
              * @return {String} header value
-             * @member KISSY.Io
+             * @member KISSY.IO
              */
             getResponseHeader: function (name) {
                 var match, self = this, responseHeaders;
@@ -147,7 +147,7 @@ KISSY.add('io/methods', function (S, Io, undefined) {
 
             /**
              * cancel this request
-             * @member KISSY.Io
+             * @member KISSY.IO
              * @param {String} [statusText=abort] error reason as current request object's statusText
              * @chainable
              */
@@ -163,7 +163,7 @@ KISSY.add('io/methods', function (S, Io, undefined) {
 
             /**
              * get native XMLHttpRequest
-             * @member KISSY.Io
+             * @member KISSY.IO
              * @return {XMLHttpRequest}
              */
             getNativeXhr: function () {

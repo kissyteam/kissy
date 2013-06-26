@@ -12,11 +12,11 @@ KISSY.add("mvc/sync", function (S, io, Json) {
 
     /**
      * Default sync mechanism.
-     * Sync data with server using {@link Io} .
+     * Sync data with server using {@link IO} .
      * @member MVC
      * @param {MVC.Model|MVC.Collection} self Model or Collection instance to sync with server.
      * @param {String} method Create or update or delete or read.
-     * @param {Object} options Io options
+     * @param {Object} options IO options
      */
     function sync(self, method, options) {
         var type = methodMap[method],

@@ -3,7 +3,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/plugin/flash-common/utils", function (S, SWF) {
-    var Dom = S.Dom,
+    var Dom = S.DOM,
 
         flashUtils = {
 

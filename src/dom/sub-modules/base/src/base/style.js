@@ -70,7 +70,7 @@ KISSY.add('dom/base/style', function (S, Dom, undefined) {
 
     S.mix(Dom,
         /**
-         * @override KISSY.Dom
+         * @override KISSY.DOM
          * @class
          * @singleton
          */

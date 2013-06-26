@@ -45,7 +45,7 @@ KISSY.add('dom/base/create', function (S, Dom, undefined) {
 
     S.mix(Dom,
         /**
-         * @override KISSY.Dom
+         * @override KISSY.DOM
          * @class
          * @singleton
          */
@@ -310,7 +310,7 @@ KISSY.add('dom/base/create', function (S, Dom, undefined) {
              * if set true then deep argument must be set true as well.
              * refer: https://developer.mozilla.org/En/Dom/Node.cloneNode
              * @return {HTMLElement}
-             * @member KISSY.Dom
+             * @member KISSY.DOM
              */
             clone: function (selector, deep, withDataAndEvent, deepWithDataAndEvent) {
                 if (typeof deep === 'object') {

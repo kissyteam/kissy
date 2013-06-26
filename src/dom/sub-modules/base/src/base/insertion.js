@@ -125,7 +125,7 @@ KISSY.add('dom/base/insertion', function (S, Dom) {
     // loadScripts default to false to prevent xss
     S.mix(Dom,
         /**
-         * @override KISSY.Dom
+         * @override KISSY.DOM
          * @class
          * @singleton
          */

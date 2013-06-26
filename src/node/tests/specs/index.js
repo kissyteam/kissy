@@ -1,0 +1,21 @@
+KISSY.add(function(S,io){
+    io({
+        url:'../specs/node.fragment.html',
+        async:false,
+        success:function(data){
+            $('body').append(data);
+        }
+    });
+    S.each(arguments,function(a,i){
+        if(i>1){
+            a.run();
+        }
+    });
+},{
+    requires:[
+        'io',
+        './anim',
+        './event',
+        './node'
+    ]
+});

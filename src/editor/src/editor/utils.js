@@ -8,7 +8,7 @@ KISSY.add("editor/utils", function (S,Editor) {
         FALSE = false,
         NULL = null,
         Node = S.Node,
-        Dom = S.Dom,
+        Dom = S.DOM,
         UA = S.UA,
 
         /**

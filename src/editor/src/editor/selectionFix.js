@@ -14,7 +14,7 @@ KISSY.add("editor/selectionFix", function (S, Editor) {
         NULL = null,
         UA = S.UA,
         Event = S.Event,
-        Dom = S.Dom,
+        Dom = S.DOM,
         Node = S.Node,
         KES = Editor.SELECTION;
 

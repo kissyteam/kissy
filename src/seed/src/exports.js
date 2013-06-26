@@ -38,7 +38,7 @@
 
     if (nativeJson) {
         S.add('json', function () {
-            return S.Json =S.JSON = nativeJson;
+            return S.JSON = nativeJson;
         });
         // light weight json parse
         S.parseJson = function (data) {

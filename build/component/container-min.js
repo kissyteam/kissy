@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 24 21:41
+build time: Jun 27 03:32
 */
 KISSY.add("component/container/render",function(h,f,i){return f.ATTRS.xrender.value.extend([],{decorateDom:function(){var g=this,f=g.getChildrenContainerEl(),a=g.control,b=a.get("defaultChildCfg"),c=b.prefixCls,d=b.xclass,e=[];f.children().each(function(a){var f=g.getComponentConstructorByNode(c,a)||d&&i.getConstructorByXClass(d);f&&e.push(new f(h.merge(b,{srcNode:a})))});a.set("children",e)},getChildrenContainerEl:function(){return this.$el}},{name:"ContainerRender"})},{requires:["component/control",
 "component/manager"]});

@@ -5,7 +5,7 @@
 KISSY.add("editor/plugin/remove-format/cmd", function (S, Editor) {
     var KER = Editor.RANGE,
         ElementPath = Editor.ElementPath,
-        Dom = S.Dom,
+        Dom = S.DOM,
         /**
          * A comma separated list of elements to be removed
          * when executing the "remove format" command.

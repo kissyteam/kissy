@@ -327,7 +327,7 @@ KISSY.add('mvc/router', function (S, Node, Base) {
         allRoutes.push(self);
     }
 
-    Router.ATTRS ={
+    Router.ATTRS = {
         /**
          * Route and action config.
          * @type {Object}
@@ -347,12 +347,12 @@ KISSY.add('mvc/router', function (S, Node, Base) {
     };
 
     S.extend(Router, Base, {
-            /**
-             * Add config to current router.
-             * @param {Object} routes Route config.
-             * @example
-             * <code>
-             *   {
+        /**
+         * Add config to current router.
+         * @param {Object} routes Route config.
+         * @example
+         * <code>
+         *   {
              *     "/search/:param":"callback"
              *     // or
              *     "search":{
@@ -360,166 +360,173 @@ KISSY.add('mvc/router', function (S, Node, Base) {
              *       callback:fn
              *     }
              *   }
-             * </code>
-             */
-            addRoutes: function (routes) {
-                var self = this;
-                each(routes, function (callback, name) {
-                    self[ROUTER_MAP][name] = transformRouterReg(self, name, normFn(self, callback));
-                });
-            }
-        }, {
+         * </code>
+         */
+        addRoutes: function (routes) {
+            var self = this;
+            each(routes, function (callback, name) {
+                self[ROUTER_MAP][name] = transformRouterReg(self, name, normFn(self, callback));
+            });
+        }
+    }, {
 
-            /**
-             * whether Router can process path
-             * @param {String} path path for route
-             * @return {Boolean}
-             */
-            hasRoute: function (path) {
-                var match = 0;
-                // user input : /xx/yy/zz
-                each(allRoutes, function (route) {
-                    var routeRegs = route[ROUTER_MAP];
-                    each(routeRegs, function (desc) {
-                        var reg = desc.reg;
-                        if (path.match(reg)) {
-                            match = 1;
-                            return false;
-                        }
-                    });
-                    if (match) {
+        /**
+         * whether Router can process path
+         * @param {String} path path for route
+         * @return {Boolean}
+         */
+        hasRoute: function (path) {
+            var match = 0;
+            // user input : /xx/yy/zz
+            each(allRoutes, function (route) {
+                var routeRegs = route[ROUTER_MAP];
+                each(routeRegs, function (desc) {
+                    var reg = desc.reg;
+                    if (path.match(reg)) {
+                        match = 1;
                         return false;
                     }
                 });
-                return !!match;
-            },
+                if (match) {
+                    return false;
+                }
+            });
+            return !!match;
+        },
 
-            /**
-             * get the route path
-             * @param {String} url full location href
-             * @return {String} route path
-             */
-            removeRoot: function (url) {
-                var u = new S.Uri(url);
-                return u.getPath().substr(Router.urlRoot.length);
-            },
+        /**
+         * get the route path
+         * @param {String} url full location href
+         * @return {String} route path
+         */
+        removeRoot: function (url) {
+            var u = new S.Uri(url);
+            return u.getPath().substr(Router.urlRoot.length);
+        },
 
-            /**
-             * Navigate to specified path.
-             * Similar to runRoute in sammy.js.
-             * @param {String} path Destination path.
-             * @param {Object} [opts] Config for current navigation.
-             * @param {Boolean} opts.triggerRoute Whether to trigger responding action
-             *                  even current path is same as parameter
-             */
-            navigate: function (path, opts) {
-                opts = opts || {};
-                var replaceHistory = opts.replaceHistory, normalizedPath;
-                if (getFragment() !== path) {
-                    if (Router.nativeHistory && supportNativeHistory) {
-                        history[replaceHistory ? 'replaceState' : 'pushState']({},
-                            "", getFullPath(path));
-                        // pushState does not fire popstate event (unlike hashchange)
-                        // so popstate is not statechange
-                        // fire manually
-                        dispatch();
-                    } else {
-                        normalizedPath = '#!' + path;
-                        if (replaceHistory) {
-                            // add history hack
-                            location.replace(normalizedPath +
-                                (ie && ie < 8 ? Node.REPLACE_HISTORY : ''));
-                        } else {
-                            location.hash = normalizedPath;
-                        }
-                    }
-                } else if (opts && opts.triggerRoute) {
+        /**
+         * Navigate to specified path.
+         * Similar to runRoute in sammy.js.
+         * @param {String} path Destination path.
+         * @param {Object} [opts] Config for current navigation.
+         * @param {Boolean} opts.triggerRoute Whether to trigger responding action
+         *                  even current path is same as parameter
+         */
+        navigate: function (path, opts) {
+            opts = opts || {};
+            var replaceHistory = opts.replaceHistory, normalizedPath;
+            if (getFragment() !== path) {
+                if (Router.nativeHistory && supportNativeHistory) {
+                    history[replaceHistory ? 'replaceState' : 'pushState']({},
+                        "", getFullPath(path));
+                    // pushState does not fire popstate event (unlike hashchange)
+                    // so popstate is not statechange
+                    // fire manually
                     dispatch();
-                }
-            },
-            /**
-             * Start router (url monitor).
-             * @param {Object} opts
-             * @param {Function} opts.success Callback function to be called after router is started.
-             * @param {String} opts.urlRoot Specify url root for html5 history management.
-             * @param {Boolean} opts.nativeHistory Whether enable html5 history management.
-             */
-            start: function (opts) {
-
-                opts = opts || {};
-
-                if (Router.__started) {
-                    return opts.success && opts.success();
-                }
-
-                // remove backslash
-                opts.urlRoot = (opts.urlRoot || "").replace(/\/$/, '');
-
-                var urlRoot,
-                    nativeHistory = opts.nativeHistory,
-                    locPath = location.pathname,
-                    hash = getFragment(),
-                    hashIsValid = location.hash.match(/#!.+/);
-
-                urlRoot = Router.urlRoot = opts.urlRoot;
-                Router.nativeHistory = nativeHistory;
-
-                if (nativeHistory) {
-
-                    if (supportNativeHistory) {
-                        // http://x.com/#!/x/y
-                        // =>
-                        // http://x.com/x/y
-                        // =>
-                        // process without refresh page and add history entry
-                        if (hashIsValid) {
-                            if (equalsIgnoreSlash(locPath, urlRoot)) {
-                                // put hash to path
-                                history['replaceState']({}, "", getFullPath(hash));
-                                opts.triggerRoute = 1;
-                            } else {
-                                S.error("location path must be same with urlRoot!");
-                            }
-                        }
+                } else {
+                    normalizedPath = '#!' + path;
+                    if (replaceHistory) {
+                        // add history hack
+                        location.replace(normalizedPath +
+                            (ie && ie < 8 ? Node.REPLACE_HISTORY : ''));
+                    } else {
+                        location.hash = normalizedPath;
                     }
-                    // http://x.com/x/y
-                    // =>
+                }
+            } else if (opts && opts.triggerRoute) {
+                dispatch();
+            }
+        },
+        /**
+         * Start router (url monitor).
+         * @param {Object} opts
+         * @param {Function} opts.success Callback function to be called after router is started.
+         * @param {String} opts.urlRoot Specify url root for html5 history management.
+         * @param {Boolean} opts.nativeHistory Whether enable html5 history management.
+         */
+        start: function (opts) {
+
+            opts = opts || {};
+
+            if (Router.__started) {
+                return opts.success && opts.success();
+            }
+
+            // remove backslash
+            opts.urlRoot = (opts.urlRoot || "").replace(/\/$/, '');
+
+            var urlRoot,
+                nativeHistory = opts.nativeHistory,
+                locPath = location.pathname,
+                hash = getFragment(),
+                hashIsValid = location.hash.match(/#!.+/);
+
+            urlRoot = Router.urlRoot = opts.urlRoot;
+            Router.nativeHistory = nativeHistory;
+
+            if (nativeHistory) {
+
+                if (supportNativeHistory) {
                     // http://x.com/#!/x/y
                     // =>
-                    // refresh page without add history entry
-                    else if (!equalsIgnoreSlash(locPath, urlRoot)) {
-                        location.replace(addEndSlash(urlRoot) + "#!" + hash);
-                        return;
+                    // http://x.com/x/y
+                    // =>
+                    // process without refresh page and add history entry
+                    if (hashIsValid) {
+                        if (equalsIgnoreSlash(locPath, urlRoot)) {
+                            // put hash to path
+                            history['replaceState']({}, "", getFullPath(hash));
+                            opts.triggerRoute = 1;
+                        } else {
+                            S.error("location path must be same with urlRoot!");
+                        }
                     }
-
+                }
+                // http://x.com/x/y
+                // =>
+                // http://x.com/#!/x/y
+                // =>
+                // refresh page without add history entry
+                else if (!equalsIgnoreSlash(locPath, urlRoot)) {
+                    location.replace(addEndSlash(urlRoot) + "#!" + hash);
+                    return;
                 }
 
-                // prevent hashChange trigger on start
-                setTimeout(function () {
-
-                    if (nativeHistory && supportNativeHistory) {
-                        $win.on('popstate', dispatch);
-                        // html5 triggerRoute is leaved to user decision
-                        // if provide no #! hash
-                    } else {
-                        $win.on("hashchange", dispatch);
-                        // hash-based browser is forced to trigger route
-                        opts.triggerRoute = 1;
-                    }
-
-                    // check initial hash on start
-                    // in case server does not render initial state correctly
-                    // when monitor hashchange ,client must be responsible for dispatching and rendering.
-                    if (opts.triggerRoute) {
-                        dispatch();
-                    }
-                    opts.success && opts.success();
-
-                }, BREATH_INTERVAL);
-
-                Router.__started = 1;
             }
-        });
+
+            // prevent hashChange trigger on start
+            setTimeout(function () {
+
+                if (nativeHistory && supportNativeHistory) {
+                    $win.on('popstate', dispatch);
+                    // html5 triggerRoute is leaved to user decision
+                    // if provide no #! hash
+                } else {
+                    $win.on("hashchange", dispatch);
+                    // hash-based browser is forced to trigger route
+                    opts.triggerRoute = 1;
+                }
+
+                // check initial hash on start
+                // in case server does not render initial state correctly
+                // when monitor hashchange ,client must be responsible for dispatching and rendering.
+                if (opts.triggerRoute) {
+                    dispatch();
+                }
+                opts.success && opts.success();
+
+            }, BREATH_INTERVAL);
+
+            Router.__started = 1;
+        },
+
+        stop: function () {
+            Router.__started = 0;
+            $win.detach('popstate', dispatch);
+            $win.detach("hashchange", dispatch);
+            allRoutes = [];
+        }
+    });
 
     return Router;
 

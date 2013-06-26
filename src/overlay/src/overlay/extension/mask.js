@@ -10,11 +10,11 @@ KISSY.add("overlay/extension/mask", function (S, Node) {
             $ = Node.all;
 
         function docWidth() {
-            return  ie6 ? ("expression(KISSY.Dom.docWidth())") : "100%";
+            return  ie6 ? ("expression(KISSY.DOM.docWidth())") : "100%";
         }
 
         function docHeight() {
-            return ie6 ? ("expression(KISSY.Dom.docHeight())") : "100%";
+            return ie6 ? ("expression(KISSY.DOM.docHeight())") : "100%";
         }
 
         function initMask(self) {

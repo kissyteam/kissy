@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 24 21:43
+build time: Jun 27 03:34
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -21,7 +21,7 @@ KISSY.add("editor/plugin/dent-cmd", function (S, Editor, ListUtils) {
 
     var listNodeNames = {ol:1, ul:1},
         Walker = Editor.Walker,
-        Dom = S.Dom,
+        Dom = S.DOM,
         Node = S.Node,
         UA = S.UA,
         isNotWhitespaces = Walker.whitespaces(true),

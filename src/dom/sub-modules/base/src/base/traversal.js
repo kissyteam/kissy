@@ -10,7 +10,7 @@ KISSY.add('dom/base/traversal', function (S, Dom, undefined) {
 
     S.mix(Dom,
         /**
-         * @override KISSY.Dom
+         * @override KISSY.DOM
          * @class
          * @singleton
          */
@@ -187,7 +187,7 @@ KISSY.add('dom/base/traversal', function (S, Dom, undefined) {
              * @param {HTMLElement|String} n1
              * @param {HTMLElement|String} n2
              * @return {Boolean}
-             * @member KISSY.Dom
+             * @member KISSY.DOM
              */
             equals: function (n1, n2) {
                 n1 = Dom.query(n1);

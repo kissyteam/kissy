@@ -21,7 +21,7 @@
     {{/each}}
 </head>
 <body>
-<h1>{{component}} test cases</h1>
+<h1 style="text-align: center">{{component}} test cases</h1>
 {{{html}}}
 <script>
     var tests=['specs/'];
@@ -36,7 +36,7 @@
     });
 
     {{#if tests}}
-        tests.unshift();
+        tests.shift();
     {{/if}}
 
     {{#each tests}}

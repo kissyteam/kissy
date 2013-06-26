@@ -129,7 +129,7 @@ KISSY.add('dom/base/selector', function (S, Dom, undefined) {
 
     S.mix(Dom,
         /**
-         * @override KISSY.Dom
+         * @override KISSY.DOM
          * @class
          * @singleton
          */
@@ -197,7 +197,7 @@ KISSY.add('dom/base/selector', function (S, Dom, undefined) {
              * @param {HTMLElement[]} The Array of Dom elements.
              * @method
              * @return {HTMLElement[]}
-             * @member KISSY.Dom
+             * @member KISSY.DOM
              */
             unique: (function () {
                 var hasDuplicate,
@@ -249,7 +249,7 @@ KISSY.add('dom/base/selector', function (S, Dom, undefined) {
              * @param {String|Function} filter Selector string or filter function
              * @param {String|HTMLElement[]|HTMLDocument} [context] Context under which to find matched elements
              * @return {HTMLElement[]}
-             * @member KISSY.Dom
+             * @member KISSY.DOM
              */
             filter: function (selector, filter, context) {
                 var elems = query(selector, context),
@@ -303,7 +303,7 @@ KISSY.add('dom/base/selector', function (S, Dom, undefined) {
              * @param {String|HTMLElement[]} selector Matched elements
              * @param {String|Function} filter Selector string or filter function
              * @param {String|HTMLElement[]|HTMLDocument} [context] Context under which to find matched elements
-             * @member KISSY.Dom
+             * @member KISSY.DOM
              * @return {Boolean}
              */
             test: function (selector, filter, context) {

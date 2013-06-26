@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 24 22:32
+build time: Jun 27 03:32
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -153,6 +153,10 @@ KISSY.add("combobox/control", function (S, Node, Control, ComboBoxRender, Menu, 
                 self.get('menu').onRendered(function (menu) {
                     onMenuAfterRenderUI(self, menu);
                 });
+            },
+
+            destructor:function(){
+                this.get('menu').destroy();
             },
 
             /**
@@ -1388,10 +1392,10 @@ KISSY.add("combobox/local-data-source", function (S) {
  * Remote datasource for ComboBox
  * @author yiminghe@gmail.com
  */
-KISSY.add("combobox/remote-data-source", function (S, Io) {
+KISSY.add("combobox/remote-data-source", function (S, IO) {
 
     /**
-     * dataSource which wrap {@link KISSY.Io} utility.
+     * dataSource which wrap {@link KISSY.IO} utility.
      * @class KISSY.ComboBox.RemoteDataSource
      * @extends KISSY.Base
      */
@@ -1442,7 +1446,7 @@ KISSY.add("combobox/remote-data-source", function (S, Io) {
          */
         parse: {},
         /**
-         * Io configuration.same as {@link KISSY.Io}
+         * IO configuration.same as {@link KISSY.IO}
          * @cfg {Object} xhrCfg
          */
         /**
@@ -1493,7 +1497,7 @@ KISSY.add("combobox/remote-data-source", function (S, Io) {
                 }
                 callback.call(context, data);
             };
-            self.io = Io(xhrCfg);
+            self.io = IO(xhrCfg);
         }
     });
     return RemoteDataSource;

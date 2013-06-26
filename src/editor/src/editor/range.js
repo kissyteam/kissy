@@ -30,7 +30,7 @@ KISSY.add("editor/range", function (S, Editor, Utils, Walker, ElementPath) {
         NULL = null,
         KER = Editor.RANGE,
         KEP = Editor.POSITION,
-        Dom = S.Dom,
+        Dom = S.DOM,
         UA = S.UA,
         dtd = Editor.XHTML_DTD,
         Node = S.Node,

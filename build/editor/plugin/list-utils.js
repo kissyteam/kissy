@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 24 21:46
+build time: Jun 27 03:36
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -16,7 +16,7 @@ build time: Jun 24 21:46
 KISSY.add('editor/plugin/list-utils', function (S, Editor) {
     var listNodeNames = {ol: 1, ul: 1},
         Node = S.Node,
-        Dom = S.Dom,
+        Dom = S.DOM,
         NodeType = Dom.NodeType,
         UA = S.UA,
         list = {

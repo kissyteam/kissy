@@ -8,7 +8,7 @@ KISSY.add("editor/plugin/maximize/cmd", function (S, Editor) {
         doc = document,
         Node = S.Node,
         Event = S.Event,
-        Dom = S.Dom,
+        Dom = S.DOM,
         iframe,
         MAXIMIZE_TOOLBAR_CLASS = "editor-toolbar-padding",
         init = function () {

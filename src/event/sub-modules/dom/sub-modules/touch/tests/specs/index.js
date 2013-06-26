@@ -1,0 +1,10 @@
+KISSY.add(KISSY.noop,{
+    requires:[
+        './double-tap',
+        './pinch',
+        './rotate',
+        './swipe',
+        './tap',
+        './tap-hold'
+    ]
+});

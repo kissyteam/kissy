@@ -19,7 +19,7 @@ KISSY.add('base', function (S, Attribute) {
         var self = this,
             c = self.constructor;
         if (!(self instanceof Base)) {
-            S.error('should use new to create class instance');
+            S.error('should use new to create class instance: ');
         }
         // save user config
         self.userConfig = config;

@@ -4,7 +4,7 @@
  */
 KISSY.add('calendar/base', function (S, Node, Event, undefined) {
     var EventTarget = Event.Target,
-        Dom= S.Dom,
+        Dom= S.DOM,
         UA = S.UA,
         $ = Node.all;
 

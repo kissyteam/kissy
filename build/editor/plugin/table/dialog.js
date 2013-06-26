@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 24 21:47
+build time: Jun 27 03:38
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -15,7 +15,7 @@ build time: Jun 24 21:47
  */
 KISSY.add("editor/plugin/table/dialog", function (S, Editor, Dialog4E, MenuButton) {
     var Node = S.Node,
-        Dom = S.Dom,
+        Dom = S.DOM,
         trim = S.trim,
         showBorderClassName = "ke_show_border",
         collapseTableClass = "k-e-collapse-table",

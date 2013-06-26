@@ -9,9 +9,9 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor,
                                                             SWF, undefined) {
 
     var UA = S.UA,
-        Dom = S.Dom,
+        Dom = S.DOM,
         $ = S.all,
-        Json = S.Json,
+        Json = S.JSON,
         PIC_NUM_LIMIT = 15,
         PIC_NUM_LIMIT_WARNING = "系统将只保留 n 张",
         PIC_SIZE_LIMIT = 1000,
@@ -575,7 +575,7 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor,
                 data = localStorage.getItem(KEY),
                 tbl = self._list[0];
             if (!data) return;
-            data = Json.parse(S.urlDecode(data));
+            data = S.parseJson(S.urlDecode(data));
             for (var i = 0; i < data.length; i++) {
                 var d = data[i];
                 d.complete = 1;

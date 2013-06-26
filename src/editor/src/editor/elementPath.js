@@ -7,7 +7,7 @@
  For licensing, see LICENSE.html or http://ckeditor.com/license
  */
 KISSY.add("editor/elementPath", function (S,Editor) {
-    var Dom = S.Dom,
+    var Dom = S.DOM,
         dtd = Editor.XHTML_DTD,
         TRUE = true,
         FALSE = false,

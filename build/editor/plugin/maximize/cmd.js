@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 24 21:46
+build time: Jun 27 03:37
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -19,7 +19,7 @@ KISSY.add("editor/plugin/maximize/cmd", function (S, Editor) {
         doc = document,
         Node = S.Node,
         Event = S.Event,
-        Dom = S.Dom,
+        Dom = S.DOM,
         iframe,
         MAXIMIZE_TOOLBAR_CLASS = "editor-toolbar-padding",
         init = function () {

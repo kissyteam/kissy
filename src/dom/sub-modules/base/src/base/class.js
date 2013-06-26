@@ -51,7 +51,7 @@ KISSY.add('dom/base/class', function (S, Dom) {
 
     S.mix(Dom,
         /**
-         * @override KISSY.Dom
+         * @override KISSY.DOM
          * @class
          * @singleton
          */

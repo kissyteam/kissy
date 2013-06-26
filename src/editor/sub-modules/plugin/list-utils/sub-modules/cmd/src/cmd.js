@@ -12,7 +12,7 @@ KISSY.add("editor/plugin/list-utils/cmd", function (S, Editor, ListUtils, undefi
         Walker = Editor.Walker,
         UA = S.UA,
         Node = S.Node,
-        Dom = S.Dom,
+        Dom = S.DOM,
         headerTagRegex = /^h[1-6]$/;
 
     function ListCommand(type) {

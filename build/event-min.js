@@ -1,6 +1,6 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 24 21:49
+build time: Jun 27 03:40
 */
 KISSY.add("event",function(a,c,b){a.EventTarget=b.Target;return a.Event=a.merge(c,b)},{requires:["event/dom","event/custom"]});

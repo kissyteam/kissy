@@ -3,13 +3,13 @@
  * process form config
  * @author yiminghe@gmail.com
  */
-KISSY.add('io/form', function (S, Io, Dom, FormSerializer) {
+KISSY.add('io/form', function (S, IO, Dom, FormSerializer) {
 
     var win = S.Env.host,
         slice = Array.prototype.slice,
         FormData = win['FormData'];
 
-    Io.on('start', function (e) {
+    IO.on('start', function (e) {
         var io = e.io,
             form,
             d,
@@ -76,7 +76,7 @@ KISSY.add('io/form', function (S, Io, Dom, FormSerializer) {
         }
     });
 
-    return Io;
+    return IO;
 
 }, {
     requires: ['./base', 'dom', './form-serializer']

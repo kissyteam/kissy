@@ -13,7 +13,7 @@ KISSY.add("editor/walker", function (S, Editor) {
         FALSE = false,
         NULL = null,
         UA = S.UA,
-        Dom = S.Dom,
+        Dom = S.DOM,
         dtd = Editor.XHTML_DTD,
         Node = S.Node;
 

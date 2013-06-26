@@ -4,7 +4,7 @@
  */
 KISSY.add("editor/plugin/table/dialog", function (S, Editor, Dialog4E, MenuButton) {
     var Node = S.Node,
-        Dom = S.Dom,
+        Dom = S.DOM,
         trim = S.trim,
         showBorderClassName = "ke_show_border",
         collapseTableClass = "k-e-collapse-table",

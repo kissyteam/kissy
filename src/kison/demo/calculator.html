@@ -63,9 +63,9 @@
         return js_beautify(str, opts);
     }
 
-    KISSY.use("kison,io,node", function (S, KISON,Io) {
+    KISSY.use("kison,io,node", function (S, KISON,IO) {
 
-        Io({
+        IO({
             url: 'cal-grammar.kison',
             dataType: 'text',
             success: function (data) {

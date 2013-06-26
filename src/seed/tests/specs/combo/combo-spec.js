@@ -173,12 +173,12 @@ describe("KISSY ComboLoader", function () {
         runs(function () {
             S.clearLoader();
 
-            S.Dom = null;
+            S.DOM = null;
             S.use("dom", function () {
-                expect(S.Dom).not.toBe(undefined);
+                expect(S.DOM).not.toBe(undefined);
             });
             waitsFor(function () {
-                return S.Dom;
+                return S.DOM;
             });
         });
     });
@@ -217,7 +217,7 @@ describe("KISSY ComboLoader", function () {
                 .toBe("http://" + host + "/kissy/src/seed/tests/specs/combo/" +
                     "tests/??a.js,b.js,c.js?t=" + S.Config.tag+'.js');
 
-            S.Dom = null;
+            S.DOM = null;
 
             S.clearLoader();
 
@@ -243,7 +243,7 @@ describe("KISSY ComboLoader", function () {
             });
 
             waitsFor(function () {
-                return S.Dom;
+                return S.DOM;
             });
         });
     });
@@ -272,7 +272,7 @@ describe("KISSY ComboLoader", function () {
                 x: {}
             });
 
-            S.Dom = null;
+            S.DOM = null;
 
             window.TEST_A = 0;
 
@@ -359,7 +359,7 @@ describe("KISSY ComboLoader", function () {
             ]
         });
 
-        S.Dom = null;
+        S.DOM = null;
 
         var ret = 0;
 
@@ -368,7 +368,7 @@ describe("KISSY ComboLoader", function () {
         });
 
         waitsFor(function () {
-            return S.Dom && (ret === 9);
+            return S.DOM && (ret === 9);
         });
     });
 

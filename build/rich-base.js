@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 24 21:50
+build time: Jun 27 03:41
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -244,10 +244,12 @@ KISSY.add('rich-base', function (S, Base) {
          */
         destroy: function () {
             var self = this;
-            self.callPluginsMethod("destructor");
-            destroyHierarchy(self);
-            self.fire('destroy');
-            self.detach();
+            if (!self.get('destroyed')) {
+                self.callPluginsMethod("destructor");
+                destroyHierarchy(self);
+                self.set('destroyed', true);
+                self.fire('destroy');
+            }
         },
 
         /**
@@ -335,6 +337,10 @@ KISSY.add('rich-base', function (S, Base) {
              */
             plugins: {
                 value: []
+            },
+
+            destroyed: {
+                value: false
             },
 
             /**

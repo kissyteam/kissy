@@ -11,7 +11,7 @@ KISSY.add('dom/base/api', function (S) {
         RE_NUM = /[\-+]?(?:\d*\.|)\d+(?:[eE][\-+]?\d+|)/.source,
         /**
          * Dom Element node type.
-         * @enum {Number} KISSY.Dom.NodeType
+         * @enum {Number} KISSY.DOM.NodeType
          */
             NodeType = {
             /**
@@ -66,7 +66,7 @@ KISSY.add('dom/base/api', function (S) {
         /**
          * KISSY Dom Utils.
          * Provides Dom helper methods.
-         * @class KISSY.Dom
+         * @class KISSY.DOM
          * @singleton
          */
             Dom = {

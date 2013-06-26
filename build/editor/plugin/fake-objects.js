@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 24 21:44
+build time: Jun 27 03:34
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -15,7 +15,7 @@ build time: Jun 24 21:44
  */
 KISSY.add("editor/plugin/fake-objects", function (S, Editor, HtmlParser) {
     var Node = S.Node,
-        Dom = S.Dom,
+        Dom = S.DOM,
         Utils = Editor.Utils,
         SPACER_GIF = Utils.debugUrl('theme/spacer.gif');
 

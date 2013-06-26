@@ -7,7 +7,6 @@ KISSY.add('dom/base', function (S, Dom) {
     S.mix(S, {
         // compatibility
         DOM:Dom,
-        Dom: Dom,
         get: Dom.get,
         query: Dom.query
     });

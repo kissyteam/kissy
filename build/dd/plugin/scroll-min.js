@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 24 21:42
+build time: Jun 27 03:33
 */
 KISSY.add("dd/plugin/scroll",function(d,s,t,k){function i(){i.superclass.constructor.apply(this,arguments)}var l=s.DDM,r=d.Env.host;k.all(r);var m=".-ks-dd-scroll"+d.now(),u=100;i.ATTRS={node:{valueFn:function(){return k.one(r)},setter:function(a){return k.one(a)}},rate:{value:[10,10]},diff:{value:[20,20]}};var o=d.isWindow;d.extend(i,t,{pluginId:"dd/plugin/scroll",getRegion:function(a){return o(a[0])?{width:a.width(),height:a.height()}:{width:a.outerWidth(),height:a.outerHeight()}},getOffset:function(a){return o(a[0])?
 {left:a.scrollLeft(),top:a.scrollTop()}:a.offset()},getScroll:function(a){return{left:a.scrollLeft(),top:a.scrollTop()}},setScroll:function(a,d){a.scrollLeft(d.left);a.scrollTop(d.top)},pluginDestructor:function(a){a.detach(m)},pluginInitializer:function(a){function i(){if(o(e[0]))return 0;var c=a.mousePos,d=l.region(e);return!l.inRegion(d,c)?(clearTimeout(j),j=0,1):0}function k(){if(!i()){var c=g.getRegion(e),m=c.width,c=c.height,b=g.getScroll(e),l=d.clone(b),n=!1;f.top-c>=-p[1]&&(b.top+=q[1],n=

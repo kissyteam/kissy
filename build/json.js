@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 24 21:49
+build time: Jun 27 03:40
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -916,10 +916,10 @@ KISSY.add('json', function (S, stringify, parse) {
     /**
      * The Json object contains methods for converting values to JavaScript Object Notation (Json)
      * and for converting Json to values.
-     * @class KISSY.Json
+     * @class KISSY.JSON
      * @singleton
      */
-    return S.JSON = S.Json = {
+    return S.JSON = {
         /**
          * Convert a value to Json, optionally replacing values if a replacer function is specified,
          * or optionally including only the specified properties if a replacer array is specified.

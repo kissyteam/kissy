@@ -48,6 +48,7 @@ KISSY.add('event/dom/hashchange', function (S, DOMEvent, Dom) {
 
         poll = function () {
             var hash = getHash(), replaceHistory;
+
             if (replaceHistory = S.endsWith(hash, REPLACE_HISTORY)) {
                 hash = hash.slice(0, -REPLACE_HISTORY.length);
                 // 去除 ie67 hack 标记

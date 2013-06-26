@@ -8,7 +8,7 @@ KISSY.add("editor/plugin/drag-upload", function (S, Editor) {
     var Node = S.Node,
         Event = S.Event,
         Utils = Editor.Utils,
-        Dom = S.Dom;
+        Dom = S.DOM;
 
     function dragUpload(config) {
         this.config = config || {};
@@ -136,7 +136,7 @@ KISSY.add("editor/plugin/drag-upload", function (S, Editor) {
                         if (xhr.readyState == 4) {
                             if (xhr.status == 200 || xhr.status == 304) {
                                 if (xhr.responseText != "") {
-                                    var info = window['Json'].parse(xhr.responseText);
+                                    var info = S.parseJson(xhr.responseText);
                                     img[0].src = info['imgUrl'];
                                 }
                             } else {

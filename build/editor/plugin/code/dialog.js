@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 24 21:43
+build time: Jun 27 03:34
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -16,7 +16,7 @@ build time: Jun 24 21:43
 KISSY.add('editor/plugin/code/dialog', function (S, Editor, Dialog4E, MenuButton) {
 
     var xhtml_dtd = Editor.XHTML_DTD;
-    var NodeType = S.Dom.NodeType;
+    var NodeType = S.DOM.NodeType;
     var notWhitespaceEval = Editor.Walker.whitespaces(true);
 
     var codeTypes = [

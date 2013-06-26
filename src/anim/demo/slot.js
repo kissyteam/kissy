@@ -2,7 +2,7 @@
  * @author ada@taobao.com
  */
 (function () {
-    var S = KISSY, Base = S.Base, D = S.Dom, E = S.Event;
+    var S = KISSY, Base = S.Base, D = S.DOM, E = S.Event;
 
     function Slot(cards) {
         //{{{

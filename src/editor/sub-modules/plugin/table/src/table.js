@@ -5,7 +5,7 @@
 KISSY.add("editor/plugin/table", function (S, Editor, DialogLoader) {
 
     var UA = S.UA,
-        Dom = S.Dom,
+        Dom = S.DOM,
         Node = S.Node,
         tableRules = ["tr", "th", "td", "tbody", "table"],
         cellNodeRegex = /^(?:td|th)$/;

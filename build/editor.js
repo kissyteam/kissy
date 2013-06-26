@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 24 21:48
+build time: Jun 27 03:39
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -203,7 +203,7 @@ KISSY.add("editor/utils", function (S,Editor) {
         FALSE = false,
         NULL = null,
         Node = S.Node,
-        Dom = S.Dom,
+        Dom = S.DOM,
         UA = S.UA,
 
         /**
@@ -570,7 +570,7 @@ KISSY.add("editor/dom", function (S, Editor, Utils) {
         FALSE = false,
         NULL = null,
         xhtml_dtd = Editor.XHTML_DTD,
-        Dom = S.Dom,
+        Dom = S.DOM,
         NodeType = Dom.NodeType,
         UA = S.UA,
         Node = S.Node,
@@ -1542,7 +1542,7 @@ KISSY.add("editor/walker", function (S, Editor) {
         FALSE = false,
         NULL = null,
         UA = S.UA,
-        Dom = S.Dom,
+        Dom = S.DOM,
         dtd = Editor.XHTML_DTD,
         Node = S.Node;
 
@@ -1920,7 +1920,7 @@ KISSY.add("editor/walker", function (S, Editor) {
  For licensing, see LICENSE.html or http://ckeditor.com/license
  */
 KISSY.add("editor/elementPath", function (S,Editor) {
-    var Dom = S.Dom,
+    var Dom = S.DOM,
         dtd = Editor.XHTML_DTD,
         TRUE = true,
         FALSE = false,
@@ -2090,7 +2090,7 @@ KISSY.add("editor/range", function (S, Editor, Utils, Walker, ElementPath) {
         NULL = null,
         KER = Editor.RANGE,
         KEP = Editor.POSITION,
-        Dom = S.Dom,
+        Dom = S.DOM,
         UA = S.UA,
         dtd = Editor.XHTML_DTD,
         Node = S.Node,
@@ -3847,7 +3847,7 @@ KISSY.add("editor/selection", function (S,Editor) {
         FALSE = false,
         NULL = null,
         UA = S.UA,
-        Dom = S.Dom,
+        Dom = S.DOM,
     //tryThese = Editor.Utils.tryThese,
         Node = S.Node,
         KES = Editor.SELECTION,
@@ -4652,7 +4652,7 @@ KISSY.add("editor/domIterator", function (S,Editor) {
         KER = Editor.RANGE,
         ElementPath = Editor.ElementPath,
         Node = S.Node,
-        Dom = S.Dom;
+        Dom = S.DOM;
 
     /**
      * @constructor
@@ -4978,7 +4978,7 @@ KISSY.add("editor/styles", function (S, Editor) {
         FALSE = false,
         NULL = null,
         $ = S.all,
-        Dom = S.Dom,
+        Dom = S.DOM,
         /**
          * enum for style type
          * @enum {number}
@@ -7090,7 +7090,7 @@ KISSY.add("editor/htmlDataProcessor", function (S, Editor, HtmlParser) {
                     allEmpty = 1;
                     for (i = 0; i < l; i++) {
                         child = childNodes[i];
-                        if (child.nodeType == S.Dom.NodeType.TEXT_NODE && !child.nodeValue) {
+                        if (child.nodeType == S.DOM.NodeType.TEXT_NODE && !child.nodeValue) {
                         } else {
                             allEmpty = 0;
                             break;
@@ -7488,7 +7488,7 @@ KISSY.add("editor/selectionFix", function (S, Editor) {
         NULL = null,
         UA = S.UA,
         Event = S.Event,
-        Dom = S.Dom,
+        Dom = S.DOM,
         Node = S.Node,
         KES = Editor.SELECTION;
 

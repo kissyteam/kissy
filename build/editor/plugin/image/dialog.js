@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 24 21:45
+build time: Jun 27 03:35
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -20,7 +20,7 @@ KISSY.add('editor/plugin/image/dialog/dialog-tpl',function(){
  * image dialog (support upload and remote)
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/image/dialog", function (S, Io, Editor, Dialog4E, Tabs, MenuButton, bodyTpl) {
+KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Dialog4E, Tabs, MenuButton, bodyTpl) {
     var dtd = Editor.XHTML_DTD,
         UA = S.UA,
         Node = KISSY.NodeList,
@@ -212,7 +212,7 @@ KISSY.add("editor/plugin/image/dialog", function (S, Io, Editor, Dialog4E, Tabs,
                     // 后端返回设置 domain 的 script，每次都传，防止 domain 中途变化
                     serverParams['document-domain'] = document.domain;
 
-                    var uploadIO = Io({
+                    var uploadIO = IO({
                         data: serverParams,
                         url: self.cfg['serverUrl'],
                         form: self.uploadForm[0],

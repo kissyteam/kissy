@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 24 21:47
+build time: Jun 27 03:38
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -16,7 +16,7 @@ build time: Jun 24 21:47
 KISSY.add("editor/plugin/table", function (S, Editor, DialogLoader) {
 
     var UA = S.UA,
-        Dom = S.Dom,
+        Dom = S.DOM,
         Node = S.Node,
         tableRules = ["tr", "th", "td", "tbody", "table"],
         cellNodeRegex = /^(?:td|th)$/;

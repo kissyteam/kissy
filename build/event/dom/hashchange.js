@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 24 21:49
+build time: Jun 27 03:39
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -59,6 +59,7 @@ KISSY.add('event/dom/hashchange', function (S, DOMEvent, Dom) {
 
         poll = function () {
             var hash = getHash(), replaceHistory;
+
             if (replaceHistory = S.endsWith(hash, REPLACE_HISTORY)) {
                 hash = hash.slice(0, -REPLACE_HISTORY.length);
                 // 去除 ie67 hack 标记

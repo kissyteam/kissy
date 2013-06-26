@@ -3,10 +3,10 @@
  * Remote datasource for ComboBox
  * @author yiminghe@gmail.com
  */
-KISSY.add("combobox/remote-data-source", function (S, Io) {
+KISSY.add("combobox/remote-data-source", function (S, IO) {
 
     /**
-     * dataSource which wrap {@link KISSY.Io} utility.
+     * dataSource which wrap {@link KISSY.IO} utility.
      * @class KISSY.ComboBox.RemoteDataSource
      * @extends KISSY.Base
      */
@@ -57,7 +57,7 @@ KISSY.add("combobox/remote-data-source", function (S, Io) {
          */
         parse: {},
         /**
-         * Io configuration.same as {@link KISSY.Io}
+         * IO configuration.same as {@link KISSY.IO}
          * @cfg {Object} xhrCfg
          */
         /**
@@ -108,7 +108,7 @@ KISSY.add("combobox/remote-data-source", function (S, Io) {
                 }
                 callback.call(context, data);
             };
-            self.io = Io(xhrCfg);
+            self.io = IO(xhrCfg);
         }
     });
     return RemoteDataSource;

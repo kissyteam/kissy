@@ -3,7 +3,7 @@
  * io shortcut
  * @author yiminghe@gmail.com
  */
-KISSY.add('io', function (S, serializer, Io) {
+KISSY.add('io', function (S, serializer, IO) {
     var undef = undefined;
 
     function get(url, data, callback, dataType, type) {
@@ -14,7 +14,7 @@ KISSY.add('io', function (S, serializer, Io) {
             data = undef;
         }
 
-        return Io({
+        return IO({
             type: type || 'get',
             url: url,
             data: data,
@@ -24,7 +24,7 @@ KISSY.add('io', function (S, serializer, Io) {
     }
 
     // some shortcut
-    S.mix(Io,
+    S.mix(IO,
         {
 
             serialize: serializer.serialize,
@@ -37,11 +37,11 @@ KISSY.add('io', function (S, serializer, Io) {
              * @param {Function} [callback] success callback when this request is done
              * @param callback.data returned from this request with type specified by dataType
              * @param {String} callback.status status of this request with type String
-             * @param {KISSY.Io} callback.io io object of this request
+             * @param {KISSY.IO} callback.io io object of this request
              * @param {String} [dataType] the type of data returns from this request
              * ('xml' or 'json' or 'text')
-             * @return {KISSY.Io}
-             * @member KISSY.Io
+             * @return {KISSY.IO}
+             * @member KISSY.IO
              * @static
              */
             get: get,
@@ -53,11 +53,11 @@ KISSY.add('io', function (S, serializer, Io) {
              * @param {Function} [callback] success callback when this request is done.
              * @param callback.data returned from this request with type specified by dataType
              * @param {String} callback.status status of this request with type String
-             * @param {KISSY.Io} callback.io io object of this request
+             * @param {KISSY.IO} callback.io io object of this request
              * @param {String} [dataType] the type of data returns from this request
              * ('xml' or 'json' or 'text')
-             * @return {KISSY.Io}
-             * @member KISSY.Io
+             * @return {KISSY.IO}
+             * @member KISSY.IO
              * @static
              */
             post: function (url, data, callback, dataType) {
@@ -78,9 +78,9 @@ KISSY.add('io', function (S, serializer, Io) {
              * @param {Function} [callback] success callback when this request is done.
              * @param callback.data returned from this request with type specified by dataType
              * @param {String} callback.status status of this request with type String
-             * @param {KISSY.Io} callback.io io object of this request
-             * @return {KISSY.Io}
-             * @member KISSY.Io
+             * @param {KISSY.IO} callback.io io object of this request
+             * @return {KISSY.IO}
+             * @member KISSY.IO
              * @static
              */
             jsonp: function (url, data, callback) {
@@ -94,7 +94,7 @@ KISSY.add('io', function (S, serializer, Io) {
             // 和 S.getScript 保持一致
             // 更好的 getScript 可以用
             /*
-             Io({
+             IO({
              dataType:'script'
              });
              */
@@ -106,9 +106,9 @@ KISSY.add('io', function (S, serializer, Io) {
              * @param {Object} [data] name-value object associated with this request
              * @param {Function} [callback] success callback when this request is done.@param callback.data returned from this request with type specified by dataType
              * @param {String} callback.status status of this request with type String
-             * @param {KISSY.Io} callback.io io object of this request
-             * @return {KISSY.Io}
-             * @member KISSY.Io
+             * @param {KISSY.IO} callback.io io object of this request
+             * @return {KISSY.IO}
+             * @member KISSY.IO
              * @static
              */
             getJSON: function (url, data, callback) {
@@ -126,11 +126,11 @@ KISSY.add('io', function (S, serializer, Io) {
              * @param {Object} [data] name-value object associated with this request
              * @param {Function} [callback]  success callback when this request is done.@param callback.data returned from this request with type specified by dataType
              * @param {String} callback.status status of this request with type String
-             * @param {KISSY.Io} callback.io io object of this request
+             * @param {KISSY.IO} callback.io io object of this request
              * @param {String} [dataType] the type of data returns from this request
              * ('xml' or 'json' or 'text')
-             * @return {KISSY.Io}
-             * @member KISSY.Io
+             * @return {KISSY.IO}
+             * @member KISSY.IO
              * @static
              */
             upload: function (url, form, data, callback, dataType) {
@@ -142,7 +142,7 @@ KISSY.add('io', function (S, serializer, Io) {
                     callback = data;
                     data = undef;
                 }
-                return Io({
+                return IO({
                     url: url,
                     type: 'post',
                     dataType: dataType,
@@ -155,15 +155,14 @@ KISSY.add('io', function (S, serializer, Io) {
 
     S.mix(S, {
         // compatibility
-        'Ajax': Io,
-        'Io': Io,
-        'IO': Io,
-        ajax: Io,
-        io: Io,
-        jsonp: Io.jsonp
+        'Ajax': IO,
+        'IO': IO,
+        ajax: IO,
+        io: IO,
+        jsonp: IO.jsonp
     });
 
-    return Io;
+    return IO;
 }, {
     requires: [
         'io/form-serializer',

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 24 21:50
+build time: Jun 27 03:41
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -28,7 +28,7 @@ KISSY.add('node/base', function (S, Dom, Event, undefined) {
         isNodeList = Dom.isDomNodeList;
 
     /**
-     * The NodeList class provides a {@link KISSY.Dom} wrapper for manipulating Dom Node.
+     * The NodeList class provides a {@link KISSY.DOM} wrapper for manipulating Dom Node.
      * use KISSY.all/one to retrieve NodeList instances.
      *
      *  for example:
@@ -37,7 +37,7 @@ KISSY.add('node/base', function (S, Dom, Event, undefined) {
      *
      * is equal to
      *      @example
-     *      KISSY.Dom.attr('a','href','http://docs.kissyui.com');
+     *      KISSY.DOM.attr('a','href','http://docs.kissyui.com');
      *
      * @class KISSY.NodeList
      */
@@ -277,7 +277,7 @@ KISSY.add('node/base', function (S, Dom, Event, undefined) {
     });
 
     /**
-     * Same with {@link KISSY.Dom.NodeType}
+     * Same with {@link KISSY.DOM.NodeType}
      * @member KISSY.NodeList
      * @property NodeType
      * @static

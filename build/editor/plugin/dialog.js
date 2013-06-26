@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 24 21:43
+build time: Jun 27 03:34
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -39,8 +39,8 @@ KISSY.add("editor/plugin/dialog", function (S, Editor, Overlay,
             self.center();
             var y = self.get("y");
             //居中有点偏下
-            if (y - S.Dom.scrollTop() > 200) {
-                y = S.Dom.scrollTop() + 200;
+            if (y - S.DOM.scrollTop() > 200) {
+                y = S.DOM.scrollTop() + 200;
                 self.set("y", y);
             }
             Dialog4E.superclass.show.call(self);

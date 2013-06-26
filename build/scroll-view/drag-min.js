@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 24 21:50
+build time: Jun 27 03:41
 */
 KISSY.add("scroll-view/drag",function(r,E,F,G){function s(a,c,b){var c=c.timeStamp,f=a.get("scroll"+r.ucfirst(b));a.startScroll[b]=f;a.swipe[b].startTime=c;a.swipe[b].scroll=f}function v(a,c,b,f){if(!w(a,b)){var d="left"==b?"pageX":"pageY",j=a.lastPageXY,h,e=a.startScroll[b]-(c[d]-f[b]),f=c.timeStamp,k=a.minScroll,l=a.maxScroll,g=a.lastDirection,i=a.swipe,t;j[d]&&(h=c[d]==j[d],t=0<c[d]-j[d]);e<k[b]?(e=k[b]-e,e*=x,e=k[b]-e):e>l[b]&&(e-=l[b],e*=x,e=l[b]+e);k=f-i[b].startTime;if(!h&&void 0!==g[b]&&g[b]!==
 t||k>H)i[b].startTime=f,i[b].scroll=e;a.set("left"==b?"scrollLeft":"scrollTop",e);g[b]=t;j[d]=c[d]}}function w(a,c){return!a.allowScroll[c]&&a.get("left"==c?"lockX":"lockY")?1:0}function y(a,c,b,f){if(w(a,b))f();else{var d="scroll"+("left"==b?"Left":"Top"),j=a.$contentEl,h=a.get(d),e={},k=a.minScroll,l=a.maxScroll,g=c.timeStamp,c=a.swipe,i;h<k[b]?i=k[b]:h>l[b]&&(i=l[b]);void 0!==i?(d={},d[b]=i,a.scrollTo(d,{duration:a.get("bounceDuration"),easing:a.get("bounceEasing"),queue:!1,complete:f})):a.pagesXY?

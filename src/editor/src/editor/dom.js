@@ -13,7 +13,7 @@ KISSY.add("editor/dom", function (S, Editor, Utils) {
         FALSE = false,
         NULL = null,
         xhtml_dtd = Editor.XHTML_DTD,
-        Dom = S.Dom,
+        Dom = S.DOM,
         NodeType = Dom.NodeType,
         UA = S.UA,
         Node = S.Node,

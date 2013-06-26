@@ -16,7 +16,7 @@ KISSY.add("editor/domIterator", function (S,Editor) {
         KER = Editor.RANGE,
         ElementPath = Editor.ElementPath,
         Node = S.Node,
-        Dom = S.Dom;
+        Dom = S.DOM;
 
     /**
      * @constructor

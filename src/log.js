@@ -6,7 +6,7 @@
     var log_div;
 
     function log(str) {
-        var Dom = S.Dom;
+        var Dom = S.DOM;
         var height = 100;
         if (Dom.viewportHeight() > 500) {
             height = 200;

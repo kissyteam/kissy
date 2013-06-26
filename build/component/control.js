@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 24 21:41
+build time: Jun 27 03:32
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -408,7 +408,7 @@ KISSY.add("component/control/render", function (S, RenderProcess, XTemplate, Ren
      */
     return RenderProcess.extend({
 
-        isRender: 1,
+        isRender: true,
 
         beforeCreateDom: function (renderData) {
             var self = this,
@@ -870,7 +870,9 @@ KISSY.add("component/control", function (S, Node, ControlProcess, Manager, Rende
                     el;
                 // initialize view
                 // allow custom view instance
-                if (!view) {
+                if (view) {
+                    view.set('control', self);
+                } else {
                     self.set('view', view = new Render({
                         control: self
                     }));

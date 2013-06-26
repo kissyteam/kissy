@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 24 21:46
+build time: Jun 27 03:37
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -23,7 +23,7 @@ KISSY.add("editor/plugin/list-utils/cmd", function (S, Editor, ListUtils, undefi
         Walker = Editor.Walker,
         UA = S.UA,
         Node = S.Node,
-        Dom = S.Dom,
+        Dom = S.DOM,
         headerTagRegex = /^h[1-6]$/;
 
     function ListCommand(type) {

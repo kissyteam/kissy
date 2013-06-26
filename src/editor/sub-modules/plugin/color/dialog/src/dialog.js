@@ -3,7 +3,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/plugin/color/dialog", function (S, Editor, Dialog4E) {
-    var map = S.map, Dom = S.Dom;
+    var map = S.map, Dom = S.DOM;
 
     //获取颜色数组
     function getData(color) {

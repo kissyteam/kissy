@@ -1,6 +1,6 @@
 KISSY.add('grid/editing',function(S,Component,EditorPanel,Overlay){
 
-    var Dom = S.Dom,
+    var Dom = S.DOM,
         Event = S.Event,
         doc = document,
         CLS_EDITOR_OVERLAY = 'ks-grid-editor-overlay';

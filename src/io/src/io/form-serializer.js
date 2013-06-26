@@ -20,7 +20,7 @@ KISSY.add('io/form-serializer', function (S, Dom) {
          * @param {HTMLElement[]|HTMLElement|KISSY.NodeList} forms form elements
          * @return {String} serialized string represent form elements
          * @param {Boolean}[serializeArray=false] See {@link KISSY#method-param} 同名参数
-         * @member KISSY.Io
+         * @member KISSY.IO
          * @static
          */
         serialize: function (forms, serializeArray) {

@@ -209,25 +209,6 @@ KISSY.add(function (S, Base) {
             expect(a['__attrs']['a'].value).toBe(9);
         });
 
-        it('improve error report for non-new', function () {
-
-            function t() {
-                t.superclass.constructor.apply(this, arguments);
-            }
-
-            S.extend(t, S.Base);
-
-            var m = '';
-
-            try {
-                var x = t();
-            } catch (e) {
-                m = e.message;
-            }
-
-            expect(m).toBe('should use new to create class instance');
-
-        });
 
     });
 },{

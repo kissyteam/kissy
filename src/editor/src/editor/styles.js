@@ -12,7 +12,7 @@ KISSY.add("editor/styles", function (S, Editor) {
         FALSE = false,
         NULL = null,
         $ = S.all,
-        Dom = S.Dom,
+        Dom = S.DOM,
         /**
          * enum for style type
          * @enum {number}

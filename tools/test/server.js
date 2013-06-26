@@ -3,6 +3,10 @@
  * @author yiminghe@gmail.com
  */
 
+
+require('./gen-tc');
+require('../gen-package/gen-package');
+
 var path = require('path');
 var fs = require('fs');
 fs.exists = fs.exists || path.exists;
