@@ -249,7 +249,7 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
                     break;
 
                 case DAY_OF_YEAR:
-                    value = isLeapYear(fields[YEAR]) ? 366 : 365;
+                    value = getYearLength(fields[YEAR]);
                     break;
 
                 case DAY_OF_WEEK_IN_MONTH:
@@ -319,14 +319,25 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
 
             var weekOfYear = getWeekNumber(this, fixedDateJan1, fixedDate);
 
-            if (weekOfYear > 52) {
-                var nextJan1 = fixedDateJan1 + 365;
-                if (isLeapYear(year)) {
-                    nextJan1++;
-                }
+            // 本周没有足够的时间在当前年
+            if (weekOfYear == 0) {
+                // If the date belongs to the last week of the
+                // previous year, use the week number of "12/31" of
+                // the "previous" year.
+                var fixedDec31 = fixedDateJan1 - 1;
+                var prevJan1 = fixedDateJan1 - getYearLength(year - 1);
+                weekOfYear = getWeekNumber(this, prevJan1, fixedDec31);
+            } else
+            // 本周是年末最后一周，可能有足够的时间在新的一年
+            if (weekOfYear >= 52) {
+                var nextJan1 = fixedDateJan1 + getYearLength(year);
                 var nextJan1st = getDayOfWeekDateOnOrBefore(nextJan1 + 6, this.firstDayOfWeek);
                 var nDays = nextJan1st - nextJan1;
-                if (nDays > this.minimalDaysInFirstWeek && fixedDate >= (nextJan1st - 7)) {
+                // 本周有足够天数在新的一年
+                if (nDays >= this.minimalDaysInFirstWeek &&
+                    // 当天确实在本周，weekOfYear == 53 时是不需要这个判断
+                    fixedDate >= (nextJan1st - 7)
+                    ) {
                     weekOfYear = 1;
                 }
             }
@@ -390,8 +401,8 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
                     year += toInt(month / 12);
                     month %= 12;
                 } else if (month < GregorianCalendar.JANUARY) {
-                    year += floorDivide(month/12);
-                    month = mod(month,12);
+                    year += floorDivide(month / 12);
+                    month = mod(month, 12);
                 }
             }
 
@@ -543,7 +554,7 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
                 adjustDayOfMonth(self);
             } else if (field === MONTH) {
                 value += amount;
-                var yearAmount = floorDivide(value/12);
+                var yearAmount = floorDivide(value / 12);
                 value = mod(value, 12);
                 if (yearAmount) {
                     self.set(YEAR, fields[YEAR] + yearAmount);
@@ -719,6 +730,10 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
         return isLeapYear(year) ? LEAP_MONTH_LENGTH[month] : MONTH_LENGTH[month];
     }
 
+    function getYearLength(year) {
+        return isLeapYear(year) ? 366 : 365;
+    }
+
     function getFieldStrings(field, style, locale) {
         var strings, name = DISPLAY_MAP[field];
         if (name) {
@@ -739,7 +754,7 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
             fixedDay1st -= 7;
         }
         var normalizedDayOfPeriod = (fixedDate - fixedDay1st);
-        return floorDivide(normalizedDayOfPeriod/7) + 1;
+        return floorDivide(normalizedDayOfPeriod / 7) + 1;
     }
 
     function getDayOfWeekDateOnOrBefore(fixedDate, dayOfWeek) {
