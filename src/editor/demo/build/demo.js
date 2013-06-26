@@ -5,7 +5,7 @@
             // 是否初始聚焦
             focused: true,
             attachForm: true,
-            baseZIndex: 10000,
+            baseZIndex: 10000
             // 自定义样式
             // customStyle:"p{line-height: 1.4;margin: 1.12em 0;padding: 0;}",
             // 自定义外部样式
