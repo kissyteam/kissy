@@ -1,6 +1,4 @@
-KISSY.use("cookie", function(S,Cookie) {
-
-
+KISSY.use(function(S,Cookie) {
     describe('cookie', function() {
 
         if (location.protocol === 'file:') {
@@ -64,4 +62,6 @@ KISSY.use("cookie", function(S,Cookie) {
             });
         });
     });
+},{
+    requires:['cookie']
 });

@@ -31,7 +31,7 @@ KISSY.add(function (S, ComboBox) {
                 validator: function (v, complete) {
                     complete(parseInt(v) > 10 ? ERROR : "");
                 },
-                render: '#container',
+                render: 'body',
                 dataSource: new ComboBox.LocalDataSource({
                     data: data
                 }),
@@ -128,6 +128,10 @@ KISSY.add(function (S, ComboBox) {
                 expect(comboBox.get("invalidEl").css("display")).toBe("none");
             });
 
+            runs(function(){
+                comboBox.destroy();
+            });
+
         });
 
 
@@ -140,7 +144,7 @@ KISSY.add(function (S, ComboBox) {
             var comboBox = new ComboBox.FilterSelect({
                 width: 200,
                 invalidMessage:ERROR,
-                render: '#container',
+                render: 'body',
                 dataSource: new ComboBox.LocalDataSource({
                     data: data
                 }),
@@ -236,6 +240,10 @@ KISSY.add(function (S, ComboBox) {
                 expect(error).toBe("");
                 expect(comboBox.get("el").hasClass("ks-combobox-invalid")).toBe(false);
                 expect(comboBox.get("invalidEl").css("display")).toBe("none");
+            });
+
+            runs(function(){
+                comboBox.destroy();
             });
 
         });

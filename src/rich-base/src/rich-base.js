@@ -233,10 +233,12 @@ KISSY.add('rich-base', function (S, Base) {
          */
         destroy: function () {
             var self = this;
-            self.callPluginsMethod("destructor");
-            destroyHierarchy(self);
-            self.fire('destroy');
-            self.detach();
+            if (!self.get('destroyed')) {
+                self.callPluginsMethod("destructor");
+                destroyHierarchy(self);
+                self.set('destroyed', true);
+                self.fire('destroy');
+            }
         },
 
         /**
@@ -324,6 +326,10 @@ KISSY.add('rich-base', function (S, Base) {
              */
             plugins: {
                 value: []
+            },
+
+            destroyed: {
+                value: false
             },
 
             /**

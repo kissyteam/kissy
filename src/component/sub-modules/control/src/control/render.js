@@ -89,7 +89,7 @@ KISSY.add("component/control/render", function (S, RenderProcess, XTemplate, Ren
      */
     return RenderProcess.extend({
 
-        isRender: 1,
+        isRender: true,
 
         beforeCreateDom: function (renderData) {
             var self = this,

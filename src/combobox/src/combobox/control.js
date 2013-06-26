@@ -70,6 +70,10 @@ KISSY.add("combobox/control", function (S, Node, Control, ComboBoxRender, Menu, 
                 });
             },
 
+            destructor:function(){
+                this.get('menu').destroy();
+            },
+
             /**
              * get value
              * @protected

@@ -25,7 +25,7 @@ KISSY.add(function (S, ComboBox) {
 
         var comboBox = new ComboBox({
             width: 200,
-            render: '#container',
+            render: 'body',
             dataSource: new ComboBox.LocalDataSource({
                 data: data
             }),
@@ -435,6 +435,13 @@ KISSY.add(function (S, ComboBox) {
                 var children = menu.get("children");
                 expect(t.value).toBe("1");
                 expect(menu.get('visible')).toBe(false);
+            });
+        });
+
+
+        it('clean',function(){
+            runs(function(){
+                comboBox.destroy();
             });
         });
 

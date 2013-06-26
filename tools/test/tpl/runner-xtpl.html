@@ -4,24 +4,41 @@
     <meta charset="utf-8">
     <title>{{component}} test runner</title>
     <link rel="stylesheet" href="/kissy/tools/jasmine/jasmine.css">
+    <link rel="stylesheet" href="/kissy/build/css/dpl/base.css"/>
+
+    {{#each externalLinks}}
+        <link rel="stylesheet" href="{{{.}}}"/>
+    {{/each}}
+
+    <script src="/kissy/build/seed.js"></script>
+    <script src="/kissy/src/package.js"></script>
     <script src="/kissy/tools/jasmine/jasmine.js"></script>
     <script src="/kissy/tools/jasmine/jasmine-html.js"></script>
     <script src="/kissy/tools/jasmine/jasmine.console_reporter.js"></script>
     <script src="/kissy/tools/jasmine/event-simulate.js"></script>
-    <script src="/kissy/build/seed.js"></script>
-
-    <script src="/kissy/src/package.js"></script>
+    {{#each externalScripts}}
+        <script src="{{{.}}}"></script>
+    {{/each}}
 </head>
 <body>
 <h1>{{component}} test cases</h1>
+{{{html}}}
 <script>
-    var tests=[];
+    var tests=['specs/'];
 
     KISSY.config('packages',{
         specs:{
             base:'../'
+        },
+        src:{
+            base:'/kissy/'
         }
     });
+
+    {{#if tests}}
+        tests.unshift();
+    {{/if}}
+
     {{#each tests}}
     tests.push('specs/{{{.}}}');
     {{/each}}
