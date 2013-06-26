@@ -175,7 +175,7 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
 
     var mod = Utils.mod,
         isLeapYear = Utils.isLeapYear,
-        floorDivide = Utils.floorDivide;
+        floorDivide = Math.floor;
 
 
     var MIN_VALUES = [
@@ -390,9 +390,8 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
                     year += toInt(month / 12);
                     month %= 12;
                 } else if (month < GregorianCalendar.JANUARY) {
-                    var rem = [];
-                    year += floorDivide(month, 12, rem);
-                    month = rem[0];
+                    year += floorDivide(month/12);
+                    month = mod(month,12);
                 }
             }
 
@@ -544,7 +543,7 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
                 adjustDayOfMonth(self);
             } else if (field === MONTH) {
                 value += amount;
-                var yearAmount = floorDivide(value, 12);
+                var yearAmount = floorDivide(value/12);
                 value = mod(value, 12);
                 if (yearAmount) {
                     self.set(YEAR, fields[YEAR] + yearAmount);
@@ -740,7 +739,7 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
             fixedDay1st -= 7;
         }
         var normalizedDayOfPeriod = (fixedDate - fixedDay1st);
-        return floorDivide(normalizedDayOfPeriod, 7) + 1;
+        return floorDivide(normalizedDayOfPeriod/7) + 1;
     }
 
     function getDayOfWeekDateOnOrBefore(fixedDate, dayOfWeek) {

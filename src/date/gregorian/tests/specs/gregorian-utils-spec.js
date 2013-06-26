@@ -20,12 +20,6 @@ KISSY.use('date/gregorian', function (S, GregorianCalendar) {
     }
 
     describe('GregorianCalendar Utils', function () {
-        it('floorDivide works', function () {
-            expect(Utils.floorDivide(8, 7)).toBe(1);
-            expect(Utils.floorDivide(7, 7)).toBe(1);
-            expect(Utils.floorDivide(-8, 7)).toBe(-2);
-            expect(Utils.floorDivide(-7, 7)).toBe(-1);
-        });
 
         it('mod works', function () {
             expect(Utils.mod(8, 7)).toBe(1);

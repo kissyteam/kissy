@@ -45,13 +45,13 @@ KISSY.add('date/gregorian/utils', function (S, Const) {
         var year;
         d0 = fixedDate - 1;
 
-        n400 = floorDivide(d0, DAYS_OF_400YEAR);
+        n400 = floorDivide(d0 / DAYS_OF_400YEAR);
         d1 = mod(d0, DAYS_OF_400YEAR);
-        n100 = Utils.floorDivide(d1, DAYS_OF_100YEAR);
+        n100 = floorDivide(d1 / DAYS_OF_100YEAR);
         d2 = mod(d1, DAYS_OF_100YEAR);
-        n4 = floorDivide(d2, DAYS_OF_4YEAR);
+        n4 = floorDivide(d2 / DAYS_OF_4YEAR);
         d3 = mod(d2, DAYS_OF_4YEAR);
-        n1 = floorDivide(d3, DAYS_OF_YEAR);
+        n1 = floorDivide(d3 / DAYS_OF_YEAR);
 
         year = 400 * n400 + 100 * n100 + 4 * n4 + n1;
 
@@ -71,40 +71,17 @@ KISSY.add('date/gregorian/utils', function (S, Const) {
             return (year % 100 != 0) || (year % 400 == 0);
         },
 
-        /**
-         * @ignore
-         * @param n
-         * @param d
-         * @param [r]
-         * @returns {number}
-         */
-        floorDivide: function (n, d, r) {
-            if (n >= 0) {
-                if (r) {
-                    r[0] = n % d;
-                }
-
-                return toInt(n / d);
-            }
-            // far from 0
-            var q = toInt((n + 1) / d) - 1;
-            if (r) {
-                r[0] = n - (q * d);
-            }
-            return q;
-        },
-
         mod: function (x, y) {
             // 负数时不是镜像关系
-            return (x - y * floorDivide(x, y));
+            return (x - y * floorDivide(x / y));
         },
 
         // month: 0 based
         getFixedDate: function (year, month, dayOfMonth) {
             var prevYear = year - 1;
             // 考虑公元前
-            return DAYS_OF_YEAR * prevYear + floorDivide(prevYear, 4) -
-                floorDivide(prevYear, 100) + floorDivide(prevYear, 400) +
+            return DAYS_OF_YEAR * prevYear + floorDivide(prevYear / 4) -
+                floorDivide(prevYear / 100) + floorDivide(prevYear / 400) +
                 getDayOfYear(year, month, dayOfMonth);
         },
 
@@ -137,7 +114,7 @@ KISSY.add('date/gregorian/utils', function (S, Const) {
         }
     });
 
-    var floorDivide = Utils.floorDivide,
+    var floorDivide = Math.floor,
         isLeapYear = Utils.isLeapYear,
         mod = Utils.mod;
 
