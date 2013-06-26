@@ -2,7 +2,7 @@
  * test case for anim pause/resume
  * @author yiminghe@gmail.com
  */
-KISSY.use("node,anim", function (S, _, Anim) {
+KISSY.add(function (S, _, Anim) {
     var $ = S.all;
     describe("anim pause/resume", function () {
 
@@ -109,4 +109,6 @@ KISSY.use("node,anim", function (S, _, Anim) {
 
     });
 
+},{
+    requires:['node','anim']
 });

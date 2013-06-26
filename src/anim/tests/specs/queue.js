@@ -2,7 +2,7 @@
  * test case for anim queue
  * @author yiminghe@gmail.com
  */
-KISSY.use("dom,anim,node", function (S, Dom, Anim, Node) {
+KISSY.add(function (S, Dom, Anim, Node) {
     var $ = Node.all;
     var ANIM_KEY = Anim.Q.queueCollectionKey;
     describe("anim-queue", function () {
@@ -445,4 +445,6 @@ KISSY.use("dom,anim,node", function (S, Dom, Anim, Node) {
             });
         });
     });
+},{
+    requires:['dom','anim','node']
 });

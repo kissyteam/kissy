@@ -1,5 +1,5 @@
 /**
- * Simple KISSY Test Server
+ * Simple KISSY Test Server And mvc framework
  * @author yiminghe@gmail.com
  */
 
@@ -16,9 +16,27 @@ S.use('xtemplate', function (S, XTemplate) {
 
         var express = require('express');
         var app = express();
+        var tplDir = currentDir + '/tpl/';
+        var tplCache = {};
 
-        var testTpl = new XTemplate(fs.readFileSync(currentDir + '/test-xtpl.html', 'utf-8'));
-        var listTpl = new XTemplate(fs.readFileSync(currentDir + '/list-xtpl.html', 'utf-8'));
+
+        var testTpl = getXTemplate('test');
+        var listTpl = getXTemplate('list');
+
+
+        function getXTemplate(name) {
+            path = tplDir + name + '-xtpl.html';
+            if (tplCache[name]) {
+                return tplCache[name];
+            }
+            return tplCache[name] = new XTemplate(fs.readFileSync(path, 'utf-8'));
+        }
+
+        var utils = {
+            render: function (tpl, data) {
+                return getXTemplate(tpl).render(data);
+            }
+        };
 
         // app.use(express.compress());
         app.use(express.cookieParser());
@@ -68,7 +86,7 @@ S.use('xtemplate', function (S, XTemplate) {
         app.use('/kissy/', function (req, res, next) {
             var path = req.path;
             if (S.endsWith(path, ".jss")) {
-                require(cwd + path)(req, res);
+                require(cwd + path)(req, res, utils);
             } else {
                 next();
             }

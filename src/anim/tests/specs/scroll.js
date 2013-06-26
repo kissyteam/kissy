@@ -2,7 +2,7 @@
  * test case for anim scroll
  * @author yiminghe@gmail.com
  */
-KISSY.use("dom,anim", function (S, Dom, Anim) {
+KISSY.add(function (S, Dom, Anim) {
 
     describe("anim-scroll", function () {
 
@@ -114,4 +114,6 @@ KISSY.use("dom,anim", function (S, Dom, Anim) {
         }
 
     });
+},{
+    requires:['dom','anim']
 });

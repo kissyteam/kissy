@@ -2,7 +2,7 @@
  * test case for anim fx config
  * @author yiminghe@gmail.com
  */
-KISSY.use("dom,anim,node", function (S, Dom, Anim, Node) {
+KISSY.add(function (S, Dom, Anim, Node) {
     var $ = Node.all;
 
     describe('anim-fx config', function () {
@@ -48,4 +48,6 @@ KISSY.use("dom,anim,node", function (S, Dom, Anim, Node) {
 
         });
     });
+},{
+    requires:['dom','anim','node']
 });
