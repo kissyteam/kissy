@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>{{component}} Test Runner</title>
+    <title>{{component}} test runner</title>
     <link rel="stylesheet" href="/kissy/tools/jasmine/jasmine.css">
     <script src="/kissy/tools/jasmine/jasmine.js"></script>
     <script src="/kissy/tools/jasmine/jasmine-html.js"></script>
@@ -13,7 +13,7 @@
     <script src="/kissy/src/package.js"></script>
 </head>
 <body>
-<h1>{{component}} Test Cases</h1>
+<h1>{{component}} test cases</h1>
 <script>
     var tests=[];
 
@@ -23,8 +23,10 @@
         }
     });
     {{#each tests}}
-    tests.push('specs/{{.}}');
+    tests.push('specs/{{{.}}}');
     {{/each}}
+
+    {{{script}}}
 
     KISSY.use(tests, function () {
             jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
