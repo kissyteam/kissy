@@ -141,6 +141,7 @@
 
     function normalizeBase(base) {
         var baseUri;
+        base = base.replace(/\\/g, '/');
         if (base.charAt(base.length - 1) != '/') {
             base += '/';
         }

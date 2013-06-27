@@ -34,8 +34,8 @@
 
             try {
                 var mod = fs.readFileSync(path, charset);
-                var fn = vm.runInThisContext('(function(KISSY){' + mod + '})', url);
-                fn(S);
+                var fn = vm.runInThisContext('(function(KISSY,require){' + mod + '})', url);
+                fn(S, require);
                 success && success();
             } catch (e) {
                 S.log('in file: ' + url);

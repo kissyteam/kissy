@@ -1,8 +1,10 @@
-KISSY.add(function (S, HtmlParser,UA) {
+KISSY.add(function (S, HtmlParser, UA) {
 
     function getTextSync(path, callback) {
         if (S.UA.nodejs) {
-            path=require('path').resolve(__dirname,path);
+            path = S.config('packages').src.baseUri
+                .resolve('src/html-parser/tests/runner/' + path).toString();
+            path = path.replace(/^file:/, '');
             var fs = require('fs');
             callback(fs.readFileSync(path, 'utf-8'));
         } else {
@@ -379,6 +381,6 @@ KISSY.add(function (S, HtmlParser,UA) {
         });
 
     });
-},{
-    requires:['html-parser','ua','io']
+}, {
+    requires: ['html-parser', 'ua', KISSY.UA.nodejs ? '' : 'io']
 });

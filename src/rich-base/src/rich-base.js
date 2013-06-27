@@ -236,6 +236,7 @@ KISSY.add('rich-base', function (S, Base) {
             if (!self.get('destroyed')) {
                 self.callPluginsMethod("destructor");
                 destroyHierarchy(self);
+                self.detach();
                 self.set('destroyed', true);
                 self.fire('destroy');
             }

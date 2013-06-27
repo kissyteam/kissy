@@ -1,6 +1,7 @@
 KISSY.add(function (S, Json) {
+    var JSON = ((S.UA.nodejs && typeof global === 'object') ? global : S.Env.host).JSON;
 
-    var J = ((S.UA.nodejs && typeof global === 'object') ? global : S.Env.host).Json;
+    var phantomjs = S.UA.phantomjs;
 
     describe('json', function () {
         describe('stringify', function () {
@@ -14,14 +15,14 @@ KISSY.add(function (S, Json) {
                 expect(Json.stringify(NaN)).toBe('null');
 
 
-                if (J) {
-                    expect(Json.stringify({'a': true})).toBe(J.stringify({'a': true}));
+                if (JSON) {
+                    expect(Json.stringify({'a': true})).toBe(JSON.stringify({'a': true}));
 
-                    expect(Json.stringify(true)).toBe(J.stringify(true));
+                    expect(Json.stringify(true)).toBe(JSON.stringify(true));
 
-                    expect(Json.stringify(null)).toBe(J.stringify(null));
-                    expect(Json.stringify(undefined)).toBe(J.stringify(undefined));
-                    expect(Json.stringify(NaN)).toBe(J.stringify(NaN));
+                    expect(Json.stringify(null)).toBe(JSON.stringify(null));
+                    expect(Json.stringify(undefined)).toBe(JSON.stringify(undefined));
+                    expect(Json.stringify(NaN)).toBe(JSON.stringify(NaN));
                 }
             });
 
@@ -43,8 +44,8 @@ KISSY.add(function (S, Json) {
                         gap + '}' +
                         '\n}');
 
-                    if (J) {
-                        expect(ret).toBe(J.stringify({
+                    if (JSON) {
+                        expect(ret).toBe(JSON.stringify({
                             'a': {
                                 b: 1
                             }
@@ -69,8 +70,8 @@ KISSY.add(function (S, Json) {
                         gap + ']' +
                         '\n}');
 
-                    if (J) {
-                        expect(ret).toBe(J.stringify({
+                    if (JSON) {
+                        expect(ret).toBe(JSON.stringify({
                             'a': [1]
                         }, null, gap));
                     }
@@ -94,8 +95,8 @@ KISSY.add(function (S, Json) {
                         gap + '}' +
                         '\n}');
 
-                    if (J) {
-                        expect(ret).toBe(J.stringify({
+                    if (JSON) {
+                        expect(ret).toBe(JSON.stringify({
                             'a': {
                                 b: 1
                             }
@@ -120,8 +121,8 @@ KISSY.add(function (S, Json) {
                         gap + ']' +
                         '\n}');
 
-                    if (J) {
-                        expect(ret).toBe(J.stringify({
+                    if (JSON) {
+                        expect(ret).toBe(JSON.stringify({
                             'a': [1]
                         }, null, 2));
                     }
@@ -154,8 +155,8 @@ KISSY.add(function (S, Json) {
                         gap + '}' +
                         '\n}');
 
-                    if (J) {
-                        expect(ret).toBe(J.stringify({
+                    if (JSON) {
+                        expect(ret).toBe(JSON.stringify({
                             'a': {
                                 b: {
                                     z: 1
@@ -171,35 +172,35 @@ KISSY.add(function (S, Json) {
                     }
                 });
 
+                if (JSON && !phantomjs) {
+                    it('string works for array', function () {
 
-                it('string works for array', function () {
+                        var gap = '  ';
+                        var space = ' ';
 
-                    var gap = '  ';
-                    var space = ' ';
-
-                    var ret = Json.stringify({
-                        'a': [
-                            {
-                                z: 1
+                        var ret = Json.stringify({
+                            'a': [
+                                {
+                                    z: 1
+                                }
+                            ]
+                        }, function (key, value) {
+                            if (key === '0') {
+                                expect(value.z).toBe(1);
+                                return 1;
                             }
-                        ]
-                    }, function (key, value) {
-                        if (key === '0') {
-                            expect(value.z).toBe(1);
-                            return 1;
-                        }
-                        return value;
-                    }, 2);
+                            return value;
+                        }, 2);
 
-                    expect(ret).toBe('{\n' +
-                        gap +
-                        '"a":' + space + '[\n' +
-                        gap + gap + '1\n' +
-                        gap + ']' +
-                        '\n}');
+                        expect(ret).toBe('{\n' +
+                            gap +
+                            '"a":' + space + '[\n' +
+                            gap + gap + '1\n' +
+                            gap + ']' +
+                            '\n}');
 
-                    if (J && !S.UA.phantomjs) {
-                        expect(ret).toBe(J.stringify({
+
+                        expect(ret).toBe(JSON.stringify({
                             'a': [
                                 {
                                     z: 1
@@ -212,8 +213,9 @@ KISSY.add(function (S, Json) {
                             }
                             return value;
                         }, 2));
-                    }
-                });
+
+                    });
+                }
             });
         });
 
@@ -223,8 +225,8 @@ KISSY.add(function (S, Json) {
                 var t = '{"test": 1,"t":2}',
                     r = {test: 1, t: 2};
                 expect(Json.parse(t)).toEqual(r);
-                if (J) {
-                    expect(J.parse(t)).toEqual(r);
+                if (JSON) {
+                    expect(JSON.parse(t)).toEqual(r);
                 }
             });
 
@@ -232,8 +234,8 @@ KISSY.add(function (S, Json) {
                 var t = "{\"test\":[\"t1\",\"t2\"]}" ,
                     r = {test: ['t1', 't2']};
                 expect(Json.parse(t)).toEqual(r);
-                if (J) {
-                    expect(J.parse(t)).toEqual(r);
+                if (JSON) {
+                    expect(JSON.parse(t)).toEqual(r);
                 }
             });
 
@@ -242,9 +244,9 @@ KISSY.add(function (S, Json) {
                 expect(function () {
                     Json.parse(t);
                 }).toThrow();
-                if (J) {
+                if (JSON) {
                     expect(function () {
-                        J.parse(t);
+                        JSON.parse(t);
                     }).toThrow();
                 }
             });
@@ -253,38 +255,38 @@ KISSY.add(function (S, Json) {
 
                 var r, t;
                 expect(Json.parse(t = '{"test":1}')).toEqual(r = {test: 1});
-                if (J) {
-                    expect(J.parse(t)).toEqual(r);
+                if (JSON) {
+                    expect(JSON.parse(t)).toEqual(r);
                 }
                 expect(Json.parse(t = '{}')).toEqual(r = {});
-                if (J) {
-                    expect(J.parse(t)).toEqual(r);
+                if (JSON) {
+                    expect(JSON.parse(t)).toEqual(r);
                 }
                 expect(Json.parse(t = '\n{"test":1}')).toEqual(r = {test: 1}); // 去除空白
-                if (J) {
-                    expect(J.parse(t)).toEqual(r);
+                if (JSON) {
+                    expect(JSON.parse(t)).toEqual(r);
                 }
                 expect(Json.parse(t = null)).toBeNull(r = null);
-                if (J) {
-                    expect(J.parse(t)).toEqual(r);
+                if (JSON) {
+                    expect(JSON.parse(t)).toEqual(r);
                 }
                 expect(Json.parse(t = 'true')).toBe(r = true);
-                if (J) {
-                    expect(J.parse(t)).toEqual(r);
+                if (JSON) {
+                    expect(JSON.parse(t)).toEqual(r);
                 }
                 expect(Json.parse(t = true)).toBe(r = true);
-                if (J) {
-                    expect(J.parse(t)).toEqual(r);
+                if (JSON) {
+                    expect(JSON.parse(t)).toEqual(r);
                 }
                 expect(Json.parse(t = 'null')).toBe(r = null);
-                if (J) {
-                    expect(J.parse(t)).toEqual(r);
+                if (JSON) {
+                    expect(JSON.parse(t)).toEqual(r);
                 }
                 expect(
                     function () {
                         Json.parse(t = '{a:1}');
                     }).toThrow();
-                if (J) {
+                if (JSON) {
                     expect(
                         function () {
                             Json.parse(t);
@@ -301,8 +303,8 @@ KISSY.add(function (S, Json) {
                     }
                     return v;
                 })).toEqual(r = {test: 1, t: 3});
-                if (J) {
-                    expect(J.parse(t, f)).toEqual(r);
+                if (JSON) {
+                    expect(JSON.parse(t, f)).toEqual(r);
                 }
 
                 expect(Json.parse(t = '{"test": 1,"t":2}', f = function (key, v) {
@@ -311,8 +313,8 @@ KISSY.add(function (S, Json) {
                     }
                     return v;
                 })).toEqual(r = {test: 1});
-                if (J) {
-                    expect(J.parse(t, f)).toEqual(r);
+                if (JSON) {
+                    expect(JSON.parse(t, f)).toEqual(r);
                 }
 
                 expect(Json.parse(t = '{"test": {"t":{ "t3":4},"t2":4}}', f = function (key, v) {
@@ -327,19 +329,19 @@ KISSY.add(function (S, Json) {
                         t: 1,
                         t2: 5
                     }});
-                if (J) {
-                    expect(J.parse(t, f)).toEqual(r);
+                if (JSON) {
+                    expect(JSON.parse(t, f)).toEqual(r);
                 }
             });
 
 
             // phantomjs allow \t
             it('should throw exception when encounter control character', function () {
-                var r;
+                var t;
                 expect(function () {
                     Json.parse(t = '{"x":"\t"}');
                 }).toThrow();
-                if (J) {
+                if (JSON && !phantomjs) {
                     expect(
                         function () {
                             Json.parse(t);
@@ -349,7 +351,6 @@ KISSY.add(function (S, Json) {
 
         });
     });
-
-},{
-    requires:['json']
+}, {
+    requires: ['json']
 });

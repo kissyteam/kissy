@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 27 03:41
+build time: Jun 27 13:52
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -247,6 +247,7 @@ KISSY.add('rich-base', function (S, Base) {
             if (!self.get('destroyed')) {
                 self.callPluginsMethod("destructor");
                 destroyHierarchy(self);
+                self.detach();
                 self.set('destroyed', true);
                 self.fire('destroy');
             }
