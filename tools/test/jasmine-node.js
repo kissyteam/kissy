@@ -69,7 +69,7 @@ function onComplete(runner) {
 
 if (junitReport && junitReport.report) {
     if (!fs.existsSync(junitReport.savePath)) {
-        util.puts('creating junit xml report save path: ' + junitReport.savePath);
+        console.log('creating junit xml report save path: ' + junitReport.savePath);
         fs.mkdirSync(junitReport.savePath, "0755");
     }
     jasmineEnv.addReporter(new jasmineNode['JUnitXmlReporter'](junitReport.savePath,
