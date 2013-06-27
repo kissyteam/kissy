@@ -94,16 +94,14 @@ KISSY.add('xtemplate/runtime', function (S, commands) {
      * @class KISSY.XTemplate.Runtime
      */
     function XTemplateRuntime(tpl, config) {
-
         var self = this;
         self.tpl = tpl;
         config = S.merge(defaultConfig, config);
         config.subTpls = S.merge(config.subTpls, XTemplateRuntime.subTpls);
         config.commands = S.merge(config.commands, XTemplateRuntime.commands);
-        config.instance = self;
+        config.engine = self;
         config.utils = utils;
         this.config = config;
-
     }
 
     XTemplateRuntime.prototype = {

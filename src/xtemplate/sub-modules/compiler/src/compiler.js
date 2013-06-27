@@ -61,8 +61,8 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
                     'isArray = S.isArray,' +
                     'isObject = S.isObject,' +
                     'log = S.log,' +
-                    // current xtemplate instance
-                    'instance = config.instance, ' +
+                    // current xtemplate engine
+                    'engine = config.engine, ' +
                     'commands = config.commands,' +
                     'utils = config.utils,' +
                     'error = S.error;');
@@ -130,7 +130,7 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
                 }
                 source.push('try{');
                 source.push(idName + ' = ' + tmpNameCommand +
-                    '.call(instance, scopes, ' + configNameCode[0] + ');');
+                    '.call(engine, scopes, ' + configNameCode[0] + ');');
                 source.push('}catch(e){');
                 source.push('error(e.message+": \'' +
                     idString + '\' at line ' + idNode.lineNumber + '");');
@@ -391,7 +391,7 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
 
             source.push('try{');
             source.push('buffer += ' + tmpNameCommand +
-                '.call(instance, scopes, ' + configName + ');');
+                '.call(engine, scopes, ' + configName + ');');
             source.push('}catch(e){');
             source.push('error(e.message+": \'' + pathString +
                 '\' at line ' + tplNode.path.lineNumber + '");');
