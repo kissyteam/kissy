@@ -5,8 +5,9 @@
  */
 KISSY.add("xtemplate/runtime/commands", function (S) {
 
-    return {
+    var commands;
 
+    return commands = {
         'each': function (scopes, config) {
             var params = config.params;
             var param0 = params[0];
@@ -86,6 +87,10 @@ KISSY.add("xtemplate/runtime/commands", function (S) {
         include: function (scopes, config) {
             var params = config.params;
 
+            // allow hash to shadow parent scopes
+            var extra = config.hash ? [config.hash] : [];
+            scopes = extra.concat(scopes);
+
             if (!params || params.length != 1) {
                 S[config.silent ?
                     'log' :
@@ -109,8 +114,12 @@ KISSY.add("xtemplate/runtime/commands", function (S) {
             // template file name
             config.name = param0;
             return this.invokeEngine(tpl, scopes, config)
-        }
+        },
 
+        parse: function (scopes, config) {
+            // abandon parent scopes
+            return commands.include.call(this, [], config);
+        }
     };
 
 });

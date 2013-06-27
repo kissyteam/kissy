@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 27 03:42
+build time: Jun 27 19:34
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -2269,8 +2269,8 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
                     'isArray = S.isArray,' +
                     'isObject = S.isObject,' +
                     'log = S.log,' +
-                    // current xtemplate instance
-                    'instance = config.instance, ' +
+                    // current xtemplate engine
+                    'engine = config.engine, ' +
                     'commands = config.commands,' +
                     'utils = config.utils,' +
                     'error = S.error;');
@@ -2326,6 +2326,7 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
             // {{#each variable}} {{variable}}
             if (tplNode && depth == 0) {
                 var configNameCode = self.genConfig(tplNode);
+                var configName = configNameCode[0];
                 pushToArray(source, configNameCode[1]);
                 // skip if for global commands before current template's render
                 if (foundNativeRuntimeCommand = commands[idString]) {
@@ -2338,20 +2339,28 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
                 }
                 source.push('try{');
                 source.push(idName + ' = ' + tmpNameCommand +
-                    '.call(instance, scopes, ' + configNameCode[0] + ');');
+                    '.call(engine, scopes, ' + (configName || '{}') + ');');
                 source.push('}catch(e){');
                 source.push('error(e.message+": \'' +
                     idString + '\' at line ' + idNode.lineNumber + '");');
                 source.push('}');
 
-                if (!foundNativeRuntimeCommand) {
+                if (!foundNativeRuntimeCommand && !configName) {
                     source.push('}');
                     source.push('else {');
+                }
+
+                if (!foundNativeRuntimeCommand && configName) {
+                    source.push('}');
+                    source.push('else {');
+                    source.push('error("can not find command: \'' +
+                        idString + '\' at line ' + idNode.lineNumber + '", "warn");');
+                    source.push('}');
                 }
             }
 
             // variable {{variable.subVariable}}
-            if (!foundNativeRuntimeCommand) {
+            if (!foundNativeRuntimeCommand && !configName) {
                 var tmp = guid('tmp');
                 idString = self.getIdStringFromIdParts(source, idParts);
 
@@ -2428,17 +2437,24 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
 
         genConfig: function (tplNode) {
             var source = [],
-                configName = guid('config'),
+                configName,
                 params, hash,
                 self = this;
 
-            source.push('var ' + configName + ' = S.merge(config);');
 
             if (tplNode) {
-                if (params = tplNode.params) {
+                params = tplNode.params;
+                hash = tplNode.hash;
+
+                if (params || hash) {
+                    configName = guid('config');
+                    source.push('var ' + configName + ';');
+                    source.push(configName + ' = S.merge(config);');
+                }
+
+                if (params) {
                     var paramsName = guid('params');
                     source.push('var ' + paramsName + ' = [];');
-
                     S.each(params, function (param) {
                         var nextIdNameCode = self[param.type](param);
                         if (nextIdNameCode[0]) {
@@ -2452,7 +2468,7 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
                     source.push(configName + '.params=' + paramsName + ';');
                 }
 
-                if (hash = tplNode.hash) {
+                if (hash) {
                     var hashName = guid('hash');
                     source.push('var ' + hashName + ' = {};');
                     S.each(hash.value, function (v, key) {
@@ -2544,6 +2560,11 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
 
             pushToArray(source, configNameCode[1]);
 
+            if (!configName) {
+                configName = S.guid('config');
+                source.push('var ' + configName + ' = {};');
+            }
+
             source.push(configName + '.fn=' +
                 self.genFunction(programNode.statements).join('\n') + ';');
 
@@ -2599,7 +2620,7 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
 
             source.push('try{');
             source.push('buffer += ' + tmpNameCommand +
-                '.call(instance, scopes, ' + configName + ');');
+                '.call(engine, scopes, ' + configName + ');');
             source.push('}catch(e){');
             source.push('error(e.message+": \'' + pathString +
                 '\' at line ' + tplNode.path.lineNumber + '");');

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 27 03:42
+build time: Jun 27 19:34
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -17,8 +17,9 @@ build time: Jun 27 03:42
  */
 KISSY.add("xtemplate/runtime/commands", function (S) {
 
-    return {
+    var commands;
 
+    return commands = {
         'each': function (scopes, config) {
             var params = config.params;
             var param0 = params[0];
@@ -98,6 +99,10 @@ KISSY.add("xtemplate/runtime/commands", function (S) {
         include: function (scopes, config) {
             var params = config.params;
 
+            // allow hash to shadow parent scopes
+            var extra = config.hash ? [config.hash] : [];
+            scopes = extra.concat(scopes);
+
             if (!params || params.length != 1) {
                 S[config.silent ?
                     'log' :
@@ -121,8 +126,12 @@ KISSY.add("xtemplate/runtime/commands", function (S) {
             // template file name
             config.name = param0;
             return this.invokeEngine(tpl, scopes, config)
-        }
+        },
 
+        parse: function (scopes, config) {
+            // abandon parent scopes
+            return commands.include.call(this, [], config);
+        }
     };
 
 });
@@ -222,16 +231,14 @@ KISSY.add('xtemplate/runtime', function (S, commands) {
      * @class KISSY.XTemplate.Runtime
      */
     function XTemplateRuntime(tpl, config) {
-
         var self = this;
         self.tpl = tpl;
         config = S.merge(defaultConfig, config);
         config.subTpls = S.merge(config.subTpls, XTemplateRuntime.subTpls);
         config.commands = S.merge(config.commands, XTemplateRuntime.commands);
-        config.instance = self;
+        config.engine = self;
         config.utils = utils;
         this.config = config;
-
     }
 
     XTemplateRuntime.prototype = {

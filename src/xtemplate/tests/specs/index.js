@@ -619,6 +619,22 @@ KISSY.add(function (S, XTemplate) {
 
             describe('sub template', function () {
 
+                it('support parse',function(){
+                    XTemplate.addSubTpl('sub-tpl-1', '{{title}}{{title2}}');
+
+                    var tpl = '{{parse "sub-tpl-1" title2="2"}}';
+
+                    var data = {
+                        title: '1'
+                    };
+
+                    var render = new XTemplate(tpl,{
+                        name:'test-parse'
+                    }).render(data);
+
+                    expect(render).toBe('2');
+                });
+
                 it('support global sub template as string', function () {
                     XTemplate.addSubTpl('sub-tpl-1', '{{title}}');
 
@@ -685,6 +701,23 @@ KISSY.add(function (S, XTemplate) {
                     }).render(data);
 
                     expect(render).toBe('1');
+                });
+
+
+                it('allow shadow parent data', function () {
+                    var tpl = '{{include "sub-tpl-3" title="2"}}';
+
+                    var data = {
+                        title: '1'
+                    };
+
+                    var render = new XTemplate(tpl, {
+                        subTpls: {
+                            'sub-tpl-3': '{{title}}'
+                        }
+                    }).render(data);
+
+                    expect(render).toBe('2');
                 });
 
             });
