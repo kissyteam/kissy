@@ -5,7 +5,7 @@
  */
 (function (S) {
     var https = S.startsWith(location.href, 'https');
-    var prefix = https ? 'https://s.tbcdn.cn/kissy/' : 'http://a.tbcdn.cn/kissy/';
+    var prefix = https ? 'https://s.tbcdn.cn/s/kissy/' : 'http://a.tbcdn.cn/s/kissy/';
     S.config({
         packages: {
             gallery: {
