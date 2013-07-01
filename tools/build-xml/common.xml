@@ -271,6 +271,25 @@
     <target name="build" depends="concat,process,extract-dependency">
 
     </target>
+    
+    <target name="update-version">
+        <replaceregexp match="v\d.\d\d"
+                       replace="${version}"
+                       flags="g"
+                       encoding="${charset}"
+                       byline="true">
+            <fileset dir="${component.build.dir}" includes="${js-css.files}"/>
+        </replaceregexp>
+        
+        <replaceregexp match="version: '\d.\d\d'"
+                       replace="version: '${version}'"
+                       flags="g"
+                       encoding="${charset}"
+                       byline="true">
+            <fileset dir="${component.build.dir}" includes="${js-css.files}"/>
+        </replaceregexp>
+        
+    </target>
 
     <target name="clean">
         <delete dir="${component.build.dir}"/>
