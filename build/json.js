@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 27 03:40
+build time: Jul 1 21:39
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -64,7 +64,7 @@ KISSY.add('json/quote', function (S) {
  * Json.stringify for KISSY
  * @author yiminghe@gmail.com
  */
-KISSY.add('json/stringify', function (S,Quote) {
+KISSY.add('json/stringify', function (S, Quote) {
 
     function padding2(n) {
         return n < 10 ? '0' + n : n;
@@ -112,10 +112,13 @@ KISSY.add('json/stringify', function (S,Quote) {
     }
 
     function jo(value, replacerFunction, propertyList, gap, stack, indent) {
-        if (S.inArray(value, stack)) {
-            throw new TypeError('cyclic json');
+        if ('@debug@') {
+            if (S.inArray(value, stack)) {
+                throw new TypeError('cyclic json');
+            }
+            stack[stack.length] = value;
         }
-        stack[stack.length] = value;
+
         var stepBack = indent;
         indent += gap;
         var k, kl, i, p;
@@ -150,16 +153,19 @@ KISSY.add('json/stringify', function (S,Quote) {
                 ret = '{\n' + indent + properties + '\n' + stepBack + '}';
             }
         }
-
-        stack.pop();
+        if ('@debug@') {
+            stack.pop();
+        }
         return ret;
     }
 
     function ja(value, replacerFunction, propertyList, gap, stack, indent) {
-        if (S.inArray(value, stack)) {
-            throw new TypeError('cyclic json');
+        if ('@debug@') {
+            if (S.inArray(value, stack)) {
+                throw new TypeError('cyclic json');
+            }
+            stack[stack.length] = value;
         }
-        stack[stack.length] = value;
         var stepBack = indent;
         indent += gap;
         var partial = [];
@@ -186,8 +192,9 @@ KISSY.add('json/stringify', function (S,Quote) {
                 ret = '[\n' + indent + properties + '\n' + stepBack + ']';
             }
         }
-
-        stack.pop();
+        if ('@debug@') {
+            stack.pop();
+        }
 
         return ret;
     }
@@ -217,8 +224,8 @@ KISSY.add('json/stringify', function (S,Quote) {
 
     return stringify;
 
-},{
-    requires:['./quote']
+}, {
+    requires: ['./quote']
 });
 /**
  * @ignore
