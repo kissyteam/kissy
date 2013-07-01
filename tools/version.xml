@@ -1,6 +1,6 @@
 
 <project name="version-build" xmlns:ac="antlib:net.sf.antcontrib">
     
-    <property name="version" value="1.31"/>
+    <property name="version" value="1.30"/>
     
 </project>
