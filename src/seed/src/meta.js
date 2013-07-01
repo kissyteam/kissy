@@ -9,10 +9,10 @@
     S.config({
         packages: {
             gallery: {
-                base: prefix + 'gallery/'
+                base: prefix
             },
             mobile: {
-                base: prefix + 'mobile/'
+                base: prefix
             }
         },
         modules: {
