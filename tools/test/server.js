@@ -20,7 +20,7 @@ S.use('xtemplate', function (S, XTemplate) {
 
         var express = require('express');
         var app = express();
-        var tplDir = currentDir + '/tpl/';
+        var tplDir = currentDir + '/xtemplates/';
         var tplCache = {};
 
 
@@ -29,7 +29,7 @@ S.use('xtemplate', function (S, XTemplate) {
 
 
         function getXTemplate(name) {
-            path = tplDir + name + '-xtpl.html';
+            path = tplDir + name + '.html';
             if (tplCache[name]) {
                 return tplCache[name];
             }
