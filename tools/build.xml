@@ -134,7 +134,7 @@
         </replaceregexp>
         
         <replaceregexp match="version:\s*['&quot;]\d.\d\d['&quot;]"
-                       replace="version: '${version}'"
+                       replace="version:'${version}'"
                        flags="g"
                        encoding="${charset}"
                        byline="true">
