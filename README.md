@@ -1,4 +1,6 @@
-# KISSY - A Powerful JavaScript Framework [![Build Status](https://secure.travis-ci.org/kissyteam/kissy.png?branch=master)](https://travis-ci.org/kissyteam/kissy)
+# KISSY [![Build Status](https://secure.travis-ci.org/kissyteam/kissy.png?branch=master)](https://travis-ci.org/kissyteam/kissy)
+
+> A Powerful JavaScript Framework
 
  * Source: <http://github.com/kissyteam/kissy>
  * Docs: <http://docs.kissyui.com/>
