@@ -133,7 +133,7 @@
             <fileset dir="${kissy.build.dir}" includes="${js-css.files}"/>
         </replaceregexp>
         
-        <replaceregexp match="version: '\d.\d\d'"
+        <replaceregexp match="version:\s*['"]\d.\d\d['"]"
                        replace="version: '${version}'"
                        flags="g"
                        encoding="${charset}"
