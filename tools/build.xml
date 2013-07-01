@@ -21,6 +21,9 @@
     <property name="git.remote" value="remote"/>
     <property name="git.gh-pages" value="gh-pages"/>
     <property name="git.master" value="1.3.0"/>
+    <property name="js-css.files" value="**/*.js,**/*.css"/>
+    
+    <import file="./version.xml"/>
 
 
     <!--
@@ -119,6 +122,25 @@
             <arg line="/c git push ${git.remote} ${git.dev}:${git.dev}"/>
         </exec>
 
+    </target>
+    
+    <target name="update-version">
+        <replaceregexp match="v\d.\d\d"
+                       replace="v${version}"
+                       flags="g"
+                       encoding="${charset}"
+                       byline="true">
+            <fileset dir="${kissy.build.dir}" includes="${js-css.files}"/>
+        </replaceregexp>
+        
+        <replaceregexp match="version: '\d.\d\d'"
+                       replace="version: '${version}'"
+                       flags="g"
+                       encoding="${charset}"
+                       byline="true">
+            <fileset dir="${kissy.build.dir}" includes="${js-css.files}"/>
+        </replaceregexp>
+        
     </target>
 
     <target name="clean">
