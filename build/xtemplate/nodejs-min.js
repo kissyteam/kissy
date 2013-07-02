@@ -1,6 +1,6 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 2 15:40
+build time: Jul 2 21:37
 */
-KISSY.add("xtemplate/nodejs",function(c,g){function h(a){var b=a.cacheFile,d=a.extname;return function(a){if(b&&f[a])return f[a];var e=new c.Loader.Module({name:a,type:d,runtime:c}),e=i.readFileSync((new c.Uri(e.getFullPath())).getPath(),{encoding:"utf-8"});b&&(f[a]=e);return e}}var i=require("fs"),f={};return function(a,b){b=c.merge(b,{cacheFile:1});b.extname=b.extname||"html";var d=h(b);b.name=a;b.loader=d;a=d(a);delete b.extname;return new g(a,b)}},{requires:["xtemplate"]});
+KISSY.add("xtemplate/nodejs",function(d,g){function h(b){var a=b.cacheFile,c=b.extname;return function(b){if(a&&f[b])return f[b];var e=new d.Loader.Module({name:b,type:c,runtime:d}),e=i.readFileSync((new d.Uri(e.getFullPath())).getPath(),{encoding:"utf-8"});a&&(f[b]=e);return e}}var i=require("fs"),f={};return{loadFromModuleName:function(b,a){a=d.merge(a,{cacheFile:1});a.extname=a.extname||"html";var c=h(a);a.name=b;a.loader=c;c=c(b);delete a.extname;return new g(c,a)}}},{requires:["xtemplate"]});

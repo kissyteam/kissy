@@ -27,15 +27,15 @@ S.use('xtemplate/nodejs', function (S, XTemplateNodeJs) {
         });
         var tplCache = {};
 
-        var testTpl = new XTemplateNodeJs('xtemplates/test');
+        var testTpl = XTemplateNodeJs.loadFromModuleName('xtemplates/test');
 
-        var listTpl = new XTemplateNodeJs('xtemplates/list');
+        var listTpl = XTemplateNodeJs.loadFromModuleName('xtemplates/list');
 
         function getXTemplate(name) {
             if (tplCache[name]) {
                 return tplCache[name];
             }
-            return tplCache[name] = new XTemplateNodeJs('xtemplates/'+name);
+            return tplCache[name] =XTemplateNodeJs.loadFromModuleName('xtemplates/'+name);
         }
 
         var utils = {

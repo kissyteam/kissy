@@ -6,17 +6,19 @@ KISSY.add('xtemplate/nodejs', function (S, XTemplate) {
     var fs = require('fs');
     var cached = {};
 
-    return  function (tpl, config) {
-        config = S.merge(config,{
-            cacheFile:1
-        });
-        config.extname = config.extname || 'html';
-        var loader = getLoader(config);
-        config.name = tpl;
-        config.loader = loader;
-        tpl = loader(tpl);
-        delete config.extname;
-        return new XTemplate(tpl, config);
+    return  {
+        loadFromModuleName: function (moduleName, config) {
+            config = S.merge(config, {
+                cacheFile: 1
+            });
+            config.extname = config.extname || 'html';
+            var loader = getLoader(config);
+            config.name = moduleName;
+            config.loader = loader;
+            var tpl = loader(moduleName);
+            delete config.extname;
+            return new XTemplate(tpl, config);
+        }
     };
 
     function getLoader(cfg) {

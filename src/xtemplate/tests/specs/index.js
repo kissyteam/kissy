@@ -1213,7 +1213,7 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
                     }
                 });
 
-                var xtemplate = new XTemplateNodeJs('nodejs_xtemplate/a');
+                var xtemplate = XTemplateNodeJs.loadFromModuleName('nodejs_xtemplate/a');
 
                 expect(xtemplate.render({
                     n: 3
