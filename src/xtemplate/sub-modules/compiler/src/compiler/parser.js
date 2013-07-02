@@ -405,6 +405,9 @@ KISSY.add("xtemplate/compiler/parser", function () {
             return this.$2;
         }],
         [39, [6, 42, 7], function () {
+            if (this.$1.length === 3) {
+                this.$2.escaped = false;
+            }
             return this.$2;
         }],
         [39, [6, 43, 7], function () {

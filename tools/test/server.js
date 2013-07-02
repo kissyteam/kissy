@@ -15,25 +15,27 @@ var cwd = process.cwd();
 var currentDir = __dirname;
 var S = global.KISSY = global.S = require(cwd + '/build/kissy-nodejs.js');
 
-S.use('xtemplate', function (S, XTemplate) {
+S.use('xtemplate/nodejs', function (S, XTemplateNodeJs) {
     function startServer(port) {
 
         var express = require('express');
         var app = express();
-        var tplDir = currentDir + '/xtemplates/';
+        S.config('packages',{
+            'xtemplates':{
+                base:currentDir
+            }
+        });
         var tplCache = {};
 
+        var testTpl = new XTemplateNodeJs('xtemplates/test');
 
-        var testTpl = getXTemplate('test');
-        var listTpl = getXTemplate('list');
-
+        var listTpl = new XTemplateNodeJs('xtemplates/list');
 
         function getXTemplate(name) {
-            path = tplDir + name + '.html';
             if (tplCache[name]) {
                 return tplCache[name];
             }
-            return tplCache[name] = new XTemplate(fs.readFileSync(path, 'utf-8'));
+            return tplCache[name] = new XTemplateNodeJs('xtemplates/'+name);
         }
 
         var utils = {

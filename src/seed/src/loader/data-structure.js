@@ -234,7 +234,7 @@
         getPackage: function () {
             var self = this;
             return self.packageInfo ||
-                (self.packageInfo = getPackage(self.runtime, self));
+                (self.packageInfo = getPackage(self.runtime, self.name));
         },
 
         /**
@@ -324,9 +324,8 @@
         runtime: S
     });
 
-    function getPackage(self, mod) {
-        var modName = mod.name,
-            packages = self.config('packages'),
+    function getPackage(self, modName) {
+        var packages = self.config('packages'),
             pName = '',
             p;
 
@@ -344,6 +343,3 @@
     }
 
 })(KISSY);
-/*
- TODO: implement conditional loader
- */

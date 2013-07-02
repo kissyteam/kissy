@@ -158,9 +158,6 @@
             return S;
         },
 
-        /**
-         * @deprecated
-         */
         require: function (name) {
             return Utils.getModules(S, [name])[1];
         }

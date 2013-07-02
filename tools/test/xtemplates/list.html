@@ -1,4 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!DOCTYPE html>
 <html>
 <head>
     <title>Index of {{cur}}</title>
@@ -10,9 +10,9 @@
     <li><a href="../../"> Parent Directory</a></li>
     {{/if}}
     {{#each files}}
-    <li><a href="{{this}}">{{this}}</a></li>
+    <li><a href="{{.}}">{{.}}</a></li>
     {{/each}}
 </ul>
-<address>KISSY Test Server</address>
+{{{include './footer'}}}
 </body>
 </html>

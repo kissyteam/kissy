@@ -16,6 +16,14 @@ describe("uri", function () {
         expect(base.getFragment()).toBe("w");
     });
 
+    it('works for file:',function(){
+        var base = new Uri("file:d:/x.png");
+        expect(base.getScheme()).toBe("file");
+        expect(base.getHostname()).toBe("");
+        expect(base.getPath()).toBe("/d:/x.png");
+        expect(base.toString()).toBe("file:d:/x.png");
+    });
+
     it('setFragment works', function () {
         var u = new Uri('http://www.g.cn#heihei');
 

@@ -4,7 +4,7 @@
  */
 (function () {
 
-    function popState(){
+    function popState() {
         this.popState();
     }
 
@@ -96,6 +96,9 @@
                 symbol: 'tpl',
                 rhs: ['OPEN_TPL', 'inTpl', 'CLOSE'],
                 action: function () {
+                    if (this.$1.length === 3) {
+                        this.$2.escaped = false;
+                    }
                     return this.$2;
                 }
             },

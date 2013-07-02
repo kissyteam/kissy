@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 <head>
     <script src="/kissy/build/kissy.js"></script>
@@ -13,12 +14,12 @@
 <script>
     <!--
     {{#each tests}}
-        tests.push('{{{this}}}');
+        tests.push('{{{.}}}');
     {{/each}}
     document.write(tests.join("<br>"));
     -->
 </script>
-
+{{{include './footer'}}}
 </body>
 </html>
 

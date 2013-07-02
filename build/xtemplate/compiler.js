@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 27 19:34
+build time: Jul 2 15:40
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -418,6 +418,9 @@ KISSY.add("xtemplate/compiler/parser", function () {
             return this.$2;
         }],
         [39, [6, 42, 7], function () {
+            if (this.$1.length === 3) {
+                this.$2.escaped = false;
+            }
             return this.$2;
         }],
         [39, [6, 43, 7], function () {
@@ -2265,12 +2268,13 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
             source.push('var buffer = ""' + (global ? ',' : ';'));
             if (global) {
                 source.push('S = KISSY,' +
+                    'config=this.config,' +
                     'escapeHtml = config.escapeHtml && S.escapeHtml,' +
                     'isArray = S.isArray,' +
                     'isObject = S.isObject,' +
                     'log = S.log,' +
                     // current xtemplate engine
-                    'engine = config.engine, ' +
+                    'engine = this, ' +
                     'commands = config.commands,' +
                     'utils = config.utils,' +
                     'error = S.error;');
@@ -2304,7 +2308,7 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
                 return source;
             } else {
                 return {
-                    params: ['scopes', 'config', 'undefined'],
+                    params: ['scopes', 'undefined'],
                     source: source
                 };
             }
@@ -2448,8 +2452,7 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
 
                 if (params || hash) {
                     configName = guid('config');
-                    source.push('var ' + configName + ';');
-                    source.push(configName + ' = S.merge(config);');
+                    source.push('var ' + configName + ' = {};');
                 }
 
                 if (params) {

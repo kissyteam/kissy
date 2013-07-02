@@ -3,8 +3,7 @@ KISSY.add(function (S, HtmlParser, UA) {
     function getTextSync(path, callback) {
         if (S.UA.nodejs) {
             path = S.config('packages').src.baseUri
-                .resolve('src/html-parser/tests/runner/' + path).toString();
-            path = path.replace(/^file:/, '');
+                .resolve('src/html-parser/tests/runner/' + path).getPath();
             var fs = require('fs');
             callback(fs.readFileSync(path, 'utf-8'));
         } else {

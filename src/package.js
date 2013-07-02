@@ -633,6 +633,10 @@ if (location.href.indexOf('__build') == -1) {
             "base": "/kissy/src/xtemplate/sub-modules/compiler/src/compiler",
             "ignorePackageNameInUri": 1
         },
+        "xtemplate/nodejs": {
+            "base": "/kissy/src/xtemplate/sub-modules/nodejs/src/nodejs",
+            "ignorePackageNameInUri": 1
+        },
         "xtemplate/runtime": {
             "base": "/kissy/src/xtemplate/sub-modules/runtime/src/runtime",
             "ignorePackageNameInUri": 1

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 27 19:34
+build time: Jul 2 15:40
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -70,6 +70,7 @@ KISSY.add('xtemplate', function (S, XTemplateRuntime, compiler) {
         compiler: compiler,
 
         RunTime: XTemplateRuntime,
+
         /**
          * add command to all template
          * @method
@@ -80,29 +81,12 @@ KISSY.add('xtemplate', function (S, XTemplateRuntime, compiler) {
         addCommand: XTemplateRuntime.addCommand,
 
         /**
-         * add sub template definition to all template
-         * @method
-         * @static
-         * @param {String} subName
-         * @param {Function|String} def
-         */
-        addSubTpl: XTemplateRuntime.addSubTpl,
-
-        /**
          * remove command from all template by name
          * @method
          * @static
          * @param {String} commandName
          */
-        removeCommand: XTemplateRuntime.removeCommand,
-
-        /**
-         * remove sub template definition from all template by name
-         * @method
-         * @static
-         * @param {String} subName
-         */
-        removeSubTpl: XTemplateRuntime.removeSubTpl
+        removeCommand: XTemplateRuntime.removeCommand
     });
 
     return XTemplate;

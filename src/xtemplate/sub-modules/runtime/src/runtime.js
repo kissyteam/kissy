@@ -5,9 +5,7 @@
  */
 KISSY.add('xtemplate/runtime', function (S, commands) {
 
-    var subTpls = {},
-
-        utils = {
+    var utils = {
             'getProperty': function (parts, scopes, depth) {
                 // this refer to current scope object
                 if (parts == 'this' || parts == '.') {
@@ -81,7 +79,28 @@ KISSY.add('xtemplate/runtime', function (S, commands) {
              * @cfg {Boolean} escapeHtml
              * @member KISSY.XTemplate.Runtime
              */
-            escapeHtml: true
+            escapeHtml: true,
+
+            /**
+             * tpl loader to load sub tpl by name
+             * @cfg {Function} loader
+             * @member KISSY.XTemplate.Runtime
+             */
+            loader: function (subTplName) {
+                var tpl = '';
+                S.use(subTplName, {
+                    success: function (S, t) {
+                        tpl = t;
+                    },
+                    sync: 1
+                });
+                if (!tpl) {
+                    S[this.config.silent ? 'log' : 'error']('template "' +
+                        subTplName + '" does not exist, ' +
+                        'need to be required or used first!');
+                }
+                return tpl;
+            }
 
         };
 
@@ -97,9 +116,7 @@ KISSY.add('xtemplate/runtime', function (S, commands) {
         var self = this;
         self.tpl = tpl;
         config = S.merge(defaultConfig, config);
-        config.subTpls = S.merge(config.subTpls, XTemplateRuntime.subTpls);
         config.commands = S.merge(config.commands, XTemplateRuntime.commands);
-        config.engine = self;
         config.utils = utils;
         this.config = config;
     }
@@ -114,28 +131,11 @@ KISSY.add('xtemplate/runtime', function (S, commands) {
         },
 
         /**
-         * remove sub template by name
-         * @param subTplName
-         */
-        'removeSubTpl': function (subTplName) {
-            delete this.config.subTpls[subTplName];
-        },
-
-        /**
          * remove command by name
          * @param commandName
          */
         'removeCommand': function (commandName) {
             delete this.config.commands[commandName];
-        },
-
-        /**
-         * add sub template definition to current template
-         * @param subTplName
-         * @param {String|Function}def
-         */
-        addSubTpl: function (subTplName, def) {
-            this.config.subTpls[subTplName] = def;
         },
 
         /**
@@ -157,15 +157,13 @@ KISSY.add('xtemplate/runtime', function (S, commands) {
             if (!keepDataFormat) {
                 data = [data];
             }
-            return this.tpl(data, this.config);
+            return this.tpl(data);
         }
 
     };
 
     S.mix(XTemplateRuntime, {
         commands: commands,
-
-        subTpls: subTpls,
 
         utils: utils,
 
@@ -190,29 +188,6 @@ KISSY.add('xtemplate/runtime', function (S, commands) {
          */
         removeCommand: function (commandName) {
             delete commands[commandName];
-        },
-
-        /**
-         * add sub template definition to all template
-         * @method
-         * @static
-         * @param {String} tplName
-         * @param {Function|String} def
-         * @member KISSY.XTemplate.Runtime
-         */
-        addSubTpl: function (tplName, def) {
-            subTpls[tplName] = def;
-        },
-
-        /**
-         * remove sub template definition from all template by name
-         * @method
-         * @static
-         * @param {String} tplName
-         * @member KISSY.XTemplate.Runtime
-         */
-        removeSubTpl: function (tplName) {
-            delete  subTpls[tplName];
         }
     });
 

@@ -86,7 +86,6 @@ KISSY.add("xtemplate/runtime/commands", function (S) {
 
         include: function (scopes, config) {
             var params = config.params;
-
             // allow hash to shadow parent scopes
             var extra = config.hash ? [config.hash] : [];
             scopes = extra.concat(scopes);
@@ -98,21 +97,23 @@ KISSY.add("xtemplate/runtime/commands", function (S) {
                 return '';
             }
 
-            var param0 = params[0],
-                tpl,
-                subTpls = config.subTpls;
+            var myName = this.config.name;
+            var subTplName = params[0];
 
-            if (!(tpl = subTpls[param0])) {
-                S[config.silent ?
-                    'log' :
-                    'error']('does not include sub template "' +
-                        param0 + '"');
-                return '';
+            if (subTplName.charAt(0) == '.') {
+                if (myName == 'unspecified') {
+                    S.error('parent template does not have name' +' for relative sub tpl name: ' + subTplName);
+                    return '';
+                }
+                subTplName = S.Path.resolve(myName, '../', subTplName);
             }
 
-            config = S.merge(config);
+            var tpl= this.config.loader.call(this,subTplName);
+
+            config = S.merge(this.config);
             // template file name
-            config.name = param0;
+            config.name = subTplName;
+
             return this.invokeEngine(tpl, scopes, config)
         },
 

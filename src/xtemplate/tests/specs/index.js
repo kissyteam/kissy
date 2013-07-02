@@ -2,7 +2,7 @@
  * TC for KISSY XTemplate
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, XTemplate) {
+KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
 
     describe('xtemplate', function () {
 
@@ -618,31 +618,31 @@ KISSY.add(function (S, XTemplate) {
             });
 
             describe('sub template', function () {
+                it('support parse', function () {
+                    KISSY.add('xtemplate-test/sub-tpl-0', '{{title}}{{title2}}');
 
-                it('support parse',function(){
-                    XTemplate.addSubTpl('sub-tpl-1', '{{title}}{{title2}}');
-
-                    var tpl = '{{parse "sub-tpl-1" title2="2"}}';
+                    var tpl = '{{parse "xtemplate-test/sub-tpl-0" title2="2"}}';
 
                     var data = {
                         title: '1'
                     };
 
-                    var render = new XTemplate(tpl,{
-                        name:'test-parse'
+                    var render = new XTemplate(tpl, {
+                        name: 'test-parse'
                     }).render(data);
 
                     expect(render).toBe('2');
                 });
 
-                it('support global sub template as string', function () {
-                    XTemplate.addSubTpl('sub-tpl-1', '{{title}}');
-
-                    var tpl = '{{include "sub-tpl-1"}}';
+                it('support sub template as string', function () {
+                    var tpl = '{{include "xtemplate-test/sub-tpl-1"}}';
 
                     var data = {
                         title: '1'
                     };
+
+                    KISSY.add('xtemplate-test/sub-tpl-1', '{{title}}');
+
 
                     var render = new XTemplate(tpl).render(data);
 
@@ -650,76 +650,88 @@ KISSY.add(function (S, XTemplate) {
                 });
 
 
-                it('support global sub template as function', function () {
-                    XTemplate.addSubTpl('sub-tpl-2', function (scopes) {
-                        return scopes[0].title;
+                it('support relative sub template name', function () {
+                    var tpl = '{{include "./sub-tpl-3"}}';
+
+                    var data = {
+                        title: '1'
+                    };
+
+                    KISSY.add('xtemplate-test/sub-tpl-3', '{{title}}');
+
+                    var render = new XTemplate(tpl, {
+                        name: 'xtemplate-test/main'
+                    }).render(data);
+
+                    expect(render).toBe('1');
+                });
+
+
+                it('support unescape sub template name', function () {
+                    var tpl = '{{{include "./sub-tpl-3-1"}}}';
+
+                    var data = {
+                        title: '1'
+                    };
+
+                    KISSY.add('xtemplate-test/sub-tpl-3-1', '<>{{title}}');
+
+                    var render = new XTemplate(tpl, {
+                        name: 'xtemplate-test/main'
+                    }).render(data);
+
+                    expect(render).toBe('<>1');
+                });
+
+
+                it('support sub template as function', function () {
+                    var tpl = '{{include "xtemplate-test/sub-tpl-4"}}';
+
+                    var data = {
+                        title: '1'
+                    };
+
+                    KISSY.add('xtemplate-test/sub-tpl-4', function () {
+                        return function (scopes) {
+                            return scopes[0].title;
+                        };
                     });
 
-                    var tpl = '{{include "sub-tpl-2"}}';
-
-                    var data = {
-                        title: '1'
-                    };
-
                     var render = new XTemplate(tpl).render(data);
-
-                    expect(render).toBe('1');
-                });
-
-
-                it('support local sub template as string', function () {
-                    var tpl = '{{include "sub-tpl-3"}}';
-
-                    var data = {
-                        title: '1'
-                    };
-
-                    var render = new XTemplate(tpl, {
-                        subTpls: {
-                            'sub-tpl-3': '{{title}}'
-                        }
-                    }).render(data);
-
-                    expect(render).toBe('1');
-                });
-
-
-                it('support local sub template as function', function () {
-
-                    var tpl = '{{include "sub-tpl-4"}}';
-
-                    var data = {
-                        title: '1'
-                    };
-
-                    var render = new XTemplate(tpl, {
-                        subTpls: {
-                            'sub-tpl-4': function (scopes) {
-                                return scopes[0].title;
-                            }
-                        }
-                    }).render(data);
 
                     expect(render).toBe('1');
                 });
 
 
                 it('allow shadow parent data', function () {
-                    var tpl = '{{include "sub-tpl-3" title="2"}}';
+                    var tpl = '{{include "xtemplate-test/sub-tpl-5" title="2"}}';
 
                     var data = {
                         title: '1'
                     };
 
-                    var render = new XTemplate(tpl, {
-                        subTpls: {
-                            'sub-tpl-3': '{{title}}'
-                        }
-                    }).render(data);
+                    KISSY.add('xtemplate-test/sub-tpl-5', '{{title}}{{../title}}');
 
-                    expect(render).toBe('2');
+                    var render = new XTemplate(tpl).render(data);
+
+                    expect(render).toBe('21');
                 });
 
+                it('throw error when relative sub template name', function () {
+                    var tpl = '{{include "./sub-tpl-6"}}';
+
+                    var data = {
+                        title: '1'
+                    };
+
+                    KISSY.add('xtemplate-test/sub-tpl-6', '{{title}}');
+
+                    expect(function () {
+                        new XTemplate(tpl).render(data);
+                    }).toThrow("parent template does not have name " +
+                            "for relative sub tpl name:" +
+                            " ./sub-tpl-6: 'include' at line 1");
+                });
             });
 
             describe('expression', function () {
@@ -1187,6 +1199,30 @@ KISSY.add(function (S, XTemplate) {
 
     });
 
-},{
-    requires:['xtemplate']
+    if (S.UA.nodejs) {
+        describe('xtemplate on nodejs', function () {
+            it('can load from file', function () {
+                var path = S.config('packages').src.baseUri
+                    .resolve('src/xtemplate/tests/other/nodejs/')
+                    .getPath();
+
+                S.config('packages', {
+                    nodejs_xtemplate: {
+                        ignorePackageNameInUri: 1,
+                        base: path
+                    }
+                });
+
+                var xtemplate = new XTemplateNodeJs('nodejs_xtemplate/a');
+
+                expect(xtemplate.render({
+                    n: 3
+                })).toBe('12345');
+            })
+        });
+    }
+
+
+}, {
+    requires: ['xtemplate', KISSY.UA.nodejs ? 'xtemplate/nodejs' : '']
 });
