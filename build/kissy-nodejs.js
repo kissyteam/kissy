@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 3 13:57
+build time: Jul 3 17:20
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130703135748' will replace with current timestamp when compressing.
+         * NOTICE: '20130703172027' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130703135748',
+        __BUILD_TIME: '20130703172027',
         /**
          * KISSY Environment.
          * @private
@@ -5478,30 +5478,18 @@ var KISSY = (function (undefined) {
         return (new Function('return ' + s))();
     }
 
-    /**
-     * get base from seed.js
-     * @return {Object} base for kissy
-     * @ignore
-     *
-     * for example:
-     *      @example
-     *      http://a.tbcdn.cn/??s/kissy/x.y.z/seed-min.js,p/global/global.js
-     *      note about custom combo rules, such as yui3:
-     *      combo-prefix='combo?' combo-sep='&'
-     */
-    function getBaseInfo() {
-        // get base from current script file path
-        // notice: timestamp
-        var baseReg = /^(.*)(seed|kissy)(?:-min)?\.js[^/]*/i,
-            baseTestReg = /(seed|kissy)(?:-min)?\.js/i,
-            comboPrefix,
-            comboSep,
-            scripts = Env.host.document.getElementsByTagName('script'),
-            script = scripts[scripts.length - 1],
+    var baseReg = /^(.*)(seed|kissy)(?:-min)?\.js[^/]*/i,
+        baseTestReg = /(seed|kissy)(?:-min)?\.js/i;
+
+    function getBaseInfoFromOneScript(script) {
         // can not use KISSY.Uri
         // /??x.js,dom.js for tbcdn
-            src = script.src,
-            baseInfo = script.getAttribute('data-config');
+        var src = script.src || '';
+        if (!src.match(baseTestReg)) {
+            return 0;
+        }
+
+        var baseInfo = script.getAttribute('data-config');
 
         if (baseInfo) {
             baseInfo = returnJson(baseInfo);
@@ -5509,8 +5497,8 @@ var KISSY = (function (undefined) {
             baseInfo = {};
         }
 
-        comboPrefix = baseInfo.comboPrefix = baseInfo.comboPrefix || '??';
-        comboSep = baseInfo.comboSep = baseInfo.comboSep || ',';
+        var comboPrefix = baseInfo.comboPrefix = baseInfo.comboPrefix || '??';
+        var comboSep = baseInfo.comboSep = baseInfo.comboSep || ',';
 
         var parts ,
             base,
@@ -5535,9 +5523,38 @@ var KISSY = (function (undefined) {
                 return undefined;
             });
         }
+
         return S.mix({
             base: base
         }, baseInfo);
+    }
+
+    /**
+     * get base from seed.js
+     * @return {Object} base for kissy
+     * @ignore
+     *
+     * for example:
+     *      @example
+     *      http://a.tbcdn.cn/??s/kissy/x.y.z/seed-min.js,p/global/global.js
+     *      note about custom combo rules, such as yui3:
+     *      combo-prefix='combo?' combo-sep='&'
+     */
+    function getBaseInfo() {
+        // get base from current script file path
+        // notice: timestamp
+        var scripts = Env.host.document.getElementsByTagName('script'),
+            i,
+            info;
+
+        for (i = scripts.length - 1; i >= 0; i--) {
+            if (info = getBaseInfoFromOneScript(scripts[i])) {
+                return info;
+            }
+        }
+
+        S.error('must load kissy by file name: seed.js or seed-min.js');
+        return null;
     }
 
     if (S.UA.nodejs) {
@@ -5554,7 +5571,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20130703135748'
+            tag: '20130703172027'
         }, getBaseInfo()));
     }
 

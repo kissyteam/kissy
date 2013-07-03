@@ -167,30 +167,18 @@
         return (new Function('return ' + s))();
     }
 
-    /**
-     * get base from seed.js
-     * @return {Object} base for kissy
-     * @ignore
-     *
-     * for example:
-     *      @example
-     *      http://a.tbcdn.cn/??s/kissy/x.y.z/seed-min.js,p/global/global.js
-     *      note about custom combo rules, such as yui3:
-     *      combo-prefix='combo?' combo-sep='&'
-     */
-    function getBaseInfo() {
-        // get base from current script file path
-        // notice: timestamp
-        var baseReg = /^(.*)(seed|kissy)(?:-min)?\.js[^/]*/i,
-            baseTestReg = /(seed|kissy)(?:-min)?\.js/i,
-            comboPrefix,
-            comboSep,
-            scripts = Env.host.document.getElementsByTagName('script'),
-            script = scripts[scripts.length - 1],
+    var baseReg = /^(.*)(seed|kissy)(?:-min)?\.js[^/]*/i,
+        baseTestReg = /(seed|kissy)(?:-min)?\.js/i;
+
+    function getBaseInfoFromOneScript(script) {
         // can not use KISSY.Uri
         // /??x.js,dom.js for tbcdn
-            src = script.src,
-            baseInfo = script.getAttribute('data-config');
+        var src = script.src || '';
+        if (!src.match(baseTestReg)) {
+            return 0;
+        }
+
+        var baseInfo = script.getAttribute('data-config');
 
         if (baseInfo) {
             baseInfo = returnJson(baseInfo);
@@ -198,8 +186,8 @@
             baseInfo = {};
         }
 
-        comboPrefix = baseInfo.comboPrefix = baseInfo.comboPrefix || '??';
-        comboSep = baseInfo.comboSep = baseInfo.comboSep || ',';
+        var comboPrefix = baseInfo.comboPrefix = baseInfo.comboPrefix || '??';
+        var comboSep = baseInfo.comboSep = baseInfo.comboSep || ',';
 
         var parts ,
             base,
@@ -224,9 +212,38 @@
                 return undefined;
             });
         }
+
         return S.mix({
             base: base
         }, baseInfo);
+    }
+
+    /**
+     * get base from seed.js
+     * @return {Object} base for kissy
+     * @ignore
+     *
+     * for example:
+     *      @example
+     *      http://a.tbcdn.cn/??s/kissy/x.y.z/seed-min.js,p/global/global.js
+     *      note about custom combo rules, such as yui3:
+     *      combo-prefix='combo?' combo-sep='&'
+     */
+    function getBaseInfo() {
+        // get base from current script file path
+        // notice: timestamp
+        var scripts = Env.host.document.getElementsByTagName('script'),
+            i,
+            info;
+
+        for (i = scripts.length - 1; i >= 0; i--) {
+            if (info = getBaseInfoFromOneScript(scripts[i])) {
+                return info;
+            }
+        }
+
+        S.error('must load kissy by file name: seed.js or seed-min.js');
+        return null;
     }
 
     if (S.UA.nodejs) {
