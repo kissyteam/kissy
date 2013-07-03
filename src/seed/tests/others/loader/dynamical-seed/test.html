@@ -6,7 +6,20 @@
                     node = doc.createElement('script');
             node.src = url;
             node.async = true;
-            node.onload = success;
+            if ('onload' in node) {
+                node.onload = success;
+            } else {
+                node.onreadystatechange = function () {
+                    var readyState = node.readyState;
+                    if (!readyState ||
+                            readyState == "loaded" ||
+                            readyState == "complete") {
+                        node.onreadystatechange = null;
+                        success.call(node)
+                    }
+                }
+            }
+
             // can use js in head
             head.insertBefore(node, head.firstChild);
             return node;
