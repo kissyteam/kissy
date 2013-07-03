@@ -19,6 +19,7 @@ function collectTc(baseDir, codes) {
                 S.each(runners, function (r) {
                     r = '/kissy' + (f + '/' + r).replace(cwd, '').replace(/\\/g, '/');
                     codes.push("tests.push('" + r + "');\n");
+                    codes.push("tests.push('" + r + "?build');\n");
                 });
             } else {
                 collectTc(f, codes);

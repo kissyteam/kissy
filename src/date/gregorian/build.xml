@@ -1,0 +1,6 @@
+<project name="date/gregorian.build" default="build" basedir=".">
+    <property name="component.name" value="date/gregorian"/>
+
+    <import file="../../common.xml"/>
+</project>
+

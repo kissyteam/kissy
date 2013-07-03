@@ -3,7 +3,8 @@
     For dev mode only!
 */
 KISSY.config('tag', KISSY.now());
-if (location.href.indexOf('__build') == -1) {
+var loc = new KISSY.Uri(location.href);
+if (!loc.getQuery().has('build')) {
     KISSY.config('packages', {
         "anim": {
             "base": "/kissy/src/anim/src/anim",
