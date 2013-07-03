@@ -18,7 +18,7 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
                     body,
                     elBody = self.get("body");
 
-                ghost.all('.' + self.prefixCls + 'stdmod-body')
+                ghost.all('.' + self.get('prefixCls') + 'stdmod-body')
                     .css({
                         height: elBody.height(),
                         width: elBody.width()

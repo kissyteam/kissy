@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 27 03:32
+build time: Jul 3 14:38
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -138,7 +138,7 @@ KISSY.add('component/container', function (S, Control, ContainerRender) {
 
         initializer: function () {
             var self = this,
-                prefixCls = self.prefixCls,
+                prefixCls = self.get('prefixCls'),
                 defaultChildCfg = self.get('defaultChildCfg');
 
             self.publish('beforeAddChild', {
@@ -320,15 +320,14 @@ KISSY.add('component/container', function (S, Control, ContainerRender) {
             children: {
                 value: [],
                 getter: function (v) {
-                    var defaultChildCfg,
+                    var defaultChildCfg = null,
                         i,
                         c,
                         self = this;
                     for (i = 0; i < v.length; i++) {
                         c = v[i];
                         if (!c.isControl) {
-                            defaultChildCfg = defaultChildCfg ||
-                                self.get('defaultChildCfg');
+                            defaultChildCfg = defaultChildCfg || self.get('defaultChildCfg');
                             S.mix(c, defaultChildCfg, false);
                             v[i] = this.createComponent(c);
                         }

@@ -18,7 +18,7 @@ KISSY.add("editor/plugin/smiley", function (S, Editor, Overlay4E) {
     S.augment(Smiley, {
         pluginRenderUI: function (editor) {
 
-            var prefixCls = editor.prefixCls;
+            var prefixCls = editor.get('prefixCls');
 
             editor.addButton("smiley", {
                 tooltip: "插入表情",

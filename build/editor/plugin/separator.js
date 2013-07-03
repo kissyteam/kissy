@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 27 03:38
+build time: Jul 3 13:54
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -21,7 +21,7 @@ KISSY.add("editor/plugin/separator", function (S) {
     S.augment(Separator, {
         pluginRenderUI:function (editor) {
             S.all('<span ' +
-                'class="'+editor.prefixCls+'editor-toolbar-separator">&nbsp;' +
+                'class="'+editor.get('prefixCls')+'editor-toolbar-separator">&nbsp;' +
                 '</span>')
                 .appendTo(editor.get("toolBarEl"));
         }

@@ -29,7 +29,7 @@ KISSY.add("tabs", function (S, Container, Bar, Body, Tab, Panel, Render) {
                 var children = self.get('children'),
                     barOrientation = self.get('barOrientation'),
                     selected,
-                    prefixCls = self.prefixCls,
+                    prefixCls = self.get('prefixCls'),
                     tabItem,
                     panelItem,
                     bar = {

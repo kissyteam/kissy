@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 27 03:33
+build time: Jul 3 13:50
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -23,7 +23,7 @@ KISSY.add("editor/plugin/button", function (S, Editor, Button) {
             ButtonType = Button;
         }
         var self = this,
-            prefixCls = self.prefixCls + "editor-toolbar-";
+            prefixCls = self.get('prefixCls') + "editor-toolbar-";
 
         if (cfg.elCls) {
             cfg.elCls = prefixCls + cfg.elCls;
@@ -38,7 +38,7 @@ KISSY.add("editor/plugin/button", function (S, Editor, Button) {
                 prefixCls + id +
                 '"></span' +
                 '>',
-            prefixCls: self.prefixCls + "editor-",
+            prefixCls: self.get('prefixCls') + "editor-",
             editor: self
         }, cfg)).render();
 

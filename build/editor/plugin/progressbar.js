@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 27 03:37
+build time: Jul 3 13:54
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -43,7 +43,7 @@ KISSY.add("editor/plugin/progressbar", function(S) {
         _init:function() {
             var self = this,
                 h = self.get("height"),
-                prefixCls=self.prefixCls,
+                prefixCls=self.get('prefixCls'),
                 el = new Node(
 
                     S.substitute("<div" +

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 27 03:38
+build time: Jul 3 13:54
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -29,7 +29,7 @@ KISSY.add("editor/plugin/smiley", function (S, Editor, Overlay4E) {
     S.augment(Smiley, {
         pluginRenderUI: function (editor) {
 
-            var prefixCls = editor.prefixCls;
+            var prefixCls = editor.get('prefixCls');
 
             editor.addButton("smiley", {
                 tooltip: "插入表情",

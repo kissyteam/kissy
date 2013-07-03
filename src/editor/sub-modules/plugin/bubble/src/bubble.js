@@ -117,7 +117,7 @@ KISSY.add("editor/plugin/bubble", function (S, Overlay, Editor) {
 
     Editor.prototype.addBubble = function (id, filter, cfg) {
         var editor = this,
-            prefixCls = editor.prefixCls,
+            prefixCls = editor.get('prefixCls'),
             bubble;
 
         cfg = cfg || {};

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 2 12:39
+build time: Jul 3 14:38
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -630,7 +630,7 @@ KISSY.add("component/control/render", function (S, RenderProcess, XTemplate, Ren
                 control = this.get('control'),
                 cls = '',
                 l = componentCssClasses.length,
-                prefixCls = control.prefixCls;
+                prefixCls = control.get('prefixCls');
             for (; i < l; i++) {
                 cls += prefixExtra(prefixCls, componentCssClasses[i], extras);
             }
@@ -645,7 +645,7 @@ KISSY.add("component/control/render", function (S, RenderProcess, XTemplate, Ren
          */
         getBaseCssClass: function (extras) {
             return trim(prefixExtra(
-                this.control.prefixCls,
+                this.control.get('prefixCls'),
                 this.getComponentCssClasses()[0],
                 normalExtras(extras)
             ));
@@ -850,11 +850,6 @@ KISSY.add("component/control", function (S, Node, ControlProcess, Manager, Rende
              * @member KISSY.Component.Control
              */
             isControl: true,
-
-            initializer: function () {
-                // shortcut
-                this.prefixCls = this.get('prefixCls');
-            },
 
             /**
              * Constructor(or get) view object to create ui elements.

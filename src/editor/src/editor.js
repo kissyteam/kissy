@@ -69,7 +69,7 @@ KISSY.add('editor', function (S, Node, iframeContentTpl, Editor, Utils, focusMan
         bindUI: function () {
             var self = this,
                 form,
-                prefixCls = self.prefixCls,
+                prefixCls = self.get('prefixCls'),
                 textarea = self.get('textarea');
 
             if (self.get('attachForm') &&
@@ -1098,7 +1098,7 @@ KISSY.add('editor', function (S, Node, iframeContentTpl, Editor, Utils, focusMan
         }
         var iframe = new Node(S.substitute(IFRAME_TPL, {
                 iframeSrc: iframeSrc,
-                prefixCls: self.prefixCls
+                prefixCls: self.get('prefixCls')
             })),
             textarea = self.get('textarea');
         if (textarea.hasAttr('tabindex')) {

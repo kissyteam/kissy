@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 27 03:38
+build time: Jul 3 13:54
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -38,7 +38,7 @@ this.config=config||{};
                 }
             }
 
-            var resizer = new Node("<div class='"+editor.prefixCls+
+            var resizer = new Node("<div class='"+editor.get('prefixCls')+
                 "editor-resizer' style='cursor: "
                 + cursor +
                 "'></div>").appendTo(statusBarEl);

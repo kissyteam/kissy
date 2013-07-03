@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 27 03:37
+build time: Jul 3 13:53
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -121,7 +121,7 @@ KISSY.add("editor/plugin/maximize/cmd", function (S, Editor) {
 
             if (ie < 8) {
                 editor.get("toolBarEl").removeClass(
-                    editor.prefixCls + MAXIMIZE_TOOLBAR_CLASS, undefined);
+                    editor.get('prefixCls') + MAXIMIZE_TOOLBAR_CLASS, undefined);
             }
         },
         /**
@@ -159,7 +159,7 @@ KISSY.add("editor/plugin/maximize/cmd", function (S, Editor) {
             //ie6,7 图标到了窗口边界，不可点击，给个padding
             if (ie < 8) {
                 editor.get("toolBarEl").addClass(
-                    editor.prefixCls + MAXIMIZE_TOOLBAR_CLASS, undefined);
+                    editor.get('prefixCls') + MAXIMIZE_TOOLBAR_CLASS, undefined);
             }
         },
 

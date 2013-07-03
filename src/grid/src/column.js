@@ -124,7 +124,7 @@ KISSY.add('grid/column', function (S, Component, Template) {
             handleClickInternal:function (ev) {
                 var _self = this,
                     sender = S.one(ev.target),
-                    prefix = _self.prefixCls;
+                    prefix = _self.get('prefixCls');
                 if (sender.hasClass(prefix + CLS_HD_TRIGGER)) {
 
                 } else {

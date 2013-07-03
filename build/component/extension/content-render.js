@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 27 03:32
+build time: Jul 3 14:39
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -41,12 +41,12 @@ KISSY.add('component/extension/content-render', function (S) {
         },
 
         getChildrenContainerEl: function () {
-            return this.control.get('contentEl');
+            return this.control.$contentEl;
         },
 
         _onSetContent: function (v) {
             var control = this.control,
-                contentEl = control.get('contentEl');
+                contentEl = control.$contentEl;
             contentEl.html(v);
             // ie needs to set unselectable attribute recursively
             if (S.UA.ie < 9 && !control.get('allowTextSelection')) {

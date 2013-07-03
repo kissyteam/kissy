@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 27 03:36
+build time: Jul 3 13:53
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -66,7 +66,7 @@ KISSY.add("editor/plugin/link/dialog", function (S, Editor, Dialog4E, Utils) {
         _prepareShow:function () {
             var self = this,
                 editor=self.editor,
-                prefixCls=editor.prefixCls,
+                prefixCls=editor.get('prefixCls'),
                 d = new Dialog4E({
                     width:500,
                     headerContent:"链接",

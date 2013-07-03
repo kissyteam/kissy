@@ -33,7 +33,7 @@ KISSY.add("editor/plugin/image", function (S, Editor, Button, Bubble, ContextMen
 
             var self = this;
 
-            var prefixCls = editor.prefixCls;
+            var prefixCls = editor.get('prefixCls');
 
             function showImageEditor(selectedEl) {
                 DialogLoader.useDialog(editor, "image",

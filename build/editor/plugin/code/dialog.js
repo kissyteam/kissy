@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 27 03:34
+build time: Jul 3 13:50
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -96,7 +96,7 @@ KISSY.add('editor/plugin/code/dialog', function (S, Editor, Dialog4E, MenuButton
     S.augment(CodeDialog, {
         initDialog: function () {
             var self = this,
-                prefixCls = self.editor.prefixCls + 'editor-',
+                prefixCls = self.editor.get('prefixCls') + 'editor-',
                 el,
                 d;
             d = self.dialog = new Dialog4E({

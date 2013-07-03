@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 27 03:39
+build time: Jul 3 13:55
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -86,7 +86,7 @@ KISSY.add("editor/plugin/xiami-music/dialog", function (S, Editor, FlashDialog, 
         _config: function () {
             var self = this,
                 editor = self.editor,
-                prefixCls = editor.prefixCls;
+                prefixCls = editor.get('prefixCls');
             self._cls = CLS_XIAMI;
             self._type = TYPE_XIAMI;
             self._title = "虾米音乐";//属性";
@@ -100,7 +100,7 @@ KISSY.add("editor/plugin/xiami-music/dialog", function (S, Editor, FlashDialog, 
         _initD: function () {
             var self = this,
                 editor = self.editor,
-                prefixCls = editor.prefixCls,
+                prefixCls = editor.get('prefixCls'),
                 d = self.dialog,
                 del = d.get("el"),
                 dfoot = d.get("footer"),
@@ -239,7 +239,7 @@ KISSY.add("editor/plugin/xiami-music/dialog", function (S, Editor, FlashDialog, 
             var self = this,
                 i,
                 editor = self.editor,
-                prefixCls = editor.prefixCls,
+                prefixCls = editor.get('prefixCls'),
                 re = data['results'],
                 html = "";
             // xiami 返回结果自动trim了
@@ -321,7 +321,7 @@ KISSY.add("editor/plugin/xiami-music/dialog", function (S, Editor, FlashDialog, 
         _updateD: function () {
             var self = this,
                 editor = self.editor,
-                prefixCls = editor.prefixCls,
+                prefixCls = editor.get('prefixCls'),
                 f = self.selectedFlash;
             if (f) {
                 self._xiami_input.val(f.attr("title"));

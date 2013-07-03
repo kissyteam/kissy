@@ -312,7 +312,7 @@ KISSY.add("component/control/render", function (S, RenderProcess, XTemplate, Ren
                 control = this.get('control'),
                 cls = '',
                 l = componentCssClasses.length,
-                prefixCls = control.prefixCls;
+                prefixCls = control.get('prefixCls');
             for (; i < l; i++) {
                 cls += prefixExtra(prefixCls, componentCssClasses[i], extras);
             }
@@ -327,7 +327,7 @@ KISSY.add("component/control/render", function (S, RenderProcess, XTemplate, Ren
          */
         getBaseCssClass: function (extras) {
             return trim(prefixExtra(
-                this.control.prefixCls,
+                this.control.get('prefixCls'),
                 this.getComponentCssClasses()[0],
                 normalExtras(extras)
             ));

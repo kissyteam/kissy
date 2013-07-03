@@ -12,10 +12,10 @@ KISSY.add("overlay/overlay-render", function (S, Container, ContentRenderExtensi
         createDom: function () {
             var self = this;
             if (self.control.get('closable')) {
-                self.control.get('contentEl')
+                self.control.$contentEl
                     .append(self.renderTpl(CloseTpl));
                 self.fillChildrenElsBySelectors({
-                    closeBtn: '#ks-ext-close-{id}'
+                    closeBtn: '#ks-overlay-close-{id}'
                 });
             }
         }

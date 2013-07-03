@@ -32,11 +32,6 @@ KISSY.add("component/control", function (S, Node, ControlProcess, Manager, Rende
              */
             isControl: true,
 
-            initializer: function () {
-                // shortcut
-                this.prefixCls = this.get('prefixCls');
-            },
-
             /**
              * Constructor(or get) view object to create ui elements.
              * @protected

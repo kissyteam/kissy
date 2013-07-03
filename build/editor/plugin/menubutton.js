@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 27 03:37
+build time: Jul 3 13:53
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -22,7 +22,7 @@ KISSY.add("editor/plugin/menubutton", function (S, Editor, MenuButton) {
 
         SelectType = SelectType || MenuButton.Select;
 
-        var self = this, prefixCls = self.prefixCls + "editor-";
+        var self = this, prefixCls = self.get('prefixCls') + "editor-";
 
         if (cfg) {
             cfg.editor = self;

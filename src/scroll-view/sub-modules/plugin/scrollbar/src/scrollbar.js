@@ -21,7 +21,7 @@ KISSY.add('scroll-view/plugin/scrollbar', function (S, Base, ScrollBar) {
             var cfg = {
                 scrollView: scrollView,
                 // render: scrollView.get('el') => ie7 bug
-                elBefore: scrollView.get('contentEl')
+                elBefore: scrollView.$contentEl
             };
             if (minLength !== undefined) {
                 cfg.minLength = minLength;

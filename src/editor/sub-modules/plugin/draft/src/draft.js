@@ -81,7 +81,7 @@ KISSY.add("editor/plugin/draft", function (S, Editor, localStorage, Overlay, Men
 
             var self = this,
                 editor = self.editor,
-                prefixCls = editor.prefixCls,
+                prefixCls = editor.get('prefixCls'),
                 statusbar = editor.get("statusBarEl"),
                 cfg = this.config;
             cfg.draft = cfg.draft || {};
@@ -207,7 +207,7 @@ KISSY.add("editor/plugin/draft", function (S, Editor, localStorage, Overlay, Men
         _prepareHelp: function () {
             var self = this,
                 editor = self.editor,
-                prefixCls = editor.prefixCls,
+                prefixCls = editor.get('prefixCls'),
                 cfg = self.config,
                 draftCfg = cfg.draft,
                 help = new Node(draftCfg['helpHTML'] || "");

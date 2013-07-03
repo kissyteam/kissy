@@ -8,7 +8,7 @@ KISSY.add("menubutton/render", function (S, Button, ContentRenderExtension) {
 
         decorateDom: function (el) {
             var control = this.control,
-                prefixCls = control.prefixCls;
+                prefixCls = control.get('prefixCls');
             var popupMenuEl = el.one('.' + prefixCls + 'popupmenu');
             var docBody = popupMenuEl[0].ownerDocument.body;
             docBody.insertBefore(popupMenuEl[0], docBody.firstChild);

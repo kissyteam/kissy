@@ -12,7 +12,7 @@ KISSY.add("editor/plugin/button", function (S, Editor, Button) {
             ButtonType = Button;
         }
         var self = this,
-            prefixCls = self.prefixCls + "editor-toolbar-";
+            prefixCls = self.get('prefixCls') + "editor-toolbar-";
 
         if (cfg.elCls) {
             cfg.elCls = prefixCls + cfg.elCls;
@@ -27,7 +27,7 @@ KISSY.add("editor/plugin/button", function (S, Editor, Button) {
                 prefixCls + id +
                 '"></span' +
                 '>',
-            prefixCls: self.prefixCls + "editor-",
+            prefixCls: self.get('prefixCls') + "editor-",
             editor: self
         }, cfg)).render();
 

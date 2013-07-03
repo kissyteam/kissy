@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 27 03:34
+build time: Jul 3 13:51
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -168,7 +168,7 @@ KISSY.add("editor/plugin/color/dialog", function (S, Editor, Dialog4E) {
         _init: function () {
             var self = this,
                 editor = self.editor,
-                prefixCls = editor.prefixCls;
+                prefixCls = editor.get('prefixCls');
 
             self.dialog = new Dialog4E({
                 mask: true,
@@ -244,7 +244,7 @@ KISSY.add("editor/plugin/color/dialog", function (S, Editor, Dialog4E) {
                 win = self.dialog,
                 body = win.get("body"),
                 editor = self.editor,
-                prefixCls = editor.prefixCls,
+                prefixCls = editor.get('prefixCls'),
                 detailPanel = body.one("." + prefixCls + "editor-color-advanced-picker-right");
 
             detailPanel.html(map(ColorGrads(["#ffffff", color, "#000000"], 40),

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 27 03:34
+build time: Jul 3 13:50
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -89,7 +89,7 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, Dia
         _prepare: function () {
             var self = this,
                 editor = self.get("editor"),
-                prefixCls = editor.prefixCls,
+                prefixCls = editor.get('prefixCls'),
                 colorPanel;
 
             self.colorWin = new Overlay4E({
@@ -141,7 +141,7 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, Dia
             ev.halt();
             var self = this,
                 editor = self.get("editor"),
-                prefixCls = editor.prefixCls,
+                prefixCls = editor.get('prefixCls'),
                 t = new Node(ev.target);
             if (t.hasClass(prefixCls + "editor-color-a")) {
                 self.fire('selectColor', {
@@ -178,7 +178,7 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, Dia
     }
 
     ColorButton.init = function (editor, cfg) {
-        var prefix = editor.prefixCls + 'editor-toolbar-',
+        var prefix = editor.get('prefixCls') + 'editor-toolbar-',
             cmdType = cfg.cmdType,
             defaultColor = cfg.defaultColor,
             tooltip = cfg.tooltip;

@@ -27,7 +27,7 @@ this.config=config||{};
                 }
             }
 
-            var resizer = new Node("<div class='"+editor.prefixCls+
+            var resizer = new Node("<div class='"+editor.get('prefixCls')+
                 "editor-resizer' style='cursor: "
                 + cursor +
                 "'></div>").appendTo(statusBarEl);

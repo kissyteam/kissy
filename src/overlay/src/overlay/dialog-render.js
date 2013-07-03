@@ -21,7 +21,7 @@ KISSY.add("overlay/dialog-render", function (S, OverlayRender, DialogTpl) {
 
         createDom: function () {
             var self=this;
-            self.$contentEl.html(self.renderTpl(DialogTpl));
+            self.$contentEl.append(self.renderTpl(DialogTpl));
             // sentinel
             self.$el.append('<div tabindex="0"></div>');
             self.fillChildrenElsBySelectors({

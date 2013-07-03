@@ -1,9 +1,9 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 27 03:33
+build time: Jul 3 13:50
 */
 KISSY.add("editor/plugin/bubble",function(f,t,n){function u(j){var h=null,a=j.get("editor").getControls();f.each(a,function(a){var c;if(c=a.isKeBubble)if(c=a!==j)if(c=a.get("visible")){c=j.get("y");var f=c+j.get("el").outerHeight(),i=a.get("y"),d=i+a.get("el").outerHeight();c=c<=d&&f>=d||c<=i&&f>=i}c&&(h?h.get("y")<a.get("y")&&(h=a):h=a)});return h}var i={}.a,w={zIndex:n.baseZIndex(n.zIndexManager.BUBBLE_VIEW),elCls:"{prefixCls}editor-bubble",prefixCls:"{prefixCls}editor-",effect:{effect:"fade",duration:0.3}};
 n.prototype.addBubble=function(j,h,a){function p(){e.hide();var b=d.get("window");b&&(b.detach("scroll",q),r.stop())}function c(){var b;var a=e;if(b=a.get("editorSelectedEl")){var c=a.get("editor"),d=c.get("window"),k=c.get("iframe").offset(),a=k.top,k=k.left,h=k+d.width(),d=a+d.height(),g=b.offset(),g=n.Utils.getXY(g,c),c=g.top,g=g.left,j=g+b.width(),m=c+b.height(),l,o;f.UA.ie&&"img"==b[0].nodeName.toLowerCase()&&m>d?b=i:(m>d&&c<d?o=d-30:m>a&&m<d&&(o=m),j>k&&g<k?l=k:g>k&&g<h&&(l=g),b=l!==i&&o!==
-i?[l,o]:i)}else b=i;if(b){e.move(b[0],b[1]);if(l=u(e))b[1]=l.get("y")+l.get("el").outerHeight(),e.move(b[0],b[1]);e.get("visible")||e.show()}}function q(){e.get("editorSelectedEl")&&(e.get("el"),e.hide(),r())}function v(){d.get("window").on("scroll",q);c()}var d=this,s=d.prefixCls,e,a=a||{};a.editor=d;f.mix(a,w);a.elCls=f.substitute(a.elCls,{prefixCls:s});a.prefixCls=f.substitute(a.prefixCls,{prefixCls:s});e=new t(a);e.isKeBubble=1;d.addControl(j+"/bubble",e);d.on("selectionChange",function(b){var b=
+i?[l,o]:i)}else b=i;if(b){e.move(b[0],b[1]);if(l=u(e))b[1]=l.get("y")+l.get("el").outerHeight(),e.move(b[0],b[1]);e.get("visible")||e.show()}}function q(){e.get("editorSelectedEl")&&(e.get("el"),e.hide(),r())}function v(){d.get("window").on("scroll",q);c()}var d=this,s=d.get("prefixCls"),e,a=a||{};a.editor=d;f.mix(a,w);a.elCls=f.substitute(a.elCls,{prefixCls:s});a.prefixCls=f.substitute(a.prefixCls,{prefixCls:s});e=new t(a);e.isKeBubble=1;d.addControl(j+"/bubble",e);d.on("selectionChange",function(b){var b=
 b.path,a=b.elements;if(b&&a&&(b=b.lastElement))(b=h(b))?(e.set("editorSelectedEl",b),e.hide(),f.later(v,10)):p()});d.on("sourceMode",p);var r=f.buffer(c,350)}},{requires:["overlay","editor"]});

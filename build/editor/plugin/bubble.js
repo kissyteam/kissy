@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 27 03:33
+build time: Jul 3 13:50
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -128,7 +128,7 @@ KISSY.add("editor/plugin/bubble", function (S, Overlay, Editor) {
 
     Editor.prototype.addBubble = function (id, filter, cfg) {
         var editor = this,
-            prefixCls = editor.prefixCls,
+            prefixCls = editor.get('prefixCls'),
             bubble;
 
         cfg = cfg || {};

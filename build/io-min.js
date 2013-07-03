@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 27 03:40
+build time: Jul 3 13:56
 */
 KISSY.add("io/form-serializer",function(c,g){function i(a){return a.replace(h,"\r\n")}var m=/^(?:select|textarea)/i,h=/\r?\n/g,e,a=/^(?:color|date|datetime|email|hidden|month|number|password|range|search|tel|text|time|url|week)$/i;return e={serialize:function(a,b){return c.param(e.getFormData(a),void 0,void 0,b||!1)},getFormData:function(f){var b=[],e={};c.each(g.query(f),function(n){n=n.elements?c.makeArray(n.elements):[n];b.push.apply(b,n)});b=c.filter(b,function(n){return n.name&&!n.disabled&&
 (n.checked||m.test(n.nodeName)||a.test(n.type))});c.each(b,function(n){var a=g.val(n),d;null!==a&&(a=c.isArray(a)?c.map(a,i):i(a),(d=e[n.name])?(d&&!c.isArray(d)&&(d=e[n.name]=[d]),d.push.apply(d,c.makeArray(a))):e[n.name]=a)});return e}}},{requires:["dom"]});

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 27 03:35
+build time: Jul 3 13:52
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -44,7 +44,7 @@ KISSY.add("editor/plugin/image", function (S, Editor, Button, Bubble, ContextMen
 
             var self = this;
 
-            var prefixCls = editor.prefixCls;
+            var prefixCls = editor.get('prefixCls');
 
             function showImageEditor(selectedEl) {
                 DialogLoader.useDialog(editor, "image",

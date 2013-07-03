@@ -101,11 +101,11 @@ KISSY.add('scroll-view/base/render', function (S, Node, Container, ContentRender
         },
 
         '_onSetScrollLeft': function (v) {
-            this.control.get('contentEl')[0].style.left = -v + 'px';
+            this.control.contentEl.style.left = -v + 'px';
         },
 
         '_onSetScrollTop': function (v) {
-            this.control.get('contentEl')[0].style.top = -v + 'px';
+            this.control.contentEl.style.top = -v + 'px';
         }
     };
 

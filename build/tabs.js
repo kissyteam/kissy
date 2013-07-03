@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 27 03:42
+build time: Jul 3 13:58
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -454,7 +454,7 @@ KISSY.add("tabs", function (S, Container, Bar, Body, Tab, Panel, Render) {
                 var children = self.get('children'),
                     barOrientation = self.get('barOrientation'),
                     selected,
-                    prefixCls = self.prefixCls,
+                    prefixCls = self.get('prefixCls'),
                     tabItem,
                     panelItem,
                     bar = {

@@ -11,7 +11,7 @@ KISSY.add("editor/plugin/menubutton", function (S, Editor, MenuButton) {
 
         SelectType = SelectType || MenuButton.Select;
 
-        var self = this, prefixCls = self.prefixCls + "editor-";
+        var self = this, prefixCls = self.get('prefixCls') + "editor-";
 
         if (cfg) {
             cfg.editor = self;

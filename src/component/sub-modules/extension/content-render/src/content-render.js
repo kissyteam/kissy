@@ -30,12 +30,12 @@ KISSY.add('component/extension/content-render', function (S) {
         },
 
         getChildrenContainerEl: function () {
-            return this.control.get('contentEl');
+            return this.control.$contentEl;
         },
 
         _onSetContent: function (v) {
             var control = this.control,
-                contentEl = control.get('contentEl');
+                contentEl = control.$contentEl;
             contentEl.html(v);
             // ie needs to set unselectable attribute recursively
             if (S.UA.ie < 9 && !control.get('allowTextSelection')) {

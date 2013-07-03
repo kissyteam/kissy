@@ -66,7 +66,7 @@ KISSY.add("filter-menu", function (S, Menu, FilterMenuRender) {
              */
             filterItems: function (str) {
                 var self = this,
-                    prefixCls = self.prefixCls,
+                    prefixCls = self.get('prefixCls'),
                     _placeholderEl = self.get("placeholderEl"),
                     filterInput = self.get("filterInput");
 

@@ -23,7 +23,7 @@ KISSY.add("overlay/extension/loading", function (S, Node) {
             if (!self._loadingExtEl) {
                 self._loadingExtEl = new Node("<div " +
                     "class='" +
-                    self.prefixCls + "ext-loading'" +
+                    self.get('prefixCls') + "ext-loading'" +
                     " style='position: absolute;" +
                     "border: none;" +
                     "width: 100%;" +

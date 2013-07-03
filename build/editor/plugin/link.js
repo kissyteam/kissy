@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 27 03:36
+build time: Jul 3 13:53
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -43,7 +43,7 @@ KISSY.add("editor/plugin/link", function (S, Editor, Bubble, Utils, DialogLoader
     S.augment(LinkPlugin, {
         pluginRenderUI: function (editor) {
 
-            var prefixCls = editor.prefixCls;
+            var prefixCls = editor.get('prefixCls');
             editor.addButton("link", {
                 tooltip: "插入链接",
                 listeners: {

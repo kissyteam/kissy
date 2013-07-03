@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 27 03:40
+build time: Jul 3 13:57
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -570,7 +570,7 @@ KISSY.add("menu/submenu-render", function (S, MenuItemRender, ContentRenderExten
     return MenuItemRender.extend([ContentRenderExtension], {
         decorateDom: function (el) {
             var control = this.control,
-                prefixCls = control.prefixCls;
+                prefixCls = control.get('prefixCls');
             var popupMenuEl = el.one('.' + prefixCls + 'popupmenu');
             var docBody = popupMenuEl[0].ownerDocument.body;
             docBody.insertBefore(popupMenuEl[0], docBody.firstChild);

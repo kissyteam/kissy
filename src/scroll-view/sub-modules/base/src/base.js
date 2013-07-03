@@ -193,7 +193,7 @@ KISSY.add('scroll-view/base', function (S, Node, Container, Render, undefined) {
             if (anim) {
                 var scrollLeft = self.get('scrollLeft'),
                     scrollTop = self.get('scrollTop'),
-                    contentEl = self.get('contentEl'),
+                    contentEl = self.$contentEl,
                     animProperty = {
                         xx: {
                             fx: {

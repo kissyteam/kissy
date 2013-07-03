@@ -15,7 +15,7 @@ KISSY.add("editor/plugin/contextmenu", function (S, Editor, Menu, focusFix) {
             delete  cfg.event;
         }
 
-        cfg.prefixCls = self.prefixCls + "editor-";
+        cfg.prefixCls = self.get('prefixCls') + "editor-";
         cfg.editor = self;
         cfg.focusable = 1;
         cfg.zIndex = Editor.baseZIndex(Editor.zIndexManager.POPUP_MENU);

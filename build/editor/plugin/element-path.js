@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jun 27 03:34
+build time: Jul 3 13:51
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -44,7 +44,7 @@ KISSY.add("editor/plugin/element-path", function (S, Editor) {
             var self = this,
                 cfg = self.cfg,
                 editor = cfg.editor,
-                prefixCls=editor.prefixCls,
+                prefixCls=editor.get('prefixCls'),
                 statusDom = self.holder,
                 elementPath = ev.path,
                 elements = elementPath.elements,
