@@ -17,7 +17,7 @@ KISSY.add(function (S, Control) {
             contentTpl: {
                 value: '<div id="ks-my-control-{{id}}" class="{{getBaseCssClasses \'check\'}} ' +
                     '{{#if checked}}' +
-                    '{{getBaseCssClass \'checked\'}}' +
+                    '{{getBaseCssClasses \'checked\'}}' +
                     '{{/if}}' +
                     '">' +
                     '</div>'

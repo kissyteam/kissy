@@ -30,15 +30,28 @@
     });
     KISSY.use('my-control/control', function (S, MyControl) {
         S.ready(function () {
-            var my = new MyControl().render();
-            my.on('afterCheckedChange', function (e) {
-                alert(e.newVal ? 'checked' : 'unchecked');
-            });
 
-            var my2 = new MyControl({
+            var my1 = new MyControl({
                 srcNode: '#my'
             }).render();
-            alert(my2.get('id'))
+            S.log(my1.get('id'));
+            my1.on('afterCheckedChange', function (e) {
+                alert(e.newVal ? '1 checked' : '1 unchecked');
+            });
+
+            var my2 = new MyControl({}).render();
+            my2.on('afterCheckedChange', function (e) {
+                alert(e.newVal ? '2 checked' : '2 unchecked');
+            });
+
+            var my3=new MyControl({
+                checked: true
+            }).render();
+            my3.on('afterCheckedChange', function (e) {
+                alert(e.newVal ? '3 checked' : '3 unchecked');
+            });
+
+
         });
     });
 </script>
