@@ -19,8 +19,7 @@
 
     <property name="git.origin" value="origin"/>
     <property name="git.remote" value="remote"/>
-    <property name="git.gh-pages" value="gh-pages"/>
-    <property name="git.master" value="1.3.0"/>
+    <property name="git.master" value="1.3.x"/>
     <property name="js-css.files" value="**/*.js,**/*.css"/>
     
     <import file="./version.xml"/>
@@ -81,8 +80,7 @@
         <exec executable="cmd" failonerror="true">
             <arg line="/c git push ${git.origin} ${git.master}:${git.master}"/>
         </exec>
-
-        <!--push master to gh-pages also-->
+        
         <exec executable="cmd" failonerror="true">
             <arg line="/c git push ${git.remote} ${git.master}:${git.master}"/>
         </exec>
