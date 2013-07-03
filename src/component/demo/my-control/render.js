@@ -10,7 +10,10 @@ KISSY.add(function (S, Control) {
     }, {
         HTML_PARSER: {
             checkEl: function (el) {
-                return el.one('.' + this.getBaseCssClasses('check'));
+                return el.one('.' + this.getBaseCssClass('check'));
+            },
+            checked:function(el){
+                return el.one('.' + this.getBaseCssClass('check')).hasClass(this.getBaseCssClass('checked'));
             }
         },
         ATTRS: {

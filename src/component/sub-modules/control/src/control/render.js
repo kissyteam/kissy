@@ -141,7 +141,9 @@ KISSY.add("component/control/render", function (S, RenderProcess, XTemplate, Ren
                 cls.push(self.getBaseCssClasses('hover'));
             }
             if (control.get('focusable')) {
-                elAttrs['hideFocus'] = 'true';
+                if (UA.ie) {
+                    elAttrs['hideFocus'] = 'true';
+                }
                 elAttrs['tabindex'] = disabled ? '-1' : '0';
             }
         },
@@ -260,6 +262,9 @@ KISSY.add("component/control/render", function (S, RenderProcess, XTemplate, Ren
                 commands: {
                     getBaseCssClasses: function (scope, option) {
                         return self.getBaseCssClasses(option.params[0]);
+                    },
+                    getBaseCssClass: function (scope, option) {
+                        return self.getBaseCssClass(option.params[0]);
                     }
                 }
             }).render(renderData);
