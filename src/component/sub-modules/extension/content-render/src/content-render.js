@@ -7,8 +7,8 @@ KISSY.add('component/extension/content-render', function (S) {
     function shortcut(self) {
         var control = self.control;
         var contentEl = control.get('contentEl');
-        self.$contentEl=control.$contentEl = contentEl;
-        self.contentEl=control.contentEl = contentEl[0];
+        self.$contentEl = control.$contentEl = contentEl;
+        self.contentEl = control.contentEl = contentEl[0];
     }
 
     function ContentRender() {
@@ -30,7 +30,8 @@ KISSY.add('component/extension/content-render', function (S) {
         },
 
         getChildrenContainerEl: function () {
-            return this.control.$contentEl;
+            // can not use $contentEl, maybe called by decorateDom method
+            return this.control.get('contentEl');
         },
 
         _onSetContent: function (v) {
