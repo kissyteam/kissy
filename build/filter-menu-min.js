@@ -1,9 +1,9 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 3 13:56
+build time: Jul 3 16:25
 */
-KISSY.add("filter-menu/render-tpl",'<div id="ks-filter-menu-input-wrap-{{id}}" class="{{getBaseCssClasses "input-wrap"}}"> <div id="ks-filter-menu-placeholder-{{id}}" class="{{getBaseCssClasses "placeholder"}}"> {{placeholder}} </div> <input id="ks-filter-menu-input-{{id}}" class="{{getBaseCssClasses "input"}}" autocomplete="off"/> </div> <div id="ks-content-{{id}}" class="{{getBaseCssClasses "content"}}"> </div>');
+KISSY.add("filter-menu/render-tpl",'<div id="ks-filter-menu-input-wrap-{{id}}" class="{{getBaseCssClasses "input-wrap"}}"> <div id="ks-filter-menu-placeholder-{{id}}" class="{{getBaseCssClasses "placeholder"}}"> {{placeholder}} </div> <input id="ks-filter-menu-input-{{id}}" class="{{getBaseCssClasses "input"}}" autocomplete="off"/> </div> {{{include \'component/extension/content-render/content-tpl\'}}}');
 KISSY.add("filter-menu/render",function(h,i,g,e,a){return g.ATTRS.xrender.value.extend([a],{beforeCreateDom:function(a,b){h.mix(b,{placeholderEl:"#ks-filter-menu-placeholder-{id}",filterInputWrap:"#ks-filter-menu-input-wrap-{id}",filterInput:"#ks-filter-menu-input-{id}"})},getKeyEventTarget:function(){return this.control.get("filterInput")},_onSetPlaceholder:function(a){this.control.get("placeholderEl").html(a)}},{ATTRS:{contentTpl:{value:e}},HTML_PARSER:{placeholderEl:function(a){return a.one("."+
 this.getBaseCssClass("placeholder"))},filterInputWrap:function(a){return a.one("."+this.getBaseCssClass("input-wrap"))},filterInput:function(a){return a.one("."+this.getBaseCssClass("input"))}}})},{requires:["node","menu","./render-tpl","component/extension/content-render"]});
 KISSY.add("filter-menu",function(h,i,g){var e=i.extend({bindUI:function(){this.get("filterInput").on("valuechange",this.handleFilterEvent,this)},handleMouseEnterInternal:function(){e.superclass.handleMouseEnterInternal.apply(this,arguments);this.view.getKeyEventTarget()[0].select()},handleFilterEvent:function(){var a;a=this.get("filterInput");var f=this.get("highlightedItem");this.set("filterStr",a.val());a=a.val();this.get("allowMultiple")&&(a=a.replace(/^.+,/,""));if(!a&&f)f.set("highlighted",!1);

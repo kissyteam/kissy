@@ -2,7 +2,7 @@
  * checkable menu item render
  * @author yiminghe@gmail.com
  */
-KISSY.add('menu/check-menuitem-render', function (S, MenuItemRender, ContentRenderExtension) {
+KISSY.add('menu/check-menuitem-render', function (S, MenuItemRender, ContentRenderExtension, CheckMenuItemTpl) {
 
     return MenuItemRender.extend([ContentRenderExtension], {
 
@@ -21,12 +21,14 @@ KISSY.add('menu/check-menuitem-render', function (S, MenuItemRender, ContentRend
     }, {
         ATTRS: {
             contentTpl: {
-                value: '<div class="{{getBaseCssClasses "checkbox"}}">' +
-                    '</div>' +
-                    ContentRenderExtension.ATTRS.contentTpl.value
+                value: CheckMenuItemTpl
             }
         }
     })
 }, {
-    requires: ['./menuitem-render', 'component/extension/content-render']
+    requires: [
+        './menuitem-render',
+        'component/extension/content-render',
+        './check-menuitem-tpl'
+    ]
 });

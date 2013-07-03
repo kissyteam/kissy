@@ -3,7 +3,7 @@
  * submenu render for kissy ,extend menuitem render with arrow
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/submenu-render", function (S, MenuItemRender, ContentRenderExtension) {
+KISSY.add("menu/submenu-render", function (S, SubMenuTpl, MenuItemRender, ContentRenderExtension) {
 
     return MenuItemRender.extend([ContentRenderExtension], {
         decorateDom: function (el) {
@@ -22,12 +22,14 @@ KISSY.add("menu/submenu-render", function (S, MenuItemRender, ContentRenderExten
     }, {
         ATTRS: {
             contentTpl: {
-                value: ContentRenderExtension.ATTRS.contentTpl.value +
-                    '<span class="{{prefixCls}}submenu-arrow">►</span>'
+                value: SubMenuTpl
             }
         }
     });
 
 }, {
-    requires: ['./menuitem-render', 'component/extension/content-render']
+    requires: [
+        './submenu-tpl',
+        './menuitem-render',
+        'component/extension/content-render']
 });

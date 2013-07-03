@@ -2,7 +2,9 @@
  * render aria and drop arrow for menubutton
  * @author yiminghe@gmail.com
  */
-KISSY.add("menubutton/render", function (S, Button, ContentRenderExtension) {
+KISSY.add("menubutton/render", function (S, Button,
+                                         MenuButtonTpl,
+                                         ContentRenderExtension) {
 
     return Button.ATTRS.xrender.value.extend([ContentRenderExtension], {
 
@@ -36,13 +38,12 @@ KISSY.add("menubutton/render", function (S, Button, ContentRenderExtension) {
     }, {
         ATTRS: {
             contentTpl: {
-                value: ContentRenderExtension.ATTRS.contentTpl.value +
-                    '<div class="{{getBaseCssClasses "dropdown"}}">' +
-                    '<div class="{{getBaseCssClasses "dropdown-inner"}}">' +
-                    '</div>'
+                value: MenuButtonTpl
             }
         }
     });
 }, {
-    requires: ['button', 'component/extension/content-render']
+    requires: ['button',
+        './menubutton-tpl',
+        'component/extension/content-render']
 });

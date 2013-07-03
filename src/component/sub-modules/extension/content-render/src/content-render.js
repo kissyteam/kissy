@@ -2,7 +2,7 @@
  * common content box render
  * @author yiminghe@gmail.com
  */
-KISSY.add('component/extension/content-render', function (S) {
+KISSY.add('component/extension/content-render', function (S, ContentTpl) {
 
     function shortcut(self) {
         var control = self.control;
@@ -48,10 +48,7 @@ KISSY.add('component/extension/content-render', function (S) {
     S.mix(ContentRender, {
         ATTRS: {
             contentTpl: {
-                value: '<div id="ks-content-{{id}}" ' +
-                    'class="{{getBaseCssClasses "content"}}">' +
-                    '{{{content}}}' +
-                    '</div>'
+                value: ContentTpl
             }
         },
         HTML_PARSER: {
@@ -65,4 +62,6 @@ KISSY.add('component/extension/content-render', function (S) {
     });
 
     return ContentRender;
+}, {
+    requires: ['./content-render/content-tpl']
 });
