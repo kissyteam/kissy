@@ -4,7 +4,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/dom/touch/double-tap',
-    function (S, eventHandleMap, DOMEvent, SingleTouch) {
+    function (S, eventHandleMap, DomEvent, SingleTouch) {
 
         var SINGLE_TAP = 'singleTap',
             DOUBLE_TAP = 'doubleTap',
@@ -49,7 +49,7 @@ KISSY.add('event/dom/touch/double-tap',
                         // a new double tap cycle
                         self.lastEndTime = 0;
 
-                        DOMEvent.fire(target, DOUBLE_TAP, {
+                        DomEvent.fire(target, DOUBLE_TAP, {
                             touch: touch,
                             duration: duration / 1000
                         });
@@ -62,7 +62,7 @@ KISSY.add('event/dom/touch/double-tap',
                 // then a singleTap
                 duration = time - self.startTime;
                 if (duration > MAX_DURATION) {
-                    DOMEvent.fire(target, SINGLE_TAP, {
+                    DomEvent.fire(target, SINGLE_TAP, {
                         touch: touch,
                         pageX:touch.pageX,
                         which: 1,
@@ -73,7 +73,7 @@ KISSY.add('event/dom/touch/double-tap',
                     // buffer singleTap
                     // wait for a second tap
                     self.singleTapTimer = setTimeout(function () {
-                        DOMEvent.fire(target, SINGLE_TAP, {
+                        DomEvent.fire(target, SINGLE_TAP, {
                             touch: touch,
                             pageX:touch.pageX,
                             which: 1,

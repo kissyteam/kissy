@@ -25,7 +25,7 @@ KISSY.add(function (S, Dom, Event) {
         </div>\
     </div>';
 
-    var DOMEventUtils= S.require('event/dom/base/utils');
+    var DomEventUtils= S.require('event/dom/base/utils');
 
     describe('event', function () {
 
@@ -534,19 +534,19 @@ KISSY.add(function (S, Dom, Event) {
             Event.on(domNode, "keydown", noop);
 
             (function () {
-                var eventDesc = DOMEventUtils.data(domNode);
+                var eventDesc = DomEventUtils.data(domNode);
                 var num = 0;
                 for (i in eventDesc) {
-                    expect(S.inArray(i, ["handle", "events"]))
+                    expect(S.inArray(i, ["handle", "observables"]))
                         .toBe(true);
                     num++;
 
                 }
                 expect(num).toBe(2);
                 expect(S.isFunction(eventDesc.handle)).toBe(true);
-                var events = eventDesc.events;
+                var domEventObservables = eventDesc.observables;
                 num = 0;
-                for (i in events) {
+                for (i in domEventObservables) {
 
                     expect(S.inArray(i, ["click", "keydown"]))
                         .toBe(true);
@@ -554,27 +554,27 @@ KISSY.add(function (S, Dom, Event) {
 
                 }
                 expect(num).toBe(2);
-                var clickEventObserver = events["click"];
+                var clickEventObserver = domEventObservables["click"];
                 expect(clickEventObserver.observers.length).toBe(3);
             })();
 
             Event.remove(domNode, "click", noop);
 
             (function () {
-                var eventDesc = DOMEventUtils.data(domNode);
+                var domEventObservablesHolder = DomEventUtils.data(domNode);
                 var num = 0;
-                for (i in eventDesc) {
+                for (i in domEventObservablesHolder) {
 
-                    expect(S.inArray(i, ["handle", "events"]))
+                    expect(S.inArray(i, ["handle", "observables"]))
                         .toBe(true);
                     num++;
 
                 }
                 expect(num).toBe(2);
-                expect(S.isFunction(eventDesc.handle)).toBe(true);
-                var events = eventDesc.events;
+                expect(S.isFunction(domEventObservablesHolder.handle)).toBe(true);
+                var domEventObservables = domEventObservablesHolder.observables;
                 num = 0;
-                for (i in events) {
+                for (i in domEventObservables) {
 
                     expect(S.inArray(i, ["click", "keydown"]))
                         .toBe(true);
@@ -582,27 +582,27 @@ KISSY.add(function (S, Dom, Event) {
 
                 }
                 expect(num).toBe(2);
-                var clickEventObserver = events["click"];
+                var clickEventObserver = domEventObservables["click"];
                 expect(clickEventObserver.observers.length).toBe(2);
             })();
 
             Event.remove(domNode, "click");
 
             (function () {
-                var eventDesc = DOMEventUtils.data(domNode);
+                var domEventObservablesHolder = DomEventUtils.data(domNode);
                 var num = 0;
-                for (i in eventDesc) {
+                for (i in domEventObservablesHolder) {
 
-                    expect(S.inArray(i, ["handle", "events"]))
+                    expect(S.inArray(i, ["handle", "observables"]))
                         .toBe(true);
                     num++;
 
                 }
                 expect(num).toBe(2);
-                expect(S.isFunction(eventDesc.handle)).toBe(true);
-                var events = eventDesc.events;
+                expect(S.isFunction(domEventObservablesHolder.handle)).toBe(true);
+                var domEventObservables = domEventObservablesHolder.observables;
                 num = 0;
-                for (i in events) {
+                for (i in domEventObservables) {
 
                     expect(S.inArray(i, ["keydown"]))
                         .toBe(true);
@@ -610,14 +610,14 @@ KISSY.add(function (S, Dom, Event) {
 
                 }
                 expect(num).toBe(1);
-                var clickEventObserver = events["click"];
+                var clickEventObserver = domEventObservables["click"];
                 expect(clickEventObserver).toBeUndefined();
             })();
 
             Event.remove(domNode);
 
             (function () {
-                var eventDesc = DOMEventUtils.data(domNode);
+                var eventDesc = DomEventUtils.data(domNode);
                 expect(eventDesc).toBe(undefined);
             })();
 

@@ -3,9 +3,9 @@
  * event-focusin
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/focusin', function (S, DOMEvent) {
+KISSY.add('event/dom/focusin', function (S, DomEvent) {
 
-    var Special = DOMEvent.Special;
+    var Special = DomEvent.Special;
 
     // 让非 IE 浏览器支持 focusin/focusout
     S.each([
@@ -40,12 +40,12 @@ KISSY.add('event/dom/focusin', function (S, DOMEvent) {
 
         function handler(event) {
             var target = event.target;
-            return DOMEvent.fire(target, o.name);
+            return DomEvent.fire(target, o.name);
         }
 
     });
 
-    return DOMEvent;
+    return DomEvent;
 }, {
     requires: ['event/dom/base']
 });

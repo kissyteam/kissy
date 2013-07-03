@@ -3,9 +3,9 @@
  * patch for ie<9 submit: does not bubble !
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/ie/submit', function (S, DOMEvent, Dom) {
+KISSY.add('event/dom/ie/submit', function (S, DomEvent, Dom) {
 
-    var Special = DOMEvent.Special,
+    var Special = DomEvent.Special,
         getNodeName = Dom.nodeName;
 
     Special['submit'] = {
@@ -18,7 +18,7 @@ KISSY.add('event/dom/ie/submit', function (S, DOMEvent, Dom) {
             // lazy add submit for inside forms
             // note event order : click/keypress -> submit
             // key point : find the forms
-            DOMEvent.on(el, 'click keypress', detector);
+            DomEvent.on(el, 'click keypress', detector);
         },
         tearDown: function () {
             var el = this;
@@ -26,11 +26,11 @@ KISSY.add('event/dom/ie/submit', function (S, DOMEvent, Dom) {
             if (getNodeName(el) == 'form') {
                 return false;
             }
-            DOMEvent.remove(el, 'click keypress', detector);
+            DomEvent.remove(el, 'click keypress', detector);
             S.each(Dom.query('form', el), function (form) {
                 if (form.__submit__fix) {
                     form.__submit__fix = 0;
-                    DOMEvent.remove(form, 'submit', {
+                    DomEvent.remove(form, 'submit', {
                         fn: submitBubble,
                         last: 1
                     });
@@ -47,7 +47,7 @@ KISSY.add('event/dom/ie/submit', function (S, DOMEvent, Dom) {
 
         if (form && !form.__submit__fix) {
             form.__submit__fix = 1;
-            DOMEvent.on(form, 'submit', {
+            DomEvent.on(form, 'submit', {
                 fn: submitBubble,
                 last: 1
             });
@@ -63,7 +63,7 @@ KISSY.add('event/dom/ie/submit', function (S, DOMEvent, Dom) {
             !e.synthetic) {
             // simulated bubble for submit
             // fire from parentNode. if form.on('submit') , this logic is never run!
-            DOMEvent.fire(form.parentNode, 'submit', e);
+            DomEvent.fire(form.parentNode, 'submit', e);
         }
     }
 

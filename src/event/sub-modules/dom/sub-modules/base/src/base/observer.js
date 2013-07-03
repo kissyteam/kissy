@@ -7,12 +7,12 @@ KISSY.add('event/dom/base/observer', function (S, Special, BaseEvent) {
 
     /**
      * observer for dom event
-     * @class KISSY.Event.DOMEventObserver
+     * @class KISSY.Event.DomEventObserver
      * @extends KISSY.Event.Observer
      * @private
      */
-    function DOMEventObserver(cfg) {
-        DOMEventObserver.superclass.constructor.apply(this, arguments);
+    function DomEventObserver(cfg) {
+        DomEventObserver.superclass.constructor.apply(this, arguments);
         /**
          * filter selector string or function to find right element
          * @cfg {String} filter
@@ -23,7 +23,7 @@ KISSY.add('event/dom/base/observer', function (S, Special, BaseEvent) {
          */
     }
 
-    S.extend(DOMEventObserver, BaseEvent.Observer, {
+    S.extend(DomEventObserver, BaseEvent.Observer, {
 
         keys: ['fn', 'filter', 'data', 'context', 'originalType', 'groups', 'last'],
 
@@ -58,7 +58,7 @@ KISSY.add('event/dom/base/observer', function (S, Special, BaseEvent) {
 
     });
 
-    return DOMEventObserver;
+    return DomEventObserver;
 
 }, {
     requires: ['./special', 'event/base']

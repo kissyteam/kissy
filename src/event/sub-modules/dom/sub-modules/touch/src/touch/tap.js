@@ -3,7 +3,7 @@
  * gesture tap
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/touch/tap', function (S, eventHandleMap, DOMEvent, SingleTouch) {
+KISSY.add('event/dom/touch/tap', function (S, eventHandleMap, DomEvent, SingleTouch) {
 
     var event = 'tap';
 
@@ -18,7 +18,7 @@ KISSY.add('event/dom/touch/tap', function (S, eventHandleMap, DOMEvent, SingleTo
 
         onTouchEnd: function (e) {
             var touch = e.changedTouches[0];
-            DOMEvent.fire(e.target, event, {
+            DomEvent.fire(e.target, event, {
                 pageX: touch.pageX,
                 pageY: touch.pageY,
                 which: 1,

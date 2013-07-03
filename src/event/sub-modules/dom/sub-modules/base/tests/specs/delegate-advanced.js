@@ -5,7 +5,7 @@
 KISSY.add(function (S, Dom, Event) {
 
     S.get = Dom.get;
-    var DOMEventUtils= S.require('event/dom/base/utils');
+    var DomEventUtils= S.require('event/dom/base/utils');
     S.query = Dom.query;
 
     describe('delegate-advanced', function () {

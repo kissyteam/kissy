@@ -1,6 +1,6 @@
 /**
  * @ignore
- * scalable event framework for kissy (refer DOM3 Events)
+ * scalable event framework for kissy (refer Dom3 Events)
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/base', function (S, Utils, Object, Observer, Observable) {
@@ -29,7 +29,7 @@ KISSY.add('event/base', function (S, Utils, Object, Observer, Observable) {
 
  2011-11-24
  - 自定义事件和 dom 事件操作彻底分离
- - TODO: group event from DOM3 Event
+ - TODO: group event from Dom3 Events
 
  2011-06-07
  - refer : http://www.w3.org/TR/2001/WD-Dom-Level-3-Events-20010823/events.html

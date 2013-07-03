@@ -3,7 +3,7 @@
  * special house for special events
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/base/special-events', function (S, DOMEvent,Special) {
+KISSY.add('event/dom/base/special-events', function (S, DomEvent,Special) {
     var undefined = undefined,
         UA = S.UA,
         MOUSE_WHEEL = UA.gecko ? 'DOMMouseScroll' : 'mousewheel';
@@ -35,7 +35,7 @@ KISSY.add('event/dom/base/special-events', function (S, DOMEvent,Special) {
             // guarantee fire focusin first
             preFire: function (event, onlyHandlers) {
                 if (!onlyHandlers) {
-                    DOMEvent.fire(this, 'focusin');
+                    DomEvent.fire(this, 'focusin');
                 }
             },
             // guarantee fire blur first
@@ -55,7 +55,7 @@ KISSY.add('event/dom/base/special-events', function (S, DOMEvent,Special) {
             // guarantee fire focusout first
             preFire: function (event, onlyHandlers) {
                 if (!onlyHandlers) {
-                    DOMEvent.fire(this, 'focusout');
+                    DomEvent.fire(this, 'focusout');
                 }
             },
             // guarantee fire blur first

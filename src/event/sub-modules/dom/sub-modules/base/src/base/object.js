@@ -173,11 +173,11 @@ KISSY.add('event/dom/base/object', function (S, BaseEvent, undefined) {
      * copied over and normalized to the new event object
      * according to [W3C standards](http://www.w3.org/TR/dom/#event).
      *
-     * @class KISSY.Event.DOMEventObject
+     * @class KISSY.Event.DomEventObject
      * @extends KISSY.Event.Object
      * @param originalEvent native dom event
      */
-    function DOMEventObject(originalEvent) {
+    function DomEventObject(originalEvent) {
         var self = this,
             type = originalEvent.type;
 
@@ -383,7 +383,7 @@ KISSY.add('event/dom/base/object', function (S, BaseEvent, undefined) {
          * @type {HTMLElement}
          */
 
-        DOMEventObject.superclass.constructor.call(self);
+        DomEventObject.superclass.constructor.call(self);
 
         self.originalEvent = originalEvent;
 
@@ -431,9 +431,9 @@ KISSY.add('event/dom/base/object', function (S, BaseEvent, undefined) {
 
     }
 
-    S.extend(DOMEventObject, BaseEvent.Object, {
+    S.extend(DomEventObject, BaseEvent.Object, {
 
-        constructor: DOMEventObject,
+        constructor: DomEventObject,
 
         preventDefault: function () {
             var self = this,
@@ -448,7 +448,7 @@ KISSY.add('event/dom/base/object', function (S, BaseEvent, undefined) {
                 e.returnValue = FALSE;
             }
 
-            DOMEventObject.superclass.preventDefault.call(self);
+            DomEventObject.superclass.preventDefault.call(self);
         },
 
         stopPropagation: function () {
@@ -464,11 +464,11 @@ KISSY.add('event/dom/base/object', function (S, BaseEvent, undefined) {
                 e.cancelBubble = TRUE;
             }
 
-            DOMEventObject.superclass.stopPropagation.call(self);
+            DomEventObject.superclass.stopPropagation.call(self);
         }
     });
 
-    return DOMEventObject;
+    return DomEventObject;
 
 }, {
     requires: ['event/base']

@@ -3,11 +3,11 @@
  * setup event/dom api module
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/base/dom-event', function (S, BaseEvent, DOMEventUtils, Dom, Special, ObservableDOMEvent, DOMEventObject) {
+KISSY.add('event/dom/base/dom-event', function (S, BaseEvent, DomEventUtils, Dom, Special, DomEventObservable, DomEventObject) {
 
     var BaseUtils = BaseEvent.Utils;
 
-    var DOMEvent = {};
+    var DomEvent = {};
 
     function fixType(cfg, type) {
         var s = Special[type] || {},
@@ -26,57 +26,57 @@ KISSY.add('event/dom/base/dom-event', function (S, BaseEvent, DOMEventUtils, Dom
     }
 
     function addInternal(currentTarget, type, cfg) {
-        var eventDesc,
-            customEvent,
-            events,
+        var domEventObservablesHolder,
+            domEventObservable,
+            domEventObservables,
             handle;
 
         cfg = S.merge(cfg);
         type = fixType(cfg, type);
 
         // 获取事件描述
-        eventDesc = ObservableDOMEvent.getCustomEvents(currentTarget, 1);
+        domEventObservablesHolder = DomEventObservable.getDomEventObservablesHolder(currentTarget, 1);
 
-        if (!(handle = eventDesc.handle)) {
-            handle = eventDesc.handle = function (event) {
+        if (!(handle = domEventObservablesHolder.handle)) {
+            handle = domEventObservablesHolder.handle = function (event) {
                 // 是经过 fire 手动调用而浏览器同步触发导致的，就不要再次触发了，
                 // 已经在 fire 中 bubble 过一次了
                 // in case after page has unloaded
                 var type = event.type,
-                    customEvent,
+                    domEventObservable,
                     currentTarget = handle.currentTarget;
-                if (ObservableDOMEvent.triggeredEvent == type ||
+                if (DomEventObservable.triggeredEvent == type ||
                     typeof KISSY == 'undefined') {
                     return undefined;
                 }
-                customEvent = ObservableDOMEvent.getCustomEvent(currentTarget, type);
-                if (customEvent) {
+                domEventObservable = DomEventObservable.getDomEventObservable(currentTarget, type);
+                if (domEventObservable) {
                     event.currentTarget = currentTarget;
-                    event = new DOMEventObject(event);
-                    return customEvent.notify(event);
+                    event = new DomEventObject(event);
+                    return domEventObservable.notify(event);
                 }
                 return undefined;
             };
             handle.currentTarget = currentTarget;
         }
 
-        if (!(events = eventDesc.events)) {
-            events = eventDesc.events = {};
+        if (!(domEventObservables = domEventObservablesHolder.observables)) {
+            domEventObservables = domEventObservablesHolder.observables = {};
         }
 
-        //事件 listeners , similar to eventListeners in DOM3 Events
-        customEvent = events[type];
+        //事件 listeners , similar to eventListeners in Dom3 Events
+        domEventObservable = domEventObservables[type];
 
-        if (!customEvent) {
-            customEvent = events[type] = new ObservableDOMEvent({
+        if (!domEventObservable) {
+            domEventObservable = domEventObservables[type] = new DomEventObservable({
                 type: type,
                 currentTarget: currentTarget
             });
 
-            customEvent.setup();
+            domEventObservable.setup();
         }
 
-        customEvent.on(cfg);
+        domEventObservable.on(cfg);
 
         currentTarget = null;
     }
@@ -89,31 +89,31 @@ KISSY.add('event/dom/base/dom-event', function (S, BaseEvent, DOMEventUtils, Dom
 
         type = fixType(cfg, type);
 
-        var eventDesc = ObservableDOMEvent.getCustomEvents(currentTarget),
-            events = (eventDesc || {}).events;
+        var domEventObservablesHolder = DomEventObservable.getDomEventObservablesHolder(currentTarget),
+            domEventObservables = (domEventObservablesHolder || {}).observables;
 
-        if (!eventDesc || !events) {
+        if (!domEventObservablesHolder || !domEventObservables) {
             return;
         }
 
         // remove all types of event
         if (!type) {
-            for (type in events) {
-                events[type].detach(cfg);
+            for (type in domEventObservables) {
+                domEventObservables[type].detach(cfg);
             }
             return;
         }
 
-        customEvent = events[type];
+        customEvent = domEventObservables[type];
 
         if (customEvent) {
             customEvent.detach(cfg);
         }
     }
 
-    S.mix(DOMEvent, {
+    S.mix(DomEvent, {
         /**
-         * Adds an event listener.similar to addEventListener in DOM3 Events
+         * Adds an event listener.similar to addEventListener in Dom3 Events
          * @param targets KISSY selector
          * @member KISSY.Event
          * @param type {String} The type of event to append.
@@ -143,7 +143,7 @@ KISSY.add('event/dom/base/dom-event', function (S, BaseEvent, DOMEventUtils, Dom
         },
 
         /**
-         * Detach an event or set of events from an element. similar to removeEventListener in DOM3 Events
+         * Detach an event or set of events from an element. similar to removeEventListener in Dom3 Events
          * @param targets KISSY selector
          * @member KISSY.Event
          * @param {String|Boolean} [type] The type of event to remove.
@@ -200,7 +200,7 @@ KISSY.add('event/dom/base/dom-event', function (S, BaseEvent, DOMEventUtils, Dom
          * @member KISSY.Event
          */
         delegate: function (targets, eventType, filter, fn, context) {
-            return DOMEvent.on(targets, eventType, {
+            return DomEvent.on(targets, eventType, {
                 fn: fn,
                 context: context,
                 filter: filter
@@ -217,7 +217,7 @@ KISSY.add('event/dom/base/dom-event', function (S, BaseEvent, DOMEventUtils, Dom
          * @member KISSY.Event
          */
         undelegate: function (targets, eventType, filter, fn, context) {
-            return DOMEvent.detach(targets, eventType, {
+            return DomEvent.detach(targets, eventType, {
                 fn: fn,
                 context: context,
                 filter: filter
@@ -225,7 +225,7 @@ KISSY.add('event/dom/base/dom-event', function (S, BaseEvent, DOMEventUtils, Dom
         },
 
         /**
-         * fire event,simulate bubble in browser. similar to dispatchEvent in DOM3 Events
+         * fire event,simulate bubble in browser. similar to dispatchEvent in Dom3 Events
          * @param targets html nodes
          * @member KISSY.Event
          * @param {String} eventType event type
@@ -250,7 +250,7 @@ KISSY.add('event/dom/base/dom-event', function (S, BaseEvent, DOMEventUtils, Dom
                 var r,
                     i,
                     target,
-                    customEvent;
+                    domEventObservable;
 
                 BaseUtils.fillGroupsForEvent(eventType, eventData);
 
@@ -271,17 +271,17 @@ KISSY.add('event/dom/base/dom-event', function (S, BaseEvent, DOMEventUtils, Dom
 
                 for (i = targets.length - 1; i >= 0; i--) {
                     target = targets[i];
-                    customEvent = ObservableDOMEvent.getCustomEvent(target, originalType);
+                    domEventObservable = DomEventObservable.getDomEventObservable(target, originalType);
                     // bubbling
                     // html dom event defaults to bubble
-                    if (!onlyHandlers && !customEvent) {
-                        customEvent = new ObservableDOMEvent({
+                    if (!onlyHandlers && !domEventObservable) {
+                        domEventObservable = new DomEventObservable({
                             type: originalType,
                             currentTarget: target
                         });
                     }
-                    if (customEvent) {
-                        r = customEvent.fire(eventData, onlyHandlers);
+                    if (domEventObservable) {
+                        r = domEventObservable.fire(eventData, onlyHandlers);
                         if (ret !== false) {
                             ret = r;
                         }
@@ -304,7 +304,7 @@ KISSY.add('event/dom/base/dom-event', function (S, BaseEvent, DOMEventUtils, Dom
          * return last value of custom event 's observers (include bubbled) 's return value.
          */
         fireHandler: function (targets, eventType, eventData) {
-            return DOMEvent.fire(targets, eventType, eventData, 1);
+            return DomEvent.fire(targets, eventType, eventData, 1);
         },
 
 
@@ -316,19 +316,19 @@ KISSY.add('event/dom/base/dom-event', function (S, BaseEvent, DOMEventUtils, Dom
          * @private
          */
         clone: function (src, dest) {
-            var eventDesc,
-                events;
-            if (!(eventDesc = ObservableDOMEvent.getCustomEvents(src))) {
+            var domEventObservablesHolder,
+                domEventObservables;
+            if (!(domEventObservablesHolder = DomEventObservable.getDomEventObservablesHolder(src))) {
                 return;
             }
-            var srcData = DOMEventUtils.data(src);
-            if (srcData && srcData === DOMEventUtils.data(dest)) {
+            var srcData = DomEventUtils.data(src);
+            if (srcData && srcData === DomEventUtils.data(dest)) {
                 // remove event data (but without dom attached listener)
                 // which is copied from above Dom.data
-                DOMEventUtils.removeData(dest);
+                DomEventUtils.removeData(dest);
             }
-            events = eventDesc.events;
-            S.each(events, function (customEvent, type) {
+            domEventObservables = domEventObservablesHolder.observables;
+            S.each(domEventObservables, function (customEvent, type) {
                 S.each(customEvent.observers, function (observer) {
                     // context undefined
                     // 不能 this 写死在 handlers 中
@@ -339,7 +339,7 @@ KISSY.add('event/dom/base/dom-event', function (S, BaseEvent, DOMEventUtils, Dom
         }
     });
 
-    return DOMEvent;
+    return DomEvent;
 }, {
     requires: ['event/base',
         './utils',

@@ -3,9 +3,9 @@
  * patch gesture for touch
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/touch/gesture', function (S, DOMEvent) {
+KISSY.add('event/dom/touch/gesture', function (S, DomEvent) {
 
-    var Gesture = DOMEvent.Gesture,
+    var Gesture = DomEvent.Gesture,
         Features = S.Features,
         startEvent,
         moveEvent,

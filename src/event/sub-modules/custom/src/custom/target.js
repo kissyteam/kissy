@@ -3,7 +3,7 @@
  * custom event target for publish and subscribe
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/custom/target', function (S, BaseEvent, ObservableCustomEvent) {
+KISSY.add('event/custom/target', function (S, BaseEvent, CustomEventObservable) {
     var Utils = BaseEvent.Utils,
         splitAndRun = Utils.splitAndRun,
         KS_BUBBLE_TARGETS = '__~ks_bubble_targets';
@@ -37,7 +37,7 @@ KISSY.add('event/custom/target', function (S, BaseEvent, ObservableCustomEvent) 
 
             splitAndRun(type, function (type) {
 
-                var r2, customEvent;
+                var r2, customEventObservable;
 
                 Utils.fillGroupsForEvent(type, eventData);
 
@@ -45,18 +45,18 @@ KISSY.add('event/custom/target', function (S, BaseEvent, ObservableCustomEvent) 
 
                 // default bubble true
                 // if bubble false, it must has customEvent structure set already
-                customEvent = ObservableCustomEvent.getCustomEvent(self, type);
+                customEventObservable = CustomEventObservable.getCustomEventObservable(self, type);
 
                 // optimize performance for empty event listener
-                if (!customEvent && !hasTargets) {
+                if (!customEventObservable && !hasTargets) {
                     return;
                 }
 
-                if (customEvent) {
+                if (customEventObservable) {
 
-                    if (!customEvent.hasObserver() && !customEvent.defaultFn) {
+                    if (!customEventObservable.hasObserver() && !customEventObservable.defaultFn) {
 
-                        if (customEvent.bubbles && !hasTargets || !customEvent.bubbles) {
+                        if (customEventObservable.bubbles && !hasTargets || !customEventObservable.bubbles) {
                             return;
                         }
 
@@ -65,13 +65,13 @@ KISSY.add('event/custom/target', function (S, BaseEvent, ObservableCustomEvent) 
                 } else {
                     // in case no publish custom event but we need bubble
                     // because bubbles defaults to true!
-                    customEvent = new ObservableCustomEvent({
+                    customEventObservable = new CustomEventObservable({
                         currentTarget: self,
                         type: type
                     });
                 }
 
-                r2 = customEvent.fire(eventData);
+                r2 = customEventObservable.fire(eventData);
 
                 if (ret !== false) {
                     ret = r2;
@@ -86,12 +86,12 @@ KISSY.add('event/custom/target', function (S, BaseEvent, ObservableCustomEvent) 
          * @ignore
          */
         publish: function (type, cfg) {
-            var customEvent,
+            var customEventObservable,
                 self = this;
 
             splitAndRun(type, function (t) {
-                customEvent = ObservableCustomEvent.getCustomEvent(self, t, 1);
-                S.mix(customEvent, cfg)
+                customEventObservable = CustomEventObservable.getCustomEventObservable(self, t, 1);
+                S.mix(customEventObservable, cfg)
             });
 
             return self;
@@ -142,7 +142,7 @@ KISSY.add('event/custom/target', function (S, BaseEvent, ObservableCustomEvent) 
                 var cfg = Utils.normalizeParam(type, fn, context),
                     customEvent;
                 type = cfg.type;
-                customEvent = ObservableCustomEvent.getCustomEvent(self, type, 1);
+                customEvent = CustomEventObservable.getCustomEventObservable(self, type, 1);
                 if (customEvent) {
                     customEvent.on(cfg);
                 }
@@ -161,12 +161,12 @@ KISSY.add('event/custom/target', function (S, BaseEvent, ObservableCustomEvent) 
                     customEvent;
                 type = cfg.type;
                 if (type) {
-                    customEvent = ObservableCustomEvent.getCustomEvent(self, type, 1);
+                    customEvent = CustomEventObservable.getCustomEventObservable(self, type, 1);
                     if (customEvent) {
                         customEvent.detach(cfg);
                     }
                 } else {
-                    customEvents = ObservableCustomEvent.getCustomEvents(self);
+                    customEvents = CustomEventObservable.getCustomEventObservables(self);
                     S.each(customEvents, function (customEvent) {
                         customEvent.detach(cfg);
                     });

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 3 13:56
+build time: Jul 3 19:20
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -38,9 +38,9 @@ KISSY.add('event/dom/touch/handle-map', function () {
  * patch gesture for touch
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/touch/gesture', function (S, DOMEvent) {
+KISSY.add('event/dom/touch/gesture', function (S, DomEvent) {
 
-    var Gesture = DOMEvent.Gesture,
+    var Gesture = DomEvent.Gesture,
         Features = S.Features,
         startEvent,
         moveEvent,
@@ -113,7 +113,7 @@ KISSY.add('event/dom/touch/single-touch', function (S) {
  * gesture tap
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/touch/tap', function (S, eventHandleMap, DOMEvent, SingleTouch) {
+KISSY.add('event/dom/touch/tap', function (S, eventHandleMap, DomEvent, SingleTouch) {
 
     var event = 'tap';
 
@@ -128,7 +128,7 @@ KISSY.add('event/dom/touch/tap', function (S, eventHandleMap, DOMEvent, SingleTo
 
         onTouchEnd: function (e) {
             var touch = e.changedTouches[0];
-            DOMEvent.fire(e.target, event, {
+            DomEvent.fire(e.target, event, {
                 pageX: touch.pageX,
                 pageY: touch.pageY,
                 which: 1,
@@ -172,7 +172,7 @@ KISSY.add('event/dom/touch/tap', function (S, eventHandleMap, DOMEvent, SingleTo
  * gesture swipe
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, DOMEvent, SingleTouch) {
+KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, DomEvent, SingleTouch) {
 
     var event = 'swipe',
         ingEvent = 'swiping',
@@ -220,7 +220,7 @@ KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, DOMEvent, Single
             return false;
         }
 
-        DOMEvent.fire(e.target, ing ? ingEvent : event, {
+        DomEvent.fire(e.target, ing ? ingEvent : event, {
             originalEvent: e.originalEvent,
             pageX:touch.pageX,
             pageY:touch.pageY,
@@ -230,7 +230,7 @@ KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, DOMEvent, Single
              * native touch property **only for touch event**.
              *
              * @property touch
-             * @member KISSY.DOMEvent.DOMEventObject
+             * @member KISSY.DomEvent.DomEventObject
              */
             touch: touch,
             /**
@@ -239,7 +239,7 @@ KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, DOMEvent, Single
              *
              * can be one of 'up' 'down' 'left' 'right'
              * @property {String} direction
-             * @member KISSY.DOMEvent.DOMEventObject
+             * @member KISSY.DomEvent.DomEventObject
              */
             direction: direction,
             /**
@@ -248,7 +248,7 @@ KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, DOMEvent, Single
              *
              * the distance swipe gesture costs
              * @property {Number} distance
-             * @member KISSY.DOMEvent.DOMEventObject
+             * @member KISSY.DomEvent.DomEventObject
              */
             distance: distance,
             /**
@@ -257,7 +257,7 @@ KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, DOMEvent, Single
              *
              * the duration swipe gesture costs
              * @property {Number} duration
-             * @member KISSY.DOMEvent.DOMEventObject
+             * @member KISSY.DomEvent.DomEventObject
              */
             duration: (e.timeStamp - self.startTime) / 1000
         });
@@ -341,7 +341,7 @@ KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, DOMEvent, Single
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/dom/touch/double-tap',
-    function (S, eventHandleMap, DOMEvent, SingleTouch) {
+    function (S, eventHandleMap, DomEvent, SingleTouch) {
 
         var SINGLE_TAP = 'singleTap',
             DOUBLE_TAP = 'doubleTap',
@@ -386,7 +386,7 @@ KISSY.add('event/dom/touch/double-tap',
                         // a new double tap cycle
                         self.lastEndTime = 0;
 
-                        DOMEvent.fire(target, DOUBLE_TAP, {
+                        DomEvent.fire(target, DOUBLE_TAP, {
                             touch: touch,
                             duration: duration / 1000
                         });
@@ -399,7 +399,7 @@ KISSY.add('event/dom/touch/double-tap',
                 // then a singleTap
                 duration = time - self.startTime;
                 if (duration > MAX_DURATION) {
-                    DOMEvent.fire(target, SINGLE_TAP, {
+                    DomEvent.fire(target, SINGLE_TAP, {
                         touch: touch,
                         pageX:touch.pageX,
                         which: 1,
@@ -410,7 +410,7 @@ KISSY.add('event/dom/touch/double-tap',
                     // buffer singleTap
                     // wait for a second tap
                     self.singleTapTimer = setTimeout(function () {
-                        DOMEvent.fire(target, SINGLE_TAP, {
+                        DomEvent.fire(target, SINGLE_TAP, {
                             touch: touch,
                             pageX:touch.pageX,
                             which: 1,
@@ -523,7 +523,7 @@ KISSY.add('event/dom/touch/multi-touch', function (S, Dom) {
  * gesture pinch
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/touch/pinch', function (S, eventHandleMap, DOMEvent, MultiTouch, Gesture) {
+KISSY.add('event/dom/touch/pinch', function (S, eventHandleMap, DomEvent, MultiTouch, Gesture) {
 
     var PINCH = 'pinch',
         PINCH_START = 'pinchStart',
@@ -557,13 +557,13 @@ KISSY.add('event/dom/touch/pinch', function (S, eventHandleMap, DOMEvent, MultiT
                 self.startDistance = distance;
                 var target = self.target = self.getCommonTarget(e);
 
-                DOMEvent.fire(target,
+                DomEvent.fire(target,
                     PINCH_START, S.mix(e, {
                         distance: distance,
                         scale: 1
                     }));
             } else {
-                DOMEvent.fire(self.target,
+                DomEvent.fire(self.target,
                     PINCH, S.mix(e, {
                         distance: distance,
                         scale: distance / self.startDistance
@@ -573,7 +573,7 @@ KISSY.add('event/dom/touch/pinch', function (S, eventHandleMap, DOMEvent, MultiT
 
         fireEnd: function (e) {
             var self = this;
-            DOMEvent.fire(self.target, PINCH_END, S.mix(e, {
+            DomEvent.fire(self.target, PINCH_END, S.mix(e, {
                 touches: self.lastTouches
             }));
         }
@@ -598,10 +598,10 @@ KISSY.add('event/dom/touch/pinch', function (S, eventHandleMap, DOMEvent, MultiT
     eventHandleMap[PINCH] = {
         handle: p,
         add: function () {
-            DOMEvent.on(this, Gesture.move, prevent);
+            DomEvent.on(this, Gesture.move, prevent);
         },
         remove: function () {
-            DOMEvent.detach(this, Gesture.move, prevent);
+            DomEvent.detach(this, Gesture.move, prevent);
         }
     };
 
@@ -615,7 +615,7 @@ KISSY.add('event/dom/touch/pinch', function (S, eventHandleMap, DOMEvent, MultiT
  * fired when tap and hold for more than 1s
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/touch/tap-hold', function (S, eventHandleMap, SingleTouch, DOMEvent, Gesture) {
+KISSY.add('event/dom/touch/tap-hold', function (S, eventHandleMap, SingleTouch, DomEvent, Gesture) {
     var event = 'tapHold';
 
     var duration = 1000;
@@ -631,7 +631,7 @@ KISSY.add('event/dom/touch/tap-hold', function (S, eventHandleMap, SingleTouch, 
             }
             self.timer = setTimeout(function () {
                 var touch= e.touches[0];
-                DOMEvent.fire(e.target, event, {
+                DomEvent.fire(e.target, event, {
                     touch: touch,
                     pageX:touch.pageX,
                     pageY:touch.pageY,
@@ -660,10 +660,10 @@ KISSY.add('event/dom/touch/tap-hold', function (S, eventHandleMap, SingleTouch, 
     eventHandleMap[event] = {
         setup: function () {
             // prevent native scroll
-            DOMEvent.on(this, Gesture.start, prevent);
+            DomEvent.on(this, Gesture.start, prevent);
         },
         tearDown: function () {
-            DOMEvent.detach(this, Gesture.start, prevent);
+            DomEvent.detach(this, Gesture.start, prevent);
         },
         handle: new TapHold()
     };
@@ -678,7 +678,7 @@ KISSY.add('event/dom/touch/tap-hold', function (S, eventHandleMap, SingleTouch, 
  * fired when rotate using two fingers
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/touch/rotate', function (S, eventHandleMap, MultiTouch, DOMEvent, Gesture, undefined) {
+KISSY.add('event/dom/touch/rotate', function (S, eventHandleMap, MultiTouch, DomEvent, Gesture, undefined) {
     var ROTATE_START = 'rotateStart',
         ROTATE = 'rotate',
         RAD_2_DEG = 180 / Math.PI,
@@ -731,13 +731,13 @@ KISSY.add('event/dom/touch/rotate', function (S, eventHandleMap, MultiTouch, DOM
 
                 self.target = self.getCommonTarget(e);
 
-                DOMEvent.fire(self.target, ROTATE_START, S.mix(e, {
+                DomEvent.fire(self.target, ROTATE_START, S.mix(e, {
                     angle: angle,
                     rotation: 0
                 }));
 
             } else {
-                DOMEvent.fire(self.target, ROTATE, S.mix(e, {
+                DomEvent.fire(self.target, ROTATE, S.mix(e, {
                     angle: angle,
                     rotation: angle - self.startAngle
                 }));
@@ -752,7 +752,7 @@ KISSY.add('event/dom/touch/rotate', function (S, eventHandleMap, MultiTouch, DOM
 
         fireEnd: function (e) {
             var self = this;
-            DOMEvent.fire(self.target, ROTATE_END, S.mix(e, {
+            DomEvent.fire(self.target, ROTATE_END, S.mix(e, {
                 touches: self.lastTouches
             }));
         }
@@ -776,10 +776,10 @@ KISSY.add('event/dom/touch/rotate', function (S, eventHandleMap, MultiTouch, DOM
     eventHandleMap[ROTATE] = {
         handle: r,
         add: function () {
-            DOMEvent.on(this, Gesture.move, prevent);
+            DomEvent.on(this, Gesture.move, prevent);
         },
         remove: function () {
-            DOMEvent.detach(this, Gesture.move, prevent);
+            DomEvent.detach(this, Gesture.move, prevent);
         }
     };
 
@@ -793,7 +793,7 @@ KISSY.add('event/dom/touch/rotate', function (S, eventHandleMap, MultiTouch, DOM
  * singleTouchStart event
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/touch/single-touch-start', function (S, eventHandleMap, DOMEvent, SingleTouch) {
+KISSY.add('event/dom/touch/single-touch-start', function (S, eventHandleMap, DomEvent, SingleTouch) {
 
     var event = 'singleTouchStart';
 
@@ -805,7 +805,7 @@ KISSY.add('event/dom/touch/single-touch-start', function (S, eventHandleMap, DOM
         onTouchStart: function (e) {
             if (SingleTouchStart.superclass.onTouchStart.apply(this, arguments) !== false) {
                 var touch= e.touches[0];
-                DOMEvent.fire(e.target, event, {
+                DomEvent.fire(e.target, event, {
                     touch: touch[0],
                     pageX:touch.pageX,
                     pageY:touch.pageY,
@@ -838,7 +838,7 @@ KISSY.add('event/dom/touch/single-touch-start', function (S, eventHandleMap, DOM
  * base handle for touch gesture
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/touch/handle', function (S, Dom, eventHandleMap, DOMEvent, Gesture) {
+KISSY.add('event/dom/touch/handle', function (S, Dom, eventHandleMap, DomEvent, Gesture) {
 
     var key = S.guid('touch-handle'),
         Features = S.Features,
@@ -905,7 +905,7 @@ KISSY.add('event/dom/touch/handle', function (S, Dom, eventHandleMap, DOMEvent, 
 
             for (e in touchEvents) {
                 h = touchEvents[e];
-                DOMEvent.on(doc, e, self[h], self);
+                DomEvent.on(doc, e, self[h], self);
             }
         },
 
@@ -1024,7 +1024,7 @@ KISSY.add('event/dom/touch/handle', function (S, Dom, eventHandleMap, DOMEvent, 
                 e, h;
             for (e in touchEvents) {
                 h = touchEvents[e];
-                DOMEvent.detach(doc, e, self[h], self);
+                DomEvent.detach(doc, e, self[h], self);
             }
         }
 
@@ -1079,7 +1079,7 @@ KISSY.add('event/dom/touch/handle', function (S, Dom, eventHandleMap, DOMEvent, 
  * touch event logic module
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/touch', function (S, DOMEvent, eventHandleMap, eventHandle) {
+KISSY.add('event/dom/touch', function (S, DomEvent, eventHandleMap, eventHandle) {
 
     var Features = S.Features;
 
@@ -1128,7 +1128,7 @@ KISSY.add('event/dom/touch', function (S, DOMEvent, eventHandleMap, eventHandle)
         eventHandle.removeDocumentHandle(this, event);
     }
 
-    var Special = DOMEvent.Special,
+    var Special = DomEvent.Special,
         specialEvent, e, eventHandleValue;
 
     for (e in eventHandleMap) {

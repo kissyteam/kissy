@@ -434,7 +434,7 @@ KISSY.add('event/dom/base/key-codes', function (S) {
 
     /**
      * whether text and modified key is entered at the same time.
-     * @param {KISSY.Event.DOMEventObject} e event object
+     * @param {KISSY.Event.DomEventObject} e event object
      * @return {Boolean}
      */
     KeyCode.isTextModifyingKeyEvent = function (e) {

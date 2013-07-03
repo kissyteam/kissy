@@ -12,7 +12,7 @@
  *
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/base/valuechange', function (S, DOMEvent, Dom, Special) {
+KISSY.add('event/dom/base/valuechange', function (S, DomEvent, Dom, Special) {
     var VALUE_CHANGE = 'valuechange',
         getNodeName = Dom.nodeName,
         KEY = 'event/valuechange',
@@ -42,7 +42,7 @@ KISSY.add('event/dom/base/valuechange', function (S, DOMEvent, Dom, Special) {
             h = Dom.data(target, HISTORY_KEY);
         if (v !== h) {
             // allow delegate
-            DOMEvent.fireHandler(target, VALUE_CHANGE, {
+            DomEvent.fireHandler(target, VALUE_CHANGE, {
                 prevVal: h,
                 newVal: v
             });
@@ -75,18 +75,18 @@ KISSY.add('event/dom/base/valuechange', function (S, DOMEvent, Dom, Special) {
 
     function monitor(target) {
         unmonitored(target);
-        DOMEvent.on(target, 'blur', stopPollHandler);
+        DomEvent.on(target, 'blur', stopPollHandler);
         // fix #94
         // see note 2012-02-08
-        DOMEvent.on(target, 'webkitspeechchange', webkitSpeechChangeHandler);
-        DOMEvent.on(target, 'mousedown keyup keydown focus', startPollHandler);
+        DomEvent.on(target, 'webkitspeechchange', webkitSpeechChangeHandler);
+        DomEvent.on(target, 'mousedown keyup keydown focus', startPollHandler);
     }
 
     function unmonitored(target) {
         stopPoll(target);
-        DOMEvent.detach(target, 'blur', stopPollHandler);
-        DOMEvent.detach(target, 'webkitspeechchange', webkitSpeechChangeHandler);
-        DOMEvent.detach(target, 'mousedown keyup keydown focus', startPollHandler);
+        DomEvent.detach(target, 'blur', stopPollHandler);
+        DomEvent.detach(target, 'webkitspeechchange', webkitSpeechChangeHandler);
+        DomEvent.detach(target, 'mousedown keyup keydown focus', startPollHandler);
     }
 
     Special[VALUE_CHANGE] = {
@@ -101,7 +101,7 @@ KISSY.add('event/dom/base/valuechange', function (S, DOMEvent, Dom, Special) {
             unmonitored(target);
         }
     };
-    return DOMEvent;
+    return DomEvent;
 }, {
     requires: ['./dom-event', 'dom', './special']
 });

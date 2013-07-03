@@ -3,7 +3,7 @@
  * gesture pinch
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/touch/pinch', function (S, eventHandleMap, DOMEvent, MultiTouch, Gesture) {
+KISSY.add('event/dom/touch/pinch', function (S, eventHandleMap, DomEvent, MultiTouch, Gesture) {
 
     var PINCH = 'pinch',
         PINCH_START = 'pinchStart',
@@ -37,13 +37,13 @@ KISSY.add('event/dom/touch/pinch', function (S, eventHandleMap, DOMEvent, MultiT
                 self.startDistance = distance;
                 var target = self.target = self.getCommonTarget(e);
 
-                DOMEvent.fire(target,
+                DomEvent.fire(target,
                     PINCH_START, S.mix(e, {
                         distance: distance,
                         scale: 1
                     }));
             } else {
-                DOMEvent.fire(self.target,
+                DomEvent.fire(self.target,
                     PINCH, S.mix(e, {
                         distance: distance,
                         scale: distance / self.startDistance
@@ -53,7 +53,7 @@ KISSY.add('event/dom/touch/pinch', function (S, eventHandleMap, DOMEvent, MultiT
 
         fireEnd: function (e) {
             var self = this;
-            DOMEvent.fire(self.target, PINCH_END, S.mix(e, {
+            DomEvent.fire(self.target, PINCH_END, S.mix(e, {
                 touches: self.lastTouches
             }));
         }
@@ -78,10 +78,10 @@ KISSY.add('event/dom/touch/pinch', function (S, eventHandleMap, DOMEvent, MultiT
     eventHandleMap[PINCH] = {
         handle: p,
         add: function () {
-            DOMEvent.on(this, Gesture.move, prevent);
+            DomEvent.on(this, Gesture.move, prevent);
         },
         remove: function () {
-            DOMEvent.detach(this, Gesture.move, prevent);
+            DomEvent.detach(this, Gesture.move, prevent);
         }
     };
 

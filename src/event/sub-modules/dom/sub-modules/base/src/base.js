@@ -3,14 +3,14 @@
  * dom event facade
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/base', function (S, DOMEvent, KeyCode, Gesture, Special) {
+KISSY.add('event/dom/base', function (S, DomEvent, KeyCode, Gesture, Special) {
     return S.merge({
-        add: DOMEvent.on,
-        remove: DOMEvent.detach,
+        add: DomEvent.on,
+        remove: DomEvent.detach,
         KeyCode: KeyCode,
         Gesture: Gesture,
         Special: Special
-    }, DOMEvent);
+    }, DomEvent);
 }, {
     requires: [
         './base/dom-event',

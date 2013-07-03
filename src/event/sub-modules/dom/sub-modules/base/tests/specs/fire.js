@@ -4,7 +4,7 @@
  */
 KISSY.add(function (S, Dom, Event) {
 
-    var ObservableDOMEvent= S.require('event/dom/base/observable');
+    var DomEventObservable= S.require('event/dom/base/observable');
 
     describe("fire", function () {
 
@@ -26,7 +26,7 @@ KISSY.add(function (S, Dom, Event) {
 
             expect(ret).toBe(1);
 
-            expect(ObservableDOMEvent.getCustomEvents(n)).toBe(undefined);
+            expect(DomEventObservable.getDomEventObservablesHolder(n)).toBe(undefined);
 
         });
 
