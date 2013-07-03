@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 3 17:20
+build time: Jul 3 17:41
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130703172027' will replace with current timestamp when compressing.
+         * NOTICE: '20130703174106' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130703172027',
+        __BUILD_TIME: '20130703174106',
         /**
          * KISSY Environment.
          * @private
@@ -3653,7 +3653,7 @@ var KISSY = (function (undefined) {
         ATTACHED = data.ATTACHED,
         LOADED = data.LOADED,
         ERROR = data.ERROR,
-        LOADING = data.LOADING,
+    // LOADING = data.LOADING,
         /**
          * @class KISSY.Loader.Utils
          * Utils for KISSY Loader
@@ -3768,39 +3768,8 @@ var KISSY = (function (undefined) {
          * @param modNames
          * @return {Boolean}
          */
-        isAttached: function (runtime, modNames) {
+        'isAttached': function (runtime, modNames) {
             return isStatus(runtime, modNames, ATTACHED);
-        },
-
-        /**
-         * Whether modNames is loaded.
-         * @param runtime
-         * @param modNames
-         * @return {Boolean}
-         */
-        isLoaded: function (runtime, modNames) {
-            return isStatus(runtime, modNames, LOADED);
-        },
-
-        /**
-         * Whether modNames is error.
-         * @param runtime
-         * @param modNames
-         * @return {Boolean}
-         */
-        isLoaded: function (runtime, modNames) {
-            return isStatus(runtime, modNames, ERROR);
-        },
-
-
-        /**
-         * Whether modNames is loading.
-         * @param runtime
-         * @param modNames
-         * @return {Boolean}
-         */
-        isLoading: function (runtime, modNames) {
-            return isStatus(runtime, modNames, LOADING);
         },
 
         /**
@@ -3997,6 +3966,9 @@ var KISSY = (function (undefined) {
          * @param [config]
          */
         registerModule: function (runtime, name, fn, config) {
+
+            name = indexMapStr(name);
+
             var mods = runtime.Env.mods,
                 mod = mods[name];
 
@@ -5605,7 +5577,8 @@ var KISSY = (function (undefined) {
         },
 
         require: function (name) {
-            return Utils.getModules(S, [name])[1];
+            return Utils.getModules(S,
+                Utils.normalizeModNamesWithAlias(S, [name]))[1];
         }
     });
 
@@ -5706,7 +5679,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20130703172027'
+            tag: '20130703174106'
         }, getBaseInfo()));
     }
 

@@ -159,7 +159,8 @@
         },
 
         require: function (name) {
-            return Utils.getModules(S, [name])[1];
+            return Utils.getModules(S,
+                Utils.normalizeModNamesWithAlias(S, [name]))[1];
         }
     });
 

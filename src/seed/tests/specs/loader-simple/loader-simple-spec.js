@@ -28,6 +28,7 @@
             S.use("1.2/mod", function (S, Mod) {
                 ok = true;
                 expect(Mod).toBe(2);
+                expect(S.require('1.2/mod')).toBe(Mod);
                 var mod12;
                 var flag = S.config('combine') ? "1.2/??mod.js" : "1.2/mod.js";
                 var scripts = document.getElementsByTagName("script");

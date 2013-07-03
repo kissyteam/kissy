@@ -13,7 +13,7 @@
         ATTACHED = data.ATTACHED,
         LOADED = data.LOADED,
         ERROR = data.ERROR,
-        LOADING = data.LOADING,
+    // LOADING = data.LOADING,
         /**
          * @class KISSY.Loader.Utils
          * Utils for KISSY Loader
@@ -128,39 +128,8 @@
          * @param modNames
          * @return {Boolean}
          */
-        isAttached: function (runtime, modNames) {
+        'isAttached': function (runtime, modNames) {
             return isStatus(runtime, modNames, ATTACHED);
-        },
-
-        /**
-         * Whether modNames is loaded.
-         * @param runtime
-         * @param modNames
-         * @return {Boolean}
-         */
-        isLoaded: function (runtime, modNames) {
-            return isStatus(runtime, modNames, LOADED);
-        },
-
-        /**
-         * Whether modNames is error.
-         * @param runtime
-         * @param modNames
-         * @return {Boolean}
-         */
-        isLoaded: function (runtime, modNames) {
-            return isStatus(runtime, modNames, ERROR);
-        },
-
-
-        /**
-         * Whether modNames is loading.
-         * @param runtime
-         * @param modNames
-         * @return {Boolean}
-         */
-        isLoading: function (runtime, modNames) {
-            return isStatus(runtime, modNames, LOADING);
         },
 
         /**
@@ -357,6 +326,9 @@
          * @param [config]
          */
         registerModule: function (runtime, name, fn, config) {
+
+            name = indexMapStr(name);
+
             var mods = runtime.Env.mods,
                 mod = mods[name];
 
