@@ -888,6 +888,22 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
 
                 });
 
+                it('support conditional expression', function () {
+                    var tpl = '{{#if x>1 && x<10}}1{{else}}0{{/if}}' +
+                        '{{#if q && q.x<10}}1{{else}}0{{/if}}';
+
+                    expect(new XTemplate(tpl).render({
+                        x: 2
+                    })).toBe('10');
+
+                    expect(new XTemplate(tpl).render({
+                        x: 21,
+                        q: {
+                            x: 2
+                        }
+                    })).toBe('01');
+                });
+
             });
 
             it('support set', function () {
