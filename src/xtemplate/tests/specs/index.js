@@ -892,16 +892,18 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
                     var tpl = '{{#if x>1 && x<10}}1{{else}}0{{/if}}' +
                         '{{#if q && q.x<10}}1{{else}}0{{/if}}';
 
-                    expect(new XTemplate(tpl).render({
-                        x: 2
-                    })).toBe('10');
+                    expect(new XTemplate(tpl, {
+                        name: 'conditional-expression'
+                    }).render({
+                            x: 2
+                        })).toBe('10');
 
                     expect(new XTemplate(tpl).render({
-                        x: 21,
-                        q: {
-                            x: 2
-                        }
-                    })).toBe('01');
+                            x: 21,
+                            q: {
+                                x: 2
+                            }
+                        })).toBe('01');
                 });
 
             });
