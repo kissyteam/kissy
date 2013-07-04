@@ -551,7 +551,7 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
             // eval is not ok for eval("(function(){})") ie
             return (Function.apply(null, []
                 .concat(code.params)
-                .concat(code.source.join('\n') + '//@ sourceURL=' +
+                .concat(code.source.join('\n') + '//# sourceURL=' +
                     (config.name ? config.name : ('xtemplate' + (xtemplateId++))) + '.js')));
         }
     };

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 3 13:58
+build time: Jul 4 13:46
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -2762,7 +2762,7 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
             // eval is not ok for eval("(function(){})") ie
             return (Function.apply(null, []
                 .concat(code.params)
-                .concat(code.source.join('\n') + '//@ sourceURL=' +
+                .concat(code.source.join('\n') + '//# sourceURL=' +
                     (config.name ? config.name : ('xtemplate' + (xtemplateId++))) + '.js')));
         }
     };
