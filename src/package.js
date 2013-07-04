@@ -86,8 +86,8 @@ if (!loc.getQuery().has('build')) {
             "base": "/kissy/src/date/gregorian/src/gregorian",
             "ignorePackageNameInUri": 1
         },
-        "date/i18n": {
-            "base": "/kissy/src/date/i18n/src/i18n",
+        "date/i18n/zh-cn": {
+            "base": "/kissy/src/date/i18n/zh-cn/src/zh-cn",
             "ignorePackageNameInUri": 1
         },
         "dd": {

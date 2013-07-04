@@ -16,17 +16,30 @@
     .ks-my-control-checked {
         background-color: red;
     }
+
+    #singles {
+        margin: 10px 0;
+    }
+
+    .ks-my-list .ks-my-control {
+        display: inline-block;
+        margin-left: 10px;
+    }
 </style>
 <body>
-<div class="ks-my-control" id="my1" tabindex="0">
-    <div class="ks-my-control-check"></div>
-    srcNode
+
+<div id="singles">
+    <div class="ks-my-control" id="my1" tabindex="0">
+        <div class="ks-my-control-check"></div>
+        srcNode
+    </div>
+
+    <div class="ks-my-control" id="my2" tabindex="0">
+        <div class="ks-my-control-check ks-my-control-checked"></div>
+        srcNode
+    </div>
 </div>
 
-<div class="ks-my-control" id="my2" tabindex="0">
-    <div class="ks-my-control-check ks-my-control-checked"></div>
-    srcNode
-</div>
 
 </body>
 <script>
@@ -35,9 +48,8 @@
             base: './'
         }
     });
-    KISSY.use('my-control/control', function (S, MyControl) {
+    KISSY.use('my-control/control,my-control/list', function (S, MyControl, ListControl) {
         S.ready(function () {
-
             var my1 = new MyControl({
                 srcNode: '#my1'
             }).render();
@@ -54,19 +66,33 @@
                 alert(e.newVal ? '2 checked' : '2 unchecked');
             });
 
-            var my3 = new MyControl({}).render();
+            var my3 = new MyControl({
+                render: '#singles'
+            }).render();
             my3.on('afterCheckedChange', function (e) {
                 alert(e.newVal ? '3 checked' : '3 unchecked');
             });
 
-            var my4=new MyControl({
-                checked: true
+            var my4 = new MyControl({
+                checked: true,
+                render: '#singles'
             }).render();
             my4.on('afterCheckedChange', function (e) {
                 alert(e.newVal ? '4 checked' : '4 unchecked');
             });
 
+            var listControl = new ListControl({
+                children: [
+                    {
+                        xclass: 'my-control',
+                        checked: true
+                    }
+                ]
+            });
 
+            listControl.addChild(new MyControl());
+
+            listControl.render();
         });
     });
 </script>
