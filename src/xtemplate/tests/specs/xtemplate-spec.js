@@ -198,8 +198,6 @@ KISSY.use('xtemplate', function (S, XTemplate) {
 
                 });
 
-
-
                 describe('parent scope', function () {
 
                     it('support for with', function () {
@@ -703,6 +701,24 @@ KISSY.use('xtemplate', function (S, XTemplate) {
 
                     expect(new XTemplate(tpl).render(data)).toBe('6');
 
+                });
+
+                it('support conditional expression',function(){
+                    var tpl='{{#if x>1 && x<10}}1{{else}}0{{/if}}' +
+                        '{{#if q && q.x<10}}1{{else}}0{{/if}}';
+
+                    expect(new XTemplate(tpl,{
+                        name:'conditional'
+                    }).render({
+                        x:2
+                    })).toBe('10');
+
+                    expect(new XTemplate(tpl).render({
+                        x:21,
+                        q:{
+                            x:2
+                        }
+                    })).toBe('01');
                 });
 
             });
