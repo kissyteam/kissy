@@ -2,7 +2,7 @@
  * 全局同步函数
  * @author yiminghe@gmail.com
  */
-KISSY.add(function(S, mvc,Json) {
+KISSY.add(function (S, mvc, Json) {
     var KEY = 'KISSY_Note';
 
     function isModel(m) {
@@ -18,22 +18,22 @@ KISSY.add(function(S, mvc,Json) {
         return -1;
     }
 
-    var STORE,sync;
+    var STORE, sync;
     /*
      覆盖全局的同步函数
      */
-    sync = mvc.sync = function(self, method, options) {
+    sync = mvc.sync = function (self, method, options) {
         options = options || {};
         S.log(method);
         // 模拟异步请求
-        setTimeout(function() {
+        setTimeout(function () {
             var index;
             var store = STORE || (window.localStorage ? window.localStorage.getItem(KEY) || [] : []);
-            if (S.isString(store)) {
+            if (typeof store === 'string') {
                 store = Json.parse(store);
             }
 
-            var ret,id,error,i;
+            var ret, id, error, i;
             switch (method) {
                 case 'read':
                     var q;
@@ -104,5 +104,5 @@ KISSY.add(function(S, mvc,Json) {
 
     return sync;
 }, {
-    requires:['mvc','json']
+    requires: ['mvc', 'json']
 });

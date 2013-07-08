@@ -221,7 +221,7 @@
     }
 
     SimpleLoader.add = function (name, fn, config, runtime) {
-        if (S.isFunction(name)) {
+        if (typeof name === 'function') {
             config = fn;
             fn = name;
             if (UA.ie) {

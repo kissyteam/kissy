@@ -597,7 +597,7 @@ KISSY.add('dd/draggable', function (S, Node, RichBase, DDM) {
                         vs[0] = self.get('node');
                     }
                     each(vs, function (v, i) {
-                        if (S.isFunction(v)) {
+                        if (typeof v === 'function') {
                             v = v.call(self);
                         }
                         // search inside node

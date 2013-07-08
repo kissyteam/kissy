@@ -207,7 +207,7 @@ KISSY.add('grid/util', function (S) {
             if (typeof v == 'string') {
                 v = parseFloat(v);
             }
-            if (S.isNumber(v)) {
+            if (typeof v==='number') {
                 return (v * 0.01).toFixed(2);
             }
             return v;

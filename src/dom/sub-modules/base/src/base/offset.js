@@ -24,7 +24,6 @@ KISSY.add('dom/base/offset', function (S, Dom, undefined) {
         CLIENT = 'client',
         LEFT = 'left',
         TOP = 'top',
-        isNumber = S.isNumber,
         SCROLL_LEFT = SCROLL + 'Left',
         SCROLL_TOP = SCROLL + 'Top';
 
@@ -276,7 +275,7 @@ KISSY.add('dom/base/offset', function (S, Dom, undefined) {
         var method = SCROLL + name;
 
         Dom[method] = function (elem, v) {
-            if (isNumber(elem)) {
+            if (typeof elem==='number') {
                 return arguments.callee(win, elem);
             }
             elem = Dom.get(elem);
@@ -304,11 +303,11 @@ KISSY.add('dom/base/offset', function (S, Dom, undefined) {
                     //chrome == body.scrollTop
                     //firefox/ie9 == documentElement.scrollTop
                     ret = w[ 'page' + (i ? 'Y' : 'X') + 'Offset'];
-                    if (!isNumber(ret)) {
+                    if (typeof ret!=='number') {
                         d = w[DOCUMENT];
                         //ie6,7,8 standard mode
                         ret = d[DOC_ELEMENT][method];
-                        if (!isNumber(ret)) {
+                        if (typeof ret!=='number') {
                             //quirks mode
                             ret = d[BODY][method];
                         }

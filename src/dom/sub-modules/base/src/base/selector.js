@@ -289,7 +289,7 @@ KISSY.add('dom/base/selector', function (S, Dom, undefined) {
                     }
                 }
 
-                if (S.isFunction(filter)) {
+                if (typeof filter === 'function') {
                     ret = S.filter(elems, filter);
                 } else {
                     ret = Dom._matchesInternal(filter, elems);

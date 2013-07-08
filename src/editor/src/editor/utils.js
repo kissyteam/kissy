@@ -254,7 +254,7 @@ KISSY.add("editor/utils", function (S,Editor) {
                 for (var p in params) {
 
                     var v = params[p];
-                    if (S.isFunction(v)) {
+                    if (typeof v === 'function') {
                         params[p] = v();
                     }
 
@@ -330,7 +330,7 @@ KISSY.add("editor/utils", function (S,Editor) {
                 var res = this.__res || [];
                 for (var i = 0; i < res.length; i++) {
                     var r = res[i];
-                    if (S.isFunction(r)) {
+                    if (typeof r === 'function') {
                         r();
                     } else {
                         if (r.destroy) {

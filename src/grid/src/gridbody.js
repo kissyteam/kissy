@@ -302,7 +302,7 @@ KISSY.add('grid/gridbody', function (S, Component, XTemplate, Bindable) {
                 value = '';
             if (showTip) {
                 value = record[dataIndex];
-                if (S.isFunction(showTip)) {
+                if (typeof showTip === 'function') {
                     value = showTip(value, record);
                 }
             }

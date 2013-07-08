@@ -222,7 +222,7 @@
 
             var fn = mod.fn;
 
-            if (S.isFunction(fn)) {
+            if (typeof fn === 'function') {
                 // 需要解开 index，相对路径
                 // 但是需要保留 alias，防止值不对应
                 mod.value = fn.apply(mod, Utils.getModules(runtime, mod.getRequiresWithAlias()));

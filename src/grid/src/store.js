@@ -324,7 +324,7 @@ KISSY.add('grid/store',function(S){
 				position = -1,
 				records = this.resultRows;
 			func = func || _self._getDefaultMatch();
-			if(S.isUndefined(target)||S.isNull(target)){
+			if(target==null){
 				return -1;
 			}
 			S.each(records,function(record,index){
@@ -554,7 +554,7 @@ KISSY.add('grid/store',function(S){
 		//添加记录
 		_addRecord :function(record,index){
 			var records = this.resultRows;
-			if(S.isUndefined(index)){
+			if(typeof index==='undefined'){
 				index = records.length;
 			}
 			records[index] = record;

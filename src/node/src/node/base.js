@@ -84,7 +84,7 @@ KISSY.add('node/base', function (S, Dom, Event, undefined) {
          */
         item: function (index) {
             var self = this;
-            if (S.isNumber(index)) {
+            if (typeof index==='number') {
                 if (index >= self.length) {
                     return null;
                 } else {
@@ -103,7 +103,7 @@ KISSY.add('node/base', function (S, Dom, Event, undefined) {
          * @return {KISSY.NodeList} a new nodelist
          */
         add: function (selector, context, index) {
-            if (S.isNumber(context)) {
+            if (typeof context==='number') {
                 index = context;
                 context = undefined;
             }

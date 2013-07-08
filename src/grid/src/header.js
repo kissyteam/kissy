@@ -83,7 +83,7 @@ KISSY.add('grid/header', function (S, Component, Column) {
                 var _self = this,
                     columns = _self.get('columns'),
                     index;
-                c = S.isNumber(c) ? columns[c] : c;
+                c = typeof c==='number' ? columns[c] : c;
                 index = S.indexOf(c, columns);
                 columns.splice(index, 1);
                 _self.fire('remove', {column:c, index:index});

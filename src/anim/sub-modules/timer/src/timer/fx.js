@@ -53,7 +53,8 @@ KISSY.add('anim/timer/fx', function (S, Dom, undefined) {
          */
         interpolate: function (from, to, pos) {
             // 默认只对数字进行 easing
-            if (S.isNumber(from) && S.isNumber(to)) {
+            if ((typeof from==='number')&&
+                (typeof to==='number')) {
                 return /**@type Number @ignore*/(from + (to - from) * pos).toFixed(3);
             } else {
                 return /**@type Number @ignore*/undefined;

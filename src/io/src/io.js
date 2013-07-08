@@ -8,7 +8,7 @@ KISSY.add('io', function (S, serializer, IO) {
 
     function get(url, data, callback, dataType, type) {
         // data 参数可省略
-        if (S.isFunction(data)) {
+        if (typeof data === 'function') {
             dataType = callback;
             callback = data;
             data = undef;
@@ -61,7 +61,7 @@ KISSY.add('io', function (S, serializer, IO) {
              * @static
              */
             post: function (url, data, callback, dataType) {
-                if (S.isFunction(data)) {
+                if (typeof data === 'function') {
                     dataType = /**
                      @type String
                      @ignore*/callback;
@@ -84,7 +84,7 @@ KISSY.add('io', function (S, serializer, IO) {
              * @static
              */
             jsonp: function (url, data, callback) {
-                if (S.isFunction(data)) {
+                if (typeof data === 'function') {
                     callback = data;
                     data = undef;
                 }
@@ -112,7 +112,7 @@ KISSY.add('io', function (S, serializer, IO) {
              * @static
              */
             getJSON: function (url, data, callback) {
-                if (S.isFunction(data)) {
+                if (typeof data === 'function') {
                     callback = data;
                     data = undef;
                 }
@@ -134,7 +134,7 @@ KISSY.add('io', function (S, serializer, IO) {
              * @static
              */
             upload: function (url, form, data, callback, dataType) {
-                if (S.isFunction(data)) {
+                if (typeof data === 'function') {
                     dataType = /**
                      @type String
                      @ignore

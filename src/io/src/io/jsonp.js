@@ -24,7 +24,7 @@ KISSY.add('io/jsonp', function (S, IO) {
             var response,
                 cJsonpCallback = c.jsonpCallback,
                 converters,
-                jsonpCallback = S.isFunction(cJsonpCallback) ?
+                jsonpCallback = typeof cJsonpCallback === 'function' ?
                     cJsonpCallback() :
                     cJsonpCallback,
                 previous = win[ jsonpCallback ];

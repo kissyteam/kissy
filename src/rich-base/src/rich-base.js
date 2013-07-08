@@ -152,7 +152,7 @@ KISSY.add('rich-base', function (S, Base) {
         constructPlugins: function () {
             var plugins = this.get('plugins');
             S.each(plugins, function (plugin, i) {
-                if (S.isFunction(plugin)) {
+                if (typeof plugin === 'function') {
                     plugins[i] = new plugin();
                 }
             });
@@ -249,7 +249,7 @@ KISSY.add('rich-base', function (S, Base) {
          */
         'plug': function (plugin) {
             var self = this;
-            if (S.isFunction(plugin)) {
+            if (typeof plugin === 'function') {
                 plugin = new plugin();
             }
             // initialize plugin

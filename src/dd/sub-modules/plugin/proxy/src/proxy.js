@@ -100,7 +100,7 @@ KISSY.add('dd/plugin/proxy', function (S, Node, Base, DD) {
                     dragNode = drag.get('node');
                 // cache proxy node
                 if (!self.get('proxyNode')) {
-                    if (S.isFunction(node)) {
+                    if (typeof node === 'function') {
                         node = node(drag);
                         node.addClass('ks-dd-proxy');
                         node.css('position', 'absolute');

@@ -19,7 +19,7 @@ KISSY.add("editor/plugin/draft", function (S, Editor, localStorage, Overlay, Men
     }
 
     function date(d) {
-        if (S.isNumber(d)) {
+        if (typeof d==='number') {
             d = new Date(d);
         }
         if (d instanceof Date)

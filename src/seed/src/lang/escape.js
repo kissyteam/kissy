@@ -164,7 +164,7 @@
             }
             sep = sep || SEP;
             eq = eq || EQ;
-            if (S.isUndefined(serializeArray)) {
+            if (serializeArray === undefined) {
                 serializeArray = TRUE;
             }
             var buf = [], key, i, v, len, val,

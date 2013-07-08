@@ -107,7 +107,7 @@
                 ov = ov['overwrite'];
             }
 
-            if (wl && !S.isFunction(wl)) {
+            if (wl && (typeof wl !== 'function')) {
                 var originalWl = wl;
                 wl = function (name, val) {
                     return S.inArray(name, originalWl) ? val : undefined;
@@ -165,7 +165,7 @@
                 wl = undefined;
                 len++;
             }
-            if (!S.isBoolean(ov)) {
+            if (typeof ov !== 'boolean') {
                 ov = undefined;
                 len++;
             }

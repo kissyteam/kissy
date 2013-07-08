@@ -35,7 +35,7 @@ KISSY.add("tabs/bar", function (S, Toolbar, BarRender, undefined) {
             var self = this;
             var current = self.get('selectedTab');
             var next = self.getNextItemByKeyDown(e, current);
-            if (S.isBoolean(next)) {
+            if (typeof next === 'boolean') {
                 return next;
             } else {
                 next.set('selected', true);

@@ -151,7 +151,7 @@ KISSY.add("html-parser/parser", function (S, dtd, Tag, Fragment, Cursor, Lexer, 
 
     function findTagWithName(root, tagName, level) {
         if (level === 0) return 0;
-        if (S.isNumber(level)) {
+        if (typeof level==='number') {
             level--;
         }
         var r, childNodes = root.childNodes;

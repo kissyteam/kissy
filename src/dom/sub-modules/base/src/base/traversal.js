@@ -232,7 +232,7 @@ KISSY.add('dom/base/traversal', function (S, Dom, undefined) {
             fi,
             filterLength;
 
-        if (S.isNumber(filter)) {
+        if (typeof filter==='number') {
             fi = 0;
             filterLength = filter;
             filter = function () {

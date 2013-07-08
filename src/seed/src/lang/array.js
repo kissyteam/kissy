@@ -325,7 +325,7 @@
                 // window
                 || o.alert
                 || typeof o == 'string'
-                || S.isFunction(o)) {
+                || (typeof o === 'function')) {
                 return [o];
             }
             var ret = [];

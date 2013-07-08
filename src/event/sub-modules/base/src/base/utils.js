@@ -42,7 +42,7 @@ KISSY.add('event/base/utils', function (S) {
         normalizeParam: function (type, fn, context) {
             var cfg = fn || {};
 
-            if (S.isFunction(fn)) {
+            if (typeof fn === 'function') {
                 cfg = {
                     fn: fn,
                     context: context

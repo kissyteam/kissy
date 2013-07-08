@@ -31,7 +31,7 @@ KISSY.add("component/control/render", function (S, ComponentProcess, XTemplate, 
         for (p in parser) {
             v = parser[p];
             // 函数
-            if (S.isFunction(v)) {
+            if (typeof v === 'function') {
                 // html parser 放弃
                 ret = v.call(view, srcNode);
                 if (ret !== undefined) {
