@@ -169,6 +169,12 @@
         // A fallback to window.onload, that will always work
         addEventListener(win, LOAD_EVENT, fireReady);
 
+        // add one more event on window load
+        // to make sure that the callback binded by S.Event.on of window's 'load' event can always execute.
+        addEventListener(win, LOAD_EVENT, function(){
+            S.Env.winHasLoaded = true;
+        });
+
         // w3c mode
         if (standardEventModel) {
             var domReady = function () {
