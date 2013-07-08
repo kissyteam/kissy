@@ -29,9 +29,10 @@
     }
 
     function getIEVersion(ua) {
-        var m;
-        if ((m = ua.match(/MSIE\s([^;]*)/)) && m[1]) {
-            return numberify(m[1]);
+        var m, v;
+        if ((m = ua.match(/MSIE ([^;]*)|Trident.*; rv ([0-9.]+)/)) &&
+            (v = (m[1] || m[2]))) {
+            return numberify(v);
         }
         return 0;
     }
@@ -219,8 +220,11 @@
             if ((m = ua.match(/AppleWebKit\/([\d.]*)/)) && m[1]) {
                 UA[core = 'webkit'] = numberify(m[1]);
 
+                if ((m = ua.match(/OPR\/(\d+\.\d+)/)) && m[1]) {
+                    UA[shell = 'opera'] = numberify(m[1]);
+                }
                 // Chrome
-                if ((m = ua.match(/Chrome\/([\d.]*)/)) && m[1]) {
+                else if ((m = ua.match(/Chrome\/([\d.]*)/)) && m[1]) {
                     UA[shell = 'chrome'] = numberify(m[1]);
                 }
                 // Safari
@@ -376,17 +380,20 @@
 
 /*
  NOTES:
- 2013.01.17
+ 2013.07.08 yiminghe@gmail.com
+ - support ie11 and opera(using blink)
+
+ 2013.01.17 yiminghe@gmail.com
  - expose getDescriptorFromUserAgent for analysis tool in nodejs
 
- 2012.11.27
+ 2012.11.27 yiminghe@gmail.com
  - moved to seed for conditional loading and better code share
 
  2012.11.21 yiminghe@gmail.com
  - touch and os support
 
- 2011.11.08
- - ie < 10 使用条件注释判断内核，更精确 by gonghaocn@gmail.com
+ 2011.11.08 gonghaocn@gmail.com
+ - ie < 10 使用条件注释判断内核，更精确
 
  2010.03
  - jQuery, YUI 等类库都推荐用特性探测替代浏览器嗅探。特性探测的好处是能自动适应未来设备和未知设备，比如
