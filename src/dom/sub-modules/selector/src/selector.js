@@ -654,7 +654,12 @@ KISSY.add('dom/selector', function (S, parser, Dom) {
                 if (id) {
                     // http://yiminghe.github.io/lab/playground/fragment-selector/selector.html
                     var doesNotHasById = !context.getElementById,
-                        tmp = doesNotHasById ? null : context.getElementById(id);
+                        contextInDom = Dom._contains(contextDocument, context),
+                        tmp = doesNotHasById ? (
+                            contextInDom ?
+                                contextDocument.getElementById(id) :
+                                null
+                            ) : context.getElementById(id);
                     // id bug
                     // https://github.com/kissyteam/kissy/issues/67
                     if (!tmp && doesNotHasById || tmp && getAttr(tmp, 'id') != id) {
@@ -672,6 +677,9 @@ KISSY.add('dom/selector', function (S, parser, Dom) {
                             mySeeds = [];
                         }
                     } else {
+                        if (contextInDom && tmp && context !== contextDocument) {
+                            tmp = Dom._contains(context, tmp) ? tmp : null;
+                        }
                         mySeeds = tmp ? [tmp] : [];
                     }
                 } else {

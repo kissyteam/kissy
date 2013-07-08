@@ -55,6 +55,22 @@ KISSY.add(function (S, engine, Dom) {
             expect(select('i', node).length).toBe(1);
         });
 
+
+        it('works for in dom node', function () {
+            var node = Dom.create('<div><i id="i"></i></div>');
+            var holder = Dom.create('<div id="holder"><b id="b"></b></div>');
+            document.body.appendChild(node);
+            document.body.appendChild(holder);
+
+            expect(select('#i', node).length).toBe(1);
+            expect(select('i', node).length).toBe(1);
+
+            expect(select('#b', node).length).toBe(0);
+            expect(select('b', node).length).toBe(0);
+            Dom.remove(node);
+            Dom.remove(holder);
+        });
+
     });
 }, {
     requires: ['dom/selector', 'dom']
