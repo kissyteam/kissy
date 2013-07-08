@@ -7,7 +7,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-touch-fullscreen" content="yes">
     <title>Demo - SimpleButton</title>
-    <link href="../../../css/src/dpl/base.css" rel="stylesheet"/>
+    <link href="../../../css/assets/dpl/base.css" rel="stylesheet"/>
     <link href="../assets/custombutton.css" rel="stylesheet"/>
     <style>
         h1 {
@@ -48,19 +48,17 @@
 
     <h2>从 json 描述生成</h2>
 
-    <div id="button_container2"></div>
+    <div id="button_container3"></div>
 </div>
 <script src="/kissy/build/seed.js"></script>
-<script src="../../src/button.js"></script>
-<script src="../../src/base.js"></script>
-<script src="../../src/buttonRender.js"></script>
-<script src="../../../log.js"></script>
+<script src="/kissy/src/package.js"></script>
+<script src="/kissy/src/log.js"></script>
 <script>
 
-    KISSY.use("node,button,component/base", function (S, Node, Button, Component) {
+    KISSY.use("node,button,component/manager", function (S, Node, Button, Manager) {
         // view
         // render to container : button_container
-        // controller
+        // control
         // view as a parameter
         var b = new Button({
             content: "by new",
@@ -72,7 +70,7 @@
 
         b.on("click", function () {
             setTimeout(function () {
-                log("button click");
+                log("by new click");
             }, 0);
         });
 
@@ -107,10 +105,10 @@
             log("渐进增强 click");
         });
 
-        Component.create({
+        Manager.createComponent({
             xclass: 'button',
             content: 'json',
-            render: "#button_container2",
+            render: "#button_container3",
             listeners: {
                 click: {
                     fn: function () {

@@ -2,8 +2,8 @@
  * dirty hack for ie
  * @author yiminghe@gmail.com
  */
-KISSY.add('dom/ie', function (S, DOM) {
-    return DOM;
+KISSY.add('dom/ie', function (S, Dom) {
+    return Dom;
 }, {
     requires: [
         './ie/attr',

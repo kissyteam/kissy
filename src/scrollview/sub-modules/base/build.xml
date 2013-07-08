@@ -1,8 +1,0 @@
-<project name="scrollview/base.build" default="build" basedir=".">
-    <description>scrollview/base Build File</description>
-
-    <property name="component.name" value="scrollview/base"/>
-
-    <import file="../../../common.xml"/>
-</project>
-

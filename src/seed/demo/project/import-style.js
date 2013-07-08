@@ -1,14 +1,17 @@
 (function (S) {
+    var isDebug = S.Config.debug;
 
     function importStyle(modNames) {
         if (typeof modNames == 'string') {
             modNames = modNames.split(',');
         }
-        var cssList = [], cssCache = {};
-        var stack = [],
+        var cssList = [],
+            cssCache = {},
+            stack = [],
             stackCache = {},
-            processed = {};
-        var mods = S.Env.mods;
+            processed = {},
+            mods = S.Env.mods;
+        isDebug = S.Config.debug;
         S.each(modNames, function (modName) {
             var mod;
             if (mod = mods[modName]) {
@@ -48,9 +51,9 @@
                             combined[0].getPackage() != currentPackage) {
                             combined.pop();
                             combinedUrl.pop();
+                            document.writeln('<link href="' + (prefix + combinedUrl.join(comboSep) + suffix) + '"  rel="stylesheet"/>');
                             combined = [];
                             combinedUrl = [];
-                            document.writeln('<link href="' + (prefix + combinedUrl.join(comboSep) + suffix) + '"  rel="stylesheet"/>');
                             i--;
                         } else {
                         }
@@ -70,7 +73,7 @@
 
     function collectCss(mod, cssList, stack, cssCache, stackCache, processed) {
         var name = mod.getName();
-        if (stackCache[name]) {
+        if (isDebug && stackCache[name]) {
             S.error('circular dependencies found: ' + stack);
             return;
         }
@@ -87,13 +90,17 @@
             return;
         }
         var requires = mod.getRequiredMods();
-        stackCache[name] = 1;
-        stack.push(name);
+        if (isDebug) {
+            stackCache[name] = 1;
+            stack.push(name);
+        }
         S.each(requires, function (r) {
             collectCss(r, cssList, stack, cssCache, stackCache, processed);
         });
-        stack.pop();
-        delete stackCache[name];
+        if (isDebug) {
+            stack.pop();
+            delete stackCache[name];
+        }
     }
 
     window.importStyle = importStyle;

@@ -5,19 +5,16 @@
             // 是否初始聚焦
             focused: true,
             attachForm: true,
-            baseZIndex: 10000,
+            baseZIndex: 10000
             // 自定义样式
             // customStyle:"p{line-height: 1.4;margin: 1.12em 0;padding: 0;}",
             // 自定义外部样式
             // customLink:["http://localhost/customLink.css","http://xx.com/y2.css"],
-            // render:"#container",
-            srcNode: '#container',
-            width: '900px',
-            height: "400px"
+
         }, window.EDITOR_CFG);
 
         var plugins = ("source-area" +
-            ",code"+
+            ",code" +
             ",separator" +
             ",bold" +
             ",italic," +
@@ -266,8 +263,13 @@
             });
 
             cfg.plugins = args;
-            var editor = new Editor(cfg);
-            editor.render();
+            var editor;
+            if (cfg.fromTextarea) {
+                editor = Editor.decorate(cfg.fromTextarea, cfg);
+            } else {
+                editor = new Editor(cfg);
+                editor.render();
+            }
             editor.on("blur", function () {
                 S.log("editor blur");
             });
@@ -280,7 +282,9 @@
 
             window.newEditor = editor;
 
-
+//            editor.on('paste', function () {
+//                return 'x';
+//            });
         });
 
     });

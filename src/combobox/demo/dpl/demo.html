@@ -7,7 +7,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-touch-fullscreen" content="yes">
     <title>combobox</title>
-    <link href="../../../../src/css/src/dpl/base.css" rel="stylesheet"/>
+    <link href="../../../../src/css/assets/dpl/base.css" rel="stylesheet"/>
     <link href="../../../button/assets/dpl.css" rel="stylesheet"/>
     <link href="../../../menu/assets/dpl.css" rel="stylesheet"/>
     <link href="../../assets/dpl.css" rel="stylesheet"/>
@@ -93,7 +93,7 @@
             <div class="span9">
                 <h3>FilterSelect</h3>
 
-                <p>利用现有 DOM 生成 Filter Select</p>
+                <p>利用现有 Dom 生成 Filter Select</p>
 
                 <div>
                     <div class="ks-combobox" id="J_Combox_Check" style="width:200px">
@@ -101,7 +101,10 @@
                             <div class="ks-combobox-trigger-inner">▼</div>
                         </div>
                         <div class="ks-combobox-input-wrap">
-                            <input class="ks-combobox-input">
+                            <input class="ks-combobox-input" id="xx">
+                            <label style="display: block;"
+                                   for="xx"
+                                   class="ks-combobox-placeholder">     请输入     </label>
                         </div>
                     </div>
                 </div>
@@ -127,14 +130,7 @@
     </section>
 </div>
 <script src="/kissy/build/seed.js"></script>
-<script src="../../src/base.js"></script>
-<script src="../../src/render.js"></script>
-<script src="../../src/combobox.js"></script>
-<script src="../../src/multi-value-combobox.js"></script>
-<script src="../../src/local-data-source.js"></script>
-<script src="../../src/cursor.js"></script>
-<script src="../../src/filter-select.js"></script>
-<script src="../../src/remote-data-source.js"></script>
+<script src="/kissy/src/package.js"></script>
 <script>
     /**/
     KISSY.use('combobox', function (S, ComboBox) {
@@ -246,7 +242,7 @@
             render: "#inp-combobox-container-check",
             placeholder: "请输入",
             invalidMessage: "请选择提示框内容",
-            //inputValue: "c3464356",
+            //value: "c3464356",
             dataSource: new ComboBox.LocalDataSource({
                 data: data
             }),
@@ -284,7 +280,7 @@
             srcNode: '#J_Combox_Check',
             placeholder: "请输入",
             invalidMessage: "请选择提示框内容",
-            // inputValue: "c3464356",
+            // value: "c3464356",
             dataSource: new ComboBox.LocalDataSource({
                 data: data
             }),

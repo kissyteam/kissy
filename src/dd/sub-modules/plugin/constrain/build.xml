@@ -1,0 +1,5 @@
+<project name="dd/plugin/constrain.build" default="build" basedir="">
+    <property name="component.name" value="dd/plugin/constrain"/>
+
+    <import file="../../../../common.xml"/>
+</project>

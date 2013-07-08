@@ -1,6 +1,4 @@
 <project name="event/dom/focusin.build" default="build">
-    <description>event/dom/focusin Build File</description>
-
     <property name="component.name" value="event/dom/focusin"/>
 
     <import file="../../../../../common.xml"/>

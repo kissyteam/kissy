@@ -3,9 +3,9 @@
  * @author yiminghe@gmail.com
  * @ignore
  */
-KISSY.add('anim/base', function (S, DOM, Utils, EventCustom, Q) {
+KISSY.add('anim/base', function (S, Dom, Utils, CustomEvent, Q) {
 
-    var NodeType = DOM.NodeType;
+    var NodeType = Dom.NodeType;
     var specialVals = {
         toggle: 1,
         hide: 1,
@@ -24,7 +24,7 @@ KISSY.add('anim/base', function (S, DOM, Utils, EventCustom, Q) {
          * @type {Object}
          */
         self.config = config;
-        self.el = DOM.get(config.el);
+        self.node = self.el = Dom.get(config.node);
         // 实例属性
         self._backupProps = {};
         self._propsData = {};
@@ -39,11 +39,11 @@ KISSY.add('anim/base', function (S, DOM, Utils, EventCustom, Q) {
 
         // only recover after complete anim
         if (!S.isEmptyObject(_backupProps = self._backupProps)) {
-            DOM.css(self.el, _backupProps);
+            Dom.css(self.node, _backupProps);
         }
     }
 
-    S.augment(AnimBase, EventCustom.Target, {
+    S.augment(AnimBase, CustomEvent.Target, {
         /**
          * prepare fx hook
          * @protected
@@ -54,11 +54,11 @@ KISSY.add('anim/base', function (S, DOM, Utils, EventCustom, Q) {
         runInternal: function () {
             var self = this,
                 config = self.config,
-                el = self.el,
+                node = self.node,
                 val,
                 _backupProps = self._backupProps,
                 _propsData = self._propsData,
-                props = config.props,
+                to = config.to,
                 defaultDelay = (config.delay || 0),
                 defaultDuration = config.duration;
 
@@ -72,7 +72,7 @@ KISSY.add('anim/base', function (S, DOM, Utils, EventCustom, Q) {
             }
 
             // 分离 easing
-            S.each(props, function (val, prop) {
+            S.each(to, function (val, prop) {
                 if (!S.isPlainObject(val)) {
                     val = {
                         value: val
@@ -88,16 +88,16 @@ KISSY.add('anim/base', function (S, DOM, Utils, EventCustom, Q) {
                 }, val);
             });
 
-            if (el.nodeType == NodeType.ELEMENT_NODE) {
+            if (node.nodeType == NodeType.ELEMENT_NODE) {
 
                 // 放在前面，设置 overflow hidden，否则后面 ie6  取 width/height 初值导致错误
                 // <div style='width:0'><div style='width:100px'></div></div>
-                if (props.width || props.height) {
+                if (to.width || to.height) {
                     // Make sure that nothing sneaks out
                     // Record all 3 overflow attributes because IE does not
                     // change the overflow attribute when overflowX and
                     // overflowY are set to the same value
-                    var elStyle = el.style;
+                    var elStyle = node.style;
                     S.mix(_backupProps, {
                         overflow: elStyle.overflow,
                         'overflow-x': elStyle.overflowX,
@@ -105,8 +105,8 @@ KISSY.add('anim/base', function (S, DOM, Utils, EventCustom, Q) {
                     });
                     elStyle.overflow = 'hidden';
                     // inline element should has layout/inline-block
-                    if (DOM.css(el, 'display') === 'inline' &&
-                        DOM.css(el, 'float') === 'none') {
+                    if (Dom.css(node, 'display') === 'inline' &&
+                        Dom.css(node, 'float') === 'none') {
                         if (S.UA['ie']) {
                             elStyle.zoom = 1;
                         } else {
@@ -116,7 +116,7 @@ KISSY.add('anim/base', function (S, DOM, Utils, EventCustom, Q) {
                 }
 
                 var exit, hidden;
-                hidden = (DOM.css(el, 'display') === 'none');
+                hidden = (Dom.css(node, 'display') === 'none');
                 S.each(_propsData, function (_propData, prop) {
                     val = _propData.value;
                     // 直接结束
@@ -127,7 +127,7 @@ KISSY.add('anim/base', function (S, DOM, Utils, EventCustom, Q) {
                             return exit = false;
                         }
                         // backup original inline css value
-                        _backupProps[prop] = DOM.style(el, prop);
+                        _backupProps[prop] = Dom.style(node, prop);
                         if (val == 'toggle') {
                             val = hidden ? 'show' : 'hide';
                         }
@@ -136,10 +136,10 @@ KISSY.add('anim/base', function (S, DOM, Utils, EventCustom, Q) {
                             // 执行完后隐藏
                             _backupProps.display = 'none';
                         } else {
-                            _propData.value = DOM.css(el, prop);
+                            _propData.value = Dom.css(node, prop);
                             // prevent flash of content
-                            DOM.css(el, prop, 0);
-                            DOM.show(el);
+                            Dom.css(node, prop, 0);
+                            Dom.show(node);
                         }
                     }
                     return undefined;
@@ -242,7 +242,7 @@ KISSY.add('anim/base', function (S, DOM, Utils, EventCustom, Q) {
                 self.runInternal();
             } else {
                 // 当前动画对象加入队列
-                q = Q.queue(self.el, queue, self);
+                q = Q.queue(self.node, queue, self);
                 if (q.length == 1) {
                     self.runInternal();
                 }
@@ -258,14 +258,14 @@ KISSY.add('anim/base', function (S, DOM, Utils, EventCustom, Q) {
          */
         stop: function (finish) {
             var self = this,
-                el = self.el,
+                node = self.node,
                 q,
                 queue = self.config.queue;
 
             if (!self.isRunning() && !self.isPaused()) {
                 if (queue !== false) {
                     // queued but not start to run
-                    Q.remove(el, queue, self);
+                    Q.remove(node, queue, self);
                 }
                 return self;
             }
@@ -279,7 +279,7 @@ KISSY.add('anim/base', function (S, DOM, Utils, EventCustom, Q) {
             }
             if (queue !== false) {
                 // notify next anim to run in the same queue
-                q = Q.dequeue(el, queue);
+                q = Q.dequeue(node, queue);
                 if (q && q[0]) {
                     q[0].runInternal();
                 }

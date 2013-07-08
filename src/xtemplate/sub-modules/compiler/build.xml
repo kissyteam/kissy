@@ -1,6 +1,4 @@
 <project name="xtemplate/compiler.build" default="build" basedir=".">
-    <description>xtemplate compiler Build File</description>
-
     <property name="component.name" value="xtemplate/compiler"/>
 
     <import file="../../../common.xml"/>

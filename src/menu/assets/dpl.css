@@ -61,11 +61,6 @@
   left: -9999px;
   top: -9999px;
 }
-
-.ks-popupmenu-shown{
-    visibility: visible;
-}
-
 .ks-popupmenu-hidden{
     visibility: hidden;
 }
@@ -160,4 +155,8 @@
 }
 .ks-menuitem-checked .ks-menuitem-checkbox:last-child {
   *margin-left: 0;
+}
+
+.ks-menuitem-content {
+    display: inline;
 }

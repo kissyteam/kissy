@@ -7,19 +7,21 @@
 
     var index = -1;
     var S = KISSY;
-    var $ = S.all;
     window.tests = [];
     var testIframe;
     var uri = new S.Uri(location.href);
+    var testBuild = uri.getQuery().has('build');
 
     if (!uri.getQuery().has('once')) {
-        if ('onmessage' in window) {
+        if (('onmessage' in window) && window.addEventListener) {
             S.log('using onmessage');
-            S.Event.on(window, "message", function (e) {
-                if (e.originalEvent.data == "next") {
+
+            window.addEventListener("message", function (e) {
+                if (e.data == "next") {
                     SNext();
                 }
-            });
+            }, false);
+
         } else {
             S.log('window.name');
             setInterval(function () {
@@ -39,7 +41,8 @@
             window.scrollTo(0, 0);
             location.hash = tests[index];
             setTimeout(function () {
-                testIframe.src = tests[index] + "?" + (+new Date());
+                testIframe.src = tests[index] + "?" + (+new Date())
+                    + (testBuild ? '&build' : '');
             }, 50);
         }
     }

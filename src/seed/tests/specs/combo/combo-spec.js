@@ -1,7 +1,6 @@
 describe("KISSY ComboLoader", function () {
     var S = KISSY,
-        host = location.host,
-        ComboLoader = S.Loader.Combo;
+        host = location.host;
 
 
     it("should works simply", function () {
@@ -38,7 +37,7 @@ describe("KISSY ComboLoader", function () {
             });
             setTimeout(function () {
                 ret = a;
-            }, 0);
+            }, 10);
             ret2 = a;
         });
 
@@ -57,11 +56,12 @@ describe("KISSY ComboLoader", function () {
     it("should calculate rightly", function () {
         waits(10);
         runs(function () {
-            expect(S.Env._comboLoader.loading).toBe(0);
 
             S.clearLoader();
 
-            var l = new ComboLoader(S);
+            var waitingModules = new S.Loader.WaitingModules(function () {
+            });
+            var l = new S.Loader.ComboLoader(S, waitingModules);
 
             S.config('modules', {
                 a: {
@@ -79,11 +79,11 @@ describe("KISSY ComboLoader", function () {
             });
 
             var r;
-            r = l.calculate(["a", "h"]);
+            r = S.keys(l.calculate(["a", "h"]));
             S.Loader.Utils.createModulesInfo(S, r);
             var c = l.getComboUrls(r);
-            expect(c.js[''][0]).toBe(S.Config.base +
-                "??a.js,b.js,d.js,f.js,g.js,e.js,c.js,h.js,m.js?t=" + S.Config.tag);
+            expect(c.js[''][0].fullpath).toBe(S.Config.base +
+                "??a.js,b.js,d.js,f.js,g.js,e.js,c.js,h.js,m.js?t=" + S.Config.tag+'.js');
 
         });
 
@@ -92,7 +92,6 @@ describe("KISSY ComboLoader", function () {
     it("should trunk url by comboMaxFileNum config rightly", function () {
         waits(10);
         runs(function () {
-            expect(S.Env._comboLoader.loading).toBe(0);
 
             S.clearLoader();
 
@@ -100,7 +99,9 @@ describe("KISSY ComboLoader", function () {
 
             S.config('comboMaxFileNum', 2);
 
-            var l = new ComboLoader(S);
+            var waitingModules = new S.Loader.WaitingModules(function () {
+            });
+            var l = new S.Loader.ComboLoader(S, waitingModules);
 
             S.config('modules', {
                 a: {
@@ -112,14 +113,14 @@ describe("KISSY ComboLoader", function () {
             });
 
             var r;
-            r = l.calculate(["a", "b"]);
+            r = S.keys(l.calculate(["a", "b"]));
             S.Loader.Utils.createModulesInfo(S, r);
             var c = l.getComboUrls(r);
             var js = c.js[''];
             expect(js.length).toBe(3);
-            expect(js[0]).toBe(S.Config.base + "??a.js,b.js?t=" + S.Config.tag);
-            expect(js[1]).toBe(S.Config.base + "??d.js,e.js?t=" + S.Config.tag);
-            expect(js[2]).toBe(S.Config.base + "??c.js?t=" + S.Config.tag);
+            expect(js[0].fullpath).toBe(S.Config.base + "??a.js,b.js?t=" + S.Config.tag+'.js');
+            expect(js[1].fullpath).toBe(S.Config.base + "??d.js,e.js?t=" + S.Config.tag+'.js');
+            expect(js[2].fullpath).toBe(S.Config.base + "??c.js?t=" + S.Config.tag+'.js');
 
             S.config('comboMaxFileNum', comboMaxFileNum);
         });
@@ -129,8 +130,6 @@ describe("KISSY ComboLoader", function () {
         waits(10);
         runs(function () {
             S.config('comboMaxFileNum', 9999);
-
-            expect(S.Env._comboLoader.loading).toBe(0);
 
             S.clearLoader();
 
@@ -146,7 +145,9 @@ describe("KISSY ComboLoader", function () {
                 }
             }
 
-            var l = new ComboLoader(S);
+            var waitingModules = new S.Loader.WaitingModules(function () {
+            });
+            var l = new S.Loader.ComboLoader(S, waitingModules);
 
             S.config('modules', x);
 
@@ -155,14 +156,14 @@ describe("KISSY ComboLoader", function () {
                 ret.push("y" + i);
             }
             var r;
-            r = l.calculate(ret);
+            r = S.keys(l.calculate(ret));
             S.Loader.Utils.createModulesInfo(S, r);
             var c = l.getComboUrls(r);
             var cjs = c.js[''];
             expect(cjs.length).toBe(3);
 
             S.each(cjs, function (j) {
-                expect(j.length).not.toBeGreaterThan(S.Config.comboMaxUrlLength)
+                expect(j.fullpath.length).not.toBeGreaterThan(S.Config.comboMaxUrlLength)
             });
         });
     });
@@ -170,8 +171,6 @@ describe("KISSY ComboLoader", function () {
     it("should works for native mod", function () {
         waits(10);
         runs(function () {
-            expect(S.Env._comboLoader.loading).toBe(0);
-
             S.clearLoader();
 
             S.DOM = null;
@@ -189,7 +188,36 @@ describe("KISSY ComboLoader", function () {
         runs(function () {
             KISSY.clearLoader();
 
-            expect(S.Env._comboLoader.loading).toBe(0);
+            KISSY.config({
+                packages: [
+                    {
+                        name: 'tests',
+                        path: '/kissy/src/seed/tests/specs/combo/'
+                    }
+                ]
+            });
+            S.config('modules', {
+                "tests/a": {
+                    requires: ['./b']
+                },
+                "tests/b": {
+                    requires: ['./c', 'dom']
+                }
+            });
+
+            var waitingModules = new S.Loader.WaitingModules(function () {
+            });
+            var loader = new S.Loader.ComboLoader(S, waitingModules);
+            var mods = S.keys(loader.calculate(["tests/a"]));
+            S.Loader.Utils.createModulesInfo(S, mods);
+            var urls = loader.getComboUrls(mods);
+            var host = location.host;
+
+            expect(urls['js']['tests'][0].fullpath)
+                .toBe("http://" + host + "/kissy/src/seed/tests/specs/combo/" +
+                    "tests/??a.js,b.js,c.js?t=" + S.Config.tag+'.js');
+
+            S.DOM = null;
 
             S.clearLoader();
 
@@ -210,17 +238,6 @@ describe("KISSY ComboLoader", function () {
                 }
             });
 
-            var mods = S.getLoader().calculate(["tests/a"]);
-            S.Loader.Utils.createModulesInfo(S, mods);
-            var urls = S.getLoader().getComboUrls(mods);
-            var host = location.host;
-
-            expect(urls['js']['tests'][0])
-                .toBe("http://" + host + "/kissy/src/seed/tests/specs/combo/" +
-                    "tests/??a.js,b.js,c.js?t=" + S.Config.tag);
-
-            S.DOM = null;
-
             S.use('tests/a', function (S, a) {
                 expect(a).toBe(6);
             });
@@ -236,8 +253,6 @@ describe("KISSY ComboLoader", function () {
         waits(10);
         runs(function () {
             S.clearLoader();
-
-            expect(S.Env._comboLoader.loading).toBe(0);
 
             KISSY.config({
                 packages: [
@@ -309,9 +324,13 @@ describe("KISSY ComboLoader", function () {
         });
 
         runs(function () {
-            var loader = S.getLoader(), Loader = S.Loader, utils = Loader.Utils;
+            var waitingModules = new S.Loader.WaitingModules(function () {
+            });
+            var loader = new S.Loader.ComboLoader(S, waitingModules);
+            var Loader = S.Loader,
+                utils = Loader.Utils;
 
-            var allModNames = loader.calculate(["timestamp/y"]);
+            var allModNames = S.keys(loader.calculate(["timestamp/y"]));
 
             utils.createModulesInfo(S, allModNames);
             var comboUrls = loader.getComboUrls(allModNames);
@@ -320,9 +339,9 @@ describe("KISSY ComboLoader", function () {
 
             var jss = comboUrls.js[key];
 
-            expect(jss[0]).toBe("http://" + host + "/kissy/src/seed/tests/specs/timestamp/y.js");
-            expect(jss[1]).toBe("http://" + host + "/kissy/src/seed/tests/specs/timestamp/x.js");
-            expect(jss[2]).toBe("http://" + host + "/kissy/src/seed/tests/specs/timestamp/z.js");
+            expect(jss[0].fullpath).toBe("http://" + host + "/kissy/src/seed/tests/specs/timestamp/y.js");
+            expect(jss[1].fullpath).toBe("http://" + host + "/kissy/src/seed/tests/specs/timestamp/x.js");
+            expect(jss[2].fullpath).toBe("http://" + host + "/kissy/src/seed/tests/specs/timestamp/z.js");
 
         });
     });

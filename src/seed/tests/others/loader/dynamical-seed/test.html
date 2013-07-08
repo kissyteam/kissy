@@ -1,0 +1,35 @@
+<head>
+    <script>
+        function getScript(url, success) {
+            var doc = document;
+            var head = doc.getElementsByTagName('head')[0],
+                    node = doc.createElement('script');
+            node.src = url;
+            node.async = true;
+            if ('onload' in node) {
+                node.onload = success;
+            } else {
+                node.onreadystatechange = function () {
+                    var readyState = node.readyState;
+                    if (!readyState ||
+                            readyState == "loaded" ||
+                            readyState == "complete") {
+                        node.onreadystatechange = null;
+                        success.call(node)
+                    }
+                }
+            }
+
+            // can use js in head
+            head.insertBefore(node, head.firstChild);
+            return node;
+        }
+        getScript('/kissy/build/seed.js', function () {
+            alert(KISSY.config('base'))
+        });
+    </script>
+    <script></script>
+</head>
+<body>
+<script></script>
+</body>

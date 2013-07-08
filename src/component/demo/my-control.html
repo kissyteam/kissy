@@ -1,0 +1,98 @@
+<script src="/kissy/build/seed.js"></script>
+<!--<script src="/kissy/src/package.js"></script>-->
+<style>
+    .ks-my-control {
+        width: 100px;
+        height: 100px;
+        border: 1px solid green;
+    }
+
+    .ks-my-control-check {
+        width: 50px;
+        height: 50px;
+        border: 1px solid #000000;
+    }
+
+    .ks-my-control-checked {
+        background-color: red;
+    }
+
+    #singles {
+        margin: 10px 0;
+    }
+
+    .ks-my-list .ks-my-control {
+        display: inline-block;
+        margin-left: 10px;
+    }
+</style>
+<body>
+
+<div id="singles">
+    <div class="ks-my-control" id="my1" tabindex="0">
+        <div class="ks-my-control-check"></div>
+        srcNode
+    </div>
+
+    <div class="ks-my-control" id="my2" tabindex="0">
+        <div class="ks-my-control-check ks-my-control-checked"></div>
+        srcNode
+    </div>
+</div>
+
+
+</body>
+<script>
+    KISSY.config('packages', {
+        'my-control': {
+            base: './'
+        }
+    });
+    KISSY.use('my-control/control,my-control/list', function (S, MyControl, ListControl) {
+        S.ready(function () {
+            var my1 = new MyControl({
+                srcNode: '#my1'
+            }).render();
+            S.log(my1.get('id'));
+            my1.on('afterCheckedChange', function (e) {
+                alert(e.newVal ? '1 checked' : '1 unchecked');
+            });
+
+            var my2 = new MyControl({
+                srcNode: '#my2'
+            }).render();
+            S.log(my2.get('id'));
+            my2.on('afterCheckedChange', function (e) {
+                alert(e.newVal ? '2 checked' : '2 unchecked');
+            });
+
+            var my3 = new MyControl({
+                render: '#singles'
+            }).render();
+            my3.on('afterCheckedChange', function (e) {
+                alert(e.newVal ? '3 checked' : '3 unchecked');
+            });
+
+            var my4 = new MyControl({
+                checked: true,
+                render: '#singles'
+            }).render();
+            my4.on('afterCheckedChange', function (e) {
+                alert(e.newVal ? '4 checked' : '4 unchecked');
+            });
+
+            var listControl = new ListControl({
+                children: [
+                    {
+                        xclass: 'my-control',
+                        checked: true
+                    }
+                ]
+            });
+
+            listControl.addChild(new MyControl());
+
+            listControl.render();
+        });
+    });
+</script>

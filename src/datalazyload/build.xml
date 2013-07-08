@@ -1,7 +1,0 @@
-<project name="datalazyload.build" default="build" basedir=".">
-    <description>Datalazyload Build File</description>
-
-    <property name="component.name" value="datalazyload"/>
-
-    <import file="../common.xml"/>
-</project>

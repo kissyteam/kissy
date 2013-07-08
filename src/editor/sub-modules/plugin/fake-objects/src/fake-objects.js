@@ -2,16 +2,15 @@
  * fakeObjects for music ,video,flash
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/fake-objects", function (S, Editor) {
+KISSY.add("editor/plugin/fake-objects", function (S, Editor, HtmlParser) {
     var Node = S.Node,
-        DOM = S.DOM,
+        Dom = S.DOM,
         Utils = Editor.Utils,
-        SPACER_GIF = Utils.debugUrl('theme/spacer.gif'),
-        HTMLParser = S.require("htmlparser");
+        SPACER_GIF = Utils.debugUrl('theme/spacer.gif');
 
     S.augment(Editor, {
         //ie6 ,object outHTML error
-        createFakeElement:function (realElement, className, realElementType, isResizable, outerHTML, attrs) {
+        createFakeElement: function (realElement, className, realElementType, isResizable, outerHTML, attrs) {
             var style = realElement.attr("style") || '';
             if (realElement.attr("width")) {
                 style = "width:" + realElement.attr("width") + "px;" + style;
@@ -23,11 +22,11 @@ KISSY.add("editor/plugin/fake-objects", function (S, Editor) {
             // add current class to fake element
                 existClass = S.trim(realElement.attr('class')),
                 attributes = {
-                    'class':className + " " + existClass,
-                    src:SPACER_GIF,
-                    _ke_realelement:encodeURIComponent(outerHTML || realElement.outerHTML(undefined)),
-                    _ke_real_node_type:realElement[0].nodeType,
-                    style:style
+                    'class': className + " " + existClass,
+                    src: SPACER_GIF,
+                    _ke_realelement: encodeURIComponent(outerHTML || realElement.outerHtml()),
+                    _ke_real_node_type: realElement[0].nodeType,
+                    style: style
                 };
 
             if (attrs) {
@@ -44,8 +43,8 @@ KISSY.add("editor/plugin/fake-objects", function (S, Editor) {
             return new Node("<img/>", attributes, self.get("document")[0]);
         },
 
-        restoreRealElement:function (fakeElement) {
-            if (fakeElement.attr('_ke_real_node_type') != DOM.NodeType.ELEMENT_NODE) {
+        restoreRealElement: function (fakeElement) {
+            if (fakeElement.attr('_ke_real_node_type') != Dom.NodeType.ELEMENT_NODE) {
                 return null;
             }
 
@@ -60,18 +59,18 @@ KISSY.add("editor/plugin/fake-objects", function (S, Editor) {
 
 
     var htmlFilterRules = {
-        tags:{
+        tags: {
             /**
              * 生成最终html时，从编辑器html转化把fake替换为真实，并将style的width,height搞到属性上去
              * @param element
              */
-            $:function (element) {
+            $: function (element) {
                 var realHTML = element.getAttribute("_ke_realelement");
 
                 var realFragment;
 
                 if (realHTML) {
-                    realFragment = new HTMLParser.Parser(S.urlDecode(realHTML)).parse();
+                    realFragment = new HtmlParser.Parser(S.urlDecode(realHTML)).parse();
                 }
 
                 var realElement = realFragment && realFragment.childNodes[ 0 ];
@@ -106,7 +105,7 @@ KISSY.add("editor/plugin/fake-objects", function (S, Editor) {
 
 
     return {
-        init:function (editor) {
+        init: function (editor) {
             var dataProcessor = editor.htmlDataProcessor,
                 htmlFilter = dataProcessor && dataProcessor.htmlFilter;
 
@@ -120,8 +119,8 @@ KISSY.add("editor/plugin/fake-objects", function (S, Editor) {
 
             S.mix(dataProcessor, {
 
-                restoreRealElement:function (fakeElement) {
-                    if (fakeElement.attr('_ke_real_node_type') != DOM.NodeType.ELEMENT_NODE) {
+                restoreRealElement: function (fakeElement) {
+                    if (fakeElement.attr('_ke_real_node_type') != Dom.NodeType.ELEMENT_NODE) {
                         return null;
                     }
 
@@ -140,8 +139,8 @@ KISSY.add("editor/plugin/fake-objects", function (S, Editor) {
                  * @param realElementType
                  * @param [isResizable]
                  */
-                createFakeParserElement:function (realElement, className, realElementType, isResizable, attrs) {
-                    var html = HTMLParser.serialize(realElement);
+                createFakeParserElement: function (realElement, className, realElementType, isResizable, attrs) {
+                    var html = HtmlParser.serialize(realElement);
                     var style = realElement.getAttribute("style") || '';
                     if (realElement.getAttribute("width")) {
                         style = "width:" + realElement.getAttribute("width") + "px;" + style;
@@ -152,12 +151,12 @@ KISSY.add("editor/plugin/fake-objects", function (S, Editor) {
                     // add current class to fake element
                     var existClass = S.trim(realElement.getAttribute("class")),
                         attributes = {
-                            'class':className + " " + existClass,
-                            src:SPACER_GIF,
-                            _ke_realelement:encodeURIComponent(html),
-                            _ke_real_node_type:realElement.nodeType + "",
-                            style:style,
-                            align:realElement.getAttribute("align") || ''
+                            'class': className + " " + existClass,
+                            src: SPACER_GIF,
+                            _ke_realelement: encodeURIComponent(html),
+                            _ke_real_node_type: realElement.nodeType + "",
+                            style: style,
+                            align: realElement.getAttribute("align") || ''
                         };
 
                     if (attrs) {
@@ -172,11 +171,11 @@ KISSY.add("editor/plugin/fake-objects", function (S, Editor) {
                     if (isResizable) {
                         attributes._ke_resizable = "_ke_resizable";
                     }
-                    return new HTMLParser.Tag('img', attributes);
+                    return new HtmlParser.Tag('img', attributes);
                 }
             });
         }
     };
 }, {
-    requires:["editor"]
+    requires: ["editor", 'html-parser']
 });

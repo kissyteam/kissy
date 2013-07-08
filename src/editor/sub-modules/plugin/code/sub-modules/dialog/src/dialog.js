@@ -131,7 +131,7 @@ KISSY.add('editor/plugin/code/dialog', function (S, Editor, Dialog4E, MenuButton
             }
             var codeEl = S.all(S.substitute(codeTpl, {
                 type: self.type.get('value'),
-                code: S.escapeHTML(val)
+                code: S.escapeHtml(val)
             }), editor.get('document')[0]);
             self.dialog.hide();
             // chrome:

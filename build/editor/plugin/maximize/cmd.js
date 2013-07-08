@@ -1,8 +1,14 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 17 00:19
+build time: Jul 3 13:53
 */
+/*
+ Combined processedModules by KISSY Module Compiler: 
+
+ editor/plugin/maximize/cmd
+*/
+
 /**
  * Add maximizeWindow/restoreWindow to Editor.
  * @author yiminghe@gmail.com
@@ -13,7 +19,7 @@ KISSY.add("editor/plugin/maximize/cmd", function (S, Editor) {
         doc = document,
         Node = S.Node,
         Event = S.Event,
-        DOM = S.DOM,
+        Dom = S.DOM,
         iframe,
         MAXIMIZE_TOOLBAR_CLASS = "editor-toolbar-padding",
         init = function () {
@@ -87,7 +93,7 @@ KISSY.add("editor/plugin/maximize/cmd", function (S, Editor) {
             textareaEl.css({
                 height: self.iframeHeight
             });
-            DOM.css(doc.body, {
+            Dom.css(doc.body, {
                 width: "",
                 height: "",
                 overflow: ""
@@ -130,8 +136,8 @@ KISSY.add("editor/plugin/maximize/cmd", function (S, Editor) {
             self.iframeHeight = editor.get("textarea").parent().style("height");
             self.editorElWidth = editorEl.style("width");
             //主窗口滚动条也要保存哦
-            self.scrollLeft = DOM.scrollLeft();
-            self.scrollTop = DOM.scrollTop();
+            self.scrollLeft = Dom.scrollLeft();
+            self.scrollTop = Dom.scrollTop();
             window.scrollTo(0, 0);
 
             //将父节点的position都改成static并保存原状态 bugfix:最大化被父元素限制
@@ -216,15 +222,15 @@ KISSY.add("editor/plugin/maximize/cmd", function (S, Editor) {
             var self = this,
                 editor = self.editor,
                 editorEl = editor.get("el"),
-                viewportHeight = DOM.viewportHeight(),
-                viewportWidth = DOM.viewportWidth(),
+                viewportHeight = Dom.viewportHeight(),
+                viewportWidth = Dom.viewportWidth(),
                 textareaEl = editor.get("textarea"),
                 statusHeight = editor.get("statusBarEl") ?
                     editor.get("statusBarEl")[0].offsetHeight : 0,
                 toolHeight = editor.get("toolBarEl")[0].offsetHeight;
 
             if (!ie) {
-                DOM.css(doc.body, {
+                Dom.css(doc.body, {
                     width: 0,
                     height: 0,
                     overflow: "hidden"
@@ -336,3 +342,4 @@ KISSY.add("editor/plugin/maximize/cmd", function (S, Editor) {
 }, {
     requires: ['editor']
 });
+

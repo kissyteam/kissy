@@ -11,10 +11,10 @@ KISSY.add("combobox", function (S, ComboBox, MultiValueComboBox, FilterSelect, L
     return ComboBox;
 }, {
     requires: [
-        'combobox/base',
+        'combobox/control',
         'combobox/multi-value-combobox',
         'combobox/filter-select',
-        'combobox/LocalDataSource',
-        'combobox/RemoteDataSource'
+        'combobox/local-data-source',
+        'combobox/remote-data-source'
     ]
 });

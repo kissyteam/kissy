@@ -1,8 +1,14 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 17 00:16
+build time: Jul 3 13:50
 */
+/*
+ Combined processedModules by KISSY Module Compiler: 
+
+ editor/plugin/checkbox-source-area
+*/
+
 /**
  * checkbox source editor for kissy editor
  * @author yiminghe@gmail.com
@@ -74,3 +80,4 @@ KISSY.add("editor/plugin/checkbox-source-area", function (S, Editor) {
 }, {
     requires:["editor"]
 });
+

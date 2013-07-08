@@ -17,17 +17,19 @@
     <h2>
         static : input a or b or c or d or 3，逗号分隔
     </h2>
+
+    <div class="ks-multi-value-combobox" id="combobox" style="width:400px">
+        <div class="ks-multi-value-combobox-input-wrap">
+            <textarea style="width:100%;height:18px;" aria-haspopup="true"
+                   aria-combobox="list" role="combobox" combobox="off"
+                   class="ks-multi-value-combobox-input" tabindex="0"
+                   ></textarea>
+        </div>
+    </div>
 </div>
 
 <script src="/kissy/build/seed.js"></script>
-<script src="../../src/render.js"></script>
-<script src="../../src/base.js"></script>
-<script src="../../src/combobox.js"></script>
-<script src="../../src/filter-select.js"></script>
-<script src="../../src/cursor.js"></script>
-<script src="../../src/local-data-source.js"></script>
-<script src="../../src/remote-data-source.js"></script>
-<script src="../../src/multi-value-combobox.js"></script>
+<script src="/kissy/src/package.js"></script>
 <script>
     KISSY.use("combobox", function (S, ComboBox) {
 
@@ -40,13 +42,8 @@
         ];
 
         var basicComboBox = new ComboBox.MultiValueComboBox({
-            render:'#container',
-            width:500,
+            srcNode:'#combobox',
             hasTrigger:false,
-            input:S.all('<textarea ' +
-                    'style="width: 100%;height:18px;" ' +
-                    'class="ks-combobox-input">' +
-                    '</textarea>'),
             updateInputOnDownUp:false,
             separator:',',
             format:function (query, data) {
@@ -55,13 +52,13 @@
                     var v = data[i] + "";
                     if (query) {
                         ret[i] = {
-                            content:S.escapeHTML(v)
+                            content:S.escapeHtml(v)
                                     .replace(new RegExp(S.escapeRegExp(query), "g"),
                                     "<b>$&</b>")
                         };
                     } else {
                         ret[i] = {
-                            content:S.escapeHTML(v)
+                            content:S.escapeHtml(v)
                         };
                     }
                 }

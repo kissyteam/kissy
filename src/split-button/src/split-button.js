@@ -2,40 +2,18 @@
  * SplitButton for KISSY. Combination of button and menubutton.
  * @author yiminghe@gmail.com
  */
-KISSY.add("split-button", function (S, Component, Button, MenuButton) {
+KISSY.add("split-button", function (S, Container) {
 
-    return Component.Controller.extend([], {
+    return Container.extend({
 
         renderUI: function () {
             var self = this,
                 alignWithEl = self.get("alignWithEl"),
-                children = self.get("children");
-            self.setInternal("menuButton", children[1]);
-            self.setInternal("button", children[0]);
-            var menuButton = children[1],
+                menuButton = self.get("children")[1],
                 menu = menuButton.get("menu");
             if (alignWithEl) {
-                if (menu.isController) {
-                    menu.get("align").node = self.get("el");
-                } else {
-                    menu.align = menu.align || {};
-                    menu.align.node = self.get("el");
-                }
+                menu.get("align").node = self.$el;
             }
-        },
-
-        decorateInternal: function (el) {
-            var self = this,
-                button = self.get("button"),
-                menuButton = self.get("menuButton");
-            self.set("el", el);
-            var children = el.children();
-            self.setInternal("button", new Button(S.mix({
-                srcNode: children[0]
-            }, button)));
-            self.setInternal("menuButton", new MenuButton(S.mix({
-                srcNode: children[1]
-            }, menuButton)));
         }
 
     }, {
@@ -60,23 +38,29 @@ KISSY.add("split-button", function (S, Component, Button, MenuButton) {
                     }
                 ]
             },
-            button: {
+            menuButton: {
+                getter: function () {
+                    return this.get('children')[1];
+                },
                 setter: function (v) {
-                    this.get("children")[0] = v;
+                    this.get('children')[1] = v;
                 }
             },
-            menuButton: {
+            button: {
+                getter: function () {
+                    return this.get('children')[0];
+                },
                 setter: function (v) {
-                    this.get("children")[1] = v;
+                    this.get('children')[0] = v;
                 }
             }
-        }
-
-    }, {
+        },
         xclass: 'split-button'
     });
 
 
 }, {
-    requires: ['component/base', 'button', 'menubutton']
+    requires: ['component/container',
+        // implicit requirement
+        'button', 'menubutton']
 });

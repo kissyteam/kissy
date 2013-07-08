@@ -19,7 +19,7 @@
                 packages: [
                     {
                         name: "cyclic",
-                        path: "../specs"
+                        path: "/kissy/src/seed/tests/specs/"
                     }
                 ]
 

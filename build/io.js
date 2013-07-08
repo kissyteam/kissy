@@ -1,14 +1,120 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 17 00:22
+build time: Jul 8 13:17
 */
+/*
+ Combined processedModules by KISSY Module Compiler: 
+
+ io/form-serializer
+ io/base
+ io/xhr-transport-base
+ io/sub-domain-transport
+ io/xdr-flash-transport
+ io/xhr-transport
+ io/script-transport
+ io/jsonp
+ io/form
+ io/iframe-transport
+ io/methods
+ io
+*/
+
+/**
+ * @ignore
+ * form data  serialization util
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('io/form-serializer', function (S, Dom) {
+    var rselectTextarea = /^(?:select|textarea)/i,
+        rCRLF = /\r?\n/g,
+        FormSerializer,
+        rinput = /^(?:color|date|datetime|email|hidden|month|number|password|range|search|tel|text|time|url|week)$/i;
+
+    function normalizeCRLF(v) {
+        return v.replace(rCRLF, '\r\n');
+    }
+
+    return FormSerializer = {
+        /**
+         * form serialization
+         * @method
+         * @param {HTMLElement[]|HTMLElement|KISSY.NodeList} forms form elements
+         * @return {String} serialized string represent form elements
+         * @param {Boolean}[serializeArray=false] See {@link KISSY#method-param} 同名参数
+         * @member KISSY.IO
+         * @static
+         */
+        serialize: function (forms, serializeArray) {
+            // 名值键值对序列化,数组元素名字前不加 []
+            return S.param(FormSerializer.getFormData(forms), undefined, undefined,
+                serializeArray || false);
+        },
+
+        getFormData: function (forms) {
+            var elements = [], data = {};
+            S.each(Dom.query(forms), function (el) {
+                // form 取其表单元素集合
+                // 其他直接取自身
+                var subs = el.elements ? S.makeArray(el.elements) : [el];
+                elements.push.apply(elements, subs);
+            });
+            // 对表单元素进行过滤，具备有效值的才保留
+            elements = S.filter(elements, function (el) {
+                // 有名字
+                return el.name &&
+                    // 不被禁用
+                    !el.disabled &&
+                    (
+                        // radio,checkbox 被选择了
+                        el.checked ||
+                            // select 或者 textarea
+                            rselectTextarea.test(el.nodeName) ||
+                            // input 类型
+                            rinput.test(el.type)
+                        );
+
+                // 这样子才取值
+            });
+            S.each(elements, function (el) {
+                var val = Dom.val(el), vs;
+
+                // <select></select> select nothing!
+                // #297
+                if (val === null) {
+                    return;
+                }
+
+                // 字符串换行平台归一化
+                if (S.isArray(val)) {
+                    val = S.map(val, normalizeCRLF);
+                } else {
+                    val = normalizeCRLF(val);
+                }
+
+                vs = data[el.name];
+                if (!vs) {
+                    data[el.name] = val;
+                    return;
+                }
+                if (vs && !S.isArray(vs)) {
+                    // 多个元素重名时搞成数组
+                    vs = data[el.name] = [vs];
+                }
+                vs.push.apply(vs, S.makeArray(val));
+            });
+            return data;
+        }
+    };
+}, {
+    requires: ['dom']
+});
 /**
  * @ignore
  * a scalable client io framework
  * @author yiminghe@gmail.com
  */
-KISSY.add('io/base', function (S, JSON, Event, undefined) {
+KISSY.add('io/base', function (S, Event, undefined) {
 
     var rlocalProtocol = /^(?:about|app|app\-storage|.+\-extension|file|widget)$/,
         rspace = /\s+/,
@@ -39,7 +145,7 @@ KISSY.add('io/base', function (S, JSON, Event, undefined) {
             },
             converters: {
                 text: {
-                    json: S.parseJSON,
+                    json: S.parseJson,
                     html: mirror,
                     text: mirror,
                     xml: S.parseXML
@@ -176,7 +282,7 @@ KISSY.add('io/base', function (S, JSON, Event, undefined) {
      * specify the context of this request 's callback (success,error,complete)
      *
      * @cfg {Object} converters
-     * Default to: {text:{json:JSON.parse,html:mirror,text:mirror,xml:KISSY.parseXML}}
+     * Default to: {text:{json:Json.parse,html:mirror,text:mirror,xml:KISSY.parseXML}}
      * specified how to transform one dataType to another dataType
      * It is recommended to do so once in the {@link KISSY.IO#method-setupConfig}
      *
@@ -469,11 +575,11 @@ KISSY.add('io/base', function (S, JSON, Event, undefined) {
         } catch (e) {
             // Propagate exception as error if not done
             if (self.state < 2) {
-
+                S.log(e.stack || e, 'error');
                 self._ioReady(-1, e.message);
                 // Simply rethrow otherwise
             } else {
-
+                S.error(e);
             }
         }
 
@@ -532,7 +638,7 @@ KISSY.add('io/base', function (S, JSON, Event, undefined) {
 
     return IO;
 }, {
-    requires: ['json', 'event']
+    requires: ['event']
 });
 
 /*
@@ -558,100 +664,860 @@ KISSY.add('io/base', function (S, JSON, Event, undefined) {
  2011 yiminghe@gmail.com
  - 借鉴 jquery，优化减少闭包使用
 
- *//**
+ */
+/**
  * @ignore
- * form data  serialization util
+ * base for xhr and subdomain
  * @author yiminghe@gmail.com
  */
-KISSY.add('io/form-serializer', function (S, DOM) {
-    var rselectTextarea = /^(?:select|textarea)/i,
-        rCRLF = /\r?\n/g,
-        FormSerializer,
-        rinput = /^(?:color|date|datetime|email|hidden|month|number|password|range|search|tel|text|time|url|week)$/i;
+KISSY.add('io/xhr-transport-base', function (S, IO) {
+    var OK_CODE = 200,
+        win = S.Env.host,
+    // http://msdn.microsoft.com/en-us/library/cc288060(v=vs.85).aspx
+        _XDomainRequest = S.UA.ie > 7 && win['XDomainRequest'],
+        NO_CONTENT_CODE = 204,
+        NOT_FOUND_CODE = 404,
+        NO_CONTENT_CODE2 = 1223,
+        XhrTransportBase = {
+            proto: {}
+        }, lastModifiedCached = {},
+        eTagCached = {};
 
-    function normalizeCRLF(v) {
-        return v.replace(rCRLF, '\r\n');
+    IO.__lastModifiedCached = lastModifiedCached;
+    IO.__eTagCached = eTagCached;
+
+    function createStandardXHR(_, refWin) {
+        try {
+            return new (refWin || win)['XMLHttpRequest']();
+        } catch (e) {
+            S.log('createStandardXHR error: ' + _);
+        }
+        return undefined;
     }
 
-    return FormSerializer = {
-        /**
-         * form serialization
-         * @method
-         * @param {HTMLElement[]|HTMLElement|KISSY.NodeList} forms form elements
-         * @return {String} serialized string represent form elements
-         * @param {Boolean}[serializeArray=false] See {@link KISSY#method-param} 同名参数
-         * @member KISSY.IO
-         * @static
-         */
-        serialize: function (forms, serializeArray) {
-            // 名值键值对序列化,数组元素名字前不加 []
-            return S.param(FormSerializer.getFormData(forms), undefined, undefined,
-                serializeArray || false);
+    function createActiveXHR(_, refWin) {
+        try {
+            return new (refWin || win)['ActiveXObject']('Microsoft.XMLHTTP');
+        } catch (e) {
+            S.log('createActiveXHR error: ' + _);
+        }
+        return undefined;
+    }
+
+    XhrTransportBase.nativeXhr = win['ActiveXObject'] ? function (crossDomain, refWin) {
+        // consider ie10
+        if (!supportCORS && crossDomain && _XDomainRequest) {
+            return new _XDomainRequest();
+        }
+        // ie7 XMLHttpRequest 不能访问本地文件
+        return !IO.isLocal && createStandardXHR(crossDomain, refWin) ||
+            createActiveXHR(crossDomain, refWin);
+    } : createStandardXHR;
+
+    XhrTransportBase._XDomainRequest = _XDomainRequest;
+
+    var supportCORS = XhrTransportBase.supportCORS =
+        ('withCredentials' in XhrTransportBase.nativeXhr());
+
+    function isInstanceOfXDomainRequest(xhr) {
+        return _XDomainRequest && (xhr instanceof _XDomainRequest);
+    }
+
+    function getIfModifiedKey(c) {
+        var ifModified = c.ifModified,
+            ifModifiedKey;
+        if (ifModified) {
+            ifModifiedKey = c.uri;
+            if (c.cache === false) {
+                ifModifiedKey = ifModifiedKey.clone();
+                // remove random timestamp
+                // random timestamp is forced to fetch code file from server
+                ifModifiedKey.query.remove('_ksTS');
+            }
+            ifModifiedKey = ifModifiedKey.toString();
+        }
+        return ifModifiedKey;
+    }
+
+    S.mix(XhrTransportBase.proto, {
+        sendInternal: function () {
+            var self = this,
+                io = self.io,
+                c = io.config,
+                nativeXhr = self.nativeXhr,
+                files = c.files,
+                type = files ? 'post' : c.type,
+                async = c.async,
+                username,
+                mimeType = io.mimeType,
+                requestHeaders = io.requestHeaders || {},
+                url = io._getUrlForSend(),
+                xhrFields,
+                ifModifiedKey = getIfModifiedKey(c),
+                cacheValue,
+                i;
+
+            if (ifModifiedKey) {
+                // if io want a conditional load
+                // (response status is 304 and responseText is null)
+                // u need to set if-modified-since manually!
+                // or else
+                // u will always get response status 200 and full responseText
+                // which is also conditional load but process transparently by browser
+                if (cacheValue = lastModifiedCached[ifModifiedKey]) {
+                    requestHeaders['If-Modified-Since'] = cacheValue;
+                }
+                if (cacheValue = eTagCached[ifModifiedKey]) {
+                    requestHeaders['If-None-Match'] = cacheValue;
+                }
+            }
+
+            if (username = c['username']) {
+                nativeXhr.open(type, url, async, username, c.password)
+            } else {
+                nativeXhr.open(type, url, async);
+            }
+
+            xhrFields = c['xhrFields'] || {};
+
+            if ('withCredentials' in xhrFields) {
+                if (!supportCORS) {
+                    delete xhrFields.withCredentials;
+                }
+            } else if (supportCORS) {
+                // withCredentials defaults to true
+                xhrFields.withCredentials = true;
+            }
+
+            for (i in xhrFields) {
+                nativeXhr[ i ] = xhrFields[ i ];
+            }
+
+            // Override mime type if supported
+            if (mimeType && nativeXhr.overrideMimeType) {
+                nativeXhr.overrideMimeType(mimeType);
+            }
+
+            // set header event cross domain, eg: phonegap
+            if (!requestHeaders['X-Requested-With']) {
+                requestHeaders[ 'X-Requested-With' ] = 'XMLHttpRequest';
+            }
+
+            // ie<10 XDomainRequest does not support setRequestHeader
+            if (typeof nativeXhr.setRequestHeader !== 'undefined') {
+                for (i in requestHeaders) {
+                    nativeXhr.setRequestHeader(i, requestHeaders[ i ]);
+                }
+            }
+
+            var sendContent = c.hasContent && c.data || null;
+
+            // support html5 file upload api
+            if (files) {
+                var originalSentContent = sendContent,
+                    data = {};
+                if (originalSentContent) {
+                    data = S.unparam(originalSentContent);
+                }
+                data = S.mix(data, files);
+                sendContent = new FormData();
+                S.each(data, function (vs, k) {
+                    if (S.isArray(vs)) {
+                        S.each(vs, function (v) {
+                            sendContent.append(k + (c.serializeArray ? '[]' : ''), v);
+                        });
+                    } else {
+                        sendContent.append(k, vs);
+                    }
+                });
+            }
+
+            nativeXhr.send(sendContent);
+
+            if (!async || nativeXhr.readyState == 4) {
+                self._callback();
+            } else {
+                // _XDomainRequest 单独的回调机制
+                if (isInstanceOfXDomainRequest(nativeXhr)) {
+                    nativeXhr.onload = function () {
+                        nativeXhr.readyState = 4;
+                        nativeXhr.status = 200;
+                        self._callback();
+                    };
+                    nativeXhr.onerror = function () {
+                        nativeXhr.readyState = 4;
+                        nativeXhr.status = 500;
+                        self._callback();
+                    };
+                } else {
+                    nativeXhr.onreadystatechange = function () {
+                        self._callback();
+                    };
+                }
+            }
+        },
+        // 由 io.abort 调用，自己不可以调用 io.abort
+        abort: function () {
+            this._callback(0, 1);
         },
 
-        getFormData: function (forms) {
-            var elements = [], data = {};
-            S.each(DOM.query(forms), function (el) {
-                // form 取其表单元素集合
-                // 其他直接取自身
-                var subs = el.elements ? S.makeArray(el.elements) : [el];
-                elements.push.apply(elements, subs);
-            });
-            // 对表单元素进行过滤，具备有效值的才保留
-            elements = S.filter(elements, function (el) {
-                // 有名字
-                return el.name &&
-                    // 不被禁用
-                    !el.disabled &&
-                    (
-                        // radio,checkbox 被选择了
-                        el.checked ||
-                            // select 或者 textarea
-                            rselectTextarea.test(el.nodeName) ||
-                            // input 类型
-                            rinput.test(el.type)
-                        );
+        _callback: function (event, abort) {
+            // Firefox throws exceptions when accessing properties
+            // of an xhr when a network error occurred
+            // http://helpful.knobs-dials.com/index.php/Component_returned_failure_code:_0x80040111_(NS_ERROR_NOT_AVAILABLE)
+            var self = this,
+                nativeXhr = self.nativeXhr,
+                io = self.io,
+                ifModifiedKey,
+                lastModified,
+                eTag,
+                statusText,
+                xml,
+                c = io.config;
+            try {
+                //abort or complete
+                if (abort || nativeXhr.readyState == 4) {
+                    // ie6 ActiveObject 设置不恰当属性导致出错
+                    if (isInstanceOfXDomainRequest(nativeXhr)) {
+                        nativeXhr.onerror = S.noop;
+                        nativeXhr.onload = S.noop;
+                    } else {
+                        // ie6 ActiveObject 只能设置，不能读取这个属性，否则出错！
+                        nativeXhr.onreadystatechange = S.noop;
+                    }
 
-                // 这样子才取值
-            });
-            S.each(elements, function (el) {
-                var val = DOM.val(el), vs;
+                    if (abort) {
+                        // 完成以后 abort 不要调用
+                        if (nativeXhr.readyState !== 4) {
+                            nativeXhr.abort();
+                        }
+                    } else {
+                        ifModifiedKey = getIfModifiedKey(c);
 
-                // <select></select> select nothing!
-                // #297
-                if (val === null) {
-                    return;
-                }
+                        var status = nativeXhr.status;
 
-                // 字符串换行平台归一化
-                if (S.isArray(val)) {
-                    val = S.map(val, normalizeCRLF);
-                } else {
-                    val = normalizeCRLF(val);
-                }
+                        // _XDomainRequest 不能获取响应头
+                        if (!isInstanceOfXDomainRequest(nativeXhr)) {
+                            io.responseHeadersString = nativeXhr.getAllResponseHeaders();
+                        }
 
-                vs = data[el.name];
-                if (!vs) {
-                    data[el.name] = val;
-                    return;
+                        if (ifModifiedKey) {
+                            lastModified = nativeXhr.getResponseHeader('Last-Modified');
+                            eTag = nativeXhr.getResponseHeader('ETag');
+                            // if u want to set if-modified-since manually
+                            // u need to save last-modified after the first request
+                            if (lastModified) {
+                                lastModifiedCached[ifModifiedKey] = lastModified;
+                            }
+                            if (eTag) {
+                                eTagCached[eTag] = eTag;
+                            }
+                        }
+
+                        xml = nativeXhr.responseXML;
+
+                        // Construct response list
+                        if (xml && xml.documentElement /* #4958 */) {
+                            io.responseXML = xml;
+                        }
+
+                        var text = io.responseText = nativeXhr.responseText;
+
+                        // same with old-ie iframe-upload
+                        if (c.files && text) {
+                            var bodyIndex, lastBodyIndex;
+                            if ((bodyIndex = text.indexOf('<body>')) != -1) {
+                                lastBodyIndex = text.lastIndexOf('</body>');
+                                if (lastBodyIndex == -1) {
+                                    lastBodyIndex = text.length;
+                                }
+                                text = text.slice(bodyIndex + 6, lastBodyIndex);
+                            }
+                            // same with old-ie logic
+                            io.responseText = S.unEscapeHtml(text);
+                        }
+
+                        // Firefox throws an exception when accessing
+                        // statusText for faulty cross-domain requests
+                        try {
+                            statusText = nativeXhr.statusText;
+                        } catch (e) {
+                            S.log('xhr statusText error: ');
+                            S.log(e);
+                            // We normalize with Webkit giving an empty statusText
+                            statusText = '';
+                        }
+
+                        // Filter status for non standard behaviors
+                        // If the request is local and we have data: assume a success
+                        // (success with no data won't get notified, that's the best we
+                        // can do given current implementations)
+                        if (!status && IO.isLocal && !c.crossDomain) {
+                            status = io.responseText ? OK_CODE : NOT_FOUND_CODE;
+                            // IE - #1450: sometimes returns 1223 when it should be 204
+                        } else if (status === NO_CONTENT_CODE2) {
+                            status = NO_CONTENT_CODE;
+                        }
+
+                        io._ioReady(status, statusText);
+                    }
                 }
-                if (vs && !S.isArray(vs)) {
-                    // 多个元素重名时搞成数组
-                    vs = data[el.name] = [vs];
+            } catch (firefoxAccessException) {
+                nativeXhr.onreadystatechange = S.noop;
+                if (!abort) {
+                    io._ioReady(-1, firefoxAccessException);
                 }
-                vs.push.apply(vs, S.makeArray(val));
-            });
-            return data;
+            }
         }
-    };
+    })
+    ;
+
+    return XhrTransportBase;
 }, {
-    requires: ['dom']
-});/**
+    requires: ['./base']
+});
+/**
+ * @ignore
+ * solve io between sub domains using proxy page
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('io/sub-domain-transport', function (S, XhrTransportBase, Event, Dom) {
+
+    var PROXY_PAGE = '/sub_domain_proxy.html',
+        doc = S.Env.host.document,
+        iframeMap = {
+            // hostname:{iframe: , ready:}
+        };
+
+    function SubDomainTransport(io) {
+        var self = this,
+            c = io.config;
+        self.io = io;
+        c.crossDomain = false;
+        S.log('use SubDomainTransport for: ' + c.url);
+    }
+
+
+    S.augment(SubDomainTransport, XhrTransportBase.proto, {
+        // get nativeXhr from iframe document
+        // not from current document directly like XhrTransport
+        send: function () {
+            var self = this,
+                c = self.io.config,
+                uri = c.uri,
+                hostname = uri.getHostname(),
+                iframe,
+                iframeUri,
+                iframeDesc = iframeMap[hostname];
+
+            var proxy = PROXY_PAGE;
+
+            if (c['xdr'] && c['xdr']['subDomain'] && c['xdr']['subDomain'].proxy) {
+                proxy = c['xdr']['subDomain'].proxy;
+            }
+
+            if (iframeDesc && iframeDesc.ready) {
+                self.nativeXhr = XhrTransportBase.nativeXhr(0, iframeDesc.iframe.contentWindow);
+                if (self.nativeXhr) {
+                    self.sendInternal();
+                } else {
+                    S.error('document.domain not set correctly!');
+                }
+                return;
+            }
+
+            if (!iframeDesc) {
+                iframeDesc = iframeMap[hostname] = {};
+                iframe = iframeDesc.iframe = doc.createElement('iframe');
+                Dom.css(iframe, {
+                    position: 'absolute',
+                    left: '-9999px',
+                    top: '-9999px'
+                });
+                Dom.prepend(iframe, doc.body || doc.documentElement);
+                iframeUri = new S.Uri();
+                iframeUri.setScheme(uri.getScheme());
+                iframeUri.setPort(uri.getPort());
+                iframeUri.setHostname(hostname);
+                iframeUri.setPath(proxy);
+                iframe.src = iframeUri.toString();
+            } else {
+                iframe = iframeDesc.iframe;
+            }
+
+            Event.on(iframe, 'load', _onLoad, self);
+
+        }
+    });
+
+    function _onLoad() {
+        var self = this,
+            c = self.io.config,
+            uri = c.uri,
+            hostname = uri.getHostname(),
+            iframeDesc = iframeMap[hostname];
+        iframeDesc.ready = 1;
+        Event.detach(iframeDesc.iframe, 'load', _onLoad, self);
+        self.send();
+    }
+
+    return SubDomainTransport;
+
+}, {
+    requires: ['./xhr-transport-base', 'event', 'dom']
+});
+/**
+ * @ignore
+ * use flash to accomplish cross domain request, usage scenario ? why not jsonp ?
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('io/xdr-flash-transport', function (S, IO, Dom) {
+
+    var // current running request instances
+        maps = {},
+        ID = 'io_swf',
+    // flash transporter
+        flash,
+        doc = S.Env.host.document,
+    // whether create the flash transporter
+        init = false;
+
+    // create the flash transporter
+    function _swf(uri, _, uid) {
+        if (init) {
+            return;
+        }
+        init = true;
+        var o = '<object id="' + ID +
+                '" type="application/x-shockwave-flash" data="' +
+                uri + '" width="0" height="0">' +
+                '<param name="movie" value="' +
+                uri + '" />' +
+                '<param name="FlashVars" value="yid=' +
+                _ + '&uid=' +
+                uid +
+                '&host=KISSY.IO" />' +
+                '<param name="allowScriptAccess" value="always" />' +
+                '</object>',
+            c = doc.createElement('div');
+        Dom.prepend(c, doc.body || doc.documentElement);
+        c.innerHTML = o;
+    }
+
+    function XdrFlashTransport(io) {
+        S.log('use XdrFlashTransport for: ' + io.config.url);
+        this.io = io;
+    }
+
+    S.augment(XdrFlashTransport, {
+        // rewrite send to support flash xdr
+        send: function () {
+            var self = this,
+                io = self.io,
+                c = io.config,
+                xdr = c['xdr'] || {};
+            // 不提供则使用 cdn 默认的 flash
+            _swf(xdr.src || (S.Config.base + 'io/assets/io.swf'), 1, 1);
+            // 简便起见，用轮训
+            if (!flash) {
+                // S.log('detect xdr flash');
+                setTimeout(function () {
+                    self.send();
+                }, 200);
+                return;
+            }
+            self._uid = S.guid();
+            maps[self._uid] = self;
+
+            // ie67 send 出错？
+            flash.send(io._getUrlForSend(), {
+                id: self._uid,
+                uid: self._uid,
+                method: c.type,
+                data: c.hasContent && c.data || {}
+            });
+        },
+
+        abort: function () {
+            flash.abort(this._uid);
+        },
+
+        _xdrResponse: function (e, o) {
+            // S.log(e);
+            var self = this,
+                ret,
+                id = o.id,
+                responseText,
+                c = o.c,
+                io = self.io;
+
+            // need decodeURI to get real value from flash returned value
+            if (c && (responseText = c.responseText)) {
+                io.responseText = decodeURI(responseText);
+            }
+
+            switch (e) {
+                case 'success':
+                    ret = { status: 200, statusText: 'success' };
+                    delete maps[id];
+                    break;
+                case 'abort':
+                    delete maps[id];
+                    break;
+                case 'timeout':
+                case 'transport error':
+                case 'failure':
+                    delete maps[id];
+                    ret = {
+                        status: 'status' in c ? c.status : 500,
+                        statusText: c.statusText || e
+                    };
+                    break;
+            }
+            if (ret) {
+                io._ioReady(ret.status, ret.statusText);
+            }
+        }
+    });
+
+    /*called by flash*/
+    IO['applyTo'] = function (_, cmd, args) {
+        // S.log(cmd + ' execute');
+        var cmds = cmd.split('.').slice(1),
+            func = IO;
+        S.each(cmds, function (c) {
+            func = func[c];
+        });
+        func.apply(null, args);
+    };
+
+    // when flash is loaded
+    IO['xdrReady'] = function () {
+        flash = doc.getElementById(ID);
+    };
+
+    /*
+     when response is returned from server
+     @param e response status
+     @param o internal data
+     */
+    IO['xdrResponse'] = function (e, o) {
+        var xhr = maps[o.uid];
+        xhr && xhr._xdrResponse(e, o);
+    };
+
+    return XdrFlashTransport;
+
+}, {
+    requires: ['./base', 'dom']
+});
+/**
+ * @ignore
+ * io xhr transport class, route subdomain, xdr
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('io/xhr-transport', function (S, IO, XhrTransportBase, SubDomainTransport, XdrFlashTransport) {
+
+    var win = S.Env.host,
+        doc = win.document,
+        _XDomainRequest = XhrTransportBase._XDomainRequest;
+
+    function isSubDomain(hostname) {
+        // phonegap does not have doc.domain
+        return doc.domain && S.endsWith(hostname, doc.domain);
+    }
+
+    /**
+     * @class
+     * @ignore
+     */
+    function XhrTransport(io) {
+        var c = io.config,
+            crossDomain = c.crossDomain,
+            self = this,
+            xhr,
+            xdrCfg = c['xdr'] || {},
+            subDomain = xdrCfg.subDomain = xdrCfg.subDomain || {};
+
+        self.io = io;
+
+        if (crossDomain && !XhrTransportBase.supportCORS) {
+            // 跨子域
+            if (isSubDomain(c.uri.getHostname())) {
+                // force to not use sub domain transport
+                if (subDomain.proxy !== false) {
+                    return new SubDomainTransport(io);
+                }
+            }
+
+            /*
+             ie>7 通过配置 use='flash' 强制使用 flash xdr
+             使用 withCredentials 检测是否支持 CORS
+             http://hacks.mozilla.org/2009/07/cross-site-xmlhttprequest-with-cors/
+             */
+            if ((String(xdrCfg.use) === 'flash' || !_XDomainRequest)) {
+                return new XdrFlashTransport(io);
+            }
+        }
+
+        xhr = self.nativeXhr = XhrTransportBase.nativeXhr(crossDomain);
+        S.log('crossDomain: ' + crossDomain + ', use ' + (_XDomainRequest && (xhr instanceof _XDomainRequest) ? 'XDomainRequest' : 'XhrTransport') + ' for: ' + c.url);
+
+        return self;
+    }
+
+    S.augment(XhrTransport, XhrTransportBase.proto, {
+
+        send: function () {
+            this.sendInternal();
+        }
+
+    });
+
+    IO['setupTransport']('*', XhrTransport);
+
+    return IO;
+}, {
+    requires: ['./base', './xhr-transport-base', './sub-domain-transport', './xdr-flash-transport']
+});
+
+/*
+ 2012-11-28 note ie port problem:
+ - ie 的 xhr 可以跨端口发请求，例如 localhost:8888 发请求到 localhost:9999
+ - ie iframe 间访问不设置 document.domain 完全不考虑 port！
+ - localhost:8888 访问 iframe 内的 localhost:9999
+
+ CORS : http://www.nczonline.net/blog/2010/05/25/cross-domain-io-with-cross-origin-resource-sharing/
+ */
+/**
+ * @ignore
+ * script transport for kissy io,
+ * modified version of S.getScript,
+ * add abort ability
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('io/script-transport', function (S, IO, _, undefined) {
+
+    var win = S.Env.host,
+        doc = win.document,
+        OK_CODE = 200,
+        ERROR_CODE = 500;
+
+    IO.setupConfig({
+        accepts: {
+            script: 'text/javascript, ' +
+                'application/javascript, ' +
+                'application/ecmascript, ' +
+                'application/x-ecmascript'
+        },
+
+        contents: {
+            script: /javascript|ecmascript/
+        },
+        converters: {
+            text: {
+                // 如果以 xhr+eval 需要下面的，
+                // 否则直接 script node 不需要，引擎自己执行了，
+                // 不需要手动 eval
+                script: function (text) {
+                    S.globalEval(text);
+                    return text;
+                }
+            }
+        }
+    });
+
+    function ScriptTransport(io) {
+        var config = io.config;
+        // 优先使用 xhr+eval 来执行脚本, ie 下可以探测到（更多）失败状态
+        if (!config.crossDomain) {
+            return new (IO['getTransport']('*'))(io);
+        }
+        this.io = io;
+        S.log('use ScriptTransport for: ' + config.url);
+        return this;
+    }
+
+    S.augment(ScriptTransport, {
+        send: function () {
+            var self = this,
+                script,
+                io = self.io,
+                c = io.config,
+                head = doc['head'] ||
+                    doc.getElementsByTagName('head')[0] ||
+                    doc.documentElement;
+
+            self.head = head;
+            script = doc.createElement('script');
+            self.script = script;
+            script.async = true;
+
+            if (c['scriptCharset']) {
+                script.charset = c['scriptCharset'];
+            }
+
+            script.src = io._getUrlForSend();
+
+            script.onerror =
+                script.onload =
+                    script.onreadystatechange = function (e) {
+                        e = e || win.event;
+                        // firefox onerror 没有 type ?!
+                        self._callback((e.type || 'error').toLowerCase());
+                    };
+
+            head.insertBefore(script, head.firstChild);
+        },
+
+        _callback: function (event, abort) {
+            var self = this,
+                script = self.script,
+                io = self.io,
+                head = self.head;
+
+            // 防止重复调用,成功后 abort
+            if (!script) {
+                return;
+            }
+
+            if (
+                abort ||
+                    !script.readyState ||
+                    /loaded|complete/.test(script.readyState) ||
+                    event == 'error'
+                ) {
+
+                script['onerror'] = script.onload = script.onreadystatechange = null;
+
+                // Remove the script
+                if (head && script.parentNode) {
+                    // ie 报错载入无效 js
+                    // 怎么 abort ??
+                    // script.src = '#';
+                    head.removeChild(script);
+                }
+
+                self.script = undefined;
+                self.head = undefined;
+
+                // Callback if not abort
+                if (!abort && event != 'error') {
+                    io._ioReady(OK_CODE, 'success');
+                }
+                // 非 ie<9 可以判断出来
+                else if (event == 'error') {
+                    io._ioReady(ERROR_CODE, 'script error');
+                }
+            }
+        },
+
+        abort: function () {
+            this._callback(0, 1);
+        }
+    });
+
+    IO['setupTransport']('script', ScriptTransport);
+
+    return IO;
+
+}, {
+    requires: ['./base', './xhr-transport']
+});
+/**
+ * @ignore
+ * jsonp transport based on script transport
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('io/jsonp', function (S, IO) {
+    var win = S.Env.host;
+    IO.setupConfig({
+        jsonp: 'callback',
+        jsonpCallback: function () {
+            // 不使用 now() ，极端情况下可能重复
+            return S.guid('jsonp');
+        }
+    });
+
+    IO.on('start', function (e) {
+        var io = e.io,
+            c = io.config,
+            dataType = c.dataType;
+        if (dataType[0] == 'jsonp') {
+            // jsonp does not need contentType.
+            // https://github.com/kissyteam/kissy/issues/394
+            delete c.contentType;
+            var response,
+                cJsonpCallback = c.jsonpCallback,
+                converters,
+                jsonpCallback = S.isFunction(cJsonpCallback) ?
+                    cJsonpCallback() :
+                    cJsonpCallback,
+                previous = win[ jsonpCallback ];
+
+            c.uri.query.set(c.jsonp, jsonpCallback);
+
+            // build temporary JSONP function
+            win[jsonpCallback] = function (r) {
+                // 使用数组，区别：故意调用了 jsonpCallback(undefined) 与 根本没有调用
+                // jsonp 返回了数组
+                if (arguments.length > 1) {
+                    r = S.makeArray(arguments);
+                }
+                // 先存在内存里, onload 后再读出来处理
+                response = [r];
+            };
+
+            // cleanup whether success or failure
+            io.fin(function () {
+                win[ jsonpCallback ] = previous;
+                if (previous === undefined) {
+                    try {
+                        delete win[ jsonpCallback ];
+                    } catch (e) {
+                        //S.log('delete window variable error : ');
+                        //S.log(e);
+                    }
+                } else if (response) {
+                    // after io success handler called
+                    // then call original existed jsonpcallback
+                    previous(response[0]);
+                }
+            });
+
+            converters = c.converters;
+            converters.script = converters.script || {};
+
+            // script -> jsonp ,jsonp need to see json not as script
+            // if ie onload a 404/500 file or all browsers onload an invalid script
+            // 404/invalid will be caught here
+            // because response is undefined( jsonp callback is never called)
+            // error throwed will be caught in conversion step
+            // and KISSY will notify user by error callback
+            converters.script.json = function () {
+                if (!response) {
+                    S.error(' not call jsonpCallback: ' + jsonpCallback)
+                }
+                return response[0];
+            };
+
+            dataType.length = 2;
+            // 利用 script transport 发送 script 请求
+            dataType[0] = 'script';
+            dataType[1] = 'json';
+        }
+    });
+
+    return IO;
+}, {
+    requires: ['./base']
+});
+/**
  * @ignore
  * process form config
  * @author yiminghe@gmail.com
  */
-KISSY.add('io/form', function (S, IO, DOM, FormSerializer) {
+KISSY.add('io/form', function (S, IO, Dom, FormSerializer) {
 
     var win = S.Env.host,
         slice = Array.prototype.slice,
@@ -669,12 +1535,12 @@ KISSY.add('io/form', function (S, IO, DOM, FormSerializer) {
 
         // serialize form if needed
         if (tmpForm = c.form) {
-            form = DOM.get(tmpForm);
+            form = Dom.get(tmpForm);
             data = c.data;
             var isUpload = false;
             var files = {};
 
-            var inputs = DOM.query('input', form);
+            var inputs = Dom.query('input', form);
             for (var i = 0, l = inputs.length; i < l; i++) {
                 var input = inputs[i];
                 if (input.type.toLowerCase() == 'file') {
@@ -683,7 +1549,7 @@ KISSY.add('io/form', function (S, IO, DOM, FormSerializer) {
                         break;
                     }
                     var selected = slice.call(input.files, 0);
-                    files[DOM.attr(input, 'name')] = selected.length > 1 ? selected : (selected[0]||null);
+                    files[Dom.attr(input, 'name')] = selected.length > 1 ? selected : (selected[0]||null);
                 }
             }
 
@@ -728,12 +1594,13 @@ KISSY.add('io/form', function (S, IO, DOM, FormSerializer) {
 
 }, {
     requires: ['./base', 'dom', './form-serializer']
-});/**
+});
+/**
  * @ignore
  * non-refresh upload file with form by iframe
  * @author yiminghe@gmail.com
  */
-KISSY.add('io/iframe-transport', function (S, DOM, Event, IO) {
+KISSY.add('io/iframe-transport', function (S, Dom, Event, IO) {
 
     var doc = S.Env.host.document,
         OK_CODE = 200,
@@ -753,7 +1620,7 @@ KISSY.add('io/iframe-transport', function (S, DOM, Event, IO) {
     // text or html dataType is of same effect.
     // same as normal ajax or html5 FileData
     iframeConverter.json = function (str) {
-        return S.parseJSON(S.unEscapeHTML(str));
+        return S.parseJson(S.unEscapeHtml(str));
     };
 
     // iframe 内的内容就是 body.innerText
@@ -780,9 +1647,9 @@ KISSY.add('io/iframe-transport', function (S, DOM, Event, IO) {
         var id = S.guid('io-iframe'),
             iframe,
         // empty src, so no history
-            src = DOM.getEmptyIframeSrc();
+            src = Dom.getEmptyIframeSrc();
 
-        iframe = xhr.iframe = DOM.create('<iframe ' +
+        iframe = xhr.iframe = Dom.create('<iframe ' +
             // ie6 need this when cross domain
             (src ? (' src="' + src + '" ') : '') +
             ' id="' + id + '"' +
@@ -790,7 +1657,7 @@ KISSY.add('io/iframe-transport', function (S, DOM, Event, IO) {
             ' name="' + id + '"' +
             ' style="position:absolute;left:-9999px;top:-9999px;"/>');
 
-        DOM.prepend(iframe, doc.body || doc.documentElement);
+        Dom.prepend(iframe, doc.body || doc.documentElement);
         return iframe;
     }
 
@@ -805,7 +1672,7 @@ KISSY.add('io/iframe-transport', function (S, DOM, Event, IO) {
                 e.type = 'hidden';
                 e.name = k + (isArray && serializeArray ? '[]' : '');
                 e.value = vs[i];
-                DOM.append(e, form);
+                Dom.append(e, form);
                 ret.push(e);
             }
         });
@@ -813,12 +1680,12 @@ KISSY.add('io/iframe-transport', function (S, DOM, Event, IO) {
     }
 
     function removeFieldsFromData(fields) {
-        DOM.remove(fields);
+        Dom.remove(fields);
     }
 
     function IframeTransport(io) {
         this.io = io;
-
+        S.log('use IframeTransport for: ' + io.config.url);
     }
 
     S.augment(IframeTransport, {
@@ -831,22 +1698,22 @@ KISSY.add('io/iframe-transport', function (S, DOM, Event, IO) {
                 iframe,
                 query,
                 data = c.data,
-                form = DOM.get(c.form);
+                form = Dom.get(c.form);
 
             self.attrs = {
-                target: DOM.attr(form, 'target') || '',
-                action: DOM.attr(form, 'action') || '',
+                target: Dom.attr(form, 'target') || '',
+                action: Dom.attr(form, 'action') || '',
                 // enctype 区分 iframe 与 serialize
-                encoding:DOM.attr(form, 'encoding'),
-                enctype:DOM.attr(form, 'enctype'),
-                method: DOM.attr(form, 'method')
+                encoding:Dom.attr(form, 'encoding'),
+                enctype:Dom.attr(form, 'enctype'),
+                method: Dom.attr(form, 'method')
             };
             self.form = form;
 
             iframe = createIframe(io);
 
             // set target to iframe to avoid main page refresh
-            DOM.attr(form, {
+            Dom.attr(form, {
                 target: iframe.id,
                 action: io._getUrlForSend(),
                 method: 'post',
@@ -897,10 +1764,10 @@ KISSY.add('io/iframe-transport', function (S, DOM, Event, IO) {
             // ie6 立即设置 action 设置为空导致白屏
             if (eventType == 'abort' && S.UA.ie == 6) {
                 setTimeout(function () {
-                    DOM.attr(form, self.attrs);
+                    Dom.attr(form, self.attrs);
                 }, 0);
             } else {
-                DOM.attr(form, self.attrs);
+                Dom.attr(form, self.attrs);
             }
 
             removeFieldsFromData(this.fields);
@@ -909,7 +1776,7 @@ KISSY.add('io/iframe-transport', function (S, DOM, Event, IO) {
 
             setTimeout(function () {
                 // firefox will keep loading if not set timeout
-                DOM.remove(iframe);
+                Dom.remove(iframe);
             }, BREATH_INTERVAL);
 
             // nullify to prevent memory leak?
@@ -922,7 +1789,7 @@ KISSY.add('io/iframe-transport', function (S, DOM, Event, IO) {
                     // ie<9
                     if (iframeDoc && iframeDoc.body) {
                         // https://github.com/kissyteam/kissy/issues/304
-                        io.responseText = DOM.html(iframeDoc.body);
+                        io.responseText = Dom.html(iframeDoc.body);
                         // ie still can retrieve xml 's responseText
                         if (S.startsWith(io.responseText, '<?xml')) {
                             io.responseText = undefined;
@@ -976,265 +1843,6 @@ KISSY.add('io/iframe-transport', function (S, DOM, Event, IO) {
 
 }, {
     requires: ['dom', 'event', './base']
-});/**
- * @ignore
- * io shortcut
- * @author yiminghe@gmail.com
- */
-KISSY.add('io', function (S, serializer, IO) {
-    var undef = undefined;
-
-    function get(url, data, callback, dataType, type) {
-        // data 参数可省略
-        if (S.isFunction(data)) {
-            dataType = callback;
-            callback = data;
-            data = undef;
-        }
-
-        return IO({
-            type: type || 'get',
-            url: url,
-            data: data,
-            success: callback,
-            dataType: dataType
-        });
-    }
-
-    // some shortcut
-    S.mix(IO,
-        {
-
-            serialize: serializer.serialize,
-
-            /**
-             * perform a get request
-             * @method
-             * @param {String} url request destination
-             * @param {Object} [data] name-value object associated with this request
-             * @param {Function} [callback] success callback when this request is done
-             * @param callback.data returned from this request with type specified by dataType
-             * @param {String} callback.status status of this request with type String
-             * @param {KISSY.IO} callback.io io object of this request
-             * @param {String} [dataType] the type of data returns from this request
-             * ('xml' or 'json' or 'text')
-             * @return {KISSY.IO}
-             * @member KISSY.IO
-             * @static
-             */
-            get: get,
-
-            /**
-             * preform a post request
-             * @param {String} url request destination
-             * @param {Object} [data] name-value object associated with this request
-             * @param {Function} [callback] success callback when this request is done.
-             * @param callback.data returned from this request with type specified by dataType
-             * @param {String} callback.status status of this request with type String
-             * @param {KISSY.IO} callback.io io object of this request
-             * @param {String} [dataType] the type of data returns from this request
-             * ('xml' or 'json' or 'text')
-             * @return {KISSY.IO}
-             * @member KISSY.IO
-             * @static
-             */
-            post: function (url, data, callback, dataType) {
-                if (S.isFunction(data)) {
-                    dataType = /**
-                     @type String
-                     @ignore*/callback;
-                    callback = data;
-                    data = undef;
-                }
-                return get(url, data, callback, dataType, 'post');
-            },
-
-            /**
-             * preform a jsonp request
-             * @param {String} url request destination
-             * @param {Object} [data] name-value object associated with this request
-             * @param {Function} [callback] success callback when this request is done.
-             * @param callback.data returned from this request with type specified by dataType
-             * @param {String} callback.status status of this request with type String
-             * @param {KISSY.IO} callback.io io object of this request
-             * @return {KISSY.IO}
-             * @member KISSY.IO
-             * @static
-             */
-            jsonp: function (url, data, callback) {
-                if (S.isFunction(data)) {
-                    callback = data;
-                    data = undef;
-                }
-                return get(url, data, callback, 'jsonp');
-            },
-
-            // 和 S.getScript 保持一致
-            // 更好的 getScript 可以用
-            /*
-             IO({
-             dataType:'script'
-             });
-             */
-            getScript: S.getScript,
-
-            /**
-             * perform a get request to fetch json data from server
-             * @param {String} url request destination
-             * @param {Object} [data] name-value object associated with this request
-             * @param {Function} [callback] success callback when this request is done.@param callback.data returned from this request with type specified by dataType
-             * @param {String} callback.status status of this request with type String
-             * @param {KISSY.IO} callback.io io object of this request
-             * @return {KISSY.IO}
-             * @member KISSY.IO
-             * @static
-             */
-            getJSON: function (url, data, callback) {
-                if (S.isFunction(data)) {
-                    callback = data;
-                    data = undef;
-                }
-                return get(url, data, callback, 'json');
-            },
-
-            /**
-             * submit form without page refresh
-             * @param {String} url request destination
-             * @param {HTMLElement|KISSY.NodeList} form element tobe submited
-             * @param {Object} [data] name-value object associated with this request
-             * @param {Function} [callback]  success callback when this request is done.@param callback.data returned from this request with type specified by dataType
-             * @param {String} callback.status status of this request with type String
-             * @param {KISSY.IO} callback.io io object of this request
-             * @param {String} [dataType] the type of data returns from this request
-             * ('xml' or 'json' or 'text')
-             * @return {KISSY.IO}
-             * @member KISSY.IO
-             * @static
-             */
-            upload: function (url, form, data, callback, dataType) {
-                if (S.isFunction(data)) {
-                    dataType = /**
-                     @type String
-                     @ignore
-                     */callback;
-                    callback = data;
-                    data = undef;
-                }
-                return IO({
-                    url: url,
-                    type: 'post',
-                    dataType: dataType,
-                    form: form,
-                    data: data,
-                    success: callback
-                });
-            }
-        });
-
-    S.mix(S, {
-        // compatibility
-        'Ajax': IO,
-        'IO': IO,
-        ajax: IO,
-        io: IO,
-        jsonp: IO.jsonp
-    });
-
-    return IO;
-}, {
-    requires: [
-        'io/form-serializer',
-        'io/base',
-        'io/xhr-transport',
-        'io/script-transport',
-        'io/jsonp',
-        'io/form',
-        'io/iframe-transport',
-        'io/methods']
-});/**
- * @ignore
- * jsonp transport based on script transport
- * @author yiminghe@gmail.com
- */
-KISSY.add('io/jsonp', function (S, IO) {
-    var win = S.Env.host;
-    IO.setupConfig({
-        jsonp: 'callback',
-        jsonpCallback: function () {
-            // 不使用 now() ，极端情况下可能重复
-            return S.guid('jsonp');
-        }
-    });
-
-    IO.on('start', function (e) {
-        var io = e.io,
-            c = io.config,
-            dataType = c.dataType;
-        if (dataType[0] == 'jsonp') {
-            var response,
-                cJsonpCallback = c.jsonpCallback,
-                converters,
-                jsonpCallback = S.isFunction(cJsonpCallback) ?
-                    cJsonpCallback() :
-                    cJsonpCallback,
-                previous = win[ jsonpCallback ];
-
-            c.uri.query.set(c.jsonp, jsonpCallback);
-
-            // build temporary JSONP function
-            win[jsonpCallback] = function (r) {
-                // 使用数组，区别：故意调用了 jsonpCallback(undefined) 与 根本没有调用
-                // jsonp 返回了数组
-                if (arguments.length > 1) {
-                    r = S.makeArray(arguments);
-                }
-                // 先存在内存里, onload 后再读出来处理
-                response = [r];
-            };
-
-            // cleanup whether success or failure
-            io.fin(function () {
-                win[ jsonpCallback ] = previous;
-                if (previous === undefined) {
-                    try {
-                        delete win[ jsonpCallback ];
-                    } catch (e) {
-                        //S.log('delete window variable error : ');
-                        //S.log(e);
-                    }
-                } else if (response) {
-                    // after io success handler called
-                    // then call original existed jsonpcallback
-                    previous(response[0]);
-                }
-            });
-
-            converters = c.converters;
-            converters.script = converters.script || {};
-
-            // script -> jsonp ,jsonp need to see json not as script
-            // if ie onload a 404/500 file or all browsers onload an invalid script
-            // 404/invalid will be caught here
-            // because response is undefined( jsonp callback is never called)
-            // error throwed will be caught in conversion step
-            // and KISSY will notify user by error callback
-            converters.script.json = function () {
-                if (!response) {
-
-                }
-                return response[0];
-            };
-
-            dataType.length = 2;
-            // 利用 script transport 发送 script 请求
-            dataType[0] = 'script';
-            dataType[1] = 'json';
-        }
-    });
-
-    return IO;
-}, {
-    requires: ['./base']
 });
 /**
  * @ignore
@@ -1438,7 +2046,7 @@ KISSY.add('io/methods', function (S, IO, undefined) {
                             statusText = 'success';
                             isSuccess = true;
                         } catch (e) {
-
+                            S.log(e.stack || e, 'error');
                             statusText = 'parser error';
                         }
                     }
@@ -1477,756 +2085,181 @@ KISSY.add('io/methods', function (S, IO, undefined) {
     );
 }, {
     requires: ['./base']
-});/**
+});
+/**
  * @ignore
- * script transport for kissy io,
- * modified version of S.getScript,
- * add abort ability
+ * io shortcut
  * @author yiminghe@gmail.com
  */
-KISSY.add('io/script-transport', function (S, IO, _, undefined) {
+KISSY.add('io', function (S, serializer, IO) {
+    var undef = undefined;
 
-    var win = S.Env.host,
-        doc = win.document,
-        OK_CODE = 200,
-        ERROR_CODE = 500;
-
-    IO.setupConfig({
-        accepts: {
-            script: 'text/javascript, ' +
-                'application/javascript, ' +
-                'application/ecmascript, ' +
-                'application/x-ecmascript'
-        },
-
-        contents: {
-            script: /javascript|ecmascript/
-        },
-        converters: {
-            text: {
-                // 如果以 xhr+eval 需要下面的，
-                // 否则直接 script node 不需要，引擎自己执行了，
-                // 不需要手动 eval
-                script: function (text) {
-                    S.globalEval(text);
-                    return text;
-                }
-            }
+    function get(url, data, callback, dataType, type) {
+        // data 参数可省略
+        if (S.isFunction(data)) {
+            dataType = callback;
+            callback = data;
+            data = undef;
         }
-    });
 
-    function ScriptTransport(io) {
-        var config = io.config;
-        // 优先使用 xhr+eval 来执行脚本, ie 下可以探测到（更多）失败状态
-        if (!config.crossDomain) {
-            return new (IO['getTransport']('*'))(io);
-        }
-        this.io = io;
-
-        return this;
-    }
-
-    S.augment(ScriptTransport, {
-        send: function () {
-            var self = this,
-                script,
-                io = self.io,
-                c = io.config,
-                head = doc['head'] ||
-                    doc.getElementsByTagName('head')[0] ||
-                    doc.documentElement;
-
-            self.head = head;
-            script = doc.createElement('script');
-            self.script = script;
-            script.async = true;
-
-            if (c['scriptCharset']) {
-                script.charset = c['scriptCharset'];
-            }
-
-            script.src = io._getUrlForSend();
-
-            script.onerror =
-                script.onload =
-                    script.onreadystatechange = function (e) {
-                        e = e || win.event;
-                        // firefox onerror 没有 type ?!
-                        self._callback((e.type || 'error').toLowerCase());
-                    };
-
-            head.insertBefore(script, head.firstChild);
-        },
-
-        _callback: function (event, abort) {
-            var self = this,
-                script = self.script,
-                io = self.io,
-                head = self.head;
-
-            // 防止重复调用,成功后 abort
-            if (!script) {
-                return;
-            }
-
-            if (
-                abort ||
-                    !script.readyState ||
-                    /loaded|complete/.test(script.readyState) ||
-                    event == 'error'
-                ) {
-
-                script['onerror'] = script.onload = script.onreadystatechange = null;
-
-                // Remove the script
-                if (head && script.parentNode) {
-                    // ie 报错载入无效 js
-                    // 怎么 abort ??
-                    // script.src = '#';
-                    head.removeChild(script);
-                }
-
-                self.script = undefined;
-                self.head = undefined;
-
-                // Callback if not abort
-                if (!abort && event != 'error') {
-                    io._ioReady(OK_CODE, 'success');
-                }
-                // 非 ie<9 可以判断出来
-                else if (event == 'error') {
-                    io._ioReady(ERROR_CODE, 'script error');
-                }
-            }
-        },
-
-        abort: function () {
-            this._callback(0, 1);
-        }
-    });
-
-    IO['setupTransport']('script', ScriptTransport);
-
-    return IO;
-
-}, {
-    requires: ['./base', './xhr-transport']
-});/**
- * @ignore
- * solve io between sub domains using proxy page
- * @author yiminghe@gmail.com
- */
-KISSY.add('io/sub-domain-transport', function (S, XhrTransportBase, Event, DOM) {
-
-    var PROXY_PAGE = '/sub_domain_proxy.html',
-        doc = S.Env.host.document,
-        iframeMap = {
-            // hostname:{iframe: , ready:}
-        };
-
-    function SubDomainTransport(io) {
-        var self = this,
-            c = io.config;
-        self.io = io;
-        c.crossDomain = false;
-
-    }
-
-
-    S.augment(SubDomainTransport, XhrTransportBase.proto, {
-        // get nativeXhr from iframe document
-        // not from current document directly like XhrTransport
-        send: function () {
-            var self = this,
-                c = self.io.config,
-                uri = c.uri,
-                hostname = uri.getHostname(),
-                iframe,
-                iframeUri,
-                iframeDesc = iframeMap[hostname];
-
-            var proxy = PROXY_PAGE;
-
-            if (c['xdr'] && c['xdr']['subDomain'] && c['xdr']['subDomain'].proxy) {
-                proxy = c['xdr']['subDomain'].proxy;
-            }
-
-            if (iframeDesc && iframeDesc.ready) {
-                self.nativeXhr = XhrTransportBase.nativeXhr(0, iframeDesc.iframe.contentWindow);
-                if (self.nativeXhr) {
-                    self.sendInternal();
-                } else {
-
-                }
-                return;
-            }
-
-            if (!iframeDesc) {
-                iframeDesc = iframeMap[hostname] = {};
-                iframe = iframeDesc.iframe = doc.createElement('iframe');
-                DOM.css(iframe, {
-                    position: 'absolute',
-                    left: '-9999px',
-                    top: '-9999px'
-                });
-                DOM.prepend(iframe, doc.body || doc.documentElement);
-                iframeUri = new S.Uri();
-                iframeUri.setScheme(uri.getScheme());
-                iframeUri.setPort(uri.getPort());
-                iframeUri.setHostname(hostname);
-                iframeUri.setPath(proxy);
-                iframe.src = iframeUri.toString();
-            } else {
-                iframe = iframeDesc.iframe;
-            }
-
-            Event.on(iframe, 'load', _onLoad, self);
-
-        }
-    });
-
-    function _onLoad() {
-        var self = this,
-            c = self.io.config,
-            uri = c.uri,
-            hostname = uri.getHostname(),
-            iframeDesc = iframeMap[hostname];
-        iframeDesc.ready = 1;
-        Event.detach(iframeDesc.iframe, 'load', _onLoad, self);
-        self.send();
-    }
-
-    return SubDomainTransport;
-
-}, {
-    requires: ['./xhr-transport-base', 'event', 'dom']
-});/**
- * @ignore
- * use flash to accomplish cross domain request, usage scenario ? why not jsonp ?
- * @author yiminghe@gmail.com
- */
-KISSY.add('io/xdr-flash-transport', function (S, IO, DOM) {
-
-    var // current running request instances
-        maps = {},
-        ID = 'io_swf',
-    // flash transporter
-        flash,
-        doc = S.Env.host.document,
-    // whether create the flash transporter
-        init = false;
-
-    // create the flash transporter
-    function _swf(uri, _, uid) {
-        if (init) {
-            return;
-        }
-        init = true;
-        var o = '<object id="' + ID +
-                '" type="application/x-shockwave-flash" data="' +
-                uri + '" width="0" height="0">' +
-                '<param name="movie" value="' +
-                uri + '" />' +
-                '<param name="FlashVars" value="yid=' +
-                _ + '&uid=' +
-                uid +
-                '&host=KISSY.IO" />' +
-                '<param name="allowScriptAccess" value="always" />' +
-                '</object>',
-            c = doc.createElement('div');
-        DOM.prepend(c, doc.body || doc.documentElement);
-        c.innerHTML = o;
-    }
-
-    function XdrFlashTransport(io) {
-
-        this.io = io;
-    }
-
-    S.augment(XdrFlashTransport, {
-        // rewrite send to support flash xdr
-        send: function () {
-            var self = this,
-                io = self.io,
-                c = io.config,
-                xdr = c['xdr'] || {};
-            // 不提供则使用 cdn 默认的 flash
-            _swf(xdr.src || (S.Config.base + 'io/assets/io.swf'), 1, 1);
-            // 简便起见，用轮训
-            if (!flash) {
-                // S.log('detect xdr flash');
-                setTimeout(function () {
-                    self.send();
-                }, 200);
-                return;
-            }
-            self._uid = S.guid();
-            maps[self._uid] = self;
-
-            // ie67 send 出错？
-            flash.send(io._getUrlForSend(), {
-                id: self._uid,
-                uid: self._uid,
-                method: c.type,
-                data: c.hasContent && c.data || {}
-            });
-        },
-
-        abort: function () {
-            flash.abort(this._uid);
-        },
-
-        _xdrResponse: function (e, o) {
-            // S.log(e);
-            var self = this,
-                ret,
-                id = o.id,
-                responseText,
-                c = o.c,
-                io = self.io;
-
-            // need decodeURI to get real value from flash returned value
-            if (c && (responseText = c.responseText)) {
-                io.responseText = decodeURI(responseText);
-            }
-
-            switch (e) {
-                case 'success':
-                    ret = { status: 200, statusText: 'success' };
-                    delete maps[id];
-                    break;
-                case 'abort':
-                    delete maps[id];
-                    break;
-                case 'timeout':
-                case 'transport error':
-                case 'failure':
-                    delete maps[id];
-                    ret = {
-                        status: 'status' in c ? c.status : 500,
-                        statusText: c.statusText || e
-                    };
-                    break;
-            }
-            if (ret) {
-                io._ioReady(ret.status, ret.statusText);
-            }
-        }
-    });
-
-    /*called by flash*/
-    IO['applyTo'] = function (_, cmd, args) {
-        // S.log(cmd + ' execute');
-        var cmds = cmd.split('.').slice(1),
-            func = IO;
-        S.each(cmds, function (c) {
-            func = func[c];
+        return IO({
+            type: type || 'get',
+            url: url,
+            data: data,
+            success: callback,
+            dataType: dataType
         });
-        func.apply(null, args);
-    };
-
-    // when flash is loaded
-    IO['xdrReady'] = function () {
-        flash = doc.getElementById(ID);
-    };
-
-    /*
-     when response is returned from server
-     @param e response status
-     @param o internal data
-     */
-    IO['xdrResponse'] = function (e, o) {
-        var xhr = maps[o.uid];
-        xhr && xhr._xdrResponse(e, o);
-    };
-
-    return XdrFlashTransport;
-
-}, {
-    requires: ['./base', 'dom']
-});/**
- * @ignore
- * base for xhr and subdomain
- * @author yiminghe@gmail.com
- */
-KISSY.add('io/xhr-transport-base', function (S, IO) {
-    var OK_CODE = 200,
-        win = S.Env.host,
-    // http://msdn.microsoft.com/en-us/library/cc288060(v=vs.85).aspx
-        _XDomainRequest = S.UA.ie > 7 && win['XDomainRequest'],
-        NO_CONTENT_CODE = 204,
-        NOT_FOUND_CODE = 404,
-        NO_CONTENT_CODE2 = 1223,
-        XhrTransportBase = {
-            proto: {}
-        }, lastModifiedCached = {},
-        eTagCached = {};
-
-    IO.__lastModifiedCached = lastModifiedCached;
-    IO.__eTagCached = eTagCached;
-
-    function createStandardXHR(_, refWin) {
-        try {
-            return new (refWin || win)['XMLHttpRequest']();
-        } catch (e) {
-
-        }
-        return undefined;
     }
 
-    function createActiveXHR(_, refWin) {
-        try {
-            return new (refWin || win)['ActiveXObject']('Microsoft.XMLHTTP');
-        } catch (e) {
+    // some shortcut
+    S.mix(IO,
+        {
 
-        }
-        return undefined;
-    }
+            serialize: serializer.serialize,
 
-    XhrTransportBase.nativeXhr = win['ActiveXObject'] ? function (crossDomain, refWin) {
-        // consider ie10
-        if (!XhrTransportBase.supportCORS && crossDomain && _XDomainRequest) {
-            return new _XDomainRequest();
-        }
-        // ie7 XMLHttpRequest 不能访问本地文件
-        return !IO.isLocal && createStandardXHR(crossDomain, refWin) ||
-            createActiveXHR(crossDomain, refWin);
-    } : createStandardXHR;
+            /**
+             * perform a get request
+             * @method
+             * @param {String} url request destination
+             * @param {Object} [data] name-value object associated with this request
+             * @param {Function} [callback] success callback when this request is done
+             * @param callback.data returned from this request with type specified by dataType
+             * @param {String} callback.status status of this request with type String
+             * @param {KISSY.IO} callback.io io object of this request
+             * @param {String} [dataType] the type of data returns from this request
+             * ('xml' or 'json' or 'text')
+             * @return {KISSY.IO}
+             * @member KISSY.IO
+             * @static
+             */
+            get: get,
 
-    XhrTransportBase._XDomainRequest = _XDomainRequest;
-    XhrTransportBase.supportCORS = ('withCredentials' in XhrTransportBase.nativeXhr());
-    function isInstanceOfXDomainRequest(xhr) {
-        return _XDomainRequest && (xhr instanceof _XDomainRequest);
-    }
-
-    function getIfModifiedKey(c) {
-        var ifModified = c.ifModified,
-            ifModifiedKey;
-        if (ifModified) {
-            ifModifiedKey = c.uri;
-            if (c.cache === false) {
-                ifModifiedKey = ifModifiedKey.clone();
-                // remove random timestamp
-                // random timestamp is forced to fetch code file from server
-                ifModifiedKey.query.remove('_ksTS');
-            }
-            ifModifiedKey = ifModifiedKey.toString();
-        }
-        return ifModifiedKey;
-    }
-
-    S.mix(XhrTransportBase.proto, {
-        sendInternal: function () {
-            var self = this,
-                io = self.io,
-                c = io.config,
-                nativeXhr = self.nativeXhr,
-                files = c.files,
-                type = files ? 'post' : c.type,
-                async = c.async,
-                username,
-                mimeType = io.mimeType,
-                requestHeaders = io.requestHeaders || {},
-                url = io._getUrlForSend(),
-                xhrFields,
-                ifModifiedKey = getIfModifiedKey(c),
-                cacheValue,
-                i;
-
-            if (ifModifiedKey) {
-                // if io want a conditional load
-                // (response status is 304 and responseText is null)
-                // u need to set if-modified-since manually!
-                // or else
-                // u will always get response status 200 and full responseText
-                // which is also conditional load but process transparently by browser
-                if (cacheValue = lastModifiedCached[ifModifiedKey]) {
-                    requestHeaders['If-Modified-Since'] = cacheValue;
+            /**
+             * preform a post request
+             * @param {String} url request destination
+             * @param {Object} [data] name-value object associated with this request
+             * @param {Function} [callback] success callback when this request is done.
+             * @param callback.data returned from this request with type specified by dataType
+             * @param {String} callback.status status of this request with type String
+             * @param {KISSY.IO} callback.io io object of this request
+             * @param {String} [dataType] the type of data returns from this request
+             * ('xml' or 'json' or 'text')
+             * @return {KISSY.IO}
+             * @member KISSY.IO
+             * @static
+             */
+            post: function (url, data, callback, dataType) {
+                if (S.isFunction(data)) {
+                    dataType = /**
+                     @type String
+                     @ignore*/callback;
+                    callback = data;
+                    data = undef;
                 }
-                if (cacheValue = eTagCached[ifModifiedKey]) {
-                    requestHeaders['If-None-Match'] = cacheValue;
+                return get(url, data, callback, dataType, 'post');
+            },
+
+            /**
+             * preform a jsonp request
+             * @param {String} url request destination
+             * @param {Object} [data] name-value object associated with this request
+             * @param {Function} [callback] success callback when this request is done.
+             * @param callback.data returned from this request with type specified by dataType
+             * @param {String} callback.status status of this request with type String
+             * @param {KISSY.IO} callback.io io object of this request
+             * @return {KISSY.IO}
+             * @member KISSY.IO
+             * @static
+             */
+            jsonp: function (url, data, callback) {
+                if (S.isFunction(data)) {
+                    callback = data;
+                    data = undef;
                 }
-            }
+                return get(url, data, callback, 'jsonp');
+            },
 
-            if (username = c['username']) {
-                nativeXhr.open(type, url, async, username, c.password)
-            } else {
-                nativeXhr.open(type, url, async);
-            }
+            // 和 S.getScript 保持一致
+            // 更好的 getScript 可以用
+            /*
+             IO({
+             dataType:'script'
+             });
+             */
+            getScript: S.getScript,
 
-            var withCredentials = 0;
-
-            if (xhrFields = c['xhrFields']) {
-                for (i in xhrFields) {
-                    if (i == 'withCredentials') {
-                        withCredentials = 1;
-                    }
-                    nativeXhr[ i ] = xhrFields[ i ];
+            /**
+             * perform a get request to fetch json data from server
+             * @param {String} url request destination
+             * @param {Object} [data] name-value object associated with this request
+             * @param {Function} [callback] success callback when this request is done.@param callback.data returned from this request with type specified by dataType
+             * @param {String} callback.status status of this request with type String
+             * @param {KISSY.IO} callback.io io object of this request
+             * @return {KISSY.IO}
+             * @member KISSY.IO
+             * @static
+             */
+            getJSON: function (url, data, callback) {
+                if (S.isFunction(data)) {
+                    callback = data;
+                    data = undef;
                 }
-            }
+                return get(url, data, callback, 'json');
+            },
 
-            // withCredentials defaults to true
-            if (!withCredentials) {
-                nativeXhr.withCredentials = true;
-            }
-
-            // Override mime type if supported
-            if (mimeType && nativeXhr.overrideMimeType) {
-                nativeXhr.overrideMimeType(mimeType);
-            }
-
-            // set header event cross domain, eg: phonegap
-            if (!requestHeaders['X-Requested-With']) {
-                requestHeaders[ 'X-Requested-With' ] = 'XMLHttpRequest';
-            }
-
-            // ie<10 XDomainRequest does not support setRequestHeader
-            if (typeof nativeXhr.setRequestHeader !== 'undefined') {
-                for (i in requestHeaders) {
-                    nativeXhr.setRequestHeader(i, requestHeaders[ i ]);
+            /**
+             * submit form without page refresh
+             * @param {String} url request destination
+             * @param {HTMLElement|KISSY.NodeList} form element tobe submited
+             * @param {Object} [data] name-value object associated with this request
+             * @param {Function} [callback]  success callback when this request is done.@param callback.data returned from this request with type specified by dataType
+             * @param {String} callback.status status of this request with type String
+             * @param {KISSY.IO} callback.io io object of this request
+             * @param {String} [dataType] the type of data returns from this request
+             * ('xml' or 'json' or 'text')
+             * @return {KISSY.IO}
+             * @member KISSY.IO
+             * @static
+             */
+            upload: function (url, form, data, callback, dataType) {
+                if (S.isFunction(data)) {
+                    dataType = /**
+                     @type String
+                     @ignore
+                     */callback;
+                    callback = data;
+                    data = undef;
                 }
-            }
-
-            var sendContent = c.hasContent && c.data || null;
-
-            // support html5 file upload api
-            if (files) {
-                var originalSentContent = sendContent,
-                    data = {};
-                if (originalSentContent) {
-                    data = S.unparam(originalSentContent);
-                }
-                data = S.mix(data, files);
-                sendContent = new FormData();
-                S.each(data, function (vs, k) {
-                    if (S.isArray(vs)) {
-                        S.each(vs, function (v) {
-                            sendContent.append(k + (c.serializeArray ? '[]' : ''), v);
-                        });
-                    } else {
-                        sendContent.append(k, vs);
-                    }
+                return IO({
+                    url: url,
+                    type: 'post',
+                    dataType: dataType,
+                    form: form,
+                    data: data,
+                    success: callback
                 });
             }
+        });
 
-            nativeXhr.send(sendContent);
-
-            if (!async || nativeXhr.readyState == 4) {
-                self._callback();
-            } else {
-                // _XDomainRequest 单独的回调机制
-                if (isInstanceOfXDomainRequest(nativeXhr)) {
-                    nativeXhr.onload = function () {
-                        nativeXhr.readyState = 4;
-                        nativeXhr.status = 200;
-                        self._callback();
-                    };
-                    nativeXhr.onerror = function () {
-                        nativeXhr.readyState = 4;
-                        nativeXhr.status = 500;
-                        self._callback();
-                    };
-                } else {
-                    nativeXhr.onreadystatechange = function () {
-                        self._callback();
-                    };
-                }
-            }
-        },
-        // 由 io.abort 调用，自己不可以调用 io.abort
-        abort: function () {
-            this._callback(0, 1);
-        },
-
-        _callback: function (event, abort) {
-            // Firefox throws exceptions when accessing properties
-            // of an xhr when a network error occurred
-            // http://helpful.knobs-dials.com/index.php/Component_returned_failure_code:_0x80040111_(NS_ERROR_NOT_AVAILABLE)
-            var self = this,
-                nativeXhr = self.nativeXhr,
-                io = self.io,
-                ifModifiedKey,
-                lastModified,
-                eTag,
-                statusText,
-                xml,
-                c = io.config;
-            try {
-                //abort or complete
-                if (abort || nativeXhr.readyState == 4) {
-                    // ie6 ActiveObject 设置不恰当属性导致出错
-                    if (isInstanceOfXDomainRequest(nativeXhr)) {
-                        nativeXhr.onerror = S.noop;
-                        nativeXhr.onload = S.noop;
-                    } else {
-                        // ie6 ActiveObject 只能设置，不能读取这个属性，否则出错！
-                        nativeXhr.onreadystatechange = S.noop;
-                    }
-
-                    if (abort) {
-                        // 完成以后 abort 不要调用
-                        if (nativeXhr.readyState !== 4) {
-                            nativeXhr.abort();
-                        }
-                    } else {
-                        ifModifiedKey = getIfModifiedKey(c);
-
-                        var status = nativeXhr.status;
-
-                        // _XDomainRequest 不能获取响应头
-                        if (!isInstanceOfXDomainRequest(nativeXhr)) {
-                            io.responseHeadersString = nativeXhr.getAllResponseHeaders();
-                        }
-
-                        if (ifModifiedKey) {
-                            lastModified = nativeXhr.getResponseHeader('Last-Modified');
-                            eTag = nativeXhr.getResponseHeader('ETag');
-                            // if u want to set if-modified-since manually
-                            // u need to save last-modified after the first request
-                            if (lastModified) {
-                                lastModifiedCached[ifModifiedKey] = lastModified;
-                            }
-                            if (eTag) {
-                                eTagCached[eTag] = eTag;
-                            }
-                        }
-
-                        xml = nativeXhr.responseXML;
-
-                        // Construct response list
-                        if (xml && xml.documentElement /* #4958 */) {
-                            io.responseXML = xml;
-                        }
-
-                        var text = io.responseText = nativeXhr.responseText;
-
-                        // same with old-ie iframe-upload
-                        if (c.files && text) {
-                            var bodyIndex, lastBodyIndex;
-                            if ((bodyIndex = text.indexOf('<body>')) != -1) {
-                                lastBodyIndex = text.lastIndexOf('</body>');
-                                if (lastBodyIndex == -1) {
-                                    lastBodyIndex = text.length;
-                                }
-                                text = text.slice(bodyIndex + 6, lastBodyIndex);
-                            }
-                            // same with old-ie logic
-                            io.responseText = S.unEscapeHTML(text);
-                        }
-
-                        // Firefox throws an exception when accessing
-                        // statusText for faulty cross-domain requests
-                        try {
-                            statusText = nativeXhr.statusText;
-                        } catch (e) {
-
-
-                            // We normalize with Webkit giving an empty statusText
-                            statusText = '';
-                        }
-
-                        // Filter status for non standard behaviors
-                        // If the request is local and we have data: assume a success
-                        // (success with no data won't get notified, that's the best we
-                        // can do given current implementations)
-                        if (!status && IO.isLocal && !c.crossDomain) {
-                            status = io.responseText ? OK_CODE : NOT_FOUND_CODE;
-                            // IE - #1450: sometimes returns 1223 when it should be 204
-                        } else if (status === NO_CONTENT_CODE2) {
-                            status = NO_CONTENT_CODE;
-                        }
-
-                        io._ioReady(status, statusText);
-                    }
-                }
-            } catch (firefoxAccessException) {
-                nativeXhr.onreadystatechange = S.noop;
-                if (!abort) {
-                    io._ioReady(-1, firefoxAccessException);
-                }
-            }
-        }
-    })
-    ;
-
-    return XhrTransportBase;
-}, {
-    requires: ['./base']
-});/**
- * @ignore
- * io xhr transport class, route subdomain, xdr
- * @author yiminghe@gmail.com
- */
-KISSY.add('io/xhr-transport', function (S, IO, XhrTransportBase, SubDomainTransport, XdrFlashTransport) {
-
-    var win = S.Env.host,
-        doc = win.document,
-        _XDomainRequest = XhrTransportBase._XDomainRequest;
-
-    function isSubDomain(hostname) {
-        // phonegap does not have doc.domain
-        return doc.domain && S.endsWith(hostname, doc.domain);
-    }
-
-    /**
-     * @class
-     * @ignore
-     */
-    function XhrTransport(io) {
-        var c = io.config,
-            crossDomain = c.crossDomain,
-            self = this,
-            xhr,
-            xdrCfg = c['xdr'] || {},
-            subDomain = xdrCfg.subDomain = xdrCfg.subDomain || {};
-
-        self.io = io;
-
-        if (crossDomain && !XhrTransportBase.supportCORS) {
-            // 跨子域
-            if (isSubDomain(c.uri.getHostname())) {
-                // force to not use sub domain transport
-                if (subDomain.proxy !== false) {
-                    return new SubDomainTransport(io);
-                }
-            }
-
-            /*
-             ie>7 通过配置 use='flash' 强制使用 flash xdr
-             使用 withCredentials 检测是否支持 CORS
-             http://hacks.mozilla.org/2009/07/cross-site-xmlhttprequest-with-cors/
-             */
-            if ((String(xdrCfg.use) === 'flash' || !_XDomainRequest)) {
-                return new XdrFlashTransport(io);
-            }
-        }
-
-        xhr = self.nativeXhr = XhrTransportBase.nativeXhr(crossDomain);
-
-
-        return self;
-    }
-
-    S.augment(XhrTransport, XhrTransportBase.proto, {
-
-        send: function () {
-            this.sendInternal();
-        }
-
+    S.mix(S, {
+        // compatibility
+        'Ajax': IO,
+        'IO': IO,
+        ajax: IO,
+        io: IO,
+        jsonp: IO.jsonp
     });
-
-    IO['setupTransport']('*', XhrTransport);
 
     return IO;
 }, {
-    requires: ['./base', './xhr-transport-base', './sub-domain-transport', './xdr-flash-transport']
+    requires: [
+        'io/form-serializer',
+        'io/base',
+        'io/xhr-transport',
+        'io/script-transport',
+        'io/jsonp',
+        'io/form',
+        'io/iframe-transport',
+        'io/methods']
 });
 
-/*
- 2012-11-28 note ie port problem:
- - ie 的 xhr 可以跨端口发请求，例如 localhost:8888 发请求到 localhost:9999
- - ie iframe 间访问不设置 document.domain 完全不考虑 port！
- - localhost:8888 访问 iframe 内的 localhost:9999
-
- CORS : http://www.nczonline.net/blog/2010/05/25/cross-domain-io-with-cross-origin-resource-sharing/
- */

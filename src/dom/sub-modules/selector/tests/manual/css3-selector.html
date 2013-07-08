@@ -28,11 +28,10 @@
     </li>
 </ul>
 <script src="/kissy/build/seed.js"></script>
-<script src="../../src/selector/index.js"></script>
-<script src="../../src/selector/parser.js"></script>
+<script src="/kissy/src/package.js"></script>
 <script src="/kissy/tools/third-party/sizzle.js"></script>
 <script>
-    KISSY.use('dom/ie/selector/', function (S, engine) {
+    KISSY.use('dom/selector', function (S, engine) {
         var start= S.now();
         var els = engine.select('#t > .inner form ul > li.my');
         S.log(S.now()-start);

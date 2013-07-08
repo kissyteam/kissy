@@ -1,6 +1,4 @@
 <project name="editor/plugin/fake-objects.build" default="build" basedir=".">
-    <description>editor/plugin/fake-objects Build File</description>
-
     <property name="component.name" value="editor/plugin/fake-objects"/>
 
     <property name="component.meta.dir" location="./ke-meta/"/>

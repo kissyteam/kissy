@@ -1,8 +1,14 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 17 00:16
+build time: Jul 3 13:51
 */
+/*
+ Combined processedModules by KISSY Module Compiler: 
+
+ editor/plugin/drag-upload
+*/
+
 /**
  * drag file support for html5 file&dd
  * @author yiminghe@gmail.com
@@ -13,7 +19,7 @@ KISSY.add("editor/plugin/drag-upload", function (S, Editor) {
     var Node = S.Node,
         Event = S.Event,
         Utils = Editor.Utils,
-        DOM = S.DOM;
+        Dom = S.DOM;
 
     function dragUpload(config) {
         this.config = config || {};
@@ -34,7 +40,7 @@ KISSY.add("editor/plugin/drag-upload", function (S, Editor) {
             function nodeInsert(ev) {
                 var oe = ev['originalEvent'],
                     t = oe.target;
-                if (DOM.nodeName(t) == "img" && t.src.match(/^file:\/\//)) {
+                if (Dom.nodeName(t) == "img" && t.src.match(/^file:\/\//)) {
                     inserted[t.src] = t;
                 }
             }
@@ -61,10 +67,10 @@ KISSY.add("editor/plugin/drag-upload", function (S, Editor) {
                      */
                     if (!S.isEmptyObject(inserted)) {
                         S.each(inserted, function (el) {
-                            if (DOM.nodeName(el) == "img") {
+                            if (Dom.nodeName(el) == "img") {
                                 archor = el.nextSibling;
                                 ap = el.parentNode;
-                                DOM.remove(el);
+                                Dom.remove(el);
                             }
                         });
                         inserted = {};
@@ -93,11 +99,11 @@ KISSY.add("editor/plugin/drag-upload", function (S, Editor) {
                             + "'" + "/>");
                         var nakeImg = img[0];
                         ap.insertBefore(nakeImg, archor);
-                        var np = nakeImg.parentNode, np_name = DOM.nodeName(np);
+                        var np = nakeImg.parentNode, np_name = Dom.nodeName(np);
                         // 防止拖放导致插入到 body 以外
                         if (np_name == "head"
                             || np_name == "html") {
-                            DOM.insertBefore(nakeImg, document.body.firstChild);
+                            Dom.insertBefore(nakeImg, document.body.firstChild);
                         }
 
                         fileUpload(file, img);
@@ -141,13 +147,13 @@ KISSY.add("editor/plugin/drag-upload", function (S, Editor) {
                         if (xhr.readyState == 4) {
                             if (xhr.status == 200 || xhr.status == 304) {
                                 if (xhr.responseText != "") {
-                                    var info = window['JSON'].parse(xhr.responseText);
+                                    var info = S.parseJson(xhr.responseText);
                                     img[0].src = info['imgUrl'];
                                 }
                             } else {
                                 alert("服务器端出错！");
                                 img.remove();
-
+                                S.log(xhr);
                             }
                             xhr.onreadystatechange = null;
                         }
@@ -187,3 +193,4 @@ KISSY.add("editor/plugin/drag-upload", function (S, Editor) {
 }, {
     requires: ['editor']
 });
+

@@ -37,8 +37,6 @@
         "js-beautify": ">=0.2.0"
     },
     "devDependencies": {
-        "walkdir": ">0.0.4",
-        "jasmine-reporters": ">0.2",
         "express": ">3.0"
     },
     "licenses": [

@@ -4,7 +4,7 @@
  */
 KISSY.add("editor/plugin/progressbar", function(S) {
 
-    var DOM = S.DOM,Node = S.Node;
+    var Dom = S.DOM,Node = S.Node;
 
     function ProgressBar() {
         ProgressBar.superclass.constructor.apply(this, arguments);

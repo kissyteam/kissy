@@ -1,0 +1,5 @@
+<project name="html-parser.build" default="build" basedir=".">
+    <property name="component.name" value="html-parser"/>
+
+    <import file="../common.xml"/>
+</project>

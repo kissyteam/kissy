@@ -1,176 +1,20 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 17 00:13
+build time: Jul 3 13:48
 */
-/**
- * @ignore
- * special patch for making color gradual change
- * @author yiminghe@gmail.com
- */
-KISSY.add('anim/timer/color', function (S, DOM, Fx,SHORT_HANDS) {
-
-    var HEX_BASE = 16,
-        floor = Math.floor,
-        KEYWORDS = {
-            'black':[0, 0, 0],
-            'silver':[192, 192, 192],
-            'gray':[128, 128, 128],
-            'white':[255, 255, 255],
-            'maroon':[128, 0, 0],
-            'red':[255, 0, 0],
-            'purple':[128, 0, 128],
-            'fuchsia':[255, 0, 255],
-            'green':[0, 128, 0],
-            'lime':[0, 255, 0],
-            'olive':[128, 128, 0],
-            'yellow':[255, 255, 0],
-            'navy':[0, 0, 128],
-            'blue':[0, 0, 255],
-            'teal':[0, 128, 128],
-            'aqua':[0, 255, 255]
-        },
-        re_RGB = /^rgb\(([0-9]+)\s*,\s*([0-9]+)\s*,\s*([0-9]+)\)$/i,
-        re_RGBA = /^rgba\(([0-9]+)\s*,\s*([0-9]+)\s*,\s*([0-9]+),\s*([0-9]+)\)$/i,
-        re_hex = /^#?([0-9A-F]{1,2})([0-9A-F]{1,2})([0-9A-F]{1,2})$/i,
-
-        COLORS = [
-            'backgroundColor' ,
-            'borderBottomColor' ,
-            'borderLeftColor' ,
-            'borderRightColor' ,
-            'borderTopColor' ,
-            'color' ,
-            'outlineColor'
-        ];
-
-    SHORT_HANDS['background'].push('backgroundColor');
-
-    SHORT_HANDS['borderColor'] = [
-        'borderBottomColor',
-        'borderLeftColor',
-        'borderRightColor',
-        'borderTopColor'
-    ];
-
-    SHORT_HANDS['border'].push(
-        'borderBottomColor',
-        'borderLeftColor',
-        'borderRightColor',
-        'borderTopColor'
-    );
-
-    SHORT_HANDS['borderBottom'].push(
-        'borderBottomColor'
-    );
-
-    SHORT_HANDS['borderLeft'].push(
-        'borderLeftColor'
-    );
-
-    SHORT_HANDS['borderRight'].push(
-        'borderRightColor'
-    );
-
-    SHORT_HANDS['borderTop'].push(
-        'borderTopColor'
-    );
-
-    //得到颜色的数值表示，红绿蓝数字数组
-    function numericColor(val) {
-        val = (val + '');
-        var match;
-        if (match = val.match(re_RGB)) {
-            return [
-                parseInt(match[1]),
-                parseInt(match[2]),
-                parseInt(match[3])
-            ];
-        }
-        else if (match = val.match(re_RGBA)) {
-            return [
-                parseInt(match[1]),
-                parseInt(match[2]),
-                parseInt(match[3]),
-                parseInt(match[4])
-            ];
-        }
-        else if (match = val.match(re_hex)) {
-            for (var i = 1; i < match.length; i++) {
-                if (match[i].length < 2) {
-                    match[i] += match[i];
-                }
-            }
-            return [
-                parseInt(match[1], HEX_BASE),
-                parseInt(match[2], HEX_BASE),
-                parseInt(match[3], HEX_BASE)
-            ];
-        }
-        if (KEYWORDS[val = val.toLowerCase()]) {
-            return KEYWORDS[val];
-        }
-
-        //transparent 或者颜色字符串返回
-
-        return [255, 255, 255];
-    }
-
-    function ColorFx() {
-        ColorFx.superclass.constructor.apply(this, arguments);
-    }
-
-    S.extend(ColorFx, Fx, {
-
-        load:function () {
-            var self = this;
-            ColorFx.superclass.load.apply(self, arguments);
-            if (self.from) {
-                self.from = numericColor(self.from);
-            }
-            if (self.to) {
-                self.to = numericColor(self.to);
-            }
-        },
-
-        interpolate:function (from, to, pos) {
-            var interpolate = ColorFx.superclass.interpolate;
-            if (from.length == 3 && to.length == 3) {
-                return 'rgb(' + [
-                    floor(interpolate(from[0], to[0], pos)),
-                    floor(interpolate(from[1], to[1], pos)),
-                    floor(interpolate(from[2], to[2], pos))
-                ].join(', ') + ')';
-            } else if (from.length == 4 || to.length == 4) {
-                return 'rgba(' + [
-                    floor(interpolate(from[0], to[0], pos)),
-                    floor(interpolate(from[1], to[1], pos)),
-                    floor(interpolate(from[2], to[2], pos)),
-                    // 透明度默认 1
-                    floor(interpolate(from[3] || 1, to[3] || 1, pos))
-                ].join(', ') + ')';
-            } else {
-                return S.log('anim/color unknown value : ' + from);
-            }
-        }
-
-    });
-
-    S.each(COLORS, function (color) {
-        Fx.Factories[color] = ColorFx;
-    });
-
-    return ColorFx;
-
-}, {
-    requires:['dom','./fx','./short-hand']
-});
-
 /*
-  TODO
-  支持 hsla
-   - https://github.com/jquery/jquery-color/blob/master/jquery.color.js
-*//**
+ Combined processedModules by KISSY Module Compiler: 
+
+ anim/timer/easing
+ anim/timer/manager
+ anim/timer/fx
+ anim/timer/short-hand
+ anim/timer/color
+ anim/timer
+*/
+
+/**
  * @ignore
  * Easing equation from yui3 and css3
  * @author yiminghe@gmail.com, lifesinger@gmail.com
@@ -514,169 +358,6 @@ KISSY.add('anim/timer/easing', function () {
  */
 /**
  * @ignore
- * animate on single property
- * @author yiminghe@gmail.com
- */
-KISSY.add('anim/timer/fx', function (S, DOM, undefined) {
-
-    /**
-     * basic animation about single css property or element attribute
-     * @class KISSY.Anim.Fx
-     * @private
-     */
-    function Fx(cfg) {
-        this.load(cfg);
-    }
-
-    Fx.prototype = {
-
-        // implemented by KISSY
-        isBasicFx: 1,
-
-        constructor: Fx,
-
-        /**
-         * reset config.
-         * @param cfg
-         */
-        load: function (cfg) {
-            var self = this;
-            S.mix(self, cfg);
-            self.pos = 0;
-            self.unit = self.unit || '';
-        },
-
-        /**
-         * process current anim frame.
-         * @param {Number} pos
-         */
-        frame: function (pos) {
-            var self = this;
-            self.pos = pos;
-            self.update();
-            self.finished = self.finished || pos == 1;
-        },
-
-        /**
-         * interpolate function
-         *
-         * @param {Number} from current css value
-         * @param {Number} to end css value
-         * @param {Number} pos current position from easing 0~1
-         * @return {Number} value corresponding to position
-         */
-        interpolate: function (from, to, pos) {
-            // 默认只对数字进行 easing
-            if (S.isNumber(from) && S.isNumber(to)) {
-                return /**@type Number @ignore*/(from + (to - from) * pos).toFixed(3);
-            } else {
-                return /**@type Number @ignore*/undefined;
-            }
-        },
-
-        /**
-         * update dom according to current frame css value.
-         *
-         */
-        update: function () {
-            var self = this,
-                anim = self.anim,
-                prop = self.prop,
-                el = anim.el,
-                from = self.from,
-                to = self.to,
-                val = self.interpolate(from, to, self.pos);
-
-            if (val === /**@type Number @ignore*/undefined) {
-                // 插值出错，直接设置为最终值
-                if (!self.finished) {
-                    self.finished = 1;
-                    DOM.css(el, prop, to);
-
-                }
-            } else {
-                val += self.unit;
-                if (isAttr(el, prop)) {
-                    DOM.attr(el, prop, val, 1);
-                } else {
-                    // S.log(self.prop + ' update: ' + val);
-                    DOM.css(el, prop, val);
-                }
-            }
-        },
-
-        /**
-         * current value
-         *
-         */
-        cur: function () {
-            var self = this,
-                prop = self.prop,
-                el = self.anim.el;
-            if (isAttr(el, prop)) {
-                return DOM.attr(el, prop, undefined, 1);
-            }
-            var parsed,
-                r = DOM.css(el, prop);
-            // Empty strings, null, undefined and 'auto' are converted to 0,
-            // complex values such as 'rotate(1rad)' or '0px 10px' are returned as is,
-            // simple values such as '10px' are parsed to Float.
-            return isNaN(parsed = parseFloat(r)) ?
-                !r || r === 'auto' ? 0 : r
-                : parsed;
-        }
-    };
-
-    function isAttr(el, prop) {
-        // support scrollTop/Left now!
-        if ((!el.style || el.style[ prop ] == null) &&
-            DOM.attr(el, prop, undefined, 1) != null) {
-            return 1;
-        }
-        return 0;
-    }
-
-    function getPos(anim, propData) {
-        var t = S.now(),
-            runTime,
-            startTime = anim.startTime,
-            delay = propData.delay,
-            duration = propData.duration;
-        runTime = t - startTime - delay;
-        if (runTime <= 0) {
-            return 0;
-        } else if (runTime >= duration) {
-            return 1;
-        } else {
-            return propData.easing(runTime / duration);
-        }
-    }
-
-    Fx.Factories = {};
-
-    Fx.getPos = getPos;
-
-    Fx.getFx = function (cfg) {
-        var Constructor = Fx.Factories[cfg.prop] || Fx;
-        return new Constructor(cfg);
-    };
-
-    return Fx;
-
-}, {
-    requires: ['dom']
-});
-/*
- TODO
- 支持 transform ,ie 使用 matrix
- - http://shawphy.com/2011/01/transformation-matrix-in-front-end.html
- - http://www.cnblogs.com/winter-cn/archive/2010/12/29/1919266.html
- - 标准：http://www.zenelements.com/blog/css3-transform/
- - ie: http://www.useragentman.com/IETransformsTranslator/
- - wiki: http://en.wikipedia.org/wiki/Transformation_matrix
- - jq 插件: http://plugins.jquery.com/project/2d-transform
- *//**
- * @ignore
  * single timer for the whole anim module
  * @author yiminghe@gmail.com
  */
@@ -700,7 +381,7 @@ KISSY.add('anim/timer/manager', function (S, undefined) {
     }
     // chrome is unstable....
     if (requestAnimationFrameFn && !S.UA.chrome) {
-
+        S.log('anim use requestAnimationFrame');
     } else {
         requestAnimationFrameFn = function (fn) {
             return setTimeout(fn, INTERVAL);
@@ -776,7 +457,172 @@ KISSY.add('anim/timer/manager', function (S, undefined) {
  * @ignore
  *
  * !TODO: deal with https://developers.google.com/chrome/whitepapers/pagevisibility
- *//**
+ */
+/**
+ * @ignore
+ * animate on single property
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('anim/timer/fx', function (S, Dom, undefined) {
+
+    /**
+     * basic animation about single css property or element attribute
+     * @class KISSY.Anim.Fx
+     * @private
+     */
+    function Fx(cfg) {
+        this.load(cfg);
+    }
+
+    Fx.prototype = {
+
+        // implemented by KISSY
+        isBasicFx: 1,
+
+        constructor: Fx,
+
+        /**
+         * reset config.
+         * @param cfg
+         */
+        load: function (cfg) {
+            var self = this;
+            S.mix(self, cfg);
+            self.pos = 0;
+            self.unit = self.unit || '';
+        },
+
+        /**
+         * process current anim frame.
+         * @param {Number} pos
+         */
+        frame: function (pos) {
+            var self = this;
+            self.pos = pos;
+            self.update();
+            self.finished = self.finished || pos == 1;
+        },
+
+        /**
+         * interpolate function
+         *
+         * @param {Number} from current css value
+         * @param {Number} to end css value
+         * @param {Number} pos current position from easing 0~1
+         * @return {Number} value corresponding to position
+         */
+        interpolate: function (from, to, pos) {
+            // 默认只对数字进行 easing
+            if (S.isNumber(from) && S.isNumber(to)) {
+                return /**@type Number @ignore*/(from + (to - from) * pos).toFixed(3);
+            } else {
+                return /**@type Number @ignore*/undefined;
+            }
+        },
+
+        /**
+         * update dom according to current frame css value.
+         *
+         */
+        update: function () {
+            var self = this,
+                anim = self.anim,
+                prop = self.prop,
+                node = anim.node,
+                from = self.from,
+                to = self.to,
+                val = self.interpolate(from, to, self.pos);
+
+            if (val === /**@type Number @ignore*/undefined) {
+                // 插值出错，直接设置为最终值
+                if (!self.finished) {
+                    self.finished = 1;
+                    Dom.css(node, prop, to);
+                    S.log(prop + ' update directly ! : ' + val + ' : ' + from + ' : ' + to);
+                }
+            } else {
+                val += self.unit;
+                if (isAttr(node, prop)) {
+                    Dom.attr(node, prop, val, 1);
+                } else {
+                    // S.log(self.prop + ' update: ' + val);
+                    Dom.css(node, prop, val);
+                }
+            }
+        },
+
+        /**
+         * current value
+         *
+         */
+        cur: function () {
+            var self = this,
+                prop = self.prop,
+                node = self.anim.node;
+            if (isAttr(node, prop)) {
+                return Dom.attr(node, prop, undefined, 1);
+            }
+            var parsed,
+                r = Dom.css(node, prop);
+            // Empty strings, null, undefined and 'auto' are converted to 0,
+            // complex values such as 'rotate(1rad)' or '0px 10px' are returned as is,
+            // simple values such as '10px' are parsed to Float.
+            return isNaN(parsed = parseFloat(r)) ?
+                !r || r === 'auto' ? 0 : r
+                : parsed;
+        }
+    };
+
+    function isAttr(node, prop) {
+        // support scrollTop/Left now!
+        if ((!node.style || node.style[ prop ] == null) &&
+            Dom.attr(node, prop, undefined, 1) != null) {
+            return 1;
+        }
+        return 0;
+    }
+
+    function getPos(anim, propData) {
+        var t = S.now(),
+            runTime,
+            startTime = anim.startTime,
+            delay = propData.delay,
+            duration = propData.duration;
+        runTime = t - startTime - delay;
+        if (runTime <= 0) {
+            return 0;
+        } else if (runTime >= duration) {
+            return 1;
+        } else {
+            return propData.easing(runTime / duration);
+        }
+    }
+
+    Fx.Factories = {};
+
+    Fx.getPos = getPos;
+
+    Fx.getFx = function (cfg) {
+        var Constructor = Fx.Factories[cfg.prop] || Fx;
+        return new Constructor(cfg);
+    };
+
+    return Fx;
+
+}, {
+    requires: ['dom']
+});
+/*
+ TODO
+ 支持 transform ,ie 使用 matrix
+ - http://shawphy.com/2011/01/transformation-matrix-in-front-end.html
+ - http://www.cnblogs.com/winter-cn/archive/2010/12/29/1919266.html
+ - 标准：http://www.zenelements.com/blog/css3-transform/
+ - ie: http://www.useragentman.com/IETransformsTranslator/
+ - wiki: http://en.wikipedia.org/wiki/Transformation_matrix
+ - jq 插件: http://plugins.jquery.com/project/2d-transform
+ */
+/**
  * short-hand css properties
  * @author yiminghe@gmail.com
  * @ignore
@@ -817,26 +663,194 @@ KISSY.add('anim/timer/short-hand', function () {
             'paddingTop'
         ]
     };
-});/**
+});
+/**
+ * @ignore
+ * special patch for making color gradual change
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('anim/timer/color', function (S, Dom, Fx,SHORT_HANDS) {
+
+    var HEX_BASE = 16,
+        floor = Math.floor,
+        KEYWORDS = {
+            'black':[0, 0, 0],
+            'silver':[192, 192, 192],
+            'gray':[128, 128, 128],
+            'white':[255, 255, 255],
+            'maroon':[128, 0, 0],
+            'red':[255, 0, 0],
+            'purple':[128, 0, 128],
+            'fuchsia':[255, 0, 255],
+            'green':[0, 128, 0],
+            'lime':[0, 255, 0],
+            'olive':[128, 128, 0],
+            'yellow':[255, 255, 0],
+            'navy':[0, 0, 128],
+            'blue':[0, 0, 255],
+            'teal':[0, 128, 128],
+            'aqua':[0, 255, 255]
+        },
+        re_RGB = /^rgb\(([0-9]+)\s*,\s*([0-9]+)\s*,\s*([0-9]+)\)$/i,
+        re_RGBA = /^rgba\(([0-9]+)\s*,\s*([0-9]+)\s*,\s*([0-9]+),\s*([0-9]+)\)$/i,
+        re_hex = /^#?([0-9A-F]{1,2})([0-9A-F]{1,2})([0-9A-F]{1,2})$/i,
+
+        COLORS = [
+            'backgroundColor' ,
+            'borderBottomColor' ,
+            'borderLeftColor' ,
+            'borderRightColor' ,
+            'borderTopColor' ,
+            'color' ,
+            'outlineColor'
+        ];
+
+    SHORT_HANDS['background'].push('backgroundColor');
+
+    SHORT_HANDS['borderColor'] = [
+        'borderBottomColor',
+        'borderLeftColor',
+        'borderRightColor',
+        'borderTopColor'
+    ];
+
+    SHORT_HANDS['border'].push(
+        'borderBottomColor',
+        'borderLeftColor',
+        'borderRightColor',
+        'borderTopColor'
+    );
+
+    SHORT_HANDS['borderBottom'].push(
+        'borderBottomColor'
+    );
+
+    SHORT_HANDS['borderLeft'].push(
+        'borderLeftColor'
+    );
+
+    SHORT_HANDS['borderRight'].push(
+        'borderRightColor'
+    );
+
+    SHORT_HANDS['borderTop'].push(
+        'borderTopColor'
+    );
+
+    //得到颜色的数值表示，红绿蓝数字数组
+    function numericColor(val) {
+        val = (val + '');
+        var match;
+        if (match = val.match(re_RGB)) {
+            return [
+                parseInt(match[1]),
+                parseInt(match[2]),
+                parseInt(match[3])
+            ];
+        }
+        else if (match = val.match(re_RGBA)) {
+            return [
+                parseInt(match[1]),
+                parseInt(match[2]),
+                parseInt(match[3]),
+                parseInt(match[4])
+            ];
+        }
+        else if (match = val.match(re_hex)) {
+            for (var i = 1; i < match.length; i++) {
+                if (match[i].length < 2) {
+                    match[i] += match[i];
+                }
+            }
+            return [
+                parseInt(match[1], HEX_BASE),
+                parseInt(match[2], HEX_BASE),
+                parseInt(match[3], HEX_BASE)
+            ];
+        }
+        if (KEYWORDS[val = val.toLowerCase()]) {
+            return KEYWORDS[val];
+        }
+
+        //transparent 或者颜色字符串返回
+        S.log('only allow rgb or hex color string : ' + val, 'warn');
+        return [255, 255, 255];
+    }
+
+    function ColorFx() {
+        ColorFx.superclass.constructor.apply(this, arguments);
+    }
+
+    S.extend(ColorFx, Fx, {
+
+        load:function () {
+            var self = this;
+            ColorFx.superclass.load.apply(self, arguments);
+            if (self.from) {
+                self.from = numericColor(self.from);
+            }
+            if (self.to) {
+                self.to = numericColor(self.to);
+            }
+        },
+
+        interpolate:function (from, to, pos) {
+            var interpolate = ColorFx.superclass.interpolate;
+            if (from.length == 3 && to.length == 3) {
+                return 'rgb(' + [
+                    floor(interpolate(from[0], to[0], pos)),
+                    floor(interpolate(from[1], to[1], pos)),
+                    floor(interpolate(from[2], to[2], pos))
+                ].join(', ') + ')';
+            } else if (from.length == 4 || to.length == 4) {
+                return 'rgba(' + [
+                    floor(interpolate(from[0], to[0], pos)),
+                    floor(interpolate(from[1], to[1], pos)),
+                    floor(interpolate(from[2], to[2], pos)),
+                    // 透明度默认 1
+                    floor(interpolate(from[3] || 1, to[3] || 1, pos))
+                ].join(', ') + ')';
+            } else {
+                return S.log('anim/color unknown value : ' + from);
+            }
+        }
+
+    });
+
+    S.each(COLORS, function (color) {
+        Fx.Factories[color] = ColorFx;
+    });
+
+    return ColorFx;
+
+}, {
+    requires:['dom','./fx','./short-hand']
+});
+
+/*
+ refer
+   - https://developer.mozilla.org/en-US/docs/Web/CSS/color_value
+*/
+/**
  * animation using js timer
  * @author yiminghe@gmail.com
  * @ignore
  */
-KISSY.add('anim/timer', function (S, DOM, Event, AnimBase, Easing, AM, Fx, SHORT_HANDS) {
+KISSY.add('anim/timer', function (S, Dom, Event, AnimBase, Easing, AM, Fx, SHORT_HANDS) {
 
-    var camelCase = DOM._camelCase,
+    var camelCase = Dom._camelCase,
         NUMBER_REG = /^([+\-]=)?([\d+.\-]+)([a-z%]*)$/i;
 
     function Anim() {
         var self = this,
-            props;
+            to;
         Anim.superclass.constructor.apply(self, arguments);
         // camel case uniformity
-        S.each(props = self.props, function (v, prop) {
+        S.each(to = self.to, function (v, prop) {
             var camelProp = camelCase(prop);
             if (prop != camelProp) {
-                props[camelProp] = props[prop];
-                delete props[prop];
+                to[camelProp] = to[prop];
+                delete to[prop];
             }
         });
     }
@@ -845,7 +859,7 @@ KISSY.add('anim/timer', function (S, DOM, Event, AnimBase, Easing, AM, Fx, SHORT
 
         prepareFx: function () {
             var self = this,
-                el = self.el,
+                node = self.node,
                 _propsData = self._propsData;
 
             S.each(_propsData, function (_propData) {
@@ -868,18 +882,18 @@ KISSY.add('anim/timer', function (S, DOM, Event, AnimBase, Easing, AM, Fx, SHORT
                     origin = {};
                     S.each(shortHands, function (sh) {
                         // 得到原始分属性之前值
-                        origin[sh] = DOM.css(el, sh);
+                        origin[sh] = Dom.css(node, sh);
                     });
-                    DOM.css(el, p, val);
+                    Dom.css(node, p, val);
                     S.each(origin, function (val, sh) {
                         // 如果分属性没有显式设置过，得到期待的分属性最后值
                         if (!(sh in _propsData)) {
                             _propsData[sh] = S.merge(_propData, {
-                                value: DOM.css(el, sh)
+                                value: Dom.css(node, sh)
                             });
                         }
                         // 还原
-                        DOM.css(el, sh, val);
+                        Dom.css(node, sh, val);
                     });
                     // 删除复合属性
                     delete _propsData[p];
@@ -932,13 +946,13 @@ KISSY.add('anim/timer', function (S, DOM, Event, AnimBase, Easing, AM, Fx, SHORT
                             to2 = to;
                         do {
                             ++to2;
-                            DOM.css(el, prop, to2 + unit);
+                            Dom.css(node, prop, to2 + unit);
                             // in case tmpCur==0
                             tmpCur = fx.cur();
                         } while (tmpCur == 0);
                         // S.log(to2+' --- '+tmpCur);
                         from = (to2 / tmpCur) * from;
-                        DOM.css(el, prop, from + unit);
+                        Dom.css(node, prop, from + unit);
                     }
 
                     // 相对
@@ -1085,3 +1099,4 @@ KISSY.add('anim/timer', function (S, DOM, Event, AnimBase, Easing, AM, Fx, SHORT
  - api 借鉴了 YUI, jQuery 以及 http://www.w3.org/TR/css3-transitions/
  - 代码实现了借鉴了 Emile.js: http://github.com/madrobby/emile *
  */
+

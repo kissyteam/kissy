@@ -1,8 +1,14 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 17 00:20
+build time: Jul 3 13:55
 */
+/*
+ Combined processedModules by KISSY Module Compiler: 
+
+ editor/plugin/unordered-list
+*/
+
 /**
  * Add ul/ol button.
  * @author yiminghe@gmail.com
@@ -45,3 +51,4 @@ KISSY.add("editor/plugin/unordered-list", function (S, Editor, ListButton, ListC
 }, {
     requires: ['editor', './list-utils/btn', './unordered-list/cmd']
 });
+

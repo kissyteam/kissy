@@ -1,0 +1,7 @@
+<project name="editor/plugin/flash-common/base-class.build" default="build" basedir="">
+    <property name="component.name" value="editor/plugin/flash-common/base-class"/>
+
+    <property name="component.meta.dir" location="./ke-meta/"/>
+
+    <import file="../../../../../common.xml"/>
+</project>

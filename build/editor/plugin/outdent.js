@@ -1,8 +1,14 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 17 00:19
+build time: Jul 3 13:54
 */
+/*
+ Combined processedModules by KISSY Module Compiler: 
+
+ editor/plugin/outdent
+*/
+
 /**
  * Add indent button.
  * @author yiminghe@gmail.com
@@ -51,3 +57,4 @@ KISSY.add("editor/plugin/outdent", function (S, Editor, indexCmd) {
 }, {
     requires:['editor', './outdent/cmd']
 });
+

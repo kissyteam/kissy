@@ -62,10 +62,6 @@
   top: -9999px;
 }
 
-.ks-popupmenu-shown{
-    visibility: visible;
-}
-
 .ks-popupmenu-hidden{
     visibility: hidden;
 }
@@ -108,6 +104,9 @@
   color: #333333;
   white-space: nowrap;
   cursor: default;
+}
+.ks-menuitem-content {
+    display: inline;
 }
 .ks-menu .ks-menuitem-hover,
 .ks-menu .ks-menuitem-active {

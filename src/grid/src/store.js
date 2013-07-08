@@ -1,6 +1,6 @@
 /**
  * Store for grid.
- * @author dxq613@gmail.com, yiminghe@gmail.com
+ * @author dxq613@gmail.com
  */
 KISSY.add('grid/store',function(S){
 	/**

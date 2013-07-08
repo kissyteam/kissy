@@ -1,3 +1,0 @@
-config({
-'ajax': {alias: ['io']}
-});

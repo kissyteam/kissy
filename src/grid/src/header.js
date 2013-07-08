@@ -1,6 +1,6 @@
 /**
  * This class specifies the definition for a header of a grid.
- * @author dxq613@gmail.com, yiminghe@gmail.com
+ * @author dxq613@gmail.com
  */
 KISSY.add('grid/header', function (S, Component, Column) {
 
@@ -21,9 +21,9 @@ KISSY.add('grid/header', function (S, Component, Column) {
             _self.set('tableEl', tableEl);
         },
         /**
-         * refer: {Component.Render#getContentElement}
+         * refer: {Component.Render#getChildrenContainerEl}
          */
-        getContentElement:function () {
+        getChildrenContainerEl:function () {
             return this.get('el').one('tr');
         },
         scrollTo:function (obj) {
@@ -49,9 +49,9 @@ KISSY.add('grid/header', function (S, Component, Column) {
      * the header container is responsible for triggering changes within the view.
      * @name Grid.Header
      * @constructor
-     * @extends KISSY.Component.Controller
+     * @extends KISSY.Component.Control
      */
-    var header = Component.Controller.extend(
+    var header = Component.Control.extend(
         /**
          * @lends Grid.Header.prototype
          */
@@ -91,7 +91,7 @@ KISSY.add('grid/header', function (S, Component, Column) {
             },
             /**
              * For overridden.
-             * refer: Component.Controller#bindUI
+             * refer: Component.Control#bindUI
              */
             bindUI:function () {
                 var _self = this;
@@ -184,7 +184,7 @@ KISSY.add('grid/header', function (S, Component, Column) {
              * @param {Object} obj the scroll object which has two value:top(scrollTop),left(scrollLeft)
              */
             scrollTo:function (obj) {
-                this.get('view').scrollTo(obj);
+                this.view.scrollTo(obj);
             },
             //when column's event fire ,this header must handle them.
             _bindColumnsEvent:function () {
@@ -424,11 +424,10 @@ KISSY.add('grid/header', function (S, Component, Column) {
                 }
             }
         }, {
-            xclass:'grid-header',
-            priority:1
+            xclass:'grid-header'
         });
 
     return header;
 }, {
-    requires:['component', './column']
+    requires:['component/base', './column']
 });

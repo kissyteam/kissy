@@ -7,8 +7,8 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-touch-fullscreen" content="yes">
     <title>delegate example</title>
-    <script src="../../../../../../../../../build/seed.js" charset="utf-8"></script>
-
+    <script src="/kissy/build/seed.js" charset="utf-8"></script>
+    <script src="/kissy/src/package.js"></script>
     <style type="text/css">
         body, html {
             margin: 0;
@@ -29,7 +29,7 @@
     var S = KISSY;
 
     if (1) {
-        S.use("dom,event/dom", function (S, DOM, Event) {
+        S.use("dom,event/dom", function (S, Dom, Event) {
             var t;
             Event.on("#b1", "click", function () {
                 S.log("KISSY click on #b1");
@@ -48,7 +48,7 @@
                 S.log("KISSY click on #a");
             });
             // Event.undelegate("#a", "click");
-            // DOM.get("#b1").click();
+            // Dom.get("#b1").click();
         });
     }
 

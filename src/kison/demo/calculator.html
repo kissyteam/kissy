@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="../../css/src/dpl/base.css"/>
-    <link rel="stylesheet" href="../../css/src/dpl/forms.css"/>
+    <link rel="stylesheet" href="../../css/assets/dpl/base.css"/>
+    <link rel="stylesheet" href="../../css/assets/dpl/forms.css"/>
     <link rel="stylesheet" href="../../button/assets/dpl.css"/>
-    <script src="../../../tools/third-party/syntaxhighlighter_3.0.83/scripts/shCore.js"></script>
-    <script src="../../../tools/third-party/syntaxhighlighter_3.0.83/scripts/shBrushJScript.js"></script>
+    <script src="/kissy/tools/third-party/syntaxhighlighter_3.0.83/scripts/shCore.js"></script>
+    <script src="/kissy/tools/third-party/syntaxhighlighter_3.0.83/scripts/shBrushJScript.js"></script>
     <link type="text/css" rel="stylesheet"
-          href="../../../tools/third-party/syntaxhighlighter_3.0.83/styles/shCoreDefault.css"/>
-    <script src="../../../tools/third-party/beautify.js"></script>
+          href="/kissy/tools/third-party/syntaxhighlighter_3.0.83/styles/shCoreDefault.css"/>
+    <script src="/kissy/tools/third-party/beautify.js"></script>
     <title> kison </title>
 </head>
 <body>
@@ -51,16 +51,10 @@
 
 </div>
 <script src="/kissy/build/seed.js"></script>
-<script src="../src/grammar.js"></script>
-<script src="../src/item.js"></script>
-<script src="../src/item-set.js"></script>
-<script src="../src/kison.js"></script>
-<script src="../src/lexer.js"></script>
-<script src="../src/utils.js" charset="utf-8"></script>
-<script src="../src/non-terminal.js"></script>
-<script src="../src/production.js"></script>
+<script src="/kissy/src/package.js"></script>
 <script>
-    var MAPS = {}, FNS = {};
+    var MAPS = {},
+            FNS = {};
 
     function js_beauty(str) {
         var opts = {"indent_size": "4", "indent_char": " ",
@@ -69,8 +63,9 @@
         return js_beautify(str, opts);
     }
 
-    KISSY.use("kison", function (S, KISON) {
-        S.io({
+    KISSY.use("kison,io,node", function (S, KISON,IO) {
+
+        IO({
             url: 'cal-grammar.kison',
             dataType: 'text',
             success: function (data) {
@@ -80,6 +75,8 @@
 
         var $ = S.all;
 
+        var gen = $('#gen');
+
         $("#p").on("click", function () {
             var grammar = S.trim($("#grammar").val());
             var g = MAPS[grammar];
@@ -88,14 +85,15 @@
                 g = (MAPS[grammar] = new KISON.Grammar(eval(grammar)).genCode());
                 alert("生成代码耗时: " + (S.now() - start) + "毫秒");
             }
-            $('#gen').html('<pre class="brush: js;">' + S.escapeHTML(js_beauty(g)) + '</pre>');
-            SyntaxHighlighter.highlight({}, $('#gen').one("pre")[0]);
+            gen.html('<pre class="brush: js;">' + S.escapeHtml(js_beauty(g)) + '</pre>');
+            SyntaxHighlighter.highlight({}, gen.one("pre")[0]);
             var parser = FNS[grammar] || (FNS[grammar] = new Function(g)());
             start = S.now();
             var ret = parser.parse($("#source").val());
             alert("parse 表达式耗时: " + (S.now() - start) + "毫秒");
             alert("最终结果：" + ret);
         });
+
     });
 </script>
 </body>

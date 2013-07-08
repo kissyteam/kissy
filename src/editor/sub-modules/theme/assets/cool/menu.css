@@ -1,0 +1,52 @@
+/**
+menu style for kissy editor ,include contextmenu and select menu
+@author yiminghe@gmail.com
+**/
+.ks-editor-popupmenu {
+    background: none repeat scroll 0 0 #fcfcfc;
+    border-color: rgb(206, 213, 224);
+    border-style: solid;
+    border-width: 1px;
+    cursor: default;
+    font: 13px Arial, sans-serif;
+    margin: 0;
+    outline: medium none; /*padding: 4px 0;*/
+    position: absolute;
+    overflow: auto;
+    overflow-x: hidden;
+    left: -9999px;
+    top: -9999px;
+    box-shadow: 0px 1px 1px rgb(228, 228, 228);
+    box-shadow: 0px 1px 1px rgb(228, 228, 228);
+    /*
+    有了阴影，就hover失效？
+    filter: progid:DXImageTransform.Microsoft.Shadow(color = '#e4e4e4', Direction = 135, Strength = 3);
+    */
+    box-shadow: 0px 1px 1px rgb(228, 228, 228);
+}
+
+.ks-editor-popupmenu-hidden {
+    visibility: hidden;
+}
+
+.ks-editor-menuitem {
+    margin: 0;
+    border-width: 0;
+    padding: 4px 10px 4px 20px;
+    white-space: nowrap;
+    /*ie6 can hover*/
+    position: relative;
+    zoom: 1;
+}
+
+.ks-editor-menuitem-hover, .ks-editor-option-selected {
+    background: #D6E9F8;
+    text-decoration: none;
+    color: black;
+}
+
+.ks-editor-menuitem-disabled{
+    opacity: 0.3;
+    -moz-opacity: 0.3;
+    filter: alpha(opacity = 30);
+}

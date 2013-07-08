@@ -1,8 +1,14 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 17 00:17
+build time: Jul 3 13:51
 */
+/*
+ Combined processedModules by KISSY Module Compiler: 
+
+ editor/plugin/font-family
+*/
+
 /**
  * font formatting for kissy editor
  * @author yiminghe@gmail.com
@@ -44,7 +50,7 @@ KISSY.add("editor/plugin/font-family", function (S, Editor, ui, cmd) {
                     },
                     {
                         content:"微软雅黑",
-                        value:"Microsoft YaHei"
+                        value:"'Microsoft YaHei'"
                     },
                     {
                         content:"Georgia",
@@ -52,7 +58,7 @@ KISSY.add("editor/plugin/font-family", function (S, Editor, ui, cmd) {
                     },
                     {
                         content:"Times New Roman",
-                        value:"Times New Roman"
+                        value:"'Times New Roman'"
                     },
                     {
                         content:"Impact",
@@ -60,7 +66,7 @@ KISSY.add("editor/plugin/font-family", function (S, Editor, ui, cmd) {
                     },
                     {
                         content:"Courier New",
-                        value:"Courier New"
+                        value:"'Courier New'"
                     },
                     {
                         content:"Arial",
@@ -101,3 +107,4 @@ KISSY.add("editor/plugin/font-family", function (S, Editor, ui, cmd) {
 }, {
     requires:['editor', './font/ui', './font-family/cmd']
 });
+

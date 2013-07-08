@@ -1,129 +1,36 @@
 package com.taobao.f2e;
 
 import java.io.File;
-import java.util.ArrayList;
+import java.io.FileFilter;
 import java.util.HashMap;
-import java.util.regex.Pattern;
+import java.util.Map;
 
 /**
  * KISSY Packages config.
  *
  * @author yiminghe@gmail.com
- * @since 2012-08-06
  */
 public class Packages {
 
+    private Map<String, Package> packages;
+
     private static HashMap<String, Module> moduleCache = new HashMap<String, Module>();
 
-    static Pattern trimLastPart = Pattern.compile("[^/]*/$");
-
-    /**
-     * package encoding
-     */
-    private String[] encodings = {"utf-8"};
-
-    /**
-     * package base urls
-     */
-    private String[] baseUrls = {
-            //"d:/code/kissy_git/kissy/tools/module-compiler/tests/kissy/"
-    };
-
-
-    private String[] packageUrls = {
-            //"d:/code/kissy_git/kissy/tools/module-compiler/tests/kissy/biz/"
-    };
-
-    public String[] getEncodings() {
-        return encodings;
+    public void setPackages(Map<String, Package> packages) {
+        this.packages = packages;
     }
 
-    public String[] getPackageUrls() {
-        return packageUrls;
-    }
-
-    public void setPackageUrls(String[] packageUrls) {
-        ArrayList<String> re = new ArrayList<String>();
-        for (String base : packageUrls) {
-            base = FileUtils.escapePath(base).trim();
-            if (!base.endsWith("/")) {
-                base += "/";
-            }
-            re.add(base);
-        }
-        this.packageUrls = re.toArray(new String[re.size()]);
-    }
-
-    public void setEncodings(String[] encodings) {
-        this.encodings = encodings;
-    }
-
-    public String[] getBaseUrls() {
-        return baseUrls;
-    }
-
-    public void setBaseUrls(String[] baseUrls) {
-
-        ArrayList<String> re = new ArrayList<String>();
-        for (String base : baseUrls) {
-            base = FileUtils.escapePath(base).trim();
-            if (!base.endsWith("/")) {
-                base += "/";
-            }
-            re.add(base);
-        }
-        this.baseUrls = re.toArray(new String[re.size()]);
-    }
-
-    public Module getModuleFromName(String moduleName) {
-        Module m = this.getModuleFromCache(moduleName);
-        if (m != null) {
-            return m;
-        }
-        Packages packages = this;
-
-        String path = packages.getModuleFullPath(moduleName);
-
-
-        String baseUrl = path.replaceFirst("(?i)" + moduleName + ".js$", "");
-
-        String[] baseUrls = packages.getBaseUrls();
-        if (baseUrls.length == 0) {
-            ArrayList<String> tmp = new ArrayList<String>();
-            String[] packageUrls = packages.getPackageUrls();
-            for (String packageUrl : packageUrls) {
-                tmp.add(trimLastPart.matcher(packageUrl).replaceAll(""));
-            }
-            baseUrls = tmp.toArray(new String[tmp.size()]);
-        }
-
-        int index = ArrayUtils.indexOf(baseUrls, baseUrl);
-
-        String[] encodings = packages.getEncodings();
-
-        if (index == -1 || index >= encodings.length) {
-            index = 0;
-        }
-        String encoding = encodings[index];
-        m = constructModule(encoding, path, moduleName);
-        if (m != null) {
-            this.setModuleToCache(moduleName, m);
-        }
-        return m;
-    }
-
-    private Module getModuleFromCache(String moduleName) {
-        return moduleCache.get(moduleName);
+    public Map<String, Package> getPackages() {
+        return this.packages;
     }
 
     private void setModuleToCache(String moduleName, Module module) {
         moduleCache.put(moduleName, module);
     }
 
-    private Module constructModule(String encoding, String path, String moduleName) {
+    private Module constructModule(Package p, String moduleName) {
         Module module = new Module();
-        module.setEncoding(encoding);
-        module.setFullpath(path);
+        module.setPck(p);
         module.setName(moduleName);
         if (module.isValidFormat()) {
             moduleName = module.getModuleNameFromNode();
@@ -135,95 +42,122 @@ public class Packages {
         return null;
     }
 
-    private String getModuleFullPath(String moduleName) {
-        Packages packages = this;
-        String r = FileUtils.escapePath(moduleName);
-        String path = null;
-        String[] baseUrls = packages.getBaseUrls();
-        if (r.charAt(0) == '/') {
-            r = r.substring(1);
-        }
-        if (!r.endsWith(".js") && !r.endsWith(".JS")) {
-            r += ".js";
-        }
-        if (baseUrls.length > 0) {
-            for (String baseUrl : baseUrls) {
-                path = baseUrl + r;
-                if (new File(path).exists()) {
-                    break;
+    public void initByBaseUrls(String baseUrlStr) {
+        String[] bases = baseUrlStr.split(",");
+        Map<String, Package> ps = new HashMap<String, Package>();
+        for (String base : bases) {
+            File f = new File(base);
+            File[] files = f.listFiles(new FileFilter() {
+                public boolean accept(File pathname) {
+                    return pathname.isDirectory() || pathname.getName().endsWith(".js");
                 }
+            });
+            for (File d : files) {
+                String name = d.getName();
+                String path = d.getAbsolutePath();
+                if (d.isFile()) {
+                    name = d.getName().substring(0, d.getName().length() - 3);
+                    path = d.getParentFile().getAbsolutePath() + '/' + name;
+                }
+                if (ps.get(name) != null) {
+                    continue;
+                }
+                Package p = new Package();
+                p.setPath(path);
+                p.setName(name);
+                ps.put(name, p);
             }
+        }
+        this.setPackages(ps);
+    }
+
+    public void initByPackageUrls(String packageUrlStr) {
+        String[] bases = packageUrlStr.split(",");
+        Map<String, Package> ps = new HashMap<String, Package>();
+        for (String base : bases) {
+            // anim/base=d:/c/d
+            int equalIndex = base.indexOf("=");
+            String name = "";
+            if (equalIndex != -1) {
+                name = base.substring(0, equalIndex);
+                base = base.substring(equalIndex + 1);
+            }
+            File d = new File(base);
+            Package p = new Package();
+            p.setPath(d.getAbsolutePath());
+            if (name.length() == 0) {
+                name = d.getName();
+            }
+            p.setName(name);
+            ps.put(name, p);
+        }
+        this.setPackages(ps);
+    }
+
+    public Module getModuleFromName(String moduleName) {
+
+        Module m = moduleCache.get(moduleName);
+
+        if (moduleCache.containsKey(moduleName)) {
+            return m;
+        }
+
+        Package f = null;
+        String fName = "";
+
+        for (String pName : packages.keySet()) {
+            Package p = packages.get(pName);
+            if (moduleName.startsWith(p.getName()) && p.getName().length() > fName.length()) {
+                f = p;
+                fName = f.getName();
+            }
+        }
+
+        if (f == null) {
+            m = null;
         } else {
-            String[] packageUrls = this.packageUrls;
-            int index = r.indexOf('/');
-            if (index == -1) {
-                return path;
-            }
-            String packageName = r.substring(0, index);
-            for (String packageUrl : packageUrls) {
-                if (packageUrl.endsWith(packageName + '/')) {
-                    path = packageUrl + r.substring(index + 1);
-                    break;
-                }
-            }
+            m = constructModule(f, moduleName);
         }
-        return path;
+
+        this.setModuleToCache(moduleName, m);
+
+        return m;
     }
 
     public boolean isModuleExists(String moduleName) {
-        String path = this.getModuleFullPath(moduleName);
-        return path != null && new File(this.getModuleFullPath(moduleName)).exists();
+        return getModuleFromName(moduleName) != null;
     }
 
-
     public Module getModuleFromPath(String path) {
-        String name;
-        String[] encodings = this.getEncodings();
-        String encoding = encodings[0];
         path = FileUtils.escapePath(path);
-        String[] baseUrls = this.getBaseUrls();
-        int finalIndex = -1,
-                curIndex;
-        String finalBase = "";
-        int packageIndex = -1;
-        int finalPackageIndex = -1;
-        Module m = null;
-        if (baseUrls.length > 0) {
-            for (String baseUrl : baseUrls) {
-                packageIndex++;
-                curIndex = path.indexOf(baseUrl, 0);
-                if (curIndex > finalIndex) {
-                    finalIndex = curIndex;
-                    finalPackageIndex = packageIndex;
-                    finalBase = baseUrl;
-                }
-            }
-        } else {
-            for (String packageUrl : packageUrls) {
-                packageIndex++;
-                curIndex = path.indexOf(packageUrl, 0);
-                if (curIndex > finalIndex) {
-                    finalIndex = curIndex;
-                    finalPackageIndex = packageIndex;
-                    finalBase = packageUrl;
-                }
-            }
-            finalBase = trimLastPart.matcher(finalBase).replaceAll("");
-        }
-        if (finalIndex != -1) {
-            name = FileUtils.removeSuffix(path.substring(finalBase.length()));
-            m = this.getModuleFromCache(name);
-            if (m != null) {
-                return m;
-            }
-            if (finalPackageIndex < encodings.length) {
-                encoding = encodings[finalPackageIndex];
-            }
-            m = constructModule(encoding, path, name);
-            if (m != null) {
-                this.setModuleToCache(name, m);
+
+        String fName = "";
+        Package f = null;
+
+        for (String pName : packages.keySet()) {
+            Package p = packages.get(pName);
+            if (path.startsWith(p.getPath()) && p.getName().length() > fName.length()) {
+                f = p;
+                fName = f.getName();
             }
         }
-        return m;
+
+        if (f == null) {
+            return null;
+        }
+
+        String extName = path.substring(f.getPath().length());
+        extName = extName.substring(0, extName.length() - 3);
+
+        return getModuleFromName(f.getName() + extName);
+    }
+
+    public static void main(String[] args) {
+        System.out.println("123".substring(3));
+        System.out.println(moduleCache.get("x"));
+        System.out.println(moduleCache.containsKey("x"));
+        moduleCache.put("x", null);
+        System.out.println(moduleCache.get("x"));
+        System.out.println(moduleCache.containsKey("x"));
     }
 }

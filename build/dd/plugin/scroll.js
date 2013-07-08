@@ -1,17 +1,24 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 17 00:15
+build time: Jul 3 13:49
 */
+/*
+ Combined processedModules by KISSY Module Compiler: 
+
+ dd/plugin/scroll
+*/
+
 /**
  * @ignore
  * auto scroll for drag object's container
  * @author yiminghe@gmail.com
  */
-KISSY.add('dd/plugin/scroll', function (S, DD, Base, Node, DOM) {
+KISSY.add('dd/plugin/scroll', function (S, DD, Base, Node) {
 
     var DDM = DD.DDM,
         win = S.Env.host,
+        $win = Node.all(win),
         SCROLL_EVENT = '.-ks-dd-scroll' + S.now(),
         RATE = [10, 10],
         ADJUST_DELAY = 100,
@@ -80,8 +87,8 @@ KISSY.add('dd/plugin/scroll', function (S, DD, Base, Node, DOM) {
         getRegion: function (node) {
             if (isWin(node[0])) {
                 return {
-                    width: DOM.viewportWidth(),
-                    height: DOM.viewportHeight()
+                    width: node.width(),
+                    height: node.height()
                 };
             } else {
                 return {
@@ -98,8 +105,8 @@ KISSY.add('dd/plugin/scroll', function (S, DD, Base, Node, DOM) {
         getOffset: function (node) {
             if (isWin(node[0])) {
                 return {
-                    left: DOM.scrollLeft(),
-                    top: DOM.scrollTop()
+                    left: node.scrollLeft(),
+                    top: node.scrollTop()
                 };
             } else {
                 return node.offset();
@@ -273,5 +280,6 @@ KISSY.add('dd/plugin/scroll', function (S, DD, Base, Node, DOM) {
 
     return Scroll;
 }, {
-    requires: ['dd/base', 'base', 'node', 'dom']
+    requires: ['dd', 'base', 'node']
 });
+

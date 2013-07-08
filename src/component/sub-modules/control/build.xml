@@ -1,0 +1,6 @@
+<project name="component/control.build" default="build" basedir=".">
+    <property name="component.name" value="component/control"/>
+
+    <import file="../../../common.xml"/>
+</project>
+

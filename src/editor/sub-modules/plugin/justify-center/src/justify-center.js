@@ -41,7 +41,7 @@ KISSY.add("editor/plugin/justify-center", function (S, Editor, justifyCenterCmd)
 
             editor.docReady(function () {
                 editor.get("document").on("keydown", function (e) {
-                    if (e.ctrlKey && e.keyCode == S.Node.KeyCodes.E) {
+                    if (e.ctrlKey && e.keyCode == S.Node.KeyCode.E) {
                         editor.execCommand("justifyCenter");
                         e.preventDefault();
                     }

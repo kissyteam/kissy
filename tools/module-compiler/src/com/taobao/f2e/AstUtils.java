@@ -5,8 +5,9 @@ import com.google.javascript.jscomp.Compiler;
 import com.google.javascript.rhino.Node;
 
 /**
+ * utils for ast
+ *
  * @author yiminghe@gmail.com
- * @since 2011-01-18
  */
 public class AstUtils {
 	/**

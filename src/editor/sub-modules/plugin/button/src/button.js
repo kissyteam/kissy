@@ -12,7 +12,7 @@ KISSY.add("editor/plugin/button", function (S, Editor, Button) {
             ButtonType = Button;
         }
         var self = this,
-            prefixCls = self.get("prefixCls") + "editor-toolbar-";
+            prefixCls = self.get('prefixCls') + "editor-toolbar-";
 
         if (cfg.elCls) {
             cfg.elCls = prefixCls + cfg.elCls;
@@ -27,13 +27,9 @@ KISSY.add("editor/plugin/button", function (S, Editor, Button) {
                 prefixCls + id +
                 '"></span' +
                 '>',
-            prefixCls: self.get("prefixCls") + "editor-",
+            prefixCls: self.get('prefixCls') + "editor-",
             editor: self
         }, cfg)).render();
-
-        // preserver selection in editor iframe
-        // magic happens when tabIndex and unselectable are both set
-        b.get("el").unselectable();
 
         if (!cfg.content) {
             var contentEl = b.get("el").one("span");

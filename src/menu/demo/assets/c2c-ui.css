@@ -43,7 +43,7 @@
     border-color: #ffad33 !important; /* Hover border wins. */
 }
 
-::root .c2c-menu-button-caption,
+::root .c2c-menu-button-content,
 ::root .c2c-menu-button-dropdown {
     /* Required to make pseudo-rounded corners work on Safari. */
     line-height: normal;
@@ -57,7 +57,7 @@
 }
 
 .c2c-menu-button-disabled,
-.c2c-menu-button-disabled .c2c-menu-button-caption,
+.c2c-menu-button-disabled .c2c-menu-button-content,
 .c2c-menu-button-disabled .c2c-menu-button-dropdown {
     border-color: #999 !important;
 }
@@ -85,7 +85,7 @@
 }
 
 /* Caption style. */
-.c2c-menu-button-caption {
+.c2c-menu-button-content {
     padding: 0 4px 0 0;
     vertical-align: top;
     display: inline-block;
@@ -122,10 +122,6 @@
     position: absolute;
     left: -9999px;
     top: -9999px;
-}
-
-.c2c-popupmenu-shown{
-    visibility: visible;
 }
 
 .c2c-popupmenu-hidden{
@@ -220,6 +216,10 @@
     position: absolute;
     right: 0;
     text-align: right;
+}
+
+.c2c-menuitem-content {
+    display: inline;
 }
 
 /* menu item end */

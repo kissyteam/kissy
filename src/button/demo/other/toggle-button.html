@@ -7,7 +7,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-touch-fullscreen" content="yes">
 <title>Demo - ToggleButton</title>
-<link href="../../../css/src/dpl/base.css" rel="stylesheet"/>
+<link href="../../../css/assets/dpl/base.css" rel="stylesheet"/>
 <link href="../assets/custombutton.css" rel="stylesheet"/>
 <style>
     h1 {
@@ -38,14 +38,12 @@
     <label>禁用：<input type="checkbox" id='dis'/></label>
 </div>
 <script src="/kissy/build/seed.js"></script>
-<script src="../../src/button.js"></script>
-<script src="../../src/base.js"></script>
-<script src="../../src/buttonRender.js"></script>
+<script src="/kissy/src/package.js"></script>
 <script>
     KISSY.use("node,button", function (S, Node, Button) {
         // view
         // render to container : button_container
-        // controller
+        // control
         // view as a parameter
         var b = new Button({
             content:"测试",

@@ -1,8 +1,14 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 17 00:15
+build time: Jul 3 13:49
 */
+/*
+ Combined processedModules by KISSY Module Compiler: 
+
+ dd/plugin/proxy
+*/
+
 /**
  * @ignore
  * generate proxy drag object,
@@ -139,7 +145,7 @@ KISSY.add('dd/plugin/proxy', function (S, Node, Base, DD) {
                 }
                 drag['setInternal']('node', dragNode);
                 if (hideNodeOnDrag) {
-                    dragNode.css('visibility', 'visible');
+                    dragNode.css('visibility', '');
                 }
             }
 
@@ -158,5 +164,6 @@ KISSY.add('dd/plugin/proxy', function (S, Node, Base, DD) {
 
     return Proxy;
 }, {
-    requires: ['node', 'base', 'dd/base']
+    requires: ['node', 'base', 'dd']
 });
+

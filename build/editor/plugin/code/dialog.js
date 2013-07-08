@@ -1,8 +1,14 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 17 00:16
+build time: Jul 3 13:50
 */
+/*
+ Combined processedModules by KISSY Module Compiler: 
+
+ editor/plugin/code/dialog
+*/
+
 /**
  * insert program code dialog
  * @author yiminghe@gmail.com
@@ -136,7 +142,7 @@ KISSY.add('editor/plugin/code/dialog', function (S, Editor, Dialog4E, MenuButton
             }
             var codeEl = S.all(S.substitute(codeTpl, {
                 type: self.type.get('value'),
-                code: S.escapeHTML(val)
+                code: S.escapeHtml(val)
             }), editor.get('document')[0]);
             self.dialog.hide();
             // chrome:
@@ -177,3 +183,4 @@ KISSY.add('editor/plugin/code/dialog', function (S, Editor, Dialog4E, MenuButton
 }, {
     requires: ['editor', '../dialog', 'menubutton']
 });
+

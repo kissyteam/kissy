@@ -3,18 +3,17 @@
  * event-focusin
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/focusin', function (S, Event) {
+KISSY.add('event/dom/focusin', function (S, DomEvent) {
 
-    var special = Event._Special;
+    var Special = DomEvent.Special;
 
     // 让非 IE 浏览器支持 focusin/focusout
-
     S.each([
         { name: 'focusin', fix: 'focus' },
         { name: 'focusout', fix: 'blur' }
     ], function (o) {
         var key = S.guid('attaches_' + S.now() + '_');
-        special[o.name] = {
+        Special[o.name] = {
             // 统一在 document 上 capture focus/blur 事件，然后模拟冒泡 fire 出来
             // 达到和 focusin 一样的效果 focusin -> focus
             // refer: http://yiminghe.iteye.com/blog/813255
@@ -41,17 +40,22 @@ KISSY.add('event/dom/focusin', function (S, Event) {
 
         function handler(event) {
             var target = event.target;
-            return Event.fire(target, o.name);
+            return DomEvent.fire(target, o.name);
         }
 
     });
 
-    return Event;
+    return DomEvent;
 }, {
     requires: ['event/dom/base']
 });
 
 /*
- yiminghe@gmail.com:2011-06-07
- - 更加合理的模拟冒泡顺序，子元素先出触发，父元素后触发
+ yiminghe@gmail.com: 2013-06-06
+  - focusin blur 顺序注意 <input1 /><div2><input2 /></div2>, focus from input1 to input2
+  - ie: div2 focusin input1 blur
+  - others: input1 blur div2 focusin
+
+ yiminghe@gmail.com: 2011-06-07
+  - 更加合理的模拟冒泡顺序，子元素先出触发，父元素后触发
  */

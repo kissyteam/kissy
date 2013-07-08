@@ -1,1 +1,1 @@
-# DOM Utilities
+# Dom Utilities

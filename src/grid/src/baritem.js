@@ -1,20 +1,20 @@
 /**
  * buttons or controls of toolbar
- * @author dxq613@gmail.com, yiminghe@gmail.com
+ * @author dxq613@gmail.com
  */
 KISSY.add('grid/baritem',function(S,Component,Button,Node){
 
 
-    var KeyCodes=Node.KeyCodes;
+    var KeyCode=Node.KeyCode;
 
 	/**
      * BarItem class a control used in toolbar ,for example button,select,text,input an so on
      * @name BarItem
      * @constructor
-     * @extends KISSY.Component.Controller
+     * @extends KISSY.Component.Control
      * @member Grid.Bar
      */
-	var BarItem = Component.Controller.extend({
+	var BarItem = Component.Control.extend({
 		/* render baritem 's dom
 		* @protected
         *
@@ -40,8 +40,7 @@ KISSY.add('grid/baritem',function(S,Component,Button,Node){
 			}
 		}
 	},{
-		xclass : 'grid-bar-item',
-		priority : 1	
+		xclass : 'grid-bar-item'
 	});
 	/**
      * A simple class that adds button to toolbar
@@ -62,19 +61,19 @@ KISSY.add('grid/baritem',function(S,Component,Button,Node){
 			}));
 
 		},
-		handleKeyEventInternal:function (e) {
-			if (e.keyCode == KeyCodes.ENTER &&
+		handleKeyDownInternal:function (e) {
+			if (e.keyCode == KeyCode.ENTER &&
 				e.type == "keydown" ||
-				e.keyCode == KeyCodes.SPACE &&
+				e.keyCode == KeyCode.SPACE &&
 					e.type == "keyup") {
-				return this.performActionInternal.call(this,e);
+				return this.handleClickInternal.call(this,e);
 			}
 			// Return true for space keypress (even though the event is handled on keyup)
 			// as preventDefault needs to be called up keypress to take effect in IE and
 			// WebKit.
-			return e.keyCode == KeyCodes.SPACE;
+			return e.keyCode == KeyCode.SPACE;
 		},
-		performActionInternal:function () {
+		handleClickInternal:function () {
 			var self = this;
 			// button 的默认行为就是触发 click
 			self.fire("click");
@@ -119,8 +118,7 @@ KISSY.add('grid/baritem',function(S,Component,Button,Node){
 			}
 		}
 	},{
-		xclass : 'grid-bar-item-button',
-		priority : 2	
+		xclass : 'grid-bar-item-button'
 	});
 	
 	/**
@@ -140,8 +138,7 @@ KISSY.add('grid/baritem',function(S,Component,Button,Node){
             el .attr("role", "separator");
         }
 	},{
-		xclass : 'grid-bar-item-separator',
-		priority : 2	
+		xclass : 'grid-bar-item-separator'
 	});
 
 	
@@ -166,8 +163,7 @@ KISSY.add('grid/baritem',function(S,Component,Button,Node){
 			}
 		}
 	},{
-		xclass : 'grid-bar-item-spacer',
-		priority : 2	
+		xclass : 'grid-bar-item-spacer'
 	});
 	
 
@@ -196,8 +192,7 @@ KISSY.add('grid/baritem',function(S,Component,Button,Node){
 			}
 		}
 	},{
-		xclass : 'grid-bar-item-text',
-		priority : 2	
+		xclass : 'grid-bar-item-text'
 	});
 	
 
@@ -211,5 +206,5 @@ KISSY.add('grid/baritem',function(S,Component,Button,Node){
 
 	return	BarItem;
 },{
-	requires:['component','button','node']
+	requires:['component/base','button','node']
 });

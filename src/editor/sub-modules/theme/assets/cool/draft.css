@@ -1,0 +1,64 @@
+.ks-editor-draft {
+    position: absolute;
+    right: 15px;
+    height: 22px;
+    bottom: 4px;
+    width: 650px;
+    _bottom: 0;    text-align: right;
+
+}
+
+.ks-editor-draft .ks-editor-menu-button {
+    background: none;
+    background-color: #ffffff;
+    text-align: left;
+    padding: 0;
+    margin-right: 2px;
+}
+
+.ks-editor-draft .ks-editor-menu-button-content {
+    padding-left: 4px;
+    height: 20px;
+    line-height: 20px;
+    position: relative;
+}
+
+.ks-editor-draft-save-btn span {
+    vertical-align: middle;
+}
+
+.ks-editor-draft-save {
+    background: no-repeat scroll 0 1px transparent;
+    background-image: url("icon_save.png"); /** sprite-ref: cool; */
+    width: 18px;
+    height: 15px;
+    display: inline-block;
+    zoom: 1;
+    *display: inline;
+    margin: 1px 0 2px 0;
+}
+
+.ks-editor-draft-title, .ks-editor-draft-time {
+    vertical-align: middle;
+}
+
+.ks-editor-draft-time {
+    margin: 0 10px;
+}
+
+.ks-editor-draft-help {
+    /*不能使用 center center ,ie 对于容器理解有误,text-indent会增加容器*/
+    background: no-repeat;
+    background-image: url("icon_help.png"); /** sprite-ref: cool; */
+    width: 14px;
+    overflow: hidden;
+    height: 14px;
+    text-indent: 9999px;
+    outline: none;
+    display: inline-block;
+    zoom: 1;
+    *display: inline;
+    vertical-align: middle;
+    cursor: pointer;
+}
+

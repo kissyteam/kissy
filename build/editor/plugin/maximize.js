@@ -1,8 +1,14 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 17 00:19
+build time: Jul 3 13:53
 */
+/*
+ Combined processedModules by KISSY Module Compiler: 
+
+ editor/plugin/maximize
+*/
+
 /**
  * Maximize plugin
  * @author yiminghe@gmail.com
@@ -50,3 +56,4 @@ KISSY.add("editor/plugin/maximize", function (S, Editor, maximizeCmd) {
 }, {
     requires:['editor', './maximize/cmd']
 });
+

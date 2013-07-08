@@ -10,6 +10,8 @@
     padding: 4px 0;
     position: absolute;
     z-index: 99999;
+    left: -9999px;
+    top:-9999px;
 }
 
 .ks-menuitem {
@@ -20,10 +22,6 @@
     line-height: 18px;
     padding: 1px 0 2px;
     white-space: nowrap;
-}
-
-.ks-popupmenu-shown{
-    visibility: visible;
 }
 
 .ks-popupmenu-hidden{
@@ -93,4 +91,17 @@
 
 .ks-menuitem-disabled {
     color: #808080;
+}
+
+.ks-combobox-placeholder {
+    position: absolute;
+    left: 2px;
+    top: 2px;
+    opacity: 0.6;
+    filter: alpha(opacity=60);
+    *zoom: 1;
+    opacity: 0.6;
+    filter: alpha(opacity=60);
+    *zoom: 1;
+    display: none;
 }

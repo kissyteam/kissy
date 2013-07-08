@@ -7,8 +7,17 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-touch-fullscreen" content="yes">
     <title>KISSY Dialog</title>
-    <script src="/kissy/build/css/dpl/base.css"></script>
+    <link rel="stylesheet" href="/kissy/build/css/dpl/base.css"/>
+    <link rel="stylesheet" href="assets/cool.css"/>
+    <style>
+        ul, li {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
     <script src="/kissy/build/seed.js"></script>
+    <script src="/kissy/src/package.js"></script>
 </head>
 <body>
 <div id="header">
@@ -30,8 +39,7 @@
 </div>
         <pre class="s-section">
 
-功能：对话框
-源码：<a href="../dialog.js">dialog.js</a></pre>
+功能：对话框</pre>
 
 <link rel="stylesheet" href="assets/cool.css"/>
 
@@ -71,15 +79,17 @@
 <div class="s-section" id="detail">
     <div class="s-demo">
         <style>
-            .ks-overlay p{
+            .ks-overlay p {
                 margin: 0;
                 padding: 0;
             }
-            .ks-overlay ul,.ks-overlay li{
+
+            .ks-overlay ul, .ks-overlay li {
                 margin: 0;
                 padding: 0;
                 list-style-type: none;
             }
+
             #detail .tb-attention {
                 position: absolute;
                 left: -9999px;
@@ -160,12 +170,12 @@
                 *zoom: 1;
             }
 
-            #detail .tb-attention .ks-ext-close .ks-ext-close-x {
+            #detail .tb-attention .ks-overlay-close .ks-overlay-close-x {
                 background: transparent url("http://img01.taobaocdn.com/tps/i1/T1krl0Xk8zXXXXXXXX-194-382.png") -75px -99px no-repeat;
                 height: 8px;
             }
 
-            #detail .tb-attention .ks-ext-close, #detail .tb-attention .ks-ext-close:hover {
+            #detail .tb-attention .ks-overlay-close, #detail .tb-attention .ks-overlay-close:hover {
                 background: none;
                 border: none;
             }
@@ -173,41 +183,48 @@
         <button id="btn3" class="button">选择</button>
 
         <div class="tb-key tb-attention" id="choose">
-            <p class="ks-stdmod-header tb-note-title">请选择您要的商品信息
-            </p>
+            <div class="ks-dialog-content">
+                <a href="javascript:void('close')"
+                   class="ks-dialog-close ks-overlay-close" role="button">
+                    <span class="ks-dialog-close-x ks-overlay-close-x">close</span>
+                </a>
 
-            <div class="ks-stdmod-body tb-skin">
-                <dl class="tb-prop ks-clear">
-                    <dt>尺　　码：</dt>
-                    <dd>
-                        <ul data-property="尺码" class="ks-clear J_TSaleProp  ">
-                            <li data-value="20503:3271530"><a href="#"><span>M</span></a></li>
+                <div class="ks-dialog-header tb-note-title">请选择您要的商品信息
+                </div>
 
-                            <li data-value="20503:3271531"><a href="#"><span>L</span></a></li>
-                            <li data-value="20503:3267945"><a href="#"><span>XL</span></a></li>
-                        </ul>
-                    </dd>
-                </dl>
-                <dl class="tb-prop ks-clear">
-                    <dt>颜　　色：</dt>
-                    <dd>
+                <div class="ks-dialog-body tb-skin">
+                    <dl class="tb-prop ks-clear">
+                        <dt>尺　　码：</dt>
+                        <dd>
+                            <ul data-property="尺码" class="ks-clear J_TSaleProp  ">
+                                <li data-value="20503:3271530"><a href="#"><span>M</span></a></li>
 
-                        <ul data-property="颜色" class="ks-clear J_TSaleProp tb-img  ">
-                            <li data-value="1627207:3232483" title="TX043 白色">
-                                <a href="#"
-                                   style="background:url(http://img01.taobaocdn.com/bao/uploaded/i1/290649218/T2DaRjXllMXXXXXXXX_!!290649218.jpg_30x30.jpg) center no-repeat;">
-                                    <span>TX043 白色</span>
-                                </a>
-                            </li>
-                            <li data-value="1627207:3232484" title="TX043 蓝色">
-                                <a href="#"
-                                   style="background:url(http://img04.taobaocdn.com/bao/uploaded/i4/290649218/T2OqJjXlpMXXXXXXXX_!!290649218.jpg_30x30.jpg) center no-repeat;">
-                                    <span>TX043 蓝色</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </dd>
-                </dl>
+                                <li data-value="20503:3271531"><a href="#"><span>L</span></a></li>
+                                <li data-value="20503:3267945"><a href="#"><span>XL</span></a></li>
+                            </ul>
+                        </dd>
+                    </dl>
+                    <dl class="tb-prop ks-clear">
+                        <dt>颜　　色：</dt>
+                        <dd>
+
+                            <ul data-property="颜色" class="ks-clear J_TSaleProp tb-img  ">
+                                <li data-value="1627207:3232483" title="TX043 白色">
+                                    <a href="#"
+                                       style="background:url(http://img01.taobaocdn.com/bao/uploaded/i1/290649218/T2DaRjXllMXXXXXXXX_!!290649218.jpg_30x30.jpg) center no-repeat;">
+                                        <span>TX043 白色</span>
+                                    </a>
+                                </li>
+                                <li data-value="1627207:3232484" title="TX043 蓝色">
+                                    <a href="#"
+                                       style="background:url(http://img04.taobaocdn.com/bao/uploaded/i4/290649218/T2OqJjXlpMXXXXXXXX_!!290649218.jpg_30x30.jpg) center no-repeat;">
+                                        <span>TX043 蓝色</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </dd>
+                    </dl>
+                </div>
             </div>
         </div>
         <script>
@@ -228,13 +245,15 @@
                     }
                 });
                 d.plug(new DragPlugin({
-                    handlers: ['.ks-stdmod-header']
+                    handlers: ['.ks-dialog-header']
                 }).plug(new ConstrainPlugin({
-                    constrain: window
-                })));
+                            constrain: window
+                        })));
                 Node.one('#btn3').on('click', function () {
                     d.show();
                 });
+
+                window.srcNodeDialog=d;
 
             });
 
@@ -273,7 +292,7 @@
                 var dialog = new O.Dialog({
                     width: 400,
                     bodyStyle: {
-                        height: 100
+                        height: '100px'
                     },
                     effect: {
                         effect: 'fade'
@@ -287,23 +306,25 @@
                 });
 
                 dialog.plug(new DragPlugin({
-                    handlers: ['.ks-stdmod-header']
-                }).plug(new ConstrainPlugin({
-                    constrain: '#c1'
-                }))).plug(new ResizePlugin({
-                    minWidth: 150,
-                    minHeight: 70,
-                    handlers: ["b", "t", "r", "l", "tr", "tl", "br", "bl"]
-                }));
+                            handlers: ['.ks-dialog-header']
+                        }).plug(new ConstrainPlugin({
+                                    constrain: '#c1'
+                                }))).plug(new ResizePlugin({
+                            minWidth: 150,
+                            minHeight: 70,
+                            handlers: ["b", "t", "r", "l", "tr", "tl", "br", "bl"]
+                        }));
 
-                dialog.on('show', function () {
-                    if (stat) {
-                        this.set('bodyContent', '我的位置只能在容器中');
-                    } else {
-                        this.set('bodyContent', '我自由啦');
+                dialog.on('beforeVisibleChange', function (e) {
+                    if (e.newVal) {
+                        if (stat) {
+                            this.set('bodyContent', '我的位置只能在容器中');
+                        } else {
+                            this.set('bodyContent', '我自由啦');
+                        }
+                        Node.one('#btn6').html('隐藏');
+                        sh = 1;
                     }
-                    Node.one('#btn6').html('隐藏');
-                    sh = 1;
                 });
                 dialog.on('hide', function () {
                     Node.one('#btn6').html('显示');
@@ -334,7 +355,7 @@
                 Node.one('#btn8').on('click', function () {
                     dialog.getPlugin('component/plugin/drag')
                             .getPlugin('dd/plugin/constrain')
-                            .set('constrain','#c1');
+                            .set('constrain', '#c1');
                     dialog.set("align", {
                         node: '#c1',
                         points: ['cc', 'cc']
@@ -354,11 +375,11 @@
 <div class="s-section">
     <div class="s-demo">
         <style>
-            .my .ks-stdmod-header, .my .ks-stdmod-footer {
+            .my .ks-dialog-header, .my .ks-dialog-footer {
                 display: none;
             }
 
-            .my .ks-stdmod-body {
+            .my .ks-dialog-body {
                 line-height: 0;
             }
         </style>
@@ -430,7 +451,7 @@
         <div id="btn18" tabindex="0"><img width="50" height="50"
                                           src="http://img04.taobaocdn.com/tps/i4/T1QaObXfRoXXXXXXXX-130-130.jpg"/></div>
         <script>
-            KISSY.use("dom,node,ua,event,overlay", function (S, DOM, Node, UA, Event, Overlay) {
+            KISSY.use("dom,node,ua,event,overlay", function (S, Dom, Node, UA, Event, Overlay) {
                 var Dialog = Overlay.Dialog, $ = S.all;
 
                 S.ready(function (S) {

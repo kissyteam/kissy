@@ -1,8 +1,14 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 17 00:20
+build time: Jul 3 13:55
 */
+/*
+ Combined processedModules by KISSY Module Compiler: 
+
+ editor/plugin/underline/cmd
+*/
+
 /**
  * underline command
  * @author yiminghe@gmail.com
@@ -27,3 +33,4 @@ KISSY.add("editor/plugin/underline/cmd", function (S, Editor, Cmd) {
 }, {
     requires:['editor', '../font/cmd']
 });
+

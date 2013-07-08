@@ -3,6 +3,7 @@
 <head>
     <meta charset="gbk">
     <script src="/kissy/build/seed.js"></script>
+    <script src="/kissy/src/package.js"></script>
     <style>
 
     </style>
@@ -226,14 +227,14 @@
 </div>
 <script>
     KISSY.use("node,overlay", function (S, Node, O) {
-        var DOM = S.DOM, Event = S.Event;
+        var Dom = S.DOM, Event = S.Event;
         var elem = S.get('.J_TWidget');
 
         var type = elem.getAttribute('data-widget-type'), config;
 
         config = elem.getAttribute('data-widget-config');
         if (config) config = config.replace(/'/g, '"');
-        config = S.parseJSON(config);
+        config = S.parseJson(config);
 
         // 兼容之前没有markupType时的写法
         if (!('type' in config)) {
@@ -255,9 +256,9 @@
             });
 
             // 注意：需要坚持content和trigger的个数是否相当和匹配，这点可以参考switchable
-            var container = DOM.get(config.container),
-                    triggers = DOM.query(config.trigger, container),
-                    contents = DOM.query(config.content, container);
+            var container = Dom.get(config.container),
+                    triggers = Dom.query(config.trigger, container),
+                    contents = Dom.query(config.content, container);
 
             Event.on(document, 'click', function () {
                 popup.hide();

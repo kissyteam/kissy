@@ -1,8 +1,14 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 17 00:16
+build time: Jul 3 13:51
 */
+/*
+ Combined processedModules by KISSY Module Compiler: 
+
+ editor/plugin/draft
+*/
+
 /**
  * draft for kissy editor
  * @author yiminghe@gmail.com
@@ -12,7 +18,7 @@ KISSY.add("editor/plugin/draft", function (S, Editor, localStorage, Overlay, Men
         LIMIT = 5,
         Event = S.Event,
         INTERVAL = 5,
-        JSON = S['JSON'],
+        Json = S['Json'],
         DRAFT_SAVE = "ks-editor-draft-save20110503";
 
     function padding(n, l, p) {
@@ -76,7 +82,7 @@ KISSY.add("editor/plugin/draft", function (S, Editor, localStorage, Overlay, Men
                      * 原生 localStorage 必须串行化
                      */
                     drafts = (localStorage == window.localStorage) ?
-                        JSON.parse(S.urlDecode(str)) : str;
+                        Json.parse(S.urlDecode(str)) : str;
                 }
                 self.drafts = drafts;
             }
@@ -292,16 +298,23 @@ KISSY.add("editor/plugin/draft", function (S, Editor, localStorage, Overlay, Men
                 tip = (draft.auto ? "自动" : "手动") + "保存于 : "
                     + date(draft.date);
                 versions.addItem({
-                    xclass: 'menuitem',
                     content: tip,
                     value: i
+                });
+            }
+
+            if (!drafts.length) {
+                versions.addItem({
+                    disabled: true,
+                    content: '尚无历史',
+                    value: ''
                 });
             }
 
             timeTip.html(tip);
             localStorage.setItem(self._getSaveKey(),
                 (localStorage == window.localStorage) ?
-                    encodeURIComponent(JSON.stringify(drafts))
+                    encodeURIComponent(Json.stringify(drafts))
                     : drafts);
         },
 
@@ -314,7 +327,7 @@ KISSY.add("editor/plugin/draft", function (S, Editor, localStorage, Overlay, Men
             //可视区域内代码！= 最终代码
             //代码模式也要支持草稿功能
             //统一获得最终代码
-                data = editor.get("formatData");
+                data = editor.getData(1);
 
             //如果当前内容为空，不保存版本
             if (!data) {
@@ -340,7 +353,7 @@ KISSY.add("editor/plugin/draft", function (S, Editor, localStorage, Overlay, Men
                 v = ev.target.get("value");
             if (confirm("确认恢复 " + date(drafts[v].date) + " 的编辑历史？")) {
                 editor.execCommand("save");
-                editor.set("data", drafts[v].content);
+                editor.setData(drafts[v].content);
                 editor.execCommand("save");
             }
             ev.halt();
@@ -380,3 +393,4 @@ KISSY.add("editor/plugin/draft", function (S, Editor, localStorage, Overlay, Men
 }, {
     "requires": ["editor", "./local-storage", "overlay", './menubutton']
 });
+

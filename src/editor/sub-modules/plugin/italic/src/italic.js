@@ -19,7 +19,7 @@ KISSY.add("editor/plugin/italic", function (S, Editor, ui, cmd) {
 
             editor.docReady(function () {
                 editor.get("document").on("keydown", function (e) {
-                    if (e.ctrlKey && e.keyCode == S.Node.KeyCodes.I) {
+                    if (e.ctrlKey && e.keyCode == S.Node.KeyCode.I) {
                         editor.execCommand("italic");
                         e.preventDefault();
                     }

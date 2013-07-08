@@ -1,8 +1,8 @@
 /**
  *  a specialized pagingbar which use number buttons
- * @author dxq613@gmail.com, yiminghe@gmail.com
+ * @author dxq613@gmail.com
  */
-KISSY.add('grid/numberpagingbar', function (S,Component,PBar,Bar) {
+KISSY.add('grid/number-pagingbar', function (S,Component,PBar,Bar) {
 
 	var NUMBER_CONTAINER = 'numberContainer',
 	    CLS_NUMBER_BUTTON = 'ks-grid-button-number',
@@ -201,13 +201,12 @@ KISSY.add('grid/numberpagingbar', function (S,Component,PBar,Bar) {
 			}
 		}
 	},{
-		xclass : 'grid-pagingbar-number',
-		priority : 3	
+		xclass : 'grid-pagingbar-number'
 	});
 
 
 	PBar.Number = numberPagingBar;
 	return numberPagingBar;
 },{
-	 requires:['component','./pagingbar','./bar']
+	 requires:['component/base','./pagingbar','./bar']
 });

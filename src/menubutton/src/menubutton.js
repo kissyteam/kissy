@@ -2,14 +2,12 @@
  * menubutton
  * @author yiminghe@gmail.com
  */
-KISSY.add("menubutton", function(S, MenuButton, MenuButtonRender, Select, Option) {
-    MenuButton.Render = MenuButtonRender;
+KISSY.add("menubutton", function(S, MenuButton, Select, Option) {
     MenuButton.Select = Select;
     MenuButton.Option = Option;
     return MenuButton;
 }, {
-    requires:['menubutton/base',
-        'menubutton/baseRender',
+    requires:['menubutton/control',
         'menubutton/select',
         'menubutton/option']
 });

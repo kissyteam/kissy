@@ -1,14 +1,20 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 17 00:17
+build time: Jul 3 13:51
 */
+/*
+ Combined processedModules by KISSY Module Compiler: 
+
+ editor/plugin/flash-common/utils
+*/
+
 /**
  * flash utilities
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/plugin/flash-common/utils", function (S, SWF) {
-    var DOM = S.DOM,
+    var Dom = S.DOM,
 
         flashUtils = {
 
@@ -31,8 +37,8 @@ KISSY.add("editor/plugin/flash-common/utils", function (S, SWF) {
 
             isFlashEmbed: function (element) {
                 return (
-                    DOM.attr(element, "type") == 'application/x-shockwave-flash' ||
-                        /\.swf(?:$|\?)/i.test(DOM.attr(element, "src") || '')
+                    Dom.attr(element, "type") == 'application/x-shockwave-flash' ||
+                        /\.swf(?:$|\?)/i.test(Dom.attr(element, "src") || '')
                     );
             },
 
@@ -41,14 +47,14 @@ KISSY.add("editor/plugin/flash-common/utils", function (S, SWF) {
             },
 
             createSWF: function (cfg) {
-                var render = DOM.create('<div style="' +
+                var render = Dom.create('<div style="' +
                     "position:absolute;left:-9999px;top:-9999px;" +
                     '"></div>', undefined, cfg.document);
                 cfg.htmlMode = 'full';
-                DOM.append(render, cfg.document.body);
+                Dom.append(render, cfg.document.body);
                 cfg.render = render;
                 var swf = new SWF(cfg);
-                DOM.remove(render);
+                Dom.remove(render);
                 return {
                     el: S.all(swf.get('el')),
                     html: swf.get('html')
@@ -60,3 +66,4 @@ KISSY.add("editor/plugin/flash-common/utils", function (S, SWF) {
 }, {
     requires: ['swf']
 });
+

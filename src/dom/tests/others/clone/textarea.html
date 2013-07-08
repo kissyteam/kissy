@@ -2,6 +2,7 @@
 <html>
 <head>
     <script src="/kissy/build/seed.js"></script>
+    <script src="/kissy/src/package.js"></script>
     <script src="/kissy/tools/third-party/jquery.js"></script>
 </head>
 <body>
@@ -13,7 +14,7 @@
 </div>
 <script>
     var S = KISSY;
-    S.use('node', function () {
+    KISSY.use('node', function () {
         S.one('.textarea-id').val("textarea can't be cloned");
         S.one('.text-id').val('text value can be cloned');
         S.one('#foo').append(S.one('#cloned-id').clone(true));

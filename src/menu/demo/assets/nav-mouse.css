@@ -6,13 +6,16 @@
 .nav-menu a {
     text-decoration: none;
 }
+
 .nav-menu a, .nav-menu a:link, .nav-menu a:visited {
     color: #333;
 }
+
 .nav-menu a:hover, .nav-menu .nav-menuitem-hover a, .nav-menu a:active {
     text-decoration: none;
     color: #F96400;
 }
+
 .horizonal {
     background-color: #f0f0f0;
     border: 1px solid #dcdcdc;
@@ -21,10 +24,10 @@
     *zoom: 1;
 }
 
-
 .nav-menu .nav-menuitem {
     white-space: nowrap;
 }
+
 .nav-menu .nav-menuitem .title {
     display: block;
     font-size: 14px;
@@ -33,12 +36,15 @@
     line-height: 33px;
     padding: 0 30px;
 }
+
 .nav-menu .nav-menuitem span.title {
     padding: 0 20px 0 12px;
 }
+
 .horizonal .nav-menuitem {
     float: left;
 }
+
 .nav-menu .nav-menuitem-hover a.title {
     border-top: 2px solid #F96400;
     margin-top: -1px;
@@ -46,7 +52,7 @@
     background-color: #e4e4e4;
     background-image: -moz-linear-gradient(-90deg, #e9e9e9, #dedede);
     background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #e9e9e9), color-stop(1, #dedede));
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorStr = '#e9e9e9', EndColorStr = '#dedede');
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#e9e9e9', EndColorStr='#dedede');
     -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#e9e9e9', EndColorStr='#dedede')";
 }
 
@@ -59,10 +65,11 @@
     position: relative;
     z-index: 10000;
 }
+
 .nav-menu .nav-submenu .nav-submenu-arrow {
     position: absolute;
     top: 46%;
-    top: 40%\9;
+    top: 40% \9;
     right: 6px;
     width: 0;
     height: 0;
@@ -89,7 +96,7 @@
     -o-transform-origin: 50% 50%;
     transform: rotate(180deg);
     transform-origin: 50% 30%;
-    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation = 2);
+    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2);
 }
 
 .nav-popupmenu {
@@ -97,6 +104,8 @@
     border: 1px solid #CBCBCB;
     position: absolute;
     z-index: 99;
+    left: -9999px;
+    top: -9999px;
 }
 
 .nav-popupmenu .nav-menuitem a {
@@ -109,4 +118,11 @@
 .nav-popupmenu .nav-menuitem-hover a {
     background: #fff;
     font-weight: bold;
+}
+
+.nav-popupmenu-hidden {
+    visibility: hidden;
+}
+.nav-menuitem-content {
+    display: inline;
 }

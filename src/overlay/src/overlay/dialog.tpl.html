@@ -1,0 +1,26 @@
+<div class="{{getBaseCssClasses "header"}}"
+
+         style="
+{{#each headerStyle}} 
+ {{xkey}}:{{.}};  
+{{/each}}
+"
+         id="ks-stdmod-header-{{id}}">{{{headerContent}}}</div>
+
+    <div class="{{getBaseCssClasses "body"}}"
+
+         style="
+{{#each bodyStyle}} 
+ {{xkey}}:{{.}};  
+{{/each}}
+"
+         id="ks-stdmod-body-{{id}}">{{{bodyContent}}}</div>
+
+    <div class="{{getBaseCssClasses "footer"}}"
+
+         style="
+{{#each footerStyle}} 
+ {{xkey}}:{{.}};  
+{{/each}}
+"
+         id="ks-stdmod-footer-{{id}}">{{{footerContent}}}</div>

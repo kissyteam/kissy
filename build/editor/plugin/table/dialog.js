@@ -1,16 +1,21 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 17 00:20
+build time: Jul 3 13:55
 */
+/*
+ Combined processedModules by KISSY Module Compiler: 
+
+ editor/plugin/table/dialog
+*/
+
 /**
  * table dialog
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/plugin/table/dialog", function (S, Editor, Dialog4E, MenuButton) {
     var Node = S.Node,
-        DOM = S.DOM,
-        UA = S.UA,
+        Dom = S.DOM,
         trim = S.trim,
         showBorderClassName = "ke_show_border",
         collapseTableClass = "k-e-collapse-table",
@@ -308,7 +313,7 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Dialog4E, MenuButto
                     //不能使用dom操作了, ie6 table 报错
                     //http://msdn.microsoft.com/en-us/library/ms532998(VS.85).aspx
                     var c = selectedTable[0].createCaption();
-                    DOM.html(c, "<span>"
+                    Dom.html(c, "<span>"
                         + tcv
                         + "</span>");
                     // new Node("<caption><span>" + tcv + "</span></caption>");
@@ -327,7 +332,8 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Dialog4E, MenuButto
                 cols = parseInt(d.tcols.val()) || 1,
                 rows = parseInt(d.trows.val()) || 1,
             //firefox 需要 br 才能得以放置焦点
-                cellpad = UA['ie'] ? "&nbsp;" : "&nbsp;<br/>",
+            //cellPad = UA['ie'] ? "&nbsp;" : "&nbsp;<br/>",
+                cellPad = S.UA.ie ? '' : '<br/>',
                 editor = self.editor;
 
             if (valid(d.talign.get("value")))
@@ -375,7 +381,7 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Dialog4E, MenuButto
                 html += "<thead>";
                 html += "<tr>";
                 for (i = 0; i < cols; i++) {
-                    html += "<th>" + cellpad + "</th>";
+                    html += "<th>" + cellPad + "</th>";
                 }
                 html += "</tr>";
                 html += "</thead>";
@@ -386,7 +392,7 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Dialog4E, MenuButto
             for (var r = 0; r < rows; r++) {
                 html += "<tr>";
                 for (i = 0; i < cols; i++) {
-                    html += "<td>" + cellpad + "</td>";
+                    html += "<td>" + cellPad + "</td>";
                 }
                 html += "</tr>";
             }
@@ -483,3 +489,4 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Dialog4E, MenuButto
 }, {
     requires: ['editor', '../dialog', '../menubutton']
 });
+

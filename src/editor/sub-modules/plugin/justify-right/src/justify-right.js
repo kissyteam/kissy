@@ -43,7 +43,7 @@ KISSY.add("editor/plugin/justify-right", function (S, Editor, justifyCenterCmd) 
 
             editor.docReady(function () {
                 editor.get("document").on("keydown", function (e) {
-                    if (e.ctrlKey && e.keyCode == S.Node.KeyCodes.R) {
+                    if (e.ctrlKey && e.keyCode == S.Node.KeyCode.R) {
                         editor.execCommand("justifyRight");
                         e.preventDefault();
                     }

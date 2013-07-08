@@ -1,43 +1,86 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 17 00:13
+build time: Jul 3 13:48
 */
+/*
+ Combined processedModules by KISSY Module Compiler: 
+
+ button/render
+ button
+*/
+
+/**
+ * @ignore
+ * abstract view for button
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("button/render", function (S, Control) {
+    // http://www.w3.org/TR/wai-aria-practices/
+    return Control.ATTRS.xrender.value.extend({
+        beforeCreateDom: function (renderData) {
+            var self = this;
+            S.mix(renderData.elAttrs, {
+                role: 'button',
+                title: renderData.tooltip,
+                'aria-describedby': renderData.describedby
+            });
+            if (renderData.checked) {
+                renderData.elCls.push(self.getBaseCssClasses("checked"));
+            }
+        },
+        _onSetChecked: function (v) {
+            var self = this,
+                cls = self.getBaseCssClasses("checked");
+            self.$el[v ? 'addClass' : 'removeClass'](cls);
+        },
+        '_onSetTooltip': function (title) {
+            this.el.setAttribute("title", title);
+        },
+        '_onSetDescribedby': function (describedby) {
+            this.el.setAttribute("aria-describedby", describedby);
+        }
+    }, {
+        name: 'ButtonRender'
+    });
+}, {
+    requires: ['component/control']
+});
 /**
  * @ignore
  * Button control for KISSY.
  * @author yiminghe@gmail.com
  */
-KISSY.add("button/base", function (S, Event, Component, ButtonRender) {
+KISSY.add("button", function (S, Node, Control, ButtonRender) {
 
-    var KeyCodes = Event.KeyCodes;
+    var KeyCode = Node.KeyCode;
     /**
      * KISSY Button.
-     * @extends KISSY.Component.Controller
+     * @extends KISSY.Component.Control
      * @class KISSY.Button
      */
-    var Button = Component.Controller.extend({
+    return Control.extend({
 
         isButton: 1,
 
         bindUI: function () {
-            this.get("el").on("keyup", this.handleKeyEventInternal, this);
+            this.$el.on("keyup", this.handleKeyDownInternal, this);
         },
 
-        handleKeyEventInternal: function (e) {
-            if (e.keyCode == KeyCodes.ENTER &&
+        handleKeyDownInternal: function (e) {
+            if (e.keyCode == KeyCode.ENTER &&
                 e.type == "keydown" ||
-                e.keyCode == KeyCodes.SPACE &&
+                e.keyCode == KeyCode.SPACE &&
                     e.type == "keyup") {
-                return this.performActionInternal(e);
+                return this.handleClickInternal(e);
             }
             // Return true for space keypress (even though the event is handled on keyup)
             // as preventDefault needs to be called up keypress to take effect in IE and
             // WebKit.
-            return e.keyCode == KeyCodes.SPACE;
+            return e.keyCode == KeyCode.SPACE;
         },
 
-        performActionInternal: function () {
+        handleClickInternal: function () {
             var self = this;
             if (self.get("checkable")) {
                 self.set("checked", !self.get("checked"));
@@ -72,6 +115,7 @@ KISSY.add("button/base", function (S, Event, Component, ButtonRender) {
              * @ignore
              */
             describedby: {
+                value: '',
                 view: 1
             },
             /**
@@ -87,6 +131,7 @@ KISSY.add("button/base", function (S, Event, Component, ButtonRender) {
              * @ignore
              */
             tooltip: {
+                value: '',
                 view: 1
             },
 
@@ -115,67 +160,18 @@ KISSY.add("button/base", function (S, Event, Component, ButtonRender) {
              * @ignore
              */
             checked: {
+                value:false,
                 view: 1
             },
 
             xrender: {
                 value: ButtonRender
             }
-        }
-    }, {
-        xclass: 'button',
-        priority: 10
+        },
+        xclass: 'button'
     });
 
-    return Button;
-
 }, {
-    requires: ['event', 'component/base', './buttonRender']
-});/**
- * @ignore
- * simulated button for kissy , inspired by goog button
- * @author yiminghe@gmail.com
- */
-KISSY.add("button", function (S, Button, Render) {
-    Button.Render = Render;
-    return Button;
-}, {
-    requires:[
-        'button/base',
-        'button/buttonRender'
-    ]
-});/**
- * @ignore
- * abstract view for button
- * @author yiminghe@gmail.com
- */
-KISSY.add("button/buttonRender", function (S, Component) {
-    // http://www.w3.org/TR/wai-aria-practices/
-    return Component.Render.extend({
-        createDom:function () {
-            // set wai-aria role
-            this.get("el")
-                .attr("role", "button");
-        },
-        _onSetChecked:function (v) {
-            var self = this,
-                el = self.get("el"),
-                cls = self.getCssClassWithState("checked");
-            el[v ? 'addClass' : 'removeClass'](cls);
-        },
-        _onSetTooltip:function (title) {
-            this.get("el").attr("title", title);
-        },
-        '_onSetDescribedby':function (describedby) {
-            this.get("el").attr("aria-describedby", describedby);
-        }
-    }, {
-        ATTRS:{
-            describedby:{},
-            tooltip:{},
-            checked:{}
-        }
-    });
-}, {
-    requires:['component/base']
+    requires: ['node', 'component/control', 'button/render']
 });
+

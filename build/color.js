@@ -1,8 +1,14 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 17 00:14
+build time: Jul 3 13:48
 */
+/*
+ Combined processedModules by KISSY Module Compiler: 
+
+ color
+*/
+
 /**
  * Color For KISSY.
  * @ignore
@@ -518,3 +524,4 @@ KISSY.add("color", function (S, Base) {
  * Refer:
  *  - http://en.wikipedia.org/wiki/HSL_and_HSV
  */
+

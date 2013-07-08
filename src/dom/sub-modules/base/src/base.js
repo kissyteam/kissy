@@ -3,14 +3,15 @@
  * dom
  * @author yiminghe@gmail.com
  */
-KISSY.add('dom/base', function (S, DOM) {
+KISSY.add('dom/base', function (S, Dom) {
     S.mix(S, {
-        DOM: DOM,
-        get: DOM.get,
-        query: DOM.query
+        // compatibility
+        DOM:Dom,
+        get: Dom.get,
+        query: Dom.query
     });
 
-    return DOM;
+    return Dom;
 }, {
     requires: [
         './base/api',

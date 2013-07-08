@@ -1,4 +1,6 @@
-# KISSY - An Enjoyable JavaScript Library [![Build Status](https://secure.travis-ci.org/kissyteam/kissy.png?branch=master)](https://travis-ci.org/kissyteam/kissy)
+# KISSY [![Build Status](https://secure.travis-ci.org/kissyteam/kissy.png?branch=master)](https://travis-ci.org/kissyteam/kissy)
+
+> A Powerful JavaScript Framework
 
  * Source: <http://github.com/kissyteam/kissy>
  * Docs: <http://docs.kissyui.com/>
@@ -8,11 +10,7 @@
 
 ## Vision
 
-小巧灵活，简洁实用，使用起来让人感觉愉悦。
-
-    Keep It
-        Simple & Stupid, Short & Sweet, Slim & Sexy...
-    Yeah!
+模块化，高扩展性，组件齐全，接口一致，自主开发，适合多种应用场景
 
 
 ## Structure

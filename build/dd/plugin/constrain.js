@@ -1,8 +1,14 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 17 00:14
+build time: Jul 3 13:49
 */
+/*
+ Combined processedModules by KISSY Module Compiler: 
+
+ dd/plugin/constrain
+*/
+
 /**
  * @ignore
  * plugin constrain region for drag and drop
@@ -137,3 +143,4 @@ KISSY.add('dd/plugin/constrain', function (S, Base, Node) {
 }, {
     requires: ['base', 'node']
 });
+

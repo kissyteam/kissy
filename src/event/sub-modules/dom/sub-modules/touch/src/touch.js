@@ -3,7 +3,9 @@
  * touch event logic module
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/touch', function (S, EventDomBase, eventHandleMap, eventHandle) {
+KISSY.add('event/dom/touch', function (S, DomEvent, eventHandleMap, eventHandle) {
+
+    var Features = S.Features;
 
     function setupExtra(event) {
         setup.call(this, event);
@@ -11,6 +13,20 @@ KISSY.add('event/dom/touch', function (S, EventDomBase, eventHandleMap, eventHan
     }
 
     function setup(event) {
+        var self = this,
+            style = self.style;
+        if (Features.isMsPointerSupported() && style) {
+            if (!self.__ks_touch_action) {
+                self.__ks_touch_action = style.msTouchAction;
+                self.__ks_user_select = style.msUserSelect;
+                style.msTouchAction = style.msUserSelect = 'none';
+            }
+            if (!self.__ks_touch_action_count) {
+                self.__ks_touch_action_count = 1;
+            } else {
+                self.__ks_touch_action_count++;
+            }
+        }
         eventHandle.addDocumentHandle(this, event);
     }
 
@@ -20,10 +36,23 @@ KISSY.add('event/dom/touch', function (S, EventDomBase, eventHandleMap, eventHan
     }
 
     function tearDown(event) {
+        var self = this,
+            style = self.style;
+        if (Features.isMsPointerSupported() && style) {
+            if (!self.__ks_touch_action_count) {
+                S.error('touch event error for ie');
+            }
+            self.__ks_touch_action_count--;
+            if (!self.__ks_touch_action_count) {
+                style.msUserSelect = self.__ks_user_select;
+                style.msTouchAction = self.__ks_touch_action;
+                self.__ks_touch_action = '';
+            }
+        }
         eventHandle.removeDocumentHandle(this, event);
     }
 
-    var Special = EventDomBase._Special,
+    var Special = DomEvent.Special,
         specialEvent, e, eventHandleValue;
 
     for (e in eventHandleMap) {

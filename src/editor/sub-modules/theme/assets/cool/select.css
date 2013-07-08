@@ -1,0 +1,102 @@
+/**
+select style for kissy editor
+@author yiminghe@gmail.com
+**/
+
+.ks-editor-menu-button, .ks-editor-big-select {
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    border: 1px solid rgb(193, 200, 209);
+    height: 20px;
+    margin: 2px 0;
+    color: #000;
+    border-radius: 2px;
+    border-radius: 2px;
+    text-decoration: none;
+    white-space: nowrap;
+    overflow: hidden;
+    position: relative;
+    vertical-align: middle;
+    /*outline: none;*/
+}
+
+.ks-editor-tools .ks-editor-menu-button {
+    margin: 0 2px;
+}
+
+.ks-editor-tools .ks-editor-menu-button-hover {
+    color: black;
+    text-decoration: none;
+    border-color: #729BD1;
+}
+
+.ks-editor-tools .ks-editor-menu-button-active {
+    color: #000;
+    background-color: #ffffff;
+}
+
+.ks-editor-menu-button-dropdown,
+.ks-editor-big-menu-button-dropdown,
+.ks-editor-big-menu-button-dropdown-inner {
+    background: no-repeat scroll center center transparent;
+    background-image: url("arrow.png"); /** sprite-ref: cool; */
+    width: 7px;
+    height: 3px;
+    vertical-align: middle;
+    font-size: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    margin-top: 10px;
+    margin-right: 5px;
+}
+
+.ks-editor-big-menu-button-dropdown {
+    margin-top: 0;
+    margin-right: 0;
+}
+
+.ks-editor-menu-button-disabled,
+.ks-editor-menu-button-disabled .ks-editor-menu-button-hover,
+.ks-editor-menu-button-disabled .ks-editor-menu-button {
+    cursor: default;
+    color: gray;
+    border-color: rgb(193, 200, 209);
+}
+
+.ks-ie9 .ks-editor-menu-button-disabled .ks-editor-menu-button {
+    filter: none;
+}
+
+.ks-editor-tools .ks-editor-menu-button-content {
+    padding-left: 4px;
+    height: 20px;
+    line-height: 20px;
+    position: relative;
+}
+
+.ks-editor-big-select {
+    height: 24px;
+}
+
+.ks-editor-big-menu-button-dropdown {
+    padding-left: 6px;
+    padding-right: 6px;
+    background: #e8ebee repeat-x left top;
+    background-image: url("ks-editor-button-bg.png"); /** sprite-ref: cool; sprite-alignment: repeat;*/
+    -background-image: none;
+    height: 24px;
+    width: 14px;
+    padding-top: 1px;
+    border-left: 1px solid #C1C8D1;
+}
+
+.ks-editor-big-select {
+    background: #FFFFFF repeat-x scroll 0 0;
+    background-image: url("text-bg.png");
+}
+
+.ks-editor-big-menu-button-content {
+    padding-left: 5px;
+}

@@ -8,7 +8,7 @@ module.exports = function (req, res) {
 
     function run() {
         var data = S.merge({
-
+                contentType:req.get('content-type'),
                 'name': 'test',
                 'birth': '2010/11/23',
                 'email': 'test@gmail.com'

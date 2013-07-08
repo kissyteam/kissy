@@ -1,8 +1,14 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 17 00:21
+build time: Jul 3 13:55
 */
+/*
+ Combined processedModules by KISSY Module Compiler: 
+
+ editor/plugin/xiami-music
+*/
+
 /**
  * xiami-music button
  * @author yiminghe@gmail.com
@@ -137,3 +143,4 @@ KISSY.add("editor/plugin/xiami-music", function (S, Editor, FlashBaseClass, flas
     requires: ['editor', './flash-common/base-class',
         './flash-common/utils', './fake-objects']
 });
+

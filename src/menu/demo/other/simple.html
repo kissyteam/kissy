@@ -11,7 +11,7 @@
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-touch-fullscreen" content="yes">
-    <link href="../../../css/src/dpl/base.css" rel="stylesheet"/>
+    <link href="../../../css/assets/dpl/base.css" rel="stylesheet"/>
     <link href="../assets/menu.css" rel="stylesheet"/>
     <link href="../assets/menuitem.css" rel="stylesheet"/>
     <link href="../assets/submenu.css" rel="stylesheet"/>
@@ -62,26 +62,22 @@
     <label>禁用：<input type="checkbox" id='dis'/></label>
     <br>
     <label>隐藏：<input type="checkbox" id='hide'/></label>
+    <br>
+    <label>修改：
+        <button id="modify">修改</button>
+    </label>
 
 </div>
 <script src="/kissy/build/seed.js"></script>
+<script src="/kissy/src/package.js"></script>
 <script>
-
-    //    KISSY.config({
-    //        map:[
-    //            [/\?t=.+$/, ""]
-    //        ],
-    //        "combine":true
-    //    });
-
-
     (function () {
         KISSY.use("node,menu,separator",
                 function (S, Node, Menu, Separator) {
                     //view
                     //render to container : button_container
 
-                    //controller
+                    //control
                     //view as a parameter
 
                     var sb = new Menu.PopupMenu({
@@ -92,11 +88,11 @@
                         }
                     });
 
-                    sb.addChild(new Menu.Item({
+                    sb.addChild(new Menu.CheckItem({
                         content: "submenuitem1"
                     }));
 
-                    sb.addChild(new Menu.Item({
+                    sb.addChild(new Menu.CheckItem({
                         content: "submenuitem2"
                     }));
 
@@ -104,7 +100,6 @@
 
                     if (true) {
                         var sb2 = new Menu.PopupMenu({
-
                             // boolean，是否鼠标脱离菜单后自动隐藏
                             //autoHideOnMouseLeave:true,
                             children: [
@@ -168,6 +163,10 @@
                     });
 
                     hide[0].checked = false;
+
+                    Node.one('#modify').on('click', function () {
+                        menu.getChildAt(0).set('content', 'modified');
+                    })
                 });
     })();
 </script>

@@ -55,7 +55,7 @@
   filter: alpha(opacity=100);
   *zoom: 1;
 }
-.ks-menu-button-caption {
+.ks-menu-button-content {
   display: inline-block;
   *display: inline;
   *zoom: 1;

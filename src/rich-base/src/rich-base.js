@@ -9,13 +9,14 @@ KISSY.add('rich-base', function (S, Base) {
         ucfirst = S.ucfirst,
         ON_SET = '_onSet',
         noop = S.noop,
-        RE_DASH = /(?:^|-)([a-z])/ig,
-        CAMEL_CASE_FN = function (all, letter) {
-            return letter.toUpperCase();
-        };
+        RE_DASH = /(?:^|-)([a-z])/ig;
+
+    function replaceToUpper(all, letter) {
+        return letter.toUpperCase();
+    }
 
     function CamelCase(name) {
-        return name.replace(RE_DASH, CAMEL_CASE_FN);
+        return name.replace(RE_DASH, replaceToUpper);
     }
 
     /**
@@ -68,8 +69,9 @@ KISSY.add('rich-base', function (S, Base) {
          * @protected
          * @param mainMethod method name of main class.
          * @param extMethod method name of extension class
+         * @param {Array} args arguments
          */
-        callMethodByHierarchy: function (mainMethod, extMethod) {
+        callMethodByHierarchy: function (mainMethod, extMethod, args) {
             var self = this,
                 c = self.constructor,
                 extChains = [],
@@ -78,6 +80,8 @@ KISSY.add('rich-base', function (S, Base) {
                 i,
                 exts,
                 t;
+
+            args = args || [];
 
             // define
             while (c) {
@@ -119,7 +123,7 @@ KISSY.add('rich-base', function (S, Base) {
             // 初始化函数
             // 顺序：父类的所有扩展类函数 -> 父类对应函数 -> 子类的所有扩展函数 -> 子类对应函数
             for (i = extChains.length - 1; i >= 0; i--) {
-                extChains[i] && extChains[i].call(self);
+                extChains[i] && extChains[i].apply(self, args);
             }
         },
 
@@ -127,13 +131,16 @@ KISSY.add('rich-base', function (S, Base) {
          * call plugin method
          * @protected
          * @param method method name of plugin
+         * @param {Array} args arguments
          */
-        callPluginsMethod: function (method) {
+        callPluginsMethod: function (method, args) {
             var self = this;
+            args = args || [];
             method = 'plugin' + ucfirst(method);
             S.each(self.get('plugins'), function (plugin) {
+                var myArgs = [self].concat(args);
                 if (plugin[method]) {
-                    plugin[method](self);
+                    plugin[method].apply(plugin, myArgs);
                 }
             });
         },
@@ -199,7 +206,7 @@ KISSY.add('rich-base', function (S, Base) {
                             if ((onSetMethod = self[onSetMethodName]) &&
                                 // 用户如果设置了显式不同步，就不同步，
                                 // 比如一些值从 html 中读取，不需要同步再次设置
-                                attrs[attributeName].sync !== false &&
+                                attrs[attributeName].sync !== 0 &&
                                 (attributeValue = self.get(attributeName)) !== undefined) {
                                 onSetMethod.call(self, attributeValue);
                             }
@@ -226,10 +233,13 @@ KISSY.add('rich-base', function (S, Base) {
          */
         destroy: function () {
             var self = this;
-            self.callPluginsMethod("destructor");
-            destroyHierarchy(self);
-            self.fire('destroy');
-            self.detach();
+            if (!self.get('destroyed')) {
+                self.callPluginsMethod("destructor");
+                destroyHierarchy(self);
+                self.detach();
+                self.set('destroyed', true);
+                self.fire('destroy');
+            }
         },
 
         /**
@@ -317,6 +327,10 @@ KISSY.add('rich-base', function (S, Base) {
              */
             plugins: {
                 value: []
+            },
+
+            destroyed: {
+                value: false
             },
 
             /**
@@ -450,7 +464,7 @@ KISSY.add('rich-base', function (S, Base) {
                 C.prototype.constructor = C;
             }
 
-            C.extend = extend;
+            C.extend = C.extend || extend;
 
             return C;
         }

@@ -6,8 +6,9 @@
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-touch-fullscreen" content="yes">
-    <script src="/kissy/build/seed.js"></script>
-    <script src="../../../../../../../log.js"></script>
+    <script src="/kissy/build/seed.js" charset="utf-8"></script>
+    <script src="/kissy/src/package.js"></script>
+    <script src="/kissy/src/log.js"></script>
 </head>
 <body>
 
@@ -25,24 +26,11 @@
 
 <div style="height: 900px;">sd</div>
 <div style="height: 900px;">sd</div>
-
-
-<script src="../../src/handle.js"></script>
-<script src="../../src/multi-touch.js"></script>
-<script src="../../src/pinch.js"></script>
-<script src="../../src/double-tap.js"></script>
-<script src="../../src/gesture.js"></script>
-<script src="../../src/handle-map.js"></script>
-<script src="../../src/rotate.js"></script>
-<script src="../../src/single-touch.js"></script>
-<script src="../../src/swipe.js"></script>
-<script src="../../src/tap-hold.js"></script>
-<script src="../../src/tap.js"></script>
-<script src="../../src/touch.js"></script>
-<script src="../../src/single-touch-start.js"></script>
 <script>
 
     KISSY.use('event', function (S, Event) {
+
+        var transform = S.Features.getTransformProperty();
 
         Event.on('#t', "pinch pinchStart pinchEnd", function (e) {
             console.log(e.originalEvent && e.originalEvent.type);
@@ -56,13 +44,13 @@
 
         Event.on('#t', 'pinchStart', function () {
             o = 1;
-            if (t.style.webkitTransform) {
-                o = parseFloat(t.style.webkitTransform.replace(/scale\(/, ''));
+            if (t.style[transform]) {
+                o = parseFloat(t.style[transform].replace(/scale\(/, ''));
             }
         });
 
         Event.on('#t', 'pinch', function (e) {
-            t.style.webkitTransform = 'scale(' + (o * e.scale) + ')';
+            t.style[transform] = 'scale(' + (o * e.scale) + ')';
         });
 
     });

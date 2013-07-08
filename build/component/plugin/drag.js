@@ -1,8 +1,14 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 17 00:14
+build time: Jul 3 14:39
 */
+/*
+ Combined processedModules by KISSY Module Compiler: 
+
+ component/plugin/drag
+*/
+
 /**
  * @ignore
  * drag plugin for kissy component
@@ -39,12 +45,12 @@ KISSY.add('component/plugin/drag', function (S, RichBase, DD) {
         pluginId: 'component/plugin/drag',
 
         pluginBindUI: function (component) {
-            var el = component.get('el'),
+            var $el = component.$el,
                 self = this;
-            self.set('node', el);
+            self.set('node', $el);
             // sync
             self.on("dragend", function () {
-                var offset = el.offset();
+                var offset = $el.offset();
                 component.setInternal('xy', [offset.left, offset.top]);
             });
         },
@@ -65,5 +71,6 @@ KISSY.add('component/plugin/drag', function (S, RichBase, DD) {
     });
 
 }, {
-    requires: ['rich-base', 'dd/base']
+    requires: ['rich-base', 'dd']
 });
+

@@ -32,6 +32,7 @@
 <div id="qunit-testrunner-toolbar"></div>
 <h2 id="qunit-userAgent"></h2>
 
+<a href="test.html" id="test-a-href"></a>
 
 <!-- this iframe is outside the #qunit-fixture so it won't reload constantly wasting time, but it means the tests must be "safe" and clean up after themselves -->
 <iframe id="loadediframe" name="loadediframe" style="display:none;"></iframe>
@@ -268,11 +269,10 @@
 </div>
 </dl>
 <br id="last"/>
-<script src="../../src/parser.js"></script>
-<script src="../../src/selector.js"></script>
+<script src="/kissy/src/package.js"></script>
 <script src="../specs/sizzle-spec.js"></script>
 <script>
-    window.onload = function () {
+    KISSY.use('dom/selector', function () {
         // let tc run first
         setTimeout(function () {
             jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
@@ -281,6 +281,6 @@
                 jasmine.kissyNext(this.results().failedCount);
             });
         }, 100);
-    };
+    });
 </script>
 </body>

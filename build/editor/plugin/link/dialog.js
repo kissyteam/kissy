@@ -1,8 +1,14 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 17 00:18
+build time: Jul 3 13:53
 */
+/*
+ Combined processedModules by KISSY Module Compiler: 
+
+ editor/plugin/link/dialog
+*/
+
 /**
  * link dialog
  * @author yiminghe@gmail.com
@@ -138,3 +144,4 @@ KISSY.add("editor/plugin/link/dialog", function (S, Editor, Dialog4E, Utils) {
 }, {
     requires:['editor', '../dialog', './utils']
 });
+

@@ -1,8 +1,14 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 17 00:18
+build time: Jul 3 13:52
 */
+/*
+ Combined processedModules by KISSY Module Compiler: 
+
+ editor/plugin/italic
+*/
+
 /**
  * italic button.
  * @author yiminghe@gmail.com
@@ -24,7 +30,7 @@ KISSY.add("editor/plugin/italic", function (S, Editor, ui, cmd) {
 
             editor.docReady(function () {
                 editor.get("document").on("keydown", function (e) {
-                    if (e.ctrlKey && e.keyCode == S.Node.KeyCodes.I) {
+                    if (e.ctrlKey && e.keyCode == S.Node.KeyCode.I) {
                         editor.execCommand("italic");
                         e.preventDefault();
                     }
@@ -37,3 +43,4 @@ KISSY.add("editor/plugin/italic", function (S, Editor, ui, cmd) {
 }, {
     requires:['editor', './font/ui', './italic/cmd']
 });
+

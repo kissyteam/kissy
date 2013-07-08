@@ -1,0 +1,5 @@
+<project name="dd/plugin/scroll.build" default="build" basedir="">
+    <property name="component.name" value="dd/plugin/scroll"/>
+
+    <import file="../../../../common.xml"/>
+</project>

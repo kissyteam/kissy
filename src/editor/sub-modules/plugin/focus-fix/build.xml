@@ -1,6 +1,4 @@
 <project name="editor/plugin/focus-fix.build" default="build" basedir=".">
-    <description>editor/plugin/focus-fix Build File</description>
-
     <property name="component.name"
               value="editor/plugin/focus-fix"/>
 

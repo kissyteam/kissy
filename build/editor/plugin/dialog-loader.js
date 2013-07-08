@@ -1,8 +1,14 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 17 00:16
+build time: Jul 3 13:51
 */
+/*
+ Combined processedModules by KISSY Module Compiler: 
+
+ editor/plugin/dialog-loader
+*/
+
 /**
  * load editor's dialog dynamically
  * @author yiminghe@gmail.com
@@ -54,3 +60,4 @@ KISSY.add("editor/plugin/dialog-loader", function (S, Overlay, Editor) {
 }, {
     requires:['overlay', 'editor']
 });
+

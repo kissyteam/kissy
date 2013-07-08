@@ -10,7 +10,12 @@ KISSY.add("editor/plugin/contextmenu", function (S, Editor, Menu, focusFix) {
 
         cfg = cfg || {};
 
-        cfg.prefixCls = self.get("prefixCls") + "editor-";
+        var event = cfg.event;
+        if (event) {
+            delete  cfg.event;
+        }
+
+        cfg.prefixCls = self.get('prefixCls') + "editor-";
         cfg.editor = self;
         cfg.focusable = 1;
         cfg.zIndex = Editor.baseZIndex(Editor.zIndexManager.POPUP_MENU);
@@ -21,7 +26,7 @@ KISSY.add("editor/plugin/contextmenu", function (S, Editor, Menu, focusFix) {
 
         menu.on("afterRenderUI", function () {
             menu.get("el").on("keydown", function (e) {
-                if (e.keyCode == S.Event.KeyCodes.ESC) {
+                if (e.keyCode == S.Event.KeyCode.ESC) {
                     menu.hide();
                 }
             });
@@ -36,45 +41,54 @@ KISSY.add("editor/plugin/contextmenu", function (S, Editor, Menu, focusFix) {
                 }
             });
             doc.delegate("contextmenu", filter, function (ev) {
-                var t = S.all(ev.target);
                 ev.halt();
-                // ie 右键作用中，不会发生焦点转移，光标移动
-                // 只能右键作用完后才能，才会发生光标移动,range变化
-                // 异步右键操作
-                // qc #3764,#3767
-                var x = ev.pageX,
-                    y = ev.pageY;
-                if (!x) {
-                    return;
-                } else {
-                    var translate = Editor.Utils.getXY({
-                        left:x,
-                        top:y
-                    }, self);
-                    x = translate.left;
-                    y = translate.top;
-                }
-                setTimeout(function () {
-                    menu.set("editorSelectedEl", t, {
-                        silent:1
-                    });
-                    menu.set("xy", [x, y]);
-                    menu.show();
-                    self.fire("contextmenu", {
-                        contextmenu:menu
-                    });
-                    window.focus();
-                    document.body.focus();
-                    // 防止焦点一直在 el，focus 无效
-                    menu.focus();
-                }, 30);
+                showNow(ev);
             });
         });
+
+        function showNow(ev) {
+            var t = S.all(ev.target);
+
+            // ie 右键作用中，不会发生焦点转移，光标移动
+            // 只能右键作用完后才能，才会发生光标移动,range变化
+            // 异步右键操作
+            // qc #3764,#3767
+            var x = ev.pageX,
+                y = ev.pageY;
+            if (!x) {
+                return;
+            } else {
+                var translate = Editor.Utils.getXY({
+                    left: x,
+                    top: y
+                }, self);
+                x = translate.left;
+                y = translate.top;
+            }
+            setTimeout(function () {
+                menu.set("editorSelectedEl", t, {
+                    silent: 1
+                });
+                menu.move(x, y);
+                self.fire("contextmenu", {
+                    contextmenu: menu
+                });
+                menu.show();
+                window.focus();
+                document.body.focus();
+                // 防止焦点一直在 el，focus 无效
+                menu.focus();
+            }, 30);
+        }
+
+        if (event) {
+            showNow(event);
+        }
 
         self.addControl(id + "/contextmenu", menu);
 
         return menu;
     };
 }, {
-    requires:['editor', 'menu', './focus-fix']
+    requires: ['editor', 'menu', './focus-fix']
 });

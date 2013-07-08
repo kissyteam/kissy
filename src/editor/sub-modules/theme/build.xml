@@ -1,6 +1,4 @@
 <project name="editor/theme.build" default="build" basedir=".">
-    <description>editor/theme Build File</description>
-
     <property name="component.name" value="editor/theme"/>
 
     <import file="../../../common.xml"/>
@@ -15,9 +13,9 @@
         </classpath>
     </taskdef>
 
-    <target name="concat">
+    <target name="concat-css">
         <copy todir="${component.src.dir.tmp}">
-            <fileset dir="${component.src.dir}" includes="**/*"/>
+            <fileset dir="assets" includes="**/*"/>
         </copy>
 
         <concat destfile="${component.src.dir.tmp}/cool/editor-pkg.css"

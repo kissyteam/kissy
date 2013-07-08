@@ -1,6 +1,4 @@
 <project name="editor/plugin/flash/dialog.build" default="build" basedir=".">
-    <description>editor/plugin/flash Build File</description>
-
     <property name="component.name" value="editor/plugin/flash/dialog"/>
 
     <property name="component.meta.dir" location="./ke-meta/"/>

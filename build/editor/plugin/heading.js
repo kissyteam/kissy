@@ -1,8 +1,14 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 17 00:17
+build time: Jul 3 13:52
 */
+/*
+ Combined processedModules by KISSY Module Compiler: 
+
+ editor/plugin/heading
+*/
+
 /**
  * Heading plugin for KISSY.
  * @author yiminghe@gmail.com
@@ -90,3 +96,4 @@ KISSY.add("editor/plugin/heading", function (S, Editor, headingCmd) {
 }, {
     requires: ['editor', './heading/cmd']
 });
+

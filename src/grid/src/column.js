@@ -1,6 +1,6 @@
 /**
  * This class specifies the definition for a column of a grid.
- * @author dxq613@gmail.com, yiminghe@gmail.com
+ * @author dxq613@gmail.com
  */
 KISSY.add('grid/column', function (S, Component, Template) {
 
@@ -103,9 +103,9 @@ KISSY.add('grid/column', function (S, Component, Template) {
      * In general, this class will not be created directly, rather an array of column configurations will be passed to the grid
      * @name Grid.Column
      * @constructor
-     * @extends KISSY.Component.Controller
+     * @extends KISSY.Component.Control
      */
-    var column = Component.Controller.extend(
+    var column = Component.Control.extend(
         /**
          * @lends Grid.Column.prototype
          */
@@ -118,10 +118,10 @@ KISSY.add('grid/column', function (S, Component, Template) {
             },
 
             /**
-             * {Component.Controller#performActionInternal}
+             * {Component.Control#handleClickInternal}
              * @private
              */
-            performActionInternal:function (ev) {
+            handleClickInternal:function (ev) {
                 var _self = this,
                     sender = S.one(ev.target),
                     prefix = _self.get('prefixCls');
@@ -315,8 +315,7 @@ KISSY.add('grid/column', function (S, Component, Template) {
 
             }
         }, {
-            xclass:'grid-hd',
-            priority:1
+            xclass:'grid-hd'
         });
 
     column.Empty = column.extend({
@@ -339,13 +338,12 @@ KISSY.add('grid/column', function (S, Component, Template) {
             }
         }
     }, {
-        xclass:'grid-hd-empty',
-        priority:1
+        xclass:'grid-hd-empty'
     });
 
     return column;
 
 }, {
-    requires:['component', 'template']
+    requires:['component/base', 'template']
 });
 	

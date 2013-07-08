@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Index of {{cur}}</title>
+</head>
+<body>
+<h1>Index of {{cur}}</h1>
+<ul>
+    {{#if cur !== '/'}}
+    <li><a href="../../"> Parent Directory</a></li>
+    {{/if}}
+    {{#each files}}
+    <li><a href="{{.}}">{{.}}</a></li>
+    {{/each}}
+</ul>
+{{{include './footer'}}}
+</body>
+</html>

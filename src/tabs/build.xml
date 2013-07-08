@@ -1,6 +1,4 @@
 <project name="tabs.build" default="build" basedir=".">
-    <description>Tabs Build File</description>
-
     <property name="component.name" value="tabs"/>
 
     <import file="../common.xml"/>

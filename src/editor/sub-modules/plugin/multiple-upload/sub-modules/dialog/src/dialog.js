@@ -2,15 +2,16 @@
  * multiple-upload dialog
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor, DragPlugin,
+KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor,
+                                                            Overlay,DragPlugin,
                                                             ProgressBar, Dialog4E,
                                                             FlashBridge, localStorage,
                                                             SWF, undefined) {
 
     var UA = S.UA,
-        DOM = S.DOM,
+        Dom = S.DOM,
         $ = S.all,
-        JSON = S.JSON,
+        Json = S.JSON,
         PIC_NUM_LIMIT = 15,
         PIC_NUM_LIMIT_WARNING = "系统将只保留 n 张",
         PIC_SIZE_LIMIT = 1000,
@@ -70,7 +71,7 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor, DragPlugi
                 mask: false,
                 plugins: [
                     new DragPlugin({
-                        handlers: ['.ks-editor-stdmod-header']
+                        handlers: ['.ks-editor-dialog-header']
                     })
                 ],
                 focus4e: false,
@@ -83,7 +84,7 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor, DragPlugi
             // 所以不设置 visibility ，漂移大法
             d.on("beforeVisibleChange", function (ev) {
                 if (!ev.newVal) {
-                    d.set("xy", [-9999, -9999]);
+                    d.move(-9999, -9999);
                     return false;
                 }
             });
@@ -355,7 +356,7 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor, DragPlugi
             var previewSuffix = uploadCfg['previewSuffix'];
             if (previewWidth) {
 
-                var previewWin = new (S.require("overlay"))({
+                var previewWin = new Overlay({
                     mask: false,
                     prefixCls: replacePrefix('{prefixCls}editor-', prefixCls),
                     width: previewWidth,
@@ -387,9 +388,9 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor, DragPlugi
                                     "src='" +
                                     url + "' />")
                             }
-                            var offset = DOM.offset(td);
+                            var offset = Dom.offset(td);
                             offset.left += td[0].offsetWidth;
-                            previewWin.set("xy", [offset.left, offset.top]);
+                            previewWin.move(offset.left, offset.top);
                             previewWin.show();
                         }
                     } else {
@@ -496,7 +497,7 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor, DragPlugi
 
             if (!data) return;
             try {
-                data = S.parseJSON(data);
+                data = S.parseJson(data);
             } catch (ex) {
                 S.log("multiUpload _onUploadCompleteData error :");
                 S.log(ex);
@@ -574,7 +575,7 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor, DragPlugi
                 data = localStorage.getItem(KEY),
                 tbl = self._list[0];
             if (!data) return;
-            data = JSON.parse(S.urlDecode(data));
+            data = S.parseJson(S.urlDecode(data));
             for (var i = 0; i < data.length; i++) {
                 var d = data[i];
                 d.complete = 1;
@@ -613,7 +614,7 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor, DragPlugi
                 }
             }
 
-            localStorage.setItem(KEY, encodeURIComponent(JSON.stringify(data)));
+            localStorage.setItem(KEY, encodeURIComponent(Json.stringify(data)));
 
         },
         _getFilesSize: function (files) {
@@ -658,22 +659,22 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor, DragPlugi
                 id = f.fid,
                 row = tbl.insertRow(-1);
             var prefixCls = self.editor.get('prefixCls');
-            DOM.attr(row, "fid", id);
+            Dom.attr(row, "fid", id);
             var cell = row.insertCell(-1);
-            DOM.attr(cell, "class", replacePrefix('{prefixCls}editor-upload-seq', prefixCls));
+            Dom.attr(cell, "class", replacePrefix('{prefixCls}editor-upload-seq', prefixCls));
             cell = row.insertCell(-1);
             if (f.name.length > 18) {
                 f.name = f.name.substring(0, 18) + "...";
             }
-            DOM.html(cell, "<div style='width:160px;overflow:hidden;'><div style='width:9999px;text-align:left;'>" + f.name + "</div></div>");
-            DOM.attr(cell, "class", replacePrefix('{prefixCls}editor-upload-filename', prefixCls));
+            Dom.html(cell, "<div style='width:160px;overflow:hidden;'><div style='width:9999px;text-align:left;'>" + f.name + "</div></div>");
+            Dom.attr(cell, "class", replacePrefix('{prefixCls}editor-upload-filename', prefixCls));
             cell = row.insertCell(-1);
-            DOM.html(cell, f.size);
-            DOM.attr(cell, "class", replacePrefix('{prefixCls}editor-upload-filesize', prefixCls));
+            Dom.html(cell, f.size);
+            Dom.attr(cell, "class", replacePrefix('{prefixCls}editor-upload-filesize', prefixCls));
             cell = row.insertCell(-1);
-            DOM.attr(cell, "class", replacePrefix('{prefixCls}editor-upload-progress', prefixCls));
+            Dom.attr(cell, "class", replacePrefix('{prefixCls}editor-upload-progress', prefixCls));
             cell = row.insertCell(-1);
-            DOM.html(cell, replacePrefix("<a class='{prefixCls}editor-upload-moveup' href='#'>[上移]</a> &nbsp; " +
+            Dom.html(cell, replacePrefix("<a class='{prefixCls}editor-upload-moveup' href='#'>[上移]</a> &nbsp; " +
                 "<a class='{prefixCls}editor-upload-movedown' href='#'>[下移]</a> &nbsp; " +
                 "<a href='#' class='{prefixCls}editor-upload-insert' style='" +
                 (f.complete ? "" : "display:none;") +
@@ -723,7 +724,7 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor, DragPlugi
                 //去除已经 ui 显示出来的
                 var trs = list.children("tr");
                 for (i = 0; i < trs.length; i++) {
-                    var tr = trs[i], fid = DOM.attr(tr, "fid");
+                    var tr = trs[i], fid = Dom.attr(tr, "fid");
                     fid && files[fid] && (delete files[fid]);
                 }
                 //限额-目前ui的
@@ -808,6 +809,7 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor, DragPlugi
     return MultiUploadDialog;
 }, {
     requires: ['editor',
+        'overlay',
         'component/plugin/drag',
         '../progressbar',
         '../dialog',

@@ -1,14 +1,20 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 17 00:16
+build time: Jul 3 13:51
 */
+/*
+ Combined processedModules by KISSY Module Compiler: 
+
+ editor/plugin/color/dialog
+*/
+
 /**
  * color picker
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/plugin/color/dialog", function (S, Editor, Dialog4E) {
-    var map = S.map, DOM = S.DOM;
+    var map = S.map, Dom = S.DOM;
 
     //获取颜色数组
     function getData(color) {
@@ -70,7 +76,7 @@ KISSY.add("editor/plugin/color/dialog", function (S, Editor, Dialog4E) {
                 if (!frag) {
                     frag = document.createElement("textarea");
                     frag.style.display = "none";
-                    DOM.prepend(frag, document.body);
+                    Dom.prepend(frag, document.body);
                 }
                 try {
                     frag.style.color = color;
@@ -262,3 +268,4 @@ KISSY.add("editor/plugin/color/dialog", function (S, Editor, Dialog4E) {
 }, {
     requires: ['editor', '../dialog']
 });
+

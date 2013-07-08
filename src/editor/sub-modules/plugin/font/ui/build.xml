@@ -1,0 +1,8 @@
+<project name="editor/plugin/font/ui.build" default="build" basedir="">
+    <property name="component.name"
+              value="editor/plugin/font/ui"/>
+
+    <property name="component.meta.dir" location="./ke-meta/"/>
+
+    <import file="../../../../../common.xml"/>
+</project>

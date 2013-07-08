@@ -1,8 +1,14 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 17 00:19
+build time: Jul 3 13:54
 */
+/*
+ Combined processedModules by KISSY Module Compiler: 
+
+ editor/plugin/remove-format
+*/
+
 /**
  * removeFormat for selection.
  * @author yiminghe@gmail.com
@@ -31,3 +37,4 @@ KISSY.add("editor/plugin/remove-format", function (S, Editor, formatCmd) {
 }, {
     requires:['editor', './remove-format/cmd', './button']
 });
+

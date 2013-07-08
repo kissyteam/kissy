@@ -1,16 +1,17 @@
 <!doctype html>
 <html>
 <head>
-<meta charset="utf-8"/>
+    <meta charset="utf-8"/>
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-touch-fullscreen" content="yes">
-<title>KISSY Overlay</title>
-<link href="../../../../src/css/src/dpl/base.css" rel="stylesheet"/>
-<link href="../../assets/dpl.css" rel="stylesheet"/>
-<link href="../../../../src/button/assets/dpl.css" rel="stylesheet"/>
-<script src="/kissy/build/seed.js"></script>
+    <title>KISSY Overlay</title>
+    <link href="../../../../src/css/assets/dpl/base.css" rel="stylesheet"/>
+    <link href="../../assets/dpl.css" rel="stylesheet"/>
+    <link href="../../../../src/button/assets/dpl.css" rel="stylesheet"/>
+    <script src="/kissy/build/seed.js"></script>
+    <script src="/kissy/src/package.js"></script>
 </head>
 <body>
 <div class="container">
@@ -21,6 +22,7 @@
     <div class="row">
         <div class="span6">
             <h3>模态对话框</h3>
+
             <p>带遮罩的模态对话框</p>
         </div>
         <div class="span18">
@@ -34,36 +36,36 @@
     <script>
         KISSY.use("overlay,button", function (S, Overlay, Button) {
             var d = new Overlay.Dialog({
-                headerContent:"头部",
-                width:500,
-                mask:true,
-                bodyContent:"<div>内容</div>",
-                align:{
-                    points:['cc', 'cc']
+                headerContent: "头部",
+                width: 500,
+                mask: true,
+                bodyContent: "<div>内容</div>",
+                align: {
+                    points: ['cc', 'cc']
                 }
             });
 
             d.on("afterRenderUI", function () {
                 new Button({
-                    content:"关闭",
-                    elCls:"ks-button-primary",
-                    listeners:{
-                        click:function () {
+                    content: "关闭",
+                    elCls: "ks-button-primary",
+                    listeners: {
+                        click: function () {
                             d.hide();
                         }
                     },
-                    render:d.get("footer")
+                    render: d.get("footer")
                 }).render();
                 new Button({
-                    content:"保存",
-                    render:d.get("footer")
+                    content: "保存",
+                    render: d.get("footer")
                 }).render();
             });
 
             new Button({
-                srcNode:'#ok',
-                listeners:{
-                    click:function () {
+                srcNode: '#ok',
+                listeners: {
+                    click: function () {
                         d.show();
                     }
                 }
@@ -78,6 +80,7 @@
     <div class="row">
         <div class="span6">
             <h3>popup</h3>
+
             <p>一些小的内容浮出展示</p>
         </div>
         <div class="span18">
@@ -92,7 +95,8 @@
         <div class="ks-popup-arrow"></div>
         <div class="ks-popup-inner">
             <h3 class="ks-popup-title">A Title</h3>
-            <div class="ks-popup-content">
+
+            <div class="ks-popup-inner-content">
                 <p>And here's some amazing content. It's very engaging. right?</p>
             </div>
         </div>
@@ -100,24 +104,24 @@
 
     <script>
         KISSY.use("overlay,button", function (S, Overlay, Button) {
-            var $= S.all;
+            var $ = S.all;
 
-            var b=new Button({
-                srcNode:'#hover'
+            var b = new Button({
+                srcNode: '#hover'
             }).render();
 
             var d = new Overlay.Popup({
-                trigger:"#hover",
-                elCls:"ks-popup-right",
-                triggerType:"mouse",
-                content:$("#hoverTpl").html(),
-                effect:{
-                    effect:"fade",
-                    duration:0.3
+                trigger: "#hover",
+                elCls: "ks-popup-right",
+                triggerType: "mouse",
+                content: $("#hoverTpl").html(),
+                effect: {
+                    effect: "fade",
+                    duration: 0.3
                 },
-                align:{
-                    node:'#hover',
-                    points:['cr', 'cl']
+                align: {
+                    node: '#hover',
+                    points: ['cr', 'cl']
                 }
             });
 
@@ -125,12 +129,12 @@
     </script>
 
 
-
     <h1>tooltip</h1>
 
     <div class="row">
         <div class="span6">
             <h3>tooltip</h3>
+
             <p>一些更小的内容提示</p>
         </div>
         <div class="span18">
@@ -142,26 +146,26 @@
     </div>
 
     <script type="x-template" id="tipTpl">
-            <div class="ks-popup-arrow"></div>
-            <div class="ks-tooltip-inner">first tooltip</div>
+        <div class="ks-popup-arrow"></div>
+        <div class="ks-tooltip-inner">first tooltip</div>
     </script>
 
     <script>
         KISSY.use("overlay,button", function (S, Overlay, Button) {
-            var $= S.all;
+            var $ = S.all;
 
             var d = new Overlay.Popup({
-                trigger:"#tip",
-                elCls:"ks-popup-top",
-                triggerType:"mouse",
-                content:$("#tipTpl").html(),
-                effect:{
-                    effect:"fade",
-                    duration:0.3
+                trigger: "#tip",
+                elCls: "ks-popup-top",
+                triggerType: "mouse",
+                content: $("#tipTpl").html(),
+                effect: {
+                    effect: "fade",
+                    duration: 0.3
                 },
-                align:{
-                    node:'#tip',
-                    points:['tc', 'bc']
+                align: {
+                    node: '#tip',
+                    points: ['tc', 'bc']
                 }
             });
 

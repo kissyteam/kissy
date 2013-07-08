@@ -17,6 +17,9 @@ History:
 ### v1.3.0 -> v1.4.0
 
  - [*] kissy-tools 对应工具合并到 tools 目录
+ - [!] switchable 移到 gallery/switchable/
+ - [!] datalazyload 移到 gallery/datalazyload/
+ - [!] waterfall 移到 gallery/waterfall/
  - [!] 模块更新到对应模块文件夹查看
 
 ### Happy 3nd Anniversary (2012/10/26)
@@ -328,7 +331,7 @@ History:
 ### v1.1.5 -> v1.1.6 (2010/11/30)
 
  - [!] KISSY.Event.on 第一个参数只支持单个原生 dom 节点或原生 dom 节点数组以及选择器字符串
- - [!] calendar 模块，S.use('calendar', fn) 需要写成 S.use('calendar+css', fn), 否则不会自动加载样式
+ - [!] calendar 模块，KISSY.use('calendar', fn) 需要写成 KISSY.use('calendar+css', fn), 否则不会自动加载样式
  - [*] loader 中，对内置模块无需配置，采用约定，去除 mods.js
  - [*] S.clone 增加防循环引用
  - [+] kissy-tools 增加 idebug

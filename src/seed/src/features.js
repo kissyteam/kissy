@@ -3,7 +3,7 @@
  * detect if current browser supports various features.
  * @author yiminghe@gmail.com
  */
-(function (S) {
+(function (S, undefined) {
 
     var Env = S.Env,
         win = Env.host,
@@ -18,16 +18,17 @@
     // nodejs
         doc = win.document || {},
         documentMode = doc.documentMode,
-        isTransitionSupportedState = false,
-        transitionPrefix = '',
-        isTransformSupportedState = false,
-        transformPrefix = '',
+        isMsPointerSupported,
+        transitionProperty,
+        transformProperty,
+        transitionPrefix,
+        transformPrefix,
         documentElement = doc.documentElement,
         documentElementStyle,
         isClassListSupportedState = true,
         isQuerySelectorSupportedState = false,
     // phantomjs issue: http://code.google.com/p/phantomjs/issues/detail?id=375
-        isTouchSupportedState = ('ontouchstart' in doc) && !(UA.phantomjs),
+        isTouchEventSupportedState = ('ontouchstart' in doc) && !(UA.phantomjs),
         ie = documentMode || UA.ie;
 
     if (documentElement) {
@@ -41,17 +42,20 @@
         S.each(VENDORS, function (val) {
             var transition = val ? val + 'Transition' : 'transition',
                 transform = val ? val + 'Transform' : 'transform';
-            if (transition in documentElementStyle) {
+            if (transitionPrefix === undefined &&
+                transition in documentElementStyle) {
                 transitionPrefix = val;
-                isTransitionSupportedState = true;
+                transitionProperty = transition;
             }
-            if (transform in documentElementStyle) {
+            if (transformPrefix === undefined &&
+                transform in documentElementStyle) {
                 transformPrefix = val;
-                isTransformSupportedState = true;
+                transformProperty = transform;
             }
         });
 
         isClassListSupportedState = 'classList' in documentElement;
+        isMsPointerSupported = "msPointerEnabled" in (win.navigator || {});
     }
 
     /**
@@ -67,14 +71,17 @@
          * whether support win8 pointer event.
          * @type {Boolean}
          */
-        // isMsPointerEnabled: "msPointerEnabled" in (win.navigator || {}),
+        isMsPointerSupported: function () {
+            return isMsPointerSupported;
+        },
+
         /**
          * whether support touch event.
          * @method
          * @return {Boolean}
          */
-        isTouchSupported: function () {
-            return isTouchSupportedState;
+        isTouchEventSupported: function () {
+            return isTouchEventSupportedState;
         },
 
         isDeviceMotionSupported: function () {
@@ -89,11 +96,11 @@
         },
 
         'isTransitionSupported': function () {
-            return isTransitionSupportedState;
+            return transitionPrefix !== undefined;
         },
 
         'isTransformSupported': function () {
-            return isTransformSupportedState;
+            return transformPrefix !== undefined;
         },
 
         'isClassListSupported': function () {
@@ -101,7 +108,9 @@
         },
 
         'isQuerySelectorSupported': function () {
-            return isQuerySelectorSupportedState;
+            // force to use js selector engine
+            return !S.config('dom/selector') &&
+                isQuerySelectorSupportedState;
         },
 
         'isIELessThan': function (v) {
@@ -111,8 +120,17 @@
         'getTransitionPrefix': function () {
             return transitionPrefix;
         },
+
         'getTransformPrefix': function () {
             return transformPrefix;
+        },
+
+        'getTransitionProperty': function () {
+            return transitionProperty;
+        },
+
+        'getTransformProperty': function () {
+            return transformProperty;
         }
     };
 })(KISSY);

@@ -1,0 +1,12 @@
+KISSY.add(function(S,xdr){
+    xdr.run();
+},{
+    requires:[
+        './xdr',
+        './decode/',
+        './basic',
+        './serialize',
+        './upload',
+        './advanced'
+    ]
+});

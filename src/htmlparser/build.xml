@@ -1,7 +1,0 @@
-<project name="htmlparser.build" default="build" basedir=".">
-    <description>HTMLParser Build File</description>
-
-    <property name="component.name" value="htmlparser"/>
-
-    <import file="../common.xml"/>
-</project>

@@ -18,7 +18,7 @@ KISSY.add("editor/plugin/underline", function (S, Editor, ui, cmd) {
 
             editor.docReady(function () {
                 editor.get("document").on("keydown", function (e) {
-                    if (e.ctrlKey && e.keyCode == S.Node.KeyCodes.U) {
+                    if (e.ctrlKey && e.keyCode == S.Node.KeyCode.U) {
                         editor.execCommand("underline");
                         e.preventDefault();
                     }

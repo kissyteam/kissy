@@ -2,7 +2,7 @@
  * 全局同步函数
  * @author yiminghe@gmail.com
  */
-KISSY.add(function(S, mvc) {
+KISSY.add(function(S, mvc,Json) {
     var KEY = 'KISSY_Note';
 
     function isModel(m) {
@@ -30,7 +30,7 @@ KISSY.add(function(S, mvc) {
             var index;
             var store = STORE || (window.localStorage ? window.localStorage.getItem(KEY) || [] : []);
             if (S.isString(store)) {
-                store = JSON.parse(store);
+                store = Json.parse(store);
             }
 
             var ret,id,error,i;
@@ -81,7 +81,7 @@ KISSY.add(function(S, mvc) {
             }
 
             if (method != 'read' && window.localStorage) {
-                window.localStorage.setItem(KEY, S.JSON.stringify(store));
+                window.localStorage.setItem(KEY, Json.stringify(store));
             }
 
             STORE = store;
@@ -104,5 +104,5 @@ KISSY.add(function(S, mvc) {
 
     return sync;
 }, {
-    requires:['mvc']
+    requires:['mvc','json']
 });

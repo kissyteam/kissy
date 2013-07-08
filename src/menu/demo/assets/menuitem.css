@@ -39,6 +39,7 @@
 }
 
 .ks-menuitem-content {
+    display: inline;
     font: normal 13px Arial, sans-serif;
 }
 
@@ -83,7 +84,7 @@
 .ks-menuitem-checked .ks-menuitem-checkbox,
 .ks-menuitem-checked.ks-menuitem-icon {
     /* Client apps may override the URL at which they serve the sprite. */
-    background: url(https://ssl.gstatic.com/editor/editortoolbar.png) no-repeat -512px 0;
+    background: url(http://img02.taobaocdn.com/tps/i2/T1wZBBFahaXXX2fxQq-624-16.png) no-repeat -512px 0;
 }
 
 /* Keyboard shortcut ("accelerator") style. */

@@ -2,15 +2,7 @@ KISSY.clearLoader = function () {
     var self = this,
         Env = self.Env,
         modules = Env.mods,
-        m,
-        l;
-
-    if ((l = Env._comboLoader) && l.clear) {
-        l.clear();
-    }
-    if ((l = Env._loader) && l.clear) {
-        l.clear();
-    }
+        m;
 
     self.config({
         map: false,
@@ -25,6 +17,7 @@ KISSY.clearLoader = function () {
                 if (p != 'alias' &&
                     p != 'name' &&
                     p != 'type' &&
+                    p != 'callbacks' &&
                     p != 'runtime') {
                     delete modules[m][p];
                 }

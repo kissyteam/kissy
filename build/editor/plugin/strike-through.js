@@ -1,8 +1,14 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 17 00:20
+build time: Jul 3 13:54
 */
+/*
+ Combined processedModules by KISSY Module Compiler: 
+
+ editor/plugin/strike-through
+*/
+
 /**
  * strikeThrough button
  * @author yiminghe@gmail.com
@@ -26,3 +32,4 @@ KISSY.add("editor/plugin/strike-through", function (S, Editor, ui, cmd) {
 }, {
     requires:['editor', './font/ui', './strike-through/cmd']
 });
+

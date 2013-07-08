@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 17 00:21
+build time: Jul 3 13:55
 */
 KISSY.add("editor/plugin/word-filter",function(r,s){function I(c){for(var c=c.toUpperCase(),d=J.length,b=0,f=0;f<d;++f)for(var e=J[f],g=e[1].length;c.substr(0,g)==e[1];c=c.substr(g))b+=e[0];return b}function K(c){for(var c=c.toUpperCase(),d=L.length,b=1,f=1;0<c.length;f*=d)b+=L.indexOf(c.charAt(c.length-1))*f,c=c.substr(0,c.length-1);return b}function z(c,d){d?c.setAttribute("style",d):c.removeAttribute("style")}function C(c){c=c.childNodes||[];return 1==c.length&&c[0]||null}function M(c,d){for(var b=
 c.childNodes||[],f=[],e,g=0;g<b.length;g++)e=b[g],e.nodeName&&(e.nodeName==d&&(f.push(e),b.splice(g--,1)),f=f.concat(M(e,d)));return f}function D(c,d){for(var b=c.parentNode;b&&(!b.nodeName||!b.nodeName.match(d));)b=b.parentNode;return b}function E(c,d){var b,f,e=c.childNodes||[];for(f=0;f<e.length;f++)if(b=e[f],d(b)||b.nodeName&&(b=E(b,d)))return b;return null}function t(c,d,b,f){var e="",g;if("string"==typeof b)e+=d+":"+b+";";else{if("object"==typeof d)for(g in d)e+=g+":"+d[g]+";";else e+=d;f=b}d=
@@ -25,4 +25,4 @@ a.filterChildren();if(H(a))return a.setTagName(null),null;if(G(a)){var c=E(a,fun
 a.getAttribute("name")?a.setTagName(null):x.webkit&&b&&b.match(/file:\/\/\/[\S]+#/i)&&a.setAttribute("href",b.replace(/file:\/\/\/[^#]+/i,""))},"ke:listbullet":function(a){D(a,/h\d/)&&a.setTagName(null)}},attributeNames:[[/^onmouse(:?out|over)/,""],[/^onload$/,""],[/(?:v|o):\w+/,""],[/^lang/,""]],attributes:{style:b([[/^list-style-type$/],[/^margin$|^margin-(?!bottom|top)/,null,function(a,b,c){if(b.nodeName in{p:1,div:1}){if("margin"==c)a=T(c,a,["margin-left"])["margin-left"];else if("margin-left"!=
 c)return null;if(a&&!S.test(a))return["margin-left",a]}return null}],[/^clear$/],[/^border.*|margin.*|vertical-align|float$/,null,function(a,b){if("img"==b.nodeName)return a}],[/^width|height$/,null,function(a,b){if(b.nodeName in{table:1,td:1,th:1,img:1})return a}]],1),width:function(a,b){if(b.nodeName in h.$tableContent)return!1},border:function(a,b){if(b.nodeName in h.$tableContent)return!1},"class":d,bgcolor:d,valign:function(a,b){t(b,"vertical-align",a);return!1}},comment:x.ie?function(a,b){var c=
 a.match(/<img.*?>/),d=a.match(/^\[if !supportLists\]([\s\S]*?)\[endif\]$/);return d?(d=(c=d[1]||c&&"l.")&&c.match(/>(?:[(]?)([^\s]+?)([.)]?)</),P(d,c)):x.gecko&&c?(c=(new s.Parser(c[0])).parse().childNodes[0],(d=(d=(d=b.previousSibling)&&d.toHTML().match(/<v:imagedata[^>]*o:href=['"](.*?)['"]/))&&d[1])&&c.setAttribute("src",d),c):!1}:d})})();return{toDataFormat:function(c,d){x.gecko&&(c=c.replace(/(<\!--\[if[^<]*?\])--\>([\S\s]*?)<\!--(\[endif\]--\>)/gi,"$1$2$3"));return c=d.htmlDataProcessor.toDataFormat(c,
-O)}}},{requires:["htmlparser"]});
+O)}}},{requires:["html-parser"]});

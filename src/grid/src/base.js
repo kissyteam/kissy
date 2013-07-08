@@ -1,6 +1,6 @@
 /**
  * This class specifies the definition for whow grid
- * @author dxq613@gmail.com, yiminghe@gmail.com
+ * @author dxq613@gmail.com
  */
 KISSY.add('grid/base', function (S, Component, Header, GridBody, Util) {
 
@@ -15,10 +15,10 @@ KISSY.add('grid/base', function (S, Component, Header, GridBody, Util) {
      * This class specifies the definition for the grid which contains {@link Grid.Header},{@link Grid.GridBody}
      * @name Grid
      * @constructor
-     * @extends KISSY.Component.Controller
+     * @extends KISSY.Component.Control
      * @extends Grid.Bindable
      */
-    var grid = Component.Controller.extend({
+    var grid = Component.Control.extend({
 
         createDom:function () {
             var _self = this;
@@ -443,10 +443,9 @@ KISSY.add('grid/base', function (S, Component, Header, GridBody, Util) {
             }
         }
     }, {
-        xclass:'grid',
-        priority:1
+        xclass:'grid'
     });
     return grid;
 }, {
-    requires:['component', './header', './gridbody', './util']
+    requires:['component/base', './header', './gridbody', './util']
 });

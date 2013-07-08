@@ -79,5 +79,5 @@ this.config=config||{};
 
     return Resize;
 }, {
-    requires:['editor', 'dd/base']
+    requires:['editor', 'dd']
 });

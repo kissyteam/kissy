@@ -5,6 +5,7 @@
 </head>
 <body>
 <h1 style="text-align: center;color: red">open console please</h1>
+
 <div class="l1">
     <ul class="l2">
         <li>
@@ -20,14 +21,12 @@
         </li>
     </ul>
 </div>
+
 <script src="/kissy/build/seed.js"></script>
 <script src="/kissy/tools/third-party/sizzle.js"></script>
 <script>
-    KISSY.use('sizzle', function (S, Sizzle) {
-        debugger
-        var els=Sizzle('div.l1 > .l2 li:nth-child(2)');
-        S.log(els);
-    });
+    var els = Sizzle('div.l1 > .l2 li:nth-child(2)');
+    S.log(els);
 </script>
 </body>
 </html>

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 17 00:22
+build time: Jul 3 16:19
 */
 /**
  * Menu DPL For KISSY.
@@ -67,10 +67,6 @@ build time: Apr 17 00:22
   top: -9999px;
 }
 
-.ks-popupmenu-shown{
-    visibility: visible;
-}
-
 .ks-popupmenu-hidden{
     visibility: hidden;
 }
@@ -113,6 +109,9 @@ build time: Apr 17 00:22
   color: #333333;
   white-space: nowrap;
   cursor: default;
+}
+.ks-menuitem-content {
+    display: inline;
 }
 .ks-menu .ks-menuitem-hover,
 .ks-menu .ks-menuitem-active {

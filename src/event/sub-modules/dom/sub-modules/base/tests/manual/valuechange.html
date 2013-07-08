@@ -18,10 +18,10 @@ value ： <input id="test"/>
 
 <script src="/kissy/build/seed.js"></script>
 
-
+<script src="/kissy/src/package.js"></script>
 <script>
 
-    KISSY.use("dom,event/dom,node", function (S, DOM, Event, Node) {
+    KISSY.use("dom,event/dom,node", function (S, Dom, Event, Node) {
 
         var test = Node.one("#test");
         test.on("valueChange", function (ev) {

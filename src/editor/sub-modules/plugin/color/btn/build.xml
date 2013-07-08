@@ -1,0 +1,7 @@
+<project name="editor/plugin/color/btn.build" default="build" basedir="">
+    <property name="component.name" value="editor/plugin/color/btn"/>
+
+    <property name="component.meta.dir" location="./ke-meta/"/>
+
+    <import file="../../../../../common.xml"/>
+</project>

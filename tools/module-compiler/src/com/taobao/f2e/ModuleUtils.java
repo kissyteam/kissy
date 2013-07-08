@@ -7,6 +7,8 @@ import java.util.ArrayList;
 
 /**
  * utils for module
+ *
+ * @author yiminghe@gmail.com
  */
 public class ModuleUtils {
 
@@ -49,7 +51,7 @@ public class ModuleUtils {
 
 
     /**
-     * 数组中 #开头的字符串表示表达式
+     * startWith '#' has special meaning
      * @param astRoot ast root
      * @param name    module name
      * @return String[] required processedModules 's name
@@ -77,7 +79,6 @@ public class ModuleUtils {
                                 re.add(ModuleUtils.getDepModuleName(name, fl.getString()));
                             } else {
                                 // conditional loader
-                                // 条件表达式
                                 // window.localStorage?"localStorage":""
                                 String source = AstUtils.toSource(fl);
                                 source = source.substring(0, source.length() - 1);

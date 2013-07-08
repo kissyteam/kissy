@@ -7,7 +7,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-touch-fullscreen" content="yes">
 <title>checkable-menu</title>
-<link href="../../../css/src/dpl/base.css" rel="stylesheet"/>
+<link href="../../../css/assets/dpl/base.css" rel="stylesheet"/>
 <link href="../../../button/demo/assets/custombutton.css" rel="stylesheet"/>
 <link href="../assets/menubutton.css" rel="stylesheet"/>
 
@@ -106,40 +106,37 @@
     </div>
 
     <script src="/kissy/build/seed.js"></script>
-
-    <script>
-
-
-    </script>
-    <!--
-<script src="http://assets.daily.taobao.net/s/kissy/1.2.0/kissy.js"></script>
--->
-
+    <script src="/kissy/src/package.js"></script>
     <script>
 
 
             KISSY.use("menubutton,menu", function (S, MenuButton, Menu) {
                 var sb = new Menu.PopupMenu();
-                sb.addChild(new Menu.Item({
-                    content:"submenuitem1",
-                    checkable:true}));
-                sb.addChild(new Menu.Item({
-                    content:"submenuitem2",
-                    checkable:true}));
+
+                sb.addChild(new Menu.CheckItem({
+                    content:"submenuitem1"
+                }));
+
+                sb.addChild(new Menu.CheckItem({
+                    content:"submenuitem2"
+                }));
 
 
                 var sb2 = new Menu.PopupMenu();
-                sb2.addChild(new Menu.Item({
-                    content:"submenuitem11",
-                    checkable:true}));
-                sb2.addChild(new Menu.Item({
-                    content:"submenuitem22",
-                    checkable:true}));
+
+                sb2.addChild(new Menu.CheckItem({
+                    content:"submenuitem11"
+                }));
+
+                sb2.addChild(new Menu.CheckItem({
+                    content:"submenuitem22"
+                }));
                 var b2 = new Menu.SubMenu({
                     content:"sub-sub-menu",
 
                     menu:sb2
                 });
+
                 sb.addChild(b2);
 
                 var b = new Menu.SubMenu({
@@ -152,8 +149,8 @@
 
                     children:[
                         b,
-                        new Menu.Item({content:"alone",
-                            checkable:true
+                        new Menu.CheckItem({
+                            content:"alone"
                         })
                     ]
                 });
@@ -162,6 +159,11 @@
                     render:"#exist",
                     content:"多选菜单",
                     width:200,
+                    listeners: {
+                        click: function (e) {
+                            S.log(e.target.get('content'));
+                        }
+                    },
                     menu:menu
                 });
                 exist.render();

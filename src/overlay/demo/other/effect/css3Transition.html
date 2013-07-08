@@ -8,6 +8,7 @@
     <meta name="apple-touch-fullscreen" content="yes">
     <title>KISSY css3 effect</title>
     <script src="/kissy/build/seed.js"></script>
+    <script src="/kissy/src/package.js"></script>
     <link rel="stylesheet" href="../assets/cool.css"/>
     <style>
         .ks-overlay, .ks-overlay-mask {
@@ -17,17 +18,12 @@
             -moz-transition-property: visibility,opacity;
         }
 
-        .ks-overlay-shown {
-            opacity: 1;
-        }
-
-        .ks-overlay-mask-shown {
+        .ks-overlay-mask {
             opacity: 0.3;
         }
 
         .ks-overlay-hidden, .ks-overlay-mask-hidden {
             opacity: 0;
-
         }
     </style>
 </head>
@@ -39,7 +35,7 @@
 
 <script>
 
-        S.use("overlay", function (S, Overlay) {
+        KISSY.use("overlay", function (S, Overlay) {
             var o = new Overlay.Dialog({
                 width: 500,
                 height: 500,

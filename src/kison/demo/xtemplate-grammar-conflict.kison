@@ -1,0 +1,447 @@
+/**
+ * lalr grammar and lexer rules for kissy xtemplate.
+ * @author yiminghe@gmail.com
+ */
+(function () {
+
+    return {
+        productions: [
+            {
+                symbol: 'program',
+                rhs: ['statements', 'inverse', 'statements'],
+                action: function () {
+                    return new this.yy.ProgramNode(this.lexer.lineNumber, this.$1, this.$3);
+                }
+            },
+            {
+                symbol: 'program',
+                rhs: ['statements'],
+                action: function () {
+                    return new this.yy.ProgramNode(this.lexer.lineNumber, this.$1);
+                }
+            },
+            {
+                symbol: 'statements',
+                rhs: ['statement'],
+                action: function () {
+                    return [this.$1];
+                }
+            },
+            {
+                symbol: 'statements',
+                rhs: ['statements', 'statement'],
+                action: function () {
+                    this.$1.push(this.$2);
+                }
+            },
+            {
+                symbol: 'statement',
+                rhs: ['openBlock', 'program', 'closeBlock'],
+                action: function () {
+                    return new this.yy.BlockNode(this.lexer.lineNumber, this.$1, this.$2, this.$3);
+                }
+            },
+            {
+                symbol: 'statement',
+                rhs: ['tpl']
+            },
+            {
+                symbol: 'statement',
+                rhs: ['CONTENT'],
+                action: function () {
+                    return new this.yy.ContentNode(this.lexer.lineNumber, this.$1);
+                }
+            },
+            {
+                symbol: 'tpl',
+                rhs: ['OPEN', 'path', 'params', 'CLOSE'],
+                action: function () {
+                    return new this.yy.TplNode(this.lexer.lineNumber, this.$2, this.$3);
+                }
+            },
+            {
+                symbol: 'tpl',
+                rhs: ['OPEN', 'Expression', 'CLOSE'],
+                action: function () {
+                    return new this.yy.TplExpressionNode(this.lexer.lineNumber,
+                        this.$2);
+                }
+            },
+
+            {
+                symbol: 'params',
+                rhs: ['params', 'param'],
+                action: function () {
+                    this.$1.push(this.$2);
+                }
+            },
+            {
+                symbol: 'params',
+                rhs: ['param'],
+                action: function () {
+                    return [this.$1];
+                }
+            },
+            {
+                symbol: 'param',
+                rhs: ['Expression']
+            },
+
+        /**
+         * expression start
+         */
+            {
+                symbol: 'Expression',
+                rhs: ['AdditiveExpression']
+            },
+
+            {
+                symbol: 'AdditiveExpression',
+                rhs: ['UnaryExpression']
+            },
+
+            {
+                symbol: 'AdditiveExpression',
+                rhs: ['AdditiveExpression', 'MINUS', 'UnaryExpression'],
+                action: function () {
+                    return new this.yy.AdditiveExpression(this.$1, '-', this.$3);
+                }
+            },
+
+            {
+                symbol: 'AdditiveExpression',
+                rhs: ['AdditiveExpression', 'PLUS', 'UnaryExpression'],
+                action: function () {
+                    return new this.yy.AdditiveExpression(this.$1, '+', this.$3);
+                }
+            },
+
+            {
+                symbol: 'UnaryExpression',
+                rhs: ['NOT', 'UnaryExpression'],
+                action: function () {
+                    return new this.yy.UnaryExpression(this.$1);
+                }
+            },
+
+            {
+                symbol: 'UnaryExpression',
+                rhs: ['PrimaryExpression']
+            },
+
+            {
+                symbol: 'PrimaryExpression',
+                rhs: ['NUMBER'],
+                action: function () {
+                    return new this.yy.NumberNode(this.lexer.lineNumber, this.$1);
+                }
+            },
+
+            {
+                symbol: 'PrimaryExpression',
+                rhs: ['MINUS', 'NUMBER'],
+                action: function () {
+                    return new this.yy.NumberNode(this.lexer.lineNumber, 0 - this.$2);
+                }
+            },
+
+            {
+                symbol: 'PrimaryExpression',
+                rhs: ['path']
+            },
+
+            {
+                symbol: 'path',
+                rhs: ['ID'],
+                action: function () {
+                    return new this.yy.IdNode(this.lexer.lineNumber, [this.$1]);
+                }
+            }
+        ],
+        lexer: {
+            // states: t et
+            rules: [
+                {
+                    // "\n".match(/./)
+                    regexp: /^(\\[\s\S]|[\s\S])*?(?={{)/,
+                    action: function () {
+                        var self = this,
+                            text = self.text,
+                            m,
+                            n = 0;
+                        if (m = text.match(/\\+$/)) {
+                            n = m[0].length;
+                        }
+                        if (n % 2) {
+                            text = text.slice(0, -1);
+                            self.pushState('et');
+                        } else {
+                            self.pushState('t');
+                        }
+                        // https://github.com/kissyteam/kissy/issues/330
+                        // return even empty
+                        self.text = text;
+                        return 'CONTENT';
+                    }
+                },
+                {
+                    regexp: /^[\s\S]+/,
+                    token: 'CONTENT'
+                },
+                {
+                    state: ['et'],
+                    token: 'CONTENT',
+                    regexp: /^[\s\S]{2,}?(?:(?={{)|$)/,
+                    action: function () {
+                        this.popState();
+                    }
+                },
+                {
+                    state: ['t'],
+                    // support Inverted Sections in mustache
+                    // support {{@
+                    regexp: /^{{(?:#|@|\^)/,
+                    token: 'OPEN_BLOCK'
+                },
+                {
+                    state: ['t'],
+                    regexp: /^{{\//,
+                    token: 'OPEN_END_BLOCK'
+                },
+                {
+                    state: ['t'],
+                    regexp: /^{{\s*else/,
+                    token: 'OPEN_INVERSE'
+                },
+                {
+                    state: ['t'],
+                    regexp: /^{{{/,
+                    token: 'OPEN_UN_ESCAPED'
+                },
+                {
+                    state: ['t'],
+                    regexp: /^{{![\s\S]*?}}/,
+                    action: function () {
+                        // return to content mode
+                        this.popState();
+                    }
+                    // ignore comment
+                    // ,token: 'COMMENT'
+                },
+                // plain mode
+                {
+                    state: ['t'],
+                    regexp: /^{{%([\s\S]*?)%}}/,
+                    action: function () {
+                        // return to content mode
+                        this.text = this.matches[1] || '';
+                        this.popState();
+                    },
+                    token: 'CONTENT'
+                },
+
+                {
+                    state: ['t'],
+                    regexp: /^{{/,
+                    token: 'OPEN'
+                },
+                {
+                    state: ['t'],
+                    regexp: /^\s+/
+                },
+                {
+                    state: ['t'],
+                    regexp: /^}}}/,
+                    action: function () {
+                        this.popState();
+                    },
+                    token: 'CLOSE'
+                },
+                {
+                    state: ['t'],
+                    regexp: /^}}/,
+                    action: function () {
+                        this.popState();
+                    },
+                    token: 'CLOSE'
+                },
+                {
+                    state: ['t'],
+                    regexp: /^\(/,
+                    token: 'LPAREN'
+                },
+                {
+                    state: ['t'],
+                    regexp: /^\)/,
+                    token: 'RPAREN'
+                },
+                {
+                    state: ['t'],
+                    regexp: /^\|\|/,
+                    token: 'OR'
+                },
+                {
+                    state: ['t'],
+                    regexp: /^&&/,
+                    token: 'AND'
+                },
+                {
+                    state: ['t'],
+                    regexp: /^===/,
+                    token: 'LOGIC_EQUALS'
+                },
+                {
+                    state: ['t'],
+                    regexp: /^!==/,
+                    token: 'LOGIC_NOT_EQUALS'
+                },
+                {
+                    state: ['t'],
+                    regexp: /^>/,
+                    token: 'GT'
+                },
+                {
+                    state: ['t'],
+                    regexp: /^>=/,
+                    token: 'GE'
+                },
+                {
+                    state: ['t'],
+                    regexp: /^</,
+                    token: 'LT'
+                },
+                {
+                    state: ['t'],
+                    regexp: /^<=/,
+                    token: 'LE'
+                },
+                {
+                    state: ['t'],
+                    regexp: /^\+/,
+                    token: 'PLUS'
+                },
+                {
+                    state: ['t'],
+                    regexp: /^-/,
+                    token: 'MINUS'
+                },
+                {
+                    state: ['t'],
+                    regexp: /^\*/,
+                    token: 'MULTIPLY'
+                },
+                {
+                    state: ['t'],
+                    regexp: /^\//,
+                    token: 'DIVIDE'
+                },
+                {
+                    state: ['t'],
+                    regexp: /^%/,
+                    token: 'MODULUS'
+                },
+                {
+                    state: ['t'],
+                    regexp: /^!/,
+                    token: 'NOT'
+                },
+                {
+                    state: ['t'],
+                    // notice escaped string
+                    regexp: /^"(\\"|[^"])*"/,
+                    action: function () {
+                        this.text = this.text.slice(1, -1).replace(/\\"/g, '"');
+                    },
+                    token: 'STRING'
+                },
+                {
+                    state: ['t'],
+                    // notice escaped string
+                    regexp: /^'(\\'|[^'])*'/,
+                    action: function () {
+                        this.text = this.text.slice(1, -1).replace(/\\'/g, "'");
+                    },
+                    token: 'STRING'
+                },
+                {
+                    state: ['t'],
+                    regexp: /^true/,
+                    token: 'BOOLEAN'
+                },
+                {
+                    state: ['t'],
+                    regexp: /^false/,
+                    token: 'BOOLEAN'
+                },
+                {
+                    state: ['t'],
+                    regexp: /^\d+(?:\.\d+)?(?:e-?\d+)?/i,
+                    token: 'NUMBER'
+                },
+                {
+                    state: ['t'],
+                    regexp: /^=/,
+                    token: 'EQUALS'
+                },
+                {
+                    // support {{.}}
+                    state: ['t'],
+                    regexp: /^\.(?=})/,
+                    token: 'ID'
+                },
+                {
+                    state: ['t'],
+                    regexp: /^\.\./,
+                    token: 'ID',
+                    action: function () {
+                        // wait for '/'
+                        this.pushState('ws');
+                    }
+                },
+                {
+                    state: ['ws'],
+                    regexp: /^\//,
+                    token: 'SEP',
+                    action: function () {
+                        this.popState();
+                    }
+                },
+                {
+                    state: ['t'],
+                    regexp: /^\./,
+                    token: 'SEP'
+                },
+                {
+                    state: ['t'],
+                    regexp: /^\[/,
+                    token: 'REF_START'
+                },
+                {
+                    state: ['t'],
+                    regexp: /^\]/,
+                    token: 'REF_END'
+                },
+                {
+                    state: ['t'],
+                    regexp: /^[a-zA-Z0-9_$]+/,
+                    token: 'ID'
+                },
+                {
+                    state: ['t'],
+                    regexp: /^./,
+                    token: 'INVALID'
+                }
+            ]
+        }
+
+    }
+})();
+
+/**
+ * issues:
+ *
+ *  2013-06-17 reduce shift conflicts!
+ *   {{n - 1}} expression: n-1
+ *   {{n -1}} param n(-1)
+ *
+ */

@@ -4,14 +4,15 @@
 <textarea rows="55" cols="150" id="code">
 
 </textarea>
-<script type="text/javascript" src="/kissy/build/kissy.js"></script>
+<script type="text/javascript" src="/kissy/build/seed.js"></script>
+<script src="/kissy/src/package.js"></script>
 <script type="text/javascript" id="script">
     var S = KISSY,
             Event = S.Event;
 
     (function () {
         var events = 'keydown mousemove touchstart touchmove mousewheel';
-        Event._Special.idle = {
+        Event.Special.idle = {
             setup: function () {
                 if (this !== window) {
                     return;

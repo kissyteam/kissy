@@ -2,13 +2,14 @@
  * custom dialog for kissy editor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/dialog", function (S, Editor, Overlay, focusFix, ConstrainPlugin, DragPlugin) {
+KISSY.add("editor/plugin/dialog", function (S, Editor, Overlay,
+                                            focusFix, ConstrainPlugin, DragPlugin) {
 
     var Dialog4E = Overlay.Dialog.extend({
 
         initializer: function () {
             this.plug(new DragPlugin({
-                handlers: ['.ks-editor-stdmod-header'],
+                handlers: ['.ks-editor-dialog-header'],
                 plugins: [
                     new ConstrainPlugin({
                         constrain: window
@@ -20,6 +21,7 @@ KISSY.add("editor/plugin/dialog", function (S, Editor, Overlay, focusFix, Constr
         bindUI: function () {
             focusFix.init(this);
         },
+
         show: function () {
             var self = this;
             //在 show 之前调用
@@ -32,6 +34,7 @@ KISSY.add("editor/plugin/dialog", function (S, Editor, Overlay, focusFix, Constr
             }
             Dialog4E.superclass.show.call(self);
         }
+
     }, {
         ATTRS: {
             prefixCls: {

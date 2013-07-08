@@ -7,23 +7,25 @@
 // global
 var S = global.KISSY = require('../../' + 'build/kissy-nodejs.js');
 
-var jasmineWrapper = require('../jasmine/jasmine');
+var fs = require('fs');
 
-var jasmine = jasmineWrapper.jasmine;
+var jasmineExports = require('../jasmine/jasmine');
 
-S.each(jasmineWrapper, function (v, k) {
+var jasmineNode = require('../jasmine/node/reporter').jasmineNode;
+
+var jasmine = jasmineExports.jasmine;
+
+
+S.each(jasmineExports, function (v, k) {
     global[k] = v;
 });
 
-require('jasmine-reporters');
+var jasmineEnv = jasmine.getEnv();
 
 // ------------ configs start
 
 var isVerbose = false;
 var showColors = true;
-var extentions = "js";
-var match = '.';
-var matchAll = false;
 
 var junitReport = {
     report: true,
@@ -32,179 +34,66 @@ var junitReport = {
     consolidate: true
 };
 
+var cwd = process.cwd();
+console.log('cwd: ' + cwd);
+
+S.config('packages', {
+    src: {
+        base: cwd
+    }
+});
+
 var mods = [
-    'xtemplate',
-    'kison',
-    'json',
-    'base',
-    'htmlparser',
-    'event/custom'
+    'src/xtemplate/tests/specs/',
+    'src/kison/tests/specs/',
+    'src/json/tests/specs/',
+    'src/base/tests/specs/',
+    'src/html-parser/tests/specs/',
+    'src/event/sub-modules/custom/tests/specs/'
 ];
+
+console.log('test mods: ' + mods);
+
+function onComplete(runner) {
+    var description = runner.queue.blocks[0].description;
+    console.log(description + ' ↑ \n');
+    console.log(new Array(20).join('-'));
+    console.log('\n');
+    if (runner.results().failedCount == 0) {
+        exitCode = 0;
+    } else {
+        exitCode = 1;
+        process.exit(exitCode);
+    }
+}
+
+if (junitReport && junitReport.report) {
+    if (!fs.existsSync(junitReport.savePath)) {
+        console.log('creating junit xml report save path: ' + junitReport.savePath);
+        fs.mkdirSync(junitReport.savePath, "0755");
+    }
+    jasmineEnv.addReporter(new jasmineNode['JUnitXmlReporter'](junitReport.savePath,
+        junitReport.consolidate,
+        junitReport.useDotNotation));
+}
+
+if (isVerbose) {
+    jasmineEnv.addReporter(new jasmineNode.TerminalVerboseReporter({
+        print: require('sys').print,
+        color: showColors,
+        onComplete: onComplete
+    }));
+} else {
+    jasmineEnv.addReporter(new jasmineNode.TerminalReporter({
+        print: require('sys').print,
+        color: showColors,
+        onComplete: onComplete
+    }));
+}
 
 // ------------ configs end
 
-var specFolders = [];
-
-var util,
-    path = require('path');
-
-try {
-    util = require('util')
-} catch (e) {
-    util = require('sys')
-}
-
-for (var key in jasmine) {
-    global[key] = jasmine[key];
-}
-
-S.each(mods, function (m) {
-    m = m.replace(/\//g, '/sub-modules/');
-    specFolders.push(m + '/tests/specs/');
-});
-
-var regExpSpec = new RegExp(match + (matchAll ? "" : "spec\\.") +
-    "(" + extentions + ")$", 'i');
-
-var cwd = process.cwd();
-
-// in case run from idea
-if (!S.endsWith(cwd, "src")) {
-    cwd += '/src';
-}
-
-var exitCode, index = 0;
-
-console.log(mods);
-
 // KISSY.use is asynchronous even in nodejs
-KISSY.use(mods, function (S) {
-
-    var args = S.makeArray(arguments);
-
-    var index = 0;
-
-    function onComplete(runner) {
-        var description = runner.queue.blocks[0].description;
-        util.print(description + ' ↑ \n');
-        util.print(new Array(20).join('-'));
-        util.print('\n');
-        if (runner.results().failedCount == 0) {
-            exitCode = 0;
-        } else {
-            exitCode = 1;
-            process.exit(exitCode);
-        }
-
-        process.nextTick(function () {
-            // new environment
-            jasmine.currentEnv_ = new jasmine.Env();
-            next();
-        });
-    }
-
-    function next() {
-
-        if (index < specFolders.length) {
-            var specFolder = path.resolve(cwd, specFolders[index++]);
-
-            executeSpecsInFolder(specFolder,
-                onComplete,
-                isVerbose,
-                showColors,
-                regExpSpec,
-                junitReport);
-        }
-    }
-
-    next();
-
+KISSY.use(mods, function () {
+    jasmineEnv.execute();
 });
-
-function help() {
-    util.print([
-        'USAGE: jasmine-node [--color|--noColor] [--verbose] [--coffee] directory'
-        , ''
-        , 'Options:'
-        , '  --color            - use color coding for output'
-        , '  --noColor          - do not use color coding for output'
-        , '  -m, --match REGEXP - load only specs containing "REGEXPspec"'
-        , '  --matchAll         - relax requirement of "spec" in spec file names'
-        , '  --verbose          - print extra information per each test run'
-        , '  --junitReport      - export tests results as junitReport xml format'
-        , '  --output           - defines the output folder for junitReport files'
-        , '  -h, --help         - display this help and exit'
-        , ''
-    ].join("\n"));
-
-    process.exit(-1);
-}
-
-var walkdir = require('walkdir');
-var fs = require('fs');
-
-function loadSpecs(loadPath, matcher) {
-    var wannaBeSpecs = walkdir.sync(loadPath),
-        specs = [];
-
-    for (var i = 0; i < wannaBeSpecs.length; i++) {
-        var file = wannaBeSpecs[i];
-        try {
-            if (fs.statSync(file).isFile()) {
-                if (!/.*node_modules.*/.test(file) &&
-                    matcher.test(path.basename(file))) {
-                    specs.push(file);
-                }
-            }
-        } catch (e) {
-            // nothing to do here
-        }
-    }
-
-    return specs;
-}
-
-var jasmineNode = require('../jasmine/node/reporter').jasmineNode;
-
-function executeSpecsInFolder(folder, done, isVerbose, showColors, matcher, junitReport) {
-    var fileMatcher = matcher || new RegExp(".(js)$", "i"),
-        jasmineEnv = jasmine.getEnv();
-
-    var specsList = loadSpecs(folder, fileMatcher);
-
-    if (junitReport && junitReport.report) {
-        if (!path.existsSync(junitReport.savePath)) {
-            util.puts('creating junit xml report save path: ' + junitReport.savePath);
-            fs.mkdirSync(junitReport.savePath, "0755");
-        }
-        jasmineEnv.addReporter(new jasmine['JUnitXmlReporter'](junitReport.savePath,
-            junitReport.consolidate,
-            junitReport.useDotNotation));
-    }
-
-    if (isVerbose) {
-        jasmineEnv.addReporter(new jasmineNode.TerminalVerboseReporter({
-            print: util.print,
-            color: showColors,
-            onComplete: done
-        }));
-    } else {
-        jasmineEnv.addReporter(new jasmineNode.TerminalReporter({
-            print: util.print,
-            color: showColors,
-            onComplete: done
-        }));
-    }
-
-
-    for (var i = 0, len = specsList.length; i < len; ++i) {
-        var filename = specsList[i];
-        require(filename.replace(/\.\w+$/, ""));
-    }
-
-    setTimeout(function () {
-        // async use
-        jasmineEnv.execute();
-    },200);
-
-}

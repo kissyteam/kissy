@@ -1,7 +1,11 @@
 /**
- * Simple KISSY Test Server
+ * Simple KISSY Test Server And mvc framework
  * @author yiminghe@gmail.com
  */
+
+
+require('./gen-tc');
+require('../gen-package/gen-package');
 
 var path = require('path');
 var fs = require('fs');
@@ -11,21 +15,41 @@ var cwd = process.cwd();
 var currentDir = __dirname;
 var S = global.KISSY = global.S = require(cwd + '/build/kissy-nodejs.js');
 
-S.use('xtemplate', function (S, XTemplate) {
+S.use('xtemplate/nodejs', function (S, XTemplateNodeJs) {
     function startServer(port) {
 
         var express = require('express');
         var app = express();
+        S.config('packages',{
+            'xtemplates':{
+                base:currentDir
+            }
+        });
+        var tplCache = {};
 
-        var testTpl = new XTemplate(fs.readFileSync(currentDir + '/test-xtpl.html', 'utf-8'));
-        var listTpl = new XTemplate(fs.readFileSync(currentDir + '/list-xtpl.html', 'utf-8'));
+        var testTpl = XTemplateNodeJs.loadFromModuleName('xtemplates/test');
+
+        var listTpl = XTemplateNodeJs.loadFromModuleName('xtemplates/list');
+
+        function getXTemplate(name) {
+            if (tplCache[name]) {
+                return tplCache[name];
+            }
+            return tplCache[name] =XTemplateNodeJs.loadFromModuleName('xtemplates/'+name);
+        }
+
+        var utils = {
+            render: function (tpl, data) {
+                return getXTemplate(tpl).render(data);
+            }
+        };
 
         // app.use(express.compress());
         app.use(express.cookieParser());
         app.use(express.bodyParser());
 
         // combo
-        app.use('/kissy', function (req, res, next) {
+        app.use('/kissy/', function (req, res, next) {
 
             var query = req.query, k,
                 combo = "",
@@ -65,19 +89,19 @@ S.use('xtemplate', function (S, XTemplate) {
 
         });
 
-        app.use('/kissy', function (req, res, next) {
+        app.use('/kissy/', function (req, res, next) {
             var path = req.path;
             if (S.endsWith(path, ".jss")) {
-                require(cwd + path)(req, res);
+                require(cwd + path)(req, res, utils);
             } else {
                 next();
             }
         });
 
         //app.use('/kissy', express.directory(cwd))
-        app.use('/kissy', express.static(cwd));
+        app.use('/kissy/', express.static(cwd));
 
-        app.use('/kissy', function (req, res, next) {
+        app.use('/kissy/', function (req, res, next) {
 
             var cur = cwd + req.path,
                 index = cur + '/index.jss';

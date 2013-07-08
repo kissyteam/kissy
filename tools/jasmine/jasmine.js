@@ -2534,8 +2534,9 @@ jasmine.version_ = {
 };
 
 jasmine.kissyNext = function (failedCount) {
+    var ie = document.documentMode || KISSY.UA.ie || 100;
     if (!failedCount && parent != window) {
-        if ('postMessage' in parent) {
+        if ('postMessage' in parent && ie > 8) {
             parent.postMessage('next', '*');
         } else {
             parent.name = 'next';

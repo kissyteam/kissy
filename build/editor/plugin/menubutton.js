@@ -1,8 +1,14 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 17 00:19
+build time: Jul 3 13:53
 */
+/*
+ Combined processedModules by KISSY Module Compiler: 
+
+ editor/plugin/menubutton
+*/
+
 /**
  * select component for kissy editor.
  * @author yiminghe@gmail.com
@@ -16,7 +22,7 @@ KISSY.add("editor/plugin/menubutton", function (S, Editor, MenuButton) {
 
         SelectType = SelectType || MenuButton.Select;
 
-        var self = this, prefixCls = self.get("prefixCls") + "editor-";
+        var self = this, prefixCls = self.get('prefixCls') + "editor-";
 
         if (cfg) {
             cfg.editor = self;
@@ -32,8 +38,6 @@ KISSY.add("editor/plugin/menubutton", function (S, Editor, MenuButton) {
             render: self.get("toolBarEl"),
             prefixCls: prefixCls
         }, cfg)).render();
-
-        s.get("el").unselectable();
 
         if (cfg.mode == Editor.Mode.WYSIWYG_MODE) {
             self.on("wysiwygMode", function () {
@@ -52,3 +56,4 @@ KISSY.add("editor/plugin/menubutton", function (S, Editor, MenuButton) {
 }, {
     requires: ['editor', 'menubutton']
 });
+

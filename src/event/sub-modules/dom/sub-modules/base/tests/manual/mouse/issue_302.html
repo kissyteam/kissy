@@ -9,6 +9,7 @@
     <title>delegate example</title>
 
     <script src="/kissy/build/seed.js" charset="utf-8"></script>
+    <script src="/kissy/src/package.js"></script>
     <script src="http://localhost/lib/jquery/dist/jquery.js" charset="utf-8"></script>
 
     <style type="text/css">
@@ -26,7 +27,7 @@
     </div>
 </div>
 <script>
-    KISSY.use("dom,event/dom", function (S, DOM, Event) {
+    KISSY.use("dom,event/dom", function (S, Dom, Event) {
         S.ready(function () {
             Event.on(".t", "mouseenter", function (e) {
                 setTimeout(function () {

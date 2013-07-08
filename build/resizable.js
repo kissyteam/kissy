@@ -1,8 +1,14 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 17 00:22
+build time: Jul 3 13:57
 */
+/*
+ Combined processedModules by KISSY Module Compiler: 
+
+ resizable
+*/
+
 /**
  * @ignore
  * resizable support for kissy
@@ -349,4 +355,6 @@ KISSY.add("resizable", function (S, Node, RichBase, DD, undefined) {
 
     return Resizable;
 
-}, { requires: ["node", "rich-base", "dd/base"] });
+},
+    { requires: ["node", 'rich-base', "dd"] });
+

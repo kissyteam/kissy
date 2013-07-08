@@ -626,7 +626,7 @@
 
         var customEvent;
 
-        // check taget
+        // check target
         if (!target) {
             throw new Error("simulateTouchEvent(): Invalid target.");
         }
@@ -721,20 +721,25 @@
 
         //check for DOM-compliant browsers first
         if (isFunction(document.createEvent)) {
-            if (UA.android) {
+            if (UA.android || UA.chrome) {
                 /**
                  * Couldn't find android start version that supports touch event.
                  * Assumed supported(btw APIs broken till icecream sandwitch)
                  * from the beginning.
                  */
-                if (UA.android < 4.0) {
+                if (UA.android < 4.0 ||
+                    // emulate touch events
+                    UA.chrome) {
                     /**
-                     * Touch APIs are broken in androids older than 4.0. We will use
+                     * Touch APIs are broken in androids older than 4.0.
+                     * We will use
                      * simulated touch apis for these versions.
-                     * App developer still can listen for touch events. This events
+                     * App developer still can listen for touch events.
+                     * This events
                      * will be dispatched with touch event types.
                      *
-                     * (Note) Used target for the relatedTarget. Need to verify if
+                     * (Note) Used target for the relatedTarget.
+                     * Need to verify if
                      * it has a side effect.
                      */
                     customEvent = document.createEvent("MouseEvent");

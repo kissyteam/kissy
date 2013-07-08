@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 17 00:22
+build time: Jul 3 14:41
 */
 /**
 * Variables to customize the look and feel from Bootstrap.
@@ -34,15 +34,7 @@ build time: Apr 17 00:22
     display: none;
 }
 
-.ks-overlay-shown {
-    visibility: visible;
-}
-
-.ks-overlay-mask-shown{
-    display: block;
-}
-
-.ks-ext-close {
+.ks-overlay-close {
   display: inline-block;
   *display: inline;
   *zoom: 1;
@@ -63,14 +55,14 @@ build time: Apr 17 00:22
   top: 9px;
   z-index: 99;
 }
-.ks-ext-close:last-child {
+.ks-overlay-close:last-child {
   *margin-left: 0;
 }
-.ks-ext-close:hover {
+.ks-overlay-close:hover {
   opacity: 1;
   filter: alpha(opacity=100);
   *zoom: 1;
 }
-.ks-ext-close-x {
+.ks-overlay-close-x {
   display: none;
 }

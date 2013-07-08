@@ -8,16 +8,12 @@
     <meta name="apple-touch-fullscreen" content="yes">
     <title>KISSY css3 effect</title>
     <script src="/kissy/build/seed.js"></script>
+    <script src="/kissy/src/package.js"></script>
     <link rel="stylesheet" href="../assets/cool.css"/>
     <style>
-        .ks-overlay-shown {
+        .ks-overlay {
             -webkit-animation: overlay_anim 1s ease-in-out 0 1;
             -moz-animation: overlay_anim 1s ease-in-out 0 1;
-        }
-
-        .ks-overlay-hidden {
-            -webkit-animation: overlay_anim2 1s ease-in-out 0 1;
-            -moz-animation: overlay_anim2 1s ease-in-out 0 1;
         }
 
         @-webkit-keyframes overlay_anim {
@@ -44,14 +40,9 @@
             * --------------------------------------------------------
             */
 
-        .ks-overlay-mask-shown {
+        .ks-overlay-mask {
             -webkit-animation: mask_anim 1s ease-in-out 0 1;
             -moz-animation: mask_anim 1s ease-in-out 0 1;
-        }
-
-        .ks-overlay-mask-hidden {
-            -webkit-animation: mask_anim2 1s ease-in-out 0 1;
-            -moz-animation: mask_anim2 1s ease-in-out 0 1;
         }
 
         @-webkit-keyframes mask_anim {

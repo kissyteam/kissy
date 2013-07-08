@@ -3,10 +3,10 @@
  * hashchange event for non-standard browser
  * @author yiminghe@gmail.com, xiaomacji@gmail.com
  */
-KISSY.add('event/dom/hashchange', function (S, Event, DOM) {
+KISSY.add('event/dom/hashchange', function (S, DomEvent, Dom) {
 
     var UA = S.UA,
-        special = Event._Special,
+        Special = DomEvent.Special,
         win = S.Env.host,
         doc = win.document,
         docMode = doc && doc['documentMode'],
@@ -14,7 +14,7 @@ KISSY.add('event/dom/hashchange', function (S, Event, DOM) {
         ie = docMode || UA['ie'],
         HASH_CHANGE = 'hashchange';
 
-    Event.REPLACE_HISTORY = REPLACE_HISTORY;
+    DomEvent.REPLACE_HISTORY = REPLACE_HISTORY;
 
     // 1. 不支持 hashchange 事件，支持 hash 历史导航(opera??)：定时器监控
     // 2. 不支持 hashchange 事件，不支持 hash 历史导航(ie67) : iframe + 定时器
@@ -48,6 +48,7 @@ KISSY.add('event/dom/hashchange', function (S, Event, DOM) {
 
         poll = function () {
             var hash = getHash(), replaceHistory;
+
             if (replaceHistory = S.endsWith(hash, REPLACE_HISTORY)) {
                 hash = hash.slice(0, -REPLACE_HISTORY.length);
                 // 去除 ie67 hack 标记
@@ -67,10 +68,10 @@ KISSY.add('event/dom/hashchange', function (S, Event, DOM) {
             // S.log('set iframe html :' + hash);
             var html = S.substitute(IFRAME_TEMPLATE, {
                     // 防止 hash 里有代码造成 xss
-                    // 后面通过 innerText，相当于 unEscapeHTML
-                    hash: S.escapeHTML(hash),
+                    // 后面通过 innerText，相当于 unEscapeHtml
+                    hash: S.escapeHtml(hash),
                     // 一定要加哦
-                    head: DOM.isCustomDomain() ? ("<script>" +
+                    head: Dom.isCustomDomain() ? ("<script>" +
                         "document." +
                         "domain = '" +
                         doc.domain
@@ -86,7 +87,7 @@ KISSY.add('event/dom/hashchange', function (S, Event, DOM) {
                     iframeDoc.open();
                 }
                 // 取时要用 innerText !!
-                // 否则取 innerHTML 会因为 escapeHTML 导置 body.innerHTMl != hash
+                // 否则取 innerHTML 会因为 escapeHtml 导置 body.innerHTMl != hash
                 iframeDoc.write(html);
                 iframeDoc.close();
                 // 立刻同步调用 onIframeLoad !!!!
@@ -101,7 +102,7 @@ KISSY.add('event/dom/hashchange', function (S, Event, DOM) {
         notifyHashChange = function () {
             // S.log('hash changed : ' + getHash());
             // does not need bubbling
-            Event.fireHandler(win, HASH_CHANGE);
+            DomEvent.fireHandler(win, HASH_CHANGE);
         },
         setup = function () {
             if (!timer) {
@@ -124,9 +125,9 @@ KISSY.add('event/dom/hashchange', function (S, Event, DOM) {
          */
         setup = function () {
             if (!iframe) {
-                var iframeSrc = DOM.getEmptyIframeSrc();
+                var iframeSrc = Dom.getEmptyIframeSrc();
                 //http://www.paciellogroup.com/blog/?p=604
-                iframe = DOM.create('<iframe ' +
+                iframe = Dom.create('<iframe ' +
                     (iframeSrc ? 'src="' + iframeSrc + '"' : '') +
                     ' style="display: none" ' +
                     'height="0" ' +
@@ -136,16 +137,16 @@ KISSY.add('event/dom/hashchange', function (S, Event, DOM) {
                 // Append the iframe to the documentElement rather than the body.
                 // Keeping it outside the body prevents scrolling on the initial
                 // page load
-                DOM.prepend(iframe, doc.documentElement);
+                Dom.prepend(iframe, doc.documentElement);
 
                 // init，第一次触发，以后都是 onIframeLoad
-                Event.add(iframe, 'load', function () {
-                    Event.remove(iframe, 'load');
+                DomEvent.add(iframe, 'load', function () {
+                    DomEvent.remove(iframe, 'load');
                     // Update the iframe with the initial location hash, if any. This
                     // will create an initial history entry that the user can return to
                     // after the state has changed.
                     hashChange(getHash());
-                    Event.add(iframe, 'load', onIframeLoad);
+                    DomEvent.add(iframe, 'load', onIframeLoad);
                     poll();
                 });
 
@@ -197,13 +198,13 @@ KISSY.add('event/dom/hashchange', function (S, Event, DOM) {
         tearDown = function () {
             timer && clearTimeout(timer);
             timer = 0;
-            Event.detach(iframe);
-            DOM.remove(iframe);
+            DomEvent.detach(iframe);
+            Dom.remove(iframe);
             iframe = 0;
         };
     }
 
-    special[HASH_CHANGE] = {
+    Special[HASH_CHANGE] = {
         setup: function () {
             if (this !== win) {
                 return;

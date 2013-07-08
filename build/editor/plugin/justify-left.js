@@ -1,8 +1,14 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 17 00:18
+build time: Jul 3 13:53
 */
+/*
+ Combined processedModules by KISSY Module Compiler: 
+
+ editor/plugin/justify-left
+*/
+
 /**
  * justifyLeft button.
  * @author yiminghe@gmail.com
@@ -45,7 +51,7 @@ KISSY.add("editor/plugin/justify-left", function (S, Editor, justifyCenterCmd) {
 
             editor.docReady(function () {
                 editor.get("document").on("keydown", function (e) {
-                    if (e.ctrlKey && e.keyCode == S.Node.KeyCodes.L) {
+                    if (e.ctrlKey && e.keyCode == S.Node.KeyCode.L) {
                         editor.execCommand("justifyLeft");
                         e.preventDefault();
                     }
@@ -58,3 +64,4 @@ KISSY.add("editor/plugin/justify-left", function (S, Editor, justifyCenterCmd) {
 }, {
     requires:['editor', './justify-left/cmd']
 });
+

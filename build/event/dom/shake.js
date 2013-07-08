@@ -1,15 +1,21 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 17 00:21
+build time: Jul 3 19:20
 */
+/*
+ Combined processedModules by KISSY Module Compiler: 
+
+ event/dom/shake
+*/
+
 /**
  * @ignore
  * simulate shake gesture by listening devicemotion event
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/shake', function (S, EventDomBase, undefined) {
-    var Special = EventDomBase._Special,
+KISSY.add('event/dom/shake', function (S, DomEvent, undefined) {
+    var Special = DomEvent.Special,
         start = 5,
         enough = 20,
         shaking = 0,
@@ -20,7 +26,7 @@ KISSY.add('event/dom/shake', function (S, EventDomBase, undefined) {
         devicemotion = 'devicemotion',
         checkShake = S.buffer(function () {
             if (shaking) {
-                EventDomBase.fireHandler(win, 'shake', {
+                DomEvent.fireHandler(win, 'shake', {
                     accelerationIncludingGravity: {
                         x: lastX,
                         y: lastY,
@@ -92,3 +98,4 @@ KISSY.add('event/dom/shake', function (S, EventDomBase, undefined) {
  *  - http://www.eleqtriq.com/2010/05/css-3d-matrix-transformations/
  *  - http://dev.w3.org/geo/api/spec-source-orientation
  */
+

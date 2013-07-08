@@ -10,7 +10,6 @@ import java.util.regex.Pattern;
  * Extract dependencies from code files.
  *
  * @author yiminghe@gmail.com
- * @since 2012-08-07
  */
 public class ExtractDependency {
 
@@ -40,11 +39,6 @@ public class ExtractDependency {
     private String output;
 
     /**
-     * dependency 's output file encoding.
-     */
-    private String outputEncoding = "utf-8";
-
-    /**
      * whether output compact module desc
      */
     private boolean compact = false;
@@ -58,17 +52,6 @@ public class ExtractDependency {
             "config({\n";
 
     static String CODE_SUFFIX = "\n});";
-
-    /**
-     * dom/src -> dom
-     * event/src -> event
-     */
-    private ArrayList<RegReplace> nameMap = new ArrayList<RegReplace>();
-
-    private static class RegReplace {
-        Pattern reg;
-        String replace;
-    }
 
     public void setFixModuleName(boolean fixModuleName) {
         this.fixModuleName = fixModuleName;
@@ -88,10 +71,6 @@ public class ExtractDependency {
 
     public void setOutput(String output) {
         this.output = output;
-    }
-
-    public void setOutputEncoding(String outputEncoding) {
-        this.outputEncoding = outputEncoding;
     }
 
     private boolean processSingle(String path) {
@@ -147,81 +126,15 @@ public class ExtractDependency {
         return codes;
     }
 
-    private void putToDependency(HashMap<String, ArrayList<String>> dependencyCode2,
-                                 String name, ArrayList<String> requires) {
-        ArrayList<String> old = dependencyCode2.get(name);
-
-        if (old == null) {
-            old = new ArrayList<String>();
-        }
-
-        for (String require : requires) {
-            if (!old.contains(require) &&
-                    // 防止循环引用
-                    !require.equals(name)) {
-                old.add(require);
-            }
-        }
-
-        dependencyCode2.put(name, old);
-    }
-
-    private String transformByNameMap(String name) {
-        for (RegReplace rr : nameMap) {
-            Pattern matchReg = rr.reg;
-            if (matchReg.matcher(name).matches()) {
-                return matchReg.matcher(name).replaceAll(rr.replace);
-            }
-        }
-        return name;
-    }
-
-    private ArrayList<String> transformByNameMap(ArrayList<String> requires) {
-        for (int i = 0; i < requires.size(); i++) {
-            requires.set(i, transformByNameMap(requires.get(i)));
-        }
-        return requires;
-    }
-
-    /**
-     * merge dependency within nameMap
-     */
-    private void mergeNameMap() {
-        if (nameMap != null) {
-            HashMap<String, ArrayList<String>> dependencyCode2 = new HashMap<String, ArrayList<String>>();
-            Set<String> keys = dependencyCode.keySet();
-            for (String name : keys) {
-                putToDependency(dependencyCode2, transformByNameMap(name),
-                        transformByNameMap(dependencyCode.get(name)));
-            }
-
-            this.dependencyCode = dependencyCode2;
-        }
-    }
-
-    private void constructNameMapFromString(String nameMapStr) {
-        String[] names = nameMapStr.split(",");
-        for (String n : names) {
-            String[] ns = n.split("\\|\\|");
-            RegReplace rr = new RegReplace();
-            rr.reg = Pattern.compile(ns[0]);
-            rr.replace = ns[1];
-            nameMap.add(rr);
-        }
-    }
-
     public static void commandRunnerCLI(String[] args) throws Exception {
 
         Options options = new Options();
-        options.addOption("encodings", true, "baseUrls 's encodings");
         options.addOption("baseUrls", true, "baseUrls");
         options.addOption("packageUrls", true, "packageUrls");
         options.addOption("excludeReg", true, "excludeReg");
         options.addOption("includeReg", true, "includeReg");
-        options.addOption("nameMap", true, "nameMap");
         options.addOption("output", true, "output");
         options.addOption("v", "version", false, "version");
-        options.addOption("outputEncoding", true, "outputEncoding");
         options.addOption("compact", true, "compact mode");
         options.addOption("fixModuleName", true, "fixModuleName");
 
@@ -241,20 +154,15 @@ public class ExtractDependency {
 
         Packages packages = extractDependency.getPackages();
 
-        String encodingStr = line.getOptionValue("encodings");
-        if (encodingStr != null) {
-            packages.setEncodings(encodingStr.split(","));
-        }
-
         String baseUrlStr = line.getOptionValue("baseUrls");
         if (baseUrlStr != null) {
-            packages.setBaseUrls(baseUrlStr.split(","));
+            packages.initByBaseUrls(baseUrlStr);
         }
 
 
         String packageUrlStr = line.getOptionValue("packageUrls");
         if (packageUrlStr != null) {
-            packages.setPackageUrls(packageUrlStr.split(","));
+            packages.initByPackageUrls(packageUrlStr);
         }
 
         String compact = line.getOptionValue("compact");
@@ -281,17 +189,6 @@ public class ExtractDependency {
 
         extractDependency.setOutput(line.getOptionValue("output"));
 
-        String outputEncoding = line.getOptionValue("outputEncoding");
-        if (outputEncoding != null) {
-            extractDependency.setOutputEncoding(outputEncoding);
-        }
-
-        String nameMapStr = line.getOptionValue("nameMap");
-
-        if (nameMapStr != null) {
-            extractDependency.constructNameMapFromString(nameMapStr);
-        }
-
         extractDependency.run();
 
     }
@@ -299,31 +196,30 @@ public class ExtractDependency {
     public void run() {
         long start = System.currentTimeMillis();
         boolean success = true;
-        String[] baseUrls = packages.getBaseUrls();
 
-        if (baseUrls.length == 0) {
-            baseUrls = packages.getPackageUrls();
-        }
+        Map<String, Package> ps = packages.getPackages();
 
-        for (String baseUrl : baseUrls) {
-            Collection<File> files = org.apache.commons.io.FileUtils.listFiles(new File(baseUrl),
-                    new String[]{"js"}, true);
+        for (String pName : ps.keySet()) {
+            Package p = ps.get(pName);
+            Collection<File> files = org.apache.commons.io.FileUtils.listFiles(
+                    new File(p.getPath()),
+                    new String[]{"js"},
+                    true);
 
             for (File f : files) {
                 success = processSingle(f.getPath()) && success;
             }
         }
 
-        // merge by name map
-        mergeNameMap();
-
         // get code list
         ArrayList<String> codes = formCodeList();
 
         if (codes.size() > 0) {
-            // serialize to file
-            FileUtils.outputContent(
-                    (this.compact ? COMPACT_CODE_PREFIX : CODE_PREFIX) +
+            /*
+                dependency 's output file encoding.
+            */
+            String outputEncoding = "utf-8";
+            FileUtils.outputContent((this.compact ? COMPACT_CODE_PREFIX : CODE_PREFIX) +
                             ArrayUtils.join(codes.toArray(new String[codes.size()]), ",\n")
                             + CODE_SUFFIX
                     , output, outputEncoding);

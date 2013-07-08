@@ -11,6 +11,10 @@
  * @author attila@google.com (Attila Bodis)
  */
 
+.ks-menu-hidden {
+    visibility: hidden;
+}
+
 .ks-menu {
     background: #fff;
     border-color: #ccc #666 #666 #ccc;
@@ -41,10 +45,8 @@
     top: -9999px;
 }
 
-.ks-popupmenu-shown{
-    visibility: visible;
-}
-
-.ks-popupmenu-hidden{
+.ks-popupmenu-hidden {
+    left: -9999px !important;
+    top: -9999px !important;
     visibility: hidden;
 }

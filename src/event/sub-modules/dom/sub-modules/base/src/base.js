@@ -3,22 +3,20 @@
  * dom event facade
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/base', function (S, Event, KeyCodes, _DOMUtils, Gesture, Special) {
-    S.mix(Event, {
-        KeyCodes: KeyCodes,
-        _DOMUtils: _DOMUtils,
+KISSY.add('event/dom/base', function (S, DomEvent, KeyCode, Gesture, Special) {
+    return S.merge({
+        add: DomEvent.on,
+        remove: DomEvent.detach,
+        KeyCode: KeyCode,
         Gesture: Gesture,
-        _Special: Special
-    });
-
-    return Event;
+        Special: Special
+    }, DomEvent);
 }, {
-    requires: ['event/base',
+    requires: [
+        './base/dom-event',
         './base/key-codes',
-        './base/utils',
         './base/gesture',
-        './base/special',
-        './base/api',
+        './base/special-events',
         './base/mouseenter',
         './base/valuechange']
 });

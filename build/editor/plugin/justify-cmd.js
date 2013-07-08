@@ -1,8 +1,14 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 17 00:18
+build time: Jul 3 13:53
 */
+/*
+ Combined processedModules by KISSY Module Compiler: 
+
+ editor/plugin/justify-cmd
+*/
+
 /**
  * Add justify command identifier for Editor.
  * @author yiminghe@gmail.com
@@ -75,3 +81,4 @@ KISSY.add("editor/plugin/justify-cmd", function (S, Editor) {
 }, {
     requires:['editor']
 });
+

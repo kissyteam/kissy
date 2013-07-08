@@ -20,7 +20,7 @@ KISSY.use('dom/selector', function (S, engine) {
         S.each(str, function (s, index) {
             index++;
             it(s, function () {
-                var node;
+                var node=null;
                 jQuery.ajax({
                     url: '../specs/data/h' + index + '.html',
                     async: false,
@@ -35,7 +35,6 @@ KISSY.use('dom/selector', function (S, engine) {
         });
 
         it('can deal with third-party iframe', function () {
-
             var iframe = document.getElementById('t');
             ///console.log(iframe.getAttribute('type'));
             //console.log(iframe.getAttributeNode('type')&&iframe.getAttributeNode('type').value);

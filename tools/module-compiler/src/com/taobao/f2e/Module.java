@@ -7,13 +7,14 @@ import com.google.javascript.rhino.Token;
  * KISSY Module Format.
  *
  * @author yiminghe@gmail.com
- * @since 2012-08-06
  */
 public class Module {
     /**
      * module 's full file path.
      */
-    private String fullpath;
+    private String fullpath = null;
+
+    private Package pck;
     /**
      * encoding of module 's code file.
      */
@@ -39,6 +40,10 @@ public class Module {
      */
     private Node astRoot = null;
 
+    public void setPck(Package pck) {
+        this.pck = pck;
+    }
+
     public Node getAstRoot() {
         if (astRoot != null) {
             return astRoot;
@@ -57,7 +62,7 @@ public class Module {
         if (content != null) {
             return content;
         } else {
-            return content = FileUtils.getFileContent(fullpath, encoding);
+            return content = FileUtils.getFileContent(this.getFullpath(), encoding);
         }
     }
 
@@ -72,7 +77,7 @@ public class Module {
                     moduleNameNode.getParent().getChildBefore(moduleNameNode));
             module.setCode(AstUtils.toSource(module.getAstRoot()));
             if (saveToFile) {
-                FileUtils.outputContent(code, fullpath, encoding);
+                FileUtils.outputContent(code, this.getFullpath(), encoding);
             }
         } else {
             module.setCode(module.getContent());
@@ -87,20 +92,26 @@ public class Module {
         return ModuleUtils.getRequiresFromAst(astRoot, name);
     }
 
+    public String getFullpath() {
+        if (this.fullpath != null) {
+            return this.fullpath;
+        }
+        String extName = name.substring(pck.getName().length());
+        String path = pck.getPath();
+        // base/src/base.js
+        if (extName.length() == 0) {
+            path = path.substring(0, path.length() - 1);
+        }
+        path += extName + ".js";
+        return this.fullpath = path;
+    }
+
     public String getCode() {
         return code;
     }
 
     public void setCode(String code) {
         this.code = code;
-    }
-
-    public void setFullpath(String fullpath) {
-        this.fullpath = fullpath;
-    }
-
-    public void setEncoding(String encoding) {
-        this.encoding = encoding;
     }
 
     public String getName() {
@@ -127,7 +138,8 @@ public class Module {
     }
 
     public boolean isValidFormat() {
-        Node t, root = this.getAstRoot();
+        Node t,
+                root = this.getAstRoot();
         if (root == null) {
             return false;
         } else if (root.getType() != Token.SCRIPT) {
@@ -164,7 +176,6 @@ public class Module {
             return false;
         }
 
-
         t = t.getNext();
 
         if (t == null) {
@@ -176,6 +187,5 @@ public class Module {
         }
 
         return true;
-
     }
 }

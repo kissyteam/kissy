@@ -1,7 +1,25 @@
 <project name="kison.build" default="build" basedir=".">
-    <description>kison Build File</description>
-
     <property name="component.name" value="kison"/>
+
+    <!-- kison can not rename variables -->
+    <target name="compress-js">
+        <apply executable="java" verbose="true" dest="${component.build.dir}">
+            <fileset dir="${component.build.dir}"
+                     excludes="**/*-min.js" includes="**/*.js"/>
+            <arg line="-jar"/>
+            <arg path="${closure-compiler}"/>
+            <arg line="--charset ${charset}"/>
+            <arg value="--warning_level"/>
+            <arg value="QUIET"/>
+            <arg value="--compilation_level"/>
+            <arg value="WHITESPACE_ONLY"/>
+            <arg value="--js"/>
+            <srcfile/>
+            <arg value="--js_output_file"/>
+            <targetfile/>
+            <mapper type="regexp" from="^(.*)\.(css|js)$" to="\1-min.\2"/>
+        </apply>
+    </target>
 
     <import file="../common.xml"/>
 </project>

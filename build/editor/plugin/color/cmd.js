@@ -1,8 +1,14 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 17 00:16
+build time: Jul 3 13:51
 */
+/*
+ Combined processedModules by KISSY Module Compiler: 
+
+ editor/plugin/color/cmd
+*/
+
 /**
  * color command.
  * @author yiminghe@gmail.com
@@ -32,3 +38,4 @@ KISSY.add("editor/plugin/color/cmd", function (S, Editor) {
 }, {
     requires:['editor']
 });
+

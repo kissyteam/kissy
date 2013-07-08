@@ -21,9 +21,6 @@
             }
         ]
     });
-    KISSY.getLoader().on("afterModAttached", function (e) {
-        S.log(e.mod.name + " : attached");
-    });
     KISSY.use("cyclic/a", function () {
         alert(1);
     });

@@ -18,16 +18,15 @@
         $.noConflict();
     </script>
     <script src="/kissy/build/seed.js"></script>
+    <script src="/kissy/src/package.js"></script>
 </head>
 <body>
 
 <iframe src="http://www.google.com" id='t'></iframe>
-<script src="../../src/parser.js"></script>
-<script src="../../src/selector.js"></script>
 <script src="../specs/selector-spec.js"></script>
 
 <script>
-    KISSY.ready(function () {
+    KISSY.use('dom/selector',function () {
         // let tc run first
         setTimeout(function () {
             jasmine.getEnv().addReporter(new jasmine.TrivialReporter());

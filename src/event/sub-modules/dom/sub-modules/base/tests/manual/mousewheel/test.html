@@ -7,7 +7,8 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-touch-fullscreen" content="yes">
     <title>mousewheel compatibility</title>
-    <script src="/kissy/build/seed.js"></script>
+    <script src="/kissy/build/seed.js" charset="utf-8"></script>
+    <script src="/kissy/src/package.js"></script>
 
     <style type="text/css">
         body, html {
@@ -29,8 +30,8 @@
 <script>
     var S = KISSY;
 
-    KISSY.use("dom,event/dom", function (S, DOM, Event) {
-        var t = DOM.get("#t");
+    KISSY.use("dom,event/dom", function (S, Dom, Event) {
+        var t = Dom.get("#t");
         var tmpl = "<p>" +
                 "wheelDelta:{wheelDelta}<br/>" +
                 "axis:{axis}<br/>" +
@@ -44,7 +45,7 @@
         var tt;
         Event.on(t, "mousewheel", tt = function (e) {
 
-            DOM.html(t, S.substitute(tmpl, {
+            Dom.html(t, S.substitute(tmpl, {
                 wheelDelta: e.wheelDelta,
                 axis: e.axis,
                 wheelDeltaY: e.wheelDeltaY,

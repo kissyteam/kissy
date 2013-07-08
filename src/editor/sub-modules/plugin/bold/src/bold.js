@@ -17,7 +17,7 @@ KISSY.add("editor/plugin/bold", function (S, Editor, ui, cmd) {
 
             editor.docReady(function () {
                 editor.get("document").on("keydown", function (e) {
-                    if (e.ctrlKey && e.keyCode == S.Node.KeyCodes.B) {
+                    if (e.ctrlKey && e.keyCode == S.Node.KeyCode.B) {
                         editor.execCommand("bold");
                         e.preventDefault();
                     }

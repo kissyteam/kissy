@@ -1,0 +1,13 @@
+KISSY.add(function(S,domain){
+    domain.run();
+},{
+    requires:[
+        './router-domain',
+        './collection',
+        './hierarchy',
+        './model',
+        './router',
+        './router-html5',
+        './view'
+    ]
+});

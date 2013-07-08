@@ -1,8 +1,14 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 17 00:19
+build time: Jul 3 13:53
 */
+/*
+ Combined processedModules by KISSY Module Compiler: 
+
+ editor/plugin/multiple-upload
+*/
+
 /**
  * multipleUpload button
  * @author yiminghe@gmail.com
@@ -34,3 +40,4 @@ KISSY.add("editor/plugin/multiple-upload", function (S, Editor, DialogLoader) {
 }, {
     requires:['editor', './dialog-loader']
 });
+

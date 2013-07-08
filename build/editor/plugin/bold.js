@@ -1,8 +1,14 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 17 00:15
+build time: Jul 3 13:50
 */
+/*
+ Combined processedModules by KISSY Module Compiler: 
+
+ editor/plugin/bold
+*/
+
 /**
  * bold command.
  * @author yiminghe@gmail.com
@@ -22,7 +28,7 @@ KISSY.add("editor/plugin/bold", function (S, Editor, ui, cmd) {
 
             editor.docReady(function () {
                 editor.get("document").on("keydown", function (e) {
-                    if (e.ctrlKey && e.keyCode == S.Node.KeyCodes.B) {
+                    if (e.ctrlKey && e.keyCode == S.Node.KeyCode.B) {
                         editor.execCommand("bold");
                         e.preventDefault();
                     }
@@ -35,3 +41,4 @@ KISSY.add("editor/plugin/bold", function (S, Editor, ui, cmd) {
 }, {
     requires:['editor', './font/ui', './bold/cmd']
 });
+

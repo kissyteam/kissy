@@ -115,7 +115,7 @@ KISSY.use('grid/base,grid/store,grid/numberpagingbar',function(S,Grid,Store){//
 					bodyEl = body.get('el'),
 					firstRowEl = bodyEl.one('.ks-grid-header-row'),
 					width = 150,
-					cellEl = body.get('view').findCell(colObj.get('id'),firstRowEl);
+					cellEl = body.view.findCell(colObj.get('id'),firstRowEl);
 
 				colObj.set('width',width);
 				expect(getSetWidth(cellEl)).toBe(width + 'px');
@@ -127,7 +127,7 @@ KISSY.use('grid/base,grid/store,grid/numberpagingbar',function(S,Grid,Store){//
 					bodyEl = body.get('el'),
 					firstRowEl = bodyEl.one('.ks-grid-header-row'),
 					width = 150,
-					cellEl = body.get('view').findCell(colObj.get('id'),firstRowEl);
+					cellEl = body.view.findCell(colObj.get('id'),firstRowEl);
 				expect(cellEl.css('display')).toBe('none');
 				colObj.set('visible',true);
 				expect(cellEl.css('display')).toBe('table-cell');

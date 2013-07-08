@@ -1,4 +1,4 @@
-﻿﻿/**
+﻿/**
  * This class specifies the definition for a cell editor of a grid.
  * @author dxq613@gmail.com
  */
@@ -6,9 +6,9 @@ KISSY.add('grid/editor', function (S, Component) {
 
     var CLS_EDITOR = 'ks-grid-editor',
         CLS_EDITOR_ERROR = CLS_EDITOR + '-error',
-		
+
         CLS_EDITOR_CONTROL = CLS_EDITOR + '-control',
-		DATA_ERROR = 'data-error';
+        DATA_ERROR = 'data-error';
 
     /**
      * the render of grid's editor
@@ -30,9 +30,9 @@ KISSY.add('grid/editor', function (S, Component) {
      * This is a base class of grid's editor,which can be used in column's configuration.
      * @name Grid.Editor
      * @constructor
-     * @extends KISSY.Component.Controller
+     * @extends KISSY.Component.Control
      */
-    var GridEditor = Component.Controller.extend({
+    var GridEditor = Component.Control.extend({
 
         /**
          * @private
@@ -40,47 +40,47 @@ KISSY.add('grid/editor', function (S, Component) {
         bindUI:function () {
             var _self = this,
                 binder = _self.get('binder'),
-                
+
                 events = _self.get('events');
-               
+
             if (binder) {
                 binder.call(this);
             }
             _self.bindControlEvent();
         },
-		/**
-		* 
-		*/
-		bindControlEvent : function(){
-			var _self = this,
+        /**
+         *
+         */
+        bindControlEvent : function(){
+            var _self = this,
                 el = _self.get('el'),
-				control = _self.getEditControl(),
-				triggerEvent = _self.get('triggerEvent'),
-				validEvent = _self.get('validEvent');
-				
-			control.on(triggerEvent, function () {
+                control = _self.getEditControl(),
+                triggerEvent = _self.get('triggerEvent'),
+                validEvent = _self.get('validEvent');
+
+            control.on(triggerEvent, function () {
                 var hasError = _self.hasError(),
-					text;
+                    text;
                 if (!hasError) {
-					text = _self._getControlText();
+                    text = _self._getControlText();
                     _self.fire('changed', {target:_self, text:text, value:_self.getValue(text)});
                 }
             });
-			
-			control.on(validEvent,function(){
-				var text = _self._getControlText(),
+
+            control.on(validEvent,function(){
+                var text = _self._getControlText(),
                     record = _self.get('record');
                 _self.validEditor(text, record);
-			});
-			
-			control.on('mouseenter',function(){
-				_self.fire('editorenter',{target:_self});
-			});
-			control.on('mouseleave',function(){
-				_self.fire('editorleave',{target:_self});
-			});
-			
-		},
+            });
+
+            control.on('mouseenter',function(){
+                _self.fire('editorenter',{target:_self});
+            });
+            control.on('mouseleave',function(){
+                _self.fire('editorleave',{target:_self});
+            });
+
+        },
         /**
          * @protect
          * True to indicate that this editor contains the element
@@ -90,7 +90,7 @@ KISSY.add('grid/editor', function (S, Component) {
                 el = _self.get('el');
             return el.contains(element) || el[0] == element;
         },
-        
+
         /**
          * make this editor's control focused
          */
@@ -129,12 +129,12 @@ KISSY.add('grid/editor', function (S, Component) {
             return this.get('el').hasClass(CLS_EDITOR_ERROR);
         },
         /**
-        * get the error message of the validation.
-        */
+         * get the error message of the validation.
+         */
         getErrorMsg : function(){
             var _self = this,
-				control = _self.getEditControl(),
-				msg = control.attr(DATA_ERROR);
+                control = _self.getEditControl(),
+                msg = control.attr(DATA_ERROR);
             return msg;
         },
         /**
@@ -146,14 +146,14 @@ KISSY.add('grid/editor', function (S, Component) {
                 control = _self.getEditControl();
             control.val(v);
         },
-		
-		//remove the error status
-		_clearError : function(){
-			var _self = this,
-				control = _self.getEditControl();
-			_self.get('el').removeClass(CLS_EDITOR_ERROR);
-			control.removeAttr(DATA_ERROR);
-		},
+
+        //remove the error status
+        _clearError : function(){
+            var _self = this,
+                control = _self.getEditControl();
+            _self.get('el').removeClass(CLS_EDITOR_ERROR);
+            control.removeAttr(DATA_ERROR);
+        },
         //the text of user's input
         _getControlText:function () {
             var _self = this,
@@ -168,22 +168,22 @@ KISSY.add('grid/editor', function (S, Component) {
             record = record || _self.get('record');
             return basicValidator(text) || validator(text, record);
         },
-		//set the error status
-		_setError:function(errorMsg){
-			var _self = this,
-				control = _self.getEditControl();
-			_self.get('el').addClass(CLS_EDITOR_ERROR);
-			control.attr(DATA_ERROR,errorMsg);
-		},
-		
+        //set the error status
+        _setError:function(errorMsg){
+            var _self = this,
+                control = _self.getEditControl();
+            _self.get('el').addClass(CLS_EDITOR_ERROR);
+            control.attr(DATA_ERROR,errorMsg);
+        },
+
         /**
          * Verify user input is correct,and show error if there are any error.
          * @return {Boolean}
          */
         validEditor:function (text, record) {
-            var _self = this, 
-				
-				errorMsg;
+            var _self = this,
+
+                errorMsg;
             text = text || _self._getControlText();
             errorMsg = _self._getError(text, record);
             if (errorMsg) {
@@ -211,12 +211,12 @@ KISSY.add('grid/editor', function (S, Component) {
                 _self.set('value', v[field]);
             }
         },
-		/**
-		* @private
-		*/
-		destructor:function(){
-			
-		}
+        /**
+         * @private
+         */
+        destructor:function(){
+
+        }
     }, {
         ATTRS:/** * @lends Grid.Editor.prototype*/
         {
@@ -265,46 +265,46 @@ KISSY.add('grid/editor', function (S, Component) {
              */
             events:{
                 value:[
-                    /**
-                     * @event changed
-                     * Fires when this editor's value changed
-                     * @param {event} e the event object
-                     * @param {Grid.Editor} target
-                     * @param {String} text the user's input text
-                     * @param {Object} value format the user's input text to value
-                     */
+                /**
+                 * @event changed
+                 * Fires when this editor's value changed
+                 * @param {event} e the event object
+                 * @param {Grid.Editor} target
+                 * @param {String} text the user's input text
+                 * @param {Object} value format the user's input text to value
+                 */
                     'changed',
-                    /**
-                     * @event error
-                     * Fires when this editor's value changed
-                     * @param {event} e the event object
-                     * @param {Grid.Editor} target
-                     * @param {String} msg the error msg of the user's input
-                     * @param {String} text the user's input text
-                     */
+                /**
+                 * @event error
+                 * Fires when this editor's value changed
+                 * @param {event} e the event object
+                 * @param {Grid.Editor} target
+                 * @param {String} msg the error msg of the user's input
+                 * @param {String} text the user's input text
+                 */
                     'error',
-                    /**
-                     * @event error
-                     * Fires when this editor's value changed
-                     * @param {event} e the event object
-                     * @param {Grid.Editor} target
-                     * @param {String} msg the error msg of the user's input
-                     * @param {String} text the user's input text
-                     */
+                /**
+                 * @event error
+                 * Fires when this editor's value changed
+                 * @param {event} e the event object
+                 * @param {Grid.Editor} target
+                 * @param {String} msg the error msg of the user's input
+                 * @param {String} text the user's input text
+                 */
                     '',
-                    /**
-                     * @event editorenter
-                     * Fires when mouse entered this editor
-                     * @param {event} e the event object
-                     * @param {Grid.Editor} target
-                     */
+                /**
+                 * @event editorenter
+                 * Fires when mouse entered this editor
+                 * @param {event} e the event object
+                 * @param {Grid.Editor} target
+                 */
                     'editorenter',
-                    /**
-                     * @event editorleave
-                     * Fires when mouse entered this editor
-                     * @param {event} e the event object
-                     * @param {Grid.Editor} target
-                     */
+                /**
+                 * @event editorleave
+                 * Fires when mouse entered this editor
+                 * @param {event} e the event object
+                 * @param {Grid.Editor} target
+                 */
                     'editorleave'
                 ]
             },
@@ -332,7 +332,7 @@ KISSY.add('grid/editor', function (S, Component) {
                     return v;
                 }
             },
-			
+
             /**
              * The record which user is editing
              * @type {Object}
@@ -359,12 +359,12 @@ KISSY.add('grid/editor', function (S, Component) {
             triggerEvent:{
                 value:'change'
             },
-			/**n 
-			* The event which can fire validation of the user's input
-			*/
-			validEvent : {
-				value:'keyup'
-			},
+            /**n
+             * The event which can fire validation of the user's input
+             */
+            validEvent : {
+                value:'keyup'
+            },
             /**
              * An template used to create the internal structure inside this Component's encapsulating Element.
              * User can use the syntax of KISSY's template component.
@@ -409,54 +409,51 @@ KISSY.add('grid/editor', function (S, Component) {
             }
         }
     }, {
-        xclass:'grid-editor',
-        priority:1
+        xclass:'grid-editor'
     });
 
-	/**
+    /**
      * This is a subclass of grid's editor,which can be used in column's configuration.
      * @name Grid.Editor.Text
      * @constructor
-     * @extends KISSY.Component.Controller
+     * @extends KISSY.Component.Control
      */
-	var textEditor = GridEditor.extend({},{
-		xclass:'grid-text-editor',
-        priority:2
-	});
-	
-	var numberEditor = GridEditor.extend({
-		
-	},{
-		ATTRS:/** * @lends Grid.Editor.Text.prototype*/
+    var textEditor = GridEditor.extend({},{
+        xclass:'grid-text-editor'
+    });
+
+    var numberEditor = GridEditor.extend({
+
+    },{
+        ATTRS:/** * @lends Grid.Editor.Text.prototype*/
         {
-			/**
-			* @override
-			*/
-			basicValidator : {
-				value : function(v){
-					var n = Number(v);
-					if(isNaN(n)){
-						return '不是有效的数字！';
-					}
-					return '';
-				}
-			},
-			/**
-			* @override
-			*/
-			formatter : {
-				value : function(v){
-					return Number(v);
-				}
-			}
-		}
-	
-	},{
-		xclass:'grid-number-editor',
-        priority:2
-	});
-	
+            /**
+             * @override
+             */
+            basicValidator : {
+                value : function(v){
+                    var n = Number(v);
+                    if(isNaN(n)){
+                        return '不是有效的数字！';
+                    }
+                    return '';
+                }
+            },
+            /**
+             * @override
+             */
+            formatter : {
+                value : function(v){
+                    return Number(v);
+                }
+            }
+        }
+
+    },{
+        xclass:'grid-number-editor'
+    });
+
     return GridEditor;
 }, {
-    requires:['component']
+    requires:['component/base']
 });
