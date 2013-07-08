@@ -210,6 +210,25 @@ KISSY.add(function (S,  IO) {
 
             });
 
+            it('does not have content-type', function () {
+                var ok = false;
+                runs(function () {
+                    IO({
+                        url: '../data/interface.jss?t=get',
+                        success: function (data) {
+                            expect(data.contentType).toBe(undefined);
+                            ok=1;
+                        },
+                        dataType: 'jsonp'
+                    });
+                });
+
+                waitsFor(function () {
+                    return ok;
+                });
+
+            });
+
             it('自定义callbackName', function () {
                 var ok = false;
                 runs(function () {

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 3 13:56
+build time: Jul 8 13:17
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -1444,6 +1444,9 @@ KISSY.add('io/jsonp', function (S, IO) {
             c = io.config,
             dataType = c.dataType;
         if (dataType[0] == 'jsonp') {
+            // jsonp does not need contentType.
+            // https://github.com/kissyteam/kissy/issues/394
+            delete c.contentType;
             var response,
                 cJsonpCallback = c.jsonpCallback,
                 converters,

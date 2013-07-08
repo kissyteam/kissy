@@ -18,6 +18,9 @@ KISSY.add('io/jsonp', function (S, IO) {
             c = io.config,
             dataType = c.dataType;
         if (dataType[0] == 'jsonp') {
+            // jsonp does not need contentType.
+            // https://github.com/kissyteam/kissy/issues/394
+            delete c.contentType;
             var response,
                 cJsonpCallback = c.jsonpCallback,
                 converters,
