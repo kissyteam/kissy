@@ -1,6 +1,6 @@
 
 function preview() {
-    KISSY.all('#previewEl').html(window.newEditor.getData(1));
+    KISSY.all('#previewEl').html(window.newEditor.getFormatData());
     SyntaxHighlighter.highlight();
 }
 

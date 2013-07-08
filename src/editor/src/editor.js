@@ -130,7 +130,7 @@ KISSY.add('editor', function (S, Node, iframeContentTpl, Editor, Utils, focusMan
             } else {
                 // 刚开始就配置 mode 为 sourcecode
                 if (iframe) {
-                    textarea.val(self.getData(1, WYSIWYG_MODE));
+                    textarea.val(self.getFormatData(WYSIWYG_MODE));
                     iframe.hide();
                 }
                 textarea.show();
@@ -315,13 +315,17 @@ KISSY.add('editor', function (S, Node, iframeContentTpl, Editor, Utils, focusMan
             return html;
         },
 
+        getFormatData:function(mode){
+            return this.getData(1,mode);
+        },
+
         /**
          * Get full html content of editor 's iframe.
          */
         getDocHtml: function () {
             var self = this;
             return prepareIFrameHTML(0, self.get('customStyle'),
-                self.get('customLink'), self.getData(1));
+                self.get('customLink'), self.getFormatData());
         },
 
         /**
