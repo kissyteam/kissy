@@ -2,7 +2,7 @@
  * css3 selector tc modified from Sizzle
  * @author yiminghe@gmail.com
  */
-KISSY.use('dom/selector', function (S, engine) {
+KISSY.add(function (S, engine) {
 
     var select = engine.select;
     var matches = engine.matches;
@@ -599,7 +599,7 @@ KISSY.use('dom/selector', function (S, engine) {
         t("href Attribute", "p a[href*='#']", ["simon1", "anchor2"]);
 
         t("for Attribute", "form label[for]", ["label-for"]);
-        t("for Attribute in form", "#form [for=action]", ["label-for"]);
+        t("for Attribute in form", "#form [for=text1]", ["label-for"]);
 
         t("Attribute containing []1", "input[name^='foo[']", ["hidden2"]);
         t("Attribute containing []2", "input[name^='foo[bar]']", ["hidden2"]);
@@ -1117,4 +1117,6 @@ KISSY.use('dom/selector', function (S, engine) {
         select(":not(code)", document.getElementById("ap"));
         equal(select(":not(code)", document.getElementById("foo")), q("sndp", "en", "yahoo", "sap", "anchor2", "simon"), "Reusing selector with new context");
     });
+}, {
+    requires: ['dom/selector']
 });

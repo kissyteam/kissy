@@ -19,7 +19,6 @@ KISSY.add(function (S, Dom) {
     </div>';
 
     describe("selector", function () {
-
         beforeEach(function () {
             $('body').append(tpl);
         });
@@ -28,8 +27,20 @@ KISSY.add(function (S, Dom) {
             $('#test-selector').remove();
         });
 
-        it('should return empty when context is null',function(){
-            expect(S.query("#test-selector",null).length).toBe(0);
+        it('works for fragment', function () {
+            var node = Dom.create('<div><i id="i"></i></div><div><b id="b"></b></div>');
+            expect(S.query('#i', node).length).toBe(1);
+            expect(S.query('i', node).length).toBe(1);
+        });
+
+        it('works for detached node', function () {
+            var node = Dom.create('<div><i id="i"></i></div>');
+            expect(S.query('#i', node).length).toBe(1);
+            expect(S.query('i', node).length).toBe(1);
+        });
+
+        it('should return empty when context is null', function () {
+            expect(S.query("#test-selector", null).length).toBe(0);
         });
 
         it('test support disconnect node', function () {
@@ -38,7 +49,6 @@ KISSY.add(function (S, Dom) {
         });
 
         it("support #id", function () {
-
             expect(S.get("#test-selector").id).toBe("test-selector");
 
             expect(S.query("#test-selector").length).toBe(1);
@@ -46,7 +56,6 @@ KISSY.add(function (S, Dom) {
             expect(S.get("#test-selector-xx")).toBe(null);
 
             expect(S.query("#test-selector-xx").length).toBe(0);
-
         });
 
         it("support tag ignore case", function () {
@@ -135,7 +144,6 @@ KISSY.add(function (S, Dom) {
                 "</div></div>");
 
         Dom.prepend(html, document.body);
-
 
         it("should attach each properly", function () {
             var c3 = S.query(".context-test-3");
@@ -255,6 +263,6 @@ KISSY.add(function (S, Dom) {
         });
     });
 
-},{
-    requires:['dom','core']
+}, {
+    requires: ['dom', 'core']
 });

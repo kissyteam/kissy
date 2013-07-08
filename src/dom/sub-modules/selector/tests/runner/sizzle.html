@@ -1,5 +1,5 @@
 <!doctype html>
-<html id="html">
+<html id="html" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport"
@@ -25,7 +25,7 @@
     </style>
 </head>
 <body id="body">
-<h1 id="qunit-header">KISSY css3 selector Test Suite</h1>
+<h1 id="qunit-header">KISSY css3 selector Test Suite From Sizzle</h1>
 
 <h2 id="qunit-banner"></h2>
 
@@ -72,7 +72,7 @@
 <ul id="firstUL"></ul>
 <ol id="empty"><!-- comment --></ol>
 <form id="form" action="formaction">
-    <label for="action" id="label-for">Action:</label>
+    <label for="text1" id="label-for">Action:</label>
     <input type="text" name="action" value="Test" id="text1" maxlength="30"/>
     <input type="text" name="text2" value="Test" id="text2" disabled="disabled"/>
     <input type="radio" name="radio1" id="radio1" value="on"/>
@@ -265,22 +265,22 @@
     </em>
     <span id="siblingspan"></span>
 </div>
-​
-</div>
+​</div>
 </dl>
 <br id="last"/>
 <script src="/kissy/src/package.js"></script>
-<script src="../specs/sizzle-spec.js"></script>
 <script>
-    KISSY.use('dom/selector', function () {
-        // let tc run first
-        setTimeout(function () {
-            jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
-            jasmine.getEnv().addReporter(new jasmine.ConsoleReporter());
-            jasmine.getEnv().execute(function () {
-                jasmine.kissyNext(this.results().failedCount);
-            });
-        }, 100);
+    KISSY.config('packages', {
+        specs: {
+            base: '../'
+        }
+    });
+    KISSY.use('specs/sizzle', function () {
+        jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
+        jasmine.getEnv().addReporter(new jasmine.ConsoleReporter());
+        jasmine.getEnv().execute(function () {
+            jasmine.kissyNext(this.results().failedCount);
+        });
     });
 </script>
 </body>

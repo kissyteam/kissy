@@ -50,13 +50,13 @@ tests.push('/kissy/src/dd/tests/runner/test.jss');
 
 tests.push('/kissy/src/dd/tests/runner/test.jss?build');
 
-tests.push('/kissy/src/dom/sub-modules/selector/tests/runner/selector.html');
+tests.push('/kissy/src/dom/sub-modules/selector/tests/runner/sizzle.html');
 
-tests.push('/kissy/src/dom/sub-modules/selector/tests/runner/selector.html?build');
+tests.push('/kissy/src/dom/sub-modules/selector/tests/runner/sizzle.html?build');
 
-tests.push('/kissy/src/dom/sub-modules/selector/tests/runner/test.html');
+tests.push('/kissy/src/dom/sub-modules/selector/tests/runner/test.jss');
 
-tests.push('/kissy/src/dom/sub-modules/selector/tests/runner/test.html?build');
+tests.push('/kissy/src/dom/sub-modules/selector/tests/runner/test.jss?build');
 
 tests.push('/kissy/src/dom/tests/runner/test.jss');
 

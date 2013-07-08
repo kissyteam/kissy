@@ -2,7 +2,7 @@
  * css3 selector tc modified from Sizzle
  * @author yiminghe@gmail.com
  */
-KISSY.use('dom/selector', function (S, engine) {
+KISSY.add(function (S, engine, Dom) {
 
     var select = engine.select;
 
@@ -20,7 +20,7 @@ KISSY.use('dom/selector', function (S, engine) {
         S.each(str, function (s, index) {
             index++;
             it(s, function () {
-                var node=null;
+                var node = null;
                 jQuery.ajax({
                     url: '../specs/data/h' + index + '.html',
                     async: false,
@@ -35,11 +35,27 @@ KISSY.use('dom/selector', function (S, engine) {
         });
 
         it('can deal with third-party iframe', function () {
-            var iframe = document.getElementById('t');
+            var iframe = Dom.create('<iframe src="http://www.google.com" id="t"></iframe>');
+            document.body.appendChild(iframe);
             ///console.log(iframe.getAttribute('type'));
             //console.log(iframe.getAttributeNode('type')&&iframe.getAttributeNode('type').value);
             expect(select('iframe[src*="google"]').length).toBe(1);
+            Dom.remove(iframe);
+        });
+
+        it('works for fragment', function () {
+            var node = Dom.create('<div><i id="i"></i></div><div><b id="b"></b></div>');
+            expect(select('#i', node).length).toBe(1);
+            expect(select('i', node).length).toBe(1);
+        });
+
+        it('works for detached node', function () {
+            var node = Dom.create('<div><i id="i"></i></div>');
+            expect(select('#i', node).length).toBe(1);
+            expect(select('i', node).length).toBe(1);
         });
 
     });
+}, {
+    requires: ['dom/selector', 'dom']
 });
