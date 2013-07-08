@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 3 13:50
+build time: Jul 8 18:33
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -1191,34 +1191,44 @@ KISSY.add('dom/selector', function (S, parser, Dom) {
         return el;
     }
 
-    var getElementsByTagName = function (name, context) {
-        return context.getElementsByTagName(name);
-    };
+    var getElementsByTagName;
 
-    (function () {
-        var div = document.createElement("div");
-        div.appendChild(document.createComment(""));
-        if (div.getElementsByTagName("*").length) {
-            getElementsByTagName = function (name, context) {
-                var nodes = context.getElementsByTagName(name),
-                    needsFilter = name == '*';
-                // <input id='length'>
-                if (needsFilter || typeof nodes.length != 'number') {
-                    var ret = [],
-                        i = 0,
-                        el;
-                    while (el = nodes[i++]) {
-                        if (!needsFilter || el.nodeType === 1) {
-                            ret.push(el);
+    // http://yiminghe.github.io/lab/playground/fragment-selector/selector.html
+    if (S.Features.isQuerySelectorSupported()) {
+        // just for test
+        getElementsByTagName = function (name, context) {
+            return S.makeArray(context.querySelectorAll(name));
+        };
+    } else {
+        (function () {
+            var div = document.createElement("div");
+            div.appendChild(document.createComment(""));
+            if (div.getElementsByTagName("*").length) {
+                getElementsByTagName = function (name, context) {
+                    var nodes = context.getElementsByTagName(name),
+                        needsFilter = name == '*';
+                    // <input id='length'>
+                    if (needsFilter || typeof nodes.length != 'number') {
+                        var ret = [],
+                            i = 0,
+                            el;
+                        while (el = nodes[i++]) {
+                            if (!needsFilter || el.nodeType === 1) {
+                                ret.push(el);
+                            }
                         }
+                        return ret;
+                    } else {
+                        return nodes;
                     }
-                    return ret;
-                } else {
-                    return nodes;
-                }
-            };
-        }
-    })();
+                };
+            } else {
+                getElementsByTagName = function (name, context) {
+                    return context.getElementsByTagName(name);
+                };
+            }
+        })();
+    }
 
     function getAb(param) {
         var a = 0,
@@ -1737,9 +1747,10 @@ KISSY.add('dom/selector', function (S, parser, Dom) {
         if (seeds) {
             context = context || seeds[0].ownerDocument;
         }
-        context = context || document;
 
-        contextDocument = context.ownerDocument || context;
+        contextDocument = context && context.ownerDocument || document;
+
+        context = context || contextDocument;
 
         isContextXML = isXML(context);
 
@@ -1770,11 +1781,17 @@ KISSY.add('dom/selector', function (S, parser, Dom) {
                 }
 
                 if (id) {
+                    // http://yiminghe.github.io/lab/playground/fragment-selector/selector.html
+                    var doesNotHasById = !context.getElementById,
+                        contextInDom = Dom._contains(contextDocument, context),
+                        tmp = doesNotHasById ? (
+                            contextInDom ?
+                                contextDocument.getElementById(id) :
+                                null
+                            ) : context.getElementById(id);
                     // id bug
                     // https://github.com/kissyteam/kissy/issues/67
-                    var contextNotInDom = (context != contextDocument && !Dom._contains(contextDocument, context)),
-                        tmp = contextNotInDom ? null : contextDocument.getElementById(id);
-                    if (contextNotInDom || getAttr(tmp, 'id') != id) {
+                    if (!tmp && doesNotHasById || tmp && getAttr(tmp, 'id') != id) {
                         var tmps = getElementsByTagName('*', context),
                             tmpLen = tmps.length,
                             tmpI = 0;
@@ -1789,14 +1806,10 @@ KISSY.add('dom/selector', function (S, parser, Dom) {
                             mySeeds = [];
                         }
                     } else {
-                        if (context !== contextDocument && tmp) {
+                        if (contextInDom && tmp && context !== contextDocument) {
                             tmp = Dom._contains(context, tmp) ? tmp : null;
                         }
-                        if (tmp) {
-                            mySeeds = [tmp];
-                        } else {
-                            mySeeds = [];
-                        }
+                        mySeeds = tmp ? [tmp] : [];
                     }
                 } else {
                     mySeeds = getElementsByTagName(group.value || '*', context);

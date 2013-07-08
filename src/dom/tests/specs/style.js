@@ -314,7 +314,7 @@ KISSY.add(function (S, Dom) {
                 "<div style='position: absolute'></div><span></span>" +
                 "<s style='position: fixed'></s></div>").appendTo('body');
             expect(el.css("left")).toBe("0px");
-            expect(el.one("div").css("top")).toBe("20px");
+            expect(Math.round(parseFloat(el.one("div").css("top")))).toBe(20);
             expect(el.one("span").css("top")).toBe("auto");
             expect(parseInt(el.one("s").css("top"))||1).toBe(parseInt(el.one("s")[0].getBoundingClientRect().top)||0);
         });

@@ -11,7 +11,7 @@ KISSY.add('rich-base', function (S, Base) {
         noop = S.noop,
         RE_DASH = /(?:^|-)([a-z])/ig;
 
-    function replaceToUpper(all, letter) {
+    function replaceToUpper(_, letter) {
         return letter.toUpperCase();
     }
 

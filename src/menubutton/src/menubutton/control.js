@@ -60,7 +60,7 @@ KISSY.add("menubutton/control", function (S, Node, Button, MenuButtonRender, Men
          * If drop down menu is visible then handle event to menu.
          * Returns true if the event was handled, falsy otherwise.
          * Protected, should only be overridden by subclasses.
-         * @param {KISSY.Event.DOMEventObject} e key event to handle.
+         * @param {KISSY.Event.DomEventObject} e key event to handle.
          * @return {Boolean|undefined} True Whether the key event was handled.
          * @protected
          */
@@ -116,7 +116,7 @@ KISSY.add("menubutton/control", function (S, Node, Button, MenuButtonRender, Men
         /**
          * Handles blur event.
          * When it loses keyboard focus, close the drop dow menu.
-         * @param {KISSY.Event.DOMEventObject} e Blur event.
+         * @param {KISSY.Event.DomEventObject} e Blur event.
          * Protected, should only be overridden by subclasses.
          * @protected
          *

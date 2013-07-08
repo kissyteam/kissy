@@ -4,7 +4,7 @@
  * @author yiminghe@gmail.com
  * refer: http://martinfowler.com/eaaDev/uiArchs.html
  */
-KISSY.add("component/control/render", function (S, RenderProcess, XTemplate, RenderTpl, Manager) {
+KISSY.add("component/control/render", function (S, ComponentProcess, XTemplate, RenderTpl, Manager) {
 
     var ON_SET = '_onSet',
         trim = S.trim,
@@ -83,13 +83,27 @@ KISSY.add("component/control/render", function (S, RenderProcess, XTemplate, Ren
         }
     }
 
+    var Render;
+
     /**
      * @ignore
      * Base Render class for KISSY Component.
      */
-    return RenderProcess.extend({
-
+    return  Render = ComponentProcess.extend({
         isRender: true,
+
+        createInternal: function () {
+            var self = this,
+                srcNode = self.control.get('srcNode');
+
+            if (srcNode) {
+                // decorate from existing dom structure
+                self.callMethodByHierarchy("decorateDom", "__decorateDom",
+                    [srcNode]);
+            } else {
+                Render.superclass.createInternal.apply(self, arguments);
+            }
+        },
 
         beforeCreateDom: function (renderData) {
             var self = this,
@@ -154,8 +168,13 @@ KISSY.add("component/control/render", function (S, RenderProcess, XTemplate, Ren
          * 通过 render 来重建原有的内容
          */
         createDom: function () {
-            var self = this,
-                control = self.control,
+            var self = this;
+
+            self.callMethodByHierarchy("beforeCreateDom",
+                "__beforeCreateDom",
+                [self.renderData = {}, self.childrenElSelectors = {}]);
+
+            var control = self.control,
                 tpl, html;
 
             tpl = startTpl + self.get('contentTpl') + endTpl;
@@ -226,12 +245,10 @@ KISSY.add("component/control/render", function (S, RenderProcess, XTemplate, Ren
             }
         },
 
-        syncUI: function () {
-
-        },
-
         destructor: function () {
-            this.$el.remove();
+            if (this.$el) {
+                this.$el.remove();
+            }
         },
 
         fillChildrenElsBySelectors: function (childrenElSelectors) {
@@ -422,22 +439,20 @@ KISSY.add("component/control/render", function (S, RenderProcess, XTemplate, Ren
         '_onSetZIndex': function (x) {
             this.$el.css("z-index", x);
         }
-
     }, {
-
         /**
-         * Create a new class which extends RenderProcess .
+         * Create a new class which extends ComponentProcess .
          * @param {Function[]} extensions Class constructors for extending.
          * @param {Object} px Object to be mixed into new class 's prototype.
          * @param {Object} sx Object to be mixed into new class.
          * @static
-         * @return {KISSY.Component.RenderProcess} A new class which extends RenderProcess .
+         * @return {KISSY.Component.ComponentProcess} A new class which extends ComponentProcess .
          */
         extend: function extend(extensions, px, sx) {
             var baseClass = this,
                 parsers = {};
 
-            var newClass = RenderProcess.extend.apply(baseClass, arguments);
+            var newClass = ComponentProcess.extend.apply(baseClass, arguments);
 
             if (S.isArray(extensions)) {
                 // [ex1,ex2]，扩展类后面的优先，ex2 定义的覆盖 ex1 定义的
@@ -469,6 +484,7 @@ KISSY.add("component/control/render", function (S, RenderProcess, XTemplate, Ren
                 value: '{{{content}}}'
             }
         },
+
         HTML_PARSER: {
             id: function (el) {
                 var id = el[0].id;
@@ -481,6 +497,7 @@ KISSY.add("component/control/render", function (S, RenderProcess, XTemplate, Ren
                 return el.hasClass(this.getBaseCssClass("disabled"));
             }
         },
+
         name: 'render'
     });
 
@@ -501,6 +518,10 @@ KISSY.add("component/control/render", function (S, RenderProcess, XTemplate, Ren
      *      };
      */
 }, {
-    requires: ['./render-process', 'xtemplate',
-        './render-tpl', 'component/manager']
+    requires: [
+        './process',
+        'xtemplate',
+        './render-tpl',
+        'component/manager'
+    ]
 });

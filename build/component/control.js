@@ -1,14 +1,12 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 3 14:38
+build time: Jul 8 17:41
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
 
- component/control/common-process
  component/control/process
- component/control/render-process
  component/control/render-tpl
  component/control/render
  component/control
@@ -16,10 +14,10 @@ build time: Jul 3 14:38
 
 /**
  * @ignore
- * common process for control and render
+ * render process for control and render
  * @author yiminghe@gmail.com
  */
-KISSY.add('component/control/common-process', function (S, RichBase, Promise) {
+KISSY.add('component/control/process', function (S, RichBase, Promise) {
 
     var Defer = Promise.Defer,
         noop = S.noop;
@@ -44,10 +42,10 @@ KISSY.add('component/control/common-process', function (S, RichBase, Promise) {
     }
 
     /**
-     * @class KISSY.Component.CommonProcess
+     * @class KISSY.Component.ComponentProcess
      * @extends KISSY.RichBase
      */
-    var CommonProcess = RichBase.extend({
+    var ComponentProcess = RichBase.extend({
 
         bindInternal: noop,
 
@@ -64,6 +62,39 @@ KISSY.add('component/control/common-process', function (S, RichBase, Promise) {
 
         onRendered: function (fn) {
             return this._renderedDefer.promise.then(fn);
+        },
+
+        /**
+         * create dom structure of this component
+         * (control will delegate to render).
+         * @chainable
+         */
+        create: function () {
+            var self = this;
+            if (!self.get("created")) {
+                /**
+                 * @event beforeCreateDom
+                 * fired before root node is created
+                 * @param {KISSY.Event.CustomEventObject} e
+                 */
+                self.fire('beforeCreateDom');
+                self.createInternal();
+                self.callPluginsMethod("createDom");
+
+                /**
+                 * @event afterCreateDom
+                 * fired when root node is created
+                 * @param {KISSY.Event.CustomEventObject} e
+                 */
+                self.fire('afterCreateDom');
+
+                self.setInternal("created", true);
+            }
+            return self;
+        },
+
+        createInternal: function () {
+            this.callMethodByHierarchy("createDom", "__createDom");
         },
 
         /**
@@ -100,7 +131,7 @@ KISSY.add('component/control/common-process', function (S, RichBase, Promise) {
                  */
 
                 self.fire('beforeBindUI');
-                CommonProcess.superclass.bindInternal.call(self);
+                ComponentProcess.superclass.bindInternal.call(self);
                 self.callMethodByHierarchy("bindUI", "__bindUI");
                 self.callPluginsMethod("bindUI");
 
@@ -111,7 +142,7 @@ KISSY.add('component/control/common-process', function (S, RichBase, Promise) {
                  */
                 self.fire('afterBindUI');
 
-                CommonProcess.superclass.syncInternal.call(self);
+                ComponentProcess.superclass.syncInternal.call(self);
                 syncUIs(self);
 
                 self.setInternal("rendered", true);
@@ -130,7 +161,7 @@ KISSY.add('component/control/common-process', function (S, RichBase, Promise) {
             var self = this,
                 p,
                 plugins = self.get('plugins');
-            CommonProcess.superclass.plug.apply(self, arguments);
+            ComponentProcess.superclass.plug.apply(self, arguments);
             p = plugins[plugins.length - 1];
             if (self.get('rendered')) {
                 // plugin does not support decorate
@@ -145,8 +176,7 @@ KISSY.add('component/control/common-process', function (S, RichBase, Promise) {
         }
 
     }, {
-
-        name: 'CommonProcess',
+        name: 'ComponentProcess',
 
         ATTRS: {
             /**
@@ -186,70 +216,15 @@ KISSY.add('component/control/common-process', function (S, RichBase, Promise) {
         }
     });
 
-    return CommonProcess;
+    return ComponentProcess;
 }, {
     requires: ['rich-base', 'promise']
 });
 /**
  * @ignore
- * ControlProcess for component
- * @author yiminghe@gmail.com
- */
-KISSY.add('component/control/process', function (S, CommonProcess) {
-
-    /**
-     * @class KISSY.Component.ControlProcess
-     * @extends KISSY.Component.CommonProcess
-     */
-    var ControlProcess = CommonProcess.extend({
-
-        /**
-         * create dom structure of this component (delegate to render).
-         * @chainable
-         */
-        create: function () {
-            var self = this;
-            if (!self.get("created")) {
-                /**
-                 * @event beforeCreateDom
-                 * fired before root node is created
-                 * @param {KISSY.Event.CustomEventObject} e
-                 */
-                self.fire('beforeCreateDom');
-                self.callMethodByHierarchy("createDom", "__createDom");
-                self.callPluginsMethod("createDom");
-
-                /**
-                 * @event afterCreateDom
-                 * fired when root node is created
-                 * @param {KISSY.Event.CustomEventObject} e
-                 */
-                self.fire('afterCreateDom');
-
-                self.setInternal("created", true);
-            }
-            return self;
-        },
-
-        destroy: function () {
-            if (this.get('created')) {
-                ControlProcess.superclass.destroy.apply(this, arguments);
-            }
-        }
-
-    }, {
-        name: 'ControlProcess'
-    });
-
-    return ControlProcess;
-}, {
-    requires: ['./common-process']
-});
-/**
- * @ignore
  *
  * 2013.06.18 note:
- *  - RenderProcess/ControlProcess 流程化渲染过程定义
+ *  - ComponentProcess 流程化渲染过程定义
  *
  * Refer:
  *  - http://martinfowler.com/eaaDev/uiArchs.html
@@ -258,59 +233,6 @@ KISSY.add('component/control/process', function (S, CommonProcess) {
  *  - render 包括 create ，以及把生成的节点放在 document 中
  *  - create 仅仅包括创建节点
  **/
-/**
- * @ignore
- * render process for component
- * @author yiminghe@gmail.com
- */
-KISSY.add('component/control/render-process', function (S, CommonProcess) {
-
-    /**
-     * @class KISSY.Component.RenderProcess
-     * @extends KISSY.Component.CommonProcess
-     */
-    var RenderProcess = CommonProcess.extend({
-
-        /**
-         * Create dom structure of this component.
-         * @chainable
-         */
-        create: function () {
-            var self = this;
-            if (!self.get("created")) {
-                self.callMethodByHierarchy("beforeCreateDom",
-                    "__beforeCreateDom",
-                    [self.renderData = {}, self.childrenElSelectors = {}]);
-                self.callMethodByHierarchy("createDom", "__createDom");
-                self.callPluginsMethod("createDom");
-                self.setInternal("created", true);
-            }
-            return self;
-        },
-
-        /**
-         * decorate from existing dom structure
-         * @param srcNode
-         * @returns {*}
-         */
-        decorate: function (srcNode) {
-            var self = this;
-            if (!self.get("created")) {
-                self.callMethodByHierarchy("decorateDom", "__decorateDom",
-                    [srcNode]);
-                self.callPluginsMethod("createDom");
-                self.setInternal("created", true);
-            }
-            return self;
-        }
-    }, {
-        name: 'RenderProcess'
-    });
-
-    return RenderProcess;
-}, {
-    requires: ['./common-process']
-});
 /*
   Generated by kissy-tpl2mod.
 */
@@ -322,7 +244,7 @@ KISSY.add('component/control/render-tpl',
  * @author yiminghe@gmail.com
  * refer: http://martinfowler.com/eaaDev/uiArchs.html
  */
-KISSY.add("component/control/render", function (S, RenderProcess, XTemplate, RenderTpl, Manager) {
+KISSY.add("component/control/render", function (S, ComponentProcess, XTemplate, RenderTpl, Manager) {
 
     var ON_SET = '_onSet',
         trim = S.trim,
@@ -401,13 +323,27 @@ KISSY.add("component/control/render", function (S, RenderProcess, XTemplate, Ren
         }
     }
 
+    var Render;
+
     /**
      * @ignore
      * Base Render class for KISSY Component.
      */
-    return RenderProcess.extend({
-
+    return  Render = ComponentProcess.extend({
         isRender: true,
+
+        createInternal: function () {
+            var self = this,
+                srcNode = self.control.get('srcNode');
+
+            if (srcNode) {
+                // decorate from existing dom structure
+                self.callMethodByHierarchy("decorateDom", "__decorateDom",
+                    [srcNode]);
+            } else {
+                Render.superclass.createInternal.apply(self, arguments);
+            }
+        },
 
         beforeCreateDom: function (renderData) {
             var self = this,
@@ -459,7 +395,9 @@ KISSY.add("component/control/render", function (S, RenderProcess, XTemplate, Ren
                 cls.push(self.getBaseCssClasses('hover'));
             }
             if (control.get('focusable')) {
-                elAttrs['hideFocus'] = 'true';
+                if (UA.ie) {
+                    elAttrs['hideFocus'] = 'true';
+                }
                 elAttrs['tabindex'] = disabled ? '-1' : '0';
             }
         },
@@ -470,8 +408,13 @@ KISSY.add("component/control/render", function (S, RenderProcess, XTemplate, Ren
          * 通过 render 来重建原有的内容
          */
         createDom: function () {
-            var self = this,
-                control = self.control,
+            var self = this;
+
+            self.callMethodByHierarchy("beforeCreateDom",
+                "__beforeCreateDom",
+                [self.renderData = {}, self.childrenElSelectors = {}]);
+
+            var control = self.control,
                 tpl, html;
 
             tpl = startTpl + self.get('contentTpl') + endTpl;
@@ -542,12 +485,10 @@ KISSY.add("component/control/render", function (S, RenderProcess, XTemplate, Ren
             }
         },
 
-        syncUI: function () {
-
-        },
-
         destructor: function () {
-            this.$el.remove();
+            if (this.$el) {
+                this.$el.remove();
+            }
         },
 
         fillChildrenElsBySelectors: function (childrenElSelectors) {
@@ -578,6 +519,9 @@ KISSY.add("component/control/render", function (S, RenderProcess, XTemplate, Ren
                 commands: {
                     getBaseCssClasses: function (scope, option) {
                         return self.getBaseCssClasses(option.params[0]);
+                    },
+                    getBaseCssClass: function (scope, option) {
+                        return self.getBaseCssClass(option.params[0]);
                     }
                 }
             }).render(renderData);
@@ -735,22 +679,20 @@ KISSY.add("component/control/render", function (S, RenderProcess, XTemplate, Ren
         '_onSetZIndex': function (x) {
             this.$el.css("z-index", x);
         }
-
     }, {
-
         /**
-         * Create a new class which extends RenderProcess .
+         * Create a new class which extends ComponentProcess .
          * @param {Function[]} extensions Class constructors for extending.
          * @param {Object} px Object to be mixed into new class 's prototype.
          * @param {Object} sx Object to be mixed into new class.
          * @static
-         * @return {KISSY.Component.RenderProcess} A new class which extends RenderProcess .
+         * @return {KISSY.Component.ComponentProcess} A new class which extends ComponentProcess .
          */
         extend: function extend(extensions, px, sx) {
             var baseClass = this,
                 parsers = {};
 
-            var newClass = RenderProcess.extend.apply(baseClass, arguments);
+            var newClass = ComponentProcess.extend.apply(baseClass, arguments);
 
             if (S.isArray(extensions)) {
                 // [ex1,ex2]，扩展类后面的优先，ex2 定义的覆盖 ex1 定义的
@@ -782,6 +724,7 @@ KISSY.add("component/control/render", function (S, RenderProcess, XTemplate, Ren
                 value: '{{{content}}}'
             }
         },
+
         HTML_PARSER: {
             id: function (el) {
                 var id = el[0].id;
@@ -794,6 +737,7 @@ KISSY.add("component/control/render", function (S, RenderProcess, XTemplate, Ren
                 return el.hasClass(this.getBaseCssClass("disabled"));
             }
         },
+
         name: 'render'
     });
 
@@ -814,16 +758,19 @@ KISSY.add("component/control/render", function (S, RenderProcess, XTemplate, Ren
      *      };
      */
 }, {
-    requires: ['./render-process', 'xtemplate',
-        './render-tpl', 'component/manager']
+    requires: [
+        './process',
+        'xtemplate',
+        './render-tpl',
+        'component/manager'
+    ]
 });
 /**
  * @ignore
  * Base Control class for KISSY Component.
  * @author yiminghe@gmail.com
  */
-KISSY.add("component/control", function (S, Node, ControlProcess, Manager, Render, undefined) {
-
+KISSY.add("component/control", function (S, Node, ComponentProcess, Manager, Render, undefined) {
     var ie = S.Env.host.document.documentMode || S.UA.ie,
         Features = S.Features,
         Gesture = Node.Gesture,
@@ -831,11 +778,10 @@ KISSY.add("component/control", function (S, Node, ControlProcess, Manager, Rende
 
     /**
      * Base Control class for KISSY Component.
-     * @extends KISSY.Component.RenderProcess
+     * @extends KISSY.Component.ComponentProcess
      * @class KISSY.Component.Control
      */
-    var Control = ControlProcess.extend({
-
+    var Control = ComponentProcess.extend({
             /**
              * mark current instance as control instance.
              *
@@ -859,7 +805,6 @@ KISSY.add("component/control", function (S, Node, ControlProcess, Manager, Rende
                 var self = this,
                     Render = self.get('xrender'),
                     view = self.get('view'),
-                    srcNode = self.get('srcNode'),
                     id = self.get("id"),
                     el;
                 // initialize view
@@ -867,15 +812,11 @@ KISSY.add("component/control", function (S, Node, ControlProcess, Manager, Rende
                 if (view) {
                     view.set('control', self);
                 } else {
-                    self.set('view', view = new Render({
+                    self.set('view', this.view = view = new Render({
                         control: self
                     }));
                 }
-                if (srcNode) {
-                    view.decorate(srcNode);
-                } else {
-                    view.create();
-                }
+                view.create();
                 el = view.getKeyEventTarget();
                 if (!self.get("allowTextSelection")) {
                     el.unselectable();
@@ -906,7 +847,6 @@ KISSY.add("component/control", function (S, Node, ControlProcess, Manager, Rende
                 }
 
                 if (self.get('handleMouseEvents')) {
-
                     el = self.$el;
 
                     if (!isTouchEventSupported) {
@@ -928,7 +868,6 @@ KISSY.add("component/control", function (S, Node, ControlProcess, Manager, Rende
                     if (ie && ie < 9) {
                         el.on("dblclick", self.handleDblClick, self);
                     }
-
                 }
             },
 
@@ -1022,7 +961,7 @@ KISSY.add("component/control", function (S, Node, ControlProcess, Manager, Rende
              * By default, this performs its associated action by calling
              * {@link KISSY.Component.Control#handleClickInternal}.
              * @protected
-             * @param {KISSY.Event.DOMEventObject} ev Dom event to handle.
+             * @param {KISSY.Event.DomEventObject} ev Dom event to handle.
              */
             handleDblClickInternal: function (ev) {
                 this.handleClickInternal(ev);
@@ -1037,7 +976,7 @@ KISSY.add("component/control", function (S, Node, ControlProcess, Manager, Rende
             /**
              * Handle mouseenter events. If the component is not disabled, highlights it.
              * @protected
-             * @param {KISSY.Event.DOMEventObject} ev Dom event to handle.
+             * @param {KISSY.Event.DomEventObject} ev Dom event to handle.
              */
             handleMouseEnterInternal: function (ev) {
                 this.set("highlighted", !!ev);
@@ -1052,7 +991,7 @@ KISSY.add("component/control", function (S, Node, ControlProcess, Manager, Rende
             /**
              * Handle mouseleave events. If the component is not disabled, de-highlights it.
              * @protected
-             * @param {KISSY.Event.DOMEventObject} ev Dom event to handle.
+             * @param {KISSY.Event.DomEventObject} ev Dom event to handle.
              */
             handleMouseLeaveInternal: function (ev) {
                 var self = this;
@@ -1073,7 +1012,7 @@ KISSY.add("component/control", function (S, Node, ControlProcess, Manager, Rende
              * If the component is focusable, then focus it,
              * else prevent it from receiving keyboard focus.
              * @protected
-             * @param {KISSY.Event.DOMEventObject} ev Dom event to handle.
+             * @param {KISSY.Event.DomEventObject} ev Dom event to handle.
              */
             handleMouseDownInternal: function (ev) {
                 var self = this,
@@ -1100,7 +1039,6 @@ KISSY.add("component/control", function (S, Node, ControlProcess, Manager, Rende
 
             handleMouseUp: function (ev) {
                 if (!this.get('disabled')) {
-
                     this.handleMouseUpInternal(ev);
                 }
             },
@@ -1110,7 +1048,7 @@ KISSY.add("component/control", function (S, Node, ControlProcess, Manager, Rende
              * If this component is not disabled, performs its associated action by calling
              * {@link KISSY.Component.Control#handleClickInternal}, then deactivates it.
              * @protected
-             * @param {KISSY.Event.DOMEventObject} ev Dom event to handle.
+             * @param {KISSY.Event.DomEventObject} ev Dom event to handle.
              */
             handleMouseUpInternal: function (ev) {
                 var self = this;
@@ -1122,7 +1060,6 @@ KISSY.add("component/control", function (S, Node, ControlProcess, Manager, Rende
 
             handleContextMenu: function (ev) {
                 if (!this.get('disabled')) {
-
                     this.handleContextMenuInternal(ev);
                 }
             },
@@ -1130,14 +1067,13 @@ KISSY.add("component/control", function (S, Node, ControlProcess, Manager, Rende
             /**
              * Handles context menu.
              * @protected
-             * @param {KISSY.Event.DOMEventObject} ev Dom event to handle.
+             * @param {KISSY.Event.DomEventObject} ev Dom event to handle.
              */
             handleContextMenuInternal: function (ev) {
             },
 
             handleFocus: function () {
                 if (!this.get('disabled')) {
-
                     this.handleFocusInternal();
                 }
             },
@@ -1153,7 +1089,6 @@ KISSY.add("component/control", function (S, Node, ControlProcess, Manager, Rende
 
             handleBlur: function () {
                 if (!this.get('disabled')) {
-
                     this.handleBlurInternal();
                 }
             },
@@ -1179,7 +1114,7 @@ KISSY.add("component/control", function (S, Node, ControlProcess, Manager, Rende
             /**
              * Handle enter keydown event to {@link KISSY.Component.Control#handleClickInternal}.
              * @protected
-             * @param {KISSY.Event.DOMEventObject} ev Dom event to handle.
+             * @param {KISSY.Event.DomEventObject} ev Dom event to handle.
              */
             handleKeyDownInternal: function (ev) {
                 if (ev['keyCode'] == Node.KeyCode.ENTER) {
@@ -1197,7 +1132,7 @@ KISSY.add("component/control", function (S, Node, ControlProcess, Manager, Rende
             /**
              * Performs the appropriate action when this component is activated by the user.
              * @protected
-             * @param {KISSY.Event.DOMEventObject} ev Dom event to handle.
+             * @param {KISSY.Event.DomEventObject} ev Dom event to handle.
              */
             handleClickInternal: function (ev) {
             },
@@ -1208,14 +1143,15 @@ KISSY.add("component/control", function (S, Node, ControlProcess, Manager, Rende
             destructor: function () {
                 // remove instance from manager
                 Manager.removeComponent(this.get('id'));
-                this.view.destroy();
+                if (this.view) {
+                    this.view.destroy();
+                }
             }
         },
         {
             name: 'control',
 
             ATTRS: {
-
                 id: {
                     view: 1,
                     valueFn: function () {
@@ -1669,7 +1605,7 @@ KISSY.add("component/control", function (S, Node, ControlProcess, Manager, Rende
             last.name = xclass;
         }
 
-        newClass = ControlProcess.extend.apply(baseClass, args);
+        newClass = ComponentProcess.extend.apply(baseClass, args);
 
         if (xclass) {
             Manager.setConstructorByXClass(xclass, newClass);
