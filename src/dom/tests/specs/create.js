@@ -145,6 +145,12 @@ KISSY.add(function (S, Dom) {
 
         });
 
+        it('html works for fragment',function(){
+            var html='<div></div><span></span>';
+            var n= Dom.create(html);
+            expect(Dom.html(n)).toBe(html);
+        });
+
 
         it("remove should works", function () {
             var n;
@@ -215,6 +221,14 @@ KISSY.add(function (S, Dom) {
             Dom.remove(div2);
         });
 
+
+        it('outerHtml works for fragment',function(){
+
+            var html='<div></div><span></span>';
+            var n= Dom.create(html);
+            expect(Dom.outerHtml(n)).toBe(html);
+
+        });
     });
 },{
     requires:['dom','core']

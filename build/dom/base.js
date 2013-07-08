@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 3 13:50
+build time: Jul 8 21:57
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -1018,10 +1018,18 @@ KISSY.add('dom/base/create', function (S, Dom, undefined) {
         Dom.removeData(els);
     }
 
-    function defaultCreator(html, ownerDoc) {
-        var frag = ownerDoc && ownerDoc != doc ?
+    function getHolderDiv(ownerDoc) {
+        var holder = ownerDoc && ownerDoc != doc ?
             ownerDoc.createElement(DIV) :
             DEFAULT_DIV;
+        if (holder === DEFAULT_DIV) {
+            holder.innerHTML = '';
+        }
+        return holder;
+    }
+
+    function defaultCreator(html, ownerDoc) {
+        var frag = getHolderDiv(ownerDoc);
         // html 为 <style></style> 时不行，必须有其他元素？
         frag.innerHTML = 'm<div>' + html + '<' + '/div>';
         return frag.lastChild;
@@ -1158,6 +1166,10 @@ KISSY.add('dom/base/create', function (S, Dom, undefined) {
                     // only gets value on the first of element nodes
                     if (el.nodeType == NodeType.ELEMENT_NODE) {
                         return el.innerHTML;
+                    } else if (el.nodeType == NodeType.DOCUMENT_FRAGMENT_NODE) {
+                        var holder = getHolderDiv(el.ownerDocument);
+                        holder.appendChild(el);
+                        return holder.innerHTML;
                     } else {
                         return null;
                     }
@@ -1209,7 +1221,6 @@ KISSY.add('dom/base/create', function (S, Dom, undefined) {
                     holder,
                     i,
                     valNode,
-                    ownerDoc,
                     length = els.length,
                     el = els[0];
                 if (!el) {
@@ -1217,15 +1228,10 @@ KISSY.add('dom/base/create', function (S, Dom, undefined) {
                 }
                 // getter
                 if (htmlString === undefined) {
-                    if (supportOuterHTML) {
+                    if (supportOuterHTML && el.nodeType != Dom.DOCUMENT_FRAGMENT_NODE) {
                         return el.outerHTML
                     } else {
-                        ownerDoc = el.ownerDocument;
-                        holder = ownerDoc && ownerDoc != doc ?
-                            ownerDoc.createElement(DIV) :
-                            DEFAULT_DIV;
-                        holder.innerHTML = '';
-                        holder.appendChild(Dom.clone(el, true));
+                        holder = getHolderDiv(el.ownerDocument);
                         holder.appendChild(Dom.clone(el, true));
                         return holder.innerHTML;
                     }
@@ -1364,7 +1370,7 @@ KISSY.add('dom/base/create', function (S, Dom, undefined) {
         });
 
     // compatibility
-    Dom.outerHTML=Dom.outerHtml;
+    Dom.outerHTML = Dom.outerHtml;
 
     function processAll(fn, elem, clone) {
         var elemNodeType = elem.nodeType;

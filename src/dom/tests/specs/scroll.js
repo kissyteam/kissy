@@ -108,8 +108,8 @@ KISSY.add(function (S, Dom) {
                 var scrollTop = nodeOffset.top - containerOffset.top - container_border_width;
 
                 Dom.scrollIntoView(node, container, {
-                    alignWithTop:true,
-                    allowHorizontalScroll:false
+                    alignWithTop: true,
+                    allowHorizontalScroll: false
                 });
 
                 nodeOffset = Dom.offset(node);
@@ -151,7 +151,7 @@ KISSY.add(function (S, Dom) {
 
             it("scroll node to container at bottom", function () {
                 Dom.scrollIntoView(node, container, {
-                    alignWithTop:false
+                    alignWithTop: false
                 });
                 var nt = Math.round(Dom.offset(node).top);
                 var ct = Math.round(Dom.offset(container).top);
@@ -191,7 +191,7 @@ KISSY.add(function (S, Dom) {
                 var scrollTop = Dom.scrollTop(container);
 
                 Dom.scrollIntoView(node, container, {
-                    onlyScrollIfNeeded:true
+                    onlyScrollIfNeeded: true
                 });
 
                 expect(Dom.scrollTop(container)).toBe(scrollTop);
@@ -207,8 +207,8 @@ KISSY.add(function (S, Dom) {
 
                 Dom.scrollTop(container, Dom.scrollTop(container) + 10);
 
-                Dom.scrollIntoView(node, container,{
-                    onlyScrollIfNeeded:true
+                Dom.scrollIntoView(node, container, {
+                    onlyScrollIfNeeded: true
                 });
 
                 expect(Dom.scrollTop(container)).toBe(scrollTop);
@@ -219,7 +219,7 @@ KISSY.add(function (S, Dom) {
             it('will scroll and adjust top to false if node is outside container', function () {
 
                 Dom.scrollIntoView(node, container, {
-                    alignWithTop:false
+                    alignWithTop: false
                 });
 
                 var scrollTop = Dom.scrollTop(container);
@@ -227,7 +227,7 @@ KISSY.add(function (S, Dom) {
                 Dom.scrollTop(container, Dom.scrollTop(container) - 10);
 
                 Dom.scrollIntoView(node, container, {
-                    onlyScrollIfNeeded:true
+                    onlyScrollIfNeeded: true
                 });
 
                 expect(Dom.scrollTop(container)).toBe(scrollTop);
@@ -238,20 +238,20 @@ KISSY.add(function (S, Dom) {
             it('will scroll and adjust top to true if node is outside container', function () {
 
                 Dom.scrollIntoView(node, container, {
-                    alignWithTop:true
+                    alignWithTop: true
                 });
 
                 var scrollTop = Dom.scrollTop(container);
 
-                Dom.scrollIntoView(node, container,  {
-                    alignWithTop:false
+                Dom.scrollIntoView(node, container, {
+                    alignWithTop: false
                 });
 
                 Dom.scrollTop(container, Dom.scrollTop(container) - 10);
 
-                Dom.scrollIntoView(node, container,   {
-                    alignWithTop:true,
-                    onlyScrollIfNeeded:true
+                Dom.scrollIntoView(node, container, {
+                    alignWithTop: true,
+                    onlyScrollIfNeeded: true
                 });
 
                 expect(Dom.scrollTop(container)).toBe(scrollTop);
@@ -262,20 +262,20 @@ KISSY.add(function (S, Dom) {
             it('will scroll to top false if node is outside container', function () {
 
                 Dom.scrollIntoView(node, container, {
-                    alignWithTop:false
+                    alignWithTop: false
                 });
 
                 var scrollTop = Dom.scrollTop(container);
 
                 Dom.scrollIntoView(node, container, {
-                    alignWithTop:true
+                    alignWithTop: true
                 });
 
                 Dom.scrollTop(container, Dom.scrollTop(container) + 10);
 
-                Dom.scrollIntoView(node, container,{
-                    alignWithTop:false,
-                    onlyScrollIfNeeded:true
+                Dom.scrollIntoView(node, container, {
+                    alignWithTop: false,
+                    onlyScrollIfNeeded: true
                 });
 
                 expect(Dom.scrollTop(container)).toBe(scrollTop);
@@ -285,6 +285,6 @@ KISSY.add(function (S, Dom) {
         });
 
     });
-},{
-    requires:['dom','core']
+}, {
+    requires: ['dom', 'core']
 });
