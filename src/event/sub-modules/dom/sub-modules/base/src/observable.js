@@ -38,7 +38,11 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
                 handle = eventDesc.handle;
             // 第一次注册该事件，dom 节点才需要注册 dom 事件
             if (!s.setup || s.setup.call(currentTarget, type) === false) {
-                Utils.simpleAdd(currentTarget, type, handle)
+                if(currentTarget.window == currentTarget && S.Env.winHasLoaded){
+                    handle()
+                } else {
+                    Utils.simpleAdd(currentTarget, type, handle)
+                }
             }
         },
 
