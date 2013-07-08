@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 8 17:32
+build time: Jul 8 17:41
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -812,7 +812,7 @@ KISSY.add("component/control", function (S, Node, ComponentProcess, Manager, Ren
                 if (view) {
                     view.set('control', self);
                 } else {
-                    self.set('view', view = new Render({
+                    self.set('view', this.view = view = new Render({
                         control: self
                     }));
                 }
@@ -1143,7 +1143,9 @@ KISSY.add("component/control", function (S, Node, ComponentProcess, Manager, Ren
             destructor: function () {
                 // remove instance from manager
                 Manager.removeComponent(this.get('id'));
-                this.view.destroy();
+                if (this.view) {
+                    this.view.destroy();
+                }
             }
         },
         {
