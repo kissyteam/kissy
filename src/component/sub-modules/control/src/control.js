@@ -3,8 +3,7 @@
  * Base Control class for KISSY Component.
  * @author yiminghe@gmail.com
  */
-KISSY.add("component/control", function (S, Node, ControlProcess, Manager, Render, undefined) {
-
+KISSY.add("component/control", function (S, Node, ComponentProcess, Manager, Render, undefined) {
     var ie = S.Env.host.document.documentMode || S.UA.ie,
         Features = S.Features,
         Gesture = Node.Gesture,
@@ -12,11 +11,10 @@ KISSY.add("component/control", function (S, Node, ControlProcess, Manager, Rende
 
     /**
      * Base Control class for KISSY Component.
-     * @extends KISSY.Component.RenderProcess
+     * @extends KISSY.Component.ComponentProcess
      * @class KISSY.Component.Control
      */
-    var Control = ControlProcess.extend({
-
+    var Control = ComponentProcess.extend({
             /**
              * mark current instance as control instance.
              *
@@ -40,7 +38,6 @@ KISSY.add("component/control", function (S, Node, ControlProcess, Manager, Rende
                 var self = this,
                     Render = self.get('xrender'),
                     view = self.get('view'),
-                    srcNode = self.get('srcNode'),
                     id = self.get("id"),
                     el;
                 // initialize view
@@ -52,11 +49,7 @@ KISSY.add("component/control", function (S, Node, ControlProcess, Manager, Rende
                         control: self
                     }));
                 }
-                if (srcNode) {
-                    view.decorate(srcNode);
-                } else {
-                    view.create();
-                }
+                view.create();
                 el = view.getKeyEventTarget();
                 if (!self.get("allowTextSelection")) {
                     el.unselectable();
@@ -87,7 +80,6 @@ KISSY.add("component/control", function (S, Node, ControlProcess, Manager, Rende
                 }
 
                 if (self.get('handleMouseEvents')) {
-
                     el = self.$el;
 
                     if (!isTouchEventSupported) {
@@ -109,7 +101,6 @@ KISSY.add("component/control", function (S, Node, ControlProcess, Manager, Rende
                     if (ie && ie < 9) {
                         el.on("dblclick", self.handleDblClick, self);
                     }
-
                 }
             },
 
@@ -203,7 +194,7 @@ KISSY.add("component/control", function (S, Node, ControlProcess, Manager, Rende
              * By default, this performs its associated action by calling
              * {@link KISSY.Component.Control#handleClickInternal}.
              * @protected
-             * @param {KISSY.Event.DOMEventObject} ev Dom event to handle.
+             * @param {KISSY.Event.DomEventObject} ev Dom event to handle.
              */
             handleDblClickInternal: function (ev) {
                 this.handleClickInternal(ev);
@@ -218,7 +209,7 @@ KISSY.add("component/control", function (S, Node, ControlProcess, Manager, Rende
             /**
              * Handle mouseenter events. If the component is not disabled, highlights it.
              * @protected
-             * @param {KISSY.Event.DOMEventObject} ev Dom event to handle.
+             * @param {KISSY.Event.DomEventObject} ev Dom event to handle.
              */
             handleMouseEnterInternal: function (ev) {
                 this.set("highlighted", !!ev);
@@ -233,7 +224,7 @@ KISSY.add("component/control", function (S, Node, ControlProcess, Manager, Rende
             /**
              * Handle mouseleave events. If the component is not disabled, de-highlights it.
              * @protected
-             * @param {KISSY.Event.DOMEventObject} ev Dom event to handle.
+             * @param {KISSY.Event.DomEventObject} ev Dom event to handle.
              */
             handleMouseLeaveInternal: function (ev) {
                 var self = this;
@@ -254,7 +245,7 @@ KISSY.add("component/control", function (S, Node, ControlProcess, Manager, Rende
              * If the component is focusable, then focus it,
              * else prevent it from receiving keyboard focus.
              * @protected
-             * @param {KISSY.Event.DOMEventObject} ev Dom event to handle.
+             * @param {KISSY.Event.DomEventObject} ev Dom event to handle.
              */
             handleMouseDownInternal: function (ev) {
                 var self = this,
@@ -281,7 +272,6 @@ KISSY.add("component/control", function (S, Node, ControlProcess, Manager, Rende
 
             handleMouseUp: function (ev) {
                 if (!this.get('disabled')) {
-
                     this.handleMouseUpInternal(ev);
                 }
             },
@@ -291,7 +281,7 @@ KISSY.add("component/control", function (S, Node, ControlProcess, Manager, Rende
              * If this component is not disabled, performs its associated action by calling
              * {@link KISSY.Component.Control#handleClickInternal}, then deactivates it.
              * @protected
-             * @param {KISSY.Event.DOMEventObject} ev Dom event to handle.
+             * @param {KISSY.Event.DomEventObject} ev Dom event to handle.
              */
             handleMouseUpInternal: function (ev) {
                 var self = this;
@@ -303,7 +293,6 @@ KISSY.add("component/control", function (S, Node, ControlProcess, Manager, Rende
 
             handleContextMenu: function (ev) {
                 if (!this.get('disabled')) {
-
                     this.handleContextMenuInternal(ev);
                 }
             },
@@ -311,14 +300,13 @@ KISSY.add("component/control", function (S, Node, ControlProcess, Manager, Rende
             /**
              * Handles context menu.
              * @protected
-             * @param {KISSY.Event.DOMEventObject} ev Dom event to handle.
+             * @param {KISSY.Event.DomEventObject} ev Dom event to handle.
              */
             handleContextMenuInternal: function (ev) {
             },
 
             handleFocus: function () {
                 if (!this.get('disabled')) {
-
                     this.handleFocusInternal();
                 }
             },
@@ -334,7 +322,6 @@ KISSY.add("component/control", function (S, Node, ControlProcess, Manager, Rende
 
             handleBlur: function () {
                 if (!this.get('disabled')) {
-
                     this.handleBlurInternal();
                 }
             },
@@ -360,7 +347,7 @@ KISSY.add("component/control", function (S, Node, ControlProcess, Manager, Rende
             /**
              * Handle enter keydown event to {@link KISSY.Component.Control#handleClickInternal}.
              * @protected
-             * @param {KISSY.Event.DOMEventObject} ev Dom event to handle.
+             * @param {KISSY.Event.DomEventObject} ev Dom event to handle.
              */
             handleKeyDownInternal: function (ev) {
                 if (ev['keyCode'] == Node.KeyCode.ENTER) {
@@ -378,7 +365,7 @@ KISSY.add("component/control", function (S, Node, ControlProcess, Manager, Rende
             /**
              * Performs the appropriate action when this component is activated by the user.
              * @protected
-             * @param {KISSY.Event.DOMEventObject} ev Dom event to handle.
+             * @param {KISSY.Event.DomEventObject} ev Dom event to handle.
              */
             handleClickInternal: function (ev) {
             },
@@ -396,7 +383,6 @@ KISSY.add("component/control", function (S, Node, ControlProcess, Manager, Rende
             name: 'control',
 
             ATTRS: {
-
                 id: {
                     view: 1,
                     valueFn: function () {
@@ -850,7 +836,7 @@ KISSY.add("component/control", function (S, Node, ControlProcess, Manager, Rende
             last.name = xclass;
         }
 
-        newClass = ControlProcess.extend.apply(baseClass, args);
+        newClass = ComponentProcess.extend.apply(baseClass, args);
 
         if (xclass) {
             Manager.setConstructorByXClass(xclass, newClass);

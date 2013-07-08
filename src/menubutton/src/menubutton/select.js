@@ -85,7 +85,7 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
      * Protected, should only be overridden by subclasses.
      * @protected
      *
-     * @param {KISSY.Event.DOMEventObject} e
+     * @param {KISSY.Event.DomEventObject} e
      */
     function handleMenuClick(e) {
         var self = this,
