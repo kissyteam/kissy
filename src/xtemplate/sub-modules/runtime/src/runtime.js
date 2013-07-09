@@ -8,12 +8,8 @@ KISSY.add('xtemplate/runtime', function (S, commands) {
     var utils = {
             'getProperty': function (parts, scopes, depth) {
                 // this refer to current scope object
-                if (parts == 'this' || parts == '.') {
-                    if (scopes.length) {
-                        return [ scopes[0] ];
-                    } else {
-                        return false;
-                    }
+                if (parts === '.') {
+                    parts = 'this';
                 }
                 parts = parts.split('.');
                 var len = parts.length,
@@ -28,8 +24,11 @@ KISSY.add('xtemplate/runtime', function (S, commands) {
                     valid = 1;
                     for (i = 0; i < len; i++) {
                         p = parts[i];
+                        if (p === 'this') {
+                            continue;
+                        }
                         // may not be object at all
-                        if (typeof v != 'object' || !(p in v)) {
+                        else if (typeof v != 'object' || !(p in v)) {
                             valid = 0;
                             break;
                         }

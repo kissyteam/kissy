@@ -170,6 +170,15 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
 
             describe('each', function () {
 
+                it('support nest array',function(){
+                    var tpl = '{{#each data}}{{this.0}}{{this.1}}{{.}}{{/each}}';
+                    var data = {
+                        data: [[1,2]]
+                    };
+                    var render = new XTemplate(tpl).render(data);
+                    expect(render).toBe('121,2');
+                });
+
                 it("support object", function () {
                     var tpl = '{{#each data}}{{xkey}}:{{.}}{{/each}}';
                     var data = {
