@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 3 13:55
+build time: Jul 9 15:12
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -447,7 +447,7 @@ KISSY.add("editor/utils", function (S,Editor) {
                 for (var p in params) {
 
                     var v = params[p];
-                    if (S.isFunction(v)) {
+                    if (typeof v === 'function') {
                         params[p] = v();
                     }
 
@@ -523,7 +523,7 @@ KISSY.add("editor/utils", function (S,Editor) {
                 var res = this.__res || [];
                 for (var i = 0; i < res.length; i++) {
                     var r = res[i];
-                    if (S.isFunction(r)) {
+                    if (typeof r === 'function') {
                         r();
                     } else {
                         if (r.destroy) {
@@ -6542,9 +6542,10 @@ KISSY.add("editor/clipboard", function (S, Editor, KERange, KES) {
                 range = new KERange(doc);
 
             // Create container to paste into
-            var pastebin = $(UA['webkit'] ? '<body></body>' :
+            var pastebin = $(UA['webkit'] ?
+                '<body></body>' :
                 // ie6 must use create ...
-                doc.createElement('div'), null, doc);
+                '<div></div>', doc);
 
             pastebin.attr('id', 'ke_pastebin');
             // Safari requires a filler node inside the div to have the content pasted into it. (#4882)
@@ -8442,7 +8443,7 @@ KISSY.add('editor', function (S, Node, iframeContentTpl, Editor, Utils, focusMan
             } else {
                 // 刚开始就配置 mode 为 sourcecode
                 if (iframe) {
-                    textarea.val(self.getData(1, WYSIWYG_MODE));
+                    textarea.val(self.getFormatData(WYSIWYG_MODE));
                     iframe.hide();
                 }
                 textarea.show();
@@ -8627,13 +8628,17 @@ KISSY.add('editor', function (S, Node, iframeContentTpl, Editor, Utils, focusMan
             return html;
         },
 
+        getFormatData:function(mode){
+            return this.getData(1,mode);
+        },
+
         /**
          * Get full html content of editor 's iframe.
          */
         getDocHtml: function () {
             var self = this;
             return prepareIFrameHTML(0, self.get('customStyle'),
-                self.get('customLink'), self.getData(1));
+                self.get('customLink'), self.getFormatData());
         },
 
         /**
