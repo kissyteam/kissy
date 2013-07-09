@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.30
 MIT Licensed
-build time: May 27 22:02
+build time: Jul 9 15:11
 */
 /**
  * strikeThrough button

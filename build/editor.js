@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.30
 MIT Licensed
-build time: May 27 22:02
+build time: Jul 9 15:11
 */
 /**
  * Set up editor constructor
@@ -220,9 +220,9 @@ KISSY.add("editor/core/clipboard", function (S, Editor, KERange, KES) {
                 range = new KERange(doc);
 
             // Create container to paste into
-            var pastebin = $(UA['webkit'] ? '<body></body>' :
-                // ie6 must use create ...
-                doc.createElement('div'), null, doc);
+            var pastebin = $(UA['webkit'] ?
+                '<body></body>' :
+                '<div></div>', doc);
             pastebin.attr('id', 'ke_pastebin');
             // Safari requires a filler node inside the div to have the content pasted into it. (#4882)
             UA['webkit'] && pastebin[0].appendChild(doc.createTextNode('\xa0'));
