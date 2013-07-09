@@ -5,16 +5,6 @@
 KISSY.add('date/gregorian/const', function () {
     return {
         /**
-         * Enum indicating common era
-         * @type Number
-         */
-        AD: 1,
-        /**
-         * Enum indicating before common era
-         * @type Number
-         */
-        BC: 0,
-        /**
          * Enum indicating sunday
          * @type Number
          */

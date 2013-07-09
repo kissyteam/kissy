@@ -30,6 +30,10 @@ tests.push('/kissy/src/cookie/tests/runner/test.jss');
 
 tests.push('/kissy/src/cookie/tests/runner/test.jss?build');
 
+tests.push('/kissy/src/date/format/tests/runner/test.jss');
+
+tests.push('/kissy/src/date/format/tests/runner/test.jss?build');
+
 tests.push('/kissy/src/date/gregorian/tests/runner/test.jss');
 
 tests.push('/kissy/src/date/gregorian/tests/runner/test.jss?build');

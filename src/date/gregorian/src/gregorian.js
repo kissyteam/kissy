@@ -169,17 +169,7 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
          * Enum indicating pm
          * @type Number
          */
-        PM: 1,
-        /**
-         * Enum indicating short display name for field
-         * @type Number
-         */
-        SHORT: 0,
-        /**
-         * Enum indicating long display name for field
-         * @type Number
-         */
-        LONG: 1
+        PM: 1
     });
 
     var YEAR = GregorianCalendar.YEAR;
@@ -196,18 +186,6 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
 
     var WEEK_OF_MONTH = GregorianCalendar.WEEK_OF_MONTH;
     var WEEK_OF_YEAR = GregorianCalendar.WEEK_OF_YEAR;
-
-    var SHORT = GregorianCalendar.SHORT;
-    var LONG = GregorianCalendar.LONG;
-
-
-    var DISPLAY_MAP = {};
-    DISPLAY_MAP[MONTH] = {};
-    DISPLAY_MAP[MONTH][SHORT] = 'shortMonths';
-    DISPLAY_MAP[MONTH][LONG] = 'months';
-    DISPLAY_MAP[DAY_OF_WEEK] = {};
-    DISPLAY_MAP[DAY_OF_WEEK][SHORT] = 'shortWeekdays';
-    DISPLAY_MAP[DAY_OF_WEEK][LONG] = 'weekdays';
 
     var MONTH_LENGTH = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]; // 0-based
     var LEAP_MONTH_LENGTH = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]; // 0-based
@@ -983,19 +961,6 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
 
     function getYearLength(year) {
         return isLeapYear(year) ? 366 : 365;
-    }
-
-    function getFieldStrings(field, style, locale) {
-        var strings, name = DISPLAY_MAP[field];
-        if (name) {
-            if (typeof name == 'string') {
-                strings = locale[name];
-            } else {
-                name = name[style];
-                strings = locale[name];
-            }
-        }
-        return strings;
     }
 
     function getWeekNumber(self, fixedDay1, fixedDate) {
