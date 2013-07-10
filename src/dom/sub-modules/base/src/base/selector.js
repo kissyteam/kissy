@@ -31,6 +31,67 @@ KISSY.add('dom/base/selector', function (S, Dom, undefined) {
         }
     }
 
+	// added by jayli
+	// http://jsperf.com/queryselctor-vs-getelementbyclassname2
+	
+	function makeMatch(selector){
+		if (selector.charAt(0) == '#') {
+			return makeIdMatch(selector.substr(1));
+		} else if (selector.charAt(0) == '.') {
+			return makeClassMatch(selector.substr(1));
+		} else {
+			return makeTagMatch(selector.substr(0));
+		}
+	}
+
+	function makeIdMatch(id) {
+		return function(elem) {
+			var match = document.getElementById(id);
+			return match ? [ match ] : [ ];
+		};
+	}
+
+	function makeClassMatch(className) {
+		return function(elem) {
+			return elem.getElementsByClassName(className);
+		};
+	}
+
+	function makeTagMatch(tagName) {
+		return function(elem) {
+			return elem.getElementsByTagName(tagName);
+		};
+	}
+
+	// 只涉及#id,.cls,tag的逐级选择
+	// 不包括不常见的选择器语法
+	// http://www.w3.org/TR/css3-selectors/#attribute-pseudo-classes
+	function isSimpleSelector(selector){
+		var chars = [
+			/\+/,
+			/\=/,
+			/\~/,
+			/\[/,
+			/\]/,
+			/:/,
+			/>/,
+			/\|/,
+			/\$/,
+			/\^/,
+			/\*/,
+			/\(/,
+			/\)/,
+			/\w\.\w/i,
+			/\w\#\w/i
+		];
+		for(var i = 0;i<chars.length; i++){
+			if(selector.match(chars[i])){
+				return false;
+			}
+		}
+		return true;
+	}
+
     function query(selector, context) {
 
         var ret,
@@ -45,18 +106,51 @@ KISSY.add('dom/base/selector', function (S, Dom, undefined) {
             ret = [];
         } else if (isSelectorString) {
             selector = trim(selector);
+
             // shortcut
             if (simpleContext && selector == 'body') {
                 ret = [ doc.body ]
+			} else if(isSimpleSelector(selector)) {
+				var parts = selector.split(/\s+/);
+				for (var i = 0, n = parts.length; i < n; i++) {
+					parts[i] = makeMatch(parts[i]);
+				}
+
+				var parents = contexts;
+
+				for (var i = 0, m = parts.length; i < m; i++) {
+					var part = parts[i];
+					var newParents = [ ];
+
+					for (var j = 0, n = parents.length; j < n; j++) {
+						var matches = part(parents[j]);
+						for (var k = 0, o = matches.length; k < o; k++) {
+							newParents[newParents.length++] = matches[k];
+						}
+					}
+
+					parents = newParents;
+				}
+				console.log('speedup');
+				ret = parents ? parents : [];
+			} else if('querySelectorAll' in document && contextsLen === 1) {
+				console.log('simple querySelector');
+				ret = S.makeArray(contexts[0].querySelectorAll(selector));
             } else {
                 ret = [];
                 for (i = 0; i < contextsLen; i++) {
-                    push.apply(ret, Dom._selectInternal(selector, contexts[i]));
+					if('querySelectorAll' in document){
+						console.log('chain\'s querySelector');
+						ret = ret.concat(S.makeArray(contexts[i].querySelectorAll(selector)));
+					} else {
+						push.apply(ret, Dom._selectInternal(selector, contexts[i]));
+					}
                 }
                 // multiple contexts unique
                 if (ret.length > 1 && contextsLen > 1) {
                     Dom.unique(ret);
                 }
+				console.log('normal');
             }
         }
         // 不写 context，就是包装一下
