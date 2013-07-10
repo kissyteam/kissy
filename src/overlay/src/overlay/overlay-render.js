@@ -5,7 +5,7 @@
  */
 KISSY.add("overlay/overlay-render", function (S, Container, ContentRenderExtension, ShimRenderExtension, CloseTpl) {
 
-    return Container.ATTRS.xrender.value.extend([
+    return Container.getDefaultRender().extend([
         ContentRenderExtension,
         ShimRenderExtension
     ], {

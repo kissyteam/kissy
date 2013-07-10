@@ -5,7 +5,7 @@
  */
 KISSY.add("tabs/tab-render", function (S, Button) {
 
-    return Button.ATTRS.xrender.value.extend({
+    return Button.getDefaultRender().extend({
         beforeCreateDom: function (renderData) {
             var attrs = renderData.elAttrs;
             attrs.role = 'tab';

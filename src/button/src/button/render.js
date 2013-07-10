@@ -5,7 +5,7 @@
  */
 KISSY.add("button/render", function (S, Control) {
     // http://www.w3.org/TR/wai-aria-practices/
-    return Control.ATTRS.xrender.value.extend({
+    return Control.getDefaultRender().extend({
         beforeCreateDom: function (renderData) {
             var self = this;
             S.mix(renderData.elAttrs, {

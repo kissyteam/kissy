@@ -30,7 +30,7 @@ KISSY.add("tree/node-render", function (S, Node, Container, TreeNodeTpl, Content
         CHECK_CLS = "checked",
         ALL_STATES_CLS = "checked0 checked1 checked2";
 
-    return Container.ATTRS.xrender.value.extend([ContentRenderExtension], {
+    return Container.getDefaultRender().extend([ContentRenderExtension], {
 
         beforeCreateDom: function (renderData, childrenElSelectors) {
             S.mix(renderData.elAttrs, {

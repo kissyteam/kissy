@@ -125,7 +125,7 @@ KISSY.add('scroll-view/base/render', function (S, Node, Container, ContentRender
         };
     }
 
-    return Container.ATTRS.xrender.value.extend([ContentRenderExtension],
+    return Container.getDefaultRender().extend([ContentRenderExtension],
         methods, {
             name: 'ScrollViewRender'
         });

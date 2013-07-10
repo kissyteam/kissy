@@ -1,5 +1,5 @@
 KISSY.add(function (S, Control) {
-    return Control.ATTRS.xrender.value.extend({
+    return Control.getDefaultRender().extend({
         beforeCreateDom: function (renderData, selectors) {
             selectors.checkEl = '#ks-my-control-{id}';
         },

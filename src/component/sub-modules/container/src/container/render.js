@@ -4,7 +4,7 @@
  */
 KISSY.add('component/container/render', function (S, Control, Manager) {
 
-    return Control.ATTRS.xrender.value.extend([], {
+    return Control.getDefaultRender().extend([], {
 
         /**
          * decorate child element from parent component's root element.

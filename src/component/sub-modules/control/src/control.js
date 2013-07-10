@@ -826,6 +826,18 @@ KISSY.add("component/control", function (S, Node, ComponentProcess, Manager, Ren
             }
         });
 
+    function getDefaultRender() {
+        var attrs,
+            constructor = this;
+        do {
+            attrs = constructor.ATTRS;
+            constructor = constructor.superclass;
+        } while (!attrs || !attrs.xrender);
+        return attrs.xrender.value;
+    }
+
+    Control.getDefaultRender = getDefaultRender;
+
     Control.extend = function extend(extensions, px, sx) {
         var args = S.makeArray(arguments),
             baseClass = this,
@@ -845,6 +857,7 @@ KISSY.add("component/control", function (S, Node, ComponentProcess, Manager, Ren
         }
 
         newClass.extend = extend;
+        newClass.getDefaultRender = getDefaultRender;
 
         return newClass;
     };

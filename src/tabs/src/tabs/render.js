@@ -7,7 +7,7 @@ KISSY.add("tabs/render", function (S, Container) {
 
     var CLS = "top bottom left right";
 
-    return Container.ATTRS.xrender.value.extend({
+    return Container.getDefaultRender().extend({
 
         beforeCreateDom: function (renderData) {
             renderData.elCls

@@ -4,7 +4,7 @@
  */
 KISSY.add("separator/render", function (S, Control) {
 
-    return Control.ATTRS.xrender.value.extend({
+    return Control.getDefaultRender().extend({
         beforeCreateDom: function (renderData) {
             renderData.elAttrs.role = 'separator';
         }

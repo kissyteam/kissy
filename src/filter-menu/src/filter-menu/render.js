@@ -7,7 +7,7 @@
  */
 KISSY.add("filter-menu/render", function (S, Node, Menu, FilterMenuTpl, ContentRenderExtension) {
 
-    return Menu.ATTRS.xrender.value.extend([ContentRenderExtension], {
+    return Menu.getDefaultRender().extend([ContentRenderExtension], {
 
         beforeCreateDom:function(renderData,childrenElSelectors){
             S.mix(childrenElSelectors, {

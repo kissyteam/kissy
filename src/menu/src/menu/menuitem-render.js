@@ -5,7 +5,7 @@
  */
 KISSY.add("menu/menuitem-render", function (S, Node, Control) {
 
-    return Control.ATTRS.xrender.value.extend({
+    return Control.getDefaultRender().extend({
 
         beforeCreateDom: function (renderData) {
             renderData.elAttrs.role= renderData.selectable ?

@@ -5,7 +5,7 @@
  */
 KISSY.add("combobox/render", function (S, Control, ComboboxTpl) {
 
-    var ComboboxRender = Control.ATTRS.xrender.value.extend({
+    var ComboboxRender = Control.getDefaultRender().extend({
 
         beforeCreateDom: function (renderData, childrenElSelectors) {
             S.mix(childrenElSelectors, {

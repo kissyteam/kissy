@@ -4,7 +4,7 @@
  */
 KISSY.add('editor/render',function(S,Control,RenderTpl){
 
-    return Control.ATTRS.xrender.value.extend({
+    return Control.getDefaultRender().extend({
 
         beforeCreateDom:function(renderData,childrenElSelectors){
             S.mix(renderData,{

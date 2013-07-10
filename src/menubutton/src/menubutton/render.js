@@ -6,7 +6,7 @@ KISSY.add("menubutton/render", function (S, Button,
                                          MenuButtonTpl,
                                          ContentRenderExtension) {
 
-    return Button.ATTRS.xrender.value.extend([ContentRenderExtension], {
+    return Button.getDefaultRender().extend([ContentRenderExtension], {
 
         decorateDom: function (el) {
             var control = this.control,

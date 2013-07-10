@@ -1,5 +1,5 @@
 KISSY.add('tabs/bar-render', function (S, Toolbar) {
-    return Toolbar.ATTRS.xrender.value.extend({
+    return Toolbar.getDefaultRender().extend({
         beforeCreateDom: function (renderData) {
             renderData.elAttrs.role = 'tablist';
         }

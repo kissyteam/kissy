@@ -5,7 +5,7 @@
  */
 KISSY.add("tabs/panel-render", function (S, Container) {
 
-    return Container.ATTRS.xrender.value.extend({
+    return Container.getDefaultRender().extend({
 
         beforeCreateDom: function (renderData) {
             var self = this;

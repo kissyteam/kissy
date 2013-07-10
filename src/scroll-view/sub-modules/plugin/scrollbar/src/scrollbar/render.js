@@ -123,7 +123,7 @@ KISSY.add('scroll-view/plugin/scrollbar/render', function (S, Control, ScrollBar
 
     }
 
-    return Control.ATTRS.xrender.value.extend(methods, {
+    return Control.getDefaultRender().extend(methods, {
         ATTRS: {
             contentTpl: {
                 value: ScrollBarTpl
