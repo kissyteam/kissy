@@ -29,7 +29,8 @@
     },
     "main": "./build/kissy-nodejs.js",
     "scripts": {
-        "test": "node ./tools/test/jasmine-node"
+        "test": "node ./tools/test/jasmine-node",
+        "start": "node ./tools/test/server"
     },
     "optionalDependencies": {
         "optimist": ">=0.3.4",
