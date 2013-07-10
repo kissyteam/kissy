@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 10 14:13
+build time: Jul 10 18:08
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -3287,8 +3287,8 @@ KISSY.add('dom/base/selector', function (S, Dom, undefined) {
 			/\*/,
 			/\(/,
 			/\)/,
-			/\w\.\w/i,
-			/\w\#\w/i
+			/[\w-]+\.[\w-]+/i,
+			/[\w-]+\#[\w-]+/i
 		];
 		for(var i = 0;i<chars.length; i++){
 			if(selector.match(chars[i])){
@@ -3305,7 +3305,12 @@ KISSY.add('dom/base/selector', function (S, Dom, undefined) {
             simpleContext,
             isSelectorString = typeof selector == 'string',
             contexts = context !== undefined ? query(context) : (simpleContext = 1) && [doc],
-            contextsLen = contexts.length;
+            contextsLen = contexts.length,
+			classSelectorRE = /^\.([\w-]+)$/,
+			idSelectorRE = /^#([\w-]*)$/,
+			tagSelectorRE = /^[\w-]+$/,
+			tagIdSelectorRE = /^[\w-]+#[\w-]+$/;
+			tagClassSelectorRE = /^[\w-]+\.[\w-]+$/;
 
         // 常见的空
         if (!selector) {
@@ -3316,7 +3321,34 @@ KISSY.add('dom/base/selector', function (S, Dom, undefined) {
             // shortcut
             if (simpleContext && selector == 'body') {
                 ret = [ doc.body ]
-			} else if(isSimpleSelector(selector)) {
+			} 
+			// 单层#id
+			else if (simpleContext && idSelectorRE.test(selector)) {
+				var el = doc.getElementById(selector.substr(1));
+				ret = el ? [el] : [];
+			}
+			// 单层.cls
+			else if (simpleContext && 'getElementsByClassName' in document && classSelectorRE.test(selector)) {
+				ret = doc.getElementsByClassName(selector.substr(1));
+				console.log('getElementsByClassName');
+			}
+			// 单层tgs
+			else if (simpleContext && 'getElementsByTagName' in document && tagSelectorRE.test(selector)){
+				ret = doc.getElementsByTagName(selector);
+			}
+			// tag#id 情况处理
+			else if (simpleContext && tagIdSelectorRE.test(selector)) {
+				var el = doc.getElementById(selector.replace(/^.+#/,''));
+				ret = el ? [el] : [];
+			}
+			// tag.cls 情况处理
+			else if (simpleContext && tagClassSelectorRE.test(selector)) {
+				ret = doc.querySelectorAll(selector);
+			}
+			// 第二层速选,#id tgs,#id .cls...
+			else if('getElementsByTagName' in document 
+					&& 'getElementsByClassName' in document 
+					&& isSimpleSelector(selector)) {
 				var parts = selector.split(/\s+/);
 				for (var i = 0, n = parts.length; i < n; i++) {
 					parts[i] = makeMatch(parts[i]);
@@ -3341,7 +3373,7 @@ KISSY.add('dom/base/selector', function (S, Dom, undefined) {
 				ret = parents ? parents : [];
 			} else if('querySelectorAll' in document && contextsLen === 1) {
 				console.log('simple querySelector');
-				ret = S.makeArray(contexts[0].querySelectorAll(selector));
+				ret = contexts[0].querySelectorAll(selector);
             } else {
                 ret = [];
                 for (i = 0; i < contextsLen; i++) {
