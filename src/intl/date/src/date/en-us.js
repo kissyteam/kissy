@@ -2,7 +2,7 @@
  * locale info for KISSY Date
  * @author yiminghe@gmail.com
  */
-KISSY.add('date/i18n/en-us', function () {
+KISSY.add('intl/date/en-us', function () {
     return {
         // in minutes
         timezoneOffset: -8 * 60,
@@ -18,6 +18,9 @@ KISSY.add('date/i18n/en-us', function () {
         weekdays: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday',
             'Saturday'],
         shortWeekdays: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-        ampms: ['AM', 'PM']
+        ampms: ['AM', 'PM'],
+        datePatterns:['EEEE, MMMM d, yyyy','MMMM d, yyyy','MMM d, yyyy','M/d/yy'],
+        timePatterns:['h:mm:ss \'GMT\'Z','h:mm:ss a \'GMT\'Z','h:mm:ss a','h:mm a'],
+        dateTimePattern:'{date} {time}'
     };
 });

@@ -1,6 +1,0 @@
-<project name="date/format.build" default="build" basedir=".">
-    <property name="component.name" value="date/format"/>
-
-    <import file="../../common.xml"/>
-</project>
-

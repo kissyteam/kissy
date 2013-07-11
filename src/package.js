@@ -82,16 +82,8 @@ if (!loc.getQuery().has('build')) {
             "base": "/kissy/src/cookie/src/cookie",
             "ignorePackageNameInUri": 1
         },
-        "date/format": {
-            "base": "/kissy/src/date/format/src/format",
-            "ignorePackageNameInUri": 1
-        },
         "date/gregorian": {
             "base": "/kissy/src/date/gregorian/src/gregorian",
-            "ignorePackageNameInUri": 1
-        },
-        "date/i18n": {
-            "base": "/kissy/src/date/i18n/src/i18n",
             "ignorePackageNameInUri": 1
         },
         "dd": {
@@ -540,6 +532,14 @@ if (!loc.getQuery().has('build')) {
         },
         "html-parser": {
             "base": "/kissy/src/html-parser/src/html-parser",
+            "ignorePackageNameInUri": 1
+        },
+        "intl/date": {
+            "base": "/kissy/src/intl/date/src/date",
+            "ignorePackageNameInUri": 1
+        },
+        "intl/date-time-format": {
+            "base": "/kissy/src/intl/date-time-format/src/date-time-format",
             "ignorePackageNameInUri": 1
         },
         "io": {

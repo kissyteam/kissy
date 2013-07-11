@@ -2,7 +2,7 @@
  * locale info for KISSY Date
  * @author yiminghe@gmail.com
  */
-KISSY.add('date/i18n/zh-cn', function () {
+KISSY.add('intl/date/zh-cn', function () {
     return {
         // in minutes
         timezoneOffset: 8 * 60,
@@ -19,6 +19,9 @@ KISSY.add('date/i18n/zh-cn', function () {
             '星期五', '星期六'],
         shortWeekdays: ['周日', '周一', '周二', '周三', '周四', '周五',
             '周六'],
-        ampms: ['上午', '下午']
+        ampms: ['上午', '下午'],
+        datePatterns: ["yyyy'年'M'月'd'日' EEEE", "yyyy'年'M'月'd'日'", "yyyy-M-d", "yy-M-d"],
+        timePatterns: ["ahh'时'mm'分'ss'秒' 'GMT'Z", "ahh'时'mm'分'ss'秒'", "H:mm:ss", "ah:mm"],
+        dateTimePattern: '{date} {time}'
     };
 });

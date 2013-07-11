@@ -1,9 +1,9 @@
 /**
- * SimpleDateFormat for KISSY.
- * Inspired by SimpleDateFormat from JDK.
+ * DateTimeFormat for KISSY.
+ * Inspired by DateTimeFormat from JDK.
  * @author yiminghe@gmail.com
  */
-KISSY.add('date/format', function (S, GregorianCalendar, defaultLocale) {
+KISSY.add('intl/date-time-format', function (S, GregorianCalendar, defaultLocale) {
     var MAX_VALUE = Number.MAX_VALUE;
 
     /*
@@ -57,7 +57,7 @@ KISSY.add('date/format', function (S, GregorianCalendar, defaultLocale) {
 
     patternChars = /**
      @type String
-     */patternChars.join('') + 'ahkKZ';
+     */patternChars.join('') + 'ahkKZE';
 
     function encode(lastField, count, compiledPattern) {
         compiledPattern.push({
@@ -184,9 +184,10 @@ KISSY.add('date/format', function (S, GregorianCalendar, defaultLocale) {
         return buffer.join('');
     }
 
-    function SimpleDateFormat(pattern, locale) {
+    function DateTimeFormat(pattern, locale, timeZoneOffset) {
         this.locale = locale || defaultLocale;
         this.pattern = compile(pattern);
+        this.timezoneOffset = timeZoneOffset;
     }
 
     function formatField(field, count, locale, gregorianCalendar) {
@@ -225,12 +226,13 @@ KISSY.add('date/format', function (S, GregorianCalendar, defaultLocale) {
                     locale.shortWeekdays[value];
                 break;
             case 'a':
-                current =
-                    locale.ampms(gregorianCalendar.get(GregorianCalendar.HOUR_OF_DAY) >= 12 ? 1 : 0);
+                current = locale.ampms[gregorianCalendar.get(GregorianCalendar.HOUR_OF_DAY) >= 12 ?
+                    1 :
+                    0];
                 break;
             case 'h':
-                current = zeroPaddingNumber((gregorianCalendar.
-                    get(GregorianCalendar.HOUR_OF_DAY) + 1) % 12 || 12, count);
+                current = zeroPaddingNumber(gregorianCalendar.
+                    get(GregorianCalendar.HOUR_OF_DAY) % 12 || 12, count);
                 break;
             case 'K':
                 current = zeroPaddingNumber(gregorianCalendar.
@@ -261,10 +263,10 @@ KISSY.add('date/format', function (S, GregorianCalendar, defaultLocale) {
         return current;
     }
 
-    SimpleDateFormat.prototype = {
+    DateTimeFormat.prototype = {
         format: function (gregorianCalendar) {
             var time = gregorianCalendar.getTimeInMillis();
-            gregorianCalendar = new GregorianCalendar(this.locale);
+            gregorianCalendar = new GregorianCalendar(this.timezoneOffset, this.locale);
             gregorianCalendar.setTimeInMillis(time);
             var i,
                 ret = [],
@@ -282,10 +284,52 @@ KISSY.add('date/format', function (S, GregorianCalendar, defaultLocale) {
         }
     };
 
-    return SimpleDateFormat;
+    var DateTimeStyle = DateTimeFormat.Style = {
+        FULL: 0,
+        LONG: 1,
+        MEDIUM: 2,
+        SHORT: 3
+    };
+
+    S.mix(DateTimeFormat, {
+        getInstance: function (locale, timeZoneOffset) {
+            return this.getDateTimeInstance(DateTimeStyle.SHORT, DateTimeStyle.SHORT, locale, timeZoneOffset);
+        },
+        'getDateInstance': function (dateStyle, locale, timeZoneOffset) {
+            return this.getDateTimeInstance(dateStyle, undefined, locale, timeZoneOffset);
+        },
+        getDateTimeInstance: function (dateStyle, timeStyle, locale, timeZoneOffset) {
+            locale = locale || defaultLocale;
+            var datePattern = '';
+            if (dateStyle !== undefined) {
+                datePattern = locale.datePatterns[dateStyle];
+            }
+            var timePattern = '';
+            if (timeStyle !== undefined) {
+                timePattern = locale.timePatterns[timeStyle];
+            }
+            var pattern = datePattern;
+            if (timePattern) {
+                if (datePattern) {
+                    pattern = S.substitute(locale.dateTimePattern, {
+                        date: datePattern,
+                        time: timePattern
+                    });
+                } else {
+                    pattern = timePattern;
+                }
+            }
+            return new DateTimeFormat(pattern, locale, timeZoneOffset);
+        },
+        'getTimeInstance': function (timeStyle, locale, timeZoneOffset) {
+            return this.getDateTimeInstance(undefined, timeStyle, locale, timeZoneOffset);
+        }
+    });
+
+    return DateTimeFormat;
 }, {
     requires: [
         'date/gregorian',
-        'date/i18n/zh-cn'
+        './date/zh-cn'
     ]
 });

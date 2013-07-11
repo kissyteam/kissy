@@ -1,5 +1,5 @@
 module.exports=function(req,res,utils){
     res.send(utils.render('runner',{
-        component:'date/format'
+        component:'intl/date-time-format'
     }));
 };
