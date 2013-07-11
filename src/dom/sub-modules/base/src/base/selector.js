@@ -67,29 +67,12 @@ KISSY.add('dom/base/selector', function (S, Dom, undefined) {
 	// 不包括不常见的选择器语法
 	// http://www.w3.org/TR/css3-selectors/#attribute-pseudo-classes
 	function isSimpleSelector(selector){
-		var chars = [
-			/\+/,
-			/\=/,
-			/\~/,
-			/\[/,
-			/\]/,
-			/:/,
-			/>/,
-			/\|/,
-			/\$/,
-			/\^/,
-			/\*/,
-			/\(/,
-			/\)/,
-			/[\w-]+\.[\w-]+/i,
-			/[\w-]+\#[\w-]+/i
-		];
-		for(var i = 0;i<chars.length; i++){
-			if(selector.match(chars[i])){
-				return false;
-			}
+		var R = /(\+|\=|\~|\[|\]|:|>|\||\$|\^|\*|\(|\)|[\w-]+\.[\w-]+|[\w-]+\#[\w-]+)/;
+		if(selector.match(R)){
+			return false;
+		} else {
+			return true;
 		}
-		return true;
 	}
 
     function query(selector, context) {
@@ -100,10 +83,11 @@ KISSY.add('dom/base/selector', function (S, Dom, undefined) {
             isSelectorString = typeof selector == 'string',
             contexts = context !== undefined ? query(context) : (simpleContext = 1) && [doc],
             contextsLen = contexts.length,
+			simpleSelector,
 			classSelectorRE = /^\.([\w-]+)$/,
 			idSelectorRE = /^#([\w-]*)$/,
-			tagSelectorRE = /^[\w-]+$/,
-			tagIdSelectorRE = /^[\w-]+#[\w-]+$/;
+			tagSelectorRE = /^([\w-])+$/,
+			tagIdSelectorRE = /^[\w-]+#([\w-])+$/,
 			tagClassSelectorRE = /^[\w-]+\.[\w-]+$/;
 
         // 常见的空
@@ -114,36 +98,44 @@ KISSY.add('dom/base/selector', function (S, Dom, undefined) {
 
             // shortcut
             if (simpleContext && selector == 'body') {
-                ret = [ doc.body ]
+                ret = [ doc.body ];
 			} 
-			// 单层#id
-			else if (simpleContext && idSelectorRE.test(selector)) {
-				var el = doc.getElementById(selector.substr(1));
-				ret = el ? [el] : [];
-			}
 			// 单层.cls
-			else if (simpleContext && 'getElementsByClassName' in document && classSelectorRE.test(selector)) {
-				ret = doc.getElementsByClassName(selector.substr(1));
-				console.log('getElementsByClassName');
+			else if (simpleContext && classSelectorRE.test(selector) && 'getElementsByClassName' in document) {
+				ret = contexts[0].getElementsByClassName(RegExp.$1);
+				// console.log('getElementsByClassName');
 			}
-			// 单层tgs
-			else if (simpleContext && 'getElementsByTagName' in document && tagSelectorRE.test(selector)){
-				ret = doc.getElementsByTagName(selector);
+			// tag.cls 情况处理
+			else if (simpleContext && tagClassSelectorRE.test(selector)) {
+				ret = contexts[0].querySelectorAll(selector);
+				// console.log('tag.cls');
 			}
 			// tag#id 情况处理
 			else if (simpleContext && tagIdSelectorRE.test(selector)) {
 				var el = doc.getElementById(selector.replace(/^.+#/,''));
 				ret = el ? [el] : [];
+				// console.log('tag#id');
 			}
-			// tag.cls 情况处理
-			else if (simpleContext && tagClassSelectorRE.test(selector)) {
-				ret = doc.querySelectorAll(selector);
-				console.log('tag.cls');
+			// 单层#id
+			else if (simpleContext && idSelectorRE.test(selector)) {
+				var el = doc.getElementById(selector.substr(1));
+				ret = el ? [el] : [];
+				// console.log('#id');
 			}
-			// 第二层速选,#id tgs,#id .cls...
+			// 单层tgs
+			else if (simpleContext && tagSelectorRE.test(selector) && 'getElementsByTagName' in document){
+				ret = contexts[0].getElementsByTagName(selector);
+				// console.log('tgs');
+			}
+			// 复杂的CSS3选择器
+			else if(!(simpleSelector = isSimpleSelector(selector)) && 'querySelectorAll' in document && contextsLen === 1) {
+				// console.log('simple querySelector');
+				ret = contexts[0].querySelectorAll(selector);
+			}
+			// 最后进入简单选择器的多层速选,#id tgs,#id .cls...
 			else if('getElementsByTagName' in document 
 					&& 'getElementsByClassName' in document 
-					&& isSimpleSelector(selector)) {
+					&& simpleSelector) {
 				var parts = selector.split(/\s+/);
 				for (var i = 0, n = parts.length; i < n; i++) {
 					parts[i] = makeMatch(parts[i]);
@@ -164,16 +156,16 @@ KISSY.add('dom/base/selector', function (S, Dom, undefined) {
 
 					parents = newParents;
 				}
-				console.log('speedup');
+				// console.log('speedup');
 				ret = parents ? parents : [];
-			} else if('querySelectorAll' in document && contextsLen === 1) {
-				console.log('simple querySelector');
-				ret = contexts[0].querySelectorAll(selector);
-            } else {
+				//ret = contexts[0].querySelectorAll(selector);
+            } 
+			// 最后降级使用KISSY 1.3.0 的做法
+			else {
                 ret = [];
                 for (i = 0; i < contextsLen; i++) {
 					if('querySelectorAll' in document){
-						console.log('chain\'s querySelector');
+						// console.log('chain\'s querySelector');
 						ret = ret.concat(S.makeArray(contexts[i].querySelectorAll(selector)));
 					} else {
 						push.apply(ret, Dom._selectInternal(selector, contexts[i]));
@@ -183,7 +175,7 @@ KISSY.add('dom/base/selector', function (S, Dom, undefined) {
                 if (ret.length > 1 && contextsLen > 1) {
                     Dom.unique(ret);
                 }
-				console.log('normal');
+				// console.log('normal');
             }
         }
         // 不写 context，就是包装一下
@@ -408,7 +400,7 @@ KISSY.add('dom/base/selector', function (S, Dom, undefined) {
                             }
 
                             return clsRe && tagRe;
-                        }
+                        };
                     } else if (id && !tag && !cls) {
                         filter = function (elem) {
                             return getAttr(elem, 'id') == id;

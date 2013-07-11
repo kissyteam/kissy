@@ -19,3 +19,7 @@ KISSY.add('node', function (S, Node) {
         'node/anim'
     ]
 });
+// debug for jayli
+KISSY.use('node',{
+	sync:true	
+});
