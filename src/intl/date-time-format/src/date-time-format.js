@@ -190,23 +190,23 @@ KISSY.add('intl/date-time-format', function (S, GregorianCalendar, defaultLocale
         this.timezoneOffset = timeZoneOffset;
     }
 
-    function formatField(field, count, locale, gregorianCalendar) {
+    function formatField(field, count, locale, calendar) {
         var current,
             value;
         switch (field) {
             case 'G':
-                value = gregorianCalendar.get(GregorianCalendar.YEAR) > 0 ? 1 : 0;
+                value = calendar.get(GregorianCalendar.YEAR) > 0 ? 1 : 0;
                 current = locale.eras[value];
                 break;
             case 'y':
-                value = gregorianCalendar.get(GregorianCalendar.YEAR);
+                value = calendar.get(GregorianCalendar.YEAR);
                 if (value <= 0) {
                     value = 1 - value;
                 }
                 current = (zeroPaddingNumber(value, 2, count != 2 ? MAX_VALUE : 2));
                 break;
             case 'M':
-                value = gregorianCalendar.get(GregorianCalendar.MONTH);
+                value = calendar.get(GregorianCalendar.MONTH);
                 if (count >= 4) {
                     current = locale.months[value];
                 } else if (count == 3) {
@@ -216,30 +216,30 @@ KISSY.add('intl/date-time-format', function (S, GregorianCalendar, defaultLocale
                 }
                 break;
             case 'k':
-                current = zeroPaddingNumber(gregorianCalendar.get(GregorianCalendar.HOUR_OF_DAY) || 24,
+                current = zeroPaddingNumber(calendar.get(GregorianCalendar.HOUR_OF_DAY) || 24,
                     count);
                 break;
             case 'E':
-                value = gregorianCalendar.get(GregorianCalendar.DAY_OF_WEEK);
+                value = calendar.get(GregorianCalendar.DAY_OF_WEEK);
                 current = count >= 4 ?
                     locale.weekdays[value] :
                     locale.shortWeekdays[value];
                 break;
             case 'a':
-                current = locale.ampms[gregorianCalendar.get(GregorianCalendar.HOUR_OF_DAY) >= 12 ?
+                current = locale.ampms[calendar.get(GregorianCalendar.HOUR_OF_DAY) >= 12 ?
                     1 :
                     0];
                 break;
             case 'h':
-                current = zeroPaddingNumber(gregorianCalendar.
+                current = zeroPaddingNumber(calendar.
                     get(GregorianCalendar.HOUR_OF_DAY) % 12 || 12, count);
                 break;
             case 'K':
-                current = zeroPaddingNumber(gregorianCalendar.
+                current = zeroPaddingNumber(calendar.
                     get(GregorianCalendar.HOUR_OF_DAY) % 12, count);
                 break;
             case 'Z':
-                var offset = gregorianCalendar.getTimezoneOffset();
+                var offset = calendar.getTimezoneOffset();
                 var parts = [offset < 0 ? '-' : '+'];
                 offset = Math.abs(offset);
                 parts.push(zeroPaddingNumber(Math.floor(offset / 60) % 100, 2),
@@ -257,17 +257,212 @@ KISSY.add('intl/date-time-format', function (S, GregorianCalendar, defaultLocale
                 // case 'w':
                 // case 'W':
                 var index = calendarIndexMap[field];
-                value = gregorianCalendar.get(index);
+                value = calendar.get(index);
                 current = zeroPaddingNumber(value, count);
         }
         return current;
     }
 
+    function matchField(dateStr, startIndex, matches) {
+        var matchedLen = -1,
+            index = -1,
+            i,
+            len = matches.length;
+        for (i = 0; i < len; i++) {
+            var m = matches[i];
+            var mLen = m.length;
+            if (mLen > matchedLen &&
+                matchPartString(dateStr, startIndex, m, mLen)) {
+                matchedLen = mLen;
+                index = i;
+            }
+        }
+        return index >= 0 ? {
+            value: index,
+            startIndex: startIndex + matchedLen
+        } : null;
+    }
+
+    function matchPartString(dateStr, startIndex, match, mLen) {
+        for (var i = 0; i < mLen; i++) {
+            if (dateStr.charAt(startIndex + i) != match.charAt(i)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    function getLeadingNumberLen(str) {
+        var i, c,
+            len = str.length;
+        for (i = 0; i < len; i++) {
+            c = str.charAt(i);
+            if (c < '0' || c > '9') {
+                break;
+            }
+        }
+        return i;
+    }
+
+    function matchNumber(dateStr, startIndex, count, obeyCount) {
+        var str = dateStr , n;
+        if (obeyCount) {
+            if (dateStr.length <= startIndex + count) {
+                return null;
+            }
+            str = dateStr.substring(startIndex, count);
+            if (!str.match(/^\d+$/)) {
+                return null;
+            }
+        } else {
+            str = str.substring(startIndex);
+        }
+        n = parseInt(str, 10);
+        if (isNaN(n)) {
+            return null;
+        }
+        return {
+            value: n,
+            startIndex: startIndex + getLeadingNumberLen(str)
+        };
+    }
+
+    function parseField(calendar, dateStr, startIndex, field, count, locale, obeyCount, tmp) {
+        var match, year, hour;
+        if (dateStr.length <= startIndex) {
+            return startIndex;
+        }
+        switch (field) {
+            case 'G':
+                if (match = matchField(dateStr, startIndex, locale.eras)) {
+                    if (calendar.isSet(GregorianCalendar.YEAR)) {
+                        if (match.value == 0) {
+                            year = calendar.get(GregorianCalendar.YEAR);
+                            calendar.set(GregorianCalendar.YEAR, 1 - year);
+                        }
+                    } else {
+                        tmp.era = match.value;
+                    }
+                }
+                break;
+            case 'y':
+                if (match = matchNumber(dateStr, startIndex, count, obeyCount)) {
+                    year = match.value;
+                    if ('era' in tmp) {
+                        if (tmp.era === 0) {
+                            year = 1 - year;
+                        }
+                    }
+                    calendar.set(GregorianCalendar.YEAR, year);
+                }
+                break;
+            case 'M':
+                var month;
+                if (count >= 3) {
+                    if (match = matchField(dateStr, startIndex, locale[count == 3 ?
+                        'shortMonths' : 'months'])) {
+                        month = match.value;
+                    }
+                } else {
+                    if (match = matchNumber(dateStr, startIndex, count, obeyCount)) {
+                        month = match.value-1;
+                    }
+                }
+                if (match) {
+                    calendar.set(GregorianCalendar.MONTH, month);
+                }
+                break;
+            case 'k':
+                if (match = matchNumber(dateStr, startIndex, count, obeyCount)) {
+                    calendar.set(GregorianCalendar.HOUR_OF_DAY, match.value % 24);
+                }
+                break;
+            case 'E':
+                if (match = matchField(dateStr, startIndex, locale[count > 3 ?
+                    'weekdays' :
+                    'shortWeekdays'])) {
+                    calendar.set(GregorianCalendar.DAY_OF_WEEK, match.value);
+                }
+                break;
+            case 'a':
+                if (match = matchField(dateStr, startIndex, locale.ampms)) {
+                    if (calendar.isSet(GregorianCalendar.HOUR_OF_DAY)) {
+                        if (match.value) {
+                            hour = calendar.get(GregorianCalendar.HOUR_OF_DAY);
+                            if (hour < 12) {
+                                calendar.set(GregorianCalendar.HOUR_OF_DAY, (hour + 12) % 24);
+                            }
+                        }
+                    } else {
+                        tmp.ampm = match.value;
+                    }
+                }
+                break;
+            case 'h':
+                if (match = matchNumber(dateStr, startIndex, count, obeyCount)) {
+                    hour = match.value %= 12;
+                    if (tmp.ampm) {
+                        hour += 12;
+                    }
+                    calendar.set(GregorianCalendar.HOUR_OF_DAY, hour);
+                }
+                break;
+            case 'K':
+                if (match = matchNumber(dateStr, startIndex, count, obeyCount)) {
+                    hour = match.value;
+                    if (tmp.ampm) {
+                        hour += 12;
+                    }
+                    calendar.set(GregorianCalendar.HOUR_OF_DAY, hour);
+                }
+                break;
+            case 'Z':
+                if (dateStr)
+                    var sign = 1,
+                        zoneChar = dateStr.charAt(startIndex);
+                if (zoneChar == '-') {
+                    sign = -1;
+                    startIndex++;
+                } else if (zoneChar == '+') {
+                    startIndex++;
+                } else {
+                    break;
+                }
+                if (match = matchNumber(dateStr, startIndex, 2, true)) {
+                    var zoneOffset = match.value * 60;
+                    startIndex = match.startIndex;
+                    if (match = matchNumber(dateStr, startIndex, 2, true)) {
+                        zoneOffset += match.value
+                    }
+                    calendar.setTimezoneOffset(zoneOffset);
+                }
+                break;
+            default :
+                // case 'd':
+                // case 'H':
+                // case 'm':
+                // case 's':
+                // case 'S':
+                // case 'D':
+                // case 'F':
+                // case 'w':
+                // case 'W'
+                if (match = matchNumber(dateStr, startIndex, count, obeyCount)) {
+                    var index = calendarIndexMap[field];
+                    calendar.set(index, match.value);
+                }
+        }
+        if (match) {
+            startIndex = match.startIndex;
+        }
+        return startIndex;
+    }
+
     DateTimeFormat.prototype = {
-        format: function (gregorianCalendar) {
-            var time = gregorianCalendar.getTimeInMillis();
-            gregorianCalendar = new GregorianCalendar(this.timezoneOffset, this.locale);
-            gregorianCalendar.setTimeInMillis(time);
+        format: function (calendar) {
+            var time = calendar.getTimeInMillis();
+            calendar = new GregorianCalendar(this.timezoneOffset, this.locale);
+            calendar.setTimeInMillis(time);
             var i,
                 ret = [],
                 pattern = this.pattern,
@@ -277,10 +472,75 @@ KISSY.add('intl/date-time-format', function (S, GregorianCalendar, defaultLocale
                 if (comp.text) {
                     ret.push(comp.text);
                 } else if ('field' in comp) {
-                    ret.push(formatField(comp.field, comp.count, this.locale, gregorianCalendar));
+                    ret.push(formatField(comp.field, comp.count, this.locale, calendar));
                 }
             }
             return ret.join('');
+        },
+        parse: function (dateStr) {
+            var calendar = new GregorianCalendar(this.timezoneOffset, this.locale),
+                i,
+                j,
+                tmp = {},
+                obeyCount = false,
+                dateStrLen = dateStr.length,
+                errorIndex = -1,
+                startIndex = 0,
+                oldStartIndex = 0,
+                pattern = this.pattern,
+                len = pattern.length;
+
+            loopPattern: {
+                for (i = 0; errorIndex < 0 && i < len; i++) {
+                    var comp = pattern[i], text, textLen;
+                    oldStartIndex = startIndex;
+                    if (text = comp.text) {
+                        textLen = text.length;
+                        if ((textLen + startIndex) > dateStrLen) {
+                            errorIndex = startIndex;
+                        } else {
+                            for (j = 0; j < textLen; j++) {
+                                if (text.charAt(j) != dateStr.charAt(j + startIndex)) {
+                                    errorIndex = startIndex;
+                                    break loopPattern;
+                                }
+                            }
+                            startIndex += textLen;
+                        }
+                    } else if ('field' in comp) {
+                        obeyCount = false;
+                        var nextComp = pattern[i + 1];
+                        if (nextComp) {
+                            if ('field' in nextComp) {
+                                obeyCount = true;
+                            } else {
+                                var c = nextComp.text.charAt(0);
+                                if (c >= '0' && c <= '9') {
+                                    obeyCount = true;
+                                }
+                            }
+                        }
+                        startIndex = parseField(calendar,
+                            dateStr,
+                            startIndex,
+                            comp.field,
+                            comp.count,
+                            this.locale,
+                            obeyCount,
+                            tmp);
+                        if (startIndex == oldStartIndex) {
+                            errorIndex = startIndex;
+                        }
+                    }
+                }
+            }
+
+            if (errorIndex >= 0) {
+                S.log(dateStr, 'warn');
+                S.log(dateStr.substring(0, errorIndex) + '^', 'warn');
+                throw new Error('error when parsing date');
+            }
+            return calendar;
         }
     };
 

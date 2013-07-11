@@ -590,7 +590,6 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
             var len = arguments.length;
             if (len == 2) {
                 this.fields[field] = v;
-                this.updateFieldsBySet(field);
             } else if (len < MILLISECOND + 1) {
                 for (var i = 0; i < len; i++) {
                     this.fields[YEAR + i] = arguments[i];
@@ -735,11 +734,14 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
                     adjustDayOfMonth(self);
                     break;
                 default:
+                    // other fields are set already when get
                     self.updateFieldsBySet(field);
                     break;
             }
         },
 
+        // remove other priority fields when call getFixedDate
+        // precondition: other fields are all set or computed
         updateFieldsBySet: function (field) {
             var fields = this.fields;
             switch (field) {

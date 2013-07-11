@@ -5,7 +5,7 @@
 
     <target name="concat">
         <copy todir="${component.src.dir.tmp}">
-            <fileset dir="${component.src.dir}"/>
+            <fileset dir="${component.src.dir}/date"/>
         </copy>
     </target>
 </project>

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 3 19:31
+build time: Jul 11 22:25
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -17,16 +17,6 @@ build time: Jul 3 19:31
  */
 KISSY.add('date/gregorian/const', function () {
     return {
-        /**
-         * Enum indicating common era
-         * @type Number
-         */
-        AD: 1,
-        /**
-         * Enum indicating before common era
-         * @type Number
-         */
-        BC: 0,
         /**
          * Enum indicating sunday
          * @type Number
@@ -420,17 +410,7 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
          * Enum indicating pm
          * @type Number
          */
-        PM: 1,
-        /**
-         * Enum indicating short display name for field
-         * @type Number
-         */
-        SHORT: 0,
-        /**
-         * Enum indicating long display name for field
-         * @type Number
-         */
-        LONG: 1
+        PM: 1
     });
 
     var YEAR = GregorianCalendar.YEAR;
@@ -447,18 +427,6 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
 
     var WEEK_OF_MONTH = GregorianCalendar.WEEK_OF_MONTH;
     var WEEK_OF_YEAR = GregorianCalendar.WEEK_OF_YEAR;
-
-    var SHORT = GregorianCalendar.SHORT;
-    var LONG = GregorianCalendar.LONG;
-
-
-    var DISPLAY_MAP = {};
-    DISPLAY_MAP[MONTH] = {};
-    DISPLAY_MAP[MONTH][SHORT] = 'shortMonths';
-    DISPLAY_MAP[MONTH][LONG] = 'months';
-    DISPLAY_MAP[DAY_OF_WEEK] = {};
-    DISPLAY_MAP[DAY_OF_WEEK][SHORT] = 'shortWeekdays';
-    DISPLAY_MAP[DAY_OF_WEEK][LONG] = 'weekdays';
 
     var MONTH_LENGTH = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]; // 0-based
     var LEAP_MONTH_LENGTH = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]; // 0-based
@@ -863,7 +831,6 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
             var len = arguments.length;
             if (len == 2) {
                 this.fields[field] = v;
-                this.updateFieldsBySet(field);
             } else if (len < MILLISECOND + 1) {
                 for (var i = 0; i < len; i++) {
                     this.fields[YEAR + i] = arguments[i];
@@ -1008,11 +975,14 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
                     adjustDayOfMonth(self);
                     break;
                 default:
+                    // other fields are set already when get
                     self.updateFieldsBySet(field);
                     break;
             }
         },
 
+        // remove other priority fields when call getFixedDate
+        // precondition: other fields are all set or computed
         updateFieldsBySet: function (field) {
             var fields = this.fields;
             switch (field) {
@@ -1236,19 +1206,6 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
         return isLeapYear(year) ? 366 : 365;
     }
 
-    function getFieldStrings(field, style, locale) {
-        var strings, name = DISPLAY_MAP[field];
-        if (name) {
-            if (typeof name == 'string') {
-                strings = locale[name];
-            } else {
-                name = name[style];
-                strings = locale[name];
-            }
-        }
-        return strings;
-    }
-
     function getWeekNumber(self, fixedDay1, fixedDate) {
         var fixedDay1st = getDayOfWeekDateOnOrBefore(fixedDay1 + 6, self.firstDayOfWeek);
         var nDays = (fixedDay1st - fixedDay1);
@@ -1270,7 +1227,7 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
     return GregorianCalendar;
 
 }, {
-    requires: ['date/i18n/zh-cn', './gregorian/utils', './gregorian/const']
+    requires: ['intl/date/zh-cn', './gregorian/utils', './gregorian/const']
 });
 
 /*
