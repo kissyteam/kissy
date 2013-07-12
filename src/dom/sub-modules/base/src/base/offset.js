@@ -1,7 +1,7 @@
 /**
  * @ignore
- * dom-offset
- * @author lifesinger@gmail.com, yiminghe@gmail.com
+ * @author  lifesinger@gmail.com
+ *          yiminghe@gmail.com
  */
 KISSY.add('dom/base/offset', function (S, Dom, undefined) {
 
@@ -275,7 +275,7 @@ KISSY.add('dom/base/offset', function (S, Dom, undefined) {
         var method = SCROLL + name;
 
         Dom[method] = function (elem, v) {
-            if (typeof elem==='number') {
+            if (typeof elem === 'number') {
                 return arguments.callee(win, elem);
             }
             elem = Dom.get(elem);
@@ -303,11 +303,11 @@ KISSY.add('dom/base/offset', function (S, Dom, undefined) {
                     //chrome == body.scrollTop
                     //firefox/ie9 == documentElement.scrollTop
                     ret = w[ 'page' + (i ? 'Y' : 'X') + 'Offset'];
-                    if (typeof ret!=='number') {
+                    if (typeof ret !== 'number') {
                         d = w[DOCUMENT];
                         //ie6,7,8 standard mode
                         ret = d[DOC_ELEMENT][method];
-                        if (typeof ret!=='number') {
+                        if (typeof ret !== 'number') {
                             //quirks mode
                             ret = d[BODY][method];
                         }
@@ -336,6 +336,7 @@ KISSY.add('dom/base/offset', function (S, Dom, undefined) {
             refWin = Dom.get(refWin);
             var win = getWindow(refWin);
             var ret = win['inner' + name];
+            // http://www.quirksmode.org/mobile/viewports.html
             if (UA.mobile && ret) {
                 return ret;
             }
@@ -463,15 +464,17 @@ KISSY.add('dom/base/offset', function (S, Dom, undefined) {
 });
 
 /*
+ 2013-07 A tale if two viewports
+ - A tale of two viewports: http://www.quirksmode.org/mobile/viewports.html
+
  2012-03-30
  - refer: http://www.softcomplex.com/docs/get_window_size_and_scrollbar_position.html
  - http://help.dottoro.com/ljkfqbqj.php
  - http://www.boutell.com/newfaq/creating/sizeofclientarea.html
 
- 2011-05-24
- - yiminghe@gmail.com：
+ 2011-05-24 yiminghe@gmail.com
  - 调整 docWidth , docHeight ,
- viewportHeight , viewportWidth ,scrollLeft,scrollTop 参数，
+ - viewportHeight , viewportWidth ,scrollLeft,scrollTop 参数，
  便于放置到 Node 中去，可以完全摆脱 Dom，完全使用 Node
 
 
