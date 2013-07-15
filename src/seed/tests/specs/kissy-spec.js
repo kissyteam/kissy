@@ -5,7 +5,6 @@ describe('kissy.js', function () {
 
 
     describe("S.mix", function () {
-
         it("works simply", function () {
             var o1 = { a: 1, b: 2 },
                 o2 = { a: 1, b: 2 },
@@ -227,6 +226,18 @@ describe('kissy.js', function () {
 
         });
 
+        it('undefined does not overrite existing property', function () {
+            var v = {
+                x: 1
+            };
+
+            expect(S.mix(v, {
+                x: undefined
+            })).toEqual({
+                    x: 1
+                });
+        });
+
         describe('whitelist', function () {
             it('works for deep', function () {
                 var a = {};
@@ -310,8 +321,6 @@ describe('kissy.js', function () {
                 });
             });
         });
-
-
     });
 
     it('S.merge', function () {

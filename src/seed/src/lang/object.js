@@ -114,6 +114,10 @@
                 };
             }
 
+            if (ov === undefined) {
+                ov = TRUE;
+            }
+
             var cache = [],
                 c,
                 i = 0;
@@ -271,11 +275,6 @@
         if (!s || !r) {
             return r;
         }
-
-        if (ov === undefined) {
-            ov = TRUE;
-        }
-
         var i, p, keys, len;
 
         // 记录循环标志
