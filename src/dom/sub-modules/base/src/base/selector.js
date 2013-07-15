@@ -13,23 +13,12 @@ KISSY.add('dom/base/selector', function (S, Dom, undefined) {
             docElem.oMatchesSelector ||
             docElem.msMatchesSelector,
         isArray = S.isArray,
+        makeArray = S.makeArray,
         isDomNodeList = Dom.isDomNodeList,
         SPACE = ' ',
         push = Array.prototype.push,
         RE_QUERY = /^(?:#([\w-]+))?\s*([\w-]+|\*)?\.?([\w-]+)?$/,
         trim = S.trim;
-
-    // typeof document.querySelectorAll is function in phantomjs....
-    // https://github.com/ariya/phantomjs/issues/11478
-    function makeNodeListArray(nodeList) {
-        var i,
-            len = nodeList.length,
-            ret = new Array(len);
-        for (i = 0; i < len; i++) {
-            ret[i] = nodeList[i];
-        }
-        return ret;
-    }
 
     function query_each(f) {
         var els = this,
@@ -93,7 +82,7 @@ KISSY.add('dom/base/selector', function (S, Dom, undefined) {
             // document.createElement('select').item 已经在 1 处理了
             // S.all().item 已经在 2 处理了
             else if (isDomNodeList(selector)) {
-                ret = makeNodeListArray(selector);
+                ret = makeArray(selector);
             } else {
                 ret = [ selector ];
             }
@@ -174,7 +163,7 @@ KISSY.add('dom/base/selector', function (S, Dom, undefined) {
             },
 
             _selectInternal: function (str, context) {
-                return makeNodeListArray(context.querySelectorAll(str));
+                return makeArray(context.querySelectorAll(str));
             },
 
             /**

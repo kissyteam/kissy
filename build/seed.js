@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 15 11:45
+build time: Jul 15 20:24
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130715114452' will replace with current timestamp when compressing.
+         * NOTICE: '20130715202438' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130715114452',
+        __BUILD_TIME: '20130715202438',
         /**
          * KISSY Environment.
          * @private
@@ -838,16 +838,18 @@ var KISSY = (function (undefined) {
             if (S.isArray(o)) {
                 return o;
             }
-
+            var lengthType = typeof o.length,
+                oType = typeof o;
             // The strings and functions also have 'length'
-            if (typeof o.length !== 'number'
+            if (lengthType != 'number' ||
                 // form.elements in ie78 has nodeName 'form'
                 // then caution select
-                // || o.nodeName
+                // o.nodeName
                 // window
-                || o.alert
-                || typeof o == 'string'
-                || (typeof o === 'function')) {
+                o.alert ||
+                oType == 'string' ||
+                // https://github.com/ariya/phantomjs/issues/11478
+                (oType == 'function' && !( 'item' in o && lengthType == 'number'))) {
                 return [o];
             }
             var ret = [];
@@ -5685,7 +5687,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20130715114452'
+            tag: '20130715202438'
         }, getBaseInfo()));
     }
 

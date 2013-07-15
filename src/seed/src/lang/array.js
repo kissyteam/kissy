@@ -316,16 +316,18 @@
             if (S.isArray(o)) {
                 return o;
             }
-
+            var lengthType = typeof o.length,
+                oType = typeof o;
             // The strings and functions also have 'length'
-            if (typeof o.length !== 'number'
+            if (lengthType != 'number' ||
                 // form.elements in ie78 has nodeName 'form'
                 // then caution select
-                // || o.nodeName
+                // o.nodeName
                 // window
-                || o.alert
-                || typeof o == 'string'
-                || (typeof o === 'function')) {
+                o.alert ||
+                oType == 'string' ||
+                // https://github.com/ariya/phantomjs/issues/11478
+                (oType == 'function' && !( 'item' in o && lengthType == 'number'))) {
                 return [o];
             }
             var ret = [];
