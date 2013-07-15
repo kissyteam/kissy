@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 3 19:20
+build time: Jul 15 14:21
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -115,9 +115,16 @@ KISSY.add('event/dom/touch/single-touch', function (S) {
  */
 KISSY.add('event/dom/touch/tap', function (S, eventHandleMap, DomEvent, SingleTouch) {
 
+    function preventDefault(e) {
+        e.preventDefault();
+    }
+
     var event = 'tap';
 
+    var DomEventObject = DomEvent.Object;
+
     function Tap() {
+        Tap.superclass.constructor.apply(this, arguments);
     }
 
     S.extend(Tap, SingleTouch, {
@@ -128,12 +135,23 @@ KISSY.add('event/dom/touch/tap', function (S, eventHandleMap, DomEvent, SingleTo
 
         onTouchEnd: function (e) {
             var touch = e.changedTouches[0];
-            DomEvent.fire(e.target, event, {
+            var target = e.target;
+            var eventObject = new DomEventObject({
+                type: event,
                 pageX: touch.pageX,
                 pageY: touch.pageY,
                 which: 1,
-                touch: touch
+                touch: touch,
+                target: target,
+                currentTarget: target
             });
+            DomEvent.fire(target, event, eventObject);
+            if (eventObject.isDefaultPrevented()) {
+                DomEvent.on(target, 'click', {
+                    fn: preventDefault,
+                    once: 1
+                });
+            }
         }
 
     });
@@ -839,7 +857,6 @@ KISSY.add('event/dom/touch/single-touch-start', function (S, eventHandleMap, Dom
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/dom/touch/handle', function (S, Dom, eventHandleMap, DomEvent, Gesture) {
-
     var key = S.guid('touch-handle'),
         Features = S.Features,
         isMsPointerSupported = Features.isMsPointerSupported(),
@@ -853,23 +870,15 @@ KISSY.add('event/dom/touch/handle', function (S, Dom, eventHandleMap, DomEvent, 
     }
 
     function DocumentHandler(doc) {
-
         var self = this;
-
         self.doc = doc;
-
-        self.eventHandle = {
-        };
-
+        self.eventHandle = {};
         self.init();
-
         // normalize pointer event to touch event
         self.touches = [];
-
     }
 
     DocumentHandler.prototype = {
-
         constructor: DocumentHandler,
 
         addTouch: function (t) {
@@ -1027,11 +1036,9 @@ KISSY.add('event/dom/touch/handle', function (S, Dom, eventHandleMap, DomEvent, 
                 DomEvent.detach(doc, e, self[h], self);
             }
         }
-
     };
 
     return {
-
         addDocumentHandle: function (el, event) {
             var doc = Dom.getDocument(el),
                 handle = Dom.data(doc, key);
@@ -1052,9 +1059,7 @@ KISSY.add('event/dom/touch/handle', function (S, Dom, eventHandleMap, DomEvent, 
                 }
             }
         }
-
     };
-
 }, {
     requires: [
         'dom',

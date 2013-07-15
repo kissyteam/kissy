@@ -4,7 +4,6 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/dom/touch/handle', function (S, Dom, eventHandleMap, DomEvent, Gesture) {
-
     var key = S.guid('touch-handle'),
         Features = S.Features,
         isMsPointerSupported = Features.isMsPointerSupported(),
@@ -18,23 +17,15 @@ KISSY.add('event/dom/touch/handle', function (S, Dom, eventHandleMap, DomEvent, 
     }
 
     function DocumentHandler(doc) {
-
         var self = this;
-
         self.doc = doc;
-
-        self.eventHandle = {
-        };
-
+        self.eventHandle = {};
         self.init();
-
         // normalize pointer event to touch event
         self.touches = [];
-
     }
 
     DocumentHandler.prototype = {
-
         constructor: DocumentHandler,
 
         addTouch: function (t) {
@@ -192,11 +183,9 @@ KISSY.add('event/dom/touch/handle', function (S, Dom, eventHandleMap, DomEvent, 
                 DomEvent.detach(doc, e, self[h], self);
             }
         }
-
     };
 
     return {
-
         addDocumentHandle: function (el, event) {
             var doc = Dom.getDocument(el),
                 handle = Dom.data(doc, key);
@@ -217,9 +206,7 @@ KISSY.add('event/dom/touch/handle', function (S, Dom, eventHandleMap, DomEvent, 
                 }
             }
         }
-
     };
-
 }, {
     requires: [
         'dom',

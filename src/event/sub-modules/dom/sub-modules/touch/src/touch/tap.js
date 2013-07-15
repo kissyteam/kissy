@@ -5,27 +5,45 @@
  */
 KISSY.add('event/dom/touch/tap', function (S, eventHandleMap, DomEvent, SingleTouch) {
 
+    function preventDefault(e) {
+        e.preventDefault();
+    }
+
     var event = 'tap';
 
+    var DomEventObject = DomEvent.Object;
+
     function Tap() {
+        Tap.superclass.constructor.apply(this, arguments);
     }
 
     S.extend(Tap, SingleTouch, {
-
         onTouchMove: function () {
             return false;
         },
 
         onTouchEnd: function (e) {
             var touch = e.changedTouches[0];
-            DomEvent.fire(e.target, event, {
+            var target = e.target;
+            var eventObject = new DomEventObject({
+                type: event,
+                target: target,
+                currentTarget: target
+            });
+            S.mix(eventObject, {
                 pageX: touch.pageX,
                 pageY: touch.pageY,
                 which: 1,
                 touch: touch
             });
+            DomEvent.fire(target, event, eventObject);
+            if (eventObject.isDefaultPrevented()) {
+                DomEvent.on(target, 'click', {
+                    fn: preventDefault,
+                    once: 1
+                });
+            }
         }
-
     });
 
     eventHandleMap[event] = {

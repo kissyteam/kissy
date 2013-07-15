@@ -14,7 +14,9 @@
 
 <h1>open in ios safari test tap event</h1>
 
-<a href="http://www.g.cn">google</a>
+<a href="http://www.g.cn" id="goto">google</a>
+
+<a href="http://www.g.cn" id="goto2">google2</a>
 
 <div id='t'  style='border:1px solid green;width:100px;height:100px;margin:10px'>
     tttt ttttt ttttt tttttt tttttt
@@ -29,8 +31,12 @@
 <script>
 
     KISSY.use('event,node', function (S, Event) {
-
         var $ = S.all,t;
+
+        $('#goto').on('tap',function(e){
+            e.preventDefault();
+            log('goto tap');
+        });
 
         Event.on('#t', "click tap", function (e) {
             log("t: " + e.type);
@@ -43,7 +49,6 @@
         Event.on('#detach', 'click', function () {
             Event.detach('#t2', "tap", t);
         });
-
     });
 
 </script>
