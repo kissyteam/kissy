@@ -30,3 +30,4 @@
         });
 
  - [*] support windows8 touch
+ - [*] tap 允许 preventDefault 防止链接点击跳转
