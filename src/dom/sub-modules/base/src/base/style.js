@@ -12,7 +12,6 @@ KISSY.add('dom/base/style', function (S, Dom, undefined) {
         UA = S.UA,
         getNodeName = Dom.nodeName,
         doc = WINDOW.document,
-        STYLE = 'style',
         RE_MARGIN = /^margin/,
         WIDTH = 'width',
         HEIGHT = 'height',
@@ -100,7 +99,7 @@ KISSY.add('dom/base/style', function (S, Dom, undefined) {
                 // 还没有加入到 document，就取行内
                 if (val === '' && !Dom.contains(d, elem)) {
                     name = cssProps[name] || name;
-                    val = elem[STYLE][name];
+                    val = elem.style[name];
                 }
 
                 // Safari 5.1 returns percentage for margin
@@ -219,13 +218,13 @@ KISSY.add('dom/base/style', function (S, Dom, undefined) {
                     elem, i;
                 for (i = els.length - 1; i >= 0; i--) {
                     elem = els[i];
-                    elem[STYLE][DISPLAY] = Dom.data(elem, OLD_DISPLAY) || EMPTY;
+                    elem.style[DISPLAY] = Dom.data(elem, OLD_DISPLAY) || EMPTY;
                     // 可能元素还处于隐藏状态，比如 css 里设置了 display: none
                     if (Dom.css(elem, DISPLAY) === NONE) {
                         tagName = elem.tagName.toLowerCase();
                         old = getDefaultDisplay(tagName);
                         Dom.data(elem, OLD_DISPLAY, old);
-                        elem[STYLE][DISPLAY] = old;
+                        elem.style[DISPLAY] = old;
                     }
                 }
             },
@@ -239,7 +238,7 @@ KISSY.add('dom/base/style', function (S, Dom, undefined) {
                     elem, i;
                 for (i = els.length - 1; i >= 0; i--) {
                     elem = els[i];
-                    var style = elem[STYLE],
+                    var style = elem.style,
                         old = style[DISPLAY];
                     if (old !== NONE) {
                         if (old) {
@@ -269,7 +268,7 @@ KISSY.add('dom/base/style', function (S, Dom, undefined) {
 
             /**
              * Creates a stylesheet from a text blob of rules.
-             * These rules will be wrapped in a STYLE tag and appended to the HEAD of the document.
+             * These rules will be wrapped in a style tag and appended to the HEAD of the document.
              * if cssText does not contain css hacks, u can just use Dom.create('<style>xx</style>')
              * @param {window} [refWin=window] Window which will accept this stylesheet
              * @param {String} [cssText] The text containing the css rules
@@ -323,7 +322,7 @@ KISSY.add('dom/base/style', function (S, Dom, undefined) {
                     els;
                 for (j = _els.length - 1; j >= 0; j--) {
                     elem = _els[j];
-                    style = elem[STYLE];
+                    style = elem.style;
                     style['UserSelect'] = 'none';
                     if (UA['gecko']) {
                         style['MozUserSelect'] = 'none';
@@ -460,19 +459,21 @@ KISSY.add('dom/base/style', function (S, Dom, undefined) {
     });
 
     function swap(elem, options, callback) {
-        var old = {}, name;
+        var old = {},
+            style = elem.style,
+            name;
 
         // Remember the old values, and insert the new ones
         for (name in options) {
-            old[ name ] = elem[STYLE][ name ];
-            elem[STYLE][ name ] = options[ name ];
+            old[ name ] = style[ name ];
+            style[ name ] = options[ name ];
         }
 
         callback.call(elem);
 
         // Revert the old values
         for (name in options) {
-            elem[STYLE][ name ] = old[ name ];
+            style[ name ] = old[ name ];
         }
     }
 
@@ -480,7 +481,8 @@ KISSY.add('dom/base/style', function (S, Dom, undefined) {
         var style,
             ret,
             hook;
-        if (elem.nodeType === 3 || elem.nodeType === 8 || !(style = elem[STYLE])) {
+        if (elem.nodeType === 3 ||
+            elem.nodeType === 8 || !(style = elem.style)) {
             return undefined;
         }
         name = camelCase(name);

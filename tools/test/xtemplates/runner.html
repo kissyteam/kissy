@@ -45,12 +45,12 @@
 
     {{{script}}}
 
-    KISSY.use(tests, function () {
-            jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
-            jasmine.getEnv().addReporter(new jasmine.ConsoleReporter());
-            jasmine.getEnv().execute(function () {
-                jasmine.kissyNext(this.results().failedCount);
-            });
+    KISSY.use(tests, function (S) {
+        jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
+        jasmine.getEnv().addReporter(new jasmine.ConsoleReporter());
+        jasmine.getEnv().execute(function () {
+            jasmine.kissyNext(this.results().failedCount);
+        });
     });
 </script>
 {{{include './footer'}}}

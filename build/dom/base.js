@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 8 21:57
+build time: Jul 15 19:48
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -2056,8 +2056,8 @@ KISSY.add('dom/base/insertion', function (S, Dom) {
  */
 /**
  * @ignore
- * dom-offset
- * @author lifesinger@gmail.com, yiminghe@gmail.com
+ * @author  lifesinger@gmail.com
+ *          yiminghe@gmail.com
  */
 KISSY.add('dom/base/offset', function (S, Dom, undefined) {
 
@@ -2080,7 +2080,6 @@ KISSY.add('dom/base/offset', function (S, Dom, undefined) {
         CLIENT = 'client',
         LEFT = 'left',
         TOP = 'top',
-        isNumber = S.isNumber,
         SCROLL_LEFT = SCROLL + 'Left',
         SCROLL_TOP = SCROLL + 'Top';
 
@@ -2332,7 +2331,7 @@ KISSY.add('dom/base/offset', function (S, Dom, undefined) {
         var method = SCROLL + name;
 
         Dom[method] = function (elem, v) {
-            if (isNumber(elem)) {
+            if (typeof elem === 'number') {
                 return arguments.callee(win, elem);
             }
             elem = Dom.get(elem);
@@ -2360,11 +2359,11 @@ KISSY.add('dom/base/offset', function (S, Dom, undefined) {
                     //chrome == body.scrollTop
                     //firefox/ie9 == documentElement.scrollTop
                     ret = w[ 'page' + (i ? 'Y' : 'X') + 'Offset'];
-                    if (!isNumber(ret)) {
+                    if (typeof ret !== 'number') {
                         d = w[DOCUMENT];
                         //ie6,7,8 standard mode
                         ret = d[DOC_ELEMENT][method];
-                        if (!isNumber(ret)) {
+                        if (typeof ret !== 'number') {
                             //quirks mode
                             ret = d[BODY][method];
                         }
@@ -2393,6 +2392,7 @@ KISSY.add('dom/base/offset', function (S, Dom, undefined) {
             refWin = Dom.get(refWin);
             var win = getWindow(refWin);
             var ret = win['inner' + name];
+            // http://www.quirksmode.org/mobile/viewports.html
             if (UA.mobile && ret) {
                 return ret;
             }
@@ -2520,15 +2520,17 @@ KISSY.add('dom/base/offset', function (S, Dom, undefined) {
 });
 
 /*
+ 2013-07 A tale if two viewports
+ - A tale of two viewports: http://www.quirksmode.org/mobile/viewports.html
+
  2012-03-30
  - refer: http://www.softcomplex.com/docs/get_window_size_and_scrollbar_position.html
  - http://help.dottoro.com/ljkfqbqj.php
  - http://www.boutell.com/newfaq/creating/sizeofclientarea.html
 
- 2011-05-24
- - yiminghe@gmail.com：
+ 2011-05-24 yiminghe@gmail.com
  - 调整 docWidth , docHeight ,
- viewportHeight , viewportWidth ,scrollLeft,scrollTop 参数，
+ - viewportHeight , viewportWidth ,scrollLeft,scrollTop 参数，
  便于放置到 Node 中去，可以完全摆脱 Dom，完全使用 Node
 
 
@@ -2550,7 +2552,6 @@ KISSY.add('dom/base/style', function (S, Dom, undefined) {
         UA = S.UA,
         getNodeName = Dom.nodeName,
         doc = WINDOW.document,
-        STYLE = 'style',
         RE_MARGIN = /^margin/,
         WIDTH = 'width',
         HEIGHT = 'height',
@@ -2638,7 +2639,7 @@ KISSY.add('dom/base/style', function (S, Dom, undefined) {
                 // 还没有加入到 document，就取行内
                 if (val === '' && !Dom.contains(d, elem)) {
                     name = cssProps[name] || name;
-                    val = elem[STYLE][name];
+                    val = elem.style[name];
                 }
 
                 // Safari 5.1 returns percentage for margin
@@ -2757,13 +2758,13 @@ KISSY.add('dom/base/style', function (S, Dom, undefined) {
                     elem, i;
                 for (i = els.length - 1; i >= 0; i--) {
                     elem = els[i];
-                    elem[STYLE][DISPLAY] = Dom.data(elem, OLD_DISPLAY) || EMPTY;
+                    elem.style[DISPLAY] = Dom.data(elem, OLD_DISPLAY) || EMPTY;
                     // 可能元素还处于隐藏状态，比如 css 里设置了 display: none
                     if (Dom.css(elem, DISPLAY) === NONE) {
                         tagName = elem.tagName.toLowerCase();
                         old = getDefaultDisplay(tagName);
                         Dom.data(elem, OLD_DISPLAY, old);
-                        elem[STYLE][DISPLAY] = old;
+                        elem.style[DISPLAY] = old;
                     }
                 }
             },
@@ -2777,7 +2778,7 @@ KISSY.add('dom/base/style', function (S, Dom, undefined) {
                     elem, i;
                 for (i = els.length - 1; i >= 0; i--) {
                     elem = els[i];
-                    var style = elem[STYLE],
+                    var style = elem.style,
                         old = style[DISPLAY];
                     if (old !== NONE) {
                         if (old) {
@@ -2807,7 +2808,7 @@ KISSY.add('dom/base/style', function (S, Dom, undefined) {
 
             /**
              * Creates a stylesheet from a text blob of rules.
-             * These rules will be wrapped in a STYLE tag and appended to the HEAD of the document.
+             * These rules will be wrapped in a style tag and appended to the HEAD of the document.
              * if cssText does not contain css hacks, u can just use Dom.create('<style>xx</style>')
              * @param {window} [refWin=window] Window which will accept this stylesheet
              * @param {String} [cssText] The text containing the css rules
@@ -2861,7 +2862,7 @@ KISSY.add('dom/base/style', function (S, Dom, undefined) {
                     els;
                 for (j = _els.length - 1; j >= 0; j--) {
                     elem = _els[j];
-                    style = elem[STYLE];
+                    style = elem.style;
                     style['UserSelect'] = 'none';
                     if (UA['gecko']) {
                         style['MozUserSelect'] = 'none';
@@ -2998,19 +2999,21 @@ KISSY.add('dom/base/style', function (S, Dom, undefined) {
     });
 
     function swap(elem, options, callback) {
-        var old = {}, name;
+        var old = {},
+            style = elem.style,
+            name;
 
         // Remember the old values, and insert the new ones
         for (name in options) {
-            old[ name ] = elem[STYLE][ name ];
-            elem[STYLE][ name ] = options[ name ];
+            old[ name ] = style[ name ];
+            style[ name ] = options[ name ];
         }
 
         callback.call(elem);
 
         // Revert the old values
         for (name in options) {
-            elem[STYLE][ name ] = old[ name ];
+            style[ name ] = old[ name ];
         }
     }
 
@@ -3018,7 +3021,8 @@ KISSY.add('dom/base/style', function (S, Dom, undefined) {
         var style,
             ret,
             hook;
-        if (elem.nodeType === 3 || elem.nodeType === 8 || !(style = elem[STYLE])) {
+        if (elem.nodeType === 3 ||
+            elem.nodeType === 8 || !(style = elem.style)) {
             return undefined;
         }
         name = camelCase(name);
@@ -3225,12 +3229,22 @@ KISSY.add('dom/base/selector', function (S, Dom, undefined) {
             docElem.oMatchesSelector ||
             docElem.msMatchesSelector,
         isArray = S.isArray,
-        makeArray = S.makeArray,
         isDomNodeList = Dom.isDomNodeList,
         SPACE = ' ',
         push = Array.prototype.push,
         RE_QUERY = /^(?:#([\w-]+))?\s*([\w-]+|\*)?\.?([\w-]+)?$/,
         trim = S.trim;
+
+    // typeof document.querySelectorAll is function in phantomjs....
+    function makeNodeListArray(nodeList) {
+        var i,
+            len = nodeList.length,
+            ret = new Array(len);
+        for (i = 0; i < len; i++) {
+            ret[i] = nodeList[i];
+        }
+        return ret;
+    }
 
     function query_each(f) {
         var els = this,
@@ -3294,7 +3308,7 @@ KISSY.add('dom/base/selector', function (S, Dom, undefined) {
             // document.createElement('select').item 已经在 1 处理了
             // S.all().item 已经在 2 处理了
             else if (isDomNodeList(selector)) {
-                ret = makeArray(selector);
+                ret = makeNodeListArray(selector);
             } else {
                 ret = [ selector ];
             }
@@ -3375,7 +3389,7 @@ KISSY.add('dom/base/selector', function (S, Dom, undefined) {
             },
 
             _selectInternal: function (str, context) {
-                return makeArray(context.querySelectorAll(str));
+                return makeNodeListArray(context.querySelectorAll(str));
             },
 
             /**
@@ -3501,7 +3515,7 @@ KISSY.add('dom/base/selector', function (S, Dom, undefined) {
                     }
                 }
 
-                if (S.isFunction(filter)) {
+                if (typeof filter === 'function') {
                     ret = S.filter(elems, filter);
                 } else {
                     ret = Dom._matchesInternal(filter, elems);
@@ -3767,7 +3781,7 @@ KISSY.add('dom/base/traversal', function (S, Dom, undefined) {
             fi,
             filterLength;
 
-        if (S.isNumber(filter)) {
+        if (typeof filter==='number') {
             fi = 0;
             filterLength = filter;
             filter = function () {
