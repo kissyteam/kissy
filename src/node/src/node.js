@@ -20,6 +20,8 @@ KISSY.add('node', function (S, Node) {
     ]
 });
 // debug for jayli
+/*
 KISSY.use('node',{
 	sync:true	
 });
+*/
