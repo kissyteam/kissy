@@ -29,8 +29,6 @@ KISSY.add('dom/base/style', function (S, Dom, undefined) {
             'zoom': 1
         },
         rmsPrefix = /^-ms-/,
-    // ie9+
-        R_UPPER = /([A-Z]|^ms)/g,
         EMPTY = '',
         DEFAULT_UNIT = 'px',
         NO_PX_REG = /\d(?!px)[a-z%]+$/i,
@@ -100,7 +98,6 @@ KISSY.add('dom/base/style', function (S, Dom, undefined) {
                     d = elem.ownerDocument;
 
                 name = cssProps[name] || name;
-                name = name.replace(R_UPPER, '-$1').toLowerCase();
 
                 // https://github.com/kissyteam/kissy/issues/61
                 if (computedStyle = d.defaultView.getComputedStyle(elem, null)) {
