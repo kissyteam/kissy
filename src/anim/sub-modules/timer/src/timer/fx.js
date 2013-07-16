@@ -58,7 +58,7 @@ KISSY.add('anim/timer/fx', function (S, Dom, undefined) {
             // 默认只对数字进行 easing
             if ((typeof from === 'number') &&
                 (typeof to === 'number')) {
-                return /**@type Number @ignore*/(from + (to - from) * pos).toFixed(5);
+                return /**@type Number @ignore*/Math.round((from + (to - from) * pos) * 1e5) / 1e5;
             } else {
                 return /**@type Number @ignore*/undefined;
             }

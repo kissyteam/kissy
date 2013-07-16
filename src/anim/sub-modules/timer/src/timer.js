@@ -152,6 +152,7 @@ KISSY.add('anim/timer', function (S, Dom, Event, AnimBase, Easing, AM, Fx, SHORT
                 if (!(fx.finished)) {
                     pos = Fx.getPos(self, _propData);
                     if (pos == 0) {
+                        end = 0;
                         continue;
                     }
                     fx.pos = pos;
@@ -159,6 +160,7 @@ KISSY.add('anim/timer', function (S, Dom, Event, AnimBase, Easing, AM, Fx, SHORT
                         // equal attr value, just skip
                         if (fx.from == fx.to) {
                             fx.finished = fx.finished || pos == 1;
+                            end = 0;
                             continue;
                         }
                         c = 0;

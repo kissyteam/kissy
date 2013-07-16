@@ -4,21 +4,12 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add('anim/timer/transform', function (S, Dom, Fx) {
-    function toMatrixArray(matrix) {
-        matrix = matrix.substring('matrix('.length, matrix.length - 1).split(/,/);
-        matrix = S.map(matrix, function (v) {
-            return parseFloat(v);
-        });
-        return matrix;
-    }
-
     function decomposeMatrix(matrix) {
-        matrix = toMatrixArray(matrix);
         var scaleX, scaleY , skew ,
-            A = matrix[0],
-            B = matrix[1] ,
-            C = matrix[2],
-            D = matrix[3];
+            A = matrix[0][0],
+            B = matrix[1][0] ,
+            C = matrix[0][1],
+            D = matrix[1][1];
 
         // Make sure matrix is not singular
         if (A * D - B * C) {
@@ -51,12 +42,12 @@ KISSY.add('anim/timer/transform', function (S, Dom, Fx) {
         // The recomposition order is very important
         // see http://hg.mozilla.org/mozilla-central/file/7cb3e9795d04/layout/style/nsStyleAnimation.cpp#l971
         return {
-            'translateX': +matrix[4],
-            'translateY': +matrix[5],
-            'rotate': Math.atan2(B, A),
-            'skewX': Math.atan(skew),
-            'scaleX': scaleX,
-            'scaleY': scaleY
+            'translateX': myParse(matrix[0][2]),
+            'translateY': myParse(matrix[1][2]),
+            'rotate': myParse(Math.atan2(B, A) ),
+            'skewX': myParse(Math.atan(skew)),
+            'scaleX': myParse(scaleX),
+            'scaleY': myParse(scaleY)
         };
     }
 
@@ -71,14 +62,126 @@ KISSY.add('anim/timer/transform', function (S, Dom, Fx) {
         };
     }
 
-    function normalize(transform, el, origin) {
-        var ret;
-        //el.style.visibility='hidden';
-        Dom.css(el, 'transform', transform);
-        ret = Dom.css(el, 'transform');
-        Dom.css(el, 'transform', origin);
-        //el.style.visibility='';
+    // converts an angle string in any unit to a radian Float
+    function toRadian(value) {
+        return value.indexOf("deg") > -1 ?
+            myParse(parseInt(value, 10) * (Math.PI * 2 / 360)) :
+            myParse(value);
+    }
+
+    function myParse(v) {
+        return Math.round(parseFloat(v) * 1e5) / 1e5;
+    }
+
+    // turn transform string into standard matrix form
+    function matrix(transform) {
+        transform = transform.split(")");
+        var trim = S.trim,
+            i = -1,
+            l = transform.length - 1,
+            split, prop, val,
+            ret = cssMatrixToComputableMatrix([1, 0, 0, 1, 0, 0]),
+            curr;
+
+        // Loop through the transform properties, parse and multiply them
+        while (++i < l) {
+            split = transform[i].split("(");
+            prop = trim(split[0]);
+            val = split[1];
+            curr = [1, 0, 0, 1, 0, 0];
+            switch (prop) {
+                case "translateX":
+                    curr[4] = parseInt(val, 10);
+                    break;
+
+                case "translateY":
+                    curr[5] = parseInt(val, 10);
+                    break;
+
+                case 'translate':
+                    val = val.split(",");
+                    curr[4] = parseInt(val[0], 10);
+                    curr[5] = parseInt(val[1] || 0, 10);
+                    break;
+
+                case 'rotate':
+                    val = toRadian(val);
+                    curr[0] = Math.cos(val);
+                    curr[1] = Math.sin(val);
+                    curr[2] = -Math.sin(val);
+                    curr[3] = Math.cos(val);
+                    break;
+
+                case 'scaleX':
+                    curr[0] = +val;
+                    break;
+
+                case 'scaleY':
+                    curr[3] = +val;
+                    break;
+
+                case 'scale':
+                    val = val.split(",");
+                    curr[0] = +val[0];
+                    curr[3] = val.length > 1 ? +val[1] : +val[0];
+                    break;
+
+                case "skewX":
+                    curr[2] = Math.tan(toRadian(val));
+                    break;
+
+                case "skewY":
+                    curr[1] = Math.tan(toRadian(val));
+                    break;
+
+                case 'matrix':
+                    val = val.split(",");
+                    curr[0] = +val[0];
+                    curr[1] = +val[1];
+                    curr[2] = +val[2];
+                    curr[3] = +val[3];
+                    curr[4] = parseInt(val[4], 10);
+                    curr[5] = parseInt(val[5], 10);
+                    break;
+            }
+            ret = multipleMatrix(ret, cssMatrixToComputableMatrix(curr));
+        }
+
         return ret;
+    }
+
+    function cssMatrixToComputableMatrix(matrix) {
+        return[
+            [matrix[0], matrix[2], matrix[4]],
+            [matrix[1], matrix[3], matrix[5]],
+            [0, 0, 1]
+        ];
+    }
+
+    function setMatrix(m, x, y, v) {
+        if (!m[x]) {
+            m[x] = [];
+        }
+        m[x][y] = v;
+    }
+
+    function multipleMatrix(m1, m2) {
+        var m = [],
+            r1 = m1.length,
+            r2 = m2.length,
+            c2 = m2[0].length;
+
+        for (var i = 0; i < r1; i++) {
+            for (var k = 0; k < c2; k++) {
+                var sum = 0;
+                for (var j = 0; j < r2; j++) {
+                    sum += m1[i][j] * m2[j][k];
+                }
+                setMatrix(m, i, k, sum);
+            }
+        }
+
+        return m;
     }
 
     function TransformFx() {
@@ -87,16 +190,15 @@ KISSY.add('anim/timer/transform', function (S, Dom, Fx) {
 
     S.extend(TransformFx, Fx, {
         load: function () {
-            TransformFx.superclass.load.apply(this, arguments);
-            var self = this,
-                origin = self.from;
+            var self = this;
+            TransformFx.superclass.load.apply(self, arguments);
             if (self.from && self.from != 'none') {
-                self.from = decomposeMatrix(self.from);
+                self.from = decomposeMatrix(matrix(self.from));
             } else {
                 self.from = defaultDecompose();
             }
             if (self.to) {
-                self.to = decomposeMatrix(normalize(self.to, self.anim.node, origin));
+                self.to = decomposeMatrix(matrix(self.to));
             } else {
                 self.to = defaultDecompose();
             }

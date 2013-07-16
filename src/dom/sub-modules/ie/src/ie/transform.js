@@ -12,14 +12,16 @@ KISSY.add('dom/ie/transform', function (S, Dom) {
                 matrix;
             if (elemStyle && rMatrix.test(elemStyle.filter)) {
                 matrix = RegExp.$1.split(",");
-                var dx = matrix[4] && matrix[4].split("=")[1] || 0;
-                var dy = matrix[5] && matrix[5].split("=")[1] || 0;
-                dx = parseFloat(dx);
-                dy = parseFloat(dy);
+                var dx , dy;
                 // 逆矩阵求解效率低，暂时从上一次 set 中取
-                if (Dom.hasData(elem, 'ks-transform-dx-diff')) {
-                    dx += Dom.data(elem, 'ks-transform-dx-diff');
-                    dy += Dom.data(elem, 'ks-transform-dy-diff');
+                if (Dom.hasData(elem, 'ks-transform-dx')) {
+                    dx = Dom.data(elem, 'ks-transform-dx');
+                    dy = Dom.data(elem, 'ks-transform-dy');
+                } else {
+                    dx = matrix[4] && matrix[4].split("=")[1] || 0;
+                    dy = matrix[5] && matrix[5].split("=")[1] || 0;
+                    dx = parseFloat(dx);
+                    dy = parseFloat(dy);
                 }
                 matrix = [
                     matrix[0].split("=")[1],
@@ -44,14 +46,12 @@ KISSY.add('dom/ie/transform', function (S, Dom) {
                 filter;
             elemStyle.zoom = 1;
             value = matrix(value);
-            var dx = value[0][2];
-            var dy = value[1][2];
+            // 用于 get 时恢复
+            Dom.data(elem, 'ks-transform-dx', value[0][2]);
+            Dom.data(elem, 'ks-transform-dy', value[1][2]);
             if (origin) {
                 value = adjustMatrixByOrigin(value, origin);
             }
-            // 用于 get 时恢复
-            Dom.data(elem, 'ks-transform-dx-diff', dx - value[0][2]);
-            Dom.data(elem, 'ks-transform-dy-diff', dy - value[1][2]);
             matrixVal = [
                 "Matrix(" +
                     "M11=" + value[0][0],

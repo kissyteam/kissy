@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>transform</title>
+<script src="/kissy/build/seed.js"></script>
+<script src="/kissy/src/package.js"></script>
+<style>
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+
+    /* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+
+body {
+    line-height: 1;
+}
+
+ol, ul {
+    list-style: none;
+}
+
+blockquote, q {
+    quotes: none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: '';
+    content: none;
+}
+
+ins {
+    text-decoration: none;
+}
+
+del {
+    text-decoration: line-through;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+.prettyprint {
+    font-family: monospace;
+    font-size: 11px;
+}
+
+.str {
+    color: #BFAC00;
+}
+
+.kwd, .typ {
+    color: #BF5600;
+}
+
+.com {
+    color: #111;
+}
+
+.lit {
+    color: #26BF00;
+}
+
+.pun, .opn, .clo {
+    color: #999;
+}
+
+.pln {
+    color: #DDD;
+}
+
+.tag {
+    color: #008;
+}
+
+.atn {
+    color: #606;
+}
+
+.atv {
+    color: #080;
+}
+
+.dec {
+    color: #606;
+}
+
+    /* Specify class=linenums on a pre to get line numbering */
+ol.linenums {
+    margin-top: 0;
+    margin-bottom: 0
+}
+
+    /* IE indents via margin-left */
+li.L0,
+li.L1,
+li.L2,
+li.L3,
+li.L5,
+li.L6,
+li.L7,
+li.L8 {
+    list-style-type: none
+}
+
+    /* Alternate shading for lines */
+li.L1,
+li.L3,
+li.L5,
+li.L7,
+li.L9 {
+    background: #eee
+}
+
+    /*------------------------------------*\
+      MAIN
+    \*------------------------------------*/
+
+body {
+    background: #333;
+    width: 1000px;
+    margin: 0 auto;
+    color: #FFF;
+    overflow-x: hidden;
+    font-family: Arial, "Liberation Sans", sans;
+}
+
+header h1 {
+    font-family: 'Josefin Slab', arial, serif;
+    font-size: 6em;
+    color: #BBB;
+    text-shadow: 1px 0px #FFF;
+    margin: 30px 0 5px;
+}
+
+section, footer {
+    clear: both;
+}
+
+h2 {
+    font-family: 'Josefin Slab', arial, serif;
+    font-size: 2em;
+    padding: 2em 0 .3em;
+}
+
+footer a {
+    color: #FFF;
+    text-decoration: underline;
+}
+
+footer {
+    font-size: .8em;
+    text-align: right;
+    margin: 4em 0 2em;
+}
+
+#basic li {
+    display: inline-block;
+    width: 250px;
+}
+
+.square {
+    width: 100px;
+    height: 100px;
+    margin: 0 75px;
+}
+
+.cover {
+    margin: 20px 0;
+    position: absolute;
+}
+
+.fright {
+    float: right;
+}
+
+.fleft {
+    float: left;
+}
+
+.color1 {
+    background: #bf0000;
+    color: #bf0000;
+}
+
+.color2 {
+    background: #bf5600;
+    color: #bf5600;
+}
+
+.color3 {
+    background: #bfac00;
+    color: #bfac00;
+}
+
+.color4 {
+    background: #7cbf00;
+    color: #7cbf00;
+}
+
+.color5 {
+    background: #26bf00;
+    color: #26bf00;
+}
+
+.color6 {
+    background: #00bf2f;
+    color: #00bf2f;
+}
+
+.color7 {
+    background: #00bf85;
+    color: #00bf85;
+}
+
+.color8 {
+    background: #00a2bf;
+    color: #00a2bf;
+}
+
+.color9 {
+    background: #004cbf;
+    color: #004cbf;
+}
+
+.color10 {
+    background: #0900bf;
+    color: #0900bf;
+}
+
+.color11 {
+    background: #5f00bf;
+    color: #5f00bf;
+}
+
+.color12 {
+    background: #b500bf;
+    color: #b500bf;
+}
+</style>
+</head>
+
+<body>
+
+<section id="basic">
+    <h2>Basic usage</h2>
+    <ul>
+        <li><pre class="brush: js;">KISSY.all(elem).animate({
+  transform: 'translateX(50px)'
+});</pre>
+        <li><pre class="brush: js;">KISSY.all(elem).animate({
+  transform: 'rotate(135deg)'
+});</pre>
+        <li><pre class="brush: js;">KISSY.all(elem).animate({
+  transform: 'scale(2,.5)'
+});</pre>
+        <li><pre class="brush: js;">KISSY.all(elem).animate({
+  transform: 'skewX(35deg) skewY(15deg)'
+});</pre>
+    </ul>
+    <div style="position: relative;width: 100px;
+    height: 100px;
+    margin: 0 75px;" class="fleft">
+        <div id="basic1" class="square color1" style="position: absolute; margin-left: 0;"
+             data-trans="translateX(50px)"></div>
+    </div>
+    <div id="basic2" class="square color2 fleft" data-trans="rotate(135deg)"></div>
+    <div id="basic3" class="square color3 fleft" data-trans="scale(2,.5)"></div>
+    <div id="basic4" class="square color4 fleft" data-trans="skewX(35deg) skewY(15deg)"></div>
+</section>
+
+<section>
+    <h2>Advanced usage</h2>
+
+    <div id="advanced" style="height: 150px; width: 400px; position: relative;">
+        <div id="basic5" class="square cover color5"></div>
+        <div id="basic6" class="square cover color6"></div>
+        <div id="basic7" class="square cover color7" style="z-index: 2"></div>
+        <div id="basic8" class="square cover color8"></div>
+    </div>
+</section>
+
+<script>
+    KISSY.use('core', function (S) {
+        var $ = S.all;
+        $('#basic').delegate('mouseenter', '.square', function (e) {
+            var currentTarget = $(e.currentTarget);
+            if (!currentTarget.isRunning()) {
+                currentTarget.animate({
+                    transform: currentTarget.attr('data-trans')
+                }, {
+                    //useTransition:1,
+                    duration: 0.4
+                });
+                currentTarget.animate({
+                    zoom: 1.00000001
+                }, {
+                    //useTransition:1,
+                    delay: 2,
+                    duration: 0.1,
+                    complete: function () {
+                        currentTarget.css('opacity', .5)
+                    }
+                }).animate({
+                            transform: ''
+                        }, {
+                            //useTransition:1,
+                            duration: 0.4,
+                            complete: function () {
+                                currentTarget.css('opacity', 1)
+                            }
+                        });
+            }
+        });
+
+        var transforms = [
+                    'scale(.66) skewY(-45deg)',
+                    'translate(20px) scale(.66) skewY(-45deg)',
+                    'translate(150px,50px) scale(1.5,1)',
+                    'translate(280px) scale(.66) skewY(45deg)',
+                    'translate(300px) scale(.66) skewY(45deg)'
+                ],
+                $squares = $('#advanced .square').each(function (v, i) {
+                    $(v).css({ transform: transforms[i] });
+                });
+
+        $('#advanced').on('mouseenter',function () {
+            $squares.each(function (v, i) {
+                if(i!=3){
+                   // return;
+                }
+                v.stop();
+                v.animate({ transform: transforms[i + 1] }, {
+                    duration: 0.4
+                });
+
+            });
+        }).on('mouseleave', function () {
+                    $squares.each(function (v, i) {
+                        if(i!=3){
+                            //return;
+                        }
+                        v.stop();
+                        v.animate({ transform: transforms[i] }, {
+                            duration: 0.4
+                        });
+                    });
+                });
+    });
+</script>
+</body>
+</html>

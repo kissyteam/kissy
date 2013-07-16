@@ -32,11 +32,16 @@
 <script>
     KISSY.use('dom,anim', function (S, Dom, Anim) {
         var t = Dom.get('#t');
-       Dom.css(t,'transform-origin','50% 0%');
+        Dom.css(t, 'transform-origin', '50% 0%');
         var anim = new Anim(t, {
-            transform: 'rotate(80deg)'
+            transform: 'rotate(360deg)'
         }, {
-            duration: 5
+            // useTransition:true,
+            // easing:'ease-out',
+            duration: 1,
+            complete: function () {
+                S.log('done')
+            }
         });
         anim.run();
     });
