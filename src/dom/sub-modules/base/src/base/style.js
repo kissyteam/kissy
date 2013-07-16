@@ -4,12 +4,12 @@
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('dom/base/style', function (S, Dom, undefined) {
-    var
-        WINDOW = /**
+    var WINDOW = /**
          @ignore
          @type window
          */S.Env.host,
         UA = S.UA,
+        Features = S.Features,
         getNodeName = Dom.nodeName,
         doc = WINDOW.document,
         RE_MARGIN = /^margin/,
@@ -34,12 +34,22 @@ KISSY.add('dom/base/style', function (S, Dom, undefined) {
         EMPTY = '',
         DEFAULT_UNIT = 'px',
         NO_PX_REG = /\d(?!px)[a-z%]+$/i,
-        CUSTOM_STYLES = {},
+        cssHooks = {},
         cssProps = {
             'float': 'cssFloat'
         },
         defaultDisplay = {},
         RE_DASH = /-([a-z])/ig;
+
+    if (Features.isTransformSupported()) {
+        var transform;
+        transform = cssProps.transform = Features.getTransformProperty();
+        cssProps.transformOrigin = transform + 'Origin';
+    }
+
+    if (Features.isTransitionSupported()) {
+        cssProps.transition = Features.getTransitionProperty();
+    }
 
     function upperCase() {
         return arguments[1].toUpperCase();
@@ -76,7 +86,7 @@ KISSY.add('dom/base/style', function (S, Dom, undefined) {
         {
             _camelCase: camelCase,
 
-            _CUSTOM_STYLES: CUSTOM_STYLES,
+            _cssHooks: cssHooks,
 
             _cssProps: cssProps,
 
@@ -89,6 +99,7 @@ KISSY.add('dom/base/style', function (S, Dom, undefined) {
                     style,
                     d = elem.ownerDocument;
 
+                name = cssProps[name] || name;
                 name = name.replace(R_UPPER, '-$1').toLowerCase();
 
                 // https://github.com/kissyteam/kissy/issues/61
@@ -98,7 +109,6 @@ KISSY.add('dom/base/style', function (S, Dom, undefined) {
 
                 // 还没有加入到 document，就取行内
                 if (val === '' && !Dom.contains(d, elem)) {
-                    name = cssProps[name] || name;
                     val = elem.style[name];
                 }
 
@@ -184,7 +194,7 @@ KISSY.add('dom/base/style', function (S, Dom, undefined) {
                 }
 
                 name = camelCase(name);
-                hook = CUSTOM_STYLES[name];
+                hook = cssHooks[name];
                 // getter
                 if (val === undefined) {
                     // supports css selector/Node/NodeList
@@ -417,7 +427,7 @@ KISSY.add('dom/base/style', function (S, Dom, undefined) {
         /**
          * @ignore
          */
-        CUSTOM_STYLES[ name ] = {
+        cssHooks[ name ] = {
             /**
              * @ignore
              */
@@ -434,7 +444,7 @@ KISSY.add('dom/base/style', function (S, Dom, undefined) {
     var cssShow = { position: 'absolute', visibility: 'hidden', display: 'block' };
 
     S.each(['left', 'top'], function (name) {
-        CUSTOM_STYLES[ name ] = {
+        cssHooks[ name ] = {
             get: function (el, computed) {
                 var val,
                     isAutoPosition,
@@ -486,7 +496,7 @@ KISSY.add('dom/base/style', function (S, Dom, undefined) {
             return undefined;
         }
         name = camelCase(name);
-        hook = CUSTOM_STYLES[name];
+        hook = cssHooks[name];
         name = cssProps[name] || name;
         // setter
         if (val !== undefined) {

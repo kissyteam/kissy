@@ -3,7 +3,6 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add('dom/ie/attr', function (S, Dom) {
-
     var attrHooks = Dom._attrHooks,
         attrNodeHook = Dom._attrNodeHook,
         NodeType = Dom.NodeType,

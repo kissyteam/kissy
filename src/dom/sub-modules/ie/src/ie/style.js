@@ -17,7 +17,7 @@ KISSY.add('dom/ie/style', function (S, Dom) {
         RUNTIME_STYLE = 'runtimeStyle',
         LEFT = 'left',
         PX = 'px',
-        CUSTOM_STYLES = Dom._CUSTOM_STYLES,
+        cssHooks = Dom._cssHooks,
         backgroundPosition = 'backgroundPosition',
         R_OPACITY = /opacity\s*=\s*([^)]*)/,
         R_ALPHA = /alpha\([^)]*\)/i;
@@ -25,7 +25,7 @@ KISSY.add('dom/ie/style', function (S, Dom) {
     cssProps['float'] = 'styleFloat';
 
     // odd backgroundPosition
-    CUSTOM_STYLES[backgroundPosition] = {
+    cssHooks[backgroundPosition] = {
         get: function (elem, computed) {
             if (computed) {
                 return elem[CURRENT_STYLE][backgroundPosition + 'X'] +
@@ -41,7 +41,7 @@ KISSY.add('dom/ie/style', function (S, Dom) {
     try {
         if (docElem.style[OPACITY] == null) {
 
-            CUSTOM_STYLES[OPACITY] = {
+            cssHooks[OPACITY] = {
 
                 get: function (elem, computed) {
                     // 没有设置过 opacity 时会报错，这时返回 1 即可
@@ -113,7 +113,7 @@ KISSY.add('dom/ie/style', function (S, Dom) {
         var name = 'border' + b + 'Width',
             styleName = 'border' + b + 'Style';
 
-        CUSTOM_STYLES[name] = {
+        cssHooks[name] = {
             get: function (elem, computed) {
                 // 只有需要计算样式的时候才转换，否则取原值
                 var currentStyle = computed ? elem[CURRENT_STYLE] : 0,

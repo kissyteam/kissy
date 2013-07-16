@@ -4,7 +4,6 @@
  * @ignore
  */
 KISSY.add('anim/timer', function (S, Dom, Event, AnimBase, Easing, AM, Fx, SHORT_HANDS) {
-
     var camelCase = Dom._camelCase,
         NUMBER_REG = /^([+\-]=)?([\d+.\-]+)([a-z%]*)$/i;
 
@@ -23,7 +22,6 @@ KISSY.add('anim/timer', function (S, Dom, Event, AnimBase, Easing, AM, Fx, SHORT
     }
 
     S.extend(Anim, AnimBase, {
-
         prepareFx: function () {
             var self = this,
                 node = self.node,
@@ -233,6 +231,7 @@ KISSY.add('anim/timer', function (S, Dom, Event, AnimBase, Easing, AM, Fx, SHORT
     });
 
     Anim.Easing = Easing;
+    Anim.Fx = Fx;
 
     return Anim;
 }, {
@@ -240,7 +239,7 @@ KISSY.add('anim/timer', function (S, Dom, Event, AnimBase, Easing, AM, Fx, SHORT
         'dom', 'event', './base',
         './timer/easing', './timer/manager',
         './timer/fx', './timer/short-hand'
-        , './timer/color'
+        , './timer/color' , './timer/transform'
     ]
 });
 

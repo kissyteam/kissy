@@ -11,6 +11,7 @@ KISSY.add('dom/ie', function (S, Dom) {
         './ie/insertion',
         './ie/style',
         './ie/traversal',
+        './ie/transform',
         './ie/input-selection'
     ]
 });

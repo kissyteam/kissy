@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 15 14:21
+build time: Jul 16 19:55
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -128,7 +128,6 @@ KISSY.add('event/dom/touch/tap', function (S, eventHandleMap, DomEvent, SingleTo
     }
 
     S.extend(Tap, SingleTouch, {
-
         onTouchMove: function () {
             return false;
         },
@@ -138,12 +137,14 @@ KISSY.add('event/dom/touch/tap', function (S, eventHandleMap, DomEvent, SingleTo
             var target = e.target;
             var eventObject = new DomEventObject({
                 type: event,
+                target: target,
+                currentTarget: target
+            });
+            S.mix(eventObject, {
                 pageX: touch.pageX,
                 pageY: touch.pageY,
                 which: 1,
-                touch: touch,
-                target: target,
-                currentTarget: target
+                touch: touch
             });
             DomEvent.fire(target, event, eventObject);
             if (eventObject.isDefaultPrevented()) {
@@ -153,7 +154,6 @@ KISSY.add('event/dom/touch/tap', function (S, eventHandleMap, DomEvent, SingleTo
                 });
             }
         }
-
     });
 
     eventHandleMap[event] = {

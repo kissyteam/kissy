@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 3 19:20
+build time: Jul 16 19:54
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -57,7 +57,7 @@ KISSY.add('event/base/utils', function (S) {
         normalizeParam: function (type, fn, context) {
             var cfg = fn || {};
 
-            if (S.isFunction(fn)) {
+            if (typeof fn === 'function') {
                 cfg = {
                     fn: fn,
                     context: context

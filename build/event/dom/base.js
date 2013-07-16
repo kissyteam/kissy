@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 3 19:20
+build time: Jul 16 19:55
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -2242,17 +2242,19 @@ KISSY.add('event/dom/base/valuechange', function (S, DomEvent, Dom, Special) {
  * dom event facade
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/base', function (S, DomEvent, KeyCode, Gesture, Special) {
+KISSY.add('event/dom/base', function (S, DomEvent, DomEventObject, KeyCode, Gesture, Special) {
     return S.merge({
         add: DomEvent.on,
         remove: DomEvent.detach,
         KeyCode: KeyCode,
         Gesture: Gesture,
-        Special: Special
+        Special: Special,
+        Object: DomEventObject
     }, DomEvent);
 }, {
     requires: [
         './base/dom-event',
+        './base/object',
         './base/key-codes',
         './base/gesture',
         './base/special-events',

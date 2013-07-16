@@ -5,13 +5,19 @@
  */
 KISSY.add('anim/timer/fx', function (S, Dom, undefined) {
 
+    function load(self, cfg) {
+        S.mix(self, cfg);
+        self.pos = 0;
+        self.unit = self.unit || '';
+    }
+
     /**
      * basic animation about single css property or element attribute
      * @class KISSY.Anim.Fx
      * @private
      */
     function Fx(cfg) {
-        this.load(cfg);
+        load(this, cfg);
     }
 
     Fx.prototype = {
@@ -26,10 +32,7 @@ KISSY.add('anim/timer/fx', function (S, Dom, undefined) {
          * @param cfg
          */
         load: function (cfg) {
-            var self = this;
-            S.mix(self, cfg);
-            self.pos = 0;
-            self.unit = self.unit || '';
+            load(this, cfg);
         },
 
         /**
@@ -53,9 +56,9 @@ KISSY.add('anim/timer/fx', function (S, Dom, undefined) {
          */
         interpolate: function (from, to, pos) {
             // 默认只对数字进行 easing
-            if ((typeof from==='number')&&
-                (typeof to==='number')) {
-                return /**@type Number @ignore*/(from + (to - from) * pos).toFixed(3);
+            if ((typeof from === 'number') &&
+                (typeof to === 'number')) {
+                return /**@type Number @ignore*/(from + (to - from) * pos).toFixed(5);
             } else {
                 return /**@type Number @ignore*/undefined;
             }

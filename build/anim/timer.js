@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 3 13:48
+build time: Jul 16 19:54
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -11,6 +11,7 @@ build time: Jul 3 13:48
  anim/timer/fx
  anim/timer/short-hand
  anim/timer/color
+ anim/timer/transform
  anim/timer
 */
 
@@ -465,13 +466,19 @@ KISSY.add('anim/timer/manager', function (S, undefined) {
  */
 KISSY.add('anim/timer/fx', function (S, Dom, undefined) {
 
+    function load(self, cfg) {
+        S.mix(self, cfg);
+        self.pos = 0;
+        self.unit = self.unit || '';
+    }
+
     /**
      * basic animation about single css property or element attribute
      * @class KISSY.Anim.Fx
      * @private
      */
     function Fx(cfg) {
-        this.load(cfg);
+        load(this, cfg);
     }
 
     Fx.prototype = {
@@ -486,10 +493,7 @@ KISSY.add('anim/timer/fx', function (S, Dom, undefined) {
          * @param cfg
          */
         load: function (cfg) {
-            var self = this;
-            S.mix(self, cfg);
-            self.pos = 0;
-            self.unit = self.unit || '';
+            load(this, cfg);
         },
 
         /**
@@ -513,8 +517,9 @@ KISSY.add('anim/timer/fx', function (S, Dom, undefined) {
          */
         interpolate: function (from, to, pos) {
             // 默认只对数字进行 easing
-            if (S.isNumber(from) && S.isNumber(to)) {
-                return /**@type Number @ignore*/(from + (to - from) * pos).toFixed(3);
+            if ((typeof from === 'number') &&
+                (typeof to === 'number')) {
+                return /**@type Number @ignore*/(from + (to - from) * pos).toFixed(5);
             } else {
                 return /**@type Number @ignore*/undefined;
             }
@@ -832,12 +837,143 @@ KISSY.add('anim/timer/color', function (S, Dom, Fx,SHORT_HANDS) {
    - https://developer.mozilla.org/en-US/docs/Web/CSS/color_value
 */
 /**
+ * @ignore
+ * animation for transform property
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('anim/timer/transform', function (S, Dom, Fx) {
+    function toMatrixArray(matrix) {
+        matrix = matrix.substring('matrix('.length, matrix.length - 1).split(/,/);
+        matrix = S.map(matrix, function (v) {
+            return parseFloat(v);
+        });
+        return matrix;
+    }
+
+    function decomposeMatrix(matrix) {
+        matrix = toMatrixArray(matrix);
+        var scaleX, scaleY , skew ,
+            A = matrix[0],
+            B = matrix[1] ,
+            C = matrix[2],
+            D = matrix[3];
+
+        // Make sure matrix is not singular
+        if (A * D - B * C) {
+            // step (3)
+            scaleX = Math.sqrt(A * A + B * B);
+            A /= scaleX;
+            B /= scaleX;
+            // step (4)
+            skew = A * C + B * D;
+            C -= A * skew;
+            D -= B * skew;
+            // step (5)
+            scaleY = Math.sqrt(C * C + D * D);
+            C /= scaleY;
+            D /= scaleY;
+            skew /= scaleY;
+            // step (6)
+            if (A * D < B * C) {
+                A = -A;
+                B = -B;
+                skew = -skew;
+                scaleX = -scaleX;
+            }
+            // matrix is singular and cannot be interpolated
+        } else {
+            // In this case the elem shouldn't be rendered, hence scale == 0
+            scaleX = scaleY = skew = 0;
+        }
+
+        // The recomposition order is very important
+        // see http://hg.mozilla.org/mozilla-central/file/7cb3e9795d04/layout/style/nsStyleAnimation.cpp#l971
+        return {
+            'translateX': +matrix[4],
+            'translateY': +matrix[5],
+            'rotate': Math.atan2(B, A),
+            'skewX': Math.atan(skew),
+            'scaleX': scaleX,
+            'scaleY': scaleY
+        };
+    }
+
+    function defaultDecompose() {
+        return {
+            'translateX': 0,
+            'translateY': 0,
+            'rotate': 0,
+            'skewX': 0,
+            'scaleX': 1,
+            'scaleY': 1
+        };
+    }
+
+    function normalize(transform, el, origin) {
+        var ret;
+        //el.style.visibility='hidden';
+        Dom.css(el, 'transform', transform);
+        ret = Dom.css(el, 'transform');
+        Dom.css(el, 'transform', origin);
+        //el.style.visibility='';
+        return ret;
+    }
+
+    function TransformFx() {
+        TransformFx.superclass.constructor.apply(this, arguments);
+    }
+
+    S.extend(TransformFx, Fx, {
+        load: function () {
+            TransformFx.superclass.load.apply(this, arguments);
+            var self = this,
+                origin = self.from;
+            if (self.from && self.from != 'none') {
+                self.from = decomposeMatrix(self.from);
+            } else {
+                self.from = defaultDecompose();
+            }
+            if (self.to) {
+                self.to = decomposeMatrix(normalize(self.to, self.anim.node, origin));
+            } else {
+                self.to = defaultDecompose();
+            }
+        },
+
+        interpolate: function (from, to, pos) {
+            var interpolate = TransformFx.superclass.interpolate;
+            var ret = {};
+            ret.translateX = interpolate(from.translateX, to.translateX, pos);
+            ret.translateY = interpolate(from.translateY, to.translateY, pos);
+            ret.rotate = interpolate(from.rotate, to.rotate, pos);
+            ret.skewX = interpolate(from.skewX, to.skewX, pos);
+            ret.scaleX = interpolate(from.scaleX, to.scaleX, pos);
+            ret.scaleY = interpolate(from.scaleY, to.scaleY, pos);
+            return S.substitute('translate({translateX}px,{translateY}px) ' +
+                'rotate({rotate}rad) ' +
+                'skewX({skewX}rad) ' +
+                'scale({scaleX},{scaleY})', ret);
+        }
+    });
+
+    Fx.Factories.transform = TransformFx;
+
+    return TransformFx;
+}, {
+    requires: ['dom', './fx']
+});
+/**
+ * @ignore
+ * refer:
+ * - http://louisremi.github.io/jquery.transform.js/index.html
+ * - http://hg.mozilla.org/mozilla-central/file/7cb3e9795d04/layout/style/nsStyleAnimation.cpp#l971
+ */
+/**
  * animation using js timer
  * @author yiminghe@gmail.com
  * @ignore
  */
 KISSY.add('anim/timer', function (S, Dom, Event, AnimBase, Easing, AM, Fx, SHORT_HANDS) {
-
     var camelCase = Dom._camelCase,
         NUMBER_REG = /^([+\-]=)?([\d+.\-]+)([a-z%]*)$/i;
 
@@ -856,7 +992,6 @@ KISSY.add('anim/timer', function (S, Dom, Event, AnimBase, Easing, AM, Fx, SHORT
     }
 
     S.extend(Anim, AnimBase, {
-
         prepareFx: function () {
             var self = this,
                 node = self.node,
@@ -1066,6 +1201,7 @@ KISSY.add('anim/timer', function (S, Dom, Event, AnimBase, Easing, AM, Fx, SHORT
     });
 
     Anim.Easing = Easing;
+    Anim.Fx = Fx;
 
     return Anim;
 }, {
@@ -1073,7 +1209,7 @@ KISSY.add('anim/timer', function (S, Dom, Event, AnimBase, Easing, AM, Fx, SHORT
         'dom', 'event', './base',
         './timer/easing', './timer/manager',
         './timer/fx', './timer/short-hand'
-        , './timer/color'
+        , './timer/color' , './timer/transform'
     ]
 });
 
