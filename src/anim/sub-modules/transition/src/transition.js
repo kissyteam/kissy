@@ -4,7 +4,7 @@
  * @ignore
  */
 KISSY.add('anim/transition', function (S, Dom, Event, AnimBase) {
-    var Features= S.Features;
+    var Features = S.Features;
     var vendorPrefix = Features.getTransitionPrefix();
     var R_UPPER = /([A-Z]|^ms)/g;
     var TRANSITION_END_EVENT = vendorPrefix ?
@@ -38,10 +38,12 @@ KISSY.add('anim/transition', function (S, Dom, Event, AnimBase) {
                 elStyle = node.style,
                 _propsData = self._propsData,
                 original = elStyle[TRANSITION],
+                transform,
                 propsCss = {};
-            if (_propsData.transform) {
-                _propsData[Features.getTransformProperty().replace(R_UPPER, '-$1').toLowerCase()] = _propsData.transform;
+            if (transform = _propsData.transform) {
                 delete _propsData.transform;
+                _propsData[Features.getTransformProperty()
+                    .replace(R_UPPER, '-$1').toLowerCase()] = transform;
             }
             S.each(_propsData, function (propData, prop) {
                 var v = propData.value,

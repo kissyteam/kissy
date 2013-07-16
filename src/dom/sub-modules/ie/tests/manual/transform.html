@@ -4,42 +4,39 @@
     <meta charset="utf-8"/>
     <link href="http://a.tbcdn.cn/s/kissy/1.3.0rc/css/base.css" rel="stylesheet"/>
     <style>
-        #t {
-            width: 300px;
-            height: 300px;
-            border: 1px solid transparent;
+        #t, #t2 {
             position: absolute;
-            /*
-            ie
-            margin: 100px;
-            */
-        }
-
-        #t div {
+            left: 200px;
+            top: 200px;
             width: 98px;
             height: 98px;
             border: 1px solid red;
-            margin: 100px auto;
+        }
+
+        #t2 {
+            left: 500px;
+            top: 400px;
         }
     </style>
 </head>
 <body>
 <div id="t">
-    <div></div>
+</div>
+<div id="t2">
 </div>
 <script src="/kissy/build/seed.js"></script>
 <script src="/kissy/src/package.js"></script>
 <script>
     KISSY.use('dom', function (S, Dom) {
         var t = Dom.get('#t');
-        S.log(Dom.style(t, 'transform'));
-        Dom.css(t, 'transform-origin', '50% 50%');
-        var start = 0,
-                i= 0,
+        var t2 = Dom.get('#t2');
+        Dom.css(t, 'transform-origin', '0 0');
+        var i = 0,
                 step = 15;
-        setInterval(function(){
-            Dom.css(t, 'transform', 'rotate('+(step*(++i)%360)+'deg)');
-        },500);
+        setInterval(function () {
+            Dom.css(t, 'transform', 'rotate(' + (step * (++i) % 360) + 'deg)');
+            Dom.css(t2, 'transform', 'rotate(' + (step * (++i) % 360) + 'deg)');
+        }, 500);
         S.log(Dom.css(t, 'transform'));
     });
 </script>

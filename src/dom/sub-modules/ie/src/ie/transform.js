@@ -4,7 +4,7 @@
  */
 KISSY.add('dom/ie/transform', function (S, Dom) {
     var cssHooks = Dom._cssHooks;
-    var rMatrix = /Matrix([^)]*)/;
+    var rMatrix = /progid:DXImageTransform.Microsoft.Matrix\(([^)]*)\)/;
 
     cssHooks.transform = {
         get: function (elem, computed) {
@@ -13,16 +13,10 @@ KISSY.add('dom/ie/transform', function (S, Dom) {
             if (elemStyle && rMatrix.test(elemStyle.filter)) {
                 matrix = RegExp.$1.split(",");
                 var dx , dy;
-                // 逆矩阵求解效率低，暂时从上一次 set 中取
-                if (Dom.hasData(elem, 'ks-transform-dx')) {
-                    dx = Dom.data(elem, 'ks-transform-dx');
-                    dy = Dom.data(elem, 'ks-transform-dy');
-                } else {
-                    dx = matrix[4] && matrix[4].split("=")[1] || 0;
-                    dy = matrix[5] && matrix[5].split("=")[1] || 0;
-                    dx = parseFloat(dx);
-                    dy = parseFloat(dy);
-                }
+                dx = matrix[4] && matrix[4].split("=")[1] || 0;
+                dy = matrix[5] && matrix[5].split("=")[1] || 0;
+                dx = parseFloat(dx);
+                dy = parseFloat(dy);
                 matrix = [
                     matrix[0].split("=")[1],
                     matrix[2].split("=")[1],
@@ -41,65 +35,104 @@ KISSY.add('dom/ie/transform', function (S, Dom) {
             var elemStyle = elem.style,
                 currentStyle = elem.currentStyle,
                 matrixVal,
+                region = {
+                    width: elem.clientWidth,
+                    height: elem.clientHeight
+                },
+                center = {
+                    x: region.width / 2,
+                    y: region.height / 2
+                },
             // ie must be set inline
-                origin = parseOrigin(elem.style['transformOrigin'], elem),
+                origin = parseOrigin(elem.style['transformOrigin'], region),
                 filter;
             elemStyle.zoom = 1;
-            value = matrix(value);
-            // 用于 get 时恢复
-            Dom.data(elem, 'ks-transform-dx', value[0][2]);
-            Dom.data(elem, 'ks-transform-dy', value[1][2]);
-            if (origin) {
-                value = adjustMatrixByOrigin(value, origin);
+            if (value) {
+                value = matrix(value);
+                var afterCenter = getCenterByOrigin(value, origin, center);
+                afterCenter.x = afterCenter[0][0];
+                afterCenter.y = afterCenter[1][0];
+                matrixVal = [
+                    "progid:DXImageTransform.Microsoft.Matrix(" +
+                        "M11=" + value[0][0],
+                    "M12=" + value[0][1],
+                    "M21=" + value[1][0],
+                    "M22=" + value[1][1],
+                    "Dx=" + value[0][2],
+                    "Dy=" + value[1][2],
+                    'SizingMethod="auto expand"'
+                ].join(',') + ')';
+            } else {
+                matrixVal = '';
             }
-            matrixVal = [
-                "Matrix(" +
-                    "M11=" + value[0][0],
-                "M12=" + value[0][1],
-                "M21=" + value[1][0],
-                "M22=" + value[1][1],
-                "Dx=" + value[0][2],
-                "Dy=" + value[1][2]
-            ].join(',') + ')';
             filter = currentStyle && currentStyle.filter || elemStyle.filter || "";
+
+            if (!matrixVal && !S.trim(filter.replace(rMatrix, ''))) {
+                // Setting style.filter to null, '' & ' ' still leave 'filter:' in the cssText
+                // if 'filter:' is present at all, clearType is disabled, we want to avoid this
+                // style.removeAttribute is IE Only, but so apparently is this code path...
+                elemStyle.removeAttribute('filter');
+                if (// unset inline opacity
+                    !matrixVal ||
+                        // if there is no filter style applied in a css rule, we are done
+                        currentStyle && !currentStyle.filter) {
+                    return;
+                }
+            }
+
+            // otherwise, set new filter values
+            // 如果不设，就不能覆盖外部样式表定义的样式，一定要设
             elemStyle.filter = rMatrix.test(filter) ?
                 filter.replace(rMatrix, matrixVal) :
-                filter + " progid:DXImageTransform.Microsoft." + matrixVal;
+                filter + (filter ? ', ' : '') + matrixVal;
+
+            if (matrixVal) {
+                var realCenter = {
+                    x: elem.offsetWidth / 2,
+                    y: elem.offsetHeight / 2
+                };
+                elemStyle.marginLeft = afterCenter.x - realCenter.x + 'px';
+                elemStyle.marginTop = afterCenter.y - realCenter.y + 'px';
+            } else {
+                elemStyle.marginLeft = elemStyle.marginTop = 0;
+            }
+
         }
     };
 
-    function adjustMatrixByOrigin(m, origin) {
+    function getCenterByOrigin(m, origin, center) {
         var w = origin[0],
             h = origin[1];
         return multipleMatrix([
             [1, 0, w],
             [0, 1, h],
             [0, 0, 1]
-        ], multipleMatrix(m, [
+        ], m, [
             [1, 0, -w],
             [0, 1, -h],
             [0, 0, 1]
-        ]));
+        ], [
+            [center.x],
+            [center.y],
+            [1]
+        ]);
     }
 
-    function parseOrigin(origin, el) {
-        if (origin) {
-            origin = origin.split(/\s+/);
-            if (origin.length == 1) {
-                origin[1] = origin[0];
-            }
-            for (var i = 0; i < origin.length; i++) {
-                var val = parseFloat(origin[i]);
-                if (S.endsWith(origin[i], '%')) {
-                    origin[i] = val * el[i ? 'offsetHeight' : 'offsetWidth'] / 100;
-                } else {
-                    origin[i] = val;
-                }
-            }
-            return origin;
-        } else {
-            return null;
+    function parseOrigin(origin, region) {
+        origin = origin || '50% 50%';
+        origin = origin.split(/\s+/);
+        if (origin.length == 1) {
+            origin[1] = origin[0];
         }
+        for (var i = 0; i < origin.length; i++) {
+            var val = parseFloat(origin[i]);
+            if (S.endsWith(origin[i], '%')) {
+                origin[i] = val * region[i ? 'height' : 'width'] / 100;
+            } else {
+                origin[i] = val;
+            }
+        }
+        return origin;
     }
 
     // turn transform string into standard matrix form
@@ -195,12 +228,21 @@ KISSY.add('dom/ie/transform', function (S, Dom) {
     }
 
     function multipleMatrix(m1, m2) {
+
+        if (arguments.length > 2) {
+            var ret = m1;
+            for (var i = 1; i < arguments.length; i++) {
+                ret = multipleMatrix(ret, arguments[i]);
+            }
+            return ret;
+        }
+
         var m = [],
             r1 = m1.length,
             r2 = m2.length,
             c2 = m2[0].length;
 
-        for (var i = 0; i < r1; i++) {
+        for (i = 0; i < r1; i++) {
             for (var k = 0; k < c2; k++) {
                 var sum = 0;
                 for (var j = 0; j < r2; j++) {

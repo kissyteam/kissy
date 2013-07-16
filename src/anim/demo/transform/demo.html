@@ -5,6 +5,9 @@
 <title>transform</title>
 <script src="/kissy/build/seed.js"></script>
 <script src="/kissy/src/package.js"></script>
+<script>
+    document.createElement('section');
+</script>
 <style>
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -186,11 +189,6 @@ footer {
 .square {
     width: 100px;
     height: 100px;
-    margin: 0 75px;
-}
-
-.cover {
-    margin: 20px 0;
     position: absolute;
 }
 
@@ -266,7 +264,7 @@ footer {
 
 <body>
 
-<section id="basic">
+<section id="basic" style="position: relative;height: 400px">
     <h2>Basic usage</h2>
     <ul>
         <li><pre class="brush: js;">KISSY.all(elem).animate({
@@ -282,25 +280,38 @@ footer {
   transform: 'skewX(35deg) skewY(15deg)'
 });</pre>
     </ul>
-    <div style="position: relative;width: 100px;
-    height: 100px;
-    margin: 0 75px;" class="fleft">
+    <div style="position: relative;padding: 40px 0;height: 300px">
         <div id="basic1" class="square color1" style="position: absolute; margin-left: 0;"
              data-trans="translateX(50px)"></div>
+        <div id="basic2" class="square color2"
+             style="left: 300px"
+             data-trans="rotate(135deg)"></div>
+        <div id="basic3" class="square color3"
+             style="left: 500px"
+             data-trans="scale(2,.5)"></div>
+        <div id="basic4" class="square color4"
+             style="left: 800px"
+             data-trans="skewX(35deg) skewY(15deg)"></div>
     </div>
-    <div id="basic2" class="square color2 fleft" data-trans="rotate(135deg)"></div>
-    <div id="basic3" class="square color3 fleft" data-trans="scale(2,.5)"></div>
-    <div id="basic4" class="square color4 fleft" data-trans="skewX(35deg) skewY(15deg)"></div>
+
 </section>
 
 <section>
     <h2>Advanced usage</h2>
 
-    <div id="advanced" style="height: 150px; width: 400px; position: relative;">
-        <div id="basic5" class="square cover color5"></div>
-        <div id="basic6" class="square cover color6"></div>
-        <div id="basic7" class="square cover color7" style="z-index: 2"></div>
-        <div id="basic8" class="square cover color8"></div>
+    <div id="advanced" style="height: 150px; position: relative;">
+        <div id="basic5"
+             style="left:200px"
+             class="square cover color5"></div>
+        <div id="basic6"
+             style="left:220px"
+             class="square cover color6"></div>
+        <div id="basic7"
+             style="left:240px;z-index: 2"
+             class="square cover color7"></div>
+        <div id="basic8"
+             style="left:260px"
+             class="square cover color8"></div>
     </div>
 </section>
 
@@ -310,6 +321,7 @@ footer {
         $('#basic').delegate('mouseenter', '.square', function (e) {
             var currentTarget = $(e.currentTarget);
             if (!currentTarget.isRunning()) {
+                S.log('run:' + currentTarget.html())
                 currentTarget.animate({
                     transform: currentTarget.attr('data-trans')
                 }, {
@@ -350,8 +362,8 @@ footer {
 
         $('#advanced').on('mouseenter',function () {
             $squares.each(function (v, i) {
-                if(i!=3){
-                   // return;
+                if (i != 3) {
+                    //return;
                 }
                 v.stop();
                 v.animate({ transform: transforms[i + 1] }, {
@@ -361,7 +373,7 @@ footer {
             });
         }).on('mouseleave', function () {
                     $squares.each(function (v, i) {
-                        if(i!=3){
+                        if (i != 3) {
                             //return;
                         }
                         v.stop();

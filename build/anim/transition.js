@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 16 19:54
+build time: Jul 17 01:09
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -15,13 +15,14 @@ build time: Jul 16 19:54
  * @ignore
  */
 KISSY.add('anim/transition', function (S, Dom, Event, AnimBase) {
-
-    var vendorPrefix = S.Features.getTransitionPrefix();
+    var Features = S.Features;
+    var vendorPrefix = Features.getTransitionPrefix();
+    var R_UPPER = /([A-Z]|^ms)/g;
     var TRANSITION_END_EVENT = vendorPrefix ?
         // webkitTransitionEnd !
         (vendorPrefix.toLowerCase() + 'TransitionEnd') :
         'transitionend';
-    var TRANSITION = S.Features.getTransitionProperty();
+    var TRANSITION = Features.getTransitionProperty();
 
     function genTransition(propsData) {
         var str = '';
@@ -29,8 +30,10 @@ KISSY.add('anim/transition', function (S, Dom, Event, AnimBase) {
             if (str) {
                 str += ',';
             }
-            str += prop + ' ' + propData.duration +
-                's ' + propData.easing + ' ' + propData.delay + 's';
+            str += prop + ' ' +
+                propData.duration +
+                's ' + propData.easing +
+                ' ' + propData.delay + 's';
         });
         return str;
     }
@@ -40,15 +43,19 @@ KISSY.add('anim/transition', function (S, Dom, Event, AnimBase) {
     }
 
     S.extend(TransitionAnim, AnimBase, {
-
         doStart: function () {
             var self = this,
                 node = self.node,
                 elStyle = node.style,
                 _propsData = self._propsData,
                 original = elStyle[TRANSITION],
+                transform,
                 propsCss = {};
-
+            if (transform = _propsData.transform) {
+                delete _propsData.transform;
+                _propsData[Features.getTransformProperty()
+                    .replace(R_UPPER, '-$1').toLowerCase()] = transform;
+            }
             S.each(_propsData, function (propData, prop) {
                 var v = propData.value,
                     currentValue = Dom.css(node, prop);
@@ -167,7 +174,7 @@ KISSY.add('anim/transition', function (S, Dom, Event, AnimBase) {
     requires: ['dom', 'event', './base']
 });
 /**
-  refer:
-   - https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_animated_properties
+ refer:
+ - https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_animated_properties
  */
 

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 16 19:54
+build time: Jul 17 01:09
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -519,7 +519,7 @@ KISSY.add('anim/timer/fx', function (S, Dom, undefined) {
             // 默认只对数字进行 easing
             if ((typeof from === 'number') &&
                 (typeof to === 'number')) {
-                return /**@type Number @ignore*/(from + (to - from) * pos).toFixed(5);
+                return /**@type Number @ignore*/Math.round((from + (to - from) * pos) * 1e5) / 1e5;
             } else {
                 return /**@type Number @ignore*/undefined;
             }
@@ -843,9 +843,9 @@ KISSY.add('anim/timer/color', function (S, Dom, Fx,SHORT_HANDS) {
  */
 KISSY.add('anim/timer/transform', function (S, Dom, Fx) {
     function toMatrixArray(matrix) {
-        matrix = matrix.substring('matrix('.length, matrix.length - 1).split(/,/);
+        matrix = matrix.split(/,/);
         matrix = S.map(matrix, function (v) {
-            return parseFloat(v);
+            return myParse(v);
         });
         return matrix;
     }
@@ -889,12 +889,13 @@ KISSY.add('anim/timer/transform', function (S, Dom, Fx) {
         // The recomposition order is very important
         // see http://hg.mozilla.org/mozilla-central/file/7cb3e9795d04/layout/style/nsStyleAnimation.cpp#l971
         return {
-            'translateX': +matrix[4],
-            'translateY': +matrix[5],
-            'rotate': Math.atan2(B, A),
-            'skewX': Math.atan(skew),
-            'scaleX': scaleX,
-            'scaleY': scaleY
+            'translateX': myParse(matrix[4]),
+            'translateY': myParse(matrix[5]),
+            'rotate': myParse(Math.atan2(B, A) * 180 / Math.PI),
+            'skewX': myParse(Math.atan(skew) * 180 / Math.PI),
+            'skewY': 0,
+            'scaleX': myParse(scaleX),
+            'scaleY': myParse(scaleY)
         };
     }
 
@@ -904,18 +905,65 @@ KISSY.add('anim/timer/transform', function (S, Dom, Fx) {
             'translateY': 0,
             'rotate': 0,
             'skewX': 0,
+            'skewY': 0,
             'scaleX': 1,
             'scaleY': 1
         };
     }
 
-    function normalize(transform, el, origin) {
-        var ret;
-        //el.style.visibility='hidden';
-        Dom.css(el, 'transform', transform);
-        ret = Dom.css(el, 'transform');
-        Dom.css(el, 'transform', origin);
-        //el.style.visibility='';
+    function myParse(v) {
+        return Math.round(parseFloat(v) * 1e5) / 1e5;
+    }
+
+    function getTransformInfo(transform) {
+        transform = transform.split(")");
+        var trim = S.trim,
+            i = -1,
+            l = transform.length - 1,
+            split, prop, val,
+            ret = defaultDecompose();
+
+        // Loop through the transform properties, parse and multiply them
+        while (++i < l) {
+            split = transform[i].split("(");
+            prop = trim(split[0]);
+            val = split[1];
+            switch (prop) {
+                case "translateX":
+                case "translateY":
+                case 'scaleX':
+                case 'scaleY':
+                    ret[prop] = myParse(val);
+                    break;
+
+                case 'rotate':
+                case 'skewX':
+                case 'skewY':
+                    var v = myParse(val);
+                    if (!S.endsWith(val, 'deg')) {
+                        v = v * 180 / Math.PI;
+                    }
+                    ret[prop] = v;
+                    break;
+
+                case 'translate':
+                    val = val.split(",");
+                    ret.translateX = myParse(val[0]);
+                    ret.translateY = myParse(val[1] || 0);
+                    break;
+
+                case 'scale':
+                    val = val.split(",");
+                    ret.scaleX = myParse(val[0]);
+                    ret.scaleY = myParse(val[1] || val[0]);
+                    break;
+
+                case 'matrix':
+                    return decomposeMatrix(val);
+                    break;
+            }
+        }
+
         return ret;
     }
 
@@ -925,16 +973,17 @@ KISSY.add('anim/timer/transform', function (S, Dom, Fx) {
 
     S.extend(TransformFx, Fx, {
         load: function () {
-            TransformFx.superclass.load.apply(this, arguments);
-            var self = this,
-                origin = self.from;
+            var self = this;
+            TransformFx.superclass.load.apply(self, arguments);
+            // user value has priority over computed value
+            self.from = Dom.style(self.anim.node, 'transform') || self.from;
             if (self.from && self.from != 'none') {
-                self.from = decomposeMatrix(self.from);
+                self.from = getTransformInfo(self.from);
             } else {
                 self.from = defaultDecompose();
             }
             if (self.to) {
-                self.to = decomposeMatrix(normalize(self.to, self.anim.node, origin));
+                self.to = getTransformInfo(self.to);
             } else {
                 self.to = defaultDecompose();
             }
@@ -947,11 +996,13 @@ KISSY.add('anim/timer/transform', function (S, Dom, Fx) {
             ret.translateY = interpolate(from.translateY, to.translateY, pos);
             ret.rotate = interpolate(from.rotate, to.rotate, pos);
             ret.skewX = interpolate(from.skewX, to.skewX, pos);
+            ret.skewY = interpolate(from.skewY, to.skewY, pos);
             ret.scaleX = interpolate(from.scaleX, to.scaleX, pos);
             ret.scaleY = interpolate(from.scaleY, to.scaleY, pos);
             return S.substitute('translate({translateX}px,{translateY}px) ' +
-                'rotate({rotate}rad) ' +
-                'skewX({skewX}rad) ' +
+                'rotate({rotate}deg) ' +
+                'skewX({skewX}deg) ' +
+                'skewY({skewY}deg) ' +
                 'scale({scaleX},{scaleY})', ret);
         }
     });
@@ -1122,6 +1173,7 @@ KISSY.add('anim/timer', function (S, Dom, Event, AnimBase, Easing, AM, Fx, SHORT
                 if (!(fx.finished)) {
                     pos = Fx.getPos(self, _propData);
                     if (pos == 0) {
+                        end = 0;
                         continue;
                     }
                     fx.pos = pos;
@@ -1129,6 +1181,7 @@ KISSY.add('anim/timer', function (S, Dom, Event, AnimBase, Easing, AM, Fx, SHORT
                         // equal attr value, just skip
                         if (fx.from == fx.to) {
                             fx.finished = fx.finished || pos == 1;
+                            end = 0;
                             continue;
                         }
                         c = 0;
