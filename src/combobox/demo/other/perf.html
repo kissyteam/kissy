@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <title>performance test</title>
+    <link href="/kissy/build/css/dpl/base.css" rel="stylesheet"/>
+    <link href="../assets/default.css" rel="stylesheet"/>
+    <style>
+        .ks-popupmenu {
+            border: 5px solid red;
+        }
+    </style>
+</head>
+<body>
+<h1>performance test</h1>
+
+<div style="margin:10px auto; width:800px;text-align: center" id="newNew">
+</div>
+<script src="/kissy/build/seed.js"></script>
+<script src="/kissy/src/package.js"></script>
+<script>
+    KISSY.use("combobox", function (S, ComboBox) {
+        (function () {
+            var data = ["a123456", "b12345", "c3464356", "d23434"];
+
+            for (var i = 0; i < 200; i++) {
+                data.push('data' + i);
+            }
+
+            var basicComboBox = new ComboBox({
+                render: "#newNew",
+                // width:S.one("#inp").css("width"),
+                dataSource: new ComboBox.LocalDataSource({
+                    data: data
+                }),
+                highlightMatchItem: false,
+                width: 200,
+                menu:{
+                    height:'200px',
+                    elStyle:{
+                        overflow:'auto'
+                    }
+                },
+                format: function (query, data) {
+                    var ret = [];
+                    for (var i = 0; i < data.length; i++) {
+                        ret[i] = {
+                            content: query?(data[i] + "")
+                                    .replace(new RegExp(S.escapeRegExp(query), "g"),
+                                            "<b>$&</b>"):(data[i] + ""),
+                            disabled: (i % 2 ? true : false)
+                        };
+                    }
+                    return ret;
+                }
+            });
+            basicComboBox.render();
+
+
+            basicComboBox.on("click", function (e) {
+                var item = e.target;
+                S.log(item.get("value") + "\n" + item.get("content") +
+                        "\n" + item.get("textContent"));
+            });
+        })();
+    });
+</script>
+</body>
+</html>

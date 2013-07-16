@@ -70,7 +70,7 @@ KISSY.add("combobox/control", function (S, Node, Control, ComboBoxRender, Menu, 
                 });
             },
 
-            destructor:function(){
+            destructor: function () {
                 this.get('menu').destroy();
             },
 
@@ -649,6 +649,9 @@ KISSY.add("combobox/control", function (S, Node, Control, ComboBoxRender, Menu, 
 
         data = self['normalizeData'](data);
 
+        var start = S.now();
+        S.log('menu: renderData start');
+
         menu.removeChildren(true);
 
         if (highlightedItem = menu.get('highlightedItem')) {
@@ -656,7 +659,6 @@ KISSY.add("combobox/control", function (S, Node, Control, ComboBoxRender, Menu, 
         }
 
         if (data && data.length) {
-
             for (i = 0; i < data.length; i++) {
                 v = data[i];
                 menu.addChild(v);
@@ -688,7 +690,7 @@ KISSY.add("combobox/control", function (S, Node, Control, ComboBoxRender, Menu, 
             }
 
             self.set("collapsed", false);
-
+            S.log('menu: renderData end: ' + (S.now() - start));
         } else {
             self.set("collapsed", true);
         }
