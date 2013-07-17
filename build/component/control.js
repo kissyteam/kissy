@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 8 17:41
+build time: Jul 17 22:23
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -271,7 +271,7 @@ KISSY.add("component/control/render", function (S, ComponentProcess, XTemplate, 
         for (p in parser) {
             v = parser[p];
             // 函数
-            if (S.isFunction(v)) {
+            if (typeof v === 'function') {
                 // html parser 放弃
                 ret = v.call(view, srcNode);
                 if (ret !== undefined) {
@@ -1593,6 +1593,18 @@ KISSY.add("component/control", function (S, Node, ComponentProcess, Manager, Ren
             }
         });
 
+    function getDefaultRender() {
+        var attrs,
+            constructor = this;
+        do {
+            attrs = constructor.ATTRS;
+            constructor = constructor.superclass;
+        } while (!attrs || !attrs.xrender);
+        return attrs.xrender.value;
+    }
+
+    Control.getDefaultRender = getDefaultRender;
+
     Control.extend = function extend(extensions, px, sx) {
         var args = S.makeArray(arguments),
             baseClass = this,
@@ -1612,6 +1624,7 @@ KISSY.add("component/control", function (S, Node, ComponentProcess, Manager, Ren
         }
 
         newClass.extend = extend;
+        newClass.getDefaultRender = getDefaultRender;
 
         return newClass;
     };

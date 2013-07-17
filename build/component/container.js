@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 3 14:38
+build time: Jul 17 22:23
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -16,7 +16,7 @@ build time: Jul 3 14:38
  */
 KISSY.add('component/container/render', function (S, Control, Manager) {
 
-    return Control.ATTRS.xrender.value.extend([], {
+    return Control.getDefaultRender().extend([], {
 
         /**
          * decorate child element from parent component's root element.

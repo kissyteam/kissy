@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 3 14:39
+build time: Jul 17 22:23
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -107,7 +107,7 @@ KISSY.add("component/extension/delegate-children", function (S, Node, Manager) {
         /**
          * Get child component which contains current event target node.
          * @protected
-         * @param {KISSY.Event.DOMEventObject} e event
+         * @param {KISSY.Event.DomEventObject} e event
          * @return {KISSY.Component.Control}
          */
         getOwnerControl: function (e) {

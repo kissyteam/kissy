@@ -1,9 +1,9 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 3 14:38
+build time: Jul 17 22:23
 */
-KISSY.add("component/container/render",function(h,f,i){return f.ATTRS.xrender.value.extend([],{decorateDom:function(){var g=this,f=g.getChildrenContainerEl(),a=g.control,b=a.get("defaultChildCfg"),c=b.prefixCls,d=b.xclass,e=[];f.children().each(function(a){var f=g.getComponentConstructorByNode(c,a)||d&&i.getConstructorByXClass(d);f&&e.push(new f(h.merge(b,{srcNode:a})))});a.set("children",e)},getChildrenContainerEl:function(){return this.$el}},{name:"ContainerRender"})},{requires:["component/control",
+KISSY.add("component/container/render",function(h,f,i){return f.getDefaultRender().extend([],{decorateDom:function(){var g=this,f=g.getChildrenContainerEl(),a=g.control,b=a.get("defaultChildCfg"),c=b.prefixCls,d=b.xclass,e=[];f.children().each(function(a){var f=g.getComponentConstructorByNode(c,a)||d&&i.getConstructorByXClass(d);f&&e.push(new f(h.merge(b,{srcNode:a})))});a.set("children",e)},getChildrenContainerEl:function(){return this.$el}},{name:"ContainerRender"})},{requires:["component/control",
 "component/manager"]});
 KISSY.add("component/container",function(h,f,i){function g(a){if(a.target===this){var b=a.component,c=this.get("children"),a=a.index;c.splice(a,0,b);c=this.get("children");b=c[a];b.setInternal("parent",this);this.get("rendered")&&this.renderChild(a);this.fire("afterAddChild",{component:b,index:a})}}function j(a){if(a.target===this){var b=a.component,c,d,e=a.destroy,f=this.get("children"),a=a.index;-1!=a&&f.splice(a,1);b.setInternal("parent",null);if(e)b.destroy&&b.destroy();else if(b.get&&(d=b.el))(c=
 d.parentNode)&&c.removeChild(d);this.fire("afterRemoveChild",{component:b,index:a})}}return f.extend({isContainer:!0,initializer:function(){var a=this.get("prefixCls"),b=this.get("defaultChildCfg");this.publish("beforeAddChild",{defaultFn:g});this.publish("beforeRemoveChild",{defaultFn:j});b.prefixCls=b.prefixCls||a},createDom:function(){this.createChildren()},renderUI:function(){this.renderChildren()},renderChildren:function(){var a,b=this.get("children");for(a=0;a<b.length;a++)this.renderChild(a)},
