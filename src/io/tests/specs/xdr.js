@@ -5,6 +5,9 @@
 
 KISSY.add(function (S, UA, io, Node) {
 
+    var testUrl = 'http://' + location.hostname + ':9999/kissy/src/' +
+        'io/tests/others/xdr/xdr.jss';
+
     return {
         run: function () {
             var $ = Node.all;
@@ -13,7 +16,79 @@ KISSY.add(function (S, UA, io, Node) {
 
                 var host = window.location.hostname;
 
-                it('set domain',function(){
+                it('support ignore X-Requested-With for one request', function () {
+                    var ok = 0;
+
+                    io({
+                        headers: {
+                            'X-Requested-With': false
+                        },
+                        cache: false,
+                        dataType: 'json',
+                        url: testUrl,
+                        xhrFields: {
+                            withCredentials: true
+                        },
+                        xdr: {
+                            // force to use native xhr no sub domain proxy
+                            subDomain: {
+                                proxy: false
+                            }
+                        },
+                        success: function (d, s, r) {
+                            expect('X-Requested-With' in d).toBe(false);
+                            ok = 1;
+                        }
+                    });
+
+                    waitsFor(function () {
+                        return ok;
+                    });
+                });
+
+
+                it('support ignore X-Requested-With for all request', function () {
+                    var ok = 0;
+
+                    io.setupConfig({
+                        headers: {
+                            'X-Requested-With': false
+                        }
+                    });
+
+                    io({
+                        cache: false,
+                        dataType: 'json',
+                        url: testUrl,
+                        xhrFields: {
+                            withCredentials: true
+                        },
+                        xdr: {
+                            // force to use native xhr no sub domain proxy
+                            subDomain: {
+                                proxy: false
+                            }
+                        },
+                        success: function (d, s, r) {
+                            expect('X-Requested-With' in d).toBe(false);
+                            ok = 1;
+                        }
+                    });
+
+                    waitsFor(function () {
+                        return ok;
+                    });
+
+                    runs(function () {
+                        io.setupConfig({
+                            headers: {
+                                'X-Requested-With': 'XMLHttpRequest'
+                            }
+                        });
+                    });
+                });
+
+                it('set domain', function () {
                     // ie6 不能设置和 hostname 一致。。。
                     document.domain = host.split('.').slice(-3).join('.');
                 });
@@ -32,8 +107,7 @@ KISSY.add(function (S, UA, io, Node) {
                             },
                             cache: false,
                             dataType: 'json',
-                            url: 'http://' + location.hostname + ':9999/kissy/src/' +
-                                'io/tests/others/xdr/xdr.jss',
+                            url: testUrl,
                             xhrFields: {
                                 // Cannot use wildcard in Access-Control-Allow-Origin
                                 // when credentials flag is true.
@@ -55,6 +129,9 @@ KISSY.add(function (S, UA, io, Node) {
                                 action: "x"
                             },
                             success: function (d, s, r) {
+
+                                expect(d['X-Requested-With']).toBe('XMLHttpRequest');
+
                                 // body 都可读
                                 expect(d.action).toBe('x');
 
@@ -105,7 +182,6 @@ KISSY.add(function (S, UA, io, Node) {
                         iframe.remove();
                     });
                 });
-
 
                 it("should works for subdomain", function () {
                     var ok = 0,

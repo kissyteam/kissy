@@ -6,11 +6,17 @@ module.exports = function (req, res) {
         res.set('Pragma', 'no-cache');
         res.set('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
         res.set('Access-Control-Allow-Credentials', 'true');
-        res.set('Access-Control-Allow-Origin', 'http://'+req.host+':8888');
+        res.set('Access-Control-Allow-Origin', 'http://' + req.host + ':8888');
         res.set('Access-Control-Allow-Headers', 'origin, x-requested-with, yiminghe, content-type, accept, *');
-        res.send('{"yiminghe' +  '": "'+req.get('yiminghe')+'",'+
-        '"'+'action' +  '": "'+req.query.action+'",'+
-        '"cors":"'+req.cookies.cors+'"}');
+        var ret = {
+            yiminghe: req.get('yiminghe'),
+            action: req.query.action,
+            cors: req.cookies.cors
+        };
+        if (req.get('X-Requested-With')) {
+            ret['X-Requested-With'] = req.get('X-Requested-With');
+        }
+        res.json(ret);
     }, 10);
 
 };

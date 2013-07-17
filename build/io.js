@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 8 13:17
+build time: Jul 17 19:46
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -150,6 +150,9 @@ KISSY.add('io/base', function (S, Event, undefined) {
                     text: mirror,
                     xml: S.parseXML
                 }
+            },
+            headers:{
+                'X-Requested-With':'XMLHttpRequest'
             },
             contents: {
                 xml: /xml/,
@@ -798,9 +801,10 @@ KISSY.add('io/xhr-transport-base', function (S, IO) {
                 nativeXhr.overrideMimeType(mimeType);
             }
 
-            // set header event cross domain, eg: phonegap
-            if (!requestHeaders['X-Requested-With']) {
-                requestHeaders[ 'X-Requested-With' ] = 'XMLHttpRequest';
+            var xRequestHeader = requestHeaders['X-Requested-With'];
+
+            if (xRequestHeader === false) {
+                delete requestHeaders['X-Requested-With'];
             }
 
             // ie<10 XDomainRequest does not support setRequestHeader
@@ -1450,7 +1454,7 @@ KISSY.add('io/jsonp', function (S, IO) {
             var response,
                 cJsonpCallback = c.jsonpCallback,
                 converters,
-                jsonpCallback = S.isFunction(cJsonpCallback) ?
+                jsonpCallback = typeof cJsonpCallback === 'function' ?
                     cJsonpCallback() :
                     cJsonpCallback,
                 previous = win[ jsonpCallback ];
@@ -2096,7 +2100,7 @@ KISSY.add('io', function (S, serializer, IO) {
 
     function get(url, data, callback, dataType, type) {
         // data 参数可省略
-        if (S.isFunction(data)) {
+        if (typeof data === 'function') {
             dataType = callback;
             callback = data;
             data = undef;
@@ -2149,7 +2153,7 @@ KISSY.add('io', function (S, serializer, IO) {
              * @static
              */
             post: function (url, data, callback, dataType) {
-                if (S.isFunction(data)) {
+                if (typeof data === 'function') {
                     dataType = /**
                      @type String
                      @ignore*/callback;
@@ -2172,7 +2176,7 @@ KISSY.add('io', function (S, serializer, IO) {
              * @static
              */
             jsonp: function (url, data, callback) {
-                if (S.isFunction(data)) {
+                if (typeof data === 'function') {
                     callback = data;
                     data = undef;
                 }
@@ -2200,7 +2204,7 @@ KISSY.add('io', function (S, serializer, IO) {
              * @static
              */
             getJSON: function (url, data, callback) {
-                if (S.isFunction(data)) {
+                if (typeof data === 'function') {
                     callback = data;
                     data = undef;
                 }
@@ -2222,7 +2226,7 @@ KISSY.add('io', function (S, serializer, IO) {
              * @static
              */
             upload: function (url, form, data, callback, dataType) {
-                if (S.isFunction(data)) {
+                if (typeof data === 'function') {
                     dataType = /**
                      @type String
                      @ignore
