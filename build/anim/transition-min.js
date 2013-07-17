@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 17 01:09
+build time: Jul 17 12:59
 */
 KISSY.add("anim/transition",function(g,i,l,o){function p(c){var b="";g.each(c,function(c,a){b&&(b+=",");b+=a+" "+c.duration+"s "+c.easing+" "+c.delay+"s"});return b}function h(c){h.superclass.constructor.apply(this,arguments)}var k=g.Features,m=k.getTransitionPrefix(),q=/([A-Z]|^ms)/g,n=m?m.toLowerCase()+"TransitionEnd":"transitionend",j=k.getTransitionProperty();g.extend(h,o,{doStart:function(){var c=this,b=c.node,d=b.style,a=c._propsData,f=d[j],e,h={};if(e=a.transform)delete a.transform,a[k.getTransformProperty().replace(q,
 "-$1").toLowerCase()]=e;g.each(a,function(a,e){var d=a.value,f=i.css(b,e);"number"==typeof d&&(f=parseFloat(f));f==d&&setTimeout(function(){c._onTransitionEnd({originalEvent:{propertyName:e}})},0);h[e]=d});-1!=f.indexOf("none")?f="":f&&(f+=",");d[j]=f+p(a);l.on(b,n,c._onTransitionEnd,c);i.css(b,h)},beforeResume:function(){var c=this._propsData,b=g.merge(c),d=this._runTime/1E3;g.each(b,function(a,b){var e=d;a.delay>=e?a.delay-=e:(e-=a.delay,a.delay=0,a.duration>=e?a.duration-=e:delete c[b])})},_onTransitionEnd:function(c){var c=

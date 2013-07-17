@@ -4,14 +4,15 @@
     <meta charset="utf-8"/>
     <link href="/kissy/src/css/assets/dpl/base.css" rel="stylesheet"/>
     <style>
-        body{
+        body {
             background-color: #333;
             overflow: hidden;
         }
+
         .t {
             border: 1px solid transparent;
             position: absolute;
-            top:200px;
+            top: 200px;
             left: 200px;
             /*
             ie
@@ -20,7 +21,7 @@
         }
 
         #t2 {
-            top:200px;
+            top: 200px;
             left: 500px;
         }
 
@@ -43,16 +44,16 @@
 <script src="/kissy/build/seed.js"></script>
 <script src="/kissy/src/package.js"></script>
 <script>
-    KISSY.use('dom,anim,node', function (S, Dom, Anim,Node) {
+    KISSY.use('dom,anim,node', function (S, Dom, Anim, Node) {
         var t = Dom.get('#t');
         var t2 = Dom.get('#t2');
         Dom.css(t, 'transform-origin', '0px 0px');
-        var run=false;
-        Node.all('#run').on('click',function(){
-            if(run){
+        var run = false;
+        Node.all('#run').on('click', function () {
+            if (run) {
                 return;
             }
-            run=true;
+            run = true;
             new Anim(t, {
                 transform: 'rotate(360deg)'
             }, {
@@ -60,20 +61,19 @@
                 // easing:'ease-out',
                 duration: 1,
                 complete: function () {
-                    Dom.css(t,'transform','');
-                    run=false;
+                    Dom.css(t, 'transform', '');
+                    run = false;
                 }
             }).run();
 
-
-            var a2=new Anim(t2, {
+            var a2 = new Anim(t2, {
                 transform: 'rotate(360deg)'
             }, {
-                useTransition:true,
+                useTransition: true,
                 //easing:'ease-out',
                 duration: 1,
                 complete: function () {
-                    Dom.css(t2,'transform','');
+                    Dom.css(t2, 'transform', '');
                     S.log('done2');
                 }
             });

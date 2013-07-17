@@ -12,11 +12,16 @@ KISSY.add('dom/ie/transform', function (S, Dom) {
                 matrix;
             if (elemStyle && rMatrix.test(elemStyle.filter)) {
                 matrix = RegExp.$1.split(",");
-                var dx , dy;
-                dx = matrix[4] && matrix[4].split("=")[1] || 0;
-                dy = matrix[5] && matrix[5].split("=")[1] || 0;
-                dx = parseFloat(dx);
-                dy = parseFloat(dy);
+                var dx = 0 ,
+                    dy = 0;
+                var dxs = matrix[4] && matrix[4].split("=");
+                var dys = matrix[5] && matrix[5].split("=");
+                if (dxs && dxs[0].toLowerCase() == 'dx') {
+                    dx = parseFloat(dxs[1]);
+                }
+                if (dys && dys[0].toLowerCase() == 'dy') {
+                    dy = parseFloat(dys[1]);
+                }
                 matrix = [
                     matrix[0].split("=")[1],
                     matrix[2].split("=")[1],
@@ -58,6 +63,9 @@ KISSY.add('dom/ie/transform', function (S, Dom) {
                     "M12=" + value[0][1],
                     "M21=" + value[1][0],
                     "M22=" + value[1][1],
+                    // no effect in this filter set
+                    // but used for get to keep status
+                    // Dom.css(t,'transform',Dom.css(t,'transform'))
                     "Dx=" + value[0][2],
                     "Dy=" + value[1][2],
                     'SizingMethod="auto expand"'

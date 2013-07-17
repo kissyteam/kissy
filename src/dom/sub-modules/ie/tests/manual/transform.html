@@ -4,7 +4,7 @@
     <meta charset="utf-8"/>
     <link href="http://a.tbcdn.cn/s/kissy/1.3.0rc/css/base.css" rel="stylesheet"/>
     <style>
-        #t, #t2 {
+        .shape {
             position: absolute;
             left: 200px;
             top: 200px;
@@ -13,16 +13,22 @@
             border: 1px solid red;
         }
 
-        #t2 {
+        #shapeT,#shapeT2 {
+            border: 1px solid green;
+        }
+
+        #t2,#shapeT2 {
             left: 500px;
             top: 400px;
         }
     </style>
 </head>
 <body>
-<div id="t">
+<div id="shapeT" class="shape"></div>
+<div id="t" class="shape">
 </div>
-<div id="t2">
+<div id="shapeT2" class="shape"></div>
+<div id="t2" class="shape">
 </div>
 <script src="/kissy/build/seed.js"></script>
 <script src="/kissy/src/package.js"></script>
@@ -33,8 +39,8 @@
         Dom.css(t, 'transform-origin', '0 0');
         var i = 0,
                 step = 15;
-        setTimeout(function () {
-            Dom.css(t, 'transform', 'rotate(' + (step * (++i) % 360) + 'deg)');
+        setInterval(function () {
+            Dom.css(t, 'transform', 'translate(50px,20px) rotate(' + (step * (++i) % 360) + 'deg) ');
             Dom.css(t2, 'transform', 'rotate(' + (step * (++i) % 360) + 'deg)');
         }, 500);
         S.log(Dom.css(t, 'transform'));
