@@ -31,6 +31,50 @@ KISSY.add('dom/base/selector', function (S, Dom, undefined) {
         }
     }
 
+	// added by jayli
+	// http://jsperf.com/queryselctor-vs-getelementbyclassname2
+	
+	function makeMatch(selector){
+		if (selector.charAt(0) == '#') {
+			return makeIdMatch(selector.substr(1));
+		} else if (selector.charAt(0) == '.') {
+			return makeClassMatch(selector.substr(1));
+		} else {
+			return makeTagMatch(selector.substr(0));
+		}
+	}
+
+	function makeIdMatch(id) {
+		return function(elem) {
+			var match = document.getElementById(id);
+			return match ? [ match ] : [ ];
+		};
+	}
+
+	function makeClassMatch(className) {
+		return function(elem) {
+			return elem.getElementsByClassName(className);
+		};
+	}
+
+	function makeTagMatch(tagName) {
+		return function(elem) {
+			return elem.getElementsByTagName(tagName);
+		};
+	}
+
+	// 只涉及#id,.cls,tag的逐级选择
+	// 不包括不常见的选择器语法
+	// http://www.w3.org/TR/css3-selectors/#attribute-pseudo-classes
+	function isSimpleSelector(selector){
+		var R = /(\+|\=|\~|\[|\]|:|>|\||\$|\^|\*|\(|\)|[\w-]+\.[\w-]+|[\w-]+\#[\w-]+)/;
+		if(selector.match(R)){
+			return false;
+		} else {
+			return true;
+		}
+	}
+
     function query(selector, context) {
 
         var ret,
@@ -38,25 +82,100 @@ KISSY.add('dom/base/selector', function (S, Dom, undefined) {
             simpleContext,
             isSelectorString = typeof selector == 'string',
             contexts = context !== undefined ? query(context) : (simpleContext = 1) && [doc],
-            contextsLen = contexts.length;
+            contextsLen = contexts.length,
+			simpleSelector,
+			classSelectorRE = /^\.([\w-]+)$/,
+			idSelectorRE = /^#([\w-]*)$/,
+			tagSelectorRE = /^([\w-])+$/,
+			tagIdSelectorRE = /^[\w-]+#([\w-])+$/,
+			tagClassSelectorRE = /^[\w-]+\.[\w-]+$/;
 
         // 常见的空
         if (!selector) {
             ret = [];
         } else if (isSelectorString) {
             selector = trim(selector);
+
             // shortcut
             if (simpleContext && selector == 'body') {
-                ret = [ doc.body ]
-            } else {
+                ret = [ doc.body ];
+            } 
+			// 单层.cls
+			else if (simpleContext && classSelectorRE.test(selector) && 'getElementsByClassName' in document) {
+				ret = contexts[0].getElementsByClassName(RegExp.$1);
+				// console.log('getElementsByClassName');
+			}
+			// tag.cls 情况处理
+			else if (simpleContext && tagClassSelectorRE.test(selector)) {
+				ret = contexts[0].querySelectorAll(selector);
+				// console.log('tag.cls');
+			}
+			// tag#id 情况处理
+			else if (simpleContext && tagIdSelectorRE.test(selector)) {
+				var el = doc.getElementById(selector.replace(/^.+#/,''));
+				ret = el ? [el] : [];
+				// console.log('tag#id');
+			}
+			// 单层#id
+			else if (simpleContext && idSelectorRE.test(selector)) {
+				var el = doc.getElementById(selector.substr(1));
+				ret = el ? [el] : [];
+				// console.log('#id');
+			}
+			// 单层tgs
+			else if (simpleContext && tagSelectorRE.test(selector) && 'getElementsByTagName' in document){
+				ret = contexts[0].getElementsByTagName(selector);
+				// console.log('tgs');
+			}
+			// 复杂的CSS3选择器
+			else if(!(simpleSelector = isSimpleSelector(selector)) && 'querySelectorAll' in document && contextsLen === 1) {
+				// console.log('simple querySelector');
+				ret = contexts[0].querySelectorAll(selector);
+			}
+			// 最后进入简单选择器的多层速选,#id tgs,#id .cls...
+			else if('getElementsByTagName' in document 
+					&& 'getElementsByClassName' in document 
+					&& simpleSelector) {
+				var parts = selector.split(/\s+/);
+				for (var i = 0, n = parts.length; i < n; i++) {
+					parts[i] = makeMatch(parts[i]);
+				}
+
+				var parents = contexts;
+
+				for (var i = 0, m = parts.length; i < m; i++) {
+					var part = parts[i];
+					var newParents = [ ];
+
+					for (var j = 0, n = parents.length; j < n; j++) {
+						var matches = part(parents[j]);
+						for (var k = 0, o = matches.length; k < o; k++) {
+							newParents[newParents.length++] = matches[k];
+						}
+					}
+
+					parents = newParents;
+				}
+				// console.log('speedup');
+				ret = parents ? parents : [];
+				//ret = contexts[0].querySelectorAll(selector);
+            } 
+			// 最后降级使用KISSY 1.3.0 的做法
+			else {
                 ret = [];
                 for (i = 0; i < contextsLen; i++) {
-                    push.apply(ret, Dom._selectInternal(selector, contexts[i]));
+					if('querySelectorAll' in document){
+						// console.log('chain\'s querySelector');
+						ret = ret.concat(S.makeArray(contexts[i].querySelectorAll(selector)));
+					} else {
+						push.apply(ret, Dom._selectInternal(selector, contexts[i]));
+					}
                 }
                 // multiple contexts unique
                 if (ret.length > 1 && contextsLen > 1) {
                     Dom.unique(ret);
                 }
+				// console.log('normal');
             }
         }
         // 不写 context，就是包装一下
