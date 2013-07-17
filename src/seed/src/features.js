@@ -13,7 +13,7 @@
             'Webkit',
             'Moz',
             'O',
-            'Ms'
+            'ms'
         ],
     // nodejs
         doc = win.document || {},

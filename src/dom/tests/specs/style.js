@@ -39,7 +39,6 @@ KISSY.add(function (S, Dom) {
             document.body.appendChild(elem);
 
             // getter
-            debugger
             expect(Dom.css(elem, 'float')).toBe('left');
 
 

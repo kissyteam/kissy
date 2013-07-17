@@ -33,7 +33,7 @@
         Dom.css(t, 'transform-origin', '0 0');
         var i = 0,
                 step = 15;
-        setInterval(function () {
+        setTimeout(function () {
             Dom.css(t, 'transform', 'rotate(' + (step * (++i) % 360) + 'deg)');
             Dom.css(t2, 'transform', 'rotate(' + (step * (++i) % 360) + 'deg)');
         }, 500);
