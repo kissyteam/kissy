@@ -236,7 +236,7 @@ KISSY.add('dom/base/selector', function (S, Dom, undefined) {
                 return bit ? -1 : 1;
             },
 
-            getElementsByTagName: function (name, context) {
+            _getElementsByTagName: function (name, context) {
                 // can not use getElementsByTagName for fragment
                 return S.makeArray(context.querySelectorAll(name));
             },

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 17 18:07
+build time: Jul 17 18:40
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -3459,7 +3459,7 @@ KISSY.add('dom/base/selector', function (S, Dom, undefined) {
                 return bit ? -1 : 1;
             },
 
-            getElementsByTagName: function (name, context) {
+            _getElementsByTagName: function (name, context) {
                 // can not use getElementsByTagName for fragment
                 return S.makeArray(context.querySelectorAll(name));
             },
