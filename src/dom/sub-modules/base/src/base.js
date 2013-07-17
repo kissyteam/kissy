@@ -26,7 +26,3 @@ KISSY.add('dom/base', function (S, Dom) {
         './base/traversal'
     ]
 });
-// debug for jayli
-KISSY.use('dom/base',{
-	sync:true	
-});

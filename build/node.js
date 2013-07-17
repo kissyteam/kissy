@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 16 12:11
+build time: Jul 17 09:25
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -833,10 +833,4 @@ KISSY.add('node', function (S, Node) {
         'node/anim'
     ]
 });
-// debug for jayli
-/*
-KISSY.use('node',{
-	sync:true	
-});
-*/
 

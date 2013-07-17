@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 16 12:10
+build time: Jul 17 09:24
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -4005,9 +4005,5 @@ KISSY.add('dom/base', function (S, Dom) {
         './base/selector',
         './base/traversal'
     ]
-});
-// debug for jayli
-KISSY.use('dom/base',{
-	sync:true	
 });
 
