@@ -117,11 +117,8 @@ KISSY.add(function (S, Dom) {
             var div = Dom.create("<div id='" + id + "'></div>");
             Dom.append(input, document.body);
             Dom.append(div, document.body);
-
             expect(Dom.get("#" + id).nodeName.toLowerCase()).toBe("div");
-
             Dom.remove([input, div]);
-
         });
     });
 

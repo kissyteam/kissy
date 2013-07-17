@@ -62,45 +62,6 @@ KISSY.add('dom/selector', function (S, parser, Dom) {
         return el;
     }
 
-    var getElementsByTagName;
-
-    // http://yiminghe.github.io/lab/playground/fragment-selector/selector.html
-    if (S.Features.isQuerySelectorSupported()) {
-        // just for test
-        getElementsByTagName = function (name, context) {
-            return S.makeArray(context.querySelectorAll(name));
-        };
-    } else {
-        (function () {
-            var div = document.createElement("div");
-            div.appendChild(document.createComment(""));
-            if (div.getElementsByTagName("*").length) {
-                getElementsByTagName = function (name, context) {
-                    var nodes = context.getElementsByTagName(name),
-                        needsFilter = name == '*';
-                    // <input id='length'>
-                    if (needsFilter || typeof nodes.length != 'number') {
-                        var ret = [],
-                            i = 0,
-                            el;
-                        while (el = nodes[i++]) {
-                            if (!needsFilter || el.nodeType === 1) {
-                                ret.push(el);
-                            }
-                        }
-                        return ret;
-                    } else {
-                        return nodes;
-                    }
-                };
-            } else {
-                getElementsByTagName = function (name, context) {
-                    return context.getElementsByTagName(name);
-                };
-            }
-        })();
-    }
-
     function getAb(param) {
         var a = 0,
             match,
@@ -663,7 +624,7 @@ KISSY.add('dom/selector', function (S, parser, Dom) {
                     // id bug
                     // https://github.com/kissyteam/kissy/issues/67
                     if (!tmp && doesNotHasById || tmp && getAttr(tmp, 'id') != id) {
-                        var tmps = getElementsByTagName('*', context),
+                        var tmps = Dom._getElementsByTagName('*', context),
                             tmpLen = tmps.length,
                             tmpI = 0;
                         for (; tmpI < tmpLen; tmpI++) {
@@ -683,7 +644,7 @@ KISSY.add('dom/selector', function (S, parser, Dom) {
                         mySeeds = tmp ? [tmp] : [];
                     }
                 } else {
-                    mySeeds = getElementsByTagName(group.value || '*', context);
+                    mySeeds = Dom._getElementsByTagName(group.value || '*', context);
                 }
             }
 

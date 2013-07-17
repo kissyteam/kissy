@@ -48,7 +48,7 @@ KISSY.add('dom/base/selector', function (S, Dom, undefined) {
 
     function makeIdMatch(id) {
         return function (elem) {
-            var match = doc.getElementById(id);
+            var match = Dom._getElementById(id, doc);
             return match && Dom._contains(elem, match) ? [ match ] : [ ];
         };
     }
@@ -97,12 +97,12 @@ KISSY.add('dom/base/selector', function (S, Dom, undefined) {
                 }
                 // tag#id
                 else if (rTagIdSelector.test(selector)) {
-                    el = doc.getElementById(RegExp.$2);
+                    el = Dom._getElementById(RegExp.$2, doc);
                     ret = el && el.nodeName.toLowerCase() == RegExp.$1 ? [el] : [];
                 }
                 // #id
                 else if (rIdSelector.test(selector)) {
-                    el = doc.getElementById(selector.substr(1));
+                    el = Dom._getElementById(selector.substr(1), doc);
                     ret = el ? [el] : [];
                 }
                 // tag
@@ -234,6 +234,15 @@ KISSY.add('dom/base/selector', function (S, Dom, undefined) {
                 }
                 var bit = a.compareDocumentPosition(b) & 4;
                 return bit ? -1 : 1;
+            },
+
+            getElementsByTagName: function (name, context) {
+                // can not use getElementsByTagName for fragment
+                return S.makeArray(context.querySelectorAll(name));
+            },
+
+            _getElementById: function (id, doc) {
+                return doc.getElementById(id);
             },
 
             _getSimpleAttr: getAttr,

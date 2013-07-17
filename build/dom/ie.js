@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 17 14:36
+build time: Jul 17 18:07
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -497,7 +497,6 @@ KISSY.add('dom/ie/style', function (S, Dom) {
  * @author yiminghe@gmail.com
  */
 KISSY.add('dom/ie/traversal', function (S, Dom) {
-
     Dom._contains = function (a, b) {
         if (a.nodeType == Dom.NodeType.DOCUMENT_NODE) {
             a = a.documentElement;
@@ -518,6 +517,51 @@ KISSY.add('dom/ie/traversal', function (S, Dom) {
         }
     };
 
+    var div = document.createElement("div");
+    div.appendChild(document.createComment(""));
+
+    var getElementsByTagName;
+
+    if (div.getElementsByTagName("*").length) {
+        getElementsByTagName = function (name, context) {
+            var nodes = context.getElementsByTagName(name),
+                needsFilter = name == '*';
+            // <input id='length'>
+            if (needsFilter || typeof nodes.length != 'number') {
+                var ret = [],
+                    i = 0,
+                    el;
+                while (el = nodes[i++]) {
+                    if (!needsFilter || el.nodeType === 1) {
+                        ret.push(el);
+                    }
+                }
+                return ret;
+            } else {
+                return nodes;
+            }
+        };
+    } else {
+        getElementsByTagName = function (name, context) {
+            return context.getElementsByTagName(name);
+        };
+    }
+
+    Dom._getElementsByTagName = getElementsByTagName;
+
+    var getAttr = Dom._getSimpleAttr;
+    Dom._getElementById = function (id, doc) {
+        var el = doc.getElementById(id);
+        if (el && getAttr(el, 'id') !== id) {
+            var children = getElementsByTagName('*', doc);
+            for (var i = 0, l = children.length; i < l; i++) {
+                if (getAttr(children[i], 'id') == id) {
+                    return children[i];
+                }
+            }
+        }
+        return el;
+    };
 }, {
     requires: ['dom/base']
 });
