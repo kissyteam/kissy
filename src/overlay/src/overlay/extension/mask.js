@@ -136,8 +136,16 @@ KISSY.add("overlay/extension/mask", function (S, Node) {
                 self = this,
                 maskNode = self.get('maskNode');
             if (v = e.newVal) {
-                var elZIndex = parseInt(self.$el.css('z-index')) || 1;
-                maskNode.css('z-index', elZIndex - 1);
+				var elZIndex= self.$el.css('z-index');
+				if(S.isString(elZIndex) && /e/i.test(elZIndex))
+				{//修正因为firefox的使用科学记数法引起的问题: https://bugzilla.mozilla.org/show_bug.cgi?id=470769
+					elZIndex=Number(elZIndex)/2;
+				}
+				else
+				{
+					elZIndex=(parseInt(elZIndex) || 1)-1;
+				}
+				maskNode.css('z-index', elZIndex);
             }
             processMask(self.get('mask'), maskNode, v, self);
         }
