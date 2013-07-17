@@ -11,6 +11,7 @@ KISSY.add(KISSY.noop,{
         './scroll',
         './selector',
         './style',
-        './traversal'
+        './traversal',
+        './transform'
     ]
 });

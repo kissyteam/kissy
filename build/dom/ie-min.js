@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 17 12:58
+build time: Jul 17 14:36
 */
 KISSY.add("dom/ie/attr",function(f,d){function l(c){var g="",a=c.nodeType;if(a===d.NodeType.ELEMENT_NODE)for(c=c.firstChild;c;c=c.nextSibling)g+=l(c);else if(a==i.TEXT_NODE||a==i.CDATA_SECTION_NODE)g+=c.nodeValue;return g}var e=d._attrHooks,n=d._attrNodeHook,i=d.NodeType,b=d._valHooks,a=d._propFix;8>f.UA.ie&&(e.style.set=function(c,a){c.style.cssText=a},f.mix(n,{get:function(c,a){var b=c.getAttributeNode(a);return b&&(b.specified||b.nodeValue)?b.nodeValue:void 0},set:function(c,a,b){var o=c.getAttributeNode(b),
 k;if(o)o.nodeValue=a;else try{k=c.ownerDocument.createAttribute(b),k.value=a,c.setAttributeNode(k)}catch(j){return c.setAttribute(b,a,0)}}}),f.mix(d._attrFix,a),e.tabIndex=e.tabindex,f.each("href,src,width,height,colSpan,rowSpan".split(","),function(c){e[c]={get:function(a){a=a.getAttribute(c,2);return a===null?void 0:a}}}),b.button=e.value=n,e.placeholder={get:function(c,a){return c[a]||n.get(c,a)}},b.option={get:function(c){var a=c.attributes.value;return!a||a.specified?c.value:c.text}});(e.href=

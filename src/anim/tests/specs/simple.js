@@ -4,17 +4,159 @@
  */
 KISSY.add(function (S, Dom, Anim, Node) {
 
+
+    function matrix(transform) {
+        transform = transform.split(")");
+        var trim = S.trim,
+            i = -1,
+            l = transform.length - 1,
+            split, prop, val,
+            ret = cssMatrixToComputableMatrix([1, 0, 0, 1, 0, 0]),
+            curr;
+
+        // Loop through the transform properties, parse and multiply them
+        while (++i < l) {
+            split = transform[i].split("(");
+            prop = trim(split[0]);
+            val = split[1];
+            curr = [1, 0, 0, 1, 0, 0];
+            switch (prop) {
+                case "translateX":
+                    curr[4] = parseInt(val, 10);
+                    break;
+
+                case "translateY":
+                    curr[5] = parseInt(val, 10);
+                    break;
+
+                case 'translate':
+                    val = val.split(",");
+                    curr[4] = parseInt(val[0], 10);
+                    curr[5] = parseInt(val[1] || 0, 10);
+                    break;
+
+                case 'rotate':
+                    val = toRadian(val);
+                    curr[0] = Math.cos(val);
+                    curr[1] = Math.sin(val);
+                    curr[2] = -Math.sin(val);
+                    curr[3] = Math.cos(val);
+                    break;
+
+                case 'scaleX':
+                    curr[0] = +val;
+                    break;
+
+                case 'scaleY':
+                    curr[3] = +val;
+                    break;
+
+                case 'scale':
+                    val = val.split(",");
+                    curr[0] = +val[0];
+                    curr[3] = val.length > 1 ? +val[1] : +val[0];
+                    break;
+
+                case "skewX":
+                    curr[2] = Math.tan(toRadian(val));
+                    break;
+
+                case "skewY":
+                    curr[1] = Math.tan(toRadian(val));
+                    break;
+
+                case 'matrix':
+                    val = val.split(",");
+                    curr[0] = +val[0];
+                    curr[1] = +val[1];
+                    curr[2] = +val[2];
+                    curr[3] = +val[3];
+                    curr[4] = parseInt(val[4], 10);
+                    curr[5] = parseInt(val[5], 10);
+                    break;
+            }
+            ret = multipleMatrix(ret, cssMatrixToComputableMatrix(curr));
+        }
+
+        return ret;
+    }
+
+    function cssMatrixToComputableMatrix(matrix) {
+        return[
+            [matrix[0], matrix[2], matrix[4]],
+            [matrix[1], matrix[3], matrix[5]],
+            [0, 0, 1]
+        ];
+    }
+
+    function setMatrix(m, x, y, v) {
+        if (!m[x]) {
+            m[x] = [];
+        }
+        m[x][y] = v;
+    }
+
+    function multipleMatrix(m1, m2) {
+
+        if (arguments.length > 2) {
+            var ret = m1;
+            for (var i = 1; i < arguments.length; i++) {
+                ret = multipleMatrix(ret, arguments[i]);
+            }
+            return ret;
+        }
+
+        var m = [],
+            r1 = m1.length,
+            r2 = m2.length,
+            c2 = m2[0].length;
+
+        for (i = 0; i < r1; i++) {
+            for (var k = 0; k < c2; k++) {
+                var sum = 0;
+                for (var j = 0; j < r2; j++) {
+                    sum += m1[i][j] * m2[j][k];
+                }
+                setMatrix(m, i, k, sum);
+            }
+        }
+
+        return m;
+    }
+
+    // converts an angle string in any unit to a radian Float
+    function toRadian(value) {
+        return value.indexOf("deg") > -1 ?
+            parseInt(value, 10) * (Math.PI * 2 / 360) :
+            parseFloat(value);
+    }
+
+    function toBeAlmostEqualMatrixItem(actual, expected) {
+        return Math.abs(actual - expected) < 1e-4;
+    }
+
     return {run: function () {
         var $ = Node.all;
 
         describe("anim-simple", function () {
-
             beforeEach(function () {
                 this.addMatchers({
                     toBeAlmostEqual: function (expected) {
                         return Math.abs(parseInt(this.actual) - parseInt(expected)) < 20;
                     },
 
+                    toBeAlmostEqualMatrix: function (expected) {
+                        var m1 = this.actual;
+                        for (var i = 0; i < m1.length; i++) {
+                            var row = m1[i];
+                            for (var j = 0; j < row.length; j++) {
+                                if (!toBeAlmostEqualMatrixItem(m1[i][j], expected[i][j])) {
+                                    return false;
+                                }
+                            }
+                        }
+                        return true;
+                    },
 
                     toBeEqual: function (expected) {
                         return Math.abs(parseInt(this.actual) - parseInt(expected)) < 5;
@@ -81,16 +223,12 @@ KISSY.add(function (S, Dom, Anim, Node) {
                 waits(100);
 
                 runs(function () {
-
-
                     expect(normalizeColor(Dom.css(test1, "borderTopColor")))
                         .not.toBe(initColor);
                     expect(Dom.css(test1, "width")).not.toBe("10px");
                     expect(Dom.css(test1, "height")).not.toBe("20px");
                     expect(Dom.css(test1, "left")).not.toBe("120px");
                     expect(Dom.css(test1, "top")).not.toBe("20px");
-
-
                 });
 
                 waits(800);
@@ -148,7 +286,6 @@ KISSY.add(function (S, Dom, Anim, Node) {
 
 
             it("works for width/height", function () {
-
                 var div = $("<div style='border:1px solid red;'>" +
                     "<div style='width:100px;height: 100px;'>" +
                     "</div>" +
@@ -190,13 +327,12 @@ KISSY.add(function (S, Dom, Anim, Node) {
                 runs(function () {
                     expect(div.height()).toBe(100);
                     expect(div.width()).toBe(100);
+                    div.remove();
                 });
-
             });
 
 
             it("works for string props", function () {
-
                 var div = $("<div style='border:1px solid red;'>" +
                     "<div style='width:100px;height: 100px;'>" +
                     "</div>" +
@@ -223,8 +359,44 @@ KISSY.add(function (S, Dom, Anim, Node) {
                 waits(200);
                 runs(function () {
                     expect(parseInt(div.css('opacity'))).toBe(1);
+                    div.remove();
+                });
+            });
+
+            it('support transform animation', function () {
+                var div = Dom.create('<div style="position: absolute;' +
+                    'border:1px solid red;' +
+                    'left:100px;' +
+                    'top:100px;' +
+                    'width: 100px;height: 100px;"></div>');
+                document.body.appendChild(div);
+
+                expect(Dom.css(div, 'transform')).toBe('none');
+                var val = 'rotate(30deg)';
+                var expectedMatrix = matrix(val);
+                var ok = 0;
+
+                new Anim(div, {
+                    transform: val
+                }, {
+                    duration: 1,
+                    complete: function () {
+                        ok = 1;
+                    }
+                }).run();
+
+                waitsFor(function () {
+                    return ok;
                 });
 
+                runs(function () {
+                    expect(matrix(Dom.css(div, 'transform')))
+                        .toBeAlmostEqualMatrix(expectedMatrix)
+                });
+
+                runs(function () {
+                    Dom.remove(div);
+                });
             });
 
         });

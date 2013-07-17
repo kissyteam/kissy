@@ -148,7 +148,7 @@ KISSY.add(function (S, Dom) {
         it('html works for fragment',function(){
             var html='<div></div><span></span>';
             var n= Dom.create(html);
-            expect(Dom.html(n)).toBe(html);
+            expect(Dom.html(n).toLowerCase()).toBe(html);
         });
 
 
@@ -226,7 +226,7 @@ KISSY.add(function (S, Dom) {
 
             var html='<div></div><span></span>';
             var n= Dom.create(html);
-            expect(Dom.outerHtml(n)).toBe(html);
+            expect(Dom.outerHtml(n).toLowerCase()).toBe(html);
 
         });
     });
