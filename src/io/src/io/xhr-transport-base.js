@@ -131,9 +131,10 @@ KISSY.add('io/xhr-transport-base', function (S, IO) {
                 nativeXhr.overrideMimeType(mimeType);
             }
 
-            // set header event cross domain, eg: phonegap
-            if (!requestHeaders['X-Requested-With']) {
-                requestHeaders[ 'X-Requested-With' ] = 'XMLHttpRequest';
+            var xRequestHeader = requestHeaders['X-Requested-With'];
+
+            if (xRequestHeader === false) {
+                delete requestHeaders['X-Requested-With'];
             }
 
             // ie<10 XDomainRequest does not support setRequestHeader

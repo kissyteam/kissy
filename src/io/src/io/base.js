@@ -40,6 +40,9 @@ KISSY.add('io/base', function (S, Event, undefined) {
                     xml: S.parseXML
                 }
             },
+            headers:{
+                'X-Requested-With':'XMLHttpRequest'
+            },
             contents: {
                 xml: /xml/,
                 html: /html/,
