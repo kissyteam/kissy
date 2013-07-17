@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 17 14:35
+build time: Jul 17 17:12
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -3227,20 +3227,24 @@ KISSY.add('dom/base/style', function (S, Dom, undefined) {
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('dom/base/selector', function (S, Dom, undefined) {
-
     var doc = S.Env.host.document,
         docElem = doc.documentElement,
         matches = docElem.matches ||
-            docElem.webkitMatchesSelector ||
-            docElem.mozMatchesSelector ||
-            docElem.oMatchesSelector ||
-            docElem.msMatchesSelector,
+            docElem['webkitMatchesSelector'] ||
+            docElem['mozMatchesSelector'] ||
+            docElem['oMatchesSelector'] ||
+            docElem['msMatchesSelector'],
+        supportGetElementsByClassName = 'getElementsByClassName' in doc,
         isArray = S.isArray,
         makeArray = S.makeArray,
         isDomNodeList = Dom.isDomNodeList,
         SPACE = ' ',
         push = Array.prototype.push,
-        RE_QUERY = /^(?:#([\w-]+))?\s*([\w-]+|\*)?\.?([\w-]+)?$/,
+        rClassSelector = /^\.([\w-]+)$/,
+        rIdSelector = /^#([\w-]+)$/,
+        rTagSelector = /^([\w-])+$/,
+        rTagIdSelector = /^([\w-]+)#([\w-]+)$/,
+        rSimpleSelector = /^(?:#([\w-]+))?\s*([\w-]+|\*)?\.?([\w-]+)?$/,
         trim = S.trim;
 
     function query_each(f) {
@@ -3254,10 +3258,46 @@ KISSY.add('dom/base/selector', function (S, Dom, undefined) {
         }
     }
 
-    function query(selector, context) {
+    function makeMatch(selector) {
+        var s = selector.charAt(0);
+        if (s == '#') {
+            return makeIdMatch(selector.substr(1));
+        } else if (s == '.') {
+            return makeClassMatch(selector.substr(1));
+        } else {
+            return makeTagMatch(selector);
+        }
+    }
 
+    function makeIdMatch(id) {
+        return function (elem) {
+            var match = doc.getElementById(id);
+            return match && Dom._contains(elem, match) ? [ match ] : [ ];
+        };
+    }
+
+    function makeClassMatch(className) {
+        return function (elem) {
+            return elem.getElementsByClassName(className);
+        };
+    }
+
+    function makeTagMatch(tagName) {
+        return function (elem) {
+            return elem.getElementsByTagName(tagName);
+        };
+    }
+
+    // 只涉及#id,.cls,tag的逐级选择
+    function isSimpleSelector(selector) {
+        var complexReg = /,|\+|=|~|\[|\]|:|>|\||\$|\^|\*|\(|\)|[\w-]+\.[\w-]+|[\w-]+#[\w-]+/;
+        return !selector.match(complexReg);
+    }
+
+    function query(selector, context) {
         var ret,
             i,
+            el,
             simpleContext,
             isSelectorString = typeof selector == 'string',
             contexts = context !== undefined ? query(context) : (simpleContext = 1) && [doc],
@@ -3268,10 +3308,64 @@ KISSY.add('dom/base/selector', function (S, Dom, undefined) {
             ret = [];
         } else if (isSelectorString) {
             selector = trim(selector);
-            // shortcut
-            if (simpleContext && selector == 'body') {
-                ret = [ doc.body ]
-            } else {
+
+            if (simpleContext) {
+                // shortcut
+                if (selector == 'body') {
+                    ret = [ doc.body ];
+                }
+                // .cls
+                else if (rClassSelector.test(selector) && supportGetElementsByClassName) {
+                    ret = doc.getElementsByClassName(RegExp.$1);
+                }
+                // tag#id
+                else if (rTagIdSelector.test(selector)) {
+                    el = doc.getElementById(RegExp.$2);
+                    ret = el && el.nodeName.toLowerCase() == RegExp.$1 ? [el] : [];
+                }
+                // #id
+                else if (rIdSelector.test(selector)) {
+                    el = doc.getElementById(selector.substr(1));
+                    ret = el ? [el] : [];
+                }
+                // tag
+                else if (rTagSelector.test(selector)) {
+                    ret = doc.getElementsByTagName(selector);
+                }
+                // #id tag, #id .cls...
+                else if (isSimpleSelector(selector) && supportGetElementsByClassName) {
+                    var parts = selector.split(/\s+/),
+                        partsLen,
+                        parents = contexts,
+                        parentIndex,
+                        parentsLen;
+
+                    for (i = 0, partsLen = parts.length; i < partsLen; i++) {
+                        parts[i] = makeMatch(parts[i]);
+                    }
+
+                    for (i = 0, partsLen = parts.length; i < partsLen; i++) {
+                        var part = parts[i],
+                            newParents = [ ],
+                            matches;
+
+                        for (parentIndex = 0, parentsLen = parents.length;
+                             parentIndex < parentsLen;
+                             parentIndex++) {
+                            matches = part(parents[parentIndex]);
+                            newParents.push.apply(newParents, S.makeArray(matches));
+                        }
+
+                        parents = newParents;
+                        if (!parents.length) {
+                            break;
+                        }
+                    }
+                    ret = parents && parents.length > 1 ? Dom.unique(parents) : parents;
+                }
+            }
+
+            if (!ret) {
                 ret = [];
                 for (i = 0; i < contextsLen; i++) {
                     push.apply(ret, Dom._selectInternal(selector, contexts[i]));
@@ -3361,8 +3455,8 @@ KISSY.add('dom/base/selector', function (S, Dom, undefined) {
                 if (!a.compareDocumentPosition || !b.compareDocumentPosition) {
                     return a.compareDocumentPosition ? -1 : 1;
                 }
-
-                return a.compareDocumentPosition(b) & 4 ? -1 : 1;
+                var bit = a.compareDocumentPosition(b) & 4;
+                return bit ? -1 : 1;
             },
 
             _getSimpleAttr: getAttr,
@@ -3484,7 +3578,7 @@ KISSY.add('dom/base/selector', function (S, Dom, undefined) {
 
                 if (typeof filter == 'string' &&
                     (filter = trim(filter)) &&
-                    (match = RE_QUERY.exec(filter))) {
+                    (match = rSimpleSelector.exec(filter))) {
                     id = match[1];
                     tag = match[2];
                     cls = match[3];
@@ -3540,6 +3634,8 @@ KISSY.add('dom/base/selector', function (S, Dom, undefined) {
     requires: ['./api']
 });
 /**
+ * bachi selector optimize - 2013-07-17
+ * - http://jsperf.com/queryselctor-vs-getelementbyclassname2
  * yiminghe@gmail.com - 2013-03-26
  * - refactor to use own css3 selector engine
  */

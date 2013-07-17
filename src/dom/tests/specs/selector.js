@@ -261,6 +261,28 @@ KISSY.add(function (S, Dom) {
             expect(Dom.query('#tt2', t).length).toBe(1);
             expect($('#tt2', t).length).toBe(1);
         });
+
+        it('optimize for long simple selector',function(){
+            var div=Dom.create('<div id="long-simple-selector">' +
+                '<div class="t">' +
+                '<div class="t2">' +
+                '<span>' +
+                '<b class="j" data-id="target"></b>' +
+                '</span>' +
+                '</div>' +
+                '</div>' +
+                '<div class="j"></div>' +
+                '</div>');
+
+            document.body.appendChild(div);
+
+            var ret=Dom.query('#long-simple-selector .t .t2 span .j');
+
+            expect(ret.length).toBe(1);
+            expect(ret[0].getAttribute('data-id')).toBe('target');
+
+            Dom.remove(div);
+        });
     });
 
 }, {
