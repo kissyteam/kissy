@@ -117,7 +117,8 @@ KISSY.add('dom/base/selector', function (S, Dom, undefined) {
 				// console.log('tag#id');
 			}
 			// 单层#id
-			else if (simpleContext && idSelectorRE.test(selector)) {
+			else if (simpleContext && idSelectorRE.test(selector)
+					&& contexts[0] === doc ) {
 				var el = doc.getElementById(selector.substr(1));
 				ret = el ? [el] : [];
 				// console.log('#id');
@@ -131,11 +132,16 @@ KISSY.add('dom/base/selector', function (S, Dom, undefined) {
 			else if(!(simpleSelector = isSimpleSelector(selector)) && 'querySelectorAll' in document && contextsLen === 1) {
 				// console.log('simple querySelector');
 				ret = contexts[0].querySelectorAll(selector);
+                if (ret.length > 1 && contextsLen > 1) {
+                    Dom.unique(ret);
+                }
 			}
 			// 最后进入简单选择器的多层速选,#id tgs,#id .cls...
 			else if('getElementsByTagName' in document 
 					&& 'getElementsByClassName' in document 
-					&& simpleSelector) {
+					&& simpleSelector
+					&& (contexts[0] && contexts[0].parentNode) 
+					&& (idSelectorRE.test(selector) && contexts[0] === doc) ) {
 				var parts = selector.split(/\s+/);
 				for (var i = 0, n = parts.length; i < n; i++) {
 					parts[i] = makeMatch(parts[i]);
@@ -158,7 +164,12 @@ KISSY.add('dom/base/selector', function (S, Dom, undefined) {
 				}
 				// console.log('speedup');
 				ret = parents ? parents : [];
-				//ret = contexts[0].querySelectorAll(selector);
+
+                // multiple contexts unique
+                if (ret.length > 1 && contextsLen > 1) {
+                    Dom.unique(ret);
+                }
+
             } 
 			// 最后降级使用KISSY 1.3.0 的做法
 			else {
