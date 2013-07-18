@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 17 22:23
+build time: Jul 18 22:54
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -872,8 +872,12 @@ KISSY.add("component/control", function (S, Node, ComponentProcess, Manager, Ren
             },
 
             sync: function () {
-                Control.superclass.sync.apply(this, arguments);
-                this.view.sync();
+                var self = this;
+                self.fire('beforeSyncUI');
+                self.callMethodByHierarchy("syncUI", "__syncUI");
+                self.view.sync();
+                self.callPluginsMethod("syncUI");
+                self.fire('afterSyncUI');
             },
 
             createComponent: function (cfg, parent) {
