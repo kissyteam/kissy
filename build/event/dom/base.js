@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 16 19:55
+build time: Jul 18 22:09
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -182,7 +182,7 @@ KISSY.add('event/dom/base/object', function (S, BaseEvent, undefined) {
                 props: ['rotation', 'scale']
             },
             {
-                reg: /^mousewheel$/,
+                reg: /^(mousewheel|DOMMouseScroll)$/,
                 props: [],
                 fix: function (event, originalEvent) {
                     var deltaX,
@@ -207,10 +207,10 @@ KISSY.add('event/dom/base/object', function (S, BaseEvent, undefined) {
 
                     // Gecko
                     if (axis !== undefined) {
-                        if (axis === e['HORIZONTAL_AXIS']) {
+                        if (axis === event['HORIZONTAL_AXIS']) {
                             deltaY = 0;
                             deltaX = -1 * delta;
-                        } else if (axis === e['VERTICAL_AXIS']) {
+                        } else if (axis === event['VERTICAL_AXIS']) {
                             deltaX = 0;
                             deltaY = delta;
                         }
@@ -255,7 +255,7 @@ KISSY.add('event/dom/base/object', function (S, BaseEvent, undefined) {
                 }
             },
             {
-                reg: /^mouse|contextmenu|click|mspointer/i,
+                reg: /^mouse|contextmenu|click|mspointer|(^DOMMouseScroll$)/i,
                 props: [
                     'buttons', 'clientX', 'clientY', 'button',
                     'offsetX', 'relatedTarget', 'which',
@@ -537,7 +537,8 @@ KISSY.add('event/dom/base/object', function (S, BaseEvent, undefined) {
                 originalEvent['getPreventDefault'] && originalEvent['getPreventDefault']()
             ) ? retTrue : retFalse;
 
-        var fixFn = null,
+        var fixFns = [],
+            fixFn,
             l,
             prop,
             props = commonProps.concat();
@@ -545,8 +546,8 @@ KISSY.add('event/dom/base/object', function (S, BaseEvent, undefined) {
         S.each(eventNormalizers, function (normalizer) {
             if (type.match(normalizer.reg)) {
                 props = props.concat(normalizer.props);
-                fixFn = normalizer.fix;
-                return false;
+                if (normalizer.fix)
+                    fixFns.push(normalizer.fix);
             }
             return undefined;
         });
@@ -569,10 +570,12 @@ KISSY.add('event/dom/base/object', function (S, BaseEvent, undefined) {
             self.target = self.target.parentNode;
         }
 
-        if (fixFn) {
+        l = fixFns.length;
+
+        while (l) {
+            fixFn = fixFns[--l];
             fixFn(self, originalEvent);
         }
-
     }
 
     S.extend(DomEventObject, BaseEvent.Object, {

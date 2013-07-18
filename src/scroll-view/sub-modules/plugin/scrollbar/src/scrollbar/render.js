@@ -47,17 +47,18 @@ KISSY.add('scroll-view/plugin/scrollbar/render', function (S, Control, ScrollBar
 
             control.scrollView = scrollView;
 
-            if (!scrollView.isAxisEnabled(control.get('axis'))) {
-                control.hide();
-                return;
+            if (scrollView.isAxisEnabled(control.get('axis'))) {
+                control.scrollLength = scrollView[scrollWHProperty];
+                trackElSize = control.trackElSize = $trackEl[whProperty]();
+                ratio = scrollView[clientWHProperty] / control.scrollLength;
+                barSize = ratio * trackElSize;
+                control.set(dragWhProperty, barSize);
+                control.barSize = barSize;
+                self.syncOnScrollChange();
+                control.set('visible', true);
+            } else {
+                control.set('visible', false);
             }
-            control.scrollLength = scrollView[scrollWHProperty];
-            trackElSize = control.trackElSize = $trackEl[whProperty]();
-            ratio = scrollView[clientWHProperty] / control.scrollLength;
-            barSize = ratio * trackElSize;
-            control.set(dragWhProperty, barSize);
-            control.barSize=barSize;
-            self.syncOnScrollChange();
         },
 
         syncOnScrollChange: function () {

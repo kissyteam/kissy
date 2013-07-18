@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 3 13:57
+build time: Jul 18 22:09
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -66,17 +66,18 @@ KISSY.add('scroll-view/plugin/scrollbar/render', function (S, Control, ScrollBar
 
             control.scrollView = scrollView;
 
-            if (!scrollView.isAxisEnabled(control.get('axis'))) {
-                control.hide();
-                return;
+            if (scrollView.isAxisEnabled(control.get('axis'))) {
+                control.scrollLength = scrollView[scrollWHProperty];
+                trackElSize = control.trackElSize = $trackEl[whProperty]();
+                ratio = scrollView[clientWHProperty] / control.scrollLength;
+                barSize = ratio * trackElSize;
+                control.set(dragWhProperty, barSize);
+                control.barSize = barSize;
+                self.syncOnScrollChange();
+                control.set('visible', true);
+            } else {
+                control.set('visible', false);
             }
-            control.scrollLength = scrollView[scrollWHProperty];
-            trackElSize = control.trackElSize = $trackEl[whProperty]();
-            ratio = scrollView[clientWHProperty] / control.scrollLength;
-            barSize = ratio * trackElSize;
-            control.set(dragWhProperty, barSize);
-            control.barSize=barSize;
-            self.syncOnScrollChange();
         },
 
         syncOnScrollChange: function () {
@@ -142,7 +143,7 @@ KISSY.add('scroll-view/plugin/scrollbar/render', function (S, Control, ScrollBar
 
     }
 
-    return Control.ATTRS.xrender.value.extend(methods, {
+    return Control.getDefaultRender().extend(methods, {
         ATTRS: {
             contentTpl: {
                 value: ScrollBarTpl
@@ -446,7 +447,7 @@ KISSY.add('scroll-view/plugin/scrollbar', function (S, Base, ScrollBar) {
             var cfg = {
                 scrollView: scrollView,
                 // render: scrollView.get('el') => ie7 bug
-                elBefore: scrollView.get('contentEl')
+                elBefore: scrollView.$contentEl
             };
             if (minLength !== undefined) {
                 cfg.minLength = minLength;

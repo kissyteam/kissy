@@ -9,14 +9,11 @@
             cssCache = {},
             stack = [],
             stackCache = {},
-            processed = {},
-            mods = S.Env.mods;
+            processed = {};
         isDebug = S.Config.debug;
         S.each(modNames, function (modName) {
-            var mod;
-            if (mod = mods[modName]) {
-                collectCss(mod, cssList, stack, cssCache, stackCache, processed);
-            }
+            var mod = S.Loader.Utils.createModuleInfo(S, modName);
+            collectCss(mod, cssList, stack, cssCache, stackCache, processed);
         });
         if (cssList.length) {
             if (S.config('combine')) {

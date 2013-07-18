@@ -1,0 +1,237 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <title>KISSY ScrollView</title>
+    <script src="/kissy/build/seed.js"></script>
+    <script src="/kissy/src/log.js"></script>
+    <link rel="stylesheet" href="../../../../assets/dpl.css">
+    <style>
+
+        .hideNativeScroll {
+            overflow: hidden;
+        }
+
+        body, ul, li {
+            padding: 0;
+            margin: 0;
+            border: 0;
+        }
+
+        .pic-viewer {
+            left: 0;
+            top: 0;
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: 10;
+            /*background-color: #ffff00;*/
+        }
+
+        .mask {
+            left: 0;
+            top: 0;
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: 9;
+            background-color: #333;
+            opacity: 0.6;
+            display: none;
+        }
+
+        .pic-viewer img {
+            position: absolute;
+            left: 0;
+            top: 0;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body>
+<h1>open in touch device or emulate touch in chrome</h1>
+
+<h2 id="wait" style="color:red">please wait, loading ....</h2>
+
+<div class="mask" id="mask"></div>
+<img id='img'
+     width="360" height="360"
+     src="http://img02.taobaocdn.com/bao/uploaded/i2/16818024426638425/T1A2tmFgdeXXXXXXXX_!!0-item_pic.jpg_360x360.jpg"/>
+<script src="/kissy/src/package.js"></script>
+
+<script>
+    // 本 demo 会在 ie10 模拟 ie7 下白屏，原因不明，请设置
+    // <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    var bigImg = 'http://img02.taobaocdn.com/bao/uploaded/i2/16818024426638425/T1A2tmFgdeXXXXXXXX_!!0-item_pic.jpg';
+
+    KISSY.use('scroll-view,scroll-view/plugin/scrollbar,node', function (S, ScrollView, ScrollbarPlugin, Node) {
+        var $ = Node.all;
+
+        var transformProperty = S.Features.getTransformProperty();
+
+        function toPrecision(v) {
+            return parseInt(v * 1e3) / 1e3;
+        }
+
+        var scrollview;
+
+        function showScrollView() {
+            $([document.body, document.documentElement]).addClass('hideNativeScroll');
+
+            if (!window.scrollview) {
+
+                var width = 360;
+                var height = 360;
+                var scale = 1;
+                var currentScale = scale;
+                var scrollLeft = 0;
+                var scrollTop = 0;
+                var currentScrollLeft = 0;
+                var currentScrollTop = 0;
+
+                scrollview = window.scrollView = new ScrollView({
+                    content: '<img' +
+                            ' id="myTest"' +
+                            ' src="' + bigImg + '"' +
+                            ' width="' + width +
+                            '" height="' + height + '"/><div class="marker"></div>',
+                    elCls: 'pic-viewer',
+                    plugins: [new ScrollbarPlugin({})]
+                }).render();
+
+                scrollView.on('scrollMove', function (e) {
+                    S.log('move: ' + e.pageY)
+                });
+
+
+                var bigImgEl = scrollView.get('contentEl').one('img');
+                var marker = scrollView.get('contentEl').one('.marker');
+
+                var imgStyle = bigImgEl[0].style;
+                imgStyle[transformProperty + 'Origin'] = '0 0';
+                var win = $(window);
+                var center;
+                var transitionValue = {
+                    left: win.width() / 2 - width / 2,
+                    top: win.height() / 2 - height / 2
+                };
+                var currentTransitionValue = transitionValue;
+                imgStyle[transformProperty] = 'translate3d(' +
+                        transitionValue.left + 'px,' +
+                        transitionValue.top + 'px,0px)';
+
+                // finger center relative to left top of image
+                function getCenter(e) {
+                    var touches = e.touches,
+                            offsetX = -currentScrollLeft || currentTransitionValue.left,
+                            offsetY = -currentScrollTop || currentTransitionValue.top,
+                            center;
+                    if (touches) {
+                        center = {
+                            left: (touches[0].pageX + touches[1].pageX) / 2 - offsetX,
+                            top: (touches[0].pageY + touches[1].pageY) / 2 - offsetY
+                        };
+                    } else {
+                        center = {
+                            left: e.pageX - offsetX,
+                            top: e.pageY - offsetY
+                        };
+                    }
+                    return center;
+                }
+
+                function pinchStart(e) {
+                    currentScrollLeft = scrollview.get('scrollLeft');
+                    currentScrollTop = scrollview.get('scrollTop');
+                    scrollView.stopAnimation();
+                    center = getCenter(e);
+                    scale = currentScale;
+                    scrollLeft = currentScrollLeft;
+                    scrollTop = currentScrollTop;
+                    transitionValue = currentTransitionValue;
+                }
+
+                bigImgEl.on('pinchStart', pinchStart);
+
+                function pinch(e) {
+                    // mousewheel
+                    if (e.deltaY) {
+                        e.stopPropagation();
+                        pinchStart(e);
+                        e.scale = e.deltaY > 0 ? 2 : 0.5;
+                    }
+
+                    if (currentScale < 0.5 && e.scale < 1) {
+                        return;
+                    }
+
+                    if (currentScale > 10 && e.scale > 1) {
+                        return;
+                    }
+
+                    currentScale = scale * e.scale;
+
+                    currentScale = toPrecision(currentScale);
+
+                    // center is stable
+                    currentTransitionValue = {
+                        left: toPrecision(-center.left * (e.scale - 1) +
+                                (transitionValue.left || -scrollLeft)),
+                        // scrollTop!=0 === transitionValue.top===0
+                        // top of image = transitionValue.top||-scrollView.get('scrollTop')
+                        top: toPrecision(-center.top * (e.scale - 1) +
+                                (transitionValue.top || -scrollTop))
+                    };
+                    if (currentTransitionValue.top < 0) {
+                        currentScrollTop = -currentTransitionValue.top;
+                        currentTransitionValue.top = 0;
+                    } else {
+                        currentScrollTop = 0;
+                    }
+                    scrollView.scrollTo({
+                        'top': currentScrollTop
+                    });
+
+                    if ((currentTransitionValue.left) < 0) {
+                        currentScrollLeft = -currentTransitionValue.left;
+                        currentTransitionValue.left = 0;
+                    } else {
+                        currentScrollLeft = 0;
+                    }
+
+                    scrollView.scrollTo({
+                        'left': currentScrollLeft
+                    });
+
+                    var v = 'translate3d(' + currentTransitionValue.left +
+                            'px,' + currentTransitionValue.top + 'px,0px) '
+                            + 'scale(' + currentScale + ')';
+                    imgStyle[transformProperty] = v;
+                    marker.css({
+                        width: width * currentScale,
+                        height: height * currentScale
+                    });
+                    scrollView.sync();
+                }
+
+                bigImgEl.on('pinch mousewheel', pinch);
+
+                $(window).on('resize orientationchange', S.UA.ie < 9 ?
+                        S.buffer(scrollView.sync, 30) :
+                        scrollView.sync, scrollView);
+            }
+            scrollView.show();
+            $('#mask').show();
+        }
+
+        $('#img').on(Node.Gesture.tap, showScrollView);
+        $('#wait').css({
+            color: 'green'
+        }).html('ok,please tap image');
+    });
+</script>
+</body>

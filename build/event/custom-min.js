@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 16 19:54
+build time: Jul 18 22:09
 */
 KISSY.add("event/custom/observer",function(h,m){function f(){f.superclass.constructor.apply(this,arguments)}h.extend(f,m.Observer,{keys:["fn","context","groups"]});return f},{requires:["event/base"]});KISSY.add("event/custom/object",function(h,m){function f(j){f.superclass.constructor.call(this);h.mix(this,j)}h.extend(f,m.Object);return f},{requires:["event/base"]});
 KISSY.add("event/custom/observable",function(h,m,f,j){function i(){i.superclass.constructor.apply(this,arguments);this.defaultFn=null;this.defaultTargetOnly=!1;this.bubbles=!0}var b=j.Utils;h.extend(i,j.Observable,{on:function(a){a=new m(a);-1==this.findObserver(a)&&this.observers.push(a)},fire:function(a){var a=a||{},c=this.bubbles,d=this.currentTarget,e,l=this.type,k=this.defaultFn,n,g=a,b;a.type=l;g instanceof f||(g.target=d,g=new f(g));g.currentTarget=d;a=this.notify(g);!1!==b&&(b=a);if(c&&!g.isPropagationStopped()){e=

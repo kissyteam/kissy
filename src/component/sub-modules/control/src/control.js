@@ -105,8 +105,12 @@ KISSY.add("component/control", function (S, Node, ComponentProcess, Manager, Ren
             },
 
             sync: function () {
-                Control.superclass.sync.apply(this, arguments);
-                this.view.sync();
+                var self = this;
+                self.fire('beforeSyncUI');
+                self.callMethodByHierarchy("syncUI", "__syncUI");
+                self.view.sync();
+                self.callPluginsMethod("syncUI");
+                self.fire('afterSyncUI');
             },
 
             createComponent: function (cfg, parent) {

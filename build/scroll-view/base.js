@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 3 13:57
+build time: Jul 18 22:09
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -19,25 +19,41 @@ KISSY.add('scroll-view/base/render', function (S, Node, Container, ContentRender
     // http://www.html5rocks.com/en/tutorials/speed/html5/
     var Features = S.Features,
         $ = Node.all,
+//        MARKER_CLS = 'ks-scrollview-marker',
         supportCss3 = Features.isTransformSupported(),
         transformProperty;
+
+//    function createMarker(contentEl) {
+//        var m;
+//        if (m = contentEl.one('.' + MARKER_CLS)) {
+//            return m;
+//        }
+//        return $('<div class="' + MARKER_CLS + '" ' +
+//            'style="position:absolute;' +
+//            'left:0;' +
+//            'top:0;' +
+//            'width:100%;' +
+//            'height:100%;' +
+//            '"></div>').appendTo(contentEl);
+//    }
 
     var methods = {
         syncUI: function () {
             var self = this,
                 control = self.control,
                 el = control.el,
-                contentEl = control.contentEl,
-                $contentEl = control.$contentEl,
+                //contentEl = control.contentEl,
+                $contentEl = control.$contentEl;
             // consider pull to refresh
             // refresh label will be prepended to el
             // contentEl must be absolute
             // or else
             // relative is weird, should math.max(contentEl.scrollHeight,el.scrollHeight)
             // will affect pull to refresh
-                scrollHeight = contentEl.scrollHeight,
-                scrollWidth = contentEl.scrollWidth,
-                clientHeight = el.clientHeight,
+            var scrollHeight = $contentEl.height(),
+                scrollWidth = $contentEl.width();
+
+            var clientHeight = el.clientHeight,
                 allowScroll,
                 clientWidth = el.clientWidth;
 
@@ -113,11 +129,11 @@ KISSY.add('scroll-view/base/render', function (S, Node, Container, ContentRender
         },
 
         '_onSetScrollLeft': function (v) {
-            this.control.get('contentEl')[0].style.left = -v + 'px';
+            this.control.contentEl.style.left = -v + 'px';
         },
 
         '_onSetScrollTop': function (v) {
-            this.control.get('contentEl')[0].style.top = -v + 'px';
+            this.control.contentEl.style.top = -v + 'px';
         }
     };
 
@@ -137,7 +153,7 @@ KISSY.add('scroll-view/base/render', function (S, Node, Container, ContentRender
         };
     }
 
-    return Container.ATTRS.xrender.value.extend([ContentRenderExtension],
+    return Container.getDefaultRender().extend([ContentRenderExtension],
         methods, {
             name: 'ScrollViewRender'
         });
@@ -342,7 +358,7 @@ KISSY.add('scroll-view/base', function (S, Node, Container, Render, undefined) {
             if (anim) {
                 var scrollLeft = self.get('scrollLeft'),
                     scrollTop = self.get('scrollTop'),
-                    contentEl = self.get('contentEl'),
+                    contentEl = self.$contentEl,
                     animProperty = {
                         xx: {
                             fx: {

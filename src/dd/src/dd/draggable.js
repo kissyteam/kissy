@@ -333,7 +333,6 @@ KISSY.add('dd/draggable', function (S, Node, RichBase, DDM) {
         },
 
         _move: function (ev) {
-
             var self = this,
                 ret,
                 pageX = ev.pageX,

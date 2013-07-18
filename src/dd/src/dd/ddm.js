@@ -145,7 +145,7 @@ KISSY.add('dd/ddm', function (S, Node, Base) {
         ev = normalEvent(ev);
 
         if (!ev) {
-            DDM._end();
+            ddm._end();
             return;
         }
 
@@ -461,11 +461,13 @@ KISSY.add('dd/ddm', function (S, Node, Base) {
 
             // 最后通知 move 一次，防止 touch 设备触发 touchmove 不灵敏
             e = e && normalEvent(e);
-            if (__activeToDrag) {
-                __activeToDrag._move(e);
-            }
-            if (activeDrag) {
-                activeDrag._move(e);
+            if (e) {
+                if (__activeToDrag) {
+                    __activeToDrag._move(e);
+                }
+                if (activeDrag) {
+                    activeDrag._move(e);
+                }
             }
 
             unRegisterEvent(self);
