@@ -61,7 +61,11 @@ describe('lang.js', function () {
 
         expect(S.param({b: [2, 3]})).toBe('b%5B%5D=2&b%5B%5D=3');
 
-        expect(S.param({b: undefined})).toBe("b")
+        expect(S.param({b: undefined})).toBe("b");
+
+        expect(S.param({
+            nodeType:1
+        })).toBe('nodeType=1');
     });
 
     it('S.unparam', function () {

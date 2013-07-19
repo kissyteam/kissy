@@ -159,9 +159,6 @@
          * @member KISSY
          */
         param: function (o, sep, eq, serializeArray) {
-            if (!S.isPlainObject(o)) {
-                return EMPTY;
-            }
             sep = sep || SEP;
             eq = eq || EQ;
             if (serializeArray === undefined) {

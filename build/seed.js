@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 17 12:22
+build time: Jul 19 16:30
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130717122246' will replace with current timestamp when compressing.
+         * NOTICE: '20130719163020' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130717122246',
+        __BUILD_TIME: '20130719163020',
         /**
          * KISSY Environment.
          * @private
@@ -1021,9 +1021,6 @@ var KISSY = (function (undefined) {
          * @member KISSY
          */
         param: function (o, sep, eq, serializeArray) {
-            if (!S.isPlainObject(o)) {
-                return EMPTY;
-            }
             sep = sep || SEP;
             eq = eq || EQ;
             if (serializeArray === undefined) {
@@ -3501,6 +3498,7 @@ var KISSY = (function (undefined) {
             'Webkit',
             'Moz',
             'O',
+            // ms is special .... !
             'ms'
         ],
     // nodejs
@@ -5687,7 +5685,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20130717122246'
+            tag: '20130719163020'
         }, getBaseInfo()));
     }
 
