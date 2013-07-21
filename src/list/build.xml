@@ -1,0 +1,5 @@
+<project name="list.build" default="build" basedir=".">
+    <property name="component.name" value="list"/>
+
+    <import file="../common.xml"/>
+</project>
