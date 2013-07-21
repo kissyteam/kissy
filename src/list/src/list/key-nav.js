@@ -5,9 +5,10 @@
  */
 
 KISSY.add('list/key-nav',function (S,Node) {
-
+  'use strict';
   var $ = S.all,
     KeyCode = Node.KeyCode,
+    
     /**
      * @class List.KeyNav
      * 列表导航扩展类
@@ -35,7 +36,7 @@ KISSY.add('list/key-nav',function (S,Node) {
       var _self = this,
         highlightedStatus = _self.get('highlightedStatus'),
         lightedItem = _self.getHighlighted();
-      if(lightedItem != item){
+      if(lightedItem !== item){
         this.setItemStatus(lightedItem,highlightedStatus,false);
         this.setItemStatus(item,highlightedStatus,true,element);
       }
@@ -112,7 +113,7 @@ KISSY.add('list/key-nav',function (S,Node) {
         itemCount = _self.getCount(),
         factor = forward ? 1 : -1,
         nextIndex; 
-      if(currentIndx == -1){
+      if(currentIndx === -1){
         return forward ? _self.getFirstItem() : _self.getLastItem();
       }
       if(!forward){
@@ -135,7 +136,7 @@ KISSY.add('list/key-nav',function (S,Node) {
         count = _self.getCount(),
         column = _self.getColumnCount();
       if(!count || column <= 1){ //单列时,或者为0时
-        return null;;
+        return null;
       }
       return _self._getNextItem(false,1,count);
     },
@@ -155,7 +156,7 @@ KISSY.add('list/key-nav',function (S,Node) {
         count = _self.getCount(),
         column = _self.getColumnCount();
       if(!count || column <= 1){ //单列时,或者为0时
-        return null;;
+        return null;
       }
       return this._getNextItem(true,1,count);
     },
@@ -165,7 +166,7 @@ KISSY.add('list/key-nav',function (S,Node) {
         columns = _self.getColumnCount(),
         rows = _self.getRowCount(columns);
       if(rows <= 1){ //单行或者为0时
-        return null;;
+        return null;
       }
       return  this._getNextItem(true,columns,columns * rows);
 
@@ -176,7 +177,7 @@ KISSY.add('list/key-nav',function (S,Node) {
         columns = _self.getColumnCount(),
         rows = _self.getRowCount(columns);
       if(rows <= 1){ //单行或者为0时
-        return null;;
+        return null;
       }
       return this._getNextItem(false,columns,columns * rows);
     },

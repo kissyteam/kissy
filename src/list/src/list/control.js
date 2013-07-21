@@ -13,6 +13,7 @@ KISSY.add('list/control',function (S,Controller,Selection,Render,Status,KeyNav) 
    * 列表控件
    * @extends Component.Controller
    * @mixins List.Selection
+   * @mixins List.KeyNav
    */
   var List = Controller.extend([Selection,Status,KeyNav],{
 
