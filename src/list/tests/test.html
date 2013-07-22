@@ -1,0 +1,77 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>列表测试</title>
+    <link rel="stylesheet" href="../../../tools/jasmine/jasmine.css">
+    <script src="../../../tools/jasmine/jasmine.js"></script>
+    <script src="../../../tools/jasmine/jasmine-html.js"></script>
+    <script src="../../../tools/jasmine/event-simulate.js"></script>
+    <style type="text/css">
+
+      section{
+        display: inline-block;
+        margin: 10px;
+        width:200px;
+      }
+      .ks-list{     
+        border:1px solid #ddd;
+      }
+
+      .ks-list ul{
+        list-style: none;
+        margin: 0;
+        padding:0;
+      }
+
+      .ks-list-item{
+        padding: 2px 4px 2px 8px;
+        border:1px solid white;
+      }
+      
+      .ks-list-item-hover {
+        background: #dee5ff;
+        border: 1px solid #ccd7ff;
+      }
+
+      .ks-list-item-selected{
+        background: #ccd7ff;
+        border: 1px solid #99afff;
+      }
+
+      .ks-list-item-active{
+        color: red;
+      }
+
+      .ks-list-item-disabled{
+        background: white;
+        border: 1px solid white;
+        color: #e9e9e9;
+      }
+      .column-2{
+        height: 200px;
+      }
+      .column-2 .ks-list-item{
+        float: left;
+        width: 50px;
+      }
+    </style>
+  </head>
+  <body>
+    <script src="../../../build/seed.js"></script>
+    <script src="../src/list/selection.js"></script>
+    <script src="../src/list/status.js"></script>
+    <script src="../src/list/key-nav.js"></script>
+    <script src="../src/list/status-render.js"></script>
+    <script src="../src/list/render.js"></script>
+    <script src="../src/list/control.js"></script>
+    <script src="../src/list.js"></script>
+
+    <script type="text/javascript">
+      KISSY.use(['list','../src/list/tests/specs/index'],function () {
+        jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
+        jasmine.getEnv().execute();
+      });
+    </script>
+</body>
