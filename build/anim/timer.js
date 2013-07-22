@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 17 14:35
+build time: Jul 22 19:29
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -947,6 +947,7 @@ KISSY.add('anim/timer/transform', function (S, Dom, Fx) {
                     break;
 
                 case 'translate':
+                case 'translate3d':
                     val = val.split(",");
                     ret.translateX = myParse(val[0]);
                     ret.translateY = myParse(val[1] || 0);
@@ -999,7 +1000,7 @@ KISSY.add('anim/timer/transform', function (S, Dom, Fx) {
             ret.skewY = interpolate(from.skewY, to.skewY, pos);
             ret.scaleX = interpolate(from.scaleX, to.scaleX, pos);
             ret.scaleY = interpolate(from.scaleY, to.scaleY, pos);
-            return S.substitute('translate({translateX}px,{translateY}px) ' +
+            return S.substitute('translate3d({translateX}px,{translateY}px,0) ' +
                 'rotate({rotate}deg) ' +
                 'skewX({skewX}deg) ' +
                 'skewY({skewY}deg) ' +
