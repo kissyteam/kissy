@@ -98,11 +98,11 @@ username 为你的 github 用户名
 
 启动 web 环境
 
-    node tools/test/server
+    node start
 
 现在打开 KISSY 集成测试用例: [http://localhost:8888/kissy/test](http://localhost:8888/kissy/test)
 
-你也可以测试单个模块，例如动画： [http://localhost:8888/kissy/src/anim/tests/runner/test.html](http://localhost:8888/kissy/src/anim/tests/runner/test.html)
+你也可以测试单个模块，例如动画： [http://localhost:8888/kissy/src/anim/tests/runner/test.jss](http://localhost:8888/kissy/src/anim/tests/runner/test.jss)
 
 #### 新增模块
 
@@ -110,13 +110,11 @@ username 为你的 github 用户名
 
 在 src 目录下编写源码，
 demo 目录增加 demo ，
-tests/runner/test.html 中引用 tests/specs/ 中的测试代码文件，
+tests/runner/test.jss 申明依赖的外部 css 和外部 js，
 修改 build.xml 中的当前模块名，
 sub-modules 中增加子模块。
 
-最后在 kissy 项目根目录下运行
-
-    node tools/gen-package/gen-package.js
+最后重启 web 环境
 
 
 可选： build KISSY
@@ -148,7 +146,7 @@ build KISSY 时间很长，需要耐心等待
 
 然后根据测试用例对相应模块源码进行修改（TDD）
 
-运行 http://localhost:8888/kissy/src/$module$/tests/runner/test.html -> **all test cases is green and passed.**
+运行 http://localhost:8888/kissy/src/$module$/tests/runner/test.jss -> **all test cases is green and passed.**
 
 $module$ 为你修改的模块名
 
