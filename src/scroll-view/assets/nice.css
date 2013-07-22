@@ -8,6 +8,10 @@
     -webkit-user-drag: none;
 }
 
+.ks-scroll-view-hidden{
+    display: none;
+}
+
 .ks-scroll-view-content {
     position: absolute;
     left: 0;

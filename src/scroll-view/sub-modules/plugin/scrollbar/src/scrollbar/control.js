@@ -100,7 +100,7 @@ KISSY.add('scroll-view/plugin/scrollbar/control', function (S, Node, DD, Control
                 scrollView = self.scrollView,
                 scrollProperty = self.scrollProperty,
                 ltProperty = self.ltProperty,
-                step = scrollView.scrollStep[self.ltProperty],
+                step = scrollView.getScrollStep()[self.ltProperty],
                 target = e.target,
                 direction = (target == self.downBtn || self.$downBtn.contains(target)) ? 1 : -1;
             clearInterval(self.mouseInterval);

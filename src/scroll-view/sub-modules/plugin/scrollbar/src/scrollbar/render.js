@@ -34,11 +34,11 @@ KISSY.add('scroll-view/plugin/scrollbar/render', function (S, Control, ScrollBar
             var self = this,
                 control = self.control,
                 scrollView = control.get('scrollView'),
-                $trackEl = control.$trackEl,
+                trackEl = control.trackEl,
                 isX = control.isX,
                 scrollWHProperty = isX ? 'scrollWidth' : 'scrollHeight',
                 whProperty = isX ? 'width' : 'height',
-                clientWHProperty = isX ? 'clientWidth' : 'clientHeight',
+                clientWhProperty = isX ? 'clientWidth' : 'clientHeight',
                 dragWhProperty = control.dragWhProperty,
                 ratio,
                 trackElSize,
@@ -49,8 +49,9 @@ KISSY.add('scroll-view/plugin/scrollbar/render', function (S, Control, ScrollBar
 
             if (scrollView.isAxisEnabled(control.get('axis'))) {
                 control.scrollLength = scrollView[scrollWHProperty];
-                trackElSize = control.trackElSize = $trackEl[whProperty]();
-                ratio = scrollView[clientWHProperty] / control.scrollLength;
+                trackElSize = control.trackElSize =
+                    whProperty == 'width' ? trackEl.offsetWidth : trackEl.offsetHeight;
+                ratio = scrollView[clientWhProperty] / control.scrollLength;
                 barSize = ratio * trackElSize;
                 control.set(dragWhProperty, barSize);
                 control.barSize = barSize;

@@ -14,6 +14,7 @@
         if (!log_div) {
             log_div = Dom.create('<div style="position:fixed;' +
                 'right:0;top:0;width:200px;' +
+                'z-index:9999;' +
                 'height:' + height + 'px;' +
                 '-webkit-overflow-scrolling: touch;' +
                 'border:1px solid red;' +

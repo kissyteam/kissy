@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 18 22:09
+build time: Jul 22 18:42
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -42,7 +42,7 @@ KISSY.add('scroll-view/base/render', function (S, Node, Container, ContentRender
             var self = this,
                 control = self.control,
                 el = control.el,
-                //contentEl = control.contentEl,
+                contentEl = control.contentEl,
                 $contentEl = control.$contentEl;
             // consider pull to refresh
             // refresh label will be prepended to el
@@ -50,8 +50,8 @@ KISSY.add('scroll-view/base/render', function (S, Node, Container, ContentRender
             // or else
             // relative is weird, should math.max(contentEl.scrollHeight,el.scrollHeight)
             // will affect pull to refresh
-            var scrollHeight = $contentEl.height(),
-                scrollWidth = $contentEl.width();
+            var scrollHeight = contentEl.offsetHeight,
+                scrollWidth = contentEl.offsetWidth;
 
             var clientHeight = el.clientHeight,
                 allowScroll,
@@ -61,8 +61,6 @@ KISSY.add('scroll-view/base/render', function (S, Node, Container, ContentRender
             control.scrollWidth = scrollWidth;
             control.clientHeight = clientHeight;
             control.clientWidth = clientWidth;
-
-            var elOffset = $contentEl.offset();
 
             allowScroll = control.allowScroll = {};
 
@@ -86,18 +84,14 @@ KISSY.add('scroll-view/base/render', function (S, Node, Container, ContentRender
                 top: maxScrollY = scrollHeight - clientHeight
             };
 
-            var elDoc = $(el.ownerDocument);
-
-            control.scrollStep = {
-                top: Math.max(clientHeight * clientHeight * 0.7 / elDoc.height(), 20),
-                left: Math.max(clientWidth * clientWidth * 0.7 / elDoc.width(), 20)
-            };
+            delete control.scrollStep;
 
             var snap = control.get('snap'),
                 scrollLeft = control.get('scrollLeft'),
                 scrollTop = control.get('scrollTop');
 
             if (snap) {
+                var elOffset = $contentEl.offset();
                 var pages = control.pages = typeof snap == 'string' ?
                         $contentEl.all(snap) :
                         $contentEl.children(),
@@ -142,14 +136,12 @@ KISSY.add('scroll-view/base/render', function (S, Node, Container, ContentRender
 
         methods._onSetScrollLeft = function (v) {
             var control = this.control;
-            control.contentEl.style[transformProperty] =
-                'translate3d(' + -v + 'px,' + -control.get('scrollTop') + 'px,0)';
+            control.contentEl.style[transformProperty] = 'translate3d(' + -v + 'px,' + -control.get('scrollTop') + 'px,0)';
         };
 
         methods._onSetScrollTop = function (v) {
             var control = this.control;
-            control.contentEl.style[transformProperty] =
-                'translate3d(' + -control.get('scrollLeft') + 'px,' + -v + 'px,0)';
+            control.contentEl.style[transformProperty] = 'translate3d(' + -control.get('scrollLeft') + 'px,' + -v + 'px,0)';
         };
     }
 
@@ -212,7 +204,7 @@ KISSY.add('scroll-view/base', function (S, Node, Container, Render, undefined) {
             }
             var self = this,
                 keyCode = e.keyCode,
-                scrollStep = self.scrollStep,
+                scrollStep = self.getScrollStep(),
                 ok = undefined;
             var allowX = self.isAxisEnabled('x');
             var allowY = self.isAxisEnabled('y');
@@ -248,6 +240,20 @@ KISSY.add('scroll-view/base', function (S, Node, Container, Render, undefined) {
                 }
             }
             return ok;
+        },
+
+        getScrollStep:function(){
+            var control=this;
+            if(control.scrollStep){
+                return control.scrollStep;
+            }
+            var elDoc = $(el.ownerDocument);
+            var clientHeight=control.clientHeight;
+            var clientWidth=control.clientWidth;
+            return control.scrollStep = {
+                top: Math.max(clientHeight * clientHeight * 0.7 / elDoc.height(), 20),
+                left: Math.max(clientWidth * clientWidth * 0.7 / elDoc.width(), 20)
+            };
         },
 
         handleMouseWheel: function (e) {

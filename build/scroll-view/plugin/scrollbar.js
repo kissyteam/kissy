@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 18 22:09
+build time: Jul 22 18:42
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -53,11 +53,11 @@ KISSY.add('scroll-view/plugin/scrollbar/render', function (S, Control, ScrollBar
             var self = this,
                 control = self.control,
                 scrollView = control.get('scrollView'),
-                $trackEl = control.$trackEl,
+                trackEl = control.trackEl,
                 isX = control.isX,
                 scrollWHProperty = isX ? 'scrollWidth' : 'scrollHeight',
                 whProperty = isX ? 'width' : 'height',
-                clientWHProperty = isX ? 'clientWidth' : 'clientHeight',
+                clientWhProperty = isX ? 'clientWidth' : 'clientHeight',
                 dragWhProperty = control.dragWhProperty,
                 ratio,
                 trackElSize,
@@ -68,8 +68,9 @@ KISSY.add('scroll-view/plugin/scrollbar/render', function (S, Control, ScrollBar
 
             if (scrollView.isAxisEnabled(control.get('axis'))) {
                 control.scrollLength = scrollView[scrollWHProperty];
-                trackElSize = control.trackElSize = $trackEl[whProperty]();
-                ratio = scrollView[clientWHProperty] / control.scrollLength;
+                trackElSize = control.trackElSize =
+                    whProperty == 'width' ? trackEl.offsetWidth : trackEl.offsetHeight;
+                ratio = scrollView[clientWhProperty] / control.scrollLength;
                 barSize = ratio * trackElSize;
                 control.set(dragWhProperty, barSize);
                 control.barSize = barSize;
@@ -256,7 +257,7 @@ KISSY.add('scroll-view/plugin/scrollbar/control', function (S, Node, DD, Control
                 scrollView = self.scrollView,
                 scrollProperty = self.scrollProperty,
                 ltProperty = self.ltProperty,
-                step = scrollView.scrollStep[self.ltProperty],
+                step = scrollView.getScrollStep()[self.ltProperty],
                 target = e.target,
                 direction = (target == self.downBtn || self.$downBtn.contains(target)) ? 1 : -1;
             clearInterval(self.mouseInterval);
