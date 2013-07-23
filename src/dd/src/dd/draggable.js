@@ -7,14 +7,7 @@ KISSY.add('dd/draggable', function (S, Node, RichBase, DDM) {
 
     var UA = S.UA,
         $ = Node.all,
-        Features = S.Features,
-        useGestureEvent = Features.isTouchEventSupported() ||
-            Features.isMsPointerSupported(),
         each = S.each,
-    // !! use singleTouchStart in touch to normalize gesture event
-        DRAG_START_EVENT = useGestureEvent ?
-            'singleTouchStart' :
-            Node.Gesture.start,
         ie = UA['ie'],
         NULL = null,
         PREFIX_CLS = DDM.PREFIX_CLS,
@@ -26,7 +19,6 @@ KISSY.add('dd/draggable', function (S, Node, RichBase, DDM) {
      * Provide abilities to make specified node draggable
      */
     var Draggable = RichBase.extend({
-
         initializer: function () {
             var self = this;
             self.addTarget(DDM);
@@ -209,14 +201,16 @@ KISSY.add('dd/draggable', function (S, Node, RichBase, DDM) {
         },
 
         bindDragEvent: function () {
-            var self = this, node = self.get('node');
-            node.on(DRAG_START_EVENT, handlePreDragStart, self)
+            var self = this,
+                node = self.get('node');
+            node.on(Node.Gesture.start, handlePreDragStart, self)
                 .on('dragstart', self._fixDragStart);
         },
 
-        detachDragEvent: function () {
-            var self = this, node = self.get('node');
-            node.detach(DRAG_START_EVENT, handlePreDragStart, self)
+        detachDragEvent: function (self) {
+            self = this;
+            var node = self.get('node');
+            node.detach(Node.Gesture.start, handlePreDragStart, self)
                 .detach('dragstart', self._fixDragStart);
         },
 
@@ -227,8 +221,7 @@ KISSY.add('dd/draggable', function (S, Node, RichBase, DDM) {
         _bufferTimer: NULL,
 
         _onSetDisabledChange: function (d) {
-            this.get('dragNode')[d ? 'addClass' :
-                'removeClass'](PREFIX_CLS + '-disabled');
+            this.get('dragNode')[d ? 'addClass' : 'removeClass'](PREFIX_CLS + '-disabled');
         },
 
         _fixDragStart: fixDragStart,
@@ -259,7 +252,6 @@ KISSY.add('dd/draggable', function (S, Node, RichBase, DDM) {
         },
 
         _prepare: function (ev) {
-
             if (!ev) {
                 return;
             }
@@ -285,9 +277,7 @@ KISSY.add('dd/draggable', function (S, Node, RichBase, DDM) {
             // in touch device
             // prevent touchdown
             // will prevent text selection and link click
-            // if (!useGestureEvent) {
             ev.preventDefault();
-            // }
 
             var mx = ev.pageX,
                 my = ev.pageY;
@@ -298,7 +288,6 @@ KISSY.add('dd/draggable', function (S, Node, RichBase, DDM) {
             });
 
             if (self._allowMove) {
-
                 var node = self.get('node'),
                     nxy = node.offset();
                 self.setInternal('startNodePos', nxy);
@@ -306,7 +295,6 @@ KISSY.add('dd/draggable', function (S, Node, RichBase, DDM) {
                     left: mx - nxy.left,
                     top: my - nxy.top
                 });
-
             }
 
             DDM._regToDrag(self);
@@ -402,7 +390,6 @@ KISSY.add('dd/draggable', function (S, Node, RichBase, DDM) {
         },
 
         _end: function (e) {
-
             e = e || {};
 
             var self = this,
@@ -484,13 +471,8 @@ KISSY.add('dd/draggable', function (S, Node, RichBase, DDM) {
             self.detachDragEvent();
             self.detach();
         }
-
-
     }, {
-
         name: 'Draggable',
-
-        DRAG_START_EVENT: DRAG_START_EVENT,
 
         ATTRS: {
 
@@ -566,7 +548,7 @@ KISSY.add('dd/draggable', function (S, Node, RichBase, DDM) {
             /**
              * use protective shim to cross iframe.
              *
-             * Defaults to: true
+             * Defaults to: false
              *
              * @cfg {Boolean} shim
              *
@@ -575,7 +557,7 @@ KISSY.add('dd/draggable', function (S, Node, RichBase, DDM) {
              * @ignore
              */
             shim: {
-                value: !useGestureEvent
+                value: false
             },
 
             /**

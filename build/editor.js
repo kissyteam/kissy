@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 9 15:12
+build time: Jul 23 22:55
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -44,7 +44,7 @@ KISSY.add('editor/render-tpl',
  */
 KISSY.add('editor/render',function(S,Control,RenderTpl){
 
-    return Control.ATTRS.xrender.value.extend({
+    return Control.getDefaultRender().extend({
 
         beforeCreateDom:function(renderData,childrenElSelectors){
             S.mix(renderData,{

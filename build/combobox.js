@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 3 13:49
+build time: Jul 23 22:46
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -29,7 +29,7 @@ KISSY.add('combobox/combobox-tpl',
  */
 KISSY.add("combobox/render", function (S, Control, ComboboxTpl) {
 
-    var ComboboxRender = Control.ATTRS.xrender.value.extend({
+    var ComboboxRender = Control.getDefaultRender().extend({
 
         beforeCreateDom: function (renderData, childrenElSelectors) {
             S.mix(childrenElSelectors, {
@@ -154,7 +154,7 @@ KISSY.add("combobox/control", function (S, Node, Control, ComboBoxRender, Menu, 
                 });
             },
 
-            destructor:function(){
+            destructor: function () {
                 this.get('menu').destroy();
             },
 
@@ -733,6 +733,9 @@ KISSY.add("combobox/control", function (S, Node, Control, ComboBoxRender, Menu, 
 
         data = self['normalizeData'](data);
 
+        var start = S.now();
+        S.log('menu: renderData start');
+
         menu.removeChildren(true);
 
         if (highlightedItem = menu.get('highlightedItem')) {
@@ -740,7 +743,6 @@ KISSY.add("combobox/control", function (S, Node, Control, ComboBoxRender, Menu, 
         }
 
         if (data && data.length) {
-
             for (i = 0; i < data.length; i++) {
                 v = data[i];
                 menu.addChild(v);
@@ -772,7 +774,7 @@ KISSY.add("combobox/control", function (S, Node, Control, ComboBoxRender, Menu, 
             }
 
             self.set("collapsed", false);
-
+            S.log('menu: renderData end: ' + (S.now() - start));
         } else {
             self.set("collapsed", true);
         }

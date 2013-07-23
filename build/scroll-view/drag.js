@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 22 18:42
+build time: Jul 23 22:59
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -14,12 +14,9 @@ build time: Jul 22 18:42
  * @author yiminghe@gmail.com
  */
 KISSY.add('scroll-view/drag', function (S, ScrollViewBase, DD, Node) {
-
     var OUT_OF_BOUND_FACTOR = 0.5;
 
     var Gesture = Node.Gesture;
-
-    var singleTouchStart = Gesture.singleTouchStart;
 
     var SWIPE_SAMPLE_INTERVAL = 300;
 
@@ -398,7 +395,6 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, DD, Node) {
     }
 
     return ScrollViewBase.extend({
-
             bindUI: function () {
                 var self = this,
                     $contentEl = self.$contentEl,
@@ -411,11 +407,9 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, DD, Node) {
                 dd.on('dragstart', onDragStartHandler, self)
                     .on('drag', onDragHandler, self)
                     .on('dragend', onDragEndHandler, self);
-
-                self.get('el').on(singleTouchStart, onSingleGestureStart, self);
-                $contentEl.on(singleTouchStart, onSingleGestureStart, self);
+                // self.get('el').on(Gesture.start, onSingleGestureStart, self);
+                $contentEl.on(Gesture.start, onSingleGestureStart, self);
             },
-
 
             syncUI: function () {
                 initStates(this);
@@ -429,7 +423,6 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, DD, Node) {
             _onSetDisabled: function (v) {
                 this.dd.set('disabled', v);
             }
-
         },
         {
             ATTRS: {
@@ -466,7 +459,6 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, DD, Node) {
             xclass: 'scroll-view'
         }
     );
-
 }, {
     requires: ['./base', 'dd', 'node']
 });

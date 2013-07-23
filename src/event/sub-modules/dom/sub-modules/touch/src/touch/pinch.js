@@ -3,7 +3,7 @@
  * gesture pinch
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/touch/pinch', function (S, eventHandleMap, DomEvent, MultiTouch, Gesture) {
+KISSY.add('event/dom/touch/pinch', function (S, eventHandleMap, DomEvent, MultiTouch) {
 
     var PINCH = 'pinch',
         PINCH_START = 'pinchStart',
@@ -36,7 +36,6 @@ KISSY.add('event/dom/touch/pinch', function (S, eventHandleMap, DomEvent, MultiT
                 self.isStarted = true;
                 self.startDistance = distance;
                 var target = self.target = self.getCommonTarget(e);
-
                 DomEvent.fire(target,
                     PINCH_START, S.mix(e, {
                         distance: distance,
@@ -68,9 +67,7 @@ KISSY.add('event/dom/touch/pinch', function (S, eventHandleMap, DomEvent, MultiT
         };
 
     function prevent(e) {
-        // android can not throttle
-        // need preventDefault always
-        if (!e.touches || e.touches.length == 2) {
+        if (e.touches.length == 2) {
             e.preventDefault();
         }
     }
@@ -78,15 +75,17 @@ KISSY.add('event/dom/touch/pinch', function (S, eventHandleMap, DomEvent, MultiT
     eventHandleMap[PINCH] = {
         handle: p,
         add: function () {
-            DomEvent.on(this, Gesture.move, prevent);
+            // need on this
+            // if on document, will affect other elements!
+            DomEvent.on(this, 'touchmove', prevent);
         },
         remove: function () {
-            DomEvent.detach(this, Gesture.move, prevent);
+            DomEvent.detach(this, 'touchmove', prevent);
         }
     };
 
     return Pinch;
 
 }, {
-    requires: ['./handle-map', 'event/dom/base', './multi-touch', './gesture']
+    requires: ['./handle-map', 'event/dom/base', './multi-touch']
 });

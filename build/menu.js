@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 3 16:19
+build time: Jul 23 22:56
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -28,7 +28,7 @@ build time: Jul 3 16:19
  */
 KISSY.add("menu/menu-render", function (S, Container) {
 
-    return Container.ATTRS.xrender.value.extend({
+    return Container.getDefaultRender().extend({
 
         beforeCreateDom: function (renderData) {
             renderData.elAttrs.role = 'menu';
@@ -141,7 +141,7 @@ KISSY.add("menu/control", function (S, Node, Container, DelegateChildrenExtensio
          * calls the child control's {@code handleKeydown} method to give the control
          * a chance to handle the event first.
          * Protected, should only be overridden by subclasses.
-         * @param {KISSY.Event.DOMEventObject} e Key event to handle.
+         * @param {KISSY.Event.DomEventObject} e Key event to handle.
          * @return {Boolean|undefined} Whether the event was handled by the container (or one of
          *     its children).
          * @protected
@@ -306,7 +306,7 @@ KISSY.add("menu/control", function (S, Node, Container, DelegateChildrenExtensio
  */
 KISSY.add("menu/menuitem-render", function (S, Node, Control) {
 
-    return Control.ATTRS.xrender.value.extend({
+    return Control.getDefaultRender().extend({
 
         beforeCreateDom: function (renderData) {
             renderData.elAttrs.role= renderData.selectable ?
@@ -736,7 +736,7 @@ KISSY.add("menu/submenu", function (S, Node, MenuItem, SubMenuRender) {
              * and delegates further key events to its menu until it is dismissed OR the
              * left key is pressed.
              * Protected for subclass overridden.
-             * @param {KISSY.Event.DOMEventObject} e key event.
+             * @param {KISSY.Event.DomEventObject} e key event.
              * @protected
              * @return {Boolean|undefined} Whether the event was handled.
              */

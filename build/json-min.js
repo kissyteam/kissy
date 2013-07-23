@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 3 13:56
+build time: Jul 23 22:56
 */
 KISSY.add("json/quote",function(i){var k={"":"\\b","":"\\f","\n":"\\n","\r":"\\r","\t":"\\t",'"':'\\"'},f={},m=/["\b\f\n\r\t\x00-\x1f]/g,a=/\\b|\\f|\\n|\\r|\\t|\\"|\\u[0-9a-zA-Z]{4}/g;i.each(k,function(b,a){f[a]=b});f["\\/"]="/";return{quote:function(a){return'"'+a.replace(m,function(a){var b;if(!(b=k[a]))b="\\u"+("0000"+a.charCodeAt(0).toString(16)).slice(-4);return b})+'"'},unQuote:function(b){return b.slice(1,b.length-1).replace(a,function(a){var b;if(!(b=f[a]))b=String.fromCharCode(parseInt(a.slice(2),
 16));return b})}}});

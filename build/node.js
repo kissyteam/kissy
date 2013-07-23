@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 3 13:57
+build time: Jul 23 22:56
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -99,7 +99,7 @@ KISSY.add('node/base', function (S, Dom, Event, undefined) {
          */
         item: function (index) {
             var self = this;
-            if (S.isNumber(index)) {
+            if (typeof index==='number') {
                 if (index >= self.length) {
                     return null;
                 } else {
@@ -118,7 +118,7 @@ KISSY.add('node/base', function (S, Dom, Event, undefined) {
          * @return {KISSY.NodeList} a new nodelist
          */
         add: function (selector, context, index) {
-            if (S.isNumber(context)) {
+            if (typeof context==='number') {
                 index = context;
                 context = undefined;
             }

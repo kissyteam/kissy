@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 18 22:54
+build time: Jul 23 22:46
 */
 KISSY.add("component/extension/align",function(j,n){function o(a){var c=a.ownerDocument.body,d=i(a).css("position");if(!("fixed"==d||"absolute"==d))return"html"==a.nodeName.toLowerCase()?null:a.parentNode;for(a=a.parentNode;a&&a!=c;a=a.parentNode)if(d=i(a).css("position"),"static"!=d)return a;return null}function p(a){var c,d,b={left:0,right:Infinity,top:0,bottom:Infinity},g;g=a.ownerDocument;d=i(g).getWindow();c=g.body;for(g=g.documentElement;a=o(a);)if((!u.ie||0!=a.clientWidth)&&a!=c&&a!=g&&"visible"!=
 i(a).css("overflow")){var e=i(a).offset();e.left+=a.clientLeft;e.top+=a.clientTop;b.top=Math.max(b.top,e.top);b.right=Math.min(b.right,e.left+a.clientWidth);b.bottom=Math.min(b.bottom,e.top+a.clientHeight);b.left=Math.max(b.left,e.left)}g=d.scrollLeft();a=d.scrollTop();b.left=Math.max(b.left,g);b.top=Math.max(b.top,a);c=d.width();d=d.height();b.right=Math.min(b.right,g+c);b.bottom=Math.min(b.bottom,a+d);return 0<=b.top&&0<=b.left&&b.bottom>b.top&&b.right>b.left?b:null}function q(a,c,d,b){var g,e;

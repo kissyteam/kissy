@@ -1,14 +1,14 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 9 15:12
+build time: Jul 23 22:55
 */
 /*
  thanks to CKSource's intelligent work on CKEditor
  @author yiminghe@gmail.com
 */
 KISSY.add("editor/iframe-content-tpl",'<!doctype html> <html> <head>{doctype} <title>{title}</title> <style> {style} </style> {links} </head> <body class="ks-editor"> {data} {script} </body> </html>');KISSY.add("editor/render-tpl",'<div class="{{prefixCls}}editor-tools" id="ks-editor-tools-{{id}}"> </div> <\!-- http://johanbrook.com/browsers/native-momentum-scrolling-ios-5/ ios \u4e0d\u80fd\u653e\u5728 iframe \u4e0a\uff01 --\> <div class="{{prefixCls}}editor-textarea-wrap" {{#if mobile}} style="overflow:scroll;-webkit-overflow-scrolling:touch;" {{/if}} id="ks-editor-textarea-wrap-{{id}}" > <textarea id="ks-editor-textarea-{{id}}" class="{{prefixCls}}editor-textarea" {{#each textareaAttrs}} {{xkey}}="{{.}}" {{/each}} {{#if mode}} style="display:none" {{/if}} >{{data}}</textarea> </div> <div class="{{prefixCls}}editor-status" id="ks-editor-status-{{id}}"> </div>');
-KISSY.add("editor/render",function(a,r,s){return r.ATTRS.xrender.value.extend({beforeCreateDom:function(o,l){a.mix(o,{mobile:a.UA.mobile});a.mix(l,{textarea:"#ks-editor-textarea-{id}",toolBarEl:"#ks-editor-tools-{id}",statusBarEl:"#ks-editor-status-{id}"})}},{ATTRS:{contentTpl:{value:s}}})},{requires:["component/control","./render-tpl"]});
+KISSY.add("editor/render",function(a,r,s){return r.getDefaultRender().extend({beforeCreateDom:function(o,l){a.mix(o,{mobile:a.UA.mobile});a.mix(l,{textarea:"#ks-editor-textarea-{id}",toolBarEl:"#ks-editor-tools-{id}",statusBarEl:"#ks-editor-status-{id}"})}},{ATTRS:{contentTpl:{value:s}}})},{requires:["component/control","./render-tpl"]});
 KISSY.add("editor/base",function(a,r,s,o){return s.extend({},{Config:{},XHTML_DTD:r.DTD,ATTRS:{textarea:{},textareaAttrs:{view:1},iframe:{},window:{},document:{},toolBarEl:{},statusBarEl:{},handleMouseEvents:{value:!1},focusable:{value:!1},mode:{value:1},data:{view:1},customStyle:{value:""},customLink:{value:[]},xrender:{value:o}},xclass:"editor",name:"EditorRender"})},{requires:["html-parser","component/control","./render"]});
 KISSY.add("editor/utils",function(a,r){var s=a.Node,o=a.DOM,l=a.UA,v={debugUrl:function(e){var i=a.Config;i.debug||(e=e.replace(/\.(js|css)/i,"-min.$1"));-1==e.indexOf("?t")&&(e=-1!=e.indexOf("?")?e+"&":e+"?",e+="t="+encodeURIComponent(i.tag));return i.base+"editor/"+e},lazyRun:function(a,i,n){var p=a[i],l=a[n];a[i]=function(){p.apply(this,arguments);a[i]=a[n];return l.apply(this,arguments)}},getXY:function(a,i){var n=a.left,p=a.top,l=i.get("window")[0],n=n-o.scrollLeft(l),p=p-o.scrollTop(l),l=i.get("iframe").offset(),
 n=n+l.left,p=p+l.top;return{left:n,top:p}},tryThese:function(a){for(var i,n=0,p=arguments.length;n<p;n++){var l=arguments[n];try{i=l();break}catch(k){}}return i},arrayCompare:function(a,i){if(!a&&!i)return!0;if(!a||!i||a.length!=i.length)return!1;for(var n=0;n<a.length;n++)if(a[n]!==i[n])return!1;return!0},clearAllMarkers:function(a){for(var i in a)a[i]._4e_clearMarkers(a,!0,void 0)},ltrim:function(a){return a.replace(/^\s+/,"")},rtrim:function(a){return a.replace(/\s+$/,"")},isNumber:function(e){return/^\d+(.\d+)?$/.test(a.trim(e))},

@@ -153,15 +153,15 @@
             DDM.on("dragdropmiss", function (ev) {
                 var node = ev.drag.get("node");
                 S.log(node.attr("id") + " dragdropmiss ");
-
                 if (node.isProxy) {
                     var dragNode = ev.drag.get("dragNode");
                     node = node.clone(true).insertBefore(node);
+                    var props={
+                        left: dragNode.offset().left - parseInt(dragNode.css('margin-left')),
+                        top: dragNode.offset().top - parseInt(dragNode.css('margin-top'))
+                    };
                     node.animate({
-                        props: {
-                            left: dragNode.offset().left - parseInt(dragNode.css('margin-left')),
-                            top: dragNode.offset().top - parseInt(dragNode.css('margin-top'))
-                        },
+                        to: props,
                         duration: 0.5,
                         complete: function () {
                             node.remove();
@@ -169,7 +169,7 @@
                     })
                 } else {
                     node.animate({
-                        props: {
+                        to: {
                             left: 0,
                             top: 0
                         },
@@ -203,9 +203,6 @@
             });
 
             drop.on("drophit", onhit);
-
-
-
         });
     });
 

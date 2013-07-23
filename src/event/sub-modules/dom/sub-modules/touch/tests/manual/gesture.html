@@ -30,7 +30,7 @@
 <script>
     KISSY.use('event,dom', function (S, Event, Dom) {
         var Gesture=Event.Gesture;
-        Event.on('#t1', [Gesture.start,Gesture.move,Gesture.end].join(' '), function (e) {
+        Event.on('#t1', [Gesture.start,Gesture.move,Gesture.end,'click'].join(' '), function (e) {
             console.log('********************');
             console.log(e.type);
             console.log(e.pageX + ' : ' + e.pageY);

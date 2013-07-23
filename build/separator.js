@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 3 13:58
+build time: Jul 23 22:57
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -16,7 +16,7 @@ build time: Jul 3 13:58
  */
 KISSY.add("separator/render", function (S, Control) {
 
-    return Control.ATTRS.xrender.value.extend({
+    return Control.getDefaultRender().extend({
         beforeCreateDom: function (renderData) {
             renderData.elAttrs.role = 'separator';
         }

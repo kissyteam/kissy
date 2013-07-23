@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 19 16:30
+build time: Jul 23 22:57
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130719163020' will replace with current timestamp when compressing.
+         * NOTICE: '20130723225739' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130719163020',
+        __BUILD_TIME: '20130723225739',
         /**
          * KISSY Environment.
          * @private
@@ -3385,8 +3385,10 @@ var KISSY = (function (undefined) {
                             UA[core = 'gecko'] = 0.1; // Gecko detected, look for revision
                             if ((m = ua.match(/rv:([\d.]*)/)) && m[1]) {
                                 UA[core] = numberify(m[1]);
+                                if (/Mobile|Tablet/.test(ua)) {
+                                    o.mobile = "firefox";
+                                }
                             }
-
                             // Firefox
                             if ((m = ua.match(/Firefox\/([\d.]*)/)) && m[1]) {
                                 UA[shell = 'firefox'] = numberify(m[1]);
@@ -5550,7 +5552,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20130719163020'
+            tag: '20130723225739'
         }, getBaseInfo()));
     }
 

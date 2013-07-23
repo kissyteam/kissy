@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 3 13:57
+build time: Jul 23 22:57
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -22,7 +22,7 @@ KISSY.add('rich-base', function (S, Base) {
         noop = S.noop,
         RE_DASH = /(?:^|-)([a-z])/ig;
 
-    function replaceToUpper(all, letter) {
+    function replaceToUpper(_, letter) {
         return letter.toUpperCase();
     }
 
@@ -163,7 +163,7 @@ KISSY.add('rich-base', function (S, Base) {
         constructPlugins: function () {
             var plugins = this.get('plugins');
             S.each(plugins, function (plugin, i) {
-                if (S.isFunction(plugin)) {
+                if (typeof plugin === 'function') {
                     plugins[i] = new plugin();
                 }
             });
@@ -260,7 +260,7 @@ KISSY.add('rich-base', function (S, Base) {
          */
         'plug': function (plugin) {
             var self = this;
-            if (S.isFunction(plugin)) {
+            if (typeof plugin === 'function') {
                 plugin = new plugin();
             }
             // initialize plugin

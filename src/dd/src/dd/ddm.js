@@ -1,13 +1,12 @@
 /**
  * @ignore
- * dd support for kissy , dd objects central management module
+ * dd support for kissy, dd objects central management module
  * @author yiminghe@gmail.com
  */
 KISSY.add('dd/ddm', function (S, Node, Base) {
 
     var UA = S.UA,
         $ = Node.all,
-        Features = S.Features,
         win = S.Env.host,
         doc = win.document,
         $doc = $(doc),
@@ -20,15 +19,9 @@ KISSY.add('dd/ddm', function (S, Node, Base) {
         MOVE_DELAY = 30,
         SHIM_Z_INDEX = 999999;
 
-    var TARGET = 'target',
-        Gesture = Node.Gesture,
-        CURRENT_TARGET = 'currentTarget',
+    var Gesture = Node.Gesture,
         DRAG_MOVE_EVENT = Gesture.move,
         DRAG_END_EVENT = Gesture.end;
-
-    if (Gesture.cancel) {
-        DRAG_END_EVENT += ' ' + Gesture.cancel;
-    }
 
     /**
      * @class KISSY.DD.DDM
@@ -141,8 +134,6 @@ KISSY.add('dd/ddm', function (S, Node, Base) {
         var self = this,
             __activeToDrag ,
             activeDrag;
-
-        ev = normalEvent(ev);
 
         if (!ev) {
             ddm._end();
@@ -259,7 +250,7 @@ KISSY.add('dd/ddm', function (S, Node, Base) {
      */
     function activeShim(self) {
         //创造垫片，防止进入iframe，外面document监听不到 mousedown/up/move
-        self._shim = new Node('<div ' +
+        self._shim = $('<div ' +
             'style="' +
             //red for debug
             'background-color:red;' +
@@ -326,9 +317,6 @@ KISSY.add('dd/ddm', function (S, Node, Base) {
      */
     function registerEvent(self) {
         $doc.on(DRAG_END_EVENT, self._end, self);
-        if (Gesture.cancel) {
-            $doc.on(Gesture.cancel, self._end, self);
-        }
         $doc.on(DRAG_MOVE_EVENT, throttleMoveHandle, self);
         // ie6 will not response to event when cursor is out of window.
         if (UA.ie === 6) {
@@ -342,9 +330,6 @@ KISSY.add('dd/ddm', function (S, Node, Base) {
     function unRegisterEvent(self) {
         $doc.detach(DRAG_MOVE_EVENT, throttleMoveHandle, self);
         $doc.detach(DRAG_END_EVENT, self._end, self);
-        if (Gesture.cancel) {
-            $doc.detach(Gesture.cancel, self._end, self);
-        }
         if (UA.ie === 6) {
             doc.body.releaseCapture();
         }
@@ -377,7 +362,6 @@ KISSY.add('dd/ddm', function (S, Node, Base) {
      3.为了跨越 iframe 而统一在底下的遮罩层
      */
     S.extend(DDM, Base, {
-
         /*
          可能要进行拖放的对象，需要通过 buffer/pixelThresh 考验
          */
@@ -459,8 +443,6 @@ KISSY.add('dd/ddm', function (S, Node, Base) {
                 activeDrag = self.get('activeDrag'),
                 activeDrop = self.get('activeDrop');
 
-            // 最后通知 move 一次，防止 touch 设备触发 touchmove 不灵敏
-            e = e && normalEvent(e);
             if (e) {
                 if (__activeToDrag) {
                     __activeToDrag._move(e);
@@ -550,33 +532,6 @@ KISSY.add('dd/ddm', function (S, Node, Base) {
     ddm.area = area;
     ddm.cacheWH = cacheWH;
     ddm.PREFIX_CLS = 'ks-dd-';
-
-    /*
-     normal event between devices
-     TODO: merge with event/dom/touch
-     */
-    function normalEvent(e) {
-        var type = String(e.type),
-            touches = type == Gesture.end || type == Gesture.cancel ?
-                e.changedTouches : e.touches,
-            touch;
-        touches = touches || [];
-        // add which for touch/pointer event
-        // add pageX for touch event
-        if ((Features.isTouchEventSupported() ||
-            Features.isMsPointerSupported()) && touches.length) {
-            if (touches.length != 1) {
-                return undefined;
-            }
-            touch = touches[0];
-            e[TARGET] = e[TARGET] || touch[TARGET];
-            e[CURRENT_TARGET] = e[CURRENT_TARGET] || touch[CURRENT_TARGET];
-            e.pageX = touch.pageX;
-            e.pageY = touch.pageY;
-        }
-        e.which = 1;
-        return e;
-    }
 
     return ddm;
 }, {

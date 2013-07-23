@@ -8,12 +8,16 @@
     <meta name="apple-touch-fullscreen" content="yes">
 <title>简单拖放委托实现</title>
 <style>
-
     .container {
         border: 1px solid red;
         height: 450px;
         padding: 10px;
         position: relative;
+    }
+
+    #todo {
+        zoom:1;
+        overflow: hidden;
     }
 
     .component {
@@ -22,14 +26,11 @@
         height: 100px;
         line-height: 100px;
         border: 1px solid black;
-        display: inline-block;
-        *display: inline;
-        *zoom: 1;
+        float: left;
         overflow: hidden;
     }
 
     .cheader {
-        cursor: move;
         border: 1px solid black;
         height: 20px;
         line-height: 20px;
@@ -37,7 +38,7 @@
 
     #drop, #drop3 {
         border: 1px solid green;
-        height: 130px;
+        height: 170px;
         line-height: 100px;
     }
 
@@ -48,10 +49,6 @@
     .ks-dd-drop-over {
         background: #fa8072;
     }
-
-    #container3 .component .cheader {
-        cursor: move;
-    }
 </style>
 </head>
 <body>
@@ -59,12 +56,15 @@
 <h2>简单拖放委托实现</h2>
 <div id="container3" class="container">
 
-    <div class="component">
-        <div class="cheader">
-            拖动头
+    <div id="todo">
+        <div class="component">
+            <div class="cheader">
+                拖动头
+            </div>
+            delegate drag
         </div>
-        delegate drag
     </div>
+
 
     <button id="add_delegate">add delegate drag</button>
 
@@ -80,13 +80,12 @@
 
     var S = KISSY;
 
-    KISSY.use("node,dd", function (S, Node, DD) {
+    KISSY.use("node,dd,dd/plugin/proxy", function (S, Node, DD,Proxy) {
         var DDM = DD.DDM,
                 $ = Node.all,
                 DraggableDelegate = DD.DraggableDelegate,
                 Draggable = DD.Draggable,
-                Droppable = DD.Droppable,
-                Proxy = DD.Proxy;
+                Droppable = DD.Droppable;
 
         /**
          * 委托拖放
@@ -110,7 +109,7 @@
             });
 
             var delegate = new DraggableDelegate({
-                container:"#container3",
+                container:"#todo",
                 move:1,
                 handlers:['.cheader'],
                 selector:'.component'
@@ -122,11 +121,15 @@
                 node:"#drop3"
             });
 
+            drop.on('drophit',function(e){
+                e.drag.get('dragNode').appendTo(e.drop.get('node'));
+            });
+
             var c = 0;
-            $("#add_delegate").on("click", function () {
+            $("#add_delegate").on('click', function () {
                 new Node('<div class="component"><div class="cheader">拖动头</div>delegate'
                         + (++c) + '</div>')
-                        .prependTo("#container3");
+                        .prependTo("#todo");
             });
         });
 

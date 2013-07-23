@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 3 13:56
+build time: Jul 23 22:56
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -2524,7 +2524,7 @@ KISSY.add("html-parser/parser", function (S, dtd, Tag, Fragment, Cursor, Lexer, 
 
     function findTagWithName(root, tagName, level) {
         if (level === 0) return 0;
-        if (S.isNumber(level)) {
+        if (typeof level==='number') {
             level--;
         }
         var r, childNodes = root.childNodes;

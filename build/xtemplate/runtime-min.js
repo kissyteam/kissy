@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 22 19:30
+build time: Jul 23 22:58
 */
 KISSY.add("xtemplate/runtime/commands",function(e){var g;return g={each:function(c,a){var b=a.params[0],d="",f;if(b){var h=[0,0].concat(c);if(e.isArray(b)){f=b.length;for(var i=0;i<f;i++)h[0]=b[i],h[1]={xcount:f,xindex:i},d+=a.fn(h)}else for(f in b)h[0]=b[f],h[1]={xkey:f},d+=a.fn(h)}else a.inverse&&(d=a.inverse(c));return d},"with":function(c,a){var b=a.params[0],d=[0].concat(c),f="";b?(d[0]=b,f=a.fn(d)):a.inverse&&(f=a.inverse(c));return f},"if":function(c,a){var b="";a.params[0]?a.fn&&(b=a.fn(c)):
 a.inverse&&(b=a.inverse(c));return b},set:function(c,a){for(var b=c.length-1;0<=b;b--)if("object"==typeof c[b]){e.mix(c[b],a.hash);break}return""},include:function(c,a){var b=a.params,c=(a.hash?[a.hash]:[]).concat(c);if(!b||1!=b.length)return e[a.silent?"log":"error"]("include must has one param"),"";var d=this.config.name,b=b[0];if("."==b.charAt(0)){if("unspecified"==d)return"";b=e.Path.resolve(d,"../",b)}d=this.config.loader.call(this,b);a=e.merge(this.config);a.name=b;return this.invokeEngine(d,

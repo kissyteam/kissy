@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 3 13:51
+build time: Jul 23 22:49
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -30,7 +30,7 @@ KISSY.add("editor/plugin/draft", function (S, Editor, localStorage, Overlay, Men
     }
 
     function date(d) {
-        if (S.isNumber(d)) {
+        if (typeof d==='number') {
             d = new Date(d);
         }
         if (d instanceof Date)
@@ -327,7 +327,7 @@ KISSY.add("editor/plugin/draft", function (S, Editor, localStorage, Overlay, Men
             //可视区域内代码！= 最终代码
             //代码模式也要支持草稿功能
             //统一获得最终代码
-                data = editor.getData(1);
+                data = editor.getFormatData();
 
             //如果当前内容为空，不保存版本
             if (!data) {

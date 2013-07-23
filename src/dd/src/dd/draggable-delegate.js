@@ -6,8 +6,7 @@
 KISSY.add('dd/draggable-delegate', function (S, DDM, Draggable, Node) {
 
     var PREFIX_CLS = DDM.PREFIX_CLS,
-        $ = Node.all,
-        DRAG_START_EVENT = Draggable.DRAG_START_EVENT;
+        $ = Node.all;
 
     /*
      父容器监听 mousedown，找到合适的拖动 handlers 以及拖动节点
@@ -75,14 +74,14 @@ KISSY.add('dd/draggable-delegate', function (S, DDM, Draggable, Node) {
             bindDragEvent: function () {
                 var self = this,
                     node = self.get('container');
-                node.on(DRAG_START_EVENT, handlePreDragStart, self)
+                node.on(Node.Gesture.start, handlePreDragStart, self)
                     .on('dragstart', self._fixDragStart);
             },
 
             detachDragEvent: function () {
                 var self = this;
                 self.get('container')
-                    .detach(DRAG_START_EVENT, handlePreDragStart, self)
+                    .detach(Node.Gesture.start, handlePreDragStart, self)
                     .detach('dragstart', self._fixDragStart);
             },
 

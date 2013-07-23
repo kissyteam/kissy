@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 3 13:48
+build time: Jul 23 22:45
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -17,7 +17,7 @@ build time: Jul 3 13:48
  */
 KISSY.add("button/render", function (S, Control) {
     // http://www.w3.org/TR/wai-aria-practices/
-    return Control.ATTRS.xrender.value.extend({
+    return Control.getDefaultRender().extend({
         beforeCreateDom: function (renderData) {
             var self = this;
             S.mix(renderData.elAttrs, {

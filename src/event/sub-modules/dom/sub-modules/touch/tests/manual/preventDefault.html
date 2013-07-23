@@ -1,11 +1,13 @@
 <div id="t" style="width: 100px;height: 100px;border: 1px solid red">
 
 </div>
+        <a href="#" id="a">ha ha ha</a>
 <script src="/kissy/build/seed.js"></script>
 <script src="/kissy/src/log.js"></script>
 <script src="/kissy/src/package.js"></script>
 <script>
     var t = document.getElementById('t');
+    var a = document.getElementById('a');
     function logEvent(e) {
         log(e.type);
         if (e.type == 'touchstart') {
@@ -16,17 +18,27 @@
     }
 
     KISSY.use('dom,event', function (S, Dom, Event) {
-        ['touchstart', 'touchend', 'MSPointerDown', 'MSPointerUp', 'mousedown', 'mouseup', 'mousemove']
+        ['touchstart','touchmove', 'touchend', 'MSPointerDown',
+            'MSPointerMove',
+                'click',
+                'mouseup',
+            'MSPointerUp', 'mousedown',  'mousemove']
                 .forEach(function (type) {
                     t.addEventListener(type, function (e) {
                         logEvent(e);
                         var type = e.type;
-                        if (type == 'touchstart' ||
-                                type == 'touchend' ||
-                                type == 'MSPointerDown' ||
-                                type == 'mousedown') {
-                            e.preventDefault();
+                        if(type=='touchstart'){
+                            //e.preventDefault();
                         }
+                        //
+                    }, false);
+                    a.addEventListener(type, function (e) {
+                        logEvent(e);
+                        var type = e.type;
+                        if(type=='touchstart'){
+                            //e.preventDefault();
+                        }
+                        //
                     }, false);
                 });
     });

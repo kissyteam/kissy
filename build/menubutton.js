@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 3 16:19
+build time: Jul 23 22:56
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -27,7 +27,7 @@ KISSY.add("menubutton/render", function (S, Button,
                                          MenuButtonTpl,
                                          ContentRenderExtension) {
 
-    return Button.ATTRS.xrender.value.extend([ContentRenderExtension], {
+    return Button.getDefaultRender().extend([ContentRenderExtension], {
 
         decorateDom: function (el) {
             var control = this.control,
@@ -130,7 +130,7 @@ KISSY.add("menubutton/control", function (S, Node, Button, MenuButtonRender, Men
          * If drop down menu is visible then handle event to menu.
          * Returns true if the event was handled, falsy otherwise.
          * Protected, should only be overridden by subclasses.
-         * @param {KISSY.Event.DOMEventObject} e key event to handle.
+         * @param {KISSY.Event.DomEventObject} e key event to handle.
          * @return {Boolean|undefined} True Whether the key event was handled.
          * @protected
          */
@@ -186,7 +186,7 @@ KISSY.add("menubutton/control", function (S, Node, Button, MenuButtonRender, Men
         /**
          * Handles blur event.
          * When it loses keyboard focus, close the drop dow menu.
-         * @param {KISSY.Event.DOMEventObject} e Blur event.
+         * @param {KISSY.Event.DomEventObject} e Blur event.
          * Protected, should only be overridden by subclasses.
          * @protected
          *
@@ -450,7 +450,7 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
      * Protected, should only be overridden by subclasses.
      * @protected
      *
-     * @param {KISSY.Event.DOMEventObject} e
+     * @param {KISSY.Event.DomEventObject} e
      */
     function handleMenuClick(e) {
         var self = this,

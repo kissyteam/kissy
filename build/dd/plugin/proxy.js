@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 3 13:49
+build time: Jul 23 22:47
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -111,7 +111,7 @@ KISSY.add('dd/plugin/proxy', function (S, Node, Base, DD) {
                     dragNode = drag.get('node');
                 // cache proxy node
                 if (!self.get('proxyNode')) {
-                    if (S.isFunction(node)) {
+                    if (typeof node === 'function') {
                         node = node(drag);
                         node.addClass('ks-dd-proxy');
                         node.css('position', 'absolute');

@@ -3,7 +3,7 @@
  * fired when rotate using two fingers
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/touch/rotate', function (S, eventHandleMap, MultiTouch, DomEvent, Gesture, undefined) {
+KISSY.add('event/dom/touch/rotate', function (S, eventHandleMap, MultiTouch, DomEvent, undefined) {
     var ROTATE_START = 'rotateStart',
         ROTATE = 'rotate',
         RAD_2_DEG = 180 / Math.PI,
@@ -86,7 +86,7 @@ KISSY.add('event/dom/touch/rotate', function (S, eventHandleMap, MultiTouch, Dom
     function prevent(e) {
         // android can not throttle
         // need preventDefault always
-        if (!e.touches || e.touches.length == 2) {
+        if (e.touches.length == 2) {
             e.preventDefault();
         }
     }
@@ -101,15 +101,15 @@ KISSY.add('event/dom/touch/rotate', function (S, eventHandleMap, MultiTouch, Dom
     eventHandleMap[ROTATE] = {
         handle: r,
         add: function () {
-            DomEvent.on(this, Gesture.move, prevent);
+            DomEvent.on(this, 'touchmove', prevent);
         },
         remove: function () {
-            DomEvent.detach(this, Gesture.move, prevent);
+            DomEvent.detach(this, 'touchmove', prevent);
         }
     };
 
     return Rotate;
 
 }, {
-    requires: ['./handle-map', './multi-touch', 'event/dom/base', './gesture']
+    requires: ['./handle-map', './multi-touch', 'event/dom/base']
 });

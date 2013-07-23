@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 3 13:56
+build time: Jul 23 22:56
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -45,7 +45,7 @@ KISSY.add("kison/utils", function (S) {
             var r;
 
             if (excludeReg &&
-                S.isFunction(excludeReg) &&
+                (typeof excludeReg === 'function') &&
                 (r = excludeReg(obj)) === false) {
                 return false;
             }
@@ -58,7 +58,7 @@ KISSY.add("kison/utils", function (S) {
 
             if (typeof obj == 'string') {
                 return "'" + escapeString(obj) + "'";
-            } else if (S.isNumber(obj)) {
+            } else if (typeof obj==='number') {
                 return obj + "";
             } else if (S.isRegExp(obj)) {
                 return '/' +

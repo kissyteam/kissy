@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 18 22:54
+build time: Jul 23 22:46
 */
 KISSY.add("component/control/process",function(e,l,n){function m(c){c.fire("beforeSyncUI");c.callMethodByHierarchy("syncUI","__syncUI");c.callPluginsMethod("syncUI");c.fire("afterSyncUI")}var g=n.Defer,e=e.noop,h=l.extend({bindInternal:e,syncInternal:e,initializer:function(){this._createdDefer=new g;this._renderedDefer=new g},onCreated:function(c){return this._createdDefer.promise.then(c)},onRendered:function(c){return this._renderedDefer.promise.then(c)},create:function(){this.get("created")||(this.fire("beforeCreateDom"),
 this.createInternal(),this.callPluginsMethod("createDom"),this.fire("afterCreateDom"),this.setInternal("created",!0));return this},createInternal:function(){this.callMethodByHierarchy("createDom","__createDom")},render:function(){this.get("rendered")||(this.create(),this.fire("beforeRenderUI"),this.callMethodByHierarchy("renderUI","__renderUI"),this.callPluginsMethod("renderUI"),this.fire("afterRenderUI"),this.fire("beforeBindUI"),h.superclass.bindInternal.call(this),this.callMethodByHierarchy("bindUI",

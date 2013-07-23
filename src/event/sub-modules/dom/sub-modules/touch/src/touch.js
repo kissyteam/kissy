@@ -5,6 +5,37 @@
  */
 KISSY.add('event/dom/touch', function (S, DomEvent, eventHandleMap, eventHandle) {
     var isMsPointerSupported = S.Features.isMsPointerSupported();
+    var Gesture = DomEvent.Gesture;
+    var startEvent = Gesture.start = 'KSPointerDown';
+    var moveEvent = Gesture.move = 'KSPointerMove';
+    var endEvent = Gesture.end ='KSPointerUp';
+    Gesture.tap = 'tap';
+    Gesture.doubleTap = 'doubleTap';
+
+    eventHandleMap[startEvent] = {
+        handle: {
+            isActive: 1,
+            onTouchStart: function (e) {
+                DomEvent.fire(e.target, startEvent, e);
+            }
+        }
+    };
+    eventHandleMap[moveEvent] = {
+        handle: {
+            isActive: 1,
+            onTouchMove: function (e) {
+                DomEvent.fire(e.target, moveEvent, e);
+            }
+        }
+    };
+    eventHandleMap[endEvent] = {
+        handle: {
+            isActive: 1,
+            onTouchEnd: function (e) {
+                DomEvent.fire(e.target, endEvent, e);
+            }
+        }
+    };
 
     function setupExtra(event) {
         setup.call(this, event);
@@ -75,15 +106,6 @@ KISSY.add('event/dom/touch', function (S, DomEvent, eventHandleMap, eventHandle)
         }
         Special[e] = specialEvent;
     }
-
-    Special['gestureStart'] = Special['gestureEnd'] = Special['gestureMove'] = {
-        setup: function () {
-            setup.call(this);
-        },
-        tearDown: function () {
-            tearDown.call(this);
-        }
-    };
 }, {
     requires: ['event/dom/base', './touch/handle-map', './touch/handle']
 });

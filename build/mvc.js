@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 3 13:57
+build time: Jul 23 22:56
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -997,7 +997,7 @@ KISSY.add('mvc/router', function (S, Node, Base) {
         var name = str,
             paramNames = [];
 
-        if (S.isFunction(callback)) {
+        if (typeof callback === 'function') {
             // escape keyword from regexp
             str = S.escapeRegExp(str);
 
@@ -1035,7 +1035,7 @@ KISSY.add('mvc/router', function (S, Node, Base) {
      * @param callback
      */
     function normFn(self, callback) {
-        if (S.isFunction(callback)) {
+        if (typeof callback === 'function') {
             return callback;
         } else if (typeof callback == 'string') {
             return self[callback];

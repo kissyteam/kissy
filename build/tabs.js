@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 3 13:58
+build time: Jul 23 22:58
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -18,7 +18,7 @@ build time: Jul 3 13:58
 */
 
 KISSY.add('tabs/bar-render', function (S, Toolbar) {
-    return Toolbar.ATTRS.xrender.value.extend({
+    return Toolbar.getDefaultRender().extend({
         beforeCreateDom: function (renderData) {
             renderData.elAttrs.role = 'tablist';
         }
@@ -65,7 +65,7 @@ KISSY.add("tabs/bar", function (S, Toolbar, BarRender, undefined) {
             var self = this;
             var current = self.get('selectedTab');
             var next = self.getNextItemByKeyDown(e, current);
-            if (S.isBoolean(next)) {
+            if (typeof next === 'boolean') {
                 return next;
             } else {
                 next.set('selected', true);
@@ -229,7 +229,7 @@ KISSY.add("tabs/body", function (S, Container, Extension, undefined) {
  */
 KISSY.add("tabs/tab-render", function (S, Button) {
 
-    return Button.ATTRS.xrender.value.extend({
+    return Button.getDefaultRender().extend({
         beforeCreateDom: function (renderData) {
             var attrs = renderData.elAttrs;
             attrs.role = 'tab';
@@ -310,7 +310,7 @@ KISSY.add("tabs/tab", function (S, Button, TabRender) {
  */
 KISSY.add("tabs/panel-render", function (S, Container) {
 
-    return Container.ATTRS.xrender.value.extend({
+    return Container.getDefaultRender().extend({
 
         beforeCreateDom: function (renderData) {
             var self = this;
@@ -392,7 +392,7 @@ KISSY.add("tabs/render", function (S, Container) {
 
     var CLS = "top bottom left right";
 
-    return Container.ATTRS.xrender.value.extend({
+    return Container.getDefaultRender().extend({
 
         beforeCreateDom: function (renderData) {
             renderData.elCls

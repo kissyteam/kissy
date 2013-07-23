@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 3 16:25
+build time: Jul 23 22:55
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -25,7 +25,7 @@ KISSY.add('filter-menu/render-tpl',
  */
 KISSY.add("filter-menu/render", function (S, Node, Menu, FilterMenuTpl, ContentRenderExtension) {
 
-    return Menu.ATTRS.xrender.value.extend([ContentRenderExtension], {
+    return Menu.getDefaultRender().extend([ContentRenderExtension], {
 
         beforeCreateDom:function(renderData,childrenElSelectors){
             S.mix(childrenElSelectors, {

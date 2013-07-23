@@ -1,10 +1,10 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 3 16:19
+build time: Jul 23 22:56
 */
 KISSY.add("menubutton/menubutton-tpl","{{{include 'component/extension/content-render/content-tpl'}}} <div class=\"{{getBaseCssClasses 'dropdown'}}\"> <div class=\"{{getBaseCssClasses 'dropdown-inner'}}\"> </div> </div>");
-KISSY.add("menubutton/render",function(c,b,e,i){return b.ATTRS.xrender.value.extend([i],{decorateDom:function(f){var h=this.control,c=h.get("prefixCls"),f=f.one("."+c+"popupmenu"),b=f[0].ownerDocument.body;b.insertBefore(f[0],b.firstChild);b=this.getComponentConstructorByNode(c,f);h.setInternal("menu",new b({srcNode:f,prefixCls:c}))},beforeCreateDom:function(b){c.mix(b.elAttrs,{"aria-expanded":!1,"aria-haspopup":!0})},_onSetCollapsed:function(b){var c=this.$el,e=this.getBaseCssClass("open");c[b?"removeClass":
+KISSY.add("menubutton/render",function(c,b,e,i){return b.getDefaultRender().extend([i],{decorateDom:function(f){var h=this.control,c=h.get("prefixCls"),f=f.one("."+c+"popupmenu"),b=f[0].ownerDocument.body;b.insertBefore(f[0],b.firstChild);b=this.getComponentConstructorByNode(c,f);h.setInternal("menu",new b({srcNode:f,prefixCls:c}))},beforeCreateDom:function(b){c.mix(b.elAttrs,{"aria-expanded":!1,"aria-haspopup":!0})},_onSetCollapsed:function(b){var c=this.$el,e=this.getBaseCssClass("open");c[b?"removeClass":
 "addClass"](e).attr("aria-expanded",!b)}},{ATTRS:{contentTpl:{value:e}}})},{requires:["button","./menubutton-tpl","component/extension/content-render"]});
 KISSY.add("menubutton/control",function(c,b,e,i,f,h){function l(a){a.target.isMenuItem&&this.get("collapseOnClick")&&this.set("collapsed",!0)}function j(a){a.target.isMenu&&(a=a.newVal,this.el.setAttribute("aria-activedescendant",a&&a.el.id||""))}var g=b.KeyCode,n=e.extend({isMenuButton:1,_onSetCollapsed:function(a){var d=this.get("menu");if(a)d.hide();else if(a=this.$el,!d.get("visible")){var b={node:a,points:["bl","tl"],overflow:{adjustX:1,adjustY:1}};c.mix(d.get("align"),b,!1);this.get("matchElWidth")&&
 (d.render(),b=d.get("el"),b=(parseInt(b.css("borderLeftWidth"))||0)+(parseInt(b.css("borderRightWidth"))||0),d.set("width",d.get("align").node[0].offsetWidth-b));d.show();a.attr("aria-haspopup",d.get("el").attr("id"))}},bindUI:function(){this.on("afterHighlightedItemChange",j,this);this.on("click",l,this)},handleKeyDownInternal:function(a){var d=a.keyCode,b=""+a.type,k=this.get("menu");if(d==g.SPACE){if(a.preventDefault(),"keyup"!=b)return h}else if("keydown"!=b)return h;return k.get("rendered")&&

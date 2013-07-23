@@ -3,7 +3,7 @@
  * fired when tap and hold for more than 1s
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/touch/tap-hold', function (S, eventHandleMap, SingleTouch, DomEvent, Gesture) {
+KISSY.add('event/dom/touch/tap-hold', function (S, eventHandleMap, SingleTouch, DomEvent) {
     var event = 'tapHold';
 
     var duration = 1000;
@@ -18,11 +18,11 @@ KISSY.add('event/dom/touch/tap-hold', function (S, eventHandleMap, SingleTouch, 
                 return false;
             }
             self.timer = setTimeout(function () {
-                var touch= e.touches[0];
+                var touch = e.touches[0];
                 DomEvent.fire(e.target, event, {
                     touch: touch,
-                    pageX:touch.pageX,
-                    pageY:touch.pageY,
+                    pageX: touch.pageX,
+                    pageY: touch.pageY,
                     which: 1,
                     duration: (S.now() - e.timeStamp) / 1000
                 });
@@ -40,7 +40,7 @@ KISSY.add('event/dom/touch/tap-hold', function (S, eventHandleMap, SingleTouch, 
     });
 
     function prevent(e) {
-        if (!e.touches || e.touches.length == 1) {
+        if (e.touches.length == 1) {
             e.preventDefault();
         }
     }
@@ -48,10 +48,10 @@ KISSY.add('event/dom/touch/tap-hold', function (S, eventHandleMap, SingleTouch, 
     eventHandleMap[event] = {
         setup: function () {
             // prevent native scroll
-            DomEvent.on(this, Gesture.start, prevent);
+            DomEvent.on(this, 'touchstart', prevent);
         },
         tearDown: function () {
-            DomEvent.detach(this, Gesture.start, prevent);
+            DomEvent.detach(this, 'touchstart', prevent);
         },
         handle: new TapHold()
     };
@@ -59,5 +59,5 @@ KISSY.add('event/dom/touch/tap-hold', function (S, eventHandleMap, SingleTouch, 
     return TapHold;
 
 }, {
-    requires: ['./handle-map', './single-touch', 'event/dom/base', './gesture']
+    requires: ['./handle-map', './single-touch', 'event/dom/base']
 });

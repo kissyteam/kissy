@@ -973,6 +973,15 @@
     };
 
     jasmine.simulateForDrag = function (target, type, option) {
+        if(type=='KSPointerDown'){
+            type='touchstart';
+        }
+        if(type=='KSPointerMove'){
+            type='touchmove';
+        }
+        if(type=='KSPointerUp'){
+            type='touchend';
+        }
         if (type.indexOf('mouse') != -1) {
             jasmine.simulate(target, type, option);
         } else if (type.indexOf('touch') != -1) {

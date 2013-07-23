@@ -3,7 +3,6 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add('scroll-view/drag', function (S, ScrollViewBase, DD, Node) {
-
     var OUT_OF_BOUND_FACTOR = 0.5;
 
     var Gesture = Node.Gesture;
@@ -385,7 +384,6 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, DD, Node) {
     }
 
     return ScrollViewBase.extend({
-
             bindUI: function () {
                 var self = this,
                     $contentEl = self.$contentEl,
@@ -398,11 +396,9 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, DD, Node) {
                 dd.on('dragstart', onDragStartHandler, self)
                     .on('drag', onDragHandler, self)
                     .on('dragend', onDragEndHandler, self);
-
-                self.get('el').on('singleTouchStart', onSingleGestureStart, self);
-                $contentEl.on('singleTouchStart', onSingleGestureStart, self);
+                // self.get('el').on(Gesture.start, onSingleGestureStart, self);
+                $contentEl.on(Gesture.start, onSingleGestureStart, self);
             },
-
 
             syncUI: function () {
                 initStates(this);
@@ -416,7 +412,6 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, DD, Node) {
             _onSetDisabled: function (v) {
                 this.dd.set('disabled', v);
             }
-
         },
         {
             ATTRS: {
@@ -453,7 +448,6 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, DD, Node) {
             xclass: 'scroll-view'
         }
     );
-
 }, {
     requires: ['./base', 'dd', 'node']
 });

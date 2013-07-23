@@ -1,9 +1,9 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 3 13:58
+build time: Jul 23 22:58
 */
-KISSY.add("toolbar/render",function(f,i){return i.ATTRS.xrender.value.extend({beforeCreateDom:function(f){f.elAttrs.role="toolbar"}})},{requires:["component/container"]});
+KISSY.add("toolbar/render",function(f,i){return i.getDefaultRender().extend({beforeCreateDom:function(f){f.elAttrs.role="toolbar"}})},{requires:["component/container"]});
 KISSY.add("toolbar",function(f,i,k,l,m,j){function h(a,b,c){var c=c.get("children"),d=0,e=c.length;if(a==j&&(a=1==b?0:e-1,!c[a].get("disabled")))return c[a];do d++,a=(a+e+b)%e;while(d<e&&c[a].get("disabled"));return d!=e?c[a]:null}function n(a){a.newVal?this.set("expandedItem",null):this.set("expandedItem",a.target)}function o(a){var b=a.target;if(this!==b&&(b.isMenuItem||b.isButton))a.newVal?(a=this.get("children"),this.get("expandedItem")&&f.inArray(b,a)&&this.set("expandedItem",b.isMenuButton?
 b:null),this.set("highlightedItem",b)):a.byPassSetToolbarHighlightedItem||this.set("highlightedItem",null)}var g=m.KeyCode;return i.extend([k],{_onSetHighlightedItem:function(a,b){var c,d;c=b&&b.prevVal;d=this.get("children");var e=this.el;c&&f.inArray(c,d)&&c.set("highlighted",!1,{data:{byPassSetToolbarHighlightedItem:1}});a?(e.ownerDocument.activeElement!=e&&this.focus(),d=a.el,c=d.id,c||(d.id=c=f.guid("ks-toolbar-item")),e.setAttribute("aria-activedescendant",c)):e.setAttribute("aria-activedescendant",
 "")},_onSetExpandedItem:function(a,b){b&&b.prevVal&&b.prevVal.set("collapsed",!0);a&&a.set("collapsed",!1)},bindUI:function(){this.on("afterCollapsedChange",n,this);this.on("afterHighlightedChange",o,this)},handleBlurInternal:function(){var a;this.set("expandedItem",null);(a=this.get("highlightedItem"))&&a.set("highlighted",!1)},getNextItemByKeyDown:function(a,b){this.get("orientation");var c=this.get("children"),c=b&&f.indexOf(b,c);if(b&&b.handleKeyDownInternal(a))return!0;if(a.shiftKey||a.ctrlKey||

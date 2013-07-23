@@ -1,13 +1,12 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 22 19:30
+build time: Jul 23 22:55
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
 
  event/dom/touch/handle-map
- event/dom/touch/gesture
  event/dom/touch/single-touch
  event/dom/touch/tap
  event/dom/touch/swipe
@@ -16,7 +15,6 @@ build time: Jul 22 19:30
  event/dom/touch/pinch
  event/dom/touch/tap-hold
  event/dom/touch/rotate
- event/dom/touch/single-touch-start
  event/dom/touch/handle
  event/dom/touch
 */
@@ -32,53 +30,6 @@ KISSY.add('event/dom/touch/handle-map', function () {
 
     };
 
-});
-/**
- * @ignore
- * patch gesture for touch
- * @author yiminghe@gmail.com
- */
-KISSY.add('event/dom/touch/gesture', function (S, DomEvent) {
-
-    var Gesture = DomEvent.Gesture,
-        Features = S.Features,
-        startEvent,
-        moveEvent,
-        cancelEvent,
-        endEvent;
-
-    // 不能同时绑定 touchstart 与 mousedown 会导致 ios 不能选择文本
-    // bind mousedown to turn element into clickable element
-    if (Features.isTouchEventSupported()) {
-        startEvent = 'touchstart';
-        moveEvent = 'touchmove';
-        endEvent = 'touchend';
-        cancelEvent = 'touchcancel';
-    }
-
-
-    else if (Features.isMsPointerSupported()) {
-        startEvent = 'MSPointerDown';
-        moveEvent = 'MSPointerMove';
-        endEvent = 'MSPointerUp';
-        cancelEvent = 'MSPointerCancel';
-    }
-
-    // force to load event/dom/touch in pc to use mouse to simulate touch
-    if (startEvent) {
-        Gesture.start = startEvent;
-        Gesture.move = moveEvent;
-        Gesture.end = endEvent;
-        Gesture.cancel = cancelEvent;
-        Gesture.tap = 'tap';
-        Gesture.doubleTap = 'doubleTap';
-        Gesture.singleTouchStart = 'singleTouchStart';
-    }
-
-    return Gesture;
-
-}, {
-    requires: ['event/dom/base']
 });
 /**
  * @ignore
@@ -541,7 +492,7 @@ KISSY.add('event/dom/touch/multi-touch', function (S, Dom) {
  * gesture pinch
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/touch/pinch', function (S, eventHandleMap, DomEvent, MultiTouch, Gesture) {
+KISSY.add('event/dom/touch/pinch', function (S, eventHandleMap, DomEvent, MultiTouch) {
 
     var PINCH = 'pinch',
         PINCH_START = 'pinchStart',
@@ -574,7 +525,6 @@ KISSY.add('event/dom/touch/pinch', function (S, eventHandleMap, DomEvent, MultiT
                 self.isStarted = true;
                 self.startDistance = distance;
                 var target = self.target = self.getCommonTarget(e);
-
                 DomEvent.fire(target,
                     PINCH_START, S.mix(e, {
                         distance: distance,
@@ -606,9 +556,7 @@ KISSY.add('event/dom/touch/pinch', function (S, eventHandleMap, DomEvent, MultiT
         };
 
     function prevent(e) {
-        // android can not throttle
-        // need preventDefault always
-        if (!e.touches || e.touches.length == 2) {
+        if (e.touches.length == 2) {
             e.preventDefault();
         }
     }
@@ -616,24 +564,26 @@ KISSY.add('event/dom/touch/pinch', function (S, eventHandleMap, DomEvent, MultiT
     eventHandleMap[PINCH] = {
         handle: p,
         add: function () {
-            DomEvent.on(this, Gesture.move, prevent);
+            // need on this
+            // if on document, will affect other elements!
+            DomEvent.on(this, 'touchmove', prevent);
         },
         remove: function () {
-            DomEvent.detach(this, Gesture.move, prevent);
+            DomEvent.detach(this, 'touchmove', prevent);
         }
     };
 
     return Pinch;
 
 }, {
-    requires: ['./handle-map', 'event/dom/base', './multi-touch', './gesture']
+    requires: ['./handle-map', 'event/dom/base', './multi-touch']
 });
 /**
  * @ignore
  * fired when tap and hold for more than 1s
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/touch/tap-hold', function (S, eventHandleMap, SingleTouch, DomEvent, Gesture) {
+KISSY.add('event/dom/touch/tap-hold', function (S, eventHandleMap, SingleTouch, DomEvent) {
     var event = 'tapHold';
 
     var duration = 1000;
@@ -648,11 +598,11 @@ KISSY.add('event/dom/touch/tap-hold', function (S, eventHandleMap, SingleTouch, 
                 return false;
             }
             self.timer = setTimeout(function () {
-                var touch= e.touches[0];
+                var touch = e.touches[0];
                 DomEvent.fire(e.target, event, {
                     touch: touch,
-                    pageX:touch.pageX,
-                    pageY:touch.pageY,
+                    pageX: touch.pageX,
+                    pageY: touch.pageY,
                     which: 1,
                     duration: (S.now() - e.timeStamp) / 1000
                 });
@@ -670,7 +620,7 @@ KISSY.add('event/dom/touch/tap-hold', function (S, eventHandleMap, SingleTouch, 
     });
 
     function prevent(e) {
-        if (!e.touches || e.touches.length == 1) {
+        if (e.touches.length == 1) {
             e.preventDefault();
         }
     }
@@ -678,10 +628,10 @@ KISSY.add('event/dom/touch/tap-hold', function (S, eventHandleMap, SingleTouch, 
     eventHandleMap[event] = {
         setup: function () {
             // prevent native scroll
-            DomEvent.on(this, Gesture.start, prevent);
+            DomEvent.on(this, 'touchstart', prevent);
         },
         tearDown: function () {
-            DomEvent.detach(this, Gesture.start, prevent);
+            DomEvent.detach(this, 'touchstart', prevent);
         },
         handle: new TapHold()
     };
@@ -689,14 +639,14 @@ KISSY.add('event/dom/touch/tap-hold', function (S, eventHandleMap, SingleTouch, 
     return TapHold;
 
 }, {
-    requires: ['./handle-map', './single-touch', 'event/dom/base', './gesture']
+    requires: ['./handle-map', './single-touch', 'event/dom/base']
 });
 /**
  * @ignore
  * fired when rotate using two fingers
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/touch/rotate', function (S, eventHandleMap, MultiTouch, DomEvent, Gesture, undefined) {
+KISSY.add('event/dom/touch/rotate', function (S, eventHandleMap, MultiTouch, DomEvent, undefined) {
     var ROTATE_START = 'rotateStart',
         ROTATE = 'rotate',
         RAD_2_DEG = 180 / Math.PI,
@@ -779,7 +729,7 @@ KISSY.add('event/dom/touch/rotate', function (S, eventHandleMap, MultiTouch, Dom
     function prevent(e) {
         // android can not throttle
         // need preventDefault always
-        if (!e.touches || e.touches.length == 2) {
+        if (e.touches.length == 2) {
             e.preventDefault();
         }
     }
@@ -794,79 +744,60 @@ KISSY.add('event/dom/touch/rotate', function (S, eventHandleMap, MultiTouch, Dom
     eventHandleMap[ROTATE] = {
         handle: r,
         add: function () {
-            DomEvent.on(this, Gesture.move, prevent);
+            DomEvent.on(this, 'touchmove', prevent);
         },
         remove: function () {
-            DomEvent.detach(this, Gesture.move, prevent);
+            DomEvent.detach(this, 'touchmove', prevent);
         }
     };
 
     return Rotate;
 
 }, {
-    requires: ['./handle-map', './multi-touch', 'event/dom/base', './gesture']
+    requires: ['./handle-map', './multi-touch', 'event/dom/base']
 });
-/**
- * @ignore
- * singleTouchStart event
- * @author yiminghe@gmail.com
- */
-KISSY.add('event/dom/touch/single-touch-start', function (S, eventHandleMap, DomEvent, SingleTouch) {
-
-    var event = 'singleTouchStart';
-
-    function SingleTouchStart() {
-    }
-
-    S.extend(SingleTouchStart, SingleTouch, {
-
-        onTouchStart: function (e) {
-            if (SingleTouchStart.superclass.onTouchStart.apply(this, arguments) !== false) {
-                var touch= e.touches[0];
-                DomEvent.fire(e.target, event, {
-                    touch: touch[0],
-                    pageX:touch.pageX,
-                    pageY:touch.pageY,
-                    which: 1,
-                    touches: e.touches
-                });
-                return undefined;
-            }
-            return false;
-        }
-
-    });
-
-    eventHandleMap[event] = {
-        handle: new SingleTouchStart()
-    };
-
-    return SingleTouchStart;
-
-}, {
-    requires: ['./handle-map', 'event/dom/base', './single-touch']
-});
-
-/**
- * for draggable:
- * listen singleTouchStart insteadof native touchstart in case inner element call stopPropagation
- */
 /**
  * @ignore
  * base handle for touch gesture
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/touch/handle', function (S, Dom, eventHandleMap, DomEvent, Gesture) {
+KISSY.add('event/dom/touch/handle', function (S, Dom, eventHandleMap, DomEvent) {
     var key = S.guid('touch-handle'),
         Features = S.Features,
         isMsPointerSupported = Features.isMsPointerSupported(),
-        touchEvents = {};
+        touchEvents = {},
+        startEvent,
+        moveEvent,
+        cancelEvent,
+        endEvent;
 
-    touchEvents[Gesture.start] = 'onTouchStart';
-    touchEvents[Gesture.move] = 'onTouchMove';
-    touchEvents[Gesture.end] = 'onTouchEnd';
-    if (Gesture.cancel) {
-        touchEvents[Gesture.cancel] = 'onTouchEnd';
+    if (Features.isTouchEventSupported()) {
+        startEvent = 'touchstart mousedown';
+        endEvent = 'touchend';
+        moveEvent = 'touchmove mousemove';
+        cancelEvent = 'touchcancel';
+    } else if (isMsPointerSupported) {
+        startEvent = 'MSPointerDown';
+        moveEvent = 'MSPointerMove';
+        endEvent = 'MSPointerUp';
+        cancelEvent = 'MSPointerCancel';
+    } else {
+        startEvent = 'mousedown';
+        moveEvent = 'mousemove';
+        endEvent = 'mouseup';
+    }
+
+    touchEvents[startEvent] = 'onTouchStart';
+    touchEvents[moveEvent] = 'onTouchMove';
+    touchEvents[endEvent] = 'onTouchEnd';
+    if (cancelEvent) {
+        touchEvents[cancelEvent] = 'onTouchEnd';
+    }
+
+    function onMouseUp(e) {
+        var self = this;
+        self.onTouchEnd(e);
+        DomEvent.detach(self.doc, 'mousemove', self.onTouchMove, self);
     }
 
     function DocumentHandler(doc) {
@@ -876,12 +807,15 @@ KISSY.add('event/dom/touch/handle', function (S, Dom, eventHandleMap, DomEvent, 
         self.init();
         // normalize pointer event to touch event
         self.touches = [];
+        // touches length of touch event
+        self.inTouch = 0;
     }
 
     DocumentHandler.prototype = {
         constructor: DocumentHandler,
 
         addTouch: function (t) {
+            t.identifier = t.pointerId;
             this.touches.push(t);
         },
 
@@ -922,24 +856,19 @@ KISSY.add('event/dom/touch/handle', function (S, Dom, eventHandleMap, DomEvent, 
             var type = e.type,
                 notUp,
                 touchList;
-            if (Features.isTouchEventSupported()) {
+            if (S.startsWith(type, 'touch')) {
                 touchList = (type == 'touchend' || type == 'touchcancel') ?
                     e.changedTouches :
                     e.touches;
                 if (touchList.length == 1) {
                     e.which = 1;
-                    e.pageX = touchList.pageX;
-                    e.pageY = touchList.pageY;
+                    e.pageX = touchList[0].pageX;
+                    e.pageY = touchList[0].pageY;
                 }
                 return e;
             }
-            else if (isMsPointerSupported) {
+            else {
                 touchList = this.touches;
-            } else {
-                if (type.indexOf('mouse') != -1 && e.which != 1) {
-                    return undefined;
-                }
-                touchList = [e];
             }
             notUp = !type.match(/(up|cancel)$/i);
             e.touches = notUp ? touchList : [];
@@ -948,32 +877,72 @@ KISSY.add('event/dom/touch/handle', function (S, Dom, eventHandleMap, DomEvent, 
             return e;
         },
 
-        onTouchMove: function (e) {
-            if (isMsPointerSupported) {
-                this.updateTouch(e.originalEvent);
-            }
-            // no throttle! to allow preventDefault
-            this.callEventHandle('onTouchMove', e);
-        },
-
         onTouchStart: function (event) {
             var e, h,
                 self = this,
                 eventHandle = self.eventHandle;
+            if ('touches' in event) {
+                self.inTouch = event.touches.length;
+            } else {
+                if (self.inTouch) {
+                    // ignore mouse
+                    return;
+                } else {
+                    // only setup mouseup , in case dual end event handler calls
+                    var doc = self.doc;
+                    DomEvent.on(doc, 'mouseup', {
+                        fn: self.onTouchEnd,
+                        context: self,
+                        once: true
+                    });
+                }
+            }
             for (e in eventHandle) {
                 h = eventHandle[e].handle;
                 h.isActive = 1;
             }
-            if (isMsPointerSupported) {
+            if ('touches' in event) {
+                self.touches = S.makeArray(event.touches);
+            } else if (isMsPointerSupported) {
                 self.addTouch(event.originalEvent);
+            } else {
+                // mouse mode
+                self.touches = [event.originalEvent];
             }
+            // if preventDefault, will not trigger click event
             self.callEventHandle('onTouchStart', event);
         },
 
+        onTouchMove: function (e) {
+            var self = this;
+            if (!('touches' in e)) {
+                // ignore mouse
+                if (self.inTouch) {
+                    return;
+                }
+                if (isMsPointerSupported) {
+                    self.updateTouch(e.originalEvent);
+                } else {
+                    self.touches = [e.originalEvent];
+                }
+            }
+            // no throttle! to allow preventDefault
+            self.callEventHandle('onTouchMove', e);
+        },
+
         onTouchEnd: function (event) {
-            this.callEventHandle('onTouchEnd', event);
-            if (isMsPointerSupported) {
-                this.removeTouch(event.originalEvent);
+            var self = this,
+            // detect before callEventHandle
+                isTouchSupported = 'touches' in event;
+            self.callEventHandle('onTouchEnd', event);
+            if (isTouchSupported) {
+                self.touches = S.makeArray(event.touches);
+                // if touch mode is ended
+                self.inTouch = self.touches.length;
+            } else if (isMsPointerSupported) {
+                self.removeTouch(event.originalEvent);
+            } else {
+                self.touches = [];
             }
         },
 
@@ -990,9 +959,11 @@ KISSY.add('event/dom/touch/handle', function (S, Dom, eventHandleMap, DomEvent, 
                         continue;
                     }
                     h.processed = 1;
-                    if (h.isActive && h[method](event) === false) {
+                    //type=event.type;
+                    if (h.isActive && h[method] && h[method](event) === false) {
                         h.isActive = 0;
                     }
+                    //event.type=type;
                 }
 
                 for (e in eventHandle) {
@@ -1024,7 +995,6 @@ KISSY.add('event/dom/touch/handle', function (S, Dom, eventHandleMap, DomEvent, 
                     delete eventHandle[event];
                 }
             }
-
         },
 
         destroy: function () {
@@ -1045,14 +1015,18 @@ KISSY.add('event/dom/touch/handle', function (S, Dom, eventHandleMap, DomEvent, 
             if (!handle) {
                 Dom.data(doc, key, handle = new DocumentHandler(doc));
             }
-            handle.addEventHandle(event);
+            if (event) {
+                handle.addEventHandle(event);
+            }
         },
 
         removeDocumentHandle: function (el, event) {
             var doc = Dom.getDocument(el),
                 handle = Dom.data(doc, key);
             if (handle) {
-                handle.removeEventHandle(event);
+                if (event) {
+                    handle.removeEventHandle(event);
+                }
                 if (S.isEmptyObject(handle.eventHandle)) {
                     handle.destroy();
                     Dom.removeData(doc, key);
@@ -1065,17 +1039,20 @@ KISSY.add('event/dom/touch/handle', function (S, Dom, eventHandleMap, DomEvent, 
         'dom',
         './handle-map',
         'event/dom/base',
-        './gesture',
         './tap',
         './swipe',
         './double-tap',
         './pinch',
         './tap-hold',
-        './rotate',
-        './single-touch-start'
+        './rotate'
     ]
 });
 /**
+ * 2013-07-23 yiminghe@gmail.com
+ * - bind both mouse and touch for start
+ * - but bind mousemove or touchmove for move
+ *
+ *
  * in order to make tap/doubleTap bubbling same with native event.
  * register event on document and then bubble programmatically!
  */
@@ -1085,8 +1062,38 @@ KISSY.add('event/dom/touch/handle', function (S, Dom, eventHandleMap, DomEvent, 
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/dom/touch', function (S, DomEvent, eventHandleMap, eventHandle) {
+    var isMsPointerSupported = S.Features.isMsPointerSupported();
+    var Gesture = DomEvent.Gesture;
+    var startEvent = Gesture.start = 'KSPointerDown';
+    var moveEvent = Gesture.move = 'KSPointerMove';
+    var endEvent = Gesture.end ='KSPointerUp';
+    Gesture.tap = 'tap';
+    Gesture.doubleTap = 'doubleTap';
 
-    var Features = S.Features;
+    eventHandleMap[startEvent] = {
+        handle: {
+            isActive: 1,
+            onTouchStart: function (e) {
+                DomEvent.fire(e.target, startEvent, e);
+            }
+        }
+    };
+    eventHandleMap[moveEvent] = {
+        handle: {
+            isActive: 1,
+            onTouchMove: function (e) {
+                DomEvent.fire(e.target, moveEvent, e);
+            }
+        }
+    };
+    eventHandleMap[endEvent] = {
+        handle: {
+            isActive: 1,
+            onTouchEnd: function (e) {
+                DomEvent.fire(e.target, endEvent, e);
+            }
+        }
+    };
 
     function setupExtra(event) {
         setup.call(this, event);
@@ -1096,7 +1103,7 @@ KISSY.add('event/dom/touch', function (S, DomEvent, eventHandleMap, eventHandle)
     function setup(event) {
         var self = this,
             style = self.style;
-        if (Features.isMsPointerSupported() && style) {
+        if (isMsPointerSupported && style) {
             if (!self.__ks_touch_action) {
                 self.__ks_touch_action = style.msTouchAction;
                 self.__ks_user_select = style.msUserSelect;
@@ -1119,7 +1126,7 @@ KISSY.add('event/dom/touch', function (S, DomEvent, eventHandleMap, eventHandle)
     function tearDown(event) {
         var self = this,
             style = self.style;
-        if (Features.isMsPointerSupported() && style) {
+        if (isMsPointerSupported && style) {
             if (!self.__ks_touch_action_count) {
                 S.error('touch event error for ie');
             }
@@ -1157,7 +1164,6 @@ KISSY.add('event/dom/touch', function (S, DomEvent, eventHandleMap, eventHandle)
         }
         Special[e] = specialEvent;
     }
-
 }, {
     requires: ['event/dom/base', './touch/handle-map', './touch/handle']
 });

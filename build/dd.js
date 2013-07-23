@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 3 13:50
+build time: Jul 23 22:47
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -16,14 +16,13 @@ build time: Jul 3 13:50
 
 /**
  * @ignore
- * dd support for kissy , dd objects central management module
+ * dd support for kissy, dd objects central management module
  * @author yiminghe@gmail.com
  */
 KISSY.add('dd/ddm', function (S, Node, Base) {
 
     var UA = S.UA,
         $ = Node.all,
-        Features = S.Features,
         win = S.Env.host,
         doc = win.document,
         $doc = $(doc),
@@ -36,15 +35,9 @@ KISSY.add('dd/ddm', function (S, Node, Base) {
         MOVE_DELAY = 30,
         SHIM_Z_INDEX = 999999;
 
-    var TARGET = 'target',
-        Gesture = Node.Gesture,
-        CURRENT_TARGET = 'currentTarget',
+    var Gesture = Node.Gesture,
         DRAG_MOVE_EVENT = Gesture.move,
         DRAG_END_EVENT = Gesture.end;
-
-    if (Gesture.cancel) {
-        DRAG_END_EVENT += ' ' + Gesture.cancel;
-    }
 
     /**
      * @class KISSY.DD.DDM
@@ -158,10 +151,8 @@ KISSY.add('dd/ddm', function (S, Node, Base) {
             __activeToDrag ,
             activeDrag;
 
-        ev = normalEvent(ev);
-
         if (!ev) {
-            DDM._end();
+            ddm._end();
             return;
         }
 
@@ -275,7 +266,7 @@ KISSY.add('dd/ddm', function (S, Node, Base) {
      */
     function activeShim(self) {
         //创造垫片，防止进入iframe，外面document监听不到 mousedown/up/move
-        self._shim = new Node('<div ' +
+        self._shim = $('<div ' +
             'style="' +
             //red for debug
             'background-color:red;' +
@@ -342,9 +333,6 @@ KISSY.add('dd/ddm', function (S, Node, Base) {
      */
     function registerEvent(self) {
         $doc.on(DRAG_END_EVENT, self._end, self);
-        if (Gesture.cancel) {
-            $doc.on(Gesture.cancel, self._end, self);
-        }
         $doc.on(DRAG_MOVE_EVENT, throttleMoveHandle, self);
         // ie6 will not response to event when cursor is out of window.
         if (UA.ie === 6) {
@@ -358,9 +346,6 @@ KISSY.add('dd/ddm', function (S, Node, Base) {
     function unRegisterEvent(self) {
         $doc.detach(DRAG_MOVE_EVENT, throttleMoveHandle, self);
         $doc.detach(DRAG_END_EVENT, self._end, self);
-        if (Gesture.cancel) {
-            $doc.detach(Gesture.cancel, self._end, self);
-        }
         if (UA.ie === 6) {
             doc.body.releaseCapture();
         }
@@ -393,7 +378,6 @@ KISSY.add('dd/ddm', function (S, Node, Base) {
      3.为了跨越 iframe 而统一在底下的遮罩层
      */
     S.extend(DDM, Base, {
-
         /*
          可能要进行拖放的对象，需要通过 buffer/pixelThresh 考验
          */
@@ -475,13 +459,13 @@ KISSY.add('dd/ddm', function (S, Node, Base) {
                 activeDrag = self.get('activeDrag'),
                 activeDrop = self.get('activeDrop');
 
-            // 最后通知 move 一次，防止 touch 设备触发 touchmove 不灵敏
-            e = e && normalEvent(e);
-            if (__activeToDrag) {
-                __activeToDrag._move(e);
-            }
-            if (activeDrag) {
-                activeDrag._move(e);
+            if (e) {
+                if (__activeToDrag) {
+                    __activeToDrag._move(e);
+                }
+                if (activeDrag) {
+                    activeDrag._move(e);
+                }
             }
 
             unRegisterEvent(self);
@@ -565,33 +549,6 @@ KISSY.add('dd/ddm', function (S, Node, Base) {
     ddm.cacheWH = cacheWH;
     ddm.PREFIX_CLS = 'ks-dd-';
 
-    /*
-     normal event between devices
-     TODO: merge with event/dom/touch
-     */
-    function normalEvent(e) {
-        var type = String(e.type),
-            touches = type == Gesture.end || type == Gesture.cancel ?
-                e.changedTouches : e.touches,
-            touch;
-        touches = touches || [];
-        // add which for touch/pointer event
-        // add pageX for touch event
-        if ((Features.isTouchEventSupported() ||
-            Features.isMsPointerSupported()) && touches.length) {
-            if (touches.length != 1) {
-                return undefined;
-            }
-            touch = touches[0];
-            e[TARGET] = e[TARGET] || touch[TARGET];
-            e[CURRENT_TARGET] = e[CURRENT_TARGET] || touch[CURRENT_TARGET];
-            e.pageX = touch.pageX;
-            e.pageY = touch.pageY;
-        }
-        e.which = 1;
-        return e;
-    }
-
     return ddm;
 }, {
     requires: ['node', 'base']
@@ -605,14 +562,7 @@ KISSY.add('dd/draggable', function (S, Node, RichBase, DDM) {
 
     var UA = S.UA,
         $ = Node.all,
-        Features = S.Features,
-        useGestureEvent = Features.isTouchEventSupported() ||
-            Features.isMsPointerSupported(),
         each = S.each,
-    // !! use singleTouchStart in touch to normalize gesture event
-        DRAG_START_EVENT = useGestureEvent ?
-            'singleTouchStart' :
-            Node.Gesture.start,
         ie = UA['ie'],
         NULL = null,
         PREFIX_CLS = DDM.PREFIX_CLS,
@@ -624,7 +574,6 @@ KISSY.add('dd/draggable', function (S, Node, RichBase, DDM) {
      * Provide abilities to make specified node draggable
      */
     var Draggable = RichBase.extend({
-
         initializer: function () {
             var self = this;
             self.addTarget(DDM);
@@ -807,14 +756,16 @@ KISSY.add('dd/draggable', function (S, Node, RichBase, DDM) {
         },
 
         bindDragEvent: function () {
-            var self = this, node = self.get('node');
-            node.on(DRAG_START_EVENT, handlePreDragStart, self)
+            var self = this,
+                node = self.get('node');
+            node.on(Node.Gesture.start, handlePreDragStart, self)
                 .on('dragstart', self._fixDragStart);
         },
 
-        detachDragEvent: function () {
-            var self = this, node = self.get('node');
-            node.detach(DRAG_START_EVENT, handlePreDragStart, self)
+        detachDragEvent: function (self) {
+            self = this;
+            var node = self.get('node');
+            node.detach(Node.Gesture.start, handlePreDragStart, self)
                 .detach('dragstart', self._fixDragStart);
         },
 
@@ -825,8 +776,7 @@ KISSY.add('dd/draggable', function (S, Node, RichBase, DDM) {
         _bufferTimer: NULL,
 
         _onSetDisabledChange: function (d) {
-            this.get('dragNode')[d ? 'addClass' :
-                'removeClass'](PREFIX_CLS + '-disabled');
+            this.get('dragNode')[d ? 'addClass' : 'removeClass'](PREFIX_CLS + '-disabled');
         },
 
         _fixDragStart: fixDragStart,
@@ -857,7 +807,6 @@ KISSY.add('dd/draggable', function (S, Node, RichBase, DDM) {
         },
 
         _prepare: function (ev) {
-
             if (!ev) {
                 return;
             }
@@ -883,9 +832,7 @@ KISSY.add('dd/draggable', function (S, Node, RichBase, DDM) {
             // in touch device
             // prevent touchdown
             // will prevent text selection and link click
-            // if (!useGestureEvent) {
             ev.preventDefault();
-            // }
 
             var mx = ev.pageX,
                 my = ev.pageY;
@@ -896,7 +843,6 @@ KISSY.add('dd/draggable', function (S, Node, RichBase, DDM) {
             });
 
             if (self._allowMove) {
-
                 var node = self.get('node'),
                     nxy = node.offset();
                 self.setInternal('startNodePos', nxy);
@@ -904,7 +850,6 @@ KISSY.add('dd/draggable', function (S, Node, RichBase, DDM) {
                     left: mx - nxy.left,
                     top: my - nxy.top
                 });
-
             }
 
             DDM._regToDrag(self);
@@ -931,7 +876,6 @@ KISSY.add('dd/draggable', function (S, Node, RichBase, DDM) {
         },
 
         _move: function (ev) {
-
             var self = this,
                 ret,
                 pageX = ev.pageX,
@@ -1001,7 +945,6 @@ KISSY.add('dd/draggable', function (S, Node, RichBase, DDM) {
         },
 
         _end: function (e) {
-
             e = e || {};
 
             var self = this,
@@ -1083,13 +1026,8 @@ KISSY.add('dd/draggable', function (S, Node, RichBase, DDM) {
             self.detachDragEvent();
             self.detach();
         }
-
-
     }, {
-
         name: 'Draggable',
-
-        DRAG_START_EVENT: DRAG_START_EVENT,
 
         ATTRS: {
 
@@ -1165,7 +1103,7 @@ KISSY.add('dd/draggable', function (S, Node, RichBase, DDM) {
             /**
              * use protective shim to cross iframe.
              *
-             * Defaults to: true
+             * Defaults to: false
              *
              * @cfg {Boolean} shim
              *
@@ -1174,7 +1112,7 @@ KISSY.add('dd/draggable', function (S, Node, RichBase, DDM) {
              * @ignore
              */
             shim: {
-                value: !useGestureEvent
+                value: false
             },
 
             /**
@@ -1195,7 +1133,7 @@ KISSY.add('dd/draggable', function (S, Node, RichBase, DDM) {
                         vs[0] = self.get('node');
                     }
                     each(vs, function (v, i) {
-                        if (S.isFunction(v)) {
+                        if (typeof v === 'function') {
                             v = v.call(self);
                         }
                         // search inside node
@@ -1501,8 +1439,7 @@ KISSY.add('dd/draggable', function (S, Node, RichBase, DDM) {
 KISSY.add('dd/draggable-delegate', function (S, DDM, Draggable, Node) {
 
     var PREFIX_CLS = DDM.PREFIX_CLS,
-        $ = Node.all,
-        DRAG_START_EVENT = Draggable.DRAG_START_EVENT;
+        $ = Node.all;
 
     /*
      父容器监听 mousedown，找到合适的拖动 handlers 以及拖动节点
@@ -1570,14 +1507,14 @@ KISSY.add('dd/draggable-delegate', function (S, DDM, Draggable, Node) {
             bindDragEvent: function () {
                 var self = this,
                     node = self.get('container');
-                node.on(DRAG_START_EVENT, handlePreDragStart, self)
+                node.on(Node.Gesture.start, handlePreDragStart, self)
                     .on('dragstart', self._fixDragStart);
             },
 
             detachDragEvent: function () {
                 var self = this;
                 self.get('container')
-                    .detach(DRAG_START_EVENT, handlePreDragStart, self)
+                    .detach(Node.Gesture.start, handlePreDragStart, self)
                     .detach('dragstart', self._fixDragStart);
             },
 
@@ -1664,252 +1601,250 @@ KISSY.add('dd/draggable-delegate', function (S, DDM, Draggable, Node) {
  * @author yiminghe@gmail.com
  */
 KISSY.add('dd/droppable', function (S, Node, RichBase, DDM) {
+    var PREFIX_CLS = DDM.PREFIX_CLS;
 
-        var PREFIX_CLS = DDM.PREFIX_CLS;
-
-        function validDrop(dropGroups, dragGroups) {
-            if (dragGroups === true) {
+    function validDrop(dropGroups, dragGroups) {
+        if (dragGroups === true) {
+            return 1;
+        }
+        for (var d in dropGroups) {
+            if (dragGroups[d]) {
                 return 1;
             }
-            for (var d in dropGroups) {
-                if (dragGroups[d]) {
-                    return 1;
-                }
-            }
-            return 0;
         }
+        return 0;
+    }
+
+    /**
+     * @class KISSY.DD.Droppable
+     * @extends KISSY.RichBase
+     * Make a node droppable.
+     */
+    return RichBase.extend({
+
+        initializer: function () {
+            var self = this;
+            self.addTarget(DDM);
+
+            /**
+             * fired after a draggable leaves a droppable
+             * @event dropexit
+             * @member KISSY.DD.DDM
+             * @param e
+             * @param e.drag current draggable object
+             * @param e.drop current droppable object
+             */
+
+            /**
+             *
+             * fired after a draggable leaves a droppable
+             * @event dropexit
+             * @member KISSY.DD.Droppable
+             * @param e
+             * @param e.drag current draggable object
+             * @param e.drop current droppable object
+             */
+
+
+            /**
+             * fired after a draggable object mouseenter a droppable object
+             * @event dropenter
+             * @member KISSY.DD.DDM
+             * @param e
+             * @param e.drag current draggable object
+             * @param e.drop current droppable object
+             */
+
+            /**
+             * fired after a draggable object mouseenter a droppable object
+             * @event dropenter
+             * @member KISSY.DD.Droppable
+             * @param e
+             * @param e.drag current draggable object
+             * @param e.drop current droppable object
+             */
+
+
+            /**
+             *
+             * fired after a draggable object mouseover a droppable object
+             * @event dropover
+             * @member KISSY.DD.DDM
+             * @param e
+             * @param e.drag current draggable object
+             * @param e.drop current droppable object
+             */
+
+            /**
+             *
+             * fired after a draggable object mouseover a droppable object
+             * @event dropover
+             * @member KISSY.DD.Droppable
+             * @param e
+             * @param e.drag current draggable object
+             * @param e.drop current droppable object
+             */
+
+
+            /**
+             *
+             * fired after drop a draggable onto a droppable object
+             * @event drophit
+             * @member KISSY.DD.DDM
+             * @param e
+             * @param e.drag current draggable object
+             * @param e.drop current droppable object
+             */
+
+            /**
+             *
+             * fired after drop a draggable onto a droppable object
+             * @event drophit
+             * @member KISSY.DD.Droppable
+             * @param e
+             * @param e.drag current draggable object
+             * @param e.drop current droppable object
+             */
+
+            DDM._regDrop(this);
+        },
+        /**
+         * Get drop node from target
+         * @protected
+         */
+        getNodeFromTarget: function (ev, dragNode, proxyNode) {
+            var node = this.get('node'),
+                domNode = node[0];
+            // 排除当前拖放和代理节点
+            return domNode == dragNode ||
+                domNode == proxyNode
+                ? null : node;
+        },
+
+        _active: function () {
+            var self = this,
+                drag = DDM.get('activeDrag'),
+                node = self.get('node'),
+                dropGroups = self.get('groups'),
+                dragGroups = drag.get('groups');
+            if (validDrop(dropGroups, dragGroups)) {
+                DDM._addValidDrop(self);
+                // 委托时取不到节点
+                if (node) {
+                    node.addClass(PREFIX_CLS + 'drop-active-valid');
+                    DDM.cacheWH(node);
+                }
+            } else if (node) {
+                node.addClass(PREFIX_CLS + 'drop-active-invalid');
+            }
+        },
+
+        _deActive: function () {
+            var node = this.get('node');
+            if (node) {
+                node.removeClass(PREFIX_CLS + 'drop-active-valid')
+                    .removeClass(PREFIX_CLS + 'drop-active-invalid');
+            }
+        },
+
+        __getCustomEvt: function (ev) {
+            return S.mix({
+                drag: DDM.get('activeDrag'),
+                drop: this
+            }, ev);
+        },
+
+        _handleOut: function () {
+            var self = this,
+                ret = self.__getCustomEvt();
+            self.get('node').removeClass(PREFIX_CLS + 'drop-over');
+
+            // html5 => dragleave
+            self.fire('dropexit', ret);
+        },
+
+        _handleEnter: function (ev) {
+            var self = this,
+                e = self.__getCustomEvt(ev);
+            e.drag._handleEnter(e);
+            self.get('node').addClass(PREFIX_CLS + 'drop-over');
+            self.fire('dropenter', e);
+        },
+
+
+        _handleOver: function (ev) {
+            var self = this,
+                e = self.__getCustomEvt(ev);
+            e.drag._handleOver(e);
+            self.fire('dropover', e);
+        },
+
+        _end: function () {
+            var self = this,
+                ret = self.__getCustomEvt();
+            self.get('node').removeClass(PREFIX_CLS + 'drop-over');
+            self.fire('drophit', ret);
+        },
 
         /**
-         * @class KISSY.DD.Droppable
-         * @extends KISSY.RichBase
-         * Make a node droppable.
+         * make this droppable' element undroppable
+         * @private
          */
-        return RichBase.extend({
+        destructor: function () {
+            DDM._unRegDrop(this);
+        }
+    }, {
 
-            initializer: function () {
-                var self = this;
-                self.addTarget(DDM);
+        name: 'Droppable',
 
-                /**
-                 * fired after a draggable leaves a droppable
-                 * @event dropexit
-                 * @member KISSY.DD.DDM
-                 * @param e
-                 * @param e.drag current draggable object
-                 * @param e.drop current droppable object
-                 */
-
-                /**
-                 *
-                 * fired after a draggable leaves a droppable
-                 * @event dropexit
-                 * @member KISSY.DD.Droppable
-                 * @param e
-                 * @param e.drag current draggable object
-                 * @param e.drop current droppable object
-                 */
-
-
-                /**
-                 * fired after a draggable object mouseenter a droppable object
-                 * @event dropenter
-                 * @member KISSY.DD.DDM
-                 * @param e
-                 * @param e.drag current draggable object
-                 * @param e.drop current droppable object
-                 */
-
-                /**
-                 * fired after a draggable object mouseenter a droppable object
-                 * @event dropenter
-                 * @member KISSY.DD.Droppable
-                 * @param e
-                 * @param e.drag current draggable object
-                 * @param e.drop current droppable object
-                 */
-
-
-                /**
-                 *
-                 * fired after a draggable object mouseover a droppable object
-                 * @event dropover
-                 * @member KISSY.DD.DDM
-                 * @param e
-                 * @param e.drag current draggable object
-                 * @param e.drop current droppable object
-                 */
-
-                /**
-                 *
-                 * fired after a draggable object mouseover a droppable object
-                 * @event dropover
-                 * @member KISSY.DD.Droppable
-                 * @param e
-                 * @param e.drag current draggable object
-                 * @param e.drop current droppable object
-                 */
-
-
-                /**
-                 *
-                 * fired after drop a draggable onto a droppable object
-                 * @event drophit
-                 * @member KISSY.DD.DDM
-                 * @param e
-                 * @param e.drag current draggable object
-                 * @param e.drop current droppable object
-                 */
-
-                /**
-                 *
-                 * fired after drop a draggable onto a droppable object
-                 * @event drophit
-                 * @member KISSY.DD.Droppable
-                 * @param e
-                 * @param e.drag current draggable object
-                 * @param e.drop current droppable object
-                 */
-
-                DDM._regDrop(this);
-            },
+        ATTRS: {
             /**
-             * Get drop node from target
-             * @protected
+             * droppable element
+             * @cfg {String|HTMLElement|KISSY.NodeList} node
+             * @member KISSY.DD.Droppable
              */
-            getNodeFromTarget: function (ev, dragNode, proxyNode) {
-                var node = this.get('node'),
-                    domNode = node[0];
-                // 排除当前拖放和代理节点
-                return domNode == dragNode ||
-                    domNode == proxyNode
-                    ? null : node;
-            },
-
-            _active: function () {
-                var self = this,
-                    drag = DDM.get('activeDrag'),
-                    node = self.get('node'),
-                    dropGroups = self.get('groups'),
-                    dragGroups = drag.get('groups');
-                if (validDrop(dropGroups, dragGroups)) {
-                    DDM._addValidDrop(self);
-                    // 委托时取不到节点
-                    if (node) {
-                        node.addClass(PREFIX_CLS + 'drop-active-valid');
-                        DDM.cacheWH(node);
+            /**
+             * droppable element
+             * @type {KISSY.NodeList}
+             * @property node
+             * @member KISSY.DD.Droppable
+             */
+            /**
+             * @ignore
+             */
+            node: {
+                setter: function (v) {
+                    if (v) {
+                        return Node.one(v);
                     }
-                } else if (node) {
-                    node.addClass(PREFIX_CLS + 'drop-active-invalid');
                 }
-            },
-
-            _deActive: function () {
-                var node = this.get('node');
-                if (node) {
-                    node.removeClass(PREFIX_CLS + 'drop-active-valid')
-                        .removeClass(PREFIX_CLS + 'drop-active-invalid');
-                }
-            },
-
-            __getCustomEvt: function (ev) {
-                return S.mix({
-                    drag: DDM.get('activeDrag'),
-                    drop: this
-                }, ev);
-            },
-
-            _handleOut: function () {
-                var self = this,
-                    ret = self.__getCustomEvt();
-                self.get('node').removeClass(PREFIX_CLS + 'drop-over');
-
-                // html5 => dragleave
-                self.fire('dropexit', ret);
-            },
-
-            _handleEnter: function (ev) {
-                var self = this,
-                    e = self.__getCustomEvt(ev);
-                e.drag._handleEnter(e);
-                self.get('node').addClass(PREFIX_CLS + 'drop-over');
-                self.fire('dropenter', e);
-            },
-
-
-            _handleOver: function (ev) {
-                var self = this,
-                    e = self.__getCustomEvt(ev);
-                e.drag._handleOver(e);
-                self.fire('dropover', e);
-            },
-
-            _end: function () {
-                var self = this,
-                    ret = self.__getCustomEvt();
-                self.get('node').removeClass(PREFIX_CLS + 'drop-over');
-                self.fire('drophit', ret);
             },
 
             /**
-             * make this droppable' element undroppable
-             * @private
+             * groups this droppable object belongs to.
+             * @cfg {Object|Boolean} groups
+             * @member KISSY.DD.Droppable
              */
-            destructor: function () {
-                DDM._unRegDrop(this);
-            }
-        }, {
+            /**
+             * @ignore
+             */
+            groups: {
+                value: {
 
-            name: 'Droppable',
-
-            ATTRS: {
-                /**
-                 * droppable element
-                 * @cfg {String|HTMLElement|KISSY.NodeList} node
-                 * @member KISSY.DD.Droppable
-                 */
-                /**
-                 * droppable element
-                 * @type {KISSY.NodeList}
-                 * @property node
-                 * @member KISSY.DD.Droppable
-                 */
-                /**
-                 * @ignore
-                 */
-                node: {
-                    setter: function (v) {
-                        if (v) {
-                            return Node.one(v);
-                        }
-                    }
-                },
-
-                /**
-                 * groups this droppable object belongs to.
-                 * @cfg {Object|Boolean} groups
-                 * @member KISSY.DD.Droppable
-                 */
-                /**
-                 * @ignore
-                 */
-                groups: {
-                    value: {
-
-                    }
                 }
-
             }
-        });
 
-    },
-    { requires: ['node', 'rich-base', './ddm'] });
+        }
+    });
+}, {
+    requires: ['node', 'rich-base', './ddm']
+});
 /**
  * @ignore
  * only one droppable instance for multiple droppable nodes
  * @author yiminghe@gmail.com
  */
 KISSY.add('dd/droppable-delegate', function (S, DDM, Droppable, Node) {
-
     function dragStart() {
         var self = this,
             container = self.get('container'),
@@ -1930,129 +1865,126 @@ KISSY.add('dd/droppable-delegate', function (S, DDM, Droppable, Node) {
      */
     var DroppableDelegate = Droppable.extend({
 
-            initializer: function () {
-                // 提高性能，拖放开始时缓存代理节点
-                DDM.on('dragstart', dragStart, this);
+        initializer: function () {
+            // 提高性能，拖放开始时缓存代理节点
+            DDM.on('dragstart', dragStart, this);
+        },
+
+        /**
+         * get droppable node by delegation
+         * @protected
+         */
+        getNodeFromTarget: function (ev, dragNode, proxyNode) {
+            var pointer = {
+                    left: ev.pageX,
+                    top: ev.pageY
+                },
+                self = this,
+                allNodes = self.__allNodes,
+                ret = 0,
+                vArea = Number.MAX_VALUE;
+
+            if (allNodes) {
+                S.each(allNodes, function (n) {
+                    var domNode = n[0];
+                    // 排除当前拖放的元素以及代理节点
+                    if (domNode === proxyNode || domNode === dragNode) {
+                        return;
+                    }
+                    var r = DDM.region(n);
+                    if (DDM.inRegion(r, pointer)) {
+                        // 找到面积最小的那个
+                        var a = DDM.area(r);
+                        if (a < vArea) {
+                            vArea = a;
+                            ret = n;
+                        }
+                    }
+                });
+            }
+
+            if (ret) {
+                self.setInternal('lastNode', self.get('node'));
+                self.setInternal('node', ret);
+            }
+
+            return ret;
+        },
+
+        _handleOut: function () {
+            var self = this;
+            DroppableDelegate.superclass._handleOut.apply(self, arguments);
+            self.setInternal('node', 0);
+            self.setInternal('lastNode', 0);
+        },
+
+        _handleOver: function (ev) {
+            var self = this,
+                node = self.get('node'),
+                superOut = DroppableDelegate.superclass._handleOut,
+                superOver = DroppableDelegate.superclass._handleOver,
+                superEnter = DroppableDelegate.superclass._handleEnter,
+                lastNode = self.get('lastNode');
+
+            if (lastNode[0] !== node[0]) {
+
+                // 同一个 drop 对象内委托的两个可 drop 节点相邻，先通知上次的离开
+                self.setInternal('node', lastNode);
+                superOut.apply(self, arguments);
+
+                // 再通知这次的进入
+                self.setInternal('node', node);
+                superEnter.call(self, ev);
+            } else {
+                superOver.call(self, ev);
+            }
+        },
+
+        _end: function () {
+            var self = this;
+            DroppableDelegate.superclass._end.apply(self, arguments);
+            self.setInternal('node', 0);
+        }
+    }, {
+        ATTRS: {
+
+            /**
+             * last droppable target node.
+             * @property lastNode
+             * @private
+             */
+            /**
+             * @ignore
+             */
+            lastNode: {
             },
 
             /**
-             * get droppable node by delegation
-             * @protected
+             * a selector query to get the children of container to make droppable elements from.
+             * usually as for tag.cls.
+             * @cfg {String} selector
              */
-            getNodeFromTarget: function (ev, dragNode, proxyNode) {
-                var pointer = {
-                        left: ev.pageX,
-                        top: ev.pageY
-                    },
-                    self = this,
-                    allNodes = self.__allNodes,
-                    ret = 0,
-                    vArea = Number.MAX_VALUE;
-
-
-                if (allNodes) {
-
-                    S.each(allNodes, function (n) {
-                        var domNode = n[0];
-                        // 排除当前拖放的元素以及代理节点
-                        if (domNode === proxyNode || domNode === dragNode) {
-                            return;
-                        }
-                        var r = DDM.region(n);
-                        if (DDM.inRegion(r, pointer)) {
-                            // 找到面积最小的那个
-                            var a = DDM.area(r);
-                            if (a < vArea) {
-                                vArea = a;
-                                ret = n;
-                            }
-                        }
-                    });
-                }
-
-                if (ret) {
-                    self.setInternal('lastNode', self.get('node'));
-                    self.setInternal('node', ret);
-                }
-
-                return ret;
+            /**
+             * @ignore
+             */
+            selector: {
             },
 
-            _handleOut: function () {
-                var self = this;
-                DroppableDelegate.superclass._handleOut.apply(self, arguments);
-                self.setInternal('node', 0);
-                self.setInternal('lastNode', 0);
-            },
-
-            _handleOver: function (ev) {
-                var self = this,
-                    node = self.get('node'),
-                    superOut = DroppableDelegate.superclass._handleOut,
-                    superOver = DroppableDelegate.superclass._handleOver,
-                    superEnter = DroppableDelegate.superclass._handleEnter,
-                    lastNode = self.get('lastNode');
-
-                if (lastNode[0] !== node[0]) {
-
-                    // 同一个 drop 对象内委托的两个可 drop 节点相邻，先通知上次的离开
-                    self.setInternal('node', lastNode);
-                    superOut.apply(self, arguments);
-
-                    // 再通知这次的进入
-                    self.setInternal('node', node);
-                    superEnter.call(self, ev);
-                } else {
-                    superOver.call(self, ev);
-                }
-            },
-
-            _end: function () {
-                var self = this;
-                DroppableDelegate.superclass._end.apply(self, arguments);
-                self.setInternal('node', 0);
-            }
-        },
-        {
-            ATTRS: {
-
-                /**
-                 * last droppable target node.
-                 * @property lastNode
-                 * @private
-                 */
-                /**
-                 * @ignore
-                 */
-                lastNode: {
-                },
-
-                /**
-                 * a selector query to get the children of container to make droppable elements from.
-                 * usually as for tag.cls.
-                 * @cfg {String} selector
-                 */
-                /**
-                 * @ignore
-                 */
-                selector: {
-                },
-
-                /**
-                 * a selector query to get the container to listen for mousedown events on.
-                 * All 'draggable selector' should be a child of this container
-                 * @cfg {String|HTMLElement} container
-                 */
-                /**
-                 * @ignore
-                 */
-                container: {
-                    setter: function (v) {
-                        return Node.one(v);
-                    }
+            /**
+             * a selector query to get the container to listen for mousedown events on.
+             * All 'draggable selector' should be a child of this container
+             * @cfg {String|HTMLElement} container
+             */
+            /**
+             * @ignore
+             */
+            container: {
+                setter: function (v) {
+                    return Node.one(v);
                 }
             }
-        });
+        }
+    });
 
     return DroppableDelegate;
 }, {
