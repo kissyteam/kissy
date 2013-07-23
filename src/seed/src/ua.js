@@ -305,8 +305,10 @@
                             UA[core = 'gecko'] = 0.1; // Gecko detected, look for revision
                             if ((m = ua.match(/rv:([\d.]*)/)) && m[1]) {
                                 UA[core] = numberify(m[1]);
+                                if (/Mobile|Tablet/.test(ua)) {
+                                    o.mobile = "firefox";
+                                }
                             }
-
                             // Firefox
                             if ((m = ua.match(/Firefox\/([\d.]*)/)) && m[1]) {
                                 UA[shell = 'firefox'] = numberify(m[1]);
