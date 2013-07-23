@@ -4,8 +4,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/dom/touch', function (S, DomEvent, eventHandleMap, eventHandle) {
-
-    var Features = S.Features;
+    var isMsPointerSupported = S.Features.isMsPointerSupported();
 
     function setupExtra(event) {
         setup.call(this, event);
@@ -15,7 +14,7 @@ KISSY.add('event/dom/touch', function (S, DomEvent, eventHandleMap, eventHandle)
     function setup(event) {
         var self = this,
             style = self.style;
-        if (Features.isMsPointerSupported() && style) {
+        if (isMsPointerSupported && style) {
             if (!self.__ks_touch_action) {
                 self.__ks_touch_action = style.msTouchAction;
                 self.__ks_user_select = style.msUserSelect;
@@ -38,7 +37,7 @@ KISSY.add('event/dom/touch', function (S, DomEvent, eventHandleMap, eventHandle)
     function tearDown(event) {
         var self = this,
             style = self.style;
-        if (Features.isMsPointerSupported() && style) {
+        if (isMsPointerSupported && style) {
             if (!self.__ks_touch_action_count) {
                 S.error('touch event error for ie');
             }
@@ -77,6 +76,14 @@ KISSY.add('event/dom/touch', function (S, DomEvent, eventHandleMap, eventHandle)
         Special[e] = specialEvent;
     }
 
+    Special['gestureStart'] = Special['gestureEnd'] = Special['gestureMove'] = {
+        setup: function () {
+            setup.call(this);
+        },
+        tearDown: function () {
+            tearDown.call(this);
+        }
+    };
 }, {
     requires: ['event/dom/base', './touch/handle-map', './touch/handle']
 });

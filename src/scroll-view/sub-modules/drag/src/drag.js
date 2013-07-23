@@ -8,8 +8,6 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, DD, Node) {
 
     var Gesture = Node.Gesture;
 
-    var singleTouchStart = Gesture.singleTouchStart;
-
     var SWIPE_SAMPLE_INTERVAL = 300;
 
     var MAX_SWIPE_VELOCITY = 6;
@@ -401,8 +399,8 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, DD, Node) {
                     .on('drag', onDragHandler, self)
                     .on('dragend', onDragEndHandler, self);
 
-                self.get('el').on(singleTouchStart, onSingleGestureStart, self);
-                $contentEl.on(singleTouchStart, onSingleGestureStart, self);
+                self.get('el').on('singleTouchStart', onSingleGestureStart, self);
+                $contentEl.on('singleTouchStart', onSingleGestureStart, self);
             },
 
 

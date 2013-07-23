@@ -138,7 +138,7 @@
             });
 
             function onhit(ev) {
-                var node = ev.drag.get("node");
+                var node = ev.drag.get("dragNode");
                 node.css({
                     position: "",
                     left: "",
@@ -203,6 +203,8 @@
             });
 
             drop.on("drophit", onhit);
+
+
 
         });
     });
