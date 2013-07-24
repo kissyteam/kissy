@@ -1,3 +1,8 @@
+/**
+ * use document.write to load external css files in block loading ways.
+ * depends on loader.
+ * @author yiminghe@gmail.com
+ */
 (function (S) {
     var isDebug;
 

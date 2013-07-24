@@ -534,6 +534,10 @@ if (!loc.getQuery().has('build')) {
             "base": "/kissy/src/html-parser/src/html-parser",
             "ignorePackageNameInUri": 1
         },
+        "import-style": {
+            "base": "/kissy/src/import-style/src/import-style",
+            "ignorePackageNameInUri": 1
+        },
         "intl/date": {
             "base": "/kissy/src/intl/date/src/date",
             "ignorePackageNameInUri": 1
@@ -600,10 +604,6 @@ if (!loc.getQuery().has('build')) {
         },
         "seed": {
             "base": "/kissy/src/seed/src/seed",
-            "ignorePackageNameInUri": 1
-        },
-        "seed/import-style": {
-            "base": "/kissy/src/seed/sub-modules/import-style/src/import-style",
             "ignorePackageNameInUri": 1
         },
         "separator": {
