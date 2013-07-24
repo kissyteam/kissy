@@ -156,8 +156,11 @@ KISSY.add('scroll-view/plugin/scrollbar/control', function (S, Node, DD, Control
             // only show when scroll
             var self = this;
             var scrollView = self.scrollView;
+            if (!scrollView.isAxisEnabled(self.isX ? 'x' : 'y')) {
+                return;
+            }
             self.clearHideTimer();
-            self.show();
+            self.set('visible', true);
             if (self.hideFn && !scrollView.dd.get('dragging')) {
                 self.startHideTimer();
             }

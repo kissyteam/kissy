@@ -59,6 +59,7 @@ KISSY.add('touch/image-zoomer', function (S, Node, ScrollView, ScrollbarPlugin) 
                 'removeClass'](HIDE_SCROLLBAR_CLASS);
         });
         closeEl.on(Node.Gesture.tap, function () {
+            scrollView.stopAnimation();
             scrollView.hide();
         });
         $(window).on('resize orientationchange', function () {
@@ -142,7 +143,20 @@ KISSY.add('touch/image-zoomer', function (S, Node, ScrollView, ScrollbarPlugin) 
         var toScale = initialScale * e.scale;
 
         // centerOffset is stable
-        if (toScale < 1) {
+        if (toScale < initialScale) {
+            if (currentScale == 1) {
+                return;
+            }
+            currentScroll = {
+                left: 0,
+                top: 0
+            };
+            currentScale = 1;
+            imgStyle[transformProperty] = 'translate3d(0,0,0) scaleX(' + currentScale + ')' + ' ' + 'scaleY(' + currentScale + ')';
+            markerStyle.width = contentRegion.width * currentScale + 'px';
+            markerStyle.height = contentRegion.height * currentScale + 'px';
+            scrollView.scrollTo(currentScroll);
+            scrollView.sync();
             return;
         }
 

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 23 22:59
+build time: Jul 24 13:19
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -394,21 +394,23 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, DD, Node) {
         self.startScroll = {};
     }
 
-    return ScrollViewBase.extend({
+    var ScrollViewDrag;
+
+    return ScrollViewDrag = ScrollViewBase.extend({
             bindUI: function () {
                 var self = this,
-                    $contentEl = self.$contentEl,
-                    dd = self.dd = new DD.Draggable({
-                        node: $contentEl,
-                        groups: false,
-                        // allow nested scroll-view
-                        halt: true
-                    });
+                    $contentEl = self.$contentEl;
+                // before dd
+                $contentEl.on(Gesture.start, onSingleGestureStart, self);
+                var dd = self.dd = new DD.Draggable({
+                    node: $contentEl,
+                    groups: false,
+                    // allow nested scroll-view
+                    halt: true
+                });
                 dd.on('dragstart', onDragStartHandler, self)
                     .on('drag', onDragHandler, self)
                     .on('dragend', onDragEndHandler, self);
-                // self.get('el').on(Gesture.start, onSingleGestureStart, self);
-                $contentEl.on(Gesture.start, onSingleGestureStart, self);
             },
 
             syncUI: function () {
@@ -418,6 +420,13 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, DD, Node) {
             destructor: function () {
                 this.dd.destroy();
                 this.stopAnimation();
+            },
+
+            stopAnimation: function () {
+                ScrollViewDrag.superclass.stopAnimation.apply(this, arguments);
+                // stop dd
+                // in case pinch setting scrollLeft conflicts with dd setting scrollLeft
+                this.dd.stopDrag();
             },
 
             _onSetDisabled: function (v) {

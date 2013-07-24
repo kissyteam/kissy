@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 23 22:59
+build time: Jul 24 13:19
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -313,8 +313,11 @@ KISSY.add('scroll-view/plugin/scrollbar/control', function (S, Node, DD, Control
             // only show when scroll
             var self = this;
             var scrollView = self.scrollView;
+            if (!scrollView.isAxisEnabled(self.isX ? 'x' : 'y')) {
+                return;
+            }
             self.clearHideTimer();
-            self.show();
+            self.set('visible', true);
             if (self.hideFn && !scrollView.dd.get('dragging')) {
                 self.startHideTimer();
             }

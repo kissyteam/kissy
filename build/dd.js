@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 23 22:47
+build time: Jul 24 13:19
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -151,7 +151,7 @@ KISSY.add('dd/ddm', function (S, Node, Base) {
             __activeToDrag ,
             activeDrag;
 
-        if (!ev) {
+        if (ev.touches.length > 1) {
             ddm._end();
             return;
         }
