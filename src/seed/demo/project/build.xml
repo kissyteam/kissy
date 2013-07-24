@@ -52,17 +52,11 @@ build example for kissy loader
                     <arg value="-baseUrls"/>
                     <arg value="${assets.dir}"/>
 
-                    <arg value="-encodings"/>
-                    <arg value="${charset}"/>
-
-                    <arg value="-outputEncoding"/>
-                    <arg value="${charset}"/>
-
                     <arg value="-output"/>
                     <arg value="${page.build.dir}/${var.modname}.js"/>
 
                     <arg value="-outputDependency"/>
-                    <arg value="${page.build.dir}/${var.modname}.dep.js"/>
+                    <arg value="${page.build.dir}/${var.modname}.deps.js"/>
 
                     <classpath>
                         <pathelement path="${module.compiler}"/>

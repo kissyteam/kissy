@@ -602,6 +602,10 @@ if (!loc.getQuery().has('build')) {
             "base": "/kissy/src/seed/src/seed",
             "ignorePackageNameInUri": 1
         },
+        "seed/import-style": {
+            "base": "/kissy/src/seed/sub-modules/import-style/src/import-style",
+            "ignorePackageNameInUri": 1
+        },
         "separator": {
             "base": "/kissy/src/separator/src/separator",
             "ignorePackageNameInUri": 1

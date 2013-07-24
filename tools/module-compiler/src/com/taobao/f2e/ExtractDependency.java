@@ -201,16 +201,24 @@ public class ExtractDependency {
 
         for (String pName : ps.keySet()) {
             Package p = ps.get(pName);
-            Collection<File> files = org.apache.commons.io.FileUtils.listFiles(
-                    new File(p.getPath()),
-                    new String[]{"js"},
-                    true);
-
+            File packageFolder = new File(p.getPath());
+            Collection<File> files = new ArrayList<File>();
+            if (packageFolder.isDirectory()) {
+                files = org.apache.commons.io.FileUtils.listFiles(
+                        packageFolder,
+                        new String[]{"js"},
+                        true);
+            }
+            String file = p.getPath().substring(0, p.getPath().length() - 1) +
+                    ".js";
+            File js = new File(file);
+            if (js.exists()) {
+                files.add(js);
+            }
             for (File f : files) {
                 success = processSingle(f.getPath()) && success;
             }
         }
-
         // get code list
         ArrayList<String> codes = formCodeList();
 
@@ -220,8 +228,8 @@ public class ExtractDependency {
             */
             String outputEncoding = "utf-8";
             FileUtils.outputContent((this.compact ? COMPACT_CODE_PREFIX : CODE_PREFIX) +
-                            ArrayUtils.join(codes.toArray(new String[codes.size()]), ",\n")
-                            + CODE_SUFFIX
+                    ArrayUtils.join(codes.toArray(new String[codes.size()]), ",\n")
+                    + CODE_SUFFIX
                     , output, outputEncoding);
             System.out.println("dependency file saved to: " + output);
         }

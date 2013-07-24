@@ -32,12 +32,6 @@ build example for kissy loader
             <arg value="-baseUrls"/>
             <arg value="${build.dir}"/>
 
-            <arg value="-encodings"/>
-            <arg value="${charset}"/>
-
-            <arg value="-outputEncoding"/>
-            <arg value="utf-8"/>
-
             <arg value="-output"/>
             <arg value="${build.dir}/deps.js"/>
 

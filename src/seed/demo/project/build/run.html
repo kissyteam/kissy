@@ -1,6 +1,5 @@
-<script src="/kissy/build/seed.js" data-config="{combine:true}"></script>
-<script src="./biz/page/run.dep.js"></script>
-<script src="../import-style.js"></script>
+<script src="/kissy/build/??seed.js,seed/import-style.js" data-config="{combine:true}"></script>
+<script src="biz/page/run.deps.js"></script>
 <script>
     KISSY.config({
         'packages': {
@@ -9,8 +8,7 @@
             }
         }
     });
-    importStyle('biz/page/run');
-    // block use
+    KISSY.importStyle('biz/page/run,biz/z.css');
 </script>
 <script>
     KISSY.use('biz/page/run', function (S, run) {

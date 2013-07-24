@@ -1,4 +1,4 @@
 KISSY.add("biz/x", function() {
-  return"x + overlay +  switchable"
-}, {requires:["overlay", "switchable", "./x.css"]});
+  return"x + overlay +  node"
+}, {requires:["overlay", "node", "./x.css"]});
 

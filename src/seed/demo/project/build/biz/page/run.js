@@ -7,12 +7,12 @@
 */
 
 KISSY.add("biz/x", function() {
-  return"x + overlay +  switchable"
-}, {requires:["overlay", "switchable", "./x.css"]});
+  return"x + overlay +  node"
+}, {requires:["overlay", "node", "./x.css"]});
 KISSY.add("biz/y", function(S, x) {
   return"y + " + x
 }, {requires:["./x", "./y.css"]});
 KISSY.add("biz/page/run", function(S, y) {
   return"run + " + y
-}, {requires:["../y"]});
+}, {requires:["biz/y"]});
 

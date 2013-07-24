@@ -128,15 +128,30 @@ public class Packages {
         return getModuleFromName(moduleName) != null;
     }
 
+    public boolean isPackageNameAlone(String packagePath,String modulePath){
+        String packageModulePath=packagePath.substring(0,packagePath.length()-1)+".js";
+        if(packageModulePath.equals(modulePath)){
+            return true;
+        }
+        return false;
+    }
+
     public Module getModuleFromPath(String path) {
         path = FileUtils.escapePath(path);
+
+        boolean packageNameAlone = false;
 
         String fName = "";
         Package f = null;
 
         for (String pName : packages.keySet()) {
             Package p = packages.get(pName);
-            if (path.startsWith(p.getPath()) && p.getName().length() > fName.length()) {
+            if(packageNameAlone=isPackageNameAlone(p.getPath(),path)){
+                f=p;
+                fName=f.getName();
+                break;
+            }
+            else if (path.startsWith(p.getPath()) && p.getName().length() > fName.length()) {
                 f = p;
                 fName = f.getName();
             }
@@ -146,10 +161,18 @@ public class Packages {
             return null;
         }
 
+        if(packageNameAlone){
+            return getModuleFromName(fName);
+        }
+
         String extName = path.substring(f.getPath().length());
         extName = extName.substring(0, extName.length() - 3);
 
-        return getModuleFromName(f.getName() + extName);
+        if (extName.length() != 0 && fName.length() != 0) {
+            extName = "/" + extName;
+        }
+
+        return getModuleFromName(fName + extName);
     }
 
     public static void main(String[] args) {

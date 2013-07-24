@@ -230,7 +230,6 @@ public class Main {
     public static void commandRunnerCLI(String[] args) throws Exception {
 
         Options options = new Options();
-        options.addOption("encodings", true, "baseUrls 's encodings");
         options.addOption("baseUrls", true, "baseUrls");
         options.addOption("packageUrls", true, "packageUrls");
         options.addOption("require", true, "require");

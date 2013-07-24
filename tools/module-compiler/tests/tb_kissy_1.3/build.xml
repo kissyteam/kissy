@@ -50,12 +50,6 @@ build example for kissy loader
                     <arg value="-baseUrls"/>
                     <arg value="${assets.dir}"/>
 
-                    <arg value="-encodings"/>
-                    <arg value="${charset}"/>
-
-                    <arg value="-outputEncoding"/>
-                    <arg value="${charset}"/>
-
                     <arg value="-output"/>
                     <arg value="${page.build.dir}/${var.modname}.js"/>
 
@@ -69,6 +63,25 @@ build example for kissy loader
                 </java>
             </sequential>
         </ac:for>
+        <java classname="com.taobao.f2e.Main">
+              <arg value="-require"/>
+              <!-- 入口模块 -->
+              <arg value="biz"/>
+
+              <arg value="-baseUrls"/>
+              <arg value="${assets.dir}"/>
+
+              <arg value="-output"/>
+              <arg value="${build.dir}/biz.js"/>
+
+              <arg value="-outputDependency"/>
+              <arg value="${build.dir}/biz.dep.js"/>
+
+              <classpath>
+                  <pathelement path="${module.compiler}"/>
+                  <pathelement path="${java.class.path}"/>
+              </classpath>
+          </java>
     </target>
 
     <!--项目(js,css)构建-->

@@ -108,7 +108,8 @@ public class Test {
 
 
     public static void main(String[] args) throws Exception {
-        testKISSY1_3_Packager2();
+        testKISSY1_3_ExtractDependency();
+        //testKISSY1_3_Packager2();
               // testKISSY1_3_MainPackageUrl();
     // testKISSY1_3_ExtractDependencyPackageUrl();
 //        testKISSY1_3_ExtractDependency();

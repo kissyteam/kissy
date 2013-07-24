@@ -23,7 +23,7 @@ build example for kissy loader
     <target name='prepare'>
         <mkdir dir="${build.dir}"></mkdir>
         <copy encoding="${charset}" todir="${build.dir}">
-            <fileset dir="${assets.dir}" includes="**/*"/>
+            <fileset dir="${assets.dir}" includes="**/*.js,**/*.css"/>
         </copy>
     </target>
     
@@ -32,12 +32,6 @@ build example for kissy loader
         <java classname="com.taobao.f2e.ExtractDependency">
             <arg value="-baseUrls"/>
             <arg value="${build.dir}"/>
-
-            <arg value="-encodings"/>
-            <arg value="${charset}"/>
-
-            <arg value="-outputEncoding"/>
-            <arg value="utf-8"/>
 
             <arg value="-output"/>
             <arg value="${build.dir}/deps.js"/>
