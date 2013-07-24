@@ -104,6 +104,15 @@
          */
         isCombine: function () {
             return forwardSystemPackage(this, 'combine');
+        },
+        
+        /**
+         * Get package group (for combo).
+         * @returns {String}
+         */
+        getGroup: function()
+        {
+            return forwardSystemPackage(this, 'group');
         }
     });
 
