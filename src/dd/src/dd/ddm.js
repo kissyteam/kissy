@@ -135,7 +135,7 @@ KISSY.add('dd/ddm', function (S, Node, Base) {
             __activeToDrag ,
             activeDrag;
 
-        if (ev.touches.length > 1) {
+        if (ev.touches && ev.touches.length > 1) {
             ddm._end();
             return;
         }
