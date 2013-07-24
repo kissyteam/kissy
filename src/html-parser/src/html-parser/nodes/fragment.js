@@ -10,7 +10,7 @@ KISSY.add("html-parser/nodes/fragment", function (S, Tag) {
     }
 
     S.extend(Fragment, Tag, {
-        writeHTML:function (writer, filter) {
+        writeHtml:function (writer, filter) {
             this.__filter = filter;
             this.isChildrenFiltered = 0;
             if (filter) {

@@ -17,12 +17,12 @@ KISSY.add("html-parser/nodes/text", function (S, Node) {
     }
 
     S.extend(Text, Node, {
-        writeHTML:function (writer, filter) {
+        writeHtml:function (writer, filter) {
             var ret;
             if (!filter || (ret = filter.onText(this)) !== false) {
                 if (ret) {
                     if (this !== ret) {
-                        ret.writeHTML(writer, filter);
+                        ret.writeHtml(writer, filter);
                         return;
                     }
                 }

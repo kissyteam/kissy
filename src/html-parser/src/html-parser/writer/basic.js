@@ -69,7 +69,7 @@ KISSY.add("html-parser/writer/basic", function () {
             this.append("<!--" + comment + "-->");
         },
 
-        getHTML: function () {
+        getHtml: function () {
             return this.output.join("");
         }
 

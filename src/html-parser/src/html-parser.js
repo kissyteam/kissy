@@ -18,8 +18,8 @@ KISSY.add("html-parser", function (S, DTD, Lexer, Parser, BasicWriter, BeautifyW
         DTD:DTD,
         serialize:function (n, filter) {
             var basicWriter = new BasicWriter();
-            n.writeHTML(basicWriter, filter);
-            return basicWriter.getHTML();
+            n.writeHtml(basicWriter, filter);
+            return basicWriter.getHtml();
         },
         parse:function (html) {
             return new Parser(html).parse();

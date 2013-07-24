@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 23 22:55
+build time: Jul 24 16:26
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -7407,8 +7407,8 @@ KISSY.add("editor/htmlDataProcessor", function (S, Editor, HtmlParser) {
                     //使用 htmlWriter 界面美观，加入额外文字节点\n,\t空白等
                     var writer = new HtmlParser.BeautifyWriter(),
                         n = new HtmlParser.Parser(html).parse();
-                    n.writeHTML(writer, htmlFilter);
-                    html = writer.getHTML();
+                    n.writeHtml(writer, htmlFilter);
+                    html = writer.getHtml();
                     return html;
                 },
                 // 外部html进入编辑器
@@ -7450,9 +7450,9 @@ KISSY.add("editor/htmlDataProcessor", function (S, Editor, HtmlParser) {
                     var writer = new HtmlParser.BasicWriter(),
                         n = new HtmlParser.Parser(html).parse();
 
-                    n.writeHTML(writer, _dataFilter);
+                    n.writeHtml(writer, _dataFilter);
 
-                    html = writer.getHTML();
+                    html = writer.getHtml();
 
                     return html;
                 },
@@ -7462,8 +7462,8 @@ KISSY.add("editor/htmlDataProcessor", function (S, Editor, HtmlParser) {
                 toServer: function (html) {
                     var writer = new HtmlParser.MinifyWriter(),
                         n = new HtmlParser.Parser(html).parse();
-                    n.writeHTML(writer, htmlFilter);
-                    return writer.getHTML();
+                    n.writeHtml(writer, htmlFilter);
+                    return writer.getHtml();
                 }
             };
         }

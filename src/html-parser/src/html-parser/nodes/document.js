@@ -10,7 +10,7 @@ KISSY.add("html-parser/nodes/document", function (S, Tag) {
     }
 
     S.extend(Document, Tag, {
-        writeHTML:function (writer, filter) {
+        writeHtml:function (writer, filter) {
             this.__filter = filter;
             this._writeChildrenHTML(writer);
         }

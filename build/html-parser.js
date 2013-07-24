@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 23 22:56
+build time: Jul 24 16:26
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -610,12 +610,12 @@ KISSY.add("html-parser/nodes/text", function (S, Node) {
     }
 
     S.extend(Text, Node, {
-        writeHTML:function (writer, filter) {
+        writeHtml:function (writer, filter) {
             var ret;
             if (!filter || (ret = filter.onText(this)) !== false) {
                 if (ret) {
                     if (this !== ret) {
-                        ret.writeHTML(writer, filter);
+                        ret.writeHtml(writer, filter);
                         return;
                     }
                 }
@@ -648,12 +648,12 @@ KISSY.add("html-parser/nodes/cdata", function (S, Text) {
     }
 
     S.extend(CData, Text, {
-        writeHTML:function (writer, filter) {
+        writeHtml:function (writer, filter) {
             var ret;
             if (!filter || (ret = filter.onCData(this)) !== false) {
                 if (ret) {
                     if (this !== ret) {
-                        ret.writeHTML(writer, filter);
+                        ret.writeHtml(writer, filter);
                         return;
                     }
                 }
@@ -964,7 +964,7 @@ KISSY.add("html-parser/nodes/tag", function (S, Node, Attribute, Dtd) {
             if (!self.isChildrenFiltered) {
                 var writer = new (S.require('html-parser/writer/basic'))();
                 self._writeChildrenHTML(writer);
-                var parser = new (S.require('html-parser/parser'))(writer.getHTML()),
+                var parser = new (S.require('html-parser/parser'))(writer.getHtml()),
                     children = parser.parse().childNodes;
                 self.empty();
                 S.each(children, function (c) {
@@ -979,7 +979,7 @@ KISSY.add("html-parser/nodes/tag", function (S, Node, Attribute, Dtd) {
          * @param writer
          * @param filter
          */
-        writeHTML:function (writer, filter) {
+        writeHtml:function (writer, filter) {
             var el = this,
                 tmp,
                 attrName,
@@ -1016,7 +1016,7 @@ KISSY.add("html-parser/nodes/tag", function (S, Node, Attribute, Dtd) {
 
                 // replaced by other type of node
                 if (el.nodeType !== 1) {
-                    el.writeHTML(writer, filter);
+                    el.writeHtml(writer, filter);
                     return;
                 }
 
@@ -1068,7 +1068,7 @@ KISSY.add("html-parser/nodes/tag", function (S, Node, Attribute, Dtd) {
                 filter = self.isChildrenFiltered ? 0 : self.__filter;
             // process its children recursively
             S.each(self.childNodes, function (child) {
-                child.writeHTML(writer, filter);
+                child.writeHtml(writer, filter);
             });
         }
 
@@ -1101,12 +1101,12 @@ KISSY.add("html-parser/nodes/comment", function (S, Text) {
     }
 
     S.extend(Comment, Text, {
-        writeHTML:function (writer, filter) {
+        writeHtml:function (writer, filter) {
             var ret;
             if (!filter || (ret = filter.onComment(this)) !== false) {
                 if (ret) {
                     if (this !== ret) {
-                        ret.writeHTML(writer, filter);
+                        ret.writeHtml(writer, filter);
                         return;
                     }
                 }
@@ -1905,7 +1905,7 @@ KISSY.add("html-parser/nodes/fragment", function (S, Tag) {
     }
 
     S.extend(Fragment, Tag, {
-        writeHTML:function (writer, filter) {
+        writeHtml:function (writer, filter) {
             this.__filter = filter;
             this.isChildrenFiltered = 0;
             if (filter) {
@@ -1931,7 +1931,7 @@ KISSY.add("html-parser/nodes/document", function (S, Tag) {
     }
 
     S.extend(Document, Tag, {
-        writeHTML:function (writer, filter) {
+        writeHtml:function (writer, filter) {
             this.__filter = filter;
             this._writeChildrenHTML(writer);
         }
@@ -2647,7 +2647,7 @@ KISSY.add("html-parser/writer/basic", function () {
             this.append("<!--" + comment + "-->");
         },
 
-        getHTML: function () {
+        getHtml: function () {
             return this.output.join("");
         }
 
@@ -3299,8 +3299,8 @@ KISSY.add("html-parser", function (S, DTD, Lexer, Parser, BasicWriter, BeautifyW
         DTD:DTD,
         serialize:function (n, filter) {
             var basicWriter = new BasicWriter();
-            n.writeHTML(basicWriter, filter);
-            return basicWriter.getHTML();
+            n.writeHtml(basicWriter, filter);
+            return basicWriter.getHtml();
         },
         parse:function (html) {
             return new Parser(html).parse();

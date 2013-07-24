@@ -40,9 +40,9 @@ KISSY.add(function (S, HtmlParser, UA) {
 
             var n = new HtmlParser.Parser(before).parse();
 
-            n.writeHTML(writer, filter);
+            n.writeHtml(writer, filter);
 
-            expect(writer.getHTML()).toBe("xy");
+            expect(writer.getHtml()).toBe("xy");
         });
 
 
@@ -87,9 +87,9 @@ KISSY.add(function (S, HtmlParser, UA) {
             });
 
             var n = new HtmlParser.Parser(before).parse();
-            n.writeHTML(writer, filter);
-            // S.log(writer.getHTML());
-            expect(writer.getHTML().indexOf('<img src="xx.jpg" title="me" />') != -1).toBe(true);
+            n.writeHtml(writer, filter);
+            // S.log(writer.getHtml());
+            expect(writer.getHtml().indexOf('<img src="xx.jpg" title="me" />') != -1).toBe(true);
         });
 
         it("can filter attribute", function () {
@@ -198,9 +198,9 @@ KISSY.add(function (S, HtmlParser, UA) {
 
             var n = new HtmlParser.Parser(before).parse();
 
-            n.writeHTML(writer, filter);
+            n.writeHtml(writer, filter);
 
-            expect(writer.getHTML()).toBe("<div>1</div><" + "b>2</b><span>3</span>");
+            expect(writer.getHtml()).toBe("<div>1</div><" + "b>2</b><span>3</span>");
         });
 
         it("can modify html structure on fly", function () {
@@ -282,11 +282,11 @@ KISSY.add(function (S, HtmlParser, UA) {
 
             var n = new HtmlParser.Parser(before).parse();
 
-            n.writeHTML(writer, filter);
+            n.writeHtml(writer, filter);
             if (UA['ie']) {
-                expect(writer.getHTML()).toBe("<p>\xa0</p><p>1</p>");
+                expect(writer.getHtml()).toBe("<p>\xa0</p><p>1</p>");
             } else {
-                expect(writer.getHTML()).toBe("<p>&nbsp;<br /></p><p>1</p>");
+                expect(writer.getHtml()).toBe("<p>&nbsp;<br /></p><p>1</p>");
             }
         });
 
@@ -318,8 +318,8 @@ KISSY.add(function (S, HtmlParser, UA) {
 
             var n = new HtmlParser.Parser(before).parse();
 
-            n.writeHTML(writer, filter);
-            expect(writer.getHTML()).toBe("<p>&nbsp;</p>");
+            n.writeHtml(writer, filter);
+            expect(writer.getHtml()).toBe("<p>&nbsp;</p>");
 
         });
 
@@ -346,8 +346,8 @@ KISSY.add(function (S, HtmlParser, UA) {
 
             var n = new HtmlParser.Parser(before).parse();
 
-            n.writeHTML(writer, filter);
-            expect(writer.getHTML()).toBe("<p><span></span></p>");
+            n.writeHtml(writer, filter);
+            expect(writer.getHtml()).toBe("<p><span></span></p>");
             expect(count).toBe(1);
         });
 
@@ -375,8 +375,8 @@ KISSY.add(function (S, HtmlParser, UA) {
 
             var n = new HtmlParser.Parser(before).parse();
 
-            n.writeHTML(writer, filter);
-            expect(writer.getHTML()).toBe("<p src=\"y\">x</p>");
+            n.writeHtml(writer, filter);
+            expect(writer.getHtml()).toBe("<p src=\"y\">x</p>");
         });
 
     });

@@ -134,8 +134,8 @@ KISSY.add(function (S, HtmlParser) {
                 }),
                 node = parser.parse(),
                 writer = new HtmlParser.BasicWriter();
-            node.writeHTML(writer);
-            expect(writer.getHTML()).toBe("<a>我</a><p><a>测试</a></p><a>一下</a>");
+            node.writeHtml(writer);
+            expect(writer.getHtml()).toBe("<a>我</a><p><a>测试</a></p><a>一下</a>");
         });
 
 
@@ -147,8 +147,8 @@ KISSY.add(function (S, HtmlParser) {
                 }),
                 node = parser.parse(),
                 writer = new HtmlParser.BasicWriter();
-            node.writeHTML(writer);
-            expect(writer.getHTML()).toBe("<p><a>我</a></p><p><a>测试</a></p><p><a>一下</a></p>");
+            node.writeHtml(writer);
+            expect(writer.getHtml()).toBe("<p><a>我</a></p><p><a>测试</a></p><p><a>一下</a></p>");
         });
 
         it("filterChildren should works", function () {
@@ -179,8 +179,8 @@ KISSY.add(function (S, HtmlParser) {
                     }
                 }
             });
-            node.writeHTML(writer, filter);
-            expect(writer.getHTML()).toBe("<ul><li>1</li><li>2</li></ul>");
+            node.writeHtml(writer, filter);
+            expect(writer.getHtml()).toBe("<ul><li>1</li><li>2</li></ul>");
         });
 
         it('can replace text', function () {
@@ -196,8 +196,8 @@ KISSY.add(function (S, HtmlParser) {
                     return value.replace(/2/g, '3');
                 }
             });
-            node.writeHTML(writer, filter);
-            expect(writer.getHTML()).toBe("<li>13</li><li>31</li>");
+            node.writeHtml(writer, filter);
+            expect(writer.getHtml()).toBe("<li>13</li><li>31</li>");
 
         });
 
@@ -215,17 +215,17 @@ KISSY.add(function (S, HtmlParser) {
                     parser = new Parser(html),
                     node = parser.parse(),
                     writer = new HtmlParser.BasicWriter();
-                node.writeHTML(writer);
-                expect(writer.getHTML()).toBe('<img alt="alt" />');
+                node.writeHtml(writer);
+                expect(writer.getHtml()).toBe('<img alt="alt" />');
 
 
                 var beatifyWriter = new HtmlParser.BeautifyWriter();
-                node.writeHTML(beatifyWriter);
-                expect(beatifyWriter.getHTML()).toBe('<img alt="alt" />');
+                node.writeHtml(beatifyWriter);
+                expect(beatifyWriter.getHtml()).toBe('<img alt="alt" />');
 
                 var minifyWriter = new HtmlParser.MinifyWriter();
-                node.writeHTML(minifyWriter);
-                expect(minifyWriter.getHTML()).toBe('<img alt="" />');
+                node.writeHtml(minifyWriter);
+                expect(minifyWriter.getHtml()).toBe('<img alt="" />');
             });
 
             it("does not lower case", function () {
@@ -235,13 +235,13 @@ KISSY.add(function (S, HtmlParser) {
                     node = parser.parse(),
                     writer = new HtmlParser.BasicWriter();
 
-                node.writeHTML(writer);
+                node.writeHtml(writer);
 
-                expect(writer.getHTML()).toBe(html);
+                expect(writer.getHtml()).toBe(html);
 
                 var beatifyWriter = new HtmlParser.BeautifyWriter();
-                node.writeHTML(beatifyWriter);
-                expect(beatifyWriter.getHTML()).toBe(html);
+                node.writeHtml(beatifyWriter);
+                expect(beatifyWriter.getHtml()).toBe(html);
             });
 
 

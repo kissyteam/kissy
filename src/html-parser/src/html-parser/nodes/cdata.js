@@ -11,12 +11,12 @@ KISSY.add("html-parser/nodes/cdata", function (S, Text) {
     }
 
     S.extend(CData, Text, {
-        writeHTML:function (writer, filter) {
+        writeHtml:function (writer, filter) {
             var ret;
             if (!filter || (ret = filter.onCData(this)) !== false) {
                 if (ret) {
                     if (this !== ret) {
-                        ret.writeHTML(writer, filter);
+                        ret.writeHtml(writer, filter);
                         return;
                     }
                 }
