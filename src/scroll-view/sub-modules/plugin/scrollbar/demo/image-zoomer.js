@@ -143,7 +143,7 @@ KISSY.add('touch/image-zoomer', function (S, Node, ScrollView, ScrollbarPlugin) 
         var toScale = initialScale * e.scale;
 
         // centerOffset is stable
-        if (toScale < initialScale) {
+        if (toScale < 1) {
             if (currentScale == 1) {
                 return;
             }
