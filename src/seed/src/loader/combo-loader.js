@@ -258,17 +258,17 @@
                     mods.tags = [tag]; // [package tag]
                 }
 
-                if (pkgCombo)
+                if (groupCombo)
                 {
                     // find the common prefix of package paths
-                    if (! packagePaths[path])
+                    if (packagePaths[packagePath])
                     {
-                        packagePaths[path] = 1;  // the package path processed
-                        if (! (t = packagePrefix[packageName]))
-                        {
-                            packagePrefix[packageName] = path;
-                        }
-                        else
+                        path = packagePrefix[packageName];
+                    }
+                    else
+                    {
+                        packagePaths[packagePath] = 1;  // the package has already processed
+                        if (t = packagePrefix[packageName])
                         {
                             if ((matched = (t + ' ' + path).match(prefixRegExp)) && (t = matched[1]))
                             {
@@ -279,13 +279,14 @@
                                 }
                                 path = t;
                             }
-                            if (! matched || t == "http://")  // no prefix found
+                            if (! matched || t == "http://" || t == "http")  // no prefix found
                             {
                                 packageInfo.group = "";  // disable package group combination
                                 -- i;
                                 continue;
                             }
                         }
+                        packagePrefix[packageName] = path;
                     }
                     // collect tags to calculate combined tag
                     tags = mods.tags;
@@ -296,6 +297,7 @@
                 }
                 if (path)
                 {
+//                    console.debug("modName: " + mod.getName() + ", packageName: " + packageName + ", packagePath: " + packagePath + ", comboPath: " + path);
                     mods.prefix = path;  // the combo prefix
                 }
                 
