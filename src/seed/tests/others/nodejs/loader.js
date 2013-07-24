@@ -43,7 +43,7 @@ S.log('S.ready ok');
 /**
  * 引入内部模块ajax
  */
-S.use('io', function (S) {
+S.use('ajax', function (S) {
     S.log('io ok');
 });
 
