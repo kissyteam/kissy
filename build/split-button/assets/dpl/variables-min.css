@@ -1,5 +1,5 @@
 /*
-Copyright 2012, KISSY UI Library v1.30
+Copyright 2012, KISSY UI Library v1.31
 MIT Licensed
 build time: Dec 20 22:28
 */

@@ -1,0 +1,13 @@
+<script type="text/javascript"
+        src="../../../../../../build/seed.js"
+        id="t"
+        ></script>
+<script>
+    window.onload = function () {
+        KISSY.log(document.getElementById('t').src);
+        KISSY.log(KISSY.config('base'));
+        KISSY.use('dom', function (S, Dom) {
+            alert(Dom);
+        })
+    };
+</script>

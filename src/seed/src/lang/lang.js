@@ -16,6 +16,8 @@
              * Checks to see whether two object are equals.
              * @param a 比较目标1
              * @param b 比较目标2
+             * @param [mismatchKeys] internal usage
+             * @param [mismatchValues] internal usage
              * @return {Boolean} a.equals(b)
              * @member KISSY
              */
@@ -37,7 +39,7 @@
                 if (typeof a == 'string' && typeof b == 'string') {
                     return (a == b);
                 }
-                if (S.isNumber(a) && S.isNumber(b)) {
+                if (typeof a==='number' && typeof b==='number') {
                     return (a == b);
                 }
                 if (typeof a === 'object' && typeof b === 'object') {

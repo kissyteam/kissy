@@ -6,14 +6,14 @@
 (function (S, undefined) {
 
     var Loader = S.Loader,
-        utils = Loader.Utils,
+        Utils = Loader.Utils,
         host = S.Env.host,
         location = host.location,
         simulatedLocation,
         locationHref,
         configFns = S.Config.fns;
 
-    if (!S.Env.nodejs && location && (locationHref = location.href)) {
+    if (!S.UA.nodejs && location && (locationHref = location.href)) {
         simulatedLocation = new S.Uri(locationHref)
     }
 
@@ -68,7 +68,11 @@
                 cfg.baseUri = baseUri;
                 cfg.runtime = S;
                 delete cfg.path;
-                ps[name] = new Loader.Package(cfg);
+                if (ps[name]) {
+                    ps[name].reset(cfg);
+                } else {
+                    ps[name] = new Loader.Package(cfg);
+                }
             });
             return undefined;
         } else if (cfgs === false) {
@@ -112,7 +116,7 @@
             Env = self.Env;
         if (modules) {
             S.each(modules, function (modCfg, modName) {
-                utils.createModuleInfo(self, modName, modCfg);
+                Utils.createModuleInfo(self, modName, modCfg);
                 S.mix(Env.mods[modName], modCfg);
             });
         }
@@ -137,6 +141,7 @@
 
     function normalizeBase(base) {
         var baseUri;
+        base = base.replace(/\\/g, '/');
         if (base.charAt(base.length - 1) != '/') {
             base += '/';
         }

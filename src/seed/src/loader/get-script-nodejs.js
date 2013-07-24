@@ -1,7 +1,7 @@
 /**
  * @ignore
- * implement getScript for nodejs.
- *  so loader need not to be changed.
+ * implement getScript for nodejs synchronously.
+ * so loader need not to be changed.
  * @author yiminghe@gmail.com
  */
 (function (S) {
@@ -30,12 +30,10 @@
             var uri = new S.Uri(url),
                 path = uri.getPath();
 
-            // S.log('nodejs get file from : '+path);
-
             try {
                 var mod = fs.readFileSync(path, charset);
-                var fn = vm.runInThisContext('(function(KISSY){' + mod + '})', url);
-                fn(S);
+                var fn = vm.runInThisContext('(function(KISSY,require){' + mod + '})', url);
+                fn(S, require);
                 success && success();
             } catch (e) {
                 S.log('in file: ' + url);

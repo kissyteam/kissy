@@ -61,7 +61,11 @@ describe('lang.js', function () {
 
         expect(S.param({b: [2, 3]})).toBe('b%5B%5D=2&b%5B%5D=3');
 
-        expect(S.param({b: undefined})).toBe("b")
+        expect(S.param({b: undefined})).toBe("b");
+
+        expect(S.param({
+            nodeType:1
+        })).toBe('nodeType=1');
     });
 
     it('S.unparam', function () {
@@ -85,20 +89,20 @@ describe('lang.js', function () {
         expect(S.unparam('foo=1&bar=2=6').bar).toBe('2=6');
     });
 
-    it("S.escapeHTML", function () {
-        expect(S.escapeHTML("<")).toBe("&lt;");
-        expect(S.escapeHTML(">")).toBe("&gt;");
-        expect(S.escapeHTML("&")).toBe("&amp;");
-        expect(S.escapeHTML('"')).toBe("&quot;");
+    it("S.escapeHtml", function () {
+        expect(S.escapeHtml("<")).toBe("&lt;");
+        expect(S.escapeHtml(">")).toBe("&gt;");
+        expect(S.escapeHtml("&")).toBe("&amp;");
+        expect(S.escapeHtml('"')).toBe("&quot;");
     });
 
 
-    it("S.unEscapeHTML", function () {
-        expect(S.unEscapeHTML("&lt;")).toBe("<");
-        expect(S.unEscapeHTML("&gt;")).toBe(">");
-        expect(S.unEscapeHTML("&amp;")).toBe("&");
-        expect(S.unEscapeHTML('&quot;')).toBe('"');
-        expect(S.unEscapeHTML('&#' + "b".charCodeAt(0) + ';')).toBe('b');
+    it("S.unEscapeHtml", function () {
+        expect(S.unEscapeHtml("&lt;")).toBe("<");
+        expect(S.unEscapeHtml("&gt;")).toBe(">");
+        expect(S.unEscapeHtml("&amp;")).toBe("&");
+        expect(S.unEscapeHtml('&quot;')).toBe('"');
+        expect(S.unEscapeHtml('&#' + "b".charCodeAt(0) + ';')).toBe('b');
     });
 
 
@@ -284,7 +288,7 @@ describe('lang.js', function () {
         expect(S.isPlainObject(new Date)).toBe(false);
         expect(S.isPlainObject(fn)).toBe(false);
 
-        // DOM Element
+        // Dom Element
         if (web) {
             expect(S.isPlainObject(doc.createElement('div'))).toBe(false);
         }

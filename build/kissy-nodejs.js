@@ -1,7 +1,7 @@
 ﻿/*
-Copyright 2013, KISSY UI Library v1.30
+Copyright 2013, KISSY UI Library v1.31
 MIT Licensed
-build time: Jul 1 20:13
+build time: Jul 24 16:39
 */
 /**
  * @ignore
@@ -39,19 +39,18 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130701201313' will replace with current timestamp when compressing.
+         * NOTICE: '20130724163906' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130701201313',
+        __BUILD_TIME: '20130724163906',
         /**
          * KISSY Environment.
          * @private
          * @type {Object}
          */
         Env: {
-            host: host,
-            nodejs: (typeof require == 'function') && (typeof exports == 'object')
+            host: host
         },
         /**
          * KISSY Config.
@@ -69,10 +68,10 @@ var KISSY = (function (undefined) {
 
         /**
          * The version of the library.
-         * NOTICE: '1.30' will replace with current version when compressing.
+         * NOTICE: '1.31' will replace with current version when compressing.
          * @type {String}
          */
-        version: '1.30',
+        version: '1.31',
 
         /**
          * set KISSY configuration
@@ -184,12 +183,6 @@ var KISSY = (function (undefined) {
         }
     };
 
-    // exports for nodejs
-    if (S.Env.nodejs) {
-        S.KISSY = S;
-        module.exports = S;
-    }
-
     return S;
 
 })();/**
@@ -207,7 +200,7 @@ var KISSY = (function (undefined) {
         EMPTY = '',
         ObjectCreate = Object.create,
     // error in native ie678, not in simulated ie9
-        hasEnumBug = !({toString: 1}.propertyIsEnumerable('toString')),
+        hasEnumBug = !({toString: 1}['propertyIsEnumerable']('toString')),
         enumProperties = [
             'constructor',
             'hasOwnProperty',
@@ -228,9 +221,6 @@ var KISSY = (function (undefined) {
          * @member KISSY
          */
         stamp: function (o, readOnly, marker) {
-            if (!o) {
-                return o
-            }
             marker = marker || STAMP_MARKER;
             var guid = o[marker];
             if (guid) {
@@ -280,9 +270,9 @@ var KISSY = (function (undefined) {
          * @param {Object} s the object need to augment
          * @param {Boolean|Object} [ov=TRUE] whether overwrite existing property or config.
          * @param {Boolean} [ov.overwrite=TRUE] whether overwrite existing property.
-         * @param {String[]} [ov.whitelist] array of white-list properties
+         * @param {String[]|Function} [ov.whitelist] array of white-list properties
          * @param {Boolean}[ov.deep=false] whether recursive mix if encounter object.
-         * @param {String[]} [wl] array of white-list properties
+         * @param {String[]|Function} [wl] array of white-list properties
          * @param [deep=false] {Boolean} whether recursive mix if encounter object.
          * @return {Object} the augmented object
          * @member KISSY
@@ -296,10 +286,25 @@ var KISSY = (function (undefined) {
          */
         mix: function (r, s, ov, wl, deep) {
             if (typeof ov === 'object') {
-                wl = ov['whitelist'];
+                wl = /**
+                 @ignore
+                 @type {String[]|Function}
+                 */ov['whitelist'];
                 deep = ov['deep'];
                 ov = ov['overwrite'];
             }
+
+            if (wl && (typeof wl !== 'function')) {
+                var originalWl = wl;
+                wl = function (name, val) {
+                    return S.inArray(name, originalWl) ? val : undefined;
+                };
+            }
+
+            if (ov === undefined) {
+                ov = TRUE;
+            }
+
             var cache = [],
                 c,
                 i = 0;
@@ -351,7 +356,7 @@ var KISSY = (function (undefined) {
                 wl = undefined;
                 len++;
             }
-            if (!S.isBoolean(ov)) {
+            if (typeof ov !== 'boolean') {
                 ov = undefined;
                 len++;
             }
@@ -457,12 +462,7 @@ var KISSY = (function (undefined) {
         if (!s || !r) {
             return r;
         }
-
-        if (ov === undefined) {
-            ov = TRUE;
-        }
-
-        var i = 0, p, keys, len;
+        var i, p, keys, len;
 
         // 记录循环标志
         s[MIX_CIRCULAR_DETECTION] = r;
@@ -470,24 +470,14 @@ var KISSY = (function (undefined) {
         // 记录被记录了循环标志的对像
         cache.push(s);
 
-        if (wl) {
-            len = wl.length;
-            for (i = 0; i < len; i++) {
-                p = wl[i];
-                if (p in s) {
-                    _mix(p, r, s, ov, wl, deep, cache);
-                }
-            }
-        } else {
-            // mix all properties
-            keys = S.keys(s);
-            len = keys.length;
-            for (i = 0; i < len; i++) {
-                p = keys[i];
-                if (p != MIX_CIRCULAR_DETECTION) {
-                    // no hasOwnProperty judge!
-                    _mix(p, r, s, ov, wl, deep, cache);
-                }
+        // mix all properties
+        keys = S.keys(s);
+        len = keys.length;
+        for (i = 0; i < len; i++) {
+            p = keys[i];
+            if (p != MIX_CIRCULAR_DETECTION) {
+                // no hasOwnProperty judge!
+                _mix(p, r, s, ov, wl, deep, cache);
             }
         }
 
@@ -508,6 +498,9 @@ var KISSY = (function (undefined) {
                     r[p] = target;
                 }
                 return;
+            }
+            if (wl) {
+                src = wl.call(s, p, src);
             }
             // 来源是数组和对象，并且要求深度 mix
             if (deep && src && (S.isArray(src) || S.isPlainObject(src))) {
@@ -845,16 +838,18 @@ var KISSY = (function (undefined) {
             if (S.isArray(o)) {
                 return o;
             }
-
+            var lengthType = typeof o.length,
+                oType = typeof o;
             // The strings and functions also have 'length'
-            if (typeof o.length !== 'number'
+            if (lengthType != 'number' ||
                 // form.elements in ie78 has nodeName 'form'
                 // then caution select
-                // || o.nodeName
+                // o.nodeName
                 // window
-                || o.alert
-                || typeof o == 'string'
-                || S.isFunction(o)) {
+                o.alert ||
+                oType == 'string' ||
+                // https://github.com/ariya/phantomjs/issues/11478
+                (oType == 'function' && !( 'item' in o && lengthType == 'number'))) {
                 return [o];
             }
             var ret = [];
@@ -978,7 +973,7 @@ var KISSY = (function (undefined) {
          * @member KISSY
          * @return {String} escaped html
          */
-        escapeHTML: function (str) {
+        escapeHtml: function (str) {
             return (str + '').replace(getEscapeReg(), function (m) {
                 return reverseEntities[m];
             });
@@ -1002,7 +997,7 @@ var KISSY = (function (undefined) {
          * @member KISSY
          * @return {String} un-escaped html
          */
-        unEscapeHTML: function (str) {
+        unEscapeHtml: function (str) {
             return str.replace(getUnEscapeReg(), function (m, n) {
                 return htmlEntities[m] || String.fromCharCode(+n);
             });
@@ -1026,12 +1021,9 @@ var KISSY = (function (undefined) {
          * @member KISSY
          */
         param: function (o, sep, eq, serializeArray) {
-            if (!S.isPlainObject(o)) {
-                return EMPTY;
-            }
             sep = sep || SEP;
             eq = eq || EQ;
-            if (S.isUndefined(serializeArray)) {
+            if (serializeArray === undefined) {
                 serializeArray = TRUE;
             }
             var buf = [], key, i, v, len, val,
@@ -1128,6 +1120,9 @@ var KISSY = (function (undefined) {
             return ret;
         }
     });
+
+    S.escapeHTML = S.escapeHtml;
+    S.unEscapeHTML = S.unEscapeHtml;
 })(KISSY);/**
  * @ignore
  * function utilities of lang
@@ -1202,7 +1197,7 @@ var KISSY = (function (undefined) {
          * @param [data] that is provided to the function. This accepts either a single
          * item or an array. If an array is provided, the function is executed with
          * one parameter for each array item. If you need to pass a single array
-         * parameter, it needs to be wrapped in an array [myarray].
+         * parameter, it needs to be wrapped in an array.
          *
          * @return {Object} a timer object. Call the cancel() method on this object to stop
          * the timer.
@@ -1324,6 +1319,8 @@ var KISSY = (function (undefined) {
              * Checks to see whether two object are equals.
              * @param a 比较目标1
              * @param b 比较目标2
+             * @param [mismatchKeys] internal usage
+             * @param [mismatchValues] internal usage
              * @return {Boolean} a.equals(b)
              * @member KISSY
              */
@@ -1345,7 +1342,7 @@ var KISSY = (function (undefined) {
                 if (typeof a == 'string' && typeof b == 'string') {
                     return (a == b);
                 }
-                if (S.isNumber(a) && S.isNumber(b)) {
+                if (typeof a==='number' && typeof b==='number') {
                     return (a == b);
                 }
                 if (typeof a === 'object' && typeof b === 'object') {
@@ -1605,7 +1602,7 @@ var KISSY = (function (undefined) {
         toString = OP.toString;
 
     function hasOwnProperty(o, p) {
-        return Object.prototype.hasOwnProperty.call(o, p);
+        return OP.hasOwnProperty.call(o, p);
     }
 
     S.mix(S,
@@ -1726,27 +1723,27 @@ var KISSY = (function (undefined) {
 
                 // Must be an Object.
                 // Because of IE, we also have to check the presence of the constructor property.
-                // Make sure that DOM nodes and window objects don't pass through, as well
+                // Make sure that Dom nodes and window objects don't pass through, as well
                 if (!obj || S.type(obj) !== "object" || obj.nodeType || obj.window == obj) {
                     return FALSE;
                 }
 
+                var key, objConstructor;
+
                 try {
                     // Not own constructor property must be Object
-                    if (obj.constructor &&
-                        !hasOwnProperty(obj, "constructor") &&
-                        !hasOwnProperty(obj.constructor.prototype, "isPrototypeOf")) {
+                    if ((objConstructor = obj.constructor) && !hasOwnProperty(obj, "constructor") && !hasOwnProperty(objConstructor.prototype, "isPrototypeOf")) {
                         return FALSE;
                     }
                 } catch (e) {
-                    // IE8,9 Will throw exceptions on certain host objects #9897
+                    // IE8,9 Will throw exceptions on certain host objects
                     return FALSE;
                 }
 
                 // Own properties are enumerated firstly, so to speed up,
                 // if last one is own, then all properties are own.
 
-                var key;
+
                 for (key in obj) {
                 }
 
@@ -1775,13 +1772,10 @@ var KISSY = (function (undefined) {
     var PROMISE_VALUE = '__promise_value',
         PROMISE_PENDINGS = '__promise_pendings';
 
-    /**
-     * two effects:
-     * 1. call fulfilled with immediate value
-     * 2. push fulfilled in right promise
-     * @ignore
-     * @param fulfilled
-     * @param rejected
+    /*
+     two effects:
+     1. call fulfilled with immediate value
+     2. push fulfilled in right promise
      */
     function promiseWhen(promise, fulfilled, rejected) {
         // simply call rejected
@@ -1832,20 +1826,19 @@ var KISSY = (function (undefined) {
         self.promise = promise || new Promise();
     }
 
-    Defer.prototype =
-    {
+    Defer.prototype = {
         constructor: Defer,
         /**
          * fulfill defer object's promise
          * note: can only be called once
          * @param value defer object's value
-         * @return defer object's promise
+         * @return {KISSY.Promise} defer object's promise
          */
         resolve: function (value) {
             var promise = this.promise,
                 pendings;
             if (!(pendings = promise[PROMISE_PENDINGS])) {
-                return undefined;
+                return null;
             }
             // set current promise 's resolved value
             // maybe a promise or instant value
@@ -1860,7 +1853,7 @@ var KISSY = (function (undefined) {
         /**
          * reject defer object's promise
          * @param reason
-         * @return defer object's promise
+         * @return {KISSY.Promise} defer object's promise
          */
         reject: function (reason) {
             return this.resolve(new Reject(reason));
@@ -1888,15 +1881,14 @@ var KISSY = (function (undefined) {
         }
     }
 
-    Promise.prototype =
-    {
+    Promise.prototype = {
         constructor: Promise,
         /**
          * register callbacks when this promise object is resolved
          * @param {Function} fulfilled called when resolved successfully,pass a resolved value to this function and
-         * return a value (could be promise object) for the new promise's resolved value.
+         * return a value (could be promise object) for the new promise 's resolved value.
          * @param {Function} [rejected] called when error occurs,pass error reason to this function and
-         * return a new reason for the new promise's error reason
+         * return a new reason for the new promise 's error reason
          * @return {KISSY.Promise} a new promise object
          */
         then: function (fulfilled, rejected) {
@@ -1923,6 +1915,31 @@ var KISSY = (function (undefined) {
                 return callback(reason, false);
             });
         },
+
+        /**
+         * register callbacks when this promise object is resolved,
+         * and throw error at next event loop if promise
+         * (current instance if no fulfilled and rejected parameter or
+         * new instance caused by call this.then(fulfilled, rejected))
+         * fails.
+         * @param {Function} [fulfilled] called when resolved successfully,pass a resolved value to this function and
+         * return a value (could be promise object) for the new promise 's resolved value.
+         * @param {Function} [rejected] called when error occurs,pass error reason to this function and
+         * return a new reason for the new promise 's error reason
+         */
+        done: function (fulfilled, rejected) {
+            var self = this,
+                onUnhandledError = function (error) {
+                    setTimeout(function () {
+                        throw error;
+                    }, 0);
+                },
+                promiseToHandle = fulfilled || rejected ?
+                    self.then(fulfilled, rejected) :
+                    self;
+            promiseToHandle.fail(onUnhandledError);
+        },
+
         /**
          * whether the given object is a resolved promise
          * if it is resolved with another promise,
@@ -1949,7 +1966,7 @@ var KISSY = (function (undefined) {
         if (self[PROMISE_VALUE] instanceof Promise) {
             S.error('assert.not(this.__promise_value instanceof promise) in Reject constructor');
         }
-        return undefined;
+        return self;
     }
 
     S.extend(Reject, Promise);
@@ -2060,9 +2077,9 @@ var KISSY = (function (undefined) {
              * or call fulfilled callback directly when obj is not a promise object
              * @param {KISSY.Promise|*} obj a promise object or value of any type
              * @param {Function} fulfilled called when obj resolved successfully,pass a resolved value to this function and
-             * return a value (could be promise object) for the new promise's resolved value.
+             * return a value (could be promise object) for the new promise 's resolved value.
              * @param {Function} [rejected] called when error occurs in obj,pass error reason to this function and
-             * return a new reason for the new promise's error reason
+             * return a new reason for the new promise 's error reason
              * @return {KISSY.Promise} a new promise object
              *
              * for example:
@@ -2119,7 +2136,7 @@ var KISSY = (function (undefined) {
             all: function (promises) {
                 var count = promises.length;
                 if (!count) {
-                    return promises;
+                    return null;
                 }
                 var defer = Defer();
                 for (var i = 0; i < promises.length; i++) {
@@ -2474,8 +2491,7 @@ var KISSY = (function (undefined) {
     }
 
 
-    Query.prototype =
-    {
+    Query.prototype = {
         constructor: Query,
 
         /**
@@ -2505,8 +2521,8 @@ var KISSY = (function (undefined) {
          */
         count: function () {
             var self = this,
-                _queryMap,
                 count = 0,
+                _queryMap,
                 k;
             parseQuery(self);
             _queryMap = self._queryMap;
@@ -2741,8 +2757,7 @@ var KISSY = (function (undefined) {
         return self;
     }
 
-    Uri.prototype =
-    {
+    Uri.prototype = {
 
         constructor: Uri,
 
@@ -2982,7 +2997,7 @@ var KISSY = (function (undefined) {
          * Serialize to string.
          * See rfc 5.3 Component Recomposition.
          * But kissy does not differentiate between undefined and empty.
-         * @param {boolean} [serializeArray=true]
+         * @param {Boolean} [serializeArray=true]
          * whether append [] to key name when value 's type is array
          * @return {String}
          */
@@ -3068,30 +3083,60 @@ var KISSY = (function (undefined) {
  * ua
  */
 (function (S, undefined) {
-
     var win = S.Env.host,
         doc = win.document,
         navigator = win.navigator,
-        ua = navigator && navigator.userAgent || "",
-        EMPTY = '',
-        os,
-        MOBILE = 'mobile',
-        core = EMPTY,
-        shell = EMPTY, m,
-        IE_DETECT_RANGE = [6, 9],
-        v,
-        end,
-        VERSION_PLACEHOLDER = '{{version}}',
-        IE_DETECT_TPL = '<!--[if IE ' + VERSION_PLACEHOLDER + ']><' + 's></s><![endif]-->',
-        div = doc && doc.createElement('div'),
-        s = [];
-    /**
-     * KISSY UA
-     * @member KISSY
-     * @class KISSY.UA
-     * @singleton
-     */
-    var UA = KISSY.UA = {
+        ua = navigator && navigator.userAgent || "";
+
+    function numberify(s) {
+        var c = 0;
+        // convert '1.2.3.4' to 1.234
+        return parseFloat(s.replace(/\./g, function () {
+            return (c++ === 0) ? '.' : '';
+        }));
+    }
+
+    function setTridentVersion(ua, UA) {
+        var core, m;
+        UA[core = 'trident'] = 0.1; // Trident detected, look for revision
+
+        // Get the Trident's accurate version
+        if ((m = ua.match(/Trident\/([\d.]*)/)) && m[1]) {
+            UA[core] = numberify(m[1]);
+        }
+
+        UA.core = core;
+    }
+
+    function getIEVersion(ua) {
+        var m, v;
+        if ((m = ua.match(/MSIE ([^;]*)|Trident.*; rv ([0-9.]+)/)) &&
+            (v = (m[1] || m[2]))) {
+            return numberify(v);
+        }
+        return 0;
+    }
+
+    function getDescriptorFromUserAgent(ua) {
+        var EMPTY = '',
+            os,
+            core = EMPTY,
+            shell = EMPTY, m,
+            IE_DETECT_RANGE = [6, 9],
+            ieVersion,
+            v,
+            end,
+            VERSION_PLACEHOLDER = '{{version}}',
+            IE_DETECT_TPL = '<!--[if IE ' + VERSION_PLACEHOLDER + ']><' + 's></s><![endif]-->',
+            div = doc && doc.createElement('div'),
+            s = [];
+        /**
+         * KISSY UA
+         * @member KISSY
+         * @class KISSY.UA
+         * @singleton
+         */
+        var UA = {
             /**
              * webkit version
              * @type undefined|Number
@@ -3217,193 +3262,174 @@ var KISSY = (function (undefined) {
              * @member KISSY.UA
              */
             nodejs: undefined
-        },
-        numberify = function (s) {
-            var c = 0;
-            // convert '1.2.3.4' to 1.234
-            return parseFloat(s.replace(/\./g, function () {
-                return (c++ === 0) ? '.' : '';
-            }));
         };
 
-    if (div) {
-        // try to use IE-Conditional-Comment detect IE more accurately
-        // IE10 doesn't support this method, @ref: http://blogs.msdn.com/b/ie/archive/2011/07/06/html5-parsing-in-ie10.aspx
-        div.innerHTML = IE_DETECT_TPL.replace(VERSION_PLACEHOLDER, '');
-        s = div.getElementsByTagName('s');
-    }
-
-    function getIEVersion(ua) {
-        var m;
-        if ((m = ua.match(/MSIE\s([^;]*)/)) && m[1]) {
-            return numberify(m[1]);
-        }
-        return 0;
-    }
-
-    if (s.length > 0) {
-
-        shell = 'ie';
-        UA[core = 'trident'] = 0.1; // Trident detected, look for revision
-
-        // Get the Trident's accurate version
-        if ((m = ua.match(/Trident\/([\d.]*)/)) && m[1]) {
-            UA[core] = numberify(m[1]);
+        if (div) {
+            // try to use IE-Conditional-Comment detect IE more accurately
+            // IE10 doesn't support this method, @ref: http://blogs.msdn.com/b/ie/archive/2011/07/06/html5-parsing-in-ie10.aspx
+            div.innerHTML = IE_DETECT_TPL.replace(VERSION_PLACEHOLDER, '');
+            s = div.getElementsByTagName('s');
         }
 
-        // Detect the accurate version
-        // 注意：
-        //  UA.shell = ie, 表示外壳是 ie
-        //  但 UA.ie = 7, 并不代表外壳是 ie7, 还有可能是 ie8 的兼容模式
-        //  对于 ie8 的兼容模式，还要通过 documentMode 去判断。但此处不能让 UA.ie = 8, 否则
-        //  很多脚本判断会失误。因为 ie8 的兼容模式表现行为和 ie7 相同，而不是和 ie8 相同
-        for (v = IE_DETECT_RANGE[0], end = IE_DETECT_RANGE[1]; v <= end; v++) {
-            div.innerHTML = IE_DETECT_TPL.replace(VERSION_PLACEHOLDER, v);
-            if (s.length > 0) {
-                UA[shell] = v;
-                break;
-            }
-        }
+        if (s.length > 0) {
 
-        var ieVersion;
+            setTridentVersion(ua, UA);
 
-        // https://github.com/kissyteam/kissy/issues/321
-        // win8 embed app
-        if (!UA.ie && (ieVersion = getIEVersion(ua))) {
-            UA[shell = 'ie'] = ieVersion;
-        }
-
-
-    } else {
-
-        // WebKit
-        if ((m = ua.match(/AppleWebKit\/([\d.]*)/)) && m[1]) {
-            UA[core = 'webkit'] = numberify(m[1]);
-
-            // Chrome
-            if ((m = ua.match(/Chrome\/([\d.]*)/)) && m[1]) {
-                UA[shell = 'chrome'] = numberify(m[1]);
-            }
-            // Safari
-            else if ((m = ua.match(/\/([\d.]*) Safari/)) && m[1]) {
-                UA[shell = 'safari'] = numberify(m[1]);
-            }
-
-            // Apple Mobile
-            if (/ Mobile\//.test(ua) && ua.match(/iPad|iPod|iPhone/)) {
-                UA[MOBILE] = 'apple'; // iPad, iPhone or iPod Touch
-
-                m = ua.match(/OS ([^\s]*)/);
-                if (m && m[1]) {
-                    UA.ios = numberify(m[1].replace('_', '.'));
-                }
-                os = 'ios';
-                m = ua.match(/iPad|iPod|iPhone/);
-                if (m && m[0]) {
-                    UA[m[0].toLowerCase()] = UA.ios;
-                }
-            } else if (/ Android/.test(ua)) {
-                if (/Mobile/.test(ua)) {
-                    os = UA.mobile = 'android';
-                }
-                m = ua.match(/Android ([^\s]*);/);
-                if (m && m[1]) {
-                    UA.android = numberify(m[1]);
+            // Detect the accurate version
+            // 注意：
+            //  UA.shell = ie, 表示外壳是 ie
+            //  但 UA.ie = 7, 并不代表外壳是 ie7, 还有可能是 ie8 的兼容模式
+            //  对于 ie8 的兼容模式，还要通过 documentMode 去判断。但此处不能让 UA.ie = 8, 否则
+            //  很多脚本判断会失误。因为 ie8 的兼容模式表现行为和 ie7 相同，而不是和 ie8 相同
+            for (v = IE_DETECT_RANGE[0], end = IE_DETECT_RANGE[1]; v <= end; v++) {
+                div.innerHTML = IE_DETECT_TPL.replace(VERSION_PLACEHOLDER, v);
+                if (s.length > 0) {
+                    UA[shell = 'ie'] = v;
+                    break;
                 }
             }
-            // Other WebKit Mobile Browsers
-            else if ((m = ua.match(/NokiaN[^\/]*|Android \d\.\d|webOS\/\d\.\d/))) {
-                UA[MOBILE] = m[0].toLowerCase(); // Nokia N-series, Android, webOS, ex: NokiaN95
+
+            // https://github.com/kissyteam/kissy/issues/321
+            // win8 embed app
+            if (!UA.ie && (ieVersion = getIEVersion(ua))) {
+                UA[shell = 'ie'] = ieVersion;
             }
 
-            if ((m = ua.match(/PhantomJS\/([^\s]*)/)) && m[1]) {
-                UA.phantomjs = numberify(m[1]);
-            }
-        }
-        // NOT WebKit
-        else {
-            // Presto
-            // ref: http://www.useragentstring.com/pages/useragentstring.php
-            if ((m = ua.match(/Presto\/([\d.]*)/)) && m[1]) {
-                UA[core = 'presto'] = numberify(m[1]);
+        } else {
+            // WebKit
+            if ((m = ua.match(/AppleWebKit\/([\d.]*)/)) && m[1]) {
+                UA[core = 'webkit'] = numberify(m[1]);
 
-                // Opera
-                if ((m = ua.match(/Opera\/([\d.]*)/)) && m[1]) {
-                    UA[shell = 'opera'] = numberify(m[1]); // Opera detected, look for revision
+                if ((m = ua.match(/OPR\/(\d+\.\d+)/)) && m[1]) {
+                    UA[shell = 'opera'] = numberify(m[1]);
+                }
+                // Chrome
+                else if ((m = ua.match(/Chrome\/([\d.]*)/)) && m[1]) {
+                    UA[shell = 'chrome'] = numberify(m[1]);
+                }
+                // Safari
+                else if ((m = ua.match(/\/([\d.]*) Safari/)) && m[1]) {
+                    UA[shell = 'safari'] = numberify(m[1]);
+                }
 
-                    if ((m = ua.match(/Opera\/.* Version\/([\d.]*)/)) && m[1]) {
-                        UA[shell] = numberify(m[1]);
+                // Apple Mobile
+                if (/ Mobile\//.test(ua) && ua.match(/iPad|iPod|iPhone/)) {
+                    UA.mobile = 'apple'; // iPad, iPhone or iPod Touch
+
+                    m = ua.match(/OS ([^\s]*)/);
+                    if (m && m[1]) {
+                        UA.ios = numberify(m[1].replace('_', '.'));
                     }
-
-                    // Opera Mini
-                    if ((m = ua.match(/Opera Mini[^;]*/)) && m) {
-                        UA[MOBILE] = m[0].toLowerCase(); // ex: Opera Mini/2.0.4509/1316
+                    os = 'ios';
+                    m = ua.match(/iPad|iPod|iPhone/);
+                    if (m && m[0]) {
+                        UA[m[0].toLowerCase()] = UA.ios;
                     }
-                    // Opera Mobile
-                    // ex: Opera/9.80 (Windows NT 6.1; Opera Mobi/49; U; en) Presto/2.4.18 Version/10.00
-                    // issue: 由于 Opera Mobile 有 Version/ 字段，可能会与 Opera 混淆，同时对于 Opera Mobile 的版本号也比较混乱
-                    else if ((m = ua.match(/Opera Mobi[^;]*/)) && m) {
-                        UA[MOBILE] = m[0];
+                } else if (/ Android/.test(ua)) {
+                    if (/Mobile/.test(ua)) {
+                        os = UA.mobile = 'android';
+                    }
+                    m = ua.match(/Android ([^\s]*);/);
+                    if (m && m[1]) {
+                        UA.android = numberify(m[1]);
                     }
                 }
+                // Other WebKit Mobile Browsers
+                else if ((m = ua.match(/NokiaN[^\/]*|Android \d\.\d|webOS\/\d\.\d/))) {
+                    UA.mobile = m[0].toLowerCase(); // Nokia N-series, Android, webOS, ex: NokiaN95
+                }
 
-                // NOT WebKit or Presto
-            } else {
-                // MSIE
-                // 由于最开始已经使用了 IE 条件注释判断，因此落到这里的唯一可能性只有 IE10+
-                if ((m = ua.match(/MSIE\s([^;]*)/)) && m[1]) {
-                    UA[core = 'trident'] = 0.1; // Trident detected, look for revision
-                    UA[shell = 'ie'] = numberify(m[1]);
+                if ((m = ua.match(/PhantomJS\/([^\s]*)/)) && m[1]) {
+                    UA.phantomjs = numberify(m[1]);
+                }
+            }
+            // NOT WebKit
+            else {
+                // Presto
+                // ref: http://www.useragentstring.com/pages/useragentstring.php
+                if ((m = ua.match(/Presto\/([\d.]*)/)) && m[1]) {
+                    UA[core = 'presto'] = numberify(m[1]);
 
-                    // Get the Trident's accurate version
-                    if ((m = ua.match(/Trident\/([\d.]*)/)) && m[1]) {
-                        UA[core] = numberify(m[1]);
+                    // Opera
+                    if ((m = ua.match(/Opera\/([\d.]*)/)) && m[1]) {
+                        UA[shell = 'opera'] = numberify(m[1]); // Opera detected, look for revision
+
+                        if ((m = ua.match(/Opera\/.* Version\/([\d.]*)/)) && m[1]) {
+                            UA[shell] = numberify(m[1]);
+                        }
+
+                        // Opera Mini
+                        if ((m = ua.match(/Opera Mini[^;]*/)) && m) {
+                            UA.mobile = m[0].toLowerCase(); // ex: Opera Mini/2.0.4509/1316
+                        }
+                        // Opera Mobile
+                        // ex: Opera/9.80 (Windows NT 6.1; Opera Mobi/49; U; en) Presto/2.4.18 Version/10.00
+                        // issue: 由于 Opera Mobile 有 Version/ 字段，可能会与 Opera 混淆，同时对于 Opera Mobile 的版本号也比较混乱
+                        else if ((m = ua.match(/Opera Mobi[^;]*/)) && m) {
+                            UA.mobile = m[0];
+                        }
                     }
 
-                    // NOT WebKit, Presto or IE
+                    // NOT WebKit or Presto
                 } else {
-                    // Gecko
-                    if ((m = ua.match(/Gecko/))) {
-                        UA[core = 'gecko'] = 0.1; // Gecko detected, look for revision
-                        if ((m = ua.match(/rv:([\d.]*)/)) && m[1]) {
-                            UA[core] = numberify(m[1]);
-                        }
-
-                        // Firefox
-                        if ((m = ua.match(/Firefox\/([\d.]*)/)) && m[1]) {
-                            UA[shell = 'firefox'] = numberify(m[1]);
+                    // MSIE
+                    // 由于最开始已经使用了 IE 条件注释判断，因此落到这里的唯一可能性只有 IE10+
+                    // and analysis tools in nodejs
+                    if (ieVersion = getIEVersion(ua)) {
+                        UA[shell = 'ie'] = ieVersion;
+                        setTridentVersion(ua, UA);
+                        // NOT WebKit, Presto or IE
+                    } else {
+                        // Gecko
+                        if ((m = ua.match(/Gecko/))) {
+                            UA[core = 'gecko'] = 0.1; // Gecko detected, look for revision
+                            if ((m = ua.match(/rv:([\d.]*)/)) && m[1]) {
+                                UA[core] = numberify(m[1]);
+                                if (/Mobile|Tablet/.test(ua)) {
+                                    o.mobile = "firefox";
+                                }
+                            }
+                            // Firefox
+                            if ((m = ua.match(/Firefox\/([\d.]*)/)) && m[1]) {
+                                UA[shell = 'firefox'] = numberify(m[1]);
+                            }
                         }
                     }
                 }
             }
         }
-    }
 
-    if (!os) {
-        if ((/windows|win32/i).test(ua)) {
-            os = 'windows';
-        } else if ((/macintosh|mac_powerpc/i).test(ua)) {
-            os = 'macintosh';
-        } else if ((/linux/i).test(ua)) {
-            os = 'linux';
-        } else if ((/rhino/i).test(ua)) {
-            os = 'rhino';
+        if (!os) {
+            if ((/windows|win32/i).test(ua)) {
+                os = 'windows';
+            } else if ((/macintosh|mac_powerpc/i).test(ua)) {
+                os = 'macintosh';
+            } else if ((/linux/i).test(ua)) {
+                os = 'linux';
+            } else if ((/rhino/i).test(ua)) {
+                os = 'rhino';
+            }
         }
+
+        UA.os = os;
+        UA.core = UA.core || core;
+        UA.shell = shell;
+
+        return UA;
     }
 
+    var UA = KISSY.UA = getDescriptorFromUserAgent(ua);
     // nodejs
     if (typeof process === 'object') {
         var versions, nodeVersion;
         if ((versions = process.versions) && (nodeVersion = versions.node)) {
-            os = process.platform;
+            UA.os = process.platform;
             UA.nodejs = numberify(nodeVersion);
         }
     }
 
-    UA.os = os;
-    UA.core = core;
-    UA.shell = shell;
-    UA._numberify = numberify;
+    // use by analysis tools in nodejs
+    UA.getDescriptorFromUserAgent = getDescriptorFromUserAgent;
 
     var o = [
             // browser core type
@@ -3436,14 +3462,20 @@ var KISSY = (function (undefined) {
 
 /*
  NOTES:
- 2012.11.27
+ 2013.07.08 yiminghe@gmail.com
+ - support ie11 and opera(using blink)
+
+ 2013.01.17 yiminghe@gmail.com
+ - expose getDescriptorFromUserAgent for analysis tool in nodejs
+
+ 2012.11.27 yiminghe@gmail.com
  - moved to seed for conditional loading and better code share
 
  2012.11.21 yiminghe@gmail.com
  - touch and os support
 
- 2011.11.08
- - ie < 10 使用条件注释判断内核，更精确 by gonghaocn@gmail.com
+ 2011.11.08 gonghaocn@gmail.com
+ - ie < 10 使用条件注释判断内核，更精确
 
  2010.03
  - jQuery, YUI 等类库都推荐用特性探测替代浏览器嗅探。特性探测的好处是能自动适应未来设备和未知设备，比如
@@ -3527,21 +3559,7 @@ var KISSY = (function (undefined) {
  */
 (function (S) {
 
-    /**
-     * @class KISSY.Loader
-     * @private
-     * @mixins KISSY.Loader.Target
-     * This class should not be instantiated manually.
-     */
-    function Loader(runtime) {
-        this.runtime = runtime;
-        /**
-         * @event afterModAttached
-         * fired after a module is attached
-         * @param e
-         * @param {KISSY.Loader.Module} e.mod current module object
-         */
-    }
+    var Loader = S.Loader = {};
 
     /**
      * Loader Status Enum
@@ -3559,96 +3577,6 @@ var KISSY = (function (undefined) {
         /** attached */
         'ATTACHED': 4
     };
-
-    S.Loader = Loader;
-
-    S.Loader.Status = Loader.Status;
-
-})(KISSY);
-/*
- TODO: implement conditional loader
- *//**
- * @ignore
- * simple event target for loader
- * @author yiminghe@gmail.com
- */
-(function (S) {
-
-    // in case current code runs on nodejs
-    S.namespace("Loader");
-
-    var time = S.now(),
-        p = '__events__' + time;
-
-    function getHolder(self) {
-        return self[p] || (self[p] = {});
-    }
-
-    function getEventHolder(self, name, create) {
-        var holder = getHolder(self);
-        if (create) {
-            holder[name] = holder[name] || [];
-        }
-        return holder[name];
-    }
-
-    /**
-     * @class KISSY.Loader.Target
-     * Event Target For KISSY Loader.
-     * @private
-     * @singleton
-     */
-    KISSY.Loader.Target = {
-        /**
-         * register callback for specified eventName from loader
-         * @param {String} eventName event name from kissy loader
-         * @param {Function} callback function to be executed when event of eventName is fired
-         */
-        on: function (eventName, callback) {
-            getEventHolder(this, eventName, 1).push(callback);
-        },
-
-        /**
-         * remove callback for specified eventName from loader
-         * @param {String} [eventName] eventName from kissy loader.
-         * if undefined remove all callbacks for all events
-         * @param {Function } [callback] function to be executed when event of eventName is fired.
-         * if undefined remove all callbacks fro this event
-         */
-        detach: function (eventName, callback) {
-            var self = this, fns, index;
-            if (!eventName) {
-                delete self[p];
-                return;
-            }
-            fns = getEventHolder(self, eventName);
-            if (fns) {
-                if (callback) {
-                    index = S.indexOf(callback, fns);
-                    if (index != -1) {
-                        fns.splice(index, 1);
-                    }
-                }
-                if (!callback || !fns.length) {
-                    delete getHolder(self)[eventName];
-                }
-            }
-        },
-
-        /**
-         * Fire specified event.
-         * @param eventName
-         * @param obj
-         */
-        fire: function (eventName, obj) {
-            var fns = getEventHolder(this, eventName) || [],
-                i,
-                l = fns.length;
-            for (i = 0; i < l; i++) {
-                fns[i].call(null, obj);
-            }
-        }
-    };
 })(KISSY);/**
  * @ignore
  * Utils for kissy loader
@@ -3663,13 +3591,15 @@ var KISSY = (function (undefined) {
         data = Loader.Status,
         ATTACHED = data.ATTACHED,
         LOADED = data.LOADED,
+        ERROR = data.ERROR,
+    // LOADING = data.LOADING,
         /**
          * @class KISSY.Loader.Utils
          * Utils for KISSY Loader
          * @singleton
          * @private
          */
-            Utils = S.Loader.Utils = {},
+            Utils = Loader.Utils = {},
         doc = host.document;
 
     // http://wiki.commonjs.org/wiki/Packages/Mappings/A
@@ -3777,18 +3707,8 @@ var KISSY = (function (undefined) {
          * @param modNames
          * @return {Boolean}
          */
-        isAttached: function (runtime, modNames) {
+        'isAttached': function (runtime, modNames) {
             return isStatus(runtime, modNames, ATTACHED);
-        },
-
-        /**
-         * Whether modNames is loaded.
-         * @param runtime
-         * @param modNames
-         * @return {Boolean}
-         */
-        isLoaded: function (runtime, modNames) {
-            return isStatus(runtime, modNames, LOADED);
         },
 
         /**
@@ -3823,20 +3743,20 @@ var KISSY = (function (undefined) {
             return mods;
         },
 
-        attachModsRecursively: function (modNames, runtime, stack) {
+        attachModsRecursively: function (modNames, runtime, stack, errorList) {
             stack = stack || [];
             var i,
                 s = 1,
                 l = modNames.length,
                 stackDepth = stack.length;
             for (i = 0; i < l; i++) {
-                s = Utils.attachModRecursively(modNames[i], runtime, stack) && s;
+                s = Utils.attachModRecursively(modNames[i], runtime, stack, errorList) && s;
                 stack.length = stackDepth;
             }
             return s;
         },
 
-        attachModRecursively: function (modName, runtime, stack) {
+        attachModRecursively: function (modName, runtime, stack, errorList) {
             var mods = runtime.Env.mods,
                 status,
                 m = mods[modName];
@@ -3847,10 +3767,13 @@ var KISSY = (function (undefined) {
             if (status == ATTACHED) {
                 return 1;
             }
+            if (status == ERROR) {
+                errorList.push(m);
+            }
             if (status != LOADED) {
                 return 0;
             }
-            if (S.Config.debug) {
+            if ('@DEBUG@') {
                 if (S.inArray(modName, stack)) {
                     stack.push(modName);
                     S.error('find cyclic dependency between mods: ' + stack);
@@ -3858,7 +3781,8 @@ var KISSY = (function (undefined) {
                 }
                 stack.push(modName);
             }
-            if (Utils.attachModsRecursively(m.getNormalizedRequires(), runtime, stack)) {
+            if (Utils.attachModsRecursively(m.getNormalizedRequires(),
+                runtime, stack, errorList)) {
                 Utils.attachMod(runtime, m);
                 return 1;
             }
@@ -3877,17 +3801,15 @@ var KISSY = (function (undefined) {
 
             var fn = mod.fn;
 
-            if (fn) {
+            if (typeof fn === 'function') {
                 // 需要解开 index，相对路径
                 // 但是需要保留 alias，防止值不对应
                 mod.value = fn.apply(mod, Utils.getModules(runtime, mod.getRequiresWithAlias()));
+            } else {
+                mod.value = fn;
             }
 
             mod.status = ATTACHED;
-
-            runtime.getLoader().fire('afterModAttached', {
-                mod: mod
-            });
         },
 
         /**
@@ -3983,6 +3905,9 @@ var KISSY = (function (undefined) {
          * @param [config]
          */
         registerModule: function (runtime, name, fn, config) {
+
+            name = indexMapStr(name);
+
             var mods = runtime.Env.mods,
                 mod = mods[name];
 
@@ -4052,8 +3977,8 @@ var KISSY = (function (undefined) {
  */
 (function (S) {
 
-    var Path = S.Path,
-        Loader = S.Loader,
+    var Loader = S.Loader,
+        Path = S.Path,
         IGNORE_PACKAGE_NAME_IN_URI = 'ignorePackageNameInUri',
         Utils = Loader.Utils;
 
@@ -4073,8 +3998,14 @@ var KISSY = (function (undefined) {
     }
 
     S.augment(Package, {
+
+        reset: function (cfg) {
+            S.mix(this, cfg);
+        },
+
         /**
          * Tag for package.
+         * tag can not contain ".", eg: Math.random() !
          * @return {String}
          */
         getTag: function () {
@@ -4158,14 +4089,37 @@ var KISSY = (function (undefined) {
     function Module(cfg) {
         this.status = Loader.Status.INIT;
         S.mix(this, cfg);
+        this.callbacks = [];
     }
 
     S.augment(Module, {
+
+        addCallback: function (callback) {
+            this.callbacks.push(callback);
+        },
+
+        notifyAll: function () {
+            var callback;
+            var len = this.callbacks.length,
+                i = 0;
+            for (; i < len; i++) {
+                callback = this.callbacks[i];
+                try {
+                    callback(this);
+                } catch (e) {
+                    setTimeout(function () {
+                        throw e;
+                    }, 0);
+                }
+            }
+            this.callbacks = [];
+        },
+
         /**
          * Set the value of current module
          * @param v value to be set
          */
-        'setValue': function (v) {
+        setValue: function (v) {
             this.value = v;
         },
 
@@ -4211,6 +4165,7 @@ var KISSY = (function (undefined) {
                 }
                 fullpathUri = packageBaseUri.resolve(path);
                 if (t = self.getTag()) {
+                    t += '.' + self.getType();
                     fullpathUri.query.set('t', t);
                 }
                 self.fullpath = Utils.getMappedPath(self.runtime, fullpathUri.toString());
@@ -4251,11 +4206,12 @@ var KISSY = (function (undefined) {
         getPackage: function () {
             var self = this;
             return self.packageInfo ||
-                (self.packageInfo = getPackage(self.runtime, self));
+                (self.packageInfo = getPackage(self.runtime, self.name));
         },
 
         /**
-         * Get the tag of current module
+         * Get the tag of current module.
+         * tag can not contain ".", eg: Math.random() !
          * @return {String}
          */
         getTag: function () {
@@ -4335,9 +4291,13 @@ var KISSY = (function (undefined) {
         return name + min + extname;
     }
 
-    function getPackage(self, mod) {
-        var modName = mod.name,
-            packages = self.config('packages'),
+    var systemPackage = new Loader.Package({
+        name: '',
+        runtime: S
+    });
+
+    function getPackage(self, modName) {
+        var packages = self.config('packages'),
             pName = '',
             p;
 
@@ -4351,17 +4311,124 @@ var KISSY = (function (undefined) {
 
         }
 
-        return packages[pName] || self.config('systemPackage');
+        return packages[pName] || systemPackage;
     }
 
-
-})(KISSY);
-/*
- TODO: implement conditional loader
- *//**
+})(KISSY);/**
  * @ignore
- * implement getScript for nodejs.
- *  so loader need not to be changed.
+ * script/css load across browser
+ * @author yiminghe@gmail.com
+ */
+(function (S) {
+
+    var CSS_POLL_INTERVAL = 30,
+        UA= S.UA,
+        Utils = S.Loader.Utils,
+    // central poll for link node
+        timer = 0,
+        monitors = {
+            // node.id:{callback:callback,node:node}
+        };
+
+
+    /**
+     * @ignore
+     * References:
+     *  - http://unixpapa.com/js/dyna.html
+     *  - http://www.blaze.io/technical/ies-premature-execution-problem/
+     *
+     * `onload` event is supported in WebKit since 535.23
+     *  - https://bugs.webkit.org/show_activity.cgi?id=38995
+     * `onload/onerror` event is supported since Firefox 9.0
+     *  - https://bugzilla.mozilla.org/show_bug.cgi?id=185236
+     *  - https://developer.mozilla.org/en/HTML/Element/link#Stylesheet_load_events
+     *
+     * monitor css onload across browsers.issue about 404 failure.
+     *
+     *  - firefox not ok（4 is wrong）：
+     *    - http://yearofmoo.com/2011/03/cross-browser-stylesheet-preloading/
+     *  - all is ok
+     *    - http://lifesinger.org/lab/2011/load-js-css/css-preload.html
+     *  - others
+     *    - http://www.zachleat.com/web/load-css-dynamically/
+     */
+
+    function startCssTimer() {
+        if (!timer) {
+            // S.log('start css polling');
+            cssPoll();
+        }
+    }
+
+    // single thread is ok
+    function cssPoll() {
+
+        for (var url in monitors) {
+
+            var callbackObj = monitors[url],
+                node = callbackObj.node,
+                exName,
+                loaded = 0;
+            if (UA.webkit) {
+                // http://www.w3.org/TR/Dom-Level-2-Style/stylesheets.html
+                if (node['sheet']) {
+                    S.log('webkit loaded : ' + url);
+                    loaded = 1;
+                }
+            } else if (node['sheet']) {
+                try {
+                    var cssRules = node['sheet'].cssRules;
+                    if (cssRules) {
+                        S.log('same domain firefox loaded : ' + url);
+                        loaded = 1;
+                    }
+                } catch (ex) {
+                    exName = ex.name;
+                    S.log('firefox getStyle : ' + exName + ' ' + ex.code + ' ' + url);
+                    // http://www.w3.org/TR/dom/#dom-domexception-code
+                    if (// exName == 'SecurityError' ||
+                    // for old firefox
+                        exName == 'NS_ERROR_DOM_SECURITY_ERR') {
+                        S.log(exName + ' firefox loaded : ' + url);
+                        loaded = 1;
+                    }
+                }
+            }
+
+            if (loaded) {
+                if (callbackObj.callback) {
+                    callbackObj.callback.call(node);
+                }
+                delete monitors[url];
+            }
+
+        }
+
+        if (S.isEmptyObject(monitors)) {
+            timer = 0;
+            // S.log('end css polling');
+        } else {
+            timer = setTimeout(cssPoll, CSS_POLL_INTERVAL);
+        }
+    }
+
+    S.mix(Utils, {
+        pollCss: // refer : http://lifesinger.org/lab/2011/load-js-css/css-preload.html
+        // 暂时不考虑如何判断失败，如 404 等
+            function (node, callback) {
+                var href = node.href,
+                    arr;
+                arr = monitors[href] = {};
+                arr.node = node;
+                arr.callback = callback;
+                startCssTimer();
+            }
+
+    });
+})(KISSY);/**
+ * @ignore
+ * implement getScript for nodejs synchronously.
+ * so loader need not to be changed.
  * @author yiminghe@gmail.com
  */
 (function (S) {
@@ -4390,12 +4457,10 @@ var KISSY = (function (undefined) {
             var uri = new S.Uri(url),
                 path = uri.getPath();
 
-            // S.log('nodejs get file from : '+path);
-
             try {
                 var mod = fs.readFileSync(path, charset);
-                var fn = vm.runInThisContext('(function(KISSY){' + mod + '})', url);
-                fn(S);
+                var fn = vm.runInThisContext('(function(KISSY,require){' + mod + '})', url);
+                fn(S, require);
                 success && success();
             } catch (e) {
                 S.log('in file: ' + url);
@@ -4415,14 +4480,14 @@ var KISSY = (function (undefined) {
 (function (S, undefined) {
 
     var Loader = S.Loader,
-        utils = Loader.Utils,
+        Utils = Loader.Utils,
         host = S.Env.host,
         location = host.location,
         simulatedLocation,
         locationHref,
         configFns = S.Config.fns;
 
-    if (!S.Env.nodejs && location && (locationHref = location.href)) {
+    if (!S.UA.nodejs && location && (locationHref = location.href)) {
         simulatedLocation = new S.Uri(locationHref)
     }
 
@@ -4477,7 +4542,11 @@ var KISSY = (function (undefined) {
                 cfg.baseUri = baseUri;
                 cfg.runtime = S;
                 delete cfg.path;
-                ps[name] = new Loader.Package(cfg);
+                if (ps[name]) {
+                    ps[name].reset(cfg);
+                } else {
+                    ps[name] = new Loader.Package(cfg);
+                }
             });
             return undefined;
         } else if (cfgs === false) {
@@ -4521,7 +4590,7 @@ var KISSY = (function (undefined) {
             Env = self.Env;
         if (modules) {
             S.each(modules, function (modCfg, modName) {
-                utils.createModuleInfo(self, modName, modCfg);
+                Utils.createModuleInfo(self, modName, modCfg);
                 S.mix(Env.mods[modName], modCfg);
             });
         }
@@ -4546,6 +4615,7 @@ var KISSY = (function (undefined) {
 
     function normalizeBase(base) {
         var baseUri;
+        base = base.replace(/\\/g, '/');
         if (base.charAt(base.length - 1) != '/') {
             base += '/';
         }
@@ -4563,97 +4633,199 @@ var KISSY = (function (undefined) {
     }
 
 })(KISSY);/**
+ * simple loader for KISSY. one module on request.
  * @ignore
- * add module to kissy simple loader
- * @author yiminghe@gmail.com, lifesinger@gmail.com
+ * @author yiminghe@gmail.com
  */
-(function (S) {
+(function (S, undefined) {
 
-    var Loader = S.Loader,
-        UA = S.UA,
-        utils = Loader.Utils;
+    var Loader, Status, Utils, UA,
+    // standard browser 如果 add 没有模块名，模块定义先暂存这里
+        currentMod = undefined,
+    // ie 开始载入脚本的时间
+        startLoadTime = 0,
+    // ie6,7,8开始载入脚本对应的模块名
+        startLoadModName,
+        LOADING, LOADED, ERROR, ATTACHED;
 
-    S.augment(Loader, Loader.Target, {
+    Loader = S.Loader;
+    Status = Loader.Status;
+    Utils = Loader.Utils;
+    UA = S.UA;
+    LOADING = Status.LOADING;
+    LOADED = Status.LOADED;
+    ERROR = Status.ERROR;
+    ATTACHED = Status.ATTACHED;
 
-        // standard browser 如果 add 没有模块名，模块定义先暂存这里
-        __currentMod: null,
+    /**
+     * @class KISSY.Loader.SimpleLoader
+     * one module one request
+     * @param runtime KISSY
+     * @param waitingModules load checker
+     * @private
+     */
+    function SimpleLoader(runtime, waitingModules) {
+        S.mix(this, {
+            runtime: runtime,
+            requireLoadedMods: {},
+            waitingModules: waitingModules
+        });
+    }
 
-        // ie 开始载入脚本的时间
-        __startLoadTime: 0,
+    S.augment(SimpleLoader, {
 
-        // ie6,7,8开始载入脚本对应的模块名
-        __startLoadModName: null,
+        use: function (normalizedModNames) {
+            var i,
+                l = normalizedModNames.length;
+            for (i = 0; i < l; i++) {
+                this.loadModule(normalizedModNames[i]);
+            }
+        },
 
-        /**
-         * Registers a module.
-         * @param {String|Object} [name] module name
-         * @param {Function|Object} [fn] entry point into the module that is used to bind module to KISSY
-         * @param {Object} [config] special config for this add
-         * @param {String[]} [config.requires] array of mod 's name that current module requires
-         * @member KISSY.Loader
-         *
-         * for example:
-         *      @example
-         *      KISSY.add('package-name/module-name', function(S){ }, {requires: ['mod1']});
-         */
-        add: function (name, fn, config) {
+        // only load mod requires once
+        // prevent looping dependency sub tree more than once for one use()
+        loadModRequires: function (mod) {
+            // 根据每次 use 缓存子树
             var self = this,
-                runtime = self.runtime;
+                requireLoadedMods = self.requireLoadedMods,
+                modName = mod.name,
+                requires;
+            if (!requireLoadedMods[modName]) {
+                requireLoadedMods[modName] = 1;
+                requires = mod.getNormalizedRequires();
+                self.use(requires);
+            }
+        },
 
-            // S.add(name[, fn[, config]])
-            if (typeof name == 'string') {
-                utils.registerModule(runtime, name, fn, config);
+        loadModule: function (modName) {
+            var self = this,
+                waitingModules = self.waitingModules,
+                runtime = self.runtime,
+                status,
+                isWait,
+                mod = Utils.createModuleInfo(runtime, modName);
+
+            status = mod.status;
+
+            if (status == ATTACHED || status == ERROR) {
                 return;
             }
-            // S.add(fn,config);
-            else if (S.isFunction(name)) {
-                config = fn;
-                fn = name;
-                if (UA.ie) {
-                    /*
-                     Kris Zyp
-                     2010年10月21日, 上午11时34分
-                     We actually had some discussions off-list, as it turns out the required
-                     technique is a little different than described in this thread. Briefly,
-                     to identify anonymous modules from scripts:
-                     * In non-IE browsers, the onload event is sufficient, it always fires
-                     immediately after the script is executed.
-                     * In IE, if the script is in the cache, it actually executes *during*
-                     the DOM insertion of the script tag, so you can keep track of which
-                     script is being requested in case define() is called during the DOM
-                     insertion.
-                     * In IE, if the script is not in the cache, when define() is called you
-                     can iterate through the script tags and the currently executing one will
-                     have a script.readyState == 'interactive'
-                     See RequireJS source code if you need more hints.
-                     Anyway, the bottom line from a spec perspective is that it is
-                     implemented, it works, and it is possible. Hope that helps.
-                     Kris
-                     */
-                    // http://groups.google.com/group/commonjs/browse_thread/thread/5a3358ece35e688e/43145ceccfb1dc02#43145ceccfb1dc02
-                    // use onload to get module name is not right in ie
-                    name = findModuleNameByInteractive(self);
-                    S.log('ie get modName by interactive: ' + name);
-                    utils.registerModule(runtime, name, fn, config);
-                    self.__startLoadModName = null;
-                    self.__startLoadTime = 0;
-                } else {
-                    // 其他浏览器 onload 时，关联模块名与模块定义
-                    self.__currentMod = {
-                        fn: fn,
-                        config: config
-                    };
+
+            // 已经静态存在在页面上
+            // 或者该模块不是根据自身模块名动态加载来的(io.js包含 io/base,io/form)
+            if (status === LOADED) {
+                self.loadModRequires(mod);
+            } else {
+                isWait = waitingModules.contains(modName);
+
+                // prevent duplicate listen for this use
+                //  use('a,a') or
+                //  user('a,c') a require b, c require b
+                // listen b only once
+                // already waiting, will notify loadReady in the future
+                if (isWait) {
+                    return;
                 }
-                return;
+
+                mod.addCallback(function () {
+                    // 只在 LOADED 后加载依赖项一次
+                    // 防止 config('modules') requires 和模块中 requires 不一致
+                    self.loadModRequires(mod);
+                    waitingModules.remove(modName);
+                    // notify current loader instance
+                    waitingModules.notifyAll();
+                });
+
+                waitingModules.add(modName);
+
+                // in case parallel use (more than one use)
+                if (status < LOADING) {
+                    // load and attach this module
+                    self.fetchModule(mod);
+                }
             }
-            S.log('invalid format for KISSY.add !', 'error');
+        },
+
+        // Load a single module.
+        fetchModule: function (mod) {
+
+            var self = this,
+                runtime = self.runtime,
+                modName = mod.getName(),
+                charset = mod.getCharset(),
+                url = mod.getFullPath(),
+                ie = UA.ie,
+                isCss = mod.getType() == 'css';
+
+            mod.status = LOADING;
+
+            if (ie && !isCss) {
+                startLoadModName = modName;
+                startLoadTime = Number(+new Date());
+            }
+
+            S.getScript(url, {
+                attrs: ie ? {
+                    'data-mod-name': modName
+                } : undefined,
+                // syntaxError in all browser will trigger this
+                // same as #111 : https://github.com/kissyteam/kissy/issues/111
+                success: function () {
+
+                    if (isCss) {
+                        // css does not set LOADED because no add for css! must be set manually
+                        Utils.registerModule(runtime, modName, S.noop);
+                    } else {
+                        // does not need this step for css
+                        // standard browser(except ie9) fire load after KISSY.add immediately
+                        if (currentMod) {
+                            // S.log('standard browser get mod name after load : ' + modName);
+                            Utils.registerModule(runtime,
+                                modName, currentMod.fn,
+                                currentMod.config);
+                            currentMod = undefined;
+                        }
+                    }
+
+                    // nodejs is synchronous,
+                    // use('x,y')
+                    // need x,y filled into waitingMods first
+                    // x,y waiting -> x -> load -> y -> load -> check
+                    S.later(checkHandler);
+                },
+                error: checkHandler,
+                // source:mod.name + '-init',
+                charset: charset
+            });
+
+            function checkHandler() {
+                if (mod.fn) {
+                    var msg = 'load remote module: "' + modName +
+                        '" from: "' + url + '"';
+                    S.log(msg, 'info');
+                } else {
+                    // ie will call success even when getScript error(404)
+                    _modError();
+                }
+                // notify all loader instance
+                mod.notifyAll();
+            }
+
+            function _modError() {
+                var msg = modName +
+                    ' is not loaded! can not find module in path : ' +
+                    url;
+                S.log(msg, 'error');
+                mod.status = ERROR;
+            }
+
         }
+
     });
 
-
-    // ie 特有，找到当前正在交互的脚本，根据脚本名确定模块名
-    // 如果找不到，返回发送前那个脚本
-    function findModuleNameByInteractive(self) {
+// ie 特有，找到当前正在交互的脚本，根据脚本名确定模块名
+// 如果找不到，返回发送前那个脚本
+    function findModuleNameByInteractive() {
         var scripts = S.Env.host.document.getElementsByTagName('script'),
             re,
             i,
@@ -4677,415 +4849,559 @@ var KISSY = (function (undefined) {
             // then get it back here
             // S.log('can not find interactive script,time diff : ' + (+new Date() - self.__startLoadTime), 'error');
             // S.log('old_ie get mod name from cache : ' + self.__startLoadModName);
-            name = self.__startLoadModName;
+            name = startLoadModName;
         }
         return name;
     }
 
-})(KISSY);
-
-/*
- 2012-02-21 yiminghe@gmail.com refactor:
-
- 拆分 ComboLoader 与 Loader
-
- 2011-01-04 chengyu<yiminghe@gmail.com> refactor:
-
- adopt requirejs :
-
- 1. packages(cfg) , cfg :{
- name : 包名，用于指定业务模块前缀
- path: 前缀包名对应的路径
- charset: 该包下所有文件的编码
-
- 2. add(moduleName,function(S,depModule){return function(){}},{requires:['depModuleName']});
- moduleName add 时可以不写
- depModuleName 可以写相对地址 (./ , ../)，相对于 moduleName
-
- 3. S.use(['dom'],function(S,DOM){
- });
- 依赖注入，发生于 add 和 use 时期
-
- 4. add,use 不支持 css loader ,getScript 仍然保留支持
-
- 5. 部分更新模块文件代码 x/y?t=2011 ，加载过程中注意去除事件戳，仅在载入文件时使用
-
- demo : http://lite-ext.googlecode.com/svn/trunk/lite-ext/playground/module_package/index.html
-
- 2011-03-01 yiminghe@gmail.com note:
-
- compatibility
-
- 1. 保持兼容性
- 如果 requires 都已经 attached，支持 add 后立即 attach
- 支持 { attach : false } 显示控制 add 时是否 attach
-
- 2011-05-04 初步拆分文件，tmd 乱了
- */
-/**
- * @ignore
- * use and attach mod for kissy simple loader
- * @author yiminghe@gmail.com, lifesinger@gmail.com
- */
-(function (S, undefined) {
-
-    var Loader, data, utils, UA,
-        remoteLoads = {},
-        LOADING, LOADED, ERROR, ATTACHED;
-
-    Loader = S.Loader;
-    data = Loader.Status;
-    utils = Loader.Utils;
-    UA = S.UA;
-    LOADING = data.LOADING;
-    LOADED = data.LOADED;
-    ERROR = data.ERROR;
-    ATTACHED = data.ATTACHED;
-
-    function LoadChecker(fn) {
-        S.mix(this, {
-            fn: fn,
-            waitMods: {},
-            requireLoadedMods: {}
-        });
-    }
-
-    LoadChecker.prototype = {
-
-        check: function () {
-            var self = this,
-                fn = self.fn;
-            if (fn && S.isEmptyObject(self.waitMods)) {
-                fn();
-                self.fn = null;
-            }
-        },
-
-        addWaitMod: function (modName) {
-            this.waitMods[modName] = 1;
-        },
-
-        removeWaitMod: function (modName) {
-            delete this.waitMods[modName];
-        },
-
-        isModWait: function (modName) {
-            return this.waitMods[modName];
-        },
-
-        // only load mod requires once
-        // prevent looping dependency sub tree more than once for one use()
-        loadModRequires: function (loader, mod) {
-            // 根据每次 use 缓存子树
-            var self = this,
-                requireLoadedMods = self.requireLoadedMods,
-                modName = mod.name,
-                requires;
-            if (!requireLoadedMods[modName]) {
-                requireLoadedMods[modName] = 1;
-                requires = mod.getNormalizedRequires();
-                loadModules(loader, requires, self);
+    SimpleLoader.add = function (name, fn, config, runtime) {
+        if (typeof name === 'function') {
+            config = fn;
+            fn = name;
+            if (UA.ie) {
+                // http://groups.google.com/group/commonjs/browse_thread/thread/5a3358ece35e688e/43145ceccfb1dc02#43145ceccfb1dc02
+                name = findModuleNameByInteractive();
+                // S.log('ie get modName by interactive: ' + name);
+                Utils.registerModule(runtime, name, fn, config);
+                startLoadModName = null;
+                startLoadTime = 0;
+            } else {
+                // 其他浏览器 onload 时，关联模块名与模块定义
+                currentMod = {
+                    fn: fn,
+                    config: config
+                };
             }
         }
-
     };
 
+    Loader.SimpleLoader = SimpleLoader;
 
-    S.augment(Loader, {
-        /**
-         * Start load specific mods, and fire callback when these mods and requires are attached.
-         * @member KISSY.Loader
-         *
-         * for example:
-         *      @example
-         *      S.use('mod-name', callback);
-         *      S.use('mod1,mod2', callback);
-         *
-         * @param {String|String[]} modNames names of mods to be loaded,if string then separated by space
-         * @param {Function} callback callback when modNames are all loaded,
-         * with KISSY as first argument and mod 's value as the following arguments
-         * @param _forceSync internal use, do not set
-         * @chainable
-         */
-        use: function (modNames, callback, /* for internal */_forceSync) {
-            var self = this,
-                normalizedModNames,
-                loadChecker = new LoadChecker(loadReady),
-                runtime = self.runtime;
-
-            modNames = utils.getModNamesAsArray(modNames);
-            modNames = utils.normalizeModNamesWithAlias(runtime, modNames);
-
-            normalizedModNames = utils.unalias(runtime, modNames);
-
-            function loadReady() {
-                utils.attachModsRecursively(normalizedModNames, runtime);
-                callback && callback.apply(runtime, utils.getModules(runtime, modNames));
-            }
-
-            loadModules(self, normalizedModNames, loadChecker);
-
-            // in case modules is loaded statically
-            // synchronous check
-            // but always async for loader
-            if (_forceSync) {
-                loadChecker.check();
-            } else {
-                setTimeout(function () {
-                    loadChecker.check();
-                }, 0);
-            }
-            return self;
-        }
-    });
-
-    function loadModules(self, modNames, loadChecker) {
-        var i,
-            l = modNames.length;
-        for (i = 0; i < l; i++) {
-            loadModule(self, modNames[i], loadChecker);
-        }
-    }
-
-    function loadModule(self, modName, loadChecker) {
-        var runtime = self.runtime,
-            status,
-            isWait,
-            mods = runtime.Env.mods,
-            mod = mods[modName];
-
-        if (!mod) {
-            utils.createModuleInfo(runtime, modName);
-            mod = mods[modName];
-        }
-
-        status = mod.status;
-
-        if (status == ATTACHED) {
-            return;
-        }
-
-        // 已经静态存在在页面上
-        // 或者该模块不是根据自身模块名动态加载来的(ajax.js包含 ajax/base,ajax/form)
-        if (status === LOADED) {
-            loadChecker.loadModRequires(self, mod);
-        } else {
-            isWait = loadChecker.isModWait(modName);
-            // prevent duplicate listen for this use
-            //  use('a,a') or
-            //  user('a,c') a require b, c require b
-            // listen b only once
-            // already waiting, will notify loadReady in the future
-            if (isWait) {
-                return;
-            }
-            // error or init or loading
-            loadChecker.addWaitMod(modName);
-            // in case parallel use (more than one use)
-            if (status <= LOADING) {
-                // load and attach this module
-                fetchModule(self, mod, loadChecker);
-            }
-
-        }
-    }
-
-    // Load a single module.
-    function fetchModule(self, mod, loadChecker) {
-
-        var runtime = self.runtime,
-            modName = mod.getName(),
-            charset = mod.getCharset(),
-            url = mod.getFullPath(),
-            currentModule = 0,
-            ie = UA.ie,
-            isCss = mod.getType() == 'css';
-
-        mod.status = LOADING;
-
-        if (ie && !isCss) {
-            self.__startLoadModName = modName;
-            self.__startLoadTime = Number(+new Date());
-        }
-
-        S.getScript(url, {
-            attrs: ie ? {
-                'data-mod-name': modName
-            } : undefined,
-            // syntaxError in all browser will trigger this
-            // same as #111 : https://github.com/kissyteam/kissy/issues/111
-            success: function () {
-                // parallel use
-                // 只设置第一个 use 处
-                if (mod.status == LOADING) {
-                    if (isCss) {
-                        // css does not set LOADED because no add for css! must be set manually
-                        utils.registerModule(runtime, modName, S.noop);
-                    } else {
-                        // does not need this step for css
-                        // standard browser(except ie9) fire load after KISSY.add immediately
-                        if (currentModule = self.__currentMod) {
-                            // S.log('standard browser get mod name after load : ' + modName);
-                            utils.registerModule(runtime,
-                                modName, currentModule.fn,
-                                currentModule.config);
-                            self.__currentMod = null;
-                        }
-                    }
-                }
-
-                // nodejs is synchronous,
-                // use('x,y')
-                // need x,y filled into waitingMods first
-                // x,y waiting -> x -> load -> y -> load -> check
-
-                S.later(checkHandler);
-            },
-            error: checkHandler,
-            // source:mod.name + '-init',
-            charset: charset
-        });
-
-        function checkHandler() {
-            if (mod.fn) {
-                if (!remoteLoads[modName]) {
-                    S.log('load remote module: "' + modName + '" from: "' + url + '"', 'info');
-                    remoteLoads[modName] = 1;
-                }
-                // 只在 LOADED 后加载依赖项一次
-                // 防止 config('modules') requires 和模块中 requires 不一致
-                loadChecker.loadModRequires(self, mod);
-                loadChecker.removeWaitMod(modName);
-                // a mod is loaded, need to check globally
-                loadChecker.check();
-            } else {
-                // ie will call success even when getScript error(404)
-                _modError();
-            }
-        }
-
-        function _modError() {
-            S.log(modName + ' is not loaded! can not find module in path : ' + url, 'error');
-            mod.status = ERROR;
-        }
-
-    }
 })(KISSY);
 
 /*
+ 2013-06-04 yiminghe@gmail.com
+ - refactor merge combo loader and simple loader
+ - support error callback
+
  2012-10-08 yiminghe@gmail.com refactor
  - use 调用先统一 load 再统一 attach
 
  2012-09-20 yiminghe@gmail.com refactor
  - 参考 async 重构，去除递归回调
  *//**
+ * combo loader for KISSY. using combo to load module files.
  * @ignore
- * mix loader into S and infer KISSy baseUrl if not set
- * @author yiminghe@gmail.com, lifesinger@gmail.com
+ * @author yiminghe@gmail.com
+ */
+(function (S) {
+
+    function loadScripts(rss, callback, charset) {
+        var count = rss && rss.length,
+            errorList = [],
+            successList = [];
+
+        function complete() {
+            if (!(--count)) {
+                callback(successList, errorList);
+            }
+        }
+
+        S.each(rss, function (rs) {
+            S.getScript(rs.fullpath, {
+                success: function () {
+                    successList.push(rs);
+                    complete();
+                },
+                error: function () {
+                    errorList.push(rs);
+                    complete();
+                },
+                charset: charset
+            });
+        });
+    }
+
+    var Loader = S.Loader,
+        Status = Loader.Status,
+        Utils = Loader.Utils,
+        LOADING = Status.LOADING,
+        LOADED = Status.LOADED,
+        ERROR = Status.ERROR,
+        ATTACHED = Status.ATTACHED;
+
+    /**
+     * @class KISSY.Loader.ComboLoader
+     * using combo to load module files
+     * @param runtime KISSY
+     * @param waitingModules
+     * @private
+     */
+    function ComboLoader(runtime, waitingModules) {
+        S.mix(this, {
+            runtime: runtime,
+            waitingModules: waitingModules
+        });
+    }
+
+    function debugRemoteModules(rss) {
+        S.each(rss, function (rs) {
+            var ms = [];
+            S.each(rs.mods, function (m) {
+                if (m.status == LOADED) {
+                    ms.push(m.name);
+                }
+            });
+            if (ms.length) {
+                S.log('load remote modules: "' + ms.join(', ') + '" from: "' + rs.fullpath + '"');
+            }
+        });
+    }
+
+    // ----------------------- private end
+    S.augment(ComboLoader, {
+
+        /**
+         * use, _forceSync for kissy.js, initialize dom,event sync
+         */
+        use: function (normalizedModNames) {
+            var self = this,
+                allModNames,
+                comboUrls,
+                runtime = self.runtime;
+
+            allModNames = S.keys(self.calculate(normalizedModNames));
+
+            Utils.createModulesInfo(runtime, allModNames);
+
+            comboUrls = self.getComboUrls(allModNames);
+
+            // load css first to avoid page blink
+            S.each(comboUrls.css, function (cssOne) {
+                loadScripts(cssOne, function (success, error) {
+
+                    if ('@DEBUG@') {
+                        debugRemoteModules(success);
+                    }
+
+                    S.each(success, function (one) {
+                        S.each(one.mods, function (mod) {
+                            Utils.registerModule(runtime, mod.getName(), S.noop);
+                            // notify all loader instance
+                            mod.notifyAll();
+                        });
+                    });
+
+                    S.each(error, function (one) {
+                        S.each(one.mods, function (mod) {
+                            var msg = mod.name +
+                                ' is not loaded! can not find module in path : ' +
+                                one.fullpath;
+                            S.log(msg, 'error');
+                            mod.status = ERROR;
+                            // notify all loader instance
+                            mod.notifyAll();
+                        });
+                    });
+
+                }, cssOne.charset);
+            });
+
+            // jss css download in parallel
+            S.each(comboUrls.js, function (jsOne) {
+                loadScripts(jsOne, function (success) {
+
+                    if ('@DEBUG@') {
+                        debugRemoteModules(success);
+                    }
+
+                    S.each(jsOne, function (one) {
+                        S.each(one.mods, function (mod) {
+                            // fix #111
+                            // https://github.com/kissyteam/kissy/issues/111
+                            if (!mod.fn) {
+                                var msg = mod.name +
+                                    ' is not loaded! can not find module in path : ' +
+                                    one.fullpath;
+                                S.log(msg, 'error');
+                                mod.status = ERROR;
+                            }
+                            // notify all loader instance
+                            mod.notifyAll();
+                        });
+                    });
+
+                }, jsOne.charset);
+            });
+        },
+
+        /**
+         * calculate dependency
+         * @param modNames
+         * @param [cache]
+         * @param ret
+         * @return {Array}
+         */
+        calculate: function (modNames, cache, ret) {
+            var i,
+                m,
+                mod,
+                modStatus,
+                self = this,
+                waitingModules = self.waitingModules,
+                runtime = self.runtime;
+
+            ret = ret || {};
+            // 提高性能，不用每个模块都再次全部依赖计算
+            // 做个缓存，每个模块对应的待动态加载模块
+            cache = cache || {};
+
+            for (i = 0; i < modNames.length; i++) {
+                m = modNames[i];
+                if (cache[m]) {
+                    continue;
+                }
+                cache[m] = 1;
+                mod = Utils.createModuleInfo(runtime, m);
+                modStatus = mod.status;
+                if (modStatus === ERROR) {
+                    continue;
+                }
+                if (modStatus != LOADED && modStatus != ATTACHED) {
+                    if (!waitingModules.contains(m)) {
+                        if (modStatus != LOADING) {
+                            mod.status = LOADING;
+                            ret[m] = 1;
+                        }
+                        mod.addCallback(function (mod) {
+                            waitingModules.remove(mod.getName());
+                            // notify current loader instance
+                            waitingModules.notifyAll();
+                        });
+                        waitingModules.add(m);
+                    }
+                }
+                self.calculate(mod.getNormalizedRequires(), cache, ret);
+            }
+
+            return ret;
+        },
+
+        /**
+         * Get combo urls
+         * @param modNames
+         * @return {Object}
+         */
+        getComboUrls: function (modNames) {
+
+            var self = this,
+                i,
+                runtime = self.runtime,
+                Config = runtime.Config,
+                combos = {};
+
+            S.each(modNames, function (modName) {
+                var mod = Utils.createModuleInfo(runtime, modName),
+                    packageInfo = mod.getPackage(),
+                    type = mod.getType(),
+                    mods,
+                    packageName = packageInfo.getName();
+                combos[packageName] = combos[packageName] || {};
+                if (!(mods = combos[packageName][type])) {
+                    mods = combos[packageName][type] = combos[packageName][type] || [];
+                    mods.packageInfo = packageInfo;
+                }
+                mods.push(mod);
+            });
+
+            var res = {
+                    js: {},
+                    css: {}
+                },
+                t,
+                tMods,
+                packageName,
+                type,
+                comboPrefix = Config.comboPrefix,
+                comboSep = Config.comboSep,
+                maxFileNum = Config.comboMaxFileNum,
+                maxUrlLength = Config.comboMaxUrlLength;
+
+            for (packageName in combos) {
+
+                for (type in combos[packageName]) {
+
+                    t = [];
+                    tMods = [];
+
+                    var jss = combos[packageName][type],
+                        packageInfo = jss.packageInfo,
+                        tag = packageInfo.getTag(),
+                        suffix = (tag ? ('?t=' + encodeURIComponent(tag)) + '.' + type : ''),
+                        suffixLength = suffix.length,
+                        prefix,
+                        path,
+                        fullpath,
+                        l,
+                        rss,
+                        packagePath = packageInfo.getPrefixUriForCombo();
+
+                    rss = res[type][packageName] = [];
+                    rss.charset = packageInfo.getCharset();
+                    // add packageName to common prefix
+                    // combo grouped by package
+                    prefix = packagePath + comboPrefix;
+                    l = prefix.length;
+
+                    function pushComboUrl() {
+                        // map the whole combo path
+                        //noinspection JSReferencingMutableVariableFromClosure
+                        rss.push({
+                            fullpath: Utils.getMappedPath(
+                                runtime,
+                                prefix + t.join(comboSep) + suffix,
+                                Config.mappedComboRules),
+                            mods: tMods
+                        });
+                    }
+
+                    for (i = 0; i < jss.length; i++) {
+
+                        // map individual module
+                        fullpath = jss[i].getFullPath();
+
+                        if (!packageInfo.isCombine() || !S.startsWith(fullpath, packagePath)) {
+                            rss.push({
+                                fullpath: fullpath,
+                                mods: [jss[i]]
+                            });
+                            continue;
+                        }
+
+                        // ignore query parameter
+                        path = fullpath.slice(packagePath.length).replace(/\?.*$/, '');
+
+                        t.push(path);
+                        tMods.push(jss[i]);
+
+                        if ((t.length > maxFileNum) ||
+                            (l + t.join(comboSep).length + suffixLength > maxUrlLength)) {
+                            t.pop();
+                            tMods.pop();
+                            pushComboUrl();
+                            t = [];
+                            tMods = [];
+                            i--;
+                        }
+                    }
+                    if (t.length) {
+                        pushComboUrl();
+                    }
+
+                }
+
+            }
+
+            return res;
+        }
+    });
+
+
+    Loader.ComboLoader = ComboLoader;
+
+})(KISSY);
+/*
+ 2013-06-04 yiminghe@gmail.com
+ - refactor merge combo loader and simple loader
+ - support error callback
+
+ 2012-02-20 yiminghe note:
+ - three status
+ 0: initialized
+ LOADED: load into page
+ ATTACHED: fn executed
+ *//**
+ * @ignore
+ * mix loader into S and infer KISSY baseUrl if not set
+ * @author yiminghe@gmail.com
  */
 (function (S, undefined) {
 
-    S.mix(S,
-        {
-            /**
-             * Registers a module with the KISSY global.
-             * @param {String} name module name.
-             * it must be set if combine is true in {@link KISSY#config}
-             * @param {Function} fn module definition function that is used to return
-             * this module value
-             * @param {KISSY} fn.S KISSY global instance
-             * @param {Object} [cfg] module optional config data
-             * @param {String[]} cfg.requires this module's required module name list
-             * @member KISSY
-             *
-             * for example:
-             *      @example
-             *      // dom module's definition
-             *      KISSY.add('dom', function(S, xx){
+    var Loader = KISSY.Loader,
+        Env = S.Env,
+        Utils = Loader.Utils,
+        SimpleLoader = Loader.SimpleLoader,
+        ComboLoader = Loader.ComboLoader;
+
+    function WaitingModules(fn) {
+        S.mix(this, {
+            fn: fn,
+            waitMods: {}
+        });
+    }
+
+    WaitingModules.prototype = {
+
+        constructor: WaitingModules,
+
+        notifyAll: function () {
+            var self = this,
+                fn = self.fn;
+            if (fn && S.isEmptyObject(self.waitMods)) {
+                self.fn = null;
+                fn();
+            }
+        },
+
+        add: function (modName) {
+            this.waitMods[modName] = 1;
+        },
+
+        remove: function (modName) {
+            delete this.waitMods[modName];
+        },
+
+        contains: function (modName) {
+            return this.waitMods[modName];
+        }
+
+    };
+
+    Loader.WaitingModules = WaitingModules;
+
+    S.mix(S, {
+        /**
+         * Registers a module with the KISSY global.
+         * @param {String} name module name.
+         * it must be set if combine is true in {@link KISSY#config}
+         * @param {Function} fn module definition function that is used to return
+         * this module value
+         * @param {KISSY} fn.S KISSY global instance
+         * @param {Object} [cfg] module optional config data
+         * @param {String[]} cfg.requires this module's required module name list
+         * @member KISSY
+         *
+         * for example:
+         *      @example
+         *      // dom module's definition
+         *      KISSY.add('dom', function(S, xx){
              *          return {css: function(el, name, val){}};
              *      },{
              *          requires:['xx']
              *      });
-             */
-            add: function (name, fn, cfg) {
-                this.getLoader().add(name, fn, cfg);
-            },
-            /**
-             * Attached one or more modules to global KISSY instance.
-             * @param {String|String[]} names moduleNames. 1-n modules to bind(use comma to separate)
-             * @param {Function} callback callback function executed
-             * when KISSY has the required functionality.
-             * @param {KISSY} callback.S KISSY instance
-             * @param callback.x... used module values
-             * @member KISSY
-             *
-             * for example:
-             *      @example
-             *      // loads and attached overlay,dd and its dependencies
-             *      KISSY.use('overlay,dd', function(S, Overlay){});
-             */
-            use: function (names, callback) {
-                var loader = this.getLoader();
-                loader.use.apply(loader, arguments);
-            },
-            /**
-             * get KISSY 's loader instance
-             * @member KISSY
-             * @return {KISSY.Loader}
-             */
-            getLoader: function () {
-                var self = this,
-                    Config = self.Config,
-                    Env = self.Env;
-                if (Config.combine && !Env.nodejs) {
-                    return Env._comboLoader;
-                } else {
-                    return Env._loader;
-                }
-            },
-            /**
-             * get module value defined by define function
-             * @param {string} moduleName
-             * @member KISSY
-             */
-            require: function (moduleName) {
-                return utils.getModules(this, [moduleName])[1];
+         */
+        add: function (name, fn, cfg) {
+            if (typeof name == 'string') {
+                Utils.registerModule(S, name, fn, cfg);
+            } else {
+                SimpleLoader.add(name, fn, cfg, S);
             }
-        });
+        },
+        /**
+         * Attached one or more modules to global KISSY instance.
+         * @param {String|String[]} modNames moduleNames. 1-n modules to bind(use comma to separate)
+         * @param {Function} success callback function executed
+         * when KISSY has the required functionality.
+         * @param {KISSY} success.S KISSY instance
+         * @param success.x... used module values
+         * @member KISSY
+         *
+         * for example:
+         *      @example
+         *      // loads and attached overlay,dd and its dependencies
+         *      KISSY.use('overlay,dd', function(S, Overlay){});
+         */
+        use: function (modNames, success) {
+            var Config = S.Config,
+                normalizedModNames,
+                loader,
+                error,
+                sync,
+                waitingModules = new WaitingModules(loadReady);
 
-    var Loader = S.Loader,
-        Env = S.Env,
-        utils = Loader.Utils,
-        ComboLoader = S.Loader.Combo;
+            if (S.isPlainObject(success)) {
+                sync = success.sync;
+                error = success.error;
+                success = success.success;
+            }
+
+            modNames = Utils.getModNamesAsArray(modNames);
+            modNames = Utils.normalizeModNamesWithAlias(S, modNames);
+
+            normalizedModNames = Utils.unalias(S, modNames);
+
+            function loadReady() {
+                var errorList = [],
+                    ret;
+                ret = Utils.attachModsRecursively(normalizedModNames, S, undefined, errorList);
+                if (ret) {
+                    if (success) {
+                        if (sync) {
+                            success.apply(S, Utils.getModules(S, modNames));
+                        } else {
+                            // standalone error trace
+                            setTimeout(function () {
+                                success.apply(S, Utils.getModules(S, modNames));
+                            }, 0);
+                        }
+                    }
+                } else if (errorList.length) {
+                    if (error) {
+                        if (sync) {
+                            error.apply(S, errorList);
+                        } else {
+                            setTimeout(function () {
+                                error.apply(S, errorList);
+                            }, 0);
+                        }
+                    }
+                } else {
+                    waitingModules.fn = loadReady;
+                    loader.use(normalizedModNames);
+                }
+            }
+
+            if (Config.combine && !S.UA.nodejs) {
+                loader = new ComboLoader(S, waitingModules);
+            } else {
+                loader = new SimpleLoader(S, waitingModules);
+            }
+
+            // in case modules is loaded statically
+            // synchronous check
+            // but always async for loader
+            if (sync) {
+                waitingModules.notifyAll();
+            } else {
+                setTimeout(function () {
+                    waitingModules.notifyAll();
+                }, 0);
+            }
+            return S;
+        },
+
+        require: function (name) {
+            return Utils.getModules(S,
+                Utils.normalizeModNamesWithAlias(S, [name]))[1];
+        }
+    });
 
     function returnJson(s) {
         return (new Function('return ' + s))();
     }
 
-    /**
-     * get base from seed.js
-     * @return {Object} base for kissy
-     * @ignore
-     *
-     * for example:
-     *      @example
-     *      http://a.tbcdn.cn/??s/kissy/x.y.z/seed-min.js,p/global/global.js
-     *      note about custom combo rules, such as yui3:
-     *      combo-prefix='combo?' combo-sep='&'
-     */
-    function getBaseInfo() {
-        // get base from current script file path
-        // notice: timestamp
-        var baseReg = /^(.*)(seed|kissy)(?:-min)?\.js[^/]*/i,
-            baseTestReg = /(seed|kissy)(?:-min)?\.js/i,
-            comboPrefix,
-            comboSep,
-            scripts = Env.host.document.getElementsByTagName('script'),
-            script = scripts[scripts.length - 1],
+    var baseReg = /^(.*)(seed|kissy)(?:-min)?\.js[^/]*/i,
+        baseTestReg = /(seed|kissy)(?:-min)?\.js/i;
+
+    function getBaseInfoFromOneScript(script) {
         // can not use KISSY.Uri
         // /??x.js,dom.js for tbcdn
-            src = script.src,
-            baseInfo = script.getAttribute('data-config');
+        var src = script.src || '';
+        if (!src.match(baseTestReg)) {
+            return 0;
+        }
+
+        var baseInfo = script.getAttribute('data-config');
 
         if (baseInfo) {
             baseInfo = returnJson(baseInfo);
@@ -5093,8 +5409,8 @@ var KISSY = (function (undefined) {
             baseInfo = {};
         }
 
-        comboPrefix = baseInfo.comboPrefix = baseInfo.comboPrefix || '??';
-        comboSep = baseInfo.comboSep = baseInfo.comboSep || ',';
+        var comboPrefix = baseInfo.comboPrefix = baseInfo.comboPrefix || '??';
+        var comboSep = baseInfo.comboSep = baseInfo.comboSep || ',';
 
         var parts ,
             base,
@@ -5119,12 +5435,41 @@ var KISSY = (function (undefined) {
                 return undefined;
             });
         }
+
         return S.mix({
             base: base
         }, baseInfo);
     }
 
-    if (S.Env.nodejs) {
+    /**
+     * get base from seed.js
+     * @return {Object} base for kissy
+     * @ignore
+     *
+     * for example:
+     *      @example
+     *      http://a.tbcdn.cn/??s/kissy/x.y.z/seed-min.js,p/global/global.js
+     *      note about custom combo rules, such as yui3:
+     *      combo-prefix='combo?' combo-sep='&'
+     */
+    function getBaseInfo() {
+        // get base from current script file path
+        // notice: timestamp
+        var scripts = Env.host.document.getElementsByTagName('script'),
+            i,
+            info;
+
+        for (i = scripts.length - 1; i >= 0; i--) {
+            if (info = getBaseInfoFromOneScript(scripts[i])) {
+                return info;
+            }
+        }
+
+        S.error('must load kissy by file name: seed.js or seed-min.js');
+        return null;
+    }
+
+    if (S.UA.nodejs) {
         // nodejs: no tag
         S.config({
             charset: 'utf-8',
@@ -5138,24 +5483,20 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20130701201313'
+            tag: '20130724163906'
         }, getBaseInfo()));
     }
 
-    S.config('systemPackage', new Loader.Package({
-        name: '',
-        runtime: S
-    }));
-
     // Initializes loader.
     Env.mods = {}; // all added mods
-    Env._loader = new Loader(S);
 
-    if (ComboLoader) {
-        Env._comboLoader = new ComboLoader(S);
-    }
+})(KISSY);
 
-})(KISSY);/**
+/*
+ 2013-06-04 yiminghe@gmail.com
+ - refactor merge combo loader and simple loader
+ - support error callback
+ *//**
  * @ignore
  * web.js
  * @author lifesinger@gmail.com, yiminghe@gmail.com
@@ -5266,8 +5607,8 @@ var KISSY = (function (undefined) {
         },
 
         /**
-         * Specify a function to execute when the DOM is fully loaded.
-         * @param fn {Function} A function to execute after the DOM is ready
+         * Specify a function to execute when the Dom is fully loaded.
+         * @param fn {Function} A function to execute after the Dom is ready
          *
          * for example:
          *      @example
@@ -5278,15 +5619,15 @@ var KISSY = (function (undefined) {
          */
         ready: function (fn) {
 
-            readyPromise.then(fn);
+            readyPromise.done(fn);
 
             return this;
         },
 
         /**
          * Executes the supplied callback when the item with the supplied id is found.
-         * @param id <String> The id of the element, or an array of ids to look for.
-         * @param fn <Function> What to execute when the element is found.
+         * @param id {String} The id of the element, or an array of ids to look for.
+         * @param fn {Function} What to execute when the element is found.
          * @member KISSY
          */
         available: function (id, fn) {
@@ -5304,7 +5645,7 @@ var KISSY = (function (undefined) {
 
     function fireReady() {
         // nodejs
-        if (doc) {
+        if (doc && !UA.nodejs) {
             removeEventListener(win, LOAD_EVENT, fireReady);
         }
         readyDefer.resolve(S);
@@ -5397,6 +5738,29 @@ var KISSY = (function (undefined) {
     }
 
 })(KISSY, undefined);
+/**
+ * @ignore
+ * Default KISSY Gallery and core alias.
+ * @author yiminghe@gmail.com
+ */
+(function (S) {
+    var parentUri = S.Config.baseUri.resolve('../').toString();
+    S.config({
+        packages: {
+            gallery: {
+                base: parentUri
+            },
+            mobile: {
+                base: parentUri
+            }
+        },
+        modules: {
+            core: {
+                alias: ['dom', 'event', 'ajax', 'anim', 'base', 'node', 'json', 'cookie']
+            }
+        }
+    });
+})(KISSY);
 
 (function(config,Features,UA){
 /*Generated by KISSY Module Compiler*/
@@ -5482,7 +5846,7 @@ config({
 });
 /*Generated by KISSY Module Compiler*/
 config({
-'editor': {requires: ['htmlparser','component/base','core']}
+'editor': {requires: ['node','htmlparser','component/base','core']}
 });
 config({
     "event": {
@@ -5621,7 +5985,8 @@ config({
                 },KISSY.Features,KISSY.UA);
             /**
  * @ignore
- * export KISSY 's functionality to module system
+ * 1. export KISSY 's functionality to module system
+ * 2. export light-weighted json parse
  */
 (function (S) {
 
@@ -5643,5 +6008,58 @@ config({
     S.add('path', function () {
         return S.Path
     });
+
+    var UA = S.UA,
+        Env = S.Env,
+        win = Env.host,
+        doc = win.document || {},
+        documentMode = doc.documentMode,
+        nativeJson = ((UA.nodejs && typeof global === 'object') ? global : win).JSON;
+
+    // ie 8.0.7600.16315@win7 json bug!
+    if (documentMode && documentMode < 9) {
+        nativeJson = null;
+    }
+
+    if (nativeJson) {
+        S.add('json', function () {
+            return S.JSON = nativeJson;
+        });
+        // light weight json parse
+        S.parseJson = function (data) {
+            return nativeJson.parse(data);
+        };
+    } else {
+        // Json RegExp
+        var INVALID_CHARS_REG = /^[\],:{}\s]*$/,
+            INVALID_BRACES_REG = /(?:^|:|,)(?:\s*\[)+/g,
+            INVALID_ESCAPES_REG = /\\(?:["\\\/bfnrt]|u[\da-fA-F]{4})/g,
+            INVALID_TOKENS_REG = /"[^"\\\r\n]*"|true|false|null|-?(?:\d+\.|)\d+(?:[eE][+-]?\d+|)/g;
+        S.parseJson = function (data) {
+            if (data === null) {
+                return data;
+            }
+            if (typeof data === "string") {
+                // for ie
+                data = S.trim(data);
+                if (data) {
+                    // from json2
+                    if (INVALID_CHARS_REG.test(data.replace(INVALID_ESCAPES_REG, "@")
+                        .replace(INVALID_TOKENS_REG, "]")
+                        .replace(INVALID_BRACES_REG, ""))) {
+
+                        return ( new Function("return " + data) )();
+                    }
+                }
+            }
+            return S.error("Invalid Json: " + data);
+        };
+    }
+
+    // exports for nodejs
+    if (S.UA.nodejs) {
+        S.KISSY = S;
+        module.exports = S;
+    }
 
 })(KISSY);

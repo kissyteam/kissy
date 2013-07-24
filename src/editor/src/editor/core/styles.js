@@ -12,7 +12,7 @@ KISSY.add("editor/core/styles", function (S, Editor) {
         FALSE = false,
         NULL = null,
         $ = S.all,
-        DOM = S.DOM,
+        Dom = S.DOM,
         /**
          * enum for style type
          * @enum {number}
@@ -70,7 +70,7 @@ KISSY.add("editor/core/styles", function (S, Editor) {
     function notBookmark(node) {
         //only get attributes on element nodes by kissy
         //when textnode attr() return undefined ,wonderful !!!
-        return !DOM.attr(node, "_ke_bookmark");
+        return !Dom.attr(node, "_ke_bookmark");
     }
 
     function replaceVariables(list, variablesValues) {
@@ -132,6 +132,9 @@ KISSY.add("editor/core/styles", function (S, Editor) {
     }
 
     KEStyle.prototype = {
+
+        constructor: KEStyle,
+
         apply: function (document) {
             applyStyle.call(this, document, FALSE);
         },
@@ -214,8 +217,7 @@ KISSY.add("editor/core/styles", function (S, Editor) {
             if (override) {
                 // If no attributes have been defined, remove the element.
                 if (!( attribs = override.attributes )
-                    &&
-                    !( styles = override.styles)
+                    && !( styles = override.styles)
                     )
                     return TRUE;
                 if (attribs) {
@@ -277,8 +279,8 @@ KISSY.add("editor/core/styles", function (S, Editor) {
                         element = elements[ i ];
 
                         if (this.type == KEST.STYLE_INLINE
-                            && ( DOM.equals(element, elementPath.block)
-                            || DOM.equals(element, elementPath.blockLimit) ))
+                            && ( Dom.equals(element, elementPath.block)
+                            || Dom.equals(element, elementPath.blockLimit) ))
                             continue;
 
                         if (this.type == KEST.STYLE_OBJECT
@@ -412,31 +414,31 @@ KISSY.add("editor/core/styles", function (S, Editor) {
      */
     function toPre(block, newBlock) {
         // First trim the block content.
-        var preHtml = block.html();
+        var preHTML = block.html();
 
         // 1. Trim head/tail spaces, they're not visible.
-        preHtml = replace(preHtml, /(?:^[ \t\n\r]+)|(?:[ \t\n\r]+$)/g, '');
+        preHTML = replace(preHTML, /(?:^[ \t\n\r]+)|(?:[ \t\n\r]+$)/g, '');
         // 2. Delete ANSI whitespaces immediately before and after <BR> because
         //    they are not visible.
-        preHtml = preHtml.replace(/[ \t\r\n]*(<br[^>]*>)[ \t\r\n]*/gi, '$1');
+        preHTML = preHTML.replace(/[ \t\r\n]*(<br[^>]*>)[ \t\r\n]*/gi, '$1');
         // 3. Compress other ANSI whitespaces since they're only visible as one
         //    single space previously.
         // 4. Convert &nbsp; to spaces since &nbsp; is no longer needed in <PRE>.
-        preHtml = preHtml.replace(/([ \t\n\r]+|&nbsp;)/g, ' ');
+        preHTML = preHTML.replace(/([ \t\n\r]+|&nbsp;)/g, ' ');
         // 5. Convert any <BR /> to \n. This must not be done earlier because
         //    the \n would then get compressed.
-        preHtml = preHtml.replace(/<br\b[^>]*>/gi, '\n');
+        preHTML = preHTML.replace(/<br\b[^>]*>/gi, '\n');
 
         // Krugle: IE normalizes innerHTML to <pre>, breaking whitespaces.
         if (UA['ie']) {
             var temp = block[0].ownerDocument.createElement('div');
             temp.appendChild(newBlock[0]);
-            newBlock[0].outerHTML = '<pre>' + preHtml + '</pre>';
+            newBlock.outerHtml('<pre>' + preHTML + '</pre>');
             newBlock = new Node(temp.firstChild);
             newBlock._4e_remove();
         }
         else
-            newBlock.html(preHtml);
+            newBlock.html(preHTML);
 
         return newBlock;
     }
@@ -450,14 +452,14 @@ KISSY.add("editor/core/styles", function (S, Editor) {
         // and ignore bookmark content between them.
         var duoBrRegex = /(\S\s*)\n(?:\s|(<span[^>]+_ck_bookmark.*?\/span>))*\n(?!$)/gi,
         //blockName = preBlock.nodeName(),
-            splittedHtml = replace(preBlock._4e_outerHtml(),
+            splittedHTML = replace(preBlock.outerHtml(),
                 duoBrRegex,
                 function (match, charBefore, bookmark) {
                     return charBefore + '</pre>' + bookmark + '<pre>';
                 });
 
         var pres = [];
-        splittedHtml.replace(/<pre\b.*?>([\s\S]*?)<\/pre>/gi,
+        splittedHTML.replace(/<pre\b.*?>([\s\S]*?)<\/pre>/gi,
             function (match, preContent) {
                 pres.push(preContent);
             });
@@ -493,7 +495,7 @@ KISSY.add("editor/core/styles", function (S, Editor) {
      */
     function mergePre(preBlock) {
         var previousBlock;
-        if (!( ( previousBlock = preBlock._4e_previousSourceNode(TRUE, DOM.NodeType.ELEMENT_NODE) )
+        if (!( ( previousBlock = preBlock._4e_previousSourceNode(TRUE, Dom.NodeType.ELEMENT_NODE) )
             && previousBlock.nodeName() == 'pre' ))
             return;
 
@@ -504,14 +506,14 @@ KISSY.add("editor/core/styles", function (S, Editor) {
         // a '\n' at the beginning, and previousBlock might contain a '\n'
         // towards the end. These new lines are not normally displayed but they
         // become visible after merging.
-        var mergedHtml = replace(previousBlock.html(), /\n$/, '') + '\n\n' +
+        var mergedHTML = replace(previousBlock.html(), /\n$/, '') + '\n\n' +
             replace(preBlock.html(), /^\n/, '');
 
         // Krugle: IE normalizes innerHTML from <pre>, breaking whitespaces.
         if (UA['ie'])
-            preBlock[0].outerHTML = '<pre>' + mergedHtml + '</pre>';
+            preBlock.outerHtml('<pre>' + mergedHTML + '</pre>');
         else
-            preBlock.html(mergedHtml);
+            preBlock.html(mergedHTML);
 
         previousBlock._4e_remove();
     }
@@ -519,18 +521,18 @@ KISSY.add("editor/core/styles", function (S, Editor) {
     /**
      * Converting a list of <pre> into blocks with format well preserved.
      */
-    function fromPres(preHtmls, newBlock) {
+    function fromPres(preHTMLs, newBlock) {
         var docFrag = newBlock[0].ownerDocument.createDocumentFragment();
-        for (var i = 0; i < preHtmls.length; i++) {
-            var blockHtml = preHtmls[ i ];
+        for (var i = 0; i < preHTMLs.length; i++) {
+            var blockHTML = preHTMLs[ i ];
 
             // 1. Trim the first and last line-breaks immediately after and before <pre>,
             // they're not visible.
-            blockHtml = blockHtml.replace(/(\r\n|\r)/g, '\n');
-            blockHtml = replace(blockHtml, /^[ \t]*\n/, '');
-            blockHtml = replace(blockHtml, /\n$/, '');
+            blockHTML = blockHTML.replace(/(\r\n|\r)/g, '\n');
+            blockHTML = replace(blockHTML, /^[ \t]*\n/, '');
+            blockHTML = replace(blockHTML, /\n$/, '');
             // 2. Convert spaces or tabs at the beginning or at the end to &nbsp;
-            blockHtml = replace(blockHtml, /^[ \t]+|[ \t]+$/g, function (match, offset) {
+            blockHTML = replace(blockHTML, /^[ \t]+|[ \t]+$/g, function (match, offset) {
                 if (match.length == 1)    // one space, preserve it
                     return '&nbsp;';
                 else if (!offset)        // beginning of block
@@ -541,14 +543,14 @@ KISSY.add("editor/core/styles", function (S, Editor) {
 
             // 3. Convert \n to <BR>.
             // 4. Convert contiguous (i.e. non-singular) spaces or tabs to &nbsp;
-            blockHtml = blockHtml.replace(/\n/g, '<br>');
-            blockHtml = blockHtml.replace(/[ \t]{2,}/g,
+            blockHTML = blockHTML.replace(/\n/g, '<br>');
+            blockHTML = blockHTML.replace(/[ \t]{2,}/g,
                 function (match) {
                     return new Array(match.length).join('&nbsp;') + ' ';
                 });
 
             var newBlockClone = newBlock.clone();
-            newBlockClone.html(blockHtml);
+            newBlockClone.html(blockHTML);
             docFrag.appendChild(newBlockClone[0]);
         }
         return docFrag;
@@ -563,9 +565,9 @@ KISSY.add("editor/core/styles", function (S, Editor) {
             document = range.document;
 
         if (range.collapsed) {
-            // Create the element to be inserted in the DOM.
+            // Create the element to be inserted in the Dom.
             var collapsedElement = getElement(this, document, undefined);
-            // Insert the empty element into the DOM at the range position.
+            // Insert the empty element into the Dom at the range position.
             range.insertNode(collapsedElement);
             // Place the selection right inside the empty element.
             range.moveToPosition(collapsedElement, KER.POSITION_BEFORE_END);
@@ -599,13 +601,13 @@ KISSY.add("editor/core/styles", function (S, Editor) {
         while (currentNode && currentNode[0]) {
             var applyStyle = FALSE;
 
-            if (DOM.equals(currentNode, lastNode)) {
+            if (Dom.equals(currentNode, lastNode)) {
                 currentNode = NULL;
                 applyStyle = TRUE;
             }
             else {
                 var nodeType = currentNode[0].nodeType,
-                    nodeName = nodeType == DOM.NodeType.ELEMENT_NODE ?
+                    nodeName = nodeType == Dom.NodeType.ELEMENT_NODE ?
                         currentNode.nodeName() : NULL;
 
                 if (nodeName && currentNode.attr('_ke_bookmark')) {
@@ -614,15 +616,17 @@ KISSY.add("editor/core/styles", function (S, Editor) {
                 }
 
                 // Check if the current node can be a child of the style element.
-                if (!nodeName || ( dtd[ nodeName ]
-                    && ( currentNode._4e_position(lastNode) |
-                    ( KEP.POSITION_PRECEDING |
-                        KEP.POSITION_IDENTICAL |
-                        KEP.POSITION_IS_CONTAINED) )
-                    == ( KEP.POSITION_PRECEDING +
-                    KEP.POSITION_IDENTICAL +
-                    KEP.POSITION_IS_CONTAINED )
-                    && ( !def["childRule"] || def["childRule"](currentNode) ) )) {
+                if (!nodeName || (
+                    dtd[ nodeName ] &&
+                        ( currentNode._4e_position(lastNode) |
+                            ( KEP.POSITION_PRECEDING |
+                                KEP.POSITION_IDENTICAL |
+                                KEP.POSITION_IS_CONTAINED) )
+                            == ( KEP.POSITION_PRECEDING +
+                            KEP.POSITION_IDENTICAL +
+                            KEP.POSITION_IS_CONTAINED ) &&
+                        ( !def["childRule"] || def["childRule"](currentNode) )
+                    )) {
                     var currentParent = currentNode.parent();
 
 
@@ -672,9 +676,8 @@ KISSY.add("editor/core/styles", function (S, Editor) {
 
                         // Non element nodes, or empty elements can be added
                         // completely to the range.
-                        if (nodeType == DOM.NodeType.TEXT_NODE ||
-                            ( nodeType == DOM.NodeType.ELEMENT_NODE &&
-                                !currentNode[0].childNodes.length )) {
+                        if (nodeType == Dom.NodeType.TEXT_NODE ||
+                            ( nodeType == Dom.NodeType.ELEMENT_NODE && !currentNode[0].childNodes.length )) {
                             var includedNode = currentNode,
                                 parentNode = null;
 
@@ -755,7 +758,7 @@ KISSY.add("editor/core/styles", function (S, Editor) {
 
                         }
                         //bug notice add by yiminghe@gmail.com
-                        //<span style="font-size:70px"><span style="font-size:30px">xcxx</span></span>
+                        //<span style="font-size:70px"><span style="font-size:30px">^xxx$</span></span>
                         //下一次格式xxx为70px
                         //var exit = FALSE;
                         for (styleName in def.styles) {
@@ -812,7 +815,7 @@ KISSY.add("editor/core/styles", function (S, Editor) {
                  2.ctrl-a 设置字体大小 x
                  3.选中b设置字体大小 y
                  4.保持选中b,设置字体大小 x
-                 exptected: b 大小为 x
+                 expect: b 大小为 x
                  actual: b 大小为 y
                  */
                 else {
@@ -882,7 +885,7 @@ KISSY.add("editor/core/styles", function (S, Editor) {
                         /*
                          * Before removing the style node, there may be a sibling to the style node
                          * that's exactly the same to the one to be removed. To the user, it makes
-                         * no difference that they're separate entities in the DOM tree. So, merge
+                         * no difference that they're separate entities in the Dom tree. So, merge
                          * them before removal.
                          */
                         element._4e_mergeSiblings();
@@ -987,11 +990,11 @@ KISSY.add("editor/core/styles", function (S, Editor) {
             while (currentNode[0] !== endNode[0]) {
                 /*
                  * Need to get the next node first because removeFromElement() can remove
-                 * the current node from DOM tree.
+                 * the current node from Dom tree.
                  */
                 var nextNode = currentNode._4e_nextSourceNode();
                 if (currentNode[0] &&
-                    currentNode[0].nodeType == DOM.NodeType.ELEMENT_NODE &&
+                    currentNode[0].nodeType == Dom.NodeType.ELEMENT_NODE &&
                     this.checkElementRemovable(currentNode)) {
                     // Remove style from element or overriding element.
                     if (currentNode.nodeName() == this["element"])
@@ -1009,7 +1012,7 @@ KISSY.add("editor/core/styles", function (S, Editor) {
                      * contain startNode and we'll have to call breakNodes() again and also
                      * reassign the nextNode to something after startNode.
                      */
-                    if (nextNode[0].nodeType == DOM.NodeType.ELEMENT_NODE &&
+                    if (nextNode[0].nodeType == Dom.NodeType.ELEMENT_NODE &&
                         nextNode.contains(startNode)) {
                         breakNodes();
                         nextNode = new Node(startNode[0].nextSibling);
@@ -1355,12 +1358,12 @@ KISSY.add("editor/core/styles", function (S, Editor) {
 
             if (firstChild) {
                 // Check the cached nodes for merging.
-                firstChild.nodeType == DOM.NodeType.ELEMENT_NODE &&
-                DOM._4e_mergeSiblings(firstChild);
+                firstChild.nodeType == Dom.NodeType.ELEMENT_NODE &&
+                Dom._4e_mergeSiblings(firstChild);
 
                 if (lastChild && firstChild != lastChild
-                    && lastChild.nodeType == DOM.NodeType.ELEMENT_NODE)
-                    DOM._4e_mergeSiblings(lastChild);
+                    && lastChild.nodeType == Dom.NodeType.ELEMENT_NODE)
+                    Dom._4e_mergeSiblings(lastChild);
             }
         }
     }
@@ -1369,7 +1372,7 @@ KISSY.add("editor/core/styles", function (S, Editor) {
 
     return KEStyle;
 }, {
-    requires: ['./base', './range', './selection', './domIterator', './elementPath']
+    requires: ['./base', './range', './selection', './domIterator', './elementPath', 'node']
 });
 /**
  * TODO yiminghe@gmail.com : 重构 Refer

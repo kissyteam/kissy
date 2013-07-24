@@ -14,7 +14,7 @@ KISSY.add("editor/core/selectionFix", function (S, Editor) {
         NULL = null,
         UA = S.UA,
         Event = S.Event,
-        DOM = S.DOM,
+        Dom = S.DOM,
         Node = S.Node,
         KES = Editor.SELECTION;
 
@@ -47,8 +47,7 @@ KISSY.add("editor/core/selectionFix", function (S, Editor) {
             var rng = doc.selection.createRange();
 
             // If the range is collapsed then use the last start range
-            if (startRng &&
-                !rng.item && rng.compareEndPoints('StartToEnd', rng) === 0) {
+            if (startRng && !rng.item && rng.compareEndPoints('StartToEnd', rng) === 0) {
                 startRng.select();
             }
             Event.remove(doc, 'mouseup', endSelection);
@@ -343,7 +342,7 @@ KISSY.add("editor/core/selectionFix", function (S, Editor) {
 
 
         function isBlankParagraph(block) {
-            return block._4e_outerHtml().match(emptyParagraphRegexp);
+            return block.outerHtml().match(emptyParagraphRegexp);
         }
 
         var isNotWhitespace = Editor.Walker.whitespaces(TRUE),
@@ -393,9 +392,7 @@ KISSY.add("editor/core/selectionFix", function (S, Editor) {
                 }
             }
 
-            if (!range ||
-                !range.collapsed ||
-                path.block) {
+            if (!range || !range.collapsed || path.block) {
                 return;
             }
 
@@ -411,14 +408,14 @@ KISSY.add("editor/core/selectionFix", function (S, Editor) {
                     if (isBlankParagraph(fixedBlock)) {
                         var element = fixedBlock.next(nextValidEl, 1);
                         if (element &&
-                            element[0].nodeType == DOM.NodeType.ELEMENT_NODE &&
+                            element[0].nodeType == Dom.NodeType.ELEMENT_NODE &&
                             !cannotCursorPlaced[ element ]) {
                             range.moveToElementEditablePosition(element);
                             fixedBlock._4e_remove();
                         } else {
                             element = fixedBlock.prev(nextValidEl, 1);
                             if (element &&
-                                element[0].nodeType == DOM.NodeType.ELEMENT_NODE &&
+                                element[0].nodeType == Dom.NodeType.ELEMENT_NODE &&
                                 !cannotCursorPlaced[element]) {
                                 range.moveToElementEditablePosition(element,
                                     // 空行的话还是要移到开头的
@@ -445,7 +442,7 @@ KISSY.add("editor/core/selectionFix", function (S, Editor) {
             // 最后的编辑地方
             lastRange
                 .moveToElementEditablePosition(body,
-                TRUE);
+                    TRUE);
             lastPath = new Editor.ElementPath(lastRange.startContainer);
             // 不位于 <body><p>^</p></body>
             if (lastPath.blockLimit.nodeName() !== 'body') {
@@ -474,5 +471,5 @@ KISSY.add("editor/core/selectionFix", function (S, Editor) {
         }
     };
 }, {
-    requires: ['./base', './selection']
+    requires: ['./base', './selection','node']
 });

@@ -256,7 +256,6 @@ describe("KISSY.Defer", function () {
 
     });
 
-
     it("should propagate error reason by default", function () {
 
         var d = S.Defer(),

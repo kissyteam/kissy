@@ -109,8 +109,8 @@
         },
 
         /**
-         * Specify a function to execute when the DOM is fully loaded.
-         * @param fn {Function} A function to execute after the DOM is ready
+         * Specify a function to execute when the Dom is fully loaded.
+         * @param fn {Function} A function to execute after the Dom is ready
          *
          * for example:
          *      @example
@@ -121,15 +121,15 @@
          */
         ready: function (fn) {
 
-            readyPromise.then(fn);
+            readyPromise.done(fn);
 
             return this;
         },
 
         /**
          * Executes the supplied callback when the item with the supplied id is found.
-         * @param id <String> The id of the element, or an array of ids to look for.
-         * @param fn <Function> What to execute when the element is found.
+         * @param id {String} The id of the element, or an array of ids to look for.
+         * @param fn {Function} What to execute when the element is found.
          * @member KISSY
          */
         available: function (id, fn) {
@@ -147,7 +147,7 @@
 
     function fireReady() {
         // nodejs
-        if (doc) {
+        if (doc && !UA.nodejs) {
             removeEventListener(win, LOAD_EVENT, fireReady);
         }
         readyDefer.resolve(S);

@@ -2,14 +2,13 @@
  * common utils for kissy editor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/core/utils", function (S) {
+KISSY.add("editor/core/utils", function (S,Editor) {
 
-    var Editor = S.Editor,
-        TRUE = true,
+    var TRUE = true,
         FALSE = false,
         NULL = null,
         Node = S.Node,
-        DOM = S.DOM,
+        Dom = S.DOM,
         UA = S.UA,
 
         /**
@@ -18,11 +17,7 @@ KISSY.add("editor/core/utils", function (S) {
          * @name Utils
          * @member Editor
          */
-            Utils =
-        /**
-         * @lends Editor.Utils
-         */
-        {
+            Utils ={
             /**
              *
              * @param url
@@ -67,8 +62,8 @@ KISSY.add("editor/core/utils", function (S) {
                     y = offset.top,
                     currentWindow = editor.get("window")[0];
                 //x,y相对于当前iframe文档,防止当前iframe有滚动条
-                x -= DOM.scrollLeft(currentWindow);
-                y -= DOM.scrollTop(currentWindow);
+                x -= Dom.scrollLeft(currentWindow);
+                y -= Dom.scrollTop(currentWindow);
 
                 //note:when iframe is static ,still some mistake
                 var iframePosition = editor.get("iframe").offset();
@@ -80,7 +75,7 @@ KISSY.add("editor/core/utils", function (S) {
 
             /**
              * 执行一系列函数
-             * @param var_args {...function()}
+             * @param {Function...} var_args
              * @return {*} 得到成功的返回
              */
             tryThese: function (var_args) {
@@ -259,7 +254,7 @@ KISSY.add("editor/core/utils", function (S) {
                 for (var p in params) {
 
                     var v = params[p];
-                    if (S.isFunction(v)) {
+                    if (typeof v === 'function') {
                         params[p] = v();
                     }
 
@@ -287,7 +282,7 @@ KISSY.add("editor/core/utils", function (S) {
             preventFocus: function (el) {
                 if (UA['ie']) {
                     //ie 点击按钮不丢失焦点
-                    el.unselectable(undefined);
+                    el.unselectable();
                 } else {
                     el.attr("onmousedown", "return false;");
                 }
@@ -297,7 +292,7 @@ KISSY.add("editor/core/utils", function (S) {
              *
              */
             injectDom: function (editorDom) {
-                S.mix(DOM, editorDom);
+                S.mix(Dom, editorDom);
                 for (var dm in editorDom) {
                     (function (dm) {
                         Node.prototype[dm] = function () {
@@ -335,7 +330,7 @@ KISSY.add("editor/core/utils", function (S) {
                 var res = this.__res || [];
                 for (var i = 0; i < res.length; i++) {
                     var r = res[i];
-                    if (S.isFunction(r)) {
+                    if (typeof r === 'function') {
                         r();
                     } else {
                         if (r.destroy) {
@@ -363,5 +358,5 @@ KISSY.add("editor/core/utils", function (S) {
 
     return Utils;
 }, {
-    requires: ['./base']
+    requires: ['./base','node']
 });

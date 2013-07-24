@@ -1,13 +1,13 @@
 /**
  * @ignore
  * getScript support for css and js callback after load
- * @author yiminghe@gmail.com, lifesinger@gmail.com
+ * @author yiminghe@gmail.com
  */
 (function (S) {
 
     var MILLISECONDS_OF_SECOND = 1000,
         doc = S.Env.host.document,
-        utils = S.Loader.Utils,
+        Utils = S.Loader.Utils,
         Path = S.Path,
         jsCssCallbacks = {},
         UA = S.UA,
@@ -44,7 +44,7 @@
          * @param {Number} [success.timeout] timeout (s)
          * @param {String} [success.charset] charset of current resource
          * @param {String} [charset] charset of current resource
-         * @return {HTMLElement} script/style node
+         * @return {HTML} script/style node
          * @member KISSY
          */
         getScript: function (url, success, charset) {
@@ -81,7 +81,7 @@
                 // S.log('init getScript : by ' + config.source);
             }
 
-            var head = utils.docHead(),
+            var head = Utils.docHead(),
                 node = doc.createElement(css ? 'link' : 'script'),
                 clearTimer = function () {
                     if (timer) {
@@ -96,6 +96,10 @@
                 });
             }
 
+            if (charset) {
+                node.charset = charset;
+            }
+
             if (css) {
                 node.href = url;
                 node.rel = 'stylesheet';
@@ -105,10 +109,6 @@
             }
 
             callbacks.node = node;
-
-            if (charset) {
-                node.charset = charset;
-            }
 
             var end = function (error) {
                     var index = error,
@@ -121,37 +121,37 @@
                     });
                     delete jsCssCallbacks[url];
                 },
-                useNative = !css;
+                useNative = 'onload' in node;
 
-            if (css) {
-                if (isOldWebKit) {
-                    useNative = false;
-                } else {
-                    useNative = 'onload' in node;
+            if (css && isOldWebKit) {
+                useNative = false;
+            }
+
+            function onload() {
+                var readyState = node.readyState;
+                if (!readyState ||
+                    readyState == "loaded" ||
+                    readyState == "complete") {
+                    node.onreadystatechange = node.onload = null;
+                    end(0)
                 }
             }
 
             //标准浏览器 css and all script
             if (useNative) {
-                node.onload = node.onreadystatechange = function () {
-                    var readyState = node.readyState;
-                    if (!readyState ||
-                        readyState == "loaded" ||
-                        readyState == "complete") {
-                        node.onreadystatechange = node.onload = null;
-                        end(0)
-                    }
-                };
+                node.onload = onload;
                 node.onerror = function () {
                     node.onerror = null;
                     end(1);
                 };
             }
             // old chrome/firefox for css
-            else {
-                utils.pollCss(node, function () {
+            else if (css) {
+                Utils.pollCss(node, function () {
                     end(0);
                 });
+            } else {
+                node.onreadystatechange = onload;
             }
 
             if (timeout) {

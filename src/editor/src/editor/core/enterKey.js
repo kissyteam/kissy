@@ -211,5 +211,5 @@ KISSY.add("editor/core/enterKey", function (S,Editor,Walker,ElementPath) {
         }
     };
 }, {
-    requires:['./base','./walker','./elementPath']
+    requires:['./base','./walker','./elementPath','node']
 });

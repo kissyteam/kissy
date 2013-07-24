@@ -1,57 +1,6 @@
 describe('web.js', function () {
-
     var S = KISSY,
-        host = S.Env.host,
-        fn = function () {
-        };
-
-
-    it('S.isWindow', function () {
-        expect(S.isWindow(host)).toBe(true);
-        expect(S.isWindow({})).toBe(false);
-        expect(S.isWindow({
-            setInterval:1,
-            setTimeout:1,
-            document:{
-                nodeType:9
-            }
-        })).toBe(false);
-        expect(S.isWindow(document)).toBe(false);
-        expect(S.isWindow(document.documentElement.firstChild)).toBe(false);
-    });
-
-    it('S.globalEval', function () {
-        S.globalEval('var globalEvalTest = 1;');
-        expect(host['globalEvalTest']).toBe(1);
-    });
-
-    it('S.later', function () {
-        var ok = false;
-
-        S.later(function (data) {
-            ok = true;
-            expect(data.n).toBe(1);
-        }, 20, false, null, { n:1 });
-
-        waitsFor(function () {
-            return ok;
-        });
-        ok = false;
-
-        var i = 1;
-        var timer = S.later(function (data) {
-            expect(data.n).toBe(1);
-            if (i++ === 3) {
-                timer.cancel();
-                ok = true;
-            }
-        }, 500, true, null, { n:1 });
-
-        waitsFor(function () {
-            return ok;
-        });
-        ok = false;
-    });
+        host = S.Env.host;
 
     describe("S.ready", function () {
         it('S.ready simple works', function () {
@@ -82,6 +31,53 @@ describe('web.js', function () {
                 expect(r).toBe(S);
             });
         });
+    });
+
+    it('S.isWindow', function () {
+        expect(S.isWindow(host)).toBe(true);
+        expect(S.isWindow({})).toBe(false);
+        expect(S.isWindow({
+            setInterval: 1,
+            setTimeout: 1,
+            document: {
+                nodeType: 9
+            }
+        })).toBe(false);
+        expect(S.isWindow(document)).toBe(false);
+        expect(S.isWindow(document.documentElement.firstChild)).toBe(false);
+    });
+
+    it('S.globalEval', function () {
+        S.globalEval('var globalEvalTest = 1;');
+        expect(host['globalEvalTest']).toBe(1);
+    });
+
+    it('S.later', function () {
+        var ok = false;
+
+        S.later(function (data) {
+            ok = true;
+            expect(data.n).toBe(1);
+        }, 20, false, null, { n: 1 });
+
+        waitsFor(function () {
+            return ok;
+        });
+        ok = false;
+
+        var i = 1;
+        var timer = S.later(function (data) {
+            expect(data.n).toBe(1);
+            if (i++ === 3) {
+                timer.cancel();
+                ok = true;
+            }
+        }, 500, true, null, { n: 1 });
+
+        waitsFor(function () {
+            return ok;
+        });
+        ok = false;
     });
 
 

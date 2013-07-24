@@ -90,8 +90,7 @@
     }
 
 
-    Query.prototype =
-    {
+    Query.prototype = {
         constructor: Query,
 
         /**
@@ -121,8 +120,8 @@
          */
         count: function () {
             var self = this,
-                _queryMap,
                 count = 0,
+                _queryMap,
                 k;
             parseQuery(self);
             _queryMap = self._queryMap;
@@ -357,8 +356,7 @@
         return self;
     }
 
-    Uri.prototype =
-    {
+    Uri.prototype = {
 
         constructor: Uri,
 
@@ -598,7 +596,7 @@
          * Serialize to string.
          * See rfc 5.3 Component Recomposition.
          * But kissy does not differentiate between undefined and empty.
-         * @param {boolean} [serializeArray=true]
+         * @param {Boolean} [serializeArray=true]
          * whether append [] to key name when value 's type is array
          * @return {String}
          */

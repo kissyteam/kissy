@@ -8,13 +8,10 @@
     var PROMISE_VALUE = '__promise_value',
         PROMISE_PENDINGS = '__promise_pendings';
 
-    /**
-     * two effects:
-     * 1. call fulfilled with immediate value
-     * 2. push fulfilled in right promise
-     * @ignore
-     * @param fulfilled
-     * @param rejected
+    /*
+     two effects:
+     1. call fulfilled with immediate value
+     2. push fulfilled in right promise
      */
     function promiseWhen(promise, fulfilled, rejected) {
         // simply call rejected
@@ -65,20 +62,19 @@
         self.promise = promise || new Promise();
     }
 
-    Defer.prototype =
-    {
+    Defer.prototype = {
         constructor: Defer,
         /**
          * fulfill defer object's promise
          * note: can only be called once
          * @param value defer object's value
-         * @return defer object's promise
+         * @return {KISSY.Promise} defer object's promise
          */
         resolve: function (value) {
             var promise = this.promise,
                 pendings;
             if (!(pendings = promise[PROMISE_PENDINGS])) {
-                return undefined;
+                return null;
             }
             // set current promise 's resolved value
             // maybe a promise or instant value
@@ -93,7 +89,7 @@
         /**
          * reject defer object's promise
          * @param reason
-         * @return defer object's promise
+         * @return {KISSY.Promise} defer object's promise
          */
         reject: function (reason) {
             return this.resolve(new Reject(reason));
@@ -121,15 +117,14 @@
         }
     }
 
-    Promise.prototype =
-    {
+    Promise.prototype = {
         constructor: Promise,
         /**
          * register callbacks when this promise object is resolved
          * @param {Function} fulfilled called when resolved successfully,pass a resolved value to this function and
-         * return a value (could be promise object) for the new promise's resolved value.
+         * return a value (could be promise object) for the new promise 's resolved value.
          * @param {Function} [rejected] called when error occurs,pass error reason to this function and
-         * return a new reason for the new promise's error reason
+         * return a new reason for the new promise 's error reason
          * @return {KISSY.Promise} a new promise object
          */
         then: function (fulfilled, rejected) {
@@ -156,6 +151,31 @@
                 return callback(reason, false);
             });
         },
+
+        /**
+         * register callbacks when this promise object is resolved,
+         * and throw error at next event loop if promise
+         * (current instance if no fulfilled and rejected parameter or
+         * new instance caused by call this.then(fulfilled, rejected))
+         * fails.
+         * @param {Function} [fulfilled] called when resolved successfully,pass a resolved value to this function and
+         * return a value (could be promise object) for the new promise 's resolved value.
+         * @param {Function} [rejected] called when error occurs,pass error reason to this function and
+         * return a new reason for the new promise 's error reason
+         */
+        done: function (fulfilled, rejected) {
+            var self = this,
+                onUnhandledError = function (error) {
+                    setTimeout(function () {
+                        throw error;
+                    }, 0);
+                },
+                promiseToHandle = fulfilled || rejected ?
+                    self.then(fulfilled, rejected) :
+                    self;
+            promiseToHandle.fail(onUnhandledError);
+        },
+
         /**
          * whether the given object is a resolved promise
          * if it is resolved with another promise,
@@ -182,7 +202,7 @@
         if (self[PROMISE_VALUE] instanceof Promise) {
             S.error('assert.not(this.__promise_value instanceof promise) in Reject constructor');
         }
-        return undefined;
+        return self;
     }
 
     S.extend(Reject, Promise);
@@ -293,9 +313,9 @@
              * or call fulfilled callback directly when obj is not a promise object
              * @param {KISSY.Promise|*} obj a promise object or value of any type
              * @param {Function} fulfilled called when obj resolved successfully,pass a resolved value to this function and
-             * return a value (could be promise object) for the new promise's resolved value.
+             * return a value (could be promise object) for the new promise 's resolved value.
              * @param {Function} [rejected] called when error occurs in obj,pass error reason to this function and
-             * return a new reason for the new promise's error reason
+             * return a new reason for the new promise 's error reason
              * @return {KISSY.Promise} a new promise object
              *
              * for example:
@@ -352,7 +372,7 @@
             all: function (promises) {
                 var count = promises.length;
                 if (!count) {
-                    return promises;
+                    return null;
                 }
                 var defer = Defer();
                 for (var i = 0; i < promises.length; i++) {

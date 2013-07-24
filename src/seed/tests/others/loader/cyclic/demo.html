@@ -22,9 +22,6 @@
             }
         ]
     });
-    S.getLoader().on("afterModAttached", function (e) {
-        S.log(e.mod.name + " is attached");
-    });
     S.use("tests3/b", function (S, v) {
         S.log(v);
     });
