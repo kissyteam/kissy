@@ -1,7 +1,7 @@
 KISSY.use("htmlparser,ua", function (S, HtmlParser,UA) {
 
     function getTextSync(path, callback) {
-        if (S.Env.nodejs) {
+        if (S.UA.nodejs) {
             path=require('path').resolve(__dirname,path);
             var fs = require('fs');
             callback(fs.readFileSync(path, 'utf-8'));

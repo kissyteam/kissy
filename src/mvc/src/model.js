@@ -39,7 +39,7 @@ KISSY.add("mvc/model", function (S, Base) {
              * Add current model instance to a specified collection.
              * @param {MVC.Collection} c
              */
-            addToCollection:function (c) {
+            addToCollection: function (c) {
                 this.collections[S.stamp(c)] = c;
                 this.addTarget(c);
             },
@@ -47,7 +47,7 @@ KISSY.add("mvc/model", function (S, Base) {
              * Remove current model instance from a specified collection.
              * @param {MVC.Collection} c
              */
-            removeFromCollection:function (c) {
+            removeFromCollection: function (c) {
                 delete this.collections[S.stamp(c)];
                 this.removeTarget(c);
             },
@@ -55,7 +55,7 @@ KISSY.add("mvc/model", function (S, Base) {
             /**
              * Get current model 's id.
              */
-            getId:function () {
+            getId: function () {
                 return this.get(this.get("idAttribute"));
             },
 
@@ -63,11 +63,11 @@ KISSY.add("mvc/model", function (S, Base) {
              * Set current model 's id.
              * @param id
              */
-            setId:function (id) {
+            setId: function (id) {
                 return this.set(this.get("idAttribute"), id);
             },
 
-            setInternal:function () {
+            setInternal: function () {
                 this.__isModified = 1;
                 return Model.superclass.setInternal.apply(this, arguments);
             },
@@ -76,7 +76,7 @@ KISSY.add("mvc/model", function (S, Base) {
              * whether it is newly created.
              * @return {Boolean}
              */
-            isNew:function () {
+            isNew: function () {
                 return !this.getId();
             },
 
@@ -84,7 +84,7 @@ KISSY.add("mvc/model", function (S, Base) {
              * whether has been modified since last save.
              * @return {Boolean}
              */
-            isModified:function () {
+            isModified: function () {
                 return !!(this.isNew() || this.__isModified);
             },
 
@@ -96,7 +96,7 @@ KISSY.add("mvc/model", function (S, Base) {
              * @param {Function} opts.complete callback when action is complete.
              * @chainable
              */
-            destroy:function (opts) {
+            destroy: function (opts) {
                 var self = this;
                 opts = opts || {};
                 var success = opts.success;
@@ -113,7 +113,9 @@ KISSY.add("mvc/model", function (S, Base) {
                     }
                     for (var l in lists) {
                         lists[l].remove(self, opts);
-                        self.removeFromCollection(lists[l]);
+                        if (lists[l]) {
+                            self.removeFromCollection(lists[l]);
+                        }
                     }
                     self.fire("destroy");
                     success && success.apply(this, arguments);
@@ -138,7 +140,7 @@ KISSY.add("mvc/model", function (S, Base) {
              * @param {Function} opts.complete callback when action is complete.
              * @chainable
              */
-            load:function (opts) {
+            load: function (opts) {
                 var self = this;
                 opts = opts || {};
                 var success = opts.success;
@@ -167,7 +169,7 @@ KISSY.add("mvc/model", function (S, Base) {
              * @param {Function} opts.complete callback when action is complete.
              * @chainable
              */
-            save:function (opts) {
+            save: function (opts) {
                 var self = this;
                 opts = opts || {};
                 var success = opts.success;
@@ -192,7 +194,7 @@ KISSY.add("mvc/model", function (S, Base) {
              * Get json representation for current model.
              * @return {Object}
              */
-            toJSON:function () {
+            toJSON: function () {
                 var ret = this.getAttrVals();
                 S.each(blacklist, function (b) {
                     delete ret[b];
@@ -201,7 +203,7 @@ KISSY.add("mvc/model", function (S, Base) {
             }
 
         }, {
-            ATTRS:/**
+            ATTRS: /**
              * @lends MVC.Model#
              */
             {
@@ -210,8 +212,8 @@ KISSY.add("mvc/model", function (S, Base) {
                  * Defaults to: "id".
                  * @type {String}
                  */
-                idAttribute:{
-                    value:'id'
+                idAttribute: {
+                    value: 'id'
                 },
 
                 /**
@@ -219,8 +221,8 @@ KISSY.add("mvc/model", function (S, Base) {
                  * Default call S.guid()
                  * @type {Function}
                  */
-                clientId:{
-                    valueFn:function () {
+                clientId: {
+                    valueFn: function () {
                         return S.guid("mvc-client");
                     }
                 },
@@ -229,24 +231,24 @@ KISSY.add("mvc/model", function (S, Base) {
                  * Defaults to: collection.url+"/"+mode.id
                  * @type {Function}
                  */
-                url:{
-                    value:url
+                url: {
+                    value: url
                 },
                 /**
                  * If current model does not belong to any collection.
                  * Use this attribute value as collection.url in {@link MVC.Model#url}
                  * @type {String}
                  */
-                urlRoot:{
-                    value:""
+                urlRoot: {
+                    value: ""
                 },
                 /**
                  * Sync model data with server.
                  * Default to call {@link MVC.sync}
                  * @type {Function}
                  */
-                sync:{
-                    value:function () {
+                sync: {
+                    value: function () {
                         S.require("mvc").sync.apply(this, arguments);
                     }
                 },
@@ -255,8 +257,8 @@ KISSY.add("mvc/model", function (S, Base) {
                  * Default to return raw data from server.
                  * @type {Function}
                  */
-                parse:{
-                    value:function (resp) {
+                parse: {
+                    value: function (resp) {
                         return resp;
                     }
                 }
@@ -297,5 +299,5 @@ KISSY.add("mvc/model", function (S, Base) {
     return Model;
 
 }, {
-    requires:['base']
+    requires: ['base']
 });

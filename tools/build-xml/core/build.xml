@@ -40,7 +40,9 @@
             <path path="${kissy.build.dir}/anim.js"/>
             <path path="${kissy.build.dir}/node.js"/>
             <footer filtering="no" trimleading="yes">
-                KISSY.use("ua,dom,event,node,json,ajax,anim,base,cookie",0,1);
+                KISSY.use("ua,dom,event,node,json,ajax,anim,base,cookie",{
+                sync:true
+                });
             </footer>
             <filterchain>
                 <deletecharacters chars="${bom}"/>
