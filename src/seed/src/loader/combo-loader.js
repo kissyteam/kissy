@@ -67,6 +67,23 @@
         });
     }
 
+    /**
+     * Returns hash code of a string
+     * djb2 algorithm
+     * @param {String} str string to be hashed
+     * @private
+     * @return {String} the hash code
+     */
+    function getHash(str)
+    {
+        var hash = 5381;
+        for (i = str.length; -- i > -1;)
+        {
+            hash = ((hash << 5) + hash) + str.charCodeAt(i); /* hash * 33 + char */
+        }
+        return hash;
+    }
+
     // ----------------------- private end
     S.augment(ComboLoader, {
 
@@ -202,99 +219,145 @@
          * @return {Object}
          */
         getComboUrls: function (modNames) {
+            var runtime = this.runtime, Config = runtime.Config,
+            comboPrefix = Config.comboPrefix,
+            comboSep = Config.comboSep,
+            maxFileNum = Config.comboMaxFileNum,
+            maxUrlLength = Config.comboMaxUrlLength,
+            combos = {},  // {type, {packageName+charset, [modInfo]}}}
+            res = {},  // {type, {packageName, [comboURL]}}
+            packagePaths = {}, packagePrefix = {}, prefixRegExp = /^(.*).*(?: \1.*).*$/,
+            i = 0, l = modNames.length,
+            modName, mod, packageInfo, type, types, mods, tags, tag, matched, charset, packagePath, path, packageName, group, fullpath, pkgCombo, groupCombo, jss, t, tMods;
 
-            var self = this,
-                i,
-                runtime = self.runtime,
-                Config = runtime.Config,
-                combos = {};
+            for (; i < l; ++ i)
+            {
+                modName = modNames[i];
+                mod = Utils.createModuleInfo(runtime, modName);
+                type = mod.getType();
+                fullpath = mod.getFullPath();
+                
+                packageInfo = mod.getPackage();
+                packageName = packageInfo.getName();
+                charset = packageInfo.getCharset();
+                tag = packageInfo.getTag();
+                pkgCombo = packageInfo.isCombine();
+                group = packageInfo.getGroup();
+                path = packagePath = packageInfo.getPrefixUriForCombo();
 
-            S.each(modNames, function (modName) {
-                var mod = Utils.createModuleInfo(runtime, modName),
-                    packageInfo = mod.getPackage(),
-                    type = mod.getType(),
-                    mods,
-                    packageName = packageInfo.getName();
-                combos[packageName] = combos[packageName] || {};
-                if (!(mods = combos[packageName][type])) {
-                    mods = combos[packageName][type] = combos[packageName][type] || [];
-                    mods.packageInfo = packageInfo;
+                if (groupCombo = (mod.combinable = pkgCombo && S.startsWith(fullpath, packagePath)) && packageName && group)  // whether group packages combinable (except default package and non-combo modules)
+                {
+                    packageName = group + charset;  // combined package name
                 }
+
+                types = combos[type] = combos[type] || {};
+                if (! (mods = types[packageName]))
+                {
+                    mods = types[packageName] = [];
+                    mods.charset = charset;
+                    mods.tags = [tag]; // [package tag]
+                }
+
+                if (groupCombo)
+                {
+                    // find the common prefix of package paths
+                    if (packagePaths[packagePath])
+                    {
+                        path = packagePrefix[packageName];
+                    }
+                    else
+                    {
+                        packagePaths[packagePath] = 1;  // the package has already processed
+                        if (t = packagePrefix[packageName])
+                        {
+                            if ((matched = (t + ' ' + path).match(prefixRegExp)) && (t = matched[1]))
+                            {
+                                // the prefix must ends with '/'
+                                if (t.charAt(t.length - 1) != '/')
+                                {
+                                    t = t.substring(0, t.lastIndexOf("/") + 1);
+                                }
+                                path = t;
+                            }
+                            if (! matched || t == "http://" || t == "http")  // no prefix found
+                            {
+                                packageInfo.group = "";  // disable package group combination
+                                -- i;
+                                continue;
+                            }
+                        }
+                        packagePrefix[packageName] = path;
+                    }
+                    // collect tags to calculate combined tag
+                    tags = mods.tags;
+                    if (S.indexOf(tag, tags) < 0)
+                    {
+                        tags.push(tag);
+                    }
+                }
+                if (path)
+                {
+//                    console.debug("modName: " + mod.getName() + ", packageName: " + packageName + ", packagePath: " + packagePath + ", comboPath: " + path);
+                    mods.prefix = path;  // the combo prefix
+                }
+                
                 mods.push(mod);
-            });
+            }
 
-            var res = {
-                    js: {},
-                    css: {}
-                },
-                t,
-                tMods,
-                packageName,
-                type,
-                comboPrefix = Config.comboPrefix,
-                comboSep = Config.comboSep,
-                maxFileNum = Config.comboMaxFileNum,
-                maxUrlLength = Config.comboMaxUrlLength;
-
-            for (packageName in combos) {
-
-                for (type in combos[packageName]) {
-
+            // generate combo urls
+            for (type in combos)
+            {
+                res[type] = {};
+                for (packageName in combos[type])
+                {
                     t = [];
                     tMods = [];
-
-                    var jss = combos[packageName][type],
-                        packageInfo = jss.packageInfo,
-                        tag = packageInfo.getTag(),
-                        suffix = (tag ? ('?t=' + encodeURIComponent(tag)) + '.' + type : ''),
+                    jss = combos[type][packageName];
+                    tags = jss.tags;
+                    tag = tags.length > 1 ? getHash(tags.join('')) : tags[0];
+                    
+                    var suffix = (tag ? '?t=' + encodeURIComponent(tag) + '.' + type : ''),
                         suffixLength = suffix.length,
-                        prefix,
-                        path,
-                        fullpath,
-                        l,
-                        rss,
-                        packagePath = packageInfo.getPrefixUriForCombo();
+                        basePrefix = jss.prefix,
+                        baseLen = basePrefix.length,
+                        prefix = basePrefix + comboPrefix,
+                        comboObjs = res[type][packageName] = [];
 
-                    rss = res[type][packageName] = [];
-                    rss.charset = packageInfo.getCharset();
-                    // add packageName to common prefix
-                    // combo grouped by package
-                    prefix = packagePath + comboPrefix;
                     l = prefix.length;
+                    comboObjs.charset = jss.charset;
+                    comboObjs.mods = [];
 
-                    function pushComboUrl() {
+                    function pushComboUrl()
+                    {
                         // map the whole combo path
-                        //noinspection JSReferencingMutableVariableFromClosure
-                        rss.push({
-                            fullpath: Utils.getMappedPath(
-                                runtime,
-                                prefix + t.join(comboSep) + suffix,
-                                Config.mappedComboRules),
+                        comboObjs.push(
+                        {
+                            fullpath: Utils.getMappedPath(runtime, prefix + t.join(comboSep) + suffix, Config.mappedComboRules),
                             mods: tMods
                         });
                     }
 
-                    for (i = 0; i < jss.length; i++) {
-
+                    for (i = 0; i < jss.length; i++)
+                    {
+                        comboObjs.mods.push(jss[i]);
                         // map individual module
                         fullpath = jss[i].getFullPath();
-
-                        if (!packageInfo.isCombine() || !S.startsWith(fullpath, packagePath)) {
-                            rss.push({
+                        if (! jss[i].combinable)
+                        {
+                            comboObjs.push(
+                            {
                                 fullpath: fullpath,
                                 mods: [jss[i]]
                             });
                             continue;
                         }
-
                         // ignore query parameter
-                        path = fullpath.slice(packagePath.length).replace(/\?.*$/, '');
-
+                        path = fullpath.slice(baseLen).replace(/\?.*$/, '');
                         t.push(path);
                         tMods.push(jss[i]);
 
-                        if ((t.length > maxFileNum) ||
-                            (l + t.join(comboSep).length + suffixLength > maxUrlLength)) {
+                        if (t.length > maxFileNum || (l + t.join(comboSep).length + suffixLength > maxUrlLength))
+                        {
                             t.pop();
                             tMods.pop();
                             pushComboUrl();
@@ -303,18 +366,15 @@
                             i--;
                         }
                     }
-                    if (t.length) {
+                    if (t.length)
+                    {
                         pushComboUrl();
                     }
-
                 }
-
             }
-
             return res;
         }
     });
-
 
     Loader.ComboLoader = ComboLoader;
 
