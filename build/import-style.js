@@ -1,8 +1,13 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 24 20:47
+build time: Jul 24 20:53
 */
+/**
+ * use document.write to load external css files in block loading ways.
+ * depends on loader.
+ * @author yiminghe@gmail.com
+ */
 (function (S) {
     var isDebug;
 
