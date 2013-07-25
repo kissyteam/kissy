@@ -3,7 +3,7 @@
  * overrides methods in NodeList.prototype
  * @author yiminghe@gmail.com
  */
-KISSY.add('node/override', function (S, Dom,NodeList) {
+KISSY.add('node/override', function (S, Dom, NodeList) {
 
     var NLP = NodeList.prototype;
 
@@ -52,7 +52,7 @@ KISSY.add('node/override', function (S, Dom,NodeList) {
     })
 
 }, {
-    requires: ['dom', './base']
+    requires: ['dom', './base', './attach']
 });
 
 /*
