@@ -235,6 +235,19 @@ KISSY.add('dd/droppable', function (S, Node, RichBase, DDM) {
                 value: {
 
                 }
+            },
+
+            /**
+             * whether droppable is disabled
+             * @type {Boolean}
+             * @property disabled
+             * @member KISSY.DD.Droppable
+             */
+            /**
+             * @ignore
+             */
+            disabled:{
+
             }
 
         }

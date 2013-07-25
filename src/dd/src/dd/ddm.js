@@ -3,7 +3,7 @@
  * dd support for kissy, dd objects central management module
  * @author yiminghe@gmail.com
  */
-KISSY.add('dd/ddm', function (S, Node, Base) {
+KISSY.add('dd/ddm', function (S, Node, Base, undefined) {
 
     var UA = S.UA,
         $ = Node.all,
@@ -182,6 +182,10 @@ KISSY.add('dd/ddm', function (S, Node, Base) {
             dragArea = area(dragRegion);
 
         S.each(drops, function (drop) {
+            if (drop.get('disabled')) {
+                return undefined;
+            }
+
             var a,
                 node = drop['getNodeFromTarget'](ev,
                     // node
@@ -229,6 +233,7 @@ KISSY.add('dd/ddm', function (S, Node, Base) {
             }
             return undefined;
         });
+
         oldDrop = self.get('activeDrop');
         if (oldDrop && oldDrop != activeDrop) {
             oldDrop._handleOut(ev);

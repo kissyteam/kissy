@@ -27,6 +27,10 @@
         .ks-dd-drag-over {
             background: #a52a2a;
         }
+
+        .ks-dd-drop-over {
+            background: #ffff00;
+        }
     </style>
     <link rel="stylesheet" href="../../css/assets/dpl/base.css"/>
 </head>
@@ -36,6 +40,10 @@
 <div id="container" class="container">
 
     <h2>简单拖放 + 回复动画</h2>
+
+    <label>
+        <input id="disabled" type="checkbox"/>
+        disabled droppable</label>
 
     <div class="ks-clear">
         <div id="c1" class="component">
@@ -66,7 +74,7 @@
 
     var S = KISSY;
 
-    KISSY.use("node,dd,dd/plugin/proxy", function (S, Node, DD,Proxy) {
+    KISSY.use("node,dd,dd/plugin/proxy", function (S, Node, DD, Proxy) {
         var DDM = DD.DDM,
                 $ = Node.all,
                 DraggableDelegate = DD.DraggableDelegate,
@@ -116,9 +124,12 @@
                 move: 1
             });
 
-
             var drop = new Droppable({
                 node: "#drop"
+            });
+
+            $('#disabled').on('click', function () {
+                drop.set('disabled',this.checked);
             });
 
             c1.on("dragenter", function (ev) {
@@ -156,7 +167,7 @@
                 if (node.isProxy) {
                     var dragNode = ev.drag.get("dragNode");
                     node = node.clone(true).insertBefore(node);
-                    var props={
+                    var props = {
                         left: dragNode.offset().left - parseInt(dragNode.css('margin-left')),
                         top: dragNode.offset().top - parseInt(dragNode.css('margin-top'))
                     };
