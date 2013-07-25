@@ -1,26 +1,29 @@
+/**
+ * tc for modules config
+ * @author yiminghe@gmail.com
+ */
 describe("modules and packages", function () {
-
     var S = KISSY;
 
     it("can get base correctly", function () {
         expect(KISSY.config("base"))
             .toBe(new S.Uri(location.href)
-            .resolve("/kissy/build/").toString());
+                .resolve("/kissy/build/").toString());
     });
 
     it("does not depend on order", function () {
-
+        S.clearLoader();
         KISSY.config({
-            "modules":{
-                "x/x":{
-                    requires:['x/y']
+            "modules": {
+                "x/x": {
+                    requires: ['x/y']
                 }
             }
         });
 
         KISSY.config("packages", {
-            x:{
-                base:"../specs/packages-modules"
+            x: {
+                base: "../specs/packages-modules"
             }
         });
 
@@ -38,15 +41,16 @@ describe("modules and packages", function () {
     });
 
     it("package can has same path", function () {
+        S.clearLoader();
         var combine = KISSY.config("combine");
         var ret = 0;
         KISSY.config({
-            packages:{
-                y:{
-                    base:"../specs/packages-modules"
+            packages: {
+                y: {
+                    base: "../specs/packages-modules"
                 },
-                z:{
-                    base:"../specs/packages-modules"
+                z: {
+                    base: "../specs/packages-modules"
                 }
             }
         });
@@ -62,5 +66,4 @@ describe("modules and packages", function () {
         });
 
     });
-
 });
