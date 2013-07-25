@@ -39,11 +39,3 @@ S.use('nodejs/extra', function (S, extra) {
 
 S.log('S.ready ok');
 
-
-/**
- * 引入内部模块ajax
- */
-S.use('io', function (S) {
-    S.log('io ok');
-});
-
