@@ -4,6 +4,14 @@ KISSY.clearLoader = function () {
         modules = Env.mods,
         m;
 
+    var ignore={
+        empty:1,
+        uri:1,
+        promise:1,
+        ua:1,
+        path:1
+    };
+
     self.config({
         map: false,
         mapCombo: false,
@@ -11,7 +19,7 @@ KISSY.clearLoader = function () {
     });
 
     for (m in modules) {
-        if (m != 'empty') {
+        if (!ignore[m]) {
             var p;
             for (p in modules[m]) {
                 if (p != 'alias' &&
