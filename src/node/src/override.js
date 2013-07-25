@@ -52,7 +52,7 @@ KISSY.add('node/override', function (S, DOM,NodeList) {
     })
 
 }, {
-    requires: ['dom', './base']
+    requires: ['dom', './base','./attach']
 });
 
 /*

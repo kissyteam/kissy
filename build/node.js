@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.31
 MIT Licensed
-build time: Jan 31 22:55
+build time: Jul 25 15:55
 */
 /**
  * @ignore
@@ -789,7 +789,7 @@ KISSY.add('node/override', function (S, DOM,NodeList) {
     })
 
 }, {
-    requires: ['dom', './base']
+    requires: ['dom', './base','./attach']
 });
 
 /*
