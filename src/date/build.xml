@@ -1,0 +1,11 @@
+<project name="date.build" default="build" basedir=".">
+
+    <target name="build">
+
+        <subant target="" failonerror="true" inheritall="false">
+            <fileset dir="./" includes="**/build.xml" excludes="build.xml"/>
+        </subant>
+
+    </target>
+    
+</project>
