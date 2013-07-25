@@ -15,28 +15,29 @@ KISSY.add("editor/plugin/checkbox-source-area", function (S, Editor) {
     }
 
     S.augment(CheckboxSourceArea, {
-        _init:function () {
+        _init: function () {
             var self = this,
                 editor = self.editor,
                 statusBarEl = editor.get("statusBarEl");
             self.holder = new Node("<span " +
                 "style='zoom:1;display:inline-block;height:22px;line-height:22px;'>" +
-                "<input style='margin:0 5px;vertical-align:middle;' " +
-                "type='checkbox' />" +
-                "<span style='vertical-align:middle;'>编辑源代码</span></span>")
+                "<label style='vertical-align:middle;'>" +
+                "<input style='margin:0 5px;' type='checkbox' />" +
+                "编辑源代码</label>" +
+                "</span>")
                 .appendTo(statusBarEl);
             var el = self.el = self.holder.one("input");
             el.on("click", self._check, self);
             editor.on("wysiwygMode", self._wysiwygmode, self);
             editor.on("sourceMode", self._sourcemode, self);
         },
-        _sourcemode:function () {
+        _sourcemode: function () {
             this.el.attr("checked", true);
         },
-        _wysiwygmode:function () {
+        _wysiwygmode: function () {
             this.el.attr("checked", false);
         },
-        _check:function () {
+        _check: function () {
             var self = this,
                 editor = self.editor,
                 el = self.el;
@@ -46,18 +47,17 @@ KISSY.add("editor/plugin/checkbox-source-area", function (S, Editor) {
                 editor.set("mode", WYSIWYG_MODE);
             }
         },
-        destroy:function () {
+        destroy: function () {
             this.holder.remove();
         }
     });
 
-    function CheckboxSourceAreaPlugin(){
+    function CheckboxSourceAreaPlugin() {
 
     }
 
-    S.augment(CheckboxSourceAreaPlugin,{
-        pluginRenderUI:function(editor){
-
+    S.augment(CheckboxSourceAreaPlugin, {
+        pluginRenderUI: function (editor) {
             var c = new CheckboxSourceArea(editor);
             editor.on("destroy", function () {
                 c.destroy();
@@ -67,5 +67,5 @@ KISSY.add("editor/plugin/checkbox-source-area", function (S, Editor) {
 
     return CheckboxSourceAreaPlugin;
 }, {
-    requires:["editor"]
+    requires: ["editor"]
 });
