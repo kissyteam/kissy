@@ -26,17 +26,17 @@
 
             var ok = 0;
 
-            S.use("dom,ajax", function (S, Node) {
+            S.use("dom,io", function (S, Node) {
                 ok++;
             });
 
-            S.use("dom,ajax", function (S, Node) {
+            S.use("dom,io", function (S, Node) {
                 ok++;
             });
 
             waitsFor(function () {
                 return ok == 2;
-            }, "dom,ajax never loaded");
+            }, "dom,io never loaded");
         });
 
         it("load core when use dom", function () {

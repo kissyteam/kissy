@@ -66,6 +66,14 @@
                 );
         },
 
+        getPackageUri:function(){
+            var self=this;
+            if(self.packageUri){
+                return self.packageUri;
+            }
+            return self.packageUri=new S.Uri(this.getPrefixUriForCombo());
+        },
+
         /**
          * Get package baseUri
          * @return {KISSY.Uri}
@@ -104,6 +112,14 @@
          */
         isCombine: function () {
             return forwardSystemPackage(this, 'combine');
+        },
+
+        /**
+         * Get package group (for combo).
+         * @returns {String}
+         */
+        getGroup: function () {
+            return forwardSystemPackage(this, 'group');
         }
     });
 

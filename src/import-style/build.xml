@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<project name="import-style.build" default="build" basedir=".">
+    <property name="component.name" value="import-style"/>
+
+    <import file="../../tools/build-xml/common.xml"/>
+</project>
