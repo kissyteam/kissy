@@ -11,19 +11,18 @@ KISSY.add('anim/timer/manager', function (S, undefined) {
     // then in background tab interval is changed to 15
     var INTERVAL = 15;
     // https://gist.github.com/paulirish/1579671
-    var requestAnimationFrameFn = win['requestAnimationFrame'],
+    var requestAnimationFrameFn,
+        cancelAnimationFrameFn;
+    // http://bugs.jquery.com/ticket/9381
+    if (0) {
+        requestAnimationFrameFn = win['requestAnimationFrame'];
         cancelAnimationFrameFn = win['cancelAnimationFrame'];
-    if (!requestAnimationFrameFn) {
         var vendors = ['ms', 'moz', 'webkit', 'o'];
         for (var x = 0; x < vendors.length && !requestAnimationFrameFn; ++x) {
             requestAnimationFrameFn = win[vendors[x] + 'RequestAnimationFrame'];
             cancelAnimationFrameFn = win[vendors[x] + 'CancelAnimationFrame'] ||
                 win[vendors[x] + 'CancelRequestAnimationFrame'];
         }
-    }
-    // chrome is unstable....
-    if (requestAnimationFrameFn && !S.UA.chrome) {
-        S.log('anim use requestAnimationFrame');
     } else {
         requestAnimationFrameFn = function (fn) {
             return setTimeout(fn, INTERVAL);

@@ -73,9 +73,6 @@
 
                     <arg value="${component.name}=${component.src.dir}/${component.basename}"/>
 
-                    <arg value="-encodings"/>
-                    <arg value="${charset}"/>
-
                     <arg value="-require"/>
                     <arg value="${component.name}"/>
 
