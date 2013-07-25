@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 25 13:54
+build time: Jul 25 14:07
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130725135432' will replace with current timestamp when compressing.
+         * NOTICE: '20130725140717' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130725135432',
+        __BUILD_TIME: '20130725140717',
         /**
          * KISSY Environment.
          * @private
@@ -5763,7 +5763,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20130725135432'
+            tag: '20130725140717'
         }, getBaseInfo()));
     }
 
@@ -6024,19 +6024,20 @@ var KISSY = (function (undefined) {
  * @author yiminghe@gmail.com
  */
 (function (S) {
-    var parentUri = S.Config.baseUri.resolve('../').toString();
+    var https = S.startsWith(location.href, 'https');
+    var prefix = https ? 'https://s.tbcdn.cn/s/kissy/' : 'http://a.tbcdn.cn/s/kissy/';
     S.config({
         packages: {
             gallery: {
-                base: parentUri
+                base: prefix
             },
             mobile: {
-                base: parentUri
+                base: prefix
             }
         },
         modules: {
             core: {
-                alias: ['dom', 'event', 'io', 'anim', 'base', 'node', 'json', 'cookie']
+                alias: ['dom', 'event', 'io', 'anim', 'base', 'node', 'json', 'ua', 'cookie']
             }
         }
     });

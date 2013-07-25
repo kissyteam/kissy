@@ -4,19 +4,20 @@
  * @author yiminghe@gmail.com
  */
 (function (S) {
-    var parentUri = S.Config.baseUri.resolve('../').toString();
+    var https = S.startsWith(location.href, 'https');
+    var prefix = https ? 'https://s.tbcdn.cn/s/kissy/' : 'http://a.tbcdn.cn/s/kissy/';
     S.config({
         packages: {
             gallery: {
-                base: parentUri
+                base: prefix
             },
             mobile: {
-                base: parentUri
+                base: prefix
             }
         },
         modules: {
             core: {
-                alias: ['dom', 'event', 'io', 'anim', 'base', 'node', 'json', 'cookie']
+                alias: ['dom', 'event', 'io', 'anim', 'base', 'node', 'json', 'ua', 'cookie']
             }
         }
     });
