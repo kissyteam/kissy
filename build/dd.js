@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 24 14:19
+build time: Jul 25 22:17
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -19,7 +19,7 @@ build time: Jul 24 14:19
  * dd support for kissy, dd objects central management module
  * @author yiminghe@gmail.com
  */
-KISSY.add('dd/ddm', function (S, Node, Base) {
+KISSY.add('dd/ddm', function (S, Node, Base, undefined) {
 
     var UA = S.UA,
         $ = Node.all,
@@ -198,6 +198,10 @@ KISSY.add('dd/ddm', function (S, Node, Base) {
             dragArea = area(dragRegion);
 
         S.each(drops, function (drop) {
+            if (drop.get('disabled')) {
+                return undefined;
+            }
+
             var a,
                 node = drop['getNodeFromTarget'](ev,
                     // node
@@ -245,6 +249,7 @@ KISSY.add('dd/ddm', function (S, Node, Base) {
             }
             return undefined;
         });
+
         oldDrop = self.get('activeDrop');
         if (oldDrop && oldDrop != activeDrop) {
             oldDrop._handleOut(ev);
@@ -1832,6 +1837,19 @@ KISSY.add('dd/droppable', function (S, Node, RichBase, DDM) {
                 value: {
 
                 }
+            },
+
+            /**
+             * whether droppable is disabled
+             * @type {Boolean}
+             * @property disabled
+             * @member KISSY.DD.Droppable
+             */
+            /**
+             * @ignore
+             */
+            disabled:{
+
             }
 
         }

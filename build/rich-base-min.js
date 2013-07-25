@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 23 22:57
+build time: Jul 25 22:25
 */
 KISSY.add("rich-base",function(f,n){function p(b,a){return a.toUpperCase()}function l(){var b,a;n.apply(this,arguments);a=this.get("listeners");for(b in a)this.on(b,a[b]);this.callMethodByHierarchy("initializer","constructor");this.constructPlugins();this.callPluginsMethod("initializer");this.bindInternal();this.syncInternal()}function q(b){var a;b.target==this&&(a=this[m+b.type.slice(5).slice(0,-6)],a.call(this,b.newVal,b))}var j=f.ucfirst,m="_onSet",o=f.noop,r=/(?:^|-)([a-z])/ig;f.extend(l,n,{collectConstructorChains:function(){for(var b=
 [],a=this.constructor;a;)b.push(a),a=a.superclass&&a.superclass.constructor;return b},callMethodByHierarchy:function(b,a,c){for(var d=this.constructor,e=[],i,g,h,f,k,c=c||[];d;){k=[];if(f=d.__ks_exts)for(h=0;h<f.length;h++)if(i=f[h])"constructor"!=a&&(i=i.prototype.hasOwnProperty(a)?i.prototype[a]:null),i&&k.push(i);d.prototype.hasOwnProperty(b)&&(g=d.prototype[b])&&k.push(g);k.length&&e.push.apply(e,k.reverse());d=d.superclass&&d.superclass.constructor}for(h=e.length-1;0<=h;h--)e[h]&&e[h].apply(this,

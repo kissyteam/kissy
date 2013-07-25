@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 23 22:55
+build time: Jul 25 22:23
 */
 KISSY.add("filter-menu/render-tpl",'<div id="ks-filter-menu-input-wrap-{{id}}" class="{{getBaseCssClasses "input-wrap"}}"> <div id="ks-filter-menu-placeholder-{{id}}" class="{{getBaseCssClasses "placeholder"}}"> {{placeholder}} </div> <input id="ks-filter-menu-input-{{id}}" class="{{getBaseCssClasses "input"}}" autocomplete="off"/> </div> {{{include \'component/extension/content-render/content-tpl\'}}}');
 KISSY.add("filter-menu/render",function(h,i,g,e,a){return g.getDefaultRender().extend([a],{beforeCreateDom:function(a,b){h.mix(b,{placeholderEl:"#ks-filter-menu-placeholder-{id}",filterInputWrap:"#ks-filter-menu-input-wrap-{id}",filterInput:"#ks-filter-menu-input-{id}"})},getKeyEventTarget:function(){return this.control.get("filterInput")},_onSetPlaceholder:function(a){this.control.get("placeholderEl").html(a)}},{ATTRS:{contentTpl:{value:e}},HTML_PARSER:{placeholderEl:function(a){return a.one("."+

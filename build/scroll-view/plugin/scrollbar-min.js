@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 24 13:19
+build time: Jul 25 22:25
 */
 KISSY.add("scroll-view/plugin/scrollbar/scrollbar-tpl",'<div id="ks-scrollbar-arrow-up-{{id}}" class="{{getBaseCssClasses axis+"-arrow-up"}}"> <a href="javascript:void(\'up\')">up</a> </div> <div id="ks-scrollbar-arrow-down-{{id}}" class="{{getBaseCssClasses axis+"-arrow-down"}}"> <a href="javascript:void(\'down\')">down</a> </div> <div id="ks-scrollbar-track-{{id}}" class="{{getBaseCssClasses axis+"-track"}}"> <div id="ks-scrollbar-drag-{{id}}" class="{{getBaseCssClasses axis+"-drag"}}"> <div class="{{getBaseCssClasses axis+"-drag-top"}}"> </div> <div class="{{getBaseCssClasses axis+"-drag-center"}}"> </div> <div class="{{getBaseCssClasses axis+"-drag-bottom"}}"> </div> </div> </div>');
 KISSY.add("scroll-view/plugin/scrollbar/render",function(f,h,i){var g=f.Features.isTransformSupported(),d={beforeCreateDom:function(a,b){a.elCls.push(a.prefixCls+"scrollbar-"+a.axis);f.mix(b,{dragEl:"#ks-scrollbar-drag-{id}",downBtn:"#ks-scrollbar-arrow-down-{id}",upBtn:"#ks-scrollbar-arrow-up-{id}",trackEl:"#ks-scrollbar-track-{id}"})},createDom:function(){var a=this.control;a.$dragEl=a.get("dragEl");a.$trackEl=a.get("trackEl");a.$downBtn=a.get("downBtn");a.$upBtn=a.get("upBtn");a.dragEl=a.$dragEl[0];

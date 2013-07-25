@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 23 22:55
+build time: Jul 25 22:23
 */
 KISSY.add("event/dom/base/utils",function(d,f){var a="ksEventTargetId_"+d.now(),b=d.Env.host.document;return{simpleAdd:b&&b.addEventListener?function(a,b,f,d){a.addEventListener&&a.addEventListener(b,f,!!d)}:function(a,b,f){a.attachEvent&&a.attachEvent("on"+b,f)},simpleRemove:b&&b.removeEventListener?function(a,b,f,d){a.removeEventListener&&a.removeEventListener(b,f,!!d)}:function(a,b,f){a.detachEvent&&a.detachEvent("on"+b,f)},data:function(b,d){return f.data(b,a,d)},removeData:function(b){return f.removeData(b,
 a)}}},{requires:["dom"]});KISSY.add("event/dom/base/special",function(){return{}});

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 23 22:56
+build time: Jul 25 22:24
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -497,7 +497,7 @@ KISSY.add('node/attach', function (S, Dom, Event, NodeList, undefined) {
  * overrides methods in NodeList.prototype
  * @author yiminghe@gmail.com
  */
-KISSY.add('node/override', function (S, Dom,NodeList) {
+KISSY.add('node/override', function (S, Dom, NodeList) {
 
     var NLP = NodeList.prototype;
 
@@ -546,7 +546,7 @@ KISSY.add('node/override', function (S, Dom,NodeList) {
     })
 
 }, {
-    requires: ['dom', './base']
+    requires: ['dom', './base', './attach']
 });
 
 /*
