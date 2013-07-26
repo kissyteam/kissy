@@ -17,8 +17,7 @@
 
  - bin:           kissy-nodejs 命令行执行文件
  - build:         构建好的发布文件
- - docs/api:          API 文档
- - docs/release-note:          发布文档
+ - docs:          从源码目录内文件抽取的文档资源
  - src:           源码、测试等开发资源
  - tools:         打包压缩等自动化工具
 
