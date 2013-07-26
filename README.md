@@ -1,4 +1,4 @@
-# KISSY - An Enjoyable JavaScript Library [![Build Status](https://secure.travis-ci.org/kissyteam/kissy.png?branch=1.3.0)](https://travis-ci.org/kissyteam/kissy)
+# KISSY - An Enjoyable JavaScript Library [![Build Status](https://secure.travis-ci.org/kissyteam/kissy.png?branch=1.3.x)](https://travis-ci.org/kissyteam/kissy)
 
  * Source: <http://github.com/kissyteam/kissy>
  * Docs: <http://docs.kissyui.com/>
