@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.31
 MIT Licensed
-build time: Jul 24 16:34
+build time: Jul 29 13:11
 */
 KISSY.add("editor/plugin/color/color-picker/dialog",function(e,o,q){function g(a){if(e.isArray(a))return a;var b=RegExp;if(/^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i.test(a))return f([b.$1,b.$2,b.$3],function(a){return parseInt(a,16)});if(/^#([0-9a-f])([0-9a-f])([0-9a-f])$/i.test(a))return f([b.$1,b.$2,b.$3],function(a){return parseInt(a+a,16)});if(/^rgb\((.*),(.*),(.*)\)$/i.test(a))return f([b.$1,b.$2,b.$3],function(a){return 0<a.indexOf("%")?2.55*parseFloat(a,10):a|0})}function j(a){var a="0"+
 a,b=a.length;return a.slice(b-2,b)}function m(a){a=g(a);return"#"+j(a[0].toString(16))+j(a[1].toString(16))+j(a[2].toString(16))}function p(a){this.editor=a;this._init()}var f=e.map,r=e.DOM,n=function(){function a(a,i,c){for(var d=[],a=b(a),i=b(i),h=(i[0]-a[0])/c,k=(i[1]-a[1])/c,e=(i[2]-a[2])/c,l=0,g=a[0],j=a[1],a=a[2];l<c;l++)d[l]=[g,j,a],g+=h,j+=k,a+=e;d[l]=i;return f(d,function(a){return f(a,function(a){return Math.min(Math.max(0,Math.floor(a)),255)})})}function b(a){var b=g(a);if(void 0===b){c||

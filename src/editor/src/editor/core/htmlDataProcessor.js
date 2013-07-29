@@ -309,11 +309,11 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor, HtmlParser) {
 
             var protectedSourceMarker = '{ke_protected}';
 
-            var protectElementsRegex = /(?:<textarea[^>]*>[\s\S]*<\/textarea>)|(?:<style[^>]*>[\s\S]*<\/style>)|(?:<(:?link|meta|base)[^>]*>)/gi,
+            var protectElementsRegex = /(?:<textarea[^>]*>[\s\S]*<\/textarea>)|(?:<style[^>]*>[\s\S]*<\/style>)|(?:<script[^>]*>[\s\S]*<\/script>)|(?:<(:?link|meta|base)[^>]*>)/gi,
                 encodedElementsRegex = /<ke:encoded>([^<]*)<\/ke:encoded>/gi;
 
-            var protectElementNamesRegex = /(<\/?)((?:object|embed|param|html|body|head|title|script|noscript)[^>]*>)/gi,
-                unprotectElementNamesRegex = /(<\/?)ke:((?:object|embed|param|html|body|head|title|script|noscript)[^>]*>)/gi;
+            var protectElementNamesRegex = /(<\/?)((?:object|embed|param|html|body|head|title|noscript)[^>]*>)/gi,
+                unprotectElementNamesRegex = /(<\/?)ke:((?:object|embed|param|html|body|head|title|noscript)[^>]*>)/gi;
 
             var protectSelfClosingRegex = /<ke:(param|embed)([^>]*?)\/?>(?!\s*<\/ke:\1)/gi;
 
@@ -345,8 +345,8 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor, HtmlParser) {
                 dataFilter: dataFilter,
                 htmlFilter: htmlFilter,
                 // 编辑器 html 到外部 html
-                // fixForBody , <body>t</body> => <body><p>t</p></body>
-                toHTML: function (html) {
+                // fixForBody, <body>t</body> => <body><p>t</p></body>
+                toHtml: function (html) {
                     if (UA.webkit) {
                         // remove filling char for webkit
                         html = html.replace(/\u200b/g, '');
@@ -369,6 +369,8 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor, HtmlParser) {
                     // Protect elements than can't be set inside a DIV. E.g. IE removes
                     // style tags from innerHTML. (#3710)
                     // and protect textarea, in case textarea has un-encoded html
+                    // protect script too, in case script has un-encoded html
+                    // https://github.com/kissyteam/kissy/issues/420
                     html = protectElements(html);
 
                     html = protectAttributes(html);
@@ -413,7 +415,7 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor, HtmlParser) {
                     var writer = new HtmlParser.MinifyWriter(),
                         n = new HtmlParser.Parser(html).parse();
                     n.writeHtml(writer, htmlFilter);
-                    return writer.getHTML();
+                    return writer.getHtml();
                 }
             };
         }
