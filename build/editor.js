@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 29 12:59
+build time: Jul 29 17:18
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -7416,7 +7416,7 @@ KISSY.add("editor/htmlDataProcessor", function (S, Editor, HtmlParser) {
                 htmlFilter: htmlFilter,
                 // 编辑器 html 到外部 html
                 // fixForBody, <body>t</body> => <body><p>t</p></body>
-                toHTML: function (html) {
+                toHtml: function (html) {
                     if (UA.webkit) {
                         // remove filling char for webkit
                         html = html.replace(/\u200b/g, '');
@@ -8636,7 +8636,7 @@ KISSY.add('editor', function (S, Node, iframeContentTpl, Editor, Utils, focusMan
             }
             //如果不需要要格式化，例如提交数据给服务器
             if (format) {
-                html = htmlDataProcessor.toHTML(html);
+                html = htmlDataProcessor.toHtml(html);
             } else {
                 html = htmlDataProcessor.toServer(html);
             }

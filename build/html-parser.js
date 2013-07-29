@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 25 22:24
+build time: Jul 29 17:17
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -562,7 +562,7 @@ KISSY.add("html-parser/nodes/node", function (S) {
             this.endLine = lineCount(this.page.getText(0, endPosition));
         }
         if (S.Config.debug) {
-            this.toHTMLContent = this.toHTML();
+            this.toHTMLContent = this.toHtml();
         }
     }
 
@@ -570,7 +570,7 @@ KISSY.add("html-parser/nodes/node", function (S) {
 
         constructor: Node,
 
-        toHTML: function () {
+        toHtml: function () {
             if (this.page && this.page.getText) {
                 return this.page.getText(this.startPosition, this.endPosition);
             }
@@ -584,7 +584,7 @@ KISSY.add("html-parser/nodes/node", function (S) {
                 " : " + self.endPosition +
                 "|" + self.endLine +
                 " ]\n");
-            ret.push(self.toHTML());
+            ret.push(self.toHtml());
             return ret.join("");
         }
     };
@@ -603,7 +603,7 @@ KISSY.add("html-parser/nodes/text", function (S, Node) {
             Text.superclass.constructor.apply(this, [null, -1, -1]);
         } else {
             Text.superclass.constructor.apply(this, arguments);
-            this.nodeValue = this.toHTML();
+            this.nodeValue = this.toHtml();
         }
         this.nodeType = 3;
         this.nodeName = "#text";
@@ -619,14 +619,14 @@ KISSY.add("html-parser/nodes/text", function (S, Node) {
                         return;
                     }
                 }
-                writer.text(this.toHTML());
+                writer.text(this.toHtml());
             }
         },
-        toHTML:function () {
+        toHtml:function () {
             if (this.nodeValue) {
                 return this.nodeValue;
             } else {
-                return Text.superclass.toHTML.apply(this, arguments);
+                return Text.superclass.toHtml.apply(this, arguments);
             }
         }
     });
@@ -657,7 +657,7 @@ KISSY.add("html-parser/nodes/cdata", function (S, Text) {
                         return;
                     }
                 }
-                writer.cdata(this.toHTML());
+                writer.cdata(this.toHtml());
             }
         }
     });
@@ -987,7 +987,7 @@ KISSY.add("html-parser/nodes/tag", function (S, Node, Attribute, Dtd) {
 
             // special treat for doctype
             if (tagName == "!doctype") {
-                writer.append(this.toHTML() + "\n");
+                writer.append(this.toHtml() + "\n");
                 return;
             }
 
@@ -1110,14 +1110,14 @@ KISSY.add("html-parser/nodes/comment", function (S, Text) {
                         return;
                     }
                 }
-                writer.comment(this.toHTML());
+                writer.comment(this.toHtml());
             }
         },
-        toHTML:function () {
+        toHtml:function () {
             if (this.nodeValue) {
                 return this.nodeValue;
             } else {
-                var value = Text.superclass.toHTML.apply(this, arguments);
+                var value = Text.superclass.toHtml.apply(this, arguments);
                 // <!-- -->
                 return value.substring(4, value.length - 3);
             }
@@ -2055,7 +2055,7 @@ KISSY.add("html-parser/scanners/tag-scanner", function (S, dtd, Tag, SpecialScan
                         if (childNodes[i].tagName == currentChildName) {
                             pTag.appendChild(childNodes[i]);
                         } else if (childNodes[i].nodeType == 3 &&
-                            !S.trim(childNodes[i].toHTML())) {
+                            !S.trim(childNodes[i].toHtml())) {
                         }
                         // non-empty text leave it to outer loop
                         else if (childNodes[i].nodeType == 3) {
@@ -2550,13 +2550,13 @@ KISSY.add("html-parser/parser", function (S, dtd, Tag, Fragment, Cursor, Lexer, 
             if (childNodes[i].nodeName == "html") {
                 var html = childNodes[i];
                 for (var j = 0; j < i; j++) {
-                    if (childNodes[j].nodeType == 3 && !S.trim(childNodes[j].toHTML())) {
+                    if (childNodes[j].nodeType == 3 && !S.trim(childNodes[j].toHtml())) {
                         doc.removeChild(childNodes[j]);
                     }
                 }
                 while (html.firstChild &&
                     html.firstChild.nodeType == 3 &&
-                    !S.trim(html.firstChild.toHTML())) {
+                    !S.trim(html.firstChild.toHtml())) {
                     html.removeChild(html.firstChild);
                 }
                 break;
@@ -3138,7 +3138,7 @@ KISSY.add("html-parser/writer/filter", function (S) {
             if (el && ret && ret != el) {
                 // text filter can return string value directly
                 if (typeof ret == 'string') {
-                    if (el.toHTML() == ret) {
+                    if (el.toHtml() == ret) {
                         return el;
                     }
                     el.nodeValue = ret;
@@ -3217,11 +3217,11 @@ KISSY.add("html-parser/writer/filter", function (S) {
         },
 
         onText: function (el) {
-            return filterFn.call(this, this.text, [el.toHTML(), el], el);
+            return filterFn.call(this, this.text, [el.toHtml(), el], el);
         },
 
         onCData: function (el) {
-            return filterFn.call(this, this.cdata, [el.toHTML(), el], el);
+            return filterFn.call(this, this.cdata, [el.toHtml(), el], el);
         },
 
         onAttribute: function (attrNode, el) {
@@ -3229,7 +3229,7 @@ KISSY.add("html-parser/writer/filter", function (S) {
         },
 
         onComment: function (el) {
-            return filterFn.call(this, this.comment, [el.toHTML(), el], el);
+            return filterFn.call(this, this.comment, [el.toHtml(), el], el);
         },
 
         onNode: function (el) {
