@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.31
 MIT Licensed
-build time: Jun 21 12:59
+build time: Jul 29 17:16
 */
 /**
  * xtemplate base
@@ -88,7 +88,7 @@ KISSY.add('xtemplate/runtime/base', function (S) {
                     if (valid) {
                         // support property function return value as property value
                         if (typeof v == 'function') {
-                            v = v.call(scopes[sl - 1]);
+                            v = v.call(scopes[0]);
                         }
                         return [v];
                     }

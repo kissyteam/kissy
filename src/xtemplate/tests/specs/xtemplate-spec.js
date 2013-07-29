@@ -875,6 +875,21 @@ KISSY.use('xtemplate', function (S, XTemplate) {
                     expect(render).toBe('01');
                 });
 
+                it('support function as property value with right context', function () {
+                    var tpl = '{{#list}}{{fun}}{{/list}}';
+
+                    var data = {
+                        list: [1, 2, 3],
+                        'fun': function () {
+                            return this
+                        }
+                    };
+
+                    var render = new XTemplate(tpl).render(data);
+
+                    expect(render).toBe('123');
+                });
+
                 // no no
 //                it('support . as array element', function () {
 //                    var tpl = '{{#data}}{{.}}{{/data}}';
