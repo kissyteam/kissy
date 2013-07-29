@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 25 22:26
+build time: Jul 29 17:14
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -175,7 +175,7 @@ KISSY.add('xtemplate/runtime', function (S, commands) {
                     if (valid) {
                         // support property function return value as property value
                         if (typeof v == 'function') {
-                            v = v.call(scopes[sl - 1]);
+                            v = v.call(scopes[0]);
                         }
                         return [v];
                     }

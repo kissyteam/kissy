@@ -170,10 +170,12 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
 
             describe('each', function () {
 
-                it('support nest array',function(){
+                it('support nest array', function () {
                     var tpl = '{{#each data}}{{this.0}}{{this.1}}{{.}}{{/each}}';
                     var data = {
-                        data: [[1,2]]
+                        data: [
+                            [1, 2]
+                        ]
                     };
                     var render = new XTemplate(tpl).render(data);
                     expect(render).toBe('121,2');
@@ -908,11 +910,11 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
                         })).toBe('10');
 
                     expect(new XTemplate(tpl).render({
-                            x: 21,
-                            q: {
-                                x: 2
-                            }
-                        })).toBe('01');
+                        x: 21,
+                        q: {
+                            x: 2
+                        }
+                    })).toBe('01');
                 });
 
             });
@@ -1083,6 +1085,21 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
                     var render = new XTemplate(tpl).render(data);
 
                     expect(render).toBe('01');
+                });
+
+                it('support function as property value with right context', function () {
+                    var tpl = '{{#list}}{{fun}}{{/list}}';
+
+                    var data = {
+                        list: [1, 2, 3],
+                        'fun': function () {
+                            return this
+                        }
+                    };
+
+                    var render = new XTemplate(tpl).render(data);
+
+                    expect(render).toBe('123');
                 });
 
                 // no no

@@ -37,7 +37,7 @@ KISSY.add('xtemplate/runtime', function (S, commands) {
                     if (valid) {
                         // support property function return value as property value
                         if (typeof v == 'function') {
-                            v = v.call(scopes[sl - 1]);
+                            v = v.call(scopes[0]);
                         }
                         return [v];
                     }
