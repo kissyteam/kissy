@@ -16,12 +16,12 @@ KISSY.add(function(S, HtmlParser) {
             expect(nodes[0].attributes.length).toBe(1);
             expect(nodes[0].attributes[0].name).toBe("id");
             expect(nodes[0].attributes[0].value).toBe("z");
-            expect(nodes[0].toHTML()).toBe("<div id='z'>");
+            expect(nodes[0].toHtml()).toBe("<div id='z'>");
             expect(nodes[1].nodeType).toBe(3);
-            expect(nodes[1].toHTML()).toBe("<");
+            expect(nodes[1].toHtml()).toBe("<");
             expect(nodes[2].nodeType).toBe(1);
             expect(nodes[2].nodeName).toBe("a");
-            expect(nodes[2].toHTML()).toBe("<a>");
+            expect(nodes[2].toHtml()).toBe("<a>");
         });
 
         it("works for isSelfClosed", function() {

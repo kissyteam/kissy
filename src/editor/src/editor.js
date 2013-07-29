@@ -301,7 +301,7 @@ KISSY.add('editor', function (S, Node, iframeContentTpl, Editor, Utils, focusMan
             }
             //如果不需要要格式化，例如提交数据给服务器
             if (format) {
-                html = htmlDataProcessor.toHTML(html);
+                html = htmlDataProcessor.toHtml(html);
             } else {
                 html = htmlDataProcessor.toServer(html);
             }

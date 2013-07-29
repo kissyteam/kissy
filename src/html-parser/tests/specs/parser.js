@@ -21,11 +21,11 @@ KISSY.add(function (S, HtmlParser) {
 
             expect(childNode1[0].nodeName).toBe("span");
 
-            expect(childNode1[0].childNodes[0].toHTML()).toBe("1");
+            expect(childNode1[0].childNodes[0].toHtml()).toBe("1");
 
             expect(childNode1[1].nodeName).toBe("a");
 
-            expect(childNode1[1].childNodes[0].toHTML()).toBe("http://www.taobao.com");
+            expect(childNode1[1].childNodes[0].toHtml()).toBe("http://www.taobao.com");
         });
 
         it("works for none-valid html", function () {
@@ -46,11 +46,11 @@ KISSY.add(function (S, HtmlParser) {
 
             var childnode2 = childNode1[0].childNodes;
 
-            expect(childnode2[0].toHTML()).toBe("1");
+            expect(childnode2[0].toHtml()).toBe("1");
 
             expect(childnode2[1].nodeName).toBe("a");
 
-            expect(childnode2[1].childNodes[0].toHTML()).toBe("http://www.taobao.com");
+            expect(childnode2[1].childNodes[0].toHtml()).toBe("http://www.taobao.com");
         });
 
         it('works for textarea',function(){
@@ -84,7 +84,7 @@ KISSY.add(function (S, HtmlParser) {
 
             expect(script.childNodes.length).toBe(1);
 
-            expect(script.childNodes[0].toHTML()).toBe("var x='<a>b</a>';");
+            expect(script.childNodes[0].toHtml()).toBe("var x='<a>b</a>';");
 
         });
 
@@ -107,7 +107,7 @@ KISSY.add(function (S, HtmlParser) {
 
             expect(script.childNodes.length).toBe(1);
 
-            expect(script.childNodes[0].toHTML()).toBe("var x='<a>b</a>';</a>test");
+            expect(script.childNodes[0].toHtml()).toBe("var x='<a>b</a>';</a>test");
 
         });
 
@@ -120,7 +120,7 @@ KISSY.add(function (S, HtmlParser) {
             var nodes = parser.parse().childNodes;
             expect(nodes.length).toBe(1);
             expect(nodes[0].nodeName).toBe("a");
-            expect(nodes[0].childNodes[0].toHTML()).toBe("我");
+            expect(nodes[0].childNodes[0].toHtml()).toBe("我");
         });
 
 

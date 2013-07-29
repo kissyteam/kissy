@@ -10,7 +10,7 @@ KISSY.add("html-parser/nodes/text", function (S, Node) {
             Text.superclass.constructor.apply(this, [null, -1, -1]);
         } else {
             Text.superclass.constructor.apply(this, arguments);
-            this.nodeValue = this.toHTML();
+            this.nodeValue = this.toHtml();
         }
         this.nodeType = 3;
         this.nodeName = "#text";
@@ -26,14 +26,14 @@ KISSY.add("html-parser/nodes/text", function (S, Node) {
                         return;
                     }
                 }
-                writer.text(this.toHTML());
+                writer.text(this.toHtml());
             }
         },
-        toHTML:function () {
+        toHtml:function () {
             if (this.nodeValue) {
                 return this.nodeValue;
             } else {
-                return Text.superclass.toHTML.apply(this, arguments);
+                return Text.superclass.toHtml.apply(this, arguments);
             }
         }
     });

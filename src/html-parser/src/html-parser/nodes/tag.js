@@ -245,7 +245,7 @@ KISSY.add("html-parser/nodes/tag", function (S, Node, Attribute, Dtd) {
 
             // special treat for doctype
             if (tagName == "!doctype") {
-                writer.append(this.toHTML() + "\n");
+                writer.append(this.toHtml() + "\n");
                 return;
             }
 

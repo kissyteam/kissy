@@ -20,7 +20,7 @@ KISSY.add("html-parser/nodes/cdata", function (S, Text) {
                         return;
                     }
                 }
-                writer.cdata(this.toHTML());
+                writer.cdata(this.toHtml());
             }
         }
     });

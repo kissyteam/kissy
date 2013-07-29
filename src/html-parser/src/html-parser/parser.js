@@ -177,13 +177,13 @@ KISSY.add("html-parser/parser", function (S, dtd, Tag, Fragment, Cursor, Lexer, 
             if (childNodes[i].nodeName == "html") {
                 var html = childNodes[i];
                 for (var j = 0; j < i; j++) {
-                    if (childNodes[j].nodeType == 3 && !S.trim(childNodes[j].toHTML())) {
+                    if (childNodes[j].nodeType == 3 && !S.trim(childNodes[j].toHtml())) {
                         doc.removeChild(childNodes[j]);
                     }
                 }
                 while (html.firstChild &&
                     html.firstChild.nodeType == 3 &&
-                    !S.trim(html.firstChild.toHTML())) {
+                    !S.trim(html.firstChild.toHtml())) {
                     html.removeChild(html.firstChild);
                 }
                 break;

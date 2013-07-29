@@ -1129,7 +1129,7 @@ KISSY.add("editor/plugin/word-filter", function (S, HtmlParser) {
                         var img = new HtmlParser.Parser(imageInfo[0]).parse().childNodes[ 0 ],
                             previousComment = node.previousSibling,
                         // Try to dig the real image link from vml markup from previous comment text.
-                            imgSrcInfo = previousComment && previousComment.toHTML().match(/<v:imagedata[^>]*o:href=['"](.*?)['"]/),
+                            imgSrcInfo = previousComment && previousComment.toHtml().match(/<v:imagedata[^>]*o:href=['"](.*?)['"]/),
                             imgSrc = imgSrcInfo && imgSrcInfo[ 1 ];
 
                         // Is there a real 'src' url to be used?

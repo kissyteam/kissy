@@ -25,7 +25,7 @@ KISSY.add("html-parser/nodes/node", function (S) {
             this.endLine = lineCount(this.page.getText(0, endPosition));
         }
         if (S.Config.debug) {
-            this.toHTMLContent = this.toHTML();
+            this.toHTMLContent = this.toHtml();
         }
     }
 
@@ -33,7 +33,7 @@ KISSY.add("html-parser/nodes/node", function (S) {
 
         constructor: Node,
 
-        toHTML: function () {
+        toHtml: function () {
             if (this.page && this.page.getText) {
                 return this.page.getText(this.startPosition, this.endPosition);
             }
@@ -47,7 +47,7 @@ KISSY.add("html-parser/nodes/node", function (S) {
                 " : " + self.endPosition +
                 "|" + self.endLine +
                 " ]\n");
-            ret.push(self.toHTML());
+            ret.push(self.toHtml());
             return ret.join("");
         }
     };

@@ -346,7 +346,7 @@ KISSY.add("editor/htmlDataProcessor", function (S, Editor, HtmlParser) {
                 htmlFilter: htmlFilter,
                 // 编辑器 html 到外部 html
                 // fixForBody, <body>t</body> => <body><p>t</p></body>
-                toHTML: function (html) {
+                toHtml: function (html) {
                     if (UA.webkit) {
                         // remove filling char for webkit
                         html = html.replace(/\u200b/g, '');
