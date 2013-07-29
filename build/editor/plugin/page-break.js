@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 25 22:21
+build time: Jul 29 12:59
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -22,13 +22,10 @@ KISSY.add("editor/plugin/page-break", function (S, Editor, fakeObjects) {
             '<span style="DISPLAY:none">&nbsp;</span>' +
             '</div>';
 
-    function pageBreak() {
-
-    }
+    function pageBreak() {}
 
     S.augment(pageBreak, {
         pluginRenderUI:function (editor) {
-
             fakeObjects.init(editor);
 
             var dataProcessor = editor.htmlDataProcessor,
@@ -58,6 +55,7 @@ KISSY.add("editor/plugin/page-break", function (S, Editor, fakeObjects) {
                             ( /display\s*:\s*none/i ).test(childStyle)) {
                             return dataProcessor.createFakeParserElement(element, CLS, TYPE);
                         }
+                        return undefined;
                     }
                 }
             });
@@ -66,16 +64,18 @@ KISSY.add("editor/plugin/page-break", function (S, Editor, fakeObjects) {
                 tooltip:"分页",
                 listeners:{
                     click:function () {
-
-                        var real = new Node(PAGE_BREAK_MARKUP, null, editor.get("document")[0]),
-                            substitute = editor.createFakeElement(real, CLS, TYPE,
+                        var real = new Node(PAGE_BREAK_MARKUP, null,
+                                editor.get("document")[0]),
+                            substitute = editor.createFakeElement(real, CLS,
+                                TYPE,
                                 //不可缩放，也不用
                                 false,
                                 PAGE_BREAK_MARKUP);
 
                         editor.focus();
 
-                        var sel = editor.getSelection(), range = sel && sel.getRanges()[0];
+                        var sel = editor.getSelection(),
+                            range = sel && sel.getRanges()[0];
 
                         if (!range) {
                             return;
