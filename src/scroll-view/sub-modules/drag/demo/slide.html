@@ -1,0 +1,142 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport"
+          content="width=device-width,
+           initial-scale=1.0,
+          maximum-scale=1.0,
+           minimum-scale=1.0,
+           user-scalable=no">
+    <link rel="stylesheet" href="/kissy/src/css/assets/dpl/base.css"/>
+    <link rel="stylesheet" href="/kissy/src/scroll-view/assets/dpl.css"/>
+    <style>
+        #demo2 {
+            width: 470px;
+            height: 150px;
+            border: 1px solid #B6D1E6;
+            overflow: hidden;
+        }
+
+        #demo2 .ks-scroll-view-content {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            width: 2350px;
+        }
+
+        #demo2 .my-slide-nav {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            z-index: 99;
+        }
+
+        #demo2 .my-slide-nav li {
+            float: left;
+            width: 16px;
+            height: 16px;
+            line-height: 16px;
+            margin-left: 3px;
+            background-color: #FCF2CF;
+            border: 1px solid #F47500;
+            color: #D94B01;
+            text-align: center;
+            cursor: pointer;
+
+        }
+
+        #demo2 .my-slide-nav li.ks-active {
+            width: 18px;
+            height: 18px;
+            line-height: 18px;
+            margin-top: -1px;
+            color: #FFF;
+            background-color: #FFB442;
+            font-weight: bold;
+        }
+
+        #demo2 .ks-scroll-view-content li {
+            height: 150px;
+            width: 470px;
+            overflow: hidden;
+            float: left;
+            margin: 0;
+            padding: 0;
+        }
+
+        .ks-scroll-view-slide-nav {
+            position: absolute;
+            right: 9px;
+            bottom: 10px;
+            z-index: 1;
+            padding-left: 2px;
+        }
+
+        .ks-scroll-view-slide-trigger {
+            color: #f60;
+            cursor: pointer;
+            width: 18px;
+            height: 18px;
+            background: #fff;
+            float: left;
+            font-size: 13px;
+            line-height: 18px;
+            overflow: visible;
+            text-align: center;
+            opacity: .7;
+            filter: alpha(opacity=70);
+            border: 1px solid #d8d8d8;
+            margin-left: -1px;
+        }
+
+        .ks-scroll-view-slide-trigger-active {
+            background: #f60;
+            color: #fff;
+            font-weight: 700;
+            opacity: 1;
+            filter: alpha(opacity=100);
+            z-index: 2;
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+<div id="demo2" class="ks-scroll-view">
+    <ol class="ks-scroll-view-content">
+        <li><a target="_blank">
+            <img alt="" src="http://img05.taobaocdn.com/tps/i5/T1HllqXjXpXXXXXXXX-470-150.jpg"/></a></li>
+        <li class="hidden"><a target="_blank">
+            <img alt="" width="470" height="150" border="0"
+                 src="http://img.alimama.cn/bcrm/adboard/picture/2009-12-24/091224170529.gif"/></a></li>
+        <li class="hidden"><a target="_blank">
+            <img alt="" width="470" height="150" border="0"
+                 src="http://img.alimama.cn/bcrm/adboard/picture/2009-12-29/091229160359.jpg"/></a></li>
+        <li class="hidden"><a target="_blank">
+            <img alt="" src="http://img01.taobaocdn.com/tps/i1/T1qS0qXhBhXXXXXXXX-470-150.jpg"/></a></li>
+        <li class="hidden"><a target="_blank">
+            <img alt="" src="http://img03.taobaocdn.com/tps/i3/T1g25rXaV6XXXXXXXX-490-170.png"/></a></li>
+    </ol>
+</div>
+<script src="/kissy/build/seed.js"></script>
+<script src="/kissy/src/package.js"></script>
+<script>
+    KISSY.config('packages', {
+        slide: {
+            base: './'
+        }
+    });
+    KISSY.use('slide', function (S, Slide) {
+        var slide = new Slide({
+            srcNode: '#demo2',
+            hasTrigger: true,
+            direction: 'y'
+        }).render();
+        slide.triggers.each(function (t, i) {
+            t.html(i + 1);
+        });
+        window.slide = slide;
+    });
+</script>
+</body>
+</html>

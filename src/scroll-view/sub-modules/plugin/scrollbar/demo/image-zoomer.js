@@ -1,4 +1,4 @@
-KISSY.add('touch/image-zoomer', function (S, Node, ScrollView, ScrollbarPlugin) {
+KISSY.add(function (S, Node, ScrollView, ScrollbarPlugin) {
     var $ = Node.all;
 
     var docElement = $(document.documentElement);

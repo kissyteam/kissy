@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 25 22:25
+build time: Jul 30 19:23
 */
 KISSY.add("scroll-view/plugin/pull-to-refresh",function(d,f){function e(){e.superclass.constructor.apply(this,arguments)}var g=d.substitute,h=d.Features.getTransformProperty();d.extend(e,f,{pluginId:this.getName(),_onSetState:function(a){var a=a.newVal,b=this.scrollView.get("prefixCls"),c=this.$el;c.attr("class",b+"scroll-view-pull-to-refresh "+b+"scroll-view-"+a);this.labelEl.html(this.get(a+"Html"));this.elHeight=c.height()},_onScrollMove:function(){var a=this.scrollView.get("scrollTop");-a>this.elHeight?
 this.set("state","releasing"):0>a&&this.set("state","pulling")},_onDragEnd:function(){var a=this,b=a.scrollView;if(-b.get("scrollTop")>a.elHeight){b.minScroll.top=-a.elHeight;var c=a.get("loadFn");a.set("state","loading");var d=function(){b.scrollTo({top:-a.elHeight});b.scrollTo({top:b.minScroll.top},{duration:b.get("snapDuration"),easing:b.get("snapEasing")});a.set("state","pulling")};c?c.call(a,d):d.call(a)}},_onSetScrollTop:function(a){a=a.newVal;0>a&&(this.el.style[h]="translate3d(0,"+-a+"px,0)")},

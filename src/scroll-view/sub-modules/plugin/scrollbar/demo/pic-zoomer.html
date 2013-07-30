@@ -74,8 +74,12 @@
     // 本 demo 会在 ie10 模拟 ie7 下白屏，原因不明，请设置
     // <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     var bigImg = 'http://img02.taobaocdn.com/bao/uploaded/i2/16818024426638425/T1A2tmFgdeXXXXXXXX_!!0-item_pic.jpg';
-
-    KISSY.use('node,touch/image-zoomer', function (S, Node, imageZoomer) {
+    KISSY.config('packages', {
+        'image-zoomer': {
+            base: './'
+        }
+    });
+    KISSY.use('node,image-zoomer', function (S, Node, imageZoomer) {
         var $ = Node.all;
         $('#img').on(Node.Gesture.tap, function () {
             imageZoomer.showImage({

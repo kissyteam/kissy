@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 25 22:25
+build time: Jul 30 19:23
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -242,14 +242,14 @@ KISSY.add('scroll-view/base', function (S, Node, Container, Render, undefined) {
             return ok;
         },
 
-        getScrollStep:function(){
-            var control=this;
-            if(control.scrollStep){
+        getScrollStep: function () {
+            var control = this;
+            if (control.scrollStep) {
                 return control.scrollStep;
             }
             var elDoc = $(el.ownerDocument);
-            var clientHeight=control.clientHeight;
-            var clientWidth=control.clientWidth;
+            var clientHeight = control.clientHeight;
+            var clientWidth = control.clientWidth;
             return control.scrollStep = {
                 top: Math.max(clientHeight * clientHeight * 0.7 / elDoc.height(), 20),
                 left: Math.max(clientWidth * clientWidth * 0.7 / elDoc.width(), 20)
@@ -338,7 +338,7 @@ KISSY.add('scroll-view/base', function (S, Node, Container, Render, undefined) {
             var self = this,
                 pageXy;
             if ((pageXy = self.pagesXY) && pageXy[index]) {
-                self.setInternal('pageIndex', index);
+                self.set('pageIndex', index);
                 self.scrollTo({left: pageXy[index].x, top: pageXy[index].y}, animCfg);
             }
         },

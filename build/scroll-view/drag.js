@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 25 22:25
+build time: Jul 30 19:23
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -51,6 +51,11 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, DD, Node) {
             eqWithLastPoint = e[pageXy] == lastPageXY[pageXy];
             direction = ( e[pageXy] - lastPageXY[pageXy]) > 0;
         }
+
+        if (!self.get('bounce')) {
+            scroll = Math.min(Math.max(scroll, minScroll[axis]), maxScroll[axis]);
+        }
+
         if (scroll < minScroll[axis]) {
             bound = minScroll[axis] - scroll;
             bound *= OUT_OF_BOUND_FACTOR;
@@ -457,6 +462,9 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, DD, Node) {
                 },
                 snapThreshold: {
                     value: 5
+                },
+                bounce: {
+                    value: true
                 },
                 bounceDuration: {
                     value: 0.4
