@@ -117,6 +117,7 @@
 
             var self = this,
                 runtime = self.runtime,
+                timeout = runtime.Config.timeout,
                 modName = mod.getName(),
                 charset = mod.getCharset(),
                 url = mod.getFullPath(),
@@ -134,6 +135,7 @@
                 attrs: ie ? {
                     'data-mod-name': modName
                 } : undefined,
+                timeout: timeout,
                 // syntaxError in all browser will trigger this
                 // same as #111 : https://github.com/kissyteam/kissy/issues/111
                 success: function () {

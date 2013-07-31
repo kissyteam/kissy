@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 31 16:58
+build time: Jul 31 18:03
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130731165820' will replace with current timestamp when compressing.
+         * NOTICE: '20130731180245' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130731165820',
+        __BUILD_TIME: '20130731180245',
         /**
          * KISSY Environment.
          * @private
@@ -4982,6 +4982,7 @@ var KISSY = (function (undefined) {
 
             var self = this,
                 runtime = self.runtime,
+                timeout = runtime.Config.timeout,
                 modName = mod.getName(),
                 charset = mod.getCharset(),
                 url = mod.getFullPath(),
@@ -4999,6 +5000,7 @@ var KISSY = (function (undefined) {
                 attrs: ie ? {
                     'data-mod-name': modName
                 } : undefined,
+                timeout: timeout,
                 // syntaxError in all browser will trigger this
                 // same as #111 : https://github.com/kissyteam/kissy/issues/111
                 success: function () {
@@ -5126,7 +5128,7 @@ var KISSY = (function (undefined) {
  * @author yiminghe@gmail.com
  */
 (function (S) {
-    function loadScripts(rss, callback, charset) {
+    function loadScripts(rss, callback, charset, timeout) {
         var count = rss && rss.length,
             errorList = [],
             successList = [];
@@ -5139,6 +5141,7 @@ var KISSY = (function (undefined) {
 
         S.each(rss, function (rs) {
             S.getScript(rs.fullpath, {
+                timeout: timeout,
                 success: function () {
                     successList.push(rs);
                     complete();
@@ -5230,6 +5233,7 @@ var KISSY = (function (undefined) {
             var self = this,
                 allModNames,
                 comboUrls,
+                timeout = S.Config.timeout,
                 runtime = self.runtime;
 
             allModNames = S.keys(self.calculate(normalizedModNames));
@@ -5264,7 +5268,7 @@ var KISSY = (function (undefined) {
                             mod.notifyAll();
                         });
                     });
-                }, cssOne.charset);
+                }, cssOne.charset, timeout);
             });
 
             // jss css download in parallel
@@ -5289,7 +5293,7 @@ var KISSY = (function (undefined) {
                             mod.notifyAll();
                         });
                     });
-                }, jsOne.charset);
+                }, jsOne.charset, timeout);
             });
         },
 
@@ -5774,7 +5778,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20130731165820'
+            tag: '20130731180245'
         }, getBaseInfo()));
     }
 
