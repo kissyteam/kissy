@@ -193,19 +193,23 @@
                 packageName,
                 path;
             if (!self.fullpathUri) {
-                packageInfo = self.getPackage();
-                packageBaseUri = packageInfo.getBaseUri();
-                path = self.getPath();
-                // #262
-                if (packageInfo.isIgnorePackageNameInUri() &&
-                    // native mod does not allow ignore package name
-                    (packageName = packageInfo.getName())) {
-                    path = Path.relative(packageName, path);
-                }
-                fullpathUri = packageBaseUri.resolve(path);
-                if (t = self.getTag()) {
-                    t += '.' + self.getType();
-                    fullpathUri.query.set('t', t);
+                if (self.fullpath) {
+                    fullpathUri = new S.Uri(self.fullpath);
+                } else {
+                    packageInfo = self.getPackage();
+                    packageBaseUri = packageInfo.getBaseUri();
+                    path = self.getPath();
+                    // #262
+                    if (packageInfo.isIgnorePackageNameInUri() &&
+                        // native mod does not allow ignore package name
+                        (packageName = packageInfo.getName())) {
+                        path = Path.relative(packageName, path);
+                    }
+                    fullpathUri = packageBaseUri.resolve(path);
+                    if (t = self.getTag()) {
+                        t += '.' + self.getType();
+                        fullpathUri.query.set('t', t);
+                    }
                 }
                 self.fullpathUri = fullpathUri;
             }

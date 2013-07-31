@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 31 16:42
+build time: Jul 31 16:58
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130731164239' will replace with current timestamp when compressing.
+         * NOTICE: '20130731165820' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130731164239',
+        __BUILD_TIME: '20130731165820',
         /**
          * KISSY Environment.
          * @private
@@ -4234,19 +4234,23 @@ var KISSY = (function (undefined) {
                 packageName,
                 path;
             if (!self.fullpathUri) {
-                packageInfo = self.getPackage();
-                packageBaseUri = packageInfo.getBaseUri();
-                path = self.getPath();
-                // #262
-                if (packageInfo.isIgnorePackageNameInUri() &&
-                    // native mod does not allow ignore package name
-                    (packageName = packageInfo.getName())) {
-                    path = Path.relative(packageName, path);
-                }
-                fullpathUri = packageBaseUri.resolve(path);
-                if (t = self.getTag()) {
-                    t += '.' + self.getType();
-                    fullpathUri.query.set('t', t);
+                if (self.fullpath) {
+                    fullpathUri = new S.Uri(self.fullpath);
+                } else {
+                    packageInfo = self.getPackage();
+                    packageBaseUri = packageInfo.getBaseUri();
+                    path = self.getPath();
+                    // #262
+                    if (packageInfo.isIgnorePackageNameInUri() &&
+                        // native mod does not allow ignore package name
+                        (packageName = packageInfo.getName())) {
+                        path = Path.relative(packageName, path);
+                    }
+                    fullpathUri = packageBaseUri.resolve(path);
+                    if (t = self.getTag()) {
+                        t += '.' + self.getType();
+                        fullpathUri.query.set('t', t);
+                    }
                 }
                 self.fullpathUri = fullpathUri;
             }
@@ -5770,7 +5774,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20130731164239'
+            tag: '20130731165820'
         }, getBaseInfo()));
     }
 
