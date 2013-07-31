@@ -582,6 +582,10 @@ if (!loc.getQuery().has('build')) {
             "base": "/kissy/src/resizable/src/resizable",
             "ignorePackageNameInUri": 1
         },
+        "resizable/plugin/proxy": {
+            "base": "/kissy/src/resizable/sub-modules/plugin/proxy/src/proxy",
+            "ignorePackageNameInUri": 1
+        },
         "rich-base": {
             "base": "/kissy/src/rich-base/src/rich-base",
             "ignorePackageNameInUri": 1

@@ -1,59 +1,60 @@
 <!doctype html>
 <html>
 <head>
-<meta charset="utf-8"/>
+    <meta charset="utf-8"/>
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-touch-fullscreen" content="yes">
-<title>简单拖放委托实现</title>
-<style>
-    .container {
-        border: 1px solid red;
-        height: 450px;
-        padding: 10px;
-        position: relative;
-    }
+    <title>简单拖放委托实现</title>
+    <style>
+        .container {
+            border: 1px solid red;
+            height: 450px;
+            padding: 10px;
+            position: relative;
+        }
 
-    #todo {
-        zoom:1;
-        overflow: hidden;
-    }
+        #todo {
+            zoom: 1;
+            overflow: hidden;
+        }
 
-    .component {
-        margin: 50px 10px;
-        width: 100px;
-        height: 100px;
-        line-height: 100px;
-        border: 1px solid black;
-        float: left;
-        overflow: hidden;
-    }
+        .component {
+            margin: 50px 10px;
+            width: 100px;
+            height: 100px;
+            line-height: 100px;
+            border: 1px solid black;
+            float: left;
+            overflow: hidden;
+        }
 
-    .cheader {
-        border: 1px solid black;
-        height: 20px;
-        line-height: 20px;
-    }
+        .cheader {
+            border: 1px solid black;
+            height: 20px;
+            line-height: 20px;
+        }
 
-    #drop, #drop3 {
-        border: 1px solid green;
-        height: 170px;
-        line-height: 100px;
-    }
+        #drop, #drop3 {
+            border: 1px solid green;
+            height: 170px;
+            line-height: 100px;
+        }
 
-    .ks-dd-drag-over {
-        background: #a52a2a;
-    }
+        .ks-dd-drag-over {
+            background: #a52a2a;
+        }
 
-    .ks-dd-drop-over {
-        background: #fa8072;
-    }
-</style>
+        .ks-dd-drop-over {
+            background: #fa8072;
+        }
+    </style>
 </head>
 <body>
 
 <h2>简单拖放委托实现</h2>
+
 <div id="container3" class="container">
 
     <div id="todo">
@@ -80,60 +81,50 @@
 
     var S = KISSY;
 
-    KISSY.use("node,dd,dd/plugin/proxy", function (S, Node, DD,Proxy) {
-        var DDM = DD.DDM,
-                $ = Node.all,
+    KISSY.use("node,dd,dd/plugin/proxy", function (S, Node, DD, Proxy) {
+        var $ = Node.all,
                 DraggableDelegate = DD.DraggableDelegate,
-                Draggable = DD.Draggable,
                 Droppable = DD.Droppable;
 
-        /**
-         * 委托拖放
-         */
-        S.ready(function () {
-
-            var p = new Proxy({
-                /**
-                 * 如何产生替代节点
-                 * @param drag 当前拖对象
-                 */
-                node:function (drag) {
-                    var n = $(drag.get("dragNode").clone(true));
-                    n.attr("id", S.guid("ks-dd-proxy"));
-                    n.css("opacity", 0.2);
-                    return n;
-                },
-                //每次都生成新节点
-                destroyOnEnd:true,
-                moveOnEnd:0
-            });
-
-            var delegate = new DraggableDelegate({
-                container:"#todo",
-                move:1,
-                handlers:['.cheader'],
-                selector:'.component'
-            });
-
-            delegate.plug(p);
-
-            var drop = new Droppable({
-                node:"#drop3"
-            });
-
-            drop.on('drophit',function(e){
-                e.drag.get('dragNode').appendTo(e.drop.get('node'));
-            });
-
-            var c = 0;
-            $("#add_delegate").on('click', function () {
-                new Node('<div class="component"><div class="cheader">拖动头</div>delegate'
-                        + (++c) + '</div>')
-                        .prependTo("#todo");
-            });
+        var p = new Proxy({
+            /**
+             * 如何产生替代节点
+             * @param drag 当前拖对象
+             */
+            node: function (drag) {
+                var n = $(drag.get("dragNode").clone(true));
+                n.attr("id", S.guid("ks-dd-proxy"));
+                n.css("opacity", 0.2);
+                return n;
+            },
+            //每次都生成新节点
+            destroyOnEnd: true,
+            moveOnEnd: 0
         });
 
+        var delegate = new DraggableDelegate({
+            container: "#todo",
+            move: 1,
+            handlers: ['.cheader'],
+            selector: '.component'
+        });
 
+        delegate.plug(p);
+
+        var drop = new Droppable({
+            node: "#drop3"
+        });
+
+        drop.on('drophit', function (e) {
+            e.drag.get('dragNode').appendTo(e.drop.get('node'));
+        });
+
+        var c = 0;
+        $("#add_delegate").on('click', function () {
+            new Node('<div class="component"><div class="cheader">拖动头</div>delegate'
+                    + (++c) + '</div>')
+                    .prependTo("#todo");
+        });
     });
 
 

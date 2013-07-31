@@ -2,7 +2,7 @@
  * Resizable tc.
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, Resizable) {
+KISSY.add(function (S, Resizable, ResizableProxyPlugin) {
     // ie9 mousemove does not fire
     if (document.documentMode == 9) {
         return;
@@ -12,8 +12,7 @@ KISSY.add(function (S, Resizable) {
 
     var $ = S.all;
 
-    describe('preserveRatio works', function () {
-
+    describe('proxy works', function () {
         beforeEach(function () {
             this.addMatchers({
                 toBeAlmostEqual: function (expected) {
@@ -30,7 +29,6 @@ KISSY.add(function (S, Resizable) {
                     }
                     return true;
                 },
-
 
                 toBeEqual: function (expected) {
                     return Math.abs(parseInt(this.actual) - parseInt(expected)) < 5;
@@ -51,13 +49,24 @@ KISSY.add(function (S, Resizable) {
 
         var resizable = new Resizable({
             node: dom,
+            plugins: [ResizableProxyPlugin],
             preserveRatio: true,
-            handlers: ["b", "t", "r", "l"]
+            handlers: ["b", "t", "r", "l", "tr", "tl", "br", "bl"]
         });
 
         var lNode = dom.one('.ks-resizable-handler-l');
 
+        function getRegion(dom){
+            return {
+                width: dom.width(),
+                    height: dom.height(),
+                left: dom.offset().left,
+                top: dom.offset().top
+            };
+        }
+
         it('l resize works', function () {
+            var originRegion = getRegion(dom);
             jasmine.simulateForDrag(lNode[0], Gesture.start, {
                 clientX: 102,
                 clientY: 110
@@ -76,6 +85,13 @@ KISSY.add(function (S, Resizable) {
                     clientY: 110
                 });
             });
+            runs(function(){
+                expect(originRegion).toEqual(getRegion(dom));
+                expect(originRegion).not
+                    .toEqual(getRegion(resizable
+                        .getPlugin('resizable/plugin/proxy')
+                        .get('proxyNode')));
+            });
             waits(200);
             runs(function () {
                 jasmine.simulateForDrag(document, Gesture.end, {
@@ -85,10 +101,12 @@ KISSY.add(function (S, Resizable) {
             });
             waits(200);
             runs(function () {
-                expect(dom.width()).toBeEqual(120);
-                expect(dom.height()).toBeEqual(120);
-                expect(dom.offset().left).toBeEqual(80);
-                expect(dom.offset().top).toBeEqual(100);
+                expect(getRegion(dom)).toEqual({
+                    width:120,
+                    height:120,
+                    left:80,
+                    top:100
+                });
             });
         });
 
@@ -99,7 +117,6 @@ KISSY.add(function (S, Resizable) {
             });
         });
     });
-
-},{
-    requires:['resizable']
+}, {
+    requires: ['resizable', 'resizable/plugin/proxy']
 });

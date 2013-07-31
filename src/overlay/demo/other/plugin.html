@@ -11,12 +11,19 @@
     <script src="/kissy/src/package.js"></script>
     <script src="/kissy/build/css/dpl/base.css"></script>
     <style>
+        .ks-overlay {
+            overflow: hidden;
+        }
         .ks-overlay-proxy {
             border: 1px solid red;
             position: absolute;
             left: -9999px;
             top: -9999px;
             z-index: 10000;
+        }
+        .ks-resizable-proxy {
+            border: 1px dashed #426FD9;
+            position: absolute;
         }
     </style>
 </head>
@@ -55,9 +62,10 @@
                 KISSY.use("node,overlay," +
                         "component/plugin/drag," +
                         "component/plugin/resize," +
+                        "resizable/plugin/proxy," +
                         "dd/plugin/scroll," +
                         "dd/plugin/proxy",
-                        function (S, Node, O, DragPlugin, ResizePlugin, ScrollPlugin, ProxyPlugin) {
+                        function (S, Node, O, DragPlugin, ResizePlugin, ResizeProxyPlugin, ScrollPlugin, ProxyPlugin) {
                             var $ = Node.all,
                                     dialog = new O.Dialog({
                                         width: 400,
@@ -69,7 +77,11 @@
                                         },
                                         plugins: [
                                             new ResizePlugin({
-                                                handlers: ['t', 'l', 'r', 'b']
+                                                dragConfig:{
+                                                    shim:true
+                                                },
+                                                handlers: ['t', 'l', 'r', 'b'],
+                                                plugins: [ResizeProxyPlugin]
                                             }),
 
                                             new DragPlugin({

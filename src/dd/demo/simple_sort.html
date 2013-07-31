@@ -84,7 +84,6 @@
 <script src="/kissy/build/seed.js"></script>
 <script src="/kissy/src/package.js"></script>
 <script>
-
     var S = KISSY;
 
     KISSY.use("node,dd,dd/plugin/proxy", function (S, Node, DD, Proxy) {
@@ -96,90 +95,81 @@
         /**
          * 拖放排序
          */
-
-        S.ready(function () {
-
-            var p = new Proxy({
-                /**
-                 * 如何产生替代节点
-                 * @param drag 当前拖对象
-                 */
-                node: function (drag) {
-                    var n = $(drag.get("dragNode").clone(true));
-                    n.attr("id", S.guid("ks-dd-proxy"));
-                    n.css("opacity", 0.2);
-                    return n;
-                },
-                // dragNode do not move , just change position among dom tree
-                moveOnEnd: 0
-            });
-            var c11 = new Draggable({
-                node: "#c11",
-                move: 1,
-                //模式，
-                // intersect :区域相交就算enter
-                // strict : drag 区域完全在 drop 区域内才算
-                // point : 鼠标在 drop 区域内
-                //默认 point
-                mode: Draggable.INTERSECT,
-                handlers: ["#c11 .header"]
-            });
-            new Droppable({node: "#c11"});
-
-
-            var c31 = new Draggable({
-                node: "#c31",
-                move: 1,
-                handlers: [$("#c31 .header")]
-            });
-            new Droppable({node: "#c31"});
-
-            c31.plug(p);
-
-            var c21 = new Draggable({
-                node: "#c21",
-                move: 1,
-                mode: Draggable.INTERSECT,
-                handlers: [$("#c21 .header")]
-            });
-            new Droppable({node: "#c21"});
-
-
-            function onDropHit(ev) {
-                var drag = ev.drag,
-                        dragNode = drag.get('dragNode'),
-                        drop = ev.drop,
-                        dropNode = drop.get('node');
-                dragNode.css({
-                    position: "",
-                    left: "",
-                    top: ""
-                });
-                var tmp = $("<div>").insertBefore(dropNode),
-                        dropParent = dropNode[0].parentNode;
-                dragNode[0].parentNode.replaceChild(dropNode[0], dragNode[0]);
-                dropParent.replaceChild(dragNode[0], tmp[0]);
-            }
-
-            c21.on("dragdrophit", onDropHit);
-            c11.on("dragdrophit", onDropHit);
-            c31.on("dragdrophit", onDropHit);
-
-            DDM.on("dragdropmiss", function (ev) {
-                var drag = ev.drag;
-                drag.get("dragNode").css({
-                    position: "",
-                    left: "",
-                    top: ""
-                });
-            });
-
+        var p = new Proxy({
+            /**
+             * 如何产生替代节点
+             * @param drag 当前拖对象
+             */
+            node: function (drag) {
+                var n = $(drag.get("dragNode").clone(true));
+                n.attr("id", S.guid("ks-dd-proxy"));
+                n.css("opacity", 0.2);
+                return n;
+            },
+            // dragNode do not move , just change position among dom tree
+            moveOnEnd: 0
         });
+        var c11 = new Draggable({
+            node: "#c11",
+            move: 1,
+            //模式，
+            // intersect :区域相交就算enter
+            // strict : drag 区域完全在 drop 区域内才算
+            // point : 鼠标在 drop 区域内
+            //默认 point
+            mode: Draggable.INTERSECT,
+            handlers: ["#c11 .header"]
+        });
+        new Droppable({node: "#c11"});
 
 
+        var c31 = new Draggable({
+            node: "#c31",
+            move: 1,
+            handlers: [$("#c31 .header")]
+        });
+        new Droppable({node: "#c31"});
+
+        c31.plug(p);
+
+        var c21 = new Draggable({
+            node: "#c21",
+            move: 1,
+            mode: Draggable.INTERSECT,
+            handlers: [$("#c21 .header")]
+        });
+        new Droppable({node: "#c21"});
+
+
+        function onDropHit(ev) {
+            var drag = ev.drag,
+                    dragNode = drag.get('dragNode'),
+                    drop = ev.drop,
+                    dropNode = drop.get('node');
+            dragNode.css({
+                position: "",
+                left: "",
+                top: ""
+            });
+            var tmp = $("<div>").insertBefore(dropNode),
+                    dropParent = dropNode[0].parentNode;
+            dragNode[0].parentNode.replaceChild(dropNode[0], dragNode[0]);
+            dropParent.replaceChild(dragNode[0], tmp[0]);
+        }
+
+        c21.on("dragdrophit", onDropHit);
+        c11.on("dragdrophit", onDropHit);
+        c31.on("dragdrophit", onDropHit);
+
+        DDM.on("dragdropmiss", function (ev) {
+            var drag = ev.drag;
+            drag.get("dragNode").css({
+                position: "",
+                left: "",
+                top: ""
+            });
+        });
     });
-
-
 </script>
 </body>
 </html>

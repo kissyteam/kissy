@@ -1,6 +1,18 @@
-<project name="resizable.build" default="build" basedir=".">
+<project name="resizable.build" default="build-all" basedir=".">
     <property name="component.name" value="resizable"/>
     <property name="src.dir" location="./src/"/>
 
     <import file="../common.xml"/>
+
+    <target name="build-all">
+
+        <subant target="" failonerror="true" inheritall="false">
+            <fileset dir="./sub-modules" includes="**/build.xml"/>
+        </subant>
+
+        <subant target="build" failonerror="true"
+                buildpath="."
+                inheritall="false"/>
+
+    </target>
 </project>

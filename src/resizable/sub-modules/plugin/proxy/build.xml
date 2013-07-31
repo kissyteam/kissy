@@ -1,0 +1,6 @@
+<project name="resizable/plugin/proxy.build" default="build" basedir=".">
+    <property name="component.name" value="resizable/plugin/proxy"/>
+    <property name="src.dir" location="./src/"/>
+
+    <import file="../../../../common.xml"/>
+</project>
