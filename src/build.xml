@@ -46,28 +46,28 @@
         </ac:if>
 
         <exec executable="cmd" failonerror="true">
-            <arg line="/c git push ${git.origin} ${git.dev}:${git.dev}"/>
+            <arg line="/c git push ${git.origin} ${git.dev}:${git.dev} --force"/>
         </exec>
 
         <exec executable="cmd" failonerror="true">
-            <arg line="/c git push ${git.origin} ${git.dev}:${git.master}"/>
+            <arg line="/c git push ${git.origin} ${git.dev}:${git.master} --force"/>
         </exec>
 
         <exec executable="cmd" failonerror="true">
-            <arg line="/c git push ${git.origin} ${git.dev}:${git.gh-pages}"/>
+            <arg line="/c git push ${git.origin} ${git.dev}:${git.gh-pages} --force"/>
         </exec>
 
         <exec executable="cmd" failonerror="true">
-            <arg line="/c git push ${git.remote} ${git.dev}:${git.dev}"/>
+            <arg line="/c git push ${git.remote} ${git.dev}:${git.dev} --force"/>
         </exec>
 
         <!--push master to gh-pages also-->
         <exec executable="cmd" failonerror="true">
-            <arg line="/c git push ${git.remote} ${git.dev}:${git.master}"/>
+            <arg line="/c git push ${git.remote} ${git.dev}:${git.master} --force"/>
         </exec>
 
         <exec executable="cmd" failonerror="true">
-            <arg line="/c git push ${git.remote} ${git.dev}:${git.gh-pages}"/>
+            <arg line="/c git push ${git.remote} ${git.dev}:${git.gh-pages} --force"/>
         </exec>
     </target>
 
