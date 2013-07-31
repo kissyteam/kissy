@@ -1,5 +1,0 @@
-<project name="intl/date-time-format.build" default="build" basedir=".">
-    <property name="component.name" value="intl/date-time-format"/>
-
-    <import file="../../common.xml"/>
-</project>

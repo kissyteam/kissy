@@ -4,7 +4,6 @@
  * @author yiminghe@gmail.com
  */
 (function (S, undefined) {
-
     var Loader, Status, Utils, UA,
     // standard browser 如果 add 没有模块名，模块定义先暂存这里
         currentMod = undefined,
@@ -39,7 +38,6 @@
     }
 
     S.augment(SimpleLoader, {
-
         use: function (normalizedModNames) {
             var i,
                 l = normalizedModNames.length;
@@ -114,7 +112,6 @@
 
         // Load a single module.
         fetchModule: function (mod) {
-
             var self = this,
                 runtime = self.runtime,
                 timeout = runtime.Config.timeout,
@@ -186,9 +183,7 @@
                 S.log(msg, 'error');
                 mod.status = ERROR;
             }
-
         }
-
     });
 
 // ie 特有，找到当前正在交互的脚本，根据脚本名确定模块名
@@ -244,7 +239,6 @@
     };
 
     Loader.SimpleLoader = SimpleLoader;
-
 })(KISSY);
 
 /*

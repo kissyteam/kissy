@@ -986,7 +986,7 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
     return GregorianCalendar;
 
 }, {
-    requires: ['intl/date/zh-cn', './gregorian/utils', './gregorian/const']
+    requires: ['i18n!date', './gregorian/utils', './gregorian/const']
 });
 
 /*

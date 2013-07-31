@@ -1,20 +1,9 @@
-﻿/*
-Copyright 2013, KISSY UI Library v1.40dev
-MIT Licensed
-build time: Jul 25 22:24
-*/
-/*
- Combined processedModules by KISSY Module Compiler: 
-
- intl/date-time-format
-*/
-
 /**
  * DateTimeFormat for KISSY.
  * Inspired by DateTimeFormat from JDK.
  * @author yiminghe@gmail.com
  */
-KISSY.add('intl/date-time-format', function (S, GregorianCalendar, defaultLocale) {
+KISSY.add('date/format', function (S, GregorianCalendar, defaultLocale) {
     var MAX_VALUE = Number.MAX_VALUE;
 
     /*
@@ -601,7 +590,6 @@ KISSY.add('intl/date-time-format', function (S, GregorianCalendar, defaultLocale
 }, {
     requires: [
         'date/gregorian',
-        './date/zh-cn'
+        'i18n!date'
     ]
 });
-

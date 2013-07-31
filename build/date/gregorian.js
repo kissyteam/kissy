@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 25 23:02
+build time: Jul 31 21:09
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -1227,7 +1227,7 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
     return GregorianCalendar;
 
 }, {
-    requires: ['intl/date/zh-cn', './gregorian/utils', './gregorian/const']
+    requires: ['i18n!intl/date/zh-cn', './gregorian/utils', './gregorian/const']
 });
 
 /*

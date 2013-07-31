@@ -53,5 +53,5 @@ KISSY.add(function (S, DateTimeFormat, GregorianCalendar) {
     });
 
 }, {
-    requires: ['intl/date-time-format', 'date/gregorian']
+    requires: ['date/format', 'date/gregorian']
 });
