@@ -31,6 +31,18 @@ KISSY.add(function (S, Dom) {
             Dom.remove([foo, t]);
         });
 
+        // https://github.com/kissyteam/kissy/issues/422
+        it('append does not change value for select',function(){
+            var select=body.appendChild(Dom.create('<select>' +
+                '<option>1</option>' +
+                '<option>2</option>' +
+                '</select>'));
+            expect(select.selectedIndex).toBe(0);
+            select.appendChild(Dom.create('<option>3</option>'));
+            expect(select.selectedIndex).toBe(0);
+            Dom.remove(select);
+        });
+
         it("prepend should works", function () {
             var foo = body.appendChild(Dom.create("<div><div></div></div>"));
             var t = Dom.create('<p>prepend node</p>');
