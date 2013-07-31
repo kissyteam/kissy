@@ -186,6 +186,10 @@ tests.push('/kissy/src/tabs/tests/runner/test.jss');
 
 tests.push('/kissy/src/tabs/tests/runner/test.jss?build');
 
+tests.push('/kissy/src/tree/tests/runner/test.jss');
+
+tests.push('/kissy/src/tree/tests/runner/test.jss?build');
+
 tests.push('/kissy/src/xtemplate/tests/runner/test.jss');
 
 tests.push('/kissy/src/xtemplate/tests/runner/test.jss?build');
