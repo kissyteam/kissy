@@ -8,7 +8,7 @@ node_js:
   - 0.10
 
 before_script:
-  - node ./tools/test/server.js &
+  - npm start &
 
 script:
   - npm test

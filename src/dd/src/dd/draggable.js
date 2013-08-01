@@ -8,6 +8,7 @@ KISSY.add('dd/draggable', function (S, Node, RichBase, DDM) {
     var UA = S.UA,
         $ = Node.all,
         each = S.each,
+        Features = S.Features,
         ie = UA['ie'],
         NULL = null,
         PREFIX_CLS = DDM.PREFIX_CLS,
@@ -275,9 +276,12 @@ KISSY.add('dd/draggable', function (S, Node, RichBase, DDM) {
             }
 
             // in touch device
-            // prevent touchdown
+            // prevent touchdown will prevent native scroll
+            // need to prevent on move conditionally
             // will prevent text selection and link click
-            ev.preventDefault();
+            if (!Features.isTouchEventSupported()) {
+                ev.preventDefault();
+            }
 
             var mx = ev.pageX,
                 my = ev.pageY;
@@ -309,7 +313,6 @@ KISSY.add('dd/draggable', function (S, Node, RichBase, DDM) {
                     self._start(ev);
                 }, bufferTime * 1000);
             }
-
         },
 
         _clearBufferTimer: function () {
@@ -322,7 +325,6 @@ KISSY.add('dd/draggable', function (S, Node, RichBase, DDM) {
 
         _move: function (ev) {
             var self = this,
-                ret,
                 pageX = ev.pageX,
                 pageY = ev.pageY;
 
@@ -348,11 +350,7 @@ KISSY.add('dd/draggable', function (S, Node, RichBase, DDM) {
                 top: pageY
             };
 
-            ret = {
-                pageX: pageX,
-                pageY: pageY,
-                drag: self
-            };
+            ev.drag = self;
 
             var move = self._allowMove;
 
@@ -360,18 +358,19 @@ KISSY.add('dd/draggable', function (S, Node, RichBase, DDM) {
                 var diff = self.get('deltaPos'),
                     left = pageX - diff.left,
                     top = pageY - diff.top;
-                ret.left = left;
-                ret.top = top;
+                ev.left = left;
+                ev.top = top;
                 self.setInternal('actualPos', {
                     left: left,
                     top: top
                 });
-                self.fire('dragalign', ret);
+                self.fire('dragalign', ev);
             }
 
             var def = 1;
 
-            if (self.fire('drag', ret) === false) {
+            // allow call preventDefault on handlers
+            if (self.fire('drag', ev) === false) {
                 def = 0;
             }
 
@@ -475,9 +474,6 @@ KISSY.add('dd/draggable', function (S, Node, RichBase, DDM) {
         name: 'Draggable',
 
         ATTRS: {
-
-
-
             /**
              * the dragged node. maybe a proxy node.
              * @property node
@@ -800,6 +796,11 @@ KISSY.add('dd/draggable', function (S, Node, RichBase, DDM) {
              */
             actualPos: {
 
+            },
+
+
+            preventDefaultOnMove: {
+                value: true
             }
         }
     });

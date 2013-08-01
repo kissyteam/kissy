@@ -230,10 +230,7 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, DD, Node) {
         // S.log('dragstart: ' + e.timeStamp);
         var self = this;
         initStates(self);
-        self.startMousePos = {
-            left: e.pageX,
-            top: e.pageY
-        };
+        self.startMousePos = self.dd.get('startMousePos');
         onDragStart(self, e, 'left');
         onDragStart(self, e, 'top');
         self.fire('scrollStart', {
@@ -246,8 +243,38 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, DD, Node) {
     function onDragHandler(e) {
         var self = this,
             startMousePos = self.startMousePos;
+
+        if (!startMousePos) {
+            return;
+        }
+
+        var lockX = self.get('lockX'),
+            lockY = self.get('lockY');
+
+        // if lockX or lockY then do not prevent native scroll on some condition
+        if (lockX || lockY) {
+            var direction = Math.abs(
+                e.pageX - startMousePos.left
+            ) > Math.abs(
+                e.pageY - startMousePos.top
+            ) ? 'x' : 'y';
+
+            if (lockX && direction == 'x') {
+                self.dd.stopDrag();
+                return;
+            }
+
+            if (lockY && direction == 'y') {
+                self.dd.stopDrag();
+                return;
+            }
+        }
+
+        e.preventDefault();
+
         onDragAxis(self, e, 'left', startMousePos);
         onDragAxis(self, e, 'top', startMousePos);
+
         // touchmove frequency is slow on android
         self.fire('scrollMove', {
             pageX: e.pageX,
@@ -385,6 +412,8 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, DD, Node) {
             top: {}
         };
 
+        self.startMousePos = null;
+
         self.startScroll = {};
     }
 
@@ -399,6 +428,8 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, DD, Node) {
                 var dd = self.dd = new DD.Draggable({
                     node: $contentEl,
                     groups: false,
+                    // do not prevent native scroll on some condition
+                    preventDefaultOnMove: false,
                     // allow nested scroll-view
                     halt: true
                 });
