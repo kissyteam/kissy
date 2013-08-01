@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 31 21:09
+build time: Aug 1 12:41
 */
 KISSY.add("date/format",function(x,c,z){function q(b,a,f){f.push({field:b,count:a})}function p(b,a,f,e){e=e||[];f=f||A;if(0<=b){if(100>b&&1<=a&&2>=a)return 10>b&&2==a&&e.push(C),e.push(b),e.join("");if(1E3<=b&&1E4>b){if(4==a)return e.push(b),e.join("");if(2==a&&2==f)return p(b%100,2,2,e)}}e.push(b+"");return e.join("")}function s(b,a,f){this.locale=a||z;for(var a=b.length,e=!1,c=[],d=null,n=0,k=-1,g=0;g<a;g++){var j=b.charAt(g);if("'"==j){if(g+1<a&&(j=b.charAt(g+1),"'"==j)){g++;0!=n&&(q(k,n,c),k=
 -1,n=0);e&&(d+=j);continue}e?(c.push({text:d}),e=!1):(0!=n&&(q(k,n,c),k=-1,n=0),d="",e=!0)}else if(e)d+=j;else if("a"<=j&&"z">=j||"A"<=j&&"Z">=j){if(-1==h.indexOf(j))throw Error("Illegal pattern character '"+j+"'");-1==k||k==j?(k=j,n++):(q(k,n,c),k=j,n=1)}else 0!=n&&(q(k,n,c),k=-1,n=0),c.push({text:j})}if(e)throw Error("Unterminated quote");0!=n&&q(k,n,c);this.pattern=c;this.timezoneOffset=f}function D(b,a,f,e){switch(b){case "G":b=0<e.get(c.YEAR)?1:0;a=f.eras[b];break;case "y":b=e.get(c.YEAR);0>=

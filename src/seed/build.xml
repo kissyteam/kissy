@@ -55,7 +55,6 @@
             <path location="${component.src.dir}/loader/i18n.js"/>
             <!--kissy loader end-->
 
-            <path location="${component.src.dir}/i18n.js"/>
             <path location="${component.src.dir}/web.js"/>
             <fileset dir="${component.src.dir}/meta/" includes="**/*.js"/>
             <path location="${component.src.dir}/exports.js"/>

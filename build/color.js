@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 25 22:16
+build time: Aug 1 12:40
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -15,8 +15,7 @@ build time: Jul 25 22:16
  * @author yiminghe@gmail.com
  */
 KISSY.add("color", function (S, Base) {
-
-    var rgbaRe = /\s*rgba?\s*\(\s*([0-9]+)\s*,\s*([0-9]+)\s*,\s*([0-9]+)\s*(?:,\s*(\d+))?\)\s*/,
+    var rgbaRe = /\s*rgba?\s*\(\s*([0-9]+)\s*,\s*([0-9]+)\s*,\s*([0-9]+)\s*(?:,\s*([\d\.]+))?\)\s*/,
         hexRe = /\s*#([0-9a-fA-F][0-9a-fA-F]?)([0-9a-fA-F][0-9a-fA-F]?)([0-9a-fA-F][0-9a-fA-F]?)\s*/;
 
     /**
@@ -102,14 +101,9 @@ KISSY.add("color", function (S, Base) {
          * @ignore
          */
         a: {
-            getter: function (v) {
-                if (v == undefined) {
-                    return 1;
-                }
-                return Math.round(v);
-            },
+            value: 1,
             setter: function (v) {
-                return constrain255(v);
+                return constrain1(v);
             }
         }
     };
@@ -130,7 +124,8 @@ KISSY.add("color", function (S, Base) {
          */
         'toHSLA': function () {
             var hsl = this.getHSL();
-            return "hsla(" + (Math.round(hsl.h || 0)) + "," + percentage(hsl.s) + "," + percentage(hsl.l) + "," + this.a + ")";
+            return "hsla(" + (Math.round(hsl.h || 0)) + "," + percentage(hsl.s) + "," +
+                percentage(hsl.l) + "," + this.get('a') + ")";
         },
 
         /**
@@ -274,7 +269,7 @@ KISSY.add("color", function (S, Base) {
             var values, r,
                 g,
                 b,
-                a;
+                a = 1;
 
             if ((str.length == 4 || str.length == 7) && str.substr(0, 1) === '#') {
                 values = str.match(hexRe);
@@ -292,10 +287,10 @@ KISSY.add("color", function (S, Base) {
             else {
                 values = str.match(rgbaRe);
                 if (values) {
-                    r = values[1];
-                    g = values[2];
-                    b = values[3];
-                    a = values[4];
+                    r = parseInt(values[1]);
+                    g = parseInt(values[2]);
+                    b = parseInt(values[3]);
+                    a = parseFloat(values[4]) || 1;
                 }
             }
 
@@ -346,7 +341,6 @@ KISSY.add("color", function (S, Base) {
 
 
     function hsv2rgb(cfg) {
-
         var h = Math.min(Math.round(cfg.h), 359),
             s = Math.max(0, Math.min(1, cfg.s)),
             v = Math.max(0, Math.min(1, cfg.v)),
@@ -394,8 +388,6 @@ KISSY.add("color", function (S, Base) {
     }
 
     function rgb2hsv(cfg) {
-
-
         var r = cfg.r / 255,
             g = cfg.g / 255,
             b = cfg.b / 255;
@@ -510,11 +502,14 @@ KISSY.add("color", function (S, Base) {
         return Math.max(0, Math.min(v, 255));
     }
 
+    function constrain1(v) {
+        return Math.max(0, Math.min(v, 1));
+    }
+
     // #---------------------------- private end
 
 
     return Color;
-
 }, {
     requires: ['base']
 });
