@@ -30,7 +30,7 @@
 
     function getIEVersion(ua) {
         var m, v;
-        if ((m = ua.match(/MSIE ([^;]*)|Trident.*; rv(?:\d|:)?([0-9.]+)/)) &&
+        if ((m = ua.match(/MSIE ([^;]*)|Trident.*; rv(?:\s|:)?([0-9.]+)/)) &&
             (v = (m[1] || m[2]))) {
             return numberify(v);
         }
