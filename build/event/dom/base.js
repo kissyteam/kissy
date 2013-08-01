@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 25 22:23
+build time: Aug 1 16:58
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -844,6 +844,7 @@ KISSY.add('event/dom/base/observable', function (S, Dom, Special, DomEventUtils,
                 win = Dom.getWindow(cur),
                 curDocument = win.document,
                 eventPath = [],
+                ontype = 'on' + eventType,
                 eventPathIndex = 0;
 
             // http://www.w3.org/TR/dom/#dispatching-events
@@ -864,6 +865,10 @@ KISSY.add('event/dom/base/observable', function (S, Dom, Special, DomEventUtils,
                 // default bubble for html node
                 if (domEventObservable) {
                     domEventObservable.notify(event);
+                }
+                // Trigger an inline bound script
+                if (cur[ ontype ] && cur[ ontype ].call(cur) === false) {
+                    event.preventDefault();
                 }
                 cur = eventPath[++eventPathIndex];
             } while (!onlyHandlers && cur && !event.isPropagationStopped());
