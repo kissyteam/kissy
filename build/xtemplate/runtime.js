@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 29 17:14
+build time: Aug 1 14:00
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -157,6 +157,12 @@ KISSY.add('xtemplate/runtime', function (S, commands) {
                     p,
                     valid,
                     sl = scopes.length;
+                // root keyword for root scope
+                if (parts[0] == 'root') {
+                    j = sl - 1;
+                    parts.shift();
+                    len--;
+                }
                 for (; j < sl; j++) {
                     v = scopes[j];
                     valid = 1;

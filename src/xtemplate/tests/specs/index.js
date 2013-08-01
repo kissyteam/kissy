@@ -371,9 +371,24 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
             });
 
             describe('parent scope', function () {
+                it('support access root scope', function () {
+                    var tpl = '{{#each children}}' +
+                        '{{name}}{{root.name}}' +
+                        '{{/each}}';
+                    var data={
+                        name:'x',
+                        children:[{
+                            name :'x1'
+                        },{
+                            name: 'x2'
+                        }]
+                    };
+                    var render = new XTemplate(tpl).render(data);
+
+                    expect(render).toBe('x1xx2x');
+                });
 
                 it('support for with', function () {
-
                     var tpl = '{{#with data}}' +
                         '{{#with p}}' +
                         '{{name}}-{{age}}-{{../l2}}-{{../../l1}}' +
@@ -399,7 +414,6 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
                     var render = new XTemplate(tpl).render(data);
 
                     expect(render).toBe('h-2-l2-l1');
-
                 });
 
                 it('support for each', function () {
