@@ -1,0 +1,48 @@
+
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<title>detail</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-touch-fullscreen" content="yes" />
+	<meta name="format-detection" content="telephone=no" />
+	<link rel="apple-touch-icon-precomposed" href="http://a.tbcdn.cn/mw/s/hi/tbtouch/images/touch-icon.png" />
+	<link rel="stylesheet" href="scrollview.css" />
+	<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+	<div class="container">
+		<div class="tab-nav ks-scroll-view">
+			<ul class="ks-scroll-view-content">
+				<li class="selected">
+					<a href="#">宝 贝</a>
+				</li>
+				<li>
+					<a href="#">详 情</a>
+				</li>
+				<li>
+					<a href="#">评 价(<span class="highlight">321</span>)</a>
+				</li>
+				<li>
+					<a href="#">成 交(<span class="highlight">500</span>)</a>
+				</li>
+				<li>
+					<a href="#">推 荐</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+    <script src="/kissy/build/seed.js"></script>
+    <script src="/kissy/src/package.js"></script>
+	<script>
+	KISSY.use('scroll-view', function (S, ScrollView) {
+      var sv = new ScrollView({
+          srcNode: '.tab-nav',
+          lockY: true
+      }).render();
+  });
+	</script>
+</body>
+</html>

@@ -253,18 +253,22 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, DD, Node) {
 
         // if lockX or lockY then do not prevent native scroll on some condition
         if (lockX || lockY) {
-            var direction = Math.abs(
-                e.pageX - startMousePos.left
-            ) > Math.abs(
-                e.pageY - startMousePos.top
-            ) ? 'x' : 'y';
+            var dragInitDirection;
 
-            if (lockX && direction == 'x') {
+            if (!(dragInitDirection = self.dragInitDirection)) {
+                self.dragInitDirection = dragInitDirection = Math.abs(
+                    e.pageX - startMousePos.left
+                ) > Math.abs(
+                    e.pageY - startMousePos.top
+                ) ? 'left' : 'top';
+            }
+
+            if (lockX && dragInitDirection == 'left' && self.isAxisEnabled(dragInitDirection)) {
                 self.dd.stopDrag();
                 return;
             }
 
-            if (lockY && direction == 'y') {
+            if (lockY && dragInitDirection == 'top' && self.isAxisEnabled(dragInitDirection)) {
                 self.dd.stopDrag();
                 return;
             }
@@ -415,6 +419,8 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, DD, Node) {
         self.startMousePos = null;
 
         self.startScroll = {};
+
+        self.dragInitDirection = null;
     }
 
     var ScrollViewDrag;
