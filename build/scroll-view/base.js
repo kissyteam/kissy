@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 30 19:23
+build time: Aug 1 15:51
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -18,7 +18,6 @@ KISSY.add('scroll-view/base/render', function (S, Node, Container, ContentRender
 
     // http://www.html5rocks.com/en/tutorials/speed/html5/
     var Features = S.Features,
-        $ = Node.all,
 //        MARKER_CLS = 'ks-scrollview-marker',
         supportCss3 = Features.isTransformSupported(),
         transformProperty;
@@ -76,12 +75,12 @@ KISSY.add('scroll-view/base/render', function (S, Node, Container, ContentRender
                 top: 0
             };
 
-            var maxScrollX,
-                maxScrollY;
+            var maxScrollLeft,
+                maxScrollTop;
 
             control.maxScroll = {
-                left: maxScrollX = scrollWidth - clientWidth,
-                top: maxScrollY = scrollHeight - clientHeight
+                left: maxScrollLeft = scrollWidth - clientWidth,
+                top: maxScrollTop = scrollHeight - clientHeight
             };
 
             delete control.scrollStep;
@@ -96,15 +95,15 @@ KISSY.add('scroll-view/base/render', function (S, Node, Container, ContentRender
                         $contentEl.all(snap) :
                         $contentEl.children(),
                     pageIndex = control.get('pageIndex'),
-                    pagesXY = control.pagesXY = [];
+                    pagesOffset = control.pagesOffset = [];
                 pages.each(function (p, i) {
                     var offset = p.offset(),
-                        x = offset.left - elOffset.left,
-                        y = offset.top - elOffset.top;
-                    if (x <= maxScrollX && y <= maxScrollY) {
-                        pagesXY[i] = {
-                            x: x,
-                            y: y,
+                        left = offset.left - elOffset.left,
+                        top = offset.top - elOffset.top;
+                    if (left <= maxScrollLeft && top <= maxScrollTop) {
+                        pagesOffset[i] = {
+                            left: left,
+                            top: top,
                             index: i
                         };
                     }
@@ -206,8 +205,8 @@ KISSY.add('scroll-view/base', function (S, Node, Container, Render, undefined) {
                 keyCode = e.keyCode,
                 scrollStep = self.getScrollStep(),
                 ok = undefined;
-            var allowX = self.isAxisEnabled('x');
-            var allowY = self.isAxisEnabled('y');
+            var allowX = self.allowScroll['left'];
+            var allowY = self.allowScroll['top'];
             if (allowY) {
                 var scrollStepY = scrollStep.top,
                     clientHeight = self.clientHeight,
@@ -269,7 +268,7 @@ KISSY.add('scroll-view/base', function (S, Node, Container, Render, undefined) {
                 maxScroll = self.maxScroll,
                 minScroll = self.minScroll;
 
-            if ((deltaY = e.deltaY) && self.isAxisEnabled('y')) {
+            if ((deltaY = e.deltaY) && self.allowScroll['top']) {
                 var scrollTop = self.get('scrollTop');
                 max = maxScroll.top;
                 min = minScroll.top;
@@ -280,7 +279,7 @@ KISSY.add('scroll-view/base', function (S, Node, Container, Render, undefined) {
                 }
             }
 
-            if ((deltaX = e.deltaX) && self.isAxisEnabled('x')) {
+            if ((deltaX = e.deltaX) && self.allowScroll['left']) {
                 var scrollLeft = self.get('scrollLeft');
                 max = maxScroll.left;
                 min = minScroll.left;
@@ -310,24 +309,24 @@ KISSY.add('scroll-view/base', function (S, Node, Container, Render, undefined) {
         },
 
         _getPageIndexFromXY: function (v, allowX, direction) {
-            var pagesXY = this.pagesXY.concat([]);
-            var p2 = allowX ? 'x' : 'y';
-            var i, xy;
-            pagesXY.sort(function (e1, e2) {
+            var pagesOffset = this.pagesOffset.concat([]);
+            var p2 = allowX ? 'left' : 'top';
+            var i, offset;
+            pagesOffset.sort(function (e1, e2) {
                 return e1[p2] - e2[p2];
             });
             if (direction > 0) {
-                for (i = 0; i < pagesXY.length; i++) {
-                    xy = pagesXY[i];
-                    if (xy[p2] >= v) {
-                        return xy.index;
+                for (i = 0; i < pagesOffset.length; i++) {
+                    offset = pagesOffset[i];
+                    if (offset[p2] >= v) {
+                        return offset.index;
                     }
                 }
             } else {
-                for (i = pagesXY.length - 1; i >= 0; i--) {
-                    xy = pagesXY[i];
-                    if (xy[p2] <= v) {
-                        return xy.index;
+                for (i = pagesOffset.length - 1; i >= 0; i--) {
+                    offset = pagesOffset[i];
+                    if (offset[p2] <= v) {
+                        return offset.index;
                     }
                 }
             }
@@ -336,10 +335,10 @@ KISSY.add('scroll-view/base', function (S, Node, Container, Render, undefined) {
 
         scrollToPage: function (index, animCfg) {
             var self = this,
-                pageXy;
-            if ((pageXy = self.pagesXY) && pageXy[index]) {
+                pageOffset;
+            if ((pageOffset = self.pagesOffset) && pageOffset[index]) {
                 self.set('pageIndex', index);
-                self.scrollTo({left: pageXy[index].x, top: pageXy[index].y}, animCfg);
+                self.scrollTo(pageOffset[index], animCfg);
             }
         },
 
