@@ -1,0 +1,103 @@
+.ks-date-picker {
+    box-shadow: 1px 1px 0 #ccc;
+    background: #ffffff;
+    border: 1px solid #9bc0e0;
+    width: 190px;
+}
+
+.ks-date-picker-prev-month,
+.ks-date-picker-next-month,
+.ks-date-picker-header {
+    background: url('http://img03.taobaocdn.com/tps/i3/T1d4OJXkpxXXXXXXXX-19-300.png');
+}
+
+.ks-date-picker-header {
+    background-repeat: repeat-x;
+    background-position: 0 -240px;
+    height: 26px;
+    position: relative;
+    text-align: center;
+}
+
+.ks-date-picker-prev-month, .ks-date-picker-next-month {
+    width: 19px;
+    height: 19px;
+    position: absolute;
+    top: 2px;
+}
+
+.ks-date-picker-prev-month {
+    background-position: 0 -60px;
+    left: 0;
+}
+
+.ks-date-picker-prev-month:hover {
+    background-position: 0 -80px;
+}
+
+.ks-date-picker-month-select {
+    color: #ffffff;
+    line-height: 26px;
+    text-decoration: none;
+}
+
+.ks-date-picker-month-select:hover {
+    color: #f0ff00;
+    border: 1px solid #8cc6ff;
+    background: url('http://img03.taobaocdn.com/tps/i3/T1d4OJXkpxXXXXXXXX-19-300.png');
+    background-position: 0 -268px;
+}
+
+.ks-date-picker-next-month {
+    background-position: 0 0;
+    right: 0;
+
+}
+
+.ks-date-picker-next-month:hover {
+    background-position: 0 -20px;
+}
+
+.ks-date-picker-table {
+    table-layout: fixed;
+    width: 100%;
+    border-collapse: separate;
+}
+
+.ks-date-picker-table thead tr {
+    border-bottom: 1px dashed #c9c9c9;
+}
+
+.ks-date-picker-table thead tr th {
+    width: 25px;
+    color: black;
+    font-weight: bold;
+    text-align: center;
+}
+
+.ks-date-picker-footer {
+    padding: 3px 0;
+    background-color: #f5f5f5;
+    text-align: center;
+}
+
+.ks-date-picker-today {
+    height: 16px;
+    margin: 0 3px 0 2px;
+    border-radius: 3px;
+    padding: 3px 3px 3px 3px;
+    border-width: 1px;
+    border-style: solid;
+    text-decoration: none;
+    background-color: #4187e7;
+    color: #ffffff;
+    border-color: #3375cf;
+}
+
+.ks-date-picker-today:hover {
+    color: #ffffff;
+}
+
+
+
+

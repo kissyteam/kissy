@@ -681,7 +681,7 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
                         throw new Error('illegal field for add');
                         break;
                 }
-                self.setTime(self.time + amount);
+                self.setTimeInMillis(self.time + amount);
             }
 
         },
@@ -906,7 +906,7 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
                 this.computeTime();
             }
             var cal = new GregorianCalendar(this.timezoneOffset, this.locale);
-            cal.setTime(this.time);
+            cal.setTimeInMillis(this.time);
             return cal;
         },
 

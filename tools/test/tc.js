@@ -18,6 +18,10 @@ tests.push('/kissy/src/button/tests/runner/test.jss');
 
 tests.push('/kissy/src/button/tests/runner/test.jss?build');
 
+tests.push('/kissy/src/color/tests/runner/test.jss');
+
+tests.push('/kissy/src/color/tests/runner/test.jss?build');
+
 tests.push('/kissy/src/combobox/tests/runner/test.jss');
 
 tests.push('/kissy/src/combobox/tests/runner/test.jss?build');

@@ -6,6 +6,32 @@
 KISSY.add('xtemplate/runtime', function (S, commands) {
 
     var utils = {
+            'getPropertyOrCommand': function (engine, scopes, options, name, depth, line) {
+                var id0;
+                var config = engine.config;
+                var commands = config.commands;
+                var command1 = commands[name];
+                if (command1) {
+                    try {
+                        id0 = command1.call(engine, scopes, options);
+                    } catch (e) {
+                        S['error'](e.message + ": '" +name + "' at line " + line);
+                    }
+                }
+                else {
+                    var tmp2 = utils.getProperty(name, scopes, depth);
+                    if (tmp2 === false) {
+                        S[config.silent ?
+                            "log" :
+                            "error"]("can not find property: '" +
+                                name + "' at line " + line, "warn");
+                    } else {
+                        id0 = tmp2[0];
+                    }
+                }
+                return id0;
+            },
+
             'getProperty': function (parts, scopes, depth) {
                 // this refer to current scope object
                 if (parts === '.') {
