@@ -7,7 +7,7 @@
     <description>Common Build File</description>
 
     <!-- 各个组件公用的属性 -->
-    <property name="kissy.dir" location="${ant.file.common-build}/../../../"/>
+    <property name="kissy.dir" location="${ant.file.common-build}/../../../../"/>
     <property name="kissy-tools.dir" location="${kissy.dir}/../kissy-tools/"/>
     <property name="kissy-tools.module-compiler" location="${kissy-tools.dir}/module-compiler/module-compiler.jar"/>
     <property name="kissy.build.dir" location="${kissy.dir}/build/"/>

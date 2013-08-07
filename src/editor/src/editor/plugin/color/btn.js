@@ -136,6 +136,10 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, Dia
                 self.fire('selectColor', {
                     color: t.style("background-color")
                 });
+            } else if (t.hasClass(prefixCls + 'editor-color-remove')) {
+                self.fire('selectColor', {
+                    color: null
+                });
             }
         },
 
@@ -191,7 +195,7 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, Dia
         var indicator = button.get('el').one('.' + prefix + 'color-indicator');
 
         arrow.on('selectColor', function (e) {
-            indicator.css('background-color', e.color);
+            indicator.css('background-color', e.color || defaultColor);
             runCmd(editor, cmdType, e.color);
         });
 

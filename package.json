@@ -38,7 +38,7 @@
     },
     "devDependencies": {
         "walkdir": ">0.0.4",
-        "jasmine-reporters": ">0.2",
+        "jasmine-reporters": ">0.1",
         "express": ">3.0"
     },
     "licenses": [
