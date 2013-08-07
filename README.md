@@ -6,7 +6,7 @@
  * Docs: <http://docs.kissyui.com/>
  * History: <http://github.com/kissyteam/kissy/blob/master/HISTORY.md>
  * License: <http://github.com/kissyteam/kissy/blob/master/LICENSE.md>
- * Contributing Guide: <http://github.com/kissyteam/kissy/blob/master/CONTRIBUTING.md>
+ * Contributing Guide: <http://github.com/kissyteam/kissy/blob/master/CONTRIBUTING.md> [![Stories in Ready](https://badge.waffle.io/kissyteam/kissy.png)](https://waffle.io/kissyteam/kissy)
 
 ## Vision
 
