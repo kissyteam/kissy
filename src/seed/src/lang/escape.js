@@ -15,6 +15,7 @@
     // FALSE = false,
         HEX_BASE = 16,
     // http://www.owasp.org/index.php/XSS_(Cross_Site_Scripting)_Prevention_Cheat_Sheet
+    // http://wonko.com/post/html-escaping
         htmlEntities = {
             '&amp;': '&',
             '&gt;': '>',
