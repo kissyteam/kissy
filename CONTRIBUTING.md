@@ -21,7 +21,7 @@
 
 阿里集团内部人员也可加入 [阿里技术圈](http://www.atatech.org/gprofile/348) 来讨论
 
-### 微博
+## 微博
 
 联系新浪微博或者 twitter:  **@kissyteam**
 
@@ -98,7 +98,9 @@ username 为你的 github 用户名
 
 启动 web 环境
 
-    node start
+    npm start
+    
+> 如果报告 Unknown Encoding 错误，请升级node环境到最新版。
 
 现在打开 KISSY 集成测试用例: [http://localhost:8888/kissy/test](http://localhost:8888/kissy/test)
 
