@@ -1,58 +1,62 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 6 20:44
+build time: Aug 7 19:26
 */
 .ks-date-picker {
-    box-shadow:1px 1px 0 #ccc;
-    background:#ffffff;
-    border:1px solid #9bc0e0;
+    box-shadow: 1px 1px 0 #ccc;
+    background: #ffffff;
+    border: 1px solid #9bc0e0;
+    width: 190px;
 }
 
 .ks-date-picker-prev-month,
 .ks-date-picker-next-month,
-.ks-date-picker-next-month-select,
-.ks-date-picker-header{
+.ks-date-picker-header {
     background: url('http://img03.taobaocdn.com/tps/i3/T1d4OJXkpxXXXXXXXX-19-300.png');
 }
 
 .ks-date-picker-header {
     background-repeat: repeat-x;
     background-position: 0 -240px;
-    height:26px;
-    position:relative;
+    height: 26px;
+    position: relative;
     text-align: center;
 }
 
-.ks-date-picker-prev-month,.ks-date-picker-next-month{
+.ks-date-picker-prev-month, .ks-date-picker-next-month {
     width: 19px;
     height: 19px;
     position: absolute;
+    top: 2px;
 }
 
 .ks-date-picker-prev-month {
-    background-position: 0 -180px;
-    left:0;
+    background-position: 0 -60px;
+    left: 0;
 }
 
 .ks-date-picker-prev-month:hover {
     background-position: 0 -80px;
 }
 
-.ks-date-picker-next-month-select{
+.ks-date-picker-month-select {
     color: #ffffff;
-    background-position: 100px 100px;
+    line-height: 26px;
+    text-decoration: none;
 }
 
-.ks-date-picker-next-month-select:hover{
+.ks-date-picker-month-select:hover {
     color: #f0ff00;
     border: 1px solid #8cc6ff;
+    background: url('http://img03.taobaocdn.com/tps/i3/T1d4OJXkpxXXXXXXXX-19-300.png');
     background-position: 0 -268px;
 }
 
 .ks-date-picker-next-month {
     background-position: 0 0;
-    left:0;
+    right: 0;
+
 }
 
 .ks-date-picker-next-month:hover {
@@ -70,7 +74,7 @@ build time: Aug 6 20:44
 }
 
 .ks-date-picker-table thead tr th {
-    width: 30px;
+    width: 25px;
     color: black;
     font-weight: bold;
     text-align: center;
@@ -89,7 +93,16 @@ build time: Aug 6 20:44
     padding: 3px 3px 3px 3px;
     border-width: 1px;
     border-style: solid;
+    text-decoration: none;
+    background-color: #4187e7;
+    color: #ffffff;
+    border-color: #3375cf;
 }
+
+.ks-date-picker-today:hover {
+    color: #ffffff;
+}
+
 
 
 

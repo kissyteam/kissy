@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 1 12:41
+build time: Aug 7 19:26
 */
 /**
  * locale info for KISSY Date
@@ -19,7 +19,7 @@ KISSY.add('date/i18n/zh-cn', {
         '七月', '八月', '九月', '十月', '十一月', '十二月'],
     shortMonths: ['一月', '二月', '三月', '四月', '五月', '六月',
         '七月', '八月', '九月', '十月', '十一月', '十二月'],
-    weekdays: ['星期日', '星期一', '星期二', '星期三', '星期四',
+    weekdays: ['星期天', '星期一', '星期二', '星期三', '星期四',
         '星期五', '星期六'],
     shortWeekdays: ['周日', '周一', '周二', '周三', '周四', '周五',
         '周六'],
