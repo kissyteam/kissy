@@ -105,7 +105,7 @@ KISSY.add("color", function (S, Base) {
          */
         toHSL: function () {
             var hsl = this.getHSL();
-            return "hsl(" + (Math.round(hsl.h || 0)) + "," + percentage(hsl.s) + "," + percentage(hsl.l) + ")";
+            return "hsl(" + (Math.round(hsl.h || 0)) + ", " + percentage(hsl.s) + ", " + percentage(hsl.l) + ")";
         },
         /**
          * To hsla string format
@@ -113,8 +113,8 @@ KISSY.add("color", function (S, Base) {
          */
         'toHSLA': function () {
             var hsl = this.getHSL();
-            return "hsla(" + (Math.round(hsl.h || 0)) + "," + percentage(hsl.s) + "," +
-                percentage(hsl.l) + "," + this.get('a') + ")";
+            return "hsla(" + (Math.round(hsl.h || 0)) + ", " + percentage(hsl.s) + ", " +
+                percentage(hsl.l) + ", " + this.get('a') + ")";
         },
 
         /**
@@ -123,7 +123,7 @@ KISSY.add("color", function (S, Base) {
          */
         toRGB: function () {
             var self = this;
-            return "rgb(" + self.get("r") + "," + self.get("g") + "," + self.get("b") + ")";
+            return "rgb(" + self.get("r") + ", " + self.get("g") + ", " + self.get("b") + ")";
         },
         /**
          * To rgba string format
@@ -131,7 +131,8 @@ KISSY.add("color", function (S, Base) {
          */
         toRGBA: function () {
             var self = this;
-            return "rgba(" + self.get("r") + "," + self.get("g") + "," + self.get("b") + "," + self.get("a") + ")";
+            return "rgba(" + self.get("r") + ", " + self.get("g") +
+                ", " + self.get("b") + ", " + self.get("a") + ")";
         },
         /**
          * To hex string format
