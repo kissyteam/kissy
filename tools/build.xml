@@ -7,9 +7,9 @@
     <description>KISSY Project Build File</description>
 
     <!-- kissy 主目录 -->
-    <property name="kissy.dir" location="${ant.file.kissy-project-build}/../../../"/>
+    <property name="kissy.dir" location="${ant.file.kissy-project-build}/../../"/>
     <!-- kissy 工具目录 -->
-    <property name="kissy-tools.dir" location="${kissy.dir}/../kissy-tools/"/>
+    <property name="kissy-tools.dir" location="${kissy.dir}/../../kissy-tools/"/>
     <!-- kissy build 目录 -->
     <property name="kissy.build.dir" location="${kissy.dir}/build/"/>
     <!-- kissy 源码目录 -->

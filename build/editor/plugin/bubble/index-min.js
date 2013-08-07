@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.31
 MIT Licensed
-build time: Jul 29 13:11
+build time: Aug 7 14:34
 */
 KISSY.add("editor/plugin/bubble/index",function(g,s,n){function t(j){var i=null,b=j.get("editor").getControls();g.each(b,function(c){var d;if(d=c.get)if(d=-1!=(c.get("elCls")||"").indexOf("bubble"))if(d=c!==j)if(d=c.get("visible")){d=j.get("y");var b=d+j.get("el").outerHeight(),g=c.get("y"),e=g+c.get("el").outerHeight();d=d<=e&&b>=e||d<=g&&b>=g}d&&(i?i.get("y")<c.get("y")&&(i=c):i=c)});return i}var l={}.a,v={zIndex:n.baseZIndex(n.zIndexManager.BUBBLE_VIEW),elCls:"{prefixCls}editor-bubble",prefixCls:"{prefixCls}editor-",
 effect:{effect:"fade",duration:0.3}};n.prototype.addBubble=function(j,i,b){function c(){f.hide();var a=e.get("window");a&&(a.detach("scroll",p),q.stop())}function d(){var a;var b=f;if(a=b.get("editorSelectedEl")){var d=b.get("editor"),c=d.get("window"),e=d.get("iframe").offset(),b=e.top,e=e.left,i=e+c.width(),c=b+c.height(),h=a.offset(),h=n.Utils.getXY(h,d),d=h.top,h=h.left,j=h+a.width(),m=d+a.height(),k,o;g.UA.ie&&"img"==a[0].nodeName.toLowerCase()&&m>c?a=l:(m>c&&d<c?o=c-30:m>b&&m<c&&(o=m),j>e&&

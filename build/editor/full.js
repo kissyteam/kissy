@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.31
 MIT Licensed
-build time: Jul 29 13:11
+build time: Aug 7 14:34
 */
 /**
  * Set up editor constructor
@@ -9896,6 +9896,10 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, Dia
                 self.fire('selectColor', {
                     color: t.style("background-color")
                 });
+            } else if (t.hasClass(prefixCls + 'editor-color-remove')) {
+                self.fire('selectColor', {
+                    color: null
+                });
             }
         },
 
@@ -9951,7 +9955,7 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, Dia
         var indicator = button.get('el').one('.' + prefix + 'color-indicator');
 
         arrow.on('selectColor', function (e) {
-            indicator.css('background-color', e.color);
+            indicator.css('background-color', e.color || defaultColor);
             runCmd(editor, cmdType, e.color);
         });
 
