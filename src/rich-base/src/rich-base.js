@@ -314,6 +314,30 @@ KISSY.add('rich-base', function (S, Base) {
                 }
             });
             return plugin;
+        },
+
+        parent: function() {
+            var ownCls = this.constructor; // 拥有此方法的代码书写的类
+            var name = arguments.callee.caller.__name__; // 方法名字
+            var baseProto, member; // 最后要执行的类和方法
+
+            if (!name) throw new Error('parent call error');
+
+            // parent应该调用“代码书写的方法所在的类的父同名方法”
+            // 而不是方法调用者实例的类的父同名方法
+            // 比如C继承于B继承于A，当C的实例调用从B继承来的某方法时，其中调用了this.parent，应该直接调用到A上的同名方法，而不是B的。
+            // 因此，这里通过hasOwnProperty，从当前类开始，向上找到同名方法的原始定义类
+            while (ownCls && !ownCls.prototype.hasOwnProperty(name)) {
+                ownCls = ownCls.superclass.constructor;
+            }
+
+            baseProto = ownCls.superclass;
+            if (!baseProto) throw new Error('base class not found in parent call');
+
+            member = baseProto[name];
+            if (!member || !member.apply) throw new Error('method not found in parent call');
+
+            return member.apply(this, arguments);
         }
 
     }, {
@@ -442,10 +466,19 @@ KISSY.add('rich-base', function (S, Base) {
 
                         // 方法合并
                         var exp = ext.prototype, p;
+                        var member;
                         for (p in exp) {
                             // do not mess with parent class
                             if (exp.hasOwnProperty(p)) {
-                                prototype[p] = exp[p];
+                                member = prototype[p] = exp[p];
+                                if (typeof member === 'function') {
+                                    // 函数上的__name__成员必须唯一，供parent功能使用
+                                    if (member.__name__ && member.__name__ != p) {
+                                        throw new Error('name ' + p + ' overwrite');
+                                    } else {
+                                        member.__name__ = p;
+                                    }
+                                }
                             }
                         }
                     }
