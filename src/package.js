@@ -94,6 +94,14 @@ if (!loc.getQuery().has('build')) {
             "base": "/kissy/src/date/i18n/src/i18n",
             "ignorePackageNameInUri": 1
         },
+        "date/picker/i18n": {
+            "base": "/kissy/src/date/picker/i18n/src/i18n",
+            "ignorePackageNameInUri": 1
+        },
+        "date/picker": {
+            "base": "/kissy/src/date/picker/src/picker",
+            "ignorePackageNameInUri": 1
+        },
         "dd": {
             "base": "/kissy/src/dd/src/dd",
             "ignorePackageNameInUri": 1

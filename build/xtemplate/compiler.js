@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 25 22:26
+build time: Aug 6 21:57
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -2317,73 +2317,29 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
         genId: function (idNode, tplNode) {
             var source = [],
                 depth = idNode.depth,
-                idString = idNode.string,
                 idParts = idNode.parts,
                 idName = guid('id'),
-                self = this,
-                foundNativeRuntimeCommand = 0,
-                tmpNameCommand,
-                commands = XTemplateRuntime.commands;
-
-            source.push('var ' + idName + ';');
+                self = this;
 
             // {{#each variable}} {{variable}}
-            if (tplNode && depth == 0) {
-                var configNameCode = self.genConfig(tplNode);
-                var configName = configNameCode[0];
-                pushToArray(source, configNameCode[1]);
-                // skip if for global commands before current template's render
-                if (foundNativeRuntimeCommand = commands[idString]) {
-                    tmpNameCommand = idString + 'Command';
-                } else {
-                    tmpNameCommand = guid('command');
-                    source.push('var ' + tmpNameCommand + ';');
-                    source.push(tmpNameCommand + ' = commands["' + idString + '"];');
-                    source.push('if( ' + tmpNameCommand + ' ){');
-                }
-                source.push('try{');
-                source.push(idName + ' = ' + tmpNameCommand +
-                    '.call(engine, scopes, ' + (configName || '{}') + ');');
-                source.push('}catch(e){');
-                source.push('error(e.message+": \'' +
-                    idString + '\' at line ' + idNode.lineNumber + '");');
-                source.push('}');
-
-                if (!foundNativeRuntimeCommand && !configName) {
-                    source.push('}');
-                    source.push('else {');
-                }
-
-                if (!foundNativeRuntimeCommand && configName) {
-                    source.push('}');
-                    source.push('else {');
-                    source.push('error("can not find command: \'' +
-                        idString + '\' at line ' + idNode.lineNumber + '", "warn");');
-                    source.push('}');
+            // {{command}}
+            if (depth == 0) {
+                var configNameCode = tplNode && self.genConfig(tplNode);
+                var configName;
+                if (configNameCode) {
+                    configName = configNameCode[0];
+                    pushToArray(source, configNameCode[1]);
                 }
             }
 
             // variable {{variable.subVariable}}
-            if (!foundNativeRuntimeCommand && !configName) {
-                var tmp = guid('tmp');
-                idString = self.getIdStringFromIdParts(source, idParts);
+            var idString = self.getIdStringFromIdParts(source, idParts);
 
-                source.push('var ' + tmp + ' = getPropertyUtil("' + idString +
-                    '",scopes,' + depth + ');');
-
-                source.push('if(' + tmp + '===false){');
-                source.push('S[config.silent?"log":"error"]("can not find property: \'' +
-                    idString + '\' at line ' + idNode.lineNumber + '", "warn");');
-                // only normalize when render
-                // source.push(idName + ' = "";');
-                source.push('} else {');
-                source.push(idName + ' = ' + tmp + '[0];');
-                source.push('}');
-
-                if (tplNode && depth == 0) {
-                    source.push('}');
-                }
-            }
+            source.push('var ' + idName +
+                ' = getPropertyOrCommandUtil(engine,scopes,' +
+                (configName || '{}') + ',"' +
+                idString +
+                '",' + depth + ',' + idNode.lineNumber + ');');
 
             return [idName, source];
         },

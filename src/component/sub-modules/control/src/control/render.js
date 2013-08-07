@@ -5,7 +5,6 @@
  * refer: http://martinfowler.com/eaaDev/uiArchs.html
  */
 KISSY.add("component/control/render", function (S, ComponentProcess, XTemplate, RenderTpl, Manager) {
-
     var ON_SET = '_onSet',
         trim = S.trim,
         $ = S.all,
@@ -170,9 +169,21 @@ KISSY.add("component/control/render", function (S, ComponentProcess, XTemplate, 
         createDom: function () {
             var self = this;
 
-            self.callMethodByHierarchy("beforeCreateDom",
+            self.callMethodByHierarchy(
+                "beforeCreateDom",
                 "__beforeCreateDom",
-                [self.renderData = {}, self.childrenElSelectors = {}]);
+                [
+                    self.renderData = {},
+                    self.childrenElSelectors = {},
+                    self.renderCommands = {
+                        getBaseCssClasses: function (scope, option) {
+                            return self.getBaseCssClasses(option.params[0]);
+                        },
+                        getBaseCssClass: function (scope, option) {
+                            return self.getBaseCssClass(option.params[0]);
+                        }
+                    }
+                ]);
 
             var control = self.control,
                 tpl, html;
@@ -272,18 +283,12 @@ KISSY.add("component/control/render", function (S, ComponentProcess, XTemplate, 
             }
         },
 
-        renderTpl: function (tpl, renderData) {
+        renderTpl: function (tpl, renderData, renderCommands) {
             var self = this;
             renderData = renderData || self.renderData;
+            renderCommands = renderCommands || self.renderCommands;
             return new XTemplate(tpl, {
-                commands: {
-                    getBaseCssClasses: function (scope, option) {
-                        return self.getBaseCssClasses(option.params[0]);
-                    },
-                    getBaseCssClass: function (scope, option) {
-                        return self.getBaseCssClass(option.params[0]);
-                    }
-                }
+                commands: renderCommands
             }).render(renderData);
         },
 

@@ -212,7 +212,7 @@ KISSY.add('date/format', function (S, GregorianCalendar, defaultLocale) {
                 } else if (count == 3) {
                     current = locale.shortMonths[value];
                 } else {
-                    current = zeroPaddingNumber(value + 1, 2);
+                    current = zeroPaddingNumber(value + 1, count);
                 }
                 break;
             case 'k':

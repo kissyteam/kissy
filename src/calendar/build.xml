@@ -1,5 +1,0 @@
-<project name="calendar.build" default="build" basedir=".">
-    <property name="component.name" value="calendar"/>
-
-    <import file="../common.xml"/>
-</project>
