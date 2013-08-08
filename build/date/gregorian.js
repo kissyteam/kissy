@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 1 12:41
+build time: Aug 7 19:26
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -922,7 +922,7 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
                         throw new Error('illegal field for add');
                         break;
                 }
-                self.setTime(self.time + amount);
+                self.setTimeInMillis(self.time + amount);
             }
 
         },
@@ -1147,7 +1147,7 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
                 this.computeTime();
             }
             var cal = new GregorianCalendar(this.timezoneOffset, this.locale);
-            cal.setTime(this.time);
+            cal.setTimeInMillis(this.time);
             return cal;
         },
 

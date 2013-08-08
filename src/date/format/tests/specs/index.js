@@ -22,19 +22,19 @@ KISSY.add(function (S, DateTimeFormat, GregorianCalendar) {
                 var gregorianCalendar = new GregorianCalendar(2013,
                     GregorianCalendar.JULY, 11, 14, 31, 19);
                 var df = DateTimeFormat.getDateTimeInstance(Style.FULL, Style.FULL);
-                expect(df.format(gregorianCalendar)).toBe('2013年07月11日 星期四 下午02时31分19秒 GMT+0800');
+                expect(df.format(gregorianCalendar)).toBe('2013年7月11日 星期四 下午02时31分19秒 GMT+0800');
             });
             it('getDateTimeInstance works for midnight', function () {
                 var gregorianCalendar = new GregorianCalendar(2013,
                     GregorianCalendar.JULY, 11, 0, 31, 19);
                 var df = DateTimeFormat.getDateTimeInstance(Style.FULL, Style.FULL);
-                expect(df.format(gregorianCalendar)).toBe('2013年07月11日 星期四 上午12时31分19秒 GMT+0800');
+                expect(df.format(gregorianCalendar)).toBe('2013年7月11日 星期四 上午12时31分19秒 GMT+0800');
             });
             it('getDateTimeInstance works for noon', function () {
                 var gregorianCalendar = new GregorianCalendar(2013,
                     GregorianCalendar.JULY, 11, 12, 31, 19);
                 var df = DateTimeFormat.getDateTimeInstance(Style.FULL, Style.FULL);
-                expect(df.format(gregorianCalendar)).toBe('2013年07月11日 星期四 下午12时31分19秒 GMT+0800');
+                expect(df.format(gregorianCalendar)).toBe('2013年7月11日 星期四 下午12时31分19秒 GMT+0800');
             });
         });
 
@@ -43,7 +43,7 @@ KISSY.add(function (S, DateTimeFormat, GregorianCalendar) {
                 var gregorianCalendar = new GregorianCalendar(2013,
                     GregorianCalendar.JULY, 11, 12, 31, 19);
                 var df = DateTimeFormat.getDateTimeInstance(Style.FULL, Style.FULL);
-                var str = '2013年07月11日 星期四 下午12时31分19秒 GMT+0800';
+                var str = '2013年7月11日 星期四 下午12时31分19秒 GMT+0800';
                 var cal = df.parse(str);
                 expect(cal.equals(gregorianCalendar)).toBeTruthy();
                 expect(df.format(cal)).toBe(str);

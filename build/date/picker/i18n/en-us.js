@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 6 21:59
+build time: Aug 7 19:26
 */
 /**
  * i18n resources for date-picker

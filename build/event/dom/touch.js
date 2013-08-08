@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 25 22:23
+build time: Aug 7 12:58
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -794,12 +794,6 @@ KISSY.add('event/dom/touch/handle', function (S, Dom, eventHandleMap, DomEvent) 
         touchEvents[cancelEvent] = 'onTouchEnd';
     }
 
-    function onMouseUp(e) {
-        var self = this;
-        self.onTouchEnd(e);
-        DomEvent.detach(self.doc, 'mousemove', self.onTouchMove, self);
-    }
-
     function DocumentHandler(doc) {
         var self = this;
         self.doc = doc;
@@ -887,10 +881,9 @@ KISSY.add('event/dom/touch/handle', function (S, Dom, eventHandleMap, DomEvent) 
                 if (self.inTouch) {
                     // ignore mouse
                     return;
-                } else {
+                } else if (!isMsPointerSupported) {
                     // only setup mouseup , in case dual end event handler calls
-                    var doc = self.doc;
-                    DomEvent.on(doc, 'mouseup', {
+                    DomEvent.on(self.doc, 'mouseup', {
                         fn: self.onTouchEnd,
                         context: self,
                         once: true

@@ -155,7 +155,7 @@ KISSY.add("editor/clipboard", function (S, Editor, KERange, KES) {
                 doc = editor.get("document")[0];
 
             // Avoid recursions on 'paste' event or consequent paste too fast. (#5730)
-            if (doc.getElementById('ke_pastebin')) {
+            if (doc.getElementById('ke-paste-bin')) {
                 S.log(pasteEvent + ": trigger more than once ...");
                 return;
             }
@@ -164,20 +164,20 @@ KISSY.add("editor/clipboard", function (S, Editor, KERange, KES) {
                 range = new KERange(doc);
 
             // Create container to paste into
-            var pastebin = $(UA['webkit'] ?
+            var pasteBin = $(UA['webkit'] ?
                 '<body></body>' :
                 // ie6 must use create ...
                 '<div></div>', doc);
 
-            pastebin.attr('id', 'ke_pastebin');
+            pasteBin.attr('id', 'ke-paste-bin');
             // Safari requires a filler node inside the div to have the content pasted into it. (#4882)
             if (UA['webkit']) {
-                pastebin[0].appendChild(doc.createTextNode('\u200b'));
+                pasteBin[0].appendChild(doc.createTextNode('\u200b'));
             }
 
-            doc.body.appendChild(pastebin[0]);
+            doc.body.appendChild(pasteBin[0]);
 
-            pastebin.css({
+            pasteBin.css({
                 position: 'absolute',
                 // Position the bin exactly at the position of the selected element
                 // to avoid any subsequent document scroll.
@@ -189,13 +189,13 @@ KISSY.add("editor/clipboard", function (S, Editor, KERange, KES) {
 
             // It's definitely a better user experience if we make the paste-bin pretty unnoticed
             // by pulling it off the screen.
-            pastebin.css('left', '-1000px');
+            pasteBin.css('left', '-1000px');
 
             var bms = sel.createBookmarks();
 
             // Turn off design mode temporarily before give focus to the paste bin.
-            range.setStartAt(pastebin, KER.POSITION_AFTER_START);
-            range.setEndAt(pastebin, KER.POSITION_BEFORE_END);
+            range.setStartAt(pasteBin, KER.POSITION_AFTER_START);
+            range.setEndAt(pasteBin, KER.POSITION_BEFORE_END);
             range.select(true);
             // Wait a while and grab the pasted contents
             setTimeout(function () {
@@ -205,25 +205,22 @@ KISSY.add("editor/clipboard", function (S, Editor, KERange, KES) {
                 // a div wrapper if you copy/paste the body of the editor.
                 // Remove hidden div and restore selection.
                 var bogusSpan;
-                var oldPastebin = pastebin;
+                var oldPasteBin = pasteBin;
 
-                pastebin = ( UA['webkit']
-                    && ( bogusSpan = pastebin.first() )
+                pasteBin = ( UA['webkit']
+                    && ( bogusSpan = pasteBin.first() )
                     && (bogusSpan.hasClass('Apple-style-span') ) ?
-                    bogusSpan : pastebin );
+                    bogusSpan : pasteBin );
 
                 sel.selectBookmarks(bms);
 
-                var html = pastebin.html();
+                var html = pasteBin.html();
 
-                oldPastebin.remove();
+                oldPasteBin.remove();
 
-                //莫名其妙会有这个东西！，不知道
-                //去掉
-                if (!( html = S.trim(html
-                    .replace(/<span[^>]+_ke_bookmark[^<]*?<\/span>(&nbsp;)*/ig, '')) )) {
+                if (!( html = cleanPaste(html))) {
                     // ie 第2次触发 beforepaste 会报错！
-                    // 第一次 bms 是对的，但是 pastebin 内容是错的
+                    // 第一次 bms 是对的，但是 pasteBin 内容是错的
                     // 第二次 bms 是错的，但是内容是对的
                     return;
                 }
@@ -325,6 +322,94 @@ KISSY.add("editor/clipboard", function (S, Editor, KERange, KES) {
                 }
             }, 0);
         }
+    }
+
+    function isPlainText(html) {
+        if (UA.webkit) {
+            // Plain text or ( <div><br></div> and text inside <div> ).
+            if (!html.match(/^[^<]*$/g) && !html.match(/^(<div><br( ?\/)?><\/div>|<div>[^<]*<\/div>)*$/gi))
+                return 0;
+        } else if (UA.ie) {
+            // Text and <br> or ( text and <br> in <p> - paragraphs can be separated by new \r\n ).
+            if (!html.match(/^([^<]|<br( ?\/)?>)*$/gi) && !html.match(/^(<p>([^<]|<br( ?\/)?>)*<\/p>|(\r\n))*$/gi))
+                return 0;
+        } else if (UA.gecko || UA.opera) {
+            // Text or <br>.
+            if (!html.match(/^([^<]|<br( ?\/)?>)*$/gi))
+                return 0;
+        } else
+            return 0;
+
+        return 1;
+    }
+
+    // plain text to html
+    function plainTextToHtml(html) {
+        html = html.replace(/\s+/g, ' ')
+            .replace(/> +</g, '><')
+            .replace(/<br ?\/>/gi, '<br>');
+
+        // no tags
+        if (html.match(/^[^<]$/)) {
+            return html;
+        }
+
+        // Webkit.
+        if (UA.webkit && html.indexOf('<div>') > -1) {
+            // Two line breaks create one paragraph in Webkit.
+            if (html.match(/<div>(?:<br>)?<\/div>/)) {
+                html = html.replace(/<div>(?:<br>)?<\/div>/g, function () {
+                    return '<p></p>';
+                });
+                html = html.replace(/<\/p><div>/g, '</p><p>').
+                    replace(/<\/div><p>/g, '</p><p>')
+                    .replace(/^<div>/, '<p>')
+                    .replace(/^<\/div>/, '</p>');
+            }
+
+            if (html.match(/<\/div><div>/)) {
+                html = html.replace(/<\/div><div>/g, '</p><p>')
+                    .replace(/^<div>/, '<p>')
+                    .replace(/^<\/div>/, '</p>');
+            }
+        }
+        // Opera and Firefox and enterMode != BR.
+        else if (UA.gecko || UA.opera) {
+            //  bogus <br>
+            if (UA.gecko) {
+                html = html.replace(/^<br><br>$/, '<br>');
+            }
+            if (html.indexOf('<br><br>') > -1) {
+                html = '<p>' + html.replace(/<br><br>/g, function () {
+                    return '</p><p>';
+                }) + '</p>';
+            }
+        }
+        return html;
+    }
+
+    function cleanPaste(html) {
+        var htmlMode = 0;
+        html = html.replace(/<span[^>]+_ke_bookmark[^<]*?<\/span>(&nbsp;)*/ig, '');
+        if (html.indexOf('Apple-') != -1) {
+            // replace webkit space
+            html = html.replace(/<span class="Apple-converted-space">&nbsp;<\/span>/gi, ' ');
+            html = html.replace(/<span class="Apple-tab-span"[^>]*>([^<]*)<\/span>/gi, function (all, spaces) {
+                // replace tabs with 4 spaces like firefox does.
+                return spaces.replace(/\t/g, new Array(5).join('&nbsp;'));
+            });
+            if (html.indexOf('<br class="Apple-interchange-newline">') > -1) {
+                htmlMode = 1;
+                html = html.replace(/<br class="Apple-interchange-newline">/, '');
+            }
+            html = html.replace(/(<[^>]+) class="Apple-[^"]*"/gi, '$1');
+        }
+
+        if (!htmlMode && isPlainText(html)) {
+            html = plainTextToHtml(html);
+        }
+
+        return html;
     }
 
     var lang = {
@@ -431,7 +516,7 @@ KISSY.add("editor/clipboard", function (S, Editor, KERange, KES) {
         }
     };
 }, {
-    requires: ['./base', './range', './selection','node']
+    requires: ['./base', './range', './selection', 'node']
 });
 /**
  * yiminghe@gmail.com note:

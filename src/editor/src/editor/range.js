@@ -112,6 +112,7 @@ KISSY.add("editor/range", function (S, Editor, Utils, Walker, ElementPath) {
 
     /**
      * Extract html content within range.
+     * @param {KISSY.Editor} self
      * @param {Number} action
      * 0 : delete
      * 1 : extract
@@ -988,7 +989,7 @@ KISSY.add("editor/range", function (S, Editor, Utils, Walker, ElementPath) {
         },
 
         /**
-         * Set the start posititon and then collapse range.
+         * Set the start position and then collapse range.
          * @param {KISSY.NodeList} node
          * @param {Number} position
          */

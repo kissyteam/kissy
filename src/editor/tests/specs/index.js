@@ -1,5 +1,6 @@
 KISSY.add(KISSY.noop,{
     requires:[
+        './back-color',
         './dom',
         './range',
         './style',

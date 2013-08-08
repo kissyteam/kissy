@@ -30,10 +30,6 @@ if (!loc.getQuery().has('build')) {
             "base": "/kissy/src/button/src/button",
             "ignorePackageNameInUri": 1
         },
-        "calendar": {
-            "base": "/kissy/src/calendar/src/calendar",
-            "ignorePackageNameInUri": 1
-        },
         "color": {
             "base": "/kissy/src/color/src/color",
             "ignorePackageNameInUri": 1
