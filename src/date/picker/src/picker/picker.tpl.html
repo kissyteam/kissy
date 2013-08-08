@@ -1,25 +1,24 @@
 <div class="{{getBaseCssClasses 'header'}}">
-    <a id="ks-date-picker-previous-month-{{id}}"
-       class="{{getBaseCssClasses 'prev-month'}}"
+    <a id="ks-date-picker-previous-month-btn-{{id}}"
+       class="{{getBaseCssClasses 'prev-month-btn'}}"
        href="#"
        role="button"
        title="{{previousMonthLabel}}"
        hidefocus="on">
     </a>
 
-    <div class="{{getBaseCssClasses 'month'}}">
-        <a class="{{getBaseCssClasses 'month-select'}}"
-           role="button"
-           href="#"
-           hidefocus="on"
-           title="{{monthSelectLabel}}"
-           id="ks-date-picker-month-select-{{id}}">
-            <span id="ks-date-picker-month-select-content-{{id}}">{{monthYearLabel}}</span>
-            <span class="{{getBaseCssClasses 'month-select-arrow'}}">x</span>
-        </a>
-    </div>
-    <a id="ks-date-picker-next-month-{{id}}"
-       class="{{getBaseCssClasses 'next-month'}}"
+    <a class="{{getBaseCssClasses 'month-select'}}"
+       role="button"
+       href="#"
+       hidefocus="on"
+       title="{{monthSelectLabel}}"
+       id="ks-date-picker-select-panel-{{id}}">
+        <span id="ks-date-picker-month-select-content-{{id}}">{{monthYearLabel}}</span>
+        <span class="{{getBaseCssClasses 'month-select-arrow'}}">x</span>
+    </a>
+
+    <a id="ks-date-picker-next-month-btn-{{id}}"
+       class="{{getBaseCssClasses 'next-month-btn'}}"
        href="#"
        role="button"
        title="{{nextMonthLabel}}"

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 31 11:43
+build time: Aug 8 18:23
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -3167,6 +3167,9 @@ KISSY.add('dom/base/style', function (S, Dom, undefined) {
         if (Dom.css(el, 'position') == 'fixed') {
             offset = el.getBoundingClientRect();
         } else {
+            // if offsetParent is body and body has margin
+            // then all browsers are different
+            // make sure set html,body {margin:0;padding:0;border:0;}
             offsetParent = getOffsetParent(el);
             offset = Dom.offset(el);
             parentOffset = Dom.offset(offsetParent);
@@ -3430,7 +3433,9 @@ KISSY.add('dom/base/selector', function (S, Dom, undefined) {
     function hasSingleClass(el, cls) {
         // consider xml
         var className = el && (el.className || getAttr(el, 'class'));
-        return className && (SPACE + className + SPACE).indexOf(SPACE + cls + SPACE) > -1;
+        return className &&
+            (className = className.replace(/[\r\t\n]/g, SPACE)) &&
+            (SPACE + className + SPACE).indexOf(SPACE + cls + SPACE) > -1;
     }
 
     function getAttr(el, name) {

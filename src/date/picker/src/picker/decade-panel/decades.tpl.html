@@ -1,0 +1,24 @@
+{{#each decades}}
+<tr role="row">
+    {{#each decades[xindex]}}
+    <td role="gridcell"
+        class="{{getBaseCssClasses 'cell'}}
+        {{#if startDecade<=year&&year<=endDecade}}
+         {{getBaseCssClasses 'selected-cell'}}
+        {{/if}}
+        {{#if startDecade<startYear}}
+         {{getBaseCssClasses 'last-century-cell'}}
+        {{/if}}
+        {{#if endDecade>endYear}}
+         {{getBaseCssClasses 'next-century-cell'}}
+        {{/if}}
+        ">
+        <a hidefocus="on"
+           href="#"
+           class="{{getBaseCssClasses 'decade'}}">
+            {{startDecade}}-{{endDecade}}
+        </a>
+    </td>
+    {{/each}}
+</tr>
+{{/each}}
