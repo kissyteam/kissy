@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 25 22:25
+build time: Aug 6 22:07
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130725222521' will replace with current timestamp when compressing.
+         * NOTICE: '20130806220725' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130725222521',
+        __BUILD_TIME: '20130806220725',
         /**
          * KISSY Environment.
          * @private
@@ -3110,7 +3110,7 @@ var KISSY = (function (undefined) {
 
     function getIEVersion(ua) {
         var m, v;
-        if ((m = ua.match(/MSIE ([^;]*)|Trident.*; rv ([0-9.]+)/)) &&
+        if ((m = ua.match(/MSIE ([^;]*)|Trident.*; rv(?:\s|:)?([0-9.]+)/)) &&
             (v = (m[1] || m[2]))) {
             return numberify(v);
         }
@@ -3695,6 +3695,24 @@ var KISSY = (function (undefined) {
         return s;
     }
 
+    function pluginAlias(runtime,name) {
+        var index = name.indexOf('!');
+        if (index != -1) {
+            var pluginName = name.substring(0,index);
+            name = name.substring(index + 1);
+            S.use(pluginName, {
+                sync: true,
+                success: function (S, Plugin) {
+                    if (Plugin.alias) {
+                        //noinspection JSReferencingMutableVariableFromClosure
+                        name = Plugin.alias(runtime,name, pluginName);
+                    }
+                }
+            });
+        }
+        return name;
+    }
+
     S.mix(Utils, {
 
         /**
@@ -3955,7 +3973,7 @@ var KISSY = (function (undefined) {
                     // conditional loader
                     // requires:[window.localStorage?"local-storage":""]
                     if (modNames[i]) {
-                        ret.push(indexMap(modNames[i]));
+                        ret.push(pluginAlias(runtime,indexMap(modNames[i])));
                     }
                 }
             }
@@ -4107,12 +4125,12 @@ var KISSY = (function (undefined) {
                 );
         },
 
-        getPackageUri:function(){
-            var self=this;
-            if(self.packageUri){
+        getPackageUri: function () {
+            var self = this;
+            if (self.packageUri) {
                 return self.packageUri;
             }
-            return self.packageUri=new S.Uri(this.getPrefixUriForCombo());
+            return self.packageUri = new S.Uri(this.getPrefixUriForCombo());
         },
 
         /**
@@ -4178,7 +4196,6 @@ var KISSY = (function (undefined) {
     }
 
     S.augment(Module, {
-
         addCallback: function (callback) {
             this.callbacks.push(callback);
         },
@@ -4226,11 +4243,7 @@ var KISSY = (function (undefined) {
             return v;
         },
 
-        /**
-         * Get the fullpath of current module if load dynamically
-         * @return {String}
-         */
-        getFullPath: function () {
+        getFullPathUri: function () {
             var self = this,
                 t,
                 fullpathUri,
@@ -4238,21 +4251,39 @@ var KISSY = (function (undefined) {
                 packageInfo,
                 packageName,
                 path;
+            if (!self.fullpathUri) {
+                if (self.fullpath) {
+                    fullpathUri = new S.Uri(self.fullpath);
+                } else {
+                    packageInfo = self.getPackage();
+                    packageBaseUri = packageInfo.getBaseUri();
+                    path = self.getPath();
+                    // #262
+                    if (packageInfo.isIgnorePackageNameInUri() &&
+                        // native mod does not allow ignore package name
+                        (packageName = packageInfo.getName())) {
+                        path = Path.relative(packageName, path);
+                    }
+                    fullpathUri = packageBaseUri.resolve(path);
+                    if (t = self.getTag()) {
+                        t += '.' + self.getType();
+                        fullpathUri.query.set('t', t);
+                    }
+                }
+                self.fullpathUri = fullpathUri;
+            }
+            return self.fullpathUri;
+        },
+
+        /**
+         * Get the fullpath of current module if load dynamically
+         * @return {String}
+         */
+        getFullPath: function () {
+            var self = this,
+                fullpathUri;
             if (!self.fullpath) {
-                packageInfo = self.getPackage();
-                packageBaseUri = packageInfo.getBaseUri();
-                path = self.getPath();
-                // #262
-                if (packageInfo.isIgnorePackageNameInUri() &&
-                    // native mod does not allow ignore package name
-                    (packageName = packageInfo.getName())) {
-                    path = Path.relative(packageName, path);
-                }
-                fullpathUri = packageBaseUri.resolve(path);
-                if (t = self.getTag()) {
-                    t += '.' + self.getType();
-                    fullpathUri.query.set('t', t);
-                }
+                fullpathUri = self.getFullPathUri();
                 self.fullpath = Utils.getMappedPath(self.runtime, fullpathUri.toString());
             }
             return self.fullpath;
@@ -4313,7 +4344,6 @@ var KISSY = (function (undefined) {
             return self.charset || self.getPackage().getCharset();
         },
 
-
         /**
          * Get module objects required by this one
          * @return {KISSY.Loader.Module[]}
@@ -4338,7 +4368,6 @@ var KISSY = (function (undefined) {
             }
             return requiresWithAlias;
         },
-
 
         getNormalizedRequires: function () {
             var self = this,
@@ -4858,7 +4887,6 @@ var KISSY = (function (undefined) {
  * @author yiminghe@gmail.com
  */
 (function (S, undefined) {
-
     var Loader, Status, Utils, UA,
     // standard browser 如果 add 没有模块名，模块定义先暂存这里
         currentMod = undefined,
@@ -4893,7 +4921,6 @@ var KISSY = (function (undefined) {
     }
 
     S.augment(SimpleLoader, {
-
         use: function (normalizedModNames) {
             var i,
                 l = normalizedModNames.length;
@@ -4968,9 +4995,9 @@ var KISSY = (function (undefined) {
 
         // Load a single module.
         fetchModule: function (mod) {
-
             var self = this,
                 runtime = self.runtime,
+                timeout = runtime.Config.timeout,
                 modName = mod.getName(),
                 charset = mod.getCharset(),
                 url = mod.getFullPath(),
@@ -4988,6 +5015,7 @@ var KISSY = (function (undefined) {
                 attrs: ie ? {
                     'data-mod-name': modName
                 } : undefined,
+                timeout: timeout,
                 // syntaxError in all browser will trigger this
                 // same as #111 : https://github.com/kissyteam/kissy/issues/111
                 success: function () {
@@ -5038,9 +5066,7 @@ var KISSY = (function (undefined) {
                 S.log(msg, 'error');
                 mod.status = ERROR;
             }
-
         }
-
     });
 
 // ie 特有，找到当前正在交互的脚本，根据脚本名确定模块名
@@ -5096,7 +5122,6 @@ var KISSY = (function (undefined) {
     };
 
     Loader.SimpleLoader = SimpleLoader;
-
 })(KISSY);
 
 /*
@@ -5115,7 +5140,7 @@ var KISSY = (function (undefined) {
  * @author yiminghe@gmail.com
  */
 (function (S) {
-    function loadScripts(rss, callback, charset) {
+    function loadScripts(rss, callback, charset, timeout) {
         var count = rss && rss.length,
             errorList = [],
             successList = [];
@@ -5128,6 +5153,7 @@ var KISSY = (function (undefined) {
 
         S.each(rss, function (rs) {
             S.getScript(rs.fullpath, {
+                timeout: timeout,
                 success: function () {
                     successList.push(rs);
                     complete();
@@ -5219,6 +5245,7 @@ var KISSY = (function (undefined) {
             var self = this,
                 allModNames,
                 comboUrls,
+                timeout = S.Config.timeout,
                 runtime = self.runtime;
 
             allModNames = S.keys(self.calculate(normalizedModNames));
@@ -5253,7 +5280,7 @@ var KISSY = (function (undefined) {
                             mod.notifyAll();
                         });
                     });
-                }, cssOne.charset);
+                }, cssOne.charset, timeout);
             });
 
             // jss css download in parallel
@@ -5278,7 +5305,7 @@ var KISSY = (function (undefined) {
                             mod.notifyAll();
                         });
                     });
-                }, jsOne.charset);
+                }, jsOne.charset, timeout);
             });
         },
 
@@ -5763,7 +5790,8 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20130725222521'
+            lang: 'zh-cn',
+            tag: '20130806220725'
         }, getBaseInfo()));
     }
 
@@ -5777,6 +5805,14 @@ var KISSY = (function (undefined) {
  - refactor merge combo loader and simple loader
  - support error callback
  *//**
+ * i18n plugin for kissy loader
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('i18n', {
+    alias: function (S, name) {
+        return name + '/i18n/' + S.Config.lang;
+    }
+});/**
  * @ignore
  * web.js
  * @author lifesinger@gmail.com, yiminghe@gmail.com
@@ -6074,10 +6110,6 @@ config({
 });
 /*Generated By KISSY Module Compiler*/
 config({
-'calendar': {requires: ['node','event']}
-});
-/*Generated By KISSY Module Compiler*/
-config({
 'color': {requires: ['base']}
 });
 /*Generated By KISSY Module Compiler*/
@@ -6113,7 +6145,15 @@ config({
 });
 /*Generated By KISSY Module Compiler*/
 config({
-'date/gregorian': {requires: ['intl/date/zh-cn']}
+'date/format': {requires: ['date/gregorian','i18n!date']}
+});
+/*Generated By KISSY Module Compiler*/
+config({
+'date/gregorian': {requires: ['i18n!date']}
+});
+/*Generated By KISSY Module Compiler*/
+config({
+'date/picker': {requires: ['date/gregorian','component/control','date/format','i18n!date','i18n!date/picker']}
 });
 /*Generated By KISSY Module Compiler*/
 config({
@@ -6214,10 +6254,6 @@ config({
 });
 /*Generated By KISSY Module Compiler*/
 config({
-'intl/date-time-format': {requires: ['date/gregorian','intl/date/zh-cn']}
-});
-/*Generated By KISSY Module Compiler*/
-config({
 'io': {requires: ['dom','event']}
 });
 /*Generated By KISSY Module Compiler*/
@@ -6247,6 +6283,10 @@ config({
 /*Generated By KISSY Module Compiler*/
 config({
 'resizable': {requires: ['node','rich-base','dd']}
+});
+/*Generated By KISSY Module Compiler*/
+config({
+'resizable/plugin/proxy': {requires: ['base','node']}
 });
 /*Generated By KISSY Module Compiler*/
 config({

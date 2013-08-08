@@ -18,6 +18,10 @@ tests.push('/kissy/src/button/tests/runner/test.jss');
 
 tests.push('/kissy/src/button/tests/runner/test.jss?build');
 
+tests.push('/kissy/src/color/tests/runner/test.jss');
+
+tests.push('/kissy/src/color/tests/runner/test.jss?build');
+
 tests.push('/kissy/src/combobox/tests/runner/test.jss');
 
 tests.push('/kissy/src/combobox/tests/runner/test.jss?build');
@@ -29,6 +33,10 @@ tests.push('/kissy/src/component/tests/runner/test.jss?build');
 tests.push('/kissy/src/cookie/tests/runner/test.jss');
 
 tests.push('/kissy/src/cookie/tests/runner/test.jss?build');
+
+tests.push('/kissy/src/date/format/tests/runner/test.jss');
+
+tests.push('/kissy/src/date/format/tests/runner/test.jss?build');
 
 tests.push('/kissy/src/date/gregorian/tests/runner/test.jss');
 
@@ -97,10 +105,6 @@ tests.push('/kissy/src/event/sub-modules/dom/sub-modules/touch/tests/runner/test
 tests.push('/kissy/src/html-parser/tests/runner/test.jss');
 
 tests.push('/kissy/src/html-parser/tests/runner/test.jss?build');
-
-tests.push('/kissy/src/intl/date-time-format/tests/runner/test.jss');
-
-tests.push('/kissy/src/intl/date-time-format/tests/runner/test.jss?build');
 
 tests.push('/kissy/src/io/tests/runner/test.jss');
 

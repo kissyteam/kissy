@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 30 19:23
+build time: Aug 1 15:51
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -54,11 +54,10 @@ KISSY.add('scroll-view/plugin/scrollbar/render', function (S, Control, ScrollBar
                 control = self.control,
                 scrollView = control.get('scrollView'),
                 trackEl = control.trackEl,
-                isX = control.isX,
-                scrollWHProperty = isX ? 'scrollWidth' : 'scrollHeight',
-                whProperty = isX ? 'width' : 'height',
-                clientWhProperty = isX ? 'clientWidth' : 'clientHeight',
-                dragWhProperty = control.dragWhProperty,
+                scrollWHProperty = control.scrollWHProperty,
+                whProperty = control.whProperty,
+                clientWHProperty = control.clientWHProperty,
+                dragWHProperty = control.dragWHProperty,
                 ratio,
                 trackElSize,
                 barSize,
@@ -66,13 +65,13 @@ KISSY.add('scroll-view/plugin/scrollbar/render', function (S, Control, ScrollBar
 
             control.scrollView = scrollView;
 
-            if (scrollView.isAxisEnabled(control.get('axis'))) {
+            if (scrollView.allowScroll[control.scrollType]) {
                 control.scrollLength = scrollView[scrollWHProperty];
                 trackElSize = control.trackElSize =
                     whProperty == 'width' ? trackEl.offsetWidth : trackEl.offsetHeight;
-                ratio = scrollView[clientWhProperty] / control.scrollLength;
+                ratio = scrollView[clientWHProperty] / control.scrollLength;
                 barSize = ratio * trackElSize;
-                control.set(dragWhProperty, barSize);
+                control.set(dragWHProperty, barSize);
                 control.barSize = barSize;
                 self.syncOnScrollChange();
                 control.set('visible', true);
@@ -84,32 +83,32 @@ KISSY.add('scroll-view/plugin/scrollbar/render', function (S, Control, ScrollBar
         syncOnScrollChange: function () {
             var self = this,
                 control = self.control,
-                ltProperty = control.ltProperty,
+                scrollType = control.scrollType,
                 scrollView = control.scrollView,
-                dragLtProperty = control.dragLtProperty,
-                dragWhProperty = control.dragWhProperty,
+                dragLTProperty = control.dragLTProperty,
+                dragWHProperty = control.dragWHProperty,
                 trackElSize = control.trackElSize,
                 barSize = control.barSize,
                 contentSize = control.scrollLength,
                 val = scrollView.get(control.scrollProperty),
                 maxScrollOffset = scrollView.maxScroll,
                 minScrollOffset = scrollView.minScroll,
-                minScroll = minScrollOffset[ltProperty],
-                maxScroll = maxScrollOffset[ltProperty],
+                minScroll = minScrollOffset[scrollType],
+                maxScroll = maxScrollOffset[scrollType],
                 dragVal;
             if (val > maxScroll) {
                 dragVal = maxScroll / contentSize * trackElSize;
-                control.set(dragWhProperty, barSize - (val - maxScroll));
+                control.set(dragWHProperty, barSize - (val - maxScroll));
                 // dragSizeAxis has minLength
-                control.set(dragLtProperty, dragVal + barSize - control.get(dragWhProperty));
+                control.set(dragLTProperty, dragVal + barSize - control.get(dragWHProperty));
             } else if (val < minScroll) {
                 dragVal = minScroll / contentSize * trackElSize;
-                control.set(dragWhProperty, barSize - (minScroll - val));
-                control.set(dragLtProperty, dragVal);
+                control.set(dragWHProperty, barSize - (minScroll - val));
+                control.set(dragLTProperty, dragVal);
             } else {
                 dragVal = val / contentSize * trackElSize;
-                control.set(dragLtProperty, dragVal);
-                control.set(dragWhProperty, barSize);
+                control.set(dragLTProperty, dragVal);
+                control.set(dragWHProperty, barSize);
             }
         },
 
@@ -170,14 +169,19 @@ KISSY.add('scroll-view/plugin/scrollbar/control', function (S, Node, DD, Control
     return Control.extend({
         initializer: function () {
             var self = this;
-            var isX = self.get('axis') == 'x';
-            self.isX = isX;
-            self.afterScrollChangeEvent = isX ? 'afterScrollLeftChange' : 'afterScrollTopChange';
-            self.scrollProperty = isX ? 'scrollLeft' : 'scrollTop';
-            self.ltProperty = isX ? 'left' : 'top';
-            self.pageXyProperty = isX ? 'pageX' : 'pageY';
-            self.dragWhProperty = isX ? 'dragWidth' : 'dragHeight';
-            self.dragLtProperty = isX ? 'dragLeft' : 'dragTop';
+            var scrollType = self.scrollType = self.get('axis') == 'x' ? 'left' : 'top';
+            var ucScrollType = S.ucfirst(scrollType);
+            self.pageXyProperty = scrollType == 'left' ? 'pageX' : 'pageY';
+            var wh = self.whProperty = scrollType == 'left' ? 'width' : 'height';
+            var ucWH = S.ucfirst(wh);
+            self.afterScrollChangeEvent = 'afterScroll' + ucScrollType + 'Change';
+            self.scrollProperty = 'scroll' + ucScrollType;
+
+            self.dragWHProperty = 'drag' + ucWH;
+            self.dragLTProperty = 'drag' + ucScrollType;
+
+            self.clientWHProperty = 'client' + ucWH;
+            self.scrollWHProperty = 'scroll' + ucWH;
         },
 
         bindUI: function () {
@@ -220,7 +224,7 @@ KISSY.add('scroll-view/plugin/scrollbar/control', function (S, Node, DD, Control
         onDragStart: function () {
             var self = this,
                 scrollView = self.scrollView;
-            self.startMousePos = self.dd.get('startMousePos')[self.ltProperty];
+            self.startMousePos = self.dd.get('startMousePos')[self.scrollType];
             self.startScroll = scrollView.get(self.scrollProperty);
         },
 
@@ -228,9 +232,9 @@ KISSY.add('scroll-view/plugin/scrollbar/control', function (S, Node, DD, Control
             var self = this,
                 diff = e[self.pageXyProperty] - self.startMousePos,
                 scrollView = self.scrollView,
-                ltProperty = self.ltProperty,
+                scrollType = self.scrollType,
                 scrollCfg = {};
-            scrollCfg[ltProperty] = self.startScroll + diff / self.trackElSize * self.scrollLength;
+            scrollCfg[scrollType] = self.startScroll + diff / self.trackElSize * self.scrollLength;
             scrollView.scrollToWithBounds(scrollCfg);
         },
 
@@ -256,14 +260,14 @@ KISSY.add('scroll-view/plugin/scrollbar/control', function (S, Node, DD, Control
             var self = this,
                 scrollView = self.scrollView,
                 scrollProperty = self.scrollProperty,
-                ltProperty = self.ltProperty,
-                step = scrollView.getScrollStep()[self.ltProperty],
+                scrollType = self.scrollType,
+                step = scrollView.getScrollStep()[self.scrollType],
                 target = e.target,
                 direction = (target == self.downBtn || self.$downBtn.contains(target)) ? 1 : -1;
             clearInterval(self.mouseInterval);
             function doScroll() {
                 var scrollCfg = {};
-                scrollCfg[ltProperty] = scrollView.get(scrollProperty) + direction * step;
+                scrollCfg[scrollType] = scrollView.get(scrollProperty) + direction * step;
                 scrollView.scrollToWithBounds(scrollCfg);
             }
 
@@ -282,16 +286,16 @@ KISSY.add('scroll-view/plugin/scrollbar/control', function (S, Node, DD, Control
             if (dragEl == target || $dragEl.contains(target)) {
                 return;
             }
-            var ltProperty = self.ltProperty,
+            var scrollType = self.scrollType,
                 pageXy = self.pageXyProperty,
                 trackEl = self.$trackEl,
                 scrollView = self.scrollView,
             // align mouse with bar center
                 per = Math.max(0, (e[pageXy] -
-                    trackEl.offset()[ltProperty] -
+                    trackEl.offset()[scrollType] -
                     self.barSize / 2) / self.trackElSize),
                 scrollCfg = {};
-            scrollCfg[ltProperty] = per * self.scrollLength;
+            scrollCfg[scrollType] = per * self.scrollLength;
             scrollView.scrollToWithBounds(scrollCfg);
             // prevent drag
             e.halt();
@@ -303,7 +307,7 @@ KISSY.add('scroll-view/plugin/scrollbar/control', function (S, Node, DD, Control
 
         onScrollEnd: function (e) {
             var self = this;
-            if (self.hideFn && self.get('axis') == e.axis) {
+            if (self.hideFn) {
                 self.startHideTimer();
             }
         },
@@ -313,7 +317,7 @@ KISSY.add('scroll-view/plugin/scrollbar/control', function (S, Node, DD, Control
             // only show when scroll
             var self = this;
             var scrollView = self.scrollView;
-            if (!scrollView.isAxisEnabled(self.isX ? 'x' : 'y')) {
+            if (!scrollView.allowScroll[self.scrollType]) {
                 return;
             }
             self.clearHideTimer();
@@ -459,7 +463,7 @@ KISSY.add('scroll-view/plugin/scrollbar', function (S, Base, ScrollBar) {
 
             if (self.scrollBarX) {
                 self.scrollBarX.sync();
-            } else if (scrollView.isAxisEnabled('x')) {
+            } else if (scrollView.allowScroll['left']) {
                 my = {
                     axis: 'x'
                 };
@@ -471,7 +475,7 @@ KISSY.add('scroll-view/plugin/scrollbar', function (S, Base, ScrollBar) {
 
             if (self.scrollBarY) {
                 self.scrollBarY.sync();
-            } else if (scrollView.isAxisEnabled('y')) {
+            } else if (scrollView.allowScroll['top']) {
                 my = {
                     axis: 'y'
                 };

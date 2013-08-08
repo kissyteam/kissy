@@ -29,7 +29,7 @@ KISSY.add('scroll-view/plugin/scrollbar', function (S, Base, ScrollBar) {
 
             if (self.scrollBarX) {
                 self.scrollBarX.sync();
-            } else if (scrollView.isAxisEnabled('x')) {
+            } else if (scrollView.allowScroll['left']) {
                 my = {
                     axis: 'x'
                 };
@@ -41,7 +41,7 @@ KISSY.add('scroll-view/plugin/scrollbar', function (S, Base, ScrollBar) {
 
             if (self.scrollBarY) {
                 self.scrollBarY.sync();
-            } else if (scrollView.isAxisEnabled('y')) {
+            } else if (scrollView.allowScroll['top']) {
                 my = {
                     axis: 'y'
                 };

@@ -15,7 +15,7 @@ KISSY.add("overlay/dialog-render", function (S, OverlayRender, DialogTpl) {
         beforeCreateDom: function (renderData) {
             S.mix(renderData.elAttrs, {
                 role: 'dialog',
-                'aria-labelledby': 'ks-stdmod-header' + this.get('id')
+                'aria-labelledby': 'ks-stdmod-header-' + this.control.get('id')
             });
         },
 

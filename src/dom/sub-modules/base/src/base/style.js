@@ -626,6 +626,9 @@ KISSY.add('dom/base/style', function (S, Dom, undefined) {
         if (Dom.css(el, 'position') == 'fixed') {
             offset = el.getBoundingClientRect();
         } else {
+            // if offsetParent is body and body has margin
+            // then all browsers are different
+            // make sure set html,body {margin:0;padding:0;border:0;}
             offsetParent = getOffsetParent(el);
             offset = Dom.offset(el);
             parentOffset = Dom.offset(offsetParent);

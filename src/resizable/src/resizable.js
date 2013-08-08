@@ -4,7 +4,6 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add("resizable", function (S, Node, RichBase, DD, undefined) {
-
     var $ = Node.all,
         i,
         j,
@@ -50,7 +49,6 @@ KISSY.add("resizable", function (S, Node, RichBase, DD, undefined) {
             }
         };
 
-
     for (i = 0; i < horizontal.length; i++) {
         for (j = 0; j < vertical.length; j++) {
             (function (h, v) {
@@ -78,6 +76,7 @@ KISSY.add("resizable", function (S, Node, RichBase, DD, undefined) {
             node = self.get('node'),
             handlers = self.get('handlers'),
             preserveRatio,
+            dragConfig = self.get('dragConfig'),
             prefixCls = self.get('prefixCls'),
             prefix = prefixCls + CLS_PREFIX;
         for (i = 0; i < handlers.length; i++) {
@@ -88,11 +87,11 @@ KISSY.add("resizable", function (S, Node, RichBase, DD, undefined) {
                     "-" + hc +
                     "'></div>")
                     .prependTo(node, undefined),
-                dd = dds[hc] = new Draggable({
+                dd = dds[hc] = new Draggable(S.mix({
                     node: el,
                     cursor: null,
                     groups: false
-                });
+                }, dragConfig));
             (function (hc, dd) {
                 var startEdgePos;
                 dd.on("drag", function (ev) {
@@ -107,15 +106,18 @@ KISSY.add("resizable", function (S, Node, RichBase, DD, undefined) {
                         diffL = ev.pageX - startEdgePos.left,
                         ot = self._top,
                         ol = self._left,
-                        pos = hcNormal[hc](minW, maxW, minH, maxH, ot, ol, ow, oh, diffT, diffL, preserveRatio);
+                        region = {},
+                        pos = hcNormal[hc](minW, maxW, minH, maxH,
+                            ot, ol, ow, oh, diffT, diffL, preserveRatio);
                     for (i = 0; i < ATTRS_ORDER.length; i++) {
                         if (pos[i]) {
-                            node.css(ATTRS_ORDER[i], pos[i]);
+                            region[ATTRS_ORDER[i]] = pos[i];
                         }
                     }
-                    self.fire('resize', {
+                    self.fire('beforeResize', {
                         handler: hc,
-                        dd: dd
+                        dd: dd,
+                        region: region
                     });
                 });
                 dd.on("dragstart", function () {
@@ -146,9 +148,20 @@ KISSY.add("resizable", function (S, Node, RichBase, DD, undefined) {
      * @extends KISSY.Base
      */
     var Resizable = RichBase.extend({
-
         initializer: function () {
             this['dds'] = {};
+            this.publish('beforeResize', {
+                defaultFn: this._onBeforeResize
+            })
+        },
+
+        _onBeforeResize: function (e) {
+            this.get('node').css(e.region);
+            this.fire('resize', {
+                handler: e.hc,
+                dd: e.dd,
+                region: e.region
+            });
         },
 
         _onSetNode: function () {
@@ -172,9 +185,7 @@ KISSY.add("resizable", function (S, Node, RichBase, DD, undefined) {
                 delete dds[d];
             }
         }
-
     }, {
-
         name: 'Resizable',
 
         ATTRS: {
@@ -191,7 +202,16 @@ KISSY.add("resizable", function (S, Node, RichBase, DD, undefined) {
                     return $(v);
                 }
             },
+            /**
+             * config for internal drag object
+             * @cfg {Object} dragConfig
+             */
+            /**
+             * @ignore
+             */
+            dragConfig: {
 
+            },
             /**
              * css prefix for handler elements.
              * @cfg {String} prefixCls
@@ -343,6 +363,6 @@ KISSY.add("resizable", function (S, Node, RichBase, DD, undefined) {
     };
 
     return Resizable;
-
-},
-    { requires: ["node", 'rich-base', "dd"] });
+}, {
+    requires: ["node", 'rich-base', "dd"]
+});

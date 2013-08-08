@@ -92,7 +92,6 @@ KISSY.add('dd/plugin/proxy', function (S, Node, Base, DD) {
          * @private
          */
         pluginInitializer: function (drag) {
-
             var self = this, hideNodeOnDrag = self.get('hideNodeOnDrag');
 
             function start() {
@@ -103,7 +102,6 @@ KISSY.add('dd/plugin/proxy', function (S, Node, Base, DD) {
                     if (typeof node === 'function') {
                         node = node(drag);
                         node.addClass('ks-dd-proxy');
-                        node.css('position', 'absolute');
                         self.set('proxyNode', node);
                     }
                 } else {
@@ -139,7 +137,7 @@ KISSY.add('dd/plugin/proxy', function (S, Node, Base, DD) {
             }
 
             drag['on']('dragstart' + PROXY_EVENT, start)
-                .on('dragend' + PROXY_EVENT, end);
+                ['on']('dragend' + PROXY_EVENT, end);
         },
         /**
          * make this draggable object unproxied

@@ -13,14 +13,19 @@ KISSY.add('scroll-view/plugin/scrollbar/control', function (S, Node, DD, Control
     return Control.extend({
         initializer: function () {
             var self = this;
-            var isX = self.get('axis') == 'x';
-            self.isX = isX;
-            self.afterScrollChangeEvent = isX ? 'afterScrollLeftChange' : 'afterScrollTopChange';
-            self.scrollProperty = isX ? 'scrollLeft' : 'scrollTop';
-            self.ltProperty = isX ? 'left' : 'top';
-            self.pageXyProperty = isX ? 'pageX' : 'pageY';
-            self.dragWhProperty = isX ? 'dragWidth' : 'dragHeight';
-            self.dragLtProperty = isX ? 'dragLeft' : 'dragTop';
+            var scrollType = self.scrollType = self.get('axis') == 'x' ? 'left' : 'top';
+            var ucScrollType = S.ucfirst(scrollType);
+            self.pageXyProperty = scrollType == 'left' ? 'pageX' : 'pageY';
+            var wh = self.whProperty = scrollType == 'left' ? 'width' : 'height';
+            var ucWH = S.ucfirst(wh);
+            self.afterScrollChangeEvent = 'afterScroll' + ucScrollType + 'Change';
+            self.scrollProperty = 'scroll' + ucScrollType;
+
+            self.dragWHProperty = 'drag' + ucWH;
+            self.dragLTProperty = 'drag' + ucScrollType;
+
+            self.clientWHProperty = 'client' + ucWH;
+            self.scrollWHProperty = 'scroll' + ucWH;
         },
 
         bindUI: function () {
@@ -63,7 +68,7 @@ KISSY.add('scroll-view/plugin/scrollbar/control', function (S, Node, DD, Control
         onDragStart: function () {
             var self = this,
                 scrollView = self.scrollView;
-            self.startMousePos = self.dd.get('startMousePos')[self.ltProperty];
+            self.startMousePos = self.dd.get('startMousePos')[self.scrollType];
             self.startScroll = scrollView.get(self.scrollProperty);
         },
 
@@ -71,9 +76,9 @@ KISSY.add('scroll-view/plugin/scrollbar/control', function (S, Node, DD, Control
             var self = this,
                 diff = e[self.pageXyProperty] - self.startMousePos,
                 scrollView = self.scrollView,
-                ltProperty = self.ltProperty,
+                scrollType = self.scrollType,
                 scrollCfg = {};
-            scrollCfg[ltProperty] = self.startScroll + diff / self.trackElSize * self.scrollLength;
+            scrollCfg[scrollType] = self.startScroll + diff / self.trackElSize * self.scrollLength;
             scrollView.scrollToWithBounds(scrollCfg);
         },
 
@@ -99,14 +104,14 @@ KISSY.add('scroll-view/plugin/scrollbar/control', function (S, Node, DD, Control
             var self = this,
                 scrollView = self.scrollView,
                 scrollProperty = self.scrollProperty,
-                ltProperty = self.ltProperty,
-                step = scrollView.getScrollStep()[self.ltProperty],
+                scrollType = self.scrollType,
+                step = scrollView.getScrollStep()[self.scrollType],
                 target = e.target,
                 direction = (target == self.downBtn || self.$downBtn.contains(target)) ? 1 : -1;
             clearInterval(self.mouseInterval);
             function doScroll() {
                 var scrollCfg = {};
-                scrollCfg[ltProperty] = scrollView.get(scrollProperty) + direction * step;
+                scrollCfg[scrollType] = scrollView.get(scrollProperty) + direction * step;
                 scrollView.scrollToWithBounds(scrollCfg);
             }
 
@@ -125,16 +130,16 @@ KISSY.add('scroll-view/plugin/scrollbar/control', function (S, Node, DD, Control
             if (dragEl == target || $dragEl.contains(target)) {
                 return;
             }
-            var ltProperty = self.ltProperty,
+            var scrollType = self.scrollType,
                 pageXy = self.pageXyProperty,
                 trackEl = self.$trackEl,
                 scrollView = self.scrollView,
             // align mouse with bar center
                 per = Math.max(0, (e[pageXy] -
-                    trackEl.offset()[ltProperty] -
+                    trackEl.offset()[scrollType] -
                     self.barSize / 2) / self.trackElSize),
                 scrollCfg = {};
-            scrollCfg[ltProperty] = per * self.scrollLength;
+            scrollCfg[scrollType] = per * self.scrollLength;
             scrollView.scrollToWithBounds(scrollCfg);
             // prevent drag
             e.halt();
@@ -144,9 +149,9 @@ KISSY.add('scroll-view/plugin/scrollbar/control', function (S, Node, DD, Control
             clearInterval(this.mouseInterval);
         },
 
-        onScrollEnd: function (e) {
+        onScrollEnd: function () {
             var self = this;
-            if (self.hideFn && self.get('axis') == e.axis) {
+            if (self.hideFn) {
                 self.startHideTimer();
             }
         },
@@ -156,7 +161,7 @@ KISSY.add('scroll-view/plugin/scrollbar/control', function (S, Node, DD, Control
             // only show when scroll
             var self = this;
             var scrollView = self.scrollView;
-            if (!scrollView.isAxisEnabled(self.isX ? 'x' : 'y')) {
+            if (!scrollView.allowScroll[self.scrollType]) {
                 return;
             }
             self.clearHideTimer();

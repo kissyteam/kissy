@@ -9,7 +9,6 @@ KISSY.add(function (S, Node, DD, Proxy) {
         Dom = S.DOM;
     var ie = document['documentMode'] || UA['ie'];
 
-
     describe("proxy", function () {
         var drag, dragXy, dragNode;
 

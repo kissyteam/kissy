@@ -35,11 +35,10 @@ KISSY.add('scroll-view/plugin/scrollbar/render', function (S, Control, ScrollBar
                 control = self.control,
                 scrollView = control.get('scrollView'),
                 trackEl = control.trackEl,
-                isX = control.isX,
-                scrollWHProperty = isX ? 'scrollWidth' : 'scrollHeight',
-                whProperty = isX ? 'width' : 'height',
-                clientWhProperty = isX ? 'clientWidth' : 'clientHeight',
-                dragWhProperty = control.dragWhProperty,
+                scrollWHProperty = control.scrollWHProperty,
+                whProperty = control.whProperty,
+                clientWHProperty = control.clientWHProperty,
+                dragWHProperty = control.dragWHProperty,
                 ratio,
                 trackElSize,
                 barSize,
@@ -47,13 +46,13 @@ KISSY.add('scroll-view/plugin/scrollbar/render', function (S, Control, ScrollBar
 
             control.scrollView = scrollView;
 
-            if (scrollView.isAxisEnabled(control.get('axis'))) {
+            if (scrollView.allowScroll[control.scrollType]) {
                 control.scrollLength = scrollView[scrollWHProperty];
                 trackElSize = control.trackElSize =
                     whProperty == 'width' ? trackEl.offsetWidth : trackEl.offsetHeight;
-                ratio = scrollView[clientWhProperty] / control.scrollLength;
+                ratio = scrollView[clientWHProperty] / control.scrollLength;
                 barSize = ratio * trackElSize;
-                control.set(dragWhProperty, barSize);
+                control.set(dragWHProperty, barSize);
                 control.barSize = barSize;
                 self.syncOnScrollChange();
                 control.set('visible', true);
@@ -65,32 +64,32 @@ KISSY.add('scroll-view/plugin/scrollbar/render', function (S, Control, ScrollBar
         syncOnScrollChange: function () {
             var self = this,
                 control = self.control,
-                ltProperty = control.ltProperty,
+                scrollType = control.scrollType,
                 scrollView = control.scrollView,
-                dragLtProperty = control.dragLtProperty,
-                dragWhProperty = control.dragWhProperty,
+                dragLTProperty = control.dragLTProperty,
+                dragWHProperty = control.dragWHProperty,
                 trackElSize = control.trackElSize,
                 barSize = control.barSize,
                 contentSize = control.scrollLength,
                 val = scrollView.get(control.scrollProperty),
                 maxScrollOffset = scrollView.maxScroll,
                 minScrollOffset = scrollView.minScroll,
-                minScroll = minScrollOffset[ltProperty],
-                maxScroll = maxScrollOffset[ltProperty],
+                minScroll = minScrollOffset[scrollType],
+                maxScroll = maxScrollOffset[scrollType],
                 dragVal;
             if (val > maxScroll) {
                 dragVal = maxScroll / contentSize * trackElSize;
-                control.set(dragWhProperty, barSize - (val - maxScroll));
+                control.set(dragWHProperty, barSize - (val - maxScroll));
                 // dragSizeAxis has minLength
-                control.set(dragLtProperty, dragVal + barSize - control.get(dragWhProperty));
+                control.set(dragLTProperty, dragVal + barSize - control.get(dragWHProperty));
             } else if (val < minScroll) {
                 dragVal = minScroll / contentSize * trackElSize;
-                control.set(dragWhProperty, barSize - (minScroll - val));
-                control.set(dragLtProperty, dragVal);
+                control.set(dragWHProperty, barSize - (minScroll - val));
+                control.set(dragLTProperty, dragVal);
             } else {
                 dragVal = val / contentSize * trackElSize;
-                control.set(dragLtProperty, dragVal);
-                control.set(dragWhProperty, barSize);
+                control.set(dragLTProperty, dragVal);
+                control.set(dragWHProperty, barSize);
             }
         },
 

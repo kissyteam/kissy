@@ -6,7 +6,6 @@ KISSY.add('scroll-view/base/render', function (S, Node, Container, ContentRender
 
     // http://www.html5rocks.com/en/tutorials/speed/html5/
     var Features = S.Features,
-        $ = Node.all,
 //        MARKER_CLS = 'ks-scrollview-marker',
         supportCss3 = Features.isTransformSupported(),
         transformProperty;
@@ -64,12 +63,12 @@ KISSY.add('scroll-view/base/render', function (S, Node, Container, ContentRender
                 top: 0
             };
 
-            var maxScrollX,
-                maxScrollY;
+            var maxScrollLeft,
+                maxScrollTop;
 
             control.maxScroll = {
-                left: maxScrollX = scrollWidth - clientWidth,
-                top: maxScrollY = scrollHeight - clientHeight
+                left: maxScrollLeft = scrollWidth - clientWidth,
+                top: maxScrollTop = scrollHeight - clientHeight
             };
 
             delete control.scrollStep;
@@ -84,15 +83,15 @@ KISSY.add('scroll-view/base/render', function (S, Node, Container, ContentRender
                         $contentEl.all(snap) :
                         $contentEl.children(),
                     pageIndex = control.get('pageIndex'),
-                    pagesXY = control.pagesXY = [];
+                    pagesOffset = control.pagesOffset = [];
                 pages.each(function (p, i) {
                     var offset = p.offset(),
-                        x = offset.left - elOffset.left,
-                        y = offset.top - elOffset.top;
-                    if (x <= maxScrollX && y <= maxScrollY) {
-                        pagesXY[i] = {
-                            x: x,
-                            y: y,
+                        left = offset.left - elOffset.left,
+                        top = offset.top - elOffset.top;
+                    if (left <= maxScrollLeft && top <= maxScrollTop) {
+                        pagesOffset[i] = {
+                            left: left,
+                            top: top,
                             index: i
                         };
                     }

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 25 22:17
+build time: Jul 31 11:43
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -988,7 +988,6 @@ KISSY.add('dom/base/class', function (S, Dom) {
  * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
 KISSY.add('dom/base/create', function (S, Dom, undefined) {
-
     var doc = S.Env.host.document,
         NodeType = Dom.NodeType,
         UA = S.UA,
@@ -1052,7 +1051,6 @@ KISSY.add('dom/base/create', function (S, Dom, undefined) {
              * @return {DocumentFragment|HTMLElement}
              */
             create: function (html, props, ownerDoc, _trim/*internal*/) {
-
                 var ret = null;
 
                 if (!html) {
@@ -1458,8 +1456,6 @@ KISSY.add('dom/base/create', function (S, Dom, undefined) {
     var creators = Dom._creators,
         create = Dom.create,
         creatorsMap = {
-            option: 'select',
-            optgroup: 'select',
             area: 'map',
             thead: 'table',
             td: 'tr',
@@ -1478,10 +1474,15 @@ KISSY.add('dom/base/create', function (S, Dom, undefined) {
             creators[p] = function (html, ownerDoc) {
                 return create('<' + tag + '>' +
                     html + '<' + '/' + tag + '>',
-                    null, ownerDoc);
+                    undefined, ownerDoc);
             };
         })(creatorsMap[p]);
     }
+
+    // https://github.com/kissyteam/kissy/issues/422
+    creatorsMap['option'] = creatorsMap['optgroup'] = function (html, ownerDoc) {
+        return create('<select multiple="multiple">' + html + '</select>', undefined, ownerDoc);
+    };
 
     return Dom;
 }, {

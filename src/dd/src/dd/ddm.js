@@ -132,6 +132,7 @@ KISSY.add('dd/ddm', function (S, Node, Base, undefined) {
      */
     function move(ev) {
         var self = this,
+            drag,
             __activeToDrag ,
             activeDrag;
 
@@ -140,22 +141,22 @@ KISSY.add('dd/ddm', function (S, Node, Base, undefined) {
             return;
         }
 
-        //防止 ie 选择到字
-        ev.preventDefault();
-
         // 先处理预备役，效率!
         if (__activeToDrag = self.__activeToDrag) {
-
             __activeToDrag._move(ev);
-
         } else if (activeDrag = self.get('activeDrag')) {
-
             activeDrag._move(ev);
             // for drop-free draggable performance
             if (self.__needDropCheck) {
                 notifyDropsMove(self, ev, activeDrag);
             }
+        }
 
+        drag = __activeToDrag || activeDrag;
+        // 防止 ie 选择到字
+        // touch need direction
+        if (drag && drag.get('preventDefaultOnMove')) {
+            ev.preventDefault();
         }
     }
 
@@ -164,13 +165,6 @@ KISSY.add('dd/ddm', function (S, Node, Base, undefined) {
     // 2013-01-24 更灵敏 for scroller in webkit
     var throttleMove = UA.ie && UA.ie < 8 ?
         S.throttle(move, MOVE_DELAY) : move;
-
-    function throttleMoveHandle(e) {
-        // android can not throttle
-        // need preventDefault on every event!
-        e.preventDefault();
-        throttleMove.call(this, e);
-    }
 
     function notifyDropsMove(self, ev, activeDrag) {
         var drops = self.get('validDrops'),
@@ -322,7 +316,7 @@ KISSY.add('dd/ddm', function (S, Node, Base, undefined) {
      */
     function registerEvent(self) {
         $doc.on(DRAG_END_EVENT, self._end, self);
-        $doc.on(DRAG_MOVE_EVENT, throttleMoveHandle, self);
+        $doc.on(DRAG_MOVE_EVENT, throttleMove, self);
         // ie6 will not response to event when cursor is out of window.
         if (UA.ie === 6) {
             doc.body.setCapture();
@@ -333,7 +327,7 @@ KISSY.add('dd/ddm', function (S, Node, Base, undefined) {
      结束时需要取消掉，防止平时无谓的监听
      */
     function unRegisterEvent(self) {
-        $doc.detach(DRAG_MOVE_EVENT, throttleMoveHandle, self);
+        $doc.detach(DRAG_MOVE_EVENT, throttleMove, self);
         $doc.detach(DRAG_END_EVENT, self._end, self);
         if (UA.ie === 6) {
             doc.body.releaseCapture();

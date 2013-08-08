@@ -52,6 +52,7 @@
             <path location="${component.src.dir}/loader/simple-loader.js"/>
             <path location="${component.src.dir}/loader/combo-loader.js"/>
             <path location="${component.src.dir}/loader/loader.js"/>
+            <path location="${component.src.dir}/loader/i18n.js"/>
             <!--kissy loader end-->
 
             <path location="${component.src.dir}/web.js"/>
@@ -94,6 +95,7 @@
             <path location="${component.src.dir}/loader/simple-loader.js"/>
             <path location="${component.src.dir}/loader/combo-loader.js"/>
             <path location="${component.src.dir}/loader/loader.js"/>
+            <path location="${component.src.dir}/loader/i18n.js"/>
             <!--kissy loader end-->
 
             <path location="${component.src.dir}/web.js"/>

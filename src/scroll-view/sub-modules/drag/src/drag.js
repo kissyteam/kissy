@@ -11,24 +11,24 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, DD, Node) {
 
     var MAX_SWIPE_VELOCITY = 6;
 
-    function onDragStart(self, e, axis) {
+    function onDragStart(self, e, scrollType) {
         var now = e.timeStamp,
-            scroll = self.get('scroll' + S.ucfirst(axis));
-        self.startScroll[axis] = scroll;
-        self.swipe[axis].startTime = now;
-        self.swipe[axis].scroll = scroll;
+            scroll = self.get('scroll' + S.ucfirst(scrollType));
+        self.startScroll[scrollType] = scroll;
+        self.swipe[scrollType].startTime = now;
+        self.swipe[scrollType].scroll = scroll;
     }
 
-    function onDragAxis(self, e, axis, startMousePos) {
-        if (forbidDrag(self, axis)) {
+    function onDragScroll(self, e, scrollType, startMousePos) {
+        if (forbidDrag(self, scrollType)) {
             return;
         }
-        var pageXy = axis == 'left' ? 'pageX' : 'pageY',
+        var pageOffsetProperty = scrollType == 'left' ? 'pageX' : 'pageY',
             lastPageXY = self.lastPageXY;
-        var diff = e[pageXy] - startMousePos[axis],
+        var diff = e[pageOffsetProperty] - startMousePos[scrollType],
         // touchend == last touchmove
             eqWithLastPoint,
-            scroll = self.startScroll[axis] - diff,
+            scroll = self.startScroll[scrollType] - diff,
             bound,
             now = e.timeStamp,
             minScroll = self.minScroll,
@@ -36,56 +36,55 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, DD, Node) {
             lastDirection = self.lastDirection,
             swipe = self.swipe,
             direction;
-        if (lastPageXY[pageXy]) {
-            eqWithLastPoint = e[pageXy] == lastPageXY[pageXy];
-            direction = ( e[pageXy] - lastPageXY[pageXy]) > 0;
+        if (lastPageXY[pageOffsetProperty]) {
+            eqWithLastPoint = e[pageOffsetProperty] == lastPageXY[pageOffsetProperty];
+            direction = ( e[pageOffsetProperty] - lastPageXY[pageOffsetProperty]) > 0;
         }
 
         if (!self.get('bounce')) {
-            scroll = Math.min(Math.max(scroll, minScroll[axis]), maxScroll[axis]);
+            scroll = Math.min(Math.max(scroll, minScroll[scrollType]), maxScroll[scrollType]);
         }
 
-        if (scroll < minScroll[axis]) {
-            bound = minScroll[axis] - scroll;
+        if (scroll < minScroll[scrollType]) {
+            bound = minScroll[scrollType] - scroll;
             bound *= OUT_OF_BOUND_FACTOR;
-            scroll = minScroll[axis] - bound;
-        } else if (scroll > maxScroll[axis]) {
-            bound = scroll - maxScroll[axis];
+            scroll = minScroll[scrollType] - bound;
+        } else if (scroll > maxScroll[scrollType]) {
+            bound = scroll - maxScroll[scrollType];
             bound *= OUT_OF_BOUND_FACTOR;
-            scroll = maxScroll[axis] + bound;
+            scroll = maxScroll[scrollType] + bound;
         }
 
-        var timeDiff = (now - swipe[axis].startTime);
+        var timeDiff = (now - swipe[scrollType].startTime);
 
         // swipe sample
-        if (!eqWithLastPoint && lastDirection[axis] !== undefined &&
-            lastDirection[axis] !== direction || timeDiff > SWIPE_SAMPLE_INTERVAL) {
-            swipe[axis].startTime = now;
-            swipe[axis].scroll = scroll;
+        if (!eqWithLastPoint && lastDirection[scrollType] !== undefined &&
+            lastDirection[scrollType] !== direction || timeDiff > SWIPE_SAMPLE_INTERVAL) {
+            swipe[scrollType].startTime = now;
+            swipe[scrollType].scroll = scroll;
             // S.log('record for swipe: ' + timeDiff + ' : ' + scroll);
         }
 
-        self.set(axis == 'left' ? 'scrollLeft' : 'scrollTop', scroll);
-        lastDirection[axis] = direction;
+        self.set('scroll' + S.ucfirst(scrollType), scroll);
+        lastDirection[scrollType] = direction;
 
-        lastPageXY[pageXy] = e[pageXy];
+        lastPageXY[pageOffsetProperty] = e[pageOffsetProperty];
     }
 
-    function forbidDrag(self, axis) {
-        var lockXY = axis == 'left' ? 'lockX' : 'lockY';
-        if (!self.allowScroll[axis] && self.get(lockXY)) {
+    function forbidDrag(self, scrollType) {
+        var lockXY = scrollType == 'left' ? 'lockX' : 'lockY';
+        if (!self.allowScroll[scrollType] && self.get(lockXY)) {
             return 1;
         }
         return 0;
     }
 
-    function onDragEndAxis(self, e, axis, endCallback) {
-        if (forbidDrag(self, axis)) {
+    function onDragEndAxis(self, e, scrollType, endCallback) {
+        if (forbidDrag(self, scrollType)) {
             endCallback();
             return;
         }
-        var isX = axis == 'left',
-            scrollAxis = 'scroll' + (isX ? 'Left' : 'Top'),
+        var scrollAxis = 'scroll' + S.ucfirst(scrollType),
             $contentEl = self.$contentEl,
             scroll = self.get(scrollAxis),
             anim = {},
@@ -94,14 +93,14 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, DD, Node) {
             now = e.timeStamp,
             swipe = self.swipe,
             bound;
-        if (scroll < minScroll[axis]) {
-            bound = minScroll[axis];
-        } else if (scroll > maxScroll[axis]) {
-            bound = maxScroll[axis];
+        if (scroll < minScroll[scrollType]) {
+            bound = minScroll[scrollType];
+        } else if (scroll > maxScroll[scrollType]) {
+            bound = maxScroll[scrollType];
         }
         if (bound !== undefined) {
             var scrollCfg = {};
-            scrollCfg[axis] = bound;
+            scrollCfg[scrollType] = bound;
             self.scrollTo(scrollCfg, {
                 duration: self.get('bounceDuration'),
                 easing: self.get('bounceEasing'),
@@ -111,13 +110,13 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, DD, Node) {
             return;
         }
 
-        if (self.pagesXY) {
+        if (self.pagesOffset) {
             endCallback();
             return;
         }
 
-        var duration = now - swipe[axis].startTime;
-        var distance = (scroll - swipe[axis].scroll);
+        var duration = now - swipe[scrollType].startTime;
+        var distance = (scroll - swipe[scrollType].scroll);
 
         // S.log('duration: ' + duration);
 
@@ -136,11 +135,11 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, DD, Node) {
         // S.log('velocity: ' + velocity);
         // S.log('after dragend scroll value: ' + scroll);
 
-        anim[axis] = {
+        anim[scrollType] = {
             fx: {
                 frame: makeMomentumFx(self, velocity, scroll,
-                    scrollAxis, maxScroll[axis],
-                    minScroll[axis])
+                    scrollAxis, maxScroll[scrollType],
+                    minScroll[scrollType])
             }
         };
 
@@ -230,10 +229,7 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, DD, Node) {
         // S.log('dragstart: ' + e.timeStamp);
         var self = this;
         initStates(self);
-        self.startMousePos = {
-            left: e.pageX,
-            top: e.pageY
-        };
+        self.startMousePos = self.dd.get('startMousePos');
         onDragStart(self, e, 'left');
         onDragStart(self, e, 'top');
         self.fire('scrollStart', {
@@ -246,8 +242,42 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, DD, Node) {
     function onDragHandler(e) {
         var self = this,
             startMousePos = self.startMousePos;
-        onDragAxis(self, e, 'left', startMousePos);
-        onDragAxis(self, e, 'top', startMousePos);
+
+        if (!startMousePos) {
+            return;
+        }
+
+        var lockX = self.get('lockX'),
+            lockY = self.get('lockY');
+
+        // if lockX or lockY then do not prevent native scroll on some condition
+        if (lockX || lockY) {
+            var dragInitDirection;
+
+            if (!(dragInitDirection = self.dragInitDirection)) {
+                self.dragInitDirection = dragInitDirection = Math.abs(
+                    e.pageX - startMousePos.left
+                ) > Math.abs(
+                    e.pageY - startMousePos.top
+                ) ? 'left' : 'top';
+            }
+
+            if (lockX && dragInitDirection == 'left' && !self.allowScroll[dragInitDirection]) {
+                self.dd.stopDrag();
+                return;
+            }
+
+            if (lockY && dragInitDirection == 'top' && !self.allowScroll[dragInitDirection]) {
+                self.dd.stopDrag();
+                return;
+            }
+        }
+
+        e.preventDefault();
+
+        onDragScroll(self, e, 'left', startMousePos);
+        onDragScroll(self, e, 'top', startMousePos);
+
         // touchmove frequency is slow on android
         self.fire('scrollMove', {
             pageX: e.pageX,
@@ -259,13 +289,11 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, DD, Node) {
         var self = this;
         var count = 0;
         var startMousePos = self.startMousePos;
-        var xDirection = startMousePos.left - e.pageX;
-        var yDirection = startMousePos.top - e.pageY;
+        var offsetX = startMousePos.left - e.pageX;
+        var offsetY = startMousePos.top - e.pageY;
         var snapThreshold = self.get('snapThreshold');
-        var xValid = Math.abs(xDirection) > snapThreshold;
-        var yValid = Math.abs(yDirection) > snapThreshold;
-        var allowX = self.allowScroll.left;
-        var allowY = self.allowScroll.top;
+        var allowX = self.allowScroll.left && Math.abs(offsetX) > snapThreshold;
+        var allowY = self.allowScroll.top && Math.abs(offsetY) > snapThreshold;
 
         self.fire('dragend', {
             pageX: e.pageX,
@@ -284,7 +312,7 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, DD, Node) {
                     });
                 }
 
-                if (!self.pagesXY) {
+                if (!self.pagesOffset) {
                     scrollEnd();
                     return;
                 }
@@ -302,35 +330,35 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, DD, Node) {
                     complete: scrollEnd
                 };
 
-                var pagesXY = self.pagesXY.concat([]);
+                var pagesOffset = self.pagesOffset.concat([]);
 
                 self.isScrolling = 0;
 
                 if (allowX || allowY) {
-                    if (allowX && allowY && xValid && yValid) {
+                    if (allowX && allowY) {
                         var prepareX = [],
                             newPageIndex = undefined;
                         var nowXY = {
-                            x: scrollLeft,
-                            y: scrollTop
+                            left: scrollLeft,
+                            top: scrollTop
                         };
-                        S.each(pagesXY, function (xy) {
-                            if (!xy) {
+                        S.each(pagesOffset, function (offset) {
+                            if (!offset) {
                                 return;
                             }
-                            if (xDirection > 0 && xy.x > nowXY.x) {
-                                prepareX.push(xy);
-                            } else if (xDirection < 0 && xy.x < nowXY.x) {
-                                prepareX.push(xy);
+                            if (offsetX > 0 && offset.left > nowXY.left) {
+                                prepareX.push(offset);
+                            } else if (offsetX < 0 && offset.left < nowXY.left) {
+                                prepareX.push(offset);
                             }
                         });
                         var min;
-                        if (yDirection > 0) {
+                        if (offsetY > 0) {
                             min = Number.MAX_VALUE;
                             S.each(prepareX, function (x) {
-                                if (x.y > nowXY.y) {
-                                    if (min < x.y - nowXY.y) {
-                                        min = x.y - nowXY.y;
+                                if (x.top > nowXY.top) {
+                                    if (min < x.top - nowXY.top) {
+                                        min = x.top - nowXY.top;
                                         newPageIndex = prepareX.index;
                                     }
                                 }
@@ -338,9 +366,9 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, DD, Node) {
                         } else {
                             min = Number.MAX_VALUE;
                             S.each(prepareX, function (x) {
-                                if (x.y < nowXY.y) {
-                                    if (min < nowXY.y - x.y) {
-                                        min = nowXY.y - x.y;
+                                if (x.top < nowXY.top) {
+                                    if (min < nowXY.top - x.top) {
+                                        min = nowXY.top - x.top;
                                         newPageIndex = prepareX.index;
                                     }
                                 }
@@ -357,10 +385,10 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, DD, Node) {
                             scrollEnd();
                         }
                     } else {
-                        if (allowX && xValid || allowY && yValid) {
+                        if (allowX || allowY) {
                             var toPageIndex = self._getPageIndexFromXY(
                                 allowX ? scrollLeft : scrollTop, allowX,
-                                allowX ? xDirection : yDirection);
+                                allowX ? offsetX : offsetY);
                             self.scrollToPage(toPageIndex, animCfg);
                         } else {
                             self.scrollToPage(self.get('pageIndex'));
@@ -385,7 +413,11 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, DD, Node) {
             top: {}
         };
 
+        self.startMousePos = null;
+
         self.startScroll = {};
+
+        self.dragInitDirection = null;
     }
 
     var ScrollViewDrag;
@@ -399,6 +431,8 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, DD, Node) {
                 var dd = self.dd = new DD.Draggable({
                     node: $contentEl,
                     groups: false,
+                    // do not prevent native scroll on some condition
+                    preventDefaultOnMove: false,
                     // allow nested scroll-view
                     halt: true
                 });

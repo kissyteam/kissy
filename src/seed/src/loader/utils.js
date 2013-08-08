@@ -47,6 +47,24 @@
         return s;
     }
 
+    function pluginAlias(runtime,name) {
+        var index = name.indexOf('!');
+        if (index != -1) {
+            var pluginName = name.substring(0,index);
+            name = name.substring(index + 1);
+            S.use(pluginName, {
+                sync: true,
+                success: function (S, Plugin) {
+                    if (Plugin.alias) {
+                        //noinspection JSReferencingMutableVariableFromClosure
+                        name = Plugin.alias(runtime,name, pluginName);
+                    }
+                }
+            });
+        }
+        return name;
+    }
+
     S.mix(Utils, {
 
         /**
@@ -307,7 +325,7 @@
                     // conditional loader
                     // requires:[window.localStorage?"local-storage":""]
                     if (modNames[i]) {
-                        ret.push(indexMap(modNames[i]));
+                        ret.push(pluginAlias(runtime,indexMap(modNames[i])));
                     }
                 }
             }

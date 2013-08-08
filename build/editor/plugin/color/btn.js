@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 25 22:18
+build time: Aug 7 14:01
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -14,7 +14,6 @@ build time: Jul 25 22:18
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, DialogLoader) {
-
     var Node = S.Node;
 
     var COLORS = [
@@ -67,7 +66,6 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, Dia
     initHTML();
 
     var ColorButton = Button.extend({
-
         initializer: function () {
             var self = this;
             self.on("blur", function () {
@@ -147,6 +145,10 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, Dia
                 self.fire('selectColor', {
                     color: t.style("background-color")
                 });
+            } else if (t.hasClass(prefixCls + 'editor-color-remove')) {
+                self.fire('selectColor', {
+                    color: null
+                });
             }
         },
 
@@ -202,7 +204,7 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, Dia
         var indicator = button.get('el').one('.' + prefix + 'color-indicator');
 
         arrow.on('selectColor', function (e) {
-            indicator.css('background-color', e.color);
+            indicator.css('background-color', e.color || defaultColor);
             runCmd(editor, cmdType, e.color);
         });
 
@@ -212,7 +214,6 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, Dia
     };
 
     return ColorButton;
-
 }, {
     requires: ['editor', '../button', '../overlay', '../dialog-loader']
 });

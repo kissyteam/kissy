@@ -1,10 +1,15 @@
-KISSY.add(function (S, Editor) {
+/**
+ * test style operation for editor
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(function (S, Editor, init) {
 
     var Style = Editor.Style;
     var Selection = Editor.Selection;
     var Range = Editor.Range;
     var $ = S.all;
     var UA = S.UA;
+    var editor;
 
     describe('Style', function () {
 
@@ -25,22 +30,32 @@ KISSY.add(function (S, Editor) {
                 ]
             });
 
+            it('setup', function () {
+                init(function (e) {
+                    editor = e;
+                });
+            });
+
             it('can process collapsed range in content strong', function () {
-                var p = $('<p>' +
-                    '1234<strong>56</strong></p>').appendTo('body');
-                var strong = p.one('strong');
-                var range = new Range(document);
-                range.setEnd(strong, 1);
-                range.select();
+                var p;
+                var document;
+                runs(function () {
+                    editor.setData('<p>' +
+                        '1234<strong>56</strong></p>');
+                });
                 waits(500);
                 runs(function () {
+                    p = editor.get('document').one('p');
+                    var strong = p.one('strong');
+                    document = editor.get('document')[0];
+                    var range = new Range(document);
+                    range.setEnd(strong, 1);
+                    range.select();
                     BOLD_STYLE.remove(document);
                 });
                 waits(500);
                 runs(function () {
-
                     var selection = new Selection(document);
-
                     var startElement = selection.getStartElement(),
                         currentPath = new Editor.ElementPath(startElement);
                     expect(BOLD_STYLE.checkActive(currentPath)).toBe(false);
@@ -54,35 +69,38 @@ KISSY.add(function (S, Editor) {
                         expect(p[0].childNodes.length).toBe(2);
                     }
 
-                    var range = selection.getRanges()[0];
-
+                    var range2 = selection.getRanges()[0];
                     if (UA.webkit) {
                         // http://code.google.com/p/chromium/issues/detail?id=149894
-                        expect(range.startContainer[0]).toBe(lastChild);
-                        expect(range.endContainer[0]).toBe(lastChild);
-                        expect(range.startOffset).toBe(1);
-                        expect(range.endOffset).toBe(1);
+                        expect(range2.startContainer[0]).toBe(lastChild);
+                        expect(range2.endContainer[0]).toBe(lastChild);
+                        expect(range2.startOffset).toBe(1);
+                        expect(range2.endOffset).toBe(1);
                     } else {
-                        expect(range.startContainer[0]).toBe(p[0]);
-                        expect(range.endContainer[0]).toBe(p[0]);
-                        expect(range.startOffset).toBe(2);
-                        expect(range.endOffset).toBe(2);
+                        expect(range2.startContainer[0]).toBe(p[0]);
+                        expect(range2.endContainer[0]).toBe(p[0]);
+                        expect(range2.startOffset).toBe(2);
+                        expect(range2.endOffset).toBe(2);
                     }
-                });
-
-                runs(function () {
-                    p.remove();
                 });
             });
 
 
             it('can process collapsed range in empty strong', function () {
-                var p = $('<p>' +
-                    '1234<strong>\u200b</strong></p>').appendTo('body');
-                var strong = p.one('strong');
-                var range = new Range(document);
-                range.setEnd(strong, 1);
-                range.select();
+                runs(function () {
+                    editor.setData('<p>' +
+                        '1234<strong>\u200b</strong></p>');
+                });
+                waits(500);
+                var document, p;
+                runs(function () {
+                    p = editor.get('document').one('p');
+                    var strong = p.one('strong');
+                    document = editor.get('document')[0];
+                    var range = new Range(document);
+                    range.setEnd(strong, 1);
+                    range.select();
+                });
                 waits(500);
                 runs(function () {
                     BOLD_STYLE.remove(document);
@@ -118,16 +136,12 @@ KISSY.add(function (S, Editor) {
                         expect(range.endOffset).toBe(1);
                     }
                 });
-
-                runs(function () {
-                    p.remove();
-                });
             });
         });
 
 
     });
 
-},{
-    requires:['editor']
+}, {
+    requires: ['editor', './init']
 });

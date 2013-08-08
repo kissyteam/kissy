@@ -1,0 +1,12 @@
+<project name="date/picker/i18n.build" default="build" basedir=".">
+    <property name="component.name" value="date/picker/i18n"/>
+
+    <import file="../../../common.xml"/>
+
+    <target name="concat">
+        <copy todir="${component.src.dir.tmp}">
+            <fileset dir="${component.src.dir}/i18n"/>
+        </copy>
+    </target>
+</project>
+

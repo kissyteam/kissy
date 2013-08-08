@@ -87,18 +87,18 @@
 }
 
 .ks-overlay .ks-resizable-handler-b {
-    height: 15px;
+    height: 6px;
     width: 100%; /*background-color: yellow;*/
-    /*-15px ie6 cross iframe shim*/
-    bottom: -15px;
+    /*-6px ie6 cross iframe shim*/
+    bottom: 0;
     left: 0;
     cursor: n-resize;
 }
 
 .ks-overlay .ks-resizable-handler-t {
-    height: 15px;
+    height: 6px;
     width: 100%; /*background-color: yellow;*/
-    top: -15px;
+    top: 0;
     left: 0;
     cursor: n-resize;
 }
@@ -106,54 +106,54 @@
 .ks-overlay .ks-resizable-handler-l {
     height: 100%;
     -height: expression(this.parentNode.offsetHeight);
-    width: 15px; /*background-color: yellow;*/
+    width: 6px; /*background-color: yellow;*/
     top: 0;
-    left: -15px;
+    left: 0;
     cursor: e-resize;
 }
 
 .ks-overlay .ks-resizable-handler-r {
     height: 100%;
     -height: expression(this.parentNode.offsetHeight); /*background-color: yellow;*/
-    width: 15px;
+    width: 6px;
     position: absolute;
     top: 0;
-    right: -15px;
+    right: 0;
     cursor: e-resize;
 }
 
 .ks-overlay .ks-resizable-handler-bl {
-    height: 15px;
-    width: 15px; /*background-color: green;*/
+    height: 6px;
+    width: 6px; /*background-color: green;*/
     z-index: 1;
-    bottom: -15px;
-    left: -15px;
+    bottom: 0;
+    left: 0;
     cursor: sw-resize;
 }
 
 .ks-overlay .ks-resizable-handler-br {
-    height: 15px;
-    width: 15px;
+    height: 6px;
+    width: 6px;
     z-index: 1; /*background-color: green;*/
-    bottom: -15px;
-    right: -15px;
+    bottom: 0;
+    right: 0;
     cursor: se-resize;
 }
 
 .ks-overlay .ks-resizable-handler-tl {
-    height: 15px;
-    width: 15px;
+    height: 6px;
+    width: 6px;
     z-index: 1; /*background-color: green;*/
-    top: -15px;
-    left: -15px;
+    top: 0;
+    left: 0;
     cursor: nw-resize;
 }
 
 .ks-overlay .ks-resizable-handler-tr {
-    height: 15px;
-    width: 15px;
+    height: 6px;
+    width: 6px;
     z-index: 1; /*background-color: green;*/
-    top: -15px;
-    right: -15px;
+    top: 0;
+    right: 0;
     cursor: ne-resize;
 }

@@ -4,7 +4,7 @@
  * @author yiminghe@gmail.com
  */
 (function (S) {
-    function loadScripts(rss, callback, charset) {
+    function loadScripts(rss, callback, charset, timeout) {
         var count = rss && rss.length,
             errorList = [],
             successList = [];
@@ -17,6 +17,7 @@
 
         S.each(rss, function (rs) {
             S.getScript(rs.fullpath, {
+                timeout: timeout,
                 success: function () {
                     successList.push(rs);
                     complete();
@@ -108,6 +109,7 @@
             var self = this,
                 allModNames,
                 comboUrls,
+                timeout = S.Config.timeout,
                 runtime = self.runtime;
 
             allModNames = S.keys(self.calculate(normalizedModNames));
@@ -142,7 +144,7 @@
                             mod.notifyAll();
                         });
                     });
-                }, cssOne.charset);
+                }, cssOne.charset, timeout);
             });
 
             // jss css download in parallel
@@ -167,7 +169,7 @@
                             mod.notifyAll();
                         });
                     });
-                }, jsOne.charset);
+                }, jsOne.charset, timeout);
             });
         },
 

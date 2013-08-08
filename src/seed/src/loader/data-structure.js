@@ -66,12 +66,12 @@
                 );
         },
 
-        getPackageUri:function(){
-            var self=this;
-            if(self.packageUri){
+        getPackageUri: function () {
+            var self = this;
+            if (self.packageUri) {
                 return self.packageUri;
             }
-            return self.packageUri=new S.Uri(this.getPrefixUriForCombo());
+            return self.packageUri = new S.Uri(this.getPrefixUriForCombo());
         },
 
         /**
@@ -137,7 +137,6 @@
     }
 
     S.augment(Module, {
-
         addCallback: function (callback) {
             this.callbacks.push(callback);
         },
@@ -185,11 +184,7 @@
             return v;
         },
 
-        /**
-         * Get the fullpath of current module if load dynamically
-         * @return {String}
-         */
-        getFullPath: function () {
+        getFullPathUri: function () {
             var self = this,
                 t,
                 fullpathUri,
@@ -197,21 +192,39 @@
                 packageInfo,
                 packageName,
                 path;
+            if (!self.fullpathUri) {
+                if (self.fullpath) {
+                    fullpathUri = new S.Uri(self.fullpath);
+                } else {
+                    packageInfo = self.getPackage();
+                    packageBaseUri = packageInfo.getBaseUri();
+                    path = self.getPath();
+                    // #262
+                    if (packageInfo.isIgnorePackageNameInUri() &&
+                        // native mod does not allow ignore package name
+                        (packageName = packageInfo.getName())) {
+                        path = Path.relative(packageName, path);
+                    }
+                    fullpathUri = packageBaseUri.resolve(path);
+                    if (t = self.getTag()) {
+                        t += '.' + self.getType();
+                        fullpathUri.query.set('t', t);
+                    }
+                }
+                self.fullpathUri = fullpathUri;
+            }
+            return self.fullpathUri;
+        },
+
+        /**
+         * Get the fullpath of current module if load dynamically
+         * @return {String}
+         */
+        getFullPath: function () {
+            var self = this,
+                fullpathUri;
             if (!self.fullpath) {
-                packageInfo = self.getPackage();
-                packageBaseUri = packageInfo.getBaseUri();
-                path = self.getPath();
-                // #262
-                if (packageInfo.isIgnorePackageNameInUri() &&
-                    // native mod does not allow ignore package name
-                    (packageName = packageInfo.getName())) {
-                    path = Path.relative(packageName, path);
-                }
-                fullpathUri = packageBaseUri.resolve(path);
-                if (t = self.getTag()) {
-                    t += '.' + self.getType();
-                    fullpathUri.query.set('t', t);
-                }
+                fullpathUri = self.getFullPathUri();
                 self.fullpath = Utils.getMappedPath(self.runtime, fullpathUri.toString());
             }
             return self.fullpath;
@@ -272,7 +285,6 @@
             return self.charset || self.getPackage().getCharset();
         },
 
-
         /**
          * Get module objects required by this one
          * @return {KISSY.Loader.Module[]}
@@ -297,7 +309,6 @@
             }
             return requiresWithAlias;
         },
-
 
         getNormalizedRequires: function () {
             var self = this,

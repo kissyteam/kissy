@@ -261,6 +261,7 @@
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
+            lang: 'zh-cn',
             tag: '@TIMESTAMP@'
         }, getBaseInfo()));
     }

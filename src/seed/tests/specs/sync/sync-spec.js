@@ -1,7 +1,5 @@
 describe('allow sync loading', function () {
-
     it('default to async', function () {
-
         KISSY.clearLoader();
 
         KISSY.add('test-sync', function () {
@@ -10,23 +8,21 @@ describe('allow sync loading', function () {
 
         var t = undefined;
 
+
         KISSY.use('test-sync', function (S, x) {
             t = x;
         });
 
         expect(t).toBe(undefined);
 
-        waits(0);
+        waits(50);
 
         runs(function () {
             expect(t).toBe(1);
         });
-
     });
 
-
     it('can be sync', function () {
-
         KISSY.clearLoader();
 
         KISSY.add('test-sync', function () {
@@ -43,7 +39,5 @@ describe('allow sync loading', function () {
         });
 
         expect(t).toBe(1);
-
     });
-
 });

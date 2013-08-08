@@ -24,7 +24,6 @@ KISSY.add(function (S, Resizable) {
                     var actual = this.actual;
                     for (var i in actual) {
                         if (actual[i] - expect[i] < 5) {
-                            continue;
                         } else {
                             return false;
                         }
@@ -53,7 +52,7 @@ KISSY.add(function (S, Resizable) {
         var resizable = new Resizable({
             node: dom,
             preserveRatio: true,
-            handlers: ["b", "t", "r", "l", "tr", "tl", "br", "bl"]
+            handlers: ["b", "t", "r", "l"]
         });
 
         var lNode = dom.one('.ks-resizable-handler-l');

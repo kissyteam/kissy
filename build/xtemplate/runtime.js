@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 29 17:14
+build time: Aug 6 21:57
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -144,6 +144,32 @@ KISSY.add("xtemplate/runtime/commands", function (S) {
 KISSY.add('xtemplate/runtime', function (S, commands) {
 
     var utils = {
+            'getPropertyOrCommand': function (engine, scopes, options, name, depth, line) {
+                var id0;
+                var config = engine.config;
+                var commands = config.commands;
+                var command1 = commands[name];
+                if (command1) {
+                    try {
+                        id0 = command1.call(engine, scopes, options);
+                    } catch (e) {
+                        S['error'](e.message + ": '" +name + "' at line " + line);
+                    }
+                }
+                else {
+                    var tmp2 = utils.getProperty(name, scopes, depth);
+                    if (tmp2 === false) {
+                        S[config.silent ?
+                            "log" :
+                            "error"]("can not find property: '" +
+                                name + "' at line " + line, "warn");
+                    } else {
+                        id0 = tmp2[0];
+                    }
+                }
+                return id0;
+            },
+
             'getProperty': function (parts, scopes, depth) {
                 // this refer to current scope object
                 if (parts === '.') {
@@ -157,6 +183,12 @@ KISSY.add('xtemplate/runtime', function (S, commands) {
                     p,
                     valid,
                     sl = scopes.length;
+                // root keyword for root scope
+                if (parts[0] == 'root') {
+                    j = sl - 1;
+                    parts.shift();
+                    len--;
+                }
                 for (; j < sl; j++) {
                     v = scopes[j];
                     valid = 1;

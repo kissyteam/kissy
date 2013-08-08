@@ -6,9 +6,16 @@ KISSY.add("editor/plugin/back-color/cmd", function (S, cmd) {
 
     var BACK_COLOR_STYLE = {
         element:'span',
-        styles:{ 'background-color':'#(color)' },
+        styles:{
+            'background-color':'#(color)'
+        },
         overrides:[
-            { element:'*', styles:{ 'background-color':null } }
+            {
+                element:'*',
+                styles:{
+                    'background-color':null
+                }
+            }
         ],
         childRule:function (currentNode) {
             // 除了嵌套背景，其他强制最里面
