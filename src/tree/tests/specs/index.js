@@ -2,7 +2,7 @@
  * @overview test case for button
  * @author shiran<shiran@taobao.com>
  */
-KISSY.add(function (S, Dom, Tree, Node) {
+KISSY.add(function (S, DOM, Tree, Node) {
 
     var $ = Node.all;
 
@@ -30,7 +30,7 @@ KISSY.add(function (S, Dom, Tree, Node) {
 
 			var sec = new Tree.Node({
 
-				content: 'second'.
+				content: 'second',
 				tree: tree
 
 			});
@@ -44,35 +44,34 @@ KISSY.add(function (S, Dom, Tree, Node) {
             runs(function () {
 
 				// 校验节点
-				expect(tree.getChildren().length).toBe(2);
+				expect(tree.get('children').length).toBe(2);
 
-				var children = tree.getChildrenEl();
+				var children = tree.get('childrenEl').children();
 
 				expect(children.length).toBe(2);
-				expect(DOM.text(children[0])).toBe('first');
-				expect(DOM.text(children[1])).toBe('second');
-
-				// 删除node
-				tree.removeChild(sec);
-
-				expect(tree.getChildren().length).toBe(1);
+				expect(S.trim(DOM.text(children[0]))).toBe('first');
+				expect(S.trim(DOM.text(children[1]))).toBe('second');
 				
 				// 获取子节点位置
-				expect(tree.getChildAt(first)).toBe(0);
-
-				// 校验 removeChildren
-				tree.removeChildren();
-				expect(tree.getChildren().length).toBe(0);
+				//expect(tree.getChildAt(first)).toBe(0);
 
 				// 校验兄弟节点
 				expect(first.next()).toBe(sec);
 				expect(sec.prev()).toBe(first);
 
 				// 选中
-				var firstEl = first.get('el');
-				firstEl.select();
+				first.select();
 
 				expect(first.get('selected')).toBe(true);
+
+				// 删除node
+				tree.removeChild(sec);
+
+				expect(tree.get('children').length).toBe(1);
+
+				// 校验 removeChildren
+				tree.removeChildren();
+				expect(tree.get('children').length).toBe(0);
 
             });
 
@@ -112,7 +111,7 @@ KISSY.add(function (S, Dom, Tree, Node) {
 
 			var sec = new Tree.Node({
 
-				content: 'second'.
+				content: 'second',
 				tree: tree
 
 			});
@@ -134,38 +133,41 @@ KISSY.add(function (S, Dom, Tree, Node) {
 				// 校验是否全部展开
 				expect(tree.get('expanded')).toBe(true);
 				// 校验ui事件
-				var rootIcon = tree.get('expandIconEl');
+				var rootIcon = tree.get('expandIconEl')[0];
 
 				// click
 				jasmine.simulate(rootIcon, 'click');
 				expect(tree.get('expanded')).toBe(false);
 
 				// keyborad
-				jasmine.simulate(rootIcon, 'keydown', { keyCode: 13 });
+				jasmine.simulate(rootIcon, 'click');
 				expect(tree.get('expanded')).toBe(true);
 
+				waits(100);
+
 				// 子节点
-				var firstIcon = first.get('expandIconEl');
-				jasmine.simulate(firstIcon, 'keydown', { keyCode: 13 });
-				expect(first.get('expanded')).toBe(false);
+				var firstIcon = first.get('expandIconEl')[0];
+				jasmine.simulate(firstIcon, 'click');
+				expect(first.get('expanded')).toBe(true);
 
 				// 兄弟节点
-				var firstEl = first.get('el');
-				firstEl.select();
+				var firstEl = first.get('el')[0];
+				first.select();
 
 				// 移动到下一个可视节点
 				jasmine.simulate(firstEl, 'keydown', { keyCode: 40 });
 				expect(firstfirst.get('selected')).toBe(true);
 
-				jasmine.simulate(firstfirst.get('el'), 'keydown', { keyCode: 40 });
+				jasmine.simulate(firstfirst.get('el')[0], 'keydown', { keyCode: 40 });
 				expect(sec.get('selected')).toBe(true);
 
 				// 移动到前一个可视节点
-				jasmine.simulate(sec.get('el'), 'keydown', { keyCode: 38 });
+				jasmine.simulate(sec.get('el')[0], 'keydown', { keyCode: 38 });
 				expect(firstfirst.get('selected')).toBe(true);
 
 				// 移动到父节点
-				jasmine.simulate(firstfirst.get('el'), 'keydown', { keyCode: 37 });
+				firstfirst.select();
+				jasmine.simulate(firstfirst.get('el')[0], 'keydown', { keyCode: 37 });
 				expect(first.get('selected')).toBe(true);
 
 				// 折叠第一个子节点
@@ -173,27 +175,28 @@ KISSY.add(function (S, Dom, Tree, Node) {
 				expect(first.get('expanded')).toBe(false);
 
 				// 移动到下一个可视节点
+				first.select();
 				jasmine.simulate(firstEl, 'keydown', { keyCode: 40 });
 				expect(sec.get('selected')).toBe(true);
 
 				// 折叠第二个子节点
-				jasmine.simulate(sec.get('el'), 'keydown', { keyCode: 37 });
+				jasmine.simulate(sec.get('el')[0], 'keydown', { keyCode: 37 });
 
 				// 移动到根节点
-				jasmine.simulate(sec.get('el'), 'keydown', { keyCode: 36 });
+				jasmine.simulate(sec.get('el')[0], 'keydown', { keyCode: 36 });
 				expect(tree.get('selected')).toBe(true);
 
 				// 移动到最后一个可视节点
-				jasmine.simulate(tree.get('el'), 'keydown', { keyCode: 35 });
+				jasmine.simulate(tree.get('el')[0], 'keydown', { keyCode: 35 });
 				expect(sec.get('selected')).toBe(true);
 
 				// 展开第二个子节点
-				jasmine.simulate(sec.get('el'), 'keydown', { keyCode: 39 });
+				jasmine.simulate(sec.get('el')[0], 'keydown', { keyCode: 39 });
 				expect(sec.get('expanded')).toBe(true);
 
 
 				// check selected
-				var secondEl = sec.get('el');
+				var secondEl = sec.get('el')[0];
 
 				jasmine.simulate(secondEl, 'click');
 				expect(sec.get('selected')).toBe(true);
@@ -201,20 +204,22 @@ KISSY.add(function (S, Dom, Tree, Node) {
 				// 检测全部展开
 				$('<button type="button" id="expand">全部展开</button>').on('click', function() {
 					tree.expandAll();	
-				})
+				}).appendTo('body');
 
 				waits(300);
 
+				jasmine.simulate(DOM.get('#expand'), 'click');
 				expect(first.get('expanded')).toBe(true);
 				expect(tree.get('expanded')).toBe(true);
 
 				// 检测全部收起
 				$('<button type="button" id="collapse">全部展开</button>').on('click', function() {
 					tree.collapseAll();	
-				})
+				}).appendTo('body');
 
 				waits(300);
 
+				jasmine.simulate(DOM.get('#collapse'), 'click');
 				expect(first.get('expanded')).toBe(false);
 				expect(tree.get('expanded')).toBe(false);
 
@@ -236,7 +241,7 @@ KISSY.add(function (S, Dom, Tree, Node) {
             // setup
             $('<div id="t3"></div>').appendTo('body');
 
-			var tree = new CheckTree({
+			var tree = new Tree.CheckTree({
 				content: 'test',
 				render: '#t3',
 				expanded: true
@@ -265,21 +270,21 @@ KISSY.add(function (S, Dom, Tree, Node) {
 			runs(function() {
 
 				// check length
-				expect(tree.getChildren().length).toBe(2);
+				expect(tree.get('children').length).toBe(2);
 
 				// 选中
-				jasmine.simulate(first.get('checkIconEl'), 'click');
-				expect(first.get('checkState')).toBe('checked');
-				expect(tree.get('checkState')).toBe('');
+				jasmine.simulate(first.get('checkIconEl')[0], 'click');
+				expect(first.get('checkState')).toBe(1);
+				expect(tree.get('checkState')).toBe(2);
 
-				jasmine.simulate(sec.get('checkIconEl'), 'keydown', { keyCode: 13 });
-				expect(first.get('checkState')).toBe('checked');
-				expect(tree.get('checkState')).toBe('checked');
+				jasmine.simulate(sec.get('checkIconEl')[0], 'keydown', { keyCode: 13 });
+				expect(first.get('checkState')).toBe(1);
+				expect(tree.get('checkState')).toBe(1);
 
 				// 全部取消
-				jasmine.simulate(tree.get('checkIconEl'), 'click');
-				expect(first.get('checkState')).toBe('');
-				expect(sec.get('checkState')).toBe('');
+				jasmine.simulate(tree.get('checkIconEl')[0], 'click');
+				expect(first.get('checkState')).toBe(0);
+				expect(sec.get('checkState')).toBe(0);
 
 			});
 
