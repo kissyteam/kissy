@@ -15,8 +15,12 @@
 <script src="/kissy/build/seed.js"></script>
 <script src="/kissy/src/package.js"></script>
 <script>
-    KISSY.use('date/picker',function(S,DatePicker){
-        new DatePicker().render();
+    KISSY.use('date/picker,date/gregorian', function (S, DatePicker, GregorianCalendar) {
+        new DatePicker({
+            disabledDate: function (current, value) {
+                return current.get(GregorianCalendar.MONTH) < value.get(GregorianCalendar.MONTH);
+            }
+        }).render();
     });
 </script>
 </html>

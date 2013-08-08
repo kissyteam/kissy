@@ -13,7 +13,10 @@
            href="#"
            hidefocus="on"
            title="{{monthSelectLabel}}"
-           id="ks-date-picker-month-select-{{id}}">{{monthYearLabel}}</a>
+           id="ks-date-picker-month-select-{{id}}">
+            <span id="ks-date-picker-month-select-content-{{id}}">{{monthYearLabel}}</span>
+            <span class="{{getBaseCssClasses 'month-select-arrow'}}">x</span>
+        </a>
     </div>
     <a id="ks-date-picker-next-month-{{id}}"
        class="{{getBaseCssClasses 'next-month'}}"
@@ -28,24 +31,26 @@
         <thead>
         <tr role="row">
             {{#each weekdays}}
-            <th role="columnheader" title="{{.}}">{{veryShortWeekdays[xindex]}}</th>
+            <th role="columnheader" title="{{.}}" class="{{getBaseCssClasses 'column-header'}}">
+                <span class="{{getBaseCssClasses 'column-header-inner'}}">
+                    {{veryShortWeekdays[xindex]}}
+                </span>
+            </th>
             {{/each}}
         </tr>
         </thead>
         <tbody id="ks-date-picker-tbody-{{id}}">
-        <tr>
-            <td>{{renderDates}}</td>
-        </tr>
+        {{{renderDates}}}
         </tbody>
     </table>
 </div>
 {{#if showToday}}
 <div class="{{getBaseCssClasses 'footer'}}">
-    <a class="{{getBaseCssClasses 'today'}}"
+    <a class="{{getBaseCssClasses 'today-btn'}}"
        role="button"
        hidefocus="on"
        href="#"
-       id="ks-date-picker-today-{{id}}"
+       id="ks-date-picker-today-btn-{{id}}"
        title="{{todayTimeLabel}}">{{todayLabel}}</a>
 </div>
 {{/if}}

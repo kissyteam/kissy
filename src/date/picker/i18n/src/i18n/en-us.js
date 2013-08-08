@@ -8,6 +8,6 @@ KISSY.add('date/picker/i18n/en-us', {
     nextMonth:'Next month (Control+right)',
     monthSelect:'Choose a month',
     monthYearFormat: "MMMM yyyy",
-    todayTimeFormat: "M/d/yyyy",
+    dateFormat: "M/d/yyyy",
     veryShortWeekdays: ['S', 'M', 'T', 'W', 'T', 'F', 'S']
 });
