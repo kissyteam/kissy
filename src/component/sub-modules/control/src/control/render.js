@@ -82,6 +82,15 @@ KISSY.add("component/control/render", function (S, ComponentProcess, XTemplate, 
         }
     }
 
+    // scope option
+    function getBaseCssClassesCmd() {
+        return this.getBaseCssClasses(arguments[1].params[0]);
+    }
+
+    function getBaseCssClassCmd() {
+        return this.getBaseCssClass(arguments[1].params[0]);
+    }
+
     var Render;
 
     /**
@@ -176,12 +185,8 @@ KISSY.add("component/control/render", function (S, ComponentProcess, XTemplate, 
                     self.renderData = {},
                     self.childrenElSelectors = {},
                     self.renderCommands = {
-                        getBaseCssClasses: function (scope, option) {
-                            return self.getBaseCssClasses(option.params[0]);
-                        },
-                        getBaseCssClass: function (scope, option) {
-                            return self.getBaseCssClass(option.params[0]);
-                        }
+                        getBaseCssClasses: S.bind(getBaseCssClassesCmd, self),
+                        getBaseCssClass: S.bind(getBaseCssClassCmd, self)
                     }
                 ]);
 
@@ -262,6 +267,10 @@ KISSY.add("component/control/render", function (S, ComponentProcess, XTemplate, 
             }
         },
 
+        $: function (selector) {
+            return this.$el.all(selector);
+        },
+
         fillChildrenElsBySelectors: function (childrenElSelectors) {
             var self = this,
                 el = self.$el,
@@ -277,7 +286,7 @@ KISSY.add("component/control/render", function (S, ComponentProcess, XTemplate, 
                     control.setInternal(childName, selector(el));
                 } else {
                     control.setInternal(childName,
-                        el.all(S.substitute(selector, self.renderData)));
+                        self.$(S.substitute(selector, self.renderData)));
                 }
                 delete childrenElSelectors[childName];
             }

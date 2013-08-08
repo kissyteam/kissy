@@ -3,6 +3,7 @@
     background: #ffffff;
     border: 1px solid #9bc0e0;
     width: 190px;
+    outline: none;
 }
 
 .ks-date-picker-prev-month,
@@ -41,6 +42,21 @@
     text-decoration: none;
 }
 
+.ks-date-picker-month-select-arrow {
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    font-size: 0;
+    vertical-align: middle;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 4px solid #ffffff;
+}
+
+.ks-date-picker-month-select:hover .ks-date-picker-month-select-arrow {
+    border-top-color: #f0ff00;
+}
+
 .ks-date-picker-month-select:hover {
     color: #f0ff00;
     border: 1px solid #8cc6ff;
@@ -64,15 +80,61 @@
     border-collapse: separate;
 }
 
-.ks-date-picker-table thead tr {
-    border-bottom: 1px dashed #c9c9c9;
-}
-
-.ks-date-picker-table thead tr th {
+.ks-date-picker-column-header {
     width: 25px;
     color: black;
     font-weight: bold;
     text-align: center;
+    padding: 4px 0;
+}
+
+.ks-date-picker-column-header-inner {
+    display: block;
+    padding-bottom: 4px;
+    border-bottom: 1px dashed #c9c9c9
+}
+
+.ks-date-picker-cell {
+    text-align: center;
+}
+
+.ks-date-picker-date {
+    color: #004499;
+    line-height: 22px;
+    text-decoration: none;
+    display: block;
+    border-radius: 2px;
+    border: 1px solid transparent;
+}
+
+.ks-date-picker-last-month-day .ks-date-picker-date,
+.ks-date-picker-next-month-day .ks-date-picker-date {
+    color: #bfbfbf;
+}
+
+.ks-date-picker-date:hover {
+    background-color: #f3f9ff;
+    border-color: #88b1ea;
+}
+
+.ks-date-picker-disabled-day .ks-date-picker-date {
+    cursor: default;
+}
+
+.ks-date-picker-disabled-day .ks-date-picker-date:hover {
+    background-color: transparent;
+    border-color: transparent;
+}
+
+.ks-date-picker-today .ks-date-picker-date {
+    color: #357c00;
+    border-color: #7dba4e;
+}
+
+.ks-date-picker-selected-day .ks-date-picker-date {
+    color: #fff;
+    background-color: #4187e7;
+    border-color: #4187e7;
 }
 
 .ks-date-picker-footer {
@@ -81,7 +143,8 @@
     text-align: center;
 }
 
-.ks-date-picker-today {
+.ks-date-picker-today-btn {
+    line-height: 16px;
     height: 16px;
     margin: 0 3px 0 2px;
     border-radius: 3px;
@@ -92,12 +155,16 @@
     background-color: #4187e7;
     color: #ffffff;
     border-color: #3375cf;
+    display: inline-block;
 }
 
-.ks-date-picker-today:hover {
+.ks-ie6 .ks-date-picker-today-btn {
+    zoom: 1;
+}
+
+.ks-date-picker-today-btn:hover {
     color: #ffffff;
 }
-
 
 
 

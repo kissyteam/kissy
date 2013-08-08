@@ -240,6 +240,10 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
     GregorianCalendar.prototype = {
         constructor: GregorianCalendar,
 
+        getLocale:function(){
+            return this.locale;
+        },
+
         /**
          * Returns the minimum value for
          * the given calendar field of this GregorianCalendar instance.
@@ -569,6 +573,7 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
         'setTimeInMillis': function (time) {
             this.time = time;
             this.fieldsComputed = false;
+            this.complete();
         },
 
         /**
