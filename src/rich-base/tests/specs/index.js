@@ -340,7 +340,13 @@ KISSY.add(function (S, RichBase) {
 
             var B = A.extend({
                 m: function(value) {
-                    return this.parent(value) + 'b' + value;
+                    var parent = S.parent.bind(arguments.callee, this);
+                    var t1, t2;
+                    (function() {
+                        t1 = parent(1);
+                    })();
+                    t2 = S.parent(this, 2);
+                    return this.parent(value) + t1 + t2 + 'b' + value;
                 }
             });
 
@@ -349,7 +355,7 @@ KISSY.add(function (S, RichBase) {
 
             var c = new C();
 
-            expect(c.m(1)).toEqual('a1b1');
+            expect(c.m(0)).toEqual('a0a1a2b0');
         });
 
     });
