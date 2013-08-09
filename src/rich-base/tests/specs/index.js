@@ -340,13 +340,32 @@ KISSY.add(function (S, RichBase) {
 
             var B = A.extend({
                 m: function(value) {
-                    var parent = S.parent.bind(arguments.callee, this);
-                    var t1, t2;
+                    var parent = S.bind(this.parent, this);
+                    var parent2 = S.bind(this.parent, arguments.callee, this);
+
+                    // 普通的
+                    var t0 = this.parent(value);
+
+                    // 闭包情况下通过 caller 获取 parent
+                    var t1;
                     (function() {
-                        t1 = parent(1);
+                        (function() {
+                            (function() {
+                                t1 = parent(1);
+                            })();
+                        })();
                     })();
-                    t2 = S.parent(this, 2);
-                    return this.parent(value) + t1 + t2 + 'b' + value;
+
+                    // 递归情况下通过提前绑定 arguments.callee 获取 parent
+                    var times = 0;
+                    var t2 = '';
+                    (function t() {
+                        if (times++ >= 2) return;
+                        t2 += parent2(2);
+                        t();
+                    })();
+
+                    return t0 + t1 + t2 + 'b' + value;
                 }
             });
 
@@ -355,7 +374,7 @@ KISSY.add(function (S, RichBase) {
 
             var c = new C();
 
-            expect(c.m(0)).toEqual('a0a1a2b0');
+            expect(c.m(0)).toEqual('a0a1a2a2b0');
         });
 
     });

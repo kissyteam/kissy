@@ -317,9 +317,47 @@ KISSY.add('rich-base', function (S, Base) {
         },
 
         parent: function() {
-            var args = Array.prototype.slice.call(arguments, 0);
-            args.unshift(this);
-            return S.parent.apply(arguments.callee.caller, args);
+        	var func, found = [];
+            var obj, args;
+            if (typeof this == 'function' && this.__name__) {
+            	func = this;
+            	obj = arguments[0];
+            	args = Array.prototype.slice.call(arguments, 1);
+            } else {
+	        	try {
+	        		func = arguments.callee.caller;
+	        	} catch(e) {
+	        		throw new Error('can\'t use parent in strict mode');
+	        	}
+	            while (func && found.indexOf(func) == -1 && !func.__name__) {
+	            	found.push(func);
+	            	func = func.caller;
+	            }
+	            obj = this;
+	            args = arguments;
+            }
+
+	        var ownCls = obj.constructor; // 拥有此方法的代码书写的类
+	        var name = func.__name__; // 方法名字
+	        var baseProto, member; // 最后要执行的类和方法
+
+	        if (!name) throw new Error('parent call error');
+
+	        // parent应该调用“代码书写的方法所在的类的父同名方法”
+	        // 而不是方法调用者实例的类的父同名方法
+	        // 比如C继承于B继承于A，当C的实例调用从B继承来的某方法时，其中调用了this.parent，应该直接调用到A上的同名方法，而不是B的。
+	        // 因此，这里通过hasOwnProperty，从当前类开始，向上找到同名方法的原始定义类
+	        while (ownCls && !ownCls.prototype.hasOwnProperty(name)) {
+	            ownCls = ownCls.superclass.constructor;
+	        }
+
+	        baseProto = ownCls.superclass;
+	        if (!baseProto) throw new Error('base class not found in parent call');
+
+	        member = baseProto[name];
+	        if (!member || !member.apply) throw new Error('method not found in parent call');
+
+	        return member.apply(obj, args);
         },
 
     }, {
@@ -519,37 +557,6 @@ KISSY.add('rich-base', function (S, Base) {
             method = self[ON_SET + e.type.slice(5).slice(0, -6)];
             method.call(self, e.newVal, e);
         }
-    }
-
-    S.parent = function(obj) {
-    	var func;
-    	if (typeof this == 'function' && this.__name__) {
-    		func = this;
-    	} else {
-    		func = arguments.callee.caller;
-    	}
-        var args = Array.prototype.slice.call(arguments, 1);
-        var ownCls = obj.constructor; // 拥有此方法的代码书写的类
-        var name = func.__name__; // 方法名字
-        var baseProto, member; // 最后要执行的类和方法
-
-        if (!name) throw new Error('parent call error');
-
-        // parent应该调用“代码书写的方法所在的类的父同名方法”
-        // 而不是方法调用者实例的类的父同名方法
-        // 比如C继承于B继承于A，当C的实例调用从B继承来的某方法时，其中调用了this.parent，应该直接调用到A上的同名方法，而不是B的。
-        // 因此，这里通过hasOwnProperty，从当前类开始，向上找到同名方法的原始定义类
-        while (ownCls && !ownCls.prototype.hasOwnProperty(name)) {
-            ownCls = ownCls.superclass.constructor;
-        }
-
-        baseProto = ownCls.superclass;
-        if (!baseProto) throw new Error('base class not found in parent call');
-
-        member = baseProto[name];
-        if (!member || !member.apply) throw new Error('method not found in parent call');
-
-        return member.apply(obj, args);
     }
 
     // # private end --------------------------------------
