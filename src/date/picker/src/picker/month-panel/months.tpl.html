@@ -1,0 +1,19 @@
+{{#each months}}
+<tr role="row">
+    {{#each months[xindex]}}
+    <td role="gridcell"
+        title="{{title}}"
+        class="{{getBaseCssClasses 'cell'}}
+        {{#if month===value}}
+        {{getBaseCssClasses 'selected-cell'}}
+        {{/if}}
+        ">
+        <a hidefocus="on"
+           href="#"
+           class="{{getBaseCssClasses 'month'}}">
+            {{content}}
+        </a>
+    </td>
+    {{/each}}
+</tr>
+{{/each}}

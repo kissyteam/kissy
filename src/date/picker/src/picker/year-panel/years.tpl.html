@@ -1,0 +1,25 @@
+{{#each years}}
+<tr role="row">
+    {{#each years[xindex]}}
+    <td role="gridcell"
+        title="{{title}}"
+        class="{{getBaseCssClasses 'cell'}}
+        {{#if content===year}}
+         {{getBaseCssClasses 'selected-cell'}}
+        {{/if}}
+        {{#if content<startYear}}
+         {{getBaseCssClasses 'last-decade-cell'}}
+        {{/if}}
+        {{#if content>endYear}}
+         {{getBaseCssClasses 'next-decade-cell'}}
+        {{/if}}
+        ">
+        <a hidefocus="on"
+           href="#"
+           class="{{getBaseCssClasses 'year'}}">
+            {{content}}
+        </a>
+    </td>
+    {{/each}}
+</tr>
+{{/each}}

@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <title>YearPanel</title>
+    <link href="/kissy/src/css/assets/dpl/base.css" rel="stylesheet"/>
+    <link href="../assets/picker.css" rel="stylesheet"/>
+    <link href="../assets/year-panel.css" rel="stylesheet"/>
+</head>
+<body>
+<div id="t"
+        style="border:1px solid #000000;
+        width: 190px;
+        position: relative">
+
+</div>
+</body>
+<script src="/kissy/build/seed.js"></script>
+<script src="/kissy/src/package.js"></script>
+<script>
+    KISSY.use('date/picker/year-panel/control,' +
+            'i18n!date/picker,' +
+            'date/gregorian', function (S, YearPanel, locale,GregorianCalendar) {
+        var now=new GregorianCalendar();
+        now.setTimeInMillis(S.now());
+        new YearPanel({
+            value:now,
+            locale:locale,
+            render:'#t'
+        }).render();
+    });
+</script>
+</html>

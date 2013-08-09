@@ -1,5 +1,5 @@
 /**
- * date picker control
+ * year panel for date picker
  * @author yiminghe@gmail.com
  */
 KISSY.add('date/picker/control', function (S, Node, GregorianCalendar, locale, Control, PickerRender) {
@@ -25,7 +25,7 @@ KISSY.add('date/picker/control', function (S, Node, GregorianCalendar, locale, C
     function chooseCell(e) {
         e.preventDefault();
         var td = $(e.currentTarget);
-        if (td.hasClass(this.view.getBaseCssClass('disabled-day'))) {
+        if (td.hasClass(this.view.getBaseCssClass('disabled-cell'))) {
             return;
         }
         var tr = td.parent();
@@ -37,8 +37,8 @@ KISSY.add('date/picker/control', function (S, Node, GregorianCalendar, locale, C
     return Control.extend({
         bindUI: function () {
             var self = this;
-            self.get('nextMonthEl').on(tap, nextMonth, self);
-            self.get('previousMonthEl').on(tap, prevMonth, self);
+            self.get('nextMonthBtn').on(tap, nextMonth, self);
+            self.get('previousMonthBtn').on(tap, prevMonth, self);
             self.get('tbodyEl').delegate(
                 tap,
                 '.' + self.view.getBaseCssClass('cell'),
@@ -57,9 +57,9 @@ KISSY.add('date/picker/control', function (S, Node, GregorianCalendar, locale, C
                     return date;
                 }
             },
-            previousMonthEl: {},
+            previousMonthBtn: {},
             monthSelectEl: {},
-            nextMonthEl: {},
+            nextMonthBtn: {},
             tbodyEl: {},
             todayBtnEl: {},
             dateRender: {},

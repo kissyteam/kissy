@@ -1,5 +1,5 @@
 /**
- * date picker render
+ * render for year panel
  * @author yiminghe@gmail.com
  */
 KISSY.add('date/picker/render', function (S, Control, GregorianCalendar, DateTimeFormat, PickerTpl) {
@@ -14,11 +14,6 @@ KISSY.add('date/picker/render', function (S, Control, GregorianCalendar, DateTim
         return one.get(GregorianCalendar.YEAR) == two.get(GregorianCalendar.YEAR) &&
             one.get(GregorianCalendar.MONTH) == two.get(GregorianCalendar.MONTH) &&
             one.get(GregorianCalendar.DAY_OF_MONTH) == two.get(GregorianCalendar.DAY_OF_MONTH);
-    }
-
-    function isSameMonth(one, two) {
-        return one.get(GregorianCalendar.YEAR) == two.get(GregorianCalendar.YEAR) &&
-            one.get(GregorianCalendar.MONTH) == two.get(GregorianCalendar.MONTH);
     }
 
     function beforeCurrentMonthYear(current, today) {
@@ -53,8 +48,8 @@ KISSY.add('date/picker/render', function (S, Control, GregorianCalendar, DateTim
             var value = control.get('value');
             var dateLocale = value.getLocale();
             var today = value.clone();
-            today.setTimeInMillis(S.now);
-            return new DateTimeFormat(locale.monthYearFormat, dateLocale).format(today);
+            today.setTimeInMillis(S.now());
+            return new DateTimeFormat(locale.dateFormat, dateLocale).format(today);
         },
         beforeCreateDom: function (renderData, childrenSelectors, renderCommands) {
             var self = this;
@@ -63,10 +58,10 @@ KISSY.add('date/picker/render', function (S, Control, GregorianCalendar, DateTim
             var value = control.get('value');
             var dateLocale = value.getLocale();
             S.mix(childrenSelectors, {
-                previousMonthEl: '#ks-date-picker-previous-month-{id}',
+                previousMonthBtn: '#ks-date-picker-previous-month-btn-{id}',
                 monthSelectEl: '#ks-date-picker-month-select-{id}',
                 monthSelectContentEl: '#ks-date-picker-month-select-content-{id}',
-                nextMonthEl: '#ks-date-picker-next-month-{id}',
+                nextMonthBtn: '#ks-date-picker-next-month-btn-{id}',
                 todayBtnEl: '#ks-date-picker-today-btn-{id}',
                 tbodyEl: '#ks-date-picker-tbody-{id}'
             });
@@ -107,9 +102,9 @@ KISSY.add('date/picker/render', function (S, Control, GregorianCalendar, DateTim
                 dateFormatter = new DateTimeFormat(locale.dateFormat, dateLocale),
                 todayClass = self.getBaseCssClass('today'),
                 selectedClass = self.getBaseCssClass('selected-day'),
-                lastMonthDayClass = self.getBaseCssClass('last-month-day'),
-                nextMonthDayClass = self.getBaseCssClass('next-month-day'),
-                disabledClass = self.getBaseCssClass('disabled-day');
+                lastMonthDayClass = self.getBaseCssClass('last-month-cell'),
+                nextMonthDayClass = self.getBaseCssClass('next-month-btn-day'),
+                disabledClass = self.getBaseCssClass('disabled-cell');
 
             today.setTimeInMillis(S.now());
             var month1 = value.clone();

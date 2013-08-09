@@ -5,6 +5,7 @@
 *~
 ~*
 *.diff
+*.log
 *.patch
 *.bak
 .DS_Store

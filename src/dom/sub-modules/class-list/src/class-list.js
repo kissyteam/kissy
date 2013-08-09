@@ -5,7 +5,7 @@
  */
 KISSY.add('dom/class-list', function (S, Dom) {
     var SPACE = ' ',
-        RE_CLASS = /[\n\t]/g;
+        RE_CLASS = /[\n\t\r]/g;
 
     function norm(elemClass) {
         return (SPACE + elemClass + SPACE).replace(RE_CLASS, SPACE);

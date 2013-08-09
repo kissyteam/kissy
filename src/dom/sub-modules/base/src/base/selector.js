@@ -206,7 +206,9 @@ KISSY.add('dom/base/selector', function (S, Dom, undefined) {
     function hasSingleClass(el, cls) {
         // consider xml
         var className = el && (el.className || getAttr(el, 'class'));
-        return className && (SPACE + className + SPACE).indexOf(SPACE + cls + SPACE) > -1;
+        return className &&
+            (className = className.replace(/[\r\t\n]/g, SPACE)) &&
+            (SPACE + className + SPACE).indexOf(SPACE + cls + SPACE) > -1;
     }
 
     function getAttr(el, name) {
