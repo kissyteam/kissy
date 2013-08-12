@@ -368,7 +368,7 @@ KISSY.add('base', function (S, Attribute) {
                     px[p] = hooks[p](px[p]);
                 }
             }
-            wrapPxForParent(px, SubClass);
+            wrapProtoForSuper(px, SubClass);
             var sp = ParentClass.prototype;
             // process inheritedStatics
             var inheritedStatics = sp['__inheritedStatics__'] = sp['__inheritedStatics__'] || sx['inheritedStatics'];
@@ -507,7 +507,7 @@ KISSY.add('base', function (S, Attribute) {
         }
     }
 
-    function wrapPxForParent(px, SubClass) {
+    function wrapProtoForSuper(px, SubClass) {
         for (var p in px) {
             var v = px[p];
             if (typeof v == 'function') {
