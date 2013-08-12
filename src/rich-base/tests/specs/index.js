@@ -331,6 +331,62 @@ KISSY.add(function (S, RichBase) {
 
         });
 
+        it('support parent', function() {
+            var A = RichBase.extend({
+                m: function(value) {
+                    return 'a' + value;
+                },
+                m2: function(value) {
+                    return 'a' + value;
+                }
+            });
+
+            var B = A.extend({
+                m: function(value) {
+                    var parent = S.bind(this.parent, this);
+                    var parent2 = S.bind(this.parent, arguments.callee, this);
+
+                    // 普通的
+                    var t0 = this.parent(value);
+
+                    // 闭包情况下通过 caller 获取 parent
+                    var t1;
+                    (function() {
+                        (function() {
+                            (function() {
+                                t1 = parent(1);
+                            })();
+                        })();
+                    })();
+
+                    // 递归情况下通过提前绑定 arguments.callee 获取 parent
+                    var times = 0;
+                    var t2 = '';
+                    (function t() {
+                        if (times++ >= 2) return;
+                        t2 += parent2(2);
+                        t();
+                    })();
+
+                    return t0 + t1 + t2 + 'b' + value;
+                },
+                m2: function(value) {
+                    return 'b' + this.parent(value);
+                }
+            });
+
+            var C = B.extend({
+                m2: function(value) {
+                    return 'c' + this.parent.apply(this, arguments);
+                }
+            });
+
+            var c = new C();
+
+            expect(c.m(0)).toEqual('a0a1a2a2b0');
+            expect(c.m2(0)).toBe('cba0');
+        });
+
     });
 
 },{
