@@ -335,6 +335,9 @@ KISSY.add(function (S, RichBase) {
             var A = RichBase.extend({
                 m: function(value) {
                     return 'a' + value;
+                },
+                m2: function(value) {
+                    return 'a' + value;
                 }
             });
 
@@ -366,15 +369,22 @@ KISSY.add(function (S, RichBase) {
                     })();
 
                     return t0 + t1 + t2 + 'b' + value;
+                },
+                m2: function(value) {
+                    return 'b' + this.parent(value);
                 }
             });
 
             var C = B.extend({
+                m2: function(value) {
+                    return 'c' + this.parent.apply(this, arguments);
+                }
             });
 
             var c = new C();
 
             expect(c.m(0)).toEqual('a0a1a2a2b0');
+            expect(c.m2(0)).toBe('cba0');
         });
 
     });
