@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 25 22:16
+build time: Aug 13 00:05
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -341,7 +341,6 @@ KISSY.add('component/extension/align', function (S, Node) {
 
     // for augment, no need constructor
     Align.prototype = {
-
         __bindUI: function () {
             // auto align on window resize or before el show
             var self = this;

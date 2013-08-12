@@ -8,63 +8,7 @@ KISSY.add('resizable/plugin/proxy', function (S, Base, Node) {
     var $ = Node.all,
         PROXY_EVENT = '.-ks-proxy' + S.now();
 
-    function ResizablePlugin() {
-        ResizablePlugin.superclass.constructor.apply(this, arguments);
-    }
-
-    ResizablePlugin.ATTRS = {
-        /**
-         * how to get the proxy node.
-         * default clone the node itself deeply.
-         * @cfg {Function} node
-         */
-        /**
-         * @ignore
-         */
-        node: {
-            value: function (resizable) {
-                return $('<div class="' + resizable.get('prefixCls') +
-                    'resizable-proxy"></div>');
-            }
-        },
-        /**
-         * Current proxy node.
-         * @type {KISSY.NodeList}
-         * @property proxyNode
-         */
-        /**
-         * @ignore
-         */
-        proxyNode: {
-
-        },
-
-        /**
-         * whether hide original node when resize proxy.
-         * Defaults to: false
-         * @cfg {Boolean} hideNodeOnResize
-         */
-        /**
-         * @ignore
-         */
-        hideNodeOnResize: {
-            value: false
-        },
-
-        /**
-         * destroy the proxy node at the end of this drag.
-         * default false
-         * @cfg {Boolean} destroyOnEnd
-         */
-        /**
-         * @ignore
-         */
-        destroyOnEnd: {
-            value: false
-        }
-    };
-
-    S.extend(ResizablePlugin, Base, {
+    return Base.extend({
         pluginId: 'resizable/plugin/proxy',
         pluginInitializer: function (resizable) {
             var self = this,
@@ -128,9 +72,59 @@ KISSY.add('resizable/plugin/proxy', function (S, Base, Node) {
         pluginDestructor: function (resizable) {
             resizable['detach'](PROXY_EVENT);
         }
-    });
+    },{
+        ATTRS: {
+            /**
+             * how to get the proxy node.
+             * default clone the node itself deeply.
+             * @cfg {Function} node
+             */
+            /**
+             * @ignore
+             */
+            node: {
+                value: function (resizable) {
+                    return $('<div class="' + resizable.get('prefixCls') +
+                        'resizable-proxy"></div>');
+                }
+            },
+            /**
+             * Current proxy node.
+             * @type {KISSY.NodeList}
+             * @property proxyNode
+             */
+            /**
+             * @ignore
+             */
+            proxyNode: {
 
-    return ResizablePlugin;
+            },
+
+            /**
+             * whether hide original node when resize proxy.
+             * Defaults to: false
+             * @cfg {Boolean} hideNodeOnResize
+             */
+            /**
+             * @ignore
+             */
+            hideNodeOnResize: {
+                value: false
+            },
+
+            /**
+             * destroy the proxy node at the end of this drag.
+             * default false
+             * @cfg {Boolean} destroyOnEnd
+             */
+            /**
+             * @ignore
+             */
+            destroyOnEnd: {
+                value: false
+            }
+        }
+    });
 }, {
     requires: ['base', 'node']
 });

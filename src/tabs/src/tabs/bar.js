@@ -53,9 +53,9 @@ KISSY.add("tabs/bar", function (S, Toolbar, BarRender, undefined) {
             }
         },
 
-        _onSetHighlightedItem: function () {
+        _onSetHighlightedItem: function (v,e) {
             var self = this;
-            TabBar.superclass._onSetHighlightedItem.apply(self, arguments);
+            self.super(v,e);
             if (self.get('changeType') == 'mouse') {
                 self._onSetSelectedTab.apply(self, arguments);
             }

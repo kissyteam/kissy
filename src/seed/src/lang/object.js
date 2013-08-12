@@ -203,7 +203,7 @@
             // add prototype chain
             rp = createObject(sp, r);
             r.prototype = S.mix(rp, r.prototype);
-            r.superclass = createObject(sp, s);
+            r.superclass = sp;
 
             // add prototype overrides
             if (px) {

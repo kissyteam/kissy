@@ -195,7 +195,6 @@ KISSY.add(
                     var node;
 
                     (function () {
-
                         node = $("<div style='position: absolute;left:0;top:0;" +
                             "width: 100px;height: 100px;" +
                             "overflow: hidden'>" +
@@ -255,13 +254,10 @@ KISSY.add(
                         expect(target.offset().top).toBeEqual(
                             containerOffset.top + 30
                         );
-
                     })();
 
 
                     (function () {
-
-
                         node = $("<div style='position: absolute;left:0;top:0;" +
                             "width: 100px;height: 100px;" +
                             "overflow: hidden'>" +
@@ -284,7 +280,6 @@ KISSY.add(
                         obj.render();
 
                         var containerOffset = node.offset();
-
                         obj.align(lower, ["tl", "bl"], undefined, {
 
                         });
@@ -324,7 +319,6 @@ KISSY.add(
                         expect(target.offset().top).toBeEqual(
                             containerOffset.top + 10
                         );
-
                     })();
 
                 });

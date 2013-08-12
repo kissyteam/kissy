@@ -1,3 +1,3 @@
 # Base Class
 
-Attribute management
+KISSY Class System

@@ -43,7 +43,7 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
                 trapFocus.call(this, e);
             },
 
-            _onSetVisible: function (v) {
+            _onSetVisible: function (v,e) {
                 var self = this,
                     el = self.el;
                 if (v) {
@@ -63,7 +63,7 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
                     }
                 }
                 // prevent display none for effect
-                Dialog.superclass._onSetVisible.apply(self, arguments);
+                self.super(v,e);
             }
         },
 

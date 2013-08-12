@@ -3,11 +3,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add("kison/item-set", function (S, Base) {
-    function ItemSet() {
-        ItemSet.superclass.constructor.apply(this, arguments);
-    }
-
-    S.extend(ItemSet, Base, {
+    return Base.extend({
 
         /**
          * Insert item by order
@@ -93,8 +89,6 @@ KISSY.add("kison/item-set", function (S, Base) {
             }
         }
     });
-
-    return ItemSet;
 }, {
     requires: ['base']
 });

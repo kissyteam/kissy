@@ -84,7 +84,6 @@ KISSY.add('grid/baritem',function(S,Component,Button,Node){
 			if(children[0]){
 				children[0].set('disabled',value);
 			}
-			//_self.constructor.superclass._onSetDisabled.call(_self,value);
 		},
 		_onSetChecked: function(value){
 			var _self = this,

@@ -60,12 +60,7 @@ KISSY.add("kison/grammar", function (S, Base, Utils, Item, ItemSet, NonTerminal,
         }
     }
 
-    function Grammar() {
-        var self = this;
-        Grammar.superclass.constructor.apply(self, arguments);
-    }
-
-    S.extend(Grammar, Base, {
+   return Base.extend({
 
         build: function () {
             var self = this,
@@ -840,8 +835,6 @@ KISSY.add("kison/grammar", function (S, Base, Utils, Item, ItemSet, NonTerminal,
     }
 
     // #-------------------- for generation end
-
-    return Grammar;
 }, {
     requires: [
         'base',

@@ -330,7 +330,6 @@ KISSY.add('component/extension/align', function (S, Node) {
 
     // for augment, no need constructor
     Align.prototype = {
-
         __bindUI: function () {
             // auto align on window resize or before el show
             var self = this;

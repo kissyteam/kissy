@@ -4,11 +4,7 @@
  */
 KISSY.add("kison/non-terminal", function (S, Base) {
 
-    function NonTerminal() {
-        NonTerminal.superclass.constructor.apply(this, arguments);
-    }
-
-    S.extend(NonTerminal, Base, {
+    return Base.extend({
 
     }, {
         ATTRS:{
@@ -26,9 +22,6 @@ KISSY.add("kison/non-terminal", function (S, Base) {
             }
         }
     });
-
-    return NonTerminal;
-
 }, {
     requires:['base']
 });

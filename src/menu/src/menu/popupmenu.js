@@ -13,7 +13,7 @@ KISSY.add("menu/popupmenu", function (S, AlignExtension, Menu, PopupMenuRender) 
      * @mixins KISSY.Component.Extension.Position
      * @mixins KISSY.Component.Extension.Align
      */
-    var PopupMenu = Menu.extend([
+    return Menu.extend([
         AlignExtension
     ], {
         // 根菜单 popupmenu 或者到中间的 menu 菜单
@@ -29,7 +29,7 @@ KISSY.add("menu/popupmenu", function (S, AlignExtension, Menu, PopupMenuRender) 
         },
 
         handleMouseLeaveInternal: function (e) {
-            PopupMenu.superclass.handleMouseLeaveInternal.apply(this, arguments);
+            this.super(e);
             // sub menuitem 有时不灵敏
             // var parent = this.get('parent');
             // if (parent && parent.isSubMenu) {
@@ -56,9 +56,9 @@ KISSY.add("menu/popupmenu", function (S, AlignExtension, Menu, PopupMenuRender) 
          * Protected, should only be overridden by subclasses.
          * @protected
          */
-        handleBlurInternal: function () {
+        handleBlurInternal: function (e) {
             var self = this;
-            PopupMenu.superclass.handleBlurInternal.apply(self, arguments);
+            self.super(e);
             self.hide();
         }
     }, {
@@ -98,9 +98,6 @@ KISSY.add("menu/popupmenu", function (S, AlignExtension, Menu, PopupMenuRender) 
         },
         xclass: 'popupmenu'
     });
-
-    return PopupMenu;
-
 }, {
     requires: ['component/extension/align',
         './control', './popupmenu-render']

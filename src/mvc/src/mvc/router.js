@@ -2,7 +2,7 @@
  * simple router to get path parameter and query parameter from hash(old ie) or url(html5)
  * @author yiminghe@gmail.com
  */
-KISSY.add('mvc/router', function (S, Node, Base) {
+KISSY.add('mvc/router', function (S, Node, Base, undefined) {
     var each = S.each,
     // take a breath to avoid duplicate hashchange
         BREATH_INTERVAL = 100,
@@ -223,12 +223,14 @@ KISSY.add('mvc/router', function (S, Node, Base) {
                             return false;
                         }
                     }
+                    return undefined;
                 }
             );
 
             if (exactlyMatch) {
                 return false;
             }
+            return undefined;
         });
 
 
@@ -274,6 +276,7 @@ KISSY.add('mvc/router', function (S, Node, Base) {
                 else if (g4) {
                     return "(.*)";
                 }
+                return undefined;
             });
 
             return {
@@ -319,34 +322,13 @@ KISSY.add('mvc/router', function (S, Node, Base) {
      * @member MVC
      * @extends KISSY.Base
      */
-    function Router() {
-        var self = this;
-        Router.superclass.constructor.apply(self, arguments);
-        self.on("afterRoutesChange", _afterRoutesChange, self);
-        _afterRoutesChange.call(self, {newVal: self.get("routes")});
-        allRoutes.push(self);
-    }
-
-    Router.ATTRS = {
-        /**
-         * Route and action config.
-         * @type {Object}
-         * @example
-         * <code>
-         *   {
-         *     "/search/:param":"callback"
-         *     // or
-         *     "search":{
-         *       reg:/xx/,
-         *       callback:fn
-         *     }
-         *   }
-         * </code>
-         */
-        routes: {}
-    };
-
-    S.extend(Router, Base, {
+    return Base.extend({
+        initializer: function () {
+            var self = this;
+            self.on("afterRoutesChange", _afterRoutesChange, self);
+            _afterRoutesChange.call(self, {newVal: self.get("routes")});
+            allRoutes.push(self);
+        },
         /**
          * Add config to current router.
          * @param {Object} routes Route config.
@@ -369,6 +351,25 @@ KISSY.add('mvc/router', function (S, Node, Base) {
             });
         }
     }, {
+        ATTRS: {
+
+            /**
+             * Route and action config.
+             * @type {Object}
+             * @example
+             * <code>
+             *   {
+         *     "/search/:param":"callback"
+         *     // or
+         *     "search":{
+         *       reg:/xx/,
+         *       callback:fn
+         *     }
+         *   }
+             * </code>
+             */
+            routes: {}
+        },
 
         /**
          * whether Router can process path
@@ -386,10 +387,12 @@ KISSY.add('mvc/router', function (S, Node, Base) {
                         match = 1;
                         return false;
                     }
+                    return undefined;
                 });
                 if (match) {
                     return false;
                 }
+                return undefined;
             });
             return !!match;
         },
@@ -489,7 +492,7 @@ KISSY.add('mvc/router', function (S, Node, Base) {
                 // refresh page without add history entry
                 else if (!equalsIgnoreSlash(locPath, urlRoot)) {
                     location.replace(addEndSlash(urlRoot) + "#!" + hash);
-                    return;
+                    return undefined;
                 }
 
             }
@@ -518,6 +521,7 @@ KISSY.add('mvc/router', function (S, Node, Base) {
             }, BREATH_INTERVAL);
 
             Router.__started = 1;
+            return undefined;
         },
 
         stop: function () {
@@ -527,9 +531,6 @@ KISSY.add('mvc/router', function (S, Node, Base) {
             allRoutes = [];
         }
     });
-
-    return Router;
-
 }, {
     requires: ['node', 'base']
 });

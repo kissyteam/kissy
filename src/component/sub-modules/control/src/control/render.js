@@ -106,10 +106,9 @@ KISSY.add("component/control/render", function (S, ComponentProcess, XTemplate, 
 
             if (srcNode) {
                 // decorate from existing dom structure
-                self.callMethodByHierarchy("decorateDom", "__decorateDom",
-                    [srcNode]);
+                self.decorateDom(srcNode);
             } else {
-                Render.superclass.createInternal.apply(self, arguments);
+                self.super();
             }
         },
 
@@ -177,18 +176,14 @@ KISSY.add("component/control/render", function (S, ComponentProcess, XTemplate, 
          */
         createDom: function () {
             var self = this;
-
-            self.callMethodByHierarchy(
-                "beforeCreateDom",
-                "__beforeCreateDom",
-                [
-                    self.renderData = {},
-                    self.childrenElSelectors = {},
-                    self.renderCommands = {
-                        getBaseCssClasses: S.bind(getBaseCssClassesCmd, self),
-                        getBaseCssClass: S.bind(getBaseCssClassCmd, self)
-                    }
-                ]);
+            self['beforeCreateDom'](
+                self.renderData = {},
+                self.childrenElSelectors = {},
+                self.renderCommands = {
+                    getBaseCssClasses: S.bind(getBaseCssClassesCmd, self),
+                    getBaseCssClass: S.bind(getBaseCssClassCmd, self)
+                }
+            );
 
             var control = self.control,
                 tpl, html;
@@ -210,7 +205,7 @@ KISSY.add("component/control/render", function (S, ComponentProcess, XTemplate, 
                 srcNode.attr('id', control.get('id'));
             }
 
-            constructorChains = self['collectConstructorChains']();
+            constructorChains = self.__collectConstructorChains();
 
             // 从父类到子类开始从 html 读取属性
             for (len = constructorChains.length - 1; len >= 0; len--) {
@@ -233,10 +228,7 @@ KISSY.add("component/control/render", function (S, ComponentProcess, XTemplate, 
                 var render = control.get('render'),
                     renderBefore = control.get('elBefore');
                 if (renderBefore) {
-                    el.insertBefore(renderBefore, /**
-                     @type Node
-                     @ignore
-                     */undefined);
+                    el['insertBefore'](renderBefore, undefined);
                 } else if (render) {
                     el.appendTo(render, undefined);
                 } else {
@@ -391,7 +383,7 @@ KISSY.add("component/control/render", function (S, ComponentProcess, XTemplate, 
             el.html(c);
             // ie needs to set unselectable attribute recursively
             if (UA.ie < 9 && !this.get('allowTextSelection')) {
-                el.unselectable();
+                el['unselectable']();
             }
         },
 
@@ -454,6 +446,10 @@ KISSY.add("component/control/render", function (S, ComponentProcess, XTemplate, 
             this.$el.css("z-index", x);
         }
     }, {
+        __hooks__: {
+            decorateDom: ComponentProcess.prototype.__getHook__('__decorateDom'),
+            beforeCreateDom: ComponentProcess.prototype.__getHook__('__beforeCreateDom')
+        },
         /**
          * Create a new class which extends ComponentProcess .
          * @param {Function[]} extensions Class constructors for extending.

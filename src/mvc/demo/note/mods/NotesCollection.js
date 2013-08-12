@@ -6,19 +6,13 @@ KISSY.add(function(S, mvc, NoteModel) {
     /*
      笔记列表模型
      */
-    function NotesModel() {
-        NotesModel.superclass.constructor.apply(this, arguments);
-    }
-
-    S.extend(NotesModel, mvc.Collection, {
+    return mvc.Collection.extend({
         ATTRS:{
             model:{
                 value:NoteModel
             }
         }
     });
-
-    return NotesModel;
 }, {
     requires:['mvc','./NoteModel']
 });

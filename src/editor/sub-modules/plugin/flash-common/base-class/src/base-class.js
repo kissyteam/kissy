@@ -2,18 +2,9 @@
  *  BaseClass for Flash Based plugin.
  *  @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/flash-common/base-class", function (S, Editor, ContextMenu, Bubble, DialogLoader, flashUtils) {
+KISSY.add("editor/plugin/flash-common/base-class", function (S, Editor, Base, ContextMenu, Bubble, DialogLoader, flashUtils) {
 
     var Node = S.Node;
-
-    /**
-     * 写成类的形式而不是一个简单的button命令配置，为了可以override
-     * 所有基于 flash 的插件基类，使用 template 模式抽象
-     */
-    function Flash() {
-        Flash.superclass.constructor.apply(this, arguments);
-        this._init();
-    }
 
     var tipHTML = ' <a ' +
         'class="{prefixCls}editor-bubble-url" ' +
@@ -22,23 +13,16 @@ KISSY.add("editor/plugin/flash-common/base-class", function (S, Editor, ContextM
         + ' <span class="{prefixCls}editor-bubble-link {prefixCls}editor-bubble-change">编辑</span>   |   '
         + ' <span class="{prefixCls}editor-bubble-link {prefixCls}editor-bubble-remove">删除</span>';
 
-    Flash.ATTRS = {
-        cls:{},
-        type:{},
-        label:{
-            value:"在新窗口查看"
-        },
-        bubbleId:{},
-        contextMenuId:{},
-        contextMenuHandlers:{}
-    };
-
-    S.extend(Flash, S.Base, {
-        _init:function () {
+    /**
+     * 写成类的形式而不是一个简单的button命令配置，为了可以override
+     * 所有基于 flash 的插件基类，使用 template 模式抽象
+     */
+    return Base.extend({
+        initializer: function () {
             var self = this,
                 cls = self.get("cls"),
                 editor = self.get("editor"),
-                prefixCls=editor.get('prefixCls'),
+                prefixCls = editor.get('prefixCls'),
                 children = [],
                 bubbleId = self.get("bubbleId"),
                 contextMenuId = self.get("contextMenuId"),
@@ -46,15 +30,15 @@ KISSY.add("editor/plugin/flash-common/base-class", function (S, Editor, ContextM
 
             S.each(contextMenuHandlers, function (h, content) {
                 children.push({
-                    content:content
+                    content: content
                 })
             });
 
             editor.addContextMenu(contextMenuId, "." + cls, {
-                width:"120px",
-                children:children,
-                listeners:{
-                    click:function (e) {
+                width: "120px",
+                children: children,
+                listeners: {
+                    click: function (e) {
                         var content = e.target.get("content");
                         if (contextMenuHandlers[content]) {
                             contextMenuHandlers[content].call(this);
@@ -66,18 +50,18 @@ KISSY.add("editor/plugin/flash-common/base-class", function (S, Editor, ContextM
             editor.addBubble(bubbleId, function (el) {
                 return el.hasClass(cls, undefined) && el;
             }, {
-                listeners:{
+                listeners: {
                     afterRenderUI:// 注册泡泡，selectionChange时检测
                         function () {
                             var bubble = this,
                                 el = bubble.get("contentEl");
                             el.html(S.substitute(tipHTML, {
-                                label:self.get("label"),
-                                prefixCls:prefixCls
+                                label: self.get("label"),
+                                prefixCls: prefixCls
                             }));
-                            var tipUrlEl = el.one("."+prefixCls+"editor-bubble-url"),
-                                tipChangeEl = el.one("."+prefixCls+"editor-bubble-change"),
-                                tipRemoveEl = el.one("."+prefixCls+"editor-bubble-remove");
+                            var tipUrlEl = el.one("." + prefixCls + "editor-bubble-url"),
+                                tipChangeEl = el.one("." + prefixCls + "editor-bubble-change"),
+                                tipRemoveEl = el.one("." + prefixCls + "editor-bubble-remove");
 
                             // ie focus not lose
                             Editor.Utils.preventFocus(el);
@@ -129,7 +113,7 @@ KISSY.add("editor/plugin/flash-common/base-class", function (S, Editor, ContextM
          *
          * @param r flash 元素
          */
-        _getFlashUrl:function (r) {
+        _getFlashUrl: function (r) {
             return flashUtils.getUrl(r);
         },
         /**
@@ -138,7 +122,7 @@ KISSY.add("editor/plugin/flash-common/base-class", function (S, Editor, ContextM
          * @param tipUrlElEl
          * @param selectedFlash
          */
-        _updateTip:function (tipUrlElEl, selectedFlash) {
+        _updateTip: function (tipUrlElEl, selectedFlash) {
             var self = this,
                 editor = self.get("editor"),
                 r = editor.restoreRealElement(selectedFlash);
@@ -150,7 +134,7 @@ KISSY.add("editor/plugin/flash-common/base-class", function (S, Editor, ContextM
         },
 
         //根据图片标志触发本插件应用
-        _dbClick:function (ev) {
+        _dbClick: function (ev) {
             var self = this,
                 t = new Node(ev.target);
             if (t.nodeName() === "img" && t.hasClass(self.get("cls"), undefined)) {
@@ -159,18 +143,29 @@ KISSY.add("editor/plugin/flash-common/base-class", function (S, Editor, ContextM
             }
         },
 
-        show:function (selectedEl) {
+        show: function (selectedEl) {
             var self = this,
                 editor = self.get("editor");
             DialogLoader.useDialog(editor, self.get("type"),
                 self.get("pluginConfig"),
                 selectedEl);
         }
+    }, {
+        ATTRS: {
+            cls: {},
+            type: {},
+            label: {
+                value: "在新窗口查看"
+            },
+            bubbleId: {},
+            contextMenuId: {},
+            contextMenuHandlers: {}
+        }
     });
 
-    return Flash;
-
 }, {
-    requires:['editor', '../contextmenu',
+    requires: ['editor',
+        'base' ,
+        '../contextmenu',
         '../bubble', '../dialog-loader', './utils']
 });

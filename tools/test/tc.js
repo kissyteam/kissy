@@ -142,10 +142,6 @@ tests.push('/kissy/src/resizable/tests/runner/test.jss');
 
 tests.push('/kissy/src/resizable/tests/runner/test.jss?build');
 
-tests.push('/kissy/src/rich-base/tests/runner/test.jss');
-
-tests.push('/kissy/src/rich-base/tests/runner/test.jss?build');
-
 tests.push('/kissy/src/seed/tests/runner/cache.jss');
 
 tests.push('/kissy/src/seed/tests/runner/cache.jss?build');

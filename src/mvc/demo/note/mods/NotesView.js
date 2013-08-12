@@ -9,59 +9,56 @@ KISSY.add(function(S, Node, mvc, Template, NoteView) {
     /**
      * 笔记列表View
      */
-    function NotesView() {
-        NotesView.superclass.constructor.apply(this, arguments);
+    return mvc.View.extend({
+        initializer:function(){
+            var self = this,
+                statistic,
+                dataList,
+                el = self.get("el");
 
-        var self = this,
-            statistic,
-            dataList,
-            el = self.get("el");
 
+            self.searchInput = el.one(".searchInput");
 
-        self.searchInput = el.one(".searchInput");
+            dataList = self.dataList = el.one(".dataList");
+            statistic = self.statistic = el.one(".statistic");
+            var notes = self.get("notes");
 
-        dataList = self.dataList = el.one(".dataList");
-        statistic = self.statistic = el.one(".statistic");
-        var notes = self.get("notes");
-
-        /**
-         * 监控笔记集合（包括各个笔记）的所有变化
-         */
-        notes.on("*Change", function(e) {
-            if (e.target != self) {
-                statistic.html(e.target.get("title"));
-            }
-        });
-        notes.on("add remove", function(e) {
-            statistic.html(e.model.get("title"));
-        });
-
-        /**
-         * 集合添加时，同步到 dom
-         */
-        notes.on("add", function(e) {
-            dataList.append(new NoteView({
-                note:e.model
-            }).render().get("el"))
-        });
-
-        /**
-         * 设置整体时，同步到 dom
-         */
-        notes.on("afterModelsChange", function() {
-            dataList.html(tmpl.render({list:notes.toJSON()}));
-            var list = dataList.all(".note");
-            list.each(function(l, i) {
-                // 初始化 NoteView ，修改时该 note 时局部更新
-                new NoteView({
-                    note:notes.at(i),
-                    el:l
-                })
+            /**
+             * 监控笔记集合（包括各个笔记）的所有变化
+             */
+            notes.on("*Change", function(e) {
+                if (e.target != self) {
+                    statistic.html(e.target.get("title"));
+                }
             });
-        });
-    }
+            notes.on("add remove", function(e) {
+                statistic.html(e.model.get("title"));
+            });
 
-    S.extend(NotesView, mvc.View, {
+            /**
+             * 集合添加时，同步到 dom
+             */
+            notes.on("add", function(e) {
+                dataList.append(new NoteView({
+                    note:e.model
+                }).render().get("el"))
+            });
+
+            /**
+             * 设置整体时，同步到 dom
+             */
+            notes.on("afterModelsChange", function() {
+                dataList.html(tmpl.render({list:notes.toJSON()}));
+                var list = dataList.all(".note");
+                list.each(function(l, i) {
+                    // 初始化 NoteView ，修改时该 note 时局部更新
+                    new NoteView({
+                        note:notes.at(i),
+                        el:l
+                    })
+                });
+            });
+        },
         /**
          * 新加笔记，更改url，由router处理
          */
@@ -141,9 +138,6 @@ KISSY.add(function(S, Node, mvc, Template, NoteView) {
             }
         }
     });
-
-    return NotesView;
-
 }, {
     requires:['node','mvc','xtemplate','./NoteView']
 });

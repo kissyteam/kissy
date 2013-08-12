@@ -9,11 +9,7 @@ KISSY.add(function(S, Node, mvc, Template) {
     /**
      * 编辑笔记view
      */
-    function EditView() {
-        EditView.superclass.constructor.apply(this, arguments);
-    }
-
-    S.extend(EditView, mvc.View, {
+   return mvc.View.extend({
         /**
          * 提交操作：(创建或更新)
          */
@@ -59,8 +55,6 @@ KISSY.add(function(S, Node, mvc, Template) {
             }
         }
     });
-
-    return EditView;
 }, {
     requires:['node','mvc','xtemplate']
 });

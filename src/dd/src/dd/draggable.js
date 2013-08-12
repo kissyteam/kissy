@@ -3,7 +3,7 @@
  * dd support for kissy, drag for dd
  * @author yiminghe@gmail.com
  */
-KISSY.add('dd/draggable', function (S, Node, RichBase, DDM) {
+KISSY.add('dd/draggable', function (S, Node, Base, DDM) {
 
     var UA = S.UA,
         $ = Node.all,
@@ -16,10 +16,10 @@ KISSY.add('dd/draggable', function (S, Node, RichBase, DDM) {
 
     /**
      * @class KISSY.DD.Draggable
-     * @extends KISSY.RichBase
+     * @extends KISSY.Base
      * Provide abilities to make specified node draggable
      */
-    var Draggable = RichBase.extend({
+    var Draggable = Base.extend({
         initializer: function () {
             var self = this;
             self.addTarget(DDM);
@@ -875,5 +875,5 @@ KISSY.add('dd/draggable', function (S, Node, RichBase, DDM) {
     return Draggable;
 
 }, {
-    requires: ['node', 'rich-base', './ddm']
+    requires: ['node', 'base', './ddm']
 });

@@ -13,13 +13,13 @@ KISSY.add("menu/menuitem", function (S, Control, MenuItemRender) {
      * xclass: 'menuitem'.
      * @extends KISSY.Component.Control
      */
-    var MenuItem = Control.extend({
+   return Control.extend({
 
         isMenuItem: 1,
 
         // for ios, ios only has touchdown
         handleMouseDownInternal: function (e) {
-            MenuItem.superclass.handleMouseDownInternal.call(this, e);
+            this.super(e);
             this.set("highlighted", true);
         },
 
@@ -152,8 +152,6 @@ KISSY.add("menu/menuitem", function (S, Control, MenuItemRender) {
         },
         xclass: "menuitem"
     });
-
-    return MenuItem;
 }, {
     requires: ['component/control', './menuitem-render']
 });

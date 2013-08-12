@@ -25,7 +25,7 @@ KISSY.add("combobox/filter-select", function (S, Combobox) {
     var FilterSelect = Combobox.extend({
         validate: function (callback) {
             var self = this;
-            FilterSelect.superclass.validate.call(self, function (error, val) {
+            self.super(function (error, val) {
                 if (!error) {
                     self.get("dataSource").fetchData(val, function (data) {
                         var d = valInAutoCompleteList(val, self.normalizeData(data));

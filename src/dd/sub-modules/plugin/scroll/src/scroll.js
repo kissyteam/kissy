@@ -7,65 +7,17 @@ KISSY.add('dd/plugin/scroll', function (S, DD, Base, Node) {
 
     var DDM = DD.DDM,
         win = S.Env.host,
-        $win = Node.all(win),
         SCROLL_EVENT = '.-ks-dd-scroll' + S.now(),
         RATE = [10, 10],
         ADJUST_DELAY = 100,
-        DIFF = [20, 20];
+        DIFF = [20, 20],
+        isWin = S.isWindow;
 
     /**
      * @class KISSY.DD.Plugin.Scroll
      * Scroll plugin to make parent node scroll while dragging.
      */
-    function Scroll() {
-        Scroll.superclass.constructor.apply(this, arguments);
-    }
-
-    Scroll.ATTRS = {
-        /**
-         * node to be scrolled while dragging
-         * @cfg {window|String|HTMLElement} node
-         */
-        /**
-         * @ignore
-         */
-        node: {
-            // value:window：不行，默认值一定是简单对象
-            valueFn: function () {
-                return Node.one(win);
-            },
-            setter: function (v) {
-                return Node.one(v);
-            }
-        },
-        /**
-         * adjust velocity, larger faster
-         * default [10,10]
-         * @cfg {Number[]} rate
-         */
-        /**
-         * @ignore
-         */
-        rate: {
-            value: RATE
-        },
-        /**
-         * the margin to make node scroll, easier to scroll for node if larger.
-         * default  [20,20]
-         * @cfg {number[]} diff
-         */
-        /**
-         * @ignore
-         */
-        diff: {
-            value: DIFF
-        }
-    };
-
-
-    var isWin = S.isWindow;
-
-    S.extend(Scroll, Base, {
+    return Base.extend({
 
         pluginId: 'dd/plugin/scroll',
 
@@ -265,9 +217,48 @@ KISSY.add('dd/plugin/scroll', function (S, DD, Base, Node) {
                 }
             }
         }
+    }, {
+        ATTRS: {
+            /**
+             * node to be scrolled while dragging
+             * @cfg {window|String|HTMLElement} node
+             */
+            /**
+             * @ignore
+             */
+            node: {
+                // value:window：不行，默认值一定是简单对象
+                valueFn: function () {
+                    return Node.one(win);
+                },
+                setter: function (v) {
+                    return Node.one(v);
+                }
+            },
+            /**
+             * adjust velocity, larger faster
+             * default [10,10]
+             * @cfg {Number[]} rate
+             */
+            /**
+             * @ignore
+             */
+            rate: {
+                value: RATE
+            },
+            /**
+             * the margin to make node scroll, easier to scroll for node if larger.
+             * default  [20,20]
+             * @cfg {number[]} diff
+             */
+            /**
+             * @ignore
+             */
+            diff: {
+                value: DIFF
+            }
+        }
     });
-
-    return Scroll;
 }, {
     requires: ['dd', 'base', 'node']
 });

@@ -22,6 +22,13 @@ KISSY.add('dd/ddm', function (S, Node, Base, undefined) {
     var Gesture = Node.Gesture,
         DRAG_MOVE_EVENT = Gesture.move,
         DRAG_END_EVENT = Gesture.end;
+    /*
+     负责拖动涉及的全局事件：
+     1.全局统一的鼠标移动监控
+     2.全局统一的鼠标弹起监控，用来通知当前拖动对象停止
+     3.为了跨越 iframe 而统一在底下的遮罩层
+     */
+
 
     /**
      * @class KISSY.DD.DDM
@@ -29,102 +36,211 @@ KISSY.add('dd/ddm', function (S, Node, Base, undefined) {
      * @extends KISSY.Base
      * Manager for Drag and Drop.
      */
-    function DDM() {
-        var self = this;
-        DDM.superclass.constructor.apply(self, arguments);
-    }
-
-    DDM.ATTRS = {
-        /**
-         * cursor style when dragging,if shimmed the shim will get the cursor.
-         * Defaults to: 'move'.
-         * @property dragCursor
-         * @type {String}
+    var DDM = Base.extend({
+        /*
+         可能要进行拖放的对象，需要通过 buffer/pixelThresh 考验
          */
+        __activeToDrag: 0,
 
         /**
          * @ignore
          */
-        dragCursor: {
-            value: 'move'
-        },
-
-        /***
-         * the number of pixels to move to start a drag operation,default is 3.
-         * Defaults to: 3.
-         * @property clickPixelThresh
-         * @type {Number}
-         */
-
-        /**
-         * @ignore
-         */
-        clickPixelThresh: {
-            value: PIXEL_THRESH
+        _regDrop: function (d) {
+            this.get('drops').push(d);
         },
 
         /**
-         * the number of milliseconds to start a drag operation after mousedown,unit second.
-         * Defaults to: 1.
-         * @property bufferTime
-         * @type {Number}
-         */
-
-        /**
          * @ignore
          */
-        bufferTime: {
-            value: BUFFER_TIME
+        _unRegDrop: function (d) {
+            var self = this,
+                drops = self.get('drops'),
+                index = S.indexOf(d, drops);
+            if (index != -1) {
+                drops.splice(index, 1);
+            }
         },
 
         /**
-         * currently active draggable object
-         * @type {KISSY.DD.Draggable}
-         * @readonly
-         * @property activeDrag
-         */
-        /**
+         * 注册可能将要拖放的节点
+         * @param drag
          * @ignore
          */
-        activeDrag: {},
-
-        /**
-         * currently active droppable object
-         * @type {KISSY.DD.Droppable}
-         * @readonly
-         * @property activeDrop
-         */
-        /**
-         * @ignore
-         */
-        activeDrop: {},
-
-        /**
-         * an array of drop targets.
-         * @property drops
-         * @type {KISSY.DD.Droppable[]}
-         * @private
-         */
-        /**
-         * @ignore
-         */
-        drops: {
-            value: []
+        _regToDrag: function (drag) {
+            var self = this;
+            // 事件先要注册好，防止点击，导致 mouseup 时还没注册事件
+            self.__activeToDrag = drag;
+            registerEvent(self);
         },
 
         /**
-         * a array of the valid drop targets for this interaction
-         * @property validDrops
-         * @type {KISSY.DD.Droppable[]}
-         * @private
+         * 真正开始 drag
+         * 当前拖动对象通知全局：我要开始啦
+         * 全局设置当前拖动对象
+         * @ignore
          */
+        _start: function () {
+            var self = this,
+                drops = self.get('drops'),
+                drag = self.__activeToDrag;
+            self.setInternal('activeDrag', drag);
+            // 预备役清掉
+            self.__activeToDrag = 0;
+            // 真正开始移动了才激活垫片
+            if (drag.get('shim')) {
+                activeShim(self);
+            }
+            // avoid unnecessary drop check
+            self.__needDropCheck = 0;
+            if (drag.get('groups')) {
+                _activeDrops(self);
+                if (self.get('validDrops').length) {
+                    cacheWH(drag.get('node'));
+                    self.__needDropCheck = 1;
+                }
+            }
+        },
+
         /**
          * @ignore
          */
-        validDrops: {
-            value: []
+        _addValidDrop: function (drop) {
+            this.get('validDrops').push(drop);
+        },
+
+        /**
+         * 全局通知当前拖动对象：结束拖动了！
+         * @ignore
+         */
+        _end: function (e) {
+            var self = this,
+                __activeToDrag = self.__activeToDrag,
+                activeDrag = self.get('activeDrag'),
+                activeDrop = self.get('activeDrop');
+
+            if (e) {
+                if (__activeToDrag) {
+                    __activeToDrag._move(e);
+                }
+                if (activeDrag) {
+                    activeDrag._move(e);
+                }
+            }
+
+            unRegisterEvent(self);
+            // 预备役清掉 , click 情况下 mousedown->mouseup 极快过渡
+            if (__activeToDrag) {
+                __activeToDrag._end(e);
+                self.__activeToDrag = 0;
+            }
+            if (self._shim) {
+                self._shim.hide();
+            }
+            if (!activeDrag) {
+                return;
+            }
+            activeDrag._end(e);
+            _deActiveDrops(self);
+            if (activeDrop) {
+                activeDrop._end(e);
+            }
+            self.setInternal('activeDrag', null);
+            self.setInternal('activeDrop', null);
         }
-    };
+    }, {
+        ATTRS: {
+
+            /**
+             * cursor style when dragging,if shimmed the shim will get the cursor.
+             * Defaults to: 'move'.
+             * @property dragCursor
+             * @type {String}
+             */
+
+            /**
+             * @ignore
+             */
+            dragCursor: {
+                value: 'move'
+            },
+
+            /***
+             * the number of pixels to move to start a drag operation,default is 3.
+             * Defaults to: 3.
+             * @property clickPixelThresh
+             * @type {Number}
+             */
+
+            /**
+             * @ignore
+             */
+            clickPixelThresh: {
+                value: PIXEL_THRESH
+            },
+
+            /**
+             * the number of milliseconds to start a drag operation after mousedown,unit second.
+             * Defaults to: 1.
+             * @property bufferTime
+             * @type {Number}
+             */
+
+            /**
+             * @ignore
+             */
+            bufferTime: {
+                value: BUFFER_TIME
+            },
+
+            /**
+             * currently active draggable object
+             * @type {KISSY.DD.Draggable}
+             * @readonly
+             * @property activeDrag
+             */
+            /**
+             * @ignore
+             */
+            activeDrag: {},
+
+            /**
+             * currently active droppable object
+             * @type {KISSY.DD.Droppable}
+             * @readonly
+             * @property activeDrop
+             */
+            /**
+             * @ignore
+             */
+            activeDrop: {},
+
+            /**
+             * an array of drop targets.
+             * @property drops
+             * @type {KISSY.DD.Droppable[]}
+             * @private
+             */
+            /**
+             * @ignore
+             */
+            drops: {
+                value: []
+            },
+
+            /**
+             * a array of the valid drop targets for this interaction
+             * @property validDrops
+             * @type {KISSY.DD.Droppable[]}
+             * @private
+             */
+            /**
+             * @ignore
+             */
+            validDrops: {
+                value: []
+            }
+        }
+    });
 
     /*
      全局鼠标移动事件通知当前拖动对象正在移动
@@ -354,124 +470,6 @@ KISSY.add('dd/ddm', function (S, Node, Base, undefined) {
         }
     }
 
-    /*
-     负责拖动涉及的全局事件：
-     1.全局统一的鼠标移动监控
-     2.全局统一的鼠标弹起监控，用来通知当前拖动对象停止
-     3.为了跨越 iframe 而统一在底下的遮罩层
-     */
-    S.extend(DDM, Base, {
-        /*
-         可能要进行拖放的对象，需要通过 buffer/pixelThresh 考验
-         */
-        __activeToDrag: 0,
-
-        /**
-         * @ignore
-         */
-        _regDrop: function (d) {
-            this.get('drops').push(d);
-        },
-
-        /**
-         * @ignore
-         */
-        _unRegDrop: function (d) {
-            var self = this,
-                drops = self.get('drops'),
-                index = S.indexOf(d, drops);
-            if (index != -1) {
-                drops.splice(index, 1);
-            }
-        },
-
-        /**
-         * 注册可能将要拖放的节点
-         * @param drag
-         * @ignore
-         */
-        _regToDrag: function (drag) {
-            var self = this;
-            // 事件先要注册好，防止点击，导致 mouseup 时还没注册事件
-            self.__activeToDrag = drag;
-            registerEvent(self);
-        },
-
-        /**
-         * 真正开始 drag
-         * 当前拖动对象通知全局：我要开始啦
-         * 全局设置当前拖动对象
-         * @ignore
-         */
-        _start: function () {
-            var self = this,
-                drops = self.get('drops'),
-                drag = self.__activeToDrag;
-            self.setInternal('activeDrag', drag);
-            // 预备役清掉
-            self.__activeToDrag = 0;
-            // 真正开始移动了才激活垫片
-            if (drag.get('shim')) {
-                activeShim(self);
-            }
-            // avoid unnecessary drop check
-            self.__needDropCheck = 0;
-            if (drag.get('groups')) {
-                _activeDrops(self);
-                if (self.get('validDrops').length) {
-                    cacheWH(drag.get('node'));
-                    self.__needDropCheck = 1;
-                }
-            }
-        },
-
-        /**
-         * @ignore
-         */
-        _addValidDrop: function (drop) {
-            this.get('validDrops').push(drop);
-        },
-
-        /**
-         * 全局通知当前拖动对象：结束拖动了！
-         * @ignore
-         */
-        _end: function (e) {
-            var self = this,
-                __activeToDrag = self.__activeToDrag,
-                activeDrag = self.get('activeDrag'),
-                activeDrop = self.get('activeDrop');
-
-            if (e) {
-                if (__activeToDrag) {
-                    __activeToDrag._move(e);
-                }
-                if (activeDrag) {
-                    activeDrag._move(e);
-                }
-            }
-
-            unRegisterEvent(self);
-            // 预备役清掉 , click 情况下 mousedown->mouseup 极快过渡
-            if (__activeToDrag) {
-                __activeToDrag._end(e);
-                self.__activeToDrag = 0;
-            }
-            if (self._shim) {
-                self._shim.hide();
-            }
-            if (!activeDrag) {
-                return;
-            }
-            activeDrag._end(e);
-            _deActiveDrops(self);
-            if (activeDrop) {
-                activeDrop._end(e);
-            }
-            self.setInternal('activeDrag', null);
-            self.setInternal('activeDrop', null);
-        }
-    });
 
     function region(node) {
         var offset = node.offset();

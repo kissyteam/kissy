@@ -451,7 +451,7 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, DD, Node) {
             },
 
             stopAnimation: function () {
-                ScrollViewDrag.superclass.stopAnimation.apply(this, arguments);
+                this.super();
                 // stop dd
                 // in case pinch setting scrollLeft conflicts with dd setting scrollLeft
                 this.dd.stopDrag();

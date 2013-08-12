@@ -7,11 +7,7 @@ KISSY.add('scroll-view/plugin/pull-to-refresh', function (S, Base) {
 
     var transformProperty = S.Features.getTransformProperty();
 
-    function ScrollBarPlugin() {
-        ScrollBarPlugin.superclass.constructor.apply(this, arguments);
-    }
-
-    S.extend(ScrollBarPlugin, Base, {
+    return Base.extend({
 
         pluginId: this.getName(),
 
@@ -128,8 +124,6 @@ KISSY.add('scroll-view/plugin/pull-to-refresh', function (S, Base) {
             }
         }
     });
-
-    return ScrollBarPlugin;
 }, {
     requires: ['base']
 });

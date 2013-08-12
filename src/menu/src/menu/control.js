@@ -13,7 +13,7 @@ KISSY.add("menu/control", function (S, Node, Container, DelegateChildrenExtensio
      * @class KISSY.Menu
      * @extends KISSY.Component.Control
      */
-    var Menu = Container.extend([
+    return Container.extend([
         DelegateChildrenExtension
     ], {
         isMenu: 1,
@@ -38,7 +38,7 @@ KISSY.add("menu/control", function (S, Node, Container, DelegateChildrenExtensio
         },
 
         _onSetVisible: function (v, e) {
-            Menu.superclass._onSetVisible.apply(this, arguments);
+            this.super(e);
             var highlightedItem;
             if (!v && (highlightedItem = this.get('highlightedItem'))) {
                 highlightedItem.set('highlighted', false);
@@ -54,8 +54,8 @@ KISSY.add("menu/control", function (S, Node, Container, DelegateChildrenExtensio
             return this;
         },
 
-        handleMouseEnterInternal: function () {
-            Menu.superclass.handleMouseEnterInternal.apply(this, arguments);
+        handleMouseEnterInternal: function (e) {
+            this.super(e);
             var rootMenu = this.getRootMenu();
             // maybe called by popupmenu, no submenu
             if (rootMenu && rootMenu._popupAutoHideTimer) {
@@ -66,7 +66,7 @@ KISSY.add("menu/control", function (S, Node, Container, DelegateChildrenExtensio
         },
 
         handleBlurInternal: function (e) {
-            Menu.superclass.handleBlurInternal.call(this, e);
+            this.super(e);
             var highlightedItem;
             if (highlightedItem = this.get('highlightedItem')) {
                 highlightedItem.set('highlighted', false);
@@ -239,9 +239,6 @@ KISSY.add("menu/control", function (S, Node, Container, DelegateChildrenExtensio
             el.setAttribute("aria-activedescendant", menuItem && menuItem.el.id || '');
         }
     }
-
-    return Menu;
-
 }, {
     requires: ['node', 'component/container',
         'component/extension/delegate-children', './menu-render']

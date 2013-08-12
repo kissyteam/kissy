@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 25 22:16
+build time: Aug 13 00:06
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -49,7 +49,6 @@ KISSY.add("component/extension/delegate-children", function (S, Node, Manager) {
     }
 
     S.augment(DelegateChildren, {
-
         handleChildrenEvents: function (e) {
             if (!this.get("disabled")) {
                 var control = this.getOwnerControl(e);

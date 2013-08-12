@@ -29,7 +29,7 @@ KISSY.add("menu/submenu", function (S, Node, MenuItem, SubMenuRender) {
      * @extends KISSY.Menu.Item
      * @class KISSY.Menu.SubMenu
      */
-    var SubMenu = MenuItem.extend({
+    return MenuItem.extend({
 
             isSubMenu: 1,
 
@@ -100,7 +100,7 @@ KISSY.add("menu/submenu", function (S, Node, MenuItem, SubMenuRender) {
                 if (!e) {
                     return;
                 }
-                SubMenu.superclass._onSetHighlighted.apply(this, arguments);
+                self.super(e);
                 if (e.fromMouse) {
                     return;
                 }
@@ -116,7 +116,7 @@ KISSY.add("menu/submenu", function (S, Node, MenuItem, SubMenuRender) {
                 var self = this;
                 showMenu.call(self);
                 //  trigger click event from menuitem
-                SubMenu.superclass.handleClickInternal.apply(self, arguments);
+                self.super(e);
             },
 
             /**
@@ -263,8 +263,6 @@ KISSY.add("menu/submenu", function (S, Node, MenuItem, SubMenuRender) {
     }
 
     // # ------------------------------------ private end
-
-    return SubMenu;
 }, {
     requires: ['node', './menuitem', './submenu-render']
 });

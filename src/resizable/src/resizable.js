@@ -3,7 +3,7 @@
  * resizable support for kissy
  * @author yiminghe@gmail.com
  */
-KISSY.add("resizable", function (S, Node, RichBase, DD, undefined) {
+KISSY.add("resizable", function (S, Node, Base, DD, undefined) {
     var $ = Node.all,
         i,
         j,
@@ -147,7 +147,7 @@ KISSY.add("resizable", function (S, Node, RichBase, DD, undefined) {
      * @class KISSY.Resizable
      * @extends KISSY.Base
      */
-    var Resizable = RichBase.extend({
+    var Resizable = Base.extend({
         initializer: function () {
             this['dds'] = {};
             this.publish('beforeResize', {
@@ -364,5 +364,5 @@ KISSY.add("resizable", function (S, Node, RichBase, DD, undefined) {
 
     return Resizable;
 }, {
-    requires: ["node", 'rich-base', "dd"]
+    requires: ["node", 'base', "dd"]
 });

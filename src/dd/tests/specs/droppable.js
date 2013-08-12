@@ -117,12 +117,15 @@ KISSY.add(function (S,  Node, DD, Droppable,IO) {
             });
 
             it("should fire dragover properly", function () {
-
                 if (S.UA.ie == 6) {
                     return;
                 }
 
-                var dragoverSpy = jasmine.createSpy();
+                var callCount=0;
+
+                var dragoverSpy = function(){
+                    callCount++;
+                };
 
 
                 drag.on("dragover", dragoverSpy);
@@ -135,7 +138,7 @@ KISSY.add(function (S,  Node, DD, Droppable,IO) {
                 waits(100);
 
                 runs(function () {
-                    expect(dragoverSpy.callCount).toBe(1);
+                    expect(callCount).toBe(1);
                 });
                 runs(function () {
                     jasmine.simulateForDrag(document, Gesture.move, {
@@ -147,7 +150,7 @@ KISSY.add(function (S,  Node, DD, Droppable,IO) {
 
                 runs(function () {
                     drag.detach("dragover", dragoverSpy);
-                    expect(dragoverSpy.callCount).toBe(2);
+                    expect(callCount).toBe(2);
                 });
             });
 

@@ -8,28 +8,23 @@ console.log(x);
 
 KISSY.use('base',function(S,Base) {
     // 自定义类
-    function MyClass(config) {
-        MyClass.superclass.constructor.call(this, config);
-    }
-
     // 继承 Base
-    S.extend(MyClass, Base);
-
-    // 增加属性
-    MyClass.ATTRS = {
-        size: {
-            value: 0,
-            setter: function(v) {
-                if (typeof v == 'string' && v.indexOf('inch')!== -1) {
-                    return parseFloat(v)*10/3;
-                }
-                return parseFloat(v);
-            },
-            getter: function(v) {
-                return v;
-            }
-        }
-    };
+   var MyClass= Base.extend({},{
+       ATTRS:{
+           size: {
+               value: 0,
+               setter: function(v) {
+                   if (typeof v == 'string' && v.indexOf('inch')!== -1) {
+                       return parseFloat(v)*10/3;
+                   }
+                   return parseFloat(v);
+               },
+               getter: function(v) {
+                   return v;
+               }
+           }
+       }
+   });
 
     var cls = new MyClass();
 

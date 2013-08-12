@@ -6,15 +6,7 @@ KISSY.add(function(S, mvc) {
     /*
      笔记模型
      */
-    function NoteModel() {
-        NoteModel.superclass.constructor.apply(this, arguments);
-    }
-
-    S.extend(NoteModel, mvc.Model);
-
-    return NoteModel;
-
-
+    return mvc.Model.extend();
 }, {
     requires:["mvc"]
 });

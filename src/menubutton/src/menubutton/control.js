@@ -11,7 +11,7 @@ KISSY.add("menubutton/control", function (S, Node, Button, MenuButtonRender, Men
      * @class KISSY.MenuButton
      * @extends KISSY.Button
      */
-    var MenuButton = Button.extend({
+    return Button.extend({
 
         isMenuButton: 1,
 
@@ -123,7 +123,7 @@ KISSY.add("menubutton/control", function (S, Node, Button, MenuButtonRender, Men
          */
         handleBlurInternal: function (e) {
             var self = this;
-            MenuButton.superclass.handleBlurInternal.call(self, e);
+            self.super(e);
             // such as : click the document
             self.set("collapsed", true);
         },
@@ -253,8 +253,6 @@ KISSY.add("menubutton/control", function (S, Node, Button, MenuButtonRender, Men
             el.setAttribute("aria-activedescendant", menuItem && menuItem.el.id || '');
         }
     }
-
-    return MenuButton;
 }, {
     requires: [ "node", "button", "./render", "menu"]
 });

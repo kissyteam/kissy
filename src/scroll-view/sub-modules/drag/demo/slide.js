@@ -12,27 +12,7 @@ KISSY.add(function (S, Node, Base, ScrollView, XTemplate) {
 
     var ACTIVE_CLASS = 'ks-scroll-view-slide-trigger-active';
 
-    function Slide(cfg) {
-        Slide.superclass.constructor.apply(this, arguments);
-    }
-
-    Slide.ATTRS = {
-        srcNode: {},
-        direction: {
-            value: 'y'
-        },
-        easing: {
-            value: 'easeNone'
-        },
-        hasTrigger: {
-            value: true
-        },
-        duration: {
-            value: 0.5
-        }
-    };
-
-    S.extend(Slide, Base, {
+    return Base.extend({
         render: function () {
             var self = this,
                 direction = self.get('direction'),
@@ -78,9 +58,23 @@ KISSY.add(function (S, Node, Base, ScrollView, XTemplate) {
                 duration: this.get('duration')
             });
         }
+    },{
+        ATTRS:{
+            srcNode: {},
+            direction: {
+                value: 'y'
+            },
+            easing: {
+                value: 'easeNone'
+            },
+            hasTrigger: {
+                value: true
+            },
+            duration: {
+                value: 0.5
+            }
+        }
     });
-
-    return Slide;
 }, {
     requires: ['node', 'base', 'scroll-view', 'xtemplate']
 });

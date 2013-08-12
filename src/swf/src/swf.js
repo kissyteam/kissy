@@ -17,6 +17,7 @@ KISSY.add('swf', function (S, Dom, Json, Base, FlashUA, undefined) {
         GT = '>',
         doc = S.Env.host.document,
         fpv = FlashUA.fpv,
+        fpvGEQ = FlashUA.fpvGEQ,
         fpvGTE = FlashUA.fpvGTE,
         OBJECT_TAG = 'object',
         encode = encodeURIComponent,
@@ -52,103 +53,101 @@ KISSY.add('swf', function (S, Dom, Json, Base, FlashUA, undefined) {
      * @class KISSY.SWF
      * @extends KISSY.Base
      */
-    function SWF(config) {
-        var self = this;
-        SWF.superclass.constructor.apply(self, arguments);
-        var expressInstall = self.get('expressInstall'),
-            swf,
-            html,
-            id,
-            htmlMode = self.get('htmlMode'),
-            flashVars,
-            params = self.get('params'),
-            attrs = self.get('attrs'),
-            doc = self.get('document'),
-            placeHolder = Dom.create('<span>', undefined, doc),
-            elBefore = self.get('elBefore'),
-            installedSrc = self.get('src'),
-            version = self.get('version');
+    return Base.extend({
+        initializer: function () {
+            var self = this;
+            var expressInstall = self.get('expressInstall'),
+                swf,
+                html,
+                id,
+                htmlMode = self.get('htmlMode'),
+                flashVars,
+                params = self.get('params'),
+                attrs = self.get('attrs'),
+                doc = self.get('document'),
+                placeHolder = Dom.create('<span>', undefined, doc),
+                elBefore = self.get('elBefore'),
+                installedSrc = self.get('src'),
+                version = self.get('version');
 
-        id = attrs.id = attrs.id || S.guid('ks-swf-');
+            id = attrs.id = attrs.id || S.guid('ks-swf-');
 
-        // 2. flash 插件没有安装
-        if (!fpv()) {
-            self.set('status', SWF.Status.NOT_INSTALLED);
-            return;
-        }
-
-        // 3. 已安装，但当前客户端版本低于指定版本时
-        if (version && !fpvGTE(version)) {
-            self.set('status', SWF.Status.TOO_LOW);
-
-            // 有 expressInstall 时，将 src 替换为快速安装
-            if (expressInstall) {
-                installedSrc = expressInstall;
-
-                // from swfobject
-                if (!('width' in attrs) ||
-                    (!/%$/.test(attrs.width) && parseInt(attrs.width, 10) < 310)) {
-                    attrs.width = "310";
-                }
-
-                if (!('height' in attrs) ||
-                    (!/%$/.test(attrs.height) && parseInt(attrs.height, 10) < 137)) {
-                    attrs.height = "137";
-                }
-
-                flashVars = params.flashVars = params.flashVars || {};
-                // location.toString() crash ie6
-                S.mix(flashVars, {
-                    MMredirectURL: location.href,
-                    MMplayerType: UA.ie ? "ActiveX" : "PlugIn",
-                    MMdoctitle: doc.title.slice(0, 47) + " - Flash Player Installation"
-                });
+            // 2. flash 插件没有安装
+            if (!fpv()) {
+                self.set('status', SWF.Status.NOT_INSTALLED);
+                return;
             }
-        }
 
-        if (htmlMode == 'full') {
-            html = _stringSWFFull(installedSrc, attrs, params)
-        } else {
-            html = _stringSWFDefault(installedSrc, attrs, params)
-        }
+            // 3. 已安装，但当前客户端版本低于指定版本时
+            if (version && !fpvGTE(version)) {
+                self.set('status', SWF.Status.TOO_LOW);
 
-        // ie 再取  target.innerHTML 属性大写，很多多与属性，等
-        self.set('html', html);
+                // 有 expressInstall 时，将 src 替换为快速安装
+                if (expressInstall) {
+                    installedSrc = expressInstall;
 
-        if (elBefore) {
-            Dom.insertBefore(placeHolder, elBefore);
-        } else {
-            Dom.append(placeHolder, self.get('render'));
-        }
+                    // from swfobject
+                    if (!('width' in attrs) ||
+                        (!/%$/.test(attrs.width) && parseInt(attrs.width, 10) < 310)) {
+                        attrs.width = "310";
+                    }
 
-        if ('outerHTML' in placeHolder) {
-            placeHolder.outerHTML = html;
-        } else {
-            placeHolder.parentNode.replaceChild(Dom.create(html),placeHolder);
-        }
+                    if (!('height' in attrs) ||
+                        (!/%$/.test(attrs.height) && parseInt(attrs.height, 10) < 137)) {
+                        attrs.height = "137";
+                    }
 
-        swf = Dom.get('#' + id, doc);
+                    flashVars = params.flashVars = params.flashVars || {};
+                    // location.toString() crash ie6
+                    S.mix(flashVars, {
+                        MMredirectURL: location.href,
+                        MMplayerType: UA.ie ? "ActiveX" : "PlugIn",
+                        MMdoctitle: doc.title.slice(0, 47) + " - Flash Player Installation"
+                    });
+                }
+            }
 
-        self.set('swfObject', swf);
-
-        if (htmlMode == 'full') {
-            if (UA.ie) {
-                self.set('swfObject', swf);
+            if (htmlMode == 'full') {
+                html = _stringSWFFull(installedSrc, attrs, params)
             } else {
-                self.set('swfObject', swf.parentNode);
+                html = _stringSWFDefault(installedSrc, attrs, params)
             }
-        }
 
-        // bug fix: 重新获取对象,否则还是老对象.
-        // 如 入口为 div 如果不重新获取则仍然是 div	longzang | 2010/8/9
-        self.set('el', swf);
+            // ie 再取  target.innerHTML 属性大写，很多多与属性，等
+            self.set('html', html);
 
-        if (!self.get('status')) {
-            self.set('status', SWF.Status.SUCCESS);
-        }
-    }
+            if (elBefore) {
+                Dom.insertBefore(placeHolder, elBefore);
+            } else {
+                Dom.append(placeHolder, self.get('render'));
+            }
 
-    S.extend(SWF, Base, {
+            if ('outerHTML' in placeHolder) {
+                placeHolder.outerHTML = html;
+            } else {
+                placeHolder.parentNode.replaceChild(Dom.create(html), placeHolder);
+            }
+
+            swf = Dom.get('#' + id, doc);
+
+            self.set('swfObject', swf);
+
+            if (htmlMode == 'full') {
+                if (UA.ie) {
+                    self.set('swfObject', swf);
+                } else {
+                    self.set('swfObject', swf.parentNode);
+                }
+            }
+
+            // bug fix: 重新获取对象,否则还是老对象.
+            // 如 入口为 div 如果不重新获取则仍然是 div	longzang | 2010/8/9
+            self.set('el', swf);
+
+            if (!self.get('status')) {
+                self.set('status', SWF.Status.SUCCESS);
+            }
+        },
         /**
          * Calls a specific function exposed by the SWF 's ExternalInterface.
          * @param func {String} the name of the function to call
@@ -363,13 +362,65 @@ KISSY.add('swf', function (S, Dom, Json, Base, FlashUA, undefined) {
                 value: 'default'
             }
         },
+        /**
+         * get src from existing oo/oe/o/e swf element
+         * @param {HTMLElement} swf
+         * @returns {String}
+         * @static
+         */
+        getSrc: function (swf) {
+            swf = Dom.get(swf);
+            var srcElement = getSrcElements(swf)[0],
+                src,
+                nodeName = srcElement && Dom.nodeName(srcElement);
+            if (nodeName == 'embed') {
+                return Dom.attr(srcElement, 'src');
+            } else if (nodeName == 'object') {
+                return Dom.attr(srcElement, 'data');
+            } else if (nodeName == 'param') {
+                return Dom.attr(srcElement, 'value');
+            }
+            return null;
+        },
+
+        /**
+         * swf status
+         * @enum {String} KISSY.SWF.Status
+         */
+        Status: {
+            /**
+             * flash version is too low
+             */
+            TOO_LOW: 'flash version is too low',
+            /**
+             * flash is not installed
+             */
+            NOT_INSTALLED: 'flash is not installed',
+            /**
+             * success
+             */
+            SUCCESS: 'success'
+        },
+
+        /**
+         * swf htmlMode
+         * @enum {String} KISSY.SWF.HTMLMode
+         */
+        HTMLMode: {
+            /**
+             * generate object structure depending on browser
+             */
+            DEFAULT: 'default',
+            /**
+             * generate object/object structure
+             */
+            FULL: 'full'
+        },
 
         fpv: fpv,
+        fpvGEQ: fpvGEQ,
         fpvGTE: fpvGTE
     });
-
-    // compatible
-    SWF.fpvGEQ = fpvGTE;
 
     function removeObjectInIE(obj) {
         for (var i in obj) {
@@ -410,26 +461,6 @@ KISSY.add('swf', function (S, Dom, Json, Base, FlashUA, undefined) {
     }
 
     // setSrc ie 不重新渲染
-    /**
-     * get src from existing oo/oe/o/e swf element
-     * @param {HTMLElement} swf
-     * @returns {String}
-     * @static
-     */
-    SWF.getSrc = function (swf) {
-        swf = Dom.get(swf);
-        var srcElement = getSrcElements(swf)[0],
-            src,
-            nodeName = srcElement && Dom.nodeName(srcElement);
-        if (nodeName == 'embed') {
-            return Dom.attr(srcElement, 'src');
-        } else if (nodeName == 'object') {
-            return Dom.attr(srcElement, 'data');
-        } else if (nodeName == 'param') {
-            return Dom.attr(srcElement, 'value');
-        }
-        return null;
-    };
 
     function collectionParams(params) {
         var par = EMPTY;
@@ -526,43 +557,6 @@ KISSY.add('swf', function (S, Dom, Json, Base, FlashUA, undefined) {
     function stringAttr(key, value) {
         return SPACE + key + EQUAL + DOUBLE_QUOTE + value + DOUBLE_QUOTE;
     }
-
-    /**
-     * swf status
-     * @enum {String} KISSY.SWF.Status
-     */
-    SWF.Status = {
-        /**
-         * flash version is too low
-         */
-        TOO_LOW: 'flash version is too low',
-        /**
-         * flash is not installed
-         */
-        NOT_INSTALLED: 'flash is not installed',
-        /**
-         * success
-         */
-        SUCCESS: 'success'
-    };
-
-
-    /**
-     * swf htmlMode
-     * @enum {String} KISSY.SWF.HTMLMode
-     */
-    SWF.HTMLMode = {
-        /**
-         * generate object structure depending on browser
-         */
-        DEFAULT: 'default',
-        /**
-         * generate object/object structure
-         */
-        FULL: 'full'
-    };
-
-    return SWF;
 }, {
     requires: ['dom', 'json', 'base', 'swf/ua']
 });

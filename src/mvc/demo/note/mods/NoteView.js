@@ -8,16 +8,14 @@ KISSY.add(function(S, Node,mvc, Template) {
     /*
      单个笔记view
      */
-    function NoteView() {
-        var self = this;
-        NoteView.superclass.constructor.apply(self, arguments);
-        // 任何属性发生变化就重新渲染，简化处理
-        self.get("note").on("*Change", self.render, self);
-        // 模型销毁时，销毁 view
-        self.get("note").on("destroy", self.destroy, self);
-    }
-
-    S.extend(NoteView, mvc.View, {
+    return mvc.View.extend({
+        initializer:function(){
+            var self = this;
+            // 任何属性发生变化就重新渲染，简化处理
+            self.get("note").on("*Change", self.render, self);
+            // 模型销毁时，销毁 view
+            self.get("note").on("destroy", self.destroy, self);
+        },
         /**
          * 根据模板以及数据渲染单个笔记
          */
@@ -37,8 +35,6 @@ KISSY.add(function(S, Node,mvc, Template) {
             this.get("el").remove();
         }
     });
-
-    return NoteView;
 }, {
     requires:['node','mvc','xtemplate']
 });

@@ -3,12 +3,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add("kison/production", function (S, Base) {
-
-    function Production() {
-        Production.superclass.constructor.apply(this, arguments);
-    }
-
-    S.extend(Production, Base, {
+   return Base.extend({
 
         equals: function (other) {
             var self = this;
@@ -54,9 +49,6 @@ KISSY.add("kison/production", function (S, Base) {
             }
         }
     });
-
-    return Production;
-
 }, {
     requires: ['base']
 });

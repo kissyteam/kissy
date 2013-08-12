@@ -6,17 +6,7 @@ KISSY.add(function(S, mvc) {
     var Model = mvc.Model,
         Collection = mvc.Collection;
 
-    function TreeNodeCollection() {
-        TreeNodeCollection.superclass.constructor.apply(this, arguments);
-    }
-
-    function TreeNodeModel() {
-        this.children = new TreeNodeCollection();
-        TreeNodeModel.superclass.constructor.apply(this, arguments);
-    }
-
-
-    S.extend(TreeNodeCollection, Collection, {}, {
+    var TreeNodeCollection= Collection.extend({}, {
         ATTRS:{
             model:{
                 value:TreeNodeModel
@@ -25,10 +15,12 @@ KISSY.add(function(S, mvc) {
     });
 
 
-    S.extend(TreeNodeModel, Model, {
-
+    var TreeNodeModel= Model.extend({
+        initializer:function(){
+            this.children = new TreeNodeCollection();
+        },
         toJSON:function() {
-            var ret = TreeNodeModel.superclass.toJSON.apply(this, arguments),
+            var ret = this.super(),
                 children = this.children.toJSON();
             if (children.length) {
                 ret.children = children;

@@ -38,7 +38,6 @@ KISSY.add("component/extension/delegate-children", function (S, Node, Manager) {
     }
 
     S.augment(DelegateChildren, {
-
         handleChildrenEvents: function (e) {
             if (!this.get("disabled")) {
                 var control = this.getOwnerControl(e);

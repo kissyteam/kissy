@@ -289,7 +289,6 @@ KISSY.add(function (S,
         });
 
         describe("delegate children works", function () {
-
             var MyContainer=Container.extend([DelegateChildrenExtension]);
 
             it("should attach its methods", function () {
@@ -327,7 +326,6 @@ KISSY.add(function (S,
                     });
 
                     c.addChild(child2);
-
                     c.render();
 
                     runs(function () {

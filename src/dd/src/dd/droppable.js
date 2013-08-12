@@ -3,7 +3,7 @@
  * droppable for kissy
  * @author yiminghe@gmail.com
  */
-KISSY.add('dd/droppable', function (S, Node, RichBase, DDM) {
+KISSY.add('dd/droppable', function (S, Node, Base, DDM) {
     var PREFIX_CLS = DDM.PREFIX_CLS;
 
     function validDrop(dropGroups, dragGroups) {
@@ -20,10 +20,10 @@ KISSY.add('dd/droppable', function (S, Node, RichBase, DDM) {
 
     /**
      * @class KISSY.DD.Droppable
-     * @extends KISSY.RichBase
+     * @extends KISSY.Base
      * Make a node droppable.
      */
-    return RichBase.extend({
+    return Base.extend({
 
         initializer: function () {
             var self = this;
@@ -253,5 +253,5 @@ KISSY.add('dd/droppable', function (S, Node, RichBase, DDM) {
         }
     });
 }, {
-    requires: ['node', 'rich-base', './ddm']
+    requires: ['node', 'base', './ddm']
 });

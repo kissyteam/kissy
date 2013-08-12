@@ -3,7 +3,7 @@
  * drag plugin for kissy component
  * @author yiminghe@gmail.com
  */
-KISSY.add('component/plugin/drag', function (S, RichBase, DD) {
+KISSY.add('component/plugin/drag', function (S, Base, DD) {
 
     /**
      * drag plugin for kissy component
@@ -60,5 +60,5 @@ KISSY.add('component/plugin/drag', function (S, RichBase, DD) {
     });
 
 }, {
-    requires: ['rich-base', 'dd']
+    requires: ['base', 'dd']
 });

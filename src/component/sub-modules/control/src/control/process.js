@@ -3,10 +3,11 @@
  * render process for control and render
  * @author yiminghe@gmail.com
  */
-KISSY.add('component/control/process', function (S, RichBase, Promise) {
-
+KISSY.add('component/control/process', function (S, Base, Promise) {
     var Defer = Promise.Defer,
+        __getHook__ = Base.prototype.__getHook__,
         noop = S.noop;
+
 
     function syncUIs(self) {
         /**
@@ -14,11 +15,9 @@ KISSY.add('component/control/process', function (S, RichBase, Promise) {
          * fired before component 's internal state is synchronized.
          * @param {KISSY.Event.CustomEventObject} e
          */
-
         self.fire('beforeSyncUI');
-        self.callMethodByHierarchy("syncUI", "__syncUI");
-        self.callPluginsMethod("syncUI");
-
+        self.syncUI();
+        callPluginsMethod(self, 'pluginSyncUI');
         /**
          * @event afterSyncUI
          * fired after component 's internal state is synchronized.
@@ -29,22 +28,24 @@ KISSY.add('component/control/process', function (S, RichBase, Promise) {
 
     /**
      * @class KISSY.Component.ComponentProcess
-     * @extends KISSY.RichBase
+     * @extends KISSY.Base
      */
-    var ComponentProcess = RichBase.extend({
-
+    var ComponentProcess = Base.extend({
         bindInternal: noop,
 
         syncInternal: noop,
 
         initializer: function () {
-            this._createdDefer = new Defer();
             this._renderedDefer = new Defer();
         },
 
-        'onCreated': function (fn) {
-            return this._createdDefer.promise.then(fn);
-        },
+        createDom: noop,
+
+        renderUI: noop,
+
+        bindUI: noop,
+
+        syncUI: noop,
 
         onRendered: function (fn) {
             return this._renderedDefer.promise.then(fn);
@@ -65,8 +66,7 @@ KISSY.add('component/control/process', function (S, RichBase, Promise) {
                  */
                 self.fire('beforeCreateDom');
                 self.createInternal();
-                self.callPluginsMethod("createDom");
-
+                callPluginsMethod(self, 'pluginCreateDom');
                 /**
                  * @event afterCreateDom
                  * fired when root node is created
@@ -79,8 +79,8 @@ KISSY.add('component/control/process', function (S, RichBase, Promise) {
             return self;
         },
 
-        createInternal: function () {
-            this.callMethodByHierarchy("createDom", "__createDom");
+        createInternal:function(){
+            this.createDom();
         },
 
         /**
@@ -100,8 +100,8 @@ KISSY.add('component/control/process', function (S, RichBase, Promise) {
                  */
 
                 self.fire('beforeRenderUI');
-                self.callMethodByHierarchy("renderUI", "__renderUI");
-                self.callPluginsMethod("renderUI");
+                self.renderUI();
+                callPluginsMethod(self, 'pluginRenderUI');
 
                 /**
                  * @event afterRenderUI
@@ -118,9 +118,8 @@ KISSY.add('component/control/process', function (S, RichBase, Promise) {
 
                 self.fire('beforeBindUI');
                 ComponentProcess.superclass.bindInternal.call(self);
-                self.callMethodByHierarchy("bindUI", "__bindUI");
-                self.callPluginsMethod("bindUI");
-
+                self.bindUI();
+                callPluginsMethod(self, 'pluginBindUI');
                 /**
                  * @event afterBindUI
                  * fired when component 's internal event is bind.
@@ -143,25 +142,32 @@ KISSY.add('component/control/process', function (S, RichBase, Promise) {
             syncUIs(this);
         },
 
-        plug: function () {
+        plug: function (plugin) {
             var self = this,
                 p,
                 plugins = self.get('plugins');
-            ComponentProcess.superclass.plug.apply(self, arguments);
+            self.super(plugin);
             p = plugins[plugins.length - 1];
             if (self.get('rendered')) {
                 // plugin does not support decorate
-                p.pluginCreateDom && p.pluginCreateDom(self);
+                p['pluginCreateDom'] && p['pluginCreateDom'](self);
                 p.pluginRenderUI && p.pluginRenderUI(self);
                 p.pluginBindUI && p.pluginBindUI(self);
                 p.pluginSyncUI && p.pluginSyncUI(self);
             } else if (self.get('created')) {
-                p.pluginCreateDom && p.pluginCreateDom(self);
+                p['pluginCreateDom'] && p['pluginCreateDom'](self);
             }
             return self;
         }
 
     }, {
+        __hooks__: {
+            createDom: __getHook__('__createDom'),
+            renderUI: __getHook__('__renderUI'),
+            bindUI: __getHook__('__bindUI'),
+            syncUI: __getHook__('__syncUI')
+        },
+
         name: 'ComponentProcess',
 
         ATTRS: {
@@ -192,19 +198,24 @@ KISSY.add('component/control/process', function (S, RichBase, Promise) {
              * @ignore
              */
             created: {
-                value: false,
-                setter: function (v) {
-                    if (v) {
-                        this._createdDefer.resolve(this);
-                    }
-                }
+                value: false
             }
         }
     });
 
+    function callPluginsMethod(self, method) {
+        var len;
+        var plugins = self.get('plugins');
+        if (len = plugins.length) {
+            for (var i = 0; i < len; i++) {
+                plugins[i][method].apply(this, arguments || []);
+            }
+        }
+    }
+
     return ComponentProcess;
 }, {
-    requires: ['rich-base', 'promise']
+    requires: ['base', 'promise']
 });
 /**
  * @ignore

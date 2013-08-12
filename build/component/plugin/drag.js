@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 25 22:16
+build time: Aug 13 00:06
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -14,7 +14,7 @@ build time: Jul 25 22:16
  * drag plugin for kissy component
  * @author yiminghe@gmail.com
  */
-KISSY.add('component/plugin/drag', function (S, RichBase, DD) {
+KISSY.add('component/plugin/drag', function (S, Base, DD) {
 
     /**
      * drag plugin for kissy component
@@ -71,6 +71,6 @@ KISSY.add('component/plugin/drag', function (S, RichBase, DD) {
     });
 
 }, {
-    requires: ['rich-base', 'dd']
+    requires: ['base', 'dd']
 });
 

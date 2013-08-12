@@ -9,23 +9,20 @@ KISSY.add(function (S, Node, mvc, NotesView, EditView, NotesCollection, NoteMode
     /**
      * 应用 router
      */
-    function NoteRouter() {
-        var self = this;
-        NoteRouter.superclass.constructor.apply(self, arguments);
-        self.notesView = new NotesView({
-            notes:new NotesCollection()
-        });
-        self.editView = new EditView();
-        // 初始载入全部笔记
-        self.notesView.get("notes").load();
-        self.editView.on("submit", self._onEditSubmit, self);
-        self.searchView = new SearchView({
-            notes:new NotesCollection()
-        });
-    }
-
-
-    S.extend(NoteRouter, mvc.Router, {
+   return mvc.Router.extend({
+       initializer:function(){
+           var self = this;
+           self.notesView = new NotesView({
+               notes:new NotesCollection()
+           });
+           self.editView = new EditView();
+           // 初始载入全部笔记
+           self.notesView.get("notes").load();
+           self.editView.on("submit", self._onEditSubmit, self);
+           self.searchView = new SearchView({
+               notes:new NotesCollection()
+           });
+       },
 
         _onEditSubmit:function (e) {
             var note = e.note,
@@ -125,8 +122,6 @@ KISSY.add(function (S, Node, mvc, NotesView, EditView, NotesCollection, NoteMode
             }
         }
     });
-
-    return NoteRouter;
 }, {
     requires:['node', 'mvc', './NotesView', './EditView', './NotesCollection', './NoteModel', './SearchView']
 });

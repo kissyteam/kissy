@@ -72,7 +72,7 @@ KISSY.add('dd/droppable-delegate', function (S, DDM, Droppable, Node) {
 
         _handleOut: function () {
             var self = this;
-            DroppableDelegate.superclass._handleOut.apply(self, arguments);
+            self.super();
             self.setInternal('node', 0);
             self.setInternal('lastNode', 0);
         },
@@ -81,7 +81,7 @@ KISSY.add('dd/droppable-delegate', function (S, DDM, Droppable, Node) {
             var self = this,
                 node = self.get('node'),
                 superOut = DroppableDelegate.superclass._handleOut,
-                superOver = DroppableDelegate.superclass._handleOver,
+                superOver = self.super,
                 superEnter = DroppableDelegate.superclass._handleEnter,
                 lastNode = self.get('lastNode');
 
@@ -99,9 +99,9 @@ KISSY.add('dd/droppable-delegate', function (S, DDM, Droppable, Node) {
             }
         },
 
-        _end: function () {
+        _end: function (e) {
             var self = this;
-            DroppableDelegate.superclass._end.apply(self, arguments);
+            self.super(e);
             self.setInternal('node', 0);
         }
     }, {

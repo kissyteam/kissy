@@ -3,13 +3,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add("kison/item", function (S, Base) {
-
-    function Item() {
-        Item.superclass.constructor.apply(this, arguments);
-    }
-
-
-    S.extend(Item, Base, {
+    return Base.extend({
 
         equals: function (other, ignoreLookAhead) {
             var self = this;
@@ -62,8 +56,6 @@ KISSY.add("kison/item", function (S, Base) {
             }
         }
     });
-
-    return Item;
 }, {
     requires: ['base']
 });

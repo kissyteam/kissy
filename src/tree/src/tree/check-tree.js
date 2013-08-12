@@ -18,14 +18,14 @@ KISSY.add("tree/check-tree", function (S, CheckNode, TreeManager) {
         handleKeyDownInternal: function (e) {
             var current = this.get("selectedItem");
             if (current === this) {
-                return CheckTree.superclass.handleKeyDownInternal.call(current, e);
+                return this.super(e);
             }
             return current && current.handleKeyDownInternal(e);
         },
 
-        _onSetFocused: function (v) {
+        _onSetFocused: function (v,e) {
             var self = this;
-            CheckTree.superclass._onSetFocused.apply(self, arguments);
+            self.super(v,e);
             // 得到焦点时没有选择节点
             // 默认选择自己
             if (v && !self.get("selectedItem")) {

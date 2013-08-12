@@ -24,8 +24,8 @@ KISSY.add("combobox/render", function (S, Control, ComboboxTpl) {
             this.control.get("input").attr("aria-expanded", !v);
         },
 
-        _onSetDisabled: function (v) {
-            ComboboxRender.superclass._onSetDisabled.apply(this, arguments);
+        _onSetDisabled: function (v, e) {
+            this.super(v, e);
             this.control.get("input").attr("disabled", v);
         }
 

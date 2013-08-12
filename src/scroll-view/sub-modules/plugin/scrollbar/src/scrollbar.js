@@ -3,12 +3,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add('scroll-view/plugin/scrollbar', function (S, Base, ScrollBar) {
-
-    function ScrollBarPlugin() {
-        ScrollBarPlugin.superclass.constructor.apply(this, arguments);
-    }
-
-    S.extend(ScrollBarPlugin, Base, {
+    return Base.extend({
 
         pluginId: this.getName(),
 
@@ -65,8 +60,6 @@ KISSY.add('scroll-view/plugin/scrollbar', function (S, Base, ScrollBar) {
         }
 
     });
-
-    return ScrollBarPlugin;
 }, {
     requires: ['base', './scrollbar/control']
 });
