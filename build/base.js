@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 13 18:47
+build time: Aug 13 20:51
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -1127,17 +1127,14 @@ KISSY.add('base', function (S, Attribute) {
     }
 
     function wrapProtoForSuper(px, SubClass, hooks) {
-        if (!hooks) {
-            debugger
-        }
         var extensions = SubClass.__extensions__;
         if (extensions.length) {
             for (p in hooks) {
                 px[p] = px[p] || noop;
             }
         }
-        for (var p in px) {
-            if (p in hooks) {
+        for (var p in hooks) {
+            if (p in px) {
                 px[p] = hooks[p](px[p]);
             }
         }
