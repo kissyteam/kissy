@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 13 20:51
+build time: Aug 13 22:31
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -1133,6 +1133,7 @@ KISSY.add('base', function (S, Attribute) {
                 px[p] = px[p] || noop;
             }
         }
+        // in case px contains toString
         for (var p in hooks) {
             if (p in px) {
                 px[p] = hooks[p](px[p]);
@@ -1189,6 +1190,7 @@ KISSY.add('base', function (S, Attribute) {
         }
     }
 
+    Base.INVALID=Attribute.INVALID;
 
     S.Base = Base;
 
