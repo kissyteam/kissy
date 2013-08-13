@@ -237,6 +237,7 @@ KISSY.add("combobox/control", function (S, Node, Control, ComboBoxRender, Menu, 
                     var v = self.getValueForAutocomplete();
                     if (v !== undefined) {
                         self.sendRequest(v);
+                        return true;
                     }
                 }
                 return  undefined;
