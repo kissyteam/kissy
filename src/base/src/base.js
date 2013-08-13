@@ -511,6 +511,7 @@ KISSY.add('base', function (S, Attribute) {
                 px[p] = px[p] || noop;
             }
         }
+        // in case px contains toString
         for (var p in hooks) {
             if (p in px) {
                 px[p] = hooks[p](px[p]);
