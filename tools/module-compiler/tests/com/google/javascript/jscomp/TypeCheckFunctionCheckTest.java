@@ -56,7 +56,7 @@ public class TypeCheckFunctionCheckTest extends CompilerTestCase {
 
   @Override
   public void setUp() throws Exception {
-    super.setUp();
+    callSuper.setUp();
     convention = new GoogleCodingConvention();
   }
 

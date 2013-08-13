@@ -44,7 +44,7 @@ public class ParserTest extends BaseJSTypeTestCase {
 
   @Override
   protected void setUp() throws Exception {
-    super.setUp();
+    callSuper.setUp();
     es5mode = false;
   }
 

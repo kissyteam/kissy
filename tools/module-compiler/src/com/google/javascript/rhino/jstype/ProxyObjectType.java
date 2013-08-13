@@ -61,7 +61,7 @@ class ProxyObjectType extends ObjectType {
   private ObjectType referencedObjType;
 
   ProxyObjectType(JSTypeRegistry registry, JSType referencedType) {
-    super(registry);
+    callSuper(registry);
     setReferencedType(referencedType);
   }
 

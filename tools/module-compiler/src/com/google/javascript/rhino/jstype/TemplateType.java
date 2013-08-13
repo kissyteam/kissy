@@ -51,7 +51,7 @@ public class TemplateType extends ProxyObjectType {
   private final String name;
 
   TemplateType(JSTypeRegistry registry, String name) {
-    super(registry, registry.getNativeObjectType(JSTypeNative.UNKNOWN_TYPE));
+    callSuper(registry, registry.getNativeObjectType(JSTypeNative.UNKNOWN_TYPE));
     this.name = name;
   }
 

@@ -83,7 +83,7 @@ public abstract class ObjectType extends JSType {
   private boolean unknown = true;
 
   ObjectType(JSTypeRegistry registry) {
-    super(registry);
+    callSuper(registry);
   }
 
   /**
@@ -111,7 +111,7 @@ public abstract class ObjectType extends JSType {
     } else if (getImplicitPrototype() != null) {
       return getImplicitPrototype().getJSDocInfo();
     } else {
-      return super.getJSDocInfo();
+      return callSuper.getJSDocInfo();
     }
   }
 
@@ -207,8 +207,8 @@ public abstract class ObjectType extends JSType {
 
   @Override
   public TernaryValue testForEquality(JSType that) {
-    // super
-    TernaryValue result = super.testForEquality(that);
+    // callSuper
+    TernaryValue result = callSuper.testForEquality(that);
     if (result != null) {
       return result;
     }

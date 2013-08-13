@@ -62,7 +62,7 @@ public final class NoType extends NoObjectType {
   private static final long serialVersionUID = 1L;
 
   NoType(JSTypeRegistry registry) {
-    super(registry);
+    callSuper(registry);
   }
 
   @Override

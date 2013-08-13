@@ -29,7 +29,7 @@ public class RemoveUnusedPrototypePropertiesTest extends CompilerTestCase {
   private boolean anchorUnusedVars = false;
 
   public RemoveUnusedPrototypePropertiesTest() {
-    super(EXTERNS);
+    callSuper(EXTERNS);
   }
 
   @Override

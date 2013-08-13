@@ -310,7 +310,7 @@ public  final class Instrumentation extends
       if (other instanceof com.google.javascript.jscomp.Instrumentation) {
         return mergeFrom((com.google.javascript.jscomp.Instrumentation)other);
       } else {
-        super.mergeFrom(other);
+        callSuper.mergeFrom(other);
         return this;
       }
     }
@@ -490,7 +490,7 @@ public  final class Instrumentation extends
       if (result.declarationToRemove_.isEmpty()) {
         result.declarationToRemove_ = new java.util.ArrayList<java.lang.String>();
       }
-      super.addAll(values, result.declarationToRemove_);
+      callSuper.addAll(values, result.declarationToRemove_);
       return this;
     }
     public Builder clearDeclarationToRemove() {
@@ -530,7 +530,7 @@ public  final class Instrumentation extends
       if (result.init_.isEmpty()) {
         result.init_ = new java.util.ArrayList<java.lang.String>();
       }
-      super.addAll(values, result.init_);
+      callSuper.addAll(values, result.init_);
       return this;
     }
     public Builder clearInit() {

@@ -68,8 +68,8 @@ public class ReplaceCssNamesTest extends CompilerTestCase {
 
   @Override
   protected void setUp() throws Exception {
-    super.setUp();
-    super.enableLineNumberCheck(true);
+    callSuper.setUp();
+    callSuper.enableLineNumberCheck(true);
     cssNames = Maps.newHashMap();
     useReplacementMap = true;
   }

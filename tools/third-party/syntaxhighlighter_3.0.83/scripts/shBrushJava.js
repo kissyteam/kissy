@@ -26,7 +26,7 @@
 						'false final finally float for goto if implements import ' +
 						'instanceof int interface long native new null ' +
 						'package private protected public return ' +
-						'short static strictfp super switch synchronized this throw throws true ' +
+						'short static strictfp callSuper switch synchronized this throw throws true ' +
 						'transient try void volatile while';
 
 		this.regexList = [

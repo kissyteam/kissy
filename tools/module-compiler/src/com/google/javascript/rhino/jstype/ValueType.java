@@ -46,7 +46,7 @@ import com.google.javascript.rhino.ErrorReporter;
  */
 abstract class ValueType extends JSType {
   ValueType(JSTypeRegistry registry) {
-    super(registry);
+    callSuper(registry);
   }
 
   @Override

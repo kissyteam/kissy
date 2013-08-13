@@ -23,16 +23,16 @@ public class PeepholeIntegrationTest extends CompilerTestCase {
 
   // TODO(user): Remove this when we no longer need to do string comparison.
   private PeepholeIntegrationTest(boolean compareAsTree) {
-    super("", compareAsTree);
+    callSuper("", compareAsTree);
   }
 
   public PeepholeIntegrationTest() {
-    super("");
+    callSuper("");
   }
 
   @Override
   public void setUp() throws Exception {
-    super.setUp();
+    callSuper.setUp();
 
     enableLineNumberCheck(true);
 

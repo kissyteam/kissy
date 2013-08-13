@@ -62,7 +62,7 @@ KISSY.add("mvc/model", function (S, Base) {
 
             setInternal:function () {
                 this.__isModified = 1;
-                return this.super.apply(this,arguments);
+                return this.callSuper.apply(this,arguments);
             },
 
             /**

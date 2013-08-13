@@ -66,7 +66,7 @@ public class JsFunctionParser extends JsFileLineParser {
    * @param errorManager Handles parse errors.
    */
   public JsFunctionParser(Collection<String> functions, ErrorManager errorManager) {
-    super(errorManager);
+    callSuper(errorManager);
     functionsToParse = functions;
     pattern = getPattern(functions);
     matcher = pattern.matcher("");

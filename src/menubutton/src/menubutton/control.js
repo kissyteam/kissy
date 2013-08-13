@@ -123,7 +123,7 @@ KISSY.add("menubutton/control", function (S, Node, Button, MenuButtonRender, Men
          */
         handleBlurInternal: function (e) {
             var self = this;
-            self.super(e);
+            self.callSuper(e);
             // such as : click the document
             self.set("collapsed", true);
         },

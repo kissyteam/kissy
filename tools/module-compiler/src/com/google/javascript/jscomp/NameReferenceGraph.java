@@ -84,7 +84,7 @@ class NameReferenceGraph extends
   final AbstractCompiler compiler;
 
   public NameReferenceGraph(AbstractCompiler compiler) {
-    super(true, true);
+    callSuper(true, true);
     this.compiler = compiler;
 
     // Initialize builtins.
@@ -156,12 +156,12 @@ class NameReferenceGraph extends
   @Override
   public GraphNode<Name, Reference> createNode(Name value) {
     nameMap.put(value.qName, value);
-    return super.createNode(value);
+    return callSuper.createNode(value);
   }
 
   @Override
   public void connect(Name src, Reference ref, Name dest) {
-    super.connect(src, ref, dest);
+    callSuper.connect(src, ref, dest);
     referenceMap.put(ref.site, dest);
   }
 

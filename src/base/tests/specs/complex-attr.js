@@ -3,14 +3,11 @@
  *  @author yiminghe@gmail.com
  */
 KISSY.add(function (S, Base) {
-    describe("base_complex", function () {
-
+    describe("complex attr", function () {
         it("can merge property value object from parent class", function () {
-            function a() {
-                a.superclass.constructor.apply(this, S.makeArray(arguments));
-            }
+            var A = Base.extend();
 
-            a.ATTRS = {
+            A.ATTRS = {
                 x: {
                     getter: function () {
                         return 1;
@@ -18,34 +15,23 @@ KISSY.add(function (S, Base) {
                 }
             };
 
-            S.extend(a, Base);
 
+            var B = A.extend();
 
-            function b() {
-                b.superclass.constructor.apply(this, S.makeArray(arguments));
-            }
-
-            b.ATTRS = {
+            B.ATTRS = {
                 x: {
                     value: 2
                 }
             };
-            S.extend(b, a);
-
-            var t = new b();
+            var t = new B();
 
             expect(t.get("x")).toBe(1);
-
         });
 
-
         it("support validator", function () {
+            var A = Base.extend();
 
-            function a() {
-                a.superclass.constructor.apply(this, S.makeArray(arguments));
-            }
-
-            a.ATTRS = {
+            A.ATTRS = {
                 tt: {
                     validator: function (v) {
                         return v > 1;
@@ -53,9 +39,7 @@ KISSY.add(function (S, Base) {
                 }
             };
 
-            S.extend(a, Base);
-
-            var t = new a();
+            var t = new A();
 
             expect(t.set("tt", 10)).not.toBe(false);
 
@@ -64,19 +48,15 @@ KISSY.add(function (S, Base) {
             expect(t.set("tt", 0)).toBe(false);
 
             expect(t.get("tt")).toBe(10);
-
         });
-
 
         it("support validators", function () {
 
             var validatorCalled = 0;
 
-            function Aa() {
-                Aa.superclass.constructor.apply(this, S.makeArray(arguments));
-            }
+            var A = Base.extend();
 
-            Aa.ATTRS = {
+            A.ATTRS = {
                 tt: {
                     validator: function (v, name, all) {
                         validatorCalled++;
@@ -95,9 +75,7 @@ KISSY.add(function (S, Base) {
 
             };
 
-            S.extend(Aa, Base);
-
-            var t = new Aa(),
+            var t = new A(),
                 e1;
 
             validatorCalled = 0;
@@ -139,16 +117,12 @@ KISSY.add(function (S, Base) {
             expect(e3).toBeUndefined();
             expect(t.get("t")).toBe(4);
             expect(t.get("tt")).toBe(3);
-
         });
 
         it("support sub attribute name", function () {
+            var A = Base.extend();
 
-            function a() {
-                a.superclass.constructor.apply(this, S.makeArray(arguments));
-            }
-
-            a.ATTRS = {
+            A.ATTRS = {
                 tt: {
                     // do not  use this in real world code
                     // forbid changing value in getter
@@ -163,9 +137,7 @@ KISSY.add(function (S, Base) {
                 }
             };
 
-            S.extend(a, Base);
-
-            var t = new a({
+            var t = new A({
                 tt: {
                     x: {
                         y: 1
@@ -199,11 +171,7 @@ KISSY.add(function (S, Base) {
         });
 
         it("set sub attr even if not exist attr", function () {
-            function A() {
-                A.superclass.constructor.apply(this, S.makeArray(arguments));
-            }
-
-            S.extend(A, Base);
+            var A = Base.extend();
 
             var a = new A();
 
@@ -212,36 +180,11 @@ KISSY.add(function (S, Base) {
             expect(a.get("x")).toEqual({y: 1});
 
             expect(a.get("x.y")).toBe(1);
-
         });
-/*
-        // 1.4 does not support!
-        it("set sub attr differently if declared previously", function () {
-            function A() {
-                A.superclass.constructor.apply(this, S.makeArray(arguments));
-            }
-
-            A.ATTRS = {
-                "x.y": {}
-            };
-
-            S.extend(A, Base);
-
-            var a = new A();
-
-            a.set("x.y", 1);
-
-            expect(a.get("x")).toBeUndefined();
-
-            expect(a.get("x.y")).toBe(1);
-        });
-*/
 
         it("validator works for subAttrs", function () {
             (function () {
-                function A() {
-                    A.superclass.constructor.apply(this, S.makeArray(arguments));
-                }
+                var A = Base.extend();
 
                 A.ATTRS = {
                     "x": {
@@ -250,8 +193,6 @@ KISSY.add(function (S, Base) {
                         }
                     }
                 };
-
-                S.extend(A, Base);
 
                 var a = new A();
 
@@ -276,9 +217,7 @@ KISSY.add(function (S, Base) {
             })();
 
             (function () {
-                function A() {
-                    A.superclass.constructor.apply(this, S.makeArray(arguments));
-                }
+                var A = Base.extend();
 
                 A.ATTRS = {
                     "x": {
@@ -287,8 +226,6 @@ KISSY.add(function (S, Base) {
                         }
                     }
                 };
-
-                S.extend(A, Base);
 
                 var a = new A();
 
@@ -311,13 +248,9 @@ KISSY.add(function (S, Base) {
         });
 
         it("should fire *Change once for set({})", function () {
-            function a() {
-                a.superclass.constructor.apply(this, S.makeArray(arguments));
-            }
+            var A = Base.extend();
 
-            S.extend(a, Base);
-
-            var aa = new a({x: 1, y: {z: 1}}),
+            var aa = new A({x: 1, y: {z: 1}}),
                 ok = 0,
                 afterAttrChange = {};
 
@@ -355,9 +288,7 @@ KISSY.add(function (S, Base) {
             expect(afterAttrChange.x).toBe(1);
             expect(afterAttrChange.y).toBe(1);
         });
-
-
     });
-},{
-    requires:['base']
+}, {
+    requires: ['base']
 });

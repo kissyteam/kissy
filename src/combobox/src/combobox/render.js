@@ -25,7 +25,7 @@ KISSY.add("combobox/render", function (S, Control, ComboboxTpl) {
         },
 
         _onSetDisabled: function (v, e) {
-            this.super(v, e);
+            this.callSuper(v, e);
             this.control.get("input").attr("disabled", v);
         }
 

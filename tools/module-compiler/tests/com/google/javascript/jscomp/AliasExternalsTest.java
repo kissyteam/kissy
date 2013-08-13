@@ -43,7 +43,7 @@ public class AliasExternalsTest extends CompilerTestCase {
   private String aliasableGlobals;
 
   public AliasExternalsTest() {
-    super(EXTERNS);
+    callSuper(EXTERNS);
   }
 
   @Override
@@ -54,8 +54,8 @@ public class AliasExternalsTest extends CompilerTestCase {
 
   @Override
   public void setUp() {
-    super.enableLineNumberCheck(false);
-    super.enableNormalize();
+    callSuper.enableLineNumberCheck(false);
+    callSuper.enableNormalize();
     unaliasableGlobals = null;
     aliasableGlobals = null;
   }

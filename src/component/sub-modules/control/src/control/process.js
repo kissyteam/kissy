@@ -5,7 +5,7 @@
  */
 KISSY.add('component/control/process', function (S, Base, Promise) {
     var Defer = Promise.Defer,
-        __getHook__ = Base.prototype.__getHook__,
+        __getHook = Base.prototype.__getHook,
         noop = S.noop;
 
 
@@ -146,7 +146,7 @@ KISSY.add('component/control/process', function (S, Base, Promise) {
             var self = this,
                 p,
                 plugins = self.get('plugins');
-            self.super(plugin);
+            self.callSuper(plugin);
             p = plugins[plugins.length - 1];
             if (self.get('rendered')) {
                 // plugin does not support decorate
@@ -162,10 +162,10 @@ KISSY.add('component/control/process', function (S, Base, Promise) {
 
     }, {
         __hooks__: {
-            createDom: __getHook__('__createDom'),
-            renderUI: __getHook__('__renderUI'),
-            bindUI: __getHook__('__bindUI'),
-            syncUI: __getHook__('__syncUI')
+            createDom: __getHook('__createDom'),
+            renderUI: __getHook('__renderUI'),
+            bindUI: __getHook('__bindUI'),
+            syncUI: __getHook('__syncUI')
         },
 
         name: 'ComponentProcess',

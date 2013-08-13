@@ -48,7 +48,7 @@ class ErrorFunctionType extends FunctionType {
   private static final long serialVersionUID = 1L;
 
   ErrorFunctionType(JSTypeRegistry registry, String name) {
-    super(
+    callSuper(
         registry, name, null,
         registry.createArrowType(
             registry.createOptionalParameters(

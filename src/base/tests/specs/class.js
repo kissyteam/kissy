@@ -326,7 +326,7 @@ KISSY.add(function (S, Base) {
 
         });
 
-        it('support super', function () {
+        it('support callSuper', function () {
             var A = Base.extend({
                 m: function (value) {
                     return 'a' + value;
@@ -338,15 +338,15 @@ KISSY.add(function (S, Base) {
 
             var B = A.extend({
                 m2: function (value) {
-                    return 'b' + this.super(value);
+                    return 'b' + this.callSuper(value);
                 },
                 m: function (value) {
-                    var superFn = S.bind(this.super, arguments.callee, this);
+                    var superFn = S.bind(this.callSuper, arguments.callee, this);
 
                     // 普通的
-                    var t0 = this.super(value);
+                    var t0 = this.callSuper(value);
 
-                    // 闭包情况下通过 caller 获取 super
+                    // 闭包情况下通过 caller 获取 callSuper
                     var t1 = '';
                     (function () {
                         (function () {
@@ -356,7 +356,7 @@ KISSY.add(function (S, Base) {
                         })();
                     })();
 
-                    // 递归情况下通过提前绑定 arguments.callee 获取 super
+                    // 递归情况下通过提前绑定 arguments.callee 获取 callSuper
                     var times = 0;
                     var t2 = '';
                     (function t() {
@@ -371,7 +371,7 @@ KISSY.add(function (S, Base) {
 
             var C = B.extend({
                 m2: function () {
-                    return 'c' + this.super.apply(this, arguments);
+                    return 'c' + this.callSuper.apply(this, arguments);
                 }
             });
 

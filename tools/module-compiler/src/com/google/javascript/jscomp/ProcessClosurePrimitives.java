@@ -456,7 +456,7 @@ class ProcessClosurePrimitives extends AbstractPostOrderCallback
     return null;
   }
 
-  /** Reports an incorrect use of super-method calling. */
+  /** Reports an incorrect use of callSuper-method calling. */
   private void reportBadBaseClassUse(
       NodeTraversal t, Node n, String extraMessage) {
     compiler.report(t.makeError(n, BASE_CLASS_ERROR, extraMessage));

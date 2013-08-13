@@ -421,13 +421,13 @@ class InlineFunctions implements SpecializationAwareCompilerPass {
     FindCandidatesReferences(
         Map<String, FunctionState> fns,
         Map<Node, String> anonFns) {
-      super(fns, anonFns, null);
+      callSuper(fns, anonFns, null);
       this.callback = this;
     }
 
     @Override
     public void visit(NodeTraversal t, Node n, Node parent) {
-      super.visit(t, n, parent);
+      callSuper.visit(t, n, parent);
       if (n.getType() == Token.NAME) {
         checkNameUsage(t, n, parent);
       }
@@ -1070,7 +1070,7 @@ class InlineFunctions implements SpecializationAwareCompilerPass {
     boolean inlined = false;
     Reference(
         Node callNode, JSModule module, InliningMode mode, boolean decompose) {
-      super(callNode, module, mode);
+      callSuper(callNode, module, mode);
       this.requiresDecomposition = decompose;
     }
   }

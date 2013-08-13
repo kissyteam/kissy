@@ -27,7 +27,7 @@ public class GenerateExportsTest extends CompilerTestCase {
       "goog.exportProperty = function(a, b, c) {}; ";
 
   public GenerateExportsTest() {
-    super(EXTERNS);
+    callSuper(EXTERNS);
   }
 
   @Override
@@ -44,8 +44,8 @@ public class GenerateExportsTest extends CompilerTestCase {
 
   @Override
   public void setUp() throws Exception {
-    super.setUp();
-    super.enableLineNumberCheck(false);
+    callSuper.setUp();
+    callSuper.enableLineNumberCheck(false);
   }
 
   public void testExportSymbol() {

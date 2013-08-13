@@ -36,7 +36,7 @@ public class RemoveUnusedNamesTest extends CompilerTestCase {
       "mExtern['cExtern']; \n";
 
   public RemoveUnusedNamesTest() {
-    super(EXTERNS);
+    callSuper(EXTERNS);
   }
 
   private boolean canRemoveExterns = false;

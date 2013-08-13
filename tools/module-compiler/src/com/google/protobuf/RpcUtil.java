@@ -128,7 +128,7 @@ public final class RpcUtil {
     private static final long serialVersionUID = 5469741279507848266L;
 
     public AlreadyCalledException() {
-      super("This RpcCallback was already called and cannot be called " +
+      callSuper("This RpcCallback was already called and cannot be called " +
             "multiple times.");
     }
   }

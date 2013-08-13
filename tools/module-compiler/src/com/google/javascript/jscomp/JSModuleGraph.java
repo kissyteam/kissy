@@ -401,7 +401,7 @@ public class JSModuleGraph {
 
     protected ModuleDependenceException(String message,
         JSModule module, JSModule dependentModule) {
-      super(message);
+      callSuper(message);
       this.module = module;
       this.dependentModule = dependentModule;
     }

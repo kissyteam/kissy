@@ -38,7 +38,7 @@ KISSY.add("menu/control", function (S, Node, Container, DelegateChildrenExtensio
         },
 
         _onSetVisible: function (v, e) {
-            this.super(e);
+            this.callSuper(e);
             var highlightedItem;
             if (!v && (highlightedItem = this.get('highlightedItem'))) {
                 highlightedItem.set('highlighted', false);
@@ -55,7 +55,7 @@ KISSY.add("menu/control", function (S, Node, Container, DelegateChildrenExtensio
         },
 
         handleMouseEnterInternal: function (e) {
-            this.super(e);
+            this.callSuper(e);
             var rootMenu = this.getRootMenu();
             // maybe called by popupmenu, no submenu
             if (rootMenu && rootMenu._popupAutoHideTimer) {
@@ -66,7 +66,7 @@ KISSY.add("menu/control", function (S, Node, Container, DelegateChildrenExtensio
         },
 
         handleBlurInternal: function (e) {
-            this.super(e);
+            this.callSuper(e);
             var highlightedItem;
             if (highlightedItem = this.get('highlightedItem')) {
                 highlightedItem.set('highlighted', false);

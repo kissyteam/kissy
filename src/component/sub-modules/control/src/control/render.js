@@ -108,7 +108,7 @@ KISSY.add("component/control/render", function (S, ComponentProcess, XTemplate, 
                 // decorate from existing dom structure
                 self.decorateDom(srcNode);
             } else {
-                self.super();
+                self.callSuper();
             }
         },
 
@@ -447,8 +447,8 @@ KISSY.add("component/control/render", function (S, ComponentProcess, XTemplate, 
         }
     }, {
         __hooks__: {
-            decorateDom: ComponentProcess.prototype.__getHook__('__decorateDom'),
-            beforeCreateDom: ComponentProcess.prototype.__getHook__('__beforeCreateDom')
+            decorateDom: ComponentProcess.prototype.__getHook('__decorateDom'),
+            beforeCreateDom: ComponentProcess.prototype.__getHook('__beforeCreateDom')
         },
         /**
          * Create a new class which extends ComponentProcess .

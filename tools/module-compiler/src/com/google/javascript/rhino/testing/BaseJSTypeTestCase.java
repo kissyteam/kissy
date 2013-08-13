@@ -110,7 +110,7 @@ public abstract class BaseJSTypeTestCase extends TestCase {
 
   @Override
   protected void setUp() throws Exception {
-    super.setUp();
+    callSuper.setUp();
     errorReporter = new TestErrorReporter(null, null);
     registry = new JSTypeRegistry(errorReporter);
     initTypes();

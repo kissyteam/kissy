@@ -52,7 +52,7 @@ public class FunctionPrototypeType extends PrototypeObjectType {
 
   FunctionPrototypeType(JSTypeRegistry registry, FunctionType ownerFunction,
       ObjectType implicitPrototype, boolean isNative) {
-    super(registry, null /* has no class name */, implicitPrototype,
+    callSuper(registry, null /* has no class name */, implicitPrototype,
         isNative);
     this.ownerFunction = ownerFunction;
   }

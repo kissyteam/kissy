@@ -31,7 +31,7 @@ public class SpecializeModuleTest extends CompilerTestCase {
   private static final String SHARED_EXTERNS = "var alert = function() {}";
 
   public SpecializeModuleTest() {
-    super(SHARED_EXTERNS);
+    callSuper(SHARED_EXTERNS);
   }
 
   private PassFactory inlineFunctions =
@@ -78,7 +78,7 @@ public class SpecializeModuleTest extends CompilerTestCase {
 
   @Override
   public void setUp() throws Exception {
-    super.setUp();
+    callSuper.setUp();
 
     enableNormalize();
   }

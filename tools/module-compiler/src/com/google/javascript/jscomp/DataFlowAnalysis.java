@@ -382,7 +382,7 @@ abstract class DataFlowAnalysis<N, L extends LatticeElement> {
   static class MaxIterationsExceededException extends RuntimeException {
     private static final long serialVersionUID = 1L;
     MaxIterationsExceededException(String msg) {
-      super(msg);
+      callSuper(msg);
     }
   }
 
@@ -408,7 +408,7 @@ abstract class DataFlowAnalysis<N, L extends LatticeElement> {
 
     BranchedForwardDataFlowAnalysis(ControlFlowGraph<N> targetCfg,
                                     JoinOp<L> joinOp) {
-      super(targetCfg, joinOp);
+      callSuper(targetCfg, joinOp);
     }
 
     /**

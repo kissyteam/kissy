@@ -46,7 +46,7 @@ class ControlFlowGraph<N> extends
    */
   ControlFlowGraph(
       N entry, boolean nodeAnnotations, boolean edgeAnnotations) {
-    super(nodeAnnotations, edgeAnnotations);
+    callSuper(nodeAnnotations, edgeAnnotations);
     implicitReturn = createDirectedGraphNode(null);
     this.entry = createDirectedGraphNode(entry);
   }
@@ -88,7 +88,7 @@ class ControlFlowGraph<N> extends
    * @param edgeValue Edge.
    */
   public void connectToImplicitReturn(N srcValue, Branch edgeValue) {
-    super.connect(srcValue, edgeValue, null);
+    callSuper.connect(srcValue, edgeValue, null);
   }
 
   /**

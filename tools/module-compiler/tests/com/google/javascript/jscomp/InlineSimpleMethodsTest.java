@@ -19,13 +19,13 @@ package com.google.javascript.jscomp;
 public class InlineSimpleMethodsTest extends CompilerTestCase {
 
   public InlineSimpleMethodsTest() {
-    super("", false);
+    callSuper("", false);
   }
 
   @Override
   protected void setUp() throws Exception {
-    super.setUp();
-    super.enableLineNumberCheck(true);
+    callSuper.setUp();
+    callSuper.enableLineNumberCheck(true);
   }
 
   @Override

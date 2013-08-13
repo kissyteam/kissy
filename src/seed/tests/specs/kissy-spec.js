@@ -374,6 +374,15 @@ describe('kissy.js', function () {
         expect(pig.weight).toBe('100kg');
     });
 
+    it('augment does not change constructor', function () {
+        function X() {
+        }
+        function Y() {
+        }
+        S.augment(X, Y);
+        expect(new X().constructor).toBe(X);
+    });
+
     it('S.extend', function () {
         function Bird(name) {
             this.name = name;

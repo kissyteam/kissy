@@ -32,8 +32,8 @@ public class NormalizeTest extends CompilerTestCase {
   private static final String EXTERNS = "var window;";
 
   public NormalizeTest() {
-    super(EXTERNS);
-    super.enableLineNumberCheck(true);
+    callSuper(EXTERNS);
+    callSuper.enableLineNumberCheck(true);
   }
 
   @Override

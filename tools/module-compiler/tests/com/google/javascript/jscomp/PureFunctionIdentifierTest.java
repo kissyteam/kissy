@@ -168,7 +168,7 @@ public class PureFunctionIdentifierTest extends CompilerTestCase {
       "externObj4.prototype.propWithStubAfterWithJSDoc;";
 
   public PureFunctionIdentifierTest() {
-    super(kExterns);
+    callSuper(kExterns);
     enableTypeCheck(CheckLevel.ERROR);
   }
 
@@ -180,7 +180,7 @@ public class PureFunctionIdentifierTest extends CompilerTestCase {
 
   @Override
   protected void tearDown() throws Exception {
-    super.tearDown();
+    callSuper.tearDown();
     noSideEffectCalls.clear();
     localResultCalls.clear();
     boolean regExpHaveSideEffects = true;

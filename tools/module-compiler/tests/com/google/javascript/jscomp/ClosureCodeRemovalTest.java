@@ -26,7 +26,7 @@ public class ClosureCodeRemovalTest extends CompilerTestCase {
   private static String EXTERNS = "var window;";
 
   public ClosureCodeRemovalTest() {
-    super(EXTERNS);
+    callSuper(EXTERNS);
   }
 
   public void testRemoveAbstract() {

@@ -46,7 +46,7 @@ public class UnionTypeTest extends BaseJSTypeTestCase {
 
   @Override
   public void setUp() throws Exception {
-    super.setUp();
+    callSuper.setUp();
     unresolvedNamedType =
         new NamedType(registry, "not.resolved.named.type", null, -1, -1);
   }

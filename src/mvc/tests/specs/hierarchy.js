@@ -20,7 +20,7 @@ KISSY.add(function(S, mvc) {
             this.children = new TreeNodeCollection();
         },
         toJSON:function() {
-            var ret = this.super(),
+            var ret = this.callSuper(),
                 children = this.children.toJSON();
             if (children.length) {
                 ret.children = children;

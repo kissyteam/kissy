@@ -18,23 +18,23 @@ KISSY.add('base', function (S, Attribute) {
         return name.replace(RE_DASH, replaceToUpper);
     }
 
-    function __getHook__(method, reverse) {
+    function __getHook(method, reverse) {
         return function (origFn) {
             return function wrap() {
                 var self = this;
                 if (reverse) {
                     origFn.apply(self, arguments);
                 } else {
-                    self.super.apply(self, arguments);
+                    self.callSuper.apply(self, arguments);
                 }
-
-                var extensions = wrap.__owner__.__extensions__ || [];
+                // can not use wrap in old ie
+                var extensions = arguments.callee.__owner__.__extensions__ || [];
                 if (reverse) {
                     extensions.reverse();
                 }
                 callExtensionsMethod(self, extensions, method, arguments);
                 if (reverse) {
-                    self.super.apply(self, arguments);
+                    self.callSuper.apply(self, arguments);
                 } else {
                     origFn.apply(self, arguments);
                 }
@@ -88,9 +88,9 @@ KISSY.add('base', function (S, Attribute) {
             return collectConstructorChains(this);
         },
 
-        '__getHook__': __getHook__,
+        '__getHook': __getHook,
 
-        'super': function () {
+        'callSuper': function () {
             var method, obj,
                 self = this,
                 args = arguments;
@@ -100,16 +100,18 @@ KISSY.add('base', function (S, Attribute) {
                 obj = args[0];
                 args = Array.prototype.slice.call(args, 1);
             } else {
-                method = self.super.caller;
+                method = arguments.callee.caller;
                 obj = self;
             }
 
             var name = method.__name__;
             if (!name) {
+                S.log('can not find method name for callSuper [' + self.constructor.name + ']: ' + method.toString());
                 return undefined;
             }
             var member = method.__owner__.superclass[name];
             if (!member) {
+                S.log('can not find method [' + name + '] for callSuper: ' + method.__owner__.name);
                 return undefined;
             }
 
@@ -259,9 +261,11 @@ KISSY.add('base', function (S, Attribute) {
     });
 
     S.mix(Base, {
+        name: 'Base',
+
         __hooks__: {
-            initializer: __getHook__(),
-            destructor: __getHook__('__destructor', true)
+            initializer: __getHook(),
+            destructor: __getHook('__destructor', true)
         },
 
         ATTRS: {
@@ -347,10 +351,10 @@ KISSY.add('base', function (S, Attribute) {
                 // refer : http://limu.iteye.com/blog/1136712
                 if ('@debug@') {
                     eval("SubClass = function " + CamelCase(name) + "(){ " +
-                        "this.super.apply(this, arguments);}");
+                        "this.callSuper.apply(this, arguments);}");
                 } else {
                     SubClass = function () {
-                        this.super.apply(this, arguments);
+                        this.callSuper.apply(this, arguments);
                     };
                 }
             }
@@ -508,8 +512,7 @@ KISSY.add('base', function (S, Attribute) {
     }
 
     function wrapProtoForSuper(px, SubClass) {
-        for (var p in px) {
-            var v = px[p];
+        S.each(px, function (v, p) {
             if (typeof v == 'function') {
                 if (v.__owner__) {
                     px[p] = v = wrapper(v);
@@ -517,7 +520,7 @@ KISSY.add('base', function (S, Attribute) {
                 v.__owner__ = SubClass;
                 v.__name__ = p;
             }
-        }
+        });
     }
 
     function callPluginsMethod(self, method) {
@@ -554,5 +557,5 @@ KISSY.add('base', function (S, Attribute) {
 /**
  * 2013-08-12 yiminghe@gmail.com
  * - merge rich-base and base
- * - super inspired by goto100
+ * - callSuper inspired by goto100
  */

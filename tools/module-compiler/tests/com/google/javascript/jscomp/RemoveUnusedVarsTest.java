@@ -24,7 +24,7 @@ public class RemoveUnusedVarsTest extends CompilerTestCase {
   private boolean modifyCallSites = false;
 
   public RemoveUnusedVarsTest() {
-    super("function alert() {}");
+    callSuper("function alert() {}");
     enableNormalize();
   }
 

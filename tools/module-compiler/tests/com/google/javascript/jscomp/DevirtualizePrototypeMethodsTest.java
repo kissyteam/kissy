@@ -37,7 +37,7 @@ public class DevirtualizePrototypeMethodsTest extends CompilerTestCase {
   private final List<String> typeInformation;
 
   public DevirtualizePrototypeMethodsTest() {
-    super(EXTERNAL_SYMBOLS);
+    callSuper(EXTERNAL_SYMBOLS);
     typeInformation = Lists.newArrayList();
   }
 
@@ -49,8 +49,8 @@ public class DevirtualizePrototypeMethodsTest extends CompilerTestCase {
 
   @Override
   protected void setUp() throws Exception {
-    super.setUp();
-    super.enableLineNumberCheck(true);
+    callSuper.setUp();
+    callSuper.enableLineNumberCheck(true);
     disableTypeCheck();
   }
 

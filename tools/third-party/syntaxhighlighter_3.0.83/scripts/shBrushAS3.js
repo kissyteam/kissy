@@ -30,7 +30,7 @@
 						'extends false final finally flash_proxy for get if implements import in include Infinity ' + 
 						'instanceof int internal is isFinite isNaN isXMLName label namespace NaN native new null ' + 
 						'Null Number Object object_proxy override parseFloat parseInt private protected public ' + 
-						'return set static String super switch this throw true try typeof uint undefined unescape ' + 
+						'return set static String callSuper switch this throw true try typeof uint undefined unescape ' +
 						'use void while with'
 						;
 	

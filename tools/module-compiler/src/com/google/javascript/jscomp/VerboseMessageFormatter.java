@@ -24,7 +24,7 @@ import com.google.javascript.jscomp.CheckLevel;
  */
 class VerboseMessageFormatter extends AbstractMessageFormatter {
   VerboseMessageFormatter(SourceExcerptProvider source) {
-    super(source);
+    callSuper(source);
   }
 
   public String formatError(JSError error) {

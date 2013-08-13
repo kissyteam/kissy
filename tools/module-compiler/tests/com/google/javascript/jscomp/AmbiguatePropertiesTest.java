@@ -35,7 +35,7 @@ public class AmbiguatePropertiesTest extends CompilerTestCase {
       "var google = { gears: { factory: {}, workerPool: {} } };";
 
   public AmbiguatePropertiesTest() {
-    super(EXTERNS);
+    callSuper(EXTERNS);
     enableNormalize();
     enableTypeCheck(CheckLevel.WARNING);
   }

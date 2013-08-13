@@ -608,11 +608,11 @@ class AmbiguateProperties implements CompilerPass {
     private static final long serialVersionUID = 1L;
 
     private JSTypeBitSet(int size) {
-      super(size);
+      callSuper(size);
     }
 
     private JSTypeBitSet() {
-      super();
+      callSuper();
     }
 
     /**

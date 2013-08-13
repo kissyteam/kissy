@@ -29,7 +29,7 @@ KISSY.add("menu/popupmenu", function (S, AlignExtension, Menu, PopupMenuRender) 
         },
 
         handleMouseLeaveInternal: function (e) {
-            this.super(e);
+            this.callSuper(e);
             // sub menuitem 有时不灵敏
             // var parent = this.get('parent');
             // if (parent && parent.isSubMenu) {
@@ -58,7 +58,7 @@ KISSY.add("menu/popupmenu", function (S, AlignExtension, Menu, PopupMenuRender) 
          */
         handleBlurInternal: function (e) {
             var self = this;
-            self.super(e);
+            self.callSuper(e);
             self.hide();
         }
     }, {

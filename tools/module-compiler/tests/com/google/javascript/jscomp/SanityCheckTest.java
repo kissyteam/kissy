@@ -28,7 +28,7 @@ public class SanityCheckTest extends CompilerTestCase {
   private CompilerPass otherPass = null;
 
   public SanityCheckTest() {
-    super("", false);
+    callSuper("", false);
   }
 
   @Override public void setUp() {

@@ -44,7 +44,7 @@ public class JsDocInfoParserTest extends BaseJSTypeTestCase {
 
   @Override
   public void setUp() throws Exception {
-    super.setUp();
+    callSuper.setUp();
     extraAnnotations =
         Sets.newHashSet(
             ParserRunner.createConfig(true, false).annotationNames.keySet());

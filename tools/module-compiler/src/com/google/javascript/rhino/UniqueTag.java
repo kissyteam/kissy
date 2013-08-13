@@ -113,7 +113,7 @@ public final class UniqueTag implements Serializable
           default:
             throw Kit.codeBug();
         }
-        return super.toString()+": "+name;
+        return callSuper.toString()+": "+name;
     }
 
 }

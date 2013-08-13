@@ -66,7 +66,7 @@ final class ArrowType extends JSType {
 
   ArrowType(JSTypeRegistry registry, Node parameters,
       JSType returnType, boolean returnTypeInferred) {
-    super(registry);
+    callSuper(registry);
 
     this.parameters = parameters == null ?
         registry.createParametersWithVarArgs(getNativeType(UNKNOWN_TYPE)) :

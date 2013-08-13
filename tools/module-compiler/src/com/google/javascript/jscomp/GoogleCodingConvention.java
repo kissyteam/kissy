@@ -128,7 +128,7 @@ public class GoogleCodingConvention extends ClosureCodingConvention {
    */
   @Override
   public boolean isExported(String name, boolean local) {
-    return super.isExported(name, local) ||
+    return callSuper.isExported(name, local) ||
         (!local && name.startsWith("_"));
   }
 

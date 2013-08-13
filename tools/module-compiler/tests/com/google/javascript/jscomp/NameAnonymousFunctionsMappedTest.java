@@ -26,7 +26,7 @@ public class NameAnonymousFunctionsMappedTest extends CompilerTestCase {
   private NameAnonymousFunctionsMapped pass;
 
   public NameAnonymousFunctionsMappedTest() {
-    super(EXTERNS);
+    callSuper(EXTERNS);
   }
 
   @Override

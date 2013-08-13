@@ -28,7 +28,7 @@ import com.google.javascript.rhino.Token;
 public class PrepareAstTest extends CompilerTestCase {
 
   public PrepareAstTest() {
-    super.enableLineNumberCheck(true);
+    callSuper.enableLineNumberCheck(true);
   }
 
   @Override

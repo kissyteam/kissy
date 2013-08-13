@@ -55,7 +55,7 @@ KISSY.add("tabs/bar", function (S, Toolbar, BarRender, undefined) {
 
         _onSetHighlightedItem: function (v,e) {
             var self = this;
-            self.super(v,e);
+            self.callSuper(v,e);
             if (self.get('changeType') == 'mouse') {
                 self._onSetSelectedTab.apply(self, arguments);
             }

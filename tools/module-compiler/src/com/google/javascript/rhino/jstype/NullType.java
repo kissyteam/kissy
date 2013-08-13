@@ -51,7 +51,7 @@ public final class NullType extends ValueType {
   private static final long serialVersionUID = 1L;
 
   NullType(JSTypeRegistry registry) {
-    super(registry);
+    callSuper(registry);
   }
 
   @Override
@@ -86,7 +86,7 @@ public final class NullType extends ValueType {
 
   @Override
   public TernaryValue testForEquality(JSType that) {
-    TernaryValue result = super.testForEquality(that);
+    TernaryValue result = callSuper.testForEquality(that);
     if (result != null) {
       return result;
     }

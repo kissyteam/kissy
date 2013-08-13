@@ -811,7 +811,7 @@ abstract class JsMessageVisitor extends AbstractPostOrderCallback
     private final Node node;
 
     MalformedException(String message, Node node) {
-      super(message);
+      callSuper(message);
       this.node = node;
     }
 

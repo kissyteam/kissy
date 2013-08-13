@@ -31,12 +31,12 @@ public class VarCheckTest extends CompilerTestCase {
   private CheckLevel externValidationErrorLevel;
 
   public VarCheckTest() {
-    super(EXTERNS);
+    callSuper(EXTERNS);
   }
 
   @Override
   protected void setUp() throws Exception {
-    super.setUp();
+    callSuper.setUp();
     strictModuleDepErrorLevel = CheckLevel.OFF;
     externValidationErrorLevel = null;
     sanityCheck = false;
@@ -44,7 +44,7 @@ public class VarCheckTest extends CompilerTestCase {
 
   @Override
   protected CompilerOptions getOptions() {
-    CompilerOptions options = super.getOptions();
+    CompilerOptions options = callSuper.getOptions();
     options.setWarningLevel(DiagnosticGroups.STRICT_MODULE_DEP_CHECK,
         strictModuleDepErrorLevel);
     if (externValidationErrorLevel != null) {

@@ -627,11 +627,11 @@ public class SourceMap2Test extends TestCase {
     private static final long serialVersionUID = 1L;
 
     public SourceMapParseException(String message) {
-      super(message);
+      callSuper(message);
     }
 
     public SourceMapParseException(String message, Exception ex) {
-      super(message, ex);
+      callSuper(message, ex);
     }
   }
 

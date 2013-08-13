@@ -50,7 +50,7 @@ public final class AllType extends JSType {
   private static final long serialVersionUID = 1L;
 
   AllType(JSTypeRegistry registry) {
-    super(registry);
+    callSuper(registry);
   }
 
   /**

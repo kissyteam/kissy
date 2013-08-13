@@ -51,7 +51,7 @@ public class VoidType extends ValueType {
   private static final long serialVersionUID = 1L;
 
   VoidType(JSTypeRegistry registry) {
-    super(registry);
+    callSuper(registry);
   }
 
   @Override
@@ -61,7 +61,7 @@ public class VoidType extends ValueType {
 
   @Override
   public TernaryValue testForEquality(JSType that) {
-    if (UNKNOWN.equals(super.testForEquality(that))) {
+    if (UNKNOWN.equals(callSuper.testForEquality(that))) {
       return UNKNOWN;
     }
     if (that.isSubtype(this) ||

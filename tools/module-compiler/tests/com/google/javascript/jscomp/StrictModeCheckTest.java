@@ -23,12 +23,12 @@ public class StrictModeCheckTest extends CompilerTestCase {
   private boolean noCajaChecks;
 
   public StrictModeCheckTest() {
-    super(EXTERNS);
+    callSuper(EXTERNS);
   }
 
   @Override
   protected void setUp() throws Exception {
-    super.setUp();
+    callSuper.setUp();
     noVarCheck = false;
     noCajaChecks = false;
   }

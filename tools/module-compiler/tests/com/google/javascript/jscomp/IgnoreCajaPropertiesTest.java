@@ -29,12 +29,12 @@ public class IgnoreCajaPropertiesTest extends CompilerTestCase {
       "x, i;";
 
   public IgnoreCajaPropertiesTest() {
-    super(EXTERNS);
+    callSuper(EXTERNS);
   }
 
   @Override
   public void setUp() {
-    super.enableLineNumberCheck(false);
+    callSuper.enableLineNumberCheck(false);
   }
 
   @Override

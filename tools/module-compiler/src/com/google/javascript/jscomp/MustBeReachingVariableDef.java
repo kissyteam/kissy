@@ -50,7 +50,7 @@ final class MustBeReachingVariableDef extends
 
   MustBeReachingVariableDef(
       ControlFlowGraph<Node> cfg, Scope jsScope, AbstractCompiler compiler) {
-    super(cfg, new MustDefJoin());
+    callSuper(cfg, new MustDefJoin());
     this.jsScope = jsScope;
     this.compiler = compiler;
     this.escaped = Sets.newHashSet();

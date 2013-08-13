@@ -33,8 +33,8 @@ public class AliasKeywordsTest extends CompilerTestCase {
 
   @Override
   public void setUp() {
-    super.enableLineNumberCheck(false);
-    super.enableNormalize();
+    callSuper.enableLineNumberCheck(false);
+    callSuper.enableNormalize();
   }
 
   @Override

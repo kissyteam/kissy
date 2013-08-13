@@ -208,7 +208,7 @@ describe("modules and groups", function () {
         expect(js[0].fullpath.substring(js[0].fullpath.indexOf('??')))
             .toBe("??src/seed/tests/specs/packages-groups/pkg-a/a.js," +
                 "src/seed/tests/specs/packages-groups/pkg-b/b.js," +
-                "build/dom/base.js," +
+                "build/dom/base-attr.js," +
                 "src/seed/tests/specs/packages-groups/pkg-c/c.js?t=" +
                 S.Config.tag + ".js");
 

@@ -478,7 +478,7 @@ class NameReferenceGraphConstruction implements CompilerPass {
     }
 
     /**
-     * Look for the super class implementation up the tree.
+     * Look for the callSuper class implementation up the tree.
      */
     private void recordSuperClassPrototypePropUse(
         FunctionType classType, String prop, Reference ref) {

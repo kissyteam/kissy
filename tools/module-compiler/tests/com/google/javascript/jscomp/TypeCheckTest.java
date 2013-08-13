@@ -39,7 +39,7 @@ public class TypeCheckTest extends CompilerTypeTestCase {
 
   @Override
   public void setUp() throws Exception {
-    super.setUp();
+    callSuper.setUp();
     reportMissingOverrides = CheckLevel.WARNING;
   }
 

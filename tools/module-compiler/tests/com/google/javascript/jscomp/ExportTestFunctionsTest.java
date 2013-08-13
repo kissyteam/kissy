@@ -31,12 +31,12 @@ public class ExportTestFunctionsTest extends CompilerTestCase {
       + "function testBar(arg) {}";
 
   public ExportTestFunctionsTest() {
-    super(EXTERNS);
+    callSuper(EXTERNS);
   }
 
   @Override
   public void setUp() {
-    super.enableLineNumberCheck(false);
+    callSuper.enableLineNumberCheck(false);
   }
 
   @Override

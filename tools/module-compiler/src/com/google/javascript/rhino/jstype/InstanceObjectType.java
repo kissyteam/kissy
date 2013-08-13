@@ -57,7 +57,7 @@ public final class InstanceObjectType extends PrototypeObjectType {
 
   InstanceObjectType(JSTypeRegistry registry, FunctionType constructor,
                      boolean isNativeType) {
-    super(registry, null, null, isNativeType);
+    callSuper(registry, null, null, isNativeType);
     Preconditions.checkNotNull(constructor);
     this.constructor = constructor;
   }
@@ -89,7 +89,7 @@ public final class InstanceObjectType extends PrototypeObjectType {
     if (proto != null && proto.hasOwnDeclaredProperty(name)) {
       return false;
     }
-    return super.defineProperty(name, type, inferred, inExterns, propertyNode);
+    return callSuper.defineProperty(name, type, inferred, inExterns, propertyNode);
   }
 
   @Override
@@ -97,7 +97,7 @@ public final class InstanceObjectType extends PrototypeObjectType {
     if (constructor.hasReferenceName()) {
       return constructor.getReferenceName();
     } else {
-      return super.toString();
+      return callSuper.toString();
     }
   }
 
@@ -168,7 +168,7 @@ public final class InstanceObjectType extends PrototypeObjectType {
     if (hasReferenceName()) {
       return getReferenceName().hashCode();
     } else {
-      return super.hashCode();
+      return callSuper.hashCode();
     }
   }
 

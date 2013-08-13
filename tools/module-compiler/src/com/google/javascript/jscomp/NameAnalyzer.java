@@ -196,7 +196,7 @@ final class NameAnalyzer implements CompilerPass {
     /** Local name of prototype property i.e. "b" if name is "a.prototype.b" */
     String prototypeProperty = null;
 
-    /** Name of the super class of name */
+    /** Name of the callSuper class of name */
     String superclass = null;
 
     /** Whether this is a call that only affects the class definition */
@@ -332,7 +332,7 @@ final class NameAnalyzer implements CompilerPass {
      * @param parent Parent node that assigns the expression (an ASSIGN)
      */
     PrototypeSetNode(JsName name, Node parent) {
-      super(name, parent.getFirstChild());
+      callSuper(name, parent.getFirstChild());
 
       Preconditions.checkState(parent.getType() == Token.ASSIGN);
     }
@@ -404,7 +404,7 @@ final class NameAnalyzer implements CompilerPass {
      */
     ClassDefiningFunctionNode(JsName name, Node node, Node parent,
         Node gramps) {
-      super(name, node, parent, gramps);
+      callSuper(name, node, parent, gramps);
       Preconditions.checkState(node.getType() == Token.CALL);
     }
 
@@ -435,7 +435,7 @@ final class NameAnalyzer implements CompilerPass {
      * @param gramps The parent of {@code parent}.
      */
     InstanceOfCheckNode(JsName name, Node node, Node parent, Node gramps) {
-      super(name, node, parent, gramps);
+      callSuper(name, node, parent, gramps);
       Preconditions.checkState(node.isQualifiedName());
       Preconditions.checkState(parent.getType() == Token.INSTANCEOF);
     }

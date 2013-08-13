@@ -35,8 +35,8 @@ public class PeepholeOptimizationsPassTest extends CompilerTestCase {
 
   @Override
   public void setUp() throws Exception {
-    super.setUp();
-    super.enableLineNumberCheck(true);
+    callSuper.setUp();
+    callSuper.enableLineNumberCheck(true);
   }
 
   @Override

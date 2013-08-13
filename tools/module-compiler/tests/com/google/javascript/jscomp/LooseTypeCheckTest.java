@@ -42,7 +42,7 @@ public class LooseTypeCheckTest extends CompilerTypeTestCase {
 
   @Override
   public CompilerOptions getOptions() {
-    CompilerOptions options = super.getOptions();
+    CompilerOptions options = callSuper.getOptions();
     options.looseTypes = true;
     return options;
   }

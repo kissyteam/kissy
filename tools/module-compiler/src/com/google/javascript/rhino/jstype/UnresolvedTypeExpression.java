@@ -78,7 +78,7 @@ class UnresolvedTypeExpression extends UnknownType {
    */
   UnresolvedTypeExpression(JSTypeRegistry registry, Node typeExpr,
       String sourceName, boolean forgiving) {
-    super(registry, false);
+    callSuper(registry, false);
 
     Preconditions.checkNotNull(typeExpr);
     this.typeExpr = typeExpr;

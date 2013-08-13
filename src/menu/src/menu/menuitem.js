@@ -19,7 +19,7 @@ KISSY.add("menu/menuitem", function (S, Control, MenuItemRender) {
 
         // for ios, ios only has touchdown
         handleMouseDownInternal: function (e) {
-            this.super(e);
+            this.callSuper(e);
             this.set("highlighted", true);
         },
 

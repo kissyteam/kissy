@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 13 00:06
+build time: Aug 13 12:51
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130813000650' will replace with current timestamp when compressing.
+         * NOTICE: '20130813125132' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130813000650',
+        __BUILD_TIME: '20130813125132',
         /**
          * KISSY Environment.
          * @private
@@ -348,6 +348,9 @@ var KISSY = (function (undefined) {
             var args = S.makeArray(arguments),
                 len = args.length - 2,
                 i = 1,
+                p,
+                proto,
+                arg,
                 ov = args[len],
                 wl = args[len + 1];
 
@@ -362,7 +365,19 @@ var KISSY = (function (undefined) {
             }
 
             for (; i < len; i++) {
-                S.mix(r.prototype, args[i].prototype || args[i], ov, wl);
+                arg = args[i];
+                if (proto = arg.prototype) {
+                    arg = {};
+                    var protoArray = S.keys(proto);
+                    var protoLen = protoArray.length;
+                    for (var j = 0; j < protoLen; j++) {
+                        p = protoArray[j];
+                        if (p != 'constructor') {
+                            arg[p] = proto[p];
+                        }
+                    }
+                }
+                S.mix(r.prototype, arg, ov, wl);
             }
 
             return r;
@@ -386,6 +401,10 @@ var KISSY = (function (undefined) {
 
             var sp = s.prototype,
                 rp;
+
+            // in case parent does not set constructor
+            // eg: parent.prototype={};
+            sp.constructor = s;
 
             // add prototype chain
             rp = createObject(sp, r);
@@ -5792,7 +5811,7 @@ var KISSY = (function (undefined) {
             comboMaxFileNum: 40,
             charset: 'utf-8',
             lang: 'zh-cn',
-            tag: '20130813000650'
+            tag: '20130813125132'
         }, getBaseInfo()));
     }
 

@@ -66,7 +66,7 @@ public class RenameVarsTest extends CompilerTestCase {
 
   @Override
   protected void setUp() throws Exception {
-    super.setUp();
+    callSuper.setUp();
     previouslyUsedMap = new VariableMap(new HashMap<String, String>());
     prefix = DEFAULT_PREFIX;
     withClosurePass = false;
@@ -458,7 +458,7 @@ public class RenameVarsTest extends CompilerTestCase {
 
   public void testDollarSignSuperExport2() {
     boolean normalizedExpectedJs = false;
-    super.enableNormalize(false);
+    callSuper.enableNormalize(false);
 
     useGoogleCodingConvention = false;
     // See http://code.google.com/p/closure-compiler/issues/detail?id=32
@@ -476,7 +476,7 @@ public class RenameVarsTest extends CompilerTestCase {
          "var c = function($super,   a,    b         ){};" +
             "var d = function($super,a){};");
 
-    super.disableNormalize();
+    callSuper.disableNormalize();
   }
 
   public void testPseudoNames() {

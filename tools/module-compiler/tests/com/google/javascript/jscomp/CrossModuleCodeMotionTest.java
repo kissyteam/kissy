@@ -25,12 +25,12 @@ public class CrossModuleCodeMotionTest extends CompilerTestCase {
   private static final String EXTERNS = "alert";
 
   public CrossModuleCodeMotionTest() {
-    super(EXTERNS);
+    callSuper(EXTERNS);
   }
 
   @Override
   public void setUp() {
-    super.enableLineNumberCheck(true);
+    callSuper.enableLineNumberCheck(true);
   }
 
   @Override

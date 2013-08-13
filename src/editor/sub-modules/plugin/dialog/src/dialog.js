@@ -32,7 +32,7 @@ KISSY.add("editor/plugin/dialog", function (S, Editor, Overlay,
                 y = S.DOM.scrollTop() + 200;
                 self.set("y", y);
             }
-            self.super();
+            self.callSuper();
         }
 
     }, {

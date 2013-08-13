@@ -163,7 +163,7 @@ class AliasKeywords implements CompilerPass {
   // TODO(user): Generalize this to work with typeof expressions.
   private class ThrowAliasSpecification extends AliasSpecification {
     ThrowAliasSpecification(String aliasName) {
-      super(aliasName, Token.THROW);
+      callSuper(aliasName, Token.THROW);
     }
 
     @Override
@@ -222,7 +222,7 @@ class AliasKeywords implements CompilerPass {
   /** Aliases literal keywords (e.g., null) with variable names. */
   private class KeywordAliasSpecification extends AliasSpecification {
     KeywordAliasSpecification(String aliasName, int tokenId) {
-      super(aliasName, tokenId);
+      callSuper(aliasName, tokenId);
     }
 
     @Override

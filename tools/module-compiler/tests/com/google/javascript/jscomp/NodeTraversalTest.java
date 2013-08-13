@@ -58,7 +58,7 @@ public class NodeTraversalTest extends TestCase {
    */
   static class PruningCallback extends AbstractNodeTypePruningCallback {
     public PruningCallback(Set<Integer> nodeTypes, boolean include) {
-      super(nodeTypes, include);
+      callSuper(nodeTypes, include);
     }
 
     public void visit(NodeTraversal t, Node n, Node parent) {

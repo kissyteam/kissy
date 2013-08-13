@@ -79,7 +79,7 @@ public class JSDocInfo implements Serializable {
     PUBLIC,
 
     // If visibility is not specified, we just assume that visibility
-    // is inherited from the super class.
+    // is inherited from the callSuper class.
     INHERITED
   }
 

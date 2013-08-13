@@ -548,7 +548,7 @@ public class JsMessageVisitorTest extends TestCase {
   private class CollectMessages extends JsMessageVisitor {
 
     private CollectMessages(Compiler compiler) {
-      super(compiler, true, Style.getFromParams(true, allowLegacyMessages),
+      callSuper(compiler, true, Style.getFromParams(true, allowLegacyMessages),
             null);
     }
 
@@ -562,7 +562,7 @@ public class JsMessageVisitorTest extends TestCase {
   private class DummyJsVisitor extends JsMessageVisitor {
 
     private DummyJsVisitor(Style style) {
-      super(null, true, style, null);
+      callSuper(null, true, style, null);
     }
 
     @Override

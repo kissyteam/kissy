@@ -35,7 +35,7 @@ public class InstrumentFunctionsTest extends CompilerTestCase {
 
   @Override
   protected void setUp() {
-    super.enableLineNumberCheck(false);
+    callSuper.enableLineNumberCheck(false);
     this.instrumentationPb = null;
   }
 

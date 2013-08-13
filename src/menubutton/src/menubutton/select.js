@@ -125,7 +125,7 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
              */
             removeItems: function () {
                 var self = this;
-                self.super.apply(self,arguments);
+                self.callSuper.apply(self,arguments);
                 self.set("value", null);
             },
 
@@ -137,7 +137,7 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
              */
             removeItem: function (c,destroy) {
                 var self = this;
-                self.super(c,destroy);
+                self.callSuper(c,destroy);
                 if (c.get("value") == self.get("value")) {
                     self.set("value", null);
                 }

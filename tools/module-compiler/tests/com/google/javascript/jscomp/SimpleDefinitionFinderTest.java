@@ -43,7 +43,7 @@ public class SimpleDefinitionFinderTest extends CompilerTestCase {
 
   @Override
   protected void tearDown() throws Exception {
-    super.tearDown();
+    callSuper.tearDown();
     found.clear();
   }
 

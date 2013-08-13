@@ -88,7 +88,7 @@ public class JsFileLineParserTest extends TestCase {
     StringBuilder sb = new StringBuilder();
 
     TestParser(ErrorManager errorManager) {
-      super(errorManager);
+      callSuper(errorManager);
     }
 
     boolean parseLine(String line) {

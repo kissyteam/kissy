@@ -69,7 +69,7 @@ public class JSSourceFile extends SourceFile {
   private SourceFile referenced;
 
   private JSSourceFile(SourceFile referenced) {
-    super(referenced.getName());
+    callSuper(referenced.getName());
     this.referenced = referenced;
   }
 

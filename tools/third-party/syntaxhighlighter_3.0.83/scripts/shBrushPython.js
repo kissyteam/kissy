@@ -34,7 +34,7 @@
 					'isinstance issubclass iter len list locals long map max min next ' +
 					'object oct open ord pow print property range raw_input reduce ' +
 					'reload repr reversed round set setattr slice sorted staticmethod ' +
-					'str sum super tuple type type unichr unicode vars xrange zip';
+					'str sum callSuper tuple type type unichr unicode vars xrange zip';
 
 		var special =  'None True False self cls class_';
 

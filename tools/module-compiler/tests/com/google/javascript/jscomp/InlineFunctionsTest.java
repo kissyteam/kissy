@@ -35,8 +35,8 @@ public class InlineFunctionsTest extends CompilerTestCase {
 
   @Override
   protected void setUp() throws Exception {
-    super.setUp();
-    super.enableLineNumberCheck(true);
+    callSuper.setUp();
+    callSuper.enableLineNumberCheck(true);
     allowGlobalFunctionInlining = true;
     allowBlockInlining = true;
   }

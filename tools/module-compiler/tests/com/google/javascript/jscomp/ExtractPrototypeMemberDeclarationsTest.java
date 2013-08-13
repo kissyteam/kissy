@@ -25,7 +25,7 @@ public class ExtractPrototypeMemberDeclarationsTest extends CompilerTestCase {
 
   @Override
   protected void setUp() {
-    super.enableLineNumberCheck(true);
+    callSuper.enableLineNumberCheck(true);
     enableNormalize();
   }
 

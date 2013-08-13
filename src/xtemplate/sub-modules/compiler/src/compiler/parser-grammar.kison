@@ -104,7 +104,7 @@
             },
             {
                 // inline tpl allow expression
-                // expression is super set of path
+                // expression is callSuper set of path
                 symbol: 'tpl',
                 rhs: ['OPEN_TPL', 'Expression', 'CLOSE'],
                 action: function () {

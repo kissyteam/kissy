@@ -105,7 +105,7 @@ class NamedType extends ProxyObjectType {
    */
   NamedType(JSTypeRegistry registry, String reference,
       String sourceName, int lineno, int charno) {
-    super(registry, registry.getNativeObjectType(JSTypeNative.UNKNOWN_TYPE));
+    callSuper(registry, registry.getNativeObjectType(JSTypeNative.UNKNOWN_TYPE));
 
     Preconditions.checkNotNull(reference);
     this.reference = reference;
@@ -193,7 +193,7 @@ class NamedType extends ProxyObjectType {
     }
 
     if (resolved) {
-      super.resolveInternal(t, enclosing);
+      callSuper.resolveInternal(t, enclosing);
       return registry.isLastGeneration() ?
           getReferencedType() : this;
     }
@@ -203,7 +203,7 @@ class NamedType extends ProxyObjectType {
       handleTypeCycle(t);
     }
 
-    super.resolveInternal(t, enclosing);
+    callSuper.resolveInternal(t, enclosing);
     return registry.isLastGeneration() ?
         getReferencedType() : this;
   }
@@ -361,7 +361,7 @@ class NamedType extends ProxyObjectType {
     // the type has not been resolved yet, we need to wait till its
     // resolved before we can validate it.
     if (this.isResolved()) {
-      return super.setValidator(validator);
+      return callSuper.setValidator(validator);
     } else {
       this.validator = validator;
       return true;

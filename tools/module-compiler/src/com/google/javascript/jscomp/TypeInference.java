@@ -121,7 +121,7 @@ class TypeInference
                 Scope functionScope,
                 Map<String, AssertionFunctionSpec> assertionFunctionsMap,
                 Collection<Var> unflowableVars) {
-    super(cfg, new LinkedFlowScope.FlowScopeJoinOp());
+    callSuper(cfg, new LinkedFlowScope.FlowScopeJoinOp());
     this.compiler = compiler;
     this.registry = compiler.getTypeRegistry();
     this.reverseInterpreter = reverseInterpreter;

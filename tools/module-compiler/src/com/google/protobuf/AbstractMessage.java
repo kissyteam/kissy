@@ -637,7 +637,7 @@ public abstract class AbstractMessage extends AbstractMessageLite
     @Override
     public BuilderType mergeFrom(final ByteString data)
         throws InvalidProtocolBufferException {
-      return super.mergeFrom(data);
+      return callSuper.mergeFrom(data);
     }
 
     @Override
@@ -645,20 +645,20 @@ public abstract class AbstractMessage extends AbstractMessageLite
         final ByteString data,
         final ExtensionRegistryLite extensionRegistry)
         throws InvalidProtocolBufferException {
-      return super.mergeFrom(data, extensionRegistry);
+      return callSuper.mergeFrom(data, extensionRegistry);
     }
 
     @Override
     public BuilderType mergeFrom(final byte[] data)
         throws InvalidProtocolBufferException {
-      return super.mergeFrom(data);
+      return callSuper.mergeFrom(data);
     }
 
     @Override
     public BuilderType mergeFrom(
         final byte[] data, final int off, final int len)
         throws InvalidProtocolBufferException {
-      return super.mergeFrom(data, off, len);
+      return callSuper.mergeFrom(data, off, len);
     }
 
     @Override
@@ -666,7 +666,7 @@ public abstract class AbstractMessage extends AbstractMessageLite
         final byte[] data,
         final ExtensionRegistryLite extensionRegistry)
         throws InvalidProtocolBufferException {
-      return super.mergeFrom(data, extensionRegistry);
+      return callSuper.mergeFrom(data, extensionRegistry);
     }
 
     @Override
@@ -674,13 +674,13 @@ public abstract class AbstractMessage extends AbstractMessageLite
         final byte[] data, final int off, final int len,
         final ExtensionRegistryLite extensionRegistry)
         throws InvalidProtocolBufferException {
-      return super.mergeFrom(data, off, len, extensionRegistry);
+      return callSuper.mergeFrom(data, off, len, extensionRegistry);
     }
 
     @Override
     public BuilderType mergeFrom(final InputStream input)
         throws IOException {
-      return super.mergeFrom(input);
+      return callSuper.mergeFrom(input);
     }
 
     @Override
@@ -688,13 +688,13 @@ public abstract class AbstractMessage extends AbstractMessageLite
         final InputStream input,
         final ExtensionRegistryLite extensionRegistry)
         throws IOException {
-      return super.mergeFrom(input, extensionRegistry);
+      return callSuper.mergeFrom(input, extensionRegistry);
     }
 
     @Override
     public boolean mergeDelimitedFrom(final InputStream input)
         throws IOException {
-      return super.mergeDelimitedFrom(input);
+      return callSuper.mergeDelimitedFrom(input);
     }
 
     @Override
@@ -702,7 +702,7 @@ public abstract class AbstractMessage extends AbstractMessageLite
         final InputStream input,
         final ExtensionRegistryLite extensionRegistry)
         throws IOException {
-      return super.mergeDelimitedFrom(input, extensionRegistry);
+      return callSuper.mergeDelimitedFrom(input, extensionRegistry);
     }
 
   }

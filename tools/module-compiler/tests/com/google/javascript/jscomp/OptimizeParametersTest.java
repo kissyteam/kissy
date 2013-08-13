@@ -29,7 +29,7 @@ public class OptimizeParametersTest extends CompilerTestCase {
 
   @Override
   public void setUp() {
-    super.enableLineNumberCheck(false);
+    callSuper.enableLineNumberCheck(false);
   }
 
   public void testNoRemoval() {

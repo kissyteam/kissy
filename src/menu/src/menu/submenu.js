@@ -100,7 +100,7 @@ KISSY.add("menu/submenu", function (S, Node, MenuItem, SubMenuRender) {
                 if (!e) {
                     return;
                 }
-                self.super(e);
+                self.callSuper(e);
                 if (e.fromMouse) {
                     return;
                 }
@@ -116,7 +116,7 @@ KISSY.add("menu/submenu", function (S, Node, MenuItem, SubMenuRender) {
                 var self = this;
                 showMenu.call(self);
                 //  trigger click event from menuitem
-                self.super(e);
+                self.callSuper(e);
             },
 
             /**

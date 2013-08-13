@@ -35,13 +35,13 @@ public class RenamePropertiesTest extends CompilerTestCase {
   private VariableMap prevUsedPropertyMap = null;
 
   public RenamePropertiesTest() {
-    super(EXTERNS);
+    callSuper(EXTERNS);
     enableNormalize();
   }
 
   @Override
   protected void tearDown() throws Exception {
-    super.tearDown();
+    callSuper.tearDown();
 
     prevUsedPropertyMap = null;
   }

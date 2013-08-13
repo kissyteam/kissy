@@ -33,7 +33,7 @@ public class ScopedAliasesTest extends CompilerTestCase {
   private static String EXTERNS = "var window;";
 
   public ScopedAliasesTest() {
-    super(EXTERNS);
+    callSuper(EXTERNS);
   }
 
   private void testScoped(String code, String expected) {

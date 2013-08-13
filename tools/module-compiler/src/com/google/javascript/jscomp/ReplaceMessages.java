@@ -39,7 +39,7 @@ class ReplaceMessages extends JsMessageVisitor {
       boolean checkDuplicatedMessages, JsMessage.Style style,
       boolean strictReplacement) {
 
-    super(compiler, checkDuplicatedMessages, style, bundle.idGenerator());
+    callSuper(compiler, checkDuplicatedMessages, style, bundle.idGenerator());
 
     this.bundle = bundle;
     this.strictReplacement = strictReplacement;

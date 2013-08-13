@@ -57,7 +57,7 @@ public class RhinoException extends RuntimeException
 
     RhinoException(String details)
     {
-        super(details);
+        callSuper(details);
     }
 
     @Override public final String getMessage()
@@ -81,7 +81,7 @@ public class RhinoException extends RuntimeException
 
     public String details()
     {
-        return super.getMessage();
+        return callSuper.getMessage();
     }
 
     /**
@@ -240,7 +240,7 @@ public class RhinoException extends RuntimeException
     @Override public void printStackTrace(PrintWriter s)
     {
         if (interpreterStackInfo == null) {
-            super.printStackTrace(s);
+            callSuper.printStackTrace(s);
         } else {
             s.print(generateStackTrace());
         }
@@ -249,7 +249,7 @@ public class RhinoException extends RuntimeException
     @Override public void printStackTrace(PrintStream s)
     {
         if (interpreterStackInfo == null) {
-            super.printStackTrace(s);
+            callSuper.printStackTrace(s);
         } else {
             s.print(generateStackTrace());
         }

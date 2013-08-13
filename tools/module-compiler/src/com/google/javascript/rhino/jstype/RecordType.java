@@ -76,7 +76,7 @@ public class RecordType extends PrototypeObjectType {
    *         with a property is null.
    */
   RecordType(JSTypeRegistry registry, Map<String, RecordProperty> properties) {
-    super(registry, null, null);
+    callSuper(registry, null, null);
 
     for (String property : properties.keySet()) {
       RecordProperty prop = properties.get(property);
@@ -128,14 +128,14 @@ public class RecordType extends PrototypeObjectType {
       properties.put(propertyName, type);
     }
 
-    return super.defineProperty(propertyName, type, inferred, inExterns,
+    return callSuper.defineProperty(propertyName, type, inferred, inExterns,
         propertyNode);
   }
 
   @Override
   public JSType getLeastSupertype(JSType that) {
     if (!that.isRecordType()) {
-      return super.getLeastSupertype(that);
+      return callSuper.getLeastSupertype(that);
     }
 
     RecordType thatRecord = (RecordType) that;
@@ -186,7 +186,7 @@ public class RecordType extends PrototypeObjectType {
       return builder.build();
     }
 
-    JSType greatestSubtype = super.getGreatestSubtype(that);
+    JSType greatestSubtype = callSuper.getGreatestSubtype(that);
     if (greatestSubtype.isNoObjectType() && !that.isNoObjectType()) {
       // In this branch, the other type is some object type. We find
       // the greatest subtype with the following algorithm:
@@ -315,6 +315,6 @@ public class RecordType extends PrototypeObjectType {
         properties.put(entry.getKey(), resolvedType);
       }
     }
-    return super.resolveInternal(t, scope);
+    return callSuper.resolveInternal(t, scope);
   }
 }

@@ -56,7 +56,7 @@ public class UnknownType extends ObjectType {
   private final boolean isChecked;
 
   UnknownType(JSTypeRegistry registry, boolean isChecked) {
-    super(registry);
+    callSuper(registry);
     this.isChecked = isChecked;
   }
 

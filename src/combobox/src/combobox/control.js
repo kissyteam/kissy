@@ -128,7 +128,7 @@ KISSY.add("combobox/control", function (S, Node, Control, ComboBoxRender, Menu, 
                 // S.log('blur');
                 var self = this,
                     placeholderEl = self.get("placeholderEl");
-                self.super(e);
+                self.callSuper(e);
                 delayHide(self);
                 if (self.get('invalidEl')) {
                     self.validate(function (error, val) {
@@ -150,7 +150,7 @@ KISSY.add("combobox/control", function (S, Node, Control, ComboBoxRender, Menu, 
                 var self = this,
                     target,
                     trigger;
-                self.super(e);
+                self.callSuper(e);
                 target = e.target;
                 trigger = self.get("trigger");
                 if (trigger && (trigger[0] == target || trigger.contains(target))) {

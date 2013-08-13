@@ -56,7 +56,7 @@ public class JsFileParser extends JsFileLineParser {
    * @param errorManager Handles parse errors.
    */
   public JsFileParser(ErrorManager errorManager) {
-    super(errorManager);
+    callSuper(errorManager);
   }
 
   /**

@@ -107,7 +107,7 @@ class PrototypeObjectType extends ObjectType {
    */
   PrototypeObjectType(JSTypeRegistry registry, String className,
       ObjectType implicitPrototype, boolean nativeType) {
-    super(registry);
+    callSuper(registry);
     this.properties = Maps.newTreeMap();
     this.className = className;
     this.nativeType = nativeType;
@@ -317,7 +317,7 @@ class PrototypeObjectType extends ObjectType {
     } else if (isNumberObjectType()) {
       return getNativeType(JSTypeNative.NUMBER_TYPE);
     } else {
-      return super.unboxesTo();
+      return callSuper.unboxesTo();
     }
   }
 
@@ -397,7 +397,7 @@ class PrototypeObjectType extends ObjectType {
   /**
    * This should only be reset on the FunctionPrototypeType, only to fix an
    * incorrectly established prototype chain due to the user having a mismatch
-   * in super class declaration, and only before properties on that type are
+   * in callSuper class declaration, and only before properties on that type are
    * processed.
    */
   final void setImplicitPrototype(ObjectType implicitPrototype) {
@@ -513,7 +513,7 @@ class PrototypeObjectType extends ObjectType {
 
   @Override
   public boolean hasCachedValues() {
-    return super.hasCachedValues();
+    return callSuper.hasCachedValues();
   }
 
   /** Whether this is a built-in object. */

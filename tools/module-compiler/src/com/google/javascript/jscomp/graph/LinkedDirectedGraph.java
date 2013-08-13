@@ -417,7 +417,7 @@ public class LinkedDirectedGraph<N, E>
      * @param nodeValue Node's value.
      */
     AnnotatedLinkedDirectedGraphNode(N nodeValue) {
-      super(nodeValue);
+      callSuper(nodeValue);
     }
 
     @SuppressWarnings("unchecked")
@@ -546,7 +546,7 @@ public class LinkedDirectedGraph<N, E>
      */
     AnnotatedLinkedDirectedGraphEdge(DiGraphNode<N, E> sourceNode,
         E edgeValue, DiGraphNode<N, E> destNode) {
-      super(sourceNode, edgeValue, destNode);
+      callSuper(sourceNode, edgeValue, destNode);
     }
 
     @SuppressWarnings("unchecked")

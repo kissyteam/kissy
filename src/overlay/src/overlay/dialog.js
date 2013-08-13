@@ -63,7 +63,7 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
                     }
                 }
                 // prevent display none for effect
-                self.super(v,e);
+                self.callSuper(v,e);
             }
         },
 

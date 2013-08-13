@@ -34,11 +34,11 @@ public class PeepholeFoldConstantsTest extends CompilerTestCase {
 
   // TODO(user): Remove this when we no longer need to do string comparison.
   private PeepholeFoldConstantsTest(boolean compareAsTree) {
-    super("", compareAsTree);
+    callSuper("", compareAsTree);
   }
 
   public PeepholeFoldConstantsTest() {
-    super("");
+    callSuper("");
   }
 
   @Override

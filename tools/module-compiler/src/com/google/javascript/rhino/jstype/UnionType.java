@@ -78,7 +78,7 @@ public class UnionType extends JSType {
    * @param alternates the alternates of the union
    */
   UnionType(JSTypeRegistry registry, Collection<JSType> alternates) {
-    super(registry);
+    callSuper(registry);
     this.alternates = alternates;
     this.hashcode = this.alternates.hashCode();
   }

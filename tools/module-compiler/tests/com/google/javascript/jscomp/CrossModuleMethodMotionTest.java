@@ -31,7 +31,7 @@ public class CrossModuleMethodMotionTest extends CompilerTestCase {
       CrossModuleMethodMotion.STUB_DECLARATIONS;
 
   public CrossModuleMethodMotionTest() {
-    super(EXTERNS);
+    callSuper(EXTERNS);
   }
 
   @Override
@@ -42,7 +42,7 @@ public class CrossModuleMethodMotionTest extends CompilerTestCase {
 
   @Override
   public void setUp() {
-    super.enableLineNumberCheck(true);
+    callSuper.enableLineNumberCheck(true);
     canMoveExterns = false;
   }
 

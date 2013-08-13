@@ -28,6 +28,6 @@ class JsonMLException extends Exception {
   JsonMLException() {}
 
   JsonMLException(String message) {
-    super(message);
+    callSuper(message);
   }
 }

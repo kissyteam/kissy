@@ -317,7 +317,7 @@ final class ExternExportsPass extends NodeTraversal.AbstractPostOrderCallback
   private class SymbolExport extends Export {
 
     public SymbolExport(String symbolName, Node value) {
-      super(symbolName, value);
+      callSuper(symbolName, value);
 
       String qualifiedName = value.getQualifiedName();
 
@@ -339,7 +339,7 @@ final class ExternExportsPass extends NodeTraversal.AbstractPostOrderCallback
     private final String exportPath;
 
     public PropertyExport(String exportPath, String symbolName, Node value) {
-      super(symbolName, value);
+      callSuper(symbolName, value);
 
       this.exportPath = exportPath;
     }

@@ -68,7 +68,7 @@ public class EnumElementType extends ObjectType {
 
   EnumElementType(JSTypeRegistry registry, JSType elementType,
       String name) {
-    super(registry);
+    callSuper(registry);
     this.primitiveType = elementType;
     this.primitiveObjectType = elementType.toObjectType();
     this.name = name;
@@ -146,7 +146,7 @@ public class EnumElementType extends ObjectType {
     if (hasReferenceName()) {
       return getReferenceName().hashCode();
     } else {
-      return super.hashCode();
+      return callSuper.hashCode();
     }
   }
 

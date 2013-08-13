@@ -263,13 +263,13 @@ public class SortedDependencies<INPUT extends DependencyInfo> {
 
   public static class CircularDependencyException extends Exception {
     CircularDependencyException(String message) {
-      super(message);
+      callSuper(message);
     }
   }
 
   public static class MissingProvideException extends Exception {
     MissingProvideException(String provide) {
-      super(provide);
+      callSuper(provide);
     }
   }
 }
