@@ -3,7 +3,6 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/plugin/ordered-list", function (S, Editor, ListButton, ListCmd) {
-
     function orderedList() {
     }
 

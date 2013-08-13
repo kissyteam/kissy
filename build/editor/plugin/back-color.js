@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 25 22:17
+build time: Aug 13 18:49
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -14,7 +14,6 @@ build time: Jul 25 22:17
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/plugin/back-color", function (S, Editor, Button, cmd) {
-
     function backColor(config) {
         this.config = config || {};
     }
@@ -31,7 +30,6 @@ KISSY.add("editor/plugin/back-color", function (S, Editor, Button, cmd) {
     });
 
     return backColor;
-
 }, {
     requires: ['editor', './color/btn', './back-color/cmd']
 });

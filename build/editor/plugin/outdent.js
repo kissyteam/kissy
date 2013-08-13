@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 25 22:21
+build time: Aug 13 19:01
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -14,7 +14,6 @@ build time: Jul 25 22:21
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/plugin/outdent", function (S, Editor, indexCmd) {
-
     function outdent() {
 
     }
@@ -53,7 +52,6 @@ KISSY.add("editor/plugin/outdent", function (S, Editor, indexCmd) {
     });
 
     return outdent;
-
 }, {
     requires:['editor', './outdent/cmd']
 });

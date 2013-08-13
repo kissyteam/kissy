@@ -7,7 +7,6 @@
  *
  */
 KISSY.add('node/anim', function (S, Dom, Anim, Node, undefined) {
-
     var FX = [
         // height animations
         [ 'height', 'margin-top', 'margin-bottom', 'padding-top', 'padding-bottom' ],
@@ -239,7 +238,6 @@ KISSY.add('node/anim', function (S, Dom, Anim, Node, undefined) {
                 return self;
             };
         });
-
 }, {
     requires: ['dom', 'anim', './base']
 });

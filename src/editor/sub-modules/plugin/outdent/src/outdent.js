@@ -3,7 +3,6 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/plugin/outdent", function (S, Editor, indexCmd) {
-
     function outdent() {
 
     }
@@ -42,7 +41,6 @@ KISSY.add("editor/plugin/outdent", function (S, Editor, indexCmd) {
     });
 
     return outdent;
-
 }, {
     requires:['editor', './outdent/cmd']
 });

@@ -5,39 +5,39 @@
 KISSY.add(function (S, Base) {
     describe("complex attr", function () {
         it("can merge property value object from parent class", function () {
-            var A = Base.extend();
-
-            A.ATTRS = {
-                x: {
-                    getter: function () {
-                        return 1;
+            var A = Base.extend({}, {
+                ATTRS: {
+                    x: {
+                        getter: function () {
+                            return 1;
+                        }
                     }
                 }
-            };
+            });
 
-
-            var B = A.extend();
-
-            B.ATTRS = {
-                x: {
-                    value: 2
+            var B = A.extend({}, {
+                ATTRS: {
+                    x: {
+                        value: 2
+                    }
                 }
-            };
+            });
+
             var t = new B();
 
             expect(t.get("x")).toBe(1);
         });
 
         it("support validator", function () {
-            var A = Base.extend();
-
-            A.ATTRS = {
-                tt: {
-                    validator: function (v) {
-                        return v > 1;
+            var A = Base.extend({}, {
+                ATTRS: {
+                    tt: {
+                        validator: function (v) {
+                            return v > 1;
+                        }
                     }
                 }
-            };
+            });
 
             var t = new A();
 
@@ -54,26 +54,26 @@ KISSY.add(function (S, Base) {
 
             var validatorCalled = 0;
 
-            var A = Base.extend();
+            var A = Base.extend({}, {
+                ATTRS: {
+                    tt: {
+                        validator: function (v, name, all) {
+                            validatorCalled++;
+                            if (all && (v > all["t"])) {
+                                return "tt>t!";
+                            }
+                        }
+                    },
+                    t: {
+                        validator: function (v) {
+                            if (v < 0) {
+                                return "t<0!";
+                            }
+                        }
+                    }
 
-            A.ATTRS = {
-                tt: {
-                    validator: function (v, name, all) {
-                        validatorCalled++;
-                        if (all && (v > all["t"])) {
-                            return "tt>t!";
-                        }
-                    }
-                },
-                t: {
-                    validator: function (v) {
-                        if (v < 0) {
-                            return "t<0!";
-                        }
-                    }
                 }
-
-            };
+            });
 
             var t = new A(),
                 e1;
@@ -120,22 +120,22 @@ KISSY.add(function (S, Base) {
         });
 
         it("support sub attribute name", function () {
-            var A = Base.extend();
-
-            A.ATTRS = {
-                tt: {
-                    // do not  use this in real world code
-                    // forbid changing value in getter
-                    getter: function (v) {
-                        this.__getter = 1;
-                        return v;
-                    },
-                    setter: function (v) {
-                        v.x.y++;
-                        return v;
+            var A = Base.extend({}, {
+                ATTRS: {
+                    tt: {
+                        // do not  use this in real world code
+                        // forbid changing value in getter
+                        getter: function (v) {
+                            this.__getter = 1;
+                            return v;
+                        },
+                        setter: function (v) {
+                            v.x.y++;
+                            return v;
+                        }
                     }
                 }
-            };
+            });
 
             var t = new A({
                 tt: {
@@ -184,15 +184,15 @@ KISSY.add(function (S, Base) {
 
         it("validator works for subAttrs", function () {
             (function () {
-                var A = Base.extend();
-
-                A.ATTRS = {
-                    "x": {
-                        validator: function (v) {
-                            return v > 1;
+                var A = Base.extend({}, {
+                    ATTRS: {
+                        "x": {
+                            validator: function (v) {
+                                return v > 1;
+                            }
                         }
                     }
-                };
+                });
 
                 var a = new A();
 
@@ -217,15 +217,15 @@ KISSY.add(function (S, Base) {
             })();
 
             (function () {
-                var A = Base.extend();
-
-                A.ATTRS = {
-                    "x": {
-                        validator: function (v) {
-                            return v.y > 10;
+                var A = Base.extend({}, {
+                    ATTRS: {
+                        "x": {
+                            validator: function (v) {
+                                return v.y > 10;
+                            }
                         }
                     }
-                };
+                });
 
                 var a = new A();
 

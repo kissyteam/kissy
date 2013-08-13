@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 25 22:18
+build time: Aug 13 18:50
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -13,12 +13,11 @@ build time: Jul 25 22:18
  * draft for kissy editor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/draft", function (S, Editor, localStorage, Overlay, MenuButton) {
+KISSY.add("editor/plugin/draft", function (S, Json, Editor, localStorage, Overlay, MenuButton) {
     var Node = S.Node,
         LIMIT = 5,
         Event = S.Event,
         INTERVAL = 5,
-        Json = S['Json'],
         DRAFT_SAVE = "ks-editor-draft-save20110503";
 
     function padding(n, l, p) {
@@ -30,7 +29,7 @@ KISSY.add("editor/plugin/draft", function (S, Editor, localStorage, Overlay, Men
     }
 
     function date(d) {
-        if (typeof d==='number') {
+        if (typeof d === 'number') {
             d = new Date(d);
         }
         if (d instanceof Date)
@@ -389,8 +388,7 @@ KISSY.add("editor/plugin/draft", function (S, Editor, localStorage, Overlay, Men
     });
 
     return DraftPlugin;
-
 }, {
-    "requires": ["editor", "./local-storage", "overlay", './menubutton']
+    "requires": ['json', "editor", "./local-storage", "overlay", './menubutton']
 });
 

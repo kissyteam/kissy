@@ -3,7 +3,6 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/plugin/smiley", function (S, Editor, Overlay4E) {
-
     var smiley_markup = "<div class='{prefixCls}editor-smiley-sprite'>";
     for (var i = 0; i <= 98; i++) {
         smiley_markup += "<a href='javascript:void(0)' " +

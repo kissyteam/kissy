@@ -22,7 +22,6 @@ KISSY.add("editor/plugin/xiami-music", function (S, Editor, FlashBaseClass, flas
         }
     });
 
-
     function XiamiMusicPlugin(config) {
         this.config = config || {};
     }
@@ -125,7 +124,6 @@ KISSY.add("editor/plugin/xiami-music", function (S, Editor, FlashBaseClass, flas
 
         }
     });
-
 
     return XiamiMusicPlugin;
 }, {

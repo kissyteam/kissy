@@ -8,7 +8,7 @@ KISSY.add("editor/plugin/fake-objects", function (S, Editor, HtmlParser) {
         Utils = Editor.Utils,
         SPACER_GIF = Utils.debugUrl('theme/spacer.gif');
 
-    S.augment(Editor, {
+    Editor.addMembers({
         //ie6 ,object outHTML error
         createFakeElement: function (realElement, className, realElementType, isResizable, outerHTML, attrs) {
             var style = realElement.attr("style") || '';
@@ -57,7 +57,6 @@ KISSY.add("editor/plugin/fake-objects", function (S, Editor, HtmlParser) {
         }
     });
 
-
     var htmlFilterRules = {
         tags: {
             /**
@@ -102,7 +101,6 @@ KISSY.add("editor/plugin/fake-objects", function (S, Editor, HtmlParser) {
             }
         }
     };
-
 
     return {
         init: function (editor) {

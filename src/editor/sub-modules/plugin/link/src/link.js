@@ -3,7 +3,6 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/plugin/link", function (S, Editor, Bubble, Utils, DialogLoader) {
-
     var $ = S.all,
         tipHTML = '<a ' +
             'href="" '

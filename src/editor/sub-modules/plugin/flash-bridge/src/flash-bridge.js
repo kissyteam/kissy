@@ -3,7 +3,6 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/plugin/flash-bridge", function (S, SWF, Editor) {
-
     var instances = {};
 
     function FlashBridge(cfg) {
@@ -114,7 +113,6 @@ KISSY.add("editor/plugin/flash-bridge", function (S, SWF, Editor) {
     Editor.FlashBridge = FlashBridge;
 
     return FlashBridge;
-
 }, {
     requires: ['swf', 'editor']
 });

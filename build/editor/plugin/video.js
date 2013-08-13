@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 25 22:22
+build time: Aug 13 19:03
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -129,9 +129,7 @@ KISSY.add("editor/plugin/video", function (S, Editor, flashUtils, FlashBaseClass
         }
     });
 
-
     return video;
-
 }, {
     requires: ['editor', './flash-common/utils',
         './flash-common/base-class', './fake-objects']

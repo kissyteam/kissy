@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 25 22:22
+build time: Aug 13 19:02
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -14,7 +14,6 @@ build time: Jul 25 22:22
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/plugin/table", function (S, Editor, DialogLoader) {
-
     var UA = S.UA,
         Dom = S.DOM,
         Node = S.Node,

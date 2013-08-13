@@ -4,7 +4,6 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add('io/sub-domain-transport', function (S, XhrTransportBase, Event, Dom) {
-
     var PROXY_PAGE = '/sub_domain_proxy.html',
         doc = S.Env.host.document,
         iframeMap = {
@@ -84,7 +83,6 @@ KISSY.add('io/sub-domain-transport', function (S, XhrTransportBase, Event, Dom) 
     }
 
     return SubDomainTransport;
-
 }, {
     requires: ['./xhr-transport-base', 'event', 'dom']
 });

@@ -89,7 +89,6 @@ KISSY.add("editor/plugin/element-path", function (S, Editor) {
     });
 
     return ElementPathPlugin;
-
 }, {
     requires:['editor']
 });

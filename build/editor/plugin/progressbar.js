@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 25 22:21
+build time: Aug 13 19:02
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -13,34 +13,16 @@ build time: Jul 25 22:21
  * progressbar ui
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/progressbar", function(S) {
+KISSY.add("editor/plugin/progressbar", function(S,Base) {
+    var Node = S.Node;
 
-    var Dom = S.DOM,Node = S.Node;
-
-    function ProgressBar() {
-        ProgressBar.superclass.constructor.apply(this, arguments);
-        this._init();
-    }
-
-    ProgressBar.ATTRS = {
-        container:{},
-        width:{},
-        height:{},
-        //0-100
-        progress:{
-            value:0
-        },
-        prefixCls:{
-            value:'ks-'
-        }
-    };
-    S.extend(ProgressBar, S.Base, {
+    return Base.extend({
         destroy:function() {
             var self = this;
             self.detach();
             self.el.remove();
         },
-        _init:function() {
+        initializer:function() {
             var self = this,
                 h = self.get("height"),
                 prefixCls=self.get('prefixCls'),
@@ -84,7 +66,21 @@ KISSY.add("editor/plugin/progressbar", function(S) {
             self._p.css("width", v + "%");
             self._title.html(v + "%");
         }
+    },{
+        ATTRS:{
+            container:{},
+            width:{},
+            height:{},
+            //0-100
+            progress:{
+                value:0
+            },
+            prefixCls:{
+                value:'ks-'
+            }
+        }
     });
-   return ProgressBar;
+},{
+    requires:['base']
 });
 

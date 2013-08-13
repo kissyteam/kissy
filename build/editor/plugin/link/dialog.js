@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 25 22:20
+build time: Aug 13 19:01
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -14,7 +14,6 @@ build time: Jul 25 22:20
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/plugin/link/dialog", function (S, Editor, Dialog4E, Utils) {
-
     var _ke_saved_href = Utils._ke_saved_href,
         bodyHTML = "<div style='padding:20px 20px 0 20px'>" +
             "<p>" +

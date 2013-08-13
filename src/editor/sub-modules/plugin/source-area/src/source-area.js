@@ -3,7 +3,6 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/plugin/source-area", function (S, Editor) {
-
     var SOURCE_MODE = Editor.Mode.SOURCE_MODE ,
         WYSIWYG_MODE = Editor.Mode.WYSIWYG_MODE;
 

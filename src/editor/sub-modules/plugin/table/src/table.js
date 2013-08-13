@@ -3,7 +3,6 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/plugin/table", function (S, Editor, DialogLoader) {
-
     var UA = S.UA,
         Dom = S.DOM,
         Node = S.Node,

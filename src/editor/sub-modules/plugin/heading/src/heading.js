@@ -3,7 +3,6 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/plugin/heading", function (S, Editor, headingCmd) {
-
     function HeadingPlugin() {
 
     }

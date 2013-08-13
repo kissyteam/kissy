@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 25 22:24
+build time: Aug 13 19:04
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -108,13 +108,7 @@ KISSY.add("kison/utils", function (S) {
  * @author yiminghe@gmail.com
  */
 KISSY.add("kison/item", function (S, Base) {
-
-    function Item() {
-        Item.superclass.constructor.apply(this, arguments);
-    }
-
-
-    S.extend(Item, Base, {
+    return Base.extend({
 
         equals: function (other, ignoreLookAhead) {
             var self = this;
@@ -167,8 +161,6 @@ KISSY.add("kison/item", function (S, Base) {
             }
         }
     });
-
-    return Item;
 }, {
     requires: ['base']
 });
@@ -177,11 +169,7 @@ KISSY.add("kison/item", function (S, Base) {
  * @author yiminghe@gmail.com
  */
 KISSY.add("kison/item-set", function (S, Base) {
-    function ItemSet() {
-        ItemSet.superclass.constructor.apply(this, arguments);
-    }
-
-    S.extend(ItemSet, Base, {
+    return Base.extend({
 
         /**
          * Insert item by order
@@ -267,8 +255,6 @@ KISSY.add("kison/item-set", function (S, Base) {
             }
         }
     });
-
-    return ItemSet;
 }, {
     requires: ['base']
 });
@@ -278,11 +264,7 @@ KISSY.add("kison/item-set", function (S, Base) {
  */
 KISSY.add("kison/non-terminal", function (S, Base) {
 
-    function NonTerminal() {
-        NonTerminal.superclass.constructor.apply(this, arguments);
-    }
-
-    S.extend(NonTerminal, Base, {
+    return Base.extend({
 
     }, {
         ATTRS:{
@@ -300,9 +282,6 @@ KISSY.add("kison/non-terminal", function (S, Base) {
             }
         }
     });
-
-    return NonTerminal;
-
 }, {
     requires:['base']
 });
@@ -595,12 +574,7 @@ KISSY.add("kison/lexer", function (S, Utils) {
  * @author yiminghe@gmail.com
  */
 KISSY.add("kison/production", function (S, Base) {
-
-    function Production() {
-        Production.superclass.constructor.apply(this, arguments);
-    }
-
-    S.extend(Production, Base, {
+   return Base.extend({
 
         equals: function (other) {
             var self = this;
@@ -646,9 +620,6 @@ KISSY.add("kison/production", function (S, Base) {
             }
         }
     });
-
-    return Production;
-
 }, {
     requires: ['base']
 });
@@ -714,12 +685,7 @@ KISSY.add("kison/grammar", function (S, Base, Utils, Item, ItemSet, NonTerminal,
         }
     }
 
-    function Grammar() {
-        var self = this;
-        Grammar.superclass.constructor.apply(self, arguments);
-    }
-
-    S.extend(Grammar, Base, {
+   return Base.extend({
 
         build: function () {
             var self = this,
@@ -1494,8 +1460,6 @@ KISSY.add("kison/grammar", function (S, Base, Utils, Item, ItemSet, NonTerminal,
     }
 
     // #-------------------- for generation end
-
-    return Grammar;
 }, {
     requires: [
         'base',

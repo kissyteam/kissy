@@ -3,7 +3,6 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/plugin/link/dialog", function (S, Editor, Dialog4E, Utils) {
-
     var _ke_saved_href = Utils._ke_saved_href,
         bodyHTML = "<div style='padding:20px 20px 0 20px'>" +
             "<p>" +

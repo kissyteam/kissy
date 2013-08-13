@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 25 22:24
+build time: Aug 13 19:04
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -986,7 +986,6 @@ KISSY.add('io/xhr-transport-base', function (S, IO) {
  * @author yiminghe@gmail.com
  */
 KISSY.add('io/sub-domain-transport', function (S, XhrTransportBase, Event, Dom) {
-
     var PROXY_PAGE = '/sub_domain_proxy.html',
         doc = S.Env.host.document,
         iframeMap = {
@@ -1066,7 +1065,6 @@ KISSY.add('io/sub-domain-transport', function (S, XhrTransportBase, Event, Dom) 
     }
 
     return SubDomainTransport;
-
 }, {
     requires: ['./xhr-transport-base', 'event', 'dom']
 });
@@ -1076,7 +1074,6 @@ KISSY.add('io/sub-domain-transport', function (S, XhrTransportBase, Event, Dom) 
  * @author yiminghe@gmail.com
  */
 KISSY.add('io/xdr-flash-transport', function (S, IO, Dom) {
-
     var // current running request instances
         maps = {},
         ID = 'io_swf',
@@ -1211,7 +1208,6 @@ KISSY.add('io/xdr-flash-transport', function (S, IO, Dom) {
     };
 
     return XdrFlashTransport;
-
 }, {
     requires: ['./base', 'dom']
 });
@@ -1221,7 +1217,6 @@ KISSY.add('io/xdr-flash-transport', function (S, IO, Dom) {
  * @author yiminghe@gmail.com
  */
 KISSY.add('io/xhr-transport', function (S, IO, XhrTransportBase, SubDomainTransport, XdrFlashTransport) {
-
     var win = S.Env.host,
         doc = win.document,
         _XDomainRequest = XhrTransportBase._XDomainRequest;
@@ -1301,7 +1296,6 @@ KISSY.add('io/xhr-transport', function (S, IO, XhrTransportBase, SubDomainTransp
  * @author yiminghe@gmail.com
  */
 KISSY.add('io/script-transport', function (S, IO, _, undefined) {
-
     var win = S.Env.host,
         doc = win.document,
         OK_CODE = 200,
@@ -1424,7 +1418,6 @@ KISSY.add('io/script-transport', function (S, IO, _, undefined) {
     IO['setupTransport']('script', ScriptTransport);
 
     return IO;
-
 }, {
     requires: ['./base', './xhr-transport']
 });
@@ -1605,7 +1598,6 @@ KISSY.add('io/form', function (S, IO, Dom, FormSerializer) {
  * @author yiminghe@gmail.com
  */
 KISSY.add('io/iframe-transport', function (S, Dom, Event, IO) {
-
     var doc = S.Env.host.document,
         OK_CODE = 200,
         ERROR_CODE = 500,
@@ -1844,7 +1836,6 @@ KISSY.add('io/iframe-transport', function (S, Dom, Event, IO) {
     IO['setupTransport']('iframe', IframeTransport);
 
     return IO;
-
 }, {
     requires: ['dom', 'event', './base']
 });

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 25 22:19
+build time: Aug 13 19:00
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -14,7 +14,6 @@ build time: Jul 25 22:19
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/plugin/indent", function (S, Editor, indexCmd) {
-
     function Indent() {
 
     }
@@ -36,7 +35,6 @@ KISSY.add("editor/plugin/indent", function (S, Editor, indexCmd) {
     });
 
     return Indent;
-
 }, {
     requires:['editor', './indent/cmd']
 });

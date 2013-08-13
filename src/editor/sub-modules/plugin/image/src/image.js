@@ -3,7 +3,6 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/plugin/image", function (S, Editor, Button, Bubble, ContextMenu, DialogLoader) {
-
     var UA = S.UA,
         Node = KISSY.NodeList,
         $ = S.all,

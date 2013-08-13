@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 13 00:05
+build time: Aug 13 18:47
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -19,7 +19,7 @@ build time: Aug 13 00:05
  */
 KISSY.add('component/control/process', function (S, Base, Promise) {
     var Defer = Promise.Defer,
-        __getHook__ = Base.prototype.__getHook__,
+        __getHook = Base.prototype.__getHook,
         noop = S.noop;
 
 
@@ -31,7 +31,7 @@ KISSY.add('component/control/process', function (S, Base, Promise) {
          */
         self.fire('beforeSyncUI');
         self.syncUI();
-        callPluginsMethod(self, 'pluginSyncUI');
+        self.__callPluginsMethod('pluginSyncUI');
         /**
          * @event afterSyncUI
          * fired after component 's internal state is synchronized.
@@ -80,7 +80,7 @@ KISSY.add('component/control/process', function (S, Base, Promise) {
                  */
                 self.fire('beforeCreateDom');
                 self.createInternal();
-                callPluginsMethod(self, 'pluginCreateDom');
+                self.__callPluginsMethod('pluginCreateDom');
                 /**
                  * @event afterCreateDom
                  * fired when root node is created
@@ -93,7 +93,7 @@ KISSY.add('component/control/process', function (S, Base, Promise) {
             return self;
         },
 
-        createInternal:function(){
+        createInternal: function () {
             this.createDom();
         },
 
@@ -115,7 +115,7 @@ KISSY.add('component/control/process', function (S, Base, Promise) {
 
                 self.fire('beforeRenderUI');
                 self.renderUI();
-                callPluginsMethod(self, 'pluginRenderUI');
+                self.__callPluginsMethod('pluginRenderUI');
 
                 /**
                  * @event afterRenderUI
@@ -133,7 +133,7 @@ KISSY.add('component/control/process', function (S, Base, Promise) {
                 self.fire('beforeBindUI');
                 ComponentProcess.superclass.bindInternal.call(self);
                 self.bindUI();
-                callPluginsMethod(self, 'pluginBindUI');
+                self.__callPluginsMethod('pluginBindUI');
                 /**
                  * @event afterBindUI
                  * fired when component 's internal event is bind.
@@ -156,11 +156,11 @@ KISSY.add('component/control/process', function (S, Base, Promise) {
             syncUIs(this);
         },
 
-        plug: function () {
+        plug: function (plugin) {
             var self = this,
                 p,
                 plugins = self.get('plugins');
-            ComponentProcess.superclass.plug.apply(self, arguments);
+            self.callSuper(plugin);
             p = plugins[plugins.length - 1];
             if (self.get('rendered')) {
                 // plugin does not support decorate
@@ -176,10 +176,10 @@ KISSY.add('component/control/process', function (S, Base, Promise) {
 
     }, {
         __hooks__: {
-            createDom: __getHook__('__createDom'),
-            renderUI: __getHook__('__renderUI'),
-            bindUI: __getHook__('__bindUI'),
-            syncUI: __getHook__('__syncUI')
+            createDom: __getHook('__createDom'),
+            renderUI: __getHook('__renderUI'),
+            bindUI: __getHook('__bindUI'),
+            syncUI: __getHook('__syncUI')
         },
 
         name: 'ComponentProcess',
@@ -216,16 +216,6 @@ KISSY.add('component/control/process', function (S, Base, Promise) {
             }
         }
     });
-
-    function callPluginsMethod(self, method) {
-        var len;
-        var plugins = self.get('plugins');
-        if (len = plugins.length) {
-            for (var i = 0; i < len; i++) {
-                plugins[i][method].apply(this, arguments || []);
-            }
-        }
-    }
 
     return ComponentProcess;
 }, {
@@ -342,13 +332,11 @@ KISSY.add("component/control/render", function (S, ComponentProcess, XTemplate, 
         return this.getBaseCssClass(arguments[1].params[0]);
     }
 
-    var Render;
-
     /**
      * @ignore
      * Base Render class for KISSY Component.
      */
-    return  Render = ComponentProcess.extend({
+    return ComponentProcess.extend({
         isRender: true,
 
         createInternal: function () {
@@ -359,7 +347,7 @@ KISSY.add("component/control/render", function (S, ComponentProcess, XTemplate, 
                 // decorate from existing dom structure
                 self.decorateDom(srcNode);
             } else {
-                Render.superclass.createInternal.apply(self, arguments);
+                self.callSuper();
             }
         },
 
@@ -448,23 +436,11 @@ KISSY.add("component/control/render", function (S, ComponentProcess, XTemplate, 
 
         decorateDom: function (srcNode) {
             var self = this,
-                c = self.constructor,
-                control = self.control,
-                len, p, constructorChains;
-
+                control = self.control;
             if (!srcNode.attr('id')) {
                 srcNode.attr('id', control.get('id'));
             }
-
-            constructorChains = self.__collectConstructorChains();
-
-            // 从父类到子类开始从 html 读取属性
-            for (len = constructorChains.length - 1; len >= 0; len--) {
-                c = constructorChains[len];
-                if (p = c.HTML_PARSER) {
-                    applyParser.call(self, srcNode, p, control);
-                }
-            }
+            applyParser.call(self, srcNode, self.constructor.HTML_PARSER, control);
             control.setInternal("el", self.$el = srcNode);
             self.el = srcNode[0];
         },
@@ -698,9 +674,10 @@ KISSY.add("component/control/render", function (S, ComponentProcess, XTemplate, 
         }
     }, {
         __hooks__: {
-            decorateDom: ComponentProcess.prototype.__getHook__('__decorateDom'),
-            beforeCreateDom: ComponentProcess.prototype.__getHook__('__beforeCreateDom')
+            decorateDom: ComponentProcess.prototype.__getHook('__decorateDom'),
+            beforeCreateDom: ComponentProcess.prototype.__getHook('__beforeCreateDom')
         },
+
         /**
          * Create a new class which extends ComponentProcess .
          * @param {Function[]} extensions Class constructors for extending.
@@ -710,15 +687,15 @@ KISSY.add("component/control/render", function (S, ComponentProcess, XTemplate, 
          * @return {KISSY.Component.ComponentProcess} A new class which extends ComponentProcess .
          */
         extend: function extend(extensions, px, sx) {
-            var baseClass = this,
+            var SuperClass = this,
+                NewClass,
                 parsers = {};
-
-            var newClass = ComponentProcess.extend.apply(baseClass, arguments);
-
+            NewClass = ComponentProcess.extend.apply(SuperClass, arguments);
+            NewClass[HTML_PARSER] = NewClass[HTML_PARSER] || {};
             if (S.isArray(extensions)) {
                 // [ex1,ex2]，扩展类后面的优先，ex2 定义的覆盖 ex1 定义的
                 // 主类最优先
-                S.each(extensions['concat'](newClass), function (ext) {
+                S.each(extensions['concat'](NewClass), function (ext) {
                     if (ext) {
                         // 合并 HTML_PARSER 到主类
                         S.each(ext.HTML_PARSER, function (v, name) {
@@ -726,12 +703,11 @@ KISSY.add("component/control/render", function (S, ComponentProcess, XTemplate, 
                         });
                     }
                 });
-                newClass[HTML_PARSER] = parsers;
+                NewClass[HTML_PARSER] = parsers;
             }
-
-            newClass.extend = extend;
-
-            return newClass;
+            S.mix(NewClass[HTML_PARSER], SuperClass[HTML_PARSER], false);
+            NewClass.extend = extend;
+            return NewClass;
         },
 
         //  screen state
@@ -895,9 +871,9 @@ KISSY.add("component/control", function (S, Node, ComponentProcess, Manager, Ren
             sync: function () {
                 var self = this;
                 self.fire('beforeSyncUI');
-                self.callMethodByHierarchy("syncUI", "__syncUI");
+                self.syncUI();
                 self.view.sync();
-                self.callPluginsMethod("syncUI");
+                self.__callPluginsMethod("pluginSyncUI");
                 self.fire('afterSyncUI');
             },
 

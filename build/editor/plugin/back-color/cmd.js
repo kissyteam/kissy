@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 25 22:17
+build time: Aug 13 18:49
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -17,9 +17,16 @@ KISSY.add("editor/plugin/back-color/cmd", function (S, cmd) {
 
     var BACK_COLOR_STYLE = {
         element:'span',
-        styles:{ 'background-color':'#(color)' },
+        styles:{
+            'background-color':'#(color)'
+        },
         overrides:[
-            { element:'*', styles:{ 'background-color':null } }
+            {
+                element:'*',
+                styles:{
+                    'background-color':null
+                }
+            }
         ],
         childRule:function (currentNode) {
             // 除了嵌套背景，其他强制最里面

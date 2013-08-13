@@ -3,7 +3,6 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/plugin/back-color", function (S, Editor, Button, cmd) {
-
     function backColor(config) {
         this.config = config || {};
     }
@@ -20,7 +19,6 @@ KISSY.add("editor/plugin/back-color", function (S, Editor, Button, cmd) {
     });
 
     return backColor;
-
 }, {
     requires: ['editor', './color/btn', './back-color/cmd']
 });

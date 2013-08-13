@@ -3,7 +3,6 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add("toolbar", function (S, Container, DelegateChildrenExtension, ToolbarRender, Node, undefined) {
-
     var KeyCode = Node.KeyCode;
 
     function getNextEnabledItem(index, direction, self) {
@@ -130,10 +129,11 @@ KISSY.add("toolbar", function (S, Container, DelegateChildrenExtension, ToolbarR
             self.on("afterHighlightedChange", afterHighlightedChange, self);
         },
 
-        handleBlurInternal: function () {
+        handleBlurInternal: function (e) {
             var self = this,
                 highlightedItem,
                 expandedItem;
+            self.callSuper(e);
             self.set("expandedItem", null);
             // clear for afterHighlightedChange
             if (highlightedItem = self.get("highlightedItem")) {
@@ -230,7 +230,6 @@ KISSY.add("toolbar", function (S, Container, DelegateChildrenExtension, ToolbarR
             }
         }
     });
-
 }, {
     requires: ['component/container',
         'component/extension/delegate-children',

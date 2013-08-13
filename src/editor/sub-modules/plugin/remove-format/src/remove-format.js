@@ -3,7 +3,6 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/plugin/remove-format", function (S, Editor, formatCmd) {
-
     function removeFormat() {
     }
 

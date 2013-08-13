@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 25 22:22
+build time: Aug 13 19:02
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -74,7 +74,6 @@ KISSY.add("editor/plugin/undo/cmd", function (S, Editor) {
         navigationKeyCodes = { 37: 1, 38: 1, 39: 1, 40: 1, 33: 1, 34: 1 },
         zKeyCode = 90,
         yKeyCode = 89;
-
 
     S.augment(UndoManager, {
         /**
@@ -221,7 +220,6 @@ KISSY.add("editor/plugin/undo/cmd", function (S, Editor) {
             return snapshot;
         }
     });
-
 
     return {
         init: function (editor) {

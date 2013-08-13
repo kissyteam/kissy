@@ -10,7 +10,6 @@ KISSY.add("html-parser/nodes/attribute", function(S) {
         this.value = value;
         this.quote = quote;
     }
-
     S.augment(Attribute, {
         clone: function() {
             var ret = new Attribute();

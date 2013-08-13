@@ -143,7 +143,6 @@ KISSY.add("overlay/extension/mask", function (S, Node) {
         processMask(self.get('mask'), maskNode, v, self);
     }
 
-    // for augment, no need constructor
     Mask.prototype = {
 
         __renderUI: function () {

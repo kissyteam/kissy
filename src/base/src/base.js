@@ -74,7 +74,7 @@ KISSY.add('base', function (S, Attribute) {
         self.initializer();
         // call plugins
         constructPlugins(self);
-        callPluginsMethod(self, 'pluginInitializer');
+        callPluginsMethod.call(self, 'pluginInitializer');
         // bind attr change
         self.bindInternal();
         // sync attr
@@ -84,11 +84,9 @@ KISSY.add('base', function (S, Attribute) {
     S.augment(Base, Attribute, {
         initializer: noop,
 
-        __collectConstructorChains: function () {
-            return collectConstructorChains(this);
-        },
-
         '__getHook': __getHook,
+
+        __callPluginsMethod: callPluginsMethod,
 
         'callSuper': function () {
             var method, obj,
@@ -101,17 +99,20 @@ KISSY.add('base', function (S, Attribute) {
                 args = Array.prototype.slice.call(args, 1);
             } else {
                 method = arguments.callee.caller;
+                if (method.__wrapped__) {
+                    method = method.caller;
+                }
                 obj = self;
             }
 
             var name = method.__name__;
             if (!name) {
-                S.log('can not find method name for callSuper [' + self.constructor.name + ']: ' + method.toString());
+                //S.log('can not find method name for callSuper [' + self.constructor.name + ']: ' + method.toString());
                 return undefined;
             }
             var member = method.__owner__.superclass[name];
             if (!member) {
-                S.log('can not find method [' + name + '] for callSuper: ' + method.__owner__.name);
+                //S.log('can not find method [' + name + '] for callSuper: ' + method.__owner__.name);
                 return undefined;
             }
 
@@ -142,29 +143,33 @@ KISSY.add('base', function (S, Attribute) {
          */
         syncInternal: function () {
             var self = this,
-                attributeValue, onSetMethod, i,
-                constructor, attributeName, onSetMethodName,
-                cache = {},
-                constructorChains = collectConstructorChains(self),
-                attrs;
+                cs = [],
+                i,
+                c = self.constructor,
+                attrs = self.getAttrs();
 
-            // 从父类到子类执行同步属性函数
-            for (i = constructorChains.length - 1; i >= 0; i--) {
-                constructor = constructorChains[i];
-                if (attrs = constructor[ATTRS]) {
-                    for (attributeName in attrs) {
-                        // 防止子类覆盖父类属性定义造成重复执行
-                        if (!cache[attributeName]) {
-                            cache[attributeName] = 1;
-                            onSetMethodName = ON_SET + ucfirst(attributeName);
-                            // 存在方法，并且用户设置了初始值或者存在默认值，就同步状态
-                            if ((onSetMethod = self[onSetMethodName]) &&
-                                // 用户如果设置了显式不同步，就不同步，
-                                // 比如一些值从 html 中读取，不需要同步再次设置
-                                attrs[attributeName].sync !== 0 &&
-                                (attributeValue = self.get(attributeName)) !== undefined) {
-                                onSetMethod.call(self, attributeValue);
-                            }
+            while (c) {
+                cs.push(c);
+                c = c.superclass && c.superclass.constructor;
+            }
+
+            cs.reverse();
+
+            // from super class to sub class
+            for (i = 0; i < cs.length; i++) {
+                var ATTRS = cs[i].ATTRS || {};
+                for (var attributeName in ATTRS) {
+                    if (attributeName in attrs) {
+                        var attributeValue,
+                            onSetMethod;
+                        var onSetMethodName = ON_SET + ucfirst(attributeName);
+                        // 存在方法，并且用户设置了初始值或者存在默认值，就同步状态
+                        if ((onSetMethod = self[onSetMethodName]) &&
+                            // 用户如果设置了显式不同步，就不同步，
+                            // 比如一些值从 html 中读取，不需要同步再次设置
+                            attrs[attributeName].sync !== 0 &&
+                            (attributeValue = self.get(attributeName)) !== undefined) {
+                            onSetMethod.call(self, attributeValue);
                         }
                     }
                 }
@@ -251,7 +256,7 @@ KISSY.add('base', function (S, Attribute) {
         destroy: function () {
             var self = this;
             if (!self.get('destroyed')) {
-                callPluginsMethod(self, 'pluginDestructor');
+                callPluginsMethod.call(self, 'pluginDestructor');
                 self.destructor();
                 self.detach();
                 self.set('destroyed', true);
@@ -332,7 +337,7 @@ KISSY.add('base', function (S, Attribute) {
          *      })
          */
         extend: function extend(extensions, px, sx) {
-            var ParentClass = this,
+            var SuperClass = this,
                 name,
                 SubClass;
             if (!S.isArray(extensions)) {
@@ -343,7 +348,7 @@ KISSY.add('base', function (S, Attribute) {
             }
             sx = sx || {};
             name = sx.name || 'BaseDerived';
-            px = px || {};
+            px = S.merge(px);
             if (px.hasOwnProperty('constructor')) {
                 SubClass = px.constructor;
             } else {
@@ -360,37 +365,28 @@ KISSY.add('base', function (S, Attribute) {
             }
             px.constructor = SubClass;
             // wrap method to get owner and name
-            var hooks = ParentClass.__hooks__;
-            sx.__hooks__ = S.mix(hooks, sx.__hooks__);
-            if (extensions.length) {
-                for (p in hooks) {
-                    px[p] = px[p] || noop;
-                }
+            var hooks = SuperClass.__hooks__;
+            if (hooks) {
+                sx.__hooks__ = S.merge(hooks, sx.__hooks__);
             }
-            for (var p in px) {
-                if (p in hooks) {
-                    px[p] = hooks[p](px[p]);
-                }
-            }
-            wrapProtoForSuper(px, SubClass);
-            var sp = ParentClass.prototype;
+            SubClass.__extensions__ = extensions;
+            wrapProtoForSuper(px, SubClass, sx.__hooks__ || {});
+            var sp = SuperClass.prototype;
             // process inheritedStatics
             var inheritedStatics = sp['__inheritedStatics__'] = sp['__inheritedStatics__'] || sx['inheritedStatics'];
-            if (inheritedStatics !== sx['inheritedStatics']) {
+            if (sx['inheritedStatics'] && inheritedStatics !== sx['inheritedStatics']) {
                 S.mix(inheritedStatics, sx['inheritedStatics']);
-
             }
             if (inheritedStatics) {
                 S.mix(SubClass, inheritedStatics);
             }
             delete sx['inheritedStatics'];
             // extend
-            S.extend(SubClass, ParentClass, px, sx);
+            S.extend(SubClass, SuperClass, px, sx);
             // merge extensions
-            if (extensions) {
+            if (extensions.length) {
                 var attrs = {},
-                    prototype = SubClass.prototype;
-                SubClass.__extensions__ = extensions;
+                    prototype = {};
                 // [ex1,ex2]，扩展类后面的优先，ex2 定义的覆盖 ex1 定义的
                 // 主类最优先
                 S.each(extensions['concat'](SubClass), function (ext) {
@@ -411,22 +407,29 @@ KISSY.add('base', function (S, Attribute) {
                         // 方法合并
                         var exp = ext.prototype,
                             p;
-                        var member;
                         for (p in exp) {
                             // do not mess with parent class
                             if (exp.hasOwnProperty(p)) {
-                                member = prototype[p] = exp[p];
+                                prototype[p] = exp[p];
                             }
                         }
                     }
                 });
                 SubClass[ATTRS] = attrs;
                 prototype.constructor = SubClass;
+                S.augment(SubClass, prototype);
             }
             SubClass.extend = SubClass.extend || extend;
+            SubClass.addMembers = addMembers;
             return SubClass;
         }
     });
+
+    function addMembers(px) {
+        var SubClass = this;
+        wrapProtoForSuper(px, SubClass, SubClass.__hooks__ || {});
+        S.mix(SubClass.prototype, px);
+    }
 
     /**
      * The default set of attributes which will be available for instances of this class, and
@@ -451,16 +454,6 @@ KISSY.add('base', function (S, Attribute) {
      * @static
      * @type {Object}
      */
-
-    function collectConstructorChains(self) {
-        var constructorChains = [],
-            c = self.constructor;
-        while (c) {
-            constructorChains.push(c);
-            c = c.superclass && c.superclass.constructor;
-        }
-        return constructorChains;
-    }
 
     function onSetAttrChange(e) {
         var self = this,
@@ -511,10 +504,37 @@ KISSY.add('base', function (S, Attribute) {
         }
     }
 
-    function wrapProtoForSuper(px, SubClass) {
+    function wrapProtoForSuper(px, SubClass, hooks) {
+        if (!hooks) {
+            debugger
+        }
+        var extensions = SubClass.__extensions__;
+        if (extensions.length) {
+            for (p in hooks) {
+                px[p] = px[p] || noop;
+            }
+        }
+        for (var p in px) {
+            if (p in hooks) {
+                px[p] = hooks[p](px[p]);
+            }
+        }
         S.each(px, function (v, p) {
             if (typeof v == 'function') {
+                var wrapped = 0;
                 if (v.__owner__) {
+                    var originalOwner = v.__owner__;
+                    delete v.__owner__;
+                    delete v.__name__;
+                    wrapped = v.__wrapped__ = 1;
+                    var newV = wrapper(v);
+                    newV.__owner__ = originalOwner;
+                    newV.__name__ = p;
+                    originalOwner.prototype[p] = newV;
+                } else if (v.__wrapped__) {
+                    wrapped = 1;
+                }
+                if (wrapped) {
                     px[p] = v = wrapper(v);
                 }
                 v.__owner__ = SubClass;
@@ -523,12 +543,15 @@ KISSY.add('base', function (S, Attribute) {
         });
     }
 
-    function callPluginsMethod(self, method) {
-        S.each(self.get('plugins'), function (plugin) {
-            if (plugin[method]) {
-                plugin[method].call(plugin, self);
+    function callPluginsMethod(method) {
+        var len,
+            self = this,
+            plugins = self.get('plugins');
+        if (len = plugins.length) {
+            for (var i = 0; i < len; i++) {
+                plugins[i][method] && plugins[i][method](self);
             }
-        });
+        }
     }
 
     function callExtensionsMethod(self, extensions, method, args) {

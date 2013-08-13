@@ -3,7 +3,6 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/plugin/font-size", function (S, Editor, ui, cmd) {
-
     function FontSizePlugin(config) {
         this.config = config || {};
     }

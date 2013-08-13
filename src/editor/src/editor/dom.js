@@ -7,7 +7,6 @@
  For licensing, see LICENSE.html or http://ckeditor.com/license
  */
 KISSY.add("editor/dom", function (S, Editor, Utils) {
-
     var TRUE = true,
         undefined = undefined,
         FALSE = false,

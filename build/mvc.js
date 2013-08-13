@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 25 22:24
+build time: Aug 13 19:04
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -36,16 +36,13 @@ KISSY.add("mvc/model", function (S, Base) {
      * @member MVC
      * @extends KISSY.Base
      */
-    function Model() {
-        var self = this;
-        Model.superclass.constructor.apply(self, arguments);
-        /*
-         *Change should bubble to its collections
-         */
-        self.collections = {};
-    }
-
-    S.extend(Model, Base,{
+   return Base.extend({
+       initializer:function(){
+           /*
+            *Change should bubble to its collections
+            */
+           this.collections = {};
+       },
 
             /**
              * Add current model instance to a specified collection.
@@ -75,13 +72,13 @@ KISSY.add("mvc/model", function (S, Base) {
              * Set current model 's id.
              * @param id
              */
-            setId:function (id) {
+            'setId':function (id) {
                 return this.set(this.get("idAttribute"), id);
             },
 
             setInternal:function () {
                 this.__isModified = 1;
-                return Model.superclass.setInternal.apply(this, arguments);
+                return this.callSuper.apply(this,arguments);
             },
 
             /**
@@ -301,9 +298,6 @@ KISSY.add("mvc/model", function (S, Base) {
         base = base + (base.charAt(base.length - 1) == '/' ? '' : '/');
         return base + encodeURIComponent(this.getId()) + "/";
     }
-
-    return Model;
-
 }, {
     requires:['base']
 });
@@ -334,280 +328,273 @@ KISSY.add("mvc/collection", function (S, Model, Base) {
      * @member MVC
      * @extends KISSY.Base
      */
-    function Collection() {
-        Collection.superclass.constructor.apply(this, arguments);
-    }
-
-    Collection.ATTRS =  {
+    return Base.extend({
         /**
-         * Model constructor with in current collection.
-         * @type {MVC.Model}
+         * Sort model list according {@link MVC.Collection#comparator}.
          */
-        model:{
-            value:Model
-        },
-        /**
-         * Model list.
-         * @type {MVC.Model[]}
-         */
-        models:{
-            /*
-             normalize model list
-             @param models
-             */
-            setter:function (models) {
-                var prev = this.get("models");
-                this.remove(prev, {silent:1});
-                this.add(models, {silent:1});
-                return this.get("models");
-            },
-            value:[]
-        },
-        /**
-         * Get url for sending data to server.
-         * @type {String|Function}
-         */
-        url:{
-            value:""
-        },
-        /**
-         * Comparator function for index getter when adding model.
-         * default to append to last of current model list.
-         * @type {Function}
-         */
-        comparator:{},
-        /**
-         * Sync function to sync data with server.
-         * Default to call {@link MVC.sync}
-         * @type {Function}
-         */
-        sync:{
-            value:function () {
-                S.require("mvc").sync.apply(this, arguments);
+        sort: function () {
+            var comparator = this.get("comparator");
+            if (comparator) {
+                this.get("models").sort(function (a, b) {
+                    return comparator(a) - comparator(b);
+                });
             }
         },
+
         /**
-         * Get structured data from raw data returned from server.
-         * default to return raw data from server.
-         * @type {Function}
+         * Get json representation of this collection.
+         * @return Object[]
          */
-        parse:{
-            value:function (resp) {
-                return resp;
+        toJSON: function () {
+            return S.map(this.get("models"), function (m) {
+                return m.toJSON();
+            });
+        },
+
+        /**
+         * Add a model to current collection.
+         * @param {Object|MVC.Model} model Model or json data to be added.
+         * @param {Object} [opts] Add config
+         * @param {Function} opts.silent Whether to fire add event.
+         */
+        add: function (model, opts) {
+            var self = this,
+                ret = true;
+            if (S.isArray(model)) {
+                var orig = [].concat(model);
+                S.each(orig, function (m) {
+                    var t = self._add(m, opts);
+                    ret = ret && t;
+                });
+            } else {
+                ret = self._add(model, opts);
+            }
+            return ret;
+        },
+
+        /**
+         * Remove an existing model from current collection.
+         * @param {MVC.Model} model Model to be removed.
+         * @param {Object} [opts] Remove config.
+         * @param {Function} opts.silent Whether to fire remove event.
+         */
+        remove: function (model, opts) {
+            var self = this;
+            if (S.isArray(model)) {
+                var orig = [].concat(model);
+                S.each(orig, function (m) {
+                    self._remove(m, opts);
+                });
+            } else if (model) {
+                self._remove(model, opts);
+            }
+        },
+
+        /**
+         * Get model at specified index.
+         * @param {Number} i Specified index.
+         */
+        at: function (i) {
+            return this.get("models")[i];
+        },
+
+        _normModel: function (model) {
+            var ret = true;
+            if (!(model instanceof Model)) {
+                var data = model,
+                    modelConstructor = this.get("model");
+                model = new modelConstructor();
+                ret = model.set(data, {
+                    silent: 1
+                });
+            }
+            return ret && model;
+        },
+
+        /**
+         * Initialize model list by loading data using sync mechanism.
+         * @param {Object} opts Load config.
+         * @param {Function} opts.success Callback when load is successful.
+         * @param {Function} opts.error Callback when error occurs on loading.
+         * @param {Function} opts.complete Callback when load is complete.
+         * @chainable
+         */
+        load: function (opts) {
+            var self = this;
+            opts = opts || {};
+            var success = opts.success;
+            /**
+             * @ignore
+             */
+            opts.success = function (resp) {
+                if (resp) {
+                    var v = self.get("parse").call(self, resp);
+                    if (v) {
+                        self.set("models", v, opts);
+                    }
+                }
+                // https://github.com/kissyteam/kissy/issues/138
+                S.each(self.get("models"), function (m) {
+                    m.__isModified = 0;
+                });
+                success && success.apply(this, arguments);
+            };
+            self.get("sync").call(self, self, 'read', opts);
+            return self;
+        },
+
+        /**
+         * Add a model to current collection by provide json data.
+         * @param {Object} model Json data represent model data.
+         * @param {Object} opts Create config.
+         * @param {Function} opts.success Callback when create is successful.
+         * @param {Function} opts.error Callback when error occurs on creating.
+         * @param {Function} opts.complete Callback when create is complete.
+         * @param {Function} opts.silent Whether to fire add event.
+         */
+        create: function (model, opts) {
+            var self = this;
+            opts = opts || {};
+            model = this._normModel(model);
+            if (model) {
+                model.addToCollection(self);
+                var success = opts.success;
+                opts.success = function () {
+                    self.add(model, opts);
+                    success && success();
+                };
+                model.save(opts);
+            }
+            return model;
+        },
+
+        _add: function (model, opts) {
+            model = this._normModel(model);
+            if (model) {
+                opts = opts || {};
+                var index = findModelIndex(this.get("models"), model, this.get("comparator"));
+                this.get("models").splice(index, 0, model);
+                model.addToCollection(this);
+                if (!opts['silent']) {
+                    this.fire("add", {
+                        model: model
+                    });
+                }
+            }
+            return model;
+        },
+
+        /**
+         * not call model.destroy ,maybe model belongs to multiple collections
+         * @private
+         */
+        _remove: function (model, opts) {
+            opts = opts || {};
+            var index = S.indexOf(model, this.get("models"));
+            if (index != -1) {
+                this.get("models").splice(index, 1);
+                model.removeFromCollection(this);
+            }
+            if (!opts['silent']) {
+                this.fire("remove", {
+                    model: model
+                });
+            }
+        },
+
+        /**
+         * Get model instance by id.
+         * @param {String} id
+         */
+        getById: function (id) {
+            var models = this.get("models");
+            for (var i = 0; i < models.length; i++) {
+                var model = models[i];
+                if (model.getId() === id) {
+                    return model;
+                }
+            }
+            return null;
+        },
+
+        /**
+         * Get model instance by client id.
+         * @param {String} cid Client id auto generated by model.
+         */
+        getByCid: function (cid) {
+            var models = this.get("models");
+            for (var i = 0; i < models.length; i++) {
+                var model = models[i];
+                if (model.get("clientId") === cid) {
+                    return model;
+                }
+            }
+            return null;
+        }
+
+    }, {
+        ATTRS: {
+            /**
+             * Model constructor with in current collection.
+             * @type {MVC.Model}
+             */
+            model: {
+                value: Model
+            },
+            /**
+             * Model list.
+             * @type {MVC.Model[]}
+             */
+            models: {
+                /*
+                 normalize model list
+                 @param models
+                 */
+                setter: function (models) {
+                    var prev = this.get("models");
+                    this.remove(prev, {silent: 1});
+                    this.add(models, {silent: 1});
+                    return this.get("models");
+                },
+                value: []
+            },
+            /**
+             * Get url for sending data to server.
+             * @type {String|Function}
+             */
+            url: {
+                value: ""
+            },
+            /**
+             * Comparator function for index getter when adding model.
+             * default to append to last of current model list.
+             * @type {Function}
+             */
+            comparator: {},
+            /**
+             * Sync function to sync data with server.
+             * Default to call {@link MVC.sync}
+             * @type {Function}
+             */
+            sync: {
+                value: function () {
+                    S.require("mvc").sync.apply(this, arguments);
+                }
+            },
+            /**
+             * Get structured data from raw data returned from server.
+             * default to return raw data from server.
+             * @type {Function}
+             */
+            parse: {
+                value: function (resp) {
+                    return resp;
+                }
             }
         }
-    };
-
-    S.extend(Collection, Base,{
-            /**
-             * Sort model list according {@link MVC.Collection#comparator}.
-             */
-            sort:function () {
-                var comparator = this.get("comparator");
-                if (comparator) {
-                    this.get("models").sort(function (a, b) {
-                        return comparator(a) - comparator(b);
-                    });
-                }
-            },
-
-            /**
-             * Get json representation of this collection.
-             * @return Object[]
-             */
-            toJSON:function () {
-                return S.map(this.get("models"), function (m) {
-                    return m.toJSON();
-                });
-            },
-
-            /**
-             * Add a model to current collection.
-             * @param {Object|MVC.Model} model Model or json data to be added.
-             * @param {Object} [opts] Add config
-             * @param {Function} opts.silent Whether to fire add event.
-             */
-            add:function (model, opts) {
-                var self = this,
-                    ret = true;
-                if (S.isArray(model)) {
-                    var orig = [].concat(model);
-                    S.each(orig, function (m) {
-                        var t = self._add(m, opts);
-                        ret = ret && t;
-                    });
-                } else {
-                    ret = self._add(model, opts);
-                }
-                return ret;
-            },
-
-            /**
-             * Remove an existing model from current collection.
-             * @param {MVC.Model} model Model to be removed.
-             * @param {Object} [opts] Remove config.
-             * @param {Function} opts.silent Whether to fire remove event.
-             */
-            remove:function (model, opts) {
-                var self = this;
-                if (S.isArray(model)) {
-                    var orig = [].concat(model);
-                    S.each(orig, function (m) {
-                        self._remove(m, opts);
-                    });
-                } else if (model) {
-                    self._remove(model, opts);
-                }
-            },
-
-            /**
-             * Get model at specified index.
-             * @param {Number} i Specified index.
-             */
-            at:function (i) {
-                return this.get("models")[i];
-            },
-
-            _normModel:function (model) {
-                var ret = true;
-                if (!(model instanceof Model)) {
-                    var data = model,
-                        modelConstructor = this.get("model");
-                    model = new modelConstructor();
-                    ret = model.set(data, {
-                        silent:1
-                    });
-                }
-                return ret && model;
-            },
-
-            /**
-             * Initialize model list by loading data using sync mechanism.
-             * @param {Object} opts Load config.
-             * @param {Function} opts.success Callback when load is successful.
-             * @param {Function} opts.error Callback when error occurs on loading.
-             * @param {Function} opts.complete Callback when load is complete.
-             * @chainable
-             */
-            load:function (opts) {
-                var self = this;
-                opts = opts || {};
-                var success = opts.success;
-                /**
-                 * @ignore
-                 */
-                opts.success = function (resp) {
-                    if (resp) {
-                        var v = self.get("parse").call(self, resp);
-                        if (v) {
-                            self.set("models", v, opts);
-                        }
-                    }
-                    // https://github.com/kissyteam/kissy/issues/138
-                    S.each(self.get("models"), function (m) {
-                        m.__isModified = 0;
-                    });
-                    success && success.apply(this, arguments);
-                };
-                self.get("sync").call(self, self, 'read', opts);
-                return self;
-            },
-
-            /**
-             * Add a model to current collection by provide json data.
-             * @param {Object} model Json data represent model data.
-             * @param {Object} opts Create config.
-             * @param {Function} opts.success Callback when create is successful.
-             * @param {Function} opts.error Callback when error occurs on creating.
-             * @param {Function} opts.complete Callback when create is complete.
-             * @param {Function} opts.silent Whether to fire add event.
-             */
-            create:function (model, opts) {
-                var self = this;
-                opts = opts || {};
-                model = this._normModel(model);
-                if (model) {
-                    model.addToCollection(self);
-                    var success = opts.success;
-                    opts.success = function () {
-                        self.add(model, opts);
-                        success && success();
-                    };
-                    model.save(opts);
-                }
-                return model;
-            },
-
-            _add:function (model, opts) {
-                model = this._normModel(model);
-                if (model) {
-                    opts = opts || {};
-                    var index = findModelIndex(this.get("models"), model, this.get("comparator"));
-                    this.get("models").splice(index, 0, model);
-                    model.addToCollection(this);
-                    if (!opts['silent']) {
-                        this.fire("add", {
-                            model:model
-                        });
-                    }
-                }
-                return model;
-            },
-
-            /**
-             * not call model.destroy ,maybe model belongs to multiple collections
-             * @private
-             */
-            _remove:function (model, opts) {
-                opts = opts || {};
-                var index = S.indexOf(model, this.get("models"));
-                if (index != -1) {
-                    this.get("models").splice(index, 1);
-                    model.removeFromCollection(this);
-                }
-                if (!opts['silent']) {
-                    this.fire("remove", {
-                        model:model
-                    });
-                }
-            },
-
-            /**
-             * Get model instance by id.
-             * @param {String} id
-             */
-            getById:function (id) {
-                var models = this.get("models");
-                for (var i = 0; i < models.length; i++) {
-                    var model = models[i];
-                    if (model.getId() === id) {
-                        return model;
-                    }
-                }
-                return null;
-            },
-
-            /**
-             * Get model instance by client id.
-             * @param {String} cid Client id auto generated by model.
-             */
-            getByCid:function (cid) {
-                var models = this.get("models");
-                for (var i = 0; i < models.length; i++) {
-                    var model = models[i];
-                    if (model.get("clientId") === cid) {
-                        return model;
-                    }
-                }
-                return null;
-            }
-
-        });
-
-    return Collection;
-
+    });
 }, {
-    requires:['./model', 'base']
+    requires: ['./model', 'base']
 });
 /**
  * view for kissy mvc : event delegation,el generator
@@ -631,107 +618,101 @@ KISSY.add("mvc/view", function (S, Node, Base) {
      * @member MVC
      * @extends KISSY.Base
      */
-    function View() {
-        View.superclass.constructor.apply(this, arguments);
-        var events;
-        if (events = this.get("events")) {
-            this._afterEventsChange({
-                newVal: events
-            });
-        }
-    }
+    return Base.extend({
+        initializer: function () {
+            var events;
+            if (events = this.get("events")) {
+                this._afterEventsChange({
+                    newVal: events
+                });
+            }
+        },
 
-    View.ATTRS ={
-        /**
-         * Get root element for current view instance.
-         * @type {String}
-         * @example
-         * <code>
-         * //  selector :
-         * .xx
-         * // or html string
-         * <div>my</div>
-         * </code>
-         */
-        el: {
-            value: "<div />",
-            getter: function (s) {
-                if (typeof s == 'string') {
-                    s = $(s);
-                    this.setInternal("el", s);
+        _afterEventsChange: function (e) {
+            var prevVal = e.prevVal;
+            if (prevVal) {
+                this._removeEvents(prevVal);
+            }
+            this._addEvents(e.newVal);
+        },
+
+        _removeEvents: function (events) {
+            var el = this.get("el");
+            for (var selector in events) {
+                var event = events[selector];
+                for (var type in event) {
+                    var callback = normFn(this, event[type]);
+                    el.undelegate(type, selector, callback, this);
                 }
-                return s;
+            }
+        },
+
+        _addEvents: function (events) {
+            var el = this.get("el");
+            for (var selector in events) {
+                var event = events[selector];
+                for (var type in event) {
+                    var callback = normFn(this, event[type]);
+                    el.delegate(type, selector, callback, this);
+                }
             }
         },
 
         /**
-         * Delegate event on root element.
-         * @type {Object}
-         * @example
-         * <code>
-         * events:{
+         * @chainable
+         */
+        render: function () {
+            return this;
+        },
+
+        /**
+         * Remove root element.
+         */
+        destroy: function () {
+            this.get("el").remove();
+        }
+
+    }, {
+        ATTRS: {
+            /**
+             * Get root element for current view instance.
+             * @type {String}
+             * @example
+             * <code>
+             * //  selector :
+             * .xx
+             * // or html string
+             * <div>my</div>
+             * </code>
+             */
+            el: {
+                value: "<div />",
+                getter: function (s) {
+                    if (typeof s == 'string') {
+                        s = $(s);
+                        this.setInternal("el", s);
+                    }
+                    return s;
+                }
+            },
+
+            /**
+             * Delegate event on root element.
+             * @type {Object}
+             * @example
+             * <code>
+             * events:{
          *   selector:{
          *     eventType:callback
          *   }
          * }
-         * </code>
-         */
-        events: {
-
-        }
-    };
-
-
-    S.extend(View, Base,{
-
-            _afterEventsChange: function (e) {
-                var prevVal = e.prevVal;
-                if (prevVal) {
-                    this._removeEvents(prevVal);
-                }
-                this._addEvents(e.newVal);
-            },
-
-            _removeEvents: function (events) {
-                var el = this.get("el");
-                for (var selector in events) {
-                    var event = events[selector];
-                    for (var type in event) {
-                        var callback = normFn(this, event[type]);
-                        el.undelegate(type, selector, callback, this);
-                    }
-                }
-            },
-
-            _addEvents: function (events) {
-                var el = this.get("el");
-                for (var selector in events) {
-                    var event = events[selector];
-                    for (var type in event) {
-                        var callback = normFn(this, event[type]);
-                        el.delegate(type, selector, callback, this);
-                    }
-                }
-            },
-
-            /**
-             * @chainable
+             * </code>
              */
-            render: function () {
-                return this;
-            },
+            events: {
 
-            /**
-             * Remove root element.
-             */
-            destroy: function () {
-                this.get("el").remove();
             }
-
-        });
-
-    return View;
-
+        }
+    });
 }, {
     requires: ['node', 'base']
 });
@@ -739,7 +720,7 @@ KISSY.add("mvc/view", function (S, Node, Base) {
  * simple router to get path parameter and query parameter from hash(old ie) or url(html5)
  * @author yiminghe@gmail.com
  */
-KISSY.add('mvc/router', function (S, Node, Base) {
+KISSY.add('mvc/router', function (S, Node, Base, undefined) {
     var each = S.each,
     // take a breath to avoid duplicate hashchange
         BREATH_INTERVAL = 100,
@@ -960,12 +941,14 @@ KISSY.add('mvc/router', function (S, Node, Base) {
                             return false;
                         }
                     }
+                    return undefined;
                 }
             );
 
             if (exactlyMatch) {
                 return false;
             }
+            return undefined;
         });
 
 
@@ -1011,6 +994,7 @@ KISSY.add('mvc/router', function (S, Node, Base) {
                 else if (g4) {
                     return "(.*)";
                 }
+                return undefined;
             });
 
             return {
@@ -1056,34 +1040,13 @@ KISSY.add('mvc/router', function (S, Node, Base) {
      * @member MVC
      * @extends KISSY.Base
      */
-    function Router() {
-        var self = this;
-        Router.superclass.constructor.apply(self, arguments);
-        self.on("afterRoutesChange", _afterRoutesChange, self);
-        _afterRoutesChange.call(self, {newVal: self.get("routes")});
-        allRoutes.push(self);
-    }
-
-    Router.ATTRS = {
-        /**
-         * Route and action config.
-         * @type {Object}
-         * @example
-         * <code>
-         *   {
-         *     "/search/:param":"callback"
-         *     // or
-         *     "search":{
-         *       reg:/xx/,
-         *       callback:fn
-         *     }
-         *   }
-         * </code>
-         */
-        routes: {}
-    };
-
-    S.extend(Router, Base, {
+    return Base.extend({
+        initializer: function () {
+            var self = this;
+            self.on("afterRoutesChange", _afterRoutesChange, self);
+            _afterRoutesChange.call(self, {newVal: self.get("routes")});
+            allRoutes.push(self);
+        },
         /**
          * Add config to current router.
          * @param {Object} routes Route config.
@@ -1106,6 +1069,25 @@ KISSY.add('mvc/router', function (S, Node, Base) {
             });
         }
     }, {
+        ATTRS: {
+
+            /**
+             * Route and action config.
+             * @type {Object}
+             * @example
+             * <code>
+             *   {
+         *     "/search/:param":"callback"
+         *     // or
+         *     "search":{
+         *       reg:/xx/,
+         *       callback:fn
+         *     }
+         *   }
+             * </code>
+             */
+            routes: {}
+        },
 
         /**
          * whether Router can process path
@@ -1123,10 +1105,12 @@ KISSY.add('mvc/router', function (S, Node, Base) {
                         match = 1;
                         return false;
                     }
+                    return undefined;
                 });
                 if (match) {
                     return false;
                 }
+                return undefined;
             });
             return !!match;
         },
@@ -1226,7 +1210,7 @@ KISSY.add('mvc/router', function (S, Node, Base) {
                 // refresh page without add history entry
                 else if (!equalsIgnoreSlash(locPath, urlRoot)) {
                     location.replace(addEndSlash(urlRoot) + "#!" + hash);
-                    return;
+                    return undefined;
                 }
 
             }
@@ -1255,6 +1239,7 @@ KISSY.add('mvc/router', function (S, Node, Base) {
             }, BREATH_INTERVAL);
 
             Router.__started = 1;
+            return undefined;
         },
 
         stop: function () {
@@ -1264,9 +1249,6 @@ KISSY.add('mvc/router', function (S, Node, Base) {
             allRoutes = [];
         }
     });
-
-    return Router;
-
 }, {
     requires: ['node', 'base']
 });

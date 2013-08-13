@@ -7,7 +7,6 @@
  For licensing, see LICENSE.html or http://ckeditor.com/license
  */
 KISSY.add("editor/styles", function (S, Editor) {
-
     var TRUE = true,
         FALSE = false,
         NULL = null,

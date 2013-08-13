@@ -3,7 +3,6 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/plugin/undo", function (S, Editor, Btn, cmd) {
-
     function undo() {
     }
 
@@ -26,7 +25,6 @@ KISSY.add("editor/plugin/undo", function (S, Editor, Btn, cmd) {
     });
 
     return undo;
-
 }, {
     requires: ['editor', './undo/btn', './undo/cmd']
 });

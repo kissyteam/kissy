@@ -4,7 +4,6 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add('io/iframe-transport', function (S, Dom, Event, IO) {
-
     var doc = S.Env.host.document,
         OK_CODE = 200,
         ERROR_CODE = 500,
@@ -243,7 +242,6 @@ KISSY.add('io/iframe-transport', function (S, Dom, Event, IO) {
     IO['setupTransport']('iframe', IframeTransport);
 
     return IO;
-
 }, {
     requires: ['dom', 'event', './base']
 });

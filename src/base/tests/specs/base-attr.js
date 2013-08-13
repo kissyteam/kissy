@@ -5,11 +5,11 @@
 KISSY.add(function (S, Base) {
     describe('base attr', function () {
         it('拥有 EventTarget 上的方法', function () {
-            var A=Base.extend();
+            var A = Base.extend();
 
             var a = new A();
 
-            var fired=false;
+            var fired = false;
             a.on('xxx', function () {
                 fired = true;
             });
@@ -18,7 +18,7 @@ KISSY.add(function (S, Base) {
         });
 
         it('拥有 Attribute 上的方法', function () {
-            var A=Base.extend();
+            var A = Base.extend();
 
             var a = new A();
 
@@ -57,25 +57,26 @@ KISSY.add(function (S, Base) {
         });
 
         it('能解析 ATTRS 和 config', function () {
-            var A=Base.extend();
-
-            A.ATTRS = {
-                attr1: {
-                    value: 0
+            var A = Base.extend({}, {
+                ATTRS: {
+                    attr1: {
+                        value: 0
+                    }
                 }
-            };
+            });
 
             var a = new A({ attr1: 1, attr2: 2 });
             expect(a.get('attr1')).toBe(1);
             expect(a.get('attr2')).toBe(2);
 
             // 多重继承
-            var B=A.extend();
-            B.ATTRS = {
-                'b-attr': {
-                    value: 'b'
+            var B = A.extend({}, {
+                ATTRS: {
+                    'b-attr': {
+                        value: 'b'
+                    }
                 }
-            };
+            });
 
             var b = new B({ 'b-attr': 3 });
             expect(b.get('b-attr')).toBe(3);
@@ -84,7 +85,7 @@ KISSY.add(function (S, Base) {
         });
 
         it('能正确触发 Attribute 的事件', function () {
-            var A=Base.extend();
+            var A = Base.extend();
 
             var a = new A();
 
@@ -115,7 +116,7 @@ KISSY.add(function (S, Base) {
         });
 
         it('can preventDefault beforeChange to prevent set', function () {
-            var A=Base.extend();
+            var A = Base.extend();
 
             var a = new A();
 
@@ -129,7 +130,7 @@ KISSY.add(function (S, Base) {
         });
 
         it('can stopImmediatePropagation beforeChange', function () {
-            var A=Base.extend();
+            var A = Base.extend();
 
             var a = new A();
 
@@ -146,12 +147,13 @@ KISSY.add(function (S, Base) {
         });
 
         it('transfer default value to value', function () {
-            var A=Base.extend();
-            A.ATTRS = {
-                a: {
-                    value: 9
+            var A = Base.extend({}, {
+                ATTRS: {
+                    a: {
+                        value: 9
+                    }
                 }
-            };
+            });
 
             var a = new A();
 
@@ -168,6 +170,6 @@ KISSY.add(function (S, Base) {
             expect(a['__attrs']['a'].value).toBe(9);
         });
     });
-},{
-    requires:['base']
+}, {
+    requires: ['base']
 });

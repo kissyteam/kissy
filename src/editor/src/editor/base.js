@@ -3,7 +3,6 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/base", function (S, HtmlParser, Control, EditorRender) {
-
     /**
      * @class
      * KISSY Editor.
@@ -11,9 +10,7 @@ KISSY.add("editor/base", function (S, HtmlParser, Control, EditorRender) {
      * @extends KISSY.Component.Control
      * @name Editor
      */
-    return Control.extend({
-    }, {
-
+    return Control.extend({}, {
         Config: {},
 
         XHTML_DTD: HtmlParser['DTD'],
@@ -79,6 +76,7 @@ KISSY.add("editor/base", function (S, HtmlParser, Control, EditorRender) {
              * Defaults to: wysiswyg mode
              */
             mode: {
+                view:1,
                 value: 1
             },
 
@@ -111,12 +109,8 @@ KISSY.add("editor/base", function (S, HtmlParser, Control, EditorRender) {
             }
         },
 
-        xclass: 'editor',
-
-        name: 'EditorRender'
-
+        xclass: 'editor'
     });
-
 }, {
     requires: ['html-parser', 'component/control', './render']
 });

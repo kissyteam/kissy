@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 31 15:21
+build time: Aug 13 18:48
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -19,15 +19,6 @@ KISSY.add('dd/plugin/constrain', function (S, Base, Node) {
     var $ = Node.all,
         CONSTRAIN_EVENT = '.-ks-constrain' + S.now(),
         WIN = S.Env.host;
-
-    /**
-     * @class KISSY.DD.Plugin.Constrain
-     * @extends KISSY.Base
-     * Constrain plugin to provide ability to constrain draggable to specified region
-     */
-    function Constrain() {
-        Constrain.superclass.constructor.apply(this, arguments);
-    }
 
     function onDragStart(e) {
         var self = this,
@@ -79,7 +70,12 @@ KISSY.add('dd/plugin/constrain', function (S, Base, Node) {
         this.__constrainRegion = null;
     }
 
-    S.extend(Constrain, Base, {
+    /**
+     * @class KISSY.DD.Plugin.Constrain
+     * @extends KISSY.Base
+     * Constrain plugin to provide ability to constrain draggable to specified region
+     */
+   return Base.extend({
 
         pluginId: 'dd/plugin/constrain',
 
@@ -134,12 +130,11 @@ KISSY.add('dd/plugin/constrain', function (S, Base, Node) {
                             return $(v);
                         }
                     }
+                    return v;
                 }
             }
         }
     });
-
-    return Constrain;
 }, {
     requires: ['base', 'node']
 });

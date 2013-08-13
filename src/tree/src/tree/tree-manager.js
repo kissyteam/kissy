@@ -3,7 +3,6 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add("tree/tree-manager", function (S, Node, DelegateChildrenExtension) {
-
     var UA = S.UA,
         ie = S.Env.host.document.documentMode || UA.ie,
         Features = S.Features,
@@ -41,7 +40,6 @@ KISSY.add("tree/tree-manager", function (S, Node, DelegateChildrenExtension) {
     };
 
     S.augment(TreeManager, DelegateChildrenExtension, {
-
         isTree: 1,
 
         __bindUI: function () {
@@ -78,7 +76,6 @@ KISSY.add("tree/tree-manager", function (S, Node, DelegateChildrenExtension) {
     });
 
     return TreeManager;
-
 }, {
     requires: [
         'node',

@@ -3,7 +3,6 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/plugin/fore-color", function (S, Editor, Button, cmd) {
-
     function ForeColorPlugin(config) {
         this.config = config || {};
     }

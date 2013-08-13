@@ -64,7 +64,6 @@ KISSY.add("editor/plugin/undo/cmd", function (S, Editor) {
         zKeyCode = 90,
         yKeyCode = 89;
 
-
     S.augment(UndoManager, {
         /**
          * 监控键盘输入，buffer处理
@@ -210,7 +209,6 @@ KISSY.add("editor/plugin/undo/cmd", function (S, Editor) {
             return snapshot;
         }
     });
-
 
     return {
         init: function (editor) {

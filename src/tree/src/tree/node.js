@@ -15,7 +15,6 @@ KISSY.add("tree/node", function (S, Node, Container, TreeNodeRender) {
      * @extends KISSY.Component.Control
      */
    return Container.extend({
-
         bindUI: function () {
             this.on('afterAddChild', onAddChild);
             this.on('afterRemoveChild', onRemoveChild);
@@ -42,7 +41,6 @@ KISSY.add("tree/node", function (S, Node, Container, TreeNodeRender) {
 
             // 顺序统统为前序遍历顺序
             switch (keyCode) {
-
                 case KeyCode.ENTER:
                     return self.handleClickInternal(e);
                     break;
@@ -208,9 +206,13 @@ KISSY.add("tree/node", function (S, Node, Container, TreeNodeRender) {
         }
     }, {
         ATTRS: {
-
             xrender: {
                 value: TreeNodeRender
+            },
+
+            checkable: {
+                value: false,
+                view: 1
             },
 
             // 事件代理
@@ -304,7 +306,6 @@ KISSY.add("tree/node", function (S, Node, Container, TreeNodeRender) {
         },
         xclass: 'tree-node'
     });
-
 
     // # ------------------- private start
 

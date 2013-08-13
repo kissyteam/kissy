@@ -4,7 +4,6 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add('io/xdr-flash-transport', function (S, IO, Dom) {
-
     var // current running request instances
         maps = {},
         ID = 'io_swf',
@@ -139,7 +138,6 @@ KISSY.add('io/xdr-flash-transport', function (S, IO, Dom) {
     };
 
     return XdrFlashTransport;
-
 }, {
     requires: ['./base', 'dom']
 });

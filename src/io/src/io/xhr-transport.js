@@ -4,7 +4,6 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add('io/xhr-transport', function (S, IO, XhrTransportBase, SubDomainTransport, XdrFlashTransport) {
-
     var win = S.Env.host,
         doc = win.document,
         _XDomainRequest = XhrTransportBase._XDomainRequest;

@@ -6,7 +6,6 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add('io/script-transport', function (S, IO, _, undefined) {
-
     var win = S.Env.host,
         doc = win.document,
         OK_CODE = 200,
@@ -129,7 +128,6 @@ KISSY.add('io/script-transport', function (S, IO, _, undefined) {
     IO['setupTransport']('script', ScriptTransport);
 
     return IO;
-
 }, {
     requires: ['./base', './xhr-transport']
 });

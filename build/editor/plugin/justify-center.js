@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 25 22:20
+build time: Aug 13 19:00
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -19,7 +19,6 @@ KISSY.add("editor/plugin/justify-center", function (S, Editor, justifyCenterCmd)
         editor.execCommand("justifyCenter");
         editor.focus();
     }
-
 
     function justifyCenter() {
     }

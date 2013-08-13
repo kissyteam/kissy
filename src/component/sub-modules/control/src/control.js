@@ -107,9 +107,9 @@ KISSY.add("component/control", function (S, Node, ComponentProcess, Manager, Ren
             sync: function () {
                 var self = this;
                 self.fire('beforeSyncUI');
-                self.callMethodByHierarchy("syncUI", "__syncUI");
+                self.syncUI();
                 self.view.sync();
-                self.callPluginsMethod("syncUI");
+                self.__callPluginsMethod("pluginSyncUI");
                 self.fire('afterSyncUI');
             },
 

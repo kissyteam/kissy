@@ -24,7 +24,6 @@ KISSY.add('dd/droppable', function (S, Node, Base, DDM) {
      * Make a node droppable.
      */
     return Base.extend({
-
         initializer: function () {
             var self = this;
             self.addTarget(DDM);
@@ -197,7 +196,6 @@ KISSY.add('dd/droppable', function (S, Node, Base, DDM) {
             DDM._unRegDrop(this);
         }
     }, {
-
         name: 'Droppable',
 
         ATTRS: {
@@ -249,7 +247,6 @@ KISSY.add('dd/droppable', function (S, Node, Base, DDM) {
             disabled:{
 
             }
-
         }
     });
 }, {

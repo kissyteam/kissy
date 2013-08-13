@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 29 17:17
+build time: Aug 13 19:04
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -722,7 +722,6 @@ KISSY.add("html-parser/nodes/attribute", function(S) {
         this.value = value;
         this.quote = quote;
     }
-
     S.augment(Attribute, {
         clone: function() {
             var ret = new Attribute();

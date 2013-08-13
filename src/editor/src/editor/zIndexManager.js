@@ -3,7 +3,6 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/zIndexManager", function (S, Editor) {
-
     /**
      * z-index manager
      *@enum {number}

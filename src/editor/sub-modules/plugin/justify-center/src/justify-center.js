@@ -9,7 +9,6 @@ KISSY.add("editor/plugin/justify-center", function (S, Editor, justifyCenterCmd)
         editor.focus();
     }
 
-
     function justifyCenter() {
     }
 

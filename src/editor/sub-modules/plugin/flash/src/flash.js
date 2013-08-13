@@ -3,7 +3,6 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/plugin/flash", function (S, Editor, FlashBaseClass, flashUtils, fakeObjects) {
-
     var CLS_FLASH = 'ke_flash',
         TYPE_FLASH = 'flash';
 
@@ -12,7 +11,7 @@ KISSY.add("editor/plugin/flash", function (S, Editor, FlashBaseClass, flashUtils
     }
 
     S.augment(FlashPlugin, {
-        pluginRenderUI:function (editor) {
+        pluginRenderUI: function (editor) {
 
             fakeObjects.init(editor);
 
@@ -20,8 +19,8 @@ KISSY.add("editor/plugin/flash", function (S, Editor, FlashBaseClass, flashUtils
                 dataFilter = dataProcessor.dataFilter;
 
             dataFilter.addRules({
-                    tags:{
-                        'object':function (element) {
+                    tags: {
+                        'object': function (element) {
                             var classId = element.getAttribute("classid"), i;
                             if (!classId) {
                                 var childNodes = element.childNodes;
@@ -31,7 +30,7 @@ KISSY.add("editor/plugin/flash", function (S, Editor, FlashBaseClass, flashUtils
                                         if (!flashUtils.isFlashEmbed(childNodes[i][ i ])) {
                                             return dataProcessor
                                                 .createFakeParserElement(element,
-                                                CLS_FLASH, TYPE_FLASH, true);
+                                                    CLS_FLASH, TYPE_FLASH, true);
                                         } else {
                                             return null;
                                         }
@@ -42,7 +41,7 @@ KISSY.add("editor/plugin/flash", function (S, Editor, FlashBaseClass, flashUtils
                             return dataProcessor.createFakeParserElement(element,
                                 CLS_FLASH, TYPE_FLASH, true);
                         },
-                        'embed':function (element) {
+                        'embed': function (element) {
                             if (flashUtils.isFlashEmbed(element)) {
                                 return dataProcessor
                                     .createFakeParserElement(element, CLS_FLASH, TYPE_FLASH, true);
@@ -55,14 +54,14 @@ KISSY.add("editor/plugin/flash", function (S, Editor, FlashBaseClass, flashUtils
 
 
             var flashControl = new FlashBaseClass({
-                editor:editor,
-                cls:CLS_FLASH,
-                type:TYPE_FLASH,
-                pluginConfig:this.config,
-                bubbleId:"flash",
-                contextMenuId:'flash',
-                contextMenuHandlers:{
-                    "Flash属性":function () {
+                editor: editor,
+                cls: CLS_FLASH,
+                type: TYPE_FLASH,
+                pluginConfig: this.config,
+                bubbleId: "flash",
+                contextMenuId: 'flash',
+                contextMenuHandlers: {
+                    "Flash属性": function () {
                         var selectedEl = this.get("editorSelectedEl");
                         if (selectedEl) {
                             flashControl.show(selectedEl);
@@ -74,24 +73,18 @@ KISSY.add("editor/plugin/flash", function (S, Editor, FlashBaseClass, flashUtils
             this.flashControl = flashControl;
 
             editor.addButton("flash", {
-                tooltip:"插入Flash",
-                listeners:{
-                    click:function () {
+                tooltip: "插入Flash",
+                listeners: {
+                    click: function () {
                         flashControl.show();
                     }
                 },
-                mode:Editor.Mode.WYSIWYG_MODE
+                mode: Editor.Mode.WYSIWYG_MODE
             });
         }
-//       ,
-//
-//        destructor:function () {
-//            this.flashControl.destroy();
-//        }
     });
 
     return FlashPlugin;
-
 }, {
-    requires:['editor', './flash-common/base-class', './flash-common/utils', './fake-objects']
+    requires: ['editor', './flash-common/base-class', './flash-common/utils', './fake-objects']
 });

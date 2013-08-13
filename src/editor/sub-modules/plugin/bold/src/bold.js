@@ -3,7 +3,6 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/plugin/bold", function (S, Editor, ui, cmd) {
-
     function bold() {
     }
 

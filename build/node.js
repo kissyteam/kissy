@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 25 22:24
+build time: Aug 13 19:04
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -569,7 +569,6 @@ KISSY.add('node/override', function (S, Dom, NodeList) {
  *
  */
 KISSY.add('node/anim', function (S, Dom, Anim, Node, undefined) {
-
     var FX = [
         // height animations
         [ 'height', 'margin-top', 'margin-bottom', 'padding-top', 'padding-bottom' ],
@@ -801,7 +800,6 @@ KISSY.add('node/anim', function (S, Dom, Anim, Node, undefined) {
                 return self;
             };
         });
-
 }, {
     requires: ['dom', 'anim', './base']
 });

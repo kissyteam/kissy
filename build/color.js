@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 7 12:07
+build time: Aug 13 18:47
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -22,94 +22,7 @@ KISSY.add("color", function (S, Base) {
      * Color for KISSY to normalize HSL, HSV, RGB and HEX.
      * @class KISSY.Color
      */
-    function Color() {
-        Color.superclass.constructor.apply(this, arguments);
-    }
-
-    Color.ATTRS = {
-        /**
-         * Red.
-         * @type {Number}
-         * @property r
-         */
-        /**
-         * Red.
-         * @cfg {Number} r
-         */
-        /**
-         * @ignore
-         */
-        r: {
-            getter: function (v) {
-                return Math.round(v);
-            },
-            setter: function (v) {
-                return constrain255(v);
-            }
-        },
-        /**
-         * Green.
-         * @type {Number}
-         * @property g
-         */
-        /**
-         * Green.
-         * @cfg {Number} g
-         */
-        /**
-         * @ignore
-         */
-        g: {
-            getter: function (v) {
-                return Math.round(v);
-            },
-            setter: function (v) {
-                return constrain255(v);
-            }
-        },
-        /**
-         * Blue.
-         * @type {Number}
-         * @property b
-         */
-        /**
-         * Blue.
-         * @cfg {Number} b
-         */
-        /**
-         * @ignore
-         */
-        b: {
-            getter: function (v) {
-                return Math.round(v);
-            },
-            setter: function (v) {
-                return constrain255(v);
-            }
-        },
-        /**
-         * Alpha.
-         * @type {Number}
-         * @property a
-         */
-        /**
-         * Alpha.
-         * Defaults to: 1
-         * @cfg {Number} a
-         */
-        /**
-         * @ignore
-         */
-        a: {
-            value: 1,
-            setter: function (v) {
-                return constrain1(v);
-            }
-        }
-    };
-
-    S.extend(Color, Base, {
-
+    var Color = Base.extend({
         /**
          * To hsl string format
          * @return {String}
@@ -257,9 +170,89 @@ KISSY.add("color", function (S, Base) {
 
             self.set(hsl2rgb(cfg));
         }
-    });
+    }, {
+        ATTRS: {
+            /**
+             * Red.
+             * @type {Number}
+             * @property r
+             */
+            /**
+             * Red.
+             * @cfg {Number} r
+             */
+            /**
+             * @ignore
+             */
+            r: {
+                getter: function (v) {
+                    return Math.round(v);
+                },
+                setter: function (v) {
+                    return constrain255(v);
+                }
+            },
+            /**
+             * Green.
+             * @type {Number}
+             * @property g
+             */
+            /**
+             * Green.
+             * @cfg {Number} g
+             */
+            /**
+             * @ignore
+             */
+            g: {
+                getter: function (v) {
+                    return Math.round(v);
+                },
+                setter: function (v) {
+                    return constrain255(v);
+                }
+            },
+            /**
+             * Blue.
+             * @type {Number}
+             * @property b
+             */
+            /**
+             * Blue.
+             * @cfg {Number} b
+             */
+            /**
+             * @ignore
+             */
+            b: {
+                getter: function (v) {
+                    return Math.round(v);
+                },
+                setter: function (v) {
+                    return constrain255(v);
+                }
+            },
+            /**
+             * Alpha.
+             * @type {Number}
+             * @property a
+             */
+            /**
+             * Alpha.
+             * Defaults to: 1
+             * @cfg {Number} a
+             */
+            /**
+             * @ignore
+             */
+            a: {
+                value: 1,
+                setter: function (v) {
+                    return constrain1(v);
+                }
+            }
+        },
 
-    S.mix(Color, {
 
         /**
          * Construct color object from String.
@@ -331,7 +324,6 @@ KISSY.add("color", function (S, Base) {
             rgb.a = cfg.a;
             return new Color(rgb);
         }
-
     });
 
     // #---------------------------- private start

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 25 22:21
+build time: Aug 13 19:01
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -18,7 +18,6 @@ KISSY.add("editor/plugin/maximize", function (S, Editor, maximizeCmd) {
         RESTORE_CLASS = "restore",
         MAXIMIZE_TIP = "全屏",
         RESTORE_TIP = "取消全屏";
-
 
     function maximizePlugin() {
 

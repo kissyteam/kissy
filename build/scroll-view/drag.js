@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 1 15:51
+build time: Aug 13 19:05
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -462,7 +462,7 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, DD, Node) {
             },
 
             stopAnimation: function () {
-                ScrollViewDrag.superclass.stopAnimation.apply(this, arguments);
+                this.callSuper();
                 // stop dd
                 // in case pinch setting scrollLeft conflicts with dd setting scrollLeft
                 this.dd.stopDrag();

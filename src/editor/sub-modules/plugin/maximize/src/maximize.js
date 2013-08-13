@@ -8,7 +8,6 @@ KISSY.add("editor/plugin/maximize", function (S, Editor, maximizeCmd) {
         MAXIMIZE_TIP = "全屏",
         RESTORE_TIP = "取消全屏";
 
-
     function maximizePlugin() {
 
     }

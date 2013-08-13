@@ -3,7 +3,6 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/plugin/font-family", function (S, Editor, ui, cmd) {
-
     function FontFamilyPlugin(config) {
         this.config = config || {};
     }

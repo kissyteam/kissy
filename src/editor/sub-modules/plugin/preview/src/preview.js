@@ -54,6 +54,4 @@ KISSY.add("editor/plugin/preview", function (S) {
         }});
 
     return Preview;
-
-
 });

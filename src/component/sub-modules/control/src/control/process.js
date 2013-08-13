@@ -17,7 +17,7 @@ KISSY.add('component/control/process', function (S, Base, Promise) {
          */
         self.fire('beforeSyncUI');
         self.syncUI();
-        callPluginsMethod(self, 'pluginSyncUI');
+        self.__callPluginsMethod('pluginSyncUI');
         /**
          * @event afterSyncUI
          * fired after component 's internal state is synchronized.
@@ -66,7 +66,7 @@ KISSY.add('component/control/process', function (S, Base, Promise) {
                  */
                 self.fire('beforeCreateDom');
                 self.createInternal();
-                callPluginsMethod(self, 'pluginCreateDom');
+                self.__callPluginsMethod('pluginCreateDom');
                 /**
                  * @event afterCreateDom
                  * fired when root node is created
@@ -79,7 +79,7 @@ KISSY.add('component/control/process', function (S, Base, Promise) {
             return self;
         },
 
-        createInternal:function(){
+        createInternal: function () {
             this.createDom();
         },
 
@@ -101,7 +101,7 @@ KISSY.add('component/control/process', function (S, Base, Promise) {
 
                 self.fire('beforeRenderUI');
                 self.renderUI();
-                callPluginsMethod(self, 'pluginRenderUI');
+                self.__callPluginsMethod('pluginRenderUI');
 
                 /**
                  * @event afterRenderUI
@@ -119,7 +119,7 @@ KISSY.add('component/control/process', function (S, Base, Promise) {
                 self.fire('beforeBindUI');
                 ComponentProcess.superclass.bindInternal.call(self);
                 self.bindUI();
-                callPluginsMethod(self, 'pluginBindUI');
+                self.__callPluginsMethod('pluginBindUI');
                 /**
                  * @event afterBindUI
                  * fired when component 's internal event is bind.
@@ -202,16 +202,6 @@ KISSY.add('component/control/process', function (S, Base, Promise) {
             }
         }
     });
-
-    function callPluginsMethod(self, method) {
-        var len;
-        var plugins = self.get('plugins');
-        if (len = plugins.length) {
-            for (var i = 0; i < len; i++) {
-                plugins[i][method].apply(this, arguments || []);
-            }
-        }
-    }
 
     return ComponentProcess;
 }, {

@@ -4,7 +4,6 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add('dd/draggable', function (S, Node, Base, DDM) {
-
     var UA = S.UA,
         $ = Node.all,
         each = S.each,
@@ -802,36 +801,35 @@ KISSY.add('dd/draggable', function (S, Node, Base, DDM) {
             preventDefaultOnMove: {
                 value: true
             }
+        },
+
+        inheritedStatics: {
+            /**
+             * drag drop mode enum.
+             * @enum {String} KISSY.DD.Draggable.DropMode
+             */
+            DropMode: {
+                /**
+                 * In point mode, a Drop is targeted by the cursor being over the Target
+                 */
+                'POINT': 'point',
+                /**
+                 * In intersect mode, a Drop is targeted by 'part' of the drag node being over the Target
+                 */
+                INTERSECT: 'intersect',
+                /**
+                 * In strict mode, a Drop is targeted by the 'entire' drag node being over the Target
+                 */
+                STRICT: 'strict'
+            }
         }
     });
-
-    /**
-     * drag drop mode enum.
-     * @enum {String} KISSY.DD.Draggable.DropMode
-     */
-    Draggable.DropMode = {
-        /**
-         * In point mode, a Drop is targeted by the cursor being over the Target
-         */
-        'POINT': 'point',
-        /**
-         * In intersect mode, a Drop is targeted by 'part' of the drag node being over the Target
-         */
-        INTERSECT: 'intersect',
-        /**
-         * In strict mode, a Drop is targeted by the 'entire' drag node being over the Target
-         */
-        STRICT: 'strict'
-    };
-
-    S.mix(Draggable, Draggable.DropMode);
 
     var _ieSelectBack;
 
     function fixIEMouseUp() {
         doc.body.onselectstart = _ieSelectBack;
     }
-
 
     // prevent select text in ie
     function fixIEMouseDown() {
@@ -873,7 +871,6 @@ KISSY.add('dd/draggable', function (S, Node, Base, DDM) {
     };
 
     return Draggable;
-
 }, {
     requires: ['node', 'base', './ddm']
 });

@@ -7,8 +7,6 @@
  For licensing, see LICENSE.html or http://ckeditor.com/license
  */
 KISSY.add("editor/selection", function (S,Editor) {
-
-
     /**
      * selection type enum
      * @enum {number}
@@ -72,8 +70,6 @@ KISSY.add("editor/selection", function (S,Editor) {
     };
 
     S.augment(KESelection, {
-
-
         /**
          * Gets the native selection object from the browser.
          * @return {Object} The native selection object.

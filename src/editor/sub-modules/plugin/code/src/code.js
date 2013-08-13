@@ -3,7 +3,6 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add('editor/plugin/code', function (S, Editor,DialogLoader) {
-
     function CodePlugin() {
 
     }

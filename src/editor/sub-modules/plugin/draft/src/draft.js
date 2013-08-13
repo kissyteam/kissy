@@ -377,7 +377,6 @@ KISSY.add("editor/plugin/draft", function (S, Json, Editor, localStorage, Overla
     });
 
     return DraftPlugin;
-
 }, {
     "requires": ['json', "editor", "./local-storage", "overlay", './menubutton']
 });

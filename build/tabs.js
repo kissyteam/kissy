@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 25 22:25
+build time: Aug 13 19:05
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -83,9 +83,9 @@ KISSY.add("tabs/bar", function (S, Toolbar, BarRender, undefined) {
             }
         },
 
-        _onSetHighlightedItem: function () {
+        _onSetHighlightedItem: function (v,e) {
             var self = this;
-            TabBar.superclass._onSetHighlightedItem.apply(self, arguments);
+            self.callSuper(v,e);
             if (self.get('changeType') == 'mouse') {
                 self._onSetSelectedTab.apply(self, arguments);
             }

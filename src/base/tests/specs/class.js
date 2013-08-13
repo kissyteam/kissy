@@ -304,7 +304,7 @@ KISSY.add(function (S, Base) {
             var xx = [];
 
             var T = Base.extend({
-                _onSetXx: function (v) {
+                '_onSetXx': function (v) {
                     xx.push(v);
                 }
             }, {
@@ -380,6 +380,93 @@ KISSY.add(function (S, Base) {
             expect(c.m2(0)).toBe('cba0');
         });
 
+        it('support shared proto', function () {
+            var x = {
+                x: function () {
+                    return this.callSuper();
+                }
+            };
+
+            var X = Base.extend({
+                x: function () {
+                    return 'x'
+                }
+            }, {
+                name: 'X'
+            });
+
+            var Y = X.extend(x, {
+                name: 'Y'
+            });
+
+            var Z = Base.extend({
+                x: function () {
+                    return 'z'
+                }
+            }, {
+                name: 'Z'
+            });
+
+            var Y2 = Z.extend(x, {
+                name: 'Y2'
+            });
+
+            expect(new Y().x()).toBe('x');
+            expect(new Y2().x()).toBe('z');
+        });
+
+
+        it('_onSet will run by order', function () {
+            var order = [];
+            var X = Base.extend({
+                _onSetX: function () {
+                    order.push(1);
+                },
+                '_onSetZ': function () {
+                    order.push(2);
+                }
+            }, {
+                ATTRS: {
+                    x: {
+                        value: 2
+                    },
+                    z: {
+                        value: 2
+                    }
+                }
+            });
+
+            var Y = X.extend({
+                _onSetY: function () {
+                    order.push(33);
+                },
+                _onSetX: function () {
+                    order.push(11);
+                }
+            }, {
+                ATTRS: {
+                    y: {
+                        value: 1
+                    }
+                }
+            });
+
+            new Y();
+
+            expect(order).toEqual([11, 2, 33]);
+        });
+
+        it('support inheritedStatics', function () {
+            var t = {};
+            var X = Base.extend({}, {
+                inheritedStatics: {
+                    z: t
+                }
+            });
+            var Z = X.extend();
+            expect(X.z).toBe(t);
+            expect(Z.z).toBe(t);
+        });
     });
 
 }, {

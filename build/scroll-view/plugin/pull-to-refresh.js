@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 1 15:51
+build time: Aug 13 19:05
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -18,11 +18,7 @@ KISSY.add('scroll-view/plugin/pull-to-refresh', function (S, Base) {
 
     var transformProperty = S.Features.getTransformProperty();
 
-    function ScrollBarPlugin() {
-        ScrollBarPlugin.superclass.constructor.apply(this, arguments);
-    }
-
-    S.extend(ScrollBarPlugin, Base, {
+    return Base.extend({
 
         pluginId: this.getName(),
 
@@ -139,8 +135,6 @@ KISSY.add('scroll-view/plugin/pull-to-refresh', function (S, Base) {
             }
         }
     });
-
-    return ScrollBarPlugin;
 }, {
     requires: ['base']
 });

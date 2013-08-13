@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 25 22:21
+build time: Aug 13 19:01
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -14,7 +14,6 @@ build time: Jul 25 22:21
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/plugin/ordered-list", function (S, Editor, ListButton, ListCmd) {
-
     function orderedList() {
     }
 

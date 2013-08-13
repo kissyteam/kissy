@@ -8,7 +8,6 @@
  For licensing, see LICENSE.html or http://ckeditor.com/license
  */
 KISSY.add("editor/walker", function (S, Editor) {
-
     var TRUE = true,
         FALSE = false,
         NULL = null,

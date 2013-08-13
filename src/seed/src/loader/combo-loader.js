@@ -101,7 +101,6 @@
 
     // ----------------------- private end
     S.augment(ComboLoader, {
-
         /**
          * use, _forceSync for kissy.js, initialize dom,event sync
          */

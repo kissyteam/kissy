@@ -4,31 +4,18 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add('editor', function (S, Node, iframeContentTpl, Editor, Utils, focusManager, Styles, zIndexManger, clipboard, enterKey, htmlDataProcessor, selectionFix) {
-
     var TRUE = true,
-
         undefined = undefined,
-
         FALSE = false,
-
         NULL = null,
-
         window = S.Env.host,
-
         document = window.document,
-
         UA = S.UA,
-
         IS_IE = UA['ie'],
-
         NodeType = Node.NodeType,
-
         $ = Node.all,
-
         HEIGHT = 'height',
-
         tryThese = Utils.tryThese,
-
         IFRAME_TPL = '<iframe' +
             ' class="{prefixCls}editor-iframe"' +
             ' frameborder="0" ' +
@@ -37,7 +24,6 @@ KISSY.add('editor', function (S, Node, iframeContentTpl, Editor, Utils, focusMan
             ' {iframeSrc} ' +
             '>' +
             '</iframe>' ,
-
         EMPTY_CONTENT_REG = /^(?:<(p)>)?(?:(?:&nbsp;)|\s|<br[^>]*>)*(?:<\/\1>)?$/i;
 
     Editor.Mode = {
@@ -47,8 +33,7 @@ KISSY.add('editor', function (S, Node, iframeContentTpl, Editor, Utils, focusMan
 
     var WYSIWYG_MODE = 1;
 
-    S.augment(Editor, {
-
+    Editor.addMembers({
         initializer: function () {
             var self = this;
             self.__commands = {};
@@ -315,8 +300,8 @@ KISSY.add('editor', function (S, Node, iframeContentTpl, Editor, Utils, focusMan
             return html;
         },
 
-        getFormatData:function(mode){
-            return this.getData(1,mode);
+        getFormatData: function (mode) {
+            return this.getData(1, mode);
         },
 
         /**
@@ -836,7 +821,6 @@ KISSY.add('editor', function (S, Node, iframeContentTpl, Editor, Utils, focusMan
 
     // ---------------------------------------------------------------------- start private
 
-
     function blinkCursor(doc, retry) {
         var body = doc.body;
         tryThese(
@@ -1141,7 +1125,6 @@ KISSY.add('editor', function (S, Node, iframeContentTpl, Editor, Utils, focusMan
     // ------------------------------------------------------------------- end private
 
     return Editor;
-
 }, {
     requires: [
         'node',

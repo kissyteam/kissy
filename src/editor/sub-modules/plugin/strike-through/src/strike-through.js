@@ -3,7 +3,6 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/plugin/strike-through", function (S, Editor, ui, cmd) {
-
     function StrikeThrough() {
     }
 

@@ -3,7 +3,6 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/plugin/indent", function (S, Editor, indexCmd) {
-
     function Indent() {
 
     }
@@ -25,7 +24,6 @@ KISSY.add("editor/plugin/indent", function (S, Editor, indexCmd) {
     });
 
     return Indent;
-
 }, {
     requires:['editor', './indent/cmd']
 });

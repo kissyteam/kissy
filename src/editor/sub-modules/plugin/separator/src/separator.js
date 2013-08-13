@@ -3,7 +3,6 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/plugin/separator", function (S) {
-
     function Separator() {
     }
 

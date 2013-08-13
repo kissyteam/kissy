@@ -353,7 +353,7 @@ KISSY.add('swf', function (S, Dom, Json, Base, FlashUA, undefined) {
 
             /**
              *  full or default(depends on browser object)
-             *  @cfg {KISSY.SWF.HTMLMode} htmlMode
+             *  @cfg {KISSY.SWF.HtmlMode} htmlMode
              */
             /**
              * @ignore
@@ -404,9 +404,9 @@ KISSY.add('swf', function (S, Dom, Json, Base, FlashUA, undefined) {
 
         /**
          * swf htmlMode
-         * @enum {String} KISSY.SWF.HTMLMode
+         * @enum {String} KISSY.SWF.HtmlMode
          */
-        HTMLMode: {
+        HtmlMode: {
             /**
              * generate object structure depending on browser
              */

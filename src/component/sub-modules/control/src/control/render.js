@@ -91,13 +91,11 @@ KISSY.add("component/control/render", function (S, ComponentProcess, XTemplate, 
         return this.getBaseCssClass(arguments[1].params[0]);
     }
 
-    var Render;
-
     /**
      * @ignore
      * Base Render class for KISSY Component.
      */
-    return  Render = ComponentProcess.extend({
+    return ComponentProcess.extend({
         isRender: true,
 
         createInternal: function () {
@@ -197,23 +195,11 @@ KISSY.add("component/control/render", function (S, ComponentProcess, XTemplate, 
 
         decorateDom: function (srcNode) {
             var self = this,
-                c = self.constructor,
-                control = self.control,
-                len, p, constructorChains;
-
+                control = self.control;
             if (!srcNode.attr('id')) {
                 srcNode.attr('id', control.get('id'));
             }
-
-            constructorChains = self.__collectConstructorChains();
-
-            // 从父类到子类开始从 html 读取属性
-            for (len = constructorChains.length - 1; len >= 0; len--) {
-                c = constructorChains[len];
-                if (p = c.HTML_PARSER) {
-                    applyParser.call(self, srcNode, p, control);
-                }
-            }
+            applyParser.call(self, srcNode, self.constructor.HTML_PARSER, control);
             control.setInternal("el", self.$el = srcNode);
             self.el = srcNode[0];
         },
@@ -450,6 +436,7 @@ KISSY.add("component/control/render", function (S, ComponentProcess, XTemplate, 
             decorateDom: ComponentProcess.prototype.__getHook('__decorateDom'),
             beforeCreateDom: ComponentProcess.prototype.__getHook('__beforeCreateDom')
         },
+
         /**
          * Create a new class which extends ComponentProcess .
          * @param {Function[]} extensions Class constructors for extending.
@@ -459,15 +446,15 @@ KISSY.add("component/control/render", function (S, ComponentProcess, XTemplate, 
          * @return {KISSY.Component.ComponentProcess} A new class which extends ComponentProcess .
          */
         extend: function extend(extensions, px, sx) {
-            var baseClass = this,
+            var SuperClass = this,
+                NewClass,
                 parsers = {};
-
-            var newClass = ComponentProcess.extend.apply(baseClass, arguments);
-
+            NewClass = ComponentProcess.extend.apply(SuperClass, arguments);
+            NewClass[HTML_PARSER] = NewClass[HTML_PARSER] || {};
             if (S.isArray(extensions)) {
                 // [ex1,ex2]，扩展类后面的优先，ex2 定义的覆盖 ex1 定义的
                 // 主类最优先
-                S.each(extensions['concat'](newClass), function (ext) {
+                S.each(extensions['concat'](NewClass), function (ext) {
                     if (ext) {
                         // 合并 HTML_PARSER 到主类
                         S.each(ext.HTML_PARSER, function (v, name) {
@@ -475,12 +462,11 @@ KISSY.add("component/control/render", function (S, ComponentProcess, XTemplate, 
                         });
                     }
                 });
-                newClass[HTML_PARSER] = parsers;
+                NewClass[HTML_PARSER] = parsers;
             }
-
-            newClass.extend = extend;
-
-            return newClass;
+            S.mix(NewClass[HTML_PARSER], SuperClass[HTML_PARSER], false);
+            NewClass.extend = extend;
+            return NewClass;
         },
 
         //  screen state

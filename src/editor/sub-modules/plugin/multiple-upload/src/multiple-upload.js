@@ -3,7 +3,6 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/plugin/multiple-upload", function (S, Editor, DialogLoader) {
-
     function MultipleUpload(config) {
         this.config = config || {};
     }
@@ -25,7 +24,6 @@ KISSY.add("editor/plugin/multiple-upload", function (S, Editor, DialogLoader) {
     });
 
     return MultipleUpload;
-
 }, {
     requires:['editor', './dialog-loader']
 });

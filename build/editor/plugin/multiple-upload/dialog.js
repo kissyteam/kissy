@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 25 22:21
+build time: Aug 13 19:01
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -18,7 +18,6 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor,
                                                             ProgressBar, Dialog4E,
                                                             FlashBridge, localStorage,
                                                             SWF, undefined) {
-
     var UA = S.UA,
         Dom = S.DOM,
         $ = S.all,
@@ -57,7 +56,6 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor,
         //将node1插入到原来node2的位置
         _parent.insertBefore(node1, _t2);
     }
-
 
     S.augment(MultiUploadDialog, {
         addRes: Editor.Utils.addRes,

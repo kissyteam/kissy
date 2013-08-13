@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 25 22:18
+build time: Aug 13 18:50
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -16,7 +16,7 @@ build time: Jul 25 22:18
 KISSY.add("editor/plugin/dialog", function (S, Editor, Overlay,
                                             focusFix, ConstrainPlugin, DragPlugin) {
 
-    var Dialog4E = Overlay.Dialog.extend({
+   return Overlay.Dialog.extend({
 
         initializer: function () {
             this.plug(new DragPlugin({
@@ -43,7 +43,7 @@ KISSY.add("editor/plugin/dialog", function (S, Editor, Overlay,
                 y = S.DOM.scrollTop() + 200;
                 self.set("y", y);
             }
-            Dialog4E.superclass.show.call(self);
+            self.callSuper();
         }
 
     }, {
@@ -56,8 +56,6 @@ KISSY.add("editor/plugin/dialog", function (S, Editor, Overlay,
             }
         }
     });
-
-    return Dialog4E;
 }, {
     requires: ["editor", 'overlay', './focus-fix', 'dd/plugin/constrain', 'component/plugin/drag']
 });

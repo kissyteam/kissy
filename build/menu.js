@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 13 00:06
+build time: Aug 13 19:04
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -57,7 +57,7 @@ KISSY.add("menu/control", function (S, Node, Container, DelegateChildrenExtensio
      * @class KISSY.Menu
      * @extends KISSY.Component.Control
      */
-    var Menu = Container.extend([
+    return Container.extend([
         DelegateChildrenExtension
     ], {
         isMenu: 1,
@@ -82,7 +82,7 @@ KISSY.add("menu/control", function (S, Node, Container, DelegateChildrenExtensio
         },
 
         _onSetVisible: function (v, e) {
-            Menu.superclass._onSetVisible.apply(this, arguments);
+            this.callSuper(e);
             var highlightedItem;
             if (!v && (highlightedItem = this.get('highlightedItem'))) {
                 highlightedItem.set('highlighted', false);
@@ -98,8 +98,8 @@ KISSY.add("menu/control", function (S, Node, Container, DelegateChildrenExtensio
             return this;
         },
 
-        handleMouseEnterInternal: function () {
-            Menu.superclass.handleMouseEnterInternal.apply(this, arguments);
+        handleMouseEnterInternal: function (e) {
+            this.callSuper(e);
             var rootMenu = this.getRootMenu();
             // maybe called by popupmenu, no submenu
             if (rootMenu && rootMenu._popupAutoHideTimer) {
@@ -110,7 +110,7 @@ KISSY.add("menu/control", function (S, Node, Container, DelegateChildrenExtensio
         },
 
         handleBlurInternal: function (e) {
-            Menu.superclass.handleBlurInternal.call(this, e);
+            this.callSuper(e);
             var highlightedItem;
             if (highlightedItem = this.get('highlightedItem')) {
                 highlightedItem.set('highlighted', false);
@@ -283,9 +283,6 @@ KISSY.add("menu/control", function (S, Node, Container, DelegateChildrenExtensio
             el.setAttribute("aria-activedescendant", menuItem && menuItem.el.id || '');
         }
     }
-
-    return Menu;
-
 }, {
     requires: ['node', 'component/container',
         'component/extension/delegate-children', './menu-render']
@@ -351,13 +348,13 @@ KISSY.add("menu/menuitem", function (S, Control, MenuItemRender) {
      * xclass: 'menuitem'.
      * @extends KISSY.Component.Control
      */
-    var MenuItem = Control.extend({
+   return Control.extend({
 
         isMenuItem: 1,
 
         // for ios, ios only has touchdown
         handleMouseDownInternal: function (e) {
-            MenuItem.superclass.handleMouseDownInternal.call(this, e);
+            this.callSuper(e);
             this.set("highlighted", true);
         },
 
@@ -490,8 +487,6 @@ KISSY.add("menu/menuitem", function (S, Control, MenuItemRender) {
         },
         xclass: "menuitem"
     });
-
-    return MenuItem;
 }, {
     requires: ['component/control', './menuitem-render']
 });
@@ -640,7 +635,7 @@ KISSY.add("menu/submenu", function (S, Node, MenuItem, SubMenuRender) {
      * @extends KISSY.Menu.Item
      * @class KISSY.Menu.SubMenu
      */
-    var SubMenu = MenuItem.extend({
+    return MenuItem.extend({
 
             isSubMenu: 1,
 
@@ -711,7 +706,7 @@ KISSY.add("menu/submenu", function (S, Node, MenuItem, SubMenuRender) {
                 if (!e) {
                     return;
                 }
-                SubMenu.superclass._onSetHighlighted.apply(this, arguments);
+                self.callSuper(e);
                 if (e.fromMouse) {
                     return;
                 }
@@ -727,7 +722,7 @@ KISSY.add("menu/submenu", function (S, Node, MenuItem, SubMenuRender) {
                 var self = this;
                 showMenu.call(self);
                 //  trigger click event from menuitem
-                SubMenu.superclass.handleClickInternal.apply(self, arguments);
+                self.callSuper(e);
             },
 
             /**
@@ -874,8 +869,6 @@ KISSY.add("menu/submenu", function (S, Node, MenuItem, SubMenuRender) {
     }
 
     // # ------------------------------------ private end
-
-    return SubMenu;
 }, {
     requires: ['node', './menuitem', './submenu-render']
 });
@@ -911,7 +904,7 @@ KISSY.add("menu/popupmenu", function (S, AlignExtension, Menu, PopupMenuRender) 
      * @mixins KISSY.Component.Extension.Position
      * @mixins KISSY.Component.Extension.Align
      */
-    var PopupMenu = Menu.extend([
+    return Menu.extend([
         AlignExtension
     ], {
         // 根菜单 popupmenu 或者到中间的 menu 菜单
@@ -927,7 +920,7 @@ KISSY.add("menu/popupmenu", function (S, AlignExtension, Menu, PopupMenuRender) 
         },
 
         handleMouseLeaveInternal: function (e) {
-            PopupMenu.superclass.handleMouseLeaveInternal.apply(this, arguments);
+            this.callSuper(e);
             // sub menuitem 有时不灵敏
             // var parent = this.get('parent');
             // if (parent && parent.isSubMenu) {
@@ -954,9 +947,9 @@ KISSY.add("menu/popupmenu", function (S, AlignExtension, Menu, PopupMenuRender) 
          * Protected, should only be overridden by subclasses.
          * @protected
          */
-        handleBlurInternal: function () {
+        handleBlurInternal: function (e) {
             var self = this;
-            PopupMenu.superclass.handleBlurInternal.apply(self, arguments);
+            self.callSuper(e);
             self.hide();
         }
     }, {
@@ -996,9 +989,6 @@ KISSY.add("menu/popupmenu", function (S, AlignExtension, Menu, PopupMenuRender) 
         },
         xclass: 'popupmenu'
     });
-
-    return PopupMenu;
-
 }, {
     requires: ['component/extension/align',
         './control', './popupmenu-render']

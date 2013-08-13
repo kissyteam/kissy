@@ -3,7 +3,6 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add("tree/node-render", function (S, Node, Container, TreeNodeTpl, ContentRenderExtension) {
-
     var SELECTED_CLS = "selected",
         COMMON_EXPAND_EL_CLS = "expand-icon-{t}",
         EXPAND_ICON_EL_FILE_CLS = [

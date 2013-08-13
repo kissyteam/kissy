@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 25 22:21
+build time: Aug 13 19:02
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -99,7 +99,7 @@ KISSY.add("editor/plugin/remove-format/cmd", function (S, Editor) {
                             };
 
                             // does not make bookmark within any format tag
-                            // but keep bookmark node is at original text posititon
+                            // but keep bookmark node is at original text position
                             breakParent(startNode);
                             breakParent(endNode);
 

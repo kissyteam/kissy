@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 25 22:22
+build time: Aug 13 19:03
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -14,7 +14,6 @@ build time: Jul 25 22:22
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/plugin/unordered-list", function (S, Editor, ListButton, ListCmd) {
-
     function unorderedList() {
     }
 

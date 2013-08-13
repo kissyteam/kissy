@@ -118,9 +118,7 @@ KISSY.add("editor/plugin/video", function (S, Editor, flashUtils, FlashBaseClass
         }
     });
 
-
     return video;
-
 }, {
     requires: ['editor', './flash-common/utils',
         './flash-common/base-class', './fake-objects']
