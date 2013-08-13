@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.31
 MIT Licensed
-build time: Jun 7 13:04
+build time: Aug 13 20:24
 */
 /**
  * @ignore
@@ -244,7 +244,11 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
                 } else if (e.keyCode == KeyCodes.DOWN || e.keyCode == KeyCodes.UP) {
                     // re-fetch, consider multiple input
                     // S.log("refetch : " + getValue(self));
-                    self.sendRequest(this.getValueInternal());
+                    var value = this.getValueInternal();
+                    if (value !== undefined) {
+                        self.sendRequest(value);
+                        return true;
+                    }
                 }
                 return  undefined;
             },

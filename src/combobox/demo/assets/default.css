@@ -1,4 +1,4 @@
-.ks-menu {
+.ks-popupmenu {
     background: #fff;
     border-color: #999;
     border-style: solid;
@@ -10,6 +10,8 @@
     padding: 4px 0;
     position: absolute;
     z-index: 99999;
+    left: -9999px;
+    top: -9999px;
 }
 
 .ks-menuitem {
