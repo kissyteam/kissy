@@ -568,6 +568,7 @@ KISSY.add('base', function (S, Attribute) {
         }
     }
 
+    Base.INVALID=Attribute.INVALID;
 
     S.Base = Base;
 

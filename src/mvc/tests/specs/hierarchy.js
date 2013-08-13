@@ -2,87 +2,83 @@
  * Usage model tc
  * @author yiminghe@gmail.com
  */
-KISSY.add(function(S, mvc) {
+KISSY.add(function (S, mvc) {
     var Model = mvc.Model,
         Collection = mvc.Collection;
 
-    var TreeNodeCollection= Collection.extend({}, {
-        ATTRS:{
-            model:{
-                value:TreeNodeModel
-            }
-        }
-    });
-
-
-    var TreeNodeModel= Model.extend({
-        initializer:function(){
-            this.children = new TreeNodeCollection();
+    var TreeNodeModel = Model.extend({
+        getChildren: function () {
+            return this.children || (this.children = new TreeNodeCollection());
         },
-        toJSON:function() {
+        toJSON: function () {
             var ret = this.callSuper(),
-                children = this.children.toJSON();
+                children = this.getChildren().toJSON();
             if (children.length) {
                 ret.children = children;
             }
             return ret;
-
         }
-
     }, {
-        ATTRS:{
-            children:{
-                setter:function(vs) {
+        ATTRS: {
+            children: {
+                setter: function (vs) {
                     var mods = [];
                     for (var i = 0; i < vs.length; i++) {
                         var v = vs[i];
                         mods.push(new TreeNodeModel(v));
                     }
-                    this.children.set("models", mods);
-                    return S.Base.Attribute.INVALID;
+                    this.getChildren().set("models", mods);
+                    return S.Base.INVALID;
                 }
             }
         }
     });
 
+    var TreeNodeCollection = Collection.extend({}, {
+        ATTRS: {
+            model: {
+                value: TreeNodeModel
+            }
+        }
+    });
 
-    describe("model hierachy", function() {
+    describe("model hierachy", function () {
 
         var data = {
-            title:"1",
-            content:"1-1",
-            children:[
-                {
-                    title:"2",
-                    content:"2-2",
-                    children:[
-                        {
-                            title:"5",
-                            content:"5-5"
+                title: "1",
+                content: "1-1",
+                children: [
+                    {
+                        title: "2",
+                        content: "2-2",
+                        children: [
+                            {
+                                title: "5",
+                                content: "5-5"
 
-                        },
-                        {
-                            title:"4",
-                            content:"4-4"
+                            },
+                            {
+                                title: "4",
+                                content: "4-4"
 
-                        }
-                    ]
-                },
-                {
-                    title:"3",
-                    content:"3-3"
-                }
-            ]
-        },
+                            }
+                        ]
+                    },
+                    {
+                        title: "3",
+                        content: "3-3"
+                    }
+                ]
+            },
             model = new TreeNodeModel(data);
 
-        it("basic should works", function() {
+        it("basic should works", function () {
             expect(model.get("title")).toBe("1");
             expect(model.get("content")).toBe("1-1");
             expect(model.get("children")).toBeUndefined();
         })
 
-        it("children should be array of Model", function() {
+        it("children should be array of Model", function () {
             var children = model.children;
 
             expect(children.get("models").length).toBe(2);
@@ -94,7 +90,7 @@ KISSY.add(function(S, mvc) {
             expect(c.get("content")).toBe("2-2");
         });
 
-        it("should construct collection recursively ", function() {
+        it("should construct collection recursively ", function () {
             var c = model.children.get("models")[0],
                 children = c.children;
             expect(children.get("models").length).toBe(2);
@@ -107,13 +103,11 @@ KISSY.add(function(S, mvc) {
             expect(c2.get("content")).toBe("4-4");
         });
 
-        it("toJSON should equals to original data", function() {
+        it("toJSON should equals to original data", function () {
             var d = model.toJSON();
             expect(d).toEqual(data);
         });
-
     });
-
-},{
-    requires:['mvc']
+}, {
+    requires: ['mvc']
 });

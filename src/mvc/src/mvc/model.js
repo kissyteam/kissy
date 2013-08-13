@@ -6,6 +6,9 @@ KISSY.add("mvc/model", function (S, Base) {
 
     var blacklist = [
         "idAttribute",
+        "destroyed",
+        "plugins",
+        "listeners",
         "clientId",
         "urlRoot",
         "url",

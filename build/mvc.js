@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 13 19:04
+build time: Aug 13 22:19
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -22,6 +22,9 @@ KISSY.add("mvc/model", function (S, Base) {
 
     var blacklist = [
         "idAttribute",
+        "destroyed",
+        "plugins",
+        "listeners",
         "clientId",
         "urlRoot",
         "url",
@@ -1033,6 +1036,8 @@ KISSY.add('mvc/router', function (S, Node, Base, undefined) {
         self.addRoutes(e.newVal);
     }
 
+    var Router;
+
     /**
      * @name Router
      * @class
@@ -1040,7 +1045,7 @@ KISSY.add('mvc/router', function (S, Node, Base, undefined) {
      * @member MVC
      * @extends KISSY.Base
      */
-    return Base.extend({
+    return Router = Base.extend({
         initializer: function () {
             var self = this;
             self.on("afterRoutesChange", _afterRoutesChange, self);
@@ -1166,7 +1171,6 @@ KISSY.add('mvc/router', function (S, Node, Base, undefined) {
          * @param {Boolean} opts.nativeHistory Whether enable html5 history management.
          */
         start: function (opts) {
-
             opts = opts || {};
 
             if (Router.__started) {
