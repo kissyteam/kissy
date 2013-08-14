@@ -7,7 +7,7 @@ KISSY.use("dom,event/dom/base", function (S, DOM, Event) {
 
         var div,
             form,
-            inp = DOM.get("input", div);
+            inp;
 
         beforeEach(function(){
              div = DOM.create("<div>" +

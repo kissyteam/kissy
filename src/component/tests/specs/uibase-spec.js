@@ -6,6 +6,10 @@ KISSY.use("component/base,component/extension", function (S, Component, extensio
 
     var UIBase = Component.UIBase, $ = S.all;
 
+    function removeUnselectable(str){
+        return str.replace(/ unselectable="?on"?/gi,'')
+    }
+
     describe('uibase', function () {
 
 
@@ -272,7 +276,7 @@ KISSY.use("component/base,component/extension", function (S, Component, extensio
                 });
                 n.render();
                 expect(n.get("content").html()).toBe('4');
-                expect(n.get("el").html().toLowerCase()).toBe('<span>4</span>');
+                expect(removeUnselectable(n.get("el").html()).toLowerCase()).toBe('<span>4</span>');
                 n.destroy();
             });
         });
@@ -302,7 +306,7 @@ KISSY.use("component/base,component/extension", function (S, Component, extensio
 
                     expect(content.get("content")).toBe("23");
 
-                    expect(el.html().toLowerCase().replace(/"/g, ""))
+                    expect(removeUnselectable(el.html().toLowerCase()).replace(/"/g, ""))
                         .toBe("<div class=ks-contentbox>23</div>");
 
                     el.remove();
@@ -319,7 +323,7 @@ KISSY.use("component/base,component/extension", function (S, Component, extensio
 
                     expect(content.get("content")).toBe("4");
 
-                    expect(el.html().toLowerCase().replace(/"/g, ""))
+                    expect(removeUnselectable(el.html().toLowerCase()).replace(/"/g, ""))
                         .toBe("<div class=ks-contentbox>23</div>");
 
                     el.remove();
@@ -336,7 +340,7 @@ KISSY.use("component/base,component/extension", function (S, Component, extensio
 
                     expect(content.get("content").html()).toBe("4");
 
-                    expect(el.html().toLowerCase().replace(/"/g, ""))
+                    expect(removeUnselectable(el.html().toLowerCase()).replace(/"/g, ""))
                         .toBe("<div class=ks-contentbox>23</div>");
 
                     el.remove();
