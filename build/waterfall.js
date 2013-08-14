@@ -1,10 +1,10 @@
-﻿/*
+/*
 Copyright 2013, KISSY UI Library v1.31
 MIT Licensed
-build time: Jan 8 21:42
+build time: Aug 15 00:08
 */
 /**
- * @fileOverview Make Elements flow like waterfall.
+ *  Make Elements flow like waterfall.
  * @author yiminghe@gmail.com
  */
 KISSY.add("waterfall/base", function (S, Node, Base) {
@@ -107,7 +107,7 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
         /**
          * Minimum col count of waterfall items.
          * Event window resize to 0.
-         * @default 1.
+         * Defaults to: 1.
          * @type {Number}
          */
         minColCount: {
@@ -116,7 +116,7 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
 
         /**
          * Effect config object when waterfall item is added to container.
-         * @default { effect:"fadeIn",duration:1 }
+         * Defaults to: { effect:"fadeIn",duration:1 }
          * @type {Object}
          * @example
          * <code>
@@ -154,7 +154,7 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
 
         /**
          * Effect config object when waterfall item is adjusted on window resize.
-         * @default { easing:"",duration:1 }
+         * Defaults to: { easing:"",duration:1 }
          * @type {Object}
          * @example
          * <code>
@@ -591,7 +591,7 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
  *  - 增加动画特效
  *  - 增加删除/调整接口
  **//**
- * @fileOverview Dynamic load waterfall items by monitor window scroll.
+ *  Dynamic load waterfall items by monitor window scroll.
  * @author yiminghe@gmail.com
  */
 KISSY.add("waterfall/loader", function (S, Node, Waterfall) {
@@ -676,7 +676,7 @@ KISSY.add("waterfall/loader", function (S, Node, Waterfall) {
     {
         /**
          * Preload distance below viewport.
-         * @default 0.
+         * Defaults to: 0.
          * @type {Number}
          */
         diff: {
@@ -752,7 +752,7 @@ KISSY.add("waterfall/loader", function (S, Node, Waterfall) {
 }, {
     requires: ['node', './base']
 });/**
- * @fileOverview waterfall
+ *  waterfall
  * @author yiminghe@gmail.com
  */
 KISSY.add("waterfall", function (S, Waterfall, Loader) {

@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.31
 MIT Licensed
-build time: Jan 15 13:39
+build time: Aug 15 00:08
 */
 KISSY.add("tabs/bar",function(d,b){var a=b.extend({createDom:function(){this.get("el").attr("role","tablist")},handleKeyEventInternal:function(a){var c=this.get("selectedTab"),a=this.getNextItemByKeyEventInternal(a,c);if(d.isBoolean(a))return a;a.set("selected",!0);return!0},renderUI:function(){var a=this,c=a.get("children");d.each(c,function(c){c.get("selected")&&a.set("selectedTab",c)})},_onSetSelectedTab:function(a,c){var b;a&&(c&&(b=c.prevVal)&&b.set("selected",!1),a.set("selected",!0))},_onSetHighlightedItem:function(){a.superclass._onSetHighlightedItem.apply(this,
 arguments);"mouse"==this.get("changeType")&&this._onSetSelectedTab.apply(this,arguments)},bindUI:function(){var a=this;a.on("afterSelectedChange",function(c){c.newVal&&c.target.isTabsTab&&a.set("selectedTab",c.target)})}},{ATTRS:{selectedTab:{},changeType:{value:"click"},defaultChildXClass:{value:"tabs-tab"}}},{xclass:"tabs-bar",priority:30});a.ChangeType={CLICK:"click",MOUSE:"mouse"};return a},{requires:["toolbar"]});

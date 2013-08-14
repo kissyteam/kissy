@@ -1,11 +1,11 @@
-﻿/*
-Copyright 2012, KISSY UI Library v1.31
+/*
+Copyright 2013, KISSY UI Library v1.31
 MIT Licensed
-build time: Dec 20 22:23
+build time: Aug 15 00:00
 */
 /**
  * @ignore
- * @fileOverview anim
+ *  anim
  */
 KISSY.add('anim', function (S, Anim, Easing) {
     Anim.Easing = Easing;
@@ -18,7 +18,7 @@ KISSY.add('anim', function (S, Anim, Easing) {
     requires:['anim/base', 'anim/easing', 'anim/color', 'anim/background-position']
 });/**
  * @ignore
- * @fileOverview special patch for anim backgroundPosition
+ *  special patch for anim backgroundPosition
  * @author yiminghe@gmail.com
  */
 KISSY.add('anim/background-position', function (S, DOM, Anim, Fx) {
@@ -94,7 +94,7 @@ KISSY.add('anim/background-position', function (S, DOM, Anim, Fx) {
     requires:['dom', './base', './fx']
 });/**
  * @ignore
- * @fileOverview animation framework for KISSY
+ *  animation framework for KISSY
  * @author   yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('anim/base', function (S, DOM, Event, Easing, AM, Fx, Q) {
@@ -809,7 +809,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, AM, Fx, Q) {
  */
 /**
  * @ignore
- * @fileOverview special patch for making color gradual change
+ *  special patch for making color gradual change
  * @author yiminghe@gmail.com
  */
 KISSY.add('anim/color', function (S, DOM, Anim, Fx) {
@@ -983,7 +983,7 @@ KISSY.add('anim/color', function (S, DOM, Anim, Fx) {
    - https://github.com/jquery/jquery-color/blob/master/jquery.color.js
 *//**
  * @ignore
- * @fileOverview Easing equation from yui3
+ *  Easing equation from yui3
  */
 KISSY.add('anim/easing', function () {
 
@@ -1205,7 +1205,7 @@ KISSY.add('anim/easing', function () {
  */
 /**
  * @ignore
- * @fileOverview animate on single property
+ *  animate on single property
  * @author yiminghe@gmail.com
  */
 KISSY.add('anim/fx', function (S, DOM, undefined) {
@@ -1366,7 +1366,7 @@ KISSY.add('anim/fx', function (S, DOM, undefined) {
  - jq 插件: http://plugins.jquery.com/project/2d-transform
  *//**
  * @ignore
- * @fileOverview single timer for the whole anim module
+ *  single timer for the whole anim module
  * @author yiminghe@gmail.com
  */
 KISSY.add('anim/manager', function (S) {
@@ -1445,7 +1445,7 @@ KISSY.add('anim/manager', function (S) {
  * !TODO: deal with https://developers.google.com/chrome/whitepapers/pagevisibility
  *//**
  * @ignore
- * @fileOverview queue of anim objects
+ *  queue of anim objects
  * @author yiminghe@gmail.com
  */
 KISSY.add('anim/queue', function (S, DOM) {

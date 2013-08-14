@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.31
 MIT Licensed
-build time: Jan 5 20:44
+build time: Aug 15 00:07
 */
 KISSY.add("overlay/base",function(d,e,b,a,c,g,f,h){return e.Controller.extend([b.ContentBox,b.Position,a,b.Align,c,g,h],{},{ATTRS:{focusable:{value:!1},allowTextSelection:{value:!0},closable:{value:!1},handleMouseEvents:{value:!1},xrender:{value:f}}},{xclass:"overlay",priority:10})},{requires:"component/base,component/extension,./extension/loading,./extension/close,./extension/mask,./overlay-render,./extension/overlay-effect".split(",")});
 KISSY.add("overlay/dialog-render",function(d,e,b){return e.extend([b],{createDom:function(){var a=this.get("el"),c,b=this.get("header");if(!(c=b.attr("id")))b.attr("id",c=d.guid("ks-dialog-header"));a.attr("role","dialog").attr("aria-labelledby",c);a.append("<div tabindex='0' style='position:absolute;'></div>")}})},{requires:["./overlay-render","./extension/stdmod-render"]});

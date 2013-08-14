@@ -1,11 +1,11 @@
-﻿/*
-Copyright 2012, KISSY UI Library v1.31
+/*
+Copyright 2013, KISSY UI Library v1.31
 MIT Licensed
-build time: Dec 20 22:24
+build time: Aug 15 00:01
 */
 /**
  * @ignore
- * @fileOverview cookie
+ *  cookie
  * @author lifesinger@gmail.com
  */
 KISSY.add('cookie', function (S) {

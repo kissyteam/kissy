@@ -1,11 +1,11 @@
-﻿/*
-Copyright 2012, KISSY UI Library v1.31
+/*
+Copyright 2013, KISSY UI Library v1.31
 MIT Licensed
-build time: Dec 20 22:27
+build time: Aug 15 00:06
 */
 /**
  * @ignore
- * @fileOverview custom event target for publish and subscribe
+ *  custom event target for publish and subscribe
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/custom/api-impl', function (S, api, Event, ObservableCustomEvent) {
@@ -194,7 +194,7 @@ KISSY.add('event/custom/api-impl', function (S, api, Event, ObservableCustomEven
  - implement bubble for custom event
  *//**
  * @ignore
- * @fileOverview custom event target for publish and subscribe
+ *  custom event target for publish and subscribe
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/custom/api', function () {

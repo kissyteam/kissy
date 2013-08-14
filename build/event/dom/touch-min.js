@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.31
 MIT Licensed
-build time: Apr 2 18:05
+build time: Aug 15 00:06
 */
 KISSY.add("event/dom/touch/double-tap",function(e,b,g,a){function d(){}e.extend(d,a,{onTouchStart:function(a){if(!1===d.superclass.onTouchStart.apply(this,arguments))return!1;this.startTime=a.timeStamp;this.singleTapTimer&&(clearTimeout(this.singleTapTimer),this.singleTapTimer=0)},onTouchMove:function(){return!1},onTouchEnd:function(a){var d=this.lastEndTime,b=a.timeStamp,e=a.target,c=a.changedTouches[0],f=b-this.startTime;this.lastEndTime=b;if(d&&(f=b-d,300>f)){this.lastEndTime=0;g.fire(e,"doubleTap",
 {touch:c,duration:f/1E3});return}f=b-this.startTime;300<f?g.fire(e,"singleTap",{touch:c,duration:f/1E3}):this.singleTapTimer=setTimeout(function(){g.fire(e,"singleTap",{touch:c,duration:f/1E3})},300)}});b.singleTap=b.doubleTap={handle:new d};return d},{requires:["./handle-map","event/dom/base","./single-touch"]});

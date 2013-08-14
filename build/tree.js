@@ -1,7 +1,7 @@
-﻿/*
+/*
 Copyright 2013, KISSY UI Library v1.31
 MIT Licensed
-build time: Apr 11 16:52
+build time: Aug 15 00:08
 */
 /**
  *  root node represent a simple tree

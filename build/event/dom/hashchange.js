@@ -1,11 +1,11 @@
-﻿/*
-Copyright 2012, KISSY UI Library v1.31
+/*
+Copyright 2013, KISSY UI Library v1.31
 MIT Licensed
-build time: Dec 20 22:27
+build time: Aug 15 00:06
 */
 /**
  * @ignore
- * @fileOverview hashchange event for non-standard browser
+ *  hashchange event for non-standard browser
  * @author yiminghe@gmail.com, xiaomacji@gmail.com
  */
 KISSY.add('event/dom/hashchange', function (S, Event, DOM) {

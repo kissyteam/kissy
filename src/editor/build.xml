@@ -32,9 +32,6 @@
         <concat destfile="${component.src.dir.tmp}/editor-pkg.js" encoding="${charset}" outputencoding="${charset}">
             <fileset dir="${component.src.dir}/editor/core"
                      includes="**/*.js"/>
-            <filterchain>
-                <deletecharacters chars="${bom}"/>
-            </filterchain>
         </concat>
     </target>
 
@@ -44,9 +41,6 @@
                 encoding="${charset}" outputencoding="${charset}">
             <path location="${editor.theme.dir}/editor-common.css"/>
             <fileset dir="${editor.theme.dir}/cool/" includes="**/*.css"/>
-            <filterchain>
-                <deletecharacters chars="${bom}"/>
-            </filterchain>
         </concat>
 
         <smartsprites cssfilesuffix="-sprite"
@@ -66,9 +60,6 @@
             <fileset dir="${component.src.dir.tmp}/plugin/"
                      excludes="**/dialog.js,**/dynamic/**/*.js"
                      includes="**/*.js"/>
-            <filterchain>
-                <deletecharacters chars="${bom}"/>
-            </filterchain>
             <path location="${component.src.dir}/editor/full.js"/>
         </concat>
     </target>

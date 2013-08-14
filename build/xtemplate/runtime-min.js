@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.31
 MIT Licensed
-build time: Jul 29 17:16
+build time: Aug 15 00:08
 */
 KISSY.add("xtemplate/runtime/base",function(d){function b(c,a){this.tpl=c;a=d.merge(g,a);a.subTpls=d.merge(a.subTpls,b.subTpls);a.commands=d.merge(a.commands,b.commands);this.option=a}var g={silent:!0,name:"",utils:{getProperty:function(c,a,e){if("this"==c||"."==c)return a.length?[a[0]]:!1;for(var c=c.split("."),g=c.length,b=e||0,f,d,i,k=a.length;b<k;b++){f=a[b];i=1;for(e=0;e<g;e++){d=c[e];if("object"!=typeof f||!(d in f)){i=0;break}f=f[d]}if(i)return"function"==typeof f&&(f=f.call(a[0])),[f]}return!1}}};
 b.prototype={constructor:b,removeSubTpl:function(c){delete this.option.subTpls[c]},removeCommand:function(c){delete this.option.commands[c]},addSubTpl:function(c,a){this.option.subTpls[c]=a},addCommand:function(c,a){this.option.commands[c]=a},render:function(c,a){a||(c=[c]);return this.tpl(c,this.option)}};return b});

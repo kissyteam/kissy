@@ -1,7 +1,7 @@
-﻿/*
+/*
 Copyright 2013, KISSY UI Library v1.31
 MIT Licensed
-build time: Jul 25 15:56
+build time: Aug 15 00:08
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130725155557' will replace with current timestamp when compressing.
+         * NOTICE: '20130815000847' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130725155557',
+        __BUILD_TIME: '20130815000847',
         /**
          * KISSY Environment.
          * @private
@@ -5694,7 +5694,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20130725155557'
+            tag: '20130815000847'
         }, getBaseInfo()));
     }
 
@@ -6243,7 +6243,7 @@ config({
 /*
 Copyright 2013, KISSY UI Library v1.31
 MIT Licensed
-build time: Jun 21 17:38
+build time: Aug 15 00:01
 */
 /**
  * @ignore
@@ -10298,7 +10298,7 @@ KISSY.add('dom/base/traversal', function (S, DOM, undefined) {
 /*
 Copyright 2013, KISSY UI Library v1.31
 MIT Licensed
-build time: Jul 24 16:30
+build time: Aug 15 00:02
 */
 /**
  * attr ie hack
@@ -10994,9 +10994,9 @@ KISSY.add('dom/ie/traversal', function (S, DOM) {
     requires: ['dom/base']
 });
 /*
-Copyright 2012, KISSY UI Library v1.31
+Copyright 2013, KISSY UI Library v1.31
 MIT Licensed
-build time: Dec 20 22:27
+build time: Aug 15 00:06
 */
 /**
  * @ignore
@@ -11333,7 +11333,7 @@ KISSY.add('event/base/observer', function (S) {
 
 });/**
  * @ignore
- * @fileOverview utils for event
+ *  utils for event
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/base/utils', function (S) {
@@ -11411,13 +11411,13 @@ KISSY.add('event/base/utils', function (S) {
 
 });
 /*
-Copyright 2012, KISSY UI Library v1.31
+Copyright 2013, KISSY UI Library v1.31
 MIT Licensed
-build time: Dec 20 22:27
+build time: Aug 15 00:06
 */
 /**
  * @ignore
- * @fileOverview custom event target for publish and subscribe
+ *  custom event target for publish and subscribe
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/custom/api-impl', function (S, api, Event, ObservableCustomEvent) {
@@ -11606,7 +11606,7 @@ KISSY.add('event/custom/api-impl', function (S, api, Event, ObservableCustomEven
  - implement bubble for custom event
  *//**
  * @ignore
- * @fileOverview custom event target for publish and subscribe
+ *  custom event target for publish and subscribe
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/custom/api', function () {
@@ -11968,7 +11968,7 @@ KISSY.add('event/custom/observer', function (S, Event) {
 /*
 Copyright 2013, KISSY UI Library v1.31
 MIT Licensed
-build time: Jan 9 19:16
+build time: Aug 15 00:06
 */
 /**
  * @ignore
@@ -14102,13 +14102,13 @@ KISSY.add('event/dom/base/valuechange', function (S, Event, DOM, special) {
  -> mousedown -> blur -> webkitspeechchange -> focus
  */
 /*
-Copyright 2012, KISSY UI Library v1.31
+Copyright 2013, KISSY UI Library v1.31
 MIT Licensed
-build time: Dec 20 22:27
+build time: Aug 15 00:06
 */
 /**
  * @ignore
- * @fileOverview event-focusin
+ *  event-focusin
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/dom/focusin', function (S, Event) {
@@ -14164,13 +14164,13 @@ KISSY.add('event/dom/focusin', function (S, Event) {
  - 更加合理的模拟冒泡顺序，子元素先出触发，父元素后触发
  */
 /*
-Copyright 2012, KISSY UI Library v1.31
+Copyright 2013, KISSY UI Library v1.31
 MIT Licensed
-build time: Dec 20 22:27
+build time: Aug 15 00:06
 */
 /**
  * @ignore
- * @fileOverview hashchange event for non-standard browser
+ *  hashchange event for non-standard browser
  * @author yiminghe@gmail.com, xiaomacji@gmail.com
  */
 KISSY.add('event/dom/hashchange', function (S, Event, DOM) {
@@ -14405,13 +14405,13 @@ KISSY.add('event/dom/hashchange', function (S, Event, DOM) {
  https://github.com/cowboy/jquery-hashchange
  */
 /*
-Copyright 2012, KISSY UI Library v1.31
+Copyright 2013, KISSY UI Library v1.31
 MIT Licensed
-build time: Dec 20 22:27
+build time: Aug 15 00:06
 */
 /**
  * @ignore
- * @fileOverview  change bubble and checkbox/radio fix patch for ie<9
+ *   change bubble and checkbox/radio fix patch for ie<9
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/dom/ie/change', function (S, Event, DOM) {
@@ -14526,7 +14526,7 @@ KISSY.add('event/dom/ie', function () {
     requires: ['./ie/change', './ie/submit']
 });/**
  * @ignore
- * @fileOverview patch for ie<9 submit: does not bubble !
+ *  patch for ie<9 submit: does not bubble !
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/dom/ie/submit', function (S, Event, DOM) {
@@ -14601,9 +14601,9 @@ KISSY.add('event/dom/ie/submit', function (S, Event, DOM) {
  - http://bugs.jquery.com/ticket/11049
  */
 /*
-Copyright 2012, KISSY UI Library v1.31
+Copyright 2013, KISSY UI Library v1.31
 MIT Licensed
-build time: Dec 20 22:27
+build time: Aug 15 00:06
 */
 /**
  * @ignore
@@ -14697,7 +14697,7 @@ KISSY.add('event/dom/shake', function (S, EventDomBase, undefined) {
 /*
 Copyright 2013, KISSY UI Library v1.31
 MIT Licensed
-build time: Apr 2 18:05
+build time: Aug 15 00:06
 */
 /**
  * @ignore
@@ -15657,15 +15657,10 @@ KISSY.add('event/dom/touch', function (S, EventDomBase, eventHandleMap, eventHan
 /*
 Copyright 2013, KISSY UI Library v1.31
 MIT Licensed
-build time: Jan 29 22:46
+build time: Aug 15 00:06
 */
 /*
-Copyright 2012, KISSY UI Library v1.31
-MIT Licensed
-build time: Dec 20 22:27
-*/
-/*
- @fileOverview  http://www.JSON.org/json2.js
+   http://www.JSON.org/json2.js
 
  2010-08-25
 
@@ -16147,7 +16142,7 @@ KISSY.add("json/json2", function () {
 /*
 Copyright 2013, KISSY UI Library v1.31
 MIT Licensed
-build time: Jan 29 22:46
+build time: Aug 15 00:06
 */
 /**
  * @ignore
@@ -16194,7 +16189,7 @@ KISSY.add('json', function (S, J) {
 /*
 Copyright 2013, KISSY UI Library v1.31
 MIT Licensed
-build time: Jan 31 23:15
+build time: Aug 15 00:00
 */
 /**
  * @ignore
@@ -18334,13 +18329,13 @@ KISSY.add('ajax/xhr-transport', function (S, IO, XhrTransportBase, SubDomainTran
  CORS : http://www.nczonline.net/blog/2010/05/25/cross-domain-io-with-cross-origin-resource-sharing/
  */
 /*
-Copyright 2012, KISSY UI Library v1.31
+Copyright 2013, KISSY UI Library v1.31
 MIT Licensed
-build time: Dec 20 22:24
+build time: Aug 15 00:01
 */
 /**
  * @ignore
- * @fileOverview cookie
+ *  cookie
  * @author lifesinger@gmail.com
  */
 KISSY.add('cookie', function (S) {
@@ -18444,13 +18439,13 @@ KISSY.add('cookie', function (S) {
  独立成静态工具类的方式更优。
  */
 /*
-Copyright 2012, KISSY UI Library v1.31
+Copyright 2013, KISSY UI Library v1.31
 MIT Licensed
-build time: Dec 20 22:23
+build time: Aug 15 00:00
 */
 /**
  * @ignore
- * @fileOverview attribute management
+ *  attribute management
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('base/attribute', function (S, undefined) {
@@ -18994,7 +18989,7 @@ KISSY.add('base/attribute', function (S, undefined) {
  */
 /**
  * @ignore
- * @fileOverview attribute management and event in one
+ *  attribute management and event in one
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('base', function (S, Attribute, Event) {
@@ -19084,13 +19079,13 @@ KISSY.add('base', function (S, Attribute, Event) {
     requires: ['base/attribute', 'event/custom']
 });
 /*
-Copyright 2012, KISSY UI Library v1.31
+Copyright 2013, KISSY UI Library v1.31
 MIT Licensed
-build time: Dec 20 22:23
+build time: Aug 15 00:00
 */
 /**
  * @ignore
- * @fileOverview anim
+ *  anim
  */
 KISSY.add('anim', function (S, Anim, Easing) {
     Anim.Easing = Easing;
@@ -19103,7 +19098,7 @@ KISSY.add('anim', function (S, Anim, Easing) {
     requires:['anim/base', 'anim/easing', 'anim/color', 'anim/background-position']
 });/**
  * @ignore
- * @fileOverview special patch for anim backgroundPosition
+ *  special patch for anim backgroundPosition
  * @author yiminghe@gmail.com
  */
 KISSY.add('anim/background-position', function (S, DOM, Anim, Fx) {
@@ -19179,7 +19174,7 @@ KISSY.add('anim/background-position', function (S, DOM, Anim, Fx) {
     requires:['dom', './base', './fx']
 });/**
  * @ignore
- * @fileOverview animation framework for KISSY
+ *  animation framework for KISSY
  * @author   yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('anim/base', function (S, DOM, Event, Easing, AM, Fx, Q) {
@@ -19894,7 +19889,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, AM, Fx, Q) {
  */
 /**
  * @ignore
- * @fileOverview special patch for making color gradual change
+ *  special patch for making color gradual change
  * @author yiminghe@gmail.com
  */
 KISSY.add('anim/color', function (S, DOM, Anim, Fx) {
@@ -20068,7 +20063,7 @@ KISSY.add('anim/color', function (S, DOM, Anim, Fx) {
    - https://github.com/jquery/jquery-color/blob/master/jquery.color.js
 *//**
  * @ignore
- * @fileOverview Easing equation from yui3
+ *  Easing equation from yui3
  */
 KISSY.add('anim/easing', function () {
 
@@ -20290,7 +20285,7 @@ KISSY.add('anim/easing', function () {
  */
 /**
  * @ignore
- * @fileOverview animate on single property
+ *  animate on single property
  * @author yiminghe@gmail.com
  */
 KISSY.add('anim/fx', function (S, DOM, undefined) {
@@ -20451,7 +20446,7 @@ KISSY.add('anim/fx', function (S, DOM, undefined) {
  - jq 插件: http://plugins.jquery.com/project/2d-transform
  *//**
  * @ignore
- * @fileOverview single timer for the whole anim module
+ *  single timer for the whole anim module
  * @author yiminghe@gmail.com
  */
 KISSY.add('anim/manager', function (S) {
@@ -20530,7 +20525,7 @@ KISSY.add('anim/manager', function (S) {
  * !TODO: deal with https://developers.google.com/chrome/whitepapers/pagevisibility
  *//**
  * @ignore
- * @fileOverview queue of anim objects
+ *  queue of anim objects
  * @author yiminghe@gmail.com
  */
 KISSY.add('anim/queue', function (S, DOM) {
@@ -20633,7 +20628,7 @@ KISSY.add('anim/queue', function (S, DOM) {
 /*
 Copyright 2013, KISSY UI Library v1.31
 MIT Licensed
-build time: Jul 25 15:55
+build time: Aug 15 00:07
 */
 /**
  * @ignore

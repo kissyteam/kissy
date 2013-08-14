@@ -1,7 +1,7 @@
 /*
-Copyright 2012, KISSY UI Library v1.31
+Copyright 2013, KISSY UI Library v1.31
 MIT Licensed
-build time: Dec 25 23:19
+build time: Aug 15 00:08
 */
 KISSY.add("toolbar",function(f,j,k,n,g){function e(a,b,c){var c=c.get("children"),h=0,d=c.length;if(a==g&&(a=1==b?0:d-1,!c[a].get("disabled")))return c[a];do h++,a=(a+d+b)%d;while(h<d&&c[a].get("disabled"));return h!=d?c[a]:null}function l(a){a.target!=this&&(a.newVal?this.set("expandedItem",null):this.set("expandedItem",a.target))}function m(a){var b=this.get("el")[0],c,d=a.target;if(f.inArray(d,this.get("children"))&&a.newVal&&(d.get("el")[0].ownerDocument.activeElement!=b&&b.focus(),(a=this.get("highlightedItem"))&&
 a!=d&&a.set("highlighted",!1),this.set("highlightedItem",d),(c=this.get("expandedItem"))&&c.hasAttr("collapsed")&&c!=d))c.set("collapsed",!0),d.set("collapsed",!1)}var d=k.KeyCodes,i=j.Container.extend({addChild:function(){var a=i.superclass.addChild.apply(this,arguments),b=a;b.set("handleMouseEvents",!1);b.set("focusable",!1);return a},createDom:function(){this.get("el").attr("role","toolbar")},_onSetHighlightedItem:function(a){var b,c=this.get("el");a?(b=a.get("el"),(a=b.attr("id"))||b.attr("id",

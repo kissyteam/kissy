@@ -1,6 +1,6 @@
 /*
-Copyright 2012, KISSY UI Library v1.31
+Copyright 2013, KISSY UI Library v1.31
 MIT Licensed
-build time: Dec 20 22:24
+build time: Aug 15 00:01
 */
 .col-main{float:left;width:100%;min-height:1px}.col-sub,.col-extra{float:left}.layout,.main-wrap,.col-sub,.col-extra{*zoom:1}.layout:before,.main-wrap:before,.col-sub:before,.col-extra:before,.layout:after,.main-wrap:after,.col-sub:after,.col-extra:after{display:table;content:""}.layout:after,.main-wrap:after,.col-sub:after,.col-extra:after{clear:both}.grid-s5m0 .main-wrap{margin-left:200px}.grid-s5m0 .col-sub{width:190px;margin-left:-100%}.grid-m0s5 .main-wrap{margin-right:200px}.grid-m0s5 .col-sub{width:190px;margin-left:-190px}.grid-s5m0e6 .main-wrap{margin:0 240px 0 200px}.grid-s5m0e6 .col-sub{width:190px;margin-left:-100%}.grid-s5m0e6 .col-extra{width:230px;margin-left:-230px}.grid-e6m0s5 .main-wrap{margin:0 200px 0 240px}.grid-e6m0s5 .col-sub{width:190px;margin-left:-190px}.grid-e6m0s5 .col-extra{width:230px;margin-left:-100%}.grid-m0e6s5 .main-wrap{margin-right:440px}.grid-m0e6s5 .col-sub{width:190px;margin-left:-190px}.grid-m0e6s5 .col-extra{width:230px;margin-left:-430px}

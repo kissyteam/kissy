@@ -14,9 +14,6 @@
             <path location="${component.src.dir}/dpl/flying-swing.css"/>
             <path location="${component.src.dir}/dpl/grids.css"/>
             <path location="${component.src.dir}/dpl/common.css"/>
-            <filterchain>
-                <deletecharacters chars="${bom}" />
-            </filterchain>
         </concat>
     </target>
 

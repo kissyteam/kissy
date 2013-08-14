@@ -25,7 +25,6 @@
         <!-- kissy: seed + core, 独立单文件 -->
         <concat destfile="${component.src.dir.tmp}/kissy-pkg.js"
                 encoding="${charset}" outputencoding="${charset}">
-            <header filtering="no" trimleading="yes">${bom}</header>
             <path path="${kissy.build.dir}/seed.js"/>
             <fileset dir="${kissy.build.dir}/dom/"
                      includes="**/*.js" excludes="**/*-min.js"/>
@@ -44,9 +43,6 @@
                 sync:true
                 });
             </footer>
-            <filterchain>
-                <deletecharacters chars="${bom}"/>
-            </filterchain>
         </concat>
     </target>
 

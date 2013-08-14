@@ -1,11 +1,11 @@
-﻿/*
-Copyright 2012, KISSY UI Library v1.31
+/*
+Copyright 2013, KISSY UI Library v1.31
 MIT Licensed
-build time: Dec 20 22:27
+build time: Aug 15 00:06
 */
 /**
  * @ignore
- * @fileOverview event-focusin
+ *  event-focusin
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/dom/focusin', function (S, Event) {

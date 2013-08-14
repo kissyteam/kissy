@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.31
 MIT Licensed
-build time: Jan 30 22:39
+build time: Aug 15 00:00
 */
 KISSY.add("component/base",function(d,g,e,c,h,a,b,i){d.mix(g,{Controller:e,Render:c,Container:h,DelegateChildren:a,DecorateChild:i,DecorateChildren:b});return g},{requires:"./base/impl,./base/controller,./base/render,./base/container,./base/delegate-children,./base/decorate-children,./base/decorate-child".split(",")});
 KISSY.add("component/base/box-render",function(d){function g(){}var e=d.all,c=d.UA,h=d.Env.host.document;g.ATTRS={el:{setter:function(a){return e(a)}},elCls:{},elStyle:{},width:{},height:{},elTagName:{value:"div"},elAttrs:{},content:{},elBefore:{},render:{},visible:{value:!0},visibleMode:{value:"display"},contentEl:{valueFn:function(){return this.get("el")}}};g.HTML_PARSER={el:function(a){return a},content:function(a){return(this.get("contentEl")||a).html()}};g.prototype={__createDom:function(){var a,

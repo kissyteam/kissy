@@ -1,11 +1,11 @@
-﻿/*
-Copyright 2012, KISSY UI Library v1.31
+/*
+Copyright 2013, KISSY UI Library v1.31
 MIT Licensed
-build time: Dec 20 22:24
+build time: Aug 15 00:01
 */
 /**
  * @ignore
- * @fileOverview generate proxy drag object,
+ *  generate proxy drag object,
  * @author yiminghe@gmail.com
  */
 KISSY.add('dd/plugin/proxy', function (S, Node, Base, DD) {

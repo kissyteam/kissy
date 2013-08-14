@@ -1,11 +1,11 @@
-﻿/*
+/*
 Copyright 2013, KISSY UI Library v1.31
 MIT Licensed
-build time: Jan 5 20:44
+build time: Aug 15 00:07
 */
 /**
  * @ignore
- * @fileOverview controller for overlay
+ *  controller for overlay
  * @author yiminghe@gmail.com
  */
 KISSY.add("overlay/base", function (S, Component, Extension, Loading, Close, Mask, OverlayRender, OverlayEffect) {
@@ -111,7 +111,7 @@ KISSY.add("overlay/base", function (S, Component, Extension, Loading, Close, Mas
     ]
 });/**
  * @ignore
- * @fileOverview render for dialog
+ *  render for dialog
  * @author yiminghe@gmail.com
  */
 KISSY.add("overlay/dialog-render", function (S, OverlayRender,StdMod) {
@@ -140,7 +140,7 @@ KISSY.add("overlay/dialog-render", function (S, OverlayRender,StdMod) {
     requires: ['./overlay-render','./extension/stdmod-render']
 });/**
  * @ignore
- * @fileOverview KISSY.Dialog
+ *  KISSY.Dialog
  * @author yiminghe@gmail.com
  */
 KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node, StdMod, DialogEffect) {
@@ -318,7 +318,7 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node, StdMod, Di
  *  重构，使用扩展类
  *//**
  * @ignore
- * @fileOverview close extension for kissy dialog
+ *  close extension for kissy dialog
  * @author yiminghe@gmail.com
  */
 KISSY.add("overlay/extension/close-render", function (S, Node) {
@@ -378,7 +378,7 @@ KISSY.add("overlay/extension/close-render", function (S, Node) {
     requires: ["node"]
 });/**
  * @ignore
- * @fileOverview close extension for kissy dialog
+ *  close extension for kissy dialog
  * @author yiminghe@gmail.com
  */
 KISSY.add("overlay/extension/close", function () {
@@ -508,7 +508,7 @@ KISSY.add('overlay/extension/dialog-effect', function (S) {
 
 });/**
  * @ignore
- * @fileOverview loading mask support for overlay
+ *  loading mask support for overlay
  * @author yiminghe@gmail.com
  */
 KISSY.add("overlay/extension/loading-render", function (S, Node) {
@@ -548,7 +548,7 @@ KISSY.add("overlay/extension/loading-render", function (S, Node) {
     requires: ['node']
 });/**
  * @ignore
- * @fileOverview loading mask support for overlay
+ *  loading mask support for overlay
  * @author yiminghe@gmail.com
  */
 KISSY.add("overlay/extension/loading", function () {
@@ -585,7 +585,7 @@ KISSY.add("overlay/extension/loading", function () {
 
 });/**
  * @ignore
- * @fileOverview mask extension for kissy
+ *  mask extension for kissy
  * @author yiminghe@gmail.com
  */
 KISSY.add("overlay/extension/mask-render", function (S, Node) {
@@ -694,7 +694,7 @@ KISSY.add("overlay/extension/mask-render", function (S, Node) {
     requires: ["node"]
 });/**
  * @ignore
- * @fileOverview mask extension for kissy
+ *  mask extension for kissy
  * @author yiminghe@gmail.com
  */
 KISSY.add("overlay/extension/mask", function (S, Event) {
@@ -988,7 +988,7 @@ KISSY.add('overlay/extension/overlay-effect', function (S) {
 
 });/**
  * @ignore
- * @fileOverview support standard mod for component
+ *  support standard mod for component
  * @author yiminghe@gmail.com
  */
 KISSY.add("overlay/extension/stdmod-render", function (S, Node) {
@@ -1095,7 +1095,7 @@ KISSY.add("overlay/extension/stdmod-render", function (S, Node) {
     requires: ['node']
 });/**
  * @ignore
- * @fileOverview support standard mod for component
+ *  support standard mod for component
  * @author yiminghe@gmail.com
  */
 KISSY.add("overlay/extension/stdmod", function () {
@@ -1211,7 +1211,7 @@ KISSY.add("overlay/extension/stdmod", function () {
 
 });/**
  * @ignore
- * @fileOverview KISSY Overlay
+ *  KISSY Overlay
  * @author yiminghe@gmail.com
  */
 KISSY.add("overlay/overlay-render", function (S, Component, Extension, Loading, Close, Mask) {
@@ -1243,7 +1243,7 @@ KISSY.add("overlay/overlay-render", function (S, Component, Extension, Loading, 
  */
 /**
  * @ignore
- * @fileOverview overlay
+ *  overlay
  * @author yiminghe@gmail.com
  */
 KISSY.add("overlay", function (S, O, OR, D, DR, P) {
@@ -1264,7 +1264,7 @@ KISSY.add("overlay", function (S, O, OR, D, DR, P) {
     ]
 });/**
  * @ignore
- * @fileOverview KISSY.Popup
+ *  KISSY.Popup
  * @author qiaohua@taobao.com, yiminghe@gmail.com
  */
 KISSY.add('overlay/popup', function (S, Overlay, undefined) {

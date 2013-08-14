@@ -1,7 +1,7 @@
-﻿/*
+/*
 Copyright 2013, KISSY UI Library v1.31
 MIT Licensed
-build time: Feb 28 18:33
+build time: Aug 15 00:08
 */
 /**
  * @ignore
