@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 14 18:46
+build time: Aug 14 19:59
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130814184556' will replace with current timestamp when compressing.
+         * NOTICE: '20130814195947' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130814184556',
+        __BUILD_TIME: '20130814195947',
         /**
          * KISSY Environment.
          * @private
@@ -5712,7 +5712,7 @@ var KISSY = (function (undefined) {
          * @return {*} value of module which name is moduleName
          */
         require: function (moduleName) {
-            var moduleNames = Utils.normalizeModNamesWithAlias(S, [moduleName]);
+            var moduleNames = Utils.unalias(S, Utils.normalizeModNamesWithAlias(S, [moduleName]));
             if (Utils.attachModsRecursively(moduleNames, S)) {
                 return Utils.getModules(S, moduleNames)[1];
             }
@@ -5818,7 +5818,7 @@ var KISSY = (function (undefined) {
             comboMaxFileNum: 40,
             charset: 'utf-8',
             lang: 'zh-cn',
-            tag: '20130814184556'
+            tag: '20130814195947'
         }, getBaseInfo()));
     }
 

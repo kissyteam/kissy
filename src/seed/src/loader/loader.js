@@ -165,7 +165,7 @@
          * @return {*} value of module which name is moduleName
          */
         require: function (moduleName) {
-            var moduleNames = Utils.normalizeModNamesWithAlias(S, [moduleName]);
+            var moduleNames = Utils.unalias(S, Utils.normalizeModNamesWithAlias(S, [moduleName]));
             if (Utils.attachModsRecursively(moduleNames, S)) {
                 return Utils.getModules(S, moduleNames)[1];
             }
