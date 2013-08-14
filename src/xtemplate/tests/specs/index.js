@@ -181,8 +181,8 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
                     expect(render).toBe('121,2');
                 });
 
-                it("support object", function () {
-                    var tpl = '{{#each data}}{{xkey}}:{{.}}{{/each}}';
+                it("support each object", function () {
+                    var tpl = '{{#each data}}{{xindex}}:{{.}}{{/each}}';
                     var data = {
                         data: {
                             x: 1,
@@ -312,7 +312,7 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
                     expect(render).toBe('!1-2-!');
                 });
 
-                it('support object', function () {
+                it('support object in array', function () {
 
                     var tpl = '{{#each data}}{{name}}-{{xindex}}/{{xcount}}|{{/each}}';
 
@@ -351,7 +351,7 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
 
             describe('with', function () {
 
-                it('support object', function () {
+                it('support object in with', function () {
 
                     var tpl = '{{#with data}}{{name}}-{{age}}{{/with}}';
 
@@ -375,13 +375,16 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
                     var tpl = '{{#each children}}' +
                         '{{name}}{{root.name}}' +
                         '{{/each}}';
-                    var data={
-                        name:'x',
-                        children:[{
-                            name :'x1'
-                        },{
-                            name: 'x2'
-                        }]
+                    var data = {
+                        name: 'x',
+                        children: [
+                            {
+                                name: 'x1'
+                            },
+                            {
+                                name: 'x2'
+                            }
+                        ]
                     };
                     var render = new XTemplate(tpl).render(data);
 
@@ -563,11 +566,13 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
 
                 it('support global command for variable', function () {
 
-                    XTemplate.addCommand('global', function (scopes, config) {
-                        return 'global-' + config.params[0];
+                    KISSY.add('global_xcmd', function () {
+                        return function (scopes, config) {
+                            return 'global-' + config.params[0];
+                        }
                     });
 
-                    var tpl = 'my {{global title}}';
+                    var tpl = 'my {{global_xcmd title}}';
 
                     var data = {
                         title: '1'
@@ -582,11 +587,13 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
 
                 it('support global command for block', function () {
 
-                    XTemplate.addCommand('global2', function (scopes, config) {
-                        return 'global2-' + config.fn(scopes);
+                    KISSY.add('global2_xcmd', function () {
+                        return  function (scopes, config) {
+                            return 'global2-' + config.fn(scopes);
+                        }
                     });
 
-                    var tpl = 'my {{#global2}}{{title}}{{/global2}}';
+                    var tpl = 'my {{#global2_xcmd}}{{title}}{{/global2_xcmd}}';
 
                     var data = {
                         title: '1'
@@ -640,6 +647,34 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
 
                 });
 
+            });
+
+            describe('support macro', function () {
+                it('simple support', function () {
+                    var tpl = '{{#macro "test" "t"}}{{t}}{{/macro}}call {{macro "test" arg}}';
+                    var render = new XTemplate(tpl).render({
+                        arg: 'macro'
+                    });
+                    expect(render).toBe('call macro');
+                });
+
+                it('support sub template macro define', function () {
+                    var tpl = '{{include "macro/x"}}call {{macro "test" arg}}';
+                    KISSY.add('macro/x', '{{#macro "test" "t"}}{{t}}{{/macro}}');
+                    var render = new XTemplate(tpl).render({
+                        arg: 'macro'
+                    });
+                    expect(render).toBe('call macro');
+                });
+
+                it('support use macro from parent template', function () {
+                    var tpl = '{{#macro "test" "t"}}{{t}}2{{/macro}}{{include "macro/x2"}}';
+                    KISSY.add('macro/x2', 'call {{macro "test" arg}}');
+                    var render = new XTemplate(tpl).render({
+                        arg: 'macro'
+                    });
+                    expect(render).toBe('call macro2');
+                });
             });
 
             describe('sub template', function () {
@@ -784,15 +819,11 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
                 });
 
                 it('support expression for variable even undefined', function () {
-
                     var tpl = '{{n+3*4/2}}';
-
                     var data = {
                         n2: 1
                     };
-
                     expect(new XTemplate(tpl).render(data)).toBe('NaN');
-
                 });
 
                 it('support expression for variable in string', function () {
@@ -967,7 +998,7 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
 
 
                 it('support variable as index', function () {
-                    // 不推荐！
+
                     var tpl = "{{#data[d]}}{{.}}{{/data[d]}}";
 
                     var data = {
@@ -1054,7 +1085,7 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
                         r = e.message;
                     }
                     if (KISSY.Config.debug) {
-                        expect(r).toBe("can not find command: 'data' at line 1");
+                        expect(r).toBe("can not find property: 'data' at line 1");
                     }
                 });
 
@@ -1072,7 +1103,6 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
 
                 it('support {{^', function () {
                     var tpl = '{{^xx}}1{{/xx}}';
-
                     var render = new XTemplate(tpl).render({});
 
                     expect(render).toBe('1');

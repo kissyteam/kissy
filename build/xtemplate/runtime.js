@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 13 19:06
+build time: Aug 14 18:46
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -16,7 +16,6 @@ build time: Aug 13 19:06
  * @ignore
  */
 KISSY.add("xtemplate/runtime/commands", function (S) {
-
     var commands;
 
     return commands = {
@@ -44,7 +43,7 @@ KISSY.add("xtemplate/runtime/commands", function (S) {
                     for (var name in param0) {
                         opScopes[0] = param0[name];
                         opScopes[1] = {
-                            xkey: name
+                            xindex: name
                         };
                         buffer += config.fn(opScopes);
                     }
@@ -103,30 +102,62 @@ KISSY.add("xtemplate/runtime/commands", function (S) {
             scopes = extra.concat(scopes);
 
             if (!params || params.length != 1) {
-                S[config.silent ?
-                    'log' :
-                    'error']('include must has one param');
+                S.error('include must has one param');
                 return '';
             }
 
             var myName = this.config.name;
             var subTplName = params[0];
 
+
             if (subTplName.charAt(0) == '.') {
                 if (myName == 'unspecified') {
-                    S.error('parent template does not have name' +' for relative sub tpl name: ' + subTplName);
+                    S.error('parent template does not have name' + ' for relative sub tpl name: ' + subTplName);
                     return '';
                 }
                 subTplName = S.Path.resolve(myName, '../', subTplName);
             }
 
-            var tpl= this.config.loader.call(this,subTplName);
+            var tpl = this.config.loader.call(this, subTplName);
 
             config = S.merge(this.config);
             // template file name
             config.name = subTplName;
-
+            // pass commands to sub template
+            config.commands = this.config.commands;
+            // share macros with parent template and sub template
+            config.macros = this.config.macros;
             return this.invokeEngine(tpl, scopes, config)
+        },
+
+        'macro': function (scopes, config) {
+            var params = config.params;
+            var macroName = params[0];
+            var params1 = params.slice(1);
+            var macros = this.config.macros;
+            // definition
+            if (config.fn) {
+                macros[macroName] = {
+                    paramNames: params1,
+                    fn: config.fn
+                };
+            } else {
+                var paramValues = {};
+                var macro = macros[macroName];
+                if (!macro) {
+                    macro = S.require(macroName);
+                    if (!macro) {
+                        S.error("can not find macro module:" + name);
+                    }
+                }
+                S.each(macro.paramNames, function (p, i) {
+                    paramValues[p] = params1[i];
+                });
+                var newScopes = scopes.concat();
+                newScopes.unshift(paramValues);
+                return macro.fn.call(this, newScopes);
+            }
+            return '';
         },
 
         parse: function (scopes, config) {
@@ -134,7 +165,6 @@ KISSY.add("xtemplate/runtime/commands", function (S) {
             return commands.include.call(this, [], config);
         }
     };
-
 });
 /**
  * xtemplate runtime
@@ -142,27 +172,78 @@ KISSY.add("xtemplate/runtime/commands", function (S) {
  * @ignore
  */
 KISSY.add('xtemplate/runtime', function (S, commands) {
-
     var utils = {
-            'getPropertyOrCommand': function (engine, scopes, options, name, depth, line) {
+            'runBlockCommand': function (engine, scopes, options, name, line) {
+                var config = engine.config;
+                var logFn = S[config.silent ? 'log' : 'error'];
+                var commands = config.commands;
+                var command = commands[name];
+                if (!command && S.endsWith(name, '_xcmd')) {
+                    command = S.require(name);
+                    if (!command) {
+                        S.error("can not find command module: " + name + "' at line " + line);
+                        return '';
+                    }
+                }
+                if (!command) {
+                    if (!options.params && !options.hash) {
+                        var property = utils.getProperty(name, scopes);
+                        if (property === false) {
+                            logFn("can not find property: '" + name + "' at line " + line);
+                            property = '';
+                        } else {
+                            property = property[0];
+                        }
+                        command = commands['if'];
+                        if (S.isArray(property)) {
+                            command = commands.each;
+                        }
+                        else if (typeof property == 'object') {
+                            command = commands['with'];
+                        }
+                        options.params = [property];
+                    } else {
+                        S.error("can not find command module: " + name + "' at line " + line);
+                        return '';
+                    }
+                }
+                var ret = '';
+                try {
+                    ret = command.call(engine, scopes, options);
+                } catch (e) {
+                    S.error(e.message + ": '" + name + "' at line " + line);
+                }
+                return ret;
+            },
+
+            'getPropertyOrRunCommand': function (engine, scopes, options, name, depth, line) {
                 var id0;
                 var config = engine.config;
                 var commands = config.commands;
                 var command1 = commands[name];
+                var logFn = S[config.silent ? 'log' : 'error'];
+                if (!command1 && S.endsWith(name, '_xcmd')) {
+                    command1 = S.require(name);
+                    if (!command1) {
+                        S.error("can not find command module: " + name + "' at line " + line);
+                        return '';
+                    }
+                }
                 if (command1) {
                     try {
                         id0 = command1.call(engine, scopes, options);
                     } catch (e) {
-                        S['error'](e.message + ": '" +name + "' at line " + line);
+                        S.error(e.message + ": '" + name + "' at line " + line);
+                        return '';
                     }
                 }
                 else {
                     var tmp2 = utils.getProperty(name, scopes, depth);
                     if (tmp2 === false) {
-                        S[config.silent ?
-                            "log" :
-                            "error"]("can not find property: '" +
-                                name + "' at line " + line, "warn");
+                        logFn("can not find property: '" +
+                            name + "' at line " + line, "warn");
+                        // undefined for undefined property
+                        return undefined;
                     } else {
                         id0 = tmp2[0];
                     }
@@ -256,15 +337,9 @@ KISSY.add('xtemplate/runtime', function (S, commands) {
              * @member KISSY.XTemplate.Runtime
              */
             loader: function (subTplName) {
-                var tpl = '';
-                S.use(subTplName, {
-                    success: function (S, t) {
-                        tpl = t;
-                    },
-                    sync: 1
-                });
+                var tpl = S.require(subTplName);
                 if (!tpl) {
-                    S[this.config.silent ? 'log' : 'error']('template "' +
+                    S.error('template "' +
                         subTplName + '" does not exist, ' +
                         'need to be required or used first!');
                 }
@@ -285,13 +360,16 @@ KISSY.add('xtemplate/runtime', function (S, commands) {
         var self = this;
         self.tpl = tpl;
         config = S.merge(defaultConfig, config);
-        config.commands = S.merge(config.commands, XTemplateRuntime.commands);
+        config.commands = S.merge(config.commands, commands);
         config.utils = utils;
+        config.macros = config.macros || {};
         this.config = config;
     }
 
-    XTemplateRuntime.prototype = {
+    XTemplateRuntime.commands = commands;
+    XTemplateRuntime.utils = utils;
 
+    XTemplateRuntime.prototype = {
         constructor: XTemplateRuntime,
 
         // allow str sub template
@@ -328,40 +406,9 @@ KISSY.add('xtemplate/runtime', function (S, commands) {
             }
             return this.tpl(data);
         }
-
     };
 
-    S.mix(XTemplateRuntime, {
-        commands: commands,
-
-        utils: utils,
-
-        /**
-         * add command to all template
-         * @method
-         * @static
-         * @param {String} commandName
-         * @param {Function} fn
-         * @member KISSY.XTemplate.Runtime
-         */
-        addCommand: function (commandName, fn) {
-            commands[commandName] = fn;
-        },
-
-        /**
-         * remove command from all template by name
-         * @method
-         * @static
-         * @param {String} commandName
-         * @member KISSY.XTemplate.Runtime
-         */
-        removeCommand: function (commandName) {
-            delete commands[commandName];
-        }
-    });
-
     return XTemplateRuntime;
-
 }, {
     requires: [ './runtime/commands']
 });

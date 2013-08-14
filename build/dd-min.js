@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 13 18:49
+build time: Aug 14 18:38
 */
 KISSY.add("dd/ddm",function(i,f,k,h){function j(g){var a,d;if(g.touches&&1<g.touches.length)p._end();else{if(a=this.__activeToDrag)a._move(g);else if(d=this.get("activeDrag"))d._move(g),this.__needDropCheck&&b(this,g,d);(a=a||d)&&a.get("preventDefaultOnMove")&&g.preventDefault()}}function b(g,b,d){var c=g.get("validDrops"),o=d.get("mode"),e=0,m=0,f=l(d.get("node")),n=q(f);i.each(c,function(g){if(g.get("disabled"))return h;var c;c=g.getNodeFromTarget(b,d.get("dragNode")[0],d.get("node")[0]);if(!c)return h;
 if("point"==o)s(l(c),d.mousePos)&&(c=q(l(c)),e?c<m&&(e=g,m=c):(e=g,m=c));else if("intersect"==o)c=q(a(f,l(c))),c>m&&(m=c,e=g);else if("strict"==o&&(c=q(a(f,l(c))),c==n))return e=g,!1;return h});if((c=g.get("activeDrop"))&&c!=e)c._handleOut(b),d._handleOut(b);g.setInternal("activeDrop",e);e&&(c!=e?e._handleEnter(b):e._handleOver(b))}function e(g){g._shim=u('<div style="background-color:red;position:'+(v?"absolute":"fixed")+";left:0;width:100%;height:100%;top:0;cursor:"+p.get("dragCursor")+";z-index:"+

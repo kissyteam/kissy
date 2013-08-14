@@ -158,9 +158,18 @@
             return S;
         },
 
-        require: function (name) {
-            return Utils.getModules(S,
-                Utils.normalizeModNamesWithAlias(S, [name]))[1];
+        /**
+         * get module value from KISSY module cache
+         * @param {String} moduleName module name
+         * @member KISSY
+         * @return {*} value of module which name is moduleName
+         */
+        require: function (moduleName) {
+            var moduleNames = Utils.normalizeModNamesWithAlias(S, [moduleName]);
+            if (Utils.attachModsRecursively(moduleNames, S)) {
+                return Utils.getModules(S, moduleNames)[1];
+            }
+            return undefined;
         }
     });
 

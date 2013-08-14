@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 13 19:05
+build time: Aug 14 18:45
 */
 KISSY.add("scroll-view/base/render",function(j,k,m,n){var j=j.Features,g,k={syncUI:function(){var c=this.control,e=c.el,f=c.contentEl,a=c.$contentEl,d=f.offsetHeight,f=f.offsetWidth,b=e.clientHeight,o=e.clientWidth;c.scrollHeight=d;c.scrollWidth=f;c.clientHeight=b;c.clientWidth=o;e=c.allowScroll={};d>b&&(e.top=1);f>o&&(e.left=1);c.minScroll={left:0,top:0};var i,l;c.maxScroll={left:i=f-o,top:l=d-b};delete c.scrollStep;b=c.get("snap");d=c.get("scrollLeft");f=c.get("scrollTop");if(b){var h=a.offset(),
 a=c.pages="string"==typeof b?a.all(b):a.children(),b=c.get("pageIndex"),g=c.pagesOffset=[];a.each(function(b,a){var d=b.offset(),c=d.left-h.left,d=d.top-h.top;c<=i&&d<=l&&(g[a]={left:c,top:d,index:a})});if(b){c.scrollToPage(b);return}}c.scrollToWithBounds({left:d,top:f})},_onSetScrollLeft:function(c){this.control.contentEl.style.left=-c+"px"},_onSetScrollTop:function(c){this.control.contentEl.style.top=-c+"px"}};j.isTransformSupported()&&(g=j.getTransformProperty(),k._onSetScrollLeft=function(c){var e=

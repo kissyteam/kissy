@@ -258,9 +258,9 @@ KISSY.add('base', function (S, Attribute) {
             if (!self.get('destroyed')) {
                 callPluginsMethod.call(self, 'pluginDestructor');
                 self.destructor();
-                self.detach();
                 self.set('destroyed', true);
                 self.fire('destroy');
+                self.detach();
             }
         }
     });

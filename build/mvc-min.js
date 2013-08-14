@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 13 22:19
+build time: Aug 14 18:45
 */
 KISSY.add("mvc/model",function(e,g){var i="idAttribute,destroyed,plugins,listeners,clientId,urlRoot,url,parse,sync".split(",");return g.extend({initializer:function(){this.collections={}},addToCollection:function(a){this.collections[e.stamp(a)]=a;this.addTarget(a)},removeFromCollection:function(a){delete this.collections[e.stamp(a)];this.removeTarget(a)},getId:function(){return this.get(this.get("idAttribute"))},setId:function(a){return this.set(this.get("idAttribute"),a)},setInternal:function(){this.__isModified=
 1;return this.callSuper.apply(this,arguments)},isNew:function(){return!this.getId()},isModified:function(){return!(!this.isNew()&&!this.__isModified)},destroy:function(a){var b=this,a=a||{},d=a.success;a.success=function(c){var f=b.collections;if(c){var h=b.get("parse").call(b,c);h&&b.set(h,a)}for(var e in f)f[e].remove(b,a);b.fire("destroy");d&&d.apply(this,arguments)};!b.isNew()&&a["delete"]?b.get("sync").call(b,b,"delete",a):(a.success(),a.complete&&a.complete());return b},load:function(a){var b=

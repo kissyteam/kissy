@@ -4,7 +4,6 @@
  * @ignore
  */
 KISSY.add("xtemplate/runtime/commands", function (S) {
-
     var commands;
 
     return commands = {
@@ -32,7 +31,7 @@ KISSY.add("xtemplate/runtime/commands", function (S) {
                     for (var name in param0) {
                         opScopes[0] = param0[name];
                         opScopes[1] = {
-                            xkey: name
+                            xindex: name
                         };
                         buffer += config.fn(opScopes);
                     }
@@ -91,30 +90,62 @@ KISSY.add("xtemplate/runtime/commands", function (S) {
             scopes = extra.concat(scopes);
 
             if (!params || params.length != 1) {
-                S[config.silent ?
-                    'log' :
-                    'error']('include must has one param');
+                S.error('include must has one param');
                 return '';
             }
 
             var myName = this.config.name;
             var subTplName = params[0];
 
+
             if (subTplName.charAt(0) == '.') {
                 if (myName == 'unspecified') {
-                    S.error('parent template does not have name' +' for relative sub tpl name: ' + subTplName);
+                    S.error('parent template does not have name' + ' for relative sub tpl name: ' + subTplName);
                     return '';
                 }
                 subTplName = S.Path.resolve(myName, '../', subTplName);
             }
 
-            var tpl= this.config.loader.call(this,subTplName);
+            var tpl = this.config.loader.call(this, subTplName);
 
             config = S.merge(this.config);
             // template file name
             config.name = subTplName;
-
+            // pass commands to sub template
+            config.commands = this.config.commands;
+            // share macros with parent template and sub template
+            config.macros = this.config.macros;
             return this.invokeEngine(tpl, scopes, config)
+        },
+
+        'macro': function (scopes, config) {
+            var params = config.params;
+            var macroName = params[0];
+            var params1 = params.slice(1);
+            var macros = this.config.macros;
+            // definition
+            if (config.fn) {
+                macros[macroName] = {
+                    paramNames: params1,
+                    fn: config.fn
+                };
+            } else {
+                var paramValues = {};
+                var macro = macros[macroName];
+                if (!macro) {
+                    macro = S.require(macroName);
+                    if (!macro) {
+                        S.error("can not find macro module:" + name);
+                    }
+                }
+                S.each(macro.paramNames, function (p, i) {
+                    paramValues[p] = params1[i];
+                });
+                var newScopes = scopes.concat();
+                newScopes.unshift(paramValues);
+                return macro.fn.call(this, newScopes);
+            }
+            return '';
         },
 
         parse: function (scopes, config) {
@@ -122,5 +153,4 @@ KISSY.add("xtemplate/runtime/commands", function (S) {
             return commands.include.call(this, [], config);
         }
     };
-
 });

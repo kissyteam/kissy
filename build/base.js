@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 13 22:31
+build time: Aug 14 18:36
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -880,9 +880,9 @@ KISSY.add('base', function (S, Attribute) {
             if (!self.get('destroyed')) {
                 callPluginsMethod.call(self, 'pluginDestructor');
                 self.destructor();
-                self.detach();
                 self.set('destroyed', true);
                 self.fire('destroy');
+                self.detach();
             }
         }
     });

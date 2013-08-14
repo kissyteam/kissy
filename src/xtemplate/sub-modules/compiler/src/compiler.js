@@ -4,7 +4,6 @@
  * @ignore
  */
 KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
-
     parser.yy = ast;
 
     var doubleReg = /\\*"/g,
@@ -59,24 +58,13 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
                 source.push('S = KISSY,' +
                     'config=this.config,' +
                     'escapeHtml = config.escapeHtml && S.escapeHtml,' +
-                    'isArray = S.isArray,' +
-                    'isObject = S.isObject,' +
-                    'log = S.log,' +
                     // current xtemplate engine
                     'engine = this, ' +
-                    'commands = config.commands,' +
-                    'utils = config.utils,' +
-                    'error = S.error;');
+                    'utils = config.utils;');
 
                 var natives = '',
                     c,
-                    utils = XTemplateRuntime.utils,
-                // shortcut for global commands
-                    commands = XTemplateRuntime.commands;
-
-                for (c in commands) {
-                    natives += c + 'Command = commands["' + c + '"],';
-                }
+                    utils = XTemplateRuntime.utils;
 
                 for (c in utils) {
                     natives += c + 'Util = utils["' + c + '"],';
@@ -125,7 +113,7 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
             var idString = self.getIdStringFromIdParts(source, idParts);
 
             source.push('var ' + idName +
-                ' = getPropertyOrCommandUtil(engine,scopes,' +
+                ' = getPropertyOrRunCommandUtil(engine,scopes,' +
                 (configName || '{}') + ',"' +
                 idString +
                 '",' + depth + ',' + idNode.lineNumber + ');');
@@ -296,15 +284,12 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
             var programNode = block.program,
                 source = [],
                 self = this,
-                tmpNameCommand,
                 tplNode = block.tpl,
                 configNameCode = self.genConfig(tplNode),
                 configName = configNameCode[0],
-                commands = XTemplateRuntime.commands,
-                pathString = tplNode.path.string,
-                inverseFn,
-                existsNativeCommand,
-                variableName;
+                tplPath=tplNode.path,
+                pathString = tplPath.string,
+                inverseFn;
 
             pushToArray(source, configNameCode[1]);
 
@@ -330,57 +315,21 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
                 source.push(configName + '.inverse = ' + tmp + ';');
             }
 
-            // reduce generated code size
-            if (existsNativeCommand = commands[pathString]) {
-                tmpNameCommand = pathString + 'Command';
-            } else {
-                tmpNameCommand = guid('command');
-                source.push('var ' + tmpNameCommand +
-                    ' = commands["' + pathString + '"];');
-                // {{#xx}}1{#xx} => xx is not command =>
-                // if xx => array => {{#each xx}}1{/each}}
-                // if xx => object => {{#with xx}}1{/with}}
-                // else => {{#if xx}}1{/if}}
-                if (!tplNode.hash && !tplNode.params) {
-                    source.push('if(!' + tmpNameCommand + '){');
-                    pathString = self.getIdStringFromIdParts(source, tplNode.path.parts);
-                    var propertyValueHolder = guid('propertyValueHolder');
-                    source.push('var ' + propertyValueHolder +
-                        ' = getPropertyUtil("' + pathString + '",scopes);');
-                    variableName = guid('variableName');
-                    source.push('var ' + variableName +
-                        '=' + propertyValueHolder + '&&' +
-                        propertyValueHolder + '[0];');
-                    source.push(configName + '.params=[' + variableName + '];');
-                    source.push('if(isArray(' + variableName + ')){');
-                    source.push(tmpNameCommand + '=commands["each"];');
-                    source.push('}');
-                    source.push('else if(isObject(' + variableName + ')){');
-                    source.push(tmpNameCommand + '=commands["with"];');
-                    source.push('}');
-                    source.push('else {');
-                    source.push(tmpNameCommand + '=commands["if"];');
-                    source.push('}');
-                    source.push('}');
+            if (!tplNode.hash && !tplNode.params) {
+                var parts = tplPath.parts;
+                for (var i = 0; i < parts.length; i++) {
+                    // {{x[d]}}
+                    if (typeof parts[i] != 'string') {
+                        pathString = self.getIdStringFromIdParts(source, parts);
+                        break;
+                    }
                 }
-                source.push('if( ' + tmpNameCommand + ' ){');
             }
 
-            source.push('try{');
-            source.push('buffer += ' + tmpNameCommand +
-                '.call(engine, scopes, ' + configName + ');');
-            source.push('}catch(e){');
-            source.push('error(e.message+": \'' + pathString +
-                '\' at line ' + tplNode.path.lineNumber + '");');
-            source.push('}');
-
-            if (!existsNativeCommand) {
-                source.push('}');
-                source.push('if(' + propertyValueHolder + '===false) {');
-                source.push('S[config.silent?"log":"error"]("can not find command: \'' +
-                    pathString + '\' at line ' + tplNode.path.lineNumber + '","warn");');
-                source.push('}');
-            }
+            source.push('buffer += runBlockCommandUtil(engine, scopes, ' +
+                configName + ', ' +
+                '"' + pathString + '", ' +
+                tplPath.lineNumber + ');');
             return source;
         },
 
@@ -443,7 +392,6 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
             }
             return idString;
         }
-
     };
 
     function outputVariable(expressionOrVariable, escaped, source) {
@@ -518,7 +466,6 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
                     '\n//# ' + sourceURL));
         }
     };
-
 }, {
     requires: ['./compiler/parser', './compiler/ast', 'xtemplate/runtime']
 });
