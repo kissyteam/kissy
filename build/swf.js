@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 15 00:01
+build time: Aug 15 01:01
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -189,13 +189,13 @@ KISSY.add('swf', function (S, Dom, Json, Base, FlashUA, undefined) {
             swliveconnect: EMPTY,
             seamlesstabbing: EMPTY
         };
-
+    var SWF;
     /**
      * insert a new swf into container
      * @class KISSY.SWF
      * @extends KISSY.Base
      */
-    return Base.extend({
+    return SWF = Base.extend({
         initializer: function () {
             var self = this;
             var expressInstall = self.get('expressInstall'),

@@ -103,5 +103,5 @@ KISSY.add(function (S, Dom, Event) {
         });
     });
 },{
-    requires:['dom','event/dom/base']
+    requires:['dom','event/dom']
 });

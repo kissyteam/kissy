@@ -2,7 +2,7 @@
  * tc for kissy swf
  * @author yiminghe@gmail.com, oicuicu@gmail.com
  */
-KISSY.add(function (S, UA, SWF, Dom) {
+KISSY.add(function (S, SWF, Dom) {
         if (KISSY.UA.mobile || KISSY.UA.phantomjs || location.protocol === 'file:') {
 
         } else {
@@ -172,5 +172,5 @@ KISSY.add(function (S, UA, SWF, Dom) {
             });
         });}
 },{
-    requires:"ua,swf,dom".split(',')
+    requires:"swf,dom".split(',')
 });

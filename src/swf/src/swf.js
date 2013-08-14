@@ -47,13 +47,13 @@ KISSY.add('swf', function (S, Dom, Json, Base, FlashUA, undefined) {
             swliveconnect: EMPTY,
             seamlesstabbing: EMPTY
         };
-
+    var SWF;
     /**
      * insert a new swf into container
      * @class KISSY.SWF
      * @extends KISSY.Base
      */
-    return Base.extend({
+    return SWF = Base.extend({
         initializer: function () {
             var self = this;
             var expressInstall = self.get('expressInstall'),

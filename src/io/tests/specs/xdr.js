@@ -129,9 +129,6 @@ KISSY.add(function (S, UA, io, Node) {
                                 action: "x"
                             },
                             success: function (d, s, r) {
-
-                                expect(d['X-Requested-With']).toBe('XMLHttpRequest');
-
                                 // body 都可读
                                 expect(d.action).toBe('x');
 
@@ -139,16 +136,18 @@ KISSY.add(function (S, UA, io, Node) {
                                 // ie8-9 XDomainRequest 不可读
                                 // header ie10 ,chrome, firefox 可读
                                 if (UA.ie && UA.ie < 10) {
-                                    expect(d.yiminghe).toBe('undefined');
+                                    expect(typeof  d.yiminghe).toBe('undefined');
+                                    expect(typeof  d['X-Requested-With']).toBe('undefined');
                                 } else {
                                     expect(d.yiminghe).toBe('oo');
+                                    expect(d['X-Requested-With']).toBe('XMLHttpRequest');
                                 }
 
                                 // ie8-9 XDomainRequest 不可读
                                 // header ie10 ,chrome, firefox 可读
                                 // ie6-7 flash 可读
                                 if (UA.ie && UA.ie >= 8 && UA.ie <= 9) {
-                                    expect(d.cors).toBe('undefined');
+                                    expect(typeof d.cors).toBe('undefined');
                                 } else {
                                     expect(d.cors).toBe('ok')
                                 }

@@ -37,7 +37,7 @@ describe("KISSY ComboLoader", function () {
             });
             setTimeout(function () {
                 ret = a;
-            }, 10);
+            }, 108);
             ret2 = a;
         });
 
@@ -291,11 +291,11 @@ describe("KISSY ComboLoader", function () {
             });
 
             waitsFor(function () {
-                return ret == 2;
+                return order.length==2;
             });
 
             runs(function () {
-                expect(order).toEqual([1, 2]);
+                expect(order.sort()).toEqual([1, 2]);
             });
         });
     });
