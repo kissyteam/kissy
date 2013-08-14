@@ -21,9 +21,6 @@
             <path location="assets/dpl/flying-swing.css"/>
             <path location="assets/dpl/grids.css"/>
             <path location="assets/dpl/common.css"/>
-            <filterchain>
-                <deletecharacters chars="${bom}"/>
-            </filterchain>
         </concat>
     </target>
 </project>

@@ -163,7 +163,7 @@
         <delete dir="${component.build.dir.tmp}"/>
     </target>
 
-    <!-- 替换版本信息以及给文件加上版权信息以及加上 bom -->
+    <!-- 替换版本信息以及给文件加上版权信息 -->
     <target name="copyright">
         <tstamp>
             <format property="stamp.time" pattern="MMM d HH:mm" locale="en,UK"/>
@@ -180,30 +180,16 @@
                 <fileset dir="${component.build.dir.tmp}"/>
             </ac:path>
             <ac:sequential>
-                <!--如果不是压缩文件，就加上 bom 头，否则 ie 诡异问题-->
-                <ac:var name="copyright.bomOrEmpty" value=""/>
                 <ac:var name="copyright.file.name" unset="true"/>
                 <basename property="copyright.file.name" file="@{file}"/>
-                <ac:if>
-                    <not>
-                        <contains string="${copyright.file.name}" substring="-min." casesensitive="false"/>
-                    </not>
-                    <ac:then>
-                        <ac:var name="copyright.bomOrEmpty" value="${bom}"/>
-                    </ac:then>
-                </ac:if>
                 <concat destfile="@{file}.tmp" encoding="${charset}" outputencoding="${charset}">
-                    <!-- ie need bom , odd -->
-                    <header filtering="no" trimleading="yes">${copyright.bomOrEmpty}/*
+                    <header filtering="no" trimleading="yes">/*
                         Copyright ${build.year}, KISSY UI Library v${version}
                         MIT Licensed
                         build time: ${stamp.time}
                         */
                     </header>
                     <fileset file="@{file}"/>
-                    <filterchain>
-                        <deletecharacters chars="${bom}"/>
-                    </filterchain>
                 </concat>
                 <move file="@{file}.tmp" tofile="@{file}"/>
             </ac:sequential>

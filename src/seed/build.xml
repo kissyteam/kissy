@@ -58,9 +58,6 @@
             <path location="${component.src.dir}/web.js"/>
             <fileset dir="${component.src.dir}/meta/" includes="**/*.js"/>
             <path location="${component.src.dir}/exports.js"/>
-            <filterchain>
-                <deletecharacters chars="${bom}"/>
-            </filterchain>
         </concat>
 
         <!-- build kissy-nodejs -->
@@ -101,9 +98,6 @@
             <path location="${component.src.dir}/web.js"/>
             <fileset dir="${component.src.dir}/meta/" includes="**/*.js"/>
             <path location="${component.src.dir}/exports.js"/>
-            <filterchain>
-                <deletecharacters chars="${bom}"/>
-            </filterchain>
         </concat>
     </target>
 

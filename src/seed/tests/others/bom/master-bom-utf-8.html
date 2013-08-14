@@ -1,0 +1,18 @@
+<meta charset="utf-8"/>
+<script src="../../../../../build/seed.js" charset="utf-8"></script>
+<h1>must test with apache</h1>
+<script>
+    KISSY.getScript('bom.js', {
+        charset: 'utf-8',
+        success: function () {
+            setTimeout(function () {
+                KISSY.getScript('bom.js', {
+                    charset: 'utf-8',
+                    success: function () {
+
+                    }
+                });
+            }, 1000);
+        }
+    });
+</script>

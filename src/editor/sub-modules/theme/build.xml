@@ -22,9 +22,6 @@
                 encoding="${charset}" outputencoding="${charset}">
             <path location="${component.src.dir.tmp}/editor-common.css"/>
             <fileset dir="${component.src.dir.tmp}/cool" includes="**/*.css"/>
-            <filterchain>
-                <deletecharacters chars="${bom}"/>
-            </filterchain>
         </concat>
 
         <smartsprites cssfilesuffix="-sprite"

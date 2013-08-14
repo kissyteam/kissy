@@ -27,6 +27,6 @@
     <property name="git.gh-pages" value="gh-pages"/>
     <property name="git.master" value="master"/>
     <property name="git.dev" value="dev"/>
-    <property name="bom" value="&#xFEFF;"/>
+    <!--<property name="bom" value="&#xFEFF;"/>-->
 
 </project>

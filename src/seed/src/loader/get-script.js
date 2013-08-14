@@ -4,12 +4,12 @@
  * @author yiminghe@gmail.com
  */
 (function (S) {
-
     var MILLISECONDS_OF_SECOND = 1000,
         doc = S.Env.host.document,
         Utils = S.Loader.Utils,
         Path = S.Path,
         jsCssCallbacks = {},
+        headNode,
         UA = S.UA,
     // onload for webkit 535.23  Firefox 9.0
     // https://bugs.webkit.org/show_activity.cgi?id=38995
@@ -44,7 +44,7 @@
          * @param {Number} [success.timeout] timeout (s)
          * @param {String} [success.charset] charset of current resource
          * @param {String} [charset] charset of current resource
-         * @return {HTML} script/style node
+         * @return {HTMLElement} script/style node
          * @member KISSY
          */
         getScript: function (url, success, charset) {
@@ -81,8 +81,7 @@
                 // S.log('init getScript : by ' + config.source);
             }
 
-            var head = Utils.docHead(),
-                node = doc.createElement(css ? 'link' : 'script'),
+            var node = doc.createElement(css ? 'link' : 'script'),
                 clearTimer = function () {
                     if (timer) {
                         timer.cancel();
@@ -159,18 +158,20 @@
                     end(1);
                 }, timeout * MILLISECONDS_OF_SECOND);
             }
+            if (!headNode) {
+                headNode = Utils.docHead();
+            }
             if (css) {
                 // css order matters
                 // so can not use css in head
-                head.appendChild(node);
+                headNode.appendChild(node);
             } else {
                 // can use js in head
-                head.insertBefore(node, head.firstChild);
+                headNode.insertBefore(node, headNode.firstChild);
             }
             return node;
         }
     });
-
 })(KISSY);
 /*
  yiminghe@gmail.com refactor@2012-03-29

@@ -8,9 +8,6 @@
         <concat destfile="${component.src.dir.tmp}/${component.basename}-pkg.js"
                 encoding="${charset}" outputencoding="${charset}">
             <fileset dir="${component.src.dir}" includes="**/*.js"/>
-            <filterchain>
-                <deletecharacters chars="${bom}"/>
-            </filterchain>
         </concat>
     </target>
 
