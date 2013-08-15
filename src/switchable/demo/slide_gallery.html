@@ -9,21 +9,21 @@
 <title>Slide - 幻灯片特效</title>
 <script src="/kissy/build/seed.js"></script>
 
-<script src="../src/base.js"></script>
-<script src="../src/aria.js"></script>
-<script src="../src/accordion/base.js"></script>
-<script src="../src/accordion/aria.js"></script>
-<script src="../src/autoplay.js"></script>
+<!--<script src="../src/base.js"></script>-->
+<!--<script src="../src/aria.js"></script>-->
+<!--<script src="../src/accordion/base.js"></script>-->
+<!--<script src="../src/accordion/aria.js"></script>-->
+<!--<script src="../src/autoplay.js"></script>-->
 
-<script src="../src/carousel/base.js"></script>
-<script src="../src/carousel/aria.js"></script>
-<script src="../src/circular.js"></script>
-<script src="../src/effect.js"></script>
-<script src="../src/lazyload.js"></script>
-<script src="../src/slide/base.js"></script>
-<script src="../src/tabs/base.js"></script>
-<script src="../src/tabs/aria.js"></script>
-<script src="../src/switchable.js"></script>
+<!--<script src="../src/carousel/base.js"></script>-->
+<!--<script src="../src/carousel/aria.js"></script>-->
+<!--<script src="../src/circular.js"></script>-->
+<!--<script src="../src/effect.js"></script>-->
+<!--<script src="../src/lazyload.js"></script>-->
+<!--<script src="../src/slide/base.js"></script>-->
+<!--<script src="../src/tabs/base.js"></script>-->
+<!--<script src="../src/tabs/aria.js"></script>-->
+<!--<script src="../src/switchable.js"></script>-->
 <style>
     #title {
         font-size: 35px;
@@ -76,7 +76,7 @@
     </ul>
 </div>
 <script>
-    KISSY.use("switchable", function (S, Switchable) {
+    KISSY.use("switchable,node", function (S, Switchable) {
         var DOM = S.DOM;
         var s = new Switchable.Carousel('#list', {
             contentCls:'pic-list',
