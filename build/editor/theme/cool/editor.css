@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 14 23:58
+build time: Aug 15 15:48
 */
 /**
 ks-editor-post ，编辑器内容外部包装容器
@@ -11,19 +11,6 @@ from : resource://gre/res/html.css
 编辑器生成内容
 </div>
 **/
-/*
-清除编辑器内容里面的浮动
- */
-.ks-editor-post:after {
-    content: '\20';
-    display: block;
-    height: 0;
-    clear: both;
-}
-
-.ks-editor-post {
-    *zoom: 1;
-}
 
 .ks-editor-hidden {
     position: absolute;
@@ -1094,6 +1081,10 @@ menu style for kissy editor ,include contextmenu and select menu
     vertical-align: middle;
 }
 
+/*
+ can not set background on content-box
+ ie6 bug!
+*/
 .ks-editor-dialog, .ks-editor-popup {
     background-color: #FBFBFB;
     border: 1px solid #ACB4BE;

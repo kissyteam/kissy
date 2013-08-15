@@ -25,6 +25,10 @@
     vertical-align: middle;
 }
 
+/*
+ can not set background on content-box
+ ie6 bug!
+*/
 .ks-editor-dialog, .ks-editor-popup {
     background-color: #FBFBFB;
     border: 1px solid #ACB4BE;
