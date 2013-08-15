@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.31
 MIT Licensed
-build time: Aug 15 00:05
+build time: Aug 15 15:50
 */
 /**
 ks-editor-post ，编辑器内容外部包装容器
@@ -1064,7 +1064,8 @@ menu style for kissy editor ,include contextmenu and select menu
     vertical-align: middle;
 }
 
-.ks-editor-dialog .ks-editor-contentbox, .ks-editor-popup .ks-editor-contentbox {
+.ks-editor-dialog,
+.ks-editor-popup {
     background-color: #FBFBFB;
     border: 1px solid #ACB4BE;
 }

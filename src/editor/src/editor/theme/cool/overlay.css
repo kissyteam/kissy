@@ -12,7 +12,8 @@
     vertical-align: middle;
 }
 
-.ks-editor-dialog .ks-editor-contentbox, .ks-editor-popup .ks-editor-contentbox {
+.ks-editor-dialog,
+.ks-editor-popup {
     background-color: #FBFBFB;
     border: 1px solid #ACB4BE;
 }

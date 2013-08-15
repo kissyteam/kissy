@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.31
 MIT Licensed
-build time: Aug 15 00:05
+build time: Aug 15 15:50
 */
 /**
  * image dialog (support upload and remote)
@@ -75,7 +75,7 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Overlay4E, Tabs
             "</div>" +
             "</div>" +
             "<div style='" +
-            "padding:0 20px 5px 20px;zoom:1'>" +
+            "padding:0 20px 5px 20px;'>" +
             "<table " +
             "style='width:100%;margin-top:8px;' " +
             "class='{prefixCls}img-setting'>" +

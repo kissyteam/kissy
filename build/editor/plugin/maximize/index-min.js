@@ -1,6 +1,6 @@
 /*
 Copyright 2013, KISSY UI Library v1.31
 MIT Licensed
-build time: Aug 15 00:05
+build time: Aug 15 15:50
 */
 KISSY.add("editor/plugin/maximize/index",function(c,e,d){function b(){}c.augment(b,{pluginRenderUI:function(a){d.init(a);a.addButton("maximize",{tooltip:"\u5168\u5c4f",listeners:{click:function(){this.get("checked")?(a.execCommand("maximizeWindow"),this.set("tooltip","\u53d6\u6d88\u5168\u5c4f"),this.set("contentCls","restore")):(a.execCommand("restoreWindow"),this.set("tooltip","\u5168\u5c4f"),this.set("contentCls","maximize"));a.focus()}},checkable:!0})}});return b},{requires:["editor","./cmd"]});
