@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 15 00:01
+build time: Aug 15 20:30
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -172,19 +172,25 @@ KISSY.add("xtemplate/runtime/commands", function (S) {
  * @ignore
  */
 KISSY.add('xtemplate/runtime', function (S, commands) {
+    function findCommand(commands, name) {
+        var parts = name.split('.');
+        var cmd = commands;
+        var len = parts.length;
+        for (var i = 0; i < len; i++) {
+            cmd = cmd[parts[i]];
+            if (!cmd) {
+                break;
+            }
+        }
+        return cmd;
+    }
+
     var utils = {
             'runBlockCommand': function (engine, scopes, options, name, line) {
                 var config = engine.config;
                 var logFn = S[config.silent ? 'log' : 'error'];
                 var commands = config.commands;
-                var command = commands[name];
-                if (!command && S.endsWith(name, '_xcmd')) {
-                    command = S.require(name);
-                    if (!command) {
-                        S.error("can not find command module: " + name + "' at line " + line);
-                        return '';
-                    }
-                }
+                var command = findCommand(commands, name);
                 if (!command) {
                     if (!options.params && !options.hash) {
                         var property = utils.getProperty(name, scopes);
@@ -220,15 +226,8 @@ KISSY.add('xtemplate/runtime', function (S, commands) {
                 var id0;
                 var config = engine.config;
                 var commands = config.commands;
-                var command1 = commands[name];
+                var command1 = findCommand(commands, name);
                 var logFn = S[config.silent ? 'log' : 'error'];
-                if (!command1 && S.endsWith(name, '_xcmd')) {
-                    command1 = S.require(name);
-                    if (!command1) {
-                        S.error("can not find command module: " + name + "' at line " + line);
-                        return '';
-                    }
-                }
                 if (command1) {
                     try {
                         id0 = command1.call(engine, scopes, options);
@@ -366,8 +365,34 @@ KISSY.add('xtemplate/runtime', function (S, commands) {
         this.config = config;
     }
 
-    XTemplateRuntime.commands = commands;
-    XTemplateRuntime.utils = utils;
+    S.mix(XTemplateRuntime, {
+        commands: commands,
+
+        utils: utils,
+
+        /**
+         * add command to all template
+         * @method
+         * @static
+         * @param {String} commandName
+         * @param {Function} fn
+         * @member KISSY.XTemplate.Runtime
+         */
+        addCommand: function (commandName, fn) {
+            commands[commandName] = fn;
+        },
+
+        /**
+         * remove command from all template by name
+         * @method
+         * @static
+         * @param {String} commandName
+         * @member KISSY.XTemplate.Runtime
+         */
+        removeCommand: function (commandName) {
+            delete commands[commandName];
+        }
+    });
 
     XTemplateRuntime.prototype = {
         constructor: XTemplateRuntime,

@@ -566,10 +566,8 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
 
                 it('support global command for variable', function () {
 
-                    KISSY.add('global_xcmd', function () {
-                        return function (scopes, config) {
-                            return 'global-' + config.params[0];
-                        }
+                    XTemplate.addCommand('global_xcmd', function (scopes, config) {
+                        return 'global-' + config.params[0];
                     });
 
                     var tpl = 'my {{global_xcmd title}}';
@@ -585,12 +583,31 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
                 });
 
 
+                it('support namespace global command for variable', function () {
+
+                    XTemplate.addCommand('cmd', {
+                        global_xcmd: function (scopes, config) {
+                            return 'global-' + config.params[0];
+                        }
+                    });
+
+                    var tpl = '{{cmd.global_xcmd title}}';
+
+                    var data = {
+                        title: '1'
+                    };
+
+                    var render = new XTemplate(tpl).render(data);
+
+                    expect(render).toBe('global-1');
+
+                });
+
+
                 it('support global command for block', function () {
 
-                    KISSY.add('global2_xcmd', function () {
-                        return  function (scopes, config) {
-                            return 'global2-' + config.fn(scopes);
-                        }
+                    XTemplate.addCommand('global2_xcmd', function (scopes, config) {
+                        return 'global2-' + config.fn(scopes);
                     });
 
                     var tpl = 'my {{#global2_xcmd}}{{title}}{{/global2_xcmd}}';
@@ -618,6 +635,28 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
                         commands: {
                             'global3': function (scopes, config) {
                                 return 'global3-' + config.params[0];
+                            }
+                        }
+                    }).render(data);
+
+                    expect(render).toBe('my global3-1');
+
+                });
+
+                it('support namespace local command for variable', function () {
+
+                    var tpl = 'my {{global3.x title}}';
+
+                    var data = {
+                        title: '1'
+                    };
+
+                    var render = new XTemplate(tpl, {
+                        commands: {
+                            'global3': {
+                                x: function (scopes, config) {
+                                    return 'global3-' + config.params[0];
+                                }
                             }
                         }
                     }).render(data);

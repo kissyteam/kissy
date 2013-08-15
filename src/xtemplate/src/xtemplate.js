@@ -4,7 +4,6 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add('xtemplate', function (S, XTemplateRuntime, compiler) {
-
     var cache = XTemplate.cache = {};
 
     function compile(tpl, config) {
@@ -44,7 +43,6 @@ KISSY.add('xtemplate', function (S, XTemplateRuntime, compiler) {
      * @extends KISSY.XTemplate.Runtime
      */
     function XTemplate(tpl, config) {
-
         var self = this;
         config = S.merge(defaultCfg, config);
 
