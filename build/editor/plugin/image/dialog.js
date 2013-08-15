@@ -75,7 +75,7 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Overlay4E, Tabs
             "</div>" +
             "</div>" +
             "<div style='" +
-            "padding:0 20px 5px 20px;'>" +
+            "padding:0 20px 5px 20px;zoom:1'>" +
             "<table " +
             "style='width:100%;margin-top:8px;' " +
             "class='{prefixCls}img-setting'>" +
