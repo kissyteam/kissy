@@ -19,6 +19,16 @@ KISSY.add("editor/plugin/overlay/index", function (S, Editor, Overlay, focusFix,
     });
 
     Overlay4E.Dialog = Overlay.Dialog.extend({
+        initializer:function(){
+            this.plug(new DragPlugin({
+                handlers: ['.ks-editor-stdmod-header'],
+                plugins: [
+                    new ConstrainPlugin({
+                        constrain: window
+                    })
+                ]
+            }));
+        },
         bindUI: function () {
             focusFix.init(this);
         },
@@ -41,18 +51,6 @@ KISSY.add("editor/plugin/overlay/index", function (S, Editor, Overlay, focusFix,
             },
             "zIndex": {
                 value: Editor.baseZIndex(Editor.zIndexManager.OVERLAY)
-            },
-            plugins: {
-                value: [
-                    new DragPlugin({
-                        handlers: ['.ks-editor-stdmod-header'],
-                        plugins: [
-                            new ConstrainPlugin({
-                                constrain: window
-                            })
-                        ]
-                    })
-                ]
             }
         }
     });

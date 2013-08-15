@@ -27,8 +27,18 @@
         .ks-dd-drag-over {
             background: #a52a2a;
         }
+
+        .ks-dd-drop-over {
+            background: #ffff00;
+        }
+
+        .ks-dd-proxy {
+            position: absolute;
+            left: -9999px;
+            top: -9999px;
+        }
     </style>
-    <link rel="stylesheet" href="../../css/src/dpl/base.css"/>
+    <link rel="stylesheet" href="/kissy/src/css/src/dpl/base.css"/>
 </head>
 <body>
 
@@ -57,21 +67,19 @@
     <div id="drop">
         <strong>drop zone</strong>
     </div>
+
 </div>
 
 <script src="/kissy/build/seed.js"></script>
-
 <script>
 
     var S = KISSY;
 
-    KISSY.use("node,dd", function (S, Node, DD) {
+    KISSY.use("node,dd,dd/plugin/proxy", function (S, Node, DD, Proxy) {
         var DDM = DD.DDM,
                 $ = Node.all,
-                DraggableDelegate = DD.DraggableDelegate,
                 Draggable = DD.Draggable,
-                Droppable = DD.Droppable,
-                Proxy = DD.Proxy;
+                Droppable = DD.Droppable;
 
         /**
          * 简单拖放
@@ -99,14 +107,14 @@
                 // strict : drag 区域完全在 drop 区域内才算
                 // point : 鼠标在 drop 区域内
                 //默认 point
-                mode: Draggable.INTERSECT
+                mode: Draggable.DropMode.INTERSECT
             });
 
 
             var c3 = new Draggable({
                 node: "#c3",
                 move: 1,
-                mode: Draggable.STRICT
+                mode: Draggable.DropMode.STRICT
             });
 
             c3.plug(p);
@@ -115,7 +123,6 @@
                 node: "#c2",
                 move: 1
             });
-
 
             var drop = new Droppable({
                 node: "#drop"
@@ -138,7 +145,7 @@
             });
 
             function onhit(ev) {
-                var node = ev.drag.get("node");
+                var node = ev.drag.get("dragNode");
                 node.css({
                     position: "",
                     left: "",
@@ -153,15 +160,14 @@
             DDM.on("dragdropmiss", function (ev) {
                 var node = ev.drag.get("node");
                 S.log(node.attr("id") + " dragdropmiss ");
-
                 if (node.isProxy) {
                     var dragNode = ev.drag.get("dragNode");
                     node = node.clone(true).insertBefore(node);
-                    node.animate({
-                        props: {
-                            left: dragNode.offset().left - parseInt(dragNode.css('margin-left')),
-                            top: dragNode.offset().top - parseInt(dragNode.css('margin-top'))
-                        },
+                    var props = {
+                        left: dragNode.offset().left - parseInt(dragNode.css('margin-left')),
+                        top: dragNode.offset().top - parseInt(dragNode.css('margin-top'))
+                    };
+                    node.animate(props,{
                         duration: 0.5,
                         complete: function () {
                             node.remove();
@@ -169,10 +175,9 @@
                     })
                 } else {
                     node.animate({
-                        props: {
-                            left: 0,
-                            top: 0
-                        },
+                        left: 0,
+                        top: 0
+                    }, {
                         duration: 0.5,
                         complete: function () {
                             node.css({
@@ -203,7 +208,6 @@
             });
 
             drop.on("drophit", onhit);
-
         });
     });
 

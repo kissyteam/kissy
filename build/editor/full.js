@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.31
 MIT Licensed
-build time: Aug 15 15:50
+build time: Aug 15 16:16
 */
 /**
  * Set up editor constructor
@@ -14518,6 +14518,16 @@ KISSY.add("editor/plugin/overlay/index", function (S, Editor, Overlay, focusFix,
     });
 
     Overlay4E.Dialog = Overlay.Dialog.extend({
+        initializer:function(){
+            this.plug(new DragPlugin({
+                handlers: ['.ks-editor-stdmod-header'],
+                plugins: [
+                    new ConstrainPlugin({
+                        constrain: window
+                    })
+                ]
+            }));
+        },
         bindUI: function () {
             focusFix.init(this);
         },
@@ -14540,18 +14550,6 @@ KISSY.add("editor/plugin/overlay/index", function (S, Editor, Overlay, focusFix,
             },
             "zIndex": {
                 value: Editor.baseZIndex(Editor.zIndexManager.OVERLAY)
-            },
-            plugins: {
-                value: [
-                    new DragPlugin({
-                        handlers: ['.ks-editor-stdmod-header'],
-                        plugins: [
-                            new ConstrainPlugin({
-                                constrain: window
-                            })
-                        ]
-                    })
-                ]
             }
         }
     });
