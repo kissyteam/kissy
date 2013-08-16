@@ -6,14 +6,15 @@ KISSY.add('date/picker/month-panel/control',function(S,
                                                      Node,
                                                      GregorianCalendar,
                                                      Control,
-                                                     MonthPanelRender){
+                                                     MonthPanelRender,
+    YearPanel){
     var tap = Node.Gesture.tap;
     var $ = Node.all;
 
     function goYear(self, direction) {
         var next = self.get('value').clone();
         next.add(GregorianCalendar.YEAR, direction);
-        self.set('value', next);
+        self.set('value',next)
     }
 
     function nextYear(e) {
@@ -34,7 +35,31 @@ KISSY.add('date/picker/month-panel/control',function(S,
         var trIndex = tr.index();
         var value=this.get('value').clone();
         value.set(GregorianCalendar.MONTH,trIndex*4+tdIndex);
-        this.set('value', value);
+        this.fire('select',{
+            value:value
+        });
+    }
+    
+    function showYearPanel(e) {
+        e.preventDefault();
+        var yearPanel = this.get('yearPanel');
+        yearPanel.set('value', this.get('value'));
+        yearPanel.show();
+    }
+
+    function setUpYearPanel() {
+        var self = this;
+        var yearPanel = new YearPanel({
+            locale:this.get('locale'),
+            render: self.get('el')
+        });
+        yearPanel.on('select', onYearPanelSelect, self);
+        return yearPanel;
+    }
+
+    function onYearPanelSelect(e) {
+        this.set('value', e.value);
+        this.get('yearPanel').hide();
     }
 
     return Control.extend({
@@ -48,6 +73,7 @@ KISSY.add('date/picker/month-panel/control',function(S,
                 chooseCell,
                 self
             );
+            self.get('yearSelectEl').on(tap,showYearPanel,self);
         }
     },{
         xclass:'date-picker-month-panel',
@@ -55,11 +81,20 @@ KISSY.add('date/picker/month-panel/control',function(S,
             value:{
                 view:1
             },
+            yearPanel: {
+                valueFn: setUpYearPanel
+            },
             xrender:{
                 value:MonthPanelRender
             }
         }
     })
 },{
-    requires:['node','date/gregorian','component/control','./render']
+    requires:[
+        'node',
+        'date/gregorian',
+        'component/control',
+        './render',
+        '../year-panel/control'
+    ]
 });

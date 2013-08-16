@@ -2,7 +2,7 @@
  * year panel for date picker
  * @author yiminghe@gmail.com
  */
-KISSY.add('date/picker/control', function (S, Node, GregorianCalendar, locale, Control, PickerRender) {
+KISSY.add('date/picker/control', function (S, Node, GregorianCalendar, locale, Control, PickerRender, MonthPanel) {
     var tap = Node.Gesture.tap;
     var $ = Node.all;
 
@@ -34,6 +34,35 @@ KISSY.add('date/picker/control', function (S, Node, GregorianCalendar, locale, C
         this.set('value', this.dateTable[trIndex][tdIndex]);
     }
 
+    function showMonthPanel(e) {
+        e.preventDefault();
+        var monthPanel = this.get('monthPanel');
+        monthPanel.set('value', this.get('value'));
+        monthPanel.show();
+    }
+
+    function setUpMonthPanel() {
+        var self = this;
+        var monthPanel = new MonthPanel({
+            locale: this.get('locale'),
+            render: self.get('el')
+        });
+        monthPanel.on('select', onMonthPanelSelect, self);
+        return monthPanel;
+    }
+
+    function onMonthPanelSelect(e) {
+        this.set('value', e.value);
+        this.get('monthPanel').hide();
+    }
+
+    function chooseToday(e) {
+        e.preventDefault();
+        var today = this.get('value').clone();
+        today.setTimeInMillis(S.now());
+        this.set('value', today);
+    }
+
     return Control.extend({
         bindUI: function () {
             var self = this;
@@ -45,6 +74,8 @@ KISSY.add('date/picker/control', function (S, Node, GregorianCalendar, locale, C
                 chooseCell,
                 self
             );
+            self.get('monthSelectEl').on(tap, showMonthPanel, self);
+            self.get('todayBtnEl').on(tap, chooseToday, self);
         }
     }, {
         xclass: 'date-picker',
@@ -59,6 +90,9 @@ KISSY.add('date/picker/control', function (S, Node, GregorianCalendar, locale, C
             },
             previousMonthBtn: {},
             monthSelectEl: {},
+            monthPanel: {
+                valueFn: setUpMonthPanel
+            },
             nextMonthBtn: {},
             tbodyEl: {},
             todayBtnEl: {},
@@ -81,6 +115,8 @@ KISSY.add('date/picker/control', function (S, Node, GregorianCalendar, locale, C
         'node',
         'date/gregorian',
         'i18n!date/picker',
-        'component/control', './render'
+        'component/control',
+        './render',
+        './month-panel/control'
     ]
 });

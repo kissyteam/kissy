@@ -1,8 +1,17 @@
 .ks-date-picker-decade-panel {
     width: 100%;
+    height: 100%;
+    left: 0;
+    top:0;
+    z-index: 30;
     position: absolute;
+    background: #ffffff;
     outline: none;
     border-bottom: 1px solid #9bc0e0;
+}
+
+.ks-date-picker-decade-panel-hidden {
+    display: none;
 }
 
 .ks-date-picker-decade-panel-prev-century-btn,

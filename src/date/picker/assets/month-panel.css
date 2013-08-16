@@ -1,8 +1,17 @@
 .ks-date-picker-month-panel {
     width: 100%;
+    height:100%;
+    left: 0;
+    top:0;
+    z-index: 10;
+    background: #ffffff;
     position: absolute;
     outline: none;
     border-bottom: 1px solid #9bc0e0;
+}
+
+.ks-date-picker-month-panel-hidden {
+    display: none;
 }
 
 .ks-date-picker-month-panel-prev-year-btn,

@@ -2,7 +2,7 @@
  * month select for date picker
  * @author yiminghe@gmail.com
  */
-KISSY.add('date/picker/year-panel/control', function (S, Node, GregorianCalendar, Control, YearPanelRender) {
+KISSY.add('date/picker/year-panel/control', function (S, Node, GregorianCalendar, Control, DecadePanelRender, DecadePanel) {
     var tap = Node.Gesture.tap;
     var $ = Node.all;
 
@@ -31,6 +31,31 @@ KISSY.add('date/picker/year-panel/control', function (S, Node, GregorianCalendar
         var value = this.get('value').clone();
         value.set(GregorianCalendar.YEAR, this.years[trIndex][tdIndex].content);
         this.set('value', value);
+        this.fire('select', {
+            value: value
+        });
+    }
+
+    function showDecadePanel(e) {
+        e.preventDefault();
+        var decadePanel = this.get('decadePanel');
+        decadePanel.set('value', this.get('value'));
+        decadePanel.show();
+    }
+
+    function setUpDecadePanel() {
+        var self = this;
+        var decadePanel = new DecadePanel({
+            locale: this.get('locale'),
+            render: self.get('el')
+        });
+        decadePanel.on('select', onDecadePanelSelect, self);
+        return decadePanel;
+    }
+
+    function onDecadePanelSelect(e) {
+        this.set('value', e.value);
+        this.get('decadePanel').hide();
     }
 
     return Control.extend({
@@ -44,6 +69,7 @@ KISSY.add('date/picker/year-panel/control', function (S, Node, GregorianCalendar
                 chooseCell,
                 self
             );
+            self.get('decadeSelectEl').on(tap, showDecadePanel, self);
         }
     }, {
         xclass: 'date-picker-year-panel',
@@ -51,11 +77,19 @@ KISSY.add('date/picker/year-panel/control', function (S, Node, GregorianCalendar
             value: {
                 view: 1
             },
+            decadePanel: {
+                valueFn: setUpDecadePanel
+            },
             xrender: {
-                value: YearPanelRender
+                value: DecadePanelRender
             }
         }
     });
 }, {
-    requires: ['node', 'date/gregorian', 'component/control', './render']
+    requires: [
+        'node',
+        'date/gregorian',
+        'component/control',
+        './render',
+        '../decade-panel/control']
 });

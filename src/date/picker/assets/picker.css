@@ -4,6 +4,11 @@
     border: 1px solid #9bc0e0;
     width: 190px;
     outline: none;
+    position: relative;
+}
+
+.ks-date-picker-hidden {
+    display: none;
 }
 
 .ks-date-picker-prev-month-btn,

@@ -32,6 +32,9 @@ KISSY.add('date/picker/decade-panel/control', function (S, Node, GregorianCalend
         var y = value.get(GregorianCalendar.YEAR) % 10;
         value.set(GregorianCalendar.YEAR, this.decades[trIndex][tdIndex].startDecade + y);
         this.set('value', value);
+        this.fire('select', {
+            value: value
+        });
     }
 
     return Control.extend({

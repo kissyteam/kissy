@@ -49,7 +49,7 @@ KISSY.add('date/picker/month-panel/render', function (S, Control, GregorianCalen
                 previousYearBtn: '#ks-date-picker-month-panel-previous-year-btn-{id}',
                 yearSelectEl: '#ks-date-picker-month-panel-year-select-{id}',
                 yearSelectContentEl: '#ks-date-picker-month-panel-year-select-content-{id}',
-                nextYearBtn: '#ks-date-picker-month-panel-next-year-btn{id}'
+                nextYearBtn: '#ks-date-picker-month-panel-next-year-btn-{id}'
             });
             
             prepareMonths(control);
