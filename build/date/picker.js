@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 16 13:32
+build time: Aug 16 15:24
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -63,6 +63,10 @@ KISSY.add('date/picker/render', function (S, Control, GregorianCalendar, DateTim
             current.get(GregorianCalendar.MONTH) > today.get(GregorianCalendar.MONTH);
     }
 
+    function renderDatesCmd(){
+        return this.view.renderDates();
+    }
+
     return Control.getDefaultRender().extend({
         getMonthYearLabel: function () {
             var self = this;
@@ -114,7 +118,7 @@ KISSY.add('date/picker/render', function (S, Control, GregorianCalendar, DateTim
                 todayLabel: locale.today,
                 todayTimeLabel: self.getTodayTimeLabel()
             });
-            renderCommands.renderDates = S.bind(self.renderDates, self);
+            renderCommands.renderDates = renderDatesCmd;
         },
         renderDates: function () {
             var self = this,
