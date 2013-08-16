@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 16 15:24
+build time: Aug 16 17:10
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -64,7 +64,7 @@ KISSY.add('date/picker/render', function (S, Control, GregorianCalendar, DateTim
     }
 
     function renderDatesCmd(){
-        return this.view.renderDates();
+        return this.config.view.renderDates();
     }
 
     return Control.getDefaultRender().extend({

@@ -84,11 +84,11 @@ KISSY.add("component/control/render", function (S, ComponentProcess, XTemplate, 
 
     // scope option
     function getBaseCssClassesCmd() {
-        return this.view.getBaseCssClasses(arguments[1].params[0]);
+        return this.config.view.getBaseCssClasses(arguments[1].params[0]);
     }
 
     function getBaseCssClassCmd() {
-        return this.view.getBaseCssClass(arguments[1].params[0]);
+        return this.config.view.getBaseCssClass(arguments[1].params[0]);
     }
 
     /**
@@ -274,12 +274,11 @@ KISSY.add("component/control/render", function (S, ComponentProcess, XTemplate, 
             var self = this;
             renderData = renderData || self.renderData;
             renderCommands = renderCommands || self.renderCommands;
-            var engine = new XTemplate(tpl, {
+            return new XTemplate(tpl, {
+                control: self.control,
+                view: self,
                 commands: renderCommands
-            });
-            engine.control = self.control;
-            engine.view = self;
-            return engine.render(renderData);
+            }).render(renderData);
         },
 
         /**

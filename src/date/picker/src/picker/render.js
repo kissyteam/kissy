@@ -33,7 +33,7 @@ KISSY.add('date/picker/render', function (S, Control, GregorianCalendar, DateTim
     }
 
     function renderDatesCmd(){
-        return this.view.renderDates();
+        return this.config.view.renderDates();
     }
 
     return Control.getDefaultRender().extend({
