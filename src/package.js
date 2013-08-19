@@ -538,10 +538,6 @@ if (!loc.getQuery().has('build')) {
             "base": "/kissy/src/filter-menu/src/filter-menu",
             "ignorePackageNameInUri": 1
         },
-        "grid": {
-            "base": "/kissy/src/grid/src/grid",
-            "ignorePackageNameInUri": 1
-        },
         "html-parser": {
             "base": "/kissy/src/html-parser/src/html-parser",
             "ignorePackageNameInUri": 1
