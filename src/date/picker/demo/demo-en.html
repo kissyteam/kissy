@@ -33,6 +33,7 @@
 <script src="/kissy/build/seed.js"></script>
 <script src="/kissy/src/package.js"></script>
 <script>
+    KISSY.config('lang','en-us');
     KISSY.use('node,date/picker,date/gregorian,date/format', function (S, Node, DatePicker, GregorianCalendar, DateFormat) {
         var result = Node.all('#result');
         var picker = new DatePicker({

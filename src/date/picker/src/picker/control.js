@@ -5,10 +5,43 @@
 KISSY.add('date/picker/control', function (S, Node, GregorianCalendar, locale, Control, PickerRender, MonthPanel) {
     var tap = Node.Gesture.tap;
     var $ = Node.all;
+    var undefined = undefined;
+    var KeyCode = Node.KeyCode;
+
+    function goStartMonth(self) {
+        var next = self.get('value').clone();
+        next.set(GregorianCalendar.DAY_OF_MONTH, 1);
+        self.set('value', next);
+    }
+
+    function goEndMonth(self) {
+        var next = self.get('value').clone();
+        next.add(GregorianCalendar.MONTH, 1);
+        next.add(GregorianCalendar.DAY_OF_MONTH, -1);
+        self.set('value', next);
+    }
 
     function goMonth(self, direction) {
         var next = self.get('value').clone();
         next.add(GregorianCalendar.MONTH, direction);
+        self.set('value', next);
+    }
+
+    function goYear(self, direction) {
+        var next = self.get('value').clone();
+        next.add(GregorianCalendar.YEAR, direction);
+        self.set('value', next);
+    }
+
+    function goWeek(self, direction) {
+        var next = self.get('value').clone();
+        next.add(GregorianCalendar.WEEK_OF_YEAR, direction);
+        self.set('value', next);
+    }
+
+    function goDay(self, direction) {
+        var next = self.get('value').clone();
+        next.add(GregorianCalendar.DAY_OF_MONTH, direction);
         self.set('value', next);
     }
 
@@ -22,18 +55,30 @@ KISSY.add('date/picker/control', function (S, Node, GregorianCalendar, locale, C
         goMonth(this, -1);
     }
 
+    function nextYear(e) {
+        e.preventDefault();
+        goYear(this, 1);
+    }
+
+    function prevYear(e) {
+        e.preventDefault();
+        goYear(this, -1);
+    }
+
     function chooseCell(e) {
-        var disabledDate = this.get('disabledDate');
+        var self = this;
+        self.set('clear', false);
+        var disabledDate = self.get('disabledDate');
         e.preventDefault();
         var td = $(e.currentTarget);
-        var tr = td.parent();
-        var tdIndex = td.index();
-        var trIndex = tr.index();
-        var value = this.dateTable[trIndex][tdIndex];
-        if (disabledDate && disabledDate(value, this.get('value'))) {
+        var value = self.dateTable[parseInt(td.attr('data-index'))];
+        if (disabledDate && disabledDate(value, self.get('value'))) {
             return
         }
-        this.set('value', this.dateTable[trIndex][tdIndex]);
+        self.set('value', value);
+        self.fire('select', {
+            value: value
+        });
     }
 
     function showMonthPanel(e) {
@@ -60,9 +105,32 @@ KISSY.add('date/picker/control', function (S, Node, GregorianCalendar, locale, C
 
     function chooseToday(e) {
         e.preventDefault();
+        this.set('clear', false);
         var today = this.get('value').clone();
         today.setTimeInMillis(S.now());
         this.set('value', today);
+    }
+
+    function toggleClear() {
+        var self = this,
+            v = !self.get('clear');
+        if (!v) {
+            var value = self.get('value');
+            value.set(GregorianCalendar.DAY_OF_MONTH, 1);
+            self.set('clear', false);
+        } else {
+            self.set('clear', true);
+        }
+    }
+
+    function onClearClick(e) {
+        e.preventDefault();
+        if (!this.get('clear')) {
+            toggleClear.call(this);
+        }
+        this.fire('select', {
+            value: null
+        });
     }
 
     return Control.extend({
@@ -70,6 +138,8 @@ KISSY.add('date/picker/control', function (S, Node, GregorianCalendar, locale, C
             var self = this;
             self.get('nextMonthBtn').on(tap, nextMonth, self);
             self.get('previousMonthBtn').on(tap, prevMonth, self);
+            self.get('nextYearBtn').on(tap, nextYear, self);
+            self.get('previousYearBtn').on(tap, prevYear, self);
             self.get('tbodyEl').delegate(
                 tap,
                 '.' + self.view.getBaseCssClass('cell'),
@@ -78,6 +148,82 @@ KISSY.add('date/picker/control', function (S, Node, GregorianCalendar, locale, C
             );
             self.get('monthSelectEl').on(tap, showMonthPanel, self);
             self.get('todayBtnEl').on(tap, chooseToday, self);
+            self.get('clearBtnEl').on(tap, onClearClick, self);
+        },
+        handleKeyDownInternal: function (e) {
+            var self = this;
+            var keyCode = e.keyCode;
+            var ctrlKey = e.ctrlKey;
+            switch (keyCode) {
+                case KeyCode.SPACE:
+                    self.set('clear', !self.get('clear'));
+                    return true;
+            }
+            if (this.get('clear')) {
+                switch (keyCode) {
+                    case KeyCode.DOWN:
+                    case KeyCode.UP:
+                    case KeyCode.LEFT:
+                    case KeyCode.RIGHT:
+                        if (!ctrlKey) {
+                            toggleClear.call(self);
+                        }
+                        return true;
+                    case KeyCode.HOME:
+                        toggleClear.call(self);
+                        goStartMonth(self);
+                        return true;
+                    case KeyCode.END:
+                        toggleClear.call(self);
+                        goEndMonth(self);
+                        return true;
+                    case KeyCode.ENTER:
+                        self.fire('select', {
+                            value: null
+                        });
+                        return true;
+                }
+            }
+            switch (keyCode) {
+                case KeyCode.DOWN:
+                    goWeek(self, 1);
+                    return true;
+                case KeyCode.UP:
+                    goWeek(self, -1);
+                    return true;
+                case KeyCode.LEFT:
+                    if (ctrlKey) {
+                        goYear(self, -1);
+                    } else {
+                        goDay(self, -1);
+                    }
+                    return true;
+                case KeyCode.RIGHT:
+                    if (ctrlKey) {
+                        goYear(self, 1);
+                    } else {
+                        goDay(self, 1);
+                    }
+                    return true;
+                case KeyCode.HOME:
+                    goStartMonth(self);
+                    return true;
+                case KeyCode.END:
+                    goEndMonth(self);
+                    return true;
+                case KeyCode.PAGE_DOWN:
+                    goMonth(self, 1);
+                    return true;
+                case KeyCode.PAGE_UP:
+                    goMonth(self, -1);
+                    return true;
+                case KeyCode.ENTER:
+                    self.fire('select', {
+                        value: self.get('value')
+                    });
+                    return true;
+            }
+            return undefined;
         }
     }, {
         xclass: 'date-picker',
@@ -110,9 +256,17 @@ KISSY.add('date/picker/control', function (S, Node, GregorianCalendar, locale, C
                 view: 1,
                 value: true
             },
-            showWeekNumber:{
-                view:1,
-                value:true
+            showClear: {
+                view: 1,
+                value: true
+            },
+            clear: {
+                view: 1,
+                value: false
+            },
+            showWeekNumber: {
+                view: 1,
+                value: true
             },
             xrender: {
                 value: PickerRender

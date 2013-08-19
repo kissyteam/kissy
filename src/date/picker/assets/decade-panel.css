@@ -10,6 +10,10 @@
     border-bottom: 1px solid #9bc0e0;
 }
 
+.ks-ie6 .ks-date-picker-decade-panel{
+    height:expression(this.parentNode.offsetHeight)
+}
+
 .ks-date-picker-decade-panel-hidden {
     display: none;
 }
@@ -18,6 +22,12 @@
 .ks-date-picker-decade-panel-next-century-btn,
 .ks-date-picker-decade-panel-header {
     background: url('http://img03.taobaocdn.com/tps/i3/T1d4OJXkpxXXXXXXXX-19-300.png');
+}
+
+.ks-ie6 .ks-date-picker-decade-panel-prev-century-btn,
+.ks-ie6 .ks-date-picker-decade-panel-next-century-btn,
+.ks-ie6 .ks-date-picker-decade-panel-header {
+    background-image: url('http://img01.taobaocdn.com/tps/i1/T10.uJXc4bXXXXXXXX-19-300.png');
 }
 
 .ks-date-picker-decade-panel-header {
@@ -78,6 +88,12 @@
     display: block;
     border-radius: 2px;
     border: 1px solid transparent;
+}
+
+.ks-ie6 .ks-date-picker-decade-panel-decade {
+    border-color: tomato;
+    zoom: 1;
+    filter: chroma(color=tomato);
 }
 
 .ks-date-picker-decade-panel-decade:hover {

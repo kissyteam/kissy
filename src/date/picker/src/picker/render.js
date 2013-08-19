@@ -5,12 +5,25 @@
 KISSY.add('date/picker/render', function (S, Node, Control, GregorianCalendar, DateTimeFormat, PickerTpl) {
     var dateRowTplStart = '<tr role="row">';
     var dateRowTplEnd = '</tr>';
-    var dateCellTpl = '<td role="gridcell" title="{title}" class="{cls}">{content}</td>';
+    var dateCellTpl = '<td role="gridcell" data-index="{index}" title="{title}" class="{cls}">{content}</td>';
     var weekNumberCellTpl = '<td role="gridcell" class="{cls}">{content}</td>';
-    var dateTpl = '<a hidefocus="on" class="{cls}" href="#" aria-disabled="{disabled}">{content}</a>';
+    var dateTpl = '<a ' +
+        ' id="{id}" ' +
+        ' hidefocus="on" ' +
+        ' unselectable="on" ' +
+        ' tabindex="-1" ' +
+        ' class="{cls}" ' +
+        ' href="#" ' +
+        ' aria-selected="{selected}" ' +
+        ' aria-disabled="{disabled}">{content}</a>';
     var DATE_ROW_COUNT = 6;
     var DATE_COL_COUNT = 7;
-    var $ = Node.all;
+
+    function getIdFromDate(d) {
+        return 'ks-date-picker-date-' + d.get(GregorianCalendar.YEAR) +
+            '-' + d.get(GregorianCalendar.MONTH) + '-' +
+            d.get(GregorianCalendar.DAY_OF_MONTH);
+    }
 
     function isSameDay(one, two) {
         return one.get(GregorianCalendar.YEAR) == two.get(GregorianCalendar.YEAR) &&
@@ -52,6 +65,7 @@ KISSY.add('date/picker/render', function (S, Node, Control, GregorianCalendar, D
             var dateLocale = value.getLocale();
             return new DateTimeFormat(locale.monthYearFormat, dateLocale).format(value);
         },
+
         getTodayTimeLabel: function () {
             var self = this;
             var control = self.control;
@@ -62,6 +76,7 @@ KISSY.add('date/picker/render', function (S, Node, Control, GregorianCalendar, D
             today.setTimeInMillis(S.now());
             return new DateTimeFormat(locale.dateFormat, dateLocale).format(today);
         },
+
         beforeCreateDom: function (renderData, childrenSelectors, renderCommands) {
             var self = this;
             var control = self.control;
@@ -69,11 +84,14 @@ KISSY.add('date/picker/render', function (S, Node, Control, GregorianCalendar, D
             var value = control.get('value');
             var dateLocale = value.getLocale();
             S.mix(childrenSelectors, {
-                previousMonthBtn: '#ks-date-picker-previous-month-btn-{id}',
                 monthSelectEl: '#ks-date-picker-month-select-{id}',
                 monthSelectContentEl: '#ks-date-picker-month-select-content-{id}',
+                previousMonthBtn: '#ks-date-picker-previous-month-btn-{id}',
                 nextMonthBtn: '#ks-date-picker-next-month-btn-{id}',
+                previousYearBtn: '#ks-date-picker-previous-year-btn-{id}',
+                nextYearBtn: '#ks-date-picker-next-year-btn-{id}',
                 todayBtnEl: '#ks-date-picker-today-btn-{id}',
+                clearBtnEl: '#ks-date-picker-clear-btn-{id}',
                 tbodyEl: '#ks-date-picker-tbody-{id}'
             });
             var veryShortWeekdays = [];
@@ -85,24 +103,29 @@ KISSY.add('date/picker/render', function (S, Node, Control, GregorianCalendar, D
                 weekDays[i] = dateLocale.weekdays[index];
             }
             S.mix(renderData, {
+                monthSelectLabel: locale.monthSelect,
                 monthYearLabel: self.getMonthYearLabel(),
                 previousMonthLabel: locale.previousMonth,
-                monthSelectLabel: locale.monthSelect,
                 nextMonthLabel: locale.nextMonth,
+                previousYearLabel: locale.previousYear,
+                nextYearLabel: locale.nextYear,
                 weekdays: weekDays,
                 veryShortWeekdays: veryShortWeekdays,
                 todayLabel: locale.today,
+                clearLabel: locale.clear,
                 todayTimeLabel: self.getTodayTimeLabel()
             });
             renderCommands.renderDates = renderDatesCmd;
         },
+
         renderDates: function () {
             var self = this,
                 i, j,
-                tables = [],
+                dateTable = [],
                 current,
                 control = self.control,
-                showWeekNumber=control.get('showWeekNumber'),
+                isClear = control.get('clear'),
+                showWeekNumber = control.get('showWeekNumber'),
                 locale = control.get('locale'),
                 value = control.get('value'),
                 today = value.clone(),
@@ -121,7 +144,6 @@ KISSY.add('date/picker/render', function (S, Node, Control, GregorianCalendar, D
 
             today.setTimeInMillis(S.now());
             var month1 = value.clone();
-
             month1.set(value.get(GregorianCalendar.YEAR), value.get(GregorianCalendar.MONTH), 1);
             var day = month1.get(GregorianCalendar.DAY_OF_WEEK);
             var lastMonthDiffDay = (day + 7 - value.getFirstDayOfWeek()) % 7;
@@ -130,36 +152,38 @@ KISSY.add('date/picker/render', function (S, Node, Control, GregorianCalendar, D
             lastMonth1.add(GregorianCalendar.DAY_OF_MONTH, -lastMonthDiffDay);
             var passed = 0;
             for (i = 0; i < DATE_ROW_COUNT; i++) {
-                tables[i] = [];
                 for (j = 0; j < DATE_COL_COUNT; j++) {
                     current = lastMonth1;
                     if (passed) {
                         current = current.clone();
                         current.add(GregorianCalendar.DAY_OF_MONTH, passed);
                     }
-                    tables[i][j] = current;
+                    dateTable.push(current);
                     passed++;
                 }
             }
             var tableHtml = '';
+            passed = 0;
             for (i = 0; i < DATE_ROW_COUNT; i++) {
                 var rowHtml = dateRowTplStart;
-                if(showWeekNumber){
-                    rowHtml+= S.substitute(weekNumberCellTpl,{
-                        cls:weekNumberCellClass,
-                        content:tables[i][0].get(GregorianCalendar.WEEK_OF_YEAR)
+                if (showWeekNumber) {
+                    rowHtml += S.substitute(weekNumberCellTpl, {
+                        cls: weekNumberCellClass,
+                        content: dateTable[passed].get(GregorianCalendar.WEEK_OF_YEAR)
                     });
                 }
                 for (j = 0; j < DATE_COL_COUNT; j++) {
-                    current = tables[i][j];
+                    current = dateTable[passed];
                     var cls = cellClass;
                     var disabled = false;
+                    var selected = false;
 
                     if (isSameDay(current, today)) {
                         cls += ' ' + todayClass;
                     }
-                    if (isSameDay(current, value)) {
+                    if (!isClear && isSameDay(current, value)) {
                         cls += ' ' + selectedClass;
+                        selected = true;
                     }
                     if (beforeCurrentMonthYear(current, value)) {
                         cls += ' ' + lastMonthDayClass;
@@ -177,60 +201,77 @@ KISSY.add('date/picker/render', function (S, Node, Control, GregorianCalendar, D
                     } else {
                         dateHtml = S.substitute(dateTpl, {
                             cls: dateClass,
+                            id: getIdFromDate(current),
+                            selected: selected,
                             disabled: disabled,
+
                             content: current.get(GregorianCalendar.DAY_OF_MONTH)
                         });
                     }
                     rowHtml += S.substitute(dateCellTpl, {
                         cls: cls,
+                        index: passed,
                         title: dateFormatter.format(current),
                         content: dateHtml
                     });
+                    passed++;
                 }
                 tableHtml += rowHtml + dateRowTplEnd;
             }
-            control.dateTable = tables;
+            control.dateTable = dateTable;
             return tableHtml;
         },
 
         createDom: function () {
-            this.dateCells = this.$('.' + this.getBaseCssClasses('cell'));
+            this.$el.attr('aria-activedescendant', getIdFromDate(this.control.get('value')));
         },
+
+        '_onSetClear': function (v) {
+            var control = this.control;
+            var value = control.get('value');
+            var selectedCls = this.getBaseCssClass('selected-day');
+            var id = getIdFromDate(value);
+            var currentA = this.$('#' + id);
+            if (v) {
+                currentA.parent().removeClass(selectedCls);
+                currentA.attr('aria-selected', false);
+                this.$el.attr('aria-activedescendant', '');
+            } else {
+                currentA.parent().addClass(selectedCls);
+                currentA.attr('aria-selected', true);
+                this.$el.attr('aria-activedescendant', id);
+            }
+        },
+
         // re render after current value change
         _onSetValue: function (value, e) {
             var control = this.control;
             var preValue = e.prevVal;
             if (isSameMonth(preValue, value)) {
                 var disabledDate = control.get('disabledDate');
-                var dateCells = this.dateCells;
                 var selectedCls = this.getBaseCssClass('selected-day');
-                var dateTable = control.dateTable;
-                for (var i = 0; i < DATE_ROW_COUNT; i++) {
-                    for (var j = 0; j < DATE_COL_COUNT; j++) {
-                        var index = i * DATE_COL_COUNT + j;
-                        var date = dateTable[i][j];
-                        if (isSameDay(date, value)) {
-                            if (disabledDate && disabledDate(date, value)) {
-                            } else {
-                                $(dateCells[index]).addClass(selectedCls);
-                            }
-                        } else if (isSameDay(date, preValue)) {
-                            $(dateCells[index]).removeClass(selectedCls);
-                        }
-                    }
+                var prevA = this.$('#' + getIdFromDate(preValue));
+                prevA.parent().removeClass(selectedCls);
+                prevA.attr('aria-selected', false);
+                if (disabledDate && disabledDate(value, value)) {
+                } else {
+                    var currentA = this.$('#' + getIdFromDate(value));
+                    currentA.parent().addClass(selectedCls);
+                    currentA.attr('aria-selected', true);
                 }
-                return;
+            } else {
+                var tbodyEl = control.get('tbodyEl');
+                var monthSelectContentEl = control.get('monthSelectContentEl');
+                var todayBtnEl = control.get('todayBtnEl');
+                monthSelectContentEl.html(this.getMonthYearLabel());
+                todayBtnEl.attr('title', this.getTodayTimeLabel());
+                tbodyEl.html(this.renderDates());
             }
-            var tbodyEl = control.get('tbodyEl');
-            var monthSelectContentEl = control.get('monthSelectContentEl');
-            var todayBtnEl = control.get('todayBtnEl');
-            monthSelectContentEl.html(this.getMonthYearLabel());
-            todayBtnEl.attr('title', this.getTodayTimeLabel());
-            tbodyEl.html(this.renderDates());
-            this.dateCells = this.$('.' + this.getBaseCssClasses('cell'));
+            this.$el.attr('aria-activedescendant', getIdFromDate(value));
         }
     }, {
         name: 'date-picker-render',
+
         ATTRS: {
             contentTpl: {
                 value: PickerTpl

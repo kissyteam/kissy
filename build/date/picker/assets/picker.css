@@ -1,13 +1,13 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 16 17:10
+build time: Aug 19 17:23
 */
 .ks-date-picker {
     box-shadow: 1px 1px 0 #ccc;
     background: #ffffff;
     border: 1px solid #9bc0e0;
-    width: 190px;
+    width: 215px;
     outline: none;
     position: relative;
 }
@@ -18,19 +18,33 @@ build time: Aug 16 17:10
 
 .ks-date-picker-prev-month-btn,
 .ks-date-picker-next-month-btn,
+.ks-date-picker-prev-year-btn,
+.ks-date-picker-next-year-btn,
 .ks-date-picker-header {
-    background: url('http://img03.taobaocdn.com/tps/i3/T1d4OJXkpxXXXXXXXX-19-300.png');
+    background-image: url('http://img03.taobaocdn.com/tps/i3/T1d4OJXkpxXXXXXXXX-19-300.png');
+}
+
+.ks-ie6 .ks-date-picker-prev-month-btn,
+.ks-ie6 .ks-date-picker-next-month-btn,
+.ks-ie6 .ks-date-picker-prev-year-btn,
+.ks-ie6 .ks-date-picker-next-year-btn,
+.ks-ie6 .ks-date-picker-header {
+    background-image: url('http://img01.taobaocdn.com/tps/i1/T10.uJXc4bXXXXXXXX-19-300.png');
 }
 
 .ks-date-picker-header {
     background-repeat: repeat-x;
     background-position: 0 -240px;
     height: 26px;
+    line-height: 26px;
     position: relative;
     text-align: center;
 }
 
-.ks-date-picker-prev-month-btn, .ks-date-picker-next-month-btn {
+.ks-date-picker-prev-month-btn,
+.ks-date-picker-next-month-btn,
+.ks-date-picker-prev-year-btn,
+.ks-date-picker-next-year-btn {
     width: 19px;
     height: 19px;
     position: absolute;
@@ -39,17 +53,56 @@ build time: Aug 16 17:10
 
 .ks-date-picker-prev-month-btn {
     background-position: 0 -60px;
-    left: 0;
+    left: 24px;
 }
 
 .ks-date-picker-prev-month-btn:hover {
     background-position: 0 -80px;
 }
 
+.ks-date-picker-prev-year-btn {
+    background-position: 0 -180px;
+    left: 0;
+}
+
+.ks-date-picker-prev-year-btn:hover {
+    background-position: 0 -200px;
+}
+
+.ks-date-picker-next-month-btn {
+    background-position: 0 0;
+    right: 24px;
+}
+
+.ks-date-picker-next-month-btn:hover {
+    background-position: 0 -20px;
+}
+
+.ks-date-picker-next-year-btn {
+    background-position: 0 -120px;
+    right: 0;
+}
+
+.ks-date-picker-next-year-btn:hover {
+    background-position: 0 -140px;
+}
+
 .ks-date-picker-month-select {
     color: #ffffff;
     line-height: 26px;
-    text-decoration: none;
+    border: 1px solid transparent;
+}
+
+.ks-ie6 .ks-date-picker-month-select {
+    border-color: tomato;
+    zoom: 1;
+    filter: chroma(color=tomato);
+}
+
+.ks-ie7 .ks-date-picker-month-select,
+.ks-ie6 .ks-date-picker-month-select {
+    position: relative;
+    top: 5px;
 }
 
 .ks-date-picker-month-select-arrow {
@@ -61,6 +114,19 @@ build time: Aug 16 17:10
     border-left: 4px solid transparent;
     border-right: 4px solid transparent;
     border-top: 4px solid #ffffff;
+    border-bottom-width: 0px;
+}
+
+.ks-ie7 .ks-date-picker-month-select-arrow {
+    padding-top: 2px;
+    vertical-align: bottom;
+}
+
+.ks-ie6 .ks-date-picker-month-select-arrow {
+    border-left-color: tomato;
+    border-right-color: tomato;
+    zoom: 1;
+    filter: chroma(color=tomato);
 }
 
 .ks-date-picker-month-select:hover .ks-date-picker-month-select-arrow {
@@ -74,14 +140,13 @@ build time: Aug 16 17:10
     background-position: 0 -268px;
 }
 
-.ks-date-picker-next-month-btn {
-    background-position: 0 0;
-    right: 0;
-
+.ks-date-picker-week-number-cell {
+    text-align: center;
+    line-height: 22px;
 }
 
-.ks-date-picker-next-month-btn:hover {
-    background-position: 0 -20px;
+.ks-date-picker-week-number-header {
+    text-indent: -9999px;
 }
 
 .ks-date-picker-table {
@@ -117,6 +182,12 @@ build time: Aug 16 17:10
     border: 1px solid transparent;
 }
 
+.ks-ie6 .ks-date-picker-date {
+    border-color: tomato;
+    zoom: 1;
+    filter: chroma(color=tomato);
+}
+
 .ks-date-picker-last-month-cell .ks-date-picker-date,
 .ks-date-picker-next-month-btn-day .ks-date-picker-date {
     color: #bfbfbf;
@@ -132,8 +203,12 @@ build time: Aug 16 17:10
 }
 
 .ks-date-picker-disabled-cell .ks-date-picker-date:hover {
-    background-color: transparent;
     border-color: transparent;
+}
+
+.ks-ie6 .ks-date-picker-disabled-cell .ks-date-picker-date:hover {
+    border-color: tomato;
+    filter: chroma(color=tomato);
 }
 
 .ks-date-picker-today .ks-date-picker-date {
@@ -153,7 +228,8 @@ build time: Aug 16 17:10
     text-align: center;
 }
 
-.ks-date-picker-today-btn {
+.ks-date-picker-today-btn,
+.ks-date-picker-clear-btn {
     line-height: 16px;
     height: 16px;
     margin: 0 3px 0 2px;
@@ -168,11 +244,13 @@ build time: Aug 16 17:10
     display: inline-block;
 }
 
-.ks-ie6 .ks-date-picker-today-btn {
+.ks-ie6 .ks-date-picker-today-btn,
+.ks-ie6 .ks-date-picker-clear-btn {
     zoom: 1;
 }
 
-.ks-date-picker-today-btn:hover {
+.ks-date-picker-today-btn:hover,
+.ks-date-picker-clear-btn:hover {
     color: #ffffff;
 }
 

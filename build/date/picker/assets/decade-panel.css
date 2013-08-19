@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 16 17:10
+build time: Aug 19 17:23
 */
 .ks-date-picker-decade-panel {
     width: 100%;
@@ -15,6 +15,10 @@ build time: Aug 16 17:10
     border-bottom: 1px solid #9bc0e0;
 }
 
+.ks-ie6 .ks-date-picker-decade-panel{
+    height:expression(this.parentNode.offsetHeight)
+}
+
 .ks-date-picker-decade-panel-hidden {
     display: none;
 }
@@ -23,6 +27,12 @@ build time: Aug 16 17:10
 .ks-date-picker-decade-panel-next-century-btn,
 .ks-date-picker-decade-panel-header {
     background: url('http://img03.taobaocdn.com/tps/i3/T1d4OJXkpxXXXXXXXX-19-300.png');
+}
+
+.ks-ie6 .ks-date-picker-decade-panel-prev-century-btn,
+.ks-ie6 .ks-date-picker-decade-panel-next-century-btn,
+.ks-ie6 .ks-date-picker-decade-panel-header {
+    background-image: url('http://img01.taobaocdn.com/tps/i1/T10.uJXc4bXXXXXXXX-19-300.png');
 }
 
 .ks-date-picker-decade-panel-header {
@@ -83,6 +93,12 @@ build time: Aug 16 17:10
     display: block;
     border-radius: 2px;
     border: 1px solid transparent;
+}
+
+.ks-ie6 .ks-date-picker-decade-panel-decade {
+    border-color: tomato;
+    zoom: 1;
+    filter: chroma(color=tomato);
 }
 
 .ks-date-picker-decade-panel-decade:hover {
