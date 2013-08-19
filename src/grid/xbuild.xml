@@ -1,5 +1,0 @@
-<project name="grid.build" default="build" basedir=".">
-    <property name="component.name" value="grid"/>
-
-    <import file="../common.xml"/>
-</project>

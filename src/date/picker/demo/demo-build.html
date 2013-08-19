@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <title>DatePicker</title>
+    <link href="/kissy/src/css/assets/dpl/base.css" rel="stylesheet"/>
+    <link href="/kissy/build/date/picker/assets/dpl.css" rel="stylesheet"/>
+    <style>
+        a:focus {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<a id="prev" href="#">prev link</a>
+
+<div id="holder">
+
+</div>
+<a id="next" href="#">next link</a>
+
+<div id="result">
+
+</div>
+</body>
+<script src="/kissy/build/seed.js"></script>
+<script>
+    KISSY.use('node,date/picker,date/gregorian,date/format', function (S, Node, DatePicker, GregorianCalendar, DateFormat) {
+        var result = Node.all('#result');
+        var picker = new DatePicker({
+            disabledDate: function (current, value) {
+                return current.get(GregorianCalendar.MONTH) < value.get(GregorianCalendar.MONTH);
+            },
+            // showWeekNumber:false,
+            // showToday:false,
+            render: '#holder'
+        }).render();
+
+        picker.on('select', function (e) {
+            var value = e.value;
+            if (value) {
+                result.html(DateFormat.getDateInstance(DateFormat.Style.FULL).format(value));
+            } else {
+                result.html('null');
+            }
+        });
+    });
+</script>
+</html>

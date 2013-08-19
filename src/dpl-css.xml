@@ -1,0 +1,8 @@
+<project name="dpl-css">
+    <target name="concat-css">
+        <copy todir="${component.src.dir.tmp}">
+            <fileset dir="${component.work.dir}"
+                     includes="assets/**/dpl.css"/>
+        </copy>
+    </target>
+</project>
