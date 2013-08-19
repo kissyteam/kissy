@@ -29,6 +29,11 @@
     <table class="{{getBaseCssClasses 'table'}}" cellspacing="0" role="grid">
         <thead>
         <tr role="row">
+            {{#if showWeekNumber}}
+            <th role="columnheader" class="{{getBaseCssClasses 'column-header'}} {{getBaseCssClasses 'week-number-header'}}">
+                <span class="{{getBaseCssClasses 'column-header-inner'}}">x</span>
+            </th>
+            {{/if}}
             {{#each weekdays}}
             <th role="columnheader" title="{{.}}" class="{{getBaseCssClasses 'column-header'}}">
                 <span class="{{getBaseCssClasses 'column-header-inner'}}">

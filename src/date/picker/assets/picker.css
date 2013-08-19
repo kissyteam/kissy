@@ -2,7 +2,7 @@
     box-shadow: 1px 1px 0 #ccc;
     background: #ffffff;
     border: 1px solid #9bc0e0;
-    width: 190px;
+    width: 215px;
     outline: none;
     position: relative;
 }
@@ -77,6 +77,15 @@
 
 .ks-date-picker-next-month-btn:hover {
     background-position: 0 -20px;
+}
+
+.ks-date-picker-week-number-cell{
+    text-align: center;
+    line-height: 22px;
+}
+
+.ks-date-picker-week-number-header {
+    text-indent: -9999px;
 }
 
 .ks-date-picker-table {

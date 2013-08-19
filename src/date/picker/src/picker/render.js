@@ -2,18 +2,25 @@
  * render for year panel
  * @author yiminghe@gmail.com
  */
-KISSY.add('date/picker/render', function (S, Control, GregorianCalendar, DateTimeFormat, PickerTpl) {
+KISSY.add('date/picker/render', function (S, Node, Control, GregorianCalendar, DateTimeFormat, PickerTpl) {
     var dateRowTplStart = '<tr role="row">';
     var dateRowTplEnd = '</tr>';
     var dateCellTpl = '<td role="gridcell" title="{title}" class="{cls}">{content}</td>';
-    var dateTpl = '<a hidefocus="on" class="{cls}" href="#">{content}</a>';
+    var weekNumberCellTpl = '<td role="gridcell" class="{cls}">{content}</td>';
+    var dateTpl = '<a hidefocus="on" class="{cls}" href="#" aria-disabled="{disabled}">{content}</a>';
     var DATE_ROW_COUNT = 6;
     var DATE_COL_COUNT = 7;
+    var $ = Node.all;
 
     function isSameDay(one, two) {
         return one.get(GregorianCalendar.YEAR) == two.get(GregorianCalendar.YEAR) &&
             one.get(GregorianCalendar.MONTH) == two.get(GregorianCalendar.MONTH) &&
             one.get(GregorianCalendar.DAY_OF_MONTH) == two.get(GregorianCalendar.DAY_OF_MONTH);
+    }
+
+    function isSameMonth(one, two) {
+        return one.get(GregorianCalendar.YEAR) == two.get(GregorianCalendar.YEAR) &&
+            one.get(GregorianCalendar.MONTH) == two.get(GregorianCalendar.MONTH);
     }
 
     function beforeCurrentMonthYear(current, today) {
@@ -32,7 +39,7 @@ KISSY.add('date/picker/render', function (S, Control, GregorianCalendar, DateTim
             current.get(GregorianCalendar.MONTH) > today.get(GregorianCalendar.MONTH);
     }
 
-    function renderDatesCmd(){
+    function renderDatesCmd() {
         return this.config.view.renderDates();
     }
 
@@ -95,10 +102,12 @@ KISSY.add('date/picker/render', function (S, Control, GregorianCalendar, DateTim
                 tables = [],
                 current,
                 control = self.control,
+                showWeekNumber=control.get('showWeekNumber'),
                 locale = control.get('locale'),
                 value = control.get('value'),
                 today = value.clone(),
                 cellClass = self.getBaseCssClass('cell'),
+                weekNumberCellClass = self.getBaseCssClass('week-number-cell'),
                 dateClass = self.getBaseCssClass('date'),
                 dateRender = control.get('dateRender'),
                 disabledDate = control.get('disabledDate'),
@@ -135,9 +144,16 @@ KISSY.add('date/picker/render', function (S, Control, GregorianCalendar, DateTim
             var tableHtml = '';
             for (i = 0; i < DATE_ROW_COUNT; i++) {
                 var rowHtml = dateRowTplStart;
+                if(showWeekNumber){
+                    rowHtml+= S.substitute(weekNumberCellTpl,{
+                        cls:weekNumberCellClass,
+                        content:tables[i][0].get(GregorianCalendar.WEEK_OF_YEAR)
+                    });
+                }
                 for (j = 0; j < DATE_COL_COUNT; j++) {
                     current = tables[i][j];
                     var cls = cellClass;
+                    var disabled = false;
 
                     if (isSameDay(current, today)) {
                         cls += ' ' + todayClass;
@@ -153,6 +169,7 @@ KISSY.add('date/picker/render', function (S, Control, GregorianCalendar, DateTim
                     }
                     if (disabledDate && disabledDate(current, value)) {
                         cls += ' ' + disabledClass;
+                        disabled = true;
                     }
 
                     var dateHtml = '';
@@ -160,6 +177,7 @@ KISSY.add('date/picker/render', function (S, Control, GregorianCalendar, DateTim
                     } else {
                         dateHtml = S.substitute(dateTpl, {
                             cls: dateClass,
+                            disabled: disabled,
                             content: current.get(GregorianCalendar.DAY_OF_MONTH)
                         });
                     }
@@ -174,15 +192,42 @@ KISSY.add('date/picker/render', function (S, Control, GregorianCalendar, DateTim
             control.dateTable = tables;
             return tableHtml;
         },
+
+        createDom: function () {
+            this.dateCells = this.$('.' + this.getBaseCssClasses('cell'));
+        },
         // re render after current value change
-        _onSetValue: function () {
+        _onSetValue: function (value, e) {
             var control = this.control;
+            var preValue = e.prevVal;
+            if (isSameMonth(preValue, value)) {
+                var disabledDate = control.get('disabledDate');
+                var dateCells = this.dateCells;
+                var selectedCls = this.getBaseCssClass('selected-day');
+                var dateTable = control.dateTable;
+                for (var i = 0; i < DATE_ROW_COUNT; i++) {
+                    for (var j = 0; j < DATE_COL_COUNT; j++) {
+                        var index = i * DATE_COL_COUNT + j;
+                        var date = dateTable[i][j];
+                        if (isSameDay(date, value)) {
+                            if (disabledDate && disabledDate(date, value)) {
+                            } else {
+                                $(dateCells[index]).addClass(selectedCls);
+                            }
+                        } else if (isSameDay(date, preValue)) {
+                            $(dateCells[index]).removeClass(selectedCls);
+                        }
+                    }
+                }
+                return;
+            }
             var tbodyEl = control.get('tbodyEl');
             var monthSelectContentEl = control.get('monthSelectContentEl');
             var todayBtnEl = control.get('todayBtnEl');
             monthSelectContentEl.html(this.getMonthYearLabel());
             todayBtnEl.attr('title', this.getTodayTimeLabel());
             tbodyEl.html(this.renderDates());
+            this.dateCells = this.$('.' + this.getBaseCssClasses('cell'));
         }
     }, {
         name: 'date-picker-render',
@@ -193,7 +238,9 @@ KISSY.add('date/picker/render', function (S, Control, GregorianCalendar, DateTim
         }
     });
 }, {
-    requires: ['component/control',
+    requires: [
+        'node',
+        'component/control',
         'date/gregorian',
         'date/format',
         './picker-tpl']

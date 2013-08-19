@@ -23,14 +23,16 @@ KISSY.add('date/picker/control', function (S, Node, GregorianCalendar, locale, C
     }
 
     function chooseCell(e) {
+        var disabledDate = this.get('disabledDate');
         e.preventDefault();
         var td = $(e.currentTarget);
-        if (td.hasClass(this.view.getBaseCssClass('disabled-cell'))) {
-            return;
-        }
         var tr = td.parent();
         var tdIndex = td.index();
         var trIndex = tr.index();
+        var value = this.dateTable[trIndex][tdIndex];
+        if (disabledDate && disabledDate(value, this.get('value'))) {
+            return
+        }
         this.set('value', this.dateTable[trIndex][tdIndex]);
     }
 
@@ -80,6 +82,9 @@ KISSY.add('date/picker/control', function (S, Node, GregorianCalendar, locale, C
     }, {
         xclass: 'date-picker',
         ATTRS: {
+            focusable: {
+                value: true
+            },
             value: {
                 view: 1,
                 valueFn: function () {
@@ -105,6 +110,10 @@ KISSY.add('date/picker/control', function (S, Node, GregorianCalendar, locale, C
                 view: 1,
                 value: true
             },
+            showWeekNumber:{
+                view:1,
+                value:true
+            },
             xrender: {
                 value: PickerRender
             }
@@ -120,3 +129,7 @@ KISSY.add('date/picker/control', function (S, Node, GregorianCalendar, locale, C
         './month-panel/control'
     ]
 });
+/*
+ keyboard
+ - http://www.w3.org/TR/wai-aria-practices/#datepicker
+ */

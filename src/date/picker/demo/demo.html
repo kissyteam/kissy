@@ -14,6 +14,11 @@
     <link href="../assets/decade-panel.css" rel="stylesheet"/>
 </head>
 <body>
+<a id="prev">prev link</a>
+<div id="holder">
+
+</div>
+<a id="next">prev link</a>
 </body>
 <script src="/kissy/build/seed.js"></script>
 <script src="/kissy/src/package.js"></script>
@@ -22,7 +27,10 @@
         new DatePicker({
             disabledDate: function (current, value) {
                 return current.get(GregorianCalendar.MONTH) < value.get(GregorianCalendar.MONTH);
-            }
+            },
+            // showWeekNumber:false,
+            // showToday:false,
+            render:'#holder'
         }).render();
     });
 </script>
