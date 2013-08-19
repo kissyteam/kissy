@@ -78,6 +78,9 @@ KISSY.add('date/picker/month-panel/control',function(S,
     },{
         xclass:'date-picker-month-panel',
         ATTRS:{
+            focusable:{
+                value:false
+            },
             value:{
                 view:1
             },

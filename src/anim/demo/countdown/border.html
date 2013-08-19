@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        #wrap {
+            position: absolute;
+            background: #ffffff;
+            width: 100px;
+            height: 100px;
+            border-radius: 100px;
+            border: 1px solid red;
+            left: 200px;
+            top: 100px
+        }
+
+        #inner {
+            position: absolute;
+            background: white;
+            font-size: 0;
+            overflow: hidden;
+            border-color: transparent;
+            border-width: 50px;
+            border-style: solid;
+            border-radius: 100px;
+        }
+
+        #inner.loading-25 {
+            border-color: #7ad5f7 #fff #fff #fff;
+        }
+
+        #inner.loading-50 {
+            border-color: #7ad5f7 #7ad5f7 #fff #fff;
+        }
+
+        #inner.loading-75 {
+            border-color: #7ad5f7 #7ad5f7 #7ad5f7 #fff;
+        }
+
+        #inner.loading-100 {
+            border-color: #7ad5f7 #7ad5f7 #7ad5f7 #7ad5f7;
+        }
+    </style>
+</head>
+<body>
+
+<div id="wrap">
+    <div id="inner"></div>
+</div>
+<script src="/kissy/build/seed.js"></script>
+<script>
+    (function (S) {
+        if (!S.Features.isTransformSupported()) {
+            alert('your browser does not support this');
+            return;
+        }
+        S.use('node', function (S, Node) {
+            var $ = Node.all;
+            var inner = $('#inner');
+            inner.css('transform', 'rotate(45deg)');
+
+            inner[0].className = 'loading-25';
+            setTimeout(function () {
+                inner[0].className = 'loading-50';
+                setTimeout(function () {
+                    inner[0].className = 'loading-75';
+                    setTimeout(function () {
+                        inner[0].className = 'loading-100';
+                    }, 1000);
+                }, 1000);
+            }, 1000);
+        });
+    })(KISSY);
+</script>
+</body>
+</html>

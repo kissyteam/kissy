@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 19 17:23
+build time: Aug 19 21:52
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -637,6 +637,9 @@ KISSY.add('date/picker/decade-panel/control', function (S, Node, GregorianCalend
     }, {
         xclass: 'date-picker-decade-panel',
         ATTRS: {
+            focusable:{
+                value:false
+            },
             value: {
                 view: 1
             },
@@ -724,6 +727,9 @@ KISSY.add('date/picker/year-panel/control', function (S, Node, GregorianCalendar
     }, {
         xclass: 'date-picker-year-panel',
         ATTRS: {
+            focusable:{
+                value:false
+            },
             value: {
                 view: 1
             },
@@ -823,6 +829,9 @@ KISSY.add('date/picker/month-panel/control',function(S,
     },{
         xclass:'date-picker-month-panel',
         ATTRS:{
+            focusable:{
+                value:false
+            },
             value:{
                 view:1
             },

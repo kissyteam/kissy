@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        #wrap {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            border-radius: 100px;
+            left: 200px;
+            top: 100px;
+        }
+
+        #inner, #inner2 {
+            border-radius: 100px;
+            background: red;
+            position: absolute;
+            font-size: 0;
+            width: 100px;
+            height: 100px;
+            clip: rect(0px 100px 100px 50px);
+        }
+
+        #inner2 {
+            clip: rect(0px 50px 100px 0px);
+        }
+
+        #inner3, #inner4 {
+            position: absolute;
+            background: #ffffff;
+            width: 50px;
+            margin-left: 50px;
+            height: 100px;
+        }
+
+        #inner4 {
+            margin-right: 50px;
+            margin-left: 0;
+        }
+    </style>
+</head>
+<body>
+
+<div id="wrap">
+    <div id="inner">
+        <div id="inner3"></div>
+    </div>
+    <div id="inner2">
+        <div id="inner4"></div>
+    </div>
+</div>
+<script src="/kissy/build/seed.js"></script>
+<script>
+    (function (S) {
+        if (!S.Features.isTransformSupported()) {
+            alert('your browser does not support this');
+            return;
+        }
+        S.use('node', function (S, Node) {
+            var $ = Node.all;
+            var inner3 = $('#inner3');
+            var inner4 = $('#inner4');
+            inner3.css('transform-origin', '0% 50%');
+            inner4.css('transform-origin', '100% 50%');
+            inner3.animate({
+                transform: 'rotate(180deg)'
+            }, {
+                useTransition: true,
+                complete: function () {
+                    inner4.animate({
+                        transform: 'rotate(180deg)'
+                    }, {
+                        useTransition: true,
+                        duration: 2
+                    });
+                },
+                duration: 2
+            });
+        });
+    })(KISSY);
+
+</script>
+</body>
+</html>

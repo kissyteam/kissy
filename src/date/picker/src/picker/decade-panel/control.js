@@ -52,6 +52,9 @@ KISSY.add('date/picker/decade-panel/control', function (S, Node, GregorianCalend
     }, {
         xclass: 'date-picker-decade-panel',
         ATTRS: {
+            focusable:{
+                value:false
+            },
             value: {
                 view: 1
             },

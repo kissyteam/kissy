@@ -74,6 +74,9 @@ KISSY.add('date/picker/year-panel/control', function (S, Node, GregorianCalendar
     }, {
         xclass: 'date-picker-year-panel',
         ATTRS: {
+            focusable:{
+                value:false
+            },
             value: {
                 view: 1
             },
