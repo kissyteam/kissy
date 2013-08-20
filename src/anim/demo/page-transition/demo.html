@@ -179,7 +179,7 @@
             page2.one('.page-mask').hide();
             currentPageIndex = i;
             pages.animate({
-                'transform': 'translateX(' + getOffsetLeft(i) + 'px)'
+                'transform': 'translateZ(0) translateX(' + getOffsetLeft(i) + 'px)'
             }, {
                 duration: 0.5,
                 complete: function () {
