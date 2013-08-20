@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 20 14:04
+build time: Aug 20 15:52
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -160,18 +160,18 @@ KISSY.add('date/picker/render', function (S, Node, Control, DateTimeFormat, Pick
                 locale = control.get('locale'),
                 value = control.get('value'),
                 today = value.clone(),
-                cellClass = self.getBaseCssClass('cell'),
-                weekNumberCellClass = self.getBaseCssClass('week-number-cell'),
-                dateClass = self.getBaseCssClass('date'),
+                cellClass = self.getBaseCssClasses('cell'),
+                weekNumberCellClass = self.getBaseCssClasses('week-number-cell'),
+                dateClass = self.getBaseCssClasses('date'),
                 dateRender = control.get('dateRender'),
                 disabledDate = control.get('disabledDate'),
                 dateLocale = value.getLocale(),
                 dateFormatter = new DateTimeFormat(locale.dateFormat, dateLocale),
-                todayClass = self.getBaseCssClass('today'),
-                selectedClass = self.getBaseCssClass('selected-day'),
-                lastMonthDayClass = self.getBaseCssClass('last-month-cell'),
-                nextMonthDayClass = self.getBaseCssClass('next-month-btn-day'),
-                disabledClass = self.getBaseCssClass('disabled-cell');
+                todayClass = self.getBaseCssClasses('today'),
+                selectedClass = self.getBaseCssClasses('selected-day'),
+                lastMonthDayClass = self.getBaseCssClasses('last-month-cell'),
+                nextMonthDayClass = self.getBaseCssClasses('next-month-btn-day'),
+                disabledClass = self.getBaseCssClasses('disabled-cell');
 
             today.setTime(S.now());
             var month1 = value.clone();
@@ -259,7 +259,7 @@ KISSY.add('date/picker/render', function (S, Node, Control, DateTimeFormat, Pick
         '_onSetClear': function (v) {
             var control = this.control;
             var value = control.get('value');
-            var selectedCls = this.getBaseCssClass('selected-day');
+            var selectedCls = this.getBaseCssClasses('selected-day');
             var id = getIdFromDate(value);
             var currentA = this.$('#' + id);
             if (v) {
@@ -279,7 +279,7 @@ KISSY.add('date/picker/render', function (S, Node, Control, DateTimeFormat, Pick
             var preValue = e.prevVal;
             if (isSameMonth(preValue, value)) {
                 var disabledDate = control.get('disabledDate');
-                var selectedCls = this.getBaseCssClass('selected-day');
+                var selectedCls = this.getBaseCssClasses('selected-day');
                 var prevA = this.$('#' + getIdFromDate(preValue));
                 prevA.parent().removeClass(selectedCls);
                 prevA.attr('aria-selected', false);

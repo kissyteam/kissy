@@ -7,8 +7,21 @@
     position: relative;
 }
 
+.ks-popup-date-picker {
+    position: absolute;
+    left: -9999px;
+    top: -9999px;
+}
+
 .ks-date-picker-hidden {
     display: none;
+}
+
+.ks-popup-date-picker-hidden {
+    display: block;
+    visibility: hidden;
+    left: -9999px;
+    top: -9999px;
 }
 
 .ks-date-picker-prev-month-btn,

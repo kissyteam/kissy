@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 20 14:04
+build time: Aug 20 15:52
 */
 /**
  * locale info for KISSY Date
