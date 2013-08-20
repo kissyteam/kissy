@@ -49,7 +49,9 @@
         }
 
         function createPicker() {
-            picker = new PopupDatePicker();
+            picker = new PopupDatePicker({
+                shim:true
+            });
             picker.on('blur', function () {
                 picker.hide();
             });

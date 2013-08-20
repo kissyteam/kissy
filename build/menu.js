@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 19 22:22
+build time: Aug 20 17:37
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -877,24 +877,24 @@ KISSY.add("menu/submenu", function (S, Node, MenuItem, SubMenuRender) {
  * popup menu render
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/popupmenu-render", function (S, ContentRenderExtension, ShimRenderExtension, MenuRender) {
+KISSY.add("menu/popupmenu-render", function (S, ContentRenderExtension, MenuRender) {
 
     return MenuRender.extend([
-        ContentRenderExtension,
-        ShimRenderExtension
+        ContentRenderExtension
     ]);
 
 }, {
-    requires: ['component/extension/content-render',
-        'component/extension/shim-render',
-        './menu-render']
+    requires: [
+        'component/extension/content-render',
+        './menu-render'
+    ]
 });
 /**
  * @ignore
  * positionable and not focusable menu
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/popupmenu", function (S, AlignExtension, Menu, PopupMenuRender) {
+KISSY.add("menu/popupmenu", function (S, AlignExtension,Shim, Menu, PopupMenuRender) {
 
     /**
      * Popup Menu.
@@ -905,6 +905,7 @@ KISSY.add("menu/popupmenu", function (S, AlignExtension, Menu, PopupMenuRender) 
      * @mixins KISSY.Component.Extension.Align
      */
     return Menu.extend([
+        Shim,
         AlignExtension
     ], {
         // 根菜单 popupmenu 或者到中间的 menu 菜单
@@ -991,6 +992,7 @@ KISSY.add("menu/popupmenu", function (S, AlignExtension, Menu, PopupMenuRender) 
     });
 }, {
     requires: ['component/extension/align',
+        'component/extension/shim',
         './control', './popupmenu-render']
 });
 /**

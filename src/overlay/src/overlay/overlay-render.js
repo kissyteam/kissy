@@ -3,11 +3,10 @@
  * KISSY Overlay
  * @author yiminghe@gmail.com
  */
-KISSY.add("overlay/overlay-render", function (S, Container, ContentRenderExtension, ShimRenderExtension, CloseTpl) {
+KISSY.add("overlay/overlay-render", function (S, Container, ContentRenderExtension, CloseTpl) {
 
     return Container.getDefaultRender().extend([
-        ContentRenderExtension,
-        ShimRenderExtension
+        ContentRenderExtension
     ], {
         createDom: function () {
             var self = this;
@@ -31,7 +30,6 @@ KISSY.add("overlay/overlay-render", function (S, Container, ContentRenderExtensi
     requires: [
         "component/container",
         'component/extension/content-render',
-        'component/extension/shim-render',
         './close-tpl'
     ]
 });

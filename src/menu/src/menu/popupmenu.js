@@ -3,7 +3,7 @@
  * positionable and not focusable menu
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/popupmenu", function (S, AlignExtension, Menu, PopupMenuRender) {
+KISSY.add("menu/popupmenu", function (S, AlignExtension,Shim, Menu, PopupMenuRender) {
 
     /**
      * Popup Menu.
@@ -14,6 +14,7 @@ KISSY.add("menu/popupmenu", function (S, AlignExtension, Menu, PopupMenuRender) 
      * @mixins KISSY.Component.Extension.Align
      */
     return Menu.extend([
+        Shim,
         AlignExtension
     ], {
         // 根菜单 popupmenu 或者到中间的 menu 菜单
@@ -100,5 +101,6 @@ KISSY.add("menu/popupmenu", function (S, AlignExtension, Menu, PopupMenuRender) 
     });
 }, {
     requires: ['component/extension/align',
+        'component/extension/shim',
         './control', './popupmenu-render']
 });

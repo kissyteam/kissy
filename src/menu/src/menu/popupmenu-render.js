@@ -3,15 +3,15 @@
  * popup menu render
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/popupmenu-render", function (S, ContentRenderExtension, ShimRenderExtension, MenuRender) {
+KISSY.add("menu/popupmenu-render", function (S, ContentRenderExtension, MenuRender) {
 
     return MenuRender.extend([
-        ContentRenderExtension,
-        ShimRenderExtension
+        ContentRenderExtension
     ]);
 
 }, {
-    requires: ['component/extension/content-render',
-        'component/extension/shim-render',
-        './menu-render']
+    requires: [
+        'component/extension/content-render',
+        './menu-render'
+    ]
 });

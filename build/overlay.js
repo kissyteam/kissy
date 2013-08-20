@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 19 22:23
+build time: Aug 20 17:37
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -261,11 +261,10 @@ KISSY.add('overlay/close-tpl',
  * KISSY Overlay
  * @author yiminghe@gmail.com
  */
-KISSY.add("overlay/overlay-render", function (S, Container, ContentRenderExtension, ShimRenderExtension, CloseTpl) {
+KISSY.add("overlay/overlay-render", function (S, Container, ContentRenderExtension, CloseTpl) {
 
     return Container.getDefaultRender().extend([
-        ContentRenderExtension,
-        ShimRenderExtension
+        ContentRenderExtension
     ], {
         createDom: function () {
             var self = this;
@@ -289,7 +288,6 @@ KISSY.add("overlay/overlay-render", function (S, Container, ContentRenderExtensi
     requires: [
         "component/container",
         'component/extension/content-render',
-        'component/extension/shim-render',
         './close-tpl'
     ]
 });
@@ -476,7 +474,7 @@ KISSY.add('overlay/extension/overlay-effect', function (S) {
  * control for overlay
  * @author yiminghe@gmail.com
  */
-KISSY.add("overlay/control", function (S, Container, AlignExtension,
+KISSY.add("overlay/control", function (S, Container,Shim, AlignExtension,
                                     Loading, Mask, OverlayRender, OverlayEffect) {
 
     var HIDE = "hide",
@@ -497,6 +495,7 @@ KISSY.add("overlay/control", function (S, Container, AlignExtension,
      * @mixins KISSY.Overlay.Extension.Mask
      */
     return Container.extend([
+        Shim,
         Loading,
         AlignExtension,
         Mask,
@@ -633,6 +632,7 @@ KISSY.add("overlay/control", function (S, Container, AlignExtension,
 }, {
     requires: [
         'component/container',
+        'component/extension/shim',
         'component/extension/align',
         "./extension/loading",
         "./extension/mask",

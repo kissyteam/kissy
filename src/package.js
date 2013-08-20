@@ -58,8 +58,8 @@ if (!loc.getQuery().has('build')) {
             "base": "/kissy/src/component/sub-modules/extension/delegate-children/src/delegate-children",
             "ignorePackageNameInUri": 1
         },
-        "component/extension/shim-render": {
-            "base": "/kissy/src/component/sub-modules/extension/shim-render/src/shim-render",
+        "component/extension/shim": {
+            "base": "/kissy/src/component/sub-modules/extension/shim/src/shim",
             "ignorePackageNameInUri": 1
         },
         "component/manager": {
