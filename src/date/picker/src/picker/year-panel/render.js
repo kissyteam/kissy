@@ -2,10 +2,10 @@
  * render for year-panel
  * @author yiminghe@gmail.com
  */
-KISSY.add('date/picker/year-panel/render', function (S, Control, GregorianCalendar, DateFormat, YearsTpl, YearPanelTpl) {
+KISSY.add('date/picker/year-panel/render', function (S, Control, DateFormat, YearsTpl, YearPanelTpl) {
     function prepareYears(control) {
         var value = control.get('value');
-        var currentYear = value.get(GregorianCalendar.YEAR);
+        var currentYear = value.getYear();
         var startYear = parseInt(currentYear / 10) * 10;
         var preYear = startYear - 1;
         var current = value.clone();
@@ -18,7 +18,7 @@ KISSY.add('date/picker/year-panel/render', function (S, Control, GregorianCalend
         for (var i = 0; i < 3; i++) {
             years[i] = [];
             for (var j = 0; j < 4; j++) {
-                current.set(GregorianCalendar.YEAR, preYear + index);
+                current.setYear( preYear + index);
                 years[i][j] = {
                     content: preYear + index,
                     title: dateFormatter.format(current)
@@ -34,7 +34,7 @@ KISSY.add('date/picker/year-panel/render', function (S, Control, GregorianCalend
         beforeCreateDom: function (renderData, childrenSelectors) {
             var control = this.control;
             var value = control.get('value');
-            var currentYear = value.get(GregorianCalendar.YEAR);
+            var currentYear = value.getYear();
             var startYear = parseInt(currentYear / 10) * 10;
             var endYear = startYear + 9;
             var locale = control.get('locale');
@@ -43,7 +43,7 @@ KISSY.add('date/picker/year-panel/render', function (S, Control, GregorianCalend
                 years: prepareYears(control),
                 startYear: startYear,
                 endYear: endYear,
-                year: value.get(GregorianCalendar.YEAR),
+                year: value.getYear(),
                 previousDecadeLabel: locale.previousDecade,
                 nextDecadeLabel: locale.nextDecade
             });
@@ -58,14 +58,14 @@ KISSY.add('date/picker/year-panel/render', function (S, Control, GregorianCalend
 
         _onSetValue: function (value) {
             var control = this.control;
-            var currentYear = value.get(GregorianCalendar.YEAR);
+            var currentYear = value.getYear();
             var startYear = parseInt(currentYear / 10) * 10;
             var endYear = startYear + 9;
             S.mix(this.renderData, {
                 startYear:startYear,
                 endYear:endYear,
                 years: prepareYears(control),
-                year: value.get(GregorianCalendar.YEAR)
+                year: value.getYear()
             });
             control.get('tbodyEl').html(this.renderTpl(YearsTpl));
             control.get('decadeSelectContentEl').html(startYear+'-'+endYear);
@@ -79,7 +79,6 @@ KISSY.add('date/picker/year-panel/render', function (S, Control, GregorianCalend
     });
 }, {
     requires: ['component/control',
-        'date/gregorian',
         'date/format',
         './years-tpl',
         './year-panel-tpl']

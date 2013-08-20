@@ -420,9 +420,7 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, DD, Node) {
         self.dragInitDirection = null;
     }
 
-    var ScrollViewDrag;
-
-    return ScrollViewDrag = ScrollViewBase.extend({
+    return ScrollViewBase.extend({
             bindUI: function () {
                 var self = this,
                     $contentEl = self.$contentEl;

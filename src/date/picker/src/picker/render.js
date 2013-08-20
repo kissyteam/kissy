@@ -2,7 +2,7 @@
  * render for year panel
  * @author yiminghe@gmail.com
  */
-KISSY.add('date/picker/render', function (S, Node, Control, GregorianCalendar, DateTimeFormat, PickerTpl) {
+KISSY.add('date/picker/render', function (S, Node, Control, DateTimeFormat, PickerTpl) {
     var dateRowTplStart = '<tr role="row">';
     var dateRowTplEnd = '</tr>';
     var dateCellTpl = '<td role="gridcell" data-index="{index}" title="{title}" class="{cls}">{content}</td>';
@@ -20,36 +20,36 @@ KISSY.add('date/picker/render', function (S, Node, Control, GregorianCalendar, D
     var DATE_COL_COUNT = 7;
 
     function getIdFromDate(d) {
-        return 'ks-date-picker-date-' + d.get(GregorianCalendar.YEAR) +
-            '-' + d.get(GregorianCalendar.MONTH) + '-' +
-            d.get(GregorianCalendar.DAY_OF_MONTH);
+        return 'ks-date-picker-date-' + d.getYear() +
+            '-' + d.getMonth() + '-' +
+            d.getDayOfMonth();
     }
 
     function isSameDay(one, two) {
-        return one.get(GregorianCalendar.YEAR) == two.get(GregorianCalendar.YEAR) &&
-            one.get(GregorianCalendar.MONTH) == two.get(GregorianCalendar.MONTH) &&
-            one.get(GregorianCalendar.DAY_OF_MONTH) == two.get(GregorianCalendar.DAY_OF_MONTH);
+        return one.getYear() == two.getYear() &&
+            one.getMonth() == two.getMonth() &&
+            one.getDayOfMonth() == two.getDayOfMonth();
     }
 
     function isSameMonth(one, two) {
-        return one.get(GregorianCalendar.YEAR) == two.get(GregorianCalendar.YEAR) &&
-            one.get(GregorianCalendar.MONTH) == two.get(GregorianCalendar.MONTH);
+        return one.getYear() == two.getYear() &&
+            one.getMonth() == two.getMonth();
     }
 
     function beforeCurrentMonthYear(current, today) {
-        if (current.get(GregorianCalendar.YEAR) < today.get(GregorianCalendar.YEAR)) {
+        if (current.getYear() < today.getYear()) {
             return 1;
         }
-        return current.get(GregorianCalendar.YEAR) == today.get(GregorianCalendar.YEAR) &&
-            current.get(GregorianCalendar.MONTH) < today.get(GregorianCalendar.MONTH);
+        return current.getYear() == today.getYear() &&
+            current.getMonth() < today.getMonth();
     }
 
     function afterCurrentMonthYear(current, today) {
-        if (current.get(GregorianCalendar.YEAR) > today.get(GregorianCalendar.YEAR)) {
+        if (current.getYear() > today.getYear()) {
             return 1;
         }
-        return current.get(GregorianCalendar.YEAR) == today.get(GregorianCalendar.YEAR) &&
-            current.get(GregorianCalendar.MONTH) > today.get(GregorianCalendar.MONTH);
+        return current.getYear() == today.getYear() &&
+            current.getMonth() > today.getMonth();
     }
 
     function renderDatesCmd() {
@@ -73,7 +73,7 @@ KISSY.add('date/picker/render', function (S, Node, Control, GregorianCalendar, D
             var value = control.get('value');
             var dateLocale = value.getLocale();
             var today = value.clone();
-            today.setTimeInMillis(S.now());
+            today.setTime(S.now());
             return new DateTimeFormat(locale.dateFormat, dateLocale).format(today);
         },
 
@@ -142,21 +142,21 @@ KISSY.add('date/picker/render', function (S, Node, Control, GregorianCalendar, D
                 nextMonthDayClass = self.getBaseCssClass('next-month-btn-day'),
                 disabledClass = self.getBaseCssClass('disabled-cell');
 
-            today.setTimeInMillis(S.now());
+            today.setTime(S.now());
             var month1 = value.clone();
-            month1.set(value.get(GregorianCalendar.YEAR), value.get(GregorianCalendar.MONTH), 1);
-            var day = month1.get(GregorianCalendar.DAY_OF_WEEK);
+            month1.set(value.getYear(), value.getMonth(), 1);
+            var day = month1.getDayOfWeek();
             var lastMonthDiffDay = (day + 7 - value.getFirstDayOfWeek()) % 7;
             // calculate last month
             var lastMonth1 = month1.clone();
-            lastMonth1.add(GregorianCalendar.DAY_OF_MONTH, -lastMonthDiffDay);
+            lastMonth1.addDayOfMonth (-lastMonthDiffDay);
             var passed = 0;
             for (i = 0; i < DATE_ROW_COUNT; i++) {
                 for (j = 0; j < DATE_COL_COUNT; j++) {
                     current = lastMonth1;
                     if (passed) {
                         current = current.clone();
-                        current.add(GregorianCalendar.DAY_OF_MONTH, passed);
+                        current.addDayOfMonth(passed);
                     }
                     dateTable.push(current);
                     passed++;
@@ -169,7 +169,7 @@ KISSY.add('date/picker/render', function (S, Node, Control, GregorianCalendar, D
                 if (showWeekNumber) {
                     rowHtml += S.substitute(weekNumberCellTpl, {
                         cls: weekNumberCellClass,
-                        content: dateTable[passed].get(GregorianCalendar.WEEK_OF_YEAR)
+                        content: dateTable[passed].getWeekOfYear()
                     });
                 }
                 for (j = 0; j < DATE_COL_COUNT; j++) {
@@ -204,8 +204,7 @@ KISSY.add('date/picker/render', function (S, Node, Control, GregorianCalendar, D
                             id: getIdFromDate(current),
                             selected: selected,
                             disabled: disabled,
-
-                            content: current.get(GregorianCalendar.DAY_OF_MONTH)
+                            content: current.getDayOfMonth()
                         });
                     }
                     rowHtml += S.substitute(dateCellTpl, {
@@ -282,7 +281,6 @@ KISSY.add('date/picker/render', function (S, Node, Control, GregorianCalendar, D
     requires: [
         'node',
         'component/control',
-        'date/gregorian',
         'date/format',
         './picker-tpl']
 });

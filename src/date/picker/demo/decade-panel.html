@@ -26,7 +26,7 @@
             'i18n!date/picker,' +
             'date/gregorian', function (S, CenturyPanel, locale,GregorianCalendar) {
         var now=new GregorianCalendar();
-        now.setTimeInMillis(S.now());
+        now.setTime(S.now());
         new CenturyPanel({
             value:now,
             locale:locale,

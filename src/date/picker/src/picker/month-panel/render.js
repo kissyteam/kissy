@@ -2,10 +2,10 @@
  * render for month panel
  * @author yiminghe@gmail.com
  */
-KISSY.add('date/picker/month-panel/render', function (S, Control, GregorianCalendar, DateFormat, MonthsTpl, MonthPanelTpl) {
+KISSY.add('date/picker/month-panel/render', function (S, Control, DateFormat, MonthsTpl, MonthPanelTpl) {
     function prepareMonths(control) {
         var value = control.get('value');
-        var currentMonth = value.get(GregorianCalendar.MONTH);
+        var currentMonth = value.getMonth();
         var current = value.clone();
         var locale = control.get('locale');
         var monthYearFormat = locale.monthYearFormat;
@@ -17,7 +17,7 @@ KISSY.add('date/picker/month-panel/render', function (S, Control, GregorianCalen
         for (var i = 0; i < 3; i++) {
             months[i] = [];
             for (var j = 0; j < 4; j++) {
-                current.set(GregorianCalendar.MONTH, index);
+                current.setMonth( index);
                 months[i][j] = {
                     value:index,
                     content: shortMonths[index],
@@ -28,7 +28,7 @@ KISSY.add('date/picker/month-panel/render', function (S, Control, GregorianCalen
         }
         S.mix(control.view.renderData,{
             months:months,
-            year: value.get(GregorianCalendar.YEAR),
+            year: value.getYear(),
             month:currentMonth
         });
         control.months = months;
@@ -59,7 +59,7 @@ KISSY.add('date/picker/month-panel/render', function (S, Control, GregorianCalen
             var control = this.control;
             prepareMonths(control);
             control.get('tbodyEl').html(this.renderTpl(MonthsTpl));
-            control.get('yearSelectContentEl').html(value.get(GregorianCalendar.YEAR));
+            control.get('yearSelectContentEl').html(value.getYear());
         }
     }, {
         ATTRS: {
@@ -70,7 +70,6 @@ KISSY.add('date/picker/month-panel/render', function (S, Control, GregorianCalen
     });
 }, {
     requires: ['component/control',
-        'date/gregorian',
         'date/format',
         './months-tpl',
         './month-panel-tpl']

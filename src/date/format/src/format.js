@@ -43,9 +43,9 @@ KISSY.add('date/format', function (S, GregorianCalendar, defaultLocale) {
     patternChars[GregorianCalendar.MONTH] = 'M';
     patternChars[GregorianCalendar.DAY_OF_MONTH] = 'd';
     patternChars[GregorianCalendar.HOUR_OF_DAY] = 'H';
-    patternChars[GregorianCalendar.MINUTE] = 'm';
-    patternChars[GregorianCalendar.SECOND] = 's';
-    patternChars[GregorianCalendar.MILLISECOND] = 'S';
+    patternChars[GregorianCalendar.MINUTES] = 'm';
+    patternChars[GregorianCalendar.SECONDS] = 's';
+    patternChars[GregorianCalendar.MILLISECONDS] = 'S';
     patternChars[GregorianCalendar.WEEK_OF_YEAR] = 'w';
     patternChars[GregorianCalendar.WEEK_OF_MONTH] = 'W';
     patternChars[GregorianCalendar.DAY_OF_YEAR] = 'D';
@@ -195,18 +195,18 @@ KISSY.add('date/format', function (S, GregorianCalendar, defaultLocale) {
             value;
         switch (field) {
             case 'G':
-                value = calendar.get(GregorianCalendar.YEAR) > 0 ? 1 : 0;
+                value = calendar.getYear() > 0 ? 1 : 0;
                 current = locale.eras[value];
                 break;
             case 'y':
-                value = calendar.get(GregorianCalendar.YEAR);
+                value = calendar.getYear();
                 if (value <= 0) {
                     value = 1 - value;
                 }
                 current = (zeroPaddingNumber(value, 2, count != 2 ? MAX_VALUE : 2));
                 break;
             case 'M':
-                value = calendar.get(GregorianCalendar.MONTH);
+                value = calendar.getMonth();
                 if (count >= 4) {
                     current = locale.months[value];
                 } else if (count == 3) {
@@ -216,27 +216,27 @@ KISSY.add('date/format', function (S, GregorianCalendar, defaultLocale) {
                 }
                 break;
             case 'k':
-                current = zeroPaddingNumber(calendar.get(GregorianCalendar.HOUR_OF_DAY) || 24,
+                current = zeroPaddingNumber(calendar.getHourOfDay()|| 24,
                     count);
                 break;
             case 'E':
-                value = calendar.get(GregorianCalendar.DAY_OF_WEEK);
+                value = calendar.getDayOfWeek();
                 current = count >= 4 ?
                     locale.weekdays[value] :
                     locale.shortWeekdays[value];
                 break;
             case 'a':
-                current = locale.ampms[calendar.get(GregorianCalendar.HOUR_OF_DAY) >= 12 ?
+                current = locale.ampms[calendar.getHourOfDay() >= 12 ?
                     1 :
                     0];
                 break;
             case 'h':
                 current = zeroPaddingNumber(calendar.
-                    get(GregorianCalendar.HOUR_OF_DAY) % 12 || 12, count);
+                    getHourOfDay() % 12 || 12, count);
                 break;
             case 'K':
                 current = zeroPaddingNumber(calendar.
-                    get(GregorianCalendar.HOUR_OF_DAY) % 12, count);
+                    getHourOfDay() % 12, count);
                 break;
             case 'Z':
                 var offset = calendar.getTimezoneOffset();
@@ -335,10 +335,10 @@ KISSY.add('date/format', function (S, GregorianCalendar, defaultLocale) {
         switch (field) {
             case 'G':
                 if (match = matchField(dateStr, startIndex, locale.eras)) {
-                    if (calendar.isSet(GregorianCalendar.YEAR)) {
+                    if (calendar.isSetYear()) {
                         if (match.value == 0) {
-                            year = calendar.get(GregorianCalendar.YEAR);
-                            calendar.set(GregorianCalendar.YEAR, 1 - year);
+                            year = calendar.getYear();
+                            calendar.setYear(1 - year);
                         }
                     } else {
                         tmp.era = match.value;
@@ -353,7 +353,7 @@ KISSY.add('date/format', function (S, GregorianCalendar, defaultLocale) {
                             year = 1 - year;
                         }
                     }
-                    calendar.set(GregorianCalendar.YEAR, year);
+                    calendar.setYear(year);
                 }
                 break;
             case 'M':
@@ -369,28 +369,28 @@ KISSY.add('date/format', function (S, GregorianCalendar, defaultLocale) {
                     }
                 }
                 if (match) {
-                    calendar.set(GregorianCalendar.MONTH, month);
+                    calendar.setMonth( month);
                 }
                 break;
             case 'k':
                 if (match = matchNumber(dateStr, startIndex, count, obeyCount)) {
-                    calendar.set(GregorianCalendar.HOUR_OF_DAY, match.value % 24);
+                    calendar.setHourOfDay(match.value % 24);
                 }
                 break;
             case 'E':
                 if (match = matchField(dateStr, startIndex, locale[count > 3 ?
                     'weekdays' :
                     'shortWeekdays'])) {
-                    calendar.set(GregorianCalendar.DAY_OF_WEEK, match.value);
+                    calendar.setDayOfWeek( match.value);
                 }
                 break;
             case 'a':
                 if (match = matchField(dateStr, startIndex, locale.ampms)) {
-                    if (calendar.isSet(GregorianCalendar.HOUR_OF_DAY)) {
+                    if (calendar.isSetHourOfDay()) {
                         if (match.value) {
-                            hour = calendar.get(GregorianCalendar.HOUR_OF_DAY);
+                            hour = calendar.getHourOfDay();
                             if (hour < 12) {
-                                calendar.set(GregorianCalendar.HOUR_OF_DAY, (hour + 12) % 24);
+                                calendar.setHourOfDay((hour + 12) % 24);
                             }
                         }
                     } else {
@@ -404,7 +404,7 @@ KISSY.add('date/format', function (S, GregorianCalendar, defaultLocale) {
                     if (tmp.ampm) {
                         hour += 12;
                     }
-                    calendar.set(GregorianCalendar.HOUR_OF_DAY, hour);
+                    calendar.setHourOfDay(hour);
                 }
                 break;
             case 'K':
@@ -413,7 +413,7 @@ KISSY.add('date/format', function (S, GregorianCalendar, defaultLocale) {
                     if (tmp.ampm) {
                         hour += 12;
                     }
-                    calendar.set(GregorianCalendar.HOUR_OF_DAY, hour);
+                    calendar.setHourOfDay(hour);
                 }
                 break;
             case 'Z':
@@ -460,9 +460,9 @@ KISSY.add('date/format', function (S, GregorianCalendar, defaultLocale) {
 
     DateTimeFormat.prototype = {
         format: function (calendar) {
-            var time = calendar.getTimeInMillis();
+            var time = calendar.getTime();
             calendar = new GregorianCalendar(this.timezoneOffset, this.locale);
-            calendar.setTimeInMillis(time);
+            calendar.setTime(time);
             var i,
                 ret = [],
                 pattern = this.pattern,

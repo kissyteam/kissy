@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 19 22:09
+build time: Aug 20 14:04
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -33,7 +33,7 @@ KISSY.add('date/picker/picker-tpl',
  * render for year panel
  * @author yiminghe@gmail.com
  */
-KISSY.add('date/picker/render', function (S, Node, Control, GregorianCalendar, DateTimeFormat, PickerTpl) {
+KISSY.add('date/picker/render', function (S, Node, Control, DateTimeFormat, PickerTpl) {
     var dateRowTplStart = '<tr role="row">';
     var dateRowTplEnd = '</tr>';
     var dateCellTpl = '<td role="gridcell" data-index="{index}" title="{title}" class="{cls}">{content}</td>';
@@ -51,36 +51,36 @@ KISSY.add('date/picker/render', function (S, Node, Control, GregorianCalendar, D
     var DATE_COL_COUNT = 7;
 
     function getIdFromDate(d) {
-        return 'ks-date-picker-date-' + d.get(GregorianCalendar.YEAR) +
-            '-' + d.get(GregorianCalendar.MONTH) + '-' +
-            d.get(GregorianCalendar.DAY_OF_MONTH);
+        return 'ks-date-picker-date-' + d.getYear() +
+            '-' + d.getMonth() + '-' +
+            d.getDayOfMonth();
     }
 
     function isSameDay(one, two) {
-        return one.get(GregorianCalendar.YEAR) == two.get(GregorianCalendar.YEAR) &&
-            one.get(GregorianCalendar.MONTH) == two.get(GregorianCalendar.MONTH) &&
-            one.get(GregorianCalendar.DAY_OF_MONTH) == two.get(GregorianCalendar.DAY_OF_MONTH);
+        return one.getYear() == two.getYear() &&
+            one.getMonth() == two.getMonth() &&
+            one.getDayOfMonth() == two.getDayOfMonth();
     }
 
     function isSameMonth(one, two) {
-        return one.get(GregorianCalendar.YEAR) == two.get(GregorianCalendar.YEAR) &&
-            one.get(GregorianCalendar.MONTH) == two.get(GregorianCalendar.MONTH);
+        return one.getYear() == two.getYear() &&
+            one.getMonth() == two.getMonth();
     }
 
     function beforeCurrentMonthYear(current, today) {
-        if (current.get(GregorianCalendar.YEAR) < today.get(GregorianCalendar.YEAR)) {
+        if (current.getYear() < today.getYear()) {
             return 1;
         }
-        return current.get(GregorianCalendar.YEAR) == today.get(GregorianCalendar.YEAR) &&
-            current.get(GregorianCalendar.MONTH) < today.get(GregorianCalendar.MONTH);
+        return current.getYear() == today.getYear() &&
+            current.getMonth() < today.getMonth();
     }
 
     function afterCurrentMonthYear(current, today) {
-        if (current.get(GregorianCalendar.YEAR) > today.get(GregorianCalendar.YEAR)) {
+        if (current.getYear() > today.getYear()) {
             return 1;
         }
-        return current.get(GregorianCalendar.YEAR) == today.get(GregorianCalendar.YEAR) &&
-            current.get(GregorianCalendar.MONTH) > today.get(GregorianCalendar.MONTH);
+        return current.getYear() == today.getYear() &&
+            current.getMonth() > today.getMonth();
     }
 
     function renderDatesCmd() {
@@ -104,7 +104,7 @@ KISSY.add('date/picker/render', function (S, Node, Control, GregorianCalendar, D
             var value = control.get('value');
             var dateLocale = value.getLocale();
             var today = value.clone();
-            today.setTimeInMillis(S.now());
+            today.setTime(S.now());
             return new DateTimeFormat(locale.dateFormat, dateLocale).format(today);
         },
 
@@ -173,21 +173,21 @@ KISSY.add('date/picker/render', function (S, Node, Control, GregorianCalendar, D
                 nextMonthDayClass = self.getBaseCssClass('next-month-btn-day'),
                 disabledClass = self.getBaseCssClass('disabled-cell');
 
-            today.setTimeInMillis(S.now());
+            today.setTime(S.now());
             var month1 = value.clone();
-            month1.set(value.get(GregorianCalendar.YEAR), value.get(GregorianCalendar.MONTH), 1);
-            var day = month1.get(GregorianCalendar.DAY_OF_WEEK);
+            month1.set(value.getYear(), value.getMonth(), 1);
+            var day = month1.getDayOfWeek();
             var lastMonthDiffDay = (day + 7 - value.getFirstDayOfWeek()) % 7;
             // calculate last month
             var lastMonth1 = month1.clone();
-            lastMonth1.add(GregorianCalendar.DAY_OF_MONTH, -lastMonthDiffDay);
+            lastMonth1.addDayOfMonth (-lastMonthDiffDay);
             var passed = 0;
             for (i = 0; i < DATE_ROW_COUNT; i++) {
                 for (j = 0; j < DATE_COL_COUNT; j++) {
                     current = lastMonth1;
                     if (passed) {
                         current = current.clone();
-                        current.add(GregorianCalendar.DAY_OF_MONTH, passed);
+                        current.addDayOfMonth(passed);
                     }
                     dateTable.push(current);
                     passed++;
@@ -200,7 +200,7 @@ KISSY.add('date/picker/render', function (S, Node, Control, GregorianCalendar, D
                 if (showWeekNumber) {
                     rowHtml += S.substitute(weekNumberCellTpl, {
                         cls: weekNumberCellClass,
-                        content: dateTable[passed].get(GregorianCalendar.WEEK_OF_YEAR)
+                        content: dateTable[passed].getWeekOfYear()
                     });
                 }
                 for (j = 0; j < DATE_COL_COUNT; j++) {
@@ -235,8 +235,7 @@ KISSY.add('date/picker/render', function (S, Node, Control, GregorianCalendar, D
                             id: getIdFromDate(current),
                             selected: selected,
                             disabled: disabled,
-
-                            content: current.get(GregorianCalendar.DAY_OF_MONTH)
+                            content: current.getDayOfMonth()
                         });
                     }
                     rowHtml += S.substitute(dateCellTpl, {
@@ -313,7 +312,6 @@ KISSY.add('date/picker/render', function (S, Node, Control, GregorianCalendar, D
     requires: [
         'node',
         'component/control',
-        'date/gregorian',
         'date/format',
         './picker-tpl']
 });
@@ -331,10 +329,10 @@ KISSY.add('date/picker/month-panel/month-panel-tpl',
  * render for month panel
  * @author yiminghe@gmail.com
  */
-KISSY.add('date/picker/month-panel/render', function (S, Control, GregorianCalendar, DateFormat, MonthsTpl, MonthPanelTpl) {
+KISSY.add('date/picker/month-panel/render', function (S, Control, DateFormat, MonthsTpl, MonthPanelTpl) {
     function prepareMonths(control) {
         var value = control.get('value');
-        var currentMonth = value.get(GregorianCalendar.MONTH);
+        var currentMonth = value.getMonth();
         var current = value.clone();
         var locale = control.get('locale');
         var monthYearFormat = locale.monthYearFormat;
@@ -346,7 +344,7 @@ KISSY.add('date/picker/month-panel/render', function (S, Control, GregorianCalen
         for (var i = 0; i < 3; i++) {
             months[i] = [];
             for (var j = 0; j < 4; j++) {
-                current.set(GregorianCalendar.MONTH, index);
+                current.setMonth( index);
                 months[i][j] = {
                     value:index,
                     content: shortMonths[index],
@@ -357,7 +355,7 @@ KISSY.add('date/picker/month-panel/render', function (S, Control, GregorianCalen
         }
         S.mix(control.view.renderData,{
             months:months,
-            year: value.get(GregorianCalendar.YEAR),
+            year: value.getYear(),
             month:currentMonth
         });
         control.months = months;
@@ -388,7 +386,7 @@ KISSY.add('date/picker/month-panel/render', function (S, Control, GregorianCalen
             var control = this.control;
             prepareMonths(control);
             control.get('tbodyEl').html(this.renderTpl(MonthsTpl));
-            control.get('yearSelectContentEl').html(value.get(GregorianCalendar.YEAR));
+            control.get('yearSelectContentEl').html(value.getYear());
         }
     }, {
         ATTRS: {
@@ -399,7 +397,6 @@ KISSY.add('date/picker/month-panel/render', function (S, Control, GregorianCalen
     });
 }, {
     requires: ['component/control',
-        'date/gregorian',
         'date/format',
         './months-tpl',
         './month-panel-tpl']
@@ -418,10 +415,10 @@ KISSY.add('date/picker/year-panel/year-panel-tpl',
  * render for year-panel
  * @author yiminghe@gmail.com
  */
-KISSY.add('date/picker/year-panel/render', function (S, Control, GregorianCalendar, DateFormat, YearsTpl, YearPanelTpl) {
+KISSY.add('date/picker/year-panel/render', function (S, Control, DateFormat, YearsTpl, YearPanelTpl) {
     function prepareYears(control) {
         var value = control.get('value');
-        var currentYear = value.get(GregorianCalendar.YEAR);
+        var currentYear = value.getYear();
         var startYear = parseInt(currentYear / 10) * 10;
         var preYear = startYear - 1;
         var current = value.clone();
@@ -434,7 +431,7 @@ KISSY.add('date/picker/year-panel/render', function (S, Control, GregorianCalend
         for (var i = 0; i < 3; i++) {
             years[i] = [];
             for (var j = 0; j < 4; j++) {
-                current.set(GregorianCalendar.YEAR, preYear + index);
+                current.setYear( preYear + index);
                 years[i][j] = {
                     content: preYear + index,
                     title: dateFormatter.format(current)
@@ -450,7 +447,7 @@ KISSY.add('date/picker/year-panel/render', function (S, Control, GregorianCalend
         beforeCreateDom: function (renderData, childrenSelectors) {
             var control = this.control;
             var value = control.get('value');
-            var currentYear = value.get(GregorianCalendar.YEAR);
+            var currentYear = value.getYear();
             var startYear = parseInt(currentYear / 10) * 10;
             var endYear = startYear + 9;
             var locale = control.get('locale');
@@ -459,7 +456,7 @@ KISSY.add('date/picker/year-panel/render', function (S, Control, GregorianCalend
                 years: prepareYears(control),
                 startYear: startYear,
                 endYear: endYear,
-                year: value.get(GregorianCalendar.YEAR),
+                year: value.getYear(),
                 previousDecadeLabel: locale.previousDecade,
                 nextDecadeLabel: locale.nextDecade
             });
@@ -474,14 +471,14 @@ KISSY.add('date/picker/year-panel/render', function (S, Control, GregorianCalend
 
         _onSetValue: function (value) {
             var control = this.control;
-            var currentYear = value.get(GregorianCalendar.YEAR);
+            var currentYear = value.getYear();
             var startYear = parseInt(currentYear / 10) * 10;
             var endYear = startYear + 9;
             S.mix(this.renderData, {
                 startYear:startYear,
                 endYear:endYear,
                 years: prepareYears(control),
-                year: value.get(GregorianCalendar.YEAR)
+                year: value.getYear()
             });
             control.get('tbodyEl').html(this.renderTpl(YearsTpl));
             control.get('decadeSelectContentEl').html(startYear+'-'+endYear);
@@ -495,7 +492,6 @@ KISSY.add('date/picker/year-panel/render', function (S, Control, GregorianCalend
     });
 }, {
     requires: ['component/control',
-        'date/gregorian',
         'date/format',
         './years-tpl',
         './year-panel-tpl']
@@ -514,10 +510,10 @@ KISSY.add('date/picker/decade-panel/decade-panel-tpl',
  * render for decade panel
  * @author yiminghe@gmail.com
  */
-KISSY.add('date/picker/decade-panel/render', function (S, Control, GregorianCalendar, DateFormat, MonthsTpl, DecadePanelTpl) {
+KISSY.add('date/picker/decade-panel/render', function (S, Control, DateFormat, MonthsTpl, DecadePanelTpl) {
     function prepareYears(control, view) {
         var value = control.get('value');
-        var currentYear = value.get(GregorianCalendar.YEAR);
+        var currentYear = value.getYear();
         var startYear = parseInt(currentYear / 100) * 100;
         var preYear = startYear - 10;
         var endYear = startYear + 99;
@@ -578,7 +574,6 @@ KISSY.add('date/picker/decade-panel/render', function (S, Control, GregorianCale
     });
 }, {
     requires: ['component/control',
-        'date/gregorian',
         'date/format',
         './decades-tpl',
         './decade-panel-tpl']
@@ -587,13 +582,13 @@ KISSY.add('date/picker/decade-panel/render', function (S, Control, GregorianCale
  * decade panel for date picker
  * @author yiminghe@gmail.com
  */
-KISSY.add('date/picker/decade-panel/control', function (S, Node, GregorianCalendar, Control, CenturyPanelRender) {
+KISSY.add('date/picker/decade-panel/control', function (S, Node, Control, CenturyPanelRender) {
     var tap = Node.Gesture.tap;
     var $ = Node.all;
 
     function goYear(self, direction) {
         var next = self.get('value').clone();
-        next.add(GregorianCalendar.YEAR, direction);
+        next.addYear(direction);
         self.set('value', next);
     }
 
@@ -614,8 +609,8 @@ KISSY.add('date/picker/decade-panel/control', function (S, Node, GregorianCalend
         var tdIndex = td.index();
         var trIndex = tr.index();
         var value = this.get('value').clone();
-        var y = value.get(GregorianCalendar.YEAR) % 10;
-        value.set(GregorianCalendar.YEAR, this.decades[trIndex][tdIndex].startDecade + y);
+        var y = value.getYear() % 10;
+        value.setYear(this.decades[trIndex][tdIndex].startDecade + y);
         this.set('value', value);
         this.fire('select', {
             value: value
@@ -649,19 +644,19 @@ KISSY.add('date/picker/decade-panel/control', function (S, Node, GregorianCalend
         }
     });
 }, {
-    requires: ['node', 'date/gregorian', 'component/control', './render']
+    requires: ['node', 'component/control', './render']
 });
 /**
  * month select for date picker
  * @author yiminghe@gmail.com
  */
-KISSY.add('date/picker/year-panel/control', function (S, Node, GregorianCalendar, Control, DecadePanelRender, DecadePanel) {
+KISSY.add('date/picker/year-panel/control', function (S, Node, Control, DecadePanelRender, DecadePanel) {
     var tap = Node.Gesture.tap;
     var $ = Node.all;
 
     function goYear(self, direction) {
         var next = self.get('value').clone();
-        next.add(GregorianCalendar.YEAR, direction);
+        next.addYear( direction);
         self.set('value', next);
     }
 
@@ -682,7 +677,7 @@ KISSY.add('date/picker/year-panel/control', function (S, Node, GregorianCalendar
         var tdIndex = td.index();
         var trIndex = tr.index();
         var value = this.get('value').clone();
-        value.set(GregorianCalendar.YEAR, this.years[trIndex][tdIndex].content);
+        value.setYear(this.years[trIndex][tdIndex].content);
         this.set('value', value);
         this.fire('select', {
             value: value
@@ -744,7 +739,6 @@ KISSY.add('date/picker/year-panel/control', function (S, Node, GregorianCalendar
 }, {
     requires: [
         'node',
-        'date/gregorian',
         'component/control',
         './render',
         '../decade-panel/control']
@@ -755,7 +749,6 @@ KISSY.add('date/picker/year-panel/control', function (S, Node, GregorianCalendar
  */
 KISSY.add('date/picker/month-panel/control',function(S,
                                                      Node,
-                                                     GregorianCalendar,
                                                      Control,
                                                      MonthPanelRender,
     YearPanel){
@@ -764,7 +757,7 @@ KISSY.add('date/picker/month-panel/control',function(S,
 
     function goYear(self, direction) {
         var next = self.get('value').clone();
-        next.add(GregorianCalendar.YEAR, direction);
+        next.addYear( direction);
         self.set('value',next)
     }
 
@@ -785,7 +778,7 @@ KISSY.add('date/picker/month-panel/control',function(S,
         var tdIndex = td.index();
         var trIndex = tr.index();
         var value=this.get('value').clone();
-        value.set(GregorianCalendar.MONTH,trIndex*4+tdIndex);
+        value.setMonth(trIndex*4+tdIndex);
         this.fire('select',{
             value:value
         });
@@ -846,7 +839,6 @@ KISSY.add('date/picker/month-panel/control',function(S,
 },{
     requires:[
         'node',
-        'date/gregorian',
         'component/control',
         './render',
         '../year-panel/control'
@@ -864,38 +856,37 @@ KISSY.add('date/picker/control', function (S, Node, GregorianCalendar, locale, C
 
     function goStartMonth(self) {
         var next = self.get('value').clone();
-        next.set(GregorianCalendar.DAY_OF_MONTH, 1);
+        next.setDayOfMonth(1);
         self.set('value', next);
     }
 
     function goEndMonth(self) {
         var next = self.get('value').clone();
-        next.add(GregorianCalendar.MONTH, 1);
-        next.add(GregorianCalendar.DAY_OF_MONTH, -1);
+        next.setDayOfMonth(next.getActualMaximum(GregorianCalendar.MONTH));
         self.set('value', next);
     }
 
     function goMonth(self, direction) {
         var next = self.get('value').clone();
-        next.add(GregorianCalendar.MONTH, direction);
+        next.addMonth(direction);
         self.set('value', next);
     }
 
     function goYear(self, direction) {
         var next = self.get('value').clone();
-        next.add(GregorianCalendar.YEAR, direction);
+        next.addYear(direction);
         self.set('value', next);
     }
 
     function goWeek(self, direction) {
         var next = self.get('value').clone();
-        next.add(GregorianCalendar.WEEK_OF_YEAR, direction);
+        next.addWeekOfYear(direction);
         self.set('value', next);
     }
 
     function goDay(self, direction) {
         var next = self.get('value').clone();
-        next.add(GregorianCalendar.DAY_OF_MONTH, direction);
+        next.addDayOfMonth(direction);
         self.set('value', next);
     }
 
@@ -961,7 +952,7 @@ KISSY.add('date/picker/control', function (S, Node, GregorianCalendar, locale, C
         e.preventDefault();
         this.set('clear', false);
         var today = this.get('value').clone();
-        today.setTimeInMillis(S.now());
+        today.setTime(S.now());
         this.set('value', today);
     }
 
@@ -970,7 +961,7 @@ KISSY.add('date/picker/control', function (S, Node, GregorianCalendar, locale, C
             v = !self.get('clear');
         if (!v) {
             var value = self.get('value');
-            value.set(GregorianCalendar.DAY_OF_MONTH, 1);
+            value.setDayOfMonth(1);
             self.set('clear', false);
         } else {
             self.set('clear', true);
@@ -1089,7 +1080,7 @@ KISSY.add('date/picker/control', function (S, Node, GregorianCalendar, locale, C
                 view: 1,
                 valueFn: function () {
                     var date = new GregorianCalendar();
-                    date.setTimeInMillis(S.now());
+                    date.setTime(S.now());
                     return date;
                 }
             },

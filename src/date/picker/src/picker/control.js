@@ -10,38 +10,37 @@ KISSY.add('date/picker/control', function (S, Node, GregorianCalendar, locale, C
 
     function goStartMonth(self) {
         var next = self.get('value').clone();
-        next.set(GregorianCalendar.DAY_OF_MONTH, 1);
+        next.setDayOfMonth(1);
         self.set('value', next);
     }
 
     function goEndMonth(self) {
         var next = self.get('value').clone();
-        next.add(GregorianCalendar.MONTH, 1);
-        next.add(GregorianCalendar.DAY_OF_MONTH, -1);
+        next.setDayOfMonth(next.getActualMaximum(GregorianCalendar.MONTH));
         self.set('value', next);
     }
 
     function goMonth(self, direction) {
         var next = self.get('value').clone();
-        next.add(GregorianCalendar.MONTH, direction);
+        next.addMonth(direction);
         self.set('value', next);
     }
 
     function goYear(self, direction) {
         var next = self.get('value').clone();
-        next.add(GregorianCalendar.YEAR, direction);
+        next.addYear(direction);
         self.set('value', next);
     }
 
     function goWeek(self, direction) {
         var next = self.get('value').clone();
-        next.add(GregorianCalendar.WEEK_OF_YEAR, direction);
+        next.addWeekOfYear(direction);
         self.set('value', next);
     }
 
     function goDay(self, direction) {
         var next = self.get('value').clone();
-        next.add(GregorianCalendar.DAY_OF_MONTH, direction);
+        next.addDayOfMonth(direction);
         self.set('value', next);
     }
 
@@ -107,7 +106,7 @@ KISSY.add('date/picker/control', function (S, Node, GregorianCalendar, locale, C
         e.preventDefault();
         this.set('clear', false);
         var today = this.get('value').clone();
-        today.setTimeInMillis(S.now());
+        today.setTime(S.now());
         this.set('value', today);
     }
 
@@ -116,7 +115,7 @@ KISSY.add('date/picker/control', function (S, Node, GregorianCalendar, locale, C
             v = !self.get('clear');
         if (!v) {
             var value = self.get('value');
-            value.set(GregorianCalendar.DAY_OF_MONTH, 1);
+            value.setDayOfMonth(1);
             self.set('clear', false);
         } else {
             self.set('clear', true);
@@ -235,7 +234,7 @@ KISSY.add('date/picker/control', function (S, Node, GregorianCalendar, locale, C
                 view: 1,
                 valueFn: function () {
                     var date = new GregorianCalendar();
-                    date.setTimeInMillis(S.now());
+                    date.setTime(S.now());
                     return date;
                 }
             },

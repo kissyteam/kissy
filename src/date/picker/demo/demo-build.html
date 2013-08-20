@@ -29,11 +29,11 @@
 </body>
 <script src="/kissy/build/seed.js"></script>
 <script>
-    KISSY.use('node,date/picker,date/gregorian,date/format', function (S, Node, DatePicker, GregorianCalendar, DateFormat) {
+    KISSY.use('node,date/picker,date/format', function (S, Node, DatePicker, DateFormat) {
         var result = Node.all('#result');
         var picker = new DatePicker({
             disabledDate: function (current, value) {
-                return current.get(GregorianCalendar.MONTH) < value.get(GregorianCalendar.MONTH);
+                return current.getMonth() < value.getMonth();
             },
             // showWeekNumber:false,
             // showToday:false,

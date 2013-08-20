@@ -28,7 +28,7 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
      *  - dayOfMonth - the value used to set the DAY_OF_MONTH calendar field in the calendar.
      *  - hourOfDay - the value used to set the HOUR_OF_DAY calendar field in the calendar.
      *  - minute - the value used to set the MINUTE calendar field in the calendar.
-     *  - second - the value used to set the SECOND calendar field in the calendar.
+     *  - second - the value used to set the SECONDS calendar field in the calendar.
      *  Constructs a GregorianCalendar with the given date and time set for the default time zone with the default locale.
      * @class KISSY.GregorianCalendar
      */
@@ -86,7 +86,6 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
     S.mix(GregorianCalendar, Const);
 
     S.mix(GregorianCalendar, {
-
         /**
          * Determines if the given year is a leap year.
          * Returns true if the given year is a leap year. To specify BC year numbers,
@@ -122,17 +121,17 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
          * Enum indicating the minute of the day
          * @type Number
          */
-        MINUTE: 5,
+        MINUTES: 5,
         /**
          * Enum indicating the second of the day
          * @type Number
          */
-        SECOND: 6,
+        SECONDS: 6,
         /**
          * Enum indicating the millisecond of the day
          * @type Number
          */
-        MILLISECOND: 7,
+        MILLISECONDS: 7,
         /**
          * Enum indicating the week number within the current year
          * @type Number
@@ -172,14 +171,23 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
         PM: 1
     });
 
+
+    var fields = ['',
+        'Year', 'Month', 'DayOfMonth',
+        'HourOfDay',
+        'Minutes', 'Seconds', 'Milliseconds', 'WeekOfYear',
+        'WeekOfMonth', 'DayOfYear', 'DayOfWeek',
+        'DayOfWeekInMonth'
+    ];
+
     var YEAR = GregorianCalendar.YEAR;
     var MONTH = GregorianCalendar.MONTH;
     var DAY_OF_MONTH = GregorianCalendar.DAY_OF_MONTH;
     var HOUR_OF_DAY = GregorianCalendar.HOUR_OF_DAY;
-    var MINUTE = GregorianCalendar.MINUTE;
-    var SECOND = GregorianCalendar.SECOND;
+    var MINUTE = GregorianCalendar.MINUTES;
+    var SECONDS = GregorianCalendar.SECONDS;
 
-    var MILLISECOND = GregorianCalendar.MILLISECOND;
+    var MILLISECONDS = GregorianCalendar.MILLISECONDS;
     var DAY_OF_WEEK_IN_MONTH = GregorianCalendar.DAY_OF_WEEK_IN_MONTH;
     var DAY_OF_YEAR = GregorianCalendar.DAY_OF_YEAR;
     var DAY_OF_WEEK = GregorianCalendar.DAY_OF_WEEK;
@@ -210,8 +218,8 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
         1,              // DAY_OF_MONTH
         0,              // HOUR_OF_DAY
         0,              // MINUTE
-        0,              // SECOND
-        0,              // MILLISECOND
+        0,              // SECONDS
+        0,              // MILLISECONDS
 
         1,              // WEEK_OF_YEAR
         undefined,              // WEEK_OF_MONTH
@@ -228,8 +236,8 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
         undefined, // DAY_OF_MONTH
         23,             // HOUR_OF_DAY
         59,             // MINUTE
-        59,             // SECOND
-        999,            // MILLISECOND
+        59,             // SECONDS
+        999,            // MILLISECONDS
         undefined,             // WEEK_OF_YEAR
         undefined,              // WEEK_OF_MONTH
         undefined,            // DAY_OF_YEAR
@@ -240,7 +248,23 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
     GregorianCalendar.prototype = {
         constructor: GregorianCalendar,
 
-        getLocale:function(){
+        /**
+         * Determines if current year is a leap year.
+         * Returns true if the given year is a leap year. To specify BC year numbers,
+         * 1 - year number must be given. For example, year BC 4 is specified as -3.
+         * @returns {Boolean} true if the given year is a leap year; false otherwise.
+         * @static
+         * @method
+         */
+        isLeapYear: function () {
+            return isLeapYear(this.getYear());
+        },
+
+        /**
+         * Return local info for current date instance
+         * @returns {Object}
+         */
+        getLocale: function () {
             return this.locale;
         },
 
@@ -365,13 +389,13 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
                 var r = timeOfDay % ONE_HOUR;
                 fields[MINUTE] = toInt(r / ONE_MINUTE);
                 r %= ONE_MINUTE;
-                fields[SECOND] = toInt(r / ONE_SECOND);
-                fields[MILLISECOND] = r % ONE_SECOND;
+                fields[SECONDS] = toInt(r / ONE_SECOND);
+                fields[MILLISECONDS] = r % ONE_SECOND;
             } else {
                 fields[HOUR_OF_DAY] =
                     fields[MINUTE] =
-                        fields[SECOND] =
-                            fields[MILLISECOND] = 0;
+                        fields[SECONDS] =
+                            fields[MILLISECONDS] = 0;
             }
 
 
@@ -433,9 +457,9 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
             timeOfDay *= 60;
             timeOfDay += fields[MINUTE] || 0;
             timeOfDay *= 60;
-            timeOfDay += fields[SECOND] || 0;
+            timeOfDay += fields[SECONDS] || 0;
             timeOfDay *= 1000;
-            timeOfDay += fields[MILLISECOND] || 0;
+            timeOfDay += fields[MILLISECONDS] || 0;
 
             var fixedDate = 0;
 
@@ -458,6 +482,7 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
          * the computeTime() method is called if the time value (millisecond offset from the Epoch)
          * has not been calculated from calendar field values.
          * Then, the computeFields() method is called to calculate all calendar field values.
+         * @protected
          */
         complete: function () {
             if (this.time === undefined) {
@@ -559,7 +584,7 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
          * @member KISSY.GregorianCalendar
          * @returns {Number} the current time as UTC milliseconds from the epoch.
          */
-        getTimeInMillis: function () {
+        getTime: function () {
             if (this.time === undefined) {
                 this.computeTime();
             }
@@ -570,7 +595,7 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
          * Sets this Calendar's current time from the given long value.
          * @param time the new time in UTC milliseconds from the epoch.
          */
-        'setTimeInMillis': function (time) {
+        'setTime': function (time) {
             this.time = time;
             this.fieldsComputed = false;
             this.complete();
@@ -587,6 +612,84 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
         },
 
         /**
+         * Returns the year of the given calendar field.
+         * @method getYear
+         * @returns {Number} the year for the given calendar field.
+
+         /**
+         * Returns the month of the given calendar field.
+         * @method getMonth
+         * @returns {Number} the month for the given calendar field.
+         */
+
+
+        /**
+         * Returns the day of month of the given calendar field.
+         * @method getDayOfMonth
+         * @returns {Number} the day of month for the given calendar field.
+         */
+
+
+        /**
+         * Returns the hour of day of the given calendar field.
+         * @method getHourOfDay
+         * @returns {Number} the hour of day for the given calendar field.
+         */
+
+
+        /**
+         * Returns the minute of the given calendar field.
+         * @method getMinute
+         * @returns {Number} the minute for the given calendar field.
+         */
+
+
+        /**
+         * Returns the second of the given calendar field.
+         * @method getSecond
+         * @returns {Number} the second for the given calendar field.
+         */
+
+
+        /**
+         * Returns the millisecond of the given calendar field.
+         * @method getMilliSecond
+         * @returns {Number} the millisecond for the given calendar field.
+         */
+
+
+        /**
+         * Returns the week of year of the given calendar field.
+         * @method getWeekOfYear
+         * @returns {Number} the week of year for the given calendar field.
+         */
+
+
+        /**
+         * Returns the week of month of the given calendar field.
+         * @method getWeekOfMonth
+         * @returns {Number} the week of month for the given calendar field.
+         */
+
+        /**
+         * Returns the day of year of the given calendar field.
+         * @method getDayOfYear
+         * @returns {Number} the day of year for the given calendar field.
+         */
+
+        /**
+         * Returns the day of week of the given calendar field.
+         * @method getDayOfWeek
+         * @returns {Number} the day of week for the given calendar field.
+         */
+
+        /**
+         * Returns the day of week in month of the given calendar field.
+         * @method getDayOfWeekInMonth
+         * @returns {Number} the day of week in month for the given calendar field.
+         */
+
+        /**
          * Sets the given calendar field to the given value.
          * @param field the given calendar field.
          * @param v the value to be set for the given calendar field.
@@ -595,7 +698,7 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
             var len = arguments.length;
             if (len == 2) {
                 this.fields[field] = v;
-            } else if (len < MILLISECOND + 1) {
+            } else if (len < MILLISECONDS + 1) {
                 for (var i = 0; i < len; i++) {
                     this.fields[YEAR + i] = arguments[i];
                 }
@@ -604,6 +707,79 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
             }
             this.time = undefined;
         },
+
+
+        /**
+         * Set the year of the given calendar field.
+         * @method setYear
+         */
+
+
+        /**
+         * Set the month of the given calendar field.
+         * @method setMonth
+         */
+
+
+        /**
+         * Set the day of month of the given calendar field.
+         * @method setDayOfMonth
+         */
+
+
+        /**
+         * Set the hour of day of the given calendar field.
+         * @method setHourOfDay
+         */
+
+
+        /**
+         * Set the minute of the given calendar field.
+         * @method setMinute
+         */
+
+
+        /**
+         * Set the second of the given calendar field.
+         * @method setSecond
+         */
+
+
+        /**
+         * Set the millisecond of the given calendar field.
+         * @method setMilliSecond
+         */
+
+
+        /**
+         * Set the week of year of the given calendar field.
+         * @method setWeekOfYear
+         */
+
+
+        /**
+         * Set the week of month of the given calendar field.
+         * @method setWeekOfMonth
+         */
+
+
+        /**
+         * Set the day of year of the given calendar field.
+         * @method setDayOfYear
+         */
+
+
+        /**
+         * Set the day of week of the given calendar field.
+         * @method setDayOfWeek
+         */
+
+
+        /**
+         * Set the day of week in month of the given calendar field.
+         * @method setDayOfWeekInMonth
+         */
+
 
         /**
          * add for specified field based on two rules:
@@ -667,10 +843,10 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
                     case MINUTE:
                         amount *= ONE_MINUTE;
                         break;
-                    case SECOND:
+                    case SECONDS:
                         amount *= ONE_SECOND;
                         break;
-                    case MILLISECOND:
+                    case MILLISECONDS:
                         break;
                     case WEEK_OF_MONTH:
                     case WEEK_OF_YEAR:
@@ -686,11 +862,90 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
                         throw new Error('illegal field for add');
                         break;
                 }
-                self.setTimeInMillis(self.time + amount);
+                self.setTime(self.time + amount);
             }
 
         },
 
+
+        /**
+         * add the year of the given calendar field.
+         * @method addYear
+         * @param {Number} amount the signed amount to add to field.
+         */
+
+        /**
+         * add the month of the given calendar field.
+         * @method addMonth
+         * @param {Number} amount the signed amount to add to field.
+         */
+
+        /**
+         * add the day of month of the given calendar field.
+         * @method addDayOfMonth
+         * @param {Number} amount the signed amount to add to field.
+         */
+
+        /**
+         * add the hour of day of the given calendar field.
+         * @method addHourOfDay
+         * @param {Number} amount the signed amount to add to field.
+         */
+
+        /**
+         * add the minute of the given calendar field.
+         * @method addMinute
+         * @param {Number} amount the signed amount to add to field.
+         */
+
+        /**
+         * add the second of the given calendar field.
+         * @method addSecond
+         * @param {Number} amount the signed amount to add to field.
+         */
+
+        /**
+         * add the millisecond of the given calendar field.
+         * @method addMilliSecond
+         * @param {Number} amount the signed amount to add to field.
+         */
+
+        /**
+         * add the week of year of the given calendar field.
+         * @method addWeekOfYear
+         * @param {Number} amount the signed amount to add to field.
+         */
+
+
+        /**
+         * add the week of month of the given calendar field.
+         * @method addWeekOfMonth
+         * @param {Number} amount the signed amount to add to field.
+         */
+
+        /**
+         * add the day of year of the given calendar field.
+         * @method addDayOfYear
+         * @param {Number} amount the signed amount to add to field.
+         */
+
+        /**
+         * add the day of week of the given calendar field.
+         * @method addDayOfWeek
+         * @param {Number} amount the signed amount to add to field.
+         */
+
+        /**
+         * add the day of week in month of the given calendar field.
+         * @method addDayOfWeekInMonth
+         * @param {Number} amount the signed amount to add to field.
+         */
+
+
+        /**
+         * Get rolled value for the field
+         * @protected
+         */
         getRolledValue: function (value, amount, min, max) {
             var diff = value - min;
             var range = max - min + 1;
@@ -745,8 +1000,86 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
             }
         },
 
-        // remove other priority fields when call getFixedDate
-        // precondition: other fields are all set or computed
+
+        /**
+         * roll the year of the given calendar field.
+         * @method rollYear
+         * @param {Number} amount the signed amount to add to field.
+         */
+
+
+        /**
+         * roll the month of the given calendar field.
+         * @param {Number} amount the signed amount to add to field.
+         * @method rollMonth
+         */
+
+        /**
+         * roll the day of month of the given calendar field.
+         * @method rollDayOfMonth
+         * @param {Number} amount the signed amount to add to field.
+         */
+
+
+        /**
+         * roll the hour of day of the given calendar field.
+         * @method rollHourOfDay
+         * @param {Number} amount the signed amount to add to field.
+         */
+
+        /**
+         * roll the minute of the given calendar field.
+         * @method rollMinute
+         * @param {Number} amount the signed amount to add to field.
+         */
+
+
+        /**
+         * roll the second of the given calendar field.
+         * @method rollSecond
+         * @param {Number} amount the signed amount to add to field.
+         */
+
+        /**
+         * roll the millisecond of the given calendar field.
+         * @method rollMilliSecond
+         * @param {Number} amount the signed amount to add to field.
+         */
+
+
+        /**
+         * roll the week of year of the given calendar field.
+         * @method rollWeekOfYear
+         * @param {Number} amount the signed amount to add to field.
+         */
+
+
+        /**
+         * roll the week of month of the given calendar field.
+         * @method rollWeekOfMonth
+         * @param {Number} amount the signed amount to add to field.
+         */
+
+
+        /**
+         * roll the day of year of the given calendar field.
+         * @method rollDayOfYear
+         * @param {Number} amount the signed amount to add to field.
+         */
+
+
+        /**
+         * roll the day of week of the given calendar field.
+         * @method rollDayOfWeek
+         * @param {Number} amount the signed amount to add to field.
+         */
+
+
+        /**
+         * remove other priority fields when call getFixedDate
+         * precondition: other fields are all set or computed
+         * @protected
+         */
         updateFieldsBySet: function (field) {
             var fields = this.fields;
             switch (field) {
@@ -766,10 +1099,17 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
             }
         },
 
+        /**
+         * get current date instance's timezone offset
+         * @returns {Number}
+         */
         getTimezoneOffset: function () {
             return this.timezoneOffset;
         },
 
+        /**
+         * set current date instance's timezone offset
+         */
         'setTimezoneOffset': function (timezoneOffset) {
             if (this.timezoneOffset != timezoneOffset) {
                 this.fieldsComputed = undefined;
@@ -777,6 +1117,9 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
             }
         },
 
+        /**
+         * set first day of week for current date instance
+         */
         'setFirstDayOfWeek': function (firstDayOfWeek) {
             if (this.firstDayOfWeek != firstDayOfWeek) {
                 this.firstDayOfWeek = firstDayOfWeek;
@@ -911,7 +1254,7 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
                 this.computeTime();
             }
             var cal = new GregorianCalendar(this.timezoneOffset, this.locale);
-            cal.setTimeInMillis(this.time);
+            cal.setTime(this.time);
             return cal;
         },
 
@@ -924,7 +1267,7 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
          * @returns {boolean} true if this object is equal to obj; false otherwise.
          */
         equals: function (obj) {
-            return this.getTimeInMillis() == obj.getTimeInMillis() &&
+            return this.getTime() == obj.getTime() &&
                 this.firstDayOfWeek == obj.firstDayOfWeek &&
                 this.timezoneOffset == obj.timezoneOffset &&
                 this.minimalDaysInFirstWeek == obj.minimalDaysInFirstWeek;
@@ -947,6 +1290,88 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
             this.fieldsComputed = false;
         }
     };
+
+    var GregorianCalendarProto = GregorianCalendar.prototype;
+
+    if ('@debug@') {
+        // for idea
+        GregorianCalendarProto.getDayOfMonth =
+            GregorianCalendarProto.getHourOfDay =
+                GregorianCalendarProto.getWeekOfYear =
+                    GregorianCalendarProto.getWeekOfMonth =
+                        GregorianCalendarProto.getDayOfYear =
+                            GregorianCalendarProto.getDayOfWeek =
+                                GregorianCalendarProto.getDayOfWeekInMonth = S.noop;
+
+        GregorianCalendarProto.addDayOfMonth =
+            GregorianCalendarProto.addMonth =
+                GregorianCalendarProto.addYear = GregorianCalendarProto.addMinutes =
+                    GregorianCalendarProto.addSeconds =
+                        GregorianCalendarProto.addMilliSeconds =
+                            GregorianCalendarProto.addHourOfDay =
+                                GregorianCalendarProto.addWeekOfYear =
+                                    GregorianCalendarProto.addWeekOfMonth =
+                                        GregorianCalendarProto.addDayOfYear =
+                                            GregorianCalendarProto.addDayOfWeek =
+                                                GregorianCalendarProto.addDayOfWeekInMonth = S.noop;
+
+
+        GregorianCalendarProto.isSetDayOfMonth =
+            GregorianCalendarProto.isSetMonth =
+                GregorianCalendarProto.isSetYear = GregorianCalendarProto.isSetMinutes =
+                    GregorianCalendarProto.isSetSeconds =
+                        GregorianCalendarProto.isSetMilliSeconds =
+                            GregorianCalendarProto.isSetHourOfDay =
+                                GregorianCalendarProto.isSetWeekOfYear =
+                                    GregorianCalendarProto.isSetWeekOfMonth =
+                                        GregorianCalendarProto.isSetDayOfYear =
+                                            GregorianCalendarProto.isSetDayOfWeek =
+                                                GregorianCalendarProto.isSetDayOfWeekInMonth = S.noop;
+
+        GregorianCalendarProto.setDayOfMonth =
+            GregorianCalendarProto.setHourOfDay =
+                GregorianCalendarProto.setWeekOfYear =
+                    GregorianCalendarProto.setWeekOfMonth =
+                        GregorianCalendarProto.setDayOfYear =
+                            GregorianCalendarProto.setDayOfWeek =
+                                GregorianCalendarProto.setDayOfWeekInMonth = S.noop;
+
+        GregorianCalendarProto.rollDayOfMonth =
+            GregorianCalendarProto.rollMonth =
+                GregorianCalendarProto.rollYear = GregorianCalendarProto.rollMinutes =
+                    GregorianCalendarProto.rollSeconds =
+                        GregorianCalendarProto.rollMilliSeconds =
+                            GregorianCalendarProto.rollHourOfDay =
+                                GregorianCalendarProto.rollWeekOfYear =
+                                    GregorianCalendarProto.rollWeekOfMonth =
+                                        GregorianCalendarProto.rollDayOfYear =
+                                            GregorianCalendarProto.rollDayOfWeek =
+                                                GregorianCalendarProto.rollDayOfWeekInMonth = S.noop;
+    }
+
+    S.each(fields, function (f, index) {
+        if (f) {
+            GregorianCalendarProto['get' + f] = function () {
+                return this.get(index);
+            };
+
+            GregorianCalendarProto['isSet' + f] = function () {
+                return this.isSet(index);
+            };
+
+            GregorianCalendarProto['set' + f] = function (v) {
+                return this.set(index, v);
+            };
+
+            GregorianCalendarProto['add' + f] = function (v) {
+                return this.add(index, v);
+            };
+
+            GregorianCalendarProto['roll' + f] = function (v) {
+                return this.roll(index, v);
+            };
+        }
+    });
 
 
     // ------------------- private start

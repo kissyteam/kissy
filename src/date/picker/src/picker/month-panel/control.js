@@ -4,7 +4,6 @@
  */
 KISSY.add('date/picker/month-panel/control',function(S,
                                                      Node,
-                                                     GregorianCalendar,
                                                      Control,
                                                      MonthPanelRender,
     YearPanel){
@@ -13,7 +12,7 @@ KISSY.add('date/picker/month-panel/control',function(S,
 
     function goYear(self, direction) {
         var next = self.get('value').clone();
-        next.add(GregorianCalendar.YEAR, direction);
+        next.addYear( direction);
         self.set('value',next)
     }
 
@@ -34,7 +33,7 @@ KISSY.add('date/picker/month-panel/control',function(S,
         var tdIndex = td.index();
         var trIndex = tr.index();
         var value=this.get('value').clone();
-        value.set(GregorianCalendar.MONTH,trIndex*4+tdIndex);
+        value.setMonth(trIndex*4+tdIndex);
         this.fire('select',{
             value:value
         });
@@ -95,7 +94,6 @@ KISSY.add('date/picker/month-panel/control',function(S,
 },{
     requires:[
         'node',
-        'date/gregorian',
         'component/control',
         './render',
         '../year-panel/control'

@@ -2,13 +2,13 @@
  * decade panel for date picker
  * @author yiminghe@gmail.com
  */
-KISSY.add('date/picker/decade-panel/control', function (S, Node, GregorianCalendar, Control, CenturyPanelRender) {
+KISSY.add('date/picker/decade-panel/control', function (S, Node, Control, CenturyPanelRender) {
     var tap = Node.Gesture.tap;
     var $ = Node.all;
 
     function goYear(self, direction) {
         var next = self.get('value').clone();
-        next.add(GregorianCalendar.YEAR, direction);
+        next.addYear(direction);
         self.set('value', next);
     }
 
@@ -29,8 +29,8 @@ KISSY.add('date/picker/decade-panel/control', function (S, Node, GregorianCalend
         var tdIndex = td.index();
         var trIndex = tr.index();
         var value = this.get('value').clone();
-        var y = value.get(GregorianCalendar.YEAR) % 10;
-        value.set(GregorianCalendar.YEAR, this.decades[trIndex][tdIndex].startDecade + y);
+        var y = value.getYear() % 10;
+        value.setYear(this.decades[trIndex][tdIndex].startDecade + y);
         this.set('value', value);
         this.fire('select', {
             value: value
@@ -64,5 +64,5 @@ KISSY.add('date/picker/decade-panel/control', function (S, Node, GregorianCalend
         }
     });
 }, {
-    requires: ['node', 'date/gregorian', 'component/control', './render']
+    requires: ['node', 'component/control', './render']
 });

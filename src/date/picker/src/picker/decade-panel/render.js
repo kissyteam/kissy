@@ -2,10 +2,10 @@
  * render for decade panel
  * @author yiminghe@gmail.com
  */
-KISSY.add('date/picker/decade-panel/render', function (S, Control, GregorianCalendar, DateFormat, MonthsTpl, DecadePanelTpl) {
+KISSY.add('date/picker/decade-panel/render', function (S, Control, DateFormat, MonthsTpl, DecadePanelTpl) {
     function prepareYears(control, view) {
         var value = control.get('value');
-        var currentYear = value.get(GregorianCalendar.YEAR);
+        var currentYear = value.getYear();
         var startYear = parseInt(currentYear / 100) * 100;
         var preYear = startYear - 10;
         var endYear = startYear + 99;
@@ -66,7 +66,6 @@ KISSY.add('date/picker/decade-panel/render', function (S, Control, GregorianCale
     });
 }, {
     requires: ['component/control',
-        'date/gregorian',
         'date/format',
         './decades-tpl',
         './decade-panel-tpl']

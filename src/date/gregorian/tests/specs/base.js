@@ -22,91 +22,91 @@ KISSY.add(function (S, GregorianCalendar) {
             });
 
             it('time works', function () {
-                expect(gregorianCalendar.get(GregorianCalendar.YEAR)).toBe(2013);
-                expect(gregorianCalendar.get(GregorianCalendar.MONTH)).toBe(5);
-                expect(gregorianCalendar.get(GregorianCalendar.DAY_OF_MONTH)).toBe(8);
-                expect(gregorianCalendar.get(GregorianCalendar.HOUR_OF_DAY)).toBe(18);
-                expect(gregorianCalendar.get(GregorianCalendar.MINUTE)).toBe(0);
-                expect(gregorianCalendar.get(GregorianCalendar.SECOND)).toBe(0);
-                expect(gregorianCalendar.get(GregorianCalendar.MILLISECOND)).toBe(0);
+                expect(gregorianCalendar.getYear()).toBe(2013);
+                expect(gregorianCalendar.getMonth()).toBe(5);
+                expect(gregorianCalendar.getDayOfMonth()).toBe(8);
+                expect(gregorianCalendar.getHourOfDay()).toBe(18);
+                expect(gregorianCalendar.getMinutes()).toBe(0);
+                expect(gregorianCalendar.getSeconds()).toBe(0);
+                expect(gregorianCalendar.getMilliseconds()).toBe(0);
             });
 
             describe('WEEK_OF_YEAR works', function () {
                 it('works for zh-cn', function () {
-                    expect(gregorianCalendar.get(GregorianCalendar.WEEK_OF_YEAR)).toBe(23);
+                    expect(gregorianCalendar.getWeekOfYear()).toBe(23);
                 });
 
                 it('works for start of year', function () {
-                    gregorianCalendar.set(GregorianCalendar.YEAR, 2012);
-                    gregorianCalendar.set(GregorianCalendar.MONTH, 0);
-                    gregorianCalendar.set(GregorianCalendar.DAY_OF_MONTH, 1);
-                    expect(gregorianCalendar.get(GregorianCalendar.WEEK_OF_YEAR)).toBe(1);
+                    gregorianCalendar.setYear(2012);
+                    gregorianCalendar.setMonth( 0);
+                    gregorianCalendar.setDayOfMonth(1);
+                    expect(gregorianCalendar.getWeekOfYear()).toBe(1);
 
                 });
 
                 it('works for start of year for setFirstDayOfWeek2', function () {
-                    gregorianCalendar.set(GregorianCalendar.YEAR, 2012);
-                    gregorianCalendar.set(GregorianCalendar.MONTH, 0);
-                    gregorianCalendar.set(GregorianCalendar.DAY_OF_MONTH, 1);
+                    gregorianCalendar.setYear(2012);
+                    gregorianCalendar.setMonth(0);
+                    gregorianCalendar.setDayOfMonth(1);
                     gregorianCalendar.setFirstDayOfWeek(GregorianCalendar.THURSDAY);
-                    expect(gregorianCalendar.get(GregorianCalendar.WEEK_OF_YEAR)).toBe(1);
+                    expect(gregorianCalendar.getWeekOfYear()).toBe(1);
                 });
 
                 it('works for start of year 2', function () {
-                    gregorianCalendar.set(GregorianCalendar.YEAR, 2011);
-                    gregorianCalendar.set(GregorianCalendar.MONTH, 0);
-                    gregorianCalendar.set(GregorianCalendar.DAY_OF_MONTH, 1);
-                    expect(gregorianCalendar.get(GregorianCalendar.WEEK_OF_YEAR)).toBe(1);
+                    gregorianCalendar.setYear(2011);
+                    gregorianCalendar.setMonth(0);
+                    gregorianCalendar.setDayOfMonth(1);
+                    expect(gregorianCalendar.getWeekOfYear()).toBe(1);
                 });
 
                 it('works for end of year', function () {
-                    gregorianCalendar.set(GregorianCalendar.YEAR, 2011);
-                    gregorianCalendar.set(GregorianCalendar.MONTH, 11);
-                    gregorianCalendar.set(GregorianCalendar.DAY_OF_MONTH, 31);
-                    expect(gregorianCalendar.get(GregorianCalendar.WEEK_OF_YEAR)).toBe(1);
+                    gregorianCalendar.setYear(2011);
+                    gregorianCalendar.setMonth(11);
+                    gregorianCalendar.setDayOfMonth(31);
+                    expect(gregorianCalendar.getWeekOfYear()).toBe(1);
                 });
 
 
                 it('works for end of year', function () {
-                    gregorianCalendar.set(GregorianCalendar.YEAR, 2012);
-                    gregorianCalendar.set(GregorianCalendar.MONTH, 11);
-                    gregorianCalendar.set(GregorianCalendar.DAY_OF_MONTH, 31);
-                    expect(gregorianCalendar.get(GregorianCalendar.WEEK_OF_YEAR)).toBe(1);
+                    gregorianCalendar.setYear(2012);
+                    gregorianCalendar.setMonth(11);
+                    gregorianCalendar.setDayOfMonth(31);
+                    expect(gregorianCalendar.getWeekOfYear()).toBe(1);
                     expect(gregorianCalendar.getWeekYear()).toBe(2013);
                 });
 
                 it('works for ISO 8601', function () {
-                    gregorianCalendar.set(GregorianCalendar.YEAR, 2012);
-                    gregorianCalendar.set(GregorianCalendar.MONTH, 0);
-                    gregorianCalendar.set(GregorianCalendar.DAY_OF_MONTH, 1);
+                    gregorianCalendar.setYear(2012);
+                    gregorianCalendar.setMonth(0);
+                    gregorianCalendar.setDayOfMonth(1);
                     gregorianCalendar.setMinimalDaysInFirstWeek(4);
-                    expect(gregorianCalendar.get(GregorianCalendar.WEEK_OF_YEAR)).toBe(52);
+                    expect(gregorianCalendar.getWeekOfYear()).toBe(52);
                     expect(gregorianCalendar.getWeekYear()).toBe(2011);
                 });
 
             });
 
             it('DAY_OF_WEEK works', function () {
-                expect(gregorianCalendar.get(GregorianCalendar.DAY_OF_WEEK)).toBe(GregorianCalendar.SATURDAY);
+                expect(gregorianCalendar.getDayOfWeek()).toBe(GregorianCalendar.SATURDAY);
             });
 
 
             describe('WEEK_OF_MONTH', function () {
                 it('simply works', function () {
-                    expect(gregorianCalendar.get(GregorianCalendar.WEEK_OF_MONTH)).toBe(2);
-                    gregorianCalendar.set(GregorianCalendar.DAY_OF_MONTH, 1);
-                    expect(gregorianCalendar.get(GregorianCalendar.WEEK_OF_MONTH)).toBe(1);
-                    gregorianCalendar.set(GregorianCalendar.DAY_OF_MONTH, 3);
-                    expect(gregorianCalendar.get(GregorianCalendar.WEEK_OF_MONTH)).toBe(2);
+                    expect(gregorianCalendar.getWeekOfMonth()).toBe(2);
+                    gregorianCalendar.setDayOfMonth(1);
+                    expect(gregorianCalendar.getWeekOfMonth()).toBe(1);
+                    gregorianCalendar.setDayOfMonth(3);
+                    expect(gregorianCalendar.getWeekOfMonth()).toBe(2);
 
 
-                    gregorianCalendar.set(GregorianCalendar.YEAR, 2011);
-                    gregorianCalendar.set(GregorianCalendar.MONTH, 11);
-                    gregorianCalendar.set(GregorianCalendar.DAY_OF_MONTH, 31);
+                    gregorianCalendar.setYear(2011);
+                    gregorianCalendar.setMonth(11);
+                    gregorianCalendar.setDayOfMonth(31);
                     gregorianCalendar.setFirstDayOfWeek(GregorianCalendar.MONDAY);
-                    expect(gregorianCalendar.get(GregorianCalendar.WEEK_OF_MONTH)).toBe(5);
+                    expect(gregorianCalendar.getWeekOfMonth()).toBe(5);
                     gregorianCalendar.setFirstDayOfWeek(GregorianCalendar.THURSDAY);
-                    expect(gregorianCalendar.get(GregorianCalendar.WEEK_OF_MONTH)).toBe(5);
+                    expect(gregorianCalendar.getWeekOfMonth()).toBe(5);
                 });
 
                 //For example, if getFirstDayOfWeek() is SUNDAY and getMinimalDaysInFirstWeek() is 4,
@@ -120,25 +120,25 @@ KISSY.add(function (S, GregorianCalendar) {
                     gregorianCalendar.set(1998, GregorianCalendar.JANUARY, 1);
                     gregorianCalendar.setFirstDayOfWeek(GregorianCalendar.SUNDAY);
                     gregorianCalendar.setMinimalDaysInFirstWeek(4);
-                    expect(gregorianCalendar.get(GregorianCalendar.WEEK_OF_MONTH)).toBe(0);
+                    expect(gregorianCalendar.getWeekOfMonth()).toBe(0);
                 });
 
                 it('getMinimalDaysInFirstWeek 1', function () {
                     gregorianCalendar.set(1998, GregorianCalendar.JANUARY, 1);
                     gregorianCalendar.setFirstDayOfWeek(GregorianCalendar.SUNDAY);
                     gregorianCalendar.setMinimalDaysInFirstWeek(3);
-                    expect(gregorianCalendar.get(GregorianCalendar.WEEK_OF_MONTH)).toBe(1);
+                    expect(gregorianCalendar.getWeekOfMonth()).toBe(1);
                 });
             });
 
             describe('DAY_OF_WEEK_IN_MONTH', function () {
 
                 it('simply works', function () {
-                    expect(gregorianCalendar.get(GregorianCalendar.DAY_OF_WEEK_IN_MONTH)).toBe(2);
+                    expect(gregorianCalendar.getDayOfWeekInMonth()).toBe(2);
 
                     gregorianCalendar.set(2013, GregorianCalendar.APRIL, 7, 18, 0, 0);
 
-                    expect(gregorianCalendar.get(GregorianCalendar.DAY_OF_WEEK_IN_MONTH)).toBe(1);
+                    expect(gregorianCalendar.getDayOfWeekInMonth()).toBe(1);
                 });
 
                 // does not affect DAY_OF_WEEK_IN_MONTH
@@ -146,39 +146,39 @@ KISSY.add(function (S, GregorianCalendar) {
                     gregorianCalendar.set(1998, GregorianCalendar.JANUARY, 1);
                     gregorianCalendar.setFirstDayOfWeek(GregorianCalendar.SUNDAY);
                     gregorianCalendar.setMinimalDaysInFirstWeek(4);
-                    expect(gregorianCalendar.get(GregorianCalendar.DAY_OF_WEEK_IN_MONTH)).toBe(1);
+                    expect(gregorianCalendar.getDayOfWeekInMonth()).toBe(1);
                 });
 
                 it('getMinimalDaysInFirstWeek 1', function () {
                     gregorianCalendar.set(1998, GregorianCalendar.JANUARY, 1);
                     gregorianCalendar.setFirstDayOfWeek(GregorianCalendar.SUNDAY);
                     gregorianCalendar.setMinimalDaysInFirstWeek(3);
-                    expect(gregorianCalendar.get(GregorianCalendar.DAY_OF_WEEK_IN_MONTH)).toBe(1);
+                    expect(gregorianCalendar.getDayOfWeekInMonth()).toBe(1);
                 });
 
             });
 
 
-            it('getTimeInMillis works', function () {
+            it('getTime works', function () {
                 var jsDate = new Date(2013, GregorianCalendar.JUNE, 8, 18, 0, 0, 0);
-                expect(jsDate.getTime() === gregorianCalendar.getTimeInMillis());
+                expect(jsDate.getTime() === gregorianCalendar.getTime());
             });
 
             it('DAY_OF_YEAR works', function () {
                 var jan1Date = new Date(2013, GregorianCalendar.JANUARY, 1, 0, 0, 0, 0);
-                var jsDate = new Date(gregorianCalendar.getTimeInMillis());
+                var jsDate = new Date(gregorianCalendar.getTime());
                 var expected = parseInt((jsDate.getTime() - jan1Date.getTime()) / ONE_DAY) + 1;
-                expect(gregorianCalendar.get(GregorianCalendar.DAY_OF_YEAR)).toBe(expected);
+                expect(gregorianCalendar.getDayOfYear()).toBe(expected);
             });
 
             it('WEEK_OF_YEAR works', function () {
                 var gregorianCalendar = new GregorianCalendar();
-                gregorianCalendar.set(GregorianCalendar.YEAR, 1);
-                gregorianCalendar.set(GregorianCalendar.DAY_OF_WEEK, GregorianCalendar.TUESDAY);
-                gregorianCalendar.set(GregorianCalendar.WEEK_OF_YEAR, 1);
-                expect(gregorianCalendar.get((GregorianCalendar.YEAR))).toBe(1);
-                expect(gregorianCalendar.get((GregorianCalendar.DAY_OF_WEEK))).toBe(GregorianCalendar.TUESDAY);
-                expect(gregorianCalendar.get((GregorianCalendar.DAY_OF_MONTH))).toBe(2);
+                gregorianCalendar.setYear(1);
+                gregorianCalendar.setDayOfWeek(GregorianCalendar.TUESDAY);
+                gregorianCalendar.setWeekOfYear(1);
+                expect(gregorianCalendar.getYear()).toBe(1);
+                expect(gregorianCalendar.getDayOfWeek()).toBe(GregorianCalendar.TUESDAY);
+                expect(gregorianCalendar.getDayOfMonth()).toBe(2);
             });
         });
 
@@ -187,20 +187,20 @@ KISSY.add(function (S, GregorianCalendar) {
             it('can adjust DAY_OF_MONTH', function () {
                 var d = new GregorianCalendar();
                 d.set(2012, GregorianCalendar.JANUARY, 31);
-                d.add(GregorianCalendar.MONTH, 1);
-                expect(d.get(GregorianCalendar.YEAR)).toBe(2012);
-                expect(d.get(GregorianCalendar.MONTH)).toBe(GregorianCalendar.FEBRUARY);
-                expect(d.get(GregorianCalendar.DAY_OF_MONTH)).toBe(29);
+                d.addMonth(1);
+                expect(d.getYear()).toBe(2012);
+                expect(d.getMonth()).toBe(GregorianCalendar.FEBRUARY);
+                expect(d.getDayOfMonth()).toBe(29);
                 // 2012-2-28
             });
 
             it('can adjust YEAR', function () {
                 var d = new GregorianCalendar();
                 d.set(2012, GregorianCalendar.JANUARY, 31);
-                d.add(GregorianCalendar.MONTH, 13);
-                expect(d.get(GregorianCalendar.YEAR)).toBe(2013);
-                expect(d.get(GregorianCalendar.MONTH)).toBe(GregorianCalendar.FEBRUARY);
-                expect(d.get(GregorianCalendar.DAY_OF_MONTH)).toBe(28);
+                d.addMonth(13);
+                expect(d.getYear()).toBe(2013);
+                expect(d.getMonth()).toBe(GregorianCalendar.FEBRUARY);
+                expect(d.getDayOfMonth()).toBe(28);
                 // 2012-2-28
             });
 
@@ -211,20 +211,20 @@ KISSY.add(function (S, GregorianCalendar) {
             it('can adjust DAY_OF_MONTH', function () {
                 var d = new GregorianCalendar();
                 d.set(1999, GregorianCalendar.AUGUST, 31);
-                d.roll(GregorianCalendar.MONTH, 8);
-                expect(d.get(GregorianCalendar.YEAR)).toBe(1999);
-                expect(d.get(GregorianCalendar.MONTH)).toBe(GregorianCalendar.APRIL);
-                expect(d.get(GregorianCalendar.DAY_OF_MONTH)).toBe(30);
+                d.rollMonth( 8);
+                expect(d.getYear()).toBe(1999);
+                expect(d.getMonth()).toBe(GregorianCalendar.APRIL);
+                expect(d.getDayOfMonth()).toBe(30);
                 // 2012-2-28
             });
 
             it('can roll to begin', function () {
                 var d = new GregorianCalendar();
                 d.set(1999, GregorianCalendar.JUNE, 1);
-                d.roll(GregorianCalendar.WEEK_OF_MONTH, -1);
-                expect(d.get(GregorianCalendar.YEAR)).toBe(1999);
-                expect(d.get(GregorianCalendar.MONTH)).toBe(GregorianCalendar.JUNE);
-                expect(d.get(GregorianCalendar.DAY_OF_MONTH)).toBe(29);
+                d.rollWeekOfMonth(-1);
+                expect(d.getYear()).toBe(1999);
+                expect(d.getMonth()).toBe(GregorianCalendar.JUNE);
+                expect(d.getDayOfMonth()).toBe(29);
                 // 2012-2-28
             });
 
