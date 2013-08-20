@@ -1,0 +1,16 @@
+<div style="width: 100px;height: 100px;border: 1px solid red;" id="t">
+    <div
+            id="t2"
+            style="width: 40px;height:40px;margin: 20px;border: 1px solid green;"></div>
+</div>
+<script src="/kissy/build/seed.js"></script>
+<script>
+    KISSY.use('node', function (S, Node) {
+        S.ready(function () {
+            var $ = Node.all;
+            $('#t').on('click', function (e) {
+                alert(e.target.id + ' : ' + e.button);
+            });
+        });
+    });
+</script>

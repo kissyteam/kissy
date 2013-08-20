@@ -3,8 +3,7 @@
  * custom event for dom.
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/base/observable', function (S, Dom, Special, DomEventUtils,
-                                                 DomEventObserver, DomEventObject, BaseEvent) {
+KISSY.add('event/dom/base/observable', function (S, Dom, Special, DomEventUtils, DomEventObserver, DomEventObject, BaseEvent) {
 
     // 记录手工 fire(domElement,type) 时的 type
     // 再在浏览器通知的系统 eventHandler 中检查
@@ -87,7 +86,9 @@ KISSY.add('event/dom/base/observable', function (S, Dom, Special, DomEventUtils,
                 observer;
 
             // collect delegated observers and corresponding element
-            if (delegateCount && target.nodeType) {
+            // https://github.com/kissyteam/kissy/issues/437
+            if (delegateCount && target.nodeType &&
+                (!event['button'] || eventType !== "click")) {
                 while (target != currentTarget) {
                     if (target.disabled !== true || eventType !== "click") {
                         var cachedMatch = {},
