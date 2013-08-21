@@ -208,6 +208,7 @@ KISSY.add('io/xhr-transport-base', function (S, IO) {
                 statusText,
                 xml,
                 c = io.config;
+            // S.log(nativeXhr.readyState+':'+nativeXhr.status);
             try {
                 //abort or complete
                 if (abort || nativeXhr.readyState == 4) {
