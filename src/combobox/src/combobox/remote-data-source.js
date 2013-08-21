@@ -4,17 +4,12 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add("combobox/remote-data-source", function (S, IO, Base, undefined) {
-
     /**
      * dataSource which wrap {@link KISSY.IO} utility.
      * @class KISSY.ComboBox.RemoteDataSource
      * @extends KISSY.Base
      */
     return Base.extend({
-        initializer: function () {
-            self.io = null;
-            self.caches = {};
-        },
         /**
          * Data source interface. How to get data for comboBox
          * @param {String} inputVal current active input's value
@@ -28,6 +23,7 @@ KISSY.add("combobox/remote-data-source", function (S, IO, Base, undefined) {
                 parse = self.get("parse"),
                 cache = self.get("cache"),
                 allowEmpty = self.get("allowEmpty");
+            self.caches = self.caches || {};
             if (self.io) {
                 // abort previous request
                 self.io.abort();
