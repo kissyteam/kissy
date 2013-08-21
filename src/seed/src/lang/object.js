@@ -11,7 +11,8 @@
         host = this,
         TRUE = true,
         EMPTY = '',
-        ObjectCreate = Object.create,
+        Obj = Object,
+        ObjectCreate = Obj.create,
     // error in native ie678, not in simulated ie9
         hasEnumBug = !({toString: 1}['propertyIsEnumerable']('toString')),
         enumProperties = [
@@ -56,7 +57,7 @@
          * @return {Array}
          * @member KISSY
          */
-        keys: function (o) {
+        keys: Obj.keys || function (o) {
             var result = [], p, i;
 
             for (p in o) {

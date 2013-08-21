@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 20 17:38
+build time: Aug 21 21:27
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130820173810' will replace with current timestamp when compressing.
+         * NOTICE: '20130821212654' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130820173810',
+        __BUILD_TIME: '20130821212654',
         /**
          * KISSY Environment.
          * @private
@@ -198,7 +198,8 @@ var KISSY = (function (undefined) {
         host = this,
         TRUE = true,
         EMPTY = '',
-        ObjectCreate = Object.create,
+        Obj = Object,
+        ObjectCreate = Obj.create,
     // error in native ie678, not in simulated ie9
         hasEnumBug = !({toString: 1}['propertyIsEnumerable']('toString')),
         enumProperties = [
@@ -243,7 +244,7 @@ var KISSY = (function (undefined) {
          * @return {Array}
          * @member KISSY
          */
-        keys: function (o) {
+        keys: Obj.keys || function (o) {
             var result = [], p, i;
 
             for (p in o) {
@@ -5683,7 +5684,7 @@ var KISSY = (function (undefined) {
             comboMaxFileNum: 40,
             charset: 'utf-8',
             lang: 'zh-cn',
-            tag: '20130820173810'
+            tag: '20130821212654'
         }, getBaseInfo()));
     }
 
