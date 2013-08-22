@@ -86,11 +86,9 @@ KISSY.add('event/dom/base/observable', function (S, Dom, Special, DomEventUtils,
                 observer;
 
             // collect delegated observers and corresponding element
-            // https://github.com/kissyteam/kissy/issues/437
-            if (delegateCount && target.nodeType &&
-                (!event['button'] || eventType !== "click")) {
+            if (delegateCount && target.nodeType) {
                 while (target != currentTarget) {
-                    if (target.disabled !== true || eventType !== "click") {
+                    if (target.disabled !== true || eventType !== 'click') {
                         var cachedMatch = {},
                             matched, key, filter;
                         currentTargetObservers = [];

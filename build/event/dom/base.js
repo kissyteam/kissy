@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 20 18:14
+build time: Aug 22 14:53
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -532,10 +532,17 @@ KISSY.add('event/dom/base/object', function (S, BaseEvent, undefined) {
         self.originalEvent = originalEvent;
 
         // in case dom event has been mark as default prevented by lower dom node
-        self.isDefaultPrevented = (
-            originalEvent['defaultPrevented'] || originalEvent.returnValue === FALSE ||
-                originalEvent['getPreventDefault'] && originalEvent['getPreventDefault']()
-            ) ? retTrue : retFalse;
+        var isDefaultPrevented = retFalse;
+        if ('defaultPrevented' in originalEvent) {
+            isDefaultPrevented = originalEvent['defaultPrevented'] ? retTrue : retFalse;
+        } else if ('getPreventDefault' in originalEvent) {
+            // https://bugzilla.mozilla.org/show_bug.cgi?id=691151
+            isDefaultPrevented = originalEvent['getPreventDefault']() ? retTrue : retFalse;
+        } else if ('returnValue' in originalEvent) {
+            isDefaultPrevented = originalEvent.returnValue === FALSE ? retTrue : retFalse;
+        }
+
+        self.isDefaultPrevented = isDefaultPrevented;
 
         var fixFns = [],
             fixFn,
@@ -730,11 +737,9 @@ KISSY.add('event/dom/base/observable', function (S, Dom, Special, DomEventUtils,
                 observer;
 
             // collect delegated observers and corresponding element
-            // https://github.com/kissyteam/kissy/issues/437
-            if (delegateCount && target.nodeType &&
-                (!event['button'] || eventType !== "click")) {
+            if (delegateCount && target.nodeType) {
                 while (target != currentTarget) {
-                    if (target.disabled !== true || eventType !== "click") {
+                    if (target.disabled !== true || eventType !== 'click') {
                         var cachedMatch = {},
                             matched, key, filter;
                         currentTargetObservers = [];

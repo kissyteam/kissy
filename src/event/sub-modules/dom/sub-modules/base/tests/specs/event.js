@@ -25,7 +25,7 @@ KISSY.add(function (S, Dom, Event) {
         </div>\
     </div>';
 
-    var DomEventUtils= S.require('event/dom/base/utils');
+    var DomEventUtils = S.require('event/dom/base/utils');
 
     describe('event', function () {
 
@@ -258,7 +258,32 @@ KISSY.add(function (S, Dom, Event) {
                 });
             });
 
-
+            it('isDefaultPrevented is set correctly', function () {
+                var ok = 0;
+                Event.on('#event-test-data', 'click', function (e) {
+                    expect(e.isDefaultPrevented()).toBe(true);
+                    ok = 1;
+                });
+                Event.on('#link-f', 'click', function (e) {
+                    e.preventDefault();
+                });
+                jasmine.simulate(Dom.get('#link-f'), 'click');
+                waitsFor(function () {
+                    return ok;
+                });
+                runs(function(){
+                    Event.detach('#event-test-data');
+                    ok = 0;
+                    Event.on('#event-test-data', 'click', function (e) {
+                        expect(e.isDefaultPrevented()).toBe(false);
+                        ok = 1;
+                    });
+                    jasmine.simulate(Dom.get('#link-g'), 'click');
+                });
+                waitsFor(function () {
+                    return ok;
+                });
+            });
         });
 
         describe('remove event', function () {
@@ -372,7 +397,7 @@ KISSY.add(function (S, Dom, Event) {
                             bard = 1;
                         }
                     },
-                    'o1':{
+                    'o1': {
                         fn: function () {
                             bard1 = 1;
                         }
@@ -385,62 +410,62 @@ KISSY.add(function (S, Dom, Event) {
                             food = 1;
                         }
                     },
-                    'w1':{
+                    'w1': {
                         fn: function () {
                             food1 = 1;
                         }
                     }
                 });
 
-                Event.fire(bar,'o');
-                Event.fire(foo,'w');
-                Event.fire(bar,'o1');
-                Event.fire(foo,'w1');
+                Event.fire(bar, 'o');
+                Event.fire(foo, 'w');
+                Event.fire(bar, 'o1');
+                Event.fire(foo, 'w1');
 
                 expect(bard).toBe(1);
                 expect(food).toBe(1);
                 expect(bard1).toBe(1);
                 expect(food1).toBe(1);
 
-                bard=0;
-                food=0;
-                bard1=0;
-                food1=0;
+                bard = 0;
+                food = 0;
+                bard1 = 0;
+                food1 = 0;
 
-                Event.detach(foo,{
-                    'o':{
-                        deep:true
+                Event.detach(foo, {
+                    'o': {
+                        deep: true
                     },
-                    'w':{
-                        deep:true
+                    'w': {
+                        deep: true
                     }
                 });
 
-                Event.fire(bar,'o');
-                Event.fire(foo,'w');
-                Event.fire(bar,'o1');
-                Event.fire(foo,'w1');
+                Event.fire(bar, 'o');
+                Event.fire(foo, 'w');
+                Event.fire(bar, 'o1');
+                Event.fire(foo, 'w1');
 
                 expect(bard).toBe(0);
                 expect(food).toBe(0);
                 expect(bard1).toBe(1);
                 expect(food1).toBe(1);
 
-                bard=0;
-                food=0;
-                bard1=0;
-                food1=0;
+                bard = 0;
+                food = 0;
+                bard1 = 0;
+                food1 = 0;
 
-                Event.detach(foo,{
-                    '':{
-                        deep:true
+                Event.detach(foo, {
+                    '': {
+                        deep: true
                     }
                 });
 
-                Event.fire(bar,'o');
-                Event.fire(foo,'w');
-                Event.fire(bar,'o1');
-                Event.fire(foo,'w1');
+                Event.fire(bar, 'o');
+                Event.fire(foo, 'w');
+                Event.fire(bar, 'o1');
+                Event.fire(foo, 'w1');
 
                 expect(bard).toBe(0);
                 expect(food).toBe(0);
@@ -623,6 +648,6 @@ KISSY.add(function (S, Dom, Event) {
 
         });
     });
-},{
-    requires:['dom','event/dom/base']
+}, {
+    requires: ['dom', 'event/dom/base']
 });

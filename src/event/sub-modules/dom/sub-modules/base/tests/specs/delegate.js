@@ -3,7 +3,6 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, Dom, Event) {
-
     S.get = Dom.get;
     S.query = Dom.query;
 
@@ -41,7 +40,6 @@ KISSY.add(function (S, Dom, Event) {
     });
 
     describe('delegate', function () {
-
         it("should invoke correctly", function () {
             var ret = [];
 
@@ -55,7 +53,9 @@ KISSY.add(function (S, Dom, Event) {
             var a = S.get('#test-delegate-a');
             var b = S.get('#test-delegate-b');
             // support native dom event
-            jasmine.simulate(a, "click");
+            jasmine.simulate(a, "click",{
+                which:1
+            });
             waits(10);
             runs(function () {
                 expect(ret).toEqual([a.id,
@@ -69,7 +69,9 @@ KISSY.add(function (S, Dom, Event) {
             runs(function () {
                 ret = [];
                 // support simulated event
-                Event.fire(b, "click");
+                Event.fire(b, "click",{
+                    which:1
+                });
             });
             waits(10);
             runs(function () {
@@ -86,7 +88,9 @@ KISSY.add(function (S, Dom, Event) {
                 Event.undelegate(S.get('#test-delegate'), "click", ".xx", test);
                 ret = [];
                 // support simulated event
-                Event.fire(b, "click");
+                Event.fire(b, "click",{
+                    which:1
+                });
             });
             waits(10);
             runs(function () {

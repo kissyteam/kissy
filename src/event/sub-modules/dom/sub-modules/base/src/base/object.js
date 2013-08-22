@@ -388,10 +388,17 @@ KISSY.add('event/dom/base/object', function (S, BaseEvent, undefined) {
         self.originalEvent = originalEvent;
 
         // in case dom event has been mark as default prevented by lower dom node
-        self.isDefaultPrevented = (
-            originalEvent['defaultPrevented'] || originalEvent.returnValue === FALSE ||
-                originalEvent['getPreventDefault'] && originalEvent['getPreventDefault']()
-            ) ? retTrue : retFalse;
+        var isDefaultPrevented = retFalse;
+        if ('defaultPrevented' in originalEvent) {
+            isDefaultPrevented = originalEvent['defaultPrevented'] ? retTrue : retFalse;
+        } else if ('getPreventDefault' in originalEvent) {
+            // https://bugzilla.mozilla.org/show_bug.cgi?id=691151
+            isDefaultPrevented = originalEvent['getPreventDefault']() ? retTrue : retFalse;
+        } else if ('returnValue' in originalEvent) {
+            isDefaultPrevented = originalEvent.returnValue === FALSE ? retTrue : retFalse;
+        }
+
+        self.isDefaultPrevented = isDefaultPrevented;
 
         var fixFns = [],
             fixFn,
