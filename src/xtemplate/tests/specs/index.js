@@ -333,7 +333,6 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
                 });
 
                 it('support simple array', function () {
-
                     var tpl = '{{#each data}}{{this}}-{{xindex}}/{{xcount}}|{{/each}}';
 
                     var data = {
@@ -343,9 +342,28 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
                     var render = new XTemplate(tpl).render(data);
 
                     expect(render).toBe('1-0/2|2-1/2|');
-
                 });
 
+
+                it('support nested each', function () {
+                    var tpl = '{{#each outer}}{{t}}{{#each inner}}{{this}}{{/each}}{{/each}}';
+                    var data = {
+                        outer: [
+                            {
+                                t: 1,
+                                inner: [11, 12]
+                            },
+                            {
+                                t: 2,
+                                inner: [21, 22]
+                            }
+                        ]
+                    };
+
+                    var render = new XTemplate(tpl).render(data);
+
+                    expect(render).toBe('1111222122');
+                });
             });
 
 
@@ -1220,26 +1238,26 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
 
         });
 
-        describe('汉字',function(){
-           it('允许汉字内容',function(){
-                var tpl='{{t}}出现了';
-               var data = {
-                   t:1
-               };
+        describe('汉字', function () {
+            it('允许汉字内容', function () {
+                var tpl = '{{t}}出现了';
+                var data = {
+                    t: 1
+                };
 
-               var render = new XTemplate(tpl).render(data);
+                var render = new XTemplate(tpl).render(data);
 
-               expect(render).toBe('1出现了');
-           });
+                expect(render).toBe('1出现了');
+            });
 
-            it('允许汉字参数',function(){
-                var tpl='{{t "出现了"}}';
+            it('允许汉字参数', function () {
+                var tpl = '{{t "出现了"}}';
                 var data = {
                 };
 
-                var render = new XTemplate(tpl,{
-                    commands:{
-                        t:function(scopes,option){
+                var render = new XTemplate(tpl, {
+                    commands: {
+                        t: function (scopes, option) {
                             return option.params[0];
                         }
                     }
