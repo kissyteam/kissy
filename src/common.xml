@@ -184,7 +184,7 @@
                 <basename property="copyright.file.name" file="@{file}"/>
                 <concat destfile="@{file}.tmp" encoding="${charset}" outputencoding="${charset}">
                     <header filtering="no" trimleading="yes">/*
-                        Copyright ${build.year}, KISSY UI Library v${version}
+                        Copyright ${build.year}, KISSY v${version}
                         MIT Licensed
                         build time: ${stamp.time}
                         */
