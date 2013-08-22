@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 15 20:30
+build time: Aug 22 16:00
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -137,10 +137,13 @@ KISSY.add("xtemplate/runtime/commands", function (S) {
             var macros = this.config.macros;
             // definition
             if (config.fn) {
-                macros[macroName] = {
-                    paramNames: params1,
-                    fn: config.fn
-                };
+                // parent template override child template
+                if (!macros[macroName]) {
+                    macros[macroName] = {
+                        paramNames: params1,
+                        fn: config.fn
+                    };
+                }
             } else {
                 var paramValues = {};
                 var macro = macros[macroName];

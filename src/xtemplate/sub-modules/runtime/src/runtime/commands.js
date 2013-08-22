@@ -125,10 +125,13 @@ KISSY.add("xtemplate/runtime/commands", function (S) {
             var macros = this.config.macros;
             // definition
             if (config.fn) {
-                macros[macroName] = {
-                    paramNames: params1,
-                    fn: config.fn
-                };
+                // parent template override child template
+                if (!macros[macroName]) {
+                    macros[macroName] = {
+                        paramNames: params1,
+                        fn: config.fn
+                    };
+                }
             } else {
                 var paramValues = {};
                 var macro = macros[macroName];

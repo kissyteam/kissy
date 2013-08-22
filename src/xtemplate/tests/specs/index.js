@@ -732,6 +732,17 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
                     });
                     expect(render).toBe('call macro2');
                 });
+
+                it('support template extend', function () {
+                    KISSY.add('xtemplate/parent', '{{#macro "x"}}{{title}} parent{{/macro}}' +
+                        '{{macro "x"}}');
+                    var render = new XTemplate('{{#macro "x"}}{{content}} child{{/macro}}' +
+                        '{{include "xtemplate/parent"}}').render({
+                            title: 'title',
+                            content: 'content'
+                        });
+                    expect(render).toBe('content child');
+                });
             });
 
             describe('sub template', function () {
