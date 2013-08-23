@@ -37,7 +37,7 @@
     S.use(mods, function () {
         var args = S.makeArray(arguments).slice(1);
         S.each(args, function (a, i) {
-            fns[i](a);
+            fns[i](a.init());
         });
     })
 </script>

@@ -16,5 +16,10 @@
     S.each(nodes,function(n){
         mods.push(n.getAttribute('data-mod'));
     });
-    S.use(mods);
+    S.use(mods,function(){
+        var args = S.makeArray(arguments).slice(1);
+        S.each(args, function (a, i) {
+            a.init();
+        });
+    });
 </script>
