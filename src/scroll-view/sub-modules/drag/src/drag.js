@@ -274,6 +274,7 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, DD, Node) {
         }
 
         e.preventDefault();
+        e.domEvent.preventDefault();
 
         onDragScroll(self, e, 'left', startMousePos);
         onDragScroll(self, e, 'top', startMousePos);

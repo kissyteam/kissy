@@ -1,7 +1,7 @@
 /*
-Copyright 2013, KISSY UI Library v1.40dev
+Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Aug 19 22:25
+build time: Aug 24 01:51
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -285,6 +285,7 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, DD, Node) {
         }
 
         e.preventDefault();
+        e.domEvent.preventDefault();
 
         onDragScroll(self, e, 'left', startMousePos);
         onDragScroll(self, e, 'top', startMousePos);
@@ -431,9 +432,7 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, DD, Node) {
         self.dragInitDirection = null;
     }
 
-    var ScrollViewDrag;
-
-    return ScrollViewDrag = ScrollViewBase.extend({
+    return ScrollViewBase.extend({
             bindUI: function () {
                 var self = this,
                     $contentEl = self.$contentEl;

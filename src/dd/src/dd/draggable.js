@@ -349,7 +349,14 @@ KISSY.add('dd/draggable', function (S, Node, Base, DDM) {
                 top: pageY
             };
 
-            ev.drag = self;
+            var customEvent = {
+                drag: self,
+                left: pageX,
+                top: pageY,
+                pageX: pageX,
+                pageY: pageY,
+                domEvent: ev
+            };
 
             var move = self._allowMove;
 
@@ -357,19 +364,19 @@ KISSY.add('dd/draggable', function (S, Node, Base, DDM) {
                 var diff = self.get('deltaPos'),
                     left = pageX - diff.left,
                     top = pageY - diff.top;
-                ev.left = left;
-                ev.top = top;
+                customEvent.left = left;
+                customEvent.top = top;
                 self.setInternal('actualPos', {
                     left: left,
                     top: top
                 });
-                self.fire('dragalign', ev);
+                self.fire('dragalign', customEvent);
             }
 
             var def = 1;
 
             // allow call preventDefault on handlers
-            if (self.fire('drag', ev) === false) {
+            if (self.fire('drag', customEvent) === false) {
                 def = 0;
             }
 
