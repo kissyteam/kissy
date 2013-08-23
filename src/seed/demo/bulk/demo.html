@@ -1,0 +1,43 @@
+<script src="/kissy/build/seed.js" data-config="{combine:true}"></script>
+<script>
+    KISSY.config('packages', {
+        bulk: {
+            base: '../'
+        }
+    });
+    var Mods = [];
+</script>
+<div id="a"></div>
+<script>
+    Mods.push({
+        mods: ['bulk/a'],
+        fn: function (a) {
+            alert(a);
+        }
+    });
+</script>
+<div id="b"></div>
+<script>
+    Mods.push({
+        mods: ['bulk/b'],
+        fn: function (b) {
+            alert(b);
+        }
+    });
+</script>
+<script>
+    var S = KISSY;
+    var mods = [];
+    var fns = [];
+    S.each(Mods, function (m) {
+        mods.push.apply(mods, m.mods);
+        fns.push(m.fn)
+    });
+
+    S.use(mods, function () {
+        var args = S.makeArray(arguments).slice(1);
+        S.each(args, function (a, i) {
+            fns[i](a);
+        });
+    })
+</script>
