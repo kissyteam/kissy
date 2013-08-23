@@ -32,7 +32,8 @@
                     keys,
                     i = 0,
                     length = object && object.length,
-                    isObj = length === undefined || typeof object == 'function';
+                // do not use typeof obj == 'function': bug in phantomjs
+                    isObj = length === undefined || S.type(object) == 'function';
 
                 context = context || null;
 

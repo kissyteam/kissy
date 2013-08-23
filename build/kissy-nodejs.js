@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Aug 23 13:14
+build time: Aug 24 01:13
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130823131431' will replace with current timestamp when compressing.
+         * NOTICE: '20130824011304' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130823131431',
+        __BUILD_TIME: '20130824011304',
         /**
          * KISSY Environment.
          * @private
@@ -574,7 +574,8 @@ var KISSY = (function (undefined) {
                     keys,
                     i = 0,
                     length = object && object.length,
-                    isObj = length === undefined || typeof object == 'function';
+                // do not use typeof obj == 'function': bug in phantomjs
+                    isObj = length === undefined || S.type(object) == 'function';
 
                 context = context || null;
 
@@ -5687,7 +5688,7 @@ var KISSY = (function (undefined) {
             comboMaxFileNum: 40,
             charset: 'utf-8',
             lang: 'zh-cn',
-            tag: '20130823131431'
+            tag: '20130824011304'
         }, getBaseInfo()));
     }
 
