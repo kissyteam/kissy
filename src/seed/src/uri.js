@@ -227,14 +227,7 @@
             var self = this,
                 _queryMap,
                 currentValue;
-            if (S.isObject(key)) {
-                if (key instanceof Query) {
-                    key = key.get();
-                }
-                S.each(key, function (v, k) {
-                    self.add(k, v);
-                });
-            } else {
+            if (typeof key == 'string') {
                 parseQuery(self);
                 _queryMap = self._queryMap;
                 currentValue = _queryMap[key];
@@ -244,6 +237,13 @@
                     currentValue = [].concat(currentValue).concat(value);
                 }
                 _queryMap[key] = currentValue;
+            } else {
+                if (key instanceof Query) {
+                    key = key.get();
+                }
+                for (var k in key) {
+                    self.add(k, key[k]);
+                }
             }
             return self;
         },

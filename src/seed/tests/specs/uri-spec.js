@@ -16,7 +16,7 @@ describe("uri", function () {
         expect(base.getFragment()).toBe("w");
     });
 
-    it('works for file:',function(){
+    it('works for file:', function () {
         var base = new Uri("file:d:/x.png");
         expect(base.getScheme()).toBe("file");
         expect(base.getHostname()).toBe("");
@@ -49,12 +49,20 @@ describe("uri", function () {
     });
 
 
-
     describe('query', function () {
 
-        it('count works',function(){
+        it('count works', function () {
             var query = new Uri.Query("x=1&y=2");
             expect(query.count()).toBe(2);
+        });
+
+        it('allow special attribute name', function () {
+            var query = new Uri.Query();
+            query.add({
+                length: 2,
+                nodeType:1
+            });
+            expect(query.toString()).toBe('length=2&nodeType=1');
         });
 
         it('works', function () {

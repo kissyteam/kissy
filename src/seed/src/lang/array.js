@@ -32,7 +32,7 @@
                     keys,
                     i = 0,
                     length = object && object.length,
-                    isObj = length === undefined || S.type(object) === 'function';
+                    isObj = length === undefined || typeof object == 'function';
 
                 context = context || null;
 
@@ -47,7 +47,10 @@
                     }
                 } else {
                     for (val = object[0];
-                         i < length && fn.call(context, val, i, object) !== FALSE; val = object[++i]) {
+                         i < length; val = object[++i]) {
+                        if (fn.call(context, val, i, object) === FALSE) {
+                            break;
+                        }
                     }
                 }
             }

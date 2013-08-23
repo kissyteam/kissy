@@ -1,7 +1,7 @@
 /*
-Copyright 2013, KISSY UI Library v1.40dev
+Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Aug 21 21:27
+build time: Aug 23 13:14
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130821212654' will replace with current timestamp when compressing.
+         * NOTICE: '20130823131431' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130821212654',
+        __BUILD_TIME: '20130823131431',
         /**
          * KISSY Environment.
          * @private
@@ -574,7 +574,7 @@ var KISSY = (function (undefined) {
                     keys,
                     i = 0,
                     length = object && object.length,
-                    isObj = length === undefined || S.type(object) === 'function';
+                    isObj = length === undefined || typeof object == 'function';
 
                 context = context || null;
 
@@ -589,7 +589,10 @@ var KISSY = (function (undefined) {
                     }
                 } else {
                     for (val = object[0];
-                         i < length && fn.call(context, val, i, object) !== FALSE; val = object[++i]) {
+                         i < length; val = object[++i]) {
+                        if (fn.call(context, val, i, object) === FALSE) {
+                            break;
+                        }
                     }
                 }
             }
@@ -2649,14 +2652,7 @@ var KISSY = (function (undefined) {
             var self = this,
                 _queryMap,
                 currentValue;
-            if (S.isObject(key)) {
-                if (key instanceof Query) {
-                    key = key.get();
-                }
-                S.each(key, function (v, k) {
-                    self.add(k, v);
-                });
-            } else {
+            if (typeof key == 'string') {
                 parseQuery(self);
                 _queryMap = self._queryMap;
                 currentValue = _queryMap[key];
@@ -2666,6 +2662,13 @@ var KISSY = (function (undefined) {
                     currentValue = [].concat(currentValue).concat(value);
                 }
                 _queryMap[key] = currentValue;
+            } else {
+                if (key instanceof Query) {
+                    key = key.get();
+                }
+                for (var k in key) {
+                    self.add(k, key[k]);
+                }
             }
             return self;
         },
@@ -5684,7 +5687,7 @@ var KISSY = (function (undefined) {
             comboMaxFileNum: 40,
             charset: 'utf-8',
             lang: 'zh-cn',
-            tag: '20130821212654'
+            tag: '20130823131431'
         }, getBaseInfo()));
     }
 
