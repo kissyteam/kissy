@@ -1,0 +1,20 @@
+<script src="/kissy/build/seed.js" data-config="{combine:true}"></script>
+<script>
+    KISSY.config('packages', {
+        bulk: {
+            base: '../'
+        }
+    });
+    var Mods = [];
+</script>
+<div id="a" class="mod" data-mod='bulk/a'></div>
+<div id="b" class="mod" data-mod='bulk/b'></div>
+<script>
+    var S=KISSY;
+    var nodes= S.makeArray(document.querySelectorAll('.mod'));
+    var mods=[];
+    S.each(nodes,function(n){
+        mods.push(n.getAttribute('data-mod'));
+    });
+    S.use(mods);
+</script>
