@@ -64,7 +64,7 @@ describe('lang.js', function () {
         expect(S.param({b: undefined})).toBe("b");
 
         expect(S.param({
-            nodeType:1
+            nodeType: 1
         })).toBe('nodeType=1');
     });
 
@@ -235,6 +235,11 @@ describe('lang.js', function () {
 
         if (web) {
             expect(S.isArray(doc.getElementsByTagName('*'))).toBe(false);
+        }
+
+        // use native if possible
+        if (Array.isArray) {
+            expect(S.isArray).toBe(Array.isArray);
         }
     });
 

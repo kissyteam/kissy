@@ -1293,7 +1293,7 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
 
     var GregorianCalendarProto = GregorianCalendar.prototype;
 
-    if ('@debug@') {
+    if ('@DEBUG@') {
         // for idea
         GregorianCalendarProto.getDayOfMonth =
             GregorianCalendarProto.getHourOfDay =

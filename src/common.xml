@@ -101,6 +101,7 @@
         </copy>
     </target>
 
+
     <!-- 压缩 css -->
     <target name="compress-css">
         <!-- 用 YUICompressor 压缩 CSS -->
@@ -127,6 +128,15 @@
                        encoding="${charset}">
             <fileset dir="${component.build.dir}" includes="**/*.js"/>
         </replaceregexp>
+
+        <replaceregexp match="@DEBUG@"
+                       replace=""
+                       flags="g"
+                       byline="true"
+                       encoding="${charset}">
+            <fileset dir="${component.build.dir}" includes="**/*.js,**/*.css"/>
+        </replaceregexp>
+
         <!-- 用 Closure Compiler 压缩 JS -->
         <apply executable="java" verbose="true" dest="${component.build.dir}">
             <fileset dir="${component.build.dir}"
@@ -209,14 +219,6 @@
                        encoding="${charset}"
                        byline="true">
             <fileset dir="${component.build.dir}" includes="${js-css.files}"/>
-        </replaceregexp>
-
-        <replaceregexp match="@DEBUG@"
-                       replace=""
-                       flags="g"
-                       byline="true"
-                       encoding="${charset}">
-            <fileset dir="${component.build.dir}" includes="${js-css.min.files}"/>
         </replaceregexp>
 
         <replaceregexp match="@TIMESTAMP@"

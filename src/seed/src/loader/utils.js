@@ -4,7 +4,6 @@
  * @author yiminghe@gmail.com
  */
 (function (S) {
-
     var Loader = S.Loader,
         Path = S.Path,
         host = S.Env.host,
@@ -66,7 +65,6 @@
     }
 
     S.mix(Utils, {
-
         /**
          * get document head
          * @return {HTMLElement}

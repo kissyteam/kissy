@@ -354,7 +354,7 @@ KISSY.add('base', function (S, Attribute) {
             } else {
                 // debug mode, give the right name for constructor
                 // refer : http://limu.iteye.com/blog/1136712
-                if ('@debug@') {
+                if ('@DEBUG@') {
                     eval("SubClass = function " + CamelCase(name) + "(){ " +
                         "this.callSuper.apply(this, arguments);}");
                 } else {

@@ -4,7 +4,6 @@
  * @author yiminghe@gmail.com
  */
 (function (S, undefined) {
-
     var Loader = KISSY.Loader,
         Env = S.Env,
         Utils = Loader.Utils,
@@ -71,8 +70,10 @@
         add: function (name, fn, cfg) {
             if (typeof name == 'string') {
                 Utils.registerModule(S, name, fn, cfg);
-            } else {
+            } else if (!S.Config.combine) {
                 SimpleLoader.add(name, fn, cfg, S);
+            } else {
+                throw new Error('Unsupported KISSY.add format!');
             }
         },
         /**
@@ -139,7 +140,7 @@
                 }
             }
 
-            if (Config.combine && !S.UA.nodejs) {
+            if (Config.combine) {
                 loader = new ComboLoader(S, waitingModules);
             } else {
                 loader = new SimpleLoader(S, waitingModules);
@@ -277,7 +278,6 @@
 
     // Initializes loader.
     Env.mods = {}; // all added mods
-
 })(KISSY);
 
 /*

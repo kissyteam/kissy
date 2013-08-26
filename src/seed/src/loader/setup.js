@@ -4,7 +4,6 @@
  * @author yiminghe@gmail.com
  */
 (function (S) {
-
     var Loader = S.Loader = {};
 
     /**
