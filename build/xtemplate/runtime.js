@@ -1,7 +1,7 @@
 /*
-Copyright 2013, KISSY UI Library v1.40dev
+Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Aug 22 16:00
+build time: Aug 26 17:45
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -341,9 +341,7 @@ KISSY.add('xtemplate/runtime', function (S, commands) {
             loader: function (subTplName) {
                 var tpl = S.require(subTplName);
                 if (!tpl) {
-                    S.error('template "' +
-                        subTplName + '" does not exist, ' +
-                        'need to be required or used first!');
+                    S.error('template "' + subTplName + '" does not exist, ' + 'need to be required or used first!');
                 }
                 return tpl;
             }

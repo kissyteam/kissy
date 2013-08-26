@@ -170,9 +170,7 @@ KISSY.add('xtemplate/runtime', function (S, commands) {
             loader: function (subTplName) {
                 var tpl = S.require(subTplName);
                 if (!tpl) {
-                    S.error('template "' +
-                        subTplName + '" does not exist, ' +
-                        'need to be required or used first!');
+                    S.error('template "' + subTplName + '" does not exist, ' + 'need to be required or used first!');
                 }
                 return tpl;
             }

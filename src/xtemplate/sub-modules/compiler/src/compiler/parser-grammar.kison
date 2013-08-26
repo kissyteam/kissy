@@ -405,7 +405,7 @@
             rules: [
                 {
                     // "\n".match(/./)
-                    regexp: /^(\\[\s\S]|[\s\S])*?(?={{)/,
+                    regexp: /^[\s\S]*?(?={{)/,
                     action: function () {
                         var self = this,
                             text = self.text,
@@ -415,10 +415,12 @@
                             n = m[0].length;
                         }
                         if (n % 2) {
-                            text = text.slice(0, -1);
                             self.pushState('et');
                         } else {
                             self.pushState('t');
+                        }
+                        if(n){
+                            text = text.slice(0, -1);
                         }
                         // https://github.com/kissyteam/kissy/issues/330
                         // return even empty

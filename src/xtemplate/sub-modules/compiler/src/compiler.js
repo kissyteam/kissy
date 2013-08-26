@@ -19,11 +19,15 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
     /**
      * @ignore
      */
-    function escapeString(str, isDouble) {
-        return escapeSingleQuoteInCodeString(str//.replace(/\\/g, '\\\\')
-            .replace(/\r/g, '\\r')
-            .replace(/\n/g, '\\n')
-            .replace(/\t/g, '\\t'), isDouble);
+    function escapeString(str, isCode) {
+        if (isCode) {
+            str = escapeSingleQuoteInCodeString(str, false);
+        } else {
+            str = str.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+        }
+        str = str.replace(/\r/g, '\\r')
+            .replace(/\n/g, '\\n').replace(/\t/g, '\\t');
+        return str;
     }
 
     function escapeSingleQuoteInCodeString(str, isDouble) {
@@ -265,7 +269,7 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
 
         'string': function (e) {
             // same as contentNode.value
-            return ['', ["'" + escapeString(e.value) + "'"]];
+            return ['', ["'" + escapeString(e.value, true) + "'"]];
         },
 
         'number': function (e) {
@@ -287,7 +291,7 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
                 tplNode = block.tpl,
                 configNameCode = self.genConfig(tplNode),
                 configName = configNameCode[0],
-                tplPath=tplNode.path,
+                tplPath = tplNode.path,
                 pathString = tplPath.string,
                 inverseFn;
 
@@ -334,7 +338,7 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
         },
 
         'content': function (contentNode) {
-            return ['buffer += \'' + escapeString(contentNode.value) + '\';'];
+            return ['buffer += \'' + escapeString(contentNode.value, false) + '\';'];
         },
 
         'tpl': function (tplNode) {

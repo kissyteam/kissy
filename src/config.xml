@@ -8,10 +8,13 @@
     <property name="kissy.dir" location="${ant.file.config}/../../"/>
     <!-- kissy 工具目录 -->
     <property name="tools.dir" location="${kissy.dir}/tools/"/>
+    <property name="coverage.report.dir" location="${kissy.dir}/coverage-report/"/>
     <property name="module-compiler"
               location="${tools.dir}/module-compiler/module-compiler.jar"/>
     <property name="closure-compiler"
               location="${tools.dir}/closure-compiler/closure-compiler.jar"/>
+    <property name="js-cover"
+              location="${tools.dir}/js-cover/JSCover-all.jar"/>
     <property name="yui-compressor"
               location="${tools.dir}/yui-compressor/yui-compressor.jar"/>
     <property name="kissy.build.dir" location="${kissy.dir}/build/"/>

@@ -1,7 +1,7 @@
 /*
-Copyright 2013, KISSY UI Library v1.40dev
+Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Aug 15 20:30
+build time: Aug 26 17:45
 */
 /*
  Combined processedModules by KISSY Module Compiler: 

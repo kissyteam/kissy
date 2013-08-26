@@ -15,6 +15,12 @@
     </style>
 
     <script src="/kissy/build/seed.js"></script>
+    <script>
+        var loc=new KISSY.Uri(location.href);
+        if(loc.getQuery().has('coverage')){
+            KISSY.config('map',[[/{{component}}\/src/,'{{component}}/coverage/src']]);
+        }
+    </script>
     <script src="/kissy/src/package.js"></script>
     <script src="/kissy/tools/jasmine/jasmine.js"></script>
     <script src="/kissy/tools/jasmine/jasmine-html.js"></script>
@@ -44,7 +50,7 @@
     {{/if}}
 
     {{#each tests}}
-    tests.push('specs/{{{.}}}');
+        tests.push('specs/{{{.}}}');
     {{/each}}
 
     {{{script}}}

@@ -3,13 +3,9 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
-
     describe('xtemplate', function () {
-
         describe('feature', function () {
-
             it('support {{%%}}', function () {
-
                 var tpl = '{{%{{my}}%}}';
 
                 var render = new XTemplate(tpl).render({
@@ -37,7 +33,6 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
             });
 
             it('support {{variable}}', function () {
-
                 var tpl = 'this is class="t" {{title}}!';
 
                 var data = {
@@ -49,14 +44,10 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
                 }).render(data);
 
                 expect(render).toBe('this is class="t" o!');
-
             });
 
             describe("property", function () {
-
-
                 it('support sub property', function () {
-
                     var tpl = "{{data.x}}";
 
                     var data = {
@@ -68,12 +59,9 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
                     var render = new XTemplate(tpl).render(data);
 
                     expect(render).toBe('1');
-
                 });
 
-
                 it('support array index', function () {
-
                     var tpl = "{{data.1.1}}";
 
                     var data = {
@@ -83,9 +71,7 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
                     var render = new XTemplate(tpl).render(data);
 
                     expect(render).toBe('2');
-
                 });
-
             });
 
             it('support variable as index', function () {
@@ -103,9 +89,7 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
                 expect(render).toBe('1');
             });
 
-
             it('support function as template', function () {
-
                 var tpl = function (scopes) {
                     return 'this is ' + scopes[0].title + '!';
                 };
@@ -121,11 +105,9 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
             });
 
             it('support cache', function () {
-
                 var tpl = '{{title}}';
 
                 expect(new XTemplate(tpl).tpl).toBe(new XTemplate(tpl).tpl);
-
             });
 
 
@@ -169,7 +151,6 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
             });
 
             describe('each', function () {
-
                 it('support nest array', function () {
                     var tpl = '{{#each data}}{{this.0}}{{this.1}}{{.}}{{/each}}';
                     var data = {
@@ -227,7 +208,6 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
                 });
 
                 it('support variable as index', function () {
-
                     var tpl = "{{#each data[d]}}{{.}}{{/each}}";
 
                     var data = {
@@ -257,7 +237,6 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
 
                     expect(render).toBe('');
                 });
-
 
                 it('support {{^', function () {
                     var tpl = '{{^each x}}wrong{{else}}{{title}}{{/each}}' +
@@ -313,7 +292,6 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
                 });
 
                 it('support object in array', function () {
-
                     var tpl = '{{#each data}}{{name}}-{{xindex}}/{{xcount}}|{{/each}}';
 
                     var data = {
@@ -366,11 +344,8 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
                 });
             });
 
-
             describe('with', function () {
-
                 it('support object in with', function () {
-
                     var tpl = '{{#with data}}{{name}}-{{age}}{{/with}}';
 
                     var data = {
@@ -383,9 +358,7 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
                     var render = new XTemplate(tpl).render(data);
 
                     expect(render).toBe('h-2');
-
                 });
-
             });
 
             describe('parent scope', function () {
@@ -438,7 +411,6 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
                 });
 
                 it('support for each', function () {
-
                     var tpl = '{{#each data}}{{this}}-{{../total}}|{{/each}}';
 
                     var data = {
@@ -449,13 +421,10 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
                     var render = new XTemplate(tpl).render(data);
 
                     expect(render).toBe('1-3|2-3|');
-
                 });
             });
 
-
             it('support comment', function () {
-
                 var tpl = 'my {{!\n' +
                     'comment' +
                     '\n}} {{title}}';
@@ -470,11 +439,8 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
                 expect(render).toBe('my  oo');
             });
 
-
             describe('escape', function () {
-
                 it('support escape {{', function () {
-
                     var tpl = 'my {{!\n' +
                         'comment' +
                         '\n}} \\{{title}}';
@@ -494,7 +460,6 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
                 });
 
                 it('support escape {{ more', function () {
-
                     var tpl = 'my {{!\n' +
                         'comment' +
                         '\n}} \\{{title}}{{title}}';
@@ -506,13 +471,10 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
                     var render = new XTemplate(tpl).render(data);
 
                     expect(render).toBe('my  {{title}}oo');
-
                 });
 
                 describe('escapeHtml', function () {
-
                     it('default to escapeHtml', function () {
-
                         var tpl = 'my {{title}} is {{{title}}}';
 
                         var data = {
@@ -543,16 +505,20 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
 
                 });
 
-                it('support escape "', function () {
+                it('support escape " in tpl', function () {
+                    var tpl = '{{{"haha \\""}}}';
+
+                    var render = new XTemplate(tpl).render({});
+
+                    expect(render).toBe('haha "');
+                });
+
+                it('does support escape " in content', function () {
                     var tpl = '"haha \\"';
 
-                    var data = {
-                        title: '<a>'
-                    };
+                    var render = new XTemplate(tpl).render({});
 
-                    var render = new XTemplate(tpl).render(data);
-
-                    expect(render).toBe('"haha "');
+                    expect(render).toBe('"haha \\"');
                 });
 
 
@@ -574,7 +540,7 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
 
                     render = new XTemplate(tpl).render(data);
 
-                    expect(render).toBe('haha \\{{title}}');
+                    expect(render).toBe('haha \\\\{{title}}');
                 });
 
             });
@@ -907,8 +873,6 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
                 });
 
                 it('support newline/quote for variable in string', function () {
-
-                    // {{""}} 中的内容相当于写在 {{}} 外边
                     var tpl = '{{{"\n \\\' \\\\\\\'"}}} | \n \\\' \\\\\\\'';
 
                     var data = {
@@ -917,7 +881,7 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
 
                     var content = new XTemplate(tpl).render(data);
 
-                    expect(content).toBe('\n \' \\\' | \n \' \\\'');
+                    expect(content).toBe("\n ' \\' | \n \\' \\\\\\'");
 
                 });
 
@@ -1405,8 +1369,6 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
             })
         });
     }
-
-
 }, {
     requires: ['xtemplate', KISSY.UA.nodejs ? 'xtemplate/nodejs' : '']
 });
