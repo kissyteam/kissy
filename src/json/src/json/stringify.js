@@ -45,6 +45,7 @@ KISSY.add('json/stringify', function (S, Quote) {
                     return ja(value, replacerFunction, propertyList, gap, stack, indent);
                 }
                 return jo(value, replacerFunction, propertyList, gap, stack, indent);
+            // ignore undefined
         }
 
         return undefined;

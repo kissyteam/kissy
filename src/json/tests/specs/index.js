@@ -7,28 +7,24 @@ KISSY.add(function (S, Json) {
         describe('stringify', function () {
             it('should convert an arbitrary value to a Json string representation', function () {
                 expect(Json.stringify({'a': true})).toBe('{"a":true}');
-
                 expect(Json.stringify(true)).toBe('true');
-
                 expect(Json.stringify(null)).toBe('null');
                 expect(Json.stringify(undefined)).toBe(undefined);
                 expect(Json.stringify(NaN)).toBe('null');
 
-
                 if (JSON) {
                     expect(Json.stringify({'a': true})).toBe(JSON.stringify({'a': true}));
-
                     expect(Json.stringify(true)).toBe(JSON.stringify(true));
-
                     expect(Json.stringify(null)).toBe(JSON.stringify(null));
                     expect(Json.stringify(undefined)).toBe(JSON.stringify(undefined));
+                    // special number
                     expect(Json.stringify(NaN)).toBe(JSON.stringify(NaN));
+                    expect(Json.stringify(Infinity)).toBe(JSON.stringify(Infinity));
                 }
             });
 
             describe('indent', function () {
-                it('string works for object', function () {
-
+                it('string works for object', function (){
                     var gap = ' ';
                     var space = ' ';
                     var ret = Json.stringify({
@@ -53,9 +49,7 @@ KISSY.add(function (S, Json) {
                     }
                 });
 
-
                 it('string works for array', function () {
-
                     var gap = ' ';
                     var space = ' ';
 
@@ -77,9 +71,7 @@ KISSY.add(function (S, Json) {
                     }
                 });
 
-
                 it('number works for object', function () {
-
                     var gap = '  ';
                     var space = ' ';
                     var ret = Json.stringify({
@@ -104,9 +96,7 @@ KISSY.add(function (S, Json) {
                     }
                 });
 
-
                 it('string works for array', function () {
-
                     var gap = '  ';
                     var space = ' ';
 
@@ -128,7 +118,6 @@ KISSY.add(function (S, Json) {
                     }
                 });
             });
-
 
             describe('replacer', function () {
                 it('works for object', function () {
@@ -174,7 +163,6 @@ KISSY.add(function (S, Json) {
 
                 if (JSON && !phantomjs) {
                     it('string works for array', function () {
-
                         var gap = '  ';
                         var space = ' ';
 
@@ -213,14 +201,12 @@ KISSY.add(function (S, Json) {
                             }
                             return value;
                         }, 2));
-
                     });
                 }
             });
         });
 
         describe('parse', function () {
-
             it('allow whitespace', function () {
                 var t = '{"test": 1,"t":2}',
                     r = {test: 1, t: 2};
@@ -252,7 +238,6 @@ KISSY.add(function (S, Json) {
             });
 
             it('should parse a Json string to the native JavaScript representation', function () {
-
                 var r, t;
                 expect(Json.parse(t = '{"test":1}')).toEqual(r = {test: 1});
                 if (JSON) {
@@ -292,7 +277,6 @@ KISSY.add(function (S, Json) {
                             Json.parse(t);
                         }).toThrow();
                 }
-
             });
 
             it('reviver works', function () {
@@ -334,7 +318,6 @@ KISSY.add(function (S, Json) {
                 }
             });
 
-
             // phantomjs allow \t
             it('should throw exception when encounter control character', function () {
                 var t;
@@ -348,7 +331,6 @@ KISSY.add(function (S, Json) {
                         }).toThrow();
                 }
             });
-
         });
     });
 }, {
