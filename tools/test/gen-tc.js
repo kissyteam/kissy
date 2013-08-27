@@ -22,6 +22,9 @@ function collectTc(baseDir, codes) {
                 if (fs.existsSync(coverDir)) {
                     cover = 1;
                 }
+                if(codes.length>10){
+                    return;
+                }
                 S.each(runners, function (r) {
                     r = '/kissy' + (f + '/' + r).replace(cwd, '').replace(/\\/g, '/');
                     codes.push("tests.push('" + r + "');\n");
@@ -39,6 +42,7 @@ function collectTc(baseDir, codes) {
 
 var codes = [];
 collectTc(srcDir, codes);
+codes.push("tests.push('" +'/send-to-coveralls' + "');\n");
 var finalCode = '/**\n' +
     'gen by gen-tc.js\n' +
     '*/\n' +

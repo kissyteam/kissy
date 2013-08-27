@@ -137,8 +137,61 @@ S.use('xtemplate/nodejs', function (S, XTemplateNodeJs) {
             }));
         });
 
+
+        function getSourceInfo(f) {
+            var source_files = postData.source_files,
+                len = source_files.length;
+            for (var i = 0; i < len; i++) {
+                if (source_files[i].name == f) {
+                    return source_files[i];
+                }
+            }
+        }
+
+        function merge(d1, d2) {
+            var len = d1.length;
+            var dd1, dd2;
+            for (var i = 0; i < len; i++) {
+                dd1 = d1[i];
+                dd2 = d2[i];
+                if (typeof  dd2 == 'number' && typeof dd1 == 'number') {
+                    d1[i] = Math.max(d1, d2);
+                } else if (typeof  dd2 == 'number') {
+                    d1[i] = dd2;
+                }
+            }
+        }
+
+        var service_job_id = process.env.TRAVIS_JOB_ID;
+        var postData = {
+            service_name: 'travis-ci',
+            service_job_id: service_job_id,
+            source_files: []
+        };
+
+        app.get('/send-to-coveralls', function (req, res) {
+            var start = Date.now();
+            var ok = '<script>{' +
+                'content' +
+                '}\n' +
+                'console.log("0 specs, 0 failures in {time}ms.")</script>';
+            if (!service_job_id) {
+                res.send(S.substitute(ok, {
+                    //content: 'var data=' + JSON.stringify(postData) + ';console.log(data);',
+                    time: (Date.now() - start)
+                }));
+                return;
+            }
+            var str = JSON.stringify(postData);
+            var url = 'https://coveralls.io/api/v1/jobs';
+            request.post({url: url, form: { json: str}}, function () {
+                res.send(S.substitute(ok, {
+                    time: (Date.now() - start)
+                }));
+            });
+        });
+
         app.post('/save-coverage-report', function (req, res) {
-            var service_job_id = process.env.TRAVIS_JOB_ID;
             if (!service_job_id) {
                 res.send('');
                 return;
@@ -147,26 +200,24 @@ S.use('xtemplate/nodejs', function (S, XTemplateNodeJs) {
             var myPath = cwd + '/../' + req.param('path');
             var jsonReport = JSON.parse(report);
             var srcPath = path.resolve(myPath, '../../../src/') + '/';
-            var source_files = [];
-            var postData = {
-                service_name: 'travis-ci',
-                service_job_id: service_job_id,
-                source_files: source_files
-            };
+            var source_files = postData.source_files;
             for (var f in jsonReport) {
                 var detail = jsonReport[f];
-                var source = fs.readFileSync(srcPath + f, 'utf8');
                 // coveralls.io does not need first data
                 detail.lineData.shift();
-                source_files.push({
-                    name: f,
-                    source: source,
-                    coverage: detail.lineData
-                });
+                var lineData = detail.lineData;
+                var info = getSourceInfo(f);
+                if (info) {
+                    merge(info.coverage, lineData);
+                } else {
+                    var source = fs.readFileSync(srcPath + f, 'utf8');
+                    source_files.push({
+                        name: f,
+                        source: source,
+                        coverage: detail.lineData
+                    });
+                }
             }
-            var str = JSON.stringify(postData);
-            var url = 'https://coveralls.io/api/v1/jobs';
-            request.post({url: url, form: { json: str}});
             res.send('');
         });
 
