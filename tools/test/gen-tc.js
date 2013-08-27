@@ -22,9 +22,6 @@ function collectTc(baseDir, codes) {
                 if (fs.existsSync(coverDir)) {
                     cover = 1;
                 }
-                if(codes.length>10){
-                    return;
-                }
                 S.each(runners, function (r) {
                     r = '/kissy' + (f + '/' + r).replace(cwd, '').replace(/\\/g, '/');
                     codes.push("tests.push('" + r + "');\n");
