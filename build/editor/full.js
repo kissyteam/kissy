@@ -394,7 +394,7 @@ KISSY.add("editor/core/clipboard", function (S, Editor, KERange, KES) {
                 // MS-WORD format sniffing.
                 if (/(class="?Mso|style="[^"]*\bmso\-|w:WordDocument)/.test(html)) {
                     // 动态载入 word 过滤规则
-                    S.use("editor/plugin/word-filter", function (S, wordFilter) {
+                    S.use("editor/plugin/word-filter/dynamic/", function (S, wordFilter) {
                         editor.insertHtml(wordFilter.toDataFormat(html, editor));
                     });
                 } else {
