@@ -602,16 +602,32 @@ if (!loc.getQuery().has('build')) {
             "base": "/kissy/src/resizable/sub-modules/plugin/proxy/src/proxy",
             "ignorePackageNameInUri": 1
         },
+        "scroll-view/base/coverage": {
+            "base": "/kissy/src/scroll-view/sub-modules/base/coverage/src/coverage",
+            "ignorePackageNameInUri": 1
+        },
         "scroll-view/base": {
             "base": "/kissy/src/scroll-view/sub-modules/base/src/base",
+            "ignorePackageNameInUri": 1
+        },
+        "scroll-view/drag/coverage": {
+            "base": "/kissy/src/scroll-view/sub-modules/drag/coverage/src/coverage",
             "ignorePackageNameInUri": 1
         },
         "scroll-view/drag": {
             "base": "/kissy/src/scroll-view/sub-modules/drag/src/drag",
             "ignorePackageNameInUri": 1
         },
+        "scroll-view/plugin/pull-to-refresh/coverage": {
+            "base": "/kissy/src/scroll-view/sub-modules/plugin/pull-to-refresh/coverage/src/coverage",
+            "ignorePackageNameInUri": 1
+        },
         "scroll-view/plugin/pull-to-refresh": {
             "base": "/kissy/src/scroll-view/sub-modules/plugin/pull-to-refresh/src/pull-to-refresh",
+            "ignorePackageNameInUri": 1
+        },
+        "scroll-view/plugin/scrollbar/coverage": {
+            "base": "/kissy/src/scroll-view/sub-modules/plugin/scrollbar/coverage/src/coverage",
             "ignorePackageNameInUri": 1
         },
         "scroll-view/plugin/scrollbar": {
