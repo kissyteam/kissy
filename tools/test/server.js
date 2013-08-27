@@ -16,7 +16,6 @@ var request = require('request');
 
 S.use('xtemplate/nodejs', function (S, XTemplateNodeJs) {
     function startServer(port) {
-
         var express = require('express');
         var app = express();
         S.config('packages', {
@@ -49,7 +48,6 @@ S.use('xtemplate/nodejs', function (S, XTemplateNodeJs) {
 
         // combo
         app.use('/kissy/', function (req, res, next) {
-
             var query = req.query, k,
                 combo = "",
                 path = cwd + req.path;
@@ -85,7 +83,6 @@ S.use('xtemplate/nodejs', function (S, XTemplateNodeJs) {
             } else {
                 next();
             }
-
         });
 
         app.use('/kissy/', function (req, res, next) {
@@ -101,7 +98,6 @@ S.use('xtemplate/nodejs', function (S, XTemplateNodeJs) {
         app.use('/kissy/', express.static(cwd));
 
         app.use('/kissy/', function (req, res, next) {
-
             var cur = cwd + req.path,
                 index = cur + '/index.jss';
 
@@ -119,7 +115,6 @@ S.use('xtemplate/nodejs', function (S, XTemplateNodeJs) {
             } else {
                 next();
             }
-
         });
 
         var codes = require('./tc.js')();
@@ -136,7 +131,6 @@ S.use('xtemplate/nodejs', function (S, XTemplateNodeJs) {
                 tests: codes
             }));
         });
-
 
         function getSourceInfo(f) {
             var source_files = postData.source_files,
@@ -226,5 +220,4 @@ S.use('xtemplate/nodejs', function (S, XTemplateNodeJs) {
 
     startServer(9999);
     startServer(8888);
-
 });
