@@ -1,7 +1,7 @@
 /*
-Copyright 2013, KISSY UI Library v1.40dev
+Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Aug 14 23:59
+build time: Aug 27 21:59
 */
 KISSY.add("event/dom/touch/handle-map",function(){return{}});KISSY.add("event/dom/touch/single-touch",function(a){function b(){}b.prototype={constructor:b,requiredTouchCount:1,onTouchStart:function(a){if(a.touches.length!=this.requiredTouchCount)return!1;this.lastTouches=a.touches},onTouchMove:a.noop,onTouchEnd:a.noop};return b});
 KISSY.add("event/dom/touch/tap",function(a,b,d,c){function f(a){a.preventDefault()}function h(){h.superclass.constructor.apply(this,arguments)}var j=d.Object;a.extend(h,c,{onTouchMove:function(){return!1},onTouchEnd:function(c){var g=c.changedTouches[0],c=c.target,e=new j({type:"tap",target:c,currentTarget:c});a.mix(e,{pageX:g.pageX,pageY:g.pageY,which:1,touch:g});d.fire(c,"tap",e);if(e.isDefaultPrevented())d.on(c,"click",{fn:f,once:1})}});b.tap={handle:new h};return h},{requires:["./handle-map",

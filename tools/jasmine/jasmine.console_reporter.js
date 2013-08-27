@@ -25,7 +25,7 @@
     ANSI.colorize_text = function (text, color) {
         var color_code = this.color_map[color];
         return "\033[" + color_code + "m" + text + "\033[0m";
-    }
+    };
 
     var ConsoleReporter = function () {
         if (!console || !console.log) {
@@ -77,18 +77,20 @@
     };
 
     proto.reportSpecResults = function (spec) {
+        var color = 'red';
         if (spec.results().passed()) {
             this.passed_specs++;
+            color = 'green';
+        }
+        var resultText = spec.suite.description + " : " + spec.description;
+        this.log(resultText, color);
+        if (color == 'green') {
             return;
         }
-
-        var resultText = spec.suite.description + " : " + spec.description;
-        this.log(resultText, "red");
-
-        var items = spec.results().getItems()
+        var items = spec.results().getItems();
         for (var i = 0; i < items.length; i++) {
             var trace = items[i].trace.stack || items[i].trace;
-            this.log(trace, "red");
+            this.log(trace, color);
         }
     };
 

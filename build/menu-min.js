@@ -1,7 +1,7 @@
 /*
-Copyright 2013, KISSY UI Library v1.40dev
+Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Aug 20 17:37
+build time: Aug 27 22:00
 */
 KISSY.add("menu/menu-render",function(i,d){return d.getDefaultRender().extend({beforeCreateDom:function(d){d.elAttrs.role="menu"},containsElement:function(d){var c=this.$el;return c&&(c[0]===d||c.contains(d))}})},{requires:["component/container"]});
 KISSY.add("menu/control",function(i,d,h,c,a,j){function f(b){b.target.isMenu&&(b=b.newVal,this.el.setAttribute("aria-activedescendant",b&&b.el.id||""))}var g=d.KeyCode;return h.extend([c],{isMenu:1,_onSetHighlightedItem:function(b,k){var a;b&&k&&(a=k.prevVal)&&a.set("highlighted",!1,{data:{byPassSetHighlightedItem:1}})},_onSetVisible:function(b,k){this.callSuper(k);var a;!b&&(a=this.get("highlightedItem"))&&a.set("highlighted",!1)},bindUI:function(){this.on("afterHighlightedItemChange",f,this)},getRootMenu:function(){return this},

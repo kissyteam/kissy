@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Aug 26 17:45
+build time: Aug 27 22:02
 */
 KISSY.add("xtemplate/runtime/commands",function(f){var h;return h={each:function(d,a){var b=a.params[0],c="",g;if(b){var m=[0,0].concat(d);if(f.isArray(b)){g=b.length;for(var k=0;k<g;k++)m[0]=b[k],m[1]={xcount:g,xindex:k},c+=a.fn(m)}else for(g in b)m[0]=b[g],m[1]={xindex:g},c+=a.fn(m)}else a.inverse&&(c=a.inverse(d));return c},"with":function(d,a){var b=a.params[0],c=[0].concat(d),g="";b?(c[0]=b,g=a.fn(c)):a.inverse&&(g=a.inverse(d));return g},"if":function(d,a){var b="";a.params[0]?a.fn&&(b=a.fn(d)):
 a.inverse&&(b=a.inverse(d));return b},set:function(d,a){for(var b=d.length-1;0<=b;b--)if("object"==typeof d[b]){f.mix(d[b],a.hash);break}return""},include:function(d,a){var b=a.params,d=(a.hash?[a.hash]:[]).concat(d);if(!b||1!=b.length)return"";var c=this.config.name,b=b[0];if("."==b.charAt(0)){if("unspecified"==c)return"";b=f.Path.resolve(c,"../",b)}c=this.config.loader.call(this,b);a=f.merge(this.config);a.name=b;a.commands=this.config.commands;a.macros=this.config.macros;return this.invokeEngine(c,

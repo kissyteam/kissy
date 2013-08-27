@@ -356,7 +356,7 @@ function visit37_48_1(result) {
 function visit36_21_1(result) {
   _$jscoverage['/overlay/popup.js'].branchData['21'][1].ranCondition(result);
   return result;
-}_$jscoverage['/overlay/popup.js'].branchData['20'][1].init(130, 7, 'trigger');
+}_$jscoverage['/overlay/popup.js'].branchData['20'][1].init(126, 7, 'trigger');
 function visit35_20_1(result) {
   _$jscoverage['/overlay/popup.js'].branchData['20'][1].ranCondition(result);
   return result;

@@ -1,7 +1,7 @@
 /*
-Copyright 2013, KISSY UI Library v1.40dev
+Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Aug 14 23:51
+build time: Aug 27 21:50
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -501,7 +501,6 @@ KISSY.add("color", function (S, Base) {
 
     // #---------------------------- private end
 
-
     return Color;
 }, {
     requires: ['base']
@@ -510,6 +509,6 @@ KISSY.add("color", function (S, Base) {
 /**
  * @ignore
  * Refer:
- *  - http://en.wikipedia.org/wiki/HSL_and_HSV
+ *  - 支持 http://en.wikipedia.org/wiki/HSL_and_HSV
  */
 

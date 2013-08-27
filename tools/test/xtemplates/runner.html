@@ -17,8 +17,13 @@
     <script src="/kissy/build/seed.js"></script>
     <script>
         var loc=new KISSY.Uri(location.href);
+        var component= '{{{component}}}';
         if(loc.getQuery().has('coverage')){
-            KISSY.config('map',[[/{{component}}\/src/,'{{component}}/coverage/src']]);
+            KISSY.config('map',[[/kissy\/src\/(.+)\/src\//g,function(m,m1){
+                var mm=m1.replace(/sub-modules\//g,'');
+                if(mm!=component) return m;
+                return m.slice(0,-5)+'/coverage/src/';
+            }]]);
         }
     </script>
     <script src="/kissy/src/package.js"></script>

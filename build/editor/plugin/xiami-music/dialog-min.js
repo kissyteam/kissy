@@ -1,7 +1,7 @@
 /*
-Copyright 2013, KISSY UI Library v1.40dev
+Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Aug 14 23:58
+build time: Aug 27 21:58
 */
 KISSY.add("editor/plugin/xiami-music/dialog",function(f,l,p,q){function m(){m.superclass.constructor.apply(this,arguments)}function j(e,a,f){return"<a class='{prefixCls}editor-xiami-page-item {prefixCls}editor-button ks-inline-block"+(e==a?" {prefixCls}editor-xiami-curpage":"")+"' data-value='"+a+"' href='#'>"+(f||a)+"</a>"}var n=f.DOM,r=f.Node,s=l.Utils.debugUrl("theme/tao-loading.gif"),t="http://www.xiami.com/app/nineteen/search/key/{key}/page/{page}",o="\u8f93\u5165\u6b4c\u66f2\u540d\u3001\u4e13\u8f91\u540d\u3001\u827a\u4eba\u540d";f.extend(m,p,{_config:function(){var e=
 this.editor.get("prefixCls");this._cls="ke_xiami";this._type="xiami-music";this._title="\u867e\u7c73\u97f3\u4e50";this._bodyHTML=f.substitute("<div style='padding:40px 0 70px 0;'><form action='#' class='{prefixCls}editor-xiami-form' style='margin:0 20px;'><p class='{prefixCls}editor-xiami-title'></p><p class='{prefixCls}editor-xiami-url-wrap'><input class='{prefixCls}editor-xiami-url {prefixCls}editor-input' style='width:370px;'/> &nbsp;  <a class='{prefixCls}editor-xiami-submit {prefixCls}editor-button ks-inline-block'>\u641c \u7d22</a></p><p style='margin:10px 0'><label>\u5bf9 \u9f50\uff1a <select class='{prefixCls}editor-xiami-align' title='\u5bf9\u9f50'><option value='none'>\u65e0</option><option value='left'>\u5de6\u5bf9\u9f50</option><option value='right'>\u53f3\u5bf9\u9f50</option></select></label><label style='margin-left:70px;'>\u95f4\u8ddd\uff1a  <input  data-verify='^\\d+$'  data-warning='\u95f4\u8ddd\u8bf7\u8f93\u5165\u975e\u8d1f\u6574\u6570' class='{prefixCls}editor-xiami-margin {prefixCls}editor-input' style='width:60px;' value='0'/> \u50cf\u7d20</label></p></form><div class='{prefixCls}editor-xiami-list'></div></div>",

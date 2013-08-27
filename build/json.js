@@ -1,7 +1,7 @@
 /*
-Copyright 2013, KISSY UI Library v1.40dev
+Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Aug 14 23:59
+build time: Aug 27 22:00
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -106,13 +106,14 @@ KISSY.add('json/stringify', function (S, Quote) {
                     return ja(value, replacerFunction, propertyList, gap, stack, indent);
                 }
                 return jo(value, replacerFunction, propertyList, gap, stack, indent);
+            // ignore undefined
         }
 
         return undefined;
     }
 
     function jo(value, replacerFunction, propertyList, gap, stack, indent) {
-        if ('@debug@') {
+        if ('@DEBUG@') {
             if (S.inArray(value, stack)) {
                 throw new TypeError('cyclic json');
             }
@@ -153,14 +154,14 @@ KISSY.add('json/stringify', function (S, Quote) {
                 ret = '{\n' + indent + properties + '\n' + stepBack + '}';
             }
         }
-        if ('@debug@') {
+        if ('@DEBUG@') {
             stack.pop();
         }
         return ret;
     }
 
     function ja(value, replacerFunction, propertyList, gap, stack, indent) {
-        if ('@debug@') {
+        if ('@DEBUG@') {
             if (S.inArray(value, stack)) {
                 throw new TypeError('cyclic json');
             }
@@ -192,7 +193,7 @@ KISSY.add('json/stringify', function (S, Quote) {
                 ret = '[\n' + indent + properties + '\n' + stepBack + ']';
             }
         }
-        if ('@debug@') {
+        if ('@DEBUG@') {
             stack.pop();
         }
 

@@ -1,4 +1,4 @@
-# KISSY [![Build Status](https://secure.travis-ci.org/kissyteam/kissy.png?branch=master)](https://travis-ci.org/kissyteam/kissy) [![NPM version](https://badge.fury.io/js/kissy.png)](http://badge.fury.io/js/kissy)
+# KISSY [![Build Status](https://secure.travis-ci.org/kissyteam/kissy.png?branch=master)](https://travis-ci.org/kissyteam/kissy) [![NPM version](https://badge.fury.io/js/kissy.png)](http://badge.fury.io/js/kissy) [![Coverage Status](https://coveralls.io/repos/kissyteam/kissy/badge.png?branch=master)](https://coveralls.io/r/kissyteam/kissy?branch=master)
 
 > A Powerful JavaScript Framework
 

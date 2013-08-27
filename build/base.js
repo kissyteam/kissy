@@ -1,7 +1,7 @@
 /*
-Copyright 2013, KISSY UI Library v1.40dev
+Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Aug 14 23:51
+build time: Aug 27 21:50
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -976,7 +976,7 @@ KISSY.add('base', function (S, Attribute) {
             } else {
                 // debug mode, give the right name for constructor
                 // refer : http://limu.iteye.com/blog/1136712
-                if ('@debug@') {
+                if ('@DEBUG@') {
                     eval("SubClass = function " + CamelCase(name) + "(){ " +
                         "this.callSuper.apply(this, arguments);}");
                 } else {

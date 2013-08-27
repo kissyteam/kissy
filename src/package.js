@@ -6,24 +6,48 @@ KISSY.config('tag', KISSY.now());
 var loc = new KISSY.Uri(location.href);
 if (!loc.getQuery().has('build')) {
     KISSY.config('packages', {
+        "anim/coverage": {
+            "base": "/kissy/src/anim/coverage/src/coverage",
+            "ignorePackageNameInUri": 1
+        },
         "anim": {
             "base": "/kissy/src/anim/src/anim",
+            "ignorePackageNameInUri": 1
+        },
+        "anim/base/coverage": {
+            "base": "/kissy/src/anim/sub-modules/base/coverage/src/coverage",
             "ignorePackageNameInUri": 1
         },
         "anim/base": {
             "base": "/kissy/src/anim/sub-modules/base/src/base",
             "ignorePackageNameInUri": 1
         },
+        "anim/timer/coverage": {
+            "base": "/kissy/src/anim/sub-modules/timer/coverage/src/coverage",
+            "ignorePackageNameInUri": 1
+        },
         "anim/timer": {
             "base": "/kissy/src/anim/sub-modules/timer/src/timer",
+            "ignorePackageNameInUri": 1
+        },
+        "anim/transition/coverage": {
+            "base": "/kissy/src/anim/sub-modules/transition/coverage/src/coverage",
             "ignorePackageNameInUri": 1
         },
         "anim/transition": {
             "base": "/kissy/src/anim/sub-modules/transition/src/transition",
             "ignorePackageNameInUri": 1
         },
+        "base/coverage": {
+            "base": "/kissy/src/base/coverage/src/coverage",
+            "ignorePackageNameInUri": 1
+        },
         "base": {
             "base": "/kissy/src/base/src/base",
+            "ignorePackageNameInUri": 1
+        },
+        "button/coverage": {
+            "base": "/kissy/src/button/coverage/src/coverage",
             "ignorePackageNameInUri": 1
         },
         "button": {
@@ -38,60 +62,124 @@ if (!loc.getQuery().has('build')) {
             "base": "/kissy/src/color/src/color",
             "ignorePackageNameInUri": 1
         },
+        "combobox/coverage": {
+            "base": "/kissy/src/combobox/coverage/src/coverage",
+            "ignorePackageNameInUri": 1
+        },
         "combobox": {
             "base": "/kissy/src/combobox/src/combobox",
+            "ignorePackageNameInUri": 1
+        },
+        "component/container/coverage": {
+            "base": "/kissy/src/component/sub-modules/container/coverage/src/coverage",
             "ignorePackageNameInUri": 1
         },
         "component/container": {
             "base": "/kissy/src/component/sub-modules/container/src/container",
             "ignorePackageNameInUri": 1
         },
+        "component/control/coverage": {
+            "base": "/kissy/src/component/sub-modules/control/coverage/src/coverage",
+            "ignorePackageNameInUri": 1
+        },
         "component/control": {
             "base": "/kissy/src/component/sub-modules/control/src/control",
+            "ignorePackageNameInUri": 1
+        },
+        "component/extension/align/coverage": {
+            "base": "/kissy/src/component/sub-modules/extension/align/coverage/src/coverage",
             "ignorePackageNameInUri": 1
         },
         "component/extension/align": {
             "base": "/kissy/src/component/sub-modules/extension/align/src/align",
             "ignorePackageNameInUri": 1
         },
+        "component/extension/content-render/coverage": {
+            "base": "/kissy/src/component/sub-modules/extension/content-render/coverage/src/coverage",
+            "ignorePackageNameInUri": 1
+        },
         "component/extension/content-render": {
             "base": "/kissy/src/component/sub-modules/extension/content-render/src/content-render",
+            "ignorePackageNameInUri": 1
+        },
+        "component/extension/delegate-children/coverage": {
+            "base": "/kissy/src/component/sub-modules/extension/delegate-children/coverage/src/coverage",
             "ignorePackageNameInUri": 1
         },
         "component/extension/delegate-children": {
             "base": "/kissy/src/component/sub-modules/extension/delegate-children/src/delegate-children",
             "ignorePackageNameInUri": 1
         },
+        "component/extension/shim/coverage": {
+            "base": "/kissy/src/component/sub-modules/extension/shim/coverage/src/coverage",
+            "ignorePackageNameInUri": 1
+        },
         "component/extension/shim": {
             "base": "/kissy/src/component/sub-modules/extension/shim/src/shim",
+            "ignorePackageNameInUri": 1
+        },
+        "component/manager/coverage": {
+            "base": "/kissy/src/component/sub-modules/manager/coverage/src/coverage",
             "ignorePackageNameInUri": 1
         },
         "component/manager": {
             "base": "/kissy/src/component/sub-modules/manager/src/manager",
             "ignorePackageNameInUri": 1
         },
+        "component/plugin/drag/coverage": {
+            "base": "/kissy/src/component/sub-modules/plugin/drag/coverage/src/coverage",
+            "ignorePackageNameInUri": 1
+        },
         "component/plugin/drag": {
             "base": "/kissy/src/component/sub-modules/plugin/drag/src/drag",
+            "ignorePackageNameInUri": 1
+        },
+        "component/plugin/resize/coverage": {
+            "base": "/kissy/src/component/sub-modules/plugin/resize/coverage/src/coverage",
             "ignorePackageNameInUri": 1
         },
         "component/plugin/resize": {
             "base": "/kissy/src/component/sub-modules/plugin/resize/src/resize",
             "ignorePackageNameInUri": 1
         },
+        "cookie/coverage": {
+            "base": "/kissy/src/cookie/coverage/src/coverage",
+            "ignorePackageNameInUri": 1
+        },
         "cookie": {
             "base": "/kissy/src/cookie/src/cookie",
+            "ignorePackageNameInUri": 1
+        },
+        "date/format/coverage": {
+            "base": "/kissy/src/date/format/coverage/src/coverage",
             "ignorePackageNameInUri": 1
         },
         "date/format": {
             "base": "/kissy/src/date/format/src/format",
             "ignorePackageNameInUri": 1
         },
+        "date/gregorian/coverage": {
+            "base": "/kissy/src/date/gregorian/coverage/src/coverage",
+            "ignorePackageNameInUri": 1
+        },
         "date/gregorian": {
             "base": "/kissy/src/date/gregorian/src/gregorian",
             "ignorePackageNameInUri": 1
         },
+        "date/i18n/coverage": {
+            "base": "/kissy/src/date/i18n/coverage/src/coverage",
+            "ignorePackageNameInUri": 1
+        },
         "date/i18n": {
             "base": "/kissy/src/date/i18n/src/i18n",
+            "ignorePackageNameInUri": 1
+        },
+        "date/picker/coverage": {
+            "base": "/kissy/src/date/picker/coverage/src/coverage",
+            "ignorePackageNameInUri": 1
+        },
+        "date/picker/i18n/coverage": {
+            "base": "/kissy/src/date/picker/i18n/coverage/src/coverage",
             "ignorePackageNameInUri": 1
         },
         "date/picker/i18n": {
@@ -102,444 +190,888 @@ if (!loc.getQuery().has('build')) {
             "base": "/kissy/src/date/picker/src/picker",
             "ignorePackageNameInUri": 1
         },
+        "date/popup-picker/coverage": {
+            "base": "/kissy/src/date/popup-picker/coverage/src/coverage",
+            "ignorePackageNameInUri": 1
+        },
         "date/popup-picker": {
             "base": "/kissy/src/date/popup-picker/src/popup-picker",
+            "ignorePackageNameInUri": 1
+        },
+        "dd/coverage": {
+            "base": "/kissy/src/dd/coverage/src/coverage",
             "ignorePackageNameInUri": 1
         },
         "dd": {
             "base": "/kissy/src/dd/src/dd",
             "ignorePackageNameInUri": 1
         },
+        "dd/plugin/constrain/coverage": {
+            "base": "/kissy/src/dd/sub-modules/plugin/constrain/coverage/src/coverage",
+            "ignorePackageNameInUri": 1
+        },
         "dd/plugin/constrain": {
             "base": "/kissy/src/dd/sub-modules/plugin/constrain/src/constrain",
+            "ignorePackageNameInUri": 1
+        },
+        "dd/plugin/proxy/coverage": {
+            "base": "/kissy/src/dd/sub-modules/plugin/proxy/coverage/src/coverage",
             "ignorePackageNameInUri": 1
         },
         "dd/plugin/proxy": {
             "base": "/kissy/src/dd/sub-modules/plugin/proxy/src/proxy",
             "ignorePackageNameInUri": 1
         },
+        "dd/plugin/scroll/coverage": {
+            "base": "/kissy/src/dd/sub-modules/plugin/scroll/coverage/src/coverage",
+            "ignorePackageNameInUri": 1
+        },
         "dd/plugin/scroll": {
             "base": "/kissy/src/dd/sub-modules/plugin/scroll/src/scroll",
+            "ignorePackageNameInUri": 1
+        },
+        "dom/base/coverage": {
+            "base": "/kissy/src/dom/sub-modules/base/coverage/src/coverage",
             "ignorePackageNameInUri": 1
         },
         "dom/base": {
             "base": "/kissy/src/dom/sub-modules/base/src/base",
             "ignorePackageNameInUri": 1
         },
+        "dom/class-list/coverage": {
+            "base": "/kissy/src/dom/sub-modules/class-list/coverage/src/coverage",
+            "ignorePackageNameInUri": 1
+        },
         "dom/class-list": {
             "base": "/kissy/src/dom/sub-modules/class-list/src/class-list",
+            "ignorePackageNameInUri": 1
+        },
+        "dom/ie/coverage": {
+            "base": "/kissy/src/dom/sub-modules/ie/coverage/src/coverage",
             "ignorePackageNameInUri": 1
         },
         "dom/ie": {
             "base": "/kissy/src/dom/sub-modules/ie/src/ie",
             "ignorePackageNameInUri": 1
         },
+        "dom/selector/coverage": {
+            "base": "/kissy/src/dom/sub-modules/selector/coverage/src/coverage",
+            "ignorePackageNameInUri": 1
+        },
         "dom/selector": {
             "base": "/kissy/src/dom/sub-modules/selector/src/selector",
+            "ignorePackageNameInUri": 1
+        },
+        "editor/coverage": {
+            "base": "/kissy/src/editor/coverage/src/coverage",
             "ignorePackageNameInUri": 1
         },
         "editor": {
             "base": "/kissy/src/editor/src/editor",
             "ignorePackageNameInUri": 1
         },
+        "editor/plugin/back-color/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/back-color/coverage/src/coverage",
+            "ignorePackageNameInUri": 1
+        },
         "editor/plugin/back-color": {
             "base": "/kissy/src/editor/sub-modules/plugin/back-color/src/back-color",
+            "ignorePackageNameInUri": 1
+        },
+        "editor/plugin/back-color/cmd/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/back-color/sub-modules/cmd/coverage/src/coverage",
             "ignorePackageNameInUri": 1
         },
         "editor/plugin/back-color/cmd": {
             "base": "/kissy/src/editor/sub-modules/plugin/back-color/sub-modules/cmd/src/cmd",
             "ignorePackageNameInUri": 1
         },
+        "editor/plugin/bold/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/bold/coverage/src/coverage",
+            "ignorePackageNameInUri": 1
+        },
         "editor/plugin/bold": {
             "base": "/kissy/src/editor/sub-modules/plugin/bold/src/bold",
+            "ignorePackageNameInUri": 1
+        },
+        "editor/plugin/bold/cmd/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/bold/sub-modules/cmd/coverage/src/coverage",
             "ignorePackageNameInUri": 1
         },
         "editor/plugin/bold/cmd": {
             "base": "/kissy/src/editor/sub-modules/plugin/bold/sub-modules/cmd/src/cmd",
             "ignorePackageNameInUri": 1
         },
+        "editor/plugin/bubble/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/bubble/coverage/src/coverage",
+            "ignorePackageNameInUri": 1
+        },
         "editor/plugin/bubble": {
             "base": "/kissy/src/editor/sub-modules/plugin/bubble/src/bubble",
+            "ignorePackageNameInUri": 1
+        },
+        "editor/plugin/button/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/button/coverage/src/coverage",
             "ignorePackageNameInUri": 1
         },
         "editor/plugin/button": {
             "base": "/kissy/src/editor/sub-modules/plugin/button/src/button",
             "ignorePackageNameInUri": 1
         },
+        "editor/plugin/checkbox-source-area/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/checkbox-source-area/coverage/src/coverage",
+            "ignorePackageNameInUri": 1
+        },
         "editor/plugin/checkbox-source-area": {
             "base": "/kissy/src/editor/sub-modules/plugin/checkbox-source-area/src/checkbox-source-area",
+            "ignorePackageNameInUri": 1
+        },
+        "editor/plugin/code/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/code/coverage/src/coverage",
             "ignorePackageNameInUri": 1
         },
         "editor/plugin/code": {
             "base": "/kissy/src/editor/sub-modules/plugin/code/src/code",
             "ignorePackageNameInUri": 1
         },
+        "editor/plugin/code/dialog/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/code/sub-modules/dialog/coverage/src/coverage",
+            "ignorePackageNameInUri": 1
+        },
         "editor/plugin/code/dialog": {
             "base": "/kissy/src/editor/sub-modules/plugin/code/sub-modules/dialog/src/dialog",
+            "ignorePackageNameInUri": 1
+        },
+        "editor/plugin/color/btn/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/color/btn/coverage/src/coverage",
             "ignorePackageNameInUri": 1
         },
         "editor/plugin/color/btn": {
             "base": "/kissy/src/editor/sub-modules/plugin/color/btn/src/btn",
             "ignorePackageNameInUri": 1
         },
+        "editor/plugin/color/cmd/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/color/cmd/coverage/src/coverage",
+            "ignorePackageNameInUri": 1
+        },
         "editor/plugin/color/cmd": {
             "base": "/kissy/src/editor/sub-modules/plugin/color/cmd/src/cmd",
+            "ignorePackageNameInUri": 1
+        },
+        "editor/plugin/color/dialog/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/color/dialog/coverage/src/coverage",
             "ignorePackageNameInUri": 1
         },
         "editor/plugin/color/dialog": {
             "base": "/kissy/src/editor/sub-modules/plugin/color/dialog/src/dialog",
             "ignorePackageNameInUri": 1
         },
+        "editor/plugin/contextmenu/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/contextmenu/coverage/src/coverage",
+            "ignorePackageNameInUri": 1
+        },
         "editor/plugin/contextmenu": {
             "base": "/kissy/src/editor/sub-modules/plugin/contextmenu/src/contextmenu",
+            "ignorePackageNameInUri": 1
+        },
+        "editor/plugin/dent-cmd/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/dent-cmd/coverage/src/coverage",
             "ignorePackageNameInUri": 1
         },
         "editor/plugin/dent-cmd": {
             "base": "/kissy/src/editor/sub-modules/plugin/dent-cmd/src/dent-cmd",
             "ignorePackageNameInUri": 1
         },
+        "editor/plugin/dialog/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/dialog/coverage/src/coverage",
+            "ignorePackageNameInUri": 1
+        },
         "editor/plugin/dialog": {
             "base": "/kissy/src/editor/sub-modules/plugin/dialog/src/dialog",
+            "ignorePackageNameInUri": 1
+        },
+        "editor/plugin/dialog-loader/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/dialog-loader/coverage/src/coverage",
             "ignorePackageNameInUri": 1
         },
         "editor/plugin/dialog-loader": {
             "base": "/kissy/src/editor/sub-modules/plugin/dialog-loader/src/dialog-loader",
             "ignorePackageNameInUri": 1
         },
+        "editor/plugin/draft/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/draft/coverage/src/coverage",
+            "ignorePackageNameInUri": 1
+        },
         "editor/plugin/draft": {
             "base": "/kissy/src/editor/sub-modules/plugin/draft/src/draft",
+            "ignorePackageNameInUri": 1
+        },
+        "editor/plugin/drag-upload/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/drag-upload/coverage/src/coverage",
             "ignorePackageNameInUri": 1
         },
         "editor/plugin/drag-upload": {
             "base": "/kissy/src/editor/sub-modules/plugin/drag-upload/src/drag-upload",
             "ignorePackageNameInUri": 1
         },
+        "editor/plugin/element-path/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/element-path/coverage/src/coverage",
+            "ignorePackageNameInUri": 1
+        },
         "editor/plugin/element-path": {
             "base": "/kissy/src/editor/sub-modules/plugin/element-path/src/element-path",
+            "ignorePackageNameInUri": 1
+        },
+        "editor/plugin/fake-objects/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/fake-objects/coverage/src/coverage",
             "ignorePackageNameInUri": 1
         },
         "editor/plugin/fake-objects": {
             "base": "/kissy/src/editor/sub-modules/plugin/fake-objects/src/fake-objects",
             "ignorePackageNameInUri": 1
         },
+        "editor/plugin/flash/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/flash/coverage/src/coverage",
+            "ignorePackageNameInUri": 1
+        },
         "editor/plugin/flash": {
             "base": "/kissy/src/editor/sub-modules/plugin/flash/src/flash",
+            "ignorePackageNameInUri": 1
+        },
+        "editor/plugin/flash/dialog/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/flash/sub-modules/dialog/coverage/src/coverage",
             "ignorePackageNameInUri": 1
         },
         "editor/plugin/flash/dialog": {
             "base": "/kissy/src/editor/sub-modules/plugin/flash/sub-modules/dialog/src/dialog",
             "ignorePackageNameInUri": 1
         },
+        "editor/plugin/flash-bridge/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/flash-bridge/coverage/src/coverage",
+            "ignorePackageNameInUri": 1
+        },
         "editor/plugin/flash-bridge": {
             "base": "/kissy/src/editor/sub-modules/plugin/flash-bridge/src/flash-bridge",
+            "ignorePackageNameInUri": 1
+        },
+        "editor/plugin/flash-common/base-class/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/flash-common/base-class/coverage/src/coverage",
             "ignorePackageNameInUri": 1
         },
         "editor/plugin/flash-common/base-class": {
             "base": "/kissy/src/editor/sub-modules/plugin/flash-common/base-class/src/base-class",
             "ignorePackageNameInUri": 1
         },
+        "editor/plugin/flash-common/utils/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/flash-common/utils/coverage/src/coverage",
+            "ignorePackageNameInUri": 1
+        },
         "editor/plugin/flash-common/utils": {
             "base": "/kissy/src/editor/sub-modules/plugin/flash-common/utils/src/utils",
+            "ignorePackageNameInUri": 1
+        },
+        "editor/plugin/focus-fix/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/focus-fix/coverage/src/coverage",
             "ignorePackageNameInUri": 1
         },
         "editor/plugin/focus-fix": {
             "base": "/kissy/src/editor/sub-modules/plugin/focus-fix/src/focus-fix",
             "ignorePackageNameInUri": 1
         },
+        "editor/plugin/font/cmd/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/font/cmd/coverage/src/coverage",
+            "ignorePackageNameInUri": 1
+        },
         "editor/plugin/font/cmd": {
             "base": "/kissy/src/editor/sub-modules/plugin/font/cmd/src/cmd",
+            "ignorePackageNameInUri": 1
+        },
+        "editor/plugin/font/ui/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/font/ui/coverage/src/coverage",
             "ignorePackageNameInUri": 1
         },
         "editor/plugin/font/ui": {
             "base": "/kissy/src/editor/sub-modules/plugin/font/ui/src/ui",
             "ignorePackageNameInUri": 1
         },
+        "editor/plugin/font-family/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/font-family/coverage/src/coverage",
+            "ignorePackageNameInUri": 1
+        },
         "editor/plugin/font-family": {
             "base": "/kissy/src/editor/sub-modules/plugin/font-family/src/font-family",
+            "ignorePackageNameInUri": 1
+        },
+        "editor/plugin/font-family/cmd/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/font-family/sub-modules/cmd/coverage/src/coverage",
             "ignorePackageNameInUri": 1
         },
         "editor/plugin/font-family/cmd": {
             "base": "/kissy/src/editor/sub-modules/plugin/font-family/sub-modules/cmd/src/cmd",
             "ignorePackageNameInUri": 1
         },
+        "editor/plugin/font-size/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/font-size/coverage/src/coverage",
+            "ignorePackageNameInUri": 1
+        },
         "editor/plugin/font-size": {
             "base": "/kissy/src/editor/sub-modules/plugin/font-size/src/font-size",
+            "ignorePackageNameInUri": 1
+        },
+        "editor/plugin/font-size/cmd/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/font-size/sub-modules/cmd/coverage/src/coverage",
             "ignorePackageNameInUri": 1
         },
         "editor/plugin/font-size/cmd": {
             "base": "/kissy/src/editor/sub-modules/plugin/font-size/sub-modules/cmd/src/cmd",
             "ignorePackageNameInUri": 1
         },
+        "editor/plugin/fore-color/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/fore-color/coverage/src/coverage",
+            "ignorePackageNameInUri": 1
+        },
         "editor/plugin/fore-color": {
             "base": "/kissy/src/editor/sub-modules/plugin/fore-color/src/fore-color",
+            "ignorePackageNameInUri": 1
+        },
+        "editor/plugin/fore-color/cmd/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/fore-color/sub-modules/cmd/coverage/src/coverage",
             "ignorePackageNameInUri": 1
         },
         "editor/plugin/fore-color/cmd": {
             "base": "/kissy/src/editor/sub-modules/plugin/fore-color/sub-modules/cmd/src/cmd",
             "ignorePackageNameInUri": 1
         },
+        "editor/plugin/heading/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/heading/coverage/src/coverage",
+            "ignorePackageNameInUri": 1
+        },
         "editor/plugin/heading": {
             "base": "/kissy/src/editor/sub-modules/plugin/heading/src/heading",
+            "ignorePackageNameInUri": 1
+        },
+        "editor/plugin/heading/cmd/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/heading/sub-modules/cmd/coverage/src/coverage",
             "ignorePackageNameInUri": 1
         },
         "editor/plugin/heading/cmd": {
             "base": "/kissy/src/editor/sub-modules/plugin/heading/sub-modules/cmd/src/cmd",
             "ignorePackageNameInUri": 1
         },
+        "editor/plugin/image/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/image/coverage/src/coverage",
+            "ignorePackageNameInUri": 1
+        },
         "editor/plugin/image": {
             "base": "/kissy/src/editor/sub-modules/plugin/image/src/image",
+            "ignorePackageNameInUri": 1
+        },
+        "editor/plugin/image/dialog/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/image/sub-modules/dialog/coverage/src/coverage",
             "ignorePackageNameInUri": 1
         },
         "editor/plugin/image/dialog": {
             "base": "/kissy/src/editor/sub-modules/plugin/image/sub-modules/dialog/src/dialog",
             "ignorePackageNameInUri": 1
         },
+        "editor/plugin/indent/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/indent/coverage/src/coverage",
+            "ignorePackageNameInUri": 1
+        },
         "editor/plugin/indent": {
             "base": "/kissy/src/editor/sub-modules/plugin/indent/src/indent",
+            "ignorePackageNameInUri": 1
+        },
+        "editor/plugin/indent/cmd/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/indent/sub-modules/cmd/coverage/src/coverage",
             "ignorePackageNameInUri": 1
         },
         "editor/plugin/indent/cmd": {
             "base": "/kissy/src/editor/sub-modules/plugin/indent/sub-modules/cmd/src/cmd",
             "ignorePackageNameInUri": 1
         },
+        "editor/plugin/italic/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/italic/coverage/src/coverage",
+            "ignorePackageNameInUri": 1
+        },
         "editor/plugin/italic": {
             "base": "/kissy/src/editor/sub-modules/plugin/italic/src/italic",
+            "ignorePackageNameInUri": 1
+        },
+        "editor/plugin/italic/cmd/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/italic/sub-modules/cmd/coverage/src/coverage",
             "ignorePackageNameInUri": 1
         },
         "editor/plugin/italic/cmd": {
             "base": "/kissy/src/editor/sub-modules/plugin/italic/sub-modules/cmd/src/cmd",
             "ignorePackageNameInUri": 1
         },
+        "editor/plugin/justify-center/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/justify-center/coverage/src/coverage",
+            "ignorePackageNameInUri": 1
+        },
         "editor/plugin/justify-center": {
             "base": "/kissy/src/editor/sub-modules/plugin/justify-center/src/justify-center",
+            "ignorePackageNameInUri": 1
+        },
+        "editor/plugin/justify-center/cmd/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/justify-center/sub-modules/cmd/coverage/src/coverage",
             "ignorePackageNameInUri": 1
         },
         "editor/plugin/justify-center/cmd": {
             "base": "/kissy/src/editor/sub-modules/plugin/justify-center/sub-modules/cmd/src/cmd",
             "ignorePackageNameInUri": 1
         },
+        "editor/plugin/justify-cmd/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/justify-cmd/coverage/src/coverage",
+            "ignorePackageNameInUri": 1
+        },
         "editor/plugin/justify-cmd": {
             "base": "/kissy/src/editor/sub-modules/plugin/justify-cmd/src/justify-cmd",
+            "ignorePackageNameInUri": 1
+        },
+        "editor/plugin/justify-left/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/justify-left/coverage/src/coverage",
             "ignorePackageNameInUri": 1
         },
         "editor/plugin/justify-left": {
             "base": "/kissy/src/editor/sub-modules/plugin/justify-left/src/justify-left",
             "ignorePackageNameInUri": 1
         },
+        "editor/plugin/justify-left/cmd/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/justify-left/sub-modules/cmd/coverage/src/coverage",
+            "ignorePackageNameInUri": 1
+        },
         "editor/plugin/justify-left/cmd": {
             "base": "/kissy/src/editor/sub-modules/plugin/justify-left/sub-modules/cmd/src/cmd",
+            "ignorePackageNameInUri": 1
+        },
+        "editor/plugin/justify-right/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/justify-right/coverage/src/coverage",
             "ignorePackageNameInUri": 1
         },
         "editor/plugin/justify-right": {
             "base": "/kissy/src/editor/sub-modules/plugin/justify-right/src/justify-right",
             "ignorePackageNameInUri": 1
         },
+        "editor/plugin/justify-right/cmd/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/justify-right/sub-modules/cmd/coverage/src/coverage",
+            "ignorePackageNameInUri": 1
+        },
         "editor/plugin/justify-right/cmd": {
             "base": "/kissy/src/editor/sub-modules/plugin/justify-right/sub-modules/cmd/src/cmd",
+            "ignorePackageNameInUri": 1
+        },
+        "editor/plugin/link/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/link/coverage/src/coverage",
             "ignorePackageNameInUri": 1
         },
         "editor/plugin/link": {
             "base": "/kissy/src/editor/sub-modules/plugin/link/src/link",
             "ignorePackageNameInUri": 1
         },
+        "editor/plugin/link/dialog/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/link/sub-modules/dialog/coverage/src/coverage",
+            "ignorePackageNameInUri": 1
+        },
         "editor/plugin/link/dialog": {
             "base": "/kissy/src/editor/sub-modules/plugin/link/sub-modules/dialog/src/dialog",
+            "ignorePackageNameInUri": 1
+        },
+        "editor/plugin/link/utils/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/link/sub-modules/utils/coverage/src/coverage",
             "ignorePackageNameInUri": 1
         },
         "editor/plugin/link/utils": {
             "base": "/kissy/src/editor/sub-modules/plugin/link/sub-modules/utils/src/utils",
             "ignorePackageNameInUri": 1
         },
+        "editor/plugin/list-utils/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/list-utils/coverage/src/coverage",
+            "ignorePackageNameInUri": 1
+        },
         "editor/plugin/list-utils": {
             "base": "/kissy/src/editor/sub-modules/plugin/list-utils/src/list-utils",
+            "ignorePackageNameInUri": 1
+        },
+        "editor/plugin/list-utils/btn/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/list-utils/sub-modules/btn/coverage/src/coverage",
             "ignorePackageNameInUri": 1
         },
         "editor/plugin/list-utils/btn": {
             "base": "/kissy/src/editor/sub-modules/plugin/list-utils/sub-modules/btn/src/btn",
             "ignorePackageNameInUri": 1
         },
+        "editor/plugin/list-utils/cmd/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/list-utils/sub-modules/cmd/coverage/src/coverage",
+            "ignorePackageNameInUri": 1
+        },
         "editor/plugin/list-utils/cmd": {
             "base": "/kissy/src/editor/sub-modules/plugin/list-utils/sub-modules/cmd/src/cmd",
+            "ignorePackageNameInUri": 1
+        },
+        "editor/plugin/local-storage/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/local-storage/coverage/src/coverage",
             "ignorePackageNameInUri": 1
         },
         "editor/plugin/local-storage": {
             "base": "/kissy/src/editor/sub-modules/plugin/local-storage/src/local-storage",
             "ignorePackageNameInUri": 1
         },
+        "editor/plugin/maximize/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/maximize/coverage/src/coverage",
+            "ignorePackageNameInUri": 1
+        },
         "editor/plugin/maximize": {
             "base": "/kissy/src/editor/sub-modules/plugin/maximize/src/maximize",
+            "ignorePackageNameInUri": 1
+        },
+        "editor/plugin/maximize/cmd/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/maximize/sub-modules/cmd/coverage/src/coverage",
             "ignorePackageNameInUri": 1
         },
         "editor/plugin/maximize/cmd": {
             "base": "/kissy/src/editor/sub-modules/plugin/maximize/sub-modules/cmd/src/cmd",
             "ignorePackageNameInUri": 1
         },
+        "editor/plugin/menubutton/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/menubutton/coverage/src/coverage",
+            "ignorePackageNameInUri": 1
+        },
         "editor/plugin/menubutton": {
             "base": "/kissy/src/editor/sub-modules/plugin/menubutton/src/menubutton",
+            "ignorePackageNameInUri": 1
+        },
+        "editor/plugin/multiple-upload/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/multiple-upload/coverage/src/coverage",
             "ignorePackageNameInUri": 1
         },
         "editor/plugin/multiple-upload": {
             "base": "/kissy/src/editor/sub-modules/plugin/multiple-upload/src/multiple-upload",
             "ignorePackageNameInUri": 1
         },
+        "editor/plugin/multiple-upload/dialog/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/multiple-upload/sub-modules/dialog/coverage/src/coverage",
+            "ignorePackageNameInUri": 1
+        },
         "editor/plugin/multiple-upload/dialog": {
             "base": "/kissy/src/editor/sub-modules/plugin/multiple-upload/sub-modules/dialog/src/dialog",
+            "ignorePackageNameInUri": 1
+        },
+        "editor/plugin/ordered-list/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/ordered-list/coverage/src/coverage",
             "ignorePackageNameInUri": 1
         },
         "editor/plugin/ordered-list": {
             "base": "/kissy/src/editor/sub-modules/plugin/ordered-list/src/ordered-list",
             "ignorePackageNameInUri": 1
         },
+        "editor/plugin/ordered-list/cmd/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/ordered-list/sub-modules/cmd/coverage/src/coverage",
+            "ignorePackageNameInUri": 1
+        },
         "editor/plugin/ordered-list/cmd": {
             "base": "/kissy/src/editor/sub-modules/plugin/ordered-list/sub-modules/cmd/src/cmd",
+            "ignorePackageNameInUri": 1
+        },
+        "editor/plugin/outdent/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/outdent/coverage/src/coverage",
             "ignorePackageNameInUri": 1
         },
         "editor/plugin/outdent": {
             "base": "/kissy/src/editor/sub-modules/plugin/outdent/src/outdent",
             "ignorePackageNameInUri": 1
         },
+        "editor/plugin/outdent/cmd/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/outdent/sub-modules/cmd/coverage/src/coverage",
+            "ignorePackageNameInUri": 1
+        },
         "editor/plugin/outdent/cmd": {
             "base": "/kissy/src/editor/sub-modules/plugin/outdent/sub-modules/cmd/src/cmd",
+            "ignorePackageNameInUri": 1
+        },
+        "editor/plugin/overlay/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/overlay/coverage/src/coverage",
             "ignorePackageNameInUri": 1
         },
         "editor/plugin/overlay": {
             "base": "/kissy/src/editor/sub-modules/plugin/overlay/src/overlay",
             "ignorePackageNameInUri": 1
         },
+        "editor/plugin/page-break/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/page-break/coverage/src/coverage",
+            "ignorePackageNameInUri": 1
+        },
         "editor/plugin/page-break": {
             "base": "/kissy/src/editor/sub-modules/plugin/page-break/src/page-break",
+            "ignorePackageNameInUri": 1
+        },
+        "editor/plugin/preview/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/preview/coverage/src/coverage",
             "ignorePackageNameInUri": 1
         },
         "editor/plugin/preview": {
             "base": "/kissy/src/editor/sub-modules/plugin/preview/src/preview",
             "ignorePackageNameInUri": 1
         },
+        "editor/plugin/progressbar/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/progressbar/coverage/src/coverage",
+            "ignorePackageNameInUri": 1
+        },
         "editor/plugin/progressbar": {
             "base": "/kissy/src/editor/sub-modules/plugin/progressbar/src/progressbar",
+            "ignorePackageNameInUri": 1
+        },
+        "editor/plugin/remove-format/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/remove-format/coverage/src/coverage",
             "ignorePackageNameInUri": 1
         },
         "editor/plugin/remove-format": {
             "base": "/kissy/src/editor/sub-modules/plugin/remove-format/src/remove-format",
             "ignorePackageNameInUri": 1
         },
+        "editor/plugin/remove-format/cmd/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/remove-format/sub-modules/cmd/coverage/src/coverage",
+            "ignorePackageNameInUri": 1
+        },
         "editor/plugin/remove-format/cmd": {
             "base": "/kissy/src/editor/sub-modules/plugin/remove-format/sub-modules/cmd/src/cmd",
+            "ignorePackageNameInUri": 1
+        },
+        "editor/plugin/resize/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/resize/coverage/src/coverage",
             "ignorePackageNameInUri": 1
         },
         "editor/plugin/resize": {
             "base": "/kissy/src/editor/sub-modules/plugin/resize/src/resize",
             "ignorePackageNameInUri": 1
         },
+        "editor/plugin/separator/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/separator/coverage/src/coverage",
+            "ignorePackageNameInUri": 1
+        },
         "editor/plugin/separator": {
             "base": "/kissy/src/editor/sub-modules/plugin/separator/src/separator",
+            "ignorePackageNameInUri": 1
+        },
+        "editor/plugin/smiley/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/smiley/coverage/src/coverage",
             "ignorePackageNameInUri": 1
         },
         "editor/plugin/smiley": {
             "base": "/kissy/src/editor/sub-modules/plugin/smiley/src/smiley",
             "ignorePackageNameInUri": 1
         },
+        "editor/plugin/source-area/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/source-area/coverage/src/coverage",
+            "ignorePackageNameInUri": 1
+        },
         "editor/plugin/source-area": {
             "base": "/kissy/src/editor/sub-modules/plugin/source-area/src/source-area",
+            "ignorePackageNameInUri": 1
+        },
+        "editor/plugin/strike-through/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/strike-through/coverage/src/coverage",
             "ignorePackageNameInUri": 1
         },
         "editor/plugin/strike-through": {
             "base": "/kissy/src/editor/sub-modules/plugin/strike-through/src/strike-through",
             "ignorePackageNameInUri": 1
         },
+        "editor/plugin/strike-through/cmd/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/strike-through/sub-modules/cmd/coverage/src/coverage",
+            "ignorePackageNameInUri": 1
+        },
         "editor/plugin/strike-through/cmd": {
             "base": "/kissy/src/editor/sub-modules/plugin/strike-through/sub-modules/cmd/src/cmd",
+            "ignorePackageNameInUri": 1
+        },
+        "editor/plugin/table/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/table/coverage/src/coverage",
             "ignorePackageNameInUri": 1
         },
         "editor/plugin/table": {
             "base": "/kissy/src/editor/sub-modules/plugin/table/src/table",
             "ignorePackageNameInUri": 1
         },
+        "editor/plugin/table/dialog/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/table/sub-modules/dialog/coverage/src/coverage",
+            "ignorePackageNameInUri": 1
+        },
         "editor/plugin/table/dialog": {
             "base": "/kissy/src/editor/sub-modules/plugin/table/sub-modules/dialog/src/dialog",
+            "ignorePackageNameInUri": 1
+        },
+        "editor/plugin/underline/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/underline/coverage/src/coverage",
             "ignorePackageNameInUri": 1
         },
         "editor/plugin/underline": {
             "base": "/kissy/src/editor/sub-modules/plugin/underline/src/underline",
             "ignorePackageNameInUri": 1
         },
+        "editor/plugin/underline/cmd/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/underline/sub-modules/cmd/coverage/src/coverage",
+            "ignorePackageNameInUri": 1
+        },
         "editor/plugin/underline/cmd": {
             "base": "/kissy/src/editor/sub-modules/plugin/underline/sub-modules/cmd/src/cmd",
+            "ignorePackageNameInUri": 1
+        },
+        "editor/plugin/undo/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/undo/coverage/src/coverage",
             "ignorePackageNameInUri": 1
         },
         "editor/plugin/undo": {
             "base": "/kissy/src/editor/sub-modules/plugin/undo/src/undo",
             "ignorePackageNameInUri": 1
         },
+        "editor/plugin/undo/btn/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/undo/sub-modules/btn/coverage/src/coverage",
+            "ignorePackageNameInUri": 1
+        },
         "editor/plugin/undo/btn": {
             "base": "/kissy/src/editor/sub-modules/plugin/undo/sub-modules/btn/src/btn",
+            "ignorePackageNameInUri": 1
+        },
+        "editor/plugin/undo/cmd/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/undo/sub-modules/cmd/coverage/src/coverage",
             "ignorePackageNameInUri": 1
         },
         "editor/plugin/undo/cmd": {
             "base": "/kissy/src/editor/sub-modules/plugin/undo/sub-modules/cmd/src/cmd",
             "ignorePackageNameInUri": 1
         },
+        "editor/plugin/unordered-list/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/unordered-list/coverage/src/coverage",
+            "ignorePackageNameInUri": 1
+        },
         "editor/plugin/unordered-list": {
             "base": "/kissy/src/editor/sub-modules/plugin/unordered-list/src/unordered-list",
+            "ignorePackageNameInUri": 1
+        },
+        "editor/plugin/unordered-list/cmd/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/unordered-list/sub-modules/cmd/coverage/src/coverage",
             "ignorePackageNameInUri": 1
         },
         "editor/plugin/unordered-list/cmd": {
             "base": "/kissy/src/editor/sub-modules/plugin/unordered-list/sub-modules/cmd/src/cmd",
             "ignorePackageNameInUri": 1
         },
+        "editor/plugin/video/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/video/coverage/src/coverage",
+            "ignorePackageNameInUri": 1
+        },
         "editor/plugin/video": {
             "base": "/kissy/src/editor/sub-modules/plugin/video/src/video",
+            "ignorePackageNameInUri": 1
+        },
+        "editor/plugin/video/dialog/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/video/sub-modules/dialog/coverage/src/coverage",
             "ignorePackageNameInUri": 1
         },
         "editor/plugin/video/dialog": {
             "base": "/kissy/src/editor/sub-modules/plugin/video/sub-modules/dialog/src/dialog",
             "ignorePackageNameInUri": 1
         },
+        "editor/plugin/word-filter/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/word-filter/coverage/src/coverage",
+            "ignorePackageNameInUri": 1
+        },
         "editor/plugin/word-filter": {
             "base": "/kissy/src/editor/sub-modules/plugin/word-filter/src/word-filter",
+            "ignorePackageNameInUri": 1
+        },
+        "editor/plugin/xiami-music/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/xiami-music/coverage/src/coverage",
             "ignorePackageNameInUri": 1
         },
         "editor/plugin/xiami-music": {
             "base": "/kissy/src/editor/sub-modules/plugin/xiami-music/src/xiami-music",
             "ignorePackageNameInUri": 1
         },
+        "editor/plugin/xiami-music/dialog/coverage": {
+            "base": "/kissy/src/editor/sub-modules/plugin/xiami-music/sub-modules/dialog/coverage/src/coverage",
+            "ignorePackageNameInUri": 1
+        },
         "editor/plugin/xiami-music/dialog": {
             "base": "/kissy/src/editor/sub-modules/plugin/xiami-music/sub-modules/dialog/src/dialog",
+            "ignorePackageNameInUri": 1
+        },
+        "event/coverage": {
+            "base": "/kissy/src/event/coverage/src/coverage",
             "ignorePackageNameInUri": 1
         },
         "event": {
             "base": "/kissy/src/event/src/event",
             "ignorePackageNameInUri": 1
         },
+        "event/base/coverage": {
+            "base": "/kissy/src/event/sub-modules/base/coverage/src/coverage",
+            "ignorePackageNameInUri": 1
+        },
         "event/base": {
             "base": "/kissy/src/event/sub-modules/base/src/base",
+            "ignorePackageNameInUri": 1
+        },
+        "event/custom/coverage": {
+            "base": "/kissy/src/event/sub-modules/custom/coverage/src/coverage",
             "ignorePackageNameInUri": 1
         },
         "event/custom": {
             "base": "/kissy/src/event/sub-modules/custom/src/custom",
             "ignorePackageNameInUri": 1
         },
+        "event/dom/base/coverage": {
+            "base": "/kissy/src/event/sub-modules/dom/sub-modules/base/coverage/src/coverage",
+            "ignorePackageNameInUri": 1
+        },
         "event/dom/base": {
             "base": "/kissy/src/event/sub-modules/dom/sub-modules/base/src/base",
+            "ignorePackageNameInUri": 1
+        },
+        "event/dom/focusin/coverage": {
+            "base": "/kissy/src/event/sub-modules/dom/sub-modules/focusin/coverage/src/coverage",
             "ignorePackageNameInUri": 1
         },
         "event/dom/focusin": {
             "base": "/kissy/src/event/sub-modules/dom/sub-modules/focusin/src/focusin",
             "ignorePackageNameInUri": 1
         },
+        "event/dom/hashchange/coverage": {
+            "base": "/kissy/src/event/sub-modules/dom/sub-modules/hashchange/coverage/src/coverage",
+            "ignorePackageNameInUri": 1
+        },
         "event/dom/hashchange": {
             "base": "/kissy/src/event/sub-modules/dom/sub-modules/hashchange/src/hashchange",
+            "ignorePackageNameInUri": 1
+        },
+        "event/dom/ie/coverage": {
+            "base": "/kissy/src/event/sub-modules/dom/sub-modules/ie/coverage/src/coverage",
             "ignorePackageNameInUri": 1
         },
         "event/dom/ie": {
             "base": "/kissy/src/event/sub-modules/dom/sub-modules/ie/src/ie",
             "ignorePackageNameInUri": 1
         },
+        "event/dom/shake/coverage": {
+            "base": "/kissy/src/event/sub-modules/dom/sub-modules/shake/coverage/src/coverage",
+            "ignorePackageNameInUri": 1
+        },
         "event/dom/shake": {
             "base": "/kissy/src/event/sub-modules/dom/sub-modules/shake/src/shake",
             "ignorePackageNameInUri": 1
         },
+        "event/dom/touch/coverage": {
+            "base": "/kissy/src/event/sub-modules/dom/sub-modules/touch/coverage/src/coverage",
+            "ignorePackageNameInUri": 1
+        },
         "event/dom/touch": {
             "base": "/kissy/src/event/sub-modules/dom/sub-modules/touch/src/touch",
+            "ignorePackageNameInUri": 1
+        },
+        "filter-menu/coverage": {
+            "base": "/kissy/src/filter-menu/coverage/src/coverage",
             "ignorePackageNameInUri": 1
         },
         "filter-menu": {
@@ -554,32 +1086,64 @@ if (!loc.getQuery().has('build')) {
             "base": "/kissy/src/html-parser/src/html-parser",
             "ignorePackageNameInUri": 1
         },
+        "import-style/coverage": {
+            "base": "/kissy/src/import-style/coverage/src/coverage",
+            "ignorePackageNameInUri": 1
+        },
         "import-style": {
             "base": "/kissy/src/import-style/src/import-style",
+            "ignorePackageNameInUri": 1
+        },
+        "io/coverage": {
+            "base": "/kissy/src/io/coverage/src/coverage",
             "ignorePackageNameInUri": 1
         },
         "io": {
             "base": "/kissy/src/io/src/io",
             "ignorePackageNameInUri": 1
         },
+        "json/coverage": {
+            "base": "/kissy/src/json/coverage/src/coverage",
+            "ignorePackageNameInUri": 1
+        },
         "json": {
             "base": "/kissy/src/json/src/json",
+            "ignorePackageNameInUri": 1
+        },
+        "kison/coverage": {
+            "base": "/kissy/src/kison/coverage/src/coverage",
             "ignorePackageNameInUri": 1
         },
         "kison": {
             "base": "/kissy/src/kison/src/kison",
             "ignorePackageNameInUri": 1
         },
+        "menu/coverage": {
+            "base": "/kissy/src/menu/coverage/src/coverage",
+            "ignorePackageNameInUri": 1
+        },
         "menu": {
             "base": "/kissy/src/menu/src/menu",
+            "ignorePackageNameInUri": 1
+        },
+        "menubutton/coverage": {
+            "base": "/kissy/src/menubutton/coverage/src/coverage",
             "ignorePackageNameInUri": 1
         },
         "menubutton": {
             "base": "/kissy/src/menubutton/src/menubutton",
             "ignorePackageNameInUri": 1
         },
+        "mvc/coverage": {
+            "base": "/kissy/src/mvc/coverage/src/coverage",
+            "ignorePackageNameInUri": 1
+        },
         "mvc": {
             "base": "/kissy/src/mvc/src/mvc",
+            "ignorePackageNameInUri": 1
+        },
+        "node/coverage": {
+            "base": "/kissy/src/node/coverage/src/coverage",
             "ignorePackageNameInUri": 1
         },
         "node": {
@@ -594,8 +1158,16 @@ if (!loc.getQuery().has('build')) {
             "base": "/kissy/src/overlay/src/overlay",
             "ignorePackageNameInUri": 1
         },
+        "resizable/coverage": {
+            "base": "/kissy/src/resizable/coverage/src/coverage",
+            "ignorePackageNameInUri": 1
+        },
         "resizable": {
             "base": "/kissy/src/resizable/src/resizable",
+            "ignorePackageNameInUri": 1
+        },
+        "resizable/plugin/proxy/coverage": {
+            "base": "/kissy/src/resizable/sub-modules/plugin/proxy/coverage/src/coverage",
             "ignorePackageNameInUri": 1
         },
         "resizable/plugin/proxy": {
@@ -634,48 +1206,96 @@ if (!loc.getQuery().has('build')) {
             "base": "/kissy/src/scroll-view/sub-modules/plugin/scrollbar/src/scrollbar",
             "ignorePackageNameInUri": 1
         },
+        "seed/coverage": {
+            "base": "/kissy/src/seed/coverage/src/coverage",
+            "ignorePackageNameInUri": 1
+        },
         "seed": {
             "base": "/kissy/src/seed/src/seed",
+            "ignorePackageNameInUri": 1
+        },
+        "separator/coverage": {
+            "base": "/kissy/src/separator/coverage/src/coverage",
             "ignorePackageNameInUri": 1
         },
         "separator": {
             "base": "/kissy/src/separator/src/separator",
             "ignorePackageNameInUri": 1
         },
+        "split-button/coverage": {
+            "base": "/kissy/src/split-button/coverage/src/coverage",
+            "ignorePackageNameInUri": 1
+        },
         "split-button": {
             "base": "/kissy/src/split-button/src/split-button",
+            "ignorePackageNameInUri": 1
+        },
+        "stylesheet/coverage": {
+            "base": "/kissy/src/stylesheet/coverage/src/coverage",
             "ignorePackageNameInUri": 1
         },
         "stylesheet": {
             "base": "/kissy/src/stylesheet/src/stylesheet",
             "ignorePackageNameInUri": 1
         },
+        "swf/coverage": {
+            "base": "/kissy/src/swf/coverage/src/coverage",
+            "ignorePackageNameInUri": 1
+        },
         "swf": {
             "base": "/kissy/src/swf/src/swf",
+            "ignorePackageNameInUri": 1
+        },
+        "tabs/coverage": {
+            "base": "/kissy/src/tabs/coverage/src/coverage",
             "ignorePackageNameInUri": 1
         },
         "tabs": {
             "base": "/kissy/src/tabs/src/tabs",
             "ignorePackageNameInUri": 1
         },
+        "toolbar/coverage": {
+            "base": "/kissy/src/toolbar/coverage/src/coverage",
+            "ignorePackageNameInUri": 1
+        },
         "toolbar": {
             "base": "/kissy/src/toolbar/src/toolbar",
+            "ignorePackageNameInUri": 1
+        },
+        "tree/coverage": {
+            "base": "/kissy/src/tree/coverage/src/coverage",
             "ignorePackageNameInUri": 1
         },
         "tree": {
             "base": "/kissy/src/tree/src/tree",
             "ignorePackageNameInUri": 1
         },
+        "xtemplate/coverage": {
+            "base": "/kissy/src/xtemplate/coverage/src/coverage",
+            "ignorePackageNameInUri": 1
+        },
         "xtemplate": {
             "base": "/kissy/src/xtemplate/src/xtemplate",
+            "ignorePackageNameInUri": 1
+        },
+        "xtemplate/compiler/coverage": {
+            "base": "/kissy/src/xtemplate/sub-modules/compiler/coverage/src/coverage",
             "ignorePackageNameInUri": 1
         },
         "xtemplate/compiler": {
             "base": "/kissy/src/xtemplate/sub-modules/compiler/src/compiler",
             "ignorePackageNameInUri": 1
         },
+        "xtemplate/nodejs/coverage": {
+            "base": "/kissy/src/xtemplate/sub-modules/nodejs/coverage/src/coverage",
+            "ignorePackageNameInUri": 1
+        },
         "xtemplate/nodejs": {
             "base": "/kissy/src/xtemplate/sub-modules/nodejs/src/nodejs",
+            "ignorePackageNameInUri": 1
+        },
+        "xtemplate/runtime/coverage": {
+            "base": "/kissy/src/xtemplate/sub-modules/runtime/coverage/src/coverage",
             "ignorePackageNameInUri": 1
         },
         "xtemplate/runtime": {

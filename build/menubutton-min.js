@@ -1,7 +1,7 @@
 /*
-Copyright 2013, KISSY UI Library v1.40dev
+Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Aug 19 22:23
+build time: Aug 27 22:00
 */
 KISSY.add("menubutton/menubutton-tpl","{{{include 'component/extension/content-render/content-tpl'}}}\n<div class=\"{{getBaseCssClasses 'dropdown'}}\">\n    <div class=\"{{getBaseCssClasses 'dropdown-inner'}}\">\n    </div>\n</div>");
 KISSY.add("menubutton/render",function(d,a,f,j){return a.getDefaultRender().extend([j],{decorateDom:function(g){var h=this.control,d=h.get("prefixCls"),g=g.one("."+d+"popupmenu"),a=g[0].ownerDocument.body;a.insertBefore(g[0],a.firstChild);a=this.getComponentConstructorByNode(d,g);h.setInternal("menu",new a({srcNode:g,prefixCls:d}))},beforeCreateDom:function(a){d.mix(a.elAttrs,{"aria-expanded":!1,"aria-haspopup":!0})},_onSetCollapsed:function(a){var d=this.$el,f=this.getBaseCssClass("open");d[a?"removeClass":

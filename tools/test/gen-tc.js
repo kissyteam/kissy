@@ -16,10 +16,19 @@ function collectTc(baseDir, codes) {
         if (fs.statSync(f).isDirectory()) {
             if (S.endsWith(f, ts)) {
                 var runners = fs.readdirSync(f);
+                var coverDir = path.resolve(f, '../../coverage/runner');
+                var cover = 0;
+                // allow coverage
+                if (fs.existsSync(coverDir)) {
+                    cover = 1;
+                }
                 S.each(runners, function (r) {
                     r = '/kissy' + (f + '/' + r).replace(cwd, '').replace(/\\/g, '/');
                     codes.push("tests.push('" + r + "');\n");
                     codes.push("tests.push('" + r + "?build');\n");
+                    if (cover) {
+                        codes.push("tests.push('" + r + "?coverage');\n");
+                    }
                 });
             } else {
                 collectTc(f, codes);
@@ -30,7 +39,6 @@ function collectTc(baseDir, codes) {
 
 var codes = [];
 collectTc(srcDir, codes);
-codes.push("tests.push('/kissy/src/color/tests/runner/test.jss?coverage');\n");
 var finalCode = '/**\n' +
     'gen by gen-tc.js\n' +
     '*/\n' +

@@ -1,7 +1,7 @@
 /*
-Copyright 2013, KISSY UI Library v1.40dev
+Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Aug 14 23:59
+build time: Aug 27 22:00
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -878,6 +878,7 @@ KISSY.add('io/xhr-transport-base', function (S, IO) {
                 statusText,
                 xml,
                 c = io.config;
+            // S.log(nativeXhr.readyState+':'+nativeXhr.status);
             try {
                 //abort or complete
                 if (abort || nativeXhr.readyState == 4) {

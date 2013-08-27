@@ -1,17 +1,14 @@
 /**
- * Simple KISSY Test Server And mvc framework
+ * KISSY Dev Server
  * @author yiminghe@gmail.com
  */
-
 
 require('./gen-tc');
 require('../gen-package/gen-package');
 
-var mkdirp = require('mkdirp');
+// var mkdirp = require('mkdirp');
 var path = require('path');
 var fs = require('fs');
-fs.exists = fs.exists || path.exists;
-fs.existsSync = fs.existsSync || path.existsSync;
 var cwd = process.cwd();
 var currentDir = __dirname;
 var S = global.KISSY = global.S = require(cwd + '/build/kissy-nodejs.js');
@@ -143,6 +140,7 @@ S.use('xtemplate/nodejs', function (S, XTemplateNodeJs) {
         app.post('/save-coverage-report', function (req, res) {
             var service_job_id = process.env.TRAVIS_JOB_ID;
             if (!service_job_id) {
+                res.send('');
                 return;
             }
             var report = req.param('report');
@@ -158,6 +156,8 @@ S.use('xtemplate/nodejs', function (S, XTemplateNodeJs) {
             for (var f in jsonReport) {
                 var detail = jsonReport[f];
                 var source = fs.readFileSync(srcPath + f, 'utf8');
+                // coveralls.io does not need first data
+                detail.lineData.shift();
                 source_files.push({
                     name: f,
                     source: source,
@@ -167,6 +167,7 @@ S.use('xtemplate/nodejs', function (S, XTemplateNodeJs) {
             var str = JSON.stringify(postData);
             var url = 'https://coveralls.io/api/v1/jobs';
             request.post({url: url, form: { json: str}});
+            res.send('');
         });
 
         app.listen(port);

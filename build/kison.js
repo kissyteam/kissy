@@ -1,7 +1,7 @@
 /*
-Copyright 2013, KISSY UI Library v1.40dev
+Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Aug 14 23:59
+build time: Aug 27 22:00
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -1489,12 +1489,12 @@ KISSY.add("kison", function (S, Grammar, Production, Lexer, Utils) {
     Kison.Production = Production;
     Kison.Lexer = Lexer;
     Kison.Utils = Utils;
-    if (!S.trim('@DEBUG@')) {
+    if ('@DEBUG@') {
+        return Kison;
+    } else {
         alert('kison can only use uncompressed version!');
         return null;
     }
-    return Kison;
-
 }, {
     requires: ['kison/grammar', 'kison/production', 'kison/lexer', 'kison/utils']
 });
