@@ -7,6 +7,7 @@
 require('./gen-tc');
 require('../gen-package/gen-package');
 
+var mkdirp = require('mkdirp');
 var path = require('path');
 var fs = require('fs');
 fs.exists = fs.exists || path.exists;
@@ -14,15 +15,16 @@ fs.existsSync = fs.existsSync || path.existsSync;
 var cwd = process.cwd();
 var currentDir = __dirname;
 var S = global.KISSY = global.S = require(cwd + '/build/kissy-nodejs.js');
+var request = require('request');
 
 S.use('xtemplate/nodejs', function (S, XTemplateNodeJs) {
     function startServer(port) {
 
         var express = require('express');
         var app = express();
-        S.config('packages',{
-            'xtemplates':{
-                base:currentDir
+        S.config('packages', {
+            'xtemplates': {
+                base: currentDir
             }
         });
         var tplCache = {};
@@ -35,7 +37,7 @@ S.use('xtemplate/nodejs', function (S, XTemplateNodeJs) {
             if (tplCache[name]) {
                 return tplCache[name];
             }
-            return tplCache[name] =XTemplateNodeJs.loadFromModuleName('xtemplates/'+name);
+            return tplCache[name] = XTemplateNodeJs.loadFromModuleName('xtemplates/' + name);
         }
 
         var utils = {
@@ -138,9 +140,36 @@ S.use('xtemplate/nodejs', function (S, XTemplateNodeJs) {
             }));
         });
 
+        app.post('/save-coverage-report', function (req, res) {
+            var service_job_id = process.env.TRAVIS_JOB_ID;
+            if (!service_job_id) {
+                return;
+            }
+            var report = req.param('report');
+            var myPath = cwd + '/../' + req.param('path');
+            var jsonReport = JSON.parse(report);
+            var srcPath = path.resolve(myPath, '../../../src/') + '/';
+            var source_files = [];
+            var postData = {
+                service_name: 'travis-ci',
+                service_job_id: service_job_id,
+                source_files: source_files
+            };
+            for (var f in jsonReport) {
+                var detail = jsonReport[f];
+                var source = fs.readFileSync(srcPath + f, 'utf8');
+                source_files.push({
+                    name: f,
+                    source: source,
+                    coverage: detail.lineData
+                });
+            }
+            var str = JSON.stringify(postData);
+            var url = 'https://coveralls.io/api/v1/jobs';
+            request.post({url: url, form: { json: str}});
+        });
+
         app.listen(port);
-
-
     }
 
     startServer(9999);

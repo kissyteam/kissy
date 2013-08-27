@@ -190,5 +190,7 @@ tests.push('/kissy/src/xtemplate/tests/runner/test.jss');
 
 tests.push('/kissy/src/xtemplate/tests/runner/test.jss?build');
 
+tests.push('/kissy/src/color/tests/runner/test.jss?coverage');
+
  return tests; 
   };

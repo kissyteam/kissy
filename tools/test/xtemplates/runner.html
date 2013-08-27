@@ -34,9 +34,9 @@
 <h1 style="text-align: center">{{component}} test cases</h1>
 {{{html}}}
 <script>
-    var tests=['specs/'];
+    var tests=['specs/'], S=KISSY;
 
-    KISSY.config('packages',{
+    S.config('packages',{
         specs:{
             base:'../'
         },
@@ -55,11 +55,35 @@
 
     {{{script}}}
 
-    KISSY.use(tests, function (S) {
+    S.use(tests, function (S) {
         jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
         jasmine.getEnv().addReporter(new jasmine.ConsoleReporter());
         jasmine.getEnv().execute(function () {
-            jasmine.kissyNext(this.results().failedCount);
+            var self=this;
+            function createRequest(){
+                if (window.ActiveXObject) {
+                    return new ActiveXObject("Microsoft.XMLHTTP");
+                }
+                else {
+                    return new XMLHttpRequest();
+                }
+            }
+            if(window.jscoverage_serializeCoverageToJSON){
+                var json = window.jscoverage_serializeCoverageToJSON();
+
+                var request = createRequest();
+                request.open('post', '/save-coverage-report', true);
+                request.setRequestHeader('content-type','application/x-www-form-urlencoded; charset=UTF-8');
+                request.onreadystatechange = function () {
+                    if (request.readyState === 4 && request.status == 200) {
+                        jasmine.kissyNext(self.results().failedCount);
+                    }
+                };
+                request.send(S.param({
+                    report:json,
+                    path:location.pathname
+                }));
+            }
         });
     });
 </script>
