@@ -290,6 +290,9 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, DD, Node) {
         var self = this;
         var count = 0;
         var startMousePos = self.startMousePos;
+        if (!startMousePos) {
+            return;
+        }
         var offsetX = startMousePos.left - e.pageX;
         var offsetY = startMousePos.top - e.pageY;
         var snapThreshold = self.get('snapThreshold');

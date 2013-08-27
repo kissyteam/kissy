@@ -1,7 +1,7 @@
 /*
-Copyright 2013, KISSY UI Library v1.40dev
+Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Aug 19 22:25
+build time: Aug 27 13:24
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -23,6 +23,9 @@ KISSY.add('scroll-view/plugin/pull-to-refresh', function (S, Base) {
         pluginId: this.getName(),
 
         _onSetState: function (e) {
+            if (!this.scrollView) {
+                return;
+            }
             var status = e.newVal,
                 self = this,
                 prefixCls = self.scrollView.get('prefixCls'),

@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Aug 24 01:51
+build time: Aug 27 13:24
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -301,6 +301,9 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, DD, Node) {
         var self = this;
         var count = 0;
         var startMousePos = self.startMousePos;
+        if (!startMousePos) {
+            return;
+        }
         var offsetX = startMousePos.left - e.pageX;
         var offsetY = startMousePos.top - e.pageY;
         var snapThreshold = self.get('snapThreshold');

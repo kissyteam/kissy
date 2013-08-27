@@ -387,7 +387,7 @@ if (! _$jscoverage['/color.js']) {
   _$jscoverage['/color.js'].lineData[484] = 0;
   _$jscoverage['/color.js'].lineData[487] = 0;
   _$jscoverage['/color.js'].lineData[488] = 0;
-  _$jscoverage['/color.js'].lineData[494] = 0;
+  _$jscoverage['/color.js'].lineData[493] = 0;
 }
 if (! _$jscoverage['/color.js'].functionData) {
   _$jscoverage['/color.js'].functionData = [];
@@ -1056,7 +1056,7 @@ KISSY.add("color", function(S, Base) {
     _$jscoverage['/color.js'].lineData[488]++;
     return Math.max(0, Math.min(v, 1));
   }
-  _$jscoverage['/color.js'].lineData[494]++;
+  _$jscoverage['/color.js'].lineData[493]++;
   return Color;
 }, {
   requires: ['base']});

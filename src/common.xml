@@ -102,11 +102,15 @@
     </target>
 
     <target name="js-cover-gen">
-        <java jar="${js-cover}" fork="true" spawn="true">
+        <exec executable="java">
+            <!--use exec to change file encoding-->
+            <arg value="-Dfile.encoding=${charset}"/>
+            <arg value="-jar"/>
+            <arg value="${js-cover}"/>
             <arg value="-fs"/>
             <arg value="${component.src.dir}"/>
             <arg value="${component.coverage.dir}"/>
-        </java>
+        </exec>
         <delete dir="${component.coverage.dir}" includes="jscover*,**/*.html"/>
         <delete dir="${component.coverage.dir}/original-src"/>
     </target>

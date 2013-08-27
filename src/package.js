@@ -546,6 +546,10 @@ if (!loc.getQuery().has('build')) {
             "base": "/kissy/src/filter-menu/src/filter-menu",
             "ignorePackageNameInUri": 1
         },
+        "html-parser/coverage": {
+            "base": "/kissy/src/html-parser/coverage/src/coverage",
+            "ignorePackageNameInUri": 1
+        },
         "html-parser": {
             "base": "/kissy/src/html-parser/src/html-parser",
             "ignorePackageNameInUri": 1
@@ -580,6 +584,10 @@ if (!loc.getQuery().has('build')) {
         },
         "node": {
             "base": "/kissy/src/node/src/node",
+            "ignorePackageNameInUri": 1
+        },
+        "overlay/coverage": {
+            "base": "/kissy/src/overlay/coverage/src/coverage",
             "ignorePackageNameInUri": 1
         },
         "overlay": {

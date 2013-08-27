@@ -1,7 +1,7 @@
 /*
-Copyright 2013, KISSY UI Library v1.40dev
+Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Aug 14 23:59
+build time: Aug 27 11:52
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -816,7 +816,7 @@ KISSY.add("html-parser/nodes/tag", function (S, Node, Attribute, Dtd) {
 
     S.extend(Tag, Node, {
 
-        _updateSelfClosed:function () {
+        _updateSelfClosed: function () {
             var self = this;
             // <br> <img> <input> , just recognize them immediately
             self.isSelfClosed = !!(Dtd.$empty[self.nodeName]);
@@ -826,29 +826,29 @@ KISSY.add("html-parser/nodes/tag", function (S, Node, Attribute, Dtd) {
             self['closed'] = self.isSelfClosed;
         },
 
-        clone:function () {
+        clone: function () {
             var ret = new Tag(),
                 attrs = [];
             S.each(this.attributes, function (a) {
                 attrs.push(a.clone());
             });
             S.mix(ret, {
-                childNodes:[],
-                firstChild:null,
-                lastChild:null,
-                attributes:attrs,
-                nodeType:this.nodeType,
-                nodeName:this.nodeName,
-                tagName:this.tagName,
-                isSelfClosed:this.isSelfClosed,
-                closed:this.closed,
-                closedStartPosition:this.closedStartPosition,
-                closedEndPosition:this.closedEndPosition
+                childNodes: [],
+                firstChild: null,
+                lastChild: null,
+                attributes: attrs,
+                nodeType: this.nodeType,
+                nodeName: this.nodeName,
+                tagName: this.tagName,
+                isSelfClosed: this.isSelfClosed,
+                closed: this.closed,
+                closedStartPosition: this.closedStartPosition,
+                closedEndPosition: this.closedEndPosition
             });
             return ret;
         },
 
-        setTagName:function (v) {
+        setTagName: function (v) {
             var self = this;
             self.nodeName = self.tagName = v;
             if (v) {
@@ -856,7 +856,7 @@ KISSY.add("html-parser/nodes/tag", function (S, Node, Attribute, Dtd) {
             }
         },
 
-        equals:function (tag) {
+        equals: function (tag) {
             if (!tag || this.nodeName != tag.nodeName) {
                 return 0;
             }
@@ -874,23 +874,23 @@ KISSY.add("html-parser/nodes/tag", function (S, Node, Attribute, Dtd) {
             return 1;
         },
 
-        isEndTag:function () {
+        isEndTag: function () {
             return /^\//.test(this.nodeName);
         },
 
-        appendChild:function (node) {
+        appendChild: function (node) {
             this.childNodes.push(node);
             refreshChildNodes(this);
         },
 
-        replace:function (ref) {
+        replace: function (ref) {
             var silbing = ref.parentNode.childNodes,
                 index = S.indexOf(ref, silbing);
             silbing[index] = this;
             refreshChildNodes(ref.parentNode);
         },
 
-        replaceChild:function (newC, refC) {
+        replaceChild: function (newC, refC) {
             var self = this,
                 childNodes = self.childNodes;
             var index = S.indexOf(refC, childNodes);
@@ -898,12 +898,12 @@ KISSY.add("html-parser/nodes/tag", function (S, Node, Attribute, Dtd) {
             refreshChildNodes(self);
         },
 
-        prepend:function (node) {
+        prepend: function (node) {
             this.childNodes.unshift(node);
             refreshChildNodes(this);
         },
 
-        insertBefore:function (ref) {
+        insertBefore: function (ref) {
             var silbing = ref.parentNode.childNodes,
                 index = S.indexOf(ref, silbing);
             silbing.splice(index, 0, this);
@@ -911,7 +911,7 @@ KISSY.add("html-parser/nodes/tag", function (S, Node, Attribute, Dtd) {
         },
 
 
-        insertAfter:function (ref) {
+        insertAfter: function (ref) {
             var silbing = ref.parentNode.childNodes,
                 index = S.indexOf(ref, silbing);
             if (index == silbing.length - 1) {
@@ -921,24 +921,24 @@ KISSY.add("html-parser/nodes/tag", function (S, Node, Attribute, Dtd) {
             }
         },
 
-        empty:function () {
+        empty: function () {
             this.childNodes = [];
             refreshChildNodes(this);
         },
 
-        removeChild:function (node) {
+        removeChild: function (node) {
             var silbing = node.parentNode.childNodes,
                 index = S.indexOf(node, silbing);
             silbing.splice(index, 1);
             refreshChildNodes(node.parentNode);
         },
 
-        getAttribute:function (name) {
+        getAttribute: function (name) {
             var attr = findAttributeByName(this.attributes, name);
             return attr && attr.value;
         },
 
-        setAttribute:function (name, value) {
+        setAttribute: function (name, value) {
             var attr = findAttributeByName(this.attributes, name);
             if (attr) {
                 attr.value = value;
@@ -947,7 +947,7 @@ KISSY.add("html-parser/nodes/tag", function (S, Node, Attribute, Dtd) {
             }
         },
 
-        removeAttribute:function (name) {
+        removeAttribute: function (name) {
             var attr = findAttributeByName(this.attributes, name);
             if (attr) {
                 var index = S.indexOf(attr, this.attributes);
@@ -958,7 +958,7 @@ KISSY.add("html-parser/nodes/tag", function (S, Node, Attribute, Dtd) {
         /**
          * give root node a chance to filter children first
          */
-        filterChildren:function () {
+        filterChildren: function () {
             var self = this;
             if (!self.isChildrenFiltered) {
                 var writer = new (S.require('html-parser/writer/basic'))();
@@ -978,7 +978,7 @@ KISSY.add("html-parser/nodes/tag", function (S, Node, Attribute, Dtd) {
          * @param writer
          * @param filter
          */
-        writeHtml:function (writer, filter) {
+        writeHtml: function (writer, filter) {
             var el = this,
                 tmp,
                 attrName,
@@ -1062,7 +1062,7 @@ KISSY.add("html-parser/nodes/tag", function (S, Node, Attribute, Dtd) {
          * @param writer
          * @protected
          */
-        _writeChildrenHTML:function (writer) {
+        _writeChildrenHTML: function (writer) {
             var self = this,
                 filter = self.isChildrenFiltered ? 0 : self.__filter;
             // process its children recursively
@@ -1074,9 +1074,11 @@ KISSY.add("html-parser/nodes/tag", function (S, Node, Attribute, Dtd) {
     });
 
     function findAttributeByName(attributes, name) {
-        for (var i = 0; i < attributes.length; i++) {
-            if (attributes[i].name == name) {
-                return attributes[i];
+        if (attributes && attributes.length) {
+            for (var i = 0; i < attributes.length; i++) {
+                if (attributes[i].name == name) {
+                    return attributes[i];
+                }
             }
         }
         return null;
@@ -1085,7 +1087,7 @@ KISSY.add("html-parser/nodes/tag", function (S, Node, Attribute, Dtd) {
     return Tag;
 
 }, {
-    requires:['./node', './attribute', '../dtd']
+    requires: ['./node', './attribute', '../dtd']
 });
 /**
  * comment node (<!-- content -->)

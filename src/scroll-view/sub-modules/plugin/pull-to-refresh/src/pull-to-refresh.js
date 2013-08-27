@@ -12,6 +12,9 @@ KISSY.add('scroll-view/plugin/pull-to-refresh', function (S, Base) {
         pluginId: this.getName(),
 
         _onSetState: function (e) {
+            if (!this.scrollView) {
+                return;
+            }
             var status = e.newVal,
                 self = this,
                 prefixCls = self.scrollView.get('prefixCls'),
