@@ -73,9 +73,8 @@
                     return new XMLHttpRequest();
                 }
             }
-            if(window.jscoverage_serializeCoverageToJSON){
+            if(window.jscoverage_serializeCoverageToJSON && S.UA.phantomjs){
                 var json = window.jscoverage_serializeCoverageToJSON();
-
                 var request = createRequest();
                 request.open('post', '/save-coverage-report', true);
                 request.setRequestHeader('content-type','application/x-www-form-urlencoded; charset=UTF-8');
@@ -86,6 +85,7 @@
                 };
                 request.send(S.param({
                     report:json,
+                    component:component,
                     path:location.pathname
                 }));
             }

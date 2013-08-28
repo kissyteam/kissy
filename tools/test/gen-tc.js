@@ -39,6 +39,7 @@ function collectTc(baseDir, codes) {
 
 var codes = [];
 collectTc(srcDir, codes);
+//codes.push("tests.push('" +'/kissy/src/anim/sub-modules/timer/tests/runner/test.jss?coverage' + "');\n");
 codes.push("tests.push('" +'/send-to-coveralls' + "');\n");
 var finalCode = '/**\n' +
     'gen by gen-tc.js\n' +

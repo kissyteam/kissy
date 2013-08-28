@@ -169,14 +169,15 @@ S.use('xtemplate/nodejs', function (S, XTemplateNodeJs) {
                 'content' +
                 '}\n' +
                 'console.log("0 specs, 0 failures in {time}ms.")</script>';
+            var str = JSON.stringify(postData);
             if (!service_job_id) {
+                console.log(str);
                 res.send(S.substitute(ok, {
-                    //content: 'var data=' + JSON.stringify(postData) + ';console.log(data);',
+                    content: 'var data=' + str + ';console.log(data);',
                     time: (Date.now() - start)
                 }));
                 return;
             }
-            var str = JSON.stringify(postData);
             var url = 'https://coveralls.io/api/v1/jobs';
             request.post({url: url, form: { json: str}}, function () {
                 res.send(S.substitute(ok, {
@@ -186,11 +187,10 @@ S.use('xtemplate/nodejs', function (S, XTemplateNodeJs) {
         });
 
         app.post('/save-coverage-report', function (req, res) {
-            if (!service_job_id) {
-                res.send('');
-                return;
-            }
             var report = req.param('report');
+            var component = req.param('component');
+            // remove last component name
+            component = component.replace(/\/[^/]+$/, '');
             var myPath = cwd + '/../' + req.param('path');
             var jsonReport = JSON.parse(report);
             var srcPath = path.resolve(myPath, '../../../src/') + '/';
@@ -200,13 +200,14 @@ S.use('xtemplate/nodejs', function (S, XTemplateNodeJs) {
                 // coveralls.io does not need first data
                 detail.lineData.shift();
                 var lineData = detail.lineData;
-                var info = getSourceInfo(f);
+                var name = component + f;
+                var info = getSourceInfo(name);
                 if (info) {
                     merge(info.coverage, lineData);
                 } else {
                     var source = fs.readFileSync(srcPath + f, 'utf8');
                     source_files.push({
-                        name: f,
+                        name: name,
                         source: source,
                         coverage: detail.lineData
                     });
