@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Aug 27 21:52
+build time: Aug 28 14:32
 */
 KISSY.add("dom/ie/attr",function(h,c){function k(d){var f="",b=d.nodeType;if(b===c.NodeType.ELEMENT_NODE)for(d=d.firstChild;d;d=d.nextSibling)f+=k(d);else if(b==e.TEXT_NODE||b==e.CDATA_SECTION_NODE)f+=d.nodeValue;return f}var g=c._attrHooks,j=c._attrNodeHook,e=c.NodeType,a=c._valHooks,b=c._propFix;8>h.UA.ie&&(g.style.set=function(d,b){d.style.cssText=b},h.mix(j,{get:function(d,b){var a=d.getAttributeNode(b);return a&&(a.specified||a.nodeValue)?a.nodeValue:void 0},set:function(d,b,a){var m=d.getAttributeNode(a),
 e;if(m)m.nodeValue=b;else try{e=d.ownerDocument.createAttribute(a),e.value=b,d.setAttributeNode(e)}catch(c){return d.setAttribute(a,b,0)}}}),h.mix(c._attrFix,b),g.tabIndex=g.tabindex,h.each("href,src,width,height,colSpan,rowSpan".split(","),function(d){g[d]={get:function(b){b=b.getAttribute(d,2);return b===null?void 0:b}}}),a.button=g.value=j,g.placeholder={get:function(d,b){return d[b]||j.get(d,b)}},a.option={get:function(b){var a=b.attributes.value;return!a||a.specified?b.value:b.text}});(g.href=

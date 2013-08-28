@@ -3,11 +3,9 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, Dom) {
-    var $= S.all;
     S.get = Dom.get;
     S.query = Dom.query;
     describe("class", function () {
-
         var tpl = '<div id="test-data-class">\
             <p id="foo-class">' +
             '<a ' + 'href="../kissy/" style="color:red" class="link" title="test"' +
@@ -108,7 +106,6 @@ KISSY.add(function (S, Dom) {
 
         it("removeClass works", function () {
             a.className = 'link link2 link3 link4 link5';
-
             Dom.removeClass(a, 'link');
             expect(Dom.hasClass(a, 'link')).toBe(false);
             Dom.removeClass(a, 'link2 link4');
@@ -116,38 +113,29 @@ KISSY.add(function (S, Dom) {
             expect(a.className).toBe('link5');
         });
 
-
         it("replaceClass works", function () {
             a.className = 'link link3';
             // oldCls 有的话替换
             Dom.replaceClass(a, '.link', 'link2');
             expect(Dom.hasClass(a, 'link')).toBe(false);
             expect(Dom.hasClass(a, 'link2')).toBe(true);
-
             // oldCls 没有的话，仅添加
             Dom.replaceClass(a, 'link4', 'link');
-
             expect(a.className).toBe('link3 link2 link');
         });
 
-
         it("toggleClass works", function () {
             a.className = 'link link2';
-
             Dom.toggleClass(a, 'link2');
             expect(Dom.hasClass(a, 'link2')).toBe(false);
-
             //Dom.toggleClass(a, '.link2',false);
             //expect(Dom.hasClass(a, 'link2')).toBe(false);
-
-
             Dom.toggleClass(a, '.link2');
             expect(Dom.hasClass(a, 'link2')).toBe(true);
-
             // Dom.toggleClass(a, '.link2',true);
             // expect(Dom.hasClass(a, 'link2')).toBe(true);
         });
     });
 },{
-    requires:['dom','core']
+    requires:['dom']
 });

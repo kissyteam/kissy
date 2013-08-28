@@ -282,7 +282,6 @@ KISSY.add('dom/base/style', function (S, Dom, undefined) {
              * @param {String} [id] An id to add to the stylesheet for later removal
              */
             addStyleSheet: function (refWin, cssText, id) {
-
                 if (typeof refWin == 'string') {
                     id = cssText;
                     cssText = /**@type String

@@ -2,12 +2,12 @@
  * test tap gesture by simulating touch event for ios/android
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S) {
+KISSY.add(function (S,Node) {
     if (!window.canTestTouch) {
         return;
     }
 
-    var $ = S.all, step = 10;
+    var $ = Node.all, step = 10;
 
     describe('tap', function () {
 
@@ -168,6 +168,6 @@ KISSY.add(function (S) {
 
     });
 }, {
-    requires: ['core']
+    requires: ['node']
 });
 

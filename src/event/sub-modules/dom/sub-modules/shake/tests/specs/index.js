@@ -2,20 +2,18 @@
  * test tap gesture by simulating touch event for ios/android
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S) {
+KISSY.add(function (S,Event) {
     if (!window.DeviceMotionEvent) {
         return;
     }
+
     var $ = S.all, step = 10;
 
-
     describe('shake', function () {
-
         it('fires', function () {
-
             var called = 0, fn;
 
-            $(window).on('shake', function () {
+            Event.on(window,'shake', function () {
                 called = 1;
             });
 
@@ -67,12 +65,9 @@ KISSY.add(function (S) {
 
                 window.removeEventListener('devicemotion', fn, false);
             });
-
         });
 
         it('does not fire if x is too small', function () {
-
-
             var called = 0, fn;
 
             $(window).on('shake', function () {
@@ -124,15 +119,12 @@ KISSY.add(function (S) {
 
             runs(function () {
                 expect(called).toBe(0);
-
                 window.removeEventListener('devicemotion', fn, false);
             });
         });
 
 
         it('does not fire if x is not big enough', function () {
-
-
             var called = 0, fn;
 
             $(window).on('shake', function () {
@@ -192,5 +184,5 @@ KISSY.add(function (S) {
     });
 
 }, {
-    requires: ['core']
+    requires: ['event']
 });

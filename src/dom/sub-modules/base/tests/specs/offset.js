@@ -4,11 +4,7 @@
  * need to be completed
  */
 KISSY.add(function (S, Dom) {
-
-    var $= S.all;
-
     describe("offset", function () {
-
         var iframeTpl = '<iframe src="../others/offset/test-dom-offset-iframe.html"\
         id="test-iframe"\
         style="border:1px solid black; "\
@@ -68,7 +64,6 @@ KISSY.add(function (S, Dom) {
             Dom.remove(a);
         });
 
-
         it("should works for framed element", function () {
             var div = $('<div>').appendTo('body');
             div[0].innerHTML = iframeTpl;
@@ -89,13 +84,11 @@ KISSY.add(function (S, Dom) {
                     div.remove();
                     ok = 1;
                 }, 100);
-
             });
 
             waitsFor(function () {
                 return ok;
             }, "iframe can not loaded!");
-
         });
 
         it("should not change after get and set", function () {
@@ -107,8 +100,7 @@ KISSY.add(function (S, Dom) {
             expect(Math.abs(originalOffset.top - 200) < 5).toBe(true);
             window.scrollTo(0, scrollTop);
         });
-
     });
 },{
-    requires:['dom','core']
+    requires:['dom']
 });

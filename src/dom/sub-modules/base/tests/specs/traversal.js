@@ -3,9 +3,6 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, Dom) {
-
-    var $ = S.all;
-
     var tpl = '<div id="test-children" class="test-parent">\
         <p id="test-next"><a>1</a></p>\
     <p class="test-next-p"><a class="test-a">2</a></p>\
@@ -20,7 +17,6 @@ KISSY.add(function (S, Dom) {
     </div>';
 
     describe("traversal", function () {
-
         beforeEach(function () {
             $('body').append(tpl);
         });
@@ -78,7 +74,6 @@ KISSY.add(function (S, Dom) {
             expect(Dom.closest(t, ".test-parent", "#test-children")).toBe(null);
         });
 
-
         it("closest works for text node", function () {
             var div = Dom.create("<div>1</div>");
             Dom.append(div, "body");
@@ -121,34 +116,26 @@ KISSY.add(function (S, Dom) {
             var div = Dom.create("<div><span></span>1<span></span></div>");
             Dom.append(div, "body");
             var cs = div.childNodes;
-
             expect(Dom.next(cs[0])).toBe(cs[2]);
             expect(Dom.next(cs[0], undefined, 1)).toBe(cs[1]);
-
             Dom.remove(div);
         });
-
 
         it("prev works for text node", function () {
             var div = Dom.create("<div><span></span>1<span></span></div>");
             Dom.append(div, "body");
             var cs = div.childNodes;
-
             expect(Dom.prev(cs[2])).toBe(cs[0]);
             expect(Dom.prev(cs[2], undefined, 1)).toBe(cs[1]);
-
             Dom.remove(div);
         });
-
 
         it("siblings works for text node", function () {
             var div = Dom.create("<div><span></span>1<span></span></div>");
             Dom.append(div, "body");
             var cs = div.childNodes;
-
             expect(Dom.siblings(cs[2]).length).toBe(1);
             expect(Dom.siblings(cs[2], undefined, 1).length).toBe(2);
-
             Dom.remove(div);
         });
 
@@ -277,10 +264,8 @@ KISSY.add(function (S, Dom) {
             expect(Dom.index(Dom.get('body'), '.index-li')).toBe(-1);
 
             Dom.remove(div);
-
         });
-
     });
 },{
-    requires:['dom','core']
+    requires:['dom']
 });

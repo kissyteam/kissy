@@ -3,7 +3,6 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, Dom) {
-    var $= S.all;
     describe("insertion", function () {
         var body = document.body;
         it("insertBefore should works", function () {
@@ -21,7 +20,6 @@ KISSY.add(function (S, Dom) {
             expect(foo.nextSibling).toBe(t);
             Dom.remove([foo, t]);
         });
-
 
         it("append should works", function () {
             var foo = body.appendChild(Dom.create("<div><div></div></div>"));
@@ -78,7 +76,6 @@ KISSY.add(function (S, Dom) {
             Dom.remove("." + wrapperCls);
         });
 
-
         it("wrap should works", function () {
             var time = S.now();
             var wrappedCls = "f" + time;
@@ -103,7 +100,6 @@ KISSY.add(function (S, Dom) {
             Dom.remove([foo, foo2]);
             Dom.remove("." + wrapperCls);
         });
-
 
         it("wrapInner should works", function () {
             var time = S.now();
@@ -141,8 +137,7 @@ KISSY.add(function (S, Dom) {
             Dom.remove(fc);
             Dom.remove(foo);
         });
-
     });
 },{
-    requires:['dom','core']
+    requires:['dom']
 });

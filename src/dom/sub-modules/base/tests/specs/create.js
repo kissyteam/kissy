@@ -3,16 +3,11 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, Dom) {
-
-    var $= S.all;
-
     describe("create", function () {
-
         it("create should works", function () {
-
             var div = Dom.create('<div>'),
                 html = '',
-                tag = '';
+                tag;
 
             S.each([
                 'option', 'optgroup', 'td', 'th', 'tr',
@@ -70,7 +65,6 @@ KISSY.add(function (S, Dom) {
             expect(Dom.css(d, "width")).toBe("99px");
         });
 
-
         it("html should works", function () {
             var t = Dom.create("<div></div>");
             document.body.appendChild(t);
@@ -105,7 +99,6 @@ KISSY.add(function (S, Dom) {
 
             runs(function () {
                 expect(window.g_sethtml2).toBeUndefined();
-
                 // src js
                 Dom.html(t, '<script src="../others/create/test-dom-create.js"><\/script>we', true);
             });
@@ -117,7 +110,6 @@ KISSY.add(function (S, Dom) {
             runs(function () {
                 Dom.remove(t);
             });
-
         });
 
         it("html works for multiple elements", function () {
@@ -133,16 +125,13 @@ KISSY.add(function (S, Dom) {
                 expect(multiple[i].innerHTML.toLowerCase()).toBe("<span>1</span>");
             }
 
-
             Dom.html(multiple, "<span>2</span><script></script>");
-
 
             for (i = 0; i < multiple.length; i++) {
                 expect(multiple[i].innerHTML.toLowerCase()).toBe("<span>2</span>");
             }
 
             Dom.remove(multiple);
-
         });
 
         it('html works for fragment',function(){
@@ -150,7 +139,6 @@ KISSY.add(function (S, Dom) {
             var n= Dom.create(html);
             expect(Dom.html(n).toLowerCase()).toBe(html);
         });
-
 
         it("remove should works", function () {
             var n;
@@ -187,7 +175,6 @@ KISSY.add(function (S, Dom) {
             expect(Dom.create(str2).innerHTML.toLowerCase().replace(/\s/g, "")).toBe('<tr><th>1</th></tr>');
         });
 
-
         it("outerHtml works", function () {
             var div = Dom.create("<div></div>");
             var div2 = Dom.create("<div></div>");
@@ -197,7 +184,6 @@ KISSY.add(function (S, Dom) {
             Dom.append(span2, div2);
             Dom.append(div, "body");
             Dom.append(div2, "body");
-
 
             Dom.outerHtml(span, "5<span>3</span>");
             expect(Dom.html(div).toLowerCase()).toBe("5<span>3</span>");
@@ -221,15 +207,12 @@ KISSY.add(function (S, Dom) {
             Dom.remove(div2);
         });
 
-
         it('outerHtml works for fragment',function(){
-
             var html='<div></div><span></span>';
             var n= Dom.create(html);
             expect(Dom.outerHtml(n).toLowerCase()).toBe(html);
-
         });
     });
 },{
-    requires:['dom','core']
+    requires:['dom']
 });

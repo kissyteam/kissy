@@ -84,6 +84,12 @@ tests.push('/kissy/src/dd/tests/runner/test.jss?build');
 
 tests.push('/kissy/src/dd/tests/runner/test.jss?coverage');
 
+tests.push('/kissy/src/dom/sub-modules/base/tests/runner/test.jss');
+
+tests.push('/kissy/src/dom/sub-modules/base/tests/runner/test.jss?build');
+
+tests.push('/kissy/src/dom/sub-modules/base/tests/runner/test.jss?coverage');
+
 tests.push('/kissy/src/dom/sub-modules/selector/tests/runner/sizzle.html');
 
 tests.push('/kissy/src/dom/sub-modules/selector/tests/runner/sizzle.html?build');
@@ -95,10 +101,6 @@ tests.push('/kissy/src/dom/sub-modules/selector/tests/runner/test.jss');
 tests.push('/kissy/src/dom/sub-modules/selector/tests/runner/test.jss?build');
 
 tests.push('/kissy/src/dom/sub-modules/selector/tests/runner/test.jss?coverage');
-
-tests.push('/kissy/src/dom/tests/runner/test.jss');
-
-tests.push('/kissy/src/dom/tests/runner/test.jss?build');
 
 tests.push('/kissy/src/editor/tests/runner/test.jss');
 

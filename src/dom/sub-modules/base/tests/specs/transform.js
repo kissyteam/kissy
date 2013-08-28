@@ -95,7 +95,6 @@ KISSY.add(function (S, Dom) {
     }
 
     function multipleMatrix(m1, m2) {
-
         if (arguments.length > 2) {
             var ret = m1;
             for (var i = 1; i < arguments.length; i++) {

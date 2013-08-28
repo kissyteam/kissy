@@ -149,7 +149,7 @@ S.use('xtemplate/nodejs', function (S, XTemplateNodeJs) {
                 dd1 = d1[i];
                 dd2 = d2[i];
                 if (typeof  dd2 == 'number' && typeof dd1 == 'number') {
-                    d1[i] = Math.max(d1, d2);
+                    d1[i] = d1 + d2;
                 } else if (typeof  dd2 == 'number') {
                     d1[i] = dd2;
                 }

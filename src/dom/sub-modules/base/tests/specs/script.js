@@ -3,11 +3,9 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, Dom) {
-    var $= S.all;
     var div = $('<div style="display:none"></div>').prependTo("body");
 
     describe("script", function () {
-
         var o1, o2, scriptTestHolder2, o22;
 
         div[0].innerHTML = '<div id="scriptTestHolder">\
@@ -27,7 +25,6 @@ KISSY.add(function (S, Dom) {
         var scriptTestHolder = Dom.get("#scriptTestHolder");
 
         it("behave right", function () {
-
             expect(o1).toBe(1);
             expect(o2).toBe(1);
             scriptTestHolder2 = Dom.clone(scriptTestHolder, true);
@@ -64,10 +61,8 @@ KISSY.add(function (S, Dom) {
 
                 div.remove();
             });
-
         });
-
     });
 },{
-    requires:['dom','core']
+    requires:['dom']
 });

@@ -3,15 +3,11 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, Dom) {
-
-    var $ = S.all;
-    var UA= S.UA;
+    var UA = S.UA;
 
     describe("style", function () {
         beforeEach(function () {
-
             this.addMatchers({
-
                 toBeAlmostEqual: function (expected) {
                     return Math.abs(parseInt(this.actual) - parseInt(expected)) < 20;
                 },
@@ -23,12 +19,10 @@ KISSY.add(function (S, Dom) {
                 toBeExactEqual: function (expected) {
                     return Math.abs(Number(this.actual) - Number(expected)) < 1e-6;
                 }
-
             });
-
         });
-        it("css works", function () {
 
+        it("css works", function () {
             var elem = Dom.create('<div id="test-div" ' +
                 'style="padding-left: 2px; ' +
                 'background: transparent; ' +
@@ -41,7 +35,6 @@ KISSY.add(function (S, Dom) {
             // getter
             expect(Dom.css(elem, 'float')).toBe('left');
 
-
             expect(Dom.css(elem, 'position')).toBe('static');
 
             if (UA.webkit) {
@@ -51,7 +44,6 @@ KISSY.add(function (S, Dom) {
             }
 
             // expect($(elem).css("backgroundPosition")).toBe('0% 0%');
-
             if (UA.webkit) {
                 expect(Dom.css(elem, "backgroundPosition")).toBe('0% 0%');
             } else {
@@ -91,7 +83,6 @@ KISSY.add(function (S, Dom) {
 
             expect(Dom.css(elem, 'borderTopWidth')).toBe('2px');
 
-
             Dom.css(elem, {
                 marginLeft: '20px',
                 opacity: '0.8',
@@ -123,9 +114,7 @@ KISSY.add(function (S, Dom) {
             }
 
             Dom.remove([elem, test_filter]);
-
         });
-
 
         it("width/height works", function () {
             var elem = Dom.create('<div id="test-div" ' +
@@ -143,40 +132,7 @@ KISSY.add(function (S, Dom) {
             Dom.remove(elem);
         });
 
-
-        it("inner/outer width/height works", function () {
-            var elem = Dom.create('<div ' +
-                'style="' +
-                'position:absolute;' +
-                'margin:9px; ' +
-                'background: transparent; ' +
-                'padding:3px;' +
-                'border: 5px solid rgb(0,0,0);"><div ' +
-                'style="padding: 0;margin: 0;' +
-                'width:44px;height:44px;font-size:0;line-height:0;"></div>' +
-                '</div>');
-
-            document.body.appendChild(elem);
-
-            expect(Math.round(Dom.width(elem))).toBeEqual(44);
-            expect(Math.round(Dom.height(elem))).toBeEqual(44);
-
-            expect(Math.round(Dom.innerWidth(elem))).toBeEqual(44 + 3 * 2);
-            expect(Math.round(Dom.innerHeight(elem))).toBeEqual(44 + 3 * 2);
-
-            expect(Math.round(Dom.outerWidth(elem))).toBeEqual(44 + 3 * 2 + 5 * 2);
-            expect(Math.round(Dom.outerWidth(elem))).toBeEqual(44 + 3 * 2 + 5 * 2);
-
-
-            expect(Math.round(Dom.outerWidth(elem, true))).toBeEqual(44 + 3 * 2 + 5 * 2 + 9 * 2);
-            expect(Math.round(Dom.outerHeight(elem, true))).toBeEqual(44 + 3 * 2 + 5 * 2 + 9 * 2);
-
-            Dom.remove(elem);
-        });
-
-
         it("show/hide works", function () {
-
             var elem = Dom.create('<div id="test-div" ' +
                 'style="padding-left: 2pt; ' +
                 'background: transparent; ' +
@@ -187,7 +143,6 @@ KISSY.add(function (S, Dom) {
             document.body.appendChild(elem);
 
             Dom.css(elem, 'display', 'none');
-
 
             Dom.show(elem);
             expect(Dom.css(elem, 'display')).toBe('block');
@@ -201,9 +156,19 @@ KISSY.add(function (S, Dom) {
             Dom.removeAttr(elem, 'style');
 
             Dom.remove(elem);
-
         });
 
+        it('show hide can precede css', function () {
+            var id = S.guid('test-css');
+            Dom.addStyleSheet('#' + id + ' {display:none}', 'xx-style' + id);
+            var elem = Dom.create('<div></div>');
+            elem.id = id;
+            Dom.append(elem, document.body);
+            Dom.show(elem);
+            expect(Dom.css(elem, 'display')).toBe('block');
+            Dom.remove(elem);
+            Dom.remove('#'+'xx-style' + id);
+        });
 
         it("toggle works", function () {
             var elem = Dom.create('<div id="test-div" ' +
@@ -222,10 +187,8 @@ KISSY.add(function (S, Dom) {
 
             Dom.removeAttr(elem, 'style');
 
-
             Dom.remove(elem);
         });
-
 
         it("addStyleSheet works", function () {
             var elem = Dom.create("<div class='addStyleSheet'>12</div>");
@@ -235,12 +198,9 @@ KISSY.add(function (S, Dom) {
             Dom.remove(elem);
         });
 
-
         it("float works inline or from stylehsheet", function () {
-
             var tag = S.guid("float");
-            Dom.addStyleSheet("." + tag + " {float:left}")
-
+            Dom.addStyleSheet("." + tag + " {float:left}",tag+'style');
             var d = Dom.create("<div class='" + tag + "' style='float:right'><" + "/div>")
             Dom.append(d, document.body);
             expect(Dom.css(d, "float")).toBe("right");
@@ -251,35 +211,38 @@ KISSY.add(function (S, Dom) {
             expect(Dom.style(d, "float")).toBe("");
 
             Dom.remove(d);
+            Dom.remove('#'+tag+'style');
         });
 
-
+        // also test prop api
         it("float works inline or from stylehsheet", function () {
-
             var tag = S.guid("float");
-            Dom.addStyleSheet("." + tag + " {float:left}");
+            Dom.addStyleSheet("." + tag + " {float:left}",tag+'style');
 
             var d = Dom.create("<div class='" + tag + "' style='float:right'><" + "/div>")
             Dom.append(d, document.body);
             expect(Dom.css(d, "float")).toBe("right");
             expect(Dom.style(d, "float")).toBe("right");
-            Dom.css(d, "float", "");
+            // test style array
+            Dom.style([d], "float", "");
 
             expect(Dom.css(d, "float")).toBe("left");
             expect(Dom.style(d, "float")).toBe("");
 
 
-            Dom.css(d, "float", "right");
+            // test style obj
+            Dom.style([d], {"float": "right"});
 
             expect(Dom.css(d, "float")).toBe("right");
             expect(Dom.style(d, "float")).toBe("right");
 
             Dom.remove(d);
+            Dom.remove('#'+tag+'style');
         });
 
         it("opacity works inline or from stylesheet", function () {
             var tag = S.guid("opacity");
-            Dom.addStyleSheet("." + tag + " {opacity:0.55;filter:alpha(opacity=55); }");
+            Dom.addStyleSheet("." + tag + " {opacity:0.55;filter:alpha(opacity=55); }",tag+'style');
 
             var d = Dom.create("<div class='" + tag + "' style='" +
                 "opacity:0.66;filter:Alpha(opacity=66); '>" +
@@ -300,6 +263,7 @@ KISSY.add(function (S, Dom) {
             expect(Dom.css(d, "opacity")).toBeExactEqual("0.66");
             expect(Dom.style(d, "opacity")).toBeExactEqual("0.66");
             Dom.remove(d);
+            Dom.remove('#'+tag+'style');
         });
 
         it('does not leave empty style', function () {
@@ -312,13 +276,13 @@ KISSY.add(function (S, Dom) {
         it("left works for auto", function () {
             var el = $("<div style='position: relative;padding: 20px;'>" +
                 "<div style='position: absolute'></div><span></span>" +
-                "<s style='position: fixed'></s></div>").appendTo('body');
-            expect(el.css("left")).toBe("0px");
-            expect(Math.round(parseFloat(el.one("div").css("top")))).toBe(20);
-            expect(el.one("span").css("top")).toBe("auto");
-            expect(parseInt(el.one("s").css("top"))||1).toBe(parseInt(el.one("s")[0].getBoundingClientRect().top)||0);
+                "<s style='position: fixed'></s></div>").appendTo('body')[0];
+            expect(Dom.css(el, "left")).toBe("0px");
+            expect(Math.round(parseFloat(Dom.css(Dom.get('div', el), "top")))).toBe(20);
+            expect(Dom.css(Dom.get('span', el), "top")).toBe("auto");
+            expect(parseInt(Dom.css(Dom.get('s', el), "top")) || 1)
+                .toBe(parseInt(Dom.get('s', el).getBoundingClientRect().top) || 0);
         });
-
 
         it("solve #80", function () {
             var div = Dom.create("<div></div>");
@@ -330,16 +294,60 @@ KISSY.add(function (S, Dom) {
             Dom.remove(div);
         });
 
-        // #119 : https://github.com/kissyteam/kissy/issues/119
-        it("outerWidth should works for display:none", function () {
-            var div = Dom.create("<div style='display:none;'>" +
-                "<div style='width:100px;'></div>" +
-                "</div>");
-            Dom.append(div, document.body);
-            expect(Dom.innerWidth(div)).toBe(100);
-            expect(Dom.outerWidth(div)).toBe(100);
-            expect(Dom.width(div)).toBe(100);
-            Dom.remove(div);
+        describe('outerWidth/height', function () {
+            // #119 : https://github.com/kissyteam/kissy/issues/119
+            it("outerWidth should works for display:none", function () {
+                var div = Dom.create("<div style='width:100px;display:none;'>" +
+                    "</div>");
+                Dom.append(div, document.body);
+                expect(Dom.innerWidth(div)).toBe(100);
+                expect(Dom.outerWidth(div)).toBe(100);
+                expect(Dom.width(div)).toBe(100);
+                Dom.remove(div);
+            });
+
+            it("outerWidth should works for display:none !important", function () {
+                var id= S.guid('test-id');
+                var div = Dom.create("<div style='width:100px;' id='"+id+"' style='display:none;'>" +
+                    "</div>");
+                Dom.addStyleSheet('#'+id+'{display:none !important;}',id+'style');
+                Dom.append(div, document.body);
+                expect(Dom.innerWidth(div)).toBe(100);
+                expect(Dom.outerWidth(div)).toBe(100);
+                expect(Dom.width(div)).toBe(100);
+                Dom.remove(div);
+                Dom.remove('#'+id+'style');
+            });
+
+            it("inner/outer width/height works", function () {
+                var elem = Dom.create('<div ' +
+                    'style="' +
+                    'position:absolute;' +
+                    'margin:9px; ' +
+                    'background: transparent; ' +
+                    'padding:3px;' +
+                    'border: 5px solid rgb(0,0,0);"><div ' +
+                    'style="padding: 0;margin: 0;' +
+                    'width:44px;height:44px;font-size:0;line-height:0;"></div>' +
+                    '</div>');
+
+                document.body.appendChild(elem);
+
+                expect(Math.round(Dom.width(elem))).toBeEqual(44);
+                expect(Math.round(Dom.height(elem))).toBeEqual(44);
+
+                expect(Math.round(Dom.innerWidth(elem))).toBeEqual(44 + 3 * 2);
+                expect(Math.round(Dom.innerHeight(elem))).toBeEqual(44 + 3 * 2);
+
+                expect(Math.round(Dom.outerWidth(elem))).toBeEqual(44 + 3 * 2 + 5 * 2);
+                expect(Math.round(Dom.outerWidth(elem))).toBeEqual(44 + 3 * 2 + 5 * 2);
+
+
+                expect(Math.round(Dom.outerWidth(elem, true))).toBeEqual(44 + 3 * 2 + 5 * 2 + 9 * 2);
+                expect(Math.round(Dom.outerHeight(elem, true))).toBeEqual(44 + 3 * 2 + 5 * 2 + 9 * 2);
+
+                Dom.remove(elem);
+            });
         });
 
         it("css works for element not added to document yet for ie<9", function () {
@@ -353,7 +361,6 @@ KISSY.add(function (S, Dom) {
         });
 
         it('css works for margin-right for safari 5.1', function () {
-
             var div = Dom.create('<div style="width:100px;">' +
                 '<div style="margin-left:10%"></div></div>');
 
@@ -367,10 +374,8 @@ KISSY.add(function (S, Dom) {
                 expect(Dom.css(div.firstChild, 'margin-left')).toBe('10px');
             }
             Dom.remove(div);
-
         });
-
     });
-},{
-    requires:['dom','core']
+}, {
+    requires: ['dom']
 });

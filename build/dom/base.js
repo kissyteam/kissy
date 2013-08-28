@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Aug 27 21:52
+build time: Aug 28 14:31
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -25,7 +25,6 @@ build time: Aug 27 21:52
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('dom/base/api', function (S) {
-
     var WINDOW = S.Env.host || {},
         DOCUMENT = WINDOW.document,
         UA = S.UA,
@@ -2823,7 +2822,6 @@ KISSY.add('dom/base/style', function (S, Dom, undefined) {
              * @param {String} [id] An id to add to the stylesheet for later removal
              */
             addStyleSheet: function (refWin, cssText, id) {
-
                 if (typeof refWin == 'string') {
                     id = cssText;
                     cssText = /**@type String

@@ -3,9 +3,6 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, Dom) {
-
-    var $ = S.all;
-
     var tpl = '<div id="test-scroll" style="position:absolute;top:0;' +
             'left:0;width:300px;' +
             'background-color:white;">' +
@@ -27,7 +24,6 @@ KISSY.add(function (S, Dom) {
             '<div id="scroll-iframe-holder"></div>' +
             new Array(20).join('<p>x</p>') +
             '</div>',
-
         iframeTpl = '<iframe src="../others/offset/test-dom-offset-iframe.html"\
         id="test-iframe"\
         style="border:1px solid black; "\
@@ -37,9 +33,7 @@ KISSY.add(function (S, Dom) {
         scrolling="no"\
         ></iframe>';
 
-
     describe("scroll", function () {
-
         var container ,
             node , container_border_width,
             container_client_height,
@@ -77,7 +71,6 @@ KISSY.add(function (S, Dom) {
 
         describe('non-auto works', function () {
             it("scroll node to container at axis xy manually works", function () {
-
                 var nodeOffset = Dom.offset(node),
                     containerOffset = Dom.offset(container);
 
@@ -99,7 +92,6 @@ KISSY.add(function (S, Dom) {
                 expect(Dom.scrollLeft()).toBeAbsEqual(0);
                 expect(nodeOffset.left - containerOffset.left).toBeAbsEqual(container_border_width);
             });
-
 
             it("scroll node to container at axis y manually works", function () {
                 var nodeOffset = Dom.offset(node),
@@ -148,7 +140,6 @@ KISSY.add(function (S, Dom) {
                 });
             });
 
-
             it("scroll node to container at bottom", function () {
                 Dom.scrollIntoView(node, container, {
                     alignWithTop: false
@@ -181,9 +172,7 @@ KISSY.add(function (S, Dom) {
         });
 
         describe('auto works', function () {
-
             it('will not scroll if node is inside container', function () {
-
                 Dom.scrollIntoView(node, container);
 
                 Dom.scrollTop(container, Dom.scrollTop(container) - 10);
@@ -195,12 +184,9 @@ KISSY.add(function (S, Dom) {
                 });
 
                 expect(Dom.scrollTop(container)).toBe(scrollTop);
-
             });
 
-
             it('will scroll and adjust top to true if node is outside container', function () {
-
                 Dom.scrollIntoView(node, container);
 
                 var scrollTop = Dom.scrollTop(container);
@@ -212,12 +198,9 @@ KISSY.add(function (S, Dom) {
                 });
 
                 expect(Dom.scrollTop(container)).toBe(scrollTop);
-
             });
 
-
             it('will scroll and adjust top to false if node is outside container', function () {
-
                 Dom.scrollIntoView(node, container, {
                     alignWithTop: false
                 });
@@ -231,12 +214,10 @@ KISSY.add(function (S, Dom) {
                 });
 
                 expect(Dom.scrollTop(container)).toBe(scrollTop);
-
             });
 
 
             it('will scroll and adjust top to true if node is outside container', function () {
-
                 Dom.scrollIntoView(node, container, {
                     alignWithTop: true
                 });
@@ -255,12 +236,9 @@ KISSY.add(function (S, Dom) {
                 });
 
                 expect(Dom.scrollTop(container)).toBe(scrollTop);
-
             });
 
-
             it('will scroll to top false if node is outside container', function () {
-
                 Dom.scrollIntoView(node, container, {
                     alignWithTop: false
                 });
@@ -279,12 +257,9 @@ KISSY.add(function (S, Dom) {
                 });
 
                 expect(Dom.scrollTop(container)).toBe(scrollTop);
-
             });
-
         });
-
     });
 }, {
-    requires: ['dom', 'core']
+    requires: ['dom']
 });

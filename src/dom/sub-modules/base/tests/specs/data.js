@@ -3,7 +3,6 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S,  Dom) {
-    var $= S.all;
     var UA= S.UA;
     var __EXPANDO = Dom.__EXPANDO;
     describe("Dom.data", function () {
@@ -79,7 +78,6 @@ KISSY.add(function (S,  Dom) {
             // 返回空对象
             expect(S.isEmptyObject(Dom.data(window))).toBe(true);
 
-
             Dom.data(foo, "custom", "custom");
             Dom.data(bar, "custom2", "custom2");
 
@@ -97,7 +95,6 @@ KISSY.add(function (S,  Dom) {
         });
 
         it("hasData should works", function () {
-
             var p = Dom.create("<p>");
             // 给所有的段落节点设置扩展属性 ``x`` ，值为 ``y``
             Dom.data(p, "x", "y");
@@ -116,11 +113,8 @@ KISSY.add(function (S,  Dom) {
 
             //空对象
             expect(S.isEmptyObject(Dom.data(p))).toBe(true);
-
         });
     });
-
-
 },{
-    requires:['dom','core']
+    requires:['dom']
 });

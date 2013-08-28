@@ -1,5 +1,6 @@
 KISSY.add(KISSY.noop,{
     requires:[
+        './domain',
         './attr',
         './class',
         './clone',

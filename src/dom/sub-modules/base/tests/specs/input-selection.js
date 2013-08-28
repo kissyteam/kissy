@@ -4,7 +4,6 @@
  */
 KISSY.add(function (S, Dom) {
     describe("input-selection", function () {
-
         it("works for ie", function () {
             var textarea = Dom.create("<textarea></textarea>");
             Dom.append(textarea, document.body);
@@ -51,9 +50,8 @@ KISSY.add(function (S, Dom) {
             runs(function () {
                 Dom.remove(textarea);
             });
-
         });
     });
 },{
-    requires:['dom','core']
+    requires:['dom']
 });

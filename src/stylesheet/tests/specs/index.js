@@ -3,12 +3,10 @@
  * note: font-size ios bug
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, StyleSheet,Color) {
-
-    var $ = S.all;
+KISSY.add(function (S, StyleSheet, Node) {
+    var $ = Node.all;
 
     function filter(str) {
-
         var left = str.indexOf('{'), right = str.indexOf('}'),
             remain;
 
@@ -32,9 +30,7 @@ KISSY.add(function (S, StyleSheet,Color) {
     }
 
     describe("stylesheet", function () {
-
         it("works for link at same domain", function () {
-
             var n = S.all("<p class='test1'>test1</p>").appendTo("body");
 
             var n2 = S.all("<p class='test2'>test1</p>").appendTo("body");
@@ -111,12 +107,10 @@ KISSY.add(function (S, StyleSheet,Color) {
                 n2.remove();
                 $(style).remove();
             });
-
         });
 
 
         it("works for inline style", function () {
-
             var n = S.all("<p class='test1'>test1</p>").appendTo("body");
 
             var n2 = S.all("<p class='test2'>test1</p>").appendTo("body");
@@ -197,11 +191,8 @@ KISSY.add(function (S, StyleSheet,Color) {
                 n2.remove();
                 $(style).remove();
             });
-
         });
-
     });
-
-},{
-    requires:['stylesheet','core','color']
+}, {
+    requires: ['stylesheet', 'node']
 });

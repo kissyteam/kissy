@@ -265,9 +265,23 @@
     </em>
     <span id="siblingspan"></span>
 </div>
-​</div>
+​
+</div>
 </dl>
 <br id="last"/>
+<script>
+    var loc = new KISSY.Uri(location.href);
+    var component = 'dom/selector';
+    if (loc.getQuery().has('coverage')) {
+        KISSY.config('map', [
+            [/kissy\/src\/(.+)\/src\//g, function (m, m1) {
+                var mm = m1.replace(/sub-modules\//g, '');
+                if (mm != component) return m;
+                return m.slice(0, -5) + '/coverage/src/';
+            }]
+        ]);
+    }
+</script>
 <script src="/kissy/src/package.js"></script>
 <script>
     KISSY.config('packages', {
@@ -279,7 +293,33 @@
         jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
         jasmine.getEnv().addReporter(new jasmine.ConsoleReporter());
         jasmine.getEnv().execute(function () {
-            jasmine.kissyNext(this.results().failedCount);
+            var self = this;
+
+            function createRequest() {
+                if (window.ActiveXObject) {
+                    return new ActiveXObject("Microsoft.XMLHTTP");
+                }
+                else {
+                    return new XMLHttpRequest();
+                }
+            }
+
+            if (window.jscoverage_serializeCoverageToJSON) {
+                var json = window.jscoverage_serializeCoverageToJSON();
+
+                var request = createRequest();
+                request.open('post', '/save-coverage-report', true);
+                request.setRequestHeader('content-type', 'application/x-www-form-urlencoded; charset=UTF-8');
+                request.onreadystatechange = function () {
+                    if (request.readyState === 4 && request.status == 200) {
+                        jasmine.kissyNext(self.results().failedCount);
+                    }
+                };
+                request.send(S.param({
+                    report: json,
+                    path: location.pathname
+                }));
+            }
         });
     });
 </script>

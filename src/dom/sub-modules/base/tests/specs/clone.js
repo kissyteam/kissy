@@ -1,7 +1,7 @@
 KISSY.add(function (S, Dom, Event) {
-    var $ = S.all, UA = S.UA;
-    describe("clone", function () {
+    var UA = S.UA;
 
+    describe("clone", function () {
         it("works for checkbox", function () {
             var checkbox = Dom.create("<input type='checkbox' checked='checked' />");
             Dom.append(checkbox, "#test_cases");
@@ -26,7 +26,6 @@ KISSY.add(function (S, Dom, Event) {
             Dom.remove(input);
             Dom.remove(cloned);
         });
-
 
         it('works for nested textarea', function () {
             var input = Dom.create("<div><textarea></textarea></div>");
@@ -101,24 +100,18 @@ KISSY.add(function (S, Dom, Event) {
             var x = {x: 1};
             Dom.data(div, "web", x);
             Dom.data(div, "web2", 2);
-
             var d = 1;
-
             Event.on(div, "click", function () {
                 d++;
             });
-
             Event.fire(div, "click", undefined, true);
-
             expect(d).toBe(2);
-
             var cloned = Dom.clone(div, {
                 deep: false,
                 withDataAndEvent: true
             });
             expect(Dom.data(cloned, "web").x).toBe(1);
             expect(Dom.data(cloned, "web2")).toBe(2);
-
             x.x = 3;
             Dom.data(div, "web2", 4);
 
@@ -140,13 +133,10 @@ KISSY.add(function (S, Dom, Event) {
 
             runs(function () {
                 expect(d).toBe(4);
-
                 Dom.remove(cloned);
                 Dom.remove(div);
             });
-
         });
-
 
         it("works with data and event when deep", function () {
             var div = Dom.create("<div><span><" + "/span><" + "/div>");
@@ -200,7 +190,6 @@ KISSY.add(function (S, Dom, Event) {
                 Dom.remove(cloned);
                 Dom.remove(div);
             });
-
         });
 
         it('does not mess event with cloned src element', function () {
@@ -218,7 +207,6 @@ KISSY.add(function (S, Dom, Event) {
             Event.on(span, "click", function () {
                 d[this.id]++;
             });
-
 
             var span2 = Dom.clone(span, {
                 withDataAndEvent: true,
@@ -238,28 +226,21 @@ KISSY.add(function (S, Dom, Event) {
             waits(100);
 
             runs(function () {
-
                 expect(d.t1).toBe(1);
                 expect(d.t2).toBe(2);
-
             });
 
             runs(function () {
-
                 jasmine.simulate(span, 'click');
-
             });
 
             waits(100);
 
             runs(function () {
-
                 expect(d.t1).toBe(2);
                 expect(d.t2).toBe(2);
-
             });
         });
-
 
         it('does not mess event with cloned src element by firing', function () {
             var div = Dom.create("<div><span id='t1'><" + "/span><" + "/div>");
@@ -292,14 +273,11 @@ KISSY.add(function (S, Dom, Event) {
             waits(100);
 
             runs(function () {
-
                 expect(d.t1).toBe(1);
                 expect(d.t2).toBe(2);
-
             });
         });
-
     });
 },{
-    requires:['dom','event','core']
+    requires:['dom','event']
 });

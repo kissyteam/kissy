@@ -3,8 +3,6 @@
  * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
 KISSY.add(function (S, Dom) {
-    var $ = S.all;
-
     var tpl = '<div id="test-selector">\
         <div class="test-selector" id="test-selector-1">\
             <div class="test-selector">\
@@ -88,7 +86,6 @@ KISSY.add(function (S, Dom) {
                 .toBe(2);
         });
 
-
         it("support #id .cls", function () {
             expect(S.get("#test-selector-1 .test-selector").tagName.toLowerCase()).toBe("div");
             expect(S.get("#test-selector-2 .test-selector").tagName.toLowerCase()).toBe("p");
@@ -104,12 +101,10 @@ KISSY.add(function (S, Dom) {
             expect(S.query("p.test-selector").length).toBe(1);
         });
 
-
         it("support #id tag.cls", function () {
             expect(S.get("#test-selector-1 p.test-selector")).toBe(null);
             expect(S.get("#test-selector-2 p.test-selector").tagName.toLowerCase()).toBe("p");
         });
-
 
         it("does not confuse name with id", function () {
             var id = "id" + S.now();
@@ -168,17 +163,11 @@ KISSY.add(function (S, Dom) {
             expect($(".context-test-3", "#context-test-1").attr("id")).toBe("context-test-2");
         });
 
-
         it("should support other string form selector and unique works", function () {
             expect(S.query(".context-test-3", ".context-test").length).toBe(2);
-
-            expect($(".context-test-3", ".context-test").length).toBe(2);
-
         });
 
-
         it("should support node array form selector and unique works", function () {
-
             var r;
             var c3 = S.query(".context-test-3");
             expect(r = c3.length).toBe(3);
@@ -208,8 +197,6 @@ KISSY.add(function (S, Dom) {
 
             expect(r = cj.find(".context-test-3").length).toBe(2);
             expect(r = cj.find(c3j).length).toBe(2);
-
-
         });
 
         it("support other format as first parameter", function () {
@@ -236,7 +223,6 @@ KISSY.add(function (S, Dom) {
             expect(ret[0]).toBe(o[0]);
             expect(S.isArray(ret)).toBe(true);
         });
-
 
         it('id selector should constrain to context', function () {
             var t = Dom.append(Dom.create('<div id="tt"></div><div id="tt2"></div>'),
@@ -281,7 +267,6 @@ KISSY.add(function (S, Dom) {
             Dom.remove(div);
         });
     });
-
 }, {
-    requires: ['dom', 'core']
+    requires: ['dom']
 });
