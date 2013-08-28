@@ -150,6 +150,9 @@
     </style>
 </head>
 <body>
+<h1>open in touch device or emulate touch in chrome</h1>
+
+<h2 id="wait" style="color:red">please wait, loading ....</h2>
 <div id="demo2" class="ks-scroll-view">
     <ol class="ks-scroll-view-content">
         <li>
@@ -206,6 +209,9 @@
             });
         });
         window.slide = slide;
+        $('#wait').css({
+            color: 'green'
+        }).html('ok');
     });
 </script>
 </body>
