@@ -6,6 +6,7 @@
 KISSY.add('event/dom/touch/handle', function (S, Dom, eventHandleMap, DomEvent) {
     var key = S.guid('touch-handle'),
         Features = S.Features,
+        UA = S.UA,
         isMsPointerSupported = Features.isMsPointerSupported(),
         touchEvents = {},
         startEvent,
@@ -14,10 +15,16 @@ KISSY.add('event/dom/touch/handle', function (S, Dom, eventHandleMap, DomEvent) 
         endEvent;
 
     if (Features.isTouchEventSupported()) {
-        startEvent = 'touchstart mousedown';
         endEvent = 'touchend';
-        moveEvent = 'touchmove mousemove';
         cancelEvent = 'touchcancel';
+        // mouse event on android chrome is buggy...
+        if (UA.webkit && !UA.android) {
+            startEvent = 'touchstart mousedown';
+            moveEvent = 'touchmove mousemove';
+        } else {
+            startEvent = 'touchstart';
+            moveEvent = 'touchmove';
+        }
     } else if (isMsPointerSupported) {
         startEvent = 'MSPointerDown';
         moveEvent = 'MSPointerMove';
@@ -117,8 +124,11 @@ KISSY.add('event/dom/touch/handle', function (S, Dom, eventHandleMap, DomEvent) 
             var e, h,
                 self = this,
                 eventHandle = self.eventHandle;
+            // log('start: ' + event.type);
             if ('touches' in event) {
                 self.inTouch = event.touches.length;
+                // will prevent mousedown and click....
+                //event.preventDefault();
             } else {
                 if (self.inTouch) {
                     // ignore mouse
@@ -283,11 +293,22 @@ KISSY.add('event/dom/touch/handle', function (S, Dom, eventHandleMap, DomEvent) 
     ]
 });
 /**
- * 2013-07-23 yiminghe@gmail.com
- * - bind both mouse and touch for start
- * - but bind mousemove or touchmove for move
- *
- *
- * in order to make tap/doubleTap bubbling same with native event.
- * register event on document and then bubble programmatically!
+ 2013-08-28
+ - chrome android bug: first series touchstart is not fired!
+ - chrome android bug when bind mousedown and touch together to ordinary div
+   chrome pc ：
+   touchstart mousedown touchend
+   chrome android ：
+   touchstart touchend mousedown
+   safari no mousedown
+ - https://code.google.com/p/chromium/issues/detail?id=280516
+ - https://code.google.com/p/chromium/issues/detail?id=280507
+
+ 2013-07-23 yiminghe@gmail.com
+ - bind both mouse and touch for start
+ - but bind mousemove or touchmove for move
+
+
+ in order to make tap/doubleTap bubbling same with native event.
+ register event on document and then bubble programmatically!
  */

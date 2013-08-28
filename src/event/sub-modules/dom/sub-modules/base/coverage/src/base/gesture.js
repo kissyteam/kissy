@@ -248,5 +248,6 @@ KISSY.add('event/dom/base/gesture', function() {
   move: 'mousemove', 
   end: 'mouseup', 
   tap: 'click', 
+  singleTap: 'click', 
   doubleTap: 'dblclick'};
 });

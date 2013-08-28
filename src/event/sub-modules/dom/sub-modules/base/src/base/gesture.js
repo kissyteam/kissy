@@ -27,9 +27,13 @@ KISSY.add('event/dom/base/gesture', function () {
          */
         tap: 'click',
         /**
-         * doubleTap gesture, it is not same with dblclick
+         * singleTap gesture, it is  same with click on pc
          */
-        doubleTap:'dblclick'
+        singleTap: 'click',
+        /**
+         * doubleTap gesture, it is  same with dblclick on pc
+         */
+        doubleTap: 'dblclick'
     };
 
 });

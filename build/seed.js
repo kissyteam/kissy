@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Aug 27 22:01
+build time: Aug 28 18:09
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130827220112' will replace with current timestamp when compressing.
+         * NOTICE: '20130828180941' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130827220112',
+        __BUILD_TIME: '20130828180941',
         /**
          * KISSY Environment.
          * @private
@@ -3351,7 +3351,7 @@ var KISSY = (function (undefined) {
                     if (m && m[0]) {
                         UA[m[0].toLowerCase()] = UA.ios;
                     }
-                } else if (/ Android/.test(ua)) {
+                } else if (/ Android/i.test(ua)) {
                     if (/Mobile/.test(ua)) {
                         os = UA.mobile = 'android';
                     }
@@ -5823,7 +5823,7 @@ var KISSY = (function (undefined) {
             comboMaxFileNum: 40,
             charset: 'utf-8',
             lang: 'zh-cn',
-            tag: '20130827220112'
+            tag: '20130828180941'
         }, getBaseInfo()));
     }
 

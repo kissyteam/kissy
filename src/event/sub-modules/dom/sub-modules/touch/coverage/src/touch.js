@@ -322,43 +322,43 @@ if (! _$jscoverage['/touch.js'].branchData) {
   _$jscoverage['/touch.js'].branchData['104'][1] = new BranchData();
 }
 _$jscoverage['/touch.js'].branchData['104'][1].init(516, 23, 'eventHandleValue.remove');
-function visit88_104_1(result) {
+function visit89_104_1(result) {
   _$jscoverage['/touch.js'].branchData['104'][1].ranCondition(result);
   return result;
 }_$jscoverage['/touch.js'].branchData['101'][1].init(414, 20, 'eventHandleValue.add');
-function visit87_101_1(result) {
+function visit88_101_1(result) {
   _$jscoverage['/touch.js'].branchData['101'][1].ranCondition(result);
   return result;
 }_$jscoverage['/touch.js'].branchData['96'][1].init(244, 25, 'eventHandleValue.tearDown');
-function visit86_96_1(result) {
+function visit87_96_1(result) {
   _$jscoverage['/touch.js'].branchData['96'][1].ranCondition(result);
   return result;
 }_$jscoverage['/touch.js'].branchData['91'][1].init(89, 22, 'eventHandleValue.setup');
-function visit85_91_1(result) {
+function visit86_91_1(result) {
   _$jscoverage['/touch.js'].branchData['91'][1].ranCondition(result);
   return result;
 }_$jscoverage['/touch.js'].branchData['76'][1].init(182, 29, '!self.__ks_touch_action_count');
-function visit84_76_1(result) {
+function visit85_76_1(result) {
   _$jscoverage['/touch.js'].branchData['76'][1].ranCondition(result);
   return result;
 }_$jscoverage['/touch.js'].branchData['72'][1].init(18, 29, '!self.__ks_touch_action_count');
-function visit83_72_1(result) {
+function visit84_72_1(result) {
   _$jscoverage['/touch.js'].branchData['72'][1].ranCondition(result);
   return result;
 }_$jscoverage['/touch.js'].branchData['71'][1].init(73, 29, 'isMsPointerSupported && style');
-function visit82_71_1(result) {
+function visit83_71_1(result) {
   _$jscoverage['/touch.js'].branchData['71'][1].ranCondition(result);
   return result;
 }_$jscoverage['/touch.js'].branchData['54'][1].init(269, 29, '!self.__ks_touch_action_count');
-function visit81_54_1(result) {
+function visit82_54_1(result) {
   _$jscoverage['/touch.js'].branchData['54'][1].ranCondition(result);
   return result;
 }_$jscoverage['/touch.js'].branchData['49'][1].init(18, 23, '!self.__ks_touch_action');
-function visit80_49_1(result) {
+function visit81_49_1(result) {
   _$jscoverage['/touch.js'].branchData['49'][1].ranCondition(result);
   return result;
 }_$jscoverage['/touch.js'].branchData['48'][1].init(73, 29, 'isMsPointerSupported && style');
-function visit79_48_1(result) {
+function visit80_48_1(result) {
   _$jscoverage['/touch.js'].branchData['48'][1].ranCondition(result);
   return result;
 }_$jscoverage['/touch.js'].lineData[6]++;
@@ -419,9 +419,9 @@ KISSY.add('event/dom/touch', function(S, DomEvent, eventHandleMap, eventHandle) 
     _$jscoverage['/touch.js'].lineData[46]++;
     var self = this, style = self.style;
     _$jscoverage['/touch.js'].lineData[48]++;
-    if (visit79_48_1(isMsPointerSupported && style)) {
+    if (visit80_48_1(isMsPointerSupported && style)) {
       _$jscoverage['/touch.js'].lineData[49]++;
-      if (visit80_49_1(!self.__ks_touch_action)) {
+      if (visit81_49_1(!self.__ks_touch_action)) {
         _$jscoverage['/touch.js'].lineData[50]++;
         self.__ks_touch_action = style.msTouchAction;
         _$jscoverage['/touch.js'].lineData[51]++;
@@ -430,7 +430,7 @@ KISSY.add('event/dom/touch', function(S, DomEvent, eventHandleMap, eventHandle) 
         style.msTouchAction = style.msUserSelect = 'none';
       }
       _$jscoverage['/touch.js'].lineData[54]++;
-      if (visit81_54_1(!self.__ks_touch_action_count)) {
+      if (visit82_54_1(!self.__ks_touch_action_count)) {
         _$jscoverage['/touch.js'].lineData[55]++;
         self.__ks_touch_action_count = 1;
       } else {
@@ -455,16 +455,16 @@ KISSY.add('event/dom/touch', function(S, DomEvent, eventHandleMap, eventHandle) 
     _$jscoverage['/touch.js'].lineData[69]++;
     var self = this, style = self.style;
     _$jscoverage['/touch.js'].lineData[71]++;
-    if (visit82_71_1(isMsPointerSupported && style)) {
+    if (visit83_71_1(isMsPointerSupported && style)) {
       _$jscoverage['/touch.js'].lineData[72]++;
-      if (visit83_72_1(!self.__ks_touch_action_count)) {
+      if (visit84_72_1(!self.__ks_touch_action_count)) {
         _$jscoverage['/touch.js'].lineData[73]++;
         S.error('touch event error for ie');
       }
       _$jscoverage['/touch.js'].lineData[75]++;
       self.__ks_touch_action_count--;
       _$jscoverage['/touch.js'].lineData[76]++;
-      if (visit84_76_1(!self.__ks_touch_action_count)) {
+      if (visit85_76_1(!self.__ks_touch_action_count)) {
         _$jscoverage['/touch.js'].lineData[77]++;
         style.msUserSelect = self.__ks_user_select;
         _$jscoverage['/touch.js'].lineData[78]++;
@@ -485,7 +485,7 @@ KISSY.add('event/dom/touch', function(S, DomEvent, eventHandleMap, eventHandle) 
     _$jscoverage['/touch.js'].lineData[90]++;
     eventHandleValue = eventHandleMap[e];
     _$jscoverage['/touch.js'].lineData[91]++;
-    if (visit85_91_1(eventHandleValue.setup)) {
+    if (visit86_91_1(eventHandleValue.setup)) {
       _$jscoverage['/touch.js'].lineData[92]++;
       specialEvent.setup = setupExtra;
     } else {
@@ -493,7 +493,7 @@ KISSY.add('event/dom/touch', function(S, DomEvent, eventHandleMap, eventHandle) 
       specialEvent.setup = setup;
     }
     _$jscoverage['/touch.js'].lineData[96]++;
-    if (visit86_96_1(eventHandleValue.tearDown)) {
+    if (visit87_96_1(eventHandleValue.tearDown)) {
       _$jscoverage['/touch.js'].lineData[97]++;
       specialEvent.tearDown = tearDownExtra;
     } else {
@@ -501,12 +501,12 @@ KISSY.add('event/dom/touch', function(S, DomEvent, eventHandleMap, eventHandle) 
       specialEvent.tearDown = tearDown;
     }
     _$jscoverage['/touch.js'].lineData[101]++;
-    if (visit87_101_1(eventHandleValue.add)) {
+    if (visit88_101_1(eventHandleValue.add)) {
       _$jscoverage['/touch.js'].lineData[102]++;
       specialEvent.add = eventHandleValue.add;
     }
     _$jscoverage['/touch.js'].lineData[104]++;
-    if (visit88_104_1(eventHandleValue.remove)) {
+    if (visit89_104_1(eventHandleValue.remove)) {
       _$jscoverage['/touch.js'].lineData[105]++;
       specialEvent.remove = eventHandleValue.remove;
     }

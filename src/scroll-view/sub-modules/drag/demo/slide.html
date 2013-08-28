@@ -99,6 +99,54 @@
             z-index: 2;
             position: relative;
         }
+
+        .ks-image-zoomer-hide-scrollbar {
+            overflow: hidden;
+        }
+
+        body, ul, li {
+            padding: 0;
+            margin: 0;
+            border: 0;
+        }
+
+        .ks-image-zoomer {
+            left: 0;
+            top: 0;
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: 10;
+            /*background-color: #ffff00;*/
+        }
+
+        .ks-image-zoomer-close {
+            background: url(http://img02.taobaocdn.com/tps/i2/T1Y1r0Xc8cXXXK3ITg-44-44.png);
+            width: 44px;
+            height: 44px;
+            position: fixed;
+            right: 0;
+            top: 0;
+            z-index: 100;
+            cursor: pointer;
+        }
+
+        .ks-image-zoomer-mask {
+            left: 0;
+            top: 0;
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: 9;
+            background-color: #333;
+            opacity: 0.6;
+        }
+
+        .ks-image-zoomer img {
+            position: fixed;
+            left: 0;
+            top: 0;
+        }
     </style>
 </head>
 <body>
@@ -126,9 +174,13 @@
     KISSY.config('packages', {
         slide: {
             base: './'
+        },
+        'image-zoomer': {
+            base: '/kissy/src/scroll-view/sub-modules/plugin/scrollbar/demo/'
         }
     });
-    KISSY.use('slide', function (S, Slide) {
+    KISSY.use('node,slide,image-zoomer', function (S, Node, Slide, imageZoomer) {
+        var $ = Node.all;
         var slide = new Slide({
             srcNode: '#demo2',
             hasTrigger: true,
@@ -136,6 +188,13 @@
         }).render();
         slide.triggers.each(function (t, i) {
             t.html(i + 1);
+        });
+        $('#demo2').delegate(Node.Gesture.singleTap, 'img', function (e) {
+            imageZoomer.showImage({
+                src: e.currentTarget.src,
+                width: 1200,
+                height: 1200
+            });
         });
         window.slide = slide;
     });

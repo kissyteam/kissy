@@ -281,15 +281,15 @@ if (! _$jscoverage['/touch/pinch.js'].branchData) {
   _$jscoverage['/touch/pinch.js'].branchData['70'][1] = new BranchData();
 }
 _$jscoverage['/touch/pinch.js'].branchData['70'][1].init(14, 21, 'e.touches.length == 2');
-function visit49_70_1(result) {
+function visit50_70_1(result) {
   _$jscoverage['/touch/pinch.js'].branchData['70'][1].ranCondition(result);
   return result;
 }_$jscoverage['/touch/pinch.js'].branchData['35'][1].init(277, 15, '!self.isStarted');
-function visit48_35_1(result) {
+function visit49_35_1(result) {
   _$jscoverage['/touch/pinch.js'].branchData['35'][1].ranCondition(result);
   return result;
 }_$jscoverage['/touch/pinch.js'].branchData['26'][1].init(50, 16, '!self.isTracking');
-function visit47_26_1(result) {
+function visit48_26_1(result) {
   _$jscoverage['/touch/pinch.js'].branchData['26'][1].ranCondition(result);
   return result;
 }_$jscoverage['/touch/pinch.js'].lineData[6]++;
@@ -316,7 +316,7 @@ KISSY.add('event/dom/touch/pinch', function(S, eventHandleMap, DomEvent, MultiTo
   _$jscoverage['/touch/pinch.js'].lineData[24]++;
   var self = this;
   _$jscoverage['/touch/pinch.js'].lineData[26]++;
-  if (visit47_26_1(!self.isTracking)) {
+  if (visit48_26_1(!self.isTracking)) {
     _$jscoverage['/touch/pinch.js'].lineData[27]++;
     return;
   }
@@ -327,7 +327,7 @@ KISSY.add('event/dom/touch/pinch', function(S, eventHandleMap, DomEvent, MultiTo
   _$jscoverage['/touch/pinch.js'].lineData[33]++;
   self.lastTouches = touches;
   _$jscoverage['/touch/pinch.js'].lineData[35]++;
-  if (visit48_35_1(!self.isStarted)) {
+  if (visit49_35_1(!self.isStarted)) {
     _$jscoverage['/touch/pinch.js'].lineData[36]++;
     self.isStarted = true;
     _$jscoverage['/touch/pinch.js'].lineData[37]++;
@@ -362,7 +362,7 @@ KISSY.add('event/dom/touch/pinch', function(S, eventHandleMap, DomEvent, MultiTo
   function prevent(e) {
     _$jscoverage['/touch/pinch.js'].functionData[5]++;
     _$jscoverage['/touch/pinch.js'].lineData[70]++;
-    if (visit49_70_1(e.touches.length == 2)) {
+    if (visit50_70_1(e.touches.length == 2)) {
       _$jscoverage['/touch/pinch.js'].lineData[71]++;
       e.preventDefault();
     }

@@ -245,7 +245,7 @@
                     if (m && m[0]) {
                         UA[m[0].toLowerCase()] = UA.ios;
                     }
-                } else if (/ Android/.test(ua)) {
+                } else if (/ Android/i.test(ua)) {
                     if (/Mobile/.test(ua)) {
                         os = UA.mobile = 'android';
                     }

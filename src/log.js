@@ -2,17 +2,22 @@
  * simple log utils
  * @author yiminghe@gmail.com
  */
-(function (S) {
+(function () {
     var log_div;
+    
+    function create(html){
+    	var div=document.createElement('div');
+    	div.innerHTML=html;
+      return div.firstChild;
+    }
 
     function log(str) {
-        var Dom = S.DOM;
         var height = 100;
-        if (Dom.viewportHeight() > 500) {
+        if (window.innerHeight > 500) {
             height = 200;
         }
         if (!log_div) {
-            log_div = Dom.create('<div style="position:fixed;' +
+            log_div =create('<div style="position:fixed;' +
                 'right:0;top:0;width:200px;' +
                 'z-index:9999;' +
                 'height:' + height + 'px;' +
@@ -20,12 +25,18 @@
                 'border:1px solid red;' +
                 'background:white;' +
                 'overflow:auto"></div>');
-            Dom.append(log_div, document.body);
+            document.body.appendChild(log_div);
+            var button = create('<button style="position:fixed;' +
+                'right:0;top:' + height + 'px;width:200px;' +
+                'z-index:9999;">clear</button>');
+            document.body.appendChild(button);
+            button.onclick = function () {
+                log_div.innerHTML = '';
+            };
         }
-        Dom.append(Dom.create('<p>' + str + ' : ' + S.now() + '</p>'),
-            log_div);
+        log_div.appendChild(create('<p>' + str + ' : ' + new Date().valueOf() + '</p>'));
         log_div.scrollTop = log_div.scrollHeight;
     }
 
     window.log = log;
-})(KISSY);
+})();

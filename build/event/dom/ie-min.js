@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Aug 27 21:59
+build time: Aug 28 18:23
 */
 KISSY.add("event/dom/ie/change",function(h,b,g){function d(c){c=c.type;return"checkbox"==c||"radio"==c}function f(c){"checked"==c.originalEvent.propertyName&&(this.__changed=1)}function e(c){this.__changed&&(this.__changed=0,b.fire(this,"change",c))}function a(c){c=c.target;i.test(c.nodeName)&&!c.__changeHandler&&(c.__changeHandler=1,b.on(c,"change",{fn:j,last:1}))}function j(c){if(!c.isPropagationStopped()&&!d(this)){var a;(a=this.parentNode)&&b.fire(a,"change",c)}}var i=/^(?:textarea|input|select)$/i;
 b.Special.change={setup:function(){if(i.test(this.nodeName))if(d(this))b.on(this,"propertychange",f),b.on(this,"click",e);else return!1;else b.on(this,"beforeactivate",a)},tearDown:function(){if(i.test(this.nodeName))if(d(this))b.remove(this,"propertychange",f),b.remove(this,"click",e);else return!1;else b.remove(this,"beforeactivate",a),h.each(g.query("textarea,input,select",this),function(a){a.__changeHandler&&(a.__changeHandler=0,b.remove(a,"change",{fn:j,last:1}))})}}},{requires:["event/dom/base",

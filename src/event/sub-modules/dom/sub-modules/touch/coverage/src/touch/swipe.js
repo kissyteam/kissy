@@ -327,79 +327,79 @@ if (! _$jscoverage['/touch/swipe.js'].branchData) {
   _$jscoverage['/touch/swipe.js'].branchData['152'][1] = new BranchData();
 }
 _$jscoverage['/touch/swipe.js'].branchData['152'][1].init(48, 29, 'self.onTouchMove(e) === false');
-function visit75_152_1(result) {
+function visit76_152_1(result) {
   _$jscoverage['/touch/swipe.js'].branchData['152'][1].ranCondition(result);
   return result;
 }_$jscoverage['/touch/swipe.js'].branchData['143'][2].init(624, 22, 'absDeltaY > MAX_OFFSET');
-function visit74_143_2(result) {
+function visit75_143_2(result) {
   _$jscoverage['/touch/swipe.js'].branchData['143'][2].ranCondition(result);
   return result;
 }_$jscoverage['/touch/swipe.js'].branchData['143'][1].init(603, 43, 'self.isHorizontal && absDeltaY > MAX_OFFSET');
-function visit73_143_1(result) {
+function visit74_143_1(result) {
   _$jscoverage['/touch/swipe.js'].branchData['143'][1].ranCondition(result);
   return result;
 }_$jscoverage['/touch/swipe.js'].branchData['139'][2].init(505, 22, 'absDeltaX > MAX_OFFSET');
-function visit72_139_2(result) {
+function visit73_139_2(result) {
   _$jscoverage['/touch/swipe.js'].branchData['139'][2].ranCondition(result);
   return result;
 }_$jscoverage['/touch/swipe.js'].branchData['139'][1].init(486, 41, 'self.isVertical && absDeltaX > MAX_OFFSET');
-function visit71_139_1(result) {
+function visit72_139_1(result) {
   _$jscoverage['/touch/swipe.js'].branchData['139'][1].ranCondition(result);
   return result;
 }_$jscoverage['/touch/swipe.js'].branchData['135'][1].init(381, 36, 'time - self.startTime > MAX_DURATION');
-function visit70_135_1(result) {
+function visit71_135_1(result) {
   _$jscoverage['/touch/swipe.js'].branchData['135'][1].ranCondition(result);
   return result;
 }_$jscoverage['/touch/swipe.js'].branchData['118'][1].init(415, 29, 'e.type.indexOf(\'mouse\') != -1');
-function visit69_118_1(result) {
+function visit70_118_1(result) {
   _$jscoverage['/touch/swipe.js'].branchData['118'][1].ranCondition(result);
   return result;
 }_$jscoverage['/touch/swipe.js'].branchData['106'][1].init(48, 62, 'Swipe.superclass.onTouchStart.apply(self, arguments) === false');
-function visit68_106_1(result) {
+function visit69_106_1(result) {
   _$jscoverage['/touch/swipe.js'].branchData['106'][1].ranCondition(result);
   return result;
 }_$jscoverage['/touch/swipe.js'].branchData['48'][1].init(26, 10, 'deltaY < 0');
-function visit67_48_1(result) {
+function visit68_48_1(result) {
   _$jscoverage['/touch/swipe.js'].branchData['48'][1].ranCondition(result);
   return result;
 }_$jscoverage['/touch/swipe.js'].branchData['47'][1].init(1034, 15, 'self.isVertical');
-function visit66_47_1(result) {
+function visit67_47_1(result) {
   _$jscoverage['/touch/swipe.js'].branchData['47'][1].ranCondition(result);
   return result;
 }_$jscoverage['/touch/swipe.js'].branchData['45'][1].init(26, 10, 'deltaX < 0');
-function visit65_45_1(result) {
+function visit66_45_1(result) {
   _$jscoverage['/touch/swipe.js'].branchData['45'][1].ranCondition(result);
   return result;
 }_$jscoverage['/touch/swipe.js'].branchData['44'][1].init(901, 17, 'self.isHorizontal');
-function visit64_44_1(result) {
+function visit65_44_1(result) {
   _$jscoverage['/touch/swipe.js'].branchData['44'][1].ranCondition(result);
   return result;
 }_$jscoverage['/touch/swipe.js'].branchData['39'][2].init(158, 24, 'absDeltaX < MIN_DISTANCE');
-function visit63_39_2(result) {
+function visit64_39_2(result) {
   _$jscoverage['/touch/swipe.js'].branchData['39'][2].ranCondition(result);
   return result;
 }_$jscoverage['/touch/swipe.js'].branchData['39'][1].init(137, 45, 'self.isHorizontal && absDeltaX < MIN_DISTANCE');
-function visit62_39_1(result) {
+function visit63_39_1(result) {
   _$jscoverage['/touch/swipe.js'].branchData['39'][1].ranCondition(result);
   return result;
 }_$jscoverage['/touch/swipe.js'].branchData['35'][2].init(37, 24, 'absDeltaY < MIN_DISTANCE');
-function visit61_35_2(result) {
+function visit62_35_2(result) {
   _$jscoverage['/touch/swipe.js'].branchData['35'][2].ranCondition(result);
   return result;
 }_$jscoverage['/touch/swipe.js'].branchData['35'][1].init(18, 43, 'self.isVertical && absDeltaY < MIN_DISTANCE');
-function visit60_35_1(result) {
+function visit61_35_1(result) {
   _$jscoverage['/touch/swipe.js'].branchData['35'][1].ranCondition(result);
   return result;
 }_$jscoverage['/touch/swipe.js'].branchData['28'][1].init(22, 21, 'absDeltaY > absDeltaX');
-function visit59_28_1(result) {
+function visit60_28_1(result) {
   _$jscoverage['/touch/swipe.js'].branchData['28'][1].ranCondition(result);
   return result;
 }_$jscoverage['/touch/swipe.js'].branchData['27'][1].init(18, 36, 'self.isVertical && self.isHorizontal');
-function visit58_27_1(result) {
+function visit59_27_1(result) {
   _$jscoverage['/touch/swipe.js'].branchData['27'][1].ranCondition(result);
   return result;
 }_$jscoverage['/touch/swipe.js'].branchData['26'][1].init(361, 3, 'ing');
-function visit57_26_1(result) {
+function visit58_26_1(result) {
   _$jscoverage['/touch/swipe.js'].branchData['26'][1].ranCondition(result);
   return result;
 }_$jscoverage['/touch/swipe.js'].lineData[6]++;
@@ -413,11 +413,11 @@ KISSY.add('event/dom/touch/swipe', function(S, eventHandleMap, DomEvent, SingleT
     _$jscoverage['/touch/swipe.js'].lineData[15]++;
     var touches = e.changedTouches, touch = touches[0], x = touch.pageX, y = touch.pageY, deltaX = x - self.startX, deltaY = y - self.startY, absDeltaX = Math.abs(deltaX), absDeltaY = Math.abs(deltaY), distance, direction;
     _$jscoverage['/touch/swipe.js'].lineData[26]++;
-    if (visit57_26_1(ing)) {
+    if (visit58_26_1(ing)) {
       _$jscoverage['/touch/swipe.js'].lineData[27]++;
-      if (visit58_27_1(self.isVertical && self.isHorizontal)) {
+      if (visit59_27_1(self.isVertical && self.isHorizontal)) {
         _$jscoverage['/touch/swipe.js'].lineData[28]++;
-        if (visit59_28_1(absDeltaY > absDeltaX)) {
+        if (visit60_28_1(absDeltaY > absDeltaX)) {
           _$jscoverage['/touch/swipe.js'].lineData[29]++;
           self.isHorizontal = 0;
         } else {
@@ -427,27 +427,27 @@ KISSY.add('event/dom/touch/swipe', function(S, eventHandleMap, DomEvent, SingleT
       }
     } else {
       _$jscoverage['/touch/swipe.js'].lineData[35]++;
-      if (visit60_35_1(self.isVertical && visit61_35_2(absDeltaY < MIN_DISTANCE))) {
+      if (visit61_35_1(self.isVertical && visit62_35_2(absDeltaY < MIN_DISTANCE))) {
         _$jscoverage['/touch/swipe.js'].lineData[36]++;
         self.isVertical = 0;
       }
       _$jscoverage['/touch/swipe.js'].lineData[39]++;
-      if (visit62_39_1(self.isHorizontal && visit63_39_2(absDeltaX < MIN_DISTANCE))) {
+      if (visit63_39_1(self.isHorizontal && visit64_39_2(absDeltaX < MIN_DISTANCE))) {
         _$jscoverage['/touch/swipe.js'].lineData[40]++;
         self.isHorizontal = 0;
       }
     }
     _$jscoverage['/touch/swipe.js'].lineData[44]++;
-    if (visit64_44_1(self.isHorizontal)) {
+    if (visit65_44_1(self.isHorizontal)) {
       _$jscoverage['/touch/swipe.js'].lineData[45]++;
-      direction = visit65_45_1(deltaX < 0) ? 'left' : 'right';
+      direction = visit66_45_1(deltaX < 0) ? 'left' : 'right';
       _$jscoverage['/touch/swipe.js'].lineData[46]++;
       distance = absDeltaX;
     } else {
       _$jscoverage['/touch/swipe.js'].lineData[47]++;
-      if (visit66_47_1(self.isVertical)) {
+      if (visit67_47_1(self.isVertical)) {
         _$jscoverage['/touch/swipe.js'].lineData[48]++;
-        direction = visit67_48_1(deltaY < 0) ? 'up' : 'down';
+        direction = visit68_48_1(deltaY < 0) ? 'up' : 'down';
         _$jscoverage['/touch/swipe.js'].lineData[49]++;
         distance = absDeltaY;
       } else {
@@ -479,7 +479,7 @@ KISSY.add('event/dom/touch/swipe', function(S, eventHandleMap, DomEvent, SingleT
   _$jscoverage['/touch/swipe.js'].lineData[105]++;
   var self = this;
   _$jscoverage['/touch/swipe.js'].lineData[106]++;
-  if (visit68_106_1(Swipe.superclass.onTouchStart.apply(self, arguments) === false)) {
+  if (visit69_106_1(Swipe.superclass.onTouchStart.apply(self, arguments) === false)) {
     _$jscoverage['/touch/swipe.js'].lineData[107]++;
     return false;
   }
@@ -496,7 +496,7 @@ KISSY.add('event/dom/touch/swipe', function(S, eventHandleMap, DomEvent, SingleT
   _$jscoverage['/touch/swipe.js'].lineData[116]++;
   this.startY = touch.pageY;
   _$jscoverage['/touch/swipe.js'].lineData[118]++;
-  if (visit69_118_1(e.type.indexOf('mouse') != -1)) {
+  if (visit70_118_1(e.type.indexOf('mouse') != -1)) {
     _$jscoverage['/touch/swipe.js'].lineData[119]++;
     e.preventDefault();
   }
@@ -508,17 +508,17 @@ KISSY.add('event/dom/touch/swipe', function(S, eventHandleMap, DomEvent, SingleT
   _$jscoverage['/touch/swipe.js'].lineData[125]++;
   var self = this, touch = e.changedTouches[0], x = touch.pageX, y = touch.pageY, deltaX = x - self.startX, deltaY = y - self.startY, absDeltaX = Math.abs(deltaX), absDeltaY = Math.abs(deltaY), time = e.timeStamp;
   _$jscoverage['/touch/swipe.js'].lineData[135]++;
-  if (visit70_135_1(time - self.startTime > MAX_DURATION)) {
+  if (visit71_135_1(time - self.startTime > MAX_DURATION)) {
     _$jscoverage['/touch/swipe.js'].lineData[136]++;
     return false;
   }
   _$jscoverage['/touch/swipe.js'].lineData[139]++;
-  if (visit71_139_1(self.isVertical && visit72_139_2(absDeltaX > MAX_OFFSET))) {
+  if (visit72_139_1(self.isVertical && visit73_139_2(absDeltaX > MAX_OFFSET))) {
     _$jscoverage['/touch/swipe.js'].lineData[140]++;
     self.isVertical = 0;
   }
   _$jscoverage['/touch/swipe.js'].lineData[143]++;
-  if (visit73_143_1(self.isHorizontal && visit74_143_2(absDeltaY > MAX_OFFSET))) {
+  if (visit74_143_1(self.isHorizontal && visit75_143_2(absDeltaY > MAX_OFFSET))) {
     _$jscoverage['/touch/swipe.js'].lineData[144]++;
     self.isHorizontal = 0;
   }
@@ -530,7 +530,7 @@ KISSY.add('event/dom/touch/swipe', function(S, eventHandleMap, DomEvent, SingleT
   _$jscoverage['/touch/swipe.js'].lineData[151]++;
   var self = this;
   _$jscoverage['/touch/swipe.js'].lineData[152]++;
-  if (visit75_152_1(self.onTouchMove(e) === false)) {
+  if (visit76_152_1(self.onTouchMove(e) === false)) {
     _$jscoverage['/touch/swipe.js'].lineData[153]++;
     return false;
   }

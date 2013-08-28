@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Aug 27 21:59
+build time: Aug 28 18:23
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -309,98 +309,93 @@ KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, DomEvent, Single
  * gesture single tap double tap
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/touch/double-tap',
-    function (S, eventHandleMap, DomEvent, SingleTouch) {
+KISSY.add('event/dom/touch/double-tap', function (S, eventHandleMap, DomEvent, SingleTouch) {
+    var SINGLE_TAP = 'singleTap',
+        DOUBLE_TAP = 'doubleTap',
+    // same with native click delay
+        MAX_DURATION = 300;
 
-        var SINGLE_TAP = 'singleTap',
-            DOUBLE_TAP = 'doubleTap',
-        // same with native click delay
-            MAX_DURATION = 300;
+    function DoubleTap() {
+    }
 
-        function DoubleTap() {
-        }
-
-        S.extend(DoubleTap, SingleTouch, {
-
-            onTouchStart: function (e) {
-                var self = this;
-                if (DoubleTap.superclass.onTouchStart.apply(self, arguments) === false) {
-                    return false;
-                }
-                self.startTime = e.timeStamp;
-                if (self.singleTapTimer) {
-                    clearTimeout(self.singleTapTimer);
-                    self.singleTapTimer = 0;
-                }
-            },
-
-            onTouchMove: function () {
+    S.extend(DoubleTap, SingleTouch, {
+        onTouchStart: function (e) {
+            var self = this;
+            if (DoubleTap.superclass.onTouchStart.apply(self, arguments) === false) {
                 return false;
-            },
+            }
+            self.startTime = e.timeStamp;
+            if (self.singleTapTimer) {
+                clearTimeout(self.singleTapTimer);
+                self.singleTapTimer = 0;
+            }
+        },
 
-            onTouchEnd: function (e) {
-                var self = this,
-                    lastEndTime = self.lastEndTime,
-                    time = e.timeStamp,
-                    target = e.target,
-                    touch = e.changedTouches[0],
-                    duration = time - self.startTime;
-                self.lastEndTime = time;
-                // second touch end
-                if (lastEndTime) {
-                    // time between current up and last up
-                    duration = time - lastEndTime;
-                    // a double tap
-                    if (duration < MAX_DURATION) {
-                        // a new double tap cycle
-                        self.lastEndTime = 0;
+        onTouchMove: function () {
+            return false;
+        },
 
-                        DomEvent.fire(target, DOUBLE_TAP, {
-                            touch: touch,
-                            duration: duration / 1000
-                        });
-                        return;
-                    }
-                    // else treat as the first tap cycle
-                }
-
-                // time between down and up is long enough
-                // then a singleTap
+        onTouchEnd: function (e) {
+            var self = this,
+                lastEndTime = self.lastEndTime,
+                time = e.timeStamp,
+                target = e.target,
+                touch = e.changedTouches[0],
                 duration = time - self.startTime;
-                if (duration > MAX_DURATION) {
+            self.lastEndTime = time;
+            // second touch end
+            if (lastEndTime) {
+                // time between current up and last up
+                duration = time - lastEndTime;
+                // a double tap
+                if (duration < MAX_DURATION) {
+                    // a new double tap cycle
+                    self.lastEndTime = 0;
+
+                    DomEvent.fire(target, DOUBLE_TAP, {
+                        touch: touch,
+                        duration: duration / 1000
+                    });
+                    return;
+                }
+                // else treat as the first tap cycle
+            }
+
+            // time between down and up is long enough
+            // then a singleTap
+            duration = time - self.startTime;
+            if (duration > MAX_DURATION) {
+                DomEvent.fire(target, SINGLE_TAP, {
+                    touch: touch,
+                    pageX: touch.pageX,
+                    which: 1,
+                    pageY: touch.pageY,
+                    duration: duration / 1000
+                })
+            } else {
+                // buffer singleTap
+                // wait for a second tap
+                self.singleTapTimer = setTimeout(function () {
                     DomEvent.fire(target, SINGLE_TAP, {
                         touch: touch,
-                        pageX:touch.pageX,
+                        pageX: touch.pageX,
                         which: 1,
-                        pageY:touch.pageY,
+                        pageY: touch.pageY,
                         duration: duration / 1000
-                    })
-                } else {
-                    // buffer singleTap
-                    // wait for a second tap
-                    self.singleTapTimer = setTimeout(function () {
-                        DomEvent.fire(target, SINGLE_TAP, {
-                            touch: touch,
-                            pageX:touch.pageX,
-                            which: 1,
-                            pageY:touch.pageY,
-                            duration: duration / 1000
-                        });
-                    }, MAX_DURATION);
-                }
-
+                    });
+                }, MAX_DURATION);
             }
-        });
-
-        eventHandleMap[SINGLE_TAP] = eventHandleMap[DOUBLE_TAP] = {
-            handle: new DoubleTap()
-        };
-
-        return DoubleTap;
-
-    }, {
-        requires: ['./handle-map', 'event/dom/base', './single-touch']
+        }
     });
+
+    eventHandleMap[SINGLE_TAP] = eventHandleMap[DOUBLE_TAP] = {
+        handle: new DoubleTap()
+    };
+
+    return DoubleTap;
+}, {
+    requires: ['./handle-map', 'event/dom/base', './single-touch']
+});
 /**
  * @ignore
  * multi-touch base
@@ -764,6 +759,7 @@ KISSY.add('event/dom/touch/rotate', function (S, eventHandleMap, MultiTouch, Dom
 KISSY.add('event/dom/touch/handle', function (S, Dom, eventHandleMap, DomEvent) {
     var key = S.guid('touch-handle'),
         Features = S.Features,
+        UA = S.UA,
         isMsPointerSupported = Features.isMsPointerSupported(),
         touchEvents = {},
         startEvent,
@@ -772,10 +768,16 @@ KISSY.add('event/dom/touch/handle', function (S, Dom, eventHandleMap, DomEvent) 
         endEvent;
 
     if (Features.isTouchEventSupported()) {
-        startEvent = 'touchstart mousedown';
         endEvent = 'touchend';
-        moveEvent = 'touchmove mousemove';
         cancelEvent = 'touchcancel';
+        // mouse event on android chrome is buggy...
+        if (UA.webkit && !UA.android) {
+            startEvent = 'touchstart mousedown';
+            moveEvent = 'touchmove mousemove';
+        } else {
+            startEvent = 'touchstart';
+            moveEvent = 'touchmove';
+        }
     } else if (isMsPointerSupported) {
         startEvent = 'MSPointerDown';
         moveEvent = 'MSPointerMove';
@@ -875,8 +877,11 @@ KISSY.add('event/dom/touch/handle', function (S, Dom, eventHandleMap, DomEvent) 
             var e, h,
                 self = this,
                 eventHandle = self.eventHandle;
+            // log('start: ' + event.type);
             if ('touches' in event) {
                 self.inTouch = event.touches.length;
+                // will prevent mousedown and click....
+                //event.preventDefault();
             } else {
                 if (self.inTouch) {
                     // ignore mouse
@@ -1041,13 +1046,25 @@ KISSY.add('event/dom/touch/handle', function (S, Dom, eventHandleMap, DomEvent) 
     ]
 });
 /**
- * 2013-07-23 yiminghe@gmail.com
- * - bind both mouse and touch for start
- * - but bind mousemove or touchmove for move
- *
- *
- * in order to make tap/doubleTap bubbling same with native event.
- * register event on document and then bubble programmatically!
+ 2013-08-28
+ - chrome android bug: first series touchstart is not fired!
+ - chrome android bug when bind mousedown and touch together to ordinary div
+ chrome pc ：
+ touchstart mousedown touchend
+
+ chrome android ：
+ touchstart touchend mousedown
+
+ safari no mousedown
+
+
+ 2013-07-23 yiminghe@gmail.com
+ - bind both mouse and touch for start
+ - but bind mousemove or touchmove for move
+
+
+ in order to make tap/doubleTap bubbling same with native event.
+ register event on document and then bubble programmatically!
  */
 /**
  * @ignore

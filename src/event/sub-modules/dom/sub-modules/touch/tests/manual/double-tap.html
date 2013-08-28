@@ -6,7 +6,7 @@
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-touch-fullscreen" content="yes">
-    <script src="/kissy/build/seed.js" charset="utf-8"></script>
+    <script src="/kissy/build/seed.js?f" charset="utf-8"></script>
     <script src="/kissy/src/package.js"></script>
     <script src="/kissy/src/log.js"></script>
 </head>
@@ -16,7 +16,8 @@
 
 <a href="http://www.g.cn">google</a>
 
-<div id='t'   style='border:1px solid green;
+<div id='t'
+     style='border:1px solid green;
      width:100px;height:100px;margin:10px'>
     tttt ttttt ttttt tttttt tttttt
 </div>
@@ -24,11 +25,10 @@
 <script>
 
     KISSY.use('event', function (S, Event) {
-
         Event.on('#t', "singleTap doubleTap", function (e) {
             log(e.type + ' : ' + e.duration);
         });
-
+        alert('ok');
     });
 
 </script>

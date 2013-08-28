@@ -262,7 +262,7 @@ if (! _$jscoverage['/touch/tap.js'].branchData) {
   _$jscoverage['/touch/tap.js'].branchData['40'][1] = new BranchData();
 }
 _$jscoverage['/touch/tap.js'].branchData['40'][1].init(509, 32, 'eventObject.isDefaultPrevented()');
-function visit78_40_1(result) {
+function visit79_40_1(result) {
   _$jscoverage['/touch/tap.js'].branchData['40'][1].ranCondition(result);
   return result;
 }_$jscoverage['/touch/tap.js'].lineData[6]++;
@@ -311,7 +311,7 @@ KISSY.add('event/dom/touch/tap', function(S, eventHandleMap, DomEvent, SingleTou
   _$jscoverage['/touch/tap.js'].lineData[39]++;
   DomEvent.fire(target, event, eventObject);
   _$jscoverage['/touch/tap.js'].lineData[40]++;
-  if (visit78_40_1(eventObject.isDefaultPrevented())) {
+  if (visit79_40_1(eventObject.isDefaultPrevented())) {
     _$jscoverage['/touch/tap.js'].lineData[41]++;
     DomEvent.on(target, 'click', {
   fn: preventDefault, 

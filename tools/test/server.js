@@ -189,8 +189,12 @@ S.use('xtemplate/nodejs', function (S, XTemplateNodeJs) {
         app.post('/save-coverage-report', function (req, res) {
             var report = req.param('report');
             var component = req.param('component');
-            // remove last component name
-            component = component.replace(/\/[^/]+$/, '');
+            if (component.indexOf('/') != -1) {
+                // remove last component name
+                component = component.replace(/[^/]+$/, '');
+            } else {
+                component = ''
+            }
             var myPath = cwd + '/../' + req.param('path');
             var jsonReport = JSON.parse(report);
             var srcPath = path.resolve(myPath, '../../../src/') + '/';
@@ -200,7 +204,8 @@ S.use('xtemplate/nodejs', function (S, XTemplateNodeJs) {
                 // coveralls.io does not need first data
                 detail.lineData.shift();
                 var lineData = detail.lineData;
-                var name = component + f;
+                // remove leading slash
+                var name = component + f.slice(1);
                 var info = getSourceInfo(name);
                 if (info) {
                     merge(info.coverage, lineData);

@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Aug 27 21:59
+build time: Aug 28 18:23
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -2005,9 +2005,13 @@ KISSY.add('event/dom/base/gesture', function () {
          */
         tap: 'click',
         /**
-         * doubleTap gesture, it is not same with dblclick
+         * singleTap gesture, it is  same with click on pc
          */
-        doubleTap:'dblclick'
+        singleTap: 'click',
+        /**
+         * doubleTap gesture, it is  same with dblclick on pc
+         */
+        doubleTap: 'dblclick'
     };
 
 });

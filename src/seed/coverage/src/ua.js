@@ -447,7 +447,7 @@ function visit588_377_1(result) {
 function visit587_372_1(result) {
   _$jscoverage['/ua.js'].branchData['372'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ua.js'].branchData['369'][1].init(12173, 15, 'documentElement');
+}_$jscoverage['/ua.js'].branchData['369'][1].init(12174, 15, 'documentElement');
 function visit586_369_1(result) {
   _$jscoverage['/ua.js'].branchData['369'][1].ranCondition(result);
   return result;
@@ -459,11 +459,11 @@ function visit585_367_1(result) {
 function visit584_345_1(result) {
   _$jscoverage['/ua.js'].branchData['345'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ua.js'].branchData['343'][1].init(11431, 27, 'typeof process === \'object\'');
+}_$jscoverage['/ua.js'].branchData['343'][1].init(11432, 27, 'typeof process === \'object\'');
 function visit583_343_1(result) {
   _$jscoverage['/ua.js'].branchData['343'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ua.js'].branchData['335'][1].init(10289, 15, 'UA.core || core');
+}_$jscoverage['/ua.js'].branchData['335'][1].init(10290, 15, 'UA.core || core');
 function visit582_335_1(result) {
   _$jscoverage['/ua.js'].branchData['335'][1].ranCondition(result);
   return result;
@@ -483,7 +483,7 @@ function visit579_325_1(result) {
 function visit578_323_1(result) {
   _$jscoverage['/ua.js'].branchData['323'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ua.js'].branchData['322'][1].init(9879, 3, '!os');
+}_$jscoverage['/ua.js'].branchData['322'][1].init(9880, 3, '!os');
 function visit577_322_1(result) {
   _$jscoverage['/ua.js'].branchData['322'][1].ranCondition(result);
   return result;
@@ -523,7 +523,7 @@ function visit569_274_1(result) {
 function visit568_270_1(result) {
   _$jscoverage['/ua.js'].branchData['270'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ua.js'].branchData['262'][1].init(1782, 44, '(m = ua.match(/PhantomJS\\/([^\\s]*)/)) && m[1]');
+}_$jscoverage['/ua.js'].branchData['262'][1].init(1783, 44, '(m = ua.match(/PhantomJS\\/([^\\s]*)/)) && m[1]');
 function visit567_262_1(result) {
   _$jscoverage['/ua.js'].branchData['262'][1].ranCondition(result);
   return result;
@@ -535,7 +535,7 @@ function visit566_253_1(result) {
 function visit565_249_1(result) {
   _$jscoverage['/ua.js'].branchData['249'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ua.js'].branchData['248'][1].init(1165, 19, '/ Android/.test(ua)');
+}_$jscoverage['/ua.js'].branchData['248'][1].init(1165, 20, '/ Android/i.test(ua)');
 function visit564_248_1(result) {
   _$jscoverage['/ua.js'].branchData['248'][1].ranCondition(result);
   return result;
@@ -759,7 +759,7 @@ function visit545_9_1(result) {
           }
         } else {
           _$jscoverage['/ua.js'].lineData[248]++;
-          if (visit564_248_1(/ Android/.test(ua))) {
+          if (visit564_248_1(/ Android/i.test(ua))) {
             _$jscoverage['/ua.js'].lineData[249]++;
             if (visit565_249_1(/Mobile/.test(ua))) {
               _$jscoverage['/ua.js'].lineData[250]++;

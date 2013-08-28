@@ -3,95 +3,90 @@
  * gesture single tap double tap
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/touch/double-tap',
-    function (S, eventHandleMap, DomEvent, SingleTouch) {
+KISSY.add('event/dom/touch/double-tap', function (S, eventHandleMap, DomEvent, SingleTouch) {
+    var SINGLE_TAP = 'singleTap',
+        DOUBLE_TAP = 'doubleTap',
+    // same with native click delay
+        MAX_DURATION = 300;
 
-        var SINGLE_TAP = 'singleTap',
-            DOUBLE_TAP = 'doubleTap',
-        // same with native click delay
-            MAX_DURATION = 300;
+    function DoubleTap() {
+    }
 
-        function DoubleTap() {
-        }
-
-        S.extend(DoubleTap, SingleTouch, {
-
-            onTouchStart: function (e) {
-                var self = this;
-                if (DoubleTap.superclass.onTouchStart.apply(self, arguments) === false) {
-                    return false;
-                }
-                self.startTime = e.timeStamp;
-                if (self.singleTapTimer) {
-                    clearTimeout(self.singleTapTimer);
-                    self.singleTapTimer = 0;
-                }
-            },
-
-            onTouchMove: function () {
+    S.extend(DoubleTap, SingleTouch, {
+        onTouchStart: function (e) {
+            var self = this;
+            if (DoubleTap.superclass.onTouchStart.apply(self, arguments) === false) {
                 return false;
-            },
+            }
+            self.startTime = e.timeStamp;
+            if (self.singleTapTimer) {
+                clearTimeout(self.singleTapTimer);
+                self.singleTapTimer = 0;
+            }
+        },
 
-            onTouchEnd: function (e) {
-                var self = this,
-                    lastEndTime = self.lastEndTime,
-                    time = e.timeStamp,
-                    target = e.target,
-                    touch = e.changedTouches[0],
-                    duration = time - self.startTime;
-                self.lastEndTime = time;
-                // second touch end
-                if (lastEndTime) {
-                    // time between current up and last up
-                    duration = time - lastEndTime;
-                    // a double tap
-                    if (duration < MAX_DURATION) {
-                        // a new double tap cycle
-                        self.lastEndTime = 0;
+        onTouchMove: function () {
+            return false;
+        },
 
-                        DomEvent.fire(target, DOUBLE_TAP, {
-                            touch: touch,
-                            duration: duration / 1000
-                        });
-                        return;
-                    }
-                    // else treat as the first tap cycle
-                }
-
-                // time between down and up is long enough
-                // then a singleTap
+        onTouchEnd: function (e) {
+            var self = this,
+                lastEndTime = self.lastEndTime,
+                time = e.timeStamp,
+                target = e.target,
+                touch = e.changedTouches[0],
                 duration = time - self.startTime;
-                if (duration > MAX_DURATION) {
+            self.lastEndTime = time;
+            // second touch end
+            if (lastEndTime) {
+                // time between current up and last up
+                duration = time - lastEndTime;
+                // a double tap
+                if (duration < MAX_DURATION) {
+                    // a new double tap cycle
+                    self.lastEndTime = 0;
+
+                    DomEvent.fire(target, DOUBLE_TAP, {
+                        touch: touch,
+                        duration: duration / 1000
+                    });
+                    return;
+                }
+                // else treat as the first tap cycle
+            }
+
+            // time between down and up is long enough
+            // then a singleTap
+            duration = time - self.startTime;
+            if (duration > MAX_DURATION) {
+                DomEvent.fire(target, SINGLE_TAP, {
+                    touch: touch,
+                    pageX: touch.pageX,
+                    which: 1,
+                    pageY: touch.pageY,
+                    duration: duration / 1000
+                })
+            } else {
+                // buffer singleTap
+                // wait for a second tap
+                self.singleTapTimer = setTimeout(function () {
                     DomEvent.fire(target, SINGLE_TAP, {
                         touch: touch,
-                        pageX:touch.pageX,
+                        pageX: touch.pageX,
                         which: 1,
-                        pageY:touch.pageY,
+                        pageY: touch.pageY,
                         duration: duration / 1000
-                    })
-                } else {
-                    // buffer singleTap
-                    // wait for a second tap
-                    self.singleTapTimer = setTimeout(function () {
-                        DomEvent.fire(target, SINGLE_TAP, {
-                            touch: touch,
-                            pageX:touch.pageX,
-                            which: 1,
-                            pageY:touch.pageY,
-                            duration: duration / 1000
-                        });
-                    }, MAX_DURATION);
-                }
-
+                    });
+                }, MAX_DURATION);
             }
-        });
-
-        eventHandleMap[SINGLE_TAP] = eventHandleMap[DOUBLE_TAP] = {
-            handle: new DoubleTap()
-        };
-
-        return DoubleTap;
-
-    }, {
-        requires: ['./handle-map', 'event/dom/base', './single-touch']
+        }
     });
+
+    eventHandleMap[SINGLE_TAP] = eventHandleMap[DOUBLE_TAP] = {
+        handle: new DoubleTap()
+    };
+
+    return DoubleTap;
+}, {
+    requires: ['./handle-map', 'event/dom/base', './single-touch']
+});
