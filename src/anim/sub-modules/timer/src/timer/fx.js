@@ -132,10 +132,9 @@ KISSY.add('anim/timer/fx', function (S, Dom, undefined) {
     }
 
     // 判断name是否为css属性
-    var detector;
+    var cssprops = ["width","height"];
     function isCss(name){
-      detector || (detector = Dom.create("<span></span>"));
-      return detector.style[name] === undefined;
+      return cssprops.indexOf(name) > -1;
     }
 
     function getPos(anim, propData) {
