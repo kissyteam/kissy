@@ -22,7 +22,7 @@ KISSY.add(function (S, Node, Base, ScrollView, XTemplate) {
                 snap: true,
                 lockX: direction == 'x',
                 lockY: direction == 'y',
-                bounce: false
+                bounce: self.get('bounce')
             }).render();
             self.content = self.scrollView.get('contentEl');
             if (self.get('hasTrigger')) {
@@ -58,9 +58,12 @@ KISSY.add(function (S, Node, Base, ScrollView, XTemplate) {
                 duration: this.get('duration')
             });
         }
-    },{
-        ATTRS:{
+    }, {
+        ATTRS: {
             srcNode: {},
+            bounce: {
+                value: true
+            },
             direction: {
                 value: 'y'
             },

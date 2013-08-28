@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Aug 27 22:01
+build time: Aug 28 22:56
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -158,7 +158,7 @@ KISSY.add('scroll-view/plugin/scrollbar/render', function (S, Control, ScrollBar
  * scrollbar for KISSY scroll-view
  * @author yiminghe@gmail.com
  */
-KISSY.add('scroll-view/plugin/scrollbar/control', function (S, Node, DD, Control, ScrollBarRender) {
+KISSY.add('scroll-view/plugin/scrollbar/control', function (S, Node, Control, ScrollBarRender) {
 
     var MIN_BAR_LENGTH = 20;
 
@@ -196,13 +196,18 @@ KISSY.add('scroll-view/plugin/scrollbar/control', function (S, Node, DD, Control
                         .on(Gesture.end, self.onUpDownBtnMouseUp, self);
                 });
                 self.$trackEl.on(Gesture.start, self.onTrackElMouseDown, self);
-                self.dd = new DD.Draggable({
-                    node: self.$dragEl,
-                    groups: false,
-                    // allow nested scroll-view
-                    halt: true
-                }).on('drag', self.onDrag, self)
-                    .on('dragstart', self.onDragStart, self);
+                if (self.get('allowDrag')) {
+                    S.use('dd', function (S, DD) {
+                        self.dd = new DD.Draggable({
+                            node: self.$dragEl,
+                            disabled: self.get('disabled'),
+                            groups: false,
+                            // allow nested scroll-view
+                            halt: true
+                        }).on('drag', self.onDrag, self)
+                            .on('dragstart', self.onDragStart, self);
+                    });
+                }
             }
             scrollView
                 .on(self.afterScrollChangeEvent + SCROLLBAR_EVENT_NS,
@@ -322,7 +327,7 @@ KISSY.add('scroll-view/plugin/scrollbar/control', function (S, Node, DD, Control
             }
             self.clearHideTimer();
             self.set('visible', true);
-            if (self.hideFn && !scrollView.dd.get('dragging')) {
+            if (self.hideFn && !scrollView.isScrolling) {
                 self.startHideTimer();
             }
             self.view.syncOnScrollChange();
@@ -340,6 +345,10 @@ KISSY.add('scroll-view/plugin/scrollbar/control', function (S, Node, DD, Control
             },
 
             scrollView: {
+            },
+
+            allowDrag: {
+                value: false
             },
 
             axis: {
@@ -430,7 +439,7 @@ KISSY.add('scroll-view/plugin/scrollbar/control', function (S, Node, DD, Control
     });
 
 }, {
-    requires: ['node', 'dd', 'component/control', './render']
+    requires: ['node', 'component/control', './render']
 });
 /**
  * scrollbar plugin for KISSY scroll-view
@@ -438,17 +447,17 @@ KISSY.add('scroll-view/plugin/scrollbar/control', function (S, Node, DD, Control
  */
 KISSY.add('scroll-view/plugin/scrollbar', function (S, Base, ScrollBar) {
     return Base.extend({
-
         pluginId: this.getName(),
 
         pluginSyncUI: function (scrollView) {
-            var self=this;
+            var self = this;
             var minLength = self.get('minLength');
             var autoHideX = self.get('autoHideX');
             var autoHideY = self.get('autoHideY');
             var my;
             var cfg = {
                 scrollView: scrollView,
+                allowDrag: self.get('allowDrag'),
                 // render: scrollView.get('el') => ie7 bug
                 elBefore: scrollView.$contentEl
             };
@@ -482,7 +491,7 @@ KISSY.add('scroll-view/plugin/scrollbar', function (S, Base, ScrollBar) {
         },
 
         pluginDestructor: function () {
-            var self =this;
+            var self = this;
             if (self.scrollBarX) {
                 self.scrollBarX.destroy();
                 self.scrollBarX = null;
@@ -492,7 +501,6 @@ KISSY.add('scroll-view/plugin/scrollbar', function (S, Base, ScrollBar) {
                 self.scrollBarY = null;
             }
         }
-
     });
 }, {
     requires: ['base', './scrollbar/control']

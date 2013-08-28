@@ -38,6 +38,7 @@ KISSY.add(function (S, Node, ScrollView, ScrollbarPlugin) {
             return;
         }
         scrollView = new ScrollView({
+            lockX:false,
             content: IMAGE_ZOOMER_CONTENT,
             elCls: ZOOMER_CLASS,
             plugins: [ScrollbarPlugin]
@@ -58,10 +59,16 @@ KISSY.add(function (S, Node, ScrollView, ScrollbarPlugin) {
             docElement[e.newVal ? 'addClass' :
                 'removeClass'](HIDE_SCROLLBAR_CLASS);
         });
-        closeEl.on(Node.Gesture.tap, function () {
-            scrollView.stopAnimation();
-            scrollView.hide();
-        });
+        function close(e) {
+            if (e.target.nodeName.toLowerCase() != 'img') {
+                e.halt();
+                scrollView.stopAnimation();
+                scrollView.hide();
+            }
+        }
+
+        closeEl.on(Node.Gesture.tap, close);
+        contentEl.on(Node.Gesture.tap, close);
         $(window).on('resize orientationchange', function () {
             if (scrollView.get('visible')) {
                 scrollView.sync();

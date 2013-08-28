@@ -2,7 +2,7 @@
  * scrollbar for KISSY scroll-view
  * @author yiminghe@gmail.com
  */
-KISSY.add('scroll-view/plugin/scrollbar/control', function (S, Node, DD, Control, ScrollBarRender) {
+KISSY.add('scroll-view/plugin/scrollbar/control', function (S, Node, Control, ScrollBarRender) {
 
     var MIN_BAR_LENGTH = 20;
 
@@ -40,13 +40,18 @@ KISSY.add('scroll-view/plugin/scrollbar/control', function (S, Node, DD, Control
                         .on(Gesture.end, self.onUpDownBtnMouseUp, self);
                 });
                 self.$trackEl.on(Gesture.start, self.onTrackElMouseDown, self);
-                self.dd = new DD.Draggable({
-                    node: self.$dragEl,
-                    groups: false,
-                    // allow nested scroll-view
-                    halt: true
-                }).on('drag', self.onDrag, self)
-                    .on('dragstart', self.onDragStart, self);
+                if (self.get('allowDrag')) {
+                    S.use('dd', function (S, DD) {
+                        self.dd = new DD.Draggable({
+                            node: self.$dragEl,
+                            disabled: self.get('disabled'),
+                            groups: false,
+                            // allow nested scroll-view
+                            halt: true
+                        }).on('drag', self.onDrag, self)
+                            .on('dragstart', self.onDragStart, self);
+                    });
+                }
             }
             scrollView
                 .on(self.afterScrollChangeEvent + SCROLLBAR_EVENT_NS,
@@ -166,7 +171,7 @@ KISSY.add('scroll-view/plugin/scrollbar/control', function (S, Node, DD, Control
             }
             self.clearHideTimer();
             self.set('visible', true);
-            if (self.hideFn && !scrollView.dd.get('dragging')) {
+            if (self.hideFn && !scrollView.isScrolling) {
                 self.startHideTimer();
             }
             self.view.syncOnScrollChange();
@@ -184,6 +189,10 @@ KISSY.add('scroll-view/plugin/scrollbar/control', function (S, Node, DD, Control
             },
 
             scrollView: {
+            },
+
+            allowDrag: {
+                value: false
             },
 
             axis: {
@@ -274,5 +283,5 @@ KISSY.add('scroll-view/plugin/scrollbar/control', function (S, Node, DD, Control
     });
 
 }, {
-    requires: ['node', 'dd', 'component/control', './render']
+    requires: ['node', 'component/control', './render']
 });

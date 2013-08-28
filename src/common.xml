@@ -29,10 +29,13 @@
 
     <taskdef name="tpl2mod" classname="com.taobao.f2e.task.Tpl2Module" classpath="${module-compiler}"/>
 
-    <target name="tpl2mod">
+    <target name="check-src">
         <condition property="component.src.dir.exists">
             <available file="${component.src.dir}" type="dir"/>
         </condition>
+    </target>
+
+    <target name="tpl2mod" depends="check-src">
         <ac:if>
             <ac:isset property="component.src.dir.exists"/>
             <ac:then>
@@ -101,18 +104,23 @@
         </copy>
     </target>
 
-    <target name="js-cover-gen">
-        <exec executable="java">
-            <!--use exec to change file encoding-->
-            <arg value="-Dfile.encoding=${charset}"/>
-            <arg value="-jar"/>
-            <arg value="${js-cover}"/>
-            <arg value="-fs"/>
-            <arg value="${component.src.dir}"/>
-            <arg value="${component.coverage.dir}"/>
-        </exec>
-        <delete dir="${component.coverage.dir}" includes="jscover*,**/*.html"/>
-        <delete dir="${component.coverage.dir}/original-src"/>
+    <target name="js-cover-gen" depends="check-src">
+        <ac:if>
+            <ac:isset property="component.src.dir.exists"/>
+            <ac:then>
+                <exec executable="java">
+                    <!--use exec to change file encoding-->
+                    <arg value="-Dfile.encoding=${charset}"/>
+                    <arg value="-jar"/>
+                    <arg value="${js-cover}"/>
+                    <arg value="-fs"/>
+                    <arg value="${component.src.dir}"/>
+                    <arg value="${component.coverage.dir}"/>
+                </exec>
+                <delete dir="${component.coverage.dir}" includes="jscover*,**/*.html"/>
+                <delete dir="${component.coverage.dir}/original-src"/>
+            </ac:then>
+        </ac:if>
     </target>
 
     <!-- 压缩 css -->

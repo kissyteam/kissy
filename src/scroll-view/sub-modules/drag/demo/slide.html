@@ -11,9 +11,15 @@
     <link rel="stylesheet" href="/kissy/src/css/assets/dpl/base.css"/>
     <link rel="stylesheet" href="/kissy/src/scroll-view/assets/dpl.css"/>
     <style>
+        body, ul, li {
+            padding: 0;
+            margin: 0;
+            border: 0;
+        }
+
         #demo2 {
-            width: 470px;
-            height: 150px;
+            width: 540px;
+            height: 540px;
             border: 1px solid #B6D1E6;
             overflow: hidden;
         }
@@ -22,7 +28,7 @@
             margin: 0;
             padding: 0;
             overflow: hidden;
-            width: 2350px;
+            width: 2700px;
         }
 
         #demo2 .my-slide-nav {
@@ -57,8 +63,8 @@
         }
 
         #demo2 .ks-scroll-view-content li {
-            height: 150px;
-            width: 470px;
+            height: 540px;
+            width: 540px;
             overflow: hidden;
             float: left;
             margin: 0;
@@ -104,12 +110,6 @@
             overflow: hidden;
         }
 
-        body, ul, li {
-            padding: 0;
-            margin: 0;
-            border: 0;
-        }
-
         .ks-image-zoomer {
             left: 0;
             top: 0;
@@ -152,18 +152,27 @@
 <body>
 <div id="demo2" class="ks-scroll-view">
     <ol class="ks-scroll-view-content">
-        <li><a target="_blank">
-            <img alt="" src="http://img05.taobaocdn.com/tps/i5/T1HllqXjXpXXXXXXXX-470-150.jpg"/></a></li>
-        <li class="hidden"><a target="_blank">
-            <img alt="" width="470" height="150" border="0"
-                 src="http://img.alimama.cn/bcrm/adboard/picture/2009-12-24/091224170529.gif"/></a></li>
-        <li class="hidden"><a target="_blank">
-            <img alt="" width="470" height="150" border="0"
-                 src="http://img.alimama.cn/bcrm/adboard/picture/2009-12-29/091229160359.jpg"/></a></li>
-        <li class="hidden"><a target="_blank">
-            <img alt="" src="http://img01.taobaocdn.com/tps/i1/T1qS0qXhBhXXXXXXXX-470-150.jpg"/></a></li>
-        <li class="hidden"><a target="_blank">
-            <img alt="" src="http://img03.taobaocdn.com/tps/i3/T1g25rXaV6XXXXXXXX-490-170.png"/></a></li>
+        <li>
+            <img 
+                 width="540"
+                 height="540"
+                 src="http://gd4.alicdn.com/bao/uploaded/i4/19927025103146716/T1JdpoFexhXXXXXXXX_!!0-item_pic.jpg_540x540.jpg"/></li>
+        <li class="hidden">
+            <img  width="540"
+                 height="540"
+                 src="http://gd4.alicdn.com/imgextra/i4/1604749927/T2RegJXmtXXXXXXXXX_!!1604749927.jpg_540x540.jpg"/></li>
+        <li class="hidden">
+            <img  width="540"
+                  height="540"
+                 src="http://gd1.alicdn.com/imgextra/i1/1604749927/T2y7ZmXc4bXXXXXXXX_!!1604749927.jpg_540x540.jpg"/></li>
+        <li class="hidden">
+            <img  width="540"
+                  height="540"
+                    src="http://gd3.alicdn.com/imgextra/i3/1604749927/T2H9UoXk0aXXXXXXXX_!!1604749927.jpg_540x540.jpg"/></li>
+        <li class="hidden">
+            <img  width="540"
+                  height="540"
+                    src="http://gd3.alicdn.com/imgextra/i3/1604749927/T2xlguXeXaXXXXXXXX_!!1604749927.jpg_540x540.jpg"/></li>
     </ol>
 </div>
 <div style="height:1000px"></div>
@@ -189,7 +198,7 @@
         slide.triggers.each(function (t, i) {
             t.html(i + 1);
         });
-        $('#demo2').delegate(Node.Gesture.singleTap, 'img', function (e) {
+        $('#demo2').delegate(Node.Gesture.tap, 'img', function (e) {
             imageZoomer.showImage({
                 src: e.currentTarget.src,
                 width: 1200,

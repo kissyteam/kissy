@@ -4,7 +4,6 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/dom/touch/tap', function (S, eventHandleMap, DomEvent, SingleTouch) {
-
     function preventDefault(e) {
         e.preventDefault();
     }

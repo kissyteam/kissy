@@ -2,7 +2,7 @@
  * allow body to drag
  * @author yiminghe@gmail.com
  */
-KISSY.add('scroll-view/drag', function (S, ScrollViewBase, DD, Node) {
+KISSY.add('scroll-view/drag', function (S, ScrollViewBase, Node) {
     var OUT_OF_BOUND_FACTOR = 0.5;
 
     var Gesture = Node.Gesture;
@@ -23,9 +23,13 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, DD, Node) {
         if (forbidDrag(self, scrollType)) {
             return;
         }
+        var pos = {
+            pageX: e.touches[0].pageX,
+            pageY: e.touches[0].pageY
+        };
         var pageOffsetProperty = scrollType == 'left' ? 'pageX' : 'pageY',
             lastPageXY = self.lastPageXY;
-        var diff = e[pageOffsetProperty] - startMousePos[scrollType],
+        var diff = pos[pageOffsetProperty] - startMousePos[pageOffsetProperty],
         // touchend == last touchmove
             eqWithLastPoint,
             scroll = self.startScroll[scrollType] - diff,
@@ -37,8 +41,8 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, DD, Node) {
             swipe = self.swipe,
             direction;
         if (lastPageXY[pageOffsetProperty]) {
-            eqWithLastPoint = e[pageOffsetProperty] == lastPageXY[pageOffsetProperty];
-            direction = ( e[pageOffsetProperty] - lastPageXY[pageOffsetProperty]) > 0;
+            eqWithLastPoint = pos[pageOffsetProperty] == lastPageXY[pageOffsetProperty];
+            direction = ( pos[pageOffsetProperty] - lastPageXY[pageOffsetProperty]) > 0;
         }
 
         if (!self.get('bounce')) {
@@ -210,32 +214,30 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, DD, Node) {
         };
     }
 
-    function onSingleGestureStart(e) {
-        var self = this;
-        self.stopAnimation();
-        if (self.isScrolling) {
-            var pageIndex = self.get('pageIndex');
-            self.isScrolling = 0;
-            self.fire('scrollEnd', {
-                pageX: e.pageX,
-                pageY: e.pageY,
-                fromPageIndex: pageIndex,
-                pageIndex: pageIndex
-            });
-        }
-    }
-
     function onDragStartHandler(e) {
         // S.log('dragstart: ' + e.timeStamp);
         var self = this;
+        if (self.get('disabled')) {
+            return;
+        }
+        var pos = {
+            pageX: e.touches[0].pageX,
+            pageY: e.touches[0].pageY
+        };
+        var isScrolling = self.isScrolling;
+        self.stopAnimation();
+        if (isScrolling) {
+            var pageIndex = self.get('pageIndex');
+            self.fire('scrollEnd', S.mix({
+                fromPageIndex: pageIndex,
+                pageIndex: pageIndex
+            }, pos));
+        }
         initStates(self);
-        self.startMousePos = self.dd.get('startMousePos');
+        self.startMousePos = pos;
         onDragStart(self, e, 'left');
         onDragStart(self, e, 'top');
-        self.fire('scrollStart', {
-            pageX: e.pageX,
-            pageY: e.pageY
-        });
+        self.fire('scrollStart', pos);
         self.isScrolling = 1;
     }
 
@@ -243,12 +245,17 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, DD, Node) {
         var self = this,
             startMousePos = self.startMousePos;
 
-        if (!startMousePos) {
+        if (!startMousePos || !self.isScrolling) {
             return;
         }
 
         var lockX = self.get('lockX'),
             lockY = self.get('lockY');
+
+        var pos = {
+            pageX: e.touches[0].pageX,
+            pageY: e.touches[0].pageY
+        };
 
         // if lockX or lockY then do not prevent native scroll on some condition
         if (lockX || lockY) {
@@ -256,45 +263,41 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, DD, Node) {
 
             if (!(dragInitDirection = self.dragInitDirection)) {
                 self.dragInitDirection = dragInitDirection = Math.abs(
-                    e.pageX - startMousePos.left
+                    pos.pageX - startMousePos.pageX
                 ) > Math.abs(
-                    e.pageY - startMousePos.top
+                    pos.pageY - startMousePos.pageY
                 ) ? 'left' : 'top';
             }
 
             if (lockX && dragInitDirection == 'left' && !self.allowScroll[dragInitDirection]) {
-                self.dd.stopDrag();
+                self.isScrolling = 0;
                 return;
             }
 
             if (lockY && dragInitDirection == 'top' && !self.allowScroll[dragInitDirection]) {
-                self.dd.stopDrag();
+                self.isScrolling = 0;
                 return;
             }
         }
 
         e.preventDefault();
-        e.domEvent.preventDefault();
 
         onDragScroll(self, e, 'left', startMousePos);
         onDragScroll(self, e, 'top', startMousePos);
 
         // touchmove frequency is slow on android
-        self.fire('scrollMove', {
-            pageX: e.pageX,
-            pageY: e.pageY
-        });
+        self.fire('scrollMove', pos);
     }
 
     function onDragEndHandler(e) {
         var self = this;
         var count = 0;
         var startMousePos = self.startMousePos;
-        if (!startMousePos) {
+        if (!startMousePos || !self.isScrolling) {
             return;
         }
-        var offsetX = startMousePos.left - e.pageX;
-        var offsetY = startMousePos.top - e.pageY;
+        var offsetX = startMousePos.pageX - e.pageX;
+        var offsetY = startMousePos.pageY - e.pageY;
         var snapThreshold = self.get('snapThreshold');
         var allowX = self.allowScroll.left && Math.abs(offsetX) > snapThreshold;
         var allowY = self.allowScroll.top && Math.abs(offsetY) > snapThreshold;
@@ -308,6 +311,7 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, DD, Node) {
             count++;
             if (count == 2) {
                 function scrollEnd() {
+                    self.isScrolling = 0;
                     self.fire('scrollEnd', {
                         pageX: e.pageX,
                         pageY: e.pageY,
@@ -424,23 +428,17 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, DD, Node) {
         self.dragInitDirection = null;
     }
 
+    function preventDefault(e) {
+        e.preventDefault();
+    }
+
     return ScrollViewBase.extend({
             bindUI: function () {
-                var self = this,
-                    $contentEl = self.$contentEl;
-                // before dd
-                $contentEl.on(Gesture.start, onSingleGestureStart, self);
-                var dd = self.dd = new DD.Draggable({
-                    node: $contentEl,
-                    groups: false,
-                    // do not prevent native scroll on some condition
-                    preventDefaultOnMove: false,
-                    // allow nested scroll-view
-                    halt: true
-                });
-                dd.on('dragstart', onDragStartHandler, self)
-                    .on('drag', onDragHandler, self)
-                    .on('dragend', onDragEndHandler, self);
+                var self = this;
+                self.$contentEl.on('dragstart', preventDefault)
+                    .on(Gesture.start, onDragStartHandler, self)
+                    .on(Gesture.move, onDragHandler, self)
+                    .on(Gesture.end, onDragEndHandler, self);
             },
 
             syncUI: function () {
@@ -448,19 +446,12 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, DD, Node) {
             },
 
             destructor: function () {
-                this.dd.destroy();
                 this.stopAnimation();
             },
 
             stopAnimation: function () {
                 this.callSuper();
-                // stop dd
-                // in case pinch setting scrollLeft conflicts with dd setting scrollLeft
-                this.dd.stopDrag();
-            },
-
-            _onSetDisabled: function (v) {
-                this.dd.set('disabled', v);
+                self.isScrolling = 0;
             }
         },
         {
@@ -502,7 +493,7 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, DD, Node) {
         }
     );
 }, {
-    requires: ['./base', 'dd', 'node']
+    requires: ['./base', 'node']
 });
 
 /**

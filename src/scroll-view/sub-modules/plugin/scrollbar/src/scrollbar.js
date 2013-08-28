@@ -4,17 +4,17 @@
  */
 KISSY.add('scroll-view/plugin/scrollbar', function (S, Base, ScrollBar) {
     return Base.extend({
-
         pluginId: this.getName(),
 
         pluginSyncUI: function (scrollView) {
-            var self=this;
+            var self = this;
             var minLength = self.get('minLength');
             var autoHideX = self.get('autoHideX');
             var autoHideY = self.get('autoHideY');
             var my;
             var cfg = {
                 scrollView: scrollView,
+                allowDrag: self.get('allowDrag'),
                 // render: scrollView.get('el') => ie7 bug
                 elBefore: scrollView.$contentEl
             };
@@ -48,7 +48,7 @@ KISSY.add('scroll-view/plugin/scrollbar', function (S, Base, ScrollBar) {
         },
 
         pluginDestructor: function () {
-            var self =this;
+            var self = this;
             if (self.scrollBarX) {
                 self.scrollBarX.destroy();
                 self.scrollBarX = null;
@@ -58,7 +58,6 @@ KISSY.add('scroll-view/plugin/scrollbar', function (S, Base, ScrollBar) {
                 self.scrollBarY = null;
             }
         }
-
     });
 }, {
     requires: ['base', './scrollbar/control']
