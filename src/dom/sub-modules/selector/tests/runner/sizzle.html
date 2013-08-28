@@ -270,10 +270,11 @@
 </dl>
 <br id="last"/>
 <script>
-    var loc = new KISSY.Uri(location.href);
+    var S=KISSY;
+    var loc = new S.Uri(location.href);
     var component = 'dom/selector';
     if (loc.getQuery().has('coverage')) {
-        KISSY.config('map', [
+        S.config('map', [
             [/kissy\/src\/(.+)\/src\//g, function (m, m1) {
                 var mm = m1.replace(/sub-modules\//g, '');
                 if (mm != component) return m;
@@ -284,12 +285,12 @@
 </script>
 <script src="/kissy/src/package.js"></script>
 <script>
-    KISSY.config('packages', {
+    S.config('packages', {
         specs: {
             base: '../'
         }
     });
-    KISSY.use('specs/sizzle', function () {
+    S.use('specs/sizzle', function () {
         jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
         jasmine.getEnv().addReporter(new jasmine.ConsoleReporter());
         jasmine.getEnv().execute(function () {
