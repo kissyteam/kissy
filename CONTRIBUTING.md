@@ -104,7 +104,13 @@ username 为你的 github 用户名
 
 现在打开 KISSY 集成测试用例: [http://localhost:8888/kissy/test](http://localhost:8888/kissy/test)
 
-你也可以测试单个模块，例如动画： [http://localhost:8888/kissy/src/anim/tests/runner/test.jss](http://localhost:8888/kissy/src/anim/tests/runner/test.jss)
+你也可以测试单个模块，
+例如 dom：
+[http://localhost:8888/kissy/src/dom/sub-modules/base/tests/runner/test.jss](http://localhost:8888/kissy/src/dom/sub-modules/base/tests/runner/test.jss)
+
+你也可以查看单个模块的测试覆盖率，
+例如 dom：
+[http://localhost:8888/kissy/src/dom/sub-modules/base/coverage/runner/test.jss](http://localhost:8888/kissy/src/dom/sub-modules/base/coverage/runner/test.jss)
 
 #### 新增模块
 
@@ -149,6 +155,10 @@ build KISSY 时间很长，需要耐心等待
 然后根据测试用例对相应模块源码进行修改（TDD）
 
 运行 http://localhost:8888/kissy/src/$module$/tests/runner/test.jss -> **all test cases is green and passed.**
+
+继续看下你的用例的覆盖率
+
+运行 http://localhost:8888/kissy/src/$module$/coverage/runner/test.jss
 
 $module$ 为你修改的模块名
 
