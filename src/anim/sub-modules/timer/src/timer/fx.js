@@ -88,9 +88,11 @@ KISSY.add('anim/timer/fx', function (S, Dom, undefined) {
                 val += self.unit;
                 if (isAttr(node, prop)) {
                     Dom.attr(node, prop, val, 1);
-                } else {
+                } else if(isCss(prop)){
                     // S.log(self.prop + ' update: ' + val);
                     Dom.css(node, prop, val);
+                } else {
+                    // 如果prop不是标准的css属性或者attribute，那么说明node也不是一个标准的node
                 }
             }
         },
@@ -103,6 +105,9 @@ KISSY.add('anim/timer/fx', function (S, Dom, undefined) {
             var self = this,
                 prop = self.prop,
                 node = self.anim.node;
+            if(S.isPlainObject(node)){
+              return node[prop];
+            }
             if (isAttr(node, prop)) {
                 return Dom.attr(node, prop, undefined, 1);
             }
@@ -124,6 +129,13 @@ KISSY.add('anim/timer/fx', function (S, Dom, undefined) {
             return 1;
         }
         return 0;
+    }
+
+    // 判断name是否为css属性
+    var detector;
+    function isCss(name){
+      detector || (detector = Dom.create("<span></span>"));
+      return detector.style[name] === undefined;
     }
 
     function getPos(anim, propData) {
