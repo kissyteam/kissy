@@ -230,54 +230,65 @@ if (! _$jscoverage['/timer/fx.js']) {
   _$jscoverage['/timer/fx.js'] = {};
   _$jscoverage['/timer/fx.js'].lineData = [];
   _$jscoverage['/timer/fx.js'].lineData[6] = 0;
+  _$jscoverage['/timer/fx.js'].lineData[7] = 0;
   _$jscoverage['/timer/fx.js'].lineData[8] = 0;
   _$jscoverage['/timer/fx.js'].lineData[9] = 0;
   _$jscoverage['/timer/fx.js'].lineData[10] = 0;
-  _$jscoverage['/timer/fx.js'].lineData[11] = 0;
+  _$jscoverage['/timer/fx.js'].lineData[18] = 0;
   _$jscoverage['/timer/fx.js'].lineData[19] = 0;
-  _$jscoverage['/timer/fx.js'].lineData[20] = 0;
-  _$jscoverage['/timer/fx.js'].lineData[23] = 0;
-  _$jscoverage['/timer/fx.js'].lineData[35] = 0;
-  _$jscoverage['/timer/fx.js'].lineData[43] = 0;
-  _$jscoverage['/timer/fx.js'].lineData[44] = 0;
+  _$jscoverage['/timer/fx.js'].lineData[22] = 0;
+  _$jscoverage['/timer/fx.js'].lineData[33] = 0;
+  _$jscoverage['/timer/fx.js'].lineData[41] = 0;
+  _$jscoverage['/timer/fx.js'].lineData[42] = 0;
   _$jscoverage['/timer/fx.js'].lineData[45] = 0;
-  _$jscoverage['/timer/fx.js'].lineData[46] = 0;
+  _$jscoverage['/timer/fx.js'].lineData[53] = 0;
+  _$jscoverage['/timer/fx.js'].lineData[54] = 0;
+  _$jscoverage['/timer/fx.js'].lineData[57] = 0;
   _$jscoverage['/timer/fx.js'].lineData[59] = 0;
-  _$jscoverage['/timer/fx.js'].lineData[61] = 0;
+  _$jscoverage['/timer/fx.js'].lineData[60] = 0;
   _$jscoverage['/timer/fx.js'].lineData[63] = 0;
+  _$jscoverage['/timer/fx.js'].lineData[65] = 0;
+  _$jscoverage['/timer/fx.js'].lineData[67] = 0;
+  _$jscoverage['/timer/fx.js'].lineData[68] = 0;
+  _$jscoverage['/timer/fx.js'].lineData[71] = 0;
   _$jscoverage['/timer/fx.js'].lineData[72] = 0;
+  _$jscoverage['/timer/fx.js'].lineData[74] = 0;
+  _$jscoverage['/timer/fx.js'].lineData[75] = 0;
+  _$jscoverage['/timer/fx.js'].lineData[76] = 0;
+  _$jscoverage['/timer/fx.js'].lineData[78] = 0;
   _$jscoverage['/timer/fx.js'].lineData[80] = 0;
+  _$jscoverage['/timer/fx.js'].lineData[81] = 0;
   _$jscoverage['/timer/fx.js'].lineData[82] = 0;
-  _$jscoverage['/timer/fx.js'].lineData[83] = 0;
-  _$jscoverage['/timer/fx.js'].lineData[84] = 0;
   _$jscoverage['/timer/fx.js'].lineData[85] = 0;
-  _$jscoverage['/timer/fx.js'].lineData[88] = 0;
-  _$jscoverage['/timer/fx.js'].lineData[89] = 0;
-  _$jscoverage['/timer/fx.js'].lineData[90] = 0;
-  _$jscoverage['/timer/fx.js'].lineData[93] = 0;
-  _$jscoverage['/timer/fx.js'].lineData[103] = 0;
-  _$jscoverage['/timer/fx.js'].lineData[106] = 0;
-  _$jscoverage['/timer/fx.js'].lineData[107] = 0;
-  _$jscoverage['/timer/fx.js'].lineData[109] = 0;
-  _$jscoverage['/timer/fx.js'].lineData[114] = 0;
+  _$jscoverage['/timer/fx.js'].lineData[100] = 0;
+  _$jscoverage['/timer/fx.js'].lineData[102] = 0;
+  _$jscoverage['/timer/fx.js'].lineData[104] = 0;
+  _$jscoverage['/timer/fx.js'].lineData[113] = 0;
+  _$jscoverage['/timer/fx.js'].lineData[117] = 0;
+  _$jscoverage['/timer/fx.js'].lineData[118] = 0;
   _$jscoverage['/timer/fx.js'].lineData[120] = 0;
-  _$jscoverage['/timer/fx.js'].lineData[122] = 0;
-  _$jscoverage['/timer/fx.js'].lineData[124] = 0;
-  _$jscoverage['/timer/fx.js'].lineData[126] = 0;
-  _$jscoverage['/timer/fx.js'].lineData[129] = 0;
-  _$jscoverage['/timer/fx.js'].lineData[130] = 0;
+  _$jscoverage['/timer/fx.js'].lineData[121] = 0;
+  _$jscoverage['/timer/fx.js'].lineData[123] = 0;
+  _$jscoverage['/timer/fx.js'].lineData[128] = 0;
   _$jscoverage['/timer/fx.js'].lineData[135] = 0;
-  _$jscoverage['/timer/fx.js'].lineData[136] = 0;
   _$jscoverage['/timer/fx.js'].lineData[137] = 0;
-  _$jscoverage['/timer/fx.js'].lineData[138] = 0;
   _$jscoverage['/timer/fx.js'].lineData[139] = 0;
   _$jscoverage['/timer/fx.js'].lineData[141] = 0;
+  _$jscoverage['/timer/fx.js'].lineData[144] = 0;
   _$jscoverage['/timer/fx.js'].lineData[145] = 0;
-  _$jscoverage['/timer/fx.js'].lineData[147] = 0;
-  _$jscoverage['/timer/fx.js'].lineData[149] = 0;
   _$jscoverage['/timer/fx.js'].lineData[150] = 0;
   _$jscoverage['/timer/fx.js'].lineData[151] = 0;
+  _$jscoverage['/timer/fx.js'].lineData[152] = 0;
+  _$jscoverage['/timer/fx.js'].lineData[153] = 0;
   _$jscoverage['/timer/fx.js'].lineData[154] = 0;
+  _$jscoverage['/timer/fx.js'].lineData[156] = 0;
+  _$jscoverage['/timer/fx.js'].lineData[160] = 0;
+  _$jscoverage['/timer/fx.js'].lineData[162] = 0;
+  _$jscoverage['/timer/fx.js'].lineData[163] = 0;
+  _$jscoverage['/timer/fx.js'].lineData[165] = 0;
+  _$jscoverage['/timer/fx.js'].lineData[166] = 0;
+  _$jscoverage['/timer/fx.js'].lineData[168] = 0;
+  _$jscoverage['/timer/fx.js'].lineData[171] = 0;
 }
 if (! _$jscoverage['/timer/fx.js'].functionData) {
   _$jscoverage['/timer/fx.js'].functionData = [];
@@ -291,258 +302,320 @@ if (! _$jscoverage['/timer/fx.js'].functionData) {
   _$jscoverage['/timer/fx.js'].functionData[7] = 0;
   _$jscoverage['/timer/fx.js'].functionData[8] = 0;
   _$jscoverage['/timer/fx.js'].functionData[9] = 0;
-  _$jscoverage['/timer/fx.js'].functionData[10] = 0;
 }
 if (! _$jscoverage['/timer/fx.js'].branchData) {
   _$jscoverage['/timer/fx.js'].branchData = {};
-  _$jscoverage['/timer/fx.js'].branchData['11'] = [];
-  _$jscoverage['/timer/fx.js'].branchData['11'][1] = new BranchData();
-  _$jscoverage['/timer/fx.js'].branchData['46'] = [];
-  _$jscoverage['/timer/fx.js'].branchData['46'][1] = new BranchData();
-  _$jscoverage['/timer/fx.js'].branchData['46'][2] = new BranchData();
+  _$jscoverage['/timer/fx.js'].branchData['10'] = [];
+  _$jscoverage['/timer/fx.js'].branchData['10'][1] = new BranchData();
+  _$jscoverage['/timer/fx.js'].branchData['41'] = [];
+  _$jscoverage['/timer/fx.js'].branchData['41'][1] = new BranchData();
+  _$jscoverage['/timer/fx.js'].branchData['53'] = [];
+  _$jscoverage['/timer/fx.js'].branchData['53'][1] = new BranchData();
   _$jscoverage['/timer/fx.js'].branchData['59'] = [];
   _$jscoverage['/timer/fx.js'].branchData['59'][1] = new BranchData();
   _$jscoverage['/timer/fx.js'].branchData['59'][2] = new BranchData();
-  _$jscoverage['/timer/fx.js'].branchData['60'] = [];
-  _$jscoverage['/timer/fx.js'].branchData['60'][1] = new BranchData();
-  _$jscoverage['/timer/fx.js'].branchData['80'] = [];
-  _$jscoverage['/timer/fx.js'].branchData['80'][1] = new BranchData();
-  _$jscoverage['/timer/fx.js'].branchData['82'] = [];
-  _$jscoverage['/timer/fx.js'].branchData['82'][1] = new BranchData();
-  _$jscoverage['/timer/fx.js'].branchData['89'] = [];
-  _$jscoverage['/timer/fx.js'].branchData['89'][1] = new BranchData();
-  _$jscoverage['/timer/fx.js'].branchData['106'] = [];
-  _$jscoverage['/timer/fx.js'].branchData['106'][1] = new BranchData();
-  _$jscoverage['/timer/fx.js'].branchData['115'] = [];
-  _$jscoverage['/timer/fx.js'].branchData['115'][1] = new BranchData();
-  _$jscoverage['/timer/fx.js'].branchData['115'][2] = new BranchData();
-  _$jscoverage['/timer/fx.js'].branchData['122'] = [];
-  _$jscoverage['/timer/fx.js'].branchData['122'][1] = new BranchData();
-  _$jscoverage['/timer/fx.js'].branchData['122'][2] = new BranchData();
-  _$jscoverage['/timer/fx.js'].branchData['122'][3] = new BranchData();
-  _$jscoverage['/timer/fx.js'].branchData['123'] = [];
-  _$jscoverage['/timer/fx.js'].branchData['123'][1] = new BranchData();
-  _$jscoverage['/timer/fx.js'].branchData['136'] = [];
-  _$jscoverage['/timer/fx.js'].branchData['136'][1] = new BranchData();
+  _$jscoverage['/timer/fx.js'].branchData['59'][3] = new BranchData();
+  _$jscoverage['/timer/fx.js'].branchData['67'] = [];
+  _$jscoverage['/timer/fx.js'].branchData['67'][1] = new BranchData();
+  _$jscoverage['/timer/fx.js'].branchData['71'] = [];
+  _$jscoverage['/timer/fx.js'].branchData['71'][1] = new BranchData();
+  _$jscoverage['/timer/fx.js'].branchData['72'] = [];
+  _$jscoverage['/timer/fx.js'].branchData['72'][1] = new BranchData();
+  _$jscoverage['/timer/fx.js'].branchData['81'] = [];
+  _$jscoverage['/timer/fx.js'].branchData['81'][1] = new BranchData();
+  _$jscoverage['/timer/fx.js'].branchData['100'] = [];
+  _$jscoverage['/timer/fx.js'].branchData['100'][1] = new BranchData();
+  _$jscoverage['/timer/fx.js'].branchData['100'][2] = new BranchData();
+  _$jscoverage['/timer/fx.js'].branchData['101'] = [];
+  _$jscoverage['/timer/fx.js'].branchData['101'][1] = new BranchData();
+  _$jscoverage['/timer/fx.js'].branchData['117'] = [];
+  _$jscoverage['/timer/fx.js'].branchData['117'][1] = new BranchData();
+  _$jscoverage['/timer/fx.js'].branchData['118'] = [];
+  _$jscoverage['/timer/fx.js'].branchData['118'][1] = new BranchData();
+  _$jscoverage['/timer/fx.js'].branchData['120'] = [];
+  _$jscoverage['/timer/fx.js'].branchData['120'][1] = new BranchData();
+  _$jscoverage['/timer/fx.js'].branchData['129'] = [];
+  _$jscoverage['/timer/fx.js'].branchData['129'][1] = new BranchData();
+  _$jscoverage['/timer/fx.js'].branchData['129'][2] = new BranchData();
+  _$jscoverage['/timer/fx.js'].branchData['137'] = [];
+  _$jscoverage['/timer/fx.js'].branchData['137'][1] = new BranchData();
+  _$jscoverage['/timer/fx.js'].branchData['137'][2] = new BranchData();
+  _$jscoverage['/timer/fx.js'].branchData['137'][3] = new BranchData();
   _$jscoverage['/timer/fx.js'].branchData['138'] = [];
   _$jscoverage['/timer/fx.js'].branchData['138'][1] = new BranchData();
-  _$jscoverage['/timer/fx.js'].branchData['150'] = [];
-  _$jscoverage['/timer/fx.js'].branchData['150'][1] = new BranchData();
+  _$jscoverage['/timer/fx.js'].branchData['151'] = [];
+  _$jscoverage['/timer/fx.js'].branchData['151'][1] = new BranchData();
+  _$jscoverage['/timer/fx.js'].branchData['153'] = [];
+  _$jscoverage['/timer/fx.js'].branchData['153'][1] = new BranchData();
+  _$jscoverage['/timer/fx.js'].branchData['165'] = [];
+  _$jscoverage['/timer/fx.js'].branchData['165'][1] = new BranchData();
 }
-_$jscoverage['/timer/fx.js'].branchData['150'][1].init(28, 28, 'Fx.Factories[cfg.prop] || Fx');
-function visit61_150_1(result) {
-  _$jscoverage['/timer/fx.js'].branchData['150'][1].ranCondition(result);
+_$jscoverage['/timer/fx.js'].branchData['165'][1].init(68, 54, '!cfg.isCustomFx && (SubClass = Fx.Factories[cfg.prop])');
+function visit67_165_1(result) {
+  _$jscoverage['/timer/fx.js'].branchData['165'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/fx.js'].branchData['138'][1].init(285, 19, 'runTime >= duration');
-function visit60_138_1(result) {
+}_$jscoverage['/timer/fx.js'].branchData['153'][1].init(285, 19, 'runTime >= duration');
+function visit66_153_1(result) {
+  _$jscoverage['/timer/fx.js'].branchData['153'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/timer/fx.js'].branchData['151'][1].init(225, 12, 'runTime <= 0');
+function visit65_151_1(result) {
+  _$jscoverage['/timer/fx.js'].branchData['151'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/timer/fx.js'].branchData['138'][1].init(58, 42, 'Dom.attr(node, prop, undefined, 1) != null');
+function visit64_138_1(result) {
   _$jscoverage['/timer/fx.js'].branchData['138'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/fx.js'].branchData['136'][1].init(225, 12, 'runTime <= 0');
-function visit59_136_1(result) {
-  _$jscoverage['/timer/fx.js'].branchData['136'][1].ranCondition(result);
+}_$jscoverage['/timer/fx.js'].branchData['137'][3].init(70, 26, 'node.style[prop] == null');
+function visit63_137_3(result) {
+  _$jscoverage['/timer/fx.js'].branchData['137'][3].ranCondition(result);
   return result;
-}_$jscoverage['/timer/fx.js'].branchData['123'][1].init(58, 42, 'Dom.attr(node, prop, undefined, 1) != null');
-function visit58_123_1(result) {
-  _$jscoverage['/timer/fx.js'].branchData['123'][1].ranCondition(result);
+}_$jscoverage['/timer/fx.js'].branchData['137'][2].init(55, 41, '!node.style || node.style[prop] == null');
+function visit62_137_2(result) {
+  _$jscoverage['/timer/fx.js'].branchData['137'][2].ranCondition(result);
   return result;
-}_$jscoverage['/timer/fx.js'].branchData['122'][3].init(70, 26, 'node.style[prop] == null');
-function visit57_122_3(result) {
-  _$jscoverage['/timer/fx.js'].branchData['122'][3].ranCondition(result);
+}_$jscoverage['/timer/fx.js'].branchData['137'][1].init(55, 101, '(!node.style || node.style[prop] == null) && Dom.attr(node, prop, undefined, 1) != null');
+function visit61_137_1(result) {
+  _$jscoverage['/timer/fx.js'].branchData['137'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/fx.js'].branchData['122'][2].init(55, 41, '!node.style || node.style[prop] == null');
-function visit56_122_2(result) {
-  _$jscoverage['/timer/fx.js'].branchData['122'][2].ranCondition(result);
+}_$jscoverage['/timer/fx.js'].branchData['129'][2].init(58, 12, 'r === \'auto\'');
+function visit60_129_2(result) {
+  _$jscoverage['/timer/fx.js'].branchData['129'][2].ranCondition(result);
   return result;
-}_$jscoverage['/timer/fx.js'].branchData['122'][1].init(55, 101, '(!node.style || node.style[prop] == null) && Dom.attr(node, prop, undefined, 1) != null');
-function visit55_122_1(result) {
-  _$jscoverage['/timer/fx.js'].branchData['122'][1].ranCondition(result);
+}_$jscoverage['/timer/fx.js'].branchData['129'][1].init(52, 18, '!r || r === \'auto\'');
+function visit59_129_1(result) {
+  _$jscoverage['/timer/fx.js'].branchData['129'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/fx.js'].branchData['115'][2].init(54, 12, 'r === \'auto\'');
-function visit54_115_2(result) {
-  _$jscoverage['/timer/fx.js'].branchData['115'][2].ranCondition(result);
+}_$jscoverage['/timer/fx.js'].branchData['120'][1].init(259, 18, 'isAttr(node, prop)');
+function visit58_120_1(result) {
+  _$jscoverage['/timer/fx.js'].branchData['120'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/fx.js'].branchData['115'][1].init(48, 18, '!r || r === \'auto\'');
-function visit53_115_1(result) {
-  _$jscoverage['/timer/fx.js'].branchData['115'][1].ranCondition(result);
+}_$jscoverage['/timer/fx.js'].branchData['118'][1].init(25, 15, 'node[prop] || 0');
+function visit57_118_1(result) {
+  _$jscoverage['/timer/fx.js'].branchData['118'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/fx.js'].branchData['106'][1].init(123, 18, 'isAttr(node, prop)');
-function visit52_106_1(result) {
-  _$jscoverage['/timer/fx.js'].branchData['106'][1].ranCondition(result);
+}_$jscoverage['/timer/fx.js'].branchData['117'][1].init(161, 15, 'self.isCustomFx');
+function visit56_117_1(result) {
+  _$jscoverage['/timer/fx.js'].branchData['117'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/fx.js'].branchData['89'][1].init(57, 18, 'isAttr(node, prop)');
-function visit51_89_1(result) {
-  _$jscoverage['/timer/fx.js'].branchData['89'][1].ranCondition(result);
+}_$jscoverage['/timer/fx.js'].branchData['101'][1].init(46, 22, 'typeof to === \'number\'');
+function visit55_101_1(result) {
+  _$jscoverage['/timer/fx.js'].branchData['101'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/fx.js'].branchData['82'][1].init(56, 14, '!self.finished');
-function visit50_82_1(result) {
-  _$jscoverage['/timer/fx.js'].branchData['82'][1].ranCondition(result);
+}_$jscoverage['/timer/fx.js'].branchData['100'][2].init(51, 24, 'typeof from === \'number\'');
+function visit54_100_2(result) {
+  _$jscoverage['/timer/fx.js'].branchData['100'][2].ranCondition(result);
   return result;
-}_$jscoverage['/timer/fx.js'].branchData['80'][1].init(282, 42, 'val === undefined');
-function visit49_80_1(result) {
-  _$jscoverage['/timer/fx.js'].branchData['80'][1].ranCondition(result);
+}_$jscoverage['/timer/fx.js'].branchData['100'][1].init(51, 70, '(typeof from === \'number\') && (typeof to === \'number\')');
+function visit53_100_1(result) {
+  _$jscoverage['/timer/fx.js'].branchData['100'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/fx.js'].branchData['60'][1].init(46, 22, 'typeof to === \'number\'');
-function visit48_60_1(result) {
-  _$jscoverage['/timer/fx.js'].branchData['60'][1].ranCondition(result);
+}_$jscoverage['/timer/fx.js'].branchData['81'][1].init(404, 18, 'isAttr(node, prop)');
+function visit52_81_1(result) {
+  _$jscoverage['/timer/fx.js'].branchData['81'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/fx.js'].branchData['59'][2].init(51, 24, 'typeof from === \'number\'');
+}_$jscoverage['/timer/fx.js'].branchData['72'][1].init(22, 42, 'val === undefined');
+function visit51_72_1(result) {
+  _$jscoverage['/timer/fx.js'].branchData['72'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/timer/fx.js'].branchData['71'][1].init(799, 16, '!self.isCustomFx');
+function visit50_71_1(result) {
+  _$jscoverage['/timer/fx.js'].branchData['71'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/timer/fx.js'].branchData['67'][1].init(655, 14, 'propData.frame');
+function visit49_67_1(result) {
+  _$jscoverage['/timer/fx.js'].branchData['67'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/timer/fx.js'].branchData['59'][3].init(489, 9, 'pos === 0');
+function visit48_59_3(result) {
+  _$jscoverage['/timer/fx.js'].branchData['59'][3].ranCondition(result);
+  return result;
+}_$jscoverage['/timer/fx.js'].branchData['59'][2].init(474, 11, 'from === to');
 function visit47_59_2(result) {
   _$jscoverage['/timer/fx.js'].branchData['59'][2].ranCondition(result);
   return result;
-}_$jscoverage['/timer/fx.js'].branchData['59'][1].init(51, 70, '(typeof from === \'number\') && (typeof to === \'number\')');
+}_$jscoverage['/timer/fx.js'].branchData['59'][1].init(474, 24, 'from === to || pos === 0');
 function visit46_59_1(result) {
   _$jscoverage['/timer/fx.js'].branchData['59'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/fx.js'].branchData['46'][2].init(134, 8, 'pos == 1');
-function visit45_46_2(result) {
-  _$jscoverage['/timer/fx.js'].branchData['46'][2].ranCondition(result);
+}_$jscoverage['/timer/fx.js'].branchData['53'][1].init(341, 17, 'pos === undefined');
+function visit45_53_1(result) {
+  _$jscoverage['/timer/fx.js'].branchData['53'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/fx.js'].branchData['46'][1].init(117, 25, 'self.finished || pos == 1');
-function visit44_46_1(result) {
-  _$jscoverage['/timer/fx.js'].branchData['46'][1].ranCondition(result);
+}_$jscoverage['/timer/fx.js'].branchData['41'][1].init(18, 14, 'this.pos === 1');
+function visit44_41_1(result) {
+  _$jscoverage['/timer/fx.js'].branchData['41'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/fx.js'].branchData['11'][1].init(72, 15, 'self.unit || \'\'');
-function visit43_11_1(result) {
-  _$jscoverage['/timer/fx.js'].branchData['11'][1].ranCondition(result);
+}_$jscoverage['/timer/fx.js'].branchData['10'][1].init(72, 15, 'self.unit || \'\'');
+function visit43_10_1(result) {
+  _$jscoverage['/timer/fx.js'].branchData['10'][1].ranCondition(result);
   return result;
 }_$jscoverage['/timer/fx.js'].lineData[6]++;
 KISSY.add('anim/timer/fx', function(S, Dom, undefined) {
   _$jscoverage['/timer/fx.js'].functionData[0]++;
-  _$jscoverage['/timer/fx.js'].lineData[8]++;
+  _$jscoverage['/timer/fx.js'].lineData[7]++;
   function load(self, cfg) {
     _$jscoverage['/timer/fx.js'].functionData[1]++;
-    _$jscoverage['/timer/fx.js'].lineData[9]++;
+    _$jscoverage['/timer/fx.js'].lineData[8]++;
     S.mix(self, cfg);
-    _$jscoverage['/timer/fx.js'].lineData[10]++;
+    _$jscoverage['/timer/fx.js'].lineData[9]++;
     self.pos = 0;
-    _$jscoverage['/timer/fx.js'].lineData[11]++;
-    self.unit = visit43_11_1(self.unit || '');
+    _$jscoverage['/timer/fx.js'].lineData[10]++;
+    self.unit = visit43_10_1(self.unit || '');
   }
-  _$jscoverage['/timer/fx.js'].lineData[19]++;
+  _$jscoverage['/timer/fx.js'].lineData[18]++;
   function Fx(cfg) {
     _$jscoverage['/timer/fx.js'].functionData[2]++;
-    _$jscoverage['/timer/fx.js'].lineData[20]++;
+    _$jscoverage['/timer/fx.js'].lineData[19]++;
     load(this, cfg);
   }
-  _$jscoverage['/timer/fx.js'].lineData[23]++;
+  _$jscoverage['/timer/fx.js'].lineData[22]++;
   Fx.prototype = {
-  isBasicFx: 1, 
+  isCustomFx: 0, 
   constructor: Fx, 
   load: function(cfg) {
   _$jscoverage['/timer/fx.js'].functionData[3]++;
-  _$jscoverage['/timer/fx.js'].lineData[35]++;
+  _$jscoverage['/timer/fx.js'].lineData[33]++;
   load(this, cfg);
 }, 
   frame: function(pos) {
   _$jscoverage['/timer/fx.js'].functionData[4]++;
-  _$jscoverage['/timer/fx.js'].lineData[43]++;
-  var self = this;
-  _$jscoverage['/timer/fx.js'].lineData[44]++;
-  self.pos = pos;
+  _$jscoverage['/timer/fx.js'].lineData[41]++;
+  if (visit44_41_1(this.pos === 1)) {
+    _$jscoverage['/timer/fx.js'].lineData[42]++;
+    return;
+  }
   _$jscoverage['/timer/fx.js'].lineData[45]++;
-  self.update();
-  _$jscoverage['/timer/fx.js'].lineData[46]++;
-  self.finished = visit44_46_1(self.finished || visit45_46_2(pos == 1));
+  var self = this, anim = self.anim, prop = self.prop, node = anim.node, from = self.from, propData = self.propData, to = self.to;
+  _$jscoverage['/timer/fx.js'].lineData[53]++;
+  if (visit45_53_1(pos === undefined)) {
+    _$jscoverage['/timer/fx.js'].lineData[54]++;
+    pos = getPos(anim, propData);
+  }
+  _$jscoverage['/timer/fx.js'].lineData[57]++;
+  self.pos = pos;
+  _$jscoverage['/timer/fx.js'].lineData[59]++;
+  if (visit46_59_1(visit47_59_2(from === to) || visit48_59_3(pos === 0))) {
+    _$jscoverage['/timer/fx.js'].lineData[60]++;
+    return;
+  }
+  _$jscoverage['/timer/fx.js'].lineData[63]++;
+  var val = self.interpolate(from, to, self.pos);
+  _$jscoverage['/timer/fx.js'].lineData[65]++;
+  self.val = val;
+  _$jscoverage['/timer/fx.js'].lineData[67]++;
+  if (visit49_67_1(propData.frame)) {
+    _$jscoverage['/timer/fx.js'].lineData[68]++;
+    propData.frame(anim, self);
+  } else {
+    _$jscoverage['/timer/fx.js'].lineData[71]++;
+    if (visit50_71_1(!self.isCustomFx)) {
+      _$jscoverage['/timer/fx.js'].lineData[72]++;
+      if (visit51_72_1(val === undefined)) {
+        _$jscoverage['/timer/fx.js'].lineData[74]++;
+        self.pos = 1;
+        _$jscoverage['/timer/fx.js'].lineData[75]++;
+        val = to;
+        _$jscoverage['/timer/fx.js'].lineData[76]++;
+        S.log(prop + ' update directly ! : ' + val + ' : ' + from + ' : ' + to);
+      } else {
+        _$jscoverage['/timer/fx.js'].lineData[78]++;
+        val += self.unit;
+      }
+      _$jscoverage['/timer/fx.js'].lineData[80]++;
+      self.val = val;
+      _$jscoverage['/timer/fx.js'].lineData[81]++;
+      if (visit52_81_1(isAttr(node, prop))) {
+        _$jscoverage['/timer/fx.js'].lineData[82]++;
+        Dom.attr(node, prop, val, 1);
+      } else {
+        _$jscoverage['/timer/fx.js'].lineData[85]++;
+        Dom.css(node, prop, val);
+      }
+    }
+  }
 }, 
   interpolate: function(from, to, pos) {
   _$jscoverage['/timer/fx.js'].functionData[5]++;
-  _$jscoverage['/timer/fx.js'].lineData[59]++;
-  if (visit46_59_1((visit47_59_2(typeof from === 'number')) && (visit48_60_1(typeof to === 'number')))) {
-    _$jscoverage['/timer/fx.js'].lineData[61]++;
+  _$jscoverage['/timer/fx.js'].lineData[100]++;
+  if (visit53_100_1((visit54_100_2(typeof from === 'number')) && (visit55_101_1(typeof to === 'number')))) {
+    _$jscoverage['/timer/fx.js'].lineData[102]++;
     return Math.round((from + (to - from) * pos) * 1e5) / 1e5;
   } else {
-    _$jscoverage['/timer/fx.js'].lineData[63]++;
+    _$jscoverage['/timer/fx.js'].lineData[104]++;
     return undefined;
   }
 }, 
-  update: function() {
-  _$jscoverage['/timer/fx.js'].functionData[6]++;
-  _$jscoverage['/timer/fx.js'].lineData[72]++;
-  var self = this, anim = self.anim, prop = self.prop, node = anim.node, from = self.from, to = self.to, val = self.interpolate(from, to, self.pos);
-  _$jscoverage['/timer/fx.js'].lineData[80]++;
-  if (visit49_80_1(val === undefined)) {
-    _$jscoverage['/timer/fx.js'].lineData[82]++;
-    if (visit50_82_1(!self.finished)) {
-      _$jscoverage['/timer/fx.js'].lineData[83]++;
-      self.finished = 1;
-      _$jscoverage['/timer/fx.js'].lineData[84]++;
-      Dom.css(node, prop, to);
-      _$jscoverage['/timer/fx.js'].lineData[85]++;
-      S.log(prop + ' update directly ! : ' + val + ' : ' + from + ' : ' + to);
-    }
-  } else {
-    _$jscoverage['/timer/fx.js'].lineData[88]++;
-    val += self.unit;
-    _$jscoverage['/timer/fx.js'].lineData[89]++;
-    if (visit51_89_1(isAttr(node, prop))) {
-      _$jscoverage['/timer/fx.js'].lineData[90]++;
-      Dom.attr(node, prop, val, 1);
-    } else {
-      _$jscoverage['/timer/fx.js'].lineData[93]++;
-      Dom.css(node, prop, val);
-    }
-  }
-}, 
   cur: function() {
-  _$jscoverage['/timer/fx.js'].functionData[7]++;
-  _$jscoverage['/timer/fx.js'].lineData[103]++;
+  _$jscoverage['/timer/fx.js'].functionData[6]++;
+  _$jscoverage['/timer/fx.js'].lineData[113]++;
   var self = this, prop = self.prop, node = self.anim.node;
-  _$jscoverage['/timer/fx.js'].lineData[106]++;
-  if (visit52_106_1(isAttr(node, prop))) {
-    _$jscoverage['/timer/fx.js'].lineData[107]++;
-    return Dom.attr(node, prop, undefined, 1);
+  _$jscoverage['/timer/fx.js'].lineData[117]++;
+  if (visit56_117_1(self.isCustomFx)) {
+    _$jscoverage['/timer/fx.js'].lineData[118]++;
+    return visit57_118_1(node[prop] || 0);
+  } else {
+    _$jscoverage['/timer/fx.js'].lineData[120]++;
+    if (visit58_120_1(isAttr(node, prop))) {
+      _$jscoverage['/timer/fx.js'].lineData[121]++;
+      return Dom.attr(node, prop, undefined, 1);
+    } else {
+      _$jscoverage['/timer/fx.js'].lineData[123]++;
+      var parsed, r = Dom.css(node, prop);
+      _$jscoverage['/timer/fx.js'].lineData[128]++;
+      return isNaN(parsed = parseFloat(r)) ? visit59_129_1(!r || visit60_129_2(r === 'auto')) ? 0 : r : parsed;
+    }
   }
-  _$jscoverage['/timer/fx.js'].lineData[109]++;
-  var parsed, r = Dom.css(node, prop);
-  _$jscoverage['/timer/fx.js'].lineData[114]++;
-  return isNaN(parsed = parseFloat(r)) ? visit53_115_1(!r || visit54_115_2(r === 'auto')) ? 0 : r : parsed;
 }};
-  _$jscoverage['/timer/fx.js'].lineData[120]++;
+  _$jscoverage['/timer/fx.js'].lineData[135]++;
   function isAttr(node, prop) {
-    _$jscoverage['/timer/fx.js'].functionData[8]++;
-    _$jscoverage['/timer/fx.js'].lineData[122]++;
-    if (visit55_122_1((visit56_122_2(!node.style || visit57_122_3(node.style[prop] == null))) && visit58_123_1(Dom.attr(node, prop, undefined, 1) != null))) {
-      _$jscoverage['/timer/fx.js'].lineData[124]++;
+    _$jscoverage['/timer/fx.js'].functionData[7]++;
+    _$jscoverage['/timer/fx.js'].lineData[137]++;
+    if (visit61_137_1((visit62_137_2(!node.style || visit63_137_3(node.style[prop] == null))) && visit64_138_1(Dom.attr(node, prop, undefined, 1) != null))) {
+      _$jscoverage['/timer/fx.js'].lineData[139]++;
       return 1;
     }
-    _$jscoverage['/timer/fx.js'].lineData[126]++;
+    _$jscoverage['/timer/fx.js'].lineData[141]++;
     return 0;
   }
-  _$jscoverage['/timer/fx.js'].lineData[129]++;
+  _$jscoverage['/timer/fx.js'].lineData[144]++;
   function getPos(anim, propData) {
-    _$jscoverage['/timer/fx.js'].functionData[9]++;
-    _$jscoverage['/timer/fx.js'].lineData[130]++;
+    _$jscoverage['/timer/fx.js'].functionData[8]++;
+    _$jscoverage['/timer/fx.js'].lineData[145]++;
     var t = S.now(), runTime, startTime = anim.startTime, delay = propData.delay, duration = propData.duration;
-    _$jscoverage['/timer/fx.js'].lineData[135]++;
+    _$jscoverage['/timer/fx.js'].lineData[150]++;
     runTime = t - startTime - delay;
-    _$jscoverage['/timer/fx.js'].lineData[136]++;
-    if (visit59_136_1(runTime <= 0)) {
-      _$jscoverage['/timer/fx.js'].lineData[137]++;
+    _$jscoverage['/timer/fx.js'].lineData[151]++;
+    if (visit65_151_1(runTime <= 0)) {
+      _$jscoverage['/timer/fx.js'].lineData[152]++;
       return 0;
     } else {
-      _$jscoverage['/timer/fx.js'].lineData[138]++;
-      if (visit60_138_1(runTime >= duration)) {
-        _$jscoverage['/timer/fx.js'].lineData[139]++;
+      _$jscoverage['/timer/fx.js'].lineData[153]++;
+      if (visit66_153_1(runTime >= duration)) {
+        _$jscoverage['/timer/fx.js'].lineData[154]++;
         return 1;
       } else {
-        _$jscoverage['/timer/fx.js'].lineData[141]++;
+        _$jscoverage['/timer/fx.js'].lineData[156]++;
         return propData.easing(runTime / duration);
       }
     }
   }
-  _$jscoverage['/timer/fx.js'].lineData[145]++;
+  _$jscoverage['/timer/fx.js'].lineData[160]++;
   Fx.Factories = {};
-  _$jscoverage['/timer/fx.js'].lineData[147]++;
-  Fx.getPos = getPos;
-  _$jscoverage['/timer/fx.js'].lineData[149]++;
+  _$jscoverage['/timer/fx.js'].lineData[162]++;
   Fx.getFx = function(cfg) {
-  _$jscoverage['/timer/fx.js'].functionData[10]++;
-  _$jscoverage['/timer/fx.js'].lineData[150]++;
-  var Constructor = visit61_150_1(Fx.Factories[cfg.prop] || Fx);
-  _$jscoverage['/timer/fx.js'].lineData[151]++;
+  _$jscoverage['/timer/fx.js'].functionData[9]++;
+  _$jscoverage['/timer/fx.js'].lineData[163]++;
+  var Constructor = Fx, SubClass;
+  _$jscoverage['/timer/fx.js'].lineData[165]++;
+  if (visit67_165_1(!cfg.isCustomFx && (SubClass = Fx.Factories[cfg.prop]))) {
+    _$jscoverage['/timer/fx.js'].lineData[166]++;
+    Constructor = SubClass;
+  }
+  _$jscoverage['/timer/fx.js'].lineData[168]++;
   return new Constructor(cfg);
 };
-  _$jscoverage['/timer/fx.js'].lineData[154]++;
+  _$jscoverage['/timer/fx.js'].lineData[171]++;
   return Fx;
 }, {
   requires: ['dom']});

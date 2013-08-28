@@ -4,15 +4,16 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add('anim/timer/manager', function (S, undefined) {
-    var stamp = S.stamp;
-    var win = S.Env.host;
+    var stamp = S.stamp,
+        win = S.Env.host,
     // note in background tab, interval is set to 1s in chrome/firefox
     // no interval change in ie for 15, if interval is less than 15
     // then in background tab interval is changed to 15
-    var INTERVAL = 15;
+        INTERVAL = 15,
     // https://gist.github.com/paulirish/1579671
-    var requestAnimationFrameFn,
+        requestAnimationFrameFn,
         cancelAnimationFrameFn;
+
     // http://bugs.jquery.com/ticket/9381
     if (0) {
         requestAnimationFrameFn = win['requestAnimationFrame'];
@@ -34,7 +35,9 @@ KISSY.add('anim/timer/manager', function (S, undefined) {
 
     return {
         runnings: {},
+
         timer: null,
+
         start: function (anim) {
             var self = this,
                 kv = stamp(anim);
@@ -44,9 +47,11 @@ KISSY.add('anim/timer/manager', function (S, undefined) {
             self.runnings[kv] = anim;
             self.startTimer();
         },
+
         stop: function (anim) {
             this.notRun(anim);
         },
+
         notRun: function (anim) {
             var self = this,
                 kv = stamp(anim);
@@ -55,12 +60,15 @@ KISSY.add('anim/timer/manager', function (S, undefined) {
                 self.stopTimer();
             }
         },
+
         pause: function (anim) {
             this.notRun(anim);
         },
+
         resume: function (anim) {
             this.start(anim);
         },
+
         startTimer: function () {
             var self = this;
             if (!self.timer) {
@@ -73,6 +81,7 @@ KISSY.add('anim/timer/manager', function (S, undefined) {
                 });
             }
         },
+
         stopTimer: function () {
             var self = this,
                 t = self.timer;
@@ -81,14 +90,20 @@ KISSY.add('anim/timer/manager', function (S, undefined) {
                 self.timer = 0;
             }
         },
+
         runFrames: function () {
             var self = this,
                 r,
                 flag,
                 runnings = self.runnings;
             for (r in runnings) {
+                // in case stop in frame
                 runnings[r].frame();
+            }
+            //noinspection LoopStatementThatDoesntLoopJS
+            for (r in runnings) {
                 flag = 0;
+                break;
             }
             return flag === undefined;
         }

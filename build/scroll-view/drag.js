@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Aug 30 01:37
+build time: Sep 3 16:10
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -151,11 +151,9 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, Node) {
         // S.log('after dragend scroll value: ' + scroll);
 
         anim[scrollType] = {
-            fx: {
-                frame: makeMomentumFx(self, velocity, scroll,
-                    scrollAxis, maxScroll[scrollType],
-                    minScroll[scrollType])
-            }
+            frame: makeMomentumFx(self, velocity, scroll,
+                scrollAxis, maxScroll[scrollType],
+                minScroll[scrollType])
         };
 
         $contentEl.animate(anim, {
@@ -193,7 +191,7 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, Node) {
                 if (value > minScroll && value < maxScroll) {
                     // inertia
                     if (fx.lastValue === value) {
-                        fx.finished = 1;
+                        fx.pos = 1;
                     }
                     fx.lastValue = value;
                     self.set(scrollAxis, value);
@@ -218,7 +216,7 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, Node) {
                     powTime = theta * Math.exp(-SPRING_TENSION * theta);
                 value = parseInt(velocity * powTime);
                 if (value === 0) {
-                    fx.finished = 1;
+                    fx.pos = 1;
                 }
                 self.set(scrollAxis, startScroll + value);
             }

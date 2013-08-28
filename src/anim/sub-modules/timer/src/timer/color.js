@@ -4,7 +4,6 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add('anim/timer/color', function (S, Dom, Fx,SHORT_HANDS) {
-
     var HEX_BASE = 16,
         floor = Math.floor,
         KEYWORDS = {
@@ -116,7 +115,6 @@ KISSY.add('anim/timer/color', function (S, Dom, Fx,SHORT_HANDS) {
     }
 
     S.extend(ColorFx, Fx, {
-
         load:function () {
             var self = this;
             ColorFx.superclass.load.apply(self, arguments);
@@ -148,7 +146,6 @@ KISSY.add('anim/timer/color', function (S, Dom, Fx,SHORT_HANDS) {
                 return S.log('anim/color unknown value : ' + from);
             }
         }
-
     });
 
     S.each(COLORS, function (color) {
@@ -156,11 +153,9 @@ KISSY.add('anim/timer/color', function (S, Dom, Fx,SHORT_HANDS) {
     });
 
     return ColorFx;
-
 }, {
     requires:['dom','./fx','./short-hand']
 });
-
 /*
  refer
    - https://developer.mozilla.org/en-US/docs/Web/CSS/color_value

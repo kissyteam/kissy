@@ -4,7 +4,6 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add('anim/timer/fx', function (S, Dom, undefined) {
-
     function load(self, cfg) {
         S.mix(self, cfg);
         self.pos = 0;
@@ -21,9 +20,8 @@ KISSY.add('anim/timer/fx', function (S, Dom, undefined) {
     }
 
     Fx.prototype = {
-
-        // implemented by KISSY
-        isBasicFx: 1,
+        // default to dom anim
+        isCustomFx: 0,
 
         constructor: Fx,
 
@@ -37,13 +35,56 @@ KISSY.add('anim/timer/fx', function (S, Dom, undefined) {
 
         /**
          * process current anim frame.
-         * @param {Number} pos
+         * @param pos
          */
         frame: function (pos) {
-            var self = this;
+            if (this.pos === 1) {
+                return;
+            }
+
+            var self = this,
+                anim = self.anim,
+                prop = self.prop,
+                node = anim.node,
+                from = self.from,
+                propData = self.propData,
+                to = self.to;
+
+            if (pos === undefined) {
+                pos = getPos(anim, propData);
+            }
+
             self.pos = pos;
-            self.update();
-            self.finished = self.finished || pos == 1;
+
+            if (from === to || pos === 0) {
+                return;
+            }
+
+            var val = self.interpolate(from, to, self.pos);
+
+            self.val = val;
+
+            if (propData.frame) {
+                propData.frame(anim, self);
+            }
+            // in case completed in frame
+            else if (!self.isCustomFx) {
+                if (val === /**@type Number @ignore*/undefined) {
+                    // 插值出错，直接设置为最终值
+                    self.pos = 1;
+                    val = to;
+                    S.log(prop + ' update directly ! : ' + val + ' : ' + from + ' : ' + to);
+                } else {
+                    val += self.unit;
+                }
+                self.val = val;
+                if (isAttr(node, prop)) {
+                    Dom.attr(node, prop, val, 1);
+                } else {
+                    // S.log(self.prop + ' update: ' + val);
+                    Dom.css(node, prop, val);
+                }
+            }
         },
 
         /**
@@ -65,37 +106,6 @@ KISSY.add('anim/timer/fx', function (S, Dom, undefined) {
         },
 
         /**
-         * update dom according to current frame css value.
-         *
-         */
-        update: function () {
-            var self = this,
-                anim = self.anim,
-                prop = self.prop,
-                node = anim.node,
-                from = self.from,
-                to = self.to,
-                val = self.interpolate(from, to, self.pos);
-
-            if (val === /**@type Number @ignore*/undefined) {
-                // 插值出错，直接设置为最终值
-                if (!self.finished) {
-                    self.finished = 1;
-                    Dom.css(node, prop, to);
-                    S.log(prop + ' update directly ! : ' + val + ' : ' + from + ' : ' + to);
-                }
-            } else {
-                val += self.unit;
-                if (isAttr(node, prop)) {
-                    Dom.attr(node, prop, val, 1);
-                } else {
-                    // S.log(self.prop + ' update: ' + val);
-                    Dom.css(node, prop, val);
-                }
-            }
-        },
-
-        /**
          * current value
          *
          */
@@ -103,17 +113,22 @@ KISSY.add('anim/timer/fx', function (S, Dom, undefined) {
             var self = this,
                 prop = self.prop,
                 node = self.anim.node;
-            if (isAttr(node, prop)) {
-                return Dom.attr(node, prop, undefined, 1);
+            //不是css 或者 attribute 的缓动
+            if (self.isCustomFx) {
+                return node[prop] || 0;
             }
-            var parsed,
-                r = Dom.css(node, prop);
-            // Empty strings, null, undefined and 'auto' are converted to 0,
-            // complex values such as 'rotate(1rad)' or '0px 10px' are returned as is,
-            // simple values such as '10px' are parsed to Float.
-            return isNaN(parsed = parseFloat(r)) ?
-                !r || r === 'auto' ? 0 : r
-                : parsed;
+            else if (isAttr(node, prop)) {
+                return Dom.attr(node, prop, undefined, 1);
+            } else {
+                var parsed,
+                    r = Dom.css(node, prop);
+                // Empty strings, null, undefined and 'auto' are converted to 0,
+                // complex values such as 'rotate(1rad)' or '0px 10px' are returned as is,
+                // simple values such as '10px' are parsed to Float.
+                return isNaN(parsed = parseFloat(r)) ?
+                    !r || r === 'auto' ? 0 : r
+                    : parsed;
+            }
         }
     };
 
@@ -144,15 +159,16 @@ KISSY.add('anim/timer/fx', function (S, Dom, undefined) {
 
     Fx.Factories = {};
 
-    Fx.getPos = getPos;
-
     Fx.getFx = function (cfg) {
-        var Constructor = Fx.Factories[cfg.prop] || Fx;
+        var Constructor = Fx,
+            SubClass;
+        if (!cfg.isCustomFx && (SubClass = Fx.Factories[cfg.prop])) {
+            Constructor = SubClass
+        }
         return new Constructor(cfg);
     };
 
     return Fx;
-
 }, {
     requires: ['dom']
 });

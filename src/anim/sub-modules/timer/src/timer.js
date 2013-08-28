@@ -41,8 +41,7 @@ KISSY.add('anim/timer', function (S, Dom, Event, AnimBase, Easing, AM, Fx, SHORT
                 var origin,
                     _propData = _propsData[p],
                     val;
-                // 自定义了 fx 就忽略
-                if (_propData && !_propData.fx) {
+                if (_propData) {
                     val = _propData.value;
                     origin = {};
                     S.each(shortHands, function (sh) {
@@ -72,27 +71,27 @@ KISSY.add('anim/timer', function (S, Dom, Event, AnimBase, Easing, AM, Fx, SHORT
                 from,
                 propCfg,
                 fx,
+                isCustomFx = 0,
                 unit,
                 parts;
 
+            if (S.isPlainObject(node)) {
+                isCustomFx = 1;
+            }
+
             // 取得单位，并对单个属性构建 Fx 对象
             for (prop in _propsData) {
-
                 _propData = _propsData[prop];
-
-                // 自定义
-                if (_propData.fx) {
-                    _propData.fx.prop = prop;
-                    continue;
-                }
-
                 val = _propData.value;
                 propCfg = {
+                    isCustomFx: isCustomFx,
                     prop: prop,
                     anim: self,
                     propData: _propData
                 };
+
                 fx = Fx.getFx(propCfg);
+
                 to = val;
 
                 from = fx.cur();
@@ -139,53 +138,19 @@ KISSY.add('anim/timer', function (S, Dom, Event, AnimBase, Easing, AM, Fx, SHORT
             var self = this,
                 prop,
                 end = 1,
-                c,
                 fx,
-                pos,
                 _propData,
                 _propsData = self._propsData;
 
             for (prop in _propsData) {
                 _propData = _propsData[prop];
                 fx = _propData.fx;
-                // 当前属性没有结束
-                if (!(fx.finished)) {
-                    pos = Fx.getPos(self, _propData);
-                    if (pos == 0) {
-                        end = 0;
-                        continue;
-                    }
-                    fx.pos = pos;
-                    if (fx.isBasicFx) {
-                        // equal attr value, just skip
-                        if (fx.from == fx.to) {
-                            fx.finished = fx.finished || pos == 1;
-                            end = 0;
-                            continue;
-                        }
-                        c = 0;
-                        if (_propData.frame) {
-                            // from to pos prop -> fx
-                            c = _propData.frame(self, fx);
-                            // in case frame call stop
-                            if (!self.isRunning()) {
-                                return;
-                            }
-                        }
-                        // prevent default
-                        if (c !== false) {
-                            fx.frame(fx.finished || pos);
-                        }
-                    } else {
-                        fx.finished = fx.finished || pos == 1;
-                        fx.frame(self, fx);
-                        // in case frame call stop
-                        if (!self.isRunning()) {
-                            return;
-                        }
-                    }
-                    end &= fx.finished;
+                fx.frame();
+                // in case call stop in frame
+                if (self.__stopped) {
+                    return;
                 }
+                end &= fx.pos == 1;
             }
 
             if ((self.fire('step') === false) || end) {
@@ -198,7 +163,6 @@ KISSY.add('anim/timer', function (S, Dom, Event, AnimBase, Easing, AM, Fx, SHORT
             var self = this,
                 prop,
                 fx,
-                c,
                 _propData,
                 _propsData = self._propsData;
             AM.stop(self);
@@ -206,23 +170,7 @@ KISSY.add('anim/timer', function (S, Dom, Event, AnimBase, Easing, AM, Fx, SHORT
                 for (prop in _propsData) {
                     _propData = _propsData[prop];
                     fx = _propData.fx;
-                    // 当前属性没有结束
-                    if (fx && !(fx.finished)) {
-                        fx.pos = 1;
-                        if (fx.isBasicFx) {
-                            c = 0;
-                            if (_propData.frame) {
-                                c = _propData.frame(self, fx);
-                            }
-                            // prevent default
-                            if (c !== false) {
-                                fx.frame(1);
-                            }
-                        } else {
-                            fx.frame(self, fx);
-                        }
-                        fx.finished = 1;
-                    }
+                    fx.frame(1);
                 }
             }
         },
@@ -244,8 +192,10 @@ KISSY.add('anim/timer', function (S, Dom, Event, AnimBase, Easing, AM, Fx, SHORT
         , './timer/color' , './timer/transform'
     ]
 });
-
 /*
+ 2013-09
+ - support custom anim object
+
  2013-01 yiminghe@gmail.com
  - 分属性细粒度控制 {'width':{value:,easing:,fx: }}
  - 重构，merge css3 transition and js animation

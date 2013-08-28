@@ -4,13 +4,12 @@
  * @ignore
  */
 KISSY.add('anim/base', function (S, Dom, Utils, CustomEvent, Q) {
-
-    var NodeType = Dom.NodeType;
-    var specialVals = {
-        toggle: 1,
-        hide: 1,
-        show: 1
-    };
+    var NodeType = Dom.NodeType,
+        specialVals = {
+            toggle: 1,
+            hide: 1,
+            show: 1
+        };
 
     /**
      * superclass for transition anim and js anim
@@ -25,7 +24,6 @@ KISSY.add('anim/base', function (S, Dom, Utils, CustomEvent, Q) {
          */
         self.config = config;
         self.node = self.el = Dom.get(config.node);
-        // 实例属性
         self._backupProps = {};
         self._propsData = {};
 
@@ -89,7 +87,6 @@ KISSY.add('anim/base', function (S, Dom, Utils, CustomEvent, Q) {
             });
 
             if (node.nodeType == NodeType.ELEMENT_NODE) {
-
                 // 放在前面，设置 overflow hidden，否则后面 ie6  取 width/height 初值导致错误
                 // <div style='width:0'><div style='width:100px'></div></div>
                 if (to.width || to.height) {
@@ -262,6 +259,10 @@ KISSY.add('anim/base', function (S, Dom, Utils, CustomEvent, Q) {
                 q,
                 queue = self.config.queue;
 
+            if (self.__stopped) {
+                return self;
+            }
+
             if (!self.isRunning() && !self.isPaused()) {
                 if (queue !== false) {
                     // queued but not start to run
@@ -270,13 +271,16 @@ KISSY.add('anim/base', function (S, Dom, Utils, CustomEvent, Q) {
                 return self;
             }
 
+            self.doStop(finish);
             Utils.removeRunningAnim(self);
             Utils.removePausedAnim(self);
-            self.doStop(finish);
+            self.__stopped = 1;
+
             if (finish) {
                 onComplete(self);
                 self.fire('complete');
             }
+
             if (queue !== false) {
                 // notify next anim to run in the same queue
                 q = Q.dequeue(node, queue);

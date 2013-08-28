@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Aug 27 21:50
+build time: Sep 3 16:27
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -21,7 +21,6 @@ build time: Aug 27 21:50
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('anim/timer/easing', function () {
-
     // Based on Easing Equations (c) 2003 Robert Penner, all rights reserved.
     // This work is subject to the terms in http://www.robertpenner.com/easing_terms_of_use.html
     // Preview: http://www.robertpenner.com/Easing/easing_demo.html
@@ -248,7 +247,6 @@ KISSY.add('anim/timer/easing', function () {
     // https://trac.webkit.org/browser/trunk/Source/WebCore/platform/graphics/UnitBezier.h
     // http://svn.webkit.org/repository/webkit/trunk/Source/WebCore/page/animation/AnimationBase.cpp
     function cubicBezierFunction(p1x, p1y, p2x, p2y) {
-
         // Calculate the polynomial coefficients,
         // implicit first and last control points are (0,0) and (1,1).
         var ax = 3 * p1x - 3 * p2x + 1,
@@ -327,7 +325,6 @@ KISSY.add('anim/timer/easing', function () {
 
     return Easing;
 });
-
 /*
  2013-01-04 yiminghe@gmail.com
  - js 模拟 cubic-bezier
@@ -363,15 +360,16 @@ KISSY.add('anim/timer/easing', function () {
  * @author yiminghe@gmail.com
  */
 KISSY.add('anim/timer/manager', function (S, undefined) {
-    var stamp = S.stamp;
-    var win = S.Env.host;
+    var stamp = S.stamp,
+        win = S.Env.host,
     // note in background tab, interval is set to 1s in chrome/firefox
     // no interval change in ie for 15, if interval is less than 15
     // then in background tab interval is changed to 15
-    var INTERVAL = 15;
+        INTERVAL = 15,
     // https://gist.github.com/paulirish/1579671
-    var requestAnimationFrameFn,
+        requestAnimationFrameFn,
         cancelAnimationFrameFn;
+
     // http://bugs.jquery.com/ticket/9381
     if (0) {
         requestAnimationFrameFn = win['requestAnimationFrame'];
@@ -393,7 +391,9 @@ KISSY.add('anim/timer/manager', function (S, undefined) {
 
     return {
         runnings: {},
+
         timer: null,
+
         start: function (anim) {
             var self = this,
                 kv = stamp(anim);
@@ -403,9 +403,11 @@ KISSY.add('anim/timer/manager', function (S, undefined) {
             self.runnings[kv] = anim;
             self.startTimer();
         },
+
         stop: function (anim) {
             this.notRun(anim);
         },
+
         notRun: function (anim) {
             var self = this,
                 kv = stamp(anim);
@@ -414,12 +416,15 @@ KISSY.add('anim/timer/manager', function (S, undefined) {
                 self.stopTimer();
             }
         },
+
         pause: function (anim) {
             this.notRun(anim);
         },
+
         resume: function (anim) {
             this.start(anim);
         },
+
         startTimer: function () {
             var self = this;
             if (!self.timer) {
@@ -432,6 +437,7 @@ KISSY.add('anim/timer/manager', function (S, undefined) {
                 });
             }
         },
+
         stopTimer: function () {
             var self = this,
                 t = self.timer;
@@ -440,14 +446,20 @@ KISSY.add('anim/timer/manager', function (S, undefined) {
                 self.timer = 0;
             }
         },
+
         runFrames: function () {
             var self = this,
                 r,
                 flag,
                 runnings = self.runnings;
             for (r in runnings) {
+                // in case stop in frame
                 runnings[r].frame();
+            }
+            //noinspection LoopStatementThatDoesntLoopJS
+            for (r in runnings) {
                 flag = 0;
+                break;
             }
             return flag === undefined;
         }
@@ -464,7 +476,6 @@ KISSY.add('anim/timer/manager', function (S, undefined) {
  * @author yiminghe@gmail.com
  */
 KISSY.add('anim/timer/fx', function (S, Dom, undefined) {
-
     function load(self, cfg) {
         S.mix(self, cfg);
         self.pos = 0;
@@ -481,9 +492,8 @@ KISSY.add('anim/timer/fx', function (S, Dom, undefined) {
     }
 
     Fx.prototype = {
-
-        // implemented by KISSY
-        isBasicFx: 1,
+        // default to dom anim
+        isCustomFx: 0,
 
         constructor: Fx,
 
@@ -497,13 +507,56 @@ KISSY.add('anim/timer/fx', function (S, Dom, undefined) {
 
         /**
          * process current anim frame.
-         * @param {Number} pos
+         * @param pos
          */
         frame: function (pos) {
-            var self = this;
+            if (this.pos === 1) {
+                return;
+            }
+
+            var self = this,
+                anim = self.anim,
+                prop = self.prop,
+                node = anim.node,
+                from = self.from,
+                propData = self.propData,
+                to = self.to;
+
+            if (pos === undefined) {
+                pos = getPos(anim, propData);
+            }
+
             self.pos = pos;
-            self.update();
-            self.finished = self.finished || pos == 1;
+
+            if (from === to || pos === 0) {
+                return;
+            }
+
+            var val = self.interpolate(from, to, self.pos);
+
+            self.val = val;
+
+            if (propData.frame) {
+                propData.frame(anim, self);
+            }
+            // in case completed in frame
+            else if (!self.isCustomFx) {
+                if (val === /**@type Number @ignore*/undefined) {
+                    // 插值出错，直接设置为最终值
+                    self.pos = 1;
+                    val = to;
+                    S.log(prop + ' update directly ! : ' + val + ' : ' + from + ' : ' + to);
+                } else {
+                    val += self.unit;
+                }
+                self.val = val;
+                if (isAttr(node, prop)) {
+                    Dom.attr(node, prop, val, 1);
+                } else {
+                    // S.log(self.prop + ' update: ' + val);
+                    Dom.css(node, prop, val);
+                }
+            }
         },
 
         /**
@@ -525,37 +578,6 @@ KISSY.add('anim/timer/fx', function (S, Dom, undefined) {
         },
 
         /**
-         * update dom according to current frame css value.
-         *
-         */
-        update: function () {
-            var self = this,
-                anim = self.anim,
-                prop = self.prop,
-                node = anim.node,
-                from = self.from,
-                to = self.to,
-                val = self.interpolate(from, to, self.pos);
-
-            if (val === /**@type Number @ignore*/undefined) {
-                // 插值出错，直接设置为最终值
-                if (!self.finished) {
-                    self.finished = 1;
-                    Dom.css(node, prop, to);
-                    S.log(prop + ' update directly ! : ' + val + ' : ' + from + ' : ' + to);
-                }
-            } else {
-                val += self.unit;
-                if (isAttr(node, prop)) {
-                    Dom.attr(node, prop, val, 1);
-                } else {
-                    // S.log(self.prop + ' update: ' + val);
-                    Dom.css(node, prop, val);
-                }
-            }
-        },
-
-        /**
          * current value
          *
          */
@@ -563,17 +585,22 @@ KISSY.add('anim/timer/fx', function (S, Dom, undefined) {
             var self = this,
                 prop = self.prop,
                 node = self.anim.node;
-            if (isAttr(node, prop)) {
-                return Dom.attr(node, prop, undefined, 1);
+            //不是css 或者 attribute 的缓动
+            if (self.isCustomFx) {
+                return node[prop] || 0;
             }
-            var parsed,
-                r = Dom.css(node, prop);
-            // Empty strings, null, undefined and 'auto' are converted to 0,
-            // complex values such as 'rotate(1rad)' or '0px 10px' are returned as is,
-            // simple values such as '10px' are parsed to Float.
-            return isNaN(parsed = parseFloat(r)) ?
-                !r || r === 'auto' ? 0 : r
-                : parsed;
+            else if (isAttr(node, prop)) {
+                return Dom.attr(node, prop, undefined, 1);
+            } else {
+                var parsed,
+                    r = Dom.css(node, prop);
+                // Empty strings, null, undefined and 'auto' are converted to 0,
+                // complex values such as 'rotate(1rad)' or '0px 10px' are returned as is,
+                // simple values such as '10px' are parsed to Float.
+                return isNaN(parsed = parseFloat(r)) ?
+                    !r || r === 'auto' ? 0 : r
+                    : parsed;
+            }
         }
     };
 
@@ -604,15 +631,16 @@ KISSY.add('anim/timer/fx', function (S, Dom, undefined) {
 
     Fx.Factories = {};
 
-    Fx.getPos = getPos;
-
     Fx.getFx = function (cfg) {
-        var Constructor = Fx.Factories[cfg.prop] || Fx;
+        var Constructor = Fx,
+            SubClass;
+        if (!cfg.isCustomFx && (SubClass = Fx.Factories[cfg.prop])) {
+            Constructor = SubClass
+        }
         return new Constructor(cfg);
     };
 
     return Fx;
-
 }, {
     requires: ['dom']
 });
@@ -637,8 +665,8 @@ KISSY.add('anim/timer/short-hand', function () {
         // http://www.w3.org/Style/CSS/Tracker/issues/9
         // http://snook.ca/archives/html_and_css/background-position-x-y
         // backgroundPositionX  backgroundPositionY does not support
-        background: [
-        ],
+        background: [],
+
         border: [
             'borderBottomWidth',
             'borderLeftWidth',
@@ -646,20 +674,27 @@ KISSY.add('anim/timer/short-hand', function () {
             // 'borderSpacing', 组合属性？
             'borderTopWidth'
         ],
+
         'borderBottom': ['borderBottomWidth'],
+
         'borderLeft': ['borderLeftWidth'],
+
         borderTop: ['borderTopWidth'],
+
         borderRight: ['borderRightWidth'],
+
         font: [
             'fontSize',
             'fontWeight'
         ],
+
         margin: [
             'marginBottom',
             'marginLeft',
             'marginRight',
             'marginTop'
         ],
+
         padding: [
             'paddingBottom',
             'paddingLeft',
@@ -674,7 +709,6 @@ KISSY.add('anim/timer/short-hand', function () {
  * @author yiminghe@gmail.com
  */
 KISSY.add('anim/timer/color', function (S, Dom, Fx,SHORT_HANDS) {
-
     var HEX_BASE = 16,
         floor = Math.floor,
         KEYWORDS = {
@@ -786,7 +820,6 @@ KISSY.add('anim/timer/color', function (S, Dom, Fx,SHORT_HANDS) {
     }
 
     S.extend(ColorFx, Fx, {
-
         load:function () {
             var self = this;
             ColorFx.superclass.load.apply(self, arguments);
@@ -818,7 +851,6 @@ KISSY.add('anim/timer/color', function (S, Dom, Fx,SHORT_HANDS) {
                 return S.log('anim/color unknown value : ' + from);
             }
         }
-
     });
 
     S.each(COLORS, function (color) {
@@ -826,11 +858,9 @@ KISSY.add('anim/timer/color', function (S, Dom, Fx,SHORT_HANDS) {
     });
 
     return ColorFx;
-
 }, {
     requires:['dom','./fx','./short-hand']
 });
-
 /*
  refer
    - https://developer.mozilla.org/en-US/docs/Web/CSS/color_value
@@ -1062,8 +1092,7 @@ KISSY.add('anim/timer', function (S, Dom, Event, AnimBase, Easing, AM, Fx, SHORT
                 var origin,
                     _propData = _propsData[p],
                     val;
-                // 自定义了 fx 就忽略
-                if (_propData && !_propData.fx) {
+                if (_propData) {
                     val = _propData.value;
                     origin = {};
                     S.each(shortHands, function (sh) {
@@ -1093,27 +1122,27 @@ KISSY.add('anim/timer', function (S, Dom, Event, AnimBase, Easing, AM, Fx, SHORT
                 from,
                 propCfg,
                 fx,
+                isCustomFx = 0,
                 unit,
                 parts;
 
+            if (S.isPlainObject(node)) {
+                isCustomFx = 1;
+            }
+
             // 取得单位，并对单个属性构建 Fx 对象
             for (prop in _propsData) {
-
                 _propData = _propsData[prop];
-
-                // 自定义
-                if (_propData.fx) {
-                    _propData.fx.prop = prop;
-                    continue;
-                }
-
                 val = _propData.value;
                 propCfg = {
+                    isCustomFx: isCustomFx,
                     prop: prop,
                     anim: self,
                     propData: _propData
                 };
+
                 fx = Fx.getFx(propCfg);
+
                 to = val;
 
                 from = fx.cur();
@@ -1160,53 +1189,19 @@ KISSY.add('anim/timer', function (S, Dom, Event, AnimBase, Easing, AM, Fx, SHORT
             var self = this,
                 prop,
                 end = 1,
-                c,
                 fx,
-                pos,
                 _propData,
                 _propsData = self._propsData;
 
             for (prop in _propsData) {
                 _propData = _propsData[prop];
                 fx = _propData.fx;
-                // 当前属性没有结束
-                if (!(fx.finished)) {
-                    pos = Fx.getPos(self, _propData);
-                    if (pos == 0) {
-                        end = 0;
-                        continue;
-                    }
-                    fx.pos = pos;
-                    if (fx.isBasicFx) {
-                        // equal attr value, just skip
-                        if (fx.from == fx.to) {
-                            fx.finished = fx.finished || pos == 1;
-                            end = 0;
-                            continue;
-                        }
-                        c = 0;
-                        if (_propData.frame) {
-                            // from to pos prop -> fx
-                            c = _propData.frame(self, fx);
-                            // in case frame call stop
-                            if (!self.isRunning()) {
-                                return;
-                            }
-                        }
-                        // prevent default
-                        if (c !== false) {
-                            fx.frame(fx.finished || pos);
-                        }
-                    } else {
-                        fx.finished = fx.finished || pos == 1;
-                        fx.frame(self, fx);
-                        // in case frame call stop
-                        if (!self.isRunning()) {
-                            return;
-                        }
-                    }
-                    end &= fx.finished;
+                fx.frame();
+                // in case call stop in frame
+                if (self.__stopped) {
+                    return;
                 }
+                end &= fx.pos == 1;
             }
 
             if ((self.fire('step') === false) || end) {
@@ -1219,7 +1214,6 @@ KISSY.add('anim/timer', function (S, Dom, Event, AnimBase, Easing, AM, Fx, SHORT
             var self = this,
                 prop,
                 fx,
-                c,
                 _propData,
                 _propsData = self._propsData;
             AM.stop(self);
@@ -1227,23 +1221,7 @@ KISSY.add('anim/timer', function (S, Dom, Event, AnimBase, Easing, AM, Fx, SHORT
                 for (prop in _propsData) {
                     _propData = _propsData[prop];
                     fx = _propData.fx;
-                    // 当前属性没有结束
-                    if (fx && !(fx.finished)) {
-                        fx.pos = 1;
-                        if (fx.isBasicFx) {
-                            c = 0;
-                            if (_propData.frame) {
-                                c = _propData.frame(self, fx);
-                            }
-                            // prevent default
-                            if (c !== false) {
-                                fx.frame(1);
-                            }
-                        } else {
-                            fx.frame(self, fx);
-                        }
-                        fx.finished = 1;
-                    }
+                    fx.frame(1);
                 }
             }
         },
@@ -1265,8 +1243,10 @@ KISSY.add('anim/timer', function (S, Dom, Event, AnimBase, Easing, AM, Fx, SHORT
         , './timer/color' , './timer/transform'
     ]
 });
-
 /*
+ 2013-09
+ - support custom anim object
+
  2013-01 yiminghe@gmail.com
  - 分属性细粒度控制 {'width':{value:,easing:,fx: }}
  - 重构，merge css3 transition and js animation

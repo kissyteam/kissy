@@ -106,21 +106,21 @@ KISSY.add('anim/transition', function (S, Dom, Event, AnimBase) {
         _onTransitionEnd: function (e) {
             e = e.originalEvent;
             var self = this,
-                allFinished = 1,
+                allCompleted = 1,
                 propsData = self._propsData;
             // other anim on the same element
             if (!propsData[e.propertyName]) {
                 return;
             }
-            propsData[e.propertyName].finished = 1;
+            propsData[e.propertyName].pos = 1;
             S.each(propsData, function (propData) {
-                if (!propData.finished) {
-                    allFinished = 0;
+                if (propData.pos!==1) {
+                    allCompleted = 0;
                     return false;
                 }
                 return undefined;
             });
-            if (allFinished) {
+            if (allCompleted) {
                 self.stop(true);
             }
         },

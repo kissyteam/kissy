@@ -9,8 +9,8 @@ KISSY.add('anim/timer/short-hand', function () {
         // http://www.w3.org/Style/CSS/Tracker/issues/9
         // http://snook.ca/archives/html_and_css/background-position-x-y
         // backgroundPositionX  backgroundPositionY does not support
-        background: [
-        ],
+        background: [],
+
         border: [
             'borderBottomWidth',
             'borderLeftWidth',
@@ -18,20 +18,27 @@ KISSY.add('anim/timer/short-hand', function () {
             // 'borderSpacing', 组合属性？
             'borderTopWidth'
         ],
+
         'borderBottom': ['borderBottomWidth'],
+
         'borderLeft': ['borderLeftWidth'],
+
         borderTop: ['borderTopWidth'],
+
         borderRight: ['borderRightWidth'],
+
         font: [
             'fontSize',
             'fontWeight'
         ],
+
         margin: [
             'marginBottom',
             'marginLeft',
             'marginRight',
             'marginTop'
         ],
+
         padding: [
             'paddingBottom',
             'paddingLeft',

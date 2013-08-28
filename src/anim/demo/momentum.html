@@ -40,8 +40,8 @@
 
             t.animate({
                 left: {
-                    fx: {
-                        frame: function (anim) {
+
+                        frame: function (anim,fx) {
                             var deltaTime = S.now() - anim.startTime;
                             // Math.exp(-0.1) -> Math.exp(-999)
                             // big -> small
@@ -50,12 +50,12 @@
                             var value = parseInt(startValue - velocity * (1 - frictionFactor) / THETA);
                             //S.log(frictionFactor*velocity);
                             t[0].style.left = value + 'px';
-                            if (this.lastValue === value) {
+                            if (fx.lastValue === value) {
                                 S.log('duration: ' + deltaTime);
-                                this.finished = 1;
+                                fx.pos = 1;
                             }
-                            this.lastValue = value;
-                        }
+                            fx.lastValue = value;
+
                     }
                 }
             }, {

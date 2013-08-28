@@ -347,43 +347,43 @@ if (! _$jscoverage['/timer/transform.js'].branchData) {
   _$jscoverage['/timer/transform.js'].branchData['148'][1] = new BranchData();
 }
 _$jscoverage['/timer/transform.js'].branchData['148'][1].init(448, 7, 'self.to');
-function visit81_148_1(result) {
+function visit87_148_1(result) {
   _$jscoverage['/timer/transform.js'].branchData['148'][1].ranCondition(result);
   return result;
 }_$jscoverage['/timer/transform.js'].branchData['143'][2].init(264, 19, 'self.from != \'none\'');
-function visit80_143_2(result) {
+function visit86_143_2(result) {
   _$jscoverage['/timer/transform.js'].branchData['143'][2].ranCondition(result);
   return result;
 }_$jscoverage['/timer/transform.js'].branchData['143'][1].init(251, 32, 'self.from && self.from != \'none\'');
-function visit79_143_1(result) {
+function visit85_143_1(result) {
   _$jscoverage['/timer/transform.js'].branchData['143'][1].ranCondition(result);
   return result;
 }_$jscoverage['/timer/transform.js'].branchData['142'][1].init(181, 51, 'Dom.style(self.anim.node, \'transform\') || self.from');
-function visit78_142_1(result) {
+function visit84_142_1(result) {
   _$jscoverage['/timer/transform.js'].branchData['142'][1].ranCondition(result);
   return result;
 }_$jscoverage['/timer/transform.js'].branchData['121'][1].init(149, 16, 'val[1] || val[0]');
-function visit77_121_1(result) {
+function visit83_121_1(result) {
   _$jscoverage['/timer/transform.js'].branchData['121'][1].ranCondition(result);
   return result;
 }_$jscoverage['/timer/transform.js'].branchData['115'][1].init(163, 11, 'val[1] || 0');
-function visit76_115_1(result) {
+function visit82_115_1(result) {
   _$jscoverage['/timer/transform.js'].branchData['115'][1].ranCondition(result);
   return result;
 }_$jscoverage['/timer/transform.js'].branchData['105'][1].init(81, 23, '!S.endsWith(val, \'deg\')');
-function visit75_105_1(result) {
+function visit81_105_1(result) {
   _$jscoverage['/timer/transform.js'].branchData['105'][1].ranCondition(result);
   return result;
 }_$jscoverage['/timer/transform.js'].branchData['89'][1].init(295, 7, '++i < l');
-function visit74_89_1(result) {
+function visit80_89_1(result) {
   _$jscoverage['/timer/transform.js'].branchData['89'][1].ranCondition(result);
   return result;
 }_$jscoverage['/timer/transform.js'].branchData['39'][1].init(438, 13, 'A * D < B * C');
-function visit73_39_1(result) {
+function visit79_39_1(result) {
   _$jscoverage['/timer/transform.js'].branchData['39'][1].ranCondition(result);
   return result;
 }_$jscoverage['/timer/transform.js'].branchData['24'][1].init(252, 13, 'A * D - B * C');
-function visit72_24_1(result) {
+function visit78_24_1(result) {
   _$jscoverage['/timer/transform.js'].branchData['24'][1].ranCondition(result);
   return result;
 }_$jscoverage['/timer/transform.js'].lineData[6]++;
@@ -411,7 +411,7 @@ KISSY.add('anim/timer/transform', function(S, Dom, Fx) {
     _$jscoverage['/timer/transform.js'].lineData[17]++;
     var scaleX, scaleY, skew, A = matrix[0], B = matrix[1], C = matrix[2], D = matrix[3];
     _$jscoverage['/timer/transform.js'].lineData[24]++;
-    if (visit72_24_1(A * D - B * C)) {
+    if (visit78_24_1(A * D - B * C)) {
       _$jscoverage['/timer/transform.js'].lineData[26]++;
       scaleX = Math.sqrt(A * A + B * B);
       _$jscoverage['/timer/transform.js'].lineData[27]++;
@@ -433,7 +433,7 @@ KISSY.add('anim/timer/transform', function(S, Dom, Fx) {
       _$jscoverage['/timer/transform.js'].lineData[37]++;
       skew /= scaleY;
       _$jscoverage['/timer/transform.js'].lineData[39]++;
-      if (visit73_39_1(A * D < B * C)) {
+      if (visit79_39_1(A * D < B * C)) {
         _$jscoverage['/timer/transform.js'].lineData[40]++;
         A = -A;
         _$jscoverage['/timer/transform.js'].lineData[41]++;
@@ -484,7 +484,7 @@ KISSY.add('anim/timer/transform', function(S, Dom, Fx) {
     _$jscoverage['/timer/transform.js'].lineData[82]++;
     var trim = S.trim, i = -1, l = transform.length - 1, split, prop, val, ret = defaultDecompose();
     _$jscoverage['/timer/transform.js'].lineData[89]++;
-    while (visit74_89_1(++i < l)) {
+    while (visit80_89_1(++i < l)) {
       _$jscoverage['/timer/transform.js'].lineData[90]++;
       split = transform[i].split("(");
       _$jscoverage['/timer/transform.js'].lineData[91]++;
@@ -507,7 +507,7 @@ KISSY.add('anim/timer/transform', function(S, Dom, Fx) {
           _$jscoverage['/timer/transform.js'].lineData[104]++;
           var v = myParse(val);
           _$jscoverage['/timer/transform.js'].lineData[105]++;
-          if (visit75_105_1(!S.endsWith(val, 'deg'))) {
+          if (visit81_105_1(!S.endsWith(val, 'deg'))) {
             _$jscoverage['/timer/transform.js'].lineData[106]++;
             v = v * 180 / Math.PI;
           }
@@ -522,7 +522,7 @@ KISSY.add('anim/timer/transform', function(S, Dom, Fx) {
           _$jscoverage['/timer/transform.js'].lineData[114]++;
           ret.translateX = myParse(val[0]);
           _$jscoverage['/timer/transform.js'].lineData[115]++;
-          ret.translateY = myParse(visit76_115_1(val[1] || 0));
+          ret.translateY = myParse(visit82_115_1(val[1] || 0));
           _$jscoverage['/timer/transform.js'].lineData[116]++;
           break;
         case 'scale':
@@ -531,7 +531,7 @@ KISSY.add('anim/timer/transform', function(S, Dom, Fx) {
           _$jscoverage['/timer/transform.js'].lineData[120]++;
           ret.scaleX = myParse(val[0]);
           _$jscoverage['/timer/transform.js'].lineData[121]++;
-          ret.scaleY = myParse(visit77_121_1(val[1] || val[0]));
+          ret.scaleY = myParse(visit83_121_1(val[1] || val[0]));
           _$jscoverage['/timer/transform.js'].lineData[122]++;
           break;
         case 'matrix':
@@ -559,9 +559,9 @@ KISSY.add('anim/timer/transform', function(S, Dom, Fx) {
   _$jscoverage['/timer/transform.js'].lineData[140]++;
   TransformFx.superclass.load.apply(self, arguments);
   _$jscoverage['/timer/transform.js'].lineData[142]++;
-  self.from = visit78_142_1(Dom.style(self.anim.node, 'transform') || self.from);
+  self.from = visit84_142_1(Dom.style(self.anim.node, 'transform') || self.from);
   _$jscoverage['/timer/transform.js'].lineData[143]++;
-  if (visit79_143_1(self.from && visit80_143_2(self.from != 'none'))) {
+  if (visit85_143_1(self.from && visit86_143_2(self.from != 'none'))) {
     _$jscoverage['/timer/transform.js'].lineData[144]++;
     self.from = getTransformInfo(self.from);
   } else {
@@ -569,7 +569,7 @@ KISSY.add('anim/timer/transform', function(S, Dom, Fx) {
     self.from = defaultDecompose();
   }
   _$jscoverage['/timer/transform.js'].lineData[148]++;
-  if (visit81_148_1(self.to)) {
+  if (visit87_148_1(self.to)) {
     _$jscoverage['/timer/transform.js'].lineData[149]++;
     self.to = getTransformInfo(self.to);
   } else {

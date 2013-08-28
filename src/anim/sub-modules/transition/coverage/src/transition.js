@@ -350,15 +350,15 @@ function visit13_149_1(result) {
 function visit12_139_1(result) {
   _$jscoverage['/transition.js'].branchData['139'][1].ranCondition(result);
   return result;
-}_$jscoverage['/transition.js'].branchData['123'][1].init(589, 11, 'allFinished');
+}_$jscoverage['/transition.js'].branchData['123'][1].init(584, 12, 'allCompleted');
 function visit11_123_1(result) {
   _$jscoverage['/transition.js'].branchData['123'][1].ranCondition(result);
   return result;
-}_$jscoverage['/transition.js'].branchData['117'][1].init(22, 18, '!propData.finished');
+}_$jscoverage['/transition.js'].branchData['117'][1].init(22, 16, 'propData.pos !== 1');
 function visit10_117_1(result) {
   _$jscoverage['/transition.js'].branchData['117'][1].ranCondition(result);
   return result;
-}_$jscoverage['/transition.js'].branchData['112'][1].init(209, 26, '!propsData[e.propertyName]');
+}_$jscoverage['/transition.js'].branchData['112'][1].init(210, 26, '!propsData[e.propertyName]');
 function visit9_112_1(result) {
   _$jscoverage['/transition.js'].branchData['112'][1].ranCondition(result);
   return result;
@@ -521,21 +521,21 @@ KISSY.add('anim/transition', function(S, Dom, Event, AnimBase) {
   _$jscoverage['/transition.js'].lineData[107]++;
   e = e.originalEvent;
   _$jscoverage['/transition.js'].lineData[108]++;
-  var self = this, allFinished = 1, propsData = self._propsData;
+  var self = this, allCompleted = 1, propsData = self._propsData;
   _$jscoverage['/transition.js'].lineData[112]++;
   if (visit9_112_1(!propsData[e.propertyName])) {
     _$jscoverage['/transition.js'].lineData[113]++;
     return;
   }
   _$jscoverage['/transition.js'].lineData[115]++;
-  propsData[e.propertyName].finished = 1;
+  propsData[e.propertyName].pos = 1;
   _$jscoverage['/transition.js'].lineData[116]++;
   S.each(propsData, function(propData) {
   _$jscoverage['/transition.js'].functionData[10]++;
   _$jscoverage['/transition.js'].lineData[117]++;
-  if (visit10_117_1(!propData.finished)) {
+  if (visit10_117_1(propData.pos !== 1)) {
     _$jscoverage['/transition.js'].lineData[118]++;
-    allFinished = 0;
+    allCompleted = 0;
     _$jscoverage['/transition.js'].lineData[119]++;
     return false;
   }
@@ -543,7 +543,7 @@ KISSY.add('anim/transition', function(S, Dom, Event, AnimBase) {
   return undefined;
 });
   _$jscoverage['/transition.js'].lineData[123]++;
-  if (visit11_123_1(allFinished)) {
+  if (visit11_123_1(allCompleted)) {
     _$jscoverage['/transition.js'].lineData[124]++;
     self.stop(true);
   }

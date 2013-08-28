@@ -4,5 +4,5 @@ KISSY.add(function(S,Simple,Queue){
 },{
     requires:['src/anim/tests/specs/simple',
         'src/anim/tests/specs/queue',
-        './frame','./fx','./pause','./scroll']
+        './frame','./pause','./scroll']
 });

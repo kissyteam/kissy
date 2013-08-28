@@ -36,21 +36,20 @@
             var velocity = startVelocity * ACCELERATION;
             t.animate({
                 left: {
-                    fx: {
-                        frame: function (anim) {
-                            var deltaTime = S.now() - anim.startTime,
-                                    theta = (deltaTime / ACCELERATION),
-                            // long tail hump
-                                    powTime = theta * Math.exp(-SPRING_TENSION * theta),
-                                    value = parseInt(velocity * powTime);
-                            if (value === 0) {
-                                S.log('duration: ' + deltaTime);
-                                this.finished = 1;
-                            }
-                            //S.log(powTime);
-                            t[0].style.left = startValue + value + 'px';
+                    frame: function (anim, fx) {
+                        var deltaTime = S.now() - anim.startTime,
+                                theta = (deltaTime / ACCELERATION),
+                        // long tail hump
+                                powTime = theta * Math.exp(-SPRING_TENSION * theta),
+                                value = parseInt(velocity * powTime);
+                        if (value === 0) {
+                            S.log('duration: ' + deltaTime);
+                            fx.pos = 1;
                         }
+                        //S.log(powTime);
+                        t[0].style.left = startValue + value + 'px';
                     }
+
                 }
             }, {
                 duration: 999,

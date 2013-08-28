@@ -4,7 +4,6 @@
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('anim/timer/easing', function () {
-
     // Based on Easing Equations (c) 2003 Robert Penner, all rights reserved.
     // This work is subject to the terms in http://www.robertpenner.com/easing_terms_of_use.html
     // Preview: http://www.robertpenner.com/Easing/easing_demo.html
@@ -231,7 +230,6 @@ KISSY.add('anim/timer/easing', function () {
     // https://trac.webkit.org/browser/trunk/Source/WebCore/platform/graphics/UnitBezier.h
     // http://svn.webkit.org/repository/webkit/trunk/Source/WebCore/page/animation/AnimationBase.cpp
     function cubicBezierFunction(p1x, p1y, p2x, p2y) {
-
         // Calculate the polynomial coefficients,
         // implicit first and last control points are (0,0) and (1,1).
         var ax = 3 * p1x - 3 * p2x + 1,
@@ -310,7 +308,6 @@ KISSY.add('anim/timer/easing', function () {
 
     return Easing;
 });
-
 /*
  2013-01-04 yiminghe@gmail.com
  - js 模拟 cubic-bezier
