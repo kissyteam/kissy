@@ -97,7 +97,7 @@ KISSY.add('anim/timer', function (S, Dom, Event, AnimBase, Easing, AM, Fx, SHORT
 
                 //不是基本的动画
                 if(S.isPlainObject(node)){
-                  fx.isBasicFx = 0;
+                  fx._customFx = 1;
                 }
                 from = fx.cur();
 
