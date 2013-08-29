@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.31
 MIT Licensed
-build time: Aug 15 00:08
+build time: Aug 29 20:12
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130815000847' will replace with current timestamp when compressing.
+         * NOTICE: '20130829201216' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130815000847',
+        __BUILD_TIME: '20130829201216',
         /**
          * KISSY Environment.
          * @private
@@ -5694,7 +5694,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20130815000847'
+            tag: '20130829201216'
         }, getBaseInfo()));
     }
 
@@ -10996,7 +10996,7 @@ KISSY.add('dom/ie/traversal', function (S, DOM) {
 /*
 Copyright 2013, KISSY UI Library v1.31
 MIT Licensed
-build time: Aug 15 00:06
+build time: Aug 29 20:11
 */
 /**
  * @ignore
@@ -11298,7 +11298,12 @@ KISSY.add('event/base/observer', function (S) {
          * @param {KISSY.Event.ObservableEvent} ce
          */
         notifyInternal: function (event, ce) {
-            return this.simpleNotify(event, ce);
+            var ret = this.simpleNotify(event, ce);
+            // return false 等价 preventDefault + stopPropagation
+            if (ret === false) {
+                event.halt();
+            }
+            return ret;
         },
 
         /**
@@ -11318,11 +11323,6 @@ KISSY.add('event/base/observer', function (S) {
             }
 
             ret = self.notifyInternal(event, ce);
-
-            // return false 等价 preventDefault + stopPropagation
-            if (ret === false) {
-                event.halt();
-            }
 
             return ret;
         }
@@ -11413,7 +11413,7 @@ KISSY.add('event/base/utils', function (S) {
 /*
 Copyright 2013, KISSY UI Library v1.31
 MIT Licensed
-build time: Aug 15 00:06
+build time: Aug 29 20:11
 */
 /**
  * @ignore
@@ -11477,7 +11477,7 @@ KISSY.add('event/custom/api-impl', function (S, api, Event, ObservableCustomEven
 
                     r2 = customEvent.fire(eventData);
 
-                    if (ret !== false) {
+                    if (ret !== false && r2!==undefined) {
                         ret = r2;
                     }
                 });
@@ -11779,7 +11779,7 @@ KISSY.add('event/custom/observable', function (S, api, CustomEventObserver, Cust
 
             ret = self.notify(customEvent);
 
-            if (gRet !== false) {
+            if (gRet !== false && ret !== undefined) {
                 gRet = ret;
             }
 
@@ -11792,7 +11792,7 @@ KISSY.add('event/custom/observable', function (S, api, CustomEventObserver, Cust
                     ret = api.fire(parents[i], type, customEvent);
 
                     // false 优先返回
-                    if (gRet !== false) {
+                    if (gRet !== false && ret!==undefined) {
                         gRet = ret;
                     }
 
@@ -11825,11 +11825,8 @@ KISSY.add('event/custom/observable', function (S, api, CustomEventObserver, Cust
 
             for (i = 0; i < len && !event.isImmediatePropagationStopped(); i++) {
                 ret = observers[i].notify(event, this);
-                if (gRet !== false) {
+                if (gRet !== false && ret !== undefined) {
                     gRet = ret;
-                }
-                if (ret === false) {
-                    event.halt();
                 }
             }
 
@@ -11968,7 +11965,7 @@ KISSY.add('event/custom/observer', function (S, Event) {
 /*
 Copyright 2013, KISSY UI Library v1.31
 MIT Licensed
-build time: Aug 15 00:06
+build time: Aug 29 20:12
 */
 /**
  * @ignore
@@ -12247,7 +12244,7 @@ KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, Observa
                     }
                     if (customEvent) {
                         r = customEvent.fire(eventData, onlyHandlers);
-                        if (ret !== false) {
+                        if (ret !== false && r !== undefined) {
                             ret = r;
                         }
                     }
@@ -13554,7 +13551,7 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
                     // 和 jQuery 逻辑保持一致
                     // 有一个 false，最终结果就是 false
                     // 否则等于最后一个返回值
-                    if (gRet !== false) {
+                    if (gRet !== false && ret !== undefined) {
                         gRet = ret;
                     }
                 }
@@ -13632,7 +13629,7 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
                 // default bubble for html node
                 if (customEvent) {
                     t = customEvent.notify(event);
-                    if (ret !== false) {
+                    if (ret !== false && t !== undefined) {
                         ret = t;
                     }
                 }
@@ -13660,8 +13657,7 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
                             (
                                 eventType !== 'focus' && eventType !== 'blur') ||
                                 currentTarget.offsetWidth !== 0
-                            ) &&
-                        !S.isWindow(currentTarget)) {
+                            ) && !S.isWindow(currentTarget)) {
                         // Don't re-trigger an onFOO event when we call its FOO() method
                         old = currentTarget[ ontype ];
 

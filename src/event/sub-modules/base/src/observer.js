@@ -73,7 +73,12 @@ KISSY.add('event/base/observer', function (S) {
          * @param {KISSY.Event.ObservableEvent} ce
          */
         notifyInternal: function (event, ce) {
-            return this.simpleNotify(event, ce);
+            var ret = this.simpleNotify(event, ce);
+            // return false 等价 preventDefault + stopPropagation
+            if (ret === false) {
+                event.halt();
+            }
+            return ret;
         },
 
         /**
@@ -93,11 +98,6 @@ KISSY.add('event/base/observer', function (S) {
             }
 
             ret = self.notifyInternal(event, ce);
-
-            // return false 等价 preventDefault + stopPropagation
-            if (ret === false) {
-                event.halt();
-            }
 
             return ret;
         }

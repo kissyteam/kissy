@@ -275,7 +275,7 @@ KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, Observa
                     }
                     if (customEvent) {
                         r = customEvent.fire(eventData, onlyHandlers);
-                        if (ret !== false) {
+                        if (ret !== false && r !== undefined) {
                             ret = r;
                         }
                     }

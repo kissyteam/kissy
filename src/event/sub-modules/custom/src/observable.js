@@ -96,7 +96,7 @@ KISSY.add('event/custom/observable', function (S, api, CustomEventObserver, Cust
 
             ret = self.notify(customEvent);
 
-            if (gRet !== false) {
+            if (gRet !== false && ret !== undefined) {
                 gRet = ret;
             }
 
@@ -109,7 +109,7 @@ KISSY.add('event/custom/observable', function (S, api, CustomEventObserver, Cust
                     ret = api.fire(parents[i], type, customEvent);
 
                     // false 优先返回
-                    if (gRet !== false) {
+                    if (gRet !== false && ret!==undefined) {
                         gRet = ret;
                     }
 
@@ -142,11 +142,8 @@ KISSY.add('event/custom/observable', function (S, api, CustomEventObserver, Cust
 
             for (i = 0; i < len && !event.isImmediatePropagationStopped(); i++) {
                 ret = observers[i].notify(event, this);
-                if (gRet !== false) {
+                if (gRet !== false && ret !== undefined) {
                     gRet = ret;
-                }
-                if (ret === false) {
-                    event.halt();
                 }
             }
 

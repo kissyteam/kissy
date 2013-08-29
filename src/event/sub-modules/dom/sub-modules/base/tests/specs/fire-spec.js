@@ -27,6 +27,46 @@ KISSY.use("dom,event/dom/base", function (S, DOM, Event) {
 
         });
 
+        it('can get fire return value', function () {
+            var n = DOM.create("<div/>"), ret;
+
+            Event.on(n, 'xx', function () {
+                return 1;
+            });
+
+            Event.on(n, 'xx', function () {
+            });
+
+            expect(Event.fire(n, 'xx')).toBe(1);
+
+            Event.detach(n);
+
+            Event.on(n, 'xx', function () {
+                return false;
+            });
+
+            Event.on(n, 'xx', function () {
+                return 1;
+            });
+
+            Event.on(n, 'xx', function () {
+            });
+
+            expect(Event.fire(n, 'xx')).toBe(false);
+
+            Event.detach(n);
+
+            Event.on(n, 'xx', function () {
+                return 1;
+            });
+
+            Event.on(n, 'xx', function () {
+                return null;
+            });
+
+            expect(Event.fire(n, 'xx')).toBe(null);
+        });
+
         it('bubble event remove element/fn in the middle', function () {
 
             var n = DOM.create("<div>" +

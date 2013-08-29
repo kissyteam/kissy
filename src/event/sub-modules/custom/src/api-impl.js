@@ -60,7 +60,7 @@ KISSY.add('event/custom/api-impl', function (S, api, Event, ObservableCustomEven
 
                     r2 = customEvent.fire(eventData);
 
-                    if (ret !== false) {
+                    if (ret !== false && r2!==undefined) {
                         ret = r2;
                     }
                 });

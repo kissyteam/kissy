@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.31
 MIT Licensed
-build time: Aug 15 00:06
+build time: Aug 29 20:12
 */
 /**
  * @ignore
@@ -280,7 +280,7 @@ KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, Observa
                     }
                     if (customEvent) {
                         r = customEvent.fire(eventData, onlyHandlers);
-                        if (ret !== false) {
+                        if (ret !== false && r !== undefined) {
                             ret = r;
                         }
                     }
@@ -1587,7 +1587,7 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
                     // 和 jQuery 逻辑保持一致
                     // 有一个 false，最终结果就是 false
                     // 否则等于最后一个返回值
-                    if (gRet !== false) {
+                    if (gRet !== false && ret !== undefined) {
                         gRet = ret;
                     }
                 }
@@ -1665,7 +1665,7 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
                 // default bubble for html node
                 if (customEvent) {
                     t = customEvent.notify(event);
-                    if (ret !== false) {
+                    if (ret !== false && t !== undefined) {
                         ret = t;
                     }
                 }
@@ -1693,8 +1693,7 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
                             (
                                 eventType !== 'focus' && eventType !== 'blur') ||
                                 currentTarget.offsetWidth !== 0
-                            ) &&
-                        !S.isWindow(currentTarget)) {
+                            ) && !S.isWindow(currentTarget)) {
                         // Don't re-trigger an onFOO event when we call its FOO() method
                         old = currentTarget[ ontype ];
 
