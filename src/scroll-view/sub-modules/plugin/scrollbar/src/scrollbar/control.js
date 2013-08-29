@@ -10,6 +10,10 @@ KISSY.add('scroll-view/plugin/scrollbar/control', function (S, Node, Control, Sc
 
     var Gesture = Node.Gesture;
 
+    var Features = S.Features;
+
+    var allowDrag = !Features.isTouchEventSupported() && !Features.isMsPointerSupported();
+
     return Control.extend({
         initializer: function () {
             var self = this;
@@ -40,7 +44,7 @@ KISSY.add('scroll-view/plugin/scrollbar/control', function (S, Node, Control, Sc
                         .on(Gesture.end, self.onUpDownBtnMouseUp, self);
                 });
                 self.$trackEl.on(Gesture.start, self.onTrackElMouseDown, self);
-                if (self.get('allowDrag')) {
+                if (allowDrag) {
                     S.use('dd', function (S, DD) {
                         self.dd = new DD.Draggable({
                             node: self.$dragEl,
@@ -189,10 +193,6 @@ KISSY.add('scroll-view/plugin/scrollbar/control', function (S, Node, Control, Sc
             },
 
             scrollView: {
-            },
-
-            allowDrag: {
-                value: false
             },
 
             axis: {

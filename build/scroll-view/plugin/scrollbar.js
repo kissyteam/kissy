@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Aug 28 22:56
+build time: Aug 29 11:54
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -166,6 +166,10 @@ KISSY.add('scroll-view/plugin/scrollbar/control', function (S, Node, Control, Sc
 
     var Gesture = Node.Gesture;
 
+    var Features = S.Features;
+
+    var allowDrag = !Features.isTouchEventSupported() && !Features.isMsPointerSupported();
+
     return Control.extend({
         initializer: function () {
             var self = this;
@@ -196,7 +200,7 @@ KISSY.add('scroll-view/plugin/scrollbar/control', function (S, Node, Control, Sc
                         .on(Gesture.end, self.onUpDownBtnMouseUp, self);
                 });
                 self.$trackEl.on(Gesture.start, self.onTrackElMouseDown, self);
-                if (self.get('allowDrag')) {
+                if (allowDrag) {
                     S.use('dd', function (S, DD) {
                         self.dd = new DD.Draggable({
                             node: self.$dragEl,
@@ -347,10 +351,6 @@ KISSY.add('scroll-view/plugin/scrollbar/control', function (S, Node, Control, Sc
             scrollView: {
             },
 
-            allowDrag: {
-                value: false
-            },
-
             axis: {
                 view: 1
             },
@@ -457,7 +457,6 @@ KISSY.add('scroll-view/plugin/scrollbar', function (S, Base, ScrollBar) {
             var my;
             var cfg = {
                 scrollView: scrollView,
-                allowDrag: self.get('allowDrag'),
                 // render: scrollView.get('el') => ie7 bug
                 elBefore: scrollView.$contentEl
             };
