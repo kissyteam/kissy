@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Aug 27 21:52
+build time: Aug 30 01:37
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -99,6 +99,9 @@ KISSY.add('dd/ddm', function (S, Node, Base, undefined) {
             var self = this,
                 drops = self.get('drops'),
                 drag = self.__activeToDrag;
+            if (!drag) {
+                return;
+            }
             self.setInternal('activeDrag', drag);
             // 预备役清掉
             self.__activeToDrag = 0;
@@ -295,8 +298,7 @@ KISSY.add('dd/ddm', function (S, Node, Base, undefined) {
     // 同一时刻只可能有个 drag 元素，只能有一次 move 被注册，不需要每个实例一个 throttle
     // 一个应用一个 document 只需要注册一个 move
     // 2013-01-24 更灵敏 for scroller in webkit
-    var throttleMove = UA.ie && UA.ie < 8 ?
-        S.throttle(move, MOVE_DELAY) : move;
+    var throttleMove = UA.ie ? S.throttle(move, MOVE_DELAY) : move;
 
     function notifyDropsMove(self, ev, activeDrag) {
         var drops = self.get('validDrops'),
@@ -450,7 +452,7 @@ KISSY.add('dd/ddm', function (S, Node, Base, undefined) {
         $doc.on(DRAG_END_EVENT, self._end, self);
         $doc.on(DRAG_MOVE_EVENT, throttleMove, self);
         // ie6 will not response to event when cursor is out of window.
-        if (UA.ie === 6) {
+        if (doc.body.setCapture) {
             doc.body.setCapture();
         }
     }
@@ -461,7 +463,7 @@ KISSY.add('dd/ddm', function (S, Node, Base, undefined) {
     function unRegisterEvent(self) {
         $doc.detach(DRAG_MOVE_EVENT, throttleMove, self);
         $doc.detach(DRAG_END_EVENT, self._end, self);
-        if (UA.ie === 6) {
+        if (doc.body.releaseCapture) {
             doc.body.releaseCapture();
         }
     }

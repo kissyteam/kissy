@@ -8,7 +8,6 @@
     <meta name="apple-touch-fullscreen" content="yes">
     <title>简单拖放 demo</title>
     <style>
-
         .component {
             margin: 50px 10px;
             width: 120px;
@@ -17,6 +16,8 @@
             float: left;
             display: inline;
             overflow: hidden;
+            -ms-touch-action:none
+            -ms-user-select:none;
         }
 
         #drop {

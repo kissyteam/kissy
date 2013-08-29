@@ -153,29 +153,35 @@
 <h1>open in touch device or emulate touch in chrome</h1>
 
 <h2 id="wait" style="color:red">please wait, loading ....</h2>
+
 <div id="demo2" class="ks-scroll-view">
     <ol class="ks-scroll-view-content">
         <li>
-            <img 
-                 width="540"
+            <img
+                    width="540"
+                    height="540"
+                    src="http://gd4.alicdn.com/bao/uploaded/i4/19927025103146716/T1JdpoFexhXXXXXXXX_!!0-item_pic.jpg_540x540.jpg"/>
+        </li>
+        <li class="hidden">
+            <img width="540"
                  height="540"
-                 src="http://gd4.alicdn.com/bao/uploaded/i4/19927025103146716/T1JdpoFexhXXXXXXXX_!!0-item_pic.jpg_540x540.jpg"/></li>
+                 src="http://gd4.alicdn.com/imgextra/i4/1604749927/T2RegJXmtXXXXXXXXX_!!1604749927.jpg_540x540.jpg"/>
+        </li>
         <li class="hidden">
-            <img  width="540"
+            <img width="540"
                  height="540"
-                 src="http://gd4.alicdn.com/imgextra/i4/1604749927/T2RegJXmtXXXXXXXXX_!!1604749927.jpg_540x540.jpg"/></li>
+                 src="http://gd1.alicdn.com/imgextra/i1/1604749927/T2y7ZmXc4bXXXXXXXX_!!1604749927.jpg_540x540.jpg"/>
+        </li>
         <li class="hidden">
-            <img  width="540"
-                  height="540"
-                 src="http://gd1.alicdn.com/imgextra/i1/1604749927/T2y7ZmXc4bXXXXXXXX_!!1604749927.jpg_540x540.jpg"/></li>
+            <img width="540"
+                 height="540"
+                 src="http://gd3.alicdn.com/imgextra/i3/1604749927/T2H9UoXk0aXXXXXXXX_!!1604749927.jpg_540x540.jpg"/>
+        </li>
         <li class="hidden">
-            <img  width="540"
-                  height="540"
-                    src="http://gd3.alicdn.com/imgextra/i3/1604749927/T2H9UoXk0aXXXXXXXX_!!1604749927.jpg_540x540.jpg"/></li>
-        <li class="hidden">
-            <img  width="540"
-                  height="540"
-                    src="http://gd3.alicdn.com/imgextra/i3/1604749927/T2xlguXeXaXXXXXXXX_!!1604749927.jpg_540x540.jpg"/></li>
+            <img width="540"
+                 height="540"
+                 src="http://gd3.alicdn.com/imgextra/i3/1604749927/T2xlguXeXaXXXXXXXX_!!1604749927.jpg_540x540.jpg"/>
+        </li>
     </ol>
 </div>
 <div style="height:1000px"></div>
@@ -201,13 +207,17 @@
         slide.triggers.each(function (t, i) {
             t.html(i + 1);
         });
-        $('#demo2').delegate(Node.Gesture.tap, 'img', function (e) {
+        $('#demo2').delegate(Node.Gesture.tap, 'img',function (e) {
             imageZoomer.showImage({
                 src: e.currentTarget.src,
                 width: 1200,
                 height: 1200
             });
         });
+//        .on('touchstart', function (e) {
+//                    // ios mousedown bug
+//                    e.preventDefault();
+//                });
         window.slide = slide;
         $('#wait').css({
             color: 'green'

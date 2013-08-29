@@ -1,7 +1,7 @@
 /**
  * @ignore
  * A seed where KISSY grows up from, KISS Yeah !
- * @author https://github.com/kissyteam?tab=members
+ * @author https://github.com/kissyteam/kissy/contributors
  */
 
 /**

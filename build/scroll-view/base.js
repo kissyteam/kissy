@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Aug 29 11:54
+build time: Aug 30 01:36
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -159,7 +159,6 @@ KISSY.add('scroll-view/base/render', function (S, Node, Container, ContentRender
  * @author yiminghe@gmail.com
  */
 KISSY.add('scroll-view/base', function (S, Node, Container, Render, undefined) {
-
     var $ = S.all,
         isTouchEventSupported = S.Features.isTouchEventSupported(),
         KeyCode = Node.KeyCode;
@@ -179,7 +178,6 @@ KISSY.add('scroll-view/base', function (S, Node, Container, Render, undefined) {
     }
 
     return Container.extend({
-
         bindUI: function () {
             var self = this,
                 $el = self.$el;
@@ -246,7 +244,7 @@ KISSY.add('scroll-view/base', function (S, Node, Container, Render, undefined) {
             if (control.scrollStep) {
                 return control.scrollStep;
             }
-            var elDoc = $(el.ownerDocument);
+            var elDoc = $(this.get('el')[0].ownerDocument);
             var clientHeight = control.clientHeight;
             var clientWidth = control.clientWidth;
             return control.scrollStep = {
@@ -262,7 +260,7 @@ KISSY.add('scroll-view/base', function (S, Node, Container, Render, undefined) {
             var max,
                 min,
                 self = this,
-                scrollStep = self.scrollStep,
+                scrollStep = self.getScrollStep(),
                 deltaY,
                 deltaX,
                 maxScroll = self.maxScroll,
@@ -275,7 +273,10 @@ KISSY.add('scroll-view/base', function (S, Node, Container, Render, undefined) {
                 if (scrollTop <= min && deltaY > 0 || scrollTop >= max && deltaY < 0) {
                 } else {
                     self.scrollToWithBounds({top: scrollTop - e.deltaY * scrollStep['top']});
-                    e.preventDefault();
+                    // no need for pointer event
+                    if (isTouchEventSupported) {
+                        e.preventDefault();
+                    }
                 }
             }
 
@@ -286,7 +287,9 @@ KISSY.add('scroll-view/base', function (S, Node, Container, Render, undefined) {
                 if (scrollLeft <= min && deltaX > 0 || scrollLeft >= max && deltaX < 0) {
                 } else {
                     self.scrollToWithBounds({left: scrollLeft - e.deltaX * scrollStep['left']});
-                    e.preventDefault();
+                    if (isTouchEventSupported) {
+                        e.preventDefault();
+                    }
                 }
             }
         },
@@ -390,7 +393,6 @@ KISSY.add('scroll-view/base', function (S, Node, Container, Render, undefined) {
                 }
             }
         }
-
     }, {
         ATTRS: {
             contentEl: {
@@ -431,7 +433,6 @@ KISSY.add('scroll-view/base', function (S, Node, Container, Render, undefined) {
         },
         xclass: 'scroll-view'
     });
-
 }, {
     requires: ['node',
         'component/container',

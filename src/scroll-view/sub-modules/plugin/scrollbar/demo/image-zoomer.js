@@ -32,6 +32,10 @@ KISSY.add(function (S, Node, ScrollView, ScrollbarPlugin) {
     var MASK_CLASS = ZOOMER_CLASS + '-mask';
     var MASK_HTML = '<div class="' + MASK_CLASS + '"></div>';
 
+    function prevent(e) {
+        e.preventDefault();
+    }
+
     function initScrollView() {
         if (scrollView) {
             return;
@@ -68,8 +72,7 @@ KISSY.add(function (S, Node, ScrollView, ScrollbarPlugin) {
             newVal: 1
         });
 
-        function close(e) {
-            e.halt();
+        function close() {
             scrollView.stopAnimation();
             scrollView.hide();
         }
@@ -77,6 +80,9 @@ KISSY.add(function (S, Node, ScrollView, ScrollbarPlugin) {
         // tap(touch down is buggy on safari ios)
         closeEl.on(tap, close);
         contentEl.on(tap, close);
+        // ios mousedown bug
+        //closeEl.on('touchstart', prevent);
+        //contentEl.on('touchstart', prevent);
         $(window).on('resize orientationchange', function () {
             if (scrollView.get('visible')) {
                 scrollView.sync();

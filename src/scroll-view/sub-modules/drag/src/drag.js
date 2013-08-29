@@ -239,6 +239,8 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, Node) {
         onDragStart(self, e, 'top');
         self.fire('scrollStart', pos);
         self.isScrolling = 1;
+        // TODO: bug ie10 if mouse out of window
+        self.$contentEl.on(Gesture.move, onDragHandler, self);
     }
 
     function onDragHandler(e) {
@@ -259,28 +261,36 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, Node) {
 
         // if lockX or lockY then do not prevent native scroll on some condition
         if (lockX || lockY) {
+            var xDiff = Math.abs(pos.pageX - startMousePos.pageX);
+            var yDiff = Math.abs(pos.pageY - startMousePos.pageY);
+
+            // allow little deviation
+            if (Math.max(xDiff, yDiff) < 5) {
+                return;
+            }
+
             var dragInitDirection;
 
             if (!(dragInitDirection = self.dragInitDirection)) {
-                self.dragInitDirection = dragInitDirection = Math.abs(
-                    pos.pageX - startMousePos.pageX
-                ) > Math.abs(
-                    pos.pageY - startMousePos.pageY
-                ) ? 'left' : 'top';
+                self.dragInitDirection = dragInitDirection = xDiff > yDiff ? 'left' : 'top';
             }
 
             if (lockX && dragInitDirection == 'left' && !self.allowScroll[dragInitDirection]) {
+                S.log('not in right direction');
                 self.isScrolling = 0;
                 return;
             }
 
             if (lockY && dragInitDirection == 'top' && !self.allowScroll[dragInitDirection]) {
+                S.log('not in right direction');
                 self.isScrolling = 0;
                 return;
             }
         }
 
-        e.preventDefault();
+        if (S.Features.isTouchEventSupported()) {
+            e.preventDefault();
+        }
 
         onDragScroll(self, e, 'left', startMousePos);
         onDragScroll(self, e, 'top', startMousePos);
@@ -289,13 +299,19 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, Node) {
         self.fire('scrollMove', pos);
     }
 
+    if (S.UA.ie) {
+        onDragHandler = S.throttle(onDragHandler, 30);
+    }
+
     function onDragEndHandler(e) {
         var self = this;
         var count = 0;
         var startMousePos = self.startMousePos;
+
         if (!startMousePos || !self.isScrolling) {
             return;
         }
+        self.$contentEl.detach(Gesture.move, onDragHandler, self);
         var offsetX = startMousePos.pageX - e.pageX;
         var offsetY = startMousePos.pageY - e.pageY;
         var snapThreshold = self.get('snapThreshold');
@@ -437,7 +453,6 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, Node) {
                 var self = this;
                 self.$contentEl.on('dragstart', preventDefault)
                     .on(Gesture.start, onDragStartHandler, self)
-                    .on(Gesture.move, onDragHandler, self)
                     .on(Gesture.end, onDragEndHandler, self);
             },
 

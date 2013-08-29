@@ -277,21 +277,21 @@ if (! _$jscoverage['/meta/modules.js']) {
   _$jscoverage['/meta/modules.js'].lineData[201] = 0;
   _$jscoverage['/meta/modules.js'].lineData[205] = 0;
   _$jscoverage['/meta/modules.js'].lineData[208] = 0;
-  _$jscoverage['/meta/modules.js'].lineData[213] = 0;
-  _$jscoverage['/meta/modules.js'].lineData[217] = 0;
-  _$jscoverage['/meta/modules.js'].lineData[221] = 0;
-  _$jscoverage['/meta/modules.js'].lineData[225] = 0;
-  _$jscoverage['/meta/modules.js'].lineData[229] = 0;
-  _$jscoverage['/meta/modules.js'].lineData[233] = 0;
-  _$jscoverage['/meta/modules.js'].lineData[237] = 0;
-  _$jscoverage['/meta/modules.js'].lineData[241] = 0;
-  _$jscoverage['/meta/modules.js'].lineData[245] = 0;
-  _$jscoverage['/meta/modules.js'].lineData[249] = 0;
-  _$jscoverage['/meta/modules.js'].lineData[253] = 0;
-  _$jscoverage['/meta/modules.js'].lineData[257] = 0;
-  _$jscoverage['/meta/modules.js'].lineData[261] = 0;
-  _$jscoverage['/meta/modules.js'].lineData[265] = 0;
-  _$jscoverage['/meta/modules.js'].lineData[270] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[216] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[220] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[224] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[228] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[232] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[236] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[240] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[244] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[248] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[252] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[256] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[260] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[264] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[268] = 0;
+  _$jscoverage['/meta/modules.js'].lineData[273] = 0;
 }
 if (! _$jscoverage['/meta/modules.js'].functionData) {
   _$jscoverage['/meta/modules.js'].functionData = [];
@@ -302,8 +302,14 @@ if (! _$jscoverage['/meta/modules.js'].branchData) {
   _$jscoverage['/meta/modules.js'].branchData = {};
   _$jscoverage['/meta/modules.js'].branchData['133'] = [];
   _$jscoverage['/meta/modules.js'].branchData['133'][1] = new BranchData();
+  _$jscoverage['/meta/modules.js'].branchData['211'] = [];
+  _$jscoverage['/meta/modules.js'].branchData['211'][1] = new BranchData();
 }
-_$jscoverage['/meta/modules.js'].branchData['133'][1].init(45, 67, 'Features.isTouchEventSupported() || Features.isMsPointerSupported()');
+_$jscoverage['/meta/modules.js'].branchData['211'][1].init(-1, 65, 'Features.isTouchEventSupported() || Features.isMsPointerSupported()');
+function visit482_211_1(result) {
+  _$jscoverage['/meta/modules.js'].branchData['211'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/meta/modules.js'].branchData['133'][1].init(45, 67, 'Features.isTouchEventSupported() || Features.isMsPointerSupported()');
 function visit481_133_1(result) {
   _$jscoverage['/meta/modules.js'].branchData['133'][1].ranCondition(result);
   return result;
@@ -499,65 +505,65 @@ function visit481_133_1(result) {
   _$jscoverage['/meta/modules.js'].lineData[208]++;
   config({
   "scroll-view": {
-  "alias": [Features.isTouchEventSupported() ? 'scroll-view/drag' : 'scroll-view/base']}});
-  _$jscoverage['/meta/modules.js'].lineData[213]++;
+  "alias": [visit482_211_1(Features.isTouchEventSupported() || Features.isMsPointerSupported()) ? 'scroll-view/drag' : 'scroll-view/base']}});
+  _$jscoverage['/meta/modules.js'].lineData[216]++;
   config({
   'scroll-view/base': {
   requires: ['node', 'component/container', 'component/extension/content-render']}});
-  _$jscoverage['/meta/modules.js'].lineData[217]++;
+  _$jscoverage['/meta/modules.js'].lineData[220]++;
   config({
   'scroll-view/drag': {
-  requires: ['scroll-view/base', 'dd', 'node']}});
-  _$jscoverage['/meta/modules.js'].lineData[221]++;
+  requires: ['scroll-view/base', 'node']}});
+  _$jscoverage['/meta/modules.js'].lineData[224]++;
   config({
   'scroll-view/plugin/pull-to-refresh': {
   requires: ['base']}});
-  _$jscoverage['/meta/modules.js'].lineData[225]++;
+  _$jscoverage['/meta/modules.js'].lineData[228]++;
   config({
   'scroll-view/plugin/scrollbar': {
-  requires: ['base', 'node', 'dd', 'component/control']}});
-  _$jscoverage['/meta/modules.js'].lineData[229]++;
+  requires: ['base', 'node', 'component/control']}});
+  _$jscoverage['/meta/modules.js'].lineData[232]++;
   config({
   'separator': {
   requires: ['component/control']}});
-  _$jscoverage['/meta/modules.js'].lineData[233]++;
+  _$jscoverage['/meta/modules.js'].lineData[236]++;
   config({
   'split-button': {
   requires: ['component/container', 'button', 'menubutton']}});
-  _$jscoverage['/meta/modules.js'].lineData[237]++;
+  _$jscoverage['/meta/modules.js'].lineData[240]++;
   config({
   'stylesheet': {
   requires: ['dom']}});
-  _$jscoverage['/meta/modules.js'].lineData[241]++;
+  _$jscoverage['/meta/modules.js'].lineData[244]++;
   config({
   'swf': {
   requires: ['dom', 'json', 'base']}});
-  _$jscoverage['/meta/modules.js'].lineData[245]++;
+  _$jscoverage['/meta/modules.js'].lineData[248]++;
   config({
   'tabs': {
   requires: ['component/container', 'toolbar', 'button']}});
-  _$jscoverage['/meta/modules.js'].lineData[249]++;
+  _$jscoverage['/meta/modules.js'].lineData[252]++;
   config({
   'toolbar': {
   requires: ['component/container', 'component/extension/delegate-children', 'node']}});
-  _$jscoverage['/meta/modules.js'].lineData[253]++;
+  _$jscoverage['/meta/modules.js'].lineData[256]++;
   config({
   'tree': {
   requires: ['node', 'component/container', 'component/extension/content-render', 'component/extension/delegate-children']}});
-  _$jscoverage['/meta/modules.js'].lineData[257]++;
+  _$jscoverage['/meta/modules.js'].lineData[260]++;
   config({
   'xtemplate': {
   requires: ['xtemplate/runtime', 'xtemplate/compiler']}});
-  _$jscoverage['/meta/modules.js'].lineData[261]++;
+  _$jscoverage['/meta/modules.js'].lineData[264]++;
   config({
   'xtemplate/compiler': {
   requires: ['xtemplate/runtime']}});
-  _$jscoverage['/meta/modules.js'].lineData[265]++;
+  _$jscoverage['/meta/modules.js'].lineData[268]++;
   config({
   'xtemplate/nodejs': {
   requires: ['xtemplate']}});
 })(function(c) {
   _$jscoverage['/meta/modules.js'].functionData[1]++;
-  _$jscoverage['/meta/modules.js'].lineData[270]++;
+  _$jscoverage['/meta/modules.js'].lineData[273]++;
   KISSY.config('modules', c);
 }, KISSY.Features, KISSY.UA);

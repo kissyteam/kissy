@@ -230,7 +230,7 @@ if (! _$jscoverage['/touch/handle-map.js']) {
   _$jscoverage['/touch/handle-map.js'] = {};
   _$jscoverage['/touch/handle-map.js'].lineData = [];
   _$jscoverage['/touch/handle-map.js'].lineData[6] = 0;
-  _$jscoverage['/touch/handle-map.js'].lineData[8] = 0;
+  _$jscoverage['/touch/handle-map.js'].lineData[7] = 0;
 }
 if (! _$jscoverage['/touch/handle-map.js'].functionData) {
   _$jscoverage['/touch/handle-map.js'].functionData = [];
@@ -242,6 +242,6 @@ if (! _$jscoverage['/touch/handle-map.js'].branchData) {
 _$jscoverage['/touch/handle-map.js'].lineData[6]++;
 KISSY.add('event/dom/touch/handle-map', function() {
   _$jscoverage['/touch/handle-map.js'].functionData[0]++;
-  _$jscoverage['/touch/handle-map.js'].lineData[8]++;
+  _$jscoverage['/touch/handle-map.js'].lineData[7]++;
   return {};
 });
