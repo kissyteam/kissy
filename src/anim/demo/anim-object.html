@@ -18,21 +18,8 @@
     <div id="J_Box2" style="border:1px solid #ccc;width:100px;height:100px;">
     </div>
 
-    <script charset="utf-8" src="../../../build/seed.js"></script>
-
-    <script type="text/javascript" src="../src/anim.js"></script>
-    <script type="text/javascript" src="../sub-modules/base/src/base/queue.js"></script>
-    <script type="text/javascript" src="../sub-modules/base/src/base/utils.js"></script>
-    <script type="text/javascript" src="../sub-modules/base/src/base.js"></script>
-
-    <script type="text/javascript" src="../sub-modules/timer/src/timer/color.js"></script>
-    <script type="text/javascript" src="../sub-modules/timer/src/timer/easing.js"></script>
-    <script type="text/javascript" src="../sub-modules/timer/src/timer/fx.js"></script>
-    <script type="text/javascript" src="../sub-modules/timer/src/timer/manager.js"></script>
-    <script type="text/javascript" src="../sub-modules/timer/src/timer/short-hand.js"></script>
-    <script type="text/javascript" src="../sub-modules/timer/src/timer/transform.js"></script>
-    <script type="text/javascript" src="../sub-modules/timer/src/timer.js"></script>
-
+    <script charset="utf-8" src="/kissy/build/seed.js"></script>
+    <script type="text/javascript" src="/kissy/src/package.js"></script>
     <script type="text/javascript">
      KISSY.use("anim,node",function(S,Anim,Node){
        var ctx = document.getElementById('Canvas').getContext('2d')
@@ -62,7 +49,6 @@
              //console.log(fx.pos);
              var propname = fx.prop;
              var val = fx.val;
-             console.log(propname,val);
              var r = 5+fx.pos*(80-5);
              circle(100,100,r);
            }
