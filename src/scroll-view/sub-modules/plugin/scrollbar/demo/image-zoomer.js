@@ -4,6 +4,7 @@ KISSY.add(function (S, Node, ScrollView, ScrollbarPlugin) {
 
     var transformProperty = S.Features.getTransformProperty();
     var transformOriginProperty = transformProperty + 'Origin';
+    var tap = Node.Gesture.tap;
 
     var scrollView;
     var scroll;
@@ -68,16 +69,14 @@ KISSY.add(function (S, Node, ScrollView, ScrollbarPlugin) {
         });
 
         function close(e) {
-            if (e.target.nodeName.toLowerCase() != 'img') {
-                e.halt();
-                scrollView.stopAnimation();
-                scrollView.hide();
-            }
+            e.halt();
+            scrollView.stopAnimation();
+            scrollView.hide();
         }
 
         // tap(touch down is buggy on safari ios)
-        closeEl.on('click', close);
-        contentEl.on('click', close);
+        closeEl.on(tap, close);
+        contentEl.on(tap, close);
         $(window).on('resize orientationchange', function () {
             if (scrollView.get('visible')) {
                 scrollView.sync();

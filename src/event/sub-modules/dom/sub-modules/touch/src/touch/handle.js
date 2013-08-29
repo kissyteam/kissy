@@ -17,8 +17,8 @@ KISSY.add('event/dom/touch/handle', function (S, Dom, eventHandleMap, DomEvent) 
     if (Features.isTouchEventSupported()) {
         endEvent = 'touchend';
         cancelEvent = 'touchcancel';
-        // mouse event on android chrome is buggy...
-        if (UA.webkit && !UA.android) {
+        // mouse event on android chrome/ios is buggy...
+        if (UA.chrome && !UA.android) {
             startEvent = 'touchstart mousedown';
             moveEvent = 'touchmove mousemove';
         } else {
@@ -124,11 +124,10 @@ KISSY.add('event/dom/touch/handle', function (S, Dom, eventHandleMap, DomEvent) 
             var e, h,
                 self = this,
                 eventHandle = self.eventHandle;
-            // log('start: ' + event.type);
             if ('touches' in event) {
                 self.inTouch = event.touches.length;
                 // will prevent mousedown and click....
-                //event.preventDefault();
+                // event.preventDefault();
             } else {
                 if (self.inTouch) {
                     // ignore mouse
@@ -293,14 +292,19 @@ KISSY.add('event/dom/touch/handle', function (S, Dom, eventHandleMap, DomEvent) 
     ]
 });
 /**
- 2013-08-28
+ 2013-08-29 yiminghe@gmail.com
+ - ios bug
+ create new element on touchend handler
+ then a mousedown event will be fired on the new element
+
+ 2013-08-28 yiminghe@gmail.com
  - chrome android bug: first series touchstart is not fired!
  - chrome android bug when bind mousedown and touch together to ordinary div
-   chrome pc ：
-   touchstart mousedown touchend
-   chrome android ：
-   touchstart touchend mousedown
-   safari no mousedown
+ chrome pc ：
+ touchstart mousedown touchend
+ chrome android ：
+ touchstart touchend mousedown
+ safari no mousedown
  - https://code.google.com/p/chromium/issues/detail?id=280516
  - https://code.google.com/p/chromium/issues/detail?id=280507
 
@@ -308,7 +312,7 @@ KISSY.add('event/dom/touch/handle', function (S, Dom, eventHandleMap, DomEvent) 
  - bind both mouse and touch for start
  - but bind mousemove or touchmove for move
 
-
+ 2012 yiminghe@gmail.com
  in order to make tap/doubleTap bubbling same with native event.
  register event on document and then bubble programmatically!
  */
