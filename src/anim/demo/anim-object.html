@@ -40,8 +40,8 @@
 
        var o = {r:1};
        var anim = new Anim(o,{
-         r:100,
-         r2:200//这个不用
+         r:100 //,
+         /* r2:200//这个不用 */
        },{
            easing:"swing",
            duration:.5,
@@ -49,8 +49,8 @@
              //console.log(fx.pos);
              var propname = fx.prop;
              var val = fx.val;
-             var r = 5+fx.pos*(80-5);
-             circle(100,100,r);
+             //var r = 5+fx.pos*(80-5);
+             circle(100,100,val);
            }
          });
        anim.run();
