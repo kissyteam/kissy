@@ -95,6 +95,10 @@ KISSY.add('anim/timer', function (S, Dom, Event, AnimBase, Easing, AM, Fx, SHORT
                 fx = Fx.getFx(propCfg);
                 to = val;
 
+                //不是基本的动画
+                if(S.isPlainObject(node)){
+                  fx.isBasicFx = 0;
+                }
                 from = fx.cur();
 
                 val += '';

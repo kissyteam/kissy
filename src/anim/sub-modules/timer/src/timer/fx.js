@@ -88,7 +88,7 @@ KISSY.add('anim/timer/fx', function (S, Dom, undefined) {
                 val += self.unit;
                 if (isAttr(node, prop)) {
                     Dom.attr(node, prop, val, 1);
-                } else if(isCss(prop)){
+                } else if(self.isBasicFx){
                     // S.log(self.prop + ' update: ' + val);
                     Dom.css(node, prop, val);
                 } else {
@@ -105,7 +105,8 @@ KISSY.add('anim/timer/fx', function (S, Dom, undefined) {
             var self = this,
                 prop = self.prop,
                 node = self.anim.node;
-            if(S.isPlainObject(node)){
+            //不是css 或者 attribute 的缓动
+            if(!this.isBasicFx){
               return node[prop];
             }
             if (isAttr(node, prop)) {
@@ -129,12 +130,6 @@ KISSY.add('anim/timer/fx', function (S, Dom, undefined) {
             return 1;
         }
         return 0;
-    }
-
-    // 判断name是否为css属性
-    var cssprops = ["width","height"];
-    function isCss(name){
-      return cssprops.indexOf(name) > -1;
     }
 
     function getPos(anim, propData) {
