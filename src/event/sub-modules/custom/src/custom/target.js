@@ -6,8 +6,8 @@
 KISSY.add('event/custom/target', function (S, BaseEvent, CustomEventObservable) {
     var Utils = BaseEvent.Utils,
         splitAndRun = Utils.splitAndRun,
+        undefined = undefined,
         KS_BUBBLE_TARGETS = '__~ks_bubble_targets';
-
 
     /**
      * @class KISSY.Event.Target
@@ -21,7 +21,6 @@ KISSY.add('event/custom/target', function (S, BaseEvent, CustomEventObservable) 
      * or will not be created at all.
      */
     return {
-
         isTarget: 1,
 
         /**
@@ -73,7 +72,7 @@ KISSY.add('event/custom/target', function (S, BaseEvent, CustomEventObservable) 
 
                 r2 = customEventObservable.fire(eventData);
 
-                if (ret !== false) {
+                if (ret !== false && r2 !== undefined) {
                     ret = r2;
                 }
 

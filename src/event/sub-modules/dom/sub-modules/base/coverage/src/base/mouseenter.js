@@ -251,15 +251,15 @@ if (! _$jscoverage['/base/mouseenter.js'].branchData) {
   _$jscoverage['/base/mouseenter.js'].branchData['22'][2] = new BranchData();
 }
 _$jscoverage['/base/mouseenter.js'].branchData['22'][2].init(39, 31, 'relatedTarget !== currentTarget');
-function visit46_22_2(result) {
+function visit48_22_2(result) {
   _$jscoverage['/base/mouseenter.js'].branchData['22'][2].ranCondition(result);
   return result;
 }_$jscoverage['/base/mouseenter.js'].branchData['22'][1].init(39, 103, 'relatedTarget !== currentTarget && !Dom.contains(currentTarget, relatedTarget)');
-function visit45_22_1(result) {
+function visit47_22_1(result) {
   _$jscoverage['/base/mouseenter.js'].branchData['22'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/mouseenter.js'].branchData['21'][1].init(293, 144, '!relatedTarget || (relatedTarget !== currentTarget && !Dom.contains(currentTarget, relatedTarget))');
-function visit44_21_1(result) {
+function visit46_21_1(result) {
   _$jscoverage['/base/mouseenter.js'].branchData['21'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/mouseenter.js'].lineData[6]++;
@@ -280,7 +280,7 @@ KISSY.add('event/dom/base/mouseenter', function(S, Dom, Special) {
   _$jscoverage['/base/mouseenter.js'].lineData[16]++;
   var currentTarget = event.currentTarget, relatedTarget = event.relatedTarget;
   _$jscoverage['/base/mouseenter.js'].lineData[21]++;
-  if (visit44_21_1(!relatedTarget || (visit45_22_1(visit46_22_2(relatedTarget !== currentTarget) && !Dom.contains(currentTarget, relatedTarget))))) {
+  if (visit46_21_1(!relatedTarget || (visit47_22_1(visit48_22_2(relatedTarget !== currentTarget) && !Dom.contains(currentTarget, relatedTarget))))) {
     _$jscoverage['/base/mouseenter.js'].lineData[33]++;
     return [observer.simpleNotify(event, ce)];
   }

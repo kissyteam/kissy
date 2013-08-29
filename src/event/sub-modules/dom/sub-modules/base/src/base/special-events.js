@@ -35,7 +35,7 @@ KISSY.add('event/dom/base/special-events', function (S, DomEvent,Special) {
             // guarantee fire focusin first
             preFire: function (event, onlyHandlers) {
                 if (!onlyHandlers) {
-                    DomEvent.fire(this, 'focusin');
+                    return DomEvent.fire(this, 'focusin');
                 }
             },
             // guarantee fire blur first
@@ -55,7 +55,7 @@ KISSY.add('event/dom/base/special-events', function (S, DomEvent,Special) {
             // guarantee fire focusout first
             preFire: function (event, onlyHandlers) {
                 if (!onlyHandlers) {
-                    DomEvent.fire(this, 'focusout');
+                    return DomEvent.fire(this, 'focusout');
                 }
             },
             // guarantee fire blur first

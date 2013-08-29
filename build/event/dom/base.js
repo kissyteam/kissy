@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Aug 29 14:20
+build time: Aug 29 19:58
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -83,7 +83,6 @@ KISSY.add('event/dom/base/special', function () {
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/dom/base/observer', function (S, Special, BaseEvent) {
-
     /**
      * observer for dom event
      * @class KISSY.Event.DomEventObserver
@@ -103,7 +102,6 @@ KISSY.add('event/dom/base/observer', function (S, Special, BaseEvent) {
     }
 
     S.extend(DomEventObserver, BaseEvent.Observer, {
-
         keys: ['fn', 'filter', 'data', 'context', 'originalType', 'groups', 'last'],
 
         notifyInternal: function (event, ce) {
@@ -127,6 +125,10 @@ KISSY.add('event/dom/base/observer', function (S, Special, BaseEvent) {
                 }
             } else {
                 ret = self.simpleNotify(event, ce);
+            }
+
+            if (ret === false) {
+                event.halt();
             }
 
             // notify other mousemove listener
@@ -796,7 +798,7 @@ KISSY.add('event/dom/base/observable', function (S, Dom, Special, DomEventUtils,
                     // 和 jQuery 逻辑保持一致
                     // 有一个 false，最终结果就是 false
                     // 否则等于最后一个返回值
-                    if (gRet !== false) {
+                    if (gRet !== false && ret !== undefined) {
                         gRet = ret;
                     }
                 }
@@ -813,7 +815,6 @@ KISSY.add('event/dom/base/observable', function (S, Dom, Special, DomEventUtils,
          * @param {Boolean} [onlyHandlers] for internal usage
          */
         fire: function (event, onlyHandlers/*internal usage*/) {
-
             event = event || {};
 
             var self = this,
@@ -850,6 +851,8 @@ KISSY.add('event/dom/base/observable', function (S, Dom, Special, DomEventUtils,
                 win = Dom.getWindow(cur),
                 curDocument = win.document,
                 eventPath = [],
+                gret,
+                ret,
                 ontype = 'on' + eventType,
                 eventPathIndex = 0;
 
@@ -870,7 +873,10 @@ KISSY.add('event/dom/base/observable', function (S, Dom, Special, DomEventUtils,
                 domEventObservable = DomEventObservable.getDomEventObservable(cur, eventType);
                 // default bubble for html node
                 if (domEventObservable) {
-                    domEventObservable.notify(event);
+                    ret = domEventObservable.notify(event);
+                    if (ret !== undefined && gret !== false) {
+                        gret = ret;
+                    }
                 }
                 // Trigger an inline bound script
                 if (cur[ ontype ] && cur[ ontype ].call(cur) === false) {
@@ -901,6 +907,7 @@ KISSY.add('event/dom/base/observable', function (S, Dom, Special, DomEventUtils,
                 DomEventObservable.triggeredEvent = '';
             }
 
+            return gret;
         },
 
         /**
@@ -1097,8 +1104,9 @@ KISSY.add('event/dom/base/observable', function (S, Dom, Special, DomEventUtils,
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/dom/base/dom-event', function (S, BaseEvent, DomEventUtils, Dom, Special, DomEventObservable, DomEventObject) {
-
     var BaseUtils = BaseEvent.Utils;
+
+    var undefined = undefined;
 
     var DomEvent = {};
 
@@ -1375,7 +1383,7 @@ KISSY.add('event/dom/base/dom-event', function (S, BaseEvent, DomEventUtils, Dom
                     }
                     if (domEventObservable) {
                         r = domEventObservable.fire(eventData, onlyHandlers);
-                        if (ret !== false) {
+                        if (ret !== false && r !== undefined) {
                             ret = r;
                         }
                     }
@@ -2052,7 +2060,7 @@ KISSY.add('event/dom/base/special-events', function (S, DomEvent,Special) {
             // guarantee fire focusin first
             preFire: function (event, onlyHandlers) {
                 if (!onlyHandlers) {
-                    DomEvent.fire(this, 'focusin');
+                    return DomEvent.fire(this, 'focusin');
                 }
             },
             // guarantee fire blur first
@@ -2072,7 +2080,7 @@ KISSY.add('event/dom/base/special-events', function (S, DomEvent,Special) {
             // guarantee fire focusout first
             preFire: function (event, onlyHandlers) {
                 if (!onlyHandlers) {
-                    DomEvent.fire(this, 'focusout');
+                    return DomEvent.fire(this, 'focusout');
                 }
             },
             // guarantee fire blur first

@@ -232,61 +232,61 @@ if (! _$jscoverage['/custom/target.js']) {
   _$jscoverage['/custom/target.js'].lineData[6] = 0;
   _$jscoverage['/custom/target.js'].lineData[7] = 0;
   _$jscoverage['/custom/target.js'].lineData[23] = 0;
-  _$jscoverage['/custom/target.js'].lineData[31] = 0;
-  _$jscoverage['/custom/target.js'].lineData[36] = 0;
-  _$jscoverage['/custom/target.js'].lineData[38] = 0;
-  _$jscoverage['/custom/target.js'].lineData[40] = 0;
-  _$jscoverage['/custom/target.js'].lineData[42] = 0;
-  _$jscoverage['/custom/target.js'].lineData[44] = 0;
-  _$jscoverage['/custom/target.js'].lineData[48] = 0;
+  _$jscoverage['/custom/target.js'].lineData[30] = 0;
+  _$jscoverage['/custom/target.js'].lineData[35] = 0;
+  _$jscoverage['/custom/target.js'].lineData[37] = 0;
+  _$jscoverage['/custom/target.js'].lineData[39] = 0;
+  _$jscoverage['/custom/target.js'].lineData[41] = 0;
+  _$jscoverage['/custom/target.js'].lineData[43] = 0;
+  _$jscoverage['/custom/target.js'].lineData[47] = 0;
+  _$jscoverage['/custom/target.js'].lineData[50] = 0;
   _$jscoverage['/custom/target.js'].lineData[51] = 0;
-  _$jscoverage['/custom/target.js'].lineData[52] = 0;
-  _$jscoverage['/custom/target.js'].lineData[55] = 0;
-  _$jscoverage['/custom/target.js'].lineData[57] = 0;
+  _$jscoverage['/custom/target.js'].lineData[54] = 0;
+  _$jscoverage['/custom/target.js'].lineData[56] = 0;
+  _$jscoverage['/custom/target.js'].lineData[58] = 0;
   _$jscoverage['/custom/target.js'].lineData[59] = 0;
-  _$jscoverage['/custom/target.js'].lineData[60] = 0;
-  _$jscoverage['/custom/target.js'].lineData[68] = 0;
-  _$jscoverage['/custom/target.js'].lineData[74] = 0;
+  _$jscoverage['/custom/target.js'].lineData[67] = 0;
+  _$jscoverage['/custom/target.js'].lineData[73] = 0;
+  _$jscoverage['/custom/target.js'].lineData[75] = 0;
   _$jscoverage['/custom/target.js'].lineData[76] = 0;
-  _$jscoverage['/custom/target.js'].lineData[77] = 0;
-  _$jscoverage['/custom/target.js'].lineData[82] = 0;
-  _$jscoverage['/custom/target.js'].lineData[89] = 0;
+  _$jscoverage['/custom/target.js'].lineData[81] = 0;
+  _$jscoverage['/custom/target.js'].lineData[88] = 0;
+  _$jscoverage['/custom/target.js'].lineData[91] = 0;
   _$jscoverage['/custom/target.js'].lineData[92] = 0;
   _$jscoverage['/custom/target.js'].lineData[93] = 0;
-  _$jscoverage['/custom/target.js'].lineData[94] = 0;
-  _$jscoverage['/custom/target.js'].lineData[97] = 0;
-  _$jscoverage['/custom/target.js'].lineData[104] = 0;
+  _$jscoverage['/custom/target.js'].lineData[96] = 0;
+  _$jscoverage['/custom/target.js'].lineData[103] = 0;
+  _$jscoverage['/custom/target.js'].lineData[105] = 0;
   _$jscoverage['/custom/target.js'].lineData[106] = 0;
-  _$jscoverage['/custom/target.js'].lineData[107] = 0;
-  _$jscoverage['/custom/target.js'].lineData[109] = 0;
-  _$jscoverage['/custom/target.js'].lineData[116] = 0;
+  _$jscoverage['/custom/target.js'].lineData[108] = 0;
+  _$jscoverage['/custom/target.js'].lineData[115] = 0;
+  _$jscoverage['/custom/target.js'].lineData[118] = 0;
   _$jscoverage['/custom/target.js'].lineData[119] = 0;
-  _$jscoverage['/custom/target.js'].lineData[120] = 0;
-  _$jscoverage['/custom/target.js'].lineData[122] = 0;
+  _$jscoverage['/custom/target.js'].lineData[121] = 0;
+  _$jscoverage['/custom/target.js'].lineData[128] = 0;
   _$jscoverage['/custom/target.js'].lineData[129] = 0;
   _$jscoverage['/custom/target.js'].lineData[130] = 0;
-  _$jscoverage['/custom/target.js'].lineData[131] = 0;
-  _$jscoverage['/custom/target.js'].lineData[133] = 0;
+  _$jscoverage['/custom/target.js'].lineData[132] = 0;
+  _$jscoverage['/custom/target.js'].lineData[139] = 0;
   _$jscoverage['/custom/target.js'].lineData[140] = 0;
   _$jscoverage['/custom/target.js'].lineData[141] = 0;
-  _$jscoverage['/custom/target.js'].lineData[142] = 0;
+  _$jscoverage['/custom/target.js'].lineData[143] = 0;
   _$jscoverage['/custom/target.js'].lineData[144] = 0;
   _$jscoverage['/custom/target.js'].lineData[145] = 0;
   _$jscoverage['/custom/target.js'].lineData[146] = 0;
-  _$jscoverage['/custom/target.js'].lineData[147] = 0;
-  _$jscoverage['/custom/target.js'].lineData[150] = 0;
+  _$jscoverage['/custom/target.js'].lineData[149] = 0;
+  _$jscoverage['/custom/target.js'].lineData[156] = 0;
   _$jscoverage['/custom/target.js'].lineData[157] = 0;
   _$jscoverage['/custom/target.js'].lineData[158] = 0;
-  _$jscoverage['/custom/target.js'].lineData[159] = 0;
+  _$jscoverage['/custom/target.js'].lineData[161] = 0;
   _$jscoverage['/custom/target.js'].lineData[162] = 0;
   _$jscoverage['/custom/target.js'].lineData[163] = 0;
   _$jscoverage['/custom/target.js'].lineData[164] = 0;
   _$jscoverage['/custom/target.js'].lineData[165] = 0;
-  _$jscoverage['/custom/target.js'].lineData[166] = 0;
+  _$jscoverage['/custom/target.js'].lineData[168] = 0;
   _$jscoverage['/custom/target.js'].lineData[169] = 0;
   _$jscoverage['/custom/target.js'].lineData[170] = 0;
-  _$jscoverage['/custom/target.js'].lineData[171] = 0;
-  _$jscoverage['/custom/target.js'].lineData[176] = 0;
+  _$jscoverage['/custom/target.js'].lineData[175] = 0;
 }
 if (! _$jscoverage['/custom/target.js'].functionData) {
   _$jscoverage['/custom/target.js'].functionData = [];
@@ -306,258 +306,268 @@ if (! _$jscoverage['/custom/target.js'].functionData) {
 }
 if (! _$jscoverage['/custom/target.js'].branchData) {
   _$jscoverage['/custom/target.js'].branchData = {};
-  _$jscoverage['/custom/target.js'].branchData['34'] = [];
-  _$jscoverage['/custom/target.js'].branchData['34'][1] = new BranchData();
-  _$jscoverage['/custom/target.js'].branchData['36'] = [];
-  _$jscoverage['/custom/target.js'].branchData['36'][1] = new BranchData();
-  _$jscoverage['/custom/target.js'].branchData['51'] = [];
-  _$jscoverage['/custom/target.js'].branchData['51'][1] = new BranchData();
-  _$jscoverage['/custom/target.js'].branchData['55'] = [];
-  _$jscoverage['/custom/target.js'].branchData['55'][1] = new BranchData();
-  _$jscoverage['/custom/target.js'].branchData['57'] = [];
-  _$jscoverage['/custom/target.js'].branchData['57'][1] = new BranchData();
-  _$jscoverage['/custom/target.js'].branchData['59'] = [];
-  _$jscoverage['/custom/target.js'].branchData['59'][1] = new BranchData();
-  _$jscoverage['/custom/target.js'].branchData['59'][2] = new BranchData();
-  _$jscoverage['/custom/target.js'].branchData['76'] = [];
-  _$jscoverage['/custom/target.js'].branchData['76'][1] = new BranchData();
-  _$jscoverage['/custom/target.js'].branchData['106'] = [];
-  _$jscoverage['/custom/target.js'].branchData['106'][1] = new BranchData();
-  _$jscoverage['/custom/target.js'].branchData['119'] = [];
-  _$jscoverage['/custom/target.js'].branchData['119'][1] = new BranchData();
+  _$jscoverage['/custom/target.js'].branchData['33'] = [];
+  _$jscoverage['/custom/target.js'].branchData['33'][1] = new BranchData();
+  _$jscoverage['/custom/target.js'].branchData['35'] = [];
+  _$jscoverage['/custom/target.js'].branchData['35'][1] = new BranchData();
+  _$jscoverage['/custom/target.js'].branchData['50'] = [];
+  _$jscoverage['/custom/target.js'].branchData['50'][1] = new BranchData();
+  _$jscoverage['/custom/target.js'].branchData['54'] = [];
+  _$jscoverage['/custom/target.js'].branchData['54'][1] = new BranchData();
+  _$jscoverage['/custom/target.js'].branchData['56'] = [];
+  _$jscoverage['/custom/target.js'].branchData['56'][1] = new BranchData();
+  _$jscoverage['/custom/target.js'].branchData['58'] = [];
+  _$jscoverage['/custom/target.js'].branchData['58'][1] = new BranchData();
+  _$jscoverage['/custom/target.js'].branchData['58'][2] = new BranchData();
+  _$jscoverage['/custom/target.js'].branchData['75'] = [];
+  _$jscoverage['/custom/target.js'].branchData['75'][1] = new BranchData();
+  _$jscoverage['/custom/target.js'].branchData['75'][2] = new BranchData();
+  _$jscoverage['/custom/target.js'].branchData['75'][3] = new BranchData();
+  _$jscoverage['/custom/target.js'].branchData['105'] = [];
+  _$jscoverage['/custom/target.js'].branchData['105'][1] = new BranchData();
+  _$jscoverage['/custom/target.js'].branchData['118'] = [];
+  _$jscoverage['/custom/target.js'].branchData['118'][1] = new BranchData();
+  _$jscoverage['/custom/target.js'].branchData['129'] = [];
+  _$jscoverage['/custom/target.js'].branchData['129'][1] = new BranchData();
   _$jscoverage['/custom/target.js'].branchData['130'] = [];
   _$jscoverage['/custom/target.js'].branchData['130'][1] = new BranchData();
-  _$jscoverage['/custom/target.js'].branchData['131'] = [];
-  _$jscoverage['/custom/target.js'].branchData['131'][1] = new BranchData();
-  _$jscoverage['/custom/target.js'].branchData['146'] = [];
-  _$jscoverage['/custom/target.js'].branchData['146'][1] = new BranchData();
-  _$jscoverage['/custom/target.js'].branchData['163'] = [];
-  _$jscoverage['/custom/target.js'].branchData['163'][1] = new BranchData();
-  _$jscoverage['/custom/target.js'].branchData['165'] = [];
-  _$jscoverage['/custom/target.js'].branchData['165'][1] = new BranchData();
+  _$jscoverage['/custom/target.js'].branchData['145'] = [];
+  _$jscoverage['/custom/target.js'].branchData['145'][1] = new BranchData();
+  _$jscoverage['/custom/target.js'].branchData['162'] = [];
+  _$jscoverage['/custom/target.js'].branchData['162'][1] = new BranchData();
+  _$jscoverage['/custom/target.js'].branchData['164'] = [];
+  _$jscoverage['/custom/target.js'].branchData['164'][1] = new BranchData();
 }
-_$jscoverage['/custom/target.js'].branchData['165'][1].init(124, 11, 'customEvent');
-function visit50_165_1(result) {
-  _$jscoverage['/custom/target.js'].branchData['165'][1].ranCondition(result);
+_$jscoverage['/custom/target.js'].branchData['164'][1].init(124, 11, 'customEvent');
+function visit57_164_1(result) {
+  _$jscoverage['/custom/target.js'].branchData['164'][1].ranCondition(result);
   return result;
-}_$jscoverage['/custom/target.js'].branchData['163'][1].init(193, 4, 'type');
-function visit49_163_1(result) {
-  _$jscoverage['/custom/target.js'].branchData['163'][1].ranCondition(result);
+}_$jscoverage['/custom/target.js'].branchData['162'][1].init(193, 4, 'type');
+function visit56_162_1(result) {
+  _$jscoverage['/custom/target.js'].branchData['162'][1].ranCondition(result);
   return result;
-}_$jscoverage['/custom/target.js'].branchData['146'][1].init(252, 11, 'customEvent');
-function visit48_146_1(result) {
-  _$jscoverage['/custom/target.js'].branchData['146'][1].ranCondition(result);
+}_$jscoverage['/custom/target.js'].branchData['145'][1].init(252, 11, 'customEvent');
+function visit55_145_1(result) {
+  _$jscoverage['/custom/target.js'].branchData['145'][1].ranCondition(result);
   return result;
-}_$jscoverage['/custom/target.js'].branchData['131'][1].init(44, 29, 'self[KS_BUBBLE_TARGETS] || []');
-function visit47_131_1(result) {
-  _$jscoverage['/custom/target.js'].branchData['131'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/custom/target.js'].branchData['130'][1].init(48, 9, '!readOnly');
-function visit46_130_1(result) {
+}_$jscoverage['/custom/target.js'].branchData['130'][1].init(44, 29, 'self[KS_BUBBLE_TARGETS] || []');
+function visit54_130_1(result) {
   _$jscoverage['/custom/target.js'].branchData['130'][1].ranCondition(result);
   return result;
-}_$jscoverage['/custom/target.js'].branchData['119'][1].init(154, 11, 'index != -1');
-function visit45_119_1(result) {
-  _$jscoverage['/custom/target.js'].branchData['119'][1].ranCondition(result);
+}_$jscoverage['/custom/target.js'].branchData['129'][1].init(48, 9, '!readOnly');
+function visit53_129_1(result) {
+  _$jscoverage['/custom/target.js'].branchData['129'][1].ranCondition(result);
   return result;
-}_$jscoverage['/custom/target.js'].branchData['106'][1].init(94, 34, '!S.inArray(anotherTarget, targets)');
-function visit44_106_1(result) {
-  _$jscoverage['/custom/target.js'].branchData['106'][1].ranCondition(result);
+}_$jscoverage['/custom/target.js'].branchData['118'][1].init(154, 11, 'index != -1');
+function visit52_118_1(result) {
+  _$jscoverage['/custom/target.js'].branchData['118'][1].ranCondition(result);
   return result;
-}_$jscoverage['/custom/target.js'].branchData['76'][1].init(1358, 13, 'ret !== false');
-function visit43_76_1(result) {
-  _$jscoverage['/custom/target.js'].branchData['76'][1].ranCondition(result);
+}_$jscoverage['/custom/target.js'].branchData['105'][1].init(94, 34, '!S.inArray(anotherTarget, targets)');
+function visit51_105_1(result) {
+  _$jscoverage['/custom/target.js'].branchData['105'][1].ranCondition(result);
   return result;
-}_$jscoverage['/custom/target.js'].branchData['59'][2].init(32, 44, 'customEventObservable.bubbles && !hasTargets');
-function visit42_59_2(result) {
-  _$jscoverage['/custom/target.js'].branchData['59'][2].ranCondition(result);
+}_$jscoverage['/custom/target.js'].branchData['75'][3].init(1375, 16, 'r2 !== undefined');
+function visit50_75_3(result) {
+  _$jscoverage['/custom/target.js'].branchData['75'][3].ranCondition(result);
   return result;
-}_$jscoverage['/custom/target.js'].branchData['59'][1].init(32, 78, 'customEventObservable.bubbles && !hasTargets || !customEventObservable.bubbles');
-function visit41_59_1(result) {
-  _$jscoverage['/custom/target.js'].branchData['59'][1].ranCondition(result);
+}_$jscoverage['/custom/target.js'].branchData['75'][2].init(1358, 13, 'ret !== false');
+function visit49_75_2(result) {
+  _$jscoverage['/custom/target.js'].branchData['75'][2].ranCondition(result);
   return result;
-}_$jscoverage['/custom/target.js'].branchData['57'][1].init(28, 72, '!customEventObservable.hasObserver() && !customEventObservable.defaultFn');
-function visit40_57_1(result) {
-  _$jscoverage['/custom/target.js'].branchData['57'][1].ranCondition(result);
+}_$jscoverage['/custom/target.js'].branchData['75'][1].init(1358, 33, 'ret !== false && r2 !== undefined');
+function visit48_75_1(result) {
+  _$jscoverage['/custom/target.js'].branchData['75'][1].ranCondition(result);
   return result;
-}_$jscoverage['/custom/target.js'].branchData['55'][1].init(582, 21, 'customEventObservable');
-function visit39_55_1(result) {
-  _$jscoverage['/custom/target.js'].branchData['55'][1].ranCondition(result);
+}_$jscoverage['/custom/target.js'].branchData['58'][2].init(32, 44, 'customEventObservable.bubbles && !hasTargets');
+function visit47_58_2(result) {
+  _$jscoverage['/custom/target.js'].branchData['58'][2].ranCondition(result);
   return result;
-}_$jscoverage['/custom/target.js'].branchData['51'][1].init(470, 37, '!customEventObservable && !hasTargets');
-function visit38_51_1(result) {
-  _$jscoverage['/custom/target.js'].branchData['51'][1].ranCondition(result);
+}_$jscoverage['/custom/target.js'].branchData['58'][1].init(32, 78, 'customEventObservable.bubbles && !hasTargets || !customEventObservable.bubbles');
+function visit46_58_1(result) {
+  _$jscoverage['/custom/target.js'].branchData['58'][1].ranCondition(result);
   return result;
-}_$jscoverage['/custom/target.js'].branchData['36'][1].init(196, 15, 'eventData || {}');
-function visit37_36_1(result) {
-  _$jscoverage['/custom/target.js'].branchData['36'][1].ranCondition(result);
+}_$jscoverage['/custom/target.js'].branchData['56'][1].init(28, 72, '!customEventObservable.hasObserver() && !customEventObservable.defaultFn');
+function visit45_56_1(result) {
+  _$jscoverage['/custom/target.js'].branchData['56'][1].ranCondition(result);
   return result;
-}_$jscoverage['/custom/target.js'].branchData['34'][1].init(127, 25, 'targets && targets.length');
-function visit36_34_1(result) {
-  _$jscoverage['/custom/target.js'].branchData['34'][1].ranCondition(result);
+}_$jscoverage['/custom/target.js'].branchData['54'][1].init(582, 21, 'customEventObservable');
+function visit44_54_1(result) {
+  _$jscoverage['/custom/target.js'].branchData['54'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/custom/target.js'].branchData['50'][1].init(470, 37, '!customEventObservable && !hasTargets');
+function visit43_50_1(result) {
+  _$jscoverage['/custom/target.js'].branchData['50'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/custom/target.js'].branchData['35'][1].init(196, 15, 'eventData || {}');
+function visit42_35_1(result) {
+  _$jscoverage['/custom/target.js'].branchData['35'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/custom/target.js'].branchData['33'][1].init(127, 25, 'targets && targets.length');
+function visit41_33_1(result) {
+  _$jscoverage['/custom/target.js'].branchData['33'][1].ranCondition(result);
   return result;
 }_$jscoverage['/custom/target.js'].lineData[6]++;
 KISSY.add('event/custom/target', function(S, BaseEvent, CustomEventObservable) {
   _$jscoverage['/custom/target.js'].functionData[0]++;
   _$jscoverage['/custom/target.js'].lineData[7]++;
-  var Utils = BaseEvent.Utils, splitAndRun = Utils.splitAndRun, KS_BUBBLE_TARGETS = '__~ks_bubble_targets';
+  var Utils = BaseEvent.Utils, splitAndRun = Utils.splitAndRun, undefined = undefined, KS_BUBBLE_TARGETS = '__~ks_bubble_targets';
   _$jscoverage['/custom/target.js'].lineData[23]++;
   return {
   isTarget: 1, 
   fire: function(type, eventData) {
   _$jscoverage['/custom/target.js'].functionData[1]++;
-  _$jscoverage['/custom/target.js'].lineData[31]++;
-  var self = this, ret = undefined, targets = self.getTargets(1), hasTargets = visit36_34_1(targets && targets.length);
-  _$jscoverage['/custom/target.js'].lineData[36]++;
-  eventData = visit37_36_1(eventData || {});
-  _$jscoverage['/custom/target.js'].lineData[38]++;
+  _$jscoverage['/custom/target.js'].lineData[30]++;
+  var self = this, ret = undefined, targets = self.getTargets(1), hasTargets = visit41_33_1(targets && targets.length);
+  _$jscoverage['/custom/target.js'].lineData[35]++;
+  eventData = visit42_35_1(eventData || {});
+  _$jscoverage['/custom/target.js'].lineData[37]++;
   splitAndRun(type, function(type) {
   _$jscoverage['/custom/target.js'].functionData[2]++;
-  _$jscoverage['/custom/target.js'].lineData[40]++;
+  _$jscoverage['/custom/target.js'].lineData[39]++;
   var r2, customEventObservable;
-  _$jscoverage['/custom/target.js'].lineData[42]++;
+  _$jscoverage['/custom/target.js'].lineData[41]++;
   Utils.fillGroupsForEvent(type, eventData);
-  _$jscoverage['/custom/target.js'].lineData[44]++;
+  _$jscoverage['/custom/target.js'].lineData[43]++;
   type = eventData.type;
-  _$jscoverage['/custom/target.js'].lineData[48]++;
+  _$jscoverage['/custom/target.js'].lineData[47]++;
   customEventObservable = CustomEventObservable.getCustomEventObservable(self, type);
-  _$jscoverage['/custom/target.js'].lineData[51]++;
-  if (visit38_51_1(!customEventObservable && !hasTargets)) {
-    _$jscoverage['/custom/target.js'].lineData[52]++;
+  _$jscoverage['/custom/target.js'].lineData[50]++;
+  if (visit43_50_1(!customEventObservable && !hasTargets)) {
+    _$jscoverage['/custom/target.js'].lineData[51]++;
     return;
   }
-  _$jscoverage['/custom/target.js'].lineData[55]++;
-  if (visit39_55_1(customEventObservable)) {
-    _$jscoverage['/custom/target.js'].lineData[57]++;
-    if (visit40_57_1(!customEventObservable.hasObserver() && !customEventObservable.defaultFn)) {
-      _$jscoverage['/custom/target.js'].lineData[59]++;
-      if (visit41_59_1(visit42_59_2(customEventObservable.bubbles && !hasTargets) || !customEventObservable.bubbles)) {
-        _$jscoverage['/custom/target.js'].lineData[60]++;
+  _$jscoverage['/custom/target.js'].lineData[54]++;
+  if (visit44_54_1(customEventObservable)) {
+    _$jscoverage['/custom/target.js'].lineData[56]++;
+    if (visit45_56_1(!customEventObservable.hasObserver() && !customEventObservable.defaultFn)) {
+      _$jscoverage['/custom/target.js'].lineData[58]++;
+      if (visit46_58_1(visit47_58_2(customEventObservable.bubbles && !hasTargets) || !customEventObservable.bubbles)) {
+        _$jscoverage['/custom/target.js'].lineData[59]++;
         return;
       }
     }
   } else {
-    _$jscoverage['/custom/target.js'].lineData[68]++;
+    _$jscoverage['/custom/target.js'].lineData[67]++;
     customEventObservable = new CustomEventObservable({
   currentTarget: self, 
   type: type});
   }
-  _$jscoverage['/custom/target.js'].lineData[74]++;
+  _$jscoverage['/custom/target.js'].lineData[73]++;
   r2 = customEventObservable.fire(eventData);
-  _$jscoverage['/custom/target.js'].lineData[76]++;
-  if (visit43_76_1(ret !== false)) {
-    _$jscoverage['/custom/target.js'].lineData[77]++;
+  _$jscoverage['/custom/target.js'].lineData[75]++;
+  if (visit48_75_1(visit49_75_2(ret !== false) && visit50_75_3(r2 !== undefined))) {
+    _$jscoverage['/custom/target.js'].lineData[76]++;
     ret = r2;
   }
 });
-  _$jscoverage['/custom/target.js'].lineData[82]++;
+  _$jscoverage['/custom/target.js'].lineData[81]++;
   return ret;
 }, 
   publish: function(type, cfg) {
   _$jscoverage['/custom/target.js'].functionData[3]++;
-  _$jscoverage['/custom/target.js'].lineData[89]++;
+  _$jscoverage['/custom/target.js'].lineData[88]++;
   var customEventObservable, self = this;
-  _$jscoverage['/custom/target.js'].lineData[92]++;
+  _$jscoverage['/custom/target.js'].lineData[91]++;
   splitAndRun(type, function(t) {
   _$jscoverage['/custom/target.js'].functionData[4]++;
-  _$jscoverage['/custom/target.js'].lineData[93]++;
+  _$jscoverage['/custom/target.js'].lineData[92]++;
   customEventObservable = CustomEventObservable.getCustomEventObservable(self, t, 1);
-  _$jscoverage['/custom/target.js'].lineData[94]++;
+  _$jscoverage['/custom/target.js'].lineData[93]++;
   S.mix(customEventObservable, cfg);
 });
-  _$jscoverage['/custom/target.js'].lineData[97]++;
+  _$jscoverage['/custom/target.js'].lineData[96]++;
   return self;
 }, 
   addTarget: function(anotherTarget) {
   _$jscoverage['/custom/target.js'].functionData[5]++;
-  _$jscoverage['/custom/target.js'].lineData[104]++;
+  _$jscoverage['/custom/target.js'].lineData[103]++;
   var self = this, targets = self.getTargets();
-  _$jscoverage['/custom/target.js'].lineData[106]++;
-  if (visit44_106_1(!S.inArray(anotherTarget, targets))) {
-    _$jscoverage['/custom/target.js'].lineData[107]++;
+  _$jscoverage['/custom/target.js'].lineData[105]++;
+  if (visit51_105_1(!S.inArray(anotherTarget, targets))) {
+    _$jscoverage['/custom/target.js'].lineData[106]++;
     targets.push(anotherTarget);
   }
-  _$jscoverage['/custom/target.js'].lineData[109]++;
+  _$jscoverage['/custom/target.js'].lineData[108]++;
   return self;
 }, 
   removeTarget: function(anotherTarget) {
   _$jscoverage['/custom/target.js'].functionData[6]++;
-  _$jscoverage['/custom/target.js'].lineData[116]++;
+  _$jscoverage['/custom/target.js'].lineData[115]++;
   var self = this, targets = self.getTargets(), index = S.indexOf(anotherTarget, targets);
-  _$jscoverage['/custom/target.js'].lineData[119]++;
-  if (visit45_119_1(index != -1)) {
-    _$jscoverage['/custom/target.js'].lineData[120]++;
+  _$jscoverage['/custom/target.js'].lineData[118]++;
+  if (visit52_118_1(index != -1)) {
+    _$jscoverage['/custom/target.js'].lineData[119]++;
     targets.splice(index, 1);
   }
-  _$jscoverage['/custom/target.js'].lineData[122]++;
+  _$jscoverage['/custom/target.js'].lineData[121]++;
   return self;
 }, 
   getTargets: function(readOnly) {
   _$jscoverage['/custom/target.js'].functionData[7]++;
-  _$jscoverage['/custom/target.js'].lineData[129]++;
+  _$jscoverage['/custom/target.js'].lineData[128]++;
   var self = this;
-  _$jscoverage['/custom/target.js'].lineData[130]++;
-  if (visit46_130_1(!readOnly)) {
-    _$jscoverage['/custom/target.js'].lineData[131]++;
-    self[KS_BUBBLE_TARGETS] = visit47_131_1(self[KS_BUBBLE_TARGETS] || []);
+  _$jscoverage['/custom/target.js'].lineData[129]++;
+  if (visit53_129_1(!readOnly)) {
+    _$jscoverage['/custom/target.js'].lineData[130]++;
+    self[KS_BUBBLE_TARGETS] = visit54_130_1(self[KS_BUBBLE_TARGETS] || []);
   }
-  _$jscoverage['/custom/target.js'].lineData[133]++;
+  _$jscoverage['/custom/target.js'].lineData[132]++;
   return self[KS_BUBBLE_TARGETS];
 }, 
   on: function(type, fn, context) {
   _$jscoverage['/custom/target.js'].functionData[8]++;
-  _$jscoverage['/custom/target.js'].lineData[140]++;
+  _$jscoverage['/custom/target.js'].lineData[139]++;
   var self = this;
-  _$jscoverage['/custom/target.js'].lineData[141]++;
+  _$jscoverage['/custom/target.js'].lineData[140]++;
   Utils.batchForType(function(type, fn, context) {
   _$jscoverage['/custom/target.js'].functionData[9]++;
-  _$jscoverage['/custom/target.js'].lineData[142]++;
+  _$jscoverage['/custom/target.js'].lineData[141]++;
   var cfg = Utils.normalizeParam(type, fn, context), customEvent;
-  _$jscoverage['/custom/target.js'].lineData[144]++;
+  _$jscoverage['/custom/target.js'].lineData[143]++;
   type = cfg.type;
-  _$jscoverage['/custom/target.js'].lineData[145]++;
+  _$jscoverage['/custom/target.js'].lineData[144]++;
   customEvent = CustomEventObservable.getCustomEventObservable(self, type, 1);
-  _$jscoverage['/custom/target.js'].lineData[146]++;
-  if (visit48_146_1(customEvent)) {
-    _$jscoverage['/custom/target.js'].lineData[147]++;
+  _$jscoverage['/custom/target.js'].lineData[145]++;
+  if (visit55_145_1(customEvent)) {
+    _$jscoverage['/custom/target.js'].lineData[146]++;
     customEvent.on(cfg);
   }
 }, 0, type, fn, context);
-  _$jscoverage['/custom/target.js'].lineData[150]++;
+  _$jscoverage['/custom/target.js'].lineData[149]++;
   return self;
 }, 
   detach: function(type, fn, context) {
   _$jscoverage['/custom/target.js'].functionData[10]++;
-  _$jscoverage['/custom/target.js'].lineData[157]++;
+  _$jscoverage['/custom/target.js'].lineData[156]++;
   var self = this;
-  _$jscoverage['/custom/target.js'].lineData[158]++;
+  _$jscoverage['/custom/target.js'].lineData[157]++;
   Utils.batchForType(function(type, fn, context) {
   _$jscoverage['/custom/target.js'].functionData[11]++;
-  _$jscoverage['/custom/target.js'].lineData[159]++;
+  _$jscoverage['/custom/target.js'].lineData[158]++;
   var cfg = Utils.normalizeParam(type, fn, context), customEvents, customEvent;
-  _$jscoverage['/custom/target.js'].lineData[162]++;
+  _$jscoverage['/custom/target.js'].lineData[161]++;
   type = cfg.type;
-  _$jscoverage['/custom/target.js'].lineData[163]++;
-  if (visit49_163_1(type)) {
-    _$jscoverage['/custom/target.js'].lineData[164]++;
+  _$jscoverage['/custom/target.js'].lineData[162]++;
+  if (visit56_162_1(type)) {
+    _$jscoverage['/custom/target.js'].lineData[163]++;
     customEvent = CustomEventObservable.getCustomEventObservable(self, type, 1);
-    _$jscoverage['/custom/target.js'].lineData[165]++;
-    if (visit50_165_1(customEvent)) {
-      _$jscoverage['/custom/target.js'].lineData[166]++;
+    _$jscoverage['/custom/target.js'].lineData[164]++;
+    if (visit57_164_1(customEvent)) {
+      _$jscoverage['/custom/target.js'].lineData[165]++;
       customEvent.detach(cfg);
     }
   } else {
-    _$jscoverage['/custom/target.js'].lineData[169]++;
+    _$jscoverage['/custom/target.js'].lineData[168]++;
     customEvents = CustomEventObservable.getCustomEventObservables(self);
-    _$jscoverage['/custom/target.js'].lineData[170]++;
+    _$jscoverage['/custom/target.js'].lineData[169]++;
     S.each(customEvents, function(customEvent) {
   _$jscoverage['/custom/target.js'].functionData[12]++;
-  _$jscoverage['/custom/target.js'].lineData[171]++;
+  _$jscoverage['/custom/target.js'].lineData[170]++;
   customEvent.detach(cfg);
 });
   }
 }, 0, type, fn, context);
-  _$jscoverage['/custom/target.js'].lineData[176]++;
+  _$jscoverage['/custom/target.js'].lineData[175]++;
   return self;
 }};
 }, {

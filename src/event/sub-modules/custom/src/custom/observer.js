@@ -16,9 +16,7 @@ KISSY.add('event/custom/observer', function (S, BaseEvent) {
     }
 
     S.extend(CustomEventObserver, BaseEvent.Observer, {
-
         keys:['fn','context','groups']
-
     });
 
     return CustomEventObserver;

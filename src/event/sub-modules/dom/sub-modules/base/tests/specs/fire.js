@@ -3,13 +3,10 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, Dom, Event) {
-
-    var DomEventObservable= S.require('event/dom/base/observable');
+    var DomEventObservable = S.require('event/dom/base/observable');
 
     describe("fire", function () {
-
         it('support once', function () {
-
             var n = Dom.create("<div/>"), ret;
 
             Event.on(n, "mouseenter", {
@@ -27,7 +24,46 @@ KISSY.add(function (S, Dom, Event) {
             expect(ret).toBe(1);
 
             expect(DomEventObservable.getDomEventObservablesHolder(n)).toBe(undefined);
+        });
 
+        it('can get fire return value', function () {
+            var n = Dom.create("<div/>"), ret;
+
+            Event.on(n, 'xx', function () {
+                return 1;
+            });
+
+            Event.on(n, 'xx', function () {
+            });
+
+            expect(Event.fire(n, 'xx')).toBe(1);
+
+            Event.detach(n);
+
+            Event.on(n, 'xx', function () {
+                return false;
+            });
+
+            Event.on(n, 'xx', function () {
+                return 1;
+            });
+
+            Event.on(n, 'xx', function () {
+            });
+
+            expect(Event.fire(n, 'xx')).toBe(false);
+
+            Event.detach(n);
+
+            Event.on(n, 'xx', function () {
+                return 1;
+            });
+
+            Event.on(n, 'xx', function () {
+                return null;
+            });
+
+            expect(Event.fire(n, 'xx')).toBe(null);
         });
 
         it('bubble event remove element/fn in the middle', function () {
@@ -85,10 +121,10 @@ KISSY.add(function (S, Dom, Event) {
         it('fireHandler does not bubble', function () {
 
             var n = Dom.create("<div>" +
-                "<div class='l1'>" +
-                "<div class='l2'></div>" +
-                "</div>" +
-                "</div>"),
+                    "<div class='l1'>" +
+                    "<div class='l2'></div>" +
+                    "</div>" +
+                    "</div>"),
                 ret = [],
                 dfn, winFn;
 
@@ -138,6 +174,6 @@ KISSY.add(function (S, Dom, Event) {
         });
     });
 
-},{
-    requires:['dom','event/dom/base']
+}, {
+    requires: ['dom', 'event/dom/base']
 });

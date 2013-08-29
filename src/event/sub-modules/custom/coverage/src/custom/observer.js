@@ -233,7 +233,7 @@ if (! _$jscoverage['/custom/observer.js']) {
   _$jscoverage['/custom/observer.js'].lineData[14] = 0;
   _$jscoverage['/custom/observer.js'].lineData[15] = 0;
   _$jscoverage['/custom/observer.js'].lineData[18] = 0;
-  _$jscoverage['/custom/observer.js'].lineData[24] = 0;
+  _$jscoverage['/custom/observer.js'].lineData[22] = 0;
 }
 if (! _$jscoverage['/custom/observer.js'].functionData) {
   _$jscoverage['/custom/observer.js'].functionData = [];
@@ -255,7 +255,7 @@ KISSY.add('event/custom/observer', function(S, BaseEvent) {
   _$jscoverage['/custom/observer.js'].lineData[18]++;
   S.extend(CustomEventObserver, BaseEvent.Observer, {
   keys: ['fn', 'context', 'groups']});
-  _$jscoverage['/custom/observer.js'].lineData[24]++;
+  _$jscoverage['/custom/observer.js'].lineData[22]++;
   return CustomEventObserver;
 }, {
   requires: ['event/base']});

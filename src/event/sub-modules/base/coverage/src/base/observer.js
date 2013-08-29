@@ -242,14 +242,14 @@ if (! _$jscoverage['/base/observer.js']) {
   _$jscoverage['/base/observer.js'].lineData[63] = 0;
   _$jscoverage['/base/observer.js'].lineData[65] = 0;
   _$jscoverage['/base/observer.js'].lineData[75] = 0;
-  _$jscoverage['/base/observer.js'].lineData[85] = 0;
-  _$jscoverage['/base/observer.js'].lineData[90] = 0;
-  _$jscoverage['/base/observer.js'].lineData[91] = 0;
+  _$jscoverage['/base/observer.js'].lineData[77] = 0;
+  _$jscoverage['/base/observer.js'].lineData[78] = 0;
+  _$jscoverage['/base/observer.js'].lineData[80] = 0;
+  _$jscoverage['/base/observer.js'].lineData[89] = 0;
+  _$jscoverage['/base/observer.js'].lineData[93] = 0;
   _$jscoverage['/base/observer.js'].lineData[94] = 0;
   _$jscoverage['/base/observer.js'].lineData[97] = 0;
-  _$jscoverage['/base/observer.js'].lineData[98] = 0;
-  _$jscoverage['/base/observer.js'].lineData[101] = 0;
-  _$jscoverage['/base/observer.js'].lineData[106] = 0;
+  _$jscoverage['/base/observer.js'].lineData[102] = 0;
 }
 if (! _$jscoverage['/base/observer.js'].functionData) {
   _$jscoverage['/base/observer.js'].functionData = [];
@@ -270,23 +270,23 @@ if (! _$jscoverage['/base/observer.js'].branchData) {
   _$jscoverage['/base/observer.js'].branchData['60'][1] = new BranchData();
   _$jscoverage['/base/observer.js'].branchData['61'] = [];
   _$jscoverage['/base/observer.js'].branchData['61'][1] = new BranchData();
-  _$jscoverage['/base/observer.js'].branchData['90'] = [];
-  _$jscoverage['/base/observer.js'].branchData['90'][1] = new BranchData();
-  _$jscoverage['/base/observer.js'].branchData['90'][2] = new BranchData();
-  _$jscoverage['/base/observer.js'].branchData['97'] = [];
-  _$jscoverage['/base/observer.js'].branchData['97'][1] = new BranchData();
+  _$jscoverage['/base/observer.js'].branchData['77'] = [];
+  _$jscoverage['/base/observer.js'].branchData['77'][1] = new BranchData();
+  _$jscoverage['/base/observer.js'].branchData['93'] = [];
+  _$jscoverage['/base/observer.js'].branchData['93'][1] = new BranchData();
+  _$jscoverage['/base/observer.js'].branchData['93'][2] = new BranchData();
 }
-_$jscoverage['/base/observer.js'].branchData['97'][1].init(456, 13, 'ret === false');
-function visit12_97_1(result) {
-  _$jscoverage['/base/observer.js'].branchData['97'][1].ranCondition(result);
+_$jscoverage['/base/observer.js'].branchData['93'][2].init(192, 48, '!self.groups || !(self.groups.match(_ks_groups))');
+function visit12_93_2(result) {
+  _$jscoverage['/base/observer.js'].branchData['93'][2].ranCondition(result);
   return result;
-}_$jscoverage['/base/observer.js'].branchData['90'][2].init(216, 48, '!self.groups || !(self.groups.match(_ks_groups))');
-function visit11_90_2(result) {
-  _$jscoverage['/base/observer.js'].branchData['90'][2].ranCondition(result);
+}_$jscoverage['/base/observer.js'].branchData['93'][1].init(177, 64, '_ks_groups && (!self.groups || !(self.groups.match(_ks_groups)))');
+function visit11_93_1(result) {
+  _$jscoverage['/base/observer.js'].branchData['93'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/observer.js'].branchData['90'][1].init(201, 64, '_ks_groups && (!self.groups || !(self.groups.match(_ks_groups)))');
-function visit10_90_1(result) {
-  _$jscoverage['/base/observer.js'].branchData['90'][1].ranCondition(result);
+}_$jscoverage['/base/observer.js'].branchData['77'][1].init(136, 13, 'ret === false');
+function visit10_77_1(result) {
+  _$jscoverage['/base/observer.js'].branchData['77'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/observer.js'].branchData['61'][1].init(155, 9, 'self.once');
 function visit9_61_1(result) {
@@ -344,27 +344,27 @@ KISSY.add('event/base/observer', function(S, undefined) {
   notifyInternal: function(event, ce) {
   _$jscoverage['/base/observer.js'].functionData[5]++;
   _$jscoverage['/base/observer.js'].lineData[75]++;
-  return this.simpleNotify(event, ce);
+  var ret = this.simpleNotify(event, ce);
+  _$jscoverage['/base/observer.js'].lineData[77]++;
+  if (visit10_77_1(ret === false)) {
+    _$jscoverage['/base/observer.js'].lineData[78]++;
+    event.halt();
+  }
+  _$jscoverage['/base/observer.js'].lineData[80]++;
+  return ret;
 }, 
   notify: function(event, ce) {
   _$jscoverage['/base/observer.js'].functionData[6]++;
-  _$jscoverage['/base/observer.js'].lineData[85]++;
-  var ret, self = this, _ks_groups = event._ks_groups;
-  _$jscoverage['/base/observer.js'].lineData[90]++;
-  if (visit10_90_1(_ks_groups && (visit11_90_2(!self.groups || !(self.groups.match(_ks_groups)))))) {
-    _$jscoverage['/base/observer.js'].lineData[91]++;
+  _$jscoverage['/base/observer.js'].lineData[89]++;
+  var self = this, _ks_groups = event._ks_groups;
+  _$jscoverage['/base/observer.js'].lineData[93]++;
+  if (visit11_93_1(_ks_groups && (visit12_93_2(!self.groups || !(self.groups.match(_ks_groups)))))) {
+    _$jscoverage['/base/observer.js'].lineData[94]++;
     return undefined;
   }
-  _$jscoverage['/base/observer.js'].lineData[94]++;
-  ret = self.notifyInternal(event, ce);
   _$jscoverage['/base/observer.js'].lineData[97]++;
-  if (visit12_97_1(ret === false)) {
-    _$jscoverage['/base/observer.js'].lineData[98]++;
-    event.halt();
-  }
-  _$jscoverage['/base/observer.js'].lineData[101]++;
-  return ret;
+  return self.notifyInternal(event, ce);
 }};
-  _$jscoverage['/base/observer.js'].lineData[106]++;
+  _$jscoverage['/base/observer.js'].lineData[102]++;
   return Observer;
 });

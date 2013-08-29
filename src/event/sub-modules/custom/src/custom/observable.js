@@ -5,8 +5,8 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/custom/observable', function (S, CustomEventObserver, CustomEventObject, BaseEvent) {
-
     var Utils = BaseEvent.Utils;
+    var undefined = undefined;
 
     /**
      * custom event for registering and un-registering observer for specified event on normal object.
@@ -57,7 +57,6 @@ KISSY.add('event/custom/observable', function (S, CustomEventObserver, CustomEve
          * return last value of custom event 's observers (include bubbled) 's return value.
          */
         fire: function (eventData) {
-
             eventData = eventData || {};
 
             var self = this,
@@ -82,7 +81,7 @@ KISSY.add('event/custom/observable', function (S, CustomEventObserver, CustomEve
 
             ret = self.notify(customEventObject);
 
-            if (gRet !== false) {
+            if (gRet !== false && ret != undefined) {
                 gRet = ret;
             }
 
@@ -98,7 +97,7 @@ KISSY.add('event/custom/observable', function (S, CustomEventObserver, CustomEve
                     ret = parents[i].fire(type, customEventObject);
 
                     // false 优先返回
-                    if (gRet !== false) {
+                    if (gRet !== false && ret !== undefined) {
                         gRet = ret;
                     }
 
@@ -138,12 +137,8 @@ KISSY.add('event/custom/observable', function (S, CustomEventObserver, CustomEve
 
             for (i = 0; i < len && !event.isImmediatePropagationStopped(); i++) {
                 ret = observers[i].notify(event, this);
-                if (gRet !== false) {
+                if (gRet !== false && ret !== undefined) {
                     gRet = ret;
-                }
-                if (ret === false) {
-                    // not immediate stop
-                    event.halt();
                 }
             }
 

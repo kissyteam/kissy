@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Aug 29 14:20
+build time: Aug 29 19:57
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -307,7 +307,12 @@ KISSY.add('event/base/observer', function (S, undefined) {
          * @param {KISSY.Event.Observable} ce
          */
         notifyInternal: function (event, ce) {
-            return this.simpleNotify(event, ce);
+            var ret = this.simpleNotify(event, ce);
+            // return false 等价 preventDefault + stopPropagation
+            if (ret === false) {
+                event.halt();
+            }
+            return ret;
         },
 
         /**
@@ -316,9 +321,7 @@ KISSY.add('event/base/observer', function (S, undefined) {
          * @param ce
          */
         notify: function (event, ce) {
-
-            var ret,
-                self = this,
+            var self = this,
                 _ks_groups = event._ks_groups;
 
             // handler's group does not match specified groups (at fire step)
@@ -326,14 +329,7 @@ KISSY.add('event/base/observer', function (S, undefined) {
                 return undefined;
             }
 
-            ret = self.notifyInternal(event, ce);
-
-            // return false 等价 preventDefault + stopPropagation
-            if (ret === false) {
-                event.halt();
-            }
-
-            return ret;
+            return self.notifyInternal(event, ce);
         }
 
     };

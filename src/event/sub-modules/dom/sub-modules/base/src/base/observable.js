@@ -145,7 +145,7 @@ KISSY.add('event/dom/base/observable', function (S, Dom, Special, DomEventUtils,
                     // 和 jQuery 逻辑保持一致
                     // 有一个 false，最终结果就是 false
                     // 否则等于最后一个返回值
-                    if (gRet !== false) {
+                    if (gRet !== false && ret !== undefined) {
                         gRet = ret;
                     }
                 }
@@ -162,7 +162,6 @@ KISSY.add('event/dom/base/observable', function (S, Dom, Special, DomEventUtils,
          * @param {Boolean} [onlyHandlers] for internal usage
          */
         fire: function (event, onlyHandlers/*internal usage*/) {
-
             event = event || {};
 
             var self = this,
@@ -199,6 +198,8 @@ KISSY.add('event/dom/base/observable', function (S, Dom, Special, DomEventUtils,
                 win = Dom.getWindow(cur),
                 curDocument = win.document,
                 eventPath = [],
+                gret,
+                ret,
                 ontype = 'on' + eventType,
                 eventPathIndex = 0;
 
@@ -219,7 +220,10 @@ KISSY.add('event/dom/base/observable', function (S, Dom, Special, DomEventUtils,
                 domEventObservable = DomEventObservable.getDomEventObservable(cur, eventType);
                 // default bubble for html node
                 if (domEventObservable) {
-                    domEventObservable.notify(event);
+                    ret = domEventObservable.notify(event);
+                    if (ret !== undefined && gret !== false) {
+                        gret = ret;
+                    }
                 }
                 // Trigger an inline bound script
                 if (cur[ ontype ] && cur[ ontype ].call(cur) === false) {
@@ -250,6 +254,7 @@ KISSY.add('event/dom/base/observable', function (S, Dom, Special, DomEventUtils,
                 DomEventObservable.triggeredEvent = '';
             }
 
+            return gret;
         },
 
         /**

@@ -4,8 +4,9 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/dom/base/dom-event', function (S, BaseEvent, DomEventUtils, Dom, Special, DomEventObservable, DomEventObject) {
-
     var BaseUtils = BaseEvent.Utils;
+
+    var undefined = undefined;
 
     var DomEvent = {};
 
@@ -282,7 +283,7 @@ KISSY.add('event/dom/base/dom-event', function (S, BaseEvent, DomEventUtils, Dom
                     }
                     if (domEventObservable) {
                         r = domEventObservable.fire(eventData, onlyHandlers);
-                        if (ret !== false) {
+                        if (ret !== false && r !== undefined) {
                             ret = r;
                         }
                     }

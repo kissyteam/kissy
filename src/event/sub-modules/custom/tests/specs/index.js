@@ -3,10 +3,10 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, Event) {
-    
-    var EventTarget=Event.Target;
 
-    var CustomEventObservable= S.require('event/custom/observable');
+    var EventTarget = Event.Target;
+
+    var CustomEventObservable = S.require('event/custom/observable');
 
     var FIRST = '1', SECOND = '2', SEP = '=';
 
@@ -49,10 +49,10 @@ KISSY.add(function (S, Event) {
             t.fire('click');
             t.fire('click');
 
-            expect(ret).toEqual([1,2]);
+            expect(ret).toEqual([1, 2]);
 
             expect(CustomEventObservable
-                .getCustomEventObservables(t,1)['click'].hasObserver())
+                .getCustomEventObservables(t, 1)['click'].hasObserver())
                 .toBeFalsy();
         });
 
@@ -304,7 +304,7 @@ KISSY.add(function (S, Event) {
             eventTarget.on("keydown", noop);
             (function () {
                 var customEventObservables = CustomEventObservable.
-                    getCustomEventObservables(eventTarget,1);
+                    getCustomEventObservables(eventTarget, 1);
 
                 var num = 0;
                 for (i in customEventObservables) {
@@ -321,7 +321,7 @@ KISSY.add(function (S, Event) {
 
             (function () {
                 var customEventObservables = CustomEventObservable
-                    .getCustomEventObservables(eventTarget,1);
+                    .getCustomEventObservables(eventTarget, 1);
                 var num = 0;
 
                 for (i in customEventObservables) {
@@ -339,7 +339,7 @@ KISSY.add(function (S, Event) {
             eventTarget.detach("click");
 
             (function () {
-                var customEventObservables = CustomEventObservable.getCustomEventObservables(eventTarget,1);
+                var customEventObservables = CustomEventObservable.getCustomEventObservables(eventTarget, 1);
 
                 expect(customEventObservables['keydown'].hasObserver()).toBeTruthy();
                 var clickObserver = customEventObservables["click"];
@@ -350,8 +350,8 @@ KISSY.add(function (S, Event) {
 
             (function () {
                 var customEventObservables = CustomEventObservable
-                    .getCustomEventObservables(eventTarget,1);
-                for(var o in customEventObservables){
+                    .getCustomEventObservables(eventTarget, 1);
+                for (var o in customEventObservables) {
                     expect(customEventObservables[o].hasObserver()).toBeFalsy();
                 }
 
@@ -412,8 +412,9 @@ KISSY.add(function (S, Event) {
                 runs(function () {
                     result = [];
                     dog.detach('running', rfalse);
-
-                    // 没有 false，就取最后的值
+                    dog.on('running', function () {
+                    });
+                    // 没有 false，就取最后的值, 除了 undefined
                     expect(dog.run()).toBe(SECOND);
                     waits(0);
                     runs(function () {
@@ -659,6 +660,6 @@ KISSY.add(function (S, Event) {
         });
     });
 
-},{
-    requires:['event/custom']
+}, {
+    requires: ['event/custom']
 });

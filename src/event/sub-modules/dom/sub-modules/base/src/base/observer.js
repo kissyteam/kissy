@@ -4,7 +4,6 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/dom/base/observer', function (S, Special, BaseEvent) {
-
     /**
      * observer for dom event
      * @class KISSY.Event.DomEventObserver
@@ -24,7 +23,6 @@ KISSY.add('event/dom/base/observer', function (S, Special, BaseEvent) {
     }
 
     S.extend(DomEventObserver, BaseEvent.Observer, {
-
         keys: ['fn', 'filter', 'data', 'context', 'originalType', 'groups', 'last'],
 
         notifyInternal: function (event, ce) {
@@ -48,6 +46,10 @@ KISSY.add('event/dom/base/observer', function (S, Special, BaseEvent) {
                 }
             } else {
                 ret = self.simpleNotify(event, ce);
+            }
+
+            if (ret === false) {
+                event.halt();
             }
 
             // notify other mousemove listener

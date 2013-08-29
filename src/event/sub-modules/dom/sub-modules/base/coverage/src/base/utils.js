@@ -269,58 +269,58 @@ if (! _$jscoverage['/base/utils.js'].branchData) {
   _$jscoverage['/base/utils.js'].branchData['27'][1] = new BranchData();
 }
 _$jscoverage['/base/utils.js'].branchData['27'][1].init(22, 14, 'el.detachEvent');
-function visit199_27_1(result) {
+function visit207_27_1(result) {
   _$jscoverage['/base/utils.js'].branchData['27'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/utils.js'].branchData['22'][1].init(22, 22, 'el.removeEventListener');
-function visit198_22_1(result) {
+function visit206_22_1(result) {
   _$jscoverage['/base/utils.js'].branchData['22'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/utils.js'].branchData['20'][1].init(514, 30, 'doc && doc.removeEventListener');
-function visit197_20_1(result) {
+function visit205_20_1(result) {
   _$jscoverage['/base/utils.js'].branchData['20'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/utils.js'].branchData['16'][1].init(22, 14, 'el.attachEvent');
-function visit196_16_1(result) {
+function visit204_16_1(result) {
   _$jscoverage['/base/utils.js'].branchData['16'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/utils.js'].branchData['11'][1].init(22, 19, 'el.addEventListener');
-function visit195_11_1(result) {
+function visit203_11_1(result) {
   _$jscoverage['/base/utils.js'].branchData['11'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/utils.js'].branchData['9'][1].init(102, 27, 'doc && doc.addEventListener');
-function visit194_9_1(result) {
+function visit202_9_1(result) {
   _$jscoverage['/base/utils.js'].branchData['9'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/utils.js'].lineData[6]++;
 KISSY.add('event/dom/base/utils', function(S, Dom) {
   _$jscoverage['/base/utils.js'].functionData[0]++;
   _$jscoverage['/base/utils.js'].lineData[7]++;
-  var EVENT_GUID = 'ksEventTargetId_' + S.now(), doc = S.Env.host.document, simpleAdd = visit194_9_1(doc && doc.addEventListener) ? function(el, type, fn, capture) {
+  var EVENT_GUID = 'ksEventTargetId_' + S.now(), doc = S.Env.host.document, simpleAdd = visit202_9_1(doc && doc.addEventListener) ? function(el, type, fn, capture) {
   _$jscoverage['/base/utils.js'].functionData[1]++;
   _$jscoverage['/base/utils.js'].lineData[11]++;
-  if (visit195_11_1(el.addEventListener)) {
+  if (visit203_11_1(el.addEventListener)) {
     _$jscoverage['/base/utils.js'].lineData[12]++;
     el.addEventListener(type, fn, !!capture);
   }
 } : function(el, type, fn) {
   _$jscoverage['/base/utils.js'].functionData[2]++;
   _$jscoverage['/base/utils.js'].lineData[16]++;
-  if (visit196_16_1(el.attachEvent)) {
+  if (visit204_16_1(el.attachEvent)) {
     _$jscoverage['/base/utils.js'].lineData[17]++;
     el.attachEvent('on' + type, fn);
   }
-}, simpleRemove = visit197_20_1(doc && doc.removeEventListener) ? function(el, type, fn, capture) {
+}, simpleRemove = visit205_20_1(doc && doc.removeEventListener) ? function(el, type, fn, capture) {
   _$jscoverage['/base/utils.js'].functionData[3]++;
   _$jscoverage['/base/utils.js'].lineData[22]++;
-  if (visit198_22_1(el.removeEventListener)) {
+  if (visit206_22_1(el.removeEventListener)) {
     _$jscoverage['/base/utils.js'].lineData[23]++;
     el.removeEventListener(type, fn, !!capture);
   }
 } : function(el, type, fn) {
   _$jscoverage['/base/utils.js'].functionData[4]++;
   _$jscoverage['/base/utils.js'].lineData[27]++;
-  if (visit199_27_1(el.detachEvent)) {
+  if (visit207_27_1(el.detachEvent)) {
     _$jscoverage['/base/utils.js'].lineData[28]++;
     el.detachEvent('on' + type, fn);
   }

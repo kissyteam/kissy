@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Aug 29 14:20
+build time: Aug 29 19:57
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -31,9 +31,7 @@ KISSY.add('event/custom/observer', function (S, BaseEvent) {
     }
 
     S.extend(CustomEventObserver, BaseEvent.Observer, {
-
         keys:['fn','context','groups']
-
     });
 
     return CustomEventObserver;
@@ -85,8 +83,8 @@ KISSY.add('event/custom/object', function (S, BaseEvent) {
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/custom/observable', function (S, CustomEventObserver, CustomEventObject, BaseEvent) {
-
     var Utils = BaseEvent.Utils;
+    var undefined = undefined;
 
     /**
      * custom event for registering and un-registering observer for specified event on normal object.
@@ -137,7 +135,6 @@ KISSY.add('event/custom/observable', function (S, CustomEventObserver, CustomEve
          * return last value of custom event 's observers (include bubbled) 's return value.
          */
         fire: function (eventData) {
-
             eventData = eventData || {};
 
             var self = this,
@@ -162,7 +159,7 @@ KISSY.add('event/custom/observable', function (S, CustomEventObserver, CustomEve
 
             ret = self.notify(customEventObject);
 
-            if (gRet !== false) {
+            if (gRet !== false && ret != undefined) {
                 gRet = ret;
             }
 
@@ -178,7 +175,7 @@ KISSY.add('event/custom/observable', function (S, CustomEventObserver, CustomEve
                     ret = parents[i].fire(type, customEventObject);
 
                     // false 优先返回
-                    if (gRet !== false) {
+                    if (gRet !== false && ret !== undefined) {
                         gRet = ret;
                     }
 
@@ -218,12 +215,8 @@ KISSY.add('event/custom/observable', function (S, CustomEventObserver, CustomEve
 
             for (i = 0; i < len && !event.isImmediatePropagationStopped(); i++) {
                 ret = observers[i].notify(event, this);
-                if (gRet !== false) {
+                if (gRet !== false && ret !== undefined) {
                     gRet = ret;
-                }
-                if (ret === false) {
-                    // not immediate stop
-                    event.halt();
                 }
             }
 
@@ -341,8 +334,8 @@ KISSY.add('event/custom/observable', function (S, CustomEventObserver, CustomEve
 KISSY.add('event/custom/target', function (S, BaseEvent, CustomEventObservable) {
     var Utils = BaseEvent.Utils,
         splitAndRun = Utils.splitAndRun,
+        undefined = undefined,
         KS_BUBBLE_TARGETS = '__~ks_bubble_targets';
-
 
     /**
      * @class KISSY.Event.Target
@@ -356,7 +349,6 @@ KISSY.add('event/custom/target', function (S, BaseEvent, CustomEventObservable) 
      * or will not be created at all.
      */
     return {
-
         isTarget: 1,
 
         /**
@@ -408,7 +400,7 @@ KISSY.add('event/custom/target', function (S, BaseEvent, CustomEventObservable) 
 
                 r2 = customEventObservable.fire(eventData);
 
-                if (ret !== false) {
+                if (ret !== false && r2 !== undefined) {
                     ret = r2;
                 }
 
