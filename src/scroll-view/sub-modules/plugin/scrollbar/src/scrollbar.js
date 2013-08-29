@@ -14,7 +14,6 @@ KISSY.add('scroll-view/plugin/scrollbar', function (S, Base, ScrollBar) {
             var my;
             var cfg = {
                 scrollView: scrollView,
-                allowDrag: self.get('allowDrag'),
                 // render: scrollView.get('el') => ie7 bug
                 elBefore: scrollView.$contentEl
             };

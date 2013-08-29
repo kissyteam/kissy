@@ -307,23 +307,23 @@ if (! _$jscoverage['/scrollbar/render.js'].branchData) {
   _$jscoverage['/scrollbar/render.js'].branchData['115'][1] = new BranchData();
 }
 _$jscoverage['/scrollbar/render.js'].branchData['115'][1].init(4534, 11, 'supportCss3');
-function visit23_115_1(result) {
+function visit24_115_1(result) {
   _$jscoverage['/scrollbar/render.js'].branchData['115'][1].ranCondition(result);
   return result;
 }_$jscoverage['/scrollbar/render.js'].branchData['85'][1].init(1100, 15, 'val < minScroll');
-function visit22_85_1(result) {
+function visit23_85_1(result) {
   _$jscoverage['/scrollbar/render.js'].branchData['85'][1].ranCondition(result);
   return result;
 }_$jscoverage['/scrollbar/render.js'].branchData['80'][1].init(773, 15, 'val > maxScroll');
-function visit21_80_1(result) {
+function visit22_80_1(result) {
   _$jscoverage['/scrollbar/render.js'].branchData['80'][1].ranCondition(result);
   return result;
 }_$jscoverage['/scrollbar/render.js'].branchData['52'][1].init(42, 21, 'whProperty == \'width\'');
-function visit20_52_1(result) {
+function visit21_52_1(result) {
   _$jscoverage['/scrollbar/render.js'].branchData['52'][1].ranCondition(result);
   return result;
 }_$jscoverage['/scrollbar/render.js'].branchData['49'][1].init(605, 42, 'scrollView.allowScroll[control.scrollType]');
-function visit19_49_1(result) {
+function visit20_49_1(result) {
   _$jscoverage['/scrollbar/render.js'].branchData['49'][1].ranCondition(result);
   return result;
 }_$jscoverage['/scrollbar/render.js'].lineData[5]++;
@@ -372,11 +372,11 @@ KISSY.add('scroll-view/plugin/scrollbar/render', function(S, Control, ScrollBarT
   _$jscoverage['/scrollbar/render.js'].lineData[47]++;
   control.scrollView = scrollView;
   _$jscoverage['/scrollbar/render.js'].lineData[49]++;
-  if (visit19_49_1(scrollView.allowScroll[control.scrollType])) {
+  if (visit20_49_1(scrollView.allowScroll[control.scrollType])) {
     _$jscoverage['/scrollbar/render.js'].lineData[50]++;
     control.scrollLength = scrollView[scrollWHProperty];
     _$jscoverage['/scrollbar/render.js'].lineData[51]++;
-    trackElSize = control.trackElSize = visit20_52_1(whProperty == 'width') ? trackEl.offsetWidth : trackEl.offsetHeight;
+    trackElSize = control.trackElSize = visit21_52_1(whProperty == 'width') ? trackEl.offsetWidth : trackEl.offsetHeight;
     _$jscoverage['/scrollbar/render.js'].lineData[53]++;
     ratio = scrollView[clientWHProperty] / control.scrollLength;
     _$jscoverage['/scrollbar/render.js'].lineData[54]++;
@@ -399,7 +399,7 @@ KISSY.add('scroll-view/plugin/scrollbar/render', function(S, Control, ScrollBarT
   _$jscoverage['/scrollbar/render.js'].lineData[65]++;
   var self = this, control = self.control, scrollType = control.scrollType, scrollView = control.scrollView, dragLTProperty = control.dragLTProperty, dragWHProperty = control.dragWHProperty, trackElSize = control.trackElSize, barSize = control.barSize, contentSize = control.scrollLength, val = scrollView.get(control.scrollProperty), maxScrollOffset = scrollView.maxScroll, minScrollOffset = scrollView.minScroll, minScroll = minScrollOffset[scrollType], maxScroll = maxScrollOffset[scrollType], dragVal;
   _$jscoverage['/scrollbar/render.js'].lineData[80]++;
-  if (visit21_80_1(val > maxScroll)) {
+  if (visit22_80_1(val > maxScroll)) {
     _$jscoverage['/scrollbar/render.js'].lineData[81]++;
     dragVal = maxScroll / contentSize * trackElSize;
     _$jscoverage['/scrollbar/render.js'].lineData[82]++;
@@ -408,7 +408,7 @@ KISSY.add('scroll-view/plugin/scrollbar/render', function(S, Control, ScrollBarT
     control.set(dragLTProperty, dragVal + barSize - control.get(dragWHProperty));
   } else {
     _$jscoverage['/scrollbar/render.js'].lineData[85]++;
-    if (visit22_85_1(val < minScroll)) {
+    if (visit23_85_1(val < minScroll)) {
       _$jscoverage['/scrollbar/render.js'].lineData[86]++;
       dragVal = minScroll / contentSize * trackElSize;
       _$jscoverage['/scrollbar/render.js'].lineData[87]++;
@@ -448,7 +448,7 @@ KISSY.add('scroll-view/plugin/scrollbar/render', function(S, Control, ScrollBarT
   _$jscoverage['/scrollbar/render.js'].lineData[113]++;
   var transformProperty = S.Features.getTransformProperty();
   _$jscoverage['/scrollbar/render.js'].lineData[115]++;
-  if (visit23_115_1(supportCss3)) {
+  if (visit24_115_1(supportCss3)) {
     _$jscoverage['/scrollbar/render.js'].lineData[117]++;
     methods._onSetDragLeft = function(v) {
   _$jscoverage['/scrollbar/render.js'].functionData[9]++;

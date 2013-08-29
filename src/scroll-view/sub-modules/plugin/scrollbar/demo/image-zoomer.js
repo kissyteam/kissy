@@ -1,7 +1,5 @@
 KISSY.add(function (S, Node, ScrollView, ScrollbarPlugin) {
     var $ = Node.all;
-
-    var docElement = $(document.documentElement);
     var win = $(window);
 
     var transformProperty = S.Features.getTransformProperty();
@@ -21,7 +19,7 @@ KISSY.add(function (S, Node, ScrollView, ScrollbarPlugin) {
     var centerOffset;
     var markerEl;
     var initialScale;
-    var currentScale;
+    var currentScale = 1;
     var markerStyle;
 
     var ZOOMER_CLASS = 'ks-image-zoomer';
@@ -38,11 +36,21 @@ KISSY.add(function (S, Node, ScrollView, ScrollbarPlugin) {
             return;
         }
         scrollView = new ScrollView({
-            lockX:false,
+            lockX: false,
             content: IMAGE_ZOOMER_CONTENT,
             elCls: ZOOMER_CLASS,
+            listeners: {
+                afterVisibleChange: onScrollViewShow
+            },
             plugins: [ScrollbarPlugin]
         }).render();
+
+        function onScrollViewShow(e) {
+            maskEl[e.newVal ? 'show' : 'hide']();
+            $([document.documentElement, document.body])[e.newVal ? 'addClass' :
+                'removeClass'](HIDE_SCROLLBAR_CLASS);
+        }
+
         contentEl = scrollView.get('contentEl');
         imgEl = contentEl.one('img');
         markerEl = contentEl.one('.' + MARKER_CLASS);
@@ -54,11 +62,11 @@ KISSY.add(function (S, Node, ScrollView, ScrollbarPlugin) {
         contentEl.on('pinchStart', pinchStart);
         contentEl.on('pinch mousewheel', pinch);
         maskEl = $(MASK_HTML).prependTo(document.body);
-        scrollView.on('afterVisibleChange', function (e) {
-            maskEl[e.newVal ? 'show' : 'hide']();
-            docElement[e.newVal ? 'addClass' :
-                'removeClass'](HIDE_SCROLLBAR_CLASS);
+
+        onScrollViewShow({
+            newVal: 1
         });
+
         function close(e) {
             if (e.target.nodeName.toLowerCase() != 'img') {
                 e.halt();
@@ -67,8 +75,9 @@ KISSY.add(function (S, Node, ScrollView, ScrollbarPlugin) {
             }
         }
 
-        closeEl.on(Node.Gesture.tap, close);
-        contentEl.on(Node.Gesture.tap, close);
+        // tap(touch down is buggy on safari ios)
+        closeEl.on('click', close);
+        contentEl.on('click', close);
         $(window).on('resize orientationchange', function () {
             if (scrollView.get('visible')) {
                 scrollView.sync();
@@ -110,16 +119,18 @@ KISSY.add(function (S, Node, ScrollView, ScrollbarPlugin) {
         var touches = e.touches,
             offsetX = -currentScroll.left,
             offsetY = -currentScroll.top,
+            scrollLeft = win.scrollLeft(),
+            scrollTop = win.scrollTop(),
             centerOffset;
         if (touches) {
             centerOffset = {
-                left: (touches[0].pageX + touches[1].pageX) / 2 - offsetX,
-                top: (touches[0].pageY + touches[1].pageY) / 2 - offsetY
+                left: (touches[0].pageX + touches[1].pageX) / 2 - offsetX - scrollLeft,
+                top: (touches[0].pageY + touches[1].pageY) / 2 - offsetY - scrollTop
             };
         } else {
             centerOffset = {
-                left: e.pageX - offsetX,
-                top: e.pageY - offsetY
+                left: e.pageX - offsetX - scrollLeft,
+                top: e.pageY - offsetY - scrollTop
             };
         }
         return centerOffset;
@@ -159,9 +170,9 @@ KISSY.add(function (S, Node, ScrollView, ScrollbarPlugin) {
                 top: 0
             };
             currentScale = 1;
-            imgStyle[transformProperty] = 'translate3d(0,0,0) scaleX(' + currentScale + ')' + ' ' + 'scaleY(' + currentScale + ')';
-            markerStyle.width = contentRegion.width * currentScale + 'px';
-            markerStyle.height = contentRegion.height * currentScale + 'px';
+            imgStyle[transformProperty] = 'translate3d(0,0,0) scaleX(1) scaleY(1)';
+            markerStyle.width = contentRegion.width + 'px';
+            markerStyle.height = contentRegion.height + 'px';
             scrollView.scrollTo(currentScroll);
             scrollView.sync();
             return;
@@ -173,6 +184,7 @@ KISSY.add(function (S, Node, ScrollView, ScrollbarPlugin) {
 
         currentScale = toScale;
 
+        // keep center point fixed in viewport
         var currentScroll = {
             left: Math.max(centerOffset.left * (e.scale - 1) + scroll.left, 0),
             top: Math.max(centerOffset.top * (e.scale - 1) + scroll.top, 0)
