@@ -107,7 +107,7 @@ KISSY.add('anim/timer/fx', function (S, Dom, undefined) {
                 node = self.anim.node;
             //不是css 或者 attribute 的缓动
             if(this._customFx){
-              return node[prop];
+              return node[prop] || 0;
             }
             if (isAttr(node, prop)) {
                 return Dom.attr(node, prop, undefined, 1);
