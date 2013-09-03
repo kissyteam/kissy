@@ -1,10 +1,8 @@
 describe("KISSY Loader alias", function () {
-
     it('alias works', function () {
-
         KISSY.config({
             packages: {
-                a: {
+                'alias-a': {
                     base: window.ALIAS_PATH || '../specs/alias/'
                 }
             },
@@ -21,7 +19,6 @@ describe("KISSY Loader alias", function () {
             }
         });
 
-
         var ret = 0;
 
         KISSY.use('alias-a/x', function (S, X) {
@@ -32,7 +29,6 @@ describe("KISSY Loader alias", function () {
         waitsFor(function () {
             return ret;
         });
-
     });
 
 });

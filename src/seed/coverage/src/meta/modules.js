@@ -509,11 +509,11 @@ function visit481_133_1(result) {
   _$jscoverage['/meta/modules.js'].lineData[216]++;
   config({
   'scroll-view/base': {
-  requires: ['node', 'component/container', 'component/extension/content-render']}});
+  requires: ['node', 'anim', 'component/container', 'component/extension/content-render']}});
   _$jscoverage['/meta/modules.js'].lineData[220]++;
   config({
   'scroll-view/drag': {
-  requires: ['scroll-view/base', 'node']}});
+  requires: ['scroll-view/base', 'node', 'anim']}});
   _$jscoverage['/meta/modules.js'].lineData[224]++;
   config({
   'scroll-view/plugin/pull-to-refresh': {

@@ -351,13 +351,11 @@
 
     function getPackage(self, modName) {
         var packages = self.config('packages'),
+            modNameSlash = modName + '/',
             pName = '',
             p;
-
         for (p in packages) {
-            // longest match
-            if (S.startsWith(modName, p) &&
-                p.length > pName.length) {
+            if (S.startsWith(modNameSlash, p + '/') && p.length > pName.length) {
                 pName = p;
             }
         }

@@ -39,6 +39,10 @@ describe("loader package", function () {
                 {
                     name: "com",
                     path: "/kissy/src/seed/tests/specs/package_path_longest_match/"
+                },
+                {
+                    name: "com/c",
+                    path: "/kissy/src/seed/tests/specs/package_path_longest_match/"
                 }
             ]
         });
@@ -57,6 +61,12 @@ describe("loader package", function () {
 
         expect(m1.getPackage().getName()).toBe('');
 
+        m1 = new Loader.Module({
+            name: 'component/a/c',
+            runtime: S
+        });
+
+        expect(m1.getPackage().getName()).toBe('');
 
          m1 = new Loader.Module({
             name: 'com',
@@ -71,5 +81,26 @@ describe("loader package", function () {
         });
 
         expect(m1.getPackage().getName()).toBe('com');
+
+        m1 = new Loader.Module({
+            name: 'com/a/a',
+            runtime: S
+        });
+
+        expect(m1.getPackage().getName()).toBe('com');
+
+        m1 = new Loader.Module({
+            name: 'com/c',
+            runtime: S
+        });
+
+        expect(m1.getPackage().getName()).toBe('com/c');
+
+        m1 = new Loader.Module({
+            name: 'com/c/a',
+            runtime: S
+        });
+
+        expect(m1.getPackage().getName()).toBe('com/c');
     });
 });
