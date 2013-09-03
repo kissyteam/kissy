@@ -235,46 +235,47 @@ if (! _$jscoverage['/drag.js']) {
   _$jscoverage['/drag.js'].lineData[10] = 0;
   _$jscoverage['/drag.js'].lineData[12] = 0;
   _$jscoverage['/drag.js'].lineData[14] = 0;
-  _$jscoverage['/drag.js'].lineData[15] = 0;
+  _$jscoverage['/drag.js'].lineData[16] = 0;
   _$jscoverage['/drag.js'].lineData[17] = 0;
-  _$jscoverage['/drag.js'].lineData[18] = 0;
   _$jscoverage['/drag.js'].lineData[19] = 0;
-  _$jscoverage['/drag.js'].lineData[22] = 0;
-  _$jscoverage['/drag.js'].lineData[23] = 0;
+  _$jscoverage['/drag.js'].lineData[20] = 0;
+  _$jscoverage['/drag.js'].lineData[21] = 0;
   _$jscoverage['/drag.js'].lineData[24] = 0;
+  _$jscoverage['/drag.js'].lineData[25] = 0;
   _$jscoverage['/drag.js'].lineData[26] = 0;
-  _$jscoverage['/drag.js'].lineData[30] = 0;
+  _$jscoverage['/drag.js'].lineData[28] = 0;
   _$jscoverage['/drag.js'].lineData[32] = 0;
-  _$jscoverage['/drag.js'].lineData[43] = 0;
-  _$jscoverage['/drag.js'].lineData[44] = 0;
+  _$jscoverage['/drag.js'].lineData[34] = 0;
   _$jscoverage['/drag.js'].lineData[45] = 0;
-  _$jscoverage['/drag.js'].lineData[48] = 0;
-  _$jscoverage['/drag.js'].lineData[49] = 0;
-  _$jscoverage['/drag.js'].lineData[52] = 0;
-  _$jscoverage['/drag.js'].lineData[53] = 0;
+  _$jscoverage['/drag.js'].lineData[46] = 0;
+  _$jscoverage['/drag.js'].lineData[47] = 0;
+  _$jscoverage['/drag.js'].lineData[50] = 0;
+  _$jscoverage['/drag.js'].lineData[51] = 0;
   _$jscoverage['/drag.js'].lineData[54] = 0;
   _$jscoverage['/drag.js'].lineData[55] = 0;
   _$jscoverage['/drag.js'].lineData[56] = 0;
   _$jscoverage['/drag.js'].lineData[57] = 0;
   _$jscoverage['/drag.js'].lineData[58] = 0;
   _$jscoverage['/drag.js'].lineData[59] = 0;
-  _$jscoverage['/drag.js'].lineData[62] = 0;
-  _$jscoverage['/drag.js'].lineData[65] = 0;
+  _$jscoverage['/drag.js'].lineData[60] = 0;
+  _$jscoverage['/drag.js'].lineData[61] = 0;
+  _$jscoverage['/drag.js'].lineData[64] = 0;
   _$jscoverage['/drag.js'].lineData[67] = 0;
-  _$jscoverage['/drag.js'].lineData[68] = 0;
-  _$jscoverage['/drag.js'].lineData[72] = 0;
-  _$jscoverage['/drag.js'].lineData[73] = 0;
+  _$jscoverage['/drag.js'].lineData[69] = 0;
+  _$jscoverage['/drag.js'].lineData[70] = 0;
+  _$jscoverage['/drag.js'].lineData[74] = 0;
   _$jscoverage['/drag.js'].lineData[75] = 0;
-  _$jscoverage['/drag.js'].lineData[78] = 0;
-  _$jscoverage['/drag.js'].lineData[79] = 0;
+  _$jscoverage['/drag.js'].lineData[77] = 0;
   _$jscoverage['/drag.js'].lineData[80] = 0;
   _$jscoverage['/drag.js'].lineData[81] = 0;
+  _$jscoverage['/drag.js'].lineData[82] = 0;
   _$jscoverage['/drag.js'].lineData[83] = 0;
-  _$jscoverage['/drag.js'].lineData[86] = 0;
-  _$jscoverage['/drag.js'].lineData[87] = 0;
+  _$jscoverage['/drag.js'].lineData[85] = 0;
   _$jscoverage['/drag.js'].lineData[88] = 0;
   _$jscoverage['/drag.js'].lineData[89] = 0;
+  _$jscoverage['/drag.js'].lineData[90] = 0;
   _$jscoverage['/drag.js'].lineData[91] = 0;
+  _$jscoverage['/drag.js'].lineData[93] = 0;
   _$jscoverage['/drag.js'].lineData[100] = 0;
   _$jscoverage['/drag.js'].lineData[101] = 0;
   _$jscoverage['/drag.js'].lineData[102] = 0;
@@ -295,50 +296,51 @@ if (! _$jscoverage['/drag.js']) {
   _$jscoverage['/drag.js'].lineData[135] = 0;
   _$jscoverage['/drag.js'].lineData[137] = 0;
   _$jscoverage['/drag.js'].lineData[142] = 0;
-  _$jscoverage['/drag.js'].lineData[148] = 0;
-  _$jscoverage['/drag.js'].lineData[155] = 0;
+  _$jscoverage['/drag.js'].lineData[153] = 0;
+  _$jscoverage['/drag.js'].lineData[154] = 0;
   _$jscoverage['/drag.js'].lineData[156] = 0;
-  _$jscoverage['/drag.js'].lineData[157] = 0;
-  _$jscoverage['/drag.js'].lineData[158] = 0;
   _$jscoverage['/drag.js'].lineData[159] = 0;
+  _$jscoverage['/drag.js'].lineData[160] = 0;
   _$jscoverage['/drag.js'].lineData[161] = 0;
+  _$jscoverage['/drag.js'].lineData[162] = 0;
   _$jscoverage['/drag.js'].lineData[163] = 0;
-  _$jscoverage['/drag.js'].lineData[164] = 0;
   _$jscoverage['/drag.js'].lineData[165] = 0;
-  _$jscoverage['/drag.js'].lineData[166] = 0;
   _$jscoverage['/drag.js'].lineData[167] = 0;
-  _$jscoverage['/drag.js'].lineData[172] = 0;
-  _$jscoverage['/drag.js'].lineData[173] = 0;
-  _$jscoverage['/drag.js'].lineData[177] = 0;
+  _$jscoverage['/drag.js'].lineData[168] = 0;
+  _$jscoverage['/drag.js'].lineData[169] = 0;
+  _$jscoverage['/drag.js'].lineData[170] = 0;
+  _$jscoverage['/drag.js'].lineData[171] = 0;
+  _$jscoverage['/drag.js'].lineData[174] = 0;
+  _$jscoverage['/drag.js'].lineData[175] = 0;
   _$jscoverage['/drag.js'].lineData[179] = 0;
-  _$jscoverage['/drag.js'].lineData[180] = 0;
+  _$jscoverage['/drag.js'].lineData[181] = 0;
   _$jscoverage['/drag.js'].lineData[182] = 0;
-  _$jscoverage['/drag.js'].lineData[183] = 0;
+  _$jscoverage['/drag.js'].lineData[184] = 0;
   _$jscoverage['/drag.js'].lineData[185] = 0;
   _$jscoverage['/drag.js'].lineData[186] = 0;
-  _$jscoverage['/drag.js'].lineData[187] = 0;
+  _$jscoverage['/drag.js'].lineData[188] = 0;
   _$jscoverage['/drag.js'].lineData[189] = 0;
   _$jscoverage['/drag.js'].lineData[190] = 0;
-  _$jscoverage['/drag.js'].lineData[196] = 0;
-  _$jscoverage['/drag.js'].lineData[198] = 0;
-  _$jscoverage['/drag.js'].lineData[200] = 0;
-  _$jscoverage['/drag.js'].lineData[202] = 0;
-  _$jscoverage['/drag.js'].lineData[206] = 0;
-  _$jscoverage['/drag.js'].lineData[207] = 0;
-  _$jscoverage['/drag.js'].lineData[208] = 0;
+  _$jscoverage['/drag.js'].lineData[192] = 0;
+  _$jscoverage['/drag.js'].lineData[193] = 0;
+  _$jscoverage['/drag.js'].lineData[199] = 0;
+  _$jscoverage['/drag.js'].lineData[201] = 0;
+  _$jscoverage['/drag.js'].lineData[203] = 0;
+  _$jscoverage['/drag.js'].lineData[205] = 0;
+  _$jscoverage['/drag.js'].lineData[209] = 0;
   _$jscoverage['/drag.js'].lineData[210] = 0;
-  _$jscoverage['/drag.js'].lineData[215] = 0;
-  _$jscoverage['/drag.js'].lineData[217] = 0;
+  _$jscoverage['/drag.js'].lineData[211] = 0;
+  _$jscoverage['/drag.js'].lineData[213] = 0;
   _$jscoverage['/drag.js'].lineData[218] = 0;
   _$jscoverage['/drag.js'].lineData[219] = 0;
+  _$jscoverage['/drag.js'].lineData[220] = 0;
   _$jscoverage['/drag.js'].lineData[221] = 0;
-  _$jscoverage['/drag.js'].lineData[225] = 0;
-  _$jscoverage['/drag.js'].lineData[226] = 0;
-  _$jscoverage['/drag.js'].lineData[227] = 0;
+  _$jscoverage['/drag.js'].lineData[223] = 0;
+  _$jscoverage['/drag.js'].lineData[224] = 0;
   _$jscoverage['/drag.js'].lineData[228] = 0;
   _$jscoverage['/drag.js'].lineData[229] = 0;
-  _$jscoverage['/drag.js'].lineData[234] = 0;
-  _$jscoverage['/drag.js'].lineData[235] = 0;
+  _$jscoverage['/drag.js'].lineData[230] = 0;
+  _$jscoverage['/drag.js'].lineData[231] = 0;
   _$jscoverage['/drag.js'].lineData[236] = 0;
   _$jscoverage['/drag.js'].lineData[237] = 0;
   _$jscoverage['/drag.js'].lineData[238] = 0;
@@ -349,115 +351,116 @@ if (! _$jscoverage['/drag.js']) {
   _$jscoverage['/drag.js'].lineData[248] = 0;
   _$jscoverage['/drag.js'].lineData[249] = 0;
   _$jscoverage['/drag.js'].lineData[252] = 0;
-  _$jscoverage['/drag.js'].lineData[255] = 0;
+  _$jscoverage['/drag.js'].lineData[257] = 0;
+  _$jscoverage['/drag.js'].lineData[258] = 0;
   _$jscoverage['/drag.js'].lineData[261] = 0;
   _$jscoverage['/drag.js'].lineData[262] = 0;
-  _$jscoverage['/drag.js'].lineData[263] = 0;
+  _$jscoverage['/drag.js'].lineData[264] = 0;
+  _$jscoverage['/drag.js'].lineData[265] = 0;
   _$jscoverage['/drag.js'].lineData[266] = 0;
-  _$jscoverage['/drag.js'].lineData[267] = 0;
   _$jscoverage['/drag.js'].lineData[270] = 0;
-  _$jscoverage['/drag.js'].lineData[272] = 0;
-  _$jscoverage['/drag.js'].lineData[273] = 0;
-  _$jscoverage['/drag.js'].lineData[276] = 0;
+  _$jscoverage['/drag.js'].lineData[274] = 0;
   _$jscoverage['/drag.js'].lineData[277] = 0;
-  _$jscoverage['/drag.js'].lineData[278] = 0;
   _$jscoverage['/drag.js'].lineData[279] = 0;
-  _$jscoverage['/drag.js'].lineData[282] = 0;
+  _$jscoverage['/drag.js'].lineData[280] = 0;
   _$jscoverage['/drag.js'].lineData[283] = 0;
-  _$jscoverage['/drag.js'].lineData[284] = 0;
   _$jscoverage['/drag.js'].lineData[285] = 0;
+  _$jscoverage['/drag.js'].lineData[286] = 0;
   _$jscoverage['/drag.js'].lineData[289] = 0;
-  _$jscoverage['/drag.js'].lineData[290] = 0;
-  _$jscoverage['/drag.js'].lineData[293] = 0;
-  _$jscoverage['/drag.js'].lineData[294] = 0;
+  _$jscoverage['/drag.js'].lineData[291] = 0;
+  _$jscoverage['/drag.js'].lineData[292] = 0;
+  _$jscoverage['/drag.js'].lineData[296] = 0;
   _$jscoverage['/drag.js'].lineData[297] = 0;
   _$jscoverage['/drag.js'].lineData[300] = 0;
   _$jscoverage['/drag.js'].lineData[301] = 0;
   _$jscoverage['/drag.js'].lineData[304] = 0;
-  _$jscoverage['/drag.js'].lineData[305] = 0;
-  _$jscoverage['/drag.js'].lineData[306] = 0;
   _$jscoverage['/drag.js'].lineData[307] = 0;
-  _$jscoverage['/drag.js'].lineData[309] = 0;
-  _$jscoverage['/drag.js'].lineData[310] = 0;
+  _$jscoverage['/drag.js'].lineData[308] = 0;
+  _$jscoverage['/drag.js'].lineData[311] = 0;
   _$jscoverage['/drag.js'].lineData[312] = 0;
   _$jscoverage['/drag.js'].lineData[313] = 0;
   _$jscoverage['/drag.js'].lineData[314] = 0;
-  _$jscoverage['/drag.js'].lineData[315] = 0;
   _$jscoverage['/drag.js'].lineData[316] = 0;
   _$jscoverage['/drag.js'].lineData[317] = 0;
   _$jscoverage['/drag.js'].lineData[319] = 0;
+  _$jscoverage['/drag.js'].lineData[320] = 0;
+  _$jscoverage['/drag.js'].lineData[321] = 0;
+  _$jscoverage['/drag.js'].lineData[322] = 0;
+  _$jscoverage['/drag.js'].lineData[323] = 0;
   _$jscoverage['/drag.js'].lineData[324] = 0;
-  _$jscoverage['/drag.js'].lineData[325] = 0;
   _$jscoverage['/drag.js'].lineData[326] = 0;
-  _$jscoverage['/drag.js'].lineData[327] = 0;
-  _$jscoverage['/drag.js'].lineData[328] = 0;
-  _$jscoverage['/drag.js'].lineData[329] = 0;
-  _$jscoverage['/drag.js'].lineData[337] = 0;
-  _$jscoverage['/drag.js'].lineData[338] = 0;
-  _$jscoverage['/drag.js'].lineData[339] = 0;
-  _$jscoverage['/drag.js'].lineData[342] = 0;
-  _$jscoverage['/drag.js'].lineData[343] = 0;
+  _$jscoverage['/drag.js'].lineData[331] = 0;
+  _$jscoverage['/drag.js'].lineData[332] = 0;
+  _$jscoverage['/drag.js'].lineData[333] = 0;
+  _$jscoverage['/drag.js'].lineData[334] = 0;
+  _$jscoverage['/drag.js'].lineData[335] = 0;
+  _$jscoverage['/drag.js'].lineData[336] = 0;
   _$jscoverage['/drag.js'].lineData[344] = 0;
   _$jscoverage['/drag.js'].lineData[345] = 0;
   _$jscoverage['/drag.js'].lineData[346] = 0;
-  _$jscoverage['/drag.js'].lineData[347] = 0;
   _$jscoverage['/drag.js'].lineData[349] = 0;
-  _$jscoverage['/drag.js'].lineData[355] = 0;
-  _$jscoverage['/drag.js'].lineData[357] = 0;
-  _$jscoverage['/drag.js'].lineData[359] = 0;
-  _$jscoverage['/drag.js'].lineData[360] = 0;
-  _$jscoverage['/drag.js'].lineData[361] = 0;
-  _$jscoverage['/drag.js'].lineData[363] = 0;
+  _$jscoverage['/drag.js'].lineData[350] = 0;
+  _$jscoverage['/drag.js'].lineData[351] = 0;
+  _$jscoverage['/drag.js'].lineData[352] = 0;
+  _$jscoverage['/drag.js'].lineData[353] = 0;
+  _$jscoverage['/drag.js'].lineData[354] = 0;
+  _$jscoverage['/drag.js'].lineData[356] = 0;
+  _$jscoverage['/drag.js'].lineData[362] = 0;
+  _$jscoverage['/drag.js'].lineData[364] = 0;
+  _$jscoverage['/drag.js'].lineData[366] = 0;
   _$jscoverage['/drag.js'].lineData[367] = 0;
   _$jscoverage['/drag.js'].lineData[368] = 0;
-  _$jscoverage['/drag.js'].lineData[369] = 0;
-  _$jscoverage['/drag.js'].lineData[371] = 0;
-  _$jscoverage['/drag.js'].lineData[372] = 0;
-  _$jscoverage['/drag.js'].lineData[373] = 0;
+  _$jscoverage['/drag.js'].lineData[370] = 0;
   _$jscoverage['/drag.js'].lineData[374] = 0;
-  _$jscoverage['/drag.js'].lineData[377] = 0;
+  _$jscoverage['/drag.js'].lineData[375] = 0;
+  _$jscoverage['/drag.js'].lineData[376] = 0;
   _$jscoverage['/drag.js'].lineData[378] = 0;
   _$jscoverage['/drag.js'].lineData[379] = 0;
   _$jscoverage['/drag.js'].lineData[380] = 0;
   _$jscoverage['/drag.js'].lineData[381] = 0;
-  _$jscoverage['/drag.js'].lineData[382] = 0;
-  _$jscoverage['/drag.js'].lineData[383] = 0;
   _$jscoverage['/drag.js'].lineData[384] = 0;
+  _$jscoverage['/drag.js'].lineData[385] = 0;
+  _$jscoverage['/drag.js'].lineData[386] = 0;
+  _$jscoverage['/drag.js'].lineData[387] = 0;
+  _$jscoverage['/drag.js'].lineData[388] = 0;
   _$jscoverage['/drag.js'].lineData[389] = 0;
   _$jscoverage['/drag.js'].lineData[390] = 0;
   _$jscoverage['/drag.js'].lineData[391] = 0;
-  _$jscoverage['/drag.js'].lineData[392] = 0;
-  _$jscoverage['/drag.js'].lineData[393] = 0;
-  _$jscoverage['/drag.js'].lineData[394] = 0;
+  _$jscoverage['/drag.js'].lineData[396] = 0;
+  _$jscoverage['/drag.js'].lineData[397] = 0;
+  _$jscoverage['/drag.js'].lineData[398] = 0;
   _$jscoverage['/drag.js'].lineData[399] = 0;
   _$jscoverage['/drag.js'].lineData[400] = 0;
   _$jscoverage['/drag.js'].lineData[401] = 0;
-  _$jscoverage['/drag.js'].lineData[403] = 0;
-  _$jscoverage['/drag.js'].lineData[404] = 0;
+  _$jscoverage['/drag.js'].lineData[406] = 0;
   _$jscoverage['/drag.js'].lineData[407] = 0;
+  _$jscoverage['/drag.js'].lineData[408] = 0;
   _$jscoverage['/drag.js'].lineData[410] = 0;
   _$jscoverage['/drag.js'].lineData[411] = 0;
   _$jscoverage['/drag.js'].lineData[414] = 0;
-  _$jscoverage['/drag.js'].lineData[416] = 0;
   _$jscoverage['/drag.js'].lineData[417] = 0;
+  _$jscoverage['/drag.js'].lineData[418] = 0;
+  _$jscoverage['/drag.js'].lineData[421] = 0;
+  _$jscoverage['/drag.js'].lineData[423] = 0;
   _$jscoverage['/drag.js'].lineData[424] = 0;
-  _$jscoverage['/drag.js'].lineData[425] = 0;
-  _$jscoverage['/drag.js'].lineData[428] = 0;
-  _$jscoverage['/drag.js'].lineData[429] = 0;
   _$jscoverage['/drag.js'].lineData[431] = 0;
-  _$jscoverage['/drag.js'].lineData[433] = 0;
+  _$jscoverage['/drag.js'].lineData[432] = 0;
+  _$jscoverage['/drag.js'].lineData[435] = 0;
+  _$jscoverage['/drag.js'].lineData[436] = 0;
   _$jscoverage['/drag.js'].lineData[438] = 0;
   _$jscoverage['/drag.js'].lineData[440] = 0;
-  _$jscoverage['/drag.js'].lineData[442] = 0;
   _$jscoverage['/drag.js'].lineData[445] = 0;
-  _$jscoverage['/drag.js'].lineData[446] = 0;
+  _$jscoverage['/drag.js'].lineData[447] = 0;
   _$jscoverage['/drag.js'].lineData[449] = 0;
-  _$jscoverage['/drag.js'].lineData[451] = 0;
-  _$jscoverage['/drag.js'].lineData[454] = 0;
+  _$jscoverage['/drag.js'].lineData[452] = 0;
+  _$jscoverage['/drag.js'].lineData[453] = 0;
+  _$jscoverage['/drag.js'].lineData[456] = 0;
   _$jscoverage['/drag.js'].lineData[458] = 0;
-  _$jscoverage['/drag.js'].lineData[462] = 0;
-  _$jscoverage['/drag.js'].lineData[466] = 0;
-  _$jscoverage['/drag.js'].lineData[467] = 0;
+  _$jscoverage['/drag.js'].lineData[461] = 0;
+  _$jscoverage['/drag.js'].lineData[465] = 0;
+  _$jscoverage['/drag.js'].lineData[469] = 0;
+  _$jscoverage['/drag.js'].lineData[473] = 0;
+  _$jscoverage['/drag.js'].lineData[474] = 0;
 }
 if (! _$jscoverage['/drag.js'].functionData) {
   _$jscoverage['/drag.js'].functionData = [];
@@ -485,36 +488,36 @@ if (! _$jscoverage['/drag.js'].functionData) {
 }
 if (! _$jscoverage['/drag.js'].branchData) {
   _$jscoverage['/drag.js'].branchData = {};
-  _$jscoverage['/drag.js'].branchData['23'] = [];
-  _$jscoverage['/drag.js'].branchData['23'][1] = new BranchData();
-  _$jscoverage['/drag.js'].branchData['30'] = [];
-  _$jscoverage['/drag.js'].branchData['30'][1] = new BranchData();
-  _$jscoverage['/drag.js'].branchData['43'] = [];
-  _$jscoverage['/drag.js'].branchData['43'][1] = new BranchData();
-  _$jscoverage['/drag.js'].branchData['44'] = [];
-  _$jscoverage['/drag.js'].branchData['44'][1] = new BranchData();
+  _$jscoverage['/drag.js'].branchData['25'] = [];
+  _$jscoverage['/drag.js'].branchData['25'][1] = new BranchData();
+  _$jscoverage['/drag.js'].branchData['32'] = [];
+  _$jscoverage['/drag.js'].branchData['32'][1] = new BranchData();
   _$jscoverage['/drag.js'].branchData['45'] = [];
   _$jscoverage['/drag.js'].branchData['45'][1] = new BranchData();
-  _$jscoverage['/drag.js'].branchData['48'] = [];
-  _$jscoverage['/drag.js'].branchData['48'][1] = new BranchData();
-  _$jscoverage['/drag.js'].branchData['52'] = [];
-  _$jscoverage['/drag.js'].branchData['52'][1] = new BranchData();
-  _$jscoverage['/drag.js'].branchData['56'] = [];
-  _$jscoverage['/drag.js'].branchData['56'][1] = new BranchData();
-  _$jscoverage['/drag.js'].branchData['65'] = [];
-  _$jscoverage['/drag.js'].branchData['65'][1] = new BranchData();
-  _$jscoverage['/drag.js'].branchData['65'][2] = new BranchData();
-  _$jscoverage['/drag.js'].branchData['65'][3] = new BranchData();
-  _$jscoverage['/drag.js'].branchData['65'][4] = new BranchData();
-  _$jscoverage['/drag.js'].branchData['66'] = [];
-  _$jscoverage['/drag.js'].branchData['66'][1] = new BranchData();
-  _$jscoverage['/drag.js'].branchData['66'][2] = new BranchData();
-  _$jscoverage['/drag.js'].branchData['79'] = [];
-  _$jscoverage['/drag.js'].branchData['79'][1] = new BranchData();
-  _$jscoverage['/drag.js'].branchData['80'] = [];
-  _$jscoverage['/drag.js'].branchData['80'][1] = new BranchData();
-  _$jscoverage['/drag.js'].branchData['87'] = [];
-  _$jscoverage['/drag.js'].branchData['87'][1] = new BranchData();
+  _$jscoverage['/drag.js'].branchData['46'] = [];
+  _$jscoverage['/drag.js'].branchData['46'][1] = new BranchData();
+  _$jscoverage['/drag.js'].branchData['47'] = [];
+  _$jscoverage['/drag.js'].branchData['47'][1] = new BranchData();
+  _$jscoverage['/drag.js'].branchData['50'] = [];
+  _$jscoverage['/drag.js'].branchData['50'][1] = new BranchData();
+  _$jscoverage['/drag.js'].branchData['54'] = [];
+  _$jscoverage['/drag.js'].branchData['54'][1] = new BranchData();
+  _$jscoverage['/drag.js'].branchData['58'] = [];
+  _$jscoverage['/drag.js'].branchData['58'][1] = new BranchData();
+  _$jscoverage['/drag.js'].branchData['67'] = [];
+  _$jscoverage['/drag.js'].branchData['67'][1] = new BranchData();
+  _$jscoverage['/drag.js'].branchData['67'][2] = new BranchData();
+  _$jscoverage['/drag.js'].branchData['67'][3] = new BranchData();
+  _$jscoverage['/drag.js'].branchData['67'][4] = new BranchData();
+  _$jscoverage['/drag.js'].branchData['68'] = [];
+  _$jscoverage['/drag.js'].branchData['68'][1] = new BranchData();
+  _$jscoverage['/drag.js'].branchData['68'][2] = new BranchData();
+  _$jscoverage['/drag.js'].branchData['81'] = [];
+  _$jscoverage['/drag.js'].branchData['81'][1] = new BranchData();
+  _$jscoverage['/drag.js'].branchData['82'] = [];
+  _$jscoverage['/drag.js'].branchData['82'][1] = new BranchData();
+  _$jscoverage['/drag.js'].branchData['89'] = [];
+  _$jscoverage['/drag.js'].branchData['89'][1] = new BranchData();
   _$jscoverage['/drag.js'].branchData['100'] = [];
   _$jscoverage['/drag.js'].branchData['100'][1] = new BranchData();
   _$jscoverage['/drag.js'].branchData['102'] = [];
@@ -527,478 +530,486 @@ if (! _$jscoverage['/drag.js'].branchData) {
   _$jscoverage['/drag.js'].branchData['127'][1] = new BranchData();
   _$jscoverage['/drag.js'].branchData['127'][2] = new BranchData();
   _$jscoverage['/drag.js'].branchData['127'][3] = new BranchData();
-  _$jscoverage['/drag.js'].branchData['172'] = [];
-  _$jscoverage['/drag.js'].branchData['172'][1] = new BranchData();
-  _$jscoverage['/drag.js'].branchData['180'] = [];
-  _$jscoverage['/drag.js'].branchData['180'][1] = new BranchData();
-  _$jscoverage['/drag.js'].branchData['180'][2] = new BranchData();
-  _$jscoverage['/drag.js'].branchData['180'][3] = new BranchData();
+  _$jscoverage['/drag.js'].branchData['174'] = [];
+  _$jscoverage['/drag.js'].branchData['174'][1] = new BranchData();
   _$jscoverage['/drag.js'].branchData['182'] = [];
   _$jscoverage['/drag.js'].branchData['182'][1] = new BranchData();
-  _$jscoverage['/drag.js'].branchData['196'] = [];
-  _$jscoverage['/drag.js'].branchData['196'][1] = new BranchData();
-  _$jscoverage['/drag.js'].branchData['207'] = [];
-  _$jscoverage['/drag.js'].branchData['207'][1] = new BranchData();
-  _$jscoverage['/drag.js'].branchData['218'] = [];
-  _$jscoverage['/drag.js'].branchData['218'][1] = new BranchData();
-  _$jscoverage['/drag.js'].branchData['227'] = [];
-  _$jscoverage['/drag.js'].branchData['227'][1] = new BranchData();
+  _$jscoverage['/drag.js'].branchData['182'][2] = new BranchData();
+  _$jscoverage['/drag.js'].branchData['182'][3] = new BranchData();
+  _$jscoverage['/drag.js'].branchData['184'] = [];
+  _$jscoverage['/drag.js'].branchData['184'][1] = new BranchData();
+  _$jscoverage['/drag.js'].branchData['199'] = [];
+  _$jscoverage['/drag.js'].branchData['199'][1] = new BranchData();
+  _$jscoverage['/drag.js'].branchData['210'] = [];
+  _$jscoverage['/drag.js'].branchData['210'][1] = new BranchData();
+  _$jscoverage['/drag.js'].branchData['220'] = [];
+  _$jscoverage['/drag.js'].branchData['220'][1] = new BranchData();
+  _$jscoverage['/drag.js'].branchData['229'] = [];
+  _$jscoverage['/drag.js'].branchData['229'][1] = new BranchData();
   _$jscoverage['/drag.js'].branchData['248'] = [];
   _$jscoverage['/drag.js'].branchData['248'][1] = new BranchData();
   _$jscoverage['/drag.js'].branchData['261'] = [];
   _$jscoverage['/drag.js'].branchData['261'][1] = new BranchData();
-  _$jscoverage['/drag.js'].branchData['266'] = [];
-  _$jscoverage['/drag.js'].branchData['266'][1] = new BranchData();
-  _$jscoverage['/drag.js'].branchData['272'] = [];
-  _$jscoverage['/drag.js'].branchData['272'][1] = new BranchData();
-  _$jscoverage['/drag.js'].branchData['273'] = [];
-  _$jscoverage['/drag.js'].branchData['273'][1] = new BranchData();
-  _$jscoverage['/drag.js'].branchData['276'] = [];
-  _$jscoverage['/drag.js'].branchData['276'][1] = new BranchData();
-  _$jscoverage['/drag.js'].branchData['276'][2] = new BranchData();
-  _$jscoverage['/drag.js'].branchData['276'][3] = new BranchData();
-  _$jscoverage['/drag.js'].branchData['282'] = [];
-  _$jscoverage['/drag.js'].branchData['282'][1] = new BranchData();
-  _$jscoverage['/drag.js'].branchData['282'][2] = new BranchData();
-  _$jscoverage['/drag.js'].branchData['282'][3] = new BranchData();
+  _$jscoverage['/drag.js'].branchData['264'] = [];
+  _$jscoverage['/drag.js'].branchData['264'][1] = new BranchData();
+  _$jscoverage['/drag.js'].branchData['274'] = [];
+  _$jscoverage['/drag.js'].branchData['274'][1] = new BranchData();
+  _$jscoverage['/drag.js'].branchData['279'] = [];
+  _$jscoverage['/drag.js'].branchData['279'][1] = new BranchData();
+  _$jscoverage['/drag.js'].branchData['280'] = [];
+  _$jscoverage['/drag.js'].branchData['280'][1] = new BranchData();
+  _$jscoverage['/drag.js'].branchData['283'] = [];
+  _$jscoverage['/drag.js'].branchData['283'][1] = new BranchData();
+  _$jscoverage['/drag.js'].branchData['283'][2] = new BranchData();
+  _$jscoverage['/drag.js'].branchData['283'][3] = new BranchData();
   _$jscoverage['/drag.js'].branchData['289'] = [];
   _$jscoverage['/drag.js'].branchData['289'][1] = new BranchData();
-  _$jscoverage['/drag.js'].branchData['300'] = [];
-  _$jscoverage['/drag.js'].branchData['300'][1] = new BranchData();
-  _$jscoverage['/drag.js'].branchData['309'] = [];
-  _$jscoverage['/drag.js'].branchData['309'][1] = new BranchData();
+  _$jscoverage['/drag.js'].branchData['289'][2] = new BranchData();
+  _$jscoverage['/drag.js'].branchData['289'][3] = new BranchData();
+  _$jscoverage['/drag.js'].branchData['296'] = [];
+  _$jscoverage['/drag.js'].branchData['296'][1] = new BranchData();
+  _$jscoverage['/drag.js'].branchData['307'] = [];
+  _$jscoverage['/drag.js'].branchData['307'][1] = new BranchData();
   _$jscoverage['/drag.js'].branchData['316'] = [];
   _$jscoverage['/drag.js'].branchData['316'][1] = new BranchData();
-  _$jscoverage['/drag.js'].branchData['316'][2] = new BranchData();
-  _$jscoverage['/drag.js'].branchData['317'] = [];
-  _$jscoverage['/drag.js'].branchData['317'][1] = new BranchData();
-  _$jscoverage['/drag.js'].branchData['317'][2] = new BranchData();
-  _$jscoverage['/drag.js'].branchData['326'] = [];
-  _$jscoverage['/drag.js'].branchData['326'][1] = new BranchData();
-  _$jscoverage['/drag.js'].branchData['337'] = [];
-  _$jscoverage['/drag.js'].branchData['337'][1] = new BranchData();
-  _$jscoverage['/drag.js'].branchData['359'] = [];
-  _$jscoverage['/drag.js'].branchData['359'][1] = new BranchData();
-  _$jscoverage['/drag.js'].branchData['360'] = [];
-  _$jscoverage['/drag.js'].branchData['360'][1] = new BranchData();
-  _$jscoverage['/drag.js'].branchData['368'] = [];
-  _$jscoverage['/drag.js'].branchData['368'][1] = new BranchData();
-  _$jscoverage['/drag.js'].branchData['371'] = [];
-  _$jscoverage['/drag.js'].branchData['371'][1] = new BranchData();
-  _$jscoverage['/drag.js'].branchData['371'][2] = new BranchData();
-  _$jscoverage['/drag.js'].branchData['371'][3] = new BranchData();
-  _$jscoverage['/drag.js'].branchData['373'] = [];
-  _$jscoverage['/drag.js'].branchData['373'][1] = new BranchData();
-  _$jscoverage['/drag.js'].branchData['373'][2] = new BranchData();
-  _$jscoverage['/drag.js'].branchData['373'][3] = new BranchData();
+  _$jscoverage['/drag.js'].branchData['323'] = [];
+  _$jscoverage['/drag.js'].branchData['323'][1] = new BranchData();
+  _$jscoverage['/drag.js'].branchData['323'][2] = new BranchData();
+  _$jscoverage['/drag.js'].branchData['324'] = [];
+  _$jscoverage['/drag.js'].branchData['324'][1] = new BranchData();
+  _$jscoverage['/drag.js'].branchData['324'][2] = new BranchData();
+  _$jscoverage['/drag.js'].branchData['333'] = [];
+  _$jscoverage['/drag.js'].branchData['333'][1] = new BranchData();
+  _$jscoverage['/drag.js'].branchData['344'] = [];
+  _$jscoverage['/drag.js'].branchData['344'][1] = new BranchData();
+  _$jscoverage['/drag.js'].branchData['366'] = [];
+  _$jscoverage['/drag.js'].branchData['366'][1] = new BranchData();
+  _$jscoverage['/drag.js'].branchData['367'] = [];
+  _$jscoverage['/drag.js'].branchData['367'][1] = new BranchData();
+  _$jscoverage['/drag.js'].branchData['375'] = [];
+  _$jscoverage['/drag.js'].branchData['375'][1] = new BranchData();
   _$jscoverage['/drag.js'].branchData['378'] = [];
   _$jscoverage['/drag.js'].branchData['378'][1] = new BranchData();
-  _$jscoverage['/drag.js'].branchData['381'] = [];
-  _$jscoverage['/drag.js'].branchData['381'][1] = new BranchData();
-  _$jscoverage['/drag.js'].branchData['382'] = [];
-  _$jscoverage['/drag.js'].branchData['382'][1] = new BranchData();
-  _$jscoverage['/drag.js'].branchData['391'] = [];
-  _$jscoverage['/drag.js'].branchData['391'][1] = new BranchData();
-  _$jscoverage['/drag.js'].branchData['392'] = [];
-  _$jscoverage['/drag.js'].branchData['392'][1] = new BranchData();
+  _$jscoverage['/drag.js'].branchData['378'][2] = new BranchData();
+  _$jscoverage['/drag.js'].branchData['378'][3] = new BranchData();
+  _$jscoverage['/drag.js'].branchData['380'] = [];
+  _$jscoverage['/drag.js'].branchData['380'][1] = new BranchData();
+  _$jscoverage['/drag.js'].branchData['380'][2] = new BranchData();
+  _$jscoverage['/drag.js'].branchData['380'][3] = new BranchData();
+  _$jscoverage['/drag.js'].branchData['385'] = [];
+  _$jscoverage['/drag.js'].branchData['385'][1] = new BranchData();
+  _$jscoverage['/drag.js'].branchData['388'] = [];
+  _$jscoverage['/drag.js'].branchData['388'][1] = new BranchData();
+  _$jscoverage['/drag.js'].branchData['389'] = [];
+  _$jscoverage['/drag.js'].branchData['389'][1] = new BranchData();
+  _$jscoverage['/drag.js'].branchData['398'] = [];
+  _$jscoverage['/drag.js'].branchData['398'][1] = new BranchData();
   _$jscoverage['/drag.js'].branchData['399'] = [];
   _$jscoverage['/drag.js'].branchData['399'][1] = new BranchData();
-  _$jscoverage['/drag.js'].branchData['400'] = [];
-  _$jscoverage['/drag.js'].branchData['400'][1] = new BranchData();
-  _$jscoverage['/drag.js'].branchData['410'] = [];
-  _$jscoverage['/drag.js'].branchData['410'][1] = new BranchData();
+  _$jscoverage['/drag.js'].branchData['406'] = [];
+  _$jscoverage['/drag.js'].branchData['406'][1] = new BranchData();
+  _$jscoverage['/drag.js'].branchData['407'] = [];
+  _$jscoverage['/drag.js'].branchData['407'][1] = new BranchData();
+  _$jscoverage['/drag.js'].branchData['417'] = [];
+  _$jscoverage['/drag.js'].branchData['417'][1] = new BranchData();
 }
-_$jscoverage['/drag.js'].branchData['410'][1].init(30, 16, 'allowX || allowY');
-function visit70_410_1(result) {
-  _$jscoverage['/drag.js'].branchData['410'][1].ranCondition(result);
+_$jscoverage['/drag.js'].branchData['417'][1].init(30, 16, 'allowX || allowY');
+function visit71_417_1(result) {
+  _$jscoverage['/drag.js'].branchData['417'][1].ranCondition(result);
   return result;
-}_$jscoverage['/drag.js'].branchData['400'][1].init(34, 25, 'newPageIndex != pageIndex');
-function visit69_400_1(result) {
-  _$jscoverage['/drag.js'].branchData['400'][1].ranCondition(result);
+}_$jscoverage['/drag.js'].branchData['407'][1].init(34, 25, 'newPageIndex != pageIndex');
+function visit70_407_1(result) {
+  _$jscoverage['/drag.js'].branchData['407'][1].ranCondition(result);
   return result;
-}_$jscoverage['/drag.js'].branchData['399'][1].init(1908, 25, 'newPageIndex != undefined');
+}_$jscoverage['/drag.js'].branchData['406'][1].init(1908, 25, 'newPageIndex != undefined');
+function visit69_406_1(result) {
+  _$jscoverage['/drag.js'].branchData['406'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/drag.js'].branchData['399'][1].init(42, 23, 'min < nowXY.top - x.top');
 function visit68_399_1(result) {
   _$jscoverage['/drag.js'].branchData['399'][1].ranCondition(result);
   return result;
-}_$jscoverage['/drag.js'].branchData['392'][1].init(42, 23, 'min < nowXY.top - x.top');
-function visit67_392_1(result) {
-  _$jscoverage['/drag.js'].branchData['392'][1].ranCondition(result);
+}_$jscoverage['/drag.js'].branchData['398'][1].init(38, 17, 'x.top < nowXY.top');
+function visit67_398_1(result) {
+  _$jscoverage['/drag.js'].branchData['398'][1].ranCondition(result);
   return result;
-}_$jscoverage['/drag.js'].branchData['391'][1].init(38, 17, 'x.top < nowXY.top');
-function visit66_391_1(result) {
-  _$jscoverage['/drag.js'].branchData['391'][1].ranCondition(result);
+}_$jscoverage['/drag.js'].branchData['389'][1].init(42, 23, 'min < x.top - nowXY.top');
+function visit66_389_1(result) {
+  _$jscoverage['/drag.js'].branchData['389'][1].ranCondition(result);
   return result;
-}_$jscoverage['/drag.js'].branchData['382'][1].init(42, 23, 'min < x.top - nowXY.top');
-function visit65_382_1(result) {
-  _$jscoverage['/drag.js'].branchData['382'][1].ranCondition(result);
+}_$jscoverage['/drag.js'].branchData['388'][1].init(38, 17, 'x.top > nowXY.top');
+function visit65_388_1(result) {
+  _$jscoverage['/drag.js'].branchData['388'][1].ranCondition(result);
   return result;
-}_$jscoverage['/drag.js'].branchData['381'][1].init(38, 17, 'x.top > nowXY.top');
-function visit64_381_1(result) {
-  _$jscoverage['/drag.js'].branchData['381'][1].ranCondition(result);
+}_$jscoverage['/drag.js'].branchData['385'][1].init(833, 11, 'offsetY > 0');
+function visit64_385_1(result) {
+  _$jscoverage['/drag.js'].branchData['385'][1].ranCondition(result);
   return result;
-}_$jscoverage['/drag.js'].branchData['378'][1].init(833, 11, 'offsetY > 0');
-function visit63_378_1(result) {
+}_$jscoverage['/drag.js'].branchData['380'][3].init(305, 24, 'offset.left < nowXY.left');
+function visit63_380_3(result) {
+  _$jscoverage['/drag.js'].branchData['380'][3].ranCondition(result);
+  return result;
+}_$jscoverage['/drag.js'].branchData['380'][2].init(290, 11, 'offsetX < 0');
+function visit62_380_2(result) {
+  _$jscoverage['/drag.js'].branchData['380'][2].ranCondition(result);
+  return result;
+}_$jscoverage['/drag.js'].branchData['380'][1].init(290, 39, 'offsetX < 0 && offset.left < nowXY.left');
+function visit61_380_1(result) {
+  _$jscoverage['/drag.js'].branchData['380'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/drag.js'].branchData['378'][3].init(165, 24, 'offset.left > nowXY.left');
+function visit60_378_3(result) {
+  _$jscoverage['/drag.js'].branchData['378'][3].ranCondition(result);
+  return result;
+}_$jscoverage['/drag.js'].branchData['378'][2].init(150, 11, 'offsetX > 0');
+function visit59_378_2(result) {
+  _$jscoverage['/drag.js'].branchData['378'][2].ranCondition(result);
+  return result;
+}_$jscoverage['/drag.js'].branchData['378'][1].init(150, 39, 'offsetX > 0 && offset.left > nowXY.left');
+function visit58_378_1(result) {
   _$jscoverage['/drag.js'].branchData['378'][1].ranCondition(result);
   return result;
-}_$jscoverage['/drag.js'].branchData['373'][3].init(305, 24, 'offset.left < nowXY.left');
-function visit62_373_3(result) {
-  _$jscoverage['/drag.js'].branchData['373'][3].ranCondition(result);
+}_$jscoverage['/drag.js'].branchData['375'][1].init(34, 7, '!offset');
+function visit57_375_1(result) {
+  _$jscoverage['/drag.js'].branchData['375'][1].ranCondition(result);
   return result;
-}_$jscoverage['/drag.js'].branchData['373'][2].init(290, 11, 'offsetX < 0');
-function visit61_373_2(result) {
-  _$jscoverage['/drag.js'].branchData['373'][2].ranCondition(result);
+}_$jscoverage['/drag.js'].branchData['367'][1].init(26, 16, 'allowX && allowY');
+function visit56_367_1(result) {
+  _$jscoverage['/drag.js'].branchData['367'][1].ranCondition(result);
   return result;
-}_$jscoverage['/drag.js'].branchData['373'][1].init(290, 39, 'offsetX < 0 && offset.left < nowXY.left');
-function visit60_373_1(result) {
-  _$jscoverage['/drag.js'].branchData['373'][1].ranCondition(result);
+}_$jscoverage['/drag.js'].branchData['366'][1].init(1159, 16, 'allowX || allowY');
+function visit55_366_1(result) {
+  _$jscoverage['/drag.js'].branchData['366'][1].ranCondition(result);
   return result;
-}_$jscoverage['/drag.js'].branchData['371'][3].init(165, 24, 'offset.left > nowXY.left');
-function visit59_371_3(result) {
-  _$jscoverage['/drag.js'].branchData['371'][3].ranCondition(result);
+}_$jscoverage['/drag.js'].branchData['344'][1].init(388, 17, '!self.pagesOffset');
+function visit54_344_1(result) {
+  _$jscoverage['/drag.js'].branchData['344'][1].ranCondition(result);
   return result;
-}_$jscoverage['/drag.js'].branchData['371'][2].init(150, 11, 'offsetX > 0');
-function visit58_371_2(result) {
-  _$jscoverage['/drag.js'].branchData['371'][2].ranCondition(result);
+}_$jscoverage['/drag.js'].branchData['333'][1].init(40, 10, 'count == 2');
+function visit53_333_1(result) {
+  _$jscoverage['/drag.js'].branchData['333'][1].ranCondition(result);
   return result;
-}_$jscoverage['/drag.js'].branchData['371'][1].init(150, 39, 'offsetX > 0 && offset.left > nowXY.left');
-function visit57_371_1(result) {
-  _$jscoverage['/drag.js'].branchData['371'][1].ranCondition(result);
+}_$jscoverage['/drag.js'].branchData['324'][2].init(546, 33, 'Math.abs(offsetY) > snapThreshold');
+function visit52_324_2(result) {
+  _$jscoverage['/drag.js'].branchData['324'][2].ranCondition(result);
   return result;
-}_$jscoverage['/drag.js'].branchData['368'][1].init(34, 7, '!offset');
-function visit56_368_1(result) {
-  _$jscoverage['/drag.js'].branchData['368'][1].ranCondition(result);
+}_$jscoverage['/drag.js'].branchData['324'][1].init(522, 57, 'self.allowScroll.top && Math.abs(offsetY) > snapThreshold');
+function visit51_324_1(result) {
+  _$jscoverage['/drag.js'].branchData['324'][1].ranCondition(result);
   return result;
-}_$jscoverage['/drag.js'].branchData['360'][1].init(26, 16, 'allowX && allowY');
-function visit55_360_1(result) {
-  _$jscoverage['/drag.js'].branchData['360'][1].ranCondition(result);
+}_$jscoverage['/drag.js'].branchData['323'][2].init(465, 33, 'Math.abs(offsetX) > snapThreshold');
+function visit50_323_2(result) {
+  _$jscoverage['/drag.js'].branchData['323'][2].ranCondition(result);
   return result;
-}_$jscoverage['/drag.js'].branchData['359'][1].init(1159, 16, 'allowX || allowY');
-function visit54_359_1(result) {
-  _$jscoverage['/drag.js'].branchData['359'][1].ranCondition(result);
+}_$jscoverage['/drag.js'].branchData['323'][1].init(440, 58, 'self.allowScroll.left && Math.abs(offsetX) > snapThreshold');
+function visit49_323_1(result) {
+  _$jscoverage['/drag.js'].branchData['323'][1].ranCondition(result);
   return result;
-}_$jscoverage['/drag.js'].branchData['337'][1].init(388, 17, '!self.pagesOffset');
-function visit53_337_1(result) {
-  _$jscoverage['/drag.js'].branchData['337'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/drag.js'].branchData['326'][1].init(40, 10, 'count == 2');
-function visit52_326_1(result) {
-  _$jscoverage['/drag.js'].branchData['326'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/drag.js'].branchData['317'][2].init(546, 33, 'Math.abs(offsetY) > snapThreshold');
-function visit51_317_2(result) {
-  _$jscoverage['/drag.js'].branchData['317'][2].ranCondition(result);
-  return result;
-}_$jscoverage['/drag.js'].branchData['317'][1].init(522, 57, 'self.allowScroll.top && Math.abs(offsetY) > snapThreshold');
-function visit50_317_1(result) {
-  _$jscoverage['/drag.js'].branchData['317'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/drag.js'].branchData['316'][2].init(465, 33, 'Math.abs(offsetX) > snapThreshold');
-function visit49_316_2(result) {
-  _$jscoverage['/drag.js'].branchData['316'][2].ranCondition(result);
-  return result;
-}_$jscoverage['/drag.js'].branchData['316'][1].init(440, 58, 'self.allowScroll.left && Math.abs(offsetX) > snapThreshold');
+}_$jscoverage['/drag.js'].branchData['316'][1].init(115, 35, '!startMousePos || !self.isScrolling');
 function visit48_316_1(result) {
   _$jscoverage['/drag.js'].branchData['316'][1].ranCondition(result);
   return result;
-}_$jscoverage['/drag.js'].branchData['309'][1].init(115, 35, '!startMousePos || !self.isScrolling');
-function visit47_309_1(result) {
-  _$jscoverage['/drag.js'].branchData['309'][1].ranCondition(result);
+}_$jscoverage['/drag.js'].branchData['307'][1].init(10390, 7, 'S.UA.ie');
+function visit47_307_1(result) {
+  _$jscoverage['/drag.js'].branchData['307'][1].ranCondition(result);
   return result;
-}_$jscoverage['/drag.js'].branchData['300'][1].init(10274, 7, 'S.UA.ie');
-function visit46_300_1(result) {
-  _$jscoverage['/drag.js'].branchData['300'][1].ranCondition(result);
+}_$jscoverage['/drag.js'].branchData['296'][1].init(1565, 34, 'S.Features.isTouchEventSupported()');
+function visit46_296_1(result) {
+  _$jscoverage['/drag.js'].branchData['296'][1].ranCondition(result);
   return result;
-}_$jscoverage['/drag.js'].branchData['289'][1].init(1433, 34, 'S.Features.isTouchEventSupported()');
-function visit45_289_1(result) {
+}_$jscoverage['/drag.js'].branchData['289'][3].init(476, 26, 'dragInitDirection == \'top\'');
+function visit45_289_3(result) {
+  _$jscoverage['/drag.js'].branchData['289'][3].ranCondition(result);
+  return result;
+}_$jscoverage['/drag.js'].branchData['289'][2].init(476, 66, 'dragInitDirection == \'top\' && !self.allowScroll[dragInitDirection]');
+function visit44_289_2(result) {
+  _$jscoverage['/drag.js'].branchData['289'][2].ranCondition(result);
+  return result;
+}_$jscoverage['/drag.js'].branchData['289'][1].init(467, 75, 'lockY && dragInitDirection == \'top\' && !self.allowScroll[dragInitDirection]');
+function visit43_289_1(result) {
   _$jscoverage['/drag.js'].branchData['289'][1].ranCondition(result);
   return result;
-}_$jscoverage['/drag.js'].branchData['282'][3].init(736, 26, 'dragInitDirection == \'top\'');
-function visit44_282_3(result) {
-  _$jscoverage['/drag.js'].branchData['282'][3].ranCondition(result);
+}_$jscoverage['/drag.js'].branchData['283'][3].init(246, 27, 'dragInitDirection == \'left\'');
+function visit42_283_3(result) {
+  _$jscoverage['/drag.js'].branchData['283'][3].ranCondition(result);
   return result;
-}_$jscoverage['/drag.js'].branchData['282'][2].init(736, 66, 'dragInitDirection == \'top\' && !self.allowScroll[dragInitDirection]');
-function visit43_282_2(result) {
-  _$jscoverage['/drag.js'].branchData['282'][2].ranCondition(result);
+}_$jscoverage['/drag.js'].branchData['283'][2].init(246, 67, 'dragInitDirection == \'left\' && !self.allowScroll[dragInitDirection]');
+function visit41_283_2(result) {
+  _$jscoverage['/drag.js'].branchData['283'][2].ranCondition(result);
   return result;
-}_$jscoverage['/drag.js'].branchData['282'][1].init(727, 75, 'lockY && dragInitDirection == \'top\' && !self.allowScroll[dragInitDirection]');
-function visit42_282_1(result) {
-  _$jscoverage['/drag.js'].branchData['282'][1].ranCondition(result);
+}_$jscoverage['/drag.js'].branchData['283'][1].init(237, 76, 'lockX && dragInitDirection == \'left\' && !self.allowScroll[dragInitDirection]');
+function visit40_283_1(result) {
+  _$jscoverage['/drag.js'].branchData['283'][1].ranCondition(result);
   return result;
-}_$jscoverage['/drag.js'].branchData['276'][3].init(508, 27, 'dragInitDirection == \'left\'');
-function visit41_276_3(result) {
-  _$jscoverage['/drag.js'].branchData['276'][3].ranCondition(result);
+}_$jscoverage['/drag.js'].branchData['280'][1].init(63, 13, 'xDiff > yDiff');
+function visit39_280_1(result) {
+  _$jscoverage['/drag.js'].branchData['280'][1].ranCondition(result);
   return result;
-}_$jscoverage['/drag.js'].branchData['276'][2].init(508, 67, 'dragInitDirection == \'left\' && !self.allowScroll[dragInitDirection]');
-function visit40_276_2(result) {
-  _$jscoverage['/drag.js'].branchData['276'][2].ranCondition(result);
+}_$jscoverage['/drag.js'].branchData['279'][1].init(60, 45, '!(dragInitDirection = self.dragInitDirection)');
+function visit38_279_1(result) {
+  _$jscoverage['/drag.js'].branchData['279'][1].ranCondition(result);
   return result;
-}_$jscoverage['/drag.js'].branchData['276'][1].init(499, 76, 'lockX && dragInitDirection == \'left\' && !self.allowScroll[dragInitDirection]');
-function visit39_276_1(result) {
-  _$jscoverage['/drag.js'].branchData['276'][1].ranCondition(result);
+}_$jscoverage['/drag.js'].branchData['274'][1].init(845, 14, 'lockX || lockY');
+function visit37_274_1(result) {
+  _$jscoverage['/drag.js'].branchData['274'][1].ranCondition(result);
   return result;
-}_$jscoverage['/drag.js'].branchData['273'][1].init(63, 13, 'xDiff > yDiff');
-function visit38_273_1(result) {
-  _$jscoverage['/drag.js'].branchData['273'][1].ranCondition(result);
+}_$jscoverage['/drag.js'].branchData['264'][1].init(18, 17, '!self.isScrolling');
+function visit36_264_1(result) {
+  _$jscoverage['/drag.js'].branchData['264'][1].ranCondition(result);
   return result;
-}_$jscoverage['/drag.js'].branchData['272'][1].init(322, 45, '!(dragInitDirection = self.dragInitDirection)');
-function visit37_272_1(result) {
-  _$jscoverage['/drag.js'].branchData['272'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/drag.js'].branchData['266'][1].init(195, 26, 'Math.max(xDiff, yDiff) < 5');
-function visit36_266_1(result) {
-  _$jscoverage['/drag.js'].branchData['266'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/drag.js'].branchData['261'][1].init(455, 14, 'lockX || lockY');
+}_$jscoverage['/drag.js'].branchData['261'][1].init(435, 37, 'Math.max(xDiff, yDiff) < PIXEL_THRESH');
 function visit35_261_1(result) {
   _$jscoverage['/drag.js'].branchData['261'][1].ranCondition(result);
   return result;
-}_$jscoverage['/drag.js'].branchData['248'][1].init(91, 35, '!startMousePos || !self.isScrolling');
+}_$jscoverage['/drag.js'].branchData['248'][1].init(91, 14, '!startMousePos');
 function visit34_248_1(result) {
   _$jscoverage['/drag.js'].branchData['248'][1].ranCondition(result);
   return result;
-}_$jscoverage['/drag.js'].branchData['227'][1].init(345, 11, 'isScrolling');
-function visit33_227_1(result) {
-  _$jscoverage['/drag.js'].branchData['227'][1].ranCondition(result);
+}_$jscoverage['/drag.js'].branchData['229'][1].init(297, 11, 'isScrolling');
+function visit33_229_1(result) {
+  _$jscoverage['/drag.js'].branchData['229'][1].ranCondition(result);
   return result;
-}_$jscoverage['/drag.js'].branchData['218'][1].init(88, 20, 'self.get(\'disabled\')');
-function visit32_218_1(result) {
-  _$jscoverage['/drag.js'].branchData['218'][1].ranCondition(result);
+}_$jscoverage['/drag.js'].branchData['220'][1].init(40, 20, 'self.get(\'disabled\')');
+function visit32_220_1(result) {
+  _$jscoverage['/drag.js'].branchData['220'][1].ranCondition(result);
   return result;
-}_$jscoverage['/drag.js'].branchData['207'][1].init(351, 11, 'value === 0');
-function visit31_207_1(result) {
-  _$jscoverage['/drag.js'].branchData['207'][1].ranCondition(result);
+}_$jscoverage['/drag.js'].branchData['210'][1].init(351, 11, 'value === 0');
+function visit31_210_1(result) {
+  _$jscoverage['/drag.js'].branchData['210'][1].ranCondition(result);
   return result;
-}_$jscoverage['/drag.js'].branchData['196'][1].init(1144, 18, 'value <= minScroll');
-function visit30_196_1(result) {
-  _$jscoverage['/drag.js'].branchData['196'][1].ranCondition(result);
+}_$jscoverage['/drag.js'].branchData['199'][1].init(1177, 18, 'value <= minScroll');
+function visit30_199_1(result) {
+  _$jscoverage['/drag.js'].branchData['199'][1].ranCondition(result);
   return result;
-}_$jscoverage['/drag.js'].branchData['182'][1].init(58, 22, 'fx.lastValue === value');
-function visit29_182_1(result) {
+}_$jscoverage['/drag.js'].branchData['184'][1].init(58, 22, 'fx.lastValue === value');
+function visit29_184_1(result) {
+  _$jscoverage['/drag.js'].branchData['184'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/drag.js'].branchData['182'][3].init(396, 17, 'value < maxScroll');
+function visit28_182_3(result) {
+  _$jscoverage['/drag.js'].branchData['182'][3].ranCondition(result);
+  return result;
+}_$jscoverage['/drag.js'].branchData['182'][2].init(375, 17, 'value > minScroll');
+function visit27_182_2(result) {
+  _$jscoverage['/drag.js'].branchData['182'][2].ranCondition(result);
+  return result;
+}_$jscoverage['/drag.js'].branchData['182'][1].init(375, 38, 'value > minScroll && value < maxScroll');
+function visit26_182_1(result) {
   _$jscoverage['/drag.js'].branchData['182'][1].ranCondition(result);
   return result;
-}_$jscoverage['/drag.js'].branchData['180'][3].init(396, 17, 'value < maxScroll');
-function visit28_180_3(result) {
-  _$jscoverage['/drag.js'].branchData['180'][3].ranCondition(result);
+}_$jscoverage['/drag.js'].branchData['174'][1].init(102, 7, 'inertia');
+function visit25_174_1(result) {
+  _$jscoverage['/drag.js'].branchData['174'][1].ranCondition(result);
   return result;
-}_$jscoverage['/drag.js'].branchData['180'][2].init(375, 17, 'value > minScroll');
-function visit27_180_2(result) {
-  _$jscoverage['/drag.js'].branchData['180'][2].ranCondition(result);
-  return result;
-}_$jscoverage['/drag.js'].branchData['180'][1].init(375, 38, 'value > minScroll && value < maxScroll');
-function visit26_180_1(result) {
-  _$jscoverage['/drag.js'].branchData['180'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/drag.js'].branchData['172'][1].init(132, 7, 'inertia');
-function visit25_172_1(result) {
-  _$jscoverage['/drag.js'].branchData['172'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/drag.js'].branchData['127'][3].init(1317, 13, 'distance == 0');
+}_$jscoverage['/drag.js'].branchData['127'][3].init(1250, 13, 'distance == 0');
 function visit24_127_3(result) {
   _$jscoverage['/drag.js'].branchData['127'][3].ranCondition(result);
   return result;
-}_$jscoverage['/drag.js'].branchData['127'][2].init(1300, 13, 'duration == 0');
+}_$jscoverage['/drag.js'].branchData['127'][2].init(1233, 13, 'duration == 0');
 function visit23_127_2(result) {
   _$jscoverage['/drag.js'].branchData['127'][2].ranCondition(result);
   return result;
-}_$jscoverage['/drag.js'].branchData['127'][1].init(1300, 30, 'duration == 0 || distance == 0');
+}_$jscoverage['/drag.js'].branchData['127'][1].init(1233, 30, 'duration == 0 || distance == 0');
 function visit22_127_1(result) {
   _$jscoverage['/drag.js'].branchData['127'][1].ranCondition(result);
   return result;
-}_$jscoverage['/drag.js'].branchData['117'][1].init(1037, 16, 'self.pagesOffset');
+}_$jscoverage['/drag.js'].branchData['117'][1].init(970, 16, 'self.pagesOffset');
 function visit21_117_1(result) {
   _$jscoverage['/drag.js'].branchData['117'][1].ranCondition(result);
   return result;
-}_$jscoverage['/drag.js'].branchData['105'][1].init(657, 19, 'bound !== undefined');
+}_$jscoverage['/drag.js'].branchData['105'][1].init(590, 19, 'bound !== undefined');
 function visit20_105_1(result) {
   _$jscoverage['/drag.js'].branchData['105'][1].ranCondition(result);
   return result;
-}_$jscoverage['/drag.js'].branchData['102'][1].init(556, 30, 'scroll > maxScroll[scrollType]');
+}_$jscoverage['/drag.js'].branchData['102'][1].init(489, 30, 'scroll > maxScroll[scrollType]');
 function visit19_102_1(result) {
   _$jscoverage['/drag.js'].branchData['102'][1].ranCondition(result);
   return result;
-}_$jscoverage['/drag.js'].branchData['100'][1].init(457, 30, 'scroll < minScroll[scrollType]');
+}_$jscoverage['/drag.js'].branchData['100'][1].init(390, 30, 'scroll < minScroll[scrollType]');
 function visit18_100_1(result) {
   _$jscoverage['/drag.js'].branchData['100'][1].ranCondition(result);
   return result;
-}_$jscoverage['/drag.js'].branchData['87'][1].init(14, 28, 'forbidDrag(self, scrollType)');
-function visit17_87_1(result) {
-  _$jscoverage['/drag.js'].branchData['87'][1].ranCondition(result);
+}_$jscoverage['/drag.js'].branchData['89'][1].init(14, 28, 'forbidDrag(self, scrollType)');
+function visit17_89_1(result) {
+  _$jscoverage['/drag.js'].branchData['89'][1].ranCondition(result);
   return result;
-}_$jscoverage['/drag.js'].branchData['80'][1].init(78, 49, '!self.allowScroll[scrollType] && self.get(lockXY)');
-function visit16_80_1(result) {
-  _$jscoverage['/drag.js'].branchData['80'][1].ranCondition(result);
+}_$jscoverage['/drag.js'].branchData['82'][1].init(78, 49, '!self.allowScroll[scrollType] && self.get(lockXY)');
+function visit16_82_1(result) {
+  _$jscoverage['/drag.js'].branchData['82'][1].ranCondition(result);
   return result;
-}_$jscoverage['/drag.js'].branchData['79'][1].init(23, 20, 'scrollType == \'left\'');
-function visit15_79_1(result) {
-  _$jscoverage['/drag.js'].branchData['79'][1].ranCondition(result);
+}_$jscoverage['/drag.js'].branchData['81'][1].init(23, 20, 'scrollType == \'left\'');
+function visit15_81_1(result) {
+  _$jscoverage['/drag.js'].branchData['81'][1].ranCondition(result);
   return result;
-}_$jscoverage['/drag.js'].branchData['66'][2].init(118, 32, 'timeDiff > SWIPE_SAMPLE_INTERVAL');
-function visit14_66_2(result) {
-  _$jscoverage['/drag.js'].branchData['66'][2].ranCondition(result);
+}_$jscoverage['/drag.js'].branchData['68'][2].init(118, 32, 'timeDiff > SWIPE_SAMPLE_INTERVAL');
+function visit14_68_2(result) {
+  _$jscoverage['/drag.js'].branchData['68'][2].ranCondition(result);
   return result;
-}_$jscoverage['/drag.js'].branchData['66'][1].init(55, 39, 'lastDirection[scrollType] !== direction');
-function visit13_66_1(result) {
-  _$jscoverage['/drag.js'].branchData['66'][1].ranCondition(result);
+}_$jscoverage['/drag.js'].branchData['68'][1].init(55, 39, 'lastDirection[scrollType] !== direction');
+function visit13_68_1(result) {
+  _$jscoverage['/drag.js'].branchData['68'][1].ranCondition(result);
   return result;
-}_$jscoverage['/drag.js'].branchData['65'][4].init(1676, 39, 'lastDirection[scrollType] !== undefined');
-function visit12_65_4(result) {
-  _$jscoverage['/drag.js'].branchData['65'][4].ranCondition(result);
+}_$jscoverage['/drag.js'].branchData['67'][4].init(1676, 39, 'lastDirection[scrollType] !== undefined');
+function visit12_67_4(result) {
+  _$jscoverage['/drag.js'].branchData['67'][4].ranCondition(result);
   return result;
-}_$jscoverage['/drag.js'].branchData['65'][3].init(1676, 95, 'lastDirection[scrollType] !== undefined && lastDirection[scrollType] !== direction');
-function visit11_65_3(result) {
-  _$jscoverage['/drag.js'].branchData['65'][3].ranCondition(result);
+}_$jscoverage['/drag.js'].branchData['67'][3].init(1676, 95, 'lastDirection[scrollType] !== undefined && lastDirection[scrollType] !== direction');
+function visit11_67_3(result) {
+  _$jscoverage['/drag.js'].branchData['67'][3].ranCondition(result);
   return result;
-}_$jscoverage['/drag.js'].branchData['65'][2].init(1656, 115, '!eqWithLastPoint && lastDirection[scrollType] !== undefined && lastDirection[scrollType] !== direction');
-function visit10_65_2(result) {
-  _$jscoverage['/drag.js'].branchData['65'][2].ranCondition(result);
+}_$jscoverage['/drag.js'].branchData['67'][2].init(1656, 115, '!eqWithLastPoint && lastDirection[scrollType] !== undefined && lastDirection[scrollType] !== direction');
+function visit10_67_2(result) {
+  _$jscoverage['/drag.js'].branchData['67'][2].ranCondition(result);
   return result;
-}_$jscoverage['/drag.js'].branchData['65'][1].init(1656, 151, '!eqWithLastPoint && lastDirection[scrollType] !== undefined && lastDirection[scrollType] !== direction || timeDiff > SWIPE_SAMPLE_INTERVAL');
-function visit9_65_1(result) {
-  _$jscoverage['/drag.js'].branchData['65'][1].ranCondition(result);
+}_$jscoverage['/drag.js'].branchData['67'][1].init(1656, 151, '!eqWithLastPoint && lastDirection[scrollType] !== undefined && lastDirection[scrollType] !== direction || timeDiff > SWIPE_SAMPLE_INTERVAL');
+function visit9_67_1(result) {
+  _$jscoverage['/drag.js'].branchData['67'][1].ranCondition(result);
   return result;
-}_$jscoverage['/drag.js'].branchData['56'][1].init(1360, 30, 'scroll > maxScroll[scrollType]');
-function visit8_56_1(result) {
-  _$jscoverage['/drag.js'].branchData['56'][1].ranCondition(result);
+}_$jscoverage['/drag.js'].branchData['58'][1].init(1360, 30, 'scroll > maxScroll[scrollType]');
+function visit8_58_1(result) {
+  _$jscoverage['/drag.js'].branchData['58'][1].ranCondition(result);
   return result;
-}_$jscoverage['/drag.js'].branchData['52'][1].init(1156, 30, 'scroll < minScroll[scrollType]');
-function visit7_52_1(result) {
-  _$jscoverage['/drag.js'].branchData['52'][1].ranCondition(result);
+}_$jscoverage['/drag.js'].branchData['54'][1].init(1156, 30, 'scroll < minScroll[scrollType]');
+function visit7_54_1(result) {
+  _$jscoverage['/drag.js'].branchData['54'][1].ranCondition(result);
   return result;
-}_$jscoverage['/drag.js'].branchData['48'][1].init(1011, 19, '!self.get(\'bounce\')');
-function visit6_48_1(result) {
-  _$jscoverage['/drag.js'].branchData['48'][1].ranCondition(result);
+}_$jscoverage['/drag.js'].branchData['50'][1].init(1011, 19, '!self.get(\'bounce\')');
+function visit6_50_1(result) {
+  _$jscoverage['/drag.js'].branchData['50'][1].ranCondition(result);
   return result;
-}_$jscoverage['/drag.js'].branchData['45'][1].init(118, 61, '(pos[pageOffsetProperty] - lastPageXY[pageOffsetProperty]) > 0');
-function visit5_45_1(result) {
+}_$jscoverage['/drag.js'].branchData['47'][1].init(118, 61, '(pos[pageOffsetProperty] - lastPageXY[pageOffsetProperty]) > 0');
+function visit5_47_1(result) {
+  _$jscoverage['/drag.js'].branchData['47'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/drag.js'].branchData['46'][1].init(32, 57, 'pos[pageOffsetProperty] == lastPageXY[pageOffsetProperty]');
+function visit4_46_1(result) {
+  _$jscoverage['/drag.js'].branchData['46'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/drag.js'].branchData['45'][1].init(771, 30, 'lastPageXY[pageOffsetProperty]');
+function visit3_45_1(result) {
   _$jscoverage['/drag.js'].branchData['45'][1].ranCondition(result);
   return result;
-}_$jscoverage['/drag.js'].branchData['44'][1].init(32, 57, 'pos[pageOffsetProperty] == lastPageXY[pageOffsetProperty]');
-function visit4_44_1(result) {
-  _$jscoverage['/drag.js'].branchData['44'][1].ranCondition(result);
+}_$jscoverage['/drag.js'].branchData['32'][1].init(224, 20, 'scrollType == \'left\'');
+function visit2_32_1(result) {
+  _$jscoverage['/drag.js'].branchData['32'][1].ranCondition(result);
   return result;
-}_$jscoverage['/drag.js'].branchData['43'][1].init(771, 30, 'lastPageXY[pageOffsetProperty]');
-function visit3_43_1(result) {
-  _$jscoverage['/drag.js'].branchData['43'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/drag.js'].branchData['30'][1].init(224, 20, 'scrollType == \'left\'');
-function visit2_30_1(result) {
-  _$jscoverage['/drag.js'].branchData['30'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/drag.js'].branchData['23'][1].init(14, 28, 'forbidDrag(self, scrollType)');
-function visit1_23_1(result) {
-  _$jscoverage['/drag.js'].branchData['23'][1].ranCondition(result);
+}_$jscoverage['/drag.js'].branchData['25'][1].init(14, 28, 'forbidDrag(self, scrollType)');
+function visit1_25_1(result) {
+  _$jscoverage['/drag.js'].branchData['25'][1].ranCondition(result);
   return result;
 }_$jscoverage['/drag.js'].lineData[5]++;
-KISSY.add('scroll-view/drag', function(S, ScrollViewBase, Node) {
+KISSY.add('scroll-view/drag', function(S, ScrollViewBase, Node, Anim) {
   _$jscoverage['/drag.js'].functionData[0]++;
   _$jscoverage['/drag.js'].lineData[6]++;
   var OUT_OF_BOUND_FACTOR = 0.5;
   _$jscoverage['/drag.js'].lineData[8]++;
-  var Gesture = Node.Gesture;
+  var PIXEL_THRESH = 3;
   _$jscoverage['/drag.js'].lineData[10]++;
-  var SWIPE_SAMPLE_INTERVAL = 300;
+  var Gesture = Node.Gesture;
   _$jscoverage['/drag.js'].lineData[12]++;
-  var MAX_SWIPE_VELOCITY = 6;
+  var SWIPE_SAMPLE_INTERVAL = 300;
   _$jscoverage['/drag.js'].lineData[14]++;
+  var MAX_SWIPE_VELOCITY = 6;
+  _$jscoverage['/drag.js'].lineData[16]++;
   function onDragStart(self, e, scrollType) {
     _$jscoverage['/drag.js'].functionData[1]++;
-    _$jscoverage['/drag.js'].lineData[15]++;
-    var now = e.timeStamp, scroll = self.get('scroll' + S.ucfirst(scrollType));
     _$jscoverage['/drag.js'].lineData[17]++;
-    self.startScroll[scrollType] = scroll;
-    _$jscoverage['/drag.js'].lineData[18]++;
-    self.swipe[scrollType].startTime = now;
+    var now = e.timeStamp, scroll = self.get('scroll' + S.ucfirst(scrollType));
     _$jscoverage['/drag.js'].lineData[19]++;
+    self.startScroll[scrollType] = scroll;
+    _$jscoverage['/drag.js'].lineData[20]++;
+    self.swipe[scrollType].startTime = now;
+    _$jscoverage['/drag.js'].lineData[21]++;
     self.swipe[scrollType].scroll = scroll;
   }
-  _$jscoverage['/drag.js'].lineData[22]++;
+  _$jscoverage['/drag.js'].lineData[24]++;
   function onDragScroll(self, e, scrollType, startMousePos) {
     _$jscoverage['/drag.js'].functionData[2]++;
-    _$jscoverage['/drag.js'].lineData[23]++;
-    if (visit1_23_1(forbidDrag(self, scrollType))) {
-      _$jscoverage['/drag.js'].lineData[24]++;
+    _$jscoverage['/drag.js'].lineData[25]++;
+    if (visit1_25_1(forbidDrag(self, scrollType))) {
+      _$jscoverage['/drag.js'].lineData[26]++;
       return;
     }
-    _$jscoverage['/drag.js'].lineData[26]++;
+    _$jscoverage['/drag.js'].lineData[28]++;
     var pos = {
   pageX: e.touches[0].pageX, 
   pageY: e.touches[0].pageY};
-    _$jscoverage['/drag.js'].lineData[30]++;
-    var pageOffsetProperty = visit2_30_1(scrollType == 'left') ? 'pageX' : 'pageY', lastPageXY = self.lastPageXY;
     _$jscoverage['/drag.js'].lineData[32]++;
+    var pageOffsetProperty = visit2_32_1(scrollType == 'left') ? 'pageX' : 'pageY', lastPageXY = self.lastPageXY;
+    _$jscoverage['/drag.js'].lineData[34]++;
     var diff = pos[pageOffsetProperty] - startMousePos[pageOffsetProperty], eqWithLastPoint, scroll = self.startScroll[scrollType] - diff, bound, now = e.timeStamp, minScroll = self.minScroll, maxScroll = self.maxScroll, lastDirection = self.lastDirection, swipe = self.swipe, direction;
-    _$jscoverage['/drag.js'].lineData[43]++;
-    if (visit3_43_1(lastPageXY[pageOffsetProperty])) {
-      _$jscoverage['/drag.js'].lineData[44]++;
-      eqWithLastPoint = visit4_44_1(pos[pageOffsetProperty] == lastPageXY[pageOffsetProperty]);
-      _$jscoverage['/drag.js'].lineData[45]++;
-      direction = visit5_45_1((pos[pageOffsetProperty] - lastPageXY[pageOffsetProperty]) > 0);
+    _$jscoverage['/drag.js'].lineData[45]++;
+    if (visit3_45_1(lastPageXY[pageOffsetProperty])) {
+      _$jscoverage['/drag.js'].lineData[46]++;
+      eqWithLastPoint = visit4_46_1(pos[pageOffsetProperty] == lastPageXY[pageOffsetProperty]);
+      _$jscoverage['/drag.js'].lineData[47]++;
+      direction = visit5_47_1((pos[pageOffsetProperty] - lastPageXY[pageOffsetProperty]) > 0);
     }
-    _$jscoverage['/drag.js'].lineData[48]++;
-    if (visit6_48_1(!self.get('bounce'))) {
-      _$jscoverage['/drag.js'].lineData[49]++;
+    _$jscoverage['/drag.js'].lineData[50]++;
+    if (visit6_50_1(!self.get('bounce'))) {
+      _$jscoverage['/drag.js'].lineData[51]++;
       scroll = Math.min(Math.max(scroll, minScroll[scrollType]), maxScroll[scrollType]);
     }
-    _$jscoverage['/drag.js'].lineData[52]++;
-    if (visit7_52_1(scroll < minScroll[scrollType])) {
-      _$jscoverage['/drag.js'].lineData[53]++;
-      bound = minScroll[scrollType] - scroll;
-      _$jscoverage['/drag.js'].lineData[54]++;
-      bound *= OUT_OF_BOUND_FACTOR;
+    _$jscoverage['/drag.js'].lineData[54]++;
+    if (visit7_54_1(scroll < minScroll[scrollType])) {
       _$jscoverage['/drag.js'].lineData[55]++;
+      bound = minScroll[scrollType] - scroll;
+      _$jscoverage['/drag.js'].lineData[56]++;
+      bound *= OUT_OF_BOUND_FACTOR;
+      _$jscoverage['/drag.js'].lineData[57]++;
       scroll = minScroll[scrollType] - bound;
     } else {
-      _$jscoverage['/drag.js'].lineData[56]++;
-      if (visit8_56_1(scroll > maxScroll[scrollType])) {
-        _$jscoverage['/drag.js'].lineData[57]++;
-        bound = scroll - maxScroll[scrollType];
-        _$jscoverage['/drag.js'].lineData[58]++;
-        bound *= OUT_OF_BOUND_FACTOR;
+      _$jscoverage['/drag.js'].lineData[58]++;
+      if (visit8_58_1(scroll > maxScroll[scrollType])) {
         _$jscoverage['/drag.js'].lineData[59]++;
+        bound = scroll - maxScroll[scrollType];
+        _$jscoverage['/drag.js'].lineData[60]++;
+        bound *= OUT_OF_BOUND_FACTOR;
+        _$jscoverage['/drag.js'].lineData[61]++;
         scroll = maxScroll[scrollType] + bound;
       }
     }
-    _$jscoverage['/drag.js'].lineData[62]++;
+    _$jscoverage['/drag.js'].lineData[64]++;
     var timeDiff = (now - swipe[scrollType].startTime);
-    _$jscoverage['/drag.js'].lineData[65]++;
-    if (visit9_65_1(visit10_65_2(!eqWithLastPoint && visit11_65_3(visit12_65_4(lastDirection[scrollType] !== undefined) && visit13_66_1(lastDirection[scrollType] !== direction))) || visit14_66_2(timeDiff > SWIPE_SAMPLE_INTERVAL))) {
-      _$jscoverage['/drag.js'].lineData[67]++;
+    _$jscoverage['/drag.js'].lineData[67]++;
+    if (visit9_67_1(visit10_67_2(!eqWithLastPoint && visit11_67_3(visit12_67_4(lastDirection[scrollType] !== undefined) && visit13_68_1(lastDirection[scrollType] !== direction))) || visit14_68_2(timeDiff > SWIPE_SAMPLE_INTERVAL))) {
+      _$jscoverage['/drag.js'].lineData[69]++;
       swipe[scrollType].startTime = now;
-      _$jscoverage['/drag.js'].lineData[68]++;
+      _$jscoverage['/drag.js'].lineData[70]++;
       swipe[scrollType].scroll = scroll;
     }
-    _$jscoverage['/drag.js'].lineData[72]++;
+    _$jscoverage['/drag.js'].lineData[74]++;
     self.set('scroll' + S.ucfirst(scrollType), scroll);
-    _$jscoverage['/drag.js'].lineData[73]++;
-    lastDirection[scrollType] = direction;
     _$jscoverage['/drag.js'].lineData[75]++;
+    lastDirection[scrollType] = direction;
+    _$jscoverage['/drag.js'].lineData[77]++;
     lastPageXY[pageOffsetProperty] = e[pageOffsetProperty];
   }
-  _$jscoverage['/drag.js'].lineData[78]++;
+  _$jscoverage['/drag.js'].lineData[80]++;
   function forbidDrag(self, scrollType) {
     _$jscoverage['/drag.js'].functionData[3]++;
-    _$jscoverage['/drag.js'].lineData[79]++;
-    var lockXY = visit15_79_1(scrollType == 'left') ? 'lockX' : 'lockY';
-    _$jscoverage['/drag.js'].lineData[80]++;
-    if (visit16_80_1(!self.allowScroll[scrollType] && self.get(lockXY))) {
-      _$jscoverage['/drag.js'].lineData[81]++;
+    _$jscoverage['/drag.js'].lineData[81]++;
+    var lockXY = visit15_81_1(scrollType == 'left') ? 'lockX' : 'lockY';
+    _$jscoverage['/drag.js'].lineData[82]++;
+    if (visit16_82_1(!self.allowScroll[scrollType] && self.get(lockXY))) {
+      _$jscoverage['/drag.js'].lineData[83]++;
       return 1;
     }
-    _$jscoverage['/drag.js'].lineData[83]++;
+    _$jscoverage['/drag.js'].lineData[85]++;
     return 0;
   }
-  _$jscoverage['/drag.js'].lineData[86]++;
+  _$jscoverage['/drag.js'].lineData[88]++;
   function onDragEndAxis(self, e, scrollType, endCallback) {
     _$jscoverage['/drag.js'].functionData[4]++;
-    _$jscoverage['/drag.js'].lineData[87]++;
-    if (visit17_87_1(forbidDrag(self, scrollType))) {
-      _$jscoverage['/drag.js'].lineData[88]++;
+    _$jscoverage['/drag.js'].lineData[89]++;
+    if (visit17_89_1(forbidDrag(self, scrollType))) {
+      _$jscoverage['/drag.js'].lineData[90]++;
       endCallback();
-      _$jscoverage['/drag.js'].lineData[89]++;
+      _$jscoverage['/drag.js'].lineData[91]++;
       return;
     }
-    _$jscoverage['/drag.js'].lineData[91]++;
-    var scrollAxis = 'scroll' + S.ucfirst(scrollType), $contentEl = self.$contentEl, scroll = self.get(scrollAxis), anim = {}, minScroll = self.minScroll, maxScroll = self.maxScroll, now = e.timeStamp, swipe = self.swipe, bound;
+    _$jscoverage['/drag.js'].lineData[93]++;
+    var scrollAxis = 'scroll' + S.ucfirst(scrollType), scroll = self.get(scrollAxis), minScroll = self.minScroll, maxScroll = self.maxScroll, now = e.timeStamp, swipe = self.swipe, bound;
     _$jscoverage['/drag.js'].lineData[100]++;
     if (visit18_100_1(scroll < minScroll[scrollType])) {
       _$jscoverage['/drag.js'].lineData[101]++;
@@ -1048,124 +1059,128 @@ KISSY.add('scroll-view/drag', function(S, ScrollViewBase, Node) {
     _$jscoverage['/drag.js'].lineData[137]++;
     velocity = Math.min(Math.max(velocity, -MAX_SWIPE_VELOCITY), MAX_SWIPE_VELOCITY);
     _$jscoverage['/drag.js'].lineData[142]++;
-    anim[scrollType] = {
-  frame: makeMomentumFx(self, velocity, scroll, scrollAxis, maxScroll[scrollType], minScroll[scrollType])};
-    _$jscoverage['/drag.js'].lineData[148]++;
-    $contentEl.animate(anim, {
+    var animCfg = {
+  node: {}, 
+  to: {}, 
   duration: 9999, 
   queue: false, 
-  complete: endCallback});
+  complete: endCallback, 
+  frame: makeMomentumFx(self, velocity, scroll, scrollAxis, maxScroll[scrollType], minScroll[scrollType])};
+    _$jscoverage['/drag.js'].lineData[153]++;
+    animCfg.node[scrollType] = scroll;
+    _$jscoverage['/drag.js'].lineData[154]++;
+    animCfg.to[scrollType] = null;
+    _$jscoverage['/drag.js'].lineData[156]++;
+    self.scrollAnims.push(new Anim(animCfg).run());
   }
-  _$jscoverage['/drag.js'].lineData[155]++;
-  var FRICTION = 0.5;
-  _$jscoverage['/drag.js'].lineData[156]++;
-  var ACCELERATION = 20;
-  _$jscoverage['/drag.js'].lineData[157]++;
-  var THETA = Math.log(1 - (FRICTION / 10));
-  _$jscoverage['/drag.js'].lineData[158]++;
-  var ALPHA = THETA / ACCELERATION;
   _$jscoverage['/drag.js'].lineData[159]++;
-  var SPRING_TENSION = 0.3;
+  var FRICTION = 0.5;
+  _$jscoverage['/drag.js'].lineData[160]++;
+  var ACCELERATION = 20;
   _$jscoverage['/drag.js'].lineData[161]++;
+  var THETA = Math.log(1 - (FRICTION / 10));
+  _$jscoverage['/drag.js'].lineData[162]++;
+  var ALPHA = THETA / ACCELERATION;
+  _$jscoverage['/drag.js'].lineData[163]++;
+  var SPRING_TENSION = 0.3;
+  _$jscoverage['/drag.js'].lineData[165]++;
   function makeMomentumFx(self, startVelocity, startScroll, scrollAxis, maxScroll, minScroll) {
     _$jscoverage['/drag.js'].functionData[5]++;
-    _$jscoverage['/drag.js'].lineData[163]++;
+    _$jscoverage['/drag.js'].lineData[167]++;
     var velocity = startVelocity * ACCELERATION;
-    _$jscoverage['/drag.js'].lineData[164]++;
+    _$jscoverage['/drag.js'].lineData[168]++;
     var inertia = 1;
-    _$jscoverage['/drag.js'].lineData[165]++;
+    _$jscoverage['/drag.js'].lineData[169]++;
     var bounceStartTime = 0;
-    _$jscoverage['/drag.js'].lineData[166]++;
-    return function(anim) {
+    _$jscoverage['/drag.js'].lineData[170]++;
+    return function(anim, fx) {
   _$jscoverage['/drag.js'].functionData[6]++;
-  _$jscoverage['/drag.js'].lineData[167]++;
-  var now = S.now(), fx = this, deltaTime, value;
-  _$jscoverage['/drag.js'].lineData[172]++;
-  if (visit25_172_1(inertia)) {
-    _$jscoverage['/drag.js'].lineData[173]++;
+  _$jscoverage['/drag.js'].lineData[171]++;
+  var now = S.now(), deltaTime, value;
+  _$jscoverage['/drag.js'].lineData[174]++;
+  if (visit25_174_1(inertia)) {
+    _$jscoverage['/drag.js'].lineData[175]++;
     deltaTime = now - anim.startTime;
-    _$jscoverage['/drag.js'].lineData[177]++;
-    var frictionFactor = Math.exp(deltaTime * ALPHA);
     _$jscoverage['/drag.js'].lineData[179]++;
+    var frictionFactor = Math.exp(deltaTime * ALPHA);
+    _$jscoverage['/drag.js'].lineData[181]++;
     value = parseInt(startScroll + velocity * (1 - frictionFactor) / (-THETA));
-    _$jscoverage['/drag.js'].lineData[180]++;
-    if (visit26_180_1(visit27_180_2(value > minScroll) && visit28_180_3(value < maxScroll))) {
-      _$jscoverage['/drag.js'].lineData[182]++;
-      if (visit29_182_1(fx.lastValue === value)) {
-        _$jscoverage['/drag.js'].lineData[183]++;
+    _$jscoverage['/drag.js'].lineData[182]++;
+    if (visit26_182_1(visit27_182_2(value > minScroll) && visit28_182_3(value < maxScroll))) {
+      _$jscoverage['/drag.js'].lineData[184]++;
+      if (visit29_184_1(fx.lastValue === value)) {
+        _$jscoverage['/drag.js'].lineData[185]++;
         fx.pos = 1;
+        _$jscoverage['/drag.js'].lineData[186]++;
+        return;
       }
-      _$jscoverage['/drag.js'].lineData[185]++;
+      _$jscoverage['/drag.js'].lineData[188]++;
       fx.lastValue = value;
-      _$jscoverage['/drag.js'].lineData[186]++;
+      _$jscoverage['/drag.js'].lineData[189]++;
       self.set(scrollAxis, value);
-      _$jscoverage['/drag.js'].lineData[187]++;
+      _$jscoverage['/drag.js'].lineData[190]++;
       return;
     }
-    _$jscoverage['/drag.js'].lineData[189]++;
+    _$jscoverage['/drag.js'].lineData[192]++;
     inertia = 0;
-    _$jscoverage['/drag.js'].lineData[190]++;
+    _$jscoverage['/drag.js'].lineData[193]++;
     velocity = velocity * frictionFactor;
-    _$jscoverage['/drag.js'].lineData[196]++;
-    startScroll = visit30_196_1(value <= minScroll) ? minScroll : maxScroll;
-    _$jscoverage['/drag.js'].lineData[198]++;
+    _$jscoverage['/drag.js'].lineData[199]++;
+    startScroll = visit30_199_1(value <= minScroll) ? minScroll : maxScroll;
+    _$jscoverage['/drag.js'].lineData[201]++;
     bounceStartTime = now;
   } else {
-    _$jscoverage['/drag.js'].lineData[200]++;
+    _$jscoverage['/drag.js'].lineData[203]++;
     deltaTime = now - bounceStartTime;
-    _$jscoverage['/drag.js'].lineData[202]++;
+    _$jscoverage['/drag.js'].lineData[205]++;
     var theta = (deltaTime / ACCELERATION), powTime = theta * Math.exp(-SPRING_TENSION * theta);
-    _$jscoverage['/drag.js'].lineData[206]++;
+    _$jscoverage['/drag.js'].lineData[209]++;
     value = parseInt(velocity * powTime);
-    _$jscoverage['/drag.js'].lineData[207]++;
-    if (visit31_207_1(value === 0)) {
-      _$jscoverage['/drag.js'].lineData[208]++;
+    _$jscoverage['/drag.js'].lineData[210]++;
+    if (visit31_210_1(value === 0)) {
+      _$jscoverage['/drag.js'].lineData[211]++;
       fx.pos = 1;
     }
-    _$jscoverage['/drag.js'].lineData[210]++;
+    _$jscoverage['/drag.js'].lineData[213]++;
     self.set(scrollAxis, startScroll + value);
   }
 };
   }
-  _$jscoverage['/drag.js'].lineData[215]++;
+  _$jscoverage['/drag.js'].lineData[218]++;
   function onDragStartHandler(e) {
     _$jscoverage['/drag.js'].functionData[7]++;
-    _$jscoverage['/drag.js'].lineData[217]++;
+    _$jscoverage['/drag.js'].lineData[219]++;
     var self = this;
-    _$jscoverage['/drag.js'].lineData[218]++;
-    if (visit32_218_1(self.get('disabled'))) {
-      _$jscoverage['/drag.js'].lineData[219]++;
+    _$jscoverage['/drag.js'].lineData[220]++;
+    if (visit32_220_1(self.get('disabled'))) {
+      _$jscoverage['/drag.js'].lineData[221]++;
       return;
     }
-    _$jscoverage['/drag.js'].lineData[221]++;
+    _$jscoverage['/drag.js'].lineData[223]++;
+    self.stopAnimation();
+    _$jscoverage['/drag.js'].lineData[224]++;
     var pos = {
   pageX: e.touches[0].pageX, 
   pageY: e.touches[0].pageY};
-    _$jscoverage['/drag.js'].lineData[225]++;
+    _$jscoverage['/drag.js'].lineData[228]++;
     var isScrolling = self.isScrolling;
-    _$jscoverage['/drag.js'].lineData[226]++;
-    self.stopAnimation();
-    _$jscoverage['/drag.js'].lineData[227]++;
-    if (visit33_227_1(isScrolling)) {
-      _$jscoverage['/drag.js'].lineData[228]++;
+    _$jscoverage['/drag.js'].lineData[229]++;
+    if (visit33_229_1(isScrolling)) {
+      _$jscoverage['/drag.js'].lineData[230]++;
       var pageIndex = self.get('pageIndex');
-      _$jscoverage['/drag.js'].lineData[229]++;
+      _$jscoverage['/drag.js'].lineData[231]++;
       self.fire('scrollEnd', S.mix({
   fromPageIndex: pageIndex, 
   pageIndex: pageIndex}, pos));
     }
-    _$jscoverage['/drag.js'].lineData[234]++;
-    initStates(self);
-    _$jscoverage['/drag.js'].lineData[235]++;
-    self.startMousePos = pos;
     _$jscoverage['/drag.js'].lineData[236]++;
-    onDragStart(self, e, 'left');
+    initStates(self);
     _$jscoverage['/drag.js'].lineData[237]++;
-    onDragStart(self, e, 'top');
+    self.startMousePos = pos;
     _$jscoverage['/drag.js'].lineData[238]++;
-    self.fire('scrollStart', pos);
+    onDragStart(self, e, 'left');
     _$jscoverage['/drag.js'].lineData[239]++;
-    self.isScrolling = 1;
+    onDragStart(self, e, 'top');
     _$jscoverage['/drag.js'].lineData[241]++;
     self.$contentEl.on(Gesture.move, onDragHandler, self);
   }
@@ -1175,301 +1190,305 @@ KISSY.add('scroll-view/drag', function(S, ScrollViewBase, Node) {
     _$jscoverage['/drag.js'].lineData[245]++;
     var self = this, startMousePos = self.startMousePos;
     _$jscoverage['/drag.js'].lineData[248]++;
-    if (visit34_248_1(!startMousePos || !self.isScrolling)) {
+    if (visit34_248_1(!startMousePos)) {
       _$jscoverage['/drag.js'].lineData[249]++;
       return;
     }
     _$jscoverage['/drag.js'].lineData[252]++;
-    var lockX = self.get('lockX'), lockY = self.get('lockY');
-    _$jscoverage['/drag.js'].lineData[255]++;
     var pos = {
   pageX: e.touches[0].pageX, 
   pageY: e.touches[0].pageY};
+    _$jscoverage['/drag.js'].lineData[257]++;
+    var xDiff = Math.abs(pos.pageX - startMousePos.pageX);
+    _$jscoverage['/drag.js'].lineData[258]++;
+    var yDiff = Math.abs(pos.pageY - startMousePos.pageY);
     _$jscoverage['/drag.js'].lineData[261]++;
-    if (visit35_261_1(lockX || lockY)) {
+    if (visit35_261_1(Math.max(xDiff, yDiff) < PIXEL_THRESH)) {
       _$jscoverage['/drag.js'].lineData[262]++;
-      var xDiff = Math.abs(pos.pageX - startMousePos.pageX);
-      _$jscoverage['/drag.js'].lineData[263]++;
-      var yDiff = Math.abs(pos.pageY - startMousePos.pageY);
-      _$jscoverage['/drag.js'].lineData[266]++;
-      if (visit36_266_1(Math.max(xDiff, yDiff) < 5)) {
-        _$jscoverage['/drag.js'].lineData[267]++;
-        return;
+      return;
+    } else {
+      _$jscoverage['/drag.js'].lineData[264]++;
+      if (visit36_264_1(!self.isScrolling)) {
+        _$jscoverage['/drag.js'].lineData[265]++;
+        self.fire('scrollStart', pos);
+        _$jscoverage['/drag.js'].lineData[266]++;
+        self.isScrolling = 1;
       }
-      _$jscoverage['/drag.js'].lineData[270]++;
+    }
+    _$jscoverage['/drag.js'].lineData[270]++;
+    var lockX = self.get('lockX'), lockY = self.get('lockY');
+    _$jscoverage['/drag.js'].lineData[274]++;
+    if (visit37_274_1(lockX || lockY)) {
+      _$jscoverage['/drag.js'].lineData[277]++;
       var dragInitDirection;
-      _$jscoverage['/drag.js'].lineData[272]++;
-      if (visit37_272_1(!(dragInitDirection = self.dragInitDirection))) {
-        _$jscoverage['/drag.js'].lineData[273]++;
-        self.dragInitDirection = dragInitDirection = visit38_273_1(xDiff > yDiff) ? 'left' : 'top';
+      _$jscoverage['/drag.js'].lineData[279]++;
+      if (visit38_279_1(!(dragInitDirection = self.dragInitDirection))) {
+        _$jscoverage['/drag.js'].lineData[280]++;
+        self.dragInitDirection = dragInitDirection = visit39_280_1(xDiff > yDiff) ? 'left' : 'top';
       }
-      _$jscoverage['/drag.js'].lineData[276]++;
-      if (visit39_276_1(lockX && visit40_276_2(visit41_276_3(dragInitDirection == 'left') && !self.allowScroll[dragInitDirection]))) {
-        _$jscoverage['/drag.js'].lineData[277]++;
-        S.log('not in right direction');
-        _$jscoverage['/drag.js'].lineData[278]++;
+      _$jscoverage['/drag.js'].lineData[283]++;
+      if (visit40_283_1(lockX && visit41_283_2(visit42_283_3(dragInitDirection == 'left') && !self.allowScroll[dragInitDirection]))) {
+        _$jscoverage['/drag.js'].lineData[285]++;
         self.isScrolling = 0;
-        _$jscoverage['/drag.js'].lineData[279]++;
+        _$jscoverage['/drag.js'].lineData[286]++;
         return;
       }
-      _$jscoverage['/drag.js'].lineData[282]++;
-      if (visit42_282_1(lockY && visit43_282_2(visit44_282_3(dragInitDirection == 'top') && !self.allowScroll[dragInitDirection]))) {
-        _$jscoverage['/drag.js'].lineData[283]++;
-        S.log('not in right direction');
-        _$jscoverage['/drag.js'].lineData[284]++;
+      _$jscoverage['/drag.js'].lineData[289]++;
+      if (visit43_289_1(lockY && visit44_289_2(visit45_289_3(dragInitDirection == 'top') && !self.allowScroll[dragInitDirection]))) {
+        _$jscoverage['/drag.js'].lineData[291]++;
         self.isScrolling = 0;
-        _$jscoverage['/drag.js'].lineData[285]++;
+        _$jscoverage['/drag.js'].lineData[292]++;
         return;
       }
     }
-    _$jscoverage['/drag.js'].lineData[289]++;
-    if (visit45_289_1(S.Features.isTouchEventSupported())) {
-      _$jscoverage['/drag.js'].lineData[290]++;
+    _$jscoverage['/drag.js'].lineData[296]++;
+    if (visit46_296_1(S.Features.isTouchEventSupported())) {
+      _$jscoverage['/drag.js'].lineData[297]++;
       e.preventDefault();
     }
-    _$jscoverage['/drag.js'].lineData[293]++;
+    _$jscoverage['/drag.js'].lineData[300]++;
     onDragScroll(self, e, 'left', startMousePos);
-    _$jscoverage['/drag.js'].lineData[294]++;
+    _$jscoverage['/drag.js'].lineData[301]++;
     onDragScroll(self, e, 'top', startMousePos);
-    _$jscoverage['/drag.js'].lineData[297]++;
+    _$jscoverage['/drag.js'].lineData[304]++;
     self.fire('scrollMove', pos);
   }
-  _$jscoverage['/drag.js'].lineData[300]++;
-  if (visit46_300_1(S.UA.ie)) {
-    _$jscoverage['/drag.js'].lineData[301]++;
+  _$jscoverage['/drag.js'].lineData[307]++;
+  if (visit47_307_1(S.UA.ie)) {
+    _$jscoverage['/drag.js'].lineData[308]++;
     onDragHandler = S.throttle(onDragHandler, 30);
   }
-  _$jscoverage['/drag.js'].lineData[304]++;
+  _$jscoverage['/drag.js'].lineData[311]++;
   function onDragEndHandler(e) {
     _$jscoverage['/drag.js'].functionData[9]++;
-    _$jscoverage['/drag.js'].lineData[305]++;
+    _$jscoverage['/drag.js'].lineData[312]++;
     var self = this;
-    _$jscoverage['/drag.js'].lineData[306]++;
+    _$jscoverage['/drag.js'].lineData[313]++;
     var count = 0;
-    _$jscoverage['/drag.js'].lineData[307]++;
+    _$jscoverage['/drag.js'].lineData[314]++;
     var startMousePos = self.startMousePos;
-    _$jscoverage['/drag.js'].lineData[309]++;
-    if (visit47_309_1(!startMousePos || !self.isScrolling)) {
-      _$jscoverage['/drag.js'].lineData[310]++;
+    _$jscoverage['/drag.js'].lineData[316]++;
+    if (visit48_316_1(!startMousePos || !self.isScrolling)) {
+      _$jscoverage['/drag.js'].lineData[317]++;
       return;
     }
-    _$jscoverage['/drag.js'].lineData[312]++;
-    self.$contentEl.detach(Gesture.move, onDragHandler, self);
-    _$jscoverage['/drag.js'].lineData[313]++;
-    var offsetX = startMousePos.pageX - e.pageX;
-    _$jscoverage['/drag.js'].lineData[314]++;
-    var offsetY = startMousePos.pageY - e.pageY;
-    _$jscoverage['/drag.js'].lineData[315]++;
-    var snapThreshold = self.get('snapThreshold');
-    _$jscoverage['/drag.js'].lineData[316]++;
-    var allowX = visit48_316_1(self.allowScroll.left && visit49_316_2(Math.abs(offsetX) > snapThreshold));
-    _$jscoverage['/drag.js'].lineData[317]++;
-    var allowY = visit50_317_1(self.allowScroll.top && visit51_317_2(Math.abs(offsetY) > snapThreshold));
     _$jscoverage['/drag.js'].lineData[319]++;
+    self.$contentEl.detach(Gesture.move, onDragHandler, self);
+    _$jscoverage['/drag.js'].lineData[320]++;
+    var offsetX = startMousePos.pageX - e.pageX;
+    _$jscoverage['/drag.js'].lineData[321]++;
+    var offsetY = startMousePos.pageY - e.pageY;
+    _$jscoverage['/drag.js'].lineData[322]++;
+    var snapThreshold = self.get('snapThreshold');
+    _$jscoverage['/drag.js'].lineData[323]++;
+    var allowX = visit49_323_1(self.allowScroll.left && visit50_323_2(Math.abs(offsetX) > snapThreshold));
+    _$jscoverage['/drag.js'].lineData[324]++;
+    var allowY = visit51_324_1(self.allowScroll.top && visit52_324_2(Math.abs(offsetY) > snapThreshold));
+    _$jscoverage['/drag.js'].lineData[326]++;
     self.fire('dragend', {
   pageX: e.pageX, 
   pageY: e.pageY});
-    _$jscoverage['/drag.js'].lineData[324]++;
+    _$jscoverage['/drag.js'].lineData[331]++;
     function endCallback() {
       _$jscoverage['/drag.js'].functionData[10]++;
-      _$jscoverage['/drag.js'].lineData[325]++;
+      _$jscoverage['/drag.js'].lineData[332]++;
       count++;
-      _$jscoverage['/drag.js'].lineData[326]++;
-      if (visit52_326_1(count == 2)) {
-        _$jscoverage['/drag.js'].lineData[327]++;
+      _$jscoverage['/drag.js'].lineData[333]++;
+      if (visit53_333_1(count == 2)) {
+        _$jscoverage['/drag.js'].lineData[334]++;
         function scrollEnd() {
           _$jscoverage['/drag.js'].functionData[11]++;
-          _$jscoverage['/drag.js'].lineData[328]++;
+          _$jscoverage['/drag.js'].lineData[335]++;
           self.isScrolling = 0;
-          _$jscoverage['/drag.js'].lineData[329]++;
+          _$jscoverage['/drag.js'].lineData[336]++;
           self.fire('scrollEnd', {
   pageX: e.pageX, 
   pageY: e.pageY, 
   fromPageIndex: pageIndex, 
   pageIndex: self.get('pageIndex')});
-        }        _$jscoverage['/drag.js'].lineData[337]++;
-        if (visit53_337_1(!self.pagesOffset)) {
-          _$jscoverage['/drag.js'].lineData[338]++;
+        }        _$jscoverage['/drag.js'].lineData[344]++;
+        if (visit54_344_1(!self.pagesOffset)) {
+          _$jscoverage['/drag.js'].lineData[345]++;
           scrollEnd();
-          _$jscoverage['/drag.js'].lineData[339]++;
+          _$jscoverage['/drag.js'].lineData[346]++;
           return;
         }
-        _$jscoverage['/drag.js'].lineData[342]++;
-        var snapThreshold = self.get('snapThreshold');
-        _$jscoverage['/drag.js'].lineData[343]++;
-        var snapDuration = self.get('snapDuration');
-        _$jscoverage['/drag.js'].lineData[344]++;
-        var snapEasing = self.get('snapEasing');
-        _$jscoverage['/drag.js'].lineData[345]++;
-        var pageIndex = self.get('pageIndex');
-        _$jscoverage['/drag.js'].lineData[346]++;
-        var scrollLeft = self.get('scrollLeft');
-        _$jscoverage['/drag.js'].lineData[347]++;
-        var scrollTop = self.get('scrollTop');
         _$jscoverage['/drag.js'].lineData[349]++;
+        var snapThreshold = self.get('snapThreshold');
+        _$jscoverage['/drag.js'].lineData[350]++;
+        var snapDuration = self.get('snapDuration');
+        _$jscoverage['/drag.js'].lineData[351]++;
+        var snapEasing = self.get('snapEasing');
+        _$jscoverage['/drag.js'].lineData[352]++;
+        var pageIndex = self.get('pageIndex');
+        _$jscoverage['/drag.js'].lineData[353]++;
+        var scrollLeft = self.get('scrollLeft');
+        _$jscoverage['/drag.js'].lineData[354]++;
+        var scrollTop = self.get('scrollTop');
+        _$jscoverage['/drag.js'].lineData[356]++;
         var animCfg = {
   duration: snapDuration, 
   easing: snapEasing, 
   complete: scrollEnd};
-        _$jscoverage['/drag.js'].lineData[355]++;
+        _$jscoverage['/drag.js'].lineData[362]++;
         var pagesOffset = self.pagesOffset.concat([]);
-        _$jscoverage['/drag.js'].lineData[357]++;
+        _$jscoverage['/drag.js'].lineData[364]++;
         self.isScrolling = 0;
-        _$jscoverage['/drag.js'].lineData[359]++;
-        if (visit54_359_1(allowX || allowY)) {
-          _$jscoverage['/drag.js'].lineData[360]++;
-          if (visit55_360_1(allowX && allowY)) {
-            _$jscoverage['/drag.js'].lineData[361]++;
+        _$jscoverage['/drag.js'].lineData[366]++;
+        if (visit55_366_1(allowX || allowY)) {
+          _$jscoverage['/drag.js'].lineData[367]++;
+          if (visit56_367_1(allowX && allowY)) {
+            _$jscoverage['/drag.js'].lineData[368]++;
             var prepareX = [], newPageIndex = undefined;
-            _$jscoverage['/drag.js'].lineData[363]++;
+            _$jscoverage['/drag.js'].lineData[370]++;
             var nowXY = {
   left: scrollLeft, 
   top: scrollTop};
-            _$jscoverage['/drag.js'].lineData[367]++;
+            _$jscoverage['/drag.js'].lineData[374]++;
             S.each(pagesOffset, function(offset) {
   _$jscoverage['/drag.js'].functionData[12]++;
-  _$jscoverage['/drag.js'].lineData[368]++;
-  if (visit56_368_1(!offset)) {
-    _$jscoverage['/drag.js'].lineData[369]++;
+  _$jscoverage['/drag.js'].lineData[375]++;
+  if (visit57_375_1(!offset)) {
+    _$jscoverage['/drag.js'].lineData[376]++;
     return;
   }
-  _$jscoverage['/drag.js'].lineData[371]++;
-  if (visit57_371_1(visit58_371_2(offsetX > 0) && visit59_371_3(offset.left > nowXY.left))) {
-    _$jscoverage['/drag.js'].lineData[372]++;
+  _$jscoverage['/drag.js'].lineData[378]++;
+  if (visit58_378_1(visit59_378_2(offsetX > 0) && visit60_378_3(offset.left > nowXY.left))) {
+    _$jscoverage['/drag.js'].lineData[379]++;
     prepareX.push(offset);
   } else {
-    _$jscoverage['/drag.js'].lineData[373]++;
-    if (visit60_373_1(visit61_373_2(offsetX < 0) && visit62_373_3(offset.left < nowXY.left))) {
-      _$jscoverage['/drag.js'].lineData[374]++;
+    _$jscoverage['/drag.js'].lineData[380]++;
+    if (visit61_380_1(visit62_380_2(offsetX < 0) && visit63_380_3(offset.left < nowXY.left))) {
+      _$jscoverage['/drag.js'].lineData[381]++;
       prepareX.push(offset);
     }
   }
 });
-            _$jscoverage['/drag.js'].lineData[377]++;
+            _$jscoverage['/drag.js'].lineData[384]++;
             var min;
-            _$jscoverage['/drag.js'].lineData[378]++;
-            if (visit63_378_1(offsetY > 0)) {
-              _$jscoverage['/drag.js'].lineData[379]++;
+            _$jscoverage['/drag.js'].lineData[385]++;
+            if (visit64_385_1(offsetY > 0)) {
+              _$jscoverage['/drag.js'].lineData[386]++;
               min = Number.MAX_VALUE;
-              _$jscoverage['/drag.js'].lineData[380]++;
+              _$jscoverage['/drag.js'].lineData[387]++;
               S.each(prepareX, function(x) {
   _$jscoverage['/drag.js'].functionData[13]++;
-  _$jscoverage['/drag.js'].lineData[381]++;
-  if (visit64_381_1(x.top > nowXY.top)) {
-    _$jscoverage['/drag.js'].lineData[382]++;
-    if (visit65_382_1(min < x.top - nowXY.top)) {
-      _$jscoverage['/drag.js'].lineData[383]++;
+  _$jscoverage['/drag.js'].lineData[388]++;
+  if (visit65_388_1(x.top > nowXY.top)) {
+    _$jscoverage['/drag.js'].lineData[389]++;
+    if (visit66_389_1(min < x.top - nowXY.top)) {
+      _$jscoverage['/drag.js'].lineData[390]++;
       min = x.top - nowXY.top;
-      _$jscoverage['/drag.js'].lineData[384]++;
+      _$jscoverage['/drag.js'].lineData[391]++;
       newPageIndex = prepareX.index;
     }
   }
 });
             } else {
-              _$jscoverage['/drag.js'].lineData[389]++;
+              _$jscoverage['/drag.js'].lineData[396]++;
               min = Number.MAX_VALUE;
-              _$jscoverage['/drag.js'].lineData[390]++;
+              _$jscoverage['/drag.js'].lineData[397]++;
               S.each(prepareX, function(x) {
   _$jscoverage['/drag.js'].functionData[14]++;
-  _$jscoverage['/drag.js'].lineData[391]++;
-  if (visit66_391_1(x.top < nowXY.top)) {
-    _$jscoverage['/drag.js'].lineData[392]++;
-    if (visit67_392_1(min < nowXY.top - x.top)) {
-      _$jscoverage['/drag.js'].lineData[393]++;
+  _$jscoverage['/drag.js'].lineData[398]++;
+  if (visit67_398_1(x.top < nowXY.top)) {
+    _$jscoverage['/drag.js'].lineData[399]++;
+    if (visit68_399_1(min < nowXY.top - x.top)) {
+      _$jscoverage['/drag.js'].lineData[400]++;
       min = nowXY.top - x.top;
-      _$jscoverage['/drag.js'].lineData[394]++;
+      _$jscoverage['/drag.js'].lineData[401]++;
       newPageIndex = prepareX.index;
     }
   }
 });
             }
-            _$jscoverage['/drag.js'].lineData[399]++;
-            if (visit68_399_1(newPageIndex != undefined)) {
-              _$jscoverage['/drag.js'].lineData[400]++;
-              if (visit69_400_1(newPageIndex != pageIndex)) {
-                _$jscoverage['/drag.js'].lineData[401]++;
+            _$jscoverage['/drag.js'].lineData[406]++;
+            if (visit69_406_1(newPageIndex != undefined)) {
+              _$jscoverage['/drag.js'].lineData[407]++;
+              if (visit70_407_1(newPageIndex != pageIndex)) {
+                _$jscoverage['/drag.js'].lineData[408]++;
                 self.scrollToPage(newPageIndex, animCfg);
               } else {
-                _$jscoverage['/drag.js'].lineData[403]++;
+                _$jscoverage['/drag.js'].lineData[410]++;
                 self.scrollToPage(newPageIndex);
-                _$jscoverage['/drag.js'].lineData[404]++;
+                _$jscoverage['/drag.js'].lineData[411]++;
                 scrollEnd();
               }
             } else {
-              _$jscoverage['/drag.js'].lineData[407]++;
+              _$jscoverage['/drag.js'].lineData[414]++;
               scrollEnd();
             }
           } else {
-            _$jscoverage['/drag.js'].lineData[410]++;
-            if (visit70_410_1(allowX || allowY)) {
-              _$jscoverage['/drag.js'].lineData[411]++;
+            _$jscoverage['/drag.js'].lineData[417]++;
+            if (visit71_417_1(allowX || allowY)) {
+              _$jscoverage['/drag.js'].lineData[418]++;
               var toPageIndex = self._getPageIndexFromXY(allowX ? scrollLeft : scrollTop, allowX, allowX ? offsetX : offsetY);
-              _$jscoverage['/drag.js'].lineData[414]++;
+              _$jscoverage['/drag.js'].lineData[421]++;
               self.scrollToPage(toPageIndex, animCfg);
             } else {
-              _$jscoverage['/drag.js'].lineData[416]++;
+              _$jscoverage['/drag.js'].lineData[423]++;
               self.scrollToPage(self.get('pageIndex'));
-              _$jscoverage['/drag.js'].lineData[417]++;
+              _$jscoverage['/drag.js'].lineData[424]++;
               scrollEnd();
             }
           }
         }
       }
     }
-    _$jscoverage['/drag.js'].lineData[424]++;
+    _$jscoverage['/drag.js'].lineData[431]++;
     onDragEndAxis(self, e, 'left', endCallback);
-    _$jscoverage['/drag.js'].lineData[425]++;
+    _$jscoverage['/drag.js'].lineData[432]++;
     onDragEndAxis(self, e, 'top', endCallback);
   }
-  _$jscoverage['/drag.js'].lineData[428]++;
+  _$jscoverage['/drag.js'].lineData[435]++;
   function initStates(self) {
     _$jscoverage['/drag.js'].functionData[15]++;
-    _$jscoverage['/drag.js'].lineData[429]++;
+    _$jscoverage['/drag.js'].lineData[436]++;
     self.lastPageXY = {};
-    _$jscoverage['/drag.js'].lineData[431]++;
+    _$jscoverage['/drag.js'].lineData[438]++;
     self.lastDirection = {};
-    _$jscoverage['/drag.js'].lineData[433]++;
+    _$jscoverage['/drag.js'].lineData[440]++;
     self.swipe = {
   left: {}, 
   top: {}};
-    _$jscoverage['/drag.js'].lineData[438]++;
+    _$jscoverage['/drag.js'].lineData[445]++;
     self.startMousePos = null;
-    _$jscoverage['/drag.js'].lineData[440]++;
+    _$jscoverage['/drag.js'].lineData[447]++;
     self.startScroll = {};
-    _$jscoverage['/drag.js'].lineData[442]++;
+    _$jscoverage['/drag.js'].lineData[449]++;
     self.dragInitDirection = null;
   }
-  _$jscoverage['/drag.js'].lineData[445]++;
+  _$jscoverage['/drag.js'].lineData[452]++;
   function preventDefault(e) {
     _$jscoverage['/drag.js'].functionData[16]++;
-    _$jscoverage['/drag.js'].lineData[446]++;
+    _$jscoverage['/drag.js'].lineData[453]++;
     e.preventDefault();
   }
-  _$jscoverage['/drag.js'].lineData[449]++;
+  _$jscoverage['/drag.js'].lineData[456]++;
   return ScrollViewBase.extend({
   bindUI: function() {
   _$jscoverage['/drag.js'].functionData[17]++;
-  _$jscoverage['/drag.js'].lineData[451]++;
+  _$jscoverage['/drag.js'].lineData[458]++;
   var self = this;
-  _$jscoverage['/drag.js'].lineData[454]++;
+  _$jscoverage['/drag.js'].lineData[461]++;
   self.$contentEl.on('dragstart', preventDefault).on(Gesture.start, onDragStartHandler, self).on(Gesture.end, onDragEndHandler, self);
 }, 
   syncUI: function() {
   _$jscoverage['/drag.js'].functionData[18]++;
-  _$jscoverage['/drag.js'].lineData[458]++;
+  _$jscoverage['/drag.js'].lineData[465]++;
   initStates(this);
 }, 
   destructor: function() {
   _$jscoverage['/drag.js'].functionData[19]++;
-  _$jscoverage['/drag.js'].lineData[462]++;
+  _$jscoverage['/drag.js'].lineData[469]++;
   this.stopAnimation();
 }, 
   stopAnimation: function() {
   _$jscoverage['/drag.js'].functionData[20]++;
-  _$jscoverage['/drag.js'].lineData[466]++;
+  _$jscoverage['/drag.js'].lineData[473]++;
   this.callSuper();
-  _$jscoverage['/drag.js'].lineData[467]++;
-  self.isScrolling = 0;
+  _$jscoverage['/drag.js'].lineData[474]++;
+  this.isScrolling = 0;
 }}, {
   ATTRS: {
   lockX: {
@@ -1486,4 +1505,4 @@ KISSY.add('scroll-view/drag', function(S, ScrollViewBase, Node) {
   value: 'easeOut'}}, 
   xclass: 'scroll-view'});
 }, {
-  requires: ['./base', 'node']});
+  requires: ['./base', 'node', 'anim']});

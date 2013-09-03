@@ -4,7 +4,6 @@
  * @ignore
  */
 KISSY.add('anim', function (S, Dom, AnimBase, TimerAnim, TransitionAnim) {
-
     var Utils = AnimBase.Utils,
         defaultConfig = {
             duration: 1,
@@ -191,7 +190,6 @@ KISSY.add('anim', function (S, Dom, AnimBase, TimerAnim, TransitionAnim) {
     Anim.Q = AnimBase.Q;
 
     return Anim;
-
 }, {
     requires: ['dom', 'anim/base', 'anim/timer',
         KISSY.Features.isTransitionSupported() ? 'anim/transition' : '']

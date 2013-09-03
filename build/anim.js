@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 3 16:20
+build time: Sep 3 19:05
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -15,7 +15,6 @@ build time: Sep 3 16:20
  * @ignore
  */
 KISSY.add('anim', function (S, Dom, AnimBase, TimerAnim, TransitionAnim) {
-
     var Utils = AnimBase.Utils,
         defaultConfig = {
             duration: 1,
@@ -202,7 +201,6 @@ KISSY.add('anim', function (S, Dom, AnimBase, TimerAnim, TransitionAnim) {
     Anim.Q = AnimBase.Q;
 
     return Anim;
-
 }, {
     requires: ['dom', 'anim/base', 'anim/timer',
         KISSY.Features.isTransitionSupported() ? 'anim/transition' : '']

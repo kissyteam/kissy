@@ -4,7 +4,6 @@
  * @author yiminghe@gmail.com
  */
 (function (S) {
-
     var Loader = S.Loader,
         Path = S.Path,
         IGNORE_PACKAGE_NAME_IN_URI = 'ignorePackageNameInUri',

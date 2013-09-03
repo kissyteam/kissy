@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Aug 30 01:36
+build time: Sep 3 19:05
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -158,7 +158,7 @@ KISSY.add('scroll-view/base/render', function (S, Node, Container, ContentRender
  * scroll-view control
  * @author yiminghe@gmail.com
  */
-KISSY.add('scroll-view/base', function (S, Node, Container, Render, undefined) {
+KISSY.add('scroll-view/base', function (S, Node, Anim, Container, Render, undefined) {
     var $ = S.all,
         isTouchEventSupported = S.Features.isTouchEventSupported(),
         KeyCode = Node.KeyCode;
@@ -177,7 +177,15 @@ KISSY.add('scroll-view/base', function (S, Node, Container, Render, undefined) {
         el.scrollTop = el.scrollLeft = 0;
     }
 
+    function frame(anim, fx) {
+        anim.scrollView.set(fx.prop, fx.val);
+    }
+
     return Container.extend({
+        initializer: function () {
+            this.scrollAnims = [];
+        },
+
         bindUI: function () {
             var self = this,
                 $el = self.$el;
@@ -300,7 +308,12 @@ KISSY.add('scroll-view/base', function (S, Node, Container, Render, undefined) {
 
         stopAnimation: function () {
             var self = this;
-            self.$contentEl.stop();
+            if (self.scrollAnims.length) {
+                S.each(self.scrollAnims, function (scrollAnim) {
+                    scrollAnim.stop();
+                });
+                self.scrollAnims = [];
+            }
             self.scrollToWithBounds({
                 left: self.get('scrollLeft'),
                 top: self.get('scrollTop')
@@ -358,32 +371,30 @@ KISSY.add('scroll-view/base', function (S, Node, Container, Render, undefined) {
             self.scrollTo(cfg, anim);
         },
 
-        scrollTo: function (cfg, anim) {
-            var self = this;
-            var left = cfg.left,
+        scrollTo: function (cfg, animCfg) {
+            var self = this,
+                left = cfg.left,
                 top = cfg.top;
-
-            if (anim) {
+            if (animCfg) {
                 var scrollLeft = self.get('scrollLeft'),
                     scrollTop = self.get('scrollTop'),
-                    contentEl = self.$contentEl,
-                    animProperty = {
-                        xx: {
-                            fx: {
-                                frame: function (anim, fx) {
-                                    if (left !== undefined) {
-                                        self.set('scrollLeft',
-                                            scrollLeft + fx.pos * (left - scrollLeft));
-                                    }
-                                    if (top !== undefined) {
-                                        self.set('scrollTop',
-                                            scrollTop + fx.pos * (top - scrollTop));
-                                    }
-                                }
-                            }
-                        }
-                    };
-                contentEl.animate(animProperty, anim);
+                    node = {},
+                    to = {};
+                if (left !== undefined) {
+                    to.scrollLeft = left;
+                    node.scrollLeft = self.get('scrollLeft');
+                }
+                if (top !== undefined) {
+                    to.scrollTop = top;
+                    node.scrollTop = self.get('scrollTop');
+                }
+                animCfg.frame = frame;
+                animCfg.node = node;
+                animCfg.to = to;
+                var anim;
+                self.scrollAnims.push(anim = new Anim(animCfg));
+                anim.scrollView = self;
+                anim.run();
             } else {
                 if (left !== undefined) {
                     self.set('scrollLeft', left);
@@ -435,6 +446,7 @@ KISSY.add('scroll-view/base', function (S, Node, Container, Render, undefined) {
     });
 }, {
     requires: ['node',
+        'anim',
         'component/container',
         './base/render']
 });

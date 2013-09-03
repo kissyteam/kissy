@@ -2,8 +2,10 @@
  * allow body to drag
  * @author yiminghe@gmail.com
  */
-KISSY.add('scroll-view/drag', function (S, ScrollViewBase, Node) {
+KISSY.add('scroll-view/drag', function (S, ScrollViewBase, Node, Anim) {
     var OUT_OF_BOUND_FACTOR = 0.5;
+
+    var PIXEL_THRESH = 3;
 
     var Gesture = Node.Gesture;
 
@@ -89,9 +91,7 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, Node) {
             return;
         }
         var scrollAxis = 'scroll' + S.ucfirst(scrollType),
-            $contentEl = self.$contentEl,
             scroll = self.get(scrollAxis),
-            anim = {},
             minScroll = self.minScroll,
             maxScroll = self.maxScroll,
             now = e.timeStamp,
@@ -139,17 +139,21 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, Node) {
         // S.log('velocity: ' + velocity);
         // S.log('after dragend scroll value: ' + scroll);
 
-        anim[scrollType] = {
+        var animCfg = {
+            node: {},
+            to: {},
+            duration: 9999,
+            queue: false,
+            complete: endCallback,
             frame: makeMomentumFx(self, velocity, scroll,
                 scrollAxis, maxScroll[scrollType],
                 minScroll[scrollType])
         };
 
-        $contentEl.animate(anim, {
-            duration: 9999,
-            queue: false,
-            complete: endCallback
-        });
+        animCfg.node[scrollType] = scroll;
+        animCfg.to[scrollType] = null;
+
+        self.scrollAnims.push(new Anim(animCfg).run());
     }
 
     var FRICTION = 0.5;
@@ -163,12 +167,10 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, Node) {
         var velocity = startVelocity * ACCELERATION;
         var inertia = 1;
         var bounceStartTime = 0;
-        return function (anim) {
+        return function (anim, fx) {
             var now = S.now(),
-                fx = this,
                 deltaTime,
                 value;
-
             if (inertia) {
                 deltaTime = now - anim.startTime;
                 // Math.exp(-0.1) -> Math.exp(-999)
@@ -181,6 +183,7 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, Node) {
                     // inertia
                     if (fx.lastValue === value) {
                         fx.pos = 1;
+                        return;
                     }
                     fx.lastValue = value;
                     self.set(scrollAxis, value);
@@ -213,17 +216,16 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, Node) {
     }
 
     function onDragStartHandler(e) {
-        // S.log('dragstart: ' + e.timeStamp);
         var self = this;
         if (self.get('disabled')) {
             return;
         }
+        self.stopAnimation();
         var pos = {
             pageX: e.touches[0].pageX,
             pageY: e.touches[0].pageY
         };
         var isScrolling = self.isScrolling;
-        self.stopAnimation();
         if (isScrolling) {
             var pageIndex = self.get('pageIndex');
             self.fire('scrollEnd', S.mix({
@@ -235,8 +237,6 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, Node) {
         self.startMousePos = pos;
         onDragStart(self, e, 'left');
         onDragStart(self, e, 'top');
-        self.fire('scrollStart', pos);
-        self.isScrolling = 1;
         // TODO: bug ie10 if mouse out of window
         self.$contentEl.on(Gesture.move, onDragHandler, self);
     }
@@ -245,27 +245,34 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, Node) {
         var self = this,
             startMousePos = self.startMousePos;
 
-        if (!startMousePos || !self.isScrolling) {
+        if (!startMousePos) {
             return;
         }
-
-        var lockX = self.get('lockX'),
-            lockY = self.get('lockY');
 
         var pos = {
             pageX: e.touches[0].pageX,
             pageY: e.touches[0].pageY
         };
 
+        var xDiff = Math.abs(pos.pageX - startMousePos.pageX);
+        var yDiff = Math.abs(pos.pageY - startMousePos.pageY);
+
+        // allow little deviation
+        if (Math.max(xDiff, yDiff) < PIXEL_THRESH) {
+            return;
+        } else {
+            if (!self.isScrolling) {
+                self.fire('scrollStart', pos);
+                self.isScrolling = 1;
+            }
+        }
+
+        var lockX = self.get('lockX'),
+            lockY = self.get('lockY');
+
         // if lockX or lockY then do not prevent native scroll on some condition
         if (lockX || lockY) {
-            var xDiff = Math.abs(pos.pageX - startMousePos.pageX);
-            var yDiff = Math.abs(pos.pageY - startMousePos.pageY);
 
-            // allow little deviation
-            if (Math.max(xDiff, yDiff) < 5) {
-                return;
-            }
 
             var dragInitDirection;
 
@@ -274,13 +281,13 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, Node) {
             }
 
             if (lockX && dragInitDirection == 'left' && !self.allowScroll[dragInitDirection]) {
-                S.log('not in right direction');
+                //S.log('not in right direction');
                 self.isScrolling = 0;
                 return;
             }
 
             if (lockY && dragInitDirection == 'top' && !self.allowScroll[dragInitDirection]) {
-                S.log('not in right direction');
+                //S.log('not in right direction');
                 self.isScrolling = 0;
                 return;
             }
@@ -464,7 +471,7 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, Node) {
 
             stopAnimation: function () {
                 this.callSuper();
-                self.isScrolling = 0;
+                this.isScrolling = 0;
             }
         },
         {
@@ -506,7 +513,7 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, Node) {
         }
     );
 }, {
-    requires: ['./base', 'node']
+    requires: ['./base', 'node', 'anim']
 });
 
 /**

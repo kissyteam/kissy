@@ -418,7 +418,7 @@ function visit52_81_1(result) {
 function visit51_72_1(result) {
   _$jscoverage['/timer/fx.js'].branchData['72'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/fx.js'].branchData['71'][1].init(799, 16, '!self.isCustomFx');
+}_$jscoverage['/timer/fx.js'].branchData['71'][1].init(810, 16, '!self.isCustomFx');
 function visit50_71_1(result) {
   _$jscoverage['/timer/fx.js'].branchData['71'][1].ranCondition(result);
   return result;
@@ -506,7 +506,7 @@ KISSY.add('anim/timer/fx', function(S, Dom, undefined) {
   _$jscoverage['/timer/fx.js'].lineData[67]++;
   if (visit49_67_1(propData.frame)) {
     _$jscoverage['/timer/fx.js'].lineData[68]++;
-    propData.frame(anim, self);
+    propData.frame.call(self, anim, self);
   } else {
     _$jscoverage['/timer/fx.js'].lineData[71]++;
     if (visit50_71_1(!self.isCustomFx)) {

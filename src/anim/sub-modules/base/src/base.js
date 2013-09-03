@@ -23,7 +23,11 @@ KISSY.add('anim/base', function (S, Dom, Utils, CustomEvent, Q) {
          * @type {Object}
          */
         self.config = config;
-        self.node = self.el = Dom.get(config.node);
+        var node = config.node;
+        if (!S.isPlainObject(node)) {
+            node = Dom.get(config.node);
+        }
+        self.node = self.el = node;
         self._backupProps = {};
         self._propsData = {};
 

@@ -239,99 +239,102 @@ if (! _$jscoverage['/base.js']) {
   _$jscoverage['/base.js'].lineData[28] = 0;
   _$jscoverage['/base.js'].lineData[30] = 0;
   _$jscoverage['/base.js'].lineData[31] = 0;
+  _$jscoverage['/base.js'].lineData[32] = 0;
+  _$jscoverage['/base.js'].lineData[34] = 0;
   _$jscoverage['/base.js'].lineData[35] = 0;
-  _$jscoverage['/base.js'].lineData[36] = 0;
   _$jscoverage['/base.js'].lineData[39] = 0;
   _$jscoverage['/base.js'].lineData[40] = 0;
+  _$jscoverage['/base.js'].lineData[43] = 0;
   _$jscoverage['/base.js'].lineData[44] = 0;
-  _$jscoverage['/base.js'].lineData[53] = 0;
-  _$jscoverage['/base.js'].lineData[64] = 0;
-  _$jscoverage['/base.js'].lineData[66] = 0;
+  _$jscoverage['/base.js'].lineData[48] = 0;
+  _$jscoverage['/base.js'].lineData[57] = 0;
   _$jscoverage['/base.js'].lineData[68] = 0;
-  _$jscoverage['/base.js'].lineData[69] = 0;
+  _$jscoverage['/base.js'].lineData[70] = 0;
+  _$jscoverage['/base.js'].lineData[72] = 0;
   _$jscoverage['/base.js'].lineData[73] = 0;
-  _$jscoverage['/base.js'].lineData[74] = 0;
-  _$jscoverage['/base.js'].lineData[75] = 0;
+  _$jscoverage['/base.js'].lineData[77] = 0;
+  _$jscoverage['/base.js'].lineData[78] = 0;
   _$jscoverage['/base.js'].lineData[79] = 0;
-  _$jscoverage['/base.js'].lineData[89] = 0;
-  _$jscoverage['/base.js'].lineData[92] = 0;
-  _$jscoverage['/base.js'].lineData[97] = 0;
-  _$jscoverage['/base.js'].lineData[98] = 0;
-  _$jscoverage['/base.js'].lineData[103] = 0;
-  _$jscoverage['/base.js'].lineData[105] = 0;
+  _$jscoverage['/base.js'].lineData[83] = 0;
+  _$jscoverage['/base.js'].lineData[93] = 0;
+  _$jscoverage['/base.js'].lineData[96] = 0;
+  _$jscoverage['/base.js'].lineData[101] = 0;
+  _$jscoverage['/base.js'].lineData[102] = 0;
   _$jscoverage['/base.js'].lineData[107] = 0;
-  _$jscoverage['/base.js'].lineData[108] = 0;
-  _$jscoverage['/base.js'].lineData[110] = 0;
-  _$jscoverage['/base.js'].lineData[115] = 0;
-  _$jscoverage['/base.js'].lineData[116] = 0;
-  _$jscoverage['/base.js'].lineData[117] = 0;
-  _$jscoverage['/base.js'].lineData[118] = 0;
+  _$jscoverage['/base.js'].lineData[109] = 0;
+  _$jscoverage['/base.js'].lineData[111] = 0;
+  _$jscoverage['/base.js'].lineData[112] = 0;
+  _$jscoverage['/base.js'].lineData[114] = 0;
+  _$jscoverage['/base.js'].lineData[119] = 0;
   _$jscoverage['/base.js'].lineData[120] = 0;
   _$jscoverage['/base.js'].lineData[121] = 0;
-  _$jscoverage['/base.js'].lineData[123] = 0;
+  _$jscoverage['/base.js'].lineData[122] = 0;
   _$jscoverage['/base.js'].lineData[124] = 0;
+  _$jscoverage['/base.js'].lineData[125] = 0;
   _$jscoverage['/base.js'].lineData[127] = 0;
   _$jscoverage['/base.js'].lineData[128] = 0;
-  _$jscoverage['/base.js'].lineData[129] = 0;
   _$jscoverage['/base.js'].lineData[131] = 0;
   _$jscoverage['/base.js'].lineData[132] = 0;
-  _$jscoverage['/base.js'].lineData[134] = 0;
+  _$jscoverage['/base.js'].lineData[133] = 0;
+  _$jscoverage['/base.js'].lineData[135] = 0;
   _$jscoverage['/base.js'].lineData[136] = 0;
   _$jscoverage['/base.js'].lineData[138] = 0;
-  _$jscoverage['/base.js'].lineData[139] = 0;
+  _$jscoverage['/base.js'].lineData[140] = 0;
   _$jscoverage['/base.js'].lineData[142] = 0;
-  _$jscoverage['/base.js'].lineData[145] = 0;
+  _$jscoverage['/base.js'].lineData[143] = 0;
   _$jscoverage['/base.js'].lineData[146] = 0;
+  _$jscoverage['/base.js'].lineData[149] = 0;
   _$jscoverage['/base.js'].lineData[150] = 0;
-  _$jscoverage['/base.js'].lineData[152] = 0;
   _$jscoverage['/base.js'].lineData[154] = 0;
-  _$jscoverage['/base.js'].lineData[162] = 0;
-  _$jscoverage['/base.js'].lineData[170] = 0;
-  _$jscoverage['/base.js'].lineData[179] = 0;
-  _$jscoverage['/base.js'].lineData[180] = 0;
-  _$jscoverage['/base.js'].lineData[182] = 0;
+  _$jscoverage['/base.js'].lineData[156] = 0;
+  _$jscoverage['/base.js'].lineData[158] = 0;
+  _$jscoverage['/base.js'].lineData[166] = 0;
+  _$jscoverage['/base.js'].lineData[174] = 0;
   _$jscoverage['/base.js'].lineData[183] = 0;
   _$jscoverage['/base.js'].lineData[184] = 0;
-  _$jscoverage['/base.js'].lineData[185] = 0;
+  _$jscoverage['/base.js'].lineData[186] = 0;
   _$jscoverage['/base.js'].lineData[187] = 0;
-  _$jscoverage['/base.js'].lineData[209] = 0;
-  _$jscoverage['/base.js'].lineData[210] = 0;
-  _$jscoverage['/base.js'].lineData[212] = 0;
+  _$jscoverage['/base.js'].lineData[188] = 0;
+  _$jscoverage['/base.js'].lineData[189] = 0;
+  _$jscoverage['/base.js'].lineData[191] = 0;
   _$jscoverage['/base.js'].lineData[213] = 0;
   _$jscoverage['/base.js'].lineData[214] = 0;
-  _$jscoverage['/base.js'].lineData[215] = 0;
   _$jscoverage['/base.js'].lineData[216] = 0;
+  _$jscoverage['/base.js'].lineData[217] = 0;
   _$jscoverage['/base.js'].lineData[218] = 0;
-  _$jscoverage['/base.js'].lineData[234] = 0;
+  _$jscoverage['/base.js'].lineData[219] = 0;
+  _$jscoverage['/base.js'].lineData[220] = 0;
+  _$jscoverage['/base.js'].lineData[222] = 0;
   _$jscoverage['/base.js'].lineData[238] = 0;
-  _$jscoverage['/base.js'].lineData[239] = 0;
   _$jscoverage['/base.js'].lineData[242] = 0;
   _$jscoverage['/base.js'].lineData[243] = 0;
-  _$jscoverage['/base.js'].lineData[244] = 0;
+  _$jscoverage['/base.js'].lineData[246] = 0;
+  _$jscoverage['/base.js'].lineData[247] = 0;
   _$jscoverage['/base.js'].lineData[248] = 0;
-  _$jscoverage['/base.js'].lineData[257] = 0;
-  _$jscoverage['/base.js'].lineData[262] = 0;
-  _$jscoverage['/base.js'].lineData[263] = 0;
+  _$jscoverage['/base.js'].lineData[252] = 0;
+  _$jscoverage['/base.js'].lineData[261] = 0;
   _$jscoverage['/base.js'].lineData[266] = 0;
   _$jscoverage['/base.js'].lineData[267] = 0;
-  _$jscoverage['/base.js'].lineData[269] = 0;
+  _$jscoverage['/base.js'].lineData[270] = 0;
   _$jscoverage['/base.js'].lineData[271] = 0;
-  _$jscoverage['/base.js'].lineData[274] = 0;
+  _$jscoverage['/base.js'].lineData[273] = 0;
   _$jscoverage['/base.js'].lineData[275] = 0;
-  _$jscoverage['/base.js'].lineData[276] = 0;
-  _$jscoverage['/base.js'].lineData[277] = 0;
+  _$jscoverage['/base.js'].lineData[278] = 0;
   _$jscoverage['/base.js'].lineData[279] = 0;
   _$jscoverage['/base.js'].lineData[280] = 0;
   _$jscoverage['/base.js'].lineData[281] = 0;
+  _$jscoverage['/base.js'].lineData[283] = 0;
   _$jscoverage['/base.js'].lineData[284] = 0;
-  _$jscoverage['/base.js'].lineData[286] = 0;
-  _$jscoverage['/base.js'].lineData[287] = 0;
+  _$jscoverage['/base.js'].lineData[285] = 0;
   _$jscoverage['/base.js'].lineData[288] = 0;
+  _$jscoverage['/base.js'].lineData[290] = 0;
   _$jscoverage['/base.js'].lineData[291] = 0;
   _$jscoverage['/base.js'].lineData[292] = 0;
+  _$jscoverage['/base.js'].lineData[295] = 0;
   _$jscoverage['/base.js'].lineData[296] = 0;
-  _$jscoverage['/base.js'].lineData[297] = 0;
-  _$jscoverage['/base.js'].lineData[299] = 0;
+  _$jscoverage['/base.js'].lineData[300] = 0;
+  _$jscoverage['/base.js'].lineData[301] = 0;
+  _$jscoverage['/base.js'].lineData[303] = 0;
 }
 if (! _$jscoverage['/base.js'].functionData) {
   _$jscoverage['/base.js'].functionData = [];
@@ -354,187 +357,193 @@ if (! _$jscoverage['/base.js'].functionData) {
 }
 if (! _$jscoverage['/base.js'].branchData) {
   _$jscoverage['/base.js'].branchData = {};
-  _$jscoverage['/base.js'].branchData['30'] = [];
-  _$jscoverage['/base.js'].branchData['30'][1] = new BranchData();
-  _$jscoverage['/base.js'].branchData['39'] = [];
-  _$jscoverage['/base.js'].branchData['39'][1] = new BranchData();
-  _$jscoverage['/base.js'].branchData['60'] = [];
-  _$jscoverage['/base.js'].branchData['60'][1] = new BranchData();
-  _$jscoverage['/base.js'].branchData['66'] = [];
-  _$jscoverage['/base.js'].branchData['66'][1] = new BranchData();
-  _$jscoverage['/base.js'].branchData['74'] = [];
-  _$jscoverage['/base.js'].branchData['74'][1] = new BranchData();
-  _$jscoverage['/base.js'].branchData['89'] = [];
-  _$jscoverage['/base.js'].branchData['89'][1] = new BranchData();
-  _$jscoverage['/base.js'].branchData['92'] = [];
-  _$jscoverage['/base.js'].branchData['92'][1] = new BranchData();
-  _$jscoverage['/base.js'].branchData['105'] = [];
-  _$jscoverage['/base.js'].branchData['105'][1] = new BranchData();
-  _$jscoverage['/base.js'].branchData['105'][2] = new BranchData();
-  _$jscoverage['/base.js'].branchData['106'] = [];
-  _$jscoverage['/base.js'].branchData['106'][1] = new BranchData();
-  _$jscoverage['/base.js'].branchData['107'] = [];
-  _$jscoverage['/base.js'].branchData['107'][1] = new BranchData();
-  _$jscoverage['/base.js'].branchData['116'] = [];
-  _$jscoverage['/base.js'].branchData['116'][1] = new BranchData();
+  _$jscoverage['/base.js'].branchData['27'] = [];
+  _$jscoverage['/base.js'].branchData['27'][1] = new BranchData();
+  _$jscoverage['/base.js'].branchData['34'] = [];
+  _$jscoverage['/base.js'].branchData['34'][1] = new BranchData();
+  _$jscoverage['/base.js'].branchData['43'] = [];
+  _$jscoverage['/base.js'].branchData['43'][1] = new BranchData();
+  _$jscoverage['/base.js'].branchData['64'] = [];
+  _$jscoverage['/base.js'].branchData['64'][1] = new BranchData();
+  _$jscoverage['/base.js'].branchData['70'] = [];
+  _$jscoverage['/base.js'].branchData['70'][1] = new BranchData();
+  _$jscoverage['/base.js'].branchData['78'] = [];
+  _$jscoverage['/base.js'].branchData['78'][1] = new BranchData();
+  _$jscoverage['/base.js'].branchData['93'] = [];
+  _$jscoverage['/base.js'].branchData['93'][1] = new BranchData();
+  _$jscoverage['/base.js'].branchData['96'] = [];
+  _$jscoverage['/base.js'].branchData['96'][1] = new BranchData();
+  _$jscoverage['/base.js'].branchData['109'] = [];
+  _$jscoverage['/base.js'].branchData['109'][1] = new BranchData();
+  _$jscoverage['/base.js'].branchData['109'][2] = new BranchData();
+  _$jscoverage['/base.js'].branchData['110'] = [];
+  _$jscoverage['/base.js'].branchData['110'][1] = new BranchData();
+  _$jscoverage['/base.js'].branchData['111'] = [];
+  _$jscoverage['/base.js'].branchData['111'][1] = new BranchData();
   _$jscoverage['/base.js'].branchData['120'] = [];
   _$jscoverage['/base.js'].branchData['120'][1] = new BranchData();
-  _$jscoverage['/base.js'].branchData['121'] = [];
-  _$jscoverage['/base.js'].branchData['121'][1] = new BranchData();
-  _$jscoverage['/base.js'].branchData['121'][2] = new BranchData();
-  _$jscoverage['/base.js'].branchData['121'][3] = new BranchData();
-  _$jscoverage['/base.js'].branchData['121'][4] = new BranchData();
-  _$jscoverage['/base.js'].branchData['121'][5] = new BranchData();
-  _$jscoverage['/base.js'].branchData['128'] = [];
-  _$jscoverage['/base.js'].branchData['128'][1] = new BranchData();
-  _$jscoverage['/base.js'].branchData['131'] = [];
-  _$jscoverage['/base.js'].branchData['131'][1] = new BranchData();
-  _$jscoverage['/base.js'].branchData['145'] = [];
-  _$jscoverage['/base.js'].branchData['145'][1] = new BranchData();
-  _$jscoverage['/base.js'].branchData['180'] = [];
-  _$jscoverage['/base.js'].branchData['180'][1] = new BranchData();
-  _$jscoverage['/base.js'].branchData['210'] = [];
-  _$jscoverage['/base.js'].branchData['210'][1] = new BranchData();
-  _$jscoverage['/base.js'].branchData['238'] = [];
-  _$jscoverage['/base.js'].branchData['238'][1] = new BranchData();
-  _$jscoverage['/base.js'].branchData['243'] = [];
-  _$jscoverage['/base.js'].branchData['243'][1] = new BranchData();
-  _$jscoverage['/base.js'].branchData['262'] = [];
-  _$jscoverage['/base.js'].branchData['262'][1] = new BranchData();
+  _$jscoverage['/base.js'].branchData['124'] = [];
+  _$jscoverage['/base.js'].branchData['124'][1] = new BranchData();
+  _$jscoverage['/base.js'].branchData['125'] = [];
+  _$jscoverage['/base.js'].branchData['125'][1] = new BranchData();
+  _$jscoverage['/base.js'].branchData['125'][2] = new BranchData();
+  _$jscoverage['/base.js'].branchData['125'][3] = new BranchData();
+  _$jscoverage['/base.js'].branchData['125'][4] = new BranchData();
+  _$jscoverage['/base.js'].branchData['125'][5] = new BranchData();
+  _$jscoverage['/base.js'].branchData['132'] = [];
+  _$jscoverage['/base.js'].branchData['132'][1] = new BranchData();
+  _$jscoverage['/base.js'].branchData['135'] = [];
+  _$jscoverage['/base.js'].branchData['135'][1] = new BranchData();
+  _$jscoverage['/base.js'].branchData['149'] = [];
+  _$jscoverage['/base.js'].branchData['149'][1] = new BranchData();
+  _$jscoverage['/base.js'].branchData['184'] = [];
+  _$jscoverage['/base.js'].branchData['184'][1] = new BranchData();
+  _$jscoverage['/base.js'].branchData['214'] = [];
+  _$jscoverage['/base.js'].branchData['214'][1] = new BranchData();
+  _$jscoverage['/base.js'].branchData['242'] = [];
+  _$jscoverage['/base.js'].branchData['242'][1] = new BranchData();
+  _$jscoverage['/base.js'].branchData['247'] = [];
+  _$jscoverage['/base.js'].branchData['247'][1] = new BranchData();
   _$jscoverage['/base.js'].branchData['266'] = [];
   _$jscoverage['/base.js'].branchData['266'][1] = new BranchData();
-  _$jscoverage['/base.js'].branchData['267'] = [];
-  _$jscoverage['/base.js'].branchData['267'][1] = new BranchData();
-  _$jscoverage['/base.js'].branchData['279'] = [];
-  _$jscoverage['/base.js'].branchData['279'][1] = new BranchData();
-  _$jscoverage['/base.js'].branchData['284'] = [];
-  _$jscoverage['/base.js'].branchData['284'][1] = new BranchData();
-  _$jscoverage['/base.js'].branchData['287'] = [];
-  _$jscoverage['/base.js'].branchData['287'][1] = new BranchData();
+  _$jscoverage['/base.js'].branchData['270'] = [];
+  _$jscoverage['/base.js'].branchData['270'][1] = new BranchData();
+  _$jscoverage['/base.js'].branchData['271'] = [];
+  _$jscoverage['/base.js'].branchData['271'][1] = new BranchData();
+  _$jscoverage['/base.js'].branchData['283'] = [];
+  _$jscoverage['/base.js'].branchData['283'][1] = new BranchData();
+  _$jscoverage['/base.js'].branchData['288'] = [];
+  _$jscoverage['/base.js'].branchData['288'][1] = new BranchData();
+  _$jscoverage['/base.js'].branchData['291'] = [];
+  _$jscoverage['/base.js'].branchData['291'][1] = new BranchData();
 }
-_$jscoverage['/base.js'].branchData['287'][1].init(129, 9, 'q && q[0]');
-function visit63_287_1(result) {
-  _$jscoverage['/base.js'].branchData['287'][1].ranCondition(result);
+_$jscoverage['/base.js'].branchData['291'][1].init(129, 9, 'q && q[0]');
+function visit64_291_1(result) {
+  _$jscoverage['/base.js'].branchData['291'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base.js'].branchData['284'][1].init(772, 15, 'queue !== false');
-function visit62_284_1(result) {
-  _$jscoverage['/base.js'].branchData['284'][1].ranCondition(result);
+}_$jscoverage['/base.js'].branchData['288'][1].init(772, 15, 'queue !== false');
+function visit63_288_1(result) {
+  _$jscoverage['/base.js'].branchData['288'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base.js'].branchData['279'][1].init(653, 6, 'finish');
-function visit61_279_1(result) {
-  _$jscoverage['/base.js'].branchData['279'][1].ranCondition(result);
+}_$jscoverage['/base.js'].branchData['283'][1].init(653, 6, 'finish');
+function visit62_283_1(result) {
+  _$jscoverage['/base.js'].branchData['283'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base.js'].branchData['267'][1].init(22, 15, 'queue !== false');
-function visit60_267_1(result) {
-  _$jscoverage['/base.js'].branchData['267'][1].ranCondition(result);
+}_$jscoverage['/base.js'].branchData['271'][1].init(22, 15, 'queue !== false');
+function visit61_271_1(result) {
+  _$jscoverage['/base.js'].branchData['271'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base.js'].branchData['266'][1].init(231, 37, '!self.isRunning() && !self.isPaused()');
+}_$jscoverage['/base.js'].branchData['270'][1].init(231, 37, '!self.isRunning() && !self.isPaused()');
+function visit60_270_1(result) {
+  _$jscoverage['/base.js'].branchData['270'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/base.js'].branchData['266'][1].init(149, 14, 'self.__stopped');
 function visit59_266_1(result) {
   _$jscoverage['/base.js'].branchData['266'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base.js'].branchData['262'][1].init(149, 14, 'self.__stopped');
-function visit58_262_1(result) {
-  _$jscoverage['/base.js'].branchData['262'][1].ranCondition(result);
+}_$jscoverage['/base.js'].branchData['247'][1].init(107, 13, 'q.length == 1');
+function visit58_247_1(result) {
+  _$jscoverage['/base.js'].branchData['247'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base.js'].branchData['243'][1].init(107, 13, 'q.length == 1');
-function visit57_243_1(result) {
-  _$jscoverage['/base.js'].branchData['243'][1].ranCondition(result);
+}_$jscoverage['/base.js'].branchData['242'][1].init(114, 15, 'queue === false');
+function visit57_242_1(result) {
+  _$jscoverage['/base.js'].branchData['242'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base.js'].branchData['238'][1].init(114, 15, 'queue === false');
-function visit56_238_1(result) {
-  _$jscoverage['/base.js'].branchData['238'][1].ranCondition(result);
+}_$jscoverage['/base.js'].branchData['214'][1].init(48, 15, 'self.isPaused()');
+function visit56_214_1(result) {
+  _$jscoverage['/base.js'].branchData['214'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base.js'].branchData['210'][1].init(48, 15, 'self.isPaused()');
-function visit55_210_1(result) {
-  _$jscoverage['/base.js'].branchData['210'][1].ranCondition(result);
+}_$jscoverage['/base.js'].branchData['184'][1].init(48, 16, 'self.isRunning()');
+function visit55_184_1(result) {
+  _$jscoverage['/base.js'].branchData['184'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base.js'].branchData['180'][1].init(48, 16, 'self.isRunning()');
-function visit54_180_1(result) {
-  _$jscoverage['/base.js'].branchData['180'][1].ranCondition(result);
+}_$jscoverage['/base.js'].branchData['149'][1].init(2658, 14, 'exit === false');
+function visit54_149_1(result) {
+  _$jscoverage['/base.js'].branchData['149'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base.js'].branchData['145'][1].init(2658, 14, 'exit === false');
-function visit53_145_1(result) {
-  _$jscoverage['/base.js'].branchData['145'][1].ranCondition(result);
+}_$jscoverage['/base.js'].branchData['135'][1].init(562, 13, 'val == \'hide\'');
+function visit53_135_1(result) {
+  _$jscoverage['/base.js'].branchData['135'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base.js'].branchData['131'][1].init(562, 13, 'val == \'hide\'');
-function visit52_131_1(result) {
-  _$jscoverage['/base.js'].branchData['131'][1].ranCondition(result);
+}_$jscoverage['/base.js'].branchData['132'][1].init(420, 15, 'val == \'toggle\'');
+function visit52_132_1(result) {
+  _$jscoverage['/base.js'].branchData['132'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base.js'].branchData['128'][1].init(420, 15, 'val == \'toggle\'');
-function visit51_128_1(result) {
-  _$jscoverage['/base.js'].branchData['128'][1].ranCondition(result);
+}_$jscoverage['/base.js'].branchData['125'][5].init(57, 13, 'val == \'show\'');
+function visit51_125_5(result) {
+  _$jscoverage['/base.js'].branchData['125'][5].ranCondition(result);
   return result;
-}_$jscoverage['/base.js'].branchData['121'][5].init(57, 13, 'val == \'show\'');
-function visit50_121_5(result) {
-  _$jscoverage['/base.js'].branchData['121'][5].ranCondition(result);
+}_$jscoverage['/base.js'].branchData['125'][4].init(57, 24, 'val == \'show\' && !hidden');
+function visit50_125_4(result) {
+  _$jscoverage['/base.js'].branchData['125'][4].ranCondition(result);
   return result;
-}_$jscoverage['/base.js'].branchData['121'][4].init(57, 24, 'val == \'show\' && !hidden');
-function visit49_121_4(result) {
-  _$jscoverage['/base.js'].branchData['121'][4].ranCondition(result);
+}_$jscoverage['/base.js'].branchData['125'][3].init(30, 13, 'val == \'hide\'');
+function visit49_125_3(result) {
+  _$jscoverage['/base.js'].branchData['125'][3].ranCondition(result);
   return result;
-}_$jscoverage['/base.js'].branchData['121'][3].init(30, 13, 'val == \'hide\'');
-function visit48_121_3(result) {
-  _$jscoverage['/base.js'].branchData['121'][3].ranCondition(result);
+}_$jscoverage['/base.js'].branchData['125'][2].init(30, 23, 'val == \'hide\' && hidden');
+function visit48_125_2(result) {
+  _$jscoverage['/base.js'].branchData['125'][2].ranCondition(result);
   return result;
-}_$jscoverage['/base.js'].branchData['121'][2].init(30, 23, 'val == \'hide\' && hidden');
-function visit47_121_2(result) {
-  _$jscoverage['/base.js'].branchData['121'][2].ranCondition(result);
+}_$jscoverage['/base.js'].branchData['125'][1].init(30, 51, 'val == \'hide\' && hidden || val == \'show\' && !hidden');
+function visit47_125_1(result) {
+  _$jscoverage['/base.js'].branchData['125'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base.js'].branchData['121'][1].init(30, 51, 'val == \'hide\' && hidden || val == \'show\' && !hidden');
-function visit46_121_1(result) {
-  _$jscoverage['/base.js'].branchData['121'][1].ranCondition(result);
+}_$jscoverage['/base.js'].branchData['124'][1].init(99, 16, 'specialVals[val]');
+function visit46_124_1(result) {
+  _$jscoverage['/base.js'].branchData['124'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base.js'].branchData['120'][1].init(99, 16, 'specialVals[val]');
+}_$jscoverage['/base.js'].branchData['120'][1].init(1321, 35, 'Dom.css(node, \'display\') === \'none\'');
 function visit45_120_1(result) {
   _$jscoverage['/base.js'].branchData['120'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base.js'].branchData['116'][1].init(1321, 35, 'Dom.css(node, \'display\') === \'none\'');
-function visit44_116_1(result) {
-  _$jscoverage['/base.js'].branchData['116'][1].ranCondition(result);
+}_$jscoverage['/base.js'].branchData['111'][1].init(30, 10, 'S.UA[\'ie\']');
+function visit44_111_1(result) {
+  _$jscoverage['/base.js'].branchData['111'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base.js'].branchData['107'][1].init(30, 10, 'S.UA[\'ie\']');
-function visit43_107_1(result) {
-  _$jscoverage['/base.js'].branchData['107'][1].ranCondition(result);
+}_$jscoverage['/base.js'].branchData['110'][1].init(65, 33, 'Dom.css(node, \'float\') === \'none\'');
+function visit43_110_1(result) {
+  _$jscoverage['/base.js'].branchData['110'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base.js'].branchData['106'][1].init(65, 33, 'Dom.css(node, \'float\') === \'none\'');
-function visit42_106_1(result) {
-  _$jscoverage['/base.js'].branchData['106'][1].ranCondition(result);
+}_$jscoverage['/base.js'].branchData['109'][2].init(697, 37, 'Dom.css(node, \'display\') === \'inline\'');
+function visit42_109_2(result) {
+  _$jscoverage['/base.js'].branchData['109'][2].ranCondition(result);
   return result;
-}_$jscoverage['/base.js'].branchData['105'][2].init(697, 37, 'Dom.css(node, \'display\') === \'inline\'');
-function visit41_105_2(result) {
-  _$jscoverage['/base.js'].branchData['105'][2].ranCondition(result);
+}_$jscoverage['/base.js'].branchData['109'][1].init(697, 99, 'Dom.css(node, \'display\') === \'inline\' && Dom.css(node, \'float\') === \'none\'');
+function visit41_109_1(result) {
+  _$jscoverage['/base.js'].branchData['109'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base.js'].branchData['105'][1].init(697, 99, 'Dom.css(node, \'display\') === \'inline\' && Dom.css(node, \'float\') === \'none\'');
-function visit40_105_1(result) {
-  _$jscoverage['/base.js'].branchData['105'][1].ranCondition(result);
+}_$jscoverage['/base.js'].branchData['96'][1].init(177, 21, 'to.width || to.height');
+function visit40_96_1(result) {
+  _$jscoverage['/base.js'].branchData['96'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base.js'].branchData['92'][1].init(177, 21, 'to.width || to.height');
-function visit39_92_1(result) {
-  _$jscoverage['/base.js'].branchData['92'][1].ranCondition(result);
+}_$jscoverage['/base.js'].branchData['93'][1].init(1213, 38, 'node.nodeType == NodeType.ELEMENT_NODE');
+function visit39_93_1(result) {
+  _$jscoverage['/base.js'].branchData['93'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base.js'].branchData['89'][1].init(1213, 38, 'node.nodeType == NodeType.ELEMENT_NODE');
-function visit38_89_1(result) {
-  _$jscoverage['/base.js'].branchData['89'][1].ranCondition(result);
+}_$jscoverage['/base.js'].branchData['78'][1].init(22, 21, '!S.isPlainObject(val)');
+function visit38_78_1(result) {
+  _$jscoverage['/base.js'].branchData['78'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base.js'].branchData['74'][1].init(22, 21, '!S.isPlainObject(val)');
-function visit37_74_1(result) {
-  _$jscoverage['/base.js'].branchData['74'][1].ranCondition(result);
+}_$jscoverage['/base.js'].branchData['70'][1].init(467, 34, 'self.fire(\'beforeStart\') === false');
+function visit37_70_1(result) {
+  _$jscoverage['/base.js'].branchData['70'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base.js'].branchData['66'][1].init(467, 34, 'self.fire(\'beforeStart\') === false');
-function visit36_66_1(result) {
-  _$jscoverage['/base.js'].branchData['66'][1].ranCondition(result);
+}_$jscoverage['/base.js'].branchData['64'][1].init(276, 17, 'config.delay || 0');
+function visit36_64_1(result) {
+  _$jscoverage['/base.js'].branchData['64'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base.js'].branchData['60'][1].init(276, 17, 'config.delay || 0');
-function visit35_60_1(result) {
-  _$jscoverage['/base.js'].branchData['60'][1].ranCondition(result);
+}_$jscoverage['/base.js'].branchData['43'][1].init(88, 50, '!S.isEmptyObject(_backupProps = self._backupProps)');
+function visit35_43_1(result) {
+  _$jscoverage['/base.js'].branchData['43'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base.js'].branchData['39'][1].init(88, 50, '!S.isEmptyObject(_backupProps = self._backupProps)');
-function visit34_39_1(result) {
-  _$jscoverage['/base.js'].branchData['39'][1].ranCondition(result);
+}_$jscoverage['/base.js'].branchData['34'][1].init(426, 26, 'complete = config.complete');
+function visit34_34_1(result) {
+  _$jscoverage['/base.js'].branchData['34'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base.js'].branchData['30'][1].init(317, 26, 'complete = config.complete');
-function visit33_30_1(result) {
-  _$jscoverage['/base.js'].branchData['30'][1].ranCondition(result);
+}_$jscoverage['/base.js'].branchData['27'][1].init(231, 22, '!S.isPlainObject(node)');
+function visit33_27_1(result) {
+  _$jscoverage['/base.js'].branchData['27'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base.js'].lineData[6]++;
 KISSY.add('anim/base', function(S, Dom, Utils, CustomEvent, Q) {
@@ -552,170 +561,177 @@ KISSY.add('anim/base', function(S, Dom, Utils, CustomEvent, Q) {
     _$jscoverage['/base.js'].lineData[25]++;
     self.config = config;
     _$jscoverage['/base.js'].lineData[26]++;
-    self.node = self.el = Dom.get(config.node);
+    var node = config.node;
     _$jscoverage['/base.js'].lineData[27]++;
-    self._backupProps = {};
-    _$jscoverage['/base.js'].lineData[28]++;
-    self._propsData = {};
+    if (visit33_27_1(!S.isPlainObject(node))) {
+      _$jscoverage['/base.js'].lineData[28]++;
+      node = Dom.get(config.node);
+    }
     _$jscoverage['/base.js'].lineData[30]++;
-    if (visit33_30_1(complete = config.complete)) {
-      _$jscoverage['/base.js'].lineData[31]++;
+    self.node = self.el = node;
+    _$jscoverage['/base.js'].lineData[31]++;
+    self._backupProps = {};
+    _$jscoverage['/base.js'].lineData[32]++;
+    self._propsData = {};
+    _$jscoverage['/base.js'].lineData[34]++;
+    if (visit34_34_1(complete = config.complete)) {
+      _$jscoverage['/base.js'].lineData[35]++;
       self.on('complete', complete);
     }
   }
-  _$jscoverage['/base.js'].lineData[35]++;
+  _$jscoverage['/base.js'].lineData[39]++;
   function onComplete(self) {
     _$jscoverage['/base.js'].functionData[2]++;
-    _$jscoverage['/base.js'].lineData[36]++;
+    _$jscoverage['/base.js'].lineData[40]++;
     var _backupProps;
-    _$jscoverage['/base.js'].lineData[39]++;
-    if (visit34_39_1(!S.isEmptyObject(_backupProps = self._backupProps))) {
-      _$jscoverage['/base.js'].lineData[40]++;
+    _$jscoverage['/base.js'].lineData[43]++;
+    if (visit35_43_1(!S.isEmptyObject(_backupProps = self._backupProps))) {
+      _$jscoverage['/base.js'].lineData[44]++;
       Dom.css(self.node, _backupProps);
     }
   }
-  _$jscoverage['/base.js'].lineData[44]++;
+  _$jscoverage['/base.js'].lineData[48]++;
   S.augment(AnimBase, CustomEvent.Target, {
   prepareFx: function() {
   _$jscoverage['/base.js'].functionData[3]++;
 }, 
   runInternal: function() {
   _$jscoverage['/base.js'].functionData[4]++;
-  _$jscoverage['/base.js'].lineData[53]++;
-  var self = this, config = self.config, node = self.node, val, _backupProps = self._backupProps, _propsData = self._propsData, to = config.to, defaultDelay = (visit35_60_1(config.delay || 0)), defaultDuration = config.duration;
-  _$jscoverage['/base.js'].lineData[64]++;
+  _$jscoverage['/base.js'].lineData[57]++;
+  var self = this, config = self.config, node = self.node, val, _backupProps = self._backupProps, _propsData = self._propsData, to = config.to, defaultDelay = (visit36_64_1(config.delay || 0)), defaultDuration = config.duration;
+  _$jscoverage['/base.js'].lineData[68]++;
   Utils.saveRunningAnim(self);
-  _$jscoverage['/base.js'].lineData[66]++;
-  if (visit36_66_1(self.fire('beforeStart') === false)) {
-    _$jscoverage['/base.js'].lineData[68]++;
+  _$jscoverage['/base.js'].lineData[70]++;
+  if (visit37_70_1(self.fire('beforeStart') === false)) {
+    _$jscoverage['/base.js'].lineData[72]++;
     self.stop(0);
-    _$jscoverage['/base.js'].lineData[69]++;
+    _$jscoverage['/base.js'].lineData[73]++;
     return;
   }
-  _$jscoverage['/base.js'].lineData[73]++;
+  _$jscoverage['/base.js'].lineData[77]++;
   S.each(to, function(val, prop) {
   _$jscoverage['/base.js'].functionData[5]++;
-  _$jscoverage['/base.js'].lineData[74]++;
-  if (visit37_74_1(!S.isPlainObject(val))) {
-    _$jscoverage['/base.js'].lineData[75]++;
+  _$jscoverage['/base.js'].lineData[78]++;
+  if (visit38_78_1(!S.isPlainObject(val))) {
+    _$jscoverage['/base.js'].lineData[79]++;
     val = {
   value: val};
   }
-  _$jscoverage['/base.js'].lineData[79]++;
+  _$jscoverage['/base.js'].lineData[83]++;
   _propsData[prop] = S.mix({
   delay: defaultDelay, 
   easing: config.easing, 
   frame: config.frame, 
   duration: defaultDuration}, val);
 });
-  _$jscoverage['/base.js'].lineData[89]++;
-  if (visit38_89_1(node.nodeType == NodeType.ELEMENT_NODE)) {
-    _$jscoverage['/base.js'].lineData[92]++;
-    if (visit39_92_1(to.width || to.height)) {
-      _$jscoverage['/base.js'].lineData[97]++;
+  _$jscoverage['/base.js'].lineData[93]++;
+  if (visit39_93_1(node.nodeType == NodeType.ELEMENT_NODE)) {
+    _$jscoverage['/base.js'].lineData[96]++;
+    if (visit40_96_1(to.width || to.height)) {
+      _$jscoverage['/base.js'].lineData[101]++;
       var elStyle = node.style;
-      _$jscoverage['/base.js'].lineData[98]++;
+      _$jscoverage['/base.js'].lineData[102]++;
       S.mix(_backupProps, {
   overflow: elStyle.overflow, 
   'overflow-x': elStyle.overflowX, 
   'overflow-y': elStyle.overflowY});
-      _$jscoverage['/base.js'].lineData[103]++;
+      _$jscoverage['/base.js'].lineData[107]++;
       elStyle.overflow = 'hidden';
-      _$jscoverage['/base.js'].lineData[105]++;
-      if (visit40_105_1(visit41_105_2(Dom.css(node, 'display') === 'inline') && visit42_106_1(Dom.css(node, 'float') === 'none'))) {
-        _$jscoverage['/base.js'].lineData[107]++;
-        if (visit43_107_1(S.UA['ie'])) {
-          _$jscoverage['/base.js'].lineData[108]++;
+      _$jscoverage['/base.js'].lineData[109]++;
+      if (visit41_109_1(visit42_109_2(Dom.css(node, 'display') === 'inline') && visit43_110_1(Dom.css(node, 'float') === 'none'))) {
+        _$jscoverage['/base.js'].lineData[111]++;
+        if (visit44_111_1(S.UA['ie'])) {
+          _$jscoverage['/base.js'].lineData[112]++;
           elStyle.zoom = 1;
         } else {
-          _$jscoverage['/base.js'].lineData[110]++;
+          _$jscoverage['/base.js'].lineData[114]++;
           elStyle.display = 'inline-block';
         }
       }
     }
-    _$jscoverage['/base.js'].lineData[115]++;
+    _$jscoverage['/base.js'].lineData[119]++;
     var exit, hidden;
-    _$jscoverage['/base.js'].lineData[116]++;
-    hidden = (visit44_116_1(Dom.css(node, 'display') === 'none'));
-    _$jscoverage['/base.js'].lineData[117]++;
+    _$jscoverage['/base.js'].lineData[120]++;
+    hidden = (visit45_120_1(Dom.css(node, 'display') === 'none'));
+    _$jscoverage['/base.js'].lineData[121]++;
     S.each(_propsData, function(_propData, prop) {
   _$jscoverage['/base.js'].functionData[6]++;
-  _$jscoverage['/base.js'].lineData[118]++;
+  _$jscoverage['/base.js'].lineData[122]++;
   val = _propData.value;
-  _$jscoverage['/base.js'].lineData[120]++;
-  if (visit45_120_1(specialVals[val])) {
-    _$jscoverage['/base.js'].lineData[121]++;
-    if (visit46_121_1(visit47_121_2(visit48_121_3(val == 'hide') && hidden) || visit49_121_4(visit50_121_5(val == 'show') && !hidden))) {
-      _$jscoverage['/base.js'].lineData[123]++;
+  _$jscoverage['/base.js'].lineData[124]++;
+  if (visit46_124_1(specialVals[val])) {
+    _$jscoverage['/base.js'].lineData[125]++;
+    if (visit47_125_1(visit48_125_2(visit49_125_3(val == 'hide') && hidden) || visit50_125_4(visit51_125_5(val == 'show') && !hidden))) {
+      _$jscoverage['/base.js'].lineData[127]++;
       self.stop(1);
-      _$jscoverage['/base.js'].lineData[124]++;
+      _$jscoverage['/base.js'].lineData[128]++;
       return exit = false;
     }
-    _$jscoverage['/base.js'].lineData[127]++;
+    _$jscoverage['/base.js'].lineData[131]++;
     _backupProps[prop] = Dom.style(node, prop);
-    _$jscoverage['/base.js'].lineData[128]++;
-    if (visit51_128_1(val == 'toggle')) {
-      _$jscoverage['/base.js'].lineData[129]++;
+    _$jscoverage['/base.js'].lineData[132]++;
+    if (visit52_132_1(val == 'toggle')) {
+      _$jscoverage['/base.js'].lineData[133]++;
       val = hidden ? 'show' : 'hide';
     } else {
-      _$jscoverage['/base.js'].lineData[131]++;
-      if (visit52_131_1(val == 'hide')) {
-        _$jscoverage['/base.js'].lineData[132]++;
+      _$jscoverage['/base.js'].lineData[135]++;
+      if (visit53_135_1(val == 'hide')) {
+        _$jscoverage['/base.js'].lineData[136]++;
         _propData.value = 0;
-        _$jscoverage['/base.js'].lineData[134]++;
+        _$jscoverage['/base.js'].lineData[138]++;
         _backupProps.display = 'none';
       } else {
-        _$jscoverage['/base.js'].lineData[136]++;
+        _$jscoverage['/base.js'].lineData[140]++;
         _propData.value = Dom.css(node, prop);
-        _$jscoverage['/base.js'].lineData[138]++;
+        _$jscoverage['/base.js'].lineData[142]++;
         Dom.css(node, prop, 0);
-        _$jscoverage['/base.js'].lineData[139]++;
+        _$jscoverage['/base.js'].lineData[143]++;
         Dom.show(node);
       }
     }
   }
-  _$jscoverage['/base.js'].lineData[142]++;
+  _$jscoverage['/base.js'].lineData[146]++;
   return undefined;
 });
-    _$jscoverage['/base.js'].lineData[145]++;
-    if (visit53_145_1(exit === false)) {
-      _$jscoverage['/base.js'].lineData[146]++;
+    _$jscoverage['/base.js'].lineData[149]++;
+    if (visit54_149_1(exit === false)) {
+      _$jscoverage['/base.js'].lineData[150]++;
       return;
     }
   }
-  _$jscoverage['/base.js'].lineData[150]++;
-  self.startTime = S.now();
-  _$jscoverage['/base.js'].lineData[152]++;
-  self.prepareFx();
   _$jscoverage['/base.js'].lineData[154]++;
+  self.startTime = S.now();
+  _$jscoverage['/base.js'].lineData[156]++;
+  self.prepareFx();
+  _$jscoverage['/base.js'].lineData[158]++;
   self.doStart();
 }, 
   isRunning: function() {
   _$jscoverage['/base.js'].functionData[7]++;
-  _$jscoverage['/base.js'].lineData[162]++;
+  _$jscoverage['/base.js'].lineData[166]++;
   return Utils.isAnimRunning(this);
 }, 
   isPaused: function() {
   _$jscoverage['/base.js'].functionData[8]++;
-  _$jscoverage['/base.js'].lineData[170]++;
+  _$jscoverage['/base.js'].lineData[174]++;
   return Utils.isAnimPaused(this);
 }, 
   pause: function() {
   _$jscoverage['/base.js'].functionData[9]++;
-  _$jscoverage['/base.js'].lineData[179]++;
+  _$jscoverage['/base.js'].lineData[183]++;
   var self = this;
-  _$jscoverage['/base.js'].lineData[180]++;
-  if (visit54_180_1(self.isRunning())) {
-    _$jscoverage['/base.js'].lineData[182]++;
+  _$jscoverage['/base.js'].lineData[184]++;
+  if (visit55_184_1(self.isRunning())) {
+    _$jscoverage['/base.js'].lineData[186]++;
     self._runTime = S.now() - self.startTime;
-    _$jscoverage['/base.js'].lineData[183]++;
+    _$jscoverage['/base.js'].lineData[187]++;
     Utils.removeRunningAnim(self);
-    _$jscoverage['/base.js'].lineData[184]++;
+    _$jscoverage['/base.js'].lineData[188]++;
     Utils.savePausedAnim(self);
-    _$jscoverage['/base.js'].lineData[185]++;
+    _$jscoverage['/base.js'].lineData[189]++;
     self.doStop();
   }
-  _$jscoverage['/base.js'].lineData[187]++;
+  _$jscoverage['/base.js'].lineData[191]++;
   return self;
 }, 
   doStop: function() {
@@ -726,22 +742,22 @@ KISSY.add('anim/base', function(S, Dom, Utils, CustomEvent, Q) {
 }, 
   resume: function() {
   _$jscoverage['/base.js'].functionData[12]++;
-  _$jscoverage['/base.js'].lineData[209]++;
+  _$jscoverage['/base.js'].lineData[213]++;
   var self = this;
-  _$jscoverage['/base.js'].lineData[210]++;
-  if (visit55_210_1(self.isPaused())) {
-    _$jscoverage['/base.js'].lineData[212]++;
-    self.startTime = S.now() - self._runTime;
-    _$jscoverage['/base.js'].lineData[213]++;
-    Utils.removePausedAnim(self);
-    _$jscoverage['/base.js'].lineData[214]++;
-    Utils.saveRunningAnim(self);
-    _$jscoverage['/base.js'].lineData[215]++;
-    self['beforeResume']();
+  _$jscoverage['/base.js'].lineData[214]++;
+  if (visit56_214_1(self.isPaused())) {
     _$jscoverage['/base.js'].lineData[216]++;
+    self.startTime = S.now() - self._runTime;
+    _$jscoverage['/base.js'].lineData[217]++;
+    Utils.removePausedAnim(self);
+    _$jscoverage['/base.js'].lineData[218]++;
+    Utils.saveRunningAnim(self);
+    _$jscoverage['/base.js'].lineData[219]++;
+    self['beforeResume']();
+    _$jscoverage['/base.js'].lineData[220]++;
     self.doStart();
   }
-  _$jscoverage['/base.js'].lineData[218]++;
+  _$jscoverage['/base.js'].lineData[222]++;
   return self;
 }, 
   'beforeResume': function() {
@@ -749,78 +765,78 @@ KISSY.add('anim/base', function(S, Dom, Utils, CustomEvent, Q) {
 }, 
   run: function() {
   _$jscoverage['/base.js'].functionData[14]++;
-  _$jscoverage['/base.js'].lineData[234]++;
-  var self = this, q, queue = self.config.queue;
   _$jscoverage['/base.js'].lineData[238]++;
-  if (visit56_238_1(queue === false)) {
-    _$jscoverage['/base.js'].lineData[239]++;
+  var self = this, q, queue = self.config.queue;
+  _$jscoverage['/base.js'].lineData[242]++;
+  if (visit57_242_1(queue === false)) {
+    _$jscoverage['/base.js'].lineData[243]++;
     self.runInternal();
   } else {
-    _$jscoverage['/base.js'].lineData[242]++;
+    _$jscoverage['/base.js'].lineData[246]++;
     q = Q.queue(self.node, queue, self);
-    _$jscoverage['/base.js'].lineData[243]++;
-    if (visit57_243_1(q.length == 1)) {
-      _$jscoverage['/base.js'].lineData[244]++;
+    _$jscoverage['/base.js'].lineData[247]++;
+    if (visit58_247_1(q.length == 1)) {
+      _$jscoverage['/base.js'].lineData[248]++;
       self.runInternal();
     }
   }
-  _$jscoverage['/base.js'].lineData[248]++;
+  _$jscoverage['/base.js'].lineData[252]++;
   return self;
 }, 
   stop: function(finish) {
   _$jscoverage['/base.js'].functionData[15]++;
-  _$jscoverage['/base.js'].lineData[257]++;
+  _$jscoverage['/base.js'].lineData[261]++;
   var self = this, node = self.node, q, queue = self.config.queue;
-  _$jscoverage['/base.js'].lineData[262]++;
-  if (visit58_262_1(self.__stopped)) {
-    _$jscoverage['/base.js'].lineData[263]++;
+  _$jscoverage['/base.js'].lineData[266]++;
+  if (visit59_266_1(self.__stopped)) {
+    _$jscoverage['/base.js'].lineData[267]++;
     return self;
   }
-  _$jscoverage['/base.js'].lineData[266]++;
-  if (visit59_266_1(!self.isRunning() && !self.isPaused())) {
-    _$jscoverage['/base.js'].lineData[267]++;
-    if (visit60_267_1(queue !== false)) {
-      _$jscoverage['/base.js'].lineData[269]++;
+  _$jscoverage['/base.js'].lineData[270]++;
+  if (visit60_270_1(!self.isRunning() && !self.isPaused())) {
+    _$jscoverage['/base.js'].lineData[271]++;
+    if (visit61_271_1(queue !== false)) {
+      _$jscoverage['/base.js'].lineData[273]++;
       Q.remove(node, queue, self);
     }
-    _$jscoverage['/base.js'].lineData[271]++;
+    _$jscoverage['/base.js'].lineData[275]++;
     return self;
   }
-  _$jscoverage['/base.js'].lineData[274]++;
+  _$jscoverage['/base.js'].lineData[278]++;
   self.doStop(finish);
-  _$jscoverage['/base.js'].lineData[275]++;
-  Utils.removeRunningAnim(self);
-  _$jscoverage['/base.js'].lineData[276]++;
-  Utils.removePausedAnim(self);
-  _$jscoverage['/base.js'].lineData[277]++;
-  self.__stopped = 1;
   _$jscoverage['/base.js'].lineData[279]++;
-  if (visit61_279_1(finish)) {
-    _$jscoverage['/base.js'].lineData[280]++;
+  Utils.removeRunningAnim(self);
+  _$jscoverage['/base.js'].lineData[280]++;
+  Utils.removePausedAnim(self);
+  _$jscoverage['/base.js'].lineData[281]++;
+  self.__stopped = 1;
+  _$jscoverage['/base.js'].lineData[283]++;
+  if (visit62_283_1(finish)) {
+    _$jscoverage['/base.js'].lineData[284]++;
     onComplete(self);
-    _$jscoverage['/base.js'].lineData[281]++;
+    _$jscoverage['/base.js'].lineData[285]++;
     self.fire('complete');
   }
-  _$jscoverage['/base.js'].lineData[284]++;
-  if (visit62_284_1(queue !== false)) {
-    _$jscoverage['/base.js'].lineData[286]++;
+  _$jscoverage['/base.js'].lineData[288]++;
+  if (visit63_288_1(queue !== false)) {
+    _$jscoverage['/base.js'].lineData[290]++;
     q = Q.dequeue(node, queue);
-    _$jscoverage['/base.js'].lineData[287]++;
-    if (visit63_287_1(q && q[0])) {
-      _$jscoverage['/base.js'].lineData[288]++;
+    _$jscoverage['/base.js'].lineData[291]++;
+    if (visit64_291_1(q && q[0])) {
+      _$jscoverage['/base.js'].lineData[292]++;
       q[0].runInternal();
     }
   }
-  _$jscoverage['/base.js'].lineData[291]++;
+  _$jscoverage['/base.js'].lineData[295]++;
   self.fire('end');
-  _$jscoverage['/base.js'].lineData[292]++;
+  _$jscoverage['/base.js'].lineData[296]++;
   return self;
 }});
-  _$jscoverage['/base.js'].lineData[296]++;
+  _$jscoverage['/base.js'].lineData[300]++;
   AnimBase.Utils = Utils;
-  _$jscoverage['/base.js'].lineData[297]++;
+  _$jscoverage['/base.js'].lineData[301]++;
   AnimBase.Q = Q;
-  _$jscoverage['/base.js'].lineData[299]++;
+  _$jscoverage['/base.js'].lineData[303]++;
   return AnimBase;
 }, {
   requires: ['dom', './base/utils', 'event/custom', './base/queue']});

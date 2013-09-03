@@ -4,7 +4,6 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, DomEvent, SingleTouch) {
-
     var event = 'swipe',
         ingEvent = 'swiping',
         MAX_DURATION = 1000,
@@ -25,6 +24,11 @@ KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, DomEvent, Single
 
         if (ing) {
             if (self.isVertical && self.isHorizontal) {
+                // allow little deviation
+                if (Math.max(absDeltaX, absDeltaY) < 5) {
+                    return;
+                }
+
                 if (absDeltaY > absDeltaX) {
                     self.isHorizontal = 0;
                 } else {
@@ -53,8 +57,8 @@ KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, DomEvent, Single
 
         DomEvent.fire(e.target, ing ? ingEvent : event, {
             originalEvent: e.originalEvent,
-            pageX:touch.pageX,
-            pageY:touch.pageY,
+            pageX: touch.pageX,
+            pageY: touch.pageY,
             which: 1,
             /**
              *
@@ -162,7 +166,6 @@ KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, DomEvent, Single
     };
 
     return Swipe;
-
 }, {
     requires: ['./handle-map', 'event/dom/base', './single-touch']
 });

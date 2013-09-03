@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 3 16:19
+build time: Sep 3 19:05
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -246,7 +246,11 @@ KISSY.add('anim/base', function (S, Dom, Utils, CustomEvent, Q) {
          * @type {Object}
          */
         self.config = config;
-        self.node = self.el = Dom.get(config.node);
+        var node = config.node;
+        if (!S.isPlainObject(node)) {
+            node = Dom.get(config.node);
+        }
+        self.node = self.el = node;
         self._backupProps = {};
         self._propsData = {};
 

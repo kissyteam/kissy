@@ -65,7 +65,7 @@ KISSY.add('anim/timer/fx', function (S, Dom, undefined) {
             self.val = val;
 
             if (propData.frame) {
-                propData.frame(anim, self);
+                propData.frame.call(self, anim, self);
             }
             // in case completed in frame
             else if (!self.isCustomFx) {
