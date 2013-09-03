@@ -1,5 +1,8 @@
+/**
+ * tc for html-parser for editor
+ * @author yiminghe@gmail.com
+ */
 KISSY.add(function (S, HtmlParser, UA) {
-
     function getTextSync(path, callback) {
         if (S.UA.nodejs) {
             path = S.config('packages').src.baseUri

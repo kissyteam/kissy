@@ -1,20 +1,18 @@
 describe("loader package", function () {
-
+    var S = KISSY;
+    var Loader = S.Loader;
     it("longest match works", function () {
-
-        var S = KISSY;
-
         var debug = S.Config.debug;
         S.Config.debug = true;
-        KISSY.config({
-            packages:[
+        S.config({
+            packages: [
                 {
-                    name:"test",
-                    path:"/kissy/src/seed/tests/specs/package_path_longest_match/"
+                    name: "test",
+                    path: "/kissy/src/seed/tests/specs/package_path_longest_match/"
                 },
                 {
-                    name:"test2",
-                    path:"/kissy/src/seed/tests/specs/package_path_longest_match/test/"
+                    name: "test2",
+                    path: "/kissy/src/seed/tests/specs/package_path_longest_match/test/"
                 }
             ]
         });
@@ -31,8 +29,47 @@ describe("loader package", function () {
 
         runs(function () {
             S.Config.debug = debug;
+            S.clearLoader();
         });
-
     });
 
+    it('match by slash', function () {
+        S.config({
+            packages: [
+                {
+                    name: "com",
+                    path: "/kissy/src/seed/tests/specs/package_path_longest_match/"
+                }
+            ]
+        });
+
+        var m1 = new Loader.Module({
+            name: 'component',
+            runtime: S
+        });
+
+        expect(m1.getPackage().getName()).toBe('');
+
+         m1 = new Loader.Module({
+            name: 'component/a',
+            runtime: S
+        });
+
+        expect(m1.getPackage().getName()).toBe('');
+
+
+         m1 = new Loader.Module({
+            name: 'com',
+            runtime: S
+        });
+
+        expect(m1.getPackage().getName()).toBe('com');
+
+        m1 = new Loader.Module({
+            name: 'com/a',
+            runtime: S
+        });
+
+        expect(m1.getPackage().getName()).toBe('com');
+    });
 });

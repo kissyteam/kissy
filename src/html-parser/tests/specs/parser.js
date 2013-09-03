@@ -55,7 +55,9 @@ KISSY.add(function (S, HtmlParser) {
 
         it('works for textarea',function(){
 
-            var html='<textarea><img src="xx.jpg"/><img src="yy.jpg"/></textarea>';
+            var html='<textarea><img src=' +
+                '"xx.jpg"/><img src=' +
+                '"yy.jpg"/></textarea>';
 
             var parser = new Parser(html),
                 node;
@@ -243,10 +245,7 @@ KISSY.add(function (S, HtmlParser) {
                 node.writeHtml(beatifyWriter);
                 expect(beatifyWriter.getHtml()).toBe(html);
             });
-
-
         });
-
     });
 },{
     requires:['html-parser','ua']

@@ -1,12 +1,13 @@
-KISSY.add(function(S, HtmlParser) {
+/**
+ * tc for lexer of html-parser
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(function (S, HtmlParser) {
     var Lexer = HtmlParser.Lexer;
-    describe("htmlparser_lexer", function() {
-
-
-        it("works", function() {
-
+    describe("html parser lexer", function () {
+        it("works", function () {
             var html = "<div id='z'><<a> ";
-            var lexer = new Lexer(html),node;
+            var lexer = new Lexer(html), node;
             var nodes = [];
             while (node = lexer.nextNode()) {
                 nodes.push(node);
@@ -24,9 +25,9 @@ KISSY.add(function(S, HtmlParser) {
             expect(nodes[2].toHtml()).toBe("<a>");
         });
 
-        it("works for isSelfClosed", function() {
+        it("works for isSelfClosed", function () {
             var html = "<z/>x";
-            var lexer = new Lexer(html),node;
+            var lexer = new Lexer(html), node;
             var nodes = [];
             while (node = lexer.nextNode()) {
                 nodes.push(node);
@@ -36,9 +37,9 @@ KISSY.add(function(S, HtmlParser) {
             expect(nodes[0].isSelfClosed).toBe(true);
         });
 
-        it("works for <br/>", function() {
+        it("works for <br/>", function () {
             var html = "<br/>";
-            var lexer = new Lexer(html),node;
+            var lexer = new Lexer(html), node;
             var nodes = [];
             while (node = lexer.nextNode()) {
                 nodes.push(node);
@@ -48,9 +49,9 @@ KISSY.add(function(S, HtmlParser) {
             expect(nodes[0].isSelfClosed).toBe(true);
         });
 
-        it("works when encounter invalid attribute value", function() {
+        it("works when encounter invalid attribute value", function () {
             var html = '<a href="http://g.cn/"">1</a>';
-            var lexer = new Lexer(html),node;
+            var lexer = new Lexer(html), node;
             var nodes = [];
             while (node = lexer.nextNode()) {
                 nodes.push(node);
@@ -64,8 +65,6 @@ KISSY.add(function(S, HtmlParser) {
         });
 
     });
-
-
-},{
-    requires:['html-parser','ua']
+}, {
+    requires: ['html-parser', 'ua']
 });
