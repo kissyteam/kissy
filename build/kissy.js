@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.32
 MIT Licensed
-build time: Aug 29 20:12
+build time: Sep 3 16:51
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130829201216' will replace with current timestamp when compressing.
+         * NOTICE: '20130903165054' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130829201216',
+        __BUILD_TIME: '20130903165054',
         /**
          * KISSY Environment.
          * @private
@@ -68,10 +68,10 @@ var KISSY = (function (undefined) {
 
         /**
          * The version of the library.
-         * NOTICE: '1.31' will replace with current version when compressing.
+         * NOTICE: '1.32' will replace with current version when compressing.
          * @type {String}
          */
-        version:'1.32',
+        version: '1.32',
 
         /**
          * set KISSY configuration
@@ -5694,7 +5694,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20130829201216'
+            tag: '20130903165054'
         }, getBaseInfo()));
     }
 
@@ -6243,7 +6243,7 @@ config({
 /*
 Copyright 2013, KISSY UI Library v1.32
 MIT Licensed
-build time: Aug 15 00:01
+build time: Sep 3 16:49
 */
 /**
  * @ignore
@@ -7380,7 +7380,7 @@ KISSY.add('dom/base/create', function (S, DOM, undefined) {
                 div: defaultCreator
             },
 
-            _defaultCreator:defaultCreator,
+            _defaultCreator: defaultCreator,
 
             /**
              * Get the HTML contents of the first element in the set of matched elements.
@@ -7418,8 +7418,7 @@ KISSY.add('dom/base/create', function (S, DOM, undefined) {
                     // faster
                     // fix #103,some html element can not be set through innerHTML
                     if (!htmlString.match(/<(?:script|style|link)/i) &&
-                        (!lostLeadingWhitespace || !htmlString.match(R_LEADING_WHITESPACE)) &&
-                        !creatorsMap[ (htmlString.match(RE_TAG) || ['', ''])[1].toLowerCase() ]) {
+                        (!lostLeadingWhitespace || !htmlString.match(R_LEADING_WHITESPACE)) && !creatorsMap[ (htmlString.match(RE_TAG) || ['', ''])[1].toLowerCase() ]) {
 
                         try {
                             for (i = els.length - 1; i >= 0; i--) {
@@ -7504,6 +7503,7 @@ KISSY.add('dom/base/create', function (S, DOM, undefined) {
              */
             remove: function (selector, keepData) {
                 var el,
+                    parent,
                     els = DOM.query(selector),
                     elChildren,
                     i;
@@ -7516,8 +7516,15 @@ KISSY.add('dom/base/create', function (S, DOM, undefined) {
                         cleanData(el);
                     }
 
-                    if (el.parentNode) {
-                        el.parentNode.removeChild(el);
+                    if (parent = el.parentNode) {
+                        // https://github.com/kissyteam/kissy/issues/463
+                        // removeNode(false) doesn't leak in IE 6+, but removeChild() and removeNode(true) are known to leak under IE 8- while 9+ is TBD.
+                        // In IE quirks mode, PARAM nodes as children of OBJECT/APPLET nodes have a removeNode method that does nothing and
+                        // the parent node has canHaveChildren=false even though removeChild correctly removes the PARAM children.
+                        // In IE, SVG/strict nodes don't have a removeNode method nor a canHaveChildren boolean.
+                        UA.ie && parent.canHaveChildren && "removeNode" in el ?
+                            el.removeNode(false) :
+                            parent.removeChild(el);
                     }
                 }
             },
