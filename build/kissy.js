@@ -1,5 +1,5 @@
 /*
-Copyright 2013, KISSY UI Library v1.31
+Copyright 2013, KISSY UI Library v1.32
 MIT Licensed
 build time: Aug 29 20:12
 */
@@ -71,7 +71,7 @@ var KISSY = (function (undefined) {
          * NOTICE: '1.31' will replace with current version when compressing.
          * @type {String}
          */
-        version: '1.31',
+        version:'1.32',
 
         /**
          * set KISSY configuration
@@ -6241,7 +6241,7 @@ config({
 
 })(KISSY);
 /*
-Copyright 2013, KISSY UI Library v1.31
+Copyright 2013, KISSY UI Library v1.32
 MIT Licensed
 build time: Aug 15 00:01
 */
@@ -10296,7 +10296,7 @@ KISSY.add('dom/base/traversal', function (S, DOM, undefined) {
  遵循 8/2 原则，用尽可能少的代码满足用户最常用的功能。
  */
 /*
-Copyright 2013, KISSY UI Library v1.31
+Copyright 2013, KISSY UI Library v1.32
 MIT Licensed
 build time: Aug 15 00:02
 */
@@ -10994,7 +10994,7 @@ KISSY.add('dom/ie/traversal', function (S, DOM) {
     requires: ['dom/base']
 });
 /*
-Copyright 2013, KISSY UI Library v1.31
+Copyright 2013, KISSY UI Library v1.32
 MIT Licensed
 build time: Aug 29 20:11
 */
@@ -11411,7 +11411,7 @@ KISSY.add('event/base/utils', function (S) {
 
 });
 /*
-Copyright 2013, KISSY UI Library v1.31
+Copyright 2013, KISSY UI Library v1.32
 MIT Licensed
 build time: Aug 29 20:11
 */
@@ -11963,7 +11963,7 @@ KISSY.add('event/custom/observer', function (S, Event) {
     requires: ['event/base']
 });
 /*
-Copyright 2013, KISSY UI Library v1.31
+Copyright 2013, KISSY UI Library v1.32
 MIT Licensed
 build time: Aug 29 20:12
 */
@@ -14098,7 +14098,7 @@ KISSY.add('event/dom/base/valuechange', function (S, Event, DOM, special) {
  -> mousedown -> blur -> webkitspeechchange -> focus
  */
 /*
-Copyright 2013, KISSY UI Library v1.31
+Copyright 2013, KISSY UI Library v1.32
 MIT Licensed
 build time: Aug 15 00:06
 */
@@ -14160,7 +14160,7 @@ KISSY.add('event/dom/focusin', function (S, Event) {
  - 更加合理的模拟冒泡顺序，子元素先出触发，父元素后触发
  */
 /*
-Copyright 2013, KISSY UI Library v1.31
+Copyright 2013, KISSY UI Library v1.32
 MIT Licensed
 build time: Aug 15 00:06
 */
@@ -14401,7 +14401,7 @@ KISSY.add('event/dom/hashchange', function (S, Event, DOM) {
  https://github.com/cowboy/jquery-hashchange
  */
 /*
-Copyright 2013, KISSY UI Library v1.31
+Copyright 2013, KISSY UI Library v1.32
 MIT Licensed
 build time: Aug 15 00:06
 */
@@ -14597,7 +14597,7 @@ KISSY.add('event/dom/ie/submit', function (S, Event, DOM) {
  - http://bugs.jquery.com/ticket/11049
  */
 /*
-Copyright 2013, KISSY UI Library v1.31
+Copyright 2013, KISSY UI Library v1.32
 MIT Licensed
 build time: Aug 15 00:06
 */
@@ -14691,7 +14691,7 @@ KISSY.add('event/dom/shake', function (S, EventDomBase, undefined) {
  *  - http://dev.w3.org/geo/api/spec-source-orientation
  */
 /*
-Copyright 2013, KISSY UI Library v1.31
+Copyright 2013, KISSY UI Library v1.32
 MIT Licensed
 build time: Aug 15 00:06
 */
@@ -15651,7 +15651,7 @@ KISSY.add('event/dom/touch', function (S, EventDomBase, eventHandleMap, eventHan
     requires: ['event/dom/base', './touch/handle-map', './touch/handle']
 });
 /*
-Copyright 2013, KISSY UI Library v1.31
+Copyright 2013, KISSY UI Library v1.32
 MIT Licensed
 build time: Aug 15 00:06
 */
@@ -16136,7 +16136,7 @@ KISSY.add("json/json2", function () {
     return JSON;
 });
 /*
-Copyright 2013, KISSY UI Library v1.31
+Copyright 2013, KISSY UI Library v1.32
 MIT Licensed
 build time: Aug 15 00:06
 */
@@ -16183,7 +16183,7 @@ KISSY.add('json', function (S, J) {
     ]
 });
 /*
-Copyright 2013, KISSY UI Library v1.31
+Copyright 2013, KISSY UI Library v1.32
 MIT Licensed
 build time: Aug 15 00:00
 */
@@ -18325,7 +18325,7 @@ KISSY.add('ajax/xhr-transport', function (S, IO, XhrTransportBase, SubDomainTran
  CORS : http://www.nczonline.net/blog/2010/05/25/cross-domain-io-with-cross-origin-resource-sharing/
  */
 /*
-Copyright 2013, KISSY UI Library v1.31
+Copyright 2013, KISSY UI Library v1.32
 MIT Licensed
 build time: Aug 15 00:01
 */
@@ -18435,7 +18435,7 @@ KISSY.add('cookie', function (S) {
  独立成静态工具类的方式更优。
  */
 /*
-Copyright 2013, KISSY UI Library v1.31
+Copyright 2013, KISSY UI Library v1.32
 MIT Licensed
 build time: Aug 15 00:00
 */
@@ -19075,7 +19075,7 @@ KISSY.add('base', function (S, Attribute, Event) {
     requires: ['base/attribute', 'event/custom']
 });
 /*
-Copyright 2013, KISSY UI Library v1.31
+Copyright 2013, KISSY UI Library v1.32
 MIT Licensed
 build time: Aug 15 00:00
 */
@@ -20622,7 +20622,7 @@ KISSY.add('anim/queue', function (S, DOM) {
     requires: ['dom']
 });
 /*
-Copyright 2013, KISSY UI Library v1.31
+Copyright 2013, KISSY UI Library v1.32
 MIT Licensed
 build time: Aug 15 00:07
 */

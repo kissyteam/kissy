@@ -1,9 +1,9 @@
 /*
-Copyright 2013, KISSY UI Library v1.31
+Copyright 2013, KISSY UI Library v1.32
 MIT Licensed
 build time: Aug 29 20:12
 */
-var KISSY=function(a){var e=this,i,m=0;return i={__BUILD_TIME:"20130829201216",Env:{host:e},Config:{debug:"",fns:{}},version:"1.31",config:function(h,b){var g,e,c=this,f,o=i.Config,p=o.fns;i.isObject(h)?i.each(h,function(a,d){(f=p[d])?f.call(c,a):o[d]=a}):(g=p[h],b===a?e=g?g.call(c):o[h]:g?e=g.call(c,b):o[h]=b);return e},log:function(h,b,g){if(i.Config.debug&&(g&&(h=g+": "+h),e.console!==a&&console.log))console[b&&console[b]?b:"log"](h)},error:function(a){if(i.Config.debug)throw a instanceof
+var KISSY=function(a){var e=this,i,m=0;return i={__BUILD_TIME:"20130829201216",Env:{host:e},Config:{debug:"",fns:{}},version:'1.32',config:function(h,b){var g,e,c=this,f,o=i.Config,p=o.fns;i.isObject(h)?i.each(h,function(a,d){(f=p[d])?f.call(c,a):o[d]=a}):(g=p[h],b===a?e=g?g.call(c):o[h]:g?e=g.call(c,b):o[h]=b);return e},log:function(h,b,g){if(i.Config.debug&&(g&&(h=g+": "+h),e.console!==a&&console.log))console[b&&console[b]?b:"log"](h)},error:function(a){if(i.Config.debug)throw a instanceof
 Error?a:Error(a);},guid:function(a){return(a||"")+m++}}}();
 (function(a,e){function i(){}function m(a,f){var d;c?d=c(a):(i.prototype=a,d=new i);d.constructor=f;return d}function h(f,j,d,l,q,c){if(!j||!f)return f;var k,o,g,i;j[b]=f;c.push(j);g=a.keys(j);i=g.length;for(k=0;k<i;k++)if(o=g[k],o!=b){var m=f,r=j,G=d,w=l,y=q,v=c;if(G||!(o in m)||y){var t=m[o],s=r[o];if(t===s)t===e&&(m[o]=t);else if(w&&(s=w.call(r,o,s)),y&&s&&(a.isArray(s)||a.isPlainObject(s)))s[b]?m[o]=s[b]:(r=t&&(a.isArray(t)||a.isPlainObject(t))?t:a.isArray(s)?[]:{},m[o]=r,h(r,s,G,w,n,v));else if(s!==
 e&&(G||!(o in m)))m[o]=s}}return f}var b="__MIX_CIRCULAR",g=this,n=!0,c=Object.create,f=!{toString:1}.propertyIsEnumerable("toString"),o="constructor,hasOwnProperty,isPrototypeOf,propertyIsEnumerable,toString,toLocaleString,valueOf".split(",");(function(a,f){for(var d in f)a[d]=f[d]})(a,{stamp:function(f,j,d){var d=d||"__~ks_stamped",l=f[d];if(!l&&!j)try{l=f[d]=a.guid(d)}catch(q){l=e}return l},keys:function(a){var j=[],d,l;for(d in a)j.push(d);if(f)for(l=o.length-1;0<=l;l--)d=o[l],a.hasOwnProperty(d)&&

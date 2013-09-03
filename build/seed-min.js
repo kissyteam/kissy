@@ -1,9 +1,9 @@
 /*
-Copyright 2013, KISSY UI Library v1.31
+Copyright 2013, KISSY UI Library v1.32
 MIT Licensed
 build time: Aug 29 20:12
 */
-var KISSY=function(a){var e=this,i,m=0;return i={__BUILD_TIME:"20130829201216",Env:{host:e},Config:{debug:"",fns:{}},version:"1.31",config:function(l,f){var g,e,b=this,d,p=i.Config,k=p.fns;i.isObject(l)?i.each(l,function(a,c){(d=k[c])?d.call(b,a):p[c]=a}):(g=k[l],f===a?e=g?g.call(b):p[l]:g?e=g.call(b,f):p[l]=f);return e},log:function(l,f,g){if(i.Config.debug&&(g&&(l=g+": "+l),e.console!==a&&console.log))console[f&&console[f]?f:"log"](l)},error:function(a){if(i.Config.debug)throw a instanceof
+var KISSY=function(a){var e=this,i,m=0;return i={__BUILD_TIME:"20130829201216",Env:{host:e},Config:{debug:"",fns:{}},version:'1.32',config:function(l,f){var g,e,b=this,d,p=i.Config,k=p.fns;i.isObject(l)?i.each(l,function(a,c){(d=k[c])?d.call(b,a):p[c]=a}):(g=k[l],f===a?e=g?g.call(b):p[l]:g?e=g.call(b,f):p[l]=f);return e},log:function(l,f,g){if(i.Config.debug&&(g&&(l=g+": "+l),e.console!==a&&console.log))console[f&&console[f]?f:"log"](l)},error:function(a){if(i.Config.debug)throw a instanceof
 Error?a:Error(a);},guid:function(a){return(a||"")+m++}}}();
 (function(a,e){function i(){}function m(a,d){var c;b?c=b(a):(i.prototype=a,c=new i);c.constructor=d;return c}function l(d,n,c,j,q,b){if(!n||!d)return d;var h,p,g,i;n[f]=d;b.push(n);g=a.keys(n);i=g.length;for(h=0;h<i;h++)if(p=g[h],p!=f){var m=d,r=n,G=c,x=j,y=q,w=b;if(G||!(p in m)||y){var u=m[p],t=r[p];if(u===t)u===e&&(m[p]=u);else if(x&&(t=x.call(r,p,t)),y&&t&&(a.isArray(t)||a.isPlainObject(t)))t[f]?m[p]=t[f]:(r=u&&(a.isArray(u)||a.isPlainObject(u))?u:a.isArray(t)?[]:{},m[p]=r,l(r,t,G,x,o,w));else if(t!==
 e&&(G||!(p in m)))m[p]=t}}return d}var f="__MIX_CIRCULAR",g=this,o=!0,b=Object.create,d=!{toString:1}.propertyIsEnumerable("toString"),p="constructor,hasOwnProperty,isPrototypeOf,propertyIsEnumerable,toString,toLocaleString,valueOf".split(",");(function(a,d){for(var c in d)a[c]=d[c]})(a,{stamp:function(d,n,c){var c=c||"__~ks_stamped",j=d[c];if(!j&&!n)try{j=d[c]=a.guid(c)}catch(q){j=e}return j},keys:function(a){var n=[],c,j;for(c in a)n.push(c);if(d)for(j=p.length-1;0<=j;j--)c=p[j],a.hasOwnProperty(c)&&

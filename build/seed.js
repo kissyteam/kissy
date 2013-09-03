@@ -1,5 +1,5 @@
 /*
-Copyright 2013, KISSY UI Library v1.31
+Copyright 2013, KISSY UI Library v1.32
 MIT Licensed
 build time: Aug 29 20:12
 */
@@ -71,7 +71,7 @@ var KISSY = (function (undefined) {
          * NOTICE: '1.31' will replace with current version when compressing.
          * @type {String}
          */
-        version: '1.31',
+        version:'1.32',
 
         /**
          * set KISSY configuration
