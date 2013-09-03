@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>kissy anim demo</title>
+  </head>
+  <body>
+    <canvas id="Canvas" style="border:1px solid #ccc;" width="200" height="200"></canvas>
+
+    <br/>
+
+    <div id="J_Box" style="border:1px solid #ccc;width:100px;height:100px;">
+
+    </div>
+
+    <br/>
+
+    <div id="J_Box2" style="border:1px solid #ccc;width:100px;height:100px;">
+    </div>
+
+    <script charset="utf-8" src="/kissy/build/seed.js"></script>
+    <script type="text/javascript" src="/kissy/src/package.js"></script>
+    <script type="text/javascript">
+     KISSY.use("anim,node",function(S,Anim,Node){
+       var ctx = document.getElementById('Canvas').getContext('2d')
+
+       function circle(cx,cy,r,opt){
+         ctx.beginPath();
+         for(var x in opt){
+           ctx[x] = opt[x];
+         }
+         ctx.arc(cx,cy,r,0,2*Math.PI,true);
+         ctx.fill();
+         ctx.closePath();
+       };
+
+       circle(100,100,5,{
+         fillStyle:"#999"
+       });
+
+       var o = {r:1};
+       var anim = new Anim(o,{
+         r:100 //,
+         /* r2:200//这个不用 */
+       },{
+           easing:"swing",
+           duration:.5,
+           frame:function(anim,fx){
+             //console.log(fx.pos);
+             var propname = fx.prop;
+             var val = fx.val;
+             //var r = 5+fx.pos*(80-5);
+             circle(100,100,val);
+           }
+         });
+       anim.run();
+       
+       //正常node animate方法不受影响
+
+       var $box = S.one("#J_Box");
+       var anim2 = new Anim($box,{"width":"200px"},{
+         useTransition:false
+       });
+       anim2.run(); 
+       
+       S.one("#J_Box2").animate({"height":"200px"});
+
+     });
+    </script>
+  </body>
+</html>
+
+

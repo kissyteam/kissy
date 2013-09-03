@@ -399,6 +399,32 @@ KISSY.add(function (S, Dom, Anim, Node) {
                 });
             });
 
+            it("anim accept custom animation property",function(){
+              //非标准的css属性渐变
+              var anyPlainObject = {
+                  r:1
+              };
+              //最终半径
+              var finalRadius;
+
+              var anim = new Anim(anyPlainObject,{
+                r:80
+              },{
+                easing:"swing",
+                duration:.5,
+                frame:function(anim,fx){
+                  var propname = fx.prop;
+                  var val = fx.val;
+                  finalRadius = val;
+                }
+              });
+              anim.run();
+              waits(600);
+              runs(function(){
+                expect(finalRadius).boBe(80);
+              });
+            });
+
         });
     }};
 }, {

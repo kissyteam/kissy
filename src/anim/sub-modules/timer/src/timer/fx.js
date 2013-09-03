@@ -88,9 +88,11 @@ KISSY.add('anim/timer/fx', function (S, Dom, undefined) {
                 val += self.unit;
                 if (isAttr(node, prop)) {
                     Dom.attr(node, prop, val, 1);
-                } else {
+                } else if(!self._customFx){
                     // S.log(self.prop + ' update: ' + val);
                     Dom.css(node, prop, val);
+                } else {
+                    // 自定义
                 }
             }
         },
@@ -103,6 +105,10 @@ KISSY.add('anim/timer/fx', function (S, Dom, undefined) {
             var self = this,
                 prop = self.prop,
                 node = self.anim.node;
+            //不是css 或者 attribute 的缓动
+            if(this._customFx){
+              return node[prop] || 0;
+            }
             if (isAttr(node, prop)) {
                 return Dom.attr(node, prop, undefined, 1);
             }

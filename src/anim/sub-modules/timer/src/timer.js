@@ -95,6 +95,10 @@ KISSY.add('anim/timer', function (S, Dom, Event, AnimBase, Easing, AM, Fx, SHORT
                 fx = Fx.getFx(propCfg);
                 to = val;
 
+                //不是基本的动画
+                if(S.isPlainObject(node)){
+                  fx._customFx = 1;
+                }
                 from = fx.cur();
 
                 val += '';
@@ -165,6 +169,9 @@ KISSY.add('anim/timer', function (S, Dom, Event, AnimBase, Easing, AM, Fx, SHORT
                         }
                         c = 0;
                         if (_propData.frame) {
+                            // 拟合得到当前的值
+                            var val = fx.interpolate(fx.from,fx.to,fx.pos);
+                            fx.val = val;
                             // from to pos prop -> fx
                             c = _propData.frame(self, fx);
                             // in case frame call stop
