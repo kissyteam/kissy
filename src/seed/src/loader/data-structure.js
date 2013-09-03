@@ -350,21 +350,8 @@
     });
 
     function getPackage(self, modName) {
-        var packages = self.config('packages'),
-            pName = '',
-            p;
-
-        for (p in packages) {
-
-            // longest match
-            if (S.startsWith(modName, p) &&
-                p.length > pName.length) {
-                pName = p;
-            }
-
-        }
-
-        return packages[pName] || systemPackage;
+        var packages = self.config('packages');
+        return packages[modName] || systemPackage;
     }
 
 })(KISSY);
