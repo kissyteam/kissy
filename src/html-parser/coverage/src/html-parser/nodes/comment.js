@@ -268,23 +268,23 @@ if (! _$jscoverage['/html-parser/nodes/comment.js'].branchData) {
   _$jscoverage['/html-parser/nodes/comment.js'].branchData['27'][1] = new BranchData();
 }
 _$jscoverage['/html-parser/nodes/comment.js'].branchData['27'][1].init(18, 14, 'this.nodeValue');
-function visit180_27_1(result) {
+function visit188_27_1(result) {
   _$jscoverage['/html-parser/nodes/comment.js'].branchData['27'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/nodes/comment.js'].branchData['18'][1].init(26, 12, 'this !== ret');
-function visit179_18_1(result) {
+function visit187_18_1(result) {
   _$jscoverage['/html-parser/nodes/comment.js'].branchData['18'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/nodes/comment.js'].branchData['17'][1].init(22, 3, 'ret');
-function visit178_17_1(result) {
+function visit186_17_1(result) {
   _$jscoverage['/html-parser/nodes/comment.js'].branchData['17'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/nodes/comment.js'].branchData['16'][2].init(52, 39, '(ret = filter.onComment(this)) !== false');
-function visit177_16_2(result) {
+function visit185_16_2(result) {
   _$jscoverage['/html-parser/nodes/comment.js'].branchData['16'][2].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/nodes/comment.js'].branchData['16'][1].init(40, 51, '!filter || (ret = filter.onComment(this)) !== false');
-function visit176_16_1(result) {
+function visit184_16_1(result) {
   _$jscoverage['/html-parser/nodes/comment.js'].branchData['16'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/nodes/comment.js'].lineData[5]++;
@@ -307,11 +307,11 @@ KISSY.add("html-parser/nodes/comment", function(S, Text) {
   _$jscoverage['/html-parser/nodes/comment.js'].lineData[15]++;
   var ret;
   _$jscoverage['/html-parser/nodes/comment.js'].lineData[16]++;
-  if (visit176_16_1(!filter || visit177_16_2((ret = filter.onComment(this)) !== false))) {
+  if (visit184_16_1(!filter || visit185_16_2((ret = filter.onComment(this)) !== false))) {
     _$jscoverage['/html-parser/nodes/comment.js'].lineData[17]++;
-    if (visit178_17_1(ret)) {
+    if (visit186_17_1(ret)) {
       _$jscoverage['/html-parser/nodes/comment.js'].lineData[18]++;
-      if (visit179_18_1(this !== ret)) {
+      if (visit187_18_1(this !== ret)) {
         _$jscoverage['/html-parser/nodes/comment.js'].lineData[19]++;
         ret.writeHtml(writer, filter);
         _$jscoverage['/html-parser/nodes/comment.js'].lineData[20]++;
@@ -325,7 +325,7 @@ KISSY.add("html-parser/nodes/comment", function(S, Text) {
   toHtml: function() {
   _$jscoverage['/html-parser/nodes/comment.js'].functionData[3]++;
   _$jscoverage['/html-parser/nodes/comment.js'].lineData[27]++;
-  if (visit180_27_1(this.nodeValue)) {
+  if (visit188_27_1(this.nodeValue)) {
     _$jscoverage['/html-parser/nodes/comment.js'].lineData[28]++;
     return this.nodeValue;
   } else {

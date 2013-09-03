@@ -261,19 +261,19 @@ if (! _$jscoverage['/html-parser/nodes/cdata.js'].branchData) {
   _$jscoverage['/html-parser/nodes/cdata.js'].branchData['18'][1] = new BranchData();
 }
 _$jscoverage['/html-parser/nodes/cdata.js'].branchData['18'][1].init(26, 12, 'this !== ret');
-function visit175_18_1(result) {
+function visit183_18_1(result) {
   _$jscoverage['/html-parser/nodes/cdata.js'].branchData['18'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/nodes/cdata.js'].branchData['17'][1].init(22, 3, 'ret');
-function visit174_17_1(result) {
+function visit182_17_1(result) {
   _$jscoverage['/html-parser/nodes/cdata.js'].branchData['17'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/nodes/cdata.js'].branchData['16'][2].init(52, 37, '(ret = filter.onCData(this)) !== false');
-function visit173_16_2(result) {
+function visit181_16_2(result) {
   _$jscoverage['/html-parser/nodes/cdata.js'].branchData['16'][2].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/nodes/cdata.js'].branchData['16'][1].init(40, 49, '!filter || (ret = filter.onCData(this)) !== false');
-function visit172_16_1(result) {
+function visit180_16_1(result) {
   _$jscoverage['/html-parser/nodes/cdata.js'].branchData['16'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/nodes/cdata.js'].lineData[5]++;
@@ -296,11 +296,11 @@ KISSY.add("html-parser/nodes/cdata", function(S, Text) {
   _$jscoverage['/html-parser/nodes/cdata.js'].lineData[15]++;
   var ret;
   _$jscoverage['/html-parser/nodes/cdata.js'].lineData[16]++;
-  if (visit172_16_1(!filter || visit173_16_2((ret = filter.onCData(this)) !== false))) {
+  if (visit180_16_1(!filter || visit181_16_2((ret = filter.onCData(this)) !== false))) {
     _$jscoverage['/html-parser/nodes/cdata.js'].lineData[17]++;
-    if (visit174_17_1(ret)) {
+    if (visit182_17_1(ret)) {
       _$jscoverage['/html-parser/nodes/cdata.js'].lineData[18]++;
-      if (visit175_18_1(this !== ret)) {
+      if (visit183_18_1(this !== ret)) {
         _$jscoverage['/html-parser/nodes/cdata.js'].lineData[19]++;
         ret.writeHtml(writer, filter);
         _$jscoverage['/html-parser/nodes/cdata.js'].lineData[20]++;

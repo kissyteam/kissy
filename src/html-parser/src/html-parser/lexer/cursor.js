@@ -2,20 +2,25 @@
  * represent a cursor of page , it can advance and retreat
  * @author yiminghe@gmail.com
  */
-KISSY.add("html-parser/lexer/cursor",function() {
+KISSY.add("html-parser/lexer/cursor", function () {
     function Cursor(offset) {
         this.position = offset || 0;
     }
 
     Cursor.prototype = {
+        constructor: Cursor,
 
-        constructor:Cursor,
-
-        advance:function() {
+        advance: function () {
             this.position++;
         },
 
-        retreat:function() {
+        clone: function () {
+            var c = new Cursor();
+            c.position = this.position;
+            return c;
+        },
+
+        retreat: function () {
             this.position = Math.max(--this.position, 0);
         }
     };

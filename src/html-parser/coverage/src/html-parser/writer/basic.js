@@ -284,23 +284,23 @@ if (! _$jscoverage['/html-parser/writer/basic.js'].branchData) {
   _$jscoverage['/html-parser/writer/basic.js'].branchData['56'][1] = new BranchData();
 }
 _$jscoverage['/html-parser/writer/basic.js'].branchData['56'][1].init(101, 23, 'attr.value || attr.name');
-function visit338_56_1(result) {
+function visit346_56_1(result) {
   _$jscoverage['/html-parser/writer/basic.js'].branchData['56'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/writer/basic.js'].branchData['42'][1].init(18, 15, 'el.isSelfClosed');
-function visit337_42_1(result) {
+function visit345_42_1(result) {
   _$jscoverage['/html-parser/writer/basic.js'].branchData['42'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/writer/basic.js'].branchData['27'][1].init(38, 14, 'j < arg.length');
-function visit336_27_1(result) {
+function visit344_27_1(result) {
   _$jscoverage['/html-parser/writer/basic.js'].branchData['27'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/writer/basic.js'].branchData['26'][1].init(54, 14, 'arg.length > 1');
-function visit335_26_1(result) {
+function visit343_26_1(result) {
   _$jscoverage['/html-parser/writer/basic.js'].branchData['26'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/writer/basic.js'].branchData['24'][1].init(123, 15, 'i < args.length');
-function visit334_24_1(result) {
+function visit342_24_1(result) {
   _$jscoverage['/html-parser/writer/basic.js'].branchData['24'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/writer/basic.js'].lineData[5]++;
@@ -326,13 +326,13 @@ KISSY.add("html-parser/writer/basic", function() {
   _$jscoverage['/html-parser/writer/basic.js'].lineData[21]++;
   var o = this.output, args = (arguments), arg;
   _$jscoverage['/html-parser/writer/basic.js'].lineData[24]++;
-  for (var i = 0; visit334_24_1(i < args.length); i++) {
+  for (var i = 0; visit342_24_1(i < args.length); i++) {
     _$jscoverage['/html-parser/writer/basic.js'].lineData[25]++;
     arg = args[i];
     _$jscoverage['/html-parser/writer/basic.js'].lineData[26]++;
-    if (visit335_26_1(arg.length > 1)) {
+    if (visit343_26_1(arg.length > 1)) {
       _$jscoverage['/html-parser/writer/basic.js'].lineData[27]++;
-      for (var j = 0; visit336_27_1(j < arg.length); j++) {
+      for (var j = 0; visit344_27_1(j < arg.length); j++) {
         _$jscoverage['/html-parser/writer/basic.js'].lineData[28]++;
         o.push(arg.charAt(j));
       }
@@ -352,7 +352,7 @@ KISSY.add("html-parser/writer/basic", function() {
   openTagClose: function(el) {
   _$jscoverage['/html-parser/writer/basic.js'].functionData[5]++;
   _$jscoverage['/html-parser/writer/basic.js'].lineData[42]++;
-  if (visit337_42_1(el.isSelfClosed)) {
+  if (visit345_42_1(el.isSelfClosed)) {
     _$jscoverage['/html-parser/writer/basic.js'].lineData[43]++;
     this.append(" ", "/");
   }
@@ -367,7 +367,7 @@ KISSY.add("html-parser/writer/basic", function() {
   attribute: function(attr) {
   _$jscoverage['/html-parser/writer/basic.js'].functionData[7]++;
   _$jscoverage['/html-parser/writer/basic.js'].lineData[53]++;
-  this.append(" ", attr.name, "=\"", escapeAttrValue(visit338_56_1(attr.value || attr.name)), "\"");
+  this.append(" ", attr.name, "=\"", escapeAttrValue(visit346_56_1(attr.value || attr.name)), "\"");
 }, 
   text: function(text) {
   _$jscoverage['/html-parser/writer/basic.js'].functionData[8]++;

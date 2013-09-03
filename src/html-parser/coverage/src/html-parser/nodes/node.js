@@ -276,15 +276,15 @@ if (! _$jscoverage['/html-parser/nodes/node.js'].branchData) {
   _$jscoverage['/html-parser/nodes/node.js'].branchData['37'][1] = new BranchData();
 }
 _$jscoverage['/html-parser/nodes/node.js'].branchData['37'][1].init(18, 30, 'this.page && this.page.getText');
-function visit184_37_1(result) {
+function visit192_37_1(result) {
   _$jscoverage['/html-parser/nodes/node.js'].branchData['37'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/nodes/node.js'].branchData['27'][1].init(447, 14, 'S.Config.debug');
-function visit183_27_1(result) {
+function visit191_27_1(result) {
   _$jscoverage['/html-parser/nodes/node.js'].branchData['27'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/nodes/node.js'].branchData['23'][1].init(263, 4, 'page');
-function visit182_23_1(result) {
+function visit190_23_1(result) {
   _$jscoverage['/html-parser/nodes/node.js'].branchData['23'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/nodes/node.js'].lineData[5]++;
@@ -322,14 +322,14 @@ KISSY.add("html-parser/nodes/node", function(S) {
     _$jscoverage['/html-parser/nodes/node.js'].lineData[22]++;
     this.nextSibling = null;
     _$jscoverage['/html-parser/nodes/node.js'].lineData[23]++;
-    if (visit182_23_1(page)) {
+    if (visit190_23_1(page)) {
       _$jscoverage['/html-parser/nodes/node.js'].lineData[24]++;
       this.startLine = lineCount(this.page.getText(0, startPosition));
       _$jscoverage['/html-parser/nodes/node.js'].lineData[25]++;
       this.endLine = lineCount(this.page.getText(0, endPosition));
     }
     _$jscoverage['/html-parser/nodes/node.js'].lineData[27]++;
-    if (visit183_27_1(S.Config.debug)) {
+    if (visit191_27_1(S.Config.debug)) {
       _$jscoverage['/html-parser/nodes/node.js'].lineData[28]++;
       this.toHTMLContent = this.toHtml();
     }
@@ -340,7 +340,7 @@ KISSY.add("html-parser/nodes/node", function(S) {
   toHtml: function() {
   _$jscoverage['/html-parser/nodes/node.js'].functionData[4]++;
   _$jscoverage['/html-parser/nodes/node.js'].lineData[37]++;
-  if (visit184_37_1(this.page && this.page.getText)) {
+  if (visit192_37_1(this.page && this.page.getText)) {
     _$jscoverage['/html-parser/nodes/node.js'].lineData[38]++;
     return this.page.getText(this.startPosition, this.endPosition);
   }

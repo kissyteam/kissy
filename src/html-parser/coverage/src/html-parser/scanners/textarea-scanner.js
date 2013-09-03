@@ -245,7 +245,7 @@ if (! _$jscoverage['/html-parser/scanners/textarea-scanner.js'].branchData) {
   _$jscoverage['/html-parser/scanners/textarea-scanner.js'].branchData['8'][1] = new BranchData();
 }
 _$jscoverage['/html-parser/scanners/textarea-scanner.js'].branchData['8'][1].init(21, 10, 'opts || {}');
-function visit314_8_1(result) {
+function visit322_8_1(result) {
   _$jscoverage['/html-parser/scanners/textarea-scanner.js'].branchData['8'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/scanners/textarea-scanner.js'].lineData[5]++;
@@ -256,7 +256,7 @@ KISSY.add("html-parser/scanners/textarea-scanner", function(S, CDataScanner, Spe
   scan: function(tag, lexer, opts) {
   _$jscoverage['/html-parser/scanners/textarea-scanner.js'].functionData[1]++;
   _$jscoverage['/html-parser/scanners/textarea-scanner.js'].lineData[8]++;
-  opts = visit314_8_1(opts || {});
+  opts = visit322_8_1(opts || {});
   _$jscoverage['/html-parser/scanners/textarea-scanner.js'].lineData[9]++;
   CDataScanner.scan(tag, lexer, opts);
 }};

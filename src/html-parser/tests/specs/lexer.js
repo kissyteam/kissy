@@ -25,6 +25,24 @@ KISSY.add(function (S, HtmlParser) {
             expect(nodes[2].toHtml()).toBe("<a>");
         });
 
+        it('can detect syntax error about tag in strict mode',function(){
+            var html = "<div \n " +
+                "a='b'";
+            var lexer = new Lexer(html,{
+                strict:true
+            });
+            expect(function(){
+                lexer.nextNode();
+            }).toThrow('div syntax error at row 2 , col 7');
+            html = "</div";
+            lexer = new Lexer(html,{
+                strict:true
+            });
+            expect(function(){
+                lexer.nextNode();
+            }).toThrow('/div syntax error at row 1 , col 6');
+        });
+
         it("works for isSelfClosed", function () {
             var html = "<z/>x";
             var lexer = new Lexer(html), node;

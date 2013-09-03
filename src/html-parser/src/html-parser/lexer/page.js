@@ -39,7 +39,7 @@ KISSY.add("html-parser/lexer/page", function (S, Index) {
 
             // update line Index
             if ('\n' === ret) {
-                this.lineIndex.add(cursor);
+                this.lineIndex.add(cursor.clone());
             }
 
             return ret;

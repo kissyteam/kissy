@@ -33,14 +33,23 @@ KISSY.add("html-parser/lexer/index", function () {
          * @param cursor
          */
         row: function (cursor) {
-            return indexOfCursorForInsert(this.lineCursors, cursor) - 1;
+            var cs = this.lineCursors;
+            for (var i = 0; i < cs.length; i++) {
+                if (cs[i].position > cursor.position) {
+                    return i - 1;
+                }
+            }
+            return i;
         },
 
         col: function (cursor) {
-            var row = indexOfCursorForInsert(this.lineCursors, cursor) - 1;
-            return cursor.position - this.lineCursors[row]
+            var linePosition = 0,
+                lineCursor;
+            if (lineCursor = this.lineCursors[this.row(cursor) - 1]) {
+                linePosition = lineCursor.position;
+            }
+            return cursor.position - linePosition;
         }
-
     };
 
     function indexOfCursor(cs, c) {

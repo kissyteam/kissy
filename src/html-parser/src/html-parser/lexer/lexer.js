@@ -3,16 +3,15 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add("html-parser/lexer/lexer", function (S, Cursor, Page, TextNode, CData, Utils, Attribute, TagNode, CommentNode) {
-
-    function Lexer(text) {
+    function Lexer(text, cfg) {
         var self = this;
         self.page = new Page(text);
         self.cursor = new Cursor();
         self.nodeFactory = this;
+        this.cfg = cfg || {};
     }
 
     Lexer.prototype = {
-
         constructor: Lexer,
 
         setPosition: function (p) {
@@ -165,9 +164,20 @@ KISSY.add("html-parser/lexer/lexer", function (S, Cursor, Page, TextNode, CData,
                 bookmarks = [],
                 attributes = [],
                 ch,
+                cfg = this.cfg,
+                strict = cfg.strict,
+                checkError = S.noop,
                 page = this.page,
                 state = 0,
                 cursor = this.cursor;
+            if (strict) {
+                checkError = function () {
+                    if (strict && ch === -1 && attributes.length) {
+                        throw new Error(attributes[0].name + ' syntax error at row ' +
+                            (page.row(cursor) + 1) + ' , col ' + (page.col(cursor) + 1));
+                    }
+                };
+            }
             /**
              * record state position
              *
@@ -205,7 +215,8 @@ KISSY.add("html-parser/lexer/lexer", function (S, Cursor, Page, TextNode, CData,
                         }
                         break;
 
-                    case 1: // within attribute name
+                    case 1:
+                        // within attribute name
                         if ((-1 == ch) || ('>' == ch) || ('<' == ch)) {
                             if ('<' == ch) {
                                 // don't consume the opening angle
@@ -283,7 +294,7 @@ KISSY.add("html-parser/lexer/lexer", function (S, Cursor, Page, TextNode, CData,
                     // Gernot Fricke
                     // See Bug # 891058 Bug in lexer.
                     case 6: // undecided for state 0 or 2
-                        // we have read white spaces after an attributte name
+                        // we have read white spaces after an attribute name
                         if (-1 == ch) {
                             // same as last else clause
                             this.standalone(attributes, bookmarks);
@@ -315,6 +326,8 @@ KISSY.add("html-parser/lexer/lexer", function (S, Cursor, Page, TextNode, CData,
                     default:
                         throw new Error("how ** did we get in state " + state);
                 }
+
+                checkError();
             }
 
             return this.makeTag(start, cursor.position, attributes);
@@ -504,7 +517,9 @@ KISSY.add("html-parser/lexer/lexer", function (S, Cursor, Page, TextNode, CData,
 
         /**
          * parse cdata such as code in script
-         * @param quoteSmart if set true end tag in quote (but not in comment mode) does not end current tag ( <script>x="<a>taobao</a>"</script> )
+         * @param quoteSmart if set true end tag in quote
+         * (but not in comment mode) does not end current tag ( <script>x="<a>taobao</a>"</script> )
+         * @param tagName
          */
         parseCDATA: function (quoteSmart, tagName) {
             var start,
@@ -751,7 +766,6 @@ KISSY.add("html-parser/lexer/lexer", function (S, Cursor, Page, TextNode, CData,
     };
 
     return Lexer;
-
 }, {
     requires: [
         './cursor',

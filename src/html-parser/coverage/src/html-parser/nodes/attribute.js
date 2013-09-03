@@ -265,23 +265,23 @@ if (! _$jscoverage['/html-parser/nodes/attribute.js'].branchData) {
   _$jscoverage['/html-parser/nodes/attribute.js'].branchData['20'][5] = new BranchData();
 }
 _$jscoverage['/html-parser/nodes/attribute.js'].branchData['20'][5].init(77, 31, 'this.nodeType == other.nodeType');
-function visit171_20_5(result) {
+function visit179_20_5(result) {
   _$jscoverage['/html-parser/nodes/attribute.js'].branchData['20'][5].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/nodes/attribute.js'].branchData['20'][4].init(48, 25, 'this.value == other.value');
-function visit170_20_4(result) {
+function visit178_20_4(result) {
   _$jscoverage['/html-parser/nodes/attribute.js'].branchData['20'][4].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/nodes/attribute.js'].branchData['20'][3].init(48, 60, 'this.value == other.value && this.nodeType == other.nodeType');
-function visit169_20_3(result) {
+function visit177_20_3(result) {
   _$jscoverage['/html-parser/nodes/attribute.js'].branchData['20'][3].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/nodes/attribute.js'].branchData['20'][2].init(21, 23, 'this.name == other.name');
-function visit168_20_2(result) {
+function visit176_20_2(result) {
   _$jscoverage['/html-parser/nodes/attribute.js'].branchData['20'][2].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/nodes/attribute.js'].branchData['20'][1].init(21, 87, 'this.name == other.name && this.value == other.value && this.nodeType == other.nodeType');
-function visit167_20_1(result) {
+function visit175_20_1(result) {
   _$jscoverage['/html-parser/nodes/attribute.js'].branchData['20'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/nodes/attribute.js'].lineData[5]++;
@@ -315,7 +315,7 @@ KISSY.add("html-parser/nodes/attribute", function(S) {
   equals: function(other) {
   _$jscoverage['/html-parser/nodes/attribute.js'].functionData[3]++;
   _$jscoverage['/html-parser/nodes/attribute.js'].lineData[20]++;
-  return visit167_20_1(visit168_20_2(this.name == other.name) && visit169_20_3(visit170_20_4(this.value == other.value) && visit171_20_5(this.nodeType == other.nodeType)));
+  return visit175_20_1(visit176_20_2(this.name == other.name) && visit177_20_3(visit178_20_4(this.value == other.value) && visit179_20_5(this.nodeType == other.nodeType)));
 }});
   _$jscoverage['/html-parser/nodes/attribute.js'].lineData[23]++;
   Attribute.prototype.clone = function() {

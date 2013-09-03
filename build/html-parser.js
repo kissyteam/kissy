@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Aug 27 22:00
+build time: Sep 3 21:14
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -371,20 +371,25 @@ KISSY.add("html-parser/dtd", function(KY) {
  * represent a cursor of page , it can advance and retreat
  * @author yiminghe@gmail.com
  */
-KISSY.add("html-parser/lexer/cursor",function() {
+KISSY.add("html-parser/lexer/cursor", function () {
     function Cursor(offset) {
         this.position = offset || 0;
     }
 
     Cursor.prototype = {
+        constructor: Cursor,
 
-        constructor:Cursor,
-
-        advance:function() {
+        advance: function () {
             this.position++;
         },
 
-        retreat:function() {
+        clone: function () {
+            var c = new Cursor();
+            c.position = this.position;
+            return c;
+        },
+
+        retreat: function () {
             this.position = Math.max(--this.position, 0);
         }
     };
@@ -426,14 +431,23 @@ KISSY.add("html-parser/lexer/index", function () {
          * @param cursor
          */
         row: function (cursor) {
-            return indexOfCursorForInsert(this.lineCursors, cursor) - 1;
+            var cs = this.lineCursors;
+            for (var i = 0; i < cs.length; i++) {
+                if (cs[i].position > cursor.position) {
+                    return i - 1;
+                }
+            }
+            return i;
         },
 
         col: function (cursor) {
-            var row = indexOfCursorForInsert(this.lineCursors, cursor) - 1;
-            return cursor.position - this.lineCursors[row]
+            var linePosition = 0,
+                lineCursor;
+            if (lineCursor = this.lineCursors[this.row(cursor) - 1]) {
+                linePosition = lineCursor.position;
+            }
+            return cursor.position - linePosition;
         }
-
     };
 
     function indexOfCursor(cs, c) {
@@ -498,7 +512,7 @@ KISSY.add("html-parser/lexer/page", function (S, Index) {
 
             // update line Index
             if ('\n' === ret) {
-                this.lineIndex.add(cursor);
+                this.lineIndex.add(cursor.clone());
             }
 
             return ret;
@@ -1134,16 +1148,15 @@ KISSY.add("html-parser/nodes/comment", function (S, Text) {
  * @author yiminghe@gmail.com
  */
 KISSY.add("html-parser/lexer/lexer", function (S, Cursor, Page, TextNode, CData, Utils, Attribute, TagNode, CommentNode) {
-
-    function Lexer(text) {
+    function Lexer(text, cfg) {
         var self = this;
         self.page = new Page(text);
         self.cursor = new Cursor();
         self.nodeFactory = this;
+        this.cfg = cfg || {};
     }
 
     Lexer.prototype = {
-
         constructor: Lexer,
 
         setPosition: function (p) {
@@ -1296,9 +1309,20 @@ KISSY.add("html-parser/lexer/lexer", function (S, Cursor, Page, TextNode, CData,
                 bookmarks = [],
                 attributes = [],
                 ch,
+                cfg = this.cfg,
+                strict = cfg.strict,
+                checkError = S.noop,
                 page = this.page,
                 state = 0,
                 cursor = this.cursor;
+            if (strict) {
+                checkError = function () {
+                    if (strict && ch === -1 && attributes.length) {
+                        throw new Error(attributes[0].name + ' syntax error at row ' +
+                            (page.row(cursor) + 1) + ' , col ' + (page.col(cursor) + 1));
+                    }
+                };
+            }
             /**
              * record state position
              *
@@ -1336,7 +1360,8 @@ KISSY.add("html-parser/lexer/lexer", function (S, Cursor, Page, TextNode, CData,
                         }
                         break;
 
-                    case 1: // within attribute name
+                    case 1:
+                        // within attribute name
                         if ((-1 == ch) || ('>' == ch) || ('<' == ch)) {
                             if ('<' == ch) {
                                 // don't consume the opening angle
@@ -1414,7 +1439,7 @@ KISSY.add("html-parser/lexer/lexer", function (S, Cursor, Page, TextNode, CData,
                     // Gernot Fricke
                     // See Bug # 891058 Bug in lexer.
                     case 6: // undecided for state 0 or 2
-                        // we have read white spaces after an attributte name
+                        // we have read white spaces after an attribute name
                         if (-1 == ch) {
                             // same as last else clause
                             this.standalone(attributes, bookmarks);
@@ -1446,6 +1471,8 @@ KISSY.add("html-parser/lexer/lexer", function (S, Cursor, Page, TextNode, CData,
                     default:
                         throw new Error("how ** did we get in state " + state);
                 }
+
+                checkError();
             }
 
             return this.makeTag(start, cursor.position, attributes);
@@ -1635,7 +1662,9 @@ KISSY.add("html-parser/lexer/lexer", function (S, Cursor, Page, TextNode, CData,
 
         /**
          * parse cdata such as code in script
-         * @param quoteSmart if set true end tag in quote (but not in comment mode) does not end current tag ( <script>x="<a>taobao</a>"</script> )
+         * @param quoteSmart if set true end tag in quote
+         * (but not in comment mode) does not end current tag ( <script>x="<a>taobao</a>"</script> )
+         * @param tagName
          */
         parseCDATA: function (quoteSmart, tagName) {
             var start,
@@ -1882,7 +1911,6 @@ KISSY.add("html-parser/lexer/lexer", function (S, Cursor, Page, TextNode, CData,
     };
 
     return Lexer;
-
 }, {
     requires: [
         './cursor',
