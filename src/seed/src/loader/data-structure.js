@@ -356,8 +356,7 @@
 
         for (p in packages) {
 
-            if (modName.split('/')[0] === p &&
-                p.length > pName.length) {
+            if (modName.split('/')[0] === p) {
                 pName = p;
             }
 
