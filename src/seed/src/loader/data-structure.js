@@ -356,8 +356,7 @@
 
         for (p in packages) {
 
-            // longest match
-            if (S.startsWith(modName, p) &&
+            if (modName.split('/')[0] === p &&
                 p.length > pName.length) {
                 pName = p;
             }
