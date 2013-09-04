@@ -280,8 +280,6 @@ if (! _$jscoverage['/loader/simple-loader.js']) {
   _$jscoverage['/loader/simple-loader.js'].lineData[159] = 0;
   _$jscoverage['/loader/simple-loader.js'].lineData[166] = 0;
   _$jscoverage['/loader/simple-loader.js'].lineData[167] = 0;
-  _$jscoverage['/loader/simple-loader.js'].lineData[168] = 0;
-  _$jscoverage['/loader/simple-loader.js'].lineData[170] = 0;
   _$jscoverage['/loader/simple-loader.js'].lineData[173] = 0;
   _$jscoverage['/loader/simple-loader.js'].lineData[176] = 0;
   _$jscoverage['/loader/simple-loader.js'].lineData[179] = 0;
@@ -576,10 +574,6 @@ function visit416_44_1(result) {
     _$jscoverage['/loader/simple-loader.js'].functionData[8]++;
     _$jscoverage['/loader/simple-loader.js'].lineData[167]++;
     if (visit428_167_1(mod.fn)) {
-      _$jscoverage['/loader/simple-loader.js'].lineData[168]++;
-      var msg = 'load remote module: "' + modName + '" from: "' + url + '"';
-      _$jscoverage['/loader/simple-loader.js'].lineData[170]++;
-      S.log(msg, 'info');
     } else {
       _$jscoverage['/loader/simple-loader.js'].lineData[173]++;
       _modError();

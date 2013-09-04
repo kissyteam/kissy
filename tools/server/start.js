@@ -195,7 +195,8 @@ S.use('xtemplate/nodejs', function (S, XTemplateNodeJs) {
             } else {
                 component = ''
             }
-            var myPath = cwd + '/../' + req.param('path');
+            var path = req.param('path');
+            var myPath = cwd + '/' + path.slice(path.indexOf('/') + 1);
             var jsonReport = JSON.parse(report);
             var srcPath = path.resolve(myPath, '../../../src/') + '/';
             var source_files = postData.source_files;

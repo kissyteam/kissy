@@ -165,9 +165,9 @@
 
             function checkHandler() {
                 if (mod.fn) {
-                    var msg = 'load remote module: "' + modName +
-                        '" from: "' + url + '"';
-                    S.log(msg, 'info');
+                    // var msg = 'load remote module: "' + modName +
+                    //    '" from: "' + url + '"';
+                    // S.log(msg, 'info');
                 } else {
                     // ie will call success even when getScript error(404)
                     _modError();

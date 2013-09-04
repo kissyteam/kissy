@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 4 10:42
+build time: Sep 4 22:52
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130904104236' will replace with current timestamp when compressing.
+         * NOTICE: '20130904225238' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130904104236',
+        __BUILD_TIME: '20130904225238',
         /**
          * KISSY Environment.
          * @private
@@ -4928,9 +4928,9 @@ var KISSY = (function (undefined) {
 
             function checkHandler() {
                 if (mod.fn) {
-                    var msg = 'load remote module: "' + modName +
-                        '" from: "' + url + '"';
-                    S.log(msg, 'info');
+                    // var msg = 'load remote module: "' + modName +
+                    //    '" from: "' + url + '"';
+                    // S.log(msg, 'info');
                 } else {
                     // ie will call success even when getScript error(404)
                     _modError();
@@ -5680,7 +5680,7 @@ var KISSY = (function (undefined) {
             comboMaxFileNum: 40,
             charset: 'utf-8',
             lang: 'zh-cn',
-            tag: '20130904104236'
+            tag: '20130904225238'
         }, getBaseInfo()));
     }
 
