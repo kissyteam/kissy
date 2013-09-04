@@ -18,7 +18,7 @@
     "yyfrankyy <yyfrankyy@gmail.com>"
   ],
   "engines": {
-    "node": ">=0.8.0"
+    "node": "~0.10.2"
   },
   "bin": {
     "kissy-xtemplate": "./bin/xtemplate.js",
