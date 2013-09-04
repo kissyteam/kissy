@@ -55,12 +55,12 @@
 
         <replace token="./cool.png"
                  file="${editor.theme.tmp.dir}/cool/editor.css"
-                       value="/kissy/k/${cdn-version}/editor/theme/cool/cool.png"
-                       encoding="${charset}"/>
+                 value="http://gtms02.alicdn.com/tps/i2/T1dyWGFmpbXXaZpXLq-24-613.png"
+                 encoding="${charset}"/>
 
         <replace token="./cool-ie6.png"
                  file="${editor.theme.tmp.dir}/cool/editor.css"
-                 value="/kissy/k/${cdn-version}/editor/theme/cool/cool-ie6.png"
+                 value="http://gtms03.alicdn.com/tps/i3/T1jsWEFdteXXaZpXLq-24-613.png"
                  encoding="${charset}"/>
     </target>
 
