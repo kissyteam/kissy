@@ -1,4 +1,9 @@
-# KISSY [![Build Status](https://secure.travis-ci.org/kissyteam/kissy.png?branch=master)](https://travis-ci.org/kissyteam/kissy) [![NPM version](https://badge.fury.io/js/kissy.png)](http://badge.fury.io/js/kissy) [![Coverage Status](https://coveralls.io/repos/kissyteam/kissy/badge.png?branch=master)](https://coveralls.io/r/kissyteam/kissy?branch=master)
+# KISSY
+[![Build Status](https://secure.travis-ci.org/kissyteam/kissy.png?branch=master)](https://travis-ci.org/kissyteam/kissy)
+[![NPM version](https://badge.fury.io/js/kissy.png)](http://badge.fury.io/js/kissy)
+[![Coverage Status](https://coveralls.io/repos/kissyteam/kissy/badge.png?branch=master)](https://coveralls.io/r/kissyteam/kissy?branch=master)
+[![Stories in Ready](https://badge.waffle.io/kissyteam/kissy.png)](https://waffle.io/kissyteam/kissy)
+[![Dependency Status](https://gemnasium.com/kissyteam/kissy.png)](https://gemnasium.com/kissyteam/kissy)
 
 > A Powerful JavaScript Framework
 
@@ -6,7 +11,7 @@
  * Docs: <http://docs.kissyui.com/>
  * History: <http://github.com/kissyteam/kissy/blob/master/HISTORY.md>
  * License: <http://github.com/kissyteam/kissy/blob/master/LICENSE.md>
- * Contributing Guide: <http://github.com/kissyteam/kissy/blob/master/CONTRIBUTING.md> [![Stories in Ready](https://badge.waffle.io/kissyteam/kissy.png)](https://waffle.io/kissyteam/kissy)
+ * Contributing Guide: <http://github.com/kissyteam/kissy/blob/master/CONTRIBUTING.md>
 
 ## Vision
 
