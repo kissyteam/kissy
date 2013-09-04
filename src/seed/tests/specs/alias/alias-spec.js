@@ -4,7 +4,7 @@ describe("KISSY Loader alias", function () {
 
         KISSY.config({
             packages: {
-                a: {
+                'alias-a': {
                     base: window.ALIAS_PATH || '../specs/alias/'
                 }
             },
