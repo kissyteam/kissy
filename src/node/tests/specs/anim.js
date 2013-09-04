@@ -1,13 +1,12 @@
 /**
- * testcases for anim on node
+ * test cases for anim on node
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, Anim, Node) {
+    var $ = Node.all;
 
     return {
-        run:function(){
-            var $ = Node.all;
-
+        run: function () {
             function padding(s) {
                 if (s.length == 1)
                     return "0" + s;
@@ -30,6 +29,25 @@ KISSY.add(function (S, Anim, Node) {
             }
 
             describe("anim on node", function () {
+                it('fadeIn/fadeOut works', function () {
+                    var n = $('<div style="border:1px solid red;width:100px;height: 100px;">test fadeIn</div>');
+                    n.appendTo(document.body);
+                    n.fadeIn(1);
+                    waits(10);
+                    runs(function () {
+                        expect(n.css('opacity')).toBe('1');
+                        n.fadeOut(.5);
+                    });
+                    waits(100);
+                    runs(function () {
+                        expect(n.css('opacity')).not.toBe('1');
+                    });
+                    waits(600);
+                    runs(function () {
+                        expect(n.css('opacity')).toBe('1');
+                        expect(n.css('display')).toBe('none');
+                    });
+                });
 
                 it("should attach node with slideUp/down well", function () {
                     var test1 = Node.one("#test6");
@@ -61,7 +79,6 @@ KISSY.add(function (S, Anim, Node) {
                         expect(normalizeColor(test1.css("background-color")))
                             .toBe("#cccccc");
                     });
-
 
                     runs(function () {
                         test1.slideDown(0.4);
@@ -120,7 +137,6 @@ KISSY.add(function (S, Anim, Node) {
                         test2.show(0.2);
                     });
 
-
                     waits(100);
 
                     runs(function () {
@@ -131,7 +147,6 @@ KISSY.add(function (S, Anim, Node) {
 
                     });
 
-
                     waits(200);
 
                     runs(function () {
@@ -140,13 +155,10 @@ KISSY.add(function (S, Anim, Node) {
                         expect(test2.css("height")).toBe("100px");
                         expect(test2.css("opacity") + "").toBe('1');
                     });
-
                 });
             });
         }
-    }
-
-
-},{
-    requires:['anim','node']
+    };
+}, {
+    requires: ['anim', 'node']
 });

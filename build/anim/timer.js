@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 3 19:05
+build time: Sep 4 18:15
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -1221,7 +1221,10 @@ KISSY.add('anim/timer', function (S, Dom, Event, AnimBase, Easing, AM, Fx, SHORT
                 for (prop in _propsData) {
                     _propData = _propsData[prop];
                     fx = _propData.fx;
-                    fx.frame(1);
+                    // fadeIn() -> call stop
+                    if (fx) {
+                        fx.frame(1);
+                    }
                 }
             }
         },

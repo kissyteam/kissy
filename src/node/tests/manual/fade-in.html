@@ -1,0 +1,22 @@
+<!doctype html>
+<html>
+<head>
+    <script src="/kissy/build/seed.js"></script>
+    <script src="/kissy/src/package.js"></script>
+</head>
+<body>
+<div id="t" style="width:100px;
+height: 100px;
+border:1px solid red;"></div>
+<script>
+    KISSY.use('node', function (S, Node) {
+        var t = Node.all('#t');
+        var now = S.now();
+        t.fadeIn(1);
+        S.log('duration: ' + (S.now() - now));
+        t.fadeOut(2);
+        t.fadeIn(2);
+    });
+</script>
+</body>
+</html>

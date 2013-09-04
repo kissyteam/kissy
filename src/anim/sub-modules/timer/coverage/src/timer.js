@@ -306,11 +306,12 @@ if (! _$jscoverage['/timer.js']) {
   _$jscoverage['/timer.js'].lineData[170] = 0;
   _$jscoverage['/timer.js'].lineData[171] = 0;
   _$jscoverage['/timer.js'].lineData[172] = 0;
-  _$jscoverage['/timer.js'].lineData[173] = 0;
-  _$jscoverage['/timer.js'].lineData[179] = 0;
-  _$jscoverage['/timer.js'].lineData[183] = 0;
-  _$jscoverage['/timer.js'].lineData[184] = 0;
+  _$jscoverage['/timer.js'].lineData[174] = 0;
+  _$jscoverage['/timer.js'].lineData[175] = 0;
+  _$jscoverage['/timer.js'].lineData[182] = 0;
   _$jscoverage['/timer.js'].lineData[186] = 0;
+  _$jscoverage['/timer.js'].lineData[187] = 0;
+  _$jscoverage['/timer.js'].lineData[189] = 0;
 }
 if (! _$jscoverage['/timer.js'].functionData) {
   _$jscoverage['/timer.js'].functionData = [];
@@ -359,8 +360,14 @@ if (! _$jscoverage['/timer.js'].branchData) {
   _$jscoverage['/timer.js'].branchData['156'][2] = new BranchData();
   _$jscoverage['/timer.js'].branchData['169'] = [];
   _$jscoverage['/timer.js'].branchData['169'][1] = new BranchData();
+  _$jscoverage['/timer.js'].branchData['174'] = [];
+  _$jscoverage['/timer.js'].branchData['174'][1] = new BranchData();
 }
-_$jscoverage['/timer.js'].branchData['169'][1].init(195, 6, 'finish');
+_$jscoverage['/timer.js'].branchData['174'][1].init(163, 2, 'fx');
+function visit105_174_1(result) {
+  _$jscoverage['/timer.js'].branchData['174'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/timer.js'].branchData['169'][1].init(195, 6, 'finish');
 function visit104_169_1(result) {
   _$jscoverage['/timer.js'].branchData['169'][1].ranCondition(result);
   return result;
@@ -621,21 +628,24 @@ KISSY.add('anim/timer', function(S, Dom, Event, AnimBase, Easing, AM, Fx, SHORT_
       _propData = _propsData[prop];
       _$jscoverage['/timer.js'].lineData[172]++;
       fx = _propData.fx;
-      _$jscoverage['/timer.js'].lineData[173]++;
-      fx.frame(1);
+      _$jscoverage['/timer.js'].lineData[174]++;
+      if (visit105_174_1(fx)) {
+        _$jscoverage['/timer.js'].lineData[175]++;
+        fx.frame(1);
+      }
     }
   }
 }, 
   doStart: function() {
   _$jscoverage['/timer.js'].functionData[10]++;
-  _$jscoverage['/timer.js'].lineData[179]++;
+  _$jscoverage['/timer.js'].lineData[182]++;
   AM.start(this);
 }});
-  _$jscoverage['/timer.js'].lineData[183]++;
-  Anim.Easing = Easing;
-  _$jscoverage['/timer.js'].lineData[184]++;
-  Anim.Fx = Fx;
   _$jscoverage['/timer.js'].lineData[186]++;
+  Anim.Easing = Easing;
+  _$jscoverage['/timer.js'].lineData[187]++;
+  Anim.Fx = Fx;
+  _$jscoverage['/timer.js'].lineData[189]++;
   return Anim;
 }, {
   requires: ['dom', 'event', './base', './timer/easing', './timer/manager', './timer/fx', './timer/short-hand', './timer/color', './timer/transform']});
