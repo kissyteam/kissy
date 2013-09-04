@@ -12,5 +12,6 @@ before_script:
 
 script:
   - npm test
+  - node --version
   - phantomjs --version
   - phantomjs ./tools/test/jasmine-phantomjs.js
