@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 4 12:05
+build time: Sep 4 12:23
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -941,7 +941,7 @@ KISSY.add('event/dom/touch/handle', function (S, Dom, eventHandleMap, DomEvent) 
                 eventHandle = self.eventHandle;
             if (isTouchEvent(type)) {
                 self.setPrimaryTouch(event.changedTouches[0]);
-                self.dupMouse(type);
+                self.dupMouse(event);
             } else if (isMouseEvent(type)) {
                 if (self.isEventSimulatedFromTouch(event)) {
                     return;

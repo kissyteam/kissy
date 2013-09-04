@@ -190,7 +190,7 @@ KISSY.add('event/dom/touch/handle', function (S, Dom, eventHandleMap, DomEvent) 
                 eventHandle = self.eventHandle;
             if (isTouchEvent(type)) {
                 self.setPrimaryTouch(event.changedTouches[0]);
-                self.dupMouse(type);
+                self.dupMouse(event);
             } else if (isMouseEvent(type)) {
                 if (self.isEventSimulatedFromTouch(event)) {
                     return;

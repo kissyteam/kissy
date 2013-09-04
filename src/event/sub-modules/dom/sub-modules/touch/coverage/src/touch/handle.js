@@ -595,7 +595,7 @@ function visit33_216_1(result) {
 function visit32_215_1(result) {
   _$jscoverage['/touch/handle.js'].branchData['215'][1].ranCondition(result);
   return result;
-}_$jscoverage['/touch/handle.js'].branchData['199'][1].init(517, 22, 'isMSPointerEvent(type)');
+}_$jscoverage['/touch/handle.js'].branchData['199'][1].init(518, 22, 'isMSPointerEvent(type)');
 function visit31_199_1(result) {
   _$jscoverage['/touch/handle.js'].branchData['199'][1].ranCondition(result);
   return result;
@@ -603,7 +603,7 @@ function visit31_199_1(result) {
 function visit30_195_1(result) {
   _$jscoverage['/touch/handle.js'].branchData['195'][1].ranCondition(result);
   return result;
-}_$jscoverage['/touch/handle.js'].branchData['194'][1].init(305, 18, 'isMouseEvent(type)');
+}_$jscoverage['/touch/handle.js'].branchData['194'][1].init(306, 18, 'isMouseEvent(type)');
 function visit29_194_1(result) {
   _$jscoverage['/touch/handle.js'].branchData['194'][1].ranCondition(result);
   return result;
@@ -944,7 +944,7 @@ KISSY.add('event/dom/touch/handle', function(S, Dom, eventHandleMap, DomEvent) {
     _$jscoverage['/touch/handle.js'].lineData[192]++;
     self.setPrimaryTouch(event.changedTouches[0]);
     _$jscoverage['/touch/handle.js'].lineData[193]++;
-    self.dupMouse(type);
+    self.dupMouse(event);
   } else {
     _$jscoverage['/touch/handle.js'].lineData[194]++;
     if (visit29_194_1(isMouseEvent(type))) {
