@@ -198,7 +198,7 @@ S.use('xtemplate/nodejs', function (S, XTemplateNodeJs) {
             var pathParam = req.param('path');
             var myPath = cwd + '/' + pathParam.slice(pathParam.indexOf('/') + 1);
             var jsonReport = JSON.parse(report);
-            var srcPath = path.resolve(myPath, '../../../src/') + '/';
+            var srcPath = path.resolve(myPath, '../../../src/');
             var source_files = postData.source_files;
             for (var f in jsonReport) {
                 var detail = jsonReport[f];
