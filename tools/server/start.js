@@ -171,9 +171,9 @@ S.use('xtemplate/nodejs', function (S, XTemplateNodeJs) {
                 'console.log("0 specs, 0 failures in {time}ms.")</script>';
             var str = JSON.stringify(postData);
             if (!service_job_id) {
-                console.log(str);
+                //console.log(str);
                 res.send(S.substitute(ok, {
-                    content: 'var data=' + str + ';console.log(data);',
+                    //content: 'var data=' + str + ';console.log(data);',
                     time: (Date.now() - start)
                 }));
                 return;
@@ -187,6 +187,10 @@ S.use('xtemplate/nodejs', function (S, XTemplateNodeJs) {
         });
 
         app.post('/save-coverage-report', function (req, res) {
+            if (!service_job_id) {
+                res.send('');
+                return;
+            }
             var report = req.param('report');
             var component = req.param('component');
             if (component.indexOf('/') != -1) {
