@@ -216,7 +216,8 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, Node, Anim) {
     }
 
     function onDragStartHandler(e) {
-        var self = this;
+        var self = this,
+            touches = e.touches;
         if (self.get('disabled')) {
             return;
         }
@@ -233,6 +234,9 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, Node, Anim) {
                 pageIndex: pageIndex
             }, pos));
         }
+        if (touches.length > 1) {
+            return;
+        }
         initStates(self);
         self.startMousePos = pos;
         onDragStart(self, e, 'left');
@@ -243,15 +247,22 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, Node, Anim) {
 
     function onDragHandler(e) {
         var self = this,
+            touches = e.touches,
             startMousePos = self.startMousePos;
+
+        // move out of window and release in ie
+        if (!touches.length) {
+            onDragEndHandler.call(self, e);
+            return;
+        }
 
         if (!startMousePos) {
             return;
         }
 
         var pos = {
-            pageX: e.touches[0].pageX,
-            pageY: e.touches[0].pageY
+            pageX: touches[0].pageX,
+            pageY: touches[0].pageY
         };
 
         var xDiff = Math.abs(pos.pageX - startMousePos.pageX);
@@ -272,8 +283,6 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, Node, Anim) {
 
         // if lockX or lockY then do not prevent native scroll on some condition
         if (lockX || lockY) {
-
-
             var dragInitDirection;
 
             if (!(dragInitDirection = self.dragInitDirection)) {
@@ -310,24 +319,21 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, Node, Anim) {
 
     function onDragEndHandler(e) {
         var self = this;
-        var count = 0;
         var startMousePos = self.startMousePos;
-
+        self.$contentEl.detach(Gesture.move, onDragHandler, self);
         if (!startMousePos || !self.isScrolling) {
             return;
         }
-        self.$contentEl.detach(Gesture.move, onDragHandler, self);
+        var count = 0;
         var offsetX = startMousePos.pageX - e.pageX;
         var offsetY = startMousePos.pageY - e.pageY;
         var snapThreshold = self.get('snapThreshold');
         var allowX = self.allowScroll.left && Math.abs(offsetX) > snapThreshold;
         var allowY = self.allowScroll.top && Math.abs(offsetY) > snapThreshold;
-
         self.fire('dragend', {
             pageX: e.pageX,
             pageY: e.pageY
         });
-
         function endCallback() {
             count++;
             if (count == 2) {
@@ -434,18 +440,13 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, Node, Anim) {
 
     function initStates(self) {
         self.lastPageXY = {};
-
         self.lastDirection = {};
-
         self.swipe = {
             left: {},
             top: {}
         };
-
         self.startMousePos = null;
-
         self.startScroll = {};
-
         self.dragInitDirection = null;
     }
 
@@ -473,8 +474,7 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, Node, Anim) {
                 this.callSuper();
                 this.isScrolling = 0;
             }
-        },
-        {
+        }, {
             ATTRS: {
                 /**
                  * whether allow drag in x direction when content size is less than container size.
@@ -515,7 +515,6 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, Node, Anim) {
 }, {
     requires: ['./base', 'node', 'anim']
 });
-
 /**
  * @ignore
  * refer

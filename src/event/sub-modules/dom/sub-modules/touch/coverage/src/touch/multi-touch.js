@@ -291,35 +291,35 @@ if (! _$jscoverage['/touch/multi-touch.js'].branchData) {
   _$jscoverage['/touch/multi-touch.js'].branchData['74'][1] = new BranchData();
 }
 _$jscoverage['/touch/multi-touch.js'].branchData['74'][1].init(66, 14, 'self.isStarted');
-function visit52_74_1(result) {
+function visit60_74_1(result) {
   _$jscoverage['/touch/multi-touch.js'].branchData['74'][1].ranCondition(result);
   return result;
 }_$jscoverage['/touch/multi-touch.js'].branchData['71'][1].init(257, 15, 'self.isTracking');
-function visit51_71_1(result) {
+function visit59_71_1(result) {
   _$jscoverage['/touch/multi-touch.js'].branchData['71'][1].ranCondition(result);
   return result;
 }_$jscoverage['/touch/multi-touch.js'].branchData['56'][1].init(22, 20, 'Dom.contains(t2, t1)');
-function visit50_56_1(result) {
+function visit58_56_1(result) {
   _$jscoverage['/touch/multi-touch.js'].branchData['56'][1].ranCondition(result);
   return result;
 }_$jscoverage['/touch/multi-touch.js'].branchData['51'][1].init(210, 20, 'Dom.contains(t1, t2)');
-function visit49_51_1(result) {
+function visit57_51_1(result) {
   _$jscoverage['/touch/multi-touch.js'].branchData['51'][1].ranCondition(result);
   return result;
 }_$jscoverage['/touch/multi-touch.js'].branchData['48'][1].init(138, 8, 't1 == t2');
-function visit48_48_1(result) {
+function visit56_48_1(result) {
   _$jscoverage['/touch/multi-touch.js'].branchData['48'][1].ranCondition(result);
   return result;
 }_$jscoverage['/touch/multi-touch.js'].branchData['36'][1].init(48, 16, '!self.isTracking');
-function visit47_36_1(result) {
+function visit55_36_1(result) {
   _$jscoverage['/touch/multi-touch.js'].branchData['36'][1].ranCondition(result);
   return result;
 }_$jscoverage['/touch/multi-touch.js'].branchData['25'][1].init(311, 35, 'touchesCount > requiredTouchesCount');
-function visit46_25_1(result) {
+function visit54_25_1(result) {
   _$jscoverage['/touch/multi-touch.js'].branchData['25'][1].ranCondition(result);
   return result;
 }_$jscoverage['/touch/multi-touch.js'].branchData['22'][1].init(201, 37, 'touchesCount === requiredTouchesCount');
-function visit45_22_1(result) {
+function visit53_22_1(result) {
   _$jscoverage['/touch/multi-touch.js'].branchData['22'][1].ranCondition(result);
   return result;
 }_$jscoverage['/touch/multi-touch.js'].lineData[6]++;
@@ -338,12 +338,12 @@ KISSY.add('event/dom/touch/multi-touch', function(S, Dom) {
   _$jscoverage['/touch/multi-touch.js'].lineData[17]++;
   var self = this, requiredTouchesCount = self.requiredTouchCount, touches = e.touches, touchesCount = touches.length;
   _$jscoverage['/touch/multi-touch.js'].lineData[22]++;
-  if (visit45_22_1(touchesCount === requiredTouchesCount)) {
+  if (visit53_22_1(touchesCount === requiredTouchesCount)) {
     _$jscoverage['/touch/multi-touch.js'].lineData[23]++;
     self.start();
   } else {
     _$jscoverage['/touch/multi-touch.js'].lineData[25]++;
-    if (visit46_25_1(touchesCount > requiredTouchesCount)) {
+    if (visit54_25_1(touchesCount > requiredTouchesCount)) {
       _$jscoverage['/touch/multi-touch.js'].lineData[26]++;
       self.end(e);
     }
@@ -359,7 +359,7 @@ KISSY.add('event/dom/touch/multi-touch', function(S, Dom) {
   _$jscoverage['/touch/multi-touch.js'].lineData[35]++;
   var self = this;
   _$jscoverage['/touch/multi-touch.js'].lineData[36]++;
-  if (visit47_36_1(!self.isTracking)) {
+  if (visit55_36_1(!self.isTracking)) {
     _$jscoverage['/touch/multi-touch.js'].lineData[37]++;
     self.isTracking = true;
     _$jscoverage['/touch/multi-touch.js'].lineData[38]++;
@@ -372,19 +372,19 @@ KISSY.add('event/dom/touch/multi-touch', function(S, Dom) {
   _$jscoverage['/touch/multi-touch.js'].lineData[45]++;
   var touches = e.touches, t1 = touches[0].target, t2 = touches[1].target;
   _$jscoverage['/touch/multi-touch.js'].lineData[48]++;
-  if (visit48_48_1(t1 == t2)) {
+  if (visit56_48_1(t1 == t2)) {
     _$jscoverage['/touch/multi-touch.js'].lineData[49]++;
     return t1;
   }
   _$jscoverage['/touch/multi-touch.js'].lineData[51]++;
-  if (visit49_51_1(Dom.contains(t1, t2))) {
+  if (visit57_51_1(Dom.contains(t1, t2))) {
     _$jscoverage['/touch/multi-touch.js'].lineData[52]++;
     return t1;
   }
   _$jscoverage['/touch/multi-touch.js'].lineData[55]++;
   while (1) {
     _$jscoverage['/touch/multi-touch.js'].lineData[56]++;
-    if (visit50_56_1(Dom.contains(t2, t1))) {
+    if (visit58_56_1(Dom.contains(t2, t1))) {
       _$jscoverage['/touch/multi-touch.js'].lineData[57]++;
       return t2;
     }
@@ -401,11 +401,11 @@ KISSY.add('event/dom/touch/multi-touch', function(S, Dom) {
   _$jscoverage['/touch/multi-touch.js'].lineData[66]++;
   var self = this;
   _$jscoverage['/touch/multi-touch.js'].lineData[71]++;
-  if (visit51_71_1(self.isTracking)) {
+  if (visit59_71_1(self.isTracking)) {
     _$jscoverage['/touch/multi-touch.js'].lineData[72]++;
     self.isTracking = false;
     _$jscoverage['/touch/multi-touch.js'].lineData[74]++;
-    if (visit52_74_1(self.isStarted)) {
+    if (visit60_74_1(self.isStarted)) {
       _$jscoverage['/touch/multi-touch.js'].lineData[75]++;
       self.isStarted = false;
       _$jscoverage['/touch/multi-touch.js'].lineData[76]++;

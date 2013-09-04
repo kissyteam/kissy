@@ -435,6 +435,7 @@ KISSY.add('dd/ddm', function (S, Node, Base, undefined) {
     function registerEvent(self) {
         $doc.on(DRAG_END_EVENT, self._end, self);
         $doc.on(DRAG_MOVE_EVENT, throttleMove, self);
+        // http://stackoverflow.com/questions/1685326/responding-to-the-onmousemove-event-outside-of-the-browser-window-in-ie
         // ie6 will not response to event when cursor is out of window.
         if (doc.body.setCapture) {
             doc.body.setCapture();

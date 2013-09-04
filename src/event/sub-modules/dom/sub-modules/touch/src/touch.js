@@ -21,6 +21,7 @@ KISSY.add('event/dom/touch', function (S, DomEvent, eventHandleMap, eventHandle)
             }
         }
     };
+
     eventHandleMap[moveEvent] = {
         setup: function () {
             var doc = this.ownerDocument || this;
@@ -46,6 +47,7 @@ KISSY.add('event/dom/touch', function (S, DomEvent, eventHandleMap, eventHandle)
             }
         }
     };
+
     eventHandleMap[endEvent] = {
         handle: {
             // always fire

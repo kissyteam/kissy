@@ -10,12 +10,16 @@ KISSY.add('event/dom/touch/handle', function (S, Dom, eventHandleMap, DomEvent) 
         gestureMoveEvent,
         gestureEndEvent;
 
-    function isTouchEvent(e) {
-        return S.startsWith(e.type, 'touch');
+    function isTouchEvent(type) {
+        return S.startsWith(type, 'touch');
     }
 
-    function isMouseEvent(e) {
-        return S.startsWith(e.type, 'mouse');
+    function isMouseEvent(type) {
+        return S.startsWith(type, 'mouse');
+    }
+
+    function isMSPointerEvent(type) {
+        return S.startsWith(type, 'MSPointer');
     }
 
     // This should be long enough to ignore compatible mouse events made by touch
@@ -28,7 +32,7 @@ KISSY.add('event/dom/touch/handle', function (S, Dom, eventHandleMap, DomEvent) 
         // allow touch and mouse both!
         gestureStartEvent = 'touchstart mousedown';
         gestureMoveEvent = 'touchmove mousemove';
-        if(S.UA.ios){
+        if (S.UA.ios) {
             // ios mousedown is buggy
             gestureEndEvent = 'touchend touchcancel';
             gestureStartEvent = 'touchstart';
@@ -56,6 +60,8 @@ KISSY.add('event/dom/touch/handle', function (S, Dom, eventHandleMap, DomEvent) 
     }
 
     DocumentHandler.prototype = {
+        constructor: DocumentHandler,
+
         lastTouches: [],
 
         firstTouch: null,
@@ -68,14 +74,50 @@ KISSY.add('event/dom/touch/handle', function (S, Dom, eventHandleMap, DomEvent) 
             DomEvent.on(doc, gestureEndEvent, self.onTouchEnd, self);
         },
 
+        addTouch: function (originalEvent) {
+            originalEvent.identifier = originalEvent['pointerId'];
+            this.touches.push(originalEvent);
+        },
+
+        removeTouch: function (originalEvent) {
+            var i = 0,
+                touch,
+                pointerId = originalEvent['pointerId'],
+                touches = this.touches,
+                l = touches.length;
+            for (; i < l; i++) {
+                touch = touches[i];
+                if (touch['pointerId'] === pointerId) {
+                    touches.splice(i, 1);
+                    break;
+                }
+            }
+        },
+
+        updateTouch: function (originalEvent) {
+            var i = 0,
+                touch,
+                pointerId = originalEvent['pointerId'],
+                touches = this.touches,
+                l = touches.length;
+            for (; i < l; i++) {
+                touch = touches[i];
+                if (touch['pointerId'] === pointerId) {
+                    touches[i] = originalEvent;
+                }
+            }
+        },
+
         isPrimaryTouch: function (inTouch) {
             return this.firstTouch === inTouch.identifier;
         },
+
         setPrimaryTouch: function (inTouch) {
             if (this.firstTouch === null) {
                 this.firstTouch = inTouch.identifier;
             }
         },
+
         removePrimaryTouch: function (inTouch) {
             if (this.isPrimaryTouch(inTouch)) {
                 this.firstTouch = null;
@@ -117,13 +159,11 @@ KISSY.add('event/dom/touch/handle', function (S, Dom, eventHandleMap, DomEvent) 
             return 0;
         },
 
-        constructor: DocumentHandler,
-
         normalize: function (e) {
             var type = e.type,
                 notUp,
                 touchList;
-            if (isTouchEvent(e)) {
+            if (isTouchEvent(type)) {
                 touchList = (type == 'touchend' || type == 'touchcancel') ?
                     e.changedTouches :
                     e.touches;
@@ -146,56 +186,65 @@ KISSY.add('event/dom/touch/handle', function (S, Dom, eventHandleMap, DomEvent) 
         onTouchStart: function (event) {
             var e, h,
                 self = this,
+                type = event.type,
                 eventHandle = self.eventHandle;
-            if (isTouchEvent(event)) {
+            if (isTouchEvent(type)) {
                 self.setPrimaryTouch(event.changedTouches[0]);
-                self.dupMouse(event);
-            } else if (isMouseEvent(event)) {
+                self.dupMouse(type);
+            } else if (isMouseEvent(type)) {
                 if (self.isEventSimulatedFromTouch(event)) {
                     return;
                 }
+                self.touches = [event.originalEvent];
+            } else if (isMSPointerEvent(type)) {
+                self.addTouch(event.originalEvent);
+            } else {
+                throw new Error('unrecognized touch event: ' + event.type);
             }
             for (e in eventHandle) {
                 h = eventHandle[e].handle;
                 h.isActive = 1;
             }
-            if (isTouchEvent(event)) {
-                self.touches = S.makeArray(event.touches);
-            } else {
-                self.touches = [event.originalEvent];
-            }
             // if preventDefault, will not trigger click event
             self.callEventHandle('onTouchStart', event);
         },
 
-        onTouchMove: function (e) {
-            var self = this;
-            if (isMouseEvent(e)) {
-                if (this.isEventSimulatedFromTouch(e)) {
+        onTouchMove: function (event) {
+            var self = this,
+                type = event.type;
+            if (isTouchEvent(type)) {
+            } else if (isMouseEvent(type)) {
+                if (self.isEventSimulatedFromTouch(type)) {
                     return;
                 }
+                self.touches = [event.originalEvent];
+            } else if (isMSPointerEvent(type)) {
+                self.updateTouch(event.originalEvent);
+            } else {
+                throw new Error('unrecognized touch event: ' + event.type);
             }
-            self.touches = [e.originalEvent];
             // no throttle! to allow preventDefault
-            self.callEventHandle('onTouchMove', e);
+            self.callEventHandle('onTouchMove', event);
         },
 
         onTouchEnd: function (event) {
-            var self = this;
-            if (isMouseEvent(event)) {
+            var self = this,
+                type = event.type;
+            if (isMouseEvent(type)) {
                 if (self.isEventSimulatedFromTouch(event)) {
                     return;
                 }
             }
             self.callEventHandle('onTouchEnd', event);
-            if (isTouchEvent(event)) {
-                self.touches = S.makeArray(event.touches);
+            if (isTouchEvent(type)) {
                 self.dupMouse(event);
                 S.makeArray(event.changedTouches).forEach(function (touch) {
                     self.removePrimaryTouch(touch);
                 });
-            } else {
+            } else if (isMouseEvent(type)) {
                 self.touches = [];
+            } else if (isMSPointerEvent(type)) {
+                self.removeTouch(event.originalEvent);
             }
         },
 
