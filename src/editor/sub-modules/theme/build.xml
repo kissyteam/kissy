@@ -30,11 +30,21 @@
             <fileset file="${component.src.dir.tmp}/cool/editor-pkg.css"/>
         </smartsprites>
 
-        <move tofile="${component.src.dir.tmp}/cool/editor.css">
+        <copy tofile="${component.src.dir.tmp}/cool/editor.css">
             <path location="${component.src.dir.tmp}/cool/editor-pkg-sprite.css"/>
-        </move>
+        </copy>
+
+        <replace token="./cool.png"
+                 file="${component.src.dir.tmp}/cool/editor.css"
+                 value="/kissy/k/${cdn.version}/editor/theme/cool/cool.png"
+                 encoding="${charset}"/>
+
+        <replace token="./cool-ie6.png"
+                 file="${component.src.dir.tmp}/cool/editor.css"
+                 value="/kissy/k/${cdn.version}/editor/theme/cool/cool-ie6.png"
+                 encoding="${charset}"/>
 
         <delete dir="${component.src.dir.tmp}/cool/"
-                excludes="editor.css,cool.png,cool-ie6.png,text-bg.png"></delete>
+                excludes="editor.css,editor-pkg-sprite.css,cool.png,cool-ie6.png,text-bg.png"></delete>
     </target>
 </project>
