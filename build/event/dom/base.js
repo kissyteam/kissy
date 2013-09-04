@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.32
 MIT Licensed
-build time: Aug 29 20:12
+build time: Sep 4 21:10
 */
 /**
  * @ignore
@@ -1951,6 +1951,10 @@ KISSY.add('event/dom/base/observer', function (S, special, Event) {
                 }
             } else {
                 ret = self.simpleNotify(event, ce);
+            }
+
+            if (ret === false) {
+                event.halt();
             }
 
             event.type = type;

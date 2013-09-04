@@ -48,6 +48,10 @@ KISSY.add('event/dom/base/observer', function (S, special, Event) {
                 ret = self.simpleNotify(event, ce);
             }
 
+            if (ret === false) {
+                event.halt();
+            }
+
             event.type = type;
 
             return ret;
