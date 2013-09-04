@@ -8,10 +8,10 @@ node_js:
   - 0.10
 
 before_script:
+  - node --version
+  - phantomjs --version
   - npm start &
 
 script:
   - npm test
-  - node --version
-  - phantomjs --version
   - phantomjs ./tools/test/jasmine-phantomjs.js
