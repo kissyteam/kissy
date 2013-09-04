@@ -24,6 +24,8 @@
             border: 1px solid black;
             float: left;
             overflow: hidden;
+            -ms-touch-action:none;
+            -ms-user-select:none;
         }
 
         .header {
@@ -91,7 +93,6 @@
                 $ = Node.all,
                 Draggable = DD.Draggable,
                 Droppable = DD.Droppable;
-
         /**
          * 拖放排序
          */
@@ -109,6 +110,7 @@
             // dragNode do not move , just change position among dom tree
             moveOnEnd: 0
         });
+
         var c11 = new Draggable({
             node: "#c11",
             move: 1,
@@ -117,29 +119,26 @@
             // strict : drag 区域完全在 drop 区域内才算
             // point : 鼠标在 drop 区域内
             //默认 point
-            mode: Draggable.INTERSECT,
+            mode: Draggable.DropMode.INTERSECT,
             handlers: ["#c11 .header"]
         });
         new Droppable({node: "#c11"});
 
-
         var c31 = new Draggable({
             node: "#c31",
             move: 1,
-            handlers: [$("#c31 .header")]
+            handlers: ["#c31 .header"]
         });
         new Droppable({node: "#c31"});
-
         c31.plug(p);
 
         var c21 = new Draggable({
             node: "#c21",
             move: 1,
-            mode: Draggable.INTERSECT,
-            handlers: [$("#c21 .header")]
+            mode: Draggable.DropMode.POINT,
+            handlers: ["#c21 .header"]
         });
         new Droppable({node: "#c21"});
-
 
         function onDropHit(ev) {
             var drag = ev.drag,

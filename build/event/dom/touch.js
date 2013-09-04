@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 4 12:23
+build time: Sep 4 12:50
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -1128,7 +1128,6 @@ KISSY.add('event/dom/touch/handle', function (S, Dom, eventHandleMap, DomEvent) 
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/dom/touch', function (S, DomEvent, eventHandleMap, eventHandle) {
-    var isMsPointerSupported = S.Features.isMsPointerSupported();
     var Gesture = DomEvent.Gesture;
     var startEvent = Gesture.start = 'KSPointerDown';
     var moveEvent = Gesture.move = 'KSPointerMove';
@@ -1193,37 +1192,10 @@ KISSY.add('event/dom/touch', function (S, DomEvent, eventHandleMap, eventHandle)
     }
 
     function setup(event) {
-        var self = this,
-            style = self.style;
-        if (isMsPointerSupported && style) {
-            if (!self.__ks_touch_action) {
-                self.__ks_touch_action = style.msTouchAction;
-                self.__ks_user_select = style.msUserSelect;
-                style.msTouchAction = style.msUserSelect = 'none';
-            }
-            if (!self.__ks_touch_action_count) {
-                self.__ks_touch_action_count = 1;
-            } else {
-                self.__ks_touch_action_count++;
-            }
-        }
         eventHandle.addDocumentHandle(this, event);
     }
 
     function tearDown(event) {
-        var self = this,
-            style = self.style;
-        if (isMsPointerSupported && style) {
-            if (!self.__ks_touch_action_count) {
-                S.error('touch event error for ie');
-            }
-            self.__ks_touch_action_count--;
-            if (!self.__ks_touch_action_count) {
-                style.msUserSelect = self.__ks_user_select;
-                style.msTouchAction = self.__ks_touch_action;
-                self.__ks_touch_action = '';
-            }
-        }
         eventHandle.removeDocumentHandle(this, event);
     }
 

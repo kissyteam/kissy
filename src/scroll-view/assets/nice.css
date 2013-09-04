@@ -6,6 +6,8 @@
     outline: none;
     -webkit-tap-highlight-color: rgba(0,0,0,0);
     -webkit-user-drag: none;
+    -ms-touch-action:none;
+    -ms-user-select:none;
 }
 
 .ks-scroll-view-hidden{
