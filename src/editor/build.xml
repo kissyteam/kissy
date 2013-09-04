@@ -52,6 +52,16 @@
         <move tofile="${editor.theme.tmp.dir}/cool/editor.css">
             <path location="${editor.theme.tmp.dir}/cool/editor-pkg-sprite.css"/>
         </move>
+
+        <replace token="./cool.png"
+                 file="${editor.theme.tmp.dir}/cool/editor.css"
+                       value="/kissy/k/${cdn-version}/editor/theme/cool/cool.png"
+                       encoding="${charset}"/>
+
+        <replace token="./cool-ie6.png"
+                 file="${editor.theme.tmp.dir}/cool/editor.css"
+                 value="/kissy/k/${cdn-version}/editor/theme/cool/cool-ie6.png"
+                 encoding="${charset}"/>
     </target>
 
     <target name="editor-full">

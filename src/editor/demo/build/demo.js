@@ -279,9 +279,6 @@
             });
 
             window.newEditor = editor;
-
-
         });
-
     });
 })();
