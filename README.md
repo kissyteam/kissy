@@ -1,5 +1,6 @@
 # KISSY
 [![Build Status](https://secure.travis-ci.org/kissyteam/kissy.png?branch=master)](https://travis-ci.org/kissyteam/kissy)
+[![Codeship Status](https://www.codeship.io/projects/939cebe0-f137-0130-4512-3223cd47985b/status?branch=master)](https://www.codeship.io/projects/6301)
 [![NPM version](https://badge.fury.io/js/kissy.png)](http://badge.fury.io/js/kissy)
 [![Coverage Status](https://coveralls.io/repos/kissyteam/kissy/badge.png?branch=master)](https://coveralls.io/r/kissyteam/kissy?branch=master)
 [![Stories in Ready](https://badge.waffle.io/kissyteam/kissy.png)](https://waffle.io/kissyteam/kissy)
