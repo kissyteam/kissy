@@ -3,8 +3,8 @@
  * @author yiminghe@gmail.com
  */
 
-require('./gen-tc');
-require('../gen-package/gen-package');
+require('../test/gen-tc');
+require('./gen-package');
 
 // var mkdirp = require('mkdirp');
 var path = require('path');
@@ -117,7 +117,7 @@ S.use('xtemplate/nodejs', function (S, XTemplateNodeJs) {
             }
         });
 
-        var codes = require('./tc.js')();
+        var codes = require('./../test/tc.js')();
 
         app.get('/crossdomain.xml', function (req, res) {
             res.set('content-type', 'text/xml');

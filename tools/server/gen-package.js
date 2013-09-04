@@ -1,10 +1,11 @@
-var cwd = process.cwd();
+var cwd = normalizeSlash(process.cwd());
 var path = require('path');
 var startDir = normalizeSlash(path.resolve(cwd, 'src') + '/');
-var saveTo = startDir + '/package.js';
+var saveTo = startDir + 'package.js';
 var base = '/kissy/src/';
-var baseDir = normalizeSlash(path.resolve(cwd, '../'));
 var fs = require('fs');
+var suffixLen = '/src'.length;
+var S = global.KISSY = global.S = require(cwd + '/build/kissy-nodejs');
 
 function normalizeSlash(str) {
     return str.replace(/\\/g, '/');
@@ -18,7 +19,7 @@ function collectSrcDir(dir, allSrc) {
         if (state.isDirectory()) {
             if (f == 'src') {
                 allSrc.push(c);
-            } else {
+            } else if (f != 'coverage') {
                 collectSrcDir(c + '/', allSrc);
             }
         }
@@ -41,8 +42,8 @@ collectSrcDir(startDir, allSrc);
 var mod = {};
 
 allSrc.forEach(function (v) {
-    v = v.substring(baseDir.length);
-    var name = v.substring(base.length, v.length - 4);
+    v = '/kissy/' + v.replace(cwd + '/', '');
+    var name = v.substring(base.length, v.length - suffixLen);
     name = name.replace(/sub-modules\//g, '');
     mod[name] = {
         base: v + '/' + path.basename(name),

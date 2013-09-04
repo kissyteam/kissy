@@ -113,6 +113,7 @@ KISSY.add('io/xhr-transport-base', function (S, IO) {
 
             xhrFields = c['xhrFields'] || {};
 
+            // must set after open in mobile!
             if ('withCredentials' in xhrFields) {
                 if (!supportCORS) {
                     delete xhrFields.withCredentials;

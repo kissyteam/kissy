@@ -4,14 +4,14 @@
  */
 var path = require('path');
 var fs = require('fs');
-var cwd = process.cwd();
+var cwd = process.cwd().replace(/\\/g, '/');
 var srcDir = path.resolve(cwd, 'src');
-var S = global.KISSY = global.S = require(cwd + '/build/kissy-nodejs.js');
+var S = global.KISSY = global.S = require(cwd + '/build/kissy-nodejs');
 
 function collectTc(baseDir, codes) {
     var files = fs.readdirSync(baseDir);
     var ts = "/tests/runner";
-    S.each(files, function (f) {
+    files.forEach(function (f) {
         f = baseDir + '/' + f;
         if (fs.statSync(f).isDirectory()) {
             if (S.endsWith(f, ts)) {
@@ -22,8 +22,9 @@ function collectTc(baseDir, codes) {
                 if (fs.existsSync(coverDir)) {
                     cover = 1;
                 }
-                S.each(runners, function (r) {
-                    r = '/kissy' + (f + '/' + r).replace(cwd, '').replace(/\\/g, '/');
+                runners.forEach(function (r) {
+                    f = f.replace(/\\/g, '/');
+                    r = '/kissy/' + (f + '/' + r).replace(cwd + '/', '');
                     codes.push("tests.push('" + r + "');\n");
                     codes.push("tests.push('" + r + "?build');\n");
                     if (cover) {
@@ -40,7 +41,7 @@ function collectTc(baseDir, codes) {
 var codes = [];
 collectTc(srcDir, codes);
 //codes.push("tests.push('" +'/kissy/src/anim/sub-modules/timer/tests/runner/test.jss?coverage' + "');\n");
-codes.push("tests.push('" +'/send-to-coveralls' + "');\n");
+codes.push("tests.push('" + '/send-to-coveralls' + "');\n");
 var finalCode = '/**\n' +
     'gen by gen-tc.js\n' +
     '*/\n' +
