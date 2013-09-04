@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 4 12:05
+build time: Sep 4 12:21
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -23,6 +23,8 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, Node, Anim) {
     var SWIPE_SAMPLE_INTERVAL = 300;
 
     var MAX_SWIPE_VELOCITY = 6;
+
+    var $document = Node.all(document);
 
     function onDragStart(self, e, scrollType) {
         var now = e.timeStamp,
@@ -252,20 +254,15 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, Node, Anim) {
         self.startMousePos = pos;
         onDragStart(self, e, 'left');
         onDragStart(self, e, 'top');
-        // TODO: bug ie10 if mouse out of window
-        self.$contentEl.on(Gesture.move, onDragHandler, self);
+        // ie10 if mouse out of window
+        $document.on(Gesture.move, onDragHandler, self)
+            .on(Gesture.end, onDragEndHandler, self);
     }
 
     function onDragHandler(e) {
         var self = this,
             touches = e.touches,
             startMousePos = self.startMousePos;
-
-        // move out of window and release in ie
-        if (!touches.length) {
-            onDragEndHandler.call(self, e);
-            return;
-        }
 
         if (!startMousePos) {
             return;
@@ -331,7 +328,7 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, Node, Anim) {
     function onDragEndHandler(e) {
         var self = this;
         var startMousePos = self.startMousePos;
-        self.$contentEl.detach(Gesture.move, onDragHandler, self);
+        $document.detach(Gesture.move, onDragHandler, self);
         if (!startMousePos || !self.isScrolling) {
             return;
         }
@@ -469,8 +466,7 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, Node, Anim) {
             bindUI: function () {
                 var self = this;
                 self.$contentEl.on('dragstart', preventDefault)
-                    .on(Gesture.start, onDragStartHandler, self)
-                    .on(Gesture.end, onDragEndHandler, self);
+                    .on(Gesture.start, onDragStartHandler, self);
             },
 
             syncUI: function () {
