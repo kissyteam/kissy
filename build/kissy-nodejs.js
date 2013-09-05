@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 4 22:52
+build time: Sep 5 14:19
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130904225238' will replace with current timestamp when compressing.
+         * NOTICE: '20130905141915' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130904225238',
+        __BUILD_TIME: '20130905141915',
         /**
          * KISSY Environment.
          * @private
@@ -5680,7 +5680,7 @@ var KISSY = (function (undefined) {
             comboMaxFileNum: 40,
             charset: 'utf-8',
             lang: 'zh-cn',
-            tag: '20130904225238'
+            tag: '20130905141915'
         }, getBaseInfo()));
     }
 
@@ -5948,10 +5948,17 @@ KISSY.add('i18n', {
  * @author yiminghe@gmail.com
  */
 (function (S) {
+    // compatibility
     S.config({
         modules: {
             core: {
                 alias: ['dom', 'event', 'io', 'anim', 'base', 'node', 'json', 'ua', 'cookie']
+            },
+            ajax: {
+                alias: ['io']
+            },
+            'rich-base': {
+                alias: ['base']
             }
         }
     });

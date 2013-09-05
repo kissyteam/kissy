@@ -14,13 +14,16 @@ Legend of version history:
 History:
 ---------------------------
 
-### v1.3.0 -> v1.4.0
+### v1.3 -> v1.4.0
 
  - [*] kissy-tools 对应工具合并到 tools 目录
  - [!] switchable 移到 gallery/switchable/
  - [!] datalazyload 移到 gallery/datalazyload/
  - [!] waterfall 移到 gallery/waterfall/
  - [!] 模块更新到对应模块文件夹查看
+ - [*] ajax module deprecated, please use io instead
+ - [*] rich-base module deprecated, merged with base, please use base instead
+ - [*] core module deprecated, please use module when you need
 
 ### Happy 3nd Anniversary (2012/10/26)
  - [!] Still Alive

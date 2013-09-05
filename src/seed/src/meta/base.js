@@ -4,10 +4,17 @@
  * @author yiminghe@gmail.com
  */
 (function (S) {
+    // compatibility
     S.config({
         modules: {
             core: {
                 alias: ['dom', 'event', 'io', 'anim', 'base', 'node', 'json', 'ua', 'cookie']
+            },
+            ajax: {
+                alias: ['io']
+            },
+            'rich-base': {
+                alias: ['base']
             }
         }
     });

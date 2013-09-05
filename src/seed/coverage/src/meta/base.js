@@ -230,11 +230,11 @@ if (! _$jscoverage['/meta/base.js']) {
   _$jscoverage['/meta/base.js'] = {};
   _$jscoverage['/meta/base.js'].lineData = [];
   _$jscoverage['/meta/base.js'].lineData[6] = 0;
-  _$jscoverage['/meta/base.js'].lineData[7] = 0;
-  _$jscoverage['/meta/base.js'].lineData[14] = 0;
-  _$jscoverage['/meta/base.js'].lineData[15] = 0;
-  _$jscoverage['/meta/base.js'].lineData[16] = 0;
-  _$jscoverage['/meta/base.js'].lineData[17] = 0;
+  _$jscoverage['/meta/base.js'].lineData[8] = 0;
+  _$jscoverage['/meta/base.js'].lineData[21] = 0;
+  _$jscoverage['/meta/base.js'].lineData[22] = 0;
+  _$jscoverage['/meta/base.js'].lineData[23] = 0;
+  _$jscoverage['/meta/base.js'].lineData[24] = 0;
 }
 if (! _$jscoverage['/meta/base.js'].functionData) {
   _$jscoverage['/meta/base.js'].functionData = [];
@@ -242,28 +242,32 @@ if (! _$jscoverage['/meta/base.js'].functionData) {
 }
 if (! _$jscoverage['/meta/base.js'].branchData) {
   _$jscoverage['/meta/base.js'].branchData = {};
-  _$jscoverage['/meta/base.js'].branchData['14'] = [];
-  _$jscoverage['/meta/base.js'].branchData['14'][1] = new BranchData();
+  _$jscoverage['/meta/base.js'].branchData['21'] = [];
+  _$jscoverage['/meta/base.js'].branchData['21'][1] = new BranchData();
 }
-_$jscoverage['/meta/base.js'].branchData['14'][1].init(197, 30, 'typeof location != \'undefined\'');
-function visit480_14_1(result) {
-  _$jscoverage['/meta/base.js'].branchData['14'][1].ranCondition(result);
+_$jscoverage['/meta/base.js'].branchData['21'][1].init(364, 30, 'typeof location != \'undefined\'');
+function visit480_21_1(result) {
+  _$jscoverage['/meta/base.js'].branchData['21'][1].ranCondition(result);
   return result;
 }_$jscoverage['/meta/base.js'].lineData[6]++;
 (function(S) {
   _$jscoverage['/meta/base.js'].functionData[0]++;
-  _$jscoverage['/meta/base.js'].lineData[7]++;
+  _$jscoverage['/meta/base.js'].lineData[8]++;
   S.config({
   modules: {
   core: {
-  alias: ['dom', 'event', 'io', 'anim', 'base', 'node', 'json', 'ua', 'cookie']}}});
-  _$jscoverage['/meta/base.js'].lineData[14]++;
-  if (visit480_14_1(typeof location != 'undefined')) {
-    _$jscoverage['/meta/base.js'].lineData[15]++;
+  alias: ['dom', 'event', 'io', 'anim', 'base', 'node', 'json', 'ua', 'cookie']}, 
+  ajax: {
+  alias: ['io']}, 
+  'rich-base': {
+  alias: ['base']}}});
+  _$jscoverage['/meta/base.js'].lineData[21]++;
+  if (visit480_21_1(typeof location != 'undefined')) {
+    _$jscoverage['/meta/base.js'].lineData[22]++;
     var https = S.startsWith(location.href, 'https');
-    _$jscoverage['/meta/base.js'].lineData[16]++;
+    _$jscoverage['/meta/base.js'].lineData[23]++;
     var prefix = https ? 'https://s.tbcdn.cn/s/kissy/' : 'http://a.tbcdn.cn/s/kissy/';
-    _$jscoverage['/meta/base.js'].lineData[17]++;
+    _$jscoverage['/meta/base.js'].lineData[24]++;
     S.config({
   packages: {
   gallery: {
