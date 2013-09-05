@@ -20,7 +20,9 @@ History:
  - [!] switchable 移到 gallery/switchable/
  - [!] datalazyload 移到 gallery/datalazyload/
  - [!] waterfall 移到 gallery/waterfall/
+ - [!] imagezoom 移到 gallery/imagezoom/
  - [!] 模块更新到对应模块文件夹查看
+ - [!] delete kissy.js
  - [*] ajax module deprecated, please use io instead
  - [*] rich-base module deprecated, merged with base, please use base instead
  - [*] core module deprecated, please use module when you need
