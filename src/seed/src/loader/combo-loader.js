@@ -32,6 +32,7 @@
     }
 
     var Loader = S.Loader,
+        logger= S.getLogger('s/loader'),
         Status = Loader.Status,
         Utils = Loader.Utils,
         LOADING = Status.LOADING,
@@ -65,7 +66,7 @@
                 }
             });
             if (ms.length) {
-                S.log('load remote modules: "' + ms.join(', ') + '" from: "' + rs.fullpath + '"');
+                logger.log('load remote modules: "' + ms.join(', ') + '" from: "' + rs.fullpath + '"', 'info');
             }
         });
     }
@@ -223,7 +224,6 @@
 
             return ret;
         },
-
 
         getComboMods: function (modNames, comboPrefixes) {
             var comboMods = {},

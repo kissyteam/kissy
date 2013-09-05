@@ -36,13 +36,10 @@
                 fn(S, require);
                 success && success();
             } catch (e) {
-                S.log('in file: ' + url);
+                S.log('in file: ' + url,'error');
                 S.log(e.stack, 'error');
                 error && error(e);
             }
-
         }
-
     });
-
 })(KISSY);

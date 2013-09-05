@@ -1,8 +1,6 @@
 describe('kissy.js', function () {
-
     var S = KISSY,
         host = S.Env.host;
-
 
     describe("S.mix", function () {
         it("works simply", function () {
@@ -377,8 +375,10 @@ describe('kissy.js', function () {
     it('augment does not change constructor', function () {
         function X() {
         }
+
         function Y() {
         }
+
         S.augment(X, Y);
         expect(new X().constructor).toBe(X);
     });
@@ -438,8 +438,46 @@ describe('kissy.js', function () {
         }
     });
 
-    it('S.log', function () {
-        //S.log('test log');
+    describe('S.getLogger', function () {
+        var loggerCfg = S.config('logger');
+        afterEach(function () {
+            S.config('logger', loggerCfg);
+        });
+        it('default works', function () {
+            var logger = S.getLogger('my');
+            expect(logger.log('x')).toBe('my: x');
+            // default exclude s/.*
+            logger = S.getLogger('s/xx');
+            expect(logger.log('x')).toBeFalsy();
+        });
+        it('includes works', function () {
+            S.config('logger', {
+                includes: [/^xx\//]
+            });
+            var logger = S.getLogger('xx/y');
+            expect(logger.log('x')).toBe('xx/y: x');
+            logger = S.getLogger('zz/x');
+            expect(logger.log('x')).toBeFalsy();
+        });
+        it('excludes works', function () {
+            S.config('logger', {
+                excludes: [/^yy\//]
+            });
+            var logger = S.getLogger('xx/y');
+            expect(logger.log('x')).toBe('xx/y: x');
+            logger = S.getLogger('yy/x');
+            expect(logger.log('x')).toBeFalsy();
+        });
+        it('includes precede excludes works', function () {
+            S.config('logger', {
+                includes: [/^xx\//],
+                excludes: [/^xx\//]
+            });
+            var logger = S.getLogger('xx/y');
+            expect(logger.log('x')).toBe('xx/y: x');
+            logger = S.getLogger('yy/x');
+            expect(logger.log('x')).toBeFalsy();
+        });
     });
 
     it('S.error', function () {
@@ -454,6 +492,4 @@ describe('kissy.js', function () {
         expect(typeof S.guid()).toBe('string');
         expect(S.guid() - S.guid()).toBe(-1);
     });
-
-
 });

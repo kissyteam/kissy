@@ -75,10 +75,7 @@
             callbacks.push([success, error]);
 
             if (callbacks.length > 1) {
-                // S.log(' queue js : ' + callbacks.length + ' : for :' + url + ' by ' + (config.source || ''));
                 return callbacks.node;
-            } else {
-                // S.log('init getScript : by ' + config.source);
             }
 
             var node = doc.createElement(css ? 'link' : 'script'),

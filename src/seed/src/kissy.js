@@ -24,14 +24,12 @@
  * @class KISSY
  */
 var KISSY = (function (undefined) {
-
     var host = this,
         S,
         guid = 0,
         EMPTY = '';
 
     S = {
-
         /**
          * The build time of the library.
          * NOTICE: '@TIMESTAMP@' will replace with current timestamp when compressing.
@@ -145,24 +143,55 @@ var KISSY = (function (undefined) {
          * @param msg {String} the message to log.
          * @param {String} [cat] the log category for the message. Default
          *        categories are 'info', 'warn', 'error', 'time' etc.
-         * @param {String} [src] the source of the the message (opt)
+         * @param {String} [logger] the logger of the the message (opt)
          */
-        log: function (msg, cat, src) {
-            if (S.Config.debug) {
-                if (src) {
-                    msg = src + ': ' + msg;
+        log: function (msg, cat, logger) {
+            if ('@DEBUG@') {
+                var matched = 1;
+                if (logger) {
+                    var loggerCfg = S.Config.logger || {},
+                        list, i;
+                    if (list = loggerCfg.includes) {
+                        matched = 0;
+                        for (i = 0; i < list.length; i++) {
+                            if (logger.match(list[i])) {
+                                matched = 1;
+                                break;
+                            }
+                        }
+                    } else if (list = loggerCfg.excludes) {
+                        matched = 1;
+                        for (i = 0; i < list.length; i++) {
+                            if (logger.match(list[i])) {
+                                matched = 0;
+                                break;
+                            }
+                        }
+                    }
+                    if (matched) {
+                        msg = logger + ': ' + msg;
+                    }
                 }
-                if (host['console'] !== undefined && console.log) {
+                if (host['console'] !== undefined && console.log && matched) {
                     console[cat && console[cat] ? cat : 'log'](msg);
+                    return msg;
                 }
             }
+        },
+
+        'getLogger': function (logger) {
+            return {
+                log: function (msg, cat) {
+                    return S.log(msg, cat, logger);
+                }
+            };
         },
 
         /**
          * Throws error message.
          */
         error: function (msg) {
-            if (S.Config.debug) {
+            if ('@DEBUG@') {
                 // with stack info!
                 throw msg instanceof  Error ? msg : new Error(msg);
             }
@@ -178,6 +207,11 @@ var KISSY = (function (undefined) {
         }
     };
 
-    return S;
+    if ('@DEBUG@') {
+        S.Config.logger = {
+            excludes: [/^s\/.*/]
+        };
+    }
 
+    return S;
 })();

@@ -84,8 +84,8 @@
                     xml.loadXML(data);
                 }
             } catch (e) {
-                S.log('parseXML error : ');
-                S.log(e);
+                S.log('parseXML error :','error');
+                S.log(e,'error');
                 xml = undefined;
             }
             if (!xml || !xml.documentElement || xml.getElementsByTagName('parsererror').length) {
@@ -211,7 +211,6 @@
                         doScroll('left');
                         fireReady();
                     } catch (ex) {
-                        //S.log('detect document ready : ' + ex);
                         setTimeout(readyScroll, POLL_INTERVAL);
                     }
                 };

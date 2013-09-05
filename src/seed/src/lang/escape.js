@@ -240,7 +240,8 @@
                     try {
                         val = decode(val);
                     } catch (e) {
-                        S.log(e + 'decodeURIComponent error : ' + val, 'error');
+                        S.log('decodeURIComponent error : ' + val,'error');
+                        S.log(e, 'error');
                     }
                     if (S.endsWith(key, '[]')) {
                         key = key.substring(0, key.length - 2);

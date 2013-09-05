@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 5 14:19
+build time: Sep 5 19:01
 */
 /**
  * @ignore
@@ -29,21 +29,19 @@ build time: Sep 5 14:19
  * @class KISSY
  */
 var KISSY = (function (undefined) {
-
     var host = this,
         S,
         guid = 0,
         EMPTY = '';
 
     S = {
-
         /**
          * The build time of the library.
-         * NOTICE: '20130905141915' will replace with current timestamp when compressing.
+         * NOTICE: '20130905190105' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130905141915',
+        __BUILD_TIME: '20130905190105',
         /**
          * KISSY Environment.
          * @private
@@ -150,24 +148,55 @@ var KISSY = (function (undefined) {
          * @param msg {String} the message to log.
          * @param {String} [cat] the log category for the message. Default
          *        categories are 'info', 'warn', 'error', 'time' etc.
-         * @param {String} [src] the source of the the message (opt)
+         * @param {String} [logger] the logger of the the message (opt)
          */
-        log: function (msg, cat, src) {
-            if (S.Config.debug) {
-                if (src) {
-                    msg = src + ': ' + msg;
+        log: function (msg, cat, logger) {
+            if ('@DEBUG@') {
+                var matched = 1;
+                if (logger) {
+                    var loggerCfg = S.Config.logger || {},
+                        list, i;
+                    if (list = loggerCfg.includes) {
+                        matched = 0;
+                        for (i = 0; i < list.length; i++) {
+                            if (logger.match(list[i])) {
+                                matched = 1;
+                                break;
+                            }
+                        }
+                    } else if (list = loggerCfg.excludes) {
+                        matched = 1;
+                        for (i = 0; i < list.length; i++) {
+                            if (logger.match(list[i])) {
+                                matched = 0;
+                                break;
+                            }
+                        }
+                    }
+                    if (matched) {
+                        msg = logger + ': ' + msg;
+                    }
                 }
-                if (host['console'] !== undefined && console.log) {
+                if (host['console'] !== undefined && console.log && matched) {
                     console[cat && console[cat] ? cat : 'log'](msg);
+                    return msg;
                 }
             }
+        },
+
+        'getLogger': function (logger) {
+            return {
+                log: function (msg, cat) {
+                    return S.log(msg, cat, logger);
+                }
+            };
         },
 
         /**
          * Throws error message.
          */
         error: function (msg) {
-            if (S.Config.debug) {
+            if ('@DEBUG@') {
                 // with stack info!
                 throw msg instanceof  Error ? msg : new Error(msg);
             }
@@ -183,8 +212,13 @@ var KISSY = (function (undefined) {
         }
     };
 
-    return S;
+    if ('@DEBUG@') {
+        S.Config.logger = {
+            excludes: [/^s\/.*/]
+        };
+    }
 
+    return S;
 })();/**
  * @ignore
  * object utilities of lang
@@ -1126,7 +1160,8 @@ var KISSY = (function (undefined) {
                     try {
                         val = decode(val);
                     } catch (e) {
-                        S.log(e + 'decodeURIComponent error : ' + val, 'error');
+                        S.log('decodeURIComponent error : ' + val,'error');
+                        S.log(e, 'error');
                     }
                     if (S.endsWith(key, '[]')) {
                         key = key.substring(0, key.length - 2);
@@ -1400,7 +1435,6 @@ var KISSY = (function (undefined) {
                         try {
                             delete v[CLONE_MARKER];
                         } catch (e) {
-                            // S.log('delete CLONE_MARKER error : ');
                             v[CLONE_MARKER] = undefined;
                         }
                     }
@@ -3719,17 +3753,17 @@ var KISSY = (function (undefined) {
         return s;
     }
 
-    function pluginAlias(runtime,name) {
+    function pluginAlias(runtime, name) {
         var index = name.indexOf('!');
         if (index != -1) {
-            var pluginName = name.substring(0,index);
+            var pluginName = name.substring(0, index);
             name = name.substring(index + 1);
             S.use(pluginName, {
                 sync: true,
                 success: function (S, Plugin) {
                     if (Plugin.alias) {
                         //noinspection JSReferencingMutableVariableFromClosure
-                        name = Plugin.alias(runtime,name, pluginName);
+                        name = Plugin.alias(runtime, name, pluginName);
                     }
                 }
             });
@@ -3996,7 +4030,7 @@ var KISSY = (function (undefined) {
                     // conditional loader
                     // requires:[window.localStorage?"local-storage":""]
                     if (modNames[i]) {
-                        ret.push(pluginAlias(runtime,indexMap(modNames[i])));
+                        ret.push(pluginAlias(runtime, indexMap(modNames[i])));
                     }
                 }
             }
@@ -4022,7 +4056,7 @@ var KISSY = (function (undefined) {
                 mod = mods[name];
 
             if (mod && mod.fn) {
-                S.log(name + ' is defined more than once');
+                S.log(name + ' is defined more than once', 'error');
                 return;
             }
 
@@ -4040,7 +4074,6 @@ var KISSY = (function (undefined) {
             });
 
             S.mix(mod, config);
-            // S.log(name + ' is loaded', 'info');
         },
 
         /**
@@ -4449,16 +4482,15 @@ var KISSY = (function (undefined) {
  * @author yiminghe@gmail.com
  */
 (function (S) {
-
     var CSS_POLL_INTERVAL = 30,
         UA= S.UA,
+        logger= S.getLogger('s/loader'),
         Utils = S.Loader.Utils,
     // central poll for link node
         timer = 0,
         monitors = {
             // node.id:{callback:callback,node:node}
         };
-
 
     /**
      * @ignore
@@ -4484,16 +4516,13 @@ var KISSY = (function (undefined) {
 
     function startCssTimer() {
         if (!timer) {
-            // S.log('start css polling');
             cssPoll();
         }
     }
 
     // single thread is ok
     function cssPoll() {
-
         for (var url in monitors) {
-
             var callbackObj = monitors[url],
                 node = callbackObj.node,
                 exName,
@@ -4501,24 +4530,24 @@ var KISSY = (function (undefined) {
             if (UA.webkit) {
                 // http://www.w3.org/TR/Dom-Level-2-Style/stylesheets.html
                 if (node['sheet']) {
-                    S.log('webkit loaded : ' + url);
+                    logger.log('webkit loaded : ' + url,'log');
                     loaded = 1;
                 }
             } else if (node['sheet']) {
                 try {
                     var cssRules = node['sheet'].cssRules;
                     if (cssRules) {
-                        S.log('same domain firefox loaded : ' + url);
+                        logger.log('same domain firefox loaded : ' + url,'log');
                         loaded = 1;
                     }
                 } catch (ex) {
                     exName = ex.name;
-                    S.log('firefox getStyle : ' + exName + ' ' + ex.code + ' ' + url);
+                    logger.log('firefox getStyle : ' + exName + ' ' + ex.code + ' ' + url,'log');
                     // http://www.w3.org/TR/dom/#dom-domexception-code
                     if (// exName == 'SecurityError' ||
                     // for old firefox
                         exName == 'NS_ERROR_DOM_SECURITY_ERR') {
-                        S.log(exName + ' firefox loaded : ' + url);
+                        logger.log(exName + ' firefox loaded : ' + url,'log');
                         loaded = 1;
                     }
                 }
@@ -4535,7 +4564,6 @@ var KISSY = (function (undefined) {
 
         if (S.isEmptyObject(monitors)) {
             timer = 0;
-            // S.log('end css polling');
         } else {
             timer = setTimeout(cssPoll, CSS_POLL_INTERVAL);
         }
@@ -4552,7 +4580,6 @@ var KISSY = (function (undefined) {
                 arr.callback = callback;
                 startCssTimer();
             }
-
     });
 })(KISSY);/**
  * @ignore
@@ -4592,15 +4619,12 @@ var KISSY = (function (undefined) {
                 fn(S, require);
                 success && success();
             } catch (e) {
-                S.log('in file: ' + url);
+                S.log('in file: ' + url,'error');
                 S.log(e.stack, 'error');
                 error && error(e);
             }
-
         }
-
     });
-
 })(KISSY);/**
  * @ignore
  * Declare config info for KISSY.
@@ -4768,6 +4792,7 @@ var KISSY = (function (undefined) {
  */
 (function (S, undefined) {
     var Loader, Status, Utils, UA,
+        logger= S.getLogger('s/loader'),
     // standard browser 如果 add 没有模块名，模块定义先暂存这里
         currentMod = undefined,
     // ie 开始载入脚本的时间
@@ -4928,9 +4953,9 @@ var KISSY = (function (undefined) {
 
             function checkHandler() {
                 if (mod.fn) {
-                    // var msg = 'load remote module: "' + modName +
-                    //    '" from: "' + url + '"';
-                    // S.log(msg, 'info');
+                     var msg = 'load remote module: "' + modName +
+                        '" from: "' + url + '"';
+                    logger.log(msg, 'info');
                 } else {
                     // ie will call success even when getScript error(404)
                     _modError();
@@ -5048,6 +5073,7 @@ var KISSY = (function (undefined) {
     }
 
     var Loader = S.Loader,
+        logger= S.getLogger('s/loader'),
         Status = Loader.Status,
         Utils = Loader.Utils,
         LOADING = Status.LOADING,
@@ -5081,7 +5107,7 @@ var KISSY = (function (undefined) {
                 }
             });
             if (ms.length) {
-                S.log('load remote modules: "' + ms.join(', ') + '" from: "' + rs.fullpath + '"');
+                logger.log('load remote modules: "' + ms.join(', ') + '" from: "' + rs.fullpath + '"', 'info');
             }
         });
     }
@@ -5239,7 +5265,6 @@ var KISSY = (function (undefined) {
 
             return ret;
         },
-
 
         getComboMods: function (modNames, comboPrefixes) {
             var comboMods = {},
@@ -5680,7 +5705,7 @@ var KISSY = (function (undefined) {
             comboMaxFileNum: 40,
             charset: 'utf-8',
             lang: 'zh-cn',
-            tag: '20130905141915'
+            tag: '20130905190105'
         }, getBaseInfo()));
     }
 
@@ -5786,8 +5811,8 @@ KISSY.add('i18n', {
                     xml.loadXML(data);
                 }
             } catch (e) {
-                S.log('parseXML error : ');
-                S.log(e);
+                S.log('parseXML error :','error');
+                S.log(e,'error');
                 xml = undefined;
             }
             if (!xml || !xml.documentElement || xml.getElementsByTagName('parsererror').length) {
@@ -5913,7 +5938,6 @@ KISSY.add('i18n', {
                         doScroll('left');
                         fireReady();
                     } catch (ex) {
-                        //S.log('detect document ready : ' + ex);
                         setTimeout(readyScroll, POLL_INTERVAL);
                     }
                 };

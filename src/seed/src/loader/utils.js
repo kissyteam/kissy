@@ -46,17 +46,17 @@
         return s;
     }
 
-    function pluginAlias(runtime,name) {
+    function pluginAlias(runtime, name) {
         var index = name.indexOf('!');
         if (index != -1) {
-            var pluginName = name.substring(0,index);
+            var pluginName = name.substring(0, index);
             name = name.substring(index + 1);
             S.use(pluginName, {
                 sync: true,
                 success: function (S, Plugin) {
                     if (Plugin.alias) {
                         //noinspection JSReferencingMutableVariableFromClosure
-                        name = Plugin.alias(runtime,name, pluginName);
+                        name = Plugin.alias(runtime, name, pluginName);
                     }
                 }
             });
@@ -323,7 +323,7 @@
                     // conditional loader
                     // requires:[window.localStorage?"local-storage":""]
                     if (modNames[i]) {
-                        ret.push(pluginAlias(runtime,indexMap(modNames[i])));
+                        ret.push(pluginAlias(runtime, indexMap(modNames[i])));
                     }
                 }
             }
@@ -349,7 +349,7 @@
                 mod = mods[name];
 
             if (mod && mod.fn) {
-                S.log(name + ' is defined more than once');
+                S.log(name + ' is defined more than once', 'error');
                 return;
             }
 
@@ -367,7 +367,6 @@
             });
 
             S.mix(mod, config);
-            // S.log(name + ' is loaded', 'info');
         },
 
         /**

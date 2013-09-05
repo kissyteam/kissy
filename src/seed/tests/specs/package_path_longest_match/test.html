@@ -13,6 +13,11 @@
     <script src="/kissy/tools/jasmine/jasmine.console_reporter.js"></script>
 
 <script src="/kissy/build/seed.js"></script>
+    <script>
+        KISSY.config('logger',{
+            includes:[/^s\/loader/]
+        });
+    </script>
     <script src="../../others/clear.js"></script>
 <script src="./package-longest-match-spec.js"></script>
 </head>

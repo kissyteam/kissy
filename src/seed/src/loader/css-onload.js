@@ -4,16 +4,15 @@
  * @author yiminghe@gmail.com
  */
 (function (S) {
-
     var CSS_POLL_INTERVAL = 30,
         UA= S.UA,
+        logger= S.getLogger('s/loader'),
         Utils = S.Loader.Utils,
     // central poll for link node
         timer = 0,
         monitors = {
             // node.id:{callback:callback,node:node}
         };
-
 
     /**
      * @ignore
@@ -39,16 +38,13 @@
 
     function startCssTimer() {
         if (!timer) {
-            // S.log('start css polling');
             cssPoll();
         }
     }
 
     // single thread is ok
     function cssPoll() {
-
         for (var url in monitors) {
-
             var callbackObj = monitors[url],
                 node = callbackObj.node,
                 exName,
@@ -56,24 +52,24 @@
             if (UA.webkit) {
                 // http://www.w3.org/TR/Dom-Level-2-Style/stylesheets.html
                 if (node['sheet']) {
-                    S.log('webkit loaded : ' + url);
+                    logger.log('webkit loaded : ' + url,'log');
                     loaded = 1;
                 }
             } else if (node['sheet']) {
                 try {
                     var cssRules = node['sheet'].cssRules;
                     if (cssRules) {
-                        S.log('same domain firefox loaded : ' + url);
+                        logger.log('same domain firefox loaded : ' + url,'log');
                         loaded = 1;
                     }
                 } catch (ex) {
                     exName = ex.name;
-                    S.log('firefox getStyle : ' + exName + ' ' + ex.code + ' ' + url);
+                    logger.log('firefox getStyle : ' + exName + ' ' + ex.code + ' ' + url,'log');
                     // http://www.w3.org/TR/dom/#dom-domexception-code
                     if (// exName == 'SecurityError' ||
                     // for old firefox
                         exName == 'NS_ERROR_DOM_SECURITY_ERR') {
-                        S.log(exName + ' firefox loaded : ' + url);
+                        logger.log(exName + ' firefox loaded : ' + url,'log');
                         loaded = 1;
                     }
                 }
@@ -90,7 +86,6 @@
 
         if (S.isEmptyObject(monitors)) {
             timer = 0;
-            // S.log('end css polling');
         } else {
             timer = setTimeout(cssPoll, CSS_POLL_INTERVAL);
         }
@@ -107,6 +102,5 @@
                 arr.callback = callback;
                 startCssTimer();
             }
-
     });
 })(KISSY);

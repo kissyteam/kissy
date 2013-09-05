@@ -142,7 +142,7 @@
 
     <!-- 压缩 js -->
     <target name="compress-js">
-        <replaceregexp match="^\s*(S|KISSY)\.(log|error)\s*\(.+$"
+        <replaceregexp match="^\s*(S|KISSY|logger)\.(log|error)\s*\(.+$"
                        replace=""
                        flags="g"
                        byline="true"

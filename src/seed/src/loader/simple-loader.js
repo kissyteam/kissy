@@ -5,6 +5,7 @@
  */
 (function (S, undefined) {
     var Loader, Status, Utils, UA,
+        logger= S.getLogger('s/loader'),
     // standard browser 如果 add 没有模块名，模块定义先暂存这里
         currentMod = undefined,
     // ie 开始载入脚本的时间
@@ -165,9 +166,9 @@
 
             function checkHandler() {
                 if (mod.fn) {
-                    // var msg = 'load remote module: "' + modName +
-                    //    '" from: "' + url + '"';
-                    // S.log(msg, 'info');
+                     var msg = 'load remote module: "' + modName +
+                        '" from: "' + url + '"';
+                    logger.log(msg, 'info');
                 } else {
                     // ie will call success even when getScript error(404)
                     _modError();
