@@ -52,8 +52,6 @@
             e.halt();
             var jsonText = $('#original').val();
             var json = Json.parse(jsonText);
-            S.log('**************************');
-            S.log(json);
             $('#code').text(Json.stringify(json, null, '    '));
         });
     });

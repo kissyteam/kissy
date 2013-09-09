@@ -6,6 +6,7 @@
 KISSY.add('io/iframe-transport', function (S, Dom, Event, IO) {
     var doc = S.Env.host.document,
         OK_CODE = 200,
+        logger= S.getLogger('s/io'),
         ERROR_CODE = 500,
         BREATH_INTERVAL = 30,
         iframeConverter = S.clone(IO.getConfig().converters.text);
@@ -87,7 +88,7 @@ KISSY.add('io/iframe-transport', function (S, Dom, Event, IO) {
 
     function IframeTransport(io) {
         this.io = io;
-        S.log('use IframeTransport for: ' + io.config.url);
+        logger.info('use IframeTransport for: ' + io.config.url);
     }
 
     S.augment(IframeTransport, {

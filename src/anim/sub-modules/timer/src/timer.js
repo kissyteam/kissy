@@ -114,7 +114,6 @@ KISSY.add('anim/timer', function (S, Dom, Event, AnimBase, Easing, AM, Fx, SHORT
                             // in case tmpCur==0
                             tmpCur = fx.cur();
                         } while (tmpCur == 0);
-                        // S.log(to2+' --- '+tmpCur);
                         from = (to2 / tmpCur) * from;
                         Dom.css(node, prop, from + unit);
                     }

@@ -8,6 +8,7 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor,
                                                             FlashBridge, localStorage,
                                                             SWF, undefined) {
     var UA = S.UA,
+        logger= S.getLogger('s/editor/plugin/multiple-upload/dialog'),
         Dom = S.DOM,
         $ = S.all,
         Json = S.JSON,
@@ -438,7 +439,6 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor,
                 uploader = self.uploader,
                 id = ev.id || (ev['file'] && ev['file'].id);
             if (!id) {
-                S.log(ev);
                 return;
             }
             var tr = self._getFileTr(id),
@@ -447,7 +447,7 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor,
 
             uploader['removeFile'](id);
             if (!ev._custom) {
-                S.log(status);
+                logger.error(status);
                 status = "服务器出错或格式不正确";
             }
             if (tr) {
@@ -483,7 +483,6 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor,
                 prefixCls = self.editor.get('prefixCls'),
                 data = S.trim(ev.data).replace(/\r|\n/g, ""),
                 id = ev['file'].id;
-            //S.log(data);
 
             //成功后不会自动清除列表，自己清除
             if (id) {
@@ -497,8 +496,7 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor,
             try {
                 data = S.parseJson(data);
             } catch (ex) {
-                S.log("multiUpload _onUploadCompleteData error :");
-                S.log(ex);
+                logger.error("multiUpload _onUploadCompleteData error: "+data);
                 throw ex;
             }
             if (data.error) {

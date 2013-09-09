@@ -6,6 +6,7 @@
 KISSY.add('io/xhr-transport', function (S, IO, XhrTransportBase, SubDomainTransport, XdrFlashTransport) {
     var win = S.Env.host,
         doc = win.document,
+        logger = S.getLogger('s/io'),
         _XDomainRequest = XhrTransportBase._XDomainRequest;
 
     function isSubDomain(hostname) {
@@ -47,7 +48,10 @@ KISSY.add('io/xhr-transport', function (S, IO, XhrTransportBase, SubDomainTransp
         }
 
         xhr = self.nativeXhr = XhrTransportBase.nativeXhr(crossDomain);
-        S.log('crossDomain: ' + crossDomain + ', use ' + (_XDomainRequest && (xhr instanceof _XDomainRequest) ? 'XDomainRequest' : 'XhrTransport') + ' for: ' + c.url);
+        logger.debug('crossDomain: ' + crossDomain + ', use ' +
+            (_XDomainRequest && (xhr instanceof _XDomainRequest) ?
+                'XDomainRequest' :
+                'XhrTransport') + ' for: ' + c.url);
 
         return self;
     }

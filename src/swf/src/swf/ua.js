@@ -26,7 +26,7 @@ KISSY.add('swf/ua', function (S, undefined) {
             try {
                 ver = new ActiveXObject(SF + '.' + SF)['GetVariable']('$version');
             } catch (ex) {
-                S.log('getFlashVersion failed via ActiveXObject');
+                // S.log('getFlashVersion failed via ActiveXObject');
                 // nothing to do, just return undefined
             }
         }

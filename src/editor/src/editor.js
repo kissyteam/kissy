@@ -8,6 +8,7 @@ KISSY.add('editor', function (S, Node, iframeContentTpl, Editor, Utils, focusMan
         undefined = undefined,
         FALSE = false,
         NULL = null,
+        logger= S.getLogger('s/editor'),
         window = S.Env.host,
         document = window.document,
         UA = S.UA,
@@ -258,7 +259,7 @@ KISSY.add('editor', function (S, Node, iframeContentTpl, Editor, Utils, focusMan
             if (cmd) {
                 return cmd.exec.apply(cmd, args);
             } else {
-                S.log(name + ': command not found');
+                logger.error(name + ': command not found');
                 return undefined;
             }
         },
@@ -601,7 +602,7 @@ KISSY.add('editor', function (S, Node, iframeContentTpl, Editor, Utils, focusMan
                 try {
                     $sel.createRange().pasteHTML(data);
                 } catch (e) {
-                    S.log('insertHtml error in ie');
+                    logger.error('insertHtml error in ie');
                 }
             } else {
                 // ie9 仍然没有
@@ -751,9 +752,6 @@ KISSY.add('editor', function (S, Node, iframeContentTpl, Editor, Utils, focusMan
                 // 左键激活
                 var t = evt.target;
                 if (t == htmlElement) {
-                    //S.log("click");
-                    //self.focus();
-                    //return;
                     if (UA['gecko']) {
                         blinkCursor(doc, FALSE);
                     }

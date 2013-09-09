@@ -18,7 +18,6 @@
     }
 
     WaitingModules.prototype = {
-
         constructor: WaitingModules,
 
         notifyAll: function () {
@@ -41,7 +40,6 @@
         contains: function (modName) {
             return this.waitMods[modName];
         }
-
     };
 
     Loader.WaitingModules = WaitingModules;

@@ -25,11 +25,11 @@ KISSY.clearLoader = function () {
                 if (p != 'alias' &&
                     p != 'name' &&
                     p != 'type' &&
-                    p != 'callbacks' &&
                     p != 'runtime') {
                     delete modules[m][p];
                 }
             }
+            modules[m].waitedCallbacks = [];
             modules[m].status = 0;
         }
     }

@@ -4,6 +4,7 @@
  */
 KISSY.add("editor/plugin/bubble", function (S, Overlay, Editor) {
     var undefined = {}['a'],
+        logger= S.getLogger('s/editor'),
         BUBBLE_CFG = {
             zIndex: Editor.baseZIndex(Editor.zIndexManager.BUBBLE_VIEW),
             elCls: "{prefixCls}editor-bubble",
@@ -179,7 +180,6 @@ KISSY.add("editor/plugin/bubble", function (S, Overlay, Editor) {
         editor.on("sourceMode", onHide);
 
         function showImmediately() {
-
             var xy = getXy(bubble);
             if (xy) {
                 bubble.move(xy[0],xy[1]);
@@ -191,7 +191,7 @@ KISSY.add("editor/plugin/bubble", function (S, Overlay, Editor) {
                 if (!bubble.get("visible")) {
                     bubble.show();
                 } else {
-                    S.log("already show by selectionChange");
+                    logger.debug("already show by selectionChange");
                 }
             }
         }

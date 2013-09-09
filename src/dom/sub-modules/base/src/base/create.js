@@ -7,6 +7,7 @@ KISSY.add('dom/base/create', function (S, Dom, undefined) {
     var doc = S.Env.host.document,
         NodeType = Dom.NodeType,
         UA = S.UA,
+        logger= S.getLogger('s/dom'),
         ie = UA['ie'],
         DIV = 'div',
         PARENT_NODE = 'parentNode',
@@ -470,7 +471,7 @@ KISSY.add('dom/base/create', function (S, Dom, undefined) {
                 ret.appendChild(nodes[i]);
             }
         } else {
-            S.log('Unable to convert ' + nodes + ' to fragment.');
+            logger.error('Unable to convert ' + nodes + ' to fragment.');
         }
         return ret;
     }

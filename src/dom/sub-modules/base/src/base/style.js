@@ -9,6 +9,7 @@ KISSY.add('dom/base/style', function (S, Dom, undefined) {
          @type window
          */S.Env.host,
         UA = S.UA,
+        logger= S.getLogger('s/dom'),
         Features = S.Features,
         getNodeName = Dom.nodeName,
         doc = WINDOW.document,
@@ -513,7 +514,7 @@ KISSY.add('dom/base/style', function (S, Dom, undefined) {
                     // EMPTY will unset style!
                     style[name] = val;
                 } catch (e) {
-                    S.log('css set error :' + e);
+                    logger.warn('css set error:' + e);
                 }
                 // #80 fix,font-family
                 if (val === EMPTY && style.removeAttribute) {

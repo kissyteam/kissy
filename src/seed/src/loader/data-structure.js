@@ -131,20 +131,20 @@
     function Module(cfg) {
         this.status = Loader.Status.INIT;
         S.mix(this, cfg);
-        this.callbacks = [];
+        this.waitedCallbacks = [];
     }
 
     S.augment(Module, {
-        addCallback: function (callback) {
-            this.callbacks.push(callback);
+        wait: function (callback) {
+            this.waitedCallbacks.push(callback);
         },
 
         notifyAll: function () {
             var callback;
-            var len = this.callbacks.length,
+            var len = this.waitedCallbacks.length,
                 i = 0;
             for (; i < len; i++) {
-                callback = this.callbacks[i];
+                callback = this.waitedCallbacks[i];
                 try {
                     callback(this);
                 } catch (e) {
@@ -153,7 +153,7 @@
                     }, 0);
                 }
             }
-            this.callbacks = [];
+            this.waitedCallbacks = [];
         },
 
         /**
@@ -185,14 +185,14 @@
         getFullPathUri: function () {
             var self = this,
                 t,
-                fullpathUri,
+                fullPathUri,
                 packageBaseUri,
                 packageInfo,
                 packageName,
                 path;
-            if (!self.fullpathUri) {
+            if (!self.fullPathUri) {
                 if (self.fullpath) {
-                    fullpathUri = new S.Uri(self.fullpath);
+                    fullPathUri = new S.Uri(self.fullpath);
                 } else {
                     packageInfo = self.getPackage();
                     packageBaseUri = packageInfo.getBaseUri();
@@ -203,15 +203,15 @@
                         (packageName = packageInfo.getName())) {
                         path = Path.relative(packageName, path);
                     }
-                    fullpathUri = packageBaseUri.resolve(path);
+                    fullPathUri = packageBaseUri.resolve(path);
                     if (t = self.getTag()) {
                         t += '.' + self.getType();
-                        fullpathUri.query.set('t', t);
+                        fullPathUri.query.set('t', t);
                     }
                 }
-                self.fullpathUri = fullpathUri;
+                self.fullPathUri = fullPathUri;
             }
-            return self.fullpathUri;
+            return self.fullPathUri;
         },
 
         /**
@@ -220,10 +220,10 @@
          */
         getFullPath: function () {
             var self = this,
-                fullpathUri;
+                fullPathUri;
             if (!self.fullpath) {
-                fullpathUri = self.getFullPathUri();
-                self.fullpath = Utils.getMappedPath(self.runtime, fullpathUri.toString());
+                fullPathUri = self.getFullPathUri();
+                self.fullpath = Utils.getMappedPath(self.runtime, fullPathUri.toString());
             }
             return self.fullpath;
         },

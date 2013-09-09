@@ -8,6 +8,7 @@
 KISSY.add('io/script-transport', function (S, IO, _, undefined) {
     var win = S.Env.host,
         doc = win.document,
+        logger= S.getLogger('s/io'),
         OK_CODE = 200,
         ERROR_CODE = 500;
 
@@ -42,7 +43,7 @@ KISSY.add('io/script-transport', function (S, IO, _, undefined) {
             return new (IO['getTransport']('*'))(io);
         }
         this.io = io;
-        S.log('use ScriptTransport for: ' + config.url);
+        logger.info('use ScriptTransport for: ' + config.url);
         return this;
     }
 

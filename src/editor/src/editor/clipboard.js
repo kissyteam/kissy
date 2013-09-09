@@ -6,6 +6,7 @@
 KISSY.add("editor/clipboard", function (S, Editor, KERange, KES) {
     var $ = S.all,
         UA = S.UA,
+        logger= S.getLogger('s/editor'),
         pasteEvent = UA.ie ? 'beforepaste' : 'paste',
         KER = Editor.RANGE;
 
@@ -16,7 +17,6 @@ KISSY.add("editor/clipboard", function (S, Editor, KERange, KES) {
     }
 
     S.augment(Paste, {
-
         _init: function () {
             var self = this,
                 editor = self.editor,
@@ -148,7 +148,7 @@ KISSY.add("editor/clipboard", function (S, Editor, KERange, KES) {
                 return;
             }
 
-            S.log(pasteEvent + ": " + " paste event happen");
+            logger.debug(pasteEvent + ": " + " paste event happen");
 
             var self = this,
                 editor = self.editor,
@@ -156,7 +156,7 @@ KISSY.add("editor/clipboard", function (S, Editor, KERange, KES) {
 
             // Avoid recursions on 'paste' event or consequent paste too fast. (#5730)
             if (doc.getElementById('ke-paste-bin')) {
-                S.log(pasteEvent + ": trigger more than once ...");
+                logger.debug(pasteEvent + ": trigger more than once ...");
                 return;
             }
 
@@ -225,7 +225,7 @@ KISSY.add("editor/clipboard", function (S, Editor, KERange, KES) {
                     return;
                 }
 
-                S.log("paste " + html);
+                logger.debug("paste " + html);
 
                 var re = editor.fire("paste", {
                     html: html

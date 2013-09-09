@@ -6,6 +6,7 @@
 KISSY.add('io/xdr-flash-transport', function (S, IO, Dom) {
     var // current running request instances
         maps = {},
+        logger= S.getLogger('s/io'),
         ID = 'io_swf',
     // flash transporter
         flash,
@@ -36,7 +37,7 @@ KISSY.add('io/xdr-flash-transport', function (S, IO, Dom) {
     }
 
     function XdrFlashTransport(io) {
-        S.log('use XdrFlashTransport for: ' + io.config.url);
+        logger.info('use XdrFlashTransport for: ' + io.config.url);
         this.io = io;
     }
 
@@ -51,7 +52,6 @@ KISSY.add('io/xdr-flash-transport', function (S, IO, Dom) {
             _swf(xdr.src || (S.Config.base + 'io/assets/io.swf'), 1, 1);
             // 简便起见，用轮训
             if (!flash) {
-                // S.log('detect xdr flash');
                 setTimeout(function () {
                     self.send();
                 }, 200);
@@ -74,7 +74,6 @@ KISSY.add('io/xdr-flash-transport', function (S, IO, Dom) {
         },
 
         _xdrResponse: function (e, o) {
-            // S.log(e);
             var self = this,
                 ret,
                 id = o.id,
@@ -113,7 +112,6 @@ KISSY.add('io/xdr-flash-transport', function (S, IO, Dom) {
 
     /*called by flash*/
     IO['applyTo'] = function (_, cmd, args) {
-        // S.log(cmd + ' execute');
         var cmds = cmd.split('.').slice(1),
             func = IO;
         S.each(cmds, function (c) {

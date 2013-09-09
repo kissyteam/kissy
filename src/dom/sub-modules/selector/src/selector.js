@@ -3,8 +3,9 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add('dom/selector', function (S, parser, Dom) {
+    var logger= S.getLogger('s/dom');
 
-    S.log('use KISSY css3 selector');
+    logger.info('use KISSY css3 selector');
 
     // ident === identifier
 
@@ -684,7 +685,6 @@ KISSY.add('dom/selector', function (S, parser, Dom) {
         select: select,
         matches: matches
     };
-
 }, {
     requires: [
         './selector/parser',

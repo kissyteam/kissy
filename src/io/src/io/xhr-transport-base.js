@@ -6,6 +6,7 @@
 KISSY.add('io/xhr-transport-base', function (S, IO) {
     var OK_CODE = 200,
         win = S.Env.host,
+        logger= S.getLogger('s/io'),
     // http://msdn.microsoft.com/en-us/library/cc288060(v=vs.85).aspx
         _XDomainRequest = S.UA.ie > 7 && win['XDomainRequest'],
         NO_CONTENT_CODE = 204,
@@ -23,7 +24,6 @@ KISSY.add('io/xhr-transport-base', function (S, IO) {
         try {
             return new (refWin || win)['XMLHttpRequest']();
         } catch (e) {
-            S.log('createStandardXHR error: ' + _);
         }
         return undefined;
     }
@@ -32,7 +32,6 @@ KISSY.add('io/xhr-transport-base', function (S, IO) {
         try {
             return new (refWin || win)['ActiveXObject']('Microsoft.XMLHTTP');
         } catch (e) {
-            S.log('createActiveXHR error: ' + _);
         }
         return undefined;
     }
@@ -209,7 +208,6 @@ KISSY.add('io/xhr-transport-base', function (S, IO) {
                 statusText,
                 xml,
                 c = io.config;
-            // S.log(nativeXhr.readyState+':'+nativeXhr.status);
             try {
                 //abort or complete
                 if (abort || nativeXhr.readyState == 4) {
@@ -278,8 +276,8 @@ KISSY.add('io/xhr-transport-base', function (S, IO) {
                         try {
                             statusText = nativeXhr.statusText;
                         } catch (e) {
-                            S.log('xhr statusText error: ');
-                            S.log(e);
+                            logger.error('xhr statusText error: ');
+                            logger.error(e);
                             // We normalize with Webkit giving an empty statusText
                             statusText = '';
                         }

@@ -3,9 +3,9 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add('dom/ie/style', function (S, Dom) {
-
     var cssProps = Dom._cssProps,
         UA = S.UA,
+        logger = S.getLogger('s/dom'),
         HUNDRED = 100,
         doc = S.Env.host.document,
         docElem = doc && doc.documentElement,
@@ -40,9 +40,7 @@ KISSY.add('dom/ie/style', function (S, Dom) {
     // use alpha filter for IE opacity
     try {
         if (docElem.style[OPACITY] == null) {
-
             cssHooks[OPACITY] = {
-
                 get: function (elem, computed) {
                     // 没有设置过 opacity 时会报错，这时返回 1 即可
                     // 如果该节点没有添加到 dom ，取不到 filters 结构
@@ -91,9 +89,8 @@ KISSY.add('dom/ie/style', function (S, Dom) {
                 }
             };
         }
-    }
-    catch (ex) {
-        S.log('IE filters ActiveX is disabled. ex = ' + ex);
+    } catch (ex) {
+        logger.debug('IE filters ActiveX is disabled. ex = ' + ex);
     }
 
     /*
@@ -169,7 +166,6 @@ KISSY.add('dom/ie/style', function (S, Dom) {
         }
         return ret === '' ? 'auto' : ret;
     };
-
 }, {
     requires: ['dom/base']
 });

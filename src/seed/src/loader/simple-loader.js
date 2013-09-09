@@ -92,7 +92,7 @@
                     return;
                 }
 
-                mod.addCallback(function () {
+                mod.wait(function () {
                     // 只在 LOADED 后加载依赖项一次
                     // 防止 config('modules') requires 和模块中 requires 不一致
                     self.loadModRequires(mod);
@@ -145,7 +145,7 @@
                         // does not need this step for css
                         // standard browser(except ie9) fire load after KISSY.add immediately
                         if (currentMod) {
-                            // S.log('standard browser get mod name after load : ' + modName);
+                            logger.debug('standard browser get mod name after load : ' + modName);
                             Utils.registerModule(runtime,
                                 modName, currentMod.fn,
                                 currentMod.config);
@@ -168,7 +168,7 @@
                 if (mod.fn) {
                      var msg = 'load remote module: "' + modName +
                         '" from: "' + url + '"';
-                    logger.log(msg, 'info');
+                    logger.info(msg);
                 } else {
                     // ie will call success even when getScript error(404)
                     _modError();
@@ -181,7 +181,7 @@
                 var msg = modName +
                     ' is not loaded! can not find module in path : ' +
                     url;
-                S.log(msg, 'error');
+                logger.error(msg);
                 mod.status = ERROR;
             }
         }
@@ -211,8 +211,8 @@
             // module code is executed right after inserting into dom
             // i has to preserve module name before insert module script into dom,
             // then get it back here
-            // S.log('can not find interactive script,time diff : ' + (+new Date() - self.__startLoadTime), 'error');
-            // S.log('old_ie get mod name from cache : ' + self.__startLoadModName);
+            logger.debug('can not find interactive script,time diff : ' + (+new Date() - self.__startLoadTime));
+            logger.debug('old_ie get mod name from cache : ' + self.__startLoadModName);
             name = startLoadModName;
         }
         return name;

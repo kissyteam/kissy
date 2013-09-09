@@ -3,7 +3,6 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add("kison/grammar", function (S, Base, Utils, Item, ItemSet, NonTerminal, Lexer, Production) {
-
     var GrammarConst = {
             SHIFT_TYPE: 1,
             REDUCE_TYPE: 2,
@@ -12,6 +11,7 @@ KISSY.add("kison/grammar", function (S, Base, Utils, Item, ItemSet, NonTerminal,
             PRODUCTION_INDEX: 1,
             TO_INDEX: 2
         },
+        logger = S.getLogger('s/kison'),
         serializeObject = Utils.serializeObject,
         mix = S.mix,
         END_TAG = Lexer.STATIC.END_TAG,
@@ -37,30 +37,30 @@ KISSY.add("kison/grammar", function (S, Base, Utils, Item, ItemSet, NonTerminal,
     function visualizeAction(action, productions, itemSets) {
         switch (action[GrammarConst.TYPE_INDEX]) {
             case GrammarConst.SHIFT_TYPE:
-                S.log('shift');
+                logger.debug('shift');
                 break;
             case GrammarConst.REDUCE_TYPE:
-                S.log('reduce');
+                logger.debug('reduce');
                 break;
             case GrammarConst.ACCEPT_TYPE:
-                S.log('accept');
+                logger.debug('accept');
                 break;
         }
-        S.log('from production:');
+        logger.debug('from production:');
         if (action[GrammarConst.PRODUCTION_INDEX] != undefined) {
-            S.log(productions[action[GrammarConst.PRODUCTION_INDEX]] + '');
+            logger.debug(productions[action[GrammarConst.PRODUCTION_INDEX]] + '');
         } else {
-            S.log('undefined');
+            logger.debug('undefined');
         }
-        S.log('to itemSet:');
+        logger.debug('to itemSet:');
         if (action[GrammarConst.TO_INDEX] != undefined) {
-            S.log(itemSets[action[GrammarConst.TO_INDEX]].toString(1));
+            logger.debug(itemSets[action[GrammarConst.TO_INDEX]].toString(1));
         } else {
-            S.log('undefined');
+            logger.debug('undefined');
         }
     }
 
-   return Base.extend({
+    return Base.extend({
 
         build: function () {
             var self = this,
@@ -506,14 +506,14 @@ KISSY.add("kison/grammar", function (S, Base, Utils, Item, ItemSet, NonTerminal,
                                 val = [];
                                 val[GrammarConst.TYPE_INDEX] = GrammarConst.ACCEPT_TYPE;
                                 if (t && t.toString() != val.toString()) {
-                                    S.log(new Array(29).join('*'));
-                                    S.log('***** conflict in reduce: action already defined ->',
+                                    logger.debug(new Array(29).join('*'));
+                                    logger.debug('***** conflict in reduce: action already defined ->',
                                         'warn');
-                                    S.log('***** current item:', 'info');
-                                    S.log(item.toString());
-                                    S.log('***** current action:', 'info');
+                                    logger.debug('***** current item:', 'info');
+                                    logger.debug(item.toString());
+                                    logger.debug('***** current action:', 'info');
                                     visualizeAction(t, productions, itemSets);
-                                    S.log('***** will be overwritten ->', 'info');
+                                    logger.debug('***** will be overwritten ->', 'info');
                                     visualizeAction(val, productions, itemSets);
                                 }
                                 action[i][mappedEndTag] = val;
@@ -530,14 +530,14 @@ KISSY.add("kison/grammar", function (S, Base, Utils, Item, ItemSet, NonTerminal,
                                 val[GrammarConst.TYPE_INDEX] = GrammarConst.REDUCE_TYPE;
                                 val[GrammarConst.PRODUCTION_INDEX] = S.indexOf(production, productions);
                                 if (t && t.toString() != val.toString()) {
-                                    S.log(new Array(29).join('*'));
-                                    S.log('conflict in reduce: action already defined ->',
+                                    logger.debug(new Array(29).join('*'));
+                                    logger.debug('conflict in reduce: action already defined ->',
                                         'warn');
-                                    S.log('***** current item:', 'info');
-                                    S.log(item.toString());
-                                    S.log('***** current action:', 'info');
+                                    logger.debug('***** current item:', 'info');
+                                    logger.debug(item.toString());
+                                    logger.debug('***** current action:', 'info');
                                     visualizeAction(t, productions, itemSets);
-                                    S.log('***** will be overwritten ->', 'info');
+                                    logger.debug('***** will be overwritten ->', 'info');
                                     visualizeAction(val, productions, itemSets);
                                 }
                                 action[i][l] = val;
@@ -556,18 +556,18 @@ KISSY.add("kison/grammar", function (S, Base, Utils, Item, ItemSet, NonTerminal,
                         val[GrammarConst.TO_INDEX] = indexOf(anotherItemSet, itemSets);
                         t = action[i][symbol];
                         if (t && t.toString() != val.toString()) {
-                            S.log(new Array(29).join('*'));
-                            S.log('conflict in shift: action already defined ->',
+                            logger.debug(new Array(29).join('*'));
+                            logger.debug('conflict in shift: action already defined ->',
                                 'warn');
-                            S.log('***** current itemSet:', 'info');
-                            S.log(itemSet.toString(1));
-                            S.log('***** current symbol:', 'info');
-                            S.log(symbol);
-                            S.log('***** goto itemSet:', 'info');
-                            S.log(anotherItemSet.toString(1));
-                            S.log('***** current action:', 'info');
+                            logger.debug('***** current itemSet:', 'info');
+                            logger.debug(itemSet.toString(1));
+                            logger.debug('***** current symbol:', 'info');
+                            logger.debug(symbol);
+                            logger.debug('***** goto itemSet:', 'info');
+                            logger.debug(anotherItemSet.toString(1));
+                            logger.debug('***** current action:', 'info');
                             visualizeAction(t, productions, itemSets);
-                            S.log('***** will be overwritten ->', 'info');
+                            logger.debug('***** will be overwritten ->', 'info');
                             visualizeAction(val, productions, itemSets);
                         }
                         action[i][symbol] = val;
@@ -576,19 +576,19 @@ KISSY.add("kison/grammar", function (S, Base, Utils, Item, ItemSet, NonTerminal,
                         t = gotos[i][symbol];
                         val = indexOf(anotherItemSet, itemSets);
                         if (t && val != t) {
-                            S.log(new Array(29).join('*'));
-                            S.log('conflict in shift: goto already defined ->',
+                            logger.debug(new Array(29).join('*'));
+                            logger.debug('conflict in shift: goto already defined ->',
                                 'warn');
-                            S.log('***** current itemSet:', 'info');
-                            S.log(itemSet.toString(1));
-                            S.log('***** current symbol:', 'info');
-                            S.log(symbol);
-                            S.log('***** goto itemSet:', 'info');
-                            S.log(anotherItemSet.toString(1));
-                            S.log('***** current goto state:', 'info');
-                            S.log(t);
-                            S.log('***** will be overwritten ->', 'info');
-                            S.log(val);
+                            logger.debug('***** current itemSet:', 'info');
+                            logger.debug(itemSet.toString(1));
+                            logger.debug('***** current symbol:', 'info');
+                            logger.debug(symbol);
+                            logger.debug('***** goto itemSet:', 'info');
+                            logger.debug(anotherItemSet.toString(1));
+                            logger.debug('***** current goto state:', 'info');
+                            logger.debug(t);
+                            logger.debug('***** will be overwritten ->', 'info');
+                            logger.debug(val);
                         }
                         gotos[i][symbol] = val;
                     }
@@ -643,7 +643,6 @@ KISSY.add("kison/grammar", function (S, Base, Utils, Item, ItemSet, NonTerminal,
         },
 
         genCode: function (cfg) {
-
             cfg = cfg || {};
 
             var self = this,
@@ -720,7 +719,6 @@ KISSY.add("kison/grammar", function (S, Base, Utils, Item, ItemSet, NonTerminal,
 
     // #-------------- for generation start
     function parse(input) {
-
         var self = this,
             lexer = self.lexer,
             state,
@@ -744,7 +742,7 @@ KISSY.add("kison/grammar", function (S, Base, Utils, Item, ItemSet, NonTerminal,
             }
 
             if (!symbol) {
-                S.log("it is not a valid input: " + input, "error");
+                S.log("it is not a valid input: " + input, 'error');
                 return false;
             }
 
@@ -766,9 +764,7 @@ KISSY.add("kison/grammar", function (S, Base, Utils, Item, ItemSet, NonTerminal,
             }
 
             switch (action[GrammarConst.TYPE_INDEX]) {
-
                 case GrammarConst.SHIFT_TYPE:
-
                     stack.push(symbol);
 
                     valueStack.push(lexer.text);
@@ -782,7 +778,6 @@ KISSY.add("kison/grammar", function (S, Base, Utils, Item, ItemSet, NonTerminal,
                     break;
 
                 case GrammarConst.REDUCE_TYPE:
-
                     var production = productions[action[GrammarConst.PRODUCTION_INDEX]],
                         reducedSymbol = production.symbol || production[0],
                         reducedAction = production.action || production[2],
@@ -824,14 +819,12 @@ KISSY.add("kison/grammar", function (S, Base, Utils, Item, ItemSet, NonTerminal,
                     break;
 
                 case GrammarConst.ACCEPT_TYPE:
-
                     return $$;
             }
 
         }
 
         return undefined;
-
     }
 
     // #-------------------- for generation end

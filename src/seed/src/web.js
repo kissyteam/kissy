@@ -5,46 +5,32 @@
  * this code can only run at browser environment
  */
 (function (S, undefined) {
-
     var win = S.Env.host,
-
+        logger= S.getLogger('s/web'),
         UA = S.UA,
-
         doc = win['document'],
-
         docElem = doc && doc.documentElement,
-
         location = win.location,
-
         EMPTY = '',
-
         readyDefer = new S.Defer(),
-
         readyPromise = readyDefer.promise,
-
     // The number of poll times.
         POLL_RETIRES = 500,
-
     // The poll interval in milliseconds.
         POLL_INTERVAL = 40,
-
     // #id or id
         RE_ID_STR = /^#?([\w-]+)$/,
-
         RE_NOT_WHITESPACE = /\S/,
-
         standardEventModel = !!(doc && doc.addEventListener),
         DOM_READY_EVENT = 'DOMContentLoaded',
         READY_STATE_CHANGE_EVENT = 'readystatechange',
         LOAD_EVENT = 'load',
         COMPLETE = 'complete',
-
         addEventListener = standardEventModel ? function (el, type, fn) {
             el.addEventListener(type, fn, false);
         } : function (el, type, fn) {
             el.attachEvent('on' + type, fn);
         },
-
         removeEventListener = standardEventModel ? function (el, type, fn) {
             el.removeEventListener(type, fn, false);
         } : function (el, type, fn) {
@@ -52,8 +38,6 @@
         };
 
     S.mix(S, {
-
-
         /**
          * A crude way of determining if an object is a window
          * @member KISSY
@@ -84,8 +68,8 @@
                     xml.loadXML(data);
                 }
             } catch (e) {
-                S.log('parseXML error :','error');
-                S.log(e,'error');
+                logger.error('parseXML error :');
+                logger.error(e);
                 xml = undefined;
             }
             if (!xml || !xml.documentElement || xml.getElementsByTagName('parsererror').length) {

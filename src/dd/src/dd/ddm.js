@@ -4,9 +4,9 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add('dd/ddm', function (S, Node, Base, undefined) {
-
     var UA = S.UA,
         $ = Node.all,
+        logger= S.getLogger('dd/ddm'),
         win = S.Env.host,
         doc = win.document,
         $doc = $(doc),
@@ -477,8 +477,8 @@ KISSY.add('dd/ddm', function (S, Node, Base, undefined) {
     function region(node) {
         var offset = node.offset();
         if (!node.__dd_cached_width) {
-            S.log('no cache in dd!');
-            S.log(node[0]);
+            logger.debug('no cache in dd!');
+            logger.debug(node[0]);
         }
         return {
             left: offset.left,

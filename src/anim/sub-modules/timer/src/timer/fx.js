@@ -4,6 +4,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add('anim/timer/fx', function (S, Dom, undefined) {
+    var logger= S.getLogger('s/aim/timer/fx');
     function load(self, cfg) {
         S.mix(self, cfg);
         self.pos = 0;
@@ -73,7 +74,7 @@ KISSY.add('anim/timer/fx', function (S, Dom, undefined) {
                     // 插值出错，直接设置为最终值
                     self.pos = 1;
                     val = to;
-                    S.log(prop + ' update directly ! : ' + val + ' : ' + from + ' : ' + to);
+                    logger.warn(prop + ' update directly ! : ' + val + ' : ' + from + ' : ' + to);
                 } else {
                     val += self.unit;
                 }
@@ -81,7 +82,6 @@ KISSY.add('anim/timer/fx', function (S, Dom, undefined) {
                 if (isAttr(node, prop)) {
                     Dom.attr(node, prop, val, 1);
                 } else {
-                    // S.log(self.prop + ' update: ' + val);
                     Dom.css(node, prop, val);
                 }
             }

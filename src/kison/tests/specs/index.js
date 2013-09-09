@@ -11,18 +11,14 @@ KISSY.add(function (S, Kison) {
     }
 
     describe("kison", function () {
-
         it('escape correctly', function () {
-
             expect(Utils.escapeString("'\\")).toBe("\\'\\\\");
 
             expect(eval("'" + Utils.escapeString("'\\") + "'")).toBe("'\\");
-
         });
 
         // 4-41 文法 GOTO 图
         it("generate goto map ok", function () {
-
             var grammar = new Grammar({
                 productions: [
                     {
@@ -98,11 +94,9 @@ KISSY.add(function (S, Kison) {
             });
 
             expect(num).toBe(3);
-
         });
 
         it("generate table ok", function () {
-
             // S.log('it("generate table ok", function () {');
 
             var grammar = new Grammar({
@@ -151,7 +145,6 @@ KISSY.add(function (S, Kison) {
             var table = grammar.visualizeTable();
 
             // S.log(table.join("\n"));
-
         });
 
         it("parse ok", function () {

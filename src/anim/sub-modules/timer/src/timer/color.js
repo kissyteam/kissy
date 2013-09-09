@@ -5,6 +5,7 @@
  */
 KISSY.add('anim/timer/color', function (S, Dom, Fx,SHORT_HANDS) {
     var HEX_BASE = 16,
+        logger= S.getLogger('s/anim/timer/color'),
         floor = Math.floor,
         KEYWORDS = {
             'black':[0, 0, 0],
@@ -106,7 +107,7 @@ KISSY.add('anim/timer/color', function (S, Dom, Fx,SHORT_HANDS) {
         }
 
         //transparent 或者颜色字符串返回
-        S.log('only allow rgb or hex color string : ' + val, 'warn');
+        logger.warn('only allow rgb or hex color string : ' + val);
         return [255, 255, 255];
     }
 
@@ -143,7 +144,7 @@ KISSY.add('anim/timer/color', function (S, Dom, Fx,SHORT_HANDS) {
                     floor(interpolate(from[3] || 1, to[3] || 1, pos))
                 ].join(', ') + ')';
             } else {
-                return S.log('anim/color unknown value : ' + from);
+                logger.warn('unknown value : ' + from);
             }
         }
     });

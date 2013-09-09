@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 5 19:01
+build time: Sep 9 11:27
 */
 /**
  * @ignore
@@ -34,14 +34,21 @@ var KISSY = (function (undefined) {
         guid = 0,
         EMPTY = '';
 
+    var loggerLevel = {
+        'debug': 10,
+        'info': 20,
+        'warn': 30,
+        'error': 40
+    };
+
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20130905190105' will replace with current timestamp when compressing.
+         * NOTICE: '20130909112658' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130905190105',
+        __BUILD_TIME: '20130909112658',
         /**
          * KISSY Environment.
          * @private
@@ -155,11 +162,17 @@ var KISSY = (function (undefined) {
                 var matched = 1;
                 if (logger) {
                     var loggerCfg = S.Config.logger || {},
-                        list, i;
+                        list, i, l, level, minLevel, maxLevel, reg;
+                    cat = cat || 'debug';
+                    level = loggerLevel[cat] || loggerLevel['debug'];
                     if (list = loggerCfg.includes) {
                         matched = 0;
                         for (i = 0; i < list.length; i++) {
-                            if (logger.match(list[i])) {
+                            l = list[i];
+                            reg = l.logger;
+                            maxLevel = loggerLevel[l.maxLevel] || loggerLevel['error'];
+                            minLevel = loggerLevel[l.minLevel] || loggerLevel['debug'];
+                            if (minLevel <= level && maxLevel >= level && logger.match(reg)) {
                                 matched = 1;
                                 break;
                             }
@@ -167,7 +180,11 @@ var KISSY = (function (undefined) {
                     } else if (list = loggerCfg.excludes) {
                         matched = 1;
                         for (i = 0; i < list.length; i++) {
-                            if (logger.match(list[i])) {
+                            l = list[i];
+                            reg = l.logger;
+                            maxLevel = loggerLevel[l.maxLevel] || loggerLevel['error'];
+                            minLevel = loggerLevel[l.minLevel] || loggerLevel['debug'];
+                            if (minLevel <= level && maxLevel >= level && logger.match(reg)) {
                                 matched = 0;
                                 break;
                             }
@@ -185,11 +202,7 @@ var KISSY = (function (undefined) {
         },
 
         'getLogger': function (logger) {
-            return {
-                log: function (msg, cat) {
-                    return S.log(msg, cat, logger);
-                }
-            };
+            return getLogger(logger);
         },
 
         /**
@@ -214,8 +227,23 @@ var KISSY = (function (undefined) {
 
     if ('@DEBUG@') {
         S.Config.logger = {
-            excludes: [/^s\/.*/]
+            excludes: [
+                {
+                    logger: /^s\/.*/,
+                    maxLevel: 'info'
+                }
+            ]
         };
+    }
+
+    function getLogger(logger) {
+        var obj = {};
+        S.each(loggerLevel, function (_, cat) {
+            obj[cat] = function (msg) {
+                return S.log(msg, cat, logger);
+            };
+        });
+        return obj;
     }
 
     return S;
@@ -931,6 +959,7 @@ var KISSY = (function (undefined) {
     var SEP = '&',
         EMPTY = '',
         EQ = '=',
+        logger= S.getLogger('s/lang'),
         TRUE = true,
     // FALSE = false,
         HEX_BASE = 16,
@@ -1160,8 +1189,8 @@ var KISSY = (function (undefined) {
                     try {
                         val = decode(val);
                     } catch (e) {
-                        S.log('decodeURIComponent error : ' + val,'error');
-                        S.log(e, 'error');
+                        logger.error('decodeURIComponent error : ' + val);
+                        logger.error(e);
                     }
                     if (S.endsWith(key, '[]')) {
                         key = key.substring(0, key.length - 2);
@@ -1830,6 +1859,7 @@ var KISSY = (function (undefined) {
 (function (S, undefined) {
 
     var PROMISE_VALUE = '__promise_value',
+        logger= S.getLogger('s/promise'),
         PROMISE_PENDINGS = '__promise_pendings';
 
     /*
@@ -2050,7 +2080,7 @@ var KISSY = (function (undefined) {
                     value;
             } catch (e) {
                 // print stack info for firefox/chrome
-                S.log(e.stack || e, 'error');
+                logger.error(e.stack || e);
                 return new Reject(e);
             }
         }
@@ -2064,7 +2094,7 @@ var KISSY = (function (undefined) {
                     new Reject(reason);
             } catch (e) {
                 // print stack info for firefox/chrome
-                S.log(e.stack || e, 'error');
+                logger.error(e.stack || e);
                 return new Reject(e);
             }
         }
@@ -2468,6 +2498,7 @@ var KISSY = (function (undefined) {
 
     var reDisallowedInSchemeOrUserInfo = /[#\/\?@]/g,
         reDisallowedInPathName = /[#\?]/g,
+        logger= S.getLogger('s/uri'),
     // ?? combo of taobao
         reDisallowedInQuery = /[#@]/g,
         reDisallowedInFragment = /#/g,
@@ -2807,7 +2838,7 @@ var KISSY = (function (undefined) {
                 try {
                     v = S.urlDecode(v);
                 } catch (e) {
-                    S.log(e + 'urlDecode error : ' + v, 'error');
+                    logger.error(e + 'urlDecode error : ' + v);
                 }
                 // need to decode to get data structure in memory
                 self[key] = v;
@@ -3713,6 +3744,7 @@ var KISSY = (function (undefined) {
 (function (S) {
     var Loader = S.Loader,
         Path = S.Path,
+        logger = S.getLogger('s/loader'),
         host = S.Env.host,
         startsWith = S.startsWith,
         data = Loader.Status,
@@ -4056,7 +4088,7 @@ var KISSY = (function (undefined) {
                 mod = mods[name];
 
             if (mod && mod.fn) {
-                S.log(name + ' is defined more than once', 'error');
+                logger.error(name + ' is defined more than once');
                 return;
             }
 
@@ -4246,20 +4278,20 @@ var KISSY = (function (undefined) {
     function Module(cfg) {
         this.status = Loader.Status.INIT;
         S.mix(this, cfg);
-        this.callbacks = [];
+        this.waitedCallbacks = [];
     }
 
     S.augment(Module, {
-        addCallback: function (callback) {
-            this.callbacks.push(callback);
+        wait: function (callback) {
+            this.waitedCallbacks.push(callback);
         },
 
         notifyAll: function () {
             var callback;
-            var len = this.callbacks.length,
+            var len = this.waitedCallbacks.length,
                 i = 0;
             for (; i < len; i++) {
-                callback = this.callbacks[i];
+                callback = this.waitedCallbacks[i];
                 try {
                     callback(this);
                 } catch (e) {
@@ -4268,7 +4300,7 @@ var KISSY = (function (undefined) {
                     }, 0);
                 }
             }
-            this.callbacks = [];
+            this.waitedCallbacks = [];
         },
 
         /**
@@ -4300,14 +4332,14 @@ var KISSY = (function (undefined) {
         getFullPathUri: function () {
             var self = this,
                 t,
-                fullpathUri,
+                fullPathUri,
                 packageBaseUri,
                 packageInfo,
                 packageName,
                 path;
-            if (!self.fullpathUri) {
+            if (!self.fullPathUri) {
                 if (self.fullpath) {
-                    fullpathUri = new S.Uri(self.fullpath);
+                    fullPathUri = new S.Uri(self.fullpath);
                 } else {
                     packageInfo = self.getPackage();
                     packageBaseUri = packageInfo.getBaseUri();
@@ -4318,15 +4350,15 @@ var KISSY = (function (undefined) {
                         (packageName = packageInfo.getName())) {
                         path = Path.relative(packageName, path);
                     }
-                    fullpathUri = packageBaseUri.resolve(path);
+                    fullPathUri = packageBaseUri.resolve(path);
                     if (t = self.getTag()) {
                         t += '.' + self.getType();
-                        fullpathUri.query.set('t', t);
+                        fullPathUri.query.set('t', t);
                     }
                 }
-                self.fullpathUri = fullpathUri;
+                self.fullPathUri = fullPathUri;
             }
-            return self.fullpathUri;
+            return self.fullPathUri;
         },
 
         /**
@@ -4335,10 +4367,10 @@ var KISSY = (function (undefined) {
          */
         getFullPath: function () {
             var self = this,
-                fullpathUri;
+                fullPathUri;
             if (!self.fullpath) {
-                fullpathUri = self.getFullPathUri();
-                self.fullpath = Utils.getMappedPath(self.runtime, fullpathUri.toString());
+                fullPathUri = self.getFullPathUri();
+                self.fullpath = Utils.getMappedPath(self.runtime, fullPathUri.toString());
             }
             return self.fullpath;
         },
@@ -4530,24 +4562,24 @@ var KISSY = (function (undefined) {
             if (UA.webkit) {
                 // http://www.w3.org/TR/Dom-Level-2-Style/stylesheets.html
                 if (node['sheet']) {
-                    logger.log('webkit loaded : ' + url,'log');
+                    logger.debug('webkit loaded : ' + url);
                     loaded = 1;
                 }
             } else if (node['sheet']) {
                 try {
                     var cssRules = node['sheet'].cssRules;
                     if (cssRules) {
-                        logger.log('same domain firefox loaded : ' + url,'log');
+                        logger.debug('same domain firefox loaded : ' + url);
                         loaded = 1;
                     }
                 } catch (ex) {
                     exName = ex.name;
-                    logger.log('firefox getStyle : ' + exName + ' ' + ex.code + ' ' + url,'log');
+                    logger.debug('firefox getStyle : ' + exName + ' ' + ex.code + ' ' + url);
                     // http://www.w3.org/TR/dom/#dom-domexception-code
                     if (// exName == 'SecurityError' ||
                     // for old firefox
                         exName == 'NS_ERROR_DOM_SECURITY_ERR') {
-                        logger.log(exName + ' firefox loaded : ' + url,'log');
+                        logger.debug(exName + ' firefox loaded : ' + url);
                         loaded = 1;
                     }
                 }
@@ -4590,6 +4622,7 @@ var KISSY = (function (undefined) {
 (function (S) {
 
     var fs = require('fs'),
+        logger= S.getLogger('s/loader'),
         vm = require('vm');
 
     S.mix(S, {
@@ -4605,7 +4638,7 @@ var KISSY = (function (undefined) {
             }
 
             if (S.startsWith(S.Path.extname(url).toLowerCase(), '.css')) {
-                S.log('node js can not load css: ' + url, 'warn');
+                logger.warn('node js can not load css: ' + url);
                 success && success();
                 return;
             }
@@ -4619,8 +4652,8 @@ var KISSY = (function (undefined) {
                 fn(S, require);
                 success && success();
             } catch (e) {
-                S.log('in file: ' + url,'error');
-                S.log(e.stack, 'error');
+                logger.error('in file: ' + url);
+                logger.error(e.stack);
                 error && error(e);
             }
         }
@@ -4879,7 +4912,7 @@ var KISSY = (function (undefined) {
                     return;
                 }
 
-                mod.addCallback(function () {
+                mod.wait(function () {
                     // 只在 LOADED 后加载依赖项一次
                     // 防止 config('modules') requires 和模块中 requires 不一致
                     self.loadModRequires(mod);
@@ -4932,7 +4965,7 @@ var KISSY = (function (undefined) {
                         // does not need this step for css
                         // standard browser(except ie9) fire load after KISSY.add immediately
                         if (currentMod) {
-                            // S.log('standard browser get mod name after load : ' + modName);
+                            logger.debug('standard browser get mod name after load : ' + modName);
                             Utils.registerModule(runtime,
                                 modName, currentMod.fn,
                                 currentMod.config);
@@ -4955,7 +4988,7 @@ var KISSY = (function (undefined) {
                 if (mod.fn) {
                      var msg = 'load remote module: "' + modName +
                         '" from: "' + url + '"';
-                    logger.log(msg, 'info');
+                    logger.info(msg);
                 } else {
                     // ie will call success even when getScript error(404)
                     _modError();
@@ -4968,7 +5001,7 @@ var KISSY = (function (undefined) {
                 var msg = modName +
                     ' is not loaded! can not find module in path : ' +
                     url;
-                S.log(msg, 'error');
+                logger.error(msg);
                 mod.status = ERROR;
             }
         }
@@ -4998,8 +5031,8 @@ var KISSY = (function (undefined) {
             // module code is executed right after inserting into dom
             // i has to preserve module name before insert module script into dom,
             // then get it back here
-            // S.log('can not find interactive script,time diff : ' + (+new Date() - self.__startLoadTime), 'error');
-            // S.log('old_ie get mod name from cache : ' + self.__startLoadModName);
+            logger.debug('can not find interactive script,time diff : ' + (+new Date() - self.__startLoadTime));
+            logger.debug('old_ie get mod name from cache : ' + self.__startLoadModName);
             name = startLoadModName;
         }
         return name;
@@ -5107,7 +5140,7 @@ var KISSY = (function (undefined) {
                 }
             });
             if (ms.length) {
-                logger.log('load remote modules: "' + ms.join(', ') + '" from: "' + rs.fullpath + '"', 'info');
+                logger.info('load remote modules: "' + ms.join(', ') + '" from: "' + rs.fullpath + '"');
             }
         });
     }
@@ -5179,7 +5212,7 @@ var KISSY = (function (undefined) {
                             var msg = mod.name +
                                 ' is not loaded! can not find module in path : ' +
                                 one.fullpath;
-                            S.log(msg, 'error');
+                            logger.error(msg);
                             mod.status = ERROR;
                             // notify all loader instance
                             mod.notifyAll();
@@ -5203,7 +5236,7 @@ var KISSY = (function (undefined) {
                                 var msg = mod.name +
                                     ' is not loaded! can not find module in path : ' +
                                     one.fullpath;
-                                S.log(msg, 'error');
+                                logger.error(msg);
                                 mod.status = ERROR;
                             }
                             // notify all loader instance
@@ -5252,7 +5285,7 @@ var KISSY = (function (undefined) {
                             mod.status = LOADING;
                             ret[m] = 1;
                         }
-                        mod.addCallback(function (mod) {
+                        mod.wait(function (mod) {
                             waitingModules.remove(mod.getName());
                             // notify current loader instance
                             waitingModules.notifyAll();
@@ -5275,6 +5308,7 @@ var KISSY = (function (undefined) {
                 modName, mod, packageInfo, type, typedCombos, mods,
                 tag, charset, packagePath,
                 packageName, group, fullpath;
+
             for (; i < l; ++i) {
                 modName = modNames[i];
                 mod = Utils.createModuleInfo(runtime, modName);
@@ -5325,6 +5359,7 @@ var KISSY = (function (undefined) {
                 }
                 mods.push(mod);
             }
+
             return comboMods;
         },
 
@@ -5342,7 +5377,6 @@ var KISSY = (function (undefined) {
                 maxUrlLength = Config.comboMaxUrlLength;
 
             var comboPrefixes = {};
-
             // {type, {comboName, [modInfo]}}}
             var comboMods = this.getComboMods(modNames, comboPrefixes);
             // {type, {comboName, [url]}}}
@@ -5451,7 +5485,6 @@ var KISSY = (function (undefined) {
     }
 
     WaitingModules.prototype = {
-
         constructor: WaitingModules,
 
         notifyAll: function () {
@@ -5474,7 +5507,6 @@ var KISSY = (function (undefined) {
         contains: function (modName) {
             return this.waitMods[modName];
         }
-
     };
 
     Loader.WaitingModules = WaitingModules;
@@ -5705,7 +5737,7 @@ var KISSY = (function (undefined) {
             comboMaxFileNum: 40,
             charset: 'utf-8',
             lang: 'zh-cn',
-            tag: '20130905190105'
+            tag: '20130909112658'
         }, getBaseInfo()));
     }
 
@@ -5732,46 +5764,32 @@ KISSY.add('i18n', {
  * this code can only run at browser environment
  */
 (function (S, undefined) {
-
     var win = S.Env.host,
-
+        logger= S.getLogger('s/web'),
         UA = S.UA,
-
         doc = win['document'],
-
         docElem = doc && doc.documentElement,
-
         location = win.location,
-
         EMPTY = '',
-
         readyDefer = new S.Defer(),
-
         readyPromise = readyDefer.promise,
-
     // The number of poll times.
         POLL_RETIRES = 500,
-
     // The poll interval in milliseconds.
         POLL_INTERVAL = 40,
-
     // #id or id
         RE_ID_STR = /^#?([\w-]+)$/,
-
         RE_NOT_WHITESPACE = /\S/,
-
         standardEventModel = !!(doc && doc.addEventListener),
         DOM_READY_EVENT = 'DOMContentLoaded',
         READY_STATE_CHANGE_EVENT = 'readystatechange',
         LOAD_EVENT = 'load',
         COMPLETE = 'complete',
-
         addEventListener = standardEventModel ? function (el, type, fn) {
             el.addEventListener(type, fn, false);
         } : function (el, type, fn) {
             el.attachEvent('on' + type, fn);
         },
-
         removeEventListener = standardEventModel ? function (el, type, fn) {
             el.removeEventListener(type, fn, false);
         } : function (el, type, fn) {
@@ -5779,8 +5797,6 @@ KISSY.add('i18n', {
         };
 
     S.mix(S, {
-
-
         /**
          * A crude way of determining if an object is a window
          * @member KISSY
@@ -5811,8 +5827,8 @@ KISSY.add('i18n', {
                     xml.loadXML(data);
                 }
             } catch (e) {
-                S.log('parseXML error :','error');
-                S.log(e,'error');
+                logger.error('parseXML error :');
+                logger.error(e);
                 xml = undefined;
             }
             if (!xml || !xml.documentElement || xml.getElementsByTagName('parsererror').length) {

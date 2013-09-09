@@ -29,6 +29,13 @@ var KISSY = (function (undefined) {
         guid = 0,
         EMPTY = '';
 
+    var loggerLevel = {
+        'debug': 10,
+        'info': 20,
+        'warn': 30,
+        'error': 40
+    };
+
     S = {
         /**
          * The build time of the library.
@@ -150,11 +157,17 @@ var KISSY = (function (undefined) {
                 var matched = 1;
                 if (logger) {
                     var loggerCfg = S.Config.logger || {},
-                        list, i;
+                        list, i, l, level, minLevel, maxLevel, reg;
+                    cat = cat || 'debug';
+                    level = loggerLevel[cat] || loggerLevel['debug'];
                     if (list = loggerCfg.includes) {
                         matched = 0;
                         for (i = 0; i < list.length; i++) {
-                            if (logger.match(list[i])) {
+                            l = list[i];
+                            reg = l.logger;
+                            maxLevel = loggerLevel[l.maxLevel] || loggerLevel['error'];
+                            minLevel = loggerLevel[l.minLevel] || loggerLevel['debug'];
+                            if (minLevel <= level && maxLevel >= level && logger.match(reg)) {
                                 matched = 1;
                                 break;
                             }
@@ -162,7 +175,11 @@ var KISSY = (function (undefined) {
                     } else if (list = loggerCfg.excludes) {
                         matched = 1;
                         for (i = 0; i < list.length; i++) {
-                            if (logger.match(list[i])) {
+                            l = list[i];
+                            reg = l.logger;
+                            maxLevel = loggerLevel[l.maxLevel] || loggerLevel['error'];
+                            minLevel = loggerLevel[l.minLevel] || loggerLevel['debug'];
+                            if (minLevel <= level && maxLevel >= level && logger.match(reg)) {
                                 matched = 0;
                                 break;
                             }
@@ -180,11 +197,7 @@ var KISSY = (function (undefined) {
         },
 
         'getLogger': function (logger) {
-            return {
-                log: function (msg, cat) {
-                    return S.log(msg, cat, logger);
-                }
-            };
+            return getLogger(logger);
         },
 
         /**
@@ -209,8 +222,23 @@ var KISSY = (function (undefined) {
 
     if ('@DEBUG@') {
         S.Config.logger = {
-            excludes: [/^s\/.*/]
+            excludes: [
+                {
+                    logger: /^s\/.*/,
+                    maxLevel: 'info'
+                }
+            ]
         };
+    }
+
+    function getLogger(logger) {
+        var obj = {};
+        S.each(loggerLevel, function (_, cat) {
+            obj[cat] = function (msg) {
+                return S.log(msg, cat, logger);
+            };
+        });
+        return obj;
     }
 
     return S;

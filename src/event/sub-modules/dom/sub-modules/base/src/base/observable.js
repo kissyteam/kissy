@@ -9,6 +9,7 @@ KISSY.add('event/dom/base/observable', function (S, Dom, Special, DomEventUtils,
     // 再在浏览器通知的系统 eventHandler 中检查
     // 如果相同，那么证明已经 fire 过了，不要再次触发了
     var BaseUtils = BaseEvent.Utils;
+    var logger= S.getLogger('s/event');
 
     /**
      * custom event for dom
@@ -247,8 +248,7 @@ KISSY.add('event/dom/base/observable', function (S, Dom, Special, DomEventUtils,
                         currentTarget[ eventType ]();
                     }
                 } catch (eError) {
-                    S.log('trigger action error: ');
-                    S.log(eError);
+                    logger.debug('trigger action error: '+eError);
                 }
 
                 DomEventObservable.triggeredEvent = '';

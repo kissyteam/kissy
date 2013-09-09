@@ -52,24 +52,24 @@
             if (UA.webkit) {
                 // http://www.w3.org/TR/Dom-Level-2-Style/stylesheets.html
                 if (node['sheet']) {
-                    logger.log('webkit loaded : ' + url,'log');
+                    logger.debug('webkit loaded : ' + url);
                     loaded = 1;
                 }
             } else if (node['sheet']) {
                 try {
                     var cssRules = node['sheet'].cssRules;
                     if (cssRules) {
-                        logger.log('same domain firefox loaded : ' + url,'log');
+                        logger.debug('same domain firefox loaded : ' + url);
                         loaded = 1;
                     }
                 } catch (ex) {
                     exName = ex.name;
-                    logger.log('firefox getStyle : ' + exName + ' ' + ex.code + ' ' + url,'log');
+                    logger.debug('firefox getStyle : ' + exName + ' ' + ex.code + ' ' + url);
                     // http://www.w3.org/TR/dom/#dom-domexception-code
                     if (// exName == 'SecurityError' ||
                     // for old firefox
                         exName == 'NS_ERROR_DOM_SECURITY_ERR') {
-                        logger.log(exName + ' firefox loaded : ' + url,'log');
+                        logger.debug(exName + ' firefox loaded : ' + url);
                         loaded = 1;
                     }
                 }

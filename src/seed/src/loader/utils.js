@@ -6,6 +6,7 @@
 (function (S) {
     var Loader = S.Loader,
         Path = S.Path,
+        logger = S.getLogger('s/loader'),
         host = S.Env.host,
         startsWith = S.startsWith,
         data = Loader.Status,
@@ -349,7 +350,7 @@
                 mod = mods[name];
 
             if (mod && mod.fn) {
-                S.log(name + ' is defined more than once', 'error');
+                logger.error(name + ' is defined more than once');
                 return;
             }
 

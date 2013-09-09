@@ -7,6 +7,7 @@
 (function (S) {
 
     var fs = require('fs'),
+        logger= S.getLogger('s/loader'),
         vm = require('vm');
 
     S.mix(S, {
@@ -22,7 +23,7 @@
             }
 
             if (S.startsWith(S.Path.extname(url).toLowerCase(), '.css')) {
-                S.log('node js can not load css: ' + url, 'warn');
+                logger.warn('node js can not load css: ' + url);
                 success && success();
                 return;
             }
@@ -36,8 +37,8 @@
                 fn(S, require);
                 success && success();
             } catch (e) {
-                S.log('in file: ' + url,'error');
-                S.log(e.stack, 'error');
+                logger.error('in file: ' + url);
+                logger.error(e.stack);
                 error && error(e);
             }
         }

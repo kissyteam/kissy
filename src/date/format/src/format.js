@@ -5,6 +5,7 @@
  */
 KISSY.add('date/format', function (S, GregorianCalendar, defaultLocale) {
     var MAX_VALUE = Number.MAX_VALUE;
+    var logger= S.getLogger('s/date/format');
 
     /*
 
@@ -477,6 +478,7 @@ KISSY.add('date/format', function (S, GregorianCalendar, defaultLocale) {
             }
             return ret.join('');
         },
+
         parse: function (dateStr) {
             var calendar = new GregorianCalendar(this.timezoneOffset, this.locale),
                 i,
@@ -536,9 +538,10 @@ KISSY.add('date/format', function (S, GregorianCalendar, defaultLocale) {
             }
 
             if (errorIndex >= 0) {
-                S.log(dateStr, 'warn');
-                S.log(dateStr.substring(0, errorIndex) + '^', 'warn');
-                throw new Error('error when parsing date');
+                logger.error('error when parsing date');
+                logger.error(dateStr);
+                logger.error(dateStr.substring(0, errorIndex) + '^');
+                return undefined;
             }
             return calendar;
         }

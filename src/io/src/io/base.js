@@ -7,6 +7,7 @@ KISSY.add('io/base', function (S, Event, undefined) {
 
     var rlocalProtocol = /^(?:about|app|app\-storage|.+\-extension|file|widget)$/,
         rspace = /\s+/,
+        logger= S.getLogger('s/io'),
         mirror = function (s) {
             return s;
         },
@@ -467,7 +468,7 @@ KISSY.add('io/base', function (S, Event, undefined) {
         } catch (e) {
             // Propagate exception as error if not done
             if (self.state < 2) {
-                S.log(e.stack || e, 'error');
+                logger.error(e.stack || e);
                 self._ioReady(-1, e.message);
                 // Simply rethrow otherwise
             } else {

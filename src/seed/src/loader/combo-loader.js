@@ -66,7 +66,7 @@
                 }
             });
             if (ms.length) {
-                logger.log('load remote modules: "' + ms.join(', ') + '" from: "' + rs.fullpath + '"', 'info');
+                logger.info('load remote modules: "' + ms.join(', ') + '" from: "' + rs.fullpath + '"');
             }
         });
     }
@@ -138,7 +138,7 @@
                             var msg = mod.name +
                                 ' is not loaded! can not find module in path : ' +
                                 one.fullpath;
-                            S.log(msg, 'error');
+                            logger.error(msg);
                             mod.status = ERROR;
                             // notify all loader instance
                             mod.notifyAll();
@@ -162,7 +162,7 @@
                                 var msg = mod.name +
                                     ' is not loaded! can not find module in path : ' +
                                     one.fullpath;
-                                S.log(msg, 'error');
+                                logger.error(msg);
                                 mod.status = ERROR;
                             }
                             // notify all loader instance
@@ -211,7 +211,7 @@
                             mod.status = LOADING;
                             ret[m] = 1;
                         }
-                        mod.addCallback(function (mod) {
+                        mod.wait(function (mod) {
                             waitingModules.remove(mod.getName());
                             // notify current loader instance
                             waitingModules.notifyAll();
@@ -234,6 +234,7 @@
                 modName, mod, packageInfo, type, typedCombos, mods,
                 tag, charset, packagePath,
                 packageName, group, fullpath;
+
             for (; i < l; ++i) {
                 modName = modNames[i];
                 mod = Utils.createModuleInfo(runtime, modName);
@@ -284,6 +285,7 @@
                 }
                 mods.push(mod);
             }
+
             return comboMods;
         },
 
@@ -301,7 +303,6 @@
                 maxUrlLength = Config.comboMaxUrlLength;
 
             var comboPrefixes = {};
-
             // {type, {comboName, [modInfo]}}}
             var comboMods = this.getComboMods(modNames, comboPrefixes);
             // {type, {comboName, [url]}}}

@@ -5,6 +5,7 @@
  */
 KISSY.add('io/sub-domain-transport', function (S, XhrTransportBase, Event, Dom) {
     var PROXY_PAGE = '/sub_domain_proxy.html',
+        logger= S.getLogger('s/io'),
         doc = S.Env.host.document,
         iframeMap = {
             // hostname:{iframe: , ready:}
@@ -15,9 +16,8 @@ KISSY.add('io/sub-domain-transport', function (S, XhrTransportBase, Event, Dom) 
             c = io.config;
         self.io = io;
         c.crossDomain = false;
-        S.log('use SubDomainTransport for: ' + c.url);
+        logger.info('use SubDomainTransport for: ' + c.url);
     }
-
 
     S.augment(SubDomainTransport, XhrTransportBase.proto, {
         // get nativeXhr from iframe document

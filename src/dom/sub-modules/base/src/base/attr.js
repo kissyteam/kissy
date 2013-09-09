@@ -287,8 +287,6 @@ KISSY.add('dom/base/attr', function (S, Dom, undefined) {
                         el[ name ] = undefined;
                         delete el[ name ];
                     } catch (e) {
-                        // S.log('delete el property error : ');
-                        // S.log(e);
                     }
                 }
             },

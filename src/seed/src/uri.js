@@ -7,6 +7,7 @@
 
     var reDisallowedInSchemeOrUserInfo = /[#\/\?@]/g,
         reDisallowedInPathName = /[#\?]/g,
+        logger= S.getLogger('s/uri'),
     // ?? combo of taobao
         reDisallowedInQuery = /[#@]/g,
         reDisallowedInFragment = /#/g,
@@ -346,7 +347,7 @@
                 try {
                     v = S.urlDecode(v);
                 } catch (e) {
-                    S.log(e + 'urlDecode error : ' + v, 'error');
+                    logger.error(e + 'urlDecode error : ' + v);
                 }
                 // need to decode to get data structure in memory
                 self[key] = v;

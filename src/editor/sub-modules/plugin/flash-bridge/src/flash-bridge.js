@@ -4,6 +4,7 @@
  */
 KISSY.add("editor/plugin/flash-bridge", function (S, SWF, Editor) {
     var instances = {};
+    var logger= S.getLogger('s/editor/plugin/flash-bridge');
 
     function FlashBridge(cfg) {
         this._init(cfg);
@@ -79,7 +80,7 @@ KISSY.add("editor/plugin/flash-bridge", function (S, SWF, Editor) {
                 type = event.type;
 
             if (type === 'log') {
-                S.log(event.message);
+                logger.debug(event.message);
             } else if (type) {
                 self.fire(type, event);
             }
@@ -99,7 +100,7 @@ KISSY.add("editor/plugin/flash-bridge", function (S, SWF, Editor) {
     });
 
     FlashBridge.EventHandler = function (id, event) {
-        S.log("flash fire event : " + event.type);
+        logger.debug("fire event: " + event.type);
         var instance = instances[id];
         if (instance) {
             //防止ie同步触发事件，后面还没on呢，另外给 swf 喘息机会

@@ -52,7 +52,6 @@
         });
 
         it("map config works", function () {
-
             S.clearLoader();
 
             KISSY.config({

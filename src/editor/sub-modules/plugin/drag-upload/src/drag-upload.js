@@ -142,7 +142,6 @@ KISSY.add("editor/plugin/drag-upload", function (S, Editor) {
                             } else {
                                 alert("服务器端出错！");
                                 img.remove();
-                                S.log(xhr);
                             }
                             xhr.onreadystatechange = null;
                         }

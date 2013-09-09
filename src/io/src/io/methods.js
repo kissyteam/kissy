@@ -4,8 +4,8 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add('io/methods', function (S, IO, undefined) {
-
     var OK_CODE = 200,
+        logger= S.getLogger('s/logger'),
         Promise = S.Promise,
         MULTIPLE_CHOICES = 300,
         NOT_MODIFIED = 304,
@@ -200,7 +200,7 @@ KISSY.add('io/methods', function (S, IO, undefined) {
                             statusText = 'success';
                             isSuccess = true;
                         } catch (e) {
-                            S.log(e.stack || e, 'error');
+                            logger.error(e.stack || e);
                             statusText = 'parser error';
                         }
                     }

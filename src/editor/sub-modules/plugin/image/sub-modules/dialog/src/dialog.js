@@ -143,7 +143,6 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Dialog4E, Tabs,
                             file2 = fso['GetFile'](file.value);
                         return file2.size;
                     } catch (e) {
-                        S.log(e.message);
                     }
                 }
                 return 0;

@@ -4,7 +4,6 @@
  */
 KISSY.add('dom/ie/input-selection', function (S, Dom) {
     var propHooks = Dom._propHooks;
-    // S.log("fix selectionEnd/Start !");
     // note :
     // in ie textarea can not set selectionStart or selectionEnd between '\r' and '\n'
     // else kissy will move start to one step backward and move end to one step forword

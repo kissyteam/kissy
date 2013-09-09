@@ -141,8 +141,6 @@ KISSY.add('dom/base/data', function (S, Dom, undefined) {
                     delete elem[EXPANDO];
                 } catch (e) {
                     elem[EXPANDO] = undefined;
-                    //S.log('delete expando error : ');
-                    //S.log(e);
                 }
                 if (elem.removeAttribute) {
                     elem.removeAttribute(EXPANDO);

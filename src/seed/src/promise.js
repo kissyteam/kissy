@@ -6,6 +6,7 @@
 (function (S, undefined) {
 
     var PROMISE_VALUE = '__promise_value',
+        logger= S.getLogger('s/promise'),
         PROMISE_PENDINGS = '__promise_pendings';
 
     /*
@@ -226,7 +227,7 @@
                     value;
             } catch (e) {
                 // print stack info for firefox/chrome
-                S.log(e.stack || e, 'error');
+                logger.error(e.stack || e);
                 return new Reject(e);
             }
         }
@@ -240,7 +241,7 @@
                     new Reject(reason);
             } catch (e) {
                 // print stack info for firefox/chrome
-                S.log(e.stack || e, 'error');
+                logger.error(e.stack || e);
                 return new Reject(e);
             }
         }

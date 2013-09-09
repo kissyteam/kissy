@@ -214,7 +214,6 @@ KISSY.add("editor/plugin/dent-cmd", function (S, Editor, ListUtils) {
         if (nearestListBlock
             && startContainer[0].nodeType == Dom.NodeType.ELEMENT_NODE
             && startContainer.nodeName() in listNodeNames) {
-            //S.log("indent from ul/ol");
             var walker = new Walker(range);
             walker.evaluator = isListItem;
             range.startContainer = walker.next();

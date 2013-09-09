@@ -11,6 +11,7 @@
     var SEP = '&',
         EMPTY = '',
         EQ = '=',
+        logger= S.getLogger('s/lang'),
         TRUE = true,
     // FALSE = false,
         HEX_BASE = 16,
@@ -240,8 +241,8 @@
                     try {
                         val = decode(val);
                     } catch (e) {
-                        S.log('decodeURIComponent error : ' + val,'error');
-                        S.log(e, 'error');
+                        logger.error('decodeURIComponent error : ' + val);
+                        logger.error(e);
                     }
                     if (S.endsWith(key, '[]')) {
                         key = key.substring(0, key.length - 2);
