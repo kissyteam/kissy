@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * Encapsulate KISSY toggle button for kissy editor
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(&quot;editor/plugin/button&quot;, function (S, Editor, Button) {
+<span id='KISSY-Editor-method-addButton'>    /**
+</span>     * add button to editor
+     * @param {String} id control id
+     * @param {Object} cfg button config
+     * @param {Function} ButtonType button constructor. needs to extend {@link KISSY.Button}, Defaults to {@link KISSY.Button}.
+     * @member KISSY.Editor
+     */
+    Editor.prototype.addButton = function (id, cfg, ButtonType) {
+
+        if (ButtonType === undefined) {
+            ButtonType = Button;
+        }
+        var self = this,
+            prefixCls = self.get('prefixCls') + &quot;editor-toolbar-&quot;;
+
+        if (cfg.elCls) {
+            cfg.elCls = prefixCls + cfg.elCls;
+        }
+
+        cfg.elCls = prefixCls + 'button ' + (cfg.elCls || &quot;&quot;);
+
+        var b = new ButtonType(S.mix({
+            render: self.get(&quot;toolBarEl&quot;),
+            content: '&lt;span ' +
+                'class=&quot;' + prefixCls + 'item ' +
+                prefixCls + id +
+                '&quot;&gt;&lt;/span' +
+                '&gt;',
+            prefixCls: self.get('prefixCls') + &quot;editor-&quot;,
+            editor: self
+        }, cfg)).render();
+
+        if (!cfg.content) {
+            var contentEl = b.get(&quot;el&quot;).one(&quot;span&quot;);
+            b.on(&quot;afterContentClsChange&quot;, function (e) {
+                contentEl[0].className = prefixCls + 'item ' +
+                    prefixCls + e.newVal;
+            });
+        }
+
+        if (b.get(&quot;mode&quot;) == Editor.Mode.WYSIWYG_MODE) {
+            self.on(&quot;wysiwygMode&quot;, function () {
+                b.set(&quot;disabled&quot;, false);
+            });
+            self.on(&quot;sourceMode&quot;, function () {
+                b.set(&quot;disabled&quot;, true);
+            });
+        }
+
+        self.addControl(id + &quot;/button&quot;, b);
+
+        return b;
+    };
+
+    return Button;
+}, {
+    requires: ['editor', 'button']
+});
+</pre>
+</body>
+</html>

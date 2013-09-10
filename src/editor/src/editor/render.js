@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * render for editor
  * @author yiminghe@gmail.com
  */

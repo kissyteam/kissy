@@ -4,7 +4,6 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add('node/override', function (S, Dom, NodeList) {
-
     var NLP = NodeList.prototype;
 
     /**
@@ -15,6 +14,7 @@ KISSY.add('node/override', function (S, Dom, NodeList) {
      * @member KISSY.NodeList
      */
 
+
     /**
      * Insert every element in the set of newNodes to the beginning of every element in the set of current node list.
      * @param {KISSY.NodeList} newNodes Nodes to be inserted
@@ -24,12 +24,12 @@ KISSY.add('node/override', function (S, Dom, NodeList) {
      */
 
 
-        // append(node ,parent) : 参数顺序反过来了
-        // appendTo(parent,node) : 才是正常
+        // append(node ,parent): reverse param order
+        // appendTo(parent,node): normal
     S.each(['append', 'prepend', 'before', 'after'], function (insertType) {
         NLP[insertType] = function (html) {
             var newNode = html, self = this;
-            // 创建
+            // create
             if (typeof newNode == 'string') {
                 newNode = Dom.create(newNode);
             }
@@ -50,7 +50,6 @@ KISSY.add('node/override', function (S, Dom, NodeList) {
             return orig.call(self, others);
         };
     })
-
 }, {
     requires: ['dom', './base', './attach']
 });

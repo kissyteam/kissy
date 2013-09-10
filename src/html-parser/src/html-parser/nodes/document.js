@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * fake document node
  * @author yiminghe@gmail.com
  */

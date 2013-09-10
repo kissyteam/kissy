@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * foreColor button.
  * @author yiminghe@gmail.com
  */

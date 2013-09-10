@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * Local dataSource for ComboBox
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(&quot;combobox/local-data-source&quot;, function (S, Base) {
+
+<span id='KISSY-ComboBox-LocalDataSource'>    /**
+</span>     * Local dataSource for comboBox.
+     * @extends KISSY.Base
+     * @class KISSY.ComboBox.LocalDataSource
+     */
+
+    return Base.extend({
+<span id='KISSY-ComboBox-LocalDataSource-method-fetchData'>        /**
+</span>         * Data source interface. How to get data for comboBox.
+         * @param {String} inputVal current active input's value
+         * @param {Function} callback callback to notify comboBox when data is ready
+         * @param {Object} context callback 's execution context
+         */
+        fetchData: function (inputVal, callback, context) {
+            var parse = this.get(&quot;parse&quot;),
+                data = this.get(&quot;data&quot;);
+            data = parse(inputVal, data);
+            callback.call(context, data);
+        }
+    }, {
+        ATTRS: {
+<span id='KISSY-ComboBox-LocalDataSource-cfg-data'>            /**
+</span>             * array of static data for comboBox
+             * @cfg {Object[]} data
+             */
+<span id='global-property-data'>            /**
+</span>             * @ignore
+             */
+            data: {
+                value: []
+            },
+<span id='KISSY-ComboBox-LocalDataSource-cfg-parse'>            /**
+</span>             * parse data function.
+             * Defaults to: index of match.
+             * @cfg {Function} parse
+             */
+            parse: {
+                value: parser
+            }
+        }
+    });
+
+    function parser(inputVal, data) {
+        var ret = [],
+            count = 0;
+        if (!inputVal) {
+            return data;
+        }
+        S.each(data, function (d) {
+            if (d.indexOf(inputVal) != -1) {
+                ret.push(d);
+            }
+            count++;
+        });
+
+        return ret;
+    }
+}, {
+    requires: ['base']
+});</pre>
+</body>
+</html>

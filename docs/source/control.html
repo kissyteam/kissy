@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * Input wrapper for ComboBox component.
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(&quot;combobox/control&quot;, function (S, Node, Control, ComboBoxRender, Menu, undefined) {
+    var ComboBox,
+        KeyCode = Node.KeyCode;
+
+<span id='KISSY-ComboBox'>    /**
+</span>     * KISSY ComboBox.
+     * xclass: 'combobox'.
+     * @extends KISSY.Component.Control
+     * @class KISSY.ComboBox
+     */
+    ComboBox = Control.extend({
+
+            // user's input text.
+            // for restore after press esc key
+            // if update input when press down or up key
+            _savedValue: null,
+
+<span id='KISSY-ComboBox-method-normalizeData'>            /**
+</span>             * normalize returned data
+             * @protected
+             * @param data
+             */
+            'normalizeData': function (data) {
+                var self = this,
+                    contents, v, i, c;
+                if (data &amp;&amp; data.length) {
+                    data = data.slice(0, self.get(&quot;maxItemCount&quot;));
+                    if (self.get(&quot;format&quot;)) {
+                        contents = self.get(&quot;format&quot;).call(self,
+                            self.getValueForAutocomplete(), data);
+                    } else {
+                        contents = [];
+                    }
+                    for (i = 0; i &lt; data.length; i++) {
+                        v = data[i];
+                        c = contents[i] = S.mix({
+                            content: v,
+                            textContent: v,
+                            value: v
+                        }, contents[i]);
+                    }
+                    return contents;
+                }
+                return contents;
+            },
+
+            bindUI: function () {
+                var self = this,
+                    input = self.get(&quot;input&quot;);
+
+                input.on(&quot;valuechange&quot;, onValueChange, self);
+
+<span id='KISSY-ComboBox-event-afterCollapsedChange'>                /**
+</span>                 * fired after combobox 's collapsed attribute is changed.
+                 * @event afterCollapsedChange
+                 * @param e
+                 * @param e.newVal current value
+                 * @param e.prevVal previous value
+                 */
+
+                self.on('click', onMenuItemClick, self);
+
+                self.get('menu').onRendered(function (menu) {
+                    onMenuAfterRenderUI(self, menu);
+                });
+            },
+
+            destructor: function () {
+                this.get('menu').destroy();
+            },
+
+<span id='KISSY-ComboBox-method-getValueForAutocomplete'>            /**
+</span>             * get value
+             * @protected
+             */
+            getValueForAutocomplete: function () {
+                return this.get('value');
+            },
+
+<span id='KISSY-ComboBox-method-setValueFromAutocomplete'>            /**
+</span>             * set value
+             * @protected
+             * @method
+             * @member KISSY.ComboBox
+             */
+            setValueFromAutocomplete: function (value, setCfg) {
+                this.set('value', value, setCfg);
+            },
+
+            // buffer/bridge between check timer and change logic
+            '_onSetValue': function (v, e) {
+                var self = this,
+                    value;
+                // only trigger menu when timer cause change
+                if (e.causedByTimer) {
+                    value = self['getValueForAutocomplete']();
+                    // undefined means invalid input value
+                    if (value === undefined) {
+                        self.set(&quot;collapsed&quot;, true);
+                        return;
+                    }
+                    self._savedValue = value;
+                    self.sendRequest(value);
+                } else {
+                    self.get('input').val(v);
+                }
+            },
+
+            handleFocusInternal: function () {
+                var self = this,
+                    placeholderEl;
+                if (self.get('invalidEl')) {
+                    setInvalid(self, false);
+                }
+                if (placeholderEl = self.get(&quot;placeholderEl&quot;)) {
+                    placeholderEl.hide();
+                }
+            },
+
+            handleBlurInternal: function (e) {
+                var self = this,
+                    placeholderEl = self.get(&quot;placeholderEl&quot;);
+                self.callSuper(e);
+                delayHide(self);
+                if (self.get('invalidEl')) {
+                    self.validate(function (error, val) {
+                        if (error) {
+                            if (!self.get(&quot;focused&quot;) &amp;&amp; val == self.get('value')) {
+                                setInvalid(self, error);
+                            }
+                        } else {
+                            setInvalid(self, false);
+                        }
+                    });
+                }
+                if (placeholderEl &amp;&amp; !self.get('value')) {
+                    placeholderEl.show();
+                }
+            },
+
+            handleMouseDownInternal: function (e) {
+                var self = this,
+                    target,
+                    trigger;
+                self.callSuper(e);
+                target = e.target;
+                trigger = self.get(&quot;trigger&quot;);
+                if (trigger &amp;&amp; (trigger[0] == target || trigger.contains(target))) {
+                    if (self.get('collapsed')) {
+                        // fetch data
+                        self.focus();
+                        self.sendRequest('');
+                    } else {
+                        // switch from open to collapse
+                        self.set('collapsed', true);
+                    }
+                    e.preventDefault();
+                }
+            },
+
+            handleKeyDownInternal: function (e) {
+                var self = this,
+                    updateInputOnDownUp,
+                    input,
+                    keyCode = e.keyCode,
+                    highlightedItem,
+                    handledByMenu,
+                    menu = self.get(&quot;menu&quot;);
+
+                input = self.get(&quot;input&quot;);
+                updateInputOnDownUp = self.get(&quot;updateInputOnDownUp&quot;);
+
+                if (menu.get(&quot;visible&quot;)) {
+
+                    highlightedItem = menu.get(&quot;highlightedItem&quot;);
+
+                    // https://github.com/kissyteam/kissy/issues/371
+                    // combobox: input should be involved in key press sequence
+                    if (updateInputOnDownUp &amp;&amp; highlightedItem) {
+                        var menuChildren = menu.get('children');
+                        if (keyCode == KeyCode.DOWN &amp;&amp;
+                            highlightedItem == getFirstEnabledItem(menuChildren.concat().reverse())
+                            ||
+                            keyCode == KeyCode.UP &amp;&amp;
+                                highlightedItem == getFirstEnabledItem(menuChildren)
+                            ) {
+                            self.setValueFromAutocomplete(self._savedValue);
+                            highlightedItem.set('highlighted', false);
+                            return true;
+                        }
+                    }
+
+                    handledByMenu = menu.handleKeyDownInternal(e);
+
+                    highlightedItem = menu.get(&quot;highlightedItem&quot;);
+
+                    // esc
+                    if (keyCode == KeyCode.ESC) {
+                        self.set(&quot;collapsed&quot;, true);
+                        if (updateInputOnDownUp) {
+                            // combobox will change input value
+                            // but it does not need to reload data
+                            // restore original user's input text
+                            self.setValueFromAutocomplete(self._savedValue);
+                        }
+                        return true;
+                    }
+
+                    if (updateInputOnDownUp &amp;&amp;
+                        S.inArray(keyCode, [KeyCode.DOWN, KeyCode.UP])) {
+                        // update menu's active value to input just for show
+                        self.setValueFromAutocomplete(highlightedItem.get(&quot;textContent&quot;));
+                    }
+
+                    // tab
+                    // if menu is open and an menuitem is highlighted, see as click/enter
+                    if (keyCode == KeyCode.TAB &amp;&amp; highlightedItem) {
+                        // click highlightedItem
+                        highlightedItem.handleClickInternal();
+                        // only prevent focus change in multiple mode
+                        if (self.get(&quot;multiple&quot;)) {
+                            return true;
+                        }
+                    }
+
+                    return handledByMenu;
+                } else if (keyCode == KeyCode.DOWN || keyCode == KeyCode.UP) {
+                    // re-fetch, consider multiple input
+                    var v = self.getValueForAutocomplete();
+                    if (v !== undefined) {
+                        self.sendRequest(v);
+                        return true;
+                    }
+                }
+                return  undefined;
+            },
+
+            validate: function (callback) {
+                var self = this,
+                    validator = self.get('validator'),
+                    val = self.getValueForAutocomplete();
+
+                if (validator) {
+                    validator(val, function (error) {
+                        callback(error, val);
+                    });
+                } else {
+                    callback(false, val);
+                }
+            },
+
+<span id='KISSY-ComboBox-method-sendRequest'>            /**
+</span>             * fetch comboBox list by value and show comboBox list
+             * @param {String} value value for fetching comboBox list
+             */
+            sendRequest: function (value) {
+                var self = this,
+                    dataSource = self.get(&quot;dataSource&quot;);
+                dataSource.fetchData(value, renderData, self);
+            },
+
+            _onSetCollapsed: function (v) {
+                var self = this,
+                    el = self.$el,
+                    menu = self.get('menu');
+                if (v) {
+                    menu.hide();
+                } else {
+                    // 保证显示前已经 bind 好 menu 事件
+                    clearDismissTimer(self);
+                    if (!menu.get(&quot;visible&quot;)) {
+                        if (self.get(&quot;matchElWidth&quot;)) {
+                            menu.render();
+                            var menuEl = menu.get('el');
+                            var borderWidth =
+                                (parseInt(menuEl.css('borderLeftWidth')) || 0) +
+                                    (parseInt(menuEl.css('borderRightWidth')) || 0);
+                            menu.set(&quot;width&quot;, el[0].offsetWidth - borderWidth);
+                        }
+                        menu.show();
+                    }
+                }
+            }
+        },
+        {
+            ATTRS: {
+
+<span id='KISSY-ComboBox-property-input'>                /**
+</span>                 * Input element of current combobox.
+                 * @type {KISSY.NodeList}
+                 * @property input
+                 */
+<span id='global-property-input'>                /**
+</span>                 * @ignore
+                 */
+                input: {
+                },
+
+<span id='KISSY-ComboBox-cfg-inputValue'>                /**
+</span>                 * initial value for input
+                 * @cfg {String} inputValue
+                 */
+<span id='global-property-value'>                /**
+</span>                 * @ignore
+                 */
+                value: {
+                    value: '',
+                    sync: 0,
+                    view: 1
+                },
+
+<span id='global-property-trigger'>                /**
+</span>                 * trigger arrow element
+                 * @ignore
+                 */
+                trigger: {
+                },
+
+<span id='KISSY-ComboBox-cfg-placeholder'>                /**
+</span>                 * placeholder
+                 * @cfg {String} placeholder
+                 */
+<span id='global-property-placeholder'>                /**
+</span>                 * @ignore
+                 */
+                placeholder: {
+                    view: 1
+                },
+
+
+<span id='global-property-placeholderEl'>                /**
+</span>                 * label for placeholder in ie
+                 * @ignore
+                 */
+                placeholderEl: {
+                },
+
+<span id='KISSY-ComboBox-property-validator'>                /**
+</span>                 * custom validation function
+                 * @type Function
+                 * @property validator
+                 */
+<span id='global-property-validator'>                /**
+</span>                 * @ignore
+                 */
+                validator: {
+                },
+
+<span id='global-property-invalidEl'>                /**
+</span>                 * invalid tag el
+                 * @ignore
+                 */
+                invalidEl: {
+                },
+
+                allowTextSelection: {
+                    value: true
+                },
+
+<span id='KISSY-ComboBox-cfg-hasTrigger'>                /**
+</span>                 * Whether show combobox trigger.
+                 * Defaults to: true.
+                 * @cfg {Boolean} hasTrigger
+                 */
+<span id='global-property-hasTrigger'>                /**
+</span>                 * @ignore
+                 */
+                hasTrigger: {
+                    value: true,
+                    view: 1
+                },
+
+<span id='KISSY-ComboBox-cfg-menu'>                /**
+</span>                 * ComboBox dropDown menuList or config
+                 * @cfg {KISSY.Menu.PopupMenu|Object} menu
+                 */
+<span id='KISSY-ComboBox-property-menu'>                /**
+</span>                 * ComboBox dropDown menuList or config
+                 * @property menu
+                 * @type {KISSY.Menu.PopupMenu}
+                 */
+<span id='global-property-menu'>                /**
+</span>                 * @ignore
+                 */
+                menu: {
+                    value: {
+                    },
+                    getter: function (v) {
+                        if (!v.isControl) {
+                            v.xclass = v.xclass || 'popupmenu';
+                            v = this.createComponent(v);
+                            this.setInternal('menu', v);
+                        }
+                        return v;
+                    },
+                    setter: function (m) {
+                        if (m.isControl) {
+                            m.setInternal('parent', this);
+                            var align = {
+                                node: this.$el,
+                                points: [&quot;bl&quot;, &quot;tl&quot;],
+                                overflow: {
+                                    adjustX: 1,
+                                    adjustY: 1
+                                }
+                            };
+                            S.mix(m.get('align'), align, false);
+                        }
+                    }
+                },
+
+<span id='KISSY-ComboBox-property-collapsed'>                /**
+</span>                 * Whether combobox menu is hidden.
+                 * @type {Boolean}
+                 * @property collapsed
+                 */
+<span id='global-property-collapsed'>                /**
+</span>                 * @ignore
+                 */
+                collapsed: {
+                    view: 1,
+                    value: true
+                },
+
+<span id='KISSY-ComboBox-cfg-dataSource'>                /**
+</span>                 * dataSource for comboBox.
+                 * @cfg {KISSY.ComboBox.LocalDataSource|KISSY.ComboBox.RemoteDataSource|Object} dataSource
+                 */
+<span id='global-property-dataSource'>                /**
+</span>                 * @ignore
+                 */
+                dataSource: {
+                    // 和 input 关联起来，input可以有很多，每个数据源可以不一样，但是 menu 共享
+                },
+
+<span id='KISSY-ComboBox-cfg-maxItemCount'>                /**
+</span>                 * maxItemCount max count of data to be shown
+                 * @cfg {Number} maxItemCount
+                 */
+<span id='global-property-maxItemCount'>                /**
+</span>                 * @ignore
+                 */
+                maxItemCount: {
+                    value: 99999
+                },
+
+<span id='KISSY-ComboBox-cfg-matchElWidth'>                /**
+</span>                 * Whether drop down menu is same width with input.
+                 * Defaults to: true.
+                 * @cfg {Boolean} matchElWidth
+                 */
+<span id='global-property-matchElWidth'>                /**
+</span>                 * @ignore
+                 */
+                matchElWidth: {
+                    value: true
+                },
+
+<span id='KISSY-ComboBox-cfg-format'>                /**
+</span>                 * Format function to return array of
+                 * html/text/menu item attributes from array of data.
+                 * @cfg {Function} format
+                 */
+<span id='global-property-format'>                /**
+</span>                 * @ignore
+                 */
+                format: {
+                },
+
+<span id='KISSY-ComboBox-cfg-updateInputOnDownUp'>                /**
+</span>                 * Whether update input's value at keydown or up when combobox menu shows.
+                 * Default to: true
+                 * @cfg {Boolean} updateInputOnDownUp
+                 */
+<span id='global-property-updateInputOnDownUp'>                /**
+</span>                 * @ignore
+                 */
+                updateInputOnDownUp: {
+                    value: true
+                },
+
+<span id='KISSY-ComboBox-cfg-autoHighlightFirst'>                /**
+</span>                 * Whether or not the first row should be highlighted by default.
+                 * Defaults to: false
+                 * @cfg {Boolean} autoHighlightFirst
+                 */
+<span id='global-property-autoHighlightFirst'>                /**
+</span>                 * @ignore
+                 */
+                autoHighlightFirst: {
+                },
+
+<span id='KISSY-ComboBox-cfg-highlightMatchItem'>                /**
+</span>                 * whether highlight item when item content is same with user input.
+                 * Defaults to: true
+                 * @cfg {Boolean} highlightMatchItem
+                 */
+<span id='global-property-highlightMatchItem'>                /**
+</span>                 * @ignore
+                 */
+                highlightMatchItem: {
+                    value: true
+                },
+
+                xrender: {
+                    value: ComboBoxRender
+                }
+            },
+            xclass: 'combobox'
+        });
+
+
+    // #----------------------- private start
+
+    function getFirstEnabledItem(children) {
+        for (var i = 0; i &lt; children.length; i++) {
+            if (!children[i].get('disabled')) {
+                return children[i];
+            }
+        }
+        return null;
+    }
+
+    function onMenuFocusout() {
+        var combobox = this;
+        delayHide(combobox);
+    }
+
+    function onMenuFocusin() {
+        var combobox = this;
+        // different event sequence
+        // ie fire focusin blur
+        // others fire blur focusin
+        setTimeout(function () {
+            clearDismissTimer(combobox);
+        }, 0);
+    }
+
+    function onMenuMouseOver() {
+        var combobox = this;
+        // trigger el focus
+        self.focus();
+        // prevent menu from hiding
+        clearDismissTimer(combobox);
+    }
+
+    function onMenuMouseDown() {
+        var combobox = this;
+        // consider multi-input
+        // input.val(self.get('value'));
+        // force change event for cursor keep
+        combobox.setValueFromAutocomplete(combobox.getValueForAutocomplete(), {
+            force: 1
+        });
+    }
+
+    function onMenuAfterRenderUI(self, menu) {
+        var contentEl;
+        var input = self.get('input');
+        var el = menu.get('el');
+        contentEl = menu.get(&quot;contentEl&quot;);
+        input.attr(&quot;aria-owns&quot;, el.attr('id'));
+        // menu has input!
+        el.on(&quot;focusout&quot;, onMenuFocusout, self);
+        el.on(&quot;focusin&quot;, onMenuFocusin, self);
+        contentEl.on(&quot;mouseover&quot;, onMenuMouseOver, self);
+        // cause valuechange
+        // if click menuitem while chinese input is open(xu -&gt; '')
+        contentEl.on('mousedown', onMenuMouseDown, self);
+    }
+
+    function onMenuItemClick(e) {
+        var item = e.target,
+            self = this,
+            textContent;
+        if (item.isMenuItem) {
+            textContent = item.get('textContent');
+            self.setValueFromAutocomplete(textContent);
+            self._savedValue = textContent;
+            self.set(&quot;collapsed&quot;, true);
+        }
+    }
+
+    function setInvalid(self, error) {
+        var $el = self.$el,
+            cls = self.view.getBaseCssClasses('invalid'),
+            invalidEl = self.get(&quot;invalidEl&quot;);
+        if (error) {
+            $el.addClass(cls);
+            invalidEl.attr(&quot;title&quot;, error);
+            invalidEl.show();
+        } else {
+            $el.removeClass(cls);
+            invalidEl.hide();
+        }
+    }
+
+    function delayHide(self) {
+        if (self._focusoutDismissTimer) {
+            return;
+        }
+        self._focusoutDismissTimer = setTimeout(function () {
+                // ie6 bug
+                if (self._focusoutDismissTimer) {
+                    self.set(&quot;collapsed&quot;, true);
+                }
+            },
+            // ie6 needs longer timeout
+            50);
+    }
+
+    function clearDismissTimer(self) {
+        var t;
+        if (t = self._focusoutDismissTimer) {
+            clearTimeout(t);
+            self._focusoutDismissTimer = null;
+        }
+    }
+
+    function onValueChange(e) {
+        this.set('value', e.newVal, {
+            data: {
+                causedByTimer: 1
+            }
+        });
+    }
+
+    function renderData(data) {
+        var self = this,
+            v,
+            children = [],
+            val,
+            matchVal,
+            highlightedItem,
+            i,
+            menu = self.get(&quot;menu&quot;);
+
+        data = self['normalizeData'](data);
+
+        var start = S.now();
+
+        menu.removeChildren(true);
+
+        if (highlightedItem = menu.get('highlightedItem')) {
+            highlightedItem.set('highlighted', false);
+        }
+
+        if (data &amp;&amp; data.length) {
+            for (i = 0; i &lt; data.length; i++) {
+                v = data[i];
+                menu.addChild(v);
+            }
+
+            children = menu.get('children');
+
+            // make menu item (which textContent is same as input) active
+            val = self['getValueForAutocomplete']();
+
+            if (self.get('highlightMatchItem')) {
+                for (i = 0; i &lt; children.length; i++) {
+                    if (children[i].get(&quot;textContent&quot;) == val) {
+                        children[i].set('highlighted', true);
+                        matchVal = true;
+                        break;
+                    }
+                }
+            }
+
+            // Whether or not the first row should be highlighted by default.
+            if (!matchVal &amp;&amp; self.get(&quot;autoHighlightFirst&quot;)) {
+                for (i = 0; i &lt; children.length; i++) {
+                    if (!children[i].get(&quot;disabled&quot;)) {
+                        children[i].set('highlighted', true);
+                        break;
+                    }
+                }
+            }
+
+            self.set(&quot;collapsed&quot;, false);
+        } else {
+            self.set(&quot;collapsed&quot;, true);
+        }
+    }
+
+    // #------------------------private end
+
+    return ComboBox;
+}, {
+    requires: [
+        'node',
+        'component/control',
+        './render',
+        'menu'
+    ]
+});
+
+<span id='global-property-'>/**
+</span> * @ignore
+ *
+ * !TODO
+ *  - menubutton combobox 抽象提取 picker (extjs)
+ *
+ *
+ * 2012-05
+ * auto-complete menu 对齐当前输入位置
+ *  - http://kirblog.idetalk.com/2010/03/calculating-cursor-position-in-textarea.html
+ *  - https://github.com/kir/js_cursor_position
+ *
+ * 2012-04-01 可能 issue :
+ *  - 用户键盘上下键高亮一些选项，
+ *    input 值为高亮项的 textContent,那么点击 body 失去焦点，
+ *    到底要不要设置 selectedItem 为当前高亮项？
+ *    additional note:
+ *    1. tab 时肯定会把当前高亮项设置为 selectedItem
+ *    2. 鼠标时不会把高亮项的 textContent 设到 input 上去
+ *    1,2 都没问题，关键是键盘结合鼠标时怎么个处理？或者不考虑算了！
+ **/</pre>
+</body>
+</html>

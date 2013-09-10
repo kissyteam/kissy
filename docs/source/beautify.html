@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * format html prettily
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(&quot;html-parser/writer/beautify&quot;, function (S, BasicWriter, dtd, Utils) {
+
+    function BeautifyWriter() {
+        var self = this;
+        BeautifyWriter.superclass.constructor.apply(self, arguments);
+        // tag in pre should not indent
+        // space (\t\r\n ) in pre should not collapse
+        self.inPre = 0;
+        self.indentChar = &quot;\t&quot;;
+        self.indentLevel = 0;
+        // whether to indent on current line
+        // if already indent and then not line break ,next tag should not indent
+        self.allowIndent = 0;
+        self.rules = {};
+
+        for (var e in S.merge(
+            dtd.$nonBodyContent,
+            dtd.$block,
+            dtd.$listItem,
+            dtd.$tableContent,
+            // may add unnecessary whitespaces
+            {
+                &quot;select&quot;:1,
+                // add unnecessary whitespaces is ok for script and style
+                &quot;script&quot;:1,
+                &quot;style&quot;:1
+            }
+        )) {
+            self.setRules(e, {
+                // whether its tag/text children should indent
+                allowIndent:1,
+                breakBeforeOpen:1,
+                breakAfterOpen:1,
+                breakBeforeClose:1, // !dtd[e]['#text']
+                breakAfterClose:1
+            });
+        }
+
+        self.setRules('option', {
+            breakBeforeOpen:1
+        });
+
+        self.setRules('optiongroup', {
+            breakBeforeOpen:1
+        });
+
+        self.setRules('br', {
+            breakAfterOpen:1
+        });
+
+        self.setRules('title', {
+            allowIndent:0,
+            breakBeforeClose:0,
+            breakAfterOpen:0
+        });
+
+        // Disable indentation on &lt;pre&gt;.
+        self.setRules('pre', {
+            allowIndent:0
+        });
+    }
+
+    S.extend(BeautifyWriter, BasicWriter, {
+        indentation:function () {
+            if (!this.inPre) {
+                this.append(new Array(this.indentLevel + 1).join(this.indentChar));
+            }
+            // already indent ,unless line break  it will not indent again
+            this.allowIndent = 0;
+        },
+
+        lineBreak:function () {
+            var o = this.output;
+            if (!this.inPre &amp;&amp; o.length) {
+                // prevent adding more \n between tags :
+                // before : &lt;div&gt;\n&lt;div&gt;\n&lt;/div&gt;\n&lt;/div&gt; =&gt; &lt;div&gt;\n\t' '\n&lt;div&gt;
+                // now : &lt;div&gt;\n&lt;div&gt;\n&lt;/div&gt;\n&lt;/div&gt; =&gt; &lt;div&gt;\n&lt;div&gt; =&gt; indentation =&gt;&lt;div&gt;\n\t&lt;div&gt;
+                for (var j = o.length - 1; j &gt;= 0; j--) {
+                    if (!(/[\r\n\t ]/.test(o[j]))) {
+                        break;
+                    }
+                }
+                o.length = j + 1;
+                this.append(&quot;\n&quot;);
+            }
+            // allow indentation if encounter next tag
+            this.allowIndent = 1;
+        },
+
+        setRules:function (tagName, rule) {
+            if (!this.rules[tagName]) {
+                this.rules[tagName] = {};
+            }
+            S.mix(this.rules[tagName], rule);
+        },
+
+        openTag:function (el) {
+
+            var tagName = el.tagName,
+                rules = this.rules[tagName] || {};
+            if (this.allowIndent) {
+                this.indentation();
+            } else if (rules.breakBeforeOpen) {
+                this.lineBreak();
+                this.indentation();
+            }
+            BeautifyWriter.superclass.openTag.apply(this, arguments);
+        },
+
+        openTagClose:function (el) {
+
+            var tagName = el.tagName;
+            var rules = this.rules[tagName] || {};
+            if (el.isSelfClosed) {
+                this.append(&quot; /&gt;&quot;)
+            } else {
+                this.append(&quot;&gt;&quot;);
+                if (rules.allowIndent) {
+                    this.indentLevel++;
+                }
+            }
+            if (rules.breakAfterOpen) {
+                this.lineBreak();
+            }
+            if (tagName === 'pre') {
+                this.inPre = 1;
+            }
+        },
+
+        closeTag:function (el) {
+            var self = this,
+                tagName = el.tagName,
+                rules = self.rules[tagName] || {};
+
+            if (rules.allowIndent) {
+                self.indentLevel--;
+            }
+
+            if (self.allowIndent) {
+                self.indentation();
+            } else if (rules.breakBeforeClose) {
+                self.lineBreak();
+                self.indentation();
+            }
+
+            BeautifyWriter.superclass.closeTag.apply(self, arguments);
+
+            if (tagName === &quot;pre&quot;) {
+                self.inPre = 0;
+            }
+
+            if (rules.breakAfterClose) {
+                self.lineBreak();
+            }
+
+        },
+
+        text:function (text) {
+            if (this.allowIndent) {
+                this.indentation();
+            }
+            if (!this.inPre) {
+                // shrink consequential spaces into one space
+                // 换行也没了，否则由于 closeTag 时 lineBreak 会导致换行越来越多
+                text = Utils.collapseWhitespace(text);
+            }
+            this.append(text);
+        },
+
+        comment:function (comment) {
+            if (this.allowIndent) {
+                this.indentation();
+            }
+            this.append(&quot;&lt;!--&quot; + comment + &quot;--&gt;&quot;);
+        },
+
+        cdata:function (text) {
+            if (this.allowIndent) {
+                this.indentation();
+            }
+            this.append(S.trim(text));
+        }
+
+    });
+
+    return BeautifyWriter;
+
+}, {
+    requires:['./basic', '../dtd', '../utils']
+});</pre>
+</body>
+</html>

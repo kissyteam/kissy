@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * Add table plugin for KISSY.
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(&quot;editor/plugin/table&quot;, function (S, Editor, DialogLoader) {
+    var UA = S.UA,
+        Dom = S.DOM,
+        Node = S.Node,
+        tableRules = [&quot;tr&quot;, &quot;th&quot;, &quot;td&quot;, &quot;tbody&quot;, &quot;table&quot;],
+        cellNodeRegex = /^(?:td|th)$/;
+
+    function getSelectedCells(selection) {
+        // Walker will try to split text nodes, which will make the current selection
+        // invalid. So save bookmarks before doing anything.
+        var bookmarks = selection.createBookmarks(),
+            ranges = selection.getRanges(),
+            retval = [],
+            database = {};
+
+        function moveOutOfCellGuard(node) {
+            // Apply to the first cell only.
+            if (retval.length &gt; 0) {
+                return;
+            }
+            // If we are exiting from the first &lt;/td&gt;, then the td should definitely be
+            // included.
+            if (node[0].nodeType == Dom.NodeType.ELEMENT_NODE &amp;&amp;
+                cellNodeRegex.test(node.nodeName()) &amp;&amp;
+                !node.data('selected_cell')) {
+                node._4e_setMarker(database, 'selected_cell', true, undefined);
+                retval.push(node);
+            }
+        }
+
+        for (var i = 0; i &lt; ranges.length; i++) {
+            var range = ranges[ i ];
+
+            if (range.collapsed) {
+                // Walker does not handle collapsed ranges yet - fall back to old API.
+                var startNode = range.getCommonAncestor(),
+                    nearestCell = startNode.closest('td', undefined) ||
+                        startNode.closest('th', undefined);
+                if (nearestCell)
+                    retval.push(nearestCell);
+            } else {
+                var walker = new Walker(range),
+                    node;
+                walker.guard = moveOutOfCellGuard;
+
+                while (( node = walker.next() )) {
+                    // If may be possible for us to have a range like this:
+                    // &lt;td&gt;^1&lt;/td&gt;&lt;td&gt;^2&lt;/td&gt;
+                    // The 2nd td shouldn't be included.
+                    //
+                    // So we have to take care to include a td we've entered only when we've
+                    // walked into its children.
+
+                    var parent = node.parent();
+                    if (parent &amp;&amp; cellNodeRegex.test(parent.nodeName()) &amp;&amp;
+                        !parent.data('selected_cell')) {
+                        parent._4e_setMarker(database, 'selected_cell', true, undefined);
+                        retval.push(parent);
+                    }
+                }
+            }
+        }
+
+        Editor.Utils.clearAllMarkers(database);
+        // Restore selection position.
+        selection.selectBookmarks(bookmarks);
+
+        return retval;
+    }
+
+    function clearRow($tr) {
+        // Get the array of row's cells.
+        var $cells = $tr.cells;
+        // Empty all cells.
+        for (var i = 0; i &lt; $cells.length; i++) {
+            $cells[ i ].innerHTML = '';
+            if (!UA['ie'])
+                ( new Node($cells[ i ]) )._4e_appendBogus(undefined);
+        }
+    }
+
+    function insertRow(selection, insertBefore) {
+        // Get the row where the selection is placed in.
+        var row = selection.getStartElement().parent('tr');
+        if (!row)
+            return;
+
+        // Create a clone of the row.
+        var newRow = row.clone(true);
+        // Insert the new row before of it.
+        newRow.insertBefore(row);
+        // Clean one of the rows to produce the illusion of
+        // inserting an empty row
+        // before or after.
+        clearRow(insertBefore ? newRow[0] : row[0]);
+    }
+
+    function deleteRows(selectionOrRow) {
+        if (selectionOrRow instanceof Editor.Selection) {
+            var cells = getSelectedCells(selectionOrRow),
+                cellsCount = cells.length,
+                rowsToDelete = [],
+                cursorPosition,
+                previousRowIndex,
+                nextRowIndex;
+
+            // Queue up the rows - it's possible and
+            // likely that we have duplicates.
+            for (var i = 0; i &lt; cellsCount; i++) {
+                var row = cells[ i ].parent(),
+                    rowIndex = row[0].rowIndex;
+
+                !i &amp;&amp; ( previousRowIndex = rowIndex - 1 );
+                rowsToDelete[ rowIndex ] = row;
+                i == cellsCount - 1 &amp;&amp; ( nextRowIndex = rowIndex + 1 );
+            }
+
+            var table = row.parent('table'),
+                rows = table[0].rows,
+                rowCount = rows.length;
+
+            // Where to put the cursor after rows been deleted?
+            // 1. Into next sibling row if any;
+            // 2. Into previous sibling row if any;
+            // 3. Into table's parent element if it's the very last row.
+            cursorPosition = new Node(
+                nextRowIndex &lt; rowCount &amp;&amp; table[0].rows[ nextRowIndex ] ||
+                    previousRowIndex &gt; 0 &amp;&amp; table[0].rows[ previousRowIndex ] ||
+                    table[0].parentNode);
+
+            for (i = rowsToDelete.length; i &gt;= 0; i--) {
+                if (rowsToDelete[ i ])
+                    deleteRows(rowsToDelete[ i ]);
+            }
+
+            return cursorPosition;
+        }
+        else if (selectionOrRow instanceof Node) {
+            table = selectionOrRow.parent('table');
+
+            if (table[0].rows.length == 1)
+                table.remove();
+            else
+                selectionOrRow.remove();
+        }
+
+        return 0;
+    }
+
+    function insertColumn(selection, insertBefore) {
+        // Get the cell where the selection is placed in.
+        var startElement = selection.getStartElement(),
+            cell = startElement.closest('td', undefined) ||
+                startElement.closest('th', undefined);
+
+        if (!cell) {
+            return;
+        }
+
+        // Get the cell's table.
+        var table = cell.parent('table'),
+            cellIndex = cell[0].cellIndex;
+        // Loop through all rows available in the table.
+        for (var i = 0; i &lt; table[0].rows.length; i++) {
+            var $row = table[0].rows[ i ];
+            // If the row doesn't have enough cells, ignore it.
+            if ($row.cells.length &lt; ( cellIndex + 1 ))
+                continue;
+            cell = new Node($row.cells[ cellIndex ].cloneNode(undefined));
+
+            if (!UA['ie'])
+                cell._4e_appendBogus(undefined);
+            // Get back the currently selected cell.
+            var baseCell = new Node($row.cells[ cellIndex ]);
+            if (insertBefore)
+                cell.insertBefore(baseCell);
+            else
+                cell.insertAfter(baseCell);
+        }
+    }
+
+    function getFocusElementAfterDelCols(cells) {
+        var cellIndexList = [],
+            table = cells[ 0 ] &amp;&amp; cells[ 0 ].parent('table'),
+            i, length,
+            targetIndex, targetCell;
+
+        // get the cellIndex list of delete cells
+        for (i = 0, length = cells.length; i &lt; length; i++) {
+            cellIndexList.push(cells[i][0].cellIndex);
+        }
+
+        // get the focusable column index
+        cellIndexList.sort();
+        for (i = 1, length = cellIndexList.length;
+             i &lt; length; i++) {
+            if (cellIndexList[ i ] - cellIndexList[ i - 1 ] &gt; 1) {
+                targetIndex = cellIndexList[ i - 1 ] + 1;
+                break;
+            }
+        }
+
+        if (!targetIndex) {
+            targetIndex = cellIndexList[ 0 ] &gt; 0 ? ( cellIndexList[ 0 ] - 1 )
+                : ( cellIndexList[ cellIndexList.length - 1 ] + 1 );
+        }
+
+        // scan row by row to get the target cell
+        var rows = table[0].rows;
+        for (i = 0, length = rows.length;
+             i &lt; length; i++) {
+            targetCell = rows[ i ].cells[ targetIndex ];
+            if (targetCell) {
+                break;
+            }
+        }
+
+        return targetCell ? new Node(targetCell) : table.prev();
+    }
+
+    function deleteColumns(selectionOrCell) {
+        if (selectionOrCell instanceof Editor.Selection) {
+            var colsToDelete = getSelectedCells(selectionOrCell),
+                elementToFocus = getFocusElementAfterDelCols(colsToDelete);
+
+            for (var i = colsToDelete.length - 1; i &gt;= 0; i--) {
+                //某一列已经删除？？这一列的cell再做？ !table判断处理
+                if (colsToDelete[ i ]) {
+                    deleteColumns(colsToDelete[i]);
+                }
+            }
+
+            return elementToFocus;
+        } else if (selectionOrCell instanceof Node) {
+            // Get the cell's table.
+            var table = selectionOrCell.parent('table');
+
+            //该单元格所属的列已经被删除了
+            if (!table)
+                return null;
+
+            // Get the cell index.
+            var cellIndex = selectionOrCell[0].cellIndex;
+
+            /*
+             * Loop through all rows from down to up,
+             *  coz it's possible that some rows
+             * will be deleted.
+             */
+            for (i = table[0].rows.length - 1; i &gt;= 0; i--) {
+                // Get the row.
+                var row = new Node(table[0].rows[ i ]);
+
+                // If the cell to be removed is the first one and
+                //  the row has just one cell.
+                if (!cellIndex &amp;&amp; row[0].cells.length == 1) {
+                    deleteRows(row);
+                    continue;
+                }
+
+                // Else, just delete the cell.
+                if (row[0].cells[ cellIndex ])
+                    row[0].removeChild(row[0].cells[ cellIndex ]);
+            }
+        }
+
+        return null;
+    }
+
+    function placeCursorInCell(cell, placeAtEnd) {
+        var range = new Editor.Range(cell[0].ownerDocument);
+        if (!range['moveToElementEditablePosition'](cell,
+            placeAtEnd ? true : undefined)) {
+            range.selectNodeContents(cell);
+            range.collapse(placeAtEnd ? false : true);
+        }
+        range.select(true);
+    }
+
+    function getSel(editor) {
+        var selection = editor.getSelection(),
+            startElement = selection &amp;&amp; selection.getStartElement(),
+            table = startElement &amp;&amp; startElement.closest('table', undefined);
+        if (!table)
+            return undefined;
+        var td = startElement.closest(function (n) {
+            var name = Dom.nodeName(n);
+            return table.contains(n) &amp;&amp; (name == &quot;td&quot; || name == &quot;th&quot;);
+        }, undefined);
+        var tr = startElement.closest(function (n) {
+            var name = Dom.nodeName(n);
+            return table.contains(n) &amp;&amp; name == &quot;tr&quot;;
+        }, undefined);
+        return {
+            table:table,
+            td:td,
+            tr:tr
+        };
+    }
+
+    function ensureTd(editor) {
+        var info = getSel(editor);
+        return info &amp;&amp; info.td;
+
+    }
+
+    function ensureTr(editor) {
+        var info = getSel(editor);
+        return info &amp;&amp; info.tr;
+    }
+
+    var statusChecker = {
+        &quot;表格属性&quot;:getSel,
+        &quot;删除表格&quot;:ensureTd,
+        &quot;删除列&quot;:ensureTd,
+        &quot;删除行&quot;:ensureTr,
+        '在上方插入行':ensureTr,
+        '在下方插入行':ensureTr,
+        '在左侧插入列':ensureTd,
+        '在右侧插入列':ensureTd
+    };
+
+   // table 编辑模式下显示虚线边框便于编辑
+    var showBorderClassName = 'ke_show_border',
+        cssTemplate =
+            // IE6 don't have child selector support,
+            // where nested table cells could be incorrect.
+            ( UA['ie'] === 6 ?
+                [
+                    'table.%2,',
+                    'table.%2 td, table.%2 th,',
+                    '{',
+                    'border : #d3d3d3 1px dotted',
+                    '}'
+                ] :
+                [
+                    ' table.%2,',
+                    ' table.%2 &gt; tr &gt; td,  table.%2 &gt; tr &gt; th,',
+                    ' table.%2 &gt; tbody &gt; tr &gt; td,  table.%2 &gt; tbody &gt; tr &gt; th,',
+                    ' table.%2 &gt; thead &gt; tr &gt; td,  table.%2 &gt; thead &gt; tr &gt; th,',
+                    ' table.%2 &gt; tfoot &gt; tr &gt; td,  table.%2 &gt; tfoot &gt; tr &gt; th',
+                    '{',
+                    'border : #d3d3d3 1px dotted',
+                    '}'
+                ] ).join(''),
+
+        cssStyleText = cssTemplate.replace(/%2/g, showBorderClassName),
+
+        extraDataFilter = {
+            tags:{
+                'table':function (element) {
+                    var cssClass = element.getAttribute(&quot;class&quot;),
+                        border = parseInt(element.getAttribute(&quot;border&quot;), 10);
+
+                    if (!border || border &lt;= 0) {
+                        element.setAttribute(&quot;class&quot;, S.trim((cssClass || &quot;&quot;) +
+                            ' ' + showBorderClassName));
+                    }
+                }
+            }
+        },
+
+        extraHTMLFilter = {
+            tags:{
+                'table':function (table) {
+                    var cssClass = table.getAttribute(&quot;class&quot;), v;
+
+                    if (cssClass) {
+                        v = S.trim(cssClass.replace(showBorderClassName, &quot;&quot;));
+                        if (v) {
+                            table.setAttribute(&quot;class&quot;, v);
+                        } else {
+                            table.removeAttribute(&quot;class&quot;);
+                        }
+                    }
+
+
+                }
+
+            }
+        };
+
+    function TablePlugin(config) {
+        this.config = config || {};
+    }
+
+    S.augment(TablePlugin, {
+        pluginRenderUI:function (editor) {
+            // 动态加入显表格 border css，便于编辑
+            editor.addCustomStyle(cssStyleText);
+
+            var dataProcessor = editor.htmlDataProcessor,
+                dataFilter = dataProcessor &amp;&amp; dataProcessor.dataFilter,
+                htmlFilter = dataProcessor &amp;&amp; dataProcessor.htmlFilter;
+
+            dataFilter.addRules(extraDataFilter);
+            htmlFilter.addRules(extraHTMLFilter);
+
+            var self = this,
+                handlers = {
+
+                    &quot;表格属性&quot;:function () {
+                        this.hide();
+                        var info = getSel(editor);
+                        if (info) {
+                            DialogLoader.useDialog(editor, &quot;table&quot;,
+                                self.config,
+                                {
+                                    selectedTable:info.table,
+                                    selectedTd:info.td
+                                });
+                        }
+                    },
+
+                    &quot;删除表格&quot;:function () {
+                        this.hide();
+                        var selection = editor.getSelection(),
+                            startElement = selection &amp;&amp; selection.getStartElement(),
+                            table = startElement &amp;&amp; startElement.closest('table', undefined);
+
+                        if (!table) {
+                            return;
+                        }
+
+                        editor.execCommand(&quot;save&quot;);
+
+                        // Maintain the selection point at where the table was deleted.
+                        selection.selectElement(table);
+                        var range = selection.getRanges()[0];
+                        range.collapse();
+                        selection.selectRanges([ range ]);
+
+                        // If the table's parent has only one child,
+                        // remove it,except body,as well.( #5416 )
+                        var parent = table.parent();
+                        if (parent[0].childNodes.length == 1 &amp;&amp;
+                            parent.nodeName() != 'body' &amp;&amp;
+                            parent.nodeName() != 'td') {
+                            parent.remove();
+                        } else {
+                            table.remove();
+                        }
+                        editor.execCommand(&quot;save&quot;);
+                    },
+
+                    '删除行 ':function () {
+                        this.hide();
+                        editor.execCommand(&quot;save&quot;);
+                        var selection = editor.getSelection();
+                        placeCursorInCell(deleteRows(selection), undefined);
+                        editor.execCommand(&quot;save&quot;);
+                    },
+
+                    '删除列 ':function () {
+                        this.hide();
+                        editor.execCommand(&quot;save&quot;);
+                        var selection = editor.getSelection(),
+                            element = deleteColumns(selection);
+                        element &amp;&amp; placeCursorInCell(element, true);
+                        editor.execCommand(&quot;save&quot;);
+                    },
+
+                    '在上方插入行':function () {
+                        this.hide();
+                        editor.execCommand(&quot;save&quot;);
+                        var selection = editor.getSelection();
+                        insertRow(selection, true);
+                        editor.execCommand(&quot;save&quot;);
+                    },
+
+                    '在下方插入行':function () {
+                        this.hide();
+                        editor.execCommand(&quot;save&quot;);
+                        var selection = editor.getSelection();
+                        insertRow(selection, undefined);
+                        editor.execCommand(&quot;save&quot;);
+                    },
+
+                    '在左侧插入列':function () {
+                        this.hide();
+                        editor.execCommand(&quot;save&quot;);
+                        var selection = editor.getSelection();
+                        insertColumn(selection, true);
+                        editor.execCommand(&quot;save&quot;);
+                    },
+
+                    '在右侧插入列':function () {
+                        this.hide();
+                        editor.execCommand(&quot;save&quot;);
+                        var selection = editor.getSelection();
+                        insertColumn(selection, undefined);
+                        editor.execCommand(&quot;save&quot;);
+                    }
+                };
+
+            var children = [];
+            S.each(handlers, function (h, name) {
+                children.push({
+                    content:name
+                });
+            });
+
+            editor.addContextMenu(&quot;table&quot;, function (node) {
+                if (S.inArray(Dom.nodeName(node), tableRules)) {
+                    return true;
+                }
+            }, {
+                width:&quot;120px&quot;,
+                children:children,
+                listeners:{
+                    click:function (e) {
+                        var content = e.target.get(&quot;content&quot;);
+                        if (handlers[content]) {
+                            handlers[content].apply(this);
+                        }
+
+                    },
+                    beforeVisibleChange:function (e) {
+                        if (e.newVal) {
+                            var self = this, children = self.get(&quot;children&quot;);
+                            var editor = self.get(&quot;editor&quot;);
+                            S.each(children, function (c) {
+                                var content = c.get(&quot;content&quot;);
+                                if (!statusChecker[content] ||
+                                    statusChecker[content].call(self, editor)) {
+                                    c.set(&quot;disabled&quot;, false);
+                                } else {
+                                    c.set(&quot;disabled&quot;, true);
+                                }
+                            });
+
+                        }
+                    }
+                }
+            });
+
+            editor.addButton(&quot;table&quot;, {
+                mode:Editor.Mode.WYSIWYG_MODE,
+                listeners:{
+                    click:function () {
+                        DialogLoader.useDialog(editor, &quot;table&quot;,
+                            self.config,
+                            {
+                                selectedTable:0,
+                                selectedTd:0
+                            });
+
+                    }
+                },
+                tooltip:&quot;插入表格&quot;
+            });
+
+        }
+    });
+
+    return TablePlugin;
+}, {
+    requires:['editor', './dialog-loader', './contextmenu']
+});</pre>
+</body>
+</html>

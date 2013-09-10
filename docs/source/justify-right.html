@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * justifyRight button.
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(&quot;editor/plugin/justify-right&quot;, function (S, Editor, justifyCenterCmd) {
+    function exec() {
+        var editor = this.get(&quot;editor&quot;);
+        editor.execCommand(&quot;justifyRight&quot;);
+        editor.focus();
+    }
+
+    function justifyRight() {
+
+    }
+
+    S.augment(justifyRight, {
+        pluginRenderUI:function (editor) {
+
+            justifyCenterCmd.init(editor);
+
+            editor.addButton(&quot;justifyRight&quot;, {
+                tooltip:&quot;右对齐&quot;,
+                checkable:true,
+                listeners:{
+                    click:exec,
+                    afterSyncUI:function () {
+                        var self = this;
+                        editor.on(&quot;selectionChange&quot;, function () {
+                            if (editor.get(&quot;mode&quot;) == Editor.Mode.SOURCE_MODE) {
+                                return;
+                            }
+                            if (editor.queryCommandValue(&quot;justifyRight&quot;)) {
+                                self.set(&quot;checked&quot;, true);
+                            } else {
+                                self.set(&quot;checked&quot;, false);
+                            }
+                        });
+                    }
+
+                },
+                mode:Editor.Mode.WYSIWYG_MODE
+            });
+
+            editor.docReady(function () {
+                editor.get(&quot;document&quot;).on(&quot;keydown&quot;, function (e) {
+                    if (e.ctrlKey &amp;&amp; e.keyCode == S.Node.KeyCode.R) {
+                        editor.execCommand(&quot;justifyRight&quot;);
+                        e.preventDefault();
+                    }
+                });
+            });
+        }
+    });
+
+    return justifyRight;
+}, {
+    requires:['editor', './justify-right/cmd']
+});</pre>
+</body>
+</html>

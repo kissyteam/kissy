@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * separator for button
  * @author yiminghe@gmail.com
  */

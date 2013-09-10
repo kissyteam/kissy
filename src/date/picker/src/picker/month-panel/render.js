@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * render for month panel
  * @author yiminghe@gmail.com
  */

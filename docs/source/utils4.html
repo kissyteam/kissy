@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * flash utilities
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(&quot;editor/plugin/flash-common/utils&quot;, function (S, SWF) {
+    var Dom = S.DOM,
+
+        flashUtils = {
+
+            insertFlash: function (editor, src, attrs, _cls, _type) {
+                var nodeInfo = flashUtils.createSWF({
+                        src: src,
+                        attrs: attrs,
+                        document: editor.get(&quot;document&quot;)[0]
+                    }),
+                    real = nodeInfo.el,
+                    substitute = editor.createFakeElement(real,
+                        _cls || 'ke_flash',
+                        _type || 'flash',
+                        true,
+                        nodeInfo.html,
+                        attrs);
+                editor.insertElement(substitute);
+                return substitute;
+            },
+
+            isFlashEmbed: function (element) {
+                return (
+                    Dom.attr(element, &quot;type&quot;) == 'application/x-shockwave-flash' ||
+                        /\.swf(?:$|\?)/i.test(Dom.attr(element, &quot;src&quot;) || '')
+                    );
+            },
+
+            getUrl: function (r) {
+                return SWF.getSrc(r);
+            },
+
+            createSWF: function (cfg) {
+                var render = Dom.create('&lt;div style=&quot;' +
+                    &quot;position:absolute;left:-9999px;top:-9999px;&quot; +
+                    '&quot;&gt;&lt;/div&gt;', undefined, cfg.document);
+                cfg.htmlMode = 'full';
+                Dom.append(render, cfg.document.body);
+                cfg.render = render;
+                var swf = new SWF(cfg);
+                Dom.remove(render);
+                return {
+                    el: S.all(swf.get('el')),
+                    html: swf.get('html')
+                };
+            }
+        };
+
+    return flashUtils;
+}, {
+    requires: ['swf']
+});</pre>
+</body>
+</html>

@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * Add ul/ol button.
  * @author yiminghe@gmail.com
  */

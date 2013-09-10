@@ -1,5 +1,6 @@
 /**
- * dom utils for kissy editor,mainly from ckeditor
+ * @ignore
+ * dom utils for kissy editor
  * @author yiminghe@gmail.com
  */
 /*
@@ -49,9 +50,9 @@ KISSY.add("editor/dom", function (S, Editor, Utils) {
         };
     /**
      * Enum for node position
-     * @enum {number}
+     * @enum {number} KISSY.Editor.PositionType
      */
-    Editor.POSITION = {
+    Editor.PositionType = {
         POSITION_IDENTICAL: 0,
         POSITION_DISCONNECTED: 1,
         POSITION_FOLLOWING: 2,
@@ -59,7 +60,7 @@ KISSY.add("editor/dom", function (S, Editor, Utils) {
         POSITION_IS_CONTAINED: 8,
         POSITION_CONTAINS: 16
     };
-    var KEP = Editor.POSITION;
+    var KEP = Editor.PositionType;
 
     /*
      * Anything whose display computed style is block, list-item, table,
@@ -269,12 +270,10 @@ KISSY.add("editor/dom", function (S, Editor, Utils) {
 
             /**
              * 将当前元素和周围的元素合并
-             * @example
-             * <code>
-             * <b><i>1</i></b><b><i>3</i></b>
-             * =>
-             * <b><i>13</i></b>
-             * </code>
+             *      @example
+             *      <b><i>1</i></b><b><i>3</i></b>
+             *      <!-- => -->
+             *      <b><i>13</i></b>
              */
             _4e_mergeSiblings: function (thisElement) {
                 thisElement = normalEl(thisElement);

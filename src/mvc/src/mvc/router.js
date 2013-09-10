@@ -318,10 +318,8 @@ KISSY.add('mvc/router', function (S, Node, Base, undefined) {
     var Router;
 
     /**
-     * @name Router
-     * @class
      * Router used to route url to responding action callbacks.
-     * @member MVC
+     * @class KISSY.MVC.Router
      * @extends KISSY.Base
      */
     return Router = Base.extend({
@@ -334,17 +332,16 @@ KISSY.add('mvc/router', function (S, Node, Base, undefined) {
         /**
          * Add config to current router.
          * @param {Object} routes Route config.
-         * @example
-         * <code>
-         *   {
-             *     "/search/:param":"callback"
-             *     // or
-             *     "search":{
-             *       reg:/xx/,
-             *       callback:fn
-             *     }
-             *   }
-         * </code>
+         *
+         *
+         *      {
+         *          "/search/:param":"callback"
+         *          // or
+         *          "search":{
+         *              reg:/xx/,
+         *              callback:fn
+         *          }
+         *      }
          */
         addRoutes: function (routes) {
             var self = this;
@@ -358,17 +355,16 @@ KISSY.add('mvc/router', function (S, Node, Base, undefined) {
             /**
              * Route and action config.
              * @type {Object}
-             * @example
-             * <code>
-             *   {
-         *     "/search/:param":"callback"
-         *     // or
-         *     "search":{
-         *       reg:/xx/,
-         *       callback:fn
-         *     }
-         *   }
-             * </code>
+             *
+             *
+             *     {
+             *       "/search/:param":"callback"
+             *       // or
+             *       "search":{
+             *         reg:/xx/,
+             *         callback:fn
+             *       }
+             *     }
              */
             routes: {}
         },

@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * checkbox source editor for kissy editor
  * @author yiminghe@gmail.com
  */

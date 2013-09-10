@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * xiami-music dialog
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(&quot;editor/plugin/xiami-music/dialog&quot;, function (S, Editor, FlashDialog, MenuButton) {
+    var Dom = S.DOM,
+        Node = S.Node,
+        Utils = Editor.Utils,
+        loading = Utils.debugUrl(&quot;theme/tao-loading.gif&quot;),
+        XIAMI_URL = &quot;http://www.xiami.com/app/nineteen/search/key/{key}/page/{page}&quot;,
+        CLS_XIAMI = &quot;ke_xiami&quot;,
+        TYPE_XIAMI = &quot;xiami-music&quot;,
+        BTIP = &quot;搜 索&quot;,
+        TIP = &quot;输入歌曲名、专辑名、艺人名&quot;;
+
+
+    function limit(str, l) {
+        if (str.length &gt; l)
+            str = str.substring(0, l) + &quot;...&quot;;
+        return str;
+    }
+
+    var MARGIN_DEFAULT = 0,
+        bodyHTML = &quot;&lt;div style='padding:40px 0 70px 0;'&gt;&quot; +
+            &quot;&lt;form action='#' class='{prefixCls}editor-xiami-form' style='margin:0 20px;'&gt;&quot; +
+            &quot;&lt;p class='{prefixCls}editor-xiami-title'&gt;&quot; +
+            &quot;&quot; +
+            &quot;&lt;/p&gt;&quot; +
+            &quot;&lt;p class='{prefixCls}editor-xiami-url-wrap'&gt;&quot; +
+            &quot;&lt;input class='{prefixCls}editor-xiami-url {prefixCls}editor-input' &quot; +
+            &quot;style='width:370px;&quot;
+            + &quot;'&quot; +
+            &quot;/&gt; &amp;nbsp; &quot; +
+            &quot; &lt;a &quot; +
+            &quot;class='{prefixCls}editor-xiami-submit {prefixCls}editor-button ks-inline-block'&quot; +
+            &quot;&gt;&quot;
+            + BTIP + &quot;&lt;/a&gt;&quot; +
+            &quot;&lt;/p&gt;&quot; +
+            &quot;&lt;p &quot; +
+            &quot;style='margin:10px 0'&gt;&quot; +
+            &quot;&lt;label&gt;对 齐： &quot; +
+            &quot;&lt;select &quot; +
+            &quot;class='{prefixCls}editor-xiami-align' title='对齐'&gt;&quot; +
+            &quot;&lt;option value='none'&gt;无&lt;/option&gt;&quot; +
+            &quot;&lt;option value='left'&gt;左对齐&lt;/option&gt;&quot; +
+            &quot;&lt;option value='right'&gt;右对齐&lt;/option&gt;&quot; +
+            &quot;&lt;/select&gt;&quot; +
+            &quot;&lt;/label&gt;&quot; +
+            &quot;&lt;label style='margin-left:70px;'&gt;间距： &quot; +
+            &quot; &quot; +
+            &quot;&lt;input &quot; +
+            &quot;&quot; +
+            &quot; data-verify='^\\d+$' &quot; +
+            &quot; data-warning='间距请输入非负整数' &quot; +
+            &quot;class='{prefixCls}editor-xiami-margin {prefixCls}editor-input' style='width:60px;&quot; +
+            &quot;' value='&quot;
+            + MARGIN_DEFAULT + &quot;'/&gt; 像素&quot; +
+            &quot;&lt;/label&gt;&quot; +
+            &quot;&lt;/p&gt;&quot; +
+            &quot;&lt;/form&gt;&quot; +
+            &quot;&lt;div &quot; +
+            &quot;class='{prefixCls}editor-xiami-list'&gt;&quot; +
+            &quot;&lt;/div&gt;&quot; +
+            &quot;&lt;/div&gt;&quot;,
+        footHTML = &quot;&lt;div style='padding:5px 20px 20px;'&gt;&lt;a &quot; +
+            &quot;class='{prefixCls}editor-xiami-ok {prefixCls}editor-button ks-inline-block' &quot; +
+            &quot;style='margin-right:20px;'&gt;确&amp;nbsp;定&lt;/a&gt;&quot; +
+            &quot;&lt;a class='{prefixCls}editor-xiami-cancel {prefixCls}editor-button ks-inline-block'&gt;取&amp;nbsp;消&lt;/a&gt;&lt;/div&gt;&quot;;
+
+    function XiamiMusicDialog() {
+        XiamiMusicDialog.superclass.constructor.apply(this, arguments);
+    }
+
+    S.extend(XiamiMusicDialog, FlashDialog, {
+        _config: function () {
+            var self = this,
+                editor = self.editor,
+                prefixCls = editor.get('prefixCls');
+            self._cls = CLS_XIAMI;
+            self._type = TYPE_XIAMI;
+            self._title = &quot;虾米音乐&quot;;//属性&quot;;
+            self._bodyHTML = S.substitute(bodyHTML, {
+                prefixCls: prefixCls
+            });
+            self._footHTML = S.substitute(footHTML, {
+                prefixCls: prefixCls
+            });
+        },
+        _initD: function () {
+            var self = this,
+                editor = self.editor,
+                prefixCls = editor.get('prefixCls'),
+                d = self.dialog,
+                del = d.get(&quot;el&quot;),
+                dfoot = d.get(&quot;footer&quot;),
+                input = del.one(&quot;.&quot; + prefixCls + &quot;editor-xiami-url&quot;);
+            self.dAlign = MenuButton.Select.decorate(del.one(&quot;.&quot; + prefixCls + &quot;editor-xiami-align&quot;), {
+                prefixCls: 'ks-editor-big-',
+                width: 80,
+                menuCfg: {
+                    prefixCls: 'ks-editor-',
+                    render: del
+                }
+            });
+            self.addRes(self.dAlign);
+            self._xiami_input = input;
+            Editor.Utils.placeholder(input, TIP);
+            self.addRes(input);
+            self._xiamia_list = del.one(&quot;.&quot; + prefixCls + &quot;editor-xiami-list&quot;);
+            self._xiami_submit = del.one(&quot;.&quot; + prefixCls + &quot;editor-xiami-submit&quot;);
+            self._xiami_submit.on(&quot;click&quot;, function (ev) {
+                if (!self._xiami_submit.hasClass(&quot;ks-editor-button-disabled&quot;, undefined))
+                    loadRecordsByPage(1);
+                ev.halt();
+            });
+            self.addRes(self._xiami_submit);
+            input.on(&quot;keydown&quot;, function (ev) {
+                if (ev.keyCode === 13) {
+                    loadRecordsByPage(1);
+                }
+            });
+            self.dMargin = del.one(&quot;.&quot; + prefixCls + &quot;editor-xiami-margin&quot;);
+            self._xiami_url_wrap = del.one(&quot;.&quot; + prefixCls + &quot;editor-xiami-url-wrap&quot;);
+            self._xiamia_title = del.one(&quot;.&quot; + prefixCls + &quot;editor-xiami-title&quot;);
+
+            var _xiami_ok = dfoot.one(&quot;.&quot; + prefixCls + &quot;editor-xiami-ok&quot;);
+            dfoot.one(&quot;.&quot; + prefixCls + &quot;editor-xiami-cancel&quot;).on(&quot;click&quot;, function (ev) {
+                d.hide();
+                ev.halt();
+            });
+            self.addRes(dfoot);
+            _xiami_ok.on(&quot;click&quot;, function (ev) {
+                var f = self.selectedFlash,
+                    r = editor.restoreRealElement(f);
+                self._dinfo = {
+                    url: self._getFlashUrl(r),
+                    attrs: {
+                        title: f.attr(&quot;title&quot;),
+                        //align:self.dAlign.val(),
+                        style: &quot;margin:&quot; +
+                            (parseInt(self.dMargin.val()) || 0)
+                            + &quot;px;&quot; +
+                            &quot;float:&quot; + self.dAlign.get(&quot;value&quot;) + &quot;;&quot;
+                    }
+                };
+                self._gen();
+                ev.halt();
+            }, self);
+            self.addRes(_xiami_ok);
+
+            function loadRecordsByPage(page) {
+                var query = input.val();
+                if (query.replace(/[^\x00-\xff]/g, &quot;@@&quot;).length &gt; 30) {
+                    alert(&quot;长度上限30个字符（1个汉字=2个字符）&quot;);
+                    return;
+                } else if (!S.trim(query) || query == TIP) {
+                    alert(&quot;不能为空！&quot;);
+                    return;
+                }
+                self._xiami_submit.addClass(prefixCls + &quot;editor-button-disabled&quot;, undefined);
+                var req = S.substitute(XIAMI_URL, {
+                    key: encodeURIComponent(input.val()),
+                    page: page
+                });
+                self._xiamia_list.html(&quot;&lt;img style='&quot; +
+                    &quot;display:block;&quot; +
+                    &quot;width:32px;&quot; +
+                    &quot;height:32px;&quot; +
+                    &quot;margin:5px auto 0 auto;&quot; +
+                    &quot;'src='&quot; + loading + &quot;'/&gt;&quot; +
+                    &quot;&lt;p style='width: 130px; margin: 15px auto 0; color: rgb(150, 150, 150);'&gt;正在搜索，请稍候......&lt;/p&gt;&quot;);
+                self._xiamia_list.show();
+
+                S.use('io',function(S,IO){
+                    new IO({
+                        cache: false,
+                        url: req,
+                        dataType: 'jsonp',
+                        success: function (data) {
+                            data.page = page;
+                            self._listSearch(data);
+                        },
+                        error: function () {
+                            self._xiami_submit.removeClass(prefixCls + &quot;editor-button-disabled&quot;, undefined);
+                            var html = &quot;&lt;p style='text-align:center;margin:10px 0;'&gt;&quot; +
+                                &quot;不好意思，超时了，请重试！&quot; +
+                                &quot;&lt;/p&gt;&quot;;
+                            self._xiamia_list.html(html);
+                        }
+                    });
+                });
+            }
+
+            self._xiamia_list.on(&quot;click&quot;, function (ev) {
+                ev.preventDefault();
+                var t = new Node(ev.target),
+                    add = t.closest(function (node) {
+                        return self._xiamia_list.contains(node) &amp;&amp;
+                            Dom.hasClass(node, prefixCls + &quot;editor-xiami-add&quot;);
+                    }, undefined),
+                    paging = t.closest(function (node) {
+                        return self._xiamia_list.contains(node) &amp;&amp;
+                            Dom.hasClass(node, prefixCls + &quot;editor-xiami-page-item&quot;);
+                    }, undefined);
+                if (add) {
+                    self._dinfo = {
+                        url: (&quot;http://www.xiami.com/widget/&quot; +
+                            add.attr(&quot;data-value&quot;)
+                            + &quot;/singlePlayer.swf&quot;),
+                        attrs: {
+                            title: add.attr(&quot;title&quot;),
+                            //align:self.dAlign.val(),
+                            style: &quot;margin:&quot; +
+                                (parseInt(self.dMargin.val()) || 0)
+                                + &quot;px;&quot; +
+                                &quot;float:&quot; + self.dAlign.get(&quot;value&quot;) + &quot;;&quot;
+                        }
+                    };
+                    self._gen();
+                } else if (paging) {
+                    loadRecordsByPage(parseInt(paging.attr(&quot;data-value&quot;)));
+                }
+                ev.halt();
+            });
+            self.addRes(self._xiamia_list);
+        },
+        _listSearch: function (data) {
+            var self = this,
+                i,
+                editor = self.editor,
+                prefixCls = editor.get('prefixCls'),
+                re = data['results'],
+                html = &quot;&quot;;
+            // xiami 返回结果自动trim了
+            if (data.key == S.trim(self._xiami_input.val())) {
+                self._xiami_submit.removeClass(prefixCls + &quot;editor-button-disabled&quot;, undefined);
+                if (re &amp;&amp; re.length) {
+                    html = &quot;&lt;ul&gt;&quot;;
+                    for (i = 0; i &lt; re.length; i++) {
+                        var r = re[i], d = getDisplayName(r);
+                        html += &quot;&lt;li &quot; +
+                            &quot;title='&quot; + d + &quot;'&gt;&quot; +
+                            &quot;&lt;span class='&quot; + prefixCls + &quot;editor-xiami-song'&gt;&quot;
+                            + limit(d, 35) +
+                            &quot;&lt;/span&gt;&quot; +
+                            &quot;&quot; +
+                            &quot;&quot; +
+                            //album_id_song_id
+                            &quot;&lt;a href='#' &quot; +
+                            &quot;title='&quot; + d + &quot;' &quot; +
+                            &quot;class='&quot; + prefixCls + &quot;editor-xiami-add' data-value='&quot; +
+                            (
+                                r['album_id']
+                                    + &quot;_&quot;
+                                    + r['song_id']
+                                )
+                            + &quot;'&gt;添加&lt;/a&gt;&quot; +
+                            &quot;&lt;/li&gt;&quot;
+                    }
+                    html += &quot;&lt;/ul&gt;&quot;;
+
+                    var page = data.page,
+                        totalPage = Math.floor(data['total'] / 8),
+                        start = page - 1,
+                        end = page + 1;
+
+                    if (totalPage &gt; 1) {
+                        html += &quot;&lt;p class='&quot; + prefixCls + &quot;editor-xiami-paging'&gt;&quot;;
+                        if (start &lt;= 2) {
+                            end = Math.min(2 - start + end, totalPage - 1);
+                            start = 2;
+                        }
+                        end = Math.min(end, totalPage - 1);
+                        if (end == totalPage - 1) {
+                            start = Math.max(2, end - 3);
+                        }
+                        if (page != 1) {
+                            html += getXiamiPaging(page, page - 1, &quot;上一页&quot;);
+                        }
+                        html += getXiamiPaging(page, 1, &quot;1&quot;);
+                        if (start != 2) {
+                            html += &quot;&lt;span class='&quot; + prefixCls + &quot;editor-xiami-page-more'&gt;...&lt;/span&gt;&quot;;
+                        }
+                        for (i = start; i &lt;= end; i++) {
+                            html += getXiamiPaging(page, i, undefined);
+                        }
+                        if (end != totalPage) {
+                            if (end != totalPage - 1) {
+                                html += &quot;&lt;span class='&quot; + prefixCls + &quot;editor-xiami-page-more'&gt;...&lt;/span&gt;&quot;;
+                            }
+                            html += getXiamiPaging(page, totalPage, totalPage);
+                        }
+                        if (page != totalPage) {
+                            html += getXiamiPaging(page, page + 1, &quot;下一页&quot;);
+                        }
+                        html += &quot;&lt;/p&gt;&quot;;
+                    }
+
+                } else {
+                    html = &quot;&lt;p style='text-align:center;margin:10px 0;'&gt;&quot; +
+                        &quot;不好意思，没有找到结果！&quot; +
+                        &quot;&lt;/p&gt;&quot;;
+                }
+                self._xiamia_list.html(S.substitute(html, {
+                    prefixCls: prefixCls
+                }));
+            }
+        },
+
+        _updateD: function () {
+            var self = this,
+                editor = self.editor,
+                prefixCls = editor.get('prefixCls'),
+                f = self.selectedFlash;
+            if (f) {
+                self._xiami_input.val(f.attr(&quot;title&quot;));
+                self._xiamia_title.html(f.attr(&quot;title&quot;));
+                self.dAlign.set(&quot;value&quot;, f.css(&quot;float&quot;));
+                self.dMargin.val(parseInt(f.style(&quot;margin&quot;)) || 0);
+                self._xiami_url_wrap.hide();
+                self.dialog.get(&quot;footer&quot;).show();
+                self._xiamia_title.show();
+            } else {
+                Editor.Utils.resetInput(self._xiami_input);
+                self.dAlign.set(&quot;value&quot;, &quot;none&quot;);
+                self.dMargin.val(MARGIN_DEFAULT);
+                self._xiami_url_wrap.show();
+                self.dialog.get(&quot;footer&quot;).hide();
+                self._xiamia_title.hide();
+                self._xiami_submit.removeClass(prefixCls + &quot;editor-button-disabled&quot;, undefined);
+            }
+            self._xiamia_list.hide();
+            self._xiamia_list.html(&quot;&quot;);
+        },
+
+        _getDInfo: function () {
+            var self = this;
+            S.mix(self._dinfo.attrs, {
+                width: 257,
+                height: 33
+            });
+            return self._dinfo;
+        }
+
+    });
+
+
+    function getXiamiPaging(page, i, s) {
+        return &quot;&lt;a class='{prefixCls}editor-xiami-page-item {prefixCls}editor-button ks-inline-block&quot; +
+            ((page == i) ? &quot; {prefixCls}editor-xiami-curpage&quot; : &quot;&quot;) +
+            &quot;' data-value='&quot; + i + &quot;' href='#'&gt;&quot; + (s || i) + &quot;&lt;/a&gt;&quot;;
+    }
+
+    function getDisplayName(r) {
+        return S.urlDecode(r['song_name'])
+            + &quot; - &quot;
+            + S.urlDecode(r['artist_name']);
+    }
+
+    return XiamiMusicDialog;
+
+}, {
+    requires: [
+        'editor',
+        '../flash/dialog',
+        '../menubutton']
+});</pre>
+</body>
+</html>

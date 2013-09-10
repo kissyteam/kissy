@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * color picker
  * @author yiminghe@gmail.com
  */

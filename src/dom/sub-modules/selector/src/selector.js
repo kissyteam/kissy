@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * css3 selector engine for ie6-8
  * @author yiminghe@gmail.com
  */
@@ -692,6 +693,7 @@ KISSY.add('dom/selector', function (S, parser, Dom) {
     ]
 });
 /**
+ * @ignore
  * note 2013-03-28
  *  - use recursive call to replace backtracking algorithm
  *

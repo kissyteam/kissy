@@ -18,6 +18,10 @@ KISSY.add("component/extension/shim", function (S) {
         "z-index: -1;" +
         "height: " + (ie6 ? "expression(this.parentNode.clientHeight)" : "100%") + ";" + "'/>";
 
+    /**
+     * create iframe shim for mixin.
+     * @class KISSY.Component.Extension.Shim
+     */
     function Shim() {
     }
 

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * font formatting for kissy editor
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(&quot;editor/plugin/font/ui&quot;, function (S, Editor, Button, MenuButton) {
+
+    var FontSelect = MenuButton.Select.extend({
+
+        initializer:function () {
+            var self = this,
+                editor = self.get(&quot;editor&quot;);
+            self.on(&quot;click&quot;, function (ev) {
+                var v = ev.target.get(&quot;value&quot;),
+                    cmdType = self.get(&quot;cmdType&quot;);
+                editor.execCommand(cmdType, v);
+            });
+
+            editor.on(&quot;selectionChange&quot;, function () {
+                if (editor.get(&quot;mode&quot;) == Editor.Mode.SOURCE_MODE) {
+                    return;
+                }
+
+                var cmdType = self.get(&quot;cmdType&quot;),
+                    menu = self.get(&quot;menu&quot;),
+                    children = menu.get &amp;&amp; menu.get(&quot;children&quot;);
+
+                if (children) {
+                    // Check if the element is removable by any of
+                    // the styles.
+                    var currentValue = editor.queryCommandValue(cmdType);
+                    if (currentValue !== false) {
+                        currentValue = (currentValue + &quot;&quot;).toLowerCase();
+                        for (var j = 0; j &lt; children.length; j++) {
+                            var item = children[j];
+                            var value = item.get(&quot;value&quot;);
+                            if (currentValue == value.toLowerCase()) {
+                                self.set(&quot;value&quot;, value);
+                                return;
+                            }
+                        }
+                    }
+                    self.set(&quot;value&quot;, null);
+                }
+            });
+        }
+    });
+
+
+    var FontButton = Button.extend({
+
+        initializer:function () {
+            var self = this,
+                editor = self.get(&quot;editor&quot;),
+                cmdType = self.get(&quot;cmdType&quot;);
+            self.on(&quot;click&quot;, function () {
+                var checked = self.get(&quot;checked&quot;);
+                if (checked) {
+                    editor.execCommand(cmdType);
+                    editor.focus();
+                } else {
+                    editor.execCommand(cmdType, false);
+                    editor.focus();
+                }
+            });
+            editor.on(&quot;selectionChange&quot;, function () {
+
+                if (editor.get(&quot;mode&quot;) == Editor.Mode.SOURCE_MODE) {
+                    return;
+                }
+                var cmdType = self.get(&quot;cmdType&quot;);
+                if (editor.queryCommandValue(cmdType)) {
+                    self.set(&quot;checked&quot;, true);
+                } else {
+                    self.set(&quot;checked&quot;, false);
+                }
+            });
+        }
+    }, {
+        ATTRS:{
+            checkable:{
+                value:true
+            },
+            mode:{
+                value:Editor.Mode.WYSIWYG_MODE
+            }
+        }
+    });
+
+    return {
+        Button:FontButton,
+        Select:FontSelect
+    };
+}, {
+    requires:['editor', '../button', '../menubutton']
+});
+</pre>
+</body>
+</html>

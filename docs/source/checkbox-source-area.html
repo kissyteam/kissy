@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * checkbox source editor for kissy editor
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(&quot;editor/plugin/checkbox-source-area&quot;, function (S, Editor) {
+    var Node = S.Node;
+
+    var SOURCE_MODE = Editor.Mode.SOURCE_MODE ,
+        WYSIWYG_MODE = Editor.Mode.WYSIWYG_MODE;
+
+    function CheckboxSourceArea(editor) {
+        var self = this;
+        self.editor = editor;
+        self._init();
+    }
+
+    S.augment(CheckboxSourceArea, {
+        _init: function () {
+            var self = this,
+                editor = self.editor,
+                statusBarEl = editor.get(&quot;statusBarEl&quot;);
+            self.holder = new Node(&quot;&lt;span &quot; +
+                &quot;style='zoom:1;display:inline-block;height:22px;line-height:22px;'&gt;&quot; +
+                &quot;&lt;label style='vertical-align:middle;'&gt;&quot; +
+                &quot;&lt;input style='margin:0 5px;' type='checkbox' /&gt;&quot; +
+                &quot;编辑源代码&lt;/label&gt;&quot; +
+                &quot;&lt;/span&gt;&quot;)
+                .appendTo(statusBarEl);
+            var el = self.el = self.holder.one(&quot;input&quot;);
+            el.on(&quot;click&quot;, self._check, self);
+            editor.on(&quot;wysiwygMode&quot;, self._wysiwygmode, self);
+            editor.on(&quot;sourceMode&quot;, self._sourcemode, self);
+        },
+        _sourcemode: function () {
+            this.el.attr(&quot;checked&quot;, true);
+        },
+        _wysiwygmode: function () {
+            this.el.attr(&quot;checked&quot;, false);
+        },
+        _check: function () {
+            var self = this,
+                editor = self.editor,
+                el = self.el;
+            if (el.attr(&quot;checked&quot;)) {
+                editor.set(&quot;mode&quot;, SOURCE_MODE);
+            } else {
+                editor.set(&quot;mode&quot;, WYSIWYG_MODE);
+            }
+        },
+        destroy: function () {
+            this.holder.remove();
+        }
+    });
+
+    function CheckboxSourceAreaPlugin() {
+
+    }
+
+    S.augment(CheckboxSourceAreaPlugin, {
+        pluginRenderUI: function (editor) {
+            var c = new CheckboxSourceArea(editor);
+            editor.on(&quot;destroy&quot;, function () {
+                c.destroy();
+            });
+        }
+    });
+
+    return CheckboxSourceAreaPlugin;
+}, {
+    requires: [&quot;editor&quot;]
+});
+</pre>
+</body>
+</html>

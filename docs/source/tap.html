@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * gesture tap
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('event/dom/touch/tap', function (S, eventHandleMap, DomEvent, SingleTouch) {
+    function preventDefault(e) {
+        e.preventDefault();
+    }
+
+    var event = 'tap';
+
+    var DomEventObject = DomEvent.Object;
+
+    function Tap() {
+        Tap.superclass.constructor.apply(this, arguments);
+    }
+
+    S.extend(Tap, SingleTouch, {
+        onTouchMove: function () {
+            return false;
+        },
+
+        onTouchEnd: function (e) {
+            var touch = e.changedTouches[0];
+            var target = e.target;
+            var eventObject = new DomEventObject({
+                type: event,
+                target: target,
+                currentTarget: target
+            });
+            S.mix(eventObject, {
+                pageX: touch.pageX,
+                pageY: touch.pageY,
+                which: 1,
+                touch: touch
+            });
+            DomEvent.fire(target, event, eventObject);
+            if (eventObject.isDefaultPrevented()) {
+                DomEvent.on(target, 'click', {
+                    fn: preventDefault,
+                    once: 1
+                });
+            }
+        }
+    });
+
+    eventHandleMap[event] = {
+        handle: new Tap()
+    };
+
+    return Tap;
+
+}, {
+    requires: ['./handle-map', 'event/dom/base', './single-touch']
+});
+<span id='global-property-'>/**
+</span> * @ignore
+ *
+ * yiminghe@gmail.com 2012-10-31
+ *
+ * 页面改动必须先用桌面 chrome 刷新下，再用 ios 刷新，否则很可能不生效??
+ *
+ * why to implement tap:
+ * 1.   click 造成 clickable element 有 -webkit-tap-highlight-color 其内不能选择文字
+ * 2.   touchstart touchdown 时间间隔非常短不会触发 click (touchstart)
+ * 3.   click 在touchmove 到其他地方后仍然会触发（如果没有组织touchmove默认行为导致的屏幕移动）
+ *
+ * tap:
+ * 1.   长按可以选择文字，
+ *      可以选择阻止 document 的 touchstart 来阻止整个程序的文字选择功能:
+ *      同时阻止了touch 的 mouse/click 相关事件触发
+ * 2.   反应更灵敏
+ *
+ * https://developers.google.com/mobile/articles/fast_buttons
+ */</pre>
+</body>
+</html>

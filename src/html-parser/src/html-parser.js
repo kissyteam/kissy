@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * HtmlParser for KISSY (Editor)
  * @author yiminghe@gmail.com
  */

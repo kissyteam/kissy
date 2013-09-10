@@ -1,13 +1,17 @@
 /**
+ * @ignore
  * render for container
  * @author yiminghe@gmail.com
  */
 KISSY.add('component/container/render', function (S, Control, Manager) {
-
+    /**
+     * User KISSY.Component.Container.getDefaultRender() to get this class
+     * @class KISSY.Component.Container.Render
+     */
     return Control.getDefaultRender().extend([], {
-
         /**
          * decorate child element from parent component's root element.
+         * @protected
          */
         decorateDom: function () {
             var self = this,
@@ -32,6 +36,7 @@ KISSY.add('component/container/render', function (S, Control, Manager) {
         },
         /**
          * Return the dom element into which child component to be rendered.
+         * @protected
          * @return {KISSY.NodeList}
          */
         getChildrenContainerEl: function () {
@@ -40,7 +45,6 @@ KISSY.add('component/container/render', function (S, Control, Manager) {
     }, {
         name: 'ContainerRender'
     });
-
 }, {
     requires: ['component/control', 'component/manager']
 });

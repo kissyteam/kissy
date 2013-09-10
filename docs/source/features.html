@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * detect if current browser supports various features.
+ * @author yiminghe@gmail.com
+ */
+(function (S, undefined) {
+
+    var Env = S.Env,
+        win = Env.host,
+        UA = S.UA,
+        VENDORS = [
+            '',
+            'Webkit',
+            'Moz',
+            'O',
+            // ms is special .... !
+            'ms'
+        ],
+    // nodejs
+        doc = win.document || {},
+        documentMode = doc.documentMode,
+        isMsPointerSupported,
+        transitionProperty,
+        transformProperty,
+        transitionPrefix,
+        transformPrefix,
+        documentElement = doc.documentElement,
+        documentElementStyle,
+        isClassListSupportedState = true,
+        isQuerySelectorSupportedState = false,
+    // phantomjs issue: http://code.google.com/p/phantomjs/issues/detail?id=375
+        isTouchEventSupportedState = ('ontouchstart' in doc) &amp;&amp; !(UA.phantomjs),
+        ie = documentMode || UA.ie;
+
+    if (documentElement) {
+        if (documentElement.querySelector &amp;&amp;
+            // broken ie8
+            ie != 8) {
+            isQuerySelectorSupportedState = true;
+        }
+        documentElementStyle = documentElement.style;
+
+        S.each(VENDORS, function (val) {
+            var transition = val ? val + 'Transition' : 'transition',
+                transform = val ? val + 'Transform' : 'transform';
+            if (transitionPrefix === undefined &amp;&amp;
+                transition in documentElementStyle) {
+                transitionPrefix = val;
+                transitionProperty = transition;
+            }
+            if (transformPrefix === undefined &amp;&amp;
+                transform in documentElementStyle) {
+                transformPrefix = val;
+                transformProperty = transform;
+            }
+        });
+
+        isClassListSupportedState = 'classList' in documentElement;
+        isMsPointerSupported = &quot;msPointerEnabled&quot; in (win.navigator || {});
+    }
+
+<span id='KISSY-Features'>    /**
+</span>     * test browser features
+     * @class KISSY.Features
+     * @private
+     * @singleton
+     */
+    S.Features = {
+        // http://blogs.msdn.com/b/ie/archive/2011/09/20/touch-input-for-ie10-and-metro-style-apps.aspx
+<span id='global-property-isMsPointerSupported'>        /**
+</span>         * @ignore
+         * whether support win8 pointer event.
+         * @type {Boolean}
+         */
+        isMsPointerSupported: function () {
+            return isMsPointerSupported;
+        },
+
+<span id='KISSY-Features-method-isTouchEventSupported'>        /**
+</span>         * whether support touch event.
+         * @method
+         * @return {Boolean}
+         */
+        isTouchEventSupported: function () {
+            return isTouchEventSupportedState;
+        },
+
+<span id='KISSY-Features-method-isDeviceMotionSupported'>        isDeviceMotionSupported: function () {
+</span>            return !!win['DeviceMotionEvent'];
+        },
+
+<span id='KISSY-Features-method-isHashChangeSupported'>        'isHashChangeSupported': function () {
+</span>            // ie8 支持 hashchange
+            // 但 ie8 以上切换浏览器模式到 ie7（兼容模式），
+            // 会导致 'onhashchange' in window === true，但是不触发事件
+            return ( 'onhashchange' in win) &amp;&amp; (!ie || ie &gt; 7);
+        },
+
+<span id='KISSY-Features-method-isTransitionSupported'>        'isTransitionSupported': function () {
+</span>            return transitionPrefix !== undefined;
+        },
+
+<span id='KISSY-Features-method-isTransformSupported'>        'isTransformSupported': function () {
+</span>            return transformPrefix !== undefined;
+        },
+
+<span id='KISSY-Features-method-isClassListSupported'>        'isClassListSupported': function () {
+</span>            return isClassListSupportedState
+        },
+
+<span id='KISSY-Features-method-isQuerySelectorSupported'>        'isQuerySelectorSupported': function () {
+</span>            // force to use js selector engine
+            return !S.config('dom/selector') &amp;&amp;
+                isQuerySelectorSupportedState;
+        },
+
+<span id='KISSY-Features-method-isIELessThan'>        'isIELessThan': function (v) {
+</span>            return ie &amp;&amp; ie &lt; v;
+        },
+
+<span id='KISSY-Features-method-getTransitionPrefix'>        'getTransitionPrefix': function () {
+</span>            return transitionPrefix;
+        },
+
+<span id='KISSY-Features-method-getTransformPrefix'>        'getTransformPrefix': function () {
+</span>            return transformPrefix;
+        },
+
+<span id='KISSY-Features-method-getTransitionProperty'>        'getTransitionProperty': function () {
+</span>            return transitionProperty;
+        },
+
+<span id='KISSY-Features-method-getTransformProperty'>        'getTransformProperty': function () {
+</span>            return transformProperty;
+        }
+    };
+})(KISSY);</pre>
+</body>
+</html>

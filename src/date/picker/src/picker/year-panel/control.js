@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * month select for date picker
  * @author yiminghe@gmail.com
  */

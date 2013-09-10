@@ -1,9 +1,9 @@
 /**
+ * @ignore
  * write html into its minified form,thanks to kangax where minify algorithm comes from
  * @author yiminghe@gmail.com
  */
 KISSY.add("html-parser/writer/minify", function (S, BasicWriter, Utils) {
-
     var trim = S.trim,
         collapseWhitespace = Utils.collapseWhitespace,
         reEmptyAttribute = new RegExp(
@@ -138,20 +138,25 @@ KISSY.add("html-parser/writer/minify", function (S, BasicWriter, Utils) {
             .replace(/(?:\/\*[\s\xa0]*\]\]>[\s\xa0]*\*\/|\/\/[\s\xa0]*\]\]>)[\s\xa0]*$/, '');
     }
 
-    function Minifier() {
+    /**
+     * MinifyWriter for html content
+     * @class KISSY.HtmlParse.MinifyWriter
+     * @extends KISSY.HtmlParse.BasicWriter
+     */
+    function MinifyWriter() {
         var self = this;
-        Minifier.superclass.constructor.apply(self, arguments);
+        MinifyWriter.superclass.constructor.apply(self, arguments);
         self.inPre = 0;
     }
 
-    S.extend(Minifier, BasicWriter, {
+    S.extend(MinifyWriter, BasicWriter, {
         /**
          * remove non-conditional comment
          */
         comment: function (text) {
             if (isConditionalComment(text)) {
                 text = cleanConditionalComment(text);
-                Minifier.superclass.comment.call(this, text);
+                MinifyWriter.superclass.comment.call(this, text);
             }
         },
 
@@ -163,7 +168,7 @@ KISSY.add("html-parser/writer/minify", function (S, BasicWriter, Utils) {
             if (el.tagName == 'pre') {
                 self.inPre = 1;
             }
-            Minifier.superclass.openTag.apply(self, arguments);
+            MinifyWriter.superclass.openTag.apply(self, arguments);
         },
 
         /**
@@ -174,7 +179,7 @@ KISSY.add("html-parser/writer/minify", function (S, BasicWriter, Utils) {
             if (el.tagName == 'pre') {
                 self.inPre = 0;
             }
-            Minifier.superclass.closeTag.apply(self, arguments);
+            MinifyWriter.superclass.closeTag.apply(self, arguments);
         },
 
         /**
@@ -182,7 +187,7 @@ KISSY.add("html-parser/writer/minify", function (S, BasicWriter, Utils) {
          */
         cdata: function (cdata) {
             cdata = removeCDATASections(cdata);
-            Minifier.superclass.cdata.call(this, cdata);
+            MinifyWriter.superclass.cdata.call(this, cdata);
         },
 
         attribute: function (attr, el) {
@@ -229,13 +234,12 @@ KISSY.add("html-parser/writer/minify", function (S, BasicWriter, Utils) {
         }
     });
 
-    return Minifier;
-
+    return MinifyWriter;
 }, {
     requires: ['./basic', '../utils']
 });
 
-/**
- * refer :
- *  - https://github.com/kangax/html-minifier/
- **/
+/*
+  refer :
+   - https://github.com/kangax/html-minifier/
+ */

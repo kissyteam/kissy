@@ -1,5 +1,6 @@
 /**
- * Range implementation across browsers for kissy editor. Modified from CKEditor.
+ * @ignore
+ * Range implementation across browsers for kissy editor.
  * @author yiminghe@gmail.com
  */
 /*
@@ -9,9 +10,9 @@
 KISSY.add("editor/range", function (S, Editor, Utils, Walker, ElementPath) {
     /**
      * Enum for range
-     * @enum {number}
+     * @enum {number} KISSY.Editor.RangeType
      */
-    Editor.RANGE = {
+    Editor.RangeType = {
         POSITION_AFTER_START: 1, // <element>^contents</element>		"^text"
         POSITION_BEFORE_END: 2, // <element>contents^</element>		"text^"
         POSITION_BEFORE_START: 3, // ^<element>contents</element>		^"text"
@@ -28,8 +29,8 @@ KISSY.add("editor/range", function (S, Editor, Utils, Walker, ElementPath) {
     var TRUE = true,
         FALSE = false,
         NULL = null,
-        KER = Editor.RANGE,
-        KEP = Editor.POSITION,
+        KER = Editor.RangeType,
+        KEP = Editor.PositionType,
         Dom = S.DOM,
         UA = S.UA,
         dtd = Editor.XHTML_DTD,
@@ -426,11 +427,9 @@ KISSY.add("editor/range", function (S, Editor, Utils, Walker, ElementPath) {
 
 
     /**
-     * @member Editor
-     * @class
      * Range implementation across browsers.
+     * @class KISSY.Editor.Range
      * @param document {Document}
-     * @name Range
      */
     function KERange(document) {
         var self = this;
@@ -717,12 +716,11 @@ KISSY.add("editor/range", function (S, Editor, Utils, Walker, ElementPath) {
 
         /**
          * Get node which is enclosed by range.
-         * @example
-         * <code>
-         * ^&lt;book/&gt;&lt;span/&gt;&lt;book/&gt;^
-         * =>
-         * ^&lt;span/&gt;^
-         * &lt;/code&gt;
+         *
+         *      @example
+         *      ^<book/><span/><book/>^
+         *      <!-- => -->
+         *      ^<span/>^
          */
         getEnclosedNode: function () {
             var walkerRange = this.clone();
@@ -1177,15 +1175,13 @@ KISSY.add("editor/range", function (S, Editor, Utils, Walker, ElementPath) {
          * Enlarge the range as mush as possible
          * @param {Number} unit
          * @method
-         * @example
-         * <code>
-         *      &lt;div&gt;&lt;span&gt;&lt;span&gt;^1&lt;/span&gt;2^&lt;/span&gt;x&lt;/div&gt;
+         *
+         *
+         *      <div><span><span>^1</span>2^</span>x</div>
          *      =>
-         *      &lt;div&gt;^&lt;span&gt;&lt;span&gt;1&lt;/span&gt;2&lt;/span&gt;^x&lt;/div&gt;
-         * </code>
+         *      <div>^<span&gt;<span>1</span>2</span>^x</div>
          */
         enlarge: (function () {
-
             function enlargeElement(self, left, stop, commonAncestor) {
                 var container = self[left ? 'startContainer' : 'endContainer'],
                     enlarge,

@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * localStorage support for ie<8
  * @author yiminghe@gmail.com
  */

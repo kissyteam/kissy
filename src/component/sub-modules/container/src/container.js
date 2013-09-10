@@ -1,9 +1,9 @@
 /**
+ * @ignore
  * component hierarchy management
  * @author yiminghe@gmail.com
  */
 KISSY.add('component/container', function (S, Control, ContainerRender) {
-
     function defAddChild(e) {
         var self = this;
         if (e.target !== self) {
@@ -75,7 +75,6 @@ KISSY.add('component/container', function (S, Control, ContainerRender) {
      * @class KISSY.Component.Container
      */
     return Control.extend({
-
         isContainer: true,
 
         initializer: function () {

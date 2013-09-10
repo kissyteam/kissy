@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * Heading plugin for KISSY.
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(&quot;editor/plugin/heading&quot;, function (S, Editor, headingCmd) {
+    function HeadingPlugin() {
+
+    }
+
+    S.augment(HeadingPlugin, {
+        pluginRenderUI: function (editor) {
+            headingCmd.init(editor);
+
+            var FORMAT_SELECTION_ITEMS = [],
+                FORMATS = {
+                    &quot;普通文本&quot;: &quot;p&quot;,
+                    &quot;标题1&quot;: &quot;h1&quot;,
+                    &quot;标题2&quot;: &quot;h2&quot;,
+                    &quot;标题3&quot;: &quot;h3&quot;,
+                    &quot;标题4&quot;: &quot;h4&quot;,
+                    &quot;标题5&quot;: &quot;h5&quot;,
+                    &quot;标题6&quot;: &quot;h6&quot;
+                },
+                FORMAT_SIZES = {
+                    p: &quot;1em&quot;,
+                    h1: &quot;2em&quot;,
+                    h2: &quot;1.5em&quot;,
+                    h3: &quot;1.17em&quot;,
+                    h4: &quot;1em&quot;,
+                    h5: &quot;0.83em&quot;,
+                    h6: &quot;0.67em&quot;
+                };
+
+            for (var p in FORMATS) {
+
+                FORMAT_SELECTION_ITEMS.push({
+                    content: p,
+                    value: FORMATS[p],
+                    elAttrs: {
+                        style: &quot;font-size:&quot; + FORMAT_SIZES[FORMATS[p]]
+                    }
+                });
+
+            }
+
+            editor.addSelect(&quot;heading&quot;, {
+                defaultCaption: &quot;标题&quot;,
+                width: &quot;120px&quot;,
+                menu: {
+                    children: FORMAT_SELECTION_ITEMS
+                },
+                mode: Editor.Mode.WYSIWYG_MODE,
+                listeners: {
+                    click: function (ev) {
+                        var v = ev.target.get(&quot;value&quot;)
+                        editor.execCommand(&quot;heading&quot;, v);
+                    },
+                    afterSyncUI: function () {
+                        var self = this;
+                        editor.on(&quot;selectionChange&quot;, function () {
+                            if (editor.get(&quot;mode&quot;) == Editor.Mode.SOURCE_MODE) {
+                                return;
+                            }
+                            // For each element into the elements path.
+                            // Check if the element is removable by any of
+                            // the styles.
+                            var headingValue = editor.queryCommandValue(&quot;heading&quot;), value;
+                            for (value in FORMAT_SIZES) {
+                                if (value == headingValue) {
+                                    self.set(&quot;value&quot;, value);
+                                    return;
+                                }
+                            }
+                            self.set(&quot;value&quot;, null);
+                        });
+                    }
+
+                }
+            });
+        }
+    });
+
+    return HeadingPlugin;
+}, {
+    requires: ['editor', './heading/cmd']
+});</pre>
+</body>
+</html>

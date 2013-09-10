@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * flash dialog
  * @author yiminghe@gmail.com
  */
@@ -108,23 +109,19 @@ KISSY.add("editor/plugin/flash/dialog", function (S, Editor, flashUtils, Dialog4
             self.addRes(self.dialog);
             self._initD();
         },
+
         _realShow: function () {
             //显示前就要内容搞好
             this._updateD();
             this.dialog.show();
         },
-        /**
-         * 子类覆盖，如何从flash url得到合适的应用表示地址
-         *
-         * @param r flash 元素
-         */
+
+        // 子类覆盖，如何从flash url得到合适的应用表示地址
         _getFlashUrl: function (r) {
             return flashUtils.getUrl(r);
         },
-        /**
-         * 触发前初始化窗口 field，子类覆盖
-         *
-         */
+
+        // 触发前初始化窗口 field，子类覆盖
         _updateD: function () {
             var self = this,
                 editor = self.editor,
@@ -159,10 +156,7 @@ KISSY.add("editor/plugin/flash/dialog", function (S, Editor, flashUtils, Dialog4
         },
 
 
-        /**
-         * 映射窗口field，子类覆盖
-         *
-         */
+        // 映射窗口field，子类覆盖
         _initD: function () {
             var self = this,
                 d = self.dialog,
@@ -194,10 +188,8 @@ KISSY.add("editor/plugin/flash/dialog", function (S, Editor, flashUtils, Dialog4
             self.addRes(self.dAlign);
         },
 
-        /**
-         * 应用子类覆盖，提供 flash 元素的相关信息
-         *
-         */
+
+        // 应用子类覆盖，提供 flash 元素的相关信息
         _getDInfo: function () {
             var self = this;
             return {
@@ -213,9 +205,8 @@ KISSY.add("editor/plugin/flash/dialog", function (S, Editor, flashUtils, Dialog4
             };
         },
 
-        /**
-         * 真正产生 flash 元素
-         */
+
+        // 真正产生 flash 元素
         _gen: function (ev) {
             ev && ev.halt();
             var self = this,

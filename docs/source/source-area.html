@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * source editor for kissy editor
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(&quot;editor/plugin/source-area&quot;, function (S, Editor) {
+    var SOURCE_MODE = Editor.Mode.SOURCE_MODE ,
+        WYSIWYG_MODE = Editor.Mode.WYSIWYG_MODE;
+
+    function sourceArea() {
+    }
+
+    S.augment(sourceArea, {
+        pluginRenderUI:function (editor) {
+            editor.addButton(&quot;sourceArea&quot;, {
+                tooltip:&quot;源码&quot;,
+                listeners:{
+                    afterSyncUI:function () {
+                        var self = this;
+                        editor.on(&quot;wysiwygMode&quot;, function () {
+                            self.set(&quot;checked&quot;, false);
+                        });
+                        editor.on(&quot;sourceMode&quot;, function () {
+                            self.set(&quot;checked&quot;, true);
+                        });
+
+                    },
+                    click:function () {
+                        var self = this;
+                        var checked = self.get(&quot;checked&quot;);
+                        if (checked) {
+                            editor.set(&quot;mode&quot;, SOURCE_MODE);
+                        } else {
+                            editor.set(&quot;mode&quot;, WYSIWYG_MODE);
+                        }
+                    }
+                },
+                checkable:true
+            });
+        }
+    });
+
+    return sourceArea;
+}, {
+    requires:['editor', './button']
+});
+</pre>
+</body>
+</html>

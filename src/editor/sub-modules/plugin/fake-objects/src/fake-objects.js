@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * fakeObjects for music ,video,flash
  * @author yiminghe@gmail.com
  */
@@ -59,10 +60,7 @@ KISSY.add("editor/plugin/fake-objects", function (S, Editor, HtmlParser) {
 
     var htmlFilterRules = {
         tags: {
-            /**
-             * 生成最终html时，从编辑器html转化把fake替换为真实，并将style的width,height搞到属性上去
-             * @param element
-             */
+           // 生成最终html时，从编辑器html转化把fake替换为真实，并将style的width,height搞到属性上去
             $: function (element) {
                 var realHTML = element.getAttribute("_ke_realelement");
 
@@ -116,7 +114,6 @@ KISSY.add("editor/plugin/fake-objects", function (S, Editor, HtmlParser) {
             }
 
             S.mix(dataProcessor, {
-
                 restoreRealElement: function (fakeElement) {
                     if (fakeElement.attr('_ke_real_node_type') != Dom.NodeType.ELEMENT_NODE) {
                         return null;
@@ -130,13 +127,8 @@ KISSY.add("editor/plugin/fake-objects", function (S, Editor, HtmlParser) {
                     return temp.first().remove();
                 },
 
-                /**
-                 * 从外边真实的html，转为为编辑器代码支持的替换元素
-                 * @param realElement
-                 * @param className
-                 * @param realElementType
-                 * @param [isResizable]
-                 */
+
+               // 从外边真实的html，转为为编辑器代码支持的替换元素
                 createFakeParserElement: function (realElement, className, realElementType, isResizable, attrs) {
                     var html = HtmlParser.serialize(realElement);
                     var style = realElement.getAttribute("style") || '';

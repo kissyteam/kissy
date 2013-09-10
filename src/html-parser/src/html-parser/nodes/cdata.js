@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * dom text node
  * @author yiminghe@gmail.com
  */

@@ -155,7 +155,6 @@
          * @param [context] {Object} optional context object
          * @return {Array} The items on which the supplied function returned TRUE.
          * If no items matched an empty array is returned.
-         * @member KISSY
          */
         filter: filter ?
             function (arr, fn, context) {

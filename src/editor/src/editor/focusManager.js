@@ -1,18 +1,22 @@
 /**
- * 多实例的管理，主要是焦点控制，主要是为了
- * 1.firefox 焦点失去 bug，记录当前状态
- * 2.窗口隐藏后能够恢复焦点
+ * focus management
+ * @ignore
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/focusManager", function (S,Editor) {
+KISSY.add("editor/focusManager", function (S, Editor) {
 
     var INSTANCES = {},
         timer,
-    //当前焦点所在处
         currentInstance,
-        focusManager = {
+        /**
+         * focus management for all editor instances.
+         * @class KISSY.Editor.focusManager
+         * @singleton
+         * @private
+         */
+            focusManager = {
             /**
-             * 刷新全部实例
+             * make all editor instance editable
              */
             refreshAll: function () {
                 for (var i in INSTANCES) {
@@ -22,25 +26,38 @@ KISSY.add("editor/focusManager", function (S,Editor) {
                 }
             },
             /**
-             * 得到当前获得焦点的实例
+             * get current focused editor instance
              */
             currentInstance: function () {
                 return currentInstance;
             },
             /**
-             *
+             * get editor instance by editor id
              * @param id {string}
              */
             getInstance: function (id) {
                 return INSTANCES[id];
             },
-            add: function (editor) {
-                editor.get("window").on("focus", focus, editor)
-                    .on( "blur", blur, editor);
-            },
+            /**
+             * register editor within focus manager
+             * @param editor
+             */
             register: function (editor) {
                 INSTANCES[editor.get('id')] = editor;
             },
+            /**
+             * monitor editor focus and register editor
+             * @param editor
+             */
+            add: function (editor) {
+                this.register(editor);
+                editor.get("window").on("focus", focus, editor)
+                    .on("blur", blur, editor);
+            },
+            /**
+             * remove editor from focus manager
+             * @param editor
+             */
             remove: function (editor) {
                 delete INSTANCES[editor.get('id')];
                 editor.get("window").detach("focus", focus, editor)

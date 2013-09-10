@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * DateTimeFormat for KISSY.
  * Inspired by DateTimeFormat from JDK.
  * @author yiminghe@gmail.com
@@ -57,6 +58,7 @@ KISSY.add('date/format', function (S, GregorianCalendar, defaultLocale) {
     });
 
     patternChars = /**
+     @ignore
      @type String
      */patternChars.join('') + 'ahkKZE';
 

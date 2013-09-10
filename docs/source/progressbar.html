@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * progressbar ui
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(&quot;editor/plugin/progressbar&quot;, function(S,Base) {
+    var Node = S.Node;
+
+    return Base.extend({
+        destroy:function() {
+            var self = this;
+            self.detach();
+            self.el.remove();
+        },
+        initializer:function() {
+            var self = this,
+                h = self.get(&quot;height&quot;),
+                prefixCls=self.get('prefixCls'),
+                el = new Node(
+
+                    S.substitute(&quot;&lt;div&quot; +
+                    &quot; class='{prefixCls}editor-progressbar' &quot; +
+                    &quot; style='width:&quot; +
+                    self.get(&quot;width&quot;) +
+                    &quot;;&quot; +
+                    &quot;height:&quot; +
+                    h +
+                    &quot;;'&quot; +
+                    &quot;&gt;&lt;/div&gt;&quot;,{
+                        prefixCls:prefixCls
+                    })),
+                container = self.get(&quot;container&quot;),
+                p = new Node(
+                    S.substitute(&quot;&lt;div style='overflow:hidden;'&gt;&quot; +
+                        &quot;&lt;div class='{prefixCls}editor-progressbar-inner' style='height:&quot; + (parseInt(h) - 4) + &quot;px'&gt;&quot; +
+                        &quot;&lt;div class='{prefixCls}editor-progressbar-inner-bg'&gt;&lt;/div&gt;&quot; +
+                        &quot;&lt;/div&gt;&quot; +
+                        &quot;&lt;/div&gt;&quot;,{
+                        prefixCls:prefixCls
+                    })
+                ).appendTo(el),
+                title = new Node(&quot;&lt;span class='&quot;+prefixCls+&quot;editor-progressbar-title'&gt;&lt;/span&gt;&quot;)
+                    .appendTo(el);
+            if (container)
+                el.appendTo(container);
+            self.el = el;
+            self._title = title;
+            self._p = p;
+            self.on(&quot;afterProgressChange&quot;, self._progressChange, self);
+            self._progressChange({newVal:self.get(&quot;progress&quot;)});
+        },
+
+        _progressChange:function(ev) {
+            var self = this,
+                v = ev.newVal;
+            self._p.css(&quot;width&quot;, v + &quot;%&quot;);
+            self._title.html(v + &quot;%&quot;);
+        }
+    },{
+        ATTRS:{
+            container:{},
+            width:{},
+            height:{},
+            //0-100
+            progress:{
+                value:0
+            },
+            prefixCls:{
+                value:'ks-'
+            }
+        }
+    });
+},{
+    requires:['base']
+});</pre>
+</body>
+</html>

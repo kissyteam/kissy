@@ -1,20 +1,22 @@
 /**
+ * @ignore
  * basic writer for inheritance
  * @author yiminghe@gmail.com
  */
 KISSY.add("html-parser/writer/basic", function () {
-
     function escapeAttrValue(str) {
         return String(str).replace(/"/g, "&quote;");
     }
 
-
+    /**
+     * BasicWriter for html content
+     * @class KISSY.HtmlParse.BasicWriter
+     */
     function BasicWriter() {
         this.output = [];
     }
 
     BasicWriter.prototype = {
-
         constructor: BasicWriter,
 
         append: function () {
@@ -76,5 +78,4 @@ KISSY.add("html-parser/writer/basic", function () {
     };
 
     return BasicWriter;
-
 });

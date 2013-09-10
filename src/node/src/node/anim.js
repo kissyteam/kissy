@@ -123,6 +123,7 @@ KISSY.add('node/anim', function (S, Dom, Anim, Node, undefined) {
         }
     });
 
+
     /**
      * animate show effect for current node list.
      * @param {Number} duration duration of effect
@@ -132,6 +133,7 @@ KISSY.add('node/anim', function (S, Dom, Anim, Node, undefined) {
      * @member KISSY.NodeList
      * @method show
      */
+
 
     /**
      * animate hide effect for current node list.
@@ -143,6 +145,7 @@ KISSY.add('node/anim', function (S, Dom, Anim, Node, undefined) {
      * @method hide
      */
 
+
     /**
      * toggle show and hide effect for current node list.
      * @param {Number} duration duration of effect
@@ -152,6 +155,7 @@ KISSY.add('node/anim', function (S, Dom, Anim, Node, undefined) {
      * @member KISSY.NodeList
      * @method toggle
      */
+
 
     /**
      * animate fadeIn effect for current node list.
@@ -163,6 +167,7 @@ KISSY.add('node/anim', function (S, Dom, Anim, Node, undefined) {
      * @method fadeIn
      */
 
+
     /**
      * animate fadeOut effect for current node list.
      * @param {Number} duration duration of effect
@@ -172,6 +177,7 @@ KISSY.add('node/anim', function (S, Dom, Anim, Node, undefined) {
      * @member KISSY.NodeList
      * @method fadeOut
      */
+
 
     /**
      * toggle fadeIn and fadeOut effect for current node list.
@@ -183,6 +189,7 @@ KISSY.add('node/anim', function (S, Dom, Anim, Node, undefined) {
      * @method fadeToggle
      */
 
+
     /**
      * animate slideUp effect for current node list.
      * @param {Number} duration duration of effect
@@ -192,6 +199,7 @@ KISSY.add('node/anim', function (S, Dom, Anim, Node, undefined) {
      * @member KISSY.NodeList
      * @method slideUp
      */
+
 
     /**
      * animate slideDown effect for current node list.
@@ -203,6 +211,7 @@ KISSY.add('node/anim', function (S, Dom, Anim, Node, undefined) {
      * @method slideDown
      */
 
+
     /**
      * toggle slideUp and slideDown effect for current node list.
      * @param {Number} duration duration of effect
@@ -212,6 +221,7 @@ KISSY.add('node/anim', function (S, Dom, Anim, Node, undefined) {
      * @member KISSY.NodeList
      * @method slideToggle
      */
+
 
     S.each({
             show: getFxs('show', 3),

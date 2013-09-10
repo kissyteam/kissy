@@ -1,5 +1,6 @@
 /**
  * locale info for KISSY Date
+ * @ignore
  * @author yiminghe@gmail.com
  */
 KISSY.add('date/i18n/en-us', {

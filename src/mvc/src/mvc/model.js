@@ -3,7 +3,6 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add("mvc/model", function (S, Base) {
-
     var blacklist = [
         "idAttribute",
         "destroyed",
@@ -17,10 +16,8 @@ KISSY.add("mvc/model", function (S, Base) {
     ];
 
     /**
-     * @name Model
-     * @class
      * Model represent a data record.
-     * @member MVC
+     * @class KISSY.MVC.Model
      * @extends KISSY.Base
      */
    return Base.extend({
@@ -33,7 +30,7 @@ KISSY.add("mvc/model", function (S, Base) {
 
             /**
              * Add current model instance to a specified collection.
-             * @param {MVC.Collection} c
+             * @param {KISSY.MVC.Collection} c
              */
             addToCollection:function (c) {
                 this.collections[S.stamp(c)] = c;
@@ -41,7 +38,7 @@ KISSY.add("mvc/model", function (S, Base) {
             },
             /**
              * Remove current model instance from a specified collection.
-             * @param {MVC.Collection} c
+             * @param {KISSY.MVC.Collection} c
              */
             removeFromCollection:function (c) {
                 delete this.collections[S.stamp(c)];
@@ -226,7 +223,7 @@ KISSY.add("mvc/model", function (S, Base) {
                 },
                 /**
                  * If current model does not belong to any collection.
-                 * Use this attribute value as collection.url in {@link MVC.Model#url}
+                 * Use this attribute value as collection.url in {@link KISSY.MVC.Model#url}
                  * @type {String}
                  */
                 urlRoot:{
@@ -234,7 +231,7 @@ KISSY.add("mvc/model", function (S, Base) {
                 },
                 /**
                  * Sync model data with server.
-                 * Default to call {@link MVC.sync}
+                 * Default to call {@link KISSY.MVC.sync}
                  * @type {Function}
                  */
                 sync:{

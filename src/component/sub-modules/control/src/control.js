@@ -11,7 +11,7 @@ KISSY.add("component/control", function (S, Node, ComponentProcess, Manager, Ren
 
     /**
      * Base Control class for KISSY Component.
-     * @extends KISSY.Component.ComponentProcess
+     * @extends KISSY.Component.Process
      * @class KISSY.Component.Control
      */
     var Control = ComponentProcess.extend({
@@ -25,7 +25,6 @@ KISSY.add("component/control", function (S, Node, ComponentProcess, Manager, Ren
              *      menu.isControl // => true
              *
              * @type {Boolean}
-             * @public
              * @member KISSY.Component.Control
              */
             isControl: true,

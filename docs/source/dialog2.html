@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * color picker
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(&quot;editor/plugin/color/dialog&quot;, function (S, Editor, Dialog4E) {
+    var map = S.map, Dom = S.DOM;
+
+    //获取颜色数组
+    function getData(color) {
+        if (S.isArray(color)) return color;
+        var re = RegExp;
+        if (/^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i.test(color)) {
+            //#rrggbb
+            return map([ re['$1'], re['$2'], re['$3'] ], function (x) {
+                return parseInt(x, 16);
+            });
+        } else if (/^#([0-9a-f])([0-9a-f])([0-9a-f])$/i.test(color)) {
+            //#rgb
+            return map([ re['$1'], re['$2'], re['$3'] ], function (x) {
+                return parseInt(x + x, 16);
+            });
+        } else if (/^rgb\((.*),(.*),(.*)\)$/i.test(color)) {
+            //rgb(n,n,n) or rgb(n%,n%,n%)
+            return map([ re['$1'], re['$2'], re['$3'] ], function (x) {
+                return x.indexOf(&quot;%&quot;) &gt; 0 ? parseFloat(x, 10) * 2.55 : x | 0;
+            });
+        }
+        return undefined;
+    }
+
+    //refer:http://www.cnblogs.com/cloudgamer/archive/2009/03/11/color.html
+    //http://yiminghe.javaeye.com/blog/511589
+    //获取颜色梯度方法
+    var ColorGrads = (function () {
+        //获取颜色梯度数据
+        function getStep(start, end, step) {
+            var colors = [];
+            start = getColor(start);
+            end = getColor(end);
+            var stepR = (end[0] - start[0]) / step,
+                stepG = (end[1] - start[1]) / step,
+                stepB = (end[2] - start[2]) / step;
+            //生成颜色集合
+            for (var i = 0, r = start[0], g = start[1], b = start[2]; i &lt; step; i++) {
+                colors[i] = [r, g, b];
+                r += stepR;
+                g += stepG;
+                b += stepB;
+            }
+            colors[i] = end;
+            //修正颜色值
+            return map(colors, function (x) {
+                return map(x, function (x) {
+                    return Math.min(Math.max(0, Math.floor(x)), 255);
+                });
+            });
+        }
+
+        //获取颜色数据
+        var frag;
+
+        function getColor(color) {
+            var ret = getData(color);
+            if (ret === undefined) {
+                if (!frag) {
+                    frag = document.createElement(&quot;textarea&quot;);
+                    frag.style.display = &quot;none&quot;;
+                    Dom.prepend(frag, document.body);
+                }
+                try {
+                    frag.style.color = color;
+                } catch (e) {
+                    return [0, 0, 0];
+                }
+
+                if (document.defaultView) {
+                    ret = getData(document.defaultView.getComputedStyle(frag, null).color);
+                } else {
+                    color = frag.createTextRange()['queryCommandValue'](&quot;ForeColor&quot;);
+                    ret = [ color &amp; 0x0000ff, (color &amp; 0x00ff00) &gt;&gt;&gt; 8, (color &amp; 0xff0000) &gt;&gt;&gt; 16 ];
+                }
+            }
+            return ret;
+        }
+
+
+        return function (colors, step) {
+            var ret = [], len = colors.length;
+            if (step === undefined) {
+                step = 20;
+            }
+            if (len == 1) {
+                ret = getStep(colors[0], colors[0], step);
+            } else if (len &gt; 1) {
+                for (var i = 0, n = len - 1; i &lt; n; i++) {
+                    var t = step[i] || step;
+                    var steps = getStep(colors[i], colors[i + 1], t);
+                    i &lt; n - 1 &amp;&amp; steps.pop();
+                    ret = ret.concat(steps);
+                }
+            }
+            return ret;
+        }
+    })();
+
+    function padding2(x) {
+        x = &quot;0&quot; + x;
+        var l = x.length;
+        return x.slice(l - 2, l);
+    }
+
+    function hex(c) {
+        c = getData(c);
+        return &quot;#&quot; + padding2(c[0].toString(16))
+            + padding2(c[1].toString(16))
+            + padding2(c[2].toString(16));
+    }
+
+    var pickerHTML = &quot;&lt;ul&gt;&quot; +
+            map(ColorGrads([ &quot;red&quot;, &quot;orange&quot;, &quot;yellow&quot;, &quot;green&quot;, &quot;cyan&quot;, &quot;blue&quot;, &quot;purple&quot; ], 5),
+                function (x) {
+                    return map(ColorGrads([ &quot;white&quot;, &quot;rgb(&quot; + x.join(&quot;,&quot;) + &quot;)&quot; , &quot;black&quot; ], 5),
+                        function (x) {
+                            return &quot;&lt;li&gt;&lt;a style='background-color&quot; + &quot;:&quot; + hex(x) + &quot;' href='#'&gt;&lt;/a&gt;&lt;/li&gt;&quot;;
+                        }).join(&quot;&quot;);
+                }).join(&quot;&lt;/ul&gt;&lt;ul&gt;&quot;) + &quot;&lt;/ul&gt;&quot;,
+        panelHTML = &quot;&lt;div class='{prefixCls}editor-color-advanced-picker'&gt;&quot; +
+            &quot;&lt;div class='ks-clear'&gt;&quot; +
+            &quot;&lt;div class='{prefixCls}editor-color-advanced-picker-left'&gt;&quot; +
+            pickerHTML +
+            &quot;&lt;/div&gt;&quot; +
+            &quot;&lt;div class='{prefixCls}editor-color-advanced-picker-right'&gt;&quot; +
+            &quot;&lt;/div&gt;&quot; +
+            &quot;&lt;/div&gt;&quot; +
+            &quot;&lt;div style='padding:10px;'&gt;&quot; +
+            &quot;&lt;label&gt;&quot; +
+            &quot;颜色值： &quot; +
+            &quot;&lt;input style='width:100px' class='{prefixCls}editor-color-advanced-value'/&gt;&quot; +
+            &quot;&lt;/label&gt;&quot; +
+            &quot;&lt;span class='{prefixCls}editor-color-advanced-indicator'&gt;&lt;/span&gt;&quot; +
+            &quot;&lt;/div&gt;&quot; +
+            &quot;&lt;/div&gt;&quot;,
+        footHTML = &quot;&lt;div style='padding:5px 20px 20px;'&gt;&quot; +
+            &quot;&lt;a class='{prefixCls}editor-button {prefixCls}editor-color-advanced-ok ks-inline-block'&gt;确定&lt;/a&gt;&quot; +
+            &quot;&amp;nbsp;&amp;nbsp;&amp;nbsp;&quot; +
+            &quot;&lt;a class='{prefixCls}editor-button  {prefixCls}editor-color-advanced-cancel ks-inline-block'&gt;取消&lt;/a&gt;&quot; +
+            &quot;&lt;/div&gt;&quot;;
+
+    function ColorPicker(editor) {
+        this.editor = editor;
+        this._init();
+    }
+
+    var addRes = Editor.Utils.addRes, destroyRes = Editor.Utils.destroyRes;
+
+    S.augment(ColorPicker, {
+        _init: function () {
+            var self = this,
+                editor = self.editor,
+                prefixCls = editor.get('prefixCls');
+
+            self.dialog = new Dialog4E({
+                mask: true,
+                headerContent: &quot;颜色拾取器&quot;,
+                bodyContent: S.substitute(panelHTML, {
+                    prefixCls: prefixCls
+                }),
+                footerContent: S.substitute(footHTML, {
+                    prefixCls: prefixCls
+                }),
+                width: &quot;550px&quot;
+            }).render();
+            var win = self.dialog,
+                body = win.get(&quot;body&quot;),
+                foot = win.get(&quot;footer&quot;),
+                indicator = body.one(&quot;.&quot; + prefixCls + &quot;editor-color-advanced-indicator&quot;),
+                indicatorValue = body.one(&quot;.&quot; + prefixCls + &quot;editor-color-advanced-value&quot;),
+                left = body.one(&quot;.&quot; + prefixCls + &quot;editor-color-advanced-picker-left&quot;),
+                right = body.one(&quot;.&quot; + prefixCls + &quot;editor-color-advanced-picker-right&quot;),
+                ok = foot.one(&quot;.&quot; + prefixCls + &quot;editor-color-advanced-ok&quot;),
+                cancel = foot.one(&quot;.&quot; + prefixCls + &quot;editor-color-advanced-cancel&quot;);
+
+            ok.on(&quot;click&quot;, function (ev) {
+                var v = S.trim(indicatorValue.val()),
+                    colorButtonArrow = self.colorButtonArrow;
+                if (!/^#([a-f0-9]{1,2}){3,3}$/i.test(v)) {
+                    alert(&quot;请输入正确的颜色代码&quot;);
+                    return;
+                }
+                //先隐藏窗口，使得编辑器恢复焦点，恢复原先range
+                self.hide();
+                colorButtonArrow.fire('selectColor', {
+                    color: indicatorValue.val()
+                });
+                ev.halt();
+            });
+
+
+            indicatorValue.on(&quot;change&quot;, function () {
+                var v = S.trim(indicatorValue.val());
+                if (!/^#([a-f0-9]{1,2}){3,3}$/i.test(v)) {
+                    alert(&quot;请输入正确的颜色代码&quot;);
+                    return;
+                }
+                indicator.css(&quot;background-color&quot;, v);
+            });
+
+
+            cancel.on(&quot;click&quot;, function (ev) {
+                self.hide();
+                ev &amp;&amp; ev.halt();
+            });
+            body.on(&quot;click&quot;, function (ev) {
+                ev.halt();
+                var t = new S.Node(ev.target);
+                if (t.nodeName() == &quot;a&quot;) {
+                    var c = hex(t.css(&quot;background-color&quot;));
+                    if (left.contains(t))self._detailColor(c);
+                    indicatorValue.val(c);
+                    indicator.css(&quot;background-color&quot;, c);
+                }
+            });
+            addRes.call(self, ok, indicatorValue, cancel, body, self.dialog);
+
+            var defaultColor = &quot;#FF9900&quot;;
+            self._detailColor(defaultColor);
+            indicatorValue.val(defaultColor);
+            indicator.css(&quot;background-color&quot;, defaultColor);
+        },
+
+        _detailColor: function (color) {
+            var self = this,
+                win = self.dialog,
+                body = win.get(&quot;body&quot;),
+                editor = self.editor,
+                prefixCls = editor.get('prefixCls'),
+                detailPanel = body.one(&quot;.&quot; + prefixCls + &quot;editor-color-advanced-picker-right&quot;);
+
+            detailPanel.html(map(ColorGrads([&quot;#ffffff&quot;, color, &quot;#000000&quot;], 40),
+                function (x) {
+                    return &quot;&lt;a style='background-color:&quot; + hex(x) + &quot;'&gt;&lt;/a&gt;&quot;;
+                }).join(&quot;&quot;));
+        },
+        show: function (colorButtonArrow) {
+            this.colorButtonArrow = colorButtonArrow;
+            this.dialog.show();
+        },
+        hide: function () {
+            this.dialog.hide();
+        },
+        destroy: function () {
+            destroyRes.call(this);
+        }
+    });
+
+    return ColorPicker;
+}, {
+    requires: ['editor', '../dialog']
+});</pre>
+</body>
+</html>

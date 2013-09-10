@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * video button.
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(&quot;editor/plugin/video&quot;, function (S, Editor, flashUtils, FlashBaseClass, fakeObjects) {
+    var CLS_VIDEO = &quot;ke_video&quot;,
+        TYPE_VIDEO = &quot;video&quot;;
+
+    function video(config) {
+        this.config = config;
+    }
+
+    S.augment(video, {
+        pluginRenderUI: function (editor) {
+
+            fakeObjects.init(editor);
+
+            var dataProcessor = editor.htmlDataProcessor,
+                dataFilter = dataProcessor &amp;&amp; dataProcessor.dataFilter;
+
+            var provider = [];
+
+            function getProvider(url) {
+                for (var i = 0;
+                     i &lt; provider.length;
+                     i++) {
+                    var p = provider[i];
+                    if (p['reg'].test(url)) {
+                        return p;
+                    }
+                }
+                return undefined;
+            }
+
+            var videoCfg = this.config;
+
+            if (videoCfg['providers']) {
+                provider.push.apply(provider, videoCfg['providers']);
+            }
+
+            videoCfg.getProvider = getProvider;
+
+            dataFilter &amp;&amp; dataFilter.addRules({
+                tags: {
+                    'object': function (element) {
+                        var classId = element.getAttribute(&quot;classid&quot;), i;
+                        var childNodes = element.childNodes;
+                        if (!classId) {
+
+                            // Look for the inner &lt;embed&gt;
+                            for (i = 0; i &lt; childNodes.length; i++) {
+                                if (childNodes[ i ].nodeName == 'embed') {
+                                    if (!flashUtils.isFlashEmbed(childNodes[ i ])) {
+                                        return null;
+                                    }
+                                    if (getProvider(childNodes[ i ].getAttribute(&quot;src&quot;))) {
+                                        return dataProcessor.createFakeParserElement(element,
+                                            CLS_VIDEO, TYPE_VIDEO, true);
+                                    }
+                                }
+                            }
+                            return null;
+                        }
+                        for (i = 0; i &lt; childNodes.length; i++) {
+                            var c = childNodes[ i ];
+                            if (c.nodeName == 'param' &amp;&amp;
+                                c.getAttribute(&quot;name&quot;).toLowerCase() == &quot;movie&quot;) {
+                                if (getProvider(c.getAttribute(&quot;value&quot;) ||
+                                    c.getAttribute(&quot;VALUE&quot;))) {
+                                    return dataProcessor.createFakeParserElement(element,
+                                        CLS_VIDEO, TYPE_VIDEO, true);
+                                }
+                            }
+                        }
+
+                    },
+
+                    'embed': function (element) {
+                        if (!flashUtils.isFlashEmbed(element))
+                            return null;
+                        if (getProvider(element.getAttribute(&quot;src&quot;))) {
+                            return dataProcessor.createFakeParserElement(element,
+                                CLS_VIDEO, TYPE_VIDEO, true);
+                        }
+
+                    }
+                    //4 比 flash 的优先级 5 高！
+                }}, 4);
+
+
+            var flashControl = new FlashBaseClass({
+                editor: editor,
+                cls: CLS_VIDEO,
+                type: TYPE_VIDEO,
+                pluginConfig: this.config,
+                bubbleId: &quot;video&quot;,
+                contextMenuId: &quot;video&quot;,
+                contextMenuHandlers: {
+                    &quot;视频属性&quot;: function () {
+                        var selectedEl = this.get(&quot;editorSelectedEl&quot;);
+                        if (selectedEl) {
+                            flashControl.show(selectedEl);
+                        }
+                    }
+                }
+            });
+
+            editor.addButton(&quot;video&quot;, {
+                tooltip: &quot;插入视频&quot;,
+                listeners: {
+                    click: function () {
+                        flashControl.show();
+
+                    }
+                },
+                mode: Editor.Mode.WYSIWYG_MODE
+            });
+        }
+    });
+
+    return video;
+}, {
+    requires: ['editor', './flash-common/utils',
+        './flash-common/base-class', './fake-objects']
+});</pre>
+</body>
+</html>

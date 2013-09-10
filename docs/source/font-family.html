@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * font formatting for kissy editor
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(&quot;editor/plugin/font-family&quot;, function (S, Editor, ui, cmd) {
+    function FontFamilyPlugin(config) {
+        this.config = config || {};
+    }
+
+    S.augment(FontFamilyPlugin, {
+        pluginRenderUI:function (editor) {
+
+            cmd.init(editor);
+
+            var fontFamilies = this.config;
+
+            var menu = {};
+
+
+            S.mix(menu, {
+                children:[
+                    //ie 不认识中文？？？
+                    {
+                        content:&quot;宋体&quot;,
+                        value:&quot;SimSun&quot;
+                    },
+                    {
+                        content:&quot;黑体&quot;,
+                        value:&quot;SimHei&quot;
+                    },
+                    {
+                        content:&quot;隶书&quot;,
+                        value:&quot;LiSu&quot;
+                    },
+                    {
+                        content:&quot;楷体&quot;,
+                        value:&quot;KaiTi_GB2312&quot;
+                    },
+                    {
+                        content:&quot;微软雅黑&quot;,
+                        value:&quot;'Microsoft YaHei'&quot;
+                    },
+                    {
+                        content:&quot;Georgia&quot;,
+                        value:&quot;Georgia&quot;
+                    },
+                    {
+                        content:&quot;Times New Roman&quot;,
+                        value:&quot;'Times New Roman'&quot;
+                    },
+                    {
+                        content:&quot;Impact&quot;,
+                        value:&quot;Impact&quot;
+                    },
+                    {
+                        content:&quot;Courier New&quot;,
+                        value:&quot;'Courier New'&quot;
+                    },
+                    {
+                        content:&quot;Arial&quot;,
+                        value:&quot;Arial&quot;
+                    },
+                    {
+                        content:&quot;Verdana&quot;,
+                        value:&quot;Verdana&quot;
+                    },
+                    {
+                        content:&quot;Tahoma&quot;,
+                        value:&quot;Tahoma&quot;
+                    }
+                ],
+                width:&quot;130px&quot;
+            });
+
+            S.each(menu.children, function (item) {
+                var attrs = item.elAttrs || {},
+                    value = item.value;
+                attrs.style = attrs.style || &quot;&quot;;
+                attrs.style += &quot;;font-family:&quot; + value;
+                item.elAttrs = attrs;
+            });
+
+            fontFamilies.menu = S.mix(menu, fontFamilies.menu);
+
+            editor.addSelect(&quot;fontFamily&quot;, S.mix({
+                cmdType:&quot;fontFamily&quot;,
+                defaultCaption:&quot;字体&quot;,
+                width:130,
+                mode:Editor.Mode.WYSIWYG_MODE
+            }, fontFamilies), ui.Select);
+        }
+    });
+
+    return FontFamilyPlugin;
+}, {
+    requires:['editor', './font/ui', './font-family/cmd']
+});
+</pre>
+</body>
+</html>

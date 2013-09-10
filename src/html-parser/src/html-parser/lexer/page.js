@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * represent html source
  * @author yiminghe@gmail.com
  */

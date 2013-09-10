@@ -1,12 +1,11 @@
 /**
- * @ignore
- * web.js
- * @author lifesinger@gmail.com, yiminghe@gmail.com
  * this code can only run at browser environment
+ * @ignore
+ * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
 (function (S, undefined) {
     var win = S.Env.host,
-        logger= S.getLogger('s/web'),
+        logger = S.getLogger('s/web'),
         UA = S.UA,
         doc = win['document'],
         docElem = doc && doc.documentElement,
@@ -45,7 +44,6 @@
         isWindow: function (obj) {
             return obj != null && obj == obj.window;
         },
-
 
         /**
          * get xml representation of data
@@ -95,18 +93,11 @@
         /**
          * Specify a function to execute when the Dom is fully loaded.
          * @param fn {Function} A function to execute after the Dom is ready
-         *
-         * for example:
-         *      @example
-         *      KISSY.ready(function(S){});
-         *
          * @chainable
          * @member KISSY
          */
         ready: function (fn) {
-
             readyPromise.done(fn);
-
             return this;
         },
 
@@ -118,14 +109,18 @@
          */
         available: function (id, fn) {
             id = (id + EMPTY).match(RE_ID_STR)[1];
-            var retryCount = 1,
-                node,
-                timer = S.later(function () {
-                    if ((node = doc.getElementById(id)) && (fn(node) || 1) ||
-                        ++retryCount > POLL_RETIRES) {
-                        timer.cancel();
-                    }
-                }, POLL_INTERVAL, true);
+            var retryCount = 1;
+            var timer = S.later(function () {
+                if (++retryCount > POLL_RETIRES) {
+                    timer.cancel();
+                    return;
+                }
+                var node = doc.getElementById(id);
+                if (node) {
+                    fn(node);
+                    timer.cancel();
+                }
+            }, POLL_INTERVAL, true);
         }
     });
 
@@ -137,12 +132,8 @@
         readyDefer.resolve(S);
     }
 
-    /**
-     * Binds ready events.
-     * @ignore
-     */
+    //  Binds ready events.
     function bindReady() {
-
         // Catch cases where ready() is called after the
         // browser event has already occurred.
         if (!doc || doc.readyState === COMPLETE) {
@@ -164,7 +155,6 @@
         }
         // IE event model is used
         else {
-
             var stateChange = function () {
                 if (doc.readyState === COMPLETE) {
                     removeEventListener(doc, READY_STATE_CHANGE_EVENT, stateChange);
@@ -208,7 +198,6 @@
         S.Config.debug = true;
     }
 
-
     // bind on start
     // in case when you bind but the DOMContentLoaded has triggered
     // then you has to wait onload
@@ -221,5 +210,4 @@
         } catch (e) {
         }
     }
-
 })(KISSY, undefined);

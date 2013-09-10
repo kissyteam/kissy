@@ -51,5 +51,8 @@
   "repository": {
     "type": "git",
     "url": "http://github.com/kissyteam/kissy.git"
+  },
+  "dependencies": {
+    "fs-extra": "~0.6.4"
   }
 }

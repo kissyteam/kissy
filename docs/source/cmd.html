@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * backColor command.
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(&quot;editor/plugin/back-color/cmd&quot;, function (S, cmd) {
+
+    var BACK_COLOR_STYLE = {
+        element:'span',
+        styles:{
+            'background-color':'#(color)'
+        },
+        overrides:[
+            {
+                element:'*',
+                styles:{
+                    'background-color':null
+                }
+            }
+        ],
+        childRule:function (currentNode) {
+            // 除了嵌套背景，其他强制最里面
+            // &lt;span style='bgcolor:red'&gt;&lt;span style='fontSize:100px'&gt;123434&lt;/span&gt;&lt;/span&gt;
+            return !!currentNode.style('background-color');
+
+            // 不完美
+            // 1. 123456 背景变黄
+            // 2. 345 字体变大
+            // or
+            // current 有 font-size 的孙子
+        }
+    };
+
+    return {
+        init:function (editor) {
+            if (!editor.hasCommand(&quot;backColor&quot;)) {
+                editor.addCommand(&quot;backColor&quot;, {
+                    exec:function (editor, c) {
+                        editor.execCommand(&quot;save&quot;);
+                        cmd.applyColor(editor, c, BACK_COLOR_STYLE);
+                        editor.execCommand(&quot;save&quot;);
+                    }
+                });
+            }
+        }
+    };
+
+}, {
+    requires:['../color/cmd']
+});</pre>
+</body>
+</html>

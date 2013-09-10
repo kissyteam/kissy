@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * comment node (<!-- content -->)
  * @author yiminghe@gmail.com
  */

@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * fake document fragment
  * @author yiminghe@gmail.com
  */

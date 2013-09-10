@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * gesture pinch
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('event/dom/touch/pinch', function (S, eventHandleMap, DomEvent, MultiTouch) {
+
+    var PINCH = 'pinch',
+        PINCH_START = 'pinchStart',
+        PINCH_END = 'pinchEnd';
+
+    function getDistance(p1, p2) {
+        var deltaX = p1.pageX - p2.pageX,
+            deltaY = p1.pageY - p2.pageY;
+        return Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+    }
+
+    function Pinch() {
+    }
+
+    S.extend(Pinch, MultiTouch, {
+
+        onTouchMove: function (e) {
+            var self = this;
+
+            if (!self.isTracking) {
+                return;
+            }
+
+            var touches = e.touches;
+            var distance = getDistance(touches[0], touches[1]);
+
+            self.lastTouches = touches;
+
+            if (!self.isStarted) {
+                self.isStarted = true;
+                self.startDistance = distance;
+                var target = self.target = self.getCommonTarget(e);
+                DomEvent.fire(target,
+                    PINCH_START, S.mix(e, {
+                        distance: distance,
+                        scale: 1
+                    }));
+            } else {
+                DomEvent.fire(self.target,
+                    PINCH, S.mix(e, {
+                        distance: distance,
+                        scale: distance / self.startDistance
+                    }));
+            }
+        },
+
+        fireEnd: function (e) {
+            var self = this;
+            DomEvent.fire(self.target, PINCH_END, S.mix(e, {
+                touches: self.lastTouches
+            }));
+        }
+
+    });
+
+    var p = new Pinch();
+
+    eventHandleMap[PINCH_START] =
+        eventHandleMap[PINCH_END] = {
+            handle: p
+        };
+
+    function prevent(e) {
+        if (e.touches.length == 2) {
+            e.preventDefault();
+        }
+    }
+
+    eventHandleMap[PINCH] = {
+        handle: p,
+        add: function () {
+            // need on this
+            // if on document, will affect other elements!
+            DomEvent.on(this, 'touchmove', prevent);
+        },
+        remove: function () {
+            DomEvent.detach(this, 'touchmove', prevent);
+        }
+    };
+
+    return Pinch;
+
+}, {
+    requires: ['./handle-map', 'event/dom/base', './multi-touch']
+});</pre>
+</body>
+</html>

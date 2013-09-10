@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * font formatting for kissy editor
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(&quot;editor/plugin/font-size&quot;, function (S, Editor, ui, cmd) {
+    function FontSizePlugin(config) {
+        this.config = config || {};
+    }
+
+    S.augment(FontSizePlugin, {
+        pluginRenderUI:function (editor) {
+
+            cmd.init(editor);
+
+            function wrapFont(vs) {
+                var v = [];
+                S.each(vs, function (n) {
+                    v.push({
+                        content:n,
+                        value:n
+                    });
+                });
+                return v;
+            }
+
+            var fontSizeConfig = this.config;
+
+            fontSizeConfig.menu = S.mix({
+                children:wrapFont([
+                    &quot;8px&quot;, &quot;10px&quot;, &quot;12px&quot;,
+                    &quot;14px&quot;, &quot;18px&quot;, &quot;24px&quot;,
+                    &quot;36px&quot;, &quot;48px&quot;, &quot;60px&quot;,
+                    &quot;72px&quot;, &quot;84px&quot;, &quot;96px&quot;
+                ])
+            }, fontSizeConfig.menu);
+
+            editor.addSelect(&quot;fontSize&quot;, S.mix({
+                cmdType:&quot;fontSize&quot;,
+                defaultCaption:&quot;大小&quot;,
+                width:&quot;70px&quot;,
+                mode:Editor.Mode.WYSIWYG_MODE
+            }, fontSizeConfig), ui.Select);
+        }
+    });
+
+    return FontSizePlugin;
+}, {
+    requires:['editor', './font/ui', './font-size/cmd']
+});
+</pre>
+</body>
+</html>

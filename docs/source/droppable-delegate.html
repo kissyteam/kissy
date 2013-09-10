@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * only one droppable instance for multiple droppable nodes
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('dd/droppable-delegate', function (S, DDM, Droppable, Node) {
+    function dragStart() {
+        var self = this,
+            container = self.get('container'),
+            allNodes = [],
+            selector = self.get('selector');
+        container.all(selector).each(function (n) {
+            // 2012-05-18: 缓存高宽，提高性能
+            DDM.cacheWH(n);
+            allNodes.push(n);
+        });
+        self.__allNodes = allNodes;
+    }
+
+<span id='KISSY-DD-DroppableDelegate'>    /**
+</span>     * @class KISSY.DD.DroppableDelegate
+     * @extend KISSY.DD.Droppable
+     * Make multiple nodes droppable under a container using only one droppable instance.
+     */
+    var DroppableDelegate = Droppable.extend({
+
+        initializer: function () {
+            // 提高性能，拖放开始时缓存代理节点
+            DDM.on('dragstart', dragStart, this);
+        },
+
+<span id='KISSY-DD-DroppableDelegate-method-getNodeFromTarget'>        /**
+</span>         * get droppable node by delegation
+         * @protected
+         */
+        getNodeFromTarget: function (ev, dragNode, proxyNode) {
+            var pointer = {
+                    left: ev.pageX,
+                    top: ev.pageY
+                },
+                self = this,
+                allNodes = self.__allNodes,
+                ret = 0,
+                vArea = Number.MAX_VALUE;
+
+            if (allNodes) {
+                S.each(allNodes, function (n) {
+                    var domNode = n[0];
+                    // 排除当前拖放的元素以及代理节点
+                    if (domNode === proxyNode || domNode === dragNode) {
+                        return;
+                    }
+                    var r = DDM.region(n);
+                    if (DDM.inRegion(r, pointer)) {
+                        // 找到面积最小的那个
+                        var a = DDM.area(r);
+                        if (a &lt; vArea) {
+                            vArea = a;
+                            ret = n;
+                        }
+                    }
+                });
+            }
+
+            if (ret) {
+                self.setInternal('lastNode', self.get('node'));
+                self.setInternal('node', ret);
+            }
+
+            return ret;
+        },
+
+        _handleOut: function () {
+            var self = this;
+            self.callSuper();
+            self.setInternal('node', 0);
+            self.setInternal('lastNode', 0);
+        },
+
+        _handleOver: function (ev) {
+            var self = this,
+                node = self.get('node'),
+                superOut = DroppableDelegate.superclass._handleOut,
+                superOver = self.callSuper,
+                superEnter = DroppableDelegate.superclass._handleEnter,
+                lastNode = self.get('lastNode');
+
+            if (lastNode[0] !== node[0]) {
+
+                // 同一个 drop 对象内委托的两个可 drop 节点相邻，先通知上次的离开
+                self.setInternal('node', lastNode);
+                superOut.apply(self, arguments);
+
+                // 再通知这次的进入
+                self.setInternal('node', node);
+                superEnter.call(self, ev);
+            } else {
+                superOver.call(self, ev);
+            }
+        },
+
+        _end: function (e) {
+            var self = this;
+            self.callSuper(e);
+            self.setInternal('node', 0);
+        }
+    }, {
+        ATTRS: {
+
+<span id='KISSY-DD-DroppableDelegate-property-lastNode'>            /**
+</span>             * last droppable target node.
+             * @property lastNode
+             * @private
+             */
+<span id='global-property-lastNode'>            /**
+</span>             * @ignore
+             */
+            lastNode: {
+            },
+
+<span id='KISSY-DD-DroppableDelegate-cfg-selector'>            /**
+</span>             * a selector query to get the children of container to make droppable elements from.
+             * usually as for tag.cls.
+             * @cfg {String} selector
+             */
+<span id='global-property-selector'>            /**
+</span>             * @ignore
+             */
+            selector: {
+            },
+
+<span id='KISSY-DD-DroppableDelegate-cfg-container'>            /**
+</span>             * a selector query to get the container to listen for mousedown events on.
+             * All 'draggable selector' should be a child of this container
+             * @cfg {String|HTMLElement} container
+             */
+<span id='global-property-container'>            /**
+</span>             * @ignore
+             */
+            container: {
+                setter: function (v) {
+                    return Node.one(v);
+                }
+            }
+        }
+    });
+
+    return DroppableDelegate;
+}, {
+    requires: ['./ddm', './droppable', 'node']
+});</pre>
+</body>
+</html>

@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * Adds a heading tag around a selection or insertion point line.
  * Requires the tag-name string to be passed in as a value argument (i.e. "H1", "H6")
  * @author yiminghe@gmail.com

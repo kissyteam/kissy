@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * dom text node
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(&quot;html-parser/nodes/cdata&quot;, function (S, Text) {
+
+    function CData() {
+        CData.superclass.constructor.apply(this, arguments);
+        this.nodeType = 4;
+        this.nodeName = &quot;#cdata&quot;;
+    }
+
+    S.extend(CData, Text, {
+        writeHtml:function (writer, filter) {
+            var ret;
+            if (!filter || (ret = filter.onCData(this)) !== false) {
+                if (ret) {
+                    if (this !== ret) {
+                        ret.writeHtml(writer, filter);
+                        return;
+                    }
+                }
+                writer.cdata(this.toHtml());
+            }
+        }
+    });
+
+    return CData;
+}, {
+    requires:['./text']
+});</pre>
+</body>
+</html>

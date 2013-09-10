@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * ie create hack
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('dom/ie/insertion', function (S, Dom) {
+
+    var UA = S.UA;
+
+    if (UA.ie &lt; 8) {
+
+        /*
+         ie 6,7 lose checked status when append to dom
+         var c=S.all('&lt;input /&gt;');
+         c.attr('type','radio');
+         c.attr('checked',true);
+         S.all('#t').append(c);
+         alert(c[0].checked);
+         */
+        Dom._fixInsertionChecked = function fixChecked(ret) {
+            for (var i = 0; i &lt; ret.length; i++) {
+                var el = ret[i];
+                if (el.nodeType == Dom.NodeType.DOCUMENT_FRAGMENT_NODE) {
+                    fixChecked(el.childNodes);
+                } else if (Dom.nodeName(el) == 'input') {
+                    fixCheckedInternal(el);
+                } else if (el.nodeType == Dom.NodeType.ELEMENT_NODE) {
+                    var cs = el.getElementsByTagName('input');
+                    for (var j = 0; j &lt; cs.length; j++) {
+                        fixChecked(cs[j]);
+                    }
+                }
+            }
+        };
+
+        function fixCheckedInternal(el) {
+            if (el.type === 'checkbox' || el.type === 'radio') {
+                // after insert, in ie6/7 checked is decided by defaultChecked !
+                el.defaultChecked = el.checked;
+            }
+        }
+
+    }
+
+
+}, {
+    requires: ['dom/base']
+});</pre>
+</body>
+</html>

@@ -1,5 +1,6 @@
 /**
- * modified from ckeditor core - selection
+ * @ignore
+ * selection normalizer
  * @author yiminghe@gmail.com
  */
 /*
@@ -9,13 +10,12 @@
 KISSY.add("editor/selection", function (S,Editor) {
     /**
      * selection type enum
-     * @enum {number}
+     * @enum {number} KISSY.Editor.SelectionType
      */
-    Editor.SELECTION = {
+    Editor.SelectionType = {
         SELECTION_NONE: 1,
         SELECTION_TEXT: 2,
         SELECTION_ELEMENT: 3
-
     };
     var TRUE = true,
         FALSE = false,
@@ -24,8 +24,8 @@ KISSY.add("editor/selection", function (S,Editor) {
         Dom = S.DOM,
     //tryThese = Editor.Utils.tryThese,
         Node = S.Node,
-        KES = Editor.SELECTION,
-        KER = Editor.RANGE,
+        KES = Editor.SelectionType,
+        KER = Editor.RangeType,
     // ie9 仍然采用老的 range api，发现新的不稳定
         OLD_IE = UA['ie'], //!window.getSelection,
         Walker = Editor.Walker,
@@ -33,8 +33,9 @@ KISSY.add("editor/selection", function (S,Editor) {
         KERange = Editor.Range;
 
     /**
-     * @constructor
-     * @param document {Document}
+     * selection normalizer class
+     * @class KISSY.Editor.Selection
+     * @param document {Document} document of editor
      */
     function KESelection(document) {
         var self = this;
@@ -73,8 +74,9 @@ KISSY.add("editor/selection", function (S,Editor) {
         /**
          * Gets the native selection object from the browser.
          * @return {Object} The native selection object.
-         * @example
-         * var selection = editor.getSelection().<b>getNative()</b>;
+         *
+         *
+         *      var selection = editor.getSelection().<b>getNative()</b>;
          */
         getNative: !OLD_IE ?
             function () {
@@ -101,9 +103,10 @@ KISSY.add("editor/selection", function (S,Editor) {
          * @return {number} One of the following constant values:
          *         SELECTION_NONE,  SELECTION_TEXT or
          *         SELECTION_ELEMENT.
-         * @example
-         * if ( editor.getSelection().<b>getType()</b> == SELECTION_TEXT )
-         *     alert( 'Text is selected' );
+         *
+         *
+         *      if ( editor.getSelection().<b>getType()</b> == SELECTION_TEXT )
+         *          alert( 'Text is selected' );
          */
         getType: !OLD_IE ?
             function () {
@@ -327,9 +330,10 @@ KISSY.add("editor/selection", function (S,Editor) {
          * Gets the Dom element in which the selection starts.
          * @return The element at the beginning of the
          *        selection.
-         * @example
-         * var element = editor.getSelection().<b>getStartElement()</b>;
-         * alert( element.nodeName() );
+         *
+         *
+         *      var element = editor.getSelection().<b>getStartElement()</b>;
+         *          alert( element.nodeName() );
          */
         getStartElement: function () {
             var self = this, cache = self._.cache;
@@ -412,9 +416,10 @@ KISSY.add("editor/selection", function (S,Editor) {
          * @return The selected element. Null if no
          *        selection is available or the selection type is not
          *       SELECTION_ELEMENT.
-         * @example
-         * var element = editor.getSelection().<b>getSelectedElement()</b>;
-         * alert( element.nodeName() );
+         *
+         *
+         *      var element = editor.getSelection().<b>getSelectedElement()</b>;
+         *      alert( element.nodeName() );
          */
         getSelectedElement: function () {
             var self = this,

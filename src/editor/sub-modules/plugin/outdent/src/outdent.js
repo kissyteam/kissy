@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * Add indent button.
  * @author yiminghe@gmail.com
  */

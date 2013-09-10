@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * xiami-music button
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(&quot;editor/plugin/xiami-music&quot;, function (S, Editor, FlashBaseClass, flashUtils, fakeObjects) {
+    var CLS_XIAMI = &quot;ke_xiami&quot;,
+        TYPE_XIAMI = &quot;xiami-music&quot;;
+
+    function XiamiMusic() {
+        XiamiMusic.superclass.constructor.apply(this, arguments);
+    }
+
+    S.extend(XiamiMusic, FlashBaseClass, {
+        _updateTip: function (tipUrlEl, selectedFlash) {
+            var self = this,
+                editor = self.get(&quot;editor&quot;),
+                r = editor.restoreRealElement(selectedFlash);
+            if (r) {
+                tipUrlEl.html(selectedFlash.attr(&quot;title&quot;));
+                tipUrlEl.attr(&quot;href&quot;, self._getFlashUrl(r));
+            }
+        }
+    });
+
+    function XiamiMusicPlugin(config) {
+        this.config = config || {};
+    }
+
+    S.augment(XiamiMusicPlugin, {
+        pluginRenderUI: function (editor) {
+
+            fakeObjects.init(editor);
+
+            var dataProcessor = editor.htmlDataProcessor,
+                dataFilter = dataProcessor &amp;&amp; dataProcessor.dataFilter;
+
+            function checkXiami(url) {
+                return /xiami\.com/i.test(url);
+            }
+
+            dataFilter &amp;&amp; dataFilter.addRules({
+                tags: {
+                    'object': function (element) {
+                        var //增加音乐名字提示
+                            title = element.getAttribute(&quot;title&quot;),
+                            i,
+                            c,
+                            classId = element.getAttribute(&quot;classid&quot;);
+                        var childNodes = element.childNodes;
+                        if (!classId) {
+                            // Look for the inner &lt;embed&gt;
+                            for (i = 0; i &lt; childNodes.length; i++) {
+                                c = childNodes[ i ];
+                                if (c.nodeName == 'embed') {
+                                    if (!flashUtils.isFlashEmbed(c)) {
+                                        return null;
+                                    }
+                                    if (checkXiami(c.attributes.src)) {
+                                        return dataProcessor.createFakeParserElement(element, CLS_XIAMI, TYPE_XIAMI, true, {
+                                            title: title
+                                        });
+                                    }
+                                }
+                            }
+                            return null;
+                        }
+                        for (i = 0; i &lt; childNodes.length; i++) {
+                            c = childNodes[ i ];
+                            //innerHTML 会莫名首字母大写，还会加入一些属性
+                            //Movie
+                            if (c.nodeName == 'param' &amp;&amp;
+                                // ie 自动属性名大写
+                                c.getAttribute(&quot;name&quot;).toLowerCase() == &quot;movie&quot;) {
+
+                                if (checkXiami(c.getAttribute(&quot;value&quot;) ||
+                                    c.getAttribute(&quot;VALUE&quot;))) {
+                                    return dataProcessor.createFakeParserElement(element,
+                                        CLS_XIAMI, TYPE_XIAMI, true, {
+                                            title: title
+                                        });
+                                }
+                            }
+                        }
+                    },
+
+                    'embed': function (element) {
+                        if (flashUtils.isFlashEmbed(element) &amp;&amp;
+                            checkXiami(element.getAttribute(&quot;src&quot;))) {
+                            return dataProcessor.createFakeParserElement(element,
+                                CLS_XIAMI, TYPE_XIAMI, true, {
+                                    title: element.getAttribute(&quot;title&quot;)
+                                });
+                        }
+                    }
+                    //4 比 flash 的优先级 5 高！
+                }}, 4);
+
+            var xiamiMusic = new XiamiMusic({
+                editor: editor,
+                cls: CLS_XIAMI,
+                type: TYPE_XIAMI,
+                bubbleId: &quot;xiami&quot;,
+                pluginConfig: this.config,
+                contextMenuId: &quot;xiami&quot;,
+                contextMenuHandlers: {
+                    &quot;虾米属性&quot;: function () {
+                        var selectedEl = this.get(&quot;editorSelectedEl&quot;);
+                        if (selectedEl) {
+                            xiamiMusic.show(selectedEl);
+                        }
+                    }
+                }
+            });
+
+            editor.addButton(&quot;xiamiMusic&quot;, {
+                tooltip: &quot;插入虾米音乐&quot;,
+                listeners: {
+                    click: function () {
+                        xiamiMusic.show();
+                    }
+                },
+                mode: Editor.Mode.WYSIWYG_MODE
+            });
+
+        }
+    });
+
+    return XiamiMusicPlugin;
+}, {
+    requires: ['editor', './flash-common/base-class',
+        './flash-common/utils', './fake-objects']
+});</pre>
+</body>
+</html>

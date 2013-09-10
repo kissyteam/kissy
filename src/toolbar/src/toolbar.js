@@ -76,10 +76,8 @@ KISSY.add("toolbar", function (S, Container, DelegateChildrenExtension, ToolbarR
     }
 
     /**
-     * @name Toolbar
-     * @class
-     * KISSY Toolbar.
-     * xclass: 'toolbar'.
+     * Toolbar component for KISSY. xclass: 'toolbar'.
+     * @class KISSY.Toolbar
      */
     return Container.extend([DelegateChildrenExtension], {
         _onSetHighlightedItem: function (item, e) {

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * Default KISSY Gallery and core alias.
+ * @author yiminghe@gmail.com
+ */
+(function (S) {
+    // compatibility
+    S.config({
+        modules: {
+            core: {
+                alias: ['dom', 'event', 'io', 'anim', 'base', 'node', 'json', 'ua', 'cookie']
+            },
+            ajax: {
+                alias: ['io']
+            },
+            'rich-base': {
+                alias: ['base']
+            }
+        }
+    });
+    if (typeof location != 'undefined') {
+        var https = S.startsWith(location.href, 'https');
+        var prefix = https ? 'https://s.tbcdn.cn/s/kissy/' : 'http://a.tbcdn.cn/s/kissy/';
+        S.config({
+            packages: {
+                gallery: {
+                    base: prefix
+                },
+                mobile: {
+                    base: prefix
+                }
+            }
+        });
+    }
+})(KISSY);
+</pre>
+</body>
+</html>

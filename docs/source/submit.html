@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * patch for ie&lt;9 submit: does not bubble !
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('event/dom/ie/submit', function (S, DomEvent, Dom) {
+
+    var Special = DomEvent.Special,
+        getNodeName = Dom.nodeName;
+
+    Special['submit'] = {
+        setup: function () {
+            var el = this;
+            // form use native
+            if (getNodeName(el) == 'form') {
+                return false;
+            }
+            // lazy add submit for inside forms
+            // note event order : click/keypress -&gt; submit
+            // key point : find the forms
+            DomEvent.on(el, 'click keypress', detector);
+        },
+        tearDown: function () {
+            var el = this;
+            // form use native
+            if (getNodeName(el) == 'form') {
+                return false;
+            }
+            DomEvent.remove(el, 'click keypress', detector);
+            S.each(Dom.query('form', el), function (form) {
+                if (form.__submit__fix) {
+                    form.__submit__fix = 0;
+                    DomEvent.remove(form, 'submit', {
+                        fn: submitBubble,
+                        last: 1
+                    });
+                }
+            });
+        }
+    };
+
+
+    function detector(e) {
+        var t = e.target,
+            nodeName = getNodeName(t),
+            form = (nodeName == 'input' || nodeName == 'button') ? t.form : null;
+
+        if (form &amp;&amp; !form.__submit__fix) {
+            form.__submit__fix = 1;
+            DomEvent.on(form, 'submit', {
+                fn: submitBubble,
+                last: 1
+            });
+        }
+    }
+
+    function submitBubble(e) {
+        var form = this;
+        if (form.parentNode &amp;&amp;
+            // it is stopped by user callback
+            !e.isPropagationStopped() &amp;&amp;
+            // it is not fired manually
+            !e.synthetic) {
+            // simulated bubble for submit
+            // fire from parentNode. if form.on('submit') , this logic is never run!
+            DomEvent.fire(form.parentNode, 'submit', e);
+        }
+    }
+
+}, {
+    requires: ['event/dom/base', 'dom']
+});
+/*
+ modified from jq, fix submit in ie&lt;9
+ - http://bugs.jquery.com/ticket/11049
+ */</pre>
+</body>
+</html>

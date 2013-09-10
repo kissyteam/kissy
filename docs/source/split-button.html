@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * SplitButton for KISSY. Combination of button and menubutton.
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(&quot;split-button&quot;, function (S, Container) {
+
+    return Container.extend({
+
+        renderUI: function () {
+            var self = this,
+                alignWithEl = self.get(&quot;alignWithEl&quot;),
+                menuButton = self.get(&quot;children&quot;)[1],
+                menu = menuButton.get(&quot;menu&quot;);
+            if (alignWithEl) {
+                menu.get(&quot;align&quot;).node = self.$el;
+            }
+        }
+
+    }, {
+
+        ATTRS: {
+            handleMouseEvents: {
+                value: false
+            },
+            focusable: {
+                value: false
+            },
+            alignWithEl: {
+                value: true
+            },
+            children: {
+                value: [
+                    {
+                        xclass: 'button'
+                    },
+                    {
+                        xclass: 'menu-button'
+                    }
+                ]
+            },
+            menuButton: {
+                getter: function () {
+                    return this.get('children')[1];
+                },
+                setter: function (v) {
+                    this.get('children')[1] = v;
+                }
+            },
+            button: {
+                getter: function () {
+                    return this.get('children')[0];
+                },
+                setter: function (v) {
+                    this.get('children')[0] = v;
+                }
+            }
+        },
+        xclass: 'split-button'
+    });
+
+
+}, {
+    requires: ['component/container',
+        // implicit requirement
+        'button', 'menubutton']
+});</pre>
+</body>
+</html>

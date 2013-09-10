@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * create iframe shim for flash/select/office plugin
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(&quot;component/extension/shim&quot;, function (S) {
+    var ie6 = S.UA.ie === 6;
+
+    var shimTpl = &quot;&lt;&quot; + &quot;iframe style='position: absolute;&quot; +
+        &quot;border: none;&quot; +
+        // consider border
+        // bug fix: 2012-11-07
+        &quot;width: &quot; + (ie6 ? &quot;expression(this.parentNode.clientWidth)&quot; : &quot;100%&quot;) + &quot;;&quot; +
+        &quot;top: 0;&quot; +
+        &quot;opacity: 0;&quot; +
+        &quot;filter: alpha(opacity=0);&quot; +
+        &quot;left: 0;&quot; +
+        &quot;z-index: -1;&quot; +
+        &quot;height: &quot; + (ie6 ? &quot;expression(this.parentNode.clientHeight)&quot; : &quot;100%&quot;) + &quot;;&quot; + &quot;'/&gt;&quot;;
+
+<span id='KISSY-Component-Extension-Shim'>    /**
+</span>     * create iframe shim for mixin.
+     * @class KISSY.Component.Extension.Shim
+     */
+    function Shim() {
+    }
+
+    Shim.ATTRS = {
+<span id='KISSY-Component-Extension-Shim-cfg-shim'>        /**
+</span>         * whether create shim
+         * @cfg {Boolean} shim
+         */
+<span id='global-property-shim'>        /**
+</span>         * @ignore
+         */
+        shim: {
+            // default shim for ie6
+            // prevent select coming out of div
+            value: ie6
+        }
+    };
+
+    Shim.prototype.__createDom = function () {
+        if (this.get('shim')) {
+            this.get('el').prepend(shimTpl);
+        }
+    };
+
+    return Shim;
+});</pre>
+</body>
+</html>

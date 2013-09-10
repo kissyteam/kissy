@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * loading mask support for overlay
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(&quot;overlay/extension/loading&quot;, function (S, Node) {
+
+<span id='KISSY-Overlay-Extension-Loading'>    /**
+</span>     * @class KISSY.Overlay.Extension.Loading
+     * Loading extension class. Make component to be able to mask loading.
+     */
+    function Loading() {
+    }
+
+    Loading.prototype = {
+<span id='KISSY-Overlay-Extension-Loading-method-loading'>        /**
+</span>         * mask component as loading
+         * @chainable
+         */
+        loading: function () {
+            var self = this;
+            if (!self._loadingExtEl) {
+                self._loadingExtEl = new Node(&quot;&lt;div &quot; +
+                    &quot;class='&quot; +
+                    self.get('prefixCls') + &quot;ext-loading'&quot; +
+                    &quot; style='position: absolute;&quot; +
+                    &quot;border: none;&quot; +
+                    &quot;width: 100%;&quot; +
+                    &quot;top: 0;&quot; +
+                    &quot;left: 0;&quot; +
+                    &quot;z-index: 99999;&quot; +
+                    &quot;height:100%;&quot; +
+                    &quot;*height: expression(this.parentNode.offsetHeight);&quot; + &quot;'/&gt;&quot;)
+                    .appendTo(self.$el);
+            }
+            self._loadingExtEl.show();
+        },
+
+<span id='KISSY-Overlay-Extension-Loading-method-unloading'>        /**
+</span>         * unmask component as loading
+         * @chainable
+         */
+        unloading: function () {
+            var lel = this._loadingExtEl;
+            lel &amp;&amp; lel.hide();
+        }
+    };
+
+    return Loading;
+
+}, {
+    requires: ['node']
+});</pre>
+</body>
+</html>

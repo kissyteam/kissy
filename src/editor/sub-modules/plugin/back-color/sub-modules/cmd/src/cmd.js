@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * backColor command.
  * @author yiminghe@gmail.com
  */

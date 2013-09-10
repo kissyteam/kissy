@@ -3,13 +3,6 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add("mvc", function (S, Model, Collection, View, Router, sync) {
-
-    /**
-     * @namespace
-     * KISSY MVC Framework.
-     * @name MVC
-     */
-
     return {
         sync:sync,
         Model:Model,

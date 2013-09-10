@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * orderedList command
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(&quot;editor/plugin/ordered-list/cmd&quot;, function (S, Editor, listCmd) {
+
+    var insertOrderedList = &quot;insertOrderedList&quot;,
+        ListCommand = listCmd.ListCommand,
+        queryActive = listCmd.queryActive,
+        olCmd = new ListCommand(&quot;ol&quot;);
+
+    return {
+        init:function (editor) {
+            if (!editor.hasCommand(insertOrderedList)) {
+                editor.addCommand(insertOrderedList, {
+                    exec:function (editor,listStyleType) {
+                        editor.focus();
+                        olCmd.exec(editor,listStyleType);
+                    }
+                });
+            }
+
+            var queryOl = Editor.Utils.getQueryCmd(insertOrderedList);
+
+            if (!editor.hasCommand(queryOl)) {
+                editor.addCommand(queryOl, {
+                    exec:function (editor) {
+                        var selection = editor.getSelection();
+                        if (selection &amp;&amp; !selection.isInvalid) {
+                            var startElement = selection.getStartElement();
+                            var elementPath = new Editor.ElementPath(startElement);
+                            return queryActive(&quot;ol&quot;, elementPath);
+                        }
+                    }
+                });
+            }
+        }
+    };
+
+}, {
+    requires:['editor', '../list-utils/cmd']
+});</pre>
+</body>
+</html>

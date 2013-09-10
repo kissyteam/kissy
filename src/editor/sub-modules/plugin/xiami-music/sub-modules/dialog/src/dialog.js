@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * xiami-music dialog
  * @author yiminghe@gmail.com
  */

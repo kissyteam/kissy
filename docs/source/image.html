@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * insert image for kissy editor
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(&quot;editor/plugin/image&quot;, function (S, Editor, Button, Bubble, ContextMenu, DialogLoader) {
+    var UA = S.UA,
+        Node = KISSY.NodeList,
+        $ = S.all,
+        Event = S.Event,
+        checkImg = function (node) {
+            node = $(node);
+            if (node.nodeName() === 'img' &amp;&amp;
+                // prevent collision with fake objects
+                (!/(^|\s+)ke_/.test(node[0].className))) {
+                return node;
+            }
+        },
+        tipHTML = '&lt;a class=&quot;{prefixCls}editor-bubble-url&quot; ' +
+            'target=&quot;_blank&quot; href=&quot;#&quot;&gt;在新窗口查看&lt;/a&gt;  |  '
+            + '&lt;a class=&quot;{prefixCls}editor-bubble-link ' +
+            '{prefixCls}editor-bubble-change&quot; href=&quot;#&quot;&gt;编辑&lt;/a&gt;  |  '
+            + '&lt;a class=&quot;{prefixCls}editor-bubble-link ' +
+            '{prefixCls}editor-bubble-remove&quot; href=&quot;#&quot;&gt;删除&lt;/a&gt;';
+
+
+    function ImagePlugin(config) {
+        this.config = config || {};
+    }
+
+    S.augment(ImagePlugin, {
+        pluginRenderUI: function (editor) {
+
+            var self = this;
+
+            var prefixCls = editor.get('prefixCls');
+
+            function showImageEditor(selectedEl) {
+                DialogLoader.useDialog(editor, &quot;image&quot;,
+                    self.config,
+                    selectedEl);
+            }
+
+            // 重新采用form提交，不采用flash，国产浏览器很多问题
+            editor.addButton(&quot;image&quot;, {
+                tooltip: &quot;插入图片&quot;,
+                listeners: {
+                    click: function () {
+                        showImageEditor(null);
+
+                    }
+                },
+                mode: Editor.Mode.WYSIWYG_MODE
+            });
+
+            var handlers = [
+                {
+                    content: &quot;图片属性&quot;,
+                    fn: function () {
+                        var img = checkImg(this.get(&quot;editorSelectedEl&quot;));
+                        if (img) {
+                            // make editor restore focus
+                            this.hide();
+                            showImageEditor($(img));
+                        }
+                    }
+                },
+                {
+                    content: &quot;插入新行&quot;,
+                    fn: function () {
+                        this.hide();
+                        var doc = editor.get(&quot;document&quot;)[0],
+                            p = new Node(doc.createElement(&quot;p&quot;));
+                        if (!UA['ie']) {
+                            p._4e_appendBogus(undefined);
+                        }
+                        var r = new Editor.Range(doc);
+                        r.setStartAfter(this.get(&quot;editorSelectedEl&quot;));
+                        r.select();
+                        editor.insertElement(p);
+                        r.moveToElementEditablePosition(p, 1);
+                        r.select();
+                    }
+                }
+            ];
+
+            var children = [];
+
+            S.each(handlers, function (h) {
+                children.push({
+                    content: h.content
+                })
+            });
+
+            editor.addContextMenu(&quot;image&quot;, checkImg, {
+                width: 120,
+                children: children,
+                listeners: {
+                    click: function (e) {
+                        var self = this, content = e.target.get('content');
+                        S.each(handlers, function (h) {
+                            if (h.content == content) {
+                                h.fn.call(self);
+                            }
+                        });
+
+                    }
+                }
+            });
+
+            editor.docReady(function () {
+                Event.on(editor.get(&quot;document&quot;)[0], &quot;dblclick&quot;, function (ev) {
+                    ev.halt();
+                    var t = $(ev.target);
+                    if (checkImg(t)) {
+                        showImageEditor(t);
+                    }
+                });
+            });
+
+            editor.addBubble(&quot;image&quot;, checkImg, {
+                listeners: {
+                    afterRenderUI: function () {
+                        var bubble = this,
+                            el = bubble.get(&quot;contentEl&quot;);
+                        el.html(S.substitute(tipHTML, {
+                            prefixCls: prefixCls
+                        }));
+                        var tipUrlEl = el.one(&quot;.&quot; + prefixCls + &quot;editor-bubble-url&quot;),
+                            tipChangeEl = el.one(&quot;.&quot; + prefixCls + &quot;editor-bubble-change&quot;),
+                            tipRemoveEl = el.one(&quot;.&quot; + prefixCls + &quot;editor-bubble-remove&quot;);
+                        Editor.Utils.preventFocus(el);
+                        tipChangeEl.on(&quot;click&quot;, function (ev) {
+                            showImageEditor(bubble.get(&quot;editorSelectedEl&quot;));
+                            ev.halt();
+                        });
+                        tipRemoveEl.on(&quot;click&quot;, function (ev) {
+                            if (UA['webkit']) {
+                                var r = editor.getSelection().getRanges();
+                                if (r &amp;&amp; r[0]) {
+                                    r[0].collapse();
+                                    r[0].select();
+                                }
+                            }
+                            bubble.get(&quot;editorSelectedEl&quot;).remove();
+                            bubble.hide();
+                            editor.notifySelectionChange();
+                            ev.halt();
+                        });
+                        bubble.on(&quot;show&quot;, function () {
+                            var a = bubble.get(&quot;editorSelectedEl&quot;);
+                            if (a) {
+                                var src = a.attr(&quot;_ke_saved_src&quot;) || a.attr(&quot;src&quot;);
+                                tipUrlEl.attr(&quot;href&quot;, src);
+                            }
+                        });
+                    }
+                }
+            });
+        }
+    });
+
+    return ImagePlugin;
+}, {
+    requires: ['editor',
+        './button',
+        './bubble',
+        './contextmenu',
+        './dialog-loader']
+});</pre>
+</body>
+</html>

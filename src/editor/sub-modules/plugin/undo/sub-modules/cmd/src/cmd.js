@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * undo,redo manager for kissy editor
  * @author yiminghe@gmail.com
  */
@@ -7,8 +8,10 @@ KISSY.add("editor/plugin/undo/cmd", function (S, Editor) {
         LIMIT = 30;
 
     /**
-     * 当前编辑区域状态，包括 html 与选择区域(光标位置)
+     * current editor status(including html and cursor position)
      * @param editor
+     * @class KISSY.Editor.Undo.Snapshot
+     * @private
      */
     function Snapshot(editor) {
         var contents = editor.get("document")[0].body.innerHTML,
@@ -24,10 +27,6 @@ KISSY.add("editor/plugin/undo/cmd", function (S, Editor) {
     }
 
     S.augment(Snapshot, {
-        /**
-         * 编辑状态间是否相等
-         * @param otherImage
-         */
         equals: function (otherImage) {
             var self = this,
                 thisContents = self.contents,
@@ -39,8 +38,10 @@ KISSY.add("editor/plugin/undo/cmd", function (S, Editor) {
     });
 
     /**
-     * 通过编辑器的save与restore事件，编辑器实例的历史栈管理，与键盘监控
+     * manager history of editor content
      * @param editor
+     * @class KISSY.Editor.UndoManager
+     * @private
      */
     function UndoManager(editor) {
         // redo undo history stack
@@ -65,9 +66,6 @@ KISSY.add("editor/plugin/undo/cmd", function (S, Editor) {
         yKeyCode = 89;
 
     S.augment(UndoManager, {
-        /**
-         * 监控键盘输入，buffer处理
-         */
         _keyMonitor: function () {
             var self = this,
                 editor = self.editor;
@@ -122,7 +120,7 @@ KISSY.add("editor/plugin/undo/cmd", function (S, Editor) {
         },
 
         /**
-         * 保存历史
+         * save to history
          */
         save: function (buffer) {
 
@@ -166,7 +164,7 @@ KISSY.add("editor/plugin/undo/cmd", function (S, Editor) {
         },
 
         /**
-         * @param d 1.向前撤销 ，-1.向后重做
+         * restore from history
          */
         restore: function (d) {
 

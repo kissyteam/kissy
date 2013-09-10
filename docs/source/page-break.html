@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * pagebreak functionality
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(&quot;editor/plugin/page-break&quot;, function (S, Editor, fakeObjects) {
+    var Node = S.Node,
+        CLS = &quot;ke_pagebreak&quot;,
+        TYPE = &quot;div&quot;,
+        PAGE_BREAK_MARKUP = '&lt;div' +
+            ' style=&quot;page-break-after: always; &quot;&gt;' +
+            '&lt;span style=&quot;DISPLAY:none&quot;&gt;&amp;nbsp;&lt;/span&gt;' +
+            '&lt;/div&gt;';
+
+    function pageBreak() {}
+
+    S.augment(pageBreak, {
+        pluginRenderUI:function (editor) {
+            fakeObjects.init(editor);
+
+            var dataProcessor = editor.htmlDataProcessor,
+                dataFilter = dataProcessor &amp;&amp; dataProcessor.dataFilter;
+
+            dataFilter.addRules({
+                tags:{
+                    div:function (element) {
+                        var style = element.getAttribute(&quot;style&quot;),
+                            child;
+
+                        if (style) {
+                            var childNodes = element.childNodes;
+                            for (var i = 0; i &lt; childNodes.length; i++) {
+                                if (childNodes[i].nodeType == 1) {
+                                    child = childNodes[i];
+                                }
+                            }
+                        }
+
+                        var childStyle = child &amp;&amp;
+                            ( child.nodeName == 'span' ) &amp;&amp;
+                            child.getAttribute(&quot;style&quot;);
+
+                        if (childStyle &amp;&amp;
+                            ( /page-break-after\s*:\s*always/i ).test(style) &amp;&amp;
+                            ( /display\s*:\s*none/i ).test(childStyle)) {
+                            return dataProcessor.createFakeParserElement(element, CLS, TYPE);
+                        }
+                        return undefined;
+                    }
+                }
+            });
+
+            editor.addButton(&quot;pageBreak&quot;, {
+                tooltip:&quot;分页&quot;,
+                listeners:{
+                    click:function () {
+                        var real = new Node(PAGE_BREAK_MARKUP, null,
+                                editor.get(&quot;document&quot;)[0]),
+                            substitute = editor.createFakeElement(real, CLS,
+                                TYPE,
+                                //不可缩放，也不用
+                                false,
+                                PAGE_BREAK_MARKUP);
+
+                        editor.focus();
+
+                        var sel = editor.getSelection(),
+                            range = sel &amp;&amp; sel.getRanges()[0];
+
+                        if (!range) {
+                            return;
+                        }
+
+                        editor.execCommand(&quot;save&quot;);
+
+                        var start = range.startContainer,
+                            pre = start;
+
+                        while (start.nodeName() !== &quot;body&quot;) {
+                            pre = start;
+                            start = start.parent();
+                        }
+
+                        range.collapse(true);
+
+                        range.splitElement(pre);
+
+                        substitute.insertAfter(pre);
+
+                        editor.execCommand(&quot;save&quot;);
+                    }
+
+                },
+                mode:Editor.Mode.WYSIWYG_MODE
+            });
+        }
+    });
+
+    return pageBreak;
+}, {
+    &quot;requires&quot;:[&quot;editor&quot;, &quot;./fake-objects&quot;]
+});</pre>
+</body>
+</html>

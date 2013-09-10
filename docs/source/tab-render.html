@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * Single tab render in tab bar.
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(&quot;tabs/tab-render&quot;, function (S, Button) {
+
+    return Button.getDefaultRender().extend({
+        beforeCreateDom: function (renderData) {
+            var attrs = renderData.elAttrs;
+            attrs.role = 'tab';
+            if (renderData.selected) {
+                attrs['aria-selected'] = true;
+                renderData.elCls.push(this.getBaseCssClasses('selected'));
+            }
+        },
+        _onSetSelected: function (v) {
+            var el = this.$el;
+            var selectedCls = this.getBaseCssClasses('selected');
+            el[v ? 'addClass' : 'removeClass'](selectedCls)
+                .attr('aria-selected', !!v);
+        }
+    }, {
+        name:'TabsTabRender',
+        HTML_PARSER: {
+            selected: function (el) {
+                return el.hasClass(this.getBaseCssClass('selected'));
+            }
+        }
+    });
+
+}, {
+    requires: ['button']
+});</pre>
+</body>
+</html>

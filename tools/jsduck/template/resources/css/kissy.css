@@ -1,0 +1,139 @@
+#center-container a,
+#center-container a:hover {
+    color: #0C7FCC;
+}
+
+#center-container a:hover {
+    background-color: #D9E8FB;
+}
+
+#center-container .guide-container hr {
+    display: block;
+    height: 1px;
+    background-color: #ccc;
+    border: 0;
+    margin: 1.35em 0;
+}
+
+/* Welcome page */
+#welcome {
+    padding: 30px 15px 15px;
+    width: 900px;
+}
+
+#welcomeLogo {
+    float: left;
+    margin: 0 20px 0 0;
+}
+
+#intro {
+    overflow: hidden;
+}
+
+#license,
+#contribute {
+    clear: both;
+    overflow: hidden;
+}
+
+#popular,
+#resources {
+    overflow: hidden;
+}
+
+#popular {
+    float: left;
+    width: 70%;
+    margin-bottom: -10px;
+}
+
+#popular ul li {
+    float: left;
+    width: 50%;
+}
+
+#popular ul li dl {
+    padding: 0 10px 25px;
+}
+
+#popular ul li dl dt {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+#welcome h1 {
+    padding-bottom: 20px;
+    padding-top: 12px;
+}
+
+#welcome h2 {
+    font-family: "Exo", sans-serif;
+    color: #66AB16;
+    font-size: 1.4em;
+    margin: 20px 0;
+}
+
+#welcome .blist {
+    padding-left: 15px;
+}
+
+#welcome .blist li {
+    list-style-position: inside;
+    list-style-type: disc;
+
+}
+
+#welcome p {
+    margin-bottom: 10px;
+}
+
+code {
+    background: #F7F7F7;
+    border: 1px solid #E8E8E8;
+    padding: 0 3px;
+    font-size: 0.9em;
+
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+    border-radius: 5px;
+    color: #314E64;
+}
+
+pre code {
+    border: none;
+    background: none;
+    color: inherit;
+    padding: 0;
+}
+
+pre code a {
+    border-bottom: 1px dotted #AAA;
+}
+
+.tip {
+    border: 1px solid #aaa;
+    padding: 12px 15px 12px 65px !important;
+    background: #eee;
+
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+
+    -moz-box-shadow: 2px 2px 0 0 #ccc;
+    -webkit-box-shadow: 2px 2px 0 0 #ccc;
+    box-shadow: 2px 2px 0 0 #ccc;
+
+    overflow: hidden;
+}
+
+/* Hide image borders in guide index. */
+.thumb-list dd .thumb img {
+    border: 0;
+}
+
+.guide-container .toc {
+    max-width: 450px;
+}

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * Common btn for list.
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(&quot;editor/plugin/list-utils/btn&quot;, function (S, Editor) {
+
+    return {
+
+        init: function (editor, cfg) {
+            var buttonId = cfg.buttonId,
+                cmdType = cfg.cmdType,
+                tooltip = cfg.tooltip;
+
+            var button = editor.addButton(buttonId, {
+                elCls: buttonId + 'Btn',
+                mode: Editor.Mode.WYSIWYG_MODE,
+                tooltip: &quot;设置&quot; + tooltip
+            });
+
+            editor.on(&quot;selectionChange&quot;, function () {
+                var v;
+                if (v = editor.queryCommandValue(cmdType)) {
+                    button.set(&quot;checked&quot;, true);
+                    arrow.set('value', v);
+                } else {
+                    button.set(&quot;checked&quot;, false);
+                }
+            });
+
+            var arrow = editor.addSelect(buttonId + 'Arrow', {
+                tooltip: &quot;选择并设置&quot; + tooltip,
+                mode: Editor.Mode.WYSIWYG_MODE,
+                menu: cfg.menu,
+                matchElWidth: false,
+                elCls: 'toolbar-' + buttonId + 'ArrowBtn'
+            });
+
+            arrow.on('click', function (e) {
+                var v = e.target.get('value');
+                button.listValue = v;
+                editor.execCommand(cmdType, v);
+                editor.focus();
+            });
+
+            button.on('click', function () {
+                var v = button.listValue;
+                // checked 取 arrow 的 value，用来取消
+                if (button.get('checked')) {
+                    v = arrow.get('value');
+                }
+                editor.execCommand(cmdType, v);
+                editor.focus();
+            });
+        }
+
+    };
+
+
+}, {
+    requires: ['editor', '../button', '../menubutton']
+});</pre>
+</body>
+</html>

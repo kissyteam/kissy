@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * represent a cursor of page , it can advance and retreat
  * @author yiminghe@gmail.com
  */

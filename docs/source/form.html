@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * process form config
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('io/form', function (S, IO, Dom, FormSerializer) {
+
+    var win = S.Env.host,
+        slice = Array.prototype.slice,
+        FormData = win['FormData'];
+
+    IO.on('start', function (e) {
+        var io = e.io,
+            form,
+            d,
+            dataType,
+            formParam,
+            data,
+            tmpForm,
+            c = io.config;
+
+        // serialize form if needed
+        if (tmpForm = c.form) {
+            form = Dom.get(tmpForm);
+            data = c.data;
+            var isUpload = false;
+            var files = {};
+
+            var inputs = Dom.query('input', form);
+            for (var i = 0, l = inputs.length; i &lt; l; i++) {
+                var input = inputs[i];
+                if (input.type.toLowerCase() == 'file') {
+                    isUpload = true;
+                    if (!FormData) {
+                        break;
+                    }
+                    var selected = slice.call(input.files, 0);
+                    files[Dom.attr(input, 'name')] = selected.length &gt; 1 ? selected : (selected[0]||null);
+                }
+            }
+
+            if (isUpload &amp;&amp; FormData) {
+                c.files = c.files || {};
+                S.mix(c.files, files);
+                // browser set contentType automatically for FileData
+                delete c.contentType;
+            }
+
+            // 上传有其他方法
+            if (!isUpload || FormData) {
+                // when get need encode
+                // when FormData exists, only collect non-file type input
+                formParam = FormSerializer.getFormData(form);
+                if (c.hasContent) {
+                    formParam = S.param(formParam, undefined, undefined, c.serializeArray);
+                    if (data) {
+                        c.data += '&amp;' + formParam;
+                    } else {
+                        c.data = formParam;
+                    }
+                } else {
+                    // get 直接加到 url
+                    c.uri.query.add(formParam);
+                }
+            } else {
+                // for old-ie
+                dataType = c.dataType;
+                d = dataType[0];
+                if (d == '*') {
+                    d = 'text';
+                }
+                dataType.length = 2;
+                dataType[0] = 'iframe';
+                dataType[1] = d;
+            }
+        }
+    });
+
+    return IO;
+
+}, {
+    requires: ['./base', 'dom', './form-serializer']
+});</pre>
+</body>
+</html>

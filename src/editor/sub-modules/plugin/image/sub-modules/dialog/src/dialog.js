@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * image dialog (support upload and remote)
  * @author yiminghe@gmail.com
  */
@@ -180,9 +181,7 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Dialog4E, Tabs,
 
                     self.d.loading();
 
-                    /**
-                     * 取消当前iframe的上传
-                     */
+                   // 取消当前iframe的上传
                     loadingCancel.on("click", function (ev) {
                         ev.halt();
                         uploadIO.abort();
@@ -313,10 +312,10 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Dialog4E, Tabs,
 
             self.d.hide();
 
-            /**
-             * 2011-01-05
-             * <a><img></a> 这种结构，a不要设成 position:absolute
-             * 否则img select 不到？!!: editor.getSelection().selectElement(img) 选择不到
+            /*
+              2011-01-05
+              <a><img></a> 这种结构，a不要设成 position:absolute
+              否则img select 不到？!!: editor.getSelection().selectElement(img) 选择不到
              */
             if (self.selectedEl) {
                 img = self.selectedEl;

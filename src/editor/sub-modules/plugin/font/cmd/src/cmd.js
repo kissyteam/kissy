@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * font command.
  * @author yiminghe@gmail.com
  */

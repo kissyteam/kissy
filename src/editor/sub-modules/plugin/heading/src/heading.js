@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * Heading plugin for KISSY.
  * @author yiminghe@gmail.com
  */

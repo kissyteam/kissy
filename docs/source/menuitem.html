@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * menu item ,child component for menu
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(&quot;menu/menuitem&quot;, function (S, Control, MenuItemRender) {
+
+    var $ = S.all;
+
+<span id='KISSY-Menu-Item'>    /**
+</span>     * @class KISSY.Menu.Item
+     * A menu item component which menu is consisted of.
+     * xclass: 'menuitem'.
+     * @extends KISSY.Component.Control
+     */
+   return Control.extend({
+
+        isMenuItem: 1,
+
+        // for ios, ios only has touchdown
+        handleMouseDownInternal: function (e) {
+            this.callSuper(e);
+            this.set(&quot;highlighted&quot;, true);
+        },
+
+<span id='KISSY-Menu-Item-method-handleClickInternal'>        /**
+</span>         * Perform default action when click on enter on this menuitem.
+         * If selectable, then make it selected.
+         * If checkable, then toggle it.
+         * Finally fire click on its parent menu.
+         * @protected
+         */
+        handleClickInternal: function () {
+            var self = this;
+            // 可选
+            if (self.get(&quot;selectable&quot;)) {
+                self.set(&quot;selected&quot;, true);
+            }
+            self.fire(&quot;click&quot;);
+            return true;
+        },
+
+        // 只允许调用 menuItem 的 set('highlighted')
+        // 不允许调用 menu 的 set('highlightedItem')
+        _onSetHighlighted: function (v, e) {
+            var self = this,
+                parent = self.get('parent');
+
+            if (e &amp;&amp; e.byPassSetHighlightedItem) {
+
+            } else {
+                if (self.get('rendered')) {
+                    parent.set('highlightedItem', v ? self : null);
+                } else {
+                    if (v) {
+                        // do not set null on initializer
+                        parent.set('highlightedItem', self);
+                    }
+                }
+            }
+            // 是否要滚动到当前菜单项(横向，纵向)
+            if (v) {
+                var el = self.$el,
+                // 找到向上路径上第一个可以滚动的容器，直到父组件节点（包括）
+                // 找不到就放弃，为效率考虑不考虑 parent 的嵌套可滚动 div
+                    p = el.parent(function (e) {
+                        return $(e).css(&quot;overflow&quot;) != &quot;visible&quot;;
+                    }, parent.get('el').parent());
+                if (!p) {
+                    return;
+                }
+                el.scrollIntoView(p, {
+                    alignWithTop: true,
+                    allowHorizontalScroll: true,
+                    onlyScrollIfNeeded: true
+                });
+            }
+        },
+
+<span id='KISSY-Menu-Item-method-containsElement'>        /**
+</span>         * Check whether this menu item contains specified element.
+         * @param {KISSY.NodeList} element Element to be tested.
+         * @protected
+         */
+        containsElement: function (element) {
+            return this.view.containsElement(element);
+        }
+
+    }, {
+        ATTRS: {
+
+            focusable: {
+                value: false
+            },
+
+            handleMouseEvents: {
+                value: false
+            },
+
+<span id='KISSY-Menu-Item-cfg-selectable'>            /**
+</span>             * Whether the menu item is selectable or not.
+             * Set to true for option.
+             * @cfg {Boolean} selectable
+             */
+<span id='global-property-selectable'>            /**
+</span>             * @ignore
+             */
+            selectable: {
+                view: 1
+            },
+
+<span id='KISSY-Menu-Item-cfg-value'>            /**
+</span>             * The value associated with the menu item.
+             * @cfg {*} value
+             */
+<span id='KISSY-Menu-Item-property-value'>            /**
+</span>             * The value associated with the menu item.
+             * @property value
+             * @type {*}
+             */
+<span id='global-property-value'>            /**
+</span>             * @ignore
+             */
+            value: {},
+
+<span id='KISSY-Menu-Item-property-checked'>            /**
+</span>             * Whether the menu item is checked.
+             * @type {Boolean}
+             * @property checked
+             */
+
+
+<span id='KISSY-Menu-Item-property-selected'>            /**
+</span>             * Whether the menu item is selected.
+             * @type {Boolean}
+             * @property selected
+             */
+<span id='KISSY-Menu-Item-cfg-selected'>            /**
+</span>             * Whether the menu item is selected.
+             * @cfg {Boolean} selected
+             */
+<span id='global-property-selected'>            /**
+</span>             * @ignore
+             */
+            selected: {
+                view: 1
+            },
+
+            xrender: {
+                value: MenuItemRender
+            }
+        },
+        xclass: &quot;menuitem&quot;
+    });
+}, {
+    requires: ['component/control', './menuitem-render']
+});</pre>
+</body>
+</html>

@@ -1,6 +1,11 @@
 /**
- * monitor user's enter and shift enter keydown,modified from ckeditor
+ * @ignore
+ * monitor user's enter and shift enter keydown
  * @author yiminghe@gmail.com
+ */
+/*
+ Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+ For licensing, see LICENSE.html or http://ckeditor.com/license
  */
 KISSY.add("editor/enterKey", function (S,Editor,Walker,ElementPath) {
     var UA = S.UA,

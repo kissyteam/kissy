@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * link editor support for kissy editor ,innovation from google doc and ckeditor
  * @author yiminghe@gmail.com
  */

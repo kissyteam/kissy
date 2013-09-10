@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * Add indent button.
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(&quot;editor/plugin/indent&quot;, function (S, Editor, indexCmd) {
+    function Indent() {
+
+    }
+
+    S.augment(Indent, {
+        pluginRenderUI:function (editor) {
+            indexCmd.init(editor);
+            editor.addButton(&quot;indent&quot;, {
+                tooltip:&quot;增加缩进量 &quot;,
+                listeners:{
+                    click:function () {
+                        editor.execCommand(&quot;indent&quot;);
+                        editor.focus();
+                    }
+                },
+                mode:Editor.Mode.WYSIWYG_MODE
+            });
+        }
+    });
+
+    return Indent;
+}, {
+    requires:['editor', './indent/cmd']
+});</pre>
+</body>
+</html>

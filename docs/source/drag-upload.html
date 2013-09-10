@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * drag file support for html5 file&amp;dd
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(&quot;editor/plugin/drag-upload&quot;, function (S, Editor) {
+    var Node = S.Node,
+        Event = S.Event,
+        Utils = Editor.Utils,
+        Dom = S.DOM;
+
+    function dragUpload(config) {
+        this.config = config || {};
+    }
+
+    S.augment(dragUpload, {
+        pluginRenderUI: function (editor) {
+            var cfg = this.config,
+                fileInput = cfg['fileInput'] || &quot;Filedata&quot;,
+                sizeLimit = cfg['sizeLimit'] || Number['MAX_VALUE'],
+                serverParams = cfg['serverParams'] || {},
+                serverUrl = cfg['serverUrl'] || &quot;&quot;,
+                suffix = cfg['suffix'] || &quot;png,jpg,jpeg,gif&quot;,
+                suffix_reg = new RegExp(suffix.split(/,/).join(&quot;|&quot;) + &quot;$&quot;, &quot;i&quot;),
+
+                inserted = {}, startMonitor = false;
+
+            function nodeInsert(ev) {
+                var oe = ev['originalEvent'],
+                    t = oe.target;
+                if (Dom.nodeName(t) == &quot;img&quot; &amp;&amp; t.src.match(/^file:\/\//)) {
+                    inserted[t.src] = t;
+                }
+            }
+
+            editor.docReady(function () {
+                var document = editor.get(&quot;document&quot;)[0];
+                Event.on(document, &quot;dragenter&quot;, function () {
+                    //firefox 会插入伪数据
+                    if (!startMonitor) {
+                        Event.on(document, &quot;DOMNodeInserted&quot;, nodeInsert);
+                        startMonitor = true;
+                    }
+                });
+
+                Event.on(document, &quot;drop&quot;, function (ev) {
+                    Event.remove(document, &quot;DOMNodeInserted&quot;, nodeInsert);
+                    startMonitor = false;
+                    ev.halt();
+                    ev = ev['originalEvent'];
+                    var archor, ap;
+                    // firefox 会自动添加节点
+                    if (!S.isEmptyObject(inserted)) {
+                        S.each(inserted, function (el) {
+                            if (Dom.nodeName(el) == &quot;img&quot;) {
+                                archor = el.nextSibling;
+                                ap = el.parentNode;
+                                Dom.remove(el);
+                            }
+                        });
+                        inserted = {};
+                    } else {
+                        // 空行里拖放肯定没问题，其他在文字中间可能不准确
+                        ap = document.elementFromPoint(ev.clientX, ev.clientY);
+                        archor = ap.lastChild;
+                    }
+
+                    var dt = ev['dataTransfer'];
+                    dt.dropEffect = &quot;copy&quot;;
+                    var files = dt['files'];
+                    if (!files) {
+                        return;
+                    }
+                    for (var i = 0; i &lt; files.length; i++) {
+                        var file = files[i], name = file.name, size = file.size;
+                        if (!name.match(suffix_reg)) {
+                            continue;
+                        }
+                        if (size / 1000 &gt; sizeLimit) {
+                            continue;
+                        }
+                        var img = new Node(&quot;&lt;img &quot; + &quot;src='&quot; +
+                            Utils.debugUrl(&quot;theme/tao-loading.gif&quot;)
+                            + &quot;'&quot; + &quot;/&gt;&quot;);
+                        var nakeImg = img[0];
+                        ap.insertBefore(nakeImg, archor);
+                        var np = nakeImg.parentNode, np_name = Dom.nodeName(np);
+                        // 防止拖放导致插入到 body 以外
+                        if (np_name == &quot;head&quot;
+                            || np_name == &quot;html&quot;) {
+                            Dom.insertBefore(nakeImg, document.body.firstChild);
+                        }
+
+                        fileUpload(file, img);
+                    }
+                });
+            });
+
+
+            if (window['XMLHttpRequest'] &amp;&amp; !XMLHttpRequest.prototype.sendAsBinary) {
+                XMLHttpRequest.prototype.sendAsBinary = function (dataStr, contentType) {
+                    // chrome12 引入 WebKitBlobBuilder
+                    var bb = new (window['BlobBuilder'] || window['WebKitBlobBuilder'])();
+                    var len = dataStr.length;
+                    var data = new window['Uint8Array'](len);
+                    for (var i = 0; i &lt; len; i++) {
+                        data[i] = dataStr['charCodeAt'](i);
+                    }
+                    bb.append(data.buffer);
+                    this.send(bb['getBlob'](contentType));
+                }
+            }
+
+            function fileUpload(file, img) {
+                var reader = new window['FileReader']();
+                //chrome 不支持 addEventListener(&quot;load&quot;)
+                reader.onload = function (ev) {
+                    var fileName = file.name,
+                        fileData = ev.target['result'],
+                        boundary = &quot;----kissy-editor-yiminghe&quot;,
+                        xhr = new XMLHttpRequest();
+
+                    xhr.open(&quot;POST&quot;, serverUrl, true);
+                    xhr.onreadystatechange = function () {
+                        if (xhr.readyState == 4) {
+                            if (xhr.status == 200 || xhr.status == 304) {
+                                if (xhr.responseText != &quot;&quot;) {
+                                    var info = S.parseJson(xhr.responseText);
+                                    img[0].src = info['imgUrl'];
+                                }
+                            } else {
+                                alert(&quot;服务器端出错！&quot;);
+                                img.remove();
+                            }
+                            xhr.onreadystatechange = null;
+                        }
+                    };
+
+                    var body = &quot;\r\n--&quot; + boundary + &quot;\r\n&quot;;
+                    body += &quot;Content-Disposition: form-data; name=\&quot;&quot; +
+                        fileInput + &quot;\&quot;; filename=\&quot;&quot; + encodeURIComponent(fileName) + &quot;\&quot;\r\n&quot;;
+                    body += &quot;Content-Type: &quot; + (file.type || &quot;application/octet-stream&quot;) + &quot;\r\n\r\n&quot;;
+                    body += fileData + &quot;\r\n&quot;;
+                    serverParams = Editor.Utils.normParams(serverParams);
+                    for (var p in serverParams) {
+
+                        body += &quot;--&quot; + boundary + &quot;\r\n&quot;;
+                        body += &quot;Content-Disposition: form-data; name=\&quot;&quot; +
+                            p + &quot;\&quot;\r\n\r\n&quot;;
+                        body += serverParams[p] + &quot;\r\n&quot;;
+
+                    }
+                    body += &quot;--&quot; + boundary + &quot;--&quot;;
+
+                    xhr.setRequestHeader(&quot;Content-Type&quot;,
+                        &quot;multipart/form-data, boundary=&quot; + boundary);
+                    // simulate a file MIME POST request.
+
+                    xhr.sendAsBinary(&quot;Content-Type: multipart/form-data; boundary=&quot; +
+                        boundary + &quot;\r\nContent-Length: &quot; + body.length
+                        + &quot;\r\n&quot; + body + &quot;\r\n&quot;);
+                    reader.onload = null;
+                };
+                reader['readAsBinaryString'](file);
+            }
+        }
+    });
+
+    return dragUpload;
+}, {
+    requires: ['editor']
+});
+<span id='global-property-'>/**
+</span> * @ignore
+ * refer:
+ * - http://www.html5rocks.com/tutorials/file/filesystem/
+ * - http://yiminghe.iteye.com/blog/848613
+ */</pre>
+</body>
+</html>

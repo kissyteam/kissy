@@ -1,5 +1,6 @@
 /**
  * GregorianCalendar class for KISSY.
+ * @ignore
  * @author yiminghe@gmail.com
  */
 KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined) {
@@ -30,7 +31,7 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
      *  - minute - the value used to set the MINUTE calendar field in the calendar.
      *  - second - the value used to set the SECONDS calendar field in the calendar.
      *  Constructs a GregorianCalendar with the given date and time set for the default time zone with the default locale.
-     * @class KISSY.GregorianCalendar
+     * @class KISSY.Date.Gregorian
      */
     function GregorianCalendar(timezoneOffset, locale) {
 
@@ -615,6 +616,8 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
          * Returns the year of the given calendar field.
          * @method getYear
          * @returns {Number} the year for the given calendar field.
+         */
+
 
          /**
          * Returns the month of the given calendar field.
@@ -802,8 +805,7 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
          *
          *
          *
-         *  @example
-         *
+         *      @example
          *      var d = new GregorianCalendar();
          *      d.set(2012, GregorianCalendar.JANUARY, 31);
          *      d.add(Gregorian.MONTH,1);
@@ -960,8 +962,7 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
          *
          *
          *
-         *   @example
-         *
+         *      @example
          *      var d = new GregorianCalendar();
          *      d.set(1999, GregorianCalendar.AUGUST, 31);
          *      // 1999-4-30

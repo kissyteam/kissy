@@ -1,26 +1,29 @@
 /**
- * modified from ckeditor ,dom iterator implementation using walker and nextSourceNode
+ * @ignore
+ * dom iterator implementation using walker and nextSourceNode
  * @author yiminghe@gmail.com
  */
 /*
  Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.html or http://ckeditor.com/license
  */
-KISSY.add("editor/domIterator", function (S,Editor) {
+KISSY.add("editor/domIterator", function (S, Editor) {
     var TRUE = true,
         FALSE = false,
         NULL = null,
         UA = S.UA,
         Walker = Editor.Walker,
         KERange = Editor.Range,
-        KER = Editor.RANGE,
+        KER = Editor.RangeType,
         ElementPath = Editor.ElementPath,
         Node = S.Node,
         Dom = S.DOM;
 
     /**
-     * @constructor
+     * iterator for range
+     * @class KISSY.Editor.Iterator
      * @param range {KISSY.Editor.Range}
+     * @private
      */
     function Iterator(range) {
         if (arguments.length < 1)
@@ -50,7 +53,7 @@ KISSY.add("editor/domIterator", function (S,Editor) {
         // </ul>
         //会返回两次 li,li,而不是一次 ul ，
         // 可能只是返回包含文字的段落概念？
-        getNextParagraph:function (blockTag) {
+        getNextParagraph: function (blockTag) {
             // The block element to be returned.
             var block, self = this;
 
@@ -90,8 +93,7 @@ KISSY.add("editor/domIterator", function (S,Editor) {
                 // If that node is the lastNode, it would cause our logic to leak to the
                 // next block.(#3887)
                 if (self._.lastNode &&
-                    self._.lastNode[0].nodeType == Dom.NodeType.TEXT_NODE &&
-                    !S.trim(self._.lastNode[0].nodeValue) &&
+                    self._.lastNode[0].nodeType == Dom.NodeType.TEXT_NODE && !S.trim(self._.lastNode[0].nodeValue) &&
                     self._.lastNode.parent()._4e_isBlockBoundary()) {
                     var testRange = new KERange(range.document);
                     testRange.moveToPosition(self._.lastNode, KER.POSITION_AFTER_END);
@@ -131,7 +133,7 @@ KISSY.add("editor/domIterator", function (S,Editor) {
                 if (!includeNode) {
                     var nodeName = currentNode.nodeName();
 
-                    if (currentNode._4e_isBlockBoundary(self.forceBrBreak && { br:1 })) {
+                    if (currentNode._4e_isBlockBoundary(self.forceBrBreak && { br: 1 })) {
                         // <br> boundaries must be part of the range. It will
                         // happen only if ForceBrBreak.
                         if (nodeName == 'br')
@@ -194,7 +196,7 @@ KISSY.add("editor/domIterator", function (S,Editor) {
                     while (!currentNode[0].nextSibling && !isLast) {
                         var parentNode = currentNode.parent();
 
-                        if (parentNode._4e_isBlockBoundary(self.forceBrBreak && { br:1 })) {
+                        if (parentNode._4e_isBlockBoundary(self.forceBrBreak && { br: 1 })) {
                             closeRange = TRUE;
                             isLast = isLast || parentNode.equals(lastNode);
                             break;
@@ -231,7 +233,7 @@ KISSY.add("editor/domIterator", function (S,Editor) {
 
                 var startPath = new ElementPath(range.startContainer);
                 var startBlockLimit = startPath.blockLimit,
-                    checkLimits = { div:1, th:1, td:1 };
+                    checkLimits = { div: 1, th: 1, td: 1 };
                 block = startPath.block;
 
                 if ((!block || !block[0])
@@ -320,11 +322,16 @@ KISSY.add("editor/domIterator", function (S,Editor) {
         }
     });
 
+    /**
+     * get iterator for range
+     * @member KISSY.Editor.Range
+     * @returns {KISSY.Editor.Iterator}
+     */
     KERange.prototype.createIterator = function () {
         return new Iterator(this);
     };
 
     return Iterator;
 }, {
-    requires:['./base', './range', './elementPath', './walker','node']
+    requires: ['./base', './range', './elementPath', './walker', 'node']
 });

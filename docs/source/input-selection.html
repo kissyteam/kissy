@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * handle input selection and cursor position ie hack
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('dom/ie/input-selection', function (S, Dom) {
+    var propHooks = Dom._propHooks;
+    // note :
+    // in ie textarea can not set selectionStart or selectionEnd between '\r' and '\n'
+    // else kissy will move start to one step backward and move end to one step forword
+    // 1\r^\n2\r^\n3
+    // =&gt;
+    // 1^\r\n2\r\n^3
+    propHooks.selectionStart = {
+        set: function (elem, start) {
+            var selectionRange = getSelectionRange(elem),
+                inputRange = getInputRange(elem);
+            if (inputRange.inRange(selectionRange)) {
+                var end = getStartEnd(elem, 1)[1],
+                    diff = getMovedDistance(elem, start, end);
+                selectionRange.collapse(false);
+                selectionRange.moveStart('character', -diff);
+                if (start &gt; end) {
+                    selectionRange.collapse(true);
+                }
+                selectionRange.select();
+            }
+        },
+        get: function (elem) {
+            return getStartEnd(elem)[0];
+        }
+    };
+
+    propHooks.selectionEnd = {
+        set: function (elem, end) {
+            var selectionRange = getSelectionRange(elem),
+                inputRange = getInputRange(elem);
+            if (inputRange.inRange(selectionRange)) {
+                var start = getStartEnd(elem)[0],
+                    diff = getMovedDistance(elem, start, end);
+                selectionRange.collapse(true);
+                selectionRange.moveEnd('character', diff);
+                if (start &gt; end) {
+                    selectionRange.collapse(false);
+                }
+                selectionRange.select();
+
+            }
+        },
+        get: function (elem) {
+            return getStartEnd(elem, 1)[1];
+        }
+    };
+
+    function getStartEnd(elem, includeEnd) {
+        var start = 0,
+            end = 0,
+            selectionRange = getSelectionRange(elem),
+            inputRange = getInputRange(elem);
+        if (inputRange.inRange(selectionRange)) {
+            inputRange.setEndPoint('EndToStart', selectionRange);
+            start = getRangeText(elem, inputRange).length;
+            if (includeEnd) {
+                end = start + getRangeText(elem, selectionRange).length;
+            }
+        }
+        return [start, end];
+    }
+
+    function getSelectionRange(elem) {
+        return  elem.ownerDocument.selection.createRange();
+    }
+
+    function getInputRange(elem) {
+        // buggy textarea , can not pass inRange test
+        if (elem.type == 'textarea') {
+            var range = elem.document.body.createTextRange();
+            range.moveToElementText(elem);
+            return range;
+        } else {
+            return elem.createTextRange();
+        }
+    }
+
+    // moveEnd(&quot;character&quot;,1) will jump &quot;\r\n&quot; at one step
+    function getMovedDistance(elem, s, e) {
+        var start = Math.min(s, e);
+        var end = Math.max(s, e);
+        if (start == end) {
+            return 0;
+        }
+        if (elem.type == &quot;textarea&quot;) {
+            var l = elem.value.substring(start, end).replace(/\r\n/g, '\n').length;
+            if (s &gt; e) {
+                l = -l;
+            }
+            return l;
+        } else {
+            return e - s;
+        }
+    }
+
+    // range.text will not contain &quot;\r\n&quot; if &quot;\r\n&quot; is at end of this range
+    function getRangeText(elem, range) {
+        if (elem.type == &quot;textarea&quot;) {
+            var ret = range.text,
+                testRange = range.duplicate();
+
+            // collapsed
+            if (testRange.compareEndPoints('StartToEnd', testRange) == 0) {
+                return ret;
+            }
+
+            testRange.moveEnd('character', -1);
+
+            // consider end \r\n
+            if (testRange.text == ret) {
+                ret += '\r\n';
+            }
+
+            return ret;
+        } else {
+            return range.text;
+        }
+    }
+}, {
+    requires: ['dom/base']
+});</pre>
+</body>
+</html>

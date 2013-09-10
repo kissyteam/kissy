@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * resize functionality
  * @author yiminghe@gmail.com
  */

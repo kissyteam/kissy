@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * declare and initiate sub scanners
  * @author yiminghe@gmail.com
  */

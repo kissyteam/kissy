@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * base event object for custom and dom event.
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('event/base/object', function (S, undefined) {
+
+    var FALSE_FN = function f_f() {
+        return false;
+    }, TRUE_FN = function t_f() {
+        return true;
+    };
+
+<span id='KISSY-Event-Object'>    /**
+</span>     * @class KISSY.Event.Object
+     * @private
+     * KISSY 's base event object for custom and dom event.
+     */
+    function EventObject() {
+
+        var self = this;
+
+        self.timeStamp = S.now();
+<span id='KISSY-Event-Object-property-target'>        /**
+</span>         * target
+         * @property target
+         * @member KISSY.Event.Object
+         */
+        self.target = undefined;
+<span id='KISSY-Event-Object-property-currentTarget'>        /**
+</span>         * currentTarget
+         * @property currentTarget
+         * @member KISSY.Event.Object
+         */
+        self.currentTarget = undefined;
+<span id='KISSY-Event-Object-property-type'>        /**
+</span>         * current event type
+         * @property type
+         * @type {String}
+         * @member KISSY.Event.Object
+         */
+    }
+
+    EventObject.prototype = {
+        constructor: EventObject,
+<span id='KISSY-Event-Object-method-isDefaultPrevented'>        /**
+</span>         * Flag for preventDefault that is modified during fire event. if it is true, the default behavior for this event will be executed.
+         * @method
+         * @member KISSY.Event.Object
+         */
+        isDefaultPrevented: FALSE_FN,
+<span id='KISSY-Event-Object-method-isPropagationStopped'>        /**
+</span>         * Flag for stopPropagation that is modified during fire event. true means to stop propagation to bubble targets.
+         * @method
+         * @member KISSY.Event.Object
+         */
+        isPropagationStopped: FALSE_FN,
+<span id='KISSY-Event-Object-method-isImmediatePropagationStopped'>        /**
+</span>         * Flag for stopImmediatePropagation that is modified during fire event. true means to stop propagation to bubble targets and other listener.
+         * @method
+         * @member KISSY.Event.Object
+         */
+        isImmediatePropagationStopped: FALSE_FN,
+
+<span id='KISSY-Event-Object-method-preventDefault'>        /**
+</span>         * Prevents the event's default behavior
+         * @member KISSY.Event.Object
+         */
+        preventDefault: function () {
+            this.isDefaultPrevented = TRUE_FN;
+        },
+
+<span id='KISSY-Event-Object-method-stopPropagation'>        /**
+</span>         * Stops the propagation to the next bubble target
+         * @member KISSY.Event.Object
+         */
+        stopPropagation: function () {
+            this.isPropagationStopped = TRUE_FN;
+        },
+
+<span id='KISSY-Event-Object-method-stopImmediatePropagation'>        /**
+</span>         * Stops the propagation to the next bubble target and
+         * prevents any additional listeners from being executed
+         * on the current target.
+         * @member KISSY.Event.Object
+         */
+        stopImmediatePropagation: function () {
+            var self = this;
+            self.isImmediatePropagationStopped = TRUE_FN;
+            // fixed 1.2
+            // call stopPropagation implicitly
+            self.stopPropagation();
+        },
+
+<span id='KISSY-Event-Object-method-halt'>        /**
+</span>         * Stops the event propagation and prevents the default
+         * event behavior.
+         * @param  {Boolean} [immediate] if true additional listeners on the current target will not be executed
+         * @member KISSY.Event.Object
+         */
+        halt: function (immediate) {
+            var self = this;
+            if (immediate) {
+                self.stopImmediatePropagation();
+            } else {
+                self.stopPropagation();
+            }
+            self.preventDefault();
+        }
+    };
+
+    return EventObject;
+
+});</pre>
+</body>
+</html>

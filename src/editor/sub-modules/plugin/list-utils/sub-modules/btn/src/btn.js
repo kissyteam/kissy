@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * Common btn for list.
  * @author yiminghe@gmail.com
  */

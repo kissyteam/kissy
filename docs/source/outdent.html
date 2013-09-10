@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * Add indent button.
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(&quot;editor/plugin/outdent&quot;, function (S, Editor, indexCmd) {
+    function outdent() {
+
+    }
+
+    S.augment(outdent, {
+        pluginRenderUI:function (editor) {
+
+            indexCmd.init(editor);
+
+            editor.addButton(&quot;outdent&quot;, {
+                tooltip:&quot;减少缩进量 &quot;,
+                listeners:{
+                    click:function () {
+                        editor.execCommand(&quot;outdent&quot;);
+                        editor.focus();
+
+                    },
+                    afterSyncUI:function () {
+                        var self = this;
+                        editor.on(&quot;selectionChange&quot;, function () {
+                            if (editor.get(&quot;mode&quot;) == Editor.Mode.SOURCE_MODE) {
+                                return;
+                            }
+                            if (editor.queryCommandValue(&quot;outdent&quot;)) {
+                                self.set(&quot;disabled&quot;, false);
+                            } else {
+                                self.set(&quot;disabled&quot;, true);
+                            }
+                        });
+
+                    }
+                },
+                mode:Editor.Mode.WYSIWYG_MODE
+            });
+        }
+    });
+
+    return outdent;
+}, {
+    requires:['editor', './outdent/cmd']
+});</pre>
+</body>
+</html>

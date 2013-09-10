@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * io shortcut
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('io', function (S, serializer, IO) {
+    var undef = undefined;
+
+    function get(url, data, callback, dataType, type) {
+        // data 参数可省略
+        if (typeof data === 'function') {
+            dataType = callback;
+            callback = data;
+            data = undef;
+        }
+
+        return IO({
+            type: type || 'get',
+            url: url,
+            data: data,
+            success: callback,
+            dataType: dataType
+        });
+    }
+
+    // some shortcut
+    S.mix(IO,
+        {
+
+            serialize: serializer.serialize,
+
+<span id='KISSY-IO-static-method-get'>            /**
+</span>             * perform a get request
+             * @method
+             * @param {String} url request destination
+             * @param {Object} [data] name-value object associated with this request
+             * @param {Function} [callback] success callback when this request is done
+             * @param callback.data returned from this request with type specified by dataType
+             * @param {String} callback.status status of this request with type String
+             * @param {KISSY.IO} callback.io io object of this request
+             * @param {String} [dataType] the type of data returns from this request
+             * ('xml' or 'json' or 'text')
+             * @return {KISSY.IO}
+             * @member KISSY.IO
+             * @static
+             */
+            get: get,
+
+<span id='KISSY-IO-static-method-post'>            /**
+</span>             * preform a post request
+             * @param {String} url request destination
+             * @param {Object} [data] name-value object associated with this request
+             * @param {Function} [callback] success callback when this request is done.
+             * @param callback.data returned from this request with type specified by dataType
+             * @param {String} callback.status status of this request with type String
+             * @param {KISSY.IO} callback.io io object of this request
+             * @param {String} [dataType] the type of data returns from this request
+             * ('xml' or 'json' or 'text')
+             * @return {KISSY.IO}
+             * @member KISSY.IO
+             * @static
+             */
+            post: function (url, data, callback, dataType) {
+                if (typeof data === 'function') {
+<span id='global-property-'>                    dataType = /**
+</span>                     @type String
+                     @ignore*/callback;
+                    callback = data;
+                    data = undef;
+                }
+                return get(url, data, callback, dataType, 'post');
+            },
+
+<span id='KISSY-IO-static-method-jsonp'>            /**
+</span>             * preform a jsonp request
+             * @param {String} url request destination
+             * @param {Object} [data] name-value object associated with this request
+             * @param {Function} [callback] success callback when this request is done.
+             * @param callback.data returned from this request with type specified by dataType
+             * @param {String} callback.status status of this request with type String
+             * @param {KISSY.IO} callback.io io object of this request
+             * @return {KISSY.IO}
+             * @member KISSY.IO
+             * @static
+             */
+            jsonp: function (url, data, callback) {
+                if (typeof data === 'function') {
+                    callback = data;
+                    data = undef;
+                }
+                return get(url, data, callback, 'jsonp');
+            },
+
+            // 和 S.getScript 保持一致
+            // 更好的 getScript 可以用
+            /*
+             IO({
+             dataType:'script'
+             });
+             */
+            getScript: S.getScript,
+
+<span id='KISSY-IO-static-method-getJSON'>            /**
+</span>             * perform a get request to fetch json data from server
+             * @param {String} url request destination
+             * @param {Object} [data] name-value object associated with this request
+             * @param {Function} [callback] success callback when this request is done.@param callback.data returned from this request with type specified by dataType
+             * @param {String} callback.status status of this request with type String
+             * @param {KISSY.IO} callback.io io object of this request
+             * @return {KISSY.IO}
+             * @member KISSY.IO
+             * @static
+             */
+            getJSON: function (url, data, callback) {
+                if (typeof data === 'function') {
+                    callback = data;
+                    data = undef;
+                }
+                return get(url, data, callback, 'json');
+            },
+
+<span id='KISSY-IO-static-method-upload'>            /**
+</span>             * submit form without page refresh
+             * @param {String} url request destination
+             * @param {HTMLElement|KISSY.NodeList} form element tobe submited
+             * @param {Object} [data] name-value object associated with this request
+             * @param {Function} [callback]  success callback when this request is done.@param callback.data returned from this request with type specified by dataType
+             * @param {String} callback.status status of this request with type String
+             * @param {KISSY.IO} callback.io io object of this request
+             * @param {String} [dataType] the type of data returns from this request
+             * ('xml' or 'json' or 'text')
+             * @return {KISSY.IO}
+             * @member KISSY.IO
+             * @static
+             */
+            upload: function (url, form, data, callback, dataType) {
+                if (typeof data === 'function') {
+<span id='global-property-'>                    dataType = /**
+</span>                     @type String
+                     @ignore
+                     */callback;
+                    callback = data;
+                    data = undef;
+                }
+                return IO({
+                    url: url,
+                    type: 'post',
+                    dataType: dataType,
+                    form: form,
+                    data: data,
+                    success: callback
+                });
+            }
+        });
+
+    S.mix(S, {
+        // compatibility
+        'Ajax': IO,
+        'IO': IO,
+        ajax: IO,
+        io: IO,
+        jsonp: IO.jsonp
+    });
+
+    return IO;
+}, {
+    requires: [
+        'io/form-serializer',
+        'io/base',
+        'io/xhr-transport',
+        'io/script-transport',
+        'io/jsonp',
+        'io/form',
+        'io/iframe-transport',
+        'io/methods']
+});</pre>
+</body>
+</html>

@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * bold command.
  * @author yiminghe@gmail.com
  */

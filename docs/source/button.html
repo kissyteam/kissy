@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * Button control for KISSY.
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(&quot;button&quot;, function (S, Node, Control, ButtonRender) {
+
+    var KeyCode = Node.KeyCode;
+<span id='KISSY-Button'>    /**
+</span>     * KISSY Button.
+     * @extends KISSY.Component.Control
+     * @class KISSY.Button
+     */
+    return Control.extend({
+
+        isButton: 1,
+
+        bindUI: function () {
+            this.$el.on(&quot;keyup&quot;, this.handleKeyDownInternal, this);
+        },
+
+        handleKeyDownInternal: function (e) {
+            if (e.keyCode == KeyCode.ENTER &amp;&amp;
+                e.type == &quot;keydown&quot; ||
+                e.keyCode == KeyCode.SPACE &amp;&amp;
+                    e.type == &quot;keyup&quot;) {
+                return this.handleClickInternal(e);
+            }
+            // Return true for space keypress (even though the event is handled on keyup)
+            // as preventDefault needs to be called up keypress to take effect in IE and
+            // WebKit.
+            return e.keyCode == KeyCode.SPACE;
+        },
+
+        handleClickInternal: function () {
+            var self = this;
+            if (self.get(&quot;checkable&quot;)) {
+                self.set(&quot;checked&quot;, !self.get(&quot;checked&quot;));
+            }
+            // button 的默认行为就是触发 click
+            self.fire(&quot;click&quot;);
+        }
+    }, {
+        ATTRS: {
+<span id='KISSY-Button-property-value'>            /**
+</span>             * Value associated with button component.
+             * @property value
+             */
+<span id='KISSY-Button-cfg-value'>            /**
+</span>             * Value associated with button component.
+             * @cfg {*} value
+             */
+<span id='global-property-value'>            /**
+</span>             * @ignore
+             */
+            value: {},
+<span id='KISSY-Button-property-describedby'>            /**
+</span>             *Aria-describedby attribute.
+             * @property describedby
+             * @type {String}
+             */
+<span id='KISSY-Button-cfg-describedby'>            /**
+</span>             *Aria-describedby attribute.
+             * @cfg {String} describedby
+             */
+<span id='global-property-describedby'>            /**
+</span>             * @ignore
+             */
+            describedby: {
+                value: '',
+                view: 1
+            },
+<span id='KISSY-Button-cfg-tooltip'>            /**
+</span>             * Tooltip for button.
+             * @cfg {String} tooltip
+             */
+<span id='KISSY-Button-property-tooltip'>            /**
+</span>             * Tooltip for button.
+             * @property tooltip
+             * @type {String}
+             */
+<span id='global-property-tooltip'>            /**
+</span>             * @ignore
+             */
+            tooltip: {
+                value: '',
+                view: 1
+            },
+
+<span id='KISSY-Button-cfg-checkable'>            /**
+</span>             * Whether button can be checkable(toggle).
+             * Defaults to: false.
+             * @cfg {Boolean} checkable
+             */
+<span id='global-property-checkable'>            /**
+</span>             * @ignore
+             */
+            checkable: {
+            },
+
+<span id='KISSY-Button-property-checked'>            /**
+</span>             * Whether button is checked(toggle).
+             * Defaults to: false.
+             * @type {Boolean}
+             * @property checked
+             */
+<span id='KISSY-Button-cfg-checked'>            /**
+</span>             * Whether button is checked(toggle).
+             * @cfg {Boolean} checked
+             */
+<span id='global-property-checked'>            /**
+</span>             * @ignore
+             */
+            checked: {
+                value:false,
+                view: 1
+            },
+
+            xrender: {
+                value: ButtonRender
+            }
+        },
+        xclass: 'button'
+    });
+
+}, {
+    requires: ['node', 'component/control', 'button/render']
+});</pre>
+</body>
+</html>

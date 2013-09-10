@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * Remote datasource for ComboBox
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(&quot;combobox/remote-data-source&quot;, function (S, IO, Base, undefined) {
+<span id='KISSY-ComboBox-RemoteDataSource'>    /**
+</span>     * dataSource which wrap {@link KISSY.IO} utility.
+     * @class KISSY.ComboBox.RemoteDataSource
+     * @extends KISSY.Base
+     */
+    return Base.extend({
+<span id='KISSY-ComboBox-RemoteDataSource-method-fetchData'>        /**
+</span>         * Data source interface. How to get data for comboBox
+         * @param {String} inputVal current active input's value
+         * @param {Function} callback callback to notify comboBox when data is ready
+         * @param {Object} context callback 's execution context
+         */
+        fetchData: function (inputVal, callback, context) {
+            var self = this,
+                v,
+                paramName = self.get(&quot;paramName&quot;),
+                parse = self.get(&quot;parse&quot;),
+                cache = self.get(&quot;cache&quot;),
+                allowEmpty = self.get(&quot;allowEmpty&quot;);
+            self.caches = self.caches || {};
+            if (self.io) {
+                // abort previous request
+                self.io.abort();
+                self.io = null;
+            }
+            if (!inputVal &amp;&amp; allowEmpty !== true) {
+                return callback.call(context, []);
+            }
+            if (cache) {
+                if (v = self.caches[inputVal]) {
+                    return callback.call(context, v);
+                }
+            }
+            var xhrCfg = self.get(&quot;xhrCfg&quot;);
+            xhrCfg.data = xhrCfg.data || {};
+            xhrCfg.data[paramName] = inputVal;
+            xhrCfg.success = function (data) {
+                if (parse) {
+                    data = parse(inputVal, data);
+                }
+                self.setInternal(&quot;data&quot;, data);
+                if (cache) {
+                    self.caches[inputVal] = data;
+                }
+                callback.call(context, data);
+            };
+            self.io = IO(xhrCfg);
+            return undefined;
+        }
+    }, {
+        ATTRS: {
+
+<span id='KISSY-ComboBox-RemoteDataSource-cfg-paramName'>            /**
+</span>             * Used as parameter name to send combobox input's value to server.
+             * Defaults to: 'q'
+             * @cfg  {String} paramName
+             */
+<span id='global-property-paramName'>            /**
+</span>             * @ignore
+             */
+            paramName: {
+                value: 'q'
+            },
+<span id='KISSY-ComboBox-RemoteDataSource-cfg-allowEmpty'>            /**
+</span>             * whether send empty to server when input val is empty.
+             * Defaults to: false
+             * @cfg {Boolean} allowEmpty
+             */
+<span id='global-property-allowEmpty'>            /**
+</span>             * @ignore
+             */
+            allowEmpty: {},
+<span id='KISSY-ComboBox-RemoteDataSource-cfg-cache'>            /**
+</span>             * Whether server response data is cached.
+             * Defaults to: false
+             * @cfg {Boolean} cache
+             */
+<span id='global-property-cache'>            /**
+</span>             * @ignore
+             */
+            cache: {},
+<span id='KISSY-ComboBox-RemoteDataSource-cfg-parse'>            /**
+</span>             * Serve as a parse function to parse server
+             * response to return a valid array of data for comboBox.
+             * @cfg {Function} parse
+             */
+<span id='global-property-parse'>            /**
+</span>             * @ignore
+             */
+            parse: {},
+<span id='KISSY-ComboBox-RemoteDataSource-cfg-xhrCfg'>            /**
+</span>             * IO configuration.same as {@link KISSY.IO}
+             * @cfg {Object} xhrCfg
+             */
+<span id='global-property-xhrCfg'>            /**
+</span>             * @ignore
+             */
+            xhrCfg: {
+                value: {}
+            }
+        }
+    });
+}, {
+    requires: ['io', 'base']
+});</pre>
+</body>
+</html>

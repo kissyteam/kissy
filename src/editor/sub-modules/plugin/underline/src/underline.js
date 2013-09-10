@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * underline button
  * @author yiminghe@gmail.com
  */

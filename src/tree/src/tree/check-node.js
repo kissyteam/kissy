@@ -9,15 +9,11 @@ KISSY.add("tree/check-node", function (S, Node, TreeNode) {
         EMPTY = 0;
 
     /**
-     * @name CheckNode
-     * @member Tree
-     * @class
-     * Checked tree node.
-     * xclass: 'check-tree-node'.
-     * @extends Tree.Node
+     * Checked tree node. xclass: 'check-tree-node'.
+     * @class KISSY.Tree.CheckNode
+     * @extends KISSY.Tree.Node
      */
     var CheckNode = TreeNode.extend({
-
         handleClickInternal: function (e) {
             var self = this,
                 checkState,
@@ -133,20 +129,24 @@ KISSY.add("tree/check-node", function (S, Node, TreeNode) {
         xclass: "check-tree-node"
     });
 
-    S.mix(CheckNode,{
-            /**
-             * checked partly.
-             */
-            PARTIAL_CHECK: PARTIAL_CHECK,
-            /**
-             * checked completely.
-             */
-            CHECK: CHECK,
-            /**
-             * not checked at all.
-             */
-            EMPTY: EMPTY
-        });
+    /**
+     * check node's check state enum
+     * @enum {Number} KISSY.Tree.CheckNode.CheckState
+     */
+    CheckNode.CheckState={
+        /**
+         * checked partly.
+         */
+        PARTIAL_CHECK: PARTIAL_CHECK,
+        /**
+         * checked completely.
+         */
+        CHECK: CHECK,
+        /**
+         * not checked at all.
+         */
+        EMPTY: EMPTY
+    };
 
     return CheckNode;
 }, {

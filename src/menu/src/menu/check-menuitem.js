@@ -3,15 +3,16 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add('menu/check-menuitem', function (S, MenuItem, CheckMenuItemRender) {
+    /**
+     * @class KISSY.Menu.CheckItem
+     */
     return MenuItem.extend({
-
         handleClickInternal: function () {
             var self = this;
             self.set("checked", !self.get("checked"));
             self.fire('click');
             return true;
         }
-
     }, {
         ATTRS: {
             /**

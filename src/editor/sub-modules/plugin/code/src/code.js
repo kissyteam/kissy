@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * insert program code
  * @author yiminghe@gmail.com
  */

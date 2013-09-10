@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * fakeObjects for music ,video,flash
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(&quot;editor/plugin/fake-objects&quot;, function (S, Editor, HtmlParser) {
+    var Node = S.Node,
+        Dom = S.DOM,
+        Utils = Editor.Utils,
+        SPACER_GIF = Utils.debugUrl('theme/spacer.gif');
+
+    Editor.addMembers({
+        //ie6 ,object outHTML error
+        createFakeElement: function (realElement, className, realElementType, isResizable, outerHTML, attrs) {
+            var style = realElement.attr(&quot;style&quot;) || '';
+            if (realElement.attr(&quot;width&quot;)) {
+                style = &quot;width:&quot; + realElement.attr(&quot;width&quot;) + &quot;px;&quot; + style;
+            }
+            if (realElement.attr(&quot;height&quot;)) {
+                style = &quot;height:&quot; + realElement.attr(&quot;height&quot;) + &quot;px;&quot; + style;
+            }
+            var self = this,
+            // add current class to fake element
+                existClass = S.trim(realElement.attr('class')),
+                attributes = {
+                    'class': className + &quot; &quot; + existClass,
+                    src: SPACER_GIF,
+                    _ke_realelement: encodeURIComponent(outerHTML || realElement.outerHtml()),
+                    _ke_real_node_type: realElement[0].nodeType,
+                    style: style
+                };
+
+            if (attrs) {
+                delete attrs.width;
+                delete attrs.height;
+                S.mix(attributes, attrs, false);
+            }
+
+            if (realElementType)
+                attributes._ke_real_element_type = realElementType;
+
+            if (isResizable)
+                attributes._ke_resizable = isResizable;
+            return new Node(&quot;&lt;img/&gt;&quot;, attributes, self.get(&quot;document&quot;)[0]);
+        },
+
+        restoreRealElement: function (fakeElement) {
+            if (fakeElement.attr('_ke_real_node_type') != Dom.NodeType.ELEMENT_NODE) {
+                return null;
+            }
+
+            var html = (S.urlDecode(fakeElement.attr('_ke_realelement')));
+
+            var temp = new Node('&lt;div&gt;', null, this.get(&quot;document&quot;)[0]);
+            temp.html(html);
+            // When returning the node, remove it from its parent to detach it.
+            return temp.first().remove();
+        }
+    });
+
+    var htmlFilterRules = {
+        tags: {
+           // 生成最终html时，从编辑器html转化把fake替换为真实，并将style的width,height搞到属性上去
+            $: function (element) {
+                var realHTML = element.getAttribute(&quot;_ke_realelement&quot;);
+
+                var realFragment;
+
+                if (realHTML) {
+                    realFragment = new HtmlParser.Parser(S.urlDecode(realHTML)).parse();
+                }
+
+                var realElement = realFragment &amp;&amp; realFragment.childNodes[ 0 ];
+
+                // If we have width/height in the element, we must move it into
+                // the real element.
+                if (realElement) {
+                    var style = element.getAttribute(&quot;style&quot;);
+                    if (style) {
+                        // Get the width from the style.
+                        var match = /(?:^|\s)width\s*:\s*(\d+)/i.exec(style),
+                            width = match &amp;&amp; match[1];
+
+                        // Get the height from the style.
+                        match = /(?:^|\s)height\s*:\s*(\d+)/i.exec(style);
+
+                        var height = match &amp;&amp; match[1];
+
+                        if (width) {
+                            realElement.setAttribute(&quot;width&quot;, width);
+                        }
+                        if (height) {
+                            realElement.setAttribute(&quot;height&quot;, height);
+                        }
+                    }
+                    return realElement;
+                }
+
+            }
+        }
+    };
+
+    return {
+        init: function (editor) {
+            var dataProcessor = editor.htmlDataProcessor,
+                htmlFilter = dataProcessor &amp;&amp; dataProcessor.htmlFilter;
+
+            if (dataProcessor.createFakeParserElement) {
+                return;
+            }
+
+            if (htmlFilter) {
+                htmlFilter.addRules(htmlFilterRules);
+            }
+
+            S.mix(dataProcessor, {
+                restoreRealElement: function (fakeElement) {
+                    if (fakeElement.attr('_ke_real_node_type') != Dom.NodeType.ELEMENT_NODE) {
+                        return null;
+                    }
+
+                    var html = (S.urlDecode(fakeElement.attr('_ke_realelement')));
+
+                    var temp = new Node('&lt;div&gt;', null, editor.get(&quot;document&quot;)[0]);
+                    temp.html(html);
+                    // When returning the node, remove it from its parent to detach it.
+                    return temp.first().remove();
+                },
+
+
+               // 从外边真实的html，转为为编辑器代码支持的替换元素
+                createFakeParserElement: function (realElement, className, realElementType, isResizable, attrs) {
+                    var html = HtmlParser.serialize(realElement);
+                    var style = realElement.getAttribute(&quot;style&quot;) || '';
+                    if (realElement.getAttribute(&quot;width&quot;)) {
+                        style = &quot;width:&quot; + realElement.getAttribute(&quot;width&quot;) + &quot;px;&quot; + style;
+                    }
+                    if (realElement.getAttribute(&quot;height&quot;)) {
+                        style = &quot;height:&quot; + realElement.getAttribute(&quot;height&quot;) + &quot;px;&quot; + style;
+                    }
+                    // add current class to fake element
+                    var existClass = S.trim(realElement.getAttribute(&quot;class&quot;)),
+                        attributes = {
+                            'class': className + &quot; &quot; + existClass,
+                            src: SPACER_GIF,
+                            _ke_realelement: encodeURIComponent(html),
+                            _ke_real_node_type: realElement.nodeType + &quot;&quot;,
+                            style: style,
+                            align: realElement.getAttribute(&quot;align&quot;) || ''
+                        };
+
+                    if (attrs) {
+                        delete attrs.width;
+                        delete attrs.height;
+                        S.mix(attributes, attrs, false);
+                    }
+
+                    if (realElementType) {
+                        attributes._ke_real_element_type = realElementType;
+                    }
+                    if (isResizable) {
+                        attributes._ke_resizable = &quot;_ke_resizable&quot;;
+                    }
+                    return new HtmlParser.Tag('img', attributes);
+                }
+            });
+        }
+    };
+}, {
+    requires: [&quot;editor&quot;, 'html-parser']
+});
+</pre>
+</body>
+</html>

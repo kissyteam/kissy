@@ -3,18 +3,12 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add("tree/check-tree", function (S, CheckNode, TreeManager) {
-
-    var CheckTree;
     /**
-     * @name CheckTree
+     * KISSY Checked Tree. xclass: 'check-tree'.
      * @extends Tree.CheckNode
-     * @class
-     * KISSY Checked Tree.
-     * xclass: 'check-tree'.
-     * @member Tree
+     * @class KISSY.Tree.CheckTree
      */
-    return  CheckTree = CheckNode.extend([TreeManager], {
-
+    return CheckNode.extend([TreeManager], {
         handleKeyDownInternal: function (e) {
             var current = this.get("selectedItem");
             if (current === this) {
@@ -32,7 +26,6 @@ KISSY.add("tree/check-tree", function (S, CheckNode, TreeManager) {
                 self.select();
             }
         }
-
     }, {
         ATTRS: {
             defaultChildCfg: {

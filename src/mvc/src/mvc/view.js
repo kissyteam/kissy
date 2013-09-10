@@ -14,10 +14,8 @@ KISSY.add("mvc/view", function (S, Node, Base) {
     }
 
     /**
-     * @name View
-     * @class
      * View for delegating event on root element.
-     * @member MVC
+     * @class KISSY.MVC.View
      * @extends KISSY.Base
      */
     return Base.extend({
@@ -79,13 +77,12 @@ KISSY.add("mvc/view", function (S, Node, Base) {
             /**
              * Get root element for current view instance.
              * @type {String}
-             * @example
-             * <code>
-             * //  selector :
-             * .xx
-             * // or html string
-             * <div>my</div>
-             * </code>
+             *
+             *
+             *      //  selector :
+             *      .xx
+             *      // or html string
+             *      <div>my</div>
              */
             el: {
                 value: "<div />",
@@ -101,14 +98,11 @@ KISSY.add("mvc/view", function (S, Node, Base) {
             /**
              * Delegate event on root element.
              * @type {Object}
-             * @example
-             * <code>
-             * events:{
-         *   selector:{
-         *     eventType:callback
-         *   }
-         * }
-             * </code>
+             *
+             *
+             *      selector:{
+             *          eventType:callback
+             *      }
              */
             events: {
 

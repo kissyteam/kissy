@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * strikeThrough button
  * @author yiminghe@gmail.com
  */

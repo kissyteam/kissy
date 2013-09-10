@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * elementPath represents element's tree path from body
+ * @author yiminghe@gmail.com
+ */
+/*
+ Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+ For licensing, see LICENSE.html or http://ckeditor.com/license
+ */
+KISSY.add(&quot;editor/elementPath&quot;, function (S,Editor) {
+    var Dom = S.DOM,
+        dtd = Editor.XHTML_DTD,
+        TRUE = true,
+        FALSE = false,
+        NULL = null,
+        // Elements that may be considered the &quot;Block boundary&quot; in an element path.
+        pathBlockElements = {
+            &quot;address&quot;:1,
+            &quot;blockquote&quot;:1,
+            &quot;dl&quot;:1,
+            &quot;h1&quot;:1,
+            &quot;h2&quot;:1,
+            &quot;h3&quot;:1,
+            &quot;h4&quot;:1,
+            &quot;h5&quot;:1,
+            &quot;h6&quot;:1,
+            &quot;p&quot;:1,
+            &quot;pre&quot;:1,
+            &quot;li&quot;:1,
+            &quot;dt&quot;:1,
+            &quot;dd&quot;:1
+        },
+        // Elements that may be considered the &quot;Block limit&quot; in an element path.
+        // 特别注意：不带 p 元素
+        pathBlockLimitElements = {
+            &quot;body&quot;:1,
+            &quot;div&quot;:1,
+            &quot;table&quot;:1,
+            &quot;tbody&quot;:1,
+            &quot;tr&quot;:1,
+            &quot;td&quot;:1,
+            &quot;th&quot;:1,
+            &quot;caption&quot;:1,
+            &quot;form&quot;:1
+        },
+        // Check if an element contains any block element.
+        checkHasBlock = function (element) {
+            var childNodes = element[0].childNodes;
+            for (var i = 0, count = childNodes.length; i &lt; count; i++) {
+                var child = childNodes[i];
+                if (child.nodeType == Dom.NodeType.ELEMENT_NODE
+                    &amp;&amp; dtd.$block[ child.nodeName.toLowerCase() ])
+                    return TRUE;
+            }
+            return FALSE;
+        };
+
+<span id='KISSY-Editor-ElementPath'>    /**
+</span>     * @class KISSY.Editor.ElementPath
+     * @param lastNode {KISSY.NodeList}
+     */
+    function ElementPath(lastNode) {
+        var self = this,
+            block = NULL,
+            blockLimit = NULL,
+            elements = [],
+            e = lastNode;
+
+        while (e) {
+            if (e[0].nodeType == Dom.NodeType.ELEMENT_NODE) {
+                if (!this.lastElement)
+                    this.lastElement = e;
+
+                var elementName = e.nodeName();
+
+                if (!blockLimit) {
+                    if (!block &amp;&amp; pathBlockElements[ elementName ]) {
+                        block = e;
+                    }
+                    if (pathBlockLimitElements[ elementName ]) {
+                        // DIV is considered the Block, if no block is available (#525)
+                        // and if it doesn't contain other blocks.
+                        if (!block &amp;&amp; elementName == 'div' &amp;&amp; !checkHasBlock(e))
+                            block = e;
+                        else
+                            blockLimit = e;
+                    }
+                }
+
+                elements.push(e);
+                if (elementName == 'body') {
+                    break;
+                }
+            }
+            e = e.parent();
+        }
+
+        self.block = block;
+        self.blockLimit = blockLimit;
+        self.elements = elements;
+    }
+
+    ElementPath.prototype = {
+        constructor:ElementPath,
+<span id='KISSY-Editor-ElementPath-method-compare'>        /**
+</span>         * Compares this element path with another one.
+         * @param otherPath ElementPath The elementPath object to be
+         * compared with this one.
+         * @return {Boolean} &quot;TRUE&quot; if the paths are equal, containing the same
+         * number of elements and the same elements in the same order.
+         */
+        compare:function (otherPath) {
+            var thisElements = this.elements;
+            var otherElements = otherPath &amp;&amp; otherPath.elements;
+
+            if (!otherElements || thisElements.length != otherElements.length)
+                return FALSE;
+
+            for (var i = 0; i &lt; thisElements.length; i++) {
+                if (!Dom.equals(thisElements[ i ], otherElements[ i ]))
+                    return FALSE;
+            }
+
+            return TRUE;
+        },
+
+        contains:function (tagNames) {
+            var elements = this.elements;
+            for (var i = 0; i &lt; elements.length; i++) {
+                if (elements[ i ].nodeName() in tagNames)
+                    return elements[ i ];
+            }
+            return NULL;
+        },
+        toString:function () {
+            var elements = this.elements, i, elNames = [];
+            for (i = 0; i &lt; elements.length; i++) {
+                elNames.push(elements[i].nodeName());
+            }
+            return elNames.toString();
+        }
+    };
+    Editor.ElementPath = ElementPath;
+
+    return ElementPath;
+}, {
+    requires:['./base', './dom','node']
+});
+</pre>
+</body>
+</html>

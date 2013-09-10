@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * bubble or tip view for kissy editor
  * @author yiminghe@gmail.com
  */
@@ -19,9 +20,8 @@ KISSY.add("editor/plugin/bubble", function (S, Overlay, Editor) {
         return t <= r && b >= r;
     }
 
-    /**
-     * 是否两个bubble上下重叠？
-     */
+
+    // 是否两个bubble上下重叠？
     function overlap(b1, b2) {
         var b1_top = b1.get("y"),
             b1_bottom = b1_top + b1.get("el").outerHeight(),
@@ -32,9 +32,8 @@ KISSY.add("editor/plugin/bubble", function (S, Overlay, Editor) {
             inRange(b1_top, b1_bottom, b2_top);
     }
 
-    /**
-     * 得到依附在同一个节点上的所有 bubble 中的最下面一个
-     */
+
+    // 得到依附在同一个节点上的所有 bubble 中的最下面一个
     function getTopPosition(self) {
         var archor = null,
             editor = self.get("editor"),

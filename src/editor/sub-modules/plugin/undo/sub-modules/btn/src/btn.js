@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * undo button
  * @author yiminghe@gmail.com
  */

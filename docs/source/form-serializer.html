@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * form data  serialization util
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('io/form-serializer', function (S, Dom) {
+    var rselectTextarea = /^(?:select|textarea)/i,
+        rCRLF = /\r?\n/g,
+        FormSerializer,
+        rinput = /^(?:color|date|datetime|email|hidden|month|number|password|range|search|tel|text|time|url|week)$/i;
+
+    function normalizeCRLF(v) {
+        return v.replace(rCRLF, '\r\n');
+    }
+
+    return FormSerializer = {
+<span id='KISSY-IO-static-method-serialize'>        /**
+</span>         * form serialization
+         * @method
+         * @param {HTMLElement[]|HTMLElement|KISSY.NodeList} forms form elements
+         * @return {String} serialized string represent form elements
+         * @param {Boolean}[serializeArray=false] See {@link KISSY#method-param} 同名参数
+         * @member KISSY.IO
+         * @static
+         */
+        serialize: function (forms, serializeArray) {
+            // 名值键值对序列化,数组元素名字前不加 []
+            return S.param(FormSerializer.getFormData(forms), undefined, undefined,
+                serializeArray || false);
+        },
+
+        getFormData: function (forms) {
+            var elements = [], data = {};
+            S.each(Dom.query(forms), function (el) {
+                // form 取其表单元素集合
+                // 其他直接取自身
+                var subs = el.elements ? S.makeArray(el.elements) : [el];
+                elements.push.apply(elements, subs);
+            });
+            // 对表单元素进行过滤，具备有效值的才保留
+            elements = S.filter(elements, function (el) {
+                // 有名字
+                return el.name &amp;&amp;
+                    // 不被禁用
+                    !el.disabled &amp;&amp;
+                    (
+                        // radio,checkbox 被选择了
+                        el.checked ||
+                            // select 或者 textarea
+                            rselectTextarea.test(el.nodeName) ||
+                            // input 类型
+                            rinput.test(el.type)
+                        );
+
+                // 这样子才取值
+            });
+            S.each(elements, function (el) {
+                var val = Dom.val(el), vs;
+
+                // &lt;select&gt;&lt;/select&gt; select nothing!
+                // #297
+                if (val === null) {
+                    return;
+                }
+
+                // 字符串换行平台归一化
+                if (S.isArray(val)) {
+                    val = S.map(val, normalizeCRLF);
+                } else {
+                    val = normalizeCRLF(val);
+                }
+
+                vs = data[el.name];
+                if (!vs) {
+                    data[el.name] = val;
+                    return;
+                }
+                if (vs &amp;&amp; !S.isArray(vs)) {
+                    // 多个元素重名时搞成数组
+                    vs = data[el.name] = [vs];
+                }
+                vs.push.apply(vs, S.makeArray(val));
+            });
+            return data;
+        }
+    };
+}, {
+    requires: ['dom']
+});</pre>
+</body>
+</html>

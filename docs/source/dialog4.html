@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * flash dialog
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(&quot;editor/plugin/flash/dialog&quot;, function (S, Editor, flashUtils, Dialog4E, MenuButton) {
+    var CLS_FLASH = 'ke_flash',
+        TYPE_FLASH = 'flash',
+        TIP = &quot;请输入如 http://www.xxx.com/xxx.swf&quot;,
+        bodyHTML = &quot;&lt;div style='padding:20px 20px 0 20px'&gt;&quot; +
+            &quot;&lt;p&gt;&quot; +
+            &quot;&lt;label&gt;网址： &quot; +
+            &quot;&lt;input &quot; +
+            &quot; data-verify='^https?://[^\\s]+$' &quot; +
+            &quot; data-warning='网址格式为：http://' &quot; +
+            &quot;class='{prefixCls}editor-flash-url {prefixCls}editor-input' style='width:300px;&quot; +
+            &quot;' /&gt;&quot; +
+            &quot;&lt;/label&gt;&quot; +
+            &quot;&lt;/p&gt;&quot; +
+            &quot;&lt;table style='margin:10px 0 5px  40px;width:300px;'&gt;&quot; +
+            &quot;&lt;tr&gt;&quot; +
+            &quot;&lt;td&gt;&quot; +
+            &quot;&lt;label&gt;宽度： &quot; +
+            &quot;&lt;input &quot; +
+            &quot; data-verify='^(?!0$)\\d+$' &quot; +
+            &quot; data-warning='宽度请输入正整数' &quot; +
+            &quot;class='{prefixCls}editor-flash-width {prefixCls}editor-input' style='width:60px;&quot; +
+            &quot;' /&gt; 像素 &lt;/label&gt;&quot; +
+            &quot;&lt;/td&gt;&quot; +
+            &quot;&lt;td&gt;&quot; +
+            &quot;&lt;label&gt;高度： &quot; +
+            &quot;&lt;input &quot; +
+            &quot; data-verify='^(?!0$)\\d+$' &quot; +
+            &quot; data-warning='高度请输入正整数' &quot; +
+            &quot;class='{prefixCls}editor-flash-height {prefixCls}editor-input' &quot; +
+            &quot;style='width:60px;&quot; +
+            &quot;' /&gt; 像素 &quot; +
+            &quot;&lt;/label&gt;&quot; +
+            &quot;&lt;/td&gt;&quot; +
+            &quot;&lt;/tr&gt;&quot; +
+            &quot;&lt;tr&gt;&quot; +
+            &quot;&lt;td&gt;&quot; +
+            &quot;&lt;label&gt;&quot; +
+            &quot;对齐： &quot; +
+            &quot;&lt;/label&gt;&quot; +
+            &quot;&lt;select class='{prefixCls}editor-flash-align' title='对齐'&gt;&quot; +
+            &quot;&lt;option value='none'&gt;无&lt;/option&gt;&quot; +
+            &quot;&lt;option value='left'&gt;左对齐&lt;/option&gt;&quot; +
+            &quot;&lt;option value='right'&gt;右对齐&lt;/option&gt;&quot; +
+            &quot;&lt;/select&gt;&quot; +
+            &quot;&lt;/td&gt;&quot; +
+            &quot;&lt;td&gt;&quot; +
+            &quot;&lt;label&gt;间距： &quot; +
+            &quot;&lt;/label&gt;&quot; +
+            &quot;&lt;input &quot; +
+            &quot; data-verify='^\\d+$' &quot; +
+            &quot; data-warning='间距请输入非负整数' &quot;
+            + &quot;class='{prefixCls}editor-flash-margin {prefixCls}editor-input' &quot; +
+            &quot;style='width:60px;&quot; +
+            &quot;' value='&quot;
+            + 5 + &quot;'/&gt; 像素&quot; +
+            &quot;&lt;/td&gt;&lt;/tr&gt;&quot; +
+            &quot;&lt;/table&gt;&quot; +
+            &quot;&lt;/div&gt;&quot;,
+        footHTML = &quot;&lt;div style='padding:10px 0 35px 20px;'&gt;&quot; +
+            &quot;&lt;a &quot; +
+            &quot;class='{prefixCls}editor-flash-ok {prefixCls}editor-button ks-inline-block' &quot; +
+            &quot;style='margin-left:40px;margin-right:20px;'&gt;确定&lt;/a&gt; &quot; +
+            &quot;&lt;a class='{prefixCls}editor-flash-cancel {prefixCls}editor-button ks-inline-block'&gt;取消&lt;/a&gt;&lt;/div&gt;&quot;;
+
+
+    function FlashDialog(editor, config) {
+        var self = this;
+        self.editor = editor;
+        self.config = config || {};
+        Editor.Utils.lazyRun(self, &quot;_prepareShow&quot;, &quot;_realShow&quot;);
+        self._config();
+    }
+
+    S.augment(FlashDialog, {
+        addRes: Editor.Utils.addRes,
+        destroyRes: Editor.Utils.destroyRes,
+        _config: function () {
+            var self = this,
+                editor = self.editor,
+                prefixCls = editor.get('prefixCls');
+            self._urlTip = TIP;
+            self._type = TYPE_FLASH;
+            self._cls = CLS_FLASH;
+            self._config_dwidth = &quot;400px&quot;;
+            self._title = &quot;Flash&quot;;//属性&quot;;
+            self._bodyHTML = S.substitute(bodyHTML, {
+                prefixCls: prefixCls
+            });
+            self._footHTML = S.substitute(footHTML, {
+                prefixCls: prefixCls
+            });
+        },
+        //建立弹出窗口
+        _prepareShow: function () {
+            var self = this;
+            self.dialog = new Dialog4E({
+                headerContent: self._title,
+                bodyContent: self._bodyHTML,
+                footerContent: self._footHTML,
+                width: self._config_dwidth || &quot;500px&quot;,
+                mask: true
+            }).render();
+            self.addRes(self.dialog);
+            self._initD();
+        },
+
+        _realShow: function () {
+            //显示前就要内容搞好
+            this._updateD();
+            this.dialog.show();
+        },
+
+        // 子类覆盖，如何从flash url得到合适的应用表示地址
+        _getFlashUrl: function (r) {
+            return flashUtils.getUrl(r);
+        },
+
+        // 触发前初始化窗口 field，子类覆盖
+        _updateD: function () {
+            var self = this,
+                editor = self.editor,
+                cfg = self.config,
+                f = self.selectedFlash;
+            if (f) {
+                var r = editor.restoreRealElement(f);
+                if (!r) {
+                    return;
+                }
+                if (f.css(&quot;width&quot;)) {
+                    self.dWidth.val(parseInt(f.css(&quot;width&quot;)));
+                }
+                if (f.css(&quot;height&quot;)) {
+                    self.dHeight.val(parseInt(f.css(&quot;height&quot;)));
+                }
+                self.dAlign.set(&quot;value&quot;, f.css(&quot;float&quot;));
+                Editor.Utils.valInput(self.dUrl, self._getFlashUrl(r));
+                self.dMargin.val(parseInt(r.style(&quot;margin&quot;)) || 0);
+            } else {
+                Editor.Utils.resetInput(self.dUrl);
+                self.dWidth.val(cfg['defaultWidth'] || &quot;&quot;);
+                self.dHeight.val(cfg['defaultHeight'] || &quot;&quot;);
+                self.dAlign.set(&quot;value&quot;, &quot;none&quot;);
+                self.dMargin.val(&quot;5&quot;);
+            }
+        },
+        show: function (_selectedEl) {
+            var self = this;
+            self.selectedFlash = _selectedEl;
+            self._prepareShow();
+        },
+
+
+        // 映射窗口field，子类覆盖
+        _initD: function () {
+            var self = this,
+                d = self.dialog,
+                editor = self.editor,
+                prefixCls = editor.get('prefixCls'),
+                el = d.get(&quot;el&quot;);
+            self.dHeight = el.one(&quot;.&quot; + prefixCls + &quot;editor-flash-height&quot;);
+            self.dWidth = el.one(&quot;.&quot; + prefixCls + &quot;editor-flash-width&quot;);
+            self.dUrl = el.one(&quot;.&quot; + prefixCls + &quot;editor-flash-url&quot;);
+            self.dAlign = MenuButton.Select.decorate(el.one(&quot;.&quot; + prefixCls +
+                &quot;editor-flash-align&quot;), {
+                prefixCls: prefixCls + 'editor-big-',
+                width: 80,
+                menuCfg: {
+                    prefixCls: prefixCls + 'editor-',
+                    render: el
+                }
+            });
+            self.dMargin = el.one(&quot;.&quot; + prefixCls + &quot;editor-flash-margin&quot;);
+            var action = el.one(&quot;.&quot; + prefixCls + &quot;editor-flash-ok&quot;),
+                cancel = el.one(&quot;.&quot; + prefixCls + &quot;editor-flash-cancel&quot;);
+            action.on(&quot;click&quot;, self._gen, self);
+            cancel.on(&quot;click&quot;, function (ev) {
+                d.hide();
+                ev &amp;&amp; ev.halt();
+            });
+
+            Editor.Utils.placeholder(self.dUrl, self._urlTip);
+            self.addRes(self.dAlign);
+        },
+
+
+        // 应用子类覆盖，提供 flash 元素的相关信息
+        _getDInfo: function () {
+            var self = this;
+            return {
+                url: self.dUrl.val(),
+                attrs: {
+                    width: self.dWidth.val(),
+                    height: self.dHeight.val(),
+                    style: &quot;margin:&quot; +
+                        (parseInt(self.dMargin.val()) || 0) +
+                        &quot;px;&quot; +
+                        &quot;float:&quot; + self.dAlign.get(&quot;value&quot;) + &quot;;&quot;
+                }
+            };
+        },
+
+
+        // 真正产生 flash 元素
+        _gen: function (ev) {
+            ev &amp;&amp; ev.halt();
+            var self = this,
+                editor = self.editor,
+                dinfo = self._getDInfo(),
+                url = dinfo &amp;&amp; S.trim(dinfo.url),
+                attrs = dinfo &amp;&amp; dinfo.attrs;
+            if (!dinfo) {
+                return;
+            }
+            var re = Editor.Utils.verifyInputs(self.dialog.get(&quot;el&quot;).all(&quot;input&quot;));
+            if (!re) {
+                return;
+            }
+            self.dialog.hide();
+            var substitute = flashUtils.insertFlash(editor, url, attrs, self._cls, self._type);
+            //如果是修改，就再选中
+            if (self.selectedFlash) {
+                editor.getSelection()
+                    .selectElement(substitute);
+            }
+            editor.notifySelectionChange();
+        },
+
+        destroy: function () {
+            this.destroyRes();
+        }
+    });
+
+    return FlashDialog;
+}, {
+    requires: ['editor', '../flash-common/utils', '../dialog', '../menubutton']
+});</pre>
+</body>
+</html>

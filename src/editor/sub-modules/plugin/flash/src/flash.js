@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * Add flash plugin.
  * @author yiminghe@gmail.com
  */

@@ -4,7 +4,6 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/dom/base/object', function (S, BaseEvent, undefined) {
-
     var DOCUMENT = S.Env.host.document,
         TRUE = true,
         FALSE = false,
@@ -89,6 +88,7 @@ KISSY.add('event/dom/base/object', function (S, BaseEvent, undefined) {
                         /**
                          * deltaX of mousewheel event
                          * @property deltaX
+                         * @member KISSY.Event.DomEventObject
                          */
                         event.deltaX = deltaX;
                     }
@@ -97,6 +97,7 @@ KISSY.add('event/dom/base/object', function (S, BaseEvent, undefined) {
                         /**
                          * deltaY of mousewheel event
                          * @property deltaY
+                         * @member KISSY.Event.DomEventObject
                          */
                         event.deltaY = deltaY;
                     }
@@ -105,6 +106,7 @@ KISSY.add('event/dom/base/object', function (S, BaseEvent, undefined) {
                         /**
                          * delta of mousewheel event
                          * @property delta
+                         * @member KISSY.Event.DomEventObject
                          */
                         event.delta = delta;
                     }

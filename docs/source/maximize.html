@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * Maximize plugin
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(&quot;editor/plugin/maximize&quot;, function (S, Editor, maximizeCmd) {
+    var MAXIMIZE_CLASS = &quot;maximize&quot;,
+        RESTORE_CLASS = &quot;restore&quot;,
+        MAXIMIZE_TIP = &quot;全屏&quot;,
+        RESTORE_TIP = &quot;取消全屏&quot;;
+
+    function maximizePlugin() {
+
+    }
+
+    S.augment(maximizePlugin, {
+        pluginRenderUI:function (editor) {
+            maximizeCmd.init(editor);
+            editor.addButton(&quot;maximize&quot;, {
+                tooltip:MAXIMIZE_TIP,
+                listeners:{
+                    click:function () {
+                        var self = this;
+                        var checked = self.get(&quot;checked&quot;);
+                        if (checked) {
+                            editor.execCommand(&quot;maximizeWindow&quot;);
+                            self.set(&quot;tooltip&quot;, RESTORE_TIP);
+                            self.set(&quot;contentCls&quot;, RESTORE_CLASS);
+                        } else {
+                            editor.execCommand(&quot;restoreWindow&quot;);
+                            self.set(&quot;tooltip&quot;, MAXIMIZE_TIP);
+                            self.set(&quot;contentCls&quot;, MAXIMIZE_CLASS);
+                        }
+
+                        editor.focus();
+                    }
+
+                },
+                checkable:true
+            });
+        }
+    });
+
+    return maximizePlugin;
+}, {
+    requires:['editor', './maximize/cmd']
+});</pre>
+</body>
+</html>

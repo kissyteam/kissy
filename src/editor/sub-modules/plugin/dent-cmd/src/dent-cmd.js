@@ -1,5 +1,6 @@
 /**
- * Add indent and outdent command identifier for KISSY Editor.Modified from CKEditor
+ * @ignore
+ * Add indent and outdent command identifier for KISSY Editor.
  * @author yiminghe@gmail.com
  */
 /*

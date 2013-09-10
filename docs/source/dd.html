@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * dd support for kissy
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('dd', function (S, DDM, Draggable, DraggableDelegate, Droppable, DroppableDelegate) {
+
+    var DD = {
+        Draggable: Draggable,
+        DDM: DDM,
+        Droppable: Droppable,
+        DroppableDelegate: DroppableDelegate,
+        DraggableDelegate: DraggableDelegate
+    };
+
+    KISSY.DD = DD;
+
+    return DD;
+}, {
+    requires: [
+        'dd/ddm',
+        'dd/draggable',
+        'dd/draggable-delegate',
+        'dd/droppable',
+        'dd/droppable-delegate'
+    ]
+});</pre>
+</body>
+</html>

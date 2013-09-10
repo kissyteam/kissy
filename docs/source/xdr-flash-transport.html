@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * use flash to accomplish cross domain request, usage scenario ? why not jsonp ?
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('io/xdr-flash-transport', function (S, IO, Dom) {
+    var // current running request instances
+        maps = {},
+        logger= S.getLogger('s/io'),
+        ID = 'io_swf',
+    // flash transporter
+        flash,
+        doc = S.Env.host.document,
+    // whether create the flash transporter
+        init = false;
+
+    // create the flash transporter
+    function _swf(uri, _, uid) {
+        if (init) {
+            return;
+        }
+        init = true;
+        var o = '&lt;object id=&quot;' + ID +
+                '&quot; type=&quot;application/x-shockwave-flash&quot; data=&quot;' +
+                uri + '&quot; width=&quot;0&quot; height=&quot;0&quot;&gt;' +
+                '&lt;param name=&quot;movie&quot; value=&quot;' +
+                uri + '&quot; /&gt;' +
+                '&lt;param name=&quot;FlashVars&quot; value=&quot;yid=' +
+                _ + '&amp;uid=' +
+                uid +
+                '&amp;host=KISSY.IO&quot; /&gt;' +
+                '&lt;param name=&quot;allowScriptAccess&quot; value=&quot;always&quot; /&gt;' +
+                '&lt;/object&gt;',
+            c = doc.createElement('div');
+        Dom.prepend(c, doc.body || doc.documentElement);
+        c.innerHTML = o;
+    }
+
+    function XdrFlashTransport(io) {
+        logger.info('use XdrFlashTransport for: ' + io.config.url);
+        this.io = io;
+    }
+
+    S.augment(XdrFlashTransport, {
+        // rewrite send to support flash xdr
+        send: function () {
+            var self = this,
+                io = self.io,
+                c = io.config,
+                xdr = c['xdr'] || {};
+            // 不提供则使用 cdn 默认的 flash
+            _swf(xdr.src || (S.Config.base + 'io/assets/io.swf'), 1, 1);
+            // 简便起见，用轮训
+            if (!flash) {
+                setTimeout(function () {
+                    self.send();
+                }, 200);
+                return;
+            }
+            self._uid = S.guid();
+            maps[self._uid] = self;
+
+            // ie67 send 出错？
+            flash.send(io._getUrlForSend(), {
+                id: self._uid,
+                uid: self._uid,
+                method: c.type,
+                data: c.hasContent &amp;&amp; c.data || {}
+            });
+        },
+
+        abort: function () {
+            flash.abort(this._uid);
+        },
+
+        _xdrResponse: function (e, o) {
+            var self = this,
+                ret,
+                id = o.id,
+                responseText,
+                c = o.c,
+                io = self.io;
+
+            // need decodeURI to get real value from flash returned value
+            if (c &amp;&amp; (responseText = c.responseText)) {
+                io.responseText = decodeURI(responseText);
+            }
+
+            switch (e) {
+                case 'success':
+                    ret = { status: 200, statusText: 'success' };
+                    delete maps[id];
+                    break;
+                case 'abort':
+                    delete maps[id];
+                    break;
+                case 'timeout':
+                case 'transport error':
+                case 'failure':
+                    delete maps[id];
+                    ret = {
+                        status: 'status' in c ? c.status : 500,
+                        statusText: c.statusText || e
+                    };
+                    break;
+            }
+            if (ret) {
+                io._ioReady(ret.status, ret.statusText);
+            }
+        }
+    });
+
+    /*called by flash*/
+    IO['applyTo'] = function (_, cmd, args) {
+        var cmds = cmd.split('.').slice(1),
+            func = IO;
+        S.each(cmds, function (c) {
+            func = func[c];
+        });
+        func.apply(null, args);
+    };
+
+    // when flash is loaded
+    IO['xdrReady'] = function () {
+        flash = doc.getElementById(ID);
+    };
+
+    /*
+     when response is returned from server
+     @param e response status
+     @param o internal data
+     */
+    IO['xdrResponse'] = function (e, o) {
+        var xhr = maps[o.uid];
+        xhr &amp;&amp; xhr._xdrResponse(e, o);
+    };
+
+    return XdrFlashTransport;
+}, {
+    requires: ['./base', 'dom']
+});</pre>
+</body>
+</html>

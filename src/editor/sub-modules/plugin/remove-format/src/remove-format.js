@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * removeFormat for selection.
  * @author yiminghe@gmail.com
  */

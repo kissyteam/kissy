@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * BaseClass for Flash Based plugin.
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(&quot;editor/plugin/flash-common/base-class&quot;, function (S, Editor, Base, ContextMenu, Bubble, DialogLoader, flashUtils) {
+    var Node = S.Node;
+
+    var tipHTML = ' &lt;a ' +
+        'class=&quot;{prefixCls}editor-bubble-url&quot; ' +
+        'target=&quot;_blank&quot; ' +
+        'href=&quot;#&quot;&gt;{label}&lt;/a&gt;   |   '
+        + ' &lt;span class=&quot;{prefixCls}editor-bubble-link {prefixCls}editor-bubble-change&quot;&gt;编辑&lt;/span&gt;   |   '
+        + ' &lt;span class=&quot;{prefixCls}editor-bubble-link {prefixCls}editor-bubble-remove&quot;&gt;删除&lt;/span&gt;';
+
+    return Base.extend({
+        initializer: function () {
+            var self = this,
+                cls = self.get(&quot;cls&quot;),
+                editor = self.get(&quot;editor&quot;),
+                prefixCls = editor.get('prefixCls'),
+                children = [],
+                bubbleId = self.get(&quot;bubbleId&quot;),
+                contextMenuId = self.get(&quot;contextMenuId&quot;),
+                contextMenuHandlers = self.get(&quot;contextMenuHandlers&quot;);
+
+            S.each(contextMenuHandlers, function (h, content) {
+                children.push({
+                    content: content
+                })
+            });
+
+            editor.addContextMenu(contextMenuId, &quot;.&quot; + cls, {
+                width: &quot;120px&quot;,
+                children: children,
+                listeners: {
+                    click: function (e) {
+                        var content = e.target.get(&quot;content&quot;);
+                        if (contextMenuHandlers[content]) {
+                            contextMenuHandlers[content].call(this);
+                        }
+                    }
+                }
+            });
+
+            editor.addBubble(bubbleId, function (el) {
+                return el.hasClass(cls, undefined) &amp;&amp; el;
+            }, {
+                listeners: {
+                    afterRenderUI:// 注册泡泡，selectionChange时检测
+                        function () {
+                            var bubble = this,
+                                el = bubble.get(&quot;contentEl&quot;);
+                            el.html(S.substitute(tipHTML, {
+                                label: self.get(&quot;label&quot;),
+                                prefixCls: prefixCls
+                            }));
+                            var tipUrlEl = el.one(&quot;.&quot; + prefixCls + &quot;editor-bubble-url&quot;),
+                                tipChangeEl = el.one(&quot;.&quot; + prefixCls + &quot;editor-bubble-change&quot;),
+                                tipRemoveEl = el.one(&quot;.&quot; + prefixCls + &quot;editor-bubble-remove&quot;);
+
+                            // ie focus not lose
+                            Editor.Utils.preventFocus(el);
+
+                            tipChangeEl.on(&quot;click&quot;, function (ev) {
+                                // 回调show，传入选中元素
+                                self.show(bubble.get(&quot;editorSelectedEl&quot;));
+                                ev.halt();
+                            });
+
+                            tipRemoveEl.on(&quot;click&quot;, function (ev) {
+                                // chrome remove 后会没有焦点
+                                if (S.UA['webkit']) {
+                                    var r = editor.getSelection().getRanges(),
+                                        r0 = r &amp;&amp; r[0];
+                                    if (r0) {
+                                        r0.collapse(true);
+                                        r0.select();
+                                    }
+                                }
+                                bubble.get(&quot;editorSelectedEl&quot;).remove();
+                                bubble.hide();
+                                editor.notifySelectionChange();
+                                ev.halt();
+                            });
+
+                            /*
+                             位置变化，在显示前就设置内容，防止ie6 iframe遮罩不能正确大小
+                             */
+                            bubble.on(&quot;show&quot;, function () {
+                                var a = bubble.get(&quot;editorSelectedEl&quot;);
+                                if (a) {
+                                    self._updateTip(tipUrlEl, a);
+                                }
+                            });
+                        }
+                }
+            });
+
+
+            editor.docReady(function () {
+                //注册双击，双击时检测
+                editor.get(&quot;document&quot;).on(&quot;dblclick&quot;, self._dbClick, self);
+            });
+        },
+
+        _getFlashUrl: function (r) {
+            return flashUtils.getUrl(r);
+        },
+
+        // 更新泡泡弹出的界面，子类覆盖
+        _updateTip: function (tipUrlElEl, selectedFlash) {
+            var self = this,
+                editor = self.get(&quot;editor&quot;),
+                r = editor.restoreRealElement(selectedFlash);
+            if (!r) {
+                return;
+            }
+            var url = self._getFlashUrl(r);
+            tipUrlElEl.attr(&quot;href&quot;, url);
+        },
+
+        //根据图片标志触发本插件应用
+        _dbClick: function (ev) {
+            var self = this,
+                t = new Node(ev.target);
+            if (t.nodeName() === &quot;img&quot; &amp;&amp; t.hasClass(self.get(&quot;cls&quot;), undefined)) {
+                self.show(t);
+                ev.halt();
+            }
+        },
+
+        show: function (selectedEl) {
+            var self = this,
+                editor = self.get(&quot;editor&quot;);
+            DialogLoader.useDialog(editor, self.get(&quot;type&quot;),
+                self.get(&quot;pluginConfig&quot;),
+                selectedEl);
+        }
+    }, {
+        ATTRS: {
+            cls: {},
+            type: {},
+            label: {
+                value: &quot;在新窗口查看&quot;
+            },
+            bubbleId: {},
+            contextMenuId: {},
+            contextMenuHandlers: {}
+        }
+    });
+}, {
+    requires: ['editor',
+        'base' ,
+        '../contextmenu',
+        '../bubble', '../dialog-loader', './utils']
+});</pre>
+</body>
+</html>

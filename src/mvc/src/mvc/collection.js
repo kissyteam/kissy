@@ -19,15 +19,13 @@ KISSY.add("mvc/collection", function (S, Model, Base) {
     }
 
     /**
-     * @name Collection
-     * @class
      * Collection. A list of model.
-     * @member MVC
+     * @class KISSY.MVC.Collection
      * @extends KISSY.Base
      */
     return Base.extend({
         /**
-         * Sort model list according {@link MVC.Collection#comparator}.
+         * Sort model list according {@link KISSY.MVC.Collection#comparator}.
          */
         sort: function () {
             var comparator = this.get("comparator");
@@ -50,7 +48,7 @@ KISSY.add("mvc/collection", function (S, Model, Base) {
 
         /**
          * Add a model to current collection.
-         * @param {Object|MVC.Model} model Model or json data to be added.
+         * @param {Object|KISSY.MVC.Model} model Model or json data to be added.
          * @param {Object} [opts] Add config
          * @param {Function} opts.silent Whether to fire add event.
          */
@@ -71,7 +69,7 @@ KISSY.add("mvc/collection", function (S, Model, Base) {
 
         /**
          * Remove an existing model from current collection.
-         * @param {MVC.Model} model Model to be removed.
+         * @param {KISSY.MVC.Model} model Model to be removed.
          * @param {Object} [opts] Remove config.
          * @param {Function} opts.silent Whether to fire remove event.
          */
@@ -233,14 +231,14 @@ KISSY.add("mvc/collection", function (S, Model, Base) {
         ATTRS: {
             /**
              * Model constructor with in current collection.
-             * @type {MVC.Model}
+             * @type {KISSY.MVC.Model}
              */
             model: {
                 value: Model
             },
             /**
              * Model list.
-             * @type {MVC.Model[]}
+             * @type {KISSY.MVC.Model[]}
              */
             models: {
                 /*
@@ -270,7 +268,7 @@ KISSY.add("mvc/collection", function (S, Model, Base) {
             comparator: {},
             /**
              * Sync function to sync data with server.
-             * Default to call {@link MVC.sync}
+             * Default to call {@link KISSY.MVC.sync}
              * @type {Function}
              */
             sync: {

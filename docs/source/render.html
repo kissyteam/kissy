@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * abstract view for button
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(&quot;button/render&quot;, function (S, Control) {
+    // http://www.w3.org/TR/wai-aria-practices/
+    return Control.getDefaultRender().extend({
+        beforeCreateDom: function (renderData) {
+            var self = this;
+            S.mix(renderData.elAttrs, {
+                role: 'button',
+                title: renderData.tooltip,
+                'aria-describedby': renderData.describedby
+            });
+            if (renderData.checked) {
+                renderData.elCls.push(self.getBaseCssClasses(&quot;checked&quot;));
+            }
+        },
+        _onSetChecked: function (v) {
+            var self = this,
+                cls = self.getBaseCssClasses(&quot;checked&quot;);
+            self.$el[v ? 'addClass' : 'removeClass'](cls);
+        },
+        '_onSetTooltip': function (title) {
+            this.el.setAttribute(&quot;title&quot;, title);
+        },
+        '_onSetDescribedby': function (describedby) {
+            this.el.setAttribute(&quot;aria-describedby&quot;, describedby);
+        }
+    }, {
+        name: 'ButtonRender'
+    });
+}, {
+    requires: ['component/control']
+});</pre>
+</body>
+</html>

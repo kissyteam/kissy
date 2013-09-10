@@ -761,7 +761,7 @@ function visit209_26_1(result) {
 KISSY.add("editor/domIterator", function(S, Editor) {
   _$jscoverage['/editor/domIterator.js'].functionData[0]++;
   _$jscoverage['/editor/domIterator.js'].lineData[10]++;
-  var TRUE = true, FALSE = false, NULL = null, UA = S.UA, Walker = Editor.Walker, KERange = Editor.Range, KER = Editor.RANGE, ElementPath = Editor.ElementPath, Node = S.Node, Dom = S.DOM;
+  var TRUE = true, FALSE = false, NULL = null, UA = S.UA, Walker = Editor.Walker, KERange = Editor.Range, KER = Editor.RangeType, ElementPath = Editor.ElementPath, Node = S.Node, Dom = S.DOM;
   _$jscoverage['/editor/domIterator.js'].lineData[25]++;
   function Iterator(range) {
     _$jscoverage['/editor/domIterator.js'].functionData[1]++;

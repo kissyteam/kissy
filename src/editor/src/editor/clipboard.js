@@ -1,6 +1,6 @@
 /**
+ * @ignore
  * monitor user's paste behavior.
- * modified from CKEditor.
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/clipboard", function (S, Editor, KERange, KES) {
@@ -8,7 +8,7 @@ KISSY.add("editor/clipboard", function (S, Editor, KERange, KES) {
         UA = S.UA,
         logger= S.getLogger('s/editor'),
         pasteEvent = UA.ie ? 'beforepaste' : 'paste',
-        KER = Editor.RANGE;
+        KER = Editor.RangeType;
 
     function Paste(editor) {
         var self = this;
@@ -456,9 +456,8 @@ KISSY.add("editor/clipboard", function (S, Editor, KERange, KES) {
             };
             var clipboardCommandsList = ["copy", "cut", "paste"];
 
-            /**
-             * 给所有右键都加入复制粘贴
-             */
+
+            // 给所有右键都加入复制粘贴
             editor.on("contextmenu", function (ev) {
                 var contextmenu = ev.contextmenu;
 
@@ -519,6 +518,7 @@ KISSY.add("editor/clipboard", function (S, Editor, KERange, KES) {
     requires: ['./base', './range', './selection', 'node']
 });
 /**
+ * @ignore
  * yiminghe@gmail.com note:
  *
  * 1. chrome/ff 只会触发 paste 且不可阻止默认黏贴行为(ff 可以)

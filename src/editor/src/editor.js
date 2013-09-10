@@ -1,6 +1,6 @@
 /**
- * New Editor For KISSY
- * @preserve thanks to CKSource's intelligent work on CKEditor
+ * @ignore
+ * Editor For KISSY Based on CKEditor Core.
  * @author yiminghe@gmail.com
  */
 KISSY.add('editor', function (S, Node, iframeContentTpl, Editor, Utils, focusManager, Styles, zIndexManger, clipboard, enterKey, htmlDataProcessor, selectionFix) {
@@ -88,10 +88,8 @@ KISSY.add('editor', function (S, Node, iframeContentTpl, Editor, Utils, focusMan
             });
         },
 
-        /**
-         * 高度不在 el 上设置，设置 iframeWrap 以及 textarea（for ie）.
-         * width 依然在 el 上设置
-         */
+
+         // 高度不在 el 上设置，设置 iframeWrap 以及 textarea（for ie）. width 依然在 el 上设置
         _onSetHeight: function (v) {
             var self = this,
                 textareaEl = self.get('textarea'),
@@ -190,6 +188,7 @@ KISSY.add('editor', function (S, Node, iframeContentTpl, Editor, Utils, focusMan
 
         /**
          * Retrieve control by id.
+         * @member KISSY.Editor
          */
         getControl: function (id) {
             return this.__controls[id];
@@ -197,7 +196,7 @@ KISSY.add('editor', function (S, Node, iframeContentTpl, Editor, Utils, focusMan
 
         /**
          * Retrieve all controls.
-         * @return {*}
+         * @member KISSY.Editor
          */
         getControls: function () {
             return this.__controls;
@@ -205,6 +204,7 @@ KISSY.add('editor', function (S, Node, iframeContentTpl, Editor, Utils, focusMan
 
         /**
          * Register a control to editor by id.
+         * @member KISSY.Editor
          * @private
          */
         addControl: function (id, control) {
@@ -215,6 +215,7 @@ KISSY.add('editor', function (S, Node, iframeContentTpl, Editor, Utils, focusMan
          * Show dialog
          * @param {String} name Dialog name
          * @param args Arguments passed to show
+         * @member KISSY.Editor
          */
         showDialog: function (name, args) {
             name += '/dialog';
@@ -232,6 +233,7 @@ KISSY.add('editor', function (S, Node, iframeContentTpl, Editor, Utils, focusMan
          * Add a command object to current editor.
          * @param name {string} Command name.
          * @param obj {Object} Command object.
+         * @member KISSY.Editor
          */
         addCommand: function (name, obj) {
             this.__commands[name] = obj;
@@ -240,6 +242,7 @@ KISSY.add('editor', function (S, Node, iframeContentTpl, Editor, Utils, focusMan
         /**
          * Whether current editor has specified command instance.
          * @param name {string}
+         * @member KISSY.Editor
          */
         hasCommand: function (name) {
             return this.__commands[name];
@@ -249,6 +252,7 @@ KISSY.add('editor', function (S, Node, iframeContentTpl, Editor, Utils, focusMan
          * Whether current editor has specified command.
          * Refer: https://developer.mozilla.org/en/Rich-Text_Editing_in_Mozilla
          * @param name {string} Command name.
+         * @member KISSY.Editor
          */
         execCommand: function (name) {
             var self = this,
@@ -267,12 +271,19 @@ KISSY.add('editor', function (S, Node, iframeContentTpl, Editor, Utils, focusMan
         /**
          * Return editor's value corresponding to command name.
          * @param {String} name Command name.
-         * @return {*}
+         * @member KISSY.Editor
          */
         queryCommandValue: function (name) {
             return this.execCommand(Utils.getQueryCmd(name));
         },
 
+        /**
+         * get html content of editor body.
+         * @member KISSY.Editor
+         * @param {Boolean} format internal use
+         * @param mode for internal use
+         * @returns {String} html content of editor.
+         */
         getData: function (format, mode) {
             var self = this,
                 htmlDataProcessor = self.htmlDataProcessor,
@@ -301,12 +312,19 @@ KISSY.add('editor', function (S, Node, iframeContentTpl, Editor, Utils, focusMan
             return html;
         },
 
+        /**
+         * get formatted html content of editor body.
+         * @member KISSY.Editor
+         * @param mode for internal use
+         * @returns {String} html content of editor.
+         */
         getFormatData: function (mode) {
             return this.getData(1, mode);
         },
 
         /**
          * Get full html content of editor 's iframe.
+         * @member KISSY.Editor
          */
         getDocHtml: function () {
             var self = this;
@@ -316,6 +334,7 @@ KISSY.add('editor', function (S, Node, iframeContentTpl, Editor, Utils, focusMan
 
         /**
          * Get selection instance of current editor.
+         * @member KISSY.Editor
          */
         getSelection: function () {
             return Editor.Selection.getSelection(this.get('document')[0]);
@@ -323,13 +342,14 @@ KISSY.add('editor', function (S, Node, iframeContentTpl, Editor, Utils, focusMan
 
         /**
          * Get selected html content of current editor
-         * @return {undefined|String}
+         * @member KISSY.Editor
+         * @return {String}
          */
         'getSelectedHtml': function () {
             var self = this,
                 range = self.getSelection().getRanges()[0],
                 contents,
-                html;
+                html='';
             if (range) {
                 contents = range.cloneContents();
                 html = self.get('document')[0].createElement('div');
@@ -341,6 +361,7 @@ KISSY.add('editor', function (S, Node, iframeContentTpl, Editor, Utils, focusMan
 
         /**
          * Make current editor has focus
+         * @member KISSY.Editor
          */
         focus: function () {
             var self = this,
@@ -371,6 +392,7 @@ KISSY.add('editor', function (S, Node, iframeContentTpl, Editor, Utils, focusMan
 
         /**
          * Make current editor lose focus
+         * @member KISSY.Editor
          */
         blur: function () {
             var self = this,
@@ -382,7 +404,8 @@ KISSY.add('editor', function (S, Node, iframeContentTpl, Editor, Utils, focusMan
         /**
          * Add style text to current editor
          * @param {String} cssText
-         * @param {String} id
+         * @param {String} id style id
+         * @member KISSY.Editor
          */
         addCustomStyle: function (cssText, id) {
             var self = this,
@@ -397,7 +420,8 @@ KISSY.add('editor', function (S, Node, iframeContentTpl, Editor, Utils, focusMan
 
         /**
          * Remove style text with specified id from current editor
-         * @param id
+         * @param id style id
+         * @member KISSY.Editor
          */
         removeCustomStyle: function (id) {
             this.get('document').on('#' + id).remove();
@@ -406,6 +430,7 @@ KISSY.add('editor', function (S, Node, iframeContentTpl, Editor, Utils, focusMan
         /**
          * Add css link to current editor
          * @param {String} link
+         * @member KISSY.Editor
          */
         addCustomLink: function (link) {
             var self = this,
@@ -422,6 +447,7 @@ KISSY.add('editor', function (S, Node, iframeContentTpl, Editor, Utils, focusMan
         /**
          * Remove css link from current editor.
          * @param {String} link
+         * @member KISSY.Editor
          */
         removeCustomLink: function (link) {
             var self = this,
@@ -443,6 +469,7 @@ KISSY.add('editor', function (S, Node, iframeContentTpl, Editor, Utils, focusMan
          * Add callback which will called when editor document is ready
          * (fire when editor is renderer from textarea/source)
          * @param {Function} func
+         * @member KISSY.Editor
          */
         docReady: function (func) {
             var self = this;
@@ -452,12 +479,19 @@ KISSY.add('editor', function (S, Node, iframeContentTpl, Editor, Utils, focusMan
             }
         },
 
+        /**
+         * whether editor document is ready
+         * @returns {number}
+         * @member KISSY.Editor
+         */
         isDocReady: function () {
             return  this.__docReady;
         },
 
         /**
          * Check whether selection has changed since last check point.
+         * @member KISSY.Editor
+         * @private
          */
         checkSelectionChange: function () {
             var self = this;
@@ -484,6 +518,8 @@ KISSY.add('editor', function (S, Node, iframeContentTpl, Editor, Utils, focusMan
 
         /**
          * Fire selectionChange manually.
+         * @member KISSY.Editor
+         * @private
          */
         notifySelectionChange: function () {
             var self = this;
@@ -494,6 +530,7 @@ KISSY.add('editor', function (S, Node, iframeContentTpl, Editor, Utils, focusMan
         /**
          * Insert a element into current editor.
          * @param {KISSY.NodeList} element
+         * @member KISSY.Editor
          */
         insertElement: function (element) {
             var self = this;
@@ -508,7 +545,7 @@ KISSY.add('editor', function (S, Node, iframeContentTpl, Editor, Utils, focusMan
                 elementName = element['nodeName'](),
                 xhtml_dtd = Editor.XHTML_DTD,
                 isBlock = xhtml_dtd['$block'][ elementName ],
-                KER = Editor.RANGE,
+                KER = Editor.RangeType,
                 selection = self.getSelection(),
                 ranges = selection && selection.getRanges(),
                 range,
@@ -574,7 +611,8 @@ KISSY.add('editor', function (S, Node, iframeContentTpl, Editor, Utils, focusMan
         /**
          * insert html string into current editor.
          * @param {String} data
-         * @param [dataFilter]
+         * @param [dataFilter] internal usage
+         * @member KISSY.Editor
          */
         insertHtml: function (data, dataFilter) {
             var self = this,
@@ -624,7 +662,7 @@ KISSY.add('editor', function (S, Node, iframeContentTpl, Editor, Utils, focusMan
                                 node = $(editorDoc.createElement('p'));
                                 node._4e_appendBogus().appendTo(editorDoc.body);
                             }
-                            r.setStartAt(node, Editor.RANGE.POSITION_AFTER_START);
+                            r.setStartAt(node, Editor.RangeType.POSITION_AFTER_START);
                             r.select();
                         }
                         editorDoc.execCommand('inserthtml', FALSE, data);
@@ -640,6 +678,14 @@ KISSY.add('editor', function (S, Node, iframeContentTpl, Editor, Utils, focusMan
         }
     });
 
+    /**
+     * create editor from textarea element
+     * @member KISSY.Editor
+     * @static
+     * @param {HTMLTextAreaElement} textarea textarea to replaced by editor
+     * @param cfg editor configuration
+     * @returns {KISSY.Editor} editor instance
+     */
     Editor.decorate = function (textarea, cfg) {
         cfg = cfg || {};
         textarea = $(textarea);
@@ -663,11 +709,9 @@ KISSY.add('editor', function (S, Node, iframeContentTpl, Editor, Utils, focusMan
         return editor;
     };
 
-    /**
-     * 初始化iframe内容以及浏览器间兼容性处理，
-     * 必须等待iframe内的脚本向父窗口通知
-     *
-     * @param id {string}
+    /*
+      初始化iframe内容以及浏览器间兼容性处理，
+      必须等待iframe内的脚本向父窗口通知
      */
     Editor["_initIframe"] = function (id) {
 
@@ -685,10 +729,10 @@ KISSY.add('editor', function (S, Node, iframeContentTpl, Editor, Utils, focusMan
 
         var $body = $(body);
 
-        /**
-         * from kissy editor 1.0
-         *
-         * // 注1：在 tinymce 里，designMode = "on" 放在 try catch 里。
+        /*
+          from kissy editor 1.0
+
+          // 注1：在 tinymce 里，designMode = "on" 放在 try catch 里。
          //     原因是在 firefox 下，当iframe 在 display: none 的容器里，会导致错误。
          //     但经过我测试，firefox 3+ 以上已无此现象。
          // 注2： ie 用 contentEditable = true.
@@ -896,10 +940,10 @@ KISSY.add('editor', function (S, Node, iframeContentTpl, Editor, Utils, focusMan
         }
 
         $win.on('focus', function () {
-            /**
-             * yiminghe特别注意：firefox光标丢失bug
-             * blink后光标出现在最后，这就需要实现保存range
-             * focus后再恢复range
+            /*
+              注意：firefox光标丢失bug
+              blink后光标出现在最后，这就需要实现保存range
+              focus后再恢复range
              */
             if (UA['gecko']) {
                 blinkCursor(doc, FALSE);
@@ -912,8 +956,8 @@ KISSY.add('editor', function (S, Node, iframeContentTpl, Editor, Utils, focusMan
         });
 
         if (UA['gecko']) {
-            /**
-             * firefox 焦点丢失后，再点编辑器区域焦点会移不过来，要点两下
+            /*
+              firefox 焦点丢失后，再点编辑器区域焦点会移不过来，要点两下
              */
             $doc.on('mousedown', function () {
                 if (!self.__iframeFocus) {
@@ -925,8 +969,8 @@ KISSY.add('editor', function (S, Node, iframeContentTpl, Editor, Utils, focusMan
         if (IS_IE) {
             // Override keystrokes which should have deletion behavior
             // on control types in IE . (#4047)
-            /**
-             * 选择img，出现缩放框后不能直接删除
+            /*
+              选择img，出现缩放框后不能直接删除
              */
             $doc.on('keydown', function (evt) {
                 var keyCode = evt.keyCode;
@@ -1140,6 +1184,7 @@ KISSY.add('editor', function (S, Node, iframeContentTpl, Editor, Utils, focusMan
     ]
 });
 /**
+ * @ignore
  * 2012-07-06 yiminghe@gmail.com note ie 的怪异:
  *
  *  -   如果一开始主页面设置了 domain

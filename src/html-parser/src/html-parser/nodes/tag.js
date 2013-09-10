@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * represent tag, it can nest other tag
  * @author yiminghe@gmail.com
  */
@@ -12,6 +13,14 @@ KISSY.add("html-parser/nodes/tag", function (S, Node, Attribute, Dtd) {
         });
     }
 
+    /**
+     * Html Tag Class
+     * @param page
+     * @param startPosition
+     * @param endPosition
+     * @param attributes
+     * @class KISSY.HtmlParse.Tag
+     */
     function Tag(page, startPosition, endPosition, attributes) {
         var self = this;
 

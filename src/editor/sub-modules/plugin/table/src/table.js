@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * Add table plugin for KISSY.
  * @author yiminghe@gmail.com
  */
@@ -324,9 +325,7 @@ KISSY.add("editor/plugin/table", function (S, Editor, DialogLoader) {
         '在右侧插入列':ensureTd
     };
 
-    /**
-     * table 编辑模式下显示虚线边框便于编辑
-     */
+   // table 编辑模式下显示虚线边框便于编辑
     var showBorderClassName = 'ke_show_border',
         cssTemplate =
             // IE6 don't have child selector support,
@@ -392,9 +391,7 @@ KISSY.add("editor/plugin/table", function (S, Editor, DialogLoader) {
 
     S.augment(TablePlugin, {
         pluginRenderUI:function (editor) {
-            /**
-             * 动态加入显表格 border css，便于编辑
-             */
+            // 动态加入显表格 border css，便于编辑
             editor.addCustomStyle(cssStyleText);
 
             var dataProcessor = editor.htmlDataProcessor,

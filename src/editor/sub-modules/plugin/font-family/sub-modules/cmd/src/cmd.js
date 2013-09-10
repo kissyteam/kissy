@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * fontFamily command.
  * @author yiminghe@gmail.com
  */

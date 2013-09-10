@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * ElementPath for debug.
  * @author yiminghe@gmail.com
  */

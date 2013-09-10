@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * flash utilities
  * @author yiminghe@gmail.com
  */

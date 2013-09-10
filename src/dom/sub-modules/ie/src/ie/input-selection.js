@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * handle input selection and cursor position ie hack
  * @author yiminghe@gmail.com
  */

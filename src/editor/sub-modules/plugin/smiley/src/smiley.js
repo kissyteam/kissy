@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * smiley button
  * @author yiminghe@gmail.com
  */

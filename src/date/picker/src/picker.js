@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * date picker ui
  * @author yiminghe@gmail.com
  */

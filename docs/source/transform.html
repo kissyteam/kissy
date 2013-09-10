@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * animation for transform property
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('anim/timer/transform', function (S, Dom, Fx) {
+    function toMatrixArray(matrix) {
+        matrix = matrix.split(/,/);
+        matrix = S.map(matrix, function (v) {
+            return myParse(v);
+        });
+        return matrix;
+    }
+
+    function decomposeMatrix(matrix) {
+        matrix = toMatrixArray(matrix);
+        var scaleX, scaleY , skew ,
+            A = matrix[0],
+            B = matrix[1] ,
+            C = matrix[2],
+            D = matrix[3];
+
+        // Make sure matrix is not singular
+        if (A * D - B * C) {
+            // step (3)
+            scaleX = Math.sqrt(A * A + B * B);
+            A /= scaleX;
+            B /= scaleX;
+            // step (4)
+            skew = A * C + B * D;
+            C -= A * skew;
+            D -= B * skew;
+            // step (5)
+            scaleY = Math.sqrt(C * C + D * D);
+            C /= scaleY;
+            D /= scaleY;
+            skew /= scaleY;
+            // step (6)
+            if (A * D &lt; B * C) {
+                A = -A;
+                B = -B;
+                skew = -skew;
+                scaleX = -scaleX;
+            }
+            // matrix is singular and cannot be interpolated
+        } else {
+            // In this case the elem shouldn't be rendered, hence scale == 0
+            scaleX = scaleY = skew = 0;
+        }
+
+        // The recomposition order is very important
+        // see http://hg.mozilla.org/mozilla-central/file/7cb3e9795d04/layout/style/nsStyleAnimation.cpp#l971
+        return {
+            'translateX': myParse(matrix[4]),
+            'translateY': myParse(matrix[5]),
+            'rotate': myParse(Math.atan2(B, A) * 180 / Math.PI),
+            'skewX': myParse(Math.atan(skew) * 180 / Math.PI),
+            'skewY': 0,
+            'scaleX': myParse(scaleX),
+            'scaleY': myParse(scaleY)
+        };
+    }
+
+    function defaultDecompose() {
+        return {
+            'translateX': 0,
+            'translateY': 0,
+            'rotate': 0,
+            'skewX': 0,
+            'skewY': 0,
+            'scaleX': 1,
+            'scaleY': 1
+        };
+    }
+
+    function myParse(v) {
+        return Math.round(parseFloat(v) * 1e5) / 1e5;
+    }
+
+    function getTransformInfo(transform) {
+        transform = transform.split(&quot;)&quot;);
+        var trim = S.trim,
+            i = -1,
+            l = transform.length - 1,
+            split, prop, val,
+            ret = defaultDecompose();
+
+        // Loop through the transform properties, parse and multiply them
+        while (++i &lt; l) {
+            split = transform[i].split(&quot;(&quot;);
+            prop = trim(split[0]);
+            val = split[1];
+            switch (prop) {
+                case &quot;translateX&quot;:
+                case &quot;translateY&quot;:
+                case 'scaleX':
+                case 'scaleY':
+                    ret[prop] = myParse(val);
+                    break;
+
+                case 'rotate':
+                case 'skewX':
+                case 'skewY':
+                    var v = myParse(val);
+                    if (!S.endsWith(val, 'deg')) {
+                        v = v * 180 / Math.PI;
+                    }
+                    ret[prop] = v;
+                    break;
+
+                case 'translate':
+                case 'translate3d':
+                    val = val.split(&quot;,&quot;);
+                    ret.translateX = myParse(val[0]);
+                    ret.translateY = myParse(val[1] || 0);
+                    break;
+
+                case 'scale':
+                    val = val.split(&quot;,&quot;);
+                    ret.scaleX = myParse(val[0]);
+                    ret.scaleY = myParse(val[1] || val[0]);
+                    break;
+
+                case 'matrix':
+                    return decomposeMatrix(val);
+                    break;
+            }
+        }
+
+        return ret;
+    }
+
+    function TransformFx() {
+        TransformFx.superclass.constructor.apply(this, arguments);
+    }
+
+    S.extend(TransformFx, Fx, {
+        load: function () {
+            var self = this;
+            TransformFx.superclass.load.apply(self, arguments);
+            // user value has priority over computed value
+            self.from = Dom.style(self.anim.node, 'transform') || self.from;
+            if (self.from &amp;&amp; self.from != 'none') {
+                self.from = getTransformInfo(self.from);
+            } else {
+                self.from = defaultDecompose();
+            }
+            if (self.to) {
+                self.to = getTransformInfo(self.to);
+            } else {
+                self.to = defaultDecompose();
+            }
+        },
+
+        interpolate: function (from, to, pos) {
+            var interpolate = TransformFx.superclass.interpolate;
+            var ret = {};
+            ret.translateX = interpolate(from.translateX, to.translateX, pos);
+            ret.translateY = interpolate(from.translateY, to.translateY, pos);
+            ret.rotate = interpolate(from.rotate, to.rotate, pos);
+            ret.skewX = interpolate(from.skewX, to.skewX, pos);
+            ret.skewY = interpolate(from.skewY, to.skewY, pos);
+            ret.scaleX = interpolate(from.scaleX, to.scaleX, pos);
+            ret.scaleY = interpolate(from.scaleY, to.scaleY, pos);
+            return S.substitute('translate3d({translateX}px,{translateY}px,0) ' +
+                'rotate({rotate}deg) ' +
+                'skewX({skewX}deg) ' +
+                'skewY({skewY}deg) ' +
+                'scale({scaleX},{scaleY})', ret);
+        }
+    });
+
+    Fx.Factories.transform = TransformFx;
+
+    return TransformFx;
+}, {
+    requires: ['dom', './fx']
+});
+<span id='global-property-'>/**
+</span> * @ignore
+ * refer:
+ * - http://louisremi.github.io/jquery.transform.js/index.html
+ * - http://hg.mozilla.org/mozilla-central/file/7cb3e9795d04/layout/style/nsStyleAnimation.cpp#l971
+ */</pre>
+</body>
+</html>

@@ -1,0 +1,16 @@
+{
+    "--title": "KISSY 1.4 Docs",
+    "--welcome": "template/welcome.html",
+    "--head-html": "<link rel=\"stylesheet\" href=\"resources/css/kissy.css\" type=\"text/css\" />",
+    "--footer": "Copyright &copy; 2010-2013, <a href=\"http://kissyui.com\" style=\"color:#085585\">KISSY</a> - Alibaba. All rights reserved. | Generated with <a href=\"https://github.com/senchalabs/jsduck\">JSDuck</a>.",
+    "--seo": true,
+    "--": "{sources}",
+    "--warnings": [
+    ],
+    "--ignore-html": [
+    ],
+    "--builtin-classes": true,
+    "--examples-base-url": "../src/",
+    "--examples":"examples.json",
+    "--output": "../../docs"
+}

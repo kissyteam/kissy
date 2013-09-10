@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * Use style to gen element and wrap range's elements.Modified from CKEditor.
  * @author yiminghe@gmail.com
  */
@@ -12,18 +13,9 @@ KISSY.add("editor/styles", function (S, Editor) {
         NULL = null,
         $ = S.all,
         Dom = S.DOM,
-        /**
-         * enum for style type
-         * @enum {number}
-         */
-            KEST = {
-            STYLE_BLOCK: 1,
-            STYLE_INLINE: 2,
-            STYLE_OBJECT: 3
-        },
-        KER = Editor.RANGE,
+        KER = Editor.RangeType,
         KESelection = Editor.Selection,
-        KEP = Editor.POSITION,
+        KEP = Editor.PositionType,
         KERange = Editor.Range,
     //Walker = Editor.Walker,
         Node = S.Node,
@@ -64,7 +56,15 @@ KISSY.add("editor/styles", function (S, Editor) {
         semicolonFixRegex = /\s*(?:;\s*|$)/g,
         varRegex = /#\((.+?)\)/g;
 
-    Editor.STYLE = KEST;
+    /**
+     * enum for style type
+     * @enum {number} KISSY.Editor.StyleType
+     */
+    Editor.StyleType = KEST ={
+        STYLE_BLOCK: 1,
+        STYLE_INLINE: 2,
+        STYLE_OBJECT: 3
+    };
 
     function notBookmark(node) {
         //only get attributes on element nodes by kissy
@@ -85,9 +85,10 @@ KISSY.add("editor/styles", function (S, Editor) {
     }
 
     /**
-     * @constructor
-     * @param styleDefinition {Object}
-     * @param [variablesValues] {Object}
+     * style manipulation class
+     * @class KISSY.Editor.Style
+     * @param styleDefinition {Object} style definition
+     * @param [variablesValues] {Object} style variables
      */
     function KEStyle(styleDefinition, variablesValues) {
         if (variablesValues) {
@@ -107,11 +108,6 @@ KISSY.add("editor/styles", function (S, Editor) {
         };
     }
 
-    /**
-     *
-     * @param {Document} document
-     * @param {Boolean=} remove
-     */
     function applyStyle(document, remove) {
         // Get all ranges from the selection.
         var self = this,
@@ -131,7 +127,6 @@ KISSY.add("editor/styles", function (S, Editor) {
     }
 
     KEStyle.prototype = {
-
         constructor: KEStyle,
 
         apply: function (document) {
@@ -164,9 +159,6 @@ KISSY.add("editor/styles", function (S, Editor) {
                     : NULL ).call(self, range);
         },
 
-//        applyToObject : function(element) {
-//            setupElement(element, this);
-//        },
         // Checks if an element, or any of its attributes, is removable by the
         // current style definition.
         checkElementRemovable: function (element, fullMatch) {
@@ -442,10 +434,8 @@ KISSY.add("editor/styles", function (S, Editor) {
         return newBlock;
     }
 
-    /**
-     * Split into multiple <pre> blocks separated by double line-break.
-     * @param preBlock
-     */
+
+    // Split into multiple <pre> blocks separated by double line-break.
     function splitIntoPres(preBlock) {
         // Exclude the ones at header OR at tail,
         // and ignore bookmark content between them.
@@ -489,9 +479,7 @@ KISSY.add("editor/styles", function (S, Editor) {
         }
     }
 
-    /**
-     * Merge a <pre> block with a previous sibling if available.
-     */
+   // Merge a <pre> block with a previous sibling if available.
     function mergePre(preBlock) {
         var previousBlock;
         if (!( ( previousBlock = preBlock._4e_previousSourceNode(TRUE, Dom.NodeType.ELEMENT_NODE) )
@@ -517,9 +505,8 @@ KISSY.add("editor/styles", function (S, Editor) {
         previousBlock._4e_remove();
     }
 
-    /**
-     * Converting a list of <pre> into blocks with format well preserved.
-     */
+
+  // Converting a list of <pre> into blocks with format well preserved.
     function fromPres(preHTMLs, newBlock) {
         var docFrag = newBlock[0].ownerDocument.createDocumentFragment();
         for (var i = 0; i < preHTMLs.length; i++) {
@@ -555,10 +542,6 @@ KISSY.add("editor/styles", function (S, Editor) {
         return docFrag;
     }
 
-    /**
-     *
-     * @param range
-     */
     function applyInlineStyle(range) {
         var self = this,
             document = range.document;
@@ -839,14 +822,10 @@ KISSY.add("editor/styles", function (S, Editor) {
 
     }
 
-    /**
-     *
-     * @param range
-     */
     function removeInlineStyle(range) {
         /*
-         * Make sure our range has included all "collapsed" parent inline nodes so
-         * that our operation logic can be simpler.
+          Make sure our range has included all "collapsed" parent inline nodes so
+          that our operation logic can be simpler.
          */
         range.enlarge(KER.ENLARGE_ELEMENT);
 
@@ -863,11 +842,11 @@ KISSY.add("editor/styles", function (S, Editor) {
             for (var i = 0, element; i < startPath.elements.length
                 && ( element = startPath.elements[i] ); i++) {
                 /*
-                 * 1. If it's collapsed inside text nodes, try to remove the style from the whole element.
-                 *
-                 * 2. Otherwise if it's collapsed on element boundaries, moving the selection
-                 *  outside the styles instead of removing the whole tag,
-                 *  also make sure other inner styles were well preserved.(#3309)
+                  1. If it's collapsed inside text nodes, try to remove the style from the whole element.
+
+                  2. Otherwise if it's collapsed on element boundaries, moving the selection
+                   outside the styles instead of removing the whole tag,
+                   also make sure other inner styles were well preserved.(#3309)
                  */
                 if (element == startPath.block ||
                     element == startPath.blockLimit) {
@@ -882,10 +861,10 @@ KISSY.add("editor/styles", function (S, Editor) {
                         boundaryElement.match = startOfElement ? 'start' : 'end';
                     } else {
                         /*
-                         * Before removing the style node, there may be a sibling to the style node
-                         * that's exactly the same to the one to be removed. To the user, it makes
-                         * no difference that they're separate entities in the Dom tree. So, merge
-                         * them before removal.
+                          Before removing the style node, there may be a sibling to the style node
+                          that's exactly the same to the one to be removed. To the user, it makes
+                          no difference that they're separate entities in the Dom tree. So, merge
+                          them before removal.
                          */
                         element._4e_mergeSiblings();
                         //yiminghe:note,bug for ckeditor
@@ -1024,10 +1003,6 @@ KISSY.add("editor/styles", function (S, Editor) {
     }
 
     // Turn inline style text properties into one hash.
-    /**
-     *
-     * @param {string} styleText
-     */
     function parseStyleText(styleText) {
         styleText = String(styleText);
         var retval = {};
@@ -1057,11 +1032,6 @@ KISSY.add("editor/styles", function (S, Editor) {
         return TRUE;
     }
 
-    /**
-     *
-     * @param {string} unparsedCssText
-     * @param {Boolean=} nativeNormalize
-     */
     function normalizeCssText(unparsedCssText, nativeNormalize) {
         var styleText = "";
         if (nativeNormalize !== FALSE) {
@@ -1083,10 +1053,9 @@ KISSY.add("editor/styles", function (S, Editor) {
             .toLowerCase();
     }
 
-    /**
-     * 把 styles(css配置) 作为 属性 style 统一看待
-     * 注意对 inherit 的处理
-     * @param styleDefinition
+    /*
+     把 styles(css配置) 作为 属性 style 统一看待
+     注意对 inherit 的处理
      */
     function getAttributesForComparison(styleDefinition) {
         // If we have already computed it, just return it.
@@ -1127,10 +1096,9 @@ KISSY.add("editor/styles", function (S, Editor) {
 
 
     /**
-     * Get the the collection used to compare the elements and attributes,
-     * defined in this style overrides, with other element. All information in
-     * it is lowercased.
-     * @param  style
+      Get the the collection used to compare the elements and attributes,
+      defined in this style overrides, with other element. All information in
+      it is lowercased.
      */
     function getOverrides(style) {
         if (style._.overrides)
@@ -1201,10 +1169,8 @@ KISSY.add("editor/styles", function (S, Editor) {
                 }
             }
         }
-
         return overrides;
     }
-
 
     // Removes a style from an element itself, don't care about its subtree.
     function removeFromElement(style, element) {
@@ -1250,18 +1216,11 @@ KISSY.add("editor/styles", function (S, Editor) {
         removeNoAttribsElement(element);
     }
 
-    /**
-     *
-     * @param {string} name
-     * @param {string} value
-     * @param {Boolean=} isStyle
-     */
     function normalizeProperty(name, value, isStyle) {
         var temp = new Node('<span>');
         temp [ isStyle ? 'style' : 'attr' ](name, value);
         return temp[ isStyle ? 'style' : 'attr' ](name);
     }
-
 
     // Removes a style from inside an element.
     function removeFromInsideElement(style, element) {
@@ -1292,11 +1251,9 @@ KISSY.add("editor/styles", function (S, Editor) {
 
     }
 
-    /**
-     *  Remove overriding styles/attributes from the specific element.
-     *  Note: Remove the element if no attributes remain.
-     * @param {Object} element
-     * @param {Object} overrides
+    /*
+       Remove overriding styles/attributes from the specific element.
+       Note: Remove the element if no attributes remain.
      */
     function removeOverrides(element, overrides) {
         var i, attributes = overrides && overrides["attributes"];
@@ -1321,7 +1278,6 @@ KISSY.add("editor/styles", function (S, Editor) {
                 }
             }
         }
-
 
         var styles = overrides && overrides["styles"];
 
@@ -1374,6 +1330,7 @@ KISSY.add("editor/styles", function (S, Editor) {
     requires: ['./base', './range', './selection', './domIterator', './elementPath', 'node']
 });
 /**
+ * @ignore
  * TODO yiminghe@gmail.com : 重构 Refer
  *  - http://dvcs.w3.org/hg/editing/raw-file/tip/editing.html
  */

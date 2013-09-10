@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * month panel for date picker
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('date/picker/month-panel/control',function(S,
+                                                     Node,
+                                                     Control,
+                                                     MonthPanelRender,
+    YearPanel){
+    var tap = Node.Gesture.tap;
+    var $ = Node.all;
+
+    function goYear(self, direction) {
+        var next = self.get('value').clone();
+        next.addYear( direction);
+        self.set('value',next)
+    }
+
+    function nextYear(e) {
+        e.preventDefault();
+        goYear(this, 1);
+    }
+
+    function prevYear(e) {
+        e.preventDefault();
+        goYear(this, -1);
+    }
+
+    function chooseCell(e) {
+        e.preventDefault();
+        var td = $(e.currentTarget);
+        var tr = td.parent();
+        var tdIndex = td.index();
+        var trIndex = tr.index();
+        var value=this.get('value').clone();
+        value.setMonth(trIndex*4+tdIndex);
+        this.fire('select',{
+            value:value
+        });
+    }
+    
+    function showYearPanel(e) {
+        e.preventDefault();
+        var yearPanel = this.get('yearPanel');
+        yearPanel.set('value', this.get('value'));
+        yearPanel.show();
+    }
+
+    function setUpYearPanel() {
+        var self = this;
+        var yearPanel = new YearPanel({
+            locale:this.get('locale'),
+            render: self.get('el')
+        });
+        yearPanel.on('select', onYearPanelSelect, self);
+        return yearPanel;
+    }
+
+    function onYearPanelSelect(e) {
+        this.set('value', e.value);
+        this.get('yearPanel').hide();
+    }
+
+    return Control.extend({
+        bindUI: function () {
+            var self = this;
+            self.get('nextYearBtn').on(tap, nextYear, self);
+            self.get('previousYearBtn').on(tap, prevYear, self);
+            self.get('tbodyEl').delegate(
+                tap,
+                '.' + self.view.getBaseCssClass('cell'),
+                chooseCell,
+                self
+            );
+            self.get('yearSelectEl').on(tap,showYearPanel,self);
+        }
+    },{
+        xclass:'date-picker-month-panel',
+        ATTRS:{
+            focusable:{
+                value:false
+            },
+            value:{
+                view:1
+            },
+            yearPanel: {
+                valueFn: setUpYearPanel
+            },
+            xrender:{
+                value:MonthPanelRender
+            }
+        }
+    })
+},{
+    requires:[
+        'node',
+        'component/control',
+        './render',
+        '../year-panel/control'
+    ]
+});</pre>
+</body>
+</html>

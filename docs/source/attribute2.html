@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * represent attribute node in tag node
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(&quot;html-parser/nodes/attribute&quot;, function(S) {
+    function Attribute(name, assignMent, value, quote) {
+        this.nodeType = 2;
+        this.name = name;
+        this['assignMent'] = assignMent;
+        this.value = value;
+        this.quote = quote;
+    }
+    S.augment(Attribute, {
+        clone: function() {
+            var ret = new Attribute();
+            S.mix(ret, this);
+            return ret;
+        },
+        equals:function(other) {
+            return this.name == other.name &amp;&amp; this.value == other.value &amp;&amp; this.nodeType == other.nodeType;
+        }
+    });
+    Attribute.prototype.clone = function() {
+        var ret = new Attribute();
+        S.mix(ret, this);
+        return ret;
+    };
+    return Attribute;
+});</pre>
+</body>
+</html>

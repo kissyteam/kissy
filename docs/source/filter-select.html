@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * filter select from combobox
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(&quot;combobox/filter-select&quot;, function (S, Combobox) {
+
+    function valInAutoCompleteList(inputVal, _saveData) {
+        var valid = false;
+        if (_saveData) {
+            for (var i = 0; i &lt; _saveData.length; i++) {
+                if (_saveData[i].textContent == inputVal) {
+                    return _saveData[i];
+                }
+            }
+        }
+        return valid;
+    }
+
+<span id='KISSY-ComboBox-FilterSelect'>    /**
+</span>     * validate combobox input by dataSource
+     * @class KISSY.ComboBox.FilterSelect
+     * @extends KISSY.ComboBox
+     */
+    var FilterSelect = Combobox.extend({
+        validate: function (callback) {
+            var self = this;
+            self.callSuper(function (error, val) {
+                if (!error) {
+                    self.get(&quot;dataSource&quot;).fetchData(val, function (data) {
+                        var d = valInAutoCompleteList(val, self.normalizeData(data));
+                        callback(d ? &quot;&quot; : self.get(&quot;invalidMessage&quot;), val, d);
+                    });
+                } else {
+                    callback(error, val);
+                }
+            });
+        }
+    }, {
+        ATTRS: {
+<span id='KISSY-ComboBox-FilterSelect-cfg-invalidMessage'>            /**
+</span>             * when does not match show invalidMessage
+             * @cfg {String} invalidMessage
+             */
+<span id='global-property-invalidMessage'>            /**
+</span>             * @ignore
+             */
+            invalidMessage: {
+                value: 'invalid input'
+            }
+        }
+    });
+
+    return FilterSelect;
+
+}, {
+    requires: ['./control']
+});</pre>
+</body>
+</html>

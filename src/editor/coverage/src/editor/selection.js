@@ -1285,12 +1285,12 @@ function visit621_50_1(result) {
 KISSY.add("editor/selection", function(S, Editor) {
   _$jscoverage['/editor/selection.js'].functionData[0]++;
   _$jscoverage['/editor/selection.js'].lineData[14]++;
-  Editor.SELECTION = {
+  Editor.SelectionType = {
   SELECTION_NONE: 1, 
   SELECTION_TEXT: 2, 
   SELECTION_ELEMENT: 3};
   _$jscoverage['/editor/selection.js'].lineData[20]++;
-  var TRUE = true, FALSE = false, NULL = null, UA = S.UA, Dom = S.DOM, Node = S.Node, KES = Editor.SELECTION, KER = Editor.RANGE, OLD_IE = UA['ie'], Walker = Editor.Walker, KERange = Editor.Range;
+  var TRUE = true, FALSE = false, NULL = null, UA = S.UA, Dom = S.DOM, Node = S.Node, KES = Editor.SelectionType, KER = Editor.RangeType, OLD_IE = UA['ie'], Walker = Editor.Walker, KERange = Editor.Range;
   _$jscoverage['/editor/selection.js'].lineData[39]++;
   function KESelection(document) {
     _$jscoverage['/editor/selection.js'].functionData[1]++;

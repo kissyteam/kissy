@@ -1,11 +1,12 @@
 /**
+ * @ignore
  * nest tag scanner recursively
  * @author yiminghe@gmail.com
  */
 KISSY.add("html-parser/scanners/tag-scanner", function (S, dtd, Tag, SpecialScanners) {
 
-    var /**
-     * will create ul when encounter li and li's parent is not ul
+    var /*
+      will create ul when encounter li and li's parent is not ul
      */
         wrapper = {
         li:'ul',
@@ -13,13 +14,13 @@ KISSY.add("html-parser/scanners/tag-scanner", function (S, dtd, Tag, SpecialScan
         dd:'dl'
     };
 
-    /**
-     * refer: http://www.w3.org/TR/html5/tree-construction.html#tree-construction
-     * When the steps below require the UA to generate implied end tags,
-     * then, while the current node is a dd element,
-     * a dt element, an li element, an option element,
-     * an optgroup element, a p element, an rp element, or an rt element,
-     * the UA must pop the current node off the stack of open elements.
+    /*
+      refer: http://www.w3.org/TR/html5/tree-construction.html#tree-construction
+      When the steps below require the UA to generate implied end tags,
+      then, while the current node is a dd element,
+      a dt element, an li element, an option element,
+      an optgroup element, a p element, an rp element, or an rt element,
+      the UA must pop the current node off the stack of open elements.
      */
     var impliedEndTag = {
         // if dd encounter another dd before encounter dl ,then close last dd
@@ -32,10 +33,10 @@ KISSY.add("html-parser/scanners/tag-scanner", function (S, dtd, Tag, SpecialScan
         // p? rp? rt?
     };
 
-    /**
-     * close tag and check nest by xhtml dtd rules
-     * <span> 1 <span>2</span> <p>3</p> </span> => <span> 1 <span>2</span> </span> <p><span>3</span></p>
-     * @param tag
+    /*
+      close tag and check nest by xhtml dtd rules
+      <span> 1 <span>2</span> <p>3</p> </span> => <span> 1 <span>2</span> </span> <p><span>3</span></p>
+      @param tag
      */
     function fixCloseTagByDtd(tag, opts) {
         tag['closed'] = 1;
@@ -172,8 +173,8 @@ KISSY.add("html-parser/scanners/tag-scanner", function (S, dtd, Tag, SpecialScan
     }
 
 
-    /**
-     * checked whether tag can include node as its child according to DTD
+    /*
+      checked whether tag can include node as its child according to DTD
      */
     function canHasNodeAsChild(tag, node) {
         // document can nest any tag

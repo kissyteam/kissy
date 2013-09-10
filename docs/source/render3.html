@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * render for container
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('component/container/render', function (S, Control, Manager) {
+<span id='KISSY-Component-Container-Render'>    /**
+</span>     * User KISSY.Component.Container.getDefaultRender() to get this class
+     * @class KISSY.Component.Container.Render
+     */
+    return Control.getDefaultRender().extend([], {
+<span id='KISSY-Component-Container-Render-method-decorateDom'>        /**
+</span>         * decorate child element from parent component's root element.
+         * @protected
+         */
+        decorateDom: function () {
+            var self = this,
+                childrenContainerEl = self.getChildrenContainerEl(),
+                control = self.control,
+                defaultChildCfg = control.get('defaultChildCfg'),
+                prefixCls = defaultChildCfg.prefixCls,
+                defaultChildXClass = defaultChildCfg.xclass,
+                childrenComponents = [],
+                children = childrenContainerEl.children();
+            children.each(function (c) {
+                var ChildUI = self.getComponentConstructorByNode(prefixCls, c) ||
+                    defaultChildXClass &amp;&amp;
+                        Manager.getConstructorByXClass(defaultChildXClass);
+                if (ChildUI) {
+                    childrenComponents.push(new ChildUI(S.merge(defaultChildCfg, {
+                        srcNode: c
+                    })));
+                }
+            });
+            control.set('children', childrenComponents);
+        },
+<span id='KISSY-Component-Container-Render-method-getChildrenContainerEl'>        /**
+</span>         * Return the dom element into which child component to be rendered.
+         * @protected
+         * @return {KISSY.NodeList}
+         */
+        getChildrenContainerEl: function () {
+            return this.$el;
+        }
+    }, {
+        name: 'ContainerRender'
+    });
+}, {
+    requires: ['component/control', 'component/manager']
+});</pre>
+</body>
+</html>

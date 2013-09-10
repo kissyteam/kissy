@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * dom text node
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(&quot;html-parser/nodes/text&quot;, function (S, Node) {
+
+    function Text(v) {
+        if (typeof v == 'string') {
+            this.nodeValue = v;
+            Text.superclass.constructor.apply(this, [null, -1, -1]);
+        } else {
+            Text.superclass.constructor.apply(this, arguments);
+            this.nodeValue = this.toHtml();
+        }
+        this.nodeType = 3;
+        this.nodeName = &quot;#text&quot;;
+    }
+
+    S.extend(Text, Node, {
+        writeHtml:function (writer, filter) {
+            var ret;
+            if (!filter || (ret = filter.onText(this)) !== false) {
+                if (ret) {
+                    if (this !== ret) {
+                        ret.writeHtml(writer, filter);
+                        return;
+                    }
+                }
+                writer.text(this.toHtml());
+            }
+        },
+        toHtml:function () {
+            if (this.nodeValue) {
+                return this.nodeValue;
+            } else {
+                return Text.superclass.toHtml.apply(this, arguments);
+            }
+        }
+    });
+
+    return Text;
+}, {
+    requires:['./node']
+});</pre>
+</body>
+</html>

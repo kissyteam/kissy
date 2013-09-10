@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * table dialog
  * @author yiminghe@gmail.com
  */

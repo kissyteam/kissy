@@ -5,11 +5,9 @@
 KISSY.add("separator", function (S, Control, SeparatorRender) {
 
     /**
+     * separator component for KISSY. xclass: 'separator'.
      * @extends KISSY.Component.Control
-     * @class
-     * separator.
-     * xclass: 'separator'.
-     * @name Separator
+     * @class KISSY.Separator
      */
     return Control.extend({
     }, {

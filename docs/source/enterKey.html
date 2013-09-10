@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * monitor user's enter and shift enter keydown
+ * @author yiminghe@gmail.com
+ */
+/*
+ Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+ For licensing, see LICENSE.html or http://ckeditor.com/license
+ */
+KISSY.add(&quot;editor/enterKey&quot;, function (S,Editor,Walker,ElementPath) {
+    var UA = S.UA,
+        headerTagRegex = /^h[1-6]$/,
+        dtd = Editor.XHTML_DTD,
+        Node = S.Node,
+        Event = S.Event;
+
+
+    function getRange(editor) {
+        // Get the selection ranges.
+        var ranges = editor.getSelection().getRanges();
+        // Delete the contents of all ranges except the first one.
+        for (var i = ranges.length - 1; i &gt; 0; i--) {
+            ranges[ i ].deleteContents();
+        }
+        // Return the first range.
+        return ranges[ 0 ];
+    }
+
+    function enterBlock(editor) {
+        // Get the range for the current selection.
+        var range = getRange(editor);
+        var doc = range.document;
+        // Exit the list when we're inside an empty list item block. (#5376)
+        if (range.checkStartOfBlock() &amp;&amp; range.checkEndOfBlock()) {
+            var path = new ElementPath(range.startContainer),
+                block = path.block;
+            //只有两层？
+            if (block &amp;&amp;
+                ( block.nodeName() == 'li' || block.parent().nodeName() == 'li' )
+
+                ) {
+                if (editor.hasCommand('outdent')) {
+                    editor.execCommand(&quot;save&quot;);
+                    editor.execCommand('outdent');
+                    editor.execCommand(&quot;save&quot;);
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        }
+
+        // Determine the block element to be used.
+        var blockTag = &quot;p&quot;;
+
+        // Split the range.
+        var splitInfo = range.splitBlock(blockTag);
+
+        if (!splitInfo)
+            return true;
+
+        // Get the current blocks.
+        var previousBlock = splitInfo.previousBlock,
+            nextBlock = splitInfo.nextBlock;
+
+        var isStartOfBlock = splitInfo.wasStartOfBlock,
+            isEndOfBlock = splitInfo.wasEndOfBlock;
+
+        var node;
+
+        // If this is a block under a list item, split it as well. (#1647)
+        if (nextBlock) {
+            node = nextBlock.parent();
+            if (node.nodeName() == 'li') {
+                nextBlock._4e_breakParent(node);
+                nextBlock._4e_move(nextBlock.next(), true);
+            }
+        }
+        else if (previousBlock &amp;&amp; ( node = previousBlock.parent() ) &amp;&amp; node.nodeName() == 'li') {
+            previousBlock._4e_breakParent(node);
+            range.moveToElementEditablePosition(previousBlock.next());
+            previousBlock._4e_move(previousBlock.prev());
+        }
+
+        // If we have both the previous and next blocks, it means that the
+        // boundaries were on separated blocks, or none of them where on the
+        // block limits (start/end).
+        if (!isStartOfBlock &amp;&amp; !isEndOfBlock) {
+            // If the next block is an &lt;li&gt; with another list tree as the first
+            // child, we'll need to append a filler (&lt;br&gt;/NBSP) or the list item
+            // wouldn't be editable. (#1420)
+            if (nextBlock.nodeName() == 'li' &amp;&amp;
+                ( node = nextBlock.first(Walker.invisible(true)) ) &amp;&amp;
+                S.inArray(node.nodeName(), ['ul', 'ol']))
+                (UA['ie'] ? new Node(doc.createTextNode('\xa0')) :
+                    new Node(doc.createElement('br'))).insertBefore(node);
+
+            // Move the selection to the end block.
+            if (nextBlock)
+                range.moveToElementEditablePosition(nextBlock);
+        }
+        else {
+            var newBlock;
+
+            if (previousBlock) {
+                // Do not enter this block if it's a header tag, or we are in
+                // a Shift+Enter (#77). Create a new block element instead
+                // (later in the code).
+                if (previousBlock.nodeName() == 'li' || !headerTagRegex.test(previousBlock.nodeName())) {
+                    // Otherwise, duplicate the previous block.
+                    newBlock = previousBlock.clone();
+                }
+            }
+            else if (nextBlock)
+                newBlock = nextBlock.clone();
+
+            if (!newBlock)
+                newBlock = new Node(&quot;&lt;&quot; + blockTag + &quot;&gt;&quot;, null, doc);
+
+            // Recreate the inline elements tree, which was available
+            // before hitting enter, so the same styles will be available in
+            // the new block.
+            var elementPath = splitInfo.elementPath;
+            if (elementPath) {
+                for (var i = 0, len = elementPath.elements.length; i &lt; len; i++) {
+                    var element = elementPath.elements[ i ];
+
+                    if (element.equals(elementPath.block) || element.equals(elementPath.blockLimit))
+                        break;
+                    //&lt;li&gt;&lt;strong&gt;^&lt;/strong&gt;&lt;/li&gt;
+                    if (dtd.$removeEmpty[ element.nodeName() ]) {
+                        element = element.clone();
+                        newBlock._4e_moveChildren(element);
+                        newBlock.append(element);
+                    }
+                }
+            }
+
+            if (!UA['ie'])
+                newBlock._4e_appendBogus();
+
+            range.insertNode(newBlock);
+
+            // This is tricky, but to make the new block visible correctly
+            // we must select it.
+            // The previousBlock check has been included because it may be
+            // empty if we have fixed a block-less space (like ENTER into an
+            // empty table cell).
+            if (UA['ie'] &amp;&amp; isStartOfBlock &amp;&amp; ( !isEndOfBlock || !previousBlock[0].childNodes.length )) {
+                // Move the selection to the new block.
+                range.moveToElementEditablePosition(isEndOfBlock ? previousBlock : newBlock);
+                range.select();
+            }
+
+            // Move the selection to the new block.
+            range.moveToElementEditablePosition(isStartOfBlock &amp;&amp; !isEndOfBlock ? nextBlock : newBlock);
+        }
+
+        if (!UA['ie']) {
+            if (nextBlock) {
+                // If we have split the block, adds a temporary span at the
+                // range position and scroll relatively to it.
+                var tmpNode = new Node(doc.createElement('span'));
+
+                // We need some content for Safari.
+                tmpNode.html('&amp;nbsp;');
+
+                range.insertNode(tmpNode);
+                tmpNode.scrollIntoView(undefined,{
+                    alignWithTop:false,
+                    allowHorizontalScroll:true,
+                    onlyScrollIfNeeded:true
+                });
+                range.deleteContents();
+            }
+            else {
+                // We may use the above scroll logic for the new block case
+                // too, but it gives some weird result with Opera.
+                newBlock.scrollIntoView(undefined,{
+                    alignWithTop:false,
+                    allowHorizontalScroll:true,
+                    onlyScrollIfNeeded:true
+                });
+            }
+        }
+        range.select();
+        return true;
+    }
+
+    function EnterKey(editor) {
+        var doc = editor.get(&quot;document&quot;)[0];
+        Event.on(doc, &quot;keydown&quot;, function (ev) {
+            var keyCode = ev.keyCode;
+            if (keyCode === 13) {
+                if (ev.shiftKey || ev.ctrlKey || ev.metaKey) {
+                } else {
+                    editor.execCommand(&quot;save&quot;);
+                    var re = editor.execCommand(&quot;enterBlock&quot;);
+                    editor.execCommand(&quot;save&quot;);
+                    if (re !== false) {
+                        ev.preventDefault();
+                    }
+                }
+            }
+        });
+    }
+
+    return {
+        init:function (editor) {
+            editor.addCommand(&quot;enterBlock&quot;, {
+                exec:enterBlock
+            });
+            editor.docReady(function () {
+                EnterKey(editor);
+            });
+        }
+    };
+}, {
+    requires:['./base','./walker','./elementPath','node']
+});
+</pre>
+</body>
+</html>

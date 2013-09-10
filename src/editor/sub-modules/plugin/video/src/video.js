@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * video button.
  * @author yiminghe@gmail.com
  */

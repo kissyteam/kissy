@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * drag plugin for kissy component
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('component/plugin/drag', function (S, Base, DD) {
+
+<span id='KISSY-Component-Plugin-Drag'>    /**
+</span>     * drag plugin for kissy component
+     *
+     *      @example
+     *      KISY.use('overlay,component/plugin/drag,dd/plugin/proxy',
+     *      function(S,Overlay,DragPlugin,ProxyPlugin){
+     *        var o =new Overlay.Dialog({
+     *          plugins:[
+     *              new DragPlugin({
+     *                  handles: [function(){ return o.get('header'); }],
+     *                  plugins: [ProxyPlugin]
+     *              })
+     *          ]
+     *        })
+     *        // or
+     *        o.plug(new DragPlugin({
+     *          handles:[function(){ return o.get('header'); }]
+     *        });
+     *      });
+     *
+     *
+     * @class KISSY.Component.Plugin.Drag
+     * @extends KISSY.DD.Draggable
+     */
+    return DD.Draggable.extend({
+
+        pluginId: 'component/plugin/drag',
+
+        pluginBindUI: function (component) {
+            var $el = component.$el,
+                self = this;
+            self.set('node', $el);
+            // sync
+            self.on(&quot;dragend&quot;, function () {
+                var offset = $el.offset();
+                component.setInternal('xy', [offset.left, offset.top]);
+            });
+        },
+
+        pluginDestructor: function () {
+            this.destroy();
+        }
+
+    }, {
+        ATTRS: {
+            move: {
+                value: 1
+            },
+            groups: {
+                value: false
+            }
+        }
+    });
+
+}, {
+    requires: ['base', 'dd']
+});</pre>
+</body>
+</html>

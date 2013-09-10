@@ -1,14 +1,12 @@
 /**
  * utils for gregorian date
+ * @ignore
  * @author yiminghe@gmail.com
  */
 KISSY.add('date/gregorian/utils', function (S, Const) {
-
-
     var ACCUMULATED_DAYS_IN_MONTH
             //   1/1 2/1 3/1 4/1 5/1 6/1 7/1 8/1 9/1 10/1 11/1 12/1
             = [ 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334],
-
 
         ACCUMULATED_DAYS_IN_MONTH_LEAP
             //   1/1 2/1   3/1   4/1   5/1   6/1   7/1   8/1   9/1
@@ -21,8 +19,7 @@ KISSY.add('date/gregorian/utils', function (S, Const) {
         DAYS_OF_100YEAR = DAYS_OF_4YEAR * 25 - 1,
         DAYS_OF_400YEAR = DAYS_OF_100YEAR * 4 + 1,
 
-        Utils = {},
-        toInt = parseInt;
+        Utils = {};
 
     function getDayOfYear(year, month, dayOfMonth) {
         return dayOfMonth + (isLeapYear(year) ?
@@ -119,7 +116,6 @@ KISSY.add('date/gregorian/utils', function (S, Const) {
         mod = Utils.mod;
 
     return Utils;
-
 }, {
     requires: ['./const']
 });

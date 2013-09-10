@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * ElementPath for debug.
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(&quot;editor/plugin/element-path&quot;, function (S, Editor) {
+    var Node = S.Node;
+    var CLASS = &quot;editor-element-path&quot;;
+
+    function ElementPaths(cfg) {
+        var self = this;
+        self.cfg = cfg;
+        self._cache = [];
+        self._init();
+    }
+
+    S.augment(ElementPaths, {
+        _init:function () {
+            var self = this,
+                cfg = self.cfg,
+                editor = cfg.editor;
+            self.holder = new Node(&quot;&lt;span&gt;&quot;);
+            self.holder.appendTo(editor.get(&quot;statusBarEl&quot;), undefined);
+            editor.on(&quot;selectionChange&quot;, self._selectionChange, self);
+            Editor.Utils.sourceDisable(editor, self);
+        },
+        disable:function () {
+            this.holder.css(&quot;visibility&quot;, &quot;hidden&quot;);
+        },
+        enable:function () {
+            this.holder.css(&quot;visibility&quot;, &quot;&quot;);
+        },
+        _selectionChange:function (ev) {
+            var self = this,
+                cfg = self.cfg,
+                editor = cfg.editor,
+                prefixCls=editor.get('prefixCls'),
+                statusDom = self.holder,
+                elementPath = ev.path,
+                elements = elementPath.elements,
+                element, i,
+                cache = self._cache;
+            for (i = 0; i &lt; cache.length; i++) {
+                cache[i].remove();
+            }
+            self._cache = [];
+            // For each element into the elements path.
+            for (i = 0; i &lt; elements.length; i++) {
+                element = elements[i];
+                // 考虑 fake objects
+                var type = element.attr(&quot;_ke_real_element_type&quot;) || element.nodeName(),
+                    a = new Node(&quot;&lt;a &quot; +
+                        &quot;href='javascript(\&quot;&quot; +
+                        type + &quot;\&quot;)' &quot; +
+                        &quot;class='&quot; +
+                        prefixCls+CLASS + &quot;'&gt;&quot; +
+                        type +
+                        &quot;&lt;/a&gt;&quot;);
+                self._cache.push(a);
+                (function (element) {
+                    a.on(&quot;click&quot;, function (ev2) {
+                        ev2.halt();
+                        editor.focus();
+                        setTimeout(function () {
+                            editor.getSelection().selectElement(element);
+                        }, 50);
+                    });
+                })(element);
+                statusDom.prepend(a);
+            }
+        },
+        destroy:function () {
+            this.holder.remove();
+        }
+    });
+
+    function ElementPathPlugin() {
+
+    }
+
+    S.augment(ElementPathPlugin, {
+        pluginRenderUI:function (editor) {
+            var elemPath = new ElementPaths({
+                editor:editor
+            });
+            editor.on(&quot;destroy&quot;, function () {
+                elemPath.destroy();
+            });
+        }
+    });
+
+    return ElementPathPlugin;
+}, {
+    requires:['editor']
+});</pre>
+</body>
+</html>

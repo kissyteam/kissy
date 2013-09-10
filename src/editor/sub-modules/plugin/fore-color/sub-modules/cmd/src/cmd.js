@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * foreColor command.
  * @author yiminghe@gmail.com
  */

@@ -1,11 +1,12 @@
 /**
- * 集中管理各个z-index
+ * @ignore
+ * z-index management
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/zIndexManager", function (S, Editor) {
     /**
      * z-index manager
-     *@enum {number}
+     * @enum {number} KISSY.Editor.zIndexManager
      */
     var zIndexManager = Editor.zIndexManager = {
         BUBBLE_VIEW: (1100),
@@ -19,15 +20,11 @@ KISSY.add("editor/zIndexManager", function (S, Editor) {
         SELECT: (1200)
     };
 
-    /**
-     * 获得全局最大值
-     */
     Editor.baseZIndex = function (z) {
         return (Editor['Config'].baseZIndex || 10000) + z;
     };
 
     return zIndexManager;
-
 }, {
     requires: ['./base']
 });

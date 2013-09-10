@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * multiple-upload dialog
  * @author yiminghe@gmail.com
  */
@@ -297,9 +298,7 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor,
                     self._removeTrFile(tr);
                 }
 
-                /**
-                 * 支持排序
-                 */
+               // 支持排序
                 if (target.hasClass(replacePrefix("{prefixCls}editor-upload-moveup", prefixCls), undefined)) {
                     tr = target.parent("tr");
                     tr.css("backgroundColor", "#eef4f9");

@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * attr ie hack
  * @author yiminghe@gmail.com
  */
@@ -140,6 +141,7 @@ KISSY.add('dom/ie/attr', function (S, Dom) {
     requires: ['dom/base']
 });
 /**
+ * @ignore
  * 2012-11-27 yiminghe@gmail.com note:
  *  no need for feature detection for old-ie!
  */

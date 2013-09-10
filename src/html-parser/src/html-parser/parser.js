@@ -1,9 +1,16 @@
 /**
+ * @ignore
  * parse html to a hierarchy dom tree
  * @author yiminghe@gmail.com
  */
 KISSY.add("html-parser/parser", function (S, dtd, Tag, Fragment, Cursor, Lexer, Document, Scanner) {
 
+    /**
+     * Html Parse Class
+     * @param html
+     * @param opts
+     * @class KISSY.HtmlParse.Parse
+     */
     function Parser(html, opts) {
         // fake root node
         html = S.trim(html);
@@ -24,7 +31,6 @@ KISSY.add("html-parser/parser", function (S, dtd, Tag, Fragment, Cursor, Lexer, 
     }
 
     Parser.prototype = {
-
         constructor:Parser,
 
         elements:function () {

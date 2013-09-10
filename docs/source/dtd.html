@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * modified from ckeditor dtd by yiminghe, support html5 tag and dtd
+ * @author yimingh@gmail.com
+ */
+/*
+ Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+ For licensing, see LICENSE.html or http://ckeditor.com/license
+ */
+KISSY.add(&quot;html-parser/dtd&quot;, function(S) {
+    var merge = S.merge,
+        A = {&quot;isindex&quot;:1,&quot;fieldset&quot;:1},
+        B = {&quot;input&quot;:1,&quot;button&quot;:1,&quot;select&quot;:1,&quot;textarea&quot;:1,&quot;label&quot;:1},
+        C = merge({&quot;a&quot;:1}, B),
+        D = merge({&quot;iframe&quot;:1}, C),
+        E = {
+            &quot;hr&quot;:1,&quot;ul&quot;:1,&quot;menu&quot;:1,&quot;div&quot;:1,
+            &quot;blockquote&quot;:1,&quot;noscript&quot;:1,&quot;table&quot;:1,
+            &quot;center&quot;:1,&quot;address&quot;:1,&quot;dir&quot;:1,&quot;pre&quot;:1,&quot;h5&quot;:1,
+            &quot;dl&quot;:1,&quot;h4&quot;:1,&quot;noframes&quot;:1,&quot;h6&quot;:1,
+            &quot;ol&quot;:1,&quot;h1&quot;:1,&quot;h3&quot;:1,&quot;h2&quot;:1
+        },
+        F = {&quot;ins&quot;:1,&quot;del&quot;:1,&quot;script&quot;:1,&quot;style&quot;:1},
+        G = merge({
+            &quot;b&quot;:1,&quot;acronym&quot;:1,&quot;bdo&quot;:1,'var':1,'#text':1,
+            &quot;abbr&quot;:1,&quot;code&quot;:1,
+            &quot;br&quot;:1,&quot;i&quot;:1,&quot;cite&quot;:1,
+            &quot;kbd&quot;:1,
+            &quot;u&quot;:1,
+            &quot;strike&quot;:1,
+            &quot;s&quot;:1,
+            &quot;tt&quot;:1,
+            &quot;strong&quot;:1,
+            &quot;q&quot;:1,
+            &quot;samp&quot;:1,
+            &quot;em&quot;:1,
+            &quot;dfn&quot;:1,
+            &quot;span&quot;:1}, F),
+        H = merge({
+            &quot;sub&quot;:1,
+            &quot;img&quot;:1,
+            &quot;object&quot;:1,
+            &quot;sup&quot;:1,
+            &quot;basefont&quot;:1,
+            &quot;map&quot;:1,
+            &quot;applet&quot;:1,
+            &quot;font&quot;:1,
+            &quot;big&quot;:1,
+            &quot;small&quot;:1
+        }, G),
+        I = merge({&quot;p&quot;:1}, H),
+        J = merge({&quot;iframe&quot;:1}, H, B),
+        K = {
+            &quot;img&quot;:1,&quot;noscript&quot;:1,&quot;br&quot;:1,&quot;kbd&quot;:1,
+            &quot;center&quot;:1,&quot;button&quot;:1,
+            &quot;basefont&quot;:1,&quot;h5&quot;:1,&quot;h4&quot;:1,&quot;samp&quot;:1,
+            &quot;h6&quot;:1,&quot;ol&quot;:1,
+            &quot;h1&quot;:1,&quot;h3&quot;:1,&quot;h2&quot;:1,
+            &quot;form&quot;:1,
+            &quot;font&quot;:1,
+            '#text':1,
+            &quot;select&quot;:1,
+            &quot;menu&quot;:1,
+            &quot;ins&quot;:1,
+            &quot;abbr&quot;:1,
+            &quot;label&quot;:1,
+            &quot;code&quot;:1,
+            &quot;table&quot;:1,
+            &quot;script&quot;:1,&quot;cite&quot;:1,&quot;input&quot;:1,&quot;iframe&quot;:1,
+            &quot;strong&quot;:1,&quot;textarea&quot;:1,&quot;noframes&quot;:1,&quot;big&quot;:1,
+            &quot;small&quot;:1,&quot;span&quot;:1,&quot;hr&quot;:1,&quot;sub&quot;:1,&quot;bdo&quot;:1,
+            'var':1,&quot;div&quot;:1,&quot;object&quot;:1,&quot;sup&quot;:1,&quot;strike&quot;:1,
+            &quot;dir&quot;:1,&quot;map&quot;:1,&quot;dl&quot;:1,&quot;applet&quot;:1,&quot;del&quot;:1,&quot;isindex&quot;:1,
+            &quot;fieldset&quot;:1,&quot;ul&quot;:1,&quot;b&quot;:1,&quot;acronym&quot;:1,&quot;a&quot;:1,&quot;blockquote&quot;:1,
+            &quot;i&quot;:1,&quot;u&quot;:1,&quot;s&quot;:1,&quot;tt&quot;:1,&quot;address&quot;:1,&quot;q&quot;:1,
+            &quot;pre&quot;:1,&quot;p&quot;:1,&quot;em&quot;:1,&quot;dfn&quot;:1
+        },
+        L = merge({&quot;a&quot;:1}, J),
+        M = {&quot;tr&quot;:1},
+        N = {'#text':1},
+        O = merge({&quot;param&quot;:1}, K),
+        P = merge({&quot;form&quot;:1}, A, D, E, I),
+        Q = {&quot;li&quot;:1},
+        R = {&quot;style&quot;:1,&quot;script&quot;:1},
+        headTags = {&quot;base&quot;:1,&quot;link&quot;:1,&quot;meta&quot;:1,&quot;title&quot;:1},
+        T = merge(headTags, R),
+        U = {&quot;head&quot;:1,&quot;body&quot;:1},
+        V = {&quot;html&quot;:1};
+
+    var block = {
+        &quot;address&quot;:1,&quot;blockquote&quot;:1,&quot;center&quot;:1,
+        &quot;dir&quot;:1,&quot;div&quot;:1,&quot;dl&quot;:1,&quot;fieldset&quot;:1,
+        &quot;form&quot;:1,&quot;h1&quot;:1,&quot;h2&quot;:1,&quot;h3&quot;:1,&quot;h4&quot;:1,
+        &quot;h5&quot;:1,&quot;h6&quot;:1,&quot;hr&quot;:1,&quot;isindex&quot;:1,
+        &quot;menu&quot;:1,&quot;noframes&quot;:1,&quot;ol&quot;:1,&quot;p&quot;:1,
+        &quot;pre&quot;:1,&quot;table&quot;:1,&quot;ul&quot;:1
+    };
+
+<span id='KISSY-HtmlParser-Dtd'>    /**
+</span>     * Holds and object representation of the HTML DTD to be used by the editor in
+     * its internal operations.
+     *
+     * Each element in the DTD is represented by a
+     * property in this object. Each property contains the list of elements that
+     * can be contained by the element. Text is represented by the &quot;#text&quot; property.
+     *
+     * Several special grouping properties are also available. Their names start
+     * with the &quot;$&quot; character.
+     *
+     * @class KISSY.HtmlParser.Dtd
+     * @singleton
+     *
+     *
+     *      // Check if &quot;div&quot; can be contained in a &quot;p&quot; element.
+     *      alert( !!dtd[ 'p' ][ 'div' ] );  &quot;false&quot;
+     *      // Check if &quot;p&quot; can be contained in a &quot;div&quot; element.
+     *      alert( !!dtd[ 'div' ][ 'p' ] );  &quot;true&quot;
+     *      // Check if &quot;p&quot; is a block element.
+     *      alert( !!dtd.$block[ 'p' ] );  &quot;true&quot;
+     */
+    var dtd = {
+<span id='KISSY-HtmlParser-Dtd-property-S-nonBodyContent'>        /**
+</span>         * The &quot;$&quot; items have been added manually.
+         * List of elements living outside body.
+         */
+        $nonBodyContent: merge(V, U, headTags),
+
+<span id='KISSY-HtmlParser-Dtd-property-S-block'>        /**
+</span>         * List of block elements, like &quot;p&quot; or &quot;div&quot;.
+         * @type {Object}
+         */
+        $block : block,
+
+<span id='KISSY-HtmlParser-Dtd-property-S-blockLimit'>        /**
+</span>         * List of block limit elements.
+         * @type {Object}
+         */
+        $blockLimit : {&quot;body&quot;:1,&quot;div&quot;:1,&quot;td&quot;:1,&quot;th&quot;:1,&quot;caption&quot;:1,&quot;form&quot;:1 },
+
+<span id='KISSY-HtmlParser-Dtd-property-S-inline'>        /**
+</span>         * List of inline elements
+         * @type {Object}
+         */
+        $inline : L,    // Just like span.
+
+<span id='KISSY-HtmlParser-Dtd-property-S-body'>        /**
+</span>         * elements which can be include in body
+         * @type {Object}
+         */
+        $body : merge({&quot;script&quot;:1,&quot;style&quot;:1}, block),
+
+<span id='KISSY-HtmlParser-Dtd-property-S-cdata'>        /**
+</span>         * cdata elements
+         * @type {Object}
+         */
+        $cdata : {&quot;script&quot;:1,&quot;style&quot;:1},
+
+<span id='KISSY-HtmlParser-Dtd-property-S-empty'>        /**
+</span>         * List of empty (self-closing) elements, like &quot;br&quot; or &quot;img&quot;.
+         * @type {Object}
+         */
+        $empty : {&quot;area&quot;:1,&quot;base&quot;:1,&quot;br&quot;:1,&quot;col&quot;:1,&quot;hr&quot;:1,&quot;img&quot;:1,&quot;input&quot;:1,&quot;link&quot;:1,&quot;meta&quot;:1,&quot;param&quot;:1},
+
+<span id='KISSY-HtmlParser-Dtd-property-S-listItem'>        /**
+</span>         * List of list item elements, like &quot;li&quot; or &quot;dd&quot;.
+         * @type {Object}
+         */
+        $listItem : {&quot;dd&quot;:1,&quot;dt&quot;:1,&quot;li&quot;:1},
+
+<span id='KISSY-HtmlParser-Dtd-property-S-list'>        /**
+</span>         * List of list root elements.
+         * @type {Object}
+         */
+        $list: {&quot;ul&quot;:1,&quot;ol&quot;:1,&quot;dl&quot;:1},
+
+<span id='KISSY-HtmlParser-Dtd-property-S-nonEditable'>        /**
+</span>         * Elements that accept text nodes, but are not possible to edit into
+         * the browser.
+         * @type {Object}
+         */
+        $nonEditable : {
+            &quot;applet&quot;:1,&quot;button&quot;:1,&quot;embed&quot;:1,&quot;iframe&quot;:1,&quot;map&quot;:1,
+            &quot;object&quot;:1,&quot;option&quot;:1,&quot;script&quot;:1,&quot;textarea&quot;:1,&quot;param&quot;:1
+        },
+
+<span id='KISSY-HtmlParser-Dtd-property-S-removeEmpty'>        /**
+</span>         * List of elements that can be ignored if empty, like &quot;b&quot; or &quot;span&quot;.
+         * @type {Object}
+         */
+        $removeEmpty : {
+            &quot;abbr&quot;:1,&quot;acronym&quot;:1,&quot;address&quot;:1,&quot;b&quot;:1,&quot;bdo&quot;:1,&quot;big&quot;:1,
+            &quot;cite&quot;:1,&quot;code&quot;:1,&quot;del&quot;:1,&quot;dfn&quot;:1,&quot;em&quot;:1,&quot;font&quot;:1,&quot;i&quot;:1,&quot;ins&quot;:1,
+            &quot;label&quot;:1,&quot;kbd&quot;:1,&quot;q&quot;:1,&quot;s&quot;:1,&quot;samp&quot;:1,&quot;small&quot;:1,&quot;span&quot;:1,&quot;strike&quot;:1,
+            &quot;strong&quot;:1,&quot;sub&quot;:1,&quot;sup&quot;:1,&quot;tt&quot;:1,&quot;u&quot;:1,'var':1
+        },
+
+<span id='KISSY-HtmlParser-Dtd-property-S-tabIndex'>        /**
+</span>         * List of elements that have tabindex set to zero by default.
+         * @type {Object}
+         */
+        $tabIndex : {
+            &quot;a&quot;:1,&quot;area&quot;:1,&quot;button&quot;:1,
+            &quot;input&quot;:1,&quot;object&quot;:1,&quot;select&quot;:1,
+            &quot;textarea&quot;:1
+        },
+
+<span id='KISSY-HtmlParser-Dtd-property-S-tableContent'>        /**
+</span>         * List of elements used inside the &quot;table&quot; element, like &quot;tbody&quot; or &quot;td&quot;.
+         * @type {Object}
+         */
+        $tableContent : {
+            &quot;caption&quot;:1,&quot;col&quot;:1,&quot;colgroup&quot;:1,
+            &quot;tbody&quot;:1,&quot;td&quot;:1,&quot;tfoot&quot;:1,
+            &quot;th&quot;:1,&quot;thead&quot;:1,&quot;tr&quot;:1
+        },
+<span id='KISSY-HtmlParser-Dtd-property-html'>        /**
+</span>         * List of elements used inside the &quot;html&quot; element
+         * @type {Object}
+         */
+        &quot;html&quot;: U,
+<span id='KISSY-HtmlParser-Dtd-property-head'>        /**
+</span>         * List of elements used inside the &quot;head&quot; element
+         * @type {Object}
+         */
+        &quot;head&quot;: T,
+<span id='KISSY-HtmlParser-Dtd-property-style'>        /**
+</span>         * List of elements used inside the &quot;style&quot; element
+         * @type {Object}
+         */
+        &quot;style&quot;: N,
+<span id='KISSY-HtmlParser-Dtd-property-body'>        /**
+</span>         * List of elements used inside the &quot;body&quot; element
+         * @type {Object}
+         */
+        &quot;body&quot;: P,
+<span id='KISSY-HtmlParser-Dtd-property-base'>        /**
+</span>         * List of elements used inside the &quot;base&quot; element
+         * @type {Object}
+         */
+        &quot;base&quot;: {},
+<span id='KISSY-HtmlParser-Dtd-property-link'>        /**
+</span>         * List of elements used inside the &quot;link&quot; element
+         * @type {Object}
+         */
+        &quot;link&quot;: {},
+<span id='KISSY-HtmlParser-Dtd-property-meta'>        /**
+</span>         * List of elements used inside the &quot;meta&quot; element
+         * @type {Object}
+         */
+        &quot;meta&quot;: {},
+<span id='KISSY-HtmlParser-Dtd-property-title'>        /**
+</span>         * List of elements used inside the &quot;title&quot; element
+         * @type {Object}
+         */
+        &quot;title&quot;: N,
+<span id='KISSY-HtmlParser-Dtd-property-col'>        /**
+</span>         * List of elements used inside the &quot;col&quot; element
+         * @type {Object}
+         */
+        &quot;col&quot;: {},
+<span id='KISSY-HtmlParser-Dtd-property-tr'>        /**
+</span>         * List of elements used inside the &quot;tr&quot; element
+         * @type {Object}
+         */
+        &quot;tr&quot;: {
+            &quot;td&quot;:1,
+            &quot;th&quot;:1
+        },
+<span id='KISSY-HtmlParser-Dtd-property-img'>        /**
+</span>         * List of elements used inside the &quot;img&quot; element
+         * @type {Object}
+         */
+        &quot;img&quot;: {},
+<span id='KISSY-HtmlParser-Dtd-property-colgroup'>        /**
+</span>         * List of elements used inside the &quot;colgroup&quot; element
+         * @type {Object}
+         */
+        &quot;colgroup&quot;: {&quot;col&quot;:1},
+<span id='KISSY-HtmlParser-Dtd-property-noscript'>        /**
+</span>         * List of elements used inside the &quot;noscript&quot; element
+         * @type {Object}
+         */
+        &quot;noscript&quot;: P,
+<span id='KISSY-HtmlParser-Dtd-property-td'>        /**
+</span>         * List of elements used inside the &quot;td&quot; element
+         * @type {Object}
+         */
+        &quot;td&quot;: P,
+<span id='KISSY-HtmlParser-Dtd-property-br'>        /**
+</span>         * List of elements used inside the &quot;br&quot; element
+         * @type {Object}
+         */
+        &quot;br&quot;: {},
+<span id='KISSY-HtmlParser-Dtd-property-th'>        /**
+</span>         * List of elements used inside the &quot;th&quot; element
+         * @type {Object}
+         */
+        &quot;th&quot;: P,
+<span id='KISSY-HtmlParser-Dtd-property-center'>        /**
+</span>         * List of elements used inside the &quot;center&quot; element
+         * @type {Object}
+         */
+        &quot;center&quot;: P,
+<span id='KISSY-HtmlParser-Dtd-property-kbd'>        /**
+</span>         * List of elements used inside the &quot;kbd&quot; element
+         * @type {Object}
+         */
+        &quot;kbd&quot;: L,
+<span id='KISSY-HtmlParser-Dtd-property-button'>        /**
+</span>         * List of elements used inside the &quot;button&quot; element
+         * @type {Object}
+         */
+        &quot;button&quot;: merge(I, E),
+<span id='KISSY-HtmlParser-Dtd-property-basefont'>        /**
+</span>         * List of elements used inside the &quot;basefont&quot; element
+         * @type {Object}
+         */
+        &quot;basefont&quot;: {},
+<span id='KISSY-HtmlParser-Dtd-property-h5'>        /**
+</span>         * List of elements used inside the &quot;h5&quot; element
+         * @type {Object}
+         */
+        &quot;h5&quot;: L,
+<span id='KISSY-HtmlParser-Dtd-property-h4'>        /**
+</span>         * List of elements used inside the &quot;h4&quot; element
+         * @type {Object}
+         */
+        &quot;h4&quot;: L,
+<span id='KISSY-HtmlParser-Dtd-property-samp'>        /**
+</span>         * List of elements used inside the &quot;samp&quot; element
+         * @type {Object}
+         */
+        &quot;samp&quot;: L,
+<span id='KISSY-HtmlParser-Dtd-property-h6'>        /**
+</span>         * List of elements used inside the &quot;h6&quot; element
+         * @type {Object}
+         */
+        &quot;h6&quot;: L,
+<span id='KISSY-HtmlParser-Dtd-property-ol'>        /**
+</span>         * List of elements used inside the &quot;ol&quot; element
+         * @type {Object}
+         */
+        &quot;ol&quot;: Q,
+<span id='KISSY-HtmlParser-Dtd-property-h1'>        /**
+</span>         * List of elements used inside the &quot;h1&quot; element
+         * @type {Object}
+         */
+        &quot;h1&quot;: L,
+<span id='KISSY-HtmlParser-Dtd-property-h3'>        /**
+</span>         * List of elements used inside the &quot;h3&quot; element
+         * @type {Object}
+         */
+        &quot;h3&quot;: L,
+<span id='KISSY-HtmlParser-Dtd-property-option'>        /**
+</span>         * List of elements used inside the &quot;option&quot; element
+         * @type {Object}
+         */
+        &quot;option&quot;: N,
+<span id='KISSY-HtmlParser-Dtd-property-h2'>        /**
+</span>         * List of elements used inside the &quot;h2&quot; element
+         * @type {Object}
+         */
+        &quot;h2&quot;: L,
+<span id='KISSY-HtmlParser-Dtd-property-form'>        /**
+</span>         * List of elements used inside the &quot;form&quot; element
+         * @type {Object}
+         */
+        &quot;form&quot; : merge(A, D, E, I),
+<span id='KISSY-HtmlParser-Dtd-property-select'>        /**
+</span>         * List of elements used inside the &quot;select&quot; element
+         * @type {Object}
+         */
+        &quot;select&quot; : {
+            &quot;optgroup&quot;:1,
+            &quot;option&quot;:1
+        },
+<span id='KISSY-HtmlParser-Dtd-property-font'>        /**
+</span>         * List of elements used inside the &quot;font&quot; element
+         * @type {Object}
+         */
+        &quot;font&quot; : L,
+<span id='KISSY-HtmlParser-Dtd-property-ins'>        /**
+</span>         * List of elements used inside the &quot;ins&quot; element
+         * @type {Object}
+         */
+        &quot;ins&quot;: L,
+<span id='KISSY-HtmlParser-Dtd-property-menu'>        /**
+</span>         * List of elements used inside the &quot;menu&quot; element
+         * @type {Object}
+         */
+        &quot;menu&quot; : Q,
+<span id='KISSY-HtmlParser-Dtd-property-abbr'>        /**
+</span>         * List of elements used inside the &quot;abbr&quot; element
+         * @type {Object}
+         */
+        &quot;abbr&quot;: L,
+<span id='KISSY-HtmlParser-Dtd-property-label'>        /**
+</span>         * List of elements used inside the &quot;label&quot; element
+         * @type {Object}
+         */
+        &quot;label&quot;: L,
+<span id='KISSY-HtmlParser-Dtd-property-table'>        /**
+</span>         * List of elements used inside the &quot;table&quot; element
+         * @type {Object}
+         */
+        &quot;table&quot;: {
+            &quot;thead&quot;:1,
+            &quot;col&quot;:1,
+            &quot;tbody&quot;:1,
+            &quot;tr&quot;:1,
+            &quot;colgroup&quot;:1,
+            &quot;caption&quot;:1,
+            &quot;tfoot&quot;:1
+        },
+<span id='KISSY-HtmlParser-Dtd-property-code'>        /**
+</span>         * List of elements used inside the &quot;code&quot; element
+         * @type {Object}
+         */
+        &quot;code&quot;: L,
+<span id='KISSY-HtmlParser-Dtd-property-script'>        /**
+</span>         * List of elements used inside the &quot;script&quot; element
+         * @type {Object}
+         */
+        &quot;script&quot;: N,
+<span id='KISSY-HtmlParser-Dtd-property-tfoot'>        /**
+</span>         * List of elements used inside the &quot;tfoot&quot; element
+         * @type {Object}
+         */
+        &quot;tfoot&quot;: M,
+<span id='KISSY-HtmlParser-Dtd-property-cite'>        /**
+</span>         * List of elements used inside the &quot;cite&quot; element
+         * @type {Object}
+         */
+        &quot;cite&quot;: L,
+<span id='KISSY-HtmlParser-Dtd-property-li'>        /**
+</span>         * List of elements used inside the &quot;li&quot; element
+         * @type {Object}
+         */
+        &quot;li&quot;: P,
+<span id='KISSY-HtmlParser-Dtd-property-input'>        /**
+</span>         * List of elements used inside the &quot;input&quot; element
+         * @type {Object}
+         */
+        &quot;input&quot;: {},
+<span id='KISSY-HtmlParser-Dtd-property-iframe'>        /**
+</span>         * List of elements used inside the &quot;iframe&quot; element
+         * @type {Object}
+         */
+        &quot;iframe&quot;: P,
+<span id='KISSY-HtmlParser-Dtd-property-strong'>        /**
+</span>         * List of elements used inside the &quot;strong&quot; element
+         * @type {Object}
+         */
+        &quot;strong&quot;: L,
+<span id='KISSY-HtmlParser-Dtd-property-textarea'>        /**
+</span>         * List of elements used inside the &quot;textarea&quot; element
+         * @type {Object}
+         */
+        &quot;textarea&quot;: N,
+<span id='KISSY-HtmlParser-Dtd-property-noframes'>        /**
+</span>         * List of elements used inside the &quot;noframes&quot; element
+         * @type {Object}
+         */
+        &quot;noframes&quot;: P,
+<span id='KISSY-HtmlParser-Dtd-property-big'>        /**
+</span>         * List of elements used inside the &quot;big&quot; element
+         * @type {Object}
+         */
+        &quot;big&quot;: L,
+<span id='KISSY-HtmlParser-Dtd-property-small'>        /**
+</span>         * List of elements used inside the &quot;small&quot; element
+         * @type {Object}
+         */
+        &quot;small&quot;: L,
+<span id='KISSY-HtmlParser-Dtd-property-span'>        /**
+</span>         * List of elements used inside the &quot;span&quot; element
+         * @type {Object}
+         */
+        &quot;span&quot;: L,
+<span id='KISSY-HtmlParser-Dtd-property-hr'>        /**
+</span>         * List of elements used inside the &quot;hr&quot; element
+         * @type {Object}
+         */
+        &quot;hr&quot;: {},
+<span id='KISSY-HtmlParser-Dtd-property-dt'>        /**
+</span>         * List of elements used inside the &quot;dt&quot; element
+         * @type {Object}
+         */
+        &quot;dt&quot;: L,
+<span id='KISSY-HtmlParser-Dtd-property-sub'>        /**
+</span>         * List of elements used inside the &quot;sub&quot; element
+         * @type {Object}
+         */
+        &quot;sub&quot;: L,
+<span id='KISSY-HtmlParser-Dtd-property-optgroup'>        /**
+</span>         * List of elements used inside the &quot;optgroup&quot; element
+         * @type {Object}
+         */
+        &quot;optgroup&quot;: {&quot;option&quot;:1},
+<span id='KISSY-HtmlParser-Dtd-property-param'>        /**
+</span>         * List of elements used inside the &quot;param&quot; element
+         * @type {Object}
+         */
+        &quot;param&quot;: {},
+<span id='KISSY-HtmlParser-Dtd-property-bdo'>        /**
+</span>         * List of elements used inside the &quot;bdo&quot; element
+         * @type {Object}
+         */
+        &quot;bdo&quot;: L,
+<span id='KISSY-HtmlParser-Dtd-property-var'>        /**
+</span>         * List of elements used inside the &quot;var&quot; element
+         * @type {Object}
+         */
+        'var' : L,
+<span id='KISSY-HtmlParser-Dtd-property-div'>        /**
+</span>         * List of elements used inside the &quot;div&quot; element
+         * @type {Object}
+         */
+        &quot;div&quot;: P,
+<span id='KISSY-HtmlParser-Dtd-property-object'>        /**
+</span>         * List of elements used inside the &quot;object&quot; element
+         * @type {Object}
+         */
+        &quot;object&quot;: O,
+<span id='KISSY-HtmlParser-Dtd-property-sup'>        /**
+</span>         * List of elements used inside the &quot;sup&quot; element
+         * @type {Object}
+         */
+        &quot;sup&quot;: L,
+<span id='KISSY-HtmlParser-Dtd-property-dd'>        /**
+</span>         * List of elements used inside the &quot;dd&quot; element
+         * @type {Object}
+         */
+        &quot;dd&quot;: P,
+<span id='KISSY-HtmlParser-Dtd-property-strike'>        /**
+</span>         * List of elements used inside the &quot;strike&quot; element
+         * @type {Object}
+         */
+        &quot;strike&quot;: L,
+<span id='KISSY-HtmlParser-Dtd-property-area'>        /**
+</span>         * List of elements used inside the &quot;area&quot; element
+         * @type {Object}
+         */
+        &quot;area&quot;: {},
+<span id='KISSY-HtmlParser-Dtd-property-dir'>        /**
+</span>         * List of elements used inside the &quot;dir&quot; element
+         * @type {Object}
+         */
+        &quot;dir&quot;: Q,
+<span id='KISSY-HtmlParser-Dtd-property-map'>        /**
+</span>         * List of elements used inside the &quot;map&quot; element
+         * @type {Object}
+         */
+        &quot;map&quot;: merge({&quot;area&quot;:1,&quot;form&quot;:1,&quot;p&quot;:1}, A, F, E),
+<span id='KISSY-HtmlParser-Dtd-property-applet'>        /**
+</span>         * List of elements used inside the &quot;applet&quot; element
+         * @type {Object}
+         */
+        &quot;applet&quot;: O,
+<span id='KISSY-HtmlParser-Dtd-property-dl'>        /**
+</span>         * List of elements used inside the &quot;dl&quot; element
+         * @type {Object}
+         */
+        &quot;dl&quot;: {&quot;dt&quot;:1,&quot;dd&quot;:1},
+<span id='KISSY-HtmlParser-Dtd-property-del'>        /**
+</span>         * List of elements used inside the &quot;del&quot; element
+         * @type {Object}
+         */
+        &quot;del&quot;: L,
+<span id='KISSY-HtmlParser-Dtd-property-isindex'>        /**
+</span>         * List of elements used inside the &quot;isindex&quot; element
+         * @type {Object}
+         */
+        &quot;isindex&quot;: {},
+<span id='KISSY-HtmlParser-Dtd-property-fieldset'>        /**
+</span>         * List of elements used inside the &quot;fieldset&quot; element
+         * @type {Object}
+         */
+        &quot;fieldset&quot;: merge({
+            legend:1
+        }, K),
+<span id='KISSY-HtmlParser-Dtd-property-thead'>        /**
+</span>         * List of elements used inside the &quot;thead&quot; element
+         * @type {Object}
+         */
+        &quot;thead&quot;: M,
+<span id='KISSY-HtmlParser-Dtd-property-ul'>        /**
+</span>         * List of elements used inside the &quot;ul&quot; element
+         * @type {Object}
+         */
+        &quot;ul&quot;: Q,
+<span id='KISSY-HtmlParser-Dtd-property-acronym'>        /**
+</span>         * List of elements used inside the &quot;acronym&quot; element
+         * @type {Object}
+         */
+        &quot;acronym&quot;: L,
+<span id='KISSY-HtmlParser-Dtd-property-b'>        /**
+</span>         * List of elements used inside the &quot;b&quot; element
+         * @type {Object}
+         */
+        &quot;b&quot;: L,
+<span id='KISSY-HtmlParser-Dtd-property-a'>        /**
+</span>         * List of elements used inside the &quot;a&quot; element
+         * @type {Object}
+         */
+        &quot;a&quot;: J,
+<span id='KISSY-HtmlParser-Dtd-property-blockquote'>        /**
+</span>         * List of elements used inside the &quot;blockquote&quot; element
+         * @type {Object}
+         */
+        &quot;blockquote&quot;: P,
+<span id='KISSY-HtmlParser-Dtd-property-caption'>        /**
+</span>         * List of elements used inside the &quot;caption&quot; element
+         * @type {Object}
+         */
+        &quot;caption&quot;: L,
+<span id='KISSY-HtmlParser-Dtd-property-i'>        /**
+</span>         * List of elements used inside the &quot;i&quot; element
+         * @type {Object}
+         */
+        &quot;i&quot;: L,
+<span id='KISSY-HtmlParser-Dtd-property-u'>        /**
+</span>         * List of elements used inside the &quot;u&quot; element
+         * @type {Object}
+         */
+        &quot;u&quot;: L,
+<span id='KISSY-HtmlParser-Dtd-property-tbody'>        /**
+</span>         * List of elements used inside the &quot;tbody&quot; element
+         * @type {Object}
+         */
+        &quot;tbody&quot;: M,
+<span id='KISSY-HtmlParser-Dtd-property-s'>        /**
+</span>         * List of elements used inside the &quot;s&quot; element
+         * @type {Object}
+         */
+        &quot;s&quot;: L,
+<span id='KISSY-HtmlParser-Dtd-property-address'>        /**
+</span>         * List of elements used inside the &quot;address&quot; element
+         * @type {Object}
+         */
+        &quot;address&quot;: merge(D, I),
+<span id='KISSY-HtmlParser-Dtd-property-tt'>        /**
+</span>         * List of elements used inside the &quot;tt&quot; element
+         * @type {Object}
+         */
+        &quot;tt&quot;: L,
+<span id='KISSY-HtmlParser-Dtd-property-legend'>        /**
+</span>         * List of elements used inside the &quot;legend&quot; element
+         * @type {Object}
+         */
+        &quot;legend&quot;: L,
+<span id='KISSY-HtmlParser-Dtd-property-q'>        /**
+</span>         * List of elements used inside the &quot;q&quot; element
+         * @type {Object}
+         */
+        &quot;q&quot;: L,
+<span id='KISSY-HtmlParser-Dtd-property-pre'>        /**
+</span>         * List of elements used inside the &quot;pre&quot; element
+         * @type {Object}
+         */
+        &quot;pre&quot;: merge(G, C),
+<span id='KISSY-HtmlParser-Dtd-property-p'>        /**
+</span>         * List of elements used inside the &quot;p&quot; element
+         * @type {Object}
+         */
+        &quot;p&quot;: L,
+<span id='KISSY-HtmlParser-Dtd-property-em'>        /**
+</span>         * List of elements used inside the &quot;em&quot; element
+         * @type {Object}
+         */
+        &quot;em&quot;: L,
+<span id='KISSY-HtmlParser-Dtd-property-dfn'>        /**
+</span>         * List of elements used inside the &quot;dfn&quot; element
+         * @type {Object}
+         */
+        &quot;dfn&quot;: L
+    };
+    
+    (function() {
+        var i,
+            html_tags = [
+                &quot;article&quot;,&quot;figure&quot;,&quot;nav&quot;,
+                &quot;aside&quot;,&quot;section&quot;,&quot;footer&quot;
+            ];
+
+        for (var p in dtd) {
+            for (var p2 in dtd[p]) {
+                if (p2 == &quot;div&quot;) {
+                    for (i = 0; i &lt; html_tags.length; i++) {
+                        dtd[p][html_tags[i]] = dtd[p][p2];
+                    }
+                }
+            }
+        }
+
+        for (i = 0; i &lt; html_tags.length; i++) {
+            dtd[html_tags[i]] = dtd[&quot;div&quot;];
+        }
+
+        dtd.$empty['!doctype'] = 1;
+    })();
+
+    return dtd;
+});
+</pre>
+</body>
+</html>

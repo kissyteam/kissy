@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * link utils
  * @author yiminghe@gmail.com
  */

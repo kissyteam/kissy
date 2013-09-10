@@ -1,8 +1,14 @@
 /**
+ * @ignore
  * filter dom tree to html string form,api designed by ckeditor
  * @author yiminghe@gmail.com
  */
 KISSY.add("html-parser/writer/filter", function (S) {
+
+    /**
+     * Filter for Html Parse Writer
+     * @class KISSY.HtmlParse.Filter
+     */
     function Filter() {
         // {priority: ?, value:?}
         this.tagNames = [];
@@ -74,7 +80,6 @@ KISSY.add("html-parser/writer/filter", function (S) {
     }
 
     Filter.prototype = {
-
         constructor: Filter,
 
         /**

@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * Maximize plugin
  * @author yiminghe@gmail.com
  */

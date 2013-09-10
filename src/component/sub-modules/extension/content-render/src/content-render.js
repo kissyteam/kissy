@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * common content box render
  * @author yiminghe@gmail.com
  */

@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * fontSize command.
  * @author yiminghe@gmail.com
  */

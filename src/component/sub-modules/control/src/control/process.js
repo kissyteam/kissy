@@ -8,26 +8,8 @@ KISSY.add('component/control/process', function (S, Base, Promise) {
         __getHook = Base.prototype.__getHook,
         noop = S.noop;
 
-
-    function syncUIs(self) {
-        /**
-         * @event beforeSyncUI
-         * fired before component 's internal state is synchronized.
-         * @param {KISSY.Event.CustomEventObject} e
-         */
-        self.fire('beforeSyncUI');
-        self.syncUI();
-        self.__callPluginsMethod('pluginSyncUI');
-        /**
-         * @event afterSyncUI
-         * fired after component 's internal state is synchronized.
-         * @param {KISSY.Event.CustomEventObject} e
-         */
-        self.fire('afterSyncUI');
-    }
-
     /**
-     * @class KISSY.Component.ComponentProcess
+     * @class KISSY.Component.Process
      * @extends KISSY.Base
      */
     var ComponentProcess = Base.extend({
@@ -202,6 +184,23 @@ KISSY.add('component/control/process', function (S, Base, Promise) {
             }
         }
     });
+
+    function syncUIs(self) {
+        /**
+         * @event beforeSyncUI
+         * fired before component 's internal state is synchronized.
+         * @param {KISSY.Event.CustomEventObject} e
+         */
+        self.fire('beforeSyncUI');
+        self.syncUI();
+        self.__callPluginsMethod('pluginSyncUI');
+        /**
+         * @event afterSyncUI
+         * fired after component 's internal state is synchronized.
+         * @param {KISSY.Event.CustomEventObject} e
+         */
+        self.fire('afterSyncUI');
+    }
 
     return ComponentProcess;
 }, {

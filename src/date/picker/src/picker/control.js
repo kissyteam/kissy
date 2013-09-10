@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * year panel for date picker
  * @author yiminghe@gmail.com
  */

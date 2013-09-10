@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * type judgement
+ * @author yiminghe@gmail.com, lifesinger@gmail.com
+ *
+ */
+(function (S, undefined) {
+    // [[Class]] -&gt; type pairs
+    var class2type = {},
+        FALSE = false,
+        noop = S.noop,
+        OP = Object.prototype,
+        toString = OP.toString;
+
+    function hasOwnProperty(o, p) {
+        return OP.hasOwnProperty.call(o, p);
+    }
+
+    S.mix(S, {
+<span id='KISSY-method-type'>        /**
+</span>         * Determine the internal JavaScript [[Class]] of an object.
+         * @member KISSY
+         */
+        type: function (o) {
+            return o == null ?
+                String(o) :
+                class2type[toString.call(o)] || 'object';
+        },
+
+<span id='KISSY-method-isNull'>        /**
+</span>         * whether o === null
+         * @param o
+         * @member KISSY
+         */
+        isNull: function (o) {
+            return o === null;
+        },
+
+<span id='KISSY-method-isUndefined'>        /**
+</span>         * whether o === undefined
+         * @param o
+         * @member KISSY
+         */
+        isUndefined: function (o) {
+            return o === undefined;
+        },
+
+<span id='KISSY-method-isEmptyObject'>        /**
+</span>         * Checks to see if an object is empty.
+         * @member KISSY
+         */
+        isEmptyObject: function (o) {
+            for (var p in o) {
+                if (p !== undefined) {
+                    return FALSE;
+                }
+            }
+            return true;
+        },
+
+<span id='KISSY-method-isPlainObject'>        /**
+</span>         * Checks to see if an object is a plain object (created using '{}'
+         * or 'new Object()' but not 'new FunctionClass()').
+         * @member KISSY
+         */
+        isPlainObject: function (obj) {
+            // Must be an Object.
+            // Because of IE, we also have to check the presence of the constructor property.
+            // Make sure that Dom nodes and window objects don't pass through, as well
+            if (!obj || S.type(obj) !== &quot;object&quot; || obj.nodeType || obj.window == obj) {
+                return FALSE;
+            }
+
+            var key, objConstructor;
+
+            try {
+                // Not own constructor property must be Object
+                if ((objConstructor = obj.constructor) &amp;&amp; !hasOwnProperty(obj, &quot;constructor&quot;) &amp;&amp; !hasOwnProperty(objConstructor.prototype, &quot;isPrototypeOf&quot;)) {
+                    return FALSE;
+                }
+            } catch (e) {
+                // IE8,9 Will throw exceptions on certain host objects
+                return FALSE;
+            }
+
+            // Own properties are enumerated firstly, so to speed up,
+            // if last one is own, then all properties are own.
+
+
+            for (key in obj) {
+            }
+
+            return key === undefined || hasOwnProperty(obj, key);
+        }
+    });
+
+    if ('@DEBUG@') {
+        S.mix(S, {
+<span id='KISSY-method-isBoolean'>            /**
+</span>             * test whether o is boolean
+             * @method
+             * @param  o
+             * @return {Boolean}
+             * @member KISSY
+             */
+            isBoolean: noop,
+<span id='KISSY-method-isNumber'>            /**
+</span>             * test whether o is number
+             * @method
+             * @param  o
+             * @return {Boolean}
+             * @member KISSY
+             */
+            isNumber: noop,
+<span id='KISSY-method-isString'>            /**
+</span>             * test whether o is String
+             * @method
+             * @param  o
+             * @return {Boolean}
+             * @member KISSY
+             */
+            isString: noop,
+<span id='KISSY-method-isFunction'>            /**
+</span>             * test whether o is function
+             * @method
+             * @param  o
+             * @return {Boolean}
+             * @member KISSY
+             */
+            isFunction: noop,
+<span id='KISSY-method-isArray'>            /**
+</span>             * test whether o is Array
+             * @method
+             * @param  o
+             * @return {Boolean}
+             * @member KISSY
+             */
+            isArray: noop,
+<span id='KISSY-method-isDate'>            /**
+</span>             * test whether o is Date
+             * @method
+             * @param  o
+             * @return {Boolean}
+             * @member KISSY
+             */
+            isDate: noop,
+<span id='KISSY-method-isRegExp'>            /**
+</span>             * test whether o is RegExp
+             * @method
+             * @param  o
+             * @return {Boolean}
+             * @member KISSY
+             */
+            isRegExp: noop,
+<span id='KISSY-method-isObject'>            /**
+</span>             * test whether o is Object
+             * @method
+             * @param  o
+             * @return {Boolean}
+             * @member KISSY
+             */
+            isObject: noop
+        });
+    }
+
+    S.each('Boolean Number String Function Date RegExp Object Array'.split(' '), function (name, lc) {
+        // populate the class2type map
+        class2type['[object ' + name + ']'] = (lc = name.toLowerCase());
+
+        // add isBoolean/isNumber/...
+        S['is' + name] = function (o) {
+            return S.type(o) == lc;
+        }
+    });
+    S.isArray = Array.isArray || S.isArray;
+})(KISSY);</pre>
+</body>
+</html>

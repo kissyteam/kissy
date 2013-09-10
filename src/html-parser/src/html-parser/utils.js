@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * utils about language for html parser
  * @author yiminghe@gmail.com
  */
@@ -10,8 +11,8 @@ KISSY.add("html-parser/utils", function() {
         isLetter:function(ch) {
             return 'a' <= ch && 'z' >= ch || 'A' <= ch && 'Z' >= ch;
         },
-        /**
-         * refer: http://www.w3.org/TR/html5/syntax.html#attributes-0
+        /*
+          refer: http://www.w3.org/TR/html5/syntax.html#attributes-0
          */
         isValidAttributeNameStartChar:function(ch) {
             return !this.isWhitespace(ch) &&
@@ -22,10 +23,7 @@ KISSY.add("html-parser/utils", function() {
                 ch != '/' &&
                 ch != '=';
         },
-        /**
-         *
-         * @param ch
-         */
+
         isWhitespace:function(ch) {
             // http://yiminghe.iteye.com/admin/blogs/722786
             // http://yiminghe.iteye.com/admin/blogs/788929
@@ -38,7 +36,7 @@ KISSY.add("html-parser/utils", function() {
         }
     };
 });
-/**
- * refer:
- *  -  http://www.w3.org/TR/html5/syntax.html
- **/
+/*
+  refer:
+   -  http://www.w3.org/TR/html5/syntax.html
+ */

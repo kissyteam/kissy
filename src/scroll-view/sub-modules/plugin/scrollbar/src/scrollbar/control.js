@@ -3,7 +3,6 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add('scroll-view/plugin/scrollbar/control', function (S, Node, Control, ScrollBarRender) {
-
     var MIN_BAR_LENGTH = 20;
 
     var SCROLLBAR_EVENT_NS = '.ks-scrollbar';
@@ -14,6 +13,9 @@ KISSY.add('scroll-view/plugin/scrollbar/control', function (S, Node, Control, Sc
 
     var allowDrag = !Features.isTouchEventSupported() && !Features.isMsPointerSupported();
 
+    /**
+     * @class KISSY.ScrollView.ScrollBar
+     */
     return Control.extend({
         initializer: function () {
             var self = this;

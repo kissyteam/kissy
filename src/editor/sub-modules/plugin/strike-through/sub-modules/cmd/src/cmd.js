@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * strike-through command
  * @author yiminghe@gmail.com
  */

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * Adds a heading tag around a selection or insertion point line.
+ * Requires the tag-name string to be passed in as a value argument (i.e. &quot;H1&quot;, &quot;H6&quot;)
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(&quot;editor/plugin/heading/cmd&quot;, function (S, Editor) {
+    return {
+        init:function (editor) {
+            if (!editor.hasCommand(&quot;heading&quot;)) {
+                editor.addCommand(&quot;heading&quot;, {
+                    exec:function (editor, tag) {
+                        editor.execCommand(&quot;save&quot;);
+                        if (tag != &quot;p&quot;) {
+                            var currentValue = editor.queryCommandValue(&quot;heading&quot;);
+                        }
+                        if (tag == currentValue) {
+                            tag = &quot;p&quot;;
+                        }
+                        new Editor.Style({
+                            element:tag
+                        }).apply(editor.get(&quot;document&quot;)[0]);
+                        editor.execCommand(&quot;save&quot;);
+                    }
+                });
+
+                var queryCmd = Editor.Utils.getQueryCmd(&quot;heading&quot;);
+
+                editor.addCommand(queryCmd, {
+                    exec:function (editor) {
+                        var selection = editor.getSelection();
+                        if (selection &amp;&amp; !selection.isInvalid) {
+                            var startElement = selection.getStartElement();
+                            var currentPath = new Editor.ElementPath(startElement);
+                            var block = currentPath.block || currentPath.blockLimit;
+                            var nodeName = block &amp;&amp; block.nodeName() || &quot;&quot;;
+                            if (nodeName.match(/^h\d$/) || nodeName == &quot;p&quot;) {
+                                return nodeName;
+                            }
+                        }
+                    }
+                });
+            }
+
+
+        }
+    };
+}, {
+    requires:['editor']
+});</pre>
+</body>
+</html>

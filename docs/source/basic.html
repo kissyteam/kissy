@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * basic writer for inheritance
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(&quot;html-parser/writer/basic&quot;, function () {
+    function escapeAttrValue(str) {
+        return String(str).replace(/&quot;/g, &quot;&amp;quote;&quot;);
+    }
+
+<span id='KISSY-HtmlParse-BasicWriter'>    /**
+</span>     * BasicWriter for html content
+     * @class KISSY.HtmlParse.BasicWriter
+     */
+    function BasicWriter() {
+        this.output = [];
+    }
+
+    BasicWriter.prototype = {
+        constructor: BasicWriter,
+
+        append: function () {
+            var o = this.output,
+                args = (arguments),
+                arg;
+            for (var i = 0; i &lt; args.length; i++) {
+                arg = args[i];
+                if (arg.length &gt; 1) {
+                    for (var j = 0; j &lt; arg.length; j++) {
+                        o.push(arg.charAt(j));
+                    }
+                } else {
+                    o.push(arg);
+                }
+            }
+            return this;
+        },
+
+        openTag: function (el) {
+            this.append(&quot;&lt;&quot;, el.tagName);
+        },
+
+        openTagClose: function (el) {
+            if (el.isSelfClosed) {
+                this.append(&quot; &quot;, &quot;/&quot;);
+            }
+            this.append(&quot;&gt;&quot;);
+        },
+
+        closeTag: function (el) {
+            this.append(&quot;&lt;\/&quot;, el.tagName, &quot;&gt;&quot;);
+        },
+
+        attribute: function (attr) {
+            this.append(&quot; &quot;,
+                attr.name,
+                &quot;=\&quot;&quot;,
+                escapeAttrValue(attr.value || attr.name),
+                &quot;\&quot;&quot;);
+        },
+
+        text: function (text) {
+            this.append(text);
+        },
+
+        cdata: function (cdata) {
+            this.append(cdata);
+        },
+
+        comment: function (comment) {
+            this.append(&quot;&lt;!--&quot; + comment + &quot;--&gt;&quot;);
+        },
+
+        getHtml: function () {
+            return this.output.join(&quot;&quot;);
+        }
+
+    };
+
+    return BasicWriter;
+});</pre>
+</body>
+</html>

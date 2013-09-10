@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * link dialog
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(&quot;editor/plugin/link/dialog&quot;, function (S, Editor, Dialog4E, Utils) {
+    var _ke_saved_href = Utils._ke_saved_href,
+        bodyHTML = &quot;&lt;div style='padding:20px 20px 0 20px'&gt;&quot; +
+            &quot;&lt;p&gt;&quot; +
+            &quot;&lt;label&gt;&quot; +
+            &quot;链接网址： &quot; +
+            &quot;&lt;input &quot; +
+            &quot; data-verify='^(https?://[^\\s]+)|(#.+)$' &quot; +
+            &quot; data-warning='请输入合适的网址格式' &quot; +
+            &quot;class='{prefixCls}editor-link-url {prefixCls}editor-input' &quot; +
+            &quot;style='width:390px;&quot; +
+            &quot;'&quot; +
+            &quot; /&gt;&quot; +
+            &quot;&lt;/label&gt;&quot; +
+            &quot;&lt;/p&gt;&quot; +
+            &quot;&lt;p &quot; +
+            &quot;style='margin: 15px 0 10px 0px;'&gt;&quot; +
+            &quot;&lt;label&gt;&quot; +
+            &quot;链接名称： &quot; +
+            &quot;&lt;input class='{prefixCls}editor-link-title {prefixCls}editor-input' style='width:100px;&quot; +
+            &quot;'&gt;&quot; +
+            &quot;&lt;/label&gt; &quot; +
+            &quot;&lt;label&gt;&quot; +
+            &quot;&lt;input &quot; +
+            &quot;class='{prefixCls}editor-link-blank' &quot; +
+            &quot;style='vertical-align: middle; margin-left: 21px;' &quot; +
+            &quot;type='checkbox'/&gt;&quot; +
+            &quot; &amp;nbsp; 在新窗口打开链接&quot; +
+            &quot;&lt;/label&gt;&quot; +
+            &quot;&lt;/p&gt;&quot; +
+            &quot;&lt;/div&gt;&quot;,
+        footHTML = &quot;&lt;div style='padding:5px 20px 20px;'&gt;&quot; +
+            &quot;&lt;a &quot; +
+            &quot;href='javascript:void(\'确定\')' &quot; +
+            &quot;class='{prefixCls}editor-link-ok {prefixCls}editor-button ks-inline-block' &quot; +
+            &quot;style='margin-left:65px;margin-right:20px;'&gt;确定&lt;/a&gt; &quot; +
+            &quot;&lt;a &quot; +
+            &quot;href='javascript:void(\'取消\')' &quot; +
+            &quot;class='{prefixCls}editor-link-cancel {prefixCls}editor-button ks-inline-block'&gt;取消&lt;/a&gt;&quot; +
+            &quot;&lt;/div&gt;&quot;;
+
+    function LinkDialog(editor,config) {
+        var self = this;
+        self.editor = editor;
+        self.config=config||{};
+        Editor.Utils.lazyRun(self, &quot;_prepareShow&quot;, &quot;_real&quot;);
+    }
+
+    S.augment(LinkDialog, {
+        _prepareShow:function () {
+            var self = this,
+                editor=self.editor,
+                prefixCls=editor.get('prefixCls'),
+                d = new Dialog4E({
+                    width:500,
+                    headerContent:&quot;链接&quot;,
+                    bodyContent: S.substitute(bodyHTML,{
+                        prefixCls:prefixCls
+                        }),
+                    footerContent:S.substitute(footHTML,{
+                        prefixCls:prefixCls
+                    }),
+                    mask:true
+                }).render();
+            self.dialog = d;
+            var body = d.get(&quot;body&quot;),
+                foot = d.get(&quot;footer&quot;);
+            d.urlEl = body.one(&quot;.&quot;+prefixCls+&quot;editor-link-url&quot;);
+            d.urlTitle = body.one(&quot;.&quot;+prefixCls+&quot;editor-link-title&quot;);
+            d.targetEl = body.one(&quot;.&quot;+prefixCls+&quot;editor-link-blank&quot;);
+            var cancel = foot.one(&quot;.&quot;+prefixCls+&quot;editor-link-cancel&quot;),
+                ok = foot.one(&quot;.&quot;+prefixCls+&quot;editor-link-ok&quot;);
+            ok.on(&quot;click&quot;, self._link, self);
+            cancel.on(&quot;click&quot;, function (ev) {
+                ev &amp;&amp; ev.halt();
+                d.hide();
+            });
+            Editor.Utils.placeholder(d.urlEl, &quot;http://&quot;);
+        },
+
+        _link:function (ev) {
+            ev.halt();
+            var self = this,
+                d = self.dialog,
+                url = d.urlEl.val();
+            if (!Editor.Utils.verifyInputs(d.get(&quot;el&quot;).all(&quot;input&quot;))) {
+                return;
+            }
+            d.hide();
+            var attr = {
+                href:url,
+                target:d.targetEl[0].checked ? &quot;_blank&quot; : &quot;_self&quot;,
+                title:S.trim(d.urlTitle.val())
+            };
+            // ie9 focus 不同步，hide后等会才能恢复焦点
+            setTimeout(function () {
+                Utils.applyLink(self.editor, attr, self._selectedEl);
+            }, 0);
+        },
+
+        _real:function () {
+            var self = this,
+                cfg = self.config,
+                d = self.dialog,
+                _selectedEl = self._selectedEl;
+            //是修改行为
+            if (_selectedEl) {
+                var url = _selectedEl.attr(_ke_saved_href) || _selectedEl.attr(&quot;href&quot;);
+                Editor.Utils.valInput(d.urlEl, url);
+                d.urlTitle.val(_selectedEl.attr(&quot;title&quot;) || &quot;&quot;);
+                d.targetEl[0].checked = (_selectedEl.attr(&quot;target&quot;) == &quot;_blank&quot;);
+            } else {
+                Editor.Utils.resetInput(d.urlEl);
+                d.urlTitle.val(&quot;&quot;);
+                if (cfg.target) {
+                    d.targetEl[0].checked = true;
+                }
+            }
+            d.show();
+        },
+        show:function (_selectedEl) {
+            var self = this;
+            self._selectedEl = _selectedEl;
+            self._prepareShow();
+        }
+    });
+    return LinkDialog;
+}, {
+    requires:['editor', '../dialog', './utils']
+});</pre>
+</body>
+</html>

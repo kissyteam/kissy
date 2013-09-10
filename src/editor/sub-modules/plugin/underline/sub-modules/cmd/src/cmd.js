@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * underline command
  * @author yiminghe@gmail.com
  */

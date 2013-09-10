@@ -1,5 +1,6 @@
 /**
- * abstract class for tag and text , comment .. etc
+ * @ignore
+ * abstract class for tag and text, comment .. etc
  * @author yiminghe@gmail.com
  */
 KISSY.add("html-parser/nodes/node", function (S) {

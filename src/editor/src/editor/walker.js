@@ -1,5 +1,6 @@
 /**
- * modified from ckeditor for kissy editor ,walker implementation
+ * @ignore
+ * walker implementation
  * refer: http://www.w3.org/TR/Dom-Level-2-Traversal-Range/traversal#TreeWalker
  * @author yiminghe@gmail.com
  */
@@ -157,11 +158,9 @@ KISSY.add("editor/walker", function (S, Editor) {
     }
 
     /**
-     * @name Walker
-     * @param {Editor.Range} range
-     * @class
      * Walker for Dom.
-     * @member Editor
+     * @class KISSY.Editor.Walker
+     * @param {Editor.Range} range
      */
     function Walker(range) {
         this.range = range;
@@ -172,7 +171,7 @@ KISSY.add("editor/walker", function (S, Editor) {
          * matched nodes are considered good.
          * If the function returns "FALSE" the node is ignored.
          * @type {Function}
-         * @member Editor.Walker#
+         * @member KISSY.Editor.Walker
          */
         this.evaluator = NULL;// 当前 range 范围内深度遍历的元素调用
 
@@ -183,7 +182,7 @@ KISSY.add("editor/walker", function (S, Editor) {
          * If this function returns "FALSE", the walking ends and no more
          * nodes are evaluated.
          * @type {Function}
-         * @member Editor.Walker#
+         * @member KISSY.Editor.Walker
          */
         this.guard = NULL;// 人为缩小当前 range 范围
 

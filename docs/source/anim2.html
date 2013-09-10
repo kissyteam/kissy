@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * anim-node-plugin
+ * @author yiminghe@gmail.com,
+ *         lifesinger@gmail.com,
+ *         qiaohua@taobao.com,
+ *
+ */
+KISSY.add('node/anim', function (S, Dom, Anim, Node, undefined) {
+    var FX = [
+        // height animations
+        [ 'height', 'margin-top', 'margin-bottom', 'padding-top', 'padding-bottom' ],
+        // width animations
+        [ 'width', 'margin-left', 'margin-right', 'padding-left', 'padding-right' ],
+        // opacity animations
+        [ 'opacity' ]
+    ];
+
+    function getFxs(type, num, from) {
+        var ret = [],
+            obj = {};
+        for (var i = from || 0; i &lt; num; i++) {
+            ret.push.apply(ret, FX[i]);
+        }
+        for (i = 0; i &lt; ret.length; i++) {
+            obj[ret[i]] = type;
+        }
+        return obj;
+    }
+
+    S.augment(Node, {
+<span id='KISSY-NodeList-method-animate'>        /**
+</span>         * animate for current node list.
+         * @param var_args see {@link KISSY.Anim}
+         * @chainable
+         * @member KISSY.NodeList
+         */
+        animate: function (var_args) {
+            var self = this,
+                originArgs = S.makeArray(arguments);
+            S.each(self, function (elem) {
+                var args = S.clone(originArgs),
+                    arg0 = args[0];
+                if (arg0.to) {
+                    arg0.node = elem;
+                    Anim(arg0).run();
+                } else {
+                    Anim.apply(undefined, [elem].concat(args)).run();
+                }
+            });
+            return self;
+        },
+<span id='KISSY-NodeList-method-stop'>        /**
+</span>         * stop anim of current node list.
+         * @param {Boolean} [end] see {@link KISSY.Anim#static-method-stop}
+         * @param [clearQueue]
+         * @param [queue]
+         * @chainable
+         * @member KISSY.NodeList
+         */
+        stop: function (end, clearQueue, queue) {
+            var self = this;
+            S.each(self, function (elem) {
+                Anim.stop(elem, end, clearQueue, queue);
+            });
+            return self;
+        },
+<span id='KISSY-NodeList-method-pause'>        /**
+</span>         * pause anim of current node list.
+         * @param {Boolean} end see {@link KISSY.Anim#static-method-pause}
+         * @param queue
+         * @chainable
+         * @member KISSY.NodeList
+         */
+        pause: function (end, queue) {
+            var self = this;
+            S.each(self, function (elem) {
+                Anim.pause(elem, queue);
+            });
+            return self;
+        },
+<span id='KISSY-NodeList-method-resume'>        /**
+</span>         * resume anim of current node list.
+         * @param {Boolean} end see {@link KISSY.Anim#static-method-resume}
+         * @param queue
+         * @chainable
+         * @member KISSY.NodeList
+         */
+        resume: function (end, queue) {
+            var self = this;
+            S.each(self, function (elem) {
+                Anim.resume(elem, queue);
+            });
+            return self;
+        },
+<span id='KISSY-NodeList-method-isRunning'>        /**
+</span>         * whether one of current node list is animating.
+         * @return {Boolean}
+         * @member KISSY.NodeList
+         */
+        isRunning: function () {
+            var self = this;
+            for (var i = 0; i &lt; self.length; i++) {
+                if (Anim.isRunning(self[i])) {
+                    return true;
+                }
+            }
+            return false;
+        },
+<span id='KISSY-NodeList-method-isPaused'>        /**
+</span>         * whether one of current node list 's animation is paused.
+         * @return {Boolean}
+         * @member KISSY.NodeList
+         */
+        isPaused: function () {
+            var self = this;
+            for (var i = 0; i &lt; self.length; i++) {
+                if (Anim.isPaused(self[i])) {
+                    return true;
+                }
+            }
+            return false;
+        }
+    });
+
+
+<span id='KISSY-NodeList-method-show'>    /**
+</span>     * animate show effect for current node list.
+     * @param {Number} duration duration of effect
+     * @param {Function} [complete] callback function on anim complete.
+     * @param {String|Function} [easing] easing type or custom function.
+     * @chainable
+     * @member KISSY.NodeList
+     * @method show
+     */
+
+
+<span id='KISSY-NodeList-method-hide'>    /**
+</span>     * animate hide effect for current node list.
+     * @param {Number} duration duration of effect
+     * @param {Function} [complete] callback function on anim complete.
+     * @param {String|Function} [easing] easing type or custom function.
+     * @chainable
+     * @member KISSY.NodeList
+     * @method hide
+     */
+
+
+<span id='KISSY-NodeList-method-toggle'>    /**
+</span>     * toggle show and hide effect for current node list.
+     * @param {Number} duration duration of effect
+     * @param {Function} [complete] callback function on anim complete.
+     * @param {String|Function} [easing] easing type or custom function.
+     * @chainable
+     * @member KISSY.NodeList
+     * @method toggle
+     */
+
+
+<span id='KISSY-NodeList-method-fadeIn'>    /**
+</span>     * animate fadeIn effect for current node list.
+     * @param {Number} duration duration of effect
+     * @param {Function} [complete] callback function on anim complete.
+     * @param {String|Function} [easing] easing type or custom function.
+     * @chainable
+     * @member KISSY.NodeList
+     * @method fadeIn
+     */
+
+
+<span id='KISSY-NodeList-method-fadeOut'>    /**
+</span>     * animate fadeOut effect for current node list.
+     * @param {Number} duration duration of effect
+     * @param {Function} [complete] callback function on anim complete.
+     * @param {String|Function} [easing] easing type or custom function.
+     * @chainable
+     * @member KISSY.NodeList
+     * @method fadeOut
+     */
+
+
+<span id='KISSY-NodeList-method-fadeToggle'>    /**
+</span>     * toggle fadeIn and fadeOut effect for current node list.
+     * @param {Number} duration duration of effect
+     * @param {Function} [complete] callback function on anim complete.
+     * @param {String|Function} [easing] easing type or custom function.
+     * @chainable
+     * @member KISSY.NodeList
+     * @method fadeToggle
+     */
+
+
+<span id='KISSY-NodeList-method-slideUp'>    /**
+</span>     * animate slideUp effect for current node list.
+     * @param {Number} duration duration of effect
+     * @param {Function} [complete] callback function on anim complete.
+     * @param {String|Function} [easing] easing type or custom function.
+     * @chainable
+     * @member KISSY.NodeList
+     * @method slideUp
+     */
+
+
+<span id='KISSY-NodeList-method-slideDown'>    /**
+</span>     * animate slideDown effect for current node list.
+     * @param {Number} duration duration of effect
+     * @param {Function} [complete] callback function on anim complete.
+     * @param {String|Function} [easing] easing type or custom function.
+     * @chainable
+     * @member KISSY.NodeList
+     * @method slideDown
+     */
+
+
+<span id='KISSY-NodeList-method-slideToggle'>    /**
+</span>     * toggle slideUp and slideDown effect for current node list.
+     * @param {Number} duration duration of effect
+     * @param {Function} [complete] callback function on anim complete.
+     * @param {String|Function} [easing] easing type or custom function.
+     * @chainable
+     * @member KISSY.NodeList
+     * @method slideToggle
+     */
+
+
+    S.each({
+            show: getFxs('show', 3),
+            hide: getFxs('hide', 3),
+            toggle: getFxs('toggle', 3),
+            fadeIn: getFxs('show', 3, 2),
+            fadeOut: getFxs('hide', 3, 2),
+            fadeToggle: getFxs('toggle', 3, 2),
+            slideDown: getFxs('show', 1),
+            slideUp: getFxs('hide', 1),
+            slideToggle: getFxs('toggle', 1)
+        },
+        function (v, k) {
+            Node.prototype[k] = function (duration, complete, easing) {
+                var self = this;
+                // 没有参数时，调用 Dom 中的对应方法
+                if (Dom[k] &amp;&amp; !duration) {
+                    Dom[k](self);
+                } else {
+                    S.each(self, function (elem) {
+                        Anim(elem, v, duration, easing, complete).run();
+                    });
+                }
+                return self;
+            };
+        });
+}, {
+    requires: ['dom', 'anim', './base']
+});
+/*
+ 2011-11-10
+ - 重写，逻辑放到 Anim 模块，这边只进行转发
+
+ 2011-05-17
+ - yiminghe@gmail.com：添加 stop ，随时停止动画
+ */
+</pre>
+</body>
+</html>

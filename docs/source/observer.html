@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * observer for event.
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('event/base/observer', function (S, undefined) {
+
+<span id='KISSY-Event-Observer'>    /**
+</span>     * KISSY 's base observer for handle user-specified function
+     * @private
+     * @class KISSY.Event.Observer
+     * @param {Object} cfg
+     */
+    function Observer(cfg) {
+        S.mix(this, cfg);
+
+<span id='KISSY-Event-Observer-cfg-context'>        /**
+</span>         * context in which observer's fn runs
+         * @cfg {Object} context
+         */
+<span id='KISSY-Event-Observer-cfg-fn'>        /**
+</span>         * current observer's user-defined function
+         * @cfg {Function} fn
+         */
+<span id='KISSY-Event-Observer-cfg-once'>        /**
+</span>         * whether un-observer current observer once after running observer's user-defined function
+         * @cfg {Boolean} once
+         */
+<span id='KISSY-Event-Observer-cfg-groups'>        /**
+</span>         * groups separated by '.' which current observer belongs
+         * @cfg {String} groups
+         */
+    }
+
+    Observer.prototype = {
+
+        constructor: Observer,
+
+<span id='KISSY-Event-Observer-method-equals'>        /**
+</span>         * whether current observer equals s2
+         * @param {KISSY.Event.Observer} s2 another observer
+         * @return {Boolean}
+         */
+        equals: function (s2) {
+            var s1 = this;
+            return !!S.reduce(s1.keys, function (v, k) {
+                return v &amp;&amp; (s1[k] === s2[k]);
+            }, 1);
+        },
+
+<span id='KISSY-Event-Observer-method-simpleNotify'>        /**
+</span>         * simple run current observer's user-defined function
+         * @param {KISSY.Event.Object} event
+         * @param {KISSY.Event.Observable} ce
+         * @return {*} return value of current observer's user-defined function
+         */
+        simpleNotify: function (event, ce) {
+            var ret,
+                self = this;
+            ret = self.fn.call(self.context || ce.currentTarget, event, self.data);
+            if (self.once) {
+                //noinspection JSUnresolvedFunction
+                ce.removeObserver(self);
+            }
+            return ret;
+        },
+
+<span id='KISSY-Event-Observer-method-notifyInternal'>        /**
+</span>         * current observer's notification.
+         * @protected
+         * @param {KISSY.Event.Object} event
+         * @param {KISSY.Event.Observable} ce
+         */
+        notifyInternal: function (event, ce) {
+            var ret = this.simpleNotify(event, ce);
+            // return false 等价 preventDefault + stopPropagation
+            if (ret === false) {
+                event.halt();
+            }
+            return ret;
+        },
+
+<span id='KISSY-Event-Observer-method-notify'>        /**
+</span>         * run current observer's user-defined function
+         * @param event
+         * @param ce
+         */
+        notify: function (event, ce) {
+            var self = this,
+                _ks_groups = event._ks_groups;
+
+            // handler's group does not match specified groups (at fire step)
+            if (_ks_groups &amp;&amp; (!self.groups || !(self.groups.match(_ks_groups)))) {
+                return undefined;
+            }
+
+            return self.notifyInternal(event, ce);
+        }
+
+    };
+
+    return Observer;
+
+});</pre>
+</body>
+</html>

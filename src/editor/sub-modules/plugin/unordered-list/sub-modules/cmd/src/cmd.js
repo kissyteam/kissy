@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * ol command
  * @author yiminghe@gmail.com
  */

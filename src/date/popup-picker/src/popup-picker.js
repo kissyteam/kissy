@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * popup date picker
  * @author yiminghe@gmail.com
  */

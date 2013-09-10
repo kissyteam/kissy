@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * justifyLeft button.
  * @author yiminghe@gmail.com
  */

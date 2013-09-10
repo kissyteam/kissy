@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * Input wrapper for ComboBox component.
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(&quot;combobox/multi-value-combobox&quot;, function (S, getCursor, ComboBox) {
+
+    var SUFFIX = 'suffix',
+        rWhitespace = /\s|\xa0/;
+
+    function strContainsChar(str, c) {
+        return c &amp;&amp; str.indexOf(c) != -1;
+    }
+
+    function beforeVisibleChange(e) {
+        if (e.newVal &amp;&amp; e.target == this.get('menu')) {
+            this.alignWithCursor();
+        }
+    }
+
+<span id='KISSY-ComboBox-MultiValueComboBox'>    /**
+</span>     * KISSY MultiValueComboBox.
+     * @extends KISSY.ComboBox
+     * @class KISSY.ComboBox.MultiValueComboBox
+     */
+    return ComboBox.extend({
+
+            syncUI: function () {
+                var self = this,
+                    menu;
+                if (self.get('alignWithCursor')) {
+                    menu = self.get('menu');
+                    menu.setInternal('align',null);
+                    menu.on('beforeVisibleChange', beforeVisibleChange, this);
+                }
+            },
+
+            getValueForAutocomplete: function () {
+
+                var self = this,
+                    inputDesc = getInputDesc(self),
+                    tokens = inputDesc.tokens,
+                    tokenIndex = inputDesc.tokenIndex,
+                    separator = self.get(&quot;separator&quot;),
+                    separatorType = self.get(&quot;separatorType&quot;),
+                    token = tokens[tokenIndex],
+                    l = token.length - 1;
+
+                if (separatorType != SUFFIX) {
+                    if (strContainsChar(separator, token.charAt(0))) {
+                        token = token.slice(1);
+                    } else {
+                        // 无效输入，前缀模式无前缀
+                        return undefined;
+                    }
+                }
+
+                else if (separatorType == SUFFIX &amp;&amp; strContainsChar(separator, token.charAt(l))) {
+                    token = token.slice(0, l);
+                }
+
+                return token;
+
+            },
+
+            setValueFromAutocomplete: function (value, setCfg) {
+                var self = this,
+                    input = self.get(&quot;input&quot;),
+                    inputDesc = getInputDesc(self),
+                    tokens = inputDesc.tokens,
+                    tokenIndex = Math.max(0, inputDesc.tokenIndex),
+                    separator = self.get(&quot;separator&quot;),
+                    cursorPosition,
+                    l,
+                    separatorType = self.get(&quot;separatorType&quot;),
+                    nextToken = tokens[tokenIndex + 1] || &quot;&quot;,
+                    token = tokens[tokenIndex];
+
+                if (separatorType != SUFFIX) {
+                    tokens[tokenIndex] = token.charAt(0) + value;
+                    if (nextToken &amp;&amp; rWhitespace.test(nextToken.charAt(0))) {
+                    } else if (value) {
+                        // 自动加空白间隔
+                        tokens[tokenIndex] += ' ';
+                    }
+                } else {
+                    tokens[tokenIndex] = value;
+                    l = token.length - 1;
+                    // 尽量补上后缀
+                    if (strContainsChar(separator, token.charAt(l))) {
+                        tokens[tokenIndex] += token.charAt(l);
+                    } else if (separator.length == 1) {
+                        // 自动加后缀
+                        tokens[tokenIndex] += separator;
+                    }
+                }
+
+                cursorPosition = tokens.slice(0, tokenIndex + 1).join(&quot;&quot;).length;
+
+                self.set('value', tokens.join(&quot;&quot;), setCfg);
+
+                input.prop(&quot;selectionStart&quot;, cursorPosition);
+                input.prop(&quot;selectionEnd&quot;, cursorPosition);
+            },
+
+            'alignWithCursor': function () {
+                var self = this;
+                // does not support align with separator
+                // will cause ime error
+                var menu = self.get(&quot;menu&quot;),
+                    cursorOffset,
+                    input = self.get(&quot;input&quot;);
+                cursorOffset = getCursor(input);
+                menu.move(cursorOffset.left, cursorOffset.top);
+            }
+        },
+        {
+            ATTRS: {
+
+<span id='KISSY-ComboBox-MultiValueComboBox-cfg-separator'>                /**
+</span>                 * Separator chars used to separator multiple inputs.
+                 * Defaults to: ;,
+                 * @cfg {String} separator
+                 */
+<span id='global-property-separator'>                /**
+</span>                 * @ignore
+                 */
+                separator: {
+                    value: &quot;,;&quot;
+                },
+
+<span id='KISSY-ComboBox-MultiValueComboBox-cfg-separatorType'>                /**
+</span>                 * Separator type.
+                 * After value( 'suffix' ) or before value( 'prefix' ).
+                 * Defaults to: 'suffix'
+                 * @cfg {String} separatorType
+                 */
+<span id='global-property-separatorType'>                /**
+</span>                 * @ignore
+                 */
+                separatorType: {
+                    value: SUFFIX
+                },
+
+<span id='KISSY-ComboBox-MultiValueComboBox-cfg-literal'>                /**
+</span>                 * If separator wrapped by literal chars,separator become normal chars.
+                 * Defaults to: &quot;
+                 * @cfg {String} literal
+                 */
+<span id='global-property-literal'>                /**
+</span>                 * @ignore
+                 */
+                literal: {
+                    value: &quot;\&quot;&quot;
+                },
+
+<span id='KISSY-ComboBox-MultiValueComboBox-cfg-alignWithCursor'>                /**
+</span>                 * Whether align menu with individual token after separated by separator.
+                 * Defaults to: false
+                 * @cfg {Boolean} alignWithCursor
+                 */
+<span id='global-property-alignWithCursor'>                /**
+</span>                 * @ignore
+                 */
+                alignWithCursor: {
+                }
+            },
+            xclass: 'multi-value-combobox'
+        });
+
+    // #----------------------- private start
+
+    function getInputDesc(self) {
+        var input = self.get(&quot;input&quot;),
+            inputVal = self.get('value'),
+            tokens = [],
+            cache = [],
+            literal = self.get(&quot;literal&quot;),
+            separator = self.get(&quot;separator&quot;),
+            separatorType = self.get(&quot;separatorType&quot;),
+            inLiteral = false,
+        // 每个空格算作独立 token
+            allowWhitespaceAsStandaloneToken = separatorType != SUFFIX,
+            cursorPosition = input.prop('selectionStart'),
+            i,
+            c,
+            tokenIndex = -1;
+
+        for (i = 0; i &lt; inputVal.length; i++) {
+            c = inputVal.charAt(i);
+            if (literal) {
+                if (c == literal) {
+                    inLiteral = !inLiteral;
+                }
+            }
+            if (inLiteral) {
+                cache.push(c);
+                continue;
+            }
+            if (i == cursorPosition) {
+                // current token index
+                tokenIndex = tokens.length;
+            }
+
+            // whitespace is not part of token value
+            // then separate
+            if (allowWhitespaceAsStandaloneToken &amp;&amp; rWhitespace.test(c)) {
+                if (cache.length) {
+                    tokens.push(cache.join(&quot;&quot;));
+                }
+                cache = [];
+                cache.push(c);
+            } else if (strContainsChar(separator, c)) {
+                if (separatorType == SUFFIX) {
+                    cache.push(c);
+                    if (cache.length) {
+                        tokens.push(cache.join(&quot;&quot;));
+                    }
+                    cache = [];
+                } else {
+                    if (cache.length) {
+                        tokens.push(cache.join(&quot;&quot;));
+                    }
+                    cache = [];
+                    cache.push(c);
+                }
+            } else {
+                cache.push(c);
+            }
+        }
+
+        if (cache.length) {
+            tokens.push(cache.join(&quot;&quot;));
+        }
+
+        // 至少有一个
+        if (!tokens.length) {
+            tokens.push('');
+        }
+
+        if (tokenIndex == -1) {
+            // 后缀末尾
+            // ,^
+            if (separatorType == SUFFIX &amp;&amp; strContainsChar(separator, c)) {
+                tokens.push('');
+            }
+            tokenIndex = tokens.length - 1;
+        }
+        return {
+            tokens: tokens,
+            cursorPosition: cursorPosition,
+            tokenIndex: tokenIndex
+        };
+    }
+
+    // #------------------------private end
+}, {
+    requires: [
+        './cursor',
+        './control'
+    ]
+});
+
+<span id='global-property-'>/**
+</span> * @ignore
+ *
+ * !TODO
+ *  - menubutton combobox 抽象提取 picker (extjs)
+ *
+ *
+ * 2012-05
+ * auto-complete menu 对齐当前输入位置
+ *  - http://kirblog.idetalk.com/2010/03/calculating-cursor-position-in-textarea.html
+ *  - https://github.com/kir/js_cursor_position
+ *
+ * 2012-04-01 可能 issue :
+ *  - 用户键盘上下键高亮一些选项，
+ *    input 值为高亮项的 textContent,那么点击 body 失去焦点，
+ *    到底要不要设置 selectedItem 为当前高亮项？
+ *    additional note:
+ *    1. tab 时肯定会把当前高亮项设置为 selectedItem
+ *    2. 鼠标时不会把高亮项的 textContent 设到 input 上去
+ *    1,2 都没问题，关键是键盘结合鼠标时怎么个处理？或者不考虑算了！
+ **/</pre>
+</body>
+</html>

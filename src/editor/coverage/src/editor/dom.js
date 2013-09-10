@@ -1460,7 +1460,7 @@ KISSY.add("editor/dom", function(S, Editor, Utils) {
   "u": 1, 
   'var': 1};
   _$jscoverage['/editor/dom.js'].lineData[54]++;
-  Editor.POSITION = {
+  Editor.PositionType = {
   POSITION_IDENTICAL: 0, 
   POSITION_DISCONNECTED: 1, 
   POSITION_FOLLOWING: 2, 
@@ -1468,7 +1468,7 @@ KISSY.add("editor/dom", function(S, Editor, Utils) {
   POSITION_IS_CONTAINED: 8, 
   POSITION_CONTAINS: 16};
   _$jscoverage['/editor/dom.js'].lineData[62]++;
-  var KEP = Editor.POSITION;
+  var KEP = Editor.PositionType;
   _$jscoverage['/editor/dom.js'].lineData[70]++;
   var blockBoundaryDisplayMatch = {
   "block": 1, 

@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * simplified flash bridge for yui swf
  * @author yiminghe@gmail.com
  */
@@ -67,11 +68,6 @@ KISSY.add("editor/plugin/flash-bridge", function (S, SWF, Editor) {
                 })(m);
             }
         },
-        /**
-         * Calls a specific function exposed by the SWF's ExternalInterface.
-         * @param func {String} the name of the function to call
-         * @param args {Array} the set of arguments to pass to the function.
-         */
         _callSWF: function (func, args) {
             return this.swf.callSWF(func,args);
         },

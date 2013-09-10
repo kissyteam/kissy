@@ -7,11 +7,8 @@ KISSY.add("tree/node", function (S, Node, Container, TreeNodeRender) {
         KeyCode = Node.KeyCode;
 
     /**
-     * @class
-     * Tree Node.
-     * xclass: 'tree-node'.
-     * @name Node
-     * @member Tree
+     * Tree Node. xclass: 'tree-node'.
+     * @class KISSY.Tree.Node
      * @extends KISSY.Component.Control
      */
    return Container.extend({

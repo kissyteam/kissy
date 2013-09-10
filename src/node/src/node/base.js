@@ -4,7 +4,6 @@
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('node/base', function (S, Dom, Event, undefined) {
-
     var AP = Array.prototype,
         slice = AP.slice,
         NodeType = Dom.NodeType,
@@ -16,13 +15,9 @@ KISSY.add('node/base', function (S, Dom, Event, undefined) {
      * The NodeList class provides a {@link KISSY.DOM} wrapper for manipulating Dom Node.
      * use KISSY.all/one to retrieve NodeList instances.
      *
-     *  for example:
+     *
      *      @example
      *      KISSY.all('a').attr('href','http://docs.kissyui.com');
-     *
-     * is equal to
-     *      @example
-     *      KISSY.DOM.attr('a','href','http://docs.kissyui.com');
      *
      * @class KISSY.NodeList
      */
@@ -65,7 +60,6 @@ KISSY.add('node/base', function (S, Dom, Event, undefined) {
     }
 
     NodeList.prototype = {
-
         constructor: NodeList,
 
         isNodeList: true,

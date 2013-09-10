@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * resize functionality
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(&quot;editor/plugin/resize&quot;, function (S, Editor, DD) {
+    var Node = S.Node;
+
+    function Resize(config) {
+this.config=config||{};
+    }
+
+    S.augment(Resize, {
+        pluginRenderUI:function (editor) {
+            var Draggable = DD['Draggable'],
+                statusBarEl = editor.get(&quot;statusBarEl&quot;),
+                textarea = editor.get(&quot;textarea&quot;),
+                cfg = this.config,
+                direction = cfg[&quot;direction&quot;] || [&quot;x&quot;, &quot;y&quot;];
+
+            var cursor = 'se-resize';
+
+            if (direction.length == 1) {
+                if (direction[0] == &quot;x&quot;) {
+                    cursor = &quot;e-resize&quot;
+                } else {
+                    cursor = &quot;s-resize&quot;
+                }
+            }
+
+            var resizer = new Node(&quot;&lt;div class='&quot;+editor.get('prefixCls')+
+                &quot;editor-resizer' style='cursor: &quot;
+                + cursor +
+                &quot;'&gt;&lt;/div&gt;&quot;).appendTo(statusBarEl);
+
+            //最大化时就不能缩放了
+            editor.on(&quot;maximizeWindow&quot;, function () {
+                resizer.css(&quot;display&quot;, &quot;none&quot;);
+            });
+
+            editor.on(&quot;restoreWindow&quot;, function () {
+                resizer.css(&quot;display&quot;, &quot;&quot;);
+            });
+
+            var d = new Draggable({
+                    node:resizer,
+                    groups:false
+                }),
+                height = 0,
+                width = 0,
+                dragStartMousePos,
+                heightEl = editor.get(&quot;el&quot;),
+                widthEl = editor.get(&quot;el&quot;);
+
+            d.on(&quot;dragstart&quot;, function () {
+                height = heightEl.height();
+                width = widthEl.width();
+                editor.fire(&quot;resizeStart&quot;);
+                dragStartMousePos= d.get('dragStartMousePos');
+            });
+
+            d.on(&quot;drag&quot;, function (ev) {
+                var diffX = ev.pageX - dragStartMousePos.left,
+                    diffY = ev.pageY - dragStartMousePos.top;
+                if (S.inArray(&quot;y&quot;, direction)) {
+                    editor.set(&quot;height&quot;, height + diffY);
+                }
+                if (S.inArray(&quot;x&quot;, direction)) {
+                    editor.set(&quot;width&quot;, width + diffX);
+                }
+                editor.fire(&quot;resize&quot;);
+            });
+
+            editor.on(&quot;destroy&quot;, function () {
+                d.destroy();
+                resizer.remove();
+            });
+        }
+    });
+
+    return Resize;
+}, {
+    requires:['editor', 'dd']
+});</pre>
+</body>
+</html>

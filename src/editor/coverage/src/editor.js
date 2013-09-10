@@ -1868,7 +1868,7 @@ KISSY.add('editor', function(S, Node, iframeContentTpl, Editor, Utils, focusMana
   _$jscoverage['/editor.js'].lineData[504]++;
   self.focus();
   _$jscoverage['/editor.js'].lineData[506]++;
-  var clone, elementName = element['nodeName'](), xhtml_dtd = Editor.XHTML_DTD, isBlock = xhtml_dtd['$block'][elementName], KER = Editor.RANGE, selection = self.getSelection(), ranges = visit1176_512_1(selection && selection.getRanges()), range, notWhitespaceEval, i, next, nextName, lastElement;
+  var clone, elementName = element['nodeName'](), xhtml_dtd = Editor.XHTML_DTD, isBlock = xhtml_dtd['$block'][elementName], KER = Editor.RangeType, selection = self.getSelection(), ranges = visit1176_512_1(selection && selection.getRanges()), range, notWhitespaceEval, i, next, nextName, lastElement;
   _$jscoverage['/editor.js'].lineData[520]++;
   if (visit1177_520_1(!ranges || visit1178_520_2(ranges.length == 0))) {
     _$jscoverage['/editor.js'].lineData[521]++;
@@ -1988,7 +1988,7 @@ KISSY.add('editor', function(S, Node, iframeContentTpl, Editor, Utils, focusMana
       node._4e_appendBogus().appendTo(editorDoc.body);
     }
     _$jscoverage['/editor.js'].lineData[626]++;
-    r.setStartAt(node, Editor.RANGE.POSITION_AFTER_START);
+    r.setStartAt(node, Editor.RangeType.POSITION_AFTER_START);
     _$jscoverage['/editor.js'].lineData[627]++;
     r.select();
   }

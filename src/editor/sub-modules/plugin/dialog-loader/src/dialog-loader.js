@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * load editor's dialog dynamically
  * @author yiminghe@gmail.com
  */

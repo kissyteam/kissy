@@ -1,5 +1,6 @@
 /**
- * Modified from ckeditor. Process malformed html for kissy editor.
+ * @ignore
+ * Process malformed html for kissy editor.
  * @author yiminghe@gmail.com
  */
 /*
@@ -7,26 +8,12 @@
  For licensing, see LICENSE.html or http://ckeditor.com/license
  */
 KISSY.add("editor/htmlDataProcessor", function (S, Editor, HtmlParser) {
-
     return {
         init: function (editor) {
             var Node = S.Node,
                 UA = S.UA,
                 htmlFilter = new HtmlParser.Filter(),
                 dataFilter = new HtmlParser.Filter();
-            /*
-             function filterSpan(element) {
-             if (((element.getAttribute('class') + "").match(/Apple-\w+-span/)) ||
-             !(element.attributes.length)) {
-             element.setTagName(null);
-             return undefined;
-             }
-             if (!(element.childNodes.length) && !(element.attributes.length)) {
-             return false;
-             }
-             return undefined;
-             }
-             */
 
             // remove empty inline element
             function filterInline(element) {
@@ -181,11 +168,10 @@ KISSY.add("editor/htmlDataProcessor", function (S, Editor, HtmlParser) {
                 dataFilter.addRules(defaultDataFilterRules);
             })();
 
-
-            /**
-             * 去除firefox代码末尾自动添加的 <br/>
-             * 以及ie下自动添加的 &nbsp;
-             * 以及其他浏览器段落末尾添加的占位符
+            /*
+             去除firefox代码末尾自动添加的 <br/>
+             以及ie下自动添加的 &nbsp;
+             以及其他浏览器段落末尾添加的占位符
              */
             (function () {
                 // Regex to scan for &nbsp; at the end of blocks,

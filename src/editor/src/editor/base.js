@@ -1,14 +1,13 @@
 /**
+ * @ignore
  * Set up editor constructor
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/base", function (S, HtmlParser, Control, EditorRender) {
     /**
-     * @class
-     * KISSY Editor.
-     * xclass: 'editor'.
+     * editor component for KISSY. xclass: 'editor'.
+     * @class KISSY.Editor
      * @extends KISSY.Component.Control
-     * @name Editor
      */
     return Control.extend({}, {
         Config: {},

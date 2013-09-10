@@ -1,5 +1,6 @@
 /**
  * i18n resources for date-picker
+ * @ignore
  * @author yiminghe@gmail.com
  */
 KISSY.add('date/picker/i18n/zh-cn', {

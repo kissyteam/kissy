@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * link editor support for kissy editor ,innovation from google doc and ckeditor
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(&quot;editor/plugin/link&quot;, function (S, Editor, Bubble, Utils, DialogLoader) {
+    var $ = S.all,
+        tipHTML = '&lt;a ' +
+            'href=&quot;&quot; '
+            + ' target=&quot;_blank&quot; ' +
+            'class=&quot;{prefixCls}editor-bubble-url&quot;&gt;' +
+            '在新窗口查看' +
+            '&lt;/a&gt;  –  '
+            + ' &lt;span ' +
+            'class=&quot;{prefixCls}editor-bubble-link {prefixCls}editor-bubble-change&quot;&gt;' +
+            '编辑' +
+            '&lt;/span&gt;   |   '
+            + ' &lt;span ' +
+            'class=&quot;{prefixCls}editor-bubble-link {prefixCls}editor-bubble-remove&quot;&gt;' +
+            '去除' +
+            '&lt;/span&gt;';
+
+    function checkLink(lastElement) {
+        lastElement = $(lastElement);
+        return lastElement.closest('a', undefined);
+    }
+
+    function LinkPlugin(config) {
+        this.config = config || {};
+    }
+
+    S.augment(LinkPlugin, {
+        pluginRenderUI: function (editor) {
+
+            var prefixCls = editor.get('prefixCls');
+            editor.addButton(&quot;link&quot;, {
+                tooltip: &quot;插入链接&quot;,
+                listeners: {
+                    click: function () {
+                        showLinkEditDialog();
+
+                    }
+                },
+                mode: Editor.Mode.WYSIWYG_MODE
+            });
+
+            var self = this;
+
+            function showLinkEditDialog(selectedEl) {
+                DialogLoader.useDialog(editor, &quot;link&quot;,
+                    self.config,
+                    selectedEl);
+            }
+
+            editor.addBubble(&quot;link&quot;, checkLink, {
+                listeners: {
+                    afterRenderUI: function () {
+                        var bubble = this,
+                            el = bubble.get(&quot;contentEl&quot;);
+
+                        el.html(S.substitute(tipHTML, {
+                            prefixCls: prefixCls
+                        }));
+
+                        var tipUrl = el.one(&quot;.&quot; + prefixCls + &quot;editor-bubble-url&quot;),
+                            tipChange = el.one(&quot;.&quot; + prefixCls + &quot;editor-bubble-change&quot;),
+                            tipRemove = el.one(&quot;.&quot; + prefixCls + &quot;editor-bubble-remove&quot;);
+
+                        //ie focus not lose
+                        Editor.Utils.preventFocus(el);
+
+                        tipChange.on(&quot;click&quot;, function (ev) {
+                            showLinkEditDialog(bubble.get(&quot;editorSelectedEl&quot;));
+                            ev.halt();
+                        });
+
+                        tipRemove.on(&quot;click&quot;, function (ev) {
+                            Utils.removeLink(editor, bubble.get(&quot;editorSelectedEl&quot;));
+                            ev.halt();
+                        });
+
+                        bubble.on(&quot;show&quot;, function () {
+                            var a = bubble.get(&quot;editorSelectedEl&quot;);
+                            if (!a) {
+                                return;
+                            }
+                            var href = a.attr(Utils._ke_saved_href) ||
+                                a.attr(&quot;href&quot;);
+                            tipUrl.html(href);
+                            tipUrl.attr(&quot;href&quot;, href);
+                        });
+                    }
+
+                }
+            });
+        }
+    });
+
+    return LinkPlugin;
+}, {
+    requires: ['editor', './bubble',
+        './link/utils', './dialog-loader', './button']
+});</pre>
+</body>
+</html>

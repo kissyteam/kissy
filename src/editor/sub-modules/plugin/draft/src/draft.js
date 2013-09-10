@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * draft for kissy editor
  * @author yiminghe@gmail.com
  */
@@ -48,27 +49,25 @@ KISSY.add("editor/plugin/draft", function (S, Json, Editor, localStorage, Overla
         this._init();
     }
 
-    var addRes = Editor.Utils.addRes, destroyRes = Editor.Utils.destroyRes;
-    S.augment(Draft, {
+    var addRes = Editor.Utils.addRes,
+        destroyRes = Editor.Utils.destroyRes;
 
+    S.augment(Draft, {
         _getSaveKey: function () {
             var self = this,
                 cfg = self.config;
             return cfg.draft && cfg.draft['saveKey'] || DRAFT_SAVE;
         },
 
-        /**
-         * parse 历史记录延后，点击 select 时才开始 parse
-         */
+
+        // parse 历史记录延后，点击 select 时才开始 parse
         _getDrafts: function () {
             var self = this;
             if (!self.drafts) {
                 var str = localStorage.getItem(self._getSaveKey()),
                     drafts = [];
                 if (str) {
-                    /**
-                     * 原生 localStorage 必须串行化
-                     */
+                   // 原生 localStorage 必须串行化
                     drafts = (localStorage == window.localStorage) ?
                         Json.parse(S.urlDecode(str)) : str;
                 }
@@ -76,8 +75,8 @@ KISSY.add("editor/plugin/draft", function (S, Json, Editor, localStorage, Overla
             }
             return self.drafts;
         },
-        _init: function () {
 
+        _init: function () {
             var self = this,
                 editor = self.editor,
                 prefixCls = editor.get('prefixCls'),

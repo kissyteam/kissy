@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * transform hack for ie
  * @author yiminghe@gmail.com
  */

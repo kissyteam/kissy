@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * quote and unQuote for json
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('json/quote', function (S) {
+
+    var CONTROL_MAP = {
+            '\b': '\\b',
+            '\f': '\\f',
+            '\n': '\\n',
+            '\r': '\\r',
+            '\t': '\\t',
+            '&quot;': '\\&quot;'
+        },
+        REVERSE_CONTROL_MAP = {},
+        QUOTE_REG = /[&quot;\b\f\n\r\t\x00-\x1f]/g,
+        UN_QUOTE_REG = /\\b|\\f|\\n|\\r|\\t|\\&quot;|\\u[0-9a-zA-Z]{4}/g;
+
+    S.each(CONTROL_MAP, function (original, encoded) {
+        REVERSE_CONTROL_MAP[encoded] = original
+    });
+
+    REVERSE_CONTROL_MAP['\\/']='/';
+
+    return {
+        quote: function (value) {
+            return '&quot;' + value.replace(QUOTE_REG, function (m) {
+                var v;
+                if (!(v = CONTROL_MAP[m])) {
+                    v = '\\u' + ('0000' + m.charCodeAt(0).toString(16)).slice(-4);
+                }
+                return v;
+            }) + '&quot;';
+        },
+        unQuote:function(value){
+            return value.slice(1,value.length-1).replace(UN_QUOTE_REG,function(m){
+                var v;
+                if (!(v = REVERSE_CONTROL_MAP[m])) {
+                    v =String.fromCharCode(parseInt(m.slice(2),16));
+                }
+                return v;
+            });
+        }
+    };
+});</pre>
+</body>
+</html>

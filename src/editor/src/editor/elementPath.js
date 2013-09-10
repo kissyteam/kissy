@@ -1,5 +1,6 @@
 /**
- * modified from ckeditor ,elementPath represents element's tree path from body
+ * @ignore
+ * elementPath represents element's tree path from body
  * @author yiminghe@gmail.com
  */
 /*
@@ -55,7 +56,7 @@ KISSY.add("editor/elementPath", function (S,Editor) {
         };
 
     /**
-     * @constructor
+     * @class KISSY.Editor.ElementPath
      * @param lastNode {KISSY.NodeList}
      */
     function ElementPath(lastNode) {

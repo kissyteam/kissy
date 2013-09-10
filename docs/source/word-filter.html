@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * clean html pasted from word. modified from ckeditor.
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(&quot;editor/plugin/word-filter&quot;, function (S, HtmlParser) {
+    var $ = S.all,
+        UA = S.UA,
+        dtd = HtmlParser.DTD,
+        wordFilter = new HtmlParser.Filter(),
+        cssLengthRelativeUnit = /^([.\d]*)+(em|ex|px|gd|rem|vw|vh|vm|ch|mm|cm|in|pt|pc|deg|rad|ms|s|hz|khz){1}?/i,
+    // e.g. 0px 0pt 0px
+        emptyMarginRegex = /^(?:\b0[^\s]*\s*){1,4}$/,
+        romanLiteralPattern = '^m{0,4}(cm|cd|d?c{0,3})(xc|xl|l?x{0,3})(ix|iv|v?i{0,3})$',
+        lowerRomanLiteralRegex = new RegExp(romanLiteralPattern),
+        upperRomanLiteralRegex = new RegExp(romanLiteralPattern.toUpperCase()),
+        orderedPatterns = {
+            'decimal': /\d+/,
+            'lower-roman': lowerRomanLiteralRegex,
+            'upper-roman': upperRomanLiteralRegex,
+            'lower-alpha': /^[a-z]+$/,
+            'upper-alpha': /^[A-Z]+$/
+        },
+        unorderedPatterns = {
+            'disc': /[l\u00B7\u2002]/,
+            'circle': /[\u006F\u00D8]/,
+            'square': /[\u006E\u25C6]/
+        },
+        listMarkerPatterns = {
+            'ol': orderedPatterns,
+            'ul': unorderedPatterns
+        },
+        romans = [
+            [1000, 'M'],
+            [900, 'CM'],
+            [500, 'D'],
+            [400, 'CD'],
+            [100, 'C'],
+            [90, 'XC'],
+            [50, 'L'],
+            [40, 'XL'],
+            [10, 'X'],
+            [9, 'IX'],
+            [5, 'V'],
+            [4, 'IV'],
+            [1, 'I']
+        ],
+        alphabets = &quot;ABCDEFGHIJKLMNOPQRSTUVWXYZ&quot;;
+
+    // Convert roman numbering back to decimal.
+    function fromRoman(str) {
+        str = str.toUpperCase();
+        var l = romans.length, retVal = 0;
+        for (var i = 0; i &lt; l; ++i) {
+            for (var j = romans[i], k = j[1].length; str.substr(0, k) == j[1]; str = str.substr(k)) {
+                retVal += j[ 0 ];
+            }
+        }
+        return retVal;
+    }
+
+    // Convert alphabet numbering back to decimal.
+    function fromAlphabet(str) {
+        str = str.toUpperCase();
+        var l = alphabets.length, retVal = 1;
+        for (var x = 1; str.length &gt; 0; x *= l) {
+            retVal += alphabets.indexOf(str.charAt(str.length - 1)) * x;
+            str = str.substr(0, str.length - 1);
+        }
+        return retVal;
+    }
+
+    function setStyle(element, str) {
+        if (str) {
+            element.setAttribute(&quot;style&quot;, str);
+        } else {
+            element.removeAttribute(&quot;style&quot;);
+        }
+    }
+
+    /*
+     Convert the specified CSS length value to the calculated pixel length inside this page.
+     &lt;strong&gt;Note:&lt;/strong&gt; Percentage based value is left intact.
+     */
+    var convertToPx = (function () {
+        var calculator;
+
+        return function (cssLength) {
+            if (!calculator) {
+                calculator = $(
+                    '&lt;div style=&quot;position:absolute;left:-9999px;' +
+                        'top:-9999px;margin:0px;padding:0px;border:0px;&quot;' +
+                        '&gt;&lt;/div&gt;')['prependTo'](&quot;body&quot;);
+
+            }
+
+            if (!(/%$/).test(cssLength)) {
+                calculator.css('width', cssLength);
+                return calculator[0].clientWidth;
+            }
+
+            return cssLength;
+        };
+    })();
+
+    var listBaseIndent = 0,
+        previousListItemMargin = null,
+        previousListId;
+
+    function onlyChild(elem) {
+        var childNodes = elem.childNodes || [],
+            count = childNodes.length,
+            firstChild = (count == 1) &amp;&amp; childNodes[0];
+        return firstChild || null;
+    }
+
+    function removeAnyChildWithName(elem, tagName) {
+        var children = elem.childNodes || [],
+            ret = [],
+            child;
+
+        for (var i = 0; i &lt; children.length; i++) {
+            child = children[ i ];
+            if (!child.nodeName) {
+                continue;
+            }
+            if (child.nodeName == tagName) {
+                ret.push(child);
+                children.splice(i--, 1);
+            }
+            ret = ret.concat(removeAnyChildWithName(child, tagName));
+        }
+        return ret;
+    }
+
+    function getAncestor(elem, tagNameRegex) {
+        var parent = elem.parentNode;
+        while (parent &amp;&amp; !( parent.nodeName &amp;&amp; parent.nodeName.match(tagNameRegex) )) {
+            parent = parent.parentNode;
+        }
+        return parent;
+    }
+
+    function firstChild(elem, evaluator) {
+        var child,
+            i,
+            children = elem.childNodes || [];
+
+        for (i = 0; i &lt; children.length; i++) {
+            child = children[ i ];
+            if (evaluator(child)) {
+                return child;
+            } else if (child.nodeName) {
+                child = firstChild(child, evaluator);
+                if (child) {
+                    return child;
+                }
+            }
+        }
+
+        return null;
+    }
+
+
+    function addStyle(elem, name, value, isPrepend) {
+        var styleText, addingStyleText = '', style;
+        // name/value pair.
+        if (typeof value == 'string') {
+            addingStyleText += name + ':' + value + ';';
+        } else {
+            // style literal.
+            if (typeof name == 'object') {
+                for (style in name) {
+
+                    addingStyleText += style + ':' + name[ style ] + ';';
+
+                }
+            }
+            // raw style text form.
+            else {
+                addingStyleText += name;
+            }
+            isPrepend = value;
+        }
+
+
+        styleText = elem.getAttribute(&quot;style&quot;);
+
+        styleText = ( isPrepend ?
+            [ addingStyleText, styleText ]
+            : [ styleText, addingStyleText ] ).join(';');
+
+        setStyle(elem, styleText.replace(/^;|;(?=;)/, ''));
+    }
+
+
+    function parentOf(tagName) {
+        var result = {},
+            tag;
+        for (tag in dtd) {
+
+            if (tag.indexOf('$') == -1 &amp;&amp; dtd[ tag ][ tagName ]) {
+                result[ tag ] = 1;
+            }
+
+        }
+        return result;
+    }
+
+    var filters = {
+        // Transform a normal list into flat list items only presentation.
+        // E.g. &lt;ul&gt;&lt;li&gt;level1&lt;ol&gt;&lt;li&gt;level2&lt;/li&gt;&lt;/ol&gt;&lt;/li&gt; =&gt;
+        // &lt;ke:li ke:listtype=&quot;ul&quot; ke:indent=&quot;1&quot;&gt;level1&lt;/ke:li&gt;
+        // &lt;ke:li ke:listtype=&quot;ol&quot; ke:indent=&quot;2&quot;&gt;level2&lt;/ke:li&gt;
+        flattenList: function (element, level) {
+            level = typeof level == 'number' ? level : 1;
+
+            var listStyleType;
+
+            // All list items are of the same type.
+            switch (element.getAttribute(&quot;type&quot;)) {
+                case 'a' :
+                    listStyleType = 'lower-alpha';
+                    break;
+                case '1' :
+                    listStyleType = 'decimal';
+                    break;
+                // TODO: Support more list style type from MS-Word.
+            }
+
+            var children = element.childNodes || [],
+                child;
+
+            for (var i = 0; i &lt; children.length; i++) {
+                child = children[ i ];
+
+                if (child.nodeName in dtd.$listItem) {
+                    var listItemChildren = child.childNodes || [],
+                        count = listItemChildren.length,
+                        last = listItemChildren[ count - 1 ];
+
+                    // Move out nested list.
+                    if (last.nodeName in dtd.$list) {
+                        element.insertAfter(child);
+                        // Remove the parent list item if it's just a holder.
+                        if (!--listItemChildren.length) {
+                            element.removeChild(children[i--]);
+                        }
+                    }
+
+                    child.setTagName('ke:li');
+
+                    // Inherit numbering from list root on the first list item.
+                    element.getAttribute(&quot;start&quot;) &amp;&amp;
+                        !i &amp;&amp;
+                    ( element.setAttribute(&quot;value&quot;, element.getAttribute(&quot;start&quot;)));
+
+                    filters.stylesFilter(
+                        [
+                            [
+                                'tab-stops', null, function (val) {
+                                var margin = val.split(' ')[ 1 ].match(cssLengthRelativeUnit);
+                                margin &amp;&amp; ( previousListItemMargin = convertToPx(margin[ 0 ]) );
+                            }
+                            ],
+                            ( level == 1 ? [ 'mso-list', null, function (val) {
+                                val = val.split(' ');
+                                var listId = Number(val[ 0 ].match(/\d+/));
+                                if (listId !== previousListId) {
+                                    child.setAttribute('ke:reset', 1)
+                                }
+                                previousListId = listId;
+                            } ] : null )
+                        ])(child.getAttribute(&quot;style&quot;));
+
+                    child.setAttribute('ke:indent', level);
+                    child.setAttribute('ke:listtype', element.nodeName);
+                    child.setAttribute('ke:list-style-type', listStyleType);
+                }
+                // Flatten sub list.
+                else if (child.nodeName in dtd.$list) {
+                    // Absorb sub list children.
+                    arguments.callee.apply(this, [ child, level + 1 ]);
+                    children = children.slice(0, i).concat(child.childNodes).concat(children.slice(i + 1));
+                    element.empty();
+                    for (var j = 0, num = children.length; j &lt; num; j++) {
+                        element.appendChild(children[j]);
+                    }
+                }
+            }
+
+            element.nodeName = element.tagName = null;
+
+            // We're loosing tag name here, signalize this element as a list.
+            element.setAttribute('ke:list', 1);
+        },
+
+        /*
+          Try to collect all list items among the children and establish one
+          or more HTML list structures for them.
+         */
+        assembleList: function (element) {
+            var children = element.childNodes || [],
+                child,
+                listItem, // The current processing ke:li element.
+                listItemIndent, // Indent level of current list item.
+                lastIndent,
+                lastListItem, // The previous one just been added to the list.
+                list, // Current staging list and it's parent list if any.
+                openedLists = [],
+                previousListStyleType,
+                previousListType;
+
+            // Properties of the list item are to be resolved from the list bullet.
+            var bullet,
+                listType,
+                listStyleType,
+                itemNumeric;
+
+            for (var i = 0; i &lt; children.length; i++) {
+                child = children[ i ];
+
+                if ('ke:li' == child.nodeName) {
+                    child.setTagName('li');
+                    listItem = child;
+
+                    bullet = listItem.getAttribute('ke:listsymbol');
+                    bullet = bullet &amp;&amp; bullet.match(/^(?:[(]?)([^\s]+?)([.)]?)$/);
+                    listType = listStyleType = itemNumeric = null;
+
+                    if (listItem.getAttribute('ke:ignored')) {
+                        children.splice(i--, 1);
+                        continue;
+                    }
+
+
+                    // This's from a new list root.
+                    listItem.getAttribute('ke:reset') &amp;&amp; ( list = lastIndent = lastListItem = null );
+
+                    // List item indent level might come from a real list indentation or
+                    // been resolved from a pseudo list item's margin value, even get
+                    // no indentation at all.
+                    listItemIndent = Number(listItem.getAttribute('ke:indent'));
+
+                    // We're moving out of the current list, cleaning up.
+                    if (listItemIndent != lastIndent)
+                        previousListType = previousListStyleType = null;
+
+                    // List type and item style are already resolved.
+                    if (!bullet) {
+                        listType = listItem.getAttribute('ke:listtype') || 'ol';
+                        listStyleType = listItem.getAttribute('ke:list-style-type');
+                    }
+                    else {
+                        // Probably share the same list style type with previous list item,
+                        // give it priority to avoid ambiguous between C(Alpha) and C.(Roman).
+                        if (previousListType &amp;&amp;
+                            listMarkerPatterns[ previousListType ] [ previousListStyleType ].test(bullet[ 1 ])) {
+                            listType = previousListType;
+                            listStyleType = previousListStyleType;
+                        }
+                        else {
+                            for (var type in listMarkerPatterns) {
+
+                                for (var style in listMarkerPatterns[ type ]) {
+
+                                    if (listMarkerPatterns[ type ][ style ].test(bullet[ 1 ])) {
+                                        // Small numbering has higher priority, when dealing with ambiguous
+                                        // between C(Alpha) and C.(Roman).
+                                        if (type == 'ol' &amp;&amp; ( /alpha|roman/ ).test(style)) {
+                                            var num = /roman/.test(style) ? fromRoman(bullet[ 1 ]) : fromAlphabet(bullet[ 1 ]);
+                                            if (!itemNumeric || num &lt; itemNumeric) {
+                                                itemNumeric = num;
+                                                listType = type;
+                                                listStyleType = style;
+                                            }
+                                        }
+                                        else {
+                                            listType = type;
+                                            listStyleType = style;
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        // Simply use decimal/disc for the rest forms of unrepresentable
+                        // numerals, e.g. Chinese..., but as long as there a second part
+                        // included, it has a bigger chance of being a order list ;)
+                        !listType &amp;&amp; ( listType = bullet[ 2 ] ? 'ol' : 'ul' );
+                    }
+
+                    previousListType = listType;
+                    previousListStyleType = listStyleType || ( listType == 'ol' ? 'decimal' : 'disc' );
+                    if (listStyleType &amp;&amp; listStyleType != ( listType == 'ol' ? 'decimal' : 'disc' ))
+                        addStyle(listItem, 'list-style-type', listStyleType);
+
+                    // Figure out start numbering.
+                    if (listType == 'ol' &amp;&amp; bullet) {
+                        switch (listStyleType) {
+                            case 'decimal' :
+                                itemNumeric = Number(bullet[ 1 ]);
+                                break;
+                            case 'lower-roman':
+                            case 'upper-roman':
+                                itemNumeric = fromRoman(bullet[ 1 ]);
+                                break;
+                            case 'lower-alpha':
+                            case 'upper-alpha':
+                                itemNumeric = fromAlphabet(bullet[ 1 ]);
+                                break;
+                        }
+
+                        // Always create the numbering, swipe out unnecessary ones later.
+                        listItem.setAttribute(&quot;value&quot;, itemNumeric);
+                    }
+
+                    // Start the list construction.
+                    if (!list) {
+                        openedLists.push(list = new HtmlParser.Tag(listType));
+                        list.appendChild(listItem);
+                        element.replaceChild(list, children[i]);
+                    } else {
+                        if (listItemIndent &gt; lastIndent) {
+                            openedLists.push(list = new HtmlParser.Tag(listType));
+                            list.appendChild(listItem);
+                            lastListItem.appendChild(list);
+                        }
+                        else if (listItemIndent &lt; lastIndent) {
+                            // There might be a negative gap between two list levels. (#4944)
+                            var diff = lastIndent - listItemIndent,
+                                parent;
+                            while (diff-- &amp;&amp; ( parent = list.parentNode )) {
+                                list = parent.parentNode;
+                            }
+                            list.appendChild(listItem);
+                        }
+                        else {
+                            list.appendChild(listItem);
+                        }
+                        children.splice(i--, 1);
+                    }
+
+                    lastListItem = listItem;
+                    lastIndent = listItemIndent;
+                }
+                else if (child.nodeType == 3 &amp;&amp; !S.trim(child.nodeValue)) {
+                    //  li 间的空文字节点忽略
+                } else if (list) {
+                    list = lastIndent = lastListItem = null;
+                }
+            }
+
+            for (i = 0; i &lt; openedLists.length; i++) {
+                postProcessList(openedLists[ i ]);
+            }
+        },
+
+        /*
+          A simple filter which always rejecting.
+         */
+        falsyFilter: function () {
+            return false;
+        },
+
+        /*
+         A filter dedicated on the 'style' attribute filtering, e.g. dropping/replacing style properties.
+         @param styles {Array} in form of [ styleNameRegexp, styleValueRegexp,
+         newStyleValue/newStyleGenerator, newStyleName ] where only the first
+         parameter is mandatory.
+         @param [whitelist] {Boolean} Whether the {@param styles} will be considered as a white-list.
+         */
+        stylesFilter: function (styles, whitelist) {
+            return function (styleText, element) {
+                var rules = [];
+                // html-encoded quote might be introduced by 'font-family'
+                // from MS-Word which confused the following regexp. e.g.
+                //'font-family: &amp;quot;Lucida, Console&amp;quot;'
+                ( styleText || '' )
+                    .replace(/&amp;quot;/g, '&quot;')
+                    .replace(/\s*([^ :;]+)\s*:\s*([^;]+)\s*(?=;|$)/g,
+                    function (match, name, value) {
+                        name = name.toLowerCase();
+                        name == 'font-family' &amp;&amp; ( value = value.replace(/[&quot;']/g, '') );
+
+                        var namePattern,
+                            valuePattern,
+                            newValue,
+                            newName;
+                        for (var i = 0; i &lt; styles.length; i++) {
+                            if (styles[ i ]) {
+                                namePattern = styles[ i ][ 0 ];
+                                valuePattern = styles[ i ][ 1 ];
+                                newValue = styles[ i ][ 2 ];
+                                newName = styles[ i ][ 3 ];
+
+                                if (name.match(namePattern)
+                                    &amp;&amp; ( !valuePattern || value.match(valuePattern) )) {
+                                    name = newName || name;
+                                    whitelist &amp;&amp; ( newValue = newValue || value );
+
+                                    if (typeof newValue == 'function') {
+                                        newValue = newValue(value, element, name);
+                                    }
+
+                                    // Return an couple indicate both name and value
+                                    // changed.
+                                    if (newValue &amp;&amp; newValue.push) {
+                                        name = newValue[ 0 ];
+                                        newValue = newValue[ 1 ];
+                                    }
+
+                                    if (typeof newValue == 'string') {
+                                        rules.push([ name, newValue ]);
+                                    }
+
+                                    return;
+                                }
+                            }
+                        }
+
+                        !whitelist &amp;&amp; rules.push([ name, value ]);
+
+                    });
+
+                for (var i = 0; i &lt; rules.length; i++) {
+                    rules[ i ] = rules[ i ].join(':');
+                }
+
+                return rules.length ? ( rules.join(';') + ';' ) : false;
+            };
+        },
+
+        /*
+          A filter which will be used to apply inline css style according the stylesheet
+          definition rules, is generated lazily when filtering.
+         */
+        applyStyleFilter: null
+
+    };
+
+
+    // 1. move consistent list item styles up to list root.
+    // 2. clear out unnecessary list item numbering.
+    function postProcessList(list) {
+        var children = list.childNodes || [],
+            child,
+            count = children.length,
+            match,
+            mergeStyle,
+            styleTypeRegexp = /list-style-type:(.*?)(?:;|$)/,
+            stylesFilter = filters.stylesFilter;
+
+
+        if (styleTypeRegexp.exec(list.getAttribute(&quot;style&quot;)))
+            return;
+
+        for (var i = 0; i &lt; count; i++) {
+            child = children[ i ];
+
+            if (child.getAttribute(&quot;value&quot;) &amp;&amp; Number(child.getAttribute(&quot;value&quot;)) == i + 1) {
+                child.removeAttribute(&quot;value&quot;);
+            }
+
+            match = styleTypeRegexp.exec(child.getAttribute(&quot;style&quot;));
+
+            if (match) {
+                if (match[ 1 ] == mergeStyle || !mergeStyle)
+                    mergeStyle = match[ 1 ];
+                else {
+                    mergeStyle = null;
+                    break;
+                }
+            }
+        }
+
+        if (mergeStyle) {
+            for (i = 0; i &lt; count; i++) {
+                var style = children[ i ].getAttribute(&quot;style&quot;);
+
+                if (style) {
+                    style = stylesFilter([
+                        [ 'list-style-type']
+                    ])(style);
+                    setStyle(children[ i ], style);
+                }
+            }
+            addStyle(list, 'list-style-type', mergeStyle);
+        }
+    }
+
+    var utils = {
+        // Create a &lt;ke:listbullet&gt; which indicate an list item type.
+        createListBulletMarker: function (bullet, bulletText) {
+            var marker = new HtmlParser.Tag('ke:listbullet');
+            marker.setAttribute(&quot;ke:listsymbol&quot;, bullet[ 0 ]);
+            marker.appendChild(new HtmlParser.Text(bulletText));
+            return marker;
+        },
+
+        isListBulletIndicator: function (element) {
+            var styleText = element.getAttribute(&quot;style&quot;);
+            if (/mso-list\s*:\s*Ignore/i.test(styleText)) {
+                return true;
+            }
+        },
+
+        isContainingOnlySpaces: function (element) {
+            var text;
+            return ( ( text = onlyChild(element) )
+                &amp;&amp; ( /^(:?\s|&amp;nbsp;)+$/ ).test(text.nodeValue) );
+        },
+
+        resolveList: function (element) {
+            // &lt;ke:listbullet&gt; indicate a list item.
+            var listMarker;
+
+            if (( listMarker = removeAnyChildWithName(element, 'ke:listbullet') )
+                &amp;&amp; listMarker.length
+                &amp;&amp; ( listMarker = listMarker[ 0 ] )) {
+                element.setTagName('ke:li');
+
+                if (element.getAttribute(&quot;style&quot;)) {
+                    var styleStr = filters.stylesFilter(
+                        [
+                            // Text-indent is not representing list item level any more.
+                            [ 'text-indent' ],
+                            [ 'line-height' ],
+                            // First attempt is to resolve indent level from on a constant margin increment.
+                            [ ( /^margin(:?-left)?$/ ), null, function (margin) {
+                                // Deal with component/short-hand form.
+                                var values = margin.split(' ');
+                                margin = convertToPx(values[ 3 ] || values[ 1 ] || values [ 0 ]);
+
+                                // Figure out the indent unit by checking the first time of incrementation.
+                                if (!listBaseIndent &amp;&amp; previousListItemMargin !== null &amp;&amp;
+                                    margin &gt; previousListItemMargin) {
+                                    listBaseIndent = margin - previousListItemMargin;
+                                }
+
+                                previousListItemMargin = margin;
+                                if (listBaseIndent) {
+                                    element.setAttribute('ke:indent', listBaseIndent &amp;&amp;
+                                        ( Math.ceil(margin / listBaseIndent) + 1 ) || 1);
+                                }
+                            } ],
+                            // The best situation: &quot;mso-list:l0 level1 lfo2&quot; tells the belonged list root, list item indentation, etc.
+                            [ ( /^mso-list$/ ), null, function (val) {
+                                val = val.split(' ');
+                                var listId = Number(val[ 0 ].match(/\d+/)),
+                                    indent = Number(val[ 1 ].match(/\d+/));
+
+                                if (indent == 1) {
+                                    listId !== previousListId &amp;&amp; ( element.setAttribute('ke:reset', 1) );
+
+                                    previousListId = listId;
+                                }
+                                element.setAttribute('ke:indent', indent);
+                            } ]
+                        ])(element.getAttribute(&quot;style&quot;), element);
+
+                    setStyle(element, styleStr);
+                }
+
+                // First level list item might be presented without a margin.
+                // In case all above doesn't apply.
+                if (!element.getAttribute(&quot;ke:indent&quot;)) {
+                    previousListItemMargin = 0;
+                    element.setAttribute('ke:indent', 1);
+                }
+
+                S.each(listMarker.attributes, function (a) {
+                    element.setAttribute(a.name, a.value);
+                });
+
+                return true;
+            }
+            // Current list disconnected.
+            else {
+                previousListId = previousListItemMargin = listBaseIndent = null;
+            }
+            return false;
+        },
+
+        // Providing a shorthand style then retrieve one or more style component values.
+        getStyleComponents: (function () {
+            var calculator = $(
+                '&lt;div style=&quot;position:absolute;left:-9999px;top:-9999px;&quot;&gt;&lt;/div&gt;').prependTo(&quot;body&quot;);
+
+            return function (name, styleValue, fetchList) {
+                calculator.css(name, styleValue);
+                var styles = {},
+                    count = fetchList.length;
+                for (var i = 0; i &lt; count; i++) {
+                    styles[ fetchList[ i ] ] = calculator.css(fetchList[ i ]);
+                }
+
+                return styles;
+            };
+        })(),
+
+        listDtdParents: parentOf('ol')
+    };
+
+    (function () {
+        var blockLike = S.merge(dtd.$block, dtd.$listItem, dtd.$tableContent),
+            falsyFilter = filters.falsyFilter,
+            stylesFilter = filters.stylesFilter,
+            createListBulletMarker = utils.createListBulletMarker,
+            flattenList = filters.flattenList,
+            assembleList = filters.assembleList,
+            isListBulletIndicator = utils.isListBulletIndicator,
+            containsNothingButSpaces = utils.isContainingOnlySpaces,
+            resolveListItem = utils.resolveList,
+            convertToPxStr = function (value) {
+                value = convertToPx(value);
+                return isNaN(value) ? value : value + 'px';
+            },
+            getStyleComponents = utils.getStyleComponents,
+            listDtdParents = utils.listDtdParents;
+
+        wordFilter.addRules({
+
+            tagNames: [
+                // Remove script, meta and link elements.
+                [ ( /meta|link|script/ ), '' ]
+            ],
+
+            root: function (element) {
+                element.filterChildren();
+                assembleList(element);
+            },
+
+            tags: {
+                '^': function (element) {
+                    // Transform CSS style declaration to inline style.
+                    var applyStyleFilter;
+                    if (UA.gecko &amp;&amp; ( applyStyleFilter = filters.applyStyleFilter ))
+                        applyStyleFilter(element);
+                },
+
+                $: function (element) {
+                    var tagName = element.nodeName || '';
+
+                    // Convert length unit of width/height on blocks to
+                    // a more editor-friendly way (px).
+                    if (tagName in blockLike &amp;&amp; element.getAttribute(&quot;style&quot;)) {
+                        setStyle(element, stylesFilter(
+                            [
+                                [ ( /^(:?width|height)$/ ), null, convertToPxStr ]
+                            ])(element.getAttribute(&quot;style&quot;)));
+                    }
+
+                    // Processing headings.
+                    if (tagName.match(/h\d/)) {
+                        element.filterChildren();
+                        // Is the heading actually a list item?
+                        if (resolveListItem(element)) {
+                            return;
+                        }
+                    }
+                    // Remove inline elements which contain only empty spaces.
+                    else if (tagName in dtd.$inline) {
+                        element.filterChildren();
+                        if (containsNothingButSpaces(element)) {
+                            element.setTagName(null);
+                        }
+                    }
+                    // Remove element with ms-office namespace,
+                    // with it's content preserved, e.g. 'o:p'.
+                    else if (tagName.indexOf(':') != -1
+                        &amp;&amp; tagName.indexOf('ke') == -1) {
+                        element.filterChildren();
+
+                        // Restore image real link from vml.
+                        if (tagName == 'v:imagedata') {
+                            var href = element.getAttribute('o:href');
+                            if (href) {
+                                element.setAttribute(&quot;src&quot;, href);
+                            }
+                            element.setTagName('img');
+                            return;
+                        }
+                        element.setTagName(null);
+                    }
+
+                    // Assembling list items into a whole list.
+                    if (tagName in listDtdParents) {
+                        element.filterChildren();
+                        assembleList(element);
+                    }
+                },
+
+                // We'll drop any style sheet, but Firefox conclude
+                // certain styles in a single style element, which are
+                // required to be changed into inline ones.
+                'style': function (element) {
+                    if (UA.gecko) {
+                        // Grab only the style definition section.
+                        var styleDefSection = onlyChild(element).nodeValue
+                                .match(/\/\* Style Definitions \*\/([\s\S]*?)\/\*/),
+                            styleDefText = styleDefSection &amp;&amp; styleDefSection[ 1 ],
+                            rules = {}; // Storing the parsed result.
+
+                        if (styleDefText) {
+                            styleDefText
+                                // Remove line-breaks.
+                                .replace(/[\n\r]/g, '')
+                                // Extract selectors and style properties.
+                                .replace(/(.+?)\{(.+?)\}/g,
+                                function (rule, selectors, styleBlock) {
+                                    selectors = selectors.split(',');
+                                    var length = selectors.length;
+                                    for (var i = 0; i &lt; length; i++) {
+                                        // Assume MS-Word mostly generate only simple
+                                        // selector( [Type selector][Class selector]).
+                                        S.trim(selectors[ i ])
+                                            .replace(/^(\w+)(\.[\w-]+)?$/g,
+                                            function (match, tagName, className) {
+                                                tagName = tagName || '*';
+                                                className = className.substring(1, className.length);
+
+                                                // Reject MS-Word Normal styles.
+                                                if (className.match(/MsoNormal/))
+                                                    return;
+
+                                                if (!rules[ tagName ]) {
+                                                    rules[ tagName ] = {};
+                                                }
+                                                if (className) {
+                                                    rules[ tagName ][ className ] = styleBlock;
+                                                } else {
+                                                    rules[ tagName ] = styleBlock;
+                                                }
+                                            });
+                                    }
+                                });
+
+                            filters.applyStyleFilter = function (element) {
+                                var name = rules[ '*' ] ? '*' : element.nodeName,
+                                    className = element.getAttribute('class'),
+                                    style;
+                                if (name in rules) {
+                                    style = rules[ name ];
+                                    if (typeof style == 'object')
+                                        style = style[ className ];
+                                    // Maintain style rules priorities.
+                                    style &amp;&amp; addStyle(element, style, true);
+                                }
+                            };
+                        }
+                    }
+                    return false;
+                },
+
+                'p': function (element) {
+                    // This's a fall-back approach to recognize list item in FF3.6,
+                    // as it's not perfect as not all list style (e.g. &quot;heading list&quot;) is shipped
+                    // with this pattern. (#6662)
+                    if (/MsoListParagraph/.exec(element.getAttribute('class'))) {
+                        var bulletText = firstChild(element, function (node) {
+                            return node.nodeType == 3 &amp;&amp; !containsNothingButSpaces(node.parentNode);
+                        });
+                        var bullet = bulletText &amp;&amp; bulletText.parentNode;
+                        !bullet.getAttribute(&quot;style&quot;) &amp;&amp; ( bullet.setAttribute(&quot;style&quot;, 'mso-list: Ignore;'));
+                    }
+
+                    element.filterChildren();
+                    // Is the paragraph actually a list item?
+                    resolveListItem(element)
+                },
+
+                'div': function (element) {
+                    // Aligned table with no text surrounded is represented by a wrapper div, from which
+                    // table cells inherit as text-align styles, which is wrong.
+                    // Instead we use a clear-float div after the table to properly achieve the same layout.
+                    var singleChild = onlyChild(element);
+                    if (singleChild &amp;&amp; singleChild.nodeName == 'table') {
+                        var attrs = element.attributes;
+
+                        S.each(attrs, function (attr) {
+                            singleChild.setAttribute(attr.name, attr.value);
+                        });
+
+                        if (element.getAttribute(&quot;style&quot;)) {
+                            addStyle(singleChild, element.getAttribute(&quot;style&quot;));
+                        }
+
+                        var clearFloatDiv = new HtmlParser.Tag('div');
+                        addStyle(clearFloatDiv, 'clear', 'both');
+                        element.appendChild(clearFloatDiv);
+                        element.setTagName(null);
+                    }
+                },
+
+                'td': function (element) {
+                    // 'td' in 'thead' is actually &lt;th&gt;.
+                    if (getAncestor(element, 'thead'))
+                        element.setTagName('th');
+                },
+
+                // MS-Word sometimes present list as a mixing of normal list
+                // and pseudo-list, normalize the previous ones into pseudo form.
+                'ol': flattenList,
+                'ul': flattenList,
+                'dl': flattenList,
+
+                'font': function (element) {
+                    // Drop the font tag if it comes from list bullet text.
+                    if (isListBulletIndicator(element.parentNode)) {
+                        element.setTagName(null);
+                        return;
+                    }
+
+                    element.filterChildren();
+
+                    var styleText = element.getAttribute(&quot;style&quot;),
+                        parent = element.parentNode;
+
+                    if ('font' == parent.name)     // Merge nested &lt;font&gt; tags.
+                    {
+                        S.each(element.attributes, function (attr) {
+                            parent.setAttribute(attr.name, attr.value);
+                        });
+                        styleText &amp;&amp; addStyle(parent, styleText);
+                        element.setTagName(null);
+                    }
+                    // Convert the merged into a span with all attributes preserved.
+                    else {
+                        styleText = styleText || '';
+                        // IE's having those deprecated attributes, normalize them.
+                        if (element.getAttribute(&quot;color&quot;)) {
+                            element.getAttribute(&quot;color&quot;) != '#000000' &amp;&amp; ( styleText += 'color:' + element.getAttribute(&quot;color&quot;) + ';' );
+                            element.removeAttribute(&quot;color&quot;);
+                        }
+                        if (element.getAttribute(&quot;face&quot;)) {
+                            styleText += 'font-family:' + element.getAttribute(&quot;face&quot;) + ';';
+                            element.removeAttribute(&quot;face&quot;);
+                        }
+                        var size = element.getAttribute(&quot;size&quot;);
+                        // TODO: Mapping size in ranges of xx-small,
+                        // x-small, small, medium, large, x-large, xx-large.
+                        if (size) {
+                            styleText += 'font-size:' +
+                                (size &gt; 3 ? 'large'
+                                    : ( size &lt; 3 ? 'small' : 'medium' ) ) + ';';
+                            element.removeAttribute(&quot;size&quot;);
+                        }
+                        element.setTagName(&quot;span&quot;);
+                        addStyle(element, styleText);
+                    }
+                },
+
+                'span': function (element) {
+                    // Remove the span if it comes from list bullet text.
+                    if (isListBulletIndicator(element.parentNode)) {
+                        return false;
+                    }
+                    element.filterChildren();
+                    if (containsNothingButSpaces(element)) {
+                        element.setTagName(null);
+                        return null;
+                    }
+
+                    // List item bullet type is supposed to be indicated by
+                    // the text of a span with style 'mso-list : Ignore' or an image.
+                    if (isListBulletIndicator(element)) {
+                        var listSymbolNode = firstChild(element, function (node) {
+                            return node.nodeValue || node.nodeName == 'img';
+                        });
+
+                        var listSymbol = listSymbolNode &amp;&amp; ( listSymbolNode.nodeValue || 'l.' ),
+                            listType = listSymbol &amp;&amp; listSymbol.match(/^(?:[(]?)([^\s]+?)([.)]?)$/);
+
+                        if (listType) {
+                            var marker = createListBulletMarker(listType, listSymbol);
+                            // Some non-existed list items might be carried by an inconsequential list,
+                            // indicate by &quot;mso-hide:all/display:none&quot;,
+                            // those are to be removed later, now mark it with &quot;ke:ignored&quot;.
+                            var ancestor = getAncestor(element, 'span');
+                            if (ancestor &amp;&amp; (/ mso-hide:\s*all|display:\s*none /).
+                                test(ancestor.getAttribute(&quot;style&quot;))) {
+                                marker.setAttribute('ke:ignored', 1);
+                            }
+                            return marker;
+                        }
+                    }
+
+                    // Update the src attribute of image element with href.
+                    var styleText = element.getAttribute(&quot;style&quot;);
+
+                    // Assume MS-Word mostly carry font related styles on &lt;span&gt;,
+                    // adapting them to editor's convention.
+                    if (styleText) {
+
+                        setStyle(element, stylesFilter(
+                            [
+                                // Drop 'inline-height' style which make lines overlapping.
+                                [ /^line-height$/ ],
+                                [  /^font-family$/  ] ,
+                                [  /^font-size$/  ] ,
+                                [  /^color$/  ] ,
+                                [  /^background-color$/  ]
+                            ]
+                        )(styleText, element));
+                    }
+                },
+                // Editor doesn't support anchor with content currently (#3582),
+                // drop such anchors with content preserved.
+                'a': function (element) {
+                    var href;
+                    if (!(href = element.getAttribute(&quot;href&quot;)) &amp;&amp; element.getAttribute(&quot;name&quot;)) {
+                        element.setTagName(null);
+                    } else if (UA.webkit &amp;&amp; href &amp;&amp; href.match(/file:\/\/\/[\S]+#/i)) {
+                        element.setAttribute(&quot;href&quot;, href.replace(/file:\/\/\/[^#]+/i, ''));
+                    }
+                },
+                'ke:listbullet': function (element) {
+                    if (getAncestor(element, /h\d/)) {
+                        element.setTagName(null);
+                    }
+                }
+            },
+
+            attributeNames: [
+                // Remove onmouseover and onmouseout events (from MS Word comments effect)
+                [ ( /^onmouse(:?out|over)/ ), '' ],
+                // Onload on image element.
+                [ ( /^onload$/ ), '' ],
+                // Remove office and vml attribute from elements.
+                [ ( /(?:v|o):\w+/ ), '' ],
+                // Remove lang/language attributes.
+                [ ( /^lang/ ), '' ]
+            ],
+
+            attributes: {
+                'style': stylesFilter(
+                    // Provide a white-list of styles that we preserve, those should
+                    // be the ones that could later be altered with editor tools.
+                    [
+                        // Leave list-style-type
+                        [ ( /^list-style-type$/ ) ],
+
+                        // Preserve margin-left/right which used as default indent style in the editor.
+                        [ ( /^margin$|^margin-(?!bottom|top)/ ), null, function (value, element, name) {
+                            if (element.nodeName in { p: 1, div: 1 }) {
+                                var indentStyleName = 'margin-left';
+
+                                // Extract component value from 'margin' shorthand.
+                                if (name == 'margin') {
+                                    value = getStyleComponents(name, value,
+                                        [ indentStyleName ])[ indentStyleName ];
+                                } else if (name != indentStyleName) {
+                                    return null;
+                                }
+
+                                if (value &amp;&amp; !emptyMarginRegex.test(value)) {
+                                    return [ indentStyleName, value ];
+                                }
+                            }
+
+                            return null;
+                        } ],
+
+                        // Preserve clear float style.
+                        [ ( /^clear$/ ) ],
+
+                        [ ( /^border.*|margin.*|vertical-align|float$/ ), null,
+                            function (value, element) {
+                                if (element.nodeName == 'img')
+                                    return value;
+                            } ],
+
+                        [ (/^width|height$/ ), null,
+                            function (value, element) {
+                                if (element.nodeName in { table: 1, td: 1, th: 1, img: 1 })
+                                    return value;
+                            } ]
+                    ], 1),
+
+                // Prefer width styles over 'width' attributes.
+                'width': function (value, element) {
+                    if (element.nodeName in dtd.$tableContent)
+                        return false;
+                },
+                // Prefer border styles over table 'border' attributes.
+                'border': function (value, element) {
+                    if (element.nodeName in dtd.$tableContent)
+                        return false;
+                },
+
+                // Only Firefox carry style sheet from MS-Word, which
+                // will be applied by us manually. For other browsers
+                // the css className is useless.
+                'class': falsyFilter,
+
+                // MS-Word always generate 'background-color' along with 'bgcolor',
+                // simply drop the deprecated attributes.
+                'bgcolor': falsyFilter,
+
+                // Deprecate 'valign' attribute in favor of 'vertical-align'.
+                'valign': function (value, element) {
+                    addStyle(element, 'vertical-align', value);
+                    return false;
+                }
+            },
+
+
+            // Fore none-IE, some useful data might be buried under these IE-conditional
+            // comments where RegExp were the right approach to dig them out where usual approach
+            // is transform it into a fake element node which hold the desired data.
+            comment: UA.ie ?
+                function (value, node) {
+                    var imageInfo = value.match(/&lt;img.*?&gt;/),
+                        listInfo = value.match(/^\[if !supportLists\]([\s\S]*?)\[endif\]$/);
+
+                    // Seek for list bullet indicator.
+                    if (listInfo) {
+                        // Bullet symbol could be either text or an image.
+                        var listSymbol = listInfo[ 1 ] || ( imageInfo &amp;&amp; 'l.' ),
+                            listType = listSymbol &amp;&amp; listSymbol.match(/&gt;(?:[(]?)([^\s]+?)([.)]?)&lt;/);
+                        return createListBulletMarker(listType, listSymbol);
+                    }
+
+                    // Reveal the &lt;img&gt; element in conditional comments for Firefox.
+                    if (UA.gecko &amp;&amp; imageInfo) {
+                        var img = new HtmlParser.Parser(imageInfo[0]).parse().childNodes[ 0 ],
+                            previousComment = node.previousSibling,
+                        // Try to dig the real image link from vml markup from previous comment text.
+                            imgSrcInfo = previousComment &amp;&amp; previousComment.toHtml().match(/&lt;v:imagedata[^&gt;]*o:href=['&quot;](.*?)['&quot;]/),
+                            imgSrc = imgSrcInfo &amp;&amp; imgSrcInfo[ 1 ];
+
+                        // Is there a real 'src' url to be used?
+                        imgSrc &amp;&amp; ( img.setAttribute(&quot;src&quot;, imgSrc) );
+                        return img;
+                    }
+
+                    return false;
+                }
+                : falsyFilter
+        });
+    })();
+
+    return {
+
+        toDataFormat: function (html, editor) {
+            // Firefox will be confused by those downlevel-revealed IE conditional
+            // comments, fixing them first( convert it to upperlevel-revealed one ).
+            // e.g. &lt;![if !vml]&gt;...&lt;![endif]&gt;
+            //&lt;!--[if !supportLists]--&gt;
+            // &lt;span style=\&quot;font-family: Wingdings;\&quot; lang=\&quot;EN-US\&quot;&gt;
+            // &lt;span style=\&quot;\&quot;&gt;l&lt;span style=\&quot;font: 7pt &amp;quot;Times New Roman&amp;quot;;\&quot;&gt;&amp;nbsp;
+            // &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;
+            // &lt;!--[endif]--&gt;
+
+            //变成：
+
+            //&lt;!--[if !supportLists]
+            // &lt;span style=\&quot;font-family: Wingdings;\&quot; lang=\&quot;EN-US\&quot;&gt;
+            // &lt;span style=\&quot;\&quot;&gt;l&lt;span style=\&quot;font: 7pt &amp;quot;Times New Roman&amp;quot;;\&quot;&gt;&amp;nbsp;
+            // &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;
+            // [endif]--&gt;
+            if (UA.gecko) {
+                html = html.replace(/(&lt;!--\[if[^&lt;]*?\])--&gt;([\S\s]*?)&lt;!--(\[endif\]--&gt;)/gi,
+                    '$1$2$3');
+            }
+
+            // 针对 word 一次
+            html = editor['htmlDataProcessor'].toDataFormat(html, wordFilter);
+
+            return html;
+        }
+
+    };
+
+
+}, {
+    requires: ['html-parser']
+});</pre>
+</body>
+</html>

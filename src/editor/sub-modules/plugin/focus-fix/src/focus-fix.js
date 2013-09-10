@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * save and restore focus when overlay shows or hides
  * @author yiminghe@gmail.com
  */

@@ -44,16 +44,15 @@ KISSY.add('event/base/observable', function (S) {
 
         /**
          * remove one observer from current event's observers
-         * @param {KISSY.Event.Observer} s
-         * @memberOf KISSY.Event.Observable.prototype
+         * @param {KISSY.Event.Observer} observer
          */
-        removeObserver: function (s) {
+        removeObserver: function (observer) {
             var self = this,
                 i,
                 observers = self.observers,
                 len = observers.length;
             for (i = 0; i < len; i++) {
-                if (observers[i] == s) {
+                if (observers[i] == observer) {
                     observers.splice(i, 1);
                     break;
                 }

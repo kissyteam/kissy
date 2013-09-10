@@ -1,0 +1,31 @@
+[
+    {
+        "title": "seed",
+        "items": [
+            {
+                "name": "seed-development-mode",
+                "title": "development mode",
+                "description": "development mode using seed",
+                "url": "seed/demo/project/source/run.html",
+                "icon": "",
+                "status": ""
+            },
+            {
+                "name": "seed-production-mode-concat",
+                "title": "concat on production mode",
+                "description": "concat multiple module into one file and combo in production mode",
+                "url": "seed/demo/project/build/run.html",
+                "icon": "",
+                "status": ""
+            },
+            {
+                "name": "seed-production-mode-combo",
+                "title": "combo on production mode",
+                "description": "simple combo in production mode",
+                "url": "seed/demo/project/build-combo/run.html",
+                "icon": "",
+                "status": ""
+            }
+        ]
+    }
+]

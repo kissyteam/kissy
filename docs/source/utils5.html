@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * link utils
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(&quot;editor/plugin/link/utils&quot;, function (S, Editor) {
+
+    var Node = S.Node,
+        KEStyle = Editor.Style,
+        _ke_saved_href = &quot;_ke_saved_href&quot;,
+        link_Style = {
+            element:'a',
+            attributes:{
+                &quot;href&quot;:&quot;#(href)&quot;,
+                &quot;title&quot;:&quot;#(title)&quot;,
+                // ie &lt; 8 会把锚点地址修改，以及相对地址改为绝对地址
+                // 1. 编辑器位于 http://x.com/edit.htm
+                // 2. 用户输入 ./a.htm
+                // 3. 生成为 &lt;a href='http://x.com/a.htm'&gt;
+                // 另一个问题 refer: http://stackoverflow.com/questions/687552/prevent-tinymce-internet-explorer-from-converting-urls-to-links
+                &quot;_ke_saved_href&quot;:&quot;#(_ke_saved_href)&quot;,
+                target:&quot;#(target)&quot;
+            }
+        };
+
+    function getAttributes(el) {
+        var attributes = el.attributes,
+            re = {};
+        for (var i = 0; i &lt; attributes.length; i++) {
+            var a = attributes[i];
+            if (a.specified) {
+                re[a.name] = a.value;
+            }
+        }
+        if (el.style.cssText) {
+            re.style = el.style.cssText;
+        }
+        return re;
+    }
+
+
+    function removeLink(editor, a) {
+        editor.execCommand(&quot;save&quot;);
+        var sel = editor.getSelection(),
+            range = sel.getRanges()[0];
+        if (range &amp;&amp; range.collapsed) {
+            var bs = sel.createBookmarks();
+            // 不使用核心 styles ，直接清除元素标记即可。
+            a._4e_remove(true);
+            sel.selectBookmarks(bs);
+        } else if (range) {
+            var attrs = getAttributes(a[0]);
+            new KEStyle(link_Style, attrs).remove(editor.get(&quot;document&quot;)[0]);
+        }
+        editor.execCommand(&quot;save&quot;);
+        editor.notifySelectionChange();
+    }
+
+    function applyLink(editor, attr, _selectedEl) {
+        // 注意同步，取的话要从 _ke_saved_href 取原始值的
+        attr[_ke_saved_href] = attr.href;
+        // 是修改行为
+        if (_selectedEl) {
+            editor.execCommand(&quot;save&quot;);
+            _selectedEl.attr(attr);
+        } else {
+            var sel = editor.getSelection(),
+                range = sel &amp;&amp; sel.getRanges()[0];
+            //编辑器没有焦点或没有选择区域时直接插入链接地址
+            if (!range || range.collapsed) {
+                var a = new Node(&quot;&lt;a&gt;&quot; + attr.href + &quot;&lt;/a&gt;&quot;,
+                    attr, editor.get(&quot;document&quot;)[0]);
+                editor.insertElement(a);
+            } else {
+                editor.execCommand(&quot;save&quot;);
+                var linkStyle = new KEStyle(link_Style, attr);
+                linkStyle.apply(editor.get(&quot;document&quot;)[0]);
+            }
+        }
+        editor.execCommand(&quot;save&quot;);
+        editor.notifySelectionChange();
+    }
+
+
+    return {
+        removeLink:removeLink,
+        applyLink:applyLink,
+        _ke_saved_href:_ke_saved_href
+    }
+}, {
+    requires:['editor']
+});</pre>
+</body>
+</html>

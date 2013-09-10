@@ -1,8 +1,15 @@
 /**
+ * @ignore
  * parse html string into Nodes
  * @author yiminghe@gmail.com
  */
 KISSY.add("html-parser/lexer/lexer", function (S, Cursor, Page, TextNode, CData, Utils, Attribute, TagNode, CommentNode) {
+    /**
+     * Lexer for html parser
+     * @param {String} text html content
+     * @param {Object} cfg config object
+     * @class KISSY.HtmlParse.Lexer
+     */
     function Lexer(text, cfg) {
         var self = this;
         self.page = new Page(text);

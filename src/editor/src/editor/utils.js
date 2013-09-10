@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * common utils for kissy editor
  * @author yiminghe@gmail.com
  */
@@ -12,10 +13,9 @@ KISSY.add("editor/utils", function (S,Editor) {
         UA = S.UA,
 
         /**
-         * @namespace
          * Utilities for Editor.
-         * @name Utils
-         * @member Editor
+         * @class KISSY.Editor.Utils
+         * @singleton
          */
             Utils ={
             /**

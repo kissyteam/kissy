@@ -1,27 +1,24 @@
 /**
+ * @ignore
  * Add remove-format command for KISSY Editor.
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/plugin/remove-format/cmd", function (S, Editor) {
-    var KER = Editor.RANGE,
+    var KER = Editor.RangeType,
         ElementPath = Editor.ElementPath,
         Dom = S.DOM,
-        /**
-         * A comma separated list of elements to be removed
-         * when executing the "remove format" command.
-         * Note that only inline elements are allowed.
-         * @type {String}
-         * Defaults to: 'b,big,code,del,dfn,em,font,i,ins,kbd,q,samp,small,span,strike,strong,sub,sup,tt,u,var'
-         * @example
+        /*
+          A comma separated list of elements to be removed
+          when executing the "remove format" command.
+          Note that only inline elements are allowed.
+          Defaults to: 'b,big,code,del,dfn,em,font,i,ins,kbd,q,samp,small,span,strike,strong,sub,sup,tt,u,var'
          */
             removeFormatTags = 'b,big,code,del,dfn,em,font,i,ins,kbd,' +
             'q,samp,small,span,strike,strong,sub,sup,tt,u,var,s',
-        /**
-         * A comma separated list of elements attributes to be removed
-         * when executing the "remove format" command.
-         * @type {String}
-         * Defaults to: 'class,style,lang,width,height,align,hspace,valign'
-         * @example
+        /*
+          A comma separated list of elements attributes to be removed
+          when executing the "remove format" command.
+          Defaults to: 'class,style,lang,width,height,align,hspace,valign'
          */
             removeFormatAttributes = ('class,style,lang,width,height,' +
             'align,hspace,valign').split(/,/),

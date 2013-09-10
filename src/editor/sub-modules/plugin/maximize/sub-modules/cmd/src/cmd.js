@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * Add maximizeWindow/restoreWindow to Editor.
  * @author yiminghe@gmail.com
  */
@@ -57,9 +58,9 @@ KISSY.add("editor/plugin/maximize/cmd", function (S, Editor) {
             }, 30);
         },
 
-        /**
-         * 从内存恢复最大化前的外围状态信息到编辑器实际动作，
-         * 包括编辑器位置以及周围元素，浏览器窗口
+        /*
+         从内存恢复最大化前的外围状态信息到编辑器实际动作，
+         包括编辑器位置以及周围元素，浏览器窗口
          */
         _restoreState: function () {
             var self = this,
@@ -94,13 +95,6 @@ KISSY.add("editor/plugin/maximize/cmd", function (S, Editor) {
             editorElStyle.position = "static";
             editorElStyle.width = self.editorElWidth;
 
-            /*
-             iframe 中时假死！
-             editor.editorEl.css({
-             position:"static",
-             width:self.editorElWidth
-             });*/
-
             iframe.css({
                 left: "-99999px",
                 top: "-99999px"
@@ -113,9 +107,9 @@ KISSY.add("editor/plugin/maximize/cmd", function (S, Editor) {
                     editor.get('prefixCls') + MAXIMIZE_TOOLBAR_CLASS, undefined);
             }
         },
-        /**
-         * 保存最大化前的外围状态信息到内存，
-         * 包括编辑器位置以及周围元素，浏览器窗口
+        /*
+         保存最大化前的外围状态信息到内存，
+         包括编辑器位置以及周围元素，浏览器窗口
          */
         _saveSate: function () {
             var self = this,
@@ -152,9 +146,9 @@ KISSY.add("editor/plugin/maximize/cmd", function (S, Editor) {
             }
         },
 
-        /**
-         *  编辑器自身核心状态保存，每次最大化最小化都要save,restore，
-         *  firefox修正，iframe layout变化时，range丢了
+        /*
+         编辑器自身核心状态保存，每次最大化最小化都要save,restore，
+         firefox修正，iframe layout变化时，range丢了
          */
         _saveEditorStatus: function () {
             var self = this,
@@ -168,9 +162,9 @@ KISSY.add("editor/plugin/maximize/cmd", function (S, Editor) {
             self.savedRanges = sel && sel.getRanges();
         },
 
-        /**
-         * 编辑器自身核心状态恢复，每次最大化最小化都要save,restore，
-         * 维持编辑器核心状态不变
+        /*
+         编辑器自身核心状态恢复，每次最大化最小化都要save,restore，
+         维持编辑器核心状态不变
          */
         _restoreEditorStatus: function () {
             var self = this,
@@ -203,9 +197,9 @@ KISSY.add("editor/plugin/maximize/cmd", function (S, Editor) {
             }
         },
 
-        /**
-         * 将编辑器最大化-实际动作
-         * 必须做两次，何解？？
+        /*
+         将编辑器最大化-实际动作
+         必须做两次，何解？？
          */
         _maximize: function (stop) {
             var self = this,
@@ -307,9 +301,7 @@ KISSY.add("editor/plugin/maximize/cmd", function (S, Editor) {
 
     return {
         init: function (editor) {
-
             if (!editor.hasCommand("maximizeWindow")) {
-
                 var maximizeCmd = new MaximizeCmd(editor);
 
                 editor.addCommand("maximizeWindow", {
@@ -323,9 +315,7 @@ KISSY.add("editor/plugin/maximize/cmd", function (S, Editor) {
                         maximizeCmd.restoreWindow();
                     }
                 });
-
             }
-
         }
     };
 }, {

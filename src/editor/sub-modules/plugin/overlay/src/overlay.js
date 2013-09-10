@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * custom overlay  for kissy editor
  * @author yiminghe@gmail.com
  */

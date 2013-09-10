@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * Add justifyCenter command identifier for Editor.
  * @author yiminghe@gmail.com
  */

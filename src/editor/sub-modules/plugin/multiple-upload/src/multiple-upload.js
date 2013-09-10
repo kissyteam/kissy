@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * multipleUpload button
  * @author yiminghe@gmail.com
  */

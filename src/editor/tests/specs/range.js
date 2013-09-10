@@ -6,7 +6,7 @@ KISSY.add(function (S, Editor) {
     var $ = S.all,
         UA = S.UA,
         Dom = S.DOM,
-        RANGE = Editor.RANGE,
+        RangeType = Editor.RangeType,
         Node = S.Node;
     var Range = Editor.Range;
 
@@ -1027,7 +1027,7 @@ KISSY.add(function (S, Editor) {
                     range.setStart(textNode1, 0);
                     range.setEnd(textNode2, textNode2[0].nodeValue.length);
 
-                    range.enlarge(Editor.RANGE.ENLARGE_ELEMENT);
+                    range.enlarge(Editor.RangeType.ENLARGE_ELEMENT);
 
                     expect(range.startContainer[0]).toBe(div[0]);
                     expect(range.endContainer[0]).toBe(div[0]);
@@ -1056,7 +1056,7 @@ KISSY.add(function (S, Editor) {
                     range.setStart(textNode1, 0);
                     range.setEnd(textNode2, textNode2[0].nodeValue.length);
 
-                    range.enlarge(Editor.RANGE.ENLARGE_ELEMENT);
+                    range.enlarge(Editor.RangeType.ENLARGE_ELEMENT);
 
                     expect(range.startContainer[0]).toBe(strong[0]);
                     expect(range.endContainer[0]).toBe(textNode2[0]);
@@ -1087,7 +1087,7 @@ KISSY.add(function (S, Editor) {
                     range.setStart(textNode1, 0);
                     range.setEnd(textNode2, textNode2[0].nodeValue.length);
 
-                    range.enlarge(Editor.RANGE.ENLARGE_ELEMENT);
+                    range.enlarge(Editor.RangeType.ENLARGE_ELEMENT);
 
                     expect(range.startContainer[0]).toBe(strong[0]);
                     expect(range.endContainer[0]).toBe(strong[0]);
@@ -1115,7 +1115,7 @@ KISSY.add(function (S, Editor) {
                     range.setStart(span, 0);
                     range.setEnd(span2, 1);
 
-                    range.enlarge(Editor.RANGE.ENLARGE_ELEMENT);
+                    range.enlarge(Editor.RangeType.ENLARGE_ELEMENT);
 
                     expect(range.startContainer[0]).toBe(div[0]);
                     expect(range.endContainer[0]).toBe(div[0]);
@@ -1142,7 +1142,7 @@ KISSY.add(function (S, Editor) {
                     range.setStart(text, 1);
                     range.setEnd(text2, 1);
 
-                    range.enlarge(Editor.RANGE.ENLARGE_BLOCK_CONTENTS);
+                    range.enlarge(Editor.RangeType.ENLARGE_BLOCK_CONTENTS);
 
                     expect(range.startContainer[0]).toBe(div[0]);
                     expect(range.startOffset).toBe(0);
@@ -1164,7 +1164,7 @@ KISSY.add(function (S, Editor) {
                     range.setStart(div, 0);
                     range.setEnd(text2, 1);
 
-                    range.enlarge(Editor.RANGE.ENLARGE_BLOCK_CONTENTS);
+                    range.enlarge(Editor.RangeType.ENLARGE_BLOCK_CONTENTS);
 
                     expect(range.startContainer[0]).toBe(div[0]);
                     expect(range.startOffset).toBe(0);
@@ -1193,7 +1193,7 @@ KISSY.add(function (S, Editor) {
                     range.setStart(text, 1);
                     range.setEnd(text2, 1);
 
-                    range.enlarge(Editor.RANGE.ENLARGE_LIST_ITEM_CONTENTS);
+                    range.enlarge(Editor.RangeType.ENLARGE_LIST_ITEM_CONTENTS);
 
                     expect(range.startContainer[0]).toBe(div[0]);
                     expect(range.startOffset).toBe(3);
@@ -1261,7 +1261,7 @@ KISSY.add(function (S, Editor) {
                 range.setStart(span, 0);
                 range.setEnd(span, 0);
 
-                expect(range.checkBoundaryOfElement(div, RANGE.START))
+                expect(range.checkBoundaryOfElement(div, RangeType.START))
                     .toBe(true);
 
                 div.remove();
@@ -1275,7 +1275,7 @@ KISSY.add(function (S, Editor) {
                 range.setStart(span, 0);
                 range.setEnd(span, 0);
 
-                expect(range.checkBoundaryOfElement(div, RANGE.START))
+                expect(range.checkBoundaryOfElement(div, RangeType.START))
                     .toBe(false);
 
                 div.remove();
@@ -1293,7 +1293,7 @@ KISSY.add(function (S, Editor) {
                 range.setStart(span, 1);
                 range.setEnd(span, 1);
 
-                expect(range.checkBoundaryOfElement(div, RANGE.END))
+                expect(range.checkBoundaryOfElement(div, RangeType.END))
                     .toBe(true);
 
                 div.remove();
@@ -1307,7 +1307,7 @@ KISSY.add(function (S, Editor) {
                 range.setStart(span, 1);
                 range.setEnd(span, 1);
 
-                expect(range.checkBoundaryOfElement(div, RANGE.END))
+                expect(range.checkBoundaryOfElement(div, RangeType.END))
                     .toBe(false);
 
                 div.remove();

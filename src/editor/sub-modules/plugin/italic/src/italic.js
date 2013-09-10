@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * italic button.
  * @author yiminghe@gmail.com
  */

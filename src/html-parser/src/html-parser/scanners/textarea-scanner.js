@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * textarea data scanner
  * @author yiminghe@gmail.com
  */

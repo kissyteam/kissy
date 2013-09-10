@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * backColor button.
  * @author yiminghe@gmail.com
  */

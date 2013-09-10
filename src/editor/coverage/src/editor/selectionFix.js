@@ -776,7 +776,7 @@ function visit746_50_1(result) {
 KISSY.add("editor/selectionFix", function(S, Editor) {
   _$jscoverage['/editor/selectionFix.js'].functionData[0]++;
   _$jscoverage['/editor/selectionFix.js'].lineData[12]++;
-  var TRUE = true, FALSE = false, NULL = null, UA = S.UA, Event = S.Event, Dom = S.DOM, Node = S.Node, KES = Editor.SELECTION;
+  var TRUE = true, FALSE = false, NULL = null, UA = S.UA, Event = S.Event, Dom = S.DOM, Node = S.Node, KES = Editor.SelectionType;
   _$jscoverage['/editor/selectionFix.js'].lineData[25]++;
   function fixCursorForIE(editor) {
     _$jscoverage['/editor/selectionFix.js'].functionData[1]++;

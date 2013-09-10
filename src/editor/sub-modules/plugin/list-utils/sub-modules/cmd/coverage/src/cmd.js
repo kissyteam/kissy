@@ -820,7 +820,7 @@ KISSY.add("editor/plugin/list-utils/cmd", function(S, Editor, ListUtils, undefin
   _$jscoverage['/cmd.js'].lineData[7]++;
   var insertUnorderedList = "insertUnorderedList", insertOrderedList = "insertOrderedList", listNodeNames = {
   "ol": insertOrderedList, 
-  "ul": insertUnorderedList}, KER = Editor.RANGE, ElementPath = Editor.ElementPath, Walker = Editor.Walker, UA = S.UA, Node = S.Node, Dom = S.DOM, headerTagRegex = /^h[1-6]$/;
+  "ul": insertUnorderedList}, KER = Editor.RangeType, ElementPath = Editor.ElementPath, Walker = Editor.Walker, UA = S.UA, Node = S.Node, Dom = S.DOM, headerTagRegex = /^h[1-6]$/;
   _$jscoverage['/cmd.js'].lineData[18]++;
   function ListCommand(type) {
     _$jscoverage['/cmd.js'].functionData[1]++;

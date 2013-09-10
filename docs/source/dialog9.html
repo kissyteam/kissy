@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * video dialog
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(&quot;editor/plugin/video/dialog&quot;, function (S, Editor, FlashDialog, MenuButton) {
+    var CLS_VIDEO = &quot;ke_video&quot;,
+        TYPE_VIDEO = &quot;video&quot;,
+        DTIP = &quot;自动&quot;,
+        MARGIN_DEFAULT = 0,
+        bodyHTML = &quot;&lt;div style='padding:20px 20px 0 20px'&gt;&quot; +
+            &quot;&lt;p&gt;&quot; +
+            &quot;&lt;label&gt;&quot; +
+            &quot;链接： &quot; +
+            &quot;&quot; +
+            &quot;&lt;input &quot; +
+            &quot;class='{prefixCls}editor-video-url {prefixCls}editor-input' style='width:410px;&quot; +
+            &quot;'/&gt;&quot; +
+            &quot;&lt;/label&gt;&quot; +
+            &quot;&lt;/p&gt;&quot; +
+            &quot;&lt;table &quot; +
+            &quot;style='margin:10px 0 5px  40px;width:400px;'&gt;&quot; +
+            &quot;&lt;tr&gt;&lt;td&gt;&quot; +
+            &quot;&lt;label&gt;宽度： &quot; +
+            &quot; &quot; +
+            &quot;&lt;input &quot; +
+            &quot; data-verify='^(&quot; + DTIP + &quot;|((?!0$)\\d+))?$' &quot; +
+            &quot; data-warning='宽度请输入正整数' &quot; +
+            &quot;class='{prefixCls}editor-video-width {prefixCls}editor-input' &quot; +
+            &quot;style='width:60px;&quot; +
+            &quot;' &quot; +
+            &quot;/&gt; 像素&quot; +
+            &quot;&lt;/label&gt;&quot; +
+            &quot;&lt;/td&gt;&quot; +
+            &quot;&lt;td&gt;&quot; +
+            &quot;&lt;label&gt; 高度： &quot; +
+            &quot;&quot; +
+            &quot; &lt;input &quot; +
+            &quot; data-verify='^(&quot; + DTIP + &quot;|((?!0$)\\d+))?$' &quot; +
+            &quot; data-warning='高度请输入正整数' &quot; +
+            &quot;class='{prefixCls}editor-video-height {prefixCls}editor-input' style='width:60px;&quot; +
+            &quot;'/&gt; 像素&quot; +
+            &quot;&lt;/label&gt;&quot; +
+            &quot;&lt;/td&gt;&lt;/tr&gt;&quot; +
+            &quot;&lt;tr&gt;&quot; +
+            &quot;&lt;td&gt;&quot; +
+            &quot;&lt;label&gt;对齐： &quot; +
+            &quot;&lt;select class='{prefixCls}editor-video-align' title='对齐'&gt;&quot; +
+            &quot;&lt;option value='none'&gt;无&lt;/option&gt;&quot; +
+            &quot;&lt;option value='left'&gt;左对齐&lt;/option&gt;&quot; +
+            &quot;&lt;option value='right'&gt;右对齐&lt;/option&gt;&quot; +
+            &quot;&lt;/select&gt;&quot; +
+            &quot;&lt;/td&gt;&quot; +
+            &quot;&lt;td&gt;&quot; +
+            &quot;&lt;label&gt;间距： &quot; +
+            &quot;&lt;input &quot; +
+            &quot;&quot; +
+            &quot; data-verify='^\\d+$' &quot; +
+            &quot; data-warning='间距请输入非负整数' &quot; +
+            &quot;class='{prefixCls}editor-video-margin {prefixCls}editor-input' style='width:60px;&quot; +
+            &quot;' value='&quot;
+            + MARGIN_DEFAULT + &quot;'/&gt; 像素&quot; +
+            &quot;&lt;/label&gt;&quot; +
+            &quot;&lt;/td&gt;&lt;/tr&gt;&quot; +
+            &quot;&lt;/table&gt;&quot; +
+            &quot;&lt;/div&gt;&quot;,
+        footHTML = &quot;&lt;div style='padding:10px 0 35px 20px;'&gt;&lt;a &quot; +
+            &quot;class='{prefixCls}editor-video-ok {prefixCls}editor-button ks-inline-block' &quot; +
+            &quot;style='margin-left:40px;margin-right:20px;'&gt;确定&lt;/button&gt; &quot; +
+            &quot;&lt;a class='{prefixCls}editor-video-cancel {prefixCls}editor-button ks-inline-block'&gt;取消&lt;/a&gt;&lt;/div&gt;&quot;;
+
+    function VideoDialog() {
+        VideoDialog.superclass.constructor.apply(this, arguments);
+    }
+
+    S.extend(VideoDialog, FlashDialog, {
+        _config: function () {
+            var self = this,
+                editor = self.editor,
+                prefixCls = editor.get('prefixCls'),
+                cfg = self.config;
+            self._cls = CLS_VIDEO;
+            self._type = TYPE_VIDEO;
+            self._title = &quot;视频&quot;;//属性&quot;;
+            self._bodyHTML = S.substitute(bodyHTML, {
+                prefixCls: prefixCls
+            });
+            self._footHTML = S.substitute(footHTML, {
+                prefixCls: prefixCls
+            });
+            self.urlCfg = cfg.urlCfg;
+            self._urlTip = cfg.urlTip || &quot;请输入视频播放链接...&quot;;
+        },
+        _initD: function () {
+            var self = this,
+                d = self.dialog,
+                editor = self.editor,
+                prefixCls = editor.get('prefixCls'),
+                el = d.get(&quot;el&quot;);
+            self.dUrl = el.one(&quot;.&quot; + prefixCls + &quot;editor-video-url&quot;);
+            self.dAlign = MenuButton.Select.decorate(el.one(&quot;.&quot; + prefixCls + &quot;editor-video-align&quot;), {
+                prefixCls: prefixCls + 'editor-big-',
+                width: 80,
+                menuCfg: {
+                    prefixCls: prefixCls + 'editor-',
+                    render: el
+                }
+            });
+            self.dMargin = el.one(&quot;.&quot; + prefixCls + &quot;editor-video-margin&quot;);
+            self.dWidth = el.one(&quot;.&quot; + prefixCls + &quot;editor-video-width&quot;);
+            self.dHeight = el.one(&quot;.&quot; + prefixCls + &quot;editor-video-height&quot;);
+            var action = el.one(&quot;.&quot; + prefixCls + &quot;editor-video-ok&quot;),
+                cancel = el.one(&quot;.&quot; + prefixCls + &quot;editor-video-cancel&quot;);
+            action.on(&quot;click&quot;, self._gen, self);
+            cancel.on(&quot;click&quot;, function (ev) {
+                d.hide();
+                ev.halt();
+            });
+            Editor.Utils.placeholder(self.dUrl, self._urlTip);
+            Editor.Utils.placeholder(self.dWidth, DTIP);
+            Editor.Utils.placeholder(self.dHeight, DTIP);
+            self.addRes(self.dAlign);
+        },
+
+        _getDInfo: function () {
+            var self = this,
+                url = self.dUrl.val();
+            var videoCfg = self.config,
+                p = videoCfg.getProvider(url);
+            if (!p) {
+                alert(&quot;不支持该链接来源!&quot;);
+            } else {
+                var re = p['detect'](url);
+                if (!re) {
+                    alert(&quot;不支持该链接，请直接输入该视频提供的分享链接&quot;);
+                    return undefined;
+                }
+                return {
+                    url: re,
+                    attrs: {
+                        height: parseInt(self.dHeight.val()) || p.height,
+                        width: parseInt(self.dWidth.val()) || p.width,
+                        style: &quot;margin:&quot; + (parseInt(self.dMargin.val()) || 0) + &quot;px;&quot; +
+                            &quot;float:&quot; + self.dAlign.get(&quot;value&quot;) + &quot;;&quot;
+                    }
+                };
+            }
+            return undefined;
+        },
+
+        _gen: function (ev) {
+            var self = this,
+                url = self.dUrl.val(),
+                urlCfg = self.urlCfg;
+            if (urlCfg) {
+                for (var i = 0; i &lt; urlCfg.length; i++) {
+                    var c = urlCfg[i];
+                    if (c['reg'].test(url)) {
+                        self.dialog.loading();
+
+                        var data = {};
+
+                        data[c['paramName'] || &quot;url&quot;] = url;
+
+                        S.io({
+                            url: c.url,
+                            data: data,
+                            dataType: 'jsonp',
+                            success: function (data) {
+                                self._dynamicUrlPrepare(data[1]);
+                            }
+                        });
+
+                        return;
+                    }
+                }
+            }
+            VideoDialog.superclass._gen.call(self);
+            ev &amp;&amp; ev.halt();
+        },
+
+        _dynamicUrlPrepare: function (re) {
+            var self = this;
+            self.dUrl.val(re);
+            self.dialog.unloading();
+            VideoDialog.superclass._gen.call(self);
+        },
+
+        _updateD: function () {
+            var self = this,
+                editor = self.editor,
+                f = self.selectedFlash;
+            if (f) {
+                var r = editor.restoreRealElement(f);
+                Editor.Utils.valInput(self.dUrl, self._getFlashUrl(r));
+                self.dAlign.set(&quot;value&quot;, f.css(&quot;float&quot;));
+                self.dMargin.val(parseInt(r.style(&quot;margin&quot;)) || 0);
+                Editor.Utils.valInput(self.dWidth, parseInt(f.css(&quot;width&quot;)));
+                Editor.Utils.valInput(self.dHeight, parseInt(f.css(&quot;height&quot;)));
+            } else {
+                Editor.Utils.resetInput(self.dUrl);
+                self.dAlign.set(&quot;value&quot;, &quot;none&quot;);
+                self.dMargin.val(MARGIN_DEFAULT);
+                Editor.Utils.resetInput(self.dWidth);
+                Editor.Utils.resetInput(self.dHeight);
+            }
+        }
+    });
+
+    return VideoDialog;
+}, {
+    requires: ['editor', '../flash/dialog', '../menubutton']
+});</pre>
+</body>
+</html>

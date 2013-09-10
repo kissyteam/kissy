@@ -1,15 +1,20 @@
 /**
+ * @ignore
  * represent line index of each line
  * @author yiminghe@gmail.com
  */
 KISSY.add("html-parser/lexer/index", function () {
 
+    /**
+     * Page index class.
+     * @private
+     * @class KISSY.HtmlParse.Lexer.Index
+     */
     function Index() {
         this.lineCursors = [];
     }
 
     Index.prototype = {
-
         constructor: Index,
 
         add: function (cursor) {

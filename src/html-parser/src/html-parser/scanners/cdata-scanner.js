@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * scanner cdata (script/textarea/style)
  * @author yiminghe@gmail.com
  */

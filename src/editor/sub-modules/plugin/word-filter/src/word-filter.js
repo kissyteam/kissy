@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * clean html pasted from word. modified from ckeditor.
  * @author yiminghe@gmail.com
  */
@@ -77,10 +78,9 @@ KISSY.add("editor/plugin/word-filter", function (S, HtmlParser) {
         }
     }
 
-    /**
-     * Convert the specified CSS length value to the calculated pixel length inside this page.
-     * <strong>Note:</strong> Percentage based value is left intact.
-     * @param {String} cssLength CSS length value.
+    /*
+     Convert the specified CSS length value to the calculated pixel length inside this page.
+     <strong>Note:</strong> Percentage based value is left intact.
      */
     var convertToPx = (function () {
         var calculator;
@@ -295,10 +295,9 @@ KISSY.add("editor/plugin/word-filter", function (S, HtmlParser) {
             element.setAttribute('ke:list', 1);
         },
 
-        /**
-         *  Try to collect all list items among the children and establish one
-         *  or more HTML list structures for them.
-         * @param element
+        /*
+          Try to collect all list items among the children and establish one
+          or more HTML list structures for them.
          */
         assembleList: function (element) {
             var children = element.childNodes || [],
@@ -458,19 +457,19 @@ KISSY.add("editor/plugin/word-filter", function (S, HtmlParser) {
             }
         },
 
-        /**
-         * A simple filter which always rejecting.
+        /*
+          A simple filter which always rejecting.
          */
         falsyFilter: function () {
             return false;
         },
 
-        /**
-         * A filter dedicated on the 'style' attribute filtering, e.g. dropping/replacing style properties.
-         * @param styles {Array} in form of [ styleNameRegexp, styleValueRegexp,
-         *  newStyleValue/newStyleGenerator, newStyleName ] where only the first
-         *  parameter is mandatory.
-         * @param [whitelist] {Boolean} Whether the {@param styles} will be considered as a white-list.
+        /*
+         A filter dedicated on the 'style' attribute filtering, e.g. dropping/replacing style properties.
+         @param styles {Array} in form of [ styleNameRegexp, styleValueRegexp,
+         newStyleValue/newStyleGenerator, newStyleName ] where only the first
+         parameter is mandatory.
+         @param [whitelist] {Boolean} Whether the {@param styles} will be considered as a white-list.
          */
         stylesFilter: function (styles, whitelist) {
             return function (styleText, element) {
@@ -533,9 +532,9 @@ KISSY.add("editor/plugin/word-filter", function (S, HtmlParser) {
             };
         },
 
-        /**
-         * A filter which will be used to apply inline css style according the stylesheet
-         * definition rules, is generated lazily when filtering.
+        /*
+          A filter which will be used to apply inline css style according the stylesheet
+          definition rules, is generated lazily when filtering.
          */
         applyStyleFilter: null
 

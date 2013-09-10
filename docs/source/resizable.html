@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * resizable support for kissy
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(&quot;resizable&quot;, function (S, Node, Base, DD, undefined) {
+    var $ = Node.all,
+        i,
+        j,
+        Draggable = DD.Draggable,
+        CLS_PREFIX = &quot;resizable-handler&quot;,
+        horizontal = [&quot;l&quot;, &quot;r&quot;],
+        vertical = [&quot;t&quot;, &quot;b&quot;],
+        ATTRS_ORDER = [&quot;width&quot;, &quot;height&quot;, &quot;top&quot;, &quot;left&quot;],
+        hcNormal = {
+            &quot;t&quot;: function (minW, maxW, minH, maxH, ot, ol, ow, oh, diffT, diffL, preserveRatio) {
+                var h = getBoundValue(minH, maxH, oh - diffT),
+                    t = ot + oh - h,
+                    w = 0;
+                if (preserveRatio) {
+                    w = h / oh * ow;
+                }
+                return [w, h, t, 0]
+            },
+            &quot;b&quot;: function (minW, maxW, minH, maxH, ot, ol, ow, oh, diffT, diffL, preserveRatio) {
+                var h = getBoundValue(minH, maxH, oh + diffT),
+                    w = 0;
+                if (preserveRatio) {
+                    w = h / oh * ow;
+                }
+                return [w, h, 0, 0];
+            },
+            &quot;r&quot;: function (minW, maxW, minH, maxH, ot, ol, ow, oh, diffT, diffL, preserveRatio) {
+                var w = getBoundValue(minW, maxW, ow + diffL),
+                    h = 0;
+                if (preserveRatio) {
+                    h = w / ow * oh;
+                }
+                return [w, h, 0, 0];
+            },
+            &quot;l&quot;: function (minW, maxW, minH, maxH, ot, ol, ow, oh, diffT, diffL, preserveRatio) {
+                var w = getBoundValue(minW, maxW, ow - diffL),
+                    h = 0,
+                    l = ol + ow - w;
+                if (preserveRatio) {
+                    h = w / ow * oh;
+                }
+                return [w, h, 0, l]
+            }
+        };
+
+    for (i = 0; i &lt; horizontal.length; i++) {
+        for (j = 0; j &lt; vertical.length; j++) {
+            (function (h, v) {
+                hcNormal[ h + v] = hcNormal[ v + h] = function () {
+                    return merge(hcNormal[h].apply(this, arguments),
+                        hcNormal[v].apply(this, arguments));
+                };
+            })(horizontal[i], vertical[j]);
+        }
+    }
+    function merge(a1, a2) {
+        var a = [];
+        for (i = 0; i &lt; a1.length; i++) {
+            a[i] = a1[i] || a2[i];
+        }
+        return a;
+    }
+
+    function getBoundValue(min, max, v) {
+        return Math.min(Math.max(min, v), max);
+    }
+
+    function createDD(self) {
+        var dds = self['dds'],
+            node = self.get('node'),
+            handlers = self.get('handlers'),
+            preserveRatio,
+            dragConfig = self.get('dragConfig'),
+            prefixCls = self.get('prefixCls'),
+            prefix = prefixCls + CLS_PREFIX;
+        for (i = 0; i &lt; handlers.length; i++) {
+            var hc = handlers[i],
+                el = $(&quot;&lt;div class='&quot; +
+                    prefix +
+                    &quot; &quot; + prefix +
+                    &quot;-&quot; + hc +
+                    &quot;'&gt;&lt;/div&gt;&quot;)
+                    .prependTo(node, undefined),
+                dd = dds[hc] = new Draggable(S.mix({
+                    node: el,
+                    cursor: null,
+                    groups: false
+                }, dragConfig));
+            (function (hc, dd) {
+                var startEdgePos;
+                dd.on(&quot;drag&quot;, function (ev) {
+                    var dd = ev.target,
+                        ow = self._width,
+                        oh = self._height,
+                        minW = self.get(&quot;minWidth&quot;),
+                        maxW = self.get(&quot;maxWidth&quot;),
+                        minH = self.get(&quot;minHeight&quot;),
+                        maxH = self.get(&quot;maxHeight&quot;),
+                        diffT = ev.pageY - startEdgePos.top,
+                        diffL = ev.pageX - startEdgePos.left,
+                        ot = self._top,
+                        ol = self._left,
+                        region = {},
+                        pos = hcNormal[hc](minW, maxW, minH, maxH,
+                            ot, ol, ow, oh, diffT, diffL, preserveRatio);
+                    for (i = 0; i &lt; ATTRS_ORDER.length; i++) {
+                        if (pos[i]) {
+                            region[ATTRS_ORDER[i]] = pos[i];
+                        }
+                    }
+                    self.fire('beforeResize', {
+                        handler: hc,
+                        dd: dd,
+                        region: region
+                    });
+                });
+                dd.on(&quot;dragstart&quot;, function () {
+                    startEdgePos = dd.get('startMousePos');
+                    preserveRatio = self.get('preserveRatio');
+                    self._width = node.width();
+                    self._top = parseInt(node.css(&quot;top&quot;));
+                    self._left = parseInt(node.css(&quot;left&quot;));
+                    self._height = node.height();
+                    self.fire('resizeStart', {
+                        handler: hc,
+                        dd: dd
+                    });
+                });
+                dd.on(&quot;dragend&quot;, function () {
+                    self.fire('resizeEnd', {
+                        handler: hc,
+                        dd: dd
+                    });
+                });
+            })(hc, dd);
+        }
+    }
+
+<span id='KISSY-Resizable'>    /**
+</span>     * Make a element resizable.
+     * @class KISSY.Resizable
+     * @extends KISSY.Base
+     */
+    var Resizable = Base.extend({
+        initializer: function () {
+            this['dds'] = {};
+            this.publish('beforeResize', {
+                defaultFn: this._onBeforeResize
+            })
+        },
+
+        _onBeforeResize: function (e) {
+            this.get('node').css(e.region);
+            this.fire('resize', {
+                handler: e.hc,
+                dd: e.dd,
+                region: e.region
+            });
+        },
+
+        _onSetNode: function () {
+            createDD(this);
+        },
+
+        _onSetDisabled: function (v) {
+            var dds = this['dds'];
+            S.each(dds, function (d) {
+                d.set('disabled', v);
+            });
+        },
+
+        destructor: function () {
+            var self = this,
+                d,
+                dds = self['dds'];
+            for (d in dds) {
+                dds[d].destroy();
+                dds[d].get(&quot;node&quot;).remove();
+                delete dds[d];
+            }
+        }
+    }, {
+        name: 'Resizable',
+
+        ATTRS: {
+<span id='KISSY-Resizable-cfg-node'>            /**
+</span>             * KISSY Node to be resizable.
+             * Need to be positioned 'relative' or 'absolute'.
+             * @cfg {KISSY.NodeList} node
+             */
+<span id='global-property-node'>            /**
+</span>             * @ignore
+             */
+            node: {
+                setter: function (v) {
+                    return $(v);
+                }
+            },
+<span id='KISSY-Resizable-cfg-dragConfig'>            /**
+</span>             * config for internal drag object
+             * @cfg {Object} dragConfig
+             */
+<span id='global-property-dragConfig'>            /**
+</span>             * @ignore
+             */
+            dragConfig: {
+
+            },
+<span id='KISSY-Resizable-cfg-prefixCls'>            /**
+</span>             * css prefix for handler elements.
+             * @cfg {String} prefixCls
+             */
+<span id='global-property-prefixCls'>            /**
+</span>             * @ignore
+             */
+            prefixCls: {
+                value: 'ks-'
+            },
+
+<span id='KISSY-Resizable-cfg-disabled'>            /**
+</span>             * Whether disable current resizable.
+             * @cfg {Boolean} disabled
+             */
+<span id='KISSY-Resizable-property-disabled'>            /**
+</span>             * disable or enable current resizable.
+             * @property disabled
+             * @type {Boolean}
+             */
+<span id='global-property-disabled'>            /**
+</span>             * @ignore
+             */
+            disabled: {},
+
+<span id='KISSY-Resizable-cfg-minWidth'>            /**
+</span>             * Minimum width can current node resize to.
+             * @cfg {Number} minWidth
+             */
+<span id='KISSY-Resizable-property-minWidth'>            /**
+</span>             * Minimum width can current node resize to.
+             * @property minWidth
+             * @type {Number}
+             */
+<span id='global-property-minWidth'>            /**
+</span>             * @ignore
+             */
+            minWidth: {
+                value: 0
+            },
+<span id='KISSY-Resizable-cfg-minHeight'>            /**
+</span>             * Minimum height can current node resize to.
+             * @cfg {Number} minHeight
+             */
+<span id='KISSY-Resizable-property-minHeight'>            /**
+</span>             * Minimum height can current node resize to.
+             * @property minHeight
+             * @type {Number}
+             */
+<span id='global-property-minHeight'>            /**
+</span>             * @ignore
+             */
+            minHeight: {
+                value: 0
+            },
+<span id='KISSY-Resizable-cfg-maxWidth'>            /**
+</span>             * Maximum width can current node resize to.
+             * @cfg {Number} maxWidth
+             */
+<span id='KISSY-Resizable-property-maxWidth'>            /**
+</span>             * Maximum width can current node resize to,
+             * it can be changed after initialization,
+             * for example: responsive design.
+             * @property maxWidth
+             * @type {Number}
+             */
+<span id='global-property-maxWidth'>            /**
+</span>             * @ignore
+             */
+            maxWidth: {
+                value: Number['MAX_VALUE']
+            },
+<span id='KISSY-Resizable-cfg-maxHeight'>            /**
+</span>             * Maximum height can current node resize to.
+             * @cfg {Number} maxHeight
+             */
+<span id='KISSY-Resizable-property-maxHeight'>            /**
+</span>             * Maximum height can current node resize to.
+             * @property maxHeight
+             * @type {Number}
+             */
+<span id='global-property-maxHeight'>            /**
+</span>             * @ignore
+             */
+            maxHeight: {
+                value: Number['MAX_VALUE']
+            },
+<span id='KISSY-Resizable-cfg-preserveRatio'>            /**
+</span>             * Whether preserve width/height ratio when resizing
+             * @cfg {Boolean} preserveRatio
+             */
+<span id='global-property-preserveRatio'>            /**
+</span>             * @ignore
+             */
+            preserveRatio: {
+                value: false
+            },
+<span id='KISSY-Resizable-cfg-handlers'>            /**
+</span>             * directions can current node resize to.
+             * @cfg {KISSY.Resizable.Handler} handlers
+             */
+<span id='global-property-handlers'>            /**
+</span>             * @ignore
+             */
+            handlers: {
+                // t,tr,r,br,b,bl,l,tl
+                value: []
+            }
+        }
+    });
+
+<span id='KISSY-Resizable-Handler'>    /**
+</span>     * Resizable handlers type.
+     * @enum {String} KISSY.Resizable.Handler
+     */
+    Resizable.Handler = {
+<span id='KISSY-Resizable-Handler-property-B'>        /**
+</span>         * bottom
+         */
+        B: 'b',
+<span id='KISSY-Resizable-Handler-property-T'>        /**
+</span>         * top
+         */
+        T: 't',
+<span id='KISSY-Resizable-Handler-property-L'>        /**
+</span>         * left
+         */
+        L: 'l',
+<span id='KISSY-Resizable-Handler-property-R'>        /**
+</span>         * right
+         */
+        R: 'r',
+<span id='KISSY-Resizable-Handler-property-BL'>        /**
+</span>         * bottom-left
+         */
+        BL: 'bl',
+<span id='KISSY-Resizable-Handler-property-TL'>        /**
+</span>         * top-left
+         */
+        TL: 'tl',
+<span id='KISSY-Resizable-Handler-property-BR'>        /**
+</span>         * bottom-right
+         */
+        BR: 'br',
+<span id='KISSY-Resizable-Handler-property-TR'>        /**
+</span>         * top-right
+         */
+        TR: 'tr'
+    };
+
+    return Resizable;
+}, {
+    requires: [&quot;node&quot;, 'base', &quot;dd&quot;]
+});
+</pre>
+</body>
+</html>

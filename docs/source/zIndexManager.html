@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * z-index management
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(&quot;editor/zIndexManager&quot;, function (S, Editor) {
+<span id='KISSY-Editor-zIndexManager'>    /**
+</span>     * z-index manager
+     * @enum {number} KISSY.Editor.zIndexManager
+     */
+    var zIndexManager = Editor.zIndexManager = {
+        BUBBLE_VIEW: (1100),
+        POPUP_MENU: (1200),
+        // flash 存储设置最高
+        STORE_FLASH_SHOW: (99999),
+        MAXIMIZE: (900),
+        OVERLAY: (9999),
+        LOADING: (11000),
+        LOADING_CANCEL: 12000,
+        SELECT: (1200)
+    };
+
+    Editor.baseZIndex = function (z) {
+        return (Editor['Config'].baseZIndex || 10000) + z;
+    };
+
+    return zIndexManager;
+}, {
+    requires: ['./base']
+});</pre>
+</body>
+</html>

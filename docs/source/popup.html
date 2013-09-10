@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * KISSY.Popup
+ * @author qiaohua@taobao.com, yiminghe@gmail.com
+ */
+KISSY.add('overlay/popup', function (S, Overlay, undefined) {
+
+<span id='KISSY-Overlay-Popup'>    /**
+</span>     * @class KISSY.Overlay.Popup
+     * KISSY Popup Component.
+     * xclass: 'popup'.
+     * @extends KISSY.Overlay
+     */
+    return Overlay.extend({
+
+        initializer: function () {
+            var self = this,
+            // 获取相关联的 Dom 节点
+                trigger = self.get(&quot;trigger&quot;);
+            if (trigger) {
+                if (self.get(&quot;triggerType&quot;) === 'mouse') {
+                    self._bindTriggerMouse();
+                    self.on('afterRenderUI', function () {
+                        self._bindContainerMouse();
+                    });
+                } else {
+                    self._bindTriggerClick();
+                }
+            }
+        },
+
+        _bindTriggerMouse: function () {
+            var self = this,
+                trigger = self.get(&quot;trigger&quot;),
+                timer;
+
+            self.__mouseEnterPopup = function (ev) {
+                self._clearHiddenTimer();
+                timer = S.later(function () {
+                    self._showing(ev);
+                    timer = undefined;
+                }, self.get('mouseDelay') * 1000);
+            };
+
+            trigger.on('mouseenter', self.__mouseEnterPopup);
+
+            self._mouseLeavePopup = function () {
+                if (timer) {
+                    timer.cancel();
+                    timer = undefined;
+                }
+                self._setHiddenTimer();
+            };
+
+            trigger.on('mouseleave', self._mouseLeavePopup);
+        },
+
+        _bindContainerMouse: function () {
+            var self = this;
+            self.$el
+                .on('mouseleave', self._setHiddenTimer, self)
+                .on('mouseenter', self._clearHiddenTimer, self);
+        },
+
+        _setHiddenTimer: function () {
+            var self = this;
+            self._hiddenTimer = S.later(function () {
+                self._hiding();
+            }, self.get('mouseDelay') * 1000);
+        },
+
+        _clearHiddenTimer: function () {
+            var self = this;
+            if (self._hiddenTimer) {
+                self._hiddenTimer.cancel();
+                self._hiddenTimer = undefined;
+            }
+        },
+
+        _bindTriggerClick: function () {
+            var self = this;
+            self.__clickPopup = function (ev) {
+                ev.halt();
+                if (self.get('toggle')) {
+                    self[self.get('visible') ? '_hiding' : '_showing'](ev);
+                } else {
+                    self._showing(ev);
+                }
+            };
+
+            self.get(&quot;trigger&quot;).on('click', self.__clickPopup);
+        },
+
+        _showing: function (ev) {
+            var self = this;
+            self.set('currentTrigger', S.one(ev.target));
+            self.show();
+        },
+
+        _hiding: function () {
+            this.set('currentTrigger', undefined);
+            this.hide();
+        },
+
+        destructor: function () {
+            var self = this,
+                $el = self.$el,
+                t = self.get(&quot;trigger&quot;);
+
+            if (t) {
+                if (self.__clickPopup) {
+                    t.detach('click', self.__clickPopup);
+                }
+                if (self.__mouseEnterPopup) {
+                    t.detach('mouseenter', self.__mouseEnterPopup);
+                }
+                if (self._mouseLeavePopup) {
+                    t.detach('mouseleave', self._mouseLeavePopup);
+                }
+            }
+
+            $el.detach('mouseleave', self._setHiddenTimer, self)
+                .detach('mouseenter', self._clearHiddenTimer, self);
+
+        }
+    }, {
+        ATTRS: {
+<span id='KISSY-Overlay-Popup-cfg-trigger'>            /**
+</span>             * Trigger elements to show popup.
+             * @cfg {KISSY.NodeList} trigger
+             */
+<span id='global-property-trigger'>            /**
+</span>             * @ignore
+             */
+            trigger: {
+                setter: function (v) {
+                    return S.all(v);
+                }
+            },
+<span id='KISSY-Overlay-Popup-cfg-triggerType'>            /**
+</span>             * How to activate trigger element, &quot;click&quot; or &quot;mouse&quot;.
+             *
+             * Defaults to: &quot;click&quot;.
+             *
+             * @cfg {String} triggerType
+             */
+<span id='global-property-triggerType'>            /**
+</span>             * @ignore
+             */
+            triggerType: {
+                value: 'click'
+            },
+            currentTrigger: {},
+<span id='KISSY-Overlay-Popup-cfg-mouseDelay'>            /**
+</span>             * When trigger type is mouse, the delayed time to show popup.
+             *
+             * Defaults to: 0.1, in seconds.
+             *
+             * @cfg {Number} mouseDelay
+             */
+<span id='global-property-mouseDelay'>            /**
+</span>             * @ignore
+             */
+            mouseDelay: {
+                // triggerType 为 mouse 时, Popup 显示的延迟时间, 默认为 100ms
+                value: 0.1
+            },
+<span id='KISSY-Overlay-Popup-cfg-toggle'>            /**
+</span>             * When trigger type is click, whether support toggle.
+             *
+             * Defaults to: false
+             *
+             * @cfg {Boolean} toggle
+             */
+<span id='global-property-toggle'>            /**
+</span>             * @ignore
+             */
+            toggle: {
+                // triggerType 为 click 时, Popup 是否有toggle功能
+                value: false
+            }
+        },
+        xclass: 'popup'
+    });
+}, {
+    requires: [&quot;./control&quot;]
+});
+
+<span id='global-property-'>/**
+</span> * @ignore
+ * 2011-05-17
+ *  - yiminghe@gmail.com：利用 initializer , destructor ,ATTRS
+ **/</pre>
+</body>
+</html>

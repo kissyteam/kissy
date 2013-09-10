@@ -1,4 +1,5 @@
 # KISSY
+[![KISSY For Nodejs](https://nodei.co/npm/kissy.png)](https://npmjs.org/package/kissy)
 [![Build Status](https://secure.travis-ci.org/kissyteam/kissy.png?branch=master)](https://travis-ci.org/kissyteam/kissy)
 [![Codeship Status](https://www.codeship.io/projects/939cebe0-f137-0130-4512-3223cd47985b/status?branch=master)](https://www.codeship.io/projects/6301)
 [![NPM version](https://badge.fury.io/js/kissy.png)](http://badge.fury.io/js/kissy)

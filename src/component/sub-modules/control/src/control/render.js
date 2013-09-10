@@ -92,8 +92,9 @@ KISSY.add("component/control/render", function (S, ComponentProcess, XTemplate, 
     }
 
     /**
-     * @ignore
      * Base Render class for KISSY Component.
+     * @class KISSY.Component.Control.Process
+     * @private
      */
     return ComponentProcess.extend({
         isRender: true,
@@ -167,11 +168,6 @@ KISSY.add("component/control/render", function (S, ComponentProcess, XTemplate, 
             }
         },
 
-        /**
-         * @ignore
-         * 只负责建立节点，如果是 decorate 过来的，甚至内容会丢失
-         * 通过 render 来重建原有的内容
-         */
         createDom: function () {
             var self = this;
             self['beforeCreateDom'](
@@ -209,7 +205,7 @@ KISSY.add("component/control/render", function (S, ComponentProcess, XTemplate, 
                 control = self.control,
                 el = self.$el;
 
-            // 新建的节点才需要摆放定位
+            // need to insert created dom into body
             if (!control.get('srcNode')) {
                 var render = control.get('render'),
                     renderBefore = control.get('elBefore');
@@ -286,7 +282,7 @@ KISSY.add("component/control/render", function (S, ComponentProcess, XTemplate, 
          * @param prefixCls
          * @param {KISSY.NodeList} childNode Child component's root node.
          */
-        'getComponentConstructorByNode': function (prefixCls, childNode) {
+        getComponentConstructorByNode: function (prefixCls, childNode) {
             var cls = childNode[0].className;
             // 过滤掉特定前缀
             if (cls) {

@@ -3,9 +3,6 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add("tree/control", function (S, TreeNode, TreeManager) {
-
-    var Tree;
-
     /*多继承
      1. 继承基节点（包括可装饰儿子节点功能）
      2. 继承 mixin 树管理功能
@@ -13,14 +10,11 @@ KISSY.add("tree/control", function (S, TreeNode, TreeManager) {
      */
 
     /**
-     * @name Tree
-     * @class
-     * KISSY Tree.
-     * xclass: 'tree'.
-     * @extends Tree.Node
+     * KISSY Tree. xclass: 'tree'.
+     * @class KISSY.Tree
+     * @extends KISSY.Tree.Node
      */
-    return Tree = TreeNode.extend([TreeManager], {
-
+    return TreeNode.extend([TreeManager], {
         handleKeyDownInternal: function (e) {
             var current = this.get("selectedItem");
             if (current === this) {
@@ -38,7 +32,6 @@ KISSY.add("tree/control", function (S, TreeNode, TreeManager) {
                 self.select();
             }
         }
-
     }, {
         ATTRS: {
             defaultChildCfg: {
@@ -49,7 +42,6 @@ KISSY.add("tree/control", function (S, TreeNode, TreeManager) {
         },
         xclass: 'tree'
     });
-
 }, {
     requires: ['./node', './tree-manager']
 });

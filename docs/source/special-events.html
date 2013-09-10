@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * special house for special events
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('event/dom/base/special-events', function (S, DomEvent,Special) {
+    var undefined = undefined,
+        UA = S.UA,
+        MOUSE_WHEEL = UA.gecko ? 'DOMMouseScroll' : 'mousewheel';
+
+    return S.mix(Special, {
+
+        mousewheel: {
+            typeFix: MOUSE_WHEEL
+        },
+
+        load: {
+            // defaults to bubbles as custom event
+            bubbles: false
+        },
+        click: {
+            // use native click for correct check state order
+            fire: function (onlyHandlers) {
+                var target = this;
+                if (!onlyHandlers &amp;&amp; String(target.type) === &quot;checkbox&quot; &amp;&amp;
+                    target.click &amp;&amp; target.nodeName.toLowerCase() == 'input') {
+                    target.click();
+                    return false;
+                }
+                return undefined;
+            }
+        },
+        focus: {
+            bubbles: false,
+            // guarantee fire focusin first
+            preFire: function (event, onlyHandlers) {
+                if (!onlyHandlers) {
+                    return DomEvent.fire(this, 'focusin');
+                }
+            },
+            // guarantee fire blur first
+            fire: function (onlyHandlers) {
+                var target = this;
+                if (!onlyHandlers &amp;&amp; target.ownerDocument) {
+                    if (target !== target.ownerDocument.activeElement &amp;&amp; target.focus) {
+                        target.focus();
+                        return false;
+                    }
+                }
+                return undefined;
+            }
+        },
+        blur: {
+            bubbles: false,
+            // guarantee fire focusout first
+            preFire: function (event, onlyHandlers) {
+                if (!onlyHandlers) {
+                    return DomEvent.fire(this, 'focusout');
+                }
+            },
+            // guarantee fire blur first
+            fire: function (onlyHandlers) {
+                var target = this;
+                if (!onlyHandlers &amp;&amp; target.ownerDocument) {
+                    if (target === target.ownerDocument.activeElement &amp;&amp; target.blur) {
+                        target.blur();
+                        return false;
+                    }
+                }
+                return undefined;
+            }
+        }
+    });
+}, {
+    requires: ['./dom-event','./special']
+});</pre>
+</body>
+</html>

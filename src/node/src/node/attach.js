@@ -4,7 +4,6 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add('node/attach', function (S, Dom, Event, NodeList, undefined) {
-
     var NLP = NodeList.prototype,
         makeArray = S.makeArray,
     // Dom 添加到 NP 上的方法
@@ -52,7 +51,6 @@ KISSY.add('node/attach', function (S, Dom, Event, NodeList, undefined) {
             'removeData',
             'hasData',
             'unselectable',
-
             'wrap',
             'wrapAll',
             'replaceWith',
@@ -124,7 +122,6 @@ KISSY.add('node/attach', function (S, Dom, Event, NodeList, undefined) {
     }
 
     function accessNormIf(fn, self, index, args) {
-
         // get
         if (args[index] === undefined
             // 并且第一个参数不是对象，否则可能是批量设置写
@@ -166,7 +163,6 @@ KISSY.add('node/attach', function (S, Dom, Event, NodeList, undefined) {
             return self;
         }
     });
-
 }, {
     requires: ['dom', 'event/dom', './base']
 });

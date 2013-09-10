@@ -1,5 +1,7 @@
 /**
+ * @ignore
  * event facade for event module.contains custom dom and touch event
+ * @author yiminghe@gmail.com
  */
 KISSY.add('event', function (S, DomEvent, CustomEvent) {
 

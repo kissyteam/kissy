@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * undo,redo manager for kissy editor
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(&quot;editor/plugin/undo/cmd&quot;, function (S, Editor) {
+    var UA = S.UA,
+        LIMIT = 30;
+
+<span id='KISSY-Editor-Undo-Snapshot'>    /**
+</span>     * current editor status(including html and cursor position)
+     * @param editor
+     * @class KISSY.Editor.Undo.Snapshot
+     * @private
+     */
+    function Snapshot(editor) {
+        var contents = editor.get(&quot;document&quot;)[0].body.innerHTML,
+            self = this,
+            selection;
+        if (contents) {
+            selection = editor.getSelection();
+        }
+        //内容html
+        self.contents = contents;
+        //选择区域书签标志
+        self.bookmarks = selection &amp;&amp; selection.createBookmarks2(true);
+    }
+
+    S.augment(Snapshot, {
+        equals: function (otherImage) {
+            var self = this,
+                thisContents = self.contents,
+                otherContents = otherImage.contents;
+            // 不比较书签！
+            // source mode -&gt; wysiwyg mode 光标不保持
+            return thisContents == otherContents;
+        }
+    });
+
+<span id='KISSY-Editor-UndoManager'>    /**
+</span>     * manager history of editor content
+     * @param editor
+     * @class KISSY.Editor.UndoManager
+     * @private
+     */
+    function UndoManager(editor) {
+        // redo undo history stack
+<span id='KISSY-Editor-UndoManager-property-self'>        /**
+</span>         * 编辑器状态历史保存
+         */
+        var self = this;
+        self.history = [];
+        //当前所处状态对应的历史栈内下标
+        self.index = -1;
+        self.editor = editor;
+        //键盘输入做延迟处理
+        self.bufferRunner = S.buffer(self.save, 500, self);
+        self._init();
+    }
+
+    var //editingKeyCodes = { /*Backspace*/ 8:1, /*Delete*/ 46:1 },
+        modifierKeyCodes = { /*Shift*/ 16: 1, /*Ctrl*/ 17: 1, /*Alt*/ 18: 1 },
+    // Arrows: L, T, R, B
+        navigationKeyCodes = { 37: 1, 38: 1, 39: 1, 40: 1, 33: 1, 34: 1 },
+        zKeyCode = 90,
+        yKeyCode = 89;
+
+    S.augment(UndoManager, {
+        _keyMonitor: function () {
+            var self = this,
+                editor = self.editor;
+
+            editor.docReady(function () {
+                editor.get(&quot;document&quot;).on(&quot;keydown&quot;, function (ev) {
+                    var keyCode = ev.keyCode;
+                    if (keyCode in navigationKeyCodes
+                        || keyCode in modifierKeyCodes) {
+                        return;
+                    }
+                    // ctrl+z，撤销
+                    if (keyCode === zKeyCode &amp;&amp; (ev.ctrlKey || ev.metaKey)) {
+                        if (false !== editor.fire(&quot;beforeRedo&quot;)) {
+                            self.restore(-1);
+                        }
+                        ev.halt();
+                        return;
+                    }
+                    // ctrl+y，重做
+                    if (keyCode === yKeyCode &amp;&amp; (ev.ctrlKey || ev.metaKey)) {
+                        if (false !== editor.fire(&quot;beforeUndo&quot;)) {
+                            self.restore(1);
+                        }
+                        ev.halt();
+                        return;
+                    }
+                    if (editor.fire(&quot;beforeSave&quot;, {buffer: 1}) !== false) {
+                        self.save(1);
+                    }
+                });
+            });
+        },
+
+        _init: function () {
+            var self = this,
+                editor = self.editor;
+            self._keyMonitor();
+            setTimeout(function () {
+                // 只初始化保存一次，切换模式不保存
+                if (editor.get('mode') == Editor.Mode.WYSIWYG_MODE) {
+                    if (editor.isDocReady()) {
+                        self.save();
+                    } else {
+                        editor.on('docReady', function () {
+                            self.save();
+                            editor.detach('docReady', arguments.callee);
+                        });
+                    }
+                }
+            }, 0);
+        },
+
+<span id='KISSY-Editor-UndoManager-method-save'>        /**
+</span>         * save to history
+         */
+        save: function (buffer) {
+
+            var editor = this.editor;
+
+            // 代码模式下不和可视模式下混在一起
+            if (editor.get(&quot;mode&quot;) != Editor.Mode.WYSIWYG_MODE) {
+                return;
+            }
+
+            if (!editor.get(&quot;document&quot;)) {
+                return;
+            }
+
+            if (buffer) {
+                this.bufferRunner();
+                return;
+            }
+
+            var self = this,
+                history = self.history,
+                l = history.length,
+                index = self.index;
+
+            //前面的历史抛弃
+            l = Math.min(l, index + 1);
+
+            var last = history[l - 1],
+                current = new Snapshot(editor);
+
+            if (!last || !last.equals(current)) {
+                history.length = l;
+                if (l === LIMIT) {
+                    history.shift();
+                    l--;
+                }
+                history.push(current);
+                self.index = index = l;
+                editor.fire(&quot;afterSave&quot;, {history: history, index: index});
+            }
+        },
+
+<span id='KISSY-Editor-UndoManager-method-restore'>        /**
+</span>         * restore from history
+         */
+        restore: function (d) {
+
+            // 代码模式下不和可视模式下混在一起
+            if (this.editor.get(&quot;mode&quot;) != Editor.Mode.WYSIWYG_MODE) {
+                return undefined;
+            }
+
+            var self = this,
+                history = self.history,
+                editor = self.editor,
+                editorDomBody = editor.get(&quot;document&quot;)[0].body,
+                snapshot = history[self.index + d];
+
+            if (snapshot) {
+                editorDomBody.innerHTML = snapshot.contents;
+                if (snapshot.bookmarks) {
+                    editor.getSelection().selectBookmarks(snapshot.bookmarks);
+                } else if (UA['ie']) {
+                    // IE BUG: If I don't set the selection to *somewhere* after setting
+                    // document contents, then IE would create an empty paragraph at the bottom
+                    // the next time the document is modified.
+                    var $range = editorDomBody.createTextRange();
+                    $range.collapse(true);
+                    $range.select();
+                }
+                var selection = editor.getSelection();
+                // 将当前光标，选择区域滚动到可视区域
+                if (selection) {
+                    selection.scrollIntoView();
+                }
+                self.index += d;
+                editor.fire(d &lt; 0 ? &quot;afterUndo&quot; : &quot;afterRedo&quot;, {
+                    history: history,
+                    index: self.index
+                });
+                editor.notifySelectionChange();
+            }
+
+            return snapshot;
+        }
+    });
+
+    return {
+        init: function (editor) {
+            if (!editor.hasCommand(&quot;save&quot;)) {
+                var undoRedo = new UndoManager(editor);
+                editor.addCommand(&quot;save&quot;, {
+                    exec: function (_, buffer) {
+                        editor.focus();
+                        undoRedo.save(buffer);
+                    }
+                });
+                editor.addCommand(&quot;undo&quot;, {
+                    exec: function () {
+                        editor.focus();
+                        undoRedo.restore(-1);
+                    }
+                });
+                editor.addCommand(&quot;redo&quot;, {
+                    exec: function () {
+                        editor.focus();
+                        undoRedo.restore(1);
+                    }
+                });
+            }
+        }
+    };
+}, {
+    requires: ['editor']
+});
+</pre>
+</body>
+</html>

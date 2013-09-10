@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * render for decade panel
  * @author yiminghe@gmail.com
  */

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * foreColor command.
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(&quot;editor/plugin/fore-color/cmd&quot;, function (S, cmd) {
+
+    var COLOR_STYLES = {
+        element:'span',
+        styles:{ 'color':'#(color)' },
+        overrides:[
+            { element:'font', attributes:{ 'color':null } }
+        ],
+        childRule:function (el) {
+            // &lt;span style='color:red'&gt;&lt;a href='g.cn'&gt;abcdefg&lt;/a&gt;&lt;/span&gt;
+            // 不起作用
+            return !(el.nodeName() == &quot;a&quot; || el.all(&quot;a&quot;).length);
+        }
+    };
+
+    return {
+        init:function (editor) {
+            if (!editor.hasCommand(&quot;foreColor&quot;)) {
+                editor.addCommand(&quot;foreColor&quot;, {
+                    exec:function (editor, c) {
+                        editor.execCommand(&quot;save&quot;);
+                        cmd.applyColor(editor, c, COLOR_STYLES);
+                        editor.execCommand(&quot;save&quot;);
+                    }
+                });
+            }
+        }
+    };
+
+}, {
+    requires:['../color/cmd']
+});</pre>
+</body>
+</html>

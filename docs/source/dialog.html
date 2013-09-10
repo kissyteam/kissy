@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * insert program code dialog
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('editor/plugin/code/dialog', function (S, Editor, Dialog4E, MenuButton) {
+    var xhtml_dtd = Editor.XHTML_DTD;
+    var NodeType = S.DOM.NodeType;
+    var notWhitespaceEval = Editor.Walker.whitespaces(true);
+
+    var codeTypes = [
+            ['ActionScript3', 'as3'],
+            ['Bash/Shell', 'bash'],
+            ['C/C++', 'cpp'],
+            ['Css', 'css'],
+            ['CodeFunction', 'cf'],
+            ['C#', 'c#'],
+            ['Delphi', 'delphi'],
+            ['Diff', 'diff'],
+            ['Erlang', 'erlang'],
+            ['Groovy', 'groovy'],
+            ['HTML', 'html'],
+            ['Java', 'java'],
+            ['JavaFx', 'jfx'],
+            ['Javascript', 'js'],
+            ['Perl', 'pl'],
+            ['Php', 'php'],
+            ['Plain Text', 'plain'],
+            ['PowerShell', 'ps'],
+            ['Python', 'python'],
+            ['Ruby', 'ruby'],
+            ['Scala', 'scala'],
+            ['Sql', 'sql'],
+            ['Vb', 'vb'],
+            ['Xml', 'xml']
+        ],
+        bodyTpl = '&lt;div class=&quot;{prefixCls}code-wrap&quot;&gt;' +
+            '&lt;table class=&quot;{prefixCls}code-table&quot;&gt;' +
+            '&lt;tr&gt;' +
+            '&lt;td class=&quot;{prefixCls}code-label&quot;&gt;' +
+            '&lt;label for=&quot;ks-editor-code-type&quot;&gt;' +
+            '类型：' +
+            '&lt;/label&gt;' +
+            '&lt;/td&gt;' +
+            '&lt;td class=&quot;{prefixCls}code-content&quot;&gt;' +
+            '&lt;select ' +
+            'id=&quot;ks-editor-code-type&quot; ' +
+            ' class=&quot;{prefixCls}code-type&quot;&gt;' +
+            S.map(codeTypes, function (codeType) {
+                return '&lt;option value=&quot;' + codeType[1] + '&quot;&gt;' + codeType[0] + '&lt;/option&gt;';
+            }) +
+            '&lt;/select&gt;' +
+            '&lt;/td&gt;' +
+            '&lt;/tr&gt;' +
+            '&lt;tr&gt;' +
+            '&lt;td&gt;' +
+            '&lt;label for=&quot;ks-editor-code-textarea&quot;&gt;' +
+            '代码：' +
+            '&lt;/label&gt;' +
+            '&lt;/td&gt;' +
+            '&lt;td&gt;' +
+            '&lt;textarea ' +
+            'id=&quot;ks-editor-code-textarea&quot; ' +
+            ' class=&quot;{prefixCls}code-textarea {prefixCls}input&quot;&gt;' +
+            '&lt;/textarea&gt;' +
+            '&lt;/td&gt;' +
+            '&lt;/tr&gt;' +
+            '&lt;/table&gt;' +
+            '&lt;/div&gt;',
+        footTpl = '&lt;div class=&quot;{prefixCls}code-table-action&quot;&gt;' +
+            '&lt;a href=&quot;javascript:void(\'插入\')&quot;' +
+            ' class=&quot;{prefixCls}code-insert {prefixCls}button&quot;&gt;插入&lt;/a&gt;' +
+            '&lt;a href=&quot;javascript:void(\'取消\')&quot;' +
+            ' class=&quot;{prefixCls}code-cancel {prefixCls}button&quot;&gt;取消&lt;/a&gt;' +
+            '&lt;/td&gt;' +
+            '&lt;/div&gt;',
+        codeTpl = '&lt;pre class=&quot;prettyprint ks-editor-code brush:{type};toolbar:false;&quot;&gt;' +
+            '{code}' +
+            '&lt;/pre&gt;';
+
+    function CodeDialog(editor) {
+        this.editor = editor;
+    }
+
+    S.augment(CodeDialog, {
+        initDialog: function () {
+            var self = this,
+                prefixCls = self.editor.get('prefixCls') + 'editor-',
+                el,
+                d;
+            d = self.dialog = new Dialog4E({
+                width: 500,
+                mask: true,
+                headerContent: '插入代码',
+                bodyContent: S.substitute(bodyTpl, {
+                    prefixCls: prefixCls
+                }),
+                footerContent: S.substitute(footTpl, {
+                    prefixCls: prefixCls
+                })
+            }).render();
+            el = d.get('el');
+
+            self.insert = el.one('.' + prefixCls + 'code-insert');
+            self.cancel = el.one('.' + prefixCls + 'code-cancel');
+            self.type = MenuButton.Select.decorate(el.one('.' + prefixCls + 'code-type'),
+                {
+                    prefixCls: prefixCls + 'big-',
+                    width: 150,
+                    menuCfg: {
+                        prefixCls: prefixCls,
+                        height: 320,
+                        render: d.get('contentEl')
+                    }
+                });
+            self.code = el.one('.' + prefixCls + 'code-textarea');
+            self.insert.on('click', self._insert, self);
+            self.cancel.on('click', self.hide, self);
+        },
+        hide: function () {
+            this.dialog.hide();
+        },
+        _insert: function () {
+            var self = this,
+                val,
+                editor = self.editor,
+                code = self.code;
+            if (!S.trim(val = code.val())) {
+                alert('请输入代码!');
+                return;
+            }
+            var codeEl = S.all(S.substitute(codeTpl, {
+                type: self.type.get('value'),
+                code: S.escapeHtml(val)
+            }), editor.get('document')[0]);
+            self.dialog.hide();
+            // chrome:
+            // insert 完光标定位在了 pre 文字的末尾，不合适
+            // &lt;pre&gt;xxx ^$&lt;/pre&gt;
+            // 应该是
+            // &lt;pre&gt;xxxx&lt;/pre&gt;
+            // &lt;p&gt;^$&lt;/p&gt;
+            editor.insertElement(codeEl);
+            var range = editor.getSelection().getRanges()[0];
+
+            var next = codeEl.next(notWhitespaceEval, 1);
+            var nextName = next &amp;&amp; next[0].nodeType == NodeType.ELEMENT_NODE
+                &amp;&amp; next.nodeName();
+            // Check if it's a block element that accepts text.
+            if (nextName &amp;&amp;
+                xhtml_dtd.$block[ nextName ] &amp;&amp;
+                xhtml_dtd[ nextName ]['#text']) {
+            } else {
+                next = S.all(&quot;&lt;p&gt;&lt;/p&gt;&quot;, editor.get('document')[0]);
+                if (!S.UA.ie) {
+                    next._4e_appendBogus();
+                }
+                codeEl.after(next);
+            }
+            range.moveToElementEditablePosition(next);
+            editor.getSelection().selectRanges([range]);
+        },
+        show: function () {
+            if (!this.dialog) {
+                this.initDialog();
+            }
+            this.dialog.show();
+        }
+    });
+
+    return CodeDialog;
+}, {
+    requires: ['editor', '../dialog', 'menubutton']
+});
+</pre>
+</body>
+</html>

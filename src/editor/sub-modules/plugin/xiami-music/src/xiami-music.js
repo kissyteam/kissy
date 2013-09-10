@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * xiami-music button
  * @author yiminghe@gmail.com
  */

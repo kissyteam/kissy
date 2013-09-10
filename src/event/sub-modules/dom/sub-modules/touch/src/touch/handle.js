@@ -345,7 +345,7 @@ KISSY.add('event/dom/touch/handle', function (S, Dom, eventHandleMap, DomEvent) 
         './rotate'
     ]
 });
-/**
+/*
  2013-08-29 yiminghe@gmail.com
  - ios bug
  create new element on touchend handler

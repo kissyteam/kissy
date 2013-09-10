@@ -2122,7 +2122,7 @@ KISSY.add("editor/styles", function(S, Editor) {
   var TRUE = true, FALSE = false, NULL = null, $ = S.all, Dom = S.DOM, KEST = {
   STYLE_BLOCK: 1, 
   STYLE_INLINE: 2, 
-  STYLE_OBJECT: 3}, KER = Editor.RANGE, KESelection = Editor.Selection, KEP = Editor.POSITION, KERange = Editor.Range, Node = S.Node, UA = S.UA, ElementPath = Editor.ElementPath, blockElements = {
+  STYLE_OBJECT: 3}, KER = Editor.RangeType, KESelection = Editor.Selection, KEP = Editor.PositionType, KERange = Editor.Range, Node = S.Node, UA = S.UA, ElementPath = Editor.ElementPath, blockElements = {
   "address": 1, 
   "div": 1, 
   "h1": 1, 
@@ -2149,7 +2149,7 @@ KISSY.add("editor/styles", function(S, Editor) {
   "dd": 1, 
   "form": 1}, semicolonFixRegex = /\s*(?:;\s*|$)/g, varRegex = /#\((.+?)\)/g;
   _$jscoverage['/editor/styles.js'].lineData[67]++;
-  Editor.STYLE = KEST;
+  Editor.StyleType = KEST;
   _$jscoverage['/editor/styles.js'].lineData[69]++;
   function notBookmark(node) {
     _$jscoverage['/editor/styles.js'].functionData[1]++;

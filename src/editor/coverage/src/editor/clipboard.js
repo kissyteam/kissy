@@ -823,7 +823,7 @@ function visit1_34_1(result) {
 KISSY.add("editor/clipboard", function(S, Editor, KERange, KES) {
   _$jscoverage['/editor/clipboard.js'].functionData[0]++;
   _$jscoverage['/editor/clipboard.js'].lineData[7]++;
-  var $ = S.all, UA = S.UA, pasteEvent = UA.ie ? 'beforepaste' : 'paste', KER = Editor.RANGE;
+  var $ = S.all, UA = S.UA, pasteEvent = UA.ie ? 'beforepaste' : 'paste', KER = Editor.RangeType;
   _$jscoverage['/editor/clipboard.js'].lineData[12]++;
   function Paste(editor) {
     _$jscoverage['/editor/clipboard.js'].functionData[1]++;

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * Add flash plugin.
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(&quot;editor/plugin/flash&quot;, function (S, Editor, FlashBaseClass, flashUtils, fakeObjects) {
+    var CLS_FLASH = 'ke_flash',
+        TYPE_FLASH = 'flash';
+
+    function FlashPlugin(config) {
+        this.config = config || {};
+    }
+
+    S.augment(FlashPlugin, {
+        pluginRenderUI: function (editor) {
+
+            fakeObjects.init(editor);
+
+            var dataProcessor = editor.htmlDataProcessor,
+                dataFilter = dataProcessor.dataFilter;
+
+            dataFilter.addRules({
+                    tags: {
+                        'object': function (element) {
+                            var classId = element.getAttribute(&quot;classid&quot;), i;
+                            if (!classId) {
+                                var childNodes = element.childNodes;
+                                // Look for the inner &lt;embed&gt;
+                                for (i = 0; i &lt; childNodes.length; i++) {
+                                    if (childNodes[i].nodeName == 'embed') {
+                                        if (!flashUtils.isFlashEmbed(childNodes[i][ i ])) {
+                                            return dataProcessor
+                                                .createFakeParserElement(element,
+                                                    CLS_FLASH, TYPE_FLASH, true);
+                                        } else {
+                                            return null;
+                                        }
+                                    }
+                                }
+                                return null;
+                            }
+                            return dataProcessor.createFakeParserElement(element,
+                                CLS_FLASH, TYPE_FLASH, true);
+                        },
+                        'embed': function (element) {
+                            if (flashUtils.isFlashEmbed(element)) {
+                                return dataProcessor
+                                    .createFakeParserElement(element, CLS_FLASH, TYPE_FLASH, true);
+                            } else {
+                                return null;
+                            }
+                        }
+                    }},
+                5);
+
+
+            var flashControl = new FlashBaseClass({
+                editor: editor,
+                cls: CLS_FLASH,
+                type: TYPE_FLASH,
+                pluginConfig: this.config,
+                bubbleId: &quot;flash&quot;,
+                contextMenuId: 'flash',
+                contextMenuHandlers: {
+                    &quot;Flash属性&quot;: function () {
+                        var selectedEl = this.get(&quot;editorSelectedEl&quot;);
+                        if (selectedEl) {
+                            flashControl.show(selectedEl);
+                        }
+                    }
+                }
+            });
+
+            this.flashControl = flashControl;
+
+            editor.addButton(&quot;flash&quot;, {
+                tooltip: &quot;插入Flash&quot;,
+                listeners: {
+                    click: function () {
+                        flashControl.show();
+                    }
+                },
+                mode: Editor.Mode.WYSIWYG_MODE
+            });
+        }
+    });
+
+    return FlashPlugin;
+}, {
+    requires: ['editor', './flash-common/base-class', './flash-common/utils', './fake-objects']
+});</pre>
+</body>
+</html>

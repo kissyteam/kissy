@@ -1,4 +1,4 @@
-<script src="/kissy/build/??seed.js,import-style.js"></script>
+<script src="/kissy/build/??seed.js"></script>
 <script>
     KISSY.config({
         'packages': {
@@ -7,9 +7,11 @@
             }
         }
     });
-    KISSY.use('biz/page/run', function (S, run) {
-    	S.ready(function(){
-    		S.all('body').text(run);
-    	});
+    KISSY.use('biz/page/run,' +
+        // simple css module
+            'biz/z.css', function (S, run) {
+        S.ready(function () {
+            S.all('body').text(run);
+        });
     });
 </script>

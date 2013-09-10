@@ -1,10 +1,15 @@
 /**
+ * @ignore
  * Encapsulate KISSY toggle button for kissy editor
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/plugin/button", function (S, Editor, Button) {
     /**
-     * 将 button ui 和点击功能分离
+     * add button to editor
+     * @param {String} id control id
+     * @param {Object} cfg button config
+     * @param {Function} ButtonType button constructor. needs to extend {@link KISSY.Button}, Defaults to {@link KISSY.Button}.
+     * @member KISSY.Editor
      */
     Editor.prototype.addButton = function (id, cfg, ButtonType) {
 

@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * Add justify command identifier for Editor.
  * @author yiminghe@gmail.com
  */

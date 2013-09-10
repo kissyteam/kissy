@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * progressbar ui
  * @author yiminghe@gmail.com
  */

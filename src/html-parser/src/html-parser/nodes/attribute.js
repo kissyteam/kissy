@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * represent attribute node in tag node
  * @author yiminghe@gmail.com
  */

@@ -1,8 +1,7 @@
 /**
+ * @ignore
  * drag file support for html5 file&dd
  * @author yiminghe@gmail.com
- * @refer: http://www.html5rocks.com/tutorials/file/filesystem/
- *         http://yiminghe.iteye.com/blog/848613
  */
 KISSY.add("editor/plugin/drag-upload", function (S, Editor) {
     var Node = S.Node,
@@ -49,11 +48,8 @@ KISSY.add("editor/plugin/drag-upload", function (S, Editor) {
                     startMonitor = false;
                     ev.halt();
                     ev = ev['originalEvent'];
-
                     var archor, ap;
-                    /**
-                     * firefox 会自动添加节点
-                     */
+                    // firefox 会自动添加节点
                     if (!S.isEmptyObject(inserted)) {
                         S.each(inserted, function (el) {
                             if (Dom.nodeName(el) == "img") {
@@ -115,17 +111,10 @@ KISSY.add("editor/plugin/drag-upload", function (S, Editor) {
                 }
             }
 
-            /**
-             *
-             * @param img loading 占位图片
-             * @param file 真实数据
-             */
             function fileUpload(file, img) {
-
                 var reader = new window['FileReader']();
                 //chrome 不支持 addEventListener("load")
                 reader.onload = function (ev) {
-                    // Please report improvements to: marco.buratto at tiscali.it
                     var fileName = file.name,
                         fileData = ev.target['result'],
                         boundary = "----kissy-editor-yiminghe",
@@ -181,3 +170,9 @@ KISSY.add("editor/plugin/drag-upload", function (S, Editor) {
 }, {
     requires: ['editor']
 });
+/**
+ * @ignore
+ * refer:
+ * - http://www.html5rocks.com/tutorials/file/filesystem/
+ * - http://yiminghe.iteye.com/blog/848613
+ */
