@@ -1,7 +1,10 @@
 {
     "name": "kissy",
-    "subdomain":"dev-kissy",
-    "version": "1.4.0-1",
+    "subdomain": "dev-kissy",
+    "domains": [
+	    "dev.kissyui.com"
+	  ],
+    "version": "1.4.0-4",
     "description": "KISSY",
     "author": "yiminghe <yiminghe@gmail.com>",
     "homepage": "http://docs.kissyui.com",
@@ -36,16 +39,18 @@
     },
     "optionalDependencies": {
         "optimist": "~0.6.0",
-        "js-beautify": "~1.4.0",
         "jsdom": "~0.8.4"
     },
-    "devDependencies": {
+    "dependencies": {
+        "js-beautify": "~1.4.0",
         "express": "3.3.4",
         "mkdirp": "~0.3.5",
         "request": "~2.27.0",
         "fs-extra": "~0.6.4"
     },
-    "notes": ["express 3.3.8-3.4.0 cors bug"],
+    "notes": [
+        "express 3.3.8-3.4.0 cors bug"
+    ],
     "licenses": [
         {
             "type": "MIT",

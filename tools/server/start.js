@@ -8,7 +8,7 @@ require('./gen-package');
 
 // var mkdirp = require('mkdirp');
 var path = require('path');
-var fs = require('fs-extra');
+var fs = require('fs');
 //noinspection JSUnresolvedVariable
 var cwd = process.cwd();
 //noinspection JSUnresolvedVariable
