@@ -3,8 +3,10 @@
  * @ignore
  * @author yiminghe@gmail.com
  */
-(function (S) {
-    function loadScripts(rss, callback, charset, timeout) {
+(function (S, undefined) {
+    var ie = S.UA.ie;
+
+    function loadScripts(runtime, rss, callback, charset, timeout) {
         var count = rss && rss.length,
             errorList = [],
             successList = [];
@@ -16,10 +18,17 @@
         }
 
         S.each(rss, function (rs) {
-            S.getScript(rs.fullpath, {
+            var mod;
+            var config = {
                 timeout: timeout,
                 success: function () {
                     successList.push(rs);
+                    if (mod && currentMod) {
+                        // standard browser(except ie9) fire load after KISSY.add immediately
+                        logger.debug('standard browser get mod name after load : ' + mod.name);
+                        Utils.registerModule(runtime, mod.name, currentMod.fn, currentMod.config);
+                        currentMod = undefined;
+                    }
                     complete();
                 },
                 error: function () {
@@ -27,12 +36,26 @@
                     complete();
                 },
                 charset: charset
-            });
+            };
+            if (!rs.combine) {
+                mod = rs.mods[0];
+                if (mod.getType() == 'css') {
+                    mod = undefined;
+                }
+                else if (ie) {
+                    startLoadModName = mod.name;
+                    startLoadModTime = S.now();
+                    config.attrs = {
+                        'data-mod-name': mod.name
+                    };
+                }
+            }
+            S.getScript(rs.fullpath, config);
         });
     }
 
     var Loader = S.Loader,
-        logger= S.getLogger('s/loader'),
+        logger = S.getLogger('s/loader'),
         Status = Loader.Status,
         Utils = Loader.Utils,
         LOADING = Status.LOADING,
@@ -55,6 +78,70 @@
             runtime: runtime,
             waitingModules: waitingModules
         });
+    }
+
+    var currentMod;
+    var startLoadModName;
+    var startLoadModTime;
+
+    ComboLoader.add = function (name, fn, config, runtime) {
+        if (typeof name === 'function') {
+            config = fn;
+            fn = name;
+            if (ie) {
+                // http://groups.google.com/group/commonjs/browse_thread/thread/5a3358ece35e688e/43145ceccfb1dc02#43145ceccfb1dc02
+                name = findModuleNameByInteractive();
+                // S.log('ie get modName by interactive: ' + name);
+                Utils.registerModule(runtime, name, fn, config);
+                startLoadModName = null;
+                startLoadModTime = 0;
+            } else {
+                // 其他浏览器 onload 时，关联模块名与模块定义
+                currentMod = {
+                    fn: fn,
+                    config: config
+                };
+            }
+        } else {
+            if (ie) {
+                startLoadModName = null;
+                startLoadModTime = 0;
+            } else {
+                currentMod = undefined;
+            }
+            Utils.registerModule(runtime, name, fn, config);
+        }
+    };
+
+    // ie 特有，找到当前正在交互的脚本，根据脚本名确定模块名
+    // 如果找不到，返回发送前那个脚本
+    function findModuleNameByInteractive() {
+        var scripts = S.Env.host.document.getElementsByTagName('script'),
+            re,
+            i,
+            name,
+            script;
+
+        for (i = scripts.length - 1; i >= 0; i--) {
+            script = scripts[i];
+            if (script.readyState == 'interactive') {
+                re = script;
+                break;
+            }
+        }
+        if (re) {
+            name = re.getAttribute('data-mod-name');
+        } else {
+            // sometimes when read module file from cache,
+            // interactive status is not triggered
+            // module code is executed right after inserting into dom
+            // i has to preserve module name before insert module script into dom,
+            // then get it back here
+            logger.debug('can not find interactive script,time diff : ' + (S.now() - startLoadModTime));
+            logger.debug('old_ie get mod name from cache : ' + startLoadModName);
+            name = startLoadModName;
+        }
+        return name;
     }
 
     function debugRemoteModules(rss) {
@@ -120,7 +207,7 @@
 
             // load css first to avoid page blink
             S.each(comboUrls.css, function (cssOne) {
-                loadScripts(cssOne, function (success, error) {
+                loadScripts(runtime, cssOne, function (success, error) {
                     if ('@DEBUG@') {
                         debugRemoteModules(success);
                     }
@@ -149,7 +236,7 @@
 
             // jss css download in parallel
             S.each(comboUrls['js'], function (jsOne) {
-                loadScripts(jsOne, function (success) {
+                loadScripts(runtime, jsOne, function (success) {
                     if ('@DEBUG@') {
                         debugRemoteModules(success);
                     }
@@ -202,10 +289,10 @@
                 cache[m] = 1;
                 mod = Utils.createModuleInfo(runtime, m);
                 modStatus = mod.status;
-                if (modStatus === ERROR) {
+                if (modStatus === ERROR || modStatus === ATTACHED) {
                     continue;
                 }
-                if (modStatus != LOADED && modStatus != ATTACHED) {
+                if (modStatus != LOADED) {
                     if (!waitingModules.contains(m)) {
                         if (modStatus != LOADING) {
                             mod.status = LOADING;
@@ -333,6 +420,7 @@
                         // map the whole combo path
                         //noinspection JSReferencingMutableVariableFromClosure
                         res.push({
+                            combine: 1,
                             fullpath: Utils.getMappedPath(runtime, prefix +
                                 currentComboUrls.join(comboSep) + suffix,
                                 Config.mappedComboRules),
@@ -347,6 +435,7 @@
                         var fullpath = currentMod.getFullPath();
                         if (!currentMod.canBeCombined) {
                             res.push({
+                                combine: 0,
                                 fullpath: fullpath,
                                 mods: [currentMod]
                             });
@@ -379,6 +468,9 @@
     Loader.ComboLoader = ComboLoader;
 })(KISSY);
 /*
+ 2013-09-11
+ - union simple loader and combo loader
+
  2013-07-25 阿古, yiminghe
  - support group combo for packages
 

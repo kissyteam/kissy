@@ -222,13 +222,13 @@ tests.push('/kissy/src/seed/tests/runner/lang.html');
 
 tests.push('/kissy/src/seed/tests/runner/lang.html?build');
 
-tests.push('/kissy/src/seed/tests/runner/simple-loader-core.html');
+tests.push('/kissy/src/seed/tests/runner/no-combo-loader-core.html');
 
-tests.push('/kissy/src/seed/tests/runner/simple-loader-core.html?build');
+tests.push('/kissy/src/seed/tests/runner/no-combo-loader-core.html?build');
 
-tests.push('/kissy/src/seed/tests/runner/simple-loader.html');
+tests.push('/kissy/src/seed/tests/runner/no-combo-loader.html');
 
-tests.push('/kissy/src/seed/tests/runner/simple-loader.html?build');
+tests.push('/kissy/src/seed/tests/runner/no-combo-loader.html?build');
 
 tests.push('/kissy/src/stylesheet/tests/runner/test.jss');
 

@@ -440,186 +440,186 @@ if (! _$jscoverage['/ua.js'].branchData) {
   _$jscoverage['/ua.js'].branchData['377'][1] = new BranchData();
 }
 _$jscoverage['/ua.js'].branchData['377'][1].init(239, 17, 'S.trim(className)');
-function visit611_377_1(result) {
+function visit600_377_1(result) {
   _$jscoverage['/ua.js'].branchData['377'][1].ranCondition(result);
   return result;
 }_$jscoverage['/ua.js'].branchData['372'][1].init(48, 1, 'v');
-function visit610_372_1(result) {
+function visit599_372_1(result) {
   _$jscoverage['/ua.js'].branchData['372'][1].ranCondition(result);
   return result;
 }_$jscoverage['/ua.js'].branchData['369'][1].init(12174, 15, 'documentElement');
-function visit609_369_1(result) {
+function visit598_369_1(result) {
   _$jscoverage['/ua.js'].branchData['369'][1].ranCondition(result);
   return result;
 }_$jscoverage['/ua.js'].branchData['367'][1].init(313, 26, 'doc && doc.documentElement');
-function visit608_367_1(result) {
+function visit597_367_1(result) {
   _$jscoverage['/ua.js'].branchData['367'][1].ranCondition(result);
   return result;
 }_$jscoverage['/ua.js'].branchData['345'][1].init(51, 61, '(versions = process.versions) && (nodeVersion = versions.node)');
-function visit607_345_1(result) {
+function visit596_345_1(result) {
   _$jscoverage['/ua.js'].branchData['345'][1].ranCondition(result);
   return result;
 }_$jscoverage['/ua.js'].branchData['343'][1].init(11432, 27, 'typeof process === \'object\'');
-function visit606_343_1(result) {
+function visit595_343_1(result) {
   _$jscoverage['/ua.js'].branchData['343'][1].ranCondition(result);
   return result;
 }_$jscoverage['/ua.js'].branchData['335'][1].init(10290, 15, 'UA.core || core');
-function visit605_335_1(result) {
+function visit594_335_1(result) {
   _$jscoverage['/ua.js'].branchData['335'][1].ranCondition(result);
   return result;
 }_$jscoverage['/ua.js'].branchData['329'][1].init(286, 18, '(/rhino/i).test(ua)');
-function visit604_329_1(result) {
+function visit593_329_1(result) {
   _$jscoverage['/ua.js'].branchData['329'][1].ranCondition(result);
   return result;
 }_$jscoverage['/ua.js'].branchData['327'][1].init(207, 18, '(/linux/i).test(ua)');
-function visit603_327_1(result) {
+function visit592_327_1(result) {
   _$jscoverage['/ua.js'].branchData['327'][1].ranCondition(result);
   return result;
 }_$jscoverage['/ua.js'].branchData['325'][1].init(108, 34, '(/macintosh|mac_powerpc/i).test(ua)');
-function visit602_325_1(result) {
+function visit591_325_1(result) {
   _$jscoverage['/ua.js'].branchData['325'][1].ranCondition(result);
   return result;
 }_$jscoverage['/ua.js'].branchData['323'][1].init(19, 26, '(/windows|win32/i).test(ua)');
-function visit601_323_1(result) {
+function visit590_323_1(result) {
   _$jscoverage['/ua.js'].branchData['323'][1].ranCondition(result);
   return result;
 }_$jscoverage['/ua.js'].branchData['322'][1].init(9880, 3, '!os');
-function visit600_322_1(result) {
+function visit589_322_1(result) {
   _$jscoverage['/ua.js'].branchData['322'][1].ranCondition(result);
   return result;
 }_$jscoverage['/ua.js'].branchData['313'][1].init(492, 42, '(m = ua.match(/Firefox\\/([\\d.]*)/)) && m[1]');
-function visit599_313_1(result) {
+function visit588_313_1(result) {
   _$jscoverage['/ua.js'].branchData['313'][1].ranCondition(result);
   return result;
 }_$jscoverage['/ua.js'].branchData['308'][1].init(99, 24, '/Mobile|Tablet/.test(ua)');
-function visit598_308_1(result) {
+function visit587_308_1(result) {
   _$jscoverage['/ua.js'].branchData['308'][1].ranCondition(result);
   return result;
 }_$jscoverage['/ua.js'].branchData['306'][1].init(127, 36, '(m = ua.match(/rv:([\\d.]*)/)) && m[1]');
-function visit597_306_1(result) {
+function visit586_306_1(result) {
   _$jscoverage['/ua.js'].branchData['306'][1].ranCondition(result);
   return result;
 }_$jscoverage['/ua.js'].branchData['298'][1].init(174, 28, 'ieVersion = getIEVersion(ua)');
-function visit596_298_1(result) {
+function visit585_298_1(result) {
   _$jscoverage['/ua.js'].branchData['298'][1].ranCondition(result);
   return result;
 }_$jscoverage['/ua.js'].branchData['288'][1].init(801, 37, '(m = ua.match(/Opera Mobi[^;]*/)) && m');
-function visit595_288_1(result) {
+function visit584_288_1(result) {
   _$jscoverage['/ua.js'].branchData['288'][1].ranCondition(result);
   return result;
 }_$jscoverage['/ua.js'].branchData['282'][1].init(346, 37, '(m = ua.match(/Opera Mini[^;]*/)) && m');
-function visit594_282_1(result) {
+function visit583_282_1(result) {
   _$jscoverage['/ua.js'].branchData['282'][1].ranCondition(result);
   return result;
 }_$jscoverage['/ua.js'].branchData['277'][1].init(134, 52, '(m = ua.match(/Opera\\/.* Version\\/([\\d.]*)/)) && m[1]');
-function visit593_277_1(result) {
+function visit582_277_1(result) {
   _$jscoverage['/ua.js'].branchData['277'][1].ranCondition(result);
   return result;
 }_$jscoverage['/ua.js'].branchData['274'][1].init(119, 40, '(m = ua.match(/Opera\\/([\\d.]*)/)) && m[1]');
-function visit592_274_1(result) {
+function visit581_274_1(result) {
   _$jscoverage['/ua.js'].branchData['274'][1].ranCondition(result);
   return result;
 }_$jscoverage['/ua.js'].branchData['270'][1].init(132, 41, '(m = ua.match(/Presto\\/([\\d.]*)/)) && m[1]');
-function visit591_270_1(result) {
+function visit580_270_1(result) {
   _$jscoverage['/ua.js'].branchData['270'][1].ranCondition(result);
   return result;
 }_$jscoverage['/ua.js'].branchData['262'][1].init(1783, 44, '(m = ua.match(/PhantomJS\\/([^\\s]*)/)) && m[1]');
-function visit590_262_1(result) {
+function visit579_262_1(result) {
   _$jscoverage['/ua.js'].branchData['262'][1].ranCondition(result);
   return result;
 }_$jscoverage['/ua.js'].branchData['253'][1].init(204, 9, 'm && m[1]');
-function visit589_253_1(result) {
+function visit578_253_1(result) {
   _$jscoverage['/ua.js'].branchData['253'][1].ranCondition(result);
   return result;
 }_$jscoverage['/ua.js'].branchData['249'][1].init(26, 17, '/Mobile/.test(ua)');
-function visit588_249_1(result) {
+function visit577_249_1(result) {
   _$jscoverage['/ua.js'].branchData['249'][1].ranCondition(result);
   return result;
 }_$jscoverage['/ua.js'].branchData['248'][1].init(1165, 20, '/ Android/i.test(ua)');
-function visit587_248_1(result) {
+function visit576_248_1(result) {
   _$jscoverage['/ua.js'].branchData['248'][1].ranCondition(result);
   return result;
 }_$jscoverage['/ua.js'].branchData['245'][1].init(368, 9, 'm && m[0]');
-function visit586_245_1(result) {
+function visit575_245_1(result) {
   _$jscoverage['/ua.js'].branchData['245'][1].ranCondition(result);
   return result;
 }_$jscoverage['/ua.js'].branchData['240'][1].init(150, 9, 'm && m[1]');
-function visit585_240_1(result) {
+function visit574_240_1(result) {
   _$jscoverage['/ua.js'].branchData['240'][1].ranCondition(result);
   return result;
 }_$jscoverage['/ua.js'].branchData['236'][1].init(619, 52, '/ Mobile\\//.test(ua) && ua.match(/iPad|iPod|iPhone/)');
-function visit584_236_1(result) {
+function visit573_236_1(result) {
   _$jscoverage['/ua.js'].branchData['236'][1].ranCondition(result);
   return result;
 }_$jscoverage['/ua.js'].branchData['231'][1].init(439, 42, '(m = ua.match(/\\/([\\d.]*) Safari/)) && m[1]');
-function visit583_231_1(result) {
+function visit572_231_1(result) {
   _$jscoverage['/ua.js'].branchData['231'][1].ranCondition(result);
   return result;
 }_$jscoverage['/ua.js'].branchData['227'][1].init(259, 41, '(m = ua.match(/Chrome\\/([\\d.]*)/)) && m[1]');
-function visit582_227_1(result) {
+function visit571_227_1(result) {
   _$jscoverage['/ua.js'].branchData['227'][1].ranCondition(result);
   return result;
 }_$jscoverage['/ua.js'].branchData['223'][1].init(81, 40, '(m = ua.match(/OPR\\/(\\d+\\.\\d+)/)) && m[1]');
-function visit581_223_1(result) {
+function visit570_223_1(result) {
   _$jscoverage['/ua.js'].branchData['223'][1].ranCondition(result);
   return result;
 }_$jscoverage['/ua.js'].branchData['220'][1].init(42, 46, '(m = ua.match(/AppleWebKit\\/([\\d.]*)/)) && m[1]');
-function visit580_220_1(result) {
+function visit569_220_1(result) {
   _$jscoverage['/ua.js'].branchData['220'][1].ranCondition(result);
   return result;
 }_$jscoverage['/ua.js'].branchData['214'][1].init(765, 40, '!UA.ie && (ieVersion = getIEVersion(ua))');
-function visit579_214_1(result) {
+function visit568_214_1(result) {
   _$jscoverage['/ua.js'].branchData['214'][1].ranCondition(result);
   return result;
 }_$jscoverage['/ua.js'].branchData['206'][1].init(102, 12, 's.length > 0');
-function visit578_206_1(result) {
+function visit567_206_1(result) {
   _$jscoverage['/ua.js'].branchData['206'][1].ranCondition(result);
   return result;
 }_$jscoverage['/ua.js'].branchData['204'][1].init(414, 8, 'v <= end');
-function visit577_204_1(result) {
+function visit566_204_1(result) {
   _$jscoverage['/ua.js'].branchData['204'][1].ranCondition(result);
   return result;
 }_$jscoverage['/ua.js'].branchData['194'][1].init(4334, 12, 's.length > 0');
-function visit576_194_1(result) {
+function visit565_194_1(result) {
   _$jscoverage['/ua.js'].branchData['194'][1].ranCondition(result);
   return result;
 }_$jscoverage['/ua.js'].branchData['187'][1].init(3971, 3, 'div');
-function visit575_187_1(result) {
+function visit564_187_1(result) {
   _$jscoverage['/ua.js'].branchData['187'][1].ranCondition(result);
   return result;
 }_$jscoverage['/ua.js'].branchData['51'][1].init(353, 31, 'doc && doc.createElement(\'div\')');
-function visit574_51_1(result) {
+function visit563_51_1(result) {
   _$jscoverage['/ua.js'].branchData['51'][1].ranCondition(result);
   return result;
 }_$jscoverage['/ua.js'].branchData['34'][1].init(83, 12, 'm[1] || m[2]');
-function visit573_34_1(result) {
+function visit562_34_1(result) {
   _$jscoverage['/ua.js'].branchData['34'][1].ranCondition(result);
   return result;
 }_$jscoverage['/ua.js'].branchData['33'][1].init(34, 98, '(m = ua.match(/MSIE ([^;]*)|Trident.*; rv(?:\\s|:)?([0-9.]+)/)) && (v = (m[1] || m[2]))');
-function visit572_33_1(result) {
+function visit561_33_1(result) {
   _$jscoverage['/ua.js'].branchData['33'][1].ranCondition(result);
   return result;
 }_$jscoverage['/ua.js'].branchData['24'][1].init(162, 42, '(m = ua.match(/Trident\\/([\\d.]*)/)) && m[1]');
-function visit571_24_1(result) {
+function visit560_24_1(result) {
   _$jscoverage['/ua.js'].branchData['24'][1].ranCondition(result);
   return result;
 }_$jscoverage['/ua.js'].branchData['15'][1].init(22, 9, 'c++ === 0');
-function visit570_15_1(result) {
+function visit559_15_1(result) {
   _$jscoverage['/ua.js'].branchData['15'][1].ranCondition(result);
   return result;
 }_$jscoverage['/ua.js'].branchData['9'][2].init(100, 32, 'navigator && navigator.userAgent');
-function visit569_9_2(result) {
+function visit558_9_2(result) {
   _$jscoverage['/ua.js'].branchData['9'][2].ranCondition(result);
   return result;
 }_$jscoverage['/ua.js'].branchData['9'][1].init(100, 38, 'navigator && navigator.userAgent || ""');
-function visit568_9_1(result) {
+function visit557_9_1(result) {
   _$jscoverage['/ua.js'].branchData['9'][1].ranCondition(result);
   return result;
 }_$jscoverage['/ua.js'].lineData[5]++;
 (function(S, undefined) {
   _$jscoverage['/ua.js'].functionData[0]++;
   _$jscoverage['/ua.js'].lineData[6]++;
-  var win = S.Env.host, doc = win.document, navigator = win.navigator, ua = visit568_9_1(visit569_9_2(navigator && navigator.userAgent) || "");
+  var win = S.Env.host, doc = win.document, navigator = win.navigator, ua = visit557_9_1(visit558_9_2(navigator && navigator.userAgent) || "");
   _$jscoverage['/ua.js'].lineData[11]++;
   function numberify(s) {
     _$jscoverage['/ua.js'].functionData[1]++;
@@ -629,7 +629,7 @@ function visit568_9_1(result) {
     return parseFloat(s.replace(/\./g, function() {
   _$jscoverage['/ua.js'].functionData[2]++;
   _$jscoverage['/ua.js'].lineData[15]++;
-  return (visit570_15_1(c++ === 0)) ? '.' : '';
+  return (visit559_15_1(c++ === 0)) ? '.' : '';
 }));
   }
   _$jscoverage['/ua.js'].lineData[19]++;
@@ -640,7 +640,7 @@ function visit568_9_1(result) {
     _$jscoverage['/ua.js'].lineData[21]++;
     UA[core = 'trident'] = 0.1;
     _$jscoverage['/ua.js'].lineData[24]++;
-    if (visit571_24_1((m = ua.match(/Trident\/([\d.]*)/)) && m[1])) {
+    if (visit560_24_1((m = ua.match(/Trident\/([\d.]*)/)) && m[1])) {
       _$jscoverage['/ua.js'].lineData[25]++;
       UA[core] = numberify(m[1]);
     }
@@ -653,7 +653,7 @@ function visit568_9_1(result) {
     _$jscoverage['/ua.js'].lineData[32]++;
     var m, v;
     _$jscoverage['/ua.js'].lineData[33]++;
-    if (visit572_33_1((m = ua.match(/MSIE ([^;]*)|Trident.*; rv(?:\s|:)?([0-9.]+)/)) && (v = (visit573_34_1(m[1] || m[2]))))) {
+    if (visit561_33_1((m = ua.match(/MSIE ([^;]*)|Trident.*; rv(?:\s|:)?([0-9.]+)/)) && (v = (visit562_34_1(m[1] || m[2]))))) {
       _$jscoverage['/ua.js'].lineData[35]++;
       return numberify(v);
     }
@@ -664,7 +664,7 @@ function visit568_9_1(result) {
   function getDescriptorFromUserAgent(ua) {
     _$jscoverage['/ua.js'].functionData[5]++;
     _$jscoverage['/ua.js'].lineData[41]++;
-    var EMPTY = '', os, core = EMPTY, shell = EMPTY, m, IE_DETECT_RANGE = [6, 9], ieVersion, v, end, VERSION_PLACEHOLDER = '{{version}}', IE_DETECT_TPL = '<!--[if IE ' + VERSION_PLACEHOLDER + ']><' + 's></s><![endif]-->', div = visit574_51_1(doc && doc.createElement('div')), s = [];
+    var EMPTY = '', os, core = EMPTY, shell = EMPTY, m, IE_DETECT_RANGE = [6, 9], ieVersion, v, end, VERSION_PLACEHOLDER = '{{version}}', IE_DETECT_TPL = '<!--[if IE ' + VERSION_PLACEHOLDER + ']><' + 's></s><![endif]-->', div = visit563_51_1(doc && doc.createElement('div')), s = [];
     _$jscoverage['/ua.js'].lineData[59]++;
     var UA = {
   webkit: undefined, 
@@ -688,22 +688,22 @@ function visit568_9_1(result) {
   android: undefined, 
   nodejs: undefined};
     _$jscoverage['/ua.js'].lineData[187]++;
-    if (visit575_187_1(div)) {
+    if (visit564_187_1(div)) {
       _$jscoverage['/ua.js'].lineData[190]++;
       div.innerHTML = IE_DETECT_TPL.replace(VERSION_PLACEHOLDER, '');
       _$jscoverage['/ua.js'].lineData[191]++;
       s = div.getElementsByTagName('s');
     }
     _$jscoverage['/ua.js'].lineData[194]++;
-    if (visit576_194_1(s.length > 0)) {
+    if (visit565_194_1(s.length > 0)) {
       _$jscoverage['/ua.js'].lineData[196]++;
       setTridentVersion(ua, UA);
       _$jscoverage['/ua.js'].lineData[204]++;
-      for (v = IE_DETECT_RANGE[0] , end = IE_DETECT_RANGE[1]; visit577_204_1(v <= end); v++) {
+      for (v = IE_DETECT_RANGE[0] , end = IE_DETECT_RANGE[1]; visit566_204_1(v <= end); v++) {
         _$jscoverage['/ua.js'].lineData[205]++;
         div.innerHTML = IE_DETECT_TPL.replace(VERSION_PLACEHOLDER, v);
         _$jscoverage['/ua.js'].lineData[206]++;
-        if (visit578_206_1(s.length > 0)) {
+        if (visit567_206_1(s.length > 0)) {
           _$jscoverage['/ua.js'].lineData[207]++;
           UA[shell = 'ie'] = v;
           _$jscoverage['/ua.js'].lineData[208]++;
@@ -711,40 +711,40 @@ function visit568_9_1(result) {
         }
       }
       _$jscoverage['/ua.js'].lineData[214]++;
-      if (visit579_214_1(!UA.ie && (ieVersion = getIEVersion(ua)))) {
+      if (visit568_214_1(!UA.ie && (ieVersion = getIEVersion(ua)))) {
         _$jscoverage['/ua.js'].lineData[215]++;
         UA[shell = 'ie'] = ieVersion;
       }
     } else {
       _$jscoverage['/ua.js'].lineData[220]++;
-      if (visit580_220_1((m = ua.match(/AppleWebKit\/([\d.]*)/)) && m[1])) {
+      if (visit569_220_1((m = ua.match(/AppleWebKit\/([\d.]*)/)) && m[1])) {
         _$jscoverage['/ua.js'].lineData[221]++;
         UA[core = 'webkit'] = numberify(m[1]);
         _$jscoverage['/ua.js'].lineData[223]++;
-        if (visit581_223_1((m = ua.match(/OPR\/(\d+\.\d+)/)) && m[1])) {
+        if (visit570_223_1((m = ua.match(/OPR\/(\d+\.\d+)/)) && m[1])) {
           _$jscoverage['/ua.js'].lineData[224]++;
           UA[shell = 'opera'] = numberify(m[1]);
         } else {
           _$jscoverage['/ua.js'].lineData[227]++;
-          if (visit582_227_1((m = ua.match(/Chrome\/([\d.]*)/)) && m[1])) {
+          if (visit571_227_1((m = ua.match(/Chrome\/([\d.]*)/)) && m[1])) {
             _$jscoverage['/ua.js'].lineData[228]++;
             UA[shell = 'chrome'] = numberify(m[1]);
           } else {
             _$jscoverage['/ua.js'].lineData[231]++;
-            if (visit583_231_1((m = ua.match(/\/([\d.]*) Safari/)) && m[1])) {
+            if (visit572_231_1((m = ua.match(/\/([\d.]*) Safari/)) && m[1])) {
               _$jscoverage['/ua.js'].lineData[232]++;
               UA[shell = 'safari'] = numberify(m[1]);
             }
           }
         }
         _$jscoverage['/ua.js'].lineData[236]++;
-        if (visit584_236_1(/ Mobile\//.test(ua) && ua.match(/iPad|iPod|iPhone/))) {
+        if (visit573_236_1(/ Mobile\//.test(ua) && ua.match(/iPad|iPod|iPhone/))) {
           _$jscoverage['/ua.js'].lineData[237]++;
           UA.mobile = 'apple';
           _$jscoverage['/ua.js'].lineData[239]++;
           m = ua.match(/OS ([^\s]*)/);
           _$jscoverage['/ua.js'].lineData[240]++;
-          if (visit585_240_1(m && m[1])) {
+          if (visit574_240_1(m && m[1])) {
             _$jscoverage['/ua.js'].lineData[241]++;
             UA.ios = numberify(m[1].replace('_', '.'));
           }
@@ -753,22 +753,22 @@ function visit568_9_1(result) {
           _$jscoverage['/ua.js'].lineData[244]++;
           m = ua.match(/iPad|iPod|iPhone/);
           _$jscoverage['/ua.js'].lineData[245]++;
-          if (visit586_245_1(m && m[0])) {
+          if (visit575_245_1(m && m[0])) {
             _$jscoverage['/ua.js'].lineData[246]++;
             UA[m[0].toLowerCase()] = UA.ios;
           }
         } else {
           _$jscoverage['/ua.js'].lineData[248]++;
-          if (visit587_248_1(/ Android/i.test(ua))) {
+          if (visit576_248_1(/ Android/i.test(ua))) {
             _$jscoverage['/ua.js'].lineData[249]++;
-            if (visit588_249_1(/Mobile/.test(ua))) {
+            if (visit577_249_1(/Mobile/.test(ua))) {
               _$jscoverage['/ua.js'].lineData[250]++;
               os = UA.mobile = 'android';
             }
             _$jscoverage['/ua.js'].lineData[252]++;
             m = ua.match(/Android ([^\s]*);/);
             _$jscoverage['/ua.js'].lineData[253]++;
-            if (visit589_253_1(m && m[1])) {
+            if (visit578_253_1(m && m[1])) {
               _$jscoverage['/ua.js'].lineData[254]++;
               UA.android = numberify(m[1]);
             }
@@ -781,31 +781,31 @@ function visit568_9_1(result) {
           }
         }
         _$jscoverage['/ua.js'].lineData[262]++;
-        if (visit590_262_1((m = ua.match(/PhantomJS\/([^\s]*)/)) && m[1])) {
+        if (visit579_262_1((m = ua.match(/PhantomJS\/([^\s]*)/)) && m[1])) {
           _$jscoverage['/ua.js'].lineData[263]++;
           UA.phantomjs = numberify(m[1]);
         }
       } else {
         _$jscoverage['/ua.js'].lineData[270]++;
-        if (visit591_270_1((m = ua.match(/Presto\/([\d.]*)/)) && m[1])) {
+        if (visit580_270_1((m = ua.match(/Presto\/([\d.]*)/)) && m[1])) {
           _$jscoverage['/ua.js'].lineData[271]++;
           UA[core = 'presto'] = numberify(m[1]);
           _$jscoverage['/ua.js'].lineData[274]++;
-          if (visit592_274_1((m = ua.match(/Opera\/([\d.]*)/)) && m[1])) {
+          if (visit581_274_1((m = ua.match(/Opera\/([\d.]*)/)) && m[1])) {
             _$jscoverage['/ua.js'].lineData[275]++;
             UA[shell = 'opera'] = numberify(m[1]);
             _$jscoverage['/ua.js'].lineData[277]++;
-            if (visit593_277_1((m = ua.match(/Opera\/.* Version\/([\d.]*)/)) && m[1])) {
+            if (visit582_277_1((m = ua.match(/Opera\/.* Version\/([\d.]*)/)) && m[1])) {
               _$jscoverage['/ua.js'].lineData[278]++;
               UA[shell] = numberify(m[1]);
             }
             _$jscoverage['/ua.js'].lineData[282]++;
-            if (visit594_282_1((m = ua.match(/Opera Mini[^;]*/)) && m)) {
+            if (visit583_282_1((m = ua.match(/Opera Mini[^;]*/)) && m)) {
               _$jscoverage['/ua.js'].lineData[283]++;
               UA.mobile = m[0].toLowerCase();
             } else {
               _$jscoverage['/ua.js'].lineData[288]++;
-              if (visit595_288_1((m = ua.match(/Opera Mobi[^;]*/)) && m)) {
+              if (visit584_288_1((m = ua.match(/Opera Mobi[^;]*/)) && m)) {
                 _$jscoverage['/ua.js'].lineData[289]++;
                 UA.mobile = m[0];
               }
@@ -813,7 +813,7 @@ function visit568_9_1(result) {
           }
         } else {
           _$jscoverage['/ua.js'].lineData[298]++;
-          if (visit596_298_1(ieVersion = getIEVersion(ua))) {
+          if (visit585_298_1(ieVersion = getIEVersion(ua))) {
             _$jscoverage['/ua.js'].lineData[299]++;
             UA[shell = 'ie'] = ieVersion;
             _$jscoverage['/ua.js'].lineData[300]++;
@@ -824,17 +824,17 @@ function visit568_9_1(result) {
               _$jscoverage['/ua.js'].lineData[305]++;
               UA[core = 'gecko'] = 0.1;
               _$jscoverage['/ua.js'].lineData[306]++;
-              if (visit597_306_1((m = ua.match(/rv:([\d.]*)/)) && m[1])) {
+              if (visit586_306_1((m = ua.match(/rv:([\d.]*)/)) && m[1])) {
                 _$jscoverage['/ua.js'].lineData[307]++;
                 UA[core] = numberify(m[1]);
                 _$jscoverage['/ua.js'].lineData[308]++;
-                if (visit598_308_1(/Mobile|Tablet/.test(ua))) {
+                if (visit587_308_1(/Mobile|Tablet/.test(ua))) {
                   _$jscoverage['/ua.js'].lineData[309]++;
                   o.mobile = "firefox";
                 }
               }
               _$jscoverage['/ua.js'].lineData[313]++;
-              if (visit599_313_1((m = ua.match(/Firefox\/([\d.]*)/)) && m[1])) {
+              if (visit588_313_1((m = ua.match(/Firefox\/([\d.]*)/)) && m[1])) {
                 _$jscoverage['/ua.js'].lineData[314]++;
                 UA[shell = 'firefox'] = numberify(m[1]);
               }
@@ -844,24 +844,24 @@ function visit568_9_1(result) {
       }
     }
     _$jscoverage['/ua.js'].lineData[322]++;
-    if (visit600_322_1(!os)) {
+    if (visit589_322_1(!os)) {
       _$jscoverage['/ua.js'].lineData[323]++;
-      if (visit601_323_1((/windows|win32/i).test(ua))) {
+      if (visit590_323_1((/windows|win32/i).test(ua))) {
         _$jscoverage['/ua.js'].lineData[324]++;
         os = 'windows';
       } else {
         _$jscoverage['/ua.js'].lineData[325]++;
-        if (visit602_325_1((/macintosh|mac_powerpc/i).test(ua))) {
+        if (visit591_325_1((/macintosh|mac_powerpc/i).test(ua))) {
           _$jscoverage['/ua.js'].lineData[326]++;
           os = 'macintosh';
         } else {
           _$jscoverage['/ua.js'].lineData[327]++;
-          if (visit603_327_1((/linux/i).test(ua))) {
+          if (visit592_327_1((/linux/i).test(ua))) {
             _$jscoverage['/ua.js'].lineData[328]++;
             os = 'linux';
           } else {
             _$jscoverage['/ua.js'].lineData[329]++;
-            if (visit604_329_1((/rhino/i).test(ua))) {
+            if (visit593_329_1((/rhino/i).test(ua))) {
               _$jscoverage['/ua.js'].lineData[330]++;
               os = 'rhino';
             }
@@ -872,7 +872,7 @@ function visit568_9_1(result) {
     _$jscoverage['/ua.js'].lineData[334]++;
     UA.os = os;
     _$jscoverage['/ua.js'].lineData[335]++;
-    UA.core = visit605_335_1(UA.core || core);
+    UA.core = visit594_335_1(UA.core || core);
     _$jscoverage['/ua.js'].lineData[336]++;
     UA.shell = shell;
     _$jscoverage['/ua.js'].lineData[338]++;
@@ -881,11 +881,11 @@ function visit568_9_1(result) {
   _$jscoverage['/ua.js'].lineData[341]++;
   var UA = KISSY.UA = getDescriptorFromUserAgent(ua);
   _$jscoverage['/ua.js'].lineData[343]++;
-  if (visit606_343_1(typeof process === 'object')) {
+  if (visit595_343_1(typeof process === 'object')) {
     _$jscoverage['/ua.js'].lineData[344]++;
     var versions, nodeVersion;
     _$jscoverage['/ua.js'].lineData[345]++;
-    if (visit607_345_1((versions = process.versions) && (nodeVersion = versions.node))) {
+    if (visit596_345_1((versions = process.versions) && (nodeVersion = versions.node))) {
       _$jscoverage['/ua.js'].lineData[346]++;
       UA.os = process.platform;
       _$jscoverage['/ua.js'].lineData[347]++;
@@ -895,16 +895,16 @@ function visit568_9_1(result) {
   _$jscoverage['/ua.js'].lineData[352]++;
   UA.getDescriptorFromUserAgent = getDescriptorFromUserAgent;
   _$jscoverage['/ua.js'].lineData[354]++;
-  var o = ['webkit', 'trident', 'gecko', 'presto', 'chrome', 'safari', 'firefox', 'ie', 'opera'], documentElement = visit608_367_1(doc && doc.documentElement), className = '';
+  var o = ['webkit', 'trident', 'gecko', 'presto', 'chrome', 'safari', 'firefox', 'ie', 'opera'], documentElement = visit597_367_1(doc && doc.documentElement), className = '';
   _$jscoverage['/ua.js'].lineData[369]++;
-  if (visit609_369_1(documentElement)) {
+  if (visit598_369_1(documentElement)) {
     _$jscoverage['/ua.js'].lineData[370]++;
     S.each(o, function(key) {
   _$jscoverage['/ua.js'].functionData[6]++;
   _$jscoverage['/ua.js'].lineData[371]++;
   var v = UA[key];
   _$jscoverage['/ua.js'].lineData[372]++;
-  if (visit610_372_1(v)) {
+  if (visit599_372_1(v)) {
     _$jscoverage['/ua.js'].lineData[373]++;
     className += ' ks-' + key + (parseInt(v) + '');
     _$jscoverage['/ua.js'].lineData[374]++;
@@ -912,7 +912,7 @@ function visit568_9_1(result) {
   }
 });
     _$jscoverage['/ua.js'].lineData[377]++;
-    if (visit611_377_1(S.trim(className))) {
+    if (visit600_377_1(S.trim(className))) {
       _$jscoverage['/ua.js'].lineData[378]++;
       documentElement.className = S.trim(documentElement.className + className);
     }

@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 11 12:54
+build time: Sep 11 14:26
 */
 KISSY.add("tree/node-tpl",'<div id="ks-tree-node-row-{{id}}"\n     class="{{getBaseCssClasses \'row\'}}\n     {{#if selected}}\n        {{getBaseCssClasses \'selected\'}}\n     {{/if}}\n     ">\n    <div id="ks-tree-node-expand-icon-{{id}}"\n         class="{{getBaseCssClasses \'expand-icon\'}}">\n    </div>\n    {{#if checkable}}\n    <div id="ks-tree-node-checked-{{id}}"\n         class="{{getBaseCssClasses \'checked\'+checkState}}"></div>\n    {{/if}}\n    <div id="ks-tree-node-icon-{{id}}"\n         class="{{getBaseCssClasses \'icon\'}}">\n\n    </div>\n    {{{include \'component/extension/content-render/content-tpl\'}}}\n</div>\n<div id="ks-tree-node-children-{{id}}"\n     class="{{getBaseCssClasses \'children\'}}"\n{{^if expanded}}\nstyle="display:none"\n{{/if}}\n>\n</div>');
 KISSY.add("tree/node-render",function(e,d,g,c,b){return g.getDefaultRender().extend([b],{beforeCreateDom:function(a,b){e.mix(a.elAttrs,{role:"tree-node","aria-labelledby":"ks-content"+a.id,"aria-expanded":a.expanded?"true":"false","aria-selected":a.selected?"true":"false","aria-level":a.depth,title:a.tooltip});e.mix(b,{expandIconEl:"#ks-tree-node-expand-icon-{id}",rowEl:"#ks-tree-node-row-{id}",iconEl:"#ks-tree-node-icon-{id}",childrenEl:"#ks-tree-node-children-{id}",checkIconEl:"#ks-tree-node-checked-{id}"})},

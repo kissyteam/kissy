@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 11 12:51
+build time: Sep 11 14:23
 */
 KISSY.add("event/custom/observer",function(c,l){function g(){g.superclass.constructor.apply(this,arguments)}c.extend(g,l.Observer,{keys:["fn","context","groups"]});return g},{requires:["event/base"]});KISSY.add("event/custom/object",function(c,l){function g(i){g.superclass.constructor.call(this);c.mix(this,i)}c.extend(g,l.Object);return g},{requires:["event/base"]});
 KISSY.add("event/custom/observable",function(c,l,g,i){function h(){h.superclass.constructor.apply(this,arguments);this.defaultFn=null;this.defaultTargetOnly=!1;this.bubbles=!0}var n=i.Utils,b=b;c.extend(h,i.Observable,{on:function(a){a=new l(a);c.Config.debug&&(a.fn||"lack event handler for "+this.type);-1==this.findObserver(a)&&this.observers.push(a)},fire:function(a){var a=a||{},f=this.bubbles,d=this.currentTarget,e,m=this.type,k=this.defaultFn,o,j=a,c;a.type=m;j instanceof g||(j.target=d,j=new g(j));

@@ -1,16 +1,72 @@
-describe("KISSY ComboLoader", function () {
+describe("S ComboLoader", function () {
     var S = KISSY,
         host = location.host;
 
+    it("can combo test and not combo kissy", function () {
+        S.clearLoader();
+
+        var ret = 0;
+
+        S.config({
+            combine:false,
+            packages: [
+                {
+                    name: 'tests3',
+                    combine:true,
+                    path: '/kissy/src/seed/tests/specs/combo/'
+                }
+            ]
+        });
+
+        S.config('modules', {
+            "tests3/a": {
+                requires: ["./b"]
+            },
+            "tests3/b": {
+                requires: ["./c", "dom"]
+            }
+        });
+
+        S.use("tests3/b", function (S, c) {
+            ret=c;
+        });
+
+        waitsFor(function () {
+            return ret===3;
+        }, 2000);
+
+        runs(function () {
+            S.config('combine',true);
+        });
+    });
+
+    it('can combine combo and non combo', function () {
+        S.config({
+            packages: [
+                {
+                    name: 'no-combo',
+                    combine: false,
+                    path: '/kissy/src/seed/tests/specs/combo/'
+                }
+            ]
+        });
+        var r;
+        S.use('no-combo/a', function (S, a) {
+            r = a;
+        });
+
+        waitsFor(function () {
+            return r == 2
+        });
+    });
 
     it("should works simply", function () {
-
-        KISSY.clearLoader();
+        S.clearLoader();
 
         var ret = 0;
         var ret2 = 0;
 
-        KISSY.config({
+        S.config({
             packages: [
                 {
                     name: 'tests3',
@@ -50,7 +106,6 @@ describe("KISSY ComboLoader", function () {
             // always async
             expect(ret2).toBe(2444);
         });
-
     });
 
     it("should calculate rightly", function () {
@@ -83,7 +138,7 @@ describe("KISSY ComboLoader", function () {
             S.Loader.Utils.createModulesInfo(S, r);
             var c = l.getComboUrls(r);
             expect(c.js[''][0].fullpath).toBe(S.Config.base +
-                "??a.js,b.js,d.js,f.js,g.js,e.js,c.js,h.js,m.js?t=" + S.Config.tag+'.js');
+                "??a.js,b.js,d.js,f.js,g.js,e.js,c.js,h.js,m.js?t=" + S.Config.tag + '.js');
 
         });
 
@@ -118,9 +173,9 @@ describe("KISSY ComboLoader", function () {
             var c = l.getComboUrls(r);
             var js = c.js[''];
             expect(js.length).toBe(3);
-            expect(js[0].fullpath).toBe(S.Config.base + "??a.js,b.js?t=" + S.Config.tag+'.js');
-            expect(js[1].fullpath).toBe(S.Config.base + "??d.js,e.js?t=" + S.Config.tag+'.js');
-            expect(js[2].fullpath).toBe(S.Config.base + "??c.js?t=" + S.Config.tag+'.js');
+            expect(js[0].fullpath).toBe(S.Config.base + "??a.js,b.js?t=" + S.Config.tag + '.js');
+            expect(js[1].fullpath).toBe(S.Config.base + "??d.js,e.js?t=" + S.Config.tag + '.js');
+            expect(js[2].fullpath).toBe(S.Config.base + "??c.js?t=" + S.Config.tag + '.js');
 
             S.config('comboMaxFileNum', comboMaxFileNum);
         });
@@ -186,9 +241,9 @@ describe("KISSY ComboLoader", function () {
     it("should works for packages", function () {
         waits(10);
         runs(function () {
-            KISSY.clearLoader();
+            S.clearLoader();
 
-            KISSY.config({
+            S.config({
                 packages: [
                     {
                         name: 'tests',
@@ -215,13 +270,13 @@ describe("KISSY ComboLoader", function () {
 
             expect(urls['js']['tests'][0].fullpath)
                 .toBe("http://" + host + "/kissy/src/seed/tests/specs/combo/" +
-                    "tests/??a.js,b.js,c.js?t=" + S.Config.tag+'.js');
+                    "tests/??a.js,b.js,c.js?t=" + S.Config.tag + '.js');
 
             S.DOM = null;
 
             S.clearLoader();
 
-            KISSY.config({
+            S.config({
                 packages: [
                     {
                         name: 'tests',
@@ -254,7 +309,7 @@ describe("KISSY ComboLoader", function () {
         runs(function () {
             S.clearLoader();
 
-            KISSY.config({
+            S.config({
                 packages: [
                     {
                         name: 'tests2',
@@ -291,7 +346,7 @@ describe("KISSY ComboLoader", function () {
             });
 
             waitsFor(function () {
-                return order.length==2;
+                return order.length == 2;
             });
 
             runs(function () {
@@ -303,7 +358,7 @@ describe("KISSY ComboLoader", function () {
     it("works for not combo for specified packages", function () {
         window.TIMESTAMP_X = 0;
 
-        KISSY.config({
+        S.config({
             base: '',
             tag: '',
             debug: true,
@@ -350,7 +405,7 @@ describe("KISSY ComboLoader", function () {
     it("should load mod not config", function () {
         S.clearLoader();
 
-        KISSY.config({
+        S.config({
             packages: [
                 {
                     name: 'tests4',
@@ -374,7 +429,7 @@ describe("KISSY ComboLoader", function () {
 
     it("can use after another use", function () {
 
-        KISSY.config({
+        S.config({
             packages: [
                 {
                     name: 'test5',

@@ -432,123 +432,123 @@ if (! _$jscoverage['/promise.js'].branchData) {
   _$jscoverage['/promise.js'].branchData['383'][1] = new BranchData();
 }
 _$jscoverage['/promise.js'].branchData['383'][1].init(84, 13, '--count === 0');
-function visit567_383_1(result) {
+function visit556_383_1(result) {
   _$jscoverage['/promise.js'].branchData['383'][1].ranCondition(result);
   return result;
 }_$jscoverage['/promise.js'].branchData['379'][1].init(202, 19, 'i < promises.length');
-function visit566_379_1(result) {
+function visit555_379_1(result) {
   _$jscoverage['/promise.js'].branchData['379'][1].ranCondition(result);
   return result;
 }_$jscoverage['/promise.js'].branchData['375'][1].init(68, 6, '!count');
-function visit565_375_1(result) {
+function visit554_375_1(result) {
   _$jscoverage['/promise.js'].branchData['375'][1].ranCondition(result);
   return result;
 }_$jscoverage['/promise.js'].branchData['298'][2].init(51, 35, 'obj[PROMISE_PENDINGS] === undefined');
-function visit564_298_2(result) {
+function visit553_298_2(result) {
   _$jscoverage['/promise.js'].branchData['298'][2].ranCondition(result);
   return result;
 }_$jscoverage['/promise.js'].branchData['298'][1].init(31, 91, '(obj[PROMISE_PENDINGS] === undefined) && (obj[PROMISE_VALUE] instanceof Reject)');
-function visit563_298_1(result) {
+function visit552_298_1(result) {
   _$jscoverage['/promise.js'].branchData['298'][1].ranCondition(result);
   return result;
 }_$jscoverage['/promise.js'].branchData['297'][1].init(17, 123, 'isPromise(obj) && (obj[PROMISE_PENDINGS] === undefined) && (obj[PROMISE_VALUE] instanceof Reject)');
-function visit562_297_1(result) {
+function visit551_297_1(result) {
   _$jscoverage['/promise.js'].branchData['297'][1].ranCondition(result);
   return result;
 }_$jscoverage['/promise.js'].branchData['289'][1].init(-1, 206, '!isPromise(obj[PROMISE_VALUE]) || isResolved(obj[PROMISE_VALUE])');
-function visit561_289_1(result) {
+function visit550_289_1(result) {
   _$jscoverage['/promise.js'].branchData['289'][1].ranCondition(result);
   return result;
 }_$jscoverage['/promise.js'].branchData['285'][2].init(154, 35, 'obj[PROMISE_PENDINGS] === undefined');
-function visit560_285_2(result) {
+function visit549_285_2(result) {
   _$jscoverage['/promise.js'].branchData['285'][2].ranCondition(result);
   return result;
 }_$jscoverage['/promise.js'].branchData['285'][1].init(64, 405, '(obj[PROMISE_PENDINGS] === undefined) && (!isPromise(obj[PROMISE_VALUE]) || isResolved(obj[PROMISE_VALUE]))');
-function visit559_285_1(result) {
+function visit548_285_1(result) {
   _$jscoverage['/promise.js'].branchData['285'][1].ranCondition(result);
   return result;
 }_$jscoverage['/promise.js'].branchData['283'][1].init(32, 470, 'isPromise(obj) && (obj[PROMISE_PENDINGS] === undefined) && (!isPromise(obj[PROMISE_VALUE]) || isResolved(obj[PROMISE_VALUE]))');
-function visit558_283_1(result) {
+function visit547_283_1(result) {
   _$jscoverage['/promise.js'].branchData['283'][1].ranCondition(result);
   return result;
 }_$jscoverage['/promise.js'].branchData['282'][1].init(53, 503, '!isRejected(obj) && isPromise(obj) && (obj[PROMISE_PENDINGS] === undefined) && (!isPromise(obj[PROMISE_VALUE]) || isResolved(obj[PROMISE_VALUE]))');
-function visit557_282_1(result) {
+function visit546_282_1(result) {
   _$jscoverage['/promise.js'].branchData['282'][1].ranCondition(result);
   return result;
 }_$jscoverage['/promise.js'].branchData['263'][1].init(22, 4, 'done');
-function visit556_263_1(result) {
+function visit545_263_1(result) {
   _$jscoverage['/promise.js'].branchData['263'][1].ranCondition(result);
   return result;
 }_$jscoverage['/promise.js'].branchData['261'][1].init(1311, 25, 'value instanceof Promise');
-function visit555_261_1(result) {
+function visit544_261_1(result) {
   _$jscoverage['/promise.js'].branchData['261'][1].ranCondition(result);
   return result;
 }_$jscoverage['/promise.js'].branchData['254'][1].init(138, 24, 'value instanceof Promise');
-function visit554_254_1(result) {
+function visit543_254_1(result) {
   _$jscoverage['/promise.js'].branchData['254'][1].ranCondition(result);
   return result;
 }_$jscoverage['/promise.js'].branchData['250'][1].init(18, 4, 'done');
-function visit553_250_1(result) {
+function visit542_250_1(result) {
   _$jscoverage['/promise.js'].branchData['250'][1].ranCondition(result);
   return result;
 }_$jscoverage['/promise.js'].branchData['244'][1].init(87, 12, 'e.stack || e');
-function visit552_244_1(result) {
+function visit541_244_1(result) {
   _$jscoverage['/promise.js'].branchData['244'][1].ranCondition(result);
   return result;
 }_$jscoverage['/promise.js'].branchData['230'][1].init(87, 12, 'e.stack || e');
-function visit551_230_1(result) {
+function visit540_230_1(result) {
   _$jscoverage['/promise.js'].branchData['230'][1].ranCondition(result);
   return result;
 }_$jscoverage['/promise.js'].branchData['203'][1].init(161, 38, 'self[PROMISE_VALUE] instanceof Promise');
-function visit550_203_1(result) {
+function visit539_203_1(result) {
   _$jscoverage['/promise.js'].branchData['203'][1].ranCondition(result);
   return result;
 }_$jscoverage['/promise.js'].branchData['198'][1].init(14, 24, 'reason instanceof Reject');
-function visit549_198_1(result) {
+function visit538_198_1(result) {
   _$jscoverage['/promise.js'].branchData['198'][1].ranCondition(result);
   return result;
 }_$jscoverage['/promise.js'].branchData['174'][1].init(238, 21, 'fulfilled || rejected');
-function visit548_174_1(result) {
+function visit537_174_1(result) {
   _$jscoverage['/promise.js'].branchData['174'][1].ranCondition(result);
   return result;
 }_$jscoverage['/promise.js'].branchData['115'][1].init(125, 15, 'v === undefined');
-function visit547_115_1(result) {
+function visit536_115_1(result) {
   _$jscoverage['/promise.js'].branchData['115'][1].ranCondition(result);
   return result;
 }_$jscoverage['/promise.js'].branchData['101'][1].init(18, 29, 'obj && obj instanceof Promise');
-function visit546_101_1(result) {
+function visit535_101_1(result) {
   _$jscoverage['/promise.js'].branchData['101'][1].ranCondition(result);
   return result;
 }_$jscoverage['/promise.js'].branchData['77'][1].init(86, 39, '!(pendings = promise[PROMISE_PENDINGS])');
-function visit545_77_1(result) {
+function visit534_77_1(result) {
   _$jscoverage['/promise.js'].branchData['77'][1].ranCondition(result);
   return result;
 }_$jscoverage['/promise.js'].branchData['63'][1].init(344, 24, 'promise || new Promise()');
-function visit544_63_1(result) {
+function visit533_63_1(result) {
   _$jscoverage['/promise.js'].branchData['63'][1].ranCondition(result);
   return result;
 }_$jscoverage['/promise.js'].branchData['54'][1].init(40, 24, '!(self instanceof Defer)');
-function visit543_54_1(result) {
+function visit532_54_1(result) {
   _$jscoverage['/promise.js'].branchData['54'][1].ranCondition(result);
   return result;
 }_$jscoverage['/promise.js'].branchData['43'][1].init(191, 25, 'fulfilled && fulfilled(v)');
-function visit542_43_1(result) {
+function visit531_43_1(result) {
   _$jscoverage['/promise.js'].branchData['43'][1].ranCondition(result);
   return result;
 }_$jscoverage['/promise.js'].branchData['36'][1].init(607, 12, 'isPromise(v)');
-function visit541_36_1(result) {
+function visit530_36_1(result) {
   _$jscoverage['/promise.js'].branchData['36'][1].ranCondition(result);
   return result;
 }_$jscoverage['/promise.js'].branchData['32'][1].init(475, 8, 'pendings');
-function visit540_32_1(result) {
+function visit529_32_1(result) {
   _$jscoverage['/promise.js'].branchData['32'][1].ranCondition(result);
   return result;
 }_$jscoverage['/promise.js'].branchData['21'][1].init(89, 9, '!rejected');
-function visit539_21_1(result) {
+function visit528_21_1(result) {
   _$jscoverage['/promise.js'].branchData['21'][1].ranCondition(result);
   return result;
 }_$jscoverage['/promise.js'].branchData['19'][1].init(47, 25, 'promise instanceof Reject');
-function visit538_19_1(result) {
+function visit527_19_1(result) {
   _$jscoverage['/promise.js'].branchData['19'][1].ranCondition(result);
   return result;
 }_$jscoverage['/promise.js'].lineData[6]++;
@@ -560,9 +560,9 @@ function visit538_19_1(result) {
   function promiseWhen(promise, fulfilled, rejected) {
     _$jscoverage['/promise.js'].functionData[1]++;
     _$jscoverage['/promise.js'].lineData[19]++;
-    if (visit538_19_1(promise instanceof Reject)) {
+    if (visit527_19_1(promise instanceof Reject)) {
       _$jscoverage['/promise.js'].lineData[21]++;
-      if (visit539_21_1(!rejected)) {
+      if (visit528_21_1(!rejected)) {
         _$jscoverage['/promise.js'].lineData[22]++;
         S.error('no rejected callback!');
       }
@@ -572,17 +572,17 @@ function visit538_19_1(result) {
     _$jscoverage['/promise.js'].lineData[27]++;
     var v = promise[PROMISE_VALUE], pendings = promise[PROMISE_PENDINGS];
     _$jscoverage['/promise.js'].lineData[32]++;
-    if (visit540_32_1(pendings)) {
+    if (visit529_32_1(pendings)) {
       _$jscoverage['/promise.js'].lineData[33]++;
       pendings.push([fulfilled, rejected]);
     } else {
       _$jscoverage['/promise.js'].lineData[36]++;
-      if (visit541_36_1(isPromise(v))) {
+      if (visit530_36_1(isPromise(v))) {
         _$jscoverage['/promise.js'].lineData[37]++;
         promiseWhen(v, fulfilled, rejected);
       } else {
         _$jscoverage['/promise.js'].lineData[43]++;
-        return visit542_43_1(fulfilled && fulfilled(v));
+        return visit531_43_1(fulfilled && fulfilled(v));
       }
     }
     _$jscoverage['/promise.js'].lineData[45]++;
@@ -594,12 +594,12 @@ function visit538_19_1(result) {
     _$jscoverage['/promise.js'].lineData[53]++;
     var self = this;
     _$jscoverage['/promise.js'].lineData[54]++;
-    if (visit543_54_1(!(self instanceof Defer))) {
+    if (visit532_54_1(!(self instanceof Defer))) {
       _$jscoverage['/promise.js'].lineData[55]++;
       return new Defer(promise);
     }
     _$jscoverage['/promise.js'].lineData[63]++;
-    self.promise = visit544_63_1(promise || new Promise());
+    self.promise = visit533_63_1(promise || new Promise());
   }
   _$jscoverage['/promise.js'].lineData[66]++;
   Defer.prototype = {
@@ -609,7 +609,7 @@ function visit538_19_1(result) {
   _$jscoverage['/promise.js'].lineData[75]++;
   var promise = this.promise, pendings;
   _$jscoverage['/promise.js'].lineData[77]++;
-  if (visit545_77_1(!(pendings = promise[PROMISE_PENDINGS]))) {
+  if (visit534_77_1(!(pendings = promise[PROMISE_PENDINGS]))) {
     _$jscoverage['/promise.js'].lineData[78]++;
     return null;
   }
@@ -637,7 +637,7 @@ function visit538_19_1(result) {
   function isPromise(obj) {
     _$jscoverage['/promise.js'].functionData[6]++;
     _$jscoverage['/promise.js'].lineData[101]++;
-    return visit546_101_1(obj && obj instanceof Promise);
+    return visit535_101_1(obj && obj instanceof Promise);
   }
   _$jscoverage['/promise.js'].lineData[111]++;
   function Promise(v) {
@@ -647,7 +647,7 @@ function visit538_19_1(result) {
     _$jscoverage['/promise.js'].lineData[114]++;
     self[PROMISE_VALUE] = v;
     _$jscoverage['/promise.js'].lineData[115]++;
-    if (visit547_115_1(v === undefined)) {
+    if (visit536_115_1(v === undefined)) {
       _$jscoverage['/promise.js'].lineData[117]++;
       self[PROMISE_PENDINGS] = [];
     }
@@ -689,7 +689,7 @@ function visit538_19_1(result) {
   _$jscoverage['/promise.js'].lineData[171]++;
   throw error;
 }, 0);
-}, promiseToHandle = visit548_174_1(fulfilled || rejected) ? self.then(fulfilled, rejected) : self;
+}, promiseToHandle = visit537_174_1(fulfilled || rejected) ? self.then(fulfilled, rejected) : self;
   _$jscoverage['/promise.js'].lineData[177]++;
   promiseToHandle.fail(onUnhandledError);
 }, 
@@ -707,7 +707,7 @@ function visit538_19_1(result) {
   function Reject(reason) {
     _$jscoverage['/promise.js'].functionData[18]++;
     _$jscoverage['/promise.js'].lineData[198]++;
-    if (visit549_198_1(reason instanceof Reject)) {
+    if (visit538_198_1(reason instanceof Reject)) {
       _$jscoverage['/promise.js'].lineData[199]++;
       return reason;
     }
@@ -716,7 +716,7 @@ function visit538_19_1(result) {
     _$jscoverage['/promise.js'].lineData[202]++;
     Promise.apply(self, arguments);
     _$jscoverage['/promise.js'].lineData[203]++;
-    if (visit550_203_1(self[PROMISE_VALUE] instanceof Promise)) {
+    if (visit539_203_1(self[PROMISE_VALUE] instanceof Promise)) {
       _$jscoverage['/promise.js'].lineData[204]++;
       S.error('assert.not(this.__promise_value instanceof promise) in Reject constructor');
     }
@@ -739,7 +739,7 @@ function visit538_19_1(result) {
         return fulfilled ? fulfilled(value) : value;
       }      catch (e) {
   _$jscoverage['/promise.js'].lineData[230]++;
-  logger.error(visit551_230_1(e.stack || e));
+  logger.error(visit540_230_1(e.stack || e));
   _$jscoverage['/promise.js'].lineData[231]++;
   return new Reject(e);
 }
@@ -753,7 +753,7 @@ function visit538_19_1(result) {
         return rejected ? rejected(reason) : new Reject(reason);
       }      catch (e) {
   _$jscoverage['/promise.js'].lineData[244]++;
-  logger.error(visit552_244_1(e.stack || e));
+  logger.error(visit541_244_1(e.stack || e));
   _$jscoverage['/promise.js'].lineData[245]++;
   return new Reject(e);
 }
@@ -762,14 +762,14 @@ function visit538_19_1(result) {
     function finalFulfill(value) {
       _$jscoverage['/promise.js'].functionData[22]++;
       _$jscoverage['/promise.js'].lineData[250]++;
-      if (visit553_250_1(done)) {
+      if (visit542_250_1(done)) {
         _$jscoverage['/promise.js'].lineData[251]++;
         S.error('already done at fulfilled');
         _$jscoverage['/promise.js'].lineData[252]++;
         return;
       }
       _$jscoverage['/promise.js'].lineData[254]++;
-      if (visit554_254_1(value instanceof Promise)) {
+      if (visit543_254_1(value instanceof Promise)) {
         _$jscoverage['/promise.js'].lineData[255]++;
         S.error('assert.not(value instanceof Promise) in when');
       }
@@ -779,12 +779,12 @@ function visit538_19_1(result) {
       defer.resolve(_fulfilled(value));
     }
     _$jscoverage['/promise.js'].lineData[261]++;
-    if (visit555_261_1(value instanceof Promise)) {
+    if (visit544_261_1(value instanceof Promise)) {
       _$jscoverage['/promise.js'].lineData[262]++;
       promiseWhen(value, finalFulfill, function(reason) {
   _$jscoverage['/promise.js'].functionData[23]++;
   _$jscoverage['/promise.js'].lineData[263]++;
-  if (visit556_263_1(done)) {
+  if (visit545_263_1(done)) {
     _$jscoverage['/promise.js'].lineData[264]++;
     S.error('already done at rejected');
     _$jscoverage['/promise.js'].lineData[265]++;
@@ -806,13 +806,13 @@ function visit538_19_1(result) {
   function isResolved(obj) {
     _$jscoverage['/promise.js'].functionData[24]++;
     _$jscoverage['/promise.js'].lineData[282]++;
-    return visit557_282_1(!isRejected(obj) && visit558_283_1(isPromise(obj) && visit559_285_1((visit560_285_2(obj[PROMISE_PENDINGS] === undefined)) && (visit561_289_1(!isPromise(obj[PROMISE_VALUE]) || isResolved(obj[PROMISE_VALUE]))))));
+    return visit546_282_1(!isRejected(obj) && visit547_283_1(isPromise(obj) && visit548_285_1((visit549_285_2(obj[PROMISE_PENDINGS] === undefined)) && (visit550_289_1(!isPromise(obj[PROMISE_VALUE]) || isResolved(obj[PROMISE_VALUE]))))));
   }
   _$jscoverage['/promise.js'].lineData[296]++;
   function isRejected(obj) {
     _$jscoverage['/promise.js'].functionData[25]++;
     _$jscoverage['/promise.js'].lineData[297]++;
-    return visit562_297_1(isPromise(obj) && visit563_298_1((visit564_298_2(obj[PROMISE_PENDINGS] === undefined)) && (obj[PROMISE_VALUE] instanceof Reject)));
+    return visit551_297_1(isPromise(obj) && visit552_298_1((visit553_298_2(obj[PROMISE_PENDINGS] === undefined)) && (obj[PROMISE_VALUE] instanceof Reject)));
   }
   _$jscoverage['/promise.js'].lineData[302]++;
   KISSY.Defer = Defer;
@@ -831,14 +831,14 @@ function visit538_19_1(result) {
   _$jscoverage['/promise.js'].lineData[374]++;
   var count = promises.length;
   _$jscoverage['/promise.js'].lineData[375]++;
-  if (visit565_375_1(!count)) {
+  if (visit554_375_1(!count)) {
     _$jscoverage['/promise.js'].lineData[376]++;
     return null;
   }
   _$jscoverage['/promise.js'].lineData[378]++;
   var defer = Defer();
   _$jscoverage['/promise.js'].lineData[379]++;
-  for (var i = 0; visit566_379_1(i < promises.length); i++) {
+  for (var i = 0; visit555_379_1(i < promises.length); i++) {
     _$jscoverage['/promise.js'].lineData[380]++;
     (function(promise, i) {
   _$jscoverage['/promise.js'].functionData[27]++;
@@ -848,7 +848,7 @@ function visit538_19_1(result) {
   _$jscoverage['/promise.js'].lineData[382]++;
   promises[i] = value;
   _$jscoverage['/promise.js'].lineData[383]++;
-  if (visit567_383_1(--count === 0)) {
+  if (visit556_383_1(--count === 0)) {
     _$jscoverage['/promise.js'].lineData[386]++;
     defer.resolve(promises);
   }

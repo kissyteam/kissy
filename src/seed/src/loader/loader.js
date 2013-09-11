@@ -7,8 +7,6 @@
     var Loader = S.Loader,
         Env = S.Env,
         Utils = Loader.Utils,
-        Config= S.Config,
-        SimpleLoader = Loader.SimpleLoader,
         ComboLoader = Loader.ComboLoader;
 
     function WaitingModules(fn) {
@@ -66,13 +64,7 @@
          *      });
          */
         add: function (name, fn, cfg) {
-            if (typeof name == 'string') {
-                Utils.registerModule(S, name, fn, cfg);
-            } else if (!Config.combine) {
-                SimpleLoader.add(name, fn, cfg, S);
-            } else {
-                throw new Error('Unsupported KISSY.add format!');
-            }
+            ComboLoader.add(name, fn, cfg, S);
         },
         /**
          * Attached one or more modules to global KISSY instance.
@@ -96,8 +88,11 @@
                 waitingModules = new WaitingModules(loadReady);
 
             if (S.isPlainObject(success)) {
+                //noinspection JSUnresolvedVariable
                 sync = success.sync;
+                //noinspection JSUnresolvedVariable
                 error = success.error;
+                //noinspection JSUnresolvedVariable
                 success = success.success;
             }
 
@@ -137,11 +132,7 @@
                 }
             }
 
-            if (Config.combine) {
-                loader = new ComboLoader(S, waitingModules);
-            } else {
-                loader = new SimpleLoader(S, waitingModules);
-            }
+            loader = new ComboLoader(S, waitingModules);
 
             // in case modules is loaded statically
             // synchronous check
@@ -256,6 +247,7 @@
 
     if (S.UA.nodejs) {
         // nodejs: no tag
+        //noinspection JSUnresolvedVariable
         S.config({
             charset: 'utf-8',
             base: __dirname.replace(/\\/g, '/').replace(/\/$/, '') + '/'

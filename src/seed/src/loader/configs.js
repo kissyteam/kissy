@@ -4,7 +4,6 @@
  * @author yiminghe@gmail.com
  */
 (function (S, undefined) {
-
     var Loader = S.Loader,
         Utils = Loader.Utils,
         host = S.Env.host,
@@ -157,5 +156,4 @@
         }
         return baseUri;
     }
-
 })(KISSY);

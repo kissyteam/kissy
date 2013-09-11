@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 11 12:54
+build time: Sep 11 14:27
 */
 KISSY.add("xtemplate/runtime/commands",function(f){var l;return l={each:function(d,a){var b=a.params[0],c="",g;if(b){var k=[0,0].concat(d);if(f.isArray(b)){g=b.length;for(var n=0;n<g;n++)k[0]=b[n],k[1]={xcount:g,xindex:n},c+=a.fn(k)}else for(g in b)k[0]=b[g],k[1]={xindex:g},c+=a.fn(k)}else a.inverse&&(c=a.inverse(d));return c},"with":function(d,a){var b=a.params[0],c=[0].concat(d),g="";b?(c[0]=b,g=a.fn(c)):a.inverse&&(g=a.inverse(d));return g},"if":function(d,a){var b="";a.params[0]?a.fn&&(b=a.fn(d)):
 a.inverse&&(b=a.inverse(d));return b},set:function(d,a){for(var b=d.length-1;0<=b;b--)if("object"==typeof d[b]){f.mix(d[b],a.hash);break}return""},include:function(d,a){var b=a.params,d=(a.hash?[a.hash]:[]).concat(d);if(!b||1!=b.length)return"include must has one param","";var c=this.config.name,b=b[0];if("."==b.charAt(0)){if("unspecified"==c)return"parent template does not have name for relative sub tpl name: "+b,"";b=f.Path.resolve(c,"../",b)}c=this.config.loader.call(this,b);a=f.merge(this.config);

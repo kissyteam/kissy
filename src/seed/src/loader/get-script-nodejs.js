@@ -5,7 +5,6 @@
  * @author yiminghe@gmail.com
  */
 (function (S) {
-
     var fs = require('fs'),
         logger= S.getLogger('s/loader'),
         vm = require('vm');

@@ -49,7 +49,6 @@
             <path location="${component.src.dir}/loader/css-onload.js"/>
             <path location="${component.src.dir}/loader/get-script.js"/>
             <path location="${component.src.dir}/loader/configs.js"/>
-            <path location="${component.src.dir}/loader/simple-loader.js"/>
             <path location="${component.src.dir}/loader/combo-loader.js"/>
             <path location="${component.src.dir}/loader/loader.js"/>
             <path location="${component.src.dir}/loader/i18n.js"/>
@@ -89,7 +88,6 @@
             <path location="${component.src.dir}/loader/css-onload.js"/>
             <path location="${component.src.dir}/loader/get-script-nodejs.js"/>
             <path location="${component.src.dir}/loader/configs.js"/>
-            <path location="${component.src.dir}/loader/simple-loader.js"/>
             <path location="${component.src.dir}/loader/combo-loader.js"/>
             <path location="${component.src.dir}/loader/loader.js"/>
             <path location="${component.src.dir}/loader/i18n.js"/>

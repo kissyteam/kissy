@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 11 12:51
+build time: Sep 11 14:23
 */
 KISSY.add("editor/iframe-content-tpl",'<!doctype html>\n<html>\n<head>{doctype} \n    <title>{title}</title> \n    <style> \n    {style}\n    </style> \n    {links} \n    </head> \n<body class="ks-editor">\n{data} \n{script} \n</body> \n</html>');KISSY.add("editor/render-tpl",'<div class="{{prefixCls}}editor-tools"\n     id="ks-editor-tools-{{id}}">\n\n</div>\n\n<\!--\nhttp://johanbrook.com/browsers/native-momentum-scrolling-ios-5/\nios \u4e0d\u80fd\u653e\u5728 iframe \u4e0a\uff01\n--\>\n\n<div class="{{prefixCls}}editor-textarea-wrap"\n\n{{#if mobile}}\nstyle="overflow:scroll;-webkit-overflow-scrolling:touch;"\n{{/if}}\n\nid="ks-editor-textarea-wrap-{{id}}"\n>\n\n<textarea\n        id="ks-editor-textarea-{{id}}"\n        class="{{prefixCls}}editor-textarea"\n\n{{#each textareaAttrs}}\n{{xindex}}="{{.}}"\n{{/each}}\n\n{{#if mode}}\nstyle="display:none"\n{{/if}}\n\n>{{data}}</textarea>\n\n</div>\n\n<div class="{{prefixCls}}editor-status"\n     id="ks-editor-status-{{id}}">\n\n</div>');
 KISSY.add("editor/render",function(a,n,r){return n.getDefaultRender().extend({beforeCreateDom:function(q,o){a.mix(q,{mobile:a.UA.mobile});a.mix(o,{textarea:"#ks-editor-textarea-{id}",toolBarEl:"#ks-editor-tools-{id}",statusBarEl:"#ks-editor-status-{id}"})}},{ATTRS:{contentTpl:{value:r}}})},{requires:["component/control","./render-tpl"]});
