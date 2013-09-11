@@ -1,3 +1,7 @@
+/**
+ * gen package definition for develop mode
+ * @author yiminghe@gmail.com
+ */
 var cwd = normalizeSlash(process.cwd());
 var path = require('path');
 var startDir = normalizeSlash(path.resolve(cwd, 'src') + '/');

@@ -2,9 +2,7 @@
  * unit test framework for S
  * @author yiminghe@gmail.com
  */
-
 (function () {
-
     var index = -1;
     var S = KISSY;
     window.tests = [];

@@ -30,7 +30,8 @@
     "main": "./build/kissy-nodejs.js",
     "scripts": {
         "test": "node ./tools/test/jasmine-node",
-        "start": "node ./tools/server/start"
+        "start": "node ./tools/server/start",
+        "restart": "node ./tools/server/restart"
     },
     "optionalDependencies": {
         "optimist": "~0.6.0",
