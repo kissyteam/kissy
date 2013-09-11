@@ -16,16 +16,6 @@ KISSY.add("editor/focusManager", function (S, Editor) {
          */
             focusManager = {
             /**
-             * make all editor instance editable
-             */
-            refreshAll: function () {
-                for (var i in INSTANCES) {
-                    var e = INSTANCES[i], doc = e.get("document")[0];
-                    doc.designMode = "off";
-                    doc.designMode = "on";
-                }
-            },
-            /**
              * get current focused editor instance
              */
             currentInstance: function () {
@@ -96,7 +86,6 @@ KISSY.add("editor/focusManager", function (S, Editor) {
         }, 30);
     }
 
-    focusManager['refreshAll'] = focusManager.refreshAll;
     Editor.focusManager = focusManager;
     Editor.getInstances = function () {
         return INSTANCES;

@@ -8,7 +8,7 @@ KISSY.add('editor', function (S, Node, iframeContentTpl, Editor, Utils, focusMan
         undefined = undefined,
         FALSE = false,
         NULL = null,
-        logger= S.getLogger('s/editor'),
+        logger = S.getLogger('s/editor'),
         window = S.Env.host,
         document = window.document,
         UA = S.UA,
@@ -89,7 +89,7 @@ KISSY.add('editor', function (S, Node, iframeContentTpl, Editor, Utils, focusMan
         },
 
 
-         // 高度不在 el 上设置，设置 iframeWrap 以及 textarea（for ie）. width 依然在 el 上设置
+        // 高度不在 el 上设置，设置 iframeWrap 以及 textarea（for ie）. width 依然在 el 上设置
         _onSetHeight: function (v) {
             var self = this,
                 textareaEl = self.get('textarea'),
@@ -131,23 +131,6 @@ KISSY.add('editor', function (S, Node, iframeContentTpl, Editor, Utils, focusMan
             }
         },
 
-        'setData': function (data) {
-            var self = this,
-                htmlDataProcessor,
-                afterData = data;
-            if (self.get('mode') != WYSIWYG_MODE) {
-                // 代码模式下不需过滤
-                self.get('textarea').val(data);
-                return;
-            }
-            if (htmlDataProcessor = self.htmlDataProcessor) {
-                afterData = htmlDataProcessor.toDataFormat(data);
-            }
-            // https://github.com/kissyteam/kissy-editor/issues/17, 重建最保险
-            clearIframeDocContent(self);
-            createIframe(self, afterData);
-        },
-
         destructor: function () {
             var self = this,
                 form,
@@ -184,6 +167,16 @@ KISSY.add('editor', function (S, Node, iframeContentTpl, Editor, Utils, focusMan
 
             self.__commands = {};
             self.__controls = {};
+        },
+
+        /**
+         * make editor editable again
+         */
+        refresh: function () {
+            var doc = this.get('document')[0];
+            doc.designMode = "off";
+            doc.designMode = "on";
+            doc.body['contentEditable'] = TRUE;
         },
 
         /**
@@ -277,6 +270,23 @@ KISSY.add('editor', function (S, Node, iframeContentTpl, Editor, Utils, focusMan
             return this.execCommand(Utils.getQueryCmd(name));
         },
 
+        'setData': function (data) {
+            var self = this,
+                htmlDataProcessor,
+                afterData = data;
+            if (self.get('mode') != WYSIWYG_MODE) {
+                // 代码模式下不需过滤
+                self.get('textarea').val(data);
+                return;
+            }
+            if (htmlDataProcessor = self.htmlDataProcessor) {
+                afterData = htmlDataProcessor.toDataFormat(data);
+            }
+            // https://github.com/kissyteam/kissy-editor/issues/17, 重建最保险
+            clearIframeDocContent(self);
+            createIframe(self, afterData);
+        },
+
         /**
          * get html content of editor body.
          * @member KISSY.Editor
@@ -349,7 +359,7 @@ KISSY.add('editor', function (S, Node, iframeContentTpl, Editor, Utils, focusMan
             var self = this,
                 range = self.getSelection().getRanges()[0],
                 contents,
-                html='';
+                html = '';
             if (range) {
                 contents = range.cloneContents();
                 html = self.get('document')[0].createElement('div');
@@ -710,8 +720,8 @@ KISSY.add('editor', function (S, Node, iframeContentTpl, Editor, Utils, focusMan
     };
 
     /*
-      初始化iframe内容以及浏览器间兼容性处理，
-      必须等待iframe内的脚本向父窗口通知
+     初始化iframe内容以及浏览器间兼容性处理，
+     必须等待iframe内的脚本向父窗口通知
      */
     Editor["_initIframe"] = function (id) {
 
@@ -730,9 +740,9 @@ KISSY.add('editor', function (S, Node, iframeContentTpl, Editor, Utils, focusMan
         var $body = $(body);
 
         /*
-          from kissy editor 1.0
+         from kissy editor 1.0
 
-          // 注1：在 tinymce 里，designMode = "on" 放在 try catch 里。
+         // 注1：在 tinymce 里，designMode = "on" 放在 try catch 里。
          //     原因是在 firefox 下，当iframe 在 display: none 的容器里，会导致错误。
          //     但经过我测试，firefox 3+ 以上已无此现象。
          // 注2： ie 用 contentEditable = true.
@@ -941,9 +951,9 @@ KISSY.add('editor', function (S, Node, iframeContentTpl, Editor, Utils, focusMan
 
         $win.on('focus', function () {
             /*
-              注意：firefox光标丢失bug
-              blink后光标出现在最后，这就需要实现保存range
-              focus后再恢复range
+             注意：firefox光标丢失bug
+             blink后光标出现在最后，这就需要实现保存range
+             focus后再恢复range
              */
             if (UA['gecko']) {
                 blinkCursor(doc, FALSE);
@@ -957,7 +967,7 @@ KISSY.add('editor', function (S, Node, iframeContentTpl, Editor, Utils, focusMan
 
         if (UA['gecko']) {
             /*
-              firefox 焦点丢失后，再点编辑器区域焦点会移不过来，要点两下
+             firefox 焦点丢失后，再点编辑器区域焦点会移不过来，要点两下
              */
             $doc.on('mousedown', function () {
                 if (!self.__iframeFocus) {
@@ -970,7 +980,7 @@ KISSY.add('editor', function (S, Node, iframeContentTpl, Editor, Utils, focusMan
             // Override keystrokes which should have deletion behavior
             // on control types in IE . (#4047)
             /*
-              选择img，出现缩放框后不能直接删除
+             选择img，出现缩放框后不能直接删除
              */
             $doc.on('keydown', function (evt) {
                 var keyCode = evt.keyCode;
