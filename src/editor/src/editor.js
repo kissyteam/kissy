@@ -170,16 +170,6 @@ KISSY.add('editor', function (S, Node, iframeContentTpl, Editor, Utils, focusMan
         },
 
         /**
-         * make editor editable again
-         */
-        refresh: function () {
-            var doc = this.get('document')[0];
-            doc.designMode = "off";
-            doc.designMode = "on";
-            doc.body['contentEditable'] = TRUE;
-        },
-
-        /**
          * Retrieve control by id.
          * @member KISSY.Editor
          */
