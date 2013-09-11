@@ -229,51 +229,51 @@ if (! this._$jscoverage) {
 if (! _$jscoverage['/contextmenu.js']) {
   _$jscoverage['/contextmenu.js'] = {};
   _$jscoverage['/contextmenu.js'].lineData = [];
-  _$jscoverage['/contextmenu.js'].lineData[5] = 0;
-  _$jscoverage['/contextmenu.js'].lineData[7] = 0;
-  _$jscoverage['/contextmenu.js'].lineData[9] = 0;
-  _$jscoverage['/contextmenu.js'].lineData[11] = 0;
-  _$jscoverage['/contextmenu.js'].lineData[13] = 0;
+  _$jscoverage['/contextmenu.js'].lineData[6] = 0;
+  _$jscoverage['/contextmenu.js'].lineData[8] = 0;
+  _$jscoverage['/contextmenu.js'].lineData[10] = 0;
+  _$jscoverage['/contextmenu.js'].lineData[12] = 0;
   _$jscoverage['/contextmenu.js'].lineData[14] = 0;
   _$jscoverage['/contextmenu.js'].lineData[15] = 0;
-  _$jscoverage['/contextmenu.js'].lineData[18] = 0;
+  _$jscoverage['/contextmenu.js'].lineData[16] = 0;
   _$jscoverage['/contextmenu.js'].lineData[19] = 0;
   _$jscoverage['/contextmenu.js'].lineData[20] = 0;
   _$jscoverage['/contextmenu.js'].lineData[21] = 0;
-  _$jscoverage['/contextmenu.js'].lineData[23] = 0;
-  _$jscoverage['/contextmenu.js'].lineData[25] = 0;
-  _$jscoverage['/contextmenu.js'].lineData[27] = 0;
+  _$jscoverage['/contextmenu.js'].lineData[22] = 0;
+  _$jscoverage['/contextmenu.js'].lineData[24] = 0;
+  _$jscoverage['/contextmenu.js'].lineData[26] = 0;
   _$jscoverage['/contextmenu.js'].lineData[28] = 0;
   _$jscoverage['/contextmenu.js'].lineData[29] = 0;
   _$jscoverage['/contextmenu.js'].lineData[30] = 0;
-  _$jscoverage['/contextmenu.js'].lineData[35] = 0;
+  _$jscoverage['/contextmenu.js'].lineData[31] = 0;
   _$jscoverage['/contextmenu.js'].lineData[36] = 0;
-  _$jscoverage['/contextmenu.js'].lineData[38] = 0;
+  _$jscoverage['/contextmenu.js'].lineData[37] = 0;
   _$jscoverage['/contextmenu.js'].lineData[39] = 0;
   _$jscoverage['/contextmenu.js'].lineData[40] = 0;
-  _$jscoverage['/contextmenu.js'].lineData[43] = 0;
+  _$jscoverage['/contextmenu.js'].lineData[41] = 0;
   _$jscoverage['/contextmenu.js'].lineData[44] = 0;
   _$jscoverage['/contextmenu.js'].lineData[45] = 0;
-  _$jscoverage['/contextmenu.js'].lineData[49] = 0;
+  _$jscoverage['/contextmenu.js'].lineData[46] = 0;
   _$jscoverage['/contextmenu.js'].lineData[50] = 0;
-  _$jscoverage['/contextmenu.js'].lineData[56] = 0;
-  _$jscoverage['/contextmenu.js'].lineData[58] = 0;
+  _$jscoverage['/contextmenu.js'].lineData[51] = 0;
+  _$jscoverage['/contextmenu.js'].lineData[57] = 0;
   _$jscoverage['/contextmenu.js'].lineData[59] = 0;
-  _$jscoverage['/contextmenu.js'].lineData[61] = 0;
-  _$jscoverage['/contextmenu.js'].lineData[65] = 0;
+  _$jscoverage['/contextmenu.js'].lineData[60] = 0;
+  _$jscoverage['/contextmenu.js'].lineData[62] = 0;
   _$jscoverage['/contextmenu.js'].lineData[66] = 0;
-  _$jscoverage['/contextmenu.js'].lineData[68] = 0;
+  _$jscoverage['/contextmenu.js'].lineData[67] = 0;
   _$jscoverage['/contextmenu.js'].lineData[69] = 0;
-  _$jscoverage['/contextmenu.js'].lineData[72] = 0;
+  _$jscoverage['/contextmenu.js'].lineData[70] = 0;
   _$jscoverage['/contextmenu.js'].lineData[73] = 0;
-  _$jscoverage['/contextmenu.js'].lineData[76] = 0;
+  _$jscoverage['/contextmenu.js'].lineData[74] = 0;
   _$jscoverage['/contextmenu.js'].lineData[77] = 0;
   _$jscoverage['/contextmenu.js'].lineData[78] = 0;
-  _$jscoverage['/contextmenu.js'].lineData[80] = 0;
-  _$jscoverage['/contextmenu.js'].lineData[84] = 0;
+  _$jscoverage['/contextmenu.js'].lineData[79] = 0;
+  _$jscoverage['/contextmenu.js'].lineData[81] = 0;
   _$jscoverage['/contextmenu.js'].lineData[85] = 0;
-  _$jscoverage['/contextmenu.js'].lineData[88] = 0;
-  _$jscoverage['/contextmenu.js'].lineData[90] = 0;
+  _$jscoverage['/contextmenu.js'].lineData[86] = 0;
+  _$jscoverage['/contextmenu.js'].lineData[89] = 0;
+  _$jscoverage['/contextmenu.js'].lineData[91] = 0;
 }
 if (! _$jscoverage['/contextmenu.js'].functionData) {
   _$jscoverage['/contextmenu.js'].functionData = [];
@@ -289,158 +289,158 @@ if (! _$jscoverage['/contextmenu.js'].functionData) {
 }
 if (! _$jscoverage['/contextmenu.js'].branchData) {
   _$jscoverage['/contextmenu.js'].branchData = {};
-  _$jscoverage['/contextmenu.js'].branchData['11'] = [];
-  _$jscoverage['/contextmenu.js'].branchData['11'][1] = new BranchData();
-  _$jscoverage['/contextmenu.js'].branchData['14'] = [];
-  _$jscoverage['/contextmenu.js'].branchData['14'][1] = new BranchData();
-  _$jscoverage['/contextmenu.js'].branchData['29'] = [];
-  _$jscoverage['/contextmenu.js'].branchData['29'][1] = new BranchData();
-  _$jscoverage['/contextmenu.js'].branchData['39'] = [];
-  _$jscoverage['/contextmenu.js'].branchData['39'][1] = new BranchData();
-  _$jscoverage['/contextmenu.js'].branchData['58'] = [];
-  _$jscoverage['/contextmenu.js'].branchData['58'][1] = new BranchData();
-  _$jscoverage['/contextmenu.js'].branchData['84'] = [];
-  _$jscoverage['/contextmenu.js'].branchData['84'][1] = new BranchData();
+  _$jscoverage['/contextmenu.js'].branchData['12'] = [];
+  _$jscoverage['/contextmenu.js'].branchData['12'][1] = new BranchData();
+  _$jscoverage['/contextmenu.js'].branchData['15'] = [];
+  _$jscoverage['/contextmenu.js'].branchData['15'][1] = new BranchData();
+  _$jscoverage['/contextmenu.js'].branchData['30'] = [];
+  _$jscoverage['/contextmenu.js'].branchData['30'][1] = new BranchData();
+  _$jscoverage['/contextmenu.js'].branchData['40'] = [];
+  _$jscoverage['/contextmenu.js'].branchData['40'][1] = new BranchData();
+  _$jscoverage['/contextmenu.js'].branchData['59'] = [];
+  _$jscoverage['/contextmenu.js'].branchData['59'][1] = new BranchData();
+  _$jscoverage['/contextmenu.js'].branchData['85'] = [];
+  _$jscoverage['/contextmenu.js'].branchData['85'][1] = new BranchData();
 }
-_$jscoverage['/contextmenu.js'].branchData['84'][1].init(2180, 5, 'event');
-function visit6_84_1(result) {
-  _$jscoverage['/contextmenu.js'].branchData['84'][1].ranCondition(result);
+_$jscoverage['/contextmenu.js'].branchData['85'][1].init(2180, 5, 'event');
+function visit6_85_1(result) {
+  _$jscoverage['/contextmenu.js'].branchData['85'][1].ranCondition(result);
   return result;
-}_$jscoverage['/contextmenu.js'].branchData['58'][1].init(258, 2, '!x');
-function visit5_58_1(result) {
-  _$jscoverage['/contextmenu.js'].branchData['58'][1].ranCondition(result);
+}_$jscoverage['/contextmenu.js'].branchData['59'][1].init(258, 2, '!x');
+function visit5_59_1(result) {
+  _$jscoverage['/contextmenu.js'].branchData['59'][1].ranCondition(result);
   return result;
-}_$jscoverage['/contextmenu.js'].branchData['39'][1].init(22, 12, 'e.which == 1');
-function visit4_39_1(result) {
-  _$jscoverage['/contextmenu.js'].branchData['39'][1].ranCondition(result);
+}_$jscoverage['/contextmenu.js'].branchData['40'][1].init(22, 12, 'e.which == 1');
+function visit4_40_1(result) {
+  _$jscoverage['/contextmenu.js'].branchData['40'][1].ranCondition(result);
   return result;
-}_$jscoverage['/contextmenu.js'].branchData['29'][1].init(22, 32, 'e.keyCode == S.Event.KeyCode.ESC');
-function visit3_29_1(result) {
-  _$jscoverage['/contextmenu.js'].branchData['29'][1].ranCondition(result);
+}_$jscoverage['/contextmenu.js'].branchData['30'][1].init(22, 32, 'e.keyCode == S.Event.KeyCode.ESC');
+function visit3_30_1(result) {
+  _$jscoverage['/contextmenu.js'].branchData['30'][1].ranCondition(result);
   return result;
-}_$jscoverage['/contextmenu.js'].branchData['14'][1].init(104, 5, 'event');
-function visit2_14_1(result) {
-  _$jscoverage['/contextmenu.js'].branchData['14'][1].ranCondition(result);
+}_$jscoverage['/contextmenu.js'].branchData['15'][1].init(104, 5, 'event');
+function visit2_15_1(result) {
+  _$jscoverage['/contextmenu.js'].branchData['15'][1].ranCondition(result);
   return result;
-}_$jscoverage['/contextmenu.js'].branchData['11'][1].init(46, 9, 'cfg || {}');
-function visit1_11_1(result) {
-  _$jscoverage['/contextmenu.js'].branchData['11'][1].ranCondition(result);
+}_$jscoverage['/contextmenu.js'].branchData['12'][1].init(46, 9, 'cfg || {}');
+function visit1_12_1(result) {
+  _$jscoverage['/contextmenu.js'].branchData['12'][1].ranCondition(result);
   return result;
-}_$jscoverage['/contextmenu.js'].lineData[5]++;
+}_$jscoverage['/contextmenu.js'].lineData[6]++;
 KISSY.add("editor/plugin/contextmenu", function(S, Editor, Menu, focusFix) {
   _$jscoverage['/contextmenu.js'].functionData[0]++;
-  _$jscoverage['/contextmenu.js'].lineData[7]++;
+  _$jscoverage['/contextmenu.js'].lineData[8]++;
   Editor.prototype.addContextMenu = function(id, filter, cfg) {
   _$jscoverage['/contextmenu.js'].functionData[1]++;
-  _$jscoverage['/contextmenu.js'].lineData[9]++;
+  _$jscoverage['/contextmenu.js'].lineData[10]++;
   var self = this;
-  _$jscoverage['/contextmenu.js'].lineData[11]++;
-  cfg = visit1_11_1(cfg || {});
-  _$jscoverage['/contextmenu.js'].lineData[13]++;
-  var event = cfg.event;
+  _$jscoverage['/contextmenu.js'].lineData[12]++;
+  cfg = visit1_12_1(cfg || {});
   _$jscoverage['/contextmenu.js'].lineData[14]++;
-  if (visit2_14_1(event)) {
-    _$jscoverage['/contextmenu.js'].lineData[15]++;
+  var event = cfg.event;
+  _$jscoverage['/contextmenu.js'].lineData[15]++;
+  if (visit2_15_1(event)) {
+    _$jscoverage['/contextmenu.js'].lineData[16]++;
     delete cfg.event;
   }
-  _$jscoverage['/contextmenu.js'].lineData[18]++;
-  cfg.prefixCls = self.get('prefixCls') + "editor-";
   _$jscoverage['/contextmenu.js'].lineData[19]++;
-  cfg.editor = self;
+  cfg.prefixCls = self.get('prefixCls') + "editor-";
   _$jscoverage['/contextmenu.js'].lineData[20]++;
-  cfg.focusable = 1;
+  cfg.editor = self;
   _$jscoverage['/contextmenu.js'].lineData[21]++;
+  cfg.focusable = 1;
+  _$jscoverage['/contextmenu.js'].lineData[22]++;
   cfg.zIndex = Editor.baseZIndex(Editor.zIndexManager.POPUP_MENU);
-  _$jscoverage['/contextmenu.js'].lineData[23]++;
+  _$jscoverage['/contextmenu.js'].lineData[24]++;
   var menu = new Menu.PopupMenu(cfg);
-  _$jscoverage['/contextmenu.js'].lineData[25]++;
+  _$jscoverage['/contextmenu.js'].lineData[26]++;
   focusFix.init(menu);
-  _$jscoverage['/contextmenu.js'].lineData[27]++;
+  _$jscoverage['/contextmenu.js'].lineData[28]++;
   menu.on("afterRenderUI", function() {
   _$jscoverage['/contextmenu.js'].functionData[2]++;
-  _$jscoverage['/contextmenu.js'].lineData[28]++;
+  _$jscoverage['/contextmenu.js'].lineData[29]++;
   menu.get("el").on("keydown", function(e) {
   _$jscoverage['/contextmenu.js'].functionData[3]++;
-  _$jscoverage['/contextmenu.js'].lineData[29]++;
-  if (visit3_29_1(e.keyCode == S.Event.KeyCode.ESC)) {
-    _$jscoverage['/contextmenu.js'].lineData[30]++;
+  _$jscoverage['/contextmenu.js'].lineData[30]++;
+  if (visit3_30_1(e.keyCode == S.Event.KeyCode.ESC)) {
+    _$jscoverage['/contextmenu.js'].lineData[31]++;
     menu.hide();
   }
 });
 });
-  _$jscoverage['/contextmenu.js'].lineData[35]++;
+  _$jscoverage['/contextmenu.js'].lineData[36]++;
   self.docReady(function() {
   _$jscoverage['/contextmenu.js'].functionData[4]++;
-  _$jscoverage['/contextmenu.js'].lineData[36]++;
+  _$jscoverage['/contextmenu.js'].lineData[37]++;
   var doc = self.get("document");
-  _$jscoverage['/contextmenu.js'].lineData[38]++;
+  _$jscoverage['/contextmenu.js'].lineData[39]++;
   doc.on("mousedown", function(e) {
   _$jscoverage['/contextmenu.js'].functionData[5]++;
-  _$jscoverage['/contextmenu.js'].lineData[39]++;
-  if (visit4_39_1(e.which == 1)) {
-    _$jscoverage['/contextmenu.js'].lineData[40]++;
+  _$jscoverage['/contextmenu.js'].lineData[40]++;
+  if (visit4_40_1(e.which == 1)) {
+    _$jscoverage['/contextmenu.js'].lineData[41]++;
     menu.hide();
   }
 });
-  _$jscoverage['/contextmenu.js'].lineData[43]++;
+  _$jscoverage['/contextmenu.js'].lineData[44]++;
   doc.delegate("contextmenu", filter, function(ev) {
   _$jscoverage['/contextmenu.js'].functionData[6]++;
-  _$jscoverage['/contextmenu.js'].lineData[44]++;
-  ev.halt();
   _$jscoverage['/contextmenu.js'].lineData[45]++;
+  ev.halt();
+  _$jscoverage['/contextmenu.js'].lineData[46]++;
   showNow(ev);
 });
 });
-  _$jscoverage['/contextmenu.js'].lineData[49]++;
+  _$jscoverage['/contextmenu.js'].lineData[50]++;
   function showNow(ev) {
     _$jscoverage['/contextmenu.js'].functionData[7]++;
-    _$jscoverage['/contextmenu.js'].lineData[50]++;
+    _$jscoverage['/contextmenu.js'].lineData[51]++;
     var t = S.all(ev.target);
-    _$jscoverage['/contextmenu.js'].lineData[56]++;
+    _$jscoverage['/contextmenu.js'].lineData[57]++;
     var x = ev.pageX, y = ev.pageY;
-    _$jscoverage['/contextmenu.js'].lineData[58]++;
-    if (visit5_58_1(!x)) {
-      _$jscoverage['/contextmenu.js'].lineData[59]++;
+    _$jscoverage['/contextmenu.js'].lineData[59]++;
+    if (visit5_59_1(!x)) {
+      _$jscoverage['/contextmenu.js'].lineData[60]++;
       return;
     } else {
-      _$jscoverage['/contextmenu.js'].lineData[61]++;
+      _$jscoverage['/contextmenu.js'].lineData[62]++;
       var translate = Editor.Utils.getXY({
   left: x, 
   top: y}, self);
-      _$jscoverage['/contextmenu.js'].lineData[65]++;
-      x = translate.left;
       _$jscoverage['/contextmenu.js'].lineData[66]++;
+      x = translate.left;
+      _$jscoverage['/contextmenu.js'].lineData[67]++;
       y = translate.top;
     }
-    _$jscoverage['/contextmenu.js'].lineData[68]++;
+    _$jscoverage['/contextmenu.js'].lineData[69]++;
     setTimeout(function() {
   _$jscoverage['/contextmenu.js'].functionData[8]++;
-  _$jscoverage['/contextmenu.js'].lineData[69]++;
+  _$jscoverage['/contextmenu.js'].lineData[70]++;
   menu.set("editorSelectedEl", t, {
   silent: 1});
-  _$jscoverage['/contextmenu.js'].lineData[72]++;
-  menu.move(x, y);
   _$jscoverage['/contextmenu.js'].lineData[73]++;
+  menu.move(x, y);
+  _$jscoverage['/contextmenu.js'].lineData[74]++;
   self.fire("contextmenu", {
   contextmenu: menu});
-  _$jscoverage['/contextmenu.js'].lineData[76]++;
-  menu.show();
   _$jscoverage['/contextmenu.js'].lineData[77]++;
-  window.focus();
+  menu.show();
   _$jscoverage['/contextmenu.js'].lineData[78]++;
+  window.focus();
+  _$jscoverage['/contextmenu.js'].lineData[79]++;
   document.body.focus();
-  _$jscoverage['/contextmenu.js'].lineData[80]++;
+  _$jscoverage['/contextmenu.js'].lineData[81]++;
   menu.focus();
 }, 30);
   }
-  _$jscoverage['/contextmenu.js'].lineData[84]++;
-  if (visit6_84_1(event)) {
-    _$jscoverage['/contextmenu.js'].lineData[85]++;
+  _$jscoverage['/contextmenu.js'].lineData[85]++;
+  if (visit6_85_1(event)) {
+    _$jscoverage['/contextmenu.js'].lineData[86]++;
     showNow(event);
   }
-  _$jscoverage['/contextmenu.js'].lineData[88]++;
+  _$jscoverage['/contextmenu.js'].lineData[89]++;
   self.addControl(id + "/contextmenu", menu);
-  _$jscoverage['/contextmenu.js'].lineData[90]++;
+  _$jscoverage['/contextmenu.js'].lineData[91]++;
   return menu;
 };
 }, {

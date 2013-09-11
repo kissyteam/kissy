@@ -229,11 +229,11 @@ if (! this._$jscoverage) {
 if (! _$jscoverage['/separator.js']) {
   _$jscoverage['/separator.js'] = {};
   _$jscoverage['/separator.js'].lineData = [];
-  _$jscoverage['/separator.js'].lineData[5] = 0;
   _$jscoverage['/separator.js'].lineData[6] = 0;
-  _$jscoverage['/separator.js'].lineData[9] = 0;
-  _$jscoverage['/separator.js'].lineData[14] = 0;
-  _$jscoverage['/separator.js'].lineData[18] = 0;
+  _$jscoverage['/separator.js'].lineData[7] = 0;
+  _$jscoverage['/separator.js'].lineData[10] = 0;
+  _$jscoverage['/separator.js'].lineData[15] = 0;
+  _$jscoverage['/separator.js'].lineData[19] = 0;
 }
 if (! _$jscoverage['/separator.js'].functionData) {
   _$jscoverage['/separator.js'].functionData = [];
@@ -244,21 +244,21 @@ if (! _$jscoverage['/separator.js'].functionData) {
 if (! _$jscoverage['/separator.js'].branchData) {
   _$jscoverage['/separator.js'].branchData = {};
 }
-_$jscoverage['/separator.js'].lineData[5]++;
+_$jscoverage['/separator.js'].lineData[6]++;
 KISSY.add("editor/plugin/separator", function(S) {
   _$jscoverage['/separator.js'].functionData[0]++;
-  _$jscoverage['/separator.js'].lineData[6]++;
+  _$jscoverage['/separator.js'].lineData[7]++;
   function Separator() {
     _$jscoverage['/separator.js'].functionData[1]++;
   }
-  _$jscoverage['/separator.js'].lineData[9]++;
+  _$jscoverage['/separator.js'].lineData[10]++;
   S.augment(Separator, {
   pluginRenderUI: function(editor) {
   _$jscoverage['/separator.js'].functionData[2]++;
-  _$jscoverage['/separator.js'].lineData[14]++;
+  _$jscoverage['/separator.js'].lineData[15]++;
   S.all('<span ' + 'class="' + editor.get('prefixCls') + 'editor-toolbar-separator">&nbsp;' + '</span>').appendTo(editor.get("toolBarEl"));
 }});
-  _$jscoverage['/separator.js'].lineData[18]++;
+  _$jscoverage['/separator.js'].lineData[19]++;
   return Separator;
 }, {
   requires: ['editor']});

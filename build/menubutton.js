@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Aug 27 22:00
+build time: Sep 11 12:52
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -362,11 +362,11 @@ KISSY.add("menubutton/option", function (S, Menu) {
     requires: ['menu']
 });
 /**
+ * @ignore
  * manage a list of single-select options
  * @author yiminghe@gmail.com
  */
 KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, undefined) {
-
     function getSelectedItem(self) {
         var menu = self.get("menu"),
             cs = menu.children || menu.get && menu.get("children") || [],
@@ -442,13 +442,10 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
     }
 
 
-    /**
-     * Handle click on drop down menu.
-     * Set selected menu item as current selectedItem and hide drop down menu.
-     * Protected, should only be overridden by subclasses.
-     * @protected
-     *
-     * @param {KISSY.Event.DomEventObject} e
+    /*
+     Handle click on drop down menu.
+     Set selected menu item as current selectedItem and hide drop down menu.
+     Protected, should only be overridden by subclasses.
      */
     function handleMenuClick(e) {
         var self = this,
@@ -468,13 +465,11 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
 
 
     /**
-     * @class
      * Select component which supports single selection from a drop down menu
      * with semantics similar to native HTML select.
      * xclass: 'select'.
-     * @name Select
-     * @member MenuButton
-     * @extends MenuButton
+     * @class KISSY.MenuButton.Select
+     * @extends KISSY.MenuButton
      */
     var Select = MenuButton.extend({
             bindUI: function () {
@@ -542,7 +537,7 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
              * Generate a select component from native select element.
              * @param {HTMLElement} element Native html select element.
              * @param {Object} cfg Extra configuration for current select component.
-             * @member MenuButton.Select
+             * @member KISSY.MenuButton.Select
              */
             decorate: function (element, cfg) {
                 element = S.one(element);
@@ -607,10 +602,10 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
     requires: ['node', './control', 'menu', './option']
 });
 
-/**
- * TODO
- *  how to emulate multiple ?
- **/
+/*
+  TODO
+   how to emulate multiple ?
+ */
 /**
  * menubutton
  * @author yiminghe@gmail.com

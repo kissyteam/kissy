@@ -229,8 +229,8 @@ if (! this._$jscoverage) {
 if (! _$jscoverage['/html-parser/scanners/special-scanners.js']) {
   _$jscoverage['/html-parser/scanners/special-scanners.js'] = {};
   _$jscoverage['/html-parser/scanners/special-scanners.js'].lineData = [];
-  _$jscoverage['/html-parser/scanners/special-scanners.js'].lineData[5] = 0;
   _$jscoverage['/html-parser/scanners/special-scanners.js'].lineData[6] = 0;
+  _$jscoverage['/html-parser/scanners/special-scanners.js'].lineData[7] = 0;
 }
 if (! _$jscoverage['/html-parser/scanners/special-scanners.js'].functionData) {
   _$jscoverage['/html-parser/scanners/special-scanners.js'].functionData = [];
@@ -239,9 +239,9 @@ if (! _$jscoverage['/html-parser/scanners/special-scanners.js'].functionData) {
 if (! _$jscoverage['/html-parser/scanners/special-scanners.js'].branchData) {
   _$jscoverage['/html-parser/scanners/special-scanners.js'].branchData = {};
 }
-_$jscoverage['/html-parser/scanners/special-scanners.js'].lineData[5]++;
+_$jscoverage['/html-parser/scanners/special-scanners.js'].lineData[6]++;
 KISSY.add('html-parser/scanners/special-scanners', function() {
   _$jscoverage['/html-parser/scanners/special-scanners.js'].functionData[0]++;
-  _$jscoverage['/html-parser/scanners/special-scanners.js'].lineData[6]++;
+  _$jscoverage['/html-parser/scanners/special-scanners.js'].lineData[7]++;
   return {};
 });

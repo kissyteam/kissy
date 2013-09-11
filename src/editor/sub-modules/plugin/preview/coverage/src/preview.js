@@ -229,22 +229,22 @@ if (! this._$jscoverage) {
 if (! _$jscoverage['/preview.js']) {
   _$jscoverage['/preview.js'] = {};
   _$jscoverage['/preview.js'].lineData = [];
-  _$jscoverage['/preview.js'].lineData[5] = 0;
   _$jscoverage['/preview.js'].lineData[6] = 0;
-  _$jscoverage['/preview.js'].lineData[8] = 0;
-  _$jscoverage['/preview.js'].lineData[11] = 0;
-  _$jscoverage['/preview.js'].lineData[13] = 0;
-  _$jscoverage['/preview.js'].lineData[17] = 0;
+  _$jscoverage['/preview.js'].lineData[7] = 0;
+  _$jscoverage['/preview.js'].lineData[9] = 0;
+  _$jscoverage['/preview.js'].lineData[12] = 0;
+  _$jscoverage['/preview.js'].lineData[14] = 0;
   _$jscoverage['/preview.js'].lineData[18] = 0;
-  _$jscoverage['/preview.js'].lineData[23] = 0;
+  _$jscoverage['/preview.js'].lineData[19] = 0;
   _$jscoverage['/preview.js'].lineData[24] = 0;
   _$jscoverage['/preview.js'].lineData[25] = 0;
-  _$jscoverage['/preview.js'].lineData[27] = 0;
-  _$jscoverage['/preview.js'].lineData[45] = 0;
+  _$jscoverage['/preview.js'].lineData[26] = 0;
+  _$jscoverage['/preview.js'].lineData[28] = 0;
   _$jscoverage['/preview.js'].lineData[46] = 0;
   _$jscoverage['/preview.js'].lineData[47] = 0;
-  _$jscoverage['/preview.js'].lineData[49] = 0;
-  _$jscoverage['/preview.js'].lineData[56] = 0;
+  _$jscoverage['/preview.js'].lineData[48] = 0;
+  _$jscoverage['/preview.js'].lineData[50] = 0;
+  _$jscoverage['/preview.js'].lineData[57] = 0;
 }
 if (! _$jscoverage['/preview.js'].functionData) {
   _$jscoverage['/preview.js'].functionData = [];
@@ -256,49 +256,49 @@ if (! _$jscoverage['/preview.js'].functionData) {
 if (! _$jscoverage['/preview.js'].branchData) {
   _$jscoverage['/preview.js'].branchData = {};
 }
-_$jscoverage['/preview.js'].lineData[5]++;
+_$jscoverage['/preview.js'].lineData[6]++;
 KISSY.add("editor/plugin/preview", function(S) {
   _$jscoverage['/preview.js'].functionData[0]++;
-  _$jscoverage['/preview.js'].lineData[6]++;
+  _$jscoverage['/preview.js'].lineData[7]++;
   var win = window;
-  _$jscoverage['/preview.js'].lineData[8]++;
+  _$jscoverage['/preview.js'].lineData[9]++;
   function Preview() {
     _$jscoverage['/preview.js'].functionData[1]++;
   }
-  _$jscoverage['/preview.js'].lineData[11]++;
+  _$jscoverage['/preview.js'].lineData[12]++;
   S.augment(Preview, {
   pluginRenderUI: function(editor) {
   _$jscoverage['/preview.js'].functionData[2]++;
-  _$jscoverage['/preview.js'].lineData[13]++;
+  _$jscoverage['/preview.js'].lineData[14]++;
   editor.addButton("preview", {
   tooltip: "\u9884\u89c8", 
   listeners: {
   click: function() {
   _$jscoverage['/preview.js'].functionData[3]++;
-  _$jscoverage['/preview.js'].lineData[17]++;
+  _$jscoverage['/preview.js'].lineData[18]++;
   try {
-    _$jscoverage['/preview.js'].lineData[18]++;
+    _$jscoverage['/preview.js'].lineData[19]++;
     var screen = win.screen, iWidth = Math.round(screen.width * 0.8), iHeight = Math.round(screen.height * 0.7), iLeft = Math.round(screen.width * 0.1);
   }  catch (e) {
-  _$jscoverage['/preview.js'].lineData[23]++;
-  iWidth = 640;
   _$jscoverage['/preview.js'].lineData[24]++;
-  iHeight = 420;
+  iWidth = 640;
   _$jscoverage['/preview.js'].lineData[25]++;
+  iHeight = 420;
+  _$jscoverage['/preview.js'].lineData[26]++;
   iLeft = 80;
 }
-  _$jscoverage['/preview.js'].lineData[27]++;
+  _$jscoverage['/preview.js'].lineData[28]++;
   var sHTML = editor.getDocHtml().replace(/\${title}/, "\u9884\u89c8"), sOpenUrl = '', oWindow = win.open(sOpenUrl, '', 'toolbar=yes,' + 'location=no,' + 'status=yes,' + 'menubar=yes,' + 'scrollbars=yes,' + 'resizable=yes,' + 'width=' + iWidth + ',height=' + iHeight + ',left=' + iLeft), winDoc = oWindow.document;
-  _$jscoverage['/preview.js'].lineData[45]++;
-  winDoc.open();
   _$jscoverage['/preview.js'].lineData[46]++;
-  winDoc.write(sHTML);
+  winDoc.open();
   _$jscoverage['/preview.js'].lineData[47]++;
+  winDoc.write(sHTML);
+  _$jscoverage['/preview.js'].lineData[48]++;
   winDoc.close();
-  _$jscoverage['/preview.js'].lineData[49]++;
+  _$jscoverage['/preview.js'].lineData[50]++;
   oWindow.focus();
 }}});
 }});
-  _$jscoverage['/preview.js'].lineData[56]++;
+  _$jscoverage['/preview.js'].lineData[57]++;
   return Preview;
 });

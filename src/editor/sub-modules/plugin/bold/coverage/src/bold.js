@@ -229,17 +229,17 @@ if (! this._$jscoverage) {
 if (! _$jscoverage['/bold.js']) {
   _$jscoverage['/bold.js'] = {};
   _$jscoverage['/bold.js'].lineData = [];
-  _$jscoverage['/bold.js'].lineData[5] = 0;
   _$jscoverage['/bold.js'].lineData[6] = 0;
-  _$jscoverage['/bold.js'].lineData[9] = 0;
-  _$jscoverage['/bold.js'].lineData[11] = 0;
+  _$jscoverage['/bold.js'].lineData[7] = 0;
+  _$jscoverage['/bold.js'].lineData[10] = 0;
   _$jscoverage['/bold.js'].lineData[12] = 0;
-  _$jscoverage['/bold.js'].lineData[17] = 0;
+  _$jscoverage['/bold.js'].lineData[13] = 0;
   _$jscoverage['/bold.js'].lineData[18] = 0;
   _$jscoverage['/bold.js'].lineData[19] = 0;
   _$jscoverage['/bold.js'].lineData[20] = 0;
   _$jscoverage['/bold.js'].lineData[21] = 0;
-  _$jscoverage['/bold.js'].lineData[28] = 0;
+  _$jscoverage['/bold.js'].lineData[22] = 0;
+  _$jscoverage['/bold.js'].lineData[29] = 0;
 }
 if (! _$jscoverage['/bold.js'].functionData) {
   _$jscoverage['/bold.js'].functionData = [];
@@ -251,52 +251,52 @@ if (! _$jscoverage['/bold.js'].functionData) {
 }
 if (! _$jscoverage['/bold.js'].branchData) {
   _$jscoverage['/bold.js'].branchData = {};
-  _$jscoverage['/bold.js'].branchData['19'] = [];
-  _$jscoverage['/bold.js'].branchData['19'][1] = new BranchData();
-  _$jscoverage['/bold.js'].branchData['19'][2] = new BranchData();
+  _$jscoverage['/bold.js'].branchData['20'] = [];
+  _$jscoverage['/bold.js'].branchData['20'][1] = new BranchData();
+  _$jscoverage['/bold.js'].branchData['20'][2] = new BranchData();
 }
-_$jscoverage['/bold.js'].branchData['19'][2].init(39, 29, 'e.keyCode == S.Node.KeyCode.B');
-function visit2_19_2(result) {
-  _$jscoverage['/bold.js'].branchData['19'][2].ranCondition(result);
+_$jscoverage['/bold.js'].branchData['20'][2].init(39, 29, 'e.keyCode == S.Node.KeyCode.B');
+function visit2_20_2(result) {
+  _$jscoverage['/bold.js'].branchData['20'][2].ranCondition(result);
   return result;
-}_$jscoverage['/bold.js'].branchData['19'][1].init(26, 42, 'e.ctrlKey && e.keyCode == S.Node.KeyCode.B');
-function visit1_19_1(result) {
-  _$jscoverage['/bold.js'].branchData['19'][1].ranCondition(result);
+}_$jscoverage['/bold.js'].branchData['20'][1].init(26, 42, 'e.ctrlKey && e.keyCode == S.Node.KeyCode.B');
+function visit1_20_1(result) {
+  _$jscoverage['/bold.js'].branchData['20'][1].ranCondition(result);
   return result;
-}_$jscoverage['/bold.js'].lineData[5]++;
+}_$jscoverage['/bold.js'].lineData[6]++;
 KISSY.add("editor/plugin/bold", function(S, Editor, ui, cmd) {
   _$jscoverage['/bold.js'].functionData[0]++;
-  _$jscoverage['/bold.js'].lineData[6]++;
+  _$jscoverage['/bold.js'].lineData[7]++;
   function bold() {
     _$jscoverage['/bold.js'].functionData[1]++;
   }
-  _$jscoverage['/bold.js'].lineData[9]++;
+  _$jscoverage['/bold.js'].lineData[10]++;
   S.augment(bold, {
   pluginRenderUI: function(editor) {
   _$jscoverage['/bold.js'].functionData[2]++;
-  _$jscoverage['/bold.js'].lineData[11]++;
-  cmd.init(editor);
   _$jscoverage['/bold.js'].lineData[12]++;
+  cmd.init(editor);
+  _$jscoverage['/bold.js'].lineData[13]++;
   editor.addButton("bold", {
   cmdType: 'bold', 
   tooltip: "\u7c97\u4f53 "}, ui.Button);
-  _$jscoverage['/bold.js'].lineData[17]++;
+  _$jscoverage['/bold.js'].lineData[18]++;
   editor.docReady(function() {
   _$jscoverage['/bold.js'].functionData[3]++;
-  _$jscoverage['/bold.js'].lineData[18]++;
+  _$jscoverage['/bold.js'].lineData[19]++;
   editor.get("document").on("keydown", function(e) {
   _$jscoverage['/bold.js'].functionData[4]++;
-  _$jscoverage['/bold.js'].lineData[19]++;
-  if (visit1_19_1(e.ctrlKey && visit2_19_2(e.keyCode == S.Node.KeyCode.B))) {
-    _$jscoverage['/bold.js'].lineData[20]++;
-    editor.execCommand("bold");
+  _$jscoverage['/bold.js'].lineData[20]++;
+  if (visit1_20_1(e.ctrlKey && visit2_20_2(e.keyCode == S.Node.KeyCode.B))) {
     _$jscoverage['/bold.js'].lineData[21]++;
+    editor.execCommand("bold");
+    _$jscoverage['/bold.js'].lineData[22]++;
     e.preventDefault();
   }
 });
 });
 }});
-  _$jscoverage['/bold.js'].lineData[28]++;
+  _$jscoverage['/bold.js'].lineData[29]++;
   return bold;
 }, {
   requires: ['editor', './font/ui', './bold/cmd']});

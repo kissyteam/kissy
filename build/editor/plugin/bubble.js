@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Aug 27 21:52
+build time: Sep 11 12:45
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -10,11 +10,13 @@ build time: Aug 27 21:52
 */
 
 /**
+ * @ignore
  * bubble or tip view for kissy editor
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/plugin/bubble", function (S, Overlay, Editor) {
     var undefined = {}['a'],
+        logger= S.getLogger('s/editor'),
         BUBBLE_CFG = {
             zIndex: Editor.baseZIndex(Editor.zIndexManager.BUBBLE_VIEW),
             elCls: "{prefixCls}editor-bubble",
@@ -29,9 +31,8 @@ KISSY.add("editor/plugin/bubble", function (S, Overlay, Editor) {
         return t <= r && b >= r;
     }
 
-    /**
-     * 是否两个bubble上下重叠？
-     */
+
+    // 是否两个bubble上下重叠？
     function overlap(b1, b2) {
         var b1_top = b1.get("y"),
             b1_bottom = b1_top + b1.get("el").outerHeight(),
@@ -42,9 +43,8 @@ KISSY.add("editor/plugin/bubble", function (S, Overlay, Editor) {
             inRange(b1_top, b1_bottom, b2_top);
     }
 
-    /**
-     * 得到依附在同一个节点上的所有 bubble 中的最下面一个
-     */
+
+    // 得到依附在同一个节点上的所有 bubble 中的最下面一个
     function getTopPosition(self) {
         var archor = null,
             editor = self.get("editor"),
@@ -190,7 +190,6 @@ KISSY.add("editor/plugin/bubble", function (S, Overlay, Editor) {
         editor.on("sourceMode", onHide);
 
         function showImmediately() {
-
             var xy = getXy(bubble);
             if (xy) {
                 bubble.move(xy[0],xy[1]);
@@ -202,7 +201,7 @@ KISSY.add("editor/plugin/bubble", function (S, Overlay, Editor) {
                 if (!bubble.get("visible")) {
                     bubble.show();
                 } else {
-                    S.log("already show by selectionChange");
+                    logger.debug("already show by selectionChange");
                 }
             }
         }

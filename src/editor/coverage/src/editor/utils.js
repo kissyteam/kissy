@@ -229,8 +229,8 @@ if (! this._$jscoverage) {
 if (! _$jscoverage['/editor/utils.js']) {
   _$jscoverage['/editor/utils.js'] = {};
   _$jscoverage['/editor/utils.js'].lineData = [];
-  _$jscoverage['/editor/utils.js'].lineData[5] = 0;
-  _$jscoverage['/editor/utils.js'].lineData[7] = 0;
+  _$jscoverage['/editor/utils.js'].lineData[6] = 0;
+  _$jscoverage['/editor/utils.js'].lineData[8] = 0;
   _$jscoverage['/editor/utils.js'].lineData[27] = 0;
   _$jscoverage['/editor/utils.js'].lineData[28] = 0;
   _$jscoverage['/editor/utils.js'].lineData[29] = 0;
@@ -582,10 +582,10 @@ function visit1046_31_1(result) {
 function visit1045_28_1(result) {
   _$jscoverage['/editor/utils.js'].branchData['28'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/utils.js'].lineData[5]++;
+}_$jscoverage['/editor/utils.js'].lineData[6]++;
 KISSY.add("editor/utils", function(S, Editor) {
   _$jscoverage['/editor/utils.js'].functionData[0]++;
-  _$jscoverage['/editor/utils.js'].lineData[7]++;
+  _$jscoverage['/editor/utils.js'].lineData[8]++;
   var TRUE = true, FALSE = false, NULL = null, Node = S.Node, Dom = S.DOM, UA = S.UA, Utils = {
   debugUrl: function(url) {
   _$jscoverage['/editor/utils.js'].functionData[1]++;

@@ -229,15 +229,15 @@ if (! this._$jscoverage) {
 if (! _$jscoverage['/cmd.js']) {
   _$jscoverage['/cmd.js'] = {};
   _$jscoverage['/cmd.js'].lineData = [];
-  _$jscoverage['/cmd.js'].lineData[5] = 0;
-  _$jscoverage['/cmd.js'].lineData[7] = 0;
-  _$jscoverage['/cmd.js'].lineData[16] = 0;
-  _$jscoverage['/cmd.js'].lineData[20] = 0;
-  _$jscoverage['/cmd.js'].lineData[22] = 0;
+  _$jscoverage['/cmd.js'].lineData[6] = 0;
+  _$jscoverage['/cmd.js'].lineData[8] = 0;
+  _$jscoverage['/cmd.js'].lineData[17] = 0;
+  _$jscoverage['/cmd.js'].lineData[21] = 0;
   _$jscoverage['/cmd.js'].lineData[23] = 0;
-  _$jscoverage['/cmd.js'].lineData[25] = 0;
+  _$jscoverage['/cmd.js'].lineData[24] = 0;
   _$jscoverage['/cmd.js'].lineData[26] = 0;
   _$jscoverage['/cmd.js'].lineData[27] = 0;
+  _$jscoverage['/cmd.js'].lineData[28] = 0;
 }
 if (! _$jscoverage['/cmd.js'].functionData) {
   _$jscoverage['/cmd.js'].functionData = [];
@@ -248,28 +248,28 @@ if (! _$jscoverage['/cmd.js'].functionData) {
 }
 if (! _$jscoverage['/cmd.js'].branchData) {
   _$jscoverage['/cmd.js'].branchData = {};
-  _$jscoverage['/cmd.js'].branchData['16'] = [];
-  _$jscoverage['/cmd.js'].branchData['16'][1] = new BranchData();
-  _$jscoverage['/cmd.js'].branchData['16'][2] = new BranchData();
-  _$jscoverage['/cmd.js'].branchData['22'] = [];
-  _$jscoverage['/cmd.js'].branchData['22'][1] = new BranchData();
+  _$jscoverage['/cmd.js'].branchData['17'] = [];
+  _$jscoverage['/cmd.js'].branchData['17'][1] = new BranchData();
+  _$jscoverage['/cmd.js'].branchData['17'][2] = new BranchData();
+  _$jscoverage['/cmd.js'].branchData['23'] = [];
+  _$jscoverage['/cmd.js'].branchData['23'][1] = new BranchData();
 }
-_$jscoverage['/cmd.js'].branchData['22'][1].init(18, 31, '!editor.hasCommand("foreColor")');
-function visit3_22_1(result) {
-  _$jscoverage['/cmd.js'].branchData['22'][1].ranCondition(result);
+_$jscoverage['/cmd.js'].branchData['23'][1].init(18, 31, '!editor.hasCommand("foreColor")');
+function visit3_23_1(result) {
+  _$jscoverage['/cmd.js'].branchData['23'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['16'][2].init(118, 20, 'el.nodeName() == "a"');
-function visit2_16_2(result) {
-  _$jscoverage['/cmd.js'].branchData['16'][2].ranCondition(result);
+}_$jscoverage['/cmd.js'].branchData['17'][2].init(118, 20, 'el.nodeName() == "a"');
+function visit2_17_2(result) {
+  _$jscoverage['/cmd.js'].branchData['17'][2].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].branchData['16'][1].init(118, 42, 'el.nodeName() == "a" || el.all("a").length');
-function visit1_16_1(result) {
-  _$jscoverage['/cmd.js'].branchData['16'][1].ranCondition(result);
+}_$jscoverage['/cmd.js'].branchData['17'][1].init(118, 42, 'el.nodeName() == "a" || el.all("a").length');
+function visit1_17_1(result) {
+  _$jscoverage['/cmd.js'].branchData['17'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].lineData[5]++;
+}_$jscoverage['/cmd.js'].lineData[6]++;
 KISSY.add("editor/plugin/fore-color/cmd", function(S, cmd) {
   _$jscoverage['/cmd.js'].functionData[0]++;
-  _$jscoverage['/cmd.js'].lineData[7]++;
+  _$jscoverage['/cmd.js'].lineData[8]++;
   var COLOR_STYLES = {
   element: 'span', 
   styles: {
@@ -280,24 +280,24 @@ KISSY.add("editor/plugin/fore-color/cmd", function(S, cmd) {
   'color': null}}], 
   childRule: function(el) {
   _$jscoverage['/cmd.js'].functionData[1]++;
-  _$jscoverage['/cmd.js'].lineData[16]++;
-  return !(visit1_16_1(visit2_16_2(el.nodeName() == "a") || el.all("a").length));
+  _$jscoverage['/cmd.js'].lineData[17]++;
+  return !(visit1_17_1(visit2_17_2(el.nodeName() == "a") || el.all("a").length));
 }};
-  _$jscoverage['/cmd.js'].lineData[20]++;
+  _$jscoverage['/cmd.js'].lineData[21]++;
   return {
   init: function(editor) {
   _$jscoverage['/cmd.js'].functionData[2]++;
-  _$jscoverage['/cmd.js'].lineData[22]++;
-  if (visit3_22_1(!editor.hasCommand("foreColor"))) {
-    _$jscoverage['/cmd.js'].lineData[23]++;
+  _$jscoverage['/cmd.js'].lineData[23]++;
+  if (visit3_23_1(!editor.hasCommand("foreColor"))) {
+    _$jscoverage['/cmd.js'].lineData[24]++;
     editor.addCommand("foreColor", {
   exec: function(editor, c) {
   _$jscoverage['/cmd.js'].functionData[3]++;
-  _$jscoverage['/cmd.js'].lineData[25]++;
-  editor.execCommand("save");
   _$jscoverage['/cmd.js'].lineData[26]++;
-  cmd.applyColor(editor, c, COLOR_STYLES);
+  editor.execCommand("save");
   _$jscoverage['/cmd.js'].lineData[27]++;
+  cmd.applyColor(editor, c, COLOR_STYLES);
+  _$jscoverage['/cmd.js'].lineData[28]++;
   editor.execCommand("save");
 }});
   }

@@ -1,10 +1,11 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Aug 27 21:51
+build time: Sep 11 12:43
 */
 /**
  * i18n resources for date-picker
+ * @ignore
  * @author yiminghe@gmail.com
  */
 KISSY.add('date/picker/i18n/zh-cn', {

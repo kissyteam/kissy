@@ -1,9 +1,11 @@
 <meta charset='utf-8'/>
 <script src="/kissy/tools/third-party/jquery.js"></script>
+<script src="/kissy/build/seed.js"></script>
+<script src="/kissy/src/package.js"></script>
 <script>
     $(function () {
         $.io({
-            url: "http://"+location.hostname+":9999/kissy/src/" +
+            url: "http://" + location.hostname + ":" + SERVER_CONFIG.ports[1] + "/kissy/src/" +
                     "io/tests/jsonp.jss",
             dataType: 'jsonp',
             //forceScript:true,

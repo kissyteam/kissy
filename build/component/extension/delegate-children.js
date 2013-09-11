@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Aug 27 21:50
+build time: Sep 11 12:42
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -40,12 +40,15 @@ KISSY.add("component/extension/delegate-children", function (S, Node, Manager) {
         }
     }
 
+    /**
+     * delegate events for component's children. for mixin.
+     * @class KISSY.Component.Extension.DelegateChildren
+     */
     function DelegateChildren() {
         var self = this;
         self.__childClsTag = S.guid('ks-component-child');
         self.on('afterRenderChild', onRenderChild, self)
             .on('afterRemoveChild', onRemoveChild, self);
-
     }
 
     S.augment(DelegateChildren, {

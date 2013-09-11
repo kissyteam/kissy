@@ -269,14 +269,14 @@ if (! _$jscoverage['/node/anim.js']) {
   _$jscoverage['/node/anim.js'].lineData[118] = 0;
   _$jscoverage['/node/anim.js'].lineData[119] = 0;
   _$jscoverage['/node/anim.js'].lineData[122] = 0;
-  _$jscoverage['/node/anim.js'].lineData[216] = 0;
-  _$jscoverage['/node/anim.js'].lineData[228] = 0;
-  _$jscoverage['/node/anim.js'].lineData[229] = 0;
-  _$jscoverage['/node/anim.js'].lineData[231] = 0;
-  _$jscoverage['/node/anim.js'].lineData[232] = 0;
-  _$jscoverage['/node/anim.js'].lineData[234] = 0;
-  _$jscoverage['/node/anim.js'].lineData[235] = 0;
+  _$jscoverage['/node/anim.js'].lineData[226] = 0;
   _$jscoverage['/node/anim.js'].lineData[238] = 0;
+  _$jscoverage['/node/anim.js'].lineData[239] = 0;
+  _$jscoverage['/node/anim.js'].lineData[241] = 0;
+  _$jscoverage['/node/anim.js'].lineData[242] = 0;
+  _$jscoverage['/node/anim.js'].lineData[244] = 0;
+  _$jscoverage['/node/anim.js'].lineData[245] = 0;
+  _$jscoverage['/node/anim.js'].lineData[248] = 0;
 }
 if (! _$jscoverage['/node/anim.js'].functionData) {
   _$jscoverage['/node/anim.js'].functionData = [];
@@ -313,12 +313,12 @@ if (! _$jscoverage['/node/anim.js'].branchData) {
   _$jscoverage['/node/anim.js'].branchData['117'][1] = new BranchData();
   _$jscoverage['/node/anim.js'].branchData['118'] = [];
   _$jscoverage['/node/anim.js'].branchData['118'][1] = new BranchData();
-  _$jscoverage['/node/anim.js'].branchData['231'] = [];
-  _$jscoverage['/node/anim.js'].branchData['231'][1] = new BranchData();
+  _$jscoverage['/node/anim.js'].branchData['241'] = [];
+  _$jscoverage['/node/anim.js'].branchData['241'][1] = new BranchData();
 }
-_$jscoverage['/node/anim.js'].branchData['231'][1].init(96, 19, 'Dom[k] && !duration');
-function visit9_231_1(result) {
-  _$jscoverage['/node/anim.js'].branchData['231'][1].ranCondition(result);
+_$jscoverage['/node/anim.js'].branchData['241'][1].init(96, 19, 'Dom[k] && !duration');
+function visit9_241_1(result) {
+  _$jscoverage['/node/anim.js'].branchData['241'][1].ranCondition(result);
   return result;
 }_$jscoverage['/node/anim.js'].branchData['118'][1].init(22, 22, 'Anim.isPaused(self[i])');
 function visit8_118_1(result) {
@@ -469,7 +469,7 @@ KISSY.add('node/anim', function(S, Dom, Anim, Node, undefined) {
   _$jscoverage['/node/anim.js'].lineData[122]++;
   return false;
 }});
-  _$jscoverage['/node/anim.js'].lineData[216]++;
+  _$jscoverage['/node/anim.js'].lineData[226]++;
   S.each({
   show: getFxs('show', 3), 
   hide: getFxs('hide', 3), 
@@ -481,24 +481,24 @@ KISSY.add('node/anim', function(S, Dom, Anim, Node, undefined) {
   slideUp: getFxs('hide', 1), 
   slideToggle: getFxs('toggle', 1)}, function(v, k) {
   _$jscoverage['/node/anim.js'].functionData[12]++;
-  _$jscoverage['/node/anim.js'].lineData[228]++;
+  _$jscoverage['/node/anim.js'].lineData[238]++;
   Node.prototype[k] = function(duration, complete, easing) {
   _$jscoverage['/node/anim.js'].functionData[13]++;
-  _$jscoverage['/node/anim.js'].lineData[229]++;
+  _$jscoverage['/node/anim.js'].lineData[239]++;
   var self = this;
-  _$jscoverage['/node/anim.js'].lineData[231]++;
-  if (visit9_231_1(Dom[k] && !duration)) {
-    _$jscoverage['/node/anim.js'].lineData[232]++;
+  _$jscoverage['/node/anim.js'].lineData[241]++;
+  if (visit9_241_1(Dom[k] && !duration)) {
+    _$jscoverage['/node/anim.js'].lineData[242]++;
     Dom[k](self);
   } else {
-    _$jscoverage['/node/anim.js'].lineData[234]++;
+    _$jscoverage['/node/anim.js'].lineData[244]++;
     S.each(self, function(elem) {
   _$jscoverage['/node/anim.js'].functionData[14]++;
-  _$jscoverage['/node/anim.js'].lineData[235]++;
+  _$jscoverage['/node/anim.js'].lineData[245]++;
   Anim(elem, v, duration, easing, complete).run();
 });
   }
-  _$jscoverage['/node/anim.js'].lineData[238]++;
+  _$jscoverage['/node/anim.js'].lineData[248]++;
   return self;
 };
 });

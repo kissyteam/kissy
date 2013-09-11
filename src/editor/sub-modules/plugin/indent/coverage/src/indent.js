@@ -229,14 +229,14 @@ if (! this._$jscoverage) {
 if (! _$jscoverage['/indent.js']) {
   _$jscoverage['/indent.js'] = {};
   _$jscoverage['/indent.js'].lineData = [];
-  _$jscoverage['/indent.js'].lineData[5] = 0;
   _$jscoverage['/indent.js'].lineData[6] = 0;
-  _$jscoverage['/indent.js'].lineData[10] = 0;
-  _$jscoverage['/indent.js'].lineData[12] = 0;
+  _$jscoverage['/indent.js'].lineData[7] = 0;
+  _$jscoverage['/indent.js'].lineData[11] = 0;
   _$jscoverage['/indent.js'].lineData[13] = 0;
-  _$jscoverage['/indent.js'].lineData[17] = 0;
+  _$jscoverage['/indent.js'].lineData[14] = 0;
   _$jscoverage['/indent.js'].lineData[18] = 0;
-  _$jscoverage['/indent.js'].lineData[26] = 0;
+  _$jscoverage['/indent.js'].lineData[19] = 0;
+  _$jscoverage['/indent.js'].lineData[27] = 0;
 }
 if (! _$jscoverage['/indent.js'].functionData) {
   _$jscoverage['/indent.js'].functionData = [];
@@ -248,33 +248,33 @@ if (! _$jscoverage['/indent.js'].functionData) {
 if (! _$jscoverage['/indent.js'].branchData) {
   _$jscoverage['/indent.js'].branchData = {};
 }
-_$jscoverage['/indent.js'].lineData[5]++;
+_$jscoverage['/indent.js'].lineData[6]++;
 KISSY.add("editor/plugin/indent", function(S, Editor, indexCmd) {
   _$jscoverage['/indent.js'].functionData[0]++;
-  _$jscoverage['/indent.js'].lineData[6]++;
+  _$jscoverage['/indent.js'].lineData[7]++;
   function Indent() {
     _$jscoverage['/indent.js'].functionData[1]++;
   }
-  _$jscoverage['/indent.js'].lineData[10]++;
+  _$jscoverage['/indent.js'].lineData[11]++;
   S.augment(Indent, {
   pluginRenderUI: function(editor) {
   _$jscoverage['/indent.js'].functionData[2]++;
-  _$jscoverage['/indent.js'].lineData[12]++;
-  indexCmd.init(editor);
   _$jscoverage['/indent.js'].lineData[13]++;
+  indexCmd.init(editor);
+  _$jscoverage['/indent.js'].lineData[14]++;
   editor.addButton("indent", {
   tooltip: "\u589e\u52a0\u7f29\u8fdb\u91cf ", 
   listeners: {
   click: function() {
   _$jscoverage['/indent.js'].functionData[3]++;
-  _$jscoverage['/indent.js'].lineData[17]++;
-  editor.execCommand("indent");
   _$jscoverage['/indent.js'].lineData[18]++;
+  editor.execCommand("indent");
+  _$jscoverage['/indent.js'].lineData[19]++;
   editor.focus();
 }}, 
   mode: Editor.Mode.WYSIWYG_MODE});
 }});
-  _$jscoverage['/indent.js'].lineData[26]++;
+  _$jscoverage['/indent.js'].lineData[27]++;
   return Indent;
 }, {
   requires: ['editor', './indent/cmd']});

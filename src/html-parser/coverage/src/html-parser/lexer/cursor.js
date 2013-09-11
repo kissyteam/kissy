@@ -229,16 +229,16 @@ if (! this._$jscoverage) {
 if (! _$jscoverage['/html-parser/lexer/cursor.js']) {
   _$jscoverage['/html-parser/lexer/cursor.js'] = {};
   _$jscoverage['/html-parser/lexer/cursor.js'].lineData = [];
-  _$jscoverage['/html-parser/lexer/cursor.js'].lineData[5] = 0;
   _$jscoverage['/html-parser/lexer/cursor.js'].lineData[6] = 0;
   _$jscoverage['/html-parser/lexer/cursor.js'].lineData[7] = 0;
-  _$jscoverage['/html-parser/lexer/cursor.js'].lineData[10] = 0;
-  _$jscoverage['/html-parser/lexer/cursor.js'].lineData[14] = 0;
-  _$jscoverage['/html-parser/lexer/cursor.js'].lineData[18] = 0;
+  _$jscoverage['/html-parser/lexer/cursor.js'].lineData[8] = 0;
+  _$jscoverage['/html-parser/lexer/cursor.js'].lineData[11] = 0;
+  _$jscoverage['/html-parser/lexer/cursor.js'].lineData[15] = 0;
   _$jscoverage['/html-parser/lexer/cursor.js'].lineData[19] = 0;
   _$jscoverage['/html-parser/lexer/cursor.js'].lineData[20] = 0;
-  _$jscoverage['/html-parser/lexer/cursor.js'].lineData[24] = 0;
-  _$jscoverage['/html-parser/lexer/cursor.js'].lineData[28] = 0;
+  _$jscoverage['/html-parser/lexer/cursor.js'].lineData[21] = 0;
+  _$jscoverage['/html-parser/lexer/cursor.js'].lineData[25] = 0;
+  _$jscoverage['/html-parser/lexer/cursor.js'].lineData[29] = 0;
 }
 if (! _$jscoverage['/html-parser/lexer/cursor.js'].functionData) {
   _$jscoverage['/html-parser/lexer/cursor.js'].functionData = [];
@@ -250,44 +250,44 @@ if (! _$jscoverage['/html-parser/lexer/cursor.js'].functionData) {
 }
 if (! _$jscoverage['/html-parser/lexer/cursor.js'].branchData) {
   _$jscoverage['/html-parser/lexer/cursor.js'].branchData = {};
-  _$jscoverage['/html-parser/lexer/cursor.js'].branchData['7'] = [];
-  _$jscoverage['/html-parser/lexer/cursor.js'].branchData['7'][1] = new BranchData();
+  _$jscoverage['/html-parser/lexer/cursor.js'].branchData['8'] = [];
+  _$jscoverage['/html-parser/lexer/cursor.js'].branchData['8'][1] = new BranchData();
 }
-_$jscoverage['/html-parser/lexer/cursor.js'].branchData['7'][1].init(26, 11, 'offset || 0');
-function visit4_7_1(result) {
-  _$jscoverage['/html-parser/lexer/cursor.js'].branchData['7'][1].ranCondition(result);
+_$jscoverage['/html-parser/lexer/cursor.js'].branchData['8'][1].init(26, 11, 'offset || 0');
+function visit4_8_1(result) {
+  _$jscoverage['/html-parser/lexer/cursor.js'].branchData['8'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/cursor.js'].lineData[5]++;
+}_$jscoverage['/html-parser/lexer/cursor.js'].lineData[6]++;
 KISSY.add("html-parser/lexer/cursor", function() {
   _$jscoverage['/html-parser/lexer/cursor.js'].functionData[0]++;
-  _$jscoverage['/html-parser/lexer/cursor.js'].lineData[6]++;
+  _$jscoverage['/html-parser/lexer/cursor.js'].lineData[7]++;
   function Cursor(offset) {
     _$jscoverage['/html-parser/lexer/cursor.js'].functionData[1]++;
-    _$jscoverage['/html-parser/lexer/cursor.js'].lineData[7]++;
-    this.position = visit4_7_1(offset || 0);
+    _$jscoverage['/html-parser/lexer/cursor.js'].lineData[8]++;
+    this.position = visit4_8_1(offset || 0);
   }
-  _$jscoverage['/html-parser/lexer/cursor.js'].lineData[10]++;
+  _$jscoverage['/html-parser/lexer/cursor.js'].lineData[11]++;
   Cursor.prototype = {
   constructor: Cursor, 
   advance: function() {
   _$jscoverage['/html-parser/lexer/cursor.js'].functionData[2]++;
-  _$jscoverage['/html-parser/lexer/cursor.js'].lineData[14]++;
+  _$jscoverage['/html-parser/lexer/cursor.js'].lineData[15]++;
   this.position++;
 }, 
   clone: function() {
   _$jscoverage['/html-parser/lexer/cursor.js'].functionData[3]++;
-  _$jscoverage['/html-parser/lexer/cursor.js'].lineData[18]++;
-  var c = new Cursor();
   _$jscoverage['/html-parser/lexer/cursor.js'].lineData[19]++;
-  c.position = this.position;
+  var c = new Cursor();
   _$jscoverage['/html-parser/lexer/cursor.js'].lineData[20]++;
+  c.position = this.position;
+  _$jscoverage['/html-parser/lexer/cursor.js'].lineData[21]++;
   return c;
 }, 
   retreat: function() {
   _$jscoverage['/html-parser/lexer/cursor.js'].functionData[4]++;
-  _$jscoverage['/html-parser/lexer/cursor.js'].lineData[24]++;
+  _$jscoverage['/html-parser/lexer/cursor.js'].lineData[25]++;
   this.position = Math.max(--this.position, 0);
 }};
-  _$jscoverage['/html-parser/lexer/cursor.js'].lineData[28]++;
+  _$jscoverage['/html-parser/lexer/cursor.js'].lineData[29]++;
   return Cursor;
 });

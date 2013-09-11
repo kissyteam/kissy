@@ -230,7 +230,7 @@ if (! _$jscoverage['/kison/grammar.js']) {
   _$jscoverage['/kison/grammar.js'] = {};
   _$jscoverage['/kison/grammar.js'].lineData = [];
   _$jscoverage['/kison/grammar.js'].lineData[5] = 0;
-  _$jscoverage['/kison/grammar.js'].lineData[7] = 0;
+  _$jscoverage['/kison/grammar.js'].lineData[6] = 0;
   _$jscoverage['/kison/grammar.js'].lineData[20] = 0;
   _$jscoverage['/kison/grammar.js'].lineData[21] = 0;
   _$jscoverage['/kison/grammar.js'].lineData[22] = 0;
@@ -525,75 +525,75 @@ if (! _$jscoverage['/kison/grammar.js']) {
   _$jscoverage['/kison/grammar.js'].lineData[637] = 0;
   _$jscoverage['/kison/grammar.js'].lineData[638] = 0;
   _$jscoverage['/kison/grammar.js'].lineData[642] = 0;
-  _$jscoverage['/kison/grammar.js'].lineData[647] = 0;
-  _$jscoverage['/kison/grammar.js'].lineData[649] = 0;
-  _$jscoverage['/kison/grammar.js'].lineData[654] = 0;
-  _$jscoverage['/kison/grammar.js'].lineData[656] = 0;
+  _$jscoverage['/kison/grammar.js'].lineData[646] = 0;
+  _$jscoverage['/kison/grammar.js'].lineData[648] = 0;
+  _$jscoverage['/kison/grammar.js'].lineData[653] = 0;
+  _$jscoverage['/kison/grammar.js'].lineData[655] = 0;
+  _$jscoverage['/kison/grammar.js'].lineData[657] = 0;
   _$jscoverage['/kison/grammar.js'].lineData[658] = 0;
-  _$jscoverage['/kison/grammar.js'].lineData[659] = 0;
+  _$jscoverage['/kison/grammar.js'].lineData[660] = 0;
   _$jscoverage['/kison/grammar.js'].lineData[661] = 0;
-  _$jscoverage['/kison/grammar.js'].lineData[662] = 0;
-  _$jscoverage['/kison/grammar.js'].lineData[664] = 0;
-  _$jscoverage['/kison/grammar.js'].lineData[667] = 0;
-  _$jscoverage['/kison/grammar.js'].lineData[669] = 0;
-  _$jscoverage['/kison/grammar.js'].lineData[671] = 0;
-  _$jscoverage['/kison/grammar.js'].lineData[676] = 0;
-  _$jscoverage['/kison/grammar.js'].lineData[678] = 0;
+  _$jscoverage['/kison/grammar.js'].lineData[663] = 0;
+  _$jscoverage['/kison/grammar.js'].lineData[666] = 0;
+  _$jscoverage['/kison/grammar.js'].lineData[668] = 0;
+  _$jscoverage['/kison/grammar.js'].lineData[670] = 0;
+  _$jscoverage['/kison/grammar.js'].lineData[675] = 0;
+  _$jscoverage['/kison/grammar.js'].lineData[677] = 0;
+  _$jscoverage['/kison/grammar.js'].lineData[679] = 0;
   _$jscoverage['/kison/grammar.js'].lineData[680] = 0;
-  _$jscoverage['/kison/grammar.js'].lineData[681] = 0;
+  _$jscoverage['/kison/grammar.js'].lineData[683] = 0;
   _$jscoverage['/kison/grammar.js'].lineData[684] = 0;
   _$jscoverage['/kison/grammar.js'].lineData[685] = 0;
   _$jscoverage['/kison/grammar.js'].lineData[686] = 0;
   _$jscoverage['/kison/grammar.js'].lineData[687] = 0;
-  _$jscoverage['/kison/grammar.js'].lineData[688] = 0;
+  _$jscoverage['/kison/grammar.js'].lineData[706] = 0;
   _$jscoverage['/kison/grammar.js'].lineData[707] = 0;
-  _$jscoverage['/kison/grammar.js'].lineData[708] = 0;
+  _$jscoverage['/kison/grammar.js'].lineData[709] = 0;
   _$jscoverage['/kison/grammar.js'].lineData[710] = 0;
-  _$jscoverage['/kison/grammar.js'].lineData[711] = 0;
+  _$jscoverage['/kison/grammar.js'].lineData[721] = 0;
   _$jscoverage['/kison/grammar.js'].lineData[722] = 0;
-  _$jscoverage['/kison/grammar.js'].lineData[724] = 0;
+  _$jscoverage['/kison/grammar.js'].lineData[734] = 0;
   _$jscoverage['/kison/grammar.js'].lineData[736] = 0;
   _$jscoverage['/kison/grammar.js'].lineData[738] = 0;
   _$jscoverage['/kison/grammar.js'].lineData[740] = 0;
-  _$jscoverage['/kison/grammar.js'].lineData[742] = 0;
-  _$jscoverage['/kison/grammar.js'].lineData[743] = 0;
+  _$jscoverage['/kison/grammar.js'].lineData[741] = 0;
+  _$jscoverage['/kison/grammar.js'].lineData[744] = 0;
+  _$jscoverage['/kison/grammar.js'].lineData[745] = 0;
   _$jscoverage['/kison/grammar.js'].lineData[746] = 0;
-  _$jscoverage['/kison/grammar.js'].lineData[747] = 0;
-  _$jscoverage['/kison/grammar.js'].lineData[748] = 0;
+  _$jscoverage['/kison/grammar.js'].lineData[750] = 0;
   _$jscoverage['/kison/grammar.js'].lineData[752] = 0;
+  _$jscoverage['/kison/grammar.js'].lineData[753] = 0;
   _$jscoverage['/kison/grammar.js'].lineData[754] = 0;
   _$jscoverage['/kison/grammar.js'].lineData[755] = 0;
   _$jscoverage['/kison/grammar.js'].lineData[756] = 0;
-  _$jscoverage['/kison/grammar.js'].lineData[757] = 0;
-  _$jscoverage['/kison/grammar.js'].lineData[758] = 0;
-  _$jscoverage['/kison/grammar.js'].lineData[761] = 0;
-  _$jscoverage['/kison/grammar.js'].lineData[764] = 0;
-  _$jscoverage['/kison/grammar.js'].lineData[765] = 0;
+  _$jscoverage['/kison/grammar.js'].lineData[759] = 0;
+  _$jscoverage['/kison/grammar.js'].lineData[762] = 0;
+  _$jscoverage['/kison/grammar.js'].lineData[763] = 0;
+  _$jscoverage['/kison/grammar.js'].lineData[766] = 0;
   _$jscoverage['/kison/grammar.js'].lineData[768] = 0;
-  _$jscoverage['/kison/grammar.js'].lineData[772] = 0;
-  _$jscoverage['/kison/grammar.js'].lineData[774] = 0;
-  _$jscoverage['/kison/grammar.js'].lineData[777] = 0;
-  _$jscoverage['/kison/grammar.js'].lineData[780] = 0;
-  _$jscoverage['/kison/grammar.js'].lineData[782] = 0;
-  _$jscoverage['/kison/grammar.js'].lineData[786] = 0;
-  _$jscoverage['/kison/grammar.js'].lineData[795] = 0;
+  _$jscoverage['/kison/grammar.js'].lineData[770] = 0;
+  _$jscoverage['/kison/grammar.js'].lineData[773] = 0;
+  _$jscoverage['/kison/grammar.js'].lineData[776] = 0;
+  _$jscoverage['/kison/grammar.js'].lineData[778] = 0;
+  _$jscoverage['/kison/grammar.js'].lineData[781] = 0;
+  _$jscoverage['/kison/grammar.js'].lineData[790] = 0;
+  _$jscoverage['/kison/grammar.js'].lineData[792] = 0;
+  _$jscoverage['/kison/grammar.js'].lineData[793] = 0;
+  _$jscoverage['/kison/grammar.js'].lineData[796] = 0;
   _$jscoverage['/kison/grammar.js'].lineData[797] = 0;
-  _$jscoverage['/kison/grammar.js'].lineData[798] = 0;
+  _$jscoverage['/kison/grammar.js'].lineData[800] = 0;
   _$jscoverage['/kison/grammar.js'].lineData[801] = 0;
-  _$jscoverage['/kison/grammar.js'].lineData[802] = 0;
-  _$jscoverage['/kison/grammar.js'].lineData[805] = 0;
+  _$jscoverage['/kison/grammar.js'].lineData[803] = 0;
   _$jscoverage['/kison/grammar.js'].lineData[806] = 0;
+  _$jscoverage['/kison/grammar.js'].lineData[807] = 0;
   _$jscoverage['/kison/grammar.js'].lineData[808] = 0;
   _$jscoverage['/kison/grammar.js'].lineData[811] = 0;
-  _$jscoverage['/kison/grammar.js'].lineData[812] = 0;
   _$jscoverage['/kison/grammar.js'].lineData[813] = 0;
-  _$jscoverage['/kison/grammar.js'].lineData[816] = 0;
-  _$jscoverage['/kison/grammar.js'].lineData[818] = 0;
-  _$jscoverage['/kison/grammar.js'].lineData[820] = 0;
+  _$jscoverage['/kison/grammar.js'].lineData[815] = 0;
+  _$jscoverage['/kison/grammar.js'].lineData[817] = 0;
+  _$jscoverage['/kison/grammar.js'].lineData[819] = 0;
   _$jscoverage['/kison/grammar.js'].lineData[822] = 0;
-  _$jscoverage['/kison/grammar.js'].lineData[824] = 0;
-  _$jscoverage['/kison/grammar.js'].lineData[828] = 0;
-  _$jscoverage['/kison/grammar.js'].lineData[833] = 0;
+  _$jscoverage['/kison/grammar.js'].lineData[827] = 0;
 }
 if (! _$jscoverage['/kison/grammar.js'].functionData) {
   _$jscoverage['/kison/grammar.js'].functionData = [];
@@ -760,102 +760,102 @@ if (! _$jscoverage['/kison/grammar.js'].branchData) {
   _$jscoverage['/kison/grammar.js'].branchData['623'][1] = new BranchData();
   _$jscoverage['/kison/grammar.js'].branchData['627'] = [];
   _$jscoverage['/kison/grammar.js'].branchData['627'][1] = new BranchData();
-  _$jscoverage['/kison/grammar.js'].branchData['647'] = [];
-  _$jscoverage['/kison/grammar.js'].branchData['647'][1] = new BranchData();
-  _$jscoverage['/kison/grammar.js'].branchData['661'] = [];
-  _$jscoverage['/kison/grammar.js'].branchData['661'][1] = new BranchData();
-  _$jscoverage['/kison/grammar.js'].branchData['680'] = [];
-  _$jscoverage['/kison/grammar.js'].branchData['680'][1] = new BranchData();
-  _$jscoverage['/kison/grammar.js'].branchData['707'] = [];
-  _$jscoverage['/kison/grammar.js'].branchData['707'][1] = new BranchData();
-  _$jscoverage['/kison/grammar.js'].branchData['742'] = [];
-  _$jscoverage['/kison/grammar.js'].branchData['742'][1] = new BranchData();
-  _$jscoverage['/kison/grammar.js'].branchData['746'] = [];
-  _$jscoverage['/kison/grammar.js'].branchData['746'][1] = new BranchData();
+  _$jscoverage['/kison/grammar.js'].branchData['646'] = [];
+  _$jscoverage['/kison/grammar.js'].branchData['646'][1] = new BranchData();
+  _$jscoverage['/kison/grammar.js'].branchData['660'] = [];
+  _$jscoverage['/kison/grammar.js'].branchData['660'][1] = new BranchData();
+  _$jscoverage['/kison/grammar.js'].branchData['679'] = [];
+  _$jscoverage['/kison/grammar.js'].branchData['679'][1] = new BranchData();
+  _$jscoverage['/kison/grammar.js'].branchData['706'] = [];
+  _$jscoverage['/kison/grammar.js'].branchData['706'][1] = new BranchData();
+  _$jscoverage['/kison/grammar.js'].branchData['740'] = [];
+  _$jscoverage['/kison/grammar.js'].branchData['740'][1] = new BranchData();
+  _$jscoverage['/kison/grammar.js'].branchData['744'] = [];
+  _$jscoverage['/kison/grammar.js'].branchData['744'][1] = new BranchData();
+  _$jscoverage['/kison/grammar.js'].branchData['750'] = [];
+  _$jscoverage['/kison/grammar.js'].branchData['750'][1] = new BranchData();
   _$jscoverage['/kison/grammar.js'].branchData['752'] = [];
   _$jscoverage['/kison/grammar.js'].branchData['752'][1] = new BranchData();
   _$jscoverage['/kison/grammar.js'].branchData['754'] = [];
   _$jscoverage['/kison/grammar.js'].branchData['754'][1] = new BranchData();
-  _$jscoverage['/kison/grammar.js'].branchData['756'] = [];
-  _$jscoverage['/kison/grammar.js'].branchData['756'][1] = new BranchData();
-  _$jscoverage['/kison/grammar.js'].branchData['787'] = [];
-  _$jscoverage['/kison/grammar.js'].branchData['787'][1] = new BranchData();
-  _$jscoverage['/kison/grammar.js'].branchData['788'] = [];
-  _$jscoverage['/kison/grammar.js'].branchData['788'][1] = new BranchData();
-  _$jscoverage['/kison/grammar.js'].branchData['789'] = [];
-  _$jscoverage['/kison/grammar.js'].branchData['789'][1] = new BranchData();
-  _$jscoverage['/kison/grammar.js'].branchData['797'] = [];
-  _$jscoverage['/kison/grammar.js'].branchData['797'][1] = new BranchData();
-  _$jscoverage['/kison/grammar.js'].branchData['801'] = [];
-  _$jscoverage['/kison/grammar.js'].branchData['801'][1] = new BranchData();
-  _$jscoverage['/kison/grammar.js'].branchData['805'] = [];
-  _$jscoverage['/kison/grammar.js'].branchData['805'][1] = new BranchData();
-  _$jscoverage['/kison/grammar.js'].branchData['811'] = [];
-  _$jscoverage['/kison/grammar.js'].branchData['811'][1] = new BranchData();
+  _$jscoverage['/kison/grammar.js'].branchData['782'] = [];
+  _$jscoverage['/kison/grammar.js'].branchData['782'][1] = new BranchData();
+  _$jscoverage['/kison/grammar.js'].branchData['783'] = [];
+  _$jscoverage['/kison/grammar.js'].branchData['783'][1] = new BranchData();
+  _$jscoverage['/kison/grammar.js'].branchData['784'] = [];
+  _$jscoverage['/kison/grammar.js'].branchData['784'][1] = new BranchData();
+  _$jscoverage['/kison/grammar.js'].branchData['792'] = [];
+  _$jscoverage['/kison/grammar.js'].branchData['792'][1] = new BranchData();
+  _$jscoverage['/kison/grammar.js'].branchData['796'] = [];
+  _$jscoverage['/kison/grammar.js'].branchData['796'][1] = new BranchData();
+  _$jscoverage['/kison/grammar.js'].branchData['800'] = [];
+  _$jscoverage['/kison/grammar.js'].branchData['800'][1] = new BranchData();
+  _$jscoverage['/kison/grammar.js'].branchData['806'] = [];
+  _$jscoverage['/kison/grammar.js'].branchData['806'][1] = new BranchData();
 }
-_$jscoverage['/kison/grammar.js'].branchData['811'][1].init(1080, 3, 'len');
-function visit74_811_1(result) {
-  _$jscoverage['/kison/grammar.js'].branchData['811'][1].ranCondition(result);
+_$jscoverage['/kison/grammar.js'].branchData['806'][1].init(1078, 3, 'len');
+function visit74_806_1(result) {
+  _$jscoverage['/kison/grammar.js'].branchData['806'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kison/grammar.js'].branchData['805'][1].init(905, 17, 'ret !== undefined');
-function visit73_805_1(result) {
-  _$jscoverage['/kison/grammar.js'].branchData['805'][1].ranCondition(result);
+}_$jscoverage['/kison/grammar.js'].branchData['800'][1].init(903, 17, 'ret !== undefined');
+function visit73_800_1(result) {
+  _$jscoverage['/kison/grammar.js'].branchData['800'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kison/grammar.js'].branchData['801'][1].init(781, 13, 'reducedAction');
-function visit72_801_1(result) {
-  _$jscoverage['/kison/grammar.js'].branchData['801'][1].ranCondition(result);
+}_$jscoverage['/kison/grammar.js'].branchData['796'][1].init(779, 13, 'reducedAction');
+function visit72_796_1(result) {
+  _$jscoverage['/kison/grammar.js'].branchData['796'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kison/grammar.js'].branchData['797'][1].init(627, 7, 'i < len');
-function visit71_797_1(result) {
-  _$jscoverage['/kison/grammar.js'].branchData['797'][1].ranCondition(result);
+}_$jscoverage['/kison/grammar.js'].branchData['792'][1].init(625, 7, 'i < len');
+function visit71_792_1(result) {
+  _$jscoverage['/kison/grammar.js'].branchData['792'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kison/grammar.js'].branchData['789'][1].init(260, 31, 'production.rhs || production[1]');
-function visit70_789_1(result) {
-  _$jscoverage['/kison/grammar.js'].branchData['789'][1].ranCondition(result);
+}_$jscoverage['/kison/grammar.js'].branchData['784'][1].init(260, 31, 'production.rhs || production[1]');
+function visit70_784_1(result) {
+  _$jscoverage['/kison/grammar.js'].branchData['784'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kison/grammar.js'].branchData['788'][1].init(186, 34, 'production.action || production[2]');
-function visit69_788_1(result) {
-  _$jscoverage['/kison/grammar.js'].branchData['788'][1].ranCondition(result);
+}_$jscoverage['/kison/grammar.js'].branchData['783'][1].init(186, 34, 'production.action || production[2]');
+function visit69_783_1(result) {
+  _$jscoverage['/kison/grammar.js'].branchData['783'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kison/grammar.js'].branchData['787'][1].init(109, 34, 'production.symbol || production[0]');
-function visit68_787_1(result) {
-  _$jscoverage['/kison/grammar.js'].branchData['787'][1].ranCondition(result);
+}_$jscoverage['/kison/grammar.js'].branchData['782'][1].init(109, 34, 'production.symbol || production[0]');
+function visit68_782_1(result) {
+  _$jscoverage['/kison/grammar.js'].branchData['782'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kison/grammar.js'].branchData['756'][1].init(65, 18, 'tableAction[state]');
-function visit67_756_1(result) {
-  _$jscoverage['/kison/grammar.js'].branchData['756'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/kison/grammar.js'].branchData['754'][1].init(488, 7, '!action');
-function visit66_754_1(result) {
+}_$jscoverage['/kison/grammar.js'].branchData['754'][1].init(65, 18, 'tableAction[state]');
+function visit67_754_1(result) {
   _$jscoverage['/kison/grammar.js'].branchData['754'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kison/grammar.js'].branchData['752'][1].init(419, 48, 'tableAction[state] && tableAction[state][symbol]');
-function visit65_752_1(result) {
+}_$jscoverage['/kison/grammar.js'].branchData['752'][1].init(488, 7, '!action');
+function visit66_752_1(result) {
   _$jscoverage['/kison/grammar.js'].branchData['752'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kison/grammar.js'].branchData['746'][1].init(206, 7, '!symbol');
-function visit64_746_1(result) {
-  _$jscoverage['/kison/grammar.js'].branchData['746'][1].ranCondition(result);
+}_$jscoverage['/kison/grammar.js'].branchData['750'][1].init(419, 48, 'tableAction[state] && tableAction[state][symbol]');
+function visit65_750_1(result) {
+  _$jscoverage['/kison/grammar.js'].branchData['750'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kison/grammar.js'].branchData['742'][1].init(122, 7, '!symbol');
-function visit63_742_1(result) {
-  _$jscoverage['/kison/grammar.js'].branchData['742'][1].ranCondition(result);
+}_$jscoverage['/kison/grammar.js'].branchData['744'][1].init(206, 7, '!symbol');
+function visit64_744_1(result) {
+  _$jscoverage['/kison/grammar.js'].branchData['744'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kison/grammar.js'].branchData['707'][1].init(26, 22, '!(v instanceof Lexer)');
-function visit62_707_1(result) {
-  _$jscoverage['/kison/grammar.js'].branchData['707'][1].ranCondition(result);
+}_$jscoverage['/kison/grammar.js'].branchData['740'][1].init(122, 7, '!symbol');
+function visit63_740_1(result) {
+  _$jscoverage['/kison/grammar.js'].branchData['740'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kison/grammar.js'].branchData['680'][1].init(955, 18, 'cfg.compressSymbol');
-function visit61_680_1(result) {
-  _$jscoverage['/kison/grammar.js'].branchData['680'][1].ranCondition(result);
+}_$jscoverage['/kison/grammar.js'].branchData['706'][1].init(26, 22, '!(v instanceof Lexer)');
+function visit62_706_1(result) {
+  _$jscoverage['/kison/grammar.js'].branchData['706'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kison/grammar.js'].branchData['661'][1].init(129, 6, 'action');
-function visit60_661_1(result) {
-  _$jscoverage['/kison/grammar.js'].branchData['661'][1].ranCondition(result);
+}_$jscoverage['/kison/grammar.js'].branchData['679'][1].init(953, 18, 'cfg.compressSymbol');
+function visit61_679_1(result) {
+  _$jscoverage['/kison/grammar.js'].branchData['679'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kison/grammar.js'].branchData['647'][1].init(22, 9, 'cfg || {}');
-function visit59_647_1(result) {
-  _$jscoverage['/kison/grammar.js'].branchData['647'][1].ranCondition(result);
+}_$jscoverage['/kison/grammar.js'].branchData['660'][1].init(129, 6, 'action');
+function visit60_660_1(result) {
+  _$jscoverage['/kison/grammar.js'].branchData['660'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/kison/grammar.js'].branchData['646'][1].init(20, 9, 'cfg || {}');
+function visit59_646_1(result) {
+  _$jscoverage['/kison/grammar.js'].branchData['646'][1].ranCondition(result);
   return result;
 }_$jscoverage['/kison/grammar.js'].branchData['627'][1].init(489, 31, 'type == GrammarConst.SHIFT_TYPE');
 function visit58_627_1(result) {
@@ -1073,11 +1073,11 @@ function visit6_100_1(result) {
 function visit5_96_1(result) {
   _$jscoverage['/kison/grammar.js'].branchData['96'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kison/grammar.js'].branchData['56'][1].init(654, 42, 'action[GrammarConst.TO_INDEX] != undefined');
+}_$jscoverage['/kison/grammar.js'].branchData['56'][1].init(703, 42, 'action[GrammarConst.TO_INDEX] != undefined');
 function visit4_56_1(result) {
   _$jscoverage['/kison/grammar.js'].branchData['56'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kison/grammar.js'].branchData['50'][1].init(417, 50, 'action[GrammarConst.PRODUCTION_INDEX] != undefined');
+}_$jscoverage['/kison/grammar.js'].branchData['50'][1].init(445, 50, 'action[GrammarConst.PRODUCTION_INDEX] != undefined');
 function visit3_50_1(result) {
   _$jscoverage['/kison/grammar.js'].branchData['50'][1].ranCondition(result);
   return result;
@@ -1092,14 +1092,14 @@ function visit1_29_1(result) {
 }_$jscoverage['/kison/grammar.js'].lineData[5]++;
 KISSY.add("kison/grammar", function(S, Base, Utils, Item, ItemSet, NonTerminal, Lexer, Production) {
   _$jscoverage['/kison/grammar.js'].functionData[0]++;
-  _$jscoverage['/kison/grammar.js'].lineData[7]++;
+  _$jscoverage['/kison/grammar.js'].lineData[6]++;
   var GrammarConst = {
   SHIFT_TYPE: 1, 
   REDUCE_TYPE: 2, 
   ACCEPT_TYPE: 0, 
   TYPE_INDEX: 0, 
   PRODUCTION_INDEX: 1, 
-  TO_INDEX: 2}, serializeObject = Utils.serializeObject, mix = S.mix, END_TAG = Lexer.STATIC.END_TAG, START_TAG = '$START';
+  TO_INDEX: 2}, logger = S.getLogger('s/kison'), serializeObject = Utils.serializeObject, mix = S.mix, END_TAG = Lexer.STATIC.END_TAG, START_TAG = '$START';
   _$jscoverage['/kison/grammar.js'].lineData[20]++;
   function setSize(set3) {
     _$jscoverage['/kison/grammar.js'].functionData[1]++;
@@ -1134,39 +1134,39 @@ KISSY.add("kison/grammar", function(S, Base, Utils, Item, ItemSet, NonTerminal, 
     switch (action[GrammarConst.TYPE_INDEX]) {
       case GrammarConst.SHIFT_TYPE:
         _$jscoverage['/kison/grammar.js'].lineData[40]++;
-        S.log('shift');
+        logger.debug('shift');
         _$jscoverage['/kison/grammar.js'].lineData[41]++;
         break;
       case GrammarConst.REDUCE_TYPE:
         _$jscoverage['/kison/grammar.js'].lineData[43]++;
-        S.log('reduce');
+        logger.debug('reduce');
         _$jscoverage['/kison/grammar.js'].lineData[44]++;
         break;
       case GrammarConst.ACCEPT_TYPE:
         _$jscoverage['/kison/grammar.js'].lineData[46]++;
-        S.log('accept');
+        logger.debug('accept');
         _$jscoverage['/kison/grammar.js'].lineData[47]++;
         break;
     }
     _$jscoverage['/kison/grammar.js'].lineData[49]++;
-    S.log('from production:');
+    logger.debug('from production:');
     _$jscoverage['/kison/grammar.js'].lineData[50]++;
     if (visit3_50_1(action[GrammarConst.PRODUCTION_INDEX] != undefined)) {
       _$jscoverage['/kison/grammar.js'].lineData[51]++;
-      S.log(productions[action[GrammarConst.PRODUCTION_INDEX]] + '');
+      logger.debug(productions[action[GrammarConst.PRODUCTION_INDEX]] + '');
     } else {
       _$jscoverage['/kison/grammar.js'].lineData[53]++;
-      S.log('undefined');
+      logger.debug('undefined');
     }
     _$jscoverage['/kison/grammar.js'].lineData[55]++;
-    S.log('to itemSet:');
+    logger.debug('to itemSet:');
     _$jscoverage['/kison/grammar.js'].lineData[56]++;
     if (visit4_56_1(action[GrammarConst.TO_INDEX] != undefined)) {
       _$jscoverage['/kison/grammar.js'].lineData[57]++;
-      S.log(itemSets[action[GrammarConst.TO_INDEX]].toString(1));
+      logger.debug(itemSets[action[GrammarConst.TO_INDEX]].toString(1));
     } else {
       _$jscoverage['/kison/grammar.js'].lineData[59]++;
-      S.log('undefined');
+      logger.debug('undefined');
     }
   }
   _$jscoverage['/kison/grammar.js'].lineData[63]++;
@@ -1664,19 +1664,19 @@ KISSY.add("kison/grammar", function(S, Base, Utils, Item, ItemSet, NonTerminal, 
         _$jscoverage['/kison/grammar.js'].lineData[508]++;
         if (visit44_508_1(t && visit45_508_2(t.toString() != val.toString()))) {
           _$jscoverage['/kison/grammar.js'].lineData[509]++;
-          S.log(new Array(29).join('*'));
+          logger.debug(new Array(29).join('*'));
           _$jscoverage['/kison/grammar.js'].lineData[510]++;
-          S.log('***** conflict in reduce: action already defined ->', 'warn');
+          logger.debug('***** conflict in reduce: action already defined ->', 'warn');
           _$jscoverage['/kison/grammar.js'].lineData[512]++;
-          S.log('***** current item:', 'info');
+          logger.debug('***** current item:', 'info');
           _$jscoverage['/kison/grammar.js'].lineData[513]++;
-          S.log(item.toString());
+          logger.debug(item.toString());
           _$jscoverage['/kison/grammar.js'].lineData[514]++;
-          S.log('***** current action:', 'info');
+          logger.debug('***** current action:', 'info');
           _$jscoverage['/kison/grammar.js'].lineData[515]++;
           visualizeAction(t, productions, itemSets);
           _$jscoverage['/kison/grammar.js'].lineData[516]++;
-          S.log('***** will be overwritten ->', 'info');
+          logger.debug('***** will be overwritten ->', 'info');
           _$jscoverage['/kison/grammar.js'].lineData[517]++;
           visualizeAction(val, productions, itemSets);
         }
@@ -1700,19 +1700,19 @@ KISSY.add("kison/grammar", function(S, Base, Utils, Item, ItemSet, NonTerminal, 
   _$jscoverage['/kison/grammar.js'].lineData[532]++;
   if (visit47_532_1(t && visit48_532_2(t.toString() != val.toString()))) {
     _$jscoverage['/kison/grammar.js'].lineData[533]++;
-    S.log(new Array(29).join('*'));
+    logger.debug(new Array(29).join('*'));
     _$jscoverage['/kison/grammar.js'].lineData[534]++;
-    S.log('conflict in reduce: action already defined ->', 'warn');
+    logger.debug('conflict in reduce: action already defined ->', 'warn');
     _$jscoverage['/kison/grammar.js'].lineData[536]++;
-    S.log('***** current item:', 'info');
+    logger.debug('***** current item:', 'info');
     _$jscoverage['/kison/grammar.js'].lineData[537]++;
-    S.log(item.toString());
+    logger.debug(item.toString());
     _$jscoverage['/kison/grammar.js'].lineData[538]++;
-    S.log('***** current action:', 'info');
+    logger.debug('***** current action:', 'info');
     _$jscoverage['/kison/grammar.js'].lineData[539]++;
     visualizeAction(t, productions, itemSets);
     _$jscoverage['/kison/grammar.js'].lineData[540]++;
-    S.log('***** will be overwritten ->', 'info');
+    logger.debug('***** will be overwritten ->', 'info');
     _$jscoverage['/kison/grammar.js'].lineData[541]++;
     visualizeAction(val, productions, itemSets);
   }
@@ -1742,27 +1742,27 @@ KISSY.add("kison/grammar", function(S, Base, Utils, Item, ItemSet, NonTerminal, 
     _$jscoverage['/kison/grammar.js'].lineData[558]++;
     if (visit51_558_1(t && visit52_558_2(t.toString() != val.toString()))) {
       _$jscoverage['/kison/grammar.js'].lineData[559]++;
-      S.log(new Array(29).join('*'));
+      logger.debug(new Array(29).join('*'));
       _$jscoverage['/kison/grammar.js'].lineData[560]++;
-      S.log('conflict in shift: action already defined ->', 'warn');
+      logger.debug('conflict in shift: action already defined ->', 'warn');
       _$jscoverage['/kison/grammar.js'].lineData[562]++;
-      S.log('***** current itemSet:', 'info');
+      logger.debug('***** current itemSet:', 'info');
       _$jscoverage['/kison/grammar.js'].lineData[563]++;
-      S.log(itemSet.toString(1));
+      logger.debug(itemSet.toString(1));
       _$jscoverage['/kison/grammar.js'].lineData[564]++;
-      S.log('***** current symbol:', 'info');
+      logger.debug('***** current symbol:', 'info');
       _$jscoverage['/kison/grammar.js'].lineData[565]++;
-      S.log(symbol);
+      logger.debug(symbol);
       _$jscoverage['/kison/grammar.js'].lineData[566]++;
-      S.log('***** goto itemSet:', 'info');
+      logger.debug('***** goto itemSet:', 'info');
       _$jscoverage['/kison/grammar.js'].lineData[567]++;
-      S.log(anotherItemSet.toString(1));
+      logger.debug(anotherItemSet.toString(1));
       _$jscoverage['/kison/grammar.js'].lineData[568]++;
-      S.log('***** current action:', 'info');
+      logger.debug('***** current action:', 'info');
       _$jscoverage['/kison/grammar.js'].lineData[569]++;
       visualizeAction(t, productions, itemSets);
       _$jscoverage['/kison/grammar.js'].lineData[570]++;
-      S.log('***** will be overwritten ->', 'info');
+      logger.debug('***** will be overwritten ->', 'info');
       _$jscoverage['/kison/grammar.js'].lineData[571]++;
       visualizeAction(val, productions, itemSets);
     }
@@ -1778,29 +1778,29 @@ KISSY.add("kison/grammar", function(S, Base, Utils, Item, ItemSet, NonTerminal, 
     _$jscoverage['/kison/grammar.js'].lineData[578]++;
     if (visit54_578_1(t && visit55_578_2(val != t))) {
       _$jscoverage['/kison/grammar.js'].lineData[579]++;
-      S.log(new Array(29).join('*'));
+      logger.debug(new Array(29).join('*'));
       _$jscoverage['/kison/grammar.js'].lineData[580]++;
-      S.log('conflict in shift: goto already defined ->', 'warn');
+      logger.debug('conflict in shift: goto already defined ->', 'warn');
       _$jscoverage['/kison/grammar.js'].lineData[582]++;
-      S.log('***** current itemSet:', 'info');
+      logger.debug('***** current itemSet:', 'info');
       _$jscoverage['/kison/grammar.js'].lineData[583]++;
-      S.log(itemSet.toString(1));
+      logger.debug(itemSet.toString(1));
       _$jscoverage['/kison/grammar.js'].lineData[584]++;
-      S.log('***** current symbol:', 'info');
+      logger.debug('***** current symbol:', 'info');
       _$jscoverage['/kison/grammar.js'].lineData[585]++;
-      S.log(symbol);
+      logger.debug(symbol);
       _$jscoverage['/kison/grammar.js'].lineData[586]++;
-      S.log('***** goto itemSet:', 'info');
+      logger.debug('***** goto itemSet:', 'info');
       _$jscoverage['/kison/grammar.js'].lineData[587]++;
-      S.log(anotherItemSet.toString(1));
+      logger.debug(anotherItemSet.toString(1));
       _$jscoverage['/kison/grammar.js'].lineData[588]++;
-      S.log('***** current goto state:', 'info');
+      logger.debug('***** current goto state:', 'info');
       _$jscoverage['/kison/grammar.js'].lineData[589]++;
-      S.log(t);
+      logger.debug(t);
       _$jscoverage['/kison/grammar.js'].lineData[590]++;
-      S.log('***** will be overwritten ->', 'info');
+      logger.debug('***** will be overwritten ->', 'info');
       _$jscoverage['/kison/grammar.js'].lineData[591]++;
-      S.log(val);
+      logger.debug(val);
     }
     _$jscoverage['/kison/grammar.js'].lineData[593]++;
     gotos[i][symbol] = val;
@@ -1874,51 +1874,51 @@ KISSY.add("kison/grammar", function(S, Base, Utils, Item, ItemSet, NonTerminal, 
 }, 
   genCode: function(cfg) {
   _$jscoverage['/kison/grammar.js'].functionData[43]++;
-  _$jscoverage['/kison/grammar.js'].lineData[647]++;
-  cfg = visit59_647_1(cfg || {});
-  _$jscoverage['/kison/grammar.js'].lineData[649]++;
+  _$jscoverage['/kison/grammar.js'].lineData[646]++;
+  cfg = visit59_646_1(cfg || {});
+  _$jscoverage['/kison/grammar.js'].lineData[648]++;
   var self = this, table = self.get("table"), lexer = self.get("lexer"), lexerCode = lexer.genCode(cfg);
-  _$jscoverage['/kison/grammar.js'].lineData[654]++;
+  _$jscoverage['/kison/grammar.js'].lineData[653]++;
   self.build();
-  _$jscoverage['/kison/grammar.js'].lineData[656]++;
+  _$jscoverage['/kison/grammar.js'].lineData[655]++;
   var productions = [];
-  _$jscoverage['/kison/grammar.js'].lineData[658]++;
+  _$jscoverage['/kison/grammar.js'].lineData[657]++;
   S.each(self.get("productions"), function(p) {
   _$jscoverage['/kison/grammar.js'].functionData[44]++;
-  _$jscoverage['/kison/grammar.js'].lineData[659]++;
+  _$jscoverage['/kison/grammar.js'].lineData[658]++;
   var action = p.get("action"), ret = [p.get('symbol'), p.get('rhs')];
-  _$jscoverage['/kison/grammar.js'].lineData[661]++;
-  if (visit60_661_1(action)) {
-    _$jscoverage['/kison/grammar.js'].lineData[662]++;
+  _$jscoverage['/kison/grammar.js'].lineData[660]++;
+  if (visit60_660_1(action)) {
+    _$jscoverage['/kison/grammar.js'].lineData[661]++;
     ret.push(action);
   }
-  _$jscoverage['/kison/grammar.js'].lineData[664]++;
+  _$jscoverage['/kison/grammar.js'].lineData[663]++;
   productions.push(ret);
 });
-  _$jscoverage['/kison/grammar.js'].lineData[667]++;
+  _$jscoverage['/kison/grammar.js'].lineData[666]++;
   var code = [];
-  _$jscoverage['/kison/grammar.js'].lineData[669]++;
+  _$jscoverage['/kison/grammar.js'].lineData[668]++;
   code.push("/* Generated by kison from KISSY */");
-  _$jscoverage['/kison/grammar.js'].lineData[671]++;
+  _$jscoverage['/kison/grammar.js'].lineData[670]++;
   code.push("var parser = {}," + "S = KISSY," + "GrammarConst = " + serializeObject(GrammarConst) + ";");
-  _$jscoverage['/kison/grammar.js'].lineData[676]++;
+  _$jscoverage['/kison/grammar.js'].lineData[675]++;
   code.push(lexerCode);
-  _$jscoverage['/kison/grammar.js'].lineData[678]++;
+  _$jscoverage['/kison/grammar.js'].lineData[677]++;
   code.push("parser.lexer = lexer;");
-  _$jscoverage['/kison/grammar.js'].lineData[680]++;
-  if (visit61_680_1(cfg.compressSymbol)) {
-    _$jscoverage['/kison/grammar.js'].lineData[681]++;
+  _$jscoverage['/kison/grammar.js'].lineData[679]++;
+  if (visit61_679_1(cfg.compressSymbol)) {
+    _$jscoverage['/kison/grammar.js'].lineData[680]++;
     code.push("lexer.symbolMap = " + serializeObject(lexer.symbolMap) + ";");
   }
-  _$jscoverage['/kison/grammar.js'].lineData[684]++;
+  _$jscoverage['/kison/grammar.js'].lineData[683]++;
   code.push('parser.productions = ' + serializeObject(productions) + ";");
-  _$jscoverage['/kison/grammar.js'].lineData[685]++;
+  _$jscoverage['/kison/grammar.js'].lineData[684]++;
   code.push("parser.table = " + serializeObject(table) + ";");
-  _$jscoverage['/kison/grammar.js'].lineData[686]++;
+  _$jscoverage['/kison/grammar.js'].lineData[685]++;
   code.push("parser.parse = " + parse.toString() + ";");
-  _$jscoverage['/kison/grammar.js'].lineData[687]++;
+  _$jscoverage['/kison/grammar.js'].lineData[686]++;
   code.push("return parser;");
-  _$jscoverage['/kison/grammar.js'].lineData[688]++;
+  _$jscoverage['/kison/grammar.js'].lineData[687]++;
   return code.join("\n");
 }}, {
   ATTRS: {
@@ -1933,122 +1933,122 @@ KISSY.add("kison/grammar", function(S, Base, Utils, Item, ItemSet, NonTerminal, 
   lexer: {
   setter: function(v) {
   _$jscoverage['/kison/grammar.js'].functionData[45]++;
-  _$jscoverage['/kison/grammar.js'].lineData[707]++;
-  if (visit62_707_1(!(v instanceof Lexer))) {
-    _$jscoverage['/kison/grammar.js'].lineData[708]++;
+  _$jscoverage['/kison/grammar.js'].lineData[706]++;
+  if (visit62_706_1(!(v instanceof Lexer))) {
+    _$jscoverage['/kison/grammar.js'].lineData[707]++;
     v = new Lexer(v);
   }
-  _$jscoverage['/kison/grammar.js'].lineData[710]++;
+  _$jscoverage['/kison/grammar.js'].lineData[709]++;
   this.lexer = v;
-  _$jscoverage['/kison/grammar.js'].lineData[711]++;
+  _$jscoverage['/kison/grammar.js'].lineData[710]++;
   return v;
 }}, 
   terminals: {
   value: {}}}});
-  _$jscoverage['/kison/grammar.js'].lineData[722]++;
+  _$jscoverage['/kison/grammar.js'].lineData[721]++;
   function parse(input) {
     _$jscoverage['/kison/grammar.js'].functionData[46]++;
-    _$jscoverage['/kison/grammar.js'].lineData[724]++;
+    _$jscoverage['/kison/grammar.js'].lineData[722]++;
     var self = this, lexer = self.lexer, state, symbol, action, table = self.table, gotos = table.gotos, tableAction = table.action, productions = self.productions, valueStack = [null], stack = [0];
-    _$jscoverage['/kison/grammar.js'].lineData[736]++;
+    _$jscoverage['/kison/grammar.js'].lineData[734]++;
     lexer.resetInput(input);
-    _$jscoverage['/kison/grammar.js'].lineData[738]++;
+    _$jscoverage['/kison/grammar.js'].lineData[736]++;
     while (1) {
-      _$jscoverage['/kison/grammar.js'].lineData[740]++;
+      _$jscoverage['/kison/grammar.js'].lineData[738]++;
       state = stack[stack.length - 1];
-      _$jscoverage['/kison/grammar.js'].lineData[742]++;
-      if (visit63_742_1(!symbol)) {
-        _$jscoverage['/kison/grammar.js'].lineData[743]++;
+      _$jscoverage['/kison/grammar.js'].lineData[740]++;
+      if (visit63_740_1(!symbol)) {
+        _$jscoverage['/kison/grammar.js'].lineData[741]++;
         symbol = lexer.lex();
       }
-      _$jscoverage['/kison/grammar.js'].lineData[746]++;
-      if (visit64_746_1(!symbol)) {
-        _$jscoverage['/kison/grammar.js'].lineData[747]++;
-        S.log("it is not a valid input: " + input, "error");
-        _$jscoverage['/kison/grammar.js'].lineData[748]++;
+      _$jscoverage['/kison/grammar.js'].lineData[744]++;
+      if (visit64_744_1(!symbol)) {
+        _$jscoverage['/kison/grammar.js'].lineData[745]++;
+        S.log("it is not a valid input: " + input, 'error');
+        _$jscoverage['/kison/grammar.js'].lineData[746]++;
         return false;
       }
+      _$jscoverage['/kison/grammar.js'].lineData[750]++;
+      action = visit65_750_1(tableAction[state] && tableAction[state][symbol]);
       _$jscoverage['/kison/grammar.js'].lineData[752]++;
-      action = visit65_752_1(tableAction[state] && tableAction[state][symbol]);
-      _$jscoverage['/kison/grammar.js'].lineData[754]++;
-      if (visit66_754_1(!action)) {
-        _$jscoverage['/kison/grammar.js'].lineData[755]++;
+      if (visit66_752_1(!action)) {
+        _$jscoverage['/kison/grammar.js'].lineData[753]++;
         var expected = [], error;
-        _$jscoverage['/kison/grammar.js'].lineData[756]++;
-        if (visit67_756_1(tableAction[state])) {
-          _$jscoverage['/kison/grammar.js'].lineData[757]++;
+        _$jscoverage['/kison/grammar.js'].lineData[754]++;
+        if (visit67_754_1(tableAction[state])) {
+          _$jscoverage['/kison/grammar.js'].lineData[755]++;
           S.each(tableAction[state], function(_, symbol) {
   _$jscoverage['/kison/grammar.js'].functionData[47]++;
-  _$jscoverage['/kison/grammar.js'].lineData[758]++;
+  _$jscoverage['/kison/grammar.js'].lineData[756]++;
   expected.push(self.lexer.mapReverseSymbol(symbol));
 });
         }
-        _$jscoverage['/kison/grammar.js'].lineData[761]++;
+        _$jscoverage['/kison/grammar.js'].lineData[759]++;
         error = "Syntax error at line " + lexer.lineNumber + ":\n" + lexer.showDebugInfo() + "\n" + "expect " + expected.join(", ");
-        _$jscoverage['/kison/grammar.js'].lineData[764]++;
+        _$jscoverage['/kison/grammar.js'].lineData[762]++;
         S.error(error);
-        _$jscoverage['/kison/grammar.js'].lineData[765]++;
+        _$jscoverage['/kison/grammar.js'].lineData[763]++;
         return false;
       }
-      _$jscoverage['/kison/grammar.js'].lineData[768]++;
+      _$jscoverage['/kison/grammar.js'].lineData[766]++;
       switch (action[GrammarConst.TYPE_INDEX]) {
         case GrammarConst.SHIFT_TYPE:
-          _$jscoverage['/kison/grammar.js'].lineData[772]++;
+          _$jscoverage['/kison/grammar.js'].lineData[768]++;
           stack.push(symbol);
-          _$jscoverage['/kison/grammar.js'].lineData[774]++;
+          _$jscoverage['/kison/grammar.js'].lineData[770]++;
           valueStack.push(lexer.text);
-          _$jscoverage['/kison/grammar.js'].lineData[777]++;
+          _$jscoverage['/kison/grammar.js'].lineData[773]++;
           stack.push(action[GrammarConst.TO_INDEX]);
-          _$jscoverage['/kison/grammar.js'].lineData[780]++;
+          _$jscoverage['/kison/grammar.js'].lineData[776]++;
           symbol = null;
-          _$jscoverage['/kison/grammar.js'].lineData[782]++;
+          _$jscoverage['/kison/grammar.js'].lineData[778]++;
           break;
         case GrammarConst.REDUCE_TYPE:
-          _$jscoverage['/kison/grammar.js'].lineData[786]++;
-          var production = productions[action[GrammarConst.PRODUCTION_INDEX]], reducedSymbol = visit68_787_1(production.symbol || production[0]), reducedAction = visit69_788_1(production.action || production[2]), reducedRhs = visit70_789_1(production.rhs || production[1]), len = reducedRhs.length, i = 0, ret = undefined, $$ = valueStack[valueStack.length - len];
-          _$jscoverage['/kison/grammar.js'].lineData[795]++;
+          _$jscoverage['/kison/grammar.js'].lineData[781]++;
+          var production = productions[action[GrammarConst.PRODUCTION_INDEX]], reducedSymbol = visit68_782_1(production.symbol || production[0]), reducedAction = visit69_783_1(production.action || production[2]), reducedRhs = visit70_784_1(production.rhs || production[1]), len = reducedRhs.length, i = 0, ret = undefined, $$ = valueStack[valueStack.length - len];
+          _$jscoverage['/kison/grammar.js'].lineData[790]++;
           self.$$ = $$;
-          _$jscoverage['/kison/grammar.js'].lineData[797]++;
-          for (; visit71_797_1(i < len); i++) {
-            _$jscoverage['/kison/grammar.js'].lineData[798]++;
+          _$jscoverage['/kison/grammar.js'].lineData[792]++;
+          for (; visit71_792_1(i < len); i++) {
+            _$jscoverage['/kison/grammar.js'].lineData[793]++;
             self["$" + (len - i)] = valueStack[valueStack.length - 1 - i];
           }
-          _$jscoverage['/kison/grammar.js'].lineData[801]++;
-          if (visit72_801_1(reducedAction)) {
-            _$jscoverage['/kison/grammar.js'].lineData[802]++;
+          _$jscoverage['/kison/grammar.js'].lineData[796]++;
+          if (visit72_796_1(reducedAction)) {
+            _$jscoverage['/kison/grammar.js'].lineData[797]++;
             ret = reducedAction.call(self);
           }
-          _$jscoverage['/kison/grammar.js'].lineData[805]++;
-          if (visit73_805_1(ret !== undefined)) {
-            _$jscoverage['/kison/grammar.js'].lineData[806]++;
+          _$jscoverage['/kison/grammar.js'].lineData[800]++;
+          if (visit73_800_1(ret !== undefined)) {
+            _$jscoverage['/kison/grammar.js'].lineData[801]++;
             $$ = ret;
           } else {
-            _$jscoverage['/kison/grammar.js'].lineData[808]++;
+            _$jscoverage['/kison/grammar.js'].lineData[803]++;
             $$ = self.$$;
           }
-          _$jscoverage['/kison/grammar.js'].lineData[811]++;
-          if (visit74_811_1(len)) {
-            _$jscoverage['/kison/grammar.js'].lineData[812]++;
+          _$jscoverage['/kison/grammar.js'].lineData[806]++;
+          if (visit74_806_1(len)) {
+            _$jscoverage['/kison/grammar.js'].lineData[807]++;
             stack = stack.slice(0, -1 * len * 2);
-            _$jscoverage['/kison/grammar.js'].lineData[813]++;
+            _$jscoverage['/kison/grammar.js'].lineData[808]++;
             valueStack = valueStack.slice(0, -1 * len);
           }
-          _$jscoverage['/kison/grammar.js'].lineData[816]++;
+          _$jscoverage['/kison/grammar.js'].lineData[811]++;
           stack.push(reducedSymbol);
-          _$jscoverage['/kison/grammar.js'].lineData[818]++;
+          _$jscoverage['/kison/grammar.js'].lineData[813]++;
           valueStack.push($$);
-          _$jscoverage['/kison/grammar.js'].lineData[820]++;
+          _$jscoverage['/kison/grammar.js'].lineData[815]++;
           var newState = gotos[stack[stack.length - 2]][stack[stack.length - 1]];
-          _$jscoverage['/kison/grammar.js'].lineData[822]++;
+          _$jscoverage['/kison/grammar.js'].lineData[817]++;
           stack.push(newState);
-          _$jscoverage['/kison/grammar.js'].lineData[824]++;
+          _$jscoverage['/kison/grammar.js'].lineData[819]++;
           break;
         case GrammarConst.ACCEPT_TYPE:
-          _$jscoverage['/kison/grammar.js'].lineData[828]++;
+          _$jscoverage['/kison/grammar.js'].lineData[822]++;
           return $$;
       }
     }
-    _$jscoverage['/kison/grammar.js'].lineData[833]++;
+    _$jscoverage['/kison/grammar.js'].lineData[827]++;
     return undefined;
   }
 }, {

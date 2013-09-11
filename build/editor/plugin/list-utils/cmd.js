@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Aug 27 21:56
+build time: Sep 11 12:48
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -10,6 +10,7 @@ build time: Aug 27 21:56
 */
 
 /**
+ * @ignore
  * Add ul and ol command identifier for KISSY Editor.
  * @author yiminghe@gmail.com
  */
@@ -18,7 +19,7 @@ KISSY.add("editor/plugin/list-utils/cmd", function (S, Editor, ListUtils, undefi
     var insertUnorderedList = "insertUnorderedList",
         insertOrderedList = "insertOrderedList",
         listNodeNames = {"ol": insertOrderedList, "ul": insertUnorderedList},
-        KER = Editor.RANGE,
+        KER = Editor.RangeType,
         ElementPath = Editor.ElementPath,
         Walker = Editor.Walker,
         UA = S.UA,

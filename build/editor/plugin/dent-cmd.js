@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Aug 27 21:53
+build time: Sep 11 12:45
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -10,7 +10,8 @@ build time: Aug 27 21:53
 */
 
 /**
- * Add indent and outdent command identifier for KISSY Editor.Modified from CKEditor
+ * @ignore
+ * Add indent and outdent command identifier for KISSY Editor.
  * @author yiminghe@gmail.com
  */
 /*
@@ -225,7 +226,6 @@ KISSY.add("editor/plugin/dent-cmd", function (S, Editor, ListUtils) {
         if (nearestListBlock
             && startContainer[0].nodeType == Dom.NodeType.ELEMENT_NODE
             && startContainer.nodeName() in listNodeNames) {
-            //S.log("indent from ul/ol");
             var walker = new Walker(range);
             walker.evaluator = isListItem;
             range.startContainer = walker.next();

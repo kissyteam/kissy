@@ -229,7 +229,7 @@ if (! this._$jscoverage) {
 if (! _$jscoverage['/i18n/en-us.js']) {
   _$jscoverage['/i18n/en-us.js'] = {};
   _$jscoverage['/i18n/en-us.js'].lineData = [];
-  _$jscoverage['/i18n/en-us.js'].lineData[5] = 0;
+  _$jscoverage['/i18n/en-us.js'].lineData[6] = 0;
 }
 if (! _$jscoverage['/i18n/en-us.js'].functionData) {
   _$jscoverage['/i18n/en-us.js'].functionData = [];
@@ -237,7 +237,7 @@ if (! _$jscoverage['/i18n/en-us.js'].functionData) {
 if (! _$jscoverage['/i18n/en-us.js'].branchData) {
   _$jscoverage['/i18n/en-us.js'].branchData = {};
 }
-_$jscoverage['/i18n/en-us.js'].lineData[5]++;
+_$jscoverage['/i18n/en-us.js'].lineData[6]++;
 KISSY.add('date/picker/i18n/en-us', {
   today: 'Today', 
   clear: 'Clear', 

@@ -229,35 +229,35 @@ if (! this._$jscoverage) {
 if (! _$jscoverage['/flash.js']) {
   _$jscoverage['/flash.js'] = {};
   _$jscoverage['/flash.js'].lineData = [];
-  _$jscoverage['/flash.js'].lineData[5] = 0;
   _$jscoverage['/flash.js'].lineData[6] = 0;
-  _$jscoverage['/flash.js'].lineData[9] = 0;
+  _$jscoverage['/flash.js'].lineData[7] = 0;
   _$jscoverage['/flash.js'].lineData[10] = 0;
-  _$jscoverage['/flash.js'].lineData[13] = 0;
-  _$jscoverage['/flash.js'].lineData[16] = 0;
-  _$jscoverage['/flash.js'].lineData[18] = 0;
-  _$jscoverage['/flash.js'].lineData[21] = 0;
-  _$jscoverage['/flash.js'].lineData[24] = 0;
+  _$jscoverage['/flash.js'].lineData[11] = 0;
+  _$jscoverage['/flash.js'].lineData[14] = 0;
+  _$jscoverage['/flash.js'].lineData[17] = 0;
+  _$jscoverage['/flash.js'].lineData[19] = 0;
+  _$jscoverage['/flash.js'].lineData[22] = 0;
   _$jscoverage['/flash.js'].lineData[25] = 0;
   _$jscoverage['/flash.js'].lineData[26] = 0;
-  _$jscoverage['/flash.js'].lineData[28] = 0;
+  _$jscoverage['/flash.js'].lineData[27] = 0;
   _$jscoverage['/flash.js'].lineData[29] = 0;
   _$jscoverage['/flash.js'].lineData[30] = 0;
   _$jscoverage['/flash.js'].lineData[31] = 0;
-  _$jscoverage['/flash.js'].lineData[35] = 0;
-  _$jscoverage['/flash.js'].lineData[39] = 0;
-  _$jscoverage['/flash.js'].lineData[41] = 0;
-  _$jscoverage['/flash.js'].lineData[45] = 0;
+  _$jscoverage['/flash.js'].lineData[32] = 0;
+  _$jscoverage['/flash.js'].lineData[36] = 0;
+  _$jscoverage['/flash.js'].lineData[40] = 0;
+  _$jscoverage['/flash.js'].lineData[42] = 0;
   _$jscoverage['/flash.js'].lineData[46] = 0;
-  _$jscoverage['/flash.js'].lineData[49] = 0;
-  _$jscoverage['/flash.js'].lineData[56] = 0;
-  _$jscoverage['/flash.js'].lineData[65] = 0;
+  _$jscoverage['/flash.js'].lineData[47] = 0;
+  _$jscoverage['/flash.js'].lineData[50] = 0;
+  _$jscoverage['/flash.js'].lineData[57] = 0;
   _$jscoverage['/flash.js'].lineData[66] = 0;
   _$jscoverage['/flash.js'].lineData[67] = 0;
-  _$jscoverage['/flash.js'].lineData[73] = 0;
-  _$jscoverage['/flash.js'].lineData[75] = 0;
-  _$jscoverage['/flash.js'].lineData[79] = 0;
-  _$jscoverage['/flash.js'].lineData[87] = 0;
+  _$jscoverage['/flash.js'].lineData[68] = 0;
+  _$jscoverage['/flash.js'].lineData[74] = 0;
+  _$jscoverage['/flash.js'].lineData[76] = 0;
+  _$jscoverage['/flash.js'].lineData[80] = 0;
+  _$jscoverage['/flash.js'].lineData[88] = 0;
 }
 if (! _$jscoverage['/flash.js'].functionData) {
   _$jscoverage['/flash.js'].functionData = [];
@@ -271,111 +271,111 @@ if (! _$jscoverage['/flash.js'].functionData) {
 }
 if (! _$jscoverage['/flash.js'].branchData) {
   _$jscoverage['/flash.js'].branchData = {};
-  _$jscoverage['/flash.js'].branchData['10'] = [];
-  _$jscoverage['/flash.js'].branchData['10'][1] = new BranchData();
-  _$jscoverage['/flash.js'].branchData['25'] = [];
-  _$jscoverage['/flash.js'].branchData['25'][1] = new BranchData();
-  _$jscoverage['/flash.js'].branchData['28'] = [];
-  _$jscoverage['/flash.js'].branchData['28'][1] = new BranchData();
+  _$jscoverage['/flash.js'].branchData['11'] = [];
+  _$jscoverage['/flash.js'].branchData['11'][1] = new BranchData();
+  _$jscoverage['/flash.js'].branchData['26'] = [];
+  _$jscoverage['/flash.js'].branchData['26'][1] = new BranchData();
   _$jscoverage['/flash.js'].branchData['29'] = [];
   _$jscoverage['/flash.js'].branchData['29'][1] = new BranchData();
   _$jscoverage['/flash.js'].branchData['30'] = [];
   _$jscoverage['/flash.js'].branchData['30'][1] = new BranchData();
-  _$jscoverage['/flash.js'].branchData['45'] = [];
-  _$jscoverage['/flash.js'].branchData['45'][1] = new BranchData();
-  _$jscoverage['/flash.js'].branchData['66'] = [];
-  _$jscoverage['/flash.js'].branchData['66'][1] = new BranchData();
+  _$jscoverage['/flash.js'].branchData['31'] = [];
+  _$jscoverage['/flash.js'].branchData['31'][1] = new BranchData();
+  _$jscoverage['/flash.js'].branchData['46'] = [];
+  _$jscoverage['/flash.js'].branchData['46'][1] = new BranchData();
+  _$jscoverage['/flash.js'].branchData['67'] = [];
+  _$jscoverage['/flash.js'].branchData['67'][1] = new BranchData();
 }
-_$jscoverage['/flash.js'].branchData['66'][1].init(102, 10, 'selectedEl');
-function visit7_66_1(result) {
-  _$jscoverage['/flash.js'].branchData['66'][1].ranCondition(result);
+_$jscoverage['/flash.js'].branchData['67'][1].init(102, 10, 'selectedEl');
+function visit7_67_1(result) {
+  _$jscoverage['/flash.js'].branchData['67'][1].ranCondition(result);
   return result;
-}_$jscoverage['/flash.js'].branchData['45'][1].init(34, 32, 'flashUtils.isFlashEmbed(element)');
-function visit6_45_1(result) {
-  _$jscoverage['/flash.js'].branchData['45'][1].ranCondition(result);
+}_$jscoverage['/flash.js'].branchData['46'][1].init(34, 32, 'flashUtils.isFlashEmbed(element)');
+function visit6_46_1(result) {
+  _$jscoverage['/flash.js'].branchData['46'][1].ranCondition(result);
   return result;
-}_$jscoverage['/flash.js'].branchData['30'][1].init(46, 44, '!flashUtils.isFlashEmbed(childNodes[i][i])');
-function visit5_30_1(result) {
+}_$jscoverage['/flash.js'].branchData['31'][1].init(46, 44, '!flashUtils.isFlashEmbed(childNodes[i][i])');
+function visit5_31_1(result) {
+  _$jscoverage['/flash.js'].branchData['31'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/flash.js'].branchData['30'][1].init(42, 33, 'childNodes[i].nodeName == \'embed\'');
+function visit4_30_1(result) {
   _$jscoverage['/flash.js'].branchData['30'][1].ranCondition(result);
   return result;
-}_$jscoverage['/flash.js'].branchData['29'][1].init(42, 33, 'childNodes[i].nodeName == \'embed\'');
-function visit4_29_1(result) {
+}_$jscoverage['/flash.js'].branchData['29'][1].init(179, 21, 'i < childNodes.length');
+function visit3_29_1(result) {
   _$jscoverage['/flash.js'].branchData['29'][1].ranCondition(result);
   return result;
-}_$jscoverage['/flash.js'].branchData['28'][1].init(179, 21, 'i < childNodes.length');
-function visit3_28_1(result) {
-  _$jscoverage['/flash.js'].branchData['28'][1].ranCondition(result);
+}_$jscoverage['/flash.js'].branchData['26'][1].init(113, 8, '!classId');
+function visit2_26_1(result) {
+  _$jscoverage['/flash.js'].branchData['26'][1].ranCondition(result);
   return result;
-}_$jscoverage['/flash.js'].branchData['25'][1].init(113, 8, '!classId');
-function visit2_25_1(result) {
-  _$jscoverage['/flash.js'].branchData['25'][1].ranCondition(result);
+}_$jscoverage['/flash.js'].branchData['11'][1].init(24, 12, 'config || {}');
+function visit1_11_1(result) {
+  _$jscoverage['/flash.js'].branchData['11'][1].ranCondition(result);
   return result;
-}_$jscoverage['/flash.js'].branchData['10'][1].init(24, 12, 'config || {}');
-function visit1_10_1(result) {
-  _$jscoverage['/flash.js'].branchData['10'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/flash.js'].lineData[5]++;
+}_$jscoverage['/flash.js'].lineData[6]++;
 KISSY.add("editor/plugin/flash", function(S, Editor, FlashBaseClass, flashUtils, fakeObjects) {
   _$jscoverage['/flash.js'].functionData[0]++;
-  _$jscoverage['/flash.js'].lineData[6]++;
+  _$jscoverage['/flash.js'].lineData[7]++;
   var CLS_FLASH = 'ke_flash', TYPE_FLASH = 'flash';
-  _$jscoverage['/flash.js'].lineData[9]++;
+  _$jscoverage['/flash.js'].lineData[10]++;
   function FlashPlugin(config) {
     _$jscoverage['/flash.js'].functionData[1]++;
-    _$jscoverage['/flash.js'].lineData[10]++;
-    this.config = visit1_10_1(config || {});
+    _$jscoverage['/flash.js'].lineData[11]++;
+    this.config = visit1_11_1(config || {});
   }
-  _$jscoverage['/flash.js'].lineData[13]++;
+  _$jscoverage['/flash.js'].lineData[14]++;
   S.augment(FlashPlugin, {
   pluginRenderUI: function(editor) {
   _$jscoverage['/flash.js'].functionData[2]++;
-  _$jscoverage['/flash.js'].lineData[16]++;
+  _$jscoverage['/flash.js'].lineData[17]++;
   fakeObjects.init(editor);
-  _$jscoverage['/flash.js'].lineData[18]++;
+  _$jscoverage['/flash.js'].lineData[19]++;
   var dataProcessor = editor.htmlDataProcessor, dataFilter = dataProcessor.dataFilter;
-  _$jscoverage['/flash.js'].lineData[21]++;
+  _$jscoverage['/flash.js'].lineData[22]++;
   dataFilter.addRules({
   tags: {
   'object': function(element) {
   _$jscoverage['/flash.js'].functionData[3]++;
-  _$jscoverage['/flash.js'].lineData[24]++;
-  var classId = element.getAttribute("classid"), i;
   _$jscoverage['/flash.js'].lineData[25]++;
-  if (visit2_25_1(!classId)) {
-    _$jscoverage['/flash.js'].lineData[26]++;
+  var classId = element.getAttribute("classid"), i;
+  _$jscoverage['/flash.js'].lineData[26]++;
+  if (visit2_26_1(!classId)) {
+    _$jscoverage['/flash.js'].lineData[27]++;
     var childNodes = element.childNodes;
-    _$jscoverage['/flash.js'].lineData[28]++;
-    for (i = 0; visit3_28_1(i < childNodes.length); i++) {
-      _$jscoverage['/flash.js'].lineData[29]++;
-      if (visit4_29_1(childNodes[i].nodeName == 'embed')) {
-        _$jscoverage['/flash.js'].lineData[30]++;
-        if (visit5_30_1(!flashUtils.isFlashEmbed(childNodes[i][i]))) {
-          _$jscoverage['/flash.js'].lineData[31]++;
+    _$jscoverage['/flash.js'].lineData[29]++;
+    for (i = 0; visit3_29_1(i < childNodes.length); i++) {
+      _$jscoverage['/flash.js'].lineData[30]++;
+      if (visit4_30_1(childNodes[i].nodeName == 'embed')) {
+        _$jscoverage['/flash.js'].lineData[31]++;
+        if (visit5_31_1(!flashUtils.isFlashEmbed(childNodes[i][i]))) {
+          _$jscoverage['/flash.js'].lineData[32]++;
           return dataProcessor.createFakeParserElement(element, CLS_FLASH, TYPE_FLASH, true);
         } else {
-          _$jscoverage['/flash.js'].lineData[35]++;
+          _$jscoverage['/flash.js'].lineData[36]++;
           return null;
         }
       }
     }
-    _$jscoverage['/flash.js'].lineData[39]++;
+    _$jscoverage['/flash.js'].lineData[40]++;
     return null;
   }
-  _$jscoverage['/flash.js'].lineData[41]++;
+  _$jscoverage['/flash.js'].lineData[42]++;
   return dataProcessor.createFakeParserElement(element, CLS_FLASH, TYPE_FLASH, true);
 }, 
   'embed': function(element) {
   _$jscoverage['/flash.js'].functionData[4]++;
-  _$jscoverage['/flash.js'].lineData[45]++;
-  if (visit6_45_1(flashUtils.isFlashEmbed(element))) {
-    _$jscoverage['/flash.js'].lineData[46]++;
+  _$jscoverage['/flash.js'].lineData[46]++;
+  if (visit6_46_1(flashUtils.isFlashEmbed(element))) {
+    _$jscoverage['/flash.js'].lineData[47]++;
     return dataProcessor.createFakeParserElement(element, CLS_FLASH, TYPE_FLASH, true);
   } else {
-    _$jscoverage['/flash.js'].lineData[49]++;
+    _$jscoverage['/flash.js'].lineData[50]++;
     return null;
   }
 }}}, 5);
-  _$jscoverage['/flash.js'].lineData[56]++;
+  _$jscoverage['/flash.js'].lineData[57]++;
   var flashControl = new FlashBaseClass({
   editor: editor, 
   cls: CLS_FLASH, 
@@ -386,28 +386,28 @@ KISSY.add("editor/plugin/flash", function(S, Editor, FlashBaseClass, flashUtils,
   contextMenuHandlers: {
   "Flash\u5c5e\u6027": function() {
   _$jscoverage['/flash.js'].functionData[5]++;
-  _$jscoverage['/flash.js'].lineData[65]++;
-  var selectedEl = this.get("editorSelectedEl");
   _$jscoverage['/flash.js'].lineData[66]++;
-  if (visit7_66_1(selectedEl)) {
-    _$jscoverage['/flash.js'].lineData[67]++;
+  var selectedEl = this.get("editorSelectedEl");
+  _$jscoverage['/flash.js'].lineData[67]++;
+  if (visit7_67_1(selectedEl)) {
+    _$jscoverage['/flash.js'].lineData[68]++;
     flashControl.show(selectedEl);
   }
 }}});
-  _$jscoverage['/flash.js'].lineData[73]++;
+  _$jscoverage['/flash.js'].lineData[74]++;
   this.flashControl = flashControl;
-  _$jscoverage['/flash.js'].lineData[75]++;
+  _$jscoverage['/flash.js'].lineData[76]++;
   editor.addButton("flash", {
   tooltip: "\u63d2\u5165Flash", 
   listeners: {
   click: function() {
   _$jscoverage['/flash.js'].functionData[6]++;
-  _$jscoverage['/flash.js'].lineData[79]++;
+  _$jscoverage['/flash.js'].lineData[80]++;
   flashControl.show();
 }}, 
   mode: Editor.Mode.WYSIWYG_MODE});
 }});
-  _$jscoverage['/flash.js'].lineData[87]++;
+  _$jscoverage['/flash.js'].lineData[88]++;
   return FlashPlugin;
 }, {
   requires: ['editor', './flash-common/base-class', './flash-common/utils', './fake-objects']});

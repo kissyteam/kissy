@@ -229,10 +229,10 @@ if (! this._$jscoverage) {
 if (! _$jscoverage['/cmd.js']) {
   _$jscoverage['/cmd.js'] = {};
   _$jscoverage['/cmd.js'].lineData = [];
-  _$jscoverage['/cmd.js'].lineData[5] = 0;
-  _$jscoverage['/cmd.js'].lineData[7] = 0;
-  _$jscoverage['/cmd.js'].lineData[18] = 0;
-  _$jscoverage['/cmd.js'].lineData[20] = 0;
+  _$jscoverage['/cmd.js'].lineData[6] = 0;
+  _$jscoverage['/cmd.js'].lineData[8] = 0;
+  _$jscoverage['/cmd.js'].lineData[19] = 0;
+  _$jscoverage['/cmd.js'].lineData[21] = 0;
 }
 if (! _$jscoverage['/cmd.js'].functionData) {
   _$jscoverage['/cmd.js'].functionData = [];
@@ -242,21 +242,21 @@ if (! _$jscoverage['/cmd.js'].functionData) {
 if (! _$jscoverage['/cmd.js'].branchData) {
   _$jscoverage['/cmd.js'].branchData = {};
 }
-_$jscoverage['/cmd.js'].lineData[5]++;
+_$jscoverage['/cmd.js'].lineData[6]++;
 KISSY.add("editor/plugin/underline/cmd", function(S, Editor, Cmd) {
   _$jscoverage['/cmd.js'].functionData[0]++;
-  _$jscoverage['/cmd.js'].lineData[7]++;
+  _$jscoverage['/cmd.js'].lineData[8]++;
   var UNDERLINE_STYLE = new Editor.Style({
   element: 'u', 
   overrides: [{
   element: 'span', 
   attributes: {
   style: 'text-decoration: underline;'}}]});
-  _$jscoverage['/cmd.js'].lineData[18]++;
+  _$jscoverage['/cmd.js'].lineData[19]++;
   return {
   init: function(editor) {
   _$jscoverage['/cmd.js'].functionData[1]++;
-  _$jscoverage['/cmd.js'].lineData[20]++;
+  _$jscoverage['/cmd.js'].lineData[21]++;
   Cmd.addButtonCmd(editor, "underline", UNDERLINE_STYLE);
 }};
 }, {

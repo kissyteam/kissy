@@ -229,13 +229,13 @@ if (! this._$jscoverage) {
 if (! _$jscoverage['/fore-color.js']) {
   _$jscoverage['/fore-color.js'] = {};
   _$jscoverage['/fore-color.js'].lineData = [];
-  _$jscoverage['/fore-color.js'].lineData[5] = 0;
   _$jscoverage['/fore-color.js'].lineData[6] = 0;
   _$jscoverage['/fore-color.js'].lineData[7] = 0;
-  _$jscoverage['/fore-color.js'].lineData[10] = 0;
-  _$jscoverage['/fore-color.js'].lineData[12] = 0;
+  _$jscoverage['/fore-color.js'].lineData[8] = 0;
+  _$jscoverage['/fore-color.js'].lineData[11] = 0;
   _$jscoverage['/fore-color.js'].lineData[13] = 0;
-  _$jscoverage['/fore-color.js'].lineData[21] = 0;
+  _$jscoverage['/fore-color.js'].lineData[14] = 0;
+  _$jscoverage['/fore-color.js'].lineData[22] = 0;
 }
 if (! _$jscoverage['/fore-color.js'].functionData) {
   _$jscoverage['/fore-color.js'].functionData = [];
@@ -245,35 +245,35 @@ if (! _$jscoverage['/fore-color.js'].functionData) {
 }
 if (! _$jscoverage['/fore-color.js'].branchData) {
   _$jscoverage['/fore-color.js'].branchData = {};
-  _$jscoverage['/fore-color.js'].branchData['7'] = [];
-  _$jscoverage['/fore-color.js'].branchData['7'][1] = new BranchData();
+  _$jscoverage['/fore-color.js'].branchData['8'] = [];
+  _$jscoverage['/fore-color.js'].branchData['8'][1] = new BranchData();
 }
-_$jscoverage['/fore-color.js'].branchData['7'][1].init(24, 12, 'config || {}');
-function visit1_7_1(result) {
-  _$jscoverage['/fore-color.js'].branchData['7'][1].ranCondition(result);
+_$jscoverage['/fore-color.js'].branchData['8'][1].init(24, 12, 'config || {}');
+function visit1_8_1(result) {
+  _$jscoverage['/fore-color.js'].branchData['8'][1].ranCondition(result);
   return result;
-}_$jscoverage['/fore-color.js'].lineData[5]++;
+}_$jscoverage['/fore-color.js'].lineData[6]++;
 KISSY.add("editor/plugin/fore-color", function(S, Editor, Button, cmd) {
   _$jscoverage['/fore-color.js'].functionData[0]++;
-  _$jscoverage['/fore-color.js'].lineData[6]++;
+  _$jscoverage['/fore-color.js'].lineData[7]++;
   function ForeColorPlugin(config) {
     _$jscoverage['/fore-color.js'].functionData[1]++;
-    _$jscoverage['/fore-color.js'].lineData[7]++;
-    this.config = visit1_7_1(config || {});
+    _$jscoverage['/fore-color.js'].lineData[8]++;
+    this.config = visit1_8_1(config || {});
   }
-  _$jscoverage['/fore-color.js'].lineData[10]++;
+  _$jscoverage['/fore-color.js'].lineData[11]++;
   S.augment(ForeColorPlugin, {
   pluginRenderUI: function(editor) {
   _$jscoverage['/fore-color.js'].functionData[2]++;
-  _$jscoverage['/fore-color.js'].lineData[12]++;
-  cmd.init(editor);
   _$jscoverage['/fore-color.js'].lineData[13]++;
+  cmd.init(editor);
+  _$jscoverage['/fore-color.js'].lineData[14]++;
   Button.init(editor, {
   cmdType: 'foreColor', 
   defaultColor: 'rgb(204, 0, 0)', 
   tooltip: "\u6587\u672c\u989c\u8272"});
 }});
-  _$jscoverage['/fore-color.js'].lineData[21]++;
+  _$jscoverage['/fore-color.js'].lineData[22]++;
   return ForeColorPlugin;
 }, {
   requires: ['editor', './color/btn', './fore-color/cmd']});

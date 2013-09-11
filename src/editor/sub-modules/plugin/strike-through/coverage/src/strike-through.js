@@ -229,12 +229,12 @@ if (! this._$jscoverage) {
 if (! _$jscoverage['/strike-through.js']) {
   _$jscoverage['/strike-through.js'] = {};
   _$jscoverage['/strike-through.js'].lineData = [];
-  _$jscoverage['/strike-through.js'].lineData[5] = 0;
   _$jscoverage['/strike-through.js'].lineData[6] = 0;
-  _$jscoverage['/strike-through.js'].lineData[9] = 0;
-  _$jscoverage['/strike-through.js'].lineData[11] = 0;
+  _$jscoverage['/strike-through.js'].lineData[7] = 0;
+  _$jscoverage['/strike-through.js'].lineData[10] = 0;
   _$jscoverage['/strike-through.js'].lineData[12] = 0;
-  _$jscoverage['/strike-through.js'].lineData[19] = 0;
+  _$jscoverage['/strike-through.js'].lineData[13] = 0;
+  _$jscoverage['/strike-through.js'].lineData[20] = 0;
 }
 if (! _$jscoverage['/strike-through.js'].functionData) {
   _$jscoverage['/strike-through.js'].functionData = [];
@@ -245,25 +245,25 @@ if (! _$jscoverage['/strike-through.js'].functionData) {
 if (! _$jscoverage['/strike-through.js'].branchData) {
   _$jscoverage['/strike-through.js'].branchData = {};
 }
-_$jscoverage['/strike-through.js'].lineData[5]++;
+_$jscoverage['/strike-through.js'].lineData[6]++;
 KISSY.add("editor/plugin/strike-through", function(S, Editor, ui, cmd) {
   _$jscoverage['/strike-through.js'].functionData[0]++;
-  _$jscoverage['/strike-through.js'].lineData[6]++;
+  _$jscoverage['/strike-through.js'].lineData[7]++;
   function StrikeThrough() {
     _$jscoverage['/strike-through.js'].functionData[1]++;
   }
-  _$jscoverage['/strike-through.js'].lineData[9]++;
+  _$jscoverage['/strike-through.js'].lineData[10]++;
   S.augment(StrikeThrough, {
   pluginRenderUI: function(editor) {
   _$jscoverage['/strike-through.js'].functionData[2]++;
-  _$jscoverage['/strike-through.js'].lineData[11]++;
-  cmd.init(editor);
   _$jscoverage['/strike-through.js'].lineData[12]++;
+  cmd.init(editor);
+  _$jscoverage['/strike-through.js'].lineData[13]++;
   editor.addButton("strikeThrough", {
   cmdType: "strikeThrough", 
   tooltip: "\u5220\u9664\u7ebf "}, ui.Button);
 }});
-  _$jscoverage['/strike-through.js'].lineData[19]++;
+  _$jscoverage['/strike-through.js'].lineData[20]++;
   return StrikeThrough;
 }, {
   requires: ['editor', './font/ui', './strike-through/cmd']});

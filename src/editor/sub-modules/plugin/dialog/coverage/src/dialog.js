@@ -229,17 +229,17 @@ if (! this._$jscoverage) {
 if (! _$jscoverage['/dialog.js']) {
   _$jscoverage['/dialog.js'] = {};
   _$jscoverage['/dialog.js'].lineData = [];
-  _$jscoverage['/dialog.js'].lineData[5] = 0;
-  _$jscoverage['/dialog.js'].lineData[8] = 0;
-  _$jscoverage['/dialog.js'].lineData[11] = 0;
-  _$jscoverage['/dialog.js'].lineData[22] = 0;
-  _$jscoverage['/dialog.js'].lineData[26] = 0;
-  _$jscoverage['/dialog.js'].lineData[28] = 0;
+  _$jscoverage['/dialog.js'].lineData[6] = 0;
+  _$jscoverage['/dialog.js'].lineData[9] = 0;
+  _$jscoverage['/dialog.js'].lineData[12] = 0;
+  _$jscoverage['/dialog.js'].lineData[23] = 0;
+  _$jscoverage['/dialog.js'].lineData[27] = 0;
   _$jscoverage['/dialog.js'].lineData[29] = 0;
-  _$jscoverage['/dialog.js'].lineData[31] = 0;
+  _$jscoverage['/dialog.js'].lineData[30] = 0;
   _$jscoverage['/dialog.js'].lineData[32] = 0;
   _$jscoverage['/dialog.js'].lineData[33] = 0;
-  _$jscoverage['/dialog.js'].lineData[35] = 0;
+  _$jscoverage['/dialog.js'].lineData[34] = 0;
+  _$jscoverage['/dialog.js'].lineData[36] = 0;
 }
 if (! _$jscoverage['/dialog.js'].functionData) {
   _$jscoverage['/dialog.js'].functionData = [];
@@ -250,21 +250,21 @@ if (! _$jscoverage['/dialog.js'].functionData) {
 }
 if (! _$jscoverage['/dialog.js'].branchData) {
   _$jscoverage['/dialog.js'].branchData = {};
-  _$jscoverage['/dialog.js'].branchData['31'] = [];
-  _$jscoverage['/dialog.js'].branchData['31'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['32'] = [];
+  _$jscoverage['/dialog.js'].branchData['32'][1] = new BranchData();
 }
-_$jscoverage['/dialog.js'].branchData['31'][1].init(161, 27, 'y - S.DOM.scrollTop() > 200');
-function visit1_31_1(result) {
-  _$jscoverage['/dialog.js'].branchData['31'][1].ranCondition(result);
+_$jscoverage['/dialog.js'].branchData['32'][1].init(161, 27, 'y - S.DOM.scrollTop() > 200');
+function visit1_32_1(result) {
+  _$jscoverage['/dialog.js'].branchData['32'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].lineData[5]++;
+}_$jscoverage['/dialog.js'].lineData[6]++;
 KISSY.add("editor/plugin/dialog", function(S, Editor, Overlay, focusFix, ConstrainPlugin, DragPlugin) {
   _$jscoverage['/dialog.js'].functionData[0]++;
-  _$jscoverage['/dialog.js'].lineData[8]++;
+  _$jscoverage['/dialog.js'].lineData[9]++;
   return Overlay.Dialog.extend({
   initializer: function() {
   _$jscoverage['/dialog.js'].functionData[1]++;
-  _$jscoverage['/dialog.js'].lineData[11]++;
+  _$jscoverage['/dialog.js'].lineData[12]++;
   this.plug(new DragPlugin({
   handlers: ['.ks-editor-dialog-header'], 
   plugins: [new ConstrainPlugin({
@@ -272,25 +272,25 @@ KISSY.add("editor/plugin/dialog", function(S, Editor, Overlay, focusFix, Constra
 }, 
   bindUI: function() {
   _$jscoverage['/dialog.js'].functionData[2]++;
-  _$jscoverage['/dialog.js'].lineData[22]++;
+  _$jscoverage['/dialog.js'].lineData[23]++;
   focusFix.init(this);
 }, 
   show: function() {
   _$jscoverage['/dialog.js'].functionData[3]++;
-  _$jscoverage['/dialog.js'].lineData[26]++;
+  _$jscoverage['/dialog.js'].lineData[27]++;
   var self = this;
-  _$jscoverage['/dialog.js'].lineData[28]++;
-  self.center();
   _$jscoverage['/dialog.js'].lineData[29]++;
+  self.center();
+  _$jscoverage['/dialog.js'].lineData[30]++;
   var y = self.get("y");
-  _$jscoverage['/dialog.js'].lineData[31]++;
-  if (visit1_31_1(y - S.DOM.scrollTop() > 200)) {
-    _$jscoverage['/dialog.js'].lineData[32]++;
-    y = S.DOM.scrollTop() + 200;
+  _$jscoverage['/dialog.js'].lineData[32]++;
+  if (visit1_32_1(y - S.DOM.scrollTop() > 200)) {
     _$jscoverage['/dialog.js'].lineData[33]++;
+    y = S.DOM.scrollTop() + 200;
+    _$jscoverage['/dialog.js'].lineData[34]++;
     self.set("y", y);
   }
-  _$jscoverage['/dialog.js'].lineData[35]++;
+  _$jscoverage['/dialog.js'].lineData[36]++;
   self.callSuper();
 }}, {
   ATTRS: {

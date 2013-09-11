@@ -4,7 +4,7 @@
 <script src="/kissy/src/package.js"></script>
 <script type="text/javascript">
     document.writeln('<iframe src="' +
-            'http://' + location.hostname + ':9999/kissy/src/' +
+            'http://' + location.hostname + ':'+SERVER_CONFIG.ports[1]+'/kissy/src/' +
             'io/tests/others/xdr/set-cookie.html' +
             '"></iframe>')
 </script>
@@ -20,7 +20,7 @@
                     },
                     cache: false,
                     dataType: 'json',
-                    url: 'http://' + location.hostname + ':9999/kissy/src/' +
+                    url: 'http://' + location.hostname + ':'+SERVER_CONFIG.ports[1]+'/kissy/src/' +
                             'io/tests/others/xdr/xdr.jss',
                     xhrFields: {
                         // Cannot use wildcard in Access-Control-Allow-Origin

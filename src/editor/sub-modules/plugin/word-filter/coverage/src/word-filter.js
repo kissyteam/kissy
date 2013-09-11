@@ -229,26 +229,26 @@ if (! this._$jscoverage) {
 if (! _$jscoverage['/word-filter.js']) {
   _$jscoverage['/word-filter.js'] = {};
   _$jscoverage['/word-filter.js'].lineData = [];
-  _$jscoverage['/word-filter.js'].lineData[5] = 0;
   _$jscoverage['/word-filter.js'].lineData[6] = 0;
-  _$jscoverage['/word-filter.js'].lineData[50] = 0;
+  _$jscoverage['/word-filter.js'].lineData[7] = 0;
   _$jscoverage['/word-filter.js'].lineData[51] = 0;
   _$jscoverage['/word-filter.js'].lineData[52] = 0;
   _$jscoverage['/word-filter.js'].lineData[53] = 0;
   _$jscoverage['/word-filter.js'].lineData[54] = 0;
   _$jscoverage['/word-filter.js'].lineData[55] = 0;
-  _$jscoverage['/word-filter.js'].lineData[58] = 0;
-  _$jscoverage['/word-filter.js'].lineData[62] = 0;
+  _$jscoverage['/word-filter.js'].lineData[56] = 0;
+  _$jscoverage['/word-filter.js'].lineData[59] = 0;
   _$jscoverage['/word-filter.js'].lineData[63] = 0;
   _$jscoverage['/word-filter.js'].lineData[64] = 0;
   _$jscoverage['/word-filter.js'].lineData[65] = 0;
   _$jscoverage['/word-filter.js'].lineData[66] = 0;
   _$jscoverage['/word-filter.js'].lineData[67] = 0;
-  _$jscoverage['/word-filter.js'].lineData[69] = 0;
-  _$jscoverage['/word-filter.js'].lineData[72] = 0;
+  _$jscoverage['/word-filter.js'].lineData[68] = 0;
+  _$jscoverage['/word-filter.js'].lineData[70] = 0;
   _$jscoverage['/word-filter.js'].lineData[73] = 0;
   _$jscoverage['/word-filter.js'].lineData[74] = 0;
-  _$jscoverage['/word-filter.js'].lineData[76] = 0;
+  _$jscoverage['/word-filter.js'].lineData[75] = 0;
+  _$jscoverage['/word-filter.js'].lineData[77] = 0;
   _$jscoverage['/word-filter.js'].lineData[85] = 0;
   _$jscoverage['/word-filter.js'].lineData[86] = 0;
   _$jscoverage['/word-filter.js'].lineData[88] = 0;
@@ -345,330 +345,330 @@ if (! _$jscoverage['/word-filter.js']) {
   _$jscoverage['/word-filter.js'].lineData[287] = 0;
   _$jscoverage['/word-filter.js'].lineData[292] = 0;
   _$jscoverage['/word-filter.js'].lineData[295] = 0;
-  _$jscoverage['/word-filter.js'].lineData[304] = 0;
-  _$jscoverage['/word-filter.js'].lineData[316] = 0;
+  _$jscoverage['/word-filter.js'].lineData[303] = 0;
+  _$jscoverage['/word-filter.js'].lineData[315] = 0;
+  _$jscoverage['/word-filter.js'].lineData[320] = 0;
   _$jscoverage['/word-filter.js'].lineData[321] = 0;
-  _$jscoverage['/word-filter.js'].lineData[322] = 0;
+  _$jscoverage['/word-filter.js'].lineData[323] = 0;
   _$jscoverage['/word-filter.js'].lineData[324] = 0;
   _$jscoverage['/word-filter.js'].lineData[325] = 0;
-  _$jscoverage['/word-filter.js'].lineData[326] = 0;
+  _$jscoverage['/word-filter.js'].lineData[327] = 0;
   _$jscoverage['/word-filter.js'].lineData[328] = 0;
   _$jscoverage['/word-filter.js'].lineData[329] = 0;
-  _$jscoverage['/word-filter.js'].lineData[330] = 0;
+  _$jscoverage['/word-filter.js'].lineData[331] = 0;
   _$jscoverage['/word-filter.js'].lineData[332] = 0;
   _$jscoverage['/word-filter.js'].lineData[333] = 0;
-  _$jscoverage['/word-filter.js'].lineData[334] = 0;
-  _$jscoverage['/word-filter.js'].lineData[339] = 0;
-  _$jscoverage['/word-filter.js'].lineData[344] = 0;
+  _$jscoverage['/word-filter.js'].lineData[338] = 0;
+  _$jscoverage['/word-filter.js'].lineData[343] = 0;
+  _$jscoverage['/word-filter.js'].lineData[346] = 0;
   _$jscoverage['/word-filter.js'].lineData[347] = 0;
-  _$jscoverage['/word-filter.js'].lineData[348] = 0;
+  _$jscoverage['/word-filter.js'].lineData[350] = 0;
   _$jscoverage['/word-filter.js'].lineData[351] = 0;
   _$jscoverage['/word-filter.js'].lineData[352] = 0;
-  _$jscoverage['/word-filter.js'].lineData[353] = 0;
-  _$jscoverage['/word-filter.js'].lineData[358] = 0;
+  _$jscoverage['/word-filter.js'].lineData[357] = 0;
+  _$jscoverage['/word-filter.js'].lineData[359] = 0;
   _$jscoverage['/word-filter.js'].lineData[360] = 0;
-  _$jscoverage['/word-filter.js'].lineData[361] = 0;
-  _$jscoverage['/word-filter.js'].lineData[364] = 0;
-  _$jscoverage['/word-filter.js'].lineData[366] = 0;
-  _$jscoverage['/word-filter.js'].lineData[368] = 0;
+  _$jscoverage['/word-filter.js'].lineData[363] = 0;
+  _$jscoverage['/word-filter.js'].lineData[365] = 0;
+  _$jscoverage['/word-filter.js'].lineData[367] = 0;
+  _$jscoverage['/word-filter.js'].lineData[370] = 0;
   _$jscoverage['/word-filter.js'].lineData[371] = 0;
   _$jscoverage['/word-filter.js'].lineData[372] = 0;
   _$jscoverage['/word-filter.js'].lineData[373] = 0;
   _$jscoverage['/word-filter.js'].lineData[374] = 0;
   _$jscoverage['/word-filter.js'].lineData[375] = 0;
-  _$jscoverage['/word-filter.js'].lineData[376] = 0;
+  _$jscoverage['/word-filter.js'].lineData[379] = 0;
   _$jscoverage['/word-filter.js'].lineData[380] = 0;
   _$jscoverage['/word-filter.js'].lineData[381] = 0;
-  _$jscoverage['/word-filter.js'].lineData[382] = 0;
-  _$jscoverage['/word-filter.js'].lineData[392] = 0;
+  _$jscoverage['/word-filter.js'].lineData[391] = 0;
+  _$jscoverage['/word-filter.js'].lineData[394] = 0;
   _$jscoverage['/word-filter.js'].lineData[395] = 0;
   _$jscoverage['/word-filter.js'].lineData[396] = 0;
   _$jscoverage['/word-filter.js'].lineData[397] = 0;
-  _$jscoverage['/word-filter.js'].lineData[398] = 0;
+  _$jscoverage['/word-filter.js'].lineData[400] = 0;
   _$jscoverage['/word-filter.js'].lineData[401] = 0;
-  _$jscoverage['/word-filter.js'].lineData[402] = 0;
+  _$jscoverage['/word-filter.js'].lineData[403] = 0;
   _$jscoverage['/word-filter.js'].lineData[404] = 0;
-  _$jscoverage['/word-filter.js'].lineData[405] = 0;
+  _$jscoverage['/word-filter.js'].lineData[407] = 0;
   _$jscoverage['/word-filter.js'].lineData[408] = 0;
-  _$jscoverage['/word-filter.js'].lineData[409] = 0;
+  _$jscoverage['/word-filter.js'].lineData[411] = 0;
   _$jscoverage['/word-filter.js'].lineData[412] = 0;
-  _$jscoverage['/word-filter.js'].lineData[413] = 0;
-  _$jscoverage['/word-filter.js'].lineData[417] = 0;
+  _$jscoverage['/word-filter.js'].lineData[416] = 0;
+  _$jscoverage['/word-filter.js'].lineData[420] = 0;
   _$jscoverage['/word-filter.js'].lineData[421] = 0;
   _$jscoverage['/word-filter.js'].lineData[422] = 0;
   _$jscoverage['/word-filter.js'].lineData[423] = 0;
-  _$jscoverage['/word-filter.js'].lineData[424] = 0;
+  _$jscoverage['/word-filter.js'].lineData[425] = 0;
   _$jscoverage['/word-filter.js'].lineData[426] = 0;
   _$jscoverage['/word-filter.js'].lineData[427] = 0;
   _$jscoverage['/word-filter.js'].lineData[428] = 0;
-  _$jscoverage['/word-filter.js'].lineData[429] = 0;
-  _$jscoverage['/word-filter.js'].lineData[431] = 0;
-  _$jscoverage['/word-filter.js'].lineData[433] = 0;
+  _$jscoverage['/word-filter.js'].lineData[430] = 0;
+  _$jscoverage['/word-filter.js'].lineData[432] = 0;
+  _$jscoverage['/word-filter.js'].lineData[434] = 0;
   _$jscoverage['/word-filter.js'].lineData[435] = 0;
-  _$jscoverage['/word-filter.js'].lineData[436] = 0;
-  _$jscoverage['/word-filter.js'].lineData[438] = 0;
-  _$jscoverage['/word-filter.js'].lineData[441] = 0;
-  _$jscoverage['/word-filter.js'].lineData[443] = 0;
+  _$jscoverage['/word-filter.js'].lineData[437] = 0;
+  _$jscoverage['/word-filter.js'].lineData[440] = 0;
+  _$jscoverage['/word-filter.js'].lineData[442] = 0;
+  _$jscoverage['/word-filter.js'].lineData[445] = 0;
   _$jscoverage['/word-filter.js'].lineData[446] = 0;
-  _$jscoverage['/word-filter.js'].lineData[447] = 0;
-  _$jscoverage['/word-filter.js'].lineData[449] = 0;
+  _$jscoverage['/word-filter.js'].lineData[448] = 0;
+  _$jscoverage['/word-filter.js'].lineData[450] = 0;
   _$jscoverage['/word-filter.js'].lineData[451] = 0;
-  _$jscoverage['/word-filter.js'].lineData[452] = 0;
+  _$jscoverage['/word-filter.js'].lineData[455] = 0;
   _$jscoverage['/word-filter.js'].lineData[456] = 0;
-  _$jscoverage['/word-filter.js'].lineData[457] = 0;
-  _$jscoverage['/word-filter.js'].lineData[465] = 0;
+  _$jscoverage['/word-filter.js'].lineData[464] = 0;
+  _$jscoverage['/word-filter.js'].lineData[475] = 0;
   _$jscoverage['/word-filter.js'].lineData[476] = 0;
-  _$jscoverage['/word-filter.js'].lineData[477] = 0;
-  _$jscoverage['/word-filter.js'].lineData[481] = 0;
+  _$jscoverage['/word-filter.js'].lineData[480] = 0;
+  _$jscoverage['/word-filter.js'].lineData[484] = 0;
   _$jscoverage['/word-filter.js'].lineData[485] = 0;
-  _$jscoverage['/word-filter.js'].lineData[486] = 0;
-  _$jscoverage['/word-filter.js'].lineData[488] = 0;
+  _$jscoverage['/word-filter.js'].lineData[487] = 0;
+  _$jscoverage['/word-filter.js'].lineData[491] = 0;
   _$jscoverage['/word-filter.js'].lineData[492] = 0;
   _$jscoverage['/word-filter.js'].lineData[493] = 0;
   _$jscoverage['/word-filter.js'].lineData[494] = 0;
   _$jscoverage['/word-filter.js'].lineData[495] = 0;
   _$jscoverage['/word-filter.js'].lineData[496] = 0;
-  _$jscoverage['/word-filter.js'].lineData[497] = 0;
-  _$jscoverage['/word-filter.js'].lineData[499] = 0;
+  _$jscoverage['/word-filter.js'].lineData[498] = 0;
+  _$jscoverage['/word-filter.js'].lineData[500] = 0;
   _$jscoverage['/word-filter.js'].lineData[501] = 0;
-  _$jscoverage['/word-filter.js'].lineData[502] = 0;
+  _$jscoverage['/word-filter.js'].lineData[503] = 0;
   _$jscoverage['/word-filter.js'].lineData[504] = 0;
-  _$jscoverage['/word-filter.js'].lineData[505] = 0;
+  _$jscoverage['/word-filter.js'].lineData[509] = 0;
   _$jscoverage['/word-filter.js'].lineData[510] = 0;
   _$jscoverage['/word-filter.js'].lineData[511] = 0;
-  _$jscoverage['/word-filter.js'].lineData[512] = 0;
+  _$jscoverage['/word-filter.js'].lineData[514] = 0;
   _$jscoverage['/word-filter.js'].lineData[515] = 0;
-  _$jscoverage['/word-filter.js'].lineData[516] = 0;
-  _$jscoverage['/word-filter.js'].lineData[519] = 0;
-  _$jscoverage['/word-filter.js'].lineData[524] = 0;
+  _$jscoverage['/word-filter.js'].lineData[518] = 0;
+  _$jscoverage['/word-filter.js'].lineData[523] = 0;
+  _$jscoverage['/word-filter.js'].lineData[527] = 0;
   _$jscoverage['/word-filter.js'].lineData[528] = 0;
-  _$jscoverage['/word-filter.js'].lineData[529] = 0;
-  _$jscoverage['/word-filter.js'].lineData[532] = 0;
+  _$jscoverage['/word-filter.js'].lineData[531] = 0;
+  _$jscoverage['/word-filter.js'].lineData[546] = 0;
   _$jscoverage['/word-filter.js'].lineData[547] = 0;
-  _$jscoverage['/word-filter.js'].lineData[548] = 0;
+  _$jscoverage['/word-filter.js'].lineData[556] = 0;
   _$jscoverage['/word-filter.js'].lineData[557] = 0;
-  _$jscoverage['/word-filter.js'].lineData[558] = 0;
+  _$jscoverage['/word-filter.js'].lineData[559] = 0;
   _$jscoverage['/word-filter.js'].lineData[560] = 0;
-  _$jscoverage['/word-filter.js'].lineData[561] = 0;
+  _$jscoverage['/word-filter.js'].lineData[562] = 0;
   _$jscoverage['/word-filter.js'].lineData[563] = 0;
-  _$jscoverage['/word-filter.js'].lineData[564] = 0;
-  _$jscoverage['/word-filter.js'].lineData[567] = 0;
+  _$jscoverage['/word-filter.js'].lineData[566] = 0;
+  _$jscoverage['/word-filter.js'].lineData[568] = 0;
   _$jscoverage['/word-filter.js'].lineData[569] = 0;
   _$jscoverage['/word-filter.js'].lineData[570] = 0;
-  _$jscoverage['/word-filter.js'].lineData[571] = 0;
+  _$jscoverage['/word-filter.js'].lineData[572] = 0;
   _$jscoverage['/word-filter.js'].lineData[573] = 0;
-  _$jscoverage['/word-filter.js'].lineData[574] = 0;
+  _$jscoverage['/word-filter.js'].lineData[578] = 0;
   _$jscoverage['/word-filter.js'].lineData[579] = 0;
   _$jscoverage['/word-filter.js'].lineData[580] = 0;
-  _$jscoverage['/word-filter.js'].lineData[581] = 0;
+  _$jscoverage['/word-filter.js'].lineData[582] = 0;
   _$jscoverage['/word-filter.js'].lineData[583] = 0;
-  _$jscoverage['/word-filter.js'].lineData[584] = 0;
-  _$jscoverage['/word-filter.js'].lineData[587] = 0;
-  _$jscoverage['/word-filter.js'].lineData[590] = 0;
-  _$jscoverage['/word-filter.js'].lineData[594] = 0;
+  _$jscoverage['/word-filter.js'].lineData[586] = 0;
+  _$jscoverage['/word-filter.js'].lineData[589] = 0;
+  _$jscoverage['/word-filter.js'].lineData[593] = 0;
+  _$jscoverage['/word-filter.js'].lineData[596] = 0;
   _$jscoverage['/word-filter.js'].lineData[597] = 0;
   _$jscoverage['/word-filter.js'].lineData[598] = 0;
   _$jscoverage['/word-filter.js'].lineData[599] = 0;
-  _$jscoverage['/word-filter.js'].lineData[600] = 0;
+  _$jscoverage['/word-filter.js'].lineData[603] = 0;
   _$jscoverage['/word-filter.js'].lineData[604] = 0;
   _$jscoverage['/word-filter.js'].lineData[605] = 0;
-  _$jscoverage['/word-filter.js'].lineData[606] = 0;
+  _$jscoverage['/word-filter.js'].lineData[610] = 0;
   _$jscoverage['/word-filter.js'].lineData[611] = 0;
-  _$jscoverage['/word-filter.js'].lineData[612] = 0;
-  _$jscoverage['/word-filter.js'].lineData[618] = 0;
-  _$jscoverage['/word-filter.js'].lineData[620] = 0;
-  _$jscoverage['/word-filter.js'].lineData[623] = 0;
+  _$jscoverage['/word-filter.js'].lineData[617] = 0;
+  _$jscoverage['/word-filter.js'].lineData[619] = 0;
+  _$jscoverage['/word-filter.js'].lineData[622] = 0;
+  _$jscoverage['/word-filter.js'].lineData[624] = 0;
   _$jscoverage['/word-filter.js'].lineData[625] = 0;
-  _$jscoverage['/word-filter.js'].lineData[626] = 0;
+  _$jscoverage['/word-filter.js'].lineData[633] = 0;
   _$jscoverage['/word-filter.js'].lineData[634] = 0;
-  _$jscoverage['/word-filter.js'].lineData[635] = 0;
-  _$jscoverage['/word-filter.js'].lineData[638] = 0;
-  _$jscoverage['/word-filter.js'].lineData[640] = 0;
+  _$jscoverage['/word-filter.js'].lineData[637] = 0;
+  _$jscoverage['/word-filter.js'].lineData[639] = 0;
+  _$jscoverage['/word-filter.js'].lineData[642] = 0;
   _$jscoverage['/word-filter.js'].lineData[643] = 0;
   _$jscoverage['/word-filter.js'].lineData[644] = 0;
-  _$jscoverage['/word-filter.js'].lineData[645] = 0;
+  _$jscoverage['/word-filter.js'].lineData[650] = 0;
   _$jscoverage['/word-filter.js'].lineData[651] = 0;
-  _$jscoverage['/word-filter.js'].lineData[652] = 0;
+  _$jscoverage['/word-filter.js'].lineData[654] = 0;
   _$jscoverage['/word-filter.js'].lineData[655] = 0;
-  _$jscoverage['/word-filter.js'].lineData[656] = 0;
-  _$jscoverage['/word-filter.js'].lineData[658] = 0;
-  _$jscoverage['/word-filter.js'].lineData[660] = 0;
-  _$jscoverage['/word-filter.js'].lineData[664] = 0;
+  _$jscoverage['/word-filter.js'].lineData[657] = 0;
+  _$jscoverage['/word-filter.js'].lineData[659] = 0;
+  _$jscoverage['/word-filter.js'].lineData[663] = 0;
+  _$jscoverage['/word-filter.js'].lineData[668] = 0;
   _$jscoverage['/word-filter.js'].lineData[669] = 0;
   _$jscoverage['/word-filter.js'].lineData[670] = 0;
-  _$jscoverage['/word-filter.js'].lineData[671] = 0;
+  _$jscoverage['/word-filter.js'].lineData[673] = 0;
   _$jscoverage['/word-filter.js'].lineData[674] = 0;
-  _$jscoverage['/word-filter.js'].lineData[675] = 0;
-  _$jscoverage['/word-filter.js'].lineData[678] = 0;
-  _$jscoverage['/word-filter.js'].lineData[682] = 0;
-  _$jscoverage['/word-filter.js'].lineData[684] = 0;
-  _$jscoverage['/word-filter.js'].lineData[689] = 0;
+  _$jscoverage['/word-filter.js'].lineData[677] = 0;
+  _$jscoverage['/word-filter.js'].lineData[681] = 0;
+  _$jscoverage['/word-filter.js'].lineData[683] = 0;
+  _$jscoverage['/word-filter.js'].lineData[688] = 0;
+  _$jscoverage['/word-filter.js'].lineData[691] = 0;
   _$jscoverage['/word-filter.js'].lineData[692] = 0;
   _$jscoverage['/word-filter.js'].lineData[693] = 0;
-  _$jscoverage['/word-filter.js'].lineData[694] = 0;
+  _$jscoverage['/word-filter.js'].lineData[695] = 0;
   _$jscoverage['/word-filter.js'].lineData[696] = 0;
-  _$jscoverage['/word-filter.js'].lineData[697] = 0;
-  _$jscoverage['/word-filter.js'].lineData[700] = 0;
+  _$jscoverage['/word-filter.js'].lineData[699] = 0;
+  _$jscoverage['/word-filter.js'].lineData[706] = 0;
   _$jscoverage['/word-filter.js'].lineData[707] = 0;
-  _$jscoverage['/word-filter.js'].lineData[708] = 0;
+  _$jscoverage['/word-filter.js'].lineData[717] = 0;
   _$jscoverage['/word-filter.js'].lineData[718] = 0;
-  _$jscoverage['/word-filter.js'].lineData[719] = 0;
-  _$jscoverage['/word-filter.js'].lineData[724] = 0;
+  _$jscoverage['/word-filter.js'].lineData[723] = 0;
+  _$jscoverage['/word-filter.js'].lineData[731] = 0;
   _$jscoverage['/word-filter.js'].lineData[732] = 0;
-  _$jscoverage['/word-filter.js'].lineData[733] = 0;
+  _$jscoverage['/word-filter.js'].lineData[738] = 0;
   _$jscoverage['/word-filter.js'].lineData[739] = 0;
   _$jscoverage['/word-filter.js'].lineData[740] = 0;
-  _$jscoverage['/word-filter.js'].lineData[741] = 0;
-  _$jscoverage['/word-filter.js'].lineData[745] = 0;
+  _$jscoverage['/word-filter.js'].lineData[744] = 0;
+  _$jscoverage['/word-filter.js'].lineData[748] = 0;
   _$jscoverage['/word-filter.js'].lineData[749] = 0;
-  _$jscoverage['/word-filter.js'].lineData[750] = 0;
+  _$jscoverage['/word-filter.js'].lineData[756] = 0;
   _$jscoverage['/word-filter.js'].lineData[757] = 0;
-  _$jscoverage['/word-filter.js'].lineData[758] = 0;
+  _$jscoverage['/word-filter.js'].lineData[759] = 0;
   _$jscoverage['/word-filter.js'].lineData[760] = 0;
-  _$jscoverage['/word-filter.js'].lineData[761] = 0;
+  _$jscoverage['/word-filter.js'].lineData[764] = 0;
   _$jscoverage['/word-filter.js'].lineData[765] = 0;
   _$jscoverage['/word-filter.js'].lineData[766] = 0;
   _$jscoverage['/word-filter.js'].lineData[767] = 0;
-  _$jscoverage['/word-filter.js'].lineData[768] = 0;
-  _$jscoverage['/word-filter.js'].lineData[773] = 0;
-  _$jscoverage['/word-filter.js'].lineData[775] = 0;
+  _$jscoverage['/word-filter.js'].lineData[772] = 0;
+  _$jscoverage['/word-filter.js'].lineData[774] = 0;
+  _$jscoverage['/word-filter.js'].lineData[777] = 0;
   _$jscoverage['/word-filter.js'].lineData[778] = 0;
   _$jscoverage['/word-filter.js'].lineData[779] = 0;
   _$jscoverage['/word-filter.js'].lineData[780] = 0;
-  _$jscoverage['/word-filter.js'].lineData[781] = 0;
+  _$jscoverage['/word-filter.js'].lineData[782] = 0;
   _$jscoverage['/word-filter.js'].lineData[783] = 0;
-  _$jscoverage['/word-filter.js'].lineData[784] = 0;
-  _$jscoverage['/word-filter.js'].lineData[786] = 0;
+  _$jscoverage['/word-filter.js'].lineData[785] = 0;
+  _$jscoverage['/word-filter.js'].lineData[789] = 0;
   _$jscoverage['/word-filter.js'].lineData[790] = 0;
   _$jscoverage['/word-filter.js'].lineData[791] = 0;
-  _$jscoverage['/word-filter.js'].lineData[792] = 0;
-  _$jscoverage['/word-filter.js'].lineData[800] = 0;
-  _$jscoverage['/word-filter.js'].lineData[802] = 0;
-  _$jscoverage['/word-filter.js'].lineData[807] = 0;
-  _$jscoverage['/word-filter.js'].lineData[812] = 0;
+  _$jscoverage['/word-filter.js'].lineData[799] = 0;
+  _$jscoverage['/word-filter.js'].lineData[801] = 0;
+  _$jscoverage['/word-filter.js'].lineData[806] = 0;
+  _$jscoverage['/word-filter.js'].lineData[811] = 0;
+  _$jscoverage['/word-filter.js'].lineData[813] = 0;
   _$jscoverage['/word-filter.js'].lineData[814] = 0;
   _$jscoverage['/word-filter.js'].lineData[815] = 0;
-  _$jscoverage['/word-filter.js'].lineData[816] = 0;
-  _$jscoverage['/word-filter.js'].lineData[820] = 0;
+  _$jscoverage['/word-filter.js'].lineData[819] = 0;
+  _$jscoverage['/word-filter.js'].lineData[821] = 0;
   _$jscoverage['/word-filter.js'].lineData[822] = 0;
-  _$jscoverage['/word-filter.js'].lineData[823] = 0;
+  _$jscoverage['/word-filter.js'].lineData[825] = 0;
   _$jscoverage['/word-filter.js'].lineData[826] = 0;
-  _$jscoverage['/word-filter.js'].lineData[827] = 0;
+  _$jscoverage['/word-filter.js'].lineData[828] = 0;
   _$jscoverage['/word-filter.js'].lineData[829] = 0;
-  _$jscoverage['/word-filter.js'].lineData[830] = 0;
+  _$jscoverage['/word-filter.js'].lineData[831] = 0;
   _$jscoverage['/word-filter.js'].lineData[832] = 0;
-  _$jscoverage['/word-filter.js'].lineData[833] = 0;
-  _$jscoverage['/word-filter.js'].lineData[835] = 0;
+  _$jscoverage['/word-filter.js'].lineData[834] = 0;
+  _$jscoverage['/word-filter.js'].lineData[840] = 0;
   _$jscoverage['/word-filter.js'].lineData[841] = 0;
-  _$jscoverage['/word-filter.js'].lineData[842] = 0;
+  _$jscoverage['/word-filter.js'].lineData[844] = 0;
   _$jscoverage['/word-filter.js'].lineData[845] = 0;
   _$jscoverage['/word-filter.js'].lineData[846] = 0;
   _$jscoverage['/word-filter.js'].lineData[847] = 0;
-  _$jscoverage['/word-filter.js'].lineData[848] = 0;
-  _$jscoverage['/word-filter.js'].lineData[850] = 0;
-  _$jscoverage['/word-filter.js'].lineData[855] = 0;
+  _$jscoverage['/word-filter.js'].lineData[849] = 0;
+  _$jscoverage['/word-filter.js'].lineData[854] = 0;
+  _$jscoverage['/word-filter.js'].lineData[861] = 0;
   _$jscoverage['/word-filter.js'].lineData[862] = 0;
   _$jscoverage['/word-filter.js'].lineData[863] = 0;
-  _$jscoverage['/word-filter.js'].lineData[864] = 0;
+  _$jscoverage['/word-filter.js'].lineData[865] = 0;
   _$jscoverage['/word-filter.js'].lineData[866] = 0;
-  _$jscoverage['/word-filter.js'].lineData[867] = 0;
-  _$jscoverage['/word-filter.js'].lineData[870] = 0;
-  _$jscoverage['/word-filter.js'].lineData[872] = 0;
+  _$jscoverage['/word-filter.js'].lineData[869] = 0;
+  _$jscoverage['/word-filter.js'].lineData[871] = 0;
+  _$jscoverage['/word-filter.js'].lineData[878] = 0;
   _$jscoverage['/word-filter.js'].lineData[879] = 0;
   _$jscoverage['/word-filter.js'].lineData[880] = 0;
-  _$jscoverage['/word-filter.js'].lineData[881] = 0;
+  _$jscoverage['/word-filter.js'].lineData[882] = 0;
   _$jscoverage['/word-filter.js'].lineData[883] = 0;
-  _$jscoverage['/word-filter.js'].lineData[884] = 0;
+  _$jscoverage['/word-filter.js'].lineData[886] = 0;
   _$jscoverage['/word-filter.js'].lineData[887] = 0;
-  _$jscoverage['/word-filter.js'].lineData[888] = 0;
+  _$jscoverage['/word-filter.js'].lineData[890] = 0;
   _$jscoverage['/word-filter.js'].lineData[891] = 0;
   _$jscoverage['/word-filter.js'].lineData[892] = 0;
   _$jscoverage['/word-filter.js'].lineData[893] = 0;
-  _$jscoverage['/word-filter.js'].lineData[894] = 0;
+  _$jscoverage['/word-filter.js'].lineData[899] = 0;
   _$jscoverage['/word-filter.js'].lineData[900] = 0;
-  _$jscoverage['/word-filter.js'].lineData[901] = 0;
+  _$jscoverage['/word-filter.js'].lineData[911] = 0;
   _$jscoverage['/word-filter.js'].lineData[912] = 0;
   _$jscoverage['/word-filter.js'].lineData[913] = 0;
-  _$jscoverage['/word-filter.js'].lineData[914] = 0;
-  _$jscoverage['/word-filter.js'].lineData[917] = 0;
-  _$jscoverage['/word-filter.js'].lineData[919] = 0;
-  _$jscoverage['/word-filter.js'].lineData[922] = 0;
+  _$jscoverage['/word-filter.js'].lineData[916] = 0;
+  _$jscoverage['/word-filter.js'].lineData[918] = 0;
+  _$jscoverage['/word-filter.js'].lineData[921] = 0;
+  _$jscoverage['/word-filter.js'].lineData[923] = 0;
   _$jscoverage['/word-filter.js'].lineData[924] = 0;
-  _$jscoverage['/word-filter.js'].lineData[925] = 0;
+  _$jscoverage['/word-filter.js'].lineData[926] = 0;
   _$jscoverage['/word-filter.js'].lineData[927] = 0;
-  _$jscoverage['/word-filter.js'].lineData[928] = 0;
-  _$jscoverage['/word-filter.js'].lineData[932] = 0;
+  _$jscoverage['/word-filter.js'].lineData[931] = 0;
+  _$jscoverage['/word-filter.js'].lineData[933] = 0;
   _$jscoverage['/word-filter.js'].lineData[934] = 0;
   _$jscoverage['/word-filter.js'].lineData[935] = 0;
-  _$jscoverage['/word-filter.js'].lineData[936] = 0;
+  _$jscoverage['/word-filter.js'].lineData[937] = 0;
   _$jscoverage['/word-filter.js'].lineData[938] = 0;
   _$jscoverage['/word-filter.js'].lineData[939] = 0;
-  _$jscoverage['/word-filter.js'].lineData[940] = 0;
-  _$jscoverage['/word-filter.js'].lineData[942] = 0;
+  _$jscoverage['/word-filter.js'].lineData[941] = 0;
+  _$jscoverage['/word-filter.js'].lineData[944] = 0;
   _$jscoverage['/word-filter.js'].lineData[945] = 0;
-  _$jscoverage['/word-filter.js'].lineData[946] = 0;
-  _$jscoverage['/word-filter.js'].lineData[949] = 0;
+  _$jscoverage['/word-filter.js'].lineData[948] = 0;
+  _$jscoverage['/word-filter.js'].lineData[950] = 0;
   _$jscoverage['/word-filter.js'].lineData[951] = 0;
-  _$jscoverage['/word-filter.js'].lineData[952] = 0;
+  _$jscoverage['/word-filter.js'].lineData[957] = 0;
   _$jscoverage['/word-filter.js'].lineData[958] = 0;
-  _$jscoverage['/word-filter.js'].lineData[959] = 0;
+  _$jscoverage['/word-filter.js'].lineData[960] = 0;
   _$jscoverage['/word-filter.js'].lineData[961] = 0;
   _$jscoverage['/word-filter.js'].lineData[962] = 0;
   _$jscoverage['/word-filter.js'].lineData[963] = 0;
-  _$jscoverage['/word-filter.js'].lineData[964] = 0;
+  _$jscoverage['/word-filter.js'].lineData[968] = 0;
   _$jscoverage['/word-filter.js'].lineData[969] = 0;
   _$jscoverage['/word-filter.js'].lineData[970] = 0;
-  _$jscoverage['/word-filter.js'].lineData[971] = 0;
-  _$jscoverage['/word-filter.js'].lineData[974] = 0;
+  _$jscoverage['/word-filter.js'].lineData[973] = 0;
+  _$jscoverage['/word-filter.js'].lineData[976] = 0;
   _$jscoverage['/word-filter.js'].lineData[977] = 0;
-  _$jscoverage['/word-filter.js'].lineData[978] = 0;
+  _$jscoverage['/word-filter.js'].lineData[981] = 0;
   _$jscoverage['/word-filter.js'].lineData[982] = 0;
-  _$jscoverage['/word-filter.js'].lineData[983] = 0;
-  _$jscoverage['/word-filter.js'].lineData[985] = 0;
-  _$jscoverage['/word-filter.js'].lineData[987] = 0;
-  _$jscoverage['/word-filter.js'].lineData[992] = 0;
-  _$jscoverage['/word-filter.js'].lineData[996] = 0;
-  _$jscoverage['/word-filter.js'].lineData[998] = 0;
+  _$jscoverage['/word-filter.js'].lineData[984] = 0;
+  _$jscoverage['/word-filter.js'].lineData[986] = 0;
+  _$jscoverage['/word-filter.js'].lineData[991] = 0;
+  _$jscoverage['/word-filter.js'].lineData[995] = 0;
+  _$jscoverage['/word-filter.js'].lineData[997] = 0;
+  _$jscoverage['/word-filter.js'].lineData[1012] = 0;
   _$jscoverage['/word-filter.js'].lineData[1013] = 0;
   _$jscoverage['/word-filter.js'].lineData[1014] = 0;
   _$jscoverage['/word-filter.js'].lineData[1015] = 0;
   _$jscoverage['/word-filter.js'].lineData[1016] = 0;
-  _$jscoverage['/word-filter.js'].lineData[1017] = 0;
+  _$jscoverage['/word-filter.js'].lineData[1020] = 0;
   _$jscoverage['/word-filter.js'].lineData[1021] = 0;
-  _$jscoverage['/word-filter.js'].lineData[1022] = 0;
+  _$jscoverage['/word-filter.js'].lineData[1047] = 0;
   _$jscoverage['/word-filter.js'].lineData[1048] = 0;
-  _$jscoverage['/word-filter.js'].lineData[1049] = 0;
+  _$jscoverage['/word-filter.js'].lineData[1051] = 0;
   _$jscoverage['/word-filter.js'].lineData[1052] = 0;
-  _$jscoverage['/word-filter.js'].lineData[1053] = 0;
+  _$jscoverage['/word-filter.js'].lineData[1054] = 0;
   _$jscoverage['/word-filter.js'].lineData[1055] = 0;
-  _$jscoverage['/word-filter.js'].lineData[1056] = 0;
+  _$jscoverage['/word-filter.js'].lineData[1058] = 0;
   _$jscoverage['/word-filter.js'].lineData[1059] = 0;
-  _$jscoverage['/word-filter.js'].lineData[1060] = 0;
-  _$jscoverage['/word-filter.js'].lineData[1064] = 0;
+  _$jscoverage['/word-filter.js'].lineData[1063] = 0;
+  _$jscoverage['/word-filter.js'].lineData[1071] = 0;
   _$jscoverage['/word-filter.js'].lineData[1072] = 0;
-  _$jscoverage['/word-filter.js'].lineData[1073] = 0;
+  _$jscoverage['/word-filter.js'].lineData[1077] = 0;
   _$jscoverage['/word-filter.js'].lineData[1078] = 0;
-  _$jscoverage['/word-filter.js'].lineData[1079] = 0;
+  _$jscoverage['/word-filter.js'].lineData[1084] = 0;
   _$jscoverage['/word-filter.js'].lineData[1085] = 0;
-  _$jscoverage['/word-filter.js'].lineData[1086] = 0;
+  _$jscoverage['/word-filter.js'].lineData[1089] = 0;
   _$jscoverage['/word-filter.js'].lineData[1090] = 0;
-  _$jscoverage['/word-filter.js'].lineData[1091] = 0;
+  _$jscoverage['/word-filter.js'].lineData[1104] = 0;
   _$jscoverage['/word-filter.js'].lineData[1105] = 0;
-  _$jscoverage['/word-filter.js'].lineData[1106] = 0;
-  _$jscoverage['/word-filter.js'].lineData[1116] = 0;
-  _$jscoverage['/word-filter.js'].lineData[1120] = 0;
-  _$jscoverage['/word-filter.js'].lineData[1122] = 0;
-  _$jscoverage['/word-filter.js'].lineData[1124] = 0;
+  _$jscoverage['/word-filter.js'].lineData[1115] = 0;
+  _$jscoverage['/word-filter.js'].lineData[1119] = 0;
+  _$jscoverage['/word-filter.js'].lineData[1121] = 0;
+  _$jscoverage['/word-filter.js'].lineData[1123] = 0;
+  _$jscoverage['/word-filter.js'].lineData[1127] = 0;
   _$jscoverage['/word-filter.js'].lineData[1128] = 0;
-  _$jscoverage['/word-filter.js'].lineData[1129] = 0;
+  _$jscoverage['/word-filter.js'].lineData[1135] = 0;
   _$jscoverage['/word-filter.js'].lineData[1136] = 0;
-  _$jscoverage['/word-filter.js'].lineData[1137] = 0;
-  _$jscoverage['/word-filter.js'].lineData[1140] = 0;
-  _$jscoverage['/word-filter.js'].lineData[1146] = 0;
+  _$jscoverage['/word-filter.js'].lineData[1139] = 0;
+  _$jscoverage['/word-filter.js'].lineData[1145] = 0;
+  _$jscoverage['/word-filter.js'].lineData[1164] = 0;
   _$jscoverage['/word-filter.js'].lineData[1165] = 0;
-  _$jscoverage['/word-filter.js'].lineData[1166] = 0;
-  _$jscoverage['/word-filter.js'].lineData[1171] = 0;
-  _$jscoverage['/word-filter.js'].lineData[1173] = 0;
+  _$jscoverage['/word-filter.js'].lineData[1170] = 0;
+  _$jscoverage['/word-filter.js'].lineData[1172] = 0;
 }
 if (! _$jscoverage['/word-filter.js'].functionData) {
   _$jscoverage['/word-filter.js'].functionData = [];
@@ -733,14 +733,14 @@ if (! _$jscoverage['/word-filter.js'].functionData) {
 }
 if (! _$jscoverage['/word-filter.js'].branchData) {
   _$jscoverage['/word-filter.js'].branchData = {};
-  _$jscoverage['/word-filter.js'].branchData['53'] = [];
-  _$jscoverage['/word-filter.js'].branchData['53'][1] = new BranchData();
   _$jscoverage['/word-filter.js'].branchData['54'] = [];
   _$jscoverage['/word-filter.js'].branchData['54'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['65'] = [];
-  _$jscoverage['/word-filter.js'].branchData['65'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['73'] = [];
-  _$jscoverage['/word-filter.js'].branchData['73'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['55'] = [];
+  _$jscoverage['/word-filter.js'].branchData['55'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['66'] = [];
+  _$jscoverage['/word-filter.js'].branchData['66'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['74'] = [];
+  _$jscoverage['/word-filter.js'].branchData['74'][1] = new BranchData();
   _$jscoverage['/word-filter.js'].branchData['89'] = [];
   _$jscoverage['/word-filter.js'].branchData['89'][1] = new BranchData();
   _$jscoverage['/word-filter.js'].branchData['97'] = [];
@@ -808,894 +808,894 @@ if (! _$jscoverage['/word-filter.js'].branchData) {
   _$jscoverage['/word-filter.js'].branchData['281'][1] = new BranchData();
   _$jscoverage['/word-filter.js'].branchData['286'] = [];
   _$jscoverage['/word-filter.js'].branchData['286'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['304'] = [];
-  _$jscoverage['/word-filter.js'].branchData['304'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['321'] = [];
-  _$jscoverage['/word-filter.js'].branchData['321'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['324'] = [];
-  _$jscoverage['/word-filter.js'].branchData['324'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['329'] = [];
-  _$jscoverage['/word-filter.js'].branchData['329'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['332'] = [];
-  _$jscoverage['/word-filter.js'].branchData['332'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['339'] = [];
-  _$jscoverage['/word-filter.js'].branchData['339'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['347'] = [];
-  _$jscoverage['/word-filter.js'].branchData['347'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['303'] = [];
+  _$jscoverage['/word-filter.js'].branchData['303'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['320'] = [];
+  _$jscoverage['/word-filter.js'].branchData['320'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['323'] = [];
+  _$jscoverage['/word-filter.js'].branchData['323'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['328'] = [];
+  _$jscoverage['/word-filter.js'].branchData['328'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['331'] = [];
+  _$jscoverage['/word-filter.js'].branchData['331'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['338'] = [];
+  _$jscoverage['/word-filter.js'].branchData['338'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['346'] = [];
+  _$jscoverage['/word-filter.js'].branchData['346'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['350'] = [];
+  _$jscoverage['/word-filter.js'].branchData['350'][1] = new BranchData();
   _$jscoverage['/word-filter.js'].branchData['351'] = [];
   _$jscoverage['/word-filter.js'].branchData['351'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['352'] = [];
-  _$jscoverage['/word-filter.js'].branchData['352'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['358'] = [];
-  _$jscoverage['/word-filter.js'].branchData['358'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['368'] = [];
-  _$jscoverage['/word-filter.js'].branchData['368'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['371'] = [];
-  _$jscoverage['/word-filter.js'].branchData['371'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['371'][2] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['373'] = [];
-  _$jscoverage['/word-filter.js'].branchData['373'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['373'][2] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['392'] = [];
-  _$jscoverage['/word-filter.js'].branchData['392'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['357'] = [];
+  _$jscoverage['/word-filter.js'].branchData['357'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['367'] = [];
+  _$jscoverage['/word-filter.js'].branchData['367'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['370'] = [];
+  _$jscoverage['/word-filter.js'].branchData['370'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['370'][2] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['372'] = [];
+  _$jscoverage['/word-filter.js'].branchData['372'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['372'][2] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['391'] = [];
+  _$jscoverage['/word-filter.js'].branchData['391'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['395'] = [];
+  _$jscoverage['/word-filter.js'].branchData['395'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['395'][2] = new BranchData();
   _$jscoverage['/word-filter.js'].branchData['396'] = [];
   _$jscoverage['/word-filter.js'].branchData['396'][1] = new BranchData();
   _$jscoverage['/word-filter.js'].branchData['396'][2] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['397'] = [];
-  _$jscoverage['/word-filter.js'].branchData['397'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['397'][2] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['397'][3] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['401'] = [];
-  _$jscoverage['/word-filter.js'].branchData['401'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['401'][2] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['421'] = [];
-  _$jscoverage['/word-filter.js'].branchData['421'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['426'] = [];
-  _$jscoverage['/word-filter.js'].branchData['426'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['431'] = [];
-  _$jscoverage['/word-filter.js'].branchData['431'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['435'] = [];
-  _$jscoverage['/word-filter.js'].branchData['435'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['449'] = [];
-  _$jscoverage['/word-filter.js'].branchData['449'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['449'][2] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['451'] = [];
-  _$jscoverage['/word-filter.js'].branchData['451'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['456'] = [];
-  _$jscoverage['/word-filter.js'].branchData['456'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['481'] = [];
-  _$jscoverage['/word-filter.js'].branchData['481'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['486'] = [];
-  _$jscoverage['/word-filter.js'].branchData['486'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['486'][2] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['396'][3] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['400'] = [];
+  _$jscoverage['/word-filter.js'].branchData['400'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['400'][2] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['420'] = [];
+  _$jscoverage['/word-filter.js'].branchData['420'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['425'] = [];
+  _$jscoverage['/word-filter.js'].branchData['425'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['430'] = [];
+  _$jscoverage['/word-filter.js'].branchData['430'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['434'] = [];
+  _$jscoverage['/word-filter.js'].branchData['434'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['448'] = [];
+  _$jscoverage['/word-filter.js'].branchData['448'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['448'][2] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['450'] = [];
+  _$jscoverage['/word-filter.js'].branchData['450'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['455'] = [];
+  _$jscoverage['/word-filter.js'].branchData['455'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['480'] = [];
+  _$jscoverage['/word-filter.js'].branchData['480'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['485'] = [];
+  _$jscoverage['/word-filter.js'].branchData['485'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['485'][2] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['491'] = [];
+  _$jscoverage['/word-filter.js'].branchData['491'][1] = new BranchData();
   _$jscoverage['/word-filter.js'].branchData['492'] = [];
   _$jscoverage['/word-filter.js'].branchData['492'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['493'] = [];
-  _$jscoverage['/word-filter.js'].branchData['493'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['498'] = [];
+  _$jscoverage['/word-filter.js'].branchData['498'][1] = new BranchData();
   _$jscoverage['/word-filter.js'].branchData['499'] = [];
   _$jscoverage['/word-filter.js'].branchData['499'][1] = new BranchData();
   _$jscoverage['/word-filter.js'].branchData['500'] = [];
   _$jscoverage['/word-filter.js'].branchData['500'][1] = new BranchData();
   _$jscoverage['/word-filter.js'].branchData['501'] = [];
   _$jscoverage['/word-filter.js'].branchData['501'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['502'] = [];
-  _$jscoverage['/word-filter.js'].branchData['502'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['502'][2] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['504'] = [];
-  _$jscoverage['/word-filter.js'].branchData['504'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['510'] = [];
-  _$jscoverage['/word-filter.js'].branchData['510'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['515'] = [];
-  _$jscoverage['/word-filter.js'].branchData['515'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['524'] = [];
-  _$jscoverage['/word-filter.js'].branchData['524'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['528'] = [];
-  _$jscoverage['/word-filter.js'].branchData['528'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['548'] = [];
-  _$jscoverage['/word-filter.js'].branchData['548'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['557'] = [];
-  _$jscoverage['/word-filter.js'].branchData['557'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['560'] = [];
-  _$jscoverage['/word-filter.js'].branchData['560'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['563'] = [];
-  _$jscoverage['/word-filter.js'].branchData['563'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['563'][2] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['501'][2] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['503'] = [];
+  _$jscoverage['/word-filter.js'].branchData['503'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['509'] = [];
+  _$jscoverage['/word-filter.js'].branchData['509'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['514'] = [];
+  _$jscoverage['/word-filter.js'].branchData['514'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['523'] = [];
+  _$jscoverage['/word-filter.js'].branchData['523'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['527'] = [];
+  _$jscoverage['/word-filter.js'].branchData['527'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['547'] = [];
+  _$jscoverage['/word-filter.js'].branchData['547'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['556'] = [];
+  _$jscoverage['/word-filter.js'].branchData['556'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['559'] = [];
+  _$jscoverage['/word-filter.js'].branchData['559'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['562'] = [];
+  _$jscoverage['/word-filter.js'].branchData['562'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['562'][2] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['568'] = [];
+  _$jscoverage['/word-filter.js'].branchData['568'][1] = new BranchData();
   _$jscoverage['/word-filter.js'].branchData['569'] = [];
   _$jscoverage['/word-filter.js'].branchData['569'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['570'] = [];
-  _$jscoverage['/word-filter.js'].branchData['570'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['570'][2] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['569'][2] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['578'] = [];
+  _$jscoverage['/word-filter.js'].branchData['578'][1] = new BranchData();
   _$jscoverage['/word-filter.js'].branchData['579'] = [];
   _$jscoverage['/word-filter.js'].branchData['579'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['580'] = [];
-  _$jscoverage['/word-filter.js'].branchData['580'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['583'] = [];
-  _$jscoverage['/word-filter.js'].branchData['583'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['605'] = [];
-  _$jscoverage['/word-filter.js'].branchData['605'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['612'] = [];
-  _$jscoverage['/word-filter.js'].branchData['612'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['582'] = [];
+  _$jscoverage['/word-filter.js'].branchData['582'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['604'] = [];
+  _$jscoverage['/word-filter.js'].branchData['604'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['611'] = [];
+  _$jscoverage['/word-filter.js'].branchData['611'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['619'] = [];
+  _$jscoverage['/word-filter.js'].branchData['619'][1] = new BranchData();
   _$jscoverage['/word-filter.js'].branchData['620'] = [];
   _$jscoverage['/word-filter.js'].branchData['620'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['621'] = [];
-  _$jscoverage['/word-filter.js'].branchData['621'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['625'] = [];
-  _$jscoverage['/word-filter.js'].branchData['625'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['635'] = [];
-  _$jscoverage['/word-filter.js'].branchData['635'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['635'][2] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['624'] = [];
+  _$jscoverage['/word-filter.js'].branchData['624'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['634'] = [];
+  _$jscoverage['/word-filter.js'].branchData['634'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['634'][2] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['637'] = [];
+  _$jscoverage['/word-filter.js'].branchData['637'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['637'][2] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['637'][3] = new BranchData();
   _$jscoverage['/word-filter.js'].branchData['638'] = [];
   _$jscoverage['/word-filter.js'].branchData['638'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['638'][2] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['638'][3] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['639'] = [];
-  _$jscoverage['/word-filter.js'].branchData['639'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['643'] = [];
+  _$jscoverage['/word-filter.js'].branchData['643'][1] = new BranchData();
   _$jscoverage['/word-filter.js'].branchData['644'] = [];
   _$jscoverage['/word-filter.js'].branchData['644'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['645'] = [];
-  _$jscoverage['/word-filter.js'].branchData['645'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['645'][2] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['644'][2] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['654'] = [];
+  _$jscoverage['/word-filter.js'].branchData['654'][1] = new BranchData();
   _$jscoverage['/word-filter.js'].branchData['655'] = [];
   _$jscoverage['/word-filter.js'].branchData['655'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['656'] = [];
-  _$jscoverage['/word-filter.js'].branchData['656'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['656'][2] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['669'] = [];
-  _$jscoverage['/word-filter.js'].branchData['669'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['696'] = [];
-  _$jscoverage['/word-filter.js'].branchData['696'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['740'] = [];
-  _$jscoverage['/word-filter.js'].branchData['740'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['745'] = [];
-  _$jscoverage['/word-filter.js'].branchData['745'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['749'] = [];
-  _$jscoverage['/word-filter.js'].branchData['749'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['757'] = [];
-  _$jscoverage['/word-filter.js'].branchData['757'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['760'] = [];
-  _$jscoverage['/word-filter.js'].branchData['760'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['765'] = [];
-  _$jscoverage['/word-filter.js'].branchData['765'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['767'] = [];
-  _$jscoverage['/word-filter.js'].branchData['767'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['655'][2] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['668'] = [];
+  _$jscoverage['/word-filter.js'].branchData['668'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['695'] = [];
+  _$jscoverage['/word-filter.js'].branchData['695'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['739'] = [];
+  _$jscoverage['/word-filter.js'].branchData['739'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['744'] = [];
+  _$jscoverage['/word-filter.js'].branchData['744'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['748'] = [];
+  _$jscoverage['/word-filter.js'].branchData['748'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['756'] = [];
+  _$jscoverage['/word-filter.js'].branchData['756'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['759'] = [];
+  _$jscoverage['/word-filter.js'].branchData['759'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['764'] = [];
+  _$jscoverage['/word-filter.js'].branchData['764'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['766'] = [];
+  _$jscoverage['/word-filter.js'].branchData['766'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['772'] = [];
+  _$jscoverage['/word-filter.js'].branchData['772'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['772'][2] = new BranchData();
   _$jscoverage['/word-filter.js'].branchData['773'] = [];
   _$jscoverage['/word-filter.js'].branchData['773'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['773'][2] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['774'] = [];
-  _$jscoverage['/word-filter.js'].branchData['774'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['778'] = [];
-  _$jscoverage['/word-filter.js'].branchData['778'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['780'] = [];
-  _$jscoverage['/word-filter.js'].branchData['780'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['790'] = [];
-  _$jscoverage['/word-filter.js'].branchData['790'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['800'] = [];
-  _$jscoverage['/word-filter.js'].branchData['800'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['804'] = [];
-  _$jscoverage['/word-filter.js'].branchData['804'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['807'] = [];
-  _$jscoverage['/word-filter.js'].branchData['807'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['816'] = [];
-  _$jscoverage['/word-filter.js'].branchData['816'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['822'] = [];
-  _$jscoverage['/word-filter.js'].branchData['822'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['826'] = [];
-  _$jscoverage['/word-filter.js'].branchData['826'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['829'] = [];
-  _$jscoverage['/word-filter.js'].branchData['829'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['832'] = [];
-  _$jscoverage['/word-filter.js'].branchData['832'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['845'] = [];
-  _$jscoverage['/word-filter.js'].branchData['845'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['847'] = [];
-  _$jscoverage['/word-filter.js'].branchData['847'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['850'] = [];
-  _$jscoverage['/word-filter.js'].branchData['850'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['862'] = [];
-  _$jscoverage['/word-filter.js'].branchData['862'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['864'] = [];
-  _$jscoverage['/word-filter.js'].branchData['864'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['864'][2] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['777'] = [];
+  _$jscoverage['/word-filter.js'].branchData['777'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['779'] = [];
+  _$jscoverage['/word-filter.js'].branchData['779'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['789'] = [];
+  _$jscoverage['/word-filter.js'].branchData['789'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['799'] = [];
+  _$jscoverage['/word-filter.js'].branchData['799'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['803'] = [];
+  _$jscoverage['/word-filter.js'].branchData['803'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['806'] = [];
+  _$jscoverage['/word-filter.js'].branchData['806'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['815'] = [];
+  _$jscoverage['/word-filter.js'].branchData['815'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['821'] = [];
+  _$jscoverage['/word-filter.js'].branchData['821'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['825'] = [];
+  _$jscoverage['/word-filter.js'].branchData['825'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['828'] = [];
+  _$jscoverage['/word-filter.js'].branchData['828'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['831'] = [];
+  _$jscoverage['/word-filter.js'].branchData['831'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['844'] = [];
+  _$jscoverage['/word-filter.js'].branchData['844'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['846'] = [];
+  _$jscoverage['/word-filter.js'].branchData['846'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['849'] = [];
+  _$jscoverage['/word-filter.js'].branchData['849'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['861'] = [];
+  _$jscoverage['/word-filter.js'].branchData['861'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['863'] = [];
+  _$jscoverage['/word-filter.js'].branchData['863'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['863'][2] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['865'] = [];
+  _$jscoverage['/word-filter.js'].branchData['865'][1] = new BranchData();
   _$jscoverage['/word-filter.js'].branchData['866'] = [];
   _$jscoverage['/word-filter.js'].branchData['866'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['867'] = [];
-  _$jscoverage['/word-filter.js'].branchData['867'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['880'] = [];
-  _$jscoverage['/word-filter.js'].branchData['880'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['880'][2] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['887'] = [];
-  _$jscoverage['/word-filter.js'].branchData['887'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['900'] = [];
-  _$jscoverage['/word-filter.js'].branchData['900'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['912'] = [];
-  _$jscoverage['/word-filter.js'].branchData['912'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['922'] = [];
-  _$jscoverage['/word-filter.js'].branchData['922'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['927'] = [];
-  _$jscoverage['/word-filter.js'].branchData['927'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['932'] = [];
-  _$jscoverage['/word-filter.js'].branchData['932'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['879'] = [];
+  _$jscoverage['/word-filter.js'].branchData['879'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['879'][2] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['886'] = [];
+  _$jscoverage['/word-filter.js'].branchData['886'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['899'] = [];
+  _$jscoverage['/word-filter.js'].branchData['899'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['911'] = [];
+  _$jscoverage['/word-filter.js'].branchData['911'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['921'] = [];
+  _$jscoverage['/word-filter.js'].branchData['921'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['926'] = [];
+  _$jscoverage['/word-filter.js'].branchData['926'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['931'] = [];
+  _$jscoverage['/word-filter.js'].branchData['931'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['933'] = [];
+  _$jscoverage['/word-filter.js'].branchData['933'][1] = new BranchData();
   _$jscoverage['/word-filter.js'].branchData['934'] = [];
   _$jscoverage['/word-filter.js'].branchData['934'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['935'] = [];
-  _$jscoverage['/word-filter.js'].branchData['935'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['935'][2] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['938'] = [];
-  _$jscoverage['/word-filter.js'].branchData['938'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['945'] = [];
-  _$jscoverage['/word-filter.js'].branchData['945'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['934'][2] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['937'] = [];
+  _$jscoverage['/word-filter.js'].branchData['937'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['944'] = [];
+  _$jscoverage['/word-filter.js'].branchData['944'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['946'] = [];
+  _$jscoverage['/word-filter.js'].branchData['946'][1] = new BranchData();
   _$jscoverage['/word-filter.js'].branchData['947'] = [];
   _$jscoverage['/word-filter.js'].branchData['947'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['948'] = [];
-  _$jscoverage['/word-filter.js'].branchData['948'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['958'] = [];
-  _$jscoverage['/word-filter.js'].branchData['958'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['962'] = [];
-  _$jscoverage['/word-filter.js'].branchData['962'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['969'] = [];
-  _$jscoverage['/word-filter.js'].branchData['969'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['971'] = [];
-  _$jscoverage['/word-filter.js'].branchData['971'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['971'][2] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['957'] = [];
+  _$jscoverage['/word-filter.js'].branchData['957'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['961'] = [];
+  _$jscoverage['/word-filter.js'].branchData['961'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['968'] = [];
+  _$jscoverage['/word-filter.js'].branchData['968'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['970'] = [];
+  _$jscoverage['/word-filter.js'].branchData['970'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['970'][2] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['973'] = [];
+  _$jscoverage['/word-filter.js'].branchData['973'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['973'][2] = new BranchData();
   _$jscoverage['/word-filter.js'].branchData['974'] = [];
   _$jscoverage['/word-filter.js'].branchData['974'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['974'][2] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['975'] = [];
-  _$jscoverage['/word-filter.js'].branchData['975'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['977'] = [];
-  _$jscoverage['/word-filter.js'].branchData['977'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['983'] = [];
-  _$jscoverage['/word-filter.js'].branchData['983'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['996'] = [];
-  _$jscoverage['/word-filter.js'].branchData['996'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['1014'] = [];
-  _$jscoverage['/word-filter.js'].branchData['1014'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['1016'] = [];
-  _$jscoverage['/word-filter.js'].branchData['1016'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['1016'][2] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['1021'] = [];
-  _$jscoverage['/word-filter.js'].branchData['1021'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['1048'] = [];
-  _$jscoverage['/word-filter.js'].branchData['1048'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['1052'] = [];
-  _$jscoverage['/word-filter.js'].branchData['1052'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['1055'] = [];
-  _$jscoverage['/word-filter.js'].branchData['1055'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['1059'] = [];
-  _$jscoverage['/word-filter.js'].branchData['1059'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['1072'] = [];
-  _$jscoverage['/word-filter.js'].branchData['1072'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['1078'] = [];
-  _$jscoverage['/word-filter.js'].branchData['1078'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['1085'] = [];
-  _$jscoverage['/word-filter.js'].branchData['1085'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['1090'] = [];
-  _$jscoverage['/word-filter.js'].branchData['1090'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['1120'] = [];
-  _$jscoverage['/word-filter.js'].branchData['1120'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['976'] = [];
+  _$jscoverage['/word-filter.js'].branchData['976'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['982'] = [];
+  _$jscoverage['/word-filter.js'].branchData['982'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['995'] = [];
+  _$jscoverage['/word-filter.js'].branchData['995'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['1013'] = [];
+  _$jscoverage['/word-filter.js'].branchData['1013'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['1015'] = [];
+  _$jscoverage['/word-filter.js'].branchData['1015'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['1015'][2] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['1020'] = [];
+  _$jscoverage['/word-filter.js'].branchData['1020'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['1047'] = [];
+  _$jscoverage['/word-filter.js'].branchData['1047'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['1051'] = [];
+  _$jscoverage['/word-filter.js'].branchData['1051'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['1054'] = [];
+  _$jscoverage['/word-filter.js'].branchData['1054'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['1058'] = [];
+  _$jscoverage['/word-filter.js'].branchData['1058'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['1071'] = [];
+  _$jscoverage['/word-filter.js'].branchData['1071'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['1077'] = [];
+  _$jscoverage['/word-filter.js'].branchData['1077'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['1084'] = [];
+  _$jscoverage['/word-filter.js'].branchData['1084'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['1089'] = [];
+  _$jscoverage['/word-filter.js'].branchData['1089'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['1119'] = [];
+  _$jscoverage['/word-filter.js'].branchData['1119'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['1121'] = [];
+  _$jscoverage['/word-filter.js'].branchData['1121'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['1121'][2] = new BranchData();
   _$jscoverage['/word-filter.js'].branchData['1122'] = [];
   _$jscoverage['/word-filter.js'].branchData['1122'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['1122'][2] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['1123'] = [];
-  _$jscoverage['/word-filter.js'].branchData['1123'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['1128'] = [];
-  _$jscoverage['/word-filter.js'].branchData['1128'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['1127'] = [];
+  _$jscoverage['/word-filter.js'].branchData['1127'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['1131'] = [];
+  _$jscoverage['/word-filter.js'].branchData['1131'][1] = new BranchData();
   _$jscoverage['/word-filter.js'].branchData['1132'] = [];
   _$jscoverage['/word-filter.js'].branchData['1132'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['1133'] = [];
-  _$jscoverage['/word-filter.js'].branchData['1133'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['1136'] = [];
-  _$jscoverage['/word-filter.js'].branchData['1136'][1] = new BranchData();
-  _$jscoverage['/word-filter.js'].branchData['1165'] = [];
-  _$jscoverage['/word-filter.js'].branchData['1165'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['1135'] = [];
+  _$jscoverage['/word-filter.js'].branchData['1135'][1] = new BranchData();
+  _$jscoverage['/word-filter.js'].branchData['1164'] = [];
+  _$jscoverage['/word-filter.js'].branchData['1164'][1] = new BranchData();
 }
-_$jscoverage['/word-filter.js'].branchData['1165'][1].init(807, 8, 'UA.gecko');
-function visit191_1165_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['1165'][1].ranCondition(result);
+_$jscoverage['/word-filter.js'].branchData['1164'][1].init(807, 8, 'UA.gecko');
+function visit191_1164_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['1164'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['1136'][1].init(565, 45, 'imgSrc && (img.setAttribute("src", imgSrc))');
-function visit190_1136_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['1136'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['1135'][1].init(565, 45, 'imgSrc && (img.setAttribute("src", imgSrc))');
+function visit190_1135_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['1135'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['1133'][1].init(414, 29, 'imgSrcInfo && imgSrcInfo[1]');
-function visit189_1133_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['1133'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/word-filter.js'].branchData['1132'][1].init(284, 90, 'previousComment && previousComment.toHtml().match(/<v:imagedata[^>]*o:href=[\'"](.*?)[\'"]/)');
-function visit188_1132_1(result) {
+}_$jscoverage['/word-filter.js'].branchData['1132'][1].init(414, 29, 'imgSrcInfo && imgSrcInfo[1]');
+function visit189_1132_1(result) {
   _$jscoverage['/word-filter.js'].branchData['1132'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['1128'][1].init(726, 21, 'UA.gecko && imageInfo');
-function visit187_1128_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['1128'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['1131'][1].init(284, 90, 'previousComment && previousComment.toHtml().match(/<v:imagedata[^>]*o:href=[\'"](.*?)[\'"]/)');
+function visit188_1131_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['1131'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['1123'][1].init(96, 60, 'listSymbol && listSymbol.match(/>(?:[(]?)([^\\s]+?)([.)]?)</)');
-function visit186_1123_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['1123'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['1127'][1].init(726, 21, 'UA.gecko && imageInfo');
+function visit187_1127_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['1127'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['1122'][2].init(138, 17, 'imageInfo && \'l.\'');
-function visit185_1122_2(result) {
-  _$jscoverage['/word-filter.js'].branchData['1122'][2].ranCondition(result);
-  return result;
-}_$jscoverage['/word-filter.js'].branchData['1122'][1].init(119, 38, 'listInfo[1] || (imageInfo && \'l.\')');
-function visit184_1122_1(result) {
+}_$jscoverage['/word-filter.js'].branchData['1122'][1].init(96, 60, 'listSymbol && listSymbol.match(/>(?:[(]?)([^\\s]+?)([.)]?)</)');
+function visit186_1122_1(result) {
   _$jscoverage['/word-filter.js'].branchData['1122'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['1120'][1].init(240, 8, 'listInfo');
-function visit183_1120_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['1120'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['1121'][2].init(138, 17, 'imageInfo && \'l.\'');
+function visit185_1121_2(result) {
+  _$jscoverage['/word-filter.js'].branchData['1121'][2].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['1090'][1].init(26, 37, 'element.nodeName in dtd.$tableContent');
-function visit182_1090_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['1090'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['1121'][1].init(119, 38, 'listInfo[1] || (imageInfo && \'l.\')');
+function visit184_1121_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['1121'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['1085'][1].init(26, 37, 'element.nodeName in dtd.$tableContent');
-function visit181_1085_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['1085'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['1119'][1].init(240, 8, 'listInfo');
+function visit183_1119_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['1119'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['1078'][1].init(38, 54, 'element.nodeName in {\n  table: 1, \n  td: 1, \n  th: 1, \n  img: 1}');
-function visit180_1078_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['1078'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['1089'][1].init(26, 37, 'element.nodeName in dtd.$tableContent');
+function visit182_1089_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['1089'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['1072'][1].init(38, 25, 'element.nodeName == \'img\'');
-function visit179_1072_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['1072'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['1084'][1].init(26, 37, 'element.nodeName in dtd.$tableContent');
+function visit181_1084_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['1084'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['1059'][1].init(569, 38, 'value && !emptyMarginRegex.test(value)');
-function visit178_1059_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['1059'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['1077'][1].init(38, 54, 'element.nodeName in {\n  table: 1, \n  td: 1, \n  th: 1, \n  img: 1}');
+function visit180_1077_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['1077'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['1055'][1].init(419, 23, 'name != indentStyleName');
-function visit177_1055_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['1055'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['1071'][1].init(38, 25, 'element.nodeName == \'img\'');
+function visit179_1071_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['1071'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['1052'][1].init(195, 16, 'name == \'margin\'');
-function visit176_1052_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['1052'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['1058'][1].init(569, 38, 'value && !emptyMarginRegex.test(value)');
+function visit178_1058_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['1058'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['1048'][1].init(34, 36, 'element.nodeName in {\n  p: 1, \n  div: 1}');
-function visit175_1048_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['1048'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['1054'][1].init(419, 23, 'name != indentStyleName');
+function visit177_1054_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['1054'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['1021'][1].init(26, 27, 'getAncestor(element, /h\\d/)');
-function visit174_1021_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['1021'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['1051'][1].init(195, 16, 'name == \'margin\'');
+function visit176_1051_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['1051'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['1016'][2].init(228, 40, 'href && href.match(/file:\\/\\/\\/[\\S]+#/i)');
-function visit173_1016_2(result) {
-  _$jscoverage['/word-filter.js'].branchData['1016'][2].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['1047'][1].init(34, 36, 'element.nodeName in {\n  p: 1, \n  div: 1}');
+function visit175_1047_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['1047'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['1016'][1].init(215, 53, 'UA.webkit && href && href.match(/file:\\/\\/\\/[\\S]+#/i)');
-function visit172_1016_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['1016'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['1020'][1].init(26, 27, 'getAncestor(element, /h\\d/)');
+function visit174_1020_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['1020'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['1014'][1].init(57, 70, '!(href = element.getAttribute("href")) && element.getAttribute("name")');
-function visit171_1014_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['1014'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['1015'][2].init(228, 40, 'href && href.match(/file:\\/\\/\\/[\\S]+#/i)');
+function visit173_1015_2(result) {
+  _$jscoverage['/word-filter.js'].branchData['1015'][2].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['996'][1].init(2196, 9, 'styleText');
-function visit170_996_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['996'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['1015'][1].init(215, 53, 'UA.webkit && href && href.match(/file:\\/\\/\\/[\\S]+#/i)');
+function visit172_1015_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['1015'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['983'][1].init(468, 120, 'ancestor && (/ mso-hide:\\s*all|display:\\s*none /).test(ancestor.getAttribute("style"))');
-function visit169_983_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['983'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['1013'][1].init(57, 70, '!(href = element.getAttribute("href")) && element.getAttribute("name")');
+function visit171_1013_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['1013'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['977'][1].init(425, 8, 'listType');
-function visit168_977_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['977'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['995'][1].init(2196, 9, 'styleText');
+function visit170_995_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['995'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['975'][1].init(112, 60, 'listSymbol && listSymbol.match(/^(?:[(]?)([^\\s]+?)([.)]?)$/)');
-function visit167_975_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['975'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['982'][1].init(468, 120, 'ancestor && (/ mso-hide:\\s*all|display:\\s*none /).test(ancestor.getAttribute("style"))');
+function visit169_982_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['982'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['974'][2].init(256, 32, 'listSymbolNode.nodeValue || \'l.\'');
-function visit166_974_2(result) {
-  _$jscoverage['/word-filter.js'].branchData['974'][2].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['976'][1].init(425, 8, 'listType');
+function visit168_976_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['976'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['974'][1].init(236, 54, 'listSymbolNode && (listSymbolNode.nodeValue || \'l.\')');
-function visit165_974_1(result) {
+}_$jscoverage['/word-filter.js'].branchData['974'][1].init(112, 60, 'listSymbol && listSymbol.match(/^(?:[(]?)([^\\s]+?)([.)]?)$/)');
+function visit167_974_1(result) {
   _$jscoverage['/word-filter.js'].branchData['974'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['971'][2].init(55, 22, 'node.nodeName == \'img\'');
-function visit164_971_2(result) {
-  _$jscoverage['/word-filter.js'].branchData['971'][2].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['973'][2].init(256, 32, 'listSymbolNode.nodeValue || \'l.\'');
+function visit166_973_2(result) {
+  _$jscoverage['/word-filter.js'].branchData['973'][2].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['971'][1].init(37, 40, 'node.nodeValue || node.nodeName == \'img\'');
-function visit163_971_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['971'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['973'][1].init(236, 54, 'listSymbolNode && (listSymbolNode.nodeValue || \'l.\')');
+function visit165_973_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['973'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['969'][1].init(620, 30, 'isListBulletIndicator(element)');
-function visit162_969_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['969'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['970'][2].init(55, 22, 'node.nodeName == \'img\'');
+function visit164_970_2(result) {
+  _$jscoverage['/word-filter.js'].branchData['970'][2].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['962'][1].init(280, 33, 'containsNothingButSpaces(element)');
-function visit161_962_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['962'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['970'][1].init(37, 40, 'node.nodeValue || node.nodeName == \'img\'');
+function visit163_970_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['970'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['958'][1].init(101, 41, 'isListBulletIndicator(element.parentNode)');
-function visit160_958_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['958'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['968'][1].init(620, 30, 'isListBulletIndicator(element)');
+function visit162_968_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['968'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['948'][1].init(59, 8, 'size < 3');
-function visit159_948_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['948'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['961'][1].init(280, 33, 'containsNothingButSpaces(element)');
+function visit161_961_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['961'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['947'][1].init(48, 8, 'size > 3');
-function visit158_947_1(result) {
+}_$jscoverage['/word-filter.js'].branchData['957'][1].init(101, 41, 'isListBulletIndicator(element.parentNode)');
+function visit160_957_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['957'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/word-filter.js'].branchData['947'][1].init(59, 8, 'size < 3');
+function visit159_947_1(result) {
   _$jscoverage['/word-filter.js'].branchData['947'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['945'][1].init(920, 4, 'size');
-function visit157_945_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['945'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['946'][1].init(48, 8, 'size > 3');
+function visit158_946_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['946'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['938'][1].init(461, 28, 'element.getAttribute("face")');
-function visit156_938_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['938'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['944'][1].init(920, 4, 'size');
+function visit157_944_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['944'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['935'][2].init(30, 42, 'element.getAttribute("color") != \'#000000\'');
-function visit155_935_2(result) {
-  _$jscoverage['/word-filter.js'].branchData['935'][2].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['937'][1].init(461, 28, 'element.getAttribute("face")');
+function visit156_937_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['937'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['935'][1].init(30, 109, 'element.getAttribute("color") != \'#000000\' && (styleText += \'color:\' + element.getAttribute("color") + \';\')');
-function visit154_935_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['935'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['934'][2].init(30, 42, 'element.getAttribute("color") != \'#000000\'');
+function visit155_934_2(result) {
+  _$jscoverage['/word-filter.js'].branchData['934'][2].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['934'][1].init(169, 29, 'element.getAttribute("color")');
-function visit153_934_1(result) {
+}_$jscoverage['/word-filter.js'].branchData['934'][1].init(30, 109, 'element.getAttribute("color") != \'#000000\' && (styleText += \'color:\' + element.getAttribute("color") + \';\')');
+function visit154_934_1(result) {
   _$jscoverage['/word-filter.js'].branchData['934'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['932'][1].init(38, 15, 'styleText || \'\'');
-function visit152_932_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['932'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['933'][1].init(169, 29, 'element.getAttribute("color")');
+function visit153_933_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['933'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['927'][1].init(198, 40, 'styleText && addStyle(parent, styleText)');
-function visit151_927_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['927'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['931'][1].init(38, 15, 'styleText || \'\'');
+function visit152_931_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['931'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['922'][1].init(455, 21, '\'font\' == parent.name');
-function visit150_922_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['922'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['926'][1].init(198, 40, 'styleText && addStyle(parent, styleText)');
+function visit151_926_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['926'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['912'][1].init(103, 41, 'isListBulletIndicator(element.parentNode)');
-function visit149_912_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['912'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['921'][1].init(455, 21, '\'font\' == parent.name');
+function visit150_921_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['921'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['900'][1].init(84, 29, 'getAncestor(element, \'thead\')');
-function visit148_900_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['900'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['911'][1].init(103, 41, 'isListBulletIndicator(element.parentNode)');
+function visit149_911_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['911'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['887'][1].init(255, 29, 'element.getAttribute("style")');
-function visit147_887_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['887'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['899'][1].init(84, 29, 'getAncestor(element, \'thead\')');
+function visit148_899_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['899'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['880'][2].init(398, 31, 'singleChild.nodeName == \'table\'');
-function visit146_880_2(result) {
-  _$jscoverage['/word-filter.js'].branchData['880'][2].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['886'][1].init(255, 29, 'element.getAttribute("style")');
+function visit147_886_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['886'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['880'][1].init(383, 46, 'singleChild && singleChild.nodeName == \'table\'');
-function visit145_880_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['880'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['879'][2].init(398, 31, 'singleChild.nodeName == \'table\'');
+function visit146_879_2(result) {
+  _$jscoverage['/word-filter.js'].branchData['879'][2].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['867'][1].init(312, 85, '!bullet.getAttribute("style") && (bullet.setAttribute("style", \'mso-list: Ignore;\'))');
-function visit144_867_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['867'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['879'][1].init(383, 46, 'singleChild && singleChild.nodeName == \'table\'');
+function visit145_879_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['879'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['866'][1].init(250, 35, 'bulletText && bulletText.parentNode');
-function visit143_866_1(result) {
+}_$jscoverage['/word-filter.js'].branchData['866'][1].init(312, 85, '!bullet.getAttribute("style") && (bullet.setAttribute("style", \'mso-list: Ignore;\'))');
+function visit144_866_1(result) {
   _$jscoverage['/word-filter.js'].branchData['866'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['864'][2].init(37, 18, 'node.nodeType == 3');
-function visit142_864_2(result) {
-  _$jscoverage['/word-filter.js'].branchData['864'][2].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['865'][1].init(250, 35, 'bulletText && bulletText.parentNode');
+function visit143_865_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['865'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['864'][1].init(37, 64, 'node.nodeType == 3 && !containsNothingButSpaces(node.parentNode)');
-function visit141_864_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['864'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['863'][2].init(37, 18, 'node.nodeType == 3');
+function visit142_863_2(result) {
+  _$jscoverage['/word-filter.js'].branchData['863'][2].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['862'][1].init(261, 54, '/MsoListParagraph/.exec(element.getAttribute(\'class\'))');
-function visit140_862_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['862'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['863'][1].init(37, 64, 'node.nodeType == 3 && !containsNothingButSpaces(node.parentNode)');
+function visit141_863_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['863'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['850'][1].init(307, 39, 'style && addStyle(element, style, true)');
-function visit139_850_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['850'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['861'][1].init(261, 54, '/MsoListParagraph/.exec(element.getAttribute(\'class\'))');
+function visit140_861_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['861'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['847'][1].init(102, 24, 'typeof style == \'object\'');
-function visit138_847_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['847'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['849'][1].init(307, 39, 'style && addStyle(element, style, true)');
+function visit139_849_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['849'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['845'][1].init(245, 13, 'name in rules');
-function visit137_845_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['845'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['846'][1].init(102, 24, 'typeof style == \'object\'');
+function visit138_846_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['846'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['832'][1].init(663, 9, 'className');
-function visit136_832_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['832'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['844'][1].init(245, 13, 'name in rules');
+function visit137_844_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['844'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['829'][1].init(462, 17, '!rules[tagName]');
-function visit135_829_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['829'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['831'][1].init(663, 9, 'className');
+function visit136_831_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['831'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['826'][1].init(316, 28, 'className.match(/MsoNormal/)');
-function visit134_826_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['826'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['828'][1].init(462, 17, '!rules[tagName]');
+function visit135_828_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['828'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['822'][1].init(60, 14, 'tagName || \'*\'');
-function visit133_822_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['822'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['825'][1].init(316, 28, 'className.match(/MsoNormal/)');
+function visit134_825_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['825'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['816'][1].init(193, 10, 'i < length');
-function visit132_816_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['816'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['821'][1].init(60, 14, 'tagName || \'*\'');
+function visit133_821_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['821'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['807'][1].init(418, 12, 'styleDefText');
-function visit131_807_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['807'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['815'][1].init(193, 10, 'i < length');
+function visit132_815_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['815'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['804'][1].init(180, 39, 'styleDefSection && styleDefSection[1]');
-function visit130_804_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['804'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['806'][1].init(418, 12, 'styleDefText');
+function visit131_806_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['806'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['800'][1].init(26, 8, 'UA.gecko');
-function visit129_800_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['800'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['803'][1].init(180, 39, 'styleDefSection && styleDefSection[1]');
+function visit130_803_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['803'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['790'][1].init(2164, 25, 'tagName in listDtdParents');
-function visit128_790_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['790'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['799'][1].init(26, 8, 'UA.gecko');
+function visit129_799_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['799'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['780'][1].init(106, 4, 'href');
-function visit127_780_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['780'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['789'][1].init(2164, 25, 'tagName in listDtdParents');
+function visit128_789_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['789'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['778'][1].init(145, 24, 'tagName == \'v:imagedata\'');
-function visit126_778_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['778'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['779'][1].init(106, 4, 'href');
+function visit127_779_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['779'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['774'][1].init(54, 27, 'tagName.indexOf(\'ke\') == -1');
-function visit125_774_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['774'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['777'][1].init(145, 24, 'tagName == \'v:imagedata\'');
+function visit126_777_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['777'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['773'][2].init(1410, 26, 'tagName.indexOf(\':\') != -1');
-function visit124_773_2(result) {
-  _$jscoverage['/word-filter.js'].branchData['773'][2].ranCondition(result);
-  return result;
-}_$jscoverage['/word-filter.js'].branchData['773'][1].init(1410, 82, 'tagName.indexOf(\':\') != -1 && tagName.indexOf(\'ke\') == -1');
-function visit123_773_1(result) {
+}_$jscoverage['/word-filter.js'].branchData['773'][1].init(54, 27, 'tagName.indexOf(\'ke\') == -1');
+function visit125_773_1(result) {
   _$jscoverage['/word-filter.js'].branchData['773'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['767'][1].init(81, 33, 'containsNothingButSpaces(element)');
-function visit122_767_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['767'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['772'][2].init(1410, 26, 'tagName.indexOf(\':\') != -1');
+function visit124_772_2(result) {
+  _$jscoverage['/word-filter.js'].branchData['772'][2].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['765'][1].init(1001, 22, 'tagName in dtd.$inline');
-function visit121_765_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['765'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['772'][1].init(1410, 82, 'tagName.indexOf(\':\') != -1 && tagName.indexOf(\'ke\') == -1');
+function visit123_772_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['772'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['760'][1].init(146, 24, 'resolveListItem(element)');
-function visit120_760_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['760'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['766'][1].init(81, 33, 'containsNothingButSpaces(element)');
+function visit122_766_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['766'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['757'][1].init(606, 20, 'tagName.match(/h\\d/)');
-function visit119_757_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['757'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['764'][1].init(1001, 22, 'tagName in dtd.$inline');
+function visit121_764_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['764'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['749'][1].init(217, 53, 'tagName in blockLike && element.getAttribute("style")');
-function visit118_749_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['749'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['759'][1].init(146, 24, 'resolveListItem(element)');
+function visit120_759_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['759'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['745'][1].init(36, 22, 'element.nodeName || \'\'');
-function visit117_745_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['745'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['756'][1].init(606, 20, 'tagName.match(/h\\d/)');
+function visit119_756_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['756'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['740'][1].init(142, 59, 'UA.gecko && (applyStyleFilter = filters.applyStyleFilter)');
-function visit116_740_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['740'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['748'][1].init(217, 53, 'tagName in blockLike && element.getAttribute("style")');
+function visit118_748_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['748'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['696'][1].init(166, 9, 'i < count');
-function visit115_696_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['696'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['744'][1].init(36, 22, 'element.nodeName || \'\'');
+function visit117_744_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['744'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['669'][1].init(2653, 34, '!element.getAttribute("ke:indent")');
-function visit114_669_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['669'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['739'][1].init(142, 59, 'UA.gecko && (applyStyleFilter = filters.applyStyleFilter)');
+function visit116_739_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['739'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['656'][2].init(38, 25, 'listId !== previousListId');
-function visit113_656_2(result) {
-  _$jscoverage['/word-filter.js'].branchData['656'][2].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['695'][1].init(166, 9, 'i < count');
+function visit115_695_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['695'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['656'][1].init(38, 68, 'listId !== previousListId && (element.setAttribute(\'ke:reset\', 1))');
-function visit112_656_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['656'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['668'][1].init(2653, 34, '!element.getAttribute("ke:indent")');
+function visit114_668_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['668'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['655'][1].init(249, 11, 'indent == 1');
-function visit111_655_1(result) {
+}_$jscoverage['/word-filter.js'].branchData['655'][2].init(38, 25, 'listId !== previousListId');
+function visit113_655_2(result) {
+  _$jscoverage['/word-filter.js'].branchData['655'][2].ranCondition(result);
+  return result;
+}_$jscoverage['/word-filter.js'].branchData['655'][1].init(38, 68, 'listId !== previousListId && (element.setAttribute(\'ke:reset\', 1))');
+function visit112_655_1(result) {
   _$jscoverage['/word-filter.js'].branchData['655'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['645'][2].init(34, 101, 'listBaseIndent && (Math.ceil(margin / listBaseIndent) + 1)');
-function visit110_645_2(result) {
-  _$jscoverage['/word-filter.js'].branchData['645'][2].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['654'][1].init(249, 11, 'indent == 1');
+function visit111_654_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['654'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['645'][1].init(72, 106, 'listBaseIndent && (Math.ceil(margin / listBaseIndent) + 1) || 1');
-function visit109_645_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['645'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['644'][2].init(34, 101, 'listBaseIndent && (Math.ceil(margin / listBaseIndent) + 1)');
+function visit110_644_2(result) {
+  _$jscoverage['/word-filter.js'].branchData['644'][2].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['644'][1].init(739, 14, 'listBaseIndent');
-function visit108_644_1(result) {
+}_$jscoverage['/word-filter.js'].branchData['644'][1].init(72, 106, 'listBaseIndent && (Math.ceil(margin / listBaseIndent) + 1) || 1');
+function visit109_644_1(result) {
   _$jscoverage['/word-filter.js'].branchData['644'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['639'][1].init(71, 31, 'margin > previousListItemMargin');
-function visit107_639_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['639'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['643'][1].init(739, 14, 'listBaseIndent');
+function visit108_643_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['643'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['638'][3].init(405, 31, 'previousListItemMargin !== null');
-function visit106_638_3(result) {
-  _$jscoverage['/word-filter.js'].branchData['638'][3].ranCondition(result);
-  return result;
-}_$jscoverage['/word-filter.js'].branchData['638'][2].init(405, 103, 'previousListItemMargin !== null && margin > previousListItemMargin');
-function visit105_638_2(result) {
-  _$jscoverage['/word-filter.js'].branchData['638'][2].ranCondition(result);
-  return result;
-}_$jscoverage['/word-filter.js'].branchData['638'][1].init(386, 122, '!listBaseIndent && previousListItemMargin !== null && margin > previousListItemMargin');
-function visit104_638_1(result) {
+}_$jscoverage['/word-filter.js'].branchData['638'][1].init(71, 31, 'margin > previousListItemMargin');
+function visit107_638_1(result) {
   _$jscoverage['/word-filter.js'].branchData['638'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['635'][2].init(36, 27, 'values[1] || values[0]');
-function visit103_635_2(result) {
-  _$jscoverage['/word-filter.js'].branchData['635'][2].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['637'][3].init(405, 31, 'previousListItemMargin !== null');
+function visit106_637_3(result) {
+  _$jscoverage['/word-filter.js'].branchData['637'][3].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['635'][1].init(193, 42, 'values[3] || values[1] || values[0]');
-function visit102_635_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['635'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['637'][2].init(405, 103, 'previousListItemMargin !== null && margin > previousListItemMargin');
+function visit105_637_2(result) {
+  _$jscoverage['/word-filter.js'].branchData['637'][2].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['625'][1].init(70, 29, 'element.getAttribute("style")');
-function visit101_625_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['625'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['637'][1].init(386, 122, '!listBaseIndent && previousListItemMargin !== null && margin > previousListItemMargin');
+function visit104_637_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['637'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['621'][1].init(83, 70, 'listMarker.length && (listMarker = listMarker[0])');
-function visit100_621_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['621'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['634'][2].init(36, 27, 'values[1] || values[0]');
+function visit103_634_2(result) {
+  _$jscoverage['/word-filter.js'].branchData['634'][2].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['620'][1].init(105, 154, '(listMarker = removeAnyChildWithName(element, \'ke:listbullet\')) && listMarker.length && (listMarker = listMarker[0])');
-function visit99_620_1(result) {
+}_$jscoverage['/word-filter.js'].branchData['634'][1].init(193, 42, 'values[3] || values[1] || values[0]');
+function visit102_634_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['634'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/word-filter.js'].branchData['624'][1].init(70, 29, 'element.getAttribute("style")');
+function visit101_624_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['624'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/word-filter.js'].branchData['620'][1].init(83, 70, 'listMarker.length && (listMarker = listMarker[0])');
+function visit100_620_1(result) {
   _$jscoverage['/word-filter.js'].branchData['620'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['612'][1].init(48, 91, '(text = onlyChild(element)) && (/^(:?\\s|&nbsp;)+$/).test(text.nodeValue)');
-function visit98_612_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['612'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['619'][1].init(105, 154, '(listMarker = removeAnyChildWithName(element, \'ke:listbullet\')) && listMarker.length && (listMarker = listMarker[0])');
+function visit99_619_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['619'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['605'][1].init(78, 40, '/mso-list\\s*:\\s*Ignore/i.test(styleText)');
-function visit97_605_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['605'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['611'][1].init(48, 91, '(text = onlyChild(element)) && (/^(:?\\s|&nbsp;)+$/).test(text.nodeValue)');
+function visit98_611_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['611'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['583'][1].init(90, 5, 'style');
-function visit96_583_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['583'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['604'][1].init(78, 40, '/mso-list\\s*:\\s*Ignore/i.test(styleText)');
+function visit97_604_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['604'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['580'][1].init(26, 9, 'i < count');
-function visit95_580_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['580'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['582'][1].init(90, 5, 'style');
+function visit96_582_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['582'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['579'][1].init(957, 10, 'mergeStyle');
-function visit94_579_1(result) {
+}_$jscoverage['/word-filter.js'].branchData['579'][1].init(26, 9, 'i < count');
+function visit95_579_1(result) {
   _$jscoverage['/word-filter.js'].branchData['579'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['570'][2].init(22, 24, 'match[1] == mergeStyle');
-function visit93_570_2(result) {
-  _$jscoverage['/word-filter.js'].branchData['570'][2].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['578'][1].init(957, 10, 'mergeStyle');
+function visit94_578_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['578'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['570'][1].init(22, 39, 'match[1] == mergeStyle || !mergeStyle');
-function visit92_570_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['570'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['569'][2].init(22, 24, 'match[1] == mergeStyle');
+function visit93_569_2(result) {
+  _$jscoverage['/word-filter.js'].branchData['569'][2].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['569'][1].init(292, 5, 'match');
-function visit91_569_1(result) {
+}_$jscoverage['/word-filter.js'].branchData['569'][1].init(22, 39, 'match[1] == mergeStyle || !mergeStyle');
+function visit92_569_1(result) {
   _$jscoverage['/word-filter.js'].branchData['569'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['563'][2].init(87, 44, 'Number(child.getAttribute("value")) == i + 1');
-function visit90_563_2(result) {
-  _$jscoverage['/word-filter.js'].branchData['563'][2].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['568'][1].init(292, 5, 'match');
+function visit91_568_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['568'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['563'][1].init(56, 75, 'child.getAttribute("value") && Number(child.getAttribute("value")) == i + 1');
-function visit89_563_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['563'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['562'][2].init(87, 44, 'Number(child.getAttribute("value")) == i + 1');
+function visit90_562_2(result) {
+  _$jscoverage['/word-filter.js'].branchData['562'][2].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['560'][1].init(379, 9, 'i < count');
-function visit88_560_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['560'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['562'][1].init(56, 75, 'child.getAttribute("value") && Number(child.getAttribute("value")) == i + 1');
+function visit89_562_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['562'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['557'][1].init(281, 48, 'styleTypeRegexp.exec(list.getAttribute("style"))');
-function visit87_557_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['557'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['559'][1].init(379, 9, 'i < count');
+function visit88_559_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['559'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['548'][1].init(25, 21, 'list.childNodes || []');
-function visit86_548_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['548'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['556'][1].init(281, 48, 'styleTypeRegexp.exec(list.getAttribute("style"))');
+function visit87_556_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['556'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['528'][1].init(2460, 16, 'i < rules.length');
-function visit85_528_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['528'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['547'][1].init(25, 21, 'list.childNodes || []');
+function visit86_547_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['547'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['524'][1].init(1902, 41, '!whitelist && rules.push([name, value])');
-function visit84_524_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['524'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['527'][1].init(2460, 16, 'i < rules.length');
+function visit85_527_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['527'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['515'][1].init(764, 27, 'typeof newValue == \'string\'');
-function visit83_515_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['515'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['523'][1].init(1902, 41, '!whitelist && rules.push([name, value])');
+function visit84_523_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['523'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['510'][1].init(523, 25, 'newValue && newValue.push');
-function visit82_510_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['510'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['514'][1].init(764, 27, 'typeof newValue == \'string\'');
+function visit83_514_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['514'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['504'][1].init(189, 29, 'typeof newValue == \'function\'');
-function visit81_504_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['504'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['509'][1].init(523, 25, 'newValue && newValue.push');
+function visit82_509_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['509'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['502'][2].init(125, 17, 'newValue || value');
-function visit80_502_2(result) {
-  _$jscoverage['/word-filter.js'].branchData['502'][2].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['503'][1].init(189, 29, 'typeof newValue == \'function\'');
+function visit81_503_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['503'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['502'][1].init(99, 45, 'whitelist && (newValue = newValue || value)');
-function visit79_502_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['502'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['501'][2].init(125, 17, 'newValue || value');
+function visit80_501_2(result) {
+  _$jscoverage['/word-filter.js'].branchData['501'][2].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['501'][1].init(45, 15, 'newName || name');
-function visit78_501_1(result) {
+}_$jscoverage['/word-filter.js'].branchData['501'][1].init(99, 45, 'whitelist && (newValue = newValue || value)');
+function visit79_501_1(result) {
   _$jscoverage['/word-filter.js'].branchData['501'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['500'][1].init(65, 42, '!valuePattern || value.match(valuePattern)');
-function visit77_500_1(result) {
+}_$jscoverage['/word-filter.js'].branchData['500'][1].init(45, 15, 'newName || name');
+function visit78_500_1(result) {
   _$jscoverage['/word-filter.js'].branchData['500'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['499'][1].init(294, 110, 'name.match(namePattern) && (!valuePattern || value.match(valuePattern))');
-function visit76_499_1(result) {
+}_$jscoverage['/word-filter.js'].branchData['499'][1].init(65, 42, '!valuePattern || value.match(valuePattern)');
+function visit77_499_1(result) {
   _$jscoverage['/word-filter.js'].branchData['499'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['493'][1].init(34, 11, 'styles[i]');
-function visit75_493_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['493'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['498'][1].init(294, 110, 'name.match(namePattern) && (!valuePattern || value.match(valuePattern))');
+function visit76_498_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['498'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['492'][1].init(348, 17, 'i < styles.length');
-function visit74_492_1(result) {
+}_$jscoverage['/word-filter.js'].branchData['492'][1].init(34, 11, 'styles[i]');
+function visit75_492_1(result) {
   _$jscoverage['/word-filter.js'].branchData['492'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['486'][2].init(78, 21, 'name == \'font-family\'');
-function visit73_486_2(result) {
-  _$jscoverage['/word-filter.js'].branchData['486'][2].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['491'][1].init(348, 17, 'i < styles.length');
+function visit74_491_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['491'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['486'][1].init(78, 63, 'name == \'font-family\' && (value = value.replace(/["\']/g, \'\'))');
-function visit72_486_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['486'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['485'][2].init(78, 21, 'name == \'font-family\'');
+function visit73_485_2(result) {
+  _$jscoverage['/word-filter.js'].branchData['485'][2].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['481'][1].init(-1, 15, 'styleText || \'\'');
-function visit71_481_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['481'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['485'][1].init(78, 63, 'name == \'font-family\' && (value = value.replace(/["\']/g, \'\'))');
+function visit72_485_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['485'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['456'][1].init(7698, 22, 'i < openedLists.length');
-function visit70_456_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['456'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['480'][1].init(-1, 15, 'styleText || \'\'');
+function visit71_480_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['480'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['451'][1].init(6797, 4, 'list');
-function visit69_451_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['451'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['455'][1].init(7698, 22, 'i < openedLists.length');
+function visit70_455_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['455'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['449'][2].init(6679, 19, 'child.nodeType == 3');
-function visit68_449_2(result) {
-  _$jscoverage['/word-filter.js'].branchData['449'][2].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['450'][1].init(6797, 4, 'list');
+function visit69_450_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['450'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['449'][1].init(6679, 47, 'child.nodeType == 3 && !S.trim(child.nodeValue)');
-function visit67_449_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['449'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['448'][2].init(6679, 19, 'child.nodeType == 3');
+function visit68_448_2(result) {
+  _$jscoverage['/word-filter.js'].branchData['448'][2].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['435'][1].init(242, 38, 'diff-- && (parent = list.parentNode)');
-function visit66_435_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['435'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['448'][1].init(6679, 47, 'child.nodeType == 3 && !S.trim(child.nodeValue)');
+function visit67_448_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['448'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['431'][1].init(325, 27, 'listItemIndent < lastIndent');
-function visit65_431_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['431'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['434'][1].init(242, 38, 'diff-- && (parent = list.parentNode)');
+function visit66_434_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['434'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['426'][1].init(30, 27, 'listItemIndent > lastIndent');
-function visit64_426_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['426'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['430'][1].init(325, 27, 'listItemIndent < lastIndent');
+function visit65_430_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['430'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['421'][1].init(5205, 5, '!list');
-function visit63_421_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['421'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['425'][1].init(30, 27, 'listItemIndent > lastIndent');
+function visit64_425_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['425'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['401'][2].init(4257, 16, 'listType == \'ol\'');
-function visit62_401_2(result) {
-  _$jscoverage['/word-filter.js'].branchData['401'][2].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['420'][1].init(5205, 5, '!list');
+function visit63_420_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['420'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['401'][1].init(4257, 26, 'listType == \'ol\' && bullet');
-function visit61_401_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['401'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['400'][2].init(4257, 16, 'listType == \'ol\'');
+function visit62_400_2(result) {
+  _$jscoverage['/word-filter.js'].branchData['400'][2].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['397'][3].init(4058, 16, 'listType == \'ol\'');
-function visit60_397_3(result) {
-  _$jscoverage['/word-filter.js'].branchData['397'][3].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['400'][1].init(4257, 26, 'listType == \'ol\' && bullet');
+function visit61_400_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['400'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['397'][2].init(4039, 58, 'listStyleType != (listType == \'ol\' ? \'decimal\' : \'disc\')');
-function visit59_397_2(result) {
-  _$jscoverage['/word-filter.js'].branchData['397'][2].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['396'][3].init(4058, 16, 'listType == \'ol\'');
+function visit60_396_3(result) {
+  _$jscoverage['/word-filter.js'].branchData['396'][3].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['397'][1].init(4022, 75, 'listStyleType && listStyleType != (listType == \'ol\' ? \'decimal\' : \'disc\')');
-function visit58_397_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['397'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/word-filter.js'].branchData['396'][2].init(3956, 16, 'listType == \'ol\'');
-function visit57_396_2(result) {
+}_$jscoverage['/word-filter.js'].branchData['396'][2].init(4039, 58, 'listStyleType != (listType == \'ol\' ? \'decimal\' : \'disc\')');
+function visit59_396_2(result) {
   _$jscoverage['/word-filter.js'].branchData['396'][2].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['396'][1].init(3937, 58, 'listStyleType || (listType == \'ol\' ? \'decimal\' : \'disc\')');
-function visit56_396_1(result) {
+}_$jscoverage['/word-filter.js'].branchData['396'][1].init(4022, 75, 'listStyleType && listStyleType != (listType == \'ol\' ? \'decimal\' : \'disc\')');
+function visit58_396_1(result) {
   _$jscoverage['/word-filter.js'].branchData['396'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['392'][1].init(2278, 53, '!listType && (listType = bullet[2] ? \'ol\' : \'ul\')');
-function visit55_392_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['392'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['395'][2].init(3956, 16, 'listType == \'ol\'');
+function visit57_395_2(result) {
+  _$jscoverage['/word-filter.js'].branchData['395'][2].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['373'][2].init(195, 17, 'num < itemNumeric');
-function visit54_373_2(result) {
-  _$jscoverage['/word-filter.js'].branchData['373'][2].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['395'][1].init(3937, 58, 'listStyleType || (listType == \'ol\' ? \'decimal\' : \'disc\')');
+function visit56_395_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['395'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['373'][1].init(179, 33, '!itemNumeric || num < itemNumeric');
-function visit53_373_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['373'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['391'][1].init(2278, 53, '!listType && (listType = bullet[2] ? \'ol\' : \'ul\')');
+function visit55_391_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['391'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['371'][2].init(231, 12, 'type == \'ol\'');
-function visit52_371_2(result) {
-  _$jscoverage['/word-filter.js'].branchData['371'][2].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['372'][2].init(195, 17, 'num < itemNumeric');
+function visit54_372_2(result) {
+  _$jscoverage['/word-filter.js'].branchData['372'][2].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['371'][1].init(231, 45, 'type == \'ol\' && (/alpha|roman/).test(style)');
-function visit51_371_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['371'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['372'][1].init(179, 33, '!itemNumeric || num < itemNumeric');
+function visit53_372_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['372'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['368'][1].init(44, 53, 'listMarkerPatterns[type][style].test(bullet[1])');
-function visit50_368_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['368'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['370'][2].init(231, 12, 'type == \'ol\'');
+function visit52_370_2(result) {
+  _$jscoverage['/word-filter.js'].branchData['370'][2].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['358'][1].init(219, 131, 'previousListType && listMarkerPatterns[previousListType][previousListStyleType].test(bullet[1])');
-function visit49_358_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['358'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['370'][1].init(231, 45, 'type == \'ol\' && (/alpha|roman/).test(style)');
+function visit51_370_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['370'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['352'][1].init(37, 44, 'listItem.getAttribute(\'ke:listtype\') || \'ol\'');
-function visit48_352_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['352'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['367'][1].init(44, 53, 'listMarkerPatterns[type][style].test(bullet[1])');
+function visit50_367_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['367'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['351'][1].init(1255, 7, '!bullet');
-function visit47_351_1(result) {
+}_$jscoverage['/word-filter.js'].branchData['357'][1].init(219, 131, 'previousListType && listMarkerPatterns[previousListType][previousListStyleType].test(bullet[1])');
+function visit49_357_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['357'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/word-filter.js'].branchData['351'][1].init(37, 44, 'listItem.getAttribute(\'ke:listtype\') || \'ol\'');
+function visit48_351_1(result) {
   _$jscoverage['/word-filter.js'].branchData['351'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['347'][1].init(1053, 28, 'listItemIndent != lastIndent');
-function visit46_347_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['347'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['350'][1].init(1255, 7, '!bullet');
+function visit47_350_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['350'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['339'][1].init(561, 80, 'listItem.getAttribute(\'ke:reset\') && (list = lastIndent = lastListItem = null)');
-function visit45_339_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['339'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['346'][1].init(1053, 28, 'listItemIndent != lastIndent');
+function visit46_346_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['346'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['332'][1].init(336, 35, 'listItem.getAttribute(\'ke:ignored\')');
-function visit44_332_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['332'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['338'][1].init(561, 80, 'listItem.getAttribute(\'ke:reset\') && (list = lastIndent = lastListItem = null)');
+function visit45_338_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['338'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['329'][1].init(187, 52, 'bullet && bullet.match(/^(?:[(]?)([^\\s]+?)([.)]?)$/)');
-function visit43_329_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['329'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['331'][1].init(336, 35, 'listItem.getAttribute(\'ke:ignored\')');
+function visit44_331_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['331'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['324'][1].init(64, 25, '\'ke:li\' == child.nodeName');
-function visit42_324_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['324'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['328'][1].init(187, 52, 'bullet && bullet.match(/^(?:[(]?)([^\\s]+?)([.)]?)$/)');
+function visit43_328_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['328'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['321'][1].init(745, 19, 'i < children.length');
-function visit41_321_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['321'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['323'][1].init(64, 25, '\'ke:li\' == child.nodeName');
+function visit42_323_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['323'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['304'][1].init(29, 24, 'element.childNodes || []');
-function visit40_304_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['304'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['320'][1].init(745, 19, 'i < children.length');
+function visit41_320_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['320'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/word-filter.js'].branchData['303'][1].init(29, 24, 'element.childNodes || []');
+function visit40_303_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['303'][1].ranCondition(result);
   return result;
 }_$jscoverage['/word-filter.js'].branchData['286'][1].init(331, 7, 'j < num');
 function visit39_286_1(result) {
@@ -1837,26 +1837,26 @@ function visit6_97_1(result) {
 function visit5_89_1(result) {
   _$jscoverage['/word-filter.js'].branchData['89'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['73'][1].init(14, 3, 'str');
-function visit4_73_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['73'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['74'][1].init(14, 3, 'str');
+function visit4_74_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['74'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['65'][1].init(107, 14, 'str.length > 0');
-function visit3_65_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['65'][1].ranCondition(result);
+}_$jscoverage['/word-filter.js'].branchData['66'][1].init(107, 14, 'str.length > 0');
+function visit3_66_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['66'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['54'][1].init(55, 24, 'str.substr(0, k) == j[1]');
-function visit2_54_1(result) {
+}_$jscoverage['/word-filter.js'].branchData['55'][1].init(55, 24, 'str.substr(0, k) == j[1]');
+function visit2_55_1(result) {
+  _$jscoverage['/word-filter.js'].branchData['55'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/word-filter.js'].branchData['54'][1].init(104, 5, 'i < l');
+function visit1_54_1(result) {
   _$jscoverage['/word-filter.js'].branchData['54'][1].ranCondition(result);
   return result;
-}_$jscoverage['/word-filter.js'].branchData['53'][1].init(104, 5, 'i < l');
-function visit1_53_1(result) {
-  _$jscoverage['/word-filter.js'].branchData['53'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/word-filter.js'].lineData[5]++;
+}_$jscoverage['/word-filter.js'].lineData[6]++;
 KISSY.add("editor/plugin/word-filter", function(S, HtmlParser) {
   _$jscoverage['/word-filter.js'].functionData[0]++;
-  _$jscoverage['/word-filter.js'].lineData[6]++;
+  _$jscoverage['/word-filter.js'].lineData[7]++;
   var $ = S.all, UA = S.UA, dtd = HtmlParser.DTD, wordFilter = new HtmlParser.Filter(), cssLengthRelativeUnit = /^([.\d]*)+(em|ex|px|gd|rem|vw|vh|vm|ch|mm|cm|in|pt|pc|deg|rad|ms|s|hz|khz){1}?/i, emptyMarginRegex = /^(?:\b0[^\s]*\s*){1,4}$/, romanLiteralPattern = '^m{0,4}(cm|cd|d?c{0,3})(xc|xl|l?x{0,3})(ix|iv|v?i{0,3})$', lowerRomanLiteralRegex = new RegExp(romanLiteralPattern), upperRomanLiteralRegex = new RegExp(romanLiteralPattern.toUpperCase()), orderedPatterns = {
   'decimal': /\d+/, 
   'lower-roman': lowerRomanLiteralRegex, 
@@ -1868,50 +1868,50 @@ KISSY.add("editor/plugin/word-filter", function(S, HtmlParser) {
   'square': /[\u006E\u25C6]/}, listMarkerPatterns = {
   'ol': orderedPatterns, 
   'ul': unorderedPatterns}, romans = [[1000, 'M'], [900, 'CM'], [500, 'D'], [400, 'CD'], [100, 'C'], [90, 'XC'], [50, 'L'], [40, 'XL'], [10, 'X'], [9, 'IX'], [5, 'V'], [4, 'IV'], [1, 'I']], alphabets = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  _$jscoverage['/word-filter.js'].lineData[50]++;
+  _$jscoverage['/word-filter.js'].lineData[51]++;
   function fromRoman(str) {
     _$jscoverage['/word-filter.js'].functionData[1]++;
-    _$jscoverage['/word-filter.js'].lineData[51]++;
-    str = str.toUpperCase();
     _$jscoverage['/word-filter.js'].lineData[52]++;
-    var l = romans.length, retVal = 0;
+    str = str.toUpperCase();
     _$jscoverage['/word-filter.js'].lineData[53]++;
-    for (var i = 0; visit1_53_1(i < l); ++i) {
-      _$jscoverage['/word-filter.js'].lineData[54]++;
-      for (var j = romans[i], k = j[1].length; visit2_54_1(str.substr(0, k) == j[1]); str = str.substr(k)) {
-        _$jscoverage['/word-filter.js'].lineData[55]++;
+    var l = romans.length, retVal = 0;
+    _$jscoverage['/word-filter.js'].lineData[54]++;
+    for (var i = 0; visit1_54_1(i < l); ++i) {
+      _$jscoverage['/word-filter.js'].lineData[55]++;
+      for (var j = romans[i], k = j[1].length; visit2_55_1(str.substr(0, k) == j[1]); str = str.substr(k)) {
+        _$jscoverage['/word-filter.js'].lineData[56]++;
         retVal += j[0];
       }
     }
-    _$jscoverage['/word-filter.js'].lineData[58]++;
+    _$jscoverage['/word-filter.js'].lineData[59]++;
     return retVal;
   }
-  _$jscoverage['/word-filter.js'].lineData[62]++;
+  _$jscoverage['/word-filter.js'].lineData[63]++;
   function fromAlphabet(str) {
     _$jscoverage['/word-filter.js'].functionData[2]++;
-    _$jscoverage['/word-filter.js'].lineData[63]++;
-    str = str.toUpperCase();
     _$jscoverage['/word-filter.js'].lineData[64]++;
-    var l = alphabets.length, retVal = 1;
+    str = str.toUpperCase();
     _$jscoverage['/word-filter.js'].lineData[65]++;
-    for (var x = 1; visit3_65_1(str.length > 0); x *= l) {
-      _$jscoverage['/word-filter.js'].lineData[66]++;
-      retVal += alphabets.indexOf(str.charAt(str.length - 1)) * x;
+    var l = alphabets.length, retVal = 1;
+    _$jscoverage['/word-filter.js'].lineData[66]++;
+    for (var x = 1; visit3_66_1(str.length > 0); x *= l) {
       _$jscoverage['/word-filter.js'].lineData[67]++;
+      retVal += alphabets.indexOf(str.charAt(str.length - 1)) * x;
+      _$jscoverage['/word-filter.js'].lineData[68]++;
       str = str.substr(0, str.length - 1);
     }
-    _$jscoverage['/word-filter.js'].lineData[69]++;
+    _$jscoverage['/word-filter.js'].lineData[70]++;
     return retVal;
   }
-  _$jscoverage['/word-filter.js'].lineData[72]++;
+  _$jscoverage['/word-filter.js'].lineData[73]++;
   function setStyle(element, str) {
     _$jscoverage['/word-filter.js'].functionData[3]++;
-    _$jscoverage['/word-filter.js'].lineData[73]++;
-    if (visit4_73_1(str)) {
-      _$jscoverage['/word-filter.js'].lineData[74]++;
+    _$jscoverage['/word-filter.js'].lineData[74]++;
+    if (visit4_74_1(str)) {
+      _$jscoverage['/word-filter.js'].lineData[75]++;
       element.setAttribute("style", str);
     } else {
-      _$jscoverage['/word-filter.js'].lineData[76]++;
+      _$jscoverage['/word-filter.js'].lineData[77]++;
       element.removeAttribute("style");
     }
   }
@@ -2161,645 +2161,645 @@ KISSY.add("editor/plugin/word-filter", function(S, HtmlParser) {
 }, 
   assembleList: function(element) {
   _$jscoverage['/word-filter.js'].functionData[15]++;
-  _$jscoverage['/word-filter.js'].lineData[304]++;
-  var children = visit40_304_1(element.childNodes || []), child, listItem, listItemIndent, lastIndent, lastListItem, list, openedLists = [], previousListStyleType, previousListType;
-  _$jscoverage['/word-filter.js'].lineData[316]++;
+  _$jscoverage['/word-filter.js'].lineData[303]++;
+  var children = visit40_303_1(element.childNodes || []), child, listItem, listItemIndent, lastIndent, lastListItem, list, openedLists = [], previousListStyleType, previousListType;
+  _$jscoverage['/word-filter.js'].lineData[315]++;
   var bullet, listType, listStyleType, itemNumeric;
-  _$jscoverage['/word-filter.js'].lineData[321]++;
-  for (var i = 0; visit41_321_1(i < children.length); i++) {
-    _$jscoverage['/word-filter.js'].lineData[322]++;
+  _$jscoverage['/word-filter.js'].lineData[320]++;
+  for (var i = 0; visit41_320_1(i < children.length); i++) {
+    _$jscoverage['/word-filter.js'].lineData[321]++;
     child = children[i];
-    _$jscoverage['/word-filter.js'].lineData[324]++;
-    if (visit42_324_1('ke:li' == child.nodeName)) {
-      _$jscoverage['/word-filter.js'].lineData[325]++;
+    _$jscoverage['/word-filter.js'].lineData[323]++;
+    if (visit42_323_1('ke:li' == child.nodeName)) {
+      _$jscoverage['/word-filter.js'].lineData[324]++;
       child.setTagName('li');
-      _$jscoverage['/word-filter.js'].lineData[326]++;
+      _$jscoverage['/word-filter.js'].lineData[325]++;
       listItem = child;
-      _$jscoverage['/word-filter.js'].lineData[328]++;
+      _$jscoverage['/word-filter.js'].lineData[327]++;
       bullet = listItem.getAttribute('ke:listsymbol');
+      _$jscoverage['/word-filter.js'].lineData[328]++;
+      bullet = visit43_328_1(bullet && bullet.match(/^(?:[(]?)([^\s]+?)([.)]?)$/));
       _$jscoverage['/word-filter.js'].lineData[329]++;
-      bullet = visit43_329_1(bullet && bullet.match(/^(?:[(]?)([^\s]+?)([.)]?)$/));
-      _$jscoverage['/word-filter.js'].lineData[330]++;
       listType = listStyleType = itemNumeric = null;
-      _$jscoverage['/word-filter.js'].lineData[332]++;
-      if (visit44_332_1(listItem.getAttribute('ke:ignored'))) {
-        _$jscoverage['/word-filter.js'].lineData[333]++;
+      _$jscoverage['/word-filter.js'].lineData[331]++;
+      if (visit44_331_1(listItem.getAttribute('ke:ignored'))) {
+        _$jscoverage['/word-filter.js'].lineData[332]++;
         children.splice(i--, 1);
-        _$jscoverage['/word-filter.js'].lineData[334]++;
+        _$jscoverage['/word-filter.js'].lineData[333]++;
         continue;
       }
-      _$jscoverage['/word-filter.js'].lineData[339]++;
-      visit45_339_1(listItem.getAttribute('ke:reset') && (list = lastIndent = lastListItem = null));
-      _$jscoverage['/word-filter.js'].lineData[344]++;
+      _$jscoverage['/word-filter.js'].lineData[338]++;
+      visit45_338_1(listItem.getAttribute('ke:reset') && (list = lastIndent = lastListItem = null));
+      _$jscoverage['/word-filter.js'].lineData[343]++;
       listItemIndent = Number(listItem.getAttribute('ke:indent'));
-      _$jscoverage['/word-filter.js'].lineData[347]++;
-      if (visit46_347_1(listItemIndent != lastIndent)) {
-        _$jscoverage['/word-filter.js'].lineData[348]++;
+      _$jscoverage['/word-filter.js'].lineData[346]++;
+      if (visit46_346_1(listItemIndent != lastIndent)) {
+        _$jscoverage['/word-filter.js'].lineData[347]++;
         previousListType = previousListStyleType = null;
       }
-      _$jscoverage['/word-filter.js'].lineData[351]++;
-      if (visit47_351_1(!bullet)) {
+      _$jscoverage['/word-filter.js'].lineData[350]++;
+      if (visit47_350_1(!bullet)) {
+        _$jscoverage['/word-filter.js'].lineData[351]++;
+        listType = visit48_351_1(listItem.getAttribute('ke:listtype') || 'ol');
         _$jscoverage['/word-filter.js'].lineData[352]++;
-        listType = visit48_352_1(listItem.getAttribute('ke:listtype') || 'ol');
-        _$jscoverage['/word-filter.js'].lineData[353]++;
         listStyleType = listItem.getAttribute('ke:list-style-type');
       } else {
-        _$jscoverage['/word-filter.js'].lineData[358]++;
-        if (visit49_358_1(previousListType && listMarkerPatterns[previousListType][previousListStyleType].test(bullet[1]))) {
-          _$jscoverage['/word-filter.js'].lineData[360]++;
+        _$jscoverage['/word-filter.js'].lineData[357]++;
+        if (visit49_357_1(previousListType && listMarkerPatterns[previousListType][previousListStyleType].test(bullet[1]))) {
+          _$jscoverage['/word-filter.js'].lineData[359]++;
           listType = previousListType;
-          _$jscoverage['/word-filter.js'].lineData[361]++;
+          _$jscoverage['/word-filter.js'].lineData[360]++;
           listStyleType = previousListStyleType;
         } else {
-          _$jscoverage['/word-filter.js'].lineData[364]++;
+          _$jscoverage['/word-filter.js'].lineData[363]++;
           for (var type in listMarkerPatterns) {
-            _$jscoverage['/word-filter.js'].lineData[366]++;
+            _$jscoverage['/word-filter.js'].lineData[365]++;
             for (var style in listMarkerPatterns[type]) {
-              _$jscoverage['/word-filter.js'].lineData[368]++;
-              if (visit50_368_1(listMarkerPatterns[type][style].test(bullet[1]))) {
-                _$jscoverage['/word-filter.js'].lineData[371]++;
-                if (visit51_371_1(visit52_371_2(type == 'ol') && (/alpha|roman/).test(style))) {
-                  _$jscoverage['/word-filter.js'].lineData[372]++;
+              _$jscoverage['/word-filter.js'].lineData[367]++;
+              if (visit50_367_1(listMarkerPatterns[type][style].test(bullet[1]))) {
+                _$jscoverage['/word-filter.js'].lineData[370]++;
+                if (visit51_370_1(visit52_370_2(type == 'ol') && (/alpha|roman/).test(style))) {
+                  _$jscoverage['/word-filter.js'].lineData[371]++;
                   var num = /roman/.test(style) ? fromRoman(bullet[1]) : fromAlphabet(bullet[1]);
-                  _$jscoverage['/word-filter.js'].lineData[373]++;
-                  if (visit53_373_1(!itemNumeric || visit54_373_2(num < itemNumeric))) {
-                    _$jscoverage['/word-filter.js'].lineData[374]++;
+                  _$jscoverage['/word-filter.js'].lineData[372]++;
+                  if (visit53_372_1(!itemNumeric || visit54_372_2(num < itemNumeric))) {
+                    _$jscoverage['/word-filter.js'].lineData[373]++;
                     itemNumeric = num;
-                    _$jscoverage['/word-filter.js'].lineData[375]++;
+                    _$jscoverage['/word-filter.js'].lineData[374]++;
                     listType = type;
-                    _$jscoverage['/word-filter.js'].lineData[376]++;
+                    _$jscoverage['/word-filter.js'].lineData[375]++;
                     listStyleType = style;
                   }
                 } else {
-                  _$jscoverage['/word-filter.js'].lineData[380]++;
+                  _$jscoverage['/word-filter.js'].lineData[379]++;
                   listType = type;
-                  _$jscoverage['/word-filter.js'].lineData[381]++;
+                  _$jscoverage['/word-filter.js'].lineData[380]++;
                   listStyleType = style;
-                  _$jscoverage['/word-filter.js'].lineData[382]++;
+                  _$jscoverage['/word-filter.js'].lineData[381]++;
                   break;
                 }
               }
             }
           }
         }
-        _$jscoverage['/word-filter.js'].lineData[392]++;
-        visit55_392_1(!listType && (listType = bullet[2] ? 'ol' : 'ul'));
+        _$jscoverage['/word-filter.js'].lineData[391]++;
+        visit55_391_1(!listType && (listType = bullet[2] ? 'ol' : 'ul'));
       }
-      _$jscoverage['/word-filter.js'].lineData[395]++;
+      _$jscoverage['/word-filter.js'].lineData[394]++;
       previousListType = listType;
+      _$jscoverage['/word-filter.js'].lineData[395]++;
+      previousListStyleType = visit56_395_1(listStyleType || (visit57_395_2(listType == 'ol') ? 'decimal' : 'disc'));
       _$jscoverage['/word-filter.js'].lineData[396]++;
-      previousListStyleType = visit56_396_1(listStyleType || (visit57_396_2(listType == 'ol') ? 'decimal' : 'disc'));
-      _$jscoverage['/word-filter.js'].lineData[397]++;
-      if (visit58_397_1(listStyleType && visit59_397_2(listStyleType != (visit60_397_3(listType == 'ol') ? 'decimal' : 'disc')))) {
-        _$jscoverage['/word-filter.js'].lineData[398]++;
+      if (visit58_396_1(listStyleType && visit59_396_2(listStyleType != (visit60_396_3(listType == 'ol') ? 'decimal' : 'disc')))) {
+        _$jscoverage['/word-filter.js'].lineData[397]++;
         addStyle(listItem, 'list-style-type', listStyleType);
       }
-      _$jscoverage['/word-filter.js'].lineData[401]++;
-      if (visit61_401_1(visit62_401_2(listType == 'ol') && bullet)) {
-        _$jscoverage['/word-filter.js'].lineData[402]++;
+      _$jscoverage['/word-filter.js'].lineData[400]++;
+      if (visit61_400_1(visit62_400_2(listType == 'ol') && bullet)) {
+        _$jscoverage['/word-filter.js'].lineData[401]++;
         switch (listStyleType) {
           case 'decimal':
-            _$jscoverage['/word-filter.js'].lineData[404]++;
+            _$jscoverage['/word-filter.js'].lineData[403]++;
             itemNumeric = Number(bullet[1]);
-            _$jscoverage['/word-filter.js'].lineData[405]++;
+            _$jscoverage['/word-filter.js'].lineData[404]++;
             break;
           case 'lower-roman':
           case 'upper-roman':
-            _$jscoverage['/word-filter.js'].lineData[408]++;
+            _$jscoverage['/word-filter.js'].lineData[407]++;
             itemNumeric = fromRoman(bullet[1]);
-            _$jscoverage['/word-filter.js'].lineData[409]++;
+            _$jscoverage['/word-filter.js'].lineData[408]++;
             break;
           case 'lower-alpha':
           case 'upper-alpha':
-            _$jscoverage['/word-filter.js'].lineData[412]++;
+            _$jscoverage['/word-filter.js'].lineData[411]++;
             itemNumeric = fromAlphabet(bullet[1]);
-            _$jscoverage['/word-filter.js'].lineData[413]++;
+            _$jscoverage['/word-filter.js'].lineData[412]++;
             break;
         }
-        _$jscoverage['/word-filter.js'].lineData[417]++;
+        _$jscoverage['/word-filter.js'].lineData[416]++;
         listItem.setAttribute("value", itemNumeric);
       }
-      _$jscoverage['/word-filter.js'].lineData[421]++;
-      if (visit63_421_1(!list)) {
-        _$jscoverage['/word-filter.js'].lineData[422]++;
+      _$jscoverage['/word-filter.js'].lineData[420]++;
+      if (visit63_420_1(!list)) {
+        _$jscoverage['/word-filter.js'].lineData[421]++;
         openedLists.push(list = new HtmlParser.Tag(listType));
-        _$jscoverage['/word-filter.js'].lineData[423]++;
+        _$jscoverage['/word-filter.js'].lineData[422]++;
         list.appendChild(listItem);
-        _$jscoverage['/word-filter.js'].lineData[424]++;
+        _$jscoverage['/word-filter.js'].lineData[423]++;
         element.replaceChild(list, children[i]);
       } else {
-        _$jscoverage['/word-filter.js'].lineData[426]++;
-        if (visit64_426_1(listItemIndent > lastIndent)) {
-          _$jscoverage['/word-filter.js'].lineData[427]++;
+        _$jscoverage['/word-filter.js'].lineData[425]++;
+        if (visit64_425_1(listItemIndent > lastIndent)) {
+          _$jscoverage['/word-filter.js'].lineData[426]++;
           openedLists.push(list = new HtmlParser.Tag(listType));
-          _$jscoverage['/word-filter.js'].lineData[428]++;
+          _$jscoverage['/word-filter.js'].lineData[427]++;
           list.appendChild(listItem);
-          _$jscoverage['/word-filter.js'].lineData[429]++;
+          _$jscoverage['/word-filter.js'].lineData[428]++;
           lastListItem.appendChild(list);
         } else {
-          _$jscoverage['/word-filter.js'].lineData[431]++;
-          if (visit65_431_1(listItemIndent < lastIndent)) {
-            _$jscoverage['/word-filter.js'].lineData[433]++;
+          _$jscoverage['/word-filter.js'].lineData[430]++;
+          if (visit65_430_1(listItemIndent < lastIndent)) {
+            _$jscoverage['/word-filter.js'].lineData[432]++;
             var diff = lastIndent - listItemIndent, parent;
-            _$jscoverage['/word-filter.js'].lineData[435]++;
-            while (visit66_435_1(diff-- && (parent = list.parentNode))) {
-              _$jscoverage['/word-filter.js'].lineData[436]++;
+            _$jscoverage['/word-filter.js'].lineData[434]++;
+            while (visit66_434_1(diff-- && (parent = list.parentNode))) {
+              _$jscoverage['/word-filter.js'].lineData[435]++;
               list = parent.parentNode;
             }
-            _$jscoverage['/word-filter.js'].lineData[438]++;
+            _$jscoverage['/word-filter.js'].lineData[437]++;
             list.appendChild(listItem);
           } else {
-            _$jscoverage['/word-filter.js'].lineData[441]++;
+            _$jscoverage['/word-filter.js'].lineData[440]++;
             list.appendChild(listItem);
           }
         }
-        _$jscoverage['/word-filter.js'].lineData[443]++;
+        _$jscoverage['/word-filter.js'].lineData[442]++;
         children.splice(i--, 1);
       }
-      _$jscoverage['/word-filter.js'].lineData[446]++;
+      _$jscoverage['/word-filter.js'].lineData[445]++;
       lastListItem = listItem;
-      _$jscoverage['/word-filter.js'].lineData[447]++;
+      _$jscoverage['/word-filter.js'].lineData[446]++;
       lastIndent = listItemIndent;
     } else {
-      _$jscoverage['/word-filter.js'].lineData[449]++;
-      if (visit67_449_1(visit68_449_2(child.nodeType == 3) && !S.trim(child.nodeValue))) {
+      _$jscoverage['/word-filter.js'].lineData[448]++;
+      if (visit67_448_1(visit68_448_2(child.nodeType == 3) && !S.trim(child.nodeValue))) {
       } else {
-        _$jscoverage['/word-filter.js'].lineData[451]++;
-        if (visit69_451_1(list)) {
-          _$jscoverage['/word-filter.js'].lineData[452]++;
+        _$jscoverage['/word-filter.js'].lineData[450]++;
+        if (visit69_450_1(list)) {
+          _$jscoverage['/word-filter.js'].lineData[451]++;
           list = lastIndent = lastListItem = null;
         }
       }
     }
   }
-  _$jscoverage['/word-filter.js'].lineData[456]++;
-  for (i = 0; visit70_456_1(i < openedLists.length); i++) {
-    _$jscoverage['/word-filter.js'].lineData[457]++;
+  _$jscoverage['/word-filter.js'].lineData[455]++;
+  for (i = 0; visit70_455_1(i < openedLists.length); i++) {
+    _$jscoverage['/word-filter.js'].lineData[456]++;
     postProcessList(openedLists[i]);
   }
 }, 
   falsyFilter: function() {
   _$jscoverage['/word-filter.js'].functionData[16]++;
-  _$jscoverage['/word-filter.js'].lineData[465]++;
+  _$jscoverage['/word-filter.js'].lineData[464]++;
   return false;
 }, 
   stylesFilter: function(styles, whitelist) {
   _$jscoverage['/word-filter.js'].functionData[17]++;
-  _$jscoverage['/word-filter.js'].lineData[476]++;
+  _$jscoverage['/word-filter.js'].lineData[475]++;
   return function(styleText, element) {
   _$jscoverage['/word-filter.js'].functionData[18]++;
-  _$jscoverage['/word-filter.js'].lineData[477]++;
+  _$jscoverage['/word-filter.js'].lineData[476]++;
   var rules = [];
-  _$jscoverage['/word-filter.js'].lineData[481]++;
-  (visit71_481_1(styleText || '')).replace(/&quot;/g, '"').replace(/\s*([^ :;]+)\s*:\s*([^;]+)\s*(?=;|$)/g, function(match, name, value) {
+  _$jscoverage['/word-filter.js'].lineData[480]++;
+  (visit71_480_1(styleText || '')).replace(/&quot;/g, '"').replace(/\s*([^ :;]+)\s*:\s*([^;]+)\s*(?=;|$)/g, function(match, name, value) {
   _$jscoverage['/word-filter.js'].functionData[19]++;
-  _$jscoverage['/word-filter.js'].lineData[485]++;
+  _$jscoverage['/word-filter.js'].lineData[484]++;
   name = name.toLowerCase();
-  _$jscoverage['/word-filter.js'].lineData[486]++;
-  visit72_486_1(visit73_486_2(name == 'font-family') && (value = value.replace(/["']/g, '')));
-  _$jscoverage['/word-filter.js'].lineData[488]++;
+  _$jscoverage['/word-filter.js'].lineData[485]++;
+  visit72_485_1(visit73_485_2(name == 'font-family') && (value = value.replace(/["']/g, '')));
+  _$jscoverage['/word-filter.js'].lineData[487]++;
   var namePattern, valuePattern, newValue, newName;
-  _$jscoverage['/word-filter.js'].lineData[492]++;
-  for (var i = 0; visit74_492_1(i < styles.length); i++) {
-    _$jscoverage['/word-filter.js'].lineData[493]++;
-    if (visit75_493_1(styles[i])) {
-      _$jscoverage['/word-filter.js'].lineData[494]++;
+  _$jscoverage['/word-filter.js'].lineData[491]++;
+  for (var i = 0; visit74_491_1(i < styles.length); i++) {
+    _$jscoverage['/word-filter.js'].lineData[492]++;
+    if (visit75_492_1(styles[i])) {
+      _$jscoverage['/word-filter.js'].lineData[493]++;
       namePattern = styles[i][0];
-      _$jscoverage['/word-filter.js'].lineData[495]++;
+      _$jscoverage['/word-filter.js'].lineData[494]++;
       valuePattern = styles[i][1];
-      _$jscoverage['/word-filter.js'].lineData[496]++;
+      _$jscoverage['/word-filter.js'].lineData[495]++;
       newValue = styles[i][2];
-      _$jscoverage['/word-filter.js'].lineData[497]++;
+      _$jscoverage['/word-filter.js'].lineData[496]++;
       newName = styles[i][3];
-      _$jscoverage['/word-filter.js'].lineData[499]++;
-      if (visit76_499_1(name.match(namePattern) && (visit77_500_1(!valuePattern || value.match(valuePattern))))) {
+      _$jscoverage['/word-filter.js'].lineData[498]++;
+      if (visit76_498_1(name.match(namePattern) && (visit77_499_1(!valuePattern || value.match(valuePattern))))) {
+        _$jscoverage['/word-filter.js'].lineData[500]++;
+        name = visit78_500_1(newName || name);
         _$jscoverage['/word-filter.js'].lineData[501]++;
-        name = visit78_501_1(newName || name);
-        _$jscoverage['/word-filter.js'].lineData[502]++;
-        visit79_502_1(whitelist && (newValue = visit80_502_2(newValue || value)));
-        _$jscoverage['/word-filter.js'].lineData[504]++;
-        if (visit81_504_1(typeof newValue == 'function')) {
-          _$jscoverage['/word-filter.js'].lineData[505]++;
+        visit79_501_1(whitelist && (newValue = visit80_501_2(newValue || value)));
+        _$jscoverage['/word-filter.js'].lineData[503]++;
+        if (visit81_503_1(typeof newValue == 'function')) {
+          _$jscoverage['/word-filter.js'].lineData[504]++;
           newValue = newValue(value, element, name);
         }
-        _$jscoverage['/word-filter.js'].lineData[510]++;
-        if (visit82_510_1(newValue && newValue.push)) {
-          _$jscoverage['/word-filter.js'].lineData[511]++;
+        _$jscoverage['/word-filter.js'].lineData[509]++;
+        if (visit82_509_1(newValue && newValue.push)) {
+          _$jscoverage['/word-filter.js'].lineData[510]++;
           name = newValue[0];
-          _$jscoverage['/word-filter.js'].lineData[512]++;
+          _$jscoverage['/word-filter.js'].lineData[511]++;
           newValue = newValue[1];
         }
-        _$jscoverage['/word-filter.js'].lineData[515]++;
-        if (visit83_515_1(typeof newValue == 'string')) {
-          _$jscoverage['/word-filter.js'].lineData[516]++;
+        _$jscoverage['/word-filter.js'].lineData[514]++;
+        if (visit83_514_1(typeof newValue == 'string')) {
+          _$jscoverage['/word-filter.js'].lineData[515]++;
           rules.push([name, newValue]);
         }
-        _$jscoverage['/word-filter.js'].lineData[519]++;
+        _$jscoverage['/word-filter.js'].lineData[518]++;
         return;
       }
     }
   }
-  _$jscoverage['/word-filter.js'].lineData[524]++;
-  visit84_524_1(!whitelist && rules.push([name, value]));
+  _$jscoverage['/word-filter.js'].lineData[523]++;
+  visit84_523_1(!whitelist && rules.push([name, value]));
 });
-  _$jscoverage['/word-filter.js'].lineData[528]++;
-  for (var i = 0; visit85_528_1(i < rules.length); i++) {
-    _$jscoverage['/word-filter.js'].lineData[529]++;
+  _$jscoverage['/word-filter.js'].lineData[527]++;
+  for (var i = 0; visit85_527_1(i < rules.length); i++) {
+    _$jscoverage['/word-filter.js'].lineData[528]++;
     rules[i] = rules[i].join(':');
   }
-  _$jscoverage['/word-filter.js'].lineData[532]++;
+  _$jscoverage['/word-filter.js'].lineData[531]++;
   return rules.length ? (rules.join(';') + ';') : false;
 };
 }, 
   applyStyleFilter: null};
-  _$jscoverage['/word-filter.js'].lineData[547]++;
+  _$jscoverage['/word-filter.js'].lineData[546]++;
   function postProcessList(list) {
     _$jscoverage['/word-filter.js'].functionData[20]++;
-    _$jscoverage['/word-filter.js'].lineData[548]++;
-    var children = visit86_548_1(list.childNodes || []), child, count = children.length, match, mergeStyle, styleTypeRegexp = /list-style-type:(.*?)(?:;|$)/, stylesFilter = filters.stylesFilter;
-    _$jscoverage['/word-filter.js'].lineData[557]++;
-    if (visit87_557_1(styleTypeRegexp.exec(list.getAttribute("style")))) {
-      _$jscoverage['/word-filter.js'].lineData[558]++;
+    _$jscoverage['/word-filter.js'].lineData[547]++;
+    var children = visit86_547_1(list.childNodes || []), child, count = children.length, match, mergeStyle, styleTypeRegexp = /list-style-type:(.*?)(?:;|$)/, stylesFilter = filters.stylesFilter;
+    _$jscoverage['/word-filter.js'].lineData[556]++;
+    if (visit87_556_1(styleTypeRegexp.exec(list.getAttribute("style")))) {
+      _$jscoverage['/word-filter.js'].lineData[557]++;
       return;
     }
-    _$jscoverage['/word-filter.js'].lineData[560]++;
-    for (var i = 0; visit88_560_1(i < count); i++) {
-      _$jscoverage['/word-filter.js'].lineData[561]++;
+    _$jscoverage['/word-filter.js'].lineData[559]++;
+    for (var i = 0; visit88_559_1(i < count); i++) {
+      _$jscoverage['/word-filter.js'].lineData[560]++;
       child = children[i];
-      _$jscoverage['/word-filter.js'].lineData[563]++;
-      if (visit89_563_1(child.getAttribute("value") && visit90_563_2(Number(child.getAttribute("value")) == i + 1))) {
-        _$jscoverage['/word-filter.js'].lineData[564]++;
+      _$jscoverage['/word-filter.js'].lineData[562]++;
+      if (visit89_562_1(child.getAttribute("value") && visit90_562_2(Number(child.getAttribute("value")) == i + 1))) {
+        _$jscoverage['/word-filter.js'].lineData[563]++;
         child.removeAttribute("value");
       }
-      _$jscoverage['/word-filter.js'].lineData[567]++;
+      _$jscoverage['/word-filter.js'].lineData[566]++;
       match = styleTypeRegexp.exec(child.getAttribute("style"));
-      _$jscoverage['/word-filter.js'].lineData[569]++;
-      if (visit91_569_1(match)) {
-        _$jscoverage['/word-filter.js'].lineData[570]++;
-        if (visit92_570_1(visit93_570_2(match[1] == mergeStyle) || !mergeStyle)) {
-          _$jscoverage['/word-filter.js'].lineData[571]++;
+      _$jscoverage['/word-filter.js'].lineData[568]++;
+      if (visit91_568_1(match)) {
+        _$jscoverage['/word-filter.js'].lineData[569]++;
+        if (visit92_569_1(visit93_569_2(match[1] == mergeStyle) || !mergeStyle)) {
+          _$jscoverage['/word-filter.js'].lineData[570]++;
           mergeStyle = match[1];
         } else {
-          _$jscoverage['/word-filter.js'].lineData[573]++;
+          _$jscoverage['/word-filter.js'].lineData[572]++;
           mergeStyle = null;
-          _$jscoverage['/word-filter.js'].lineData[574]++;
+          _$jscoverage['/word-filter.js'].lineData[573]++;
           break;
         }
       }
     }
-    _$jscoverage['/word-filter.js'].lineData[579]++;
-    if (visit94_579_1(mergeStyle)) {
-      _$jscoverage['/word-filter.js'].lineData[580]++;
-      for (i = 0; visit95_580_1(i < count); i++) {
-        _$jscoverage['/word-filter.js'].lineData[581]++;
+    _$jscoverage['/word-filter.js'].lineData[578]++;
+    if (visit94_578_1(mergeStyle)) {
+      _$jscoverage['/word-filter.js'].lineData[579]++;
+      for (i = 0; visit95_579_1(i < count); i++) {
+        _$jscoverage['/word-filter.js'].lineData[580]++;
         var style = children[i].getAttribute("style");
-        _$jscoverage['/word-filter.js'].lineData[583]++;
-        if (visit96_583_1(style)) {
-          _$jscoverage['/word-filter.js'].lineData[584]++;
+        _$jscoverage['/word-filter.js'].lineData[582]++;
+        if (visit96_582_1(style)) {
+          _$jscoverage['/word-filter.js'].lineData[583]++;
           style = stylesFilter([['list-style-type']])(style);
-          _$jscoverage['/word-filter.js'].lineData[587]++;
+          _$jscoverage['/word-filter.js'].lineData[586]++;
           setStyle(children[i], style);
         }
       }
-      _$jscoverage['/word-filter.js'].lineData[590]++;
+      _$jscoverage['/word-filter.js'].lineData[589]++;
       addStyle(list, 'list-style-type', mergeStyle);
     }
   }
-  _$jscoverage['/word-filter.js'].lineData[594]++;
+  _$jscoverage['/word-filter.js'].lineData[593]++;
   var utils = {
   createListBulletMarker: function(bullet, bulletText) {
   _$jscoverage['/word-filter.js'].functionData[21]++;
-  _$jscoverage['/word-filter.js'].lineData[597]++;
+  _$jscoverage['/word-filter.js'].lineData[596]++;
   var marker = new HtmlParser.Tag('ke:listbullet');
-  _$jscoverage['/word-filter.js'].lineData[598]++;
+  _$jscoverage['/word-filter.js'].lineData[597]++;
   marker.setAttribute("ke:listsymbol", bullet[0]);
-  _$jscoverage['/word-filter.js'].lineData[599]++;
+  _$jscoverage['/word-filter.js'].lineData[598]++;
   marker.appendChild(new HtmlParser.Text(bulletText));
-  _$jscoverage['/word-filter.js'].lineData[600]++;
+  _$jscoverage['/word-filter.js'].lineData[599]++;
   return marker;
 }, 
   isListBulletIndicator: function(element) {
   _$jscoverage['/word-filter.js'].functionData[22]++;
-  _$jscoverage['/word-filter.js'].lineData[604]++;
+  _$jscoverage['/word-filter.js'].lineData[603]++;
   var styleText = element.getAttribute("style");
-  _$jscoverage['/word-filter.js'].lineData[605]++;
-  if (visit97_605_1(/mso-list\s*:\s*Ignore/i.test(styleText))) {
-    _$jscoverage['/word-filter.js'].lineData[606]++;
+  _$jscoverage['/word-filter.js'].lineData[604]++;
+  if (visit97_604_1(/mso-list\s*:\s*Ignore/i.test(styleText))) {
+    _$jscoverage['/word-filter.js'].lineData[605]++;
     return true;
   }
 }, 
   isContainingOnlySpaces: function(element) {
   _$jscoverage['/word-filter.js'].functionData[23]++;
-  _$jscoverage['/word-filter.js'].lineData[611]++;
+  _$jscoverage['/word-filter.js'].lineData[610]++;
   var text;
-  _$jscoverage['/word-filter.js'].lineData[612]++;
-  return (visit98_612_1((text = onlyChild(element)) && (/^(:?\s|&nbsp;)+$/).test(text.nodeValue)));
+  _$jscoverage['/word-filter.js'].lineData[611]++;
+  return (visit98_611_1((text = onlyChild(element)) && (/^(:?\s|&nbsp;)+$/).test(text.nodeValue)));
 }, 
   resolveList: function(element) {
   _$jscoverage['/word-filter.js'].functionData[24]++;
-  _$jscoverage['/word-filter.js'].lineData[618]++;
+  _$jscoverage['/word-filter.js'].lineData[617]++;
   var listMarker;
-  _$jscoverage['/word-filter.js'].lineData[620]++;
-  if (visit99_620_1((listMarker = removeAnyChildWithName(element, 'ke:listbullet')) && visit100_621_1(listMarker.length && (listMarker = listMarker[0])))) {
-    _$jscoverage['/word-filter.js'].lineData[623]++;
+  _$jscoverage['/word-filter.js'].lineData[619]++;
+  if (visit99_619_1((listMarker = removeAnyChildWithName(element, 'ke:listbullet')) && visit100_620_1(listMarker.length && (listMarker = listMarker[0])))) {
+    _$jscoverage['/word-filter.js'].lineData[622]++;
     element.setTagName('ke:li');
-    _$jscoverage['/word-filter.js'].lineData[625]++;
-    if (visit101_625_1(element.getAttribute("style"))) {
-      _$jscoverage['/word-filter.js'].lineData[626]++;
+    _$jscoverage['/word-filter.js'].lineData[624]++;
+    if (visit101_624_1(element.getAttribute("style"))) {
+      _$jscoverage['/word-filter.js'].lineData[625]++;
       var styleStr = filters.stylesFilter([['text-indent'], ['line-height'], [(/^margin(:?-left)?$/), null, function(margin) {
   _$jscoverage['/word-filter.js'].functionData[25]++;
-  _$jscoverage['/word-filter.js'].lineData[634]++;
+  _$jscoverage['/word-filter.js'].lineData[633]++;
   var values = margin.split(' ');
-  _$jscoverage['/word-filter.js'].lineData[635]++;
-  margin = convertToPx(visit102_635_1(values[3] || visit103_635_2(values[1] || values[0])));
-  _$jscoverage['/word-filter.js'].lineData[638]++;
-  if (visit104_638_1(!listBaseIndent && visit105_638_2(visit106_638_3(previousListItemMargin !== null) && visit107_639_1(margin > previousListItemMargin)))) {
-    _$jscoverage['/word-filter.js'].lineData[640]++;
+  _$jscoverage['/word-filter.js'].lineData[634]++;
+  margin = convertToPx(visit102_634_1(values[3] || visit103_634_2(values[1] || values[0])));
+  _$jscoverage['/word-filter.js'].lineData[637]++;
+  if (visit104_637_1(!listBaseIndent && visit105_637_2(visit106_637_3(previousListItemMargin !== null) && visit107_638_1(margin > previousListItemMargin)))) {
+    _$jscoverage['/word-filter.js'].lineData[639]++;
     listBaseIndent = margin - previousListItemMargin;
   }
-  _$jscoverage['/word-filter.js'].lineData[643]++;
+  _$jscoverage['/word-filter.js'].lineData[642]++;
   previousListItemMargin = margin;
-  _$jscoverage['/word-filter.js'].lineData[644]++;
-  if (visit108_644_1(listBaseIndent)) {
-    _$jscoverage['/word-filter.js'].lineData[645]++;
-    element.setAttribute('ke:indent', visit109_645_1(visit110_645_2(listBaseIndent && (Math.ceil(margin / listBaseIndent) + 1)) || 1));
+  _$jscoverage['/word-filter.js'].lineData[643]++;
+  if (visit108_643_1(listBaseIndent)) {
+    _$jscoverage['/word-filter.js'].lineData[644]++;
+    element.setAttribute('ke:indent', visit109_644_1(visit110_644_2(listBaseIndent && (Math.ceil(margin / listBaseIndent) + 1)) || 1));
   }
 }], [(/^mso-list$/), null, function(val) {
   _$jscoverage['/word-filter.js'].functionData[26]++;
-  _$jscoverage['/word-filter.js'].lineData[651]++;
+  _$jscoverage['/word-filter.js'].lineData[650]++;
   val = val.split(' ');
-  _$jscoverage['/word-filter.js'].lineData[652]++;
+  _$jscoverage['/word-filter.js'].lineData[651]++;
   var listId = Number(val[0].match(/\d+/)), indent = Number(val[1].match(/\d+/));
-  _$jscoverage['/word-filter.js'].lineData[655]++;
-  if (visit111_655_1(indent == 1)) {
-    _$jscoverage['/word-filter.js'].lineData[656]++;
-    visit112_656_1(visit113_656_2(listId !== previousListId) && (element.setAttribute('ke:reset', 1)));
-    _$jscoverage['/word-filter.js'].lineData[658]++;
+  _$jscoverage['/word-filter.js'].lineData[654]++;
+  if (visit111_654_1(indent == 1)) {
+    _$jscoverage['/word-filter.js'].lineData[655]++;
+    visit112_655_1(visit113_655_2(listId !== previousListId) && (element.setAttribute('ke:reset', 1)));
+    _$jscoverage['/word-filter.js'].lineData[657]++;
     previousListId = listId;
   }
-  _$jscoverage['/word-filter.js'].lineData[660]++;
+  _$jscoverage['/word-filter.js'].lineData[659]++;
   element.setAttribute('ke:indent', indent);
 }]])(element.getAttribute("style"), element);
-      _$jscoverage['/word-filter.js'].lineData[664]++;
+      _$jscoverage['/word-filter.js'].lineData[663]++;
       setStyle(element, styleStr);
     }
-    _$jscoverage['/word-filter.js'].lineData[669]++;
-    if (visit114_669_1(!element.getAttribute("ke:indent"))) {
-      _$jscoverage['/word-filter.js'].lineData[670]++;
+    _$jscoverage['/word-filter.js'].lineData[668]++;
+    if (visit114_668_1(!element.getAttribute("ke:indent"))) {
+      _$jscoverage['/word-filter.js'].lineData[669]++;
       previousListItemMargin = 0;
-      _$jscoverage['/word-filter.js'].lineData[671]++;
+      _$jscoverage['/word-filter.js'].lineData[670]++;
       element.setAttribute('ke:indent', 1);
     }
-    _$jscoverage['/word-filter.js'].lineData[674]++;
+    _$jscoverage['/word-filter.js'].lineData[673]++;
     S.each(listMarker.attributes, function(a) {
   _$jscoverage['/word-filter.js'].functionData[27]++;
-  _$jscoverage['/word-filter.js'].lineData[675]++;
+  _$jscoverage['/word-filter.js'].lineData[674]++;
   element.setAttribute(a.name, a.value);
 });
-    _$jscoverage['/word-filter.js'].lineData[678]++;
+    _$jscoverage['/word-filter.js'].lineData[677]++;
     return true;
   } else {
-    _$jscoverage['/word-filter.js'].lineData[682]++;
+    _$jscoverage['/word-filter.js'].lineData[681]++;
     previousListId = previousListItemMargin = listBaseIndent = null;
   }
-  _$jscoverage['/word-filter.js'].lineData[684]++;
+  _$jscoverage['/word-filter.js'].lineData[683]++;
   return false;
 }, 
   getStyleComponents: (function() {
   _$jscoverage['/word-filter.js'].functionData[28]++;
-  _$jscoverage['/word-filter.js'].lineData[689]++;
+  _$jscoverage['/word-filter.js'].lineData[688]++;
   var calculator = $('<div style="position:absolute;left:-9999px;top:-9999px;"></div>').prependTo("body");
-  _$jscoverage['/word-filter.js'].lineData[692]++;
+  _$jscoverage['/word-filter.js'].lineData[691]++;
   return function(name, styleValue, fetchList) {
   _$jscoverage['/word-filter.js'].functionData[29]++;
-  _$jscoverage['/word-filter.js'].lineData[693]++;
+  _$jscoverage['/word-filter.js'].lineData[692]++;
   calculator.css(name, styleValue);
-  _$jscoverage['/word-filter.js'].lineData[694]++;
+  _$jscoverage['/word-filter.js'].lineData[693]++;
   var styles = {}, count = fetchList.length;
-  _$jscoverage['/word-filter.js'].lineData[696]++;
-  for (var i = 0; visit115_696_1(i < count); i++) {
-    _$jscoverage['/word-filter.js'].lineData[697]++;
+  _$jscoverage['/word-filter.js'].lineData[695]++;
+  for (var i = 0; visit115_695_1(i < count); i++) {
+    _$jscoverage['/word-filter.js'].lineData[696]++;
     styles[fetchList[i]] = calculator.css(fetchList[i]);
   }
-  _$jscoverage['/word-filter.js'].lineData[700]++;
+  _$jscoverage['/word-filter.js'].lineData[699]++;
   return styles;
 };
 })(), 
   listDtdParents: parentOf('ol')};
-  _$jscoverage['/word-filter.js'].lineData[707]++;
+  _$jscoverage['/word-filter.js'].lineData[706]++;
   (function() {
   _$jscoverage['/word-filter.js'].functionData[30]++;
-  _$jscoverage['/word-filter.js'].lineData[708]++;
+  _$jscoverage['/word-filter.js'].lineData[707]++;
   var blockLike = S.merge(dtd.$block, dtd.$listItem, dtd.$tableContent), falsyFilter = filters.falsyFilter, stylesFilter = filters.stylesFilter, createListBulletMarker = utils.createListBulletMarker, flattenList = filters.flattenList, assembleList = filters.assembleList, isListBulletIndicator = utils.isListBulletIndicator, containsNothingButSpaces = utils.isContainingOnlySpaces, resolveListItem = utils.resolveList, convertToPxStr = function(value) {
   _$jscoverage['/word-filter.js'].functionData[31]++;
-  _$jscoverage['/word-filter.js'].lineData[718]++;
+  _$jscoverage['/word-filter.js'].lineData[717]++;
   value = convertToPx(value);
-  _$jscoverage['/word-filter.js'].lineData[719]++;
+  _$jscoverage['/word-filter.js'].lineData[718]++;
   return isNaN(value) ? value : value + 'px';
 }, getStyleComponents = utils.getStyleComponents, listDtdParents = utils.listDtdParents;
-  _$jscoverage['/word-filter.js'].lineData[724]++;
+  _$jscoverage['/word-filter.js'].lineData[723]++;
   wordFilter.addRules({
   tagNames: [[(/meta|link|script/), '']], 
   root: function(element) {
   _$jscoverage['/word-filter.js'].functionData[32]++;
-  _$jscoverage['/word-filter.js'].lineData[732]++;
+  _$jscoverage['/word-filter.js'].lineData[731]++;
   element.filterChildren();
-  _$jscoverage['/word-filter.js'].lineData[733]++;
+  _$jscoverage['/word-filter.js'].lineData[732]++;
   assembleList(element);
 }, 
   tags: {
   '^': function(element) {
   _$jscoverage['/word-filter.js'].functionData[33]++;
-  _$jscoverage['/word-filter.js'].lineData[739]++;
+  _$jscoverage['/word-filter.js'].lineData[738]++;
   var applyStyleFilter;
-  _$jscoverage['/word-filter.js'].lineData[740]++;
-  if (visit116_740_1(UA.gecko && (applyStyleFilter = filters.applyStyleFilter))) {
-    _$jscoverage['/word-filter.js'].lineData[741]++;
+  _$jscoverage['/word-filter.js'].lineData[739]++;
+  if (visit116_739_1(UA.gecko && (applyStyleFilter = filters.applyStyleFilter))) {
+    _$jscoverage['/word-filter.js'].lineData[740]++;
     applyStyleFilter(element);
   }
 }, 
   $: function(element) {
   _$jscoverage['/word-filter.js'].functionData[34]++;
-  _$jscoverage['/word-filter.js'].lineData[745]++;
-  var tagName = visit117_745_1(element.nodeName || '');
-  _$jscoverage['/word-filter.js'].lineData[749]++;
-  if (visit118_749_1(tagName in blockLike && element.getAttribute("style"))) {
-    _$jscoverage['/word-filter.js'].lineData[750]++;
+  _$jscoverage['/word-filter.js'].lineData[744]++;
+  var tagName = visit117_744_1(element.nodeName || '');
+  _$jscoverage['/word-filter.js'].lineData[748]++;
+  if (visit118_748_1(tagName in blockLike && element.getAttribute("style"))) {
+    _$jscoverage['/word-filter.js'].lineData[749]++;
     setStyle(element, stylesFilter([[(/^(:?width|height)$/), null, convertToPxStr]])(element.getAttribute("style")));
   }
-  _$jscoverage['/word-filter.js'].lineData[757]++;
-  if (visit119_757_1(tagName.match(/h\d/))) {
-    _$jscoverage['/word-filter.js'].lineData[758]++;
+  _$jscoverage['/word-filter.js'].lineData[756]++;
+  if (visit119_756_1(tagName.match(/h\d/))) {
+    _$jscoverage['/word-filter.js'].lineData[757]++;
     element.filterChildren();
-    _$jscoverage['/word-filter.js'].lineData[760]++;
-    if (visit120_760_1(resolveListItem(element))) {
-      _$jscoverage['/word-filter.js'].lineData[761]++;
+    _$jscoverage['/word-filter.js'].lineData[759]++;
+    if (visit120_759_1(resolveListItem(element))) {
+      _$jscoverage['/word-filter.js'].lineData[760]++;
       return;
     }
   } else {
-    _$jscoverage['/word-filter.js'].lineData[765]++;
-    if (visit121_765_1(tagName in dtd.$inline)) {
-      _$jscoverage['/word-filter.js'].lineData[766]++;
+    _$jscoverage['/word-filter.js'].lineData[764]++;
+    if (visit121_764_1(tagName in dtd.$inline)) {
+      _$jscoverage['/word-filter.js'].lineData[765]++;
       element.filterChildren();
-      _$jscoverage['/word-filter.js'].lineData[767]++;
-      if (visit122_767_1(containsNothingButSpaces(element))) {
-        _$jscoverage['/word-filter.js'].lineData[768]++;
+      _$jscoverage['/word-filter.js'].lineData[766]++;
+      if (visit122_766_1(containsNothingButSpaces(element))) {
+        _$jscoverage['/word-filter.js'].lineData[767]++;
         element.setTagName(null);
       }
     } else {
-      _$jscoverage['/word-filter.js'].lineData[773]++;
-      if (visit123_773_1(visit124_773_2(tagName.indexOf(':') != -1) && visit125_774_1(tagName.indexOf('ke') == -1))) {
-        _$jscoverage['/word-filter.js'].lineData[775]++;
+      _$jscoverage['/word-filter.js'].lineData[772]++;
+      if (visit123_772_1(visit124_772_2(tagName.indexOf(':') != -1) && visit125_773_1(tagName.indexOf('ke') == -1))) {
+        _$jscoverage['/word-filter.js'].lineData[774]++;
         element.filterChildren();
-        _$jscoverage['/word-filter.js'].lineData[778]++;
-        if (visit126_778_1(tagName == 'v:imagedata')) {
-          _$jscoverage['/word-filter.js'].lineData[779]++;
+        _$jscoverage['/word-filter.js'].lineData[777]++;
+        if (visit126_777_1(tagName == 'v:imagedata')) {
+          _$jscoverage['/word-filter.js'].lineData[778]++;
           var href = element.getAttribute('o:href');
-          _$jscoverage['/word-filter.js'].lineData[780]++;
-          if (visit127_780_1(href)) {
-            _$jscoverage['/word-filter.js'].lineData[781]++;
+          _$jscoverage['/word-filter.js'].lineData[779]++;
+          if (visit127_779_1(href)) {
+            _$jscoverage['/word-filter.js'].lineData[780]++;
             element.setAttribute("src", href);
           }
-          _$jscoverage['/word-filter.js'].lineData[783]++;
+          _$jscoverage['/word-filter.js'].lineData[782]++;
           element.setTagName('img');
-          _$jscoverage['/word-filter.js'].lineData[784]++;
+          _$jscoverage['/word-filter.js'].lineData[783]++;
           return;
         }
-        _$jscoverage['/word-filter.js'].lineData[786]++;
+        _$jscoverage['/word-filter.js'].lineData[785]++;
         element.setTagName(null);
       }
     }
   }
-  _$jscoverage['/word-filter.js'].lineData[790]++;
-  if (visit128_790_1(tagName in listDtdParents)) {
-    _$jscoverage['/word-filter.js'].lineData[791]++;
+  _$jscoverage['/word-filter.js'].lineData[789]++;
+  if (visit128_789_1(tagName in listDtdParents)) {
+    _$jscoverage['/word-filter.js'].lineData[790]++;
     element.filterChildren();
-    _$jscoverage['/word-filter.js'].lineData[792]++;
+    _$jscoverage['/word-filter.js'].lineData[791]++;
     assembleList(element);
   }
 }, 
   'style': function(element) {
   _$jscoverage['/word-filter.js'].functionData[35]++;
-  _$jscoverage['/word-filter.js'].lineData[800]++;
-  if (visit129_800_1(UA.gecko)) {
-    _$jscoverage['/word-filter.js'].lineData[802]++;
-    var styleDefSection = onlyChild(element).nodeValue.match(/\/\* Style Definitions \*\/([\s\S]*?)\/\*/), styleDefText = visit130_804_1(styleDefSection && styleDefSection[1]), rules = {};
-    _$jscoverage['/word-filter.js'].lineData[807]++;
-    if (visit131_807_1(styleDefText)) {
-      _$jscoverage['/word-filter.js'].lineData[812]++;
+  _$jscoverage['/word-filter.js'].lineData[799]++;
+  if (visit129_799_1(UA.gecko)) {
+    _$jscoverage['/word-filter.js'].lineData[801]++;
+    var styleDefSection = onlyChild(element).nodeValue.match(/\/\* Style Definitions \*\/([\s\S]*?)\/\*/), styleDefText = visit130_803_1(styleDefSection && styleDefSection[1]), rules = {};
+    _$jscoverage['/word-filter.js'].lineData[806]++;
+    if (visit131_806_1(styleDefText)) {
+      _$jscoverage['/word-filter.js'].lineData[811]++;
       styleDefText.replace(/[\n\r]/g, '').replace(/(.+?)\{(.+?)\}/g, function(rule, selectors, styleBlock) {
   _$jscoverage['/word-filter.js'].functionData[36]++;
-  _$jscoverage['/word-filter.js'].lineData[814]++;
+  _$jscoverage['/word-filter.js'].lineData[813]++;
   selectors = selectors.split(',');
-  _$jscoverage['/word-filter.js'].lineData[815]++;
+  _$jscoverage['/word-filter.js'].lineData[814]++;
   var length = selectors.length;
-  _$jscoverage['/word-filter.js'].lineData[816]++;
-  for (var i = 0; visit132_816_1(i < length); i++) {
-    _$jscoverage['/word-filter.js'].lineData[820]++;
+  _$jscoverage['/word-filter.js'].lineData[815]++;
+  for (var i = 0; visit132_815_1(i < length); i++) {
+    _$jscoverage['/word-filter.js'].lineData[819]++;
     S.trim(selectors[i]).replace(/^(\w+)(\.[\w-]+)?$/g, function(match, tagName, className) {
   _$jscoverage['/word-filter.js'].functionData[37]++;
+  _$jscoverage['/word-filter.js'].lineData[821]++;
+  tagName = visit133_821_1(tagName || '*');
   _$jscoverage['/word-filter.js'].lineData[822]++;
-  tagName = visit133_822_1(tagName || '*');
-  _$jscoverage['/word-filter.js'].lineData[823]++;
   className = className.substring(1, className.length);
-  _$jscoverage['/word-filter.js'].lineData[826]++;
-  if (visit134_826_1(className.match(/MsoNormal/))) {
-    _$jscoverage['/word-filter.js'].lineData[827]++;
+  _$jscoverage['/word-filter.js'].lineData[825]++;
+  if (visit134_825_1(className.match(/MsoNormal/))) {
+    _$jscoverage['/word-filter.js'].lineData[826]++;
     return;
   }
-  _$jscoverage['/word-filter.js'].lineData[829]++;
-  if (visit135_829_1(!rules[tagName])) {
-    _$jscoverage['/word-filter.js'].lineData[830]++;
+  _$jscoverage['/word-filter.js'].lineData[828]++;
+  if (visit135_828_1(!rules[tagName])) {
+    _$jscoverage['/word-filter.js'].lineData[829]++;
     rules[tagName] = {};
   }
-  _$jscoverage['/word-filter.js'].lineData[832]++;
-  if (visit136_832_1(className)) {
-    _$jscoverage['/word-filter.js'].lineData[833]++;
+  _$jscoverage['/word-filter.js'].lineData[831]++;
+  if (visit136_831_1(className)) {
+    _$jscoverage['/word-filter.js'].lineData[832]++;
     rules[tagName][className] = styleBlock;
   } else {
-    _$jscoverage['/word-filter.js'].lineData[835]++;
+    _$jscoverage['/word-filter.js'].lineData[834]++;
     rules[tagName] = styleBlock;
   }
 });
   }
 });
-      _$jscoverage['/word-filter.js'].lineData[841]++;
+      _$jscoverage['/word-filter.js'].lineData[840]++;
       filters.applyStyleFilter = function(element) {
   _$jscoverage['/word-filter.js'].functionData[38]++;
-  _$jscoverage['/word-filter.js'].lineData[842]++;
+  _$jscoverage['/word-filter.js'].lineData[841]++;
   var name = rules['*'] ? '*' : element.nodeName, className = element.getAttribute('class'), style;
-  _$jscoverage['/word-filter.js'].lineData[845]++;
-  if (visit137_845_1(name in rules)) {
-    _$jscoverage['/word-filter.js'].lineData[846]++;
+  _$jscoverage['/word-filter.js'].lineData[844]++;
+  if (visit137_844_1(name in rules)) {
+    _$jscoverage['/word-filter.js'].lineData[845]++;
     style = rules[name];
-    _$jscoverage['/word-filter.js'].lineData[847]++;
-    if (visit138_847_1(typeof style == 'object')) {
-      _$jscoverage['/word-filter.js'].lineData[848]++;
+    _$jscoverage['/word-filter.js'].lineData[846]++;
+    if (visit138_846_1(typeof style == 'object')) {
+      _$jscoverage['/word-filter.js'].lineData[847]++;
       style = style[className];
     }
-    _$jscoverage['/word-filter.js'].lineData[850]++;
-    visit139_850_1(style && addStyle(element, style, true));
+    _$jscoverage['/word-filter.js'].lineData[849]++;
+    visit139_849_1(style && addStyle(element, style, true));
   }
 };
     }
   }
-  _$jscoverage['/word-filter.js'].lineData[855]++;
+  _$jscoverage['/word-filter.js'].lineData[854]++;
   return false;
 }, 
   'p': function(element) {
   _$jscoverage['/word-filter.js'].functionData[39]++;
-  _$jscoverage['/word-filter.js'].lineData[862]++;
-  if (visit140_862_1(/MsoListParagraph/.exec(element.getAttribute('class')))) {
-    _$jscoverage['/word-filter.js'].lineData[863]++;
+  _$jscoverage['/word-filter.js'].lineData[861]++;
+  if (visit140_861_1(/MsoListParagraph/.exec(element.getAttribute('class')))) {
+    _$jscoverage['/word-filter.js'].lineData[862]++;
     var bulletText = firstChild(element, function(node) {
   _$jscoverage['/word-filter.js'].functionData[40]++;
-  _$jscoverage['/word-filter.js'].lineData[864]++;
-  return visit141_864_1(visit142_864_2(node.nodeType == 3) && !containsNothingButSpaces(node.parentNode));
+  _$jscoverage['/word-filter.js'].lineData[863]++;
+  return visit141_863_1(visit142_863_2(node.nodeType == 3) && !containsNothingButSpaces(node.parentNode));
 });
+    _$jscoverage['/word-filter.js'].lineData[865]++;
+    var bullet = visit143_865_1(bulletText && bulletText.parentNode);
     _$jscoverage['/word-filter.js'].lineData[866]++;
-    var bullet = visit143_866_1(bulletText && bulletText.parentNode);
-    _$jscoverage['/word-filter.js'].lineData[867]++;
-    visit144_867_1(!bullet.getAttribute("style") && (bullet.setAttribute("style", 'mso-list: Ignore;')));
+    visit144_866_1(!bullet.getAttribute("style") && (bullet.setAttribute("style", 'mso-list: Ignore;')));
   }
-  _$jscoverage['/word-filter.js'].lineData[870]++;
+  _$jscoverage['/word-filter.js'].lineData[869]++;
   element.filterChildren();
-  _$jscoverage['/word-filter.js'].lineData[872]++;
+  _$jscoverage['/word-filter.js'].lineData[871]++;
   resolveListItem(element);
 }, 
   'div': function(element) {
   _$jscoverage['/word-filter.js'].functionData[41]++;
-  _$jscoverage['/word-filter.js'].lineData[879]++;
+  _$jscoverage['/word-filter.js'].lineData[878]++;
   var singleChild = onlyChild(element);
-  _$jscoverage['/word-filter.js'].lineData[880]++;
-  if (visit145_880_1(singleChild && visit146_880_2(singleChild.nodeName == 'table'))) {
-    _$jscoverage['/word-filter.js'].lineData[881]++;
+  _$jscoverage['/word-filter.js'].lineData[879]++;
+  if (visit145_879_1(singleChild && visit146_879_2(singleChild.nodeName == 'table'))) {
+    _$jscoverage['/word-filter.js'].lineData[880]++;
     var attrs = element.attributes;
-    _$jscoverage['/word-filter.js'].lineData[883]++;
+    _$jscoverage['/word-filter.js'].lineData[882]++;
     S.each(attrs, function(attr) {
   _$jscoverage['/word-filter.js'].functionData[42]++;
-  _$jscoverage['/word-filter.js'].lineData[884]++;
+  _$jscoverage['/word-filter.js'].lineData[883]++;
   singleChild.setAttribute(attr.name, attr.value);
 });
-    _$jscoverage['/word-filter.js'].lineData[887]++;
-    if (visit147_887_1(element.getAttribute("style"))) {
-      _$jscoverage['/word-filter.js'].lineData[888]++;
+    _$jscoverage['/word-filter.js'].lineData[886]++;
+    if (visit147_886_1(element.getAttribute("style"))) {
+      _$jscoverage['/word-filter.js'].lineData[887]++;
       addStyle(singleChild, element.getAttribute("style"));
     }
-    _$jscoverage['/word-filter.js'].lineData[891]++;
+    _$jscoverage['/word-filter.js'].lineData[890]++;
     var clearFloatDiv = new HtmlParser.Tag('div');
-    _$jscoverage['/word-filter.js'].lineData[892]++;
+    _$jscoverage['/word-filter.js'].lineData[891]++;
     addStyle(clearFloatDiv, 'clear', 'both');
-    _$jscoverage['/word-filter.js'].lineData[893]++;
+    _$jscoverage['/word-filter.js'].lineData[892]++;
     element.appendChild(clearFloatDiv);
-    _$jscoverage['/word-filter.js'].lineData[894]++;
+    _$jscoverage['/word-filter.js'].lineData[893]++;
     element.setTagName(null);
   }
 }, 
   'td': function(element) {
   _$jscoverage['/word-filter.js'].functionData[43]++;
-  _$jscoverage['/word-filter.js'].lineData[900]++;
-  if (visit148_900_1(getAncestor(element, 'thead'))) {
-    _$jscoverage['/word-filter.js'].lineData[901]++;
+  _$jscoverage['/word-filter.js'].lineData[899]++;
+  if (visit148_899_1(getAncestor(element, 'thead'))) {
+    _$jscoverage['/word-filter.js'].lineData[900]++;
     element.setTagName('th');
   }
 }, 
@@ -2808,131 +2808,131 @@ KISSY.add("editor/plugin/word-filter", function(S, HtmlParser) {
   'dl': flattenList, 
   'font': function(element) {
   _$jscoverage['/word-filter.js'].functionData[44]++;
-  _$jscoverage['/word-filter.js'].lineData[912]++;
-  if (visit149_912_1(isListBulletIndicator(element.parentNode))) {
-    _$jscoverage['/word-filter.js'].lineData[913]++;
+  _$jscoverage['/word-filter.js'].lineData[911]++;
+  if (visit149_911_1(isListBulletIndicator(element.parentNode))) {
+    _$jscoverage['/word-filter.js'].lineData[912]++;
     element.setTagName(null);
-    _$jscoverage['/word-filter.js'].lineData[914]++;
+    _$jscoverage['/word-filter.js'].lineData[913]++;
     return;
   }
-  _$jscoverage['/word-filter.js'].lineData[917]++;
+  _$jscoverage['/word-filter.js'].lineData[916]++;
   element.filterChildren();
-  _$jscoverage['/word-filter.js'].lineData[919]++;
+  _$jscoverage['/word-filter.js'].lineData[918]++;
   var styleText = element.getAttribute("style"), parent = element.parentNode;
-  _$jscoverage['/word-filter.js'].lineData[922]++;
-  if (visit150_922_1('font' == parent.name)) {
-    _$jscoverage['/word-filter.js'].lineData[924]++;
+  _$jscoverage['/word-filter.js'].lineData[921]++;
+  if (visit150_921_1('font' == parent.name)) {
+    _$jscoverage['/word-filter.js'].lineData[923]++;
     S.each(element.attributes, function(attr) {
   _$jscoverage['/word-filter.js'].functionData[45]++;
-  _$jscoverage['/word-filter.js'].lineData[925]++;
+  _$jscoverage['/word-filter.js'].lineData[924]++;
   parent.setAttribute(attr.name, attr.value);
 });
+    _$jscoverage['/word-filter.js'].lineData[926]++;
+    visit151_926_1(styleText && addStyle(parent, styleText));
     _$jscoverage['/word-filter.js'].lineData[927]++;
-    visit151_927_1(styleText && addStyle(parent, styleText));
-    _$jscoverage['/word-filter.js'].lineData[928]++;
     element.setTagName(null);
   } else {
-    _$jscoverage['/word-filter.js'].lineData[932]++;
-    styleText = visit152_932_1(styleText || '');
-    _$jscoverage['/word-filter.js'].lineData[934]++;
-    if (visit153_934_1(element.getAttribute("color"))) {
+    _$jscoverage['/word-filter.js'].lineData[931]++;
+    styleText = visit152_931_1(styleText || '');
+    _$jscoverage['/word-filter.js'].lineData[933]++;
+    if (visit153_933_1(element.getAttribute("color"))) {
+      _$jscoverage['/word-filter.js'].lineData[934]++;
+      visit154_934_1(visit155_934_2(element.getAttribute("color") != '#000000') && (styleText += 'color:' + element.getAttribute("color") + ';'));
       _$jscoverage['/word-filter.js'].lineData[935]++;
-      visit154_935_1(visit155_935_2(element.getAttribute("color") != '#000000') && (styleText += 'color:' + element.getAttribute("color") + ';'));
-      _$jscoverage['/word-filter.js'].lineData[936]++;
       element.removeAttribute("color");
     }
-    _$jscoverage['/word-filter.js'].lineData[938]++;
-    if (visit156_938_1(element.getAttribute("face"))) {
-      _$jscoverage['/word-filter.js'].lineData[939]++;
+    _$jscoverage['/word-filter.js'].lineData[937]++;
+    if (visit156_937_1(element.getAttribute("face"))) {
+      _$jscoverage['/word-filter.js'].lineData[938]++;
       styleText += 'font-family:' + element.getAttribute("face") + ';';
-      _$jscoverage['/word-filter.js'].lineData[940]++;
+      _$jscoverage['/word-filter.js'].lineData[939]++;
       element.removeAttribute("face");
     }
-    _$jscoverage['/word-filter.js'].lineData[942]++;
+    _$jscoverage['/word-filter.js'].lineData[941]++;
     var size = element.getAttribute("size");
-    _$jscoverage['/word-filter.js'].lineData[945]++;
-    if (visit157_945_1(size)) {
-      _$jscoverage['/word-filter.js'].lineData[946]++;
-      styleText += 'font-size:' + (visit158_947_1(size > 3) ? 'large' : (visit159_948_1(size < 3) ? 'small' : 'medium')) + ';';
-      _$jscoverage['/word-filter.js'].lineData[949]++;
+    _$jscoverage['/word-filter.js'].lineData[944]++;
+    if (visit157_944_1(size)) {
+      _$jscoverage['/word-filter.js'].lineData[945]++;
+      styleText += 'font-size:' + (visit158_946_1(size > 3) ? 'large' : (visit159_947_1(size < 3) ? 'small' : 'medium')) + ';';
+      _$jscoverage['/word-filter.js'].lineData[948]++;
       element.removeAttribute("size");
     }
-    _$jscoverage['/word-filter.js'].lineData[951]++;
+    _$jscoverage['/word-filter.js'].lineData[950]++;
     element.setTagName("span");
-    _$jscoverage['/word-filter.js'].lineData[952]++;
+    _$jscoverage['/word-filter.js'].lineData[951]++;
     addStyle(element, styleText);
   }
 }, 
   'span': function(element) {
   _$jscoverage['/word-filter.js'].functionData[46]++;
-  _$jscoverage['/word-filter.js'].lineData[958]++;
-  if (visit160_958_1(isListBulletIndicator(element.parentNode))) {
-    _$jscoverage['/word-filter.js'].lineData[959]++;
+  _$jscoverage['/word-filter.js'].lineData[957]++;
+  if (visit160_957_1(isListBulletIndicator(element.parentNode))) {
+    _$jscoverage['/word-filter.js'].lineData[958]++;
     return false;
   }
-  _$jscoverage['/word-filter.js'].lineData[961]++;
+  _$jscoverage['/word-filter.js'].lineData[960]++;
   element.filterChildren();
-  _$jscoverage['/word-filter.js'].lineData[962]++;
-  if (visit161_962_1(containsNothingButSpaces(element))) {
-    _$jscoverage['/word-filter.js'].lineData[963]++;
+  _$jscoverage['/word-filter.js'].lineData[961]++;
+  if (visit161_961_1(containsNothingButSpaces(element))) {
+    _$jscoverage['/word-filter.js'].lineData[962]++;
     element.setTagName(null);
-    _$jscoverage['/word-filter.js'].lineData[964]++;
+    _$jscoverage['/word-filter.js'].lineData[963]++;
     return null;
   }
-  _$jscoverage['/word-filter.js'].lineData[969]++;
-  if (visit162_969_1(isListBulletIndicator(element))) {
-    _$jscoverage['/word-filter.js'].lineData[970]++;
+  _$jscoverage['/word-filter.js'].lineData[968]++;
+  if (visit162_968_1(isListBulletIndicator(element))) {
+    _$jscoverage['/word-filter.js'].lineData[969]++;
     var listSymbolNode = firstChild(element, function(node) {
   _$jscoverage['/word-filter.js'].functionData[47]++;
-  _$jscoverage['/word-filter.js'].lineData[971]++;
-  return visit163_971_1(node.nodeValue || visit164_971_2(node.nodeName == 'img'));
+  _$jscoverage['/word-filter.js'].lineData[970]++;
+  return visit163_970_1(node.nodeValue || visit164_970_2(node.nodeName == 'img'));
 });
-    _$jscoverage['/word-filter.js'].lineData[974]++;
-    var listSymbol = visit165_974_1(listSymbolNode && (visit166_974_2(listSymbolNode.nodeValue || 'l.'))), listType = visit167_975_1(listSymbol && listSymbol.match(/^(?:[(]?)([^\s]+?)([.)]?)$/));
-    _$jscoverage['/word-filter.js'].lineData[977]++;
-    if (visit168_977_1(listType)) {
-      _$jscoverage['/word-filter.js'].lineData[978]++;
+    _$jscoverage['/word-filter.js'].lineData[973]++;
+    var listSymbol = visit165_973_1(listSymbolNode && (visit166_973_2(listSymbolNode.nodeValue || 'l.'))), listType = visit167_974_1(listSymbol && listSymbol.match(/^(?:[(]?)([^\s]+?)([.)]?)$/));
+    _$jscoverage['/word-filter.js'].lineData[976]++;
+    if (visit168_976_1(listType)) {
+      _$jscoverage['/word-filter.js'].lineData[977]++;
       var marker = createListBulletMarker(listType, listSymbol);
-      _$jscoverage['/word-filter.js'].lineData[982]++;
+      _$jscoverage['/word-filter.js'].lineData[981]++;
       var ancestor = getAncestor(element, 'span');
-      _$jscoverage['/word-filter.js'].lineData[983]++;
-      if (visit169_983_1(ancestor && (/ mso-hide:\s*all|display:\s*none /).test(ancestor.getAttribute("style")))) {
-        _$jscoverage['/word-filter.js'].lineData[985]++;
+      _$jscoverage['/word-filter.js'].lineData[982]++;
+      if (visit169_982_1(ancestor && (/ mso-hide:\s*all|display:\s*none /).test(ancestor.getAttribute("style")))) {
+        _$jscoverage['/word-filter.js'].lineData[984]++;
         marker.setAttribute('ke:ignored', 1);
       }
-      _$jscoverage['/word-filter.js'].lineData[987]++;
+      _$jscoverage['/word-filter.js'].lineData[986]++;
       return marker;
     }
   }
-  _$jscoverage['/word-filter.js'].lineData[992]++;
+  _$jscoverage['/word-filter.js'].lineData[991]++;
   var styleText = element.getAttribute("style");
-  _$jscoverage['/word-filter.js'].lineData[996]++;
-  if (visit170_996_1(styleText)) {
-    _$jscoverage['/word-filter.js'].lineData[998]++;
+  _$jscoverage['/word-filter.js'].lineData[995]++;
+  if (visit170_995_1(styleText)) {
+    _$jscoverage['/word-filter.js'].lineData[997]++;
     setStyle(element, stylesFilter([[/^line-height$/], [/^font-family$/], [/^font-size$/], [/^color$/], [/^background-color$/]])(styleText, element));
   }
 }, 
   'a': function(element) {
   _$jscoverage['/word-filter.js'].functionData[48]++;
-  _$jscoverage['/word-filter.js'].lineData[1013]++;
+  _$jscoverage['/word-filter.js'].lineData[1012]++;
   var href;
-  _$jscoverage['/word-filter.js'].lineData[1014]++;
-  if (visit171_1014_1(!(href = element.getAttribute("href")) && element.getAttribute("name"))) {
-    _$jscoverage['/word-filter.js'].lineData[1015]++;
+  _$jscoverage['/word-filter.js'].lineData[1013]++;
+  if (visit171_1013_1(!(href = element.getAttribute("href")) && element.getAttribute("name"))) {
+    _$jscoverage['/word-filter.js'].lineData[1014]++;
     element.setTagName(null);
   } else {
-    _$jscoverage['/word-filter.js'].lineData[1016]++;
-    if (visit172_1016_1(UA.webkit && visit173_1016_2(href && href.match(/file:\/\/\/[\S]+#/i)))) {
-      _$jscoverage['/word-filter.js'].lineData[1017]++;
+    _$jscoverage['/word-filter.js'].lineData[1015]++;
+    if (visit172_1015_1(UA.webkit && visit173_1015_2(href && href.match(/file:\/\/\/[\S]+#/i)))) {
+      _$jscoverage['/word-filter.js'].lineData[1016]++;
       element.setAttribute("href", href.replace(/file:\/\/\/[^#]+/i, ''));
     }
   }
 }, 
   'ke:listbullet': function(element) {
   _$jscoverage['/word-filter.js'].functionData[49]++;
-  _$jscoverage['/word-filter.js'].lineData[1021]++;
-  if (visit174_1021_1(getAncestor(element, /h\d/))) {
-    _$jscoverage['/word-filter.js'].lineData[1022]++;
+  _$jscoverage['/word-filter.js'].lineData[1020]++;
+  if (visit174_1020_1(getAncestor(element, /h\d/))) {
+    _$jscoverage['/word-filter.js'].lineData[1021]++;
     element.setTagName(null);
   }
 }}, 
@@ -2940,63 +2940,63 @@ KISSY.add("editor/plugin/word-filter", function(S, HtmlParser) {
   attributes: {
   'style': stylesFilter([[(/^list-style-type$/)], [(/^margin$|^margin-(?!bottom|top)/), null, function(value, element, name) {
   _$jscoverage['/word-filter.js'].functionData[50]++;
-  _$jscoverage['/word-filter.js'].lineData[1048]++;
-  if (visit175_1048_1(element.nodeName in {
+  _$jscoverage['/word-filter.js'].lineData[1047]++;
+  if (visit175_1047_1(element.nodeName in {
   p: 1, 
   div: 1})) {
-    _$jscoverage['/word-filter.js'].lineData[1049]++;
+    _$jscoverage['/word-filter.js'].lineData[1048]++;
     var indentStyleName = 'margin-left';
-    _$jscoverage['/word-filter.js'].lineData[1052]++;
-    if (visit176_1052_1(name == 'margin')) {
-      _$jscoverage['/word-filter.js'].lineData[1053]++;
+    _$jscoverage['/word-filter.js'].lineData[1051]++;
+    if (visit176_1051_1(name == 'margin')) {
+      _$jscoverage['/word-filter.js'].lineData[1052]++;
       value = getStyleComponents(name, value, [indentStyleName])[indentStyleName];
     } else {
-      _$jscoverage['/word-filter.js'].lineData[1055]++;
-      if (visit177_1055_1(name != indentStyleName)) {
-        _$jscoverage['/word-filter.js'].lineData[1056]++;
+      _$jscoverage['/word-filter.js'].lineData[1054]++;
+      if (visit177_1054_1(name != indentStyleName)) {
+        _$jscoverage['/word-filter.js'].lineData[1055]++;
         return null;
       }
     }
-    _$jscoverage['/word-filter.js'].lineData[1059]++;
-    if (visit178_1059_1(value && !emptyMarginRegex.test(value))) {
-      _$jscoverage['/word-filter.js'].lineData[1060]++;
+    _$jscoverage['/word-filter.js'].lineData[1058]++;
+    if (visit178_1058_1(value && !emptyMarginRegex.test(value))) {
+      _$jscoverage['/word-filter.js'].lineData[1059]++;
       return [indentStyleName, value];
     }
   }
-  _$jscoverage['/word-filter.js'].lineData[1064]++;
+  _$jscoverage['/word-filter.js'].lineData[1063]++;
   return null;
 }], [(/^clear$/)], [(/^border.*|margin.*|vertical-align|float$/), null, function(value, element) {
   _$jscoverage['/word-filter.js'].functionData[51]++;
-  _$jscoverage['/word-filter.js'].lineData[1072]++;
-  if (visit179_1072_1(element.nodeName == 'img')) {
-    _$jscoverage['/word-filter.js'].lineData[1073]++;
+  _$jscoverage['/word-filter.js'].lineData[1071]++;
+  if (visit179_1071_1(element.nodeName == 'img')) {
+    _$jscoverage['/word-filter.js'].lineData[1072]++;
     return value;
   }
 }], [(/^width|height$/), null, function(value, element) {
   _$jscoverage['/word-filter.js'].functionData[52]++;
-  _$jscoverage['/word-filter.js'].lineData[1078]++;
-  if (visit180_1078_1(element.nodeName in {
+  _$jscoverage['/word-filter.js'].lineData[1077]++;
+  if (visit180_1077_1(element.nodeName in {
   table: 1, 
   td: 1, 
   th: 1, 
   img: 1})) {
-    _$jscoverage['/word-filter.js'].lineData[1079]++;
+    _$jscoverage['/word-filter.js'].lineData[1078]++;
     return value;
   }
 }]], 1), 
   'width': function(value, element) {
   _$jscoverage['/word-filter.js'].functionData[53]++;
-  _$jscoverage['/word-filter.js'].lineData[1085]++;
-  if (visit181_1085_1(element.nodeName in dtd.$tableContent)) {
-    _$jscoverage['/word-filter.js'].lineData[1086]++;
+  _$jscoverage['/word-filter.js'].lineData[1084]++;
+  if (visit181_1084_1(element.nodeName in dtd.$tableContent)) {
+    _$jscoverage['/word-filter.js'].lineData[1085]++;
     return false;
   }
 }, 
   'border': function(value, element) {
   _$jscoverage['/word-filter.js'].functionData[54]++;
-  _$jscoverage['/word-filter.js'].lineData[1090]++;
-  if (visit182_1090_1(element.nodeName in dtd.$tableContent)) {
-    _$jscoverage['/word-filter.js'].lineData[1091]++;
+  _$jscoverage['/word-filter.js'].lineData[1089]++;
+  if (visit182_1089_1(element.nodeName in dtd.$tableContent)) {
+    _$jscoverage['/word-filter.js'].lineData[1090]++;
     return false;
   }
 }, 
@@ -3004,47 +3004,47 @@ KISSY.add("editor/plugin/word-filter", function(S, HtmlParser) {
   'bgcolor': falsyFilter, 
   'valign': function(value, element) {
   _$jscoverage['/word-filter.js'].functionData[55]++;
-  _$jscoverage['/word-filter.js'].lineData[1105]++;
+  _$jscoverage['/word-filter.js'].lineData[1104]++;
   addStyle(element, 'vertical-align', value);
-  _$jscoverage['/word-filter.js'].lineData[1106]++;
+  _$jscoverage['/word-filter.js'].lineData[1105]++;
   return false;
 }}, 
   comment: UA.ie ? function(value, node) {
   _$jscoverage['/word-filter.js'].functionData[56]++;
-  _$jscoverage['/word-filter.js'].lineData[1116]++;
+  _$jscoverage['/word-filter.js'].lineData[1115]++;
   var imageInfo = value.match(/<img.*?>/), listInfo = value.match(/^\[if !supportLists\]([\s\S]*?)\[endif\]$/);
-  _$jscoverage['/word-filter.js'].lineData[1120]++;
-  if (visit183_1120_1(listInfo)) {
-    _$jscoverage['/word-filter.js'].lineData[1122]++;
-    var listSymbol = visit184_1122_1(listInfo[1] || (visit185_1122_2(imageInfo && 'l.'))), listType = visit186_1123_1(listSymbol && listSymbol.match(/>(?:[(]?)([^\s]+?)([.)]?)</));
-    _$jscoverage['/word-filter.js'].lineData[1124]++;
+  _$jscoverage['/word-filter.js'].lineData[1119]++;
+  if (visit183_1119_1(listInfo)) {
+    _$jscoverage['/word-filter.js'].lineData[1121]++;
+    var listSymbol = visit184_1121_1(listInfo[1] || (visit185_1121_2(imageInfo && 'l.'))), listType = visit186_1122_1(listSymbol && listSymbol.match(/>(?:[(]?)([^\s]+?)([.)]?)</));
+    _$jscoverage['/word-filter.js'].lineData[1123]++;
     return createListBulletMarker(listType, listSymbol);
   }
-  _$jscoverage['/word-filter.js'].lineData[1128]++;
-  if (visit187_1128_1(UA.gecko && imageInfo)) {
-    _$jscoverage['/word-filter.js'].lineData[1129]++;
-    var img = new HtmlParser.Parser(imageInfo[0]).parse().childNodes[0], previousComment = node.previousSibling, imgSrcInfo = visit188_1132_1(previousComment && previousComment.toHtml().match(/<v:imagedata[^>]*o:href=['"](.*?)['"]/)), imgSrc = visit189_1133_1(imgSrcInfo && imgSrcInfo[1]);
+  _$jscoverage['/word-filter.js'].lineData[1127]++;
+  if (visit187_1127_1(UA.gecko && imageInfo)) {
+    _$jscoverage['/word-filter.js'].lineData[1128]++;
+    var img = new HtmlParser.Parser(imageInfo[0]).parse().childNodes[0], previousComment = node.previousSibling, imgSrcInfo = visit188_1131_1(previousComment && previousComment.toHtml().match(/<v:imagedata[^>]*o:href=['"](.*?)['"]/)), imgSrc = visit189_1132_1(imgSrcInfo && imgSrcInfo[1]);
+    _$jscoverage['/word-filter.js'].lineData[1135]++;
+    visit190_1135_1(imgSrc && (img.setAttribute("src", imgSrc)));
     _$jscoverage['/word-filter.js'].lineData[1136]++;
-    visit190_1136_1(imgSrc && (img.setAttribute("src", imgSrc)));
-    _$jscoverage['/word-filter.js'].lineData[1137]++;
     return img;
   }
-  _$jscoverage['/word-filter.js'].lineData[1140]++;
+  _$jscoverage['/word-filter.js'].lineData[1139]++;
   return false;
 } : falsyFilter});
 })();
-  _$jscoverage['/word-filter.js'].lineData[1146]++;
+  _$jscoverage['/word-filter.js'].lineData[1145]++;
   return {
   toDataFormat: function(html, editor) {
   _$jscoverage['/word-filter.js'].functionData[57]++;
-  _$jscoverage['/word-filter.js'].lineData[1165]++;
-  if (visit191_1165_1(UA.gecko)) {
-    _$jscoverage['/word-filter.js'].lineData[1166]++;
+  _$jscoverage['/word-filter.js'].lineData[1164]++;
+  if (visit191_1164_1(UA.gecko)) {
+    _$jscoverage['/word-filter.js'].lineData[1165]++;
     html = html.replace(/(<!--\[if[^<]*?\])-->([\S\s]*?)<!--(\[endif\]-->)/gi, '$1$2$3');
   }
-  _$jscoverage['/word-filter.js'].lineData[1171]++;
+  _$jscoverage['/word-filter.js'].lineData[1170]++;
   html = editor['htmlDataProcessor'].toDataFormat(html, wordFilter);
-  _$jscoverage['/word-filter.js'].lineData[1173]++;
+  _$jscoverage['/word-filter.js'].lineData[1172]++;
   return html;
 }};
 }, {

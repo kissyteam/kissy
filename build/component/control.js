@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Aug 27 21:50
+build time: Sep 11 12:42
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -22,26 +22,8 @@ KISSY.add('component/control/process', function (S, Base, Promise) {
         __getHook = Base.prototype.__getHook,
         noop = S.noop;
 
-
-    function syncUIs(self) {
-        /**
-         * @event beforeSyncUI
-         * fired before component 's internal state is synchronized.
-         * @param {KISSY.Event.CustomEventObject} e
-         */
-        self.fire('beforeSyncUI');
-        self.syncUI();
-        self.__callPluginsMethod('pluginSyncUI');
-        /**
-         * @event afterSyncUI
-         * fired after component 's internal state is synchronized.
-         * @param {KISSY.Event.CustomEventObject} e
-         */
-        self.fire('afterSyncUI');
-    }
-
     /**
-     * @class KISSY.Component.ComponentProcess
+     * @class KISSY.Component.Process
      * @extends KISSY.Base
      */
     var ComponentProcess = Base.extend({
@@ -217,6 +199,23 @@ KISSY.add('component/control/process', function (S, Base, Promise) {
         }
     });
 
+    function syncUIs(self) {
+        /**
+         * @event beforeSyncUI
+         * fired before component 's internal state is synchronized.
+         * @param {KISSY.Event.CustomEventObject} e
+         */
+        self.fire('beforeSyncUI');
+        self.syncUI();
+        self.__callPluginsMethod('pluginSyncUI');
+        /**
+         * @event afterSyncUI
+         * fired after component 's internal state is synchronized.
+         * @param {KISSY.Event.CustomEventObject} e
+         */
+        self.fire('afterSyncUI');
+    }
+
     return ComponentProcess;
 }, {
     requires: ['base', 'promise']
@@ -333,8 +332,9 @@ KISSY.add("component/control/render", function (S, ComponentProcess, XTemplate, 
     }
 
     /**
-     * @ignore
      * Base Render class for KISSY Component.
+     * @class KISSY.Component.Control.Process
+     * @private
      */
     return ComponentProcess.extend({
         isRender: true,
@@ -408,11 +408,6 @@ KISSY.add("component/control/render", function (S, ComponentProcess, XTemplate, 
             }
         },
 
-        /**
-         * @ignore
-         * 只负责建立节点，如果是 decorate 过来的，甚至内容会丢失
-         * 通过 render 来重建原有的内容
-         */
         createDom: function () {
             var self = this;
             self['beforeCreateDom'](
@@ -450,7 +445,7 @@ KISSY.add("component/control/render", function (S, ComponentProcess, XTemplate, 
                 control = self.control,
                 el = self.$el;
 
-            // 新建的节点才需要摆放定位
+            // need to insert created dom into body
             if (!control.get('srcNode')) {
                 var render = control.get('render'),
                     renderBefore = control.get('elBefore');
@@ -527,7 +522,7 @@ KISSY.add("component/control/render", function (S, ComponentProcess, XTemplate, 
          * @param prefixCls
          * @param {KISSY.NodeList} childNode Child component's root node.
          */
-        'getComponentConstructorByNode': function (prefixCls, childNode) {
+        getComponentConstructorByNode: function (prefixCls, childNode) {
             var cls = childNode[0].className;
             // 过滤掉特定前缀
             if (cls) {
@@ -777,7 +772,7 @@ KISSY.add("component/control", function (S, Node, ComponentProcess, Manager, Ren
 
     /**
      * Base Control class for KISSY Component.
-     * @extends KISSY.Component.ComponentProcess
+     * @extends KISSY.Component.Process
      * @class KISSY.Component.Control
      */
     var Control = ComponentProcess.extend({
@@ -791,7 +786,6 @@ KISSY.add("component/control", function (S, Node, ComponentProcess, Manager, Ren
              *      menu.isControl // => true
              *
              * @type {Boolean}
-             * @public
              * @member KISSY.Component.Control
              */
             isControl: true,

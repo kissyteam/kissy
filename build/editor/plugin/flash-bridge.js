@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Aug 27 21:54
+build time: Sep 11 12:46
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -10,11 +10,13 @@ build time: Aug 27 21:54
 */
 
 /**
+ * @ignore
  * simplified flash bridge for yui swf
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/plugin/flash-bridge", function (S, SWF, Editor) {
     var instances = {};
+    var logger= S.getLogger('s/editor/plugin/flash-bridge');
 
     function FlashBridge(cfg) {
         this._init(cfg);
@@ -77,11 +79,6 @@ KISSY.add("editor/plugin/flash-bridge", function (S, SWF, Editor) {
                 })(m);
             }
         },
-        /**
-         * Calls a specific function exposed by the SWF's ExternalInterface.
-         * @param func {String} the name of the function to call
-         * @param args {Array} the set of arguments to pass to the function.
-         */
         _callSWF: function (func, args) {
             return this.swf.callSWF(func,args);
         },
@@ -90,7 +87,7 @@ KISSY.add("editor/plugin/flash-bridge", function (S, SWF, Editor) {
                 type = event.type;
 
             if (type === 'log') {
-                S.log(event.message);
+                logger.debug(event.message);
             } else if (type) {
                 self.fire(type, event);
             }
@@ -110,7 +107,7 @@ KISSY.add("editor/plugin/flash-bridge", function (S, SWF, Editor) {
     });
 
     FlashBridge.EventHandler = function (id, event) {
-        S.log("flash fire event : " + event.type);
+        logger.debug("fire event: " + event.type);
         var instance = instances[id];
         if (instance) {
             //防止ie同步触发事件，后面还没on呢，另外给 swf 喘息机会

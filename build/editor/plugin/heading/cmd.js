@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Aug 27 21:55
+build time: Sep 11 12:47
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -10,6 +10,7 @@ build time: Aug 27 21:55
 */
 
 /**
+ * @ignore
  * Adds a heading tag around a selection or insertion point line.
  * Requires the tag-name string to be passed in as a value argument (i.e. "H1", "H6")
  * @author yiminghe@gmail.com

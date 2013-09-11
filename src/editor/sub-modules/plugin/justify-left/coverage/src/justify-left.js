@@ -229,28 +229,28 @@ if (! this._$jscoverage) {
 if (! _$jscoverage['/justify-left.js']) {
   _$jscoverage['/justify-left.js'] = {};
   _$jscoverage['/justify-left.js'].lineData = [];
-  _$jscoverage['/justify-left.js'].lineData[5] = 0;
   _$jscoverage['/justify-left.js'].lineData[6] = 0;
   _$jscoverage['/justify-left.js'].lineData[7] = 0;
   _$jscoverage['/justify-left.js'].lineData[8] = 0;
   _$jscoverage['/justify-left.js'].lineData[9] = 0;
-  _$jscoverage['/justify-left.js'].lineData[12] = 0;
-  _$jscoverage['/justify-left.js'].lineData[15] = 0;
-  _$jscoverage['/justify-left.js'].lineData[17] = 0;
-  _$jscoverage['/justify-left.js'].lineData[19] = 0;
-  _$jscoverage['/justify-left.js'].lineData[25] = 0;
+  _$jscoverage['/justify-left.js'].lineData[10] = 0;
+  _$jscoverage['/justify-left.js'].lineData[13] = 0;
+  _$jscoverage['/justify-left.js'].lineData[16] = 0;
+  _$jscoverage['/justify-left.js'].lineData[18] = 0;
+  _$jscoverage['/justify-left.js'].lineData[20] = 0;
   _$jscoverage['/justify-left.js'].lineData[26] = 0;
   _$jscoverage['/justify-left.js'].lineData[27] = 0;
   _$jscoverage['/justify-left.js'].lineData[28] = 0;
-  _$jscoverage['/justify-left.js'].lineData[30] = 0;
+  _$jscoverage['/justify-left.js'].lineData[29] = 0;
   _$jscoverage['/justify-left.js'].lineData[31] = 0;
-  _$jscoverage['/justify-left.js'].lineData[33] = 0;
-  _$jscoverage['/justify-left.js'].lineData[41] = 0;
+  _$jscoverage['/justify-left.js'].lineData[32] = 0;
+  _$jscoverage['/justify-left.js'].lineData[34] = 0;
   _$jscoverage['/justify-left.js'].lineData[42] = 0;
   _$jscoverage['/justify-left.js'].lineData[43] = 0;
   _$jscoverage['/justify-left.js'].lineData[44] = 0;
   _$jscoverage['/justify-left.js'].lineData[45] = 0;
-  _$jscoverage['/justify-left.js'].lineData[52] = 0;
+  _$jscoverage['/justify-left.js'].lineData[46] = 0;
+  _$jscoverage['/justify-left.js'].lineData[53] = 0;
 }
 if (! _$jscoverage['/justify-left.js'].functionData) {
   _$jscoverage['/justify-left.js'].functionData = [];
@@ -265,54 +265,54 @@ if (! _$jscoverage['/justify-left.js'].functionData) {
 }
 if (! _$jscoverage['/justify-left.js'].branchData) {
   _$jscoverage['/justify-left.js'].branchData = {};
-  _$jscoverage['/justify-left.js'].branchData['27'] = [];
-  _$jscoverage['/justify-left.js'].branchData['27'][1] = new BranchData();
-  _$jscoverage['/justify-left.js'].branchData['30'] = [];
-  _$jscoverage['/justify-left.js'].branchData['30'][1] = new BranchData();
-  _$jscoverage['/justify-left.js'].branchData['43'] = [];
-  _$jscoverage['/justify-left.js'].branchData['43'][1] = new BranchData();
-  _$jscoverage['/justify-left.js'].branchData['43'][2] = new BranchData();
+  _$jscoverage['/justify-left.js'].branchData['28'] = [];
+  _$jscoverage['/justify-left.js'].branchData['28'][1] = new BranchData();
+  _$jscoverage['/justify-left.js'].branchData['31'] = [];
+  _$jscoverage['/justify-left.js'].branchData['31'][1] = new BranchData();
+  _$jscoverage['/justify-left.js'].branchData['44'] = [];
+  _$jscoverage['/justify-left.js'].branchData['44'][1] = new BranchData();
+  _$jscoverage['/justify-left.js'].branchData['44'][2] = new BranchData();
 }
-_$jscoverage['/justify-left.js'].branchData['43'][2].init(39, 29, 'e.keyCode == S.Node.KeyCode.L');
-function visit4_43_2(result) {
-  _$jscoverage['/justify-left.js'].branchData['43'][2].ranCondition(result);
+_$jscoverage['/justify-left.js'].branchData['44'][2].init(39, 29, 'e.keyCode == S.Node.KeyCode.L');
+function visit4_44_2(result) {
+  _$jscoverage['/justify-left.js'].branchData['44'][2].ranCondition(result);
   return result;
-}_$jscoverage['/justify-left.js'].branchData['43'][1].init(26, 42, 'e.ctrlKey && e.keyCode == S.Node.KeyCode.L');
-function visit3_43_1(result) {
-  _$jscoverage['/justify-left.js'].branchData['43'][1].ranCondition(result);
+}_$jscoverage['/justify-left.js'].branchData['44'][1].init(26, 42, 'e.ctrlKey && e.keyCode == S.Node.KeyCode.L');
+function visit3_44_1(result) {
+  _$jscoverage['/justify-left.js'].branchData['44'][1].ranCondition(result);
   return result;
-}_$jscoverage['/justify-left.js'].branchData['30'][1].init(188, 39, 'editor.queryCommandValue("justifyLeft")');
-function visit2_30_1(result) {
-  _$jscoverage['/justify-left.js'].branchData['30'][1].ranCondition(result);
+}_$jscoverage['/justify-left.js'].branchData['31'][1].init(188, 39, 'editor.queryCommandValue("justifyLeft")');
+function visit2_31_1(result) {
+  _$jscoverage['/justify-left.js'].branchData['31'][1].ranCondition(result);
   return result;
-}_$jscoverage['/justify-left.js'].branchData['27'][1].init(34, 45, 'editor.get("mode") == Editor.Mode.SOURCE_MODE');
-function visit1_27_1(result) {
-  _$jscoverage['/justify-left.js'].branchData['27'][1].ranCondition(result);
+}_$jscoverage['/justify-left.js'].branchData['28'][1].init(34, 45, 'editor.get("mode") == Editor.Mode.SOURCE_MODE');
+function visit1_28_1(result) {
+  _$jscoverage['/justify-left.js'].branchData['28'][1].ranCondition(result);
   return result;
-}_$jscoverage['/justify-left.js'].lineData[5]++;
+}_$jscoverage['/justify-left.js'].lineData[6]++;
 KISSY.add("editor/plugin/justify-left", function(S, Editor, justifyCenterCmd) {
   _$jscoverage['/justify-left.js'].functionData[0]++;
-  _$jscoverage['/justify-left.js'].lineData[6]++;
+  _$jscoverage['/justify-left.js'].lineData[7]++;
   function exec() {
     _$jscoverage['/justify-left.js'].functionData[1]++;
-    _$jscoverage['/justify-left.js'].lineData[7]++;
-    var editor = this.get("editor");
     _$jscoverage['/justify-left.js'].lineData[8]++;
-    editor.execCommand("justifyLeft");
+    var editor = this.get("editor");
     _$jscoverage['/justify-left.js'].lineData[9]++;
+    editor.execCommand("justifyLeft");
+    _$jscoverage['/justify-left.js'].lineData[10]++;
     editor.focus();
   }
-  _$jscoverage['/justify-left.js'].lineData[12]++;
+  _$jscoverage['/justify-left.js'].lineData[13]++;
   function justifyLeft() {
     _$jscoverage['/justify-left.js'].functionData[2]++;
   }
-  _$jscoverage['/justify-left.js'].lineData[15]++;
+  _$jscoverage['/justify-left.js'].lineData[16]++;
   S.augment(justifyLeft, {
   pluginRenderUI: function(editor) {
   _$jscoverage['/justify-left.js'].functionData[3]++;
-  _$jscoverage['/justify-left.js'].lineData[17]++;
+  _$jscoverage['/justify-left.js'].lineData[18]++;
   justifyCenterCmd.init(editor);
-  _$jscoverage['/justify-left.js'].lineData[19]++;
+  _$jscoverage['/justify-left.js'].lineData[20]++;
   editor.addButton("justifyLeft", {
   tooltip: "\u5de6\u5bf9\u9f50", 
   checkable: true, 
@@ -320,44 +320,44 @@ KISSY.add("editor/plugin/justify-left", function(S, Editor, justifyCenterCmd) {
   click: exec, 
   afterSyncUI: function() {
   _$jscoverage['/justify-left.js'].functionData[4]++;
-  _$jscoverage['/justify-left.js'].lineData[25]++;
-  var self = this;
   _$jscoverage['/justify-left.js'].lineData[26]++;
+  var self = this;
+  _$jscoverage['/justify-left.js'].lineData[27]++;
   editor.on("selectionChange", function() {
   _$jscoverage['/justify-left.js'].functionData[5]++;
-  _$jscoverage['/justify-left.js'].lineData[27]++;
-  if (visit1_27_1(editor.get("mode") == Editor.Mode.SOURCE_MODE)) {
-    _$jscoverage['/justify-left.js'].lineData[28]++;
+  _$jscoverage['/justify-left.js'].lineData[28]++;
+  if (visit1_28_1(editor.get("mode") == Editor.Mode.SOURCE_MODE)) {
+    _$jscoverage['/justify-left.js'].lineData[29]++;
     return;
   }
-  _$jscoverage['/justify-left.js'].lineData[30]++;
-  if (visit2_30_1(editor.queryCommandValue("justifyLeft"))) {
-    _$jscoverage['/justify-left.js'].lineData[31]++;
+  _$jscoverage['/justify-left.js'].lineData[31]++;
+  if (visit2_31_1(editor.queryCommandValue("justifyLeft"))) {
+    _$jscoverage['/justify-left.js'].lineData[32]++;
     self.set("checked", true);
   } else {
-    _$jscoverage['/justify-left.js'].lineData[33]++;
+    _$jscoverage['/justify-left.js'].lineData[34]++;
     self.set("checked", false);
   }
 });
 }}, 
   mode: Editor.Mode.WYSIWYG_MODE});
-  _$jscoverage['/justify-left.js'].lineData[41]++;
+  _$jscoverage['/justify-left.js'].lineData[42]++;
   editor.docReady(function() {
   _$jscoverage['/justify-left.js'].functionData[6]++;
-  _$jscoverage['/justify-left.js'].lineData[42]++;
+  _$jscoverage['/justify-left.js'].lineData[43]++;
   editor.get("document").on("keydown", function(e) {
   _$jscoverage['/justify-left.js'].functionData[7]++;
-  _$jscoverage['/justify-left.js'].lineData[43]++;
-  if (visit3_43_1(e.ctrlKey && visit4_43_2(e.keyCode == S.Node.KeyCode.L))) {
-    _$jscoverage['/justify-left.js'].lineData[44]++;
-    editor.execCommand("justifyLeft");
+  _$jscoverage['/justify-left.js'].lineData[44]++;
+  if (visit3_44_1(e.ctrlKey && visit4_44_2(e.keyCode == S.Node.KeyCode.L))) {
     _$jscoverage['/justify-left.js'].lineData[45]++;
+    editor.execCommand("justifyLeft");
+    _$jscoverage['/justify-left.js'].lineData[46]++;
     e.preventDefault();
   }
 });
 });
 }});
-  _$jscoverage['/justify-left.js'].lineData[52]++;
+  _$jscoverage['/justify-left.js'].lineData[53]++;
   return justifyLeft;
 }, {
   requires: ['editor', './justify-left/cmd']});

@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Aug 27 22:00
+build time: Sep 11 12:53
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -19,7 +19,6 @@ build time: Aug 27 22:00
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('node/base', function (S, Dom, Event, undefined) {
-
     var AP = Array.prototype,
         slice = AP.slice,
         NodeType = Dom.NodeType,
@@ -31,13 +30,9 @@ KISSY.add('node/base', function (S, Dom, Event, undefined) {
      * The NodeList class provides a {@link KISSY.DOM} wrapper for manipulating Dom Node.
      * use KISSY.all/one to retrieve NodeList instances.
      *
-     *  for example:
+     *
      *      @example
      *      KISSY.all('a').attr('href','http://docs.kissyui.com');
-     *
-     * is equal to
-     *      @example
-     *      KISSY.DOM.attr('a','href','http://docs.kissyui.com');
      *
      * @class KISSY.NodeList
      */
@@ -80,7 +75,6 @@ KISSY.add('node/base', function (S, Dom, Event, undefined) {
     }
 
     NodeList.prototype = {
-
         constructor: NodeList,
 
         isNodeList: true,
@@ -316,7 +310,6 @@ KISSY.add('node/base', function (S, Dom, Event, undefined) {
  * @author yiminghe@gmail.com
  */
 KISSY.add('node/attach', function (S, Dom, Event, NodeList, undefined) {
-
     var NLP = NodeList.prototype,
         makeArray = S.makeArray,
     // Dom 添加到 NP 上的方法
@@ -364,7 +357,6 @@ KISSY.add('node/attach', function (S, Dom, Event, NodeList, undefined) {
             'removeData',
             'hasData',
             'unselectable',
-
             'wrap',
             'wrapAll',
             'replaceWith',
@@ -436,7 +428,6 @@ KISSY.add('node/attach', function (S, Dom, Event, NodeList, undefined) {
     }
 
     function accessNormIf(fn, self, index, args) {
-
         // get
         if (args[index] === undefined
             // 并且第一个参数不是对象，否则可能是批量设置写
@@ -478,7 +469,6 @@ KISSY.add('node/attach', function (S, Dom, Event, NodeList, undefined) {
             return self;
         }
     });
-
 }, {
     requires: ['dom', 'event/dom', './base']
 });
@@ -498,7 +488,6 @@ KISSY.add('node/attach', function (S, Dom, Event, NodeList, undefined) {
  * @author yiminghe@gmail.com
  */
 KISSY.add('node/override', function (S, Dom, NodeList) {
-
     var NLP = NodeList.prototype;
 
     /**
@@ -509,6 +498,7 @@ KISSY.add('node/override', function (S, Dom, NodeList) {
      * @member KISSY.NodeList
      */
 
+
     /**
      * Insert every element in the set of newNodes to the beginning of every element in the set of current node list.
      * @param {KISSY.NodeList} newNodes Nodes to be inserted
@@ -518,12 +508,12 @@ KISSY.add('node/override', function (S, Dom, NodeList) {
      */
 
 
-        // append(node ,parent) : 参数顺序反过来了
-        // appendTo(parent,node) : 才是正常
+        // append(node ,parent): reverse param order
+        // appendTo(parent,node): normal
     S.each(['append', 'prepend', 'before', 'after'], function (insertType) {
         NLP[insertType] = function (html) {
             var newNode = html, self = this;
-            // 创建
+            // create
             if (typeof newNode == 'string') {
                 newNode = Dom.create(newNode);
             }
@@ -544,7 +534,6 @@ KISSY.add('node/override', function (S, Dom, NodeList) {
             return orig.call(self, others);
         };
     })
-
 }, {
     requires: ['dom', './base', './attach']
 });
@@ -685,6 +674,7 @@ KISSY.add('node/anim', function (S, Dom, Anim, Node, undefined) {
         }
     });
 
+
     /**
      * animate show effect for current node list.
      * @param {Number} duration duration of effect
@@ -694,6 +684,7 @@ KISSY.add('node/anim', function (S, Dom, Anim, Node, undefined) {
      * @member KISSY.NodeList
      * @method show
      */
+
 
     /**
      * animate hide effect for current node list.
@@ -705,6 +696,7 @@ KISSY.add('node/anim', function (S, Dom, Anim, Node, undefined) {
      * @method hide
      */
 
+
     /**
      * toggle show and hide effect for current node list.
      * @param {Number} duration duration of effect
@@ -714,6 +706,7 @@ KISSY.add('node/anim', function (S, Dom, Anim, Node, undefined) {
      * @member KISSY.NodeList
      * @method toggle
      */
+
 
     /**
      * animate fadeIn effect for current node list.
@@ -725,6 +718,7 @@ KISSY.add('node/anim', function (S, Dom, Anim, Node, undefined) {
      * @method fadeIn
      */
 
+
     /**
      * animate fadeOut effect for current node list.
      * @param {Number} duration duration of effect
@@ -734,6 +728,7 @@ KISSY.add('node/anim', function (S, Dom, Anim, Node, undefined) {
      * @member KISSY.NodeList
      * @method fadeOut
      */
+
 
     /**
      * toggle fadeIn and fadeOut effect for current node list.
@@ -745,6 +740,7 @@ KISSY.add('node/anim', function (S, Dom, Anim, Node, undefined) {
      * @method fadeToggle
      */
 
+
     /**
      * animate slideUp effect for current node list.
      * @param {Number} duration duration of effect
@@ -754,6 +750,7 @@ KISSY.add('node/anim', function (S, Dom, Anim, Node, undefined) {
      * @member KISSY.NodeList
      * @method slideUp
      */
+
 
     /**
      * animate slideDown effect for current node list.
@@ -765,6 +762,7 @@ KISSY.add('node/anim', function (S, Dom, Anim, Node, undefined) {
      * @method slideDown
      */
 
+
     /**
      * toggle slideUp and slideDown effect for current node list.
      * @param {Number} duration duration of effect
@@ -774,6 +772,7 @@ KISSY.add('node/anim', function (S, Dom, Anim, Node, undefined) {
      * @member KISSY.NodeList
      * @method slideToggle
      */
+
 
     S.each({
             show: getFxs('show', 3),

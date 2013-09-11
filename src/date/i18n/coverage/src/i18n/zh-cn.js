@@ -229,7 +229,7 @@ if (! this._$jscoverage) {
 if (! _$jscoverage['/i18n/zh-cn.js']) {
   _$jscoverage['/i18n/zh-cn.js'] = {};
   _$jscoverage['/i18n/zh-cn.js'].lineData = [];
-  _$jscoverage['/i18n/zh-cn.js'].lineData[5] = 0;
+  _$jscoverage['/i18n/zh-cn.js'].lineData[6] = 0;
 }
 if (! _$jscoverage['/i18n/zh-cn.js'].functionData) {
   _$jscoverage['/i18n/zh-cn.js'].functionData = [];
@@ -237,7 +237,7 @@ if (! _$jscoverage['/i18n/zh-cn.js'].functionData) {
 if (! _$jscoverage['/i18n/zh-cn.js'].branchData) {
   _$jscoverage['/i18n/zh-cn.js'].branchData = {};
 }
-_$jscoverage['/i18n/zh-cn.js'].lineData[5]++;
+_$jscoverage['/i18n/zh-cn.js'].lineData[6]++;
 KISSY.add('date/i18n/zh-cn', {
   timezoneOffset: 8 * 60, 
   firstDayOfWeek: 1, 

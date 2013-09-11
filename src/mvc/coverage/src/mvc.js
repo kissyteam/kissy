@@ -230,7 +230,7 @@ if (! _$jscoverage['/mvc.js']) {
   _$jscoverage['/mvc.js'] = {};
   _$jscoverage['/mvc.js'].lineData = [];
   _$jscoverage['/mvc.js'].lineData[5] = 0;
-  _$jscoverage['/mvc.js'].lineData[13] = 0;
+  _$jscoverage['/mvc.js'].lineData[6] = 0;
 }
 if (! _$jscoverage['/mvc.js'].functionData) {
   _$jscoverage['/mvc.js'].functionData = [];
@@ -242,7 +242,7 @@ if (! _$jscoverage['/mvc.js'].branchData) {
 _$jscoverage['/mvc.js'].lineData[5]++;
 KISSY.add("mvc", function(S, Model, Collection, View, Router, sync) {
   _$jscoverage['/mvc.js'].functionData[0]++;
-  _$jscoverage['/mvc.js'].lineData[13]++;
+  _$jscoverage['/mvc.js'].lineData[6]++;
   return {
   sync: sync, 
   Model: Model, 

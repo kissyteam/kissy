@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Aug 27 22:02
+build time: Sep 11 12:54
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -199,11 +199,8 @@ KISSY.add("tree/node", function (S, Node, Container, TreeNodeRender) {
         KeyCode = Node.KeyCode;
 
     /**
-     * @class
-     * Tree Node.
-     * xclass: 'tree-node'.
-     * @name Node
-     * @member Tree
+     * Tree Node. xclass: 'tree-node'.
+     * @class KISSY.Tree.Node
      * @extends KISSY.Component.Control
      */
    return Container.extend({
@@ -721,9 +718,6 @@ KISSY.add("tree/tree-manager", function (S, Node, DelegateChildrenExtension) {
  * @author yiminghe@gmail.com
  */
 KISSY.add("tree/control", function (S, TreeNode, TreeManager) {
-
-    var Tree;
-
     /*多继承
      1. 继承基节点（包括可装饰儿子节点功能）
      2. 继承 mixin 树管理功能
@@ -731,14 +725,11 @@ KISSY.add("tree/control", function (S, TreeNode, TreeManager) {
      */
 
     /**
-     * @name Tree
-     * @class
-     * KISSY Tree.
-     * xclass: 'tree'.
-     * @extends Tree.Node
+     * KISSY Tree. xclass: 'tree'.
+     * @class KISSY.Tree
+     * @extends KISSY.Tree.Node
      */
-    return Tree = TreeNode.extend([TreeManager], {
-
+    return TreeNode.extend([TreeManager], {
         handleKeyDownInternal: function (e) {
             var current = this.get("selectedItem");
             if (current === this) {
@@ -756,7 +747,6 @@ KISSY.add("tree/control", function (S, TreeNode, TreeManager) {
                 self.select();
             }
         }
-
     }, {
         ATTRS: {
             defaultChildCfg: {
@@ -767,7 +757,6 @@ KISSY.add("tree/control", function (S, TreeNode, TreeManager) {
         },
         xclass: 'tree'
     });
-
 }, {
     requires: ['./node', './tree-manager']
 });
@@ -810,15 +799,11 @@ KISSY.add("tree/check-node", function (S, Node, TreeNode) {
         EMPTY = 0;
 
     /**
-     * @name CheckNode
-     * @member Tree
-     * @class
-     * Checked tree node.
-     * xclass: 'check-tree-node'.
-     * @extends Tree.Node
+     * Checked tree node. xclass: 'check-tree-node'.
+     * @class KISSY.Tree.CheckNode
+     * @extends KISSY.Tree.Node
      */
     var CheckNode = TreeNode.extend({
-
         handleClickInternal: function (e) {
             var self = this,
                 checkState,
@@ -934,20 +919,24 @@ KISSY.add("tree/check-node", function (S, Node, TreeNode) {
         xclass: "check-tree-node"
     });
 
-    S.mix(CheckNode,{
-            /**
-             * checked partly.
-             */
-            PARTIAL_CHECK: PARTIAL_CHECK,
-            /**
-             * checked completely.
-             */
-            CHECK: CHECK,
-            /**
-             * not checked at all.
-             */
-            EMPTY: EMPTY
-        });
+    /**
+     * check node's check state enum
+     * @enum {Number} KISSY.Tree.CheckNode.CheckState
+     */
+    CheckNode.CheckState={
+        /**
+         * checked partly.
+         */
+        PARTIAL_CHECK: PARTIAL_CHECK,
+        /**
+         * checked completely.
+         */
+        CHECK: CHECK,
+        /**
+         * not checked at all.
+         */
+        EMPTY: EMPTY
+    };
 
     return CheckNode;
 }, {
@@ -958,18 +947,12 @@ KISSY.add("tree/check-node", function (S, Node, TreeNode) {
  * @author yiminghe@gmail.com
  */
 KISSY.add("tree/check-tree", function (S, CheckNode, TreeManager) {
-
-    var CheckTree;
     /**
-     * @name CheckTree
+     * KISSY Checked Tree. xclass: 'check-tree'.
      * @extends Tree.CheckNode
-     * @class
-     * KISSY Checked Tree.
-     * xclass: 'check-tree'.
-     * @member Tree
+     * @class KISSY.Tree.CheckTree
      */
-    return  CheckTree = CheckNode.extend([TreeManager], {
-
+    return CheckNode.extend([TreeManager], {
         handleKeyDownInternal: function (e) {
             var current = this.get("selectedItem");
             if (current === this) {
@@ -987,7 +970,6 @@ KISSY.add("tree/check-tree", function (S, CheckNode, TreeManager) {
                 self.select();
             }
         }
-
     }, {
         ATTRS: {
             defaultChildCfg: {

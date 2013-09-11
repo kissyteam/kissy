@@ -231,46 +231,44 @@ if (! _$jscoverage['/io/xhr-transport-base.js']) {
   _$jscoverage['/io/xhr-transport-base.js'].lineData = [];
   _$jscoverage['/io/xhr-transport-base.js'].lineData[6] = 0;
   _$jscoverage['/io/xhr-transport-base.js'].lineData[7] = 0;
-  _$jscoverage['/io/xhr-transport-base.js'].lineData[19] = 0;
   _$jscoverage['/io/xhr-transport-base.js'].lineData[20] = 0;
-  _$jscoverage['/io/xhr-transport-base.js'].lineData[22] = 0;
+  _$jscoverage['/io/xhr-transport-base.js'].lineData[21] = 0;
   _$jscoverage['/io/xhr-transport-base.js'].lineData[23] = 0;
   _$jscoverage['/io/xhr-transport-base.js'].lineData[24] = 0;
-  _$jscoverage['/io/xhr-transport-base.js'].lineData[26] = 0;
+  _$jscoverage['/io/xhr-transport-base.js'].lineData[25] = 0;
   _$jscoverage['/io/xhr-transport-base.js'].lineData[28] = 0;
   _$jscoverage['/io/xhr-transport-base.js'].lineData[31] = 0;
   _$jscoverage['/io/xhr-transport-base.js'].lineData[32] = 0;
   _$jscoverage['/io/xhr-transport-base.js'].lineData[33] = 0;
-  _$jscoverage['/io/xhr-transport-base.js'].lineData[35] = 0;
-  _$jscoverage['/io/xhr-transport-base.js'].lineData[37] = 0;
-  _$jscoverage['/io/xhr-transport-base.js'].lineData[40] = 0;
+  _$jscoverage['/io/xhr-transport-base.js'].lineData[36] = 0;
+  _$jscoverage['/io/xhr-transport-base.js'].lineData[39] = 0;
+  _$jscoverage['/io/xhr-transport-base.js'].lineData[41] = 0;
   _$jscoverage['/io/xhr-transport-base.js'].lineData[42] = 0;
-  _$jscoverage['/io/xhr-transport-base.js'].lineData[43] = 0;
-  _$jscoverage['/io/xhr-transport-base.js'].lineData[46] = 0;
-  _$jscoverage['/io/xhr-transport-base.js'].lineData[50] = 0;
-  _$jscoverage['/io/xhr-transport-base.js'].lineData[52] = 0;
+  _$jscoverage['/io/xhr-transport-base.js'].lineData[45] = 0;
+  _$jscoverage['/io/xhr-transport-base.js'].lineData[49] = 0;
+  _$jscoverage['/io/xhr-transport-base.js'].lineData[51] = 0;
+  _$jscoverage['/io/xhr-transport-base.js'].lineData[54] = 0;
   _$jscoverage['/io/xhr-transport-base.js'].lineData[55] = 0;
-  _$jscoverage['/io/xhr-transport-base.js'].lineData[56] = 0;
+  _$jscoverage['/io/xhr-transport-base.js'].lineData[58] = 0;
   _$jscoverage['/io/xhr-transport-base.js'].lineData[59] = 0;
-  _$jscoverage['/io/xhr-transport-base.js'].lineData[60] = 0;
+  _$jscoverage['/io/xhr-transport-base.js'].lineData[61] = 0;
   _$jscoverage['/io/xhr-transport-base.js'].lineData[62] = 0;
   _$jscoverage['/io/xhr-transport-base.js'].lineData[63] = 0;
   _$jscoverage['/io/xhr-transport-base.js'].lineData[64] = 0;
-  _$jscoverage['/io/xhr-transport-base.js'].lineData[65] = 0;
-  _$jscoverage['/io/xhr-transport-base.js'].lineData[68] = 0;
-  _$jscoverage['/io/xhr-transport-base.js'].lineData[70] = 0;
-  _$jscoverage['/io/xhr-transport-base.js'].lineData[72] = 0;
-  _$jscoverage['/io/xhr-transport-base.js'].lineData[75] = 0;
-  _$jscoverage['/io/xhr-transport-base.js'].lineData[77] = 0;
-  _$jscoverage['/io/xhr-transport-base.js'].lineData[93] = 0;
+  _$jscoverage['/io/xhr-transport-base.js'].lineData[67] = 0;
+  _$jscoverage['/io/xhr-transport-base.js'].lineData[69] = 0;
+  _$jscoverage['/io/xhr-transport-base.js'].lineData[71] = 0;
+  _$jscoverage['/io/xhr-transport-base.js'].lineData[74] = 0;
+  _$jscoverage['/io/xhr-transport-base.js'].lineData[76] = 0;
+  _$jscoverage['/io/xhr-transport-base.js'].lineData[92] = 0;
+  _$jscoverage['/io/xhr-transport-base.js'].lineData[99] = 0;
   _$jscoverage['/io/xhr-transport-base.js'].lineData[100] = 0;
-  _$jscoverage['/io/xhr-transport-base.js'].lineData[101] = 0;
+  _$jscoverage['/io/xhr-transport-base.js'].lineData[102] = 0;
   _$jscoverage['/io/xhr-transport-base.js'].lineData[103] = 0;
-  _$jscoverage['/io/xhr-transport-base.js'].lineData[104] = 0;
+  _$jscoverage['/io/xhr-transport-base.js'].lineData[107] = 0;
   _$jscoverage['/io/xhr-transport-base.js'].lineData[108] = 0;
-  _$jscoverage['/io/xhr-transport-base.js'].lineData[109] = 0;
-  _$jscoverage['/io/xhr-transport-base.js'].lineData[111] = 0;
-  _$jscoverage['/io/xhr-transport-base.js'].lineData[114] = 0;
+  _$jscoverage['/io/xhr-transport-base.js'].lineData[110] = 0;
+  _$jscoverage['/io/xhr-transport-base.js'].lineData[113] = 0;
   _$jscoverage['/io/xhr-transport-base.js'].lineData[116] = 0;
   _$jscoverage['/io/xhr-transport-base.js'].lineData[117] = 0;
   _$jscoverage['/io/xhr-transport-base.js'].lineData[118] = 0;
@@ -314,52 +312,52 @@ if (! _$jscoverage['/io/xhr-transport-base.js']) {
   _$jscoverage['/io/xhr-transport-base.js'].lineData[188] = 0;
   _$jscoverage['/io/xhr-transport-base.js'].lineData[195] = 0;
   _$jscoverage['/io/xhr-transport-base.js'].lineData[202] = 0;
-  _$jscoverage['/io/xhr-transport-base.js'].lineData[212] = 0;
-  _$jscoverage['/io/xhr-transport-base.js'].lineData[214] = 0;
+  _$jscoverage['/io/xhr-transport-base.js'].lineData[211] = 0;
+  _$jscoverage['/io/xhr-transport-base.js'].lineData[213] = 0;
+  _$jscoverage['/io/xhr-transport-base.js'].lineData[215] = 0;
   _$jscoverage['/io/xhr-transport-base.js'].lineData[216] = 0;
   _$jscoverage['/io/xhr-transport-base.js'].lineData[217] = 0;
-  _$jscoverage['/io/xhr-transport-base.js'].lineData[218] = 0;
-  _$jscoverage['/io/xhr-transport-base.js'].lineData[221] = 0;
-  _$jscoverage['/io/xhr-transport-base.js'].lineData[224] = 0;
+  _$jscoverage['/io/xhr-transport-base.js'].lineData[220] = 0;
+  _$jscoverage['/io/xhr-transport-base.js'].lineData[223] = 0;
+  _$jscoverage['/io/xhr-transport-base.js'].lineData[225] = 0;
   _$jscoverage['/io/xhr-transport-base.js'].lineData[226] = 0;
-  _$jscoverage['/io/xhr-transport-base.js'].lineData[227] = 0;
-  _$jscoverage['/io/xhr-transport-base.js'].lineData[230] = 0;
-  _$jscoverage['/io/xhr-transport-base.js'].lineData[232] = 0;
+  _$jscoverage['/io/xhr-transport-base.js'].lineData[229] = 0;
+  _$jscoverage['/io/xhr-transport-base.js'].lineData[231] = 0;
+  _$jscoverage['/io/xhr-transport-base.js'].lineData[234] = 0;
   _$jscoverage['/io/xhr-transport-base.js'].lineData[235] = 0;
-  _$jscoverage['/io/xhr-transport-base.js'].lineData[236] = 0;
+  _$jscoverage['/io/xhr-transport-base.js'].lineData[238] = 0;
   _$jscoverage['/io/xhr-transport-base.js'].lineData[239] = 0;
   _$jscoverage['/io/xhr-transport-base.js'].lineData[240] = 0;
-  _$jscoverage['/io/xhr-transport-base.js'].lineData[241] = 0;
+  _$jscoverage['/io/xhr-transport-base.js'].lineData[243] = 0;
   _$jscoverage['/io/xhr-transport-base.js'].lineData[244] = 0;
-  _$jscoverage['/io/xhr-transport-base.js'].lineData[245] = 0;
+  _$jscoverage['/io/xhr-transport-base.js'].lineData[246] = 0;
   _$jscoverage['/io/xhr-transport-base.js'].lineData[247] = 0;
-  _$jscoverage['/io/xhr-transport-base.js'].lineData[248] = 0;
-  _$jscoverage['/io/xhr-transport-base.js'].lineData[252] = 0;
+  _$jscoverage['/io/xhr-transport-base.js'].lineData[251] = 0;
+  _$jscoverage['/io/xhr-transport-base.js'].lineData[254] = 0;
   _$jscoverage['/io/xhr-transport-base.js'].lineData[255] = 0;
-  _$jscoverage['/io/xhr-transport-base.js'].lineData[256] = 0;
-  _$jscoverage['/io/xhr-transport-base.js'].lineData[259] = 0;
+  _$jscoverage['/io/xhr-transport-base.js'].lineData[258] = 0;
+  _$jscoverage['/io/xhr-transport-base.js'].lineData[261] = 0;
   _$jscoverage['/io/xhr-transport-base.js'].lineData[262] = 0;
   _$jscoverage['/io/xhr-transport-base.js'].lineData[263] = 0;
   _$jscoverage['/io/xhr-transport-base.js'].lineData[264] = 0;
   _$jscoverage['/io/xhr-transport-base.js'].lineData[265] = 0;
   _$jscoverage['/io/xhr-transport-base.js'].lineData[266] = 0;
-  _$jscoverage['/io/xhr-transport-base.js'].lineData[267] = 0;
-  _$jscoverage['/io/xhr-transport-base.js'].lineData[269] = 0;
-  _$jscoverage['/io/xhr-transport-base.js'].lineData[272] = 0;
+  _$jscoverage['/io/xhr-transport-base.js'].lineData[268] = 0;
+  _$jscoverage['/io/xhr-transport-base.js'].lineData[271] = 0;
+  _$jscoverage['/io/xhr-transport-base.js'].lineData[276] = 0;
   _$jscoverage['/io/xhr-transport-base.js'].lineData[277] = 0;
-  _$jscoverage['/io/xhr-transport-base.js'].lineData[278] = 0;
+  _$jscoverage['/io/xhr-transport-base.js'].lineData[279] = 0;
   _$jscoverage['/io/xhr-transport-base.js'].lineData[280] = 0;
-  _$jscoverage['/io/xhr-transport-base.js'].lineData[281] = 0;
-  _$jscoverage['/io/xhr-transport-base.js'].lineData[283] = 0;
+  _$jscoverage['/io/xhr-transport-base.js'].lineData[282] = 0;
+  _$jscoverage['/io/xhr-transport-base.js'].lineData[289] = 0;
   _$jscoverage['/io/xhr-transport-base.js'].lineData[290] = 0;
-  _$jscoverage['/io/xhr-transport-base.js'].lineData[291] = 0;
+  _$jscoverage['/io/xhr-transport-base.js'].lineData[292] = 0;
   _$jscoverage['/io/xhr-transport-base.js'].lineData[293] = 0;
-  _$jscoverage['/io/xhr-transport-base.js'].lineData[294] = 0;
-  _$jscoverage['/io/xhr-transport-base.js'].lineData[297] = 0;
+  _$jscoverage['/io/xhr-transport-base.js'].lineData[296] = 0;
+  _$jscoverage['/io/xhr-transport-base.js'].lineData[300] = 0;
   _$jscoverage['/io/xhr-transport-base.js'].lineData[301] = 0;
   _$jscoverage['/io/xhr-transport-base.js'].lineData[302] = 0;
-  _$jscoverage['/io/xhr-transport-base.js'].lineData[303] = 0;
-  _$jscoverage['/io/xhr-transport-base.js'].lineData[310] = 0;
+  _$jscoverage['/io/xhr-transport-base.js'].lineData[309] = 0;
 }
 if (! _$jscoverage['/io/xhr-transport-base.js'].functionData) {
   _$jscoverage['/io/xhr-transport-base.js'].functionData = [];
@@ -380,37 +378,37 @@ if (! _$jscoverage['/io/xhr-transport-base.js'].functionData) {
 }
 if (! _$jscoverage['/io/xhr-transport-base.js'].branchData) {
   _$jscoverage['/io/xhr-transport-base.js'].branchData = {};
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['10'] = [];
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['10'][1] = new BranchData();
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['10'][2] = new BranchData();
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['24'] = [];
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['24'][1] = new BranchData();
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['11'] = [];
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['11'][1] = new BranchData();
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['11'][2] = new BranchData();
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['25'] = [];
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['25'][1] = new BranchData();
   _$jscoverage['/io/xhr-transport-base.js'].branchData['33'] = [];
   _$jscoverage['/io/xhr-transport-base.js'].branchData['33'][1] = new BranchData();
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['42'] = [];
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['42'][1] = new BranchData();
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['42'][2] = new BranchData();
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['46'] = [];
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['46'][1] = new BranchData();
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['46'][2] = new BranchData();
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['56'] = [];
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['56'][1] = new BranchData();
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['62'] = [];
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['62'][1] = new BranchData();
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['64'] = [];
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['64'][1] = new BranchData();
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['86'] = [];
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['86'][1] = new BranchData();
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['93'] = [];
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['93'][1] = new BranchData();
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['100'] = [];
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['100'][1] = new BranchData();
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['103'] = [];
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['103'][1] = new BranchData();
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['108'] = [];
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['108'][1] = new BranchData();
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['114'] = [];
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['114'][1] = new BranchData();
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['41'] = [];
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['41'][1] = new BranchData();
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['41'][2] = new BranchData();
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['45'] = [];
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['45'][1] = new BranchData();
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['45'][2] = new BranchData();
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['55'] = [];
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['55'][1] = new BranchData();
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['61'] = [];
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['61'][1] = new BranchData();
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['63'] = [];
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['63'][1] = new BranchData();
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['85'] = [];
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['85'][1] = new BranchData();
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['92'] = [];
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['92'][1] = new BranchData();
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['99'] = [];
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['99'][1] = new BranchData();
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['102'] = [];
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['102'][1] = new BranchData();
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['107'] = [];
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['107'][1] = new BranchData();
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['113'] = [];
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['113'][1] = new BranchData();
   _$jscoverage['/io/xhr-transport-base.js'].branchData['116'] = [];
   _$jscoverage['/io/xhr-transport-base.js'].branchData['116'][1] = new BranchData();
   _$jscoverage['/io/xhr-transport-base.js'].branchData['117'] = [];
@@ -437,116 +435,116 @@ if (! _$jscoverage['/io/xhr-transport-base.js'].branchData) {
   _$jscoverage['/io/xhr-transport-base.js'].branchData['171'][2] = new BranchData();
   _$jscoverage['/io/xhr-transport-base.js'].branchData['175'] = [];
   _$jscoverage['/io/xhr-transport-base.js'].branchData['175'][1] = new BranchData();
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['214'] = [];
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['214'][1] = new BranchData();
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['214'][2] = new BranchData();
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['216'] = [];
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['216'][1] = new BranchData();
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['224'] = [];
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['224'][1] = new BranchData();
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['226'] = [];
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['226'][1] = new BranchData();
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['235'] = [];
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['235'][1] = new BranchData();
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['239'] = [];
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['239'][1] = new BranchData();
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['244'] = [];
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['244'][1] = new BranchData();
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['247'] = [];
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['247'][1] = new BranchData();
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['255'] = [];
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['255'][1] = new BranchData();
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['262'] = [];
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['262'][1] = new BranchData();
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['264'] = [];
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['264'][1] = new BranchData();
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['266'] = [];
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['266'][1] = new BranchData();
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['290'] = [];
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['290'][1] = new BranchData();
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['290'][2] = new BranchData();
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['293'] = [];
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['293'][1] = new BranchData();
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['302'] = [];
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['302'][1] = new BranchData();
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['213'] = [];
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['213'][1] = new BranchData();
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['213'][2] = new BranchData();
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['215'] = [];
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['215'][1] = new BranchData();
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['223'] = [];
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['223'][1] = new BranchData();
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['225'] = [];
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['225'][1] = new BranchData();
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['234'] = [];
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['234'][1] = new BranchData();
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['238'] = [];
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['238'][1] = new BranchData();
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['243'] = [];
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['243'][1] = new BranchData();
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['246'] = [];
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['246'][1] = new BranchData();
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['254'] = [];
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['254'][1] = new BranchData();
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['261'] = [];
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['261'][1] = new BranchData();
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['263'] = [];
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['263'][1] = new BranchData();
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['265'] = [];
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['265'][1] = new BranchData();
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['289'] = [];
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['289'][1] = new BranchData();
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['289'][2] = new BranchData();
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['292'] = [];
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['292'][1] = new BranchData();
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['301'] = [];
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['301'][1] = new BranchData();
 }
-_$jscoverage['/io/xhr-transport-base.js'].branchData['302'][1].init(78, 6, '!abort');
-function visit191_302_1(result) {
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['302'][1].ranCondition(result);
+_$jscoverage['/io/xhr-transport-base.js'].branchData['301'][1].init(78, 6, '!abort');
+function visit191_301_1(result) {
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['301'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/xhr-transport-base.js'].branchData['293'][1].init(3275, 27, 'status === NO_CONTENT_CODE2');
-function visit190_293_1(result) {
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['293'][1].ranCondition(result);
+}_$jscoverage['/io/xhr-transport-base.js'].branchData['292'][1].init(3289, 27, 'status === NO_CONTENT_CODE2');
+function visit190_292_1(result) {
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['292'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/xhr-transport-base.js'].branchData['290'][2].init(3035, 28, 'IO.isLocal && !c.crossDomain');
-function visit189_290_2(result) {
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['290'][2].ranCondition(result);
+}_$jscoverage['/io/xhr-transport-base.js'].branchData['289'][2].init(3049, 28, 'IO.isLocal && !c.crossDomain');
+function visit189_289_2(result) {
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['289'][2].ranCondition(result);
   return result;
-}_$jscoverage['/io/xhr-transport-base.js'].branchData['290'][1].init(3024, 39, '!status && IO.isLocal && !c.crossDomain');
-function visit188_290_1(result) {
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['290'][1].ranCondition(result);
+}_$jscoverage['/io/xhr-transport-base.js'].branchData['289'][1].init(3038, 39, '!status && IO.isLocal && !c.crossDomain');
+function visit188_289_1(result) {
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['289'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/xhr-transport-base.js'].branchData['266'][1].init(116, 19, 'lastBodyIndex == -1');
-function visit187_266_1(result) {
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['266'][1].ranCondition(result);
+}_$jscoverage['/io/xhr-transport-base.js'].branchData['265'][1].init(116, 19, 'lastBodyIndex == -1');
+function visit187_265_1(result) {
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['265'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/xhr-transport-base.js'].branchData['264'][1].init(94, 41, '(bodyIndex = text.indexOf(\'<body>\')) != -1');
-function visit186_264_1(result) {
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['264'][1].ranCondition(result);
+}_$jscoverage['/io/xhr-transport-base.js'].branchData['263'][1].init(94, 41, '(bodyIndex = text.indexOf(\'<body>\')) != -1');
+function visit186_263_1(result) {
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['263'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/xhr-transport-base.js'].branchData['262'][1].init(1485, 15, 'c.files && text');
-function visit185_262_1(result) {
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['262'][1].ranCondition(result);
+}_$jscoverage['/io/xhr-transport-base.js'].branchData['261'][1].init(1485, 15, 'c.files && text');
+function visit185_261_1(result) {
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['261'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/xhr-transport-base.js'].branchData['255'][1].init(1195, 26, 'xml && xml.documentElement');
-function visit184_255_1(result) {
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['255'][1].ranCondition(result);
+}_$jscoverage['/io/xhr-transport-base.js'].branchData['254'][1].init(1195, 26, 'xml && xml.documentElement');
+function visit184_254_1(result) {
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['254'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/xhr-transport-base.js'].branchData['247'][1].init(521, 4, 'eTag');
-function visit183_247_1(result) {
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['247'][1].ranCondition(result);
+}_$jscoverage['/io/xhr-transport-base.js'].branchData['246'][1].init(521, 4, 'eTag');
+function visit183_246_1(result) {
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['246'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/xhr-transport-base.js'].branchData['244'][1].init(358, 12, 'lastModified');
-function visit182_244_1(result) {
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['244'][1].ranCondition(result);
+}_$jscoverage['/io/xhr-transport-base.js'].branchData['243'][1].init(358, 12, 'lastModified');
+function visit182_243_1(result) {
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['243'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/xhr-transport-base.js'].branchData['239'][1].init(395, 13, 'ifModifiedKey');
-function visit181_239_1(result) {
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['239'][1].ranCondition(result);
+}_$jscoverage['/io/xhr-transport-base.js'].branchData['238'][1].init(395, 13, 'ifModifiedKey');
+function visit181_238_1(result) {
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['238'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/xhr-transport-base.js'].branchData['235'][1].init(204, 38, '!isInstanceOfXDomainRequest(nativeXhr)');
-function visit180_235_1(result) {
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['235'][1].ranCondition(result);
+}_$jscoverage['/io/xhr-transport-base.js'].branchData['234'][1].init(204, 38, '!isInstanceOfXDomainRequest(nativeXhr)');
+function visit180_234_1(result) {
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['234'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/xhr-transport-base.js'].branchData['226'][1].init(74, 26, 'nativeXhr.readyState !== 4');
-function visit179_226_1(result) {
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['226'][1].ranCondition(result);
+}_$jscoverage['/io/xhr-transport-base.js'].branchData['225'][1].init(74, 26, 'nativeXhr.readyState !== 4');
+function visit179_225_1(result) {
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['225'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/xhr-transport-base.js'].branchData['224'][1].init(434, 5, 'abort');
-function visit178_224_1(result) {
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['224'][1].ranCondition(result);
+}_$jscoverage['/io/xhr-transport-base.js'].branchData['223'][1].init(434, 5, 'abort');
+function visit178_223_1(result) {
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['223'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/xhr-transport-base.js'].branchData['216'][1].init(79, 37, 'isInstanceOfXDomainRequest(nativeXhr)');
-function visit177_216_1(result) {
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['216'][1].ranCondition(result);
+}_$jscoverage['/io/xhr-transport-base.js'].branchData['215'][1].init(79, 37, 'isInstanceOfXDomainRequest(nativeXhr)');
+function visit177_215_1(result) {
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['215'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/xhr-transport-base.js'].branchData['214'][2].init(68, 25, 'nativeXhr.readyState == 4');
-function visit176_214_2(result) {
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['214'][2].ranCondition(result);
+}_$jscoverage['/io/xhr-transport-base.js'].branchData['213'][2].init(68, 25, 'nativeXhr.readyState == 4');
+function visit176_213_2(result) {
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['213'][2].ranCondition(result);
   return result;
-}_$jscoverage['/io/xhr-transport-base.js'].branchData['214'][1].init(59, 34, 'abort || nativeXhr.readyState == 4');
-function visit175_214_1(result) {
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['214'][1].ranCondition(result);
+}_$jscoverage['/io/xhr-transport-base.js'].branchData['213'][1].init(59, 34, 'abort || nativeXhr.readyState == 4');
+function visit175_213_1(result) {
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['213'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io/xhr-transport-base.js'].branchData['175'][1].init(66, 37, 'isInstanceOfXDomainRequest(nativeXhr)');
 function visit174_175_1(result) {
   _$jscoverage['/io/xhr-transport-base.js'].branchData['175'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/xhr-transport-base.js'].branchData['171'][2].init(3560, 25, 'nativeXhr.readyState == 4');
+}_$jscoverage['/io/xhr-transport-base.js'].branchData['171'][2].init(3607, 25, 'nativeXhr.readyState == 4');
 function visit173_171_2(result) {
   _$jscoverage['/io/xhr-transport-base.js'].branchData['171'][2].ranCondition(result);
   return result;
-}_$jscoverage['/io/xhr-transport-base.js'].branchData['171'][1].init(3550, 35, '!async || nativeXhr.readyState == 4');
+}_$jscoverage['/io/xhr-transport-base.js'].branchData['171'][1].init(3597, 35, '!async || nativeXhr.readyState == 4');
 function visit172_171_1(result) {
   _$jscoverage['/io/xhr-transport-base.js'].branchData['171'][1].ranCondition(result);
   return result;
@@ -558,31 +556,31 @@ function visit171_159_1(result) {
 function visit170_153_1(result) {
   _$jscoverage['/io/xhr-transport-base.js'].branchData['153'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/xhr-transport-base.js'].branchData['150'][1].init(2776, 5, 'files');
+}_$jscoverage['/io/xhr-transport-base.js'].branchData['150'][1].init(2823, 5, 'files');
 function visit169_150_1(result) {
   _$jscoverage['/io/xhr-transport-base.js'].branchData['150'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/xhr-transport-base.js'].branchData['147'][2].init(2679, 22, 'c.hasContent && c.data');
+}_$jscoverage['/io/xhr-transport-base.js'].branchData['147'][2].init(2726, 22, 'c.hasContent && c.data');
 function visit168_147_2(result) {
   _$jscoverage['/io/xhr-transport-base.js'].branchData['147'][2].ranCondition(result);
   return result;
-}_$jscoverage['/io/xhr-transport-base.js'].branchData['147'][1].init(2679, 30, 'c.hasContent && c.data || null');
+}_$jscoverage['/io/xhr-transport-base.js'].branchData['147'][1].init(2726, 30, 'c.hasContent && c.data || null');
 function visit167_147_1(result) {
   _$jscoverage['/io/xhr-transport-base.js'].branchData['147'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/xhr-transport-base.js'].branchData['141'][1].init(2441, 49, 'typeof nativeXhr.setRequestHeader !== \'undefined\'');
+}_$jscoverage['/io/xhr-transport-base.js'].branchData['141'][1].init(2488, 49, 'typeof nativeXhr.setRequestHeader !== \'undefined\'');
 function visit166_141_1(result) {
   _$jscoverage['/io/xhr-transport-base.js'].branchData['141'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/xhr-transport-base.js'].branchData['136'][1].init(2248, 24, 'xRequestHeader === false');
+}_$jscoverage['/io/xhr-transport-base.js'].branchData['136'][1].init(2295, 24, 'xRequestHeader === false');
 function visit165_136_1(result) {
   _$jscoverage['/io/xhr-transport-base.js'].branchData['136'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/xhr-transport-base.js'].branchData['130'][1].init(2045, 38, 'mimeType && nativeXhr.overrideMimeType');
+}_$jscoverage['/io/xhr-transport-base.js'].branchData['130'][1].init(2092, 38, 'mimeType && nativeXhr.overrideMimeType');
 function visit164_130_1(result) {
   _$jscoverage['/io/xhr-transport-base.js'].branchData['130'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/xhr-transport-base.js'].branchData['120'][1].init(1742, 11, 'supportCORS');
+}_$jscoverage['/io/xhr-transport-base.js'].branchData['120'][1].init(1789, 11, 'supportCORS');
 function visit163_120_1(result) {
   _$jscoverage['/io/xhr-transport-base.js'].branchData['120'][1].ranCondition(result);
   return result;
@@ -590,98 +588,96 @@ function visit163_120_1(result) {
 function visit162_117_1(result) {
   _$jscoverage['/io/xhr-transport-base.js'].branchData['117'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/xhr-transport-base.js'].branchData['116'][1].init(1572, 30, '\'withCredentials\' in xhrFields');
+}_$jscoverage['/io/xhr-transport-base.js'].branchData['116'][1].init(1619, 30, '\'withCredentials\' in xhrFields');
 function visit161_116_1(result) {
   _$jscoverage['/io/xhr-transport-base.js'].branchData['116'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/xhr-transport-base.js'].branchData['114'][1].init(1531, 20, 'c[\'xhrFields\'] || {}');
-function visit160_114_1(result) {
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['114'][1].ranCondition(result);
+}_$jscoverage['/io/xhr-transport-base.js'].branchData['113'][1].init(1531, 20, 'c[\'xhrFields\'] || {}');
+function visit160_113_1(result) {
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['113'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/xhr-transport-base.js'].branchData['108'][1].init(1316, 24, 'username = c[\'username\']');
-function visit159_108_1(result) {
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['108'][1].ranCondition(result);
+}_$jscoverage['/io/xhr-transport-base.js'].branchData['107'][1].init(1316, 24, 'username = c[\'username\']');
+function visit159_107_1(result) {
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['107'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/xhr-transport-base.js'].branchData['103'][1].init(561, 38, 'cacheValue = eTagCached[ifModifiedKey]');
-function visit158_103_1(result) {
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['103'][1].ranCondition(result);
+}_$jscoverage['/io/xhr-transport-base.js'].branchData['102'][1].init(561, 38, 'cacheValue = eTagCached[ifModifiedKey]');
+function visit158_102_1(result) {
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['102'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/xhr-transport-base.js'].branchData['100'][1].init(400, 46, 'cacheValue = lastModifiedCached[ifModifiedKey]');
-function visit157_100_1(result) {
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['100'][1].ranCondition(result);
+}_$jscoverage['/io/xhr-transport-base.js'].branchData['99'][1].init(400, 46, 'cacheValue = lastModifiedCached[ifModifiedKey]');
+function visit157_99_1(result) {
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['99'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/xhr-transport-base.js'].branchData['93'][1].init(577, 13, 'ifModifiedKey');
-function visit156_93_1(result) {
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['93'][1].ranCondition(result);
+}_$jscoverage['/io/xhr-transport-base.js'].branchData['92'][1].init(577, 13, 'ifModifiedKey');
+function visit156_92_1(result) {
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['92'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/xhr-transport-base.js'].branchData['86'][1].init(343, 23, 'io.requestHeaders || {}');
-function visit155_86_1(result) {
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['86'][1].ranCondition(result);
+}_$jscoverage['/io/xhr-transport-base.js'].branchData['85'][1].init(343, 23, 'io.requestHeaders || {}');
+function visit155_85_1(result) {
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['85'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/xhr-transport-base.js'].branchData['64'][1].init(54, 17, 'c.cache === false');
-function visit154_64_1(result) {
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['64'][1].ranCondition(result);
+}_$jscoverage['/io/xhr-transport-base.js'].branchData['63'][1].init(54, 17, 'c.cache === false');
+function visit154_63_1(result) {
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['63'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/xhr-transport-base.js'].branchData['62'][1].init(82, 10, 'ifModified');
-function visit153_62_1(result) {
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['62'][1].ranCondition(result);
+}_$jscoverage['/io/xhr-transport-base.js'].branchData['61'][1].init(82, 10, 'ifModified');
+function visit153_61_1(result) {
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['61'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/xhr-transport-base.js'].branchData['56'][1].init(17, 51, '_XDomainRequest && (xhr instanceof _XDomainRequest)');
-function visit152_56_1(result) {
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['56'][1].ranCondition(result);
+}_$jscoverage['/io/xhr-transport-base.js'].branchData['55'][1].init(17, 51, '_XDomainRequest && (xhr instanceof _XDomainRequest)');
+function visit152_55_1(result) {
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['55'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/xhr-transport-base.js'].branchData['46'][2].init(200, 53, '!IO.isLocal && createStandardXHR(crossDomain, refWin)');
-function visit151_46_2(result) {
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['46'][2].ranCondition(result);
+}_$jscoverage['/io/xhr-transport-base.js'].branchData['45'][2].init(200, 53, '!IO.isLocal && createStandardXHR(crossDomain, refWin)');
+function visit151_45_2(result) {
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['45'][2].ranCondition(result);
   return result;
-}_$jscoverage['/io/xhr-transport-base.js'].branchData['46'][1].init(200, 106, '!IO.isLocal && createStandardXHR(crossDomain, refWin) || createActiveXHR(crossDomain, refWin)');
-function visit150_46_1(result) {
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['46'][1].ranCondition(result);
+}_$jscoverage['/io/xhr-transport-base.js'].branchData['45'][1].init(200, 106, '!IO.isLocal && createStandardXHR(crossDomain, refWin) || createActiveXHR(crossDomain, refWin)');
+function visit150_45_1(result) {
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['45'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/xhr-transport-base.js'].branchData['42'][2].init(56, 30, 'crossDomain && _XDomainRequest');
-function visit149_42_2(result) {
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['42'][2].ranCondition(result);
+}_$jscoverage['/io/xhr-transport-base.js'].branchData['41'][2].init(56, 30, 'crossDomain && _XDomainRequest');
+function visit149_41_2(result) {
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['41'][2].ranCondition(result);
   return result;
-}_$jscoverage['/io/xhr-transport-base.js'].branchData['42'][1].init(40, 46, '!supportCORS && crossDomain && _XDomainRequest');
-function visit148_42_1(result) {
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['42'][1].ranCondition(result);
+}_$jscoverage['/io/xhr-transport-base.js'].branchData['41'][1].init(40, 46, '!supportCORS && crossDomain && _XDomainRequest');
+function visit148_41_1(result) {
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['41'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io/xhr-transport-base.js'].branchData['33'][1].init(26, 13, 'refWin || win');
 function visit147_33_1(result) {
   _$jscoverage['/io/xhr-transport-base.js'].branchData['33'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/xhr-transport-base.js'].branchData['24'][1].init(26, 13, 'refWin || win');
-function visit146_24_1(result) {
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['24'][1].ranCondition(result);
+}_$jscoverage['/io/xhr-transport-base.js'].branchData['25'][1].init(26, 13, 'refWin || win');
+function visit146_25_1(result) {
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['25'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/xhr-transport-base.js'].branchData['10'][2].init(143, 11, 'S.UA.ie > 7');
-function visit145_10_2(result) {
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['10'][2].ranCondition(result);
+}_$jscoverage['/io/xhr-transport-base.js'].branchData['11'][2].init(181, 11, 'S.UA.ie > 7');
+function visit145_11_2(result) {
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['11'][2].ranCondition(result);
   return result;
-}_$jscoverage['/io/xhr-transport-base.js'].branchData['10'][1].init(143, 36, 'S.UA.ie > 7 && win[\'XDomainRequest\']');
-function visit144_10_1(result) {
-  _$jscoverage['/io/xhr-transport-base.js'].branchData['10'][1].ranCondition(result);
+}_$jscoverage['/io/xhr-transport-base.js'].branchData['11'][1].init(181, 36, 'S.UA.ie > 7 && win[\'XDomainRequest\']');
+function visit144_11_1(result) {
+  _$jscoverage['/io/xhr-transport-base.js'].branchData['11'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io/xhr-transport-base.js'].lineData[6]++;
 KISSY.add('io/xhr-transport-base', function(S, IO) {
   _$jscoverage['/io/xhr-transport-base.js'].functionData[0]++;
   _$jscoverage['/io/xhr-transport-base.js'].lineData[7]++;
-  var OK_CODE = 200, win = S.Env.host, _XDomainRequest = visit144_10_1(visit145_10_2(S.UA.ie > 7) && win['XDomainRequest']), NO_CONTENT_CODE = 204, NOT_FOUND_CODE = 404, NO_CONTENT_CODE2 = 1223, XhrTransportBase = {
+  var OK_CODE = 200, win = S.Env.host, logger = S.getLogger('s/io'), _XDomainRequest = visit144_11_1(visit145_11_2(S.UA.ie > 7) && win['XDomainRequest']), NO_CONTENT_CODE = 204, NOT_FOUND_CODE = 404, NO_CONTENT_CODE2 = 1223, XhrTransportBase = {
   proto: {}}, lastModifiedCached = {}, eTagCached = {};
-  _$jscoverage['/io/xhr-transport-base.js'].lineData[19]++;
-  IO.__lastModifiedCached = lastModifiedCached;
   _$jscoverage['/io/xhr-transport-base.js'].lineData[20]++;
+  IO.__lastModifiedCached = lastModifiedCached;
+  _$jscoverage['/io/xhr-transport-base.js'].lineData[21]++;
   IO.__eTagCached = eTagCached;
-  _$jscoverage['/io/xhr-transport-base.js'].lineData[22]++;
+  _$jscoverage['/io/xhr-transport-base.js'].lineData[23]++;
   function createStandardXHR(_, refWin) {
     _$jscoverage['/io/xhr-transport-base.js'].functionData[1]++;
-    _$jscoverage['/io/xhr-transport-base.js'].lineData[23]++;
+    _$jscoverage['/io/xhr-transport-base.js'].lineData[24]++;
     try {
-      _$jscoverage['/io/xhr-transport-base.js'].lineData[24]++;
-      return new (visit146_24_1(refWin || win))['XMLHttpRequest']();
+      _$jscoverage['/io/xhr-transport-base.js'].lineData[25]++;
+      return new (visit146_25_1(refWin || win))['XMLHttpRequest']();
     }    catch (e) {
-  _$jscoverage['/io/xhr-transport-base.js'].lineData[26]++;
-  S.log('createStandardXHR error: ' + _);
 }
     _$jscoverage['/io/xhr-transport-base.js'].lineData[28]++;
     return undefined;
@@ -694,84 +690,82 @@ KISSY.add('io/xhr-transport-base', function(S, IO) {
       _$jscoverage['/io/xhr-transport-base.js'].lineData[33]++;
       return new (visit147_33_1(refWin || win))['ActiveXObject']('Microsoft.XMLHTTP');
     }    catch (e) {
-  _$jscoverage['/io/xhr-transport-base.js'].lineData[35]++;
-  S.log('createActiveXHR error: ' + _);
 }
-    _$jscoverage['/io/xhr-transport-base.js'].lineData[37]++;
+    _$jscoverage['/io/xhr-transport-base.js'].lineData[36]++;
     return undefined;
   }
-  _$jscoverage['/io/xhr-transport-base.js'].lineData[40]++;
+  _$jscoverage['/io/xhr-transport-base.js'].lineData[39]++;
   XhrTransportBase.nativeXhr = win['ActiveXObject'] ? function(crossDomain, refWin) {
   _$jscoverage['/io/xhr-transport-base.js'].functionData[3]++;
-  _$jscoverage['/io/xhr-transport-base.js'].lineData[42]++;
-  if (visit148_42_1(!supportCORS && visit149_42_2(crossDomain && _XDomainRequest))) {
-    _$jscoverage['/io/xhr-transport-base.js'].lineData[43]++;
+  _$jscoverage['/io/xhr-transport-base.js'].lineData[41]++;
+  if (visit148_41_1(!supportCORS && visit149_41_2(crossDomain && _XDomainRequest))) {
+    _$jscoverage['/io/xhr-transport-base.js'].lineData[42]++;
     return new _XDomainRequest();
   }
-  _$jscoverage['/io/xhr-transport-base.js'].lineData[46]++;
-  return visit150_46_1(visit151_46_2(!IO.isLocal && createStandardXHR(crossDomain, refWin)) || createActiveXHR(crossDomain, refWin));
+  _$jscoverage['/io/xhr-transport-base.js'].lineData[45]++;
+  return visit150_45_1(visit151_45_2(!IO.isLocal && createStandardXHR(crossDomain, refWin)) || createActiveXHR(crossDomain, refWin));
 } : createStandardXHR;
-  _$jscoverage['/io/xhr-transport-base.js'].lineData[50]++;
+  _$jscoverage['/io/xhr-transport-base.js'].lineData[49]++;
   XhrTransportBase._XDomainRequest = _XDomainRequest;
-  _$jscoverage['/io/xhr-transport-base.js'].lineData[52]++;
+  _$jscoverage['/io/xhr-transport-base.js'].lineData[51]++;
   var supportCORS = XhrTransportBase.supportCORS = ('withCredentials' in XhrTransportBase.nativeXhr());
-  _$jscoverage['/io/xhr-transport-base.js'].lineData[55]++;
+  _$jscoverage['/io/xhr-transport-base.js'].lineData[54]++;
   function isInstanceOfXDomainRequest(xhr) {
     _$jscoverage['/io/xhr-transport-base.js'].functionData[4]++;
-    _$jscoverage['/io/xhr-transport-base.js'].lineData[56]++;
-    return visit152_56_1(_XDomainRequest && (xhr instanceof _XDomainRequest));
+    _$jscoverage['/io/xhr-transport-base.js'].lineData[55]++;
+    return visit152_55_1(_XDomainRequest && (xhr instanceof _XDomainRequest));
   }
-  _$jscoverage['/io/xhr-transport-base.js'].lineData[59]++;
+  _$jscoverage['/io/xhr-transport-base.js'].lineData[58]++;
   function getIfModifiedKey(c) {
     _$jscoverage['/io/xhr-transport-base.js'].functionData[5]++;
-    _$jscoverage['/io/xhr-transport-base.js'].lineData[60]++;
+    _$jscoverage['/io/xhr-transport-base.js'].lineData[59]++;
     var ifModified = c.ifModified, ifModifiedKey;
-    _$jscoverage['/io/xhr-transport-base.js'].lineData[62]++;
-    if (visit153_62_1(ifModified)) {
-      _$jscoverage['/io/xhr-transport-base.js'].lineData[63]++;
+    _$jscoverage['/io/xhr-transport-base.js'].lineData[61]++;
+    if (visit153_61_1(ifModified)) {
+      _$jscoverage['/io/xhr-transport-base.js'].lineData[62]++;
       ifModifiedKey = c.uri;
-      _$jscoverage['/io/xhr-transport-base.js'].lineData[64]++;
-      if (visit154_64_1(c.cache === false)) {
-        _$jscoverage['/io/xhr-transport-base.js'].lineData[65]++;
+      _$jscoverage['/io/xhr-transport-base.js'].lineData[63]++;
+      if (visit154_63_1(c.cache === false)) {
+        _$jscoverage['/io/xhr-transport-base.js'].lineData[64]++;
         ifModifiedKey = ifModifiedKey.clone();
-        _$jscoverage['/io/xhr-transport-base.js'].lineData[68]++;
+        _$jscoverage['/io/xhr-transport-base.js'].lineData[67]++;
         ifModifiedKey.query.remove('_ksTS');
       }
-      _$jscoverage['/io/xhr-transport-base.js'].lineData[70]++;
+      _$jscoverage['/io/xhr-transport-base.js'].lineData[69]++;
       ifModifiedKey = ifModifiedKey.toString();
     }
-    _$jscoverage['/io/xhr-transport-base.js'].lineData[72]++;
+    _$jscoverage['/io/xhr-transport-base.js'].lineData[71]++;
     return ifModifiedKey;
   }
-  _$jscoverage['/io/xhr-transport-base.js'].lineData[75]++;
+  _$jscoverage['/io/xhr-transport-base.js'].lineData[74]++;
   S.mix(XhrTransportBase.proto, {
   sendInternal: function() {
   _$jscoverage['/io/xhr-transport-base.js'].functionData[6]++;
-  _$jscoverage['/io/xhr-transport-base.js'].lineData[77]++;
-  var self = this, io = self.io, c = io.config, nativeXhr = self.nativeXhr, files = c.files, type = files ? 'post' : c.type, async = c.async, username, mimeType = io.mimeType, requestHeaders = visit155_86_1(io.requestHeaders || {}), url = io._getUrlForSend(), xhrFields, ifModifiedKey = getIfModifiedKey(c), cacheValue, i;
-  _$jscoverage['/io/xhr-transport-base.js'].lineData[93]++;
-  if (visit156_93_1(ifModifiedKey)) {
-    _$jscoverage['/io/xhr-transport-base.js'].lineData[100]++;
-    if (visit157_100_1(cacheValue = lastModifiedCached[ifModifiedKey])) {
-      _$jscoverage['/io/xhr-transport-base.js'].lineData[101]++;
+  _$jscoverage['/io/xhr-transport-base.js'].lineData[76]++;
+  var self = this, io = self.io, c = io.config, nativeXhr = self.nativeXhr, files = c.files, type = files ? 'post' : c.type, async = c.async, username, mimeType = io.mimeType, requestHeaders = visit155_85_1(io.requestHeaders || {}), url = io._getUrlForSend(), xhrFields, ifModifiedKey = getIfModifiedKey(c), cacheValue, i;
+  _$jscoverage['/io/xhr-transport-base.js'].lineData[92]++;
+  if (visit156_92_1(ifModifiedKey)) {
+    _$jscoverage['/io/xhr-transport-base.js'].lineData[99]++;
+    if (visit157_99_1(cacheValue = lastModifiedCached[ifModifiedKey])) {
+      _$jscoverage['/io/xhr-transport-base.js'].lineData[100]++;
       requestHeaders['If-Modified-Since'] = cacheValue;
     }
-    _$jscoverage['/io/xhr-transport-base.js'].lineData[103]++;
-    if (visit158_103_1(cacheValue = eTagCached[ifModifiedKey])) {
-      _$jscoverage['/io/xhr-transport-base.js'].lineData[104]++;
+    _$jscoverage['/io/xhr-transport-base.js'].lineData[102]++;
+    if (visit158_102_1(cacheValue = eTagCached[ifModifiedKey])) {
+      _$jscoverage['/io/xhr-transport-base.js'].lineData[103]++;
       requestHeaders['If-None-Match'] = cacheValue;
     }
   }
-  _$jscoverage['/io/xhr-transport-base.js'].lineData[108]++;
-  if (visit159_108_1(username = c['username'])) {
-    _$jscoverage['/io/xhr-transport-base.js'].lineData[109]++;
+  _$jscoverage['/io/xhr-transport-base.js'].lineData[107]++;
+  if (visit159_107_1(username = c['username'])) {
+    _$jscoverage['/io/xhr-transport-base.js'].lineData[108]++;
     nativeXhr.open(type, url, async, username, c.password);
   } else {
-    _$jscoverage['/io/xhr-transport-base.js'].lineData[111]++;
+    _$jscoverage['/io/xhr-transport-base.js'].lineData[110]++;
     nativeXhr.open(type, url, async);
   }
-  _$jscoverage['/io/xhr-transport-base.js'].lineData[114]++;
-  xhrFields = visit160_114_1(c['xhrFields'] || {});
+  _$jscoverage['/io/xhr-transport-base.js'].lineData[113]++;
+  xhrFields = visit160_113_1(c['xhrFields'] || {});
   _$jscoverage['/io/xhr-transport-base.js'].lineData[116]++;
   if (visit161_116_1('withCredentials' in xhrFields)) {
     _$jscoverage['/io/xhr-transport-base.js'].lineData[117]++;
@@ -891,120 +885,120 @@ KISSY.add('io/xhr-transport-base', function(S, IO) {
   _$jscoverage['/io/xhr-transport-base.js'].functionData[13]++;
   _$jscoverage['/io/xhr-transport-base.js'].lineData[202]++;
   var self = this, nativeXhr = self.nativeXhr, io = self.io, ifModifiedKey, lastModified, eTag, statusText, xml, c = io.config;
-  _$jscoverage['/io/xhr-transport-base.js'].lineData[212]++;
+  _$jscoverage['/io/xhr-transport-base.js'].lineData[211]++;
   try {
-    _$jscoverage['/io/xhr-transport-base.js'].lineData[214]++;
-    if (visit175_214_1(abort || visit176_214_2(nativeXhr.readyState == 4))) {
-      _$jscoverage['/io/xhr-transport-base.js'].lineData[216]++;
-      if (visit177_216_1(isInstanceOfXDomainRequest(nativeXhr))) {
-        _$jscoverage['/io/xhr-transport-base.js'].lineData[217]++;
+    _$jscoverage['/io/xhr-transport-base.js'].lineData[213]++;
+    if (visit175_213_1(abort || visit176_213_2(nativeXhr.readyState == 4))) {
+      _$jscoverage['/io/xhr-transport-base.js'].lineData[215]++;
+      if (visit177_215_1(isInstanceOfXDomainRequest(nativeXhr))) {
+        _$jscoverage['/io/xhr-transport-base.js'].lineData[216]++;
         nativeXhr.onerror = S.noop;
-        _$jscoverage['/io/xhr-transport-base.js'].lineData[218]++;
+        _$jscoverage['/io/xhr-transport-base.js'].lineData[217]++;
         nativeXhr.onload = S.noop;
       } else {
-        _$jscoverage['/io/xhr-transport-base.js'].lineData[221]++;
+        _$jscoverage['/io/xhr-transport-base.js'].lineData[220]++;
         nativeXhr.onreadystatechange = S.noop;
       }
-      _$jscoverage['/io/xhr-transport-base.js'].lineData[224]++;
-      if (visit178_224_1(abort)) {
-        _$jscoverage['/io/xhr-transport-base.js'].lineData[226]++;
-        if (visit179_226_1(nativeXhr.readyState !== 4)) {
-          _$jscoverage['/io/xhr-transport-base.js'].lineData[227]++;
+      _$jscoverage['/io/xhr-transport-base.js'].lineData[223]++;
+      if (visit178_223_1(abort)) {
+        _$jscoverage['/io/xhr-transport-base.js'].lineData[225]++;
+        if (visit179_225_1(nativeXhr.readyState !== 4)) {
+          _$jscoverage['/io/xhr-transport-base.js'].lineData[226]++;
           nativeXhr.abort();
         }
       } else {
-        _$jscoverage['/io/xhr-transport-base.js'].lineData[230]++;
+        _$jscoverage['/io/xhr-transport-base.js'].lineData[229]++;
         ifModifiedKey = getIfModifiedKey(c);
-        _$jscoverage['/io/xhr-transport-base.js'].lineData[232]++;
+        _$jscoverage['/io/xhr-transport-base.js'].lineData[231]++;
         var status = nativeXhr.status;
-        _$jscoverage['/io/xhr-transport-base.js'].lineData[235]++;
-        if (visit180_235_1(!isInstanceOfXDomainRequest(nativeXhr))) {
-          _$jscoverage['/io/xhr-transport-base.js'].lineData[236]++;
+        _$jscoverage['/io/xhr-transport-base.js'].lineData[234]++;
+        if (visit180_234_1(!isInstanceOfXDomainRequest(nativeXhr))) {
+          _$jscoverage['/io/xhr-transport-base.js'].lineData[235]++;
           io.responseHeadersString = nativeXhr.getAllResponseHeaders();
         }
-        _$jscoverage['/io/xhr-transport-base.js'].lineData[239]++;
-        if (visit181_239_1(ifModifiedKey)) {
-          _$jscoverage['/io/xhr-transport-base.js'].lineData[240]++;
+        _$jscoverage['/io/xhr-transport-base.js'].lineData[238]++;
+        if (visit181_238_1(ifModifiedKey)) {
+          _$jscoverage['/io/xhr-transport-base.js'].lineData[239]++;
           lastModified = nativeXhr.getResponseHeader('Last-Modified');
-          _$jscoverage['/io/xhr-transport-base.js'].lineData[241]++;
+          _$jscoverage['/io/xhr-transport-base.js'].lineData[240]++;
           eTag = nativeXhr.getResponseHeader('ETag');
-          _$jscoverage['/io/xhr-transport-base.js'].lineData[244]++;
-          if (visit182_244_1(lastModified)) {
-            _$jscoverage['/io/xhr-transport-base.js'].lineData[245]++;
+          _$jscoverage['/io/xhr-transport-base.js'].lineData[243]++;
+          if (visit182_243_1(lastModified)) {
+            _$jscoverage['/io/xhr-transport-base.js'].lineData[244]++;
             lastModifiedCached[ifModifiedKey] = lastModified;
           }
-          _$jscoverage['/io/xhr-transport-base.js'].lineData[247]++;
-          if (visit183_247_1(eTag)) {
-            _$jscoverage['/io/xhr-transport-base.js'].lineData[248]++;
+          _$jscoverage['/io/xhr-transport-base.js'].lineData[246]++;
+          if (visit183_246_1(eTag)) {
+            _$jscoverage['/io/xhr-transport-base.js'].lineData[247]++;
             eTagCached[eTag] = eTag;
           }
         }
-        _$jscoverage['/io/xhr-transport-base.js'].lineData[252]++;
+        _$jscoverage['/io/xhr-transport-base.js'].lineData[251]++;
         xml = nativeXhr.responseXML;
-        _$jscoverage['/io/xhr-transport-base.js'].lineData[255]++;
-        if (visit184_255_1(xml && xml.documentElement)) {
-          _$jscoverage['/io/xhr-transport-base.js'].lineData[256]++;
+        _$jscoverage['/io/xhr-transport-base.js'].lineData[254]++;
+        if (visit184_254_1(xml && xml.documentElement)) {
+          _$jscoverage['/io/xhr-transport-base.js'].lineData[255]++;
           io.responseXML = xml;
         }
-        _$jscoverage['/io/xhr-transport-base.js'].lineData[259]++;
+        _$jscoverage['/io/xhr-transport-base.js'].lineData[258]++;
         var text = io.responseText = nativeXhr.responseText;
-        _$jscoverage['/io/xhr-transport-base.js'].lineData[262]++;
-        if (visit185_262_1(c.files && text)) {
-          _$jscoverage['/io/xhr-transport-base.js'].lineData[263]++;
+        _$jscoverage['/io/xhr-transport-base.js'].lineData[261]++;
+        if (visit185_261_1(c.files && text)) {
+          _$jscoverage['/io/xhr-transport-base.js'].lineData[262]++;
           var bodyIndex, lastBodyIndex;
-          _$jscoverage['/io/xhr-transport-base.js'].lineData[264]++;
-          if (visit186_264_1((bodyIndex = text.indexOf('<body>')) != -1)) {
-            _$jscoverage['/io/xhr-transport-base.js'].lineData[265]++;
+          _$jscoverage['/io/xhr-transport-base.js'].lineData[263]++;
+          if (visit186_263_1((bodyIndex = text.indexOf('<body>')) != -1)) {
+            _$jscoverage['/io/xhr-transport-base.js'].lineData[264]++;
             lastBodyIndex = text.lastIndexOf('</body>');
-            _$jscoverage['/io/xhr-transport-base.js'].lineData[266]++;
-            if (visit187_266_1(lastBodyIndex == -1)) {
-              _$jscoverage['/io/xhr-transport-base.js'].lineData[267]++;
+            _$jscoverage['/io/xhr-transport-base.js'].lineData[265]++;
+            if (visit187_265_1(lastBodyIndex == -1)) {
+              _$jscoverage['/io/xhr-transport-base.js'].lineData[266]++;
               lastBodyIndex = text.length;
             }
-            _$jscoverage['/io/xhr-transport-base.js'].lineData[269]++;
+            _$jscoverage['/io/xhr-transport-base.js'].lineData[268]++;
             text = text.slice(bodyIndex + 6, lastBodyIndex);
           }
-          _$jscoverage['/io/xhr-transport-base.js'].lineData[272]++;
+          _$jscoverage['/io/xhr-transport-base.js'].lineData[271]++;
           io.responseText = S.unEscapeHtml(text);
         }
-        _$jscoverage['/io/xhr-transport-base.js'].lineData[277]++;
+        _$jscoverage['/io/xhr-transport-base.js'].lineData[276]++;
         try {
-          _$jscoverage['/io/xhr-transport-base.js'].lineData[278]++;
+          _$jscoverage['/io/xhr-transport-base.js'].lineData[277]++;
           statusText = nativeXhr.statusText;
         }        catch (e) {
+  _$jscoverage['/io/xhr-transport-base.js'].lineData[279]++;
+  logger.error('xhr statusText error: ');
   _$jscoverage['/io/xhr-transport-base.js'].lineData[280]++;
-  S.log('xhr statusText error: ');
-  _$jscoverage['/io/xhr-transport-base.js'].lineData[281]++;
-  S.log(e);
-  _$jscoverage['/io/xhr-transport-base.js'].lineData[283]++;
+  logger.error(e);
+  _$jscoverage['/io/xhr-transport-base.js'].lineData[282]++;
   statusText = '';
 }
-        _$jscoverage['/io/xhr-transport-base.js'].lineData[290]++;
-        if (visit188_290_1(!status && visit189_290_2(IO.isLocal && !c.crossDomain))) {
-          _$jscoverage['/io/xhr-transport-base.js'].lineData[291]++;
+        _$jscoverage['/io/xhr-transport-base.js'].lineData[289]++;
+        if (visit188_289_1(!status && visit189_289_2(IO.isLocal && !c.crossDomain))) {
+          _$jscoverage['/io/xhr-transport-base.js'].lineData[290]++;
           status = io.responseText ? OK_CODE : NOT_FOUND_CODE;
         } else {
-          _$jscoverage['/io/xhr-transport-base.js'].lineData[293]++;
-          if (visit190_293_1(status === NO_CONTENT_CODE2)) {
-            _$jscoverage['/io/xhr-transport-base.js'].lineData[294]++;
+          _$jscoverage['/io/xhr-transport-base.js'].lineData[292]++;
+          if (visit190_292_1(status === NO_CONTENT_CODE2)) {
+            _$jscoverage['/io/xhr-transport-base.js'].lineData[293]++;
             status = NO_CONTENT_CODE;
           }
         }
-        _$jscoverage['/io/xhr-transport-base.js'].lineData[297]++;
+        _$jscoverage['/io/xhr-transport-base.js'].lineData[296]++;
         io._ioReady(status, statusText);
       }
     }
   }  catch (firefoxAccessException) {
-  _$jscoverage['/io/xhr-transport-base.js'].lineData[301]++;
+  _$jscoverage['/io/xhr-transport-base.js'].lineData[300]++;
   nativeXhr.onreadystatechange = S.noop;
-  _$jscoverage['/io/xhr-transport-base.js'].lineData[302]++;
-  if (visit191_302_1(!abort)) {
-    _$jscoverage['/io/xhr-transport-base.js'].lineData[303]++;
+  _$jscoverage['/io/xhr-transport-base.js'].lineData[301]++;
+  if (visit191_301_1(!abort)) {
+    _$jscoverage['/io/xhr-transport-base.js'].lineData[302]++;
     io._ioReady(-1, firefoxAccessException);
   }
 }
 }});
-  _$jscoverage['/io/xhr-transport-base.js'].lineData[310]++;
+  _$jscoverage['/io/xhr-transport-base.js'].lineData[309]++;
   return XhrTransportBase;
 }, {
   requires: ['./base']});

@@ -229,8 +229,8 @@ if (! this._$jscoverage) {
 if (! _$jscoverage['/gregorian/const.js']) {
   _$jscoverage['/gregorian/const.js'] = {};
   _$jscoverage['/gregorian/const.js'].lineData = [];
-  _$jscoverage['/gregorian/const.js'].lineData[5] = 0;
   _$jscoverage['/gregorian/const.js'].lineData[6] = 0;
+  _$jscoverage['/gregorian/const.js'].lineData[7] = 0;
 }
 if (! _$jscoverage['/gregorian/const.js'].functionData) {
   _$jscoverage['/gregorian/const.js'].functionData = [];
@@ -239,10 +239,10 @@ if (! _$jscoverage['/gregorian/const.js'].functionData) {
 if (! _$jscoverage['/gregorian/const.js'].branchData) {
   _$jscoverage['/gregorian/const.js'].branchData = {};
 }
-_$jscoverage['/gregorian/const.js'].lineData[5]++;
+_$jscoverage['/gregorian/const.js'].lineData[6]++;
 KISSY.add('date/gregorian/const', function() {
   _$jscoverage['/gregorian/const.js'].functionData[0]++;
-  _$jscoverage['/gregorian/const.js'].lineData[6]++;
+  _$jscoverage['/gregorian/const.js'].lineData[7]++;
   return {
   SUNDAY: 0, 
   MONDAY: 1, 

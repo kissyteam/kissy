@@ -231,24 +231,24 @@ if (! _$jscoverage['/base/observable.js']) {
   _$jscoverage['/base/observable.js'].lineData = [];
   _$jscoverage['/base/observable.js'].lineData[6] = 0;
   _$jscoverage['/base/observable.js'].lineData[11] = 0;
-  _$jscoverage['/base/observable.js'].lineData[20] = 0;
+  _$jscoverage['/base/observable.js'].lineData[12] = 0;
   _$jscoverage['/base/observable.js'].lineData[21] = 0;
   _$jscoverage['/base/observable.js'].lineData[22] = 0;
   _$jscoverage['/base/observable.js'].lineData[23] = 0;
-  _$jscoverage['/base/observable.js'].lineData[30] = 0;
-  _$jscoverage['/base/observable.js'].lineData[33] = 0;
-  _$jscoverage['/base/observable.js'].lineData[40] = 0;
+  _$jscoverage['/base/observable.js'].lineData[24] = 0;
+  _$jscoverage['/base/observable.js'].lineData[31] = 0;
+  _$jscoverage['/base/observable.js'].lineData[34] = 0;
   _$jscoverage['/base/observable.js'].lineData[41] = 0;
-  _$jscoverage['/base/observable.js'].lineData[48] = 0;
+  _$jscoverage['/base/observable.js'].lineData[42] = 0;
   _$jscoverage['/base/observable.js'].lineData[49] = 0;
   _$jscoverage['/base/observable.js'].lineData[50] = 0;
   _$jscoverage['/base/observable.js'].lineData[51] = 0;
-  _$jscoverage['/base/observable.js'].lineData[70] = 0;
-  _$jscoverage['/base/observable.js'].lineData[89] = 0;
+  _$jscoverage['/base/observable.js'].lineData[52] = 0;
+  _$jscoverage['/base/observable.js'].lineData[71] = 0;
   _$jscoverage['/base/observable.js'].lineData[90] = 0;
   _$jscoverage['/base/observable.js'].lineData[91] = 0;
   _$jscoverage['/base/observable.js'].lineData[92] = 0;
-  _$jscoverage['/base/observable.js'].lineData[94] = 0;
+  _$jscoverage['/base/observable.js'].lineData[93] = 0;
   _$jscoverage['/base/observable.js'].lineData[95] = 0;
   _$jscoverage['/base/observable.js'].lineData[96] = 0;
   _$jscoverage['/base/observable.js'].lineData[97] = 0;
@@ -256,55 +256,55 @@ if (! _$jscoverage['/base/observable.js']) {
   _$jscoverage['/base/observable.js'].lineData[99] = 0;
   _$jscoverage['/base/observable.js'].lineData[100] = 0;
   _$jscoverage['/base/observable.js'].lineData[101] = 0;
-  _$jscoverage['/base/observable.js'].lineData[103] = 0;
+  _$jscoverage['/base/observable.js'].lineData[102] = 0;
   _$jscoverage['/base/observable.js'].lineData[104] = 0;
-  _$jscoverage['/base/observable.js'].lineData[107] = 0;
+  _$jscoverage['/base/observable.js'].lineData[105] = 0;
   _$jscoverage['/base/observable.js'].lineData[108] = 0;
-  _$jscoverage['/base/observable.js'].lineData[114] = 0;
-  _$jscoverage['/base/observable.js'].lineData[120] = 0;
+  _$jscoverage['/base/observable.js'].lineData[109] = 0;
+  _$jscoverage['/base/observable.js'].lineData[115] = 0;
   _$jscoverage['/base/observable.js'].lineData[121] = 0;
-  _$jscoverage['/base/observable.js'].lineData[131] = 0;
-  _$jscoverage['/base/observable.js'].lineData[133] = 0;
+  _$jscoverage['/base/observable.js'].lineData[122] = 0;
+  _$jscoverage['/base/observable.js'].lineData[132] = 0;
   _$jscoverage['/base/observable.js'].lineData[134] = 0;
   _$jscoverage['/base/observable.js'].lineData[135] = 0;
   _$jscoverage['/base/observable.js'].lineData[136] = 0;
-  _$jscoverage['/base/observable.js'].lineData[139] = 0;
-  _$jscoverage['/base/observable.js'].lineData[141] = 0;
-  _$jscoverage['/base/observable.js'].lineData[143] = 0;
-  _$jscoverage['/base/observable.js'].lineData[148] = 0;
+  _$jscoverage['/base/observable.js'].lineData[137] = 0;
+  _$jscoverage['/base/observable.js'].lineData[140] = 0;
+  _$jscoverage['/base/observable.js'].lineData[142] = 0;
+  _$jscoverage['/base/observable.js'].lineData[144] = 0;
   _$jscoverage['/base/observable.js'].lineData[149] = 0;
-  _$jscoverage['/base/observable.js'].lineData[156] = 0;
-  _$jscoverage['/base/observable.js'].lineData[165] = 0;
-  _$jscoverage['/base/observable.js'].lineData[167] = 0;
-  _$jscoverage['/base/observable.js'].lineData[176] = 0;
+  _$jscoverage['/base/observable.js'].lineData[150] = 0;
+  _$jscoverage['/base/observable.js'].lineData[157] = 0;
+  _$jscoverage['/base/observable.js'].lineData[166] = 0;
+  _$jscoverage['/base/observable.js'].lineData[168] = 0;
   _$jscoverage['/base/observable.js'].lineData[177] = 0;
-  _$jscoverage['/base/observable.js'].lineData[180] = 0;
+  _$jscoverage['/base/observable.js'].lineData[178] = 0;
   _$jscoverage['/base/observable.js'].lineData[181] = 0;
   _$jscoverage['/base/observable.js'].lineData[182] = 0;
-  _$jscoverage['/base/observable.js'].lineData[187] = 0;
-  _$jscoverage['/base/observable.js'].lineData[190] = 0;
+  _$jscoverage['/base/observable.js'].lineData[183] = 0;
+  _$jscoverage['/base/observable.js'].lineData[188] = 0;
   _$jscoverage['/base/observable.js'].lineData[191] = 0;
-  _$jscoverage['/base/observable.js'].lineData[197] = 0;
-  _$jscoverage['/base/observable.js'].lineData[209] = 0;
+  _$jscoverage['/base/observable.js'].lineData[192] = 0;
+  _$jscoverage['/base/observable.js'].lineData[198] = 0;
   _$jscoverage['/base/observable.js'].lineData[210] = 0;
-  _$jscoverage['/base/observable.js'].lineData[212] = 0;
-  _$jscoverage['/base/observable.js'].lineData[215] = 0;
-  _$jscoverage['/base/observable.js'].lineData[218] = 0;
+  _$jscoverage['/base/observable.js'].lineData[211] = 0;
+  _$jscoverage['/base/observable.js'].lineData[213] = 0;
+  _$jscoverage['/base/observable.js'].lineData[216] = 0;
   _$jscoverage['/base/observable.js'].lineData[219] = 0;
   _$jscoverage['/base/observable.js'].lineData[220] = 0;
-  _$jscoverage['/base/observable.js'].lineData[222] = 0;
+  _$jscoverage['/base/observable.js'].lineData[221] = 0;
   _$jscoverage['/base/observable.js'].lineData[223] = 0;
   _$jscoverage['/base/observable.js'].lineData[224] = 0;
   _$jscoverage['/base/observable.js'].lineData[225] = 0;
-  _$jscoverage['/base/observable.js'].lineData[229] = 0;
+  _$jscoverage['/base/observable.js'].lineData[226] = 0;
   _$jscoverage['/base/observable.js'].lineData[230] = 0;
-  _$jscoverage['/base/observable.js'].lineData[232] = 0;
-  _$jscoverage['/base/observable.js'].lineData[235] = 0;
-  _$jscoverage['/base/observable.js'].lineData[238] = 0;
-  _$jscoverage['/base/observable.js'].lineData[241] = 0;
-  _$jscoverage['/base/observable.js'].lineData[243] = 0;
-  _$jscoverage['/base/observable.js'].lineData[247] = 0;
-  _$jscoverage['/base/observable.js'].lineData[250] = 0;
+  _$jscoverage['/base/observable.js'].lineData[231] = 0;
+  _$jscoverage['/base/observable.js'].lineData[233] = 0;
+  _$jscoverage['/base/observable.js'].lineData[236] = 0;
+  _$jscoverage['/base/observable.js'].lineData[239] = 0;
+  _$jscoverage['/base/observable.js'].lineData[242] = 0;
+  _$jscoverage['/base/observable.js'].lineData[244] = 0;
+  _$jscoverage['/base/observable.js'].lineData[248] = 0;
   _$jscoverage['/base/observable.js'].lineData[251] = 0;
   _$jscoverage['/base/observable.js'].lineData[254] = 0;
   _$jscoverage['/base/observable.js'].lineData[257] = 0;
@@ -386,81 +386,81 @@ if (! _$jscoverage['/base/observable.js'].functionData) {
 }
 if (! _$jscoverage['/base/observable.js'].branchData) {
   _$jscoverage['/base/observable.js'].branchData = {};
-  _$jscoverage['/base/observable.js'].branchData['35'] = [];
-  _$jscoverage['/base/observable.js'].branchData['35'][1] = new BranchData();
-  _$jscoverage['/base/observable.js'].branchData['40'] = [];
-  _$jscoverage['/base/observable.js'].branchData['40'][1] = new BranchData();
-  _$jscoverage['/base/observable.js'].branchData['40'][2] = new BranchData();
-  _$jscoverage['/base/observable.js'].branchData['82'] = [];
-  _$jscoverage['/base/observable.js'].branchData['82'][1] = new BranchData();
-  _$jscoverage['/base/observable.js'].branchData['89'] = [];
-  _$jscoverage['/base/observable.js'].branchData['89'][1] = new BranchData();
+  _$jscoverage['/base/observable.js'].branchData['36'] = [];
+  _$jscoverage['/base/observable.js'].branchData['36'][1] = new BranchData();
+  _$jscoverage['/base/observable.js'].branchData['41'] = [];
+  _$jscoverage['/base/observable.js'].branchData['41'][1] = new BranchData();
+  _$jscoverage['/base/observable.js'].branchData['41'][2] = new BranchData();
+  _$jscoverage['/base/observable.js'].branchData['83'] = [];
+  _$jscoverage['/base/observable.js'].branchData['83'][1] = new BranchData();
   _$jscoverage['/base/observable.js'].branchData['90'] = [];
   _$jscoverage['/base/observable.js'].branchData['90'][1] = new BranchData();
   _$jscoverage['/base/observable.js'].branchData['91'] = [];
   _$jscoverage['/base/observable.js'].branchData['91'][1] = new BranchData();
-  _$jscoverage['/base/observable.js'].branchData['91'][2] = new BranchData();
-  _$jscoverage['/base/observable.js'].branchData['91'][3] = new BranchData();
-  _$jscoverage['/base/observable.js'].branchData['95'] = [];
-  _$jscoverage['/base/observable.js'].branchData['95'][1] = new BranchData();
-  _$jscoverage['/base/observable.js'].branchData['100'] = [];
-  _$jscoverage['/base/observable.js'].branchData['100'][1] = new BranchData();
-  _$jscoverage['/base/observable.js'].branchData['103'] = [];
-  _$jscoverage['/base/observable.js'].branchData['103'][1] = new BranchData();
-  _$jscoverage['/base/observable.js'].branchData['107'] = [];
-  _$jscoverage['/base/observable.js'].branchData['107'][1] = new BranchData();
-  _$jscoverage['/base/observable.js'].branchData['114'] = [];
-  _$jscoverage['/base/observable.js'].branchData['114'][1] = new BranchData();
-  _$jscoverage['/base/observable.js'].branchData['120'] = [];
-  _$jscoverage['/base/observable.js'].branchData['120'][1] = new BranchData();
-  _$jscoverage['/base/observable.js'].branchData['131'] = [];
-  _$jscoverage['/base/observable.js'].branchData['131'][1] = new BranchData();
-  _$jscoverage['/base/observable.js'].branchData['131'][2] = new BranchData();
-  _$jscoverage['/base/observable.js'].branchData['139'] = [];
-  _$jscoverage['/base/observable.js'].branchData['139'][1] = new BranchData();
-  _$jscoverage['/base/observable.js'].branchData['139'][2] = new BranchData();
-  _$jscoverage['/base/observable.js'].branchData['148'] = [];
-  _$jscoverage['/base/observable.js'].branchData['148'][1] = new BranchData();
-  _$jscoverage['/base/observable.js'].branchData['148'][2] = new BranchData();
-  _$jscoverage['/base/observable.js'].branchData['148'][3] = new BranchData();
-  _$jscoverage['/base/observable.js'].branchData['165'] = [];
-  _$jscoverage['/base/observable.js'].branchData['165'][1] = new BranchData();
-  _$jscoverage['/base/observable.js'].branchData['171'] = [];
-  _$jscoverage['/base/observable.js'].branchData['171'][1] = new BranchData();
+  _$jscoverage['/base/observable.js'].branchData['92'] = [];
+  _$jscoverage['/base/observable.js'].branchData['92'][1] = new BranchData();
+  _$jscoverage['/base/observable.js'].branchData['92'][2] = new BranchData();
+  _$jscoverage['/base/observable.js'].branchData['92'][3] = new BranchData();
+  _$jscoverage['/base/observable.js'].branchData['96'] = [];
+  _$jscoverage['/base/observable.js'].branchData['96'][1] = new BranchData();
+  _$jscoverage['/base/observable.js'].branchData['101'] = [];
+  _$jscoverage['/base/observable.js'].branchData['101'][1] = new BranchData();
+  _$jscoverage['/base/observable.js'].branchData['104'] = [];
+  _$jscoverage['/base/observable.js'].branchData['104'][1] = new BranchData();
+  _$jscoverage['/base/observable.js'].branchData['108'] = [];
+  _$jscoverage['/base/observable.js'].branchData['108'][1] = new BranchData();
+  _$jscoverage['/base/observable.js'].branchData['115'] = [];
+  _$jscoverage['/base/observable.js'].branchData['115'][1] = new BranchData();
+  _$jscoverage['/base/observable.js'].branchData['121'] = [];
+  _$jscoverage['/base/observable.js'].branchData['121'][1] = new BranchData();
+  _$jscoverage['/base/observable.js'].branchData['132'] = [];
+  _$jscoverage['/base/observable.js'].branchData['132'][1] = new BranchData();
+  _$jscoverage['/base/observable.js'].branchData['132'][2] = new BranchData();
+  _$jscoverage['/base/observable.js'].branchData['140'] = [];
+  _$jscoverage['/base/observable.js'].branchData['140'][1] = new BranchData();
+  _$jscoverage['/base/observable.js'].branchData['140'][2] = new BranchData();
+  _$jscoverage['/base/observable.js'].branchData['149'] = [];
+  _$jscoverage['/base/observable.js'].branchData['149'][1] = new BranchData();
+  _$jscoverage['/base/observable.js'].branchData['149'][2] = new BranchData();
+  _$jscoverage['/base/observable.js'].branchData['149'][3] = new BranchData();
+  _$jscoverage['/base/observable.js'].branchData['166'] = [];
+  _$jscoverage['/base/observable.js'].branchData['166'][1] = new BranchData();
   _$jscoverage['/base/observable.js'].branchData['172'] = [];
   _$jscoverage['/base/observable.js'].branchData['172'][1] = new BranchData();
-  _$jscoverage['/base/observable.js'].branchData['176'] = [];
-  _$jscoverage['/base/observable.js'].branchData['176'][1] = new BranchData();
-  _$jscoverage['/base/observable.js'].branchData['176'][2] = new BranchData();
-  _$jscoverage['/base/observable.js'].branchData['180'] = [];
-  _$jscoverage['/base/observable.js'].branchData['180'][1] = new BranchData();
-  _$jscoverage['/base/observable.js'].branchData['190'] = [];
-  _$jscoverage['/base/observable.js'].branchData['190'][1] = new BranchData();
-  _$jscoverage['/base/observable.js'].branchData['190'][2] = new BranchData();
-  _$jscoverage['/base/observable.js'].branchData['212'] = [];
-  _$jscoverage['/base/observable.js'].branchData['212'][1] = new BranchData();
-  _$jscoverage['/base/observable.js'].branchData['212'][2] = new BranchData();
-  _$jscoverage['/base/observable.js'].branchData['212'][3] = new BranchData();
-  _$jscoverage['/base/observable.js'].branchData['212'][4] = new BranchData();
+  _$jscoverage['/base/observable.js'].branchData['173'] = [];
+  _$jscoverage['/base/observable.js'].branchData['173'][1] = new BranchData();
+  _$jscoverage['/base/observable.js'].branchData['177'] = [];
+  _$jscoverage['/base/observable.js'].branchData['177'][1] = new BranchData();
+  _$jscoverage['/base/observable.js'].branchData['177'][2] = new BranchData();
+  _$jscoverage['/base/observable.js'].branchData['181'] = [];
+  _$jscoverage['/base/observable.js'].branchData['181'][1] = new BranchData();
+  _$jscoverage['/base/observable.js'].branchData['191'] = [];
+  _$jscoverage['/base/observable.js'].branchData['191'][1] = new BranchData();
+  _$jscoverage['/base/observable.js'].branchData['191'][2] = new BranchData();
   _$jscoverage['/base/observable.js'].branchData['213'] = [];
   _$jscoverage['/base/observable.js'].branchData['213'][1] = new BranchData();
   _$jscoverage['/base/observable.js'].branchData['213'][2] = new BranchData();
-  _$jscoverage['/base/observable.js'].branchData['222'] = [];
-  _$jscoverage['/base/observable.js'].branchData['222'][1] = new BranchData();
-  _$jscoverage['/base/observable.js'].branchData['224'] = [];
-  _$jscoverage['/base/observable.js'].branchData['224'][1] = new BranchData();
-  _$jscoverage['/base/observable.js'].branchData['224'][2] = new BranchData();
-  _$jscoverage['/base/observable.js'].branchData['224'][3] = new BranchData();
-  _$jscoverage['/base/observable.js'].branchData['229'] = [];
-  _$jscoverage['/base/observable.js'].branchData['229'][1] = new BranchData();
-  _$jscoverage['/base/observable.js'].branchData['229'][2] = new BranchData();
-  _$jscoverage['/base/observable.js'].branchData['233'] = [];
-  _$jscoverage['/base/observable.js'].branchData['233'][1] = new BranchData();
-  _$jscoverage['/base/observable.js'].branchData['233'][2] = new BranchData();
-  _$jscoverage['/base/observable.js'].branchData['235'] = [];
-  _$jscoverage['/base/observable.js'].branchData['235'][1] = new BranchData();
-  _$jscoverage['/base/observable.js'].branchData['241'] = [];
-  _$jscoverage['/base/observable.js'].branchData['241'][1] = new BranchData();
+  _$jscoverage['/base/observable.js'].branchData['213'][3] = new BranchData();
+  _$jscoverage['/base/observable.js'].branchData['213'][4] = new BranchData();
+  _$jscoverage['/base/observable.js'].branchData['214'] = [];
+  _$jscoverage['/base/observable.js'].branchData['214'][1] = new BranchData();
+  _$jscoverage['/base/observable.js'].branchData['214'][2] = new BranchData();
+  _$jscoverage['/base/observable.js'].branchData['223'] = [];
+  _$jscoverage['/base/observable.js'].branchData['223'][1] = new BranchData();
+  _$jscoverage['/base/observable.js'].branchData['225'] = [];
+  _$jscoverage['/base/observable.js'].branchData['225'][1] = new BranchData();
+  _$jscoverage['/base/observable.js'].branchData['225'][2] = new BranchData();
+  _$jscoverage['/base/observable.js'].branchData['225'][3] = new BranchData();
+  _$jscoverage['/base/observable.js'].branchData['230'] = [];
+  _$jscoverage['/base/observable.js'].branchData['230'][1] = new BranchData();
+  _$jscoverage['/base/observable.js'].branchData['230'][2] = new BranchData();
+  _$jscoverage['/base/observable.js'].branchData['234'] = [];
+  _$jscoverage['/base/observable.js'].branchData['234'][1] = new BranchData();
+  _$jscoverage['/base/observable.js'].branchData['234'][2] = new BranchData();
+  _$jscoverage['/base/observable.js'].branchData['236'] = [];
+  _$jscoverage['/base/observable.js'].branchData['236'][1] = new BranchData();
+  _$jscoverage['/base/observable.js'].branchData['242'] = [];
+  _$jscoverage['/base/observable.js'].branchData['242'][1] = new BranchData();
   _$jscoverage['/base/observable.js'].branchData['267'] = [];
   _$jscoverage['/base/observable.js'].branchData['267'][1] = new BranchData();
   _$jscoverage['/base/observable.js'].branchData['271'] = [];
@@ -689,388 +689,388 @@ function visit146_271_1(result) {
 function visit145_267_1(result) {
   _$jscoverage['/base/observable.js'].branchData['267'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/observable.js'].branchData['241'][1].init(124, 56, 'currentTarget[eventType] && !S.isWindow(currentTarget)');
-function visit144_241_1(result) {
-  _$jscoverage['/base/observable.js'].branchData['241'][1].ranCondition(result);
+}_$jscoverage['/base/observable.js'].branchData['242'][1].init(124, 56, 'currentTarget[eventType] && !S.isWindow(currentTarget)');
+function visit144_242_1(result) {
+  _$jscoverage['/base/observable.js'].branchData['242'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/observable.js'].branchData['235'][1].init(2872, 44, '!onlyHandlers && !event.isDefaultPrevented()');
-function visit143_235_1(result) {
-  _$jscoverage['/base/observable.js'].branchData['235'][1].ranCondition(result);
+}_$jscoverage['/base/observable.js'].branchData['236'][1].init(2872, 44, '!onlyHandlers && !event.isDefaultPrevented()');
+function visit143_236_1(result) {
+  _$jscoverage['/base/observable.js'].branchData['236'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/observable.js'].branchData['233'][2].init(2815, 36, 'cur && !event.isPropagationStopped()');
-function visit142_233_2(result) {
-  _$jscoverage['/base/observable.js'].branchData['233'][2].ranCondition(result);
+}_$jscoverage['/base/observable.js'].branchData['234'][2].init(2815, 36, 'cur && !event.isPropagationStopped()');
+function visit142_234_2(result) {
+  _$jscoverage['/base/observable.js'].branchData['234'][2].ranCondition(result);
   return result;
-}_$jscoverage['/base/observable.js'].branchData['233'][1].init(707, 53, '!onlyHandlers && cur && !event.isPropagationStopped()');
-function visit141_233_1(result) {
-  _$jscoverage['/base/observable.js'].branchData['233'][1].ranCondition(result);
+}_$jscoverage['/base/observable.js'].branchData['234'][1].init(707, 53, '!onlyHandlers && cur && !event.isPropagationStopped()');
+function visit141_234_1(result) {
+  _$jscoverage['/base/observable.js'].branchData['234'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/observable.js'].branchData['229'][2].init(529, 33, 'cur[ontype].call(cur) === false');
-function visit140_229_2(result) {
-  _$jscoverage['/base/observable.js'].branchData['229'][2].ranCondition(result);
+}_$jscoverage['/base/observable.js'].branchData['230'][2].init(529, 33, 'cur[ontype].call(cur) === false');
+function visit140_230_2(result) {
+  _$jscoverage['/base/observable.js'].branchData['230'][2].ranCondition(result);
   return result;
-}_$jscoverage['/base/observable.js'].branchData['229'][1].init(512, 50, 'cur[ontype] && cur[ontype].call(cur) === false');
-function visit139_229_1(result) {
-  _$jscoverage['/base/observable.js'].branchData['229'][1].ranCondition(result);
+}_$jscoverage['/base/observable.js'].branchData['230'][1].init(512, 50, 'cur[ontype] && cur[ontype].call(cur) === false');
+function visit139_230_1(result) {
+  _$jscoverage['/base/observable.js'].branchData['230'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/observable.js'].branchData['224'][3].init(108, 14, 'gret !== false');
-function visit138_224_3(result) {
-  _$jscoverage['/base/observable.js'].branchData['224'][3].ranCondition(result);
+}_$jscoverage['/base/observable.js'].branchData['225'][3].init(108, 14, 'gret !== false');
+function visit138_225_3(result) {
+  _$jscoverage['/base/observable.js'].branchData['225'][3].ranCondition(result);
   return result;
-}_$jscoverage['/base/observable.js'].branchData['224'][2].init(87, 17, 'ret !== undefined');
-function visit137_224_2(result) {
-  _$jscoverage['/base/observable.js'].branchData['224'][2].ranCondition(result);
+}_$jscoverage['/base/observable.js'].branchData['225'][2].init(87, 17, 'ret !== undefined');
+function visit137_225_2(result) {
+  _$jscoverage['/base/observable.js'].branchData['225'][2].ranCondition(result);
   return result;
-}_$jscoverage['/base/observable.js'].branchData['224'][1].init(87, 35, 'ret !== undefined && gret !== false');
-function visit136_224_1(result) {
-  _$jscoverage['/base/observable.js'].branchData['224'][1].ranCondition(result);
+}_$jscoverage['/base/observable.js'].branchData['225'][1].init(87, 35, 'ret !== undefined && gret !== false');
+function visit136_225_1(result) {
+  _$jscoverage['/base/observable.js'].branchData['225'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/observable.js'].branchData['222'][1].init(214, 18, 'domEventObservable');
-function visit135_222_1(result) {
-  _$jscoverage['/base/observable.js'].branchData['222'][1].ranCondition(result);
+}_$jscoverage['/base/observable.js'].branchData['223'][1].init(214, 18, 'domEventObservable');
+function visit135_223_1(result) {
+  _$jscoverage['/base/observable.js'].branchData['223'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/observable.js'].branchData['213'][2].init(1975, 14, 'cur && bubbles');
-function visit134_213_2(result) {
+}_$jscoverage['/base/observable.js'].branchData['214'][2].init(1975, 14, 'cur && bubbles');
+function visit134_214_2(result) {
+  _$jscoverage['/base/observable.js'].branchData['214'][2].ranCondition(result);
+  return result;
+}_$jscoverage['/base/observable.js'].branchData['214'][1].init(214, 31, '!onlyHandlers && cur && bubbles');
+function visit133_214_1(result) {
+  _$jscoverage['/base/observable.js'].branchData['214'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/base/observable.js'].branchData['213'][4].init(160, 19, 'cur === curDocument');
+function visit132_213_4(result) {
+  _$jscoverage['/base/observable.js'].branchData['213'][4].ranCondition(result);
+  return result;
+}_$jscoverage['/base/observable.js'].branchData['213'][3].init(160, 27, '(cur === curDocument) && win');
+function visit131_213_3(result) {
+  _$jscoverage['/base/observable.js'].branchData['213'][3].ranCondition(result);
+  return result;
+}_$jscoverage['/base/observable.js'].branchData['213'][2].init(138, 49, 'cur.ownerDocument || (cur === curDocument) && win');
+function visit130_213_2(result) {
   _$jscoverage['/base/observable.js'].branchData['213'][2].ranCondition(result);
   return result;
-}_$jscoverage['/base/observable.js'].branchData['213'][1].init(214, 31, '!onlyHandlers && cur && bubbles');
-function visit133_213_1(result) {
+}_$jscoverage['/base/observable.js'].branchData['213'][1].init(120, 67, 'cur.parentNode || cur.ownerDocument || (cur === curDocument) && win');
+function visit129_213_1(result) {
   _$jscoverage['/base/observable.js'].branchData['213'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/observable.js'].branchData['212'][4].init(160, 19, 'cur === curDocument');
-function visit132_212_4(result) {
-  _$jscoverage['/base/observable.js'].branchData['212'][4].ranCondition(result);
+}_$jscoverage['/base/observable.js'].branchData['191'][2].init(937, 71, 'specialEvent.preFire.call(currentTarget, event, onlyHandlers) === false');
+function visit128_191_2(result) {
+  _$jscoverage['/base/observable.js'].branchData['191'][2].ranCondition(result);
   return result;
-}_$jscoverage['/base/observable.js'].branchData['212'][3].init(160, 27, '(cur === curDocument) && win');
-function visit131_212_3(result) {
-  _$jscoverage['/base/observable.js'].branchData['212'][3].ranCondition(result);
+}_$jscoverage['/base/observable.js'].branchData['191'][1].init(913, 95, 'specialEvent.preFire && specialEvent.preFire.call(currentTarget, event, onlyHandlers) === false');
+function visit127_191_1(result) {
+  _$jscoverage['/base/observable.js'].branchData['191'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/observable.js'].branchData['212'][2].init(138, 49, 'cur.ownerDocument || (cur === curDocument) && win');
-function visit130_212_2(result) {
-  _$jscoverage['/base/observable.js'].branchData['212'][2].ranCondition(result);
+}_$jscoverage['/base/observable.js'].branchData['181'][1].init(564, 34, '!(event instanceof DomEventObject)');
+function visit126_181_1(result) {
+  _$jscoverage['/base/observable.js'].branchData['181'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/observable.js'].branchData['212'][1].init(120, 67, 'cur.parentNode || cur.ownerDocument || (cur === curDocument) && win');
-function visit129_212_1(result) {
-  _$jscoverage['/base/observable.js'].branchData['212'][1].ranCondition(result);
+}_$jscoverage['/base/observable.js'].branchData['177'][2].init(440, 61, 'specialEvent.fire.call(currentTarget, onlyHandlers) === false');
+function visit125_177_2(result) {
+  _$jscoverage['/base/observable.js'].branchData['177'][2].ranCondition(result);
   return result;
-}_$jscoverage['/base/observable.js'].branchData['190'][2].init(937, 71, 'specialEvent.preFire.call(currentTarget, event, onlyHandlers) === false');
-function visit128_190_2(result) {
-  _$jscoverage['/base/observable.js'].branchData['190'][2].ranCondition(result);
+}_$jscoverage['/base/observable.js'].branchData['177'][1].init(419, 82, 'specialEvent.fire && specialEvent.fire.call(currentTarget, onlyHandlers) === false');
+function visit124_177_1(result) {
+  _$jscoverage['/base/observable.js'].branchData['177'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/observable.js'].branchData['190'][1].init(913, 95, 'specialEvent.preFire && specialEvent.preFire.call(currentTarget, event, onlyHandlers) === false');
-function visit127_190_1(result) {
-  _$jscoverage['/base/observable.js'].branchData['190'][1].ranCondition(result);
+}_$jscoverage['/base/observable.js'].branchData['173'][1].init(214, 30, 'specialEvent.bubbles !== false');
+function visit123_173_1(result) {
+  _$jscoverage['/base/observable.js'].branchData['173'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/observable.js'].branchData['180'][1].init(564, 34, '!(event instanceof DomEventObject)');
-function visit126_180_1(result) {
-  _$jscoverage['/base/observable.js'].branchData['180'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/base/observable.js'].branchData['176'][2].init(440, 61, 'specialEvent.fire.call(currentTarget, onlyHandlers) === false');
-function visit125_176_2(result) {
-  _$jscoverage['/base/observable.js'].branchData['176'][2].ranCondition(result);
-  return result;
-}_$jscoverage['/base/observable.js'].branchData['176'][1].init(419, 82, 'specialEvent.fire && specialEvent.fire.call(currentTarget, onlyHandlers) === false');
-function visit124_176_1(result) {
-  _$jscoverage['/base/observable.js'].branchData['176'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/base/observable.js'].branchData['172'][1].init(214, 30, 'specialEvent.bubbles !== false');
-function visit123_172_1(result) {
+}_$jscoverage['/base/observable.js'].branchData['172'][1].init(161, 24, 'Special[eventType] || {}');
+function visit122_172_1(result) {
   _$jscoverage['/base/observable.js'].branchData['172'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/observable.js'].branchData['171'][1].init(161, 24, 'Special[eventType] || {}');
-function visit122_171_1(result) {
-  _$jscoverage['/base/observable.js'].branchData['171'][1].ranCondition(result);
+}_$jscoverage['/base/observable.js'].branchData['166'][1].init(22, 11, 'event || {}');
+function visit121_166_1(result) {
+  _$jscoverage['/base/observable.js'].branchData['166'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/observable.js'].branchData['165'][1].init(22, 11, 'event || {}');
-function visit121_165_1(result) {
-  _$jscoverage['/base/observable.js'].branchData['165'][1].ranCondition(result);
+}_$jscoverage['/base/observable.js'].branchData['149'][3].init(315, 17, 'ret !== undefined');
+function visit120_149_3(result) {
+  _$jscoverage['/base/observable.js'].branchData['149'][3].ranCondition(result);
   return result;
-}_$jscoverage['/base/observable.js'].branchData['148'][3].init(315, 17, 'ret !== undefined');
-function visit120_148_3(result) {
-  _$jscoverage['/base/observable.js'].branchData['148'][3].ranCondition(result);
+}_$jscoverage['/base/observable.js'].branchData['149'][2].init(297, 14, 'gRet !== false');
+function visit119_149_2(result) {
+  _$jscoverage['/base/observable.js'].branchData['149'][2].ranCondition(result);
   return result;
-}_$jscoverage['/base/observable.js'].branchData['148'][2].init(297, 14, 'gRet !== false');
-function visit119_148_2(result) {
-  _$jscoverage['/base/observable.js'].branchData['148'][2].ranCondition(result);
+}_$jscoverage['/base/observable.js'].branchData['149'][1].init(297, 35, 'gRet !== false && ret !== undefined');
+function visit118_149_1(result) {
+  _$jscoverage['/base/observable.js'].branchData['149'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/observable.js'].branchData['148'][1].init(297, 35, 'gRet !== false && ret !== undefined');
-function visit118_148_1(result) {
-  _$jscoverage['/base/observable.js'].branchData['148'][1].ranCondition(result);
+}_$jscoverage['/base/observable.js'].branchData['140'][2].init(371, 33, 'j < currentTargetObservers.length');
+function visit117_140_2(result) {
+  _$jscoverage['/base/observable.js'].branchData['140'][2].ranCondition(result);
   return result;
-}_$jscoverage['/base/observable.js'].branchData['139'][2].init(371, 33, 'j < currentTargetObservers.length');
-function visit117_139_2(result) {
-  _$jscoverage['/base/observable.js'].branchData['139'][2].ranCondition(result);
+}_$jscoverage['/base/observable.js'].branchData['140'][1].init(329, 75, '!event.isImmediatePropagationStopped() && j < currentTargetObservers.length');
+function visit116_140_1(result) {
+  _$jscoverage['/base/observable.js'].branchData['140'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/observable.js'].branchData['139'][1].init(329, 75, '!event.isImmediatePropagationStopped() && j < currentTargetObservers.length');
-function visit116_139_1(result) {
-  _$jscoverage['/base/observable.js'].branchData['139'][1].ranCondition(result);
+}_$jscoverage['/base/observable.js'].branchData['132'][2].init(3200, 7, 'i < len');
+function visit115_132_2(result) {
+  _$jscoverage['/base/observable.js'].branchData['132'][2].ranCondition(result);
   return result;
-}_$jscoverage['/base/observable.js'].branchData['131'][2].init(3200, 7, 'i < len');
-function visit115_131_2(result) {
-  _$jscoverage['/base/observable.js'].branchData['131'][2].ranCondition(result);
+}_$jscoverage['/base/observable.js'].branchData['132'][1].init(3167, 40, '!event.isPropagationStopped() && i < len');
+function visit114_132_1(result) {
+  _$jscoverage['/base/observable.js'].branchData['132'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/observable.js'].branchData['131'][1].init(3167, 40, '!event.isPropagationStopped() && i < len');
-function visit114_131_1(result) {
-  _$jscoverage['/base/observable.js'].branchData['131'][1].ranCondition(result);
+}_$jscoverage['/base/observable.js'].branchData['121'][1].init(2599, 32, 'delegateCount < observers.length');
+function visit113_121_1(result) {
+  _$jscoverage['/base/observable.js'].branchData['121'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/observable.js'].branchData['120'][1].init(2599, 32, 'delegateCount < observers.length');
-function visit113_120_1(result) {
-  _$jscoverage['/base/observable.js'].branchData['120'][1].ranCondition(result);
+}_$jscoverage['/base/observable.js'].branchData['115'][1].init(1221, 34, 'target.parentNode || currentTarget');
+function visit112_115_1(result) {
+  _$jscoverage['/base/observable.js'].branchData['115'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/observable.js'].branchData['114'][1].init(1221, 34, 'target.parentNode || currentTarget');
-function visit112_114_1(result) {
-  _$jscoverage['/base/observable.js'].branchData['114'][1].ranCondition(result);
+}_$jscoverage['/base/observable.js'].branchData['108'][1].init(810, 29, 'currentTargetObservers.length');
+function visit111_108_1(result) {
+  _$jscoverage['/base/observable.js'].branchData['108'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/observable.js'].branchData['107'][1].init(810, 29, 'currentTargetObservers.length');
-function visit111_107_1(result) {
-  _$jscoverage['/base/observable.js'].branchData['107'][1].ranCondition(result);
+}_$jscoverage['/base/observable.js'].branchData['104'][1].init(425, 7, 'matched');
+function visit110_104_1(result) {
+  _$jscoverage['/base/observable.js'].branchData['104'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/observable.js'].branchData['103'][1].init(425, 7, 'matched');
-function visit110_103_1(result) {
-  _$jscoverage['/base/observable.js'].branchData['103'][1].ranCondition(result);
+}_$jscoverage['/base/observable.js'].branchData['101'][1].init(248, 21, 'matched === undefined');
+function visit109_101_1(result) {
+  _$jscoverage['/base/observable.js'].branchData['101'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/observable.js'].branchData['100'][1].init(248, 21, 'matched === undefined');
-function visit109_100_1(result) {
-  _$jscoverage['/base/observable.js'].branchData['100'][1].ranCondition(result);
+}_$jscoverage['/base/observable.js'].branchData['96'][1].init(190, 17, 'i < delegateCount');
+function visit108_96_1(result) {
+  _$jscoverage['/base/observable.js'].branchData['96'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/observable.js'].branchData['95'][1].init(190, 17, 'i < delegateCount');
-function visit108_95_1(result) {
-  _$jscoverage['/base/observable.js'].branchData['95'][1].ranCondition(result);
+}_$jscoverage['/base/observable.js'].branchData['92'][3].init(54, 21, 'eventType !== \'click\'');
+function visit107_92_3(result) {
+  _$jscoverage['/base/observable.js'].branchData['92'][3].ranCondition(result);
   return result;
-}_$jscoverage['/base/observable.js'].branchData['91'][3].init(54, 21, 'eventType !== \'click\'');
-function visit107_91_3(result) {
-  _$jscoverage['/base/observable.js'].branchData['91'][3].ranCondition(result);
+}_$jscoverage['/base/observable.js'].branchData['92'][2].init(26, 24, 'target.disabled !== true');
+function visit106_92_2(result) {
+  _$jscoverage['/base/observable.js'].branchData['92'][2].ranCondition(result);
   return result;
-}_$jscoverage['/base/observable.js'].branchData['91'][2].init(26, 24, 'target.disabled !== true');
-function visit106_91_2(result) {
-  _$jscoverage['/base/observable.js'].branchData['91'][2].ranCondition(result);
+}_$jscoverage['/base/observable.js'].branchData['92'][1].init(26, 49, 'target.disabled !== true || eventType !== \'click\'');
+function visit105_92_1(result) {
+  _$jscoverage['/base/observable.js'].branchData['92'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/observable.js'].branchData['91'][1].init(26, 49, 'target.disabled !== true || eventType !== \'click\'');
-function visit105_91_1(result) {
+}_$jscoverage['/base/observable.js'].branchData['91'][1].init(25, 23, 'target != currentTarget');
+function visit104_91_1(result) {
   _$jscoverage['/base/observable.js'].branchData['91'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/observable.js'].branchData['90'][1].init(25, 23, 'target != currentTarget');
-function visit104_90_1(result) {
+}_$jscoverage['/base/observable.js'].branchData['90'][1].init(1046, 32, 'delegateCount && target.nodeType');
+function visit103_90_1(result) {
   _$jscoverage['/base/observable.js'].branchData['90'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/observable.js'].branchData['89'][1].init(1046, 32, 'delegateCount && target.nodeType');
-function visit103_89_1(result) {
-  _$jscoverage['/base/observable.js'].branchData['89'][1].ranCondition(result);
+}_$jscoverage['/base/observable.js'].branchData['83'][1].init(415, 23, 'self.delegateCount || 0');
+function visit102_83_1(result) {
+  _$jscoverage['/base/observable.js'].branchData['83'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/observable.js'].branchData['82'][1].init(415, 23, 'self.delegateCount || 0');
-function visit102_82_1(result) {
-  _$jscoverage['/base/observable.js'].branchData['82'][1].ranCondition(result);
+}_$jscoverage['/base/observable.js'].branchData['41'][2].init(342, 43, 's.setup.call(currentTarget, type) === false');
+function visit101_41_2(result) {
+  _$jscoverage['/base/observable.js'].branchData['41'][2].ranCondition(result);
   return result;
-}_$jscoverage['/base/observable.js'].branchData['40'][2].init(342, 43, 's.setup.call(currentTarget, type) === false');
-function visit101_40_2(result) {
-  _$jscoverage['/base/observable.js'].branchData['40'][2].ranCondition(result);
+}_$jscoverage['/base/observable.js'].branchData['41'][1].init(330, 55, '!s.setup || s.setup.call(currentTarget, type) === false');
+function visit100_41_1(result) {
+  _$jscoverage['/base/observable.js'].branchData['41'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/observable.js'].branchData['40'][1].init(330, 55, '!s.setup || s.setup.call(currentTarget, type) === false');
-function visit100_40_1(result) {
-  _$jscoverage['/base/observable.js'].branchData['40'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/base/observable.js'].branchData['35'][1].init(72, 19, 'Special[type] || {}');
-function visit99_35_1(result) {
-  _$jscoverage['/base/observable.js'].branchData['35'][1].ranCondition(result);
+}_$jscoverage['/base/observable.js'].branchData['36'][1].init(72, 19, 'Special[type] || {}');
+function visit99_36_1(result) {
+  _$jscoverage['/base/observable.js'].branchData['36'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/observable.js'].lineData[6]++;
 KISSY.add('event/dom/base/observable', function(S, Dom, Special, DomEventUtils, DomEventObserver, DomEventObject, BaseEvent) {
   _$jscoverage['/base/observable.js'].functionData[0]++;
   _$jscoverage['/base/observable.js'].lineData[11]++;
   var BaseUtils = BaseEvent.Utils;
-  _$jscoverage['/base/observable.js'].lineData[20]++;
+  _$jscoverage['/base/observable.js'].lineData[12]++;
+  var logger = S.getLogger('s/event');
+  _$jscoverage['/base/observable.js'].lineData[21]++;
   function DomEventObservable(cfg) {
     _$jscoverage['/base/observable.js'].functionData[1]++;
-    _$jscoverage['/base/observable.js'].lineData[21]++;
-    var self = this;
     _$jscoverage['/base/observable.js'].lineData[22]++;
-    S.mix(self, cfg);
+    var self = this;
     _$jscoverage['/base/observable.js'].lineData[23]++;
+    S.mix(self, cfg);
+    _$jscoverage['/base/observable.js'].lineData[24]++;
     self.reset();
   }
-  _$jscoverage['/base/observable.js'].lineData[30]++;
+  _$jscoverage['/base/observable.js'].lineData[31]++;
   S.extend(DomEventObservable, BaseEvent.Observable, {
   setup: function() {
   _$jscoverage['/base/observable.js'].functionData[2]++;
-  _$jscoverage['/base/observable.js'].lineData[33]++;
-  var self = this, type = self.type, s = visit99_35_1(Special[type] || {}), currentTarget = self.currentTarget, eventDesc = DomEventUtils.data(currentTarget), handle = eventDesc.handle;
-  _$jscoverage['/base/observable.js'].lineData[40]++;
-  if (visit100_40_1(!s.setup || visit101_40_2(s.setup.call(currentTarget, type) === false))) {
-    _$jscoverage['/base/observable.js'].lineData[41]++;
+  _$jscoverage['/base/observable.js'].lineData[34]++;
+  var self = this, type = self.type, s = visit99_36_1(Special[type] || {}), currentTarget = self.currentTarget, eventDesc = DomEventUtils.data(currentTarget), handle = eventDesc.handle;
+  _$jscoverage['/base/observable.js'].lineData[41]++;
+  if (visit100_41_1(!s.setup || visit101_41_2(s.setup.call(currentTarget, type) === false))) {
+    _$jscoverage['/base/observable.js'].lineData[42]++;
     DomEventUtils.simpleAdd(currentTarget, type, handle);
   }
 }, 
   constructor: DomEventObservable, 
   reset: function() {
   _$jscoverage['/base/observable.js'].functionData[3]++;
-  _$jscoverage['/base/observable.js'].lineData[48]++;
-  var self = this;
   _$jscoverage['/base/observable.js'].lineData[49]++;
-  DomEventObservable.superclass.reset.call(self);
+  var self = this;
   _$jscoverage['/base/observable.js'].lineData[50]++;
-  self.delegateCount = 0;
+  DomEventObservable.superclass.reset.call(self);
   _$jscoverage['/base/observable.js'].lineData[51]++;
+  self.delegateCount = 0;
+  _$jscoverage['/base/observable.js'].lineData[52]++;
   self.lastCount = 0;
 }, 
   notify: function(event) {
   _$jscoverage['/base/observable.js'].functionData[4]++;
-  _$jscoverage['/base/observable.js'].lineData[70]++;
-  var target = event.target, eventType = event['type'], self = this, currentTarget = self.currentTarget, observers = self.observers, currentTarget0, allObservers = [], ret, gRet, observerObj, i, j, delegateCount = visit102_82_1(self.delegateCount || 0), len, currentTargetObservers, currentTargetObserver, observer;
-  _$jscoverage['/base/observable.js'].lineData[89]++;
-  if (visit103_89_1(delegateCount && target.nodeType)) {
-    _$jscoverage['/base/observable.js'].lineData[90]++;
-    while (visit104_90_1(target != currentTarget)) {
-      _$jscoverage['/base/observable.js'].lineData[91]++;
-      if (visit105_91_1(visit106_91_2(target.disabled !== true) || visit107_91_3(eventType !== 'click'))) {
-        _$jscoverage['/base/observable.js'].lineData[92]++;
+  _$jscoverage['/base/observable.js'].lineData[71]++;
+  var target = event.target, eventType = event['type'], self = this, currentTarget = self.currentTarget, observers = self.observers, currentTarget0, allObservers = [], ret, gRet, observerObj, i, j, delegateCount = visit102_83_1(self.delegateCount || 0), len, currentTargetObservers, currentTargetObserver, observer;
+  _$jscoverage['/base/observable.js'].lineData[90]++;
+  if (visit103_90_1(delegateCount && target.nodeType)) {
+    _$jscoverage['/base/observable.js'].lineData[91]++;
+    while (visit104_91_1(target != currentTarget)) {
+      _$jscoverage['/base/observable.js'].lineData[92]++;
+      if (visit105_92_1(visit106_92_2(target.disabled !== true) || visit107_92_3(eventType !== 'click'))) {
+        _$jscoverage['/base/observable.js'].lineData[93]++;
         var cachedMatch = {}, matched, key, filter;
-        _$jscoverage['/base/observable.js'].lineData[94]++;
-        currentTargetObservers = [];
         _$jscoverage['/base/observable.js'].lineData[95]++;
-        for (i = 0; visit108_95_1(i < delegateCount); i++) {
-          _$jscoverage['/base/observable.js'].lineData[96]++;
-          observer = observers[i];
+        currentTargetObservers = [];
+        _$jscoverage['/base/observable.js'].lineData[96]++;
+        for (i = 0; visit108_96_1(i < delegateCount); i++) {
           _$jscoverage['/base/observable.js'].lineData[97]++;
-          filter = observer.filter;
+          observer = observers[i];
           _$jscoverage['/base/observable.js'].lineData[98]++;
-          key = filter + '';
+          filter = observer.filter;
           _$jscoverage['/base/observable.js'].lineData[99]++;
-          matched = cachedMatch[key];
+          key = filter + '';
           _$jscoverage['/base/observable.js'].lineData[100]++;
-          if (visit109_100_1(matched === undefined)) {
-            _$jscoverage['/base/observable.js'].lineData[101]++;
+          matched = cachedMatch[key];
+          _$jscoverage['/base/observable.js'].lineData[101]++;
+          if (visit109_101_1(matched === undefined)) {
+            _$jscoverage['/base/observable.js'].lineData[102]++;
             matched = cachedMatch[key] = Dom.test(target, filter);
           }
-          _$jscoverage['/base/observable.js'].lineData[103]++;
-          if (visit110_103_1(matched)) {
-            _$jscoverage['/base/observable.js'].lineData[104]++;
+          _$jscoverage['/base/observable.js'].lineData[104]++;
+          if (visit110_104_1(matched)) {
+            _$jscoverage['/base/observable.js'].lineData[105]++;
             currentTargetObservers.push(observer);
           }
         }
-        _$jscoverage['/base/observable.js'].lineData[107]++;
-        if (visit111_107_1(currentTargetObservers.length)) {
-          _$jscoverage['/base/observable.js'].lineData[108]++;
+        _$jscoverage['/base/observable.js'].lineData[108]++;
+        if (visit111_108_1(currentTargetObservers.length)) {
+          _$jscoverage['/base/observable.js'].lineData[109]++;
           allObservers.push({
   currentTarget: target, 
   'currentTargetObservers': currentTargetObservers});
         }
       }
-      _$jscoverage['/base/observable.js'].lineData[114]++;
-      target = visit112_114_1(target.parentNode || currentTarget);
+      _$jscoverage['/base/observable.js'].lineData[115]++;
+      target = visit112_115_1(target.parentNode || currentTarget);
     }
   }
-  _$jscoverage['/base/observable.js'].lineData[120]++;
-  if (visit113_120_1(delegateCount < observers.length)) {
-    _$jscoverage['/base/observable.js'].lineData[121]++;
+  _$jscoverage['/base/observable.js'].lineData[121]++;
+  if (visit113_121_1(delegateCount < observers.length)) {
+    _$jscoverage['/base/observable.js'].lineData[122]++;
     allObservers.push({
   currentTarget: currentTarget, 
   currentTargetObservers: observers.slice(delegateCount)});
   }
-  _$jscoverage['/base/observable.js'].lineData[131]++;
-  for (i = 0 , len = allObservers.length; visit114_131_1(!event.isPropagationStopped() && visit115_131_2(i < len)); ++i) {
-    _$jscoverage['/base/observable.js'].lineData[133]++;
-    observerObj = allObservers[i];
+  _$jscoverage['/base/observable.js'].lineData[132]++;
+  for (i = 0 , len = allObservers.length; visit114_132_1(!event.isPropagationStopped() && visit115_132_2(i < len)); ++i) {
     _$jscoverage['/base/observable.js'].lineData[134]++;
-    currentTargetObservers = observerObj.currentTargetObservers;
+    observerObj = allObservers[i];
     _$jscoverage['/base/observable.js'].lineData[135]++;
-    currentTarget0 = observerObj.currentTarget;
+    currentTargetObservers = observerObj.currentTargetObservers;
     _$jscoverage['/base/observable.js'].lineData[136]++;
+    currentTarget0 = observerObj.currentTarget;
+    _$jscoverage['/base/observable.js'].lineData[137]++;
     event.currentTarget = currentTarget0;
-    _$jscoverage['/base/observable.js'].lineData[139]++;
-    for (j = 0; visit116_139_1(!event.isImmediatePropagationStopped() && visit117_139_2(j < currentTargetObservers.length)); j++) {
-      _$jscoverage['/base/observable.js'].lineData[141]++;
+    _$jscoverage['/base/observable.js'].lineData[140]++;
+    for (j = 0; visit116_140_1(!event.isImmediatePropagationStopped() && visit117_140_2(j < currentTargetObservers.length)); j++) {
+      _$jscoverage['/base/observable.js'].lineData[142]++;
       currentTargetObserver = currentTargetObservers[j];
-      _$jscoverage['/base/observable.js'].lineData[143]++;
+      _$jscoverage['/base/observable.js'].lineData[144]++;
       ret = currentTargetObserver.notify(event, self);
-      _$jscoverage['/base/observable.js'].lineData[148]++;
-      if (visit118_148_1(visit119_148_2(gRet !== false) && visit120_148_3(ret !== undefined))) {
-        _$jscoverage['/base/observable.js'].lineData[149]++;
+      _$jscoverage['/base/observable.js'].lineData[149]++;
+      if (visit118_149_1(visit119_149_2(gRet !== false) && visit120_149_3(ret !== undefined))) {
+        _$jscoverage['/base/observable.js'].lineData[150]++;
         gRet = ret;
       }
     }
   }
-  _$jscoverage['/base/observable.js'].lineData[156]++;
+  _$jscoverage['/base/observable.js'].lineData[157]++;
   return gRet;
 }, 
   fire: function(event, onlyHandlers) {
   _$jscoverage['/base/observable.js'].functionData[5]++;
-  _$jscoverage['/base/observable.js'].lineData[165]++;
-  event = visit121_165_1(event || {});
-  _$jscoverage['/base/observable.js'].lineData[167]++;
-  var self = this, eventType = String(self.type), domEventObservable, eventData, specialEvent = visit122_171_1(Special[eventType] || {}), bubbles = visit123_172_1(specialEvent.bubbles !== false), currentTarget = self.currentTarget;
-  _$jscoverage['/base/observable.js'].lineData[176]++;
-  if (visit124_176_1(specialEvent.fire && visit125_176_2(specialEvent.fire.call(currentTarget, onlyHandlers) === false))) {
-    _$jscoverage['/base/observable.js'].lineData[177]++;
+  _$jscoverage['/base/observable.js'].lineData[166]++;
+  event = visit121_166_1(event || {});
+  _$jscoverage['/base/observable.js'].lineData[168]++;
+  var self = this, eventType = String(self.type), domEventObservable, eventData, specialEvent = visit122_172_1(Special[eventType] || {}), bubbles = visit123_173_1(specialEvent.bubbles !== false), currentTarget = self.currentTarget;
+  _$jscoverage['/base/observable.js'].lineData[177]++;
+  if (visit124_177_1(specialEvent.fire && visit125_177_2(specialEvent.fire.call(currentTarget, onlyHandlers) === false))) {
+    _$jscoverage['/base/observable.js'].lineData[178]++;
     return;
   }
-  _$jscoverage['/base/observable.js'].lineData[180]++;
-  if (visit126_180_1(!(event instanceof DomEventObject))) {
-    _$jscoverage['/base/observable.js'].lineData[181]++;
-    eventData = event;
+  _$jscoverage['/base/observable.js'].lineData[181]++;
+  if (visit126_181_1(!(event instanceof DomEventObject))) {
     _$jscoverage['/base/observable.js'].lineData[182]++;
+    eventData = event;
+    _$jscoverage['/base/observable.js'].lineData[183]++;
     event = new DomEventObject({
   currentTarget: currentTarget, 
   type: eventType, 
   target: currentTarget});
-    _$jscoverage['/base/observable.js'].lineData[187]++;
+    _$jscoverage['/base/observable.js'].lineData[188]++;
     S.mix(event, eventData);
   }
-  _$jscoverage['/base/observable.js'].lineData[190]++;
-  if (visit127_190_1(specialEvent.preFire && visit128_190_2(specialEvent.preFire.call(currentTarget, event, onlyHandlers) === false))) {
-    _$jscoverage['/base/observable.js'].lineData[191]++;
+  _$jscoverage['/base/observable.js'].lineData[191]++;
+  if (visit127_191_1(specialEvent.preFire && visit128_191_2(specialEvent.preFire.call(currentTarget, event, onlyHandlers) === false))) {
+    _$jscoverage['/base/observable.js'].lineData[192]++;
     return;
   }
-  _$jscoverage['/base/observable.js'].lineData[197]++;
+  _$jscoverage['/base/observable.js'].lineData[198]++;
   var cur = currentTarget, win = Dom.getWindow(cur), curDocument = win.document, eventPath = [], gret, ret, ontype = 'on' + eventType, eventPathIndex = 0;
-  _$jscoverage['/base/observable.js'].lineData[209]++;
+  _$jscoverage['/base/observable.js'].lineData[210]++;
   do {
-    _$jscoverage['/base/observable.js'].lineData[210]++;
+    _$jscoverage['/base/observable.js'].lineData[211]++;
     eventPath.push(cur);
-    _$jscoverage['/base/observable.js'].lineData[212]++;
-    cur = visit129_212_1(cur.parentNode || visit130_212_2(cur.ownerDocument || visit131_212_3((visit132_212_4(cur === curDocument)) && win)));
-  } while (visit133_213_1(!onlyHandlers && visit134_213_2(cur && bubbles)));
-  _$jscoverage['/base/observable.js'].lineData[215]++;
+    _$jscoverage['/base/observable.js'].lineData[213]++;
+    cur = visit129_213_1(cur.parentNode || visit130_213_2(cur.ownerDocument || visit131_213_3((visit132_213_4(cur === curDocument)) && win)));
+  } while (visit133_214_1(!onlyHandlers && visit134_214_2(cur && bubbles)));
+  _$jscoverage['/base/observable.js'].lineData[216]++;
   cur = eventPath[eventPathIndex];
-  _$jscoverage['/base/observable.js'].lineData[218]++;
+  _$jscoverage['/base/observable.js'].lineData[219]++;
   do {
-    _$jscoverage['/base/observable.js'].lineData[219]++;
-    event['currentTarget'] = cur;
     _$jscoverage['/base/observable.js'].lineData[220]++;
+    event['currentTarget'] = cur;
+    _$jscoverage['/base/observable.js'].lineData[221]++;
     domEventObservable = DomEventObservable.getDomEventObservable(cur, eventType);
-    _$jscoverage['/base/observable.js'].lineData[222]++;
-    if (visit135_222_1(domEventObservable)) {
-      _$jscoverage['/base/observable.js'].lineData[223]++;
-      ret = domEventObservable.notify(event);
+    _$jscoverage['/base/observable.js'].lineData[223]++;
+    if (visit135_223_1(domEventObservable)) {
       _$jscoverage['/base/observable.js'].lineData[224]++;
-      if (visit136_224_1(visit137_224_2(ret !== undefined) && visit138_224_3(gret !== false))) {
-        _$jscoverage['/base/observable.js'].lineData[225]++;
+      ret = domEventObservable.notify(event);
+      _$jscoverage['/base/observable.js'].lineData[225]++;
+      if (visit136_225_1(visit137_225_2(ret !== undefined) && visit138_225_3(gret !== false))) {
+        _$jscoverage['/base/observable.js'].lineData[226]++;
         gret = ret;
       }
     }
-    _$jscoverage['/base/observable.js'].lineData[229]++;
-    if (visit139_229_1(cur[ontype] && visit140_229_2(cur[ontype].call(cur) === false))) {
-      _$jscoverage['/base/observable.js'].lineData[230]++;
+    _$jscoverage['/base/observable.js'].lineData[230]++;
+    if (visit139_230_1(cur[ontype] && visit140_230_2(cur[ontype].call(cur) === false))) {
+      _$jscoverage['/base/observable.js'].lineData[231]++;
       event.preventDefault();
     }
-    _$jscoverage['/base/observable.js'].lineData[232]++;
+    _$jscoverage['/base/observable.js'].lineData[233]++;
     cur = eventPath[++eventPathIndex];
-  } while (visit141_233_1(!onlyHandlers && visit142_233_2(cur && !event.isPropagationStopped())));
-  _$jscoverage['/base/observable.js'].lineData[235]++;
-  if (visit143_235_1(!onlyHandlers && !event.isDefaultPrevented())) {
-    _$jscoverage['/base/observable.js'].lineData[238]++;
+  } while (visit141_234_1(!onlyHandlers && visit142_234_2(cur && !event.isPropagationStopped())));
+  _$jscoverage['/base/observable.js'].lineData[236]++;
+  if (visit143_236_1(!onlyHandlers && !event.isDefaultPrevented())) {
+    _$jscoverage['/base/observable.js'].lineData[239]++;
     try {
-      _$jscoverage['/base/observable.js'].lineData[241]++;
-      if (visit144_241_1(currentTarget[eventType] && !S.isWindow(currentTarget))) {
-        _$jscoverage['/base/observable.js'].lineData[243]++;
+      _$jscoverage['/base/observable.js'].lineData[242]++;
+      if (visit144_242_1(currentTarget[eventType] && !S.isWindow(currentTarget))) {
+        _$jscoverage['/base/observable.js'].lineData[244]++;
         DomEventObservable.triggeredEvent = eventType;
-        _$jscoverage['/base/observable.js'].lineData[247]++;
+        _$jscoverage['/base/observable.js'].lineData[248]++;
         currentTarget[eventType]();
       }
     }    catch (eError) {
-  _$jscoverage['/base/observable.js'].lineData[250]++;
-  S.log('trigger action error: ');
   _$jscoverage['/base/observable.js'].lineData[251]++;
-  S.log(eError);
+  logger.debug('trigger action error: ' + eError);
 }
     _$jscoverage['/base/observable.js'].lineData[254]++;
     DomEventObservable.triggeredEvent = '';

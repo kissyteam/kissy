@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Aug 27 22:01
+build time: Sep 11 12:53
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -32,11 +32,9 @@ KISSY.add("separator/render", function (S, Control) {
 KISSY.add("separator", function (S, Control, SeparatorRender) {
 
     /**
+     * separator component for KISSY. xclass: 'separator'.
      * @extends KISSY.Component.Control
-     * @class
-     * separator.
-     * xclass: 'separator'.
-     * @name Separator
+     * @class KISSY.Separator
      */
     return Control.extend({
     }, {

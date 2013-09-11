@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 4 18:15
+build time: Sep 11 12:42
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -173,7 +173,7 @@ KISSY.add('anim/transition', function (S, Dom, Event, AnimBase) {
 }, {
     requires: ['dom', 'event', './base']
 });
-/**
+/*
  refer:
  - https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_animated_properties
  */

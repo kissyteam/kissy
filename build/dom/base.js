@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 3 19:05
+build time: Sep 11 12:44
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -502,8 +502,6 @@ KISSY.add('dom/base/attr', function (S, Dom, undefined) {
                         el[ name ] = undefined;
                         delete el[ name ];
                     } catch (e) {
-                        // S.log('delete el property error : ');
-                        // S.log(e);
                     }
                 }
             },
@@ -990,6 +988,7 @@ KISSY.add('dom/base/create', function (S, Dom, undefined) {
     var doc = S.Env.host.document,
         NodeType = Dom.NodeType,
         UA = S.UA,
+        logger= S.getLogger('s/dom'),
         ie = UA['ie'],
         DIV = 'div',
         PARENT_NODE = 'parentNode',
@@ -1453,7 +1452,7 @@ KISSY.add('dom/base/create', function (S, Dom, undefined) {
                 ret.appendChild(nodes[i]);
             }
         } else {
-            S.log('Unable to convert ' + nodes + ' to fragment.');
+            logger.error('Unable to convert ' + nodes + ' to fragment.');
         }
         return ret;
     }
@@ -1652,8 +1651,6 @@ KISSY.add('dom/base/data', function (S, Dom, undefined) {
                     delete elem[EXPANDO];
                 } catch (e) {
                     elem[EXPANDO] = undefined;
-                    //S.log('delete expando error : ');
-                    //S.log(e);
                 }
                 if (elem.removeAttribute) {
                     elem.removeAttribute(EXPANDO);
@@ -2556,6 +2553,7 @@ KISSY.add('dom/base/style', function (S, Dom, undefined) {
          @type window
          */S.Env.host,
         UA = S.UA,
+        logger= S.getLogger('s/dom'),
         Features = S.Features,
         getNodeName = Dom.nodeName,
         doc = WINDOW.document,
@@ -3060,7 +3058,7 @@ KISSY.add('dom/base/style', function (S, Dom, undefined) {
                     // EMPTY will unset style!
                     style[name] = val;
                 } catch (e) {
-                    S.log('css set error :' + e);
+                    logger.warn('css set error:' + e);
                 }
                 // #80 fix,font-family
                 if (val === EMPTY && style.removeAttribute) {

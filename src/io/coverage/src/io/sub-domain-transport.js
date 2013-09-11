@@ -231,11 +231,11 @@ if (! _$jscoverage['/io/sub-domain-transport.js']) {
   _$jscoverage['/io/sub-domain-transport.js'].lineData = [];
   _$jscoverage['/io/sub-domain-transport.js'].lineData[6] = 0;
   _$jscoverage['/io/sub-domain-transport.js'].lineData[7] = 0;
-  _$jscoverage['/io/sub-domain-transport.js'].lineData[13] = 0;
   _$jscoverage['/io/sub-domain-transport.js'].lineData[14] = 0;
-  _$jscoverage['/io/sub-domain-transport.js'].lineData[16] = 0;
+  _$jscoverage['/io/sub-domain-transport.js'].lineData[15] = 0;
   _$jscoverage['/io/sub-domain-transport.js'].lineData[17] = 0;
   _$jscoverage['/io/sub-domain-transport.js'].lineData[18] = 0;
+  _$jscoverage['/io/sub-domain-transport.js'].lineData[19] = 0;
   _$jscoverage['/io/sub-domain-transport.js'].lineData[22] = 0;
   _$jscoverage['/io/sub-domain-transport.js'].lineData[26] = 0;
   _$jscoverage['/io/sub-domain-transport.js'].lineData[34] = 0;
@@ -316,18 +316,18 @@ function visit127_36_1(result) {
 KISSY.add('io/sub-domain-transport', function(S, XhrTransportBase, Event, Dom) {
   _$jscoverage['/io/sub-domain-transport.js'].functionData[0]++;
   _$jscoverage['/io/sub-domain-transport.js'].lineData[7]++;
-  var PROXY_PAGE = '/sub_domain_proxy.html', doc = S.Env.host.document, iframeMap = {};
-  _$jscoverage['/io/sub-domain-transport.js'].lineData[13]++;
+  var PROXY_PAGE = '/sub_domain_proxy.html', logger = S.getLogger('s/io'), doc = S.Env.host.document, iframeMap = {};
+  _$jscoverage['/io/sub-domain-transport.js'].lineData[14]++;
   function SubDomainTransport(io) {
     _$jscoverage['/io/sub-domain-transport.js'].functionData[1]++;
-    _$jscoverage['/io/sub-domain-transport.js'].lineData[14]++;
+    _$jscoverage['/io/sub-domain-transport.js'].lineData[15]++;
     var self = this, c = io.config;
-    _$jscoverage['/io/sub-domain-transport.js'].lineData[16]++;
-    self.io = io;
     _$jscoverage['/io/sub-domain-transport.js'].lineData[17]++;
-    c.crossDomain = false;
+    self.io = io;
     _$jscoverage['/io/sub-domain-transport.js'].lineData[18]++;
-    S.log('use SubDomainTransport for: ' + c.url);
+    c.crossDomain = false;
+    _$jscoverage['/io/sub-domain-transport.js'].lineData[19]++;
+    logger.info('use SubDomainTransport for: ' + c.url);
   }
   _$jscoverage['/io/sub-domain-transport.js'].lineData[22]++;
   S.augment(SubDomainTransport, XhrTransportBase.proto, {

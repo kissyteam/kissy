@@ -229,7 +229,6 @@ if (! this._$jscoverage) {
 if (! _$jscoverage['/picker/year-panel/render.js']) {
   _$jscoverage['/picker/year-panel/render.js'] = {};
   _$jscoverage['/picker/year-panel/render.js'].lineData = [];
-  _$jscoverage['/picker/year-panel/render.js'].lineData[5] = 0;
   _$jscoverage['/picker/year-panel/render.js'].lineData[6] = 0;
   _$jscoverage['/picker/year-panel/render.js'].lineData[7] = 0;
   _$jscoverage['/picker/year-panel/render.js'].lineData[8] = 0;
@@ -247,25 +246,26 @@ if (! _$jscoverage['/picker/year-panel/render.js']) {
   _$jscoverage['/picker/year-panel/render.js'].lineData[20] = 0;
   _$jscoverage['/picker/year-panel/render.js'].lineData[21] = 0;
   _$jscoverage['/picker/year-panel/render.js'].lineData[22] = 0;
-  _$jscoverage['/picker/year-panel/render.js'].lineData[26] = 0;
-  _$jscoverage['/picker/year-panel/render.js'].lineData[29] = 0;
+  _$jscoverage['/picker/year-panel/render.js'].lineData[23] = 0;
+  _$jscoverage['/picker/year-panel/render.js'].lineData[27] = 0;
   _$jscoverage['/picker/year-panel/render.js'].lineData[30] = 0;
-  _$jscoverage['/picker/year-panel/render.js'].lineData[33] = 0;
-  _$jscoverage['/picker/year-panel/render.js'].lineData[35] = 0;
+  _$jscoverage['/picker/year-panel/render.js'].lineData[31] = 0;
+  _$jscoverage['/picker/year-panel/render.js'].lineData[34] = 0;
   _$jscoverage['/picker/year-panel/render.js'].lineData[36] = 0;
   _$jscoverage['/picker/year-panel/render.js'].lineData[37] = 0;
   _$jscoverage['/picker/year-panel/render.js'].lineData[38] = 0;
   _$jscoverage['/picker/year-panel/render.js'].lineData[39] = 0;
   _$jscoverage['/picker/year-panel/render.js'].lineData[40] = 0;
   _$jscoverage['/picker/year-panel/render.js'].lineData[41] = 0;
-  _$jscoverage['/picker/year-panel/render.js'].lineData[50] = 0;
-  _$jscoverage['/picker/year-panel/render.js'].lineData[60] = 0;
+  _$jscoverage['/picker/year-panel/render.js'].lineData[42] = 0;
+  _$jscoverage['/picker/year-panel/render.js'].lineData[51] = 0;
   _$jscoverage['/picker/year-panel/render.js'].lineData[61] = 0;
   _$jscoverage['/picker/year-panel/render.js'].lineData[62] = 0;
   _$jscoverage['/picker/year-panel/render.js'].lineData[63] = 0;
   _$jscoverage['/picker/year-panel/render.js'].lineData[64] = 0;
-  _$jscoverage['/picker/year-panel/render.js'].lineData[70] = 0;
+  _$jscoverage['/picker/year-panel/render.js'].lineData[65] = 0;
   _$jscoverage['/picker/year-panel/render.js'].lineData[71] = 0;
+  _$jscoverage['/picker/year-panel/render.js'].lineData[72] = 0;
 }
 if (! _$jscoverage['/picker/year-panel/render.js'].functionData) {
   _$jscoverage['/picker/year-panel/render.js'].functionData = [];
@@ -276,85 +276,85 @@ if (! _$jscoverage['/picker/year-panel/render.js'].functionData) {
 }
 if (! _$jscoverage['/picker/year-panel/render.js'].branchData) {
   _$jscoverage['/picker/year-panel/render.js'].branchData = {};
-  _$jscoverage['/picker/year-panel/render.js'].branchData['18'] = [];
-  _$jscoverage['/picker/year-panel/render.js'].branchData['18'][1] = new BranchData();
-  _$jscoverage['/picker/year-panel/render.js'].branchData['20'] = [];
-  _$jscoverage['/picker/year-panel/render.js'].branchData['20'][1] = new BranchData();
+  _$jscoverage['/picker/year-panel/render.js'].branchData['19'] = [];
+  _$jscoverage['/picker/year-panel/render.js'].branchData['19'][1] = new BranchData();
+  _$jscoverage['/picker/year-panel/render.js'].branchData['21'] = [];
+  _$jscoverage['/picker/year-panel/render.js'].branchData['21'][1] = new BranchData();
 }
-_$jscoverage['/picker/year-panel/render.js'].branchData['20'][1].init(58, 5, 'j < 4');
-function visit45_20_1(result) {
-  _$jscoverage['/picker/year-panel/render.js'].branchData['20'][1].ranCondition(result);
+_$jscoverage['/picker/year-panel/render.js'].branchData['21'][1].init(58, 5, 'j < 4');
+function visit45_21_1(result) {
+  _$jscoverage['/picker/year-panel/render.js'].branchData['21'][1].ranCondition(result);
   return result;
-}_$jscoverage['/picker/year-panel/render.js'].branchData['18'][1].init(500, 5, 'i < 3');
-function visit44_18_1(result) {
-  _$jscoverage['/picker/year-panel/render.js'].branchData['18'][1].ranCondition(result);
+}_$jscoverage['/picker/year-panel/render.js'].branchData['19'][1].init(500, 5, 'i < 3');
+function visit44_19_1(result) {
+  _$jscoverage['/picker/year-panel/render.js'].branchData['19'][1].ranCondition(result);
   return result;
-}_$jscoverage['/picker/year-panel/render.js'].lineData[5]++;
+}_$jscoverage['/picker/year-panel/render.js'].lineData[6]++;
 KISSY.add('date/picker/year-panel/render', function(S, Control, DateFormat, YearsTpl, YearPanelTpl) {
   _$jscoverage['/picker/year-panel/render.js'].functionData[0]++;
-  _$jscoverage['/picker/year-panel/render.js'].lineData[6]++;
+  _$jscoverage['/picker/year-panel/render.js'].lineData[7]++;
   function prepareYears(control) {
     _$jscoverage['/picker/year-panel/render.js'].functionData[1]++;
-    _$jscoverage['/picker/year-panel/render.js'].lineData[7]++;
-    var value = control.get('value');
     _$jscoverage['/picker/year-panel/render.js'].lineData[8]++;
-    var currentYear = value.getYear();
+    var value = control.get('value');
     _$jscoverage['/picker/year-panel/render.js'].lineData[9]++;
-    var startYear = parseInt(currentYear / 10) * 10;
+    var currentYear = value.getYear();
     _$jscoverage['/picker/year-panel/render.js'].lineData[10]++;
-    var preYear = startYear - 1;
+    var startYear = parseInt(currentYear / 10) * 10;
     _$jscoverage['/picker/year-panel/render.js'].lineData[11]++;
-    var current = value.clone();
+    var preYear = startYear - 1;
     _$jscoverage['/picker/year-panel/render.js'].lineData[12]++;
-    var locale = control.get('locale');
+    var current = value.clone();
     _$jscoverage['/picker/year-panel/render.js'].lineData[13]++;
-    var yearFormat = locale.yearFormat;
+    var locale = control.get('locale');
     _$jscoverage['/picker/year-panel/render.js'].lineData[14]++;
-    var dateLocale = value.getLocale();
+    var yearFormat = locale.yearFormat;
     _$jscoverage['/picker/year-panel/render.js'].lineData[15]++;
-    var dateFormatter = new DateFormat(yearFormat, dateLocale);
+    var dateLocale = value.getLocale();
     _$jscoverage['/picker/year-panel/render.js'].lineData[16]++;
-    var years = [];
+    var dateFormatter = new DateFormat(yearFormat, dateLocale);
     _$jscoverage['/picker/year-panel/render.js'].lineData[17]++;
-    var index = 0;
+    var years = [];
     _$jscoverage['/picker/year-panel/render.js'].lineData[18]++;
-    for (var i = 0; visit44_18_1(i < 3); i++) {
-      _$jscoverage['/picker/year-panel/render.js'].lineData[19]++;
-      years[i] = [];
+    var index = 0;
+    _$jscoverage['/picker/year-panel/render.js'].lineData[19]++;
+    for (var i = 0; visit44_19_1(i < 3); i++) {
       _$jscoverage['/picker/year-panel/render.js'].lineData[20]++;
-      for (var j = 0; visit45_20_1(j < 4); j++) {
-        _$jscoverage['/picker/year-panel/render.js'].lineData[21]++;
-        current.setYear(preYear + index);
+      years[i] = [];
+      _$jscoverage['/picker/year-panel/render.js'].lineData[21]++;
+      for (var j = 0; visit45_21_1(j < 4); j++) {
         _$jscoverage['/picker/year-panel/render.js'].lineData[22]++;
+        current.setYear(preYear + index);
+        _$jscoverage['/picker/year-panel/render.js'].lineData[23]++;
         years[i][j] = {
   content: preYear + index, 
   title: dateFormatter.format(current)};
-        _$jscoverage['/picker/year-panel/render.js'].lineData[26]++;
+        _$jscoverage['/picker/year-panel/render.js'].lineData[27]++;
         index++;
       }
     }
-    _$jscoverage['/picker/year-panel/render.js'].lineData[29]++;
-    control.years = years;
     _$jscoverage['/picker/year-panel/render.js'].lineData[30]++;
+    control.years = years;
+    _$jscoverage['/picker/year-panel/render.js'].lineData[31]++;
     return years;
   }
-  _$jscoverage['/picker/year-panel/render.js'].lineData[33]++;
+  _$jscoverage['/picker/year-panel/render.js'].lineData[34]++;
   return Control.getDefaultRender().extend({
   beforeCreateDom: function(renderData, childrenSelectors) {
   _$jscoverage['/picker/year-panel/render.js'].functionData[2]++;
-  _$jscoverage['/picker/year-panel/render.js'].lineData[35]++;
-  var control = this.control;
   _$jscoverage['/picker/year-panel/render.js'].lineData[36]++;
-  var value = control.get('value');
+  var control = this.control;
   _$jscoverage['/picker/year-panel/render.js'].lineData[37]++;
-  var currentYear = value.getYear();
+  var value = control.get('value');
   _$jscoverage['/picker/year-panel/render.js'].lineData[38]++;
-  var startYear = parseInt(currentYear / 10) * 10;
+  var currentYear = value.getYear();
   _$jscoverage['/picker/year-panel/render.js'].lineData[39]++;
-  var endYear = startYear + 9;
+  var startYear = parseInt(currentYear / 10) * 10;
   _$jscoverage['/picker/year-panel/render.js'].lineData[40]++;
-  var locale = control.get('locale');
+  var endYear = startYear + 9;
   _$jscoverage['/picker/year-panel/render.js'].lineData[41]++;
+  var locale = control.get('locale');
+  _$jscoverage['/picker/year-panel/render.js'].lineData[42]++;
   S.mix(renderData, {
   decadeSelectLabel: locale.decadeSelect, 
   years: prepareYears(control), 
@@ -363,7 +363,7 @@ KISSY.add('date/picker/year-panel/render', function(S, Control, DateFormat, Year
   year: value.getYear(), 
   previousDecadeLabel: locale.previousDecade, 
   nextDecadeLabel: locale.nextDecade});
-  _$jscoverage['/picker/year-panel/render.js'].lineData[50]++;
+  _$jscoverage['/picker/year-panel/render.js'].lineData[51]++;
   S.mix(childrenSelectors, {
   tbodyEl: '#ks-date-picker-year-panel-tbody-{id}', 
   previousDecadeBtn: '#ks-date-picker-year-panel-previous-decade-btn-{id}', 
@@ -373,23 +373,23 @@ KISSY.add('date/picker/year-panel/render', function(S, Control, DateFormat, Year
 }, 
   _onSetValue: function(value) {
   _$jscoverage['/picker/year-panel/render.js'].functionData[3]++;
-  _$jscoverage['/picker/year-panel/render.js'].lineData[60]++;
-  var control = this.control;
   _$jscoverage['/picker/year-panel/render.js'].lineData[61]++;
-  var currentYear = value.getYear();
+  var control = this.control;
   _$jscoverage['/picker/year-panel/render.js'].lineData[62]++;
-  var startYear = parseInt(currentYear / 10) * 10;
+  var currentYear = value.getYear();
   _$jscoverage['/picker/year-panel/render.js'].lineData[63]++;
-  var endYear = startYear + 9;
+  var startYear = parseInt(currentYear / 10) * 10;
   _$jscoverage['/picker/year-panel/render.js'].lineData[64]++;
+  var endYear = startYear + 9;
+  _$jscoverage['/picker/year-panel/render.js'].lineData[65]++;
   S.mix(this.renderData, {
   startYear: startYear, 
   endYear: endYear, 
   years: prepareYears(control), 
   year: value.getYear()});
-  _$jscoverage['/picker/year-panel/render.js'].lineData[70]++;
-  control.get('tbodyEl').html(this.renderTpl(YearsTpl));
   _$jscoverage['/picker/year-panel/render.js'].lineData[71]++;
+  control.get('tbodyEl').html(this.renderTpl(YearsTpl));
+  _$jscoverage['/picker/year-panel/render.js'].lineData[72]++;
   control.get('decadeSelectContentEl').html(startYear + '-' + endYear);
 }}, {
   ATTRS: {

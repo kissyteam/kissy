@@ -238,7 +238,6 @@ if (! _$jscoverage['/swf/ua.js']) {
   _$jscoverage['/swf/ua.js'].lineData[25] = 0;
   _$jscoverage['/swf/ua.js'].lineData[26] = 0;
   _$jscoverage['/swf/ua.js'].lineData[27] = 0;
-  _$jscoverage['/swf/ua.js'].lineData[29] = 0;
   _$jscoverage['/swf/ua.js'].lineData[35] = 0;
   _$jscoverage['/swf/ua.js'].lineData[36] = 0;
   _$jscoverage['/swf/ua.js'].lineData[40] = 0;
@@ -326,7 +325,7 @@ function visit6_62_1(result) {
 function visit5_58_1(result) {
   _$jscoverage['/swf/ua.js'].branchData['58'][1].ranCondition(result);
   return result;
-}_$jscoverage['/swf/ua.js'].branchData['35'][1].init(714, 4, '!ver');
+}_$jscoverage['/swf/ua.js'].branchData['35'][1].init(717, 4, '!ver');
 function visit4_35_1(result) {
   _$jscoverage['/swf/ua.js'].branchData['35'][1].ranCondition(result);
   return result;
@@ -364,8 +363,6 @@ KISSY.add('swf/ua', function(S, undefined) {
           _$jscoverage['/swf/ua.js'].lineData[27]++;
           ver = new ActiveXObject(SF + '.' + SF)['GetVariable']('$version');
         }        catch (ex) {
-  _$jscoverage['/swf/ua.js'].lineData[29]++;
-  S.log('getFlashVersion failed via ActiveXObject');
 }
       }
     }

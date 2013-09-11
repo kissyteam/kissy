@@ -230,7 +230,7 @@ if (! _$jscoverage['/io/methods.js']) {
   _$jscoverage['/io/methods.js'] = {};
   _$jscoverage['/io/methods.js'].lineData = [];
   _$jscoverage['/io/methods.js'].lineData[6] = 0;
-  _$jscoverage['/io/methods.js'].lineData[8] = 0;
+  _$jscoverage['/io/methods.js'].lineData[7] = 0;
   _$jscoverage['/io/methods.js'].lineData[15] = 0;
   _$jscoverage['/io/methods.js'].lineData[18] = 0;
   _$jscoverage['/io/methods.js'].lineData[30] = 0;
@@ -417,7 +417,7 @@ function visit111_231_1(result) {
 function visit110_209_1(result) {
   _$jscoverage['/io/methods.js'].branchData['209'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/methods.js'].branchData['203'][1].init(36, 12, 'e.stack || e');
+}_$jscoverage['/io/methods.js'].branchData['203'][1].init(43, 12, 'e.stack || e');
 function visit109_203_1(result) {
   _$jscoverage['/io/methods.js'].branchData['203'][1].ranCondition(result);
   return result;
@@ -568,8 +568,8 @@ function visit73_30_1(result) {
 }_$jscoverage['/io/methods.js'].lineData[6]++;
 KISSY.add('io/methods', function(S, IO, undefined) {
   _$jscoverage['/io/methods.js'].functionData[0]++;
-  _$jscoverage['/io/methods.js'].lineData[8]++;
-  var OK_CODE = 200, Promise = S.Promise, MULTIPLE_CHOICES = 300, NOT_MODIFIED = 304, rheaders = /^(.*?):[ \t]*([^\r\n]*)\r?$/mg;
+  _$jscoverage['/io/methods.js'].lineData[7]++;
+  var OK_CODE = 200, logger = S.getLogger('s/logger'), Promise = S.Promise, MULTIPLE_CHOICES = 300, NOT_MODIFIED = 304, rheaders = /^(.*?):[ \t]*([^\r\n]*)\r?$/mg;
   _$jscoverage['/io/methods.js'].lineData[15]++;
   function handleResponseData(io) {
     _$jscoverage['/io/methods.js'].functionData[1]++;
@@ -780,7 +780,7 @@ KISSY.add('io/methods', function(S, IO, undefined) {
         isSuccess = true;
       }      catch (e) {
   _$jscoverage['/io/methods.js'].lineData[203]++;
-  S.log(visit109_203_1(e.stack || e), 'error');
+  logger.error(visit109_203_1(e.stack || e));
   _$jscoverage['/io/methods.js'].lineData[204]++;
   statusText = 'parser error';
 }

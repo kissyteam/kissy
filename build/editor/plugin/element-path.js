@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Aug 27 21:53
+build time: Sep 11 12:46
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -10,6 +10,7 @@ build time: Aug 27 21:53
 */
 
 /**
+ * @ignore
  * ElementPath for debug.
  * @author yiminghe@gmail.com
  */

@@ -214,7 +214,7 @@ KISSY.add(function (S, UA,  io, Node) {
             // 否则 localhost:8888 和 localhost:9999 默认可以通信...
 
             // 标准浏览器是 cors 关系
-            var uploadRc = 'http://' + location.hostname + ':9999/' +
+            var uploadRc = 'http://' + location.hostname + ':'+SERVER_CONFIG.ports[1]+'/' +
                 'kissy/src/io/tests/others/form/upload-domain.jss';
 
             io({

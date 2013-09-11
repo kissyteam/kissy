@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Aug 27 21:51
+build time: Sep 11 12:43
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -29,6 +29,10 @@ KISSY.add("component/extension/shim", function (S) {
         "z-index: -1;" +
         "height: " + (ie6 ? "expression(this.parentNode.clientHeight)" : "100%") + ";" + "'/>";
 
+    /**
+     * create iframe shim for mixin.
+     * @class KISSY.Component.Extension.Shim
+     */
     function Shim() {
     }
 

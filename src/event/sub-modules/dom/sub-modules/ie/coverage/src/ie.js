@@ -229,7 +229,7 @@ if (! this._$jscoverage) {
 if (! _$jscoverage['/ie.js']) {
   _$jscoverage['/ie.js'] = {};
   _$jscoverage['/ie.js'].lineData = [];
-  _$jscoverage['/ie.js'].lineData[5] = 0;
+  _$jscoverage['/ie.js'].lineData[6] = 0;
 }
 if (! _$jscoverage['/ie.js'].functionData) {
   _$jscoverage['/ie.js'].functionData = [];
@@ -238,7 +238,7 @@ if (! _$jscoverage['/ie.js'].functionData) {
 if (! _$jscoverage['/ie.js'].branchData) {
   _$jscoverage['/ie.js'].branchData = {};
 }
-_$jscoverage['/ie.js'].lineData[5]++;
+_$jscoverage['/ie.js'].lineData[6]++;
 KISSY.add('event/dom/ie', function() {
   _$jscoverage['/ie.js'].functionData[0]++;
 }, {

@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Aug 27 22:00
+build time: Sep 11 12:52
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -118,6 +118,7 @@ KISSY.add('io/base', function (S, Event, undefined) {
 
     var rlocalProtocol = /^(?:about|app|app\-storage|.+\-extension|file|widget)$/,
         rspace = /\s+/,
+        logger= S.getLogger('s/io'),
         mirror = function (s) {
             return s;
         },
@@ -578,7 +579,7 @@ KISSY.add('io/base', function (S, Event, undefined) {
         } catch (e) {
             // Propagate exception as error if not done
             if (self.state < 2) {
-                S.log(e.stack || e, 'error');
+                logger.error(e.stack || e);
                 self._ioReady(-1, e.message);
                 // Simply rethrow otherwise
             } else {
@@ -676,6 +677,7 @@ KISSY.add('io/base', function (S, Event, undefined) {
 KISSY.add('io/xhr-transport-base', function (S, IO) {
     var OK_CODE = 200,
         win = S.Env.host,
+        logger= S.getLogger('s/io'),
     // http://msdn.microsoft.com/en-us/library/cc288060(v=vs.85).aspx
         _XDomainRequest = S.UA.ie > 7 && win['XDomainRequest'],
         NO_CONTENT_CODE = 204,
@@ -693,7 +695,6 @@ KISSY.add('io/xhr-transport-base', function (S, IO) {
         try {
             return new (refWin || win)['XMLHttpRequest']();
         } catch (e) {
-            S.log('createStandardXHR error: ' + _);
         }
         return undefined;
     }
@@ -702,7 +703,6 @@ KISSY.add('io/xhr-transport-base', function (S, IO) {
         try {
             return new (refWin || win)['ActiveXObject']('Microsoft.XMLHTTP');
         } catch (e) {
-            S.log('createActiveXHR error: ' + _);
         }
         return undefined;
     }
@@ -783,6 +783,7 @@ KISSY.add('io/xhr-transport-base', function (S, IO) {
 
             xhrFields = c['xhrFields'] || {};
 
+            // must set after open in mobile!
             if ('withCredentials' in xhrFields) {
                 if (!supportCORS) {
                     delete xhrFields.withCredentials;
@@ -878,7 +879,6 @@ KISSY.add('io/xhr-transport-base', function (S, IO) {
                 statusText,
                 xml,
                 c = io.config;
-            // S.log(nativeXhr.readyState+':'+nativeXhr.status);
             try {
                 //abort or complete
                 if (abort || nativeXhr.readyState == 4) {
@@ -947,8 +947,8 @@ KISSY.add('io/xhr-transport-base', function (S, IO) {
                         try {
                             statusText = nativeXhr.statusText;
                         } catch (e) {
-                            S.log('xhr statusText error: ');
-                            S.log(e);
+                            logger.error('xhr statusText error: ');
+                            logger.error(e);
                             // We normalize with Webkit giving an empty statusText
                             statusText = '';
                         }
@@ -988,6 +988,7 @@ KISSY.add('io/xhr-transport-base', function (S, IO) {
  */
 KISSY.add('io/sub-domain-transport', function (S, XhrTransportBase, Event, Dom) {
     var PROXY_PAGE = '/sub_domain_proxy.html',
+        logger= S.getLogger('s/io'),
         doc = S.Env.host.document,
         iframeMap = {
             // hostname:{iframe: , ready:}
@@ -998,9 +999,8 @@ KISSY.add('io/sub-domain-transport', function (S, XhrTransportBase, Event, Dom) 
             c = io.config;
         self.io = io;
         c.crossDomain = false;
-        S.log('use SubDomainTransport for: ' + c.url);
+        logger.info('use SubDomainTransport for: ' + c.url);
     }
-
 
     S.augment(SubDomainTransport, XhrTransportBase.proto, {
         // get nativeXhr from iframe document
@@ -1077,6 +1077,7 @@ KISSY.add('io/sub-domain-transport', function (S, XhrTransportBase, Event, Dom) 
 KISSY.add('io/xdr-flash-transport', function (S, IO, Dom) {
     var // current running request instances
         maps = {},
+        logger= S.getLogger('s/io'),
         ID = 'io_swf',
     // flash transporter
         flash,
@@ -1107,7 +1108,7 @@ KISSY.add('io/xdr-flash-transport', function (S, IO, Dom) {
     }
 
     function XdrFlashTransport(io) {
-        S.log('use XdrFlashTransport for: ' + io.config.url);
+        logger.info('use XdrFlashTransport for: ' + io.config.url);
         this.io = io;
     }
 
@@ -1122,7 +1123,6 @@ KISSY.add('io/xdr-flash-transport', function (S, IO, Dom) {
             _swf(xdr.src || (S.Config.base + 'io/assets/io.swf'), 1, 1);
             // 简便起见，用轮训
             if (!flash) {
-                // S.log('detect xdr flash');
                 setTimeout(function () {
                     self.send();
                 }, 200);
@@ -1145,7 +1145,6 @@ KISSY.add('io/xdr-flash-transport', function (S, IO, Dom) {
         },
 
         _xdrResponse: function (e, o) {
-            // S.log(e);
             var self = this,
                 ret,
                 id = o.id,
@@ -1184,7 +1183,6 @@ KISSY.add('io/xdr-flash-transport', function (S, IO, Dom) {
 
     /*called by flash*/
     IO['applyTo'] = function (_, cmd, args) {
-        // S.log(cmd + ' execute');
         var cmds = cmd.split('.').slice(1),
             func = IO;
         S.each(cmds, function (c) {
@@ -1220,6 +1218,7 @@ KISSY.add('io/xdr-flash-transport', function (S, IO, Dom) {
 KISSY.add('io/xhr-transport', function (S, IO, XhrTransportBase, SubDomainTransport, XdrFlashTransport) {
     var win = S.Env.host,
         doc = win.document,
+        logger = S.getLogger('s/io'),
         _XDomainRequest = XhrTransportBase._XDomainRequest;
 
     function isSubDomain(hostname) {
@@ -1261,7 +1260,10 @@ KISSY.add('io/xhr-transport', function (S, IO, XhrTransportBase, SubDomainTransp
         }
 
         xhr = self.nativeXhr = XhrTransportBase.nativeXhr(crossDomain);
-        S.log('crossDomain: ' + crossDomain + ', use ' + (_XDomainRequest && (xhr instanceof _XDomainRequest) ? 'XDomainRequest' : 'XhrTransport') + ' for: ' + c.url);
+        logger.debug('crossDomain: ' + crossDomain + ', use ' +
+            (_XDomainRequest && (xhr instanceof _XDomainRequest) ?
+                'XDomainRequest' :
+                'XhrTransport') + ' for: ' + c.url);
 
         return self;
     }
@@ -1299,6 +1301,7 @@ KISSY.add('io/xhr-transport', function (S, IO, XhrTransportBase, SubDomainTransp
 KISSY.add('io/script-transport', function (S, IO, _, undefined) {
     var win = S.Env.host,
         doc = win.document,
+        logger= S.getLogger('s/io'),
         OK_CODE = 200,
         ERROR_CODE = 500;
 
@@ -1333,7 +1336,7 @@ KISSY.add('io/script-transport', function (S, IO, _, undefined) {
             return new (IO['getTransport']('*'))(io);
         }
         this.io = io;
-        S.log('use ScriptTransport for: ' + config.url);
+        logger.info('use ScriptTransport for: ' + config.url);
         return this;
     }
 
@@ -1473,8 +1476,6 @@ KISSY.add('io/jsonp', function (S, IO) {
                     try {
                         delete win[ jsonpCallback ];
                     } catch (e) {
-                        //S.log('delete window variable error : ');
-                        //S.log(e);
                     }
                 } else if (response) {
                     // after io success handler called
@@ -1601,6 +1602,7 @@ KISSY.add('io/form', function (S, IO, Dom, FormSerializer) {
 KISSY.add('io/iframe-transport', function (S, Dom, Event, IO) {
     var doc = S.Env.host.document,
         OK_CODE = 200,
+        logger= S.getLogger('s/io'),
         ERROR_CODE = 500,
         BREATH_INTERVAL = 30,
         iframeConverter = S.clone(IO.getConfig().converters.text);
@@ -1682,7 +1684,7 @@ KISSY.add('io/iframe-transport', function (S, Dom, Event, IO) {
 
     function IframeTransport(io) {
         this.io = io;
-        S.log('use IframeTransport for: ' + io.config.url);
+        logger.info('use IframeTransport for: ' + io.config.url);
     }
 
     S.augment(IframeTransport, {
@@ -1846,8 +1848,8 @@ KISSY.add('io/iframe-transport', function (S, Dom, Event, IO) {
  * @author yiminghe@gmail.com
  */
 KISSY.add('io/methods', function (S, IO, undefined) {
-
     var OK_CODE = 200,
+        logger= S.getLogger('s/logger'),
         Promise = S.Promise,
         MULTIPLE_CHOICES = 300,
         NOT_MODIFIED = 304,
@@ -2042,7 +2044,7 @@ KISSY.add('io/methods', function (S, IO, undefined) {
                             statusText = 'success';
                             isSuccess = true;
                         } catch (e) {
-                            S.log(e.stack || e, 'error');
+                            logger.error(e.stack || e);
                             statusText = 'parser error';
                         }
                     }

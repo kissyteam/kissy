@@ -229,23 +229,23 @@ if (! this._$jscoverage) {
 if (! _$jscoverage['/maximize.js']) {
   _$jscoverage['/maximize.js'] = {};
   _$jscoverage['/maximize.js'].lineData = [];
-  _$jscoverage['/maximize.js'].lineData[5] = 0;
   _$jscoverage['/maximize.js'].lineData[6] = 0;
-  _$jscoverage['/maximize.js'].lineData[11] = 0;
-  _$jscoverage['/maximize.js'].lineData[15] = 0;
-  _$jscoverage['/maximize.js'].lineData[17] = 0;
+  _$jscoverage['/maximize.js'].lineData[7] = 0;
+  _$jscoverage['/maximize.js'].lineData[12] = 0;
+  _$jscoverage['/maximize.js'].lineData[16] = 0;
   _$jscoverage['/maximize.js'].lineData[18] = 0;
-  _$jscoverage['/maximize.js'].lineData[22] = 0;
+  _$jscoverage['/maximize.js'].lineData[19] = 0;
   _$jscoverage['/maximize.js'].lineData[23] = 0;
   _$jscoverage['/maximize.js'].lineData[24] = 0;
   _$jscoverage['/maximize.js'].lineData[25] = 0;
   _$jscoverage['/maximize.js'].lineData[26] = 0;
   _$jscoverage['/maximize.js'].lineData[27] = 0;
-  _$jscoverage['/maximize.js'].lineData[29] = 0;
+  _$jscoverage['/maximize.js'].lineData[28] = 0;
   _$jscoverage['/maximize.js'].lineData[30] = 0;
   _$jscoverage['/maximize.js'].lineData[31] = 0;
-  _$jscoverage['/maximize.js'].lineData[34] = 0;
-  _$jscoverage['/maximize.js'].lineData[43] = 0;
+  _$jscoverage['/maximize.js'].lineData[32] = 0;
+  _$jscoverage['/maximize.js'].lineData[35] = 0;
+  _$jscoverage['/maximize.js'].lineData[44] = 0;
 }
 if (! _$jscoverage['/maximize.js'].functionData) {
   _$jscoverage['/maximize.js'].functionData = [];
@@ -256,60 +256,60 @@ if (! _$jscoverage['/maximize.js'].functionData) {
 }
 if (! _$jscoverage['/maximize.js'].branchData) {
   _$jscoverage['/maximize.js'].branchData = {};
-  _$jscoverage['/maximize.js'].branchData['24'] = [];
-  _$jscoverage['/maximize.js'].branchData['24'][1] = new BranchData();
+  _$jscoverage['/maximize.js'].branchData['25'] = [];
+  _$jscoverage['/maximize.js'].branchData['25'][1] = new BranchData();
 }
-_$jscoverage['/maximize.js'].branchData['24'][1].init(132, 7, 'checked');
-function visit1_24_1(result) {
-  _$jscoverage['/maximize.js'].branchData['24'][1].ranCondition(result);
+_$jscoverage['/maximize.js'].branchData['25'][1].init(132, 7, 'checked');
+function visit1_25_1(result) {
+  _$jscoverage['/maximize.js'].branchData['25'][1].ranCondition(result);
   return result;
-}_$jscoverage['/maximize.js'].lineData[5]++;
+}_$jscoverage['/maximize.js'].lineData[6]++;
 KISSY.add("editor/plugin/maximize", function(S, Editor, maximizeCmd) {
   _$jscoverage['/maximize.js'].functionData[0]++;
-  _$jscoverage['/maximize.js'].lineData[6]++;
+  _$jscoverage['/maximize.js'].lineData[7]++;
   var MAXIMIZE_CLASS = "maximize", RESTORE_CLASS = "restore", MAXIMIZE_TIP = "\u5168\u5c4f", RESTORE_TIP = "\u53d6\u6d88\u5168\u5c4f";
-  _$jscoverage['/maximize.js'].lineData[11]++;
+  _$jscoverage['/maximize.js'].lineData[12]++;
   function maximizePlugin() {
     _$jscoverage['/maximize.js'].functionData[1]++;
   }
-  _$jscoverage['/maximize.js'].lineData[15]++;
+  _$jscoverage['/maximize.js'].lineData[16]++;
   S.augment(maximizePlugin, {
   pluginRenderUI: function(editor) {
   _$jscoverage['/maximize.js'].functionData[2]++;
-  _$jscoverage['/maximize.js'].lineData[17]++;
-  maximizeCmd.init(editor);
   _$jscoverage['/maximize.js'].lineData[18]++;
+  maximizeCmd.init(editor);
+  _$jscoverage['/maximize.js'].lineData[19]++;
   editor.addButton("maximize", {
   tooltip: MAXIMIZE_TIP, 
   listeners: {
   click: function() {
   _$jscoverage['/maximize.js'].functionData[3]++;
-  _$jscoverage['/maximize.js'].lineData[22]++;
-  var self = this;
   _$jscoverage['/maximize.js'].lineData[23]++;
-  var checked = self.get("checked");
+  var self = this;
   _$jscoverage['/maximize.js'].lineData[24]++;
-  if (visit1_24_1(checked)) {
-    _$jscoverage['/maximize.js'].lineData[25]++;
-    editor.execCommand("maximizeWindow");
+  var checked = self.get("checked");
+  _$jscoverage['/maximize.js'].lineData[25]++;
+  if (visit1_25_1(checked)) {
     _$jscoverage['/maximize.js'].lineData[26]++;
-    self.set("tooltip", RESTORE_TIP);
+    editor.execCommand("maximizeWindow");
     _$jscoverage['/maximize.js'].lineData[27]++;
+    self.set("tooltip", RESTORE_TIP);
+    _$jscoverage['/maximize.js'].lineData[28]++;
     self.set("contentCls", RESTORE_CLASS);
   } else {
-    _$jscoverage['/maximize.js'].lineData[29]++;
-    editor.execCommand("restoreWindow");
     _$jscoverage['/maximize.js'].lineData[30]++;
-    self.set("tooltip", MAXIMIZE_TIP);
+    editor.execCommand("restoreWindow");
     _$jscoverage['/maximize.js'].lineData[31]++;
+    self.set("tooltip", MAXIMIZE_TIP);
+    _$jscoverage['/maximize.js'].lineData[32]++;
     self.set("contentCls", MAXIMIZE_CLASS);
   }
-  _$jscoverage['/maximize.js'].lineData[34]++;
+  _$jscoverage['/maximize.js'].lineData[35]++;
   editor.focus();
 }}, 
   checkable: true});
 }});
-  _$jscoverage['/maximize.js'].lineData[43]++;
+  _$jscoverage['/maximize.js'].lineData[44]++;
   return maximizePlugin;
 }, {
   requires: ['editor', './maximize/cmd']});

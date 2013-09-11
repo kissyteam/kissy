@@ -230,7 +230,7 @@ if (! _$jscoverage['/dd/ddm.js']) {
   _$jscoverage['/dd/ddm.js'] = {};
   _$jscoverage['/dd/ddm.js'].lineData = [];
   _$jscoverage['/dd/ddm.js'].lineData[6] = 0;
-  _$jscoverage['/dd/ddm.js'].lineData[8] = 0;
+  _$jscoverage['/dd/ddm.js'].lineData[7] = 0;
   _$jscoverage['/dd/ddm.js'].lineData[22] = 0;
   _$jscoverage['/dd/ddm.js'].lineData[39] = 0;
   _$jscoverage['/dd/ddm.js'].lineData[49] = 0;
@@ -348,53 +348,53 @@ if (! _$jscoverage['/dd/ddm.js']) {
   _$jscoverage['/dd/ddm.js'].lineData[435] = 0;
   _$jscoverage['/dd/ddm.js'].lineData[436] = 0;
   _$jscoverage['/dd/ddm.js'].lineData[437] = 0;
-  _$jscoverage['/dd/ddm.js'].lineData[439] = 0;
   _$jscoverage['/dd/ddm.js'].lineData[440] = 0;
-  _$jscoverage['/dd/ddm.js'].lineData[447] = 0;
+  _$jscoverage['/dd/ddm.js'].lineData[441] = 0;
   _$jscoverage['/dd/ddm.js'].lineData[448] = 0;
   _$jscoverage['/dd/ddm.js'].lineData[449] = 0;
   _$jscoverage['/dd/ddm.js'].lineData[450] = 0;
   _$jscoverage['/dd/ddm.js'].lineData[451] = 0;
-  _$jscoverage['/dd/ddm.js'].lineData[455] = 0;
+  _$jscoverage['/dd/ddm.js'].lineData[452] = 0;
   _$jscoverage['/dd/ddm.js'].lineData[456] = 0;
   _$jscoverage['/dd/ddm.js'].lineData[457] = 0;
   _$jscoverage['/dd/ddm.js'].lineData[458] = 0;
   _$jscoverage['/dd/ddm.js'].lineData[459] = 0;
   _$jscoverage['/dd/ddm.js'].lineData[460] = 0;
-  _$jscoverage['/dd/ddm.js'].lineData[465] = 0;
+  _$jscoverage['/dd/ddm.js'].lineData[461] = 0;
   _$jscoverage['/dd/ddm.js'].lineData[466] = 0;
   _$jscoverage['/dd/ddm.js'].lineData[467] = 0;
   _$jscoverage['/dd/ddm.js'].lineData[468] = 0;
   _$jscoverage['/dd/ddm.js'].lineData[469] = 0;
   _$jscoverage['/dd/ddm.js'].lineData[470] = 0;
-  _$jscoverage['/dd/ddm.js'].lineData[476] = 0;
+  _$jscoverage['/dd/ddm.js'].lineData[471] = 0;
   _$jscoverage['/dd/ddm.js'].lineData[477] = 0;
   _$jscoverage['/dd/ddm.js'].lineData[478] = 0;
   _$jscoverage['/dd/ddm.js'].lineData[479] = 0;
   _$jscoverage['/dd/ddm.js'].lineData[480] = 0;
-  _$jscoverage['/dd/ddm.js'].lineData[482] = 0;
-  _$jscoverage['/dd/ddm.js'].lineData[490] = 0;
+  _$jscoverage['/dd/ddm.js'].lineData[481] = 0;
+  _$jscoverage['/dd/ddm.js'].lineData[483] = 0;
   _$jscoverage['/dd/ddm.js'].lineData[491] = 0;
-  _$jscoverage['/dd/ddm.js'].lineData[497] = 0;
+  _$jscoverage['/dd/ddm.js'].lineData[492] = 0;
   _$jscoverage['/dd/ddm.js'].lineData[498] = 0;
   _$jscoverage['/dd/ddm.js'].lineData[499] = 0;
-  _$jscoverage['/dd/ddm.js'].lineData[501] = 0;
-  _$jscoverage['/dd/ddm.js'].lineData[504] = 0;
+  _$jscoverage['/dd/ddm.js'].lineData[500] = 0;
+  _$jscoverage['/dd/ddm.js'].lineData[502] = 0;
   _$jscoverage['/dd/ddm.js'].lineData[505] = 0;
-  _$jscoverage['/dd/ddm.js'].lineData[509] = 0;
-  _$jscoverage['/dd/ddm.js'].lineData[517] = 0;
+  _$jscoverage['/dd/ddm.js'].lineData[506] = 0;
+  _$jscoverage['/dd/ddm.js'].lineData[510] = 0;
   _$jscoverage['/dd/ddm.js'].lineData[518] = 0;
-  _$jscoverage['/dd/ddm.js'].lineData[521] = 0;
+  _$jscoverage['/dd/ddm.js'].lineData[519] = 0;
   _$jscoverage['/dd/ddm.js'].lineData[522] = 0;
   _$jscoverage['/dd/ddm.js'].lineData[523] = 0;
   _$jscoverage['/dd/ddm.js'].lineData[524] = 0;
-  _$jscoverage['/dd/ddm.js'].lineData[528] = 0;
+  _$jscoverage['/dd/ddm.js'].lineData[525] = 0;
   _$jscoverage['/dd/ddm.js'].lineData[529] = 0;
   _$jscoverage['/dd/ddm.js'].lineData[530] = 0;
   _$jscoverage['/dd/ddm.js'].lineData[531] = 0;
   _$jscoverage['/dd/ddm.js'].lineData[532] = 0;
   _$jscoverage['/dd/ddm.js'].lineData[533] = 0;
-  _$jscoverage['/dd/ddm.js'].lineData[535] = 0;
+  _$jscoverage['/dd/ddm.js'].lineData[534] = 0;
+  _$jscoverage['/dd/ddm.js'].lineData[536] = 0;
 }
 if (! _$jscoverage['/dd/ddm.js'].functionData) {
   _$jscoverage['/dd/ddm.js'].functionData = [];
@@ -504,23 +504,20 @@ if (! _$jscoverage['/dd/ddm.js'].branchData) {
   _$jscoverage['/dd/ddm.js'].branchData['420'][1] = new BranchData();
   _$jscoverage['/dd/ddm.js'].branchData['427'] = [];
   _$jscoverage['/dd/ddm.js'].branchData['427'][1] = new BranchData();
-  _$jscoverage['/dd/ddm.js'].branchData['439'] = [];
-  _$jscoverage['/dd/ddm.js'].branchData['439'][1] = new BranchData();
-  _$jscoverage['/dd/ddm.js'].branchData['450'] = [];
-  _$jscoverage['/dd/ddm.js'].branchData['450'][1] = new BranchData();
-  _$jscoverage['/dd/ddm.js'].branchData['458'] = [];
-  _$jscoverage['/dd/ddm.js'].branchData['458'][1] = new BranchData();
-  _$jscoverage['/dd/ddm.js'].branchData['468'] = [];
-  _$jscoverage['/dd/ddm.js'].branchData['468'][1] = new BranchData();
-  _$jscoverage['/dd/ddm.js'].branchData['478'] = [];
-  _$jscoverage['/dd/ddm.js'].branchData['478'][1] = new BranchData();
-  _$jscoverage['/dd/ddm.js'].branchData['484'] = [];
-  _$jscoverage['/dd/ddm.js'].branchData['484'][1] = new BranchData();
-  _$jscoverage['/dd/ddm.js'].branchData['486'] = [];
-  _$jscoverage['/dd/ddm.js'].branchData['486'][1] = new BranchData();
-  _$jscoverage['/dd/ddm.js'].branchData['491'] = [];
-  _$jscoverage['/dd/ddm.js'].branchData['491'][1] = new BranchData();
-  _$jscoverage['/dd/ddm.js'].branchData['491'][2] = new BranchData();
+  _$jscoverage['/dd/ddm.js'].branchData['440'] = [];
+  _$jscoverage['/dd/ddm.js'].branchData['440'][1] = new BranchData();
+  _$jscoverage['/dd/ddm.js'].branchData['451'] = [];
+  _$jscoverage['/dd/ddm.js'].branchData['451'][1] = new BranchData();
+  _$jscoverage['/dd/ddm.js'].branchData['459'] = [];
+  _$jscoverage['/dd/ddm.js'].branchData['459'][1] = new BranchData();
+  _$jscoverage['/dd/ddm.js'].branchData['469'] = [];
+  _$jscoverage['/dd/ddm.js'].branchData['469'][1] = new BranchData();
+  _$jscoverage['/dd/ddm.js'].branchData['479'] = [];
+  _$jscoverage['/dd/ddm.js'].branchData['479'][1] = new BranchData();
+  _$jscoverage['/dd/ddm.js'].branchData['485'] = [];
+  _$jscoverage['/dd/ddm.js'].branchData['485'][1] = new BranchData();
+  _$jscoverage['/dd/ddm.js'].branchData['487'] = [];
+  _$jscoverage['/dd/ddm.js'].branchData['487'][1] = new BranchData();
   _$jscoverage['/dd/ddm.js'].branchData['492'] = [];
   _$jscoverage['/dd/ddm.js'].branchData['492'][1] = new BranchData();
   _$jscoverage['/dd/ddm.js'].branchData['492'][2] = new BranchData();
@@ -529,84 +526,87 @@ if (! _$jscoverage['/dd/ddm.js'].branchData) {
   _$jscoverage['/dd/ddm.js'].branchData['493'][2] = new BranchData();
   _$jscoverage['/dd/ddm.js'].branchData['494'] = [];
   _$jscoverage['/dd/ddm.js'].branchData['494'][1] = new BranchData();
-  _$jscoverage['/dd/ddm.js'].branchData['498'] = [];
-  _$jscoverage['/dd/ddm.js'].branchData['498'][1] = new BranchData();
-  _$jscoverage['/dd/ddm.js'].branchData['498'][2] = new BranchData();
-  _$jscoverage['/dd/ddm.js'].branchData['498'][3] = new BranchData();
-  _$jscoverage['/dd/ddm.js'].branchData['522'] = [];
-  _$jscoverage['/dd/ddm.js'].branchData['522'][1] = new BranchData();
+  _$jscoverage['/dd/ddm.js'].branchData['494'][2] = new BranchData();
+  _$jscoverage['/dd/ddm.js'].branchData['495'] = [];
+  _$jscoverage['/dd/ddm.js'].branchData['495'][1] = new BranchData();
+  _$jscoverage['/dd/ddm.js'].branchData['499'] = [];
+  _$jscoverage['/dd/ddm.js'].branchData['499'][1] = new BranchData();
+  _$jscoverage['/dd/ddm.js'].branchData['499'][2] = new BranchData();
+  _$jscoverage['/dd/ddm.js'].branchData['499'][3] = new BranchData();
+  _$jscoverage['/dd/ddm.js'].branchData['523'] = [];
+  _$jscoverage['/dd/ddm.js'].branchData['523'][1] = new BranchData();
 }
-_$jscoverage['/dd/ddm.js'].branchData['522'][1].init(14, 4, 'node');
-function visit58_522_1(result) {
-  _$jscoverage['/dd/ddm.js'].branchData['522'][1].ranCondition(result);
+_$jscoverage['/dd/ddm.js'].branchData['523'][1].init(14, 4, 'node');
+function visit58_523_1(result) {
+  _$jscoverage['/dd/ddm.js'].branchData['523'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/ddm.js'].branchData['498'][3].init(45, 27, 'region.left >= region.right');
-function visit57_498_3(result) {
-  _$jscoverage['/dd/ddm.js'].branchData['498'][3].ranCondition(result);
+}_$jscoverage['/dd/ddm.js'].branchData['499'][3].init(45, 27, 'region.left >= region.right');
+function visit57_499_3(result) {
+  _$jscoverage['/dd/ddm.js'].branchData['499'][3].ranCondition(result);
   return result;
-}_$jscoverage['/dd/ddm.js'].branchData['498'][2].init(14, 27, 'region.top >= region.bottom');
-function visit56_498_2(result) {
-  _$jscoverage['/dd/ddm.js'].branchData['498'][2].ranCondition(result);
+}_$jscoverage['/dd/ddm.js'].branchData['499'][2].init(14, 27, 'region.top >= region.bottom');
+function visit56_499_2(result) {
+  _$jscoverage['/dd/ddm.js'].branchData['499'][2].ranCondition(result);
   return result;
-}_$jscoverage['/dd/ddm.js'].branchData['498'][1].init(14, 58, 'region.top >= region.bottom || region.left >= region.right');
-function visit55_498_1(result) {
-  _$jscoverage['/dd/ddm.js'].branchData['498'][1].ranCondition(result);
+}_$jscoverage['/dd/ddm.js'].branchData['499'][1].init(14, 58, 'region.top >= region.bottom || region.left >= region.right');
+function visit55_499_1(result) {
+  _$jscoverage['/dd/ddm.js'].branchData['499'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/ddm.js'].branchData['494'][1].init(41, 28, 'region.bottom >= pointer.top');
-function visit54_494_1(result) {
+}_$jscoverage['/dd/ddm.js'].branchData['495'][1].init(41, 28, 'region.bottom >= pointer.top');
+function visit54_495_1(result) {
+  _$jscoverage['/dd/ddm.js'].branchData['495'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/dd/ddm.js'].branchData['494'][2].init(109, 25, 'region.top <= pointer.top');
+function visit53_494_2(result) {
+  _$jscoverage['/dd/ddm.js'].branchData['494'][2].ranCondition(result);
+  return result;
+}_$jscoverage['/dd/ddm.js'].branchData['494'][1].init(44, 70, 'region.top <= pointer.top && region.bottom >= pointer.top');
+function visit52_494_1(result) {
   _$jscoverage['/dd/ddm.js'].branchData['494'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/ddm.js'].branchData['493'][2].init(109, 25, 'region.top <= pointer.top');
-function visit53_493_2(result) {
+}_$jscoverage['/dd/ddm.js'].branchData['493'][2].init(63, 28, 'region.right >= pointer.left');
+function visit51_493_2(result) {
   _$jscoverage['/dd/ddm.js'].branchData['493'][2].ranCondition(result);
   return result;
-}_$jscoverage['/dd/ddm.js'].branchData['493'][1].init(44, 70, 'region.top <= pointer.top && region.bottom >= pointer.top');
-function visit52_493_1(result) {
+}_$jscoverage['/dd/ddm.js'].branchData['493'][1].init(43, 115, 'region.right >= pointer.left && region.top <= pointer.top && region.bottom >= pointer.top');
+function visit50_493_1(result) {
   _$jscoverage['/dd/ddm.js'].branchData['493'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/ddm.js'].branchData['492'][2].init(63, 28, 'region.right >= pointer.left');
-function visit51_492_2(result) {
+}_$jscoverage['/dd/ddm.js'].branchData['492'][2].init(17, 27, 'region.left <= pointer.left');
+function visit49_492_2(result) {
   _$jscoverage['/dd/ddm.js'].branchData['492'][2].ranCondition(result);
   return result;
-}_$jscoverage['/dd/ddm.js'].branchData['492'][1].init(43, 115, 'region.right >= pointer.left && region.top <= pointer.top && region.bottom >= pointer.top');
-function visit50_492_1(result) {
+}_$jscoverage['/dd/ddm.js'].branchData['492'][1].init(17, 159, 'region.left <= pointer.left && region.right >= pointer.left && region.top <= pointer.top && region.bottom >= pointer.top');
+function visit48_492_1(result) {
   _$jscoverage['/dd/ddm.js'].branchData['492'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/ddm.js'].branchData['491'][2].init(17, 27, 'region.left <= pointer.left');
-function visit49_491_2(result) {
-  _$jscoverage['/dd/ddm.js'].branchData['491'][2].ranCondition(result);
+}_$jscoverage['/dd/ddm.js'].branchData['487'][1].init(179, 45, 'node.__dd_cached_height || node.outerHeight()');
+function visit47_487_1(result) {
+  _$jscoverage['/dd/ddm.js'].branchData['487'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/ddm.js'].branchData['491'][1].init(17, 159, 'region.left <= pointer.left && region.right >= pointer.left && region.top <= pointer.top && region.bottom >= pointer.top');
-function visit48_491_1(result) {
-  _$jscoverage['/dd/ddm.js'].branchData['491'][1].ranCondition(result);
+}_$jscoverage['/dd/ddm.js'].branchData['485'][1].init(68, 43, 'node.__dd_cached_width || node.outerWidth()');
+function visit46_485_1(result) {
+  _$jscoverage['/dd/ddm.js'].branchData['485'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/ddm.js'].branchData['486'][1].init(179, 45, 'node.__dd_cached_height || node.outerHeight()');
-function visit47_486_1(result) {
-  _$jscoverage['/dd/ddm.js'].branchData['486'][1].ranCondition(result);
+}_$jscoverage['/dd/ddm.js'].branchData['479'][1].init(51, 23, '!node.__dd_cached_width');
+function visit45_479_1(result) {
+  _$jscoverage['/dd/ddm.js'].branchData['479'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/ddm.js'].branchData['484'][1].init(68, 43, 'node.__dd_cached_width || node.outerWidth()');
-function visit46_484_1(result) {
-  _$jscoverage['/dd/ddm.js'].branchData['484'][1].ranCondition(result);
+}_$jscoverage['/dd/ddm.js'].branchData['469'][1].init(99, 12, 'drops.length');
+function visit44_469_1(result) {
+  _$jscoverage['/dd/ddm.js'].branchData['469'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/ddm.js'].branchData['478'][1].init(51, 23, '!node.__dd_cached_width');
-function visit45_478_1(result) {
-  _$jscoverage['/dd/ddm.js'].branchData['478'][1].ranCondition(result);
+}_$jscoverage['/dd/ddm.js'].branchData['459'][1].init(99, 12, 'drops.length');
+function visit43_459_1(result) {
+  _$jscoverage['/dd/ddm.js'].branchData['459'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/ddm.js'].branchData['468'][1].init(99, 12, 'drops.length');
-function visit44_468_1(result) {
-  _$jscoverage['/dd/ddm.js'].branchData['468'][1].ranCondition(result);
+}_$jscoverage['/dd/ddm.js'].branchData['451'][1].init(128, 23, 'doc.body.releaseCapture');
+function visit42_451_1(result) {
+  _$jscoverage['/dd/ddm.js'].branchData['451'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/ddm.js'].branchData['458'][1].init(99, 12, 'drops.length');
-function visit43_458_1(result) {
-  _$jscoverage['/dd/ddm.js'].branchData['458'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/dd/ddm.js'].branchData['450'][1].init(128, 23, 'doc.body.releaseCapture');
-function visit42_450_1(result) {
-  _$jscoverage['/dd/ddm.js'].branchData['450'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/dd/ddm.js'].branchData['439'][1].init(193, 19, 'doc.body.setCapture');
-function visit41_439_1(result) {
-  _$jscoverage['/dd/ddm.js'].branchData['439'][1].ranCondition(result);
+}_$jscoverage['/dd/ddm.js'].branchData['440'][1].init(320, 19, 'doc.body.setCapture');
+function visit41_440_1(result) {
+  _$jscoverage['/dd/ddm.js'].branchData['440'][1].ranCondition(result);
   return result;
 }_$jscoverage['/dd/ddm.js'].branchData['427'][1].init(421, 3, 'ie6');
 function visit40_427_1(result) {
@@ -764,15 +764,15 @@ function visit3_86_1(result) {
 function visit2_59_1(result) {
   _$jscoverage['/dd/ddm.js'].branchData['59'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dd/ddm.js'].branchData['14'][1].init(156, 14, 'UA[\'ie\'] === 6');
+}_$jscoverage['/dd/ddm.js'].branchData['14'][1].init(196, 14, 'UA[\'ie\'] === 6');
 function visit1_14_1(result) {
   _$jscoverage['/dd/ddm.js'].branchData['14'][1].ranCondition(result);
   return result;
 }_$jscoverage['/dd/ddm.js'].lineData[6]++;
 KISSY.add('dd/ddm', function(S, Node, Base, undefined) {
   _$jscoverage['/dd/ddm.js'].functionData[0]++;
-  _$jscoverage['/dd/ddm.js'].lineData[8]++;
-  var UA = S.UA, $ = Node.all, win = S.Env.host, doc = win.document, $doc = $(doc), $win = $(win), ie6 = visit1_14_1(UA['ie'] === 6), PIXEL_THRESH = 3, BUFFER_TIME = 1, MOVE_DELAY = 30, SHIM_Z_INDEX = 999999;
+  _$jscoverage['/dd/ddm.js'].lineData[7]++;
+  var UA = S.UA, $ = Node.all, logger = S.getLogger('dd/ddm'), win = S.Env.host, doc = win.document, $doc = $(doc), $win = $(win), ie6 = visit1_14_1(UA['ie'] === 6), PIXEL_THRESH = 3, BUFFER_TIME = 1, MOVE_DELAY = 30, SHIM_Z_INDEX = 999999;
   _$jscoverage['/dd/ddm.js'].lineData[22]++;
   var Gesture = Node.Gesture, DRAG_MOVE_EVENT = Gesture.move, DRAG_END_EVENT = Gesture.end;
   _$jscoverage['/dd/ddm.js'].lineData[39]++;
@@ -1096,137 +1096,137 @@ KISSY.add('dd/ddm', function(S, Node, Base, undefined) {
     $doc.on(DRAG_END_EVENT, self._end, self);
     _$jscoverage['/dd/ddm.js'].lineData[437]++;
     $doc.on(DRAG_MOVE_EVENT, throttleMove, self);
-    _$jscoverage['/dd/ddm.js'].lineData[439]++;
-    if (visit41_439_1(doc.body.setCapture)) {
-      _$jscoverage['/dd/ddm.js'].lineData[440]++;
+    _$jscoverage['/dd/ddm.js'].lineData[440]++;
+    if (visit41_440_1(doc.body.setCapture)) {
+      _$jscoverage['/dd/ddm.js'].lineData[441]++;
       doc.body.setCapture();
     }
   }
-  _$jscoverage['/dd/ddm.js'].lineData[447]++;
+  _$jscoverage['/dd/ddm.js'].lineData[448]++;
   function unRegisterEvent(self) {
     _$jscoverage['/dd/ddm.js'].functionData[14]++;
-    _$jscoverage['/dd/ddm.js'].lineData[448]++;
-    $doc.detach(DRAG_MOVE_EVENT, throttleMove, self);
     _$jscoverage['/dd/ddm.js'].lineData[449]++;
-    $doc.detach(DRAG_END_EVENT, self._end, self);
+    $doc.detach(DRAG_MOVE_EVENT, throttleMove, self);
     _$jscoverage['/dd/ddm.js'].lineData[450]++;
-    if (visit42_450_1(doc.body.releaseCapture)) {
-      _$jscoverage['/dd/ddm.js'].lineData[451]++;
+    $doc.detach(DRAG_END_EVENT, self._end, self);
+    _$jscoverage['/dd/ddm.js'].lineData[451]++;
+    if (visit42_451_1(doc.body.releaseCapture)) {
+      _$jscoverage['/dd/ddm.js'].lineData[452]++;
       doc.body.releaseCapture();
     }
   }
-  _$jscoverage['/dd/ddm.js'].lineData[455]++;
+  _$jscoverage['/dd/ddm.js'].lineData[456]++;
   function _activeDrops(self) {
     _$jscoverage['/dd/ddm.js'].functionData[15]++;
-    _$jscoverage['/dd/ddm.js'].lineData[456]++;
-    var drops = self.get('drops');
     _$jscoverage['/dd/ddm.js'].lineData[457]++;
-    self.setInternal('validDrops', []);
+    var drops = self.get('drops');
     _$jscoverage['/dd/ddm.js'].lineData[458]++;
-    if (visit43_458_1(drops.length)) {
-      _$jscoverage['/dd/ddm.js'].lineData[459]++;
+    self.setInternal('validDrops', []);
+    _$jscoverage['/dd/ddm.js'].lineData[459]++;
+    if (visit43_459_1(drops.length)) {
+      _$jscoverage['/dd/ddm.js'].lineData[460]++;
       S.each(drops, function(d) {
   _$jscoverage['/dd/ddm.js'].functionData[16]++;
-  _$jscoverage['/dd/ddm.js'].lineData[460]++;
+  _$jscoverage['/dd/ddm.js'].lineData[461]++;
   d._active();
 });
     }
   }
-  _$jscoverage['/dd/ddm.js'].lineData[465]++;
+  _$jscoverage['/dd/ddm.js'].lineData[466]++;
   function _deActiveDrops(self) {
     _$jscoverage['/dd/ddm.js'].functionData[17]++;
-    _$jscoverage['/dd/ddm.js'].lineData[466]++;
-    var drops = self.get('drops');
     _$jscoverage['/dd/ddm.js'].lineData[467]++;
-    self.setInternal('validDrops', []);
+    var drops = self.get('drops');
     _$jscoverage['/dd/ddm.js'].lineData[468]++;
-    if (visit44_468_1(drops.length)) {
-      _$jscoverage['/dd/ddm.js'].lineData[469]++;
+    self.setInternal('validDrops', []);
+    _$jscoverage['/dd/ddm.js'].lineData[469]++;
+    if (visit44_469_1(drops.length)) {
+      _$jscoverage['/dd/ddm.js'].lineData[470]++;
       S.each(drops, function(d) {
   _$jscoverage['/dd/ddm.js'].functionData[18]++;
-  _$jscoverage['/dd/ddm.js'].lineData[470]++;
+  _$jscoverage['/dd/ddm.js'].lineData[471]++;
   d._deActive();
 });
     }
   }
-  _$jscoverage['/dd/ddm.js'].lineData[476]++;
+  _$jscoverage['/dd/ddm.js'].lineData[477]++;
   function region(node) {
     _$jscoverage['/dd/ddm.js'].functionData[19]++;
-    _$jscoverage['/dd/ddm.js'].lineData[477]++;
-    var offset = node.offset();
     _$jscoverage['/dd/ddm.js'].lineData[478]++;
-    if (visit45_478_1(!node.__dd_cached_width)) {
-      _$jscoverage['/dd/ddm.js'].lineData[479]++;
-      S.log('no cache in dd!');
+    var offset = node.offset();
+    _$jscoverage['/dd/ddm.js'].lineData[479]++;
+    if (visit45_479_1(!node.__dd_cached_width)) {
       _$jscoverage['/dd/ddm.js'].lineData[480]++;
-      S.log(node[0]);
+      logger.debug('no cache in dd!');
+      _$jscoverage['/dd/ddm.js'].lineData[481]++;
+      logger.debug(node[0]);
     }
-    _$jscoverage['/dd/ddm.js'].lineData[482]++;
+    _$jscoverage['/dd/ddm.js'].lineData[483]++;
     return {
   left: offset.left, 
-  right: offset.left + (visit46_484_1(node.__dd_cached_width || node.outerWidth())), 
+  right: offset.left + (visit46_485_1(node.__dd_cached_width || node.outerWidth())), 
   top: offset.top, 
-  bottom: offset.top + (visit47_486_1(node.__dd_cached_height || node.outerHeight()))};
+  bottom: offset.top + (visit47_487_1(node.__dd_cached_height || node.outerHeight()))};
   }
-  _$jscoverage['/dd/ddm.js'].lineData[490]++;
+  _$jscoverage['/dd/ddm.js'].lineData[491]++;
   function inRegion(region, pointer) {
     _$jscoverage['/dd/ddm.js'].functionData[20]++;
-    _$jscoverage['/dd/ddm.js'].lineData[491]++;
-    return visit48_491_1(visit49_491_2(region.left <= pointer.left) && visit50_492_1(visit51_492_2(region.right >= pointer.left) && visit52_493_1(visit53_493_2(region.top <= pointer.top) && visit54_494_1(region.bottom >= pointer.top))));
+    _$jscoverage['/dd/ddm.js'].lineData[492]++;
+    return visit48_492_1(visit49_492_2(region.left <= pointer.left) && visit50_493_1(visit51_493_2(region.right >= pointer.left) && visit52_494_1(visit53_494_2(region.top <= pointer.top) && visit54_495_1(region.bottom >= pointer.top))));
   }
-  _$jscoverage['/dd/ddm.js'].lineData[497]++;
+  _$jscoverage['/dd/ddm.js'].lineData[498]++;
   function area(region) {
     _$jscoverage['/dd/ddm.js'].functionData[21]++;
-    _$jscoverage['/dd/ddm.js'].lineData[498]++;
-    if (visit55_498_1(visit56_498_2(region.top >= region.bottom) || visit57_498_3(region.left >= region.right))) {
-      _$jscoverage['/dd/ddm.js'].lineData[499]++;
+    _$jscoverage['/dd/ddm.js'].lineData[499]++;
+    if (visit55_499_1(visit56_499_2(region.top >= region.bottom) || visit57_499_3(region.left >= region.right))) {
+      _$jscoverage['/dd/ddm.js'].lineData[500]++;
       return 0;
     }
-    _$jscoverage['/dd/ddm.js'].lineData[501]++;
+    _$jscoverage['/dd/ddm.js'].lineData[502]++;
     return (region.right - region.left) * (region.bottom - region.top);
   }
-  _$jscoverage['/dd/ddm.js'].lineData[504]++;
+  _$jscoverage['/dd/ddm.js'].lineData[505]++;
   function intersect(r1, r2) {
     _$jscoverage['/dd/ddm.js'].functionData[22]++;
-    _$jscoverage['/dd/ddm.js'].lineData[505]++;
+    _$jscoverage['/dd/ddm.js'].lineData[506]++;
     var t = Math.max(r1['top'], r2.top), r = Math.min(r1.right, r2.right), b = Math.min(r1['bottom'], r2.bottom), l = Math.max(r1.left, r2.left);
-    _$jscoverage['/dd/ddm.js'].lineData[509]++;
+    _$jscoverage['/dd/ddm.js'].lineData[510]++;
     return {
   left: l, 
   right: r, 
   top: t, 
   bottom: b};
   }
-  _$jscoverage['/dd/ddm.js'].lineData[517]++;
+  _$jscoverage['/dd/ddm.js'].lineData[518]++;
   function inNodeByPointer(node, point) {
     _$jscoverage['/dd/ddm.js'].functionData[23]++;
-    _$jscoverage['/dd/ddm.js'].lineData[518]++;
+    _$jscoverage['/dd/ddm.js'].lineData[519]++;
     return inRegion(region(node), point);
   }
-  _$jscoverage['/dd/ddm.js'].lineData[521]++;
+  _$jscoverage['/dd/ddm.js'].lineData[522]++;
   function cacheWH(node) {
     _$jscoverage['/dd/ddm.js'].functionData[24]++;
-    _$jscoverage['/dd/ddm.js'].lineData[522]++;
-    if (visit58_522_1(node)) {
-      _$jscoverage['/dd/ddm.js'].lineData[523]++;
-      node.__dd_cached_width = node.outerWidth();
+    _$jscoverage['/dd/ddm.js'].lineData[523]++;
+    if (visit58_523_1(node)) {
       _$jscoverage['/dd/ddm.js'].lineData[524]++;
+      node.__dd_cached_width = node.outerWidth();
+      _$jscoverage['/dd/ddm.js'].lineData[525]++;
       node.__dd_cached_height = node.outerHeight();
     }
   }
-  _$jscoverage['/dd/ddm.js'].lineData[528]++;
-  var ddm = new DDM();
   _$jscoverage['/dd/ddm.js'].lineData[529]++;
-  ddm.inRegion = inRegion;
+  var ddm = new DDM();
   _$jscoverage['/dd/ddm.js'].lineData[530]++;
-  ddm.region = region;
+  ddm.inRegion = inRegion;
   _$jscoverage['/dd/ddm.js'].lineData[531]++;
-  ddm.area = area;
+  ddm.region = region;
   _$jscoverage['/dd/ddm.js'].lineData[532]++;
-  ddm.cacheWH = cacheWH;
+  ddm.area = area;
   _$jscoverage['/dd/ddm.js'].lineData[533]++;
+  ddm.cacheWH = cacheWH;
+  _$jscoverage['/dd/ddm.js'].lineData[534]++;
   ddm.PREFIX_CLS = 'ks-dd-';
-  _$jscoverage['/dd/ddm.js'].lineData[535]++;
+  _$jscoverage['/dd/ddm.js'].lineData[536]++;
   return ddm;
 }, {
   requires: ['node', 'base']});

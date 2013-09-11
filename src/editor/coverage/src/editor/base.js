@@ -229,8 +229,8 @@ if (! this._$jscoverage) {
 if (! _$jscoverage['/editor/base.js']) {
   _$jscoverage['/editor/base.js'] = {};
   _$jscoverage['/editor/base.js'].lineData = [];
-  _$jscoverage['/editor/base.js'].lineData[5] = 0;
-  _$jscoverage['/editor/base.js'].lineData[13] = 0;
+  _$jscoverage['/editor/base.js'].lineData[6] = 0;
+  _$jscoverage['/editor/base.js'].lineData[12] = 0;
 }
 if (! _$jscoverage['/editor/base.js'].functionData) {
   _$jscoverage['/editor/base.js'].functionData = [];
@@ -239,10 +239,10 @@ if (! _$jscoverage['/editor/base.js'].functionData) {
 if (! _$jscoverage['/editor/base.js'].branchData) {
   _$jscoverage['/editor/base.js'].branchData = {};
 }
-_$jscoverage['/editor/base.js'].lineData[5]++;
+_$jscoverage['/editor/base.js'].lineData[6]++;
 KISSY.add("editor/base", function(S, HtmlParser, Control, EditorRender) {
   _$jscoverage['/editor/base.js'].functionData[0]++;
-  _$jscoverage['/editor/base.js'].lineData[13]++;
+  _$jscoverage['/editor/base.js'].lineData[12]++;
   return Control.extend({}, {
   Config: {}, 
   XHTML_DTD: HtmlParser['DTD'], 

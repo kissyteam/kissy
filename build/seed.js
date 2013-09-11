@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 9 11:27
+build time: Sep 11 12:53
 */
 /**
  * @ignore
@@ -44,11 +44,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20130909112658' will replace with current timestamp when compressing.
+         * NOTICE: '20130911125341' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130909112658',
+        __BUILD_TIME: '20130911125341',
         /**
          * KISSY Environment.
          * @private
@@ -759,7 +759,6 @@ var KISSY = (function (undefined) {
          * @param [context] {Object} optional context object
          * @return {Array} The items on which the supplied function returned TRUE.
          * If no items matched an empty array is returned.
-         * @member KISSY
          */
         filter: filter ?
             function (arr, fn, context) {
@@ -5602,13 +5601,14 @@ var KISSY = (function (undefined) {
  ATTACHED: fn executed
  *//**
  * @ignore
- * mix loader into S and infer KISSY baseUrl if not set
+ * mix loader into KISSY and infer KISSY baseUrl if not set
  * @author yiminghe@gmail.com
  */
 (function (S, undefined) {
-    var Loader = KISSY.Loader,
+    var Loader = S.Loader,
         Env = S.Env,
         Utils = Loader.Utils,
+        Config= S.Config,
         SimpleLoader = Loader.SimpleLoader,
         ComboLoader = Loader.ComboLoader;
 
@@ -5658,19 +5658,18 @@ var KISSY = (function (undefined) {
          * @param {String[]} cfg.requires this module's required module name list
          * @member KISSY
          *
-         * for example:
-         *      @example
+         *
          *      // dom module's definition
          *      KISSY.add('dom', function(S, xx){
-             *          return {css: function(el, name, val){}};
-             *      },{
-             *          requires:['xx']
-             *      });
+         *          return {css: function(el, name, val){}};
+         *      },{
+         *          requires:['xx']
+         *      });
          */
         add: function (name, fn, cfg) {
             if (typeof name == 'string') {
                 Utils.registerModule(S, name, fn, cfg);
-            } else if (!S.Config.combine) {
+            } else if (!Config.combine) {
                 SimpleLoader.add(name, fn, cfg, S);
             } else {
                 throw new Error('Unsupported KISSY.add format!');
@@ -5691,8 +5690,7 @@ var KISSY = (function (undefined) {
          *      KISSY.use('overlay,dd', function(S, Overlay){});
          */
         use: function (modNames, success) {
-            var Config = S.Config,
-                normalizedModNames,
+            var normalizedModNames,
                 loader,
                 error,
                 sync,
@@ -5872,7 +5870,7 @@ var KISSY = (function (undefined) {
             comboMaxFileNum: 40,
             charset: 'utf-8',
             lang: 'zh-cn',
-            tag: '20130909112658'
+            tag: '20130911125341'
         }, getBaseInfo()));
     }
 
@@ -5893,14 +5891,13 @@ KISSY.add('i18n', {
         return name + '/i18n/' + S.Config.lang;
     }
 });/**
- * @ignore
- * web.js
- * @author lifesinger@gmail.com, yiminghe@gmail.com
  * this code can only run at browser environment
+ * @ignore
+ * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
 (function (S, undefined) {
     var win = S.Env.host,
-        logger= S.getLogger('s/web'),
+        logger = S.getLogger('s/web'),
         UA = S.UA,
         doc = win['document'],
         docElem = doc && doc.documentElement,
@@ -5939,7 +5936,6 @@ KISSY.add('i18n', {
         isWindow: function (obj) {
             return obj != null && obj == obj.window;
         },
-
 
         /**
          * get xml representation of data
@@ -5989,18 +5985,11 @@ KISSY.add('i18n', {
         /**
          * Specify a function to execute when the Dom is fully loaded.
          * @param fn {Function} A function to execute after the Dom is ready
-         *
-         * for example:
-         *      @example
-         *      KISSY.ready(function(S){});
-         *
          * @chainable
          * @member KISSY
          */
         ready: function (fn) {
-
             readyPromise.done(fn);
-
             return this;
         },
 
@@ -6012,14 +6001,18 @@ KISSY.add('i18n', {
          */
         available: function (id, fn) {
             id = (id + EMPTY).match(RE_ID_STR)[1];
-            var retryCount = 1,
-                node,
-                timer = S.later(function () {
-                    if ((node = doc.getElementById(id)) && (fn(node) || 1) ||
-                        ++retryCount > POLL_RETIRES) {
-                        timer.cancel();
-                    }
-                }, POLL_INTERVAL, true);
+            var retryCount = 1;
+            var timer = S.later(function () {
+                if (++retryCount > POLL_RETIRES) {
+                    timer.cancel();
+                    return;
+                }
+                var node = doc.getElementById(id);
+                if (node) {
+                    fn(node);
+                    timer.cancel();
+                }
+            }, POLL_INTERVAL, true);
         }
     });
 
@@ -6031,12 +6024,8 @@ KISSY.add('i18n', {
         readyDefer.resolve(S);
     }
 
-    /**
-     * Binds ready events.
-     * @ignore
-     */
+    //  Binds ready events.
     function bindReady() {
-
         // Catch cases where ready() is called after the
         // browser event has already occurred.
         if (!doc || doc.readyState === COMPLETE) {
@@ -6058,7 +6047,6 @@ KISSY.add('i18n', {
         }
         // IE event model is used
         else {
-
             var stateChange = function () {
                 if (doc.readyState === COMPLETE) {
                     removeEventListener(doc, READY_STATE_CHANGE_EVENT, stateChange);
@@ -6102,7 +6090,6 @@ KISSY.add('i18n', {
         S.Config.debug = true;
     }
 
-
     // bind on start
     // in case when you bind but the DOMContentLoaded has triggered
     // then you has to wait onload
@@ -6115,7 +6102,6 @@ KISSY.add('i18n', {
         } catch (e) {
         }
     }
-
 })(KISSY, undefined);
 /**
  * @ignore

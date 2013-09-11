@@ -229,32 +229,32 @@ if (! this._$jscoverage) {
 if (! _$jscoverage['/btn.js']) {
   _$jscoverage['/btn.js'] = {};
   _$jscoverage['/btn.js'].lineData = [];
-  _$jscoverage['/btn.js'].lineData[5] = 0;
-  _$jscoverage['/btn.js'].lineData[7] = 0;
-  _$jscoverage['/btn.js'].lineData[12] = 0;
-  _$jscoverage['/btn.js'].lineData[15] = 0;
+  _$jscoverage['/btn.js'].lineData[6] = 0;
+  _$jscoverage['/btn.js'].lineData[8] = 0;
+  _$jscoverage['/btn.js'].lineData[13] = 0;
   _$jscoverage['/btn.js'].lineData[16] = 0;
-  _$jscoverage['/btn.js'].lineData[18] = 0;
+  _$jscoverage['/btn.js'].lineData[17] = 0;
   _$jscoverage['/btn.js'].lineData[19] = 0;
-  _$jscoverage['/btn.js'].lineData[21] = 0;
+  _$jscoverage['/btn.js'].lineData[20] = 0;
   _$jscoverage['/btn.js'].lineData[22] = 0;
-  _$jscoverage['/btn.js'].lineData[24] = 0;
-  _$jscoverage['/btn.js'].lineData[38] = 0;
+  _$jscoverage['/btn.js'].lineData[23] = 0;
+  _$jscoverage['/btn.js'].lineData[25] = 0;
   _$jscoverage['/btn.js'].lineData[39] = 0;
-  _$jscoverage['/btn.js'].lineData[41] = 0;
-  _$jscoverage['/btn.js'].lineData[48] = 0;
-  _$jscoverage['/btn.js'].lineData[53] = 0;
-  _$jscoverage['/btn.js'].lineData[55] = 0;
+  _$jscoverage['/btn.js'].lineData[40] = 0;
+  _$jscoverage['/btn.js'].lineData[42] = 0;
+  _$jscoverage['/btn.js'].lineData[49] = 0;
+  _$jscoverage['/btn.js'].lineData[54] = 0;
   _$jscoverage['/btn.js'].lineData[56] = 0;
-  _$jscoverage['/btn.js'].lineData[58] = 0;
+  _$jscoverage['/btn.js'].lineData[57] = 0;
   _$jscoverage['/btn.js'].lineData[59] = 0;
-  _$jscoverage['/btn.js'].lineData[62] = 0;
+  _$jscoverage['/btn.js'].lineData[60] = 0;
   _$jscoverage['/btn.js'].lineData[63] = 0;
-  _$jscoverage['/btn.js'].lineData[65] = 0;
-  _$jscoverage['/btn.js'].lineData[80] = 0;
+  _$jscoverage['/btn.js'].lineData[64] = 0;
+  _$jscoverage['/btn.js'].lineData[66] = 0;
   _$jscoverage['/btn.js'].lineData[81] = 0;
-  _$jscoverage['/btn.js'].lineData[83] = 0;
-  _$jscoverage['/btn.js'].lineData[90] = 0;
+  _$jscoverage['/btn.js'].lineData[82] = 0;
+  _$jscoverage['/btn.js'].lineData[84] = 0;
+  _$jscoverage['/btn.js'].lineData[91] = 0;
 }
 if (! _$jscoverage['/btn.js'].functionData) {
   _$jscoverage['/btn.js'].functionData = [];
@@ -270,58 +270,58 @@ if (! _$jscoverage['/btn.js'].functionData) {
 }
 if (! _$jscoverage['/btn.js'].branchData) {
   _$jscoverage['/btn.js'].branchData = {};
-  _$jscoverage['/btn.js'].branchData['21'] = [];
-  _$jscoverage['/btn.js'].branchData['21'][1] = new BranchData();
-  _$jscoverage['/btn.js'].branchData['38'] = [];
-  _$jscoverage['/btn.js'].branchData['38'][1] = new BranchData();
-  _$jscoverage['/btn.js'].branchData['62'] = [];
-  _$jscoverage['/btn.js'].branchData['62'][1] = new BranchData();
-  _$jscoverage['/btn.js'].branchData['80'] = [];
-  _$jscoverage['/btn.js'].branchData['80'][1] = new BranchData();
+  _$jscoverage['/btn.js'].branchData['22'] = [];
+  _$jscoverage['/btn.js'].branchData['22'][1] = new BranchData();
+  _$jscoverage['/btn.js'].branchData['39'] = [];
+  _$jscoverage['/btn.js'].branchData['39'][1] = new BranchData();
+  _$jscoverage['/btn.js'].branchData['63'] = [];
+  _$jscoverage['/btn.js'].branchData['63'][1] = new BranchData();
+  _$jscoverage['/btn.js'].branchData['81'] = [];
+  _$jscoverage['/btn.js'].branchData['81'][1] = new BranchData();
 }
-_$jscoverage['/btn.js'].branchData['80'][1].init(71, 11, 'this.__lock');
-function visit4_80_1(result) {
-  _$jscoverage['/btn.js'].branchData['80'][1].ranCondition(result);
+_$jscoverage['/btn.js'].branchData['81'][1].init(71, 11, 'this.__lock');
+function visit4_81_1(result) {
+  _$jscoverage['/btn.js'].branchData['81'][1].ranCondition(result);
   return result;
-}_$jscoverage['/btn.js'].branchData['62'][1].init(130, 26, 'index < history.length - 1');
-function visit3_62_1(result) {
-  _$jscoverage['/btn.js'].branchData['62'][1].ranCondition(result);
+}_$jscoverage['/btn.js'].branchData['63'][1].init(130, 26, 'index < history.length - 1');
+function visit3_63_1(result) {
+  _$jscoverage['/btn.js'].branchData['63'][1].ranCondition(result);
   return result;
-}_$jscoverage['/btn.js'].branchData['38'][1].init(71, 11, 'this.__lock');
-function visit2_38_1(result) {
-  _$jscoverage['/btn.js'].branchData['38'][1].ranCondition(result);
+}_$jscoverage['/btn.js'].branchData['39'][1].init(71, 11, 'this.__lock');
+function visit2_39_1(result) {
+  _$jscoverage['/btn.js'].branchData['39'][1].ranCondition(result);
   return result;
-}_$jscoverage['/btn.js'].branchData['21'][1].init(87, 9, 'index > 0');
-function visit1_21_1(result) {
-  _$jscoverage['/btn.js'].branchData['21'][1].ranCondition(result);
+}_$jscoverage['/btn.js'].branchData['22'][1].init(87, 9, 'index > 0');
+function visit1_22_1(result) {
+  _$jscoverage['/btn.js'].branchData['22'][1].ranCondition(result);
   return result;
-}_$jscoverage['/btn.js'].lineData[5]++;
+}_$jscoverage['/btn.js'].lineData[6]++;
 KISSY.add("editor/plugin/undo/btn", function(S, Editor, Button) {
   _$jscoverage['/btn.js'].functionData[0]++;
-  _$jscoverage['/btn.js'].lineData[7]++;
+  _$jscoverage['/btn.js'].lineData[8]++;
   var UndoBtn = Button.extend({
   __lock: true, 
   bindUI: function() {
   _$jscoverage['/btn.js'].functionData[1]++;
-  _$jscoverage['/btn.js'].lineData[12]++;
+  _$jscoverage['/btn.js'].lineData[13]++;
   var self = this, editor = self.get("editor");
-  _$jscoverage['/btn.js'].lineData[15]++;
+  _$jscoverage['/btn.js'].lineData[16]++;
   self.on("click", function() {
   _$jscoverage['/btn.js'].functionData[2]++;
-  _$jscoverage['/btn.js'].lineData[16]++;
+  _$jscoverage['/btn.js'].lineData[17]++;
   editor.execCommand("undo");
 });
-  _$jscoverage['/btn.js'].lineData[18]++;
+  _$jscoverage['/btn.js'].lineData[19]++;
   editor.on("afterUndo afterRedo afterSave", function(ev) {
   _$jscoverage['/btn.js'].functionData[3]++;
-  _$jscoverage['/btn.js'].lineData[19]++;
+  _$jscoverage['/btn.js'].lineData[20]++;
   var index = ev.index;
-  _$jscoverage['/btn.js'].lineData[21]++;
-  if (visit1_21_1(index > 0)) {
-    _$jscoverage['/btn.js'].lineData[22]++;
+  _$jscoverage['/btn.js'].lineData[22]++;
+  if (visit1_22_1(index > 0)) {
+    _$jscoverage['/btn.js'].lineData[23]++;
     self.set("disabled", self.__lock = false);
   } else {
-    _$jscoverage['/btn.js'].lineData[24]++;
+    _$jscoverage['/btn.js'].lineData[25]++;
     self.set("disabled", self.__lock = true);
   }
 });
@@ -333,38 +333,38 @@ KISSY.add("editor/plugin/undo/btn", function(S, Editor, Button) {
   value: true, 
   setter: function(v) {
   _$jscoverage['/btn.js'].functionData[4]++;
-  _$jscoverage['/btn.js'].lineData[38]++;
-  if (visit2_38_1(this.__lock)) {
-    _$jscoverage['/btn.js'].lineData[39]++;
+  _$jscoverage['/btn.js'].lineData[39]++;
+  if (visit2_39_1(this.__lock)) {
+    _$jscoverage['/btn.js'].lineData[40]++;
     v = true;
   }
-  _$jscoverage['/btn.js'].lineData[41]++;
+  _$jscoverage['/btn.js'].lineData[42]++;
   return v;
 }}}});
-  _$jscoverage['/btn.js'].lineData[48]++;
+  _$jscoverage['/btn.js'].lineData[49]++;
   var RedoBtn = Button.extend({
   __lock: true, 
   bindUI: function() {
   _$jscoverage['/btn.js'].functionData[5]++;
-  _$jscoverage['/btn.js'].lineData[53]++;
+  _$jscoverage['/btn.js'].lineData[54]++;
   var self = this, editor = self.get("editor");
-  _$jscoverage['/btn.js'].lineData[55]++;
+  _$jscoverage['/btn.js'].lineData[56]++;
   self.on("click", function() {
   _$jscoverage['/btn.js'].functionData[6]++;
-  _$jscoverage['/btn.js'].lineData[56]++;
+  _$jscoverage['/btn.js'].lineData[57]++;
   editor.execCommand("redo");
 });
-  _$jscoverage['/btn.js'].lineData[58]++;
+  _$jscoverage['/btn.js'].lineData[59]++;
   editor.on("afterUndo afterRedo afterSave", function(ev) {
   _$jscoverage['/btn.js'].functionData[7]++;
-  _$jscoverage['/btn.js'].lineData[59]++;
+  _$jscoverage['/btn.js'].lineData[60]++;
   var history = ev.history, index = ev.index;
-  _$jscoverage['/btn.js'].lineData[62]++;
-  if (visit3_62_1(index < history.length - 1)) {
-    _$jscoverage['/btn.js'].lineData[63]++;
+  _$jscoverage['/btn.js'].lineData[63]++;
+  if (visit3_63_1(index < history.length - 1)) {
+    _$jscoverage['/btn.js'].lineData[64]++;
     self.set("disabled", self.__lock = false);
   } else {
-    _$jscoverage['/btn.js'].lineData[65]++;
+    _$jscoverage['/btn.js'].lineData[66]++;
     self.set("disabled", self.__lock = true);
   }
 });
@@ -376,15 +376,15 @@ KISSY.add("editor/plugin/undo/btn", function(S, Editor, Button) {
   value: true, 
   setter: function(v) {
   _$jscoverage['/btn.js'].functionData[8]++;
-  _$jscoverage['/btn.js'].lineData[80]++;
-  if (visit4_80_1(this.__lock)) {
-    _$jscoverage['/btn.js'].lineData[81]++;
+  _$jscoverage['/btn.js'].lineData[81]++;
+  if (visit4_81_1(this.__lock)) {
+    _$jscoverage['/btn.js'].lineData[82]++;
     v = true;
   }
-  _$jscoverage['/btn.js'].lineData[83]++;
+  _$jscoverage['/btn.js'].lineData[84]++;
   return v;
 }}}});
-  _$jscoverage['/btn.js'].lineData[90]++;
+  _$jscoverage['/btn.js'].lineData[91]++;
   return {
   RedoBtn: RedoBtn, 
   UndoBtn: UndoBtn};

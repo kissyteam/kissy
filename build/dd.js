@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Aug 30 01:37
+build time: Sep 11 12:44
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -20,9 +20,9 @@ build time: Aug 30 01:37
  * @author yiminghe@gmail.com
  */
 KISSY.add('dd/ddm', function (S, Node, Base, undefined) {
-
     var UA = S.UA,
         $ = Node.all,
+        logger= S.getLogger('dd/ddm'),
         win = S.Env.host,
         doc = win.document,
         $doc = $(doc),
@@ -451,6 +451,7 @@ KISSY.add('dd/ddm', function (S, Node, Base, undefined) {
     function registerEvent(self) {
         $doc.on(DRAG_END_EVENT, self._end, self);
         $doc.on(DRAG_MOVE_EVENT, throttleMove, self);
+        // http://stackoverflow.com/questions/1685326/responding-to-the-onmousemove-event-outside-of-the-browser-window-in-ie
         // ie6 will not response to event when cursor is out of window.
         if (doc.body.setCapture) {
             doc.body.setCapture();
@@ -492,8 +493,8 @@ KISSY.add('dd/ddm', function (S, Node, Base, undefined) {
     function region(node) {
         var offset = node.offset();
         if (!node.__dd_cached_width) {
-            S.log('no cache in dd!');
-            S.log(node[0]);
+            logger.debug('no cache in dd!');
+            logger.debug(node[0]);
         }
         return {
             left: offset.left,
@@ -862,7 +863,6 @@ KISSY.add('dd/draggable', function (S, Node, Base, DDM) {
             if (bufferTime) {
                 self._bufferTimer = setTimeout(function () {
                     // 事件到了，仍然是 mousedown 触发！
-                    //S.log('drag start by timeout');
                     self._start(ev);
                 }, bufferTime * 1000);
             }
@@ -888,7 +888,6 @@ KISSY.add('dd/draggable', function (S, Node, Base, DDM) {
                 // 鼠标经过了一定距离，立即开始
                 if (Math.abs(pageX - startMousePos.left) >= clickPixelThresh ||
                     Math.abs(pageY - startMousePos.top) >= clickPixelThresh) {
-                    //S.log('start drag by pixel : ' + l1 + ' : ' + l2);
                     self._start(ev);
                     start = 1;
                 }

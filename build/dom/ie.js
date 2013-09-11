@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Aug 28 14:32
+build time: Sep 11 12:44
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -17,6 +17,7 @@ build time: Aug 28 14:32
 */
 
 /**
+ * @ignore
  * attr ie hack
  * @author yiminghe@gmail.com
  */
@@ -158,10 +159,12 @@ KISSY.add('dom/ie/attr', function (S, Dom) {
     requires: ['dom/base']
 });
 /**
+ * @ignore
  * 2012-11-27 yiminghe@gmail.com note:
  *  no need for feature detection for old-ie!
  */
 /**
+ * @ignore
  * ie create hack
  * @author yiminghe@gmail.com
  */
@@ -253,6 +256,7 @@ KISSY.add('dom/ie/create', function (S, Dom) {
     requires: ['dom/base']
 });
 /**
+ * @ignore
  * ie create hack
  * @author yiminghe@gmail.com
  */
@@ -300,13 +304,14 @@ KISSY.add('dom/ie/insertion', function (S, Dom) {
     requires: ['dom/base']
 });
 /**
+ * @ignore
  * style hack for ie
  * @author yiminghe@gmail.com
  */
 KISSY.add('dom/ie/style', function (S, Dom) {
-
     var cssProps = Dom._cssProps,
         UA = S.UA,
+        logger = S.getLogger('s/dom'),
         HUNDRED = 100,
         doc = S.Env.host.document,
         docElem = doc && doc.documentElement,
@@ -341,9 +346,7 @@ KISSY.add('dom/ie/style', function (S, Dom) {
     // use alpha filter for IE opacity
     try {
         if (docElem.style[OPACITY] == null) {
-
             cssHooks[OPACITY] = {
-
                 get: function (elem, computed) {
                     // 没有设置过 opacity 时会报错，这时返回 1 即可
                     // 如果该节点没有添加到 dom ，取不到 filters 结构
@@ -392,9 +395,8 @@ KISSY.add('dom/ie/style', function (S, Dom) {
                 }
             };
         }
-    }
-    catch (ex) {
-        S.log('IE filters ActiveX is disabled. ex = ' + ex);
+    } catch (ex) {
+        logger.debug('IE filters ActiveX is disabled. ex = ' + ex);
     }
 
     /*
@@ -470,7 +472,6 @@ KISSY.add('dom/ie/style', function (S, Dom) {
         }
         return ret === '' ? 'auto' : ret;
     };
-
 }, {
     requires: ['dom/base']
 });
@@ -493,6 +494,7 @@ KISSY.add('dom/ie/style', function (S, Dom) {
  - opacity 的实现，参考自 jquery
  */
 /**
+ * @ignore
  * traversal ie hack
  * @author yiminghe@gmail.com
  */
@@ -566,6 +568,7 @@ KISSY.add('dom/ie/traversal', function (S, Dom) {
     requires: ['dom/base']
 });
 /**
+ * @ignore
  * transform hack for ie
  * @author yiminghe@gmail.com
  */
@@ -847,12 +850,12 @@ KISSY.add('dom/ie/transform', function (S, Dom) {
  * - http://hg.mozilla.org/mozilla-central/file/7cb3e9795d04/layout/style/nsStyleAnimation.cpp#l971
  */
 /**
+ * @ignore
  * handle input selection and cursor position ie hack
  * @author yiminghe@gmail.com
  */
 KISSY.add('dom/ie/input-selection', function (S, Dom) {
     var propHooks = Dom._propHooks;
-    // S.log("fix selectionEnd/Start !");
     // note :
     // in ie textarea can not set selectionStart or selectionEnd between '\r' and '\n'
     // else kissy will move start to one step backward and move end to one step forword
@@ -975,6 +978,7 @@ KISSY.add('dom/ie/input-selection', function (S, Dom) {
     requires: ['dom/base']
 });
 /**
+ * @ignore
  * dirty hack for ie
  * @author yiminghe@gmail.com
  */

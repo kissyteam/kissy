@@ -232,12 +232,12 @@ if (! _$jscoverage['/shim.js']) {
   _$jscoverage['/shim.js'].lineData[6] = 0;
   _$jscoverage['/shim.js'].lineData[7] = 0;
   _$jscoverage['/shim.js'].lineData[9] = 0;
-  _$jscoverage['/shim.js'].lineData[21] = 0;
-  _$jscoverage['/shim.js'].lineData[24] = 0;
-  _$jscoverage['/shim.js'].lineData[39] = 0;
-  _$jscoverage['/shim.js'].lineData[40] = 0;
-  _$jscoverage['/shim.js'].lineData[41] = 0;
+  _$jscoverage['/shim.js'].lineData[25] = 0;
+  _$jscoverage['/shim.js'].lineData[28] = 0;
+  _$jscoverage['/shim.js'].lineData[43] = 0;
+  _$jscoverage['/shim.js'].lineData[44] = 0;
   _$jscoverage['/shim.js'].lineData[45] = 0;
+  _$jscoverage['/shim.js'].lineData[49] = 0;
 }
 if (! _$jscoverage['/shim.js'].functionData) {
   _$jscoverage['/shim.js'].functionData = [];
@@ -249,12 +249,12 @@ if (! _$jscoverage['/shim.js'].branchData) {
   _$jscoverage['/shim.js'].branchData = {};
   _$jscoverage['/shim.js'].branchData['7'] = [];
   _$jscoverage['/shim.js'].branchData['7'][1] = new BranchData();
-  _$jscoverage['/shim.js'].branchData['40'] = [];
-  _$jscoverage['/shim.js'].branchData['40'][1] = new BranchData();
+  _$jscoverage['/shim.js'].branchData['44'] = [];
+  _$jscoverage['/shim.js'].branchData['44'][1] = new BranchData();
 }
-_$jscoverage['/shim.js'].branchData['40'][1].init(14, 16, 'this.get(\'shim\')');
-function visit2_40_1(result) {
-  _$jscoverage['/shim.js'].branchData['40'][1].ranCondition(result);
+_$jscoverage['/shim.js'].branchData['44'][1].init(14, 16, 'this.get(\'shim\')');
+function visit2_44_1(result) {
+  _$jscoverage['/shim.js'].branchData['44'][1].ranCondition(result);
   return result;
 }_$jscoverage['/shim.js'].branchData['7'][1].init(16, 13, 'S.UA.ie === 6');
 function visit1_7_1(result) {
@@ -267,23 +267,23 @@ KISSY.add("component/extension/shim", function(S) {
   var ie6 = visit1_7_1(S.UA.ie === 6);
   _$jscoverage['/shim.js'].lineData[9]++;
   var shimTpl = "<" + "iframe style='position: absolute;" + "border: none;" + "width: " + (ie6 ? "expression(this.parentNode.clientWidth)" : "100%") + ";" + "top: 0;" + "opacity: 0;" + "filter: alpha(opacity=0);" + "left: 0;" + "z-index: -1;" + "height: " + (ie6 ? "expression(this.parentNode.clientHeight)" : "100%") + ";" + "'/>";
-  _$jscoverage['/shim.js'].lineData[21]++;
+  _$jscoverage['/shim.js'].lineData[25]++;
   function Shim() {
     _$jscoverage['/shim.js'].functionData[1]++;
   }
-  _$jscoverage['/shim.js'].lineData[24]++;
+  _$jscoverage['/shim.js'].lineData[28]++;
   Shim.ATTRS = {
   shim: {
   value: ie6}};
-  _$jscoverage['/shim.js'].lineData[39]++;
+  _$jscoverage['/shim.js'].lineData[43]++;
   Shim.prototype.__createDom = function() {
   _$jscoverage['/shim.js'].functionData[2]++;
-  _$jscoverage['/shim.js'].lineData[40]++;
-  if (visit2_40_1(this.get('shim'))) {
-    _$jscoverage['/shim.js'].lineData[41]++;
+  _$jscoverage['/shim.js'].lineData[44]++;
+  if (visit2_44_1(this.get('shim'))) {
+    _$jscoverage['/shim.js'].lineData[45]++;
     this.get('el').prepend(shimTpl);
   }
 };
-  _$jscoverage['/shim.js'].lineData[45]++;
+  _$jscoverage['/shim.js'].lineData[49]++;
   return Shim;
 });

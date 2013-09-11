@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Aug 27 21:50
+build time: Sep 11 12:42
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -16,6 +16,7 @@ build time: Aug 27 21:50
 KISSY.add('component/extension/content-render/content-tpl',
 '<div id="ks-content-{{id}}"\n           class="{{getBaseCssClasses \'content\'}}">{{{content}}}</div>');
 /**
+ * @ignore
  * common content box render
  * @author yiminghe@gmail.com
  */

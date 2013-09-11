@@ -229,18 +229,17 @@ if (! this._$jscoverage) {
 if (! _$jscoverage['/ui.js']) {
   _$jscoverage['/ui.js'] = {};
   _$jscoverage['/ui.js'].lineData = [];
-  _$jscoverage['/ui.js'].lineData[5] = 0;
-  _$jscoverage['/ui.js'].lineData[7] = 0;
-  _$jscoverage['/ui.js'].lineData[10] = 0;
-  _$jscoverage['/ui.js'].lineData[12] = 0;
+  _$jscoverage['/ui.js'].lineData[6] = 0;
+  _$jscoverage['/ui.js'].lineData[8] = 0;
+  _$jscoverage['/ui.js'].lineData[11] = 0;
   _$jscoverage['/ui.js'].lineData[13] = 0;
-  _$jscoverage['/ui.js'].lineData[15] = 0;
-  _$jscoverage['/ui.js'].lineData[18] = 0;
+  _$jscoverage['/ui.js'].lineData[14] = 0;
+  _$jscoverage['/ui.js'].lineData[16] = 0;
   _$jscoverage['/ui.js'].lineData[19] = 0;
   _$jscoverage['/ui.js'].lineData[20] = 0;
-  _$jscoverage['/ui.js'].lineData[23] = 0;
-  _$jscoverage['/ui.js'].lineData[27] = 0;
-  _$jscoverage['/ui.js'].lineData[30] = 0;
+  _$jscoverage['/ui.js'].lineData[21] = 0;
+  _$jscoverage['/ui.js'].lineData[24] = 0;
+  _$jscoverage['/ui.js'].lineData[28] = 0;
   _$jscoverage['/ui.js'].lineData[31] = 0;
   _$jscoverage['/ui.js'].lineData[32] = 0;
   _$jscoverage['/ui.js'].lineData[33] = 0;
@@ -249,24 +248,25 @@ if (! _$jscoverage['/ui.js']) {
   _$jscoverage['/ui.js'].lineData[36] = 0;
   _$jscoverage['/ui.js'].lineData[37] = 0;
   _$jscoverage['/ui.js'].lineData[38] = 0;
-  _$jscoverage['/ui.js'].lineData[42] = 0;
-  _$jscoverage['/ui.js'].lineData[49] = 0;
-  _$jscoverage['/ui.js'].lineData[52] = 0;
-  _$jscoverage['/ui.js'].lineData[55] = 0;
+  _$jscoverage['/ui.js'].lineData[39] = 0;
+  _$jscoverage['/ui.js'].lineData[43] = 0;
+  _$jscoverage['/ui.js'].lineData[50] = 0;
+  _$jscoverage['/ui.js'].lineData[53] = 0;
   _$jscoverage['/ui.js'].lineData[56] = 0;
   _$jscoverage['/ui.js'].lineData[57] = 0;
   _$jscoverage['/ui.js'].lineData[58] = 0;
   _$jscoverage['/ui.js'].lineData[59] = 0;
-  _$jscoverage['/ui.js'].lineData[61] = 0;
+  _$jscoverage['/ui.js'].lineData[60] = 0;
   _$jscoverage['/ui.js'].lineData[62] = 0;
-  _$jscoverage['/ui.js'].lineData[65] = 0;
-  _$jscoverage['/ui.js'].lineData[67] = 0;
+  _$jscoverage['/ui.js'].lineData[63] = 0;
+  _$jscoverage['/ui.js'].lineData[66] = 0;
   _$jscoverage['/ui.js'].lineData[68] = 0;
-  _$jscoverage['/ui.js'].lineData[70] = 0;
+  _$jscoverage['/ui.js'].lineData[69] = 0;
   _$jscoverage['/ui.js'].lineData[71] = 0;
   _$jscoverage['/ui.js'].lineData[72] = 0;
-  _$jscoverage['/ui.js'].lineData[74] = 0;
-  _$jscoverage['/ui.js'].lineData[89] = 0;
+  _$jscoverage['/ui.js'].lineData[73] = 0;
+  _$jscoverage['/ui.js'].lineData[75] = 0;
+  _$jscoverage['/ui.js'].lineData[90] = 0;
 }
 if (! _$jscoverage['/ui.js'].functionData) {
   _$jscoverage['/ui.js'].functionData = [];
@@ -280,156 +280,156 @@ if (! _$jscoverage['/ui.js'].functionData) {
 }
 if (! _$jscoverage['/ui.js'].branchData) {
   _$jscoverage['/ui.js'].branchData = {};
-  _$jscoverage['/ui.js'].branchData['19'] = [];
-  _$jscoverage['/ui.js'].branchData['19'][1] = new BranchData();
-  _$jscoverage['/ui.js'].branchData['25'] = [];
-  _$jscoverage['/ui.js'].branchData['25'][1] = new BranchData();
-  _$jscoverage['/ui.js'].branchData['27'] = [];
-  _$jscoverage['/ui.js'].branchData['27'][1] = new BranchData();
-  _$jscoverage['/ui.js'].branchData['31'] = [];
-  _$jscoverage['/ui.js'].branchData['31'][1] = new BranchData();
-  _$jscoverage['/ui.js'].branchData['33'] = [];
-  _$jscoverage['/ui.js'].branchData['33'][1] = new BranchData();
-  _$jscoverage['/ui.js'].branchData['36'] = [];
-  _$jscoverage['/ui.js'].branchData['36'][1] = new BranchData();
-  _$jscoverage['/ui.js'].branchData['57'] = [];
-  _$jscoverage['/ui.js'].branchData['57'][1] = new BranchData();
-  _$jscoverage['/ui.js'].branchData['67'] = [];
-  _$jscoverage['/ui.js'].branchData['67'][1] = new BranchData();
-  _$jscoverage['/ui.js'].branchData['71'] = [];
-  _$jscoverage['/ui.js'].branchData['71'][1] = new BranchData();
+  _$jscoverage['/ui.js'].branchData['20'] = [];
+  _$jscoverage['/ui.js'].branchData['20'][1] = new BranchData();
+  _$jscoverage['/ui.js'].branchData['26'] = [];
+  _$jscoverage['/ui.js'].branchData['26'][1] = new BranchData();
+  _$jscoverage['/ui.js'].branchData['28'] = [];
+  _$jscoverage['/ui.js'].branchData['28'][1] = new BranchData();
+  _$jscoverage['/ui.js'].branchData['32'] = [];
+  _$jscoverage['/ui.js'].branchData['32'][1] = new BranchData();
+  _$jscoverage['/ui.js'].branchData['34'] = [];
+  _$jscoverage['/ui.js'].branchData['34'][1] = new BranchData();
+  _$jscoverage['/ui.js'].branchData['37'] = [];
+  _$jscoverage['/ui.js'].branchData['37'][1] = new BranchData();
+  _$jscoverage['/ui.js'].branchData['58'] = [];
+  _$jscoverage['/ui.js'].branchData['58'][1] = new BranchData();
+  _$jscoverage['/ui.js'].branchData['68'] = [];
+  _$jscoverage['/ui.js'].branchData['68'][1] = new BranchData();
+  _$jscoverage['/ui.js'].branchData['72'] = [];
+  _$jscoverage['/ui.js'].branchData['72'][1] = new BranchData();
 }
-_$jscoverage['/ui.js'].branchData['71'][1].init(194, 33, 'editor.queryCommandValue(cmdType)');
-function visit9_71_1(result) {
-  _$jscoverage['/ui.js'].branchData['71'][1].ranCondition(result);
+_$jscoverage['/ui.js'].branchData['72'][1].init(194, 33, 'editor.queryCommandValue(cmdType)');
+function visit9_72_1(result) {
+  _$jscoverage['/ui.js'].branchData['72'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ui.js'].branchData['67'][1].init(24, 45, 'editor.get("mode") == Editor.Mode.SOURCE_MODE');
-function visit8_67_1(result) {
-  _$jscoverage['/ui.js'].branchData['67'][1].ranCondition(result);
+}_$jscoverage['/ui.js'].branchData['68'][1].init(24, 45, 'editor.get("mode") == Editor.Mode.SOURCE_MODE');
+function visit8_68_1(result) {
+  _$jscoverage['/ui.js'].branchData['68'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ui.js'].branchData['57'][1].init(74, 7, 'checked');
-function visit7_57_1(result) {
-  _$jscoverage['/ui.js'].branchData['57'][1].ranCondition(result);
+}_$jscoverage['/ui.js'].branchData['58'][1].init(74, 7, 'checked');
+function visit7_58_1(result) {
+  _$jscoverage['/ui.js'].branchData['58'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ui.js'].branchData['36'][1].init(147, 35, 'currentValue == value.toLowerCase()');
-function visit6_36_1(result) {
-  _$jscoverage['/ui.js'].branchData['36'][1].ranCondition(result);
+}_$jscoverage['/ui.js'].branchData['37'][1].init(147, 35, 'currentValue == value.toLowerCase()');
+function visit6_37_1(result) {
+  _$jscoverage['/ui.js'].branchData['37'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ui.js'].branchData['33'][1].init(117, 19, 'j < children.length');
-function visit5_33_1(result) {
-  _$jscoverage['/ui.js'].branchData['33'][1].ranCondition(result);
+}_$jscoverage['/ui.js'].branchData['34'][1].init(117, 19, 'j < children.length');
+function visit5_34_1(result) {
+  _$jscoverage['/ui.js'].branchData['34'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ui.js'].branchData['31'][1].init(205, 22, 'currentValue !== false');
-function visit4_31_1(result) {
-  _$jscoverage['/ui.js'].branchData['31'][1].ranCondition(result);
+}_$jscoverage['/ui.js'].branchData['32'][1].init(205, 22, 'currentValue !== false');
+function visit4_32_1(result) {
+  _$jscoverage['/ui.js'].branchData['32'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ui.js'].branchData['27'][1].init(308, 8, 'children');
-function visit3_27_1(result) {
-  _$jscoverage['/ui.js'].branchData['27'][1].ranCondition(result);
+}_$jscoverage['/ui.js'].branchData['28'][1].init(308, 8, 'children');
+function visit3_28_1(result) {
+  _$jscoverage['/ui.js'].branchData['28'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ui.js'].branchData['25'][1].init(112, 32, 'menu.get && menu.get("children")');
-function visit2_25_1(result) {
-  _$jscoverage['/ui.js'].branchData['25'][1].ranCondition(result);
+}_$jscoverage['/ui.js'].branchData['26'][1].init(112, 32, 'menu.get && menu.get("children")');
+function visit2_26_1(result) {
+  _$jscoverage['/ui.js'].branchData['26'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ui.js'].branchData['19'][1].init(22, 45, 'editor.get("mode") == Editor.Mode.SOURCE_MODE');
-function visit1_19_1(result) {
-  _$jscoverage['/ui.js'].branchData['19'][1].ranCondition(result);
+}_$jscoverage['/ui.js'].branchData['20'][1].init(22, 45, 'editor.get("mode") == Editor.Mode.SOURCE_MODE');
+function visit1_20_1(result) {
+  _$jscoverage['/ui.js'].branchData['20'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ui.js'].lineData[5]++;
+}_$jscoverage['/ui.js'].lineData[6]++;
 KISSY.add("editor/plugin/font/ui", function(S, Editor, Button, MenuButton) {
   _$jscoverage['/ui.js'].functionData[0]++;
-  _$jscoverage['/ui.js'].lineData[7]++;
+  _$jscoverage['/ui.js'].lineData[8]++;
   var FontSelect = MenuButton.Select.extend({
   initializer: function() {
   _$jscoverage['/ui.js'].functionData[1]++;
-  _$jscoverage['/ui.js'].lineData[10]++;
+  _$jscoverage['/ui.js'].lineData[11]++;
   var self = this, editor = self.get("editor");
-  _$jscoverage['/ui.js'].lineData[12]++;
+  _$jscoverage['/ui.js'].lineData[13]++;
   self.on("click", function(ev) {
   _$jscoverage['/ui.js'].functionData[2]++;
-  _$jscoverage['/ui.js'].lineData[13]++;
+  _$jscoverage['/ui.js'].lineData[14]++;
   var v = ev.target.get("value"), cmdType = self.get("cmdType");
-  _$jscoverage['/ui.js'].lineData[15]++;
+  _$jscoverage['/ui.js'].lineData[16]++;
   editor.execCommand(cmdType, v);
 });
-  _$jscoverage['/ui.js'].lineData[18]++;
+  _$jscoverage['/ui.js'].lineData[19]++;
   editor.on("selectionChange", function() {
   _$jscoverage['/ui.js'].functionData[3]++;
-  _$jscoverage['/ui.js'].lineData[19]++;
-  if (visit1_19_1(editor.get("mode") == Editor.Mode.SOURCE_MODE)) {
-    _$jscoverage['/ui.js'].lineData[20]++;
+  _$jscoverage['/ui.js'].lineData[20]++;
+  if (visit1_20_1(editor.get("mode") == Editor.Mode.SOURCE_MODE)) {
+    _$jscoverage['/ui.js'].lineData[21]++;
     return;
   }
-  _$jscoverage['/ui.js'].lineData[23]++;
-  var cmdType = self.get("cmdType"), menu = self.get("menu"), children = visit2_25_1(menu.get && menu.get("children"));
-  _$jscoverage['/ui.js'].lineData[27]++;
-  if (visit3_27_1(children)) {
-    _$jscoverage['/ui.js'].lineData[30]++;
-    var currentValue = editor.queryCommandValue(cmdType);
+  _$jscoverage['/ui.js'].lineData[24]++;
+  var cmdType = self.get("cmdType"), menu = self.get("menu"), children = visit2_26_1(menu.get && menu.get("children"));
+  _$jscoverage['/ui.js'].lineData[28]++;
+  if (visit3_28_1(children)) {
     _$jscoverage['/ui.js'].lineData[31]++;
-    if (visit4_31_1(currentValue !== false)) {
-      _$jscoverage['/ui.js'].lineData[32]++;
-      currentValue = (currentValue + "").toLowerCase();
+    var currentValue = editor.queryCommandValue(cmdType);
+    _$jscoverage['/ui.js'].lineData[32]++;
+    if (visit4_32_1(currentValue !== false)) {
       _$jscoverage['/ui.js'].lineData[33]++;
-      for (var j = 0; visit5_33_1(j < children.length); j++) {
-        _$jscoverage['/ui.js'].lineData[34]++;
-        var item = children[j];
+      currentValue = (currentValue + "").toLowerCase();
+      _$jscoverage['/ui.js'].lineData[34]++;
+      for (var j = 0; visit5_34_1(j < children.length); j++) {
         _$jscoverage['/ui.js'].lineData[35]++;
-        var value = item.get("value");
+        var item = children[j];
         _$jscoverage['/ui.js'].lineData[36]++;
-        if (visit6_36_1(currentValue == value.toLowerCase())) {
-          _$jscoverage['/ui.js'].lineData[37]++;
-          self.set("value", value);
+        var value = item.get("value");
+        _$jscoverage['/ui.js'].lineData[37]++;
+        if (visit6_37_1(currentValue == value.toLowerCase())) {
           _$jscoverage['/ui.js'].lineData[38]++;
+          self.set("value", value);
+          _$jscoverage['/ui.js'].lineData[39]++;
           return;
         }
       }
     }
-    _$jscoverage['/ui.js'].lineData[42]++;
+    _$jscoverage['/ui.js'].lineData[43]++;
     self.set("value", null);
   }
 });
 }});
-  _$jscoverage['/ui.js'].lineData[49]++;
+  _$jscoverage['/ui.js'].lineData[50]++;
   var FontButton = Button.extend({
   initializer: function() {
   _$jscoverage['/ui.js'].functionData[4]++;
-  _$jscoverage['/ui.js'].lineData[52]++;
+  _$jscoverage['/ui.js'].lineData[53]++;
   var self = this, editor = self.get("editor"), cmdType = self.get("cmdType");
-  _$jscoverage['/ui.js'].lineData[55]++;
+  _$jscoverage['/ui.js'].lineData[56]++;
   self.on("click", function() {
   _$jscoverage['/ui.js'].functionData[5]++;
-  _$jscoverage['/ui.js'].lineData[56]++;
-  var checked = self.get("checked");
   _$jscoverage['/ui.js'].lineData[57]++;
-  if (visit7_57_1(checked)) {
-    _$jscoverage['/ui.js'].lineData[58]++;
-    editor.execCommand(cmdType);
+  var checked = self.get("checked");
+  _$jscoverage['/ui.js'].lineData[58]++;
+  if (visit7_58_1(checked)) {
     _$jscoverage['/ui.js'].lineData[59]++;
+    editor.execCommand(cmdType);
+    _$jscoverage['/ui.js'].lineData[60]++;
     editor.focus();
   } else {
-    _$jscoverage['/ui.js'].lineData[61]++;
-    editor.execCommand(cmdType, false);
     _$jscoverage['/ui.js'].lineData[62]++;
+    editor.execCommand(cmdType, false);
+    _$jscoverage['/ui.js'].lineData[63]++;
     editor.focus();
   }
 });
-  _$jscoverage['/ui.js'].lineData[65]++;
+  _$jscoverage['/ui.js'].lineData[66]++;
   editor.on("selectionChange", function() {
   _$jscoverage['/ui.js'].functionData[6]++;
-  _$jscoverage['/ui.js'].lineData[67]++;
-  if (visit8_67_1(editor.get("mode") == Editor.Mode.SOURCE_MODE)) {
-    _$jscoverage['/ui.js'].lineData[68]++;
+  _$jscoverage['/ui.js'].lineData[68]++;
+  if (visit8_68_1(editor.get("mode") == Editor.Mode.SOURCE_MODE)) {
+    _$jscoverage['/ui.js'].lineData[69]++;
     return;
   }
-  _$jscoverage['/ui.js'].lineData[70]++;
-  var cmdType = self.get("cmdType");
   _$jscoverage['/ui.js'].lineData[71]++;
-  if (visit9_71_1(editor.queryCommandValue(cmdType))) {
-    _$jscoverage['/ui.js'].lineData[72]++;
+  var cmdType = self.get("cmdType");
+  _$jscoverage['/ui.js'].lineData[72]++;
+  if (visit9_72_1(editor.queryCommandValue(cmdType))) {
+    _$jscoverage['/ui.js'].lineData[73]++;
     self.set("checked", true);
   } else {
-    _$jscoverage['/ui.js'].lineData[74]++;
+    _$jscoverage['/ui.js'].lineData[75]++;
     self.set("checked", false);
   }
 });
@@ -439,7 +439,7 @@ KISSY.add("editor/plugin/font/ui", function(S, Editor, Button, MenuButton) {
   value: true}, 
   mode: {
   value: Editor.Mode.WYSIWYG_MODE}}});
-  _$jscoverage['/ui.js'].lineData[89]++;
+  _$jscoverage['/ui.js'].lineData[90]++;
   return {
   Button: FontButton, 
   Select: FontSelect};

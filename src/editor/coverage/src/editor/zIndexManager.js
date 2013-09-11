@@ -229,11 +229,11 @@ if (! this._$jscoverage) {
 if (! _$jscoverage['/editor/zIndexManager.js']) {
   _$jscoverage['/editor/zIndexManager.js'] = {};
   _$jscoverage['/editor/zIndexManager.js'].lineData = [];
-  _$jscoverage['/editor/zIndexManager.js'].lineData[5] = 0;
-  _$jscoverage['/editor/zIndexManager.js'].lineData[10] = 0;
-  _$jscoverage['/editor/zIndexManager.js'].lineData[25] = 0;
-  _$jscoverage['/editor/zIndexManager.js'].lineData[26] = 0;
-  _$jscoverage['/editor/zIndexManager.js'].lineData[29] = 0;
+  _$jscoverage['/editor/zIndexManager.js'].lineData[6] = 0;
+  _$jscoverage['/editor/zIndexManager.js'].lineData[11] = 0;
+  _$jscoverage['/editor/zIndexManager.js'].lineData[23] = 0;
+  _$jscoverage['/editor/zIndexManager.js'].lineData[24] = 0;
+  _$jscoverage['/editor/zIndexManager.js'].lineData[27] = 0;
 }
 if (! _$jscoverage['/editor/zIndexManager.js'].functionData) {
   _$jscoverage['/editor/zIndexManager.js'].functionData = [];
@@ -242,17 +242,17 @@ if (! _$jscoverage['/editor/zIndexManager.js'].functionData) {
 }
 if (! _$jscoverage['/editor/zIndexManager.js'].branchData) {
   _$jscoverage['/editor/zIndexManager.js'].branchData = {};
-  _$jscoverage['/editor/zIndexManager.js'].branchData['26'] = [];
-  _$jscoverage['/editor/zIndexManager.js'].branchData['26'][1] = new BranchData();
+  _$jscoverage['/editor/zIndexManager.js'].branchData['24'] = [];
+  _$jscoverage['/editor/zIndexManager.js'].branchData['24'][1] = new BranchData();
 }
-_$jscoverage['/editor/zIndexManager.js'].branchData['26'][1].init(18, 36, 'Editor[\'Config\'].baseZIndex || 10000');
-function visit1137_26_1(result) {
-  _$jscoverage['/editor/zIndexManager.js'].branchData['26'][1].ranCondition(result);
+_$jscoverage['/editor/zIndexManager.js'].branchData['24'][1].init(18, 36, 'Editor[\'Config\'].baseZIndex || 10000');
+function visit1137_24_1(result) {
+  _$jscoverage['/editor/zIndexManager.js'].branchData['24'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/zIndexManager.js'].lineData[5]++;
+}_$jscoverage['/editor/zIndexManager.js'].lineData[6]++;
 KISSY.add("editor/zIndexManager", function(S, Editor) {
   _$jscoverage['/editor/zIndexManager.js'].functionData[0]++;
-  _$jscoverage['/editor/zIndexManager.js'].lineData[10]++;
+  _$jscoverage['/editor/zIndexManager.js'].lineData[11]++;
   var zIndexManager = Editor.zIndexManager = {
   BUBBLE_VIEW: (1100), 
   POPUP_MENU: (1200), 
@@ -262,13 +262,13 @@ KISSY.add("editor/zIndexManager", function(S, Editor) {
   LOADING: (11000), 
   LOADING_CANCEL: 12000, 
   SELECT: (1200)};
-  _$jscoverage['/editor/zIndexManager.js'].lineData[25]++;
+  _$jscoverage['/editor/zIndexManager.js'].lineData[23]++;
   Editor.baseZIndex = function(z) {
   _$jscoverage['/editor/zIndexManager.js'].functionData[1]++;
-  _$jscoverage['/editor/zIndexManager.js'].lineData[26]++;
-  return (visit1137_26_1(Editor['Config'].baseZIndex || 10000)) + z;
+  _$jscoverage['/editor/zIndexManager.js'].lineData[24]++;
+  return (visit1137_24_1(Editor['Config'].baseZIndex || 10000)) + z;
 };
-  _$jscoverage['/editor/zIndexManager.js'].lineData[29]++;
+  _$jscoverage['/editor/zIndexManager.js'].lineData[27]++;
   return zIndexManager;
 }, {
   requires: ['./base']});

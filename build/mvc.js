@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Aug 27 22:00
+build time: Sep 11 12:53
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -19,7 +19,6 @@ build time: Aug 27 22:00
  * @author yiminghe@gmail.com
  */
 KISSY.add("mvc/model", function (S, Base) {
-
     var blacklist = [
         "idAttribute",
         "destroyed",
@@ -33,10 +32,8 @@ KISSY.add("mvc/model", function (S, Base) {
     ];
 
     /**
-     * @name Model
-     * @class
      * Model represent a data record.
-     * @member MVC
+     * @class KISSY.MVC.Model
      * @extends KISSY.Base
      */
    return Base.extend({
@@ -49,7 +46,7 @@ KISSY.add("mvc/model", function (S, Base) {
 
             /**
              * Add current model instance to a specified collection.
-             * @param {MVC.Collection} c
+             * @param {KISSY.MVC.Collection} c
              */
             addToCollection:function (c) {
                 this.collections[S.stamp(c)] = c;
@@ -57,7 +54,7 @@ KISSY.add("mvc/model", function (S, Base) {
             },
             /**
              * Remove current model instance from a specified collection.
-             * @param {MVC.Collection} c
+             * @param {KISSY.MVC.Collection} c
              */
             removeFromCollection:function (c) {
                 delete this.collections[S.stamp(c)];
@@ -242,7 +239,7 @@ KISSY.add("mvc/model", function (S, Base) {
                 },
                 /**
                  * If current model does not belong to any collection.
-                 * Use this attribute value as collection.url in {@link MVC.Model#url}
+                 * Use this attribute value as collection.url in {@link KISSY.MVC.Model#url}
                  * @type {String}
                  */
                 urlRoot:{
@@ -250,7 +247,7 @@ KISSY.add("mvc/model", function (S, Base) {
                 },
                 /**
                  * Sync model data with server.
-                 * Default to call {@link MVC.sync}
+                 * Default to call {@link KISSY.MVC.sync}
                  * @type {Function}
                  */
                 sync:{
@@ -325,15 +322,13 @@ KISSY.add("mvc/collection", function (S, Model, Base) {
     }
 
     /**
-     * @name Collection
-     * @class
      * Collection. A list of model.
-     * @member MVC
+     * @class KISSY.MVC.Collection
      * @extends KISSY.Base
      */
     return Base.extend({
         /**
-         * Sort model list according {@link MVC.Collection#comparator}.
+         * Sort model list according {@link KISSY.MVC.Collection#comparator}.
          */
         sort: function () {
             var comparator = this.get("comparator");
@@ -356,7 +351,7 @@ KISSY.add("mvc/collection", function (S, Model, Base) {
 
         /**
          * Add a model to current collection.
-         * @param {Object|MVC.Model} model Model or json data to be added.
+         * @param {Object|KISSY.MVC.Model} model Model or json data to be added.
          * @param {Object} [opts] Add config
          * @param {Function} opts.silent Whether to fire add event.
          */
@@ -377,7 +372,7 @@ KISSY.add("mvc/collection", function (S, Model, Base) {
 
         /**
          * Remove an existing model from current collection.
-         * @param {MVC.Model} model Model to be removed.
+         * @param {KISSY.MVC.Model} model Model to be removed.
          * @param {Object} [opts] Remove config.
          * @param {Function} opts.silent Whether to fire remove event.
          */
@@ -539,14 +534,14 @@ KISSY.add("mvc/collection", function (S, Model, Base) {
         ATTRS: {
             /**
              * Model constructor with in current collection.
-             * @type {MVC.Model}
+             * @type {KISSY.MVC.Model}
              */
             model: {
                 value: Model
             },
             /**
              * Model list.
-             * @type {MVC.Model[]}
+             * @type {KISSY.MVC.Model[]}
              */
             models: {
                 /*
@@ -576,7 +571,7 @@ KISSY.add("mvc/collection", function (S, Model, Base) {
             comparator: {},
             /**
              * Sync function to sync data with server.
-             * Default to call {@link MVC.sync}
+             * Default to call {@link KISSY.MVC.sync}
              * @type {Function}
              */
             sync: {
@@ -615,10 +610,8 @@ KISSY.add("mvc/view", function (S, Node, Base) {
     }
 
     /**
-     * @name View
-     * @class
      * View for delegating event on root element.
-     * @member MVC
+     * @class KISSY.MVC.View
      * @extends KISSY.Base
      */
     return Base.extend({
@@ -680,13 +673,12 @@ KISSY.add("mvc/view", function (S, Node, Base) {
             /**
              * Get root element for current view instance.
              * @type {String}
-             * @example
-             * <code>
-             * //  selector :
-             * .xx
-             * // or html string
-             * <div>my</div>
-             * </code>
+             *
+             *
+             *      //  selector :
+             *      .xx
+             *      // or html string
+             *      <div>my</div>
              */
             el: {
                 value: "<div />",
@@ -702,14 +694,11 @@ KISSY.add("mvc/view", function (S, Node, Base) {
             /**
              * Delegate event on root element.
              * @type {Object}
-             * @example
-             * <code>
-             * events:{
-         *   selector:{
-         *     eventType:callback
-         *   }
-         * }
-             * </code>
+             *
+             *
+             *      selector:{
+             *          eventType:callback
+             *      }
              */
             events: {
 
@@ -1039,10 +1028,8 @@ KISSY.add('mvc/router', function (S, Node, Base, undefined) {
     var Router;
 
     /**
-     * @name Router
-     * @class
      * Router used to route url to responding action callbacks.
-     * @member MVC
+     * @class KISSY.MVC.Router
      * @extends KISSY.Base
      */
     return Router = Base.extend({
@@ -1055,17 +1042,16 @@ KISSY.add('mvc/router', function (S, Node, Base, undefined) {
         /**
          * Add config to current router.
          * @param {Object} routes Route config.
-         * @example
-         * <code>
-         *   {
-             *     "/search/:param":"callback"
-             *     // or
-             *     "search":{
-             *       reg:/xx/,
-             *       callback:fn
-             *     }
-             *   }
-         * </code>
+         *
+         *
+         *      {
+         *          "/search/:param":"callback"
+         *          // or
+         *          "search":{
+         *              reg:/xx/,
+         *              callback:fn
+         *          }
+         *      }
          */
         addRoutes: function (routes) {
             var self = this;
@@ -1079,17 +1065,16 @@ KISSY.add('mvc/router', function (S, Node, Base, undefined) {
             /**
              * Route and action config.
              * @type {Object}
-             * @example
-             * <code>
-             *   {
-         *     "/search/:param":"callback"
-         *     // or
-         *     "search":{
-         *       reg:/xx/,
-         *       callback:fn
-         *     }
-         *   }
-             * </code>
+             *
+             *
+             *     {
+             *       "/search/:param":"callback"
+             *       // or
+             *       "search":{
+             *         reg:/xx/,
+             *         callback:fn
+             *       }
+             *     }
              */
             routes: {}
         },
@@ -1280,8 +1265,8 @@ KISSY.add("mvc/sync", function (S, io, Json) {
     /**
      * Default sync mechanism.
      * Sync data with server using {@link IO} .
-     * @member MVC
-     * @param {MVC.Model|MVC.Collection} self Model or Collection instance to sync with server.
+     * @member KISSY.MVC
+     * @param {KISSY.MVC.Model|KISSY.MVC.Collection} self Model or Collection instance to sync with server.
      * @param {String} method Create or update or delete or read.
      * @param {Object} options IO options
      */
@@ -1320,13 +1305,6 @@ KISSY.add("mvc/sync", function (S, io, Json) {
  * @author yiminghe@gmail.com
  */
 KISSY.add("mvc", function (S, Model, Collection, View, Router, sync) {
-
-    /**
-     * @namespace
-     * KISSY MVC Framework.
-     * @name MVC
-     */
-
     return {
         sync:sync,
         Model:Model,

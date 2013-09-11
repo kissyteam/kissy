@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Aug 27 22:00
+build time: Sep 11 12:52
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -534,15 +534,16 @@ KISSY.add('menu/check-menuitem-render', function (S, MenuItemRender, ContentRend
  * @author yiminghe@gmail.com
  */
 KISSY.add('menu/check-menuitem', function (S, MenuItem, CheckMenuItemRender) {
+    /**
+     * @class KISSY.Menu.CheckItem
+     */
     return MenuItem.extend({
-
         handleClickInternal: function () {
             var self = this;
             self.set("checked", !self.get("checked"));
             self.fire('click');
             return true;
         }
-
     }, {
         ATTRS: {
             /**

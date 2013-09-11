@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Aug 27 21:56
+build time: Sep 11 12:48
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -10,13 +10,17 @@ build time: Aug 27 21:56
 */
 
 /**
+ * @ignore
  * select component for kissy editor.
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/plugin/menubutton", function (S, Editor, MenuButton) {
     /**
-     * 将button ui 和点击功能分离
-     * 按钮必须立刻显示出来，功能可以慢慢加载
+     * add select to editor toolbar
+     * @param {String} id control id
+     * @param {Object} cfg select config
+     * @param {Function} SelectType Select constructor. needs to extend {@link KISSY.MenuButton.Select}, Defaults to {@link KISSY.MenuButton.Select}.
+     * @member KISSY.Editor
      */
     Editor.prototype.addSelect = function (id, cfg, SelectType) {
 

@@ -229,9 +229,9 @@ if (! this._$jscoverage) {
 if (! _$jscoverage['/popup-picker.js']) {
   _$jscoverage['/popup-picker.js'] = {};
   _$jscoverage['/popup-picker.js'].lineData = [];
-  _$jscoverage['/popup-picker.js'].lineData[5] = 0;
   _$jscoverage['/popup-picker.js'].lineData[6] = 0;
-  _$jscoverage['/popup-picker.js'].lineData[16] = 0;
+  _$jscoverage['/popup-picker.js'].lineData[7] = 0;
+  _$jscoverage['/popup-picker.js'].lineData[17] = 0;
 }
 if (! _$jscoverage['/popup-picker.js'].functionData) {
   _$jscoverage['/popup-picker.js'].functionData = [];
@@ -240,15 +240,15 @@ if (! _$jscoverage['/popup-picker.js'].functionData) {
 if (! _$jscoverage['/popup-picker.js'].branchData) {
   _$jscoverage['/popup-picker.js'].branchData = {};
 }
-_$jscoverage['/popup-picker.js'].lineData[5]++;
+_$jscoverage['/popup-picker.js'].lineData[6]++;
 KISSY.add('date/popup-picker', function(S, DatePicker, AlignExtension, Shim) {
   _$jscoverage['/popup-picker.js'].functionData[0]++;
-  _$jscoverage['/popup-picker.js'].lineData[6]++;
+  _$jscoverage['/popup-picker.js'].lineData[7]++;
   var PopupDatePickerRender = DatePicker.getDefaultRender().extend({}, {
   ATTRS: {
   contentTpl: {
   value: '<div ' + 'class="{{getBaseCssClasses "content"}}">' + '{{{include "date/picker/picker-tpl"}}}' + '</div>'}}});
-  _$jscoverage['/popup-picker.js'].lineData[16]++;
+  _$jscoverage['/popup-picker.js'].lineData[17]++;
   return DatePicker.extend([Shim, AlignExtension], {}, {
   xclass: 'popup-date-picker', 
   ATTRS: {

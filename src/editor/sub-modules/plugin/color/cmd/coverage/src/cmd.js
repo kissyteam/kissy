@@ -229,15 +229,15 @@ if (! this._$jscoverage) {
 if (! _$jscoverage['/cmd.js']) {
   _$jscoverage['/cmd.js'] = {};
   _$jscoverage['/cmd.js'].lineData = [];
-  _$jscoverage['/cmd.js'].lineData[5] = 0;
   _$jscoverage['/cmd.js'].lineData[6] = 0;
   _$jscoverage['/cmd.js'].lineData[7] = 0;
   _$jscoverage['/cmd.js'].lineData[8] = 0;
   _$jscoverage['/cmd.js'].lineData[9] = 0;
   _$jscoverage['/cmd.js'].lineData[10] = 0;
-  _$jscoverage['/cmd.js'].lineData[17] = 0;
-  _$jscoverage['/cmd.js'].lineData[21] = 0;
-  _$jscoverage['/cmd.js'].lineData[24] = 0;
+  _$jscoverage['/cmd.js'].lineData[11] = 0;
+  _$jscoverage['/cmd.js'].lineData[18] = 0;
+  _$jscoverage['/cmd.js'].lineData[22] = 0;
+  _$jscoverage['/cmd.js'].lineData[25] = 0;
 }
 if (! _$jscoverage['/cmd.js'].functionData) {
   _$jscoverage['/cmd.js'].functionData = [];
@@ -246,37 +246,37 @@ if (! _$jscoverage['/cmd.js'].functionData) {
 }
 if (! _$jscoverage['/cmd.js'].branchData) {
   _$jscoverage['/cmd.js'].branchData = {};
-  _$jscoverage['/cmd.js'].branchData['9'] = [];
-  _$jscoverage['/cmd.js'].branchData['9'][1] = new BranchData();
+  _$jscoverage['/cmd.js'].branchData['10'] = [];
+  _$jscoverage['/cmd.js'].branchData['10'][1] = new BranchData();
 }
-_$jscoverage['/cmd.js'].branchData['9'][1].init(97, 1, 'c');
-function visit1_9_1(result) {
-  _$jscoverage['/cmd.js'].branchData['9'][1].ranCondition(result);
+_$jscoverage['/cmd.js'].branchData['10'][1].init(97, 1, 'c');
+function visit1_10_1(result) {
+  _$jscoverage['/cmd.js'].branchData['10'][1].ranCondition(result);
   return result;
-}_$jscoverage['/cmd.js'].lineData[5]++;
+}_$jscoverage['/cmd.js'].lineData[6]++;
 KISSY.add("editor/plugin/color/cmd", function(S, Editor) {
   _$jscoverage['/cmd.js'].functionData[0]++;
-  _$jscoverage['/cmd.js'].lineData[6]++;
+  _$jscoverage['/cmd.js'].lineData[7]++;
   function applyColor(editor, c, styles) {
     _$jscoverage['/cmd.js'].functionData[1]++;
-    _$jscoverage['/cmd.js'].lineData[7]++;
-    var doc = editor.get("document")[0];
     _$jscoverage['/cmd.js'].lineData[8]++;
-    editor.execCommand("save");
+    var doc = editor.get("document")[0];
     _$jscoverage['/cmd.js'].lineData[9]++;
-    if (visit1_9_1(c)) {
-      _$jscoverage['/cmd.js'].lineData[10]++;
+    editor.execCommand("save");
+    _$jscoverage['/cmd.js'].lineData[10]++;
+    if (visit1_10_1(c)) {
+      _$jscoverage['/cmd.js'].lineData[11]++;
       new Editor.Style(styles, {
   color: c}).apply(doc);
     } else {
-      _$jscoverage['/cmd.js'].lineData[17]++;
+      _$jscoverage['/cmd.js'].lineData[18]++;
       new Editor.Style(styles, {
   color: "inherit"}).remove(doc);
     }
-    _$jscoverage['/cmd.js'].lineData[21]++;
+    _$jscoverage['/cmd.js'].lineData[22]++;
     editor.execCommand("save");
   }
-  _$jscoverage['/cmd.js'].lineData[24]++;
+  _$jscoverage['/cmd.js'].lineData[25]++;
   return {
   applyColor: applyColor};
 }, {

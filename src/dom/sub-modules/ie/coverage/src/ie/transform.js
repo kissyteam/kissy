@@ -229,93 +229,92 @@ if (! this._$jscoverage) {
 if (! _$jscoverage['/ie/transform.js']) {
   _$jscoverage['/ie/transform.js'] = {};
   _$jscoverage['/ie/transform.js'].lineData = [];
-  _$jscoverage['/ie/transform.js'].lineData[5] = 0;
   _$jscoverage['/ie/transform.js'].lineData[6] = 0;
   _$jscoverage['/ie/transform.js'].lineData[7] = 0;
-  _$jscoverage['/ie/transform.js'].lineData[9] = 0;
-  _$jscoverage['/ie/transform.js'].lineData[11] = 0;
-  _$jscoverage['/ie/transform.js'].lineData[13] = 0;
+  _$jscoverage['/ie/transform.js'].lineData[8] = 0;
+  _$jscoverage['/ie/transform.js'].lineData[10] = 0;
+  _$jscoverage['/ie/transform.js'].lineData[12] = 0;
   _$jscoverage['/ie/transform.js'].lineData[14] = 0;
   _$jscoverage['/ie/transform.js'].lineData[15] = 0;
-  _$jscoverage['/ie/transform.js'].lineData[17] = 0;
+  _$jscoverage['/ie/transform.js'].lineData[16] = 0;
   _$jscoverage['/ie/transform.js'].lineData[18] = 0;
   _$jscoverage['/ie/transform.js'].lineData[19] = 0;
   _$jscoverage['/ie/transform.js'].lineData[20] = 0;
-  _$jscoverage['/ie/transform.js'].lineData[22] = 0;
+  _$jscoverage['/ie/transform.js'].lineData[21] = 0;
   _$jscoverage['/ie/transform.js'].lineData[23] = 0;
-  _$jscoverage['/ie/transform.js'].lineData[25] = 0;
-  _$jscoverage['/ie/transform.js'].lineData[34] = 0;
-  _$jscoverage['/ie/transform.js'].lineData[36] = 0;
-  _$jscoverage['/ie/transform.js'].lineData[40] = 0;
-  _$jscoverage['/ie/transform.js'].lineData[54] = 0;
+  _$jscoverage['/ie/transform.js'].lineData[24] = 0;
+  _$jscoverage['/ie/transform.js'].lineData[26] = 0;
+  _$jscoverage['/ie/transform.js'].lineData[35] = 0;
+  _$jscoverage['/ie/transform.js'].lineData[37] = 0;
+  _$jscoverage['/ie/transform.js'].lineData[41] = 0;
   _$jscoverage['/ie/transform.js'].lineData[55] = 0;
   _$jscoverage['/ie/transform.js'].lineData[56] = 0;
   _$jscoverage['/ie/transform.js'].lineData[57] = 0;
   _$jscoverage['/ie/transform.js'].lineData[58] = 0;
   _$jscoverage['/ie/transform.js'].lineData[59] = 0;
   _$jscoverage['/ie/transform.js'].lineData[60] = 0;
-  _$jscoverage['/ie/transform.js'].lineData[74] = 0;
-  _$jscoverage['/ie/transform.js'].lineData[76] = 0;
-  _$jscoverage['/ie/transform.js'].lineData[78] = 0;
-  _$jscoverage['/ie/transform.js'].lineData[82] = 0;
+  _$jscoverage['/ie/transform.js'].lineData[61] = 0;
+  _$jscoverage['/ie/transform.js'].lineData[75] = 0;
+  _$jscoverage['/ie/transform.js'].lineData[77] = 0;
+  _$jscoverage['/ie/transform.js'].lineData[79] = 0;
   _$jscoverage['/ie/transform.js'].lineData[83] = 0;
-  _$jscoverage['/ie/transform.js'].lineData[87] = 0;
-  _$jscoverage['/ie/transform.js'].lineData[93] = 0;
-  _$jscoverage['/ie/transform.js'].lineData[97] = 0;
+  _$jscoverage['/ie/transform.js'].lineData[84] = 0;
+  _$jscoverage['/ie/transform.js'].lineData[88] = 0;
+  _$jscoverage['/ie/transform.js'].lineData[94] = 0;
   _$jscoverage['/ie/transform.js'].lineData[98] = 0;
-  _$jscoverage['/ie/transform.js'].lineData[102] = 0;
+  _$jscoverage['/ie/transform.js'].lineData[99] = 0;
   _$jscoverage['/ie/transform.js'].lineData[103] = 0;
-  _$jscoverage['/ie/transform.js'].lineData[105] = 0;
-  _$jscoverage['/ie/transform.js'].lineData[111] = 0;
+  _$jscoverage['/ie/transform.js'].lineData[104] = 0;
+  _$jscoverage['/ie/transform.js'].lineData[106] = 0;
   _$jscoverage['/ie/transform.js'].lineData[112] = 0;
-  _$jscoverage['/ie/transform.js'].lineData[114] = 0;
-  _$jscoverage['/ie/transform.js'].lineData[129] = 0;
+  _$jscoverage['/ie/transform.js'].lineData[113] = 0;
+  _$jscoverage['/ie/transform.js'].lineData[115] = 0;
   _$jscoverage['/ie/transform.js'].lineData[130] = 0;
   _$jscoverage['/ie/transform.js'].lineData[131] = 0;
   _$jscoverage['/ie/transform.js'].lineData[132] = 0;
   _$jscoverage['/ie/transform.js'].lineData[133] = 0;
-  _$jscoverage['/ie/transform.js'].lineData[135] = 0;
+  _$jscoverage['/ie/transform.js'].lineData[134] = 0;
   _$jscoverage['/ie/transform.js'].lineData[136] = 0;
   _$jscoverage['/ie/transform.js'].lineData[137] = 0;
   _$jscoverage['/ie/transform.js'].lineData[138] = 0;
-  _$jscoverage['/ie/transform.js'].lineData[140] = 0;
-  _$jscoverage['/ie/transform.js'].lineData[143] = 0;
-  _$jscoverage['/ie/transform.js'].lineData[147] = 0;
+  _$jscoverage['/ie/transform.js'].lineData[139] = 0;
+  _$jscoverage['/ie/transform.js'].lineData[141] = 0;
+  _$jscoverage['/ie/transform.js'].lineData[144] = 0;
   _$jscoverage['/ie/transform.js'].lineData[148] = 0;
   _$jscoverage['/ie/transform.js'].lineData[149] = 0;
-  _$jscoverage['/ie/transform.js'].lineData[157] = 0;
+  _$jscoverage['/ie/transform.js'].lineData[150] = 0;
   _$jscoverage['/ie/transform.js'].lineData[158] = 0;
   _$jscoverage['/ie/transform.js'].lineData[159] = 0;
   _$jscoverage['/ie/transform.js'].lineData[160] = 0;
   _$jscoverage['/ie/transform.js'].lineData[161] = 0;
   _$jscoverage['/ie/transform.js'].lineData[162] = 0;
-  _$jscoverage['/ie/transform.js'].lineData[164] = 0;
+  _$jscoverage['/ie/transform.js'].lineData[163] = 0;
   _$jscoverage['/ie/transform.js'].lineData[165] = 0;
-  _$jscoverage['/ie/transform.js'].lineData[168] = 0;
+  _$jscoverage['/ie/transform.js'].lineData[166] = 0;
   _$jscoverage['/ie/transform.js'].lineData[169] = 0;
-  _$jscoverage['/ie/transform.js'].lineData[172] = 0;
+  _$jscoverage['/ie/transform.js'].lineData[170] = 0;
   _$jscoverage['/ie/transform.js'].lineData[173] = 0;
   _$jscoverage['/ie/transform.js'].lineData[174] = 0;
   _$jscoverage['/ie/transform.js'].lineData[175] = 0;
-  _$jscoverage['/ie/transform.js'].lineData[178] = 0;
+  _$jscoverage['/ie/transform.js'].lineData[176] = 0;
   _$jscoverage['/ie/transform.js'].lineData[179] = 0;
   _$jscoverage['/ie/transform.js'].lineData[180] = 0;
   _$jscoverage['/ie/transform.js'].lineData[181] = 0;
   _$jscoverage['/ie/transform.js'].lineData[182] = 0;
   _$jscoverage['/ie/transform.js'].lineData[183] = 0;
-  _$jscoverage['/ie/transform.js'].lineData[186] = 0;
+  _$jscoverage['/ie/transform.js'].lineData[184] = 0;
   _$jscoverage['/ie/transform.js'].lineData[187] = 0;
-  _$jscoverage['/ie/transform.js'].lineData[190] = 0;
+  _$jscoverage['/ie/transform.js'].lineData[188] = 0;
   _$jscoverage['/ie/transform.js'].lineData[191] = 0;
-  _$jscoverage['/ie/transform.js'].lineData[194] = 0;
+  _$jscoverage['/ie/transform.js'].lineData[192] = 0;
   _$jscoverage['/ie/transform.js'].lineData[195] = 0;
   _$jscoverage['/ie/transform.js'].lineData[196] = 0;
   _$jscoverage['/ie/transform.js'].lineData[197] = 0;
-  _$jscoverage['/ie/transform.js'].lineData[200] = 0;
+  _$jscoverage['/ie/transform.js'].lineData[198] = 0;
   _$jscoverage['/ie/transform.js'].lineData[201] = 0;
-  _$jscoverage['/ie/transform.js'].lineData[204] = 0;
+  _$jscoverage['/ie/transform.js'].lineData[202] = 0;
   _$jscoverage['/ie/transform.js'].lineData[205] = 0;
-  _$jscoverage['/ie/transform.js'].lineData[208] = 0;
+  _$jscoverage['/ie/transform.js'].lineData[206] = 0;
   _$jscoverage['/ie/transform.js'].lineData[209] = 0;
   _$jscoverage['/ie/transform.js'].lineData[210] = 0;
   _$jscoverage['/ie/transform.js'].lineData[211] = 0;
@@ -323,30 +322,31 @@ if (! _$jscoverage['/ie/transform.js']) {
   _$jscoverage['/ie/transform.js'].lineData[213] = 0;
   _$jscoverage['/ie/transform.js'].lineData[214] = 0;
   _$jscoverage['/ie/transform.js'].lineData[215] = 0;
-  _$jscoverage['/ie/transform.js'].lineData[217] = 0;
-  _$jscoverage['/ie/transform.js'].lineData[220] = 0;
-  _$jscoverage['/ie/transform.js'].lineData[223] = 0;
+  _$jscoverage['/ie/transform.js'].lineData[216] = 0;
+  _$jscoverage['/ie/transform.js'].lineData[218] = 0;
+  _$jscoverage['/ie/transform.js'].lineData[221] = 0;
   _$jscoverage['/ie/transform.js'].lineData[224] = 0;
-  _$jscoverage['/ie/transform.js'].lineData[231] = 0;
+  _$jscoverage['/ie/transform.js'].lineData[225] = 0;
   _$jscoverage['/ie/transform.js'].lineData[232] = 0;
   _$jscoverage['/ie/transform.js'].lineData[233] = 0;
-  _$jscoverage['/ie/transform.js'].lineData[235] = 0;
-  _$jscoverage['/ie/transform.js'].lineData[238] = 0;
-  _$jscoverage['/ie/transform.js'].lineData[240] = 0;
+  _$jscoverage['/ie/transform.js'].lineData[234] = 0;
+  _$jscoverage['/ie/transform.js'].lineData[236] = 0;
+  _$jscoverage['/ie/transform.js'].lineData[239] = 0;
   _$jscoverage['/ie/transform.js'].lineData[241] = 0;
   _$jscoverage['/ie/transform.js'].lineData[242] = 0;
   _$jscoverage['/ie/transform.js'].lineData[243] = 0;
-  _$jscoverage['/ie/transform.js'].lineData[245] = 0;
-  _$jscoverage['/ie/transform.js'].lineData[248] = 0;
-  _$jscoverage['/ie/transform.js'].lineData[253] = 0;
+  _$jscoverage['/ie/transform.js'].lineData[244] = 0;
+  _$jscoverage['/ie/transform.js'].lineData[246] = 0;
+  _$jscoverage['/ie/transform.js'].lineData[249] = 0;
   _$jscoverage['/ie/transform.js'].lineData[254] = 0;
   _$jscoverage['/ie/transform.js'].lineData[255] = 0;
   _$jscoverage['/ie/transform.js'].lineData[256] = 0;
   _$jscoverage['/ie/transform.js'].lineData[257] = 0;
-  _$jscoverage['/ie/transform.js'].lineData[259] = 0;
-  _$jscoverage['/ie/transform.js'].lineData[263] = 0;
-  _$jscoverage['/ie/transform.js'].lineData[267] = 0;
+  _$jscoverage['/ie/transform.js'].lineData[258] = 0;
+  _$jscoverage['/ie/transform.js'].lineData[260] = 0;
+  _$jscoverage['/ie/transform.js'].lineData[264] = 0;
   _$jscoverage['/ie/transform.js'].lineData[268] = 0;
+  _$jscoverage['/ie/transform.js'].lineData[269] = 0;
 }
 if (! _$jscoverage['/ie/transform.js'].functionData) {
   _$jscoverage['/ie/transform.js'].functionData = [];
@@ -363,471 +363,471 @@ if (! _$jscoverage['/ie/transform.js'].functionData) {
 }
 if (! _$jscoverage['/ie/transform.js'].branchData) {
   _$jscoverage['/ie/transform.js'].branchData = {};
-  _$jscoverage['/ie/transform.js'].branchData['13'] = [];
-  _$jscoverage['/ie/transform.js'].branchData['13'][1] = new BranchData();
-  _$jscoverage['/ie/transform.js'].branchData['17'] = [];
-  _$jscoverage['/ie/transform.js'].branchData['17'][1] = new BranchData();
+  _$jscoverage['/ie/transform.js'].branchData['14'] = [];
+  _$jscoverage['/ie/transform.js'].branchData['14'][1] = new BranchData();
   _$jscoverage['/ie/transform.js'].branchData['18'] = [];
   _$jscoverage['/ie/transform.js'].branchData['18'][1] = new BranchData();
   _$jscoverage['/ie/transform.js'].branchData['19'] = [];
   _$jscoverage['/ie/transform.js'].branchData['19'][1] = new BranchData();
-  _$jscoverage['/ie/transform.js'].branchData['19'][2] = new BranchData();
-  _$jscoverage['/ie/transform.js'].branchData['22'] = [];
-  _$jscoverage['/ie/transform.js'].branchData['22'][1] = new BranchData();
-  _$jscoverage['/ie/transform.js'].branchData['22'][2] = new BranchData();
-  _$jscoverage['/ie/transform.js'].branchData['55'] = [];
-  _$jscoverage['/ie/transform.js'].branchData['55'][1] = new BranchData();
-  _$jscoverage['/ie/transform.js'].branchData['76'] = [];
-  _$jscoverage['/ie/transform.js'].branchData['76'][1] = new BranchData();
-  _$jscoverage['/ie/transform.js'].branchData['76'][2] = new BranchData();
-  _$jscoverage['/ie/transform.js'].branchData['76'][3] = new BranchData();
-  _$jscoverage['/ie/transform.js'].branchData['78'] = [];
-  _$jscoverage['/ie/transform.js'].branchData['78'][1] = new BranchData();
-  _$jscoverage['/ie/transform.js'].branchData['84'] = [];
-  _$jscoverage['/ie/transform.js'].branchData['84'][1] = new BranchData();
-  _$jscoverage['/ie/transform.js'].branchData['86'] = [];
-  _$jscoverage['/ie/transform.js'].branchData['86'][1] = new BranchData();
-  _$jscoverage['/ie/transform.js'].branchData['97'] = [];
-  _$jscoverage['/ie/transform.js'].branchData['97'][1] = new BranchData();
-  _$jscoverage['/ie/transform.js'].branchData['130'] = [];
-  _$jscoverage['/ie/transform.js'].branchData['130'][1] = new BranchData();
-  _$jscoverage['/ie/transform.js'].branchData['132'] = [];
-  _$jscoverage['/ie/transform.js'].branchData['132'][1] = new BranchData();
-  _$jscoverage['/ie/transform.js'].branchData['135'] = [];
-  _$jscoverage['/ie/transform.js'].branchData['135'][1] = new BranchData();
-  _$jscoverage['/ie/transform.js'].branchData['137'] = [];
-  _$jscoverage['/ie/transform.js'].branchData['137'][1] = new BranchData();
-  _$jscoverage['/ie/transform.js'].branchData['157'] = [];
-  _$jscoverage['/ie/transform.js'].branchData['157'][1] = new BranchData();
-  _$jscoverage['/ie/transform.js'].branchData['174'] = [];
-  _$jscoverage['/ie/transform.js'].branchData['174'][1] = new BranchData();
-  _$jscoverage['/ie/transform.js'].branchData['196'] = [];
-  _$jscoverage['/ie/transform.js'].branchData['196'][1] = new BranchData();
-  _$jscoverage['/ie/transform.js'].branchData['232'] = [];
-  _$jscoverage['/ie/transform.js'].branchData['232'][1] = new BranchData();
-  _$jscoverage['/ie/transform.js'].branchData['240'] = [];
-  _$jscoverage['/ie/transform.js'].branchData['240'][1] = new BranchData();
-  _$jscoverage['/ie/transform.js'].branchData['242'] = [];
-  _$jscoverage['/ie/transform.js'].branchData['242'][1] = new BranchData();
-  _$jscoverage['/ie/transform.js'].branchData['253'] = [];
-  _$jscoverage['/ie/transform.js'].branchData['253'][1] = new BranchData();
+  _$jscoverage['/ie/transform.js'].branchData['20'] = [];
+  _$jscoverage['/ie/transform.js'].branchData['20'][1] = new BranchData();
+  _$jscoverage['/ie/transform.js'].branchData['20'][2] = new BranchData();
+  _$jscoverage['/ie/transform.js'].branchData['23'] = [];
+  _$jscoverage['/ie/transform.js'].branchData['23'][1] = new BranchData();
+  _$jscoverage['/ie/transform.js'].branchData['23'][2] = new BranchData();
+  _$jscoverage['/ie/transform.js'].branchData['56'] = [];
+  _$jscoverage['/ie/transform.js'].branchData['56'][1] = new BranchData();
+  _$jscoverage['/ie/transform.js'].branchData['77'] = [];
+  _$jscoverage['/ie/transform.js'].branchData['77'][1] = new BranchData();
+  _$jscoverage['/ie/transform.js'].branchData['77'][2] = new BranchData();
+  _$jscoverage['/ie/transform.js'].branchData['77'][3] = new BranchData();
+  _$jscoverage['/ie/transform.js'].branchData['79'] = [];
+  _$jscoverage['/ie/transform.js'].branchData['79'][1] = new BranchData();
+  _$jscoverage['/ie/transform.js'].branchData['85'] = [];
+  _$jscoverage['/ie/transform.js'].branchData['85'][1] = new BranchData();
+  _$jscoverage['/ie/transform.js'].branchData['87'] = [];
+  _$jscoverage['/ie/transform.js'].branchData['87'][1] = new BranchData();
+  _$jscoverage['/ie/transform.js'].branchData['98'] = [];
+  _$jscoverage['/ie/transform.js'].branchData['98'][1] = new BranchData();
+  _$jscoverage['/ie/transform.js'].branchData['131'] = [];
+  _$jscoverage['/ie/transform.js'].branchData['131'][1] = new BranchData();
+  _$jscoverage['/ie/transform.js'].branchData['133'] = [];
+  _$jscoverage['/ie/transform.js'].branchData['133'][1] = new BranchData();
+  _$jscoverage['/ie/transform.js'].branchData['136'] = [];
+  _$jscoverage['/ie/transform.js'].branchData['136'][1] = new BranchData();
+  _$jscoverage['/ie/transform.js'].branchData['138'] = [];
+  _$jscoverage['/ie/transform.js'].branchData['138'][1] = new BranchData();
+  _$jscoverage['/ie/transform.js'].branchData['158'] = [];
+  _$jscoverage['/ie/transform.js'].branchData['158'][1] = new BranchData();
+  _$jscoverage['/ie/transform.js'].branchData['175'] = [];
+  _$jscoverage['/ie/transform.js'].branchData['175'][1] = new BranchData();
+  _$jscoverage['/ie/transform.js'].branchData['197'] = [];
+  _$jscoverage['/ie/transform.js'].branchData['197'][1] = new BranchData();
+  _$jscoverage['/ie/transform.js'].branchData['233'] = [];
+  _$jscoverage['/ie/transform.js'].branchData['233'][1] = new BranchData();
+  _$jscoverage['/ie/transform.js'].branchData['241'] = [];
+  _$jscoverage['/ie/transform.js'].branchData['241'][1] = new BranchData();
+  _$jscoverage['/ie/transform.js'].branchData['243'] = [];
+  _$jscoverage['/ie/transform.js'].branchData['243'][1] = new BranchData();
   _$jscoverage['/ie/transform.js'].branchData['254'] = [];
   _$jscoverage['/ie/transform.js'].branchData['254'][1] = new BranchData();
-  _$jscoverage['/ie/transform.js'].branchData['256'] = [];
-  _$jscoverage['/ie/transform.js'].branchData['256'][1] = new BranchData();
-  _$jscoverage['/ie/transform.js'].branchData['268'] = [];
-  _$jscoverage['/ie/transform.js'].branchData['268'][1] = new BranchData();
+  _$jscoverage['/ie/transform.js'].branchData['255'] = [];
+  _$jscoverage['/ie/transform.js'].branchData['255'][1] = new BranchData();
+  _$jscoverage['/ie/transform.js'].branchData['257'] = [];
+  _$jscoverage['/ie/transform.js'].branchData['257'][1] = new BranchData();
+  _$jscoverage['/ie/transform.js'].branchData['269'] = [];
+  _$jscoverage['/ie/transform.js'].branchData['269'][1] = new BranchData();
 }
-_$jscoverage['/ie/transform.js'].branchData['268'][1].init(17, 25, 'value.indexOf("deg") > -1');
-function visit114_268_1(result) {
-  _$jscoverage['/ie/transform.js'].branchData['268'][1].ranCondition(result);
+_$jscoverage['/ie/transform.js'].branchData['269'][1].init(17, 25, 'value.indexOf("deg") > -1');
+function visit114_269_1(result) {
+  _$jscoverage['/ie/transform.js'].branchData['269'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/transform.js'].branchData['256'][1].init(64, 6, 'j < r2');
-function visit113_256_1(result) {
-  _$jscoverage['/ie/transform.js'].branchData['256'][1].ranCondition(result);
+}_$jscoverage['/ie/transform.js'].branchData['257'][1].init(64, 6, 'j < r2');
+function visit113_257_1(result) {
+  _$jscoverage['/ie/transform.js'].branchData['257'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/transform.js'].branchData['254'][1].init(30, 6, 'k < c2');
-function visit112_254_1(result) {
+}_$jscoverage['/ie/transform.js'].branchData['255'][1].init(30, 6, 'k < c2');
+function visit112_255_1(result) {
+  _$jscoverage['/ie/transform.js'].branchData['255'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/ie/transform.js'].branchData['254'][1].init(370, 6, 'i < r1');
+function visit111_254_1(result) {
   _$jscoverage['/ie/transform.js'].branchData['254'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/transform.js'].branchData['253'][1].init(370, 6, 'i < r1');
-function visit111_253_1(result) {
-  _$jscoverage['/ie/transform.js'].branchData['253'][1].ranCondition(result);
+}_$jscoverage['/ie/transform.js'].branchData['243'][1].init(57, 20, 'i < arguments.length');
+function visit110_243_1(result) {
+  _$jscoverage['/ie/transform.js'].branchData['243'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/transform.js'].branchData['242'][1].init(57, 20, 'i < arguments.length');
-function visit110_242_1(result) {
-  _$jscoverage['/ie/transform.js'].branchData['242'][1].ranCondition(result);
+}_$jscoverage['/ie/transform.js'].branchData['241'][1].init(16, 20, 'arguments.length > 2');
+function visit109_241_1(result) {
+  _$jscoverage['/ie/transform.js'].branchData['241'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/transform.js'].branchData['240'][1].init(16, 20, 'arguments.length > 2');
-function visit109_240_1(result) {
-  _$jscoverage['/ie/transform.js'].branchData['240'][1].ranCondition(result);
+}_$jscoverage['/ie/transform.js'].branchData['233'][1].init(14, 5, '!m[x]');
+function visit108_233_1(result) {
+  _$jscoverage['/ie/transform.js'].branchData['233'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/transform.js'].branchData['232'][1].init(14, 5, '!m[x]');
-function visit108_232_1(result) {
-  _$jscoverage['/ie/transform.js'].branchData['232'][1].ranCondition(result);
+}_$jscoverage['/ie/transform.js'].branchData['197'][1].init(127, 14, 'val.length > 1');
+function visit107_197_1(result) {
+  _$jscoverage['/ie/transform.js'].branchData['197'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/transform.js'].branchData['196'][1].init(127, 14, 'val.length > 1');
-function visit107_196_1(result) {
-  _$jscoverage['/ie/transform.js'].branchData['196'][1].ranCondition(result);
+}_$jscoverage['/ie/transform.js'].branchData['175'][1].init(153, 11, 'val[1] || 0');
+function visit106_175_1(result) {
+  _$jscoverage['/ie/transform.js'].branchData['175'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/transform.js'].branchData['174'][1].init(153, 11, 'val[1] || 0');
-function visit106_174_1(result) {
-  _$jscoverage['/ie/transform.js'].branchData['174'][1].ranCondition(result);
+}_$jscoverage['/ie/transform.js'].branchData['158'][1].init(343, 7, '++i < l');
+function visit105_158_1(result) {
+  _$jscoverage['/ie/transform.js'].branchData['158'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/transform.js'].branchData['157'][1].init(343, 7, '++i < l');
-function visit105_157_1(result) {
-  _$jscoverage['/ie/transform.js'].branchData['157'][1].ranCondition(result);
+}_$jscoverage['/ie/transform.js'].branchData['138'][1].init(64, 26, 'S.endsWith(origin[i], \'%\')');
+function visit104_138_1(result) {
+  _$jscoverage['/ie/transform.js'].branchData['138'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/transform.js'].branchData['137'][1].init(64, 26, 'S.endsWith(origin[i], \'%\')');
-function visit104_137_1(result) {
-  _$jscoverage['/ie/transform.js'].branchData['137'][1].ranCondition(result);
+}_$jscoverage['/ie/transform.js'].branchData['136'][1].init(186, 17, 'i < origin.length');
+function visit103_136_1(result) {
+  _$jscoverage['/ie/transform.js'].branchData['136'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/transform.js'].branchData['135'][1].init(186, 17, 'i < origin.length');
-function visit103_135_1(result) {
-  _$jscoverage['/ie/transform.js'].branchData['135'][1].ranCondition(result);
+}_$jscoverage['/ie/transform.js'].branchData['133'][1].init(92, 18, 'origin.length == 1');
+function visit102_133_1(result) {
+  _$jscoverage['/ie/transform.js'].branchData['133'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/transform.js'].branchData['132'][1].init(92, 18, 'origin.length == 1');
-function visit102_132_1(result) {
-  _$jscoverage['/ie/transform.js'].branchData['132'][1].ranCondition(result);
+}_$jscoverage['/ie/transform.js'].branchData['131'][1].init(19, 19, 'origin || \'50% 50%\'');
+function visit101_131_1(result) {
+  _$jscoverage['/ie/transform.js'].branchData['131'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/transform.js'].branchData['130'][1].init(19, 19, 'origin || \'50% 50%\'');
-function visit101_130_1(result) {
-  _$jscoverage['/ie/transform.js'].branchData['130'][1].ranCondition(result);
+}_$jscoverage['/ie/transform.js'].branchData['98'][1].init(2586, 9, 'matrixVal');
+function visit100_98_1(result) {
+  _$jscoverage['/ie/transform.js'].branchData['98'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/transform.js'].branchData['97'][1].init(2586, 9, 'matrixVal');
-function visit100_97_1(result) {
-  _$jscoverage['/ie/transform.js'].branchData['97'][1].ranCondition(result);
+}_$jscoverage['/ie/transform.js'].branchData['87'][1].init(129, 36, 'currentStyle && !currentStyle.filter');
+function visit99_87_1(result) {
+  _$jscoverage['/ie/transform.js'].branchData['87'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/transform.js'].branchData['86'][1].init(129, 36, 'currentStyle && !currentStyle.filter');
-function visit99_86_1(result) {
-  _$jscoverage['/ie/transform.js'].branchData['86'][1].ranCondition(result);
+}_$jscoverage['/ie/transform.js'].branchData['85'][1].init(48, 166, '!matrixVal || currentStyle && !currentStyle.filter');
+function visit98_85_1(result) {
+  _$jscoverage['/ie/transform.js'].branchData['85'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/transform.js'].branchData['84'][1].init(48, 166, '!matrixVal || currentStyle && !currentStyle.filter');
-function visit98_84_1(result) {
-  _$jscoverage['/ie/transform.js'].branchData['84'][1].ranCondition(result);
+}_$jscoverage['/ie/transform.js'].branchData['79'][1].init(1612, 50, '!matrixVal && !S.trim(filter.replace(rMatrix, \'\'))');
+function visit97_79_1(result) {
+  _$jscoverage['/ie/transform.js'].branchData['79'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/transform.js'].branchData['78'][1].init(1612, 50, '!matrixVal && !S.trim(filter.replace(rMatrix, \'\'))');
-function visit97_78_1(result) {
-  _$jscoverage['/ie/transform.js'].branchData['78'][1].ranCondition(result);
+}_$jscoverage['/ie/transform.js'].branchData['77'][3].init(1569, 22, 'elemStyle.filter || ""');
+function visit96_77_3(result) {
+  _$jscoverage['/ie/transform.js'].branchData['77'][3].ranCondition(result);
   return result;
-}_$jscoverage['/ie/transform.js'].branchData['76'][3].init(1569, 22, 'elemStyle.filter || ""');
-function visit96_76_3(result) {
-  _$jscoverage['/ie/transform.js'].branchData['76'][3].ranCondition(result);
+}_$jscoverage['/ie/transform.js'].branchData['77'][2].init(1530, 35, 'currentStyle && currentStyle.filter');
+function visit95_77_2(result) {
+  _$jscoverage['/ie/transform.js'].branchData['77'][2].ranCondition(result);
   return result;
-}_$jscoverage['/ie/transform.js'].branchData['76'][2].init(1530, 35, 'currentStyle && currentStyle.filter');
-function visit95_76_2(result) {
-  _$jscoverage['/ie/transform.js'].branchData['76'][2].ranCondition(result);
+}_$jscoverage['/ie/transform.js'].branchData['77'][1].init(1530, 61, 'currentStyle && currentStyle.filter || elemStyle.filter || ""');
+function visit94_77_1(result) {
+  _$jscoverage['/ie/transform.js'].branchData['77'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/transform.js'].branchData['76'][1].init(1530, 61, 'currentStyle && currentStyle.filter || elemStyle.filter || ""');
-function visit94_76_1(result) {
-  _$jscoverage['/ie/transform.js'].branchData['76'][1].ranCondition(result);
+}_$jscoverage['/ie/transform.js'].branchData['56'][1].init(585, 5, 'value');
+function visit93_56_1(result) {
+  _$jscoverage['/ie/transform.js'].branchData['56'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/transform.js'].branchData['55'][1].init(585, 5, 'value');
-function visit93_55_1(result) {
-  _$jscoverage['/ie/transform.js'].branchData['55'][1].ranCondition(result);
+}_$jscoverage['/ie/transform.js'].branchData['23'][2].init(385, 28, 'dys[0].toLowerCase() == \'dy\'');
+function visit92_23_2(result) {
+  _$jscoverage['/ie/transform.js'].branchData['23'][2].ranCondition(result);
   return result;
-}_$jscoverage['/ie/transform.js'].branchData['22'][2].init(385, 28, 'dys[0].toLowerCase() == \'dy\'');
-function visit92_22_2(result) {
-  _$jscoverage['/ie/transform.js'].branchData['22'][2].ranCondition(result);
+}_$jscoverage['/ie/transform.js'].branchData['23'][1].init(378, 35, 'dys && dys[0].toLowerCase() == \'dy\'');
+function visit91_23_1(result) {
+  _$jscoverage['/ie/transform.js'].branchData['23'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/transform.js'].branchData['22'][1].init(378, 35, 'dys && dys[0].toLowerCase() == \'dy\'');
-function visit91_22_1(result) {
-  _$jscoverage['/ie/transform.js'].branchData['22'][1].ranCondition(result);
+}_$jscoverage['/ie/transform.js'].branchData['20'][2].init(260, 28, 'dxs[0].toLowerCase() == \'dx\'');
+function visit90_20_2(result) {
+  _$jscoverage['/ie/transform.js'].branchData['20'][2].ranCondition(result);
   return result;
-}_$jscoverage['/ie/transform.js'].branchData['19'][2].init(260, 28, 'dxs[0].toLowerCase() == \'dx\'');
-function visit90_19_2(result) {
-  _$jscoverage['/ie/transform.js'].branchData['19'][2].ranCondition(result);
+}_$jscoverage['/ie/transform.js'].branchData['20'][1].init(253, 35, 'dxs && dxs[0].toLowerCase() == \'dx\'');
+function visit89_20_1(result) {
+  _$jscoverage['/ie/transform.js'].branchData['20'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/transform.js'].branchData['19'][1].init(253, 35, 'dxs && dxs[0].toLowerCase() == \'dx\'');
-function visit89_19_1(result) {
+}_$jscoverage['/ie/transform.js'].branchData['19'][1].init(197, 33, 'matrix[5] && matrix[5].split("=")');
+function visit88_19_1(result) {
   _$jscoverage['/ie/transform.js'].branchData['19'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/transform.js'].branchData['18'][1].init(197, 33, 'matrix[5] && matrix[5].split("=")');
-function visit88_18_1(result) {
+}_$jscoverage['/ie/transform.js'].branchData['18'][1].init(135, 33, 'matrix[4] && matrix[4].split("=")');
+function visit87_18_1(result) {
   _$jscoverage['/ie/transform.js'].branchData['18'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/transform.js'].branchData['17'][1].init(135, 33, 'matrix[4] && matrix[4].split("=")');
-function visit87_17_1(result) {
-  _$jscoverage['/ie/transform.js'].branchData['17'][1].ranCondition(result);
+}_$jscoverage['/ie/transform.js'].branchData['14'][1].init(115, 43, 'elemStyle && rMatrix.test(elemStyle.filter)');
+function visit86_14_1(result) {
+  _$jscoverage['/ie/transform.js'].branchData['14'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/transform.js'].branchData['13'][1].init(115, 43, 'elemStyle && rMatrix.test(elemStyle.filter)');
-function visit86_13_1(result) {
-  _$jscoverage['/ie/transform.js'].branchData['13'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/ie/transform.js'].lineData[5]++;
+}_$jscoverage['/ie/transform.js'].lineData[6]++;
 KISSY.add('dom/ie/transform', function(S, Dom) {
   _$jscoverage['/ie/transform.js'].functionData[0]++;
-  _$jscoverage['/ie/transform.js'].lineData[6]++;
-  var cssHooks = Dom._cssHooks;
   _$jscoverage['/ie/transform.js'].lineData[7]++;
+  var cssHooks = Dom._cssHooks;
+  _$jscoverage['/ie/transform.js'].lineData[8]++;
   var rMatrix = /progid:DXImageTransform.Microsoft.Matrix\(([^)]*)\)/;
-  _$jscoverage['/ie/transform.js'].lineData[9]++;
+  _$jscoverage['/ie/transform.js'].lineData[10]++;
   cssHooks.transform = {
   get: function(elem, computed) {
   _$jscoverage['/ie/transform.js'].functionData[1]++;
-  _$jscoverage['/ie/transform.js'].lineData[11]++;
+  _$jscoverage['/ie/transform.js'].lineData[12]++;
   var elemStyle = elem[computed ? 'currentStyle' : 'style'], matrix;
-  _$jscoverage['/ie/transform.js'].lineData[13]++;
-  if (visit86_13_1(elemStyle && rMatrix.test(elemStyle.filter))) {
-    _$jscoverage['/ie/transform.js'].lineData[14]++;
-    matrix = RegExp.$1.split(",");
+  _$jscoverage['/ie/transform.js'].lineData[14]++;
+  if (visit86_14_1(elemStyle && rMatrix.test(elemStyle.filter))) {
     _$jscoverage['/ie/transform.js'].lineData[15]++;
+    matrix = RegExp.$1.split(",");
+    _$jscoverage['/ie/transform.js'].lineData[16]++;
     var dx = 0, dy = 0;
-    _$jscoverage['/ie/transform.js'].lineData[17]++;
-    var dxs = visit87_17_1(matrix[4] && matrix[4].split("="));
     _$jscoverage['/ie/transform.js'].lineData[18]++;
-    var dys = visit88_18_1(matrix[5] && matrix[5].split("="));
+    var dxs = visit87_18_1(matrix[4] && matrix[4].split("="));
     _$jscoverage['/ie/transform.js'].lineData[19]++;
-    if (visit89_19_1(dxs && visit90_19_2(dxs[0].toLowerCase() == 'dx'))) {
-      _$jscoverage['/ie/transform.js'].lineData[20]++;
+    var dys = visit88_19_1(matrix[5] && matrix[5].split("="));
+    _$jscoverage['/ie/transform.js'].lineData[20]++;
+    if (visit89_20_1(dxs && visit90_20_2(dxs[0].toLowerCase() == 'dx'))) {
+      _$jscoverage['/ie/transform.js'].lineData[21]++;
       dx = parseFloat(dxs[1]);
     }
-    _$jscoverage['/ie/transform.js'].lineData[22]++;
-    if (visit91_22_1(dys && visit92_22_2(dys[0].toLowerCase() == 'dy'))) {
-      _$jscoverage['/ie/transform.js'].lineData[23]++;
+    _$jscoverage['/ie/transform.js'].lineData[23]++;
+    if (visit91_23_1(dys && visit92_23_2(dys[0].toLowerCase() == 'dy'))) {
+      _$jscoverage['/ie/transform.js'].lineData[24]++;
       dy = parseFloat(dys[1]);
     }
-    _$jscoverage['/ie/transform.js'].lineData[25]++;
+    _$jscoverage['/ie/transform.js'].lineData[26]++;
     matrix = [matrix[0].split("=")[1], matrix[2].split("=")[1], matrix[1].split("=")[1], matrix[3].split("=")[1], dx, dy];
   } else {
-    _$jscoverage['/ie/transform.js'].lineData[34]++;
+    _$jscoverage['/ie/transform.js'].lineData[35]++;
     return computed ? 'none' : '';
   }
-  _$jscoverage['/ie/transform.js'].lineData[36]++;
+  _$jscoverage['/ie/transform.js'].lineData[37]++;
   return 'matrix(' + matrix.join(',') + ')';
 }, 
   set: function(elem, value) {
   _$jscoverage['/ie/transform.js'].functionData[2]++;
-  _$jscoverage['/ie/transform.js'].lineData[40]++;
+  _$jscoverage['/ie/transform.js'].lineData[41]++;
   var elemStyle = elem.style, currentStyle = elem.currentStyle, matrixVal, region = {
   width: elem.clientWidth, 
   height: elem.clientHeight}, center = {
   x: region.width / 2, 
   y: region.height / 2}, origin = parseOrigin(elem.style['transformOrigin'], region), filter;
-  _$jscoverage['/ie/transform.js'].lineData[54]++;
-  elemStyle.zoom = 1;
   _$jscoverage['/ie/transform.js'].lineData[55]++;
-  if (visit93_55_1(value)) {
-    _$jscoverage['/ie/transform.js'].lineData[56]++;
-    value = matrix(value);
+  elemStyle.zoom = 1;
+  _$jscoverage['/ie/transform.js'].lineData[56]++;
+  if (visit93_56_1(value)) {
     _$jscoverage['/ie/transform.js'].lineData[57]++;
-    var afterCenter = getCenterByOrigin(value, origin, center);
+    value = matrix(value);
     _$jscoverage['/ie/transform.js'].lineData[58]++;
-    afterCenter.x = afterCenter[0][0];
+    var afterCenter = getCenterByOrigin(value, origin, center);
     _$jscoverage['/ie/transform.js'].lineData[59]++;
-    afterCenter.y = afterCenter[1][0];
+    afterCenter.x = afterCenter[0][0];
     _$jscoverage['/ie/transform.js'].lineData[60]++;
+    afterCenter.y = afterCenter[1][0];
+    _$jscoverage['/ie/transform.js'].lineData[61]++;
     matrixVal = ["progid:DXImageTransform.Microsoft.Matrix(" + "M11=" + value[0][0], "M12=" + value[0][1], "M21=" + value[1][0], "M22=" + value[1][1], "Dx=" + value[0][2], "Dy=" + value[1][2], 'SizingMethod="auto expand"'].join(',') + ')';
   } else {
-    _$jscoverage['/ie/transform.js'].lineData[74]++;
+    _$jscoverage['/ie/transform.js'].lineData[75]++;
     matrixVal = '';
   }
-  _$jscoverage['/ie/transform.js'].lineData[76]++;
-  filter = visit94_76_1(visit95_76_2(currentStyle && currentStyle.filter) || visit96_76_3(elemStyle.filter || ""));
-  _$jscoverage['/ie/transform.js'].lineData[78]++;
-  if (visit97_78_1(!matrixVal && !S.trim(filter.replace(rMatrix, '')))) {
-    _$jscoverage['/ie/transform.js'].lineData[82]++;
-    elemStyle.removeAttribute('filter');
+  _$jscoverage['/ie/transform.js'].lineData[77]++;
+  filter = visit94_77_1(visit95_77_2(currentStyle && currentStyle.filter) || visit96_77_3(elemStyle.filter || ""));
+  _$jscoverage['/ie/transform.js'].lineData[79]++;
+  if (visit97_79_1(!matrixVal && !S.trim(filter.replace(rMatrix, '')))) {
     _$jscoverage['/ie/transform.js'].lineData[83]++;
-    if (visit98_84_1(!matrixVal || visit99_86_1(currentStyle && !currentStyle.filter))) {
-      _$jscoverage['/ie/transform.js'].lineData[87]++;
+    elemStyle.removeAttribute('filter');
+    _$jscoverage['/ie/transform.js'].lineData[84]++;
+    if (visit98_85_1(!matrixVal || visit99_87_1(currentStyle && !currentStyle.filter))) {
+      _$jscoverage['/ie/transform.js'].lineData[88]++;
       return;
     }
   }
-  _$jscoverage['/ie/transform.js'].lineData[93]++;
+  _$jscoverage['/ie/transform.js'].lineData[94]++;
   elemStyle.filter = rMatrix.test(filter) ? filter.replace(rMatrix, matrixVal) : filter + (filter ? ', ' : '') + matrixVal;
-  _$jscoverage['/ie/transform.js'].lineData[97]++;
-  if (visit100_97_1(matrixVal)) {
-    _$jscoverage['/ie/transform.js'].lineData[98]++;
+  _$jscoverage['/ie/transform.js'].lineData[98]++;
+  if (visit100_98_1(matrixVal)) {
+    _$jscoverage['/ie/transform.js'].lineData[99]++;
     var realCenter = {
   x: elem.offsetWidth / 2, 
   y: elem.offsetHeight / 2};
-    _$jscoverage['/ie/transform.js'].lineData[102]++;
-    elemStyle.marginLeft = afterCenter.x - realCenter.x + 'px';
     _$jscoverage['/ie/transform.js'].lineData[103]++;
+    elemStyle.marginLeft = afterCenter.x - realCenter.x + 'px';
+    _$jscoverage['/ie/transform.js'].lineData[104]++;
     elemStyle.marginTop = afterCenter.y - realCenter.y + 'px';
   } else {
-    _$jscoverage['/ie/transform.js'].lineData[105]++;
+    _$jscoverage['/ie/transform.js'].lineData[106]++;
     elemStyle.marginLeft = elemStyle.marginTop = 0;
   }
 }};
-  _$jscoverage['/ie/transform.js'].lineData[111]++;
+  _$jscoverage['/ie/transform.js'].lineData[112]++;
   function getCenterByOrigin(m, origin, center) {
     _$jscoverage['/ie/transform.js'].functionData[3]++;
-    _$jscoverage['/ie/transform.js'].lineData[112]++;
+    _$jscoverage['/ie/transform.js'].lineData[113]++;
     var w = origin[0], h = origin[1];
-    _$jscoverage['/ie/transform.js'].lineData[114]++;
+    _$jscoverage['/ie/transform.js'].lineData[115]++;
     return multipleMatrix([[1, 0, w], [0, 1, h], [0, 0, 1]], m, [[1, 0, -w], [0, 1, -h], [0, 0, 1]], [[center.x], [center.y], [1]]);
   }
-  _$jscoverage['/ie/transform.js'].lineData[129]++;
+  _$jscoverage['/ie/transform.js'].lineData[130]++;
   function parseOrigin(origin, region) {
     _$jscoverage['/ie/transform.js'].functionData[4]++;
-    _$jscoverage['/ie/transform.js'].lineData[130]++;
-    origin = visit101_130_1(origin || '50% 50%');
     _$jscoverage['/ie/transform.js'].lineData[131]++;
-    origin = origin.split(/\s+/);
+    origin = visit101_131_1(origin || '50% 50%');
     _$jscoverage['/ie/transform.js'].lineData[132]++;
-    if (visit102_132_1(origin.length == 1)) {
-      _$jscoverage['/ie/transform.js'].lineData[133]++;
+    origin = origin.split(/\s+/);
+    _$jscoverage['/ie/transform.js'].lineData[133]++;
+    if (visit102_133_1(origin.length == 1)) {
+      _$jscoverage['/ie/transform.js'].lineData[134]++;
       origin[1] = origin[0];
     }
-    _$jscoverage['/ie/transform.js'].lineData[135]++;
-    for (var i = 0; visit103_135_1(i < origin.length); i++) {
-      _$jscoverage['/ie/transform.js'].lineData[136]++;
-      var val = parseFloat(origin[i]);
+    _$jscoverage['/ie/transform.js'].lineData[136]++;
+    for (var i = 0; visit103_136_1(i < origin.length); i++) {
       _$jscoverage['/ie/transform.js'].lineData[137]++;
-      if (visit104_137_1(S.endsWith(origin[i], '%'))) {
-        _$jscoverage['/ie/transform.js'].lineData[138]++;
+      var val = parseFloat(origin[i]);
+      _$jscoverage['/ie/transform.js'].lineData[138]++;
+      if (visit104_138_1(S.endsWith(origin[i], '%'))) {
+        _$jscoverage['/ie/transform.js'].lineData[139]++;
         origin[i] = val * region[i ? 'height' : 'width'] / 100;
       } else {
-        _$jscoverage['/ie/transform.js'].lineData[140]++;
+        _$jscoverage['/ie/transform.js'].lineData[141]++;
         origin[i] = val;
       }
     }
-    _$jscoverage['/ie/transform.js'].lineData[143]++;
+    _$jscoverage['/ie/transform.js'].lineData[144]++;
     return origin;
   }
-  _$jscoverage['/ie/transform.js'].lineData[147]++;
+  _$jscoverage['/ie/transform.js'].lineData[148]++;
   function matrix(transform) {
     _$jscoverage['/ie/transform.js'].functionData[5]++;
-    _$jscoverage['/ie/transform.js'].lineData[148]++;
-    transform = transform.split(")");
     _$jscoverage['/ie/transform.js'].lineData[149]++;
+    transform = transform.split(")");
+    _$jscoverage['/ie/transform.js'].lineData[150]++;
     var trim = S.trim, i = -1, l = transform.length - 1, split, prop, val, ret = cssMatrixToComputableMatrix([1, 0, 0, 1, 0, 0]), curr;
-    _$jscoverage['/ie/transform.js'].lineData[157]++;
-    while (visit105_157_1(++i < l)) {
-      _$jscoverage['/ie/transform.js'].lineData[158]++;
-      split = transform[i].split("(");
+    _$jscoverage['/ie/transform.js'].lineData[158]++;
+    while (visit105_158_1(++i < l)) {
       _$jscoverage['/ie/transform.js'].lineData[159]++;
-      prop = trim(split[0]);
+      split = transform[i].split("(");
       _$jscoverage['/ie/transform.js'].lineData[160]++;
-      val = split[1];
+      prop = trim(split[0]);
       _$jscoverage['/ie/transform.js'].lineData[161]++;
-      curr = [1, 0, 0, 1, 0, 0];
+      val = split[1];
       _$jscoverage['/ie/transform.js'].lineData[162]++;
+      curr = [1, 0, 0, 1, 0, 0];
+      _$jscoverage['/ie/transform.js'].lineData[163]++;
       switch (prop) {
         case "translateX":
-          _$jscoverage['/ie/transform.js'].lineData[164]++;
-          curr[4] = parseInt(val, 10);
           _$jscoverage['/ie/transform.js'].lineData[165]++;
+          curr[4] = parseInt(val, 10);
+          _$jscoverage['/ie/transform.js'].lineData[166]++;
           break;
         case "translateY":
-          _$jscoverage['/ie/transform.js'].lineData[168]++;
-          curr[5] = parseInt(val, 10);
           _$jscoverage['/ie/transform.js'].lineData[169]++;
+          curr[5] = parseInt(val, 10);
+          _$jscoverage['/ie/transform.js'].lineData[170]++;
           break;
         case 'translate':
-          _$jscoverage['/ie/transform.js'].lineData[172]++;
-          val = val.split(",");
           _$jscoverage['/ie/transform.js'].lineData[173]++;
-          curr[4] = parseInt(val[0], 10);
+          val = val.split(",");
           _$jscoverage['/ie/transform.js'].lineData[174]++;
-          curr[5] = parseInt(visit106_174_1(val[1] || 0), 10);
+          curr[4] = parseInt(val[0], 10);
           _$jscoverage['/ie/transform.js'].lineData[175]++;
+          curr[5] = parseInt(visit106_175_1(val[1] || 0), 10);
+          _$jscoverage['/ie/transform.js'].lineData[176]++;
           break;
         case 'rotate':
-          _$jscoverage['/ie/transform.js'].lineData[178]++;
-          val = toRadian(val);
           _$jscoverage['/ie/transform.js'].lineData[179]++;
-          curr[0] = Math.cos(val);
+          val = toRadian(val);
           _$jscoverage['/ie/transform.js'].lineData[180]++;
-          curr[1] = Math.sin(val);
+          curr[0] = Math.cos(val);
           _$jscoverage['/ie/transform.js'].lineData[181]++;
-          curr[2] = -Math.sin(val);
+          curr[1] = Math.sin(val);
           _$jscoverage['/ie/transform.js'].lineData[182]++;
-          curr[3] = Math.cos(val);
+          curr[2] = -Math.sin(val);
           _$jscoverage['/ie/transform.js'].lineData[183]++;
+          curr[3] = Math.cos(val);
+          _$jscoverage['/ie/transform.js'].lineData[184]++;
           break;
         case 'scaleX':
-          _$jscoverage['/ie/transform.js'].lineData[186]++;
-          curr[0] = +val;
           _$jscoverage['/ie/transform.js'].lineData[187]++;
+          curr[0] = +val;
+          _$jscoverage['/ie/transform.js'].lineData[188]++;
           break;
         case 'scaleY':
-          _$jscoverage['/ie/transform.js'].lineData[190]++;
-          curr[3] = +val;
           _$jscoverage['/ie/transform.js'].lineData[191]++;
+          curr[3] = +val;
+          _$jscoverage['/ie/transform.js'].lineData[192]++;
           break;
         case 'scale':
-          _$jscoverage['/ie/transform.js'].lineData[194]++;
-          val = val.split(",");
           _$jscoverage['/ie/transform.js'].lineData[195]++;
-          curr[0] = +val[0];
+          val = val.split(",");
           _$jscoverage['/ie/transform.js'].lineData[196]++;
-          curr[3] = visit107_196_1(val.length > 1) ? +val[1] : +val[0];
+          curr[0] = +val[0];
           _$jscoverage['/ie/transform.js'].lineData[197]++;
+          curr[3] = visit107_197_1(val.length > 1) ? +val[1] : +val[0];
+          _$jscoverage['/ie/transform.js'].lineData[198]++;
           break;
         case "skewX":
-          _$jscoverage['/ie/transform.js'].lineData[200]++;
-          curr[2] = Math.tan(toRadian(val));
           _$jscoverage['/ie/transform.js'].lineData[201]++;
+          curr[2] = Math.tan(toRadian(val));
+          _$jscoverage['/ie/transform.js'].lineData[202]++;
           break;
         case "skewY":
-          _$jscoverage['/ie/transform.js'].lineData[204]++;
-          curr[1] = Math.tan(toRadian(val));
           _$jscoverage['/ie/transform.js'].lineData[205]++;
+          curr[1] = Math.tan(toRadian(val));
+          _$jscoverage['/ie/transform.js'].lineData[206]++;
           break;
         case 'matrix':
-          _$jscoverage['/ie/transform.js'].lineData[208]++;
-          val = val.split(",");
           _$jscoverage['/ie/transform.js'].lineData[209]++;
-          curr[0] = +val[0];
+          val = val.split(",");
           _$jscoverage['/ie/transform.js'].lineData[210]++;
-          curr[1] = +val[1];
+          curr[0] = +val[0];
           _$jscoverage['/ie/transform.js'].lineData[211]++;
-          curr[2] = +val[2];
+          curr[1] = +val[1];
           _$jscoverage['/ie/transform.js'].lineData[212]++;
-          curr[3] = +val[3];
+          curr[2] = +val[2];
           _$jscoverage['/ie/transform.js'].lineData[213]++;
-          curr[4] = parseInt(val[4], 10);
+          curr[3] = +val[3];
           _$jscoverage['/ie/transform.js'].lineData[214]++;
-          curr[5] = parseInt(val[5], 10);
+          curr[4] = parseInt(val[4], 10);
           _$jscoverage['/ie/transform.js'].lineData[215]++;
+          curr[5] = parseInt(val[5], 10);
+          _$jscoverage['/ie/transform.js'].lineData[216]++;
           break;
       }
-      _$jscoverage['/ie/transform.js'].lineData[217]++;
+      _$jscoverage['/ie/transform.js'].lineData[218]++;
       ret = multipleMatrix(ret, cssMatrixToComputableMatrix(curr));
     }
-    _$jscoverage['/ie/transform.js'].lineData[220]++;
+    _$jscoverage['/ie/transform.js'].lineData[221]++;
     return ret;
   }
-  _$jscoverage['/ie/transform.js'].lineData[223]++;
+  _$jscoverage['/ie/transform.js'].lineData[224]++;
   function cssMatrixToComputableMatrix(matrix) {
     _$jscoverage['/ie/transform.js'].functionData[6]++;
-    _$jscoverage['/ie/transform.js'].lineData[224]++;
+    _$jscoverage['/ie/transform.js'].lineData[225]++;
     return [[matrix[0], matrix[2], matrix[4]], [matrix[1], matrix[3], matrix[5]], [0, 0, 1]];
   }
-  _$jscoverage['/ie/transform.js'].lineData[231]++;
+  _$jscoverage['/ie/transform.js'].lineData[232]++;
   function setMatrix(m, x, y, v) {
     _$jscoverage['/ie/transform.js'].functionData[7]++;
-    _$jscoverage['/ie/transform.js'].lineData[232]++;
-    if (visit108_232_1(!m[x])) {
-      _$jscoverage['/ie/transform.js'].lineData[233]++;
+    _$jscoverage['/ie/transform.js'].lineData[233]++;
+    if (visit108_233_1(!m[x])) {
+      _$jscoverage['/ie/transform.js'].lineData[234]++;
       m[x] = [];
     }
-    _$jscoverage['/ie/transform.js'].lineData[235]++;
+    _$jscoverage['/ie/transform.js'].lineData[236]++;
     m[x][y] = v;
   }
-  _$jscoverage['/ie/transform.js'].lineData[238]++;
+  _$jscoverage['/ie/transform.js'].lineData[239]++;
   function multipleMatrix(m1, m2) {
     _$jscoverage['/ie/transform.js'].functionData[8]++;
-    _$jscoverage['/ie/transform.js'].lineData[240]++;
-    if (visit109_240_1(arguments.length > 2)) {
-      _$jscoverage['/ie/transform.js'].lineData[241]++;
-      var ret = m1;
+    _$jscoverage['/ie/transform.js'].lineData[241]++;
+    if (visit109_241_1(arguments.length > 2)) {
       _$jscoverage['/ie/transform.js'].lineData[242]++;
-      for (var i = 1; visit110_242_1(i < arguments.length); i++) {
-        _$jscoverage['/ie/transform.js'].lineData[243]++;
+      var ret = m1;
+      _$jscoverage['/ie/transform.js'].lineData[243]++;
+      for (var i = 1; visit110_243_1(i < arguments.length); i++) {
+        _$jscoverage['/ie/transform.js'].lineData[244]++;
         ret = multipleMatrix(ret, arguments[i]);
       }
-      _$jscoverage['/ie/transform.js'].lineData[245]++;
+      _$jscoverage['/ie/transform.js'].lineData[246]++;
       return ret;
     }
-    _$jscoverage['/ie/transform.js'].lineData[248]++;
+    _$jscoverage['/ie/transform.js'].lineData[249]++;
     var m = [], r1 = m1.length, r2 = m2.length, c2 = m2[0].length;
-    _$jscoverage['/ie/transform.js'].lineData[253]++;
-    for (i = 0; visit111_253_1(i < r1); i++) {
-      _$jscoverage['/ie/transform.js'].lineData[254]++;
-      for (var k = 0; visit112_254_1(k < c2); k++) {
-        _$jscoverage['/ie/transform.js'].lineData[255]++;
-        var sum = 0;
+    _$jscoverage['/ie/transform.js'].lineData[254]++;
+    for (i = 0; visit111_254_1(i < r1); i++) {
+      _$jscoverage['/ie/transform.js'].lineData[255]++;
+      for (var k = 0; visit112_255_1(k < c2); k++) {
         _$jscoverage['/ie/transform.js'].lineData[256]++;
-        for (var j = 0; visit113_256_1(j < r2); j++) {
-          _$jscoverage['/ie/transform.js'].lineData[257]++;
+        var sum = 0;
+        _$jscoverage['/ie/transform.js'].lineData[257]++;
+        for (var j = 0; visit113_257_1(j < r2); j++) {
+          _$jscoverage['/ie/transform.js'].lineData[258]++;
           sum += m1[i][j] * m2[j][k];
         }
-        _$jscoverage['/ie/transform.js'].lineData[259]++;
+        _$jscoverage['/ie/transform.js'].lineData[260]++;
         setMatrix(m, i, k, sum);
       }
     }
-    _$jscoverage['/ie/transform.js'].lineData[263]++;
+    _$jscoverage['/ie/transform.js'].lineData[264]++;
     return m;
   }
-  _$jscoverage['/ie/transform.js'].lineData[267]++;
+  _$jscoverage['/ie/transform.js'].lineData[268]++;
   function toRadian(value) {
     _$jscoverage['/ie/transform.js'].functionData[9]++;
-    _$jscoverage['/ie/transform.js'].lineData[268]++;
-    return visit114_268_1(value.indexOf("deg") > -1) ? parseInt(value, 10) * (Math.PI * 2 / 360) : parseFloat(value);
+    _$jscoverage['/ie/transform.js'].lineData[269]++;
+    return visit114_269_1(value.indexOf("deg") > -1) ? parseInt(value, 10) * (Math.PI * 2 / 360) : parseFloat(value);
   }
 }, {
   requires: ['dom/base']});

@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Aug 30 01:37
+build time: Sep 11 12:52
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -197,6 +197,7 @@ KISSY.add('event/dom/ie/submit', function (S, DomEvent, Dom) {
  - http://bugs.jquery.com/ticket/11049
  */
 /**
+ * @ignore
  * patch collection for ie<9
  * @author yiminghe@gmail.com
  */

@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Aug 27 21:51
+build time: Sep 11 12:43
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -12,6 +12,7 @@ build time: Aug 27 21:51
 */
 
 /**
+ * @ignore
  * const for gregorian date
  * @author yiminghe@gmail.com
  */
@@ -20,111 +21,128 @@ KISSY.add('date/gregorian/const', function () {
         /**
          * Enum indicating sunday
          * @type Number
+         * @member KISSY.Date.Gregorian
          */
         SUNDAY: 0,
         /**
          * Enum indicating monday
          * @type Number
+         * @member KISSY.Date.Gregorian
          */
         MONDAY: 1,
         /**
          * Enum indicating tuesday
          * @type Number
+         * @member KISSY.Date.Gregorian
          */
         TUESDAY: 2,
         /**
          * Enum indicating wednesday
          * @type Number
+         * @member KISSY.Date.Gregorian
          */
         WEDNESDAY: 3,
         /**
          * Enum indicating thursday
          * @type Number
+         * @member KISSY.Date.Gregorian
          */
         THURSDAY: 4,
         /**
          * Enum indicating friday
          * @type Number
+         * @member KISSY.Date.Gregorian
          */
         FRIDAY: 5,
         /**
          * Enum indicating saturday
          * @type Number
+         * @member KISSY.Date.Gregorian
          */
         SATURDAY: 6,
         /**
          * Enum indicating january
          * @type Number
+         * @member KISSY.Date.Gregorian
          */
         JANUARY: 0,
         /**
          * Enum indicating february
          * @type Number
+         * @member KISSY.Date.Gregorian
          */
         FEBRUARY: 1,
         /**
          * Enum indicating march
          * @type Number
+         * @member KISSY.Date.Gregorian
          */
         MARCH: 2,
         /**
          * Enum indicating april
          * @type Number
+         * @member KISSY.Date.Gregorian
          */
         APRIL: 3,
         /**
          * Enum indicating may
          * @type Number
+         * @member KISSY.Date.Gregorian
          */
         MAY: 4,
         /**
          * Enum indicating june
          * @type Number
+         * @member KISSY.Date.Gregorian
          */
         JUNE: 5,
         /**
          * Enum indicating july
          * @type Number
+         * @member KISSY.Date.Gregorian
          */
         JULY: 6,
         /**
          * Enum indicating august
          * @type Number
+         * @member KISSY.Date.Gregorian
          */
         AUGUST: 7,
         /**
          * Enum indicating september
          * @type Number
+         * @member KISSY.Date.Gregorian
          */
         SEPTEMBER: 8,
         /**
          * Enum indicating october
          * @type Number
+         * @member KISSY.Date.Gregorian
          */
         OCTOBER: 9,
         /**
          * Enum indicating november
          * @type Number
+         * @member KISSY.Date.Gregorian
          */
         NOVEMBER: 10,
         /**
          * Enum indicating december
          * @type Number
+         * @member KISSY.Date.Gregorian
          */
         DECEMBER: 11
     };
 });
 /**
  * utils for gregorian date
+ * @ignore
  * @author yiminghe@gmail.com
  */
 KISSY.add('date/gregorian/utils', function (S, Const) {
-
-
     var ACCUMULATED_DAYS_IN_MONTH
             //   1/1 2/1 3/1 4/1 5/1 6/1 7/1 8/1 9/1 10/1 11/1 12/1
             = [ 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334],
-
 
         ACCUMULATED_DAYS_IN_MONTH_LEAP
             //   1/1 2/1   3/1   4/1   5/1   6/1   7/1   8/1   9/1
@@ -137,8 +155,7 @@ KISSY.add('date/gregorian/utils', function (S, Const) {
         DAYS_OF_100YEAR = DAYS_OF_4YEAR * 25 - 1,
         DAYS_OF_400YEAR = DAYS_OF_100YEAR * 4 + 1,
 
-        Utils = {},
-        toInt = parseInt;
+        Utils = {};
 
     function getDayOfYear(year, month, dayOfMonth) {
         return dayOfMonth + (isLeapYear(year) ?
@@ -235,12 +252,12 @@ KISSY.add('date/gregorian/utils', function (S, Const) {
         mod = Utils.mod;
 
     return Utils;
-
 }, {
     requires: ['./const']
 });
 /**
  * GregorianCalendar class for KISSY.
+ * @ignore
  * @author yiminghe@gmail.com
  */
 KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined) {
@@ -271,7 +288,7 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
      *  - minute - the value used to set the MINUTE calendar field in the calendar.
      *  - second - the value used to set the SECONDS calendar field in the calendar.
      *  Constructs a GregorianCalendar with the given date and time set for the default time zone with the default locale.
-     * @class KISSY.GregorianCalendar
+     * @class KISSY.Date.Gregorian
      */
     function GregorianCalendar(timezoneOffset, locale) {
 
@@ -856,6 +873,8 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
          * Returns the year of the given calendar field.
          * @method getYear
          * @returns {Number} the year for the given calendar field.
+         */
+
 
          /**
          * Returns the month of the given calendar field.
@@ -1043,8 +1062,7 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
          *
          *
          *
-         *  @example
-         *
+         *      @example
          *      var d = new GregorianCalendar();
          *      d.set(2012, GregorianCalendar.JANUARY, 31);
          *      d.add(Gregorian.MONTH,1);
@@ -1201,8 +1219,7 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
          *
          *
          *
-         *   @example
-         *
+         *      @example
          *      var d = new GregorianCalendar();
          *      d.set(1999, GregorianCalendar.AUGUST, 31);
          *      // 1999-4-30

@@ -229,22 +229,21 @@ if (! this._$jscoverage) {
 if (! _$jscoverage['/html-parser/dtd.js']) {
   _$jscoverage['/html-parser/dtd.js'] = {};
   _$jscoverage['/html-parser/dtd.js'].lineData = [];
-  _$jscoverage['/html-parser/dtd.js'].lineData[9] = 0;
-  _$jscoverage['/html-parser/dtd.js'].lineData[31] = 0;
-  _$jscoverage['/html-parser/dtd.js'].lineData[33] = 0;
-  _$jscoverage['/html-parser/dtd.js'].lineData[111] = 0;
-  _$jscoverage['/html-parser/dtd.js'].lineData[120] = 0;
-  _$jscoverage['/html-parser/dtd.js'].lineData[307] = 0;
-  _$jscoverage['/html-parser/dtd.js'].lineData[308] = 0;
-  _$jscoverage['/html-parser/dtd.js'].lineData[314] = 0;
-  _$jscoverage['/html-parser/dtd.js'].lineData[315] = 0;
-  _$jscoverage['/html-parser/dtd.js'].lineData[316] = 0;
-  _$jscoverage['/html-parser/dtd.js'].lineData[317] = 0;
-  _$jscoverage['/html-parser/dtd.js'].lineData[318] = 0;
-  _$jscoverage['/html-parser/dtd.js'].lineData[324] = 0;
-  _$jscoverage['/html-parser/dtd.js'].lineData[325] = 0;
-  _$jscoverage['/html-parser/dtd.js'].lineData[329] = 0;
-  _$jscoverage['/html-parser/dtd.js'].lineData[332] = 0;
+  _$jscoverage['/html-parser/dtd.js'].lineData[10] = 0;
+  _$jscoverage['/html-parser/dtd.js'].lineData[11] = 0;
+  _$jscoverage['/html-parser/dtd.js'].lineData[90] = 0;
+  _$jscoverage['/html-parser/dtd.js'].lineData[121] = 0;
+  _$jscoverage['/html-parser/dtd.js'].lineData[679] = 0;
+  _$jscoverage['/html-parser/dtd.js'].lineData[680] = 0;
+  _$jscoverage['/html-parser/dtd.js'].lineData[686] = 0;
+  _$jscoverage['/html-parser/dtd.js'].lineData[687] = 0;
+  _$jscoverage['/html-parser/dtd.js'].lineData[688] = 0;
+  _$jscoverage['/html-parser/dtd.js'].lineData[689] = 0;
+  _$jscoverage['/html-parser/dtd.js'].lineData[690] = 0;
+  _$jscoverage['/html-parser/dtd.js'].lineData[696] = 0;
+  _$jscoverage['/html-parser/dtd.js'].lineData[697] = 0;
+  _$jscoverage['/html-parser/dtd.js'].lineData[700] = 0;
+  _$jscoverage['/html-parser/dtd.js'].lineData[703] = 0;
 }
 if (! _$jscoverage['/html-parser/dtd.js'].functionData) {
   _$jscoverage['/html-parser/dtd.js'].functionData = [];
@@ -253,32 +252,30 @@ if (! _$jscoverage['/html-parser/dtd.js'].functionData) {
 }
 if (! _$jscoverage['/html-parser/dtd.js'].branchData) {
   _$jscoverage['/html-parser/dtd.js'].branchData = {};
-  _$jscoverage['/html-parser/dtd.js'].branchData['316'] = [];
-  _$jscoverage['/html-parser/dtd.js'].branchData['316'][1] = new BranchData();
-  _$jscoverage['/html-parser/dtd.js'].branchData['317'] = [];
-  _$jscoverage['/html-parser/dtd.js'].branchData['317'][1] = new BranchData();
-  _$jscoverage['/html-parser/dtd.js'].branchData['324'] = [];
-  _$jscoverage['/html-parser/dtd.js'].branchData['324'][1] = new BranchData();
+  _$jscoverage['/html-parser/dtd.js'].branchData['688'] = [];
+  _$jscoverage['/html-parser/dtd.js'].branchData['688'][1] = new BranchData();
+  _$jscoverage['/html-parser/dtd.js'].branchData['689'] = [];
+  _$jscoverage['/html-parser/dtd.js'].branchData['689'][1] = new BranchData();
+  _$jscoverage['/html-parser/dtd.js'].branchData['696'] = [];
+  _$jscoverage['/html-parser/dtd.js'].branchData['696'][1] = new BranchData();
 }
-_$jscoverage['/html-parser/dtd.js'].branchData['324'][1].init(466, 20, 'i < html_tags.length');
-function visit3_324_1(result) {
-  _$jscoverage['/html-parser/dtd.js'].branchData['324'][1].ranCondition(result);
+_$jscoverage['/html-parser/dtd.js'].branchData['696'][1].init(466, 20, 'i < html_tags.length');
+function visit3_696_1(result) {
+  _$jscoverage['/html-parser/dtd.js'].branchData['696'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/dtd.js'].branchData['317'][1].init(34, 20, 'i < html_tags.length');
-function visit2_317_1(result) {
-  _$jscoverage['/html-parser/dtd.js'].branchData['317'][1].ranCondition(result);
+}_$jscoverage['/html-parser/dtd.js'].branchData['689'][1].init(34, 20, 'i < html_tags.length');
+function visit2_689_1(result) {
+  _$jscoverage['/html-parser/dtd.js'].branchData['689'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/dtd.js'].branchData['316'][1].init(22, 11, 'p2 == "div"');
-function visit1_316_1(result) {
-  _$jscoverage['/html-parser/dtd.js'].branchData['316'][1].ranCondition(result);
+}_$jscoverage['/html-parser/dtd.js'].branchData['688'][1].init(22, 11, 'p2 == "div"');
+function visit1_688_1(result) {
+  _$jscoverage['/html-parser/dtd.js'].branchData['688'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/dtd.js'].lineData[9]++;
-KISSY.add("html-parser/dtd", function(KY) {
+}_$jscoverage['/html-parser/dtd.js'].lineData[10]++;
+KISSY.add("html-parser/dtd", function(S) {
   _$jscoverage['/html-parser/dtd.js'].functionData[0]++;
-  _$jscoverage['/html-parser/dtd.js'].lineData[31]++;
-  var merge = KY.merge;
-  _$jscoverage['/html-parser/dtd.js'].lineData[33]++;
-  var A = {
+  _$jscoverage['/html-parser/dtd.js'].lineData[11]++;
+  var merge = S.merge, A = {
   "isindex": 1, 
   "fieldset": 1}, B = {
   "input": 1, 
@@ -417,15 +414,15 @@ KISSY.add("html-parser/dtd", function(KY) {
   "form": 1}, A, D, E, I), Q = {
   "li": 1}, R = {
   "style": 1, 
-  "script": 1}, S = {
+  "script": 1}, headTags = {
   "base": 1, 
   "link": 1, 
   "meta": 1, 
-  "title": 1}, T = merge(S, R), U = {
+  "title": 1}, T = merge(headTags, R), U = {
   "head": 1, 
   "body": 1}, V = {
   "html": 1};
-  _$jscoverage['/html-parser/dtd.js'].lineData[111]++;
+  _$jscoverage['/html-parser/dtd.js'].lineData[90]++;
   var block = {
   "address": 1, 
   "blockquote": 1, 
@@ -450,9 +447,9 @@ KISSY.add("html-parser/dtd", function(KY) {
   "pre": 1, 
   "table": 1, 
   "ul": 1};
-  _$jscoverage['/html-parser/dtd.js'].lineData[120]++;
-  var ret = {
-  $nonBodyContent: merge(V, U, S), 
+  _$jscoverage['/html-parser/dtd.js'].lineData[121]++;
+  var dtd = {
+  $nonBodyContent: merge(V, U, headTags), 
   $block: block, 
   $blockLimit: {
   "body": 1, 
@@ -653,33 +650,33 @@ KISSY.add("html-parser/dtd", function(KY) {
   "p": L, 
   "em": L, 
   "dfn": L};
-  _$jscoverage['/html-parser/dtd.js'].lineData[307]++;
+  _$jscoverage['/html-parser/dtd.js'].lineData[679]++;
   (function() {
   _$jscoverage['/html-parser/dtd.js'].functionData[1]++;
-  _$jscoverage['/html-parser/dtd.js'].lineData[308]++;
+  _$jscoverage['/html-parser/dtd.js'].lineData[680]++;
   var i, html_tags = ["article", "figure", "nav", "aside", "section", "footer"];
-  _$jscoverage['/html-parser/dtd.js'].lineData[314]++;
-  for (var p in ret) {
-    _$jscoverage['/html-parser/dtd.js'].lineData[315]++;
-    for (var p2 in ret[p]) {
-      _$jscoverage['/html-parser/dtd.js'].lineData[316]++;
-      if (visit1_316_1(p2 == "div")) {
-        _$jscoverage['/html-parser/dtd.js'].lineData[317]++;
-        for (i = 0; visit2_317_1(i < html_tags.length); i++) {
-          _$jscoverage['/html-parser/dtd.js'].lineData[318]++;
-          ret[p][html_tags[i]] = ret[p][p2];
+  _$jscoverage['/html-parser/dtd.js'].lineData[686]++;
+  for (var p in dtd) {
+    _$jscoverage['/html-parser/dtd.js'].lineData[687]++;
+    for (var p2 in dtd[p]) {
+      _$jscoverage['/html-parser/dtd.js'].lineData[688]++;
+      if (visit1_688_1(p2 == "div")) {
+        _$jscoverage['/html-parser/dtd.js'].lineData[689]++;
+        for (i = 0; visit2_689_1(i < html_tags.length); i++) {
+          _$jscoverage['/html-parser/dtd.js'].lineData[690]++;
+          dtd[p][html_tags[i]] = dtd[p][p2];
         }
       }
     }
   }
-  _$jscoverage['/html-parser/dtd.js'].lineData[324]++;
-  for (i = 0; visit3_324_1(i < html_tags.length); i++) {
-    _$jscoverage['/html-parser/dtd.js'].lineData[325]++;
-    ret[html_tags[i]] = ret["div"];
+  _$jscoverage['/html-parser/dtd.js'].lineData[696]++;
+  for (i = 0; visit3_696_1(i < html_tags.length); i++) {
+    _$jscoverage['/html-parser/dtd.js'].lineData[697]++;
+    dtd[html_tags[i]] = dtd["div"];
   }
-  _$jscoverage['/html-parser/dtd.js'].lineData[329]++;
-  ret.$empty['!doctype'] = 1;
+  _$jscoverage['/html-parser/dtd.js'].lineData[700]++;
+  dtd.$empty['!doctype'] = 1;
 })();
-  _$jscoverage['/html-parser/dtd.js'].lineData[332]++;
-  return ret;
+  _$jscoverage['/html-parser/dtd.js'].lineData[703]++;
+  return dtd;
 });

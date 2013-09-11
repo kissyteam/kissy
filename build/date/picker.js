@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Aug 27 21:51
+build time: Sep 11 12:43
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -30,6 +30,7 @@ build time: Aug 27 21:51
 KISSY.add('date/picker/picker-tpl',
 '<div class="{{getBaseCssClasses \'header\'}}">\n    <a id="ks-date-picker-previous-year-btn-{{id}}"\n       class="{{getBaseCssClasses \'prev-year-btn\'}}"\n       href="#"\n       tabindex="-1"\n       role="button"\n       title="{{previousYearLabel}}"\n       hidefocus="on">\n    </a>\n    <a id="ks-date-picker-previous-month-btn-{{id}}"\n       class="{{getBaseCssClasses \'prev-month-btn\'}}"\n       href="#"\n       tabindex="-1"\n       role="button"\n       title="{{previousMonthLabel}}"\n       hidefocus="on">\n    </a>\n    <a class="{{getBaseCssClasses \'month-select\'}}"\n       role="button"\n       href="#"\n       tabindex="-1"\n       hidefocus="on"\n       title="{{monthSelectLabel}}"\n       id="ks-date-picker-month-select-{{id}}">\n        <span id="ks-date-picker-month-select-content-{{id}}">{{monthYearLabel}}</span>\n        <span class="{{getBaseCssClasses \'month-select-arrow\'}}">x</span>\n    </a>\n    <a id="ks-date-picker-next-month-btn-{{id}}"\n       class="{{getBaseCssClasses \'next-month-btn\'}}"\n       href="#"\n       tabindex="-1"\n       role="button"\n       title="{{nextMonthLabel}}"\n       hidefocus="on">\n    </a>\n    <a id="ks-date-picker-next-year-btn-{{id}}"\n       class="{{getBaseCssClasses \'next-year-btn\'}}"\n       href="#"\n       tabindex="-1"\n       role="button"\n       title="{{nextYearLabel}}"\n       hidefocus="on">\n    </a>\n</div>\n<div class="{{getBaseCssClasses \'body\'}}">\n    <table class="{{getBaseCssClasses \'table\'}}" cellspacing="0" role="grid">\n        <thead>\n        <tr role="row">\n            {{#if showWeekNumber}}\n            <th role="columnheader" class="{{getBaseCssClasses \'column-header\'}} {{getBaseCssClasses \'week-number-header\'}}">\n                <span class="{{getBaseCssClasses \'column-header-inner\'}}">x</span>\n            </th>\n            {{/if}}\n            {{#each weekdays}}\n            <th role="columnheader" title="{{.}}" class="{{getBaseCssClasses \'column-header\'}}">\n                <span class="{{getBaseCssClasses \'column-header-inner\'}}">\n                    {{veryShortWeekdays[xindex]}}\n                </span>\n            </th>\n            {{/each}}\n        </tr>\n        </thead>\n        <tbody id="ks-date-picker-tbody-{{id}}">\n        {{{renderDates}}}\n        </tbody>\n    </table>\n</div>\n{{#if showToday||showClear}}\n<div class="{{getBaseCssClasses \'footer\'}}">\n    <a class="{{getBaseCssClasses \'today-btn\'}}"\n       role="button"\n       hidefocus="on"\n       tabindex="-1"\n       href="#"\n       id="ks-date-picker-today-btn-{{id}}"\n       title="{{todayTimeLabel}}">{{todayLabel}}</a>\n    <a class="{{getBaseCssClasses \'clear-btn\'}}"\n       role="button"\n       hidefocus="on"\n       tabindex="-1"\n       href="#"\n       id="ks-date-picker-clear-btn-{{id}}">{{clearLabel}}</a>\n</div>\n{{/if}}');
 /**
+ * @ignore
  * render for year panel
  * @author yiminghe@gmail.com
  */
@@ -326,6 +327,7 @@ KISSY.add('date/picker/month-panel/months-tpl',
 KISSY.add('date/picker/month-panel/month-panel-tpl',
 '<div class="{{getBaseCssClasses \'header\'}}">\n    <a id="ks-date-picker-month-panel-previous-year-btn-{{id}}"\n       class="{{getBaseCssClasses \'prev-year-btn\'}}"\n       href="#"\n       role="button"\n       title="{{previousYearLabel}}"\n       hidefocus="on">\n    </a>\n\n\n        <a class="{{getBaseCssClasses \'year-select\'}}"\n           role="button"\n           href="#"\n           hidefocus="on"\n           title="{{yearSelectLabel}}"\n           id="ks-date-picker-month-panel-year-select-{{id}}">\n            <span id="ks-date-picker-month-panel-year-select-content-{{id}}">{{year}}</span>\n            <span class="{{getBaseCssClasses \'year-select-arrow\'}}">x</span>\n        </a>\n\n    <a id="ks-date-picker-month-panel-next-year-btn-{{id}}"\n       class="{{getBaseCssClasses \'next-year-btn\'}}"\n       href="#"\n       role="button"\n       title="{{nextYearLabel}}"\n       hidefocus="on">\n    </a>\n</div>\n<div class="{{getBaseCssClasses \'body\'}}">\n    <table class="{{getBaseCssClasses \'table\'}}" cellspacing="0" role="grid">\n        <tbody id="ks-date-picker-month-panel-tbody-{{id}}">\n        {{{include "date/picker/month-panel/months-tpl"}}}\n        </tbody>\n    </table>\n</div>');
 /**
+ * @ignore
  * render for month panel
  * @author yiminghe@gmail.com
  */
@@ -412,6 +414,7 @@ KISSY.add('date/picker/year-panel/years-tpl',
 KISSY.add('date/picker/year-panel/year-panel-tpl',
 '<div class="{{getBaseCssClasses \'header\'}}">\n    <a id="ks-date-picker-year-panel-previous-decade-btn-{{id}}"\n       class="{{getBaseCssClasses \'prev-decade-btn\'}}"\n       href="#"\n       role="button"\n       title="{{previousDecadeLabel}}"\n       hidefocus="on">\n    </a>\n\n    <a class="{{getBaseCssClasses \'decade-select\'}}"\n       role="button"\n       href="#"\n       hidefocus="on"\n       title="{{decadeSelectLabel}}"\n       id="ks-date-picker-year-panel-decade-select-{{id}}">\n            <span id="ks-date-picker-year-panel-decade-select-content-{{id}}">\n                {{startYear}}-{{endYear}}\n            </span>\n        <span class="{{getBaseCssClasses \'decade-select-arrow\'}}">x</span>\n    </a>\n\n    <a id="ks-date-picker-year-panel-next-decade-btn-{{id}}"\n       class="{{getBaseCssClasses \'next-decade-btn\'}}"\n       href="#"\n       role="button"\n       title="{{nextDecadeLabel}}"\n       hidefocus="on">\n    </a>\n</div>\n<div class="{{getBaseCssClasses \'body\'}}">\n    <table class="{{getBaseCssClasses \'table\'}}" cellspacing="0" role="grid">\n        <tbody id="ks-date-picker-year-panel-tbody-{{id}}">\n        {{{include "date/picker/year-panel/years-tpl"}}}\n        </tbody>\n    </table>\n</div>');
 /**
+ * @ignore
  * render for year-panel
  * @author yiminghe@gmail.com
  */
@@ -507,6 +510,7 @@ KISSY.add('date/picker/decade-panel/decades-tpl',
 KISSY.add('date/picker/decade-panel/decade-panel-tpl',
 '<div class="{{getBaseCssClasses \'header\'}}">\n    <a id="ks-date-picker-decade-panel-previous-century-btn-{{id}}"\n       class="{{getBaseCssClasses \'prev-century-btn\'}}"\n       href="#"\n       role="button"\n       title="{{previousCenturyLabel}}"\n       hidefocus="on">\n    </a>\n    <div class="{{getBaseCssClasses \'century\'}}"\n         id="ks-date-picker-decade-panel-century-{{id}}">\n                {{startYear}}-{{endYear}}\n    </div>\n    <a id="ks-date-picker-decade-panel-next-century-btn-{{id}}"\n       class="{{getBaseCssClasses \'next-century-btn\'}}"\n       href="#"\n       role="button"\n       title="{{nextCenturyLabel}}"\n       hidefocus="on">\n    </a>\n</div>\n<div class="{{getBaseCssClasses \'body\'}}">\n    <table class="{{getBaseCssClasses \'table\'}}" cellspacing="0" role="grid">\n        <tbody id="ks-date-picker-decade-panel-tbody-{{id}}">\n        {{{include "date/picker/decade-panel/decades-tpl"}}}\n        </tbody>\n    </table>\n</div>');
 /**
+ * @ignore
  * render for decade panel
  * @author yiminghe@gmail.com
  */
@@ -579,6 +583,7 @@ KISSY.add('date/picker/decade-panel/render', function (S, Control, DateFormat, M
         './decade-panel-tpl']
 });
 /**
+ * @ignore
  * decade panel for date picker
  * @author yiminghe@gmail.com
  */
@@ -647,6 +652,7 @@ KISSY.add('date/picker/decade-panel/control', function (S, Node, Control, Centur
     requires: ['node', 'component/control', './render']
 });
 /**
+ * @ignore
  * month select for date picker
  * @author yiminghe@gmail.com
  */
@@ -744,6 +750,7 @@ KISSY.add('date/picker/year-panel/control', function (S, Node, Control, DecadePa
         '../decade-panel/control']
 });
 /**
+ * @ignore
  * month panel for date picker
  * @author yiminghe@gmail.com
  */
@@ -845,6 +852,7 @@ KISSY.add('date/picker/month-panel/control',function(S,
     ]
 });
 /**
+ * @ignore
  * year panel for date picker
  * @author yiminghe@gmail.com
  */
@@ -1133,6 +1141,7 @@ KISSY.add('date/picker/control', function (S, Node, GregorianCalendar, locale, C
  - http://www.w3.org/TR/wai-aria-practices/#datepicker
  */
 /**
+ * @ignore
  * date picker ui
  * @author yiminghe@gmail.com
  */

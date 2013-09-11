@@ -230,7 +230,7 @@ if (! _$jscoverage['/separator.js']) {
   _$jscoverage['/separator.js'] = {};
   _$jscoverage['/separator.js'].lineData = [];
   _$jscoverage['/separator.js'].lineData[5] = 0;
-  _$jscoverage['/separator.js'].lineData[14] = 0;
+  _$jscoverage['/separator.js'].lineData[12] = 0;
 }
 if (! _$jscoverage['/separator.js'].functionData) {
   _$jscoverage['/separator.js'].functionData = [];
@@ -242,7 +242,7 @@ if (! _$jscoverage['/separator.js'].branchData) {
 _$jscoverage['/separator.js'].lineData[5]++;
 KISSY.add("separator", function(S, Control, SeparatorRender) {
   _$jscoverage['/separator.js'].functionData[0]++;
-  _$jscoverage['/separator.js'].lineData[14]++;
+  _$jscoverage['/separator.js'].lineData[12]++;
   return Control.extend({}, {
   ATTRS: {
   focusable: {

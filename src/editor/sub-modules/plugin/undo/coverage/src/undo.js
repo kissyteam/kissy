@@ -229,13 +229,13 @@ if (! this._$jscoverage) {
 if (! _$jscoverage['/undo.js']) {
   _$jscoverage['/undo.js'] = {};
   _$jscoverage['/undo.js'].lineData = [];
-  _$jscoverage['/undo.js'].lineData[5] = 0;
   _$jscoverage['/undo.js'].lineData[6] = 0;
-  _$jscoverage['/undo.js'].lineData[9] = 0;
-  _$jscoverage['/undo.js'].lineData[12] = 0;
-  _$jscoverage['/undo.js'].lineData[18] = 0;
-  _$jscoverage['/undo.js'].lineData[23] = 0;
-  _$jscoverage['/undo.js'].lineData[27] = 0;
+  _$jscoverage['/undo.js'].lineData[7] = 0;
+  _$jscoverage['/undo.js'].lineData[10] = 0;
+  _$jscoverage['/undo.js'].lineData[13] = 0;
+  _$jscoverage['/undo.js'].lineData[19] = 0;
+  _$jscoverage['/undo.js'].lineData[24] = 0;
+  _$jscoverage['/undo.js'].lineData[28] = 0;
 }
 if (! _$jscoverage['/undo.js'].functionData) {
   _$jscoverage['/undo.js'].functionData = [];
@@ -246,31 +246,31 @@ if (! _$jscoverage['/undo.js'].functionData) {
 if (! _$jscoverage['/undo.js'].branchData) {
   _$jscoverage['/undo.js'].branchData = {};
 }
-_$jscoverage['/undo.js'].lineData[5]++;
+_$jscoverage['/undo.js'].lineData[6]++;
 KISSY.add("editor/plugin/undo", function(S, Editor, Btn, cmd) {
   _$jscoverage['/undo.js'].functionData[0]++;
-  _$jscoverage['/undo.js'].lineData[6]++;
+  _$jscoverage['/undo.js'].lineData[7]++;
   function undo() {
     _$jscoverage['/undo.js'].functionData[1]++;
   }
-  _$jscoverage['/undo.js'].lineData[9]++;
+  _$jscoverage['/undo.js'].lineData[10]++;
   S.augment(undo, {
   pluginRenderUI: function(editor) {
   _$jscoverage['/undo.js'].functionData[2]++;
-  _$jscoverage['/undo.js'].lineData[12]++;
+  _$jscoverage['/undo.js'].lineData[13]++;
   editor.addButton("undo", {
   mode: Editor.Mode.WYSIWYG_MODE, 
   tooltip: "\u64a4\u9500", 
   editor: editor}, Btn.UndoBtn);
-  _$jscoverage['/undo.js'].lineData[18]++;
+  _$jscoverage['/undo.js'].lineData[19]++;
   editor.addButton("redo", {
   mode: Editor.Mode.WYSIWYG_MODE, 
   tooltip: "\u91cd\u505a", 
   editor: editor}, Btn.RedoBtn);
-  _$jscoverage['/undo.js'].lineData[23]++;
+  _$jscoverage['/undo.js'].lineData[24]++;
   cmd.init(editor);
 }});
-  _$jscoverage['/undo.js'].lineData[27]++;
+  _$jscoverage['/undo.js'].lineData[28]++;
   return undo;
 }, {
   requires: ['editor', './undo/btn', './undo/cmd']});

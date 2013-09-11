@@ -230,7 +230,7 @@ if (! _$jscoverage['/node/override.js']) {
   _$jscoverage['/node/override.js'] = {};
   _$jscoverage['/node/override.js'].lineData = [];
   _$jscoverage['/node/override.js'].lineData[6] = 0;
-  _$jscoverage['/node/override.js'].lineData[8] = 0;
+  _$jscoverage['/node/override.js'].lineData[7] = 0;
   _$jscoverage['/node/override.js'].lineData[29] = 0;
   _$jscoverage['/node/override.js'].lineData[30] = 0;
   _$jscoverage['/node/override.js'].lineData[31] = 0;
@@ -268,18 +268,18 @@ _$jscoverage['/node/override.js'].branchData['47'][1].init(48, 25, 'typeof other
 function visit39_47_1(result) {
   _$jscoverage['/node/override.js'].branchData['47'][1].ranCondition(result);
   return result;
-}_$jscoverage['/node/override.js'].branchData['36'][1].init(193, 7, 'newNode');
+}_$jscoverage['/node/override.js'].branchData['36'][1].init(197, 7, 'newNode');
 function visit38_36_1(result) {
   _$jscoverage['/node/override.js'].branchData['36'][1].ranCondition(result);
   return result;
-}_$jscoverage['/node/override.js'].branchData['33'][1].init(83, 26, 'typeof newNode == \'string\'');
+}_$jscoverage['/node/override.js'].branchData['33'][1].init(87, 26, 'typeof newNode == \'string\'');
 function visit37_33_1(result) {
   _$jscoverage['/node/override.js'].branchData['33'][1].ranCondition(result);
   return result;
 }_$jscoverage['/node/override.js'].lineData[6]++;
 KISSY.add('node/override', function(S, Dom, NodeList) {
   _$jscoverage['/node/override.js'].functionData[0]++;
-  _$jscoverage['/node/override.js'].lineData[8]++;
+  _$jscoverage['/node/override.js'].lineData[7]++;
   var NLP = NodeList.prototype;
   _$jscoverage['/node/override.js'].lineData[29]++;
   S.each(['append', 'prepend', 'before', 'after'], function(insertType) {

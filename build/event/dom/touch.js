@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 4 12:50
+build time: Sep 11 12:52
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -1096,7 +1096,7 @@ KISSY.add('event/dom/touch/handle', function (S, Dom, eventHandleMap, DomEvent) 
         './rotate'
     ]
 });
-/**
+/*
  2013-08-29 yiminghe@gmail.com
  - ios bug
  create new element on touchend handler

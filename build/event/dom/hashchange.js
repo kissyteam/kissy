@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Aug 30 01:37
+build time: Sep 11 12:51
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -192,7 +192,7 @@ KISSY.add('event/dom/hashchange', function (S, DomEvent, Dom) {
                     // 后退时不等
                     // 定时器调用 hashChange() 修改 iframe 同步调用过来的(手动改变 location)则相等
                     if (c != ch) {
-                        S.log('set loc hash :' + c);
+                        // S.log('set loc hash :' + c);
                         location.hash = c;
                         // 使 last hash 为 iframe 历史， 不然重新写iframe，
                         // 会导致最新状态（丢失前进状态）

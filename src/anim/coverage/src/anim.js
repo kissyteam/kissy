@@ -231,44 +231,46 @@ if (! _$jscoverage['/anim.js']) {
   _$jscoverage['/anim.js'].lineData = [];
   _$jscoverage['/anim.js'].lineData[6] = 0;
   _$jscoverage['/anim.js'].lineData[7] = 0;
-  _$jscoverage['/anim.js'].lineData[25] = 0;
   _$jscoverage['/anim.js'].lineData[26] = 0;
   _$jscoverage['/anim.js'].lineData[27] = 0;
   _$jscoverage['/anim.js'].lineData[28] = 0;
-  _$jscoverage['/anim.js'].lineData[31] = 0;
+  _$jscoverage['/anim.js'].lineData[29] = 0;
   _$jscoverage['/anim.js'].lineData[32] = 0;
   _$jscoverage['/anim.js'].lineData[33] = 0;
   _$jscoverage['/anim.js'].lineData[34] = 0;
   _$jscoverage['/anim.js'].lineData[35] = 0;
   _$jscoverage['/anim.js'].lineData[36] = 0;
-  _$jscoverage['/anim.js'].lineData[38] = 0;
+  _$jscoverage['/anim.js'].lineData[37] = 0;
   _$jscoverage['/anim.js'].lineData[39] = 0;
-  _$jscoverage['/anim.js'].lineData[44] = 0;
-  _$jscoverage['/anim.js'].lineData[47] = 0;
+  _$jscoverage['/anim.js'].lineData[40] = 0;
+  _$jscoverage['/anim.js'].lineData[45] = 0;
   _$jscoverage['/anim.js'].lineData[48] = 0;
-  _$jscoverage['/anim.js'].lineData[50] = 0;
-  _$jscoverage['/anim.js'].lineData[53] = 0;
+  _$jscoverage['/anim.js'].lineData[49] = 0;
+  _$jscoverage['/anim.js'].lineData[51] = 0;
   _$jscoverage['/anim.js'].lineData[54] = 0;
-  _$jscoverage['/anim.js'].lineData[56] = 0;
+  _$jscoverage['/anim.js'].lineData[55] = 0;
   _$jscoverage['/anim.js'].lineData[57] = 0;
-  _$jscoverage['/anim.js'].lineData[60] = 0;
+  _$jscoverage['/anim.js'].lineData[58] = 0;
   _$jscoverage['/anim.js'].lineData[61] = 0;
-  _$jscoverage['/anim.js'].lineData[63] = 0;
-  _$jscoverage['/anim.js'].lineData[67] = 0;
+  _$jscoverage['/anim.js'].lineData[62] = 0;
+  _$jscoverage['/anim.js'].lineData[64] = 0;
+  _$jscoverage['/anim.js'].lineData[68] = 0;
   _$jscoverage['/anim.js'].lineData[69] = 0;
+  _$jscoverage['/anim.js'].lineData[70] = 0;
   _$jscoverage['/anim.js'].lineData[72] = 0;
-  _$jscoverage['/anim.js'].lineData[140] = 0;
+  _$jscoverage['/anim.js'].lineData[73] = 0;
   _$jscoverage['/anim.js'].lineData[141] = 0;
   _$jscoverage['/anim.js'].lineData[142] = 0;
-  _$jscoverage['/anim.js'].lineData[150] = 0;
-  _$jscoverage['/anim.js'].lineData[152] = 0;
-  _$jscoverage['/anim.js'].lineData[163] = 0;
-  _$jscoverage['/anim.js'].lineData[172] = 0;
-  _$jscoverage['/anim.js'].lineData[184] = 0;
-  _$jscoverage['/anim.js'].lineData[186] = 0;
-  _$jscoverage['/anim.js'].lineData[188] = 0;
-  _$jscoverage['/anim.js'].lineData[190] = 0;
-  _$jscoverage['/anim.js'].lineData[192] = 0;
+  _$jscoverage['/anim.js'].lineData[143] = 0;
+  _$jscoverage['/anim.js'].lineData[151] = 0;
+  _$jscoverage['/anim.js'].lineData[153] = 0;
+  _$jscoverage['/anim.js'].lineData[164] = 0;
+  _$jscoverage['/anim.js'].lineData[173] = 0;
+  _$jscoverage['/anim.js'].lineData[185] = 0;
+  _$jscoverage['/anim.js'].lineData[187] = 0;
+  _$jscoverage['/anim.js'].lineData[189] = 0;
+  _$jscoverage['/anim.js'].lineData[191] = 0;
+  _$jscoverage['/anim.js'].lineData[193] = 0;
 }
 if (! _$jscoverage['/anim.js'].functionData) {
   _$jscoverage['/anim.js'].functionData = [];
@@ -280,193 +282,197 @@ if (! _$jscoverage['/anim.js'].functionData) {
 }
 if (! _$jscoverage['/anim.js'].branchData) {
   _$jscoverage['/anim.js'].branchData = {};
-  _$jscoverage['/anim.js'].branchData['27'] = [];
-  _$jscoverage['/anim.js'].branchData['27'][1] = new BranchData();
-  _$jscoverage['/anim.js'].branchData['31'] = [];
-  _$jscoverage['/anim.js'].branchData['31'][1] = new BranchData();
-  _$jscoverage['/anim.js'].branchData['35'] = [];
-  _$jscoverage['/anim.js'].branchData['35'][1] = new BranchData();
-  _$jscoverage['/anim.js'].branchData['38'] = [];
-  _$jscoverage['/anim.js'].branchData['38'][1] = new BranchData();
-  _$jscoverage['/anim.js'].branchData['38'][2] = new BranchData();
-  _$jscoverage['/anim.js'].branchData['47'] = [];
-  _$jscoverage['/anim.js'].branchData['47'][1] = new BranchData();
-  _$jscoverage['/anim.js'].branchData['53'] = [];
-  _$jscoverage['/anim.js'].branchData['53'][1] = new BranchData();
-  _$jscoverage['/anim.js'].branchData['56'] = [];
-  _$jscoverage['/anim.js'].branchData['56'][1] = new BranchData();
-  _$jscoverage['/anim.js'].branchData['67'] = [];
-  _$jscoverage['/anim.js'].branchData['67'][1] = new BranchData();
-  _$jscoverage['/anim.js'].branchData['144'] = [];
-  _$jscoverage['/anim.js'].branchData['144'][1] = new BranchData();
-  _$jscoverage['/anim.js'].branchData['144'][2] = new BranchData();
-  _$jscoverage['/anim.js'].branchData['146'] = [];
-  _$jscoverage['/anim.js'].branchData['146'][1] = new BranchData();
-  _$jscoverage['/anim.js'].branchData['146'][2] = new BranchData();
-  _$jscoverage['/anim.js'].branchData['148'] = [];
-  _$jscoverage['/anim.js'].branchData['148'][1] = new BranchData();
+  _$jscoverage['/anim.js'].branchData['28'] = [];
+  _$jscoverage['/anim.js'].branchData['28'][1] = new BranchData();
+  _$jscoverage['/anim.js'].branchData['32'] = [];
+  _$jscoverage['/anim.js'].branchData['32'][1] = new BranchData();
+  _$jscoverage['/anim.js'].branchData['36'] = [];
+  _$jscoverage['/anim.js'].branchData['36'][1] = new BranchData();
+  _$jscoverage['/anim.js'].branchData['39'] = [];
+  _$jscoverage['/anim.js'].branchData['39'][1] = new BranchData();
+  _$jscoverage['/anim.js'].branchData['39'][2] = new BranchData();
+  _$jscoverage['/anim.js'].branchData['48'] = [];
+  _$jscoverage['/anim.js'].branchData['48'][1] = new BranchData();
+  _$jscoverage['/anim.js'].branchData['54'] = [];
+  _$jscoverage['/anim.js'].branchData['54'][1] = new BranchData();
+  _$jscoverage['/anim.js'].branchData['57'] = [];
+  _$jscoverage['/anim.js'].branchData['57'][1] = new BranchData();
+  _$jscoverage['/anim.js'].branchData['68'] = [];
+  _$jscoverage['/anim.js'].branchData['68'][1] = new BranchData();
+  _$jscoverage['/anim.js'].branchData['145'] = [];
+  _$jscoverage['/anim.js'].branchData['145'][1] = new BranchData();
+  _$jscoverage['/anim.js'].branchData['145'][2] = new BranchData();
+  _$jscoverage['/anim.js'].branchData['147'] = [];
+  _$jscoverage['/anim.js'].branchData['147'][1] = new BranchData();
+  _$jscoverage['/anim.js'].branchData['147'][2] = new BranchData();
+  _$jscoverage['/anim.js'].branchData['149'] = [];
+  _$jscoverage['/anim.js'].branchData['149'][1] = new BranchData();
 }
-_$jscoverage['/anim.js'].branchData['148'][1].init(102, 15, 'queue === false');
-function visit14_148_1(result) {
-  _$jscoverage['/anim.js'].branchData['148'][1].ranCondition(result);
+_$jscoverage['/anim.js'].branchData['149'][1].init(102, 15, 'queue === false');
+function visit14_149_1(result) {
+  _$jscoverage['/anim.js'].branchData['149'][1].ranCondition(result);
   return result;
-}_$jscoverage['/anim.js'].branchData['146'][2].init(155, 24, 'typeof queue == \'string\'');
-function visit13_146_2(result) {
-  _$jscoverage['/anim.js'].branchData['146'][2].ranCondition(result);
+}_$jscoverage['/anim.js'].branchData['147'][2].init(155, 24, 'typeof queue == \'string\'');
+function visit13_147_2(result) {
+  _$jscoverage['/anim.js'].branchData['147'][2].ranCondition(result);
   return result;
-}_$jscoverage['/anim.js'].branchData['146'][1].init(86, 118, 'typeof queue == \'string\' || queue === false');
-function visit12_146_1(result) {
-  _$jscoverage['/anim.js'].branchData['146'][1].ranCondition(result);
+}_$jscoverage['/anim.js'].branchData['147'][1].init(86, 118, 'typeof queue == \'string\' || queue === false');
+function visit12_147_1(result) {
+  _$jscoverage['/anim.js'].branchData['147'][1].ranCondition(result);
   return result;
-}_$jscoverage['/anim.js'].branchData['144'][2].init(67, 14, 'queue === null');
-function visit11_144_2(result) {
-  _$jscoverage['/anim.js'].branchData['144'][2].ranCondition(result);
+}_$jscoverage['/anim.js'].branchData['145'][2].init(67, 14, 'queue === null');
+function visit11_145_2(result) {
+  _$jscoverage['/anim.js'].branchData['145'][2].ranCondition(result);
   return result;
-}_$jscoverage['/anim.js'].branchData['144'][1].init(51, 205, 'queue === null || typeof queue == \'string\' || queue === false');
-function visit10_144_1(result) {
-  _$jscoverage['/anim.js'].branchData['144'][1].ranCondition(result);
+}_$jscoverage['/anim.js'].branchData['145'][1].init(51, 205, 'queue === null || typeof queue == \'string\' || queue === false');
+function visit10_145_1(result) {
+  _$jscoverage['/anim.js'].branchData['145'][1].ranCondition(result);
   return result;
-}_$jscoverage['/anim.js'].branchData['67'][1].init(1455, 41, 'config[\'useTransition\'] && TransitionAnim');
-function visit9_67_1(result) {
-  _$jscoverage['/anim.js'].branchData['67'][1].ranCondition(result);
+}_$jscoverage['/anim.js'].branchData['68'][1].init(1455, 41, 'config[\'useTransition\'] && TransitionAnim');
+function visit9_68_1(result) {
+  _$jscoverage['/anim.js'].branchData['68'][1].ranCondition(result);
   return result;
-}_$jscoverage['/anim.js'].branchData['56'][1].init(211, 6, 'easing');
-function visit8_56_1(result) {
-  _$jscoverage['/anim.js'].branchData['56'][1].ranCondition(result);
+}_$jscoverage['/anim.js'].branchData['57'][1].init(211, 6, 'easing');
+function visit8_57_1(result) {
+  _$jscoverage['/anim.js'].branchData['57'][1].ranCondition(result);
   return result;
-}_$jscoverage['/anim.js'].branchData['53'][1].init(110, 8, 'duration');
-function visit7_53_1(result) {
-  _$jscoverage['/anim.js'].branchData['53'][1].ranCondition(result);
+}_$jscoverage['/anim.js'].branchData['54'][1].init(110, 8, 'duration');
+function visit7_54_1(result) {
+  _$jscoverage['/anim.js'].branchData['54'][1].ranCondition(result);
   return result;
-}_$jscoverage['/anim.js'].branchData['47'][1].init(696, 25, 'S.isPlainObject(duration)');
-function visit6_47_1(result) {
-  _$jscoverage['/anim.js'].branchData['47'][1].ranCondition(result);
+}_$jscoverage['/anim.js'].branchData['48'][1].init(696, 25, 'S.isPlainObject(duration)');
+function visit6_48_1(result) {
+  _$jscoverage['/anim.js'].branchData['48'][1].ranCondition(result);
   return result;
-}_$jscoverage['/anim.js'].branchData['38'][2].init(204, 16, 'trimProp != prop');
-function visit5_38_2(result) {
-  _$jscoverage['/anim.js'].branchData['38'][2].ranCondition(result);
+}_$jscoverage['/anim.js'].branchData['39'][2].init(204, 16, 'trimProp != prop');
+function visit5_39_2(result) {
+  _$jscoverage['/anim.js'].branchData['39'][2].ranCondition(result);
   return result;
-}_$jscoverage['/anim.js'].branchData['38'][1].init(191, 29, '!trimProp || trimProp != prop');
-function visit4_38_1(result) {
-  _$jscoverage['/anim.js'].branchData['38'][1].ranCondition(result);
+}_$jscoverage['/anim.js'].branchData['39'][1].init(191, 29, '!trimProp || trimProp != prop');
+function visit4_39_1(result) {
+  _$jscoverage['/anim.js'].branchData['39'][1].ranCondition(result);
   return result;
-}_$jscoverage['/anim.js'].branchData['35'][1].init(76, 8, 'trimProp');
-function visit3_35_1(result) {
-  _$jscoverage['/anim.js'].branchData['35'][1].ranCondition(result);
+}_$jscoverage['/anim.js'].branchData['36'][1].init(76, 8, 'trimProp');
+function visit3_36_1(result) {
+  _$jscoverage['/anim.js'].branchData['36'][1].ranCondition(result);
   return result;
-}_$jscoverage['/anim.js'].branchData['31'][1].init(60, 21, 'typeof to == \'string\'');
-function visit2_31_1(result) {
-  _$jscoverage['/anim.js'].branchData['31'][1].ranCondition(result);
+}_$jscoverage['/anim.js'].branchData['32'][1].init(60, 21, 'typeof to == \'string\'');
+function visit2_32_1(result) {
+  _$jscoverage['/anim.js'].branchData['32'][1].ranCondition(result);
   return result;
-}_$jscoverage['/anim.js'].branchData['27'][1].init(35, 9, 'node.node');
-function visit1_27_1(result) {
-  _$jscoverage['/anim.js'].branchData['27'][1].ranCondition(result);
+}_$jscoverage['/anim.js'].branchData['28'][1].init(35, 9, 'node.node');
+function visit1_28_1(result) {
+  _$jscoverage['/anim.js'].branchData['28'][1].ranCondition(result);
   return result;
 }_$jscoverage['/anim.js'].lineData[6]++;
 KISSY.add('anim', function(S, Dom, AnimBase, TimerAnim, TransitionAnim) {
   _$jscoverage['/anim.js'].functionData[0]++;
   _$jscoverage['/anim.js'].lineData[7]++;
-  var Utils = AnimBase.Utils, defaultConfig = {
+  var Utils = AnimBase.Utils, logger = S.getLogger('s/anim'), defaultConfig = {
   duration: 1, 
   easing: 'linear'};
-  _$jscoverage['/anim.js'].lineData[25]++;
+  _$jscoverage['/anim.js'].lineData[26]++;
   function Anim(node, to, duration, easing, complete) {
     _$jscoverage['/anim.js'].functionData[1]++;
-    _$jscoverage['/anim.js'].lineData[26]++;
-    var config;
     _$jscoverage['/anim.js'].lineData[27]++;
-    if (visit1_27_1(node.node)) {
-      _$jscoverage['/anim.js'].lineData[28]++;
+    var config;
+    _$jscoverage['/anim.js'].lineData[28]++;
+    if (visit1_28_1(node.node)) {
+      _$jscoverage['/anim.js'].lineData[29]++;
       config = node;
     } else {
-      _$jscoverage['/anim.js'].lineData[31]++;
-      if (visit2_31_1(typeof to == 'string')) {
-        _$jscoverage['/anim.js'].lineData[32]++;
-        to = S.unparam(String(to), ';', ':');
+      _$jscoverage['/anim.js'].lineData[32]++;
+      if (visit2_32_1(typeof to == 'string')) {
         _$jscoverage['/anim.js'].lineData[33]++;
+        to = S.unparam(String(to), ';', ':');
+        _$jscoverage['/anim.js'].lineData[34]++;
         S.each(to, function(value, prop) {
   _$jscoverage['/anim.js'].functionData[2]++;
-  _$jscoverage['/anim.js'].lineData[34]++;
-  var trimProp = S.trim(prop);
   _$jscoverage['/anim.js'].lineData[35]++;
-  if (visit3_35_1(trimProp)) {
-    _$jscoverage['/anim.js'].lineData[36]++;
+  var trimProp = S.trim(prop);
+  _$jscoverage['/anim.js'].lineData[36]++;
+  if (visit3_36_1(trimProp)) {
+    _$jscoverage['/anim.js'].lineData[37]++;
     to[trimProp] = S.trim(value);
   }
-  _$jscoverage['/anim.js'].lineData[38]++;
-  if (visit4_38_1(!trimProp || visit5_38_2(trimProp != prop))) {
-    _$jscoverage['/anim.js'].lineData[39]++;
+  _$jscoverage['/anim.js'].lineData[39]++;
+  if (visit4_39_1(!trimProp || visit5_39_2(trimProp != prop))) {
+    _$jscoverage['/anim.js'].lineData[40]++;
     delete to[prop];
   }
 });
       } else {
-        _$jscoverage['/anim.js'].lineData[44]++;
+        _$jscoverage['/anim.js'].lineData[45]++;
         to = S.clone(to);
       }
-      _$jscoverage['/anim.js'].lineData[47]++;
-      if (visit6_47_1(S.isPlainObject(duration))) {
-        _$jscoverage['/anim.js'].lineData[48]++;
+      _$jscoverage['/anim.js'].lineData[48]++;
+      if (visit6_48_1(S.isPlainObject(duration))) {
+        _$jscoverage['/anim.js'].lineData[49]++;
         config = S.clone(duration);
       } else {
-        _$jscoverage['/anim.js'].lineData[50]++;
+        _$jscoverage['/anim.js'].lineData[51]++;
         config = {
   complete: complete};
-        _$jscoverage['/anim.js'].lineData[53]++;
-        if (visit7_53_1(duration)) {
-          _$jscoverage['/anim.js'].lineData[54]++;
+        _$jscoverage['/anim.js'].lineData[54]++;
+        if (visit7_54_1(duration)) {
+          _$jscoverage['/anim.js'].lineData[55]++;
           config.duration = duration;
         }
-        _$jscoverage['/anim.js'].lineData[56]++;
-        if (visit8_56_1(easing)) {
-          _$jscoverage['/anim.js'].lineData[57]++;
+        _$jscoverage['/anim.js'].lineData[57]++;
+        if (visit8_57_1(easing)) {
+          _$jscoverage['/anim.js'].lineData[58]++;
           config.easing = easing;
         }
       }
-      _$jscoverage['/anim.js'].lineData[60]++;
-      config.node = node;
       _$jscoverage['/anim.js'].lineData[61]++;
+      config.node = node;
+      _$jscoverage['/anim.js'].lineData[62]++;
       config.to = to;
     }
-    _$jscoverage['/anim.js'].lineData[63]++;
+    _$jscoverage['/anim.js'].lineData[64]++;
     config = S.merge(defaultConfig, config, {
   useTransition: S.config('anim/useTransition')});
-    _$jscoverage['/anim.js'].lineData[67]++;
-    if (visit9_67_1(config['useTransition'] && TransitionAnim)) {
+    _$jscoverage['/anim.js'].lineData[68]++;
+    if (visit9_68_1(config['useTransition'] && TransitionAnim)) {
       _$jscoverage['/anim.js'].lineData[69]++;
+      logger.info('use transition anim');
+      _$jscoverage['/anim.js'].lineData[70]++;
       return new TransitionAnim(config);
     } else {
       _$jscoverage['/anim.js'].lineData[72]++;
+      logger.info('use js timer anim');
+      _$jscoverage['/anim.js'].lineData[73]++;
       return new TimerAnim(config);
     }
   }
-  _$jscoverage['/anim.js'].lineData[140]++;
+  _$jscoverage['/anim.js'].lineData[141]++;
   S.each(['pause', 'resume'], function(action) {
   _$jscoverage['/anim.js'].functionData[3]++;
-  _$jscoverage['/anim.js'].lineData[141]++;
+  _$jscoverage['/anim.js'].lineData[142]++;
   Anim[action] = function(node, queue) {
   _$jscoverage['/anim.js'].functionData[4]++;
-  _$jscoverage['/anim.js'].lineData[142]++;
-  if (visit10_144_1(visit11_144_2(queue === null) || visit12_146_1(visit13_146_2(typeof queue == 'string') || visit14_148_1(queue === false)))) {
-    _$jscoverage['/anim.js'].lineData[150]++;
+  _$jscoverage['/anim.js'].lineData[143]++;
+  if (visit10_145_1(visit11_145_2(queue === null) || visit12_147_1(visit13_147_2(typeof queue == 'string') || visit14_149_1(queue === false)))) {
+    _$jscoverage['/anim.js'].lineData[151]++;
     return Utils.pauseOrResumeQueue(node, queue, action);
   }
-  _$jscoverage['/anim.js'].lineData[152]++;
+  _$jscoverage['/anim.js'].lineData[153]++;
   return Utils.pauseOrResumeQueue(node, undefined, action);
 };
 });
-  _$jscoverage['/anim.js'].lineData[163]++;
+  _$jscoverage['/anim.js'].lineData[164]++;
   Anim.isRunning = Utils.isElRunning;
-  _$jscoverage['/anim.js'].lineData[172]++;
+  _$jscoverage['/anim.js'].lineData[173]++;
   Anim.isPaused = Utils.isElPaused;
-  _$jscoverage['/anim.js'].lineData[184]++;
+  _$jscoverage['/anim.js'].lineData[185]++;
   Anim.stop = Utils.stopEl;
-  _$jscoverage['/anim.js'].lineData[186]++;
+  _$jscoverage['/anim.js'].lineData[187]++;
   Anim.Easing = TimerAnim.Easing;
-  _$jscoverage['/anim.js'].lineData[188]++;
+  _$jscoverage['/anim.js'].lineData[189]++;
   S.Anim = Anim;
-  _$jscoverage['/anim.js'].lineData[190]++;
+  _$jscoverage['/anim.js'].lineData[191]++;
   Anim.Q = AnimBase.Q;
-  _$jscoverage['/anim.js'].lineData[192]++;
+  _$jscoverage['/anim.js'].lineData[193]++;
   return Anim;
 }, {
   requires: ['dom', 'anim/base', 'anim/timer', KISSY.Features.isTransitionSupported() ? 'anim/transition' : '']});

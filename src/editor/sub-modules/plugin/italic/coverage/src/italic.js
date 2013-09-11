@@ -229,17 +229,17 @@ if (! this._$jscoverage) {
 if (! _$jscoverage['/italic.js']) {
   _$jscoverage['/italic.js'] = {};
   _$jscoverage['/italic.js'].lineData = [];
-  _$jscoverage['/italic.js'].lineData[5] = 0;
   _$jscoverage['/italic.js'].lineData[6] = 0;
-  _$jscoverage['/italic.js'].lineData[10] = 0;
-  _$jscoverage['/italic.js'].lineData[12] = 0;
-  _$jscoverage['/italic.js'].lineData[14] = 0;
-  _$jscoverage['/italic.js'].lineData[19] = 0;
+  _$jscoverage['/italic.js'].lineData[7] = 0;
+  _$jscoverage['/italic.js'].lineData[11] = 0;
+  _$jscoverage['/italic.js'].lineData[13] = 0;
+  _$jscoverage['/italic.js'].lineData[15] = 0;
   _$jscoverage['/italic.js'].lineData[20] = 0;
   _$jscoverage['/italic.js'].lineData[21] = 0;
   _$jscoverage['/italic.js'].lineData[22] = 0;
   _$jscoverage['/italic.js'].lineData[23] = 0;
-  _$jscoverage['/italic.js'].lineData[30] = 0;
+  _$jscoverage['/italic.js'].lineData[24] = 0;
+  _$jscoverage['/italic.js'].lineData[31] = 0;
 }
 if (! _$jscoverage['/italic.js'].functionData) {
   _$jscoverage['/italic.js'].functionData = [];
@@ -251,52 +251,52 @@ if (! _$jscoverage['/italic.js'].functionData) {
 }
 if (! _$jscoverage['/italic.js'].branchData) {
   _$jscoverage['/italic.js'].branchData = {};
-  _$jscoverage['/italic.js'].branchData['21'] = [];
-  _$jscoverage['/italic.js'].branchData['21'][1] = new BranchData();
-  _$jscoverage['/italic.js'].branchData['21'][2] = new BranchData();
+  _$jscoverage['/italic.js'].branchData['22'] = [];
+  _$jscoverage['/italic.js'].branchData['22'][1] = new BranchData();
+  _$jscoverage['/italic.js'].branchData['22'][2] = new BranchData();
 }
-_$jscoverage['/italic.js'].branchData['21'][2].init(39, 29, 'e.keyCode == S.Node.KeyCode.I');
-function visit2_21_2(result) {
-  _$jscoverage['/italic.js'].branchData['21'][2].ranCondition(result);
+_$jscoverage['/italic.js'].branchData['22'][2].init(39, 29, 'e.keyCode == S.Node.KeyCode.I');
+function visit2_22_2(result) {
+  _$jscoverage['/italic.js'].branchData['22'][2].ranCondition(result);
   return result;
-}_$jscoverage['/italic.js'].branchData['21'][1].init(26, 42, 'e.ctrlKey && e.keyCode == S.Node.KeyCode.I');
-function visit1_21_1(result) {
-  _$jscoverage['/italic.js'].branchData['21'][1].ranCondition(result);
+}_$jscoverage['/italic.js'].branchData['22'][1].init(26, 42, 'e.ctrlKey && e.keyCode == S.Node.KeyCode.I');
+function visit1_22_1(result) {
+  _$jscoverage['/italic.js'].branchData['22'][1].ranCondition(result);
   return result;
-}_$jscoverage['/italic.js'].lineData[5]++;
+}_$jscoverage['/italic.js'].lineData[6]++;
 KISSY.add("editor/plugin/italic", function(S, Editor, ui, cmd) {
   _$jscoverage['/italic.js'].functionData[0]++;
-  _$jscoverage['/italic.js'].lineData[6]++;
+  _$jscoverage['/italic.js'].lineData[7]++;
   function italic() {
     _$jscoverage['/italic.js'].functionData[1]++;
   }
-  _$jscoverage['/italic.js'].lineData[10]++;
+  _$jscoverage['/italic.js'].lineData[11]++;
   S.augment(italic, {
   pluginRenderUI: function(editor) {
   _$jscoverage['/italic.js'].functionData[2]++;
-  _$jscoverage['/italic.js'].lineData[12]++;
+  _$jscoverage['/italic.js'].lineData[13]++;
   cmd.init(editor);
-  _$jscoverage['/italic.js'].lineData[14]++;
+  _$jscoverage['/italic.js'].lineData[15]++;
   editor.addButton("italic", {
   cmdType: 'italic', 
   tooltip: "\u659c\u4f53 "}, ui.Button);
-  _$jscoverage['/italic.js'].lineData[19]++;
+  _$jscoverage['/italic.js'].lineData[20]++;
   editor.docReady(function() {
   _$jscoverage['/italic.js'].functionData[3]++;
-  _$jscoverage['/italic.js'].lineData[20]++;
+  _$jscoverage['/italic.js'].lineData[21]++;
   editor.get("document").on("keydown", function(e) {
   _$jscoverage['/italic.js'].functionData[4]++;
-  _$jscoverage['/italic.js'].lineData[21]++;
-  if (visit1_21_1(e.ctrlKey && visit2_21_2(e.keyCode == S.Node.KeyCode.I))) {
-    _$jscoverage['/italic.js'].lineData[22]++;
-    editor.execCommand("italic");
+  _$jscoverage['/italic.js'].lineData[22]++;
+  if (visit1_22_1(e.ctrlKey && visit2_22_2(e.keyCode == S.Node.KeyCode.I))) {
     _$jscoverage['/italic.js'].lineData[23]++;
+    editor.execCommand("italic");
+    _$jscoverage['/italic.js'].lineData[24]++;
     e.preventDefault();
   }
 });
 });
 }});
-  _$jscoverage['/italic.js'].lineData[30]++;
+  _$jscoverage['/italic.js'].lineData[31]++;
   return italic;
 }, {
   requires: ['editor', './font/ui', './italic/cmd']});

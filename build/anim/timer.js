@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 4 18:15
+build time: Sep 11 12:42
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -476,6 +476,7 @@ KISSY.add('anim/timer/manager', function (S, undefined) {
  * @author yiminghe@gmail.com
  */
 KISSY.add('anim/timer/fx', function (S, Dom, undefined) {
+    var logger= S.getLogger('s/aim/timer/fx');
     function load(self, cfg) {
         S.mix(self, cfg);
         self.pos = 0;
@@ -545,7 +546,7 @@ KISSY.add('anim/timer/fx', function (S, Dom, undefined) {
                     // 插值出错，直接设置为最终值
                     self.pos = 1;
                     val = to;
-                    S.log(prop + ' update directly ! : ' + val + ' : ' + from + ' : ' + to);
+                    logger.warn(prop + ' update directly ! : ' + val + ' : ' + from + ' : ' + to);
                 } else {
                     val += self.unit;
                 }
@@ -553,7 +554,6 @@ KISSY.add('anim/timer/fx', function (S, Dom, undefined) {
                 if (isAttr(node, prop)) {
                     Dom.attr(node, prop, val, 1);
                 } else {
-                    // S.log(self.prop + ' update: ' + val);
                     Dom.css(node, prop, val);
                 }
             }
@@ -710,6 +710,7 @@ KISSY.add('anim/timer/short-hand', function () {
  */
 KISSY.add('anim/timer/color', function (S, Dom, Fx,SHORT_HANDS) {
     var HEX_BASE = 16,
+        logger= S.getLogger('s/anim/timer/color'),
         floor = Math.floor,
         KEYWORDS = {
             'black':[0, 0, 0],
@@ -811,7 +812,7 @@ KISSY.add('anim/timer/color', function (S, Dom, Fx,SHORT_HANDS) {
         }
 
         //transparent 或者颜色字符串返回
-        S.log('only allow rgb or hex color string : ' + val, 'warn');
+        logger.warn('only allow rgb or hex color string : ' + val);
         return [255, 255, 255];
     }
 
@@ -848,7 +849,7 @@ KISSY.add('anim/timer/color', function (S, Dom, Fx,SHORT_HANDS) {
                     floor(interpolate(from[3] || 1, to[3] || 1, pos))
                 ].join(', ') + ')';
             } else {
-                return S.log('anim/color unknown value : ' + from);
+                logger.warn('unknown value : ' + from);
             }
         }
     });
@@ -1165,7 +1166,6 @@ KISSY.add('anim/timer', function (S, Dom, Event, AnimBase, Easing, AM, Fx, SHORT
                             // in case tmpCur==0
                             tmpCur = fx.cur();
                         } while (tmpCur == 0);
-                        // S.log(to2+' --- '+tmpCur);
                         from = (to2 / tmpCur) * from;
                         Dom.css(node, prop, from + unit);
                     }

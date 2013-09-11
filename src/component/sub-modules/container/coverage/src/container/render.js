@@ -229,15 +229,15 @@ if (! this._$jscoverage) {
 if (! _$jscoverage['/container/render.js']) {
   _$jscoverage['/container/render.js'] = {};
   _$jscoverage['/container/render.js'].lineData = [];
-  _$jscoverage['/container/render.js'].lineData[5] = 0;
-  _$jscoverage['/container/render.js'].lineData[7] = 0;
-  _$jscoverage['/container/render.js'].lineData[13] = 0;
-  _$jscoverage['/container/render.js'].lineData[21] = 0;
-  _$jscoverage['/container/render.js'].lineData[22] = 0;
+  _$jscoverage['/container/render.js'].lineData[6] = 0;
+  _$jscoverage['/container/render.js'].lineData[11] = 0;
+  _$jscoverage['/container/render.js'].lineData[17] = 0;
   _$jscoverage['/container/render.js'].lineData[25] = 0;
   _$jscoverage['/container/render.js'].lineData[26] = 0;
-  _$jscoverage['/container/render.js'].lineData[31] = 0;
-  _$jscoverage['/container/render.js'].lineData[38] = 0;
+  _$jscoverage['/container/render.js'].lineData[29] = 0;
+  _$jscoverage['/container/render.js'].lineData[30] = 0;
+  _$jscoverage['/container/render.js'].lineData[35] = 0;
+  _$jscoverage['/container/render.js'].lineData[43] = 0;
 }
 if (! _$jscoverage['/container/render.js'].functionData) {
   _$jscoverage['/container/render.js'].functionData = [];
@@ -248,52 +248,52 @@ if (! _$jscoverage['/container/render.js'].functionData) {
 }
 if (! _$jscoverage['/container/render.js'].branchData) {
   _$jscoverage['/container/render.js'].branchData = {};
-  _$jscoverage['/container/render.js'].branchData['22'] = [];
-  _$jscoverage['/container/render.js'].branchData['22'][1] = new BranchData();
-  _$jscoverage['/container/render.js'].branchData['23'] = [];
-  _$jscoverage['/container/render.js'].branchData['23'][1] = new BranchData();
-  _$jscoverage['/container/render.js'].branchData['25'] = [];
-  _$jscoverage['/container/render.js'].branchData['25'][1] = new BranchData();
+  _$jscoverage['/container/render.js'].branchData['26'] = [];
+  _$jscoverage['/container/render.js'].branchData['26'][1] = new BranchData();
+  _$jscoverage['/container/render.js'].branchData['27'] = [];
+  _$jscoverage['/container/render.js'].branchData['27'][1] = new BranchData();
+  _$jscoverage['/container/render.js'].branchData['29'] = [];
+  _$jscoverage['/container/render.js'].branchData['29'][1] = new BranchData();
 }
-_$jscoverage['/container/render.js'].branchData['25'][1].init(225, 7, 'ChildUI');
-function visit3_25_1(result) {
-  _$jscoverage['/container/render.js'].branchData['25'][1].ranCondition(result);
+_$jscoverage['/container/render.js'].branchData['29'][1].init(225, 7, 'ChildUI');
+function visit3_29_1(result) {
+  _$jscoverage['/container/render.js'].branchData['29'][1].ranCondition(result);
   return result;
-}_$jscoverage['/container/render.js'].branchData['23'][1].init(72, 97, 'defaultChildXClass && Manager.getConstructorByXClass(defaultChildXClass)');
-function visit2_23_1(result) {
-  _$jscoverage['/container/render.js'].branchData['23'][1].ranCondition(result);
+}_$jscoverage['/container/render.js'].branchData['27'][1].init(72, 97, 'defaultChildXClass && Manager.getConstructorByXClass(defaultChildXClass)');
+function visit2_27_1(result) {
+  _$jscoverage['/container/render.js'].branchData['27'][1].ranCondition(result);
   return result;
-}_$jscoverage['/container/render.js'].branchData['22'][1].init(32, 170, 'self.getComponentConstructorByNode(prefixCls, c) || defaultChildXClass && Manager.getConstructorByXClass(defaultChildXClass)');
-function visit1_22_1(result) {
-  _$jscoverage['/container/render.js'].branchData['22'][1].ranCondition(result);
+}_$jscoverage['/container/render.js'].branchData['26'][1].init(32, 170, 'self.getComponentConstructorByNode(prefixCls, c) || defaultChildXClass && Manager.getConstructorByXClass(defaultChildXClass)');
+function visit1_26_1(result) {
+  _$jscoverage['/container/render.js'].branchData['26'][1].ranCondition(result);
   return result;
-}_$jscoverage['/container/render.js'].lineData[5]++;
+}_$jscoverage['/container/render.js'].lineData[6]++;
 KISSY.add('component/container/render', function(S, Control, Manager) {
   _$jscoverage['/container/render.js'].functionData[0]++;
-  _$jscoverage['/container/render.js'].lineData[7]++;
+  _$jscoverage['/container/render.js'].lineData[11]++;
   return Control.getDefaultRender().extend([], {
   decorateDom: function() {
   _$jscoverage['/container/render.js'].functionData[1]++;
-  _$jscoverage['/container/render.js'].lineData[13]++;
+  _$jscoverage['/container/render.js'].lineData[17]++;
   var self = this, childrenContainerEl = self.getChildrenContainerEl(), control = self.control, defaultChildCfg = control.get('defaultChildCfg'), prefixCls = defaultChildCfg.prefixCls, defaultChildXClass = defaultChildCfg.xclass, childrenComponents = [], children = childrenContainerEl.children();
-  _$jscoverage['/container/render.js'].lineData[21]++;
+  _$jscoverage['/container/render.js'].lineData[25]++;
   children.each(function(c) {
   _$jscoverage['/container/render.js'].functionData[2]++;
-  _$jscoverage['/container/render.js'].lineData[22]++;
-  var ChildUI = visit1_22_1(self.getComponentConstructorByNode(prefixCls, c) || visit2_23_1(defaultChildXClass && Manager.getConstructorByXClass(defaultChildXClass)));
-  _$jscoverage['/container/render.js'].lineData[25]++;
-  if (visit3_25_1(ChildUI)) {
-    _$jscoverage['/container/render.js'].lineData[26]++;
+  _$jscoverage['/container/render.js'].lineData[26]++;
+  var ChildUI = visit1_26_1(self.getComponentConstructorByNode(prefixCls, c) || visit2_27_1(defaultChildXClass && Manager.getConstructorByXClass(defaultChildXClass)));
+  _$jscoverage['/container/render.js'].lineData[29]++;
+  if (visit3_29_1(ChildUI)) {
+    _$jscoverage['/container/render.js'].lineData[30]++;
     childrenComponents.push(new ChildUI(S.merge(defaultChildCfg, {
   srcNode: c})));
   }
 });
-  _$jscoverage['/container/render.js'].lineData[31]++;
+  _$jscoverage['/container/render.js'].lineData[35]++;
   control.set('children', childrenComponents);
 }, 
   getChildrenContainerEl: function() {
   _$jscoverage['/container/render.js'].functionData[3]++;
-  _$jscoverage['/container/render.js'].lineData[38]++;
+  _$jscoverage['/container/render.js'].lineData[43]++;
   return this.$el;
 }}, {
   name: 'ContainerRender'});

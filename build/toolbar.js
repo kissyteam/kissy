@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Aug 27 22:01
+build time: Sep 11 12:54
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -97,10 +97,8 @@ KISSY.add("toolbar", function (S, Container, DelegateChildrenExtension, ToolbarR
     }
 
     /**
-     * @name Toolbar
-     * @class
-     * KISSY Toolbar.
-     * xclass: 'toolbar'.
+     * Toolbar component for KISSY. xclass: 'toolbar'.
+     * @class KISSY.Toolbar
      */
     return Container.extend([DelegateChildrenExtension], {
         _onSetHighlightedItem: function (item, e) {

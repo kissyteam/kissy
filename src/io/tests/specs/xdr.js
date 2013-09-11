@@ -4,8 +4,8 @@
  */
 
 KISSY.add(function (S, UA, io, Node) {
-
-    var testUrl = 'http://' + location.hostname + ':9999/kissy/src/' +
+    var port = SERVER_CONFIG.ports[1];
+    var testUrl = 'http://' + location.hostname + ':' + port + '/kissy/src/' +
         'io/tests/others/xdr/xdr.jss';
 
     return {
@@ -168,7 +168,7 @@ KISSY.add(function (S, UA, io, Node) {
 
                     });
 
-                    iframe[0].src = 'http://' + location.hostname + ':9999/kissy/src/' +
+                    iframe[0].src = 'http://' + location.hostname + ':' + port + '/kissy/src/' +
                         'io/tests/others/xdr/set-cookie.html';
                     iframe.appendTo('body');
 
@@ -187,7 +187,7 @@ KISSY.add(function (S, UA, io, Node) {
                         ret = [];
 
                     io({
-                        url: 'http://' + host + ':9999/kissy/src/io/tests/data/io.jss',
+                        url: 'http://' + host + ':' + port + '/kissy/src/io/tests/data/io.jss',
                         xdr: {
                             subDomain: {
                                 proxy: "/kissy/src/io/tests/others/subdomain/proxy.html"
@@ -232,7 +232,7 @@ KISSY.add(function (S, UA, io, Node) {
                         type: 'post',
                         form: form[0],
                         dataType: 'json',
-                        url: 'http://' + host + ':9999/kissy/src/io/' +
+                        url: 'http://' + host + ':' + port + '/kissy/src/io/' +
                             'tests/others/subdomain/upload.jss',
                         success: function (data) {
                             expect(data.test).toBe('1');

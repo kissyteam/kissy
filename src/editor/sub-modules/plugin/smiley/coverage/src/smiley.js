@@ -229,36 +229,36 @@ if (! this._$jscoverage) {
 if (! _$jscoverage['/smiley.js']) {
   _$jscoverage['/smiley.js'] = {};
   _$jscoverage['/smiley.js'].lineData = [];
-  _$jscoverage['/smiley.js'].lineData[5] = 0;
   _$jscoverage['/smiley.js'].lineData[6] = 0;
   _$jscoverage['/smiley.js'].lineData[7] = 0;
   _$jscoverage['/smiley.js'].lineData[8] = 0;
-  _$jscoverage['/smiley.js'].lineData[12] = 0;
-  _$jscoverage['/smiley.js'].lineData[14] = 0;
-  _$jscoverage['/smiley.js'].lineData[17] = 0;
-  _$jscoverage['/smiley.js'].lineData[20] = 0;
-  _$jscoverage['/smiley.js'].lineData[22] = 0;
-  _$jscoverage['/smiley.js'].lineData[27] = 0;
+  _$jscoverage['/smiley.js'].lineData[9] = 0;
+  _$jscoverage['/smiley.js'].lineData[13] = 0;
+  _$jscoverage['/smiley.js'].lineData[15] = 0;
+  _$jscoverage['/smiley.js'].lineData[18] = 0;
+  _$jscoverage['/smiley.js'].lineData[21] = 0;
+  _$jscoverage['/smiley.js'].lineData[23] = 0;
   _$jscoverage['/smiley.js'].lineData[28] = 0;
-  _$jscoverage['/smiley.js'].lineData[30] = 0;
+  _$jscoverage['/smiley.js'].lineData[29] = 0;
   _$jscoverage['/smiley.js'].lineData[31] = 0;
-  _$jscoverage['/smiley.js'].lineData[37] = 0;
+  _$jscoverage['/smiley.js'].lineData[32] = 0;
   _$jscoverage['/smiley.js'].lineData[38] = 0;
   _$jscoverage['/smiley.js'].lineData[39] = 0;
   _$jscoverage['/smiley.js'].lineData[40] = 0;
-  _$jscoverage['/smiley.js'].lineData[50] = 0;
+  _$jscoverage['/smiley.js'].lineData[41] = 0;
   _$jscoverage['/smiley.js'].lineData[51] = 0;
-  _$jscoverage['/smiley.js'].lineData[53] = 0;
-  _$jscoverage['/smiley.js'].lineData[55] = 0;
-  _$jscoverage['/smiley.js'].lineData[59] = 0;
-  _$jscoverage['/smiley.js'].lineData[62] = 0;
+  _$jscoverage['/smiley.js'].lineData[52] = 0;
+  _$jscoverage['/smiley.js'].lineData[54] = 0;
+  _$jscoverage['/smiley.js'].lineData[56] = 0;
+  _$jscoverage['/smiley.js'].lineData[60] = 0;
   _$jscoverage['/smiley.js'].lineData[63] = 0;
-  _$jscoverage['/smiley.js'].lineData[66] = 0;
-  _$jscoverage['/smiley.js'].lineData[74] = 0;
-  _$jscoverage['/smiley.js'].lineData[76] = 0;
-  _$jscoverage['/smiley.js'].lineData[80] = 0;
+  _$jscoverage['/smiley.js'].lineData[64] = 0;
+  _$jscoverage['/smiley.js'].lineData[67] = 0;
+  _$jscoverage['/smiley.js'].lineData[75] = 0;
+  _$jscoverage['/smiley.js'].lineData[77] = 0;
   _$jscoverage['/smiley.js'].lineData[81] = 0;
-  _$jscoverage['/smiley.js'].lineData[91] = 0;
+  _$jscoverage['/smiley.js'].lineData[82] = 0;
+  _$jscoverage['/smiley.js'].lineData[92] = 0;
 }
 if (! _$jscoverage['/smiley.js'].functionData) {
   _$jscoverage['/smiley.js'].functionData = [];
@@ -275,105 +275,105 @@ if (! _$jscoverage['/smiley.js'].functionData) {
 }
 if (! _$jscoverage['/smiley.js'].branchData) {
   _$jscoverage['/smiley.js'].branchData = {};
-  _$jscoverage['/smiley.js'].branchData['7'] = [];
-  _$jscoverage['/smiley.js'].branchData['7'][1] = new BranchData();
-  _$jscoverage['/smiley.js'].branchData['31'] = [];
-  _$jscoverage['/smiley.js'].branchData['31'][1] = new BranchData();
-  _$jscoverage['/smiley.js'].branchData['38'] = [];
-  _$jscoverage['/smiley.js'].branchData['38'][1] = new BranchData();
+  _$jscoverage['/smiley.js'].branchData['8'] = [];
+  _$jscoverage['/smiley.js'].branchData['8'][1] = new BranchData();
+  _$jscoverage['/smiley.js'].branchData['32'] = [];
+  _$jscoverage['/smiley.js'].branchData['32'][1] = new BranchData();
   _$jscoverage['/smiley.js'].branchData['39'] = [];
   _$jscoverage['/smiley.js'].branchData['39'][1] = new BranchData();
-  _$jscoverage['/smiley.js'].branchData['53'] = [];
-  _$jscoverage['/smiley.js'].branchData['53'][1] = new BranchData();
-  _$jscoverage['/smiley.js'].branchData['53'][2] = new BranchData();
-  _$jscoverage['/smiley.js'].branchData['76'] = [];
-  _$jscoverage['/smiley.js'].branchData['76'][1] = new BranchData();
-  _$jscoverage['/smiley.js'].branchData['80'] = [];
-  _$jscoverage['/smiley.js'].branchData['80'][1] = new BranchData();
+  _$jscoverage['/smiley.js'].branchData['40'] = [];
+  _$jscoverage['/smiley.js'].branchData['40'][1] = new BranchData();
+  _$jscoverage['/smiley.js'].branchData['54'] = [];
+  _$jscoverage['/smiley.js'].branchData['54'][1] = new BranchData();
+  _$jscoverage['/smiley.js'].branchData['54'][2] = new BranchData();
+  _$jscoverage['/smiley.js'].branchData['77'] = [];
+  _$jscoverage['/smiley.js'].branchData['77'][1] = new BranchData();
+  _$jscoverage['/smiley.js'].branchData['81'] = [];
+  _$jscoverage['/smiley.js'].branchData['81'][1] = new BranchData();
 }
-_$jscoverage['/smiley.js'].branchData['80'][1].init(30, 11, 'this.smiley');
-function visit8_80_1(result) {
-  _$jscoverage['/smiley.js'].branchData['80'][1].ranCondition(result);
+_$jscoverage['/smiley.js'].branchData['81'][1].init(30, 11, 'this.smiley');
+function visit8_81_1(result) {
+  _$jscoverage['/smiley.js'].branchData['81'][1].ranCondition(result);
   return result;
-}_$jscoverage['/smiley.js'].branchData['76'][1].init(30, 33, 'self.smiley && self.smiley.hide()');
-function visit7_76_1(result) {
-  _$jscoverage['/smiley.js'].branchData['76'][1].ranCondition(result);
+}_$jscoverage['/smiley.js'].branchData['77'][1].init(30, 33, 'self.smiley && self.smiley.hide()');
+function visit7_77_1(result) {
+  _$jscoverage['/smiley.js'].branchData['77'][1].ranCondition(result);
   return result;
-}_$jscoverage['/smiley.js'].branchData['53'][2].init(157, 19, 't.nodeName() == "a"');
-function visit6_53_2(result) {
-  _$jscoverage['/smiley.js'].branchData['53'][2].ranCondition(result);
+}_$jscoverage['/smiley.js'].branchData['54'][2].init(157, 19, 't.nodeName() == "a"');
+function visit6_54_2(result) {
+  _$jscoverage['/smiley.js'].branchData['54'][2].ranCondition(result);
   return result;
-}_$jscoverage['/smiley.js'].branchData['53'][1].init(157, 92, 't.nodeName() == "a" && (icon = t.attr("data-icon"))');
-function visit5_53_1(result) {
-  _$jscoverage['/smiley.js'].branchData['53'][1].ranCondition(result);
+}_$jscoverage['/smiley.js'].branchData['54'][1].init(157, 92, 't.nodeName() == "a" && (icon = t.attr("data-icon"))');
+function visit5_54_1(result) {
+  _$jscoverage['/smiley.js'].branchData['54'][1].ranCondition(result);
   return result;
-}_$jscoverage['/smiley.js'].branchData['39'][1].init(34, 23, '!(smiley = self.smiley)');
-function visit4_39_1(result) {
+}_$jscoverage['/smiley.js'].branchData['40'][1].init(34, 23, '!(smiley = self.smiley)');
+function visit4_40_1(result) {
+  _$jscoverage['/smiley.js'].branchData['40'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/smiley.js'].branchData['39'][1].init(111, 7, 'checked');
+function visit3_39_1(result) {
   _$jscoverage['/smiley.js'].branchData['39'][1].ranCondition(result);
   return result;
-}_$jscoverage['/smiley.js'].branchData['38'][1].init(111, 7, 'checked');
-function visit3_38_1(result) {
-  _$jscoverage['/smiley.js'].branchData['38'][1].ranCondition(result);
+}_$jscoverage['/smiley.js'].branchData['32'][1].init(34, 33, 'self.smiley && self.smiley.hide()');
+function visit2_32_1(result) {
+  _$jscoverage['/smiley.js'].branchData['32'][1].ranCondition(result);
   return result;
-}_$jscoverage['/smiley.js'].branchData['31'][1].init(34, 33, 'self.smiley && self.smiley.hide()');
-function visit2_31_1(result) {
-  _$jscoverage['/smiley.js'].branchData['31'][1].ranCondition(result);
+}_$jscoverage['/smiley.js'].branchData['8'][1].init(96, 7, 'i <= 98');
+function visit1_8_1(result) {
+  _$jscoverage['/smiley.js'].branchData['8'][1].ranCondition(result);
   return result;
-}_$jscoverage['/smiley.js'].branchData['7'][1].init(96, 7, 'i <= 98');
-function visit1_7_1(result) {
-  _$jscoverage['/smiley.js'].branchData['7'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/smiley.js'].lineData[5]++;
+}_$jscoverage['/smiley.js'].lineData[6]++;
 KISSY.add("editor/plugin/smiley", function(S, Editor, Overlay4E) {
   _$jscoverage['/smiley.js'].functionData[0]++;
-  _$jscoverage['/smiley.js'].lineData[6]++;
-  var smiley_markup = "<div class='{prefixCls}editor-smiley-sprite'>";
   _$jscoverage['/smiley.js'].lineData[7]++;
-  for (var i = 0; visit1_7_1(i <= 98); i++) {
-    _$jscoverage['/smiley.js'].lineData[8]++;
+  var smiley_markup = "<div class='{prefixCls}editor-smiley-sprite'>";
+  _$jscoverage['/smiley.js'].lineData[8]++;
+  for (var i = 0; visit1_8_1(i <= 98); i++) {
+    _$jscoverage['/smiley.js'].lineData[9]++;
     smiley_markup += "<a href='javascript:void(0)' " + "data-icon='http://a.tbcdn.cn/sys/wangwang/smiley/48x48/" + i + ".gif'>" + "</a>";
   }
-  _$jscoverage['/smiley.js'].lineData[12]++;
+  _$jscoverage['/smiley.js'].lineData[13]++;
   smiley_markup += "</div>";
-  _$jscoverage['/smiley.js'].lineData[14]++;
+  _$jscoverage['/smiley.js'].lineData[15]++;
   function Smiley() {
     _$jscoverage['/smiley.js'].functionData[1]++;
   }
-  _$jscoverage['/smiley.js'].lineData[17]++;
+  _$jscoverage['/smiley.js'].lineData[18]++;
   S.augment(Smiley, {
   pluginRenderUI: function(editor) {
   _$jscoverage['/smiley.js'].functionData[2]++;
-  _$jscoverage['/smiley.js'].lineData[20]++;
+  _$jscoverage['/smiley.js'].lineData[21]++;
   var prefixCls = editor.get('prefixCls');
-  _$jscoverage['/smiley.js'].lineData[22]++;
+  _$jscoverage['/smiley.js'].lineData[23]++;
   editor.addButton("smiley", {
   tooltip: "\u63d2\u5165\u8868\u60c5", 
   checkable: true, 
   listeners: {
   afterSyncUI: function() {
   _$jscoverage['/smiley.js'].functionData[3]++;
-  _$jscoverage['/smiley.js'].lineData[27]++;
-  var self = this;
   _$jscoverage['/smiley.js'].lineData[28]++;
+  var self = this;
+  _$jscoverage['/smiley.js'].lineData[29]++;
   self.on("blur", function() {
   _$jscoverage['/smiley.js'].functionData[4]++;
-  _$jscoverage['/smiley.js'].lineData[30]++;
+  _$jscoverage['/smiley.js'].lineData[31]++;
   setTimeout(function() {
   _$jscoverage['/smiley.js'].functionData[5]++;
-  _$jscoverage['/smiley.js'].lineData[31]++;
-  visit2_31_1(self.smiley && self.smiley.hide());
+  _$jscoverage['/smiley.js'].lineData[32]++;
+  visit2_32_1(self.smiley && self.smiley.hide());
 }, 150);
 });
 }, 
   click: function() {
   _$jscoverage['/smiley.js'].functionData[6]++;
-  _$jscoverage['/smiley.js'].lineData[37]++;
-  var self = this, smiley, checked = self.get("checked");
   _$jscoverage['/smiley.js'].lineData[38]++;
-  if (visit3_38_1(checked)) {
-    _$jscoverage['/smiley.js'].lineData[39]++;
-    if (visit4_39_1(!(smiley = self.smiley))) {
-      _$jscoverage['/smiley.js'].lineData[40]++;
+  var self = this, smiley, checked = self.get("checked");
+  _$jscoverage['/smiley.js'].lineData[39]++;
+  if (visit3_39_1(checked)) {
+    _$jscoverage['/smiley.js'].lineData[40]++;
+    if (visit4_40_1(!(smiley = self.smiley))) {
+      _$jscoverage['/smiley.js'].lineData[41]++;
       smiley = self.smiley = new Overlay4E({
   content: S.substitute(smiley_markup, {
   prefixCls: prefixCls}), 
@@ -382,51 +382,51 @@ KISSY.add("editor/plugin/smiley", function(S, Editor, Overlay4E) {
   elCls: prefixCls + "editor-popup", 
   zIndex: Editor.baseZIndex(Editor.zIndexManager.POPUP_MENU), 
   mask: false}).render();
-      _$jscoverage['/smiley.js'].lineData[50]++;
+      _$jscoverage['/smiley.js'].lineData[51]++;
       smiley.get("el").on("click", function(ev) {
   _$jscoverage['/smiley.js'].functionData[7]++;
-  _$jscoverage['/smiley.js'].lineData[51]++;
+  _$jscoverage['/smiley.js'].lineData[52]++;
   var t = new S.Node(ev.target), icon;
-  _$jscoverage['/smiley.js'].lineData[53]++;
-  if (visit5_53_1(visit6_53_2(t.nodeName() == "a") && (icon = t.attr("data-icon")))) {
-    _$jscoverage['/smiley.js'].lineData[55]++;
+  _$jscoverage['/smiley.js'].lineData[54]++;
+  if (visit5_54_1(visit6_54_2(t.nodeName() == "a") && (icon = t.attr("data-icon")))) {
+    _$jscoverage['/smiley.js'].lineData[56]++;
     var img = new S.Node("<img " + "alt='' src='" + icon + "'/>", null, editor.get("document")[0]);
-    _$jscoverage['/smiley.js'].lineData[59]++;
+    _$jscoverage['/smiley.js'].lineData[60]++;
     editor.insertElement(img);
   }
 });
-      _$jscoverage['/smiley.js'].lineData[62]++;
+      _$jscoverage['/smiley.js'].lineData[63]++;
       smiley.on("hide", function() {
   _$jscoverage['/smiley.js'].functionData[8]++;
-  _$jscoverage['/smiley.js'].lineData[63]++;
+  _$jscoverage['/smiley.js'].lineData[64]++;
   self.set("checked", false);
 });
     }
-    _$jscoverage['/smiley.js'].lineData[66]++;
+    _$jscoverage['/smiley.js'].lineData[67]++;
     smiley.set("align", {
   node: this.get("el"), 
   points: ["bl", "tl"], 
   overflow: {
   adjustX: 1, 
   adjustY: 1}});
-    _$jscoverage['/smiley.js'].lineData[74]++;
+    _$jscoverage['/smiley.js'].lineData[75]++;
     smiley.show();
   } else {
-    _$jscoverage['/smiley.js'].lineData[76]++;
-    visit7_76_1(self.smiley && self.smiley.hide());
+    _$jscoverage['/smiley.js'].lineData[77]++;
+    visit7_77_1(self.smiley && self.smiley.hide());
   }
 }, 
   destroy: function() {
   _$jscoverage['/smiley.js'].functionData[9]++;
-  _$jscoverage['/smiley.js'].lineData[80]++;
-  if (visit8_80_1(this.smiley)) {
-    _$jscoverage['/smiley.js'].lineData[81]++;
+  _$jscoverage['/smiley.js'].lineData[81]++;
+  if (visit8_81_1(this.smiley)) {
+    _$jscoverage['/smiley.js'].lineData[82]++;
     this.smiley.destroy();
   }
 }}, 
   mode: Editor.Mode.WYSIWYG_MODE});
 }});
-  _$jscoverage['/smiley.js'].lineData[91]++;
+  _$jscoverage['/smiley.js'].lineData[92]++;
   return Smiley;
 }, {
   requires: ['editor', './overlay']});

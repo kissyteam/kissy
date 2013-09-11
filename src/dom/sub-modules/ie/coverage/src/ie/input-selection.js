@@ -229,8 +229,8 @@ if (! this._$jscoverage) {
 if (! _$jscoverage['/ie/input-selection.js']) {
   _$jscoverage['/ie/input-selection.js'] = {};
   _$jscoverage['/ie/input-selection.js'].lineData = [];
-  _$jscoverage['/ie/input-selection.js'].lineData[5] = 0;
   _$jscoverage['/ie/input-selection.js'].lineData[6] = 0;
+  _$jscoverage['/ie/input-selection.js'].lineData[7] = 0;
   _$jscoverage['/ie/input-selection.js'].lineData[14] = 0;
   _$jscoverage['/ie/input-selection.js'].lineData[16] = 0;
   _$jscoverage['/ie/input-selection.js'].lineData[18] = 0;
@@ -383,10 +383,10 @@ function visit39_23_1(result) {
 function visit38_18_1(result) {
   _$jscoverage['/ie/input-selection.js'].branchData['18'][1].ranCondition(result);
   return result;
-}_$jscoverage['/ie/input-selection.js'].lineData[5]++;
+}_$jscoverage['/ie/input-selection.js'].lineData[6]++;
 KISSY.add('dom/ie/input-selection', function(S, Dom) {
   _$jscoverage['/ie/input-selection.js'].functionData[0]++;
-  _$jscoverage['/ie/input-selection.js'].lineData[6]++;
+  _$jscoverage['/ie/input-selection.js'].lineData[7]++;
   var propHooks = Dom._propHooks;
   _$jscoverage['/ie/input-selection.js'].lineData[14]++;
   propHooks.selectionStart = {

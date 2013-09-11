@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Aug 27 22:01
+build time: Sep 11 12:54
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -38,7 +38,7 @@ KISSY.add('swf/ua', function (S, undefined) {
             try {
                 ver = new ActiveXObject(SF + '.' + SF)['GetVariable']('$version');
             } catch (ex) {
-                S.log('getFlashVersion failed via ActiveXObject');
+                // S.log('getFlashVersion failed via ActiveXObject');
                 // nothing to do, just return undefined
             }
         }

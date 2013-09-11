@@ -229,18 +229,18 @@ if (! this._$jscoverage) {
 if (! _$jscoverage['/html-parser/nodes/fragment.js']) {
   _$jscoverage['/html-parser/nodes/fragment.js'] = {};
   _$jscoverage['/html-parser/nodes/fragment.js'].lineData = [];
-  _$jscoverage['/html-parser/nodes/fragment.js'].lineData[5] = 0;
   _$jscoverage['/html-parser/nodes/fragment.js'].lineData[6] = 0;
   _$jscoverage['/html-parser/nodes/fragment.js'].lineData[7] = 0;
   _$jscoverage['/html-parser/nodes/fragment.js'].lineData[8] = 0;
   _$jscoverage['/html-parser/nodes/fragment.js'].lineData[9] = 0;
-  _$jscoverage['/html-parser/nodes/fragment.js'].lineData[12] = 0;
-  _$jscoverage['/html-parser/nodes/fragment.js'].lineData[14] = 0;
+  _$jscoverage['/html-parser/nodes/fragment.js'].lineData[10] = 0;
+  _$jscoverage['/html-parser/nodes/fragment.js'].lineData[13] = 0;
   _$jscoverage['/html-parser/nodes/fragment.js'].lineData[15] = 0;
   _$jscoverage['/html-parser/nodes/fragment.js'].lineData[16] = 0;
   _$jscoverage['/html-parser/nodes/fragment.js'].lineData[17] = 0;
-  _$jscoverage['/html-parser/nodes/fragment.js'].lineData[19] = 0;
-  _$jscoverage['/html-parser/nodes/fragment.js'].lineData[23] = 0;
+  _$jscoverage['/html-parser/nodes/fragment.js'].lineData[18] = 0;
+  _$jscoverage['/html-parser/nodes/fragment.js'].lineData[20] = 0;
+  _$jscoverage['/html-parser/nodes/fragment.js'].lineData[24] = 0;
 }
 if (! _$jscoverage['/html-parser/nodes/fragment.js'].functionData) {
   _$jscoverage['/html-parser/nodes/fragment.js'].functionData = [];
@@ -250,43 +250,43 @@ if (! _$jscoverage['/html-parser/nodes/fragment.js'].functionData) {
 }
 if (! _$jscoverage['/html-parser/nodes/fragment.js'].branchData) {
   _$jscoverage['/html-parser/nodes/fragment.js'].branchData = {};
-  _$jscoverage['/html-parser/nodes/fragment.js'].branchData['16'] = [];
-  _$jscoverage['/html-parser/nodes/fragment.js'].branchData['16'][1] = new BranchData();
+  _$jscoverage['/html-parser/nodes/fragment.js'].branchData['17'] = [];
+  _$jscoverage['/html-parser/nodes/fragment.js'].branchData['17'][1] = new BranchData();
 }
-_$jscoverage['/html-parser/nodes/fragment.js'].branchData['16'][1].init(97, 6, 'filter');
-function visit189_16_1(result) {
-  _$jscoverage['/html-parser/nodes/fragment.js'].branchData['16'][1].ranCondition(result);
+_$jscoverage['/html-parser/nodes/fragment.js'].branchData['17'][1].init(97, 6, 'filter');
+function visit189_17_1(result) {
+  _$jscoverage['/html-parser/nodes/fragment.js'].branchData['17'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/nodes/fragment.js'].lineData[5]++;
+}_$jscoverage['/html-parser/nodes/fragment.js'].lineData[6]++;
 KISSY.add("html-parser/nodes/fragment", function(S, Tag) {
   _$jscoverage['/html-parser/nodes/fragment.js'].functionData[0]++;
-  _$jscoverage['/html-parser/nodes/fragment.js'].lineData[6]++;
+  _$jscoverage['/html-parser/nodes/fragment.js'].lineData[7]++;
   function Fragment() {
     _$jscoverage['/html-parser/nodes/fragment.js'].functionData[1]++;
-    _$jscoverage['/html-parser/nodes/fragment.js'].lineData[7]++;
-    this.childNodes = [];
     _$jscoverage['/html-parser/nodes/fragment.js'].lineData[8]++;
-    this.nodeType = 9;
+    this.childNodes = [];
     _$jscoverage['/html-parser/nodes/fragment.js'].lineData[9]++;
+    this.nodeType = 9;
+    _$jscoverage['/html-parser/nodes/fragment.js'].lineData[10]++;
     this.nodeName = '#fragment';
   }
-  _$jscoverage['/html-parser/nodes/fragment.js'].lineData[12]++;
+  _$jscoverage['/html-parser/nodes/fragment.js'].lineData[13]++;
   S.extend(Fragment, Tag, {
   writeHtml: function(writer, filter) {
   _$jscoverage['/html-parser/nodes/fragment.js'].functionData[2]++;
-  _$jscoverage['/html-parser/nodes/fragment.js'].lineData[14]++;
-  this.__filter = filter;
   _$jscoverage['/html-parser/nodes/fragment.js'].lineData[15]++;
-  this.isChildrenFiltered = 0;
+  this.__filter = filter;
   _$jscoverage['/html-parser/nodes/fragment.js'].lineData[16]++;
-  if (visit189_16_1(filter)) {
-    _$jscoverage['/html-parser/nodes/fragment.js'].lineData[17]++;
+  this.isChildrenFiltered = 0;
+  _$jscoverage['/html-parser/nodes/fragment.js'].lineData[17]++;
+  if (visit189_17_1(filter)) {
+    _$jscoverage['/html-parser/nodes/fragment.js'].lineData[18]++;
     filter.onFragment(this);
   }
-  _$jscoverage['/html-parser/nodes/fragment.js'].lineData[19]++;
+  _$jscoverage['/html-parser/nodes/fragment.js'].lineData[20]++;
   this._writeChildrenHTML(writer);
 }});
-  _$jscoverage['/html-parser/nodes/fragment.js'].lineData[23]++;
+  _$jscoverage['/html-parser/nodes/fragment.js'].lineData[24]++;
   return Fragment;
 }, {
   requires: ['./tag']});

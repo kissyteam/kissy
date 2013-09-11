@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Aug 28 14:32
+build time: Sep 11 12:44
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -1128,12 +1128,14 @@ KISSY.add("dom/selector/parser", function () {
     return parser;
 });
 /**
+ * @ignore
  * css3 selector engine for ie6-8
  * @author yiminghe@gmail.com
  */
 KISSY.add('dom/selector', function (S, parser, Dom) {
+    var logger= S.getLogger('s/dom');
 
-    S.log('use KISSY css3 selector');
+    logger.info('use KISSY css3 selector');
 
     // ident === identifier
 
@@ -1813,7 +1815,6 @@ KISSY.add('dom/selector', function (S, parser, Dom) {
         select: select,
         matches: matches
     };
-
 }, {
     requires: [
         './selector/parser',
@@ -1821,6 +1822,7 @@ KISSY.add('dom/selector', function (S, parser, Dom) {
     ]
 });
 /**
+ * @ignore
  * note 2013-03-28
  *  - use recursive call to replace backtracking algorithm
  *

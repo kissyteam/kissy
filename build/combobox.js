@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Aug 27 21:50
+build time: Sep 11 12:42
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -189,10 +189,8 @@ KISSY.add("combobox/control", function (S, Node, Control, ComboBoxRender, Menu, 
                         return;
                     }
                     self._savedValue = value;
-                    // S.log("value change: " + value);
                     self.sendRequest(value);
                 } else {
-                    // S.log('set input val: ' + v);
                     self.get('input').val(v);
                 }
             },
@@ -209,7 +207,6 @@ KISSY.add("combobox/control", function (S, Node, Control, ComboBoxRender, Menu, 
             },
 
             handleBlurInternal: function (e) {
-                // S.log('blur');
                 var self = this,
                     placeholderEl = self.get("placeholderEl");
                 self.callSuper(e);
@@ -615,13 +612,11 @@ KISSY.add("combobox/control", function (S, Node, Control, ComboBoxRender, Menu, 
 
     function onMenuFocusout() {
         var combobox = this;
-        // S.log('focusout');
         delayHide(combobox);
     }
 
     function onMenuFocusin() {
         var combobox = this;
-        // S.log('focusin');
         // different event sequence
         // ie fire focusin blur
         // others fire blur focusin
@@ -694,7 +689,6 @@ KISSY.add("combobox/control", function (S, Node, Control, ComboBoxRender, Menu, 
             return;
         }
         self._focusoutDismissTimer = setTimeout(function () {
-                // S.log('hide by delay ' + self._focusoutDismissTimer);
                 // ie6 bug
                 if (self._focusoutDismissTimer) {
                     self.set("collapsed", true);
@@ -702,13 +696,11 @@ KISSY.add("combobox/control", function (S, Node, Control, ComboBoxRender, Menu, 
             },
             // ie6 needs longer timeout
             50);
-        // S.log('delayHide ' + self._focusoutDismissTimer);
     }
 
     function clearDismissTimer(self) {
         var t;
         if (t = self._focusoutDismissTimer) {
-            // S.log('clearDismissTimer ' + t);
             clearTimeout(t);
             self._focusoutDismissTimer = null;
         }
@@ -735,7 +727,6 @@ KISSY.add("combobox/control", function (S, Node, Control, ComboBoxRender, Menu, 
         data = self['normalizeData'](data);
 
         var start = S.now();
-        S.log('menu: renderData start');
 
         menu.removeChildren(true);
 
@@ -775,7 +766,6 @@ KISSY.add("combobox/control", function (S, Node, Control, ComboBoxRender, Menu, 
             }
 
             self.set("collapsed", false);
-            S.log('menu: renderData end: ' + (S.now() - start));
         } else {
             self.set("collapsed", true);
         }

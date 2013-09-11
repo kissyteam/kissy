@@ -229,14 +229,14 @@ if (! this._$jscoverage) {
 if (! _$jscoverage['/multiple-upload.js']) {
   _$jscoverage['/multiple-upload.js'] = {};
   _$jscoverage['/multiple-upload.js'].lineData = [];
-  _$jscoverage['/multiple-upload.js'].lineData[5] = 0;
   _$jscoverage['/multiple-upload.js'].lineData[6] = 0;
   _$jscoverage['/multiple-upload.js'].lineData[7] = 0;
-  _$jscoverage['/multiple-upload.js'].lineData[10] = 0;
-  _$jscoverage['/multiple-upload.js'].lineData[12] = 0;
+  _$jscoverage['/multiple-upload.js'].lineData[8] = 0;
+  _$jscoverage['/multiple-upload.js'].lineData[11] = 0;
   _$jscoverage['/multiple-upload.js'].lineData[13] = 0;
-  _$jscoverage['/multiple-upload.js'].lineData[17] = 0;
-  _$jscoverage['/multiple-upload.js'].lineData[26] = 0;
+  _$jscoverage['/multiple-upload.js'].lineData[14] = 0;
+  _$jscoverage['/multiple-upload.js'].lineData[18] = 0;
+  _$jscoverage['/multiple-upload.js'].lineData[27] = 0;
 }
 if (! _$jscoverage['/multiple-upload.js'].functionData) {
   _$jscoverage['/multiple-upload.js'].functionData = [];
@@ -247,40 +247,40 @@ if (! _$jscoverage['/multiple-upload.js'].functionData) {
 }
 if (! _$jscoverage['/multiple-upload.js'].branchData) {
   _$jscoverage['/multiple-upload.js'].branchData = {};
-  _$jscoverage['/multiple-upload.js'].branchData['7'] = [];
-  _$jscoverage['/multiple-upload.js'].branchData['7'][1] = new BranchData();
+  _$jscoverage['/multiple-upload.js'].branchData['8'] = [];
+  _$jscoverage['/multiple-upload.js'].branchData['8'][1] = new BranchData();
 }
-_$jscoverage['/multiple-upload.js'].branchData['7'][1].init(24, 12, 'config || {}');
-function visit1_7_1(result) {
-  _$jscoverage['/multiple-upload.js'].branchData['7'][1].ranCondition(result);
+_$jscoverage['/multiple-upload.js'].branchData['8'][1].init(24, 12, 'config || {}');
+function visit1_8_1(result) {
+  _$jscoverage['/multiple-upload.js'].branchData['8'][1].ranCondition(result);
   return result;
-}_$jscoverage['/multiple-upload.js'].lineData[5]++;
+}_$jscoverage['/multiple-upload.js'].lineData[6]++;
 KISSY.add("editor/plugin/multiple-upload", function(S, Editor, DialogLoader) {
   _$jscoverage['/multiple-upload.js'].functionData[0]++;
-  _$jscoverage['/multiple-upload.js'].lineData[6]++;
+  _$jscoverage['/multiple-upload.js'].lineData[7]++;
   function MultipleUpload(config) {
     _$jscoverage['/multiple-upload.js'].functionData[1]++;
-    _$jscoverage['/multiple-upload.js'].lineData[7]++;
-    this.config = visit1_7_1(config || {});
+    _$jscoverage['/multiple-upload.js'].lineData[8]++;
+    this.config = visit1_8_1(config || {});
   }
-  _$jscoverage['/multiple-upload.js'].lineData[10]++;
+  _$jscoverage['/multiple-upload.js'].lineData[11]++;
   S.augment(MultipleUpload, {
   pluginRenderUI: function(editor) {
   _$jscoverage['/multiple-upload.js'].functionData[2]++;
-  _$jscoverage['/multiple-upload.js'].lineData[12]++;
-  var self = this;
   _$jscoverage['/multiple-upload.js'].lineData[13]++;
+  var self = this;
+  _$jscoverage['/multiple-upload.js'].lineData[14]++;
   editor.addButton("multipleUpload", {
   tooltip: "\u6279\u91cf\u63d2\u56fe", 
   listeners: {
   click: function() {
   _$jscoverage['/multiple-upload.js'].functionData[3]++;
-  _$jscoverage['/multiple-upload.js'].lineData[17]++;
+  _$jscoverage['/multiple-upload.js'].lineData[18]++;
   DialogLoader.useDialog(editor, "multiple-upload", self.config);
 }}, 
   mode: Editor.Mode.WYSIWYG_MODE});
 }});
-  _$jscoverage['/multiple-upload.js'].lineData[26]++;
+  _$jscoverage['/multiple-upload.js'].lineData[27]++;
   return MultipleUpload;
 }, {
   requires: ['editor', './dialog-loader']});

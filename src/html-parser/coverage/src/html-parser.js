@@ -229,12 +229,12 @@ if (! this._$jscoverage) {
 if (! _$jscoverage['/html-parser.js']) {
   _$jscoverage['/html-parser.js'] = {};
   _$jscoverage['/html-parser.js'].lineData = [];
-  _$jscoverage['/html-parser.js'].lineData[5] = 0;
   _$jscoverage['/html-parser.js'].lineData[6] = 0;
-  _$jscoverage['/html-parser.js'].lineData[20] = 0;
+  _$jscoverage['/html-parser.js'].lineData[7] = 0;
   _$jscoverage['/html-parser.js'].lineData[21] = 0;
   _$jscoverage['/html-parser.js'].lineData[22] = 0;
-  _$jscoverage['/html-parser.js'].lineData[25] = 0;
+  _$jscoverage['/html-parser.js'].lineData[23] = 0;
+  _$jscoverage['/html-parser.js'].lineData[26] = 0;
 }
 if (! _$jscoverage['/html-parser.js'].functionData) {
   _$jscoverage['/html-parser.js'].functionData = [];
@@ -245,10 +245,10 @@ if (! _$jscoverage['/html-parser.js'].functionData) {
 if (! _$jscoverage['/html-parser.js'].branchData) {
   _$jscoverage['/html-parser.js'].branchData = {};
 }
-_$jscoverage['/html-parser.js'].lineData[5]++;
+_$jscoverage['/html-parser.js'].lineData[6]++;
 KISSY.add("html-parser", function(S, DTD, Lexer, Parser, BasicWriter, BeautifyWriter, MinifyWriter, Filter, CData, Comment, Node, Tag, Text) {
   _$jscoverage['/html-parser.js'].functionData[0]++;
-  _$jscoverage['/html-parser.js'].lineData[6]++;
+  _$jscoverage['/html-parser.js'].lineData[7]++;
   return {
   CData: CData, 
   Comment: Comment, 
@@ -264,16 +264,16 @@ KISSY.add("html-parser", function(S, DTD, Lexer, Parser, BasicWriter, BeautifyWr
   DTD: DTD, 
   serialize: function(n, filter) {
   _$jscoverage['/html-parser.js'].functionData[1]++;
-  _$jscoverage['/html-parser.js'].lineData[20]++;
-  var basicWriter = new BasicWriter();
   _$jscoverage['/html-parser.js'].lineData[21]++;
-  n.writeHtml(basicWriter, filter);
+  var basicWriter = new BasicWriter();
   _$jscoverage['/html-parser.js'].lineData[22]++;
+  n.writeHtml(basicWriter, filter);
+  _$jscoverage['/html-parser.js'].lineData[23]++;
   return basicWriter.getHtml();
 }, 
   parse: function(html) {
   _$jscoverage['/html-parser.js'].functionData[2]++;
-  _$jscoverage['/html-parser.js'].lineData[25]++;
+  _$jscoverage['/html-parser.js'].lineData[26]++;
   return new Parser(html).parse();
 }};
 }, {

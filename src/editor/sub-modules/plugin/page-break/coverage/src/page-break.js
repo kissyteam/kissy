@@ -229,39 +229,39 @@ if (! this._$jscoverage) {
 if (! _$jscoverage['/page-break.js']) {
   _$jscoverage['/page-break.js'] = {};
   _$jscoverage['/page-break.js'].lineData = [];
-  _$jscoverage['/page-break.js'].lineData[5] = 0;
   _$jscoverage['/page-break.js'].lineData[6] = 0;
-  _$jscoverage['/page-break.js'].lineData[14] = 0;
-  _$jscoverage['/page-break.js'].lineData[16] = 0;
-  _$jscoverage['/page-break.js'].lineData[18] = 0;
-  _$jscoverage['/page-break.js'].lineData[20] = 0;
-  _$jscoverage['/page-break.js'].lineData[23] = 0;
-  _$jscoverage['/page-break.js'].lineData[26] = 0;
-  _$jscoverage['/page-break.js'].lineData[29] = 0;
+  _$jscoverage['/page-break.js'].lineData[7] = 0;
+  _$jscoverage['/page-break.js'].lineData[15] = 0;
+  _$jscoverage['/page-break.js'].lineData[17] = 0;
+  _$jscoverage['/page-break.js'].lineData[19] = 0;
+  _$jscoverage['/page-break.js'].lineData[21] = 0;
+  _$jscoverage['/page-break.js'].lineData[24] = 0;
+  _$jscoverage['/page-break.js'].lineData[27] = 0;
   _$jscoverage['/page-break.js'].lineData[30] = 0;
   _$jscoverage['/page-break.js'].lineData[31] = 0;
   _$jscoverage['/page-break.js'].lineData[32] = 0;
   _$jscoverage['/page-break.js'].lineData[33] = 0;
-  _$jscoverage['/page-break.js'].lineData[38] = 0;
-  _$jscoverage['/page-break.js'].lineData[42] = 0;
-  _$jscoverage['/page-break.js'].lineData[45] = 0;
-  _$jscoverage['/page-break.js'].lineData[47] = 0;
-  _$jscoverage['/page-break.js'].lineData[52] = 0;
-  _$jscoverage['/page-break.js'].lineData[56] = 0;
-  _$jscoverage['/page-break.js'].lineData[64] = 0;
-  _$jscoverage['/page-break.js'].lineData[66] = 0;
-  _$jscoverage['/page-break.js'].lineData[69] = 0;
+  _$jscoverage['/page-break.js'].lineData[34] = 0;
+  _$jscoverage['/page-break.js'].lineData[39] = 0;
+  _$jscoverage['/page-break.js'].lineData[43] = 0;
+  _$jscoverage['/page-break.js'].lineData[46] = 0;
+  _$jscoverage['/page-break.js'].lineData[48] = 0;
+  _$jscoverage['/page-break.js'].lineData[53] = 0;
+  _$jscoverage['/page-break.js'].lineData[57] = 0;
+  _$jscoverage['/page-break.js'].lineData[65] = 0;
+  _$jscoverage['/page-break.js'].lineData[67] = 0;
   _$jscoverage['/page-break.js'].lineData[70] = 0;
-  _$jscoverage['/page-break.js'].lineData[73] = 0;
-  _$jscoverage['/page-break.js'].lineData[75] = 0;
-  _$jscoverage['/page-break.js'].lineData[78] = 0;
+  _$jscoverage['/page-break.js'].lineData[71] = 0;
+  _$jscoverage['/page-break.js'].lineData[74] = 0;
+  _$jscoverage['/page-break.js'].lineData[76] = 0;
   _$jscoverage['/page-break.js'].lineData[79] = 0;
   _$jscoverage['/page-break.js'].lineData[80] = 0;
-  _$jscoverage['/page-break.js'].lineData[83] = 0;
-  _$jscoverage['/page-break.js'].lineData[85] = 0;
-  _$jscoverage['/page-break.js'].lineData[87] = 0;
-  _$jscoverage['/page-break.js'].lineData[89] = 0;
-  _$jscoverage['/page-break.js'].lineData[98] = 0;
+  _$jscoverage['/page-break.js'].lineData[81] = 0;
+  _$jscoverage['/page-break.js'].lineData[84] = 0;
+  _$jscoverage['/page-break.js'].lineData[86] = 0;
+  _$jscoverage['/page-break.js'].lineData[88] = 0;
+  _$jscoverage['/page-break.js'].lineData[90] = 0;
+  _$jscoverage['/page-break.js'].lineData[99] = 0;
 }
 if (! _$jscoverage['/page-break.js'].functionData) {
   _$jscoverage['/page-break.js'].functionData = [];
@@ -273,165 +273,165 @@ if (! _$jscoverage['/page-break.js'].functionData) {
 }
 if (! _$jscoverage['/page-break.js'].branchData) {
   _$jscoverage['/page-break.js'].branchData = {};
-  _$jscoverage['/page-break.js'].branchData['21'] = [];
-  _$jscoverage['/page-break.js'].branchData['21'][1] = new BranchData();
-  _$jscoverage['/page-break.js'].branchData['29'] = [];
-  _$jscoverage['/page-break.js'].branchData['29'][1] = new BranchData();
-  _$jscoverage['/page-break.js'].branchData['31'] = [];
-  _$jscoverage['/page-break.js'].branchData['31'][1] = new BranchData();
+  _$jscoverage['/page-break.js'].branchData['22'] = [];
+  _$jscoverage['/page-break.js'].branchData['22'][1] = new BranchData();
+  _$jscoverage['/page-break.js'].branchData['30'] = [];
+  _$jscoverage['/page-break.js'].branchData['30'][1] = new BranchData();
   _$jscoverage['/page-break.js'].branchData['32'] = [];
   _$jscoverage['/page-break.js'].branchData['32'][1] = new BranchData();
-  _$jscoverage['/page-break.js'].branchData['38'] = [];
-  _$jscoverage['/page-break.js'].branchData['38'][1] = new BranchData();
+  _$jscoverage['/page-break.js'].branchData['33'] = [];
+  _$jscoverage['/page-break.js'].branchData['33'][1] = new BranchData();
   _$jscoverage['/page-break.js'].branchData['39'] = [];
   _$jscoverage['/page-break.js'].branchData['39'][1] = new BranchData();
-  _$jscoverage['/page-break.js'].branchData['39'][2] = new BranchData();
-  _$jscoverage['/page-break.js'].branchData['42'] = [];
-  _$jscoverage['/page-break.js'].branchData['42'][1] = new BranchData();
+  _$jscoverage['/page-break.js'].branchData['40'] = [];
+  _$jscoverage['/page-break.js'].branchData['40'][1] = new BranchData();
+  _$jscoverage['/page-break.js'].branchData['40'][2] = new BranchData();
   _$jscoverage['/page-break.js'].branchData['43'] = [];
   _$jscoverage['/page-break.js'].branchData['43'][1] = new BranchData();
-  _$jscoverage['/page-break.js'].branchData['67'] = [];
-  _$jscoverage['/page-break.js'].branchData['67'][1] = new BranchData();
-  _$jscoverage['/page-break.js'].branchData['69'] = [];
-  _$jscoverage['/page-break.js'].branchData['69'][1] = new BranchData();
-  _$jscoverage['/page-break.js'].branchData['78'] = [];
-  _$jscoverage['/page-break.js'].branchData['78'][1] = new BranchData();
+  _$jscoverage['/page-break.js'].branchData['44'] = [];
+  _$jscoverage['/page-break.js'].branchData['44'][1] = new BranchData();
+  _$jscoverage['/page-break.js'].branchData['68'] = [];
+  _$jscoverage['/page-break.js'].branchData['68'][1] = new BranchData();
+  _$jscoverage['/page-break.js'].branchData['70'] = [];
+  _$jscoverage['/page-break.js'].branchData['70'][1] = new BranchData();
+  _$jscoverage['/page-break.js'].branchData['79'] = [];
+  _$jscoverage['/page-break.js'].branchData['79'][1] = new BranchData();
 }
-_$jscoverage['/page-break.js'].branchData['78'][1].init(850, 27, 'start.nodeName() !== "body"');
-function visit12_78_1(result) {
-  _$jscoverage['/page-break.js'].branchData['78'][1].ranCondition(result);
+_$jscoverage['/page-break.js'].branchData['79'][1].init(850, 27, 'start.nodeName() !== "body"');
+function visit12_79_1(result) {
+  _$jscoverage['/page-break.js'].branchData['79'][1].ranCondition(result);
   return result;
-}_$jscoverage['/page-break.js'].branchData['69'][1].init(584, 6, '!range');
-function visit11_69_1(result) {
-  _$jscoverage['/page-break.js'].branchData['69'][1].ranCondition(result);
+}_$jscoverage['/page-break.js'].branchData['70'][1].init(584, 6, '!range');
+function visit11_70_1(result) {
+  _$jscoverage['/page-break.js'].branchData['70'][1].ranCondition(result);
   return result;
-}_$jscoverage['/page-break.js'].branchData['67'][1].init(69, 25, 'sel && sel.getRanges()[0]');
-function visit10_67_1(result) {
-  _$jscoverage['/page-break.js'].branchData['67'][1].ranCondition(result);
+}_$jscoverage['/page-break.js'].branchData['68'][1].init(69, 25, 'sel && sel.getRanges()[0]');
+function visit10_68_1(result) {
+  _$jscoverage['/page-break.js'].branchData['68'][1].ranCondition(result);
   return result;
-}_$jscoverage['/page-break.js'].branchData['43'][1].init(44, 121, '(/page-break-after\\s*:\\s*always/i).test(style) && (/display\\s*:\\s*none/i).test(childStyle)');
-function visit9_43_1(result) {
+}_$jscoverage['/page-break.js'].branchData['44'][1].init(44, 121, '(/page-break-after\\s*:\\s*always/i).test(style) && (/display\\s*:\\s*none/i).test(childStyle)');
+function visit9_44_1(result) {
+  _$jscoverage['/page-break.js'].branchData['44'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/page-break.js'].branchData['43'][1].init(710, 166, 'childStyle && (/page-break-after\\s*:\\s*always/i).test(style) && (/display\\s*:\\s*none/i).test(childStyle)');
+function visit8_43_1(result) {
   _$jscoverage['/page-break.js'].branchData['43'][1].ranCondition(result);
   return result;
-}_$jscoverage['/page-break.js'].branchData['42'][1].init(710, 166, 'childStyle && (/page-break-after\\s*:\\s*always/i).test(style) && (/display\\s*:\\s*none/i).test(childStyle)');
-function visit8_42_1(result) {
-  _$jscoverage['/page-break.js'].branchData['42'][1].ranCondition(result);
+}_$jscoverage['/page-break.js'].branchData['40'][2].init(58, 24, 'child.nodeName == \'span\'');
+function visit7_40_2(result) {
+  _$jscoverage['/page-break.js'].branchData['40'][2].ranCondition(result);
   return result;
-}_$jscoverage['/page-break.js'].branchData['39'][2].init(58, 24, 'child.nodeName == \'span\'');
-function visit7_39_2(result) {
-  _$jscoverage['/page-break.js'].branchData['39'][2].ranCondition(result);
+}_$jscoverage['/page-break.js'].branchData['40'][1].init(39, 86, '(child.nodeName == \'span\') && child.getAttribute("style")');
+function visit6_40_1(result) {
+  _$jscoverage['/page-break.js'].branchData['40'][1].ranCondition(result);
   return result;
-}_$jscoverage['/page-break.js'].branchData['39'][1].init(39, 86, '(child.nodeName == \'span\') && child.getAttribute("style")');
-function visit6_39_1(result) {
+}_$jscoverage['/page-break.js'].branchData['39'][1].init(551, 126, 'child && (child.nodeName == \'span\') && child.getAttribute("style")');
+function visit5_39_1(result) {
   _$jscoverage['/page-break.js'].branchData['39'][1].ranCondition(result);
   return result;
-}_$jscoverage['/page-break.js'].branchData['38'][1].init(551, 126, 'child && (child.nodeName == \'span\') && child.getAttribute("style")');
-function visit5_38_1(result) {
-  _$jscoverage['/page-break.js'].branchData['38'][1].ranCondition(result);
+}_$jscoverage['/page-break.js'].branchData['33'][1].init(38, 27, 'childNodes[i].nodeType == 1');
+function visit4_33_1(result) {
+  _$jscoverage['/page-break.js'].branchData['33'][1].ranCondition(result);
   return result;
-}_$jscoverage['/page-break.js'].branchData['32'][1].init(38, 27, 'childNodes[i].nodeType == 1');
-function visit4_32_1(result) {
+}_$jscoverage['/page-break.js'].branchData['32'][1].init(112, 21, 'i < childNodes.length');
+function visit3_32_1(result) {
   _$jscoverage['/page-break.js'].branchData['32'][1].ranCondition(result);
   return result;
-}_$jscoverage['/page-break.js'].branchData['31'][1].init(112, 21, 'i < childNodes.length');
-function visit3_31_1(result) {
-  _$jscoverage['/page-break.js'].branchData['31'][1].ranCondition(result);
+}_$jscoverage['/page-break.js'].branchData['30'][1].init(136, 5, 'style');
+function visit2_30_1(result) {
+  _$jscoverage['/page-break.js'].branchData['30'][1].ranCondition(result);
   return result;
-}_$jscoverage['/page-break.js'].branchData['29'][1].init(136, 5, 'style');
-function visit2_29_1(result) {
-  _$jscoverage['/page-break.js'].branchData['29'][1].ranCondition(result);
+}_$jscoverage['/page-break.js'].branchData['22'][1].init(75, 41, 'dataProcessor && dataProcessor.dataFilter');
+function visit1_22_1(result) {
+  _$jscoverage['/page-break.js'].branchData['22'][1].ranCondition(result);
   return result;
-}_$jscoverage['/page-break.js'].branchData['21'][1].init(75, 41, 'dataProcessor && dataProcessor.dataFilter');
-function visit1_21_1(result) {
-  _$jscoverage['/page-break.js'].branchData['21'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/page-break.js'].lineData[5]++;
+}_$jscoverage['/page-break.js'].lineData[6]++;
 KISSY.add("editor/plugin/page-break", function(S, Editor, fakeObjects) {
   _$jscoverage['/page-break.js'].functionData[0]++;
-  _$jscoverage['/page-break.js'].lineData[6]++;
+  _$jscoverage['/page-break.js'].lineData[7]++;
   var Node = S.Node, CLS = "ke_pagebreak", TYPE = "div", PAGE_BREAK_MARKUP = '<div' + ' style="page-break-after: always; ">' + '<span style="DISPLAY:none">&nbsp;</span>' + '</div>';
-  _$jscoverage['/page-break.js'].lineData[14]++;
+  _$jscoverage['/page-break.js'].lineData[15]++;
   function pageBreak() {
     _$jscoverage['/page-break.js'].functionData[1]++;
   }
-  _$jscoverage['/page-break.js'].lineData[16]++;
+  _$jscoverage['/page-break.js'].lineData[17]++;
   S.augment(pageBreak, {
   pluginRenderUI: function(editor) {
   _$jscoverage['/page-break.js'].functionData[2]++;
-  _$jscoverage['/page-break.js'].lineData[18]++;
+  _$jscoverage['/page-break.js'].lineData[19]++;
   fakeObjects.init(editor);
-  _$jscoverage['/page-break.js'].lineData[20]++;
-  var dataProcessor = editor.htmlDataProcessor, dataFilter = visit1_21_1(dataProcessor && dataProcessor.dataFilter);
-  _$jscoverage['/page-break.js'].lineData[23]++;
+  _$jscoverage['/page-break.js'].lineData[21]++;
+  var dataProcessor = editor.htmlDataProcessor, dataFilter = visit1_22_1(dataProcessor && dataProcessor.dataFilter);
+  _$jscoverage['/page-break.js'].lineData[24]++;
   dataFilter.addRules({
   tags: {
   div: function(element) {
   _$jscoverage['/page-break.js'].functionData[3]++;
-  _$jscoverage['/page-break.js'].lineData[26]++;
+  _$jscoverage['/page-break.js'].lineData[27]++;
   var style = element.getAttribute("style"), child;
-  _$jscoverage['/page-break.js'].lineData[29]++;
-  if (visit2_29_1(style)) {
-    _$jscoverage['/page-break.js'].lineData[30]++;
-    var childNodes = element.childNodes;
+  _$jscoverage['/page-break.js'].lineData[30]++;
+  if (visit2_30_1(style)) {
     _$jscoverage['/page-break.js'].lineData[31]++;
-    for (var i = 0; visit3_31_1(i < childNodes.length); i++) {
-      _$jscoverage['/page-break.js'].lineData[32]++;
-      if (visit4_32_1(childNodes[i].nodeType == 1)) {
-        _$jscoverage['/page-break.js'].lineData[33]++;
+    var childNodes = element.childNodes;
+    _$jscoverage['/page-break.js'].lineData[32]++;
+    for (var i = 0; visit3_32_1(i < childNodes.length); i++) {
+      _$jscoverage['/page-break.js'].lineData[33]++;
+      if (visit4_33_1(childNodes[i].nodeType == 1)) {
+        _$jscoverage['/page-break.js'].lineData[34]++;
         child = childNodes[i];
       }
     }
   }
-  _$jscoverage['/page-break.js'].lineData[38]++;
-  var childStyle = visit5_38_1(child && visit6_39_1((visit7_39_2(child.nodeName == 'span')) && child.getAttribute("style")));
-  _$jscoverage['/page-break.js'].lineData[42]++;
-  if (visit8_42_1(childStyle && visit9_43_1((/page-break-after\s*:\s*always/i).test(style) && (/display\s*:\s*none/i).test(childStyle)))) {
-    _$jscoverage['/page-break.js'].lineData[45]++;
+  _$jscoverage['/page-break.js'].lineData[39]++;
+  var childStyle = visit5_39_1(child && visit6_40_1((visit7_40_2(child.nodeName == 'span')) && child.getAttribute("style")));
+  _$jscoverage['/page-break.js'].lineData[43]++;
+  if (visit8_43_1(childStyle && visit9_44_1((/page-break-after\s*:\s*always/i).test(style) && (/display\s*:\s*none/i).test(childStyle)))) {
+    _$jscoverage['/page-break.js'].lineData[46]++;
     return dataProcessor.createFakeParserElement(element, CLS, TYPE);
   }
-  _$jscoverage['/page-break.js'].lineData[47]++;
+  _$jscoverage['/page-break.js'].lineData[48]++;
   return undefined;
 }}});
-  _$jscoverage['/page-break.js'].lineData[52]++;
+  _$jscoverage['/page-break.js'].lineData[53]++;
   editor.addButton("pageBreak", {
   tooltip: "\u5206\u9875", 
   listeners: {
   click: function() {
   _$jscoverage['/page-break.js'].functionData[4]++;
-  _$jscoverage['/page-break.js'].lineData[56]++;
+  _$jscoverage['/page-break.js'].lineData[57]++;
   var real = new Node(PAGE_BREAK_MARKUP, null, editor.get("document")[0]), substitute = editor.createFakeElement(real, CLS, TYPE, false, PAGE_BREAK_MARKUP);
-  _$jscoverage['/page-break.js'].lineData[64]++;
+  _$jscoverage['/page-break.js'].lineData[65]++;
   editor.focus();
-  _$jscoverage['/page-break.js'].lineData[66]++;
-  var sel = editor.getSelection(), range = visit10_67_1(sel && sel.getRanges()[0]);
-  _$jscoverage['/page-break.js'].lineData[69]++;
-  if (visit11_69_1(!range)) {
-    _$jscoverage['/page-break.js'].lineData[70]++;
+  _$jscoverage['/page-break.js'].lineData[67]++;
+  var sel = editor.getSelection(), range = visit10_68_1(sel && sel.getRanges()[0]);
+  _$jscoverage['/page-break.js'].lineData[70]++;
+  if (visit11_70_1(!range)) {
+    _$jscoverage['/page-break.js'].lineData[71]++;
     return;
   }
-  _$jscoverage['/page-break.js'].lineData[73]++;
+  _$jscoverage['/page-break.js'].lineData[74]++;
   editor.execCommand("save");
-  _$jscoverage['/page-break.js'].lineData[75]++;
+  _$jscoverage['/page-break.js'].lineData[76]++;
   var start = range.startContainer, pre = start;
-  _$jscoverage['/page-break.js'].lineData[78]++;
-  while (visit12_78_1(start.nodeName() !== "body")) {
-    _$jscoverage['/page-break.js'].lineData[79]++;
-    pre = start;
+  _$jscoverage['/page-break.js'].lineData[79]++;
+  while (visit12_79_1(start.nodeName() !== "body")) {
     _$jscoverage['/page-break.js'].lineData[80]++;
+    pre = start;
+    _$jscoverage['/page-break.js'].lineData[81]++;
     start = start.parent();
   }
-  _$jscoverage['/page-break.js'].lineData[83]++;
+  _$jscoverage['/page-break.js'].lineData[84]++;
   range.collapse(true);
-  _$jscoverage['/page-break.js'].lineData[85]++;
+  _$jscoverage['/page-break.js'].lineData[86]++;
   range.splitElement(pre);
-  _$jscoverage['/page-break.js'].lineData[87]++;
+  _$jscoverage['/page-break.js'].lineData[88]++;
   substitute.insertAfter(pre);
-  _$jscoverage['/page-break.js'].lineData[89]++;
+  _$jscoverage['/page-break.js'].lineData[90]++;
   editor.execCommand("save");
 }}, 
   mode: Editor.Mode.WYSIWYG_MODE});
 }});
-  _$jscoverage['/page-break.js'].lineData[98]++;
+  _$jscoverage['/page-break.js'].lineData[99]++;
   return pageBreak;
 }, {
   "requires": ["editor", "./fake-objects"]});

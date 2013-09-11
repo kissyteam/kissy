@@ -229,12 +229,12 @@ if (! this._$jscoverage) {
 if (! _$jscoverage['/code.js']) {
   _$jscoverage['/code.js'] = {};
   _$jscoverage['/code.js'].lineData = [];
-  _$jscoverage['/code.js'].lineData[5] = 0;
   _$jscoverage['/code.js'].lineData[6] = 0;
-  _$jscoverage['/code.js'].lineData[10] = 0;
-  _$jscoverage['/code.js'].lineData[12] = 0;
-  _$jscoverage['/code.js'].lineData[16] = 0;
-  _$jscoverage['/code.js'].lineData[24] = 0;
+  _$jscoverage['/code.js'].lineData[7] = 0;
+  _$jscoverage['/code.js'].lineData[11] = 0;
+  _$jscoverage['/code.js'].lineData[13] = 0;
+  _$jscoverage['/code.js'].lineData[17] = 0;
+  _$jscoverage['/code.js'].lineData[25] = 0;
 }
 if (! _$jscoverage['/code.js'].functionData) {
   _$jscoverage['/code.js'].functionData = [];
@@ -246,29 +246,29 @@ if (! _$jscoverage['/code.js'].functionData) {
 if (! _$jscoverage['/code.js'].branchData) {
   _$jscoverage['/code.js'].branchData = {};
 }
-_$jscoverage['/code.js'].lineData[5]++;
+_$jscoverage['/code.js'].lineData[6]++;
 KISSY.add('editor/plugin/code', function(S, Editor, DialogLoader) {
   _$jscoverage['/code.js'].functionData[0]++;
-  _$jscoverage['/code.js'].lineData[6]++;
+  _$jscoverage['/code.js'].lineData[7]++;
   function CodePlugin() {
     _$jscoverage['/code.js'].functionData[1]++;
   }
-  _$jscoverage['/code.js'].lineData[10]++;
+  _$jscoverage['/code.js'].lineData[11]++;
   S.augment(CodePlugin, {
   pluginRenderUI: function(editor) {
   _$jscoverage['/code.js'].functionData[2]++;
-  _$jscoverage['/code.js'].lineData[12]++;
+  _$jscoverage['/code.js'].lineData[13]++;
   editor.addButton('code', {
   tooltip: "\u63d2\u5165\u4ee3\u7801", 
   listeners: {
   click: function() {
   _$jscoverage['/code.js'].functionData[3]++;
-  _$jscoverage['/code.js'].lineData[16]++;
+  _$jscoverage['/code.js'].lineData[17]++;
   DialogLoader.useDialog(editor, "code");
 }}, 
   mode: Editor.Mode.WYSIWYG_MODE});
 }});
-  _$jscoverage['/code.js'].lineData[24]++;
+  _$jscoverage['/code.js'].lineData[25]++;
   return CodePlugin;
 }, {
   requires: ['editor', './dialog-loader']});

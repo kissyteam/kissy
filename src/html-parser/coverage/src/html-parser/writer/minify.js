@@ -229,7 +229,7 @@ if (! this._$jscoverage) {
 if (! _$jscoverage['/html-parser/writer/minify.js']) {
   _$jscoverage['/html-parser/writer/minify.js'] = {};
   _$jscoverage['/html-parser/writer/minify.js'].lineData = [];
-  _$jscoverage['/html-parser/writer/minify.js'].lineData[5] = 0;
+  _$jscoverage['/html-parser/writer/minify.js'].lineData[6] = 0;
   _$jscoverage['/html-parser/writer/minify.js'].lineData[7] = 0;
   _$jscoverage['/html-parser/writer/minify.js'].lineData[14] = 0;
   _$jscoverage['/html-parser/writer/minify.js'].lineData[15] = 0;
@@ -269,39 +269,39 @@ if (! _$jscoverage['/html-parser/writer/minify.js']) {
   _$jscoverage['/html-parser/writer/minify.js'].lineData[128] = 0;
   _$jscoverage['/html-parser/writer/minify.js'].lineData[133] = 0;
   _$jscoverage['/html-parser/writer/minify.js'].lineData[134] = 0;
-  _$jscoverage['/html-parser/writer/minify.js'].lineData[141] = 0;
-  _$jscoverage['/html-parser/writer/minify.js'].lineData[142] = 0;
-  _$jscoverage['/html-parser/writer/minify.js'].lineData[143] = 0;
-  _$jscoverage['/html-parser/writer/minify.js'].lineData[144] = 0;
+  _$jscoverage['/html-parser/writer/minify.js'].lineData[146] = 0;
   _$jscoverage['/html-parser/writer/minify.js'].lineData[147] = 0;
+  _$jscoverage['/html-parser/writer/minify.js'].lineData[148] = 0;
+  _$jscoverage['/html-parser/writer/minify.js'].lineData[149] = 0;
   _$jscoverage['/html-parser/writer/minify.js'].lineData[152] = 0;
-  _$jscoverage['/html-parser/writer/minify.js'].lineData[153] = 0;
-  _$jscoverage['/html-parser/writer/minify.js'].lineData[154] = 0;
-  _$jscoverage['/html-parser/writer/minify.js'].lineData[162] = 0;
-  _$jscoverage['/html-parser/writer/minify.js'].lineData[163] = 0;
-  _$jscoverage['/html-parser/writer/minify.js'].lineData[164] = 0;
-  _$jscoverage['/html-parser/writer/minify.js'].lineData[166] = 0;
-  _$jscoverage['/html-parser/writer/minify.js'].lineData[173] = 0;
-  _$jscoverage['/html-parser/writer/minify.js'].lineData[174] = 0;
-  _$jscoverage['/html-parser/writer/minify.js'].lineData[175] = 0;
-  _$jscoverage['/html-parser/writer/minify.js'].lineData[177] = 0;
-  _$jscoverage['/html-parser/writer/minify.js'].lineData[184] = 0;
-  _$jscoverage['/html-parser/writer/minify.js'].lineData[185] = 0;
+  _$jscoverage['/html-parser/writer/minify.js'].lineData[157] = 0;
+  _$jscoverage['/html-parser/writer/minify.js'].lineData[158] = 0;
+  _$jscoverage['/html-parser/writer/minify.js'].lineData[159] = 0;
+  _$jscoverage['/html-parser/writer/minify.js'].lineData[167] = 0;
+  _$jscoverage['/html-parser/writer/minify.js'].lineData[168] = 0;
+  _$jscoverage['/html-parser/writer/minify.js'].lineData[169] = 0;
+  _$jscoverage['/html-parser/writer/minify.js'].lineData[171] = 0;
+  _$jscoverage['/html-parser/writer/minify.js'].lineData[178] = 0;
+  _$jscoverage['/html-parser/writer/minify.js'].lineData[179] = 0;
+  _$jscoverage['/html-parser/writer/minify.js'].lineData[180] = 0;
+  _$jscoverage['/html-parser/writer/minify.js'].lineData[182] = 0;
   _$jscoverage['/html-parser/writer/minify.js'].lineData[189] = 0;
-  _$jscoverage['/html-parser/writer/minify.js'].lineData[195] = 0;
-  _$jscoverage['/html-parser/writer/minify.js'].lineData[198] = 0;
-  _$jscoverage['/html-parser/writer/minify.js'].lineData[201] = 0;
+  _$jscoverage['/html-parser/writer/minify.js'].lineData[190] = 0;
+  _$jscoverage['/html-parser/writer/minify.js'].lineData[194] = 0;
+  _$jscoverage['/html-parser/writer/minify.js'].lineData[200] = 0;
   _$jscoverage['/html-parser/writer/minify.js'].lineData[203] = 0;
-  _$jscoverage['/html-parser/writer/minify.js'].lineData[204] = 0;
+  _$jscoverage['/html-parser/writer/minify.js'].lineData[206] = 0;
   _$jscoverage['/html-parser/writer/minify.js'].lineData[208] = 0;
-  _$jscoverage['/html-parser/writer/minify.js'].lineData[210] = 0;
+  _$jscoverage['/html-parser/writer/minify.js'].lineData[209] = 0;
   _$jscoverage['/html-parser/writer/minify.js'].lineData[213] = 0;
-  _$jscoverage['/html-parser/writer/minify.js'].lineData[216] = 0;
-  _$jscoverage['/html-parser/writer/minify.js'].lineData[223] = 0;
-  _$jscoverage['/html-parser/writer/minify.js'].lineData[224] = 0;
-  _$jscoverage['/html-parser/writer/minify.js'].lineData[226] = 0;
+  _$jscoverage['/html-parser/writer/minify.js'].lineData[215] = 0;
+  _$jscoverage['/html-parser/writer/minify.js'].lineData[218] = 0;
+  _$jscoverage['/html-parser/writer/minify.js'].lineData[221] = 0;
   _$jscoverage['/html-parser/writer/minify.js'].lineData[228] = 0;
-  _$jscoverage['/html-parser/writer/minify.js'].lineData[232] = 0;
+  _$jscoverage['/html-parser/writer/minify.js'].lineData[229] = 0;
+  _$jscoverage['/html-parser/writer/minify.js'].lineData[231] = 0;
+  _$jscoverage['/html-parser/writer/minify.js'].lineData[233] = 0;
+  _$jscoverage['/html-parser/writer/minify.js'].lineData[237] = 0;
 }
 if (! _$jscoverage['/html-parser/writer/minify.js'].functionData) {
   _$jscoverage['/html-parser/writer/minify.js'].functionData = [];
@@ -494,54 +494,54 @@ if (! _$jscoverage['/html-parser/writer/minify.js'].branchData) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['117'][1] = new BranchData();
   _$jscoverage['/html-parser/writer/minify.js'].branchData['121'] = [];
   _$jscoverage['/html-parser/writer/minify.js'].branchData['121'][1] = new BranchData();
-  _$jscoverage['/html-parser/writer/minify.js'].branchData['152'] = [];
-  _$jscoverage['/html-parser/writer/minify.js'].branchData['152'][1] = new BranchData();
-  _$jscoverage['/html-parser/writer/minify.js'].branchData['163'] = [];
-  _$jscoverage['/html-parser/writer/minify.js'].branchData['163'][1] = new BranchData();
-  _$jscoverage['/html-parser/writer/minify.js'].branchData['174'] = [];
-  _$jscoverage['/html-parser/writer/minify.js'].branchData['174'][1] = new BranchData();
-  _$jscoverage['/html-parser/writer/minify.js'].branchData['192'] = [];
-  _$jscoverage['/html-parser/writer/minify.js'].branchData['192'][1] = new BranchData();
-  _$jscoverage['/html-parser/writer/minify.js'].branchData['195'] = [];
-  _$jscoverage['/html-parser/writer/minify.js'].branchData['195'][1] = new BranchData();
-  _$jscoverage['/html-parser/writer/minify.js'].branchData['201'] = [];
-  _$jscoverage['/html-parser/writer/minify.js'].branchData['201'][1] = new BranchData();
-  _$jscoverage['/html-parser/writer/minify.js'].branchData['210'] = [];
-  _$jscoverage['/html-parser/writer/minify.js'].branchData['210'][1] = new BranchData();
-  _$jscoverage['/html-parser/writer/minify.js'].branchData['224'] = [];
-  _$jscoverage['/html-parser/writer/minify.js'].branchData['224'][1] = new BranchData();
+  _$jscoverage['/html-parser/writer/minify.js'].branchData['157'] = [];
+  _$jscoverage['/html-parser/writer/minify.js'].branchData['157'][1] = new BranchData();
+  _$jscoverage['/html-parser/writer/minify.js'].branchData['168'] = [];
+  _$jscoverage['/html-parser/writer/minify.js'].branchData['168'][1] = new BranchData();
+  _$jscoverage['/html-parser/writer/minify.js'].branchData['179'] = [];
+  _$jscoverage['/html-parser/writer/minify.js'].branchData['179'][1] = new BranchData();
+  _$jscoverage['/html-parser/writer/minify.js'].branchData['197'] = [];
+  _$jscoverage['/html-parser/writer/minify.js'].branchData['197'][1] = new BranchData();
+  _$jscoverage['/html-parser/writer/minify.js'].branchData['200'] = [];
+  _$jscoverage['/html-parser/writer/minify.js'].branchData['200'][1] = new BranchData();
+  _$jscoverage['/html-parser/writer/minify.js'].branchData['206'] = [];
+  _$jscoverage['/html-parser/writer/minify.js'].branchData['206'][1] = new BranchData();
+  _$jscoverage['/html-parser/writer/minify.js'].branchData['215'] = [];
+  _$jscoverage['/html-parser/writer/minify.js'].branchData['215'][1] = new BranchData();
+  _$jscoverage['/html-parser/writer/minify.js'].branchData['229'] = [];
+  _$jscoverage['/html-parser/writer/minify.js'].branchData['229'][1] = new BranchData();
 }
-_$jscoverage['/html-parser/writer/minify.js'].branchData['224'][1].init(48, 11, '!self.inPre');
-function visit529_224_1(result) {
-  _$jscoverage['/html-parser/writer/minify.js'].branchData['224'][1].ranCondition(result);
+_$jscoverage['/html-parser/writer/minify.js'].branchData['229'][1].init(48, 11, '!self.inPre');
+function visit529_229_1(result) {
+  _$jscoverage['/html-parser/writer/minify.js'].branchData['229'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['210'][1].init(690, 40, 'value && canRemoveAttributeQuotes(value)');
-function visit528_210_1(result) {
-  _$jscoverage['/html-parser/writer/minify.js'].branchData['210'][1].ranCondition(result);
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['215'][1].init(690, 40, 'value && canRemoveAttributeQuotes(value)');
+function visit528_215_1(result) {
+  _$jscoverage['/html-parser/writer/minify.js'].branchData['215'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['201'][1].init(395, 24, 'isBooleanAttribute(name)');
-function visit527_201_1(result) {
-  _$jscoverage['/html-parser/writer/minify.js'].branchData['201'][1].ranCondition(result);
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['206'][1].init(395, 24, 'isBooleanAttribute(name)');
+function visit527_206_1(result) {
+  _$jscoverage['/html-parser/writer/minify.js'].branchData['206'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['195'][1].init(201, 131, 'canDeleteEmptyAttribute(el, attr) || isAttributeRedundant(el, attr)');
-function visit526_195_1(result) {
-  _$jscoverage['/html-parser/writer/minify.js'].branchData['195'][1].ranCondition(result);
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['200'][1].init(201, 131, 'canDeleteEmptyAttribute(el, attr) || isAttributeRedundant(el, attr)');
+function visit526_200_1(result) {
+  _$jscoverage['/html-parser/writer/minify.js'].branchData['200'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['192'][1].init(110, 16, 'attr.value || ""');
-function visit525_192_1(result) {
-  _$jscoverage['/html-parser/writer/minify.js'].branchData['192'][1].ranCondition(result);
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['197'][1].init(110, 16, 'attr.value || ""');
+function visit525_197_1(result) {
+  _$jscoverage['/html-parser/writer/minify.js'].branchData['197'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['174'][1].init(48, 19, 'el.tagName == \'pre\'');
-function visit524_174_1(result) {
-  _$jscoverage['/html-parser/writer/minify.js'].branchData['174'][1].ranCondition(result);
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['179'][1].init(48, 19, 'el.tagName == \'pre\'');
+function visit524_179_1(result) {
+  _$jscoverage['/html-parser/writer/minify.js'].branchData['179'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['163'][1].init(48, 19, 'el.tagName == \'pre\'');
-function visit523_163_1(result) {
-  _$jscoverage['/html-parser/writer/minify.js'].branchData['163'][1].ranCondition(result);
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['168'][1].init(48, 19, 'el.tagName == \'pre\'');
+function visit523_168_1(result) {
+  _$jscoverage['/html-parser/writer/minify.js'].branchData['168'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].branchData['152'][1].init(18, 26, 'isConditionalComment(text)');
-function visit522_152_1(result) {
-  _$jscoverage['/html-parser/writer/minify.js'].branchData['152'][1].ranCondition(result);
+}_$jscoverage['/html-parser/writer/minify.js'].branchData['157'][1].init(18, 26, 'isConditionalComment(text)');
+function visit522_157_1(result) {
+  _$jscoverage['/html-parser/writer/minify.js'].branchData['157'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/writer/minify.js'].branchData['121'][1].init(605, 20, 'attrName === \'style\'');
 function visit521_121_1(result) {
@@ -1031,7 +1031,7 @@ function visit401_21_1(result) {
 function visit400_19_1(result) {
   _$jscoverage['/html-parser/writer/minify.js'].branchData['19'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/writer/minify.js'].lineData[5]++;
+}_$jscoverage['/html-parser/writer/minify.js'].lineData[6]++;
 KISSY.add("html-parser/writer/minify", function(S, BasicWriter, Utils) {
   _$jscoverage['/html-parser/writer/minify.js'].functionData[0]++;
   _$jscoverage['/html-parser/writer/minify.js'].lineData[7]++;
@@ -1144,99 +1144,99 @@ KISSY.add("html-parser/writer/minify", function(S, BasicWriter, Utils) {
     _$jscoverage['/html-parser/writer/minify.js'].lineData[134]++;
     return trim(text).replace(/^(?:[\s\xa0]*\/\*[\s\xa0]*<!\[CDATA\[[\s\xa0]*\*\/|[\s\xa0]*\/\/[\s\xa0]*<!\[CDATA\[.*)/, '').replace(/(?:\/\*[\s\xa0]*\]\]>[\s\xa0]*\*\/|\/\/[\s\xa0]*\]\]>)[\s\xa0]*$/, '');
   }
-  _$jscoverage['/html-parser/writer/minify.js'].lineData[141]++;
-  function Minifier() {
+  _$jscoverage['/html-parser/writer/minify.js'].lineData[146]++;
+  function MinifyWriter() {
     _$jscoverage['/html-parser/writer/minify.js'].functionData[13]++;
-    _$jscoverage['/html-parser/writer/minify.js'].lineData[142]++;
+    _$jscoverage['/html-parser/writer/minify.js'].lineData[147]++;
     var self = this;
-    _$jscoverage['/html-parser/writer/minify.js'].lineData[143]++;
-    Minifier.superclass.constructor.apply(self, arguments);
-    _$jscoverage['/html-parser/writer/minify.js'].lineData[144]++;
+    _$jscoverage['/html-parser/writer/minify.js'].lineData[148]++;
+    MinifyWriter.superclass.constructor.apply(self, arguments);
+    _$jscoverage['/html-parser/writer/minify.js'].lineData[149]++;
     self.inPre = 0;
   }
-  _$jscoverage['/html-parser/writer/minify.js'].lineData[147]++;
-  S.extend(Minifier, BasicWriter, {
+  _$jscoverage['/html-parser/writer/minify.js'].lineData[152]++;
+  S.extend(MinifyWriter, BasicWriter, {
   comment: function(text) {
   _$jscoverage['/html-parser/writer/minify.js'].functionData[14]++;
-  _$jscoverage['/html-parser/writer/minify.js'].lineData[152]++;
-  if (visit522_152_1(isConditionalComment(text))) {
-    _$jscoverage['/html-parser/writer/minify.js'].lineData[153]++;
+  _$jscoverage['/html-parser/writer/minify.js'].lineData[157]++;
+  if (visit522_157_1(isConditionalComment(text))) {
+    _$jscoverage['/html-parser/writer/minify.js'].lineData[158]++;
     text = cleanConditionalComment(text);
-    _$jscoverage['/html-parser/writer/minify.js'].lineData[154]++;
-    Minifier.superclass.comment.call(this, text);
+    _$jscoverage['/html-parser/writer/minify.js'].lineData[159]++;
+    MinifyWriter.superclass.comment.call(this, text);
   }
 }, 
   openTag: function(el) {
   _$jscoverage['/html-parser/writer/minify.js'].functionData[15]++;
-  _$jscoverage['/html-parser/writer/minify.js'].lineData[162]++;
+  _$jscoverage['/html-parser/writer/minify.js'].lineData[167]++;
   var self = this;
-  _$jscoverage['/html-parser/writer/minify.js'].lineData[163]++;
-  if (visit523_163_1(el.tagName == 'pre')) {
-    _$jscoverage['/html-parser/writer/minify.js'].lineData[164]++;
+  _$jscoverage['/html-parser/writer/minify.js'].lineData[168]++;
+  if (visit523_168_1(el.tagName == 'pre')) {
+    _$jscoverage['/html-parser/writer/minify.js'].lineData[169]++;
     self.inPre = 1;
   }
-  _$jscoverage['/html-parser/writer/minify.js'].lineData[166]++;
-  Minifier.superclass.openTag.apply(self, arguments);
+  _$jscoverage['/html-parser/writer/minify.js'].lineData[171]++;
+  MinifyWriter.superclass.openTag.apply(self, arguments);
 }, 
   closeTag: function(el) {
   _$jscoverage['/html-parser/writer/minify.js'].functionData[16]++;
-  _$jscoverage['/html-parser/writer/minify.js'].lineData[173]++;
+  _$jscoverage['/html-parser/writer/minify.js'].lineData[178]++;
   var self = this;
-  _$jscoverage['/html-parser/writer/minify.js'].lineData[174]++;
-  if (visit524_174_1(el.tagName == 'pre')) {
-    _$jscoverage['/html-parser/writer/minify.js'].lineData[175]++;
+  _$jscoverage['/html-parser/writer/minify.js'].lineData[179]++;
+  if (visit524_179_1(el.tagName == 'pre')) {
+    _$jscoverage['/html-parser/writer/minify.js'].lineData[180]++;
     self.inPre = 0;
   }
-  _$jscoverage['/html-parser/writer/minify.js'].lineData[177]++;
-  Minifier.superclass.closeTag.apply(self, arguments);
+  _$jscoverage['/html-parser/writer/minify.js'].lineData[182]++;
+  MinifyWriter.superclass.closeTag.apply(self, arguments);
 }, 
   cdata: function(cdata) {
   _$jscoverage['/html-parser/writer/minify.js'].functionData[17]++;
-  _$jscoverage['/html-parser/writer/minify.js'].lineData[184]++;
+  _$jscoverage['/html-parser/writer/minify.js'].lineData[189]++;
   cdata = removeCDATASections(cdata);
-  _$jscoverage['/html-parser/writer/minify.js'].lineData[185]++;
-  Minifier.superclass.cdata.call(this, cdata);
+  _$jscoverage['/html-parser/writer/minify.js'].lineData[190]++;
+  MinifyWriter.superclass.cdata.call(this, cdata);
 }, 
   attribute: function(attr, el) {
   _$jscoverage['/html-parser/writer/minify.js'].functionData[18]++;
-  _$jscoverage['/html-parser/writer/minify.js'].lineData[189]++;
-  var self = this, name = attr.name, normalizedValue, value = visit525_192_1(attr.value || "");
-  _$jscoverage['/html-parser/writer/minify.js'].lineData[195]++;
-  if (visit526_195_1(canDeleteEmptyAttribute(el, attr) || isAttributeRedundant(el, attr))) {
-    _$jscoverage['/html-parser/writer/minify.js'].lineData[198]++;
-    return;
-  }
-  _$jscoverage['/html-parser/writer/minify.js'].lineData[201]++;
-  if (visit527_201_1(isBooleanAttribute(name))) {
+  _$jscoverage['/html-parser/writer/minify.js'].lineData[194]++;
+  var self = this, name = attr.name, normalizedValue, value = visit525_197_1(attr.value || "");
+  _$jscoverage['/html-parser/writer/minify.js'].lineData[200]++;
+  if (visit526_200_1(canDeleteEmptyAttribute(el, attr) || isAttributeRedundant(el, attr))) {
     _$jscoverage['/html-parser/writer/minify.js'].lineData[203]++;
-    self.append(" ", name);
-    _$jscoverage['/html-parser/writer/minify.js'].lineData[204]++;
     return;
   }
-  _$jscoverage['/html-parser/writer/minify.js'].lineData[208]++;
+  _$jscoverage['/html-parser/writer/minify.js'].lineData[206]++;
+  if (visit527_206_1(isBooleanAttribute(name))) {
+    _$jscoverage['/html-parser/writer/minify.js'].lineData[208]++;
+    self.append(" ", name);
+    _$jscoverage['/html-parser/writer/minify.js'].lineData[209]++;
+    return;
+  }
+  _$jscoverage['/html-parser/writer/minify.js'].lineData[213]++;
   normalizedValue = escapeAttrValue(cleanAttributeValue(el, attr));
-  _$jscoverage['/html-parser/writer/minify.js'].lineData[210]++;
-  if (visit528_210_1(value && canRemoveAttributeQuotes(value))) {
+  _$jscoverage['/html-parser/writer/minify.js'].lineData[215]++;
+  if (visit528_215_1(value && canRemoveAttributeQuotes(value))) {
   } else {
-    _$jscoverage['/html-parser/writer/minify.js'].lineData[213]++;
+    _$jscoverage['/html-parser/writer/minify.js'].lineData[218]++;
     normalizedValue = '"' + normalizedValue + '"';
   }
-  _$jscoverage['/html-parser/writer/minify.js'].lineData[216]++;
+  _$jscoverage['/html-parser/writer/minify.js'].lineData[221]++;
   self.append(" ", name, "=", normalizedValue);
 }, 
   text: function(text) {
   _$jscoverage['/html-parser/writer/minify.js'].functionData[19]++;
-  _$jscoverage['/html-parser/writer/minify.js'].lineData[223]++;
+  _$jscoverage['/html-parser/writer/minify.js'].lineData[228]++;
   var self = this;
-  _$jscoverage['/html-parser/writer/minify.js'].lineData[224]++;
-  if (visit529_224_1(!self.inPre)) {
-    _$jscoverage['/html-parser/writer/minify.js'].lineData[226]++;
+  _$jscoverage['/html-parser/writer/minify.js'].lineData[229]++;
+  if (visit529_229_1(!self.inPre)) {
+    _$jscoverage['/html-parser/writer/minify.js'].lineData[231]++;
     text = collapseWhitespace(text);
   }
-  _$jscoverage['/html-parser/writer/minify.js'].lineData[228]++;
+  _$jscoverage['/html-parser/writer/minify.js'].lineData[233]++;
   self.append(text);
 }});
-  _$jscoverage['/html-parser/writer/minify.js'].lineData[232]++;
-  return Minifier;
+  _$jscoverage['/html-parser/writer/minify.js'].lineData[237]++;
+  return MinifyWriter;
 }, {
   requires: ['./basic', '../utils']});

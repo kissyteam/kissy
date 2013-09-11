@@ -229,44 +229,44 @@ if (! this._$jscoverage) {
 if (! _$jscoverage['/utils.js']) {
   _$jscoverage['/utils.js'] = {};
   _$jscoverage['/utils.js'].lineData = [];
-  _$jscoverage['/utils.js'].lineData[5] = 0;
-  _$jscoverage['/utils.js'].lineData[7] = 0;
-  _$jscoverage['/utils.js'].lineData[25] = 0;
+  _$jscoverage['/utils.js'].lineData[6] = 0;
+  _$jscoverage['/utils.js'].lineData[8] = 0;
   _$jscoverage['/utils.js'].lineData[26] = 0;
-  _$jscoverage['/utils.js'].lineData[28] = 0;
+  _$jscoverage['/utils.js'].lineData[27] = 0;
   _$jscoverage['/utils.js'].lineData[29] = 0;
   _$jscoverage['/utils.js'].lineData[30] = 0;
   _$jscoverage['/utils.js'].lineData[31] = 0;
-  _$jscoverage['/utils.js'].lineData[34] = 0;
+  _$jscoverage['/utils.js'].lineData[32] = 0;
   _$jscoverage['/utils.js'].lineData[35] = 0;
-  _$jscoverage['/utils.js'].lineData[37] = 0;
-  _$jscoverage['/utils.js'].lineData[41] = 0;
+  _$jscoverage['/utils.js'].lineData[36] = 0;
+  _$jscoverage['/utils.js'].lineData[38] = 0;
   _$jscoverage['/utils.js'].lineData[42] = 0;
   _$jscoverage['/utils.js'].lineData[43] = 0;
-  _$jscoverage['/utils.js'].lineData[45] = 0;
+  _$jscoverage['/utils.js'].lineData[44] = 0;
   _$jscoverage['/utils.js'].lineData[46] = 0;
-  _$jscoverage['/utils.js'].lineData[48] = 0;
+  _$jscoverage['/utils.js'].lineData[47] = 0;
   _$jscoverage['/utils.js'].lineData[49] = 0;
   _$jscoverage['/utils.js'].lineData[50] = 0;
   _$jscoverage['/utils.js'].lineData[51] = 0;
   _$jscoverage['/utils.js'].lineData[52] = 0;
-  _$jscoverage['/utils.js'].lineData[54] = 0;
+  _$jscoverage['/utils.js'].lineData[53] = 0;
   _$jscoverage['/utils.js'].lineData[55] = 0;
-  _$jscoverage['/utils.js'].lineData[58] = 0;
-  _$jscoverage['/utils.js'].lineData[60] = 0;
-  _$jscoverage['/utils.js'].lineData[62] = 0;
+  _$jscoverage['/utils.js'].lineData[56] = 0;
+  _$jscoverage['/utils.js'].lineData[59] = 0;
+  _$jscoverage['/utils.js'].lineData[61] = 0;
   _$jscoverage['/utils.js'].lineData[63] = 0;
   _$jscoverage['/utils.js'].lineData[64] = 0;
-  _$jscoverage['/utils.js'].lineData[66] = 0;
-  _$jscoverage['/utils.js'].lineData[69] = 0;
+  _$jscoverage['/utils.js'].lineData[65] = 0;
+  _$jscoverage['/utils.js'].lineData[67] = 0;
   _$jscoverage['/utils.js'].lineData[70] = 0;
-  _$jscoverage['/utils.js'].lineData[72] = 0;
-  _$jscoverage['/utils.js'].lineData[74] = 0;
+  _$jscoverage['/utils.js'].lineData[71] = 0;
+  _$jscoverage['/utils.js'].lineData[73] = 0;
   _$jscoverage['/utils.js'].lineData[75] = 0;
   _$jscoverage['/utils.js'].lineData[76] = 0;
-  _$jscoverage['/utils.js'].lineData[79] = 0;
+  _$jscoverage['/utils.js'].lineData[77] = 0;
   _$jscoverage['/utils.js'].lineData[80] = 0;
-  _$jscoverage['/utils.js'].lineData[84] = 0;
+  _$jscoverage['/utils.js'].lineData[81] = 0;
+  _$jscoverage['/utils.js'].lineData[85] = 0;
 }
 if (! _$jscoverage['/utils.js'].functionData) {
   _$jscoverage['/utils.js'].functionData = [];
@@ -277,59 +277,59 @@ if (! _$jscoverage['/utils.js'].functionData) {
 }
 if (! _$jscoverage['/utils.js'].branchData) {
   _$jscoverage['/utils.js'].branchData = {};
-  _$jscoverage['/utils.js'].branchData['28'] = [];
-  _$jscoverage['/utils.js'].branchData['28'][1] = new BranchData();
-  _$jscoverage['/utils.js'].branchData['30'] = [];
-  _$jscoverage['/utils.js'].branchData['30'][1] = new BranchData();
-  _$jscoverage['/utils.js'].branchData['34'] = [];
-  _$jscoverage['/utils.js'].branchData['34'][1] = new BranchData();
-  _$jscoverage['/utils.js'].branchData['45'] = [];
-  _$jscoverage['/utils.js'].branchData['45'][1] = new BranchData();
-  _$jscoverage['/utils.js'].branchData['50'] = [];
-  _$jscoverage['/utils.js'].branchData['50'][1] = new BranchData();
-  _$jscoverage['/utils.js'].branchData['62'] = [];
-  _$jscoverage['/utils.js'].branchData['62'][1] = new BranchData();
-  _$jscoverage['/utils.js'].branchData['67'] = [];
-  _$jscoverage['/utils.js'].branchData['67'][1] = new BranchData();
-  _$jscoverage['/utils.js'].branchData['69'] = [];
-  _$jscoverage['/utils.js'].branchData['69'][1] = new BranchData();
+  _$jscoverage['/utils.js'].branchData['29'] = [];
+  _$jscoverage['/utils.js'].branchData['29'][1] = new BranchData();
+  _$jscoverage['/utils.js'].branchData['31'] = [];
+  _$jscoverage['/utils.js'].branchData['31'][1] = new BranchData();
+  _$jscoverage['/utils.js'].branchData['35'] = [];
+  _$jscoverage['/utils.js'].branchData['35'][1] = new BranchData();
+  _$jscoverage['/utils.js'].branchData['46'] = [];
+  _$jscoverage['/utils.js'].branchData['46'][1] = new BranchData();
+  _$jscoverage['/utils.js'].branchData['51'] = [];
+  _$jscoverage['/utils.js'].branchData['51'][1] = new BranchData();
+  _$jscoverage['/utils.js'].branchData['63'] = [];
+  _$jscoverage['/utils.js'].branchData['63'][1] = new BranchData();
+  _$jscoverage['/utils.js'].branchData['68'] = [];
+  _$jscoverage['/utils.js'].branchData['68'][1] = new BranchData();
+  _$jscoverage['/utils.js'].branchData['70'] = [];
+  _$jscoverage['/utils.js'].branchData['70'][1] = new BranchData();
 }
-_$jscoverage['/utils.js'].branchData['69'][1].init(155, 25, '!range || range.collapsed');
-function visit8_69_1(result) {
-  _$jscoverage['/utils.js'].branchData['69'][1].ranCondition(result);
+_$jscoverage['/utils.js'].branchData['70'][1].init(155, 25, '!range || range.collapsed');
+function visit8_70_1(result) {
+  _$jscoverage['/utils.js'].branchData['70'][1].ranCondition(result);
   return result;
-}_$jscoverage['/utils.js'].branchData['67'][1].init(57, 25, 'sel && sel.getRanges()[0]');
-function visit7_67_1(result) {
-  _$jscoverage['/utils.js'].branchData['67'][1].ranCondition(result);
+}_$jscoverage['/utils.js'].branchData['68'][1].init(57, 25, 'sel && sel.getRanges()[0]');
+function visit7_68_1(result) {
+  _$jscoverage['/utils.js'].branchData['68'][1].ranCondition(result);
   return result;
-}_$jscoverage['/utils.js'].branchData['62'][1].init(119, 11, '_selectedEl');
-function visit6_62_1(result) {
-  _$jscoverage['/utils.js'].branchData['62'][1].ranCondition(result);
+}_$jscoverage['/utils.js'].branchData['63'][1].init(119, 11, '_selectedEl');
+function visit6_63_1(result) {
+  _$jscoverage['/utils.js'].branchData['63'][1].ranCondition(result);
   return result;
-}_$jscoverage['/utils.js'].branchData['50'][1].init(341, 5, 'range');
-function visit5_50_1(result) {
-  _$jscoverage['/utils.js'].branchData['50'][1].ranCondition(result);
+}_$jscoverage['/utils.js'].branchData['51'][1].init(341, 5, 'range');
+function visit5_51_1(result) {
+  _$jscoverage['/utils.js'].branchData['51'][1].ranCondition(result);
   return result;
-}_$jscoverage['/utils.js'].branchData['45'][1].init(134, 24, 'range && range.collapsed');
-function visit4_45_1(result) {
-  _$jscoverage['/utils.js'].branchData['45'][1].ranCondition(result);
+}_$jscoverage['/utils.js'].branchData['46'][1].init(134, 24, 'range && range.collapsed');
+function visit4_46_1(result) {
+  _$jscoverage['/utils.js'].branchData['46'][1].ranCondition(result);
   return result;
-}_$jscoverage['/utils.js'].branchData['34'][1].init(265, 16, 'el.style.cssText');
-function visit3_34_1(result) {
-  _$jscoverage['/utils.js'].branchData['34'][1].ranCondition(result);
+}_$jscoverage['/utils.js'].branchData['35'][1].init(265, 16, 'el.style.cssText');
+function visit3_35_1(result) {
+  _$jscoverage['/utils.js'].branchData['35'][1].ranCondition(result);
   return result;
-}_$jscoverage['/utils.js'].branchData['30'][1].init(54, 11, 'a.specified');
-function visit2_30_1(result) {
-  _$jscoverage['/utils.js'].branchData['30'][1].ranCondition(result);
+}_$jscoverage['/utils.js'].branchData['31'][1].init(54, 11, 'a.specified');
+function visit2_31_1(result) {
+  _$jscoverage['/utils.js'].branchData['31'][1].ranCondition(result);
   return result;
-}_$jscoverage['/utils.js'].branchData['28'][1].init(89, 21, 'i < attributes.length');
-function visit1_28_1(result) {
-  _$jscoverage['/utils.js'].branchData['28'][1].ranCondition(result);
+}_$jscoverage['/utils.js'].branchData['29'][1].init(89, 21, 'i < attributes.length');
+function visit1_29_1(result) {
+  _$jscoverage['/utils.js'].branchData['29'][1].ranCondition(result);
   return result;
-}_$jscoverage['/utils.js'].lineData[5]++;
+}_$jscoverage['/utils.js'].lineData[6]++;
 KISSY.add("editor/plugin/link/utils", function(S, Editor) {
   _$jscoverage['/utils.js'].functionData[0]++;
-  _$jscoverage['/utils.js'].lineData[7]++;
+  _$jscoverage['/utils.js'].lineData[8]++;
   var Node = S.Node, KEStyle = Editor.Style, _ke_saved_href = "_ke_saved_href", link_Style = {
   element: 'a', 
   attributes: {
@@ -337,93 +337,93 @@ KISSY.add("editor/plugin/link/utils", function(S, Editor) {
   "title": "#(title)", 
   "_ke_saved_href": "#(_ke_saved_href)", 
   target: "#(target)"}};
-  _$jscoverage['/utils.js'].lineData[25]++;
+  _$jscoverage['/utils.js'].lineData[26]++;
   function getAttributes(el) {
     _$jscoverage['/utils.js'].functionData[1]++;
-    _$jscoverage['/utils.js'].lineData[26]++;
+    _$jscoverage['/utils.js'].lineData[27]++;
     var attributes = el.attributes, re = {};
-    _$jscoverage['/utils.js'].lineData[28]++;
-    for (var i = 0; visit1_28_1(i < attributes.length); i++) {
-      _$jscoverage['/utils.js'].lineData[29]++;
-      var a = attributes[i];
+    _$jscoverage['/utils.js'].lineData[29]++;
+    for (var i = 0; visit1_29_1(i < attributes.length); i++) {
       _$jscoverage['/utils.js'].lineData[30]++;
-      if (visit2_30_1(a.specified)) {
-        _$jscoverage['/utils.js'].lineData[31]++;
+      var a = attributes[i];
+      _$jscoverage['/utils.js'].lineData[31]++;
+      if (visit2_31_1(a.specified)) {
+        _$jscoverage['/utils.js'].lineData[32]++;
         re[a.name] = a.value;
       }
     }
-    _$jscoverage['/utils.js'].lineData[34]++;
-    if (visit3_34_1(el.style.cssText)) {
-      _$jscoverage['/utils.js'].lineData[35]++;
+    _$jscoverage['/utils.js'].lineData[35]++;
+    if (visit3_35_1(el.style.cssText)) {
+      _$jscoverage['/utils.js'].lineData[36]++;
       re.style = el.style.cssText;
     }
-    _$jscoverage['/utils.js'].lineData[37]++;
+    _$jscoverage['/utils.js'].lineData[38]++;
     return re;
   }
-  _$jscoverage['/utils.js'].lineData[41]++;
+  _$jscoverage['/utils.js'].lineData[42]++;
   function removeLink(editor, a) {
     _$jscoverage['/utils.js'].functionData[2]++;
-    _$jscoverage['/utils.js'].lineData[42]++;
-    editor.execCommand("save");
     _$jscoverage['/utils.js'].lineData[43]++;
+    editor.execCommand("save");
+    _$jscoverage['/utils.js'].lineData[44]++;
     var sel = editor.getSelection(), range = sel.getRanges()[0];
-    _$jscoverage['/utils.js'].lineData[45]++;
-    if (visit4_45_1(range && range.collapsed)) {
-      _$jscoverage['/utils.js'].lineData[46]++;
+    _$jscoverage['/utils.js'].lineData[46]++;
+    if (visit4_46_1(range && range.collapsed)) {
+      _$jscoverage['/utils.js'].lineData[47]++;
       var bs = sel.createBookmarks();
-      _$jscoverage['/utils.js'].lineData[48]++;
-      a._4e_remove(true);
       _$jscoverage['/utils.js'].lineData[49]++;
+      a._4e_remove(true);
+      _$jscoverage['/utils.js'].lineData[50]++;
       sel.selectBookmarks(bs);
     } else {
-      _$jscoverage['/utils.js'].lineData[50]++;
-      if (visit5_50_1(range)) {
-        _$jscoverage['/utils.js'].lineData[51]++;
-        var attrs = getAttributes(a[0]);
+      _$jscoverage['/utils.js'].lineData[51]++;
+      if (visit5_51_1(range)) {
         _$jscoverage['/utils.js'].lineData[52]++;
+        var attrs = getAttributes(a[0]);
+        _$jscoverage['/utils.js'].lineData[53]++;
         new KEStyle(link_Style, attrs).remove(editor.get("document")[0]);
       }
     }
-    _$jscoverage['/utils.js'].lineData[54]++;
-    editor.execCommand("save");
     _$jscoverage['/utils.js'].lineData[55]++;
+    editor.execCommand("save");
+    _$jscoverage['/utils.js'].lineData[56]++;
     editor.notifySelectionChange();
   }
-  _$jscoverage['/utils.js'].lineData[58]++;
+  _$jscoverage['/utils.js'].lineData[59]++;
   function applyLink(editor, attr, _selectedEl) {
     _$jscoverage['/utils.js'].functionData[3]++;
-    _$jscoverage['/utils.js'].lineData[60]++;
+    _$jscoverage['/utils.js'].lineData[61]++;
     attr[_ke_saved_href] = attr.href;
-    _$jscoverage['/utils.js'].lineData[62]++;
-    if (visit6_62_1(_selectedEl)) {
-      _$jscoverage['/utils.js'].lineData[63]++;
-      editor.execCommand("save");
+    _$jscoverage['/utils.js'].lineData[63]++;
+    if (visit6_63_1(_selectedEl)) {
       _$jscoverage['/utils.js'].lineData[64]++;
+      editor.execCommand("save");
+      _$jscoverage['/utils.js'].lineData[65]++;
       _selectedEl.attr(attr);
     } else {
-      _$jscoverage['/utils.js'].lineData[66]++;
-      var sel = editor.getSelection(), range = visit7_67_1(sel && sel.getRanges()[0]);
-      _$jscoverage['/utils.js'].lineData[69]++;
-      if (visit8_69_1(!range || range.collapsed)) {
-        _$jscoverage['/utils.js'].lineData[70]++;
+      _$jscoverage['/utils.js'].lineData[67]++;
+      var sel = editor.getSelection(), range = visit7_68_1(sel && sel.getRanges()[0]);
+      _$jscoverage['/utils.js'].lineData[70]++;
+      if (visit8_70_1(!range || range.collapsed)) {
+        _$jscoverage['/utils.js'].lineData[71]++;
         var a = new Node("<a>" + attr.href + "</a>", attr, editor.get("document")[0]);
-        _$jscoverage['/utils.js'].lineData[72]++;
+        _$jscoverage['/utils.js'].lineData[73]++;
         editor.insertElement(a);
       } else {
-        _$jscoverage['/utils.js'].lineData[74]++;
-        editor.execCommand("save");
         _$jscoverage['/utils.js'].lineData[75]++;
-        var linkStyle = new KEStyle(link_Style, attr);
+        editor.execCommand("save");
         _$jscoverage['/utils.js'].lineData[76]++;
+        var linkStyle = new KEStyle(link_Style, attr);
+        _$jscoverage['/utils.js'].lineData[77]++;
         linkStyle.apply(editor.get("document")[0]);
       }
     }
-    _$jscoverage['/utils.js'].lineData[79]++;
-    editor.execCommand("save");
     _$jscoverage['/utils.js'].lineData[80]++;
+    editor.execCommand("save");
+    _$jscoverage['/utils.js'].lineData[81]++;
     editor.notifySelectionChange();
   }
-  _$jscoverage['/utils.js'].lineData[84]++;
+  _$jscoverage['/utils.js'].lineData[85]++;
   return {
   removeLink: removeLink, 
   applyLink: applyLink, 

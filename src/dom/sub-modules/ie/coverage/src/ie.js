@@ -229,8 +229,8 @@ if (! this._$jscoverage) {
 if (! _$jscoverage['/ie.js']) {
   _$jscoverage['/ie.js'] = {};
   _$jscoverage['/ie.js'].lineData = [];
-  _$jscoverage['/ie.js'].lineData[5] = 0;
   _$jscoverage['/ie.js'].lineData[6] = 0;
+  _$jscoverage['/ie.js'].lineData[7] = 0;
 }
 if (! _$jscoverage['/ie.js'].functionData) {
   _$jscoverage['/ie.js'].functionData = [];
@@ -239,10 +239,10 @@ if (! _$jscoverage['/ie.js'].functionData) {
 if (! _$jscoverage['/ie.js'].branchData) {
   _$jscoverage['/ie.js'].branchData = {};
 }
-_$jscoverage['/ie.js'].lineData[5]++;
+_$jscoverage['/ie.js'].lineData[6]++;
 KISSY.add('dom/ie', function(S, Dom) {
   _$jscoverage['/ie.js'].functionData[0]++;
-  _$jscoverage['/ie.js'].lineData[6]++;
+  _$jscoverage['/ie.js'].lineData[7]++;
   return Dom;
 }, {
   requires: ['./ie/attr', './ie/create', './ie/insertion', './ie/style', './ie/traversal', './ie/transform', './ie/input-selection']});

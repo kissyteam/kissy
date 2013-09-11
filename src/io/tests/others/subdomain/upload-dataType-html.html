@@ -26,7 +26,7 @@
                 form: S.get('#t'),
                 type:'post',
                 dataType: 'html',
-                url: 'http://' + location.hostname + ':9999/kissy/src/io/tests/others/subdomain/upload-html.jss',
+                url: 'http://' + location.hostname + ':'+SERVER_CONFIG.ports[1]+'/kissy/src/io/tests/others/subdomain/upload-html.jss',
                 success: function (data) {
                     alert(data)
                 }

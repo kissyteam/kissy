@@ -286,7 +286,7 @@ KISSY.add(function (S,  IO) {
             // https://github.com/kissyteam/kissy/issues/187
             it("can ignore protocol", function () {
                 var ok = 0;
-                IO.jsonp('//' + location.hostname + ':9999/kissy/src/io/tests/data/interface.jss', {
+                IO.jsonp('//' + location.hostname + ':'+SERVER_CONFIG.ports[1]+'/kissy/src/io/tests/data/interface.jss', {
                     my_param: 'taobao'
                 }, function (data) {
                     expect(typeof data).toBe('object');

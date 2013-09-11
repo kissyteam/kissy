@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Aug 30 01:36
+build time: Sep 11 12:51
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -150,7 +150,6 @@ KISSY.add('event/dom/base/observer', function (S, Special, BaseEvent) {
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/dom/base/object', function (S, BaseEvent, undefined) {
-
     var DOCUMENT = S.Env.host.document,
         TRUE = true,
         FALSE = false,
@@ -235,6 +234,7 @@ KISSY.add('event/dom/base/object', function (S, BaseEvent, undefined) {
                         /**
                          * deltaX of mousewheel event
                          * @property deltaX
+                         * @member KISSY.Event.DomEventObject
                          */
                         event.deltaX = deltaX;
                     }
@@ -243,6 +243,7 @@ KISSY.add('event/dom/base/object', function (S, BaseEvent, undefined) {
                         /**
                          * deltaY of mousewheel event
                          * @property deltaY
+                         * @member KISSY.Event.DomEventObject
                          */
                         event.deltaY = deltaY;
                     }
@@ -251,6 +252,7 @@ KISSY.add('event/dom/base/object', function (S, BaseEvent, undefined) {
                         /**
                          * delta of mousewheel event
                          * @property delta
+                         * @member KISSY.Event.DomEventObject
                          */
                         event.delta = delta;
                     }
@@ -662,6 +664,7 @@ KISSY.add('event/dom/base/observable', function (S, Dom, Special, DomEventUtils,
     // 再在浏览器通知的系统 eventHandler 中检查
     // 如果相同，那么证明已经 fire 过了，不要再次触发了
     var BaseUtils = BaseEvent.Utils;
+    var logger= S.getLogger('s/event');
 
     /**
      * custom event for dom
@@ -900,8 +903,7 @@ KISSY.add('event/dom/base/observable', function (S, Dom, Special, DomEventUtils,
                         currentTarget[ eventType ]();
                     }
                 } catch (eError) {
-                    S.log('trigger action error: ');
-                    S.log(eError);
+                    logger.debug('trigger action error: '+eError);
                 }
 
                 DomEventObservable.triggeredEvent = '';

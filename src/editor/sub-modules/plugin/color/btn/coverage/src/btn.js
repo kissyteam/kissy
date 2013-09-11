@@ -229,12 +229,11 @@ if (! this._$jscoverage) {
 if (! _$jscoverage['/btn.js']) {
   _$jscoverage['/btn.js'] = {};
   _$jscoverage['/btn.js'].lineData = [];
-  _$jscoverage['/btn.js'].lineData[5] = 0;
   _$jscoverage['/btn.js'].lineData[6] = 0;
-  _$jscoverage['/btn.js'].lineData[8] = 0;
-  _$jscoverage['/btn.js'].lineData[22] = 0;
+  _$jscoverage['/btn.js'].lineData[7] = 0;
+  _$jscoverage['/btn.js'].lineData[9] = 0;
   _$jscoverage['/btn.js'].lineData[23] = 0;
-  _$jscoverage['/btn.js'].lineData[28] = 0;
+  _$jscoverage['/btn.js'].lineData[24] = 0;
   _$jscoverage['/btn.js'].lineData[29] = 0;
   _$jscoverage['/btn.js'].lineData[30] = 0;
   _$jscoverage['/btn.js'].lineData[31] = 0;
@@ -243,62 +242,63 @@ if (! _$jscoverage['/btn.js']) {
   _$jscoverage['/btn.js'].lineData[34] = 0;
   _$jscoverage['/btn.js'].lineData[35] = 0;
   _$jscoverage['/btn.js'].lineData[36] = 0;
-  _$jscoverage['/btn.js'].lineData[42] = 0;
-  _$jscoverage['/btn.js'].lineData[44] = 0;
-  _$jscoverage['/btn.js'].lineData[46] = 0;
-  _$jscoverage['/btn.js'].lineData[48] = 0;
-  _$jscoverage['/btn.js'].lineData[55] = 0;
-  _$jscoverage['/btn.js'].lineData[57] = 0;
-  _$jscoverage['/btn.js'].lineData[59] = 0;
+  _$jscoverage['/btn.js'].lineData[37] = 0;
+  _$jscoverage['/btn.js'].lineData[43] = 0;
+  _$jscoverage['/btn.js'].lineData[45] = 0;
+  _$jscoverage['/btn.js'].lineData[47] = 0;
+  _$jscoverage['/btn.js'].lineData[49] = 0;
+  _$jscoverage['/btn.js'].lineData[56] = 0;
+  _$jscoverage['/btn.js'].lineData[58] = 0;
   _$jscoverage['/btn.js'].lineData[60] = 0;
-  _$jscoverage['/btn.js'].lineData[62] = 0;
+  _$jscoverage['/btn.js'].lineData[61] = 0;
   _$jscoverage['/btn.js'].lineData[63] = 0;
-  _$jscoverage['/btn.js'].lineData[66] = 0;
+  _$jscoverage['/btn.js'].lineData[64] = 0;
   _$jscoverage['/btn.js'].lineData[67] = 0;
   _$jscoverage['/btn.js'].lineData[68] = 0;
   _$jscoverage['/btn.js'].lineData[69] = 0;
-  _$jscoverage['/btn.js'].lineData[71] = 0;
-  _$jscoverage['/btn.js'].lineData[77] = 0;
-  _$jscoverage['/btn.js'].lineData[82] = 0;
-  _$jscoverage['/btn.js'].lineData[95] = 0;
+  _$jscoverage['/btn.js'].lineData[70] = 0;
+  _$jscoverage['/btn.js'].lineData[72] = 0;
+  _$jscoverage['/btn.js'].lineData[78] = 0;
+  _$jscoverage['/btn.js'].lineData[83] = 0;
   _$jscoverage['/btn.js'].lineData[96] = 0;
   _$jscoverage['/btn.js'].lineData[97] = 0;
   _$jscoverage['/btn.js'].lineData[98] = 0;
   _$jscoverage['/btn.js'].lineData[99] = 0;
-  _$jscoverage['/btn.js'].lineData[101] = 0;
+  _$jscoverage['/btn.js'].lineData[100] = 0;
   _$jscoverage['/btn.js'].lineData[102] = 0;
   _$jscoverage['/btn.js'].lineData[103] = 0;
   _$jscoverage['/btn.js'].lineData[104] = 0;
   _$jscoverage['/btn.js'].lineData[105] = 0;
-  _$jscoverage['/btn.js'].lineData[107] = 0;
+  _$jscoverage['/btn.js'].lineData[106] = 0;
   _$jscoverage['/btn.js'].lineData[108] = 0;
-  _$jscoverage['/btn.js'].lineData[112] = 0;
-  _$jscoverage['/btn.js'].lineData[115] = 0;
-  _$jscoverage['/btn.js'].lineData[124] = 0;
-  _$jscoverage['/btn.js'].lineData[128] = 0;
+  _$jscoverage['/btn.js'].lineData[109] = 0;
+  _$jscoverage['/btn.js'].lineData[113] = 0;
+  _$jscoverage['/btn.js'].lineData[116] = 0;
+  _$jscoverage['/btn.js'].lineData[125] = 0;
   _$jscoverage['/btn.js'].lineData[129] = 0;
-  _$jscoverage['/btn.js'].lineData[133] = 0;
+  _$jscoverage['/btn.js'].lineData[130] = 0;
   _$jscoverage['/btn.js'].lineData[134] = 0;
-  _$jscoverage['/btn.js'].lineData[137] = 0;
+  _$jscoverage['/btn.js'].lineData[135] = 0;
   _$jscoverage['/btn.js'].lineData[138] = 0;
-  _$jscoverage['/btn.js'].lineData[145] = 0;
+  _$jscoverage['/btn.js'].lineData[139] = 0;
   _$jscoverage['/btn.js'].lineData[146] = 0;
   _$jscoverage['/btn.js'].lineData[147] = 0;
-  _$jscoverage['/btn.js'].lineData[161] = 0;
-  _$jscoverage['/btn.js'].lineData[165] = 0;
+  _$jscoverage['/btn.js'].lineData[148] = 0;
+  _$jscoverage['/btn.js'].lineData[162] = 0;
   _$jscoverage['/btn.js'].lineData[166] = 0;
   _$jscoverage['/btn.js'].lineData[167] = 0;
-  _$jscoverage['/btn.js'].lineData[171] = 0;
+  _$jscoverage['/btn.js'].lineData[168] = 0;
   _$jscoverage['/btn.js'].lineData[172] = 0;
-  _$jscoverage['/btn.js'].lineData[177] = 0;
-  _$jscoverage['/btn.js'].lineData[188] = 0;
-  _$jscoverage['/btn.js'].lineData[193] = 0;
-  _$jscoverage['/btn.js'].lineData[195] = 0;
+  _$jscoverage['/btn.js'].lineData[173] = 0;
+  _$jscoverage['/btn.js'].lineData[178] = 0;
+  _$jscoverage['/btn.js'].lineData[189] = 0;
+  _$jscoverage['/btn.js'].lineData[194] = 0;
   _$jscoverage['/btn.js'].lineData[196] = 0;
   _$jscoverage['/btn.js'].lineData[197] = 0;
-  _$jscoverage['/btn.js'].lineData[200] = 0;
+  _$jscoverage['/btn.js'].lineData[198] = 0;
   _$jscoverage['/btn.js'].lineData[201] = 0;
-  _$jscoverage['/btn.js'].lineData[205] = 0;
+  _$jscoverage['/btn.js'].lineData[202] = 0;
+  _$jscoverage['/btn.js'].lineData[206] = 0;
 }
 if (! _$jscoverage['/btn.js'].functionData) {
   _$jscoverage['/btn.js'].functionData = [];
@@ -322,147 +322,147 @@ if (! _$jscoverage['/btn.js'].functionData) {
 }
 if (! _$jscoverage['/btn.js'].branchData) {
   _$jscoverage['/btn.js'].branchData = {};
-  _$jscoverage['/btn.js'].branchData['28'] = [];
-  _$jscoverage['/btn.js'].branchData['28'][1] = new BranchData();
-  _$jscoverage['/btn.js'].branchData['31'] = [];
-  _$jscoverage['/btn.js'].branchData['31'][1] = new BranchData();
-  _$jscoverage['/btn.js'].branchData['33'] = [];
-  _$jscoverage['/btn.js'].branchData['33'][1] = new BranchData();
-  _$jscoverage['/btn.js'].branchData['63'] = [];
-  _$jscoverage['/btn.js'].branchData['63'][1] = new BranchData();
-  _$jscoverage['/btn.js'].branchData['68'] = [];
-  _$jscoverage['/btn.js'].branchData['68'][1] = new BranchData();
-  _$jscoverage['/btn.js'].branchData['71'] = [];
-  _$jscoverage['/btn.js'].branchData['71'][1] = new BranchData();
-  _$jscoverage['/btn.js'].branchData['133'] = [];
-  _$jscoverage['/btn.js'].branchData['133'][1] = new BranchData();
-  _$jscoverage['/btn.js'].branchData['137'] = [];
-  _$jscoverage['/btn.js'].branchData['137'][1] = new BranchData();
-  _$jscoverage['/btn.js'].branchData['146'] = [];
-  _$jscoverage['/btn.js'].branchData['146'][1] = new BranchData();
-  _$jscoverage['/btn.js'].branchData['196'] = [];
-  _$jscoverage['/btn.js'].branchData['196'][1] = new BranchData();
+  _$jscoverage['/btn.js'].branchData['29'] = [];
+  _$jscoverage['/btn.js'].branchData['29'][1] = new BranchData();
+  _$jscoverage['/btn.js'].branchData['32'] = [];
+  _$jscoverage['/btn.js'].branchData['32'][1] = new BranchData();
+  _$jscoverage['/btn.js'].branchData['34'] = [];
+  _$jscoverage['/btn.js'].branchData['34'][1] = new BranchData();
+  _$jscoverage['/btn.js'].branchData['64'] = [];
+  _$jscoverage['/btn.js'].branchData['64'][1] = new BranchData();
+  _$jscoverage['/btn.js'].branchData['69'] = [];
+  _$jscoverage['/btn.js'].branchData['69'][1] = new BranchData();
+  _$jscoverage['/btn.js'].branchData['72'] = [];
+  _$jscoverage['/btn.js'].branchData['72'][1] = new BranchData();
+  _$jscoverage['/btn.js'].branchData['134'] = [];
+  _$jscoverage['/btn.js'].branchData['134'][1] = new BranchData();
+  _$jscoverage['/btn.js'].branchData['138'] = [];
+  _$jscoverage['/btn.js'].branchData['138'][1] = new BranchData();
+  _$jscoverage['/btn.js'].branchData['147'] = [];
+  _$jscoverage['/btn.js'].branchData['147'][1] = new BranchData();
+  _$jscoverage['/btn.js'].branchData['197'] = [];
+  _$jscoverage['/btn.js'].branchData['197'][1] = new BranchData();
 }
-_$jscoverage['/btn.js'].branchData['196'][1].init(48, 23, 'e.color || defaultColor');
-function visit10_196_1(result) {
-  _$jscoverage['/btn.js'].branchData['196'][1].ranCondition(result);
+_$jscoverage['/btn.js'].branchData['197'][1].init(48, 23, 'e.color || defaultColor');
+function visit10_197_1(result) {
+  _$jscoverage['/btn.js'].branchData['197'][1].ranCondition(result);
   return result;
-}_$jscoverage['/btn.js'].branchData['146'][1].init(48, 13, 'self.colorWin');
-function visit9_146_1(result) {
-  _$jscoverage['/btn.js'].branchData['146'][1].ranCondition(result);
+}_$jscoverage['/btn.js'].branchData['147'][1].init(48, 13, 'self.colorWin');
+function visit9_147_1(result) {
+  _$jscoverage['/btn.js'].branchData['147'][1].ranCondition(result);
   return result;
-}_$jscoverage['/btn.js'].branchData['137'][1].init(404, 45, 't.hasClass(prefixCls + \'editor-color-remove\')');
-function visit8_137_1(result) {
-  _$jscoverage['/btn.js'].branchData['137'][1].ranCondition(result);
+}_$jscoverage['/btn.js'].branchData['138'][1].init(404, 45, 't.hasClass(prefixCls + \'editor-color-remove\')');
+function visit8_138_1(result) {
+  _$jscoverage['/btn.js'].branchData['138'][1].ranCondition(result);
   return result;
-}_$jscoverage['/btn.js'].branchData['133'][1].init(214, 40, 't.hasClass(prefixCls + "editor-color-a")');
-function visit7_133_1(result) {
-  _$jscoverage['/btn.js'].branchData['133'][1].ranCondition(result);
+}_$jscoverage['/btn.js'].branchData['134'][1].init(214, 40, 't.hasClass(prefixCls + "editor-color-a")');
+function visit7_134_1(result) {
+  _$jscoverage['/btn.js'].branchData['134'][1].ranCondition(result);
   return result;
-}_$jscoverage['/btn.js'].branchData['71'][1].init(22, 37, 'self.colorWin && self.colorWin.hide()');
-function visit6_71_1(result) {
-  _$jscoverage['/btn.js'].branchData['71'][1].ranCondition(result);
+}_$jscoverage['/btn.js'].branchData['72'][1].init(22, 37, 'self.colorWin && self.colorWin.hide()');
+function visit6_72_1(result) {
+  _$jscoverage['/btn.js'].branchData['72'][1].ranCondition(result);
   return result;
-}_$jscoverage['/btn.js'].branchData['68'][1].init(74, 7, 'checked');
-function visit5_68_1(result) {
-  _$jscoverage['/btn.js'].branchData['68'][1].ranCondition(result);
+}_$jscoverage['/btn.js'].branchData['69'][1].init(74, 7, 'checked');
+function visit5_69_1(result) {
+  _$jscoverage['/btn.js'].branchData['69'][1].ranCondition(result);
   return result;
-}_$jscoverage['/btn.js'].branchData['63'][1].init(22, 37, 'self.colorWin && self.colorWin.hide()');
-function visit4_63_1(result) {
-  _$jscoverage['/btn.js'].branchData['63'][1].ranCondition(result);
+}_$jscoverage['/btn.js'].branchData['64'][1].init(22, 37, 'self.colorWin && self.colorWin.hide()');
+function visit4_64_1(result) {
+  _$jscoverage['/btn.js'].branchData['64'][1].ranCondition(result);
   return result;
-}_$jscoverage['/btn.js'].branchData['33'][1].init(67, 5, 'j < 8');
-function visit3_33_1(result) {
-  _$jscoverage['/btn.js'].branchData['33'][1].ranCondition(result);
+}_$jscoverage['/btn.js'].branchData['34'][1].init(67, 5, 'j < 8');
+function visit3_34_1(result) {
+  _$jscoverage['/btn.js'].branchData['34'][1].ranCondition(result);
   return result;
-}_$jscoverage['/btn.js'].branchData['31'][1].init(157, 5, 'k < l');
-function visit2_31_1(result) {
-  _$jscoverage['/btn.js'].branchData['31'][1].ranCondition(result);
+}_$jscoverage['/btn.js'].branchData['32'][1].init(157, 5, 'k < l');
+function visit2_32_1(result) {
+  _$jscoverage['/btn.js'].branchData['32'][1].ranCondition(result);
   return result;
-}_$jscoverage['/btn.js'].branchData['28'][1].init(241, 5, 'i < 3');
-function visit1_28_1(result) {
-  _$jscoverage['/btn.js'].branchData['28'][1].ranCondition(result);
+}_$jscoverage['/btn.js'].branchData['29'][1].init(241, 5, 'i < 3');
+function visit1_29_1(result) {
+  _$jscoverage['/btn.js'].branchData['29'][1].ranCondition(result);
   return result;
-}_$jscoverage['/btn.js'].lineData[5]++;
+}_$jscoverage['/btn.js'].lineData[6]++;
 KISSY.add("editor/plugin/color/btn", function(S, Editor, Button, Overlay4E, DialogLoader) {
   _$jscoverage['/btn.js'].functionData[0]++;
-  _$jscoverage['/btn.js'].lineData[6]++;
+  _$jscoverage['/btn.js'].lineData[7]++;
   var Node = S.Node;
-  _$jscoverage['/btn.js'].lineData[8]++;
+  _$jscoverage['/btn.js'].lineData[9]++;
   var COLORS = [["000", "444", "666", "999", "CCC", "EEE", "F3F3F3", "FFF"], ["F00", "F90", "FF0", "0F0", "0FF", "00F", "90F", "F0F"], ["F4CC" + "CC", "FCE5CD", "FFF2CC", "D9EAD3", "D0E0E3", "CFE2F3", "D9D2E9", "EAD1DC", "EA9999", "F9CB9C", "FFE599", "B6D7A8", "A2C4C9", "9FC5E8", "B4A7D6", "D5A6BD", "E06666", "F6B26B", "FFD966", "93C47D", "76A5AF", "6FA8DC", "8E7CC3", "C27BAD", "CC0000", "E69138", "F1C232", "6AA84F", "45818E", "3D85C6", "674EA7", "A64D79", "990000", "B45F06", "BF9000", "38761D", "134F5C", "0B5394", "351C75", "741B47", "660000", "783F04", "7F6000", "274E13", "0C343D", "073763", "20124D", "4C1130"]], html;
-  _$jscoverage['/btn.js'].lineData[22]++;
+  _$jscoverage['/btn.js'].lineData[23]++;
   function initHTML() {
     _$jscoverage['/btn.js'].functionData[1]++;
-    _$jscoverage['/btn.js'].lineData[23]++;
+    _$jscoverage['/btn.js'].lineData[24]++;
     html = "<div class='{prefixCls}editor-color-panel'>" + "<a class='{prefixCls}editor-color-remove' " + "href=\"javascript:void('\u6e05\u9664');\">" + "\u6e05\u9664" + "</a>";
-    _$jscoverage['/btn.js'].lineData[28]++;
-    for (var i = 0; visit1_28_1(i < 3); i++) {
-      _$jscoverage['/btn.js'].lineData[29]++;
-      html += "<div class='{prefixCls}editor-color-palette'><table>";
+    _$jscoverage['/btn.js'].lineData[29]++;
+    for (var i = 0; visit1_29_1(i < 3); i++) {
       _$jscoverage['/btn.js'].lineData[30]++;
-      var c = COLORS[i], l = c.length / 8;
+      html += "<div class='{prefixCls}editor-color-palette'><table>";
       _$jscoverage['/btn.js'].lineData[31]++;
-      for (var k = 0; visit2_31_1(k < l); k++) {
-        _$jscoverage['/btn.js'].lineData[32]++;
-        html += "<tr>";
+      var c = COLORS[i], l = c.length / 8;
+      _$jscoverage['/btn.js'].lineData[32]++;
+      for (var k = 0; visit2_32_1(k < l); k++) {
         _$jscoverage['/btn.js'].lineData[33]++;
-        for (var j = 0; visit3_33_1(j < 8); j++) {
-          _$jscoverage['/btn.js'].lineData[34]++;
-          var currentColor = "#" + (c[8 * k + j]);
+        html += "<tr>";
+        _$jscoverage['/btn.js'].lineData[34]++;
+        for (var j = 0; visit3_34_1(j < 8); j++) {
           _$jscoverage['/btn.js'].lineData[35]++;
-          html += "<td>";
+          var currentColor = "#" + (c[8 * k + j]);
           _$jscoverage['/btn.js'].lineData[36]++;
+          html += "<td>";
+          _$jscoverage['/btn.js'].lineData[37]++;
           html += "<a href='javascript:void(0);' " + "class='{prefixCls}editor-color-a' " + "style='background-color:" + currentColor + "'" + "></a>";
-          _$jscoverage['/btn.js'].lineData[42]++;
+          _$jscoverage['/btn.js'].lineData[43]++;
           html += "</td>";
         }
-        _$jscoverage['/btn.js'].lineData[44]++;
+        _$jscoverage['/btn.js'].lineData[45]++;
         html += "</tr>";
       }
-      _$jscoverage['/btn.js'].lineData[46]++;
+      _$jscoverage['/btn.js'].lineData[47]++;
       html += "</table></div>";
     }
-    _$jscoverage['/btn.js'].lineData[48]++;
+    _$jscoverage['/btn.js'].lineData[49]++;
     html += "" + "<div>" + "<a class='{prefixCls}editor-button {prefixCls}editor-color-others ks-inline-block'>\u5176\u4ed6\u989c\u8272</a>" + "</div>" + "</div>";
   }
-  _$jscoverage['/btn.js'].lineData[55]++;
+  _$jscoverage['/btn.js'].lineData[56]++;
   initHTML();
-  _$jscoverage['/btn.js'].lineData[57]++;
+  _$jscoverage['/btn.js'].lineData[58]++;
   var ColorButton = Button.extend({
   initializer: function() {
   _$jscoverage['/btn.js'].functionData[2]++;
-  _$jscoverage['/btn.js'].lineData[59]++;
-  var self = this;
   _$jscoverage['/btn.js'].lineData[60]++;
+  var self = this;
+  _$jscoverage['/btn.js'].lineData[61]++;
   self.on("blur", function() {
   _$jscoverage['/btn.js'].functionData[3]++;
-  _$jscoverage['/btn.js'].lineData[62]++;
+  _$jscoverage['/btn.js'].lineData[63]++;
   setTimeout(function() {
   _$jscoverage['/btn.js'].functionData[4]++;
-  _$jscoverage['/btn.js'].lineData[63]++;
-  visit4_63_1(self.colorWin && self.colorWin.hide());
+  _$jscoverage['/btn.js'].lineData[64]++;
+  visit4_64_1(self.colorWin && self.colorWin.hide());
 }, 150);
 });
-  _$jscoverage['/btn.js'].lineData[66]++;
+  _$jscoverage['/btn.js'].lineData[67]++;
   self.on('click', function() {
   _$jscoverage['/btn.js'].functionData[5]++;
-  _$jscoverage['/btn.js'].lineData[67]++;
-  var checked = self.get("checked");
   _$jscoverage['/btn.js'].lineData[68]++;
-  if (visit5_68_1(checked)) {
-    _$jscoverage['/btn.js'].lineData[69]++;
+  var checked = self.get("checked");
+  _$jscoverage['/btn.js'].lineData[69]++;
+  if (visit5_69_1(checked)) {
+    _$jscoverage['/btn.js'].lineData[70]++;
     self._prepare();
   } else {
-    _$jscoverage['/btn.js'].lineData[71]++;
-    visit6_71_1(self.colorWin && self.colorWin.hide());
+    _$jscoverage['/btn.js'].lineData[72]++;
+    visit6_72_1(self.colorWin && self.colorWin.hide());
   }
 });
 }, 
   _prepare: function() {
   _$jscoverage['/btn.js'].functionData[6]++;
-  _$jscoverage['/btn.js'].lineData[77]++;
+  _$jscoverage['/btn.js'].lineData[78]++;
   var self = this, editor = self.get("editor"), prefixCls = editor.get('prefixCls'), colorPanel;
-  _$jscoverage['/btn.js'].lineData[82]++;
+  _$jscoverage['/btn.js'].lineData[83]++;
   self.colorWin = new Overlay4E({
   elAttrs: {
   tabindex: 0}, 
@@ -471,40 +471,40 @@ KISSY.add("editor/plugin/color/btn", function(S, Editor, Button, Overlay4E, Dial
   prefixCls: prefixCls}), 
   width: 172, 
   zIndex: Editor.baseZIndex(Editor.zIndexManager.POPUP_MENU)}).render();
-  _$jscoverage['/btn.js'].lineData[95]++;
-  var colorWin = self.colorWin;
   _$jscoverage['/btn.js'].lineData[96]++;
-  colorPanel = colorWin.get("contentEl");
+  var colorWin = self.colorWin;
   _$jscoverage['/btn.js'].lineData[97]++;
-  colorPanel.on("click", self._selectColor, self);
+  colorPanel = colorWin.get("contentEl");
   _$jscoverage['/btn.js'].lineData[98]++;
+  colorPanel.on("click", self._selectColor, self);
+  _$jscoverage['/btn.js'].lineData[99]++;
   colorWin.on("hide", function() {
   _$jscoverage['/btn.js'].functionData[7]++;
-  _$jscoverage['/btn.js'].lineData[99]++;
+  _$jscoverage['/btn.js'].lineData[100]++;
   self.set("checked", false);
 });
-  _$jscoverage['/btn.js'].lineData[101]++;
-  var others = colorPanel.one("." + prefixCls + "editor-color-others");
   _$jscoverage['/btn.js'].lineData[102]++;
+  var others = colorPanel.one("." + prefixCls + "editor-color-others");
+  _$jscoverage['/btn.js'].lineData[103]++;
   others.on("click", function(ev) {
   _$jscoverage['/btn.js'].functionData[8]++;
-  _$jscoverage['/btn.js'].lineData[103]++;
-  ev.halt();
   _$jscoverage['/btn.js'].lineData[104]++;
-  colorWin.hide();
+  ev.halt();
   _$jscoverage['/btn.js'].lineData[105]++;
+  colorWin.hide();
+  _$jscoverage['/btn.js'].lineData[106]++;
   DialogLoader.useDialog(editor, "color", undefined, self);
 });
-  _$jscoverage['/btn.js'].lineData[107]++;
-  self._prepare = self._show;
   _$jscoverage['/btn.js'].lineData[108]++;
+  self._prepare = self._show;
+  _$jscoverage['/btn.js'].lineData[109]++;
   self._show();
 }, 
   _show: function() {
   _$jscoverage['/btn.js'].functionData[9]++;
-  _$jscoverage['/btn.js'].lineData[112]++;
+  _$jscoverage['/btn.js'].lineData[113]++;
   var self = this, el = self.get("el"), colorWin = self.colorWin;
-  _$jscoverage['/btn.js'].lineData[115]++;
+  _$jscoverage['/btn.js'].lineData[116]++;
   colorWin.set("align", {
   node: el, 
   points: ["bl", "tl"], 
@@ -512,24 +512,24 @@ KISSY.add("editor/plugin/color/btn", function(S, Editor, Button, Overlay4E, Dial
   overflow: {
   adjustX: 1, 
   adjustY: 1}});
-  _$jscoverage['/btn.js'].lineData[124]++;
+  _$jscoverage['/btn.js'].lineData[125]++;
   colorWin.show();
 }, 
   _selectColor: function(ev) {
   _$jscoverage['/btn.js'].functionData[10]++;
-  _$jscoverage['/btn.js'].lineData[128]++;
-  ev.halt();
   _$jscoverage['/btn.js'].lineData[129]++;
+  ev.halt();
+  _$jscoverage['/btn.js'].lineData[130]++;
   var self = this, editor = self.get("editor"), prefixCls = editor.get('prefixCls'), t = new Node(ev.target);
-  _$jscoverage['/btn.js'].lineData[133]++;
-  if (visit7_133_1(t.hasClass(prefixCls + "editor-color-a"))) {
-    _$jscoverage['/btn.js'].lineData[134]++;
+  _$jscoverage['/btn.js'].lineData[134]++;
+  if (visit7_134_1(t.hasClass(prefixCls + "editor-color-a"))) {
+    _$jscoverage['/btn.js'].lineData[135]++;
     self.fire('selectColor', {
   color: t.style("background-color")});
   } else {
-    _$jscoverage['/btn.js'].lineData[137]++;
-    if (visit8_137_1(t.hasClass(prefixCls + 'editor-color-remove'))) {
-      _$jscoverage['/btn.js'].lineData[138]++;
+    _$jscoverage['/btn.js'].lineData[138]++;
+    if (visit8_138_1(t.hasClass(prefixCls + 'editor-color-remove'))) {
+      _$jscoverage['/btn.js'].lineData[139]++;
       self.fire('selectColor', {
   color: null});
     }
@@ -537,11 +537,11 @@ KISSY.add("editor/plugin/color/btn", function(S, Editor, Button, Overlay4E, Dial
 }, 
   destructor: function() {
   _$jscoverage['/btn.js'].functionData[11]++;
-  _$jscoverage['/btn.js'].lineData[145]++;
-  var self = this;
   _$jscoverage['/btn.js'].lineData[146]++;
-  if (visit9_146_1(self.colorWin)) {
-    _$jscoverage['/btn.js'].lineData[147]++;
+  var self = this;
+  _$jscoverage['/btn.js'].lineData[147]++;
+  if (visit9_147_1(self.colorWin)) {
+    _$jscoverage['/btn.js'].lineData[148]++;
     self.colorWin.destroy();
   }
 }}, {
@@ -550,24 +550,24 @@ KISSY.add("editor/plugin/color/btn", function(S, Editor, Button, Overlay4E, Dial
   value: true}, 
   mode: {
   value: Editor.Mode.WYSIWYG_MODE}}});
-  _$jscoverage['/btn.js'].lineData[161]++;
+  _$jscoverage['/btn.js'].lineData[162]++;
   var tpl = '<div class="{icon}"></div>' + '<div style="background-color:{defaultColor}"' + ' class="{indicator}"></div>';
-  _$jscoverage['/btn.js'].lineData[165]++;
+  _$jscoverage['/btn.js'].lineData[166]++;
   function runCmd(editor, cmdType, color) {
     _$jscoverage['/btn.js'].functionData[12]++;
-    _$jscoverage['/btn.js'].lineData[166]++;
+    _$jscoverage['/btn.js'].lineData[167]++;
     setTimeout(function() {
   _$jscoverage['/btn.js'].functionData[13]++;
-  _$jscoverage['/btn.js'].lineData[167]++;
+  _$jscoverage['/btn.js'].lineData[168]++;
   editor.execCommand(cmdType, color);
 }, 0);
   }
-  _$jscoverage['/btn.js'].lineData[171]++;
+  _$jscoverage['/btn.js'].lineData[172]++;
   ColorButton.init = function(editor, cfg) {
   _$jscoverage['/btn.js'].functionData[14]++;
-  _$jscoverage['/btn.js'].lineData[172]++;
+  _$jscoverage['/btn.js'].lineData[173]++;
   var prefix = editor.get('prefixCls') + 'editor-toolbar-', cmdType = cfg.cmdType, defaultColor = cfg.defaultColor, tooltip = cfg.tooltip;
-  _$jscoverage['/btn.js'].lineData[177]++;
+  _$jscoverage['/btn.js'].lineData[178]++;
   var button = editor.addButton(cmdType, {
   elCls: cmdType + 'Btn', 
   content: S.substitute(tpl, {
@@ -576,28 +576,28 @@ KISSY.add("editor/plugin/color/btn", function(S, Editor, Button, Overlay4E, Dial
   indicator: prefix + 'color-indicator'}), 
   mode: Editor.Mode.WYSIWYG_MODE, 
   tooltip: "\u8bbe\u7f6e" + tooltip});
-  _$jscoverage['/btn.js'].lineData[188]++;
+  _$jscoverage['/btn.js'].lineData[189]++;
   var arrow = editor.addButton(cmdType + 'Arrow', {
   tooltip: "\u9009\u62e9\u5e76\u8bbe\u7f6e" + tooltip, 
   elCls: cmdType + 'ArrowBtn'}, ColorButton);
-  _$jscoverage['/btn.js'].lineData[193]++;
+  _$jscoverage['/btn.js'].lineData[194]++;
   var indicator = button.get('el').one('.' + prefix + 'color-indicator');
-  _$jscoverage['/btn.js'].lineData[195]++;
+  _$jscoverage['/btn.js'].lineData[196]++;
   arrow.on('selectColor', function(e) {
   _$jscoverage['/btn.js'].functionData[15]++;
-  _$jscoverage['/btn.js'].lineData[196]++;
-  indicator.css('background-color', visit10_196_1(e.color || defaultColor));
   _$jscoverage['/btn.js'].lineData[197]++;
+  indicator.css('background-color', visit10_197_1(e.color || defaultColor));
+  _$jscoverage['/btn.js'].lineData[198]++;
   runCmd(editor, cmdType, e.color);
 });
-  _$jscoverage['/btn.js'].lineData[200]++;
+  _$jscoverage['/btn.js'].lineData[201]++;
   button.on('click', function() {
   _$jscoverage['/btn.js'].functionData[16]++;
-  _$jscoverage['/btn.js'].lineData[201]++;
+  _$jscoverage['/btn.js'].lineData[202]++;
   runCmd(editor, cmdType, indicator.style('background-color'));
 });
 };
-  _$jscoverage['/btn.js'].lineData[205]++;
+  _$jscoverage['/btn.js'].lineData[206]++;
   return ColorButton;
 }, {
   requires: ['editor', '../button', '../overlay', '../dialog-loader']});

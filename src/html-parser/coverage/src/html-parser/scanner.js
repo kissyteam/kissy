@@ -229,9 +229,9 @@ if (! this._$jscoverage) {
 if (! _$jscoverage['/html-parser/scanner.js']) {
   _$jscoverage['/html-parser/scanner.js'] = {};
   _$jscoverage['/html-parser/scanner.js'].lineData = [];
-  _$jscoverage['/html-parser/scanner.js'].lineData[5] = 0;
   _$jscoverage['/html-parser/scanner.js'].lineData[6] = 0;
-  _$jscoverage['/html-parser/scanner.js'].lineData[8] = 0;
+  _$jscoverage['/html-parser/scanner.js'].lineData[7] = 0;
+  _$jscoverage['/html-parser/scanner.js'].lineData[9] = 0;
 }
 if (! _$jscoverage['/html-parser/scanner.js'].functionData) {
   _$jscoverage['/html-parser/scanner.js'].functionData = [];
@@ -240,22 +240,22 @@ if (! _$jscoverage['/html-parser/scanner.js'].functionData) {
 }
 if (! _$jscoverage['/html-parser/scanner.js'].branchData) {
   _$jscoverage['/html-parser/scanner.js'].branchData = {};
-  _$jscoverage['/html-parser/scanner.js'].branchData['8'] = [];
-  _$jscoverage['/html-parser/scanner.js'].branchData['8'][1] = new BranchData();
+  _$jscoverage['/html-parser/scanner.js'].branchData['9'] = [];
+  _$jscoverage['/html-parser/scanner.js'].branchData['9'][1] = new BranchData();
 }
-_$jscoverage['/html-parser/scanner.js'].branchData['8'][1].init(21, 39, 'SpecialScanners[nodeName] || TagScanner');
-function visit273_8_1(result) {
-  _$jscoverage['/html-parser/scanner.js'].branchData['8'][1].ranCondition(result);
+_$jscoverage['/html-parser/scanner.js'].branchData['9'][1].init(21, 39, 'SpecialScanners[nodeName] || TagScanner');
+function visit273_9_1(result) {
+  _$jscoverage['/html-parser/scanner.js'].branchData['9'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/scanner.js'].lineData[5]++;
+}_$jscoverage['/html-parser/scanner.js'].lineData[6]++;
 KISSY.add('html-parser/scanner', function(S, TagScanner, SpecialScanners) {
   _$jscoverage['/html-parser/scanner.js'].functionData[0]++;
-  _$jscoverage['/html-parser/scanner.js'].lineData[6]++;
+  _$jscoverage['/html-parser/scanner.js'].lineData[7]++;
   return {
   getScanner: function(nodeName) {
   _$jscoverage['/html-parser/scanner.js'].functionData[1]++;
-  _$jscoverage['/html-parser/scanner.js'].lineData[8]++;
-  return visit273_8_1(SpecialScanners[nodeName] || TagScanner);
+  _$jscoverage['/html-parser/scanner.js'].lineData[9]++;
+  return visit273_9_1(SpecialScanners[nodeName] || TagScanner);
 }};
 }, {
   requires: ['./scanners/tag-scanner', './scanners/special-scanners', './scanners/quote-cdata-scanner', './scanners/textarea-scanner']});

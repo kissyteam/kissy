@@ -229,25 +229,24 @@ if (! this._$jscoverage) {
 if (! _$jscoverage['/dialog.js']) {
   _$jscoverage['/dialog.js'] = {};
   _$jscoverage['/dialog.js'].lineData = [];
-  _$jscoverage['/dialog.js'].lineData[5] = 0;
   _$jscoverage['/dialog.js'].lineData[6] = 0;
-  _$jscoverage['/dialog.js'].lineData[17] = 0;
+  _$jscoverage['/dialog.js'].lineData[7] = 0;
   _$jscoverage['/dialog.js'].lineData[18] = 0;
   _$jscoverage['/dialog.js'].lineData[19] = 0;
   _$jscoverage['/dialog.js'].lineData[20] = 0;
-  _$jscoverage['/dialog.js'].lineData[23] = 0;
-  _$jscoverage['/dialog.js'].lineData[70] = 0;
+  _$jscoverage['/dialog.js'].lineData[21] = 0;
+  _$jscoverage['/dialog.js'].lineData[24] = 0;
   _$jscoverage['/dialog.js'].lineData[71] = 0;
-  _$jscoverage['/dialog.js'].lineData[74] = 0;
-  _$jscoverage['/dialog.js'].lineData[76] = 0;
-  _$jscoverage['/dialog.js'].lineData[79] = 0;
+  _$jscoverage['/dialog.js'].lineData[72] = 0;
+  _$jscoverage['/dialog.js'].lineData[75] = 0;
+  _$jscoverage['/dialog.js'].lineData[77] = 0;
   _$jscoverage['/dialog.js'].lineData[80] = 0;
   _$jscoverage['/dialog.js'].lineData[81] = 0;
   _$jscoverage['/dialog.js'].lineData[82] = 0;
-  _$jscoverage['/dialog.js'].lineData[85] = 0;
-  _$jscoverage['/dialog.js'].lineData[90] = 0;
-  _$jscoverage['/dialog.js'].lineData[97] = 0;
-  _$jscoverage['/dialog.js'].lineData[105] = 0;
+  _$jscoverage['/dialog.js'].lineData[83] = 0;
+  _$jscoverage['/dialog.js'].lineData[86] = 0;
+  _$jscoverage['/dialog.js'].lineData[91] = 0;
+  _$jscoverage['/dialog.js'].lineData[98] = 0;
   _$jscoverage['/dialog.js'].lineData[106] = 0;
   _$jscoverage['/dialog.js'].lineData[107] = 0;
   _$jscoverage['/dialog.js'].lineData[108] = 0;
@@ -257,25 +256,25 @@ if (! _$jscoverage['/dialog.js']) {
   _$jscoverage['/dialog.js'].lineData[112] = 0;
   _$jscoverage['/dialog.js'].lineData[113] = 0;
   _$jscoverage['/dialog.js'].lineData[114] = 0;
-  _$jscoverage['/dialog.js'].lineData[116] = 0;
+  _$jscoverage['/dialog.js'].lineData[115] = 0;
   _$jscoverage['/dialog.js'].lineData[117] = 0;
   _$jscoverage['/dialog.js'].lineData[118] = 0;
   _$jscoverage['/dialog.js'].lineData[119] = 0;
-  _$jscoverage['/dialog.js'].lineData[122] = 0;
+  _$jscoverage['/dialog.js'].lineData[120] = 0;
   _$jscoverage['/dialog.js'].lineData[123] = 0;
   _$jscoverage['/dialog.js'].lineData[124] = 0;
-  _$jscoverage['/dialog.js'].lineData[126] = 0;
+  _$jscoverage['/dialog.js'].lineData[125] = 0;
   _$jscoverage['/dialog.js'].lineData[127] = 0;
   _$jscoverage['/dialog.js'].lineData[128] = 0;
   _$jscoverage['/dialog.js'].lineData[129] = 0;
-  _$jscoverage['/dialog.js'].lineData[131] = 0;
+  _$jscoverage['/dialog.js'].lineData[130] = 0;
   _$jscoverage['/dialog.js'].lineData[132] = 0;
   _$jscoverage['/dialog.js'].lineData[133] = 0;
-  _$jscoverage['/dialog.js'].lineData[135] = 0;
-  _$jscoverage['/dialog.js'].lineData[146] = 0;
+  _$jscoverage['/dialog.js'].lineData[134] = 0;
+  _$jscoverage['/dialog.js'].lineData[136] = 0;
   _$jscoverage['/dialog.js'].lineData[147] = 0;
-  _$jscoverage['/dialog.js'].lineData[149] = 0;
-  _$jscoverage['/dialog.js'].lineData[151] = 0;
+  _$jscoverage['/dialog.js'].lineData[148] = 0;
+  _$jscoverage['/dialog.js'].lineData[150] = 0;
   _$jscoverage['/dialog.js'].lineData[152] = 0;
   _$jscoverage['/dialog.js'].lineData[153] = 0;
   _$jscoverage['/dialog.js'].lineData[154] = 0;
@@ -283,65 +282,65 @@ if (! _$jscoverage['/dialog.js']) {
   _$jscoverage['/dialog.js'].lineData[156] = 0;
   _$jscoverage['/dialog.js'].lineData[157] = 0;
   _$jscoverage['/dialog.js'].lineData[158] = 0;
-  _$jscoverage['/dialog.js'].lineData[160] = 0;
+  _$jscoverage['/dialog.js'].lineData[159] = 0;
   _$jscoverage['/dialog.js'].lineData[161] = 0;
-  _$jscoverage['/dialog.js'].lineData[165] = 0;
-  _$jscoverage['/dialog.js'].lineData[172] = 0;
-  _$jscoverage['/dialog.js'].lineData[174] = 0;
+  _$jscoverage['/dialog.js'].lineData[162] = 0;
+  _$jscoverage['/dialog.js'].lineData[166] = 0;
+  _$jscoverage['/dialog.js'].lineData[173] = 0;
   _$jscoverage['/dialog.js'].lineData[175] = 0;
-  _$jscoverage['/dialog.js'].lineData[180] = 0;
+  _$jscoverage['/dialog.js'].lineData[176] = 0;
   _$jscoverage['/dialog.js'].lineData[181] = 0;
-  _$jscoverage['/dialog.js'].lineData[184] = 0;
+  _$jscoverage['/dialog.js'].lineData[182] = 0;
   _$jscoverage['/dialog.js'].lineData[185] = 0;
-  _$jscoverage['/dialog.js'].lineData[188] = 0;
-  _$jscoverage['/dialog.js'].lineData[194] = 0;
+  _$jscoverage['/dialog.js'].lineData[186] = 0;
+  _$jscoverage['/dialog.js'].lineData[189] = 0;
   _$jscoverage['/dialog.js'].lineData[195] = 0;
   _$jscoverage['/dialog.js'].lineData[196] = 0;
-  _$jscoverage['/dialog.js'].lineData[198] = 0;
-  _$jscoverage['/dialog.js'].lineData[202] = 0;
-  _$jscoverage['/dialog.js'].lineData[205] = 0;
+  _$jscoverage['/dialog.js'].lineData[197] = 0;
+  _$jscoverage['/dialog.js'].lineData[199] = 0;
+  _$jscoverage['/dialog.js'].lineData[203] = 0;
   _$jscoverage['/dialog.js'].lineData[206] = 0;
-  _$jscoverage['/dialog.js'].lineData[219] = 0;
+  _$jscoverage['/dialog.js'].lineData[207] = 0;
   _$jscoverage['/dialog.js'].lineData[220] = 0;
   _$jscoverage['/dialog.js'].lineData[221] = 0;
-  _$jscoverage['/dialog.js'].lineData[223] = 0;
-  _$jscoverage['/dialog.js'].lineData[225] = 0;
-  _$jscoverage['/dialog.js'].lineData[228] = 0;
-  _$jscoverage['/dialog.js'].lineData[235] = 0;
+  _$jscoverage['/dialog.js'].lineData[222] = 0;
+  _$jscoverage['/dialog.js'].lineData[224] = 0;
+  _$jscoverage['/dialog.js'].lineData[226] = 0;
+  _$jscoverage['/dialog.js'].lineData[229] = 0;
   _$jscoverage['/dialog.js'].lineData[236] = 0;
   _$jscoverage['/dialog.js'].lineData[237] = 0;
   _$jscoverage['/dialog.js'].lineData[238] = 0;
   _$jscoverage['/dialog.js'].lineData[239] = 0;
   _$jscoverage['/dialog.js'].lineData[240] = 0;
   _$jscoverage['/dialog.js'].lineData[241] = 0;
-  _$jscoverage['/dialog.js'].lineData[260] = 0;
-  _$jscoverage['/dialog.js'].lineData[262] = 0;
-  _$jscoverage['/dialog.js'].lineData[267] = 0;
+  _$jscoverage['/dialog.js'].lineData[242] = 0;
+  _$jscoverage['/dialog.js'].lineData[261] = 0;
+  _$jscoverage['/dialog.js'].lineData[263] = 0;
   _$jscoverage['/dialog.js'].lineData[268] = 0;
   _$jscoverage['/dialog.js'].lineData[269] = 0;
   _$jscoverage['/dialog.js'].lineData[270] = 0;
   _$jscoverage['/dialog.js'].lineData[271] = 0;
-  _$jscoverage['/dialog.js'].lineData[273] = 0;
+  _$jscoverage['/dialog.js'].lineData[272] = 0;
   _$jscoverage['/dialog.js'].lineData[274] = 0;
   _$jscoverage['/dialog.js'].lineData[275] = 0;
-  _$jscoverage['/dialog.js'].lineData[277] = 0;
+  _$jscoverage['/dialog.js'].lineData[276] = 0;
   _$jscoverage['/dialog.js'].lineData[278] = 0;
-  _$jscoverage['/dialog.js'].lineData[280] = 0;
+  _$jscoverage['/dialog.js'].lineData[279] = 0;
   _$jscoverage['/dialog.js'].lineData[281] = 0;
   _$jscoverage['/dialog.js'].lineData[282] = 0;
-  _$jscoverage['/dialog.js'].lineData[284] = 0;
+  _$jscoverage['/dialog.js'].lineData[283] = 0;
   _$jscoverage['/dialog.js'].lineData[285] = 0;
-  _$jscoverage['/dialog.js'].lineData[287] = 0;
+  _$jscoverage['/dialog.js'].lineData[286] = 0;
   _$jscoverage['/dialog.js'].lineData[288] = 0;
   _$jscoverage['/dialog.js'].lineData[289] = 0;
-  _$jscoverage['/dialog.js'].lineData[291] = 0;
-  _$jscoverage['/dialog.js'].lineData[293] = 0;
+  _$jscoverage['/dialog.js'].lineData[290] = 0;
+  _$jscoverage['/dialog.js'].lineData[292] = 0;
   _$jscoverage['/dialog.js'].lineData[294] = 0;
-  _$jscoverage['/dialog.js'].lineData[296] = 0;
-  _$jscoverage['/dialog.js'].lineData[300] = 0;
-  _$jscoverage['/dialog.js'].lineData[304] = 0;
-  _$jscoverage['/dialog.js'].lineData[311] = 0;
-  _$jscoverage['/dialog.js'].lineData[315] = 0;
+  _$jscoverage['/dialog.js'].lineData[295] = 0;
+  _$jscoverage['/dialog.js'].lineData[297] = 0;
+  _$jscoverage['/dialog.js'].lineData[301] = 0;
+  _$jscoverage['/dialog.js'].lineData[305] = 0;
+  _$jscoverage['/dialog.js'].lineData[312] = 0;
   _$jscoverage['/dialog.js'].lineData[316] = 0;
   _$jscoverage['/dialog.js'].lineData[317] = 0;
   _$jscoverage['/dialog.js'].lineData[318] = 0;
@@ -349,23 +348,24 @@ if (! _$jscoverage['/dialog.js']) {
   _$jscoverage['/dialog.js'].lineData[320] = 0;
   _$jscoverage['/dialog.js'].lineData[321] = 0;
   _$jscoverage['/dialog.js'].lineData[322] = 0;
-  _$jscoverage['/dialog.js'].lineData[324] = 0;
+  _$jscoverage['/dialog.js'].lineData[323] = 0;
   _$jscoverage['/dialog.js'].lineData[325] = 0;
   _$jscoverage['/dialog.js'].lineData[326] = 0;
   _$jscoverage['/dialog.js'].lineData[327] = 0;
   _$jscoverage['/dialog.js'].lineData[328] = 0;
   _$jscoverage['/dialog.js'].lineData[329] = 0;
   _$jscoverage['/dialog.js'].lineData[330] = 0;
-  _$jscoverage['/dialog.js'].lineData[332] = 0;
+  _$jscoverage['/dialog.js'].lineData[331] = 0;
   _$jscoverage['/dialog.js'].lineData[333] = 0;
-  _$jscoverage['/dialog.js'].lineData[337] = 0;
+  _$jscoverage['/dialog.js'].lineData[334] = 0;
   _$jscoverage['/dialog.js'].lineData[338] = 0;
-  _$jscoverage['/dialog.js'].lineData[342] = 0;
-  _$jscoverage['/dialog.js'].lineData[348] = 0;
+  _$jscoverage['/dialog.js'].lineData[339] = 0;
+  _$jscoverage['/dialog.js'].lineData[343] = 0;
   _$jscoverage['/dialog.js'].lineData[349] = 0;
-  _$jscoverage['/dialog.js'].lineData[354] = 0;
+  _$jscoverage['/dialog.js'].lineData[350] = 0;
   _$jscoverage['/dialog.js'].lineData[355] = 0;
-  _$jscoverage['/dialog.js'].lineData[360] = 0;
+  _$jscoverage['/dialog.js'].lineData[356] = 0;
+  _$jscoverage['/dialog.js'].lineData[361] = 0;
 }
 if (! _$jscoverage['/dialog.js'].functionData) {
   _$jscoverage['/dialog.js'].functionData = [];
@@ -393,542 +393,542 @@ if (! _$jscoverage['/dialog.js'].functionData) {
 }
 if (! _$jscoverage['/dialog.js'].branchData) {
   _$jscoverage['/dialog.js'].branchData = {};
-  _$jscoverage['/dialog.js'].branchData['18'] = [];
-  _$jscoverage['/dialog.js'].branchData['18'][1] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['112'] = [];
-  _$jscoverage['/dialog.js'].branchData['112'][1] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['118'] = [];
-  _$jscoverage['/dialog.js'].branchData['118'][1] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['141'] = [];
-  _$jscoverage['/dialog.js'].branchData['141'][1] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['153'] = [];
-  _$jscoverage['/dialog.js'].branchData['153'][1] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['156'] = [];
-  _$jscoverage['/dialog.js'].branchData['156'][1] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['156'][2] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['198'] = [];
-  _$jscoverage['/dialog.js'].branchData['198'][1] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['202'] = [];
-  _$jscoverage['/dialog.js'].branchData['202'][1] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['205'] = [];
-  _$jscoverage['/dialog.js'].branchData['205'][1] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['214'] = [];
-  _$jscoverage['/dialog.js'].branchData['214'][1] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['220'] = [];
-  _$jscoverage['/dialog.js'].branchData['220'][1] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['235'] = [];
-  _$jscoverage['/dialog.js'].branchData['235'][1] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['237'] = [];
-  _$jscoverage['/dialog.js'].branchData['237'][1] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['239'] = [];
-  _$jscoverage['/dialog.js'].branchData['239'][1] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['267'] = [];
-  _$jscoverage['/dialog.js'].branchData['267'][1] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['269'] = [];
-  _$jscoverage['/dialog.js'].branchData['269'][1] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['274'] = [];
-  _$jscoverage['/dialog.js'].branchData['274'][1] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['277'] = [];
-  _$jscoverage['/dialog.js'].branchData['277'][1] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['281'] = [];
-  _$jscoverage['/dialog.js'].branchData['281'][1] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['284'] = [];
-  _$jscoverage['/dialog.js'].branchData['284'][1] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['287'] = [];
-  _$jscoverage['/dialog.js'].branchData['287'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['19'] = [];
+  _$jscoverage['/dialog.js'].branchData['19'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['113'] = [];
+  _$jscoverage['/dialog.js'].branchData['113'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['119'] = [];
+  _$jscoverage['/dialog.js'].branchData['119'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['142'] = [];
+  _$jscoverage['/dialog.js'].branchData['142'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['154'] = [];
+  _$jscoverage['/dialog.js'].branchData['154'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['157'] = [];
+  _$jscoverage['/dialog.js'].branchData['157'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['157'][2] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['199'] = [];
+  _$jscoverage['/dialog.js'].branchData['199'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['203'] = [];
+  _$jscoverage['/dialog.js'].branchData['203'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['206'] = [];
+  _$jscoverage['/dialog.js'].branchData['206'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['215'] = [];
+  _$jscoverage['/dialog.js'].branchData['215'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['221'] = [];
+  _$jscoverage['/dialog.js'].branchData['221'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['236'] = [];
+  _$jscoverage['/dialog.js'].branchData['236'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['238'] = [];
+  _$jscoverage['/dialog.js'].branchData['238'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['240'] = [];
+  _$jscoverage['/dialog.js'].branchData['240'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['268'] = [];
+  _$jscoverage['/dialog.js'].branchData['268'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['270'] = [];
+  _$jscoverage['/dialog.js'].branchData['270'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['275'] = [];
+  _$jscoverage['/dialog.js'].branchData['275'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['278'] = [];
+  _$jscoverage['/dialog.js'].branchData['278'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['282'] = [];
+  _$jscoverage['/dialog.js'].branchData['282'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['285'] = [];
+  _$jscoverage['/dialog.js'].branchData['285'][1] = new BranchData();
   _$jscoverage['/dialog.js'].branchData['288'] = [];
   _$jscoverage['/dialog.js'].branchData['288'][1] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['293'] = [];
-  _$jscoverage['/dialog.js'].branchData['293'][1] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['315'] = [];
-  _$jscoverage['/dialog.js'].branchData['315'][1] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['319'] = [];
-  _$jscoverage['/dialog.js'].branchData['319'][1] = new BranchData();
-  _$jscoverage['/dialog.js'].branchData['350'] = [];
-  _$jscoverage['/dialog.js'].branchData['350'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['289'] = [];
+  _$jscoverage['/dialog.js'].branchData['289'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['294'] = [];
+  _$jscoverage['/dialog.js'].branchData['294'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['316'] = [];
+  _$jscoverage['/dialog.js'].branchData['316'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['320'] = [];
+  _$jscoverage['/dialog.js'].branchData['320'][1] = new BranchData();
   _$jscoverage['/dialog.js'].branchData['351'] = [];
   _$jscoverage['/dialog.js'].branchData['351'][1] = new BranchData();
+  _$jscoverage['/dialog.js'].branchData['352'] = [];
+  _$jscoverage['/dialog.js'].branchData['352'][1] = new BranchData();
 }
-_$jscoverage['/dialog.js'].branchData['351'][1].init(212, 6, 's || i');
-function visit28_351_1(result) {
+_$jscoverage['/dialog.js'].branchData['352'][1].init(212, 6, 's || i');
+function visit28_352_1(result) {
+  _$jscoverage['/dialog.js'].branchData['352'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/dialog.js'].branchData['351'][1].init(103, 9, 'page == i');
+function visit27_351_1(result) {
   _$jscoverage['/dialog.js'].branchData['351'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['350'][1].init(103, 9, 'page == i');
-function visit27_350_1(result) {
-  _$jscoverage['/dialog.js'].branchData['350'][1].ranCondition(result);
+}_$jscoverage['/dialog.js'].branchData['320'][1].init(210, 32, 'parseInt(f.style("margin")) || 0');
+function visit26_320_1(result) {
+  _$jscoverage['/dialog.js'].branchData['320'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['319'][1].init(210, 32, 'parseInt(f.style("margin")) || 0');
-function visit26_319_1(result) {
-  _$jscoverage['/dialog.js'].branchData['319'][1].ranCondition(result);
+}_$jscoverage['/dialog.js'].branchData['316'][1].init(182, 1, 'f');
+function visit25_316_1(result) {
+  _$jscoverage['/dialog.js'].branchData['316'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['315'][1].init(182, 1, 'f');
-function visit25_315_1(result) {
-  _$jscoverage['/dialog.js'].branchData['315'][1].ranCondition(result);
+}_$jscoverage['/dialog.js'].branchData['294'][1].init(1397, 17, 'page != totalPage');
+function visit24_294_1(result) {
+  _$jscoverage['/dialog.js'].branchData['294'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['293'][1].init(1397, 17, 'page != totalPage');
-function visit24_293_1(result) {
-  _$jscoverage['/dialog.js'].branchData['293'][1].ranCondition(result);
+}_$jscoverage['/dialog.js'].branchData['289'][1].init(34, 20, 'end != totalPage - 1');
+function visit23_289_1(result) {
+  _$jscoverage['/dialog.js'].branchData['289'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['288'][1].init(34, 20, 'end != totalPage - 1');
-function visit23_288_1(result) {
+}_$jscoverage['/dialog.js'].branchData['288'][1].init(1043, 16, 'end != totalPage');
+function visit22_288_1(result) {
   _$jscoverage['/dialog.js'].branchData['288'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['287'][1].init(1043, 16, 'end != totalPage');
-function visit22_287_1(result) {
-  _$jscoverage['/dialog.js'].branchData['287'][1].ranCondition(result);
+}_$jscoverage['/dialog.js'].branchData['285'][1].init(897, 8, 'i <= end');
+function visit21_285_1(result) {
+  _$jscoverage['/dialog.js'].branchData['285'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['284'][1].init(897, 8, 'i <= end');
-function visit21_284_1(result) {
-  _$jscoverage['/dialog.js'].branchData['284'][1].ranCondition(result);
+}_$jscoverage['/dialog.js'].branchData['282'][1].init(710, 10, 'start != 2');
+function visit20_282_1(result) {
+  _$jscoverage['/dialog.js'].branchData['282'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['281'][1].init(710, 10, 'start != 2');
-function visit20_281_1(result) {
-  _$jscoverage['/dialog.js'].branchData['281'][1].ranCondition(result);
+}_$jscoverage['/dialog.js'].branchData['278'][1].init(502, 9, 'page != 1');
+function visit19_278_1(result) {
+  _$jscoverage['/dialog.js'].branchData['278'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['277'][1].init(502, 9, 'page != 1');
-function visit19_277_1(result) {
-  _$jscoverage['/dialog.js'].branchData['277'][1].ranCondition(result);
+}_$jscoverage['/dialog.js'].branchData['275'][1].init(363, 20, 'end == totalPage - 1');
+function visit18_275_1(result) {
+  _$jscoverage['/dialog.js'].branchData['275'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['274'][1].init(363, 20, 'end == totalPage - 1');
-function visit18_274_1(result) {
-  _$jscoverage['/dialog.js'].branchData['274'][1].ranCondition(result);
+}_$jscoverage['/dialog.js'].branchData['270'][1].init(115, 10, 'start <= 2');
+function visit17_270_1(result) {
+  _$jscoverage['/dialog.js'].branchData['270'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['269'][1].init(115, 10, 'start <= 2');
-function visit17_269_1(result) {
-  _$jscoverage['/dialog.js'].branchData['269'][1].ranCondition(result);
+}_$jscoverage['/dialog.js'].branchData['268'][1].init(1293, 13, 'totalPage > 1');
+function visit16_268_1(result) {
+  _$jscoverage['/dialog.js'].branchData['268'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['267'][1].init(1293, 13, 'totalPage > 1');
-function visit16_267_1(result) {
-  _$jscoverage['/dialog.js'].branchData['267'][1].ranCondition(result);
+}_$jscoverage['/dialog.js'].branchData['240'][1].init(70, 13, 'i < re.length');
+function visit15_240_1(result) {
+  _$jscoverage['/dialog.js'].branchData['240'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['239'][1].init(70, 13, 'i < re.length');
-function visit15_239_1(result) {
-  _$jscoverage['/dialog.js'].branchData['239'][1].ranCondition(result);
+}_$jscoverage['/dialog.js'].branchData['238'][1].init(120, 15, 're && re.length');
+function visit14_238_1(result) {
+  _$jscoverage['/dialog.js'].branchData['238'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['237'][1].init(120, 15, 're && re.length');
-function visit14_237_1(result) {
-  _$jscoverage['/dialog.js'].branchData['237'][1].ranCondition(result);
+}_$jscoverage['/dialog.js'].branchData['236'][1].init(262, 43, 'data.key == S.trim(self._xiami_input.val())');
+function visit13_236_1(result) {
+  _$jscoverage['/dialog.js'].branchData['236'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['235'][1].init(262, 43, 'data.key == S.trim(self._xiami_input.val())');
-function visit13_235_1(result) {
-  _$jscoverage['/dialog.js'].branchData['235'][1].ranCondition(result);
+}_$jscoverage['/dialog.js'].branchData['221'][1].init(1302, 6, 'paging');
+function visit12_221_1(result) {
+  _$jscoverage['/dialog.js'].branchData['221'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['220'][1].init(1302, 6, 'paging');
-function visit12_220_1(result) {
-  _$jscoverage['/dialog.js'].branchData['220'][1].ranCondition(result);
+}_$jscoverage['/dialog.js'].branchData['215'][1].init(45, 33, 'parseInt(self.dMargin.val()) || 0');
+function visit11_215_1(result) {
+  _$jscoverage['/dialog.js'].branchData['215'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['214'][1].init(45, 33, 'parseInt(self.dMargin.val()) || 0');
-function visit11_214_1(result) {
-  _$jscoverage['/dialog.js'].branchData['214'][1].ranCondition(result);
+}_$jscoverage['/dialog.js'].branchData['206'][1].init(595, 3, 'add');
+function visit10_206_1(result) {
+  _$jscoverage['/dialog.js'].branchData['206'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['205'][1].init(595, 3, 'add');
-function visit10_205_1(result) {
-  _$jscoverage['/dialog.js'].branchData['205'][1].ranCondition(result);
+}_$jscoverage['/dialog.js'].branchData['203'][1].init(33, 121, 'self._xiamia_list.contains(node) && Dom.hasClass(node, prefixCls + "editor-xiami-page-item")');
+function visit9_203_1(result) {
+  _$jscoverage['/dialog.js'].branchData['203'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['202'][1].init(33, 121, 'self._xiamia_list.contains(node) && Dom.hasClass(node, prefixCls + "editor-xiami-page-item")');
-function visit9_202_1(result) {
-  _$jscoverage['/dialog.js'].branchData['202'][1].ranCondition(result);
+}_$jscoverage['/dialog.js'].branchData['199'][1].init(33, 115, 'self._xiamia_list.contains(node) && Dom.hasClass(node, prefixCls + "editor-xiami-add")');
+function visit8_199_1(result) {
+  _$jscoverage['/dialog.js'].branchData['199'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['198'][1].init(33, 115, 'self._xiamia_list.contains(node) && Dom.hasClass(node, prefixCls + "editor-xiami-add")');
-function visit8_198_1(result) {
-  _$jscoverage['/dialog.js'].branchData['198'][1].ranCondition(result);
+}_$jscoverage['/dialog.js'].branchData['157'][2].init(244, 12, 'query == TIP');
+function visit7_157_2(result) {
+  _$jscoverage['/dialog.js'].branchData['157'][2].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['156'][2].init(244, 12, 'query == TIP');
-function visit7_156_2(result) {
-  _$jscoverage['/dialog.js'].branchData['156'][2].ranCondition(result);
+}_$jscoverage['/dialog.js'].branchData['157'][1].init(226, 30, '!S.trim(query) || query == TIP');
+function visit6_157_1(result) {
+  _$jscoverage['/dialog.js'].branchData['157'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['156'][1].init(226, 30, '!S.trim(query) || query == TIP');
-function visit6_156_1(result) {
-  _$jscoverage['/dialog.js'].branchData['156'][1].ranCondition(result);
+}_$jscoverage['/dialog.js'].branchData['154'][1].init(64, 48, 'query.replace(/[^\\x00-\\xff]/g, "@@").length > 30');
+function visit5_154_1(result) {
+  _$jscoverage['/dialog.js'].branchData['154'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['153'][1].init(64, 48, 'query.replace(/[^\\x00-\\xff]/g, "@@").length > 30');
-function visit5_153_1(result) {
-  _$jscoverage['/dialog.js'].branchData['153'][1].ranCondition(result);
+}_$jscoverage['/dialog.js'].branchData['142'][1].init(41, 33, 'parseInt(self.dMargin.val()) || 0');
+function visit4_142_1(result) {
+  _$jscoverage['/dialog.js'].branchData['142'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['141'][1].init(41, 33, 'parseInt(self.dMargin.val()) || 0');
-function visit4_141_1(result) {
-  _$jscoverage['/dialog.js'].branchData['141'][1].ranCondition(result);
+}_$jscoverage['/dialog.js'].branchData['119'][1].init(22, 17, 'ev.keyCode === 13');
+function visit3_119_1(result) {
+  _$jscoverage['/dialog.js'].branchData['119'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['118'][1].init(22, 17, 'ev.keyCode === 13');
-function visit3_118_1(result) {
-  _$jscoverage['/dialog.js'].branchData['118'][1].ranCondition(result);
+}_$jscoverage['/dialog.js'].branchData['113'][1].init(22, 68, '!self._xiami_submit.hasClass("ks-editor-button-disabled", undefined)');
+function visit2_113_1(result) {
+  _$jscoverage['/dialog.js'].branchData['113'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['112'][1].init(22, 68, '!self._xiami_submit.hasClass("ks-editor-button-disabled", undefined)');
-function visit2_112_1(result) {
-  _$jscoverage['/dialog.js'].branchData['112'][1].ranCondition(result);
+}_$jscoverage['/dialog.js'].branchData['19'][1].init(14, 14, 'str.length > l');
+function visit1_19_1(result) {
+  _$jscoverage['/dialog.js'].branchData['19'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['18'][1].init(14, 14, 'str.length > l');
-function visit1_18_1(result) {
-  _$jscoverage['/dialog.js'].branchData['18'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/dialog.js'].lineData[5]++;
+}_$jscoverage['/dialog.js'].lineData[6]++;
 KISSY.add("editor/plugin/xiami-music/dialog", function(S, Editor, FlashDialog, MenuButton) {
   _$jscoverage['/dialog.js'].functionData[0]++;
-  _$jscoverage['/dialog.js'].lineData[6]++;
+  _$jscoverage['/dialog.js'].lineData[7]++;
   var Dom = S.DOM, Node = S.Node, Utils = Editor.Utils, loading = Utils.debugUrl("theme/tao-loading.gif"), XIAMI_URL = "http://www.xiami.com/app/nineteen/search/key/{key}/page/{page}", CLS_XIAMI = "ke_xiami", TYPE_XIAMI = "xiami-music", BTIP = "\u641c \u7d22", TIP = "\u8f93\u5165\u6b4c\u66f2\u540d\u3001\u4e13\u8f91\u540d\u3001\u827a\u4eba\u540d";
-  _$jscoverage['/dialog.js'].lineData[17]++;
+  _$jscoverage['/dialog.js'].lineData[18]++;
   function limit(str, l) {
     _$jscoverage['/dialog.js'].functionData[1]++;
-    _$jscoverage['/dialog.js'].lineData[18]++;
-    if (visit1_18_1(str.length > l)) {
-      _$jscoverage['/dialog.js'].lineData[19]++;
+    _$jscoverage['/dialog.js'].lineData[19]++;
+    if (visit1_19_1(str.length > l)) {
+      _$jscoverage['/dialog.js'].lineData[20]++;
       str = str.substring(0, l) + "...";
     }
-    _$jscoverage['/dialog.js'].lineData[20]++;
+    _$jscoverage['/dialog.js'].lineData[21]++;
     return str;
   }
-  _$jscoverage['/dialog.js'].lineData[23]++;
+  _$jscoverage['/dialog.js'].lineData[24]++;
   var MARGIN_DEFAULT = 0, bodyHTML = "<div style='padding:40px 0 70px 0;'>" + "<form action='#' class='{prefixCls}editor-xiami-form' style='margin:0 20px;'>" + "<p class='{prefixCls}editor-xiami-title'>" + "" + "</p>" + "<p class='{prefixCls}editor-xiami-url-wrap'>" + "<input class='{prefixCls}editor-xiami-url {prefixCls}editor-input' " + "style='width:370px;" + "'" + "/> &nbsp; " + " <a " + "class='{prefixCls}editor-xiami-submit {prefixCls}editor-button ks-inline-block'" + ">" + BTIP + "</a>" + "</p>" + "<p " + "style='margin:10px 0'>" + "<label>\u5bf9 \u9f50\uff1a " + "<select " + "class='{prefixCls}editor-xiami-align' title='\u5bf9\u9f50'>" + "<option value='none'>\u65e0</option>" + "<option value='left'>\u5de6\u5bf9\u9f50</option>" + "<option value='right'>\u53f3\u5bf9\u9f50</option>" + "</select>" + "</label>" + "<label style='margin-left:70px;'>\u95f4\u8ddd\uff1a " + " " + "<input " + "" + " data-verify='^\\d+$' " + " data-warning='\u95f4\u8ddd\u8bf7\u8f93\u5165\u975e\u8d1f\u6574\u6570' " + "class='{prefixCls}editor-xiami-margin {prefixCls}editor-input' style='width:60px;" + "' value='" + MARGIN_DEFAULT + "'/> \u50cf\u7d20" + "</label>" + "</p>" + "</form>" + "<div " + "class='{prefixCls}editor-xiami-list'>" + "</div>" + "</div>", footHTML = "<div style='padding:5px 20px 20px;'><a " + "class='{prefixCls}editor-xiami-ok {prefixCls}editor-button ks-inline-block' " + "style='margin-right:20px;'>\u786e&nbsp;\u5b9a</a>" + "<a class='{prefixCls}editor-xiami-cancel {prefixCls}editor-button ks-inline-block'>\u53d6&nbsp;\u6d88</a></div>";
-  _$jscoverage['/dialog.js'].lineData[70]++;
+  _$jscoverage['/dialog.js'].lineData[71]++;
   function XiamiMusicDialog() {
     _$jscoverage['/dialog.js'].functionData[2]++;
-    _$jscoverage['/dialog.js'].lineData[71]++;
+    _$jscoverage['/dialog.js'].lineData[72]++;
     XiamiMusicDialog.superclass.constructor.apply(this, arguments);
   }
-  _$jscoverage['/dialog.js'].lineData[74]++;
+  _$jscoverage['/dialog.js'].lineData[75]++;
   S.extend(XiamiMusicDialog, FlashDialog, {
   _config: function() {
   _$jscoverage['/dialog.js'].functionData[3]++;
-  _$jscoverage['/dialog.js'].lineData[76]++;
+  _$jscoverage['/dialog.js'].lineData[77]++;
   var self = this, editor = self.editor, prefixCls = editor.get('prefixCls');
-  _$jscoverage['/dialog.js'].lineData[79]++;
-  self._cls = CLS_XIAMI;
   _$jscoverage['/dialog.js'].lineData[80]++;
-  self._type = TYPE_XIAMI;
+  self._cls = CLS_XIAMI;
   _$jscoverage['/dialog.js'].lineData[81]++;
-  self._title = "\u867e\u7c73\u97f3\u4e50";
+  self._type = TYPE_XIAMI;
   _$jscoverage['/dialog.js'].lineData[82]++;
+  self._title = "\u867e\u7c73\u97f3\u4e50";
+  _$jscoverage['/dialog.js'].lineData[83]++;
   self._bodyHTML = S.substitute(bodyHTML, {
   prefixCls: prefixCls});
-  _$jscoverage['/dialog.js'].lineData[85]++;
+  _$jscoverage['/dialog.js'].lineData[86]++;
   self._footHTML = S.substitute(footHTML, {
   prefixCls: prefixCls});
 }, 
   _initD: function() {
   _$jscoverage['/dialog.js'].functionData[4]++;
-  _$jscoverage['/dialog.js'].lineData[90]++;
+  _$jscoverage['/dialog.js'].lineData[91]++;
   var self = this, editor = self.editor, prefixCls = editor.get('prefixCls'), d = self.dialog, del = d.get("el"), dfoot = d.get("footer"), input = del.one("." + prefixCls + "editor-xiami-url");
-  _$jscoverage['/dialog.js'].lineData[97]++;
+  _$jscoverage['/dialog.js'].lineData[98]++;
   self.dAlign = MenuButton.Select.decorate(del.one("." + prefixCls + "editor-xiami-align"), {
   prefixCls: 'ks-editor-big-', 
   width: 80, 
   menuCfg: {
   prefixCls: 'ks-editor-', 
   render: del}});
-  _$jscoverage['/dialog.js'].lineData[105]++;
-  self.addRes(self.dAlign);
   _$jscoverage['/dialog.js'].lineData[106]++;
-  self._xiami_input = input;
+  self.addRes(self.dAlign);
   _$jscoverage['/dialog.js'].lineData[107]++;
-  Editor.Utils.placeholder(input, TIP);
+  self._xiami_input = input;
   _$jscoverage['/dialog.js'].lineData[108]++;
-  self.addRes(input);
+  Editor.Utils.placeholder(input, TIP);
   _$jscoverage['/dialog.js'].lineData[109]++;
-  self._xiamia_list = del.one("." + prefixCls + "editor-xiami-list");
+  self.addRes(input);
   _$jscoverage['/dialog.js'].lineData[110]++;
-  self._xiami_submit = del.one("." + prefixCls + "editor-xiami-submit");
+  self._xiamia_list = del.one("." + prefixCls + "editor-xiami-list");
   _$jscoverage['/dialog.js'].lineData[111]++;
+  self._xiami_submit = del.one("." + prefixCls + "editor-xiami-submit");
+  _$jscoverage['/dialog.js'].lineData[112]++;
   self._xiami_submit.on("click", function(ev) {
   _$jscoverage['/dialog.js'].functionData[5]++;
-  _$jscoverage['/dialog.js'].lineData[112]++;
-  if (visit2_112_1(!self._xiami_submit.hasClass("ks-editor-button-disabled", undefined))) {
-    _$jscoverage['/dialog.js'].lineData[113]++;
+  _$jscoverage['/dialog.js'].lineData[113]++;
+  if (visit2_113_1(!self._xiami_submit.hasClass("ks-editor-button-disabled", undefined))) {
+    _$jscoverage['/dialog.js'].lineData[114]++;
     loadRecordsByPage(1);
   }
-  _$jscoverage['/dialog.js'].lineData[114]++;
+  _$jscoverage['/dialog.js'].lineData[115]++;
   ev.halt();
 });
-  _$jscoverage['/dialog.js'].lineData[116]++;
-  self.addRes(self._xiami_submit);
   _$jscoverage['/dialog.js'].lineData[117]++;
+  self.addRes(self._xiami_submit);
+  _$jscoverage['/dialog.js'].lineData[118]++;
   input.on("keydown", function(ev) {
   _$jscoverage['/dialog.js'].functionData[6]++;
-  _$jscoverage['/dialog.js'].lineData[118]++;
-  if (visit3_118_1(ev.keyCode === 13)) {
-    _$jscoverage['/dialog.js'].lineData[119]++;
+  _$jscoverage['/dialog.js'].lineData[119]++;
+  if (visit3_119_1(ev.keyCode === 13)) {
+    _$jscoverage['/dialog.js'].lineData[120]++;
     loadRecordsByPage(1);
   }
 });
-  _$jscoverage['/dialog.js'].lineData[122]++;
-  self.dMargin = del.one("." + prefixCls + "editor-xiami-margin");
   _$jscoverage['/dialog.js'].lineData[123]++;
-  self._xiami_url_wrap = del.one("." + prefixCls + "editor-xiami-url-wrap");
+  self.dMargin = del.one("." + prefixCls + "editor-xiami-margin");
   _$jscoverage['/dialog.js'].lineData[124]++;
+  self._xiami_url_wrap = del.one("." + prefixCls + "editor-xiami-url-wrap");
+  _$jscoverage['/dialog.js'].lineData[125]++;
   self._xiamia_title = del.one("." + prefixCls + "editor-xiami-title");
-  _$jscoverage['/dialog.js'].lineData[126]++;
-  var _xiami_ok = dfoot.one("." + prefixCls + "editor-xiami-ok");
   _$jscoverage['/dialog.js'].lineData[127]++;
+  var _xiami_ok = dfoot.one("." + prefixCls + "editor-xiami-ok");
+  _$jscoverage['/dialog.js'].lineData[128]++;
   dfoot.one("." + prefixCls + "editor-xiami-cancel").on("click", function(ev) {
   _$jscoverage['/dialog.js'].functionData[7]++;
-  _$jscoverage['/dialog.js'].lineData[128]++;
-  d.hide();
   _$jscoverage['/dialog.js'].lineData[129]++;
+  d.hide();
+  _$jscoverage['/dialog.js'].lineData[130]++;
   ev.halt();
 });
-  _$jscoverage['/dialog.js'].lineData[131]++;
-  self.addRes(dfoot);
   _$jscoverage['/dialog.js'].lineData[132]++;
+  self.addRes(dfoot);
+  _$jscoverage['/dialog.js'].lineData[133]++;
   _xiami_ok.on("click", function(ev) {
   _$jscoverage['/dialog.js'].functionData[8]++;
-  _$jscoverage['/dialog.js'].lineData[133]++;
+  _$jscoverage['/dialog.js'].lineData[134]++;
   var f = self.selectedFlash, r = editor.restoreRealElement(f);
-  _$jscoverage['/dialog.js'].lineData[135]++;
+  _$jscoverage['/dialog.js'].lineData[136]++;
   self._dinfo = {
   url: self._getFlashUrl(r), 
   attrs: {
   title: f.attr("title"), 
-  style: "margin:" + (visit4_141_1(parseInt(self.dMargin.val()) || 0)) + "px;" + "float:" + self.dAlign.get("value") + ";"}};
-  _$jscoverage['/dialog.js'].lineData[146]++;
-  self._gen();
+  style: "margin:" + (visit4_142_1(parseInt(self.dMargin.val()) || 0)) + "px;" + "float:" + self.dAlign.get("value") + ";"}};
   _$jscoverage['/dialog.js'].lineData[147]++;
+  self._gen();
+  _$jscoverage['/dialog.js'].lineData[148]++;
   ev.halt();
 }, self);
-  _$jscoverage['/dialog.js'].lineData[149]++;
+  _$jscoverage['/dialog.js'].lineData[150]++;
   self.addRes(_xiami_ok);
-  _$jscoverage['/dialog.js'].lineData[151]++;
+  _$jscoverage['/dialog.js'].lineData[152]++;
   function loadRecordsByPage(page) {
     _$jscoverage['/dialog.js'].functionData[9]++;
-    _$jscoverage['/dialog.js'].lineData[152]++;
-    var query = input.val();
     _$jscoverage['/dialog.js'].lineData[153]++;
-    if (visit5_153_1(query.replace(/[^\x00-\xff]/g, "@@").length > 30)) {
-      _$jscoverage['/dialog.js'].lineData[154]++;
-      alert("\u957f\u5ea6\u4e0a\u965030\u4e2a\u5b57\u7b26\uff081\u4e2a\u6c49\u5b57=2\u4e2a\u5b57\u7b26\uff09");
+    var query = input.val();
+    _$jscoverage['/dialog.js'].lineData[154]++;
+    if (visit5_154_1(query.replace(/[^\x00-\xff]/g, "@@").length > 30)) {
       _$jscoverage['/dialog.js'].lineData[155]++;
+      alert("\u957f\u5ea6\u4e0a\u965030\u4e2a\u5b57\u7b26\uff081\u4e2a\u6c49\u5b57=2\u4e2a\u5b57\u7b26\uff09");
+      _$jscoverage['/dialog.js'].lineData[156]++;
       return;
     } else {
-      _$jscoverage['/dialog.js'].lineData[156]++;
-      if (visit6_156_1(!S.trim(query) || visit7_156_2(query == TIP))) {
-        _$jscoverage['/dialog.js'].lineData[157]++;
-        alert("\u4e0d\u80fd\u4e3a\u7a7a\uff01");
+      _$jscoverage['/dialog.js'].lineData[157]++;
+      if (visit6_157_1(!S.trim(query) || visit7_157_2(query == TIP))) {
         _$jscoverage['/dialog.js'].lineData[158]++;
+        alert("\u4e0d\u80fd\u4e3a\u7a7a\uff01");
+        _$jscoverage['/dialog.js'].lineData[159]++;
         return;
       }
     }
-    _$jscoverage['/dialog.js'].lineData[160]++;
-    self._xiami_submit.addClass(prefixCls + "editor-button-disabled", undefined);
     _$jscoverage['/dialog.js'].lineData[161]++;
+    self._xiami_submit.addClass(prefixCls + "editor-button-disabled", undefined);
+    _$jscoverage['/dialog.js'].lineData[162]++;
     var req = S.substitute(XIAMI_URL, {
   key: encodeURIComponent(input.val()), 
   page: page});
-    _$jscoverage['/dialog.js'].lineData[165]++;
+    _$jscoverage['/dialog.js'].lineData[166]++;
     self._xiamia_list.html("<img style='" + "display:block;" + "width:32px;" + "height:32px;" + "margin:5px auto 0 auto;" + "'src='" + loading + "'/>" + "<p style='width: 130px; margin: 15px auto 0; color: rgb(150, 150, 150);'>\u6b63\u5728\u641c\u7d22\uff0c\u8bf7\u7a0d\u5019......</p>");
-    _$jscoverage['/dialog.js'].lineData[172]++;
+    _$jscoverage['/dialog.js'].lineData[173]++;
     self._xiamia_list.show();
-    _$jscoverage['/dialog.js'].lineData[174]++;
+    _$jscoverage['/dialog.js'].lineData[175]++;
     S.use('io', function(S, IO) {
   _$jscoverage['/dialog.js'].functionData[10]++;
-  _$jscoverage['/dialog.js'].lineData[175]++;
+  _$jscoverage['/dialog.js'].lineData[176]++;
   new IO({
   cache: false, 
   url: req, 
   dataType: 'jsonp', 
   success: function(data) {
   _$jscoverage['/dialog.js'].functionData[11]++;
-  _$jscoverage['/dialog.js'].lineData[180]++;
-  data.page = page;
   _$jscoverage['/dialog.js'].lineData[181]++;
+  data.page = page;
+  _$jscoverage['/dialog.js'].lineData[182]++;
   self._listSearch(data);
 }, 
   error: function() {
   _$jscoverage['/dialog.js'].functionData[12]++;
-  _$jscoverage['/dialog.js'].lineData[184]++;
-  self._xiami_submit.removeClass(prefixCls + "editor-button-disabled", undefined);
   _$jscoverage['/dialog.js'].lineData[185]++;
+  self._xiami_submit.removeClass(prefixCls + "editor-button-disabled", undefined);
+  _$jscoverage['/dialog.js'].lineData[186]++;
   var html = "<p style='text-align:center;margin:10px 0;'>" + "\u4e0d\u597d\u610f\u601d\uff0c\u8d85\u65f6\u4e86\uff0c\u8bf7\u91cd\u8bd5\uff01" + "</p>";
-  _$jscoverage['/dialog.js'].lineData[188]++;
+  _$jscoverage['/dialog.js'].lineData[189]++;
   self._xiamia_list.html(html);
 }});
 });
   }
-  _$jscoverage['/dialog.js'].lineData[194]++;
+  _$jscoverage['/dialog.js'].lineData[195]++;
   self._xiamia_list.on("click", function(ev) {
   _$jscoverage['/dialog.js'].functionData[13]++;
-  _$jscoverage['/dialog.js'].lineData[195]++;
-  ev.preventDefault();
   _$jscoverage['/dialog.js'].lineData[196]++;
+  ev.preventDefault();
+  _$jscoverage['/dialog.js'].lineData[197]++;
   var t = new Node(ev.target), add = t.closest(function(node) {
   _$jscoverage['/dialog.js'].functionData[14]++;
-  _$jscoverage['/dialog.js'].lineData[198]++;
-  return visit8_198_1(self._xiamia_list.contains(node) && Dom.hasClass(node, prefixCls + "editor-xiami-add"));
+  _$jscoverage['/dialog.js'].lineData[199]++;
+  return visit8_199_1(self._xiamia_list.contains(node) && Dom.hasClass(node, prefixCls + "editor-xiami-add"));
 }, undefined), paging = t.closest(function(node) {
   _$jscoverage['/dialog.js'].functionData[15]++;
-  _$jscoverage['/dialog.js'].lineData[202]++;
-  return visit9_202_1(self._xiamia_list.contains(node) && Dom.hasClass(node, prefixCls + "editor-xiami-page-item"));
+  _$jscoverage['/dialog.js'].lineData[203]++;
+  return visit9_203_1(self._xiamia_list.contains(node) && Dom.hasClass(node, prefixCls + "editor-xiami-page-item"));
 }, undefined);
-  _$jscoverage['/dialog.js'].lineData[205]++;
-  if (visit10_205_1(add)) {
-    _$jscoverage['/dialog.js'].lineData[206]++;
+  _$jscoverage['/dialog.js'].lineData[206]++;
+  if (visit10_206_1(add)) {
+    _$jscoverage['/dialog.js'].lineData[207]++;
     self._dinfo = {
   url: ("http://www.xiami.com/widget/" + add.attr("data-value") + "/singlePlayer.swf"), 
   attrs: {
   title: add.attr("title"), 
-  style: "margin:" + (visit11_214_1(parseInt(self.dMargin.val()) || 0)) + "px;" + "float:" + self.dAlign.get("value") + ";"}};
-    _$jscoverage['/dialog.js'].lineData[219]++;
+  style: "margin:" + (visit11_215_1(parseInt(self.dMargin.val()) || 0)) + "px;" + "float:" + self.dAlign.get("value") + ";"}};
+    _$jscoverage['/dialog.js'].lineData[220]++;
     self._gen();
   } else {
-    _$jscoverage['/dialog.js'].lineData[220]++;
-    if (visit12_220_1(paging)) {
-      _$jscoverage['/dialog.js'].lineData[221]++;
+    _$jscoverage['/dialog.js'].lineData[221]++;
+    if (visit12_221_1(paging)) {
+      _$jscoverage['/dialog.js'].lineData[222]++;
       loadRecordsByPage(parseInt(paging.attr("data-value")));
     }
   }
-  _$jscoverage['/dialog.js'].lineData[223]++;
+  _$jscoverage['/dialog.js'].lineData[224]++;
   ev.halt();
 });
-  _$jscoverage['/dialog.js'].lineData[225]++;
+  _$jscoverage['/dialog.js'].lineData[226]++;
   self.addRes(self._xiamia_list);
 }, 
   _listSearch: function(data) {
   _$jscoverage['/dialog.js'].functionData[16]++;
-  _$jscoverage['/dialog.js'].lineData[228]++;
+  _$jscoverage['/dialog.js'].lineData[229]++;
   var self = this, i, editor = self.editor, prefixCls = editor.get('prefixCls'), re = data['results'], html = "";
-  _$jscoverage['/dialog.js'].lineData[235]++;
-  if (visit13_235_1(data.key == S.trim(self._xiami_input.val()))) {
-    _$jscoverage['/dialog.js'].lineData[236]++;
-    self._xiami_submit.removeClass(prefixCls + "editor-button-disabled", undefined);
+  _$jscoverage['/dialog.js'].lineData[236]++;
+  if (visit13_236_1(data.key == S.trim(self._xiami_input.val()))) {
     _$jscoverage['/dialog.js'].lineData[237]++;
-    if (visit14_237_1(re && re.length)) {
-      _$jscoverage['/dialog.js'].lineData[238]++;
-      html = "<ul>";
+    self._xiami_submit.removeClass(prefixCls + "editor-button-disabled", undefined);
+    _$jscoverage['/dialog.js'].lineData[238]++;
+    if (visit14_238_1(re && re.length)) {
       _$jscoverage['/dialog.js'].lineData[239]++;
-      for (i = 0; visit15_239_1(i < re.length); i++) {
-        _$jscoverage['/dialog.js'].lineData[240]++;
-        var r = re[i], d = getDisplayName(r);
+      html = "<ul>";
+      _$jscoverage['/dialog.js'].lineData[240]++;
+      for (i = 0; visit15_240_1(i < re.length); i++) {
         _$jscoverage['/dialog.js'].lineData[241]++;
+        var r = re[i], d = getDisplayName(r);
+        _$jscoverage['/dialog.js'].lineData[242]++;
         html += "<li " + "title='" + d + "'>" + "<span class='" + prefixCls + "editor-xiami-song'>" + limit(d, 35) + "</span>" + "" + "" + "<a href='#' " + "title='" + d + "' " + "class='" + prefixCls + "editor-xiami-add' data-value='" + (r['album_id'] + "_" + r['song_id']) + "'>\u6dfb\u52a0</a>" + "</li>";
       }
-      _$jscoverage['/dialog.js'].lineData[260]++;
+      _$jscoverage['/dialog.js'].lineData[261]++;
       html += "</ul>";
-      _$jscoverage['/dialog.js'].lineData[262]++;
+      _$jscoverage['/dialog.js'].lineData[263]++;
       var page = data.page, totalPage = Math.floor(data['total'] / 8), start = page - 1, end = page + 1;
-      _$jscoverage['/dialog.js'].lineData[267]++;
-      if (visit16_267_1(totalPage > 1)) {
-        _$jscoverage['/dialog.js'].lineData[268]++;
-        html += "<p class='" + prefixCls + "editor-xiami-paging'>";
+      _$jscoverage['/dialog.js'].lineData[268]++;
+      if (visit16_268_1(totalPage > 1)) {
         _$jscoverage['/dialog.js'].lineData[269]++;
-        if (visit17_269_1(start <= 2)) {
-          _$jscoverage['/dialog.js'].lineData[270]++;
-          end = Math.min(2 - start + end, totalPage - 1);
+        html += "<p class='" + prefixCls + "editor-xiami-paging'>";
+        _$jscoverage['/dialog.js'].lineData[270]++;
+        if (visit17_270_1(start <= 2)) {
           _$jscoverage['/dialog.js'].lineData[271]++;
+          end = Math.min(2 - start + end, totalPage - 1);
+          _$jscoverage['/dialog.js'].lineData[272]++;
           start = 2;
         }
-        _$jscoverage['/dialog.js'].lineData[273]++;
-        end = Math.min(end, totalPage - 1);
         _$jscoverage['/dialog.js'].lineData[274]++;
-        if (visit18_274_1(end == totalPage - 1)) {
-          _$jscoverage['/dialog.js'].lineData[275]++;
+        end = Math.min(end, totalPage - 1);
+        _$jscoverage['/dialog.js'].lineData[275]++;
+        if (visit18_275_1(end == totalPage - 1)) {
+          _$jscoverage['/dialog.js'].lineData[276]++;
           start = Math.max(2, end - 3);
         }
-        _$jscoverage['/dialog.js'].lineData[277]++;
-        if (visit19_277_1(page != 1)) {
-          _$jscoverage['/dialog.js'].lineData[278]++;
+        _$jscoverage['/dialog.js'].lineData[278]++;
+        if (visit19_278_1(page != 1)) {
+          _$jscoverage['/dialog.js'].lineData[279]++;
           html += getXiamiPaging(page, page - 1, "\u4e0a\u4e00\u9875");
         }
-        _$jscoverage['/dialog.js'].lineData[280]++;
-        html += getXiamiPaging(page, 1, "1");
         _$jscoverage['/dialog.js'].lineData[281]++;
-        if (visit20_281_1(start != 2)) {
-          _$jscoverage['/dialog.js'].lineData[282]++;
+        html += getXiamiPaging(page, 1, "1");
+        _$jscoverage['/dialog.js'].lineData[282]++;
+        if (visit20_282_1(start != 2)) {
+          _$jscoverage['/dialog.js'].lineData[283]++;
           html += "<span class='" + prefixCls + "editor-xiami-page-more'>...</span>";
         }
-        _$jscoverage['/dialog.js'].lineData[284]++;
-        for (i = start; visit21_284_1(i <= end); i++) {
-          _$jscoverage['/dialog.js'].lineData[285]++;
+        _$jscoverage['/dialog.js'].lineData[285]++;
+        for (i = start; visit21_285_1(i <= end); i++) {
+          _$jscoverage['/dialog.js'].lineData[286]++;
           html += getXiamiPaging(page, i, undefined);
         }
-        _$jscoverage['/dialog.js'].lineData[287]++;
-        if (visit22_287_1(end != totalPage)) {
-          _$jscoverage['/dialog.js'].lineData[288]++;
-          if (visit23_288_1(end != totalPage - 1)) {
-            _$jscoverage['/dialog.js'].lineData[289]++;
+        _$jscoverage['/dialog.js'].lineData[288]++;
+        if (visit22_288_1(end != totalPage)) {
+          _$jscoverage['/dialog.js'].lineData[289]++;
+          if (visit23_289_1(end != totalPage - 1)) {
+            _$jscoverage['/dialog.js'].lineData[290]++;
             html += "<span class='" + prefixCls + "editor-xiami-page-more'>...</span>";
           }
-          _$jscoverage['/dialog.js'].lineData[291]++;
+          _$jscoverage['/dialog.js'].lineData[292]++;
           html += getXiamiPaging(page, totalPage, totalPage);
         }
-        _$jscoverage['/dialog.js'].lineData[293]++;
-        if (visit24_293_1(page != totalPage)) {
-          _$jscoverage['/dialog.js'].lineData[294]++;
+        _$jscoverage['/dialog.js'].lineData[294]++;
+        if (visit24_294_1(page != totalPage)) {
+          _$jscoverage['/dialog.js'].lineData[295]++;
           html += getXiamiPaging(page, page + 1, "\u4e0b\u4e00\u9875");
         }
-        _$jscoverage['/dialog.js'].lineData[296]++;
+        _$jscoverage['/dialog.js'].lineData[297]++;
         html += "</p>";
       }
     } else {
-      _$jscoverage['/dialog.js'].lineData[300]++;
+      _$jscoverage['/dialog.js'].lineData[301]++;
       html = "<p style='text-align:center;margin:10px 0;'>" + "\u4e0d\u597d\u610f\u601d\uff0c\u6ca1\u6709\u627e\u5230\u7ed3\u679c\uff01" + "</p>";
     }
-    _$jscoverage['/dialog.js'].lineData[304]++;
+    _$jscoverage['/dialog.js'].lineData[305]++;
     self._xiamia_list.html(S.substitute(html, {
   prefixCls: prefixCls}));
   }
 }, 
   _updateD: function() {
   _$jscoverage['/dialog.js'].functionData[17]++;
-  _$jscoverage['/dialog.js'].lineData[311]++;
+  _$jscoverage['/dialog.js'].lineData[312]++;
   var self = this, editor = self.editor, prefixCls = editor.get('prefixCls'), f = self.selectedFlash;
-  _$jscoverage['/dialog.js'].lineData[315]++;
-  if (visit25_315_1(f)) {
-    _$jscoverage['/dialog.js'].lineData[316]++;
-    self._xiami_input.val(f.attr("title"));
+  _$jscoverage['/dialog.js'].lineData[316]++;
+  if (visit25_316_1(f)) {
     _$jscoverage['/dialog.js'].lineData[317]++;
-    self._xiamia_title.html(f.attr("title"));
+    self._xiami_input.val(f.attr("title"));
     _$jscoverage['/dialog.js'].lineData[318]++;
-    self.dAlign.set("value", f.css("float"));
+    self._xiamia_title.html(f.attr("title"));
     _$jscoverage['/dialog.js'].lineData[319]++;
-    self.dMargin.val(visit26_319_1(parseInt(f.style("margin")) || 0));
+    self.dAlign.set("value", f.css("float"));
     _$jscoverage['/dialog.js'].lineData[320]++;
-    self._xiami_url_wrap.hide();
+    self.dMargin.val(visit26_320_1(parseInt(f.style("margin")) || 0));
     _$jscoverage['/dialog.js'].lineData[321]++;
-    self.dialog.get("footer").show();
+    self._xiami_url_wrap.hide();
     _$jscoverage['/dialog.js'].lineData[322]++;
+    self.dialog.get("footer").show();
+    _$jscoverage['/dialog.js'].lineData[323]++;
     self._xiamia_title.show();
   } else {
-    _$jscoverage['/dialog.js'].lineData[324]++;
-    Editor.Utils.resetInput(self._xiami_input);
     _$jscoverage['/dialog.js'].lineData[325]++;
-    self.dAlign.set("value", "none");
+    Editor.Utils.resetInput(self._xiami_input);
     _$jscoverage['/dialog.js'].lineData[326]++;
-    self.dMargin.val(MARGIN_DEFAULT);
+    self.dAlign.set("value", "none");
     _$jscoverage['/dialog.js'].lineData[327]++;
-    self._xiami_url_wrap.show();
+    self.dMargin.val(MARGIN_DEFAULT);
     _$jscoverage['/dialog.js'].lineData[328]++;
-    self.dialog.get("footer").hide();
+    self._xiami_url_wrap.show();
     _$jscoverage['/dialog.js'].lineData[329]++;
-    self._xiamia_title.hide();
+    self.dialog.get("footer").hide();
     _$jscoverage['/dialog.js'].lineData[330]++;
+    self._xiamia_title.hide();
+    _$jscoverage['/dialog.js'].lineData[331]++;
     self._xiami_submit.removeClass(prefixCls + "editor-button-disabled", undefined);
   }
-  _$jscoverage['/dialog.js'].lineData[332]++;
-  self._xiamia_list.hide();
   _$jscoverage['/dialog.js'].lineData[333]++;
+  self._xiamia_list.hide();
+  _$jscoverage['/dialog.js'].lineData[334]++;
   self._xiamia_list.html("");
 }, 
   _getDInfo: function() {
   _$jscoverage['/dialog.js'].functionData[18]++;
-  _$jscoverage['/dialog.js'].lineData[337]++;
-  var self = this;
   _$jscoverage['/dialog.js'].lineData[338]++;
+  var self = this;
+  _$jscoverage['/dialog.js'].lineData[339]++;
   S.mix(self._dinfo.attrs, {
   width: 257, 
   height: 33});
-  _$jscoverage['/dialog.js'].lineData[342]++;
+  _$jscoverage['/dialog.js'].lineData[343]++;
   return self._dinfo;
 }});
-  _$jscoverage['/dialog.js'].lineData[348]++;
+  _$jscoverage['/dialog.js'].lineData[349]++;
   function getXiamiPaging(page, i, s) {
     _$jscoverage['/dialog.js'].functionData[19]++;
-    _$jscoverage['/dialog.js'].lineData[349]++;
-    return "<a class='{prefixCls}editor-xiami-page-item {prefixCls}editor-button ks-inline-block" + ((visit27_350_1(page == i)) ? " {prefixCls}editor-xiami-curpage" : "") + "' data-value='" + i + "' href='#'>" + (visit28_351_1(s || i)) + "</a>";
+    _$jscoverage['/dialog.js'].lineData[350]++;
+    return "<a class='{prefixCls}editor-xiami-page-item {prefixCls}editor-button ks-inline-block" + ((visit27_351_1(page == i)) ? " {prefixCls}editor-xiami-curpage" : "") + "' data-value='" + i + "' href='#'>" + (visit28_352_1(s || i)) + "</a>";
   }
-  _$jscoverage['/dialog.js'].lineData[354]++;
+  _$jscoverage['/dialog.js'].lineData[355]++;
   function getDisplayName(r) {
     _$jscoverage['/dialog.js'].functionData[20]++;
-    _$jscoverage['/dialog.js'].lineData[355]++;
+    _$jscoverage['/dialog.js'].lineData[356]++;
     return S.urlDecode(r['song_name']) + " - " + S.urlDecode(r['artist_name']);
   }
-  _$jscoverage['/dialog.js'].lineData[360]++;
+  _$jscoverage['/dialog.js'].lineData[361]++;
   return XiamiMusicDialog;
 }, {
   requires: ['editor', '../flash/dialog', '../menubutton']});

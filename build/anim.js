@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 4 18:15
+build time: Sep 11 12:42
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -16,6 +16,7 @@ build time: Sep 4 18:15
  */
 KISSY.add('anim', function (S, Dom, AnimBase, TimerAnim, TransitionAnim) {
     var Utils = AnimBase.Utils,
+        logger= S.getLogger('s/anim'),
         defaultConfig = {
             duration: 1,
             easing: 'linear'
@@ -76,10 +77,10 @@ KISSY.add('anim', function (S, Dom, AnimBase, TimerAnim, TransitionAnim) {
             useTransition: S.config('anim/useTransition')
         });
         if (config['useTransition'] && TransitionAnim) {
-            // S.log('use transition anim');
+            logger.info('use transition anim');
             return new TransitionAnim(config);
         } else {
-            // S.log('use js timer anim');
+            logger.info('use js timer anim');
             return new TimerAnim(config);
         }
     }

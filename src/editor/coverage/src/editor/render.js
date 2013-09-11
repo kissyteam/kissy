@@ -229,10 +229,10 @@ if (! this._$jscoverage) {
 if (! _$jscoverage['/editor/render.js']) {
   _$jscoverage['/editor/render.js'] = {};
   _$jscoverage['/editor/render.js'].lineData = [];
-  _$jscoverage['/editor/render.js'].lineData[5] = 0;
-  _$jscoverage['/editor/render.js'].lineData[7] = 0;
-  _$jscoverage['/editor/render.js'].lineData[10] = 0;
-  _$jscoverage['/editor/render.js'].lineData[14] = 0;
+  _$jscoverage['/editor/render.js'].lineData[6] = 0;
+  _$jscoverage['/editor/render.js'].lineData[8] = 0;
+  _$jscoverage['/editor/render.js'].lineData[11] = 0;
+  _$jscoverage['/editor/render.js'].lineData[15] = 0;
 }
 if (! _$jscoverage['/editor/render.js'].functionData) {
   _$jscoverage['/editor/render.js'].functionData = [];
@@ -242,17 +242,17 @@ if (! _$jscoverage['/editor/render.js'].functionData) {
 if (! _$jscoverage['/editor/render.js'].branchData) {
   _$jscoverage['/editor/render.js'].branchData = {};
 }
-_$jscoverage['/editor/render.js'].lineData[5]++;
+_$jscoverage['/editor/render.js'].lineData[6]++;
 KISSY.add('editor/render', function(S, Control, RenderTpl) {
   _$jscoverage['/editor/render.js'].functionData[0]++;
-  _$jscoverage['/editor/render.js'].lineData[7]++;
+  _$jscoverage['/editor/render.js'].lineData[8]++;
   return Control.getDefaultRender().extend({
   beforeCreateDom: function(renderData, childrenElSelectors) {
   _$jscoverage['/editor/render.js'].functionData[1]++;
-  _$jscoverage['/editor/render.js'].lineData[10]++;
+  _$jscoverage['/editor/render.js'].lineData[11]++;
   S.mix(renderData, {
   mobile: S.UA.mobile});
-  _$jscoverage['/editor/render.js'].lineData[14]++;
+  _$jscoverage['/editor/render.js'].lineData[15]++;
   S.mix(childrenElSelectors, {
   textarea: '#ks-editor-textarea-{id}', 
   toolBarEl: '#ks-editor-tools-{id}', 

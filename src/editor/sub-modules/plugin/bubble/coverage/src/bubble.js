@@ -229,13 +229,13 @@ if (! this._$jscoverage) {
 if (! _$jscoverage['/bubble.js']) {
   _$jscoverage['/bubble.js'] = {};
   _$jscoverage['/bubble.js'].lineData = [];
-  _$jscoverage['/bubble.js'].lineData[5] = 0;
   _$jscoverage['/bubble.js'].lineData[6] = 0;
-  _$jscoverage['/bubble.js'].lineData[17] = 0;
-  _$jscoverage['/bubble.js'].lineData[18] = 0;
-  _$jscoverage['/bubble.js'].lineData[24] = 0;
+  _$jscoverage['/bubble.js'].lineData[7] = 0;
+  _$jscoverage['/bubble.js'].lineData[19] = 0;
+  _$jscoverage['/bubble.js'].lineData[20] = 0;
   _$jscoverage['/bubble.js'].lineData[25] = 0;
-  _$jscoverage['/bubble.js'].lineData[30] = 0;
+  _$jscoverage['/bubble.js'].lineData[26] = 0;
+  _$jscoverage['/bubble.js'].lineData[31] = 0;
   _$jscoverage['/bubble.js'].lineData[37] = 0;
   _$jscoverage['/bubble.js'].lineData[38] = 0;
   _$jscoverage['/bubble.js'].lineData[41] = 0;
@@ -296,27 +296,27 @@ if (! _$jscoverage['/bubble.js']) {
   _$jscoverage['/bubble.js'].lineData[175] = 0;
   _$jscoverage['/bubble.js'].lineData[179] = 0;
   _$jscoverage['/bubble.js'].lineData[181] = 0;
+  _$jscoverage['/bubble.js'].lineData[182] = 0;
   _$jscoverage['/bubble.js'].lineData[183] = 0;
   _$jscoverage['/bubble.js'].lineData[184] = 0;
   _$jscoverage['/bubble.js'].lineData[185] = 0;
   _$jscoverage['/bubble.js'].lineData[186] = 0;
   _$jscoverage['/bubble.js'].lineData[187] = 0;
   _$jscoverage['/bubble.js'].lineData[188] = 0;
-  _$jscoverage['/bubble.js'].lineData[189] = 0;
+  _$jscoverage['/bubble.js'].lineData[190] = 0;
   _$jscoverage['/bubble.js'].lineData[191] = 0;
-  _$jscoverage['/bubble.js'].lineData[192] = 0;
-  _$jscoverage['/bubble.js'].lineData[194] = 0;
-  _$jscoverage['/bubble.js'].lineData[199] = 0;
+  _$jscoverage['/bubble.js'].lineData[193] = 0;
+  _$jscoverage['/bubble.js'].lineData[198] = 0;
+  _$jscoverage['/bubble.js'].lineData[200] = 0;
   _$jscoverage['/bubble.js'].lineData[201] = 0;
   _$jscoverage['/bubble.js'].lineData[202] = 0;
-  _$jscoverage['/bubble.js'].lineData[203] = 0;
+  _$jscoverage['/bubble.js'].lineData[204] = 0;
   _$jscoverage['/bubble.js'].lineData[205] = 0;
   _$jscoverage['/bubble.js'].lineData[206] = 0;
-  _$jscoverage['/bubble.js'].lineData[207] = 0;
+  _$jscoverage['/bubble.js'].lineData[209] = 0;
   _$jscoverage['/bubble.js'].lineData[210] = 0;
   _$jscoverage['/bubble.js'].lineData[211] = 0;
   _$jscoverage['/bubble.js'].lineData[212] = 0;
-  _$jscoverage['/bubble.js'].lineData[213] = 0;
 }
 if (! _$jscoverage['/bubble.js'].functionData) {
   _$jscoverage['/bubble.js'].functionData = [];
@@ -335,12 +335,12 @@ if (! _$jscoverage['/bubble.js'].functionData) {
 }
 if (! _$jscoverage['/bubble.js'].branchData) {
   _$jscoverage['/bubble.js'].branchData = {};
-  _$jscoverage['/bubble.js'].branchData['18'] = [];
-  _$jscoverage['/bubble.js'].branchData['18'][1] = new BranchData();
-  _$jscoverage['/bubble.js'].branchData['18'][2] = new BranchData();
-  _$jscoverage['/bubble.js'].branchData['18'][3] = new BranchData();
-  _$jscoverage['/bubble.js'].branchData['30'] = [];
-  _$jscoverage['/bubble.js'].branchData['30'][1] = new BranchData();
+  _$jscoverage['/bubble.js'].branchData['20'] = [];
+  _$jscoverage['/bubble.js'].branchData['20'][1] = new BranchData();
+  _$jscoverage['/bubble.js'].branchData['20'][2] = new BranchData();
+  _$jscoverage['/bubble.js'].branchData['20'][3] = new BranchData();
+  _$jscoverage['/bubble.js'].branchData['31'] = [];
+  _$jscoverage['/bubble.js'].branchData['31'][1] = new BranchData();
   _$jscoverage['/bubble.js'].branchData['42'] = [];
   _$jscoverage['/bubble.js'].branchData['42'][1] = new BranchData();
   _$jscoverage['/bubble.js'].branchData['43'] = [];
@@ -391,30 +391,30 @@ if (! _$jscoverage['/bubble.js'].branchData) {
   _$jscoverage['/bubble.js'].branchData['155'][1] = new BranchData();
   _$jscoverage['/bubble.js'].branchData['173'] = [];
   _$jscoverage['/bubble.js'].branchData['173'][1] = new BranchData();
-  _$jscoverage['/bubble.js'].branchData['184'] = [];
-  _$jscoverage['/bubble.js'].branchData['184'][1] = new BranchData();
-  _$jscoverage['/bubble.js'].branchData['187'] = [];
-  _$jscoverage['/bubble.js'].branchData['187'][1] = new BranchData();
-  _$jscoverage['/bubble.js'].branchData['191'] = [];
-  _$jscoverage['/bubble.js'].branchData['191'][1] = new BranchData();
-  _$jscoverage['/bubble.js'].branchData['202'] = [];
-  _$jscoverage['/bubble.js'].branchData['202'][1] = new BranchData();
+  _$jscoverage['/bubble.js'].branchData['183'] = [];
+  _$jscoverage['/bubble.js'].branchData['183'][1] = new BranchData();
+  _$jscoverage['/bubble.js'].branchData['186'] = [];
+  _$jscoverage['/bubble.js'].branchData['186'][1] = new BranchData();
+  _$jscoverage['/bubble.js'].branchData['190'] = [];
+  _$jscoverage['/bubble.js'].branchData['190'][1] = new BranchData();
+  _$jscoverage['/bubble.js'].branchData['201'] = [];
+  _$jscoverage['/bubble.js'].branchData['201'][1] = new BranchData();
 }
-_$jscoverage['/bubble.js'].branchData['202'][1].init(18, 31, '!bubble.get("editorSelectedEl")');
-function visit39_202_1(result) {
-  _$jscoverage['/bubble.js'].branchData['202'][1].ranCondition(result);
+_$jscoverage['/bubble.js'].branchData['201'][1].init(18, 31, '!bubble.get("editorSelectedEl")');
+function visit39_201_1(result) {
+  _$jscoverage['/bubble.js'].branchData['201'][1].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['191'][1].init(295, 22, '!bubble.get("visible")');
-function visit38_191_1(result) {
-  _$jscoverage['/bubble.js'].branchData['191'][1].ranCondition(result);
+}_$jscoverage['/bubble.js'].branchData['190'][1].init(295, 22, '!bubble.get("visible")');
+function visit38_190_1(result) {
+  _$jscoverage['/bubble.js'].branchData['190'][1].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['187'][1].init(119, 6, 'archor');
-function visit37_187_1(result) {
-  _$jscoverage['/bubble.js'].branchData['187'][1].ranCondition(result);
+}_$jscoverage['/bubble.js'].branchData['186'][1].init(119, 6, 'archor');
+function visit37_186_1(result) {
+  _$jscoverage['/bubble.js'].branchData['186'][1].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['184'][1].init(57, 2, 'xy');
-function visit36_184_1(result) {
-  _$jscoverage['/bubble.js'].branchData['184'][1].ranCondition(result);
+}_$jscoverage['/bubble.js'].branchData['183'][1].init(55, 2, 'xy');
+function visit36_183_1(result) {
+  _$jscoverage['/bubble.js'].branchData['183'][1].ranCondition(result);
   return result;
 }_$jscoverage['/bubble.js'].branchData['173'][1].init(138, 9, 'editorWin');
 function visit35_173_1(result) {
@@ -540,46 +540,46 @@ function visit6_43_1(result) {
 function visit5_42_1(result) {
   _$jscoverage['/bubble.js'].branchData['42'][1].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['30'][1].init(213, 88, 'inRange(b1_top, b1_bottom, b2_bottom) || inRange(b1_top, b1_bottom, b2_top)');
-function visit4_30_1(result) {
-  _$jscoverage['/bubble.js'].branchData['30'][1].ranCondition(result);
+}_$jscoverage['/bubble.js'].branchData['31'][1].init(213, 88, 'inRange(b1_top, b1_bottom, b2_bottom) || inRange(b1_top, b1_bottom, b2_top)');
+function visit4_31_1(result) {
+  _$jscoverage['/bubble.js'].branchData['31'][1].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['18'][3].init(27, 6, 'b >= r');
-function visit3_18_3(result) {
-  _$jscoverage['/bubble.js'].branchData['18'][3].ranCondition(result);
+}_$jscoverage['/bubble.js'].branchData['20'][3].init(27, 6, 'b >= r');
+function visit3_20_3(result) {
+  _$jscoverage['/bubble.js'].branchData['20'][3].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['18'][2].init(17, 6, 't <= r');
-function visit2_18_2(result) {
-  _$jscoverage['/bubble.js'].branchData['18'][2].ranCondition(result);
+}_$jscoverage['/bubble.js'].branchData['20'][2].init(17, 6, 't <= r');
+function visit2_20_2(result) {
+  _$jscoverage['/bubble.js'].branchData['20'][2].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].branchData['18'][1].init(17, 16, 't <= r && b >= r');
-function visit1_18_1(result) {
-  _$jscoverage['/bubble.js'].branchData['18'][1].ranCondition(result);
+}_$jscoverage['/bubble.js'].branchData['20'][1].init(17, 16, 't <= r && b >= r');
+function visit1_20_1(result) {
+  _$jscoverage['/bubble.js'].branchData['20'][1].ranCondition(result);
   return result;
-}_$jscoverage['/bubble.js'].lineData[5]++;
+}_$jscoverage['/bubble.js'].lineData[6]++;
 KISSY.add("editor/plugin/bubble", function(S, Overlay, Editor) {
   _$jscoverage['/bubble.js'].functionData[0]++;
-  _$jscoverage['/bubble.js'].lineData[6]++;
-  var undefined = {}['a'], BUBBLE_CFG = {
+  _$jscoverage['/bubble.js'].lineData[7]++;
+  var undefined = {}['a'], logger = S.getLogger('s/editor'), BUBBLE_CFG = {
   zIndex: Editor.baseZIndex(Editor.zIndexManager.BUBBLE_VIEW), 
   elCls: "{prefixCls}editor-bubble", 
   prefixCls: "{prefixCls}editor-", 
   effect: {
   effect: "fade", 
   duration: 0.3}};
-  _$jscoverage['/bubble.js'].lineData[17]++;
+  _$jscoverage['/bubble.js'].lineData[19]++;
   function inRange(t, b, r) {
     _$jscoverage['/bubble.js'].functionData[1]++;
-    _$jscoverage['/bubble.js'].lineData[18]++;
-    return visit1_18_1(visit2_18_2(t <= r) && visit3_18_3(b >= r));
+    _$jscoverage['/bubble.js'].lineData[20]++;
+    return visit1_20_1(visit2_20_2(t <= r) && visit3_20_3(b >= r));
   }
-  _$jscoverage['/bubble.js'].lineData[24]++;
+  _$jscoverage['/bubble.js'].lineData[25]++;
   function overlap(b1, b2) {
     _$jscoverage['/bubble.js'].functionData[2]++;
-    _$jscoverage['/bubble.js'].lineData[25]++;
+    _$jscoverage['/bubble.js'].lineData[26]++;
     var b1_top = b1.get("y"), b1_bottom = b1_top + b1.get("el").outerHeight(), b2_top = b2.get("y"), b2_bottom = b2_top + b2.get("el").outerHeight();
-    _$jscoverage['/bubble.js'].lineData[30]++;
-    return visit4_30_1(inRange(b1_top, b1_bottom, b2_bottom) || inRange(b1_top, b1_bottom, b2_top));
+    _$jscoverage['/bubble.js'].lineData[31]++;
+    return visit4_31_1(inRange(b1_top, b1_bottom, b2_bottom) || inRange(b1_top, b1_bottom, b2_top));
   }
   _$jscoverage['/bubble.js'].lineData[37]++;
   function getTopPosition(self) {
@@ -733,56 +733,56 @@ KISSY.add("editor/plugin/bubble", function(S, Overlay, Editor) {
   _$jscoverage['/bubble.js'].lineData[181]++;
   function showImmediately() {
     _$jscoverage['/bubble.js'].functionData[9]++;
-    _$jscoverage['/bubble.js'].lineData[183]++;
+    _$jscoverage['/bubble.js'].lineData[182]++;
     var xy = getXy(bubble);
-    _$jscoverage['/bubble.js'].lineData[184]++;
-    if (visit36_184_1(xy)) {
-      _$jscoverage['/bubble.js'].lineData[185]++;
+    _$jscoverage['/bubble.js'].lineData[183]++;
+    if (visit36_183_1(xy)) {
+      _$jscoverage['/bubble.js'].lineData[184]++;
       bubble.move(xy[0], xy[1]);
-      _$jscoverage['/bubble.js'].lineData[186]++;
+      _$jscoverage['/bubble.js'].lineData[185]++;
       var archor = getTopPosition(bubble);
-      _$jscoverage['/bubble.js'].lineData[187]++;
-      if (visit37_187_1(archor)) {
-        _$jscoverage['/bubble.js'].lineData[188]++;
+      _$jscoverage['/bubble.js'].lineData[186]++;
+      if (visit37_186_1(archor)) {
+        _$jscoverage['/bubble.js'].lineData[187]++;
         xy[1] = archor.get("y") + archor.get("el").outerHeight();
-        _$jscoverage['/bubble.js'].lineData[189]++;
+        _$jscoverage['/bubble.js'].lineData[188]++;
         bubble.move(xy[0], xy[1]);
       }
-      _$jscoverage['/bubble.js'].lineData[191]++;
-      if (visit38_191_1(!bubble.get("visible"))) {
-        _$jscoverage['/bubble.js'].lineData[192]++;
+      _$jscoverage['/bubble.js'].lineData[190]++;
+      if (visit38_190_1(!bubble.get("visible"))) {
+        _$jscoverage['/bubble.js'].lineData[191]++;
         bubble.show();
       } else {
-        _$jscoverage['/bubble.js'].lineData[194]++;
-        S.log("already show by selectionChange");
+        _$jscoverage['/bubble.js'].lineData[193]++;
+        logger.debug("already show by selectionChange");
       }
     }
   }
-  _$jscoverage['/bubble.js'].lineData[199]++;
+  _$jscoverage['/bubble.js'].lineData[198]++;
   var bufferScroll = S.buffer(showImmediately, 350);
-  _$jscoverage['/bubble.js'].lineData[201]++;
+  _$jscoverage['/bubble.js'].lineData[200]++;
   function onScroll() {
     _$jscoverage['/bubble.js'].functionData[10]++;
-    _$jscoverage['/bubble.js'].lineData[202]++;
-    if (visit39_202_1(!bubble.get("editorSelectedEl"))) {
-      _$jscoverage['/bubble.js'].lineData[203]++;
+    _$jscoverage['/bubble.js'].lineData[201]++;
+    if (visit39_201_1(!bubble.get("editorSelectedEl"))) {
+      _$jscoverage['/bubble.js'].lineData[202]++;
       return;
     }
-    _$jscoverage['/bubble.js'].lineData[205]++;
+    _$jscoverage['/bubble.js'].lineData[204]++;
     var el = bubble.get("el");
-    _$jscoverage['/bubble.js'].lineData[206]++;
+    _$jscoverage['/bubble.js'].lineData[205]++;
     bubble.hide();
-    _$jscoverage['/bubble.js'].lineData[207]++;
+    _$jscoverage['/bubble.js'].lineData[206]++;
     bufferScroll();
   }
-  _$jscoverage['/bubble.js'].lineData[210]++;
+  _$jscoverage['/bubble.js'].lineData[209]++;
   function onShow() {
     _$jscoverage['/bubble.js'].functionData[11]++;
-    _$jscoverage['/bubble.js'].lineData[211]++;
+    _$jscoverage['/bubble.js'].lineData[210]++;
     var editorWin = editor.get("window");
-    _$jscoverage['/bubble.js'].lineData[212]++;
+    _$jscoverage['/bubble.js'].lineData[211]++;
     editorWin.on("scroll", onScroll);
-    _$jscoverage['/bubble.js'].lineData[213]++;
+    _$jscoverage['/bubble.js'].lineData[212]++;
     showImmediately();
   }
 };

@@ -6,7 +6,7 @@
 
         if (0) {
             io({
-                url: 'http://' + location.hostname + ':9999/kissy/src/io/tests/data/io.jss',
+                url: 'http://' + location.hostname + ':'+SERVER_CONFIG.ports[1]+'/kissy/src/io/tests/data/io.jss',
                 cache: false,
                 success: function () {
                     S.log("success");
@@ -21,7 +21,7 @@
         }
 
         io({
-            url: 'http://' + location.hostname + ':9999/kissy/src/io/tests/data/io.jss',
+            url: 'http://' + location.hostname + ':'+SERVER_CONFIG.ports[1]+'/kissy/src/io/tests/data/io.jss',
             cache: false,
             xdr: {
                 subDomain: {

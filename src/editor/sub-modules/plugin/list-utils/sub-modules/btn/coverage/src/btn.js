@@ -229,28 +229,28 @@ if (! this._$jscoverage) {
 if (! _$jscoverage['/btn.js']) {
   _$jscoverage['/btn.js'] = {};
   _$jscoverage['/btn.js'].lineData = [];
-  _$jscoverage['/btn.js'].lineData[5] = 0;
-  _$jscoverage['/btn.js'].lineData[7] = 0;
-  _$jscoverage['/btn.js'].lineData[10] = 0;
-  _$jscoverage['/btn.js'].lineData[14] = 0;
-  _$jscoverage['/btn.js'].lineData[20] = 0;
+  _$jscoverage['/btn.js'].lineData[6] = 0;
+  _$jscoverage['/btn.js'].lineData[8] = 0;
+  _$jscoverage['/btn.js'].lineData[11] = 0;
+  _$jscoverage['/btn.js'].lineData[15] = 0;
   _$jscoverage['/btn.js'].lineData[21] = 0;
   _$jscoverage['/btn.js'].lineData[22] = 0;
   _$jscoverage['/btn.js'].lineData[23] = 0;
   _$jscoverage['/btn.js'].lineData[24] = 0;
-  _$jscoverage['/btn.js'].lineData[26] = 0;
-  _$jscoverage['/btn.js'].lineData[30] = 0;
-  _$jscoverage['/btn.js'].lineData[38] = 0;
+  _$jscoverage['/btn.js'].lineData[25] = 0;
+  _$jscoverage['/btn.js'].lineData[27] = 0;
+  _$jscoverage['/btn.js'].lineData[31] = 0;
   _$jscoverage['/btn.js'].lineData[39] = 0;
   _$jscoverage['/btn.js'].lineData[40] = 0;
   _$jscoverage['/btn.js'].lineData[41] = 0;
   _$jscoverage['/btn.js'].lineData[42] = 0;
-  _$jscoverage['/btn.js'].lineData[45] = 0;
+  _$jscoverage['/btn.js'].lineData[43] = 0;
   _$jscoverage['/btn.js'].lineData[46] = 0;
-  _$jscoverage['/btn.js'].lineData[48] = 0;
+  _$jscoverage['/btn.js'].lineData[47] = 0;
   _$jscoverage['/btn.js'].lineData[49] = 0;
-  _$jscoverage['/btn.js'].lineData[51] = 0;
+  _$jscoverage['/btn.js'].lineData[50] = 0;
   _$jscoverage['/btn.js'].lineData[52] = 0;
+  _$jscoverage['/btn.js'].lineData[53] = 0;
 }
 if (! _$jscoverage['/btn.js'].functionData) {
   _$jscoverage['/btn.js'].functionData = [];
@@ -262,81 +262,81 @@ if (! _$jscoverage['/btn.js'].functionData) {
 }
 if (! _$jscoverage['/btn.js'].branchData) {
   _$jscoverage['/btn.js'].branchData = {};
-  _$jscoverage['/btn.js'].branchData['22'] = [];
-  _$jscoverage['/btn.js'].branchData['22'][1] = new BranchData();
-  _$jscoverage['/btn.js'].branchData['48'] = [];
-  _$jscoverage['/btn.js'].branchData['48'][1] = new BranchData();
+  _$jscoverage['/btn.js'].branchData['23'] = [];
+  _$jscoverage['/btn.js'].branchData['23'][1] = new BranchData();
+  _$jscoverage['/btn.js'].branchData['49'] = [];
+  _$jscoverage['/btn.js'].branchData['49'][1] = new BranchData();
 }
-_$jscoverage['/btn.js'].branchData['48'][1].init(114, 21, 'button.get(\'checked\')');
-function visit2_48_1(result) {
-  _$jscoverage['/btn.js'].branchData['48'][1].ranCondition(result);
+_$jscoverage['/btn.js'].branchData['49'][1].init(114, 21, 'button.get(\'checked\')');
+function visit2_49_1(result) {
+  _$jscoverage['/btn.js'].branchData['49'][1].ranCondition(result);
   return result;
-}_$jscoverage['/btn.js'].branchData['22'][1].init(46, 37, 'v = editor.queryCommandValue(cmdType)');
-function visit1_22_1(result) {
-  _$jscoverage['/btn.js'].branchData['22'][1].ranCondition(result);
+}_$jscoverage['/btn.js'].branchData['23'][1].init(46, 37, 'v = editor.queryCommandValue(cmdType)');
+function visit1_23_1(result) {
+  _$jscoverage['/btn.js'].branchData['23'][1].ranCondition(result);
   return result;
-}_$jscoverage['/btn.js'].lineData[5]++;
+}_$jscoverage['/btn.js'].lineData[6]++;
 KISSY.add("editor/plugin/list-utils/btn", function(S, Editor) {
   _$jscoverage['/btn.js'].functionData[0]++;
-  _$jscoverage['/btn.js'].lineData[7]++;
+  _$jscoverage['/btn.js'].lineData[8]++;
   return {
   init: function(editor, cfg) {
   _$jscoverage['/btn.js'].functionData[1]++;
-  _$jscoverage['/btn.js'].lineData[10]++;
+  _$jscoverage['/btn.js'].lineData[11]++;
   var buttonId = cfg.buttonId, cmdType = cfg.cmdType, tooltip = cfg.tooltip;
-  _$jscoverage['/btn.js'].lineData[14]++;
+  _$jscoverage['/btn.js'].lineData[15]++;
   var button = editor.addButton(buttonId, {
   elCls: buttonId + 'Btn', 
   mode: Editor.Mode.WYSIWYG_MODE, 
   tooltip: "\u8bbe\u7f6e" + tooltip});
-  _$jscoverage['/btn.js'].lineData[20]++;
+  _$jscoverage['/btn.js'].lineData[21]++;
   editor.on("selectionChange", function() {
   _$jscoverage['/btn.js'].functionData[2]++;
-  _$jscoverage['/btn.js'].lineData[21]++;
-  var v;
   _$jscoverage['/btn.js'].lineData[22]++;
-  if (visit1_22_1(v = editor.queryCommandValue(cmdType))) {
-    _$jscoverage['/btn.js'].lineData[23]++;
-    button.set("checked", true);
+  var v;
+  _$jscoverage['/btn.js'].lineData[23]++;
+  if (visit1_23_1(v = editor.queryCommandValue(cmdType))) {
     _$jscoverage['/btn.js'].lineData[24]++;
+    button.set("checked", true);
+    _$jscoverage['/btn.js'].lineData[25]++;
     arrow.set('value', v);
   } else {
-    _$jscoverage['/btn.js'].lineData[26]++;
+    _$jscoverage['/btn.js'].lineData[27]++;
     button.set("checked", false);
   }
 });
-  _$jscoverage['/btn.js'].lineData[30]++;
+  _$jscoverage['/btn.js'].lineData[31]++;
   var arrow = editor.addSelect(buttonId + 'Arrow', {
   tooltip: "\u9009\u62e9\u5e76\u8bbe\u7f6e" + tooltip, 
   mode: Editor.Mode.WYSIWYG_MODE, 
   menu: cfg.menu, 
   matchElWidth: false, 
   elCls: 'toolbar-' + buttonId + 'ArrowBtn'});
-  _$jscoverage['/btn.js'].lineData[38]++;
+  _$jscoverage['/btn.js'].lineData[39]++;
   arrow.on('click', function(e) {
   _$jscoverage['/btn.js'].functionData[3]++;
-  _$jscoverage['/btn.js'].lineData[39]++;
-  var v = e.target.get('value');
   _$jscoverage['/btn.js'].lineData[40]++;
-  button.listValue = v;
+  var v = e.target.get('value');
   _$jscoverage['/btn.js'].lineData[41]++;
-  editor.execCommand(cmdType, v);
+  button.listValue = v;
   _$jscoverage['/btn.js'].lineData[42]++;
+  editor.execCommand(cmdType, v);
+  _$jscoverage['/btn.js'].lineData[43]++;
   editor.focus();
 });
-  _$jscoverage['/btn.js'].lineData[45]++;
+  _$jscoverage['/btn.js'].lineData[46]++;
   button.on('click', function() {
   _$jscoverage['/btn.js'].functionData[4]++;
-  _$jscoverage['/btn.js'].lineData[46]++;
+  _$jscoverage['/btn.js'].lineData[47]++;
   var v = button.listValue;
-  _$jscoverage['/btn.js'].lineData[48]++;
-  if (visit2_48_1(button.get('checked'))) {
-    _$jscoverage['/btn.js'].lineData[49]++;
+  _$jscoverage['/btn.js'].lineData[49]++;
+  if (visit2_49_1(button.get('checked'))) {
+    _$jscoverage['/btn.js'].lineData[50]++;
     v = arrow.get('value');
   }
-  _$jscoverage['/btn.js'].lineData[51]++;
-  editor.execCommand(cmdType, v);
   _$jscoverage['/btn.js'].lineData[52]++;
+  editor.execCommand(cmdType, v);
+  _$jscoverage['/btn.js'].lineData[53]++;
   editor.focus();
 });
 }};

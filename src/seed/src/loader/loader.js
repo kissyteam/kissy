@@ -1,12 +1,13 @@
 /**
  * @ignore
- * mix loader into S and infer KISSY baseUrl if not set
+ * mix loader into KISSY and infer KISSY baseUrl if not set
  * @author yiminghe@gmail.com
  */
 (function (S, undefined) {
-    var Loader = KISSY.Loader,
+    var Loader = S.Loader,
         Env = S.Env,
         Utils = Loader.Utils,
+        Config= S.Config,
         SimpleLoader = Loader.SimpleLoader,
         ComboLoader = Loader.ComboLoader;
 
@@ -56,19 +57,18 @@
          * @param {String[]} cfg.requires this module's required module name list
          * @member KISSY
          *
-         * for example:
-         *      @example
+         *
          *      // dom module's definition
          *      KISSY.add('dom', function(S, xx){
-             *          return {css: function(el, name, val){}};
-             *      },{
-             *          requires:['xx']
-             *      });
+         *          return {css: function(el, name, val){}};
+         *      },{
+         *          requires:['xx']
+         *      });
          */
         add: function (name, fn, cfg) {
             if (typeof name == 'string') {
                 Utils.registerModule(S, name, fn, cfg);
-            } else if (!S.Config.combine) {
+            } else if (!Config.combine) {
                 SimpleLoader.add(name, fn, cfg, S);
             } else {
                 throw new Error('Unsupported KISSY.add format!');
@@ -89,8 +89,7 @@
          *      KISSY.use('overlay,dd', function(S, Overlay){});
          */
         use: function (modNames, success) {
-            var Config = S.Config,
-                normalizedModNames,
+            var normalizedModNames,
                 loader,
                 error,
                 sync,

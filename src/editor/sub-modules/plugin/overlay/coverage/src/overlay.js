@@ -229,9 +229,9 @@ if (! this._$jscoverage) {
 if (! _$jscoverage['/overlay.js']) {
   _$jscoverage['/overlay.js'] = {};
   _$jscoverage['/overlay.js'].lineData = [];
-  _$jscoverage['/overlay.js'].lineData[5] = 0;
   _$jscoverage['/overlay.js'].lineData[6] = 0;
-  _$jscoverage['/overlay.js'].lineData[8] = 0;
+  _$jscoverage['/overlay.js'].lineData[7] = 0;
+  _$jscoverage['/overlay.js'].lineData[9] = 0;
 }
 if (! _$jscoverage['/overlay.js'].functionData) {
   _$jscoverage['/overlay.js'].functionData = [];
@@ -241,14 +241,14 @@ if (! _$jscoverage['/overlay.js'].functionData) {
 if (! _$jscoverage['/overlay.js'].branchData) {
   _$jscoverage['/overlay.js'].branchData = {};
 }
-_$jscoverage['/overlay.js'].lineData[5]++;
+_$jscoverage['/overlay.js'].lineData[6]++;
 KISSY.add("editor/plugin/overlay", function(S, Editor, Overlay, focusFix) {
   _$jscoverage['/overlay.js'].functionData[0]++;
-  _$jscoverage['/overlay.js'].lineData[6]++;
+  _$jscoverage['/overlay.js'].lineData[7]++;
   return Overlay.extend({
   bindUI: function() {
   _$jscoverage['/overlay.js'].functionData[1]++;
-  _$jscoverage['/overlay.js'].lineData[8]++;
+  _$jscoverage['/overlay.js'].lineData[9]++;
   focusFix.init(this);
 }}, {
   ATTRS: {

@@ -276,7 +276,6 @@ if (! _$jscoverage['/hashchange.js']) {
   _$jscoverage['/hashchange.js'].lineData[173] = 0;
   _$jscoverage['/hashchange.js'].lineData[178] = 0;
   _$jscoverage['/hashchange.js'].lineData[183] = 0;
-  _$jscoverage['/hashchange.js'].lineData[184] = 0;
   _$jscoverage['/hashchange.js'].lineData[185] = 0;
   _$jscoverage['/hashchange.js'].lineData[191] = 0;
   _$jscoverage['/hashchange.js'].lineData[193] = 0;
@@ -557,8 +556,6 @@ KISSY.add('event/dom/hashchange', function(S, DomEvent, Dom) {
       var c = S.trim(getIframeDoc(iframe).body.innerText), ch = getHash();
       _$jscoverage['/hashchange.js'].lineData[183]++;
       if (visit16_183_1(c != ch)) {
-        _$jscoverage['/hashchange.js'].lineData[184]++;
-        S.log('set loc hash :' + c);
         _$jscoverage['/hashchange.js'].lineData[185]++;
         location.hash = c;
         _$jscoverage['/hashchange.js'].lineData[191]++;

@@ -229,10 +229,10 @@ if (! this._$jscoverage) {
 if (! _$jscoverage['/cmd.js']) {
   _$jscoverage['/cmd.js'] = {};
   _$jscoverage['/cmd.js'].lineData = [];
-  _$jscoverage['/cmd.js'].lineData[5] = 0;
   _$jscoverage['/cmd.js'].lineData[6] = 0;
-  _$jscoverage['/cmd.js'].lineData[21] = 0;
-  _$jscoverage['/cmd.js'].lineData[23] = 0;
+  _$jscoverage['/cmd.js'].lineData[7] = 0;
+  _$jscoverage['/cmd.js'].lineData[22] = 0;
+  _$jscoverage['/cmd.js'].lineData[24] = 0;
 }
 if (! _$jscoverage['/cmd.js'].functionData) {
   _$jscoverage['/cmd.js'].functionData = [];
@@ -242,10 +242,10 @@ if (! _$jscoverage['/cmd.js'].functionData) {
 if (! _$jscoverage['/cmd.js'].branchData) {
   _$jscoverage['/cmd.js'].branchData = {};
 }
-_$jscoverage['/cmd.js'].lineData[5]++;
+_$jscoverage['/cmd.js'].lineData[6]++;
 KISSY.add("editor/plugin/font-size/cmd", function(S, Editor, Cmd) {
   _$jscoverage['/cmd.js'].functionData[0]++;
-  _$jscoverage['/cmd.js'].lineData[6]++;
+  _$jscoverage['/cmd.js'].lineData[7]++;
   var fontSizeStyle = {
   element: 'span', 
   styles: {
@@ -254,11 +254,11 @@ KISSY.add("editor/plugin/font-size/cmd", function(S, Editor, Cmd) {
   element: 'font', 
   attributes: {
   'size': null}}]};
-  _$jscoverage['/cmd.js'].lineData[21]++;
+  _$jscoverage['/cmd.js'].lineData[22]++;
   return {
   init: function(editor) {
   _$jscoverage['/cmd.js'].functionData[1]++;
-  _$jscoverage['/cmd.js'].lineData[23]++;
+  _$jscoverage['/cmd.js'].lineData[24]++;
   Cmd.addSelectCmd(editor, "fontSize", fontSizeStyle);
 }};
 }, {

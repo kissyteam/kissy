@@ -8,7 +8,7 @@ require('./gen-package');
 
 // var mkdirp = require('mkdirp');
 var path = require('path');
-var fs = require('fs');
+var fs = require('fs-extra');
 //noinspection JSUnresolvedVariable
 var cwd = process.cwd();
 //noinspection JSUnresolvedVariable
@@ -356,6 +356,9 @@ S.use('xtemplate/nodejs', function (S, XTemplateNodeJs) {
         app.listen(port);
     }
 
-    startServer(9999);
-    startServer(8888);
+    fs.readJson(currentDir + '/server.json', function (err, packageObj) {
+        packageObj.ports.forEach(function (port) {
+            startServer(port);
+        });
+    });
 });

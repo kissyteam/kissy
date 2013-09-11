@@ -229,7 +229,6 @@ if (! this._$jscoverage) {
 if (! _$jscoverage['/picker/decade-panel/render.js']) {
   _$jscoverage['/picker/decade-panel/render.js'] = {};
   _$jscoverage['/picker/decade-panel/render.js'].lineData = [];
-  _$jscoverage['/picker/decade-panel/render.js'].lineData[5] = 0;
   _$jscoverage['/picker/decade-panel/render.js'].lineData[6] = 0;
   _$jscoverage['/picker/decade-panel/render.js'].lineData[7] = 0;
   _$jscoverage['/picker/decade-panel/render.js'].lineData[8] = 0;
@@ -243,22 +242,23 @@ if (! _$jscoverage['/picker/decade-panel/render.js']) {
   _$jscoverage['/picker/decade-panel/render.js'].lineData[16] = 0;
   _$jscoverage['/picker/decade-panel/render.js'].lineData[17] = 0;
   _$jscoverage['/picker/decade-panel/render.js'].lineData[18] = 0;
-  _$jscoverage['/picker/decade-panel/render.js'].lineData[22] = 0;
-  _$jscoverage['/picker/decade-panel/render.js'].lineData[25] = 0;
+  _$jscoverage['/picker/decade-panel/render.js'].lineData[19] = 0;
+  _$jscoverage['/picker/decade-panel/render.js'].lineData[23] = 0;
   _$jscoverage['/picker/decade-panel/render.js'].lineData[26] = 0;
-  _$jscoverage['/picker/decade-panel/render.js'].lineData[34] = 0;
-  _$jscoverage['/picker/decade-panel/render.js'].lineData[36] = 0;
+  _$jscoverage['/picker/decade-panel/render.js'].lineData[27] = 0;
+  _$jscoverage['/picker/decade-panel/render.js'].lineData[35] = 0;
   _$jscoverage['/picker/decade-panel/render.js'].lineData[37] = 0;
   _$jscoverage['/picker/decade-panel/render.js'].lineData[38] = 0;
   _$jscoverage['/picker/decade-panel/render.js'].lineData[39] = 0;
   _$jscoverage['/picker/decade-panel/render.js'].lineData[40] = 0;
-  _$jscoverage['/picker/decade-panel/render.js'].lineData[44] = 0;
-  _$jscoverage['/picker/decade-panel/render.js'].lineData[53] = 0;
+  _$jscoverage['/picker/decade-panel/render.js'].lineData[41] = 0;
+  _$jscoverage['/picker/decade-panel/render.js'].lineData[45] = 0;
   _$jscoverage['/picker/decade-panel/render.js'].lineData[54] = 0;
   _$jscoverage['/picker/decade-panel/render.js'].lineData[55] = 0;
   _$jscoverage['/picker/decade-panel/render.js'].lineData[56] = 0;
   _$jscoverage['/picker/decade-panel/render.js'].lineData[57] = 0;
   _$jscoverage['/picker/decade-panel/render.js'].lineData[58] = 0;
+  _$jscoverage['/picker/decade-panel/render.js'].lineData[59] = 0;
 }
 if (! _$jscoverage['/picker/decade-panel/render.js'].functionData) {
   _$jscoverage['/picker/decade-panel/render.js'].functionData = [];
@@ -269,81 +269,81 @@ if (! _$jscoverage['/picker/decade-panel/render.js'].functionData) {
 }
 if (! _$jscoverage['/picker/decade-panel/render.js'].branchData) {
   _$jscoverage['/picker/decade-panel/render.js'].branchData = {};
-  _$jscoverage['/picker/decade-panel/render.js'].branchData['15'] = [];
-  _$jscoverage['/picker/decade-panel/render.js'].branchData['15'][1] = new BranchData();
-  _$jscoverage['/picker/decade-panel/render.js'].branchData['17'] = [];
-  _$jscoverage['/picker/decade-panel/render.js'].branchData['17'][1] = new BranchData();
+  _$jscoverage['/picker/decade-panel/render.js'].branchData['16'] = [];
+  _$jscoverage['/picker/decade-panel/render.js'].branchData['16'][1] = new BranchData();
+  _$jscoverage['/picker/decade-panel/render.js'].branchData['18'] = [];
+  _$jscoverage['/picker/decade-panel/render.js'].branchData['18'][1] = new BranchData();
 }
-_$jscoverage['/picker/decade-panel/render.js'].branchData['17'][1].init(60, 5, 'j < 4');
-function visit9_17_1(result) {
-  _$jscoverage['/picker/decade-panel/render.js'].branchData['17'][1].ranCondition(result);
+_$jscoverage['/picker/decade-panel/render.js'].branchData['18'][1].init(60, 5, 'j < 4');
+function visit9_18_1(result) {
+  _$jscoverage['/picker/decade-panel/render.js'].branchData['18'][1].ranCondition(result);
   return result;
-}_$jscoverage['/picker/decade-panel/render.js'].branchData['15'][1].init(347, 5, 'i < 3');
-function visit8_15_1(result) {
-  _$jscoverage['/picker/decade-panel/render.js'].branchData['15'][1].ranCondition(result);
+}_$jscoverage['/picker/decade-panel/render.js'].branchData['16'][1].init(347, 5, 'i < 3');
+function visit8_16_1(result) {
+  _$jscoverage['/picker/decade-panel/render.js'].branchData['16'][1].ranCondition(result);
   return result;
-}_$jscoverage['/picker/decade-panel/render.js'].lineData[5]++;
+}_$jscoverage['/picker/decade-panel/render.js'].lineData[6]++;
 KISSY.add('date/picker/decade-panel/render', function(S, Control, DateFormat, MonthsTpl, DecadePanelTpl) {
   _$jscoverage['/picker/decade-panel/render.js'].functionData[0]++;
-  _$jscoverage['/picker/decade-panel/render.js'].lineData[6]++;
+  _$jscoverage['/picker/decade-panel/render.js'].lineData[7]++;
   function prepareYears(control, view) {
     _$jscoverage['/picker/decade-panel/render.js'].functionData[1]++;
-    _$jscoverage['/picker/decade-panel/render.js'].lineData[7]++;
-    var value = control.get('value');
     _$jscoverage['/picker/decade-panel/render.js'].lineData[8]++;
-    var currentYear = value.getYear();
+    var value = control.get('value');
     _$jscoverage['/picker/decade-panel/render.js'].lineData[9]++;
-    var startYear = parseInt(currentYear / 100) * 100;
+    var currentYear = value.getYear();
     _$jscoverage['/picker/decade-panel/render.js'].lineData[10]++;
-    var preYear = startYear - 10;
+    var startYear = parseInt(currentYear / 100) * 100;
     _$jscoverage['/picker/decade-panel/render.js'].lineData[11]++;
-    var endYear = startYear + 99;
+    var preYear = startYear - 10;
     _$jscoverage['/picker/decade-panel/render.js'].lineData[12]++;
-    var locale = control.get('locale');
+    var endYear = startYear + 99;
     _$jscoverage['/picker/decade-panel/render.js'].lineData[13]++;
-    var decades = [];
+    var locale = control.get('locale');
     _$jscoverage['/picker/decade-panel/render.js'].lineData[14]++;
-    var index = 0;
+    var decades = [];
     _$jscoverage['/picker/decade-panel/render.js'].lineData[15]++;
-    for (var i = 0; visit8_15_1(i < 3); i++) {
-      _$jscoverage['/picker/decade-panel/render.js'].lineData[16]++;
-      decades[i] = [];
+    var index = 0;
+    _$jscoverage['/picker/decade-panel/render.js'].lineData[16]++;
+    for (var i = 0; visit8_16_1(i < 3); i++) {
       _$jscoverage['/picker/decade-panel/render.js'].lineData[17]++;
-      for (var j = 0; visit9_17_1(j < 4); j++) {
-        _$jscoverage['/picker/decade-panel/render.js'].lineData[18]++;
+      decades[i] = [];
+      _$jscoverage['/picker/decade-panel/render.js'].lineData[18]++;
+      for (var j = 0; visit9_18_1(j < 4); j++) {
+        _$jscoverage['/picker/decade-panel/render.js'].lineData[19]++;
         decades[i][j] = {
   startDecade: preYear + index * 10, 
   endDecade: preYear + index * 10 + 9};
-        _$jscoverage['/picker/decade-panel/render.js'].lineData[22]++;
+        _$jscoverage['/picker/decade-panel/render.js'].lineData[23]++;
         index++;
       }
     }
-    _$jscoverage['/picker/decade-panel/render.js'].lineData[25]++;
-    control.decades = decades;
     _$jscoverage['/picker/decade-panel/render.js'].lineData[26]++;
+    control.decades = decades;
+    _$jscoverage['/picker/decade-panel/render.js'].lineData[27]++;
     S.mix(view.renderData, {
   startYear: startYear, 
   endYear: endYear, 
   year: currentYear, 
   decades: decades});
   }
-  _$jscoverage['/picker/decade-panel/render.js'].lineData[34]++;
+  _$jscoverage['/picker/decade-panel/render.js'].lineData[35]++;
   return Control.getDefaultRender().extend({
   beforeCreateDom: function(renderData, childrenSelectors) {
   _$jscoverage['/picker/decade-panel/render.js'].functionData[2]++;
-  _$jscoverage['/picker/decade-panel/render.js'].lineData[36]++;
-  var control = this.control;
   _$jscoverage['/picker/decade-panel/render.js'].lineData[37]++;
-  var value = control.get('value');
+  var control = this.control;
   _$jscoverage['/picker/decade-panel/render.js'].lineData[38]++;
-  var locale = control.get('locale');
+  var value = control.get('value');
   _$jscoverage['/picker/decade-panel/render.js'].lineData[39]++;
-  prepareYears(control, this);
+  var locale = control.get('locale');
   _$jscoverage['/picker/decade-panel/render.js'].lineData[40]++;
+  prepareYears(control, this);
+  _$jscoverage['/picker/decade-panel/render.js'].lineData[41]++;
   S.mix(renderData, {
   previousCenturyLabel: locale.previousCentury, 
   nextCenturyLabel: locale.nextCentury});
-  _$jscoverage['/picker/decade-panel/render.js'].lineData[44]++;
+  _$jscoverage['/picker/decade-panel/render.js'].lineData[45]++;
   S.mix(childrenSelectors, {
   tbodyEl: '#ks-date-picker-decade-panel-tbody-{id}', 
   previousCenturyBtn: '#ks-date-picker-decade-panel-previous-century-btn-{id}', 
@@ -352,17 +352,17 @@ KISSY.add('date/picker/decade-panel/render', function(S, Control, DateFormat, Mo
 }, 
   _onSetValue: function() {
   _$jscoverage['/picker/decade-panel/render.js'].functionData[3]++;
-  _$jscoverage['/picker/decade-panel/render.js'].lineData[53]++;
-  var control = this.control;
   _$jscoverage['/picker/decade-panel/render.js'].lineData[54]++;
-  prepareYears(control, this);
+  var control = this.control;
   _$jscoverage['/picker/decade-panel/render.js'].lineData[55]++;
-  var startYear = this.renderData.startYear;
+  prepareYears(control, this);
   _$jscoverage['/picker/decade-panel/render.js'].lineData[56]++;
-  var endYear = this.renderData.endYear;
+  var startYear = this.renderData.startYear;
   _$jscoverage['/picker/decade-panel/render.js'].lineData[57]++;
-  control.get('tbodyEl').html(this.renderTpl(MonthsTpl));
+  var endYear = this.renderData.endYear;
   _$jscoverage['/picker/decade-panel/render.js'].lineData[58]++;
+  control.get('tbodyEl').html(this.renderTpl(MonthsTpl));
+  _$jscoverage['/picker/decade-panel/render.js'].lineData[59]++;
   control.get('centuryEl').html(startYear + '-' + endYear);
 }}, {
   ATTRS: {

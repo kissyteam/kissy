@@ -267,60 +267,60 @@ if (! _$jscoverage['/toolbar.js']) {
   _$jscoverage['/toolbar.js'].lineData[71] = 0;
   _$jscoverage['/toolbar.js'].lineData[72] = 0;
   _$jscoverage['/toolbar.js'].lineData[75] = 0;
+  _$jscoverage['/toolbar.js'].lineData[82] = 0;
   _$jscoverage['/toolbar.js'].lineData[84] = 0;
-  _$jscoverage['/toolbar.js'].lineData[86] = 0;
-  _$jscoverage['/toolbar.js'].lineData[92] = 0;
-  _$jscoverage['/toolbar.js'].lineData[93] = 0;
+  _$jscoverage['/toolbar.js'].lineData[90] = 0;
+  _$jscoverage['/toolbar.js'].lineData[91] = 0;
+  _$jscoverage['/toolbar.js'].lineData[97] = 0;
+  _$jscoverage['/toolbar.js'].lineData[98] = 0;
   _$jscoverage['/toolbar.js'].lineData[99] = 0;
-  _$jscoverage['/toolbar.js'].lineData[100] = 0;
   _$jscoverage['/toolbar.js'].lineData[101] = 0;
+  _$jscoverage['/toolbar.js'].lineData[102] = 0;
   _$jscoverage['/toolbar.js'].lineData[103] = 0;
   _$jscoverage['/toolbar.js'].lineData[104] = 0;
-  _$jscoverage['/toolbar.js'].lineData[105] = 0;
   _$jscoverage['/toolbar.js'].lineData[106] = 0;
   _$jscoverage['/toolbar.js'].lineData[108] = 0;
-  _$jscoverage['/toolbar.js'].lineData[110] = 0;
-  _$jscoverage['/toolbar.js'].lineData[115] = 0;
+  _$jscoverage['/toolbar.js'].lineData[113] = 0;
+  _$jscoverage['/toolbar.js'].lineData[114] = 0;
   _$jscoverage['/toolbar.js'].lineData[116] = 0;
-  _$jscoverage['/toolbar.js'].lineData[118] = 0;
-  _$jscoverage['/toolbar.js'].lineData[119] = 0;
+  _$jscoverage['/toolbar.js'].lineData[117] = 0;
+  _$jscoverage['/toolbar.js'].lineData[125] = 0;
+  _$jscoverage['/toolbar.js'].lineData[126] = 0;
   _$jscoverage['/toolbar.js'].lineData[127] = 0;
-  _$jscoverage['/toolbar.js'].lineData[128] = 0;
-  _$jscoverage['/toolbar.js'].lineData[129] = 0;
-  _$jscoverage['/toolbar.js'].lineData[133] = 0;
-  _$jscoverage['/toolbar.js'].lineData[136] = 0;
+  _$jscoverage['/toolbar.js'].lineData[131] = 0;
+  _$jscoverage['/toolbar.js'].lineData[134] = 0;
+  _$jscoverage['/toolbar.js'].lineData[135] = 0;
   _$jscoverage['/toolbar.js'].lineData[137] = 0;
-  _$jscoverage['/toolbar.js'].lineData[139] = 0;
-  _$jscoverage['/toolbar.js'].lineData[140] = 0;
-  _$jscoverage['/toolbar.js'].lineData[145] = 0;
+  _$jscoverage['/toolbar.js'].lineData[138] = 0;
+  _$jscoverage['/toolbar.js'].lineData[143] = 0;
+  _$jscoverage['/toolbar.js'].lineData[148] = 0;
+  _$jscoverage['/toolbar.js'].lineData[149] = 0;
   _$jscoverage['/toolbar.js'].lineData[150] = 0;
-  _$jscoverage['/toolbar.js'].lineData[151] = 0;
-  _$jscoverage['/toolbar.js'].lineData[152] = 0;
-  _$jscoverage['/toolbar.js'].lineData[157] = 0;
-  _$jscoverage['/toolbar.js'].lineData[158] = 0;
+  _$jscoverage['/toolbar.js'].lineData[155] = 0;
+  _$jscoverage['/toolbar.js'].lineData[156] = 0;
+  _$jscoverage['/toolbar.js'].lineData[161] = 0;
   _$jscoverage['/toolbar.js'].lineData[163] = 0;
-  _$jscoverage['/toolbar.js'].lineData[165] = 0;
-  _$jscoverage['/toolbar.js'].lineData[166] = 0;
-  _$jscoverage['/toolbar.js'].lineData[169] = 0;
-  _$jscoverage['/toolbar.js'].lineData[170] = 0;
-  _$jscoverage['/toolbar.js'].lineData[173] = 0;
-  _$jscoverage['/toolbar.js'].lineData[174] = 0;
-  _$jscoverage['/toolbar.js'].lineData[177] = 0;
-  _$jscoverage['/toolbar.js'].lineData[178] = 0;
-  _$jscoverage['/toolbar.js'].lineData[181] = 0;
-  _$jscoverage['/toolbar.js'].lineData[182] = 0;
-  _$jscoverage['/toolbar.js'].lineData[185] = 0;
-  _$jscoverage['/toolbar.js'].lineData[186] = 0;
-  _$jscoverage['/toolbar.js'].lineData[189] = 0;
-  _$jscoverage['/toolbar.js'].lineData[190] = 0;
+  _$jscoverage['/toolbar.js'].lineData[164] = 0;
+  _$jscoverage['/toolbar.js'].lineData[167] = 0;
+  _$jscoverage['/toolbar.js'].lineData[168] = 0;
+  _$jscoverage['/toolbar.js'].lineData[171] = 0;
+  _$jscoverage['/toolbar.js'].lineData[172] = 0;
+  _$jscoverage['/toolbar.js'].lineData[175] = 0;
+  _$jscoverage['/toolbar.js'].lineData[176] = 0;
+  _$jscoverage['/toolbar.js'].lineData[179] = 0;
+  _$jscoverage['/toolbar.js'].lineData[180] = 0;
+  _$jscoverage['/toolbar.js'].lineData[183] = 0;
+  _$jscoverage['/toolbar.js'].lineData[184] = 0;
+  _$jscoverage['/toolbar.js'].lineData[187] = 0;
+  _$jscoverage['/toolbar.js'].lineData[188] = 0;
+  _$jscoverage['/toolbar.js'].lineData[191] = 0;
   _$jscoverage['/toolbar.js'].lineData[193] = 0;
-  _$jscoverage['/toolbar.js'].lineData[195] = 0;
-  _$jscoverage['/toolbar.js'].lineData[199] = 0;
-  _$jscoverage['/toolbar.js'].lineData[203] = 0;
-  _$jscoverage['/toolbar.js'].lineData[204] = 0;
-  _$jscoverage['/toolbar.js'].lineData[207] = 0;
-  _$jscoverage['/toolbar.js'].lineData[208] = 0;
-  _$jscoverage['/toolbar.js'].lineData[211] = 0;
+  _$jscoverage['/toolbar.js'].lineData[197] = 0;
+  _$jscoverage['/toolbar.js'].lineData[201] = 0;
+  _$jscoverage['/toolbar.js'].lineData[202] = 0;
+  _$jscoverage['/toolbar.js'].lineData[205] = 0;
+  _$jscoverage['/toolbar.js'].lineData[206] = 0;
+  _$jscoverage['/toolbar.js'].lineData[209] = 0;
 }
 if (! _$jscoverage['/toolbar.js'].functionData) {
   _$jscoverage['/toolbar.js'].functionData = [];
@@ -367,100 +367,100 @@ if (! _$jscoverage['/toolbar.js'].branchData) {
   _$jscoverage['/toolbar.js'].branchData['71'] = [];
   _$jscoverage['/toolbar.js'].branchData['71'][1] = new BranchData();
   _$jscoverage['/toolbar.js'].branchData['71'][2] = new BranchData();
-  _$jscoverage['/toolbar.js'].branchData['88'] = [];
-  _$jscoverage['/toolbar.js'].branchData['88'][1] = new BranchData();
-  _$jscoverage['/toolbar.js'].branchData['92'] = [];
-  _$jscoverage['/toolbar.js'].branchData['92'][1] = new BranchData();
-  _$jscoverage['/toolbar.js'].branchData['99'] = [];
-  _$jscoverage['/toolbar.js'].branchData['99'][1] = new BranchData();
-  _$jscoverage['/toolbar.js'].branchData['100'] = [];
-  _$jscoverage['/toolbar.js'].branchData['100'][1] = new BranchData();
-  _$jscoverage['/toolbar.js'].branchData['105'] = [];
-  _$jscoverage['/toolbar.js'].branchData['105'][1] = new BranchData();
-  _$jscoverage['/toolbar.js'].branchData['115'] = [];
-  _$jscoverage['/toolbar.js'].branchData['115'][1] = new BranchData();
-  _$jscoverage['/toolbar.js'].branchData['118'] = [];
-  _$jscoverage['/toolbar.js'].branchData['118'][1] = new BranchData();
-  _$jscoverage['/toolbar.js'].branchData['139'] = [];
-  _$jscoverage['/toolbar.js'].branchData['139'][1] = new BranchData();
+  _$jscoverage['/toolbar.js'].branchData['86'] = [];
+  _$jscoverage['/toolbar.js'].branchData['86'][1] = new BranchData();
+  _$jscoverage['/toolbar.js'].branchData['90'] = [];
+  _$jscoverage['/toolbar.js'].branchData['90'][1] = new BranchData();
+  _$jscoverage['/toolbar.js'].branchData['97'] = [];
+  _$jscoverage['/toolbar.js'].branchData['97'][1] = new BranchData();
+  _$jscoverage['/toolbar.js'].branchData['98'] = [];
+  _$jscoverage['/toolbar.js'].branchData['98'][1] = new BranchData();
+  _$jscoverage['/toolbar.js'].branchData['103'] = [];
+  _$jscoverage['/toolbar.js'].branchData['103'][1] = new BranchData();
+  _$jscoverage['/toolbar.js'].branchData['113'] = [];
+  _$jscoverage['/toolbar.js'].branchData['113'][1] = new BranchData();
+  _$jscoverage['/toolbar.js'].branchData['116'] = [];
+  _$jscoverage['/toolbar.js'].branchData['116'][1] = new BranchData();
+  _$jscoverage['/toolbar.js'].branchData['137'] = [];
+  _$jscoverage['/toolbar.js'].branchData['137'][1] = new BranchData();
+  _$jscoverage['/toolbar.js'].branchData['146'] = [];
+  _$jscoverage['/toolbar.js'].branchData['146'][1] = new BranchData();
   _$jscoverage['/toolbar.js'].branchData['148'] = [];
   _$jscoverage['/toolbar.js'].branchData['148'][1] = new BranchData();
-  _$jscoverage['/toolbar.js'].branchData['150'] = [];
-  _$jscoverage['/toolbar.js'].branchData['150'][1] = new BranchData();
-  _$jscoverage['/toolbar.js'].branchData['151'] = [];
-  _$jscoverage['/toolbar.js'].branchData['151'][1] = new BranchData();
-  _$jscoverage['/toolbar.js'].branchData['157'] = [];
-  _$jscoverage['/toolbar.js'].branchData['157'][1] = new BranchData();
-  _$jscoverage['/toolbar.js'].branchData['157'][2] = new BranchData();
-  _$jscoverage['/toolbar.js'].branchData['157'][3] = new BranchData();
-  _$jscoverage['/toolbar.js'].branchData['203'] = [];
-  _$jscoverage['/toolbar.js'].branchData['203'][1] = new BranchData();
-  _$jscoverage['/toolbar.js'].branchData['207'] = [];
-  _$jscoverage['/toolbar.js'].branchData['207'][1] = new BranchData();
+  _$jscoverage['/toolbar.js'].branchData['149'] = [];
+  _$jscoverage['/toolbar.js'].branchData['149'][1] = new BranchData();
+  _$jscoverage['/toolbar.js'].branchData['155'] = [];
+  _$jscoverage['/toolbar.js'].branchData['155'][1] = new BranchData();
+  _$jscoverage['/toolbar.js'].branchData['155'][2] = new BranchData();
+  _$jscoverage['/toolbar.js'].branchData['155'][3] = new BranchData();
+  _$jscoverage['/toolbar.js'].branchData['201'] = [];
+  _$jscoverage['/toolbar.js'].branchData['201'][1] = new BranchData();
+  _$jscoverage['/toolbar.js'].branchData['205'] = [];
+  _$jscoverage['/toolbar.js'].branchData['205'][1] = new BranchData();
 }
-_$jscoverage['/toolbar.js'].branchData['207'][1].init(320, 19, 'nextHighlightedItem');
-function visit33_207_1(result) {
-  _$jscoverage['/toolbar.js'].branchData['207'][1].ranCondition(result);
+_$jscoverage['/toolbar.js'].branchData['205'][1].init(320, 19, 'nextHighlightedItem');
+function visit33_205_1(result) {
+  _$jscoverage['/toolbar.js'].branchData['205'][1].ranCondition(result);
   return result;
-}_$jscoverage['/toolbar.js'].branchData['203'][1].init(198, 39, 'typeof nextHighlightedItem == \'boolean\'');
-function visit32_203_1(result) {
-  _$jscoverage['/toolbar.js'].branchData['203'][1].ranCondition(result);
+}_$jscoverage['/toolbar.js'].branchData['201'][1].init(198, 39, 'typeof nextHighlightedItem == \'boolean\'');
+function visit32_201_1(result) {
+  _$jscoverage['/toolbar.js'].branchData['201'][1].ranCondition(result);
   return result;
-}_$jscoverage['/toolbar.js'].branchData['157'][3].init(485, 21, 'e.metaKey || e.altKey');
-function visit31_157_3(result) {
-  _$jscoverage['/toolbar.js'].branchData['157'][3].ranCondition(result);
+}_$jscoverage['/toolbar.js'].branchData['155'][3].init(485, 21, 'e.metaKey || e.altKey');
+function visit31_155_3(result) {
+  _$jscoverage['/toolbar.js'].branchData['155'][3].ranCondition(result);
   return result;
-}_$jscoverage['/toolbar.js'].branchData['157'][2].init(472, 34, 'e.ctrlKey || e.metaKey || e.altKey');
-function visit30_157_2(result) {
-  _$jscoverage['/toolbar.js'].branchData['157'][2].ranCondition(result);
+}_$jscoverage['/toolbar.js'].branchData['155'][2].init(472, 34, 'e.ctrlKey || e.metaKey || e.altKey');
+function visit30_155_2(result) {
+  _$jscoverage['/toolbar.js'].branchData['155'][2].ranCondition(result);
   return result;
-}_$jscoverage['/toolbar.js'].branchData['157'][1].init(458, 48, 'e.shiftKey || e.ctrlKey || e.metaKey || e.altKey');
-function visit29_157_1(result) {
-  _$jscoverage['/toolbar.js'].branchData['157'][1].ranCondition(result);
+}_$jscoverage['/toolbar.js'].branchData['155'][1].init(458, 48, 'e.shiftKey || e.ctrlKey || e.metaKey || e.altKey');
+function visit29_155_1(result) {
+  _$jscoverage['/toolbar.js'].branchData['155'][1].ranCondition(result);
   return result;
-}_$jscoverage['/toolbar.js'].branchData['151'][1].init(22, 32, 'current.handleKeyDownInternal(e)');
-function visit28_151_1(result) {
-  _$jscoverage['/toolbar.js'].branchData['151'][1].ranCondition(result);
+}_$jscoverage['/toolbar.js'].branchData['149'][1].init(22, 32, 'current.handleKeyDownInternal(e)');
+function visit28_149_1(result) {
+  _$jscoverage['/toolbar.js'].branchData['149'][1].ranCondition(result);
   return result;
-}_$jscoverage['/toolbar.js'].branchData['150'][1].init(227, 7, 'current');
-function visit27_150_1(result) {
-  _$jscoverage['/toolbar.js'].branchData['150'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/toolbar.js'].branchData['148'][1].init(152, 39, 'current && S.indexOf(current, children)');
-function visit26_148_1(result) {
+}_$jscoverage['/toolbar.js'].branchData['148'][1].init(227, 7, 'current');
+function visit27_148_1(result) {
   _$jscoverage['/toolbar.js'].branchData['148'][1].ranCondition(result);
   return result;
-}_$jscoverage['/toolbar.js'].branchData['139'][1].init(239, 45, 'highlightedItem = self.get("highlightedItem")');
-function visit25_139_1(result) {
-  _$jscoverage['/toolbar.js'].branchData['139'][1].ranCondition(result);
+}_$jscoverage['/toolbar.js'].branchData['146'][1].init(152, 39, 'current && S.indexOf(current, children)');
+function visit26_146_1(result) {
+  _$jscoverage['/toolbar.js'].branchData['146'][1].ranCondition(result);
   return result;
-}_$jscoverage['/toolbar.js'].branchData['118'][1].init(119, 1, 'v');
-function visit24_118_1(result) {
-  _$jscoverage['/toolbar.js'].branchData['118'][1].ranCondition(result);
+}_$jscoverage['/toolbar.js'].branchData['137'][1].init(239, 45, 'highlightedItem = self.get("highlightedItem")');
+function visit25_137_1(result) {
+  _$jscoverage['/toolbar.js'].branchData['137'][1].ranCondition(result);
   return result;
-}_$jscoverage['/toolbar.js'].branchData['115'][1].init(18, 14, 'e && e.prevVal');
-function visit23_115_1(result) {
-  _$jscoverage['/toolbar.js'].branchData['115'][1].ranCondition(result);
+}_$jscoverage['/toolbar.js'].branchData['116'][1].init(119, 1, 'v');
+function visit24_116_1(result) {
+  _$jscoverage['/toolbar.js'].branchData['116'][1].ranCondition(result);
   return result;
-}_$jscoverage['/toolbar.js'].branchData['105'][1].init(205, 3, '!id');
-function visit22_105_1(result) {
-  _$jscoverage['/toolbar.js'].branchData['105'][1].ranCondition(result);
+}_$jscoverage['/toolbar.js'].branchData['113'][1].init(18, 14, 'e && e.prevVal');
+function visit23_113_1(result) {
+  _$jscoverage['/toolbar.js'].branchData['113'][1].ranCondition(result);
   return result;
-}_$jscoverage['/toolbar.js'].branchData['100'][1].init(22, 36, 'el.ownerDocument.activeElement != el');
-function visit21_100_1(result) {
-  _$jscoverage['/toolbar.js'].branchData['100'][1].ranCondition(result);
+}_$jscoverage['/toolbar.js'].branchData['103'][1].init(205, 3, '!id');
+function visit22_103_1(result) {
+  _$jscoverage['/toolbar.js'].branchData['103'][1].ranCondition(result);
   return result;
-}_$jscoverage['/toolbar.js'].branchData['99'][1].init(507, 4, 'item');
-function visit20_99_1(result) {
-  _$jscoverage['/toolbar.js'].branchData['99'][1].ranCondition(result);
+}_$jscoverage['/toolbar.js'].branchData['98'][1].init(22, 36, 'el.ownerDocument.activeElement != el');
+function visit21_98_1(result) {
+  _$jscoverage['/toolbar.js'].branchData['98'][1].ranCondition(result);
   return result;
-}_$jscoverage['/toolbar.js'].branchData['92'][1].init(246, 39, 'prevVal && S.inArray(prevVal, children)');
-function visit19_92_1(result) {
-  _$jscoverage['/toolbar.js'].branchData['92'][1].ranCondition(result);
+}_$jscoverage['/toolbar.js'].branchData['97'][1].init(507, 4, 'item');
+function visit20_97_1(result) {
+  _$jscoverage['/toolbar.js'].branchData['97'][1].ranCondition(result);
   return result;
-}_$jscoverage['/toolbar.js'].branchData['88'][1].init(72, 14, 'e && e.prevVal');
-function visit18_88_1(result) {
-  _$jscoverage['/toolbar.js'].branchData['88'][1].ranCondition(result);
+}_$jscoverage['/toolbar.js'].branchData['90'][1].init(246, 39, 'prevVal && S.inArray(prevVal, children)');
+function visit19_90_1(result) {
+  _$jscoverage['/toolbar.js'].branchData['90'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/toolbar.js'].branchData['86'][1].init(72, 14, 'e && e.prevVal');
+function visit18_86_1(result) {
+  _$jscoverage['/toolbar.js'].branchData['86'][1].ranCondition(result);
   return result;
 }_$jscoverage['/toolbar.js'].branchData['71'][2].init(81, 45, 'child.isMenuButton && !child.get(\'collapsed\')');
 function visit17_71_2(result) {
@@ -630,154 +630,154 @@ KISSY.add("toolbar", function(S, Container, DelegateChildrenExtension, ToolbarRe
     _$jscoverage['/toolbar.js'].lineData[75]++;
     return null;
   }
-  _$jscoverage['/toolbar.js'].lineData[84]++;
+  _$jscoverage['/toolbar.js'].lineData[82]++;
   return Container.extend([DelegateChildrenExtension], {
   _onSetHighlightedItem: function(item, e) {
   _$jscoverage['/toolbar.js'].functionData[5]++;
-  _$jscoverage['/toolbar.js'].lineData[86]++;
-  var id, itemEl, self = this, prevVal = visit18_88_1(e && e.prevVal), children = self.get('children'), el = self.el;
-  _$jscoverage['/toolbar.js'].lineData[92]++;
-  if (visit19_92_1(prevVal && S.inArray(prevVal, children))) {
-    _$jscoverage['/toolbar.js'].lineData[93]++;
+  _$jscoverage['/toolbar.js'].lineData[84]++;
+  var id, itemEl, self = this, prevVal = visit18_86_1(e && e.prevVal), children = self.get('children'), el = self.el;
+  _$jscoverage['/toolbar.js'].lineData[90]++;
+  if (visit19_90_1(prevVal && S.inArray(prevVal, children))) {
+    _$jscoverage['/toolbar.js'].lineData[91]++;
     prevVal.set('highlighted', false, {
   data: {
   byPassSetToolbarHighlightedItem: 1}});
   }
-  _$jscoverage['/toolbar.js'].lineData[99]++;
-  if (visit20_99_1(item)) {
-    _$jscoverage['/toolbar.js'].lineData[100]++;
-    if (visit21_100_1(el.ownerDocument.activeElement != el)) {
-      _$jscoverage['/toolbar.js'].lineData[101]++;
+  _$jscoverage['/toolbar.js'].lineData[97]++;
+  if (visit20_97_1(item)) {
+    _$jscoverage['/toolbar.js'].lineData[98]++;
+    if (visit21_98_1(el.ownerDocument.activeElement != el)) {
+      _$jscoverage['/toolbar.js'].lineData[99]++;
       self.focus();
     }
-    _$jscoverage['/toolbar.js'].lineData[103]++;
+    _$jscoverage['/toolbar.js'].lineData[101]++;
     itemEl = item.el;
-    _$jscoverage['/toolbar.js'].lineData[104]++;
+    _$jscoverage['/toolbar.js'].lineData[102]++;
     id = itemEl.id;
-    _$jscoverage['/toolbar.js'].lineData[105]++;
-    if (visit22_105_1(!id)) {
-      _$jscoverage['/toolbar.js'].lineData[106]++;
+    _$jscoverage['/toolbar.js'].lineData[103]++;
+    if (visit22_103_1(!id)) {
+      _$jscoverage['/toolbar.js'].lineData[104]++;
       itemEl.id = id = S.guid("ks-toolbar-item");
     }
-    _$jscoverage['/toolbar.js'].lineData[108]++;
+    _$jscoverage['/toolbar.js'].lineData[106]++;
     el.setAttribute("aria-activedescendant", id);
   } else {
-    _$jscoverage['/toolbar.js'].lineData[110]++;
+    _$jscoverage['/toolbar.js'].lineData[108]++;
     el.setAttribute("aria-activedescendant", "");
   }
 }, 
   '_onSetExpandedItem': function(v, e) {
   _$jscoverage['/toolbar.js'].functionData[6]++;
-  _$jscoverage['/toolbar.js'].lineData[115]++;
-  if (visit23_115_1(e && e.prevVal)) {
-    _$jscoverage['/toolbar.js'].lineData[116]++;
+  _$jscoverage['/toolbar.js'].lineData[113]++;
+  if (visit23_113_1(e && e.prevVal)) {
+    _$jscoverage['/toolbar.js'].lineData[114]++;
     e.prevVal.set('collapsed', true);
   }
-  _$jscoverage['/toolbar.js'].lineData[118]++;
-  if (visit24_118_1(v)) {
-    _$jscoverage['/toolbar.js'].lineData[119]++;
+  _$jscoverage['/toolbar.js'].lineData[116]++;
+  if (visit24_116_1(v)) {
+    _$jscoverage['/toolbar.js'].lineData[117]++;
     v.set('collapsed', false);
   }
 }, 
   bindUI: function() {
   _$jscoverage['/toolbar.js'].functionData[7]++;
-  _$jscoverage['/toolbar.js'].lineData[127]++;
+  _$jscoverage['/toolbar.js'].lineData[125]++;
   var self = this;
-  _$jscoverage['/toolbar.js'].lineData[128]++;
+  _$jscoverage['/toolbar.js'].lineData[126]++;
   self.on("afterCollapsedChange", afterCollapsedChange, self);
-  _$jscoverage['/toolbar.js'].lineData[129]++;
+  _$jscoverage['/toolbar.js'].lineData[127]++;
   self.on("afterHighlightedChange", afterHighlightedChange, self);
 }, 
   handleBlurInternal: function(e) {
   _$jscoverage['/toolbar.js'].functionData[8]++;
-  _$jscoverage['/toolbar.js'].lineData[133]++;
+  _$jscoverage['/toolbar.js'].lineData[131]++;
   var self = this, highlightedItem, expandedItem;
-  _$jscoverage['/toolbar.js'].lineData[136]++;
+  _$jscoverage['/toolbar.js'].lineData[134]++;
   self.callSuper(e);
-  _$jscoverage['/toolbar.js'].lineData[137]++;
+  _$jscoverage['/toolbar.js'].lineData[135]++;
   self.set("expandedItem", null);
-  _$jscoverage['/toolbar.js'].lineData[139]++;
-  if (visit25_139_1(highlightedItem = self.get("highlightedItem"))) {
-    _$jscoverage['/toolbar.js'].lineData[140]++;
+  _$jscoverage['/toolbar.js'].lineData[137]++;
+  if (visit25_137_1(highlightedItem = self.get("highlightedItem"))) {
+    _$jscoverage['/toolbar.js'].lineData[138]++;
     highlightedItem.set('highlighted', false);
   }
 }, 
   getNextItemByKeyDown: function(e, current) {
   _$jscoverage['/toolbar.js'].functionData[9]++;
-  _$jscoverage['/toolbar.js'].lineData[145]++;
-  var self = this, orientation = self.get("orientation"), children = self.get("children"), childIndex = visit26_148_1(current && S.indexOf(current, children));
-  _$jscoverage['/toolbar.js'].lineData[150]++;
-  if (visit27_150_1(current)) {
-    _$jscoverage['/toolbar.js'].lineData[151]++;
-    if (visit28_151_1(current.handleKeyDownInternal(e))) {
-      _$jscoverage['/toolbar.js'].lineData[152]++;
+  _$jscoverage['/toolbar.js'].lineData[143]++;
+  var self = this, orientation = self.get("orientation"), children = self.get("children"), childIndex = visit26_146_1(current && S.indexOf(current, children));
+  _$jscoverage['/toolbar.js'].lineData[148]++;
+  if (visit27_148_1(current)) {
+    _$jscoverage['/toolbar.js'].lineData[149]++;
+    if (visit28_149_1(current.handleKeyDownInternal(e))) {
+      _$jscoverage['/toolbar.js'].lineData[150]++;
       return true;
     }
   }
-  _$jscoverage['/toolbar.js'].lineData[157]++;
-  if (visit29_157_1(e.shiftKey || visit30_157_2(e.ctrlKey || visit31_157_3(e.metaKey || e.altKey)))) {
-    _$jscoverage['/toolbar.js'].lineData[158]++;
+  _$jscoverage['/toolbar.js'].lineData[155]++;
+  if (visit29_155_1(e.shiftKey || visit30_155_2(e.ctrlKey || visit31_155_3(e.metaKey || e.altKey)))) {
+    _$jscoverage['/toolbar.js'].lineData[156]++;
     return false;
   }
-  _$jscoverage['/toolbar.js'].lineData[163]++;
+  _$jscoverage['/toolbar.js'].lineData[161]++;
   switch (e.keyCode) {
     case KeyCode.ESC:
-      _$jscoverage['/toolbar.js'].lineData[165]++;
+      _$jscoverage['/toolbar.js'].lineData[163]++;
       self.view.getKeyEventTarget().fire("blur");
-      _$jscoverage['/toolbar.js'].lineData[166]++;
+      _$jscoverage['/toolbar.js'].lineData[164]++;
       return true;
     case KeyCode.HOME:
-      _$jscoverage['/toolbar.js'].lineData[169]++;
+      _$jscoverage['/toolbar.js'].lineData[167]++;
       current = getNextEnabledItem(undefined, 1, self);
-      _$jscoverage['/toolbar.js'].lineData[170]++;
+      _$jscoverage['/toolbar.js'].lineData[168]++;
       break;
     case KeyCode.END:
-      _$jscoverage['/toolbar.js'].lineData[173]++;
+      _$jscoverage['/toolbar.js'].lineData[171]++;
       current = getNextEnabledItem(undefined, -1, self);
-      _$jscoverage['/toolbar.js'].lineData[174]++;
+      _$jscoverage['/toolbar.js'].lineData[172]++;
       break;
     case KeyCode.UP:
-      _$jscoverage['/toolbar.js'].lineData[177]++;
+      _$jscoverage['/toolbar.js'].lineData[175]++;
       current = getNextEnabledItem(childIndex, -1, self);
-      _$jscoverage['/toolbar.js'].lineData[178]++;
+      _$jscoverage['/toolbar.js'].lineData[176]++;
       break;
     case KeyCode.LEFT:
-      _$jscoverage['/toolbar.js'].lineData[181]++;
+      _$jscoverage['/toolbar.js'].lineData[179]++;
       current = getNextEnabledItem(childIndex, -1, self);
-      _$jscoverage['/toolbar.js'].lineData[182]++;
+      _$jscoverage['/toolbar.js'].lineData[180]++;
       break;
     case KeyCode.DOWN:
-      _$jscoverage['/toolbar.js'].lineData[185]++;
+      _$jscoverage['/toolbar.js'].lineData[183]++;
       current = getNextEnabledItem(childIndex, 1, self);
-      _$jscoverage['/toolbar.js'].lineData[186]++;
+      _$jscoverage['/toolbar.js'].lineData[184]++;
       break;
     case KeyCode.RIGHT:
-      _$jscoverage['/toolbar.js'].lineData[189]++;
+      _$jscoverage['/toolbar.js'].lineData[187]++;
       current = getNextEnabledItem(childIndex, 1, self);
-      _$jscoverage['/toolbar.js'].lineData[190]++;
+      _$jscoverage['/toolbar.js'].lineData[188]++;
       break;
     default:
-      _$jscoverage['/toolbar.js'].lineData[193]++;
+      _$jscoverage['/toolbar.js'].lineData[191]++;
       return false;
   }
-  _$jscoverage['/toolbar.js'].lineData[195]++;
+  _$jscoverage['/toolbar.js'].lineData[193]++;
   return current;
 }, 
   handleKeyDownInternal: function(e) {
   _$jscoverage['/toolbar.js'].functionData[10]++;
-  _$jscoverage['/toolbar.js'].lineData[199]++;
+  _$jscoverage['/toolbar.js'].lineData[197]++;
   var self = this, currentChild = getChildByHighlightedItem(self), nextHighlightedItem = self.getNextItemByKeyDown(e, currentChild);
-  _$jscoverage['/toolbar.js'].lineData[203]++;
-  if (visit32_203_1(typeof nextHighlightedItem == 'boolean')) {
-    _$jscoverage['/toolbar.js'].lineData[204]++;
+  _$jscoverage['/toolbar.js'].lineData[201]++;
+  if (visit32_201_1(typeof nextHighlightedItem == 'boolean')) {
+    _$jscoverage['/toolbar.js'].lineData[202]++;
     return nextHighlightedItem;
   }
-  _$jscoverage['/toolbar.js'].lineData[207]++;
-  if (visit33_207_1(nextHighlightedItem)) {
-    _$jscoverage['/toolbar.js'].lineData[208]++;
+  _$jscoverage['/toolbar.js'].lineData[205]++;
+  if (visit33_205_1(nextHighlightedItem)) {
+    _$jscoverage['/toolbar.js'].lineData[206]++;
     nextHighlightedItem.set("highlighted", true);
   }
-  _$jscoverage['/toolbar.js'].lineData[211]++;
+  _$jscoverage['/toolbar.js'].lineData[209]++;
   return true;
 }}, {
   xclass: 'toolbar', 

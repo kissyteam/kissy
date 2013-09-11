@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Aug 27 21:51
+build time: Sep 11 12:43
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -10,12 +10,14 @@ build time: Aug 27 21:51
 */
 
 /**
+ * @ignore
  * DateTimeFormat for KISSY.
  * Inspired by DateTimeFormat from JDK.
  * @author yiminghe@gmail.com
  */
 KISSY.add('date/format', function (S, GregorianCalendar, defaultLocale) {
     var MAX_VALUE = Number.MAX_VALUE;
+    var logger= S.getLogger('s/date/format');
 
     /*
 
@@ -67,6 +69,7 @@ KISSY.add('date/format', function (S, GregorianCalendar, defaultLocale) {
     });
 
     patternChars = /**
+     @ignore
      @type String
      */patternChars.join('') + 'ahkKZE';
 
@@ -488,6 +491,7 @@ KISSY.add('date/format', function (S, GregorianCalendar, defaultLocale) {
             }
             return ret.join('');
         },
+
         parse: function (dateStr) {
             var calendar = new GregorianCalendar(this.timezoneOffset, this.locale),
                 i,
@@ -547,9 +551,10 @@ KISSY.add('date/format', function (S, GregorianCalendar, defaultLocale) {
             }
 
             if (errorIndex >= 0) {
-                S.log(dateStr, 'warn');
-                S.log(dateStr.substring(0, errorIndex) + '^', 'warn');
-                throw new Error('error when parsing date');
+                logger.error('error when parsing date');
+                logger.error(dateStr);
+                logger.error(dateStr.substring(0, errorIndex) + '^');
+                return undefined;
             }
             return calendar;
         }
