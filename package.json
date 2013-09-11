@@ -1,5 +1,6 @@
 {
     "name": "kissy",
+    "subdomain":"dev-kissy",
     "version": "1.4.0-1",
     "description": "KISSY",
     "author": "yiminghe <yiminghe@gmail.com>",
