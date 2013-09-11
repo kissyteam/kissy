@@ -705,10 +705,10 @@ function visit11_18_1(result) {
   _$jscoverage['/control/render.js'].branchData['18'][1].ranCondition(result);
   return result;
 }_$jscoverage['/control/render.js'].lineData[7]++;
-KISSY.add("component/control/render", function(S, ComponentProcess, XTemplate, RenderTpl, Manager) {
+KISSY.add("component/control/render", function(S, Node, ComponentProcess, XTemplate, RenderTpl, Manager) {
   _$jscoverage['/control/render.js'].functionData[0]++;
   _$jscoverage['/control/render.js'].lineData[8]++;
-  var ON_SET = '_onSet', trim = S.trim, $ = S.all, UA = S.UA, startTpl = RenderTpl, endTpl = '</div>', doc = S.Env.host.document, HTML_PARSER = 'HTML_PARSER';
+  var ON_SET = '_onSet', trim = S.trim, $ = Node.all, UA = S.UA, startTpl = RenderTpl, endTpl = '</div>', doc = S.Env.host.document, HTML_PARSER = 'HTML_PARSER';
   _$jscoverage['/control/render.js'].lineData[17]++;
   function pxSetter(v) {
     _$jscoverage['/control/render.js'].functionData[1]++;
@@ -1229,4 +1229,4 @@ KISSY.add("component/control/render", function(S, ComponentProcess, XTemplate, R
 }}, 
   name: 'render'});
 }, {
-  requires: ['./process', 'xtemplate', './render-tpl', 'component/manager']});
+  requires: ['node', './process', 'xtemplate', './render-tpl', 'component/manager']});

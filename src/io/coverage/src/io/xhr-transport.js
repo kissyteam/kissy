@@ -243,10 +243,11 @@ if (! _$jscoverage['/io/xhr-transport.js']) {
   _$jscoverage['/io/xhr-transport.js'].lineData[45] = 0;
   _$jscoverage['/io/xhr-transport.js'].lineData[46] = 0;
   _$jscoverage['/io/xhr-transport.js'].lineData[50] = 0;
-  _$jscoverage['/io/xhr-transport.js'].lineData[51] = 0;
+  _$jscoverage['/io/xhr-transport.js'].lineData[52] = 0;
   _$jscoverage['/io/xhr-transport.js'].lineData[56] = 0;
-  _$jscoverage['/io/xhr-transport.js'].lineData[59] = 0;
-  _$jscoverage['/io/xhr-transport.js'].lineData[62] = 0;
+  _$jscoverage['/io/xhr-transport.js'].lineData[58] = 0;
+  _$jscoverage['/io/xhr-transport.js'].lineData[61] = 0;
+  _$jscoverage['/io/xhr-transport.js'].lineData[63] = 0;
   _$jscoverage['/io/xhr-transport.js'].lineData[67] = 0;
   _$jscoverage['/io/xhr-transport.js'].lineData[69] = 0;
 }
@@ -274,12 +275,12 @@ if (! _$jscoverage['/io/xhr-transport.js'].branchData) {
   _$jscoverage['/io/xhr-transport.js'].branchData['45'] = [];
   _$jscoverage['/io/xhr-transport.js'].branchData['45'][1] = new BranchData();
   _$jscoverage['/io/xhr-transport.js'].branchData['45'][2] = new BranchData();
-  _$jscoverage['/io/xhr-transport.js'].branchData['52'] = [];
-  _$jscoverage['/io/xhr-transport.js'].branchData['52'][1] = new BranchData();
+  _$jscoverage['/io/xhr-transport.js'].branchData['53'] = [];
+  _$jscoverage['/io/xhr-transport.js'].branchData['53'][1] = new BranchData();
 }
-_$jscoverage['/io/xhr-transport.js'].branchData['52'][1].init(56, 51, '_XDomainRequest && (xhr instanceof _XDomainRequest)');
-function visit200_52_1(result) {
-  _$jscoverage['/io/xhr-transport.js'].branchData['52'][1].ranCondition(result);
+_$jscoverage['/io/xhr-transport.js'].branchData['53'][1].init(56, 51, '_XDomainRequest && (xhr instanceof _XDomainRequest)');
+function visit200_53_1(result) {
+  _$jscoverage['/io/xhr-transport.js'].branchData['53'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io/xhr-transport.js'].branchData['45'][2].init(505, 30, 'String(xdrCfg.use) === \'flash\'');
 function visit199_45_2(result) {
@@ -349,16 +350,18 @@ KISSY.add('io/xhr-transport', function(S, IO, XhrTransportBase, SubDomainTranspo
     }
     _$jscoverage['/io/xhr-transport.js'].lineData[50]++;
     xhr = self.nativeXhr = XhrTransportBase.nativeXhr(crossDomain);
-    _$jscoverage['/io/xhr-transport.js'].lineData[51]++;
-    logger.debug('crossDomain: ' + crossDomain + ', use ' + (visit200_52_1(_XDomainRequest && (xhr instanceof _XDomainRequest)) ? 'XDomainRequest' : 'XhrTransport') + ' for: ' + c.url);
+    _$jscoverage['/io/xhr-transport.js'].lineData[52]++;
+    var msg = 'crossDomain: ' + crossDomain + ', use ' + (visit200_53_1(_XDomainRequest && (xhr instanceof _XDomainRequest)) ? 'XDomainRequest' : 'XhrTransport') + ' for: ' + c.url;
     _$jscoverage['/io/xhr-transport.js'].lineData[56]++;
+    logger.debug(msg);
+    _$jscoverage['/io/xhr-transport.js'].lineData[58]++;
     return self;
   }
-  _$jscoverage['/io/xhr-transport.js'].lineData[59]++;
+  _$jscoverage['/io/xhr-transport.js'].lineData[61]++;
   S.augment(XhrTransport, XhrTransportBase.proto, {
   send: function() {
   _$jscoverage['/io/xhr-transport.js'].functionData[3]++;
-  _$jscoverage['/io/xhr-transport.js'].lineData[62]++;
+  _$jscoverage['/io/xhr-transport.js'].lineData[63]++;
   this.sendInternal();
 }});
   _$jscoverage['/io/xhr-transport.js'].lineData[67]++;

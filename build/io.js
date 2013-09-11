@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 11 14:24
+build time: Sep 11 15:42
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -1260,20 +1260,20 @@ KISSY.add('io/xhr-transport', function (S, IO, XhrTransportBase, SubDomainTransp
         }
 
         xhr = self.nativeXhr = XhrTransportBase.nativeXhr(crossDomain);
-        logger.debug('crossDomain: ' + crossDomain + ', use ' +
+
+        var msg='crossDomain: ' + crossDomain + ', use ' +
             (_XDomainRequest && (xhr instanceof _XDomainRequest) ?
                 'XDomainRequest' :
-                'XhrTransport') + ' for: ' + c.url);
+                'XhrTransport') + ' for: ' + c.url;
+        logger.debug(msg);
 
         return self;
     }
 
     S.augment(XhrTransport, XhrTransportBase.proto, {
-
         send: function () {
             this.sendInternal();
         }
-
     });
 
     IO['setupTransport']('*', XhrTransport);

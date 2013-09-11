@@ -4,10 +4,10 @@
  * @author yiminghe@gmail.com
  * refer: http://martinfowler.com/eaaDev/uiArchs.html
  */
-KISSY.add("component/control/render", function (S, ComponentProcess, XTemplate, RenderTpl, Manager) {
+KISSY.add("component/control/render", function (S, Node, ComponentProcess, XTemplate, RenderTpl, Manager) {
     var ON_SET = '_onSet',
         trim = S.trim,
-        $ = S.all,
+        $ = Node.all,
         UA = S.UA,
         startTpl = RenderTpl,
         endTpl = '</div>',
@@ -513,6 +513,7 @@ KISSY.add("component/control/render", function (S, ComponentProcess, XTemplate, 
      */
 }, {
     requires: [
+        'node',
         './process',
         'xtemplate',
         './render-tpl',

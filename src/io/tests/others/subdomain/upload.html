@@ -19,7 +19,7 @@
 <script src="/kissy/src/package.js"></script>
 <script>
     var port = SERVER_CONFIG.ports[1];
-    if (port != 8888) {
+    if (port != SERVER_CONFIG.ports[0]) {
         document.domain = location.hostname;
     }
 

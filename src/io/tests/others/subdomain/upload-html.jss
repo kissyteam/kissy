@@ -1,5 +1,4 @@
-module.exports = function (req, res) {
-
+module.exports = function (req, res,utils) {
     setTimeout(function () {
         var t = {}, query = req.body;
         if (query.test) {
@@ -27,10 +26,8 @@ module.exports = function (req, res) {
         res.set('Pragma', 'no-cache');
         res.set('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
         res.set('Access-Control-Allow-Credentials', 'true');
-        res.set('Access-Control-Allow-Origin', 'http://'+req.host+':8888');
+        res.set('Access-Control-Allow-Origin', 'http://'+req.host+':'+utils.config.ports[0]);
         res.set('Access-Control-Allow-Headers', 'origin, x-requested-with, yiminghe, content-type, accept, *');
         res.send(data);
     }, 10);
-
-
 };

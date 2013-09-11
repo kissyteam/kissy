@@ -1,58 +1,57 @@
 {
-  "name": "kissy",
-  "version": "1.4.0-1",
-  "description": "KISSY",
-  "author": "yiminghe <yiminghe@gmail.com>",
-  "homepage": "http://docs.kissyui.com",
-  "bugs": {
-    "url": "https://github.com/kissyteam/kissy/issues"
-  },
-  "contributors": [
-    "Jayli <lijing00333@163.com>",
-    "dxq613 <dxq613@gmail.com>",
-    "fool2fish <fool2fish@gmail.com>",
-    "kingfo <oicuicu@gmail.com>",
-    "lifesinger <lifesinger@gmail.com>",
-    "lizzie <shengyan1985@gmail.com>",
-    "satans17 <satans17@gmail.com>",
-    "yyfrankyy <yyfrankyy@gmail.com>"
-  ],
-  "engines": {
-    "node": "~0.10"
-  },
-  "bin": {
-    "kissy-xtemplate": "./bin/xtemplate.js",
-    "kissy-kison": "./bin/kison.js"
-  },
-  "directories": {
-    "lib": "./build/"
-  },
-  "main": "./build/kissy-nodejs.js",
-  "scripts": {
-    "test": "node ./tools/test/jasmine-node",
-    "start": "node ./tools/server/start"
-  },
-  "optionalDependencies": {
-    "optimist": "~0.6.0",
-    "js-beautify": "~1.4.0",
-    "jsdom": "~0.8.4"
-  },
-  "devDependencies": {
-    "express": "~3.3.8",
-    "mkdirp": "~0.3.5",
-    "request": "~2.27.0"
-  },
-  "licenses": [
-    {
-      "type": "MIT",
-      "url": "https://github.com/kissyteam/kissy/blob/master/LICENSE.md"
+    "name": "kissy",
+    "version": "1.4.0-1",
+    "description": "KISSY",
+    "author": "yiminghe <yiminghe@gmail.com>",
+    "homepage": "http://docs.kissyui.com",
+    "bugs": {
+        "url": "https://github.com/kissyteam/kissy/issues"
+    },
+    "contributors": [
+        "Jayli <lijing00333@163.com>",
+        "dxq613 <dxq613@gmail.com>",
+        "fool2fish <fool2fish@gmail.com>",
+        "kingfo <oicuicu@gmail.com>",
+        "lifesinger <lifesinger@gmail.com>",
+        "lizzie <shengyan1985@gmail.com>",
+        "satans17 <satans17@gmail.com>",
+        "yyfrankyy <yyfrankyy@gmail.com>"
+    ],
+    "engines": {
+        "node": "~0.10"
+    },
+    "bin": {
+        "kissy-xtemplate": "./bin/xtemplate.js",
+        "kissy-kison": "./bin/kison.js"
+    },
+    "directories": {
+        "lib": "./build/"
+    },
+    "main": "./build/kissy-nodejs.js",
+    "scripts": {
+        "test": "node ./tools/test/jasmine-node",
+        "start": "node ./tools/server/start"
+    },
+    "optionalDependencies": {
+        "optimist": "~0.6.0",
+        "js-beautify": "~1.4.0",
+        "jsdom": "~0.8.4"
+    },
+    "devDependencies": {
+        "express": "~3.3.4",
+        "mkdirp": "~0.3.5",
+        "request": "~2.27.0",
+        "fs-extra": "~0.6.4"
+    },
+    "notes": ["express 3.3.8-3.4.0 cors bug"],
+    "licenses": [
+        {
+            "type": "MIT",
+            "url": "https://github.com/kissyteam/kissy/blob/master/LICENSE.md"
+        }
+    ],
+    "repository": {
+        "type": "git",
+        "url": "http://github.com/kissyteam/kissy.git"
     }
-  ],
-  "repository": {
-    "type": "git",
-    "url": "http://github.com/kissyteam/kissy.git"
-  },
-  "dependencies": {
-    "fs-extra": "~0.6.4"
-  }
 }

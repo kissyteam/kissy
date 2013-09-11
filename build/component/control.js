@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 11 14:14
+build time: Sep 11 14:57
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -244,10 +244,10 @@ KISSY.add('component/control/render-tpl',
  * @author yiminghe@gmail.com
  * refer: http://martinfowler.com/eaaDev/uiArchs.html
  */
-KISSY.add("component/control/render", function (S, ComponentProcess, XTemplate, RenderTpl, Manager) {
+KISSY.add("component/control/render", function (S, Node, ComponentProcess, XTemplate, RenderTpl, Manager) {
     var ON_SET = '_onSet',
         trim = S.trim,
-        $ = S.all,
+        $ = Node.all,
         UA = S.UA,
         startTpl = RenderTpl,
         endTpl = '</div>',
@@ -753,6 +753,7 @@ KISSY.add("component/control/render", function (S, ComponentProcess, XTemplate, 
      */
 }, {
     requires: [
+        'node',
         './process',
         'xtemplate',
         './render-tpl',

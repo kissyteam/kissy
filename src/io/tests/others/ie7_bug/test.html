@@ -5,7 +5,7 @@
 <script >
     KISSY.use("io,json", function (S, io, Json) {
         io({
-            url:'//'+location.hostname+':8888/kissy/src/io/tests/io-json.jss',
+            url:'//'+location.hostname+':'+SERVER_CONFIG.ports[0]+'/kissy/src/io/tests/io-json.jss',
             dataType:'json',
             success:function (d) {
                 alert(Json.stringify(d));

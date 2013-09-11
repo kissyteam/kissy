@@ -15,6 +15,7 @@ var cwd = process.cwd();
 var currentDir = __dirname;
 var S = global.KISSY = global.S = require(cwd + '/build/kissy-nodejs.js');
 var request = require('request');
+var serverConfig = JSON.parse(fs.readFileSync(currentDir + '/server.json'));
 
 S.use('xtemplate/nodejs', function (S, XTemplateNodeJs) {
     function startServer(port) {
@@ -39,6 +40,7 @@ S.use('xtemplate/nodejs', function (S, XTemplateNodeJs) {
         }
 
         var utils = {
+            config: serverConfig,
             render: function (tpl, data) {
                 return getXTemplate(tpl).render(data);
             }
@@ -356,9 +358,7 @@ S.use('xtemplate/nodejs', function (S, XTemplateNodeJs) {
         app.listen(port);
     }
 
-    fs.readJson(currentDir + '/server.json', function (err, packageObj) {
-        packageObj.ports.forEach(function (port) {
-            startServer(port);
-        });
+    serverConfig.ports.forEach(function (port) {
+        startServer(port);
     });
 });

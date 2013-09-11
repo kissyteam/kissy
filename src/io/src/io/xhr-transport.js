@@ -48,20 +48,20 @@ KISSY.add('io/xhr-transport', function (S, IO, XhrTransportBase, SubDomainTransp
         }
 
         xhr = self.nativeXhr = XhrTransportBase.nativeXhr(crossDomain);
-        logger.debug('crossDomain: ' + crossDomain + ', use ' +
+
+        var msg='crossDomain: ' + crossDomain + ', use ' +
             (_XDomainRequest && (xhr instanceof _XDomainRequest) ?
                 'XDomainRequest' :
-                'XhrTransport') + ' for: ' + c.url);
+                'XhrTransport') + ' for: ' + c.url;
+        logger.debug(msg);
 
         return self;
     }
 
     S.augment(XhrTransport, XhrTransportBase.proto, {
-
         send: function () {
             this.sendInternal();
         }
-
     });
 
     IO['setupTransport']('*', XhrTransport);
