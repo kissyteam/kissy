@@ -2,8 +2,8 @@
     "name": "kissy",
     "subdomain": "dev-kissy",
     "domains": [
-	    "dev.kissyui.com"
-	  ],
+        "dev.kissyui.com"
+    ],
     "version": "1.4.0-4",
     "description": "KISSY",
     "author": "yiminghe <yiminghe@gmail.com>",
@@ -38,10 +38,10 @@
         "stop": "node ./tools/server/stop"
     },
     "optionalDependencies": {
-        "optimist": "~0.6.0",
         "jsdom": "~0.8.4"
     },
     "dependencies": {
+        "optimist": "~0.6.0",
         "js-beautify": "~1.4.0",
         "express": "3.3.4",
         "mkdirp": "~0.3.5",
