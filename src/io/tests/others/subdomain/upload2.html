@@ -8,7 +8,7 @@
     <meta name="apple-touch-fullscreen" content="yes">
 </head>
 <body>
-<form  id="t">
+<form id="t">
     <input name="test" value='1'/>
     <input name="test2" value='2'/>
     <input name="testFile" type="file"/>
@@ -17,41 +17,20 @@
 <script src="/kissy/src/package.js"></script>
 <script>
     document.domain = location.hostname;
-
     KISSY.use("core", function (S) {
-
         var Dom = S.DOM, Event = S.Event, UA = S.UA;
-
-        function isCustomDomain() {
-            var win = window;
-            var domain = win.document.domain,
-                    hostname = win.location.hostname;
-            return domain != hostname &&
-                    domain != ( '[' + hostname + ']' );	// IPv6 IP support
-        }
-
         var doFormUpload = function (o, ps, url) {
             var id = S.guid("form-upload-");
             var frame = document.createElement('iframe');
             frame.id = id;
             frame.name = id;
             frame.className = 'ke-hidden';
-
-            var srcScript = 'document.open();' +
-                // The document domain must be set any time we
-                // call document.open().
-                    ( isCustomDomain() ? ( 'document.domain="' + document.domain + '";' ) : '' ) +
-                    'document.close();';
-            if (UA['ie']) {
-                frame.src = UA['ie'] ? 'javascript:void(function(){' + encodeURIComponent(srcScript) + '}())' : '';
-            }
+            frame.src = Dom.getEmptyIframeSrc();
             S.log("doFormUpload : " + frame.src);
             document.body.appendChild(frame);
-
             if (UA['ie']) {
                 document['frames'][id].name = id;
             }
-
             var form = o.form,
                     buf = {
                         target: Dom.attr(form, "target"),
@@ -81,8 +60,7 @@
                     hiddens.push(hd);
                 }
             }
-
-            function cb(e) {
+            function cb() {
                 var r = {  // bogus response object
                     responseText: '',
                     responseXML: null
@@ -125,7 +103,6 @@
 
             }
 
-
             setTimeout(function () {
 
                 Event.on(frame, 'load', cb);
@@ -140,7 +117,6 @@
                     }
                 }
             }, 10);
-
             return frame;
         };
 
@@ -152,10 +128,9 @@
                 }, {
                     s: 1
                 },
-                'http://' + location.hostname + ':'+SERVER_CONFIG.ports[1]+'/' +
+                'http://' + location.hostname + ':' + SERVER_CONFIG.ports[1] + '/' +
                         'kissy/src/io/tests/subdomain/upload.jss');
     });
-
 </script>
 </body>
 </html>
