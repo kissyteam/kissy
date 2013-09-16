@@ -133,5 +133,5 @@ KISSY.add('scroll-view/plugin/scrollbar/render', function (S, Control, ScrollBar
     });
 
 }, {
-    requires: ['component/control', './scrollbar-tpl']
+    requires: ['component/control', './scrollbar-xtpl']
 });

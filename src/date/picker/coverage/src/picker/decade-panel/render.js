@@ -275,11 +275,11 @@ if (! _$jscoverage['/picker/decade-panel/render.js'].branchData) {
   _$jscoverage['/picker/decade-panel/render.js'].branchData['18'][1] = new BranchData();
 }
 _$jscoverage['/picker/decade-panel/render.js'].branchData['18'][1].init(60, 5, 'j < 4');
-function visit9_18_1(result) {
+function visit14_18_1(result) {
   _$jscoverage['/picker/decade-panel/render.js'].branchData['18'][1].ranCondition(result);
   return result;
 }_$jscoverage['/picker/decade-panel/render.js'].branchData['16'][1].init(347, 5, 'i < 3');
-function visit8_16_1(result) {
+function visit13_16_1(result) {
   _$jscoverage['/picker/decade-panel/render.js'].branchData['16'][1].ranCondition(result);
   return result;
 }_$jscoverage['/picker/decade-panel/render.js'].lineData[6]++;
@@ -305,11 +305,11 @@ KISSY.add('date/picker/decade-panel/render', function(S, Control, DateFormat, Mo
     _$jscoverage['/picker/decade-panel/render.js'].lineData[15]++;
     var index = 0;
     _$jscoverage['/picker/decade-panel/render.js'].lineData[16]++;
-    for (var i = 0; visit8_16_1(i < 3); i++) {
+    for (var i = 0; visit13_16_1(i < 3); i++) {
       _$jscoverage['/picker/decade-panel/render.js'].lineData[17]++;
       decades[i] = [];
       _$jscoverage['/picker/decade-panel/render.js'].lineData[18]++;
-      for (var j = 0; visit9_18_1(j < 4); j++) {
+      for (var j = 0; visit14_18_1(j < 4); j++) {
         _$jscoverage['/picker/decade-panel/render.js'].lineData[19]++;
         decades[i][j] = {
   startDecade: preYear + index * 10, 
@@ -369,4 +369,4 @@ KISSY.add('date/picker/decade-panel/render', function(S, Control, DateFormat, Mo
   contentTpl: {
   value: DecadePanelTpl}}});
 }, {
-  requires: ['component/control', 'date/format', './decades-tpl', './decade-panel-tpl']});
+  requires: ['component/control', 'date/format', './decades-xtpl', './decade-panel-xtpl']});

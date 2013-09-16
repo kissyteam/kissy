@@ -8,6 +8,7 @@
     <property name="kissy.dir" location="${ant.file.config}/../../"/>
     <!-- kissy 工具目录 -->
     <property name="tools.dir" location="${kissy.dir}/tools/"/>
+    <property name="bin.dir" location="${kissy.dir}/bin/"/>
     <property name="coverage.report.dir" location="${kissy.dir}/coverage-report/"/>
     <property name="module-compiler"
               location="${tools.dir}/module-compiler/module-compiler.jar"/>

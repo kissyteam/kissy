@@ -1,0 +1,35 @@
+<div class="{{getBaseCssClasses 'header'}}">
+    <a id="ks-date-picker-month-panel-previous-year-btn-{{id}}"
+       class="{{getBaseCssClasses 'prev-year-btn'}}"
+       href="#"
+       role="button"
+       title="{{previousYearLabel}}"
+       hidefocus="on">
+    </a>
+
+
+        <a class="{{getBaseCssClasses 'year-select'}}"
+           role="button"
+           href="#"
+           hidefocus="on"
+           title="{{yearSelectLabel}}"
+           id="ks-date-picker-month-panel-year-select-{{id}}">
+            <span id="ks-date-picker-month-panel-year-select-content-{{id}}">{{year}}</span>
+            <span class="{{getBaseCssClasses 'year-select-arrow'}}">x</span>
+        </a>
+
+    <a id="ks-date-picker-month-panel-next-year-btn-{{id}}"
+       class="{{getBaseCssClasses 'next-year-btn'}}"
+       href="#"
+       role="button"
+       title="{{nextYearLabel}}"
+       hidefocus="on">
+    </a>
+</div>
+<div class="{{getBaseCssClasses 'body'}}">
+    <table class="{{getBaseCssClasses 'table'}}" cellspacing="0" role="grid">
+        <tbody id="ks-date-picker-month-panel-tbody-{{id}}">
+        {{{include "date/picker/month-panel/months-xtpl"}}}
+        </tbody>
+    </table>
+</div>

@@ -4,9 +4,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add('editor/render',function(S,Control,RenderTpl){
-
     return Control.getDefaultRender().extend({
-
         beforeCreateDom:function(renderData,childrenElSelectors){
             S.mix(renderData,{
                 mobile: S.UA.mobile
@@ -18,7 +16,6 @@ KISSY.add('editor/render',function(S,Control,RenderTpl){
                 statusBarEl:'#ks-editor-status-{id}'
             });
         }
-
     },{
         ATTRS:{
             contentTpl:{
@@ -26,7 +23,6 @@ KISSY.add('editor/render',function(S,Control,RenderTpl){
             }
         }
     });
-
 },{
-    requires:['component/control','./render-tpl']
+    requires:['component/control','./render-xtpl']
 });

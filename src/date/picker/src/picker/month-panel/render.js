@@ -72,6 +72,6 @@ KISSY.add('date/picker/month-panel/render', function (S, Control, DateFormat, Mo
 }, {
     requires: ['component/control',
         'date/format',
-        './months-tpl',
-        './month-panel-tpl']
+        './months-xtpl',
+        './month-panel-xtpl']
 });

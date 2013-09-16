@@ -81,5 +81,5 @@ KISSY.add("overlay/dialog-render", function (S, OverlayRender, DialogTpl) {
         }
     });
 }, {
-    requires: ['./overlay-render', './dialog-tpl', './close-tpl']
+    requires: ['./overlay-render', './dialog-xtpl', './close-xtpl']
 });

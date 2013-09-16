@@ -29,7 +29,7 @@ KISSY.add("menu/submenu-render", function (S, SubMenuTpl, MenuItemRender, Conten
 
 }, {
     requires: [
-        './submenu-tpl',
+        './submenu-xtpl',
         './menuitem-render',
         'component/extension/content-render']
 });

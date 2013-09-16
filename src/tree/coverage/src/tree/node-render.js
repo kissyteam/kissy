@@ -514,4 +514,4 @@ KISSY.add("tree/node-render", function(S, Node, Container, TreeNodeTpl, ContentR
   return el.one('.' + this.getBaseCssClass(CHECK_CLS));
 }}});
 }, {
-  requires: ['node', 'component/container', './node-tpl', 'component/extension/content-render']});
+  requires: ['node', 'component/container', './node-xtpl', 'component/extension/content-render']});

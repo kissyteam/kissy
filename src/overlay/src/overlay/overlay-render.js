@@ -30,7 +30,7 @@ KISSY.add("overlay/overlay-render", function (S, Container, ContentRenderExtensi
     requires: [
         "component/container",
         'component/extension/content-render',
-        './close-tpl'
+        './close-xtpl'
     ]
 });
 

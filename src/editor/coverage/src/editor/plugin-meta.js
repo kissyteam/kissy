@@ -319,9 +319,7 @@ if (! _$jscoverage['/editor/plugin-meta.js']) {
   _$jscoverage['/editor/plugin-meta.js'].lineData[345] = 0;
   _$jscoverage['/editor/plugin-meta.js'].lineData[349] = 0;
   _$jscoverage['/editor/plugin-meta.js'].lineData[353] = 0;
-  _$jscoverage['/editor/plugin-meta.js'].lineData[357] = 0;
-  _$jscoverage['/editor/plugin-meta.js'].lineData[361] = 0;
-  _$jscoverage['/editor/plugin-meta.js'].lineData[366] = 0;
+  _$jscoverage['/editor/plugin-meta.js'].lineData[358] = 0;
 }
 if (! _$jscoverage['/editor/plugin-meta.js'].functionData) {
   _$jscoverage['/editor/plugin-meta.js'].functionData = [];
@@ -576,131 +574,123 @@ KISSY.add('editor/plugin-meta', function() {
   requires: ['editor', 'menubutton']}});
   _$jscoverage['/editor/plugin-meta.js'].lineData[241]++;
   config({
-  'editor/plugin/multiple-upload': {
-  requires: ['editor', 'editor/plugin/dialog-loader']}});
-  _$jscoverage['/editor/plugin-meta.js'].lineData[245]++;
-  config({
-  'editor/plugin/multiple-upload/dialog': {
-  requires: ['editor', 'overlay', 'component/plugin/drag', 'editor/plugin/progressbar', 'editor/plugin/dialog', 'editor/plugin/flash-bridge', 'editor/plugin/local-storage', 'swf']}});
-  _$jscoverage['/editor/plugin-meta.js'].lineData[249]++;
-  config({
   'editor/plugin/ordered-list': {
   requires: ['editor', 'editor/plugin/list-utils/btn', 'editor/plugin/ordered-list/cmd']}});
-  _$jscoverage['/editor/plugin-meta.js'].lineData[253]++;
+  _$jscoverage['/editor/plugin-meta.js'].lineData[245]++;
   config({
   'editor/plugin/ordered-list/cmd': {
   requires: ['editor', 'editor/plugin/list-utils/cmd']}});
-  _$jscoverage['/editor/plugin-meta.js'].lineData[257]++;
+  _$jscoverage['/editor/plugin-meta.js'].lineData[249]++;
   config({
   'editor/plugin/outdent': {
   requires: ['editor', 'editor/plugin/outdent/cmd']}});
-  _$jscoverage['/editor/plugin-meta.js'].lineData[261]++;
+  _$jscoverage['/editor/plugin-meta.js'].lineData[253]++;
   config({
   'editor/plugin/outdent/cmd': {
   requires: ['editor', 'editor/plugin/dent-cmd']}});
-  _$jscoverage['/editor/plugin-meta.js'].lineData[265]++;
+  _$jscoverage['/editor/plugin-meta.js'].lineData[257]++;
   config({
   'editor/plugin/overlay': {
   requires: ['editor', 'overlay', 'editor/plugin/focus-fix']}});
-  _$jscoverage['/editor/plugin-meta.js'].lineData[269]++;
+  _$jscoverage['/editor/plugin-meta.js'].lineData[261]++;
   config({
   'editor/plugin/page-break': {
   requires: ['editor', 'editor/plugin/fake-objects']}});
-  _$jscoverage['/editor/plugin-meta.js'].lineData[273]++;
+  _$jscoverage['/editor/plugin-meta.js'].lineData[265]++;
   config({
   'editor/plugin/progressbar': {
   requires: ['base']}});
-  _$jscoverage['/editor/plugin-meta.js'].lineData[277]++;
+  _$jscoverage['/editor/plugin-meta.js'].lineData[269]++;
   config({
   'editor/plugin/remove-format': {
   requires: ['editor', 'editor/plugin/remove-format/cmd', 'editor/plugin/button']}});
-  _$jscoverage['/editor/plugin-meta.js'].lineData[281]++;
+  _$jscoverage['/editor/plugin-meta.js'].lineData[273]++;
   config({
   'editor/plugin/remove-format/cmd': {
   requires: ['editor']}});
-  _$jscoverage['/editor/plugin-meta.js'].lineData[285]++;
+  _$jscoverage['/editor/plugin-meta.js'].lineData[277]++;
   config({
   'editor/plugin/resize': {
   requires: ['editor', 'dd']}});
-  _$jscoverage['/editor/plugin-meta.js'].lineData[289]++;
+  _$jscoverage['/editor/plugin-meta.js'].lineData[281]++;
   config({
   'editor/plugin/separator': {
   requires: ['editor']}});
-  _$jscoverage['/editor/plugin-meta.js'].lineData[293]++;
+  _$jscoverage['/editor/plugin-meta.js'].lineData[285]++;
   config({
   'editor/plugin/smiley': {
   requires: ['editor', 'editor/plugin/overlay']}});
-  _$jscoverage['/editor/plugin-meta.js'].lineData[297]++;
+  _$jscoverage['/editor/plugin-meta.js'].lineData[289]++;
   config({
   'editor/plugin/source-area': {
   requires: ['editor', 'editor/plugin/button']}});
-  _$jscoverage['/editor/plugin-meta.js'].lineData[301]++;
+  _$jscoverage['/editor/plugin-meta.js'].lineData[293]++;
   config({
   'editor/plugin/strike-through': {
   requires: ['editor', 'editor/plugin/font/ui', 'editor/plugin/strike-through/cmd']}});
-  _$jscoverage['/editor/plugin-meta.js'].lineData[305]++;
+  _$jscoverage['/editor/plugin-meta.js'].lineData[297]++;
   config({
   'editor/plugin/strike-through/cmd': {
   requires: ['editor', 'editor/plugin/font/cmd']}});
-  _$jscoverage['/editor/plugin-meta.js'].lineData[309]++;
+  _$jscoverage['/editor/plugin-meta.js'].lineData[301]++;
   config({
   'editor/plugin/table': {
   requires: ['editor', 'editor/plugin/dialog-loader', 'editor/plugin/contextmenu']}});
-  _$jscoverage['/editor/plugin-meta.js'].lineData[313]++;
+  _$jscoverage['/editor/plugin-meta.js'].lineData[305]++;
   config({
   'editor/plugin/table/dialog': {
   requires: ['editor', 'editor/plugin/dialog', 'editor/plugin/menubutton']}});
-  _$jscoverage['/editor/plugin-meta.js'].lineData[317]++;
+  _$jscoverage['/editor/plugin-meta.js'].lineData[309]++;
   config({
   'editor/plugin/underline': {
   requires: ['editor', 'editor/plugin/font/ui', 'editor/plugin/underline/cmd']}});
-  _$jscoverage['/editor/plugin-meta.js'].lineData[321]++;
+  _$jscoverage['/editor/plugin-meta.js'].lineData[313]++;
   config({
   'editor/plugin/underline/cmd': {
   requires: ['editor', 'editor/plugin/font/cmd']}});
-  _$jscoverage['/editor/plugin-meta.js'].lineData[325]++;
+  _$jscoverage['/editor/plugin-meta.js'].lineData[317]++;
   config({
   'editor/plugin/undo': {
   requires: ['editor', 'editor/plugin/undo/btn', 'editor/plugin/undo/cmd']}});
-  _$jscoverage['/editor/plugin-meta.js'].lineData[329]++;
+  _$jscoverage['/editor/plugin-meta.js'].lineData[321]++;
   config({
   'editor/plugin/undo/btn': {
   requires: ['editor', 'editor/plugin/button']}});
-  _$jscoverage['/editor/plugin-meta.js'].lineData[333]++;
+  _$jscoverage['/editor/plugin-meta.js'].lineData[325]++;
   config({
   'editor/plugin/undo/cmd': {
   requires: ['editor']}});
-  _$jscoverage['/editor/plugin-meta.js'].lineData[337]++;
+  _$jscoverage['/editor/plugin-meta.js'].lineData[329]++;
   config({
   'editor/plugin/unordered-list': {
   requires: ['editor', 'editor/plugin/list-utils/btn', 'editor/plugin/unordered-list/cmd']}});
-  _$jscoverage['/editor/plugin-meta.js'].lineData[341]++;
+  _$jscoverage['/editor/plugin-meta.js'].lineData[333]++;
   config({
   'editor/plugin/unordered-list/cmd': {
   requires: ['editor', 'editor/plugin/list-utils/cmd']}});
-  _$jscoverage['/editor/plugin-meta.js'].lineData[345]++;
+  _$jscoverage['/editor/plugin-meta.js'].lineData[337]++;
   config({
   'editor/plugin/video': {
   requires: ['editor', 'editor/plugin/flash-common/utils', 'editor/plugin/flash-common/base-class', 'editor/plugin/fake-objects']}});
-  _$jscoverage['/editor/plugin-meta.js'].lineData[349]++;
+  _$jscoverage['/editor/plugin-meta.js'].lineData[341]++;
   config({
   'editor/plugin/video/dialog': {
   requires: ['editor', 'editor/plugin/flash/dialog', 'editor/plugin/menubutton']}});
-  _$jscoverage['/editor/plugin-meta.js'].lineData[353]++;
+  _$jscoverage['/editor/plugin-meta.js'].lineData[345]++;
   config({
   'editor/plugin/word-filter': {
   requires: ['html-parser']}});
-  _$jscoverage['/editor/plugin-meta.js'].lineData[357]++;
+  _$jscoverage['/editor/plugin-meta.js'].lineData[349]++;
   config({
   'editor/plugin/xiami-music': {
   requires: ['editor', 'editor/plugin/flash-common/base-class', 'editor/plugin/flash-common/utils', 'editor/plugin/fake-objects']}});
-  _$jscoverage['/editor/plugin-meta.js'].lineData[361]++;
+  _$jscoverage['/editor/plugin-meta.js'].lineData[353]++;
   config({
   'editor/plugin/xiami-music/dialog': {
   requires: ['editor', 'editor/plugin/flash/dialog', 'editor/plugin/menubutton']}});
 })(function(c) {
   _$jscoverage['/editor/plugin-meta.js'].functionData[2]++;
-  _$jscoverage['/editor/plugin-meta.js'].lineData[366]++;
+  _$jscoverage['/editor/plugin-meta.js'].lineData[358]++;
   KISSY.config('modules', c);
 }, KISSY.Features, KISSY.UA);
 });

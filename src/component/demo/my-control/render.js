@@ -1,4 +1,4 @@
-KISSY.add(function (S, Control) {
+KISSY.add(function (S, Control,XTemplate) {
     return Control.getDefaultRender().extend({
         beforeCreateDom: function (renderData, selectors) {
             selectors.checkEl = '#ks-my-control-{id}';
@@ -12,11 +12,14 @@ KISSY.add(function (S, Control) {
             checkEl: function (el) {
                 return el.one('.' + this.getBaseCssClass('check'));
             },
-            checked:function(el){
+            checked: function (el) {
                 return el.one('.' + this.getBaseCssClass('check')).hasClass(this.getBaseCssClass('checked'));
             }
         },
         ATTRS: {
+            xtemplate: {
+                value: XTemplate
+            },
             contentTpl: {
                 value: '<div id="ks-my-control-{{id}}" class="{{getBaseCssClasses \'check\'}} ' +
                     '{{#if checked}}' +
@@ -28,5 +31,5 @@ KISSY.add(function (S, Control) {
         }
     });
 }, {
-    requires: ['component/control']
+    requires: ['component/control','xtemplate']
 });

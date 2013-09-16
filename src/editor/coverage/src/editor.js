@@ -276,44 +276,44 @@ if (! _$jscoverage['/editor.js']) {
   _$jscoverage['/editor.js'].lineData[129] = 0;
   _$jscoverage['/editor.js'].lineData[130] = 0;
   _$jscoverage['/editor.js'].lineData[135] = 0;
-  _$jscoverage['/editor.js'].lineData[138] = 0;
   _$jscoverage['/editor.js'].lineData[140] = 0;
-  _$jscoverage['/editor.js'].lineData[141] = 0;
   _$jscoverage['/editor.js'].lineData[143] = 0;
-  _$jscoverage['/editor.js'].lineData[144] = 0;
+  _$jscoverage['/editor.js'].lineData[146] = 0;
   _$jscoverage['/editor.js'].lineData[147] = 0;
-  _$jscoverage['/editor.js'].lineData[148] = 0;
-  _$jscoverage['/editor.js'].lineData[152] = 0;
+  _$jscoverage['/editor.js'].lineData[151] = 0;
+  _$jscoverage['/editor.js'].lineData[153] = 0;
+  _$jscoverage['/editor.js'].lineData[155] = 0;
   _$jscoverage['/editor.js'].lineData[157] = 0;
-  _$jscoverage['/editor.js'].lineData[160] = 0;
+  _$jscoverage['/editor.js'].lineData[159] = 0;
+  _$jscoverage['/editor.js'].lineData[162] = 0;
   _$jscoverage['/editor.js'].lineData[163] = 0;
   _$jscoverage['/editor.js'].lineData[164] = 0;
   _$jscoverage['/editor.js'].lineData[168] = 0;
-  _$jscoverage['/editor.js'].lineData[170] = 0;
-  _$jscoverage['/editor.js'].lineData[172] = 0;
-  _$jscoverage['/editor.js'].lineData[174] = 0;
-  _$jscoverage['/editor.js'].lineData[176] = 0;
-  _$jscoverage['/editor.js'].lineData[179] = 0;
-  _$jscoverage['/editor.js'].lineData[180] = 0;
-  _$jscoverage['/editor.js'].lineData[181] = 0;
+  _$jscoverage['/editor.js'].lineData[169] = 0;
+  _$jscoverage['/editor.js'].lineData[177] = 0;
   _$jscoverage['/editor.js'].lineData[185] = 0;
-  _$jscoverage['/editor.js'].lineData[186] = 0;
   _$jscoverage['/editor.js'].lineData[194] = 0;
-  _$jscoverage['/editor.js'].lineData[202] = 0;
-  _$jscoverage['/editor.js'].lineData[211] = 0;
-  _$jscoverage['/editor.js'].lineData[221] = 0;
+  _$jscoverage['/editor.js'].lineData[204] = 0;
+  _$jscoverage['/editor.js'].lineData[205] = 0;
+  _$jscoverage['/editor.js'].lineData[207] = 0;
+  _$jscoverage['/editor.js'].lineData[208] = 0;
   _$jscoverage['/editor.js'].lineData[222] = 0;
-  _$jscoverage['/editor.js'].lineData[224] = 0;
-  _$jscoverage['/editor.js'].lineData[225] = 0;
-  _$jscoverage['/editor.js'].lineData[239] = 0;
-  _$jscoverage['/editor.js'].lineData[248] = 0;
-  _$jscoverage['/editor.js'].lineData[258] = 0;
-  _$jscoverage['/editor.js'].lineData[261] = 0;
-  _$jscoverage['/editor.js'].lineData[262] = 0;
-  _$jscoverage['/editor.js'].lineData[263] = 0;
+  _$jscoverage['/editor.js'].lineData[231] = 0;
+  _$jscoverage['/editor.js'].lineData[241] = 0;
+  _$jscoverage['/editor.js'].lineData[244] = 0;
+  _$jscoverage['/editor.js'].lineData[245] = 0;
+  _$jscoverage['/editor.js'].lineData[246] = 0;
+  _$jscoverage['/editor.js'].lineData[247] = 0;
+  _$jscoverage['/editor.js'].lineData[249] = 0;
+  _$jscoverage['/editor.js'].lineData[250] = 0;
+  _$jscoverage['/editor.js'].lineData[260] = 0;
   _$jscoverage['/editor.js'].lineData[264] = 0;
-  _$jscoverage['/editor.js'].lineData[266] = 0;
   _$jscoverage['/editor.js'].lineData[267] = 0;
+  _$jscoverage['/editor.js'].lineData[269] = 0;
+  _$jscoverage['/editor.js'].lineData[270] = 0;
+  _$jscoverage['/editor.js'].lineData[272] = 0;
+  _$jscoverage['/editor.js'].lineData[273] = 0;
+  _$jscoverage['/editor.js'].lineData[276] = 0;
   _$jscoverage['/editor.js'].lineData[277] = 0;
   _$jscoverage['/editor.js'].lineData[288] = 0;
   _$jscoverage['/editor.js'].lineData[291] = 0;
@@ -468,171 +468,171 @@ if (! _$jscoverage['/editor.js']) {
   _$jscoverage['/editor.js'].lineData[708] = 0;
   _$jscoverage['/editor.js'].lineData[709] = 0;
   _$jscoverage['/editor.js'].lineData[716] = 0;
-  _$jscoverage['/editor.js'].lineData[718] = 0;
-  _$jscoverage['/editor.js'].lineData[724] = 0;
-  _$jscoverage['/editor.js'].lineData[726] = 0;
-  _$jscoverage['/editor.js'].lineData[728] = 0;
-  _$jscoverage['/editor.js'].lineData[730] = 0;
-  _$jscoverage['/editor.js'].lineData[752] = 0;
-  _$jscoverage['/editor.js'].lineData[754] = 0;
+  _$jscoverage['/editor.js'].lineData[717] = 0;
+  _$jscoverage['/editor.js'].lineData[723] = 0;
+  _$jscoverage['/editor.js'].lineData[725] = 0;
+  _$jscoverage['/editor.js'].lineData[727] = 0;
+  _$jscoverage['/editor.js'].lineData[729] = 0;
+  _$jscoverage['/editor.js'].lineData[751] = 0;
+  _$jscoverage['/editor.js'].lineData[753] = 0;
+  _$jscoverage['/editor.js'].lineData[756] = 0;
   _$jscoverage['/editor.js'].lineData[757] = 0;
   _$jscoverage['/editor.js'].lineData[758] = 0;
-  _$jscoverage['/editor.js'].lineData[759] = 0;
-  _$jscoverage['/editor.js'].lineData[763] = 0;
+  _$jscoverage['/editor.js'].lineData[762] = 0;
+  _$jscoverage['/editor.js'].lineData[764] = 0;
   _$jscoverage['/editor.js'].lineData[765] = 0;
-  _$jscoverage['/editor.js'].lineData[766] = 0;
+  _$jscoverage['/editor.js'].lineData[767] = 0;
   _$jscoverage['/editor.js'].lineData[768] = 0;
-  _$jscoverage['/editor.js'].lineData[769] = 0;
-  _$jscoverage['/editor.js'].lineData[771] = 0;
-  _$jscoverage['/editor.js'].lineData[778] = 0;
+  _$jscoverage['/editor.js'].lineData[770] = 0;
+  _$jscoverage['/editor.js'].lineData[777] = 0;
+  _$jscoverage['/editor.js'].lineData[788] = 0;
   _$jscoverage['/editor.js'].lineData[789] = 0;
-  _$jscoverage['/editor.js'].lineData[790] = 0;
+  _$jscoverage['/editor.js'].lineData[796] = 0;
   _$jscoverage['/editor.js'].lineData[797] = 0;
   _$jscoverage['/editor.js'].lineData[798] = 0;
   _$jscoverage['/editor.js'].lineData[799] = 0;
-  _$jscoverage['/editor.js'].lineData[800] = 0;
-  _$jscoverage['/editor.js'].lineData[807] = 0;
-  _$jscoverage['/editor.js'].lineData[813] = 0;
+  _$jscoverage['/editor.js'].lineData[806] = 0;
+  _$jscoverage['/editor.js'].lineData[812] = 0;
+  _$jscoverage['/editor.js'].lineData[821] = 0;
   _$jscoverage['/editor.js'].lineData[822] = 0;
   _$jscoverage['/editor.js'].lineData[823] = 0;
   _$jscoverage['/editor.js'].lineData[824] = 0;
   _$jscoverage['/editor.js'].lineData[825] = 0;
-  _$jscoverage['/editor.js'].lineData[826] = 0;
+  _$jscoverage['/editor.js'].lineData[832] = 0;
   _$jscoverage['/editor.js'].lineData[833] = 0;
   _$jscoverage['/editor.js'].lineData[834] = 0;
-  _$jscoverage['/editor.js'].lineData[835] = 0;
-  _$jscoverage['/editor.js'].lineData[839] = 0;
-  _$jscoverage['/editor.js'].lineData[841] = 0;
+  _$jscoverage['/editor.js'].lineData[838] = 0;
+  _$jscoverage['/editor.js'].lineData[840] = 0;
+  _$jscoverage['/editor.js'].lineData[842] = 0;
   _$jscoverage['/editor.js'].lineData[843] = 0;
   _$jscoverage['/editor.js'].lineData[844] = 0;
-  _$jscoverage['/editor.js'].lineData[845] = 0;
+  _$jscoverage['/editor.js'].lineData[850] = 0;
   _$jscoverage['/editor.js'].lineData[851] = 0;
   _$jscoverage['/editor.js'].lineData[852] = 0;
-  _$jscoverage['/editor.js'].lineData[853] = 0;
-  _$jscoverage['/editor.js'].lineData[856] = 0;
+  _$jscoverage['/editor.js'].lineData[855] = 0;
+  _$jscoverage['/editor.js'].lineData[865] = 0;
   _$jscoverage['/editor.js'].lineData[866] = 0;
   _$jscoverage['/editor.js'].lineData[867] = 0;
-  _$jscoverage['/editor.js'].lineData[868] = 0;
-  _$jscoverage['/editor.js'].lineData[870] = 0;
+  _$jscoverage['/editor.js'].lineData[869] = 0;
+  _$jscoverage['/editor.js'].lineData[871] = 0;
   _$jscoverage['/editor.js'].lineData[872] = 0;
   _$jscoverage['/editor.js'].lineData[873] = 0;
-  _$jscoverage['/editor.js'].lineData[874] = 0;
+  _$jscoverage['/editor.js'].lineData[875] = 0;
   _$jscoverage['/editor.js'].lineData[876] = 0;
-  _$jscoverage['/editor.js'].lineData[877] = 0;
+  _$jscoverage['/editor.js'].lineData[882] = 0;
   _$jscoverage['/editor.js'].lineData[883] = 0;
   _$jscoverage['/editor.js'].lineData[884] = 0;
-  _$jscoverage['/editor.js'].lineData[885] = 0;
-  _$jscoverage['/editor.js'].lineData[887] = 0;
+  _$jscoverage['/editor.js'].lineData[886] = 0;
+  _$jscoverage['/editor.js'].lineData[891] = 0;
   _$jscoverage['/editor.js'].lineData[892] = 0;
-  _$jscoverage['/editor.js'].lineData[893] = 0;
+  _$jscoverage['/editor.js'].lineData[902] = 0;
   _$jscoverage['/editor.js'].lineData[903] = 0;
   _$jscoverage['/editor.js'].lineData[904] = 0;
   _$jscoverage['/editor.js'].lineData[905] = 0;
   _$jscoverage['/editor.js'].lineData[906] = 0;
-  _$jscoverage['/editor.js'].lineData[907] = 0;
+  _$jscoverage['/editor.js'].lineData[910] = 0;
   _$jscoverage['/editor.js'].lineData[911] = 0;
   _$jscoverage['/editor.js'].lineData[912] = 0;
   _$jscoverage['/editor.js'].lineData[913] = 0;
-  _$jscoverage['/editor.js'].lineData[914] = 0;
+  _$jscoverage['/editor.js'].lineData[919] = 0;
   _$jscoverage['/editor.js'].lineData[920] = 0;
   _$jscoverage['/editor.js'].lineData[921] = 0;
-  _$jscoverage['/editor.js'].lineData[922] = 0;
+  _$jscoverage['/editor.js'].lineData[928] = 0;
   _$jscoverage['/editor.js'].lineData[929] = 0;
-  _$jscoverage['/editor.js'].lineData[930] = 0;
+  _$jscoverage['/editor.js'].lineData[931] = 0;
   _$jscoverage['/editor.js'].lineData[932] = 0;
   _$jscoverage['/editor.js'].lineData[933] = 0;
-  _$jscoverage['/editor.js'].lineData[934] = 0;
+  _$jscoverage['/editor.js'].lineData[935] = 0;
   _$jscoverage['/editor.js'].lineData[936] = 0;
   _$jscoverage['/editor.js'].lineData[937] = 0;
-  _$jscoverage['/editor.js'].lineData[938] = 0;
-  _$jscoverage['/editor.js'].lineData[942] = 0;
+  _$jscoverage['/editor.js'].lineData[941] = 0;
+  _$jscoverage['/editor.js'].lineData[947] = 0;
   _$jscoverage['/editor.js'].lineData[948] = 0;
-  _$jscoverage['/editor.js'].lineData[949] = 0;
+  _$jscoverage['/editor.js'].lineData[950] = 0;
   _$jscoverage['/editor.js'].lineData[951] = 0;
-  _$jscoverage['/editor.js'].lineData[952] = 0;
-  _$jscoverage['/editor.js'].lineData[955] = 0;
-  _$jscoverage['/editor.js'].lineData[958] = 0;
+  _$jscoverage['/editor.js'].lineData[954] = 0;
+  _$jscoverage['/editor.js'].lineData[957] = 0;
+  _$jscoverage['/editor.js'].lineData[961] = 0;
   _$jscoverage['/editor.js'].lineData[962] = 0;
   _$jscoverage['/editor.js'].lineData[963] = 0;
-  _$jscoverage['/editor.js'].lineData[964] = 0;
-  _$jscoverage['/editor.js'].lineData[969] = 0;
+  _$jscoverage['/editor.js'].lineData[968] = 0;
+  _$jscoverage['/editor.js'].lineData[974] = 0;
   _$jscoverage['/editor.js'].lineData[975] = 0;
-  _$jscoverage['/editor.js'].lineData[976] = 0;
+  _$jscoverage['/editor.js'].lineData[977] = 0;
   _$jscoverage['/editor.js'].lineData[978] = 0;
-  _$jscoverage['/editor.js'].lineData[979] = 0;
-  _$jscoverage['/editor.js'].lineData[981] = 0;
-  _$jscoverage['/editor.js'].lineData[983] = 0;
-  _$jscoverage['/editor.js'].lineData[986] = 0;
+  _$jscoverage['/editor.js'].lineData[980] = 0;
+  _$jscoverage['/editor.js'].lineData[982] = 0;
+  _$jscoverage['/editor.js'].lineData[985] = 0;
+  _$jscoverage['/editor.js'].lineData[987] = 0;
   _$jscoverage['/editor.js'].lineData[988] = 0;
   _$jscoverage['/editor.js'].lineData[989] = 0;
   _$jscoverage['/editor.js'].lineData[990] = 0;
-  _$jscoverage['/editor.js'].lineData[991] = 0;
+  _$jscoverage['/editor.js'].lineData[998] = 0;
   _$jscoverage['/editor.js'].lineData[999] = 0;
   _$jscoverage['/editor.js'].lineData[1000] = 0;
   _$jscoverage['/editor.js'].lineData[1001] = 0;
   _$jscoverage['/editor.js'].lineData[1002] = 0;
   _$jscoverage['/editor.js'].lineData[1003] = 0;
-  _$jscoverage['/editor.js'].lineData[1004] = 0;
+  _$jscoverage['/editor.js'].lineData[1011] = 0;
   _$jscoverage['/editor.js'].lineData[1012] = 0;
   _$jscoverage['/editor.js'].lineData[1013] = 0;
   _$jscoverage['/editor.js'].lineData[1014] = 0;
   _$jscoverage['/editor.js'].lineData[1015] = 0;
-  _$jscoverage['/editor.js'].lineData[1016] = 0;
+  _$jscoverage['/editor.js'].lineData[1021] = 0;
   _$jscoverage['/editor.js'].lineData[1022] = 0;
   _$jscoverage['/editor.js'].lineData[1023] = 0;
   _$jscoverage['/editor.js'].lineData[1024] = 0;
-  _$jscoverage['/editor.js'].lineData[1025] = 0;
-  _$jscoverage['/editor.js'].lineData[1027] = 0;
-  _$jscoverage['/editor.js'].lineData[1033] = 0;
+  _$jscoverage['/editor.js'].lineData[1026] = 0;
+  _$jscoverage['/editor.js'].lineData[1032] = 0;
+  _$jscoverage['/editor.js'].lineData[1036] = 0;
   _$jscoverage['/editor.js'].lineData[1037] = 0;
-  _$jscoverage['/editor.js'].lineData[1038] = 0;
+  _$jscoverage['/editor.js'].lineData[1040] = 0;
   _$jscoverage['/editor.js'].lineData[1041] = 0;
   _$jscoverage['/editor.js'].lineData[1042] = 0;
   _$jscoverage['/editor.js'].lineData[1043] = 0;
-  _$jscoverage['/editor.js'].lineData[1044] = 0;
-  _$jscoverage['/editor.js'].lineData[1048] = 0;
+  _$jscoverage['/editor.js'].lineData[1047] = 0;
+  _$jscoverage['/editor.js'].lineData[1073] = 0;
   _$jscoverage['/editor.js'].lineData[1074] = 0;
-  _$jscoverage['/editor.js'].lineData[1075] = 0;
+  _$jscoverage['/editor.js'].lineData[1077] = 0;
   _$jscoverage['/editor.js'].lineData[1078] = 0;
-  _$jscoverage['/editor.js'].lineData[1079] = 0;
+  _$jscoverage['/editor.js'].lineData[1085] = 0;
   _$jscoverage['/editor.js'].lineData[1086] = 0;
-  _$jscoverage['/editor.js'].lineData[1087] = 0;
-  _$jscoverage['/editor.js'].lineData[1095] = 0;
-  _$jscoverage['/editor.js'].lineData[1100] = 0;
+  _$jscoverage['/editor.js'].lineData[1094] = 0;
+  _$jscoverage['/editor.js'].lineData[1099] = 0;
+  _$jscoverage['/editor.js'].lineData[1102] = 0;
   _$jscoverage['/editor.js'].lineData[1103] = 0;
   _$jscoverage['/editor.js'].lineData[1104] = 0;
-  _$jscoverage['/editor.js'].lineData[1105] = 0;
+  _$jscoverage['/editor.js'].lineData[1107] = 0;
   _$jscoverage['/editor.js'].lineData[1108] = 0;
   _$jscoverage['/editor.js'].lineData[1109] = 0;
   _$jscoverage['/editor.js'].lineData[1110] = 0;
   _$jscoverage['/editor.js'].lineData[1111] = 0;
   _$jscoverage['/editor.js'].lineData[1112] = 0;
-  _$jscoverage['/editor.js'].lineData[1113] = 0;
+  _$jscoverage['/editor.js'].lineData[1114] = 0;
   _$jscoverage['/editor.js'].lineData[1115] = 0;
   _$jscoverage['/editor.js'].lineData[1116] = 0;
-  _$jscoverage['/editor.js'].lineData[1117] = 0;
-  _$jscoverage['/editor.js'].lineData[1121] = 0;
+  _$jscoverage['/editor.js'].lineData[1120] = 0;
+  _$jscoverage['/editor.js'].lineData[1124] = 0;
   _$jscoverage['/editor.js'].lineData[1125] = 0;
   _$jscoverage['/editor.js'].lineData[1126] = 0;
-  _$jscoverage['/editor.js'].lineData[1127] = 0;
-  _$jscoverage['/editor.js'].lineData[1129] = 0;
+  _$jscoverage['/editor.js'].lineData[1128] = 0;
+  _$jscoverage['/editor.js'].lineData[1133] = 0;
   _$jscoverage['/editor.js'].lineData[1134] = 0;
-  _$jscoverage['/editor.js'].lineData[1135] = 0;
+  _$jscoverage['/editor.js'].lineData[1136] = 0;
   _$jscoverage['/editor.js'].lineData[1137] = 0;
   _$jscoverage['/editor.js'].lineData[1138] = 0;
-  _$jscoverage['/editor.js'].lineData[1139] = 0;
+  _$jscoverage['/editor.js'].lineData[1140] = 0;
   _$jscoverage['/editor.js'].lineData[1141] = 0;
   _$jscoverage['/editor.js'].lineData[1142] = 0;
-  _$jscoverage['/editor.js'].lineData[1143] = 0;
-  _$jscoverage['/editor.js'].lineData[1147] = 0;
+  _$jscoverage['/editor.js'].lineData[1146] = 0;
+  _$jscoverage['/editor.js'].lineData[1150] = 0;
   _$jscoverage['/editor.js'].lineData[1151] = 0;
   _$jscoverage['/editor.js'].lineData[1152] = 0;
-  _$jscoverage['/editor.js'].lineData[1153] = 0;
-  _$jscoverage['/editor.js'].lineData[1155] = 0;
+  _$jscoverage['/editor.js'].lineData[1154] = 0;
+  _$jscoverage['/editor.js'].lineData[1160] = 0;
   _$jscoverage['/editor.js'].lineData[1161] = 0;
-  _$jscoverage['/editor.js'].lineData[1162] = 0;
-  _$jscoverage['/editor.js'].lineData[1164] = 0;
-  _$jscoverage['/editor.js'].lineData[1169] = 0;
+  _$jscoverage['/editor.js'].lineData[1163] = 0;
+  _$jscoverage['/editor.js'].lineData[1168] = 0;
 }
 if (! _$jscoverage['/editor.js'].functionData) {
   _$jscoverage['/editor.js'].functionData = [];
@@ -735,20 +735,20 @@ if (! _$jscoverage['/editor.js'].branchData) {
   _$jscoverage['/editor.js'].branchData['116'][1] = new BranchData();
   _$jscoverage['/editor.js'].branchData['129'] = [];
   _$jscoverage['/editor.js'].branchData['129'][1] = new BranchData();
-  _$jscoverage['/editor.js'].branchData['138'] = [];
-  _$jscoverage['/editor.js'].branchData['138'][1] = new BranchData();
-  _$jscoverage['/editor.js'].branchData['143'] = [];
-  _$jscoverage['/editor.js'].branchData['143'][1] = new BranchData();
-  _$jscoverage['/editor.js'].branchData['157'] = [];
-  _$jscoverage['/editor.js'].branchData['157'][1] = new BranchData();
-  _$jscoverage['/editor.js'].branchData['158'] = [];
-  _$jscoverage['/editor.js'].branchData['158'][1] = new BranchData();
+  _$jscoverage['/editor.js'].branchData['140'] = [];
+  _$jscoverage['/editor.js'].branchData['140'][1] = new BranchData();
+  _$jscoverage['/editor.js'].branchData['141'] = [];
+  _$jscoverage['/editor.js'].branchData['141'][1] = new BranchData();
+  _$jscoverage['/editor.js'].branchData['146'] = [];
+  _$jscoverage['/editor.js'].branchData['146'][1] = new BranchData();
   _$jscoverage['/editor.js'].branchData['163'] = [];
   _$jscoverage['/editor.js'].branchData['163'][1] = new BranchData();
-  _$jscoverage['/editor.js'].branchData['180'] = [];
-  _$jscoverage['/editor.js'].branchData['180'][1] = new BranchData();
-  _$jscoverage['/editor.js'].branchData['263'] = [];
-  _$jscoverage['/editor.js'].branchData['263'][1] = new BranchData();
+  _$jscoverage['/editor.js'].branchData['246'] = [];
+  _$jscoverage['/editor.js'].branchData['246'][1] = new BranchData();
+  _$jscoverage['/editor.js'].branchData['267'] = [];
+  _$jscoverage['/editor.js'].branchData['267'][1] = new BranchData();
+  _$jscoverage['/editor.js'].branchData['272'] = [];
+  _$jscoverage['/editor.js'].branchData['272'][1] = new BranchData();
   _$jscoverage['/editor.js'].branchData['291'] = [];
   _$jscoverage['/editor.js'].branchData['291'][1] = new BranchData();
   _$jscoverage['/editor.js'].branchData['294'] = [];
@@ -846,261 +846,261 @@ if (! _$jscoverage['/editor.js'].branchData) {
   _$jscoverage['/editor.js'].branchData['702'][1] = new BranchData();
   _$jscoverage['/editor.js'].branchData['705'] = [];
   _$jscoverage['/editor.js'].branchData['705'][1] = new BranchData();
-  _$jscoverage['/editor.js'].branchData['752'] = [];
-  _$jscoverage['/editor.js'].branchData['752'][1] = new BranchData();
-  _$jscoverage['/editor.js'].branchData['765'] = [];
-  _$jscoverage['/editor.js'].branchData['765'][1] = new BranchData();
-  _$jscoverage['/editor.js'].branchData['768'] = [];
-  _$jscoverage['/editor.js'].branchData['768'][1] = new BranchData();
-  _$jscoverage['/editor.js'].branchData['787'] = [];
-  _$jscoverage['/editor.js'].branchData['787'][1] = new BranchData();
+  _$jscoverage['/editor.js'].branchData['751'] = [];
+  _$jscoverage['/editor.js'].branchData['751'][1] = new BranchData();
+  _$jscoverage['/editor.js'].branchData['764'] = [];
+  _$jscoverage['/editor.js'].branchData['764'][1] = new BranchData();
+  _$jscoverage['/editor.js'].branchData['767'] = [];
+  _$jscoverage['/editor.js'].branchData['767'][1] = new BranchData();
+  _$jscoverage['/editor.js'].branchData['786'] = [];
+  _$jscoverage['/editor.js'].branchData['786'][1] = new BranchData();
+  _$jscoverage['/editor.js'].branchData['797'] = [];
+  _$jscoverage['/editor.js'].branchData['797'][1] = new BranchData();
   _$jscoverage['/editor.js'].branchData['798'] = [];
   _$jscoverage['/editor.js'].branchData['798'][1] = new BranchData();
-  _$jscoverage['/editor.js'].branchData['799'] = [];
-  _$jscoverage['/editor.js'].branchData['799'][1] = new BranchData();
-  _$jscoverage['/editor.js'].branchData['822'] = [];
-  _$jscoverage['/editor.js'].branchData['822'][1] = new BranchData();
-  _$jscoverage['/editor.js'].branchData['824'] = [];
-  _$jscoverage['/editor.js'].branchData['824'][1] = new BranchData();
-  _$jscoverage['/editor.js'].branchData['841'] = [];
-  _$jscoverage['/editor.js'].branchData['841'][1] = new BranchData();
+  _$jscoverage['/editor.js'].branchData['821'] = [];
+  _$jscoverage['/editor.js'].branchData['821'][1] = new BranchData();
+  _$jscoverage['/editor.js'].branchData['823'] = [];
+  _$jscoverage['/editor.js'].branchData['823'][1] = new BranchData();
+  _$jscoverage['/editor.js'].branchData['840'] = [];
+  _$jscoverage['/editor.js'].branchData['840'][1] = new BranchData();
+  _$jscoverage['/editor.js'].branchData['852'] = [];
+  _$jscoverage['/editor.js'].branchData['852'][1] = new BranchData();
   _$jscoverage['/editor.js'].branchData['853'] = [];
   _$jscoverage['/editor.js'].branchData['853'][1] = new BranchData();
-  _$jscoverage['/editor.js'].branchData['854'] = [];
-  _$jscoverage['/editor.js'].branchData['854'][1] = new BranchData();
-  _$jscoverage['/editor.js'].branchData['854'][2] = new BranchData();
-  _$jscoverage['/editor.js'].branchData['876'] = [];
-  _$jscoverage['/editor.js'].branchData['876'][1] = new BranchData();
-  _$jscoverage['/editor.js'].branchData['887'] = [];
-  _$jscoverage['/editor.js'].branchData['887'][1] = new BranchData();
-  _$jscoverage['/editor.js'].branchData['903'] = [];
-  _$jscoverage['/editor.js'].branchData['903'][1] = new BranchData();
-  _$jscoverage['/editor.js'].branchData['906'] = [];
-  _$jscoverage['/editor.js'].branchData['906'][1] = new BranchData();
-  _$jscoverage['/editor.js'].branchData['913'] = [];
-  _$jscoverage['/editor.js'].branchData['913'][1] = new BranchData();
-  _$jscoverage['/editor.js'].branchData['920'] = [];
-  _$jscoverage['/editor.js'].branchData['920'][1] = new BranchData();
-  _$jscoverage['/editor.js'].branchData['920'][2] = new BranchData();
-  _$jscoverage['/editor.js'].branchData['933'] = [];
-  _$jscoverage['/editor.js'].branchData['933'][1] = new BranchData();
-  _$jscoverage['/editor.js'].branchData['948'] = [];
-  _$jscoverage['/editor.js'].branchData['948'][1] = new BranchData();
-  _$jscoverage['/editor.js'].branchData['951'] = [];
-  _$jscoverage['/editor.js'].branchData['951'][1] = new BranchData();
-  _$jscoverage['/editor.js'].branchData['958'] = [];
-  _$jscoverage['/editor.js'].branchData['958'][1] = new BranchData();
-  _$jscoverage['/editor.js'].branchData['963'] = [];
-  _$jscoverage['/editor.js'].branchData['963'][1] = new BranchData();
-  _$jscoverage['/editor.js'].branchData['969'] = [];
-  _$jscoverage['/editor.js'].branchData['969'][1] = new BranchData();
-  _$jscoverage['/editor.js'].branchData['978'] = [];
-  _$jscoverage['/editor.js'].branchData['978'][1] = new BranchData();
-  _$jscoverage['/editor.js'].branchData['981'] = [];
-  _$jscoverage['/editor.js'].branchData['981'][1] = new BranchData();
-  _$jscoverage['/editor.js'].branchData['999'] = [];
-  _$jscoverage['/editor.js'].branchData['999'][1] = new BranchData();
-  _$jscoverage['/editor.js'].branchData['1002'] = [];
-  _$jscoverage['/editor.js'].branchData['1002'][1] = new BranchData();
-  _$jscoverage['/editor.js'].branchData['1012'] = [];
-  _$jscoverage['/editor.js'].branchData['1012'][1] = new BranchData();
-  _$jscoverage['/editor.js'].branchData['1015'] = [];
-  _$jscoverage['/editor.js'].branchData['1015'][1] = new BranchData();
-  _$jscoverage['/editor.js'].branchData['1022'] = [];
-  _$jscoverage['/editor.js'].branchData['1022'][1] = new BranchData();
-  _$jscoverage['/editor.js'].branchData['1025'] = [];
-  _$jscoverage['/editor.js'].branchData['1025'][1] = new BranchData();
-  _$jscoverage['/editor.js'].branchData['1025'][2] = new BranchData();
-  _$jscoverage['/editor.js'].branchData['1043'] = [];
-  _$jscoverage['/editor.js'].branchData['1043'][1] = new BranchData();
-  _$jscoverage['/editor.js'].branchData['1052'] = [];
-  _$jscoverage['/editor.js'].branchData['1052'][1] = new BranchData();
-  _$jscoverage['/editor.js'].branchData['1059'] = [];
-  _$jscoverage['/editor.js'].branchData['1059'][1] = new BranchData();
-  _$jscoverage['/editor.js'].branchData['1103'] = [];
-  _$jscoverage['/editor.js'].branchData['1103'][1] = new BranchData();
+  _$jscoverage['/editor.js'].branchData['853'][2] = new BranchData();
+  _$jscoverage['/editor.js'].branchData['875'] = [];
+  _$jscoverage['/editor.js'].branchData['875'][1] = new BranchData();
+  _$jscoverage['/editor.js'].branchData['886'] = [];
+  _$jscoverage['/editor.js'].branchData['886'][1] = new BranchData();
+  _$jscoverage['/editor.js'].branchData['902'] = [];
+  _$jscoverage['/editor.js'].branchData['902'][1] = new BranchData();
+  _$jscoverage['/editor.js'].branchData['905'] = [];
+  _$jscoverage['/editor.js'].branchData['905'][1] = new BranchData();
+  _$jscoverage['/editor.js'].branchData['912'] = [];
+  _$jscoverage['/editor.js'].branchData['912'][1] = new BranchData();
+  _$jscoverage['/editor.js'].branchData['919'] = [];
+  _$jscoverage['/editor.js'].branchData['919'][1] = new BranchData();
+  _$jscoverage['/editor.js'].branchData['919'][2] = new BranchData();
+  _$jscoverage['/editor.js'].branchData['932'] = [];
+  _$jscoverage['/editor.js'].branchData['932'][1] = new BranchData();
+  _$jscoverage['/editor.js'].branchData['947'] = [];
+  _$jscoverage['/editor.js'].branchData['947'][1] = new BranchData();
+  _$jscoverage['/editor.js'].branchData['950'] = [];
+  _$jscoverage['/editor.js'].branchData['950'][1] = new BranchData();
+  _$jscoverage['/editor.js'].branchData['957'] = [];
+  _$jscoverage['/editor.js'].branchData['957'][1] = new BranchData();
+  _$jscoverage['/editor.js'].branchData['962'] = [];
+  _$jscoverage['/editor.js'].branchData['962'][1] = new BranchData();
+  _$jscoverage['/editor.js'].branchData['968'] = [];
+  _$jscoverage['/editor.js'].branchData['968'][1] = new BranchData();
+  _$jscoverage['/editor.js'].branchData['977'] = [];
+  _$jscoverage['/editor.js'].branchData['977'][1] = new BranchData();
+  _$jscoverage['/editor.js'].branchData['980'] = [];
+  _$jscoverage['/editor.js'].branchData['980'][1] = new BranchData();
+  _$jscoverage['/editor.js'].branchData['998'] = [];
+  _$jscoverage['/editor.js'].branchData['998'][1] = new BranchData();
+  _$jscoverage['/editor.js'].branchData['1001'] = [];
+  _$jscoverage['/editor.js'].branchData['1001'][1] = new BranchData();
+  _$jscoverage['/editor.js'].branchData['1011'] = [];
+  _$jscoverage['/editor.js'].branchData['1011'][1] = new BranchData();
+  _$jscoverage['/editor.js'].branchData['1014'] = [];
+  _$jscoverage['/editor.js'].branchData['1014'][1] = new BranchData();
+  _$jscoverage['/editor.js'].branchData['1021'] = [];
+  _$jscoverage['/editor.js'].branchData['1021'][1] = new BranchData();
+  _$jscoverage['/editor.js'].branchData['1024'] = [];
+  _$jscoverage['/editor.js'].branchData['1024'][1] = new BranchData();
+  _$jscoverage['/editor.js'].branchData['1024'][2] = new BranchData();
+  _$jscoverage['/editor.js'].branchData['1042'] = [];
+  _$jscoverage['/editor.js'].branchData['1042'][1] = new BranchData();
+  _$jscoverage['/editor.js'].branchData['1051'] = [];
+  _$jscoverage['/editor.js'].branchData['1051'][1] = new BranchData();
+  _$jscoverage['/editor.js'].branchData['1058'] = [];
+  _$jscoverage['/editor.js'].branchData['1058'][1] = new BranchData();
+  _$jscoverage['/editor.js'].branchData['1102'] = [];
+  _$jscoverage['/editor.js'].branchData['1102'][1] = new BranchData();
+  _$jscoverage['/editor.js'].branchData['1124'] = [];
+  _$jscoverage['/editor.js'].branchData['1124'][1] = new BranchData();
   _$jscoverage['/editor.js'].branchData['1125'] = [];
   _$jscoverage['/editor.js'].branchData['1125'][1] = new BranchData();
-  _$jscoverage['/editor.js'].branchData['1126'] = [];
-  _$jscoverage['/editor.js'].branchData['1126'][1] = new BranchData();
-  _$jscoverage['/editor.js'].branchData['1134'] = [];
-  _$jscoverage['/editor.js'].branchData['1134'][1] = new BranchData();
-  _$jscoverage['/editor.js'].branchData['1141'] = [];
-  _$jscoverage['/editor.js'].branchData['1141'][1] = new BranchData();
-  _$jscoverage['/editor.js'].branchData['1152'] = [];
-  _$jscoverage['/editor.js'].branchData['1152'][1] = new BranchData();
+  _$jscoverage['/editor.js'].branchData['1133'] = [];
+  _$jscoverage['/editor.js'].branchData['1133'][1] = new BranchData();
+  _$jscoverage['/editor.js'].branchData['1140'] = [];
+  _$jscoverage['/editor.js'].branchData['1140'][1] = new BranchData();
+  _$jscoverage['/editor.js'].branchData['1151'] = [];
+  _$jscoverage['/editor.js'].branchData['1151'][1] = new BranchData();
 }
-_$jscoverage['/editor.js'].branchData['1152'][1].init(14, 19, '!self.get(\'iframe\')');
-function visit1251_1152_1(result) {
-  _$jscoverage['/editor.js'].branchData['1152'][1].ranCondition(result);
+_$jscoverage['/editor.js'].branchData['1151'][1].init(14, 19, '!self.get(\'iframe\')');
+function visit1251_1151_1(result) {
+  _$jscoverage['/editor.js'].branchData['1151'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor.js'].branchData['1141'][1].init(900, 31, 'UA[\'gecko\'] && !iframe.__loaded');
-function visit1250_1141_1(result) {
-  _$jscoverage['/editor.js'].branchData['1141'][1].ranCondition(result);
+}_$jscoverage['/editor.js'].branchData['1140'][1].init(900, 31, 'UA[\'gecko\'] && !iframe.__loaded');
+function visit1250_1140_1(result) {
+  _$jscoverage['/editor.js'].branchData['1140'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor.js'].branchData['1134'][1].init(568, 28, 'textarea.hasAttr(\'tabindex\')');
-function visit1249_1134_1(result) {
-  _$jscoverage['/editor.js'].branchData['1134'][1].ranCondition(result);
+}_$jscoverage['/editor.js'].branchData['1133'][1].init(568, 28, 'textarea.hasAttr(\'tabindex\')');
+function visit1249_1133_1(result) {
+  _$jscoverage['/editor.js'].branchData['1133'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor.js'].branchData['1126'][1].init(266, 9, 'iframeSrc');
-function visit1248_1126_1(result) {
-  _$jscoverage['/editor.js'].branchData['1126'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/editor.js'].branchData['1125'][1].init(216, 35, '$(window).getEmptyIframeSrc() || \'\'');
-function visit1247_1125_1(result) {
+}_$jscoverage['/editor.js'].branchData['1125'][1].init(266, 9, 'iframeSrc');
+function visit1248_1125_1(result) {
   _$jscoverage['/editor.js'].branchData['1125'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor.js'].branchData['1103'][1].init(378, 9, 'IS_IE < 7');
-function visit1246_1103_1(result) {
-  _$jscoverage['/editor.js'].branchData['1103'][1].ranCondition(result);
+}_$jscoverage['/editor.js'].branchData['1124'][1].init(216, 35, '$(window).getEmptyIframeSrc() || \'\'');
+function visit1247_1124_1(result) {
+  _$jscoverage['/editor.js'].branchData['1124'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor.js'].branchData['1059'][1].init(515, 10, 'data || \'\'');
-function visit1245_1059_1(result) {
-  _$jscoverage['/editor.js'].branchData['1059'][1].ranCondition(result);
+}_$jscoverage['/editor.js'].branchData['1102'][1].init(378, 9, 'IS_IE < 7');
+function visit1246_1102_1(result) {
+  _$jscoverage['/editor.js'].branchData['1102'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor.js'].branchData['1052'][1].init(236, 27, 'document.documentMode === 8');
-function visit1244_1052_1(result) {
-  _$jscoverage['/editor.js'].branchData['1052'][1].ranCondition(result);
+}_$jscoverage['/editor.js'].branchData['1058'][1].init(539, 10, 'data || \'\'');
+function visit1245_1058_1(result) {
+  _$jscoverage['/editor.js'].branchData['1058'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor.js'].branchData['1043'][1].init(222, 21, 'i < customLink.length');
-function visit1243_1043_1(result) {
-  _$jscoverage['/editor.js'].branchData['1043'][1].ranCondition(result);
+}_$jscoverage['/editor.js'].branchData['1051'][1].init(236, 27, 'document.documentMode === 8');
+function visit1244_1051_1(result) {
+  _$jscoverage['/editor.js'].branchData['1051'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor.js'].branchData['1025'][2].init(74, 28, 'control.nodeName() === \'img\'');
-function visit1242_1025_2(result) {
-  _$jscoverage['/editor.js'].branchData['1025'][2].ranCondition(result);
+}_$jscoverage['/editor.js'].branchData['1042'][1].init(222, 21, 'i < customLink.length');
+function visit1243_1042_1(result) {
+  _$jscoverage['/editor.js'].branchData['1042'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor.js'].branchData['1025'][1].init(74, 64, 'control.nodeName() === \'img\' && /ke_/.test(control[0].className)');
-function visit1241_1025_1(result) {
-  _$jscoverage['/editor.js'].branchData['1025'][1].ranCondition(result);
+}_$jscoverage['/editor.js'].branchData['1024'][2].init(74, 28, 'control.nodeName() === \'img\'');
+function visit1242_1024_2(result) {
+  _$jscoverage['/editor.js'].branchData['1024'][2].ranCondition(result);
   return result;
-}_$jscoverage['/editor.js'].branchData['1022'][1].init(4970, 11, 'UA[\'gecko\']');
-function visit1240_1022_1(result) {
-  _$jscoverage['/editor.js'].branchData['1022'][1].ranCondition(result);
+}_$jscoverage['/editor.js'].branchData['1024'][1].init(74, 64, 'control.nodeName() === \'img\' && /ke_/.test(control[0].className)');
+function visit1241_1024_1(result) {
+  _$jscoverage['/editor.js'].branchData['1024'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor.js'].branchData['1015'][1].init(74, 75, 'S.inArray(control.nodeName(), [\'img\', \'hr\', \'input\', \'textarea\', \'select\'])');
-function visit1239_1015_1(result) {
-  _$jscoverage['/editor.js'].branchData['1015'][1].ranCondition(result);
+}_$jscoverage['/editor.js'].branchData['1021'][1].init(4965, 11, 'UA[\'gecko\']');
+function visit1240_1021_1(result) {
+  _$jscoverage['/editor.js'].branchData['1021'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor.js'].branchData['1012'][1].init(4623, 12, 'UA[\'webkit\']');
-function visit1238_1012_1(result) {
-  _$jscoverage['/editor.js'].branchData['1012'][1].ranCondition(result);
+}_$jscoverage['/editor.js'].branchData['1014'][1].init(74, 75, 'S.inArray(control.nodeName(), [\'img\', \'hr\', \'input\', \'textarea\', \'select\'])');
+function visit1239_1014_1(result) {
+  _$jscoverage['/editor.js'].branchData['1014'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor.js'].branchData['1002'][1].init(26, 29, 'evt.keyCode in pageUpDownKeys');
-function visit1237_1002_1(result) {
-  _$jscoverage['/editor.js'].branchData['1002'][1].ranCondition(result);
+}_$jscoverage['/editor.js'].branchData['1011'][1].init(4618, 12, 'UA[\'webkit\']');
+function visit1238_1011_1(result) {
+  _$jscoverage['/editor.js'].branchData['1011'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor.js'].branchData['999'][1].init(1368, 30, 'doc.compatMode == \'CSS1Compat\'');
-function visit1236_999_1(result) {
-  _$jscoverage['/editor.js'].branchData['999'][1].ranCondition(result);
+}_$jscoverage['/editor.js'].branchData['1001'][1].init(26, 29, 'evt.keyCode in pageUpDownKeys');
+function visit1237_1001_1(result) {
+  _$jscoverage['/editor.js'].branchData['1001'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor.js'].branchData['981'][1].init(139, 7, 'control');
-function visit1235_981_1(result) {
-  _$jscoverage['/editor.js'].branchData['981'][1].ranCondition(result);
+}_$jscoverage['/editor.js'].branchData['998'][1].init(1367, 30, 'doc.compatMode == \'CSS1Compat\'');
+function visit1236_998_1(result) {
+  _$jscoverage['/editor.js'].branchData['998'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor.js'].branchData['978'][1].init(107, 26, 'keyCode in {\n  8: 1, \n  46: 1}');
-function visit1234_978_1(result) {
-  _$jscoverage['/editor.js'].branchData['978'][1].ranCondition(result);
+}_$jscoverage['/editor.js'].branchData['980'][1].init(139, 7, 'control');
+function visit1235_980_1(result) {
+  _$jscoverage['/editor.js'].branchData['980'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor.js'].branchData['969'][1].init(2726, 5, 'IS_IE');
-function visit1233_969_1(result) {
-  _$jscoverage['/editor.js'].branchData['969'][1].ranCondition(result);
+}_$jscoverage['/editor.js'].branchData['977'][1].init(107, 26, 'keyCode in {\n  8: 1, \n  46: 1}');
+function visit1234_977_1(result) {
+  _$jscoverage['/editor.js'].branchData['977'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor.js'].branchData['963'][1].init(22, 19, '!self.__iframeFocus');
-function visit1232_963_1(result) {
-  _$jscoverage['/editor.js'].branchData['963'][1].ranCondition(result);
+}_$jscoverage['/editor.js'].branchData['968'][1].init(2722, 5, 'IS_IE');
+function visit1233_968_1(result) {
+  _$jscoverage['/editor.js'].branchData['968'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor.js'].branchData['958'][1].init(2429, 11, 'UA[\'gecko\']');
-function visit1231_958_1(result) {
-  _$jscoverage['/editor.js'].branchData['958'][1].ranCondition(result);
+}_$jscoverage['/editor.js'].branchData['962'][1].init(22, 19, '!self.__iframeFocus');
+function visit1232_962_1(result) {
+  _$jscoverage['/editor.js'].branchData['962'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor.js'].branchData['951'][1].init(252, 11, 'UA[\'opera\']');
-function visit1230_951_1(result) {
-  _$jscoverage['/editor.js'].branchData['951'][1].ranCondition(result);
+}_$jscoverage['/editor.js'].branchData['957'][1].init(2426, 11, 'UA[\'gecko\']');
+function visit1231_957_1(result) {
+  _$jscoverage['/editor.js'].branchData['957'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor.js'].branchData['948'][1].init(157, 11, 'UA[\'gecko\']');
-function visit1229_948_1(result) {
-  _$jscoverage['/editor.js'].branchData['948'][1].ranCondition(result);
+}_$jscoverage['/editor.js'].branchData['950'][1].init(249, 11, 'UA[\'opera\']');
+function visit1230_950_1(result) {
+  _$jscoverage['/editor.js'].branchData['950'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor.js'].branchData['933'][1].init(22, 33, 'UA[\'gecko\'] && self.__iframeFocus');
-function visit1228_933_1(result) {
-  _$jscoverage['/editor.js'].branchData['933'][1].ranCondition(result);
+}_$jscoverage['/editor.js'].branchData['947'][1].init(154, 11, 'UA[\'gecko\']');
+function visit1229_947_1(result) {
+  _$jscoverage['/editor.js'].branchData['947'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor.js'].branchData['920'][2].init(1120, 20, 'IS_IE || UA[\'opera\']');
-function visit1227_920_2(result) {
-  _$jscoverage['/editor.js'].branchData['920'][2].ranCondition(result);
+}_$jscoverage['/editor.js'].branchData['932'][1].init(22, 33, 'UA[\'gecko\'] && self.__iframeFocus');
+function visit1228_932_1(result) {
+  _$jscoverage['/editor.js'].branchData['932'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor.js'].branchData['920'][1].init(1105, 35, 'UA[\'gecko\'] || IS_IE || UA[\'opera\']');
-function visit1226_920_1(result) {
-  _$jscoverage['/editor.js'].branchData['920'][1].ranCondition(result);
+}_$jscoverage['/editor.js'].branchData['919'][2].init(1120, 20, 'IS_IE || UA[\'opera\']');
+function visit1227_919_2(result) {
+  _$jscoverage['/editor.js'].branchData['919'][2].ranCondition(result);
   return result;
-}_$jscoverage['/editor.js'].branchData['913'][1].init(74, 52, 'S.inArray(control.nodeName(), [\'input\', \'textarea\'])');
-function visit1225_913_1(result) {
-  _$jscoverage['/editor.js'].branchData['913'][1].ranCondition(result);
+}_$jscoverage['/editor.js'].branchData['919'][1].init(1105, 35, 'UA[\'gecko\'] || IS_IE || UA[\'opera\']');
+function visit1226_919_1(result) {
+  _$jscoverage['/editor.js'].branchData['919'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor.js'].branchData['906'][1].init(74, 50, 'S.inArray(control.nodeName(), [\'input\', \'select\'])');
-function visit1224_906_1(result) {
-  _$jscoverage['/editor.js'].branchData['906'][1].ranCondition(result);
+}_$jscoverage['/editor.js'].branchData['912'][1].init(74, 52, 'S.inArray(control.nodeName(), [\'input\', \'textarea\'])');
+function visit1225_912_1(result) {
+  _$jscoverage['/editor.js'].branchData['912'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor.js'].branchData['903'][1].init(439, 12, 'UA[\'webkit\']');
-function visit1223_903_1(result) {
-  _$jscoverage['/editor.js'].branchData['903'][1].ranCondition(result);
+}_$jscoverage['/editor.js'].branchData['905'][1].init(74, 50, 'S.inArray(control.nodeName(), [\'input\', \'select\'])');
+function visit1224_905_1(result) {
+  _$jscoverage['/editor.js'].branchData['905'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor.js'].branchData['887'][1].init(225, 29, '!retry && blinkCursor(doc, 1)');
-function visit1222_887_1(result) {
-  _$jscoverage['/editor.js'].branchData['887'][1].ranCondition(result);
+}_$jscoverage['/editor.js'].branchData['902'][1].init(439, 12, 'UA[\'webkit\']');
+function visit1223_902_1(result) {
+  _$jscoverage['/editor.js'].branchData['902'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor.js'].branchData['876'][1].init(153, 23, '!arguments.callee.retry');
-function visit1221_876_1(result) {
-  _$jscoverage['/editor.js'].branchData['876'][1].ranCondition(result);
+}_$jscoverage['/editor.js'].branchData['886'][1].init(225, 29, '!retry && blinkCursor(doc, 1)');
+function visit1222_886_1(result) {
+  _$jscoverage['/editor.js'].branchData['886'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor.js'].branchData['854'][2].init(54, 24, 't.nodeName() === \'table\'');
-function visit1220_854_2(result) {
-  _$jscoverage['/editor.js'].branchData['854'][2].ranCondition(result);
+}_$jscoverage['/editor.js'].branchData['875'][1].init(153, 23, '!arguments.callee.retry');
+function visit1221_875_1(result) {
+  _$jscoverage['/editor.js'].branchData['875'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor.js'].branchData['854'][1].init(54, 86, 't.nodeName() === \'table\' && disableInlineTableEditing');
-function visit1219_854_1(result) {
-  _$jscoverage['/editor.js'].branchData['854'][1].ranCondition(result);
+}_$jscoverage['/editor.js'].branchData['853'][2].init(54, 24, 't.nodeName() === \'table\'');
+function visit1220_853_2(result) {
+  _$jscoverage['/editor.js'].branchData['853'][2].ranCondition(result);
   return result;
-}_$jscoverage['/editor.js'].branchData['853'][1].init(85, 142, 'disableObjectResizing || (t.nodeName() === \'table\' && disableInlineTableEditing)');
-function visit1218_853_1(result) {
+}_$jscoverage['/editor.js'].branchData['853'][1].init(54, 86, 't.nodeName() === \'table\' && disableInlineTableEditing');
+function visit1219_853_1(result) {
   _$jscoverage['/editor.js'].branchData['853'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor.js'].branchData['841'][1].init(326, 50, 'disableObjectResizing || disableInlineTableEditing');
-function visit1217_841_1(result) {
-  _$jscoverage['/editor.js'].branchData['841'][1].ranCondition(result);
+}_$jscoverage['/editor.js'].branchData['852'][1].init(85, 142, 'disableObjectResizing || (t.nodeName() === \'table\' && disableInlineTableEditing)');
+function visit1218_852_1(result) {
+  _$jscoverage['/editor.js'].branchData['852'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor.js'].branchData['824'][1].init(26, 3, 'doc');
-function visit1216_824_1(result) {
-  _$jscoverage['/editor.js'].branchData['824'][1].ranCondition(result);
+}_$jscoverage['/editor.js'].branchData['840'][1].init(326, 50, 'disableObjectResizing || disableInlineTableEditing');
+function visit1217_840_1(result) {
+  _$jscoverage['/editor.js'].branchData['840'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor.js'].branchData['822'][1].init(381, 5, 'IS_IE');
-function visit1215_822_1(result) {
-  _$jscoverage['/editor.js'].branchData['822'][1].ranCondition(result);
+}_$jscoverage['/editor.js'].branchData['823'][1].init(26, 3, 'doc');
+function visit1216_823_1(result) {
+  _$jscoverage['/editor.js'].branchData['823'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor.js'].branchData['799'][1].init(26, 11, 'UA[\'gecko\']');
-function visit1214_799_1(result) {
-  _$jscoverage['/editor.js'].branchData['799'][1].ranCondition(result);
+}_$jscoverage['/editor.js'].branchData['821'][1].init(381, 5, 'IS_IE');
+function visit1215_821_1(result) {
+  _$jscoverage['/editor.js'].branchData['821'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor.js'].branchData['798'][1].init(327, 16, 't == htmlElement');
-function visit1213_798_1(result) {
+}_$jscoverage['/editor.js'].branchData['798'][1].init(26, 11, 'UA[\'gecko\']');
+function visit1214_798_1(result) {
   _$jscoverage['/editor.js'].branchData['798'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor.js'].branchData['787'][1].init(372, 26, 'UA[\'gecko\'] || UA[\'opera\']');
-function visit1212_787_1(result) {
-  _$jscoverage['/editor.js'].branchData['787'][1].ranCondition(result);
+}_$jscoverage['/editor.js'].branchData['797'][1].init(327, 16, 't == htmlElement');
+function visit1213_797_1(result) {
+  _$jscoverage['/editor.js'].branchData['797'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor.js'].branchData['768'][1].init(229, 12, 'UA[\'webkit\']');
-function visit1211_768_1(result) {
-  _$jscoverage['/editor.js'].branchData['768'][1].ranCondition(result);
+}_$jscoverage['/editor.js'].branchData['786'][1].init(372, 26, 'UA[\'gecko\'] || UA[\'opera\']');
+function visit1212_786_1(result) {
+  _$jscoverage['/editor.js'].branchData['786'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor.js'].branchData['765'][1].init(100, 26, 'UA[\'gecko\'] || UA[\'opera\']');
-function visit1210_765_1(result) {
-  _$jscoverage['/editor.js'].branchData['765'][1].ranCondition(result);
+}_$jscoverage['/editor.js'].branchData['767'][1].init(229, 12, 'UA[\'webkit\']');
+function visit1211_767_1(result) {
+  _$jscoverage['/editor.js'].branchData['767'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor.js'].branchData['752'][1].init(1320, 5, 'IS_IE');
-function visit1209_752_1(result) {
-  _$jscoverage['/editor.js'].branchData['752'][1].ranCondition(result);
+}_$jscoverage['/editor.js'].branchData['764'][1].init(100, 26, 'UA[\'gecko\'] || UA[\'opera\']');
+function visit1210_764_1(result) {
+  _$jscoverage['/editor.js'].branchData['764'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/editor.js'].branchData['751'][1].init(1316, 5, 'IS_IE');
+function visit1209_751_1(result) {
+  _$jscoverage['/editor.js'].branchData['751'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor.js'].branchData['705'][1].init(523, 26, 'cfg.data || textarea.val()');
 function visit1208_705_1(result) {
@@ -1290,7 +1290,7 @@ function visit1163_376_1(result) {
 function visit1162_370_1(result) {
   _$jscoverage['/editor.js'].branchData['370'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor.js'].branchData['353'][1].init(162, 5, 'range');
+}_$jscoverage['/editor.js'].branchData['353'][1].init(164, 5, 'range');
 function visit1161_353_1(result) {
   _$jscoverage['/editor.js'].branchData['353'][1].ranCondition(result);
   return result;
@@ -1314,33 +1314,33 @@ function visit1157_294_1(result) {
 function visit1156_291_1(result) {
   _$jscoverage['/editor.js'].branchData['291'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor.js'].branchData['263'][1].init(202, 3, 'cmd');
-function visit1155_263_1(result) {
-  _$jscoverage['/editor.js'].branchData['263'][1].ranCondition(result);
+}_$jscoverage['/editor.js'].branchData['272'][1].init(291, 42, 'htmlDataProcessor = self.htmlDataProcessor');
+function visit1155_272_1(result) {
+  _$jscoverage['/editor.js'].branchData['272'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor.js'].branchData['180'][1].init(22, 15, 'control.destroy');
-function visit1154_180_1(result) {
-  _$jscoverage['/editor.js'].branchData['180'][1].ranCondition(result);
+}_$jscoverage['/editor.js'].branchData['267'][1].init(119, 32, 'self.get(\'mode\') != WYSIWYG_MODE');
+function visit1154_267_1(result) {
+  _$jscoverage['/editor.js'].branchData['267'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor.js'].branchData['163'][1].init(368, 3, 'doc');
-function visit1153_163_1(result) {
+}_$jscoverage['/editor.js'].branchData['246'][1].init(202, 3, 'cmd');
+function visit1153_246_1(result) {
+  _$jscoverage['/editor.js'].branchData['246'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/editor.js'].branchData['163'][1].init(22, 15, 'control.destroy');
+function visit1152_163_1(result) {
   _$jscoverage['/editor.js'].branchData['163'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor.js'].branchData['158'][1].init(43, 61, '(form = textarea[0].form) && (form = $(form))');
-function visit1152_158_1(result) {
-  _$jscoverage['/editor.js'].branchData['158'][1].ranCondition(result);
+}_$jscoverage['/editor.js'].branchData['146'][1].init(368, 3, 'doc');
+function visit1151_146_1(result) {
+  _$jscoverage['/editor.js'].branchData['146'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor.js'].branchData['157'][1].init(168, 105, 'self.get(\'attachForm\') && (form = textarea[0].form) && (form = $(form))');
-function visit1151_157_1(result) {
-  _$jscoverage['/editor.js'].branchData['157'][1].ranCondition(result);
+}_$jscoverage['/editor.js'].branchData['141'][1].init(43, 61, '(form = textarea[0].form) && (form = $(form))');
+function visit1150_141_1(result) {
+  _$jscoverage['/editor.js'].branchData['141'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor.js'].branchData['143'][1].init(291, 42, 'htmlDataProcessor = self.htmlDataProcessor');
-function visit1150_143_1(result) {
-  _$jscoverage['/editor.js'].branchData['143'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/editor.js'].branchData['138'][1].init(119, 32, 'self.get(\'mode\') != WYSIWYG_MODE');
-function visit1149_138_1(result) {
-  _$jscoverage['/editor.js'].branchData['138'][1].ranCondition(result);
+}_$jscoverage['/editor.js'].branchData['140'][1].init(168, 105, 'self.get(\'attachForm\') && (form = textarea[0].form) && (form = $(form))');
+function visit1149_140_1(result) {
+  _$jscoverage['/editor.js'].branchData['140'][1].ranCondition(result);
   return result;
 }_$jscoverage['/editor.js'].branchData['129'][1].init(79, 20, 'v && self.__docReady');
 function visit1148_129_1(result) {
@@ -1512,127 +1512,127 @@ KISSY.add('editor', function(S, Node, iframeContentTpl, Editor, Utils, focusMana
     self.focus();
   }
 }, 
-  'setData': function(data) {
+  destructor: function() {
   _$jscoverage['/editor.js'].functionData[10]++;
   _$jscoverage['/editor.js'].lineData[135]++;
-  var self = this, htmlDataProcessor, afterData = data;
-  _$jscoverage['/editor.js'].lineData[138]++;
-  if (visit1149_138_1(self.get('mode') != WYSIWYG_MODE)) {
-    _$jscoverage['/editor.js'].lineData[140]++;
-    self.get('textarea').val(data);
-    _$jscoverage['/editor.js'].lineData[141]++;
-    return;
-  }
-  _$jscoverage['/editor.js'].lineData[143]++;
-  if (visit1150_143_1(htmlDataProcessor = self.htmlDataProcessor)) {
-    _$jscoverage['/editor.js'].lineData[144]++;
-    afterData = htmlDataProcessor.toDataFormat(data);
-  }
-  _$jscoverage['/editor.js'].lineData[147]++;
-  clearIframeDocContent(self);
-  _$jscoverage['/editor.js'].lineData[148]++;
-  createIframe(self, afterData);
-}, 
-  destructor: function() {
-  _$jscoverage['/editor.js'].functionData[11]++;
-  _$jscoverage['/editor.js'].lineData[152]++;
   var self = this, form, textarea = self.get('textarea'), doc = self.get('document');
-  _$jscoverage['/editor.js'].lineData[157]++;
-  if (visit1151_157_1(self.get('attachForm') && visit1152_158_1((form = textarea[0].form) && (form = $(form))))) {
-    _$jscoverage['/editor.js'].lineData[160]++;
+  _$jscoverage['/editor.js'].lineData[140]++;
+  if (visit1149_140_1(self.get('attachForm') && visit1150_141_1((form = textarea[0].form) && (form = $(form))))) {
+    _$jscoverage['/editor.js'].lineData[143]++;
     form.detach("submit", self.sync, self);
   }
-  _$jscoverage['/editor.js'].lineData[163]++;
-  if (visit1153_163_1(doc)) {
-    _$jscoverage['/editor.js'].lineData[164]++;
+  _$jscoverage['/editor.js'].lineData[146]++;
+  if (visit1151_146_1(doc)) {
+    _$jscoverage['/editor.js'].lineData[147]++;
     var body = $(doc[0].body), documentElement = $(doc[0].documentElement), win = self.get('window');
-    _$jscoverage['/editor.js'].lineData[168]++;
+    _$jscoverage['/editor.js'].lineData[151]++;
     focusManager.remove(self);
-    _$jscoverage['/editor.js'].lineData[170]++;
+    _$jscoverage['/editor.js'].lineData[153]++;
     doc.detach();
-    _$jscoverage['/editor.js'].lineData[172]++;
+    _$jscoverage['/editor.js'].lineData[155]++;
     documentElement.detach();
-    _$jscoverage['/editor.js'].lineData[174]++;
+    _$jscoverage['/editor.js'].lineData[157]++;
     body.detach();
-    _$jscoverage['/editor.js'].lineData[176]++;
+    _$jscoverage['/editor.js'].lineData[159]++;
     win.detach();
   }
-  _$jscoverage['/editor.js'].lineData[179]++;
+  _$jscoverage['/editor.js'].lineData[162]++;
   S.each(self.__controls, function(control) {
-  _$jscoverage['/editor.js'].functionData[12]++;
-  _$jscoverage['/editor.js'].lineData[180]++;
-  if (visit1154_180_1(control.destroy)) {
-    _$jscoverage['/editor.js'].lineData[181]++;
+  _$jscoverage['/editor.js'].functionData[11]++;
+  _$jscoverage['/editor.js'].lineData[163]++;
+  if (visit1152_163_1(control.destroy)) {
+    _$jscoverage['/editor.js'].lineData[164]++;
     control.destroy();
   }
 });
-  _$jscoverage['/editor.js'].lineData[185]++;
+  _$jscoverage['/editor.js'].lineData[168]++;
   self.__commands = {};
-  _$jscoverage['/editor.js'].lineData[186]++;
+  _$jscoverage['/editor.js'].lineData[169]++;
   self.__controls = {};
 }, 
   getControl: function(id) {
-  _$jscoverage['/editor.js'].functionData[13]++;
-  _$jscoverage['/editor.js'].lineData[194]++;
+  _$jscoverage['/editor.js'].functionData[12]++;
+  _$jscoverage['/editor.js'].lineData[177]++;
   return this.__controls[id];
 }, 
   getControls: function() {
-  _$jscoverage['/editor.js'].functionData[14]++;
-  _$jscoverage['/editor.js'].lineData[202]++;
+  _$jscoverage['/editor.js'].functionData[13]++;
+  _$jscoverage['/editor.js'].lineData[185]++;
   return this.__controls;
 }, 
   addControl: function(id, control) {
-  _$jscoverage['/editor.js'].functionData[15]++;
-  _$jscoverage['/editor.js'].lineData[211]++;
+  _$jscoverage['/editor.js'].functionData[14]++;
+  _$jscoverage['/editor.js'].lineData[194]++;
   this.__controls[id] = control;
 }, 
   showDialog: function(name, args) {
-  _$jscoverage['/editor.js'].functionData[16]++;
-  _$jscoverage['/editor.js'].lineData[221]++;
+  _$jscoverage['/editor.js'].functionData[15]++;
+  _$jscoverage['/editor.js'].lineData[204]++;
   name += '/dialog';
-  _$jscoverage['/editor.js'].lineData[222]++;
+  _$jscoverage['/editor.js'].lineData[205]++;
   var self = this, d = self.__controls[name];
-  _$jscoverage['/editor.js'].lineData[224]++;
+  _$jscoverage['/editor.js'].lineData[207]++;
   d.show(args);
-  _$jscoverage['/editor.js'].lineData[225]++;
+  _$jscoverage['/editor.js'].lineData[208]++;
   self.fire('dialogShow', {
   dialog: d.dialog, 
   "pluginDialog": d, 
   "dialogName": name});
 }, 
   addCommand: function(name, obj) {
-  _$jscoverage['/editor.js'].functionData[17]++;
-  _$jscoverage['/editor.js'].lineData[239]++;
+  _$jscoverage['/editor.js'].functionData[16]++;
+  _$jscoverage['/editor.js'].lineData[222]++;
   this.__commands[name] = obj;
 }, 
   hasCommand: function(name) {
-  _$jscoverage['/editor.js'].functionData[18]++;
-  _$jscoverage['/editor.js'].lineData[248]++;
+  _$jscoverage['/editor.js'].functionData[17]++;
+  _$jscoverage['/editor.js'].lineData[231]++;
   return this.__commands[name];
 }, 
   execCommand: function(name) {
-  _$jscoverage['/editor.js'].functionData[19]++;
-  _$jscoverage['/editor.js'].lineData[258]++;
+  _$jscoverage['/editor.js'].functionData[18]++;
+  _$jscoverage['/editor.js'].lineData[241]++;
   var self = this, cmd = self.__commands[name], args = S.makeArray(arguments);
-  _$jscoverage['/editor.js'].lineData[261]++;
+  _$jscoverage['/editor.js'].lineData[244]++;
   args.shift();
-  _$jscoverage['/editor.js'].lineData[262]++;
+  _$jscoverage['/editor.js'].lineData[245]++;
   args.unshift(self);
-  _$jscoverage['/editor.js'].lineData[263]++;
-  if (visit1155_263_1(cmd)) {
-    _$jscoverage['/editor.js'].lineData[264]++;
+  _$jscoverage['/editor.js'].lineData[246]++;
+  if (visit1153_246_1(cmd)) {
+    _$jscoverage['/editor.js'].lineData[247]++;
     return cmd.exec.apply(cmd, args);
   } else {
-    _$jscoverage['/editor.js'].lineData[266]++;
+    _$jscoverage['/editor.js'].lineData[249]++;
     logger.error(name + ': command not found');
-    _$jscoverage['/editor.js'].lineData[267]++;
+    _$jscoverage['/editor.js'].lineData[250]++;
     return undefined;
   }
 }, 
   queryCommandValue: function(name) {
-  _$jscoverage['/editor.js'].functionData[20]++;
-  _$jscoverage['/editor.js'].lineData[277]++;
+  _$jscoverage['/editor.js'].functionData[19]++;
+  _$jscoverage['/editor.js'].lineData[260]++;
   return this.execCommand(Utils.getQueryCmd(name));
+}, 
+  'setData': function(data) {
+  _$jscoverage['/editor.js'].functionData[20]++;
+  _$jscoverage['/editor.js'].lineData[264]++;
+  var self = this, htmlDataProcessor, afterData = data;
+  _$jscoverage['/editor.js'].lineData[267]++;
+  if (visit1154_267_1(self.get('mode') != WYSIWYG_MODE)) {
+    _$jscoverage['/editor.js'].lineData[269]++;
+    self.get('textarea').val(data);
+    _$jscoverage['/editor.js'].lineData[270]++;
+    return;
+  }
+  _$jscoverage['/editor.js'].lineData[272]++;
+  if (visit1155_272_1(htmlDataProcessor = self.htmlDataProcessor)) {
+    _$jscoverage['/editor.js'].lineData[273]++;
+    afterData = htmlDataProcessor.toDataFormat(data);
+  }
+  _$jscoverage['/editor.js'].lineData[276]++;
+  clearIframeDocContent(self);
+  _$jscoverage['/editor.js'].lineData[277]++;
+  createIframe(self, afterData);
 }, 
   getData: function(format, mode) {
   _$jscoverage['/editor.js'].functionData[21]++;
@@ -2050,111 +2050,111 @@ KISSY.add('editor', function(S, Node, iframeContentTpl, Editor, Utils, focusMana
   _$jscoverage['/editor.js'].lineData[716]++;
   Editor["_initIframe"] = function(id) {
   _$jscoverage['/editor.js'].functionData[44]++;
-  _$jscoverage['/editor.js'].lineData[718]++;
+  _$jscoverage['/editor.js'].lineData[717]++;
   var self = focusManager.getInstance(id), $doc = self.get('document'), doc = $doc[0], script = $doc.one('#ke_active_script');
-  _$jscoverage['/editor.js'].lineData[724]++;
+  _$jscoverage['/editor.js'].lineData[723]++;
   script.remove();
-  _$jscoverage['/editor.js'].lineData[726]++;
+  _$jscoverage['/editor.js'].lineData[725]++;
   fixByBindIframeDoc(self);
-  _$jscoverage['/editor.js'].lineData[728]++;
+  _$jscoverage['/editor.js'].lineData[727]++;
   var body = doc.body;
-  _$jscoverage['/editor.js'].lineData[730]++;
+  _$jscoverage['/editor.js'].lineData[729]++;
   var $body = $(body);
-  _$jscoverage['/editor.js'].lineData[752]++;
-  if (visit1209_752_1(IS_IE)) {
-    _$jscoverage['/editor.js'].lineData[754]++;
+  _$jscoverage['/editor.js'].lineData[751]++;
+  if (visit1209_751_1(IS_IE)) {
+    _$jscoverage['/editor.js'].lineData[753]++;
     body['hideFocus'] = TRUE;
-    _$jscoverage['/editor.js'].lineData[757]++;
+    _$jscoverage['/editor.js'].lineData[756]++;
     body.disabled = TRUE;
-    _$jscoverage['/editor.js'].lineData[758]++;
+    _$jscoverage['/editor.js'].lineData[757]++;
     body['contentEditable'] = TRUE;
-    _$jscoverage['/editor.js'].lineData[759]++;
+    _$jscoverage['/editor.js'].lineData[758]++;
     body.removeAttribute('disabled');
   } else {
-    _$jscoverage['/editor.js'].lineData[763]++;
+    _$jscoverage['/editor.js'].lineData[762]++;
     setTimeout(function() {
   _$jscoverage['/editor.js'].functionData[45]++;
-  _$jscoverage['/editor.js'].lineData[765]++;
-  if (visit1210_765_1(UA['gecko'] || UA['opera'])) {
-    _$jscoverage['/editor.js'].lineData[766]++;
+  _$jscoverage['/editor.js'].lineData[764]++;
+  if (visit1210_764_1(UA['gecko'] || UA['opera'])) {
+    _$jscoverage['/editor.js'].lineData[765]++;
     body['contentEditable'] = TRUE;
   } else {
-    _$jscoverage['/editor.js'].lineData[768]++;
-    if (visit1211_768_1(UA['webkit'])) {
-      _$jscoverage['/editor.js'].lineData[769]++;
+    _$jscoverage['/editor.js'].lineData[767]++;
+    if (visit1211_767_1(UA['webkit'])) {
+      _$jscoverage['/editor.js'].lineData[768]++;
       body.parentNode['contentEditable'] = TRUE;
     } else {
-      _$jscoverage['/editor.js'].lineData[771]++;
+      _$jscoverage['/editor.js'].lineData[770]++;
       doc['designMode'] = 'on';
     }
   }
 }, 0);
   }
-  _$jscoverage['/editor.js'].lineData[778]++;
-  if (visit1212_787_1(UA['gecko'] || UA['opera'])) {
-    _$jscoverage['/editor.js'].lineData[789]++;
+  _$jscoverage['/editor.js'].lineData[777]++;
+  if (visit1212_786_1(UA['gecko'] || UA['opera'])) {
+    _$jscoverage['/editor.js'].lineData[788]++;
     var htmlElement = doc.documentElement;
-    _$jscoverage['/editor.js'].lineData[790]++;
+    _$jscoverage['/editor.js'].lineData[789]++;
     $(htmlElement).on('mousedown', function(evt) {
   _$jscoverage['/editor.js'].functionData[46]++;
-  _$jscoverage['/editor.js'].lineData[797]++;
+  _$jscoverage['/editor.js'].lineData[796]++;
   var t = evt.target;
-  _$jscoverage['/editor.js'].lineData[798]++;
-  if (visit1213_798_1(t == htmlElement)) {
-    _$jscoverage['/editor.js'].lineData[799]++;
-    if (visit1214_799_1(UA['gecko'])) {
-      _$jscoverage['/editor.js'].lineData[800]++;
+  _$jscoverage['/editor.js'].lineData[797]++;
+  if (visit1213_797_1(t == htmlElement)) {
+    _$jscoverage['/editor.js'].lineData[798]++;
+    if (visit1214_798_1(UA['gecko'])) {
+      _$jscoverage['/editor.js'].lineData[799]++;
       blinkCursor(doc, FALSE);
     }
-    _$jscoverage['/editor.js'].lineData[807]++;
+    _$jscoverage['/editor.js'].lineData[806]++;
     self.activateGecko();
   }
 });
   }
-  _$jscoverage['/editor.js'].lineData[813]++;
+  _$jscoverage['/editor.js'].lineData[812]++;
   setTimeout(function() {
   _$jscoverage['/editor.js'].functionData[47]++;
-  _$jscoverage['/editor.js'].lineData[822]++;
-  if (visit1215_822_1(IS_IE)) {
-    _$jscoverage['/editor.js'].lineData[823]++;
+  _$jscoverage['/editor.js'].lineData[821]++;
+  if (visit1215_821_1(IS_IE)) {
+    _$jscoverage['/editor.js'].lineData[822]++;
     setTimeout(function() {
   _$jscoverage['/editor.js'].functionData[48]++;
-  _$jscoverage['/editor.js'].lineData[824]++;
-  if (visit1216_824_1(doc)) {
-    _$jscoverage['/editor.js'].lineData[825]++;
+  _$jscoverage['/editor.js'].lineData[823]++;
+  if (visit1216_823_1(doc)) {
+    _$jscoverage['/editor.js'].lineData[824]++;
     body.runtimeStyle['marginBottom'] = '0px';
-    _$jscoverage['/editor.js'].lineData[826]++;
+    _$jscoverage['/editor.js'].lineData[825]++;
     body.runtimeStyle['marginBottom'] = '';
   }
 }, 1000);
   }
 }, 0);
-  _$jscoverage['/editor.js'].lineData[833]++;
+  _$jscoverage['/editor.js'].lineData[832]++;
   setTimeout(function() {
   _$jscoverage['/editor.js'].functionData[49]++;
-  _$jscoverage['/editor.js'].lineData[834]++;
+  _$jscoverage['/editor.js'].lineData[833]++;
   self.__docReady = 1;
-  _$jscoverage['/editor.js'].lineData[835]++;
+  _$jscoverage['/editor.js'].lineData[834]++;
   self.fire('docReady');
-  _$jscoverage['/editor.js'].lineData[839]++;
+  _$jscoverage['/editor.js'].lineData[838]++;
   var disableObjectResizing = self.get('disableObjectResizing'), disableInlineTableEditing = self.get('disableInlineTableEditing');
-  _$jscoverage['/editor.js'].lineData[841]++;
-  if (visit1217_841_1(disableObjectResizing || disableInlineTableEditing)) {
-    _$jscoverage['/editor.js'].lineData[843]++;
+  _$jscoverage['/editor.js'].lineData[840]++;
+  if (visit1217_840_1(disableObjectResizing || disableInlineTableEditing)) {
+    _$jscoverage['/editor.js'].lineData[842]++;
     try {
-      _$jscoverage['/editor.js'].lineData[844]++;
+      _$jscoverage['/editor.js'].lineData[843]++;
       doc.execCommand('enableObjectResizing', FALSE, !disableObjectResizing);
-      _$jscoverage['/editor.js'].lineData[845]++;
+      _$jscoverage['/editor.js'].lineData[844]++;
       doc.execCommand('enableInlineTableEditing', FALSE, !disableInlineTableEditing);
     }    catch (e) {
-  _$jscoverage['/editor.js'].lineData[851]++;
+  _$jscoverage['/editor.js'].lineData[850]++;
   $body.on(IS_IE ? 'resizestart' : 'resize', function(evt) {
   _$jscoverage['/editor.js'].functionData[50]++;
-  _$jscoverage['/editor.js'].lineData[852]++;
+  _$jscoverage['/editor.js'].lineData[851]++;
   var t = new Node(evt.target);
-  _$jscoverage['/editor.js'].lineData[853]++;
-  if (visit1218_853_1(disableObjectResizing || (visit1219_854_1(visit1220_854_2(t.nodeName() === 'table') && disableInlineTableEditing)))) {
-    _$jscoverage['/editor.js'].lineData[856]++;
+  _$jscoverage['/editor.js'].lineData[852]++;
+  if (visit1218_852_1(disableObjectResizing || (visit1219_853_1(visit1220_853_2(t.nodeName() === 'table') && disableInlineTableEditing)))) {
+    _$jscoverage['/editor.js'].lineData[855]++;
     evt.preventDefault();
   }
 });
@@ -2162,343 +2162,343 @@ KISSY.add('editor', function(S, Node, iframeContentTpl, Editor, Utils, focusMana
   }
 }, 10);
 };
-  _$jscoverage['/editor.js'].lineData[866]++;
+  _$jscoverage['/editor.js'].lineData[865]++;
   function blinkCursor(doc, retry) {
     _$jscoverage['/editor.js'].functionData[51]++;
-    _$jscoverage['/editor.js'].lineData[867]++;
+    _$jscoverage['/editor.js'].lineData[866]++;
     var body = doc.body;
-    _$jscoverage['/editor.js'].lineData[868]++;
+    _$jscoverage['/editor.js'].lineData[867]++;
     tryThese(function() {
   _$jscoverage['/editor.js'].functionData[52]++;
-  _$jscoverage['/editor.js'].lineData[870]++;
+  _$jscoverage['/editor.js'].lineData[869]++;
   doc['designMode'] = 'on';
-  _$jscoverage['/editor.js'].lineData[872]++;
+  _$jscoverage['/editor.js'].lineData[871]++;
   setTimeout(function() {
   _$jscoverage['/editor.js'].functionData[53]++;
-  _$jscoverage['/editor.js'].lineData[873]++;
+  _$jscoverage['/editor.js'].lineData[872]++;
   doc['designMode'] = 'off';
-  _$jscoverage['/editor.js'].lineData[874]++;
+  _$jscoverage['/editor.js'].lineData[873]++;
   body.focus();
-  _$jscoverage['/editor.js'].lineData[876]++;
-  if (visit1221_876_1(!arguments.callee.retry)) {
-    _$jscoverage['/editor.js'].lineData[877]++;
+  _$jscoverage['/editor.js'].lineData[875]++;
+  if (visit1221_875_1(!arguments.callee.retry)) {
+    _$jscoverage['/editor.js'].lineData[876]++;
     arguments.callee.retry = TRUE;
   }
 }, 50);
 }, function() {
   _$jscoverage['/editor.js'].functionData[54]++;
-  _$jscoverage['/editor.js'].lineData[883]++;
+  _$jscoverage['/editor.js'].lineData[882]++;
   doc['designMode'] = 'off';
-  _$jscoverage['/editor.js'].lineData[884]++;
+  _$jscoverage['/editor.js'].lineData[883]++;
   body.setAttribute('contentEditable', false);
-  _$jscoverage['/editor.js'].lineData[885]++;
+  _$jscoverage['/editor.js'].lineData[884]++;
   body.setAttribute('contentEditable', true);
-  _$jscoverage['/editor.js'].lineData[887]++;
-  visit1222_887_1(!retry && blinkCursor(doc, 1));
+  _$jscoverage['/editor.js'].lineData[886]++;
+  visit1222_886_1(!retry && blinkCursor(doc, 1));
 });
   }
-  _$jscoverage['/editor.js'].lineData[892]++;
+  _$jscoverage['/editor.js'].lineData[891]++;
   function fixByBindIframeDoc(self) {
     _$jscoverage['/editor.js'].functionData[55]++;
-    _$jscoverage['/editor.js'].lineData[893]++;
+    _$jscoverage['/editor.js'].lineData[892]++;
     var iframe = self.get('iframe'), textarea = self.get('textarea')[0], $win = self.get('window'), $doc = self.get('document'), doc = $doc[0];
-    _$jscoverage['/editor.js'].lineData[903]++;
-    if (visit1223_903_1(UA['webkit'])) {
-      _$jscoverage['/editor.js'].lineData[904]++;
+    _$jscoverage['/editor.js'].lineData[902]++;
+    if (visit1223_902_1(UA['webkit'])) {
+      _$jscoverage['/editor.js'].lineData[903]++;
       $doc.on('click', function(ev) {
   _$jscoverage['/editor.js'].functionData[56]++;
-  _$jscoverage['/editor.js'].lineData[905]++;
+  _$jscoverage['/editor.js'].lineData[904]++;
   var control = new Node(ev.target);
-  _$jscoverage['/editor.js'].lineData[906]++;
-  if (visit1224_906_1(S.inArray(control.nodeName(), ['input', 'select']))) {
-    _$jscoverage['/editor.js'].lineData[907]++;
+  _$jscoverage['/editor.js'].lineData[905]++;
+  if (visit1224_905_1(S.inArray(control.nodeName(), ['input', 'select']))) {
+    _$jscoverage['/editor.js'].lineData[906]++;
     ev.preventDefault();
   }
 });
-      _$jscoverage['/editor.js'].lineData[911]++;
+      _$jscoverage['/editor.js'].lineData[910]++;
       $doc.on('mouseup', function(ev) {
   _$jscoverage['/editor.js'].functionData[57]++;
-  _$jscoverage['/editor.js'].lineData[912]++;
+  _$jscoverage['/editor.js'].lineData[911]++;
   var control = new Node(ev.target);
-  _$jscoverage['/editor.js'].lineData[913]++;
-  if (visit1225_913_1(S.inArray(control.nodeName(), ['input', 'textarea']))) {
-    _$jscoverage['/editor.js'].lineData[914]++;
+  _$jscoverage['/editor.js'].lineData[912]++;
+  if (visit1225_912_1(S.inArray(control.nodeName(), ['input', 'textarea']))) {
+    _$jscoverage['/editor.js'].lineData[913]++;
     ev.preventDefault();
   }
 });
     }
-    _$jscoverage['/editor.js'].lineData[920]++;
-    if (visit1226_920_1(UA['gecko'] || visit1227_920_2(IS_IE || UA['opera']))) {
-      _$jscoverage['/editor.js'].lineData[921]++;
+    _$jscoverage['/editor.js'].lineData[919]++;
+    if (visit1226_919_1(UA['gecko'] || visit1227_919_2(IS_IE || UA['opera']))) {
+      _$jscoverage['/editor.js'].lineData[920]++;
       var focusGrabber;
-      _$jscoverage['/editor.js'].lineData[922]++;
+      _$jscoverage['/editor.js'].lineData[921]++;
       focusGrabber = new Node('<span ' + 'tabindex="-1" ' + 'style="position:absolute; left:-10000"' + ' role="presentation"' + '></span>').insertAfter(textarea);
-      _$jscoverage['/editor.js'].lineData[929]++;
+      _$jscoverage['/editor.js'].lineData[928]++;
       focusGrabber.on('focus', function() {
   _$jscoverage['/editor.js'].functionData[58]++;
-  _$jscoverage['/editor.js'].lineData[930]++;
+  _$jscoverage['/editor.js'].lineData[929]++;
   self.focus();
 });
-      _$jscoverage['/editor.js'].lineData[932]++;
+      _$jscoverage['/editor.js'].lineData[931]++;
       self.activateGecko = function() {
   _$jscoverage['/editor.js'].functionData[59]++;
-  _$jscoverage['/editor.js'].lineData[933]++;
-  if (visit1228_933_1(UA['gecko'] && self.__iframeFocus)) {
-    _$jscoverage['/editor.js'].lineData[934]++;
+  _$jscoverage['/editor.js'].lineData[932]++;
+  if (visit1228_932_1(UA['gecko'] && self.__iframeFocus)) {
+    _$jscoverage['/editor.js'].lineData[933]++;
     focusGrabber[0].focus();
   }
 };
-      _$jscoverage['/editor.js'].lineData[936]++;
+      _$jscoverage['/editor.js'].lineData[935]++;
       self.on('destroy', function() {
   _$jscoverage['/editor.js'].functionData[60]++;
-  _$jscoverage['/editor.js'].lineData[937]++;
+  _$jscoverage['/editor.js'].lineData[936]++;
   focusGrabber.detach();
-  _$jscoverage['/editor.js'].lineData[938]++;
+  _$jscoverage['/editor.js'].lineData[937]++;
   focusGrabber.remove();
 });
     }
-    _$jscoverage['/editor.js'].lineData[942]++;
+    _$jscoverage['/editor.js'].lineData[941]++;
     $win.on('focus', function() {
   _$jscoverage['/editor.js'].functionData[61]++;
-  _$jscoverage['/editor.js'].lineData[948]++;
-  if (visit1229_948_1(UA['gecko'])) {
-    _$jscoverage['/editor.js'].lineData[949]++;
+  _$jscoverage['/editor.js'].lineData[947]++;
+  if (visit1229_947_1(UA['gecko'])) {
+    _$jscoverage['/editor.js'].lineData[948]++;
     blinkCursor(doc, FALSE);
   } else {
-    _$jscoverage['/editor.js'].lineData[951]++;
-    if (visit1230_951_1(UA['opera'])) {
-      _$jscoverage['/editor.js'].lineData[952]++;
+    _$jscoverage['/editor.js'].lineData[950]++;
+    if (visit1230_950_1(UA['opera'])) {
+      _$jscoverage['/editor.js'].lineData[951]++;
       doc.body.focus();
     }
   }
-  _$jscoverage['/editor.js'].lineData[955]++;
+  _$jscoverage['/editor.js'].lineData[954]++;
   self.notifySelectionChange();
 });
-    _$jscoverage['/editor.js'].lineData[958]++;
-    if (visit1231_958_1(UA['gecko'])) {
-      _$jscoverage['/editor.js'].lineData[962]++;
+    _$jscoverage['/editor.js'].lineData[957]++;
+    if (visit1231_957_1(UA['gecko'])) {
+      _$jscoverage['/editor.js'].lineData[961]++;
       $doc.on('mousedown', function() {
   _$jscoverage['/editor.js'].functionData[62]++;
-  _$jscoverage['/editor.js'].lineData[963]++;
-  if (visit1232_963_1(!self.__iframeFocus)) {
-    _$jscoverage['/editor.js'].lineData[964]++;
+  _$jscoverage['/editor.js'].lineData[962]++;
+  if (visit1232_962_1(!self.__iframeFocus)) {
+    _$jscoverage['/editor.js'].lineData[963]++;
     blinkCursor(doc, FALSE);
   }
 });
     }
-    _$jscoverage['/editor.js'].lineData[969]++;
-    if (visit1233_969_1(IS_IE)) {
-      _$jscoverage['/editor.js'].lineData[975]++;
+    _$jscoverage['/editor.js'].lineData[968]++;
+    if (visit1233_968_1(IS_IE)) {
+      _$jscoverage['/editor.js'].lineData[974]++;
       $doc.on('keydown', function(evt) {
   _$jscoverage['/editor.js'].functionData[63]++;
-  _$jscoverage['/editor.js'].lineData[976]++;
+  _$jscoverage['/editor.js'].lineData[975]++;
   var keyCode = evt.keyCode;
-  _$jscoverage['/editor.js'].lineData[978]++;
-  if (visit1234_978_1(keyCode in {
+  _$jscoverage['/editor.js'].lineData[977]++;
+  if (visit1234_977_1(keyCode in {
   8: 1, 
   46: 1})) {
-    _$jscoverage['/editor.js'].lineData[979]++;
+    _$jscoverage['/editor.js'].lineData[978]++;
     var sel = self.getSelection(), control = sel.getSelectedElement();
-    _$jscoverage['/editor.js'].lineData[981]++;
-    if (visit1235_981_1(control)) {
-      _$jscoverage['/editor.js'].lineData[983]++;
+    _$jscoverage['/editor.js'].lineData[980]++;
+    if (visit1235_980_1(control)) {
+      _$jscoverage['/editor.js'].lineData[982]++;
       self.execCommand('save');
-      _$jscoverage['/editor.js'].lineData[986]++;
+      _$jscoverage['/editor.js'].lineData[985]++;
       var bookmark = sel.getRanges()[0].createBookmark();
-      _$jscoverage['/editor.js'].lineData[988]++;
+      _$jscoverage['/editor.js'].lineData[987]++;
       control.remove();
-      _$jscoverage['/editor.js'].lineData[989]++;
+      _$jscoverage['/editor.js'].lineData[988]++;
       sel.selectBookmarks([bookmark]);
-      _$jscoverage['/editor.js'].lineData[990]++;
+      _$jscoverage['/editor.js'].lineData[989]++;
       self.execCommand('save');
-      _$jscoverage['/editor.js'].lineData[991]++;
+      _$jscoverage['/editor.js'].lineData[990]++;
       evt.preventDefault();
     }
   }
 });
-      _$jscoverage['/editor.js'].lineData[999]++;
-      if (visit1236_999_1(doc.compatMode == 'CSS1Compat')) {
-        _$jscoverage['/editor.js'].lineData[1000]++;
+      _$jscoverage['/editor.js'].lineData[998]++;
+      if (visit1236_998_1(doc.compatMode == 'CSS1Compat')) {
+        _$jscoverage['/editor.js'].lineData[999]++;
         var pageUpDownKeys = {
   33: 1, 
   34: 1};
-        _$jscoverage['/editor.js'].lineData[1001]++;
+        _$jscoverage['/editor.js'].lineData[1000]++;
         $doc.on('keydown', function(evt) {
   _$jscoverage['/editor.js'].functionData[64]++;
-  _$jscoverage['/editor.js'].lineData[1002]++;
-  if (visit1237_1002_1(evt.keyCode in pageUpDownKeys)) {
-    _$jscoverage['/editor.js'].lineData[1003]++;
+  _$jscoverage['/editor.js'].lineData[1001]++;
+  if (visit1237_1001_1(evt.keyCode in pageUpDownKeys)) {
+    _$jscoverage['/editor.js'].lineData[1002]++;
     setTimeout(function() {
   _$jscoverage['/editor.js'].functionData[65]++;
-  _$jscoverage['/editor.js'].lineData[1004]++;
+  _$jscoverage['/editor.js'].lineData[1003]++;
   self.getSelection().scrollIntoView();
 }, 0);
   }
 });
       }
     }
-    _$jscoverage['/editor.js'].lineData[1012]++;
-    if (visit1238_1012_1(UA['webkit'])) {
-      _$jscoverage['/editor.js'].lineData[1013]++;
+    _$jscoverage['/editor.js'].lineData[1011]++;
+    if (visit1238_1011_1(UA['webkit'])) {
+      _$jscoverage['/editor.js'].lineData[1012]++;
       $doc.on('mousedown', function(ev) {
   _$jscoverage['/editor.js'].functionData[66]++;
-  _$jscoverage['/editor.js'].lineData[1014]++;
+  _$jscoverage['/editor.js'].lineData[1013]++;
   var control = new Node(ev.target);
-  _$jscoverage['/editor.js'].lineData[1015]++;
-  if (visit1239_1015_1(S.inArray(control.nodeName(), ['img', 'hr', 'input', 'textarea', 'select']))) {
-    _$jscoverage['/editor.js'].lineData[1016]++;
+  _$jscoverage['/editor.js'].lineData[1014]++;
+  if (visit1239_1014_1(S.inArray(control.nodeName(), ['img', 'hr', 'input', 'textarea', 'select']))) {
+    _$jscoverage['/editor.js'].lineData[1015]++;
     self.getSelection().selectElement(control);
   }
 });
     }
-    _$jscoverage['/editor.js'].lineData[1022]++;
-    if (visit1240_1022_1(UA['gecko'])) {
-      _$jscoverage['/editor.js'].lineData[1023]++;
+    _$jscoverage['/editor.js'].lineData[1021]++;
+    if (visit1240_1021_1(UA['gecko'])) {
+      _$jscoverage['/editor.js'].lineData[1022]++;
       $doc.on('dragstart', function(ev) {
   _$jscoverage['/editor.js'].functionData[67]++;
-  _$jscoverage['/editor.js'].lineData[1024]++;
+  _$jscoverage['/editor.js'].lineData[1023]++;
   var control = new Node(ev.target);
-  _$jscoverage['/editor.js'].lineData[1025]++;
-  if (visit1241_1025_1(visit1242_1025_2(control.nodeName() === 'img') && /ke_/.test(control[0].className))) {
-    _$jscoverage['/editor.js'].lineData[1027]++;
+  _$jscoverage['/editor.js'].lineData[1024]++;
+  if (visit1241_1024_1(visit1242_1024_2(control.nodeName() === 'img') && /ke_/.test(control[0].className))) {
+    _$jscoverage['/editor.js'].lineData[1026]++;
     ev.preventDefault();
   }
 });
     }
-    _$jscoverage['/editor.js'].lineData[1033]++;
+    _$jscoverage['/editor.js'].lineData[1032]++;
     focusManager.add(self);
   }
-  _$jscoverage['/editor.js'].lineData[1037]++;
+  _$jscoverage['/editor.js'].lineData[1036]++;
   function prepareIFrameHTML(id, customStyle, customLink, data) {
     _$jscoverage['/editor.js'].functionData[68]++;
-    _$jscoverage['/editor.js'].lineData[1038]++;
+    _$jscoverage['/editor.js'].lineData[1037]++;
     var links = '', i, innerCssFile = Utils.debugUrl('theme/editor-iframe.css');
-    _$jscoverage['/editor.js'].lineData[1041]++;
+    _$jscoverage['/editor.js'].lineData[1040]++;
     customLink = customLink.concat([]);
-    _$jscoverage['/editor.js'].lineData[1042]++;
+    _$jscoverage['/editor.js'].lineData[1041]++;
     customLink.unshift(innerCssFile);
-    _$jscoverage['/editor.js'].lineData[1043]++;
-    for (i = 0; visit1243_1043_1(i < customLink.length); i++) {
-      _$jscoverage['/editor.js'].lineData[1044]++;
+    _$jscoverage['/editor.js'].lineData[1042]++;
+    for (i = 0; visit1243_1042_1(i < customLink.length); i++) {
+      _$jscoverage['/editor.js'].lineData[1043]++;
       links += S.substitute('<link href="' + '{href}" rel="stylesheet" />', {
   href: customLink[i]});
     }
-    _$jscoverage['/editor.js'].lineData[1048]++;
+    _$jscoverage['/editor.js'].lineData[1047]++;
     return S.substitute(iframeContentTpl, {
-  doctype: visit1244_1052_1(document.documentMode === 8) ? '<meta http-equiv="X-UA-Compatible" content="IE=7" />' : '', 
-  title: '${title}', 
+  doctype: visit1244_1051_1(document.documentMode === 8) ? '<meta http-equiv="X-UA-Compatible" content="IE=7" />' : '', 
+  title: '{title}', 
   links: links, 
-  style: customStyle, 
-  data: visit1245_1059_1(data || ''), 
+  style: '<style>' + customStyle + '</style>', 
+  data: visit1245_1058_1(data || ''), 
   script: id ? ('<script id="ke_active_script">' + ($(window).isCustomDomain() ? ('document.domain="' + document.domain + '";') : '') + 'parent.KISSY.require("editor")._initIframe("' + id + '");' + '</script>') : ''});
   }
-  _$jscoverage['/editor.js'].lineData[1074]++;
+  _$jscoverage['/editor.js'].lineData[1073]++;
   var saveLater = S.buffer(function() {
   _$jscoverage['/editor.js'].functionData[69]++;
-  _$jscoverage['/editor.js'].lineData[1075]++;
+  _$jscoverage['/editor.js'].lineData[1074]++;
   this.execCommand('save');
 }, 50);
-  _$jscoverage['/editor.js'].lineData[1078]++;
+  _$jscoverage['/editor.js'].lineData[1077]++;
   function setUpIFrame(self, data) {
     _$jscoverage['/editor.js'].functionData[70]++;
-    _$jscoverage['/editor.js'].lineData[1079]++;
+    _$jscoverage['/editor.js'].lineData[1078]++;
     var iframe = self.get('iframe'), html = prepareIFrameHTML(self.get('id'), self.get('customStyle'), self.get('customLink'), data), iframeDom = iframe[0], win = iframeDom.contentWindow, doc;
-    _$jscoverage['/editor.js'].lineData[1086]++;
+    _$jscoverage['/editor.js'].lineData[1085]++;
     iframe.__loaded = 1;
-    _$jscoverage['/editor.js'].lineData[1087]++;
+    _$jscoverage['/editor.js'].lineData[1086]++;
     try {
-      _$jscoverage['/editor.js'].lineData[1095]++;
+      _$jscoverage['/editor.js'].lineData[1094]++;
       doc = win.document;
     }    catch (e) {
-  _$jscoverage['/editor.js'].lineData[1100]++;
+  _$jscoverage['/editor.js'].lineData[1099]++;
   iframeDom.src = iframeDom.src;
-  _$jscoverage['/editor.js'].lineData[1103]++;
-  if (visit1246_1103_1(IS_IE < 7)) {
-    _$jscoverage['/editor.js'].lineData[1104]++;
+  _$jscoverage['/editor.js'].lineData[1102]++;
+  if (visit1246_1102_1(IS_IE < 7)) {
+    _$jscoverage['/editor.js'].lineData[1103]++;
     setTimeout(run, 10);
-    _$jscoverage['/editor.js'].lineData[1105]++;
+    _$jscoverage['/editor.js'].lineData[1104]++;
     return;
   }
 }
-    _$jscoverage['/editor.js'].lineData[1108]++;
+    _$jscoverage['/editor.js'].lineData[1107]++;
     run();
-    _$jscoverage['/editor.js'].lineData[1109]++;
+    _$jscoverage['/editor.js'].lineData[1108]++;
     function run() {
       _$jscoverage['/editor.js'].functionData[71]++;
-      _$jscoverage['/editor.js'].lineData[1110]++;
+      _$jscoverage['/editor.js'].lineData[1109]++;
       doc = win.document;
-      _$jscoverage['/editor.js'].lineData[1111]++;
+      _$jscoverage['/editor.js'].lineData[1110]++;
       self.setInternal('document', new Node(doc));
-      _$jscoverage['/editor.js'].lineData[1112]++;
+      _$jscoverage['/editor.js'].lineData[1111]++;
       self.setInternal('window', new Node(win));
-      _$jscoverage['/editor.js'].lineData[1113]++;
+      _$jscoverage['/editor.js'].lineData[1112]++;
       iframe.detach();
-      _$jscoverage['/editor.js'].lineData[1115]++;
+      _$jscoverage['/editor.js'].lineData[1114]++;
       doc['open']('text/html', 'replace');
-      _$jscoverage['/editor.js'].lineData[1116]++;
+      _$jscoverage['/editor.js'].lineData[1115]++;
       doc.write(html);
-      _$jscoverage['/editor.js'].lineData[1117]++;
+      _$jscoverage['/editor.js'].lineData[1116]++;
       doc.close();
     }
   }
-  _$jscoverage['/editor.js'].lineData[1121]++;
+  _$jscoverage['/editor.js'].lineData[1120]++;
   function createIframe(self, afterData) {
     _$jscoverage['/editor.js'].functionData[72]++;
+    _$jscoverage['/editor.js'].lineData[1124]++;
+    var iframeSrc = visit1247_1124_1($(window).getEmptyIframeSrc() || '');
     _$jscoverage['/editor.js'].lineData[1125]++;
-    var iframeSrc = visit1247_1125_1($(window).getEmptyIframeSrc() || '');
-    _$jscoverage['/editor.js'].lineData[1126]++;
-    if (visit1248_1126_1(iframeSrc)) {
-      _$jscoverage['/editor.js'].lineData[1127]++;
+    if (visit1248_1125_1(iframeSrc)) {
+      _$jscoverage['/editor.js'].lineData[1126]++;
       iframeSrc = ' src="' + iframeSrc + '" ';
     }
-    _$jscoverage['/editor.js'].lineData[1129]++;
+    _$jscoverage['/editor.js'].lineData[1128]++;
     var iframe = new Node(S.substitute(IFRAME_TPL, {
   iframeSrc: iframeSrc, 
   prefixCls: self.get('prefixCls')})), textarea = self.get('textarea');
-    _$jscoverage['/editor.js'].lineData[1134]++;
-    if (visit1249_1134_1(textarea.hasAttr('tabindex'))) {
-      _$jscoverage['/editor.js'].lineData[1135]++;
+    _$jscoverage['/editor.js'].lineData[1133]++;
+    if (visit1249_1133_1(textarea.hasAttr('tabindex'))) {
+      _$jscoverage['/editor.js'].lineData[1134]++;
       iframe.attr('tabindex', UA['webkit'] ? -1 : textarea.attr('tabindex'));
     }
-    _$jscoverage['/editor.js'].lineData[1137]++;
+    _$jscoverage['/editor.js'].lineData[1136]++;
     textarea.parent().prepend(iframe);
-    _$jscoverage['/editor.js'].lineData[1138]++;
+    _$jscoverage['/editor.js'].lineData[1137]++;
     self.set('iframe', iframe);
-    _$jscoverage['/editor.js'].lineData[1139]++;
+    _$jscoverage['/editor.js'].lineData[1138]++;
     self.__docReady = 0;
-    _$jscoverage['/editor.js'].lineData[1141]++;
-    if (visit1250_1141_1(UA['gecko'] && !iframe.__loaded)) {
-      _$jscoverage['/editor.js'].lineData[1142]++;
+    _$jscoverage['/editor.js'].lineData[1140]++;
+    if (visit1250_1140_1(UA['gecko'] && !iframe.__loaded)) {
+      _$jscoverage['/editor.js'].lineData[1141]++;
       iframe.on('load', function() {
   _$jscoverage['/editor.js'].functionData[73]++;
-  _$jscoverage['/editor.js'].lineData[1143]++;
+  _$jscoverage['/editor.js'].lineData[1142]++;
   setUpIFrame(self, afterData);
 }, self);
     } else {
-      _$jscoverage['/editor.js'].lineData[1147]++;
+      _$jscoverage['/editor.js'].lineData[1146]++;
       setUpIFrame(self, afterData);
     }
   }
-  _$jscoverage['/editor.js'].lineData[1151]++;
+  _$jscoverage['/editor.js'].lineData[1150]++;
   function clearIframeDocContent(self) {
     _$jscoverage['/editor.js'].functionData[74]++;
-    _$jscoverage['/editor.js'].lineData[1152]++;
-    if (visit1251_1152_1(!self.get('iframe'))) {
-      _$jscoverage['/editor.js'].lineData[1153]++;
+    _$jscoverage['/editor.js'].lineData[1151]++;
+    if (visit1251_1151_1(!self.get('iframe'))) {
+      _$jscoverage['/editor.js'].lineData[1152]++;
       return;
     }
-    _$jscoverage['/editor.js'].lineData[1155]++;
+    _$jscoverage['/editor.js'].lineData[1154]++;
     var iframe = self.get('iframe'), win = self.get('window'), doc = self.get('document'), domDoc = doc[0], documentElement = $(domDoc.documentElement), body = $(domDoc.body);
-    _$jscoverage['/editor.js'].lineData[1161]++;
+    _$jscoverage['/editor.js'].lineData[1160]++;
     S.each([doc, documentElement, body, win], function(el) {
   _$jscoverage['/editor.js'].functionData[75]++;
-  _$jscoverage['/editor.js'].lineData[1162]++;
+  _$jscoverage['/editor.js'].lineData[1161]++;
   el.detach();
 });
-    _$jscoverage['/editor.js'].lineData[1164]++;
+    _$jscoverage['/editor.js'].lineData[1163]++;
     iframe.remove();
   }
-  _$jscoverage['/editor.js'].lineData[1169]++;
+  _$jscoverage['/editor.js'].lineData[1168]++;
   return Editor;
 }, {
   requires: ['node', 'editor/iframe-content-tpl', 'editor/base', 'editor/utils', 'editor/focusManager', 'editor/styles', 'editor/zIndexManager', 'editor/clipboard', 'editor/enterKey', 'editor/htmlDataProcessor', 'editor/selectionFix', 'editor/plugin-meta']});

@@ -29,6 +29,6 @@ KISSY.add('menu/check-menuitem-render', function (S, MenuItemRender, ContentRend
     requires: [
         './menuitem-render',
         'component/extension/content-render',
-        './check-menuitem-tpl'
+        './check-menuitem-xtpl'
     ]
 });

@@ -386,4 +386,4 @@ KISSY.add("overlay/dialog-render", function(S, OverlayRender, DialogTpl) {
   return visit3_79_1(footer && footer.html());
 }}});
 }, {
-  requires: ['./overlay-render', './dialog-tpl', './close-tpl']});
+  requires: ['./overlay-render', './dialog-xtpl', './close-xtpl']});

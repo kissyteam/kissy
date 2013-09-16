@@ -240,11 +240,11 @@ if (! _$jscoverage['/preview.js']) {
   _$jscoverage['/preview.js'].lineData[25] = 0;
   _$jscoverage['/preview.js'].lineData[26] = 0;
   _$jscoverage['/preview.js'].lineData[28] = 0;
-  _$jscoverage['/preview.js'].lineData[46] = 0;
   _$jscoverage['/preview.js'].lineData[47] = 0;
   _$jscoverage['/preview.js'].lineData[48] = 0;
-  _$jscoverage['/preview.js'].lineData[50] = 0;
-  _$jscoverage['/preview.js'].lineData[57] = 0;
+  _$jscoverage['/preview.js'].lineData[49] = 0;
+  _$jscoverage['/preview.js'].lineData[51] = 0;
+  _$jscoverage['/preview.js'].lineData[58] = 0;
 }
 if (! _$jscoverage['/preview.js'].functionData) {
   _$jscoverage['/preview.js'].functionData = [];
@@ -288,17 +288,18 @@ KISSY.add("editor/plugin/preview", function(S) {
   iLeft = 80;
 }
   _$jscoverage['/preview.js'].lineData[28]++;
-  var sHTML = editor.getDocHtml().replace(/\${title}/, "\u9884\u89c8"), sOpenUrl = '', oWindow = win.open(sOpenUrl, '', 'toolbar=yes,' + 'location=no,' + 'status=yes,' + 'menubar=yes,' + 'scrollbars=yes,' + 'resizable=yes,' + 'width=' + iWidth + ',height=' + iHeight + ',left=' + iLeft), winDoc = oWindow.document;
-  _$jscoverage['/preview.js'].lineData[46]++;
-  winDoc.open();
+  var sHTML = S.substitute(editor.getDocHtml(), {
+  title: '\u9884\u89c8'}), sOpenUrl = '', oWindow = win.open(sOpenUrl, '', 'toolbar=yes,' + 'location=no,' + 'status=yes,' + 'menubar=yes,' + 'scrollbars=yes,' + 'resizable=yes,' + 'width=' + iWidth + ',height=' + iHeight + ',left=' + iLeft), winDoc = oWindow.document;
   _$jscoverage['/preview.js'].lineData[47]++;
-  winDoc.write(sHTML);
+  winDoc.open();
   _$jscoverage['/preview.js'].lineData[48]++;
+  winDoc.write(sHTML);
+  _$jscoverage['/preview.js'].lineData[49]++;
   winDoc.close();
-  _$jscoverage['/preview.js'].lineData[50]++;
+  _$jscoverage['/preview.js'].lineData[51]++;
   oWindow.focus();
 }}});
 }});
-  _$jscoverage['/preview.js'].lineData[57]++;
+  _$jscoverage['/preview.js'].lineData[58]++;
   return Preview;
 });

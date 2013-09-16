@@ -181,50 +181,56 @@
             return mods;
         },
 
-        attachModsRecursively: function (modNames, runtime, stack, errorList) {
+        attachModsRecursively: function (modNames, runtime, stack, errorList, cache) {
+            // for debug. prevent circular dependency
             stack = stack || [];
+            // for efficiency. avoid duplicate non-attach check
+            cache = cache || {};
             var i,
                 s = 1,
                 l = modNames.length,
                 stackDepth = stack.length;
             for (i = 0; i < l; i++) {
-                s = Utils.attachModRecursively(modNames[i], runtime, stack, errorList) && s;
+                s = s && Utils.attachModRecursively(modNames[i], runtime, stack, errorList, cache);
                 stack.length = stackDepth;
             }
             return s;
         },
 
-        attachModRecursively: function (modName, runtime, stack, errorList) {
+        attachModRecursively: function (modName, runtime, stack, errorList, cache) {
             var mods = runtime.Env.mods,
                 status,
                 m = mods[modName];
+            if (modName in cache) {
+                return cache[modName];
+            }
             if (!m) {
-                return 0;
+                return cache[modName] = 0;
             }
             status = m.status;
             if (status == ATTACHED) {
-                return 1;
+                return cache[modName] = 1;
             }
             if (status == ERROR) {
                 errorList.push(m);
             }
             if (status != LOADED) {
-                return 0;
+                return cache[modName] = 0;
             }
             if ('@DEBUG@') {
                 if (S.inArray(modName, stack)) {
                     stack.push(modName);
                     S.error('find cyclic dependency between mods: ' + stack);
-                    return 0;
+                    return cache[modName] = 0;
                 }
                 stack.push(modName);
             }
             if (Utils.attachModsRecursively(m.getNormalizedRequires(),
-                runtime, stack, errorList)) {
+                runtime, stack, errorList, cache)) {
                 Utils.attachMod(runtime, m);
-                return 1;
+                return cache[modName] = 1;
             }
-            return 0;
+            return cache[modName] = 0;
         },
 
         /**

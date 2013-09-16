@@ -867,7 +867,12 @@ KISSY.add("component/control", function (S, Node, ComponentProcess, Manager, Ren
 
     return Control;
 }, {
-    requires: ['node', './control/process', 'component/manager', './control/render']
+    requires: [
+        'node',
+        './control/process',
+        'component/manager',
+        './control/render'
+    ]
 });
 /*
 

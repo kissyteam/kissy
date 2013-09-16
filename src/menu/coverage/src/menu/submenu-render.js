@@ -272,4 +272,4 @@ KISSY.add("menu/submenu-render", function(S, SubMenuTpl, MenuItemRender, Content
   contentTpl: {
   value: SubMenuTpl}}});
 }, {
-  requires: ['./submenu-tpl', './menuitem-render', 'component/extension/content-render']});
+  requires: ['./submenu-xtpl', './menuitem-render', 'component/extension/content-render']});

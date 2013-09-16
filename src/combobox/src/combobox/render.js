@@ -56,5 +56,5 @@ KISSY.add("combobox/render", function (S, Control, ComboboxTpl) {
 
     return ComboboxRender;
 }, {
-    requires: ['component/control', './combobox-tpl']
+    requires: ['component/control', './combobox-xtpl']
 });

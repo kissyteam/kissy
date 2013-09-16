@@ -229,7 +229,7 @@ if (! this._$jscoverage) {
 if (! _$jscoverage['/editor/iframe-content-tpl.js']) {
   _$jscoverage['/editor/iframe-content-tpl.js'] = {};
   _$jscoverage['/editor/iframe-content-tpl.js'].lineData = [];
-  _$jscoverage['/editor/iframe-content-tpl.js'].lineData[4] = 0;
+  _$jscoverage['/editor/iframe-content-tpl.js'].lineData[3] = 0;
 }
 if (! _$jscoverage['/editor/iframe-content-tpl.js'].functionData) {
   _$jscoverage['/editor/iframe-content-tpl.js'].functionData = [];
@@ -237,5 +237,5 @@ if (! _$jscoverage['/editor/iframe-content-tpl.js'].functionData) {
 if (! _$jscoverage['/editor/iframe-content-tpl.js'].branchData) {
   _$jscoverage['/editor/iframe-content-tpl.js'].branchData = {};
 }
-_$jscoverage['/editor/iframe-content-tpl.js'].lineData[4]++;
-KISSY.add('editor/iframe-content-tpl', '<!doctype html>\n<html>\n<head>{doctype} \n    <title>{title}</title> \n    <style> \n    {style}\n    </style> \n    {links} \n    </head> \n<body class="ks-editor">\n{data} \n{script} \n</body> \n</html>');
+_$jscoverage['/editor/iframe-content-tpl.js'].lineData[3]++;
+KISSY.add('editor/iframe-content-tpl', '<!doctype html>\n<html>\n<head>{doctype}\n    <title>{title}</title>\n    {style}\n    {links}\n    </head> \n<body class="ks-editor">\n{data}\n{script}\n</body> \n</html>');

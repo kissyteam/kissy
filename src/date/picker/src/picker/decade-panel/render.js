@@ -68,6 +68,6 @@ KISSY.add('date/picker/decade-panel/render', function (S, Control, DateFormat, M
 }, {
     requires: ['component/control',
         'date/format',
-        './decades-tpl',
-        './decade-panel-tpl']
+        './decades-xtpl',
+        './decade-panel-xtpl']
 });

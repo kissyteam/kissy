@@ -3,7 +3,7 @@
  * @author yiminghe@gmail.com
  * @ignore
  */
-KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime,undefined) {
+KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime, undefined) {
     parser.yy = ast;
 
     var doubleReg = /\\*"/g,
@@ -60,7 +60,6 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime,undef
             source.push('var buffer = ""' + (global ? ',' : ';'));
             if (global) {
                 source.push('config = this.config,' +
-                    'escapeHtml = S.escapeHtml,' +
                     // current xtemplate engine
                     'engine = this, ' +
                     'utils = config.utils;');
@@ -74,7 +73,7 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime,undef
                 }
 
                 if (natives) {
-                    source.push('var ' + natives.slice(0, natives.length - 1));
+                    source.push('var ' + natives.slice(0, natives.length - 1) + ';');
                 }
             }
             if (statements) {

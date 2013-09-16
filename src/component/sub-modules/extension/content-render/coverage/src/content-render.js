@@ -350,4 +350,4 @@ KISSY.add('component/extension/content-render', function(S, ContentTpl) {
   _$jscoverage['/content-render.js'].lineData[65]++;
   return ContentRender;
 }, {
-  requires: ['./content-render/content-tpl']});
+  requires: ['./content-render/content-xtpl']});

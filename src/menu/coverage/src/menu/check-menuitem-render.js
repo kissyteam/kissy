@@ -275,4 +275,4 @@ KISSY.add('menu/check-menuitem-render', function(S, MenuItemRender, ContentRende
   contentTpl: {
   value: CheckMenuItemTpl}}});
 }, {
-  requires: ['./menuitem-render', 'component/extension/content-render', './check-menuitem-tpl']});
+  requires: ['./menuitem-render', 'component/extension/content-render', './check-menuitem-xtpl']});

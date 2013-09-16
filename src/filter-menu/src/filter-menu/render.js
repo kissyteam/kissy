@@ -45,5 +45,5 @@ KISSY.add("filter-menu/render", function (S, Node, Menu, FilterMenuTpl, ContentR
     });
 
 }, {
-    requires: ['node', 'menu', './render-tpl', 'component/extension/content-render']
+    requires: ['node', 'menu', './render-xtpl', 'component/extension/content-render']
 });

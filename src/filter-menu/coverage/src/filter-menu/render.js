@@ -294,4 +294,4 @@ KISSY.add("filter-menu/render", function(S, Node, Menu, FilterMenuTpl, ContentRe
   return el.one("." + this.getBaseCssClass('input'));
 }}});
 }, {
-  requires: ['node', 'menu', './render-tpl', 'component/extension/content-render']});
+  requires: ['node', 'menu', './render-xtpl', 'component/extension/content-render']});

@@ -40,6 +40,11 @@
 
 <script src="dev.js"></script>
 <script>
+    KISSY.config('logger',{
+       includes:[{
+           logger:/^s\/editor/
+       }]
+    });
     window.EDITOR_CFG = {
         render: '#container',
         width: '900px',

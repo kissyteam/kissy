@@ -1,0 +1,27 @@
+<div class="{{getBaseCssClasses 'header'}}">
+    <a id="ks-date-picker-decade-panel-previous-century-btn-{{id}}"
+       class="{{getBaseCssClasses 'prev-century-btn'}}"
+       href="#"
+       role="button"
+       title="{{previousCenturyLabel}}"
+       hidefocus="on">
+    </a>
+    <div class="{{getBaseCssClasses 'century'}}"
+         id="ks-date-picker-decade-panel-century-{{id}}">
+                {{startYear}}-{{endYear}}
+    </div>
+    <a id="ks-date-picker-decade-panel-next-century-btn-{{id}}"
+       class="{{getBaseCssClasses 'next-century-btn'}}"
+       href="#"
+       role="button"
+       title="{{nextCenturyLabel}}"
+       hidefocus="on">
+    </a>
+</div>
+<div class="{{getBaseCssClasses 'body'}}">
+    <table class="{{getBaseCssClasses 'table'}}" cellspacing="0" role="grid">
+        <tbody id="ks-date-picker-decade-panel-tbody-{{id}}">
+        {{{include "date/picker/decade-panel/decades-xtpl"}}}
+        </tbody>
+    </table>
+</div>

@@ -291,4 +291,4 @@ KISSY.add("menubutton/render", function(S, Button, MenuButtonTpl, ContentRenderE
   contentTpl: {
   value: MenuButtonTpl}}});
 }, {
-  requires: ['button', './menubutton-tpl', 'component/extension/content-render']});
+  requires: ['button', './menubutton-xtpl', 'component/extension/content-render']});

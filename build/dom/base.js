@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 11 14:15
+build time: Sep 16 18:07
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -988,8 +988,8 @@ KISSY.add('dom/base/create', function (S, Dom, undefined) {
     var doc = S.Env.host.document,
         NodeType = Dom.NodeType,
         UA = S.UA,
-        logger= S.getLogger('s/dom'),
-        ie = UA['ie'],
+        logger = S.getLogger('s/dom'),
+        ie = document.documentMode || UA['ie'],
         DIV = 'div',
         PARENT_NODE = 'parentNode',
         DEFAULT_DIV = doc && doc.createElement(DIV),
@@ -997,7 +997,8 @@ KISSY.add('dom/base/create', function (S, Dom, undefined) {
         RE_TAG = /<([\w:]+)/,
         R_LEADING_WHITESPACE = /^\s+/,
         R_TAIL_WHITESPACE = /\s+$/,
-        lostLeadingTailWhitespace = ie && ie < 9,
+        oldIE = !!(ie && ie < 9),
+        lostLeadingTailWhitespace = oldIE,
         R_HTML = /<|&#?\w+;/,
         supportOuterHTML = doc && 'outerHTML' in doc.documentElement,
         RE_SIMPLE_TAG = /^<(\w+)\s*\/?>(?:<\/\1>)?$/;
@@ -1030,6 +1031,39 @@ KISSY.add('dom/base/create', function (S, Dom, undefined) {
         // html 为 <style></style> 时不行，必须有其他元素？
         frag.innerHTML = 'm<div>' + html + '<' + '/div>';
         return frag.lastChild;
+    }
+
+    function _empty(node) {
+        try {
+            // fast path
+            node.innerHTML = "";
+            return;
+        } catch (e) {
+            // innerHTML is readOnly (e.g. TABLE (sub)elements in quirks mode)
+            // Fall through (saves bytes)
+        }
+        // SVG/strict elements don't support innerHTML/canHaveChildren, and OBJECT/APPLET elements in quirks node have canHaveChildren=false
+        for (var c; c = node.lastChild;) { // intentional assignment
+            _destroy(c, node); // destroy is better than removeChild so TABLE subelements are removed in proper order
+        }
+    }
+
+    function _destroy(node, parent) {
+        if (parent) {
+            // removeNode(false) doesn't leak in IE 6+, but removeChild() and removeNode(true) are known to leak under IE 8- while 9+ is TBD.
+            // In IE quirks mode, PARAM nodes as children of OBJECT/APPLET nodes have a removeNode method that does nothing and
+            // the parent node has canHaveChildren=false even though removeChild correctly removes the PARAM children.
+            // In IE, SVG/strict nodes don't have a removeNode method nor a canHaveChildren boolean.
+            if (oldIE && parent.canHaveChildren && "removeNode" in node) {
+                // in IE quirks, node.canHaveChildren can be false but firstChild can be non-null (OBJECT/APPLET)
+                if (node.firstChild) {
+                    _empty(node);
+                }
+                node.removeNode(false)
+            } else {
+                parent.removeChild(node);
+            }
+        }
     }
 
     S.mix(Dom,
@@ -1260,7 +1294,6 @@ KISSY.add('dom/base/create', function (S, Dom, undefined) {
                 var el,
                     els = Dom.query(selector),
                     all,
-                    parent,
                     DOMEvent = S.require('event/dom'),
                     i;
                 for (i = els.length - 1; i >= 0; i--) {
@@ -1273,16 +1306,12 @@ KISSY.add('dom/base/create', function (S, Dom, undefined) {
                             DOMEvent.detach(all);
                         }
                     }
-                    if (parent = el.parentNode) {
-                        // https://github.com/kissyteam/kissy/issues/463
-                        // removeNode(false) doesn't leak in IE 6+, but removeChild() and removeNode(true) are known to leak under IE 8- while 9+ is TBD.
-                        // In IE quirks mode, PARAM nodes as children of OBJECT/APPLET nodes have a removeNode method that does nothing and
-                        // the parent node has canHaveChildren=false even though removeChild correctly removes the PARAM children.
-                        // In IE, SVG/strict nodes don't have a removeNode method nor a canHaveChildren boolean.
-                        UA.ie && parent.canHaveChildren && "removeNode" in el ?
-                            el.removeNode(false) :
-                            parent.removeChild(el);
-                    }
+                    // https://github.com/kissyteam/kissy/issues/463
+                    // removeNode(false) doesn't leak in IE 6+, but removeChild() and removeNode(true) are known to leak under IE 8- while 9+ is TBD.
+                    // In IE quirks mode, PARAM nodes as children of OBJECT/APPLET nodes have a removeNode method that does nothing and
+                    // the parent node has canHaveChildren=false even though removeChild correctly removes the PARAM children.
+                    // In IE, SVG/strict nodes don't have a removeNode method nor a canHaveChildren boolean.
+                    _destroy(el, el.parentNode);
                 }
             },
 

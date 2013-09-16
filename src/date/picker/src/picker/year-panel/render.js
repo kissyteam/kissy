@@ -81,6 +81,6 @@ KISSY.add('date/picker/year-panel/render', function (S, Control, DateFormat, Yea
 }, {
     requires: ['component/control',
         'date/format',
-        './years-tpl',
-        './year-panel-tpl']
+        './years-xtpl',
+        './year-panel-xtpl']
 });

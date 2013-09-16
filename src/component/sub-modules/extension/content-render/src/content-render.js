@@ -64,5 +64,5 @@ KISSY.add('component/extension/content-render', function (S, ContentTpl) {
 
     return ContentRender;
 }, {
-    requires: ['./content-render/content-tpl']
+    requires: ['./content-render/content-xtpl']
 });

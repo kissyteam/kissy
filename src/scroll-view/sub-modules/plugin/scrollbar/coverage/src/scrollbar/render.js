@@ -468,4 +468,4 @@ KISSY.add('scroll-view/plugin/scrollbar/render', function(S, Control, ScrollBarT
   contentTpl: {
   value: ScrollBarTpl}}});
 }, {
-  requires: ['component/control', './scrollbar-tpl']});
+  requires: ['component/control', './scrollbar-xtpl']});

@@ -44,6 +44,6 @@ KISSY.add("menubutton/render", function (S, Button,
     });
 }, {
     requires: ['button',
-        './menubutton-tpl',
+        './menubutton-xtpl',
         'component/extension/content-render']
 });

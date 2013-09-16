@@ -48,7 +48,6 @@
             ",smiley" +
             ",flash" +
             ",xiami-music" +
-            ",multiple-upload" +
             ",video" +
             ",drag-upload").split(",");
 
@@ -138,22 +137,6 @@
                     ],
                     width: "125px"
                 }
-            },
-            "multiple-upload": {
-                serverUrl: "http://localhost/kissy_git/kissy/src/editor/demo/upload.php",
-                serverParams: {
-                    waterMark: function () {
-                        return S.one("#ke_img_up_watermark_2")[0].checked;
-                    }
-                },
-                //previewSuffix:"_60x60",
-                "previewWidth": "80px",
-                sizeLimit: 1000, //k,, numberLimit:15,
-                extraHTML: "<p style='margin-top:10px;'>" +
-                    "<input type='checkbox' " +
-                    "style='vertical-align:middle;margin:0 5px;' " +
-                    "id='ke_img_up_watermark_2'>" +
-                    "<span style='vertical-align:middle;'>图片加水印，防止别人盗用</span></p>"
             },
             "video": {
                 urlCfg: [

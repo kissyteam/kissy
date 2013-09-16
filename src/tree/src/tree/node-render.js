@@ -165,5 +165,5 @@ KISSY.add("tree/node-render", function (S, Node, Container, TreeNodeTpl, Content
     });
 
 }, {
-    requires: ['node', 'component/container', './node-tpl', 'component/extension/content-render']
+    requires: ['node', 'component/container', './node-xtpl', 'component/extension/content-render']
 });

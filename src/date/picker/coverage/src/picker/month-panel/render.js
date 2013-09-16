@@ -276,11 +276,11 @@ if (! _$jscoverage['/picker/month-panel/render.js'].branchData) {
   _$jscoverage['/picker/month-panel/render.js'].branchData['20'][1] = new BranchData();
 }
 _$jscoverage['/picker/month-panel/render.js'].branchData['20'][1].init(59, 5, 'j < 4');
-function visit11_20_1(result) {
+function visit17_20_1(result) {
   _$jscoverage['/picker/month-panel/render.js'].branchData['20'][1].ranCondition(result);
   return result;
 }_$jscoverage['/picker/month-panel/render.js'].branchData['18'][1].init(473, 5, 'i < 3');
-function visit10_18_1(result) {
+function visit16_18_1(result) {
   _$jscoverage['/picker/month-panel/render.js'].branchData['18'][1].ranCondition(result);
   return result;
 }_$jscoverage['/picker/month-panel/render.js'].lineData[6]++;
@@ -310,11 +310,11 @@ KISSY.add('date/picker/month-panel/render', function(S, Control, DateFormat, Mon
     _$jscoverage['/picker/month-panel/render.js'].lineData[17]++;
     var index = 0;
     _$jscoverage['/picker/month-panel/render.js'].lineData[18]++;
-    for (var i = 0; visit10_18_1(i < 3); i++) {
+    for (var i = 0; visit16_18_1(i < 3); i++) {
       _$jscoverage['/picker/month-panel/render.js'].lineData[19]++;
       months[i] = [];
       _$jscoverage['/picker/month-panel/render.js'].lineData[20]++;
-      for (var j = 0; visit11_20_1(j < 4); j++) {
+      for (var j = 0; visit17_20_1(j < 4); j++) {
         _$jscoverage['/picker/month-panel/render.js'].lineData[21]++;
         current.setMonth(index);
         _$jscoverage['/picker/month-panel/render.js'].lineData[22]++;
@@ -374,4 +374,4 @@ KISSY.add('date/picker/month-panel/render', function(S, Control, DateFormat, Mon
   contentTpl: {
   value: MonthPanelTpl}}});
 }, {
-  requires: ['component/control', 'date/format', './months-tpl', './month-panel-tpl']});
+  requires: ['component/control', 'date/format', './months-xtpl', './month-panel-xtpl']});

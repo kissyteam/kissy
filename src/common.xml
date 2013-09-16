@@ -27,8 +27,6 @@
         <format property="timestamp.isoformat" pattern="yyyyMMddHHmmss" locale="en"/>
     </tstamp>
 
-    <taskdef name="tpl2mod" classname="com.taobao.f2e.task.Tpl2Module" classpath="${module-compiler}"/>
-
     <target name="check-src">
         <condition property="component.src.dir.exists">
             <available file="${component.src.dir}" type="dir"/>
@@ -39,9 +37,14 @@
         <ac:if>
             <ac:isset property="component.src.dir.exists"/>
             <ac:then>
-                <tpl2mod>
-                    <fileset dir="${component.src.dir}" includes="**/*.tpl.html"/>
-                </tpl2mod>
+                <exec executable="node">
+                    <arg value="${bin.dir}/xtemplate"/>
+                    <arg value="-n"/>
+                    <arg value="${component.name}"/>
+                    <arg value="-p"/>
+                    <arg value="${component.src.dir}"/>
+                    <arg value="-k"/>
+                </exec>
             </ac:then>
         </ac:if>
     </target>
@@ -108,6 +111,7 @@
         <ac:if>
             <ac:isset property="component.src.dir.exists"/>
             <ac:then>
+                <delete dir="${component.coverage.dir}"/>
                 <exec executable="java">
                     <!--use exec to change file encoding-->
                     <arg value="-Dfile.encoding=${charset}"/>
@@ -142,11 +146,12 @@
 
     <!-- 压缩 js -->
     <target name="compress-js">
-        <replaceregexp match="^(\s*(S|KISSY|logger)\.(log|error|info|warn|debug))|(.*logger\s*=\s*(S|KISSY)\.getLogger)\s*\(.+$"
-                       replace=""
-                       flags="g"
-                       byline="true"
-                       encoding="${charset}">
+        <replaceregexp
+                match="^(\s*(S|KISSY|logger)\.(log|error|info|warn|debug))|(.*logger\s*=\s*(S|KISSY)\.getLogger)\s*\(.+$"
+                replace=""
+                flags="g"
+                byline="true"
+                encoding="${charset}">
             <fileset dir="${component.build.dir}" includes="**/*.js"/>
         </replaceregexp>
 

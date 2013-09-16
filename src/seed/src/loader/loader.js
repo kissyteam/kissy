@@ -6,6 +6,7 @@
 (function (S, undefined) {
     var Loader = S.Loader,
         Env = S.Env,
+        logger = S.getLogger('s/loader'),
         Utils = Loader.Utils,
         ComboLoader = Loader.ComboLoader;
 
@@ -85,6 +86,7 @@
                 loader,
                 error,
                 sync,
+                tryCount = 0,
                 waitingModules = new WaitingModules(loadReady);
 
             if (S.isPlainObject(success)) {
@@ -102,9 +104,12 @@
             normalizedModNames = Utils.unalias(S, modNames);
 
             function loadReady() {
+                ++tryCount;
                 var errorList = [],
+                    start = S.now(),
                     ret;
                 ret = Utils.attachModsRecursively(normalizedModNames, S, undefined, errorList);
+                logger.debug(tryCount + ' check duration ' + (S.now() - start));
                 if (ret) {
                     if (success) {
                         if (sync) {
@@ -127,6 +132,7 @@
                         }
                     }
                 } else {
+                    logger.debug(tryCount + ' reload ' + modNames);
                     waitingModules.fn = loadReady;
                     loader.use(normalizedModNames);
                 }

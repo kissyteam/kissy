@@ -283,5 +283,5 @@ KISSY.add('date/picker/render', function (S, Node, Control, DateTimeFormat, Pick
         'node',
         'component/control',
         'date/format',
-        './picker-tpl']
+        './picker-xtpl']
 });

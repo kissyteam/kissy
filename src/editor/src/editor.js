@@ -714,7 +714,6 @@ KISSY.add('editor', function (S, Node, iframeContentTpl, Editor, Utils, focusMan
      必须等待iframe内的脚本向父窗口通知
      */
     Editor["_initIframe"] = function (id) {
-
         var self = focusManager.getInstance(id),
             $doc = self.get('document'),
             doc = $doc[0],
@@ -1045,16 +1044,16 @@ KISSY.add('editor', function (S, Node, iframeContentTpl, Editor, Utils, focusMan
                 href: customLink[i]
             });
         }
-        return S.substitute(iframeContentTpl, {
+        return S.substitute(iframeContentTpl,{
             // kissy-editor #12
             // IE8 doesn't support carets behind images(empty content after image's block)
             // setting ie7 compatible mode would force IE8+ to run in IE7 compat mode.
             doctype: document.documentMode === 8 ?
                 '<meta http-equiv="X-UA-Compatible" content="IE=7" />' :
                 '',
-            title: '${title}',
+            title: '{title}',
             links: links,
-            style: customStyle,
+            style: '<style>' + customStyle + '</style>',
             // firefox 必须里面有东西，否则编辑前不能删除!
             data: data || '',
             script: id ?
