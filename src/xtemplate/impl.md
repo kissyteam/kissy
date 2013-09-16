@@ -9,7 +9,6 @@
 本文持续更新地址：
 [xtemplate at github](https://github.com/kissyteam/kissy/blob/master/src/xtemplate/impl.md).
 [xtemplate at docs.kissyui.com](http://docs.kissyui.com/docs/html/tutorials/kissy/component/xtemplate/impl.html).
-DSL 也是初学，敬请勘误.
 
 
 
@@ -17,6 +16,11 @@ DSL 也是初学，敬请勘误.
 
      npm install -g kissy
 
+通常测试版不会发送到 npm，这时推荐下载指定的 git 版本到本地目录安装，例如下载 [主干](https://github.com/kissyteam/kissy/archive/master.zip) 到 d:/code
+  
+    cd d:/code
+    npm link
+  	
 
 # xtemplate 示例代码
 
@@ -152,7 +156,7 @@ kison 支持在每个语法规则项中添加动作函数，通过工具在识�
 
 经过上一步得到解析函数后，调用
 
-    parse(tempalteCode)
+    parse(templateCode)
 
 即得到一棵抽象语法树，例如 xtemplate 的一段代码：
 
@@ -193,13 +197,13 @@ kison 支持在每个语法规则项中添加动作函数，通过工具在识�
 xtemplate 通过 **kissy-xtemplate** 命令支持将模板代码离线编译为模板函数模块，这样客户端可以直接require该模块，
 省去了客户端编译过程，同时开发中直接面对 html 类似的模板代码，省去了字符串嵌入模板的繁琐。
 
-例如 t-tpl.html
+例如 t.xtpl.html
 
     {{ offline }} compile
 
 运行
 
-    kissy-xtemplate -t t-tpl.html -m tests/t -w
+    kissy-xtemplate -n tests -p ./ -w
 
 可得到 t.js
 
