@@ -27,7 +27,7 @@ KISSY.add(function (S, Dom, Event) {
         });
 
         it('can get fire return value', function () {
-            var n = Dom.create("<div/>"), ret;
+            var n = Dom.create("<div/>");
 
             Event.on(n, 'xx', function () {
                 return 1;
@@ -64,6 +64,46 @@ KISSY.add(function (S, Dom, Event) {
             });
 
             expect(Event.fire(n, 'xx')).toBe(null);
+        });
+
+        it('can get fireHandler return value', function () {
+            var n = Dom.create("<div/>");
+
+            Event.on(n, 'xx', function () {
+                return 1;
+            });
+
+            Event.on(n, 'xx', function () {
+            });
+
+            expect(Event.fireHandler(n, 'xx')).toBe(1);
+
+            Event.detach(n);
+
+            Event.on(n, 'xx', function () {
+                return false;
+            });
+
+            Event.on(n, 'xx', function () {
+                return 1;
+            });
+
+            Event.on(n, 'xx', function () {
+            });
+
+            expect(Event.fireHandler(n, 'xx')).toBe(false);
+
+            Event.detach(n);
+
+            Event.on(n, 'xx', function () {
+                return 1;
+            });
+
+            Event.on(n, 'xx', function () {
+                return null;
+            });
+
+            expect(Event.fireHandler(n, 'xx')).toBe(null);
         });
 
         it('bubble event remove element/fn in the middle', function () {

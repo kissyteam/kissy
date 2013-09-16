@@ -61,7 +61,6 @@ KISSY.add(function(S, Node) {
                     });
                 });
 
-
                 it('should detach properly', function() {
                     var ret;
 
@@ -83,6 +82,86 @@ KISSY.add(function(S, Node) {
                     runs(function() {
                         expect(ret).toBeUndefined();
                     });
+                });
+
+                it('can get fire return value', function () {
+                    var n = $("<div/>");
+
+                    n.on('xx', function () {
+                        return 1;
+                    });
+
+                    n.on('xx', function () {
+                    });
+
+                    expect(n.fire('xx')).toBe(1);
+
+                    n.detach();
+
+                    n.on('xx', function () {
+                        return false;
+                    });
+
+                    n.on('xx', function () {
+                        return 1;
+                    });
+
+                    n.on('xx', function () {
+                    });
+
+                    expect(n.fire('xx')).toBe(false);
+
+                    n.detach();
+
+                    n.on('xx', function () {
+                        return 1;
+                    });
+
+                    n.on('xx', function () {
+                        return null;
+                    });
+
+                    expect(n.fire( 'xx')).toBe(null);
+                });
+
+                it('can get fireHandler return value', function () {
+                    var n = $("<div/>");
+
+                    n.on('xx', function () {
+                        return 1;
+                    });
+
+                    n.on('xx', function () {
+                    });
+
+                    expect(n.fireHandler('xx')).toBe(1);
+
+                    n.detach();
+
+                    n.on('xx', function () {
+                        return false;
+                    });
+
+                    n.on('xx', function () {
+                        return 1;
+                    });
+
+                    n.on('xx', function () {
+                    });
+
+                    expect(n.fireHandler('xx')).toBe(false);
+
+                    n.detach();
+
+                    n.on('xx', function () {
+                        return 1;
+                    });
+
+                    n.on('xx', function () {
+                        return null;
+                    });
+
+                    expect(n.fireHandler( 'xx')).toBe(null);
                 });
             });
         }

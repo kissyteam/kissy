@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 16 15:17
+build time: Sep 16 18:46
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -395,13 +395,15 @@ KISSY.add('node/attach', function (S, Dom, Event, NodeList, undefined) {
             'data': 1
         },
     // Event 添加到 NP 上的方法
-        EVENT_INCLUDES = [
+        EVENT_INCLUDES_SELF = [
             'on',
             'detach',
-            'fire',
-            'fireHandler',
             'delegate',
             'undelegate'
+        ],
+        EVENT_INCLUDES_RET = [
+            'fire',
+            'fireHandler'
         ];
 
     NodeList.KeyCode = Event.KeyCode;
@@ -460,13 +462,22 @@ KISSY.add('node/attach', function (S, Dom, Event, NodeList, undefined) {
         };
     });
 
-    S.each(EVENT_INCLUDES, function (k) {
+    S.each(EVENT_INCLUDES_SELF, function (k) {
         NLP[k] = function () {
             var self = this,
                 args = makeArray(arguments);
             args.unshift(self);
             Event[k].apply(Event, args);
             return self;
+        }
+    });
+
+    S.each(EVENT_INCLUDES_RET, function (k) {
+        NLP[k] = function () {
+            var self = this,
+                args = makeArray(arguments);
+            args.unshift(self);
+            return Event[k].apply(Event, args);
         }
     });
 }, {
