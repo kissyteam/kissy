@@ -1033,11 +1033,11 @@ KISSY.add("xtemplate/compiler/parser", function() {
   _$jscoverage['/compiler/parser.js'].functionData[19]++;
   _$jscoverage['/compiler/parser.js'].lineData[272]++;
   this.popState();
-}, ['t']], [8, /^\(/, 0, ['t']], [9, /^\)/, 0, ['t']], [10, /^\|\|/, 0, ['t']], [11, /^&&/, 0, ['t']], [12, /^===/, 0, ['t']], [13, /^!==/, 0, ['t']], [15, /^>=/, 0, ['t']], [17, /^<=/, 0, ['t']], [14, /^>/, 0, ['t']], [16, /^</, 0, ['t']], [18, /^\+/, 0, ['t']], [19, /^-/, 0, ['t']], [20, /^\*/, 0, ['t']], [21, /^\//, 0, ['t']], [22, /^%/, 0, ['t']], [23, /^!/, 0, ['t']], [24, /^"(\\"|[^"])*"/, function() {
+}, ['t']], [8, /^\(/, 0, ['t']], [9, /^\)/, 0, ['t']], [10, /^\|\|/, 0, ['t']], [11, /^&&/, 0, ['t']], [12, /^===/, 0, ['t']], [13, /^!==/, 0, ['t']], [15, /^>=/, 0, ['t']], [17, /^<=/, 0, ['t']], [14, /^>/, 0, ['t']], [16, /^</, 0, ['t']], [18, /^\+/, 0, ['t']], [19, /^-/, 0, ['t']], [20, /^\*/, 0, ['t']], [21, /^\//, 0, ['t']], [22, /^%/, 0, ['t']], [23, /^!/, 0, ['t']], [24, /^"(\\[\s\S]|[^"])*"/, function() {
   _$jscoverage['/compiler/parser.js'].functionData[20]++;
   _$jscoverage['/compiler/parser.js'].lineData[291]++;
   this.text = this.text.slice(1, -1).replace(/\\"/g, '"');
-}, ['t']], [24, /^'(\\'|[^'])*'/, function() {
+}, ['t']], [24, /^'(\\[\s\S]|[^'])*'/, function() {
   _$jscoverage['/compiler/parser.js'].functionData[21]++;
   _$jscoverage['/compiler/parser.js'].lineData[294]++;
   this.text = this.text.slice(1, -1).replace(/\\'/g, "'");

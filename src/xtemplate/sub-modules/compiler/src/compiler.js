@@ -3,7 +3,7 @@
  * @author yiminghe@gmail.com
  * @ignore
  */
-KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
+KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime,undefined) {
     parser.yy = ast;
 
     var doubleReg = /\\*"/g,
@@ -59,9 +59,8 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
             }
             source.push('var buffer = ""' + (global ? ',' : ';'));
             if (global) {
-                source.push('S = KISSY,' +
-                    'config=this.config,' +
-                    'escapeHtml = config.escapeHtml && S.escapeHtml,' +
+                source.push('config = this.config,' +
+                    'escapeHtml = S.escapeHtml,' +
                     // current xtemplate engine
                     'engine = this, ' +
                     'utils = config.utils;');
@@ -89,13 +88,13 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
                 return source;
             } else {
                 return {
-                    params: ['scopes', 'undefined'],
+                    params: ['scopes', 'S', 'undefined'],
                     source: source
                 };
             }
         },
 
-        genId: function (idNode, tplNode) {
+        genId: function (idNode, tplNode, preserveUndefined) {
             var source = [],
                 depth = idNode.depth,
                 idParts = idNode.parts,
@@ -120,7 +119,9 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
                 ' = getPropertyOrRunCommandUtil(engine,scopes,' +
                 (configName || '{}') + ',"' +
                 idString +
-                '",' + depth + ',' + idNode.lineNumber + ');');
+                '",' + depth + ',' + idNode.lineNumber +
+                ',' + (tplNode && tplNode.escaped) +
+                ',' + preserveUndefined + ');');
 
             return [idName, source];
         },
@@ -280,8 +281,9 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
             return ['', [e.value]];
         },
 
-        'id': function (e) {
-            return this.genId(e);
+        'id': function (e, topLevel) {
+            // topLevel: {{n}}
+            return this.genId(e, undefined, !topLevel);
         },
 
         'block': function (block) {
@@ -343,10 +345,9 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
 
         'tpl': function (tplNode) {
             var source = [],
-                escaped = tplNode.escaped,
                 genIdCode = this.genId(tplNode.path, tplNode);
             pushToArray(source, genIdCode[1]);
-            outputVariable(genIdCode[0], escaped, source);
+            source.push('buffer += ' + genIdCode[0] + ';');
             return source;
         },
 
@@ -354,7 +355,7 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
             var source = [],
                 escaped = e.escaped,
                 expressionOrVariable;
-            var code = this[e.expression.type](e.expression);
+            var code = this[e.expression.type](e.expression, 1);
             if (code[0]) {
                 pushToArray(source, code[1]);
                 expressionOrVariable = code[0];
@@ -362,7 +363,7 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
                 pushToArray(source, code[1].slice(0, -1));
                 expressionOrVariable = lastOfArray(code[1]);
             }
-            outputVariable(expressionOrVariable, escaped, source);
+            source.push('buffer += getExpressionUtil(' + expressionOrVariable + ',' + escaped + ');');
             return source;
         },
 
@@ -397,17 +398,6 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
             return idString;
         }
     };
-
-    function outputVariable(expressionOrVariable, escaped, source) {
-        var tmp = guid('tmp');
-        // in case it is expression, avoid duplicate computation
-        source.push('var ' + tmp + ' = ' + expressionOrVariable + ';');
-        // when render undefined => ''
-        source.push(tmp + ' = ' +
-            '(' + tmp + ' === undefined ? "" : ' + tmp + ')' + ' + "";');
-        source.push('buffer += ' + (escaped ? ('escapeHtml ? ' +
-            'escapeHtml(' + tmp + ') : ' + tmp) : tmp) + ';');
-    }
 
     var compiler;
 

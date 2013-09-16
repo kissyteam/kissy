@@ -287,10 +287,10 @@ KISSY.add("xtemplate/compiler/parser", function () {
             [21, /^\//, 0, ['t']],
             [22, /^%/, 0, ['t']],
             [23, /^!/, 0, ['t']],
-            [24, /^"(\\"|[^"])*"/, function () {
+            [24, /^"(\\[\s\S]|[^"])*"/, function () {
                 this.text = this.text.slice(1, -1).replace(/\\"/g, '"');
             }, ['t']],
-            [24, /^'(\\'|[^'])*'/, function () {
+            [24, /^'(\\[\s\S]|[^'])*'/, function () {
                 this.text = this.text.slice(1, -1).replace(/\\'/g, "'");
             }, ['t']],
             [25, /^true/, 0, ['t']],

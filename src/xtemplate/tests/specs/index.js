@@ -473,36 +473,16 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
                     expect(render).toBe('my  {{title}}oo');
                 });
 
-                describe('escapeHtml', function () {
-                    it('default to escapeHtml', function () {
-                        var tpl = 'my {{title}} is {{{title}}}';
+                it('escapeHtml works', function () {
+                    var tpl = 'my {{title}} is {{{title}}}';
 
-                        var data = {
-                            title: '<a>'
-                        };
+                    var data = {
+                        title: '<a>'
+                    };
 
-                        var render = new XTemplate(tpl).render(data);
+                    var render = new XTemplate(tpl).render(data);
 
-                        expect(render).toBe('my &lt;a&gt; is <a>');
-
-                    });
-
-                    it('can turn off default escapeHtml', function () {
-
-                        var tpl = 'my {{title}} is {{{title}}}';
-
-                        var data = {
-                            title: '<a>'
-                        };
-
-                        var render = new XTemplate(tpl, {
-                            escapeHtml: false
-                        }).render(data);
-
-                        expect(render).toBe('my <a> is <a>');
-
-                    });
-
+                    expect(render).toBe('my &lt;a&gt; is <a>');
                 });
 
                 it('support escape " in tpl', function () {
@@ -829,6 +809,10 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
             });
 
             describe('expression', function () {
+                it('support escapeHtml',function(){
+                    var tpl = '{{{"2<\\\\"+1}}} {{{"2<\\\\"+1}}}';
+                    expect(new XTemplate(tpl).render()).toBe('2<\\1 2<\\1');
+                });
 
                 it('differentiate negative number and minus', function () {
                     var tpl = '{{n-1}}';

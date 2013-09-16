@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 11 14:27
+build time: Sep 16 12:39
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -174,7 +174,9 @@ KISSY.add("xtemplate/runtime/commands", function (S) {
  * @author yiminghe@gmail.com
  * @ignore
  */
-KISSY.add('xtemplate/runtime', function (S, commands) {
+KISSY.add('xtemplate/runtime', function (S, commands, undefined) {
+    var escapeHtml = S.escapeHtml;
+
     function findCommand(commands, name) {
         var parts = name.split('.');
         var cmd = commands;
@@ -188,6 +190,51 @@ KISSY.add('xtemplate/runtime', function (S, commands) {
         return cmd;
     }
 
+    function getProperty(parts, scopes, depth) {
+        // this refer to current scope object
+        if (parts === '.') {
+            parts = 'this';
+        }
+        parts = parts.split('.');
+        var len = parts.length,
+            i,
+            j = depth || 0,
+            v,
+            p,
+            valid,
+            sl = scopes.length;
+        // root keyword for root scope
+        if (parts[0] == 'root') {
+            j = sl - 1;
+            parts.shift();
+            len--;
+        }
+        for (; j < sl; j++) {
+            v = scopes[j];
+            valid = 1;
+            for (i = 0; i < len; i++) {
+                p = parts[i];
+                if (p === 'this') {
+                    continue;
+                }
+                // may not be object at all
+                else if (typeof v != 'object' || !(p in v)) {
+                    valid = 0;
+                    break;
+                }
+                v = v[p];
+            }
+            if (valid) {
+                // support property function return value as property value
+                if (typeof v == 'function') {
+                    v = v.call(scopes[0]);
+                }
+                return [v];
+            }
+        }
+        return false;
+    }
+
     var utils = {
             'runBlockCommand': function (engine, scopes, options, name, line) {
                 var config = engine.config;
@@ -196,7 +243,7 @@ KISSY.add('xtemplate/runtime', function (S, commands) {
                 var command = findCommand(commands, name);
                 if (!command) {
                     if (!options.params && !options.hash) {
-                        var property = utils.getProperty(name, scopes);
+                        var property = getProperty(name, scopes);
                         if (property === false) {
                             logFn("can not find property: '" + name + "' at line " + line);
                             property = '';
@@ -222,10 +269,20 @@ KISSY.add('xtemplate/runtime', function (S, commands) {
                 } catch (e) {
                     S.error(e.message + ": '" + name + "' at line " + line);
                 }
+                if (ret === undefined) {
+                    ret = '';
+                }
                 return ret;
             },
 
-            'getPropertyOrRunCommand': function (engine, scopes, options, name, depth, line) {
+            'getExpression': function (exp,escaped) {
+                if(exp===undefined){
+                    exp='';
+                }
+                return escaped&&exp?escapeHtml(exp):exp;
+            },
+
+            'getPropertyOrRunCommand': function (engine, scopes, options, name, depth, line, escape, preserveUndefined) {
                 var id0;
                 var config = engine.config;
                 var commands = config.commands;
@@ -240,62 +297,21 @@ KISSY.add('xtemplate/runtime', function (S, commands) {
                     }
                 }
                 else {
-                    var tmp2 = utils.getProperty(name, scopes, depth);
+                    var tmp2 = getProperty(name, scopes, depth);
                     if (tmp2 === false) {
                         logFn("can not find property: '" +
                             name + "' at line " + line, "warn");
-                        // undefined for undefined property
-                        return undefined;
+                        // undefined for expression
+                        // {{n+2}}
+                        return preserveUndefined ? undefined : '';
                     } else {
                         id0 = tmp2[0];
                     }
                 }
-                return id0;
-            },
-
-            'getProperty': function (parts, scopes, depth) {
-                // this refer to current scope object
-                if (parts === '.') {
-                    parts = 'this';
+                if (!preserveUndefined && id0 === undefined) {
+                    id0 = '';
                 }
-                parts = parts.split('.');
-                var len = parts.length,
-                    i,
-                    j = depth || 0,
-                    v,
-                    p,
-                    valid,
-                    sl = scopes.length;
-                // root keyword for root scope
-                if (parts[0] == 'root') {
-                    j = sl - 1;
-                    parts.shift();
-                    len--;
-                }
-                for (; j < sl; j++) {
-                    v = scopes[j];
-                    valid = 1;
-                    for (i = 0; i < len; i++) {
-                        p = parts[i];
-                        if (p === 'this') {
-                            continue;
-                        }
-                        // may not be object at all
-                        else if (typeof v != 'object' || !(p in v)) {
-                            valid = 0;
-                            break;
-                        }
-                        v = v[p];
-                    }
-                    if (valid) {
-                        // support property function return value as property value
-                        if (typeof v == 'function') {
-                            v = v.call(scopes[0]);
-                        }
-                        return [v];
-                    }
-                }
-                return false;
+                return escape && id0 ? escapeHtml(id0) : id0;
             }
         },
 
@@ -324,14 +340,6 @@ KISSY.add('xtemplate/runtime', function (S, commands) {
              * @member KISSY.XTemplate.Runtime
              */
             name: 'unspecified',
-
-            /**
-             * {{}} default to escapeHtml
-             *
-             * @cfg {Boolean} escapeHtml
-             * @member KISSY.XTemplate.Runtime
-             */
-            escapeHtml: true,
 
             /**
              * tpl loader to load sub tpl by name
@@ -430,7 +438,7 @@ KISSY.add('xtemplate/runtime', function (S, commands) {
             if (!keepDataFormat) {
                 data = [data];
             }
-            return this.tpl(data);
+            return this.tpl(data, S);
         }
     };
 

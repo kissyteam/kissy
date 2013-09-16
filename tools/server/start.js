@@ -78,13 +78,13 @@ S.use('xtemplate/nodejs', function (S, XTemplateNodeJs) {
                 var $html = file_get_contents('print-template.html');
                 res.send(S.substitute($html, {
                     subtitle: $subtitle,
-                    body: fix_links(req, $body),
+                    body: fix_links($body),
                     canonical: $canonical
                 }));
             }
 
-            function print_index_page(req, res) {
-                res.send(fix_links(req, file_get_contents("index-template.html")));
+            function print_index_page(res) {
+                res.send(fix_links(file_get_contents("index-template.html")));
             }
 
             function jsonp_decode($jsonp) {
@@ -103,28 +103,23 @@ S.use('xtemplate/nodejs', function (S, XTemplateNodeJs) {
             // Turns #! links into ?print= links when in print mode.
             // <a href="#!/api/Ext.Element">  -->  <a href="?print=/api/Ext.Element">
             // <a href="#!/api/Ext.Element-cfg-id">  -->  <a href="?print=/api/Ext.Element#cfg-id">
-            function fix_links(req, $html) {
-                var query = req.query;
-                if ('print' in query || 'mobile' in query) {
-                    var $param = 'print' in query ? "print" : "mobile";
-                    return $html
-                        .replace(/<a href=(['"])#!?\/(api\/[^-'"]+)-([^'"]+)/g,
-                            '<a href=' + '$1?' + $param + '=/$2#$3')
-                        .replace(/<a href=(['"])#!?\/guide\/([^-'"]+)-section-([^'"]+)/g,
-                            '<a href=' + '$1?' + $param + '=/guide/$2#$2-section-$3')
-                        .replace(/<a href=(['"])#!?\//g,
-                            '<a href=' + '$1?' + $param + '=/');
-                } else {
-                    return $html;
-                }
+            function fix_links($html) {
+                var $param = "mobile";
+                return $html
+                    .replace(/<a href=(['"])#!?\/(api\/[^-'"]+)-([^'"]+)/g,
+                        '<a href=' + '$1?' + $param + '=/$2#$3')
+                    .replace(/<a href=(['"])#!?\/guide\/([^-'"]+)-section-([^'"]+)/g,
+                        '<a href=' + '$1?' + $param + '=/guide/$2#$2-section-$3')
+                    .replace(/<a href=(['"])#!?\//g,
+                        '<a href=' + '$1?' + $param + '=/');
             }
 
             app.get('/kissy/docs/', function (req, res) {
                 var ua = req.get('User-Agent'),
                     $fragment,
                     query = req.query;
-                if ('mobile' in query || 'print' in query || '_escaped_fragment_' in query) {
-                    $fragment = query.mobile || query.print || query['_escaped_fragment_'] || '';
+                if ('mobile' in query) {
+                    $fragment = query.mobile || '';
                 } else if (
                     /(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i
                         .test(ua) ||
@@ -140,12 +135,12 @@ S.use('xtemplate/nodejs', function (S, XTemplateNodeJs) {
                         var $json = decode_file("output/" + $className + ".js");
                         print_page(req, res, $className, "<h1>" + $className + "</h1>\n" + $json["html"], $fragment);
                     } else if ($m = $fragment.match(/^\/api\/?$/)) {
-                        print_index_page(req, res);
+                        print_index_page(res);
                     } else if ($m = $fragment.match(/^\/guide\/(.+?)(-section-.+)?$/)) {
                         $json = decode_file("guides/" + $m[1] + "/README.js");
                         print_page(req, res, $json["title"], '<div class="guide-container" style="padding: 1px">' + $json["guide"] + '</div>', $fragment);
                     } else {
-                        print_index_page(req, res);
+                        print_index_page(res);
                     }
                 } else {
                     res.send(file_get_contents('template.html'));
