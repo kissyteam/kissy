@@ -35,12 +35,20 @@ KISSY.add('dom/base/selector', function (S, Dom, undefined) {
         }
     }
 
+    function checkSelectorAndReturn(selector) {
+        var name = selector.substr(1);
+        if (!name) {
+            throw new Error('An invalid or illegal string was specified for selector.')
+        }
+        return name;
+    }
+
     function makeMatch(selector) {
         var s = selector.charAt(0);
         if (s == '#') {
-            return makeIdMatch(selector.substr(1));
+            return makeIdMatch(checkSelectorAndReturn(selector));
         } else if (s == '.') {
-            return makeClassMatch(selector.substr(1));
+            return makeClassMatch(checkSelectorAndReturn(selector));
         } else {
             return makeTagMatch(selector);
         }

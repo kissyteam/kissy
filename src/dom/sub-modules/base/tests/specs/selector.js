@@ -1,6 +1,6 @@
 /**
  * simple selector test
- * @author lifesinger@gmail.com, yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, Dom) {
     var tpl = '<div id="test-selector">\
@@ -23,6 +23,15 @@ KISSY.add(function (S, Dom) {
 
         afterEach(function () {
             $('#test-selector').remove();
+        });
+
+        it('throws exception when encounter #.', function () {
+            expect(function () {
+                S.query('#');
+            }).toThrow();
+            expect(function () {
+                S.query('.');
+            }).toThrow();
         });
 
         it('works for fragment', function () {
@@ -245,8 +254,8 @@ KISSY.add(function (S, Dom) {
             expect($('#tt2', t).length).toBe(1);
         });
 
-        it('optimize for long simple selector',function(){
-            var div=Dom.create('<div id="long-simple-selector">' +
+        it('optimize for long simple selector', function () {
+            var div = Dom.create('<div id="long-simple-selector">' +
                 '<div class="t">' +
                 '<div class="t2">' +
                 '<span>' +
@@ -259,7 +268,7 @@ KISSY.add(function (S, Dom) {
 
             document.body.appendChild(div);
 
-            var ret=Dom.query('#long-simple-selector .t .t2 span .j');
+            var ret = Dom.query('#long-simple-selector .t .t2 span .j');
 
             expect(ret.length).toBe(1);
             expect(ret[0].getAttribute('data-id')).toBe('target');
