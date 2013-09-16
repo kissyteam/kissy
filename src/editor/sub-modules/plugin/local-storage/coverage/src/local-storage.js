@@ -230,36 +230,37 @@ if (! _$jscoverage['/local-storage.js']) {
   _$jscoverage['/local-storage.js'] = {};
   _$jscoverage['/local-storage.js'].lineData = [];
   _$jscoverage['/local-storage.js'].lineData[6] = 0;
-  _$jscoverage['/local-storage.js'].lineData[10] = 0;
-  _$jscoverage['/local-storage.js'].lineData[12] = 0;
-  _$jscoverage['/local-storage.js'].lineData[16] = 0;
-  _$jscoverage['/local-storage.js'].lineData[18] = 0;
-  _$jscoverage['/local-storage.js'].lineData[27] = 0;
-  _$jscoverage['/local-storage.js'].lineData[37] = 0;
+  _$jscoverage['/local-storage.js'].lineData[7] = 0;
+  _$jscoverage['/local-storage.js'].lineData[11] = 0;
+  _$jscoverage['/local-storage.js'].lineData[13] = 0;
+  _$jscoverage['/local-storage.js'].lineData[17] = 0;
+  _$jscoverage['/local-storage.js'].lineData[19] = 0;
+  _$jscoverage['/local-storage.js'].lineData[28] = 0;
   _$jscoverage['/local-storage.js'].lineData[38] = 0;
-  _$jscoverage['/local-storage.js'].lineData[40] = 0;
-  _$jscoverage['/local-storage.js'].lineData[56] = 0;
+  _$jscoverage['/local-storage.js'].lineData[39] = 0;
+  _$jscoverage['/local-storage.js'].lineData[41] = 0;
   _$jscoverage['/local-storage.js'].lineData[57] = 0;
   _$jscoverage['/local-storage.js'].lineData[58] = 0;
-  _$jscoverage['/local-storage.js'].lineData[62] = 0;
+  _$jscoverage['/local-storage.js'].lineData[59] = 0;
   _$jscoverage['/local-storage.js'].lineData[63] = 0;
   _$jscoverage['/local-storage.js'].lineData[64] = 0;
   _$jscoverage['/local-storage.js'].lineData[65] = 0;
-  _$jscoverage['/local-storage.js'].lineData[67] = 0;
+  _$jscoverage['/local-storage.js'].lineData[66] = 0;
   _$jscoverage['/local-storage.js'].lineData[68] = 0;
-  _$jscoverage['/local-storage.js'].lineData[72] = 0;
+  _$jscoverage['/local-storage.js'].lineData[69] = 0;
   _$jscoverage['/local-storage.js'].lineData[73] = 0;
-  _$jscoverage['/local-storage.js'].lineData[76] = 0;
-  _$jscoverage['/local-storage.js'].lineData[78] = 0;
-  _$jscoverage['/local-storage.js'].lineData[81] = 0;
-  _$jscoverage['/local-storage.js'].lineData[84] = 0;
+  _$jscoverage['/local-storage.js'].lineData[74] = 0;
+  _$jscoverage['/local-storage.js'].lineData[77] = 0;
+  _$jscoverage['/local-storage.js'].lineData[79] = 0;
+  _$jscoverage['/local-storage.js'].lineData[82] = 0;
   _$jscoverage['/local-storage.js'].lineData[85] = 0;
-  _$jscoverage['/local-storage.js'].lineData[88] = 0;
+  _$jscoverage['/local-storage.js'].lineData[86] = 0;
   _$jscoverage['/local-storage.js'].lineData[89] = 0;
   _$jscoverage['/local-storage.js'].lineData[90] = 0;
-  _$jscoverage['/local-storage.js'].lineData[95] = 0;
+  _$jscoverage['/local-storage.js'].lineData[91] = 0;
   _$jscoverage['/local-storage.js'].lineData[96] = 0;
-  _$jscoverage['/local-storage.js'].lineData[106] = 0;
+  _$jscoverage['/local-storage.js'].lineData[97] = 0;
+  _$jscoverage['/local-storage.js'].lineData[107] = 0;
 }
 if (! _$jscoverage['/local-storage.js'].functionData) {
   _$jscoverage['/local-storage.js'].functionData = [];
@@ -276,30 +277,48 @@ if (! _$jscoverage['/local-storage.js'].functionData) {
 }
 if (! _$jscoverage['/local-storage.js'].branchData) {
   _$jscoverage['/local-storage.js'].branchData = {};
-  _$jscoverage['/local-storage.js'].branchData['10'] = [];
-  _$jscoverage['/local-storage.js'].branchData['10'][1] = new BranchData();
+  _$jscoverage['/local-storage.js'].branchData['7'] = [];
+  _$jscoverage['/local-storage.js'].branchData['7'][1] = new BranchData();
+  _$jscoverage['/local-storage.js'].branchData['11'] = [];
+  _$jscoverage['/local-storage.js'].branchData['11'][1] = new BranchData();
+  _$jscoverage['/local-storage.js'].branchData['11'][2] = new BranchData();
+  _$jscoverage['/local-storage.js'].branchData['11'][3] = new BranchData();
 }
-_$jscoverage['/local-storage.js'].branchData['10'][1].init(79, 34, '!S.UA[\'ie\'] && window.localStorage');
-function visit1_10_1(result) {
-  _$jscoverage['/local-storage.js'].branchData['10'][1].ranCondition(result);
+_$jscoverage['/local-storage.js'].branchData['11'][3].init(135, 6, 'ie > 8');
+function visit4_11_3(result) {
+  _$jscoverage['/local-storage.js'].branchData['11'][3].ranCondition(result);
+  return result;
+}_$jscoverage['/local-storage.js'].branchData['11'][2].init(128, 13, '!ie || ie > 8');
+function visit3_11_2(result) {
+  _$jscoverage['/local-storage.js'].branchData['11'][2].ranCondition(result);
+  return result;
+}_$jscoverage['/local-storage.js'].branchData['11'][1].init(128, 37, '(!ie || ie > 8) && window.localStorage');
+function visit2_11_1(result) {
+  _$jscoverage['/local-storage.js'].branchData['11'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/local-storage.js'].branchData['7'][1].init(15, 32, 'document.documentMode || S.UA.ie');
+function visit1_7_1(result) {
+  _$jscoverage['/local-storage.js'].branchData['7'][1].ranCondition(result);
   return result;
 }_$jscoverage['/local-storage.js'].lineData[6]++;
 KISSY.add("editor/plugin/local-storage", function(S, Editor, Overlay, FlashBridge) {
   _$jscoverage['/local-storage.js'].functionData[0]++;
-  _$jscoverage['/local-storage.js'].lineData[10]++;
-  if (visit1_10_1(!S.UA['ie'] && window.localStorage)) {
-    _$jscoverage['/local-storage.js'].lineData[12]++;
+  _$jscoverage['/local-storage.js'].lineData[7]++;
+  var ie = visit1_7_1(document.documentMode || S.UA.ie);
+  _$jscoverage['/local-storage.js'].lineData[11]++;
+  if (visit2_11_1((visit3_11_2(!ie || visit4_11_3(ie > 8))) && window.localStorage)) {
+    _$jscoverage['/local-storage.js'].lineData[13]++;
     return window.localStorage;
   }
-  _$jscoverage['/local-storage.js'].lineData[16]++;
+  _$jscoverage['/local-storage.js'].lineData[17]++;
   var swfSrc = Editor.Utils.debugUrl("plugin/local-storage/assets/swfstore.swf?t=" + (+new Date()));
-  _$jscoverage['/local-storage.js'].lineData[18]++;
+  _$jscoverage['/local-storage.js'].lineData[19]++;
   var css = {
   width: 215, 
   border: '1px solid red'}, reverseCss = {
   width: 0, 
   border: 'none'};
-  _$jscoverage['/local-storage.js'].lineData[27]++;
+  _$jscoverage['/local-storage.js'].lineData[28]++;
   var o = new Overlay({
   prefixCls: 'ks-editor-', 
   elStyle: {
@@ -307,11 +326,11 @@ KISSY.add("editor/plugin/local-storage", function(S, Editor, Overlay, FlashBridg
   width: "0px", 
   content: "<h1 style='" + "text-align:center;'>\u8bf7\u70b9\u51fb\u5141\u8bb8</h1>" + "<div class='storage-container'></div>", 
   zIndex: Editor.baseZIndex(Editor.zIndexManager.STORE_FLASH_SHOW)});
-  _$jscoverage['/local-storage.js'].lineData[37]++;
-  o.render();
   _$jscoverage['/local-storage.js'].lineData[38]++;
+  o.render();
+  _$jscoverage['/local-storage.js'].lineData[39]++;
   o.show();
-  _$jscoverage['/local-storage.js'].lineData[40]++;
+  _$jscoverage['/local-storage.js'].lineData[41]++;
   var store = new FlashBridge({
   src: swfSrc, 
   render: o.get("contentEl").one('.storage-container'), 
@@ -322,73 +341,73 @@ KISSY.add("editor/plugin/local-storage", function(S, Editor, Overlay, FlashBridg
   height: 138, 
   width: '100%'}, 
   methods: ["setItem", "removeItem", "getItem", "setMinDiskSpace", "getValueOf"]});
-  _$jscoverage['/local-storage.js'].lineData[56]++;
+  _$jscoverage['/local-storage.js'].lineData[57]++;
   S.ready(function() {
   _$jscoverage['/local-storage.js'].functionData[1]++;
-  _$jscoverage['/local-storage.js'].lineData[57]++;
+  _$jscoverage['/local-storage.js'].lineData[58]++;
   setTimeout(function() {
   _$jscoverage['/local-storage.js'].functionData[2]++;
-  _$jscoverage['/local-storage.js'].lineData[58]++;
+  _$jscoverage['/local-storage.js'].lineData[59]++;
   o.center();
 }, 0);
 });
-  _$jscoverage['/local-storage.js'].lineData[62]++;
+  _$jscoverage['/local-storage.js'].lineData[63]++;
   store.on("pending", function() {
   _$jscoverage['/local-storage.js'].functionData[3]++;
-  _$jscoverage['/local-storage.js'].lineData[63]++;
-  o.get('el').css(css);
   _$jscoverage['/local-storage.js'].lineData[64]++;
-  o.center();
+  o.get('el').css(css);
   _$jscoverage['/local-storage.js'].lineData[65]++;
+  o.center();
+  _$jscoverage['/local-storage.js'].lineData[66]++;
   o.show();
-  _$jscoverage['/local-storage.js'].lineData[67]++;
+  _$jscoverage['/local-storage.js'].lineData[68]++;
   setTimeout(function() {
   _$jscoverage['/local-storage.js'].functionData[4]++;
-  _$jscoverage['/local-storage.js'].lineData[68]++;
+  _$jscoverage['/local-storage.js'].lineData[69]++;
   store.retrySave();
 }, 1000);
 });
-  _$jscoverage['/local-storage.js'].lineData[72]++;
+  _$jscoverage['/local-storage.js'].lineData[73]++;
   store.on("save", function() {
   _$jscoverage['/local-storage.js'].functionData[5]++;
-  _$jscoverage['/local-storage.js'].lineData[73]++;
+  _$jscoverage['/local-storage.js'].lineData[74]++;
   o.get('el').css(reverseCss);
 });
-  _$jscoverage['/local-storage.js'].lineData[76]++;
+  _$jscoverage['/local-storage.js'].lineData[77]++;
   var oldSet = store.setItem;
-  _$jscoverage['/local-storage.js'].lineData[78]++;
+  _$jscoverage['/local-storage.js'].lineData[79]++;
   S.mix(store, {
   _ke: 1, 
   getItem: function(k) {
   _$jscoverage['/local-storage.js'].functionData[6]++;
-  _$jscoverage['/local-storage.js'].lineData[81]++;
+  _$jscoverage['/local-storage.js'].lineData[82]++;
   return this['getValueOf'](k);
 }, 
   retrySave: function() {
   _$jscoverage['/local-storage.js'].functionData[7]++;
-  _$jscoverage['/local-storage.js'].lineData[84]++;
-  var self = this;
   _$jscoverage['/local-storage.js'].lineData[85]++;
+  var self = this;
+  _$jscoverage['/local-storage.js'].lineData[86]++;
   self.setItem(self.lastSave.k, self.lastSave.v);
 }, 
   setItem: function(k, v) {
   _$jscoverage['/local-storage.js'].functionData[8]++;
-  _$jscoverage['/local-storage.js'].lineData[88]++;
-  var self = this;
   _$jscoverage['/local-storage.js'].lineData[89]++;
+  var self = this;
+  _$jscoverage['/local-storage.js'].lineData[90]++;
   self.lastSave = {
   k: k, 
   v: v};
-  _$jscoverage['/local-storage.js'].lineData[90]++;
+  _$jscoverage['/local-storage.js'].lineData[91]++;
   oldSet.call(self, k, v);
 }});
-  _$jscoverage['/local-storage.js'].lineData[95]++;
+  _$jscoverage['/local-storage.js'].lineData[96]++;
   store.on("contentReady", function() {
   _$jscoverage['/local-storage.js'].functionData[9]++;
-  _$jscoverage['/local-storage.js'].lineData[96]++;
+  _$jscoverage['/local-storage.js'].lineData[97]++;
   store._ready = 1;
 });
-  _$jscoverage['/local-storage.js'].lineData[106]++;
+  _$jscoverage['/local-storage.js'].lineData[107]++;
   return store;
 }, {
   "requires": ["editor", "overlay", "./flash-bridge"]});

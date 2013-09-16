@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 16 15:13
+build time: Sep 16 18:17
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -15,10 +15,11 @@ build time: Sep 16 15:13
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/plugin/local-storage", function (S, Editor, Overlay, FlashBridge) {
+    var ie = document.documentMode || S.UA.ie;
 
     // 原生或者已经定义过立即返回
     // ie 使用 flash 模拟的 localStorage，序列化性能不行
-    if (!S.UA['ie'] && window.localStorage) {
+    if ((!ie || ie > 8) && window.localStorage) {
         //原生的立即可用
         return window.localStorage;
     }
@@ -58,7 +59,7 @@ KISSY.add("editor/plugin/local-storage", function (S, Editor, Overlay, FlashBrid
         },
         attrs: {
             height: 138,
-            width:'100%'
+            width: '100%'
         },
         methods: ["setItem", "removeItem", "getItem", "setMinDiskSpace", "getValueOf"]
     });

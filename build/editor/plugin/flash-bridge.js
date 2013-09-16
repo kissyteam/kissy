@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 16 15:10
+build time: Sep 16 18:14
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -16,25 +16,23 @@ build time: Sep 16 15:10
  */
 KISSY.add("editor/plugin/flash-bridge", function (S, SWF, Editor) {
     var instances = {};
-    var logger= S.getLogger('s/editor/plugin/flash-bridge');
+    var logger = S.getLogger('s/editor/plugin/flash-bridge');
 
     function FlashBridge(cfg) {
-        this._init(cfg);
+        this._init(cfg)
     }
 
     S.augment(FlashBridge, S.EventTarget, {
         _init: function (cfg) {
             var self = this,
-                id = S.guid("flashbridge-"),
-                callback = "KISSY.Editor.FlashBridge.EventHandler";
+                id = S.guid("flash-bridge-"),
+                callback = "KISSY.require('editor').FlashBridge.EventHandler";
             cfg.id = id;
             cfg.attrs = cfg.attrs || {};
             cfg.params = cfg.params || {};
-            var
-                attrs = cfg.attrs,
+            var attrs = cfg.attrs,
                 params = cfg.params,
                 flashVars = params.flashVars = params.flashVars || {};
-
             S.mix(attrs, {
                 //http://yiminghe.javaeye.com/blog/764872
                 //firefox 必须使创建的flash以及容器可见，才会触发contentReady
@@ -80,12 +78,11 @@ KISSY.add("editor/plugin/flash-bridge", function (S, SWF, Editor) {
             }
         },
         _callSWF: function (func, args) {
-            return this.swf.callSWF(func,args);
+            return this.swf.callSWF(func, args);
         },
         _eventHandler: function (event) {
             var self = this,
                 type = event.type;
-
             if (type === 'log') {
                 logger.debug(event.message);
             } else if (type) {

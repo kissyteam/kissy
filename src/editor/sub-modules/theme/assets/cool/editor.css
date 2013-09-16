@@ -194,10 +194,6 @@ ks-editor-toolbar-padding {
     background-image: url("image.png"); /** sprite-ref: cool; */
 }
 
-.ks-editor-toolbar-multipleUpload {
-    background-image: url("multiple-image.png"); /** sprite-ref: cool; */
-}
-
 .ks-editor-toolbar-backColorBtn,
 .ks-editor-toolbar-foreColorBtn {
     margin-right: 0;
