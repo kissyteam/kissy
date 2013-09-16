@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 16 15:19
+build time: Sep 16 20:08
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -176,6 +176,11 @@ KISSY.add("xtemplate/runtime/commands", function (S) {
  */
 KISSY.add('xtemplate/runtime', function (S, commands, undefined) {
     var escapeHtml = S.escapeHtml;
+    var logger = S.getLogger('s/xtemplate');
+
+    function info(s) {
+        logger.info(s);
+    }
 
     function findCommand(commands, name) {
         var parts = name.split('.');
@@ -238,7 +243,7 @@ KISSY.add('xtemplate/runtime', function (S, commands, undefined) {
     var utils = {
             'runBlockCommand': function (engine, scopes, options, name, line) {
                 var config = engine.config;
-                var logFn = S[config.silent ? 'log' : 'error'];
+                var logFn = config.silent ? info : S.error;
                 var commands = config.commands;
                 var command = findCommand(commands, name);
                 if (!command) {
@@ -275,11 +280,11 @@ KISSY.add('xtemplate/runtime', function (S, commands, undefined) {
                 return ret;
             },
 
-            'getExpression': function (exp,escaped) {
-                if(exp===undefined){
-                    exp='';
+            'getExpression': function (exp, escaped) {
+                if (exp === undefined) {
+                    exp = '';
                 }
-                return escaped&&exp?escapeHtml(exp):exp;
+                return escaped && exp ? escapeHtml(exp) : exp;
             },
 
             'getPropertyOrRunCommand': function (engine, scopes, options, name, depth, line, escape, preserveUndefined) {
@@ -287,7 +292,7 @@ KISSY.add('xtemplate/runtime', function (S, commands, undefined) {
                 var config = engine.config;
                 var commands = config.commands;
                 var command1 = findCommand(commands, name);
-                var logFn = S[config.silent ? 'log' : 'error'];
+                var logFn = config.silent ? info : S.error;
                 if (command1) {
                     try {
                         id0 = command1.call(engine, scopes, options);
