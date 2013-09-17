@@ -1,11 +1,17 @@
 /**
  * use document.write to load external css files in block loading ways.
  * depends on loader.
+ * @ignore
  * @author yiminghe@gmail.com
  */
 (function (S) {
     var isDebug;
 
+    /**
+     * use document.write to load module's css dependency or css module in block loading ways.
+     * @param {String[]} modNames css/js module names
+     * @member KISSY
+     */
     function importStyle(modNames) {
         if (typeof modNames == 'string') {
             modNames = modNames.split(',');

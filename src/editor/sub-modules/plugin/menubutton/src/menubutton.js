@@ -20,7 +20,7 @@ KISSY.add("editor/plugin/menubutton", function (S, Editor, MenuButton) {
         if (cfg) {
             cfg.editor = self;
             if (cfg.menu) {
-                cfg.menu.zIndex = Editor.baseZIndex(Editor.zIndexManager.SELECT);
+                cfg.menu.zIndex = Editor.baseZIndex(Editor.ZIndexManager.SELECT);
             }
             if (cfg.elCls) {
                 cfg.elCls = prefixCls + cfg.elCls;

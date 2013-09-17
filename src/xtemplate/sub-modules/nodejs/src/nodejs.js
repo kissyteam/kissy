@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * load tpl from file in nodejs
  * @author yiminghe@gmail.com
  */
@@ -6,7 +7,18 @@ KISSY.add('xtemplate/nodejs', function (S, XTemplate) {
     var fs = require('fs');
     var cached = {};
 
+    /**
+     * load xtemplate from file on nodejs
+     * @class KISSY.XTemplate.Nodejs
+     * @singleton
+     */
     return  {
+        /**
+         * load xtemplate module on nodejs and return xtemplate instance
+         * @param {String} moduleName xtemplate module name
+         * @param config xtemplate config object
+         * @returns {KISSY.XTemplate} xtemplate instance
+         */
         loadFromModuleName: function (moduleName, config) {
             config = S.merge(config, {
                 cacheFile: 1

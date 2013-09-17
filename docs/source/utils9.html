@@ -16,15 +16,19 @@
 </head>
 <body onload="prettyPrint(); highlight();">
   <pre class="prettyprint lang-js"><span id='global-property-'>/**
-</span> * utils for kison.
+</span> * @ignore
+ * utils for kison.
  * @author yiminghe@gmail.com
  */
 KISSY.add(&quot;kison/utils&quot;, function (S) {
-
     var doubleReg = /&quot;/g, single = /'/g, escapeString;
 
+<span id='KISSY-Kison-Utils'>    /**
+</span>     * utils for kison
+     * @class KISSY.Kison.Utils
+     * @singleton
+     */
     return {
-
         escapeString: escapeString = function (str, quote) {
             var regexp = single;
             if (quote == '&quot;') {
@@ -40,7 +44,6 @@ KISSY.add(&quot;kison/utils&quot;, function (S) {
         },
 
         serializeObject: function serializeObject(obj, excludeReg) {
-
             var r;
 
             if (excludeReg &amp;&amp;

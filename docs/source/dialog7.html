@@ -17,34 +17,155 @@
 <body onload="prettyPrint(); highlight();">
   <pre class="prettyprint lang-js"><span id='global-property-'>/**
 </span> * @ignore
- * multiple-upload dialog
+ * table dialog
  * @author yiminghe@gmail.com
  */
-KISSY.add(&quot;editor/plugin/multiple-upload/dialog&quot;, function (S, Editor,
-                                                            Overlay,DragPlugin,
-                                                            ProgressBar, Dialog4E,
-                                                            FlashBridge, localStorage,
-                                                            SWF, undefined) {
-    var UA = S.UA,
-        logger= S.getLogger('s/editor/plugin/multiple-upload/dialog'),
+KISSY.add(&quot;editor/plugin/table/dialog&quot;, function (S, Editor, Dialog4E, MenuButton) {
+    var Node = S.Node,
         Dom = S.DOM,
-        $ = S.all,
-        Json = S.JSON,
-        PIC_NUM_LIMIT = 15,
-        PIC_NUM_LIMIT_WARNING = &quot;系统将只保留 n 张&quot;,
-        PIC_SIZE_LIMIT = 1000,
-        PIC_SIZE_LIMIT_WARNING = &quot;图片太大，请压缩至 n M以下&quot;,
-        KEY = &quot;Multiple-Upload-Save&quot;,
-        swfSrc = Editor.Utils.debugUrl(&quot;plugin/uploader/assets/uploader.longzang.swf&quot;),
-        name = &quot;ks-editor-multipleUpload&quot;,
-        FLASH_VERSION_REQUIRED = &quot;10.0.0&quot;;
+        trim = S.trim,
+        showBorderClassName = &quot;ke_show_border&quot;,
+        collapseTableClass = &quot;k-e-collapse-table&quot;,
+        IN_SIZE = 6,
+        alignStyle = 'margin:0 5px 0 0;',
+        TABLE_HTML = &quot;&lt;div style='padding:20px 20px 10px 20px;'&gt;&quot; +
+            &quot;&lt;table class='{prefixCls}editor-table-config' style='width:100%'&gt;&quot; +
+            &quot;&lt;tr&gt;&quot; +
+            &quot;&lt;td&gt;&quot; +
+            &quot;&lt;label&gt;行数： &quot; +
+            &quot;&lt;input &quot; +
+            &quot; data-verify='^(?!0$)\\d+$' &quot; +
+            &quot; data-warning='行数请输入正整数' &quot; +
+            &quot; value='2' &quot; +
+            &quot; class='{prefixCls}editor-table-rows {prefixCls}editor-table-create-only {prefixCls}editor-input' &quot; +
+            &quot;style='&quot; + alignStyle + &quot;'&quot; +
+            &quot; size='&quot; +
+            IN_SIZE +
+            &quot;'&quot; +
+            &quot; /&gt;&quot; +
+            &quot;&lt;/label&gt;&quot; +
+            &quot;&lt;/td&gt;&quot; +
+            &quot;&lt;td&gt;&quot; +
+            &quot;&lt;label&gt;宽&amp;nbsp;&amp;nbsp;&amp;nbsp;度： &quot; +
+            &quot;&lt;/label&gt; &quot; +
+            &quot;&lt;input &quot; +
+            &quot; data-verify='^(?!0$)\\d+$' &quot; +
+            &quot; data-warning='宽度请输入正整数' &quot; +
+            &quot;value='200' &quot; +
+            &quot;style='&quot; +
+            alignStyle + &quot;' &quot; +
+            &quot;class='{prefixCls}editor-table-width {prefixCls}editor-input' &quot; +
+            &quot;size='&quot; + IN_SIZE + &quot;'/&gt;&quot; +
 
-    function MultiUploadDialog(editor, config) {
-        this.editor = editor;
-        this.progressBars = {};
-        this.config = config;
-        Editor.Utils.lazyRun(this, &quot;_prepareShow&quot;, &quot;_realShow&quot;);
-    }
+            &quot;&lt;select class='{prefixCls}editor-table-width-unit' title='宽度单位'&gt;&quot; +
+            &quot;&lt;option value='px'&gt;像素&lt;/option&gt;&quot; +
+            &quot;&lt;option value='%'&gt;百分比&lt;/option&gt;&quot; +
+            &quot;&lt;/select&gt;&quot; +
+            &quot;&lt;/td&gt;&quot; +
+            &quot;&lt;/tr&gt;&quot; +
+            &quot;&lt;tr&gt;&quot; +
+            &quot;&lt;td&gt;&quot; +
+            &quot;&lt;label&gt;列数： &quot; +
+            &quot;&lt;input &quot; +
+            &quot; data-verify='^(?!0$)\\d+$' &quot; +
+            &quot; data-warning='列数请输入正整数' &quot; +
+            &quot;class='{prefixCls}editor-table-cols {prefixCls}editor-table-create-only {prefixCls}editor-input' &quot; +
+            &quot;style='&quot; + alignStyle + &quot;'&quot; +
+            &quot;value='3' &quot; +
+            &quot;size='&quot; +
+            IN_SIZE + &quot;'/&gt;&quot; +
+            &quot;&lt;/label&gt;&quot; +
+            &quot;&lt;/td&gt;&quot; +
+            &quot;&lt;td&gt;&quot; +
+            &quot;&lt;label&gt;&quot; +
+            &quot;高&amp;nbsp;&amp;nbsp;&amp;nbsp;度： &quot; +
+            &quot;&lt;/label&gt;&quot; +
+            &quot;&lt;input &quot; +
+            &quot; data-verify='^((?!0$)\\d+)?$' &quot; +
+            &quot; data-warning='高度请输入正整数' &quot; +
+            &quot;value='' &quot; +
+            &quot;style='&quot; +
+            alignStyle + &quot;'&quot; +
+            &quot;class='{prefixCls}editor-table-height {prefixCls}editor-input' &quot; +
+            &quot;size='&quot; + IN_SIZE + &quot;'/&gt;&quot; +
+            &quot; &amp;nbsp;像素&quot; +
+            &quot;&lt;/td&gt;&quot; +
+            &quot;&lt;/tr&gt;&quot; +
+            &quot;&lt;tr&gt;&quot; +
+            &quot;&lt;td&gt;&quot; +
+            &quot;&lt;label&gt;对齐： &lt;/label&gt;&quot; +
+            &quot;&lt;select class='{prefixCls}editor-table-align' title='对齐'&gt;&quot; +
+            &quot;&lt;option value=''&gt;无&lt;/option&gt;&quot; +
+            &quot;&lt;option value='left'&gt;左对齐&lt;/option&gt;&quot; +
+            &quot;&lt;option value='right'&gt;右对齐&lt;/option&gt;&quot; +
+            &quot;&lt;option value='center'&gt;中间对齐&lt;/option&gt;&quot; +
+            &quot;&lt;/select&gt;&quot; +
+            &quot;&lt;/td&gt;&quot; +
+            &quot;&lt;td&gt;&quot; +
+            &quot;&lt;label&gt;标题格：&lt;/label&gt; &quot; +
+            &quot;&lt;select class='{prefixCls}editor-table-head {prefixCls}editor-table-create-only' title='标题格'&gt;&quot; +
+            &quot;&lt;option value=''&gt;无&lt;/option&gt;&quot; +
+            &quot;&lt;option value='1'&gt;有&lt;/option&gt;&quot; +
+            &quot;&lt;/select&gt;&quot; +
+            &quot;&lt;/td&gt;&quot; +
+            &quot;&lt;/tr&gt;&quot; +
+            &quot;&lt;tr&gt;&quot; +
+            &quot;&lt;td&gt;&quot; +
+            &quot;&lt;label&gt;边框： &quot; +
+            &quot;&lt;input &quot; +
+            &quot; data-verify='^\\d+$' &quot; +
+            &quot; data-warning='边框请输入非负整数' &quot; +
+            &quot;value='1' &quot; +
+            &quot;style='&quot; +
+            alignStyle + &quot;'&quot; +
+            &quot;class='{prefixCls}editor-table-border {prefixCls}editor-input' &quot; +
+            &quot;size='&quot; + IN_SIZE + &quot;'/&gt;&quot; +
+            &quot;&lt;/label&gt; &amp;nbsp;像素&quot; +
+            &quot; &quot; +
+            '&lt;label&gt;&lt;input ' +
+            'type=&quot;checkbox&quot; ' +
+            'style=&quot;vertical-align: middle; margin-left: 5px;&quot; ' +
+            'class=&quot;{prefixCls}editor-table-collapse&quot; ' +
+            '/&gt; 合并边框' +
+            &quot;&lt;/label&gt;&quot; +
+            &quot;&lt;/td&gt;&quot; +
+            &quot;&lt;td&gt;&quot; +
+            &quot;&lt;label &quot; +
+            &quot;class='{prefixCls}editor-table-cellpadding-holder'&quot; +
+            &quot;&gt;边&amp;nbsp;&amp;nbsp;&amp;nbsp;距： &quot; +
+            &quot;&lt;input &quot; +
+            &quot; data-verify='^(\\d+)?$' &quot; +
+            &quot; data-warning='边框请输入非负整数' &quot; +
+            &quot;value='0' &quot; +
+            &quot;style='&quot; +
+            alignStyle + &quot;'&quot; +
+            &quot;class='{prefixCls}editor-table-cellpadding {prefixCls}editor-input' &quot; +
+            &quot;size='&quot; + IN_SIZE + &quot;'/&gt;&quot; +
+            &quot; &amp;nbsp;像素&lt;/label&gt;&quot; +
+            &quot;&lt;/td&gt;&quot; +
+            &quot;&lt;/tr&gt;&quot; +
+            &quot;&lt;tr&gt;&quot; +
+            &quot;&lt;td colspan='2'&gt;&quot; +
+            &quot;&lt;label&gt;&quot; +
+            &quot;标题： &quot; +
+            &quot;&lt;input &quot; +
+            &quot;class='{prefixCls}editor-table-caption {prefixCls}editor-input' &quot; +
+            &quot;style='width:380px;&quot; +
+            alignStyle + &quot;'&gt;&quot; +
+            &quot;&lt;/label&gt;&quot; +
+            &quot;&lt;/td&gt;&quot; +
+            &quot;&lt;/tr&gt;&quot; +
+            &quot;&lt;/table&gt;&quot; +
+            &quot;&lt;/div&gt;&quot;,
+        footHTML = &quot;&lt;div style='padding:5px 20px 20px;'&gt;&quot; +
+            &quot;&lt;a &quot; +
+            &quot;class='{prefixCls}editor-table-ok {prefixCls}editor-button ks-inline-block' &quot; +
+            &quot;style='margin-right:20px;'&gt;确定&lt;/a&gt; &quot; +
+            &quot;&lt;a &quot; +
+            &quot;class='{prefixCls}editor-table-cancel {prefixCls}editor-button ks-inline-block'&gt;取消&lt;/a&gt;&quot; +
+            &quot;&lt;/div&gt;&quot;,
+        addRes = Editor.Utils.addRes,
+        destroyRes = Editor.Utils.destroyRes;
 
     function replacePrefix(str, prefix) {
         return S.substitute(str, {
@@ -52,782 +173,328 @@ KISSY.add(&quot;editor/plugin/multiple-upload/dialog&quot;, function (S, Editor,
         });
     }
 
-    //定义通用的函数交换两个结点的位置
-    function swapNode(node1, node2) {
-        //获取父结点
-        var _parent = node1.parentNode;
-        //获取两个结点的相对位置
-        var _t1 = node1.nextSibling;
-        var _t2 = node2.nextSibling;
-        //将node2插入到原来node1的位置
-        _parent.insertBefore(node2, _t1);
-        //将node1插入到原来node2的位置
-        _parent.insertBefore(node1, _t2);
+    function valid(str) {
+        return trim(str).length != 0;
     }
 
-    S.augment(MultiUploadDialog, {
-        addRes: Editor.Utils.addRes,
-        destroy: Editor.Utils.destroyRes,
-        _prepareShow: function () {
+    function TableDialog(editor) {
+        var self = this;
+        self.editor = editor;
+        Editor.Utils.lazyRun(self, &quot;_prepareTableShow&quot;, &quot;_realTableShow&quot;);
+    }
+
+    S.augment(TableDialog, {
+        _tableInit: function () {
             var self = this,
-                editor = self.editor,
-                prefixCls = editor.get('prefixCls'),
-                uploadCfg = self.config;
-
-            self.addRes(function () {
-                var progressBars = self.progressBars;
-                for (var p in progressBars) {
-
-                    progressBars[p].destroy();
-
+                prefixCls = self.editor.get('prefixCls'),
+                d = new Dialog4E({
+                    width: &quot;500px&quot;,
+                    mask: true,
+                    headerContent: &quot;表格&quot;, //属性&quot;,
+                    bodyContent: replacePrefix(TABLE_HTML, prefixCls),
+                    footerContent: replacePrefix(footHTML, prefixCls)
+                }).render(),
+                dbody = d.get(&quot;body&quot;),
+                foot = d.get(&quot;footer&quot;);
+            d.twidth = dbody.one(replacePrefix(&quot;.{prefixCls}editor-table-width&quot;, prefixCls));
+            d.theight = dbody.one(replacePrefix(&quot;.{prefixCls}editor-table-height&quot;, prefixCls));
+            d.tborder = dbody.one(replacePrefix(&quot;.{prefixCls}editor-table-border&quot;, prefixCls));
+            d.tcaption = dbody.one(replacePrefix(&quot;.{prefixCls}editor-table-caption&quot;, prefixCls));
+            d.talign = MenuButton.Select.decorate(dbody.one(replacePrefix(&quot;.{prefixCls}editor-table-align&quot;, prefixCls)), {
+                prefixCls: replacePrefix('{prefixCls}editor-big-', prefixCls),
+                width: 80,
+                menuCfg: {
+                    prefixCls: replacePrefix('{prefixCls}editor-', prefixCls),
+                    render: dbody
                 }
             });
-
-            self.dialog = new Dialog4E({
-                headerContent: &quot;批量上传&quot;,
-                mask: false,
-                plugins: [
-                    new DragPlugin({
-                        handlers: ['.ks-editor-dialog-header']
-                    })
-                ],
-                focus4e: false,
-                width: &quot;600px&quot;
-            }).render();
-            var d = self.dialog;
-
-            // ie 6,7,8 upload swf 的容器如果设计了 visibility hidden 又 visible ，
-            // 那个 swf 似乎就出事了
-            // 所以不设置 visibility ，漂移大法
-            d.on(&quot;beforeVisibleChange&quot;, function (ev) {
-                if (!ev.newVal) {
-                    d.move(-9999, -9999);
-                    return false;
+            d.trows = dbody.one(replacePrefix(&quot;.{prefixCls}editor-table-rows&quot;, prefixCls));
+            d.tcols = dbody.one(replacePrefix(&quot;.{prefixCls}editor-table-cols&quot;, prefixCls));
+            d.thead = MenuButton.Select.decorate(dbody.one(replacePrefix(&quot;.{prefixCls}editor-table-head&quot;, prefixCls)), {
+                prefixCls: replacePrefix('{prefixCls}editor-big-', prefixCls),
+                width: 80,
+                menuCfg: {
+                    prefixCls: replacePrefix('{prefixCls}editor-', prefixCls),
+                    render: dbody
                 }
             });
-
-            self.addRes(d);
-
-            var multipleUploaderHolder = d.get(&quot;body&quot;),
-                btnHolder = $(
-                    replacePrefix(&quot;&lt;div class='{prefixCls}editor-upload-btn-wrap'&gt;&quot; +
-                        &quot;&lt;span &quot; +
-                        &quot;style='&quot; +
-                        &quot;margin:0 15px 0 0px;&quot; +
-                        &quot;color:#969696;&quot; +
-                        &quot;display:inline-block;&quot; +
-                        &quot;vertical-align:middle;&quot; +
-                        &quot;width:450px;&quot; +
-                        &quot;'&gt;&lt;/span&gt;&quot; +
-                        &quot;&lt;/div&gt;&quot;, prefixCls)).appendTo(multipleUploaderHolder, undefined),
-                listWrap = $(&quot;&lt;div style='display:none'&gt;&quot;)
-                    .appendTo(multipleUploaderHolder, undefined),
-                btn = $(replacePrefix(&quot;&lt;a class='{prefixCls}editor-button ks-inline-block'&gt;&quot; +
-                    &quot;浏&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;览&lt;/a&gt;&quot;, prefixCls))
-                    .appendTo(btnHolder, undefined),
-
-                listTableWrap = $(replacePrefix(&quot;&lt;div&gt;&quot; +
-                    &quot;&lt;table class='{prefixCls}editor-upload-list'&gt;&quot; +
-                    &quot;&lt;thead&gt;&quot; +
-                    &quot;&lt;tr&gt;&quot; +
-                    &quot;&lt;th style='width:30px;'&gt;&quot; +
-                    &quot;序号&quot; +
-                    &quot;&lt;/th&gt;&quot; +
-                    &quot;&lt;th&gt;&quot; +
-                    &quot;图片&quot; +
-                    &quot;&lt;/th&gt;&quot; +
-                    &quot;&lt;th&gt;&quot; +
-                    &quot;大小&quot; +
-                    &quot;&lt;/th&gt;&quot; +
-                    &quot;&lt;th style='width:30%'&gt;&quot; +
-                    &quot;上传进度&quot; +
-                    &quot;&lt;/th&gt;&quot; +
-                    &quot;&lt;th&gt;&quot; +
-                    &quot;图片操作&quot; +
-                    &quot;&lt;/th&gt;&quot; +
-                    &quot;&lt;/tr&gt;&quot; +
-                    &quot;&lt;/thead&gt;&quot; +
-                    &quot;&lt;tbody&gt;&quot; +
-                    &quot;&lt;/tbody&gt;&quot; +
-                    &quot;&lt;/table&gt;&quot; +
-                    &quot;&lt;/div&gt;&quot;, prefixCls)).appendTo(listWrap, undefined),
-                list = listTableWrap.one(&quot;tbody&quot;),
-                upHolder = $(replacePrefix(&quot;&lt;p &quot; +
-                    &quot;style='&quot; +
-                    &quot;margin:15px 15px 30px 6px;&quot; +
-                    &quot;'&gt;&quot; +
-                    &quot;&lt;a class='{prefixCls}editor-multiple-upload-delall'&quot; +
-                    &quot; style='&quot; +
-                    &quot;margin-right:20px;&quot; +
-                    &quot;cursor:pointer;&quot; +
-                    &quot;margin-left:40px;&quot; +
-                    &quot;'&gt;清空列表&lt;/a&gt;&quot; +
-                    &quot;&lt;a class='{prefixCls}editor-button {prefixCls}editor-multiple-upload-ok ks-inline-block'&gt;确定上传&lt;/a&gt;&quot; +
-                    &quot;&lt;a class='{prefixCls}editor-button {prefixCls}editor-multiple-upload-insertall ks-inline-block'&quot; +
-                    &quot; style='margin-left:20px;'&gt;全部插入&lt;/a&gt;&quot; +
-                    &quot;&lt;/p&gt;&quot;, prefixCls))
-                    .appendTo(listWrap, undefined),
-                up = upHolder.one(replacePrefix(&quot;.{prefixCls}editor-multiple-upload-ok&quot;, prefixCls)),
-                insertAll = upHolder.one(replacePrefix(&quot;.{prefixCls}editor-multiple-upload-insertall&quot;, prefixCls)),
-                delAll = upHolder.one(replacePrefix(&quot;.{prefixCls}editor-multiple-upload-delall&quot;, prefixCls)),
-                fid = S.guid(name),
-                statusText = $(&quot;&lt;span&gt;&quot;).prependTo(upHolder, undefined);
-
-
-            self._sizeLimit = uploadCfg['sizeLimit'] || PIC_SIZE_LIMIT;
-            self._numberLimit = uploadCfg['numberLimit'] || PIC_NUM_LIMIT;
-
-            var TIP = &quot;允许用户同时上传&quot; +
-                self._numberLimit
-                + &quot;张图片，单张图片容量不超过&quot; +
-                self._sizeLimit / 1000
-                + &quot;M&quot;;
-
-            if (!SWF.fpvGTE(FLASH_VERSION_REQUIRED)) {
-                TIP = &quot;您的flash插件版本过低，该功能不可用，&quot; +
-                    &quot;请&lt;a href='http://get.adobe.com/cn/flashplayer/'&quot; +
-                    &quot; target='_blank'&gt;点此升级&lt;/a&gt;&quot;;
-            }
-
-            btn.addClass(replacePrefix(&quot;{prefixCls}editor-button-disabled&quot;, prefixCls), undefined);
-            self.tipSpan = btnHolder.one(&quot;span&quot;);
-            self.tipSpan.html(TIP);
-            if (!SWF.fpvGTE(FLASH_VERSION_REQUIRED)) {
-                return;
-            }
-            if (uploadCfg['extraHTML']) {
-                listTableWrap.append(uploadCfg['extraHTML']);
-            }
-
-            self._list = list;
-            self['_listTable'] = list.parent(&quot;table&quot;);
-            self._listWrap = listWrap;
-            self._ds = uploadCfg['serverUrl'];
-            self._dsp = uploadCfg['serverParams'] || {};
-            self._fileInput = uploadCfg['fileInput'] || &quot;Filedata&quot;;
-            self.statusText = statusText;
-            self.btn = btn;
-            self.up = up;
-
-
-            var bel = btn,
-                boffset = bel.offset(),
-                fwidth = bel.width() * 2,
-                fheight = bel.height() * 1.5,
-                flashPos = $(&quot;&lt;div style='&quot; +
-                    (&quot;position:absolute;&quot; +
-                        &quot;width:&quot; + fwidth + &quot;px;&quot; +
-                        &quot;height:&quot; + fheight + &quot;px;&quot; +
-                        &quot;z-index:&quot; + Editor.baseZIndex(9999) + &quot;;&quot;)
-                    + &quot;'&gt;&quot;).appendTo(btnHolder, undefined);
-
-            //swfready 要求可见
-            flashPos.offset(boffset);
-            self.flashPos = flashPos;
-            var uploader = new FlashBridge({
-                src: swfSrc,
-                ajbridge: true,
-                methods: [
-                    &quot;getReady&quot;,
-                    //&quot;cancel&quot;,
-                    &quot;removeFile&quot;,
-                    &quot;lock&quot;,
-                    &quot;unlock&quot;,
-                    &quot;setAllowMultipleFiles&quot;,
-                    &quot;setFileFilters&quot;,
-                    &quot;uploadAll&quot;],
-                render: flashPos,
-                attrs: {
-                    width: fwidth,
-                    height: fheight
-                },
-                params: {
-                    wmode: &quot;transparent&quot;,
-                    flashVars: {
-                        &quot;allowedDomain&quot;: location.hostname,
-                        btn: true,
-                        &quot;hand&quot;: true
-                    }
+            d.cellpaddingHolder = dbody.one(replacePrefix(&quot;.{prefixCls}editor-table-cellpadding-holder&quot;, prefixCls));
+            d.cellpadding = dbody.one(replacePrefix(&quot;.{prefixCls}editor-table-cellpadding&quot;, prefixCls));
+            d.tcollapse = dbody.one(replacePrefix(&quot;.{prefixCls}editor-table-collapse&quot;, prefixCls));
+            var tok = foot.one(replacePrefix(&quot;.{prefixCls}editor-table-ok&quot;, prefixCls)),
+                tclose = foot.one(replacePrefix(&quot;.{prefixCls}editor-table-cancel&quot;, prefixCls));
+            d.twidthunit = MenuButton.Select.decorate(dbody.one(replacePrefix(&quot;.{prefixCls}editor-table-width-unit&quot;, prefixCls)), {
+                prefixCls: replacePrefix('{prefixCls}editor-big-', prefixCls),
+                width: 80,
+                menuCfg: {
+                    prefixCls: replacePrefix('{prefixCls}editor-', prefixCls),
+                    render: dbody
                 }
             });
+            self.dialog = d;
+            tok.on(&quot;click&quot;, self._tableOk, self);
 
-            self.uploader = uploader;
-
-            uploader.on(&quot;mouseOver&quot;, function () {
-                bel.addClass(replacePrefix(&quot;{prefixCls}editor-button-hover&quot;, prefixCls), undefined);
+            tclose.on(&quot;click&quot;, function (ev) {
+                ev &amp;&amp; ev.halt();
+                d.hide();
             });
-            uploader.on(&quot;mouseOut&quot;, function () {
-                bel.removeClass(replacePrefix(&quot;{prefixCls}editor-button-hover&quot;, prefixCls), undefined);
-            });
-            self.addRes(uploader);
+            addRes.call(self, d, d.twidthunit, tok, tclose);
+        },
+        _tableOk: function (ev) {
+            ev &amp;&amp; ev.halt();
+            var self = this,
+                tableDialog = self.dialog,
+                inputs = tableDialog.get(&quot;el&quot;).all(&quot;input&quot;);
 
-            var editorDoc = editor.get(&quot;document&quot;)[0];
-
-            insertAll.on(&quot;click&quot;, function (ev) {
-                var trs = list.all(&quot;tr&quot;);
-                for (var i = 0; i &lt; trs.length; i++) {
-                    var tr = $(trs[i]),
-                        url = tr.attr(&quot;url&quot;);
-                    if (url) {
-                        // chrome refer empty in empty src iframe
-                        new Image().src = url;
-                        editor.insertElement($(&quot;&lt;p&gt;&amp;nbsp;&lt;img src='&quot; +
-                            url + &quot;'/&gt;&amp;nbsp;&lt;/p&gt;&quot;, editorDoc));
-                        self._removeTrFile(tr);
-                    }
-                }
-                if (url) {
-                    listWrap.hide();
-                    d.hide();
-                }
-                ev.halt();
-            });
-            self.addRes(insertAll);
-
-            delAll.on(&quot;click&quot;, function (ev) {
-                var trs = list.all(&quot;tr&quot;);
-                for (var i = 0; i &lt; trs.length; i++) {
-                    var tr = $(trs[i]);
-                    self._removeTrFile(tr);
-                }
-                listWrap.hide();
-                ev.halt();
-            });
-            self.addRes(delAll);
-
-            list.on(&quot;click&quot;, function (ev) {
-                var target = $(ev.target), tr;
-                ev.halt();
-                if (target.hasClass(replacePrefix(&quot;{prefixCls}editor-upload-insert&quot;, prefixCls), undefined)) {
-                    tr = target.parent(&quot;tr&quot;);
-                    var url = tr.attr(&quot;url&quot;);
-                    new Image().src = url;
-                    editor.insertElement($(&quot;&lt;img src='&quot; +
-                        url + &quot;'/&gt;&quot;, null, editor.get(&quot;document&quot;)[0]));
-                }
+            if (tableDialog.twidthunit.get(&quot;value&quot;) == &quot;%&quot;) {
+                var tw = parseInt(tableDialog.twidth.val());
                 if (
-                    target.hasClass(replacePrefix(&quot;{prefixCls}editor-upload-delete&quot;, prefixCls), undefined)
-                        ||
-                        target.hasClass(replacePrefix(&quot;{prefixCls}editor-upload-insert&quot;, prefixCls), undefined
+                    !tw || (
+                        tw &gt; 100 ||
+                            tw &lt; 0
                         )
                     ) {
-                    tr = target.parent(&quot;tr&quot;);
-                    self._removeTrFile(tr);
+                    alert(&quot;宽度百分比：&quot; + &quot;请输入1-100之间&quot;);
+                    return;
                 }
-
-               // 支持排序
-                if (target.hasClass(replacePrefix(&quot;{prefixCls}editor-upload-moveup&quot;, prefixCls), undefined)) {
-                    tr = target.parent(&quot;tr&quot;);
-                    tr.css(&quot;backgroundColor&quot;, &quot;#eef4f9&quot;);
-                    tr['animate']({
-                        backgroundColor: &quot;#FBFBFB&quot;
-                    }, 1, null, function () {
-                        tr.css(&quot;backgroundColor&quot;, &quot;&quot;);
-                    });
-
-                    var pre = tr.prev(undefined, undefined);
-                    if (pre) {
-                        swapNode(tr[0], pre[0]);
-                        self._syncStatus();
-                    }
-
-                } else if (target.hasClass(replacePrefix(&quot;{prefixCls}editor-upload-movedown&quot;, prefixCls), undefined)) {
-                    tr = target.parent(&quot;tr&quot;);
-                    tr.css(&quot;backgroundColor&quot;, &quot;#eef4f9&quot;);
-                    tr['animate']({
-                        backgroundColor: &quot;#FBFBFB&quot;
-                    }, 1, null, function () {
-                        tr.css(&quot;backgroundColor&quot;, &quot;&quot;);
-                    });
-                    var next = tr.next();
-                    if (next) {
-                        swapNode(tr[0], next[0]);
-                        self._syncStatus();
-                    }
+            }
+            var re = Editor.Utils.verifyInputs(inputs);
+            if (!re) return;
+            self.dialog.hide();
+            setTimeout(function () {
+                if (!self.selectedTable) {
+                    self._genTable();
+                } else {
+                    self._modifyTable();
                 }
-                ev.halt();
-            });
-
-            self.addRes(list);
-
-            uploader.on(&quot;fileSelect&quot;, self._onSelect, self);
-            uploader.on(&quot;uploadStart&quot;, self._onUploadStart, self);
-            uploader.on(&quot;uploadProgress&quot;, self._onProgress, self);
-            uploader.on(&quot;uploadCompleteData&quot;, self._onUploadCompleteData, self);
-            uploader.on(&quot;contentReady&quot;, self._ready, self);
-            uploader.on(&quot;uploadError&quot;, self._uploadError, self);
-
-            //从本地恢复已上传记录
-            if (localStorage.ready) {
-                localStorage.ready(function () {
-                    self._restore();
-                });
-            } else {
-                self._restore();
-            }
-
-            //上传后：缩略图预览
-            var previewWidth = uploadCfg['previewWidth'];
-            var previewSuffix = uploadCfg['previewSuffix'];
-            if (previewWidth) {
-
-                var previewWin = new Overlay({
-                    mask: false,
-                    prefixCls: replacePrefix('{prefixCls}editor-', prefixCls),
-                    width: previewWidth,
-                    render: listWrap
-                }).render();
-                self.addRes(previewWin);
-                var preview = previewWin.get(&quot;contentEl&quot;);
-                preview.css(&quot;border&quot;, &quot;none&quot;);
-
-                var currentFid = 0;
-                listWrap.on(&quot;mouseover&quot;, function (ev) {
-                    var t = $(ev.target),
-                        td = t.parent(replacePrefix(&quot;.{prefixCls}editor-upload-filename&quot;, prefixCls));
-                    if (td) {
-                        var tr = td.parent(&quot;tr&quot;);
-                        if (tr.hasClass(replacePrefix(&quot;{prefixCls}editor-upload-complete&quot;, prefixCls),
-                            undefined)) {
-                            var url = tr.attr(&quot;url&quot;),
-                                fid = tr.attr(&quot;fid&quot;);
-                            if (!url) return;
-                            if (fid == currentFid) {
-                            } else {
-                                currentFid = fid;
-                                if (previewSuffix) {
-                                    url = url.replace(/(\.\w+$)/, previewSuffix);
-                                }
-                                preview.html(&quot;&lt;img &quot; +
-                                    &quot;style='display:block;' &quot; +
-                                    &quot;src='&quot; +
-                                    url + &quot;' /&gt;&quot;)
-                            }
-                            var offset = Dom.offset(td);
-                            offset.left += td[0].offsetWidth;
-                            previewWin.move(offset.left, offset.top);
-                            previewWin.show();
-                        }
-                    } else {
-                        previewWin.hide();
-                    }
-                });
-                self.addRes(listWrap);
-            }
-
-            //webkit 一旦整个可被选择就会导致点击事件没有
-            //因为拖放要求mousedown被阻止,ie9 也是奇怪了！
-            if (!UA['webkit'] &amp;&amp; Editor.Utils.ieEngine != 9) {
-                d.set(&quot;handlers&quot;, [d.get(&quot;el&quot;)]);
-            }
+            }, 0);
         },
-        _removeTrFile: function (tr) {
+        _modifyTable: function () {
             var self = this,
-                progressBars = self.progressBars,
-                fid = tr.attr(&quot;fid&quot;),
-                uploader = self.uploader;
-            if (fid) {
-                try {
-                    uploader['removeFile'](fid);
-                } catch (e) {
-                }
-            }
-            if (progressBars[fid]) {
-                progressBars[fid].destroy();
-                delete progressBars[fid];
-            }
-            tr.remove();
-            self.denable();
-            self._syncStatus();
-        },
+                d = self.dialog,
+                selectedTable = self.selectedTable,
+                caption = selectedTable.one(&quot;caption&quot;),
+                talignVal = d.talign.get(&quot;value&quot;),
+                tborderVal = d.tborder.val();
 
-        _realShow: function () {
-            this.dialog.center();
-            this.dialog.show();
+            if (valid(talignVal))
+                selectedTable.attr(&quot;align&quot;, trim(talignVal));
+            else
+                selectedTable.removeAttr(&quot;align&quot;);
+
+            if (valid(tborderVal)) {
+                selectedTable.attr(&quot;border&quot;, trim(tborderVal));
+            } else {
+                selectedTable.removeAttr(&quot;border&quot;);
+            }
+            if (!valid(tborderVal) || tborderVal == &quot;0&quot;) {
+                selectedTable.addClass(showBorderClassName, undefined);
+            } else {
+                selectedTable.removeClass(showBorderClassName, undefined);
+            }
+
+            if (valid(d.twidth.val()))
+                selectedTable.css(&quot;width&quot;,
+                    trim(d.twidth.val()) + d.twidthunit.get(&quot;value&quot;));
+            else
+                selectedTable.css(&quot;width&quot;, &quot;&quot;);
+            if (valid(d.theight.val()))
+                selectedTable.css(&quot;height&quot;,
+                    trim(d.theight.val()));
+            else
+                selectedTable.css(&quot;height&quot;, &quot;&quot;);
+
+            if (d.tcollapse[0].checked) {
+                selectedTable.addClass(collapseTableClass, undefined);
+            } else {
+                selectedTable.removeClass(collapseTableClass, undefined);
+            }
+
+            d.cellpadding.val(parseInt(d.cellpadding.val()) || 0);
+            if (self.selectedTd)self.selectedTd.css(&quot;padding&quot;, d.cellpadding.val());
+            if (valid(d.tcaption.val())) {
+                var tcv = S.escapeHtml(trim(d.tcaption.val()));
+                if (caption &amp;&amp; caption[0])
+                    caption.html(tcv);
+                else {
+                    //不能使用dom操作了, ie6 table 报错
+                    //http://msdn.microsoft.com/en-us/library/ms532998(VS.85).aspx
+                    var c = selectedTable[0].createCaption();
+                    Dom.html(c, &quot;&lt;span&gt;&quot;
+                        + tcv
+                        + &quot;&lt;/span&gt;&quot;);
+                    // new Node(&quot;&lt;caption&gt;&lt;span&gt;&quot; + tcv + &quot;&lt;/span&gt;&lt;/caption&gt;&quot;);
+                    // .insertBefore(selectedTable[0].firstChild);
+                }
+            } else if (caption) {
+                caption.remove();
+            }
+
         },
-        show: function () {
-            this._prepareShow();
+        _genTable: function () {
+            var self = this,
+                d = self.dialog,
+                html = &quot;&lt;table &quot;,
+                i,
+                cols = parseInt(d.tcols.val()) || 1,
+                rows = parseInt(d.trows.val()) || 1,
+            //firefox 需要 br 才能得以放置焦点
+            //cellPad = UA['ie'] ? &quot;&amp;nbsp;&quot; : &quot;&amp;nbsp;&lt;br/&gt;&quot;,
+                cellPad = S.UA.ie ? '' : '&lt;br/&gt;',
+                editor = self.editor;
+
+            if (valid(d.talign.get(&quot;value&quot;)))
+                html += &quot;align='&quot; + trim(d.talign.get(&quot;value&quot;)) + &quot;' &quot;;
+
+            if (valid(d.tborder.val()))
+                html += &quot;border='&quot; + trim(d.tborder.val()) + &quot;' &quot;;
+
+            var styles = [];
+
+
+            if (valid(d.twidth.val())) {
+                styles.push(&quot;width:&quot; + trim(d.twidth.val())
+                    + d.twidthunit.get(&quot;value&quot;) + &quot;;&quot;);
+            }
+
+            if (valid(d.theight.val())) {
+                styles.push(&quot;height:&quot; + trim(d.theight.val()) + &quot;px;&quot;);
+            }
+
+            if (styles.length) {
+                html += &quot;style='&quot; + styles.join(&quot;&quot;) + &quot;' &quot;;
+            }
+
+            var classes = [];
+
+            if (!valid(d.tborder.val())
+                || String(trim(d.tborder.val())) == &quot;0&quot;) {
+                classes.push(showBorderClassName);
+            }
+
+            if (d.tcollapse[0].checked) {
+                classes.push(collapseTableClass);
+            }
+            if (classes.length) {
+                html += &quot;class='&quot; + classes.join(&quot; &quot;) + &quot;' &quot;;
+            }
+
+            html += &quot;&gt;&quot;;
+            if (valid(d.tcaption.val())) {
+                html += &quot;&lt;caption&gt;&lt;span&gt;&quot; + S.escapeHtml(trim(d.tcaption.val()))
+                    + &quot;&lt;/span&gt;&lt;/caption&gt;&quot;;
+            }
+            if (d.thead.get(&quot;value&quot;)) {
+                html += &quot;&lt;thead&gt;&quot;;
+                html += &quot;&lt;tr&gt;&quot;;
+                for (i = 0; i &lt; cols; i++) {
+                    html += &quot;&lt;th&gt;&quot; + cellPad + &quot;&lt;/th&gt;&quot;;
+                }
+                html += &quot;&lt;/tr&gt;&quot;;
+                html += &quot;&lt;/thead&gt;&quot;;
+                rows -= 1;
+            }
+
+            html += &quot;&lt;tbody&gt;&quot;;
+            for (var r = 0; r &lt; rows; r++) {
+                html += &quot;&lt;tr&gt;&quot;;
+                for (i = 0; i &lt; cols; i++) {
+                    html += &quot;&lt;td&gt;&quot; + cellPad + &quot;&lt;/td&gt;&quot;;
+                }
+                html += &quot;&lt;/tr&gt;&quot;;
+            }
+            html += &quot;&lt;/tbody&gt;&quot;;
+            html += &quot;&lt;/table&gt;&quot;;
+
+            var table = new Node(html, null, editor.get(&quot;document&quot;)[0]);
+            editor.insertElement(table);
         },
-        _uploadError: function (ev) {
+        _fillTableDialog: function () {
+            var self = this,
+                d = self.dialog,
+                selectedTable = self.selectedTable,
+                caption = selectedTable.one(&quot;caption&quot;);
+            if (self.selectedTd) {
+                d.cellpadding.val(
+                    parseInt(self.selectedTd.css(&quot;padding&quot;))
+                        || &quot;0&quot;);
+            }
+
+            d.talign.set(&quot;value&quot;, selectedTable.attr(&quot;align&quot;) ||
+                &quot;&quot;);
+
+
+            d.tborder.val(selectedTable.attr(&quot;border&quot;) ||
+                &quot;0&quot;);
+            var w = selectedTable.style(&quot;width&quot;) ||
+                (&quot;&quot; + selectedTable.width());
+
+            d.tcollapse[0].checked = selectedTable.hasClass(collapseTableClass, undefined);
+
+            //忽略pt单位
+            d.twidth.val(w.replace(/px|%|(.*pt)/i, &quot;&quot;));
+            if (w.indexOf(&quot;%&quot;) != -1) {
+                d.twidthunit.set(&quot;value&quot;, &quot;%&quot;);
+            } else {
+                d.twidthunit.set(&quot;value&quot;, &quot;px&quot;);
+            }
+
+            d.theight.val((selectedTable.style(&quot;height&quot;) || &quot;&quot;)
+                .replace(/px|%/i, &quot;&quot;));
+            var c = &quot;&quot;;
+            if (caption) {
+                c = caption.text();
+            }
+            d.tcaption.val(c);
+            var head = selectedTable.first(&quot;thead&quot;),
+                rowLength = (selectedTable.one(&quot;tbody&quot;) ?
+                    selectedTable.one(&quot;tbody&quot;).children().length : 0)
+                    + (head ? head.children(&quot;tr&quot;).length : 0);
+            d.trows.val(rowLength);
+            d.tcols.val(selectedTable.one(&quot;tr&quot;) ?
+                selectedTable.one(&quot;tr&quot;).children().length : 0);
+            d.thead.set(&quot;value&quot;, head ? '1' : '');
+        },
+        _realTableShow: function () {
             var self = this,
                 prefixCls = self.editor.get('prefixCls'),
-                progressBars = self.progressBars,
-                uploader = self.uploader,
-                id = ev.id || (ev['file'] &amp;&amp; ev['file'].id);
-            if (!id) {
-                return;
-            }
-            var tr = self._getFileTr(id),
-                bar = progressBars[id],
-                status = ev.status;
+                d = self.dialog;
 
-            uploader['removeFile'](id);
-            if (!ev._custom) {
-                logger.error(status);
-                status = &quot;服务器出错或格式不正确&quot;;
-            }
-            if (tr) {
-                bar &amp;&amp; bar.destroy();
-                delete progressBars[id];
-                tr.one(replacePrefix(&quot;.{prefixCls}editor-upload-progress&quot;, prefixCls)).html(&quot;&lt;div &quot; +
-                    &quot;style='color:red;'&gt;&quot; +
-                    status +
-                    &quot;&lt;/div&gt;&quot;);
-            }
-        },
-        _getFileTr: function (id) {
-            var self = this,
-                list = self._list,
-                trs = list.all(&quot;tr&quot;);
-            for (var i = 0; i &lt; trs.length; i++) {
-                var tr = $(trs[i]);
-                if (tr.attr(&quot;fid&quot;) == id) {
-                    return tr;
-                }
-            }
-        },
-        _onUploadStart: function (ev) {
-            var self = this,
-                id = ev.id || (ev['file'] &amp;&amp; ev['file'].id);
-            var tr = this._getFileTr(id);
-            var prefixCls = self.editor.get('prefixCls');
-            tr[0].className = replacePrefix(&quot;{prefixCls}editor-upload-uploading&quot;, prefixCls);
-        },
-        _onUploadCompleteData: function (ev) {
-            var self = this,
-                uploader = self.uploader,
-                prefixCls = self.editor.get('prefixCls'),
-                data = S.trim(ev.data).replace(/\r|\n/g, &quot;&quot;),
-                id = ev['file'].id;
-
-            //成功后不会自动清除列表，自己清除
-            if (id) {
-                try {
-                    uploader['removeFile'](id);
-                } catch (e) {
-                }
-            }
-
-            if (!data) return;
-            try {
-                data = S.parseJson(data);
-            } catch (ex) {
-                logger.error(&quot;multiUpload _onUploadCompleteData error: &quot;+data);
-                throw ex;
-            }
-            if (data.error) {
-                self._uploadError({
-                    id: id,
-                    _custom: 1,
-                    status: data.error
-                });
-                return;
-            }
-            var tr = self._getFileTr(id);
-            if (tr) {
-                tr.one(replacePrefix(&quot;.{prefixCls}editor-upload-insert&quot;, prefixCls)).show();
-                self._tagComplete(tr, data['imgUrl']);
-            }
-
-            self._syncStatus();
-
-        },
-        _onProgress: function (ev) {
-            var fid = ev['file'].id,
-                progressBars = this.progressBars,
-                progess = Math.floor(ev['bytesLoaded'] * 100 / ev['bytesTotal']),
-                bar = progressBars[fid];
-            bar &amp;&amp; bar.set(&quot;progress&quot;, progess);
-
-        },
-        ddisable: function () {
-            var self = this;
-            var prefixCls = self.editor.get('prefixCls');
-            self.uploader['lock']();
-            self.btn.addClass(replacePrefix(&quot;{prefixCls}editor-button-disabled&quot;, prefixCls), undefined);
-            self.flashPos.offset({
-                left: -9999,
-                top: -9999
-            });
-        },
-        denable: function () {
-            var self = this;
-            var prefixCls = self.editor.get('prefixCls');
-            self.uploader['unlock']();
-            self.btn.removeClass(replacePrefix(&quot;{prefixCls}editor-button-disabled&quot;, prefixCls), undefined);
-            self.flashPos.offset(self.btn.offset());
-        },
-        _syncStatus: function () {
-            var self = this,
-                list = self._list,
-                seq = 1,
-                trs = list.all(&quot;tr&quot;);
-            var prefixCls = self.editor.get('prefixCls');
-            if (trs.length == 0) {
-                self._listWrap.hide();
+            if (self.selectedTable) {
+                self._fillTableDialog();
+                d.get(&quot;el&quot;)
+                    .all(replacePrefix(&quot;.{prefixCls}editor-table-create-only&quot;, prefixCls))
+                    .attr(&quot;disabled&quot;, &quot;disabled&quot;);
+                d.thead.set('disabled', true);
             } else {
-                list.all(replacePrefix(&quot;.{prefixCls}editor-upload-seq&quot;, prefixCls)).each(function (n) {
-                    n.html(seq++);
-                });
-                var wait = 0;
-                for (var i = 0; i &lt; trs.length; i++) {
-                    var tr = $(trs[i]);
-                    if (!tr.attr(&quot;url&quot;)) wait++;
-                }
-                self.statusText.html(&quot;队列中剩余&quot; + wait + &quot;张图片&quot;
-                    + &quot;，点击确定上传，开始上传。 &quot;
-                );
+                d.get(&quot;el&quot;).all(replacePrefix(&quot;.{prefixCls}editor-table-create-only&quot;, prefixCls))
+                    .removeAttr(&quot;disabled&quot;);
+                d.thead.set('disabled', false);
             }
-            //当前已上传的文件同步到本地
-            self._save();
-        },
-        //当前已上传的图片保存下来
-        _restore: function () {
-            var self = this,
-                data = localStorage.getItem(KEY),
-                tbl = self._list[0];
-            if (!data) return;
-            data = S.parseJson(S.urlDecode(data));
-            for (var i = 0; i &lt; data.length; i++) {
-                var d = data[i];
-                d.complete = 1;
-                d.fid = &quot;restore_&quot; + i;
-                var r = self._createFileTr(tbl, d);
-                self._tagComplete(r, d.url);
-            }
-            if (d) {
-                self._listWrap.show();
-                self._syncStatus();
-            }
-        },
-        _tagComplete: function (tr, url) {
-            var self = this;
-            var prefixCls = self.editor.get('prefixCls');
-            tr.attr(&quot;url&quot;, url);
-            tr[0].className = replacePrefix(&quot;{prefixCls}editor-upload-complete&quot;, prefixCls);
-        },
-        _save: function () {
-            var self = this,
-                list = self._list,
-                trs = list.all(&quot;tr&quot;),
-                data = [];
-            var prefixCls = self.editor.get('prefixCls');
-            for (var i = 0; i &lt; trs.length; i++) {
-                var tr = $(trs[i]),
-                    url = tr.attr(&quot;url&quot;);
-                if (url) {
-                    var size = tr.one(replacePrefix(&quot;.{prefixCls}editor-upload-filesize&quot;, prefixCls)).html(),
-                        name = tr.one(replacePrefix(&quot;.{prefixCls}editor-upload-filename&quot;, prefixCls)).text();
-                    data.push({
-                        name: name,
-                        size: size,
-                        url: url
-                    });
-                }
-            }
-
-            localStorage.setItem(KEY, encodeURIComponent(Json.stringify(data)));
-
-        },
-        _getFilesSize: function (files) {
-            var n = 0;
-            for (var i in files) {
-
-                n++;
-            }
-            return n;
-        },
-        _createFileTr: function (tbl, f) {
-
-            /*
-             chrome not work !
-             kissy bug?
-             var row = $(&quot;&lt;tr fid='&quot; + id + &quot;'&gt;&quot;
-             + &quot;&lt;td class='{prefixCls}editor-upload-seq'&gt;&quot;
-             + &quot;&lt;/td&gt;&quot;
-             + &quot;&lt;td&gt;&quot;
-             + f.name
-             + &quot;&lt;/td&gt;&quot;
-             + &quot;&lt;td&gt;&quot;
-             + size
-             + &quot;k&lt;/td&gt;&quot; +
-             &quot;&lt;td class='{prefixCls}editor-upload-progress'&gt;&quot; +
-             &quot;&lt;/td&gt;&quot; +
-             &quot;&lt;td&gt;&quot; +
-             &quot;&lt;a href='#' &quot; +
-             &quot;class='{prefixCls}editor-upload-insert' &quot; +
-             &quot;style='display:none'&gt;&quot; +
-             &quot;[插入]&lt;/a&gt; &amp;nbsp; &quot; +
-             &quot;&lt;a href='#' class='{prefixCls}editor-upload-delete'&gt;[删除]&lt;/a&gt; &amp;nbsp; &quot;
-             +
-             &quot;&lt;/td&gt;&quot;
-             + &quot;&lt;/tr&gt;&quot;).appendTo(list);
-             */
-
-
-            var self = this,
-                editor = self.editor,
-                progressBars = self.progressBars,
-                id = f.fid,
-                row = tbl.insertRow(-1);
-            var prefixCls = self.editor.get('prefixCls');
-            Dom.attr(row, &quot;fid&quot;, id);
-            var cell = row.insertCell(-1);
-            Dom.attr(cell, &quot;class&quot;, replacePrefix('{prefixCls}editor-upload-seq', prefixCls));
-            cell = row.insertCell(-1);
-            if (f.name.length &gt; 18) {
-                f.name = f.name.substring(0, 18) + &quot;...&quot;;
-            }
-            Dom.html(cell, &quot;&lt;div style='width:160px;overflow:hidden;'&gt;&lt;div style='width:9999px;text-align:left;'&gt;&quot; + f.name + &quot;&lt;/div&gt;&lt;/div&gt;&quot;);
-            Dom.attr(cell, &quot;class&quot;, replacePrefix('{prefixCls}editor-upload-filename', prefixCls));
-            cell = row.insertCell(-1);
-            Dom.html(cell, f.size);
-            Dom.attr(cell, &quot;class&quot;, replacePrefix('{prefixCls}editor-upload-filesize', prefixCls));
-            cell = row.insertCell(-1);
-            Dom.attr(cell, &quot;class&quot;, replacePrefix('{prefixCls}editor-upload-progress', prefixCls));
-            cell = row.insertCell(-1);
-            Dom.html(cell, replacePrefix(&quot;&lt;a class='{prefixCls}editor-upload-moveup' href='#'&gt;[上移]&lt;/a&gt; &amp;nbsp; &quot; +
-                &quot;&lt;a class='{prefixCls}editor-upload-movedown' href='#'&gt;[下移]&lt;/a&gt; &amp;nbsp; &quot; +
-                &quot;&lt;a href='#' class='{prefixCls}editor-upload-insert' style='&quot; +
-                (f.complete ? &quot;&quot; : &quot;display:none;&quot;) +
-                &quot;' &quot; +
-
-                &quot;&gt;&quot; +
-                &quot;[插入]&lt;/a&gt; &amp;nbsp; &quot; +
-                &quot;&lt;a href='#' class='{prefixCls}editor-upload-delete'&gt;&quot; +
-                &quot;[删除]&quot; +
-                &quot;&lt;/a&gt; &amp;nbsp;&quot;, prefixCls));
-
-            var rowNode = $(row);
-
-            if (parseInt(f.size) &gt; self._sizeLimit) {
-                self._uploadError({
-                    id: id,
-                    _custom: 1,
-                    status: PIC_SIZE_LIMIT_WARNING
-                        .replace(/n/, self._sizeLimit / 1000)
-                });
-                self.uploader['removeFile'](id);
-
+            if (self.selectedTd) {
+                d.cellpaddingHolder.show();
             } else {
-                progressBars[id] = new ProgressBar({
-                    container: rowNode.one(replacePrefix(&quot;.{prefixCls}editor-upload-progress&quot;, prefixCls)),
-                    width: &quot;100px&quot;,
-                    height: &quot;15px&quot;,
-                    prefixCls: editor.get('prefixCls')
-                });
-                if (f.complete) {
-                    progressBars[id].set(&quot;progress&quot;, 100);
-                }
+                d.cellpaddingHolder.hide();
             }
-
-            return rowNode;
+            self.dialog.show();
         },
-        _onSelect: function (ev) {
-            var self = this,
-                uploader = self.uploader,
-                list = self._list,
-                curNum = 0,
-            //当前队列的所有文件，连续选择的话累计！！！
-                files = ev['fileList'],
-                available = self._numberLimit, i;
-
-            if (files) {
-                //去除已经 ui 显示出来的
-                var trs = list.children(&quot;tr&quot;);
-                for (i = 0; i &lt; trs.length; i++) {
-                    var tr = trs[i], fid = Dom.attr(tr, &quot;fid&quot;);
-                    fid &amp;&amp; files[fid] &amp;&amp; (delete files[fid]);
-                }
-                //限额-目前ui的
-                available = self._numberLimit - trs.length;
-
-                var l = self._getFilesSize(files);
-
-                if (l &gt; available) {
-                    alert(PIC_NUM_LIMIT_WARNING.replace(/n/, self._numberLimit));
-                }
-
-                if (l &gt;= available) {
-                    self.ddisable();
-                }
-
-                self._listWrap.show();
-                var tbl = self._list[0];
-                //files 是这次新选择的啦！
-                //新选择的随即删除一些
-                for (i in files) {
-
-                    curNum++;
-                    var f = files[i],
-                        size = Math.floor(f.size / 1000),
-                        id = f.id;
-
-                    if (curNum &gt; available) {
-
-                        uploader['removeFile'](id);
-                        continue;
-                    }
-                    self._createFileTr(tbl, {
-                        size: size + &quot;k&quot;,
-                        fid: id,
-                        name: f.name
-                    });
-                }
-                self._syncStatus();
-            }
+        _prepareTableShow: function () {
+            var self = this;
+            self._tableInit();
         },
-
-        _ready: function () {
-            var self = this,
-                uploader = self.uploader,
-                up = self.up,
-                btn = self.btn,
-                flashPos = self.flashPos,
-                normParams = Editor.Utils.normParams;
-            var prefixCls = self.editor.get('prefixCls');
-            if (&quot;ready&quot; != uploader['getReady']()) {
-                self.tipSpan.html(&quot;您的浏览器不支持该功能，&quot; +
-                    &quot;请升级当前浏览器，&quot; +
-                    &quot;并同时 &lt;a href='http://get.adobe.com/cn/flashplayer/'&quot; +
-                    &quot; target='_blank'&gt;点此升级&lt;/a&gt; flash 插件&quot;);
-                flashPos.offset({
-                    left: -9999,
-                    top: -9999
-                });
-                return;
-            }
-            btn.removeClass(replacePrefix(&quot;{prefixCls}editor-button-disabled&quot;, prefixCls), undefined);
-            flashPos.offset(btn.offset());
-            uploader['setAllowMultipleFiles'](true);
-            uploader['setFileFilters']([
-                {
-                    ext: &quot;*.jpeg;*.jpg;*.png;*.gif&quot;,
-                    &quot;desc&quot;: &quot;图片文件( png,jpg,jpeg,gif )&quot;
-                }
-            ]);
-            up.detach();
-            up.on(&quot;click&quot;, function (ev) {
-                uploader['uploadAll'](self._ds,
-                    &quot;POST&quot;,
-                    normParams(self._dsp),
-                    self._fileInput);
-                ev.halt();
-            });
-            self.addRes(up);
+        show: function (cfg) {
+            var self = this;
+            S.mix(self, cfg);
+            self._prepareTableShow();
+        },
+        destroy: function () {
+            destroyRes.call(this);
         }
     });
 
-    return MultiUploadDialog;
+    return TableDialog;
 }, {
-    requires: ['editor',
-        'overlay',
-        'component/plugin/drag',
-        '../progressbar',
-        '../dialog',
-        '../flash-bridge',
-        '../local-storage',
-        'swf']
+    requires: ['editor', '../dialog', '../menubutton']
 });</pre>
 </body>
 </html>

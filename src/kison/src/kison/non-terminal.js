@@ -1,12 +1,14 @@
 /**
+ * @ignore
  * NonTerminal Set for KISON
  * @author yiminghe@gmail.com
  */
 KISSY.add("kison/non-terminal", function (S, Base) {
-
-    return Base.extend({
-
-    }, {
+    /**
+     * non-terminal symbol for grammar
+     * @class KISSY.Kison.NonTerminal
+     */
+    return Base.extend({}, {
         ATTRS:{
             productions:{
                 value:[]

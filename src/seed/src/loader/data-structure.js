@@ -64,6 +64,10 @@
                 );
         },
 
+        /**
+         * get package uri
+         * @returns {KISSY.Uri}
+         */
         getPackageUri: function () {
             var self = this;
             if (self.packageUri) {
@@ -89,7 +93,7 @@
         },
 
         /**
-         *  whether request mod file without package name
+         *  whether request mod file without insert package name into package base
          *  @return {Boolean}
          */
         isIgnorePackageNameInUri: function () {
@@ -182,6 +186,10 @@
             return v;
         },
 
+        /**
+         * Get the fullpath uri of current module if load dynamically
+         * @return {KISSY.Uri}
+         */
         getFullPathUri: function () {
             var self = this,
                 t,
@@ -284,7 +292,7 @@
         },
 
         /**
-         * Get module objects required by this one
+         * Get module objects required by this module
          * @return {KISSY.Loader.Module[]}
          */
         'getRequiredMods': function () {
@@ -308,6 +316,10 @@
             return requiresWithAlias;
         },
 
+        /**
+         * Get module names required by this module
+         * @return {KISSY.Loader.Module[]}
+         */
         getNormalizedRequires: function () {
             var self = this,
                 normalizedRequires,
@@ -344,7 +356,7 @@
         return name + min + extname;
     }
 
-    var systemPackage = new Loader.Package({
+    var systemPackage = new Package({
         name: '',
         runtime: S
     });

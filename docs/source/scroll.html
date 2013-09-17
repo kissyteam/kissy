@@ -32,6 +32,7 @@ KISSY.add('dd/plugin/scroll', function (S, DD, Base, Node) {
 
 <span id='KISSY-DD-Plugin-Scroll'>    /**
 </span>     * @class KISSY.DD.Plugin.Scroll
+     * @extends KISSY.Base
      * Scroll plugin to make parent node scroll while dragging.
      */
     return Base.extend({
@@ -238,7 +239,7 @@ KISSY.add('dd/plugin/scroll', function (S, DD, Base, Node) {
         ATTRS: {
 <span id='KISSY-DD-Plugin-Scroll-cfg-node'>            /**
 </span>             * node to be scrolled while dragging
-             * @cfg {window|String|HTMLElement} node
+             * @cfg {Window|String|HTMLElement} node
              */
 <span id='global-property-node'>            /**
 </span>             * @ignore

@@ -98,7 +98,7 @@ KISSY.add("component/extension/delegate-children", function (S, Node, Manager) {
         /**
          * Get child component which contains current event target node.
          * @protected
-         * @param {KISSY.Event.DomEventObject} e event
+         * @param {KISSY.Event.DomEvent.Object} e event
          * @return {KISSY.Component.Control}
          */
         getOwnerControl: function (e) {

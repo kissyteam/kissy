@@ -4,7 +4,6 @@
  * @author yiminghe@gmail.com
  */
 (function (S, undefined) {
-
     var PROMISE_VALUE = '__promise_value',
         logger= S.getLogger('s/promise'),
         PROMISE_PENDINGS = '__promise_pendings';
@@ -47,7 +46,7 @@
 
     /**
      * @class KISSY.Defer
-     * Defer constructor For KISSY,implement Promise specification.
+     * Defer constructor For KISSY, implement Promise specification.
      */
     function Defer(promise) {
         var self = this;
@@ -194,6 +193,13 @@
         }
     };
 
+    /**
+     * Reject promise
+     * @param {String|KISSY.Promise.Reject} reason reject reason
+     * @class KISSY.Promise.Reject
+     * @extend KISSY.Promise
+     * @private
+     */
     function Reject(reason) {
         if (reason instanceof Reject) {
             return reason;
@@ -208,13 +214,8 @@
 
     S.extend(Reject, Promise);
 
-    /**
-     * wrap for promiseWhen
-     * @param value
-     * @ignore
-     * @param fulfilled
-     * @param [rejected]
-     */
+
+    // wrap for promiseWhen
     function when(value, fulfilled, rejected) {
         var defer = new Defer(),
             done = 0;
@@ -303,12 +304,7 @@
     KISSY.Promise = Promise;
     Promise.Defer = Defer;
 
-    S.mix(Promise,
-        /**
-         * @class KISSY.PromiseMix
-         * @override KISSY.Promise
-         */
-        {
+    S.mix(Promise,{
             /**
              * register callbacks when obj as a promise is resolved
              * or call fulfilled callback directly when obj is not a promise object
@@ -336,6 +332,7 @@
              *
              * @static
              * @method
+             * @member KISSY.Promise
              */
             when: when,
             /**
@@ -344,6 +341,7 @@
              * @static
              * @param obj the tested object
              * @return {Boolean}
+             * @member KISSY.Promise
              */
             isPromise: isPromise,
             /**
@@ -352,6 +350,7 @@
              * @static
              * @param obj the tested object
              * @return {Boolean}
+             * @member KISSY.Promise
              */
             isResolved: isResolved,
             /**
@@ -360,6 +359,7 @@
              * @static
              * @param obj the tested object
              * @return {Boolean}
+             * @member KISSY.Promise
              */
             isRejected: isRejected,
             /**
@@ -369,6 +369,7 @@
              * @param {KISSY.Promise[]} promises list of promises
              * @static
              * @return {KISSY.Promise}
+             * @member KISSY.Promise
              */
             all: function (promises) {
                 var count = promises.length;

@@ -88,7 +88,7 @@ KISSY.add('event/dom/base/object', function (S, BaseEvent, undefined) {
                         /**
                          * deltaX of mousewheel event
                          * @property deltaX
-                         * @member KISSY.Event.DomEventObject
+                         * @member KISSY.Event.DomEvent.Object
                          */
                         event.deltaX = deltaX;
                     }
@@ -97,7 +97,7 @@ KISSY.add('event/dom/base/object', function (S, BaseEvent, undefined) {
                         /**
                          * deltaY of mousewheel event
                          * @property deltaY
-                         * @member KISSY.Event.DomEventObject
+                         * @member KISSY.Event.DomEvent.Object
                          */
                         event.deltaY = deltaY;
                     }
@@ -106,7 +106,7 @@ KISSY.add('event/dom/base/object', function (S, BaseEvent, undefined) {
                         /**
                          * delta of mousewheel event
                          * @property delta
-                         * @member KISSY.Event.DomEventObject
+                         * @member KISSY.Event.DomEvent.Object
                          */
                         event.delta = delta;
                     }
@@ -175,8 +175,9 @@ KISSY.add('event/dom/base/object', function (S, BaseEvent, undefined) {
      * copied over and normalized to the new event object
      * according to [W3C standards](http://www.w3.org/TR/dom/#event).
      *
-     * @class KISSY.Event.DomEventObject
+     * @class KISSY.Event.DomEvent.Object
      * @extends KISSY.Event.Object
+     * @private
      * @param originalEvent native dom event
      */
     function DomEventObject(originalEvent) {

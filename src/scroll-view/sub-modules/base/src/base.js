@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * scroll-view control
  * @author yiminghe@gmail.com
  */
@@ -25,6 +26,11 @@ KISSY.add('scroll-view/base', function (S, Node, Anim, Container, Render, undefi
         anim.scrollView.set(fx.prop, fx.val);
     }
 
+    /**
+     * Make container scrollable
+     * @class KISSY.ScrollView
+     * @extend KISSY.Component.Container
+     */
     return Container.extend({
         initializer: function () {
             this.scrollAnims = [];

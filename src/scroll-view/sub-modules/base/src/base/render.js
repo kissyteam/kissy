@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * scroll-view render
  * @author yiminghe@gmail.com
  */

@@ -4,15 +4,8 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add('component/container/render', function (S, Control, Manager) {
-    /**
-     * User KISSY.Component.Container.getDefaultRender() to get this class
-     * @class KISSY.Component.Container.Render
-     */
     return Control.getDefaultRender().extend([], {
-        /**
-         * decorate child element from parent component's root element.
-         * @protected
-         */
+        // decorate child element from parent component's root element.
         decorateDom: function () {
             var self = this,
                 childrenContainerEl = self.getChildrenContainerEl(),
@@ -34,11 +27,8 @@ KISSY.add('component/container/render', function (S, Control, Manager) {
             });
             control.set('children', childrenComponents);
         },
-        /**
-         * Return the dom element into which child component to be rendered.
-         * @protected
-         * @return {KISSY.NodeList}
-         */
+
+        // Return the dom element into which child component to be rendered.
         getChildrenContainerEl: function () {
             return this.$el;
         }

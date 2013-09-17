@@ -1,5 +1,6 @@
 /**
  * combination of menu and button ,similar to native select
+ * @ignore
  * @author yiminghe@gmail.com
  */
 KISSY.add("menubutton/control", function (S, Node, Button, MenuButtonRender, Menu, undefined) {
@@ -60,7 +61,7 @@ KISSY.add("menubutton/control", function (S, Node, Button, MenuButtonRender, Men
          * If drop down menu is visible then handle event to menu.
          * Returns true if the event was handled, falsy otherwise.
          * Protected, should only be overridden by subclasses.
-         * @param {KISSY.Event.DomEventObject} e key event to handle.
+         * @param {KISSY.Event.DomEvent.Object} e key event to handle.
          * @return {Boolean|undefined} True Whether the key event was handled.
          * @protected
          */
@@ -116,7 +117,7 @@ KISSY.add("menubutton/control", function (S, Node, Button, MenuButtonRender, Men
         /**
          * Handles blur event.
          * When it loses keyboard focus, close the drop dow menu.
-         * @param {KISSY.Event.DomEventObject} e Blur event.
+         * @param {KISSY.Event.DomEvent.Object} e Blur event.
          * Protected, should only be overridden by subclasses.
          * @protected
          *
@@ -189,7 +190,10 @@ KISSY.add("menubutton/control", function (S, Node, Button, MenuButtonRender, Men
             /**
              * Whether drop down menu is same width with button.
              * Defaults to: true.
-             * @type {Boolean}
+             * @cfg {Boolean} matchElWidth
+             */
+            /**
+             * @ignore
              */
             matchElWidth: {
                 value: true
@@ -199,14 +203,27 @@ KISSY.add("menubutton/control", function (S, Node, Button, MenuButtonRender, Men
              * Whether hide drop down menu when click drop down menu item.
              * eg: u do not want to set true when menu has checked menuitem.
              * Defaults to: false
-             * @type {Boolean}
+             * @cfg {Boolean} collapseOnClick
+             */
+            /**
+             * @ignore
              */
             collapseOnClick: {
                 value: false
             },
             /**
              * Drop down menu associated with this menubutton.
-             * @type {Menu}
+             * @cfg {KISSY.Menu|Object} menu
+             */
+
+            /**
+             * Drop down menu associated with this menubutton.
+             * @property {KISSY.Menu} menu
+             */
+
+
+            /**
+             * @ignore
              */
             menu: {
                 value: {},
@@ -227,12 +244,16 @@ KISSY.add("menubutton/control", function (S, Node, Button, MenuButtonRender, Men
 
             /**
              * Whether drop menu is shown.
-             * @type {Boolean}
+             * @property {Boolean} collapsed
+             */
+            /**
+             * @ignore
              */
             collapsed: {
                 value: false,
                 view: 1
             },
+
             xrender: {
                 value: MenuButtonRender
             }

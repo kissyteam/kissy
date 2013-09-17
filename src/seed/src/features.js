@@ -4,7 +4,6 @@
  * @author yiminghe@gmail.com
  */
 (function (S, undefined) {
-
     var Env = S.Env,
         win = Env.host,
         UA = S.UA,
@@ -60,7 +59,7 @@
     }
 
     /**
-     * test browser features
+     * browser features detection
      * @class KISSY.Features
      * @private
      * @singleton
@@ -68,8 +67,7 @@
     S.Features = {
         // http://blogs.msdn.com/b/ie/archive/2011/09/20/touch-input-for-ie10-and-metro-style-apps.aspx
         /**
-         * @ignore
-         * whether support win8 pointer event.
+         * whether support microsoft pointer event.
          * @type {Boolean}
          */
         isMsPointerSupported: function () {
@@ -78,17 +76,24 @@
 
         /**
          * whether support touch event.
-         * @method
          * @return {Boolean}
          */
         isTouchEventSupported: function () {
             return isTouchEventSupportedState;
         },
 
+        /**
+         * whether support device motion event
+         * @returns {boolean}
+         */
         isDeviceMotionSupported: function () {
             return !!win['DeviceMotionEvent'];
         },
 
+        /**
+         * whether support hashchange event
+         * @returns {boolean}
+         */
         'isHashChangeSupported': function () {
             // ie8 支持 hashchange
             // 但 ie8 以上切换浏览器模式到 ie7（兼容模式），
@@ -96,40 +101,77 @@
             return ( 'onhashchange' in win) && (!ie || ie > 7);
         },
 
+        /**
+         * whether support css transition
+         * @returns {boolean}
+         */
         'isTransitionSupported': function () {
             return transitionPrefix !== undefined;
         },
 
+        /**
+         * whether support css transform
+         * @returns {boolean}
+         */
         'isTransformSupported': function () {
             return transformPrefix !== undefined;
         },
 
+        /**
+         * whether support class list api
+         * @returns {boolean}
+         */
         'isClassListSupported': function () {
             return isClassListSupportedState
         },
 
+        /**
+         * whether support querySelectorAll
+         * @returns {boolean}
+         */
         'isQuerySelectorSupported': function () {
             // force to use js selector engine
             return !S.config('dom/selector') &&
                 isQuerySelectorSupportedState;
         },
 
+        /**
+         * whether is ie and ie version is less than specified version
+         * @param {Number} v specified ie version to be compared
+         * @returns {boolean}
+         */
         'isIELessThan': function (v) {
-            return ie && ie < v;
+            return !!(ie && ie < v);
         },
 
+        /**
+         * get css transition browser prefix if support css transition
+         * @returns {String}
+         */
         'getTransitionPrefix': function () {
             return transitionPrefix;
         },
 
+        /**
+         * get css transform browser prefix if support css transform
+         * @returns {String}
+         */
         'getTransformPrefix': function () {
             return transformPrefix;
         },
 
+        /**
+         * get css transition property if support css transition
+         * @returns {String}
+         */
         'getTransitionProperty': function () {
             return transitionProperty;
         },
 
+        /**
+         * get css transform property if support css transform
+         * @returns {String}
+         */
         'getTransformProperty': function () {
             return transformProperty;
         }

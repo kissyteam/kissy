@@ -1,5 +1,6 @@
 /**
  * menubutton
+ * @ignore
  * @author yiminghe@gmail.com
  */
 KISSY.add("menubutton", function(S, MenuButton, Select, Option) {

@@ -77,39 +77,39 @@ KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, DomEvent, Single
             pageX: touch.pageX,
             pageY: touch.pageY,
             which: 1,
-<span id='KISSY-DomEvent-DomEventObject-property-touch'>            /**
+<span id='KISSY-Event-DomEvent-Object-property-touch'>            /**
 </span>             *
              * native touch property **only for touch event**.
              *
              * @property touch
-             * @member KISSY.DomEvent.DomEventObject
+             * @member KISSY.Event.DomEvent.Object
              */
             touch: touch,
-<span id='KISSY-DomEvent-DomEventObject-property-direction'>            /**
+<span id='KISSY-Event-DomEvent-Object-property-direction'>            /**
 </span>             *
              * direction property **only for event swipe/singleTap/doubleTap**.
              *
              * can be one of 'up' 'down' 'left' 'right'
              * @property {String} direction
-             * @member KISSY.DomEvent.DomEventObject
+             * @member KISSY.Event.DomEvent.Object
              */
             direction: direction,
-<span id='KISSY-DomEvent-DomEventObject-property-distance'>            /**
+<span id='KISSY-Event-DomEvent-Object-property-distance'>            /**
 </span>             *
              * distance property **only for event swipe**.
              *
              * the distance swipe gesture costs
              * @property {Number} distance
-             * @member KISSY.DomEvent.DomEventObject
+             * @member KISSY.Event.DomEvent.Object
              */
             distance: distance,
-<span id='KISSY-DomEvent-DomEventObject-property-duration'>            /**
+<span id='KISSY-Event-DomEvent-Object-property-duration'>            /**
 </span>             *
              * duration property **only for touch event**.
              *
              * the duration swipe gesture costs
              * @property {Number} duration
-             * @member KISSY.DomEvent.DomEventObject
+             * @member KISSY.Event.DomEvent.Object
              */
             duration: (e.timeStamp - self.startTime) / 1000
         });

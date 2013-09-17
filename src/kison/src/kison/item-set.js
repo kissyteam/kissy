@@ -1,14 +1,15 @@
 /**
+ * @ignore
  * Item Set for KISON
  * @author yiminghe@gmail.com
  */
 KISSY.add("kison/item-set", function (S, Base) {
+    /**
+     * ItemSet for grammar
+     * @class KISSY.Kison.ItemSet
+     */
     return Base.extend({
-
-        /**
-         * Insert item by order
-         * @param item
-         */
+        // Insert item by order
         addItem: function (item) {
             var items = this.get("items");
             for (var i = 0; i < items.length; i++) {
@@ -73,7 +74,6 @@ KISSY.add("kison/item-set", function (S, Base) {
             reverseGotos[symbol] = reverseGotos[symbol] || [];
             reverseGotos[symbol].push(item);
         }
-
     }, {
         ATTRS: {
             items: {

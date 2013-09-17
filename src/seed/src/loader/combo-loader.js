@@ -170,13 +170,8 @@
         return str1.slice(0, i).join('/') + '/';
     }
 
-    /**
-     * Returns hash code of a string
-     * djb2 algorithm
-     * @param {String} str string to be hashed
-     * @private
-     * @return {String} the hash code
-     */
+
+   // Returns hash code of a stringdjb2 algorithm
     function getHash(str) {
         var hash = 5381,
             i;
@@ -187,10 +182,9 @@
         return hash + '';
     }
 
-    // ----------------------- private end
     S.augment(ComboLoader, {
         /**
-         * use, _forceSync for kissy.js, initialize dom,event sync
+         * load modules asynchronously
          */
         use: function (normalizedModNames) {
             var self = this,
@@ -262,10 +256,6 @@
 
         /**
          * calculate dependency
-         * @param modNames
-         * @param [cache]
-         * @param ret
-         * @return {Array}
          */
         calculate: function (modNames, cache, ret) {
             var i,
@@ -312,6 +302,9 @@
             return ret;
         },
 
+        /**
+         * get combo mods for modNames
+         */
         getComboMods: function (modNames, comboPrefixes) {
             var comboMods = {},
                 packageUri,
@@ -378,8 +371,6 @@
 
         /**
          * Get combo urls
-         * @param modNames
-         * @return {Object}
          */
         getComboUrls: function (modNames) {
             var runtime = this.runtime,

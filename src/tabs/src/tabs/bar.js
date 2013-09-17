@@ -4,12 +4,12 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add("tabs/bar", function (S, Toolbar, BarRender, undefined) {
-
     /**
-     * @ignore
+     * tab bar container for tab tabs.xclass: 'tabs-bar'.
+     * @class  KISSY.Tabs.Bar
+     * @extends KISSY.Toolbar
      */
     var TabBar = Toolbar.extend({
-
         bindUI: function () {
             var self = this;
             self.on("afterSelectedChange", function (e) {
@@ -96,7 +96,6 @@ KISSY.add("tabs/bar", function (S, Toolbar, BarRender, undefined) {
     };
 
     return TabBar;
-
 }, {
     requires: ['toolbar', './bar-render']
 });

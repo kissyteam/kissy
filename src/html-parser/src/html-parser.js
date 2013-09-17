@@ -1,6 +1,6 @@
 /**
- * @ignore
  * HtmlParser for KISSY (Editor)
+ * @ignore
  * @author yiminghe@gmail.com
  */
 KISSY.add("html-parser", function (S, DTD, Lexer, Parser, BasicWriter, BeautifyWriter, MinifyWriter, Filter, CData, Comment, Node, Tag, Text) {
@@ -44,6 +44,7 @@ KISSY.add("html-parser", function (S, DTD, Lexer, Parser, BasicWriter, BeautifyW
 });
 
 /**
+ * @ignore
  * refer
  *  - http://html-parser.sourceforge.net/
  *  - http://www.w3.org/TR/html5/syntax.html

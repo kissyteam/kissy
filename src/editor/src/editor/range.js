@@ -111,13 +111,11 @@ KISSY.add("editor/range", function (S, Editor, Utils, Walker, ElementPath) {
     }
 
 
-    /**
-     * Extract html content within range.
-     * @param {KISSY.Editor} self
-     * @param {Number} action
-     * 0 : delete
-     * 1 : extract
-     * 2 : clone
+    /*
+      Extract html content within range.
+      0 : delete
+      1 : extract
+      2 : clone
      */
     function execContentsAction(self, action) {
         var startNode = self.startContainer,
@@ -699,7 +697,7 @@ KISSY.add("editor/range", function (S, Editor, Utils, Walker, ElementPath) {
 
         /**
          * Clone current range.
-         * @return {Editor.Range}
+         * @return {KISSY.Editor.Range}
          */
         clone: function () {
             var self = this,

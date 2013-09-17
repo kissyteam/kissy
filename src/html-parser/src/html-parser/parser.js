@@ -9,7 +9,7 @@ KISSY.add("html-parser/parser", function (S, dtd, Tag, Fragment, Cursor, Lexer, 
      * Html Parse Class
      * @param html
      * @param opts
-     * @class KISSY.HtmlParse.Parse
+     * @class KISSY.HtmlParser.Parser
      */
     function Parser(html, opts) {
         // fake root node

@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * LALR grammar parser
  * @author yiminghe@gmail.com
  */
@@ -60,8 +61,11 @@ KISSY.add("kison/grammar", function (S, Base, Utils, Item, ItemSet, NonTerminal,
         }
     }
 
+    /**
+     * grammar generator
+     * @class KISSY.Kison.Grammar
+     */
     return Base.extend({
-
         build: function () {
             var self = this,
                 lexer = self.lexer,
@@ -366,10 +370,7 @@ KISSY.add("kison/grammar", function (S, Base, Utils, Item, ItemSet, NonTerminal,
 
         },
 
-        /**
-         * build item set.
-         * algorithm: 4.53
-         */
+        // algorithm: 4.53
         buildItemSet: function () {
             var self = this,
                 lexer = self.lexer,
@@ -841,6 +842,7 @@ KISSY.add("kison/grammar", function (S, Base, Utils, Item, ItemSet, NonTerminal,
 });
 
 /**
+ * @ignore
  * Refer
  *   - Compilers: Principles,Techniques and Tools.
  *   - http://zaach.github.com/jison/

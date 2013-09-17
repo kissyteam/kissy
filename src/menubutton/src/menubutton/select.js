@@ -50,10 +50,8 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
         });
     }
 
-    /**
-     *  different from menubutton by highlighting the currently selected option
-     *  on open menu.
-     */
+
+    // different from menubutton by highlighting the currently selected option on open menu.
     function _handleMenuShow(e) {
         var self = this,
             selectedItem = getSelectedItem(self),

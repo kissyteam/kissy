@@ -7,7 +7,8 @@ KISSY.add('event/dom/base/gesture', function () {
 
     /**
      * gesture for event
-     * @enum {String} KISSY.Event.Gesture
+     * @enum {String} KISSY.Event.DomEvent.Gesture
+     * @alias KISSY.Event.Gesture
      */
     return {
         /**

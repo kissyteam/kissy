@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * pull-to-refresh plugin for KISSY scroll-view
  * @author yiminghe@gmail.com
  */
@@ -7,8 +8,12 @@ KISSY.add('scroll-view/plugin/pull-to-refresh', function (S, Base) {
 
     var transformProperty = S.Features.getTransformProperty();
 
+    /**
+     * pull to refresh plugin for ScrollView
+     * @class KISSY.ScrollView.Plugin.PullToRefresh
+     * @extend KISSY.Base
+     */
     return Base.extend({
-
         pluginId: this.getName(),
 
         _onSetState: function (e) {

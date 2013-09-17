@@ -4,14 +4,14 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add("tabs/tab", function (S, Button, TabRender) {
-
     /**
-     * KISSY.Tabs.Tab
+     * KISSY.Tabs.Tab. xclass:'tabs-tab'
      * @class KISSY.Tabs.Tab
      * @extends KISSY.Button
      */
     return Button.extend({
         isTabsTab: true,
+
         bindUI: function () {
             this.on("click", function () {
                 this.set("selected", true);
@@ -41,7 +41,6 @@ KISSY.add("tabs/tab", function (S, Button, TabRender) {
         },
         xclass: 'tabs-tab'
     });
-
 }, {
     requires: ['button', './tab-render']
 });

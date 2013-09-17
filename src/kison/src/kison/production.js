@@ -1,10 +1,14 @@
 /**
+ * @ignore
  * Production for KISON
  * @author yiminghe@gmail.com
  */
 KISSY.add("kison/production", function (S, Base) {
+    /**
+     * production for grammar
+     * @class KISSY.Kison.Production
+     */
    return Base.extend({
-
         equals: function (other) {
             var self = this;
             if (!S.equals(other.get("rhs"), self.get("rhs"))) {
@@ -28,7 +32,6 @@ KISSY.add("kison/production", function (S, Base) {
             }
             return this.get("symbol") + " => " + rhsStr;
         }
-
     }, {
         ATTRS: {
             firsts: {

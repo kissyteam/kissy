@@ -6,7 +6,7 @@
 KISSY.add('event/dom/base/observer', function (S, Special, BaseEvent) {
     /**
      * observer for dom event
-     * @class KISSY.Event.DomEventObserver
+     * @class KISSY.Event.DomEvent.Observer
      * @extends KISSY.Event.Observer
      * @private
      */
@@ -57,11 +57,9 @@ KISSY.add('event/dom/base/observer', function (S, Special, BaseEvent) {
 
             return ret;
         }
-
     });
 
     return DomEventObserver;
-
 }, {
     requires: ['./special', 'event/base']
 });

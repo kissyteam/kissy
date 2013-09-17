@@ -73,7 +73,7 @@ KISSY.add('dom/base/api', function (S) {
             /**
              * Whether has been set a custom domain.
              * Note not perfect: localhost:8888, domain='localhost'
-             * @param {window} [win] Test window. Default current window.
+             * @param {Window} [win] Test window. Default current window.
              * @return {Boolean}
              */
             isCustomDomain: function (win) {
@@ -88,7 +88,7 @@ KISSY.add('dom/base/api', function (S) {
             /**
              * Get appropriate src for new empty iframe.
              * Consider custom domain.
-             * @param {window} [win] Window new iframe will be inserted into.
+             * @param {Window} [win] Window new iframe will be inserted into.
              * @return {String} Src for iframe.
              */
             getEmptyIframeSrc: function (win) {
@@ -111,8 +111,8 @@ KISSY.add('dom/base/api', function (S) {
              * Return corresponding window if elem is document or window.
              * Return global window if elem is undefined
              * Else return false.
-             * @param {undefined|window|HTMLDocument} [elem]
-             * @return {window|Boolean}
+             * @param {undefined|Window|HTMLDocument} [elem]
+             * @return {Window|Boolean}
              */
             getWindow: function (elem) {
                 if (!elem) {
@@ -137,7 +137,7 @@ KISSY.add('dom/base/api', function (S) {
 
             /**
              * Return corresponding document of this element.
-             * @param {Element|window|HTMLDocument} [elem]
+             * @param {HTMLElement|Window|HTMLDocument} [elem]
              * @return {HTMLDocument}
              */
             getDocument: function (elem) {

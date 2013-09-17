@@ -255,6 +255,6 @@ KISSY.add("editor/plugin/overlay", function(S, Editor, Overlay, focusFix) {
   prefixCls: {
   value: "ks-editor-"}, 
   "zIndex": {
-  value: Editor.baseZIndex(Editor.zIndexManager.OVERLAY)}}});
+  value: Editor.baseZIndex(Editor.ZIndexManager.OVERLAY)}}});
 }, {
   requires: ["editor", 'overlay', './focus-fix']});

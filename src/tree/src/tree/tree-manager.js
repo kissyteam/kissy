@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * tree management utils
  * @author yiminghe@gmail.com
  */
@@ -9,6 +10,10 @@ KISSY.add("tree/tree-manager", function (S, Node, DelegateChildrenExtension) {
         Gesture = Node.Gesture,
         isTouchEventSupported = Features.isTouchEventSupported();
 
+    /**
+     * Manage tree node for tree root
+     * @class KISSY.Tree.Manager
+     */
     function TreeManager() {
     }
 
@@ -16,7 +21,10 @@ KISSY.add("tree/tree-manager", function (S, Node, DelegateChildrenExtension) {
         /**
          * Whether show root node.
          * Defaults to: true.
-         * @type {Boolean}
+         * @cfg {Boolean} showRootNode
+         */
+        /**
+         * @ignore
          */
         showRootNode: {
             value: true,
@@ -24,8 +32,11 @@ KISSY.add("tree/tree-manager", function (S, Node, DelegateChildrenExtension) {
         },
         /**
          * Current selected tree node.
-         * @type {KISSY.Tree.Node}
+         * @property {KISSY.Tree.Node} selectedItem
          * @readonly
+         */
+        /**
+         * @ignore
          */
         selectedItem: {},
 

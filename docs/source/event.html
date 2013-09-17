@@ -21,13 +21,30 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add('event', function (S, DomEvent, CustomEvent) {
+<span id='KISSY-Event'>    /**
+</span>     * KISSY event utils. Provides event management.
+     * @class KISSY.Event
+     * @singleton
+     * @mixins KISSY.Event.DomEvent
+     */
+    var Event = S.Event = S.merge(DomEvent, {
+        DomEvent: DomEvent,
+        CustomEvent: CustomEvent
+    });
 
-    // compatibility
 
-    S.EventTarget = CustomEvent.Target;
+<span id='KISSY-Event-property-Target'>    /**
+</span>     * @member KISSY.Event
+     * @property {KISSY.Event.CustomEvent.Target} Target
+     */
 
-    return S.Event = S.merge(DomEvent, CustomEvent);
+<span id='KISSY-property-EventTarget'>    /**
+</span>     * @property {KISSY.Event.CustomEvent.Target} EventTarget
+     * @member KISSY
+     */
 
+   // compatibility
+    S.EventTarget = Event.Target = new CustomEvent.Target();
 }, {
     requires: ['event/dom', 'event/custom']
 });</pre>

@@ -21,10 +21,11 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(&quot;editor/plugin/local-storage&quot;, function (S, Editor, Overlay, FlashBridge) {
+    var ie = document.documentMode || S.UA.ie;
 
     // 原生或者已经定义过立即返回
     // ie 使用 flash 模拟的 localStorage，序列化性能不行
-    if (!S.UA['ie'] &amp;&amp; window.localStorage) {
+    if ((!ie || ie &gt; 8) &amp;&amp; window.localStorage) {
         //原生的立即可用
         return window.localStorage;
     }
@@ -49,7 +50,7 @@ KISSY.add(&quot;editor/plugin/local-storage&quot;, function (S, Editor, Overlay,
         width: &quot;0px&quot;,
         content: &quot;&lt;h1 style='&quot; + &quot;text-align:center;'&gt;请点击允许&lt;/h1&gt;&quot; +
             &quot;&lt;div class='storage-container'&gt;&lt;/div&gt;&quot;,
-        zIndex: Editor.baseZIndex(Editor.zIndexManager.STORE_FLASH_SHOW)
+        zIndex: Editor.baseZIndex(Editor.ZIndexManager.STORE_FLASH_SHOW)
     });
     o.render();
     o.show();
@@ -64,7 +65,7 @@ KISSY.add(&quot;editor/plugin/local-storage&quot;, function (S, Editor, Overlay,
         },
         attrs: {
             height: 138,
-            width:'100%'
+            width: '100%'
         },
         methods: [&quot;setItem&quot;, &quot;removeItem&quot;, &quot;getItem&quot;, &quot;setMinDiskSpace&quot;, &quot;getValueOf&quot;]
     });

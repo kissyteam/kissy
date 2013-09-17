@@ -21,11 +21,10 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(&quot;tabs/panel&quot;, function (S, Container, PanelRender) {
-
 <span id='KISSY-Tabs-Panel'>    /**
-</span>     * KISSY.Tabs.Panel
+</span>     * KISSY.Tabs.Panel.xclass: 'tabs-panel'.
      * @class  KISSY.Tabs.Panel
-     * @extends KISSY.Component.Control
+     * @extends KISSY.Component.Container
      */
     return Container.extend({
         isTabsPanel: 1
@@ -53,7 +52,6 @@ KISSY.add(&quot;tabs/panel&quot;, function (S, Container, PanelRender) {
         },
         xclass: 'tabs-panel'
     })
-
 }, {
     requires: ['component/container', './panel-render']
 });</pre>

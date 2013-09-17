@@ -16,7 +16,8 @@
 </head>
 <body onload="prettyPrint(); highlight();">
   <pre class="prettyprint lang-js"><span id='global-property-'>/**
-</span> * common render for node
+</span> * @ignore
+ * common render for node
  * @author yiminghe@gmail.com
  */
 KISSY.add(&quot;tree/node-render&quot;, function (S, Node, Container, TreeNodeTpl, ContentRenderExtension) {
@@ -182,7 +183,7 @@ KISSY.add(&quot;tree/node-render&quot;, function (S, Node, Container, TreeNodeTp
     });
 
 }, {
-    requires: ['node', 'component/container', './node-tpl', 'component/extension/content-render']
+    requires: ['node', 'component/container', './node-xtpl', 'component/extension/content-render']
 });</pre>
 </body>
 </html>

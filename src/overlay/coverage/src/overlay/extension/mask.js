@@ -268,19 +268,19 @@ if (! _$jscoverage['/overlay/extension/mask.js']) {
   _$jscoverage['/overlay/extension/mask.js'].lineData[140] = 0;
   _$jscoverage['/overlay/extension/mask.js'].lineData[143] = 0;
   _$jscoverage['/overlay/extension/mask.js'].lineData[146] = 0;
+  _$jscoverage['/overlay/extension/mask.js'].lineData[148] = 0;
   _$jscoverage['/overlay/extension/mask.js'].lineData[149] = 0;
   _$jscoverage['/overlay/extension/mask.js'].lineData[150] = 0;
-  _$jscoverage['/overlay/extension/mask.js'].lineData[151] = 0;
-  _$jscoverage['/overlay/extension/mask.js'].lineData[156] = 0;
+  _$jscoverage['/overlay/extension/mask.js'].lineData[155] = 0;
+  _$jscoverage['/overlay/extension/mask.js'].lineData[158] = 0;
   _$jscoverage['/overlay/extension/mask.js'].lineData[159] = 0;
   _$jscoverage['/overlay/extension/mask.js'].lineData[160] = 0;
   _$jscoverage['/overlay/extension/mask.js'].lineData[161] = 0;
-  _$jscoverage['/overlay/extension/mask.js'].lineData[162] = 0;
-  _$jscoverage['/overlay/extension/mask.js'].lineData[164] = 0;
+  _$jscoverage['/overlay/extension/mask.js'].lineData[163] = 0;
+  _$jscoverage['/overlay/extension/mask.js'].lineData[168] = 0;
   _$jscoverage['/overlay/extension/mask.js'].lineData[169] = 0;
   _$jscoverage['/overlay/extension/mask.js'].lineData[170] = 0;
-  _$jscoverage['/overlay/extension/mask.js'].lineData[171] = 0;
-  _$jscoverage['/overlay/extension/mask.js'].lineData[176] = 0;
+  _$jscoverage['/overlay/extension/mask.js'].lineData[175] = 0;
 }
 if (! _$jscoverage['/overlay/extension/mask.js'].functionData) {
   _$jscoverage['/overlay/extension/mask.js'].functionData = [];
@@ -312,30 +312,30 @@ if (! _$jscoverage['/overlay/extension/mask.js'].branchData) {
   _$jscoverage['/overlay/extension/mask.js'].branchData['137'][1] = new BranchData();
   _$jscoverage['/overlay/extension/mask.js'].branchData['139'] = [];
   _$jscoverage['/overlay/extension/mask.js'].branchData['139'][1] = new BranchData();
-  _$jscoverage['/overlay/extension/mask.js'].branchData['150'] = [];
-  _$jscoverage['/overlay/extension/mask.js'].branchData['150'][1] = new BranchData();
-  _$jscoverage['/overlay/extension/mask.js'].branchData['159'] = [];
-  _$jscoverage['/overlay/extension/mask.js'].branchData['159'][1] = new BranchData();
-  _$jscoverage['/overlay/extension/mask.js'].branchData['161'] = [];
-  _$jscoverage['/overlay/extension/mask.js'].branchData['161'][1] = new BranchData();
-  _$jscoverage['/overlay/extension/mask.js'].branchData['170'] = [];
-  _$jscoverage['/overlay/extension/mask.js'].branchData['170'][1] = new BranchData();
+  _$jscoverage['/overlay/extension/mask.js'].branchData['149'] = [];
+  _$jscoverage['/overlay/extension/mask.js'].branchData['149'][1] = new BranchData();
+  _$jscoverage['/overlay/extension/mask.js'].branchData['158'] = [];
+  _$jscoverage['/overlay/extension/mask.js'].branchData['158'][1] = new BranchData();
+  _$jscoverage['/overlay/extension/mask.js'].branchData['160'] = [];
+  _$jscoverage['/overlay/extension/mask.js'].branchData['160'][1] = new BranchData();
+  _$jscoverage['/overlay/extension/mask.js'].branchData['169'] = [];
+  _$jscoverage['/overlay/extension/mask.js'].branchData['169'][1] = new BranchData();
 }
-_$jscoverage['/overlay/extension/mask.js'].branchData['170'][1].init(41, 27, 'mask = this.get("maskNode")');
-function visit25_170_1(result) {
-  _$jscoverage['/overlay/extension/mask.js'].branchData['170'][1].ranCondition(result);
+_$jscoverage['/overlay/extension/mask.js'].branchData['169'][1].init(41, 27, 'mask = this.get("maskNode")');
+function visit25_169_1(result) {
+  _$jscoverage['/overlay/extension/mask.js'].branchData['169'][1].ranCondition(result);
   return result;
-}_$jscoverage['/overlay/extension/mask.js'].branchData['161'][1].init(72, 20, 'mask[\'closeOnClick\']');
-function visit24_161_1(result) {
-  _$jscoverage['/overlay/extension/mask.js'].branchData['161'][1].ranCondition(result);
+}_$jscoverage['/overlay/extension/mask.js'].branchData['160'][1].init(72, 20, 'mask[\'closeOnClick\']');
+function visit24_160_1(result) {
+  _$jscoverage['/overlay/extension/mask.js'].branchData['160'][1].ranCondition(result);
   return result;
-}_$jscoverage['/overlay/extension/mask.js'].branchData['159'][1].init(98, 23, 'mask = self.get("mask")');
-function visit23_159_1(result) {
-  _$jscoverage['/overlay/extension/mask.js'].branchData['159'][1].ranCondition(result);
+}_$jscoverage['/overlay/extension/mask.js'].branchData['158'][1].init(98, 23, 'mask = self.get("mask")');
+function visit23_158_1(result) {
+  _$jscoverage['/overlay/extension/mask.js'].branchData['158'][1].ranCondition(result);
   return result;
-}_$jscoverage['/overlay/extension/mask.js'].branchData['150'][1].init(48, 16, 'self.get(\'mask\')');
-function visit22_150_1(result) {
-  _$jscoverage['/overlay/extension/mask.js'].branchData['150'][1].ranCondition(result);
+}_$jscoverage['/overlay/extension/mask.js'].branchData['149'][1].init(48, 16, 'self.get(\'mask\')');
+function visit22_149_1(result) {
+  _$jscoverage['/overlay/extension/mask.js'].branchData['149'][1].ranCondition(result);
   return result;
 }_$jscoverage['/overlay/extension/mask.js'].branchData['139'][1].init(79, 16, '!isNaN(elZIndex)');
 function visit21_139_1(result) {
@@ -470,42 +470,42 @@ KISSY.add("overlay/extension/mask", function(S, Node) {
   Mask.prototype = {
   __renderUI: function() {
   _$jscoverage['/overlay/extension/mask.js'].functionData[10]++;
-  _$jscoverage['/overlay/extension/mask.js'].lineData[149]++;
+  _$jscoverage['/overlay/extension/mask.js'].lineData[148]++;
   var self = this;
-  _$jscoverage['/overlay/extension/mask.js'].lineData[150]++;
-  if (visit22_150_1(self.get('mask'))) {
-    _$jscoverage['/overlay/extension/mask.js'].lineData[151]++;
+  _$jscoverage['/overlay/extension/mask.js'].lineData[149]++;
+  if (visit22_149_1(self.get('mask'))) {
+    _$jscoverage['/overlay/extension/mask.js'].lineData[150]++;
     self.set('maskNode', initMask(self));
   }
 }, 
   __bindUI: function() {
   _$jscoverage['/overlay/extension/mask.js'].functionData[11]++;
-  _$jscoverage['/overlay/extension/mask.js'].lineData[156]++;
+  _$jscoverage['/overlay/extension/mask.js'].lineData[155]++;
   var self = this, maskNode, mask;
-  _$jscoverage['/overlay/extension/mask.js'].lineData[159]++;
-  if (visit23_159_1(mask = self.get("mask"))) {
-    _$jscoverage['/overlay/extension/mask.js'].lineData[160]++;
+  _$jscoverage['/overlay/extension/mask.js'].lineData[158]++;
+  if (visit23_158_1(mask = self.get("mask"))) {
+    _$jscoverage['/overlay/extension/mask.js'].lineData[159]++;
     maskNode = self.get('maskNode');
-    _$jscoverage['/overlay/extension/mask.js'].lineData[161]++;
-    if (visit24_161_1(mask['closeOnClick'])) {
-      _$jscoverage['/overlay/extension/mask.js'].lineData[162]++;
+    _$jscoverage['/overlay/extension/mask.js'].lineData[160]++;
+    if (visit24_160_1(mask['closeOnClick'])) {
+      _$jscoverage['/overlay/extension/mask.js'].lineData[161]++;
       maskNode.on(Node.Gesture.tap, self.close, self);
     }
-    _$jscoverage['/overlay/extension/mask.js'].lineData[164]++;
+    _$jscoverage['/overlay/extension/mask.js'].lineData[163]++;
     self.on('afterVisibleChange', afterVisibleChange);
   }
 }, 
   __destructor: function() {
   _$jscoverage['/overlay/extension/mask.js'].functionData[12]++;
-  _$jscoverage['/overlay/extension/mask.js'].lineData[169]++;
+  _$jscoverage['/overlay/extension/mask.js'].lineData[168]++;
   var mask;
-  _$jscoverage['/overlay/extension/mask.js'].lineData[170]++;
-  if (visit25_170_1(mask = this.get("maskNode"))) {
-    _$jscoverage['/overlay/extension/mask.js'].lineData[171]++;
+  _$jscoverage['/overlay/extension/mask.js'].lineData[169]++;
+  if (visit25_169_1(mask = this.get("maskNode"))) {
+    _$jscoverage['/overlay/extension/mask.js'].lineData[170]++;
     mask.remove();
   }
 }};
-  _$jscoverage['/overlay/extension/mask.js'].lineData[176]++;
+  _$jscoverage['/overlay/extension/mask.js'].lineData[175]++;
   return Mask;
 }, {
   requires: ["node"]});

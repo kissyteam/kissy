@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * root node represent a simple tree
  * @author yiminghe@gmail.com
  */

@@ -3,12 +3,9 @@
  * attribute management
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
-KISSY.add('base/attribute', function (S, CustomEvent, undefined) {
-
+KISSY.add('base/attribute', function (S, undefined) {
     // atomic flag
-    Attribute.INVALID = {};
-
-    var INVALID = Attribute.INVALID;
+    var INVALID = {};
 
     var FALSE = false;
 
@@ -34,46 +31,12 @@ KISSY.add('base/attribute', function (S, CustomEvent, undefined) {
         }, data));
     }
 
-    /**
-     * @ignore
-     * @param obj
-     * @param name
-     * @param [doNotCreate]
-     * @returns {*}
-     */
     function ensureNonEmpty(obj, name, doNotCreate) {
         var ret = obj[name];
         if (!doNotCreate && !ret) {
             obj[name] = ret = {};
         }
         return ret || {};
-    }
-
-    function getAttrs(self) {
-        /*
-         attribute meta information
-         {
-         attrName: {
-         getter: function,
-         setter: function,
-         // 注意：只能是普通对象以及系统内置类型，而不能是 new Xx()，否则用 valueFn 替代
-         value: v, // default value
-         valueFn: function
-         }
-         }
-         */
-        return ensureNonEmpty(self, '__attrs');
-    }
-
-
-    function getAttrVals(self) {
-        /*
-         attribute value
-         {
-         attrName: attrVal
-         }
-         */
-        return ensureNonEmpty(self, '__attrVals');
     }
 
     /*
@@ -221,7 +184,7 @@ KISSY.add('base/attribute', function (S, CustomEvent, undefined) {
 
         // fire after event
         if (!opts['silent']) {
-            value = getAttrVals(self)[name];
+            value = self.__attrVals[name];
             __fireAttrChange(self, 'after', name, prevVal, value, fullName, null, opts.data);
             if (attrs) {
                 attrs.push({
@@ -244,33 +207,10 @@ KISSY.add('base/attribute', function (S, CustomEvent, undefined) {
 
     /**
      * @class KISSY.Base.Attribute
-     * @private
-     * Attribute provides configurable attribute support along with attribute change events.
-     * It is designed to be augmented on to a host class,
-     * and provides the host with the ability to configure attributes to store and retrieve state,
-     * along with attribute change events.
-     *
-     * For example, attributes added to the host can be configured:
-     *
-     *  - With a setter function, which can be used to manipulate
-     *  values passed to attribute 's {@link #set} method, before they are stored.
-     *  - With a getter function, which can be used to manipulate stored values,
-     *  before they are returned by attribute 's {@link #get} method.
-     *  - With a validator function, to validate values before they are stored.
-     *
-     * See the {@link #addAttr} method, for the complete set of configuration
-     * options available for attributes.
-     *
-     * NOTE: Most implementations will be better off extending the {@link KISSY.Base} class,
-     * instead of augmenting Attribute directly.
-     * Base augments Attribute and will handle the initial configuration
-     * of attributes for derived classes, accounting for values passed into the constructor.
+     * @override KISSY.Base
      */
-    function Attribute() {
-    }
-
-    // for S.augment, no need to specify constructor
-    S.augment(Attribute, CustomEvent.Target, {
+    return {
+        INVALID: INVALID,
 
         /**
          * get un-cloned attr config collections
@@ -278,7 +218,7 @@ KISSY.add('base/attribute', function (S, CustomEvent, undefined) {
          * @private
          */
         getAttrs: function () {
-            return getAttrs(this);
+            return this.__attrs;
         },
 
         /**
@@ -289,7 +229,7 @@ KISSY.add('base/attribute', function (S, CustomEvent, undefined) {
             var self = this,
                 o = {},
                 a,
-                attrs = getAttrs(self);
+                attrs = self.__attrs;
             for (a in attrs) {
                 o[a] = self.get(a);
             }
@@ -315,7 +255,7 @@ KISSY.add('base/attribute', function (S, CustomEvent, undefined) {
          */
         addAttr: function (name, attrConfig, override) {
             var self = this,
-                attrs = getAttrs(self),
+                attrs = self.__attrs,
                 attr,
                 cfg = S.clone(attrConfig);
             if (attr = attrs[name]) {
@@ -349,7 +289,7 @@ KISSY.add('base/attribute', function (S, CustomEvent, undefined) {
          * @return {Boolean}
          */
         hasAttr: function (name) {
-            return getAttrs(this).hasOwnProperty(name);
+            return this.__attrs.hasOwnProperty(name);
         },
 
         /**
@@ -358,10 +298,12 @@ KISSY.add('base/attribute', function (S, CustomEvent, undefined) {
          */
         removeAttr: function (name) {
             var self = this;
+            var __attrVals = self.__attrVals;
+            var __attrs = self.__attrs;
 
             if (self.hasAttr(name)) {
-                delete getAttrs(self)[name];
-                delete getAttrVals(self)[name];
+                delete __attrs[name];
+                delete __attrVals[name];
             }
 
             return self;
@@ -449,7 +391,7 @@ KISSY.add('base/attribute', function (S, CustomEvent, undefined) {
             // then register on demand in order to collect all data meta info
             // 一定要注册属性元数据，否则其他模块通过 _attrs 不能枚举到所有有效属性
             // 因为属性在声明注册前可以直接设置值
-                attrConfig = ensureNonEmpty(getAttrs(self), name),
+                attrConfig = ensureNonEmpty(self.__attrs, name),
                 setter = attrConfig['setter'];
 
             // if setter has effect
@@ -466,7 +408,7 @@ KISSY.add('base/attribute', function (S, CustomEvent, undefined) {
             }
 
             // finally set
-            getAttrVals(self)[name] = value;
+            self.__attrVals[name] = value;
 
             return undefined;
         },
@@ -480,7 +422,7 @@ KISSY.add('base/attribute', function (S, CustomEvent, undefined) {
             var self = this,
                 dot = '.',
                 path,
-                attrVals = getAttrVals(self),
+                attrVals = self.__attrVals,
                 attrConfig,
                 getter, ret;
 
@@ -489,7 +431,7 @@ KISSY.add('base/attribute', function (S, CustomEvent, undefined) {
                 name = path.shift();
             }
 
-            attrConfig = ensureNonEmpty(getAttrs(self), name, 1);
+            attrConfig = ensureNonEmpty(self.__attrs, name, 1);
             getter = attrConfig['getter'];
 
             // get user-set value or default value
@@ -538,7 +480,7 @@ KISSY.add('base/attribute', function (S, CustomEvent, undefined) {
             opts = /**@type Object
              @ignore*/(name);
 
-            var attrs = getAttrs(self),
+            var attrs = self.__attrs,
                 values = {};
 
             // reset all
@@ -549,11 +491,11 @@ KISSY.add('base/attribute', function (S, CustomEvent, undefined) {
             self.set(values, opts);
             return self;
         }
-    });
+    };
 
     // get default attribute value from valueFn/value
     function getDefAttrVal(self, name) {
-        var attrs = getAttrs(self),
+        var attrs = self.__attrs,
             attrConfig = ensureNonEmpty(attrs, name, 1),
             valFn = attrConfig.valueFn,
             val;
@@ -585,7 +527,7 @@ KISSY.add('base/attribute', function (S, CustomEvent, undefined) {
             prevVal = self.get(name);
             value = getValueBySubValue(prevVal, path, value);
         }
-        var attrConfig = ensureNonEmpty(getAttrs(self), name),
+        var attrConfig = ensureNonEmpty(self.__attrs, name),
             e,
             validator = attrConfig['validator'];
         if (validator && (validator = normalFn(self, validator))) {
@@ -597,10 +539,6 @@ KISSY.add('base/attribute', function (S, CustomEvent, undefined) {
         }
         return undefined;
     }
-
-    return Attribute;
-}, {
-    requires: ['event/custom']
 });
 
 /*

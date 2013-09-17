@@ -16,7 +16,8 @@
 </head>
 <body onload="prettyPrint(); highlight();">
   <pre class="prettyprint lang-js"><span id='global-property-'>/**
-</span> * LALR grammar parser
+</span> * @ignore
+ * LALR grammar parser
  * @author yiminghe@gmail.com
  */
 KISSY.add(&quot;kison/grammar&quot;, function (S, Base, Utils, Item, ItemSet, NonTerminal, Lexer, Production) {
@@ -77,8 +78,11 @@ KISSY.add(&quot;kison/grammar&quot;, function (S, Base, Utils, Item, ItemSet, No
         }
     }
 
+<span id='KISSY-Kison-Grammar'>    /**
+</span>     * grammar generator
+     * @class KISSY.Kison.Grammar
+     */
     return Base.extend({
-
         build: function () {
             var self = this,
                 lexer = self.lexer,
@@ -383,10 +387,7 @@ KISSY.add(&quot;kison/grammar&quot;, function (S, Base, Utils, Item, ItemSet, No
 
         },
 
-<span id='global-method-buildItemSet'>        /**
-</span>         * build item set.
-         * algorithm: 4.53
-         */
+        // algorithm: 4.53
         buildItemSet: function () {
             var self = this,
                 lexer = self.lexer,
@@ -858,7 +859,8 @@ KISSY.add(&quot;kison/grammar&quot;, function (S, Base, Utils, Item, ItemSet, No
 });
 
 <span id='global-property-'>/**
-</span> * Refer
+</span> * @ignore
+ * Refer
  *   - Compilers: Principles,Techniques and Tools.
  *   - http://zaach.github.com/jison/
  *   - http://www.gnu.org/software/bison/

@@ -160,7 +160,7 @@ KISSY.add("editor/walker", function (S, Editor) {
     /**
      * Walker for Dom.
      * @class KISSY.Editor.Walker
-     * @param {Editor.Range} range
+     * @param {KISSY.Editor.Range} range
      */
     function Walker(range) {
         this.range = range;

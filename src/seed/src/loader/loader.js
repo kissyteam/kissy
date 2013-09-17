@@ -76,8 +76,7 @@
          * @param success.x... used module values
          * @member KISSY
          *
-         * for example:
-         *      @example
+         *
          *      // loads and attached overlay,dd and its dependencies
          *      KISSY.use('overlay,dd', function(S, Overlay){});
          */
@@ -271,7 +270,6 @@
         }, getBaseInfo()));
     }
 
-    // Initializes loader.
     Env.mods = {}; // all added mods
 })(KISSY);
 

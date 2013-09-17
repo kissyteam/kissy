@@ -16,14 +16,16 @@
 </head>
 <body onload="prettyPrint(); highlight();">
   <pre class="prettyprint lang-js"><span id='global-property-'>/**
-</span> * root node represent a check tree
+</span> * @ignore
+ * root node represent a check tree
  * @author yiminghe@gmail.com
  */
 KISSY.add(&quot;tree/check-tree&quot;, function (S, CheckNode, TreeManager) {
 <span id='KISSY-Tree-CheckTree'>    /**
 </span>     * KISSY Checked Tree. xclass: 'check-tree'.
-     * @extends Tree.CheckNode
+     * @extends KISSY.Tree.CheckNode
      * @class KISSY.Tree.CheckTree
+     * @mixins {KISSY.Tree.Manager}
      */
     return CheckNode.extend([TreeManager], {
         handleKeyDownInternal: function (e) {

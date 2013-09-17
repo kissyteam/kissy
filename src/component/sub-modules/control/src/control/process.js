@@ -44,7 +44,7 @@ KISSY.add('component/control/process', function (S, Base, Promise) {
                 /**
                  * @event beforeCreateDom
                  * fired before root node is created
-                 * @param {KISSY.Event.CustomEventObject} e
+                 * @param {KISSY.Event.CustomEvent.Object} e
                  */
                 self.fire('beforeCreateDom');
                 self.createInternal();
@@ -52,7 +52,7 @@ KISSY.add('component/control/process', function (S, Base, Promise) {
                 /**
                  * @event afterCreateDom
                  * fired when root node is created
-                 * @param {KISSY.Event.CustomEventObject} e
+                 * @param {KISSY.Event.CustomEvent.Object} e
                  */
                 self.fire('afterCreateDom');
 
@@ -78,7 +78,7 @@ KISSY.add('component/control/process', function (S, Base, Promise) {
                 /**
                  * @event beforeRenderUI
                  * fired when root node is ready
-                 * @param {KISSY.Event.CustomEventObject} e
+                 * @param {KISSY.Event.CustomEvent.Object} e
                  */
 
                 self.fire('beforeRenderUI');
@@ -88,14 +88,14 @@ KISSY.add('component/control/process', function (S, Base, Promise) {
                 /**
                  * @event afterRenderUI
                  * fired after root node is rendered into dom
-                 * @param {KISSY.Event.CustomEventObject} e
+                 * @param {KISSY.Event.CustomEvent.Object} e
                  */
                 self.fire('afterRenderUI');
 
                 /**
                  * @event beforeBindUI
                  * fired before component 's internal event is bind.
-                 * @param {KISSY.Event.CustomEventObject} e
+                 * @param {KISSY.Event.CustomEvent.Object} e
                  */
 
                 self.fire('beforeBindUI');
@@ -105,7 +105,7 @@ KISSY.add('component/control/process', function (S, Base, Promise) {
                 /**
                  * @event afterBindUI
                  * fired when component 's internal event is bind.
-                 * @param {KISSY.Event.CustomEventObject} e
+                 * @param {KISSY.Event.CustomEvent.Object} e
                  */
                 self.fire('afterBindUI');
 
@@ -189,7 +189,7 @@ KISSY.add('component/control/process', function (S, Base, Promise) {
         /**
          * @event beforeSyncUI
          * fired before component 's internal state is synchronized.
-         * @param {KISSY.Event.CustomEventObject} e
+         * @param {KISSY.Event.CustomEvent.Object} e
          */
         self.fire('beforeSyncUI');
         self.syncUI();
@@ -197,7 +197,7 @@ KISSY.add('component/control/process', function (S, Base, Promise) {
         /**
          * @event afterSyncUI
          * fired after component 's internal state is synchronized.
-         * @param {KISSY.Event.CustomEventObject} e
+         * @param {KISSY.Event.CustomEvent.Object} e
          */
         self.fire('afterSyncUI');
     }

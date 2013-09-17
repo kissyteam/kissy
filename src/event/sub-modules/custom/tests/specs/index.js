@@ -3,10 +3,11 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, Event) {
-
     var EventTarget = Event.Target;
 
     var CustomEventObservable = S.require('event/custom/observable');
+
+    var KS_CUSTOM_EVENTS = '__~ks_custom_events';
 
     var FIRST = '1', SECOND = '2', SEP = '=';
 
@@ -51,8 +52,7 @@ KISSY.add(function (S, Event) {
 
             expect(ret).toEqual([1, 2]);
 
-            expect(CustomEventObservable
-                .getCustomEventObservables(t, 1)['click'].hasObserver())
+            expect(t[KS_CUSTOM_EVENTS]['click'].hasObserver())
                 .toBeFalsy();
         });
 
@@ -303,8 +303,7 @@ KISSY.add(function (S, Event) {
             eventTarget.on("click", noop3);
             eventTarget.on("keydown", noop);
             (function () {
-                var customEventObservables = CustomEventObservable.
-                    getCustomEventObservables(eventTarget, 1);
+                var customEventObservables = eventTarget[KS_CUSTOM_EVENTS];
 
                 var num = 0;
                 for (i in customEventObservables) {
@@ -320,8 +319,7 @@ KISSY.add(function (S, Event) {
             eventTarget.detach("click", noop);
 
             (function () {
-                var customEventObservables = CustomEventObservable
-                    .getCustomEventObservables(eventTarget, 1);
+                var customEventObservables = eventTarget[KS_CUSTOM_EVENTS];
                 var num = 0;
 
                 for (i in customEventObservables) {
@@ -339,7 +337,7 @@ KISSY.add(function (S, Event) {
             eventTarget.detach("click");
 
             (function () {
-                var customEventObservables = CustomEventObservable.getCustomEventObservables(eventTarget, 1);
+                var customEventObservables = eventTarget[KS_CUSTOM_EVENTS];
 
                 expect(customEventObservables['keydown'].hasObserver()).toBeTruthy();
                 var clickObserver = customEventObservables["click"];
@@ -349,8 +347,7 @@ KISSY.add(function (S, Event) {
             eventTarget.detach();
 
             (function () {
-                var customEventObservables = CustomEventObservable
-                    .getCustomEventObservables(eventTarget, 1);
+                var customEventObservables = eventTarget[KS_CUSTOM_EVENTS];
                 for (var o in customEventObservables) {
                     expect(customEventObservables[o].hasObserver()).toBeFalsy();
                 }
@@ -659,7 +656,6 @@ KISSY.add(function (S, Event) {
 
         });
     });
-
 }, {
     requires: ['event/custom']
 });

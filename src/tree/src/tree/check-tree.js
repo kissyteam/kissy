@@ -1,12 +1,14 @@
 /**
+ * @ignore
  * root node represent a check tree
  * @author yiminghe@gmail.com
  */
 KISSY.add("tree/check-tree", function (S, CheckNode, TreeManager) {
     /**
      * KISSY Checked Tree. xclass: 'check-tree'.
-     * @extends Tree.CheckNode
+     * @extends KISSY.Tree.CheckNode
      * @class KISSY.Tree.CheckTree
+     * @mixins {KISSY.Tree.Manager}
      */
     return CheckNode.extend([TreeManager], {
         handleKeyDownInternal: function (e) {

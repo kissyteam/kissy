@@ -6,40 +6,37 @@
  */
 (function (S) {
     var fs = require('fs'),
-        logger= S.getLogger('s/loader'),
+        logger = S.getLogger('s/loader'),
         vm = require('vm');
 
-    S.mix(S, {
+    S.getScript = function (url, success, charset) {
 
-        getScript: function (url, success, charset) {
+        var error;
 
-            var error;
-
-            if (S.isPlainObject(success)) {
-                charset = success.charset;
-                error = success.error;
-                success = success.success;
-            }
-
-            if (S.startsWith(S.Path.extname(url).toLowerCase(), '.css')) {
-                logger.warn('node js can not load css: ' + url);
-                success && success();
-                return;
-            }
-
-            var uri = new S.Uri(url),
-                path = uri.getPath();
-
-            try {
-                var mod = fs.readFileSync(path, charset);
-                var fn = vm.runInThisContext('(function(KISSY,require){' + mod + '})', url);
-                fn(S, require);
-                success && success();
-            } catch (e) {
-                logger.error('in file: ' + url);
-                logger.error(e.stack);
-                error && error(e);
-            }
+        if (S.isPlainObject(success)) {
+            charset = success.charset;
+            error = success.error;
+            success = success.success;
         }
-    });
+
+        if (S.startsWith(S.Path.extname(url).toLowerCase(), '.css')) {
+            logger.warn('node js can not load css: ' + url);
+            success && success();
+            return;
+        }
+
+        var uri = new S.Uri(url),
+            path = uri.getPath();
+
+        try {
+            var mod = fs.readFileSync(path, charset);
+            var fn = vm.runInThisContext('(function(KISSY,require){' + mod + '})', url);
+            fn(S, require);
+            success && success();
+        } catch (e) {
+            logger.error('in file: ' + url);
+            logger.error(e.stack);
+            error && error(e);
+        }
+    };
 })(KISSY);

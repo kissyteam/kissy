@@ -3,15 +3,15 @@
  * KISSY Class System
  * @author yiminghe@gmail.com
  */
-KISSY.add('base', function (S, Attribute) {
+KISSY.add('base', function (S, Attribute, CustomEvent) {
     var ATTRS = 'ATTRS',
         ucfirst = S.ucfirst,
         ON_SET = '_onSet',
         noop = S.noop,
         RE_DASH = /(?:^|-)([a-z])/ig;
 
-    function replaceToUpper(_, letter) {
-        return letter.toUpperCase();
+    function replaceToUpper() {
+        return arguments[1].toUpperCase();
     }
 
     function CamelCase(name) {
@@ -44,8 +44,7 @@ KISSY.add('base', function (S, Attribute) {
 
     /**
      * @class KISSY.Base
-     * @mixins KISSY.Event.Target
-     * @mixins KISSY.Base.Attribute
+     * @extend KISSY.Event.CustomEvent.Target
      *
      * A base class which objects requiring attributes, extension, plugin, custom event support can
      * extend.
@@ -56,6 +55,9 @@ KISSY.add('base', function (S, Attribute) {
     function Base(config) {
         var self = this,
             c = self.constructor;
+        Base.superclass.constructor.apply(this, arguments);
+        self.__attrs = {};
+        self.__attrVals = {};
         // save user config
         self.userConfig = config;
         // define
@@ -81,7 +83,9 @@ KISSY.add('base', function (S, Attribute) {
         self.syncInternal();
     }
 
-    S.augment(Base, Attribute, {
+    S.augment(Base, Attribute);
+
+    S.extend(Base, CustomEvent.Target, {
         initializer: noop,
 
         '__getHook': __getHook,
@@ -266,8 +270,6 @@ KISSY.add('base', function (S, Attribute) {
     });
 
     S.mix(Base, {
-        name: 'Base',
-
         __hooks__: {
             initializer: __getHook(),
             destructor: __getHook('__destructor', true)
@@ -568,15 +570,12 @@ KISSY.add('base', function (S, Attribute) {
         }
     }
 
-    Base.INVALID=Attribute.INVALID;
-
-    S.Base = Base;
-
     return Base;
 }, {
-    requires: ['base/attribute', 'event/custom']
+    requires: ['./attribute', 'event/custom']
 });
 /**
+ * @ignore
  * 2013-08-12 yiminghe@gmail.com
  * - merge rich-base and base
  * - callSuper inspired by goto100

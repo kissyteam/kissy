@@ -30,13 +30,13 @@ KISSY.add(&quot;html-parser/nodes/tag&quot;, function (S, Node, Attribute, Dtd) 
         });
     }
 
-<span id='KISSY-HtmlParse-Tag'>    /**
+<span id='KISSY-HtmlParser-Tag'>    /**
 </span>     * Html Tag Class
      * @param page
      * @param startPosition
      * @param endPosition
      * @param attributes
-     * @class KISSY.HtmlParse.Tag
+     * @class KISSY.HtmlParser.Tag
      */
     function Tag(page, startPosition, endPosition, attributes) {
         var self = this;
@@ -240,7 +240,7 @@ KISSY.add(&quot;html-parser/nodes/tag&quot;, function (S, Node, Attribute, Dtd) 
             }
         },
 
-<span id='KISSY-HtmlParse-Tag-method-filterChildren'>        /**
+<span id='KISSY-HtmlParser-Tag-method-filterChildren'>        /**
 </span>         * give root node a chance to filter children first
          */
         filterChildren: function () {
@@ -258,7 +258,7 @@ KISSY.add(&quot;html-parser/nodes/tag&quot;, function (S, Node, Attribute, Dtd) 
             }
         },
 
-<span id='KISSY-HtmlParse-Tag-method-writeHtml'>        /**
+<span id='KISSY-HtmlParser-Tag-method-writeHtml'>        /**
 </span>         * serialize tag to html string in writer
          * @param writer
          * @param filter
@@ -343,7 +343,7 @@ KISSY.add(&quot;html-parser/nodes/tag&quot;, function (S, Node, Attribute, Dtd) 
         },
 
 
-<span id='KISSY-HtmlParse-Tag-method-_writeChildrenHTML'>        /**
+<span id='KISSY-HtmlParser-Tag-method-_writeChildrenHTML'>        /**
 </span>         * @param writer
          * @protected
          */

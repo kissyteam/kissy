@@ -21,12 +21,12 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(&quot;tabs/bar&quot;, function (S, Toolbar, BarRender, undefined) {
-
-<span id='TabBar'>    /**
-</span>     * @ignore
+<span id='KISSY-Tabs-Bar'>    /**
+</span>     * tab bar container for tab tabs.xclass: 'tabs-bar'.
+     * @class  KISSY.Tabs.Bar
+     * @extends KISSY.Toolbar
      */
     var TabBar = Toolbar.extend({
-
         bindUI: function () {
             var self = this;
             self.on(&quot;afterSelectedChange&quot;, function (e) {
@@ -113,7 +113,6 @@ KISSY.add(&quot;tabs/bar&quot;, function (S, Toolbar, BarRender, undefined) {
     };
 
     return TabBar;
-
 }, {
     requires: ['toolbar', './bar-render']
 });</pre>

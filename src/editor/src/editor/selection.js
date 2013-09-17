@@ -44,9 +44,9 @@ KISSY.add("editor/selection", function (S,Editor) {
             cache: {}
         };
 
-        /**
-         * IE BUG: The selection's document may be a different document than the
-         * editor document. Return NULL if that's the case.
+        /*
+         IE BUG: The selection's document may be a different document than the
+         editor document. Return NULL if that's the case.
          */
         if (OLD_IE) {
             try {
@@ -171,11 +171,6 @@ KISSY.add("editor/selection", function (S,Editor) {
             (function () {
                 // Finds the container and offset for a specific boundary
                 // of an IE range.
-                /**
-                 *
-                 * @param {TextRange} range
-                 * @param {Boolean=} start
-                 */
                 var getBoundaryInformation = function (range, start) {
                     // Creates a collapsed range at the requested boundary.
                     range = range.duplicate();

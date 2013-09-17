@@ -14,7 +14,7 @@ KISSY.add("editor/plugin/overlay", function (S, Editor, Overlay, focusFix) {
                 value: "ks-editor-"
             },
             "zIndex": {
-                value: Editor.baseZIndex(Editor.zIndexManager.OVERLAY)
+                value: Editor.baseZIndex(Editor.ZIndexManager.OVERLAY)
             }
         }
     });

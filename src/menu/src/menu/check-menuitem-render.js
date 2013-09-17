@@ -1,11 +1,10 @@
 /**
  * checkable menu item render
+ * @ignore
  * @author yiminghe@gmail.com
  */
 KISSY.add('menu/check-menuitem-render', function (S, MenuItemRender, ContentRenderExtension, CheckMenuItemTpl) {
-
     return MenuItemRender.extend([ContentRenderExtension], {
-
         beforeCreateDom: function (renderData) {
             if (renderData.checked) {
                 renderData.elCls.push(self.getBaseCssClasses("checked"));
@@ -17,7 +16,6 @@ KISSY.add('menu/check-menuitem-render', function (S, MenuItemRender, ContentRend
                 cls = self.getBaseCssClasses("checked");
             self.$el[v ? 'addClass' : 'removeClass'](cls);
         }
-
     }, {
         ATTRS: {
             contentTpl: {

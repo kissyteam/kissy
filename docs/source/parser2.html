@@ -22,11 +22,11 @@
  */
 KISSY.add(&quot;html-parser/parser&quot;, function (S, dtd, Tag, Fragment, Cursor, Lexer, Document, Scanner) {
 
-<span id='KISSY-HtmlParse-Parse'>    /**
+<span id='KISSY-HtmlParser-Parser'>    /**
 </span>     * Html Parse Class
      * @param html
      * @param opts
-     * @class KISSY.HtmlParse.Parse
+     * @class KISSY.HtmlParser.Parser
      */
     function Parser(html, opts) {
         // fake root node
@@ -98,7 +98,7 @@ KISSY.add(&quot;html-parser/parser&quot;, function (S, dtd, Tag, Fragment, Curso
         // 3 limit depth
         var body = findTagWithName(doc, &quot;body&quot;, 3);
         if (body) {
-<span id='KISSY-HtmlParse-Parse-property-parent'>            /**
+<span id='KISSY-HtmlParser-Parser-property-parent'>            /**
 </span>             * &lt;body&gt;
              &lt;li&gt;2&lt;/li&gt;
              &lt;span&gt;1&lt;/span&gt;

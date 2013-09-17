@@ -4,7 +4,6 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add('component/extension/content-render', function (S, ContentTpl) {
-
     function shortcut(self) {
         var control = self.control;
         var contentEl = control.get('contentEl');
@@ -12,6 +11,10 @@ KISSY.add('component/extension/content-render', function (S, ContentTpl) {
         self.contentEl = control.contentEl = contentEl[0];
     }
 
+    /**
+     * content-render extension for component system
+     * @class KISSY.Component.Extension.ContentRender
+     */
     function ContentRender() {
     }
 

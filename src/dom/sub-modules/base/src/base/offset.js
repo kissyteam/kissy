@@ -44,7 +44,7 @@ KISSY.add('dom/base/offset', function (S, Dom, undefined) {
              * which are integers indicating the new top and left coordinates for the elements.
              * @param {Number} [coordinates.left ] the new top and left coordinates for the elements.
              * @param {Number} [coordinates.top ] the new top and top coordinates for the elements.
-             * @param {window} [relativeWin] The window to measure relative to. If relativeWin
+             * @param {Window} [relativeWin] The window to measure relative to. If relativeWin
              *     is not in the ancestor frame chain of the element, we measure relative to
              *     the top-most window.
              * @return {Object|undefined} if Get, the format of returned value is same with coordinates.
@@ -226,25 +226,25 @@ KISSY.add('dom/base/offset', function (S, Dom, undefined) {
 
             /**
              * Get the width of document
-             * @param {window} [win=window] Window to be referred.
+             * @param {Window} [win=window] Window to be referred.
              * @method
              */
             docWidth: 0,
             /**
              * Get the height of document
-             * @param {window} [win=window] Window to be referred.
+             * @param {Window} [win=window] Window to be referred.
              * @method
              */
             docHeight: 0,
             /**
              * Get the height of window
-             * @param {window} [win=window] Window to be referred.
+             * @param {Window} [win=window] Window to be referred.
              * @method
              */
             viewportHeight: 0,
             /**
              * Get the width of document
-             * @param {window} [win=window] Window to be referred.
+             * @param {Window} [win=window] Window to be referred.
              * @method
              */
             viewportWidth: 0,
@@ -252,7 +252,7 @@ KISSY.add('dom/base/offset', function (S, Dom, undefined) {
              * Get the current vertical position of the scroll bar for the first element in the set of matched elements.
              * or
              * Set the current vertical position of the scroll bar for each of the set of matched elements.
-             * @param {HTMLElement[]|String|HTMLElement|window} selector matched elements
+             * @param {HTMLElement[]|String|HTMLElement|Window} selector matched elements
              * @param {Number} value An integer indicating the new position to set the scroll bar to.
              * @method
              */
@@ -261,7 +261,7 @@ KISSY.add('dom/base/offset', function (S, Dom, undefined) {
              * Get the current horizontal position of the scroll bar for the first element in the set of matched elements.
              * or
              * Set the current horizontal position of the scroll bar for each of the set of matched elements.
-             * @param {HTMLElement[]|String|HTMLElement|window} selector matched elements
+             * @param {HTMLElement[]|String|HTMLElement|Window} selector matched elements
              * @param {Number} value An integer indicating the new position to set the scroll bar to.
              * @method
              */

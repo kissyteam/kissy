@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * allow body to drag
  * @author yiminghe@gmail.com
  */
@@ -451,6 +452,10 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, Node, Anim) {
         e.preventDefault();
     }
 
+    /**
+     * allow touch drag for scroll view
+     * @class KISSY.ScrollView.Drag
+     */
     return ScrollViewBase.extend({
             bindUI: function () {
                 var self = this;
@@ -475,6 +480,7 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, Node, Anim) {
                 /**
                  * whether allow drag in x direction when content size is less than container size.
                  * Defaults to: true, does not allow.
+                 * @cfg {Boolean} lockX
                  */
                 /**
                  * @ignore
@@ -485,6 +491,7 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, Node, Anim) {
                 /**
                  * whether allow drag in y direction when content size is less than container size.
                  * Defaults to: false, allow.
+                 * @cfg {Boolean} lockY
                  */
                 /**
                  * @ignore
@@ -492,15 +499,47 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, Node, Anim) {
                 lockY: {
                     value: false
                 },
+                /**
+                 * px diff to start x or y snap gesture
+                 * Defaults to: 5.
+                 * @cfg {Boolean} snapThreshold
+                 */
+                /**
+                 * @ignore
+                 */
                 snapThreshold: {
                     value: 5
                 },
+                /**
+                 * whether allow bounce effect
+                 * Defaults to: true.
+                 * @cfg {Boolean} bounce
+                 */
+                /**
+                 * @ignore
+                 */
                 bounce: {
                     value: true
                 },
+                /**
+                 * bounce effect duration.
+                 * Defaults to: 0.4.
+                 * @cfg {Number} bounceDuration
+                 */
+                /**
+                 * @ignore
+                 */
                 bounceDuration: {
                     value: 0.4
                 },
+                /**
+                 * bounce easing config.
+                 * Defaults to: easeOut.
+                 * @cfg {Boolean} bounceEasing
+                 */
+                /**
+                 * @ignore
+                 */
                 bounceEasing: {
                     value: 'easeOut'
                 }

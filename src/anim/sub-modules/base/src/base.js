@@ -14,10 +14,13 @@ KISSY.add('anim/base', function (S, Dom, Utils, CustomEvent, Q) {
     /**
      * superclass for transition anim and js anim
      * @class KISSY.Anim.Base
+     * @extend KISSY.Event.CustomEvent.Target
+     * @private
      */
     function AnimBase(config) {
         var self = this,
             complete;
+        AnimBase.superclass.constructor.apply(this,arguments);
         /**
          * config object of current anim instance
          * @type {Object}
@@ -45,7 +48,7 @@ KISSY.add('anim/base', function (S, Dom, Utils, CustomEvent, Q) {
         }
     }
 
-    S.augment(AnimBase, CustomEvent.Target, {
+    S.extend(AnimBase, CustomEvent.Target, {
         /**
          * prepare fx hook
          * @protected

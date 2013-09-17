@@ -16,7 +16,8 @@
 </head>
 <body onload="prettyPrint(); highlight();">
   <pre class="prettyprint lang-js"><span id='global-property-'>/**
-</span> * allow body to drag
+</span> * @ignore
+ * allow body to drag
  * @author yiminghe@gmail.com
  */
 KISSY.add('scroll-view/drag', function (S, ScrollViewBase, Node, Anim) {
@@ -468,6 +469,10 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, Node, Anim) {
         e.preventDefault();
     }
 
+<span id='KISSY-ScrollView-Drag'>    /**
+</span>     * allow touch drag for scroll view
+     * @class KISSY.ScrollView.Drag
+     */
     return ScrollViewBase.extend({
             bindUI: function () {
                 var self = this;
@@ -489,9 +494,10 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, Node, Anim) {
             }
         }, {
             ATTRS: {
-<span id='global-property-'>                /**
+<span id='KISSY-ScrollView-Drag-cfg-lockX'>                /**
 </span>                 * whether allow drag in x direction when content size is less than container size.
                  * Defaults to: true, does not allow.
+                 * @cfg {Boolean} lockX
                  */
 <span id='global-property-lockX'>                /**
 </span>                 * @ignore
@@ -499,9 +505,10 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, Node, Anim) {
                 lockX: {
                     value: true
                 },
-<span id='global-property-'>                /**
+<span id='KISSY-ScrollView-Drag-cfg-lockY'>                /**
 </span>                 * whether allow drag in y direction when content size is less than container size.
                  * Defaults to: false, allow.
+                 * @cfg {Boolean} lockY
                  */
 <span id='global-property-lockY'>                /**
 </span>                 * @ignore
@@ -509,15 +516,47 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, Node, Anim) {
                 lockY: {
                     value: false
                 },
+<span id='KISSY-ScrollView-Drag-cfg-snapThreshold'>                /**
+</span>                 * px diff to start x or y snap gesture
+                 * Defaults to: 5.
+                 * @cfg {Boolean} snapThreshold
+                 */
+<span id='global-property-snapThreshold'>                /**
+</span>                 * @ignore
+                 */
                 snapThreshold: {
                     value: 5
                 },
+<span id='KISSY-ScrollView-Drag-cfg-bounce'>                /**
+</span>                 * whether allow bounce effect
+                 * Defaults to: true.
+                 * @cfg {Boolean} bounce
+                 */
+<span id='global-property-bounce'>                /**
+</span>                 * @ignore
+                 */
                 bounce: {
                     value: true
                 },
+<span id='KISSY-ScrollView-Drag-cfg-bounceDuration'>                /**
+</span>                 * bounce effect duration.
+                 * Defaults to: 0.4.
+                 * @cfg {Number} bounceDuration
+                 */
+<span id='global-property-bounceDuration'>                /**
+</span>                 * @ignore
+                 */
                 bounceDuration: {
                     value: 0.4
                 },
+<span id='KISSY-ScrollView-Drag-cfg-bounceEasing'>                /**
+</span>                 * bounce easing config.
+                 * Defaults to: easeOut.
+                 * @cfg {Boolean} bounceEasing
+                 */
+<span id='global-property-bounceEasing'>                /**
+</span>                 * @ignore
+                 */
                 bounceEasing: {
                     value: 'easeOut'
                 }

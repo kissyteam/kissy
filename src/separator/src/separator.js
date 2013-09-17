@@ -1,9 +1,9 @@
 /**
+ * @ignore
  * separator def
  * @author yiminghe@gmail.com
  */
 KISSY.add("separator", function (S, Control, SeparatorRender) {
-
     /**
      * separator component for KISSY. xclass: 'separator'.
      * @extends KISSY.Component.Control
@@ -36,7 +36,6 @@ KISSY.add("separator", function (S, Control, SeparatorRender) {
         },
         xclass: 'separator'
     });
-
 }, {
     requires: ['component/control', 'separator/render']
 });

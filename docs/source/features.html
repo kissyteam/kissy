@@ -21,7 +21,6 @@
  * @author yiminghe@gmail.com
  */
 (function (S, undefined) {
-
     var Env = S.Env,
         win = Env.host,
         UA = S.UA,
@@ -77,16 +76,15 @@
     }
 
 <span id='KISSY-Features'>    /**
-</span>     * test browser features
+</span>     * browser features detection
      * @class KISSY.Features
      * @private
      * @singleton
      */
     S.Features = {
         // http://blogs.msdn.com/b/ie/archive/2011/09/20/touch-input-for-ie10-and-metro-style-apps.aspx
-<span id='global-property-isMsPointerSupported'>        /**
-</span>         * @ignore
-         * whether support win8 pointer event.
+<span id='KISSY-Features-property-isMsPointerSupported'>        /**
+</span>         * whether support microsoft pointer event.
          * @type {Boolean}
          */
         isMsPointerSupported: function () {
@@ -95,60 +93,104 @@
 
 <span id='KISSY-Features-method-isTouchEventSupported'>        /**
 </span>         * whether support touch event.
-         * @method
          * @return {Boolean}
          */
         isTouchEventSupported: function () {
             return isTouchEventSupportedState;
         },
 
-<span id='KISSY-Features-method-isDeviceMotionSupported'>        isDeviceMotionSupported: function () {
-</span>            return !!win['DeviceMotionEvent'];
+<span id='KISSY-Features-method-isDeviceMotionSupported'>        /**
+</span>         * whether support device motion event
+         * @returns {boolean}
+         */
+        isDeviceMotionSupported: function () {
+            return !!win['DeviceMotionEvent'];
         },
 
-<span id='KISSY-Features-method-isHashChangeSupported'>        'isHashChangeSupported': function () {
-</span>            // ie8 支持 hashchange
+<span id='KISSY-Features-method-isHashChangeSupported'>        /**
+</span>         * whether support hashchange event
+         * @returns {boolean}
+         */
+        'isHashChangeSupported': function () {
+            // ie8 支持 hashchange
             // 但 ie8 以上切换浏览器模式到 ie7（兼容模式），
             // 会导致 'onhashchange' in window === true，但是不触发事件
             return ( 'onhashchange' in win) &amp;&amp; (!ie || ie &gt; 7);
         },
 
-<span id='KISSY-Features-method-isTransitionSupported'>        'isTransitionSupported': function () {
-</span>            return transitionPrefix !== undefined;
+<span id='KISSY-Features-method-isTransitionSupported'>        /**
+</span>         * whether support css transition
+         * @returns {boolean}
+         */
+        'isTransitionSupported': function () {
+            return transitionPrefix !== undefined;
         },
 
-<span id='KISSY-Features-method-isTransformSupported'>        'isTransformSupported': function () {
-</span>            return transformPrefix !== undefined;
+<span id='KISSY-Features-method-isTransformSupported'>        /**
+</span>         * whether support css transform
+         * @returns {boolean}
+         */
+        'isTransformSupported': function () {
+            return transformPrefix !== undefined;
         },
 
-<span id='KISSY-Features-method-isClassListSupported'>        'isClassListSupported': function () {
-</span>            return isClassListSupportedState
+<span id='KISSY-Features-method-isClassListSupported'>        /**
+</span>         * whether support class list api
+         * @returns {boolean}
+         */
+        'isClassListSupported': function () {
+            return isClassListSupportedState
         },
 
-<span id='KISSY-Features-method-isQuerySelectorSupported'>        'isQuerySelectorSupported': function () {
-</span>            // force to use js selector engine
+<span id='KISSY-Features-method-isQuerySelectorSupported'>        /**
+</span>         * whether support querySelectorAll
+         * @returns {boolean}
+         */
+        'isQuerySelectorSupported': function () {
+            // force to use js selector engine
             return !S.config('dom/selector') &amp;&amp;
                 isQuerySelectorSupportedState;
         },
 
-<span id='KISSY-Features-method-isIELessThan'>        'isIELessThan': function (v) {
-</span>            return ie &amp;&amp; ie &lt; v;
+<span id='KISSY-Features-method-isIELessThan'>        /**
+</span>         * whether is ie and ie version is less than specified version
+         * @param {Number} v specified ie version to be compared
+         * @returns {boolean}
+         */
+        'isIELessThan': function (v) {
+            return !!(ie &amp;&amp; ie &lt; v);
         },
 
-<span id='KISSY-Features-method-getTransitionPrefix'>        'getTransitionPrefix': function () {
-</span>            return transitionPrefix;
+<span id='KISSY-Features-method-getTransitionPrefix'>        /**
+</span>         * get css transition browser prefix if support css transition
+         * @returns {String}
+         */
+        'getTransitionPrefix': function () {
+            return transitionPrefix;
         },
 
-<span id='KISSY-Features-method-getTransformPrefix'>        'getTransformPrefix': function () {
-</span>            return transformPrefix;
+<span id='KISSY-Features-method-getTransformPrefix'>        /**
+</span>         * get css transform browser prefix if support css transform
+         * @returns {String}
+         */
+        'getTransformPrefix': function () {
+            return transformPrefix;
         },
 
-<span id='KISSY-Features-method-getTransitionProperty'>        'getTransitionProperty': function () {
-</span>            return transitionProperty;
+<span id='KISSY-Features-method-getTransitionProperty'>        /**
+</span>         * get css transition property if support css transition
+         * @returns {String}
+         */
+        'getTransitionProperty': function () {
+            return transitionProperty;
         },
 
-<span id='KISSY-Features-method-getTransformProperty'>        'getTransformProperty': function () {
-</span>            return transformProperty;
+<span id='KISSY-Features-method-getTransformProperty'>        /**
+</span>         * get css transform property if support css transform
+         * @returns {String}
+         */
+        'getTransformProperty': function () {
+            return transformProperty;
         }
     };
 })(KISSY);</pre>

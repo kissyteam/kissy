@@ -325,39 +325,39 @@ if (! _$jscoverage['/overlay/popup.js'].branchData) {
   _$jscoverage['/overlay/popup.js'].branchData['117'][1] = new BranchData();
 }
 _$jscoverage['/overlay/popup.js'].branchData['117'][1].init(277, 21, 'self._mouseLeavePopup');
-function visit43_117_1(result) {
+function visit42_117_1(result) {
   _$jscoverage['/overlay/popup.js'].branchData['117'][1].ranCondition(result);
   return result;
 }_$jscoverage['/overlay/popup.js'].branchData['114'][1].init(142, 22, 'self.__mouseEnterPopup');
-function visit42_114_1(result) {
+function visit41_114_1(result) {
   _$jscoverage['/overlay/popup.js'].branchData['114'][1].ranCondition(result);
   return result;
 }_$jscoverage['/overlay/popup.js'].branchData['111'][1].init(22, 17, 'self.__clickPopup');
-function visit41_111_1(result) {
+function visit40_111_1(result) {
   _$jscoverage['/overlay/popup.js'].branchData['111'][1].ranCondition(result);
   return result;
 }_$jscoverage['/overlay/popup.js'].branchData['110'][1].init(125, 1, 't');
-function visit40_110_1(result) {
+function visit39_110_1(result) {
   _$jscoverage['/overlay/popup.js'].branchData['110'][1].ranCondition(result);
   return result;
 }_$jscoverage['/overlay/popup.js'].branchData['84'][1].init(50, 18, 'self.get(\'toggle\')');
-function visit39_84_1(result) {
+function visit38_84_1(result) {
   _$jscoverage['/overlay/popup.js'].branchData['84'][1].ranCondition(result);
   return result;
 }_$jscoverage['/overlay/popup.js'].branchData['74'][1].init(48, 17, 'self._hiddenTimer');
-function visit38_74_1(result) {
+function visit37_74_1(result) {
   _$jscoverage['/overlay/popup.js'].branchData['74'][1].ranCondition(result);
   return result;
 }_$jscoverage['/overlay/popup.js'].branchData['48'][1].init(22, 5, 'timer');
-function visit37_48_1(result) {
+function visit36_48_1(result) {
   _$jscoverage['/overlay/popup.js'].branchData['48'][1].ranCondition(result);
   return result;
 }_$jscoverage['/overlay/popup.js'].branchData['21'][1].init(22, 35, 'self.get("triggerType") === \'mouse\'');
-function visit36_21_1(result) {
+function visit35_21_1(result) {
   _$jscoverage['/overlay/popup.js'].branchData['21'][1].ranCondition(result);
   return result;
 }_$jscoverage['/overlay/popup.js'].branchData['20'][1].init(126, 7, 'trigger');
-function visit35_20_1(result) {
+function visit34_20_1(result) {
   _$jscoverage['/overlay/popup.js'].branchData['20'][1].ranCondition(result);
   return result;
 }_$jscoverage['/overlay/popup.js'].lineData[6]++;
@@ -370,9 +370,9 @@ KISSY.add('overlay/popup', function(S, Overlay, undefined) {
   _$jscoverage['/overlay/popup.js'].lineData[17]++;
   var self = this, trigger = self.get("trigger");
   _$jscoverage['/overlay/popup.js'].lineData[20]++;
-  if (visit35_20_1(trigger)) {
+  if (visit34_20_1(trigger)) {
     _$jscoverage['/overlay/popup.js'].lineData[21]++;
-    if (visit36_21_1(self.get("triggerType") === 'mouse')) {
+    if (visit35_21_1(self.get("triggerType") === 'mouse')) {
       _$jscoverage['/overlay/popup.js'].lineData[22]++;
       self._bindTriggerMouse();
       _$jscoverage['/overlay/popup.js'].lineData[23]++;
@@ -411,7 +411,7 @@ KISSY.add('overlay/popup', function(S, Overlay, undefined) {
   self._mouseLeavePopup = function() {
   _$jscoverage['/overlay/popup.js'].functionData[6]++;
   _$jscoverage['/overlay/popup.js'].lineData[48]++;
-  if (visit37_48_1(timer)) {
+  if (visit36_48_1(timer)) {
     _$jscoverage['/overlay/popup.js'].lineData[49]++;
     timer.cancel();
     _$jscoverage['/overlay/popup.js'].lineData[50]++;
@@ -446,7 +446,7 @@ KISSY.add('overlay/popup', function(S, Overlay, undefined) {
   _$jscoverage['/overlay/popup.js'].lineData[73]++;
   var self = this;
   _$jscoverage['/overlay/popup.js'].lineData[74]++;
-  if (visit38_74_1(self._hiddenTimer)) {
+  if (visit37_74_1(self._hiddenTimer)) {
     _$jscoverage['/overlay/popup.js'].lineData[75]++;
     self._hiddenTimer.cancel();
     _$jscoverage['/overlay/popup.js'].lineData[76]++;
@@ -463,7 +463,7 @@ KISSY.add('overlay/popup', function(S, Overlay, undefined) {
   _$jscoverage['/overlay/popup.js'].lineData[83]++;
   ev.halt();
   _$jscoverage['/overlay/popup.js'].lineData[84]++;
-  if (visit39_84_1(self.get('toggle'))) {
+  if (visit38_84_1(self.get('toggle'))) {
     _$jscoverage['/overlay/popup.js'].lineData[85]++;
     self[self.get('visible') ? '_hiding' : '_showing'](ev);
   } else {
@@ -495,19 +495,19 @@ KISSY.add('overlay/popup', function(S, Overlay, undefined) {
   _$jscoverage['/overlay/popup.js'].lineData[106]++;
   var self = this, $el = self.$el, t = self.get("trigger");
   _$jscoverage['/overlay/popup.js'].lineData[110]++;
-  if (visit40_110_1(t)) {
+  if (visit39_110_1(t)) {
     _$jscoverage['/overlay/popup.js'].lineData[111]++;
-    if (visit41_111_1(self.__clickPopup)) {
+    if (visit40_111_1(self.__clickPopup)) {
       _$jscoverage['/overlay/popup.js'].lineData[112]++;
       t.detach('click', self.__clickPopup);
     }
     _$jscoverage['/overlay/popup.js'].lineData[114]++;
-    if (visit42_114_1(self.__mouseEnterPopup)) {
+    if (visit41_114_1(self.__mouseEnterPopup)) {
       _$jscoverage['/overlay/popup.js'].lineData[115]++;
       t.detach('mouseenter', self.__mouseEnterPopup);
     }
     _$jscoverage['/overlay/popup.js'].lineData[117]++;
-    if (visit43_117_1(self._mouseLeavePopup)) {
+    if (visit42_117_1(self._mouseLeavePopup)) {
       _$jscoverage['/overlay/popup.js'].lineData[118]++;
       t.detach('mouseleave', self._mouseLeavePopup);
     }

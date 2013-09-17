@@ -19,7 +19,7 @@ KISSY.add("html-parser/nodes/tag", function (S, Node, Attribute, Dtd) {
      * @param startPosition
      * @param endPosition
      * @param attributes
-     * @class KISSY.HtmlParse.Tag
+     * @class KISSY.HtmlParser.Tag
      */
     function Tag(page, startPosition, endPosition, attributes) {
         var self = this;

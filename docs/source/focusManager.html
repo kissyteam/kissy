@@ -32,16 +32,6 @@ KISSY.add(&quot;editor/focusManager&quot;, function (S, Editor) {
          * @private
          */
             focusManager = {
-<span id='KISSY-Editor-focusManager-method-refreshAll'>            /**
-</span>             * make all editor instance editable
-             */
-            refreshAll: function () {
-                for (var i in INSTANCES) {
-                    var e = INSTANCES[i], doc = e.get(&quot;document&quot;)[0];
-                    doc.designMode = &quot;off&quot;;
-                    doc.designMode = &quot;on&quot;;
-                }
-            },
 <span id='KISSY-Editor-focusManager-method-currentInstance'>            /**
 </span>             * get current focused editor instance
              */
@@ -113,7 +103,6 @@ KISSY.add(&quot;editor/focusManager&quot;, function (S, Editor) {
         }, 30);
     }
 
-    focusManager['refreshAll'] = focusManager.refreshAll;
     Editor.focusManager = focusManager;
     Editor.getInstances = function () {
         return INSTANCES;

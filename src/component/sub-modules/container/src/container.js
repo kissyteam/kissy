@@ -213,7 +213,7 @@ KISSY.add('component/container', function (S, Control, ContainerRender) {
 
         /**
          * Removes every child component attached to current component.
-         * see {@link KISSY.Component.Control#removeChild}
+         * see {@link KISSY.Component.Container#removeChild}
          * @param {Boolean} [destroy] If true,
          * calls ``destroy()`` on the removed child component.
          * @chainable

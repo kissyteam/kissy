@@ -16,13 +16,16 @@
 </head>
 <body onload="prettyPrint(); highlight();">
   <pre class="prettyprint lang-js"><span id='global-property-'>/**
-</span> * Lexer to scan token.
+</span> * @ignore
+ * Lexer to scan token.
  * @author yiminghe@gmail.com
  */
 KISSY.add(&quot;kison/lexer&quot;, function (S, Utils) {
-
     var serializeObject = Utils.serializeObject,
-
+<span id='KISSY-Kison-Lexer'>        /**
+</span>         * Lexer generator
+         * @class KISSY.Kison.Lexer
+         */
         Lexer = function (cfg) {
 
             var self = this;
@@ -61,7 +64,6 @@ KISSY.add(&quot;kison/lexer&quot;, function (S, Utils) {
     };
 
     Lexer.prototype = {
-
         constructor: Lexer,
 
         resetInput: function (input) {
@@ -295,7 +297,6 @@ KISSY.add(&quot;kison/lexer&quot;, function (S, Utils) {
     };
 
     return Lexer;
-
 }, {
     requires: ['./utils']
 });</pre>

@@ -144,7 +144,6 @@ KISSY.add("overlay/extension/mask", function (S, Node) {
     }
 
     Mask.prototype = {
-
         __renderUI: function () {
             var self = this;
             if (self.get('mask')) {

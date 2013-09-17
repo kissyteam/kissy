@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * separator render def
  * @author yiminghe@gmail.com
  */

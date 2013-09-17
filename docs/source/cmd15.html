@@ -242,11 +242,11 @@ KISSY.add(&quot;editor/plugin/maximize/cmd&quot;, function (S, Editor) {
 
             editorEl.css({
                 position: &quot;absolute&quot;,
-                zIndex: Editor.baseZIndex(Editor.zIndexManager.MAXIMIZE),
+                zIndex: Editor.baseZIndex(Editor.ZIndexManager.MAXIMIZE),
                 width: viewportWidth + &quot;px&quot;
             });
             iframe.css({
-                zIndex: Editor.baseZIndex(Editor.zIndexManager.MAXIMIZE - 5),
+                zIndex: Editor.baseZIndex(Editor.ZIndexManager.MAXIMIZE - 5),
                 height: viewportHeight + &quot;px&quot;,
                 width: viewportWidth + &quot;px&quot;
             });

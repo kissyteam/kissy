@@ -4,7 +4,6 @@
  * @author yiminghe@gmail.com
  */
 (function (S, undefined) {
-
     var reDisallowedInSchemeOrUserInfo = /[#\/\?@]/g,
         reDisallowedInPathName = /[#\?]/g,
         logger= S.getLogger('s/uri'),
@@ -89,7 +88,6 @@
     function Query(query) {
         this._query = query || '';
     }
-
 
     Query.prototype = {
         constructor: Query,
@@ -282,7 +280,6 @@
         });
     }
 
-
     /**
      * @class KISSY.Uri
      * Uri class for KISSY.
@@ -358,7 +355,6 @@
     }
 
     Uri.prototype = {
-
         constructor: Uri,
 
         /**
@@ -668,7 +664,6 @@
     };
 
     S.Uri = Uri;
-
 })(KISSY);
 /*
  Refer

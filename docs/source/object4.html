@@ -102,28 +102,28 @@ KISSY.add('event/dom/base/object', function (S, BaseEvent, undefined) {
                     }
 
                     if (deltaX !== undefined) {
-<span id='KISSY-Event-DomEventObject-property-deltaX'>                        /**
+<span id='KISSY-Event-DomEvent-Object-property-deltaX'>                        /**
 </span>                         * deltaX of mousewheel event
                          * @property deltaX
-                         * @member KISSY.Event.DomEventObject
+                         * @member KISSY.Event.DomEvent.Object
                          */
                         event.deltaX = deltaX;
                     }
 
                     if (deltaY !== undefined) {
-<span id='KISSY-Event-DomEventObject-property-deltaY'>                        /**
+<span id='KISSY-Event-DomEvent-Object-property-deltaY'>                        /**
 </span>                         * deltaY of mousewheel event
                          * @property deltaY
-                         * @member KISSY.Event.DomEventObject
+                         * @member KISSY.Event.DomEvent.Object
                          */
                         event.deltaY = deltaY;
                     }
 
                     if (delta !== undefined) {
-<span id='KISSY-Event-DomEventObject-property-delta'>                        /**
+<span id='KISSY-Event-DomEvent-Object-property-delta'>                        /**
 </span>                         * delta of mousewheel event
                          * @property delta
-                         * @member KISSY.Event.DomEventObject
+                         * @member KISSY.Event.DomEvent.Object
                          */
                         event.delta = delta;
                     }
@@ -179,7 +179,7 @@ KISSY.add('event/dom/base/object', function (S, BaseEvent, undefined) {
         return FALSE;
     }
 
-<span id='KISSY-Event-DomEventObject'>    /**
+<span id='KISSY-Event-DomEvent-Object'>    /**
 </span>     * Do not new by yourself.
      *
      * KISSY 's dom event system normalizes the event object according to
@@ -192,211 +192,212 @@ KISSY.add('event/dom/base/object', function (S, BaseEvent, undefined) {
      * copied over and normalized to the new event object
      * according to [W3C standards](http://www.w3.org/TR/dom/#event).
      *
-     * @class KISSY.Event.DomEventObject
+     * @class KISSY.Event.DomEvent.Object
      * @extends KISSY.Event.Object
+     * @private
      * @param originalEvent native dom event
      */
     function DomEventObject(originalEvent) {
         var self = this,
             type = originalEvent.type;
 
-<span id='KISSY-Event-DomEventObject-property-altKey'>        /**
+<span id='KISSY-Event-DomEvent-Object-property-altKey'>        /**
 </span>         * altKey
          * @property altKey
          */
 
-<span id='KISSY-Event-DomEventObject-property-attrChange'>        /**
+<span id='KISSY-Event-DomEvent-Object-property-attrChange'>        /**
 </span>         * attrChange
          * @property attrChange
          */
 
-<span id='KISSY-Event-DomEventObject-property-attrName'>        /**
+<span id='KISSY-Event-DomEvent-Object-property-attrName'>        /**
 </span>         * attrName
          * @property attrName
          */
 
-<span id='KISSY-Event-DomEventObject-property-bubbles'>        /**
+<span id='KISSY-Event-DomEvent-Object-property-bubbles'>        /**
 </span>         * bubbles
          * @property bubbles
          */
 
-<span id='KISSY-Event-DomEventObject-property-button'>        /**
+<span id='KISSY-Event-DomEvent-Object-property-button'>        /**
 </span>         * button
          * @property button
          */
 
-<span id='KISSY-Event-DomEventObject-property-cancelable'>        /**
+<span id='KISSY-Event-DomEvent-Object-property-cancelable'>        /**
 </span>         * cancelable
          * @property cancelable
          */
 
-<span id='KISSY-Event-DomEventObject-property-charCode'>        /**
+<span id='KISSY-Event-DomEvent-Object-property-charCode'>        /**
 </span>         * charCode
          * @property charCode
          */
 
-<span id='KISSY-Event-DomEventObject-property-clientX'>        /**
+<span id='KISSY-Event-DomEvent-Object-property-clientX'>        /**
 </span>         * clientX
          * @property clientX
          */
 
-<span id='KISSY-Event-DomEventObject-property-clientY'>        /**
+<span id='KISSY-Event-DomEvent-Object-property-clientY'>        /**
 </span>         * clientY
          * @property clientY
          */
 
-<span id='KISSY-Event-DomEventObject-property-ctrlKey'>        /**
+<span id='KISSY-Event-DomEvent-Object-property-ctrlKey'>        /**
 </span>         * ctrlKey
          * @property ctrlKey
          */
 
-<span id='KISSY-Event-DomEventObject-property-data'>        /**
+<span id='KISSY-Event-DomEvent-Object-property-data'>        /**
 </span>         * data
          * @property data
          */
 
-<span id='KISSY-Event-DomEventObject-property-detail'>        /**
+<span id='KISSY-Event-DomEvent-Object-property-detail'>        /**
 </span>         * detail
          * @property detail
          */
 
-<span id='KISSY-Event-DomEventObject-property-eventPhase'>        /**
+<span id='KISSY-Event-DomEvent-Object-property-eventPhase'>        /**
 </span>         * eventPhase
          * @property eventPhase
          */
 
-<span id='KISSY-Event-DomEventObject-property-fromElement'>        /**
+<span id='KISSY-Event-DomEvent-Object-property-fromElement'>        /**
 </span>         * fromElement
          * @property fromElement
          */
 
-<span id='KISSY-Event-DomEventObject-property-handler'>        /**
+<span id='KISSY-Event-DomEvent-Object-property-handler'>        /**
 </span>         * handler
          * @property handler
          */
 
-<span id='KISSY-Event-DomEventObject-property-keyCode'>        /**
+<span id='KISSY-Event-DomEvent-Object-property-keyCode'>        /**
 </span>         * keyCode
          * @property keyCode
          */
 
-<span id='KISSY-Event-DomEventObject-property-metaKey'>        /**
+<span id='KISSY-Event-DomEvent-Object-property-metaKey'>        /**
 </span>         * metaKey
          * @property metaKey
          */
 
-<span id='KISSY-Event-DomEventObject-property-newValue'>        /**
+<span id='KISSY-Event-DomEvent-Object-property-newValue'>        /**
 </span>         * newValue
          * @property newValue
          */
 
-<span id='KISSY-Event-DomEventObject-property-offsetX'>        /**
+<span id='KISSY-Event-DomEvent-Object-property-offsetX'>        /**
 </span>         * offsetX
          * @property offsetX
          */
 
-<span id='KISSY-Event-DomEventObject-property-offsetY'>        /**
+<span id='KISSY-Event-DomEvent-Object-property-offsetY'>        /**
 </span>         * offsetY
          * @property offsetY
          */
 
-<span id='KISSY-Event-DomEventObject-property-pageX'>        /**
+<span id='KISSY-Event-DomEvent-Object-property-pageX'>        /**
 </span>         * pageX
          * @property pageX
          */
 
-<span id='KISSY-Event-DomEventObject-property-pageY'>        /**
+<span id='KISSY-Event-DomEvent-Object-property-pageY'>        /**
 </span>         * pageY
          * @property pageY
          */
 
-<span id='KISSY-Event-DomEventObject-property-prevValue'>        /**
+<span id='KISSY-Event-DomEvent-Object-property-prevValue'>        /**
 </span>         * prevValue
          * @property prevValue
          */
 
-<span id='KISSY-Event-DomEventObject-property-relatedNode'>        /**
+<span id='KISSY-Event-DomEvent-Object-property-relatedNode'>        /**
 </span>         * relatedNode
          * @property relatedNode
          */
 
-<span id='KISSY-Event-DomEventObject-property-relatedTarget'>        /**
+<span id='KISSY-Event-DomEvent-Object-property-relatedTarget'>        /**
 </span>         * relatedTarget
          * @property relatedTarget
          */
 
-<span id='KISSY-Event-DomEventObject-property-screenX'>        /**
+<span id='KISSY-Event-DomEvent-Object-property-screenX'>        /**
 </span>         * screenX
          * @property screenX
          */
 
-<span id='KISSY-Event-DomEventObject-property-screenY'>        /**
+<span id='KISSY-Event-DomEvent-Object-property-screenY'>        /**
 </span>         * screenY
          * @property screenY
          */
 
-<span id='KISSY-Event-DomEventObject-property-shiftKey'>        /**
+<span id='KISSY-Event-DomEvent-Object-property-shiftKey'>        /**
 </span>         * shiftKey
          * @property shiftKey
          */
 
-<span id='KISSY-Event-DomEventObject-property-srcElement'>        /**
+<span id='KISSY-Event-DomEvent-Object-property-srcElement'>        /**
 </span>         * srcElement
          * @property srcElement
          */
 
-<span id='KISSY-Event-DomEventObject-property-toElement'>        /**
+<span id='KISSY-Event-DomEvent-Object-property-toElement'>        /**
 </span>         * toElement
          * @property toElement
          */
 
-<span id='KISSY-Event-DomEventObject-property-view'>        /**
+<span id='KISSY-Event-DomEvent-Object-property-view'>        /**
 </span>         * view
          * @property view
          */
 
-<span id='KISSY-Event-DomEventObject-property-wheelDelta'>        /**
+<span id='KISSY-Event-DomEvent-Object-property-wheelDelta'>        /**
 </span>         * wheelDelta
          * @property wheelDelta
          */
 
-<span id='KISSY-Event-DomEventObject-property-which'>        /**
+<span id='KISSY-Event-DomEvent-Object-property-which'>        /**
 </span>         * which
          * @property which
          */
 
-<span id='KISSY-Event-DomEventObject-property-changedTouches'>        /**
+<span id='KISSY-Event-DomEvent-Object-property-changedTouches'>        /**
 </span>         * changedTouches
          * @property changedTouches
          */
 
-<span id='KISSY-Event-DomEventObject-property-touches'>        /**
+<span id='KISSY-Event-DomEvent-Object-property-touches'>        /**
 </span>         * touches
          * @property touches
          */
 
-<span id='KISSY-Event-DomEventObject-property-targetTouches'>        /**
+<span id='KISSY-Event-DomEvent-Object-property-targetTouches'>        /**
 </span>         * targetTouches
          * @property targetTouches
          */
 
-<span id='KISSY-Event-DomEventObject-property-rotation'>        /**
+<span id='KISSY-Event-DomEvent-Object-property-rotation'>        /**
 </span>         * rotation
          * @property rotation
          */
 
-<span id='KISSY-Event-DomEventObject-property-scale'>        /**
+<span id='KISSY-Event-DomEvent-Object-property-scale'>        /**
 </span>         * scale
          * @property scale
          */
 
-<span id='KISSY-Event-DomEventObject-property-target'>        /**
+<span id='KISSY-Event-DomEvent-Object-property-target'>        /**
 </span>         * source html node of current event
          * @property target
          * @type {HTMLElement}
          */
 
-<span id='KISSY-Event-DomEventObject-property-currentTarget'>        /**
+<span id='KISSY-Event-DomEvent-Object-property-currentTarget'>        /**
 </span>         * current htm node which processes current event
          * @property currentTarget
          * @type {HTMLElement}

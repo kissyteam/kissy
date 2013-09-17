@@ -21,10 +21,10 @@
  * @author yiminghe@gmail.com
  * refer: http://martinfowler.com/eaaDev/uiArchs.html
  */
-KISSY.add(&quot;component/control/render&quot;, function (S, ComponentProcess, XTemplate, RenderTpl, Manager) {
+KISSY.add(&quot;component/control/render&quot;, function (S, Node, XTemplateRuntime, ComponentProcess, RenderTpl, Manager) {
     var ON_SET = '_onSet',
         trim = S.trim,
-        $ = S.all,
+        $ = Node.all,
         UA = S.UA,
         startTpl = RenderTpl,
         endTpl = '&lt;/div&gt;',
@@ -197,10 +197,8 @@ KISSY.add(&quot;component/control/render&quot;, function (S, ComponentProcess, X
             );
 
             var control = self.control,
-                tpl, html;
-
-            tpl = startTpl + self.get('contentTpl') + endTpl;
-            html = self.renderTpl(tpl);
+                html;
+            html = self.renderTpl(startTpl) + self.renderTpl(self.get('contentTpl')) + endTpl;
             control.setInternal(&quot;el&quot;, self.$el = $(html));
             self.el = self.$el[0];
             self.fillChildrenElsBySelectors();
@@ -287,6 +285,7 @@ KISSY.add(&quot;component/control/render&quot;, function (S, ComponentProcess, X
             var self = this;
             renderData = renderData || self.renderData;
             renderCommands = renderCommands || self.renderCommands;
+            var XTemplate = self.get('xtemplate');
             return new XTemplate(tpl, {
                 control: self.control,
                 view: self,
@@ -458,7 +457,7 @@ KISSY.add(&quot;component/control/render&quot;, function (S, ComponentProcess, X
          * @param {Object} px Object to be mixed into new class 's prototype.
          * @param {Object} sx Object to be mixed into new class.
          * @static
-         * @return {KISSY.Component.ComponentProcess} A new class which extends ComponentProcess .
+         * @return {KISSY.Component.Process} A new class which extends ComponentProcess .
          */
         extend: function extend(extensions, px, sx) {
             var SuperClass = this,
@@ -491,8 +490,13 @@ KISSY.add(&quot;component/control/render&quot;, function (S, ComponentProcess, X
                     this.control = v;
                 }
             },
+            xtemplate: {
+                value: XTemplateRuntime
+            },
             contentTpl: {
-                value: '{{{content}}}'
+                value: function (scopes) {
+                    return scopes &amp;&amp; scopes[scopes.length - 1].content || '';
+                }
             }
         },
 
@@ -530,9 +534,10 @@ KISSY.add(&quot;component/control/render&quot;, function (S, ComponentProcess, X
      */
 }, {
     requires: [
+        'node',
+        'xtemplate/runtime',
         './process',
-        'xtemplate',
-        './render-tpl',
+        './render-xtpl',
         'component/manager'
     ]
 });</pre>

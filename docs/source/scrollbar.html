@@ -16,10 +16,16 @@
 </head>
 <body onload="prettyPrint(); highlight();">
   <pre class="prettyprint lang-js"><span id='global-property-'>/**
-</span> * scrollbar plugin for KISSY scroll-view
+</span> * @ignore
+ * scrollbar plugin for KISSY scroll-view
  * @author yiminghe@gmail.com
  */
 KISSY.add('scroll-view/plugin/scrollbar', function (S, Base, ScrollBar) {
+<span id='KISSY-ScrollView-Plugin-ScrollBar'>    /**
+</span>     * ScrollBar plugin for ScrollView
+     * @class KISSY.ScrollView.Plugin.ScrollBar
+     * @extend KISSY.Base
+     */
     return Base.extend({
         pluginId: this.getName(),
 

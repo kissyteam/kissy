@@ -230,25 +230,25 @@ if (! _$jscoverage['/content-render.js']) {
   _$jscoverage['/content-render.js'] = {};
   _$jscoverage['/content-render.js'].lineData = [];
   _$jscoverage['/content-render.js'].lineData[6] = 0;
+  _$jscoverage['/content-render.js'].lineData[7] = 0;
   _$jscoverage['/content-render.js'].lineData[8] = 0;
   _$jscoverage['/content-render.js'].lineData[9] = 0;
   _$jscoverage['/content-render.js'].lineData[10] = 0;
   _$jscoverage['/content-render.js'].lineData[11] = 0;
-  _$jscoverage['/content-render.js'].lineData[12] = 0;
-  _$jscoverage['/content-render.js'].lineData[15] = 0;
   _$jscoverage['/content-render.js'].lineData[18] = 0;
-  _$jscoverage['/content-render.js'].lineData[20] = 0;
-  _$jscoverage['/content-render.js'].lineData[26] = 0;
-  _$jscoverage['/content-render.js'].lineData[30] = 0;
-  _$jscoverage['/content-render.js'].lineData[35] = 0;
-  _$jscoverage['/content-render.js'].lineData[39] = 0;
-  _$jscoverage['/content-render.js'].lineData[41] = 0;
-  _$jscoverage['/content-render.js'].lineData[43] = 0;
+  _$jscoverage['/content-render.js'].lineData[21] = 0;
+  _$jscoverage['/content-render.js'].lineData[23] = 0;
+  _$jscoverage['/content-render.js'].lineData[29] = 0;
+  _$jscoverage['/content-render.js'].lineData[33] = 0;
+  _$jscoverage['/content-render.js'].lineData[38] = 0;
+  _$jscoverage['/content-render.js'].lineData[42] = 0;
   _$jscoverage['/content-render.js'].lineData[44] = 0;
-  _$jscoverage['/content-render.js'].lineData[49] = 0;
-  _$jscoverage['/content-render.js'].lineData[57] = 0;
+  _$jscoverage['/content-render.js'].lineData[46] = 0;
+  _$jscoverage['/content-render.js'].lineData[47] = 0;
+  _$jscoverage['/content-render.js'].lineData[52] = 0;
   _$jscoverage['/content-render.js'].lineData[60] = 0;
-  _$jscoverage['/content-render.js'].lineData[65] = 0;
+  _$jscoverage['/content-render.js'].lineData[63] = 0;
+  _$jscoverage['/content-render.js'].lineData[68] = 0;
 }
 if (! _$jscoverage['/content-render.js'].functionData) {
   _$jscoverage['/content-render.js'].functionData = [];
@@ -265,73 +265,73 @@ if (! _$jscoverage['/content-render.js'].functionData) {
 }
 if (! _$jscoverage['/content-render.js'].branchData) {
   _$jscoverage['/content-render.js'].branchData = {};
-  _$jscoverage['/content-render.js'].branchData['43'] = [];
-  _$jscoverage['/content-render.js'].branchData['43'][1] = new BranchData();
-  _$jscoverage['/content-render.js'].branchData['43'][2] = new BranchData();
+  _$jscoverage['/content-render.js'].branchData['46'] = [];
+  _$jscoverage['/content-render.js'].branchData['46'][1] = new BranchData();
+  _$jscoverage['/content-render.js'].branchData['46'][2] = new BranchData();
 }
-_$jscoverage['/content-render.js'].branchData['43'][2].init(207, 11, 'S.UA.ie < 9');
-function visit2_43_2(result) {
-  _$jscoverage['/content-render.js'].branchData['43'][2].ranCondition(result);
+_$jscoverage['/content-render.js'].branchData['46'][2].init(207, 11, 'S.UA.ie < 9');
+function visit2_46_2(result) {
+  _$jscoverage['/content-render.js'].branchData['46'][2].ranCondition(result);
   return result;
-}_$jscoverage['/content-render.js'].branchData['43'][1].init(207, 49, 'S.UA.ie < 9 && !control.get(\'allowTextSelection\')');
-function visit1_43_1(result) {
-  _$jscoverage['/content-render.js'].branchData['43'][1].ranCondition(result);
+}_$jscoverage['/content-render.js'].branchData['46'][1].init(207, 49, 'S.UA.ie < 9 && !control.get(\'allowTextSelection\')');
+function visit1_46_1(result) {
+  _$jscoverage['/content-render.js'].branchData['46'][1].ranCondition(result);
   return result;
 }_$jscoverage['/content-render.js'].lineData[6]++;
 KISSY.add('component/extension/content-render', function(S, ContentTpl) {
   _$jscoverage['/content-render.js'].functionData[0]++;
-  _$jscoverage['/content-render.js'].lineData[8]++;
+  _$jscoverage['/content-render.js'].lineData[7]++;
   function shortcut(self) {
     _$jscoverage['/content-render.js'].functionData[1]++;
-    _$jscoverage['/content-render.js'].lineData[9]++;
+    _$jscoverage['/content-render.js'].lineData[8]++;
     var control = self.control;
-    _$jscoverage['/content-render.js'].lineData[10]++;
+    _$jscoverage['/content-render.js'].lineData[9]++;
     var contentEl = control.get('contentEl');
-    _$jscoverage['/content-render.js'].lineData[11]++;
+    _$jscoverage['/content-render.js'].lineData[10]++;
     self.$contentEl = control.$contentEl = contentEl;
-    _$jscoverage['/content-render.js'].lineData[12]++;
+    _$jscoverage['/content-render.js'].lineData[11]++;
     self.contentEl = control.contentEl = contentEl[0];
   }
-  _$jscoverage['/content-render.js'].lineData[15]++;
+  _$jscoverage['/content-render.js'].lineData[18]++;
   function ContentRender() {
     _$jscoverage['/content-render.js'].functionData[2]++;
   }
-  _$jscoverage['/content-render.js'].lineData[18]++;
+  _$jscoverage['/content-render.js'].lineData[21]++;
   ContentRender.prototype = {
   __beforeCreateDom: function(renderData, childrenElSelectors) {
   _$jscoverage['/content-render.js'].functionData[3]++;
-  _$jscoverage['/content-render.js'].lineData[20]++;
+  _$jscoverage['/content-render.js'].lineData[23]++;
   S.mix(childrenElSelectors, {
   contentEl: '#ks-content-{id}'});
 }, 
   __createDom: function() {
   _$jscoverage['/content-render.js'].functionData[4]++;
-  _$jscoverage['/content-render.js'].lineData[26]++;
+  _$jscoverage['/content-render.js'].lineData[29]++;
   shortcut(this);
 }, 
   __decorateDom: function() {
   _$jscoverage['/content-render.js'].functionData[5]++;
-  _$jscoverage['/content-render.js'].lineData[30]++;
+  _$jscoverage['/content-render.js'].lineData[33]++;
   shortcut(this);
 }, 
   getChildrenContainerEl: function() {
   _$jscoverage['/content-render.js'].functionData[6]++;
-  _$jscoverage['/content-render.js'].lineData[35]++;
+  _$jscoverage['/content-render.js'].lineData[38]++;
   return this.control.get('contentEl');
 }, 
   _onSetContent: function(v) {
   _$jscoverage['/content-render.js'].functionData[7]++;
-  _$jscoverage['/content-render.js'].lineData[39]++;
+  _$jscoverage['/content-render.js'].lineData[42]++;
   var control = this.control, contentEl = control.$contentEl;
-  _$jscoverage['/content-render.js'].lineData[41]++;
+  _$jscoverage['/content-render.js'].lineData[44]++;
   contentEl.html(v);
-  _$jscoverage['/content-render.js'].lineData[43]++;
-  if (visit1_43_1(visit2_43_2(S.UA.ie < 9) && !control.get('allowTextSelection'))) {
-    _$jscoverage['/content-render.js'].lineData[44]++;
+  _$jscoverage['/content-render.js'].lineData[46]++;
+  if (visit1_46_1(visit2_46_2(S.UA.ie < 9) && !control.get('allowTextSelection'))) {
+    _$jscoverage['/content-render.js'].lineData[47]++;
     contentEl.unselectable();
   }
 }};
-  _$jscoverage['/content-render.js'].lineData[49]++;
+  _$jscoverage['/content-render.js'].lineData[52]++;
   S.mix(ContentRender, {
   ATTRS: {
   contentTpl: {
@@ -339,15 +339,15 @@ KISSY.add('component/extension/content-render', function(S, ContentTpl) {
   HTML_PARSER: {
   content: function(el) {
   _$jscoverage['/content-render.js'].functionData[8]++;
-  _$jscoverage['/content-render.js'].lineData[57]++;
+  _$jscoverage['/content-render.js'].lineData[60]++;
   return el.one('.' + this.getBaseCssClass('content')).html();
 }, 
   contentEl: function(el) {
   _$jscoverage['/content-render.js'].functionData[9]++;
-  _$jscoverage['/content-render.js'].lineData[60]++;
+  _$jscoverage['/content-render.js'].lineData[63]++;
   return el.one('.' + this.getBaseCssClass('content'));
 }}});
-  _$jscoverage['/content-render.js'].lineData[65]++;
+  _$jscoverage['/content-render.js'].lineData[68]++;
   return ContentRender;
 }, {
   requires: ['./content-render/content-xtpl']});

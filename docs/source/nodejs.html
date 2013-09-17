@@ -16,14 +16,26 @@
 </head>
 <body onload="prettyPrint(); highlight();">
   <pre class="prettyprint lang-js"><span id='global-property-'>/**
-</span> * load tpl from file in nodejs
+</span> * @ignore
+ * load tpl from file in nodejs
  * @author yiminghe@gmail.com
  */
 KISSY.add('xtemplate/nodejs', function (S, XTemplate) {
     var fs = require('fs');
     var cached = {};
 
+<span id='KISSY-XTemplate-Nodejs'>    /**
+</span>     * load xtemplate from file on nodejs
+     * @class KISSY.XTemplate.Nodejs
+     * @singleton
+     */
     return  {
+<span id='KISSY-XTemplate-Nodejs-method-loadFromModuleName'>        /**
+</span>         * load xtemplate module on nodejs and return xtemplate instance
+         * @param {String} moduleName xtemplate module name
+         * @param config xtemplate config object
+         * @returns {KISSY.XTemplate} xtemplate instance
+         */
         loadFromModuleName: function (moduleName, config) {
             config = S.merge(config, {
                 cacheFile: 1

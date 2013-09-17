@@ -21,9 +21,12 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(&quot;tabs/body&quot;, function (S, Container, Extension, undefined) {
-
+<span id='KISSY-Tabs-Body'>    /**
+</span>     * tab body container for tab panels.xclass: 'tabs-body'.
+     * @class  KISSY.Tabs.Body
+     * @extends KISSY.Component.Container
+     */
     var TabBody = Container.extend({
-
         bindUI: function () {
             var self = this;
             self.on(&quot;afterSelectedPanelIndexChange&quot;, function (e) {
@@ -67,7 +70,6 @@ KISSY.add(&quot;tabs/body&quot;, function (S, Container, Extension, undefined) {
                 this.renderChild(newIndex);
             }
         }
-
     }, {
         ATTRS: {
             selectedPanelIndex: {
@@ -103,7 +105,6 @@ KISSY.add(&quot;tabs/body&quot;, function (S, Container, Extension, undefined) {
     }
 
     return TabBody;
-
 }, {
     requires: ['component/container']
 });</pre>

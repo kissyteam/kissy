@@ -1,6 +1,8 @@
+{{#if closable}}
 <a href="javascript:void('close')"
    id="ks-overlay-close-{{id}}"
-   class="{{getBaseCssClasses "close"}}"
+   class="{{getBaseCssClasses 'close'}}"
    role='button'>
-    <span class="{{getBaseCssClasses "close-x"}}">close</span>
+    <span class="{{getBaseCssClasses 'close-x'}}">close</span>
 </a>
+{{/if}}

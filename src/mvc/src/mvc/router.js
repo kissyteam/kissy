@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * simple router to get path parameter and query parameter from hash(old ie) or url(html5)
  * @author yiminghe@gmail.com
  */
@@ -44,9 +45,8 @@ KISSY.add('mvc/router', function (S, Node, Base, undefined) {
         return new S.Uri(url).getFragment().replace(/^!/, "");
     }
 
-    /**
-     * get url fragment and dispatch
-     */
+
+   // get url fragment and dispatch
     function getFragment(url) {
         url = url || location.href;
         if (Router.nativeHistory && supportNativeHistory) {
@@ -58,14 +58,6 @@ KISSY.add('mvc/router', function (S, Node, Base, undefined) {
         }
     }
 
-    /**
-     * slash ------------- start
-     */
-
-    /**
-     * whether string end with slash
-     * @param str
-     */
     function endWithSlash(str) {
         return S.endsWith(str, "/");
     }
@@ -106,22 +98,15 @@ KISSY.add('mvc/router', function (S, Node, Base, undefined) {
         return str1 == str2;
     }
 
-    /**
-     * slash ------------------  end
-     */
 
-    /**
-     * get full path from fragment for html history
-     * @param fragment
-     */
+   // get full path from fragment for html history
     function getFullPath(fragment) {
         return location.protocol + "//" + location.host +
             removeEndSlash(Router.urlRoot) + addStartSlash(fragment)
     }
 
-    /**
-     * match url with route intelligently (always get optimal result)
-     */
+
+   // match url with route intelligently (always get optimal result)
     function dispatch() {
         var query,
             path,
@@ -295,11 +280,8 @@ KISSY.add('mvc/router', function (S, Node, Base, undefined) {
         }
     }
 
-    /**
-     * normalize function by self
-     * @param self
-     * @param callback
-     */
+
+   // normalize function by self
     function normFn(self, callback) {
         if (typeof callback === 'function') {
             return callback;
@@ -354,7 +336,7 @@ KISSY.add('mvc/router', function (S, Node, Base, undefined) {
 
             /**
              * Route and action config.
-             * @type {Object}
+             * @cfg {Object} routes
              *
              *
              *     {
@@ -366,6 +348,9 @@ KISSY.add('mvc/router', function (S, Node, Base, undefined) {
              *       }
              *     }
              */
+            /**
+             * @ignore
+             */
             routes: {}
         },
 
@@ -373,6 +358,8 @@ KISSY.add('mvc/router', function (S, Node, Base, undefined) {
          * whether Router can process path
          * @param {String} path path for route
          * @return {Boolean}
+         * @static
+         * @member KISSY.MVC.Router
          */
         hasRoute: function (path) {
             var match = 0;
@@ -399,6 +386,8 @@ KISSY.add('mvc/router', function (S, Node, Base, undefined) {
          * get the route path
          * @param {String} url full location href
          * @return {String} route path
+         * @static
+         * @member KISSY.MVC.Router
          */
         removeRoot: function (url) {
             var u = new S.Uri(url);
@@ -407,7 +396,8 @@ KISSY.add('mvc/router', function (S, Node, Base, undefined) {
 
         /**
          * Navigate to specified path.
-         * Similar to runRoute in sammy.js.
+         * @static
+         * @member KISSY.MVC.Router
          * @param {String} path Destination path.
          * @param {Object} [opts] Config for current navigation.
          * @param {Boolean} opts.triggerRoute Whether to trigger responding action
@@ -439,7 +429,9 @@ KISSY.add('mvc/router', function (S, Node, Base, undefined) {
             }
         },
         /**
-         * Start router (url monitor).
+         * Start all routers (url monitor).
+         * @static
+         * @member KISSY.MVC.Router
          * @param {Object} opts
          * @param {Function} opts.success Callback function to be called after router is started.
          * @param {String} opts.urlRoot Specify url root for html5 history management.
@@ -521,6 +513,11 @@ KISSY.add('mvc/router', function (S, Node, Base, undefined) {
             return undefined;
         },
 
+        /**
+         * stop all routers
+         * @static
+         * @member KISSY.MVC.Router
+         */
         stop: function () {
             Router.__started = 0;
             $win.detach('popstate', dispatch);
@@ -533,6 +530,7 @@ KISSY.add('mvc/router', function (S, Node, Base, undefined) {
 });
 
 /**
+ * @ignore
  * 2011-11-30
  *  - support user-given native regexp for router rule
  *

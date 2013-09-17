@@ -25,9 +25,9 @@ KISSY.add('event/custom/observable', function (S, CustomEventObserver, CustomEve
     var Utils = BaseEvent.Utils;
     var undefined = undefined;
 
-<span id='KISSY-Event-CustomEventObservable'>    /**
+<span id='KISSY-Event-CustomEvent-CustomEventObservable'>    /**
 </span>     * custom event for registering and un-registering observer for specified event on normal object.
-     * @class KISSY.Event.CustomEventObservable
+     * @class KISSY.Event.CustomEvent.CustomEventObservable
      * @extends KISSY.Event.Observable
      * @private
      */
@@ -37,26 +37,26 @@ KISSY.add('event/custom/observable', function (S, CustomEventObserver, CustomEve
         self.defaultFn = null;
         self.defaultTargetOnly = false;
 
-<span id='KISSY-Event-CustomEventObservable-cfg-bubbles'>        /**
+<span id='KISSY-Event-CustomEvent-CustomEventObservable-cfg-bubbles'>        /**
 </span>         * whether this event can bubble.
          * Defaults to: true
          * @cfg {Boolean} bubbles
          */
         self.bubbles = true;
-<span id='KISSY-Event-CustomEventObservable-cfg-currentTarget'>        /**
+<span id='KISSY-Event-CustomEvent-CustomEventObservable-cfg-currentTarget'>        /**
 </span>         * event target which binds current custom event
-         * @cfg {KISSY.Event.Target} currentTarget
+         * @cfg {KISSY.Event.CustomEvent.Target} currentTarget
          */
     }
 
     S.extend(CustomEventObservable, BaseEvent.Observable, {
-<span id='KISSY-Event-CustomEventObservable-method-on'>        /**
+<span id='KISSY-Event-CustomEvent-CustomEventObservable-method-on'>        /**
 </span>         * add a observer to custom event's observers
-         * @param {Object} cfg {@link KISSY.Event.CustomEventObserver} 's config
+         * @param {Object} cfg {@link KISSY.Event.CustomEvent.Observer} 's config
          */
         on: function (cfg) {
 <span id='global-property-'>            var observer = /**@ignore
-</span>             @type KISSY.Event.CustomEventObserver*/new CustomEventObserver(cfg);
+</span>             @type KISSY.Event.CustomEvent.Observer*/new CustomEventObserver(cfg);
             if (S.Config.debug) {
                 if (!observer.fn) {
                     S.error('lack event handler for ' + this.type);
@@ -67,9 +67,9 @@ KISSY.add('event/custom/observable', function (S, CustomEventObserver, CustomEve
             }
         },
 
-<span id='KISSY-Event-CustomEventObservable-method-fire'>        /**
+<span id='KISSY-Event-CustomEvent-CustomEventObservable-method-fire'>        /**
 </span>         * notify current custom event 's observers and then bubble up if this event can bubble.
-         * @param {KISSY.Event.CustomEventObject} eventData
+         * @param {KISSY.Event.CustomEvent.Object} eventData
          * @return {*} return false if one of custom event 's observers (include bubbled) else
          * return last value of custom event 's observers (include bubbled) 's return value.
          */
@@ -105,7 +105,7 @@ KISSY.add('event/custom/observable', function (S, CustomEventObserver, CustomEve
             // gRet === false prevent
             if (bubbles &amp;&amp; !customEventObject.isPropagationStopped()) {
 
-                parents = currentTarget.getTargets(1);
+                parents = currentTarget.getTargets();
 
                 parentsLen = parents &amp;&amp; parents.length || 0;
 
@@ -125,10 +125,10 @@ KISSY.add('event/custom/observable', function (S, CustomEventObserver, CustomEve
             // parent defaultFn first
             // child defaultFn last
             if (defaultFn &amp;&amp; !customEventObject.isDefaultPrevented()) {
-                var lowestCustomEventObservable = CustomEventObservable.getCustomEventObservable(customEventObject.target,
-                    customEventObject.type);
+                var target=customEventObject.target,
+                    lowestCustomEventObservable = target.getCustomEventObservable(customEventObject.type);
                 if ((!self.defaultTargetOnly &amp;&amp; !lowestCustomEventObservable.defaultTargetOnly) ||
-                    currentTarget == customEventObject.target) {
+                    currentTarget == target) {
                     // default value as final value if possible
                     gRet = defaultFn.call(currentTarget, customEventObject);
                 }
@@ -138,9 +138,9 @@ KISSY.add('event/custom/observable', function (S, CustomEventObserver, CustomEve
 
         },
 
-<span id='KISSY-Event-CustomEventObservable-method-notify'>        /**
+<span id='KISSY-Event-CustomEvent-CustomEventObservable-method-notify'>        /**
 </span>         * notify current event 's observers
-         * @param {KISSY.Event.CustomEventObject} event
+         * @param {KISSY.Event.CustomEvent.Object} event
          * @return {*} return false if one of custom event 's observers  else
          * return last value of custom event 's observers 's return value.
          */
@@ -162,9 +162,9 @@ KISSY.add('event/custom/observable', function (S, CustomEventObserver, CustomEve
             return gRet;
         },
 
-<span id='KISSY-Event-CustomEventObservable-method-detach'>        /**
+<span id='KISSY-Event-CustomEvent-CustomEventObservable-method-detach'>        /**
 </span>         * remove some observers from current event 's observers by observer config param
-         * @param {Object} cfg {@link KISSY.Event.CustomEventObserver} 's config
+         * @param {Object} cfg {@link KISSY.Event.CustomEvent.Observer} 's config
          */
         detach: function (cfg) {
             var groupsRe,
@@ -215,48 +215,7 @@ KISSY.add('event/custom/observable', function (S, CustomEventObserver, CustomEve
         }
     });
 
-    var KS_CUSTOM_EVENTS = '__~ks_custom_events';
-
-<span id='KISSY-Event-CustomEventObservable-static-method-getCustomEventObservable'>    /**
-</span>     * Get custom event for specified event
-     * @static
-     * @protected
-     * @member KISSY.Event.CustomEventObservable
-     * @param {HTMLElement} target
-     * @param {String} type event type
-     * @param {Boolean} [create] whether create custom event on fly
-     * @return {KISSY.Event.CustomEventObservable}
-     */
-    CustomEventObservable.getCustomEventObservable = function (target, type, create) {
-        var customEvent,
-            customEventObservables = CustomEventObservable.getCustomEventObservables(target, create);
-        customEvent = customEventObservables &amp;&amp; customEventObservables[type];
-        if (!customEvent &amp;&amp; create) {
-            customEvent = customEventObservables[type] = new CustomEventObservable({
-                currentTarget: target,
-                type: type
-            });
-        }
-        return customEvent;
-    };
-
-<span id='KISSY-Event-CustomEventObservable-static-method-getCustomEventObservables'>    /**
-</span>     * Get custom events holder
-     * @protected
-     * @static
-     * @param {HTMLElement} target
-     * @param {Boolean} [create] whether create custom event container on fly
-     * @return {Object}
-     */
-    CustomEventObservable.getCustomEventObservables = function (target, create) {
-        if (!target[KS_CUSTOM_EVENTS] &amp;&amp; create) {
-            target[KS_CUSTOM_EVENTS] = {};
-        }
-        return target[KS_CUSTOM_EVENTS];
-    };
-
     return CustomEventObservable;
-
 }, {
     requires: [ './observer', './object', 'event/base']
 });

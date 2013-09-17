@@ -3,7 +3,7 @@
  * @author yiminghe@gmail.com
  * @ignore
  */
-KISSY.add('anim/timer', function (S, Dom, Event, AnimBase, Easing, AM, Fx, SHORT_HANDS) {
+KISSY.add('anim/timer', function (S, Dom, AnimBase, Easing, AM, Fx, SHORT_HANDS) {
     var camelCase = Dom._camelCase,
         NUMBER_REG = /^([+\-]=)?([\d+.\-]+)([a-z%]*)$/i;
 
@@ -188,7 +188,7 @@ KISSY.add('anim/timer', function (S, Dom, Event, AnimBase, Easing, AM, Fx, SHORT
     return Anim;
 }, {
     requires: [
-        'dom', 'event', './base',
+        'dom', './base',
         './timer/easing', './timer/manager',
         './timer/fx', './timer/short-hand'
         , './timer/color' , './timer/transform'

@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * checkable tree node
  * @author yiminghe@gmail.com
  */

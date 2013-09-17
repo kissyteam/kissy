@@ -4,12 +4,13 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/dom/base/key-codes', function (S) {
-    /**
-     * @enum {Number} KISSY.Event.KeyCode
-     * All key codes.
-     */
     var UA = S.UA,
-        KeyCode = {
+        /**
+         * @enum {Number} KISSY.Event.DomEvent.KeyCode
+         * @alias KISSY.Event.KeyCode
+         * All key codes.
+         */
+            KeyCode = {
             /**
              * MAC_ENTER
              */
@@ -432,23 +433,20 @@ KISSY.add('event/dom/base/key-codes', function (S) {
             WIN_IME: 229
         };
 
-    /**
-     * whether text and modified key is entered at the same time.
-     * @param {KISSY.Event.DomEventObject} e event object
-     * @return {Boolean}
+    /*
+      whether text and modified key is entered at the same time.
      */
     KeyCode.isTextModifyingKeyEvent = function (e) {
-        if (e.altKey && !e.ctrlKey ||
-            e.metaKey ||
+        var keyCode = e.keyCode;
+        if (e.altKey && !e.ctrlKey || e.metaKey ||
             // Function keys don't generate text
-            e.keyCode >= KeyCode.F1 &&
-                e.keyCode <= KeyCode.F12) {
+            keyCode >= KeyCode.F1 && keyCode <= KeyCode.F12) {
             return false;
         }
 
         // The following keys are quite harmless, even in combination with
         // CTRL, ALT or SHIFT.
-        switch (e.keyCode) {
+        switch (keyCode) {
             case KeyCode.ALT:
             case KeyCode.CAPS_LOCK:
             case KeyCode.CONTEXT_MENU:
@@ -478,10 +476,8 @@ KISSY.add('event/dom/base/key-codes', function (S) {
         }
     };
 
-    /**
-     * whether character is entered.
-     * @param {KISSY.Event.KeyCode} keyCode
-     * @return {Boolean}
+    /*
+      whether character is entered.
      */
     KeyCode.isCharacterKey = function (keyCode) {
         if (keyCode >= KeyCode.ZERO &&
@@ -529,5 +525,4 @@ KISSY.add('event/dom/base/key-codes', function (S) {
     };
 
     return KeyCode;
-
 });

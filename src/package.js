@@ -377,14 +377,6 @@ if (!loc.getQuery().has('build')) {
             "base": "/kissy/src/editor/sub-modules/plugin/menubutton/src/menubutton",
             "ignorePackageNameInUri": 1
         },
-        "editor/plugin/multiple-upload": {
-            "base": "/kissy/src/editor/sub-modules/plugin/multiple-upload/src/multiple-upload",
-            "ignorePackageNameInUri": 1
-        },
-        "editor/plugin/multiple-upload/dialog": {
-            "base": "/kissy/src/editor/sub-modules/plugin/multiple-upload/sub-modules/dialog/src/dialog",
-            "ignorePackageNameInUri": 1
-        },
         "editor/plugin/ordered-list": {
             "base": "/kissy/src/editor/sub-modules/plugin/ordered-list/src/ordered-list",
             "ignorePackageNameInUri": 1

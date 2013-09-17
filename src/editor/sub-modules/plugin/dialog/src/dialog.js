@@ -42,7 +42,7 @@ KISSY.add("editor/plugin/dialog", function (S, Editor, Overlay,
                 value: "ks-editor-"
             },
             "zIndex": {
-                value: Editor.baseZIndex(Editor.zIndexManager.OVERLAY)
+                value: Editor.baseZIndex(Editor.ZIndexManager.OVERLAY)
             }
         }
     });

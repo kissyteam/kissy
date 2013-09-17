@@ -20,14 +20,11 @@
  * popup date picker
  * @author yiminghe@gmail.com
  */
-KISSY.add('date/popup-picker', function (S, DatePicker, AlignExtension, Shim) {
+KISSY.add('date/popup-picker', function (S, PopupPickerTpl, DatePicker, AlignExtension, Shim) {
     var PopupDatePickerRender = DatePicker.getDefaultRender().extend({}, {
         ATTRS: {
             contentTpl: {
-                value: '&lt;div ' +
-                    'class=&quot;{{getBaseCssClasses &quot;content&quot;}}&quot;&gt;' +
-                    '{{{include &quot;date/picker/picker-tpl&quot;}}}' +
-                    '&lt;/div&gt;'
+                value: PopupPickerTpl
             }
         }
     });
@@ -42,6 +39,7 @@ KISSY.add('date/popup-picker', function (S, DatePicker, AlignExtension, Shim) {
     });
 }, {
     requires: [
+        './popup-picker/render-xtpl',
         'date/picker',
         'component/extension/align',
         'component/extension/shim'

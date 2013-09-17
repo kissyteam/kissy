@@ -15,7 +15,7 @@ KISSY.add('event/dom/base/observable', function (S, Dom, Special, DomEventUtils,
      * custom event for dom
      * @param {Object} cfg
      * @private
-     * @class KISSY.Event.DomEventObservable
+     * @class KISSY.Event.DomEvent.Observable
      * @extends KISSY.Event.Observable
      */
     function DomEventObservable(cfg) {
@@ -54,7 +54,7 @@ KISSY.add('event/dom/base/observable', function (S, Dom, Special, DomEventUtils,
 
         /**
          * notify current event 's observers
-         * @param {KISSY.Event.DomEventObject} event
+         * @param {KISSY.Event.DomEvent.Object} event
          * @return {*} return false if one of custom event 's observers  else
          * return last value of custom event 's observers 's return value.
          */
@@ -159,7 +159,7 @@ KISSY.add('event/dom/base/observable', function (S, Dom, Special, DomEventUtils,
 
         /**
          * fire dom event from bottom to up , emulate dispatchEvent in Dom3 Events
-         * @param {Object|KISSY.Event.DomEventObject} [event] additional event data
+         * @param {Object|KISSY.Event.DomEvent.Object} [event] additional event data
          * @param {Boolean} [onlyHandlers] for internal usage
          */
         fire: function (event, onlyHandlers/*internal usage*/) {
@@ -259,7 +259,7 @@ KISSY.add('event/dom/base/observable', function (S, Dom, Special, DomEventUtils,
 
         /**
          * add a observer to custom event's observers
-         * @param {Object} cfg {@link KISSY.Event.DomEventObserver} 's config
+         * @param {Object} cfg {@link KISSY.Event.DomEvent.Observer} 's config
          */
         on: function (cfg) {
             var self = this,
@@ -274,7 +274,8 @@ KISSY.add('event/dom/base/observable', function (S, Dom, Special, DomEventUtils,
                 }
             }
 
-            if (self.findObserver(/**@type KISSY.Event.DomEventObserver*/observer) == -1) {
+            if (self.findObserver(/**@type KISSY.Event.DomEvent.Observer
+             @ignore*/observer) == -1) {
                 // 增加 listener
                 if (observer.filter) {
                     observers.splice(self.delegateCount, 0, observer);
@@ -296,7 +297,7 @@ KISSY.add('event/dom/base/observable', function (S, Dom, Special, DomEventUtils,
 
         /**
          * remove some observers from current event 's observers by observer config param
-         * @param {Object} cfg {@link KISSY.Event.DomEventObserver} 's config
+         * @param {Object} cfg {@link KISSY.Event.DomEvent.Observer} 's config
          */
         detach: function (cfg) {
             var groupsRe,
@@ -415,7 +416,7 @@ KISSY.add('event/dom/base/observable', function (S, Dom, Special, DomEventUtils,
      * get custom event from html node by event type.
      * @param {HTMLElement} node
      * @param {String} type event type
-     * @return {KISSY.Event.DomEventObservable}
+     * @return {KISSY.Event.DomEvent.Observable}
      */
     DomEventObservable.getDomEventObservable = function (node, type) {
 

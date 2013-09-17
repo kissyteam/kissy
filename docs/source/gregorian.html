@@ -21,33 +21,36 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined) {
-
     var toInt = parseInt;
 
 <span id='KISSY-Date-Gregorian'>    /**
 </span>     * GregorianCalendar class.
+     *
      * - no arguments:
-     *  Constructs a default GregorianCalendar using the current time
-     *  in the default time zone with the default locale.
+     *   Constructs a default GregorianCalendar using the current time
+     *   in the default time zone with the default locale.
      * - one argument timezoneOffset:
-     *  Constructs a GregorianCalendar based on the current time
-     *  in the given timezoneOffset with the default locale.
+     *   Constructs a GregorianCalendar based on the current time
+     *   in the given timezoneOffset with the default locale.
      * - one argument locale:
-     *  Constructs a GregorianCalendar
-     *  based on the current time in the default time zone with the given locale.
-     * - two arguments:
-     *  - zone - the given time zone.
-     *  - aLocale - the given locale.
-     *  Constructs a GregorianCalendar
-     *  based on the current time in the given time zone with the given locale.
+     *   Constructs a GregorianCalendar
+     *   based on the current time in the default time zone with the given locale.
+     * - two arguments
+     *   Constructs a GregorianCalendar based on the current time in the given time zone with the given locale.
+     *      - zone - the given time zone.
+     *      - aLocale - the given locale.
+     *
      * - 3 to 6 arguments:
-     *  - year - the value used to set the YEAR calendar field in the calendar.
-     *  - month - the value used to set the MONTH calendar field in the calendar. Month value is 0-based. e.g., 0 for January.
-     *  - dayOfMonth - the value used to set the DAY_OF_MONTH calendar field in the calendar.
-     *  - hourOfDay - the value used to set the HOUR_OF_DAY calendar field in the calendar.
-     *  - minute - the value used to set the MINUTE calendar field in the calendar.
-     *  - second - the value used to set the SECONDS calendar field in the calendar.
-     *  Constructs a GregorianCalendar with the given date and time set for the default time zone with the default locale.
+     *   Constructs a GregorianCalendar with the given date and time set for the default time zone with the default locale.
+     *      - year - the value used to set the YEAR calendar field in the calendar.
+     *      - month - the value used to set the MONTH calendar field in the calendar. Month value is 0-based. e.g.,
+     *        0 for January.
+     *      - dayOfMonth - the value used to set the DAY_OF_MONTH calendar field in the calendar.
+     *      - hourOfDay - the value used to set the HOUR_OF_DAY calendar field in the calendar.
+     *      - minute - the value used to set the MINUTE calendar field in the calendar.
+     *      - second - the value used to set the SECONDS calendar field in the calendar.
+     *
+     *
      * @class KISSY.Date.Gregorian
      */
     function GregorianCalendar(timezoneOffset, locale) {
@@ -266,13 +269,13 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
     GregorianCalendar.prototype = {
         constructor: GregorianCalendar,
 
-<span id='KISSY-Date-Gregorian-static-method-isLeapYear'>        /**
+<span id='KISSY-Date-Gregorian-method-isLeapYear'>        /**
 </span>         * Determines if current year is a leap year.
          * Returns true if the given year is a leap year. To specify BC year numbers,
          * 1 - year number must be given. For example, year BC 4 is specified as -3.
          * @returns {Boolean} true if the given year is a leap year; false otherwise.
-         * @static
          * @method
+         * @member KISSY.Date.Gregorian
          */
         isLeapYear: function () {
             return isLeapYear(this.getYear());
@@ -818,17 +821,20 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
          *  smaller unit of time. HOUR_OF_DAY is a smaller field than
          *  DAY_OF_MONTH. No adjustment is made to smaller fields
          *  that are not expected to be invariant. The calendar system
-         *  determines what fields are expected to be invariant.&lt;/p&gt;
-         *
+         *  determines what fields are expected to be invariant.
          *
          *
          *      @example
-         *      var d = new GregorianCalendar();
-         *      d.set(2012, GregorianCalendar.JANUARY, 31);
-         *      d.add(Gregorian.MONTH,1);
-         *      // 2012-2-29
-         *      d.add(Gregorian.MONTH,12);
-         *      // 2013-2-28
+         *      KISSY.use('date/gregorian',function(S, GregorianCalendar){
+         *          var d = new GregorianCalendar();
+         *          d.set(2012, GregorianCalendar.JANUARY, 31);
+         *          d.add(Gregorian.MONTH,1);
+         *          // 2012-2-29
+         *          document.writeln('&lt;p&gt;'+d.getYear()+'-'+d.getMonth()+'-'+d.getDayOfWeek())
+         *          d.add(Gregorian.MONTH,12);
+         *          // 2013-2-28
+         *          document.writeln('&lt;p&gt;'+d.getYear()+'-'+d.getMonth()+'-'+d.getDayOfWeek())
+         *      });
          *
          * @param field the calendar field.
          * @param {Number} amount he amount of date or time to be added to the field.
@@ -1232,8 +1238,7 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
          *
          * @param weekYear    the week year
          * @param weekOfYear  the week number based on weekYear
-         * @param dayOfWeek   the day of week value: one of the constants
-         *                    for the {@link DAY_OF_WEEK} field:
+         * @param dayOfWeek   the day of week value
          */
         'setWeekDate': function (weekYear, weekOfYear, dayOfWeek) {
             if (dayOfWeek &lt; GregorianCalendar.SUNDAY || dayOfWeek &gt; GregorianCalendar.SATURDAY) {
@@ -1432,7 +1437,6 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
     // ------------------- private end
 
     return GregorianCalendar;
-
 }, {
     requires: ['i18n!date', './gregorian/utils', './gregorian/const']
 });

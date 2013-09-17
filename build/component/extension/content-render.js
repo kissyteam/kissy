@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 16 15:07
+build time: Sep 17 17:00
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -44,7 +44,6 @@ KISSY.add('component/extension/content-render/content-xtpl', function () {
  * @author yiminghe@gmail.com
  */
 KISSY.add('component/extension/content-render', function (S, ContentTpl) {
-
     function shortcut(self) {
         var control = self.control;
         var contentEl = control.get('contentEl');
@@ -52,6 +51,10 @@ KISSY.add('component/extension/content-render', function (S, ContentTpl) {
         self.contentEl = control.contentEl = contentEl[0];
     }
 
+    /**
+     * content-render extension for component system
+     * @class KISSY.Component.Extension.ContentRender
+     */
     function ContentRender() {
     }
 

@@ -3,34 +3,27 @@
  * KISSY Overlay
  * @author yiminghe@gmail.com
  */
-KISSY.add("overlay/overlay-render", function (S, Container, ContentRenderExtension, CloseTpl) {
-
+KISSY.add('overlay/overlay-render', function (S, Container,OverlayTpl, ContentRenderExtension) {
     return Container.getDefaultRender().extend([
         ContentRenderExtension
     ], {
-        createDom: function () {
-            var self = this;
-            if (self.control.get('closable')) {
-                self.control.$contentEl
-                    .append(self.renderTpl(CloseTpl));
-                self.fillChildrenElsBySelectors({
-                    closeBtn: '#ks-overlay-close-{id}'
-                });
-            }
-        }
     }, {
+        ATTRS:{
+          contentTpl:{
+              value:OverlayTpl
+          }
+        },
         HTML_PARSER: {
             closeBtn: function (el) {
                 return el.one("." + this.getBaseCssClass('close'));
             }
         }
     });
-
 }, {
     requires: [
-        "component/container",
-        'component/extension/content-render',
-        './close-xtpl'
+        'component/container',
+        './overlay-xtpl',
+        'component/extension/content-render'
     ]
 });
 

@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * abstraction of tree node ,root and other node will extend it
  * @author yiminghe@gmail.com
  */
@@ -9,7 +10,7 @@ KISSY.add("tree/node", function (S, Node, Container, TreeNodeRender) {
     /**
      * Tree Node. xclass: 'tree-node'.
      * @class KISSY.Tree.Node
-     * @extends KISSY.Component.Control
+     * @extends KISSY.Component.Container
      */
    return Container.extend({
         bindUI: function () {
@@ -252,7 +253,7 @@ KISSY.add("tree/node", function (S, Node, Container, TreeNodeRender) {
 
             /**
              * Whether current tree node is expanded.
-             * @type {Boolean.}
+             * @type {Boolean}
              * Defaults to: false.
              */
             expanded: {
@@ -271,7 +272,7 @@ KISSY.add("tree/node", function (S, Node, Container, TreeNodeRender) {
 
             /**
              * Tree instance current tree node belongs to.
-             * @type {Tree}
+             * @type {KISSY.Tree}
              */
             tree: {
                 getter: function () {
@@ -434,6 +435,7 @@ KISSY.add("tree/node", function (S, Node, Container, TreeNodeRender) {
 });
 
 /**
+ * @ignore
  * 2012-09-25
  *  - 去除 dblclick 支持，该交互会重复触发 click 事件，可能会重复执行逻辑
  */

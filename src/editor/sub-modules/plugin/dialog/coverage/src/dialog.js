@@ -297,6 +297,6 @@ KISSY.add("editor/plugin/dialog", function(S, Editor, Overlay, focusFix, Constra
   prefixCls: {
   value: "ks-editor-"}, 
   "zIndex": {
-  value: Editor.baseZIndex(Editor.zIndexManager.OVERLAY)}}});
+  value: Editor.baseZIndex(Editor.ZIndexManager.OVERLAY)}}});
 }, {
   requires: ["editor", 'overlay', './focus-fix', 'dd/plugin/constrain', 'component/plugin/drag']});

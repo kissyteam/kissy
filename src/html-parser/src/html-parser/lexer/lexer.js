@@ -8,7 +8,7 @@ KISSY.add("html-parser/lexer/lexer", function (S, Cursor, Page, TextNode, CData,
      * Lexer for html parser
      * @param {String} text html content
      * @param {Object} cfg config object
-     * @class KISSY.HtmlParse.Lexer
+     * @class KISSY.HtmlParser.Lexer
      */
     function Lexer(text, cfg) {
         var self = this;
@@ -158,13 +158,13 @@ KISSY.add("html-parser/lexer/lexer", function (S, Cursor, Page, TextNode, CData,
 
         /**
          * parse tag node according to fsm
-         * state 0 - outside of any attribute</li>
-         * state 1 - within attribute name</li>
-         * state 2 - equals hit</li>
-         * state 3 - within naked attribute value.</li>
-         * state 4 - within single quoted attribute value</li>
-         * state 5 - within double quoted attribute value</li>
-         * state 6 - whitespaces after attribute name could lead to state 2 (=)or state 0</li>
+         * * state 0 - outside of any attribute
+         * * state 1 - within attribute name
+         * * state 2 - equals hit
+         * * state 3 - within naked attribute value.
+         * * state 4 - within single quoted attribute value
+         * * state 5 - within double quoted attribute value
+         * * state 6 - whitespaces after attribute name could lead to state 2 (=)or state 0
          */
         parseTag: function (start) {
             var done,
@@ -635,15 +635,15 @@ KISSY.add("html-parser/lexer/lexer", function (S, Cursor, Page, TextNode, CData,
                             case '/':
                                 // tagName = "textarea"
                                 // <textarea><div></div></textarea>
-                                /**
-                                 * 8.1.2.6 Restrictions on the contents of raw text and RCDATA elements
-                                 *
-                                 *   The text in raw text and RCDATA elements must not contain any occurrences
-                                 *   of the string "</" (U+003C LESS-THAN SIGN, U+002F SOLIDUS)
-                                 *   followed by characters that case-insensitively match the tag name of the element
-                                 *   followed by one of U+0009 CHARACTER TABULATION (tab),
-                                 *   U+000A LINE FEED (LF), U+000C FORM FEED (FF), U+000D CARRIAGE RETURN (CR),
-                                 *   U+0020 SPACE, U+003E GREATER-THAN SIGN (>), or U+002F SOLIDUS (/).
+                                /*
+                                  8.1.2.6 Restrictions on the contents of raw text and RCDATA elements
+
+                                    The text in raw text and RCDATA elements must not contain any occurrences
+                                    of the string "</" (U+003C LESS-THAN SIGN, U+002F SOLIDUS)
+                                    followed by characters that case-insensitively match the tag name of the element
+                                    followed by one of U+0009 CHARACTER TABULATION (tab),
+                                    U+000A LINE FEED (LF), U+000C FORM FEED (FF), U+000D CARRIAGE RETURN (CR),
+                                    U+0020 SPACE, U+003E GREATER-THAN SIGN (>), or U+002F SOLIDUS (/).
                                  */
                                 if (!tagName || (mPage.getText(mCursor.position,
                                     mCursor.position + tagName.length) === tagName && !(mPage.getText(mCursor.position + tagName.length,

@@ -1034,7 +1034,7 @@ KISSY.add("editor/plugin/image/dialog", function(S, IO, Editor, Dialog4E, Tabs, 
   ev.halt();
 });
   _$jscoverage['/dialog.js'].lineData[127]++;
-  var loadingCancel = new Node("<a class='" + prefixCls + "button ks-inline-block' " + "style='position:absolute;" + "z-index:" + Editor.baseZIndex(Editor.zIndexManager.LOADING_CANCEL) + ";" + "left:-9999px;" + "top:-9999px;" + "'>\u53d6\u6d88\u4e0a\u4f20</a>").appendTo(document.body, undefined);
+  var loadingCancel = new Node("<a class='" + prefixCls + "button ks-inline-block' " + "style='position:absolute;" + "z-index:" + Editor.baseZIndex(Editor.ZIndexManager.LOADING_CANCEL) + ";" + "left:-9999px;" + "top:-9999px;" + "'>\u53d6\u6d88\u4e0a\u4f20</a>").appendTo(document.body, undefined);
   _$jscoverage['/dialog.js'].lineData[135]++;
   self.loadingCancel = loadingCancel;
   _$jscoverage['/dialog.js'].lineData[137]++;

@@ -140,8 +140,8 @@ KISSY.add("html-parser/writer/minify", function (S, BasicWriter, Utils) {
 
     /**
      * MinifyWriter for html content
-     * @class KISSY.HtmlParse.MinifyWriter
-     * @extends KISSY.HtmlParse.BasicWriter
+     * @class KISSY.HtmlParser.MinifyWriter
+     * @extends KISSY.HtmlParser.BasicWriter
      */
     function MinifyWriter() {
         var self = this;

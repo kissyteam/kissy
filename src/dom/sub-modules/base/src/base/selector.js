@@ -1,6 +1,6 @@
 /**
  * @ignore
- * selector
+ * simple selector for dom
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('dom/base/selector', function (S, Dom, undefined) {
@@ -297,7 +297,7 @@ KISSY.add('dom/base/selector', function (S, Dom, undefined) {
              * A string containing a selector expression.
              * or
              * array of HTMLElements.
-             * @param {String|HTMLElement[]|HTMLDocument|HTMLElement|window} [context] context under which to find elements matching selector.
+             * @param {String|HTMLElement[]|HTMLDocument|HTMLElement|Window} [context] context under which to find elements matching selector.
              * @return {HTMLElement} The first of found HTMLElements
              */
             get: function (selector, context) {
@@ -430,6 +430,7 @@ KISSY.add('dom/base/selector', function (S, Dom, undefined) {
     requires: ['./api']
 });
 /**
+ * @ignore
  * bachi selector optimize - 2013-07-17
  * - http://jsperf.com/queryselctor-vs-getelementbyclassname2
  * yiminghe@gmail.com - 2013-03-26

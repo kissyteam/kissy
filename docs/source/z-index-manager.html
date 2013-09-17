@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * z-index management
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(&quot;editor/z-index-manager&quot;, function (S, Editor) {
+<span id='KISSY-Editor-ZIndexManager'>    /**
+</span>     * z-index manager
+     * @enum {number} KISSY.Editor.ZIndexManager
+     */
+    var ZIndexManager = Editor.ZIndexManager = {
+<span id='KISSY-Editor-ZIndexManager-property-BUBBLE_VIEW'>        /**
+</span>         * bubble view
+         */
+        BUBBLE_VIEW: (1100),
+<span id='KISSY-Editor-ZIndexManager-property-POPUP_MENU'>        /**
+</span>         * bubble view
+         */
+        POPUP_MENU: (1200),
+<span id='KISSY-Editor-ZIndexManager-property-STORE_FLASH_SHOW'>        /**
+</span>         * bubble view
+         */
+        STORE_FLASH_SHOW: (99999),
+<span id='KISSY-Editor-ZIndexManager-property-MAXIMIZE'>        /**
+</span>         * bubble view
+         */
+        MAXIMIZE: (900),
+<span id='KISSY-Editor-ZIndexManager-property-OVERLAY'>        /**
+</span>         * bubble view
+         */
+        OVERLAY: (9999),
+<span id='KISSY-Editor-ZIndexManager-property-LOADING'>        /**
+</span>         * bubble view
+         */
+        LOADING: (11000),
+<span id='KISSY-Editor-ZIndexManager-property-LOADING_CANCEL'>        /**
+</span>         * bubble view
+         */
+        LOADING_CANCEL: 12000,
+<span id='KISSY-Editor-ZIndexManager-property-SELECT'>        /**
+</span>         * bubble view
+         */
+        SELECT: (1200)
+    };
+
+    Editor.baseZIndex = function (z) {
+        return (Editor['Config'].baseZIndex || 10000) + z;
+    };
+
+    return ZIndexManager;
+}, {
+    requires: ['./base']
+});</pre>
+</body>
+</html>

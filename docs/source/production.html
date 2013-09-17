@@ -16,12 +16,16 @@
 </head>
 <body onload="prettyPrint(); highlight();">
   <pre class="prettyprint lang-js"><span id='global-property-'>/**
-</span> * Production for KISON
+</span> * @ignore
+ * Production for KISON
  * @author yiminghe@gmail.com
  */
 KISSY.add(&quot;kison/production&quot;, function (S, Base) {
+<span id='KISSY-Kison-Production'>    /**
+</span>     * production for grammar
+     * @class KISSY.Kison.Production
+     */
    return Base.extend({
-
         equals: function (other) {
             var self = this;
             if (!S.equals(other.get(&quot;rhs&quot;), self.get(&quot;rhs&quot;))) {
@@ -45,7 +49,6 @@ KISSY.add(&quot;kison/production&quot;, function (S, Base) {
             }
             return this.get(&quot;symbol&quot;) + &quot; =&gt; &quot; + rhsStr;
         }
-
     }, {
         ATTRS: {
             firsts: {

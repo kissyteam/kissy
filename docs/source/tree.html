@@ -16,7 +16,8 @@
 </head>
 <body onload="prettyPrint(); highlight();">
   <pre class="prettyprint lang-js"><span id='global-property-'>/**
-</span> * tree component for kissy
+</span> * @ignore
+ * tree component for kissy
  * @author yiminghe@gmail.com
  */
 KISSY.add('tree', function (S, Tree, TreeNode, CheckNode, CheckTree) {
@@ -25,7 +26,7 @@ KISSY.add('tree', function (S, Tree, TreeNode, CheckNode, CheckTree) {
     Tree.CheckTree = CheckTree;
     return Tree;
 }, {
-    requires: [&quot;tree/control&quot;, &quot;tree/node&quot;, &quot;tree/check-node&quot;, &quot;tree/check-tree&quot;]
+    requires: ['tree/control', 'tree/node', 'tree/check-node', 'tree/check-tree']
 });</pre>
 </body>
 </html>

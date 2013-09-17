@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * render for scrollbar
  * @author yiminghe@gmail.com
  */

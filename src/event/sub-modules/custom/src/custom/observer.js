@@ -7,7 +7,7 @@ KISSY.add('event/custom/observer', function (S, BaseEvent) {
 
     /**
      * Observer for custom event
-     * @class KISSY.Event.CustomEventObserver
+     * @class KISSY.Event.CustomEvent.Observer
      * @extends KISSY.Event.Observer
      * @private
      */

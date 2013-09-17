@@ -21,19 +21,19 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/dom/base/observer', function (S, Special, BaseEvent) {
-<span id='KISSY-Event-DomEventObserver'>    /**
+<span id='KISSY-Event-DomEvent-Observer'>    /**
 </span>     * observer for dom event
-     * @class KISSY.Event.DomEventObserver
+     * @class KISSY.Event.DomEvent.Observer
      * @extends KISSY.Event.Observer
      * @private
      */
     function DomEventObserver(cfg) {
         DomEventObserver.superclass.constructor.apply(this, arguments);
-<span id='KISSY-Event-DomEventObserver-cfg-filter'>        /**
+<span id='KISSY-Event-DomEvent-Observer-cfg-filter'>        /**
 </span>         * filter selector string or function to find right element
          * @cfg {String} filter
          */
-<span id='KISSY-Event-DomEventObserver-cfg-data'>        /**
+<span id='KISSY-Event-DomEvent-Observer-cfg-data'>        /**
 </span>         * extra data as second parameter of listener
          * @cfg {*} data
          */
@@ -74,11 +74,9 @@ KISSY.add('event/dom/base/observer', function (S, Special, BaseEvent) {
 
             return ret;
         }
-
     });
 
     return DomEventObserver;
-
 }, {
     requires: ['./special', 'event/base']
 });</pre>

@@ -7,7 +7,7 @@ KISSY.add("html-parser/writer/filter", function (S) {
 
     /**
      * Filter for Html Parse Writer
-     * @class KISSY.HtmlParse.Filter
+     * @class KISSY.HtmlParser.Filter
      */
     function Filter() {
         // {priority: ?, value:?}

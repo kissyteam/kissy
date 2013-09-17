@@ -155,10 +155,10 @@ KISSY.add(&quot;html-parser/writer/minify&quot;, function (S, BasicWriter, Utils
             .replace(/(?:\/\*[\s\xa0]*\]\]&gt;[\s\xa0]*\*\/|\/\/[\s\xa0]*\]\]&gt;)[\s\xa0]*$/, '');
     }
 
-<span id='KISSY-HtmlParse-MinifyWriter'>    /**
+<span id='KISSY-HtmlParser-MinifyWriter'>    /**
 </span>     * MinifyWriter for html content
-     * @class KISSY.HtmlParse.MinifyWriter
-     * @extends KISSY.HtmlParse.BasicWriter
+     * @class KISSY.HtmlParser.MinifyWriter
+     * @extends KISSY.HtmlParser.BasicWriter
      */
     function MinifyWriter() {
         var self = this;
@@ -167,7 +167,7 @@ KISSY.add(&quot;html-parser/writer/minify&quot;, function (S, BasicWriter, Utils
     }
 
     S.extend(MinifyWriter, BasicWriter, {
-<span id='KISSY-HtmlParse-MinifyWriter-method-comment'>        /**
+<span id='KISSY-HtmlParser-MinifyWriter-method-comment'>        /**
 </span>         * remove non-conditional comment
          */
         comment: function (text) {
@@ -177,7 +177,7 @@ KISSY.add(&quot;html-parser/writer/minify&quot;, function (S, BasicWriter, Utils
             }
         },
 
-<span id='KISSY-HtmlParse-MinifyWriter-method-openTag'>        /**
+<span id='KISSY-HtmlParser-MinifyWriter-method-openTag'>        /**
 </span>         * record pre track
          */
         openTag: function (el) {
@@ -188,7 +188,7 @@ KISSY.add(&quot;html-parser/writer/minify&quot;, function (S, BasicWriter, Utils
             MinifyWriter.superclass.openTag.apply(self, arguments);
         },
 
-<span id='KISSY-HtmlParse-MinifyWriter-method-closeTag'>        /**
+<span id='KISSY-HtmlParser-MinifyWriter-method-closeTag'>        /**
 </span>         * clean pre track
          */
         closeTag: function (el) {
@@ -199,7 +199,7 @@ KISSY.add(&quot;html-parser/writer/minify&quot;, function (S, BasicWriter, Utils
             MinifyWriter.superclass.closeTag.apply(self, arguments);
         },
 
-<span id='KISSY-HtmlParse-MinifyWriter-method-cdata'>        /**
+<span id='KISSY-HtmlParser-MinifyWriter-method-cdata'>        /**
 </span>         * textarea | script | style
          */
         cdata: function (cdata) {
@@ -238,7 +238,7 @@ KISSY.add(&quot;html-parser/writer/minify&quot;, function (S, BasicWriter, Utils
             self.append(&quot; &quot;, name, &quot;=&quot;, normalizedValue);
         },
 
-<span id='KISSY-HtmlParse-MinifyWriter-method-text'>        /**
+<span id='KISSY-HtmlParser-MinifyWriter-method-text'>        /**
 </span>         * note : pre is special
          */
         text: function (text) {

@@ -127,7 +127,7 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Dialog4E, Tabs,
             var loadingCancel = new Node("<a class='" + prefixCls + "button ks-inline-block' " +
                 "style='position:absolute;" +
                 "z-index:" +
-                Editor.baseZIndex(Editor.zIndexManager.LOADING_CANCEL) + ";" +
+                Editor.baseZIndex(Editor.ZIndexManager.LOADING_CANCEL) + ";" +
                 "left:-9999px;" +
                 "top:-9999px;" +
                 "'>取消上传</a>").appendTo(document.body, undefined);

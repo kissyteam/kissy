@@ -9,24 +9,36 @@ KISSY.add('overlay/close-xtpl', function () {
         var runBlockCommandUtil = utils["runBlockCommand"],
             getExpressionUtil = utils["getExpression"],
             getPropertyOrRunCommandUtil = utils["getPropertyOrRunCommand"];
-        buffer += '<a href="javascript:void(\'close\')"\r\n   id="ks-overlay-close-';
-        var id0 = getPropertyOrRunCommandUtil(engine, scopes, {}, "id", 0, 2, undefined, false);
-        buffer += getExpressionUtil(id0, true);
-        buffer += '"\r\n   class="';
-        var config2 = {};
-        var params3 = [];
-        params3.push('close');
-        config2.params = params3;
-        var id1 = getPropertyOrRunCommandUtil(engine, scopes, config2, "getBaseCssClasses", 0, 3, true, undefined);
-        buffer += id1;
-        buffer += '"\r\n   role=\'button\'>\r\n    <span class="';
-        var config5 = {};
-        var params6 = [];
-        params6.push('close-x');
-        config5.params = params6;
-        var id4 = getPropertyOrRunCommandUtil(engine, scopes, config5, "getBaseCssClasses", 0, 5, true, undefined);
-        buffer += id4;
-        buffer += '">close</span>\r\n</a>\r\n';
+        buffer += '';
+        var config0 = {};
+        var params1 = [];
+        var id2 = getPropertyOrRunCommandUtil(engine, scopes, {}, "closable", 0, 1, undefined, true);
+        params1.push(id2);
+        config0.params = params1;
+        config0.fn = function (scopes) {
+            var buffer = "";
+            buffer += '\r\n<a href="javascript:void(\'close\')"\r\n   id="ks-overlay-close-';
+            var id3 = getPropertyOrRunCommandUtil(engine, scopes, {}, "id", 0, 3, undefined, false);
+            buffer += getExpressionUtil(id3, true);
+            buffer += '"\r\n   class="';
+            var config5 = {};
+            var params6 = [];
+            params6.push('close');
+            config5.params = params6;
+            var id4 = getPropertyOrRunCommandUtil(engine, scopes, config5, "getBaseCssClasses", 0, 4, true, undefined);
+            buffer += id4;
+            buffer += '"\r\n   role=\'button\'>\r\n    <span class="';
+            var config8 = {};
+            var params9 = [];
+            params9.push('close-x');
+            config8.params = params9;
+            var id7 = getPropertyOrRunCommandUtil(engine, scopes, config8, "getBaseCssClasses", 0, 6, true, undefined);
+            buffer += id7;
+            buffer += '">close</span>\r\n</a>\r\n';
+            return buffer;
+        };
+        buffer += runBlockCommandUtil(engine, scopes, config0, "if", 1);
+        buffer += '\r\n';
         return buffer;
     }
 });

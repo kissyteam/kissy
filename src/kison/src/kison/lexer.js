@@ -1,11 +1,14 @@
 /**
+ * @ignore
  * Lexer to scan token.
  * @author yiminghe@gmail.com
  */
 KISSY.add("kison/lexer", function (S, Utils) {
-
     var serializeObject = Utils.serializeObject,
-
+        /**
+         * Lexer generator
+         * @class KISSY.Kison.Lexer
+         */
         Lexer = function (cfg) {
 
             var self = this;
@@ -44,7 +47,6 @@ KISSY.add("kison/lexer", function (S, Utils) {
     };
 
     Lexer.prototype = {
-
         constructor: Lexer,
 
         resetInput: function (input) {
@@ -278,7 +280,6 @@ KISSY.add("kison/lexer", function (S, Utils) {
     };
 
     return Lexer;
-
 }, {
     requires: ['./utils']
 });

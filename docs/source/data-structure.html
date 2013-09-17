@@ -81,6 +81,10 @@
                 );
         },
 
+<span id='KISSY-Loader-Package-method-getPackageUri'>        /**
+</span>         * get package uri
+         * @returns {KISSY.Uri}
+         */
         getPackageUri: function () {
             var self = this;
             if (self.packageUri) {
@@ -106,7 +110,7 @@
         },
 
 <span id='KISSY-Loader-Package-method-isIgnorePackageNameInUri'>        /**
-</span>         *  whether request mod file without package name
+</span>         *  whether request mod file without insert package name into package base
          *  @return {Boolean}
          */
         isIgnorePackageNameInUri: function () {
@@ -199,6 +203,10 @@
             return v;
         },
 
+<span id='KISSY-Loader-Module-method-getFullPathUri'>        /**
+</span>         * Get the fullpath uri of current module if load dynamically
+         * @return {KISSY.Uri}
+         */
         getFullPathUri: function () {
             var self = this,
                 t,
@@ -301,7 +309,7 @@
         },
 
 <span id='KISSY-Loader-Module-method-getRequiredMods'>        /**
-</span>         * Get module objects required by this one
+</span>         * Get module objects required by this module
          * @return {KISSY.Loader.Module[]}
          */
         'getRequiredMods': function () {
@@ -325,6 +333,10 @@
             return requiresWithAlias;
         },
 
+<span id='KISSY-Loader-Module-method-getNormalizedRequires'>        /**
+</span>         * Get module names required by this module
+         * @return {KISSY.Loader.Module[]}
+         */
         getNormalizedRequires: function () {
             var self = this,
                 normalizedRequires,
@@ -361,7 +373,7 @@
         return name + min + extname;
     }
 
-    var systemPackage = new Loader.Package({
+    var systemPackage = new Package({
         name: '',
         runtime: S
     });

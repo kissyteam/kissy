@@ -11,7 +11,7 @@ KISSY.add("menu/control", function (S, Node, Container, DelegateChildrenExtensio
      * KISSY Menu.
      * xclass: 'menu'.
      * @class KISSY.Menu
-     * @extends KISSY.Component.Control
+     * @extends KISSY.Component.Container
      */
     return Container.extend([
         DelegateChildrenExtension
@@ -97,7 +97,7 @@ KISSY.add("menu/control", function (S, Node, Container, DelegateChildrenExtensio
          * calls the child control's {@code handleKeydown} method to give the control
          * a chance to handle the event first.
          * Protected, should only be overridden by subclasses.
-         * @param {KISSY.Event.DomEventObject} e Key event to handle.
+         * @param {KISSY.Event.DomEvent.Object} e Key event to handle.
          * @return {Boolean|undefined} Whether the event was handled by the container (or one of
          *     its children).
          * @protected

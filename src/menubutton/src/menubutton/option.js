@@ -1,5 +1,6 @@
 /**
  * represent a menu option , just make it selectable and can have select status
+ * @ignore
  * @author yiminghe@gmail.com
  */
 KISSY.add("menubutton/option", function (S, Menu) {

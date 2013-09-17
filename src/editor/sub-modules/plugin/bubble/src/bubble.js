@@ -7,7 +7,7 @@ KISSY.add("editor/plugin/bubble", function (S, Overlay, Editor) {
     var undefined = {}['a'],
         logger= S.getLogger('s/editor'),
         BUBBLE_CFG = {
-            zIndex: Editor.baseZIndex(Editor.zIndexManager.BUBBLE_VIEW),
+            zIndex: Editor.baseZIndex(Editor.ZIndexManager.BUBBLE_VIEW),
             elCls: "{prefixCls}editor-bubble",
             prefixCls: "{prefixCls}editor-",
             effect: {

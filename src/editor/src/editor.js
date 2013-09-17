@@ -1174,7 +1174,7 @@ KISSY.add('editor', function (S, Node, iframeContentTpl, Editor, Utils, focusMan
         'editor/utils',
         'editor/focusManager',
         'editor/styles',
-        'editor/zIndexManager',
+        'editor/z-index-manager',
         'editor/clipboard',
         'editor/enterKey',
         'editor/htmlDataProcessor',

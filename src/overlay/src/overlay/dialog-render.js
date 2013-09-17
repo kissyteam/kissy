@@ -4,14 +4,12 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add("overlay/dialog-render", function (S, OverlayRender, DialogTpl) {
-
     function _setStdModRenderContent(self, part, v) {
         part = self.control.get(part);
         part.html(v);
     }
 
     return OverlayRender.extend({
-
         beforeCreateDom: function (renderData) {
             S.mix(renderData.elAttrs, {
                 role: 'dialog',
@@ -20,11 +18,7 @@ KISSY.add("overlay/dialog-render", function (S, OverlayRender, DialogTpl) {
         },
 
         createDom: function () {
-            var self=this;
-            self.$contentEl.append(self.renderTpl(DialogTpl));
-            // sentinel
-            self.$el.append('<div tabindex="0"></div>');
-            self.fillChildrenElsBySelectors({
+            this.fillChildrenElsBySelectors({
                 header: '#ks-stdmod-header-{id}',
                 body: '#ks-stdmod-body-{id}',
                 footer: '#ks-stdmod-footer-{id}'
@@ -58,6 +52,11 @@ KISSY.add("overlay/dialog-render", function (S, OverlayRender, DialogTpl) {
             _setStdModRenderContent(this, "footer", v);
         }
     }, {
+        ATTRS: {
+            contentTpl: {
+                value: DialogTpl
+            }
+        },
         HTML_PARSER: {
             header: function (el) {
                 return el.one("." + this.getBaseCssClass('header'));
@@ -81,5 +80,5 @@ KISSY.add("overlay/dialog-render", function (S, OverlayRender, DialogTpl) {
         }
     });
 }, {
-    requires: ['./overlay-render', './dialog-xtpl', './close-xtpl']
+    requires: ['./overlay-render', './dialog-xtpl']
 });

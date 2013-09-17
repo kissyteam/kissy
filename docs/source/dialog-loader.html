@@ -30,7 +30,7 @@ KISSY.add(&quot;editor/plugin/dialog-loader&quot;, function (S, Overlay, Editor)
                         width:S.UA['ie'] == 6 ? S.DOM.docWidth() : &quot;100%&quot;,
                         y:0,
                         // 指定全局 loading zIndex 值
-                        &quot;zIndex&quot;:Editor.baseZIndex(Editor.zIndexManager.LOADING),
+                        &quot;zIndex&quot;:Editor.baseZIndex(Editor.ZIndexManager.LOADING),
                         prefixCls:prefixCls+'editor-',
                         elCls:prefixCls+&quot;editor-global-loading&quot;
                     });

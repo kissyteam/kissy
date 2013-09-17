@@ -21,7 +21,6 @@
  * @author yiminghe@gmail.com
  */
 (function (S, undefined) {
-
     var reDisallowedInSchemeOrUserInfo = /[#\/\?@]/g,
         reDisallowedInPathName = /[#\?]/g,
         logger= S.getLogger('s/uri'),
@@ -106,7 +105,6 @@
     function Query(query) {
         this._query = query || '';
     }
-
 
     Query.prototype = {
         constructor: Query,
@@ -299,7 +297,6 @@
         });
     }
 
-
 <span id='KISSY-Uri'>    /**
 </span>     * @class KISSY.Uri
      * Uri class for KISSY.
@@ -375,7 +372,6 @@
     }
 
     Uri.prototype = {
-
         constructor: Uri,
 
 <span id='KISSY-Uri-method-clone'>        /**
@@ -685,7 +681,6 @@
     };
 
     S.Uri = Uri;
-
 })(KISSY);
 /*
  Refer

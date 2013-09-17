@@ -197,7 +197,7 @@ KISSY.add("component/control", function (S, Node, ComponentProcess, Manager, Ren
              * By default, this performs its associated action by calling
              * {@link KISSY.Component.Control#handleClickInternal}.
              * @protected
-             * @param {KISSY.Event.DomEventObject} ev Dom event to handle.
+             * @param {KISSY.Event.DomEvent.Object} ev Dom event to handle.
              */
             handleDblClickInternal: function (ev) {
                 this.handleClickInternal(ev);
@@ -212,7 +212,7 @@ KISSY.add("component/control", function (S, Node, ComponentProcess, Manager, Ren
             /**
              * Handle mouseenter events. If the component is not disabled, highlights it.
              * @protected
-             * @param {KISSY.Event.DomEventObject} ev Dom event to handle.
+             * @param {KISSY.Event.DomEvent.Object} ev Dom event to handle.
              */
             handleMouseEnterInternal: function (ev) {
                 this.set("highlighted", !!ev);
@@ -227,7 +227,7 @@ KISSY.add("component/control", function (S, Node, ComponentProcess, Manager, Ren
             /**
              * Handle mouseleave events. If the component is not disabled, de-highlights it.
              * @protected
-             * @param {KISSY.Event.DomEventObject} ev Dom event to handle.
+             * @param {KISSY.Event.DomEvent.Object} ev Dom event to handle.
              */
             handleMouseLeaveInternal: function (ev) {
                 var self = this;
@@ -248,7 +248,7 @@ KISSY.add("component/control", function (S, Node, ComponentProcess, Manager, Ren
              * If the component is focusable, then focus it,
              * else prevent it from receiving keyboard focus.
              * @protected
-             * @param {KISSY.Event.DomEventObject} ev Dom event to handle.
+             * @param {KISSY.Event.DomEvent.Object} ev Dom event to handle.
              */
             handleMouseDownInternal: function (ev) {
                 var self = this,
@@ -284,7 +284,7 @@ KISSY.add("component/control", function (S, Node, ComponentProcess, Manager, Ren
              * If this component is not disabled, performs its associated action by calling
              * {@link KISSY.Component.Control#handleClickInternal}, then deactivates it.
              * @protected
-             * @param {KISSY.Event.DomEventObject} ev Dom event to handle.
+             * @param {KISSY.Event.DomEvent.Object} ev Dom event to handle.
              */
             handleMouseUpInternal: function (ev) {
                 var self = this;
@@ -303,7 +303,7 @@ KISSY.add("component/control", function (S, Node, ComponentProcess, Manager, Ren
             /**
              * Handles context menu.
              * @protected
-             * @param {KISSY.Event.DomEventObject} ev Dom event to handle.
+             * @param {KISSY.Event.DomEvent.Object} ev Dom event to handle.
              */
             handleContextMenuInternal: function (ev) {
             },
@@ -350,7 +350,7 @@ KISSY.add("component/control", function (S, Node, ComponentProcess, Manager, Ren
             /**
              * Handle enter keydown event to {@link KISSY.Component.Control#handleClickInternal}.
              * @protected
-             * @param {KISSY.Event.DomEventObject} ev Dom event to handle.
+             * @param {KISSY.Event.DomEvent.Object} ev Dom event to handle.
              */
             handleKeyDownInternal: function (ev) {
                 if (ev['keyCode'] == Node.KeyCode.ENTER) {
@@ -368,7 +368,7 @@ KISSY.add("component/control", function (S, Node, ComponentProcess, Manager, Ren
             /**
              * Performs the appropriate action when this component is activated by the user.
              * @protected
-             * @param {KISSY.Event.DomEventObject} ev Dom event to handle.
+             * @param {KISSY.Event.DomEvent.Object} ev Dom event to handle.
              */
             handleClickInternal: function (ev) {
             },
@@ -763,10 +763,6 @@ KISSY.add("component/control", function (S, Node, ComponentProcess, Manager, Ren
                  */
                 prefixXClass: {
                 },
-                /**
-                 * This component's xtype, xclass = prefixXClass + xtype.
-                 * @cfg {String} prefixXClass
-                 */
 
                 /**
                  * This component's parent component.

@@ -3,8 +3,7 @@
  * common utils for kissy editor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/utils", function (S,Editor) {
-
+KISSY.add("editor/utils", function (S, Editor) {
     var TRUE = true,
         FALSE = false,
         NULL = null,
@@ -17,12 +16,7 @@ KISSY.add("editor/utils", function (S,Editor) {
          * @class KISSY.Editor.Utils
          * @singleton
          */
-            Utils ={
-            /**
-             *
-             * @param url
-             * @return {String}
-             */
+            Utils = {
             debugUrl: function (url) {
                 var Config = S.Config;
                 if (!Config.debug) {
@@ -39,12 +33,6 @@ KISSY.add("editor/utils", function (S,Editor) {
                 return Config.base + "editor/" + url;
             },
 
-            /**
-             * 懒惰一下
-             * @param obj {Object} 包含方法的对象
-             * @param before {string} 准备方法
-             * @param after {string} 真正方法
-             */
             lazyRun: function (obj, before, after) {
                 var b = obj[before], a = obj[after];
                 obj[before] = function () {
@@ -54,9 +42,6 @@ KISSY.add("editor/utils", function (S,Editor) {
                 };
             },
 
-            /**
-             * editor 元素在主窗口的位置
-             */
             getXY: function (offset, editor) {
                 var x = offset.left,
                     y = offset.top,
@@ -73,11 +58,6 @@ KISSY.add("editor/utils", function (S,Editor) {
                 return {left: x, top: y};
             },
 
-            /**
-             * 执行一系列函数
-             * @param {Function...} var_args
-             * @return {*} 得到成功的返回
-             */
             tryThese: function (var_args) {
                 var returnValue;
                 for (var i = 0, length = arguments.length; i < length; i++) {
@@ -92,68 +72,24 @@ KISSY.add("editor/utils", function (S,Editor) {
                 return returnValue;
             },
 
-            /**
-             * 是否两个数组完全相同
-             * @param arrayA {Array}
-             * @param arrayB {Array}
-             * @return {Boolean}
-             */
-            arrayCompare: function (arrayA, arrayB) {
-                if (!arrayA && !arrayB)
-                    return TRUE;
-
-                if (!arrayA || !arrayB || arrayA.length != arrayB.length)
-                    return FALSE;
-
-                for (var i = 0; i < arrayA.length; i++) {
-                    if (arrayA[ i ] !== arrayB[ i ])
-                        return FALSE;
-                }
-
-                return TRUE;
-            },
-
-            /**
-             * @param database {Object}
-             */
             clearAllMarkers: function (database) {
                 for (var i in database) {
-
                     database[i]._4e_clearMarkers(database, TRUE, undefined);
-
                 }
             },
 
-            /**
-             *
-             * @param str {string}
-             * @return {string}
-             */
             ltrim: function (str) {
                 return str.replace(/^\s+/, "");
             },
 
-            /**
-             *
-             * @param str {string}
-             * @return {string}
-             */
             rtrim: function (str) {
                 return str.replace(/\s+$/, "");
             },
 
-            /**
-             *
-             */
             isNumber: function (n) {
                 return /^\d+(.\d+)?$/.test(S.trim(n));
             },
 
-            /**
-             *
-             * @param inputs {Array.<Node>}
-             * @return {Boolean} 是否验证成功
-             */
             verifyInputs: function (inputs) {
                 for (var i = 0; i < inputs.length; i++) {
                     var input = new Node(inputs[i]),
@@ -168,20 +104,11 @@ KISSY.add("editor/utils", function (S,Editor) {
                 return TRUE;
             },
 
-            /**
-             *
-             * @param editor {KISSY.Editor}
-             * @param plugin {Object}
-             */
             sourceDisable: function (editor, plugin) {
                 editor.on("sourceMode", plugin.disable, plugin);
                 editor.on("wysiwygMode", plugin.enable, plugin);
             },
 
-            /**
-             *
-             * @param inp {KISSY.NodeList}
-             */
             resetInput: function (inp) {
                 var placeholder = inp.attr("placeholder");
                 if (placeholder && UA['ie']) {
@@ -192,11 +119,6 @@ KISSY.add("editor/utils", function (S,Editor) {
                 }
             },
 
-            /**
-             *
-             * @param inp  {KISSY.NodeList}
-             * @param [val]
-             */
             valInput: function (inp, val) {
                 if (val === undefined) {
                     if (inp.hasClass("ks-editor-input-tip")) {
@@ -208,13 +130,9 @@ KISSY.add("editor/utils", function (S,Editor) {
                     inp.removeClass("ks-editor-input-tip");
                     inp.val(val);
                 }
+                return undefined;
             },
 
-            /**
-             *
-             * @param inp {KISSY.NodeList}
-             * @param tip {string}
-             */
             placeholder: function (inp, tip) {
                 inp.attr("placeholder", tip);
                 if (!UA['ie']) {
@@ -235,16 +153,6 @@ KISSY.add("editor/utils", function (S,Editor) {
             },
 
             /**
-             * Convert certain characters (&, <, >, and ') to their HTML character equivalents
-             *  for literal display in web pages.
-             * @param {string} value The string to encode
-             * @return {string} The encoded text
-             */
-            htmlEncode: function (value) {
-                return !value ? value : String(value).replace(/&/g, "&amp;").replace(/>/g, "&gt;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
-            },
-
-            /**
              *
              * @param params {Object}
              * @return {Object}
@@ -260,16 +168,6 @@ KISSY.add("editor/utils", function (S,Editor) {
 
                 }
                 return params;
-            },
-
-            /**
-             *
-             */
-            map: function (arr, callback) {
-                for (var i = 0; i < arr.length; i++) {
-                    arr[i] = callback(arr[i]);
-                }
-                return arr;
             },
 
             //直接判断引擎，防止兼容性模式影响
@@ -288,9 +186,6 @@ KISSY.add("editor/utils", function (S,Editor) {
                 }
             },
 
-            /**
-             *
-             */
             injectDom: function (editorDom) {
                 S.mix(Dom, editorDom);
                 for (var dm in editorDom) {
@@ -314,18 +209,12 @@ KISSY.add("editor/utils", function (S,Editor) {
                 }
             },
 
-            /**
-             *
-             */
             addRes: function () {
                 this.__res = this.__res || [];
                 var res = this.__res;
                 res.push.apply(res, S.makeArray(arguments));
             },
 
-            /**
-             *
-             */
             destroyRes: function () {
                 var res = this.__res || [];
                 for (var i = 0; i < res.length; i++) {
@@ -344,9 +233,6 @@ KISSY.add("editor/utils", function (S,Editor) {
                 this.__res = [];
             },
 
-            /**
-             *
-             */
             getQueryCmd: function (cmd) {
                 return "query" + ("-" + cmd).replace(/-(\w)/g, function (m, m1) {
                     return m1.toUpperCase()
@@ -358,5 +244,5 @@ KISSY.add("editor/utils", function (S,Editor) {
 
     return Utils;
 }, {
-    requires: ['./base','node']
+    requires: ['./base', 'node']
 });

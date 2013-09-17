@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * enhanced base for model with sync
  * @author yiminghe@gmail.com
  */
@@ -231,7 +232,7 @@ KISSY.add("mvc/model", function (S, Base) {
                 },
                 /**
                  * Sync model data with server.
-                 * Default to call {@link KISSY.MVC.sync}
+                 * Default to call {@link KISSY.MVC#sync}
                  * @type {Function}
                  */
                 sync:{

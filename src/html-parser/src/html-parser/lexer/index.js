@@ -8,7 +8,7 @@ KISSY.add("html-parser/lexer/index", function () {
     /**
      * Page index class.
      * @private
-     * @class KISSY.HtmlParse.Lexer.Index
+     * @class KISSY.HtmlParser.Lexer.Index
      */
     function Index() {
         this.lineCursors = [];

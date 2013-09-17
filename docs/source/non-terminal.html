@@ -16,14 +16,16 @@
 </head>
 <body onload="prettyPrint(); highlight();">
   <pre class="prettyprint lang-js"><span id='global-property-'>/**
-</span> * NonTerminal Set for KISON
+</span> * @ignore
+ * NonTerminal Set for KISON
  * @author yiminghe@gmail.com
  */
 KISSY.add(&quot;kison/non-terminal&quot;, function (S, Base) {
-
-    return Base.extend({
-
-    }, {
+<span id='KISSY-Kison-NonTerminal'>    /**
+</span>     * non-terminal symbol for grammar
+     * @class KISSY.Kison.NonTerminal
+     */
+    return Base.extend({}, {
         ATTRS:{
             productions:{
                 value:[]

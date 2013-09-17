@@ -10,7 +10,7 @@ KISSY.add("html-parser/writer/basic", function () {
 
     /**
      * BasicWriter for html content
-     * @class KISSY.HtmlParse.BasicWriter
+     * @class KISSY.HtmlParser.BasicWriter
      */
     function BasicWriter() {
         this.output = [];

@@ -1,5 +1,6 @@
 /**
  * checkable menu item
+ * @ignore
  * @author yiminghe@gmail.com
  */
 KISSY.add('menu/check-menuitem', function (S, MenuItem, CheckMenuItemRender) {

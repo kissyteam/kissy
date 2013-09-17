@@ -1,7 +1,8 @@
 {
     "--title": "KISSY 1.4 Docs",
     "--welcome": "template/welcome.html",
-    "--head-html": "<link rel=\"stylesheet\" href=\"resources/css/kissy.css\" type=\"text/css\" />",
+    "--external": "HTMLDocument,DocumentFragment,HTMLTextAreaElement",
+    "--head-html": "<meta name=\"data-spm\" content=\"1\" data-spm-protocol=\"i\" /><link rel=\"stylesheet\" href=\"resources/css/kissy.css\" type=\"text/css\" />",
     "--footer": "Copyright &copy; 2010-2013, <a href=\"http://kissyui.com\" style=\"color:#085585\">KISSY</a> - Alibaba. All rights reserved. | Generated with <a href=\"https://github.com/senchalabs/jsduck\">JSDuck</a>.",
     "--seo": true,
     "--": ["../../src/anim/src",
@@ -96,8 +97,6 @@
         "../../src/editor/sub-modules/plugin/maximize/src",
         "../../src/editor/sub-modules/plugin/maximize/sub-modules/cmd/src",
         "../../src/editor/sub-modules/plugin/menubutton/src",
-        "../../src/editor/sub-modules/plugin/multiple-upload/src",
-        "../../src/editor/sub-modules/plugin/multiple-upload/sub-modules/dialog/src",
         "../../src/editor/sub-modules/plugin/ordered-list/src",
         "../../src/editor/sub-modules/plugin/ordered-list/sub-modules/cmd/src",
         "../../src/editor/sub-modules/plugin/outdent/src",

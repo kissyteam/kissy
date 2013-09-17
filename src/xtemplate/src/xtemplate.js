@@ -34,10 +34,12 @@ KISSY.add('xtemplate', function (S, XTemplateRuntime, compiler) {
     /**
      * xtemplate engine for KISSY.
      *
+     *
      *      @example
-     *      new XTemplate(tplString, config);
-     *      // or
-     *      new XTemplate(tplFunction, config);
+     *      KISSY.use('xtemplate',function(S, XTemplate){
+     *          document.writeln(new XTemplate('{{title}}').render({title:2}));
+     *      });
+     *
      *
      * @class KISSY.XTemplate
      * @extends KISSY.XTemplate.Runtime

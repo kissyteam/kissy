@@ -278,7 +278,7 @@ KISSY.add('dom/base/style', function (S, Dom, undefined) {
              * Creates a stylesheet from a text blob of rules.
              * These rules will be wrapped in a style tag and appended to the HEAD of the document.
              * if cssText does not contain css hacks, u can just use Dom.create('<style>xx</style>')
-             * @param {window} [refWin=window] Window which will accept this stylesheet
+             * @param {Window} [refWin=window] Window which will accept this stylesheet
              * @param {String} [cssText] The text containing the css rules
              * @param {String} [id] An id to add to the stylesheet for later removal
              */

@@ -17,6 +17,7 @@ KISSY.add("editor/styles", function (S, Editor) {
         KESelection = Editor.Selection,
         KEP = Editor.PositionType,
         KERange = Editor.Range,
+        KEST,
     //Walker = Editor.Walker,
         Node = S.Node,
         UA = S.UA,
@@ -61,8 +62,17 @@ KISSY.add("editor/styles", function (S, Editor) {
      * @enum {number} KISSY.Editor.StyleType
      */
     Editor.StyleType = KEST ={
+        /**
+         * block type
+         */
         STYLE_BLOCK: 1,
+        /**
+         * inline type
+         */
         STYLE_INLINE: 2,
+        /**
+         * object type
+         */
         STYLE_OBJECT: 3
     };
 
@@ -791,9 +801,9 @@ KISSY.add("editor/styles", function (S, Editor) {
                         styleNode[0].normalize();
                 }
                 // Style already inherit from parents, left just to clear up any internal overrides. (#5931)
-                /**
-                 * from koubei
-                 *1.输入ab
+                /*
+                 from koubei
+                 1.输入ab
                  2.ctrl-a 设置字体大小 x
                  3.选中b设置字体大小 y
                  4.保持选中b,设置字体大小 x

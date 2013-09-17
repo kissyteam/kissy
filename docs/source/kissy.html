@@ -24,14 +24,12 @@
 <span id='KISSY'>/**
 </span> * The KISSY global namespace object. you can use
  *
- * for example:
- *      @example
+ *
  *      KISSY.each/mix
  *
  * to do basic operation. or
  *
- * for example:
- *      @example
+ *
  *      KISSY.use('overlay,node', function(S, Overlay, Node){
  *          //
  *      });
@@ -61,6 +59,7 @@ var KISSY = (function (undefined) {
          * @type {String}
          */
         __BUILD_TIME: '@TIMESTAMP@',
+
 <span id='KISSY-property-Env'>        /**
 </span>         * KISSY Environment.
          * @private
@@ -69,6 +68,7 @@ var KISSY = (function (undefined) {
         Env: {
             host: host
         },
+
 <span id='KISSY-property-Config'>        /**
 </span>         * KISSY Config.
          * If load kissy.js, Config.debug defaults to true.
@@ -92,16 +92,27 @@ var KISSY = (function (undefined) {
 
 <span id='KISSY-method-config'>        /**
 </span>         * set KISSY configuration
-         * @param {Object|String}   configName Config object or config key.
-         * @param {String} configName.base   KISSY 's base path. Default: get from kissy(-min).js or seed(-min).js
-         * @param {String} configName.tag    KISSY 's timestamp for native module. Default: KISSY 's build time.
-         * @param {Boolean} configName.debug     whether to enable debug mod.
-         * @param {Boolean} configName.combine   whether to enable combo.
+         * @param {Object|String} configName Config object or config key.
+         * @param {String} configName.base KISSY 's base path. Default: get from kissy(-min).js or seed(-min).js
+         * @param {String} configName.tag KISSY 's timestamp for native module. Default: KISSY 's build time.
+         * @param {Boolean} configName.debug whether to enable debug mod.
+         * @param {Boolean} configName.combine whether to enable combo.
+         * @param {Object} configName.logger logger config
+         * @param {Object[]} configName.logger.excludes  exclude configs
+         * @param {Object} configName.logger.excludes.0 a single exclude config
+         * @param {RegExp} configName.logger.excludes.0.logger  matched logger will be excluded from logging
+         * @param {KISSY.Logger.Level} configName.logger.excludes.0.minLevel  minimum logger level
+         * @param {KISSY.Logger.Level} configName.logger.excludes.0.maxLevel  maximum logger level
+         * @param {Object[]} configName.logger.includes include configs
+         * @param {Object} configName.logger.includes.0 a single include config
+         * @param {RegExp} configName.logger.includes.0.logger  matched logger will be included from logging
+         * @param {KISSY.Logger.Level} configName.logger.excludes.0.minLevel  minimum logger level
+         * @param {KISSY.Logger.Level} configName.logger.excludes.0.maxLevel  maximum logger level
          * @param {Object} configName.packages Packages definition with package name as the key.
-         * @param {String} configName.packages.base    Package base path.
-         * @param {String} configName.packages.tag     Timestamp for this package's module file.
-         * @param {String} configName.packages.debug     Whether force debug mode for current package.
-         * @param {String} configName.packages.combine     Whether allow combine for current package modules.
+         * @param {String} configName.packages.base Package base path.
+         * @param {String} configName.packages.tag  Timestamp for this package's module file.
+         * @param {String} configName.packages.debug Whether force debug mode for current package.
+         * @param {String} configName.packages.combine Whether allow combine for current package modules.
          * @param {String} [configName.packages.ignorePackageNameInUri=false] whether remove packageName from module request uri,
          * can only be used in production mode.
          * @param {Array[]} configName.map file map      File url map configs.
@@ -211,8 +222,14 @@ var KISSY = (function (undefined) {
                     return msg;
                 }
             }
+            return undefined;
         },
 
+<span id='KISSY-method-getLogger'>        /**
+</span>         * get log instance for specified logger
+         * @param {String} logger logger name
+         * @returns {KISSY.Logger} log instance
+         */
         'getLogger': function (logger) {
             return getLogger(logger);
         },
@@ -242,9 +259,48 @@ var KISSY = (function (undefined) {
             excludes: [
                 {
                     logger: /^s\/.*/,
-                    maxLevel: 'info'
+                    maxLevel: 'info',
+                    minLevel: 'debug'
                 }
             ]
+        };
+
+<span id='KISSY-Logger'>        /**
+</span>         * Log class for specified logger
+         * @class KISSY.Logger
+         * @private
+         */
+        function Logger() {
+
+        }
+
+<span id='KISSY-Logger-method-debug'>        /**
+</span>         * print debug log
+         * @method
+         * @param {String} str log str
+         */
+        Logger.prototype.debug = function (str) {
+        };
+<span id='KISSY-Logger-method-info'>        /**
+</span>         * print info log
+         * @method
+         * @param {String} str log str
+         */
+        Logger.prototype.info = function (str) {
+        };
+<span id='KISSY-Logger-method-warn'>        /**
+</span>         * print warn log
+         * @method
+         * @param {String} str log str
+         */
+        Logger.prototype.warn = function (str) {
+        };
+<span id='KISSY-Logger-method-error'>        /**
+</span>         * print error log
+         * @method
+         * @param {String} str log str
+         */
+        Logger.prototype.error = function (str) {
         };
     }
 
@@ -257,6 +313,32 @@ var KISSY = (function (undefined) {
         });
         return obj;
     }
+
+
+<span id='KISSY-Logger-Level'>    /**
+</span>     * Logger level enum
+     * @enum {String} KISSY.Logger.Level
+     */
+<span id='global-property-'>    S.Logger = /**@type Function
+</span>     @ignore */{};
+    S.Logger.Level = {
+<span id='KISSY-Logger-Level-property-DEBUG'>        /**
+</span>         * debug level
+         */
+        'DEBUG': 'debug',
+<span id='KISSY-Logger-Level-property-INFO'>        /**
+</span>         * info level
+         */
+        INFO: 'info',
+<span id='KISSY-Logger-Level-property-WARN'>        /**
+</span>         * warn level
+         */
+        WARN: 'warn',
+<span id='KISSY-Logger-Level-property-ERROR'>        /**
+</span>         * error level
+         */
+        ERROR: 'error'
+    };
 
     return S;
 })();</pre>

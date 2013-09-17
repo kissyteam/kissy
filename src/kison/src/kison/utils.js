@@ -1,13 +1,17 @@
 /**
+ * @ignore
  * utils for kison.
  * @author yiminghe@gmail.com
  */
 KISSY.add("kison/utils", function (S) {
-
     var doubleReg = /"/g, single = /'/g, escapeString;
 
+    /**
+     * utils for kison
+     * @class KISSY.Kison.Utils
+     * @singleton
+     */
     return {
-
         escapeString: escapeString = function (str, quote) {
             var regexp = single;
             if (quote == '"') {
@@ -23,7 +27,6 @@ KISSY.add("kison/utils", function (S) {
         },
 
         serializeObject: function serializeObject(obj, excludeReg) {
-
             var r;
 
             if (excludeReg &&

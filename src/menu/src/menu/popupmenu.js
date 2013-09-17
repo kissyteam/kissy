@@ -10,7 +10,6 @@ KISSY.add("menu/popupmenu", function (S, AlignExtension,Shim, Menu, PopupMenuRen
      * xclass: 'popupmenu'.
      * @class KISSY.Menu.PopupMenu
      * @extends KISSY.Menu
-     * @mixins KISSY.Component.Extension.Position
      * @mixins KISSY.Component.Extension.Align
      */
     return Menu.extend([

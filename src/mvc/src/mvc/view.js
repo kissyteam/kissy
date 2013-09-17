@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * view for kissy mvc : event delegation,el generator
  * @author yiminghe@gmail.com
  */

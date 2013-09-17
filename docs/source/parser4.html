@@ -304,10 +304,10 @@ KISSY.add(&quot;xtemplate/compiler/parser&quot;, function () {
             [21, /^\//, 0, ['t']],
             [22, /^%/, 0, ['t']],
             [23, /^!/, 0, ['t']],
-            [24, /^&quot;(\\&quot;|[^&quot;])*&quot;/, function () {
+            [24, /^&quot;(\\[\s\S]|[^&quot;])*&quot;/, function () {
                 this.text = this.text.slice(1, -1).replace(/\\&quot;/g, '&quot;');
             }, ['t']],
-            [24, /^'(\\'|[^'])*'/, function () {
+            [24, /^'(\\[\s\S]|[^'])*'/, function () {
                 this.text = this.text.slice(1, -1).replace(/\\'/g, &quot;'&quot;);
             }, ['t']],
             [25, /^true/, 0, ['t']],

@@ -350,7 +350,7 @@ KISSY.add("editor/plugin/contextmenu", function(S, Editor, Menu, focusFix) {
   _$jscoverage['/contextmenu.js'].lineData[21]++;
   cfg.focusable = 1;
   _$jscoverage['/contextmenu.js'].lineData[22]++;
-  cfg.zIndex = Editor.baseZIndex(Editor.zIndexManager.POPUP_MENU);
+  cfg.zIndex = Editor.baseZIndex(Editor.ZIndexManager.POPUP_MENU);
   _$jscoverage['/contextmenu.js'].lineData[24]++;
   var menu = new Menu.PopupMenu(cfg);
   _$jscoverage['/contextmenu.js'].lineData[26]++;

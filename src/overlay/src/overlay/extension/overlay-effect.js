@@ -4,7 +4,6 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add('overlay/extension/overlay-effect', function (S) {
-
     var effects = {fade: ["Out", "In"], slide: ["Up", "Down"]};
 
     function getGhost(self) {
@@ -105,6 +104,10 @@ KISSY.add('overlay/extension/overlay-effect', function (S) {
         }, easing);
     }
 
+    /**
+     * effect extension for overlay
+     * @class KISSY.Overlay.Extension.Effect
+     */
     function OverlayEffect() {
 
     }
@@ -169,5 +172,4 @@ KISSY.add('overlay/extension/overlay-effect', function (S) {
     };
 
     return OverlayEffect;
-
 });

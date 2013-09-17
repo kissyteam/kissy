@@ -306,7 +306,7 @@ KISSY.add("editor/plugin/menubutton", function(S, Editor, MenuButton) {
     _$jscoverage['/menubutton.js'].lineData[22]++;
     if (visit3_22_1(cfg.menu)) {
       _$jscoverage['/menubutton.js'].lineData[23]++;
-      cfg.menu.zIndex = Editor.baseZIndex(Editor.zIndexManager.SELECT);
+      cfg.menu.zIndex = Editor.baseZIndex(Editor.ZIndexManager.SELECT);
     }
     _$jscoverage['/menubutton.js'].lineData[25]++;
     if (visit4_25_1(cfg.elCls)) {

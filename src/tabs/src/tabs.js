@@ -16,10 +16,9 @@ KISSY.add("tabs", function (S, Container, Bar, Body, Tab, Panel, Render) {
     /**
      * Tabs for KISSY
      * @class KISSY.Tabs
-     * @extends KISSY.Component.Control
+     * @extends KISSY.Component.Container
      */
     var Tabs = Container.extend({
-
         initializer: function () {
             var self = this,
                 items = self.get('items');
@@ -279,7 +278,7 @@ KISSY.add("tabs", function (S, Container, Bar, Body, Tab, Panel, Render) {
              * fired when selected tab is changed
              * @event afterSelectedTabChange
              * @member KISSY.Tabs
-             * @param {KISSY.Event.CustomEventObject} e
+             * @param {KISSY.Event.CustomEvent.Object} e
              * @param {KISSY.Tabs.Tab} e.newVal selected tab
              */
 
@@ -288,11 +287,10 @@ KISSY.add("tabs", function (S, Container, Bar, Body, Tab, Panel, Render) {
              * fired before selected tab is changed
              * @event beforeSelectedTabChange
              * @member KISSY.Tabs
-             * @param {KISSY.Event.CustomEventObject} e
+             * @param {KISSY.Event.CustomEvent.Object} e
              * @param {KISSY.Tabs.Tab} e.newVal tab to be selected
              */
         }
-
     }, {
         ATTRS: {
 
@@ -316,8 +314,8 @@ KISSY.add("tabs", function (S, Container, Bar, Body, Tab, Panel, Render) {
             },
 
             /**
-             * tabs trigger event type, mouse or click
-             * @cfg {String} changeType
+             * whether allow tab to lazy render
+             * @cfg {Boolean} lazyRender
              */
             /**
              * @ignore

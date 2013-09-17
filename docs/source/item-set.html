@@ -16,16 +16,17 @@
 </head>
 <body onload="prettyPrint(); highlight();">
   <pre class="prettyprint lang-js"><span id='global-property-'>/**
-</span> * Item Set for KISON
+</span> * @ignore
+ * Item Set for KISON
  * @author yiminghe@gmail.com
  */
 KISSY.add(&quot;kison/item-set&quot;, function (S, Base) {
+<span id='KISSY-Kison-ItemSet'>    /**
+</span>     * ItemSet for grammar
+     * @class KISSY.Kison.ItemSet
+     */
     return Base.extend({
-
-<span id='global-method-addItem'>        /**
-</span>         * Insert item by order
-         * @param item
-         */
+        // Insert item by order
         addItem: function (item) {
             var items = this.get(&quot;items&quot;);
             for (var i = 0; i &lt; items.length; i++) {
@@ -90,7 +91,6 @@ KISSY.add(&quot;kison/item-set&quot;, function (S, Base) {
             reverseGotos[symbol] = reverseGotos[symbol] || [];
             reverseGotos[symbol].push(item);
         }
-
     }, {
         ATTRS: {
             items: {

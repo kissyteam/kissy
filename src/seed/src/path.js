@@ -5,23 +5,17 @@
  * @author yiminghe@gmail.com
  */
 (function (S) {
-
     // [root, dir, basename, ext]
     var splitPathRe = /^(\/?)([\s\S]+\/(?!$)|\/)?((?:\.{1,2}$|[\s\S]+?)?(\.[^.\/]*)?)$/;
 
-    /**
-     * Remove .. and . in path array
-     * @ignore
-     * @param parts
-     * @param allowAboveRoot
-     * @return {*}
-     */
+
+    // Remove .. and . in path array
     function normalizeArray(parts, allowAboveRoot) {
         // level above root
         var up = 0,
             i = parts.length - 1,
-            // splice costs a lot in ie
-            // use new array instead
+        // splice costs a lot in ie
+        // use new array instead
             newParts = [],
             last;
 
@@ -54,11 +48,10 @@
      * @class KISSY.Path
      * @singleton
      */
-    var Path = {
+    var Path = S.Path = {
 
         /**
          * resolve([from ...], to)
-         *
          * @return {String} Resolved path.
          */
         resolve: function () {
@@ -89,8 +82,7 @@
          * normalize .. and . in path
          * @param {String} path Path tobe normalized
          *
-         * for example:
-         *      @example
+         *
          *      'x/y/../z' => 'x/z'
          *      'x/y/z/../' => 'x/y/'
          *
@@ -132,8 +124,7 @@
          * @param {String} from
          * @param {String} to
          *
-         * for example:
-         *      @example
+         *
          *      relative('x/','x/y/z') => 'y/z'
          *      relative('x/t/z','x/') => '../../'
          *
@@ -191,6 +182,7 @@
 
         /**
          * Get dirname of path
+         * @param {String} path
          * @return {String}
          */
         dirname: function (path) {
@@ -219,11 +211,7 @@
         extname: function (path) {
             return (path.match(splitPathRe) || [])[4] || '';
         }
-
     };
-    if (Path) {
-        S.Path = Path;
-    }
 })(KISSY);
 /*
  Refer

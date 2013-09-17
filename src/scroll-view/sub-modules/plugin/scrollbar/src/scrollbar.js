@@ -1,8 +1,14 @@
 /**
+ * @ignore
  * scrollbar plugin for KISSY scroll-view
  * @author yiminghe@gmail.com
  */
 KISSY.add('scroll-view/plugin/scrollbar', function (S, Base, ScrollBar) {
+    /**
+     * ScrollBar plugin for ScrollView
+     * @class KISSY.ScrollView.Plugin.ScrollBar
+     * @extend KISSY.Base
+     */
     return Base.extend({
         pluginId: this.getName(),
 

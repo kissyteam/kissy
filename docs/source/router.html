@@ -16,7 +16,8 @@
 </head>
 <body onload="prettyPrint(); highlight();">
   <pre class="prettyprint lang-js"><span id='global-property-'>/**
-</span> * simple router to get path parameter and query parameter from hash(old ie) or url(html5)
+</span> * @ignore
+ * simple router to get path parameter and query parameter from hash(old ie) or url(html5)
  * @author yiminghe@gmail.com
  */
 KISSY.add('mvc/router', function (S, Node, Base, undefined) {
@@ -61,9 +62,8 @@ KISSY.add('mvc/router', function (S, Node, Base, undefined) {
         return new S.Uri(url).getFragment().replace(/^!/, &quot;&quot;);
     }
 
-<span id='global-method-getFragment'>    /**
-</span>     * get url fragment and dispatch
-     */
+
+   // get url fragment and dispatch
     function getFragment(url) {
         url = url || location.href;
         if (Router.nativeHistory &amp;&amp; supportNativeHistory) {
@@ -75,14 +75,6 @@ KISSY.add('mvc/router', function (S, Node, Base, undefined) {
         }
     }
 
-<span id='global-property-'>    /**
-</span>     * slash ------------- start
-     */
-
-<span id='global-method-endWithSlash'>    /**
-</span>     * whether string end with slash
-     * @param str
-     */
     function endWithSlash(str) {
         return S.endsWith(str, &quot;/&quot;);
     }
@@ -123,22 +115,15 @@ KISSY.add('mvc/router', function (S, Node, Base, undefined) {
         return str1 == str2;
     }
 
-<span id='global-property-'>    /**
-</span>     * slash ------------------  end
-     */
 
-<span id='global-method-getFullPath'>    /**
-</span>     * get full path from fragment for html history
-     * @param fragment
-     */
+   // get full path from fragment for html history
     function getFullPath(fragment) {
         return location.protocol + &quot;//&quot; + location.host +
             removeEndSlash(Router.urlRoot) + addStartSlash(fragment)
     }
 
-<span id='global-method-dispatch'>    /**
-</span>     * match url with route intelligently (always get optimal result)
-     */
+
+   // match url with route intelligently (always get optimal result)
     function dispatch() {
         var query,
             path,
@@ -312,11 +297,8 @@ KISSY.add('mvc/router', function (S, Node, Base, undefined) {
         }
     }
 
-<span id='global-method-normFn'>    /**
-</span>     * normalize function by self
-     * @param self
-     * @param callback
-     */
+
+   // normalize function by self
     function normFn(self, callback) {
         if (typeof callback === 'function') {
             return callback;
@@ -369,9 +351,9 @@ KISSY.add('mvc/router', function (S, Node, Base, undefined) {
     }, {
         ATTRS: {
 
-<span id='KISSY-MVC-Router-property-routes'>            /**
+<span id='KISSY-MVC-Router-cfg-routes'>            /**
 </span>             * Route and action config.
-             * @type {Object}
+             * @cfg {Object} routes
              *
              *
              *     {
@@ -383,13 +365,18 @@ KISSY.add('mvc/router', function (S, Node, Base, undefined) {
              *       }
              *     }
              */
+<span id='global-property-routes'>            /**
+</span>             * @ignore
+             */
             routes: {}
         },
 
-<span id='KISSY-MVC-Router-method-hasRoute'>        /**
+<span id='KISSY-MVC-Router-static-method-hasRoute'>        /**
 </span>         * whether Router can process path
          * @param {String} path path for route
          * @return {Boolean}
+         * @static
+         * @member KISSY.MVC.Router
          */
         hasRoute: function (path) {
             var match = 0;
@@ -412,19 +399,22 @@ KISSY.add('mvc/router', function (S, Node, Base, undefined) {
             return !!match;
         },
 
-<span id='KISSY-MVC-Router-method-removeRoot'>        /**
+<span id='KISSY-MVC-Router-static-method-removeRoot'>        /**
 </span>         * get the route path
          * @param {String} url full location href
          * @return {String} route path
+         * @static
+         * @member KISSY.MVC.Router
          */
         removeRoot: function (url) {
             var u = new S.Uri(url);
             return u.getPath().substr(Router.urlRoot.length);
         },
 
-<span id='KISSY-MVC-Router-method-navigate'>        /**
+<span id='KISSY-MVC-Router-static-method-navigate'>        /**
 </span>         * Navigate to specified path.
-         * Similar to runRoute in sammy.js.
+         * @static
+         * @member KISSY.MVC.Router
          * @param {String} path Destination path.
          * @param {Object} [opts] Config for current navigation.
          * @param {Boolean} opts.triggerRoute Whether to trigger responding action
@@ -455,8 +445,10 @@ KISSY.add('mvc/router', function (S, Node, Base, undefined) {
                 dispatch();
             }
         },
-<span id='KISSY-MVC-Router-method-start'>        /**
-</span>         * Start router (url monitor).
+<span id='KISSY-MVC-Router-static-method-start'>        /**
+</span>         * Start all routers (url monitor).
+         * @static
+         * @member KISSY.MVC.Router
          * @param {Object} opts
          * @param {Function} opts.success Callback function to be called after router is started.
          * @param {String} opts.urlRoot Specify url root for html5 history management.
@@ -538,6 +530,11 @@ KISSY.add('mvc/router', function (S, Node, Base, undefined) {
             return undefined;
         },
 
+<span id='KISSY-MVC-Router-static-method-stop'>        /**
+</span>         * stop all routers
+         * @static
+         * @member KISSY.MVC.Router
+         */
         stop: function () {
             Router.__started = 0;
             $win.detach('popstate', dispatch);
@@ -549,8 +546,9 @@ KISSY.add('mvc/router', function (S, Node, Base, undefined) {
     requires: ['node', 'base']
 });
 
-<span id='KISSY-MVC-Router-property-'>/**
-</span> * 2011-11-30
+<span id='global-property-'>/**
+</span> * @ignore
+ * 2011-11-30
  *  - support user-given native regexp for router rule
  *
  * refer :

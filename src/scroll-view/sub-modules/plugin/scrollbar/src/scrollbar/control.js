@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * scrollbar for KISSY scroll-view
  * @author yiminghe@gmail.com
  */
@@ -15,6 +16,8 @@ KISSY.add('scroll-view/plugin/scrollbar/control', function (S, Node, Control, Sc
 
     /**
      * @class KISSY.ScrollView.ScrollBar
+     * @extend KISSY.Component.Control
+     * @private
      */
     return Control.extend({
         initializer: function () {

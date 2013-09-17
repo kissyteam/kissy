@@ -1,10 +1,14 @@
 /**
+ * @ignore
  * Item for KISON
  * @author yiminghe@gmail.com
  */
 KISSY.add("kison/item", function (S, Base) {
+    /**
+     * grammar item
+     * @class KISSY.Kison.Item
+     */
     return Base.extend({
-
         equals: function (other, ignoreLookAhead) {
             var self = this;
             if (!other.get("production").equals(self.get("production"))) {
@@ -38,7 +42,6 @@ KISSY.add("kison/item", function (S, Base) {
             });
             return ret;
         }
-
     }, {
         ATTRS: {
             production: {},

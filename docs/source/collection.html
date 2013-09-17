@@ -16,7 +16,8 @@
 </head>
 <body onload="prettyPrint(); highlight();">
   <pre class="prettyprint lang-js"><span id='global-property-'>/**
-</span> * collection of models
+</span> * @ignore
+ * collection of models
  * @author yiminghe@gmail.com
  */
 KISSY.add(&quot;mvc/collection&quot;, function (S, Model, Base) {
@@ -285,7 +286,7 @@ KISSY.add(&quot;mvc/collection&quot;, function (S, Model, Base) {
             comparator: {},
 <span id='KISSY-MVC-Collection-property-sync'>            /**
 </span>             * Sync function to sync data with server.
-             * Default to call {@link KISSY.MVC.sync}
+             * Default to call {@link KISSY.MVC#sync}
              * @type {Function}
              */
             sync: {

@@ -16,13 +16,17 @@
 </head>
 <body onload="prettyPrint(); highlight();">
   <pre class="prettyprint lang-js"><span id='global-property-'>/**
-</span> * SplitButton for KISSY. Combination of button and menubutton.
+</span> * @ignore
+ * SplitButton for KISSY. Combination of button and menubutton.
  * @author yiminghe@gmail.com
  */
 KISSY.add(&quot;split-button&quot;, function (S, Container) {
-
+<span id='KISSY-SplitButton'>    /**
+</span>     * split button container for menubutton and button
+     * @class KISSY.SplitButton
+     * @extend KISSY.Component.Container
+     */
     return Container.extend({
-
         renderUI: function () {
             var self = this,
                 alignWithEl = self.get(&quot;alignWithEl&quot;),
@@ -32,9 +36,7 @@ KISSY.add(&quot;split-button&quot;, function (S, Container) {
                 menu.get(&quot;align&quot;).node = self.$el;
             }
         }
-
     }, {
-
         ATTRS: {
             handleMouseEvents: {
                 value: false
@@ -42,6 +44,14 @@ KISSY.add(&quot;split-button&quot;, function (S, Container) {
             focusable: {
                 value: false
             },
+<span id='KISSY-SplitButton-cfg-alignWithEl'>            /**
+</span>             * whether align menubutton with button.
+             * Defaults to: true
+             * @cfg {Boolean} alignWithEl
+             */
+<span id='global-property-alignWithEl'>            /**
+</span>             * @ignore
+             */
             alignWithEl: {
                 value: true
             },
@@ -55,6 +65,19 @@ KISSY.add(&quot;split-button&quot;, function (S, Container) {
                     }
                 ]
             },
+<span id='KISSY-SplitButton-cfg-menuButton'>            /**
+</span>             * menubutton component
+             * @cfg {KISSY.MenuButton} menuButton
+             */
+
+<span id='KISSY-SplitButton-property-menuButton'>            /**
+</span>             * menubutton component
+             * @property {KISSY.MenuButton} menuButton
+             */
+
+<span id='global-property-menuButton'>            /**
+</span>             * @ignore
+             */
             menuButton: {
                 getter: function () {
                     return this.get('children')[1];
@@ -63,6 +86,20 @@ KISSY.add(&quot;split-button&quot;, function (S, Container) {
                     this.get('children')[1] = v;
                 }
             },
+
+<span id='KISSY-SplitButton-cfg-button'>            /**
+</span>             * button component
+             * @cfg {KISSY.Button} button
+             */
+
+<span id='KISSY-SplitButton-property-button'>            /**
+</span>             * button component
+             * @property {KISSY.Button} button
+             */
+
+<span id='global-property-button'>            /**
+</span>             * @ignore
+             */
             button: {
                 getter: function () {
                     return this.get('children')[0];
@@ -74,8 +111,6 @@ KISSY.add(&quot;split-button&quot;, function (S, Container) {
         },
         xclass: 'split-button'
     });
-
-
 }, {
     requires: ['component/container',
         // implicit requirement

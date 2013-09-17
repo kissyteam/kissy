@@ -16,7 +16,8 @@
 </head>
 <body onload="prettyPrint(); highlight();">
   <pre class="prettyprint lang-js"><span id='global-property-'>/**
-</span> * enhanced base for model with sync
+</span> * @ignore
+ * enhanced base for model with sync
  * @author yiminghe@gmail.com
  */
 KISSY.add(&quot;mvc/model&quot;, function (S, Base) {
@@ -248,7 +249,7 @@ KISSY.add(&quot;mvc/model&quot;, function (S, Base) {
                 },
 <span id='KISSY-MVC-Model-property-sync'>                /**
 </span>                 * Sync model data with server.
-                 * Default to call {@link KISSY.MVC.sync}
+                 * Default to call {@link KISSY.MVC#sync}
                  * @type {Function}
                  */
                 sync:{

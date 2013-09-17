@@ -33,6 +33,7 @@ KISSY.add('dd/ddm', function (S, Node, Base, undefined) {
     /**
      * @class KISSY.DD.DDM
      * @singleton
+     * @private
      * @extends KISSY.Base
      * Manager for Drag and Drop.
      */

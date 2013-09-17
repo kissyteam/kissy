@@ -214,7 +214,7 @@ KISSY.add(&quot;component/control&quot;, function (S, Node, ComponentProcess, Ma
              * By default, this performs its associated action by calling
              * {@link KISSY.Component.Control#handleClickInternal}.
              * @protected
-             * @param {KISSY.Event.DomEventObject} ev Dom event to handle.
+             * @param {KISSY.Event.DomEvent.Object} ev Dom event to handle.
              */
             handleDblClickInternal: function (ev) {
                 this.handleClickInternal(ev);
@@ -229,7 +229,7 @@ KISSY.add(&quot;component/control&quot;, function (S, Node, ComponentProcess, Ma
 <span id='KISSY-Component-Control-method-handleMouseEnterInternal'>            /**
 </span>             * Handle mouseenter events. If the component is not disabled, highlights it.
              * @protected
-             * @param {KISSY.Event.DomEventObject} ev Dom event to handle.
+             * @param {KISSY.Event.DomEvent.Object} ev Dom event to handle.
              */
             handleMouseEnterInternal: function (ev) {
                 this.set(&quot;highlighted&quot;, !!ev);
@@ -244,7 +244,7 @@ KISSY.add(&quot;component/control&quot;, function (S, Node, ComponentProcess, Ma
 <span id='KISSY-Component-Control-method-handleMouseLeaveInternal'>            /**
 </span>             * Handle mouseleave events. If the component is not disabled, de-highlights it.
              * @protected
-             * @param {KISSY.Event.DomEventObject} ev Dom event to handle.
+             * @param {KISSY.Event.DomEvent.Object} ev Dom event to handle.
              */
             handleMouseLeaveInternal: function (ev) {
                 var self = this;
@@ -265,7 +265,7 @@ KISSY.add(&quot;component/control&quot;, function (S, Node, ComponentProcess, Ma
              * If the component is focusable, then focus it,
              * else prevent it from receiving keyboard focus.
              * @protected
-             * @param {KISSY.Event.DomEventObject} ev Dom event to handle.
+             * @param {KISSY.Event.DomEvent.Object} ev Dom event to handle.
              */
             handleMouseDownInternal: function (ev) {
                 var self = this,
@@ -301,7 +301,7 @@ KISSY.add(&quot;component/control&quot;, function (S, Node, ComponentProcess, Ma
              * If this component is not disabled, performs its associated action by calling
              * {@link KISSY.Component.Control#handleClickInternal}, then deactivates it.
              * @protected
-             * @param {KISSY.Event.DomEventObject} ev Dom event to handle.
+             * @param {KISSY.Event.DomEvent.Object} ev Dom event to handle.
              */
             handleMouseUpInternal: function (ev) {
                 var self = this;
@@ -320,7 +320,7 @@ KISSY.add(&quot;component/control&quot;, function (S, Node, ComponentProcess, Ma
 <span id='KISSY-Component-Control-method-handleContextMenuInternal'>            /**
 </span>             * Handles context menu.
              * @protected
-             * @param {KISSY.Event.DomEventObject} ev Dom event to handle.
+             * @param {KISSY.Event.DomEvent.Object} ev Dom event to handle.
              */
             handleContextMenuInternal: function (ev) {
             },
@@ -367,7 +367,7 @@ KISSY.add(&quot;component/control&quot;, function (S, Node, ComponentProcess, Ma
 <span id='KISSY-Component-Control-method-handleKeyDownInternal'>            /**
 </span>             * Handle enter keydown event to {@link KISSY.Component.Control#handleClickInternal}.
              * @protected
-             * @param {KISSY.Event.DomEventObject} ev Dom event to handle.
+             * @param {KISSY.Event.DomEvent.Object} ev Dom event to handle.
              */
             handleKeyDownInternal: function (ev) {
                 if (ev['keyCode'] == Node.KeyCode.ENTER) {
@@ -385,7 +385,7 @@ KISSY.add(&quot;component/control&quot;, function (S, Node, ComponentProcess, Ma
 <span id='KISSY-Component-Control-method-handleClickInternal'>            /**
 </span>             * Performs the appropriate action when this component is activated by the user.
              * @protected
-             * @param {KISSY.Event.DomEventObject} ev Dom event to handle.
+             * @param {KISSY.Event.DomEvent.Object} ev Dom event to handle.
              */
             handleClickInternal: function (ev) {
             },
@@ -780,10 +780,6 @@ KISSY.add(&quot;component/control&quot;, function (S, Node, ComponentProcess, Ma
                  */
                 prefixXClass: {
                 },
-<span id='KISSY-Component-Control-cfg-prefixXClass'>                /**
-</span>                 * This component's xtype, xclass = prefixXClass + xtype.
-                 * @cfg {String} prefixXClass
-                 */
 
 <span id='KISSY-Component-Control-property-parent'>                /**
 </span>                 * This component's parent component.
@@ -884,7 +880,12 @@ KISSY.add(&quot;component/control&quot;, function (S, Node, ComponentProcess, Ma
 
     return Control;
 }, {
-    requires: ['node', './control/process', 'component/manager', './control/render']
+    requires: [
+        'node',
+        './control/process',
+        'component/manager',
+        './control/render'
+    ]
 });
 /*
 

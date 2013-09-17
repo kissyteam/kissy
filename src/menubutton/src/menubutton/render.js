@@ -1,5 +1,6 @@
 /**
  * render aria and drop arrow for menubutton
+ * @ignore
  * @author yiminghe@gmail.com
  */
 KISSY.add("menubutton/render", function (S, Button,

@@ -230,51 +230,30 @@ if (! _$jscoverage['/overlay/overlay-render.js']) {
   _$jscoverage['/overlay/overlay-render.js'] = {};
   _$jscoverage['/overlay/overlay-render.js'].lineData = [];
   _$jscoverage['/overlay/overlay-render.js'].lineData[6] = 0;
-  _$jscoverage['/overlay/overlay-render.js'].lineData[8] = 0;
-  _$jscoverage['/overlay/overlay-render.js'].lineData[12] = 0;
-  _$jscoverage['/overlay/overlay-render.js'].lineData[13] = 0;
-  _$jscoverage['/overlay/overlay-render.js'].lineData[15] = 0;
-  _$jscoverage['/overlay/overlay-render.js'].lineData[16] = 0;
-  _$jscoverage['/overlay/overlay-render.js'].lineData[24] = 0;
+  _$jscoverage['/overlay/overlay-render.js'].lineData[7] = 0;
+  _$jscoverage['/overlay/overlay-render.js'].lineData[18] = 0;
 }
 if (! _$jscoverage['/overlay/overlay-render.js'].functionData) {
   _$jscoverage['/overlay/overlay-render.js'].functionData = [];
   _$jscoverage['/overlay/overlay-render.js'].functionData[0] = 0;
   _$jscoverage['/overlay/overlay-render.js'].functionData[1] = 0;
-  _$jscoverage['/overlay/overlay-render.js'].functionData[2] = 0;
 }
 if (! _$jscoverage['/overlay/overlay-render.js'].branchData) {
   _$jscoverage['/overlay/overlay-render.js'].branchData = {};
-  _$jscoverage['/overlay/overlay-render.js'].branchData['13'] = [];
-  _$jscoverage['/overlay/overlay-render.js'].branchData['13'][1] = new BranchData();
 }
-_$jscoverage['/overlay/overlay-render.js'].branchData['13'][1].init(48, 28, 'self.control.get(\'closable\')');
-function visit34_13_1(result) {
-  _$jscoverage['/overlay/overlay-render.js'].branchData['13'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/overlay/overlay-render.js'].lineData[6]++;
-KISSY.add("overlay/overlay-render", function(S, Container, ContentRenderExtension, CloseTpl) {
+_$jscoverage['/overlay/overlay-render.js'].lineData[6]++;
+KISSY.add('overlay/overlay-render', function(S, Container, OverlayTpl, ContentRenderExtension) {
   _$jscoverage['/overlay/overlay-render.js'].functionData[0]++;
-  _$jscoverage['/overlay/overlay-render.js'].lineData[8]++;
-  return Container.getDefaultRender().extend([ContentRenderExtension], {
-  createDom: function() {
-  _$jscoverage['/overlay/overlay-render.js'].functionData[1]++;
-  _$jscoverage['/overlay/overlay-render.js'].lineData[12]++;
-  var self = this;
-  _$jscoverage['/overlay/overlay-render.js'].lineData[13]++;
-  if (visit34_13_1(self.control.get('closable'))) {
-    _$jscoverage['/overlay/overlay-render.js'].lineData[15]++;
-    self.control.$contentEl.append(self.renderTpl(CloseTpl));
-    _$jscoverage['/overlay/overlay-render.js'].lineData[16]++;
-    self.fillChildrenElsBySelectors({
-  closeBtn: '#ks-overlay-close-{id}'});
-  }
-}}, {
+  _$jscoverage['/overlay/overlay-render.js'].lineData[7]++;
+  return Container.getDefaultRender().extend([ContentRenderExtension], {}, {
+  ATTRS: {
+  contentTpl: {
+  value: OverlayTpl}}, 
   HTML_PARSER: {
   closeBtn: function(el) {
-  _$jscoverage['/overlay/overlay-render.js'].functionData[2]++;
-  _$jscoverage['/overlay/overlay-render.js'].lineData[24]++;
+  _$jscoverage['/overlay/overlay-render.js'].functionData[1]++;
+  _$jscoverage['/overlay/overlay-render.js'].lineData[18]++;
   return el.one("." + this.getBaseCssClass('close'));
 }}});
 }, {
-  requires: ["component/container", 'component/extension/content-render', './close-xtpl']});
+  requires: ['component/container', './overlay-xtpl', 'component/extension/content-render']});

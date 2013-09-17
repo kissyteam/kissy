@@ -76,9 +76,9 @@
 
         /**
          * Get absolute path of dep module.similar to {@link KISSY.Path#resolve}
-         * @param moduleName current module 's name
-         * @param depName dep module 's name
-         * @return {string|Array}
+         * @param {String} moduleName current module 's name
+         * @param {String|String[]} depName dependency module 's name
+         * @return {String|String[]} normalized dependency module 's name
          */
         normalDepModuleName: function (moduleName, depName) {
             var i = 0, l;
@@ -104,8 +104,8 @@
 
         /**
          * create modules info
-         * @param runtime
-         * @param modNames
+         * @param runtime Module container, such as KISSY
+         * @param {String[]} modNames to be created module names
          */
         createModulesInfo: function (runtime, modNames) {
             S.each(modNames, function (m) {
@@ -115,9 +115,9 @@
 
         /**
          * create single module info
-         * @param runtime
-         * @param modName
-         * @param [cfg]
+         * @param runtime Module container, such as KISSY
+         * @param {String} modName to be created module name
+         * @param {Object} [cfg] module config
          * @return {KISSY.Loader.Module}
          */
         createModuleInfo: function (runtime, modName, cfg) {
@@ -141,7 +141,7 @@
 
         /**
          * Whether modNames is attached.
-         * @param runtime
+         * @param runtime Module container, such as KISSY
          * @param modNames
          * @return {Boolean}
          */
@@ -151,9 +151,9 @@
 
         /**
          * Get module values
-         * @param runtime
-         * @param modNames
-         * @return {Array}
+         * @param runtime Module container, such as KISSY
+         * @param {String[]} modNames module names
+         * @return {Array} module values
          */
         getModules: function (runtime, modNames) {
             var mods = [runtime], mod,
@@ -181,6 +181,15 @@
             return mods;
         },
 
+        /**
+         * attach modules and their dependency modules recursively
+         * @param {String[]} modNames module names
+         * @param runtime Module container, such as KISSY
+         * @param {String[]} [stack] stack for detecting circular dependency
+         * @param {Array} [errorList] errors when attach mods
+         * @param {Object} [cache] cached modules to avoid duplicate check
+         * @returns whether success attach all modules
+         */
         attachModsRecursively: function (modNames, runtime, stack, errorList, cache) {
             // for debug. prevent circular dependency
             stack = stack || [];
@@ -197,6 +206,15 @@
             return s;
         },
 
+        /**
+         * attach module and its dependency modules recursively
+         * @param {String} modName module name
+         * @param runtime Module container, such as KISSY
+         * @param {String[]} [stack] stack for detecting circular dependency
+         * @param {Array} [errorList] errors when attach mods
+         * @param {Object} [cache] cached modules to avoid duplicate check
+         * @returns whether success attach all modules
+         */
         attachModRecursively: function (modName, runtime, stack, errorList, cache) {
             var mods = runtime.Env.mods,
                 status,
@@ -235,8 +253,8 @@
 
         /**
          * Attach specified mod.
-         * @param runtime
-         * @param mod
+         * @param runtime Module container, such as KISSY
+         * @param {KISSY.Loader.Module} mod module instance
          */
         attachMod: function (runtime, mod) {
             if (mod.status != LOADED) {
@@ -258,7 +276,7 @@
 
         /**
          * Get mod names as array.
-         * @param modNames
+         * @param {String|String[]} modNames module names array or  module names string separated by ','
          * @return {String[]}
          */
         getModNamesAsArray: function (modNames) {
@@ -269,7 +287,7 @@
         },
 
         /**
-         * Three effects:
+         * normalize module names
          * 1. add index : / => /index
          * 2. unalias : core => dom,event,ua
          * 3. relative to absolute : ./x => y/x
@@ -277,7 +295,7 @@
          * @param {String|String[]} modNames Array of module names
          *  or module names string separated by comma
          * @param {String} [refModName]
-         * @return {String[]}
+         * @return {String[]} normalized module names
          */
         normalizeModNames: function (runtime, modNames, refModName) {
             return Utils.unalias(runtime,
@@ -286,9 +304,9 @@
 
         /**
          * unalias module name.
-         * @param runtime
-         * @param names
-         * @return {Array}
+         * @param runtime Module container, such as KISSY
+         * @param {String} names moduleNames
+         * @return {String[]} unaliased module names
          */
         unalias: function (runtime, names) {
             var ret = [].concat(names),
@@ -316,11 +334,11 @@
         },
 
         /**
-         * normalize module names
-         * @param runtime
-         * @param modNames
-         * @param [refModName]
-         * @return {Array}
+         * normalize module names with alias
+         * @param runtime Module container, such as KISSY
+         * @param {String[]} modNames module names
+         * @param [refModName] module to be referred if module name path is relative
+         * @return {String[]} normalize module names with alias
          */
         normalizeModNamesWithAlias: function (runtime, modNames, refModName) {
             var ret = [], i, l;
@@ -343,13 +361,12 @@
 
         /**
          * register module with factory
-         * @param runtime
-         * @param name
-         * @param fn
-         * @param [config]
+         * @param runtime Module container, such as KISSY
+         * @param {String} name module name
+         * @param {Function|*} fn module's factory or value
+         * @param [config] module config, such as dependency
          */
         registerModule: function (runtime, name, fn, config) {
-
             name = indexMapStr(name);
 
             var mods = runtime.Env.mods,
@@ -378,10 +395,10 @@
 
         /**
          * Get mapped path.
-         * @param runtime
-         * @param path
-         * @param [rules]
-         * @return {String}
+         * @param runtime Module container, such as KISSY
+         * @param {String} path module path
+         * @param [rules] map rules
+         * @return {String} mapped path
          */
         getMappedPath: function (runtime, path, rules) {
             var mappedRules = rules ||

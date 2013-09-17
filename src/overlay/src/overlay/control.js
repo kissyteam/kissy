@@ -15,12 +15,11 @@ KISSY.add("overlay/control", function (S, Container,Shim, AlignExtension,
      * KISSY Overlay Component.
      * xclass: 'overlay'.
      * @class KISSY.Overlay
-     * @extends KISSY.Component.Control
-     * @mixins KISSY.Component.Extension.Content
-     * @mixins KISSY.Component.Extension.Position
+     * @extends KISSY.Component.Container
+     * @mixins KISSY.Component.Extension.Shim
+     * @mixins KISSY.Overlay.Extension.Effect
      * @mixins KISSY.Overlay.Extension.Loading
      * @mixins KISSY.Component.Extension.Align
-     * @mixins KISSY.Overlay.Extension.Close
      * @mixins KISSY.Overlay.Extension.Mask
      */
     return Container.extend([

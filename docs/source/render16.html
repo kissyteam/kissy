@@ -15,7 +15,12 @@
   </script>
 </head>
 <body onload="prettyPrint(); highlight();">
-  <pre class="prettyprint lang-js">KISSY.add('toolbar/render', function (S, Container) {
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * render for toolbar
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('toolbar/render', function (S, Container) {
     return Container.getDefaultRender().extend({
         beforeCreateDom: function (renderData) {
             renderData.elAttrs.role = 'toolbar';

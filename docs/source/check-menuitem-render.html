@@ -17,12 +17,11 @@
 <body onload="prettyPrint(); highlight();">
   <pre class="prettyprint lang-js"><span id='global-property-'>/**
 </span> * checkable menu item render
+ * @ignore
  * @author yiminghe@gmail.com
  */
 KISSY.add('menu/check-menuitem-render', function (S, MenuItemRender, ContentRenderExtension, CheckMenuItemTpl) {
-
     return MenuItemRender.extend([ContentRenderExtension], {
-
         beforeCreateDom: function (renderData) {
             if (renderData.checked) {
                 renderData.elCls.push(self.getBaseCssClasses(&quot;checked&quot;));
@@ -34,7 +33,6 @@ KISSY.add('menu/check-menuitem-render', function (S, MenuItemRender, ContentRend
                 cls = self.getBaseCssClasses(&quot;checked&quot;);
             self.$el[v ? 'addClass' : 'removeClass'](cls);
         }
-
     }, {
         ATTRS: {
             contentTpl: {
@@ -46,7 +44,7 @@ KISSY.add('menu/check-menuitem-render', function (S, MenuItemRender, ContentRend
     requires: [
         './menuitem-render',
         'component/extension/content-render',
-        './check-menuitem-tpl'
+        './check-menuitem-xtpl'
     ]
 });</pre>
 </body>

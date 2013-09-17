@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * Toolbar for KISSY.
  * @author yiminghe@gmail.com
  */
@@ -78,6 +79,7 @@ KISSY.add("toolbar", function (S, Container, DelegateChildrenExtension, ToolbarR
     /**
      * Toolbar component for KISSY. xclass: 'toolbar'.
      * @class KISSY.Toolbar
+     * @extends KISSY.Component.Container
      */
     return Container.extend([DelegateChildrenExtension], {
         _onSetHighlightedItem: function (item, e) {

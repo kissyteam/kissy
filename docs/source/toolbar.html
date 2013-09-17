@@ -16,7 +16,8 @@
 </head>
 <body onload="prettyPrint(); highlight();">
   <pre class="prettyprint lang-js"><span id='global-property-'>/**
-</span> * Toolbar for KISSY.
+</span> * @ignore
+ * Toolbar for KISSY.
  * @author yiminghe@gmail.com
  */
 KISSY.add(&quot;toolbar&quot;, function (S, Container, DelegateChildrenExtension, ToolbarRender, Node, undefined) {
@@ -95,6 +96,7 @@ KISSY.add(&quot;toolbar&quot;, function (S, Container, DelegateChildrenExtension
 <span id='KISSY-Toolbar'>    /**
 </span>     * Toolbar component for KISSY. xclass: 'toolbar'.
      * @class KISSY.Toolbar
+     * @extends KISSY.Component.Container
      */
     return Container.extend([DelegateChildrenExtension], {
         _onSetHighlightedItem: function (item, e) {

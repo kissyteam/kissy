@@ -254,7 +254,7 @@ KISSY.add(&quot;editor/plugin/draft&quot;, function (S, Json, Editor, localStora
                 content: help,
                 prefixCls: prefixCls + 'editor-',
                 width: help.width() + &quot;px&quot;,
-                zIndex: Editor.baseZIndex(Editor.zIndexManager.OVERLAY),
+                zIndex: Editor.baseZIndex(Editor.ZIndexManager.OVERLAY),
                 mask: false
             }).render();
             self.helpPopup.get(&quot;el&quot;)

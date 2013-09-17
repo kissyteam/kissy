@@ -36,7 +36,7 @@ KISSY.add(&quot;editor/plugin/contextmenu&quot;, function (S, Editor, Menu, focu
         cfg.prefixCls = self.get('prefixCls') + &quot;editor-&quot;;
         cfg.editor = self;
         cfg.focusable = 1;
-        cfg.zIndex = Editor.baseZIndex(Editor.zIndexManager.POPUP_MENU);
+        cfg.zIndex = Editor.baseZIndex(Editor.ZIndexManager.POPUP_MENU);
 
         var menu = new Menu.PopupMenu(cfg);
 

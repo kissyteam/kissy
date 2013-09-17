@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * i18n plugin for kissy loader
  * @author yiminghe@gmail.com
  */

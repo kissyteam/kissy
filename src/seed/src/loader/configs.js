@@ -16,17 +16,6 @@
         simulatedLocation = new S.Uri(locationHref)
     }
 
-    /*
-     modify current module path
-
-     [
-     [/(.+-)min(.js(\?t=\d+)?)$/, '$1$2'],
-     [/(.+-)min(.js(\?t=\d+)?)$/, function(_,m1,m2){
-     return m1+m2;
-     }]
-     ]
-
-     */
     configFns.map = function (rules) {
         var Config = this.Config;
         if (rules === false) {
@@ -43,19 +32,12 @@
         return Config.mappedComboRules = (Config.mappedComboRules || []).concat(rules || []);
     };
 
-    /*
-     包声明
-     biz -> .
-     表示遇到 biz/x
-     在当前网页路径找 biz/x.js
-     @private
-     */
-    configFns.packages = function (cfgs) {
+    configFns.packages = function (config) {
         var name,
             Config = this.Config,
             ps = Config.packages = Config.packages || {};
-        if (cfgs) {
-            S.each(cfgs, function (cfg, key) {
+        if (config) {
+            S.each(config, function (cfg, key) {
                 // 兼容数组方式
                 name = cfg.name || key;
 
@@ -74,7 +56,7 @@
                 }
             });
             return undefined;
-        } else if (cfgs === false) {
+        } else if (config === false) {
             Config.packages = {
             };
             return undefined;
@@ -83,33 +65,6 @@
         }
     };
 
-    /*
-     只用来指定模块依赖信息.
-     <code>
-
-     KISSY.config({
-     base: '',
-     // dom-min.js
-     debug: '',
-     combine: true,
-     tag: '',
-     packages: {
-     'biz1': {
-     // path change to base
-     base: 'haha',
-     // x.js
-     debug: '',
-     tag: '',
-     combine: false,
-     }
-     },
-     modules: {
-     'biz1/main': {
-     requires: ['biz1/part1', 'biz1/part2']
-     }
-     }
-     });
-     */
     configFns.modules = function (modules) {
         var self = this,
             Env = self.Env;
@@ -121,9 +76,6 @@
         }
     };
 
-    /*
-     KISSY 's base path.
-     */
     configFns.base = function (base) {
         var self = this,
             Config = self.Config,
@@ -136,7 +88,6 @@
         Config.baseUri = baseUri;
         return undefined;
     };
-
 
     function normalizeBase(base) {
         var baseUri;

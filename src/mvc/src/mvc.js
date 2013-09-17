@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * KISSY 's MVC Framework for Page Application (Backbone Style)
  * @author yiminghe@gmail.com
  */

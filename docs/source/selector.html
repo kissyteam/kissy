@@ -17,7 +17,7 @@
 <body onload="prettyPrint(); highlight();">
   <pre class="prettyprint lang-js"><span id='global-property-'>/**
 </span> * @ignore
- * selector
+ * simple selector for dom
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('dom/base/selector', function (S, Dom, undefined) {
@@ -52,12 +52,20 @@ KISSY.add('dom/base/selector', function (S, Dom, undefined) {
         }
     }
 
+    function checkSelectorAndReturn(selector) {
+        var name = selector.substr(1);
+        if (!name) {
+            throw new Error('An invalid or illegal string was specified for selector.')
+        }
+        return name;
+    }
+
     function makeMatch(selector) {
         var s = selector.charAt(0);
         if (s == '#') {
-            return makeIdMatch(selector.substr(1));
+            return makeIdMatch(checkSelectorAndReturn(selector));
         } else if (s == '.') {
-            return makeClassMatch(selector.substr(1));
+            return makeClassMatch(checkSelectorAndReturn(selector));
         } else {
             return makeTagMatch(selector);
         }
@@ -306,7 +314,7 @@ KISSY.add('dom/base/selector', function (S, Dom, undefined) {
              * A string containing a selector expression.
              * or
              * array of HTMLElements.
-             * @param {String|HTMLElement[]|HTMLDocument|HTMLElement|window} [context] context under which to find elements matching selector.
+             * @param {String|HTMLElement[]|HTMLDocument|HTMLElement|Window} [context] context under which to find elements matching selector.
              * @return {HTMLElement} The first of found HTMLElements
              */
             get: function (selector, context) {
@@ -438,8 +446,9 @@ KISSY.add('dom/base/selector', function (S, Dom, undefined) {
 }, {
     requires: ['./api']
 });
-<span id='KISSY-DOM-property-'>/**
-</span> * bachi selector optimize - 2013-07-17
+<span id='global-property-'>/**
+</span> * @ignore
+ * bachi selector optimize - 2013-07-17
  * - http://jsperf.com/queryselctor-vs-getelementbyclassname2
  * yiminghe@gmail.com - 2013-03-26
  * - refactor to use own css3 selector engine

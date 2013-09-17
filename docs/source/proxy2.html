@@ -25,8 +25,13 @@ KISSY.add('resizable/plugin/proxy', function (S, Base, Node) {
     var $ = Node.all,
         PROXY_EVENT = '.-ks-proxy' + S.now();
 
+<span id='KISSY-Resizable-Plugin-Proxy'>    /**
+</span>     * proxy plugin for resizable
+     * @class KISSY.Resizable.Plugin.Proxy
+     */
     return Base.extend({
         pluginId: 'resizable/plugin/proxy',
+
         pluginInitializer: function (resizable) {
             var self = this,
                 hideNodeOnResize = self.get('hideNodeOnResize');
@@ -86,12 +91,20 @@ KISSY.add('resizable/plugin/proxy', function (S, Base, Node) {
                 ['on']('beforeResize' + PROXY_EVENT, beforeResize)
                 ['on']('resizeEnd' + PROXY_EVENT, end);
         },
+
         pluginDestructor: function (resizable) {
             resizable['detach'](PROXY_EVENT);
         }
     },{
         ATTRS: {
-<span id='global-cfg-node'>            /**
+<span id='KISSY-Resizable-Plugin-Proxy-cfg-pluginId'>            /**
+</span>             * pluginId.
+             * Defaults to: 'resizable/plugin/proxy'
+             * @cfg {String} pluginId
+             */
+
+
+<span id='KISSY-Resizable-Plugin-Proxy-cfg-node'>            /**
 </span>             * how to get the proxy node.
              * default clone the node itself deeply.
              * @cfg {Function} node
@@ -105,7 +118,8 @@ KISSY.add('resizable/plugin/proxy', function (S, Base, Node) {
                         'resizable-proxy&quot;&gt;&lt;/div&gt;');
                 }
             },
-<span id='global-property-proxyNode'>            /**
+
+<span id='KISSY-Resizable-Plugin-Proxy-property-proxyNode'>            /**
 </span>             * Current proxy node.
              * @type {KISSY.NodeList}
              * @property proxyNode
@@ -117,7 +131,7 @@ KISSY.add('resizable/plugin/proxy', function (S, Base, Node) {
 
             },
 
-<span id='global-cfg-hideNodeOnResize'>            /**
+<span id='KISSY-Resizable-Plugin-Proxy-cfg-hideNodeOnResize'>            /**
 </span>             * whether hide original node when resize proxy.
              * Defaults to: false
              * @cfg {Boolean} hideNodeOnResize
@@ -129,7 +143,7 @@ KISSY.add('resizable/plugin/proxy', function (S, Base, Node) {
                 value: false
             },
 
-<span id='global-cfg-destroyOnEnd'>            /**
+<span id='KISSY-Resizable-Plugin-Proxy-cfg-destroyOnEnd'>            /**
 </span>             * destroy the proxy node at the end of this drag.
              * default false
              * @cfg {Boolean} destroyOnEnd

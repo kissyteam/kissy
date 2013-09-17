@@ -1,9 +1,9 @@
 /**
+ * @ignore
  * Parser generator for kissy.
  * @author yiminghe@gmail.com
  */
 KISSY.add("kison", function (S, Grammar, Production, Lexer, Utils) {
-
     var Kison = {};
     Kison.Grammar = Grammar;
     Kison.Production = Production;

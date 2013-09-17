@@ -9,7 +9,8 @@ KISSY.add('event/custom/object', function (S, BaseEvent) {
      * Do not new by yourself.
      *
      * Custom event object.
-     * @class KISSY.Event.CustomEventObject
+     * @private
+     * @class KISSY.Event.CustomEvent.Object
      * @param {Object} data data which will be mixed into custom event instance
      * @extends KISSY.Event.Object
      */
@@ -19,12 +20,12 @@ KISSY.add('event/custom/object', function (S, BaseEvent) {
         /**
          * source target of current event
          * @property  target
-         * @type {KISSY.Event.Target}
+         * @type {KISSY.Event.CustomEvent.Target}
          */
         /**
          * current target which processes current event
          * @property currentTarget
-         * @type {KISSY.Event.Target}
+         * @type {KISSY.Event.CustomEvent.Target}
          */
     }
 

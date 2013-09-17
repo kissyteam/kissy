@@ -4,9 +4,12 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add("tabs/body", function (S, Container, Extension, undefined) {
-
+    /**
+     * tab body container for tab panels.xclass: 'tabs-body'.
+     * @class  KISSY.Tabs.Body
+     * @extends KISSY.Component.Container
+     */
     var TabBody = Container.extend({
-
         bindUI: function () {
             var self = this;
             self.on("afterSelectedPanelIndexChange", function (e) {
@@ -50,7 +53,6 @@ KISSY.add("tabs/body", function (S, Container, Extension, undefined) {
                 this.renderChild(newIndex);
             }
         }
-
     }, {
         ATTRS: {
             selectedPanelIndex: {
@@ -86,7 +88,6 @@ KISSY.add("tabs/body", function (S, Container, Extension, undefined) {
     }
 
     return TabBody;
-
 }, {
     requires: ['component/container']
 });

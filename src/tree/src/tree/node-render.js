@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * common render for node
  * @author yiminghe@gmail.com
  */

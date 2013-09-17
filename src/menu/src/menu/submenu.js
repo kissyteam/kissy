@@ -125,7 +125,7 @@ KISSY.add("menu/submenu", function (S, Node, MenuItem, SubMenuRender) {
              * and delegates further key events to its menu until it is dismissed OR the
              * left key is pressed.
              * Protected for subclass overridden.
-             * @param {KISSY.Event.DomEventObject} e key event.
+             * @param {KISSY.Event.DomEvent.Object} e key event.
              * @protected
              * @return {Boolean|undefined} Whether the event was handled.
              */

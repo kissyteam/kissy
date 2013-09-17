@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * collection of models
  * @author yiminghe@gmail.com
  */
@@ -268,7 +269,7 @@ KISSY.add("mvc/collection", function (S, Model, Base) {
             comparator: {},
             /**
              * Sync function to sync data with server.
-             * Default to call {@link KISSY.MVC.sync}
+             * Default to call {@link KISSY.MVC#sync}
              * @type {Function}
              */
             sync: {

@@ -16,7 +16,8 @@
 </head>
 <body onload="prettyPrint(); highlight();">
   <pre class="prettyprint lang-js"><span id='global-property-'>/**
-</span> * abstraction of tree node ,root and other node will extend it
+</span> * @ignore
+ * abstraction of tree node ,root and other node will extend it
  * @author yiminghe@gmail.com
  */
 KISSY.add(&quot;tree/node&quot;, function (S, Node, Container, TreeNodeRender) {
@@ -26,7 +27,7 @@ KISSY.add(&quot;tree/node&quot;, function (S, Node, Container, TreeNodeRender) {
 <span id='KISSY-Tree-Node'>    /**
 </span>     * Tree Node. xclass: 'tree-node'.
      * @class KISSY.Tree.Node
-     * @extends KISSY.Component.Control
+     * @extends KISSY.Component.Container
      */
    return Container.extend({
         bindUI: function () {
@@ -269,7 +270,7 @@ KISSY.add(&quot;tree/node&quot;, function (S, Node, Container, TreeNodeRender) {
 
 <span id='KISSY-Tree-Node-property-expanded'>            /**
 </span>             * Whether current tree node is expanded.
-             * @type {Boolean.}
+             * @type {Boolean}
              * Defaults to: false.
              */
             expanded: {
@@ -288,7 +289,7 @@ KISSY.add(&quot;tree/node&quot;, function (S, Node, Container, TreeNodeRender) {
 
 <span id='KISSY-Tree-Node-property-tree'>            /**
 </span>             * Tree instance current tree node belongs to.
-             * @type {Tree}
+             * @type {KISSY.Tree}
              */
             tree: {
                 getter: function () {
@@ -450,8 +451,9 @@ KISSY.add(&quot;tree/node&quot;, function (S, Node, Container, TreeNodeRender) {
     requires: ['node', 'component/container', './node-render']
 });
 
-<span id='KISSY-Tree-Node-property-'>/**
-</span> * 2012-09-25
+<span id='global-property-'>/**
+</span> * @ignore
+ * 2012-09-25
  *  - 去除 dblclick 支持，该交互会重复触发 click 事件，可能会重复执行逻辑
  */</pre>
 </body>

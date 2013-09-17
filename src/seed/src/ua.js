@@ -52,7 +52,6 @@
             s = [];
         /**
          * KISSY UA
-         * @member KISSY
          * @class KISSY.UA
          * @singleton
          */
@@ -339,6 +338,7 @@
     }
 
     var UA = KISSY.UA = getDescriptorFromUserAgent(ua);
+
     // nodejs
     if (typeof process === 'object') {
         var versions, nodeVersion;
