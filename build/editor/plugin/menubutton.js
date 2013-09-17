@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 16 18:17
+build time: Sep 17 23:04
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -31,7 +31,7 @@ KISSY.add("editor/plugin/menubutton", function (S, Editor, MenuButton) {
         if (cfg) {
             cfg.editor = self;
             if (cfg.menu) {
-                cfg.menu.zIndex = Editor.baseZIndex(Editor.zIndexManager.SELECT);
+                cfg.menu.zIndex = Editor.baseZIndex(Editor.ZIndexManager.SELECT);
             }
             if (cfg.elCls) {
                 cfg.elCls = prefixCls + cfg.elCls;

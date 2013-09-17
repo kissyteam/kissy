@@ -23,7 +23,8 @@ KISSY.add('overlay/overlay-render', function (S, Container,OverlayTpl, ContentRe
     requires: [
         'component/container',
         './overlay-xtpl',
-        'component/extension/content-render'
+        'component/extension/content-render',
+        './close-xtpl'
     ]
 });
 

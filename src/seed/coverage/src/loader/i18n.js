@@ -229,8 +229,8 @@ if (! this._$jscoverage) {
 if (! _$jscoverage['/loader/i18n.js']) {
   _$jscoverage['/loader/i18n.js'] = {};
   _$jscoverage['/loader/i18n.js'].lineData = [];
-  _$jscoverage['/loader/i18n.js'].lineData[5] = 0;
-  _$jscoverage['/loader/i18n.js'].lineData[7] = 0;
+  _$jscoverage['/loader/i18n.js'].lineData[6] = 0;
+  _$jscoverage['/loader/i18n.js'].lineData[8] = 0;
 }
 if (! _$jscoverage['/loader/i18n.js'].functionData) {
   _$jscoverage['/loader/i18n.js'].functionData = [];
@@ -239,10 +239,10 @@ if (! _$jscoverage['/loader/i18n.js'].functionData) {
 if (! _$jscoverage['/loader/i18n.js'].branchData) {
   _$jscoverage['/loader/i18n.js'].branchData = {};
 }
-_$jscoverage['/loader/i18n.js'].lineData[5]++;
+_$jscoverage['/loader/i18n.js'].lineData[6]++;
 KISSY.add('i18n', {
   alias: function(S, name) {
   _$jscoverage['/loader/i18n.js'].functionData[0]++;
-  _$jscoverage['/loader/i18n.js'].lineData[7]++;
+  _$jscoverage['/loader/i18n.js'].lineData[8]++;
   return name + '/i18n/' + S.Config.lang;
 }});

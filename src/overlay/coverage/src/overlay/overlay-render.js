@@ -256,4 +256,4 @@ KISSY.add('overlay/overlay-render', function(S, Container, OverlayTpl, ContentRe
   return el.one("." + this.getBaseCssClass('close'));
 }}});
 }, {
-  requires: ['component/container', './overlay-xtpl', 'component/extension/content-render']});
+  requires: ['component/container', './overlay-xtpl', 'component/extension/content-render', './close-xtpl']});

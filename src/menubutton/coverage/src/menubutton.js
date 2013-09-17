@@ -229,10 +229,10 @@ if (! this._$jscoverage) {
 if (! _$jscoverage['/menubutton.js']) {
   _$jscoverage['/menubutton.js'] = {};
   _$jscoverage['/menubutton.js'].lineData = [];
-  _$jscoverage['/menubutton.js'].lineData[5] = 0;
   _$jscoverage['/menubutton.js'].lineData[6] = 0;
   _$jscoverage['/menubutton.js'].lineData[7] = 0;
   _$jscoverage['/menubutton.js'].lineData[8] = 0;
+  _$jscoverage['/menubutton.js'].lineData[9] = 0;
 }
 if (! _$jscoverage['/menubutton.js'].functionData) {
   _$jscoverage['/menubutton.js'].functionData = [];
@@ -241,14 +241,14 @@ if (! _$jscoverage['/menubutton.js'].functionData) {
 if (! _$jscoverage['/menubutton.js'].branchData) {
   _$jscoverage['/menubutton.js'].branchData = {};
 }
-_$jscoverage['/menubutton.js'].lineData[5]++;
+_$jscoverage['/menubutton.js'].lineData[6]++;
 KISSY.add("menubutton", function(S, MenuButton, Select, Option) {
   _$jscoverage['/menubutton.js'].functionData[0]++;
-  _$jscoverage['/menubutton.js'].lineData[6]++;
-  MenuButton.Select = Select;
   _$jscoverage['/menubutton.js'].lineData[7]++;
-  MenuButton.Option = Option;
+  MenuButton.Select = Select;
   _$jscoverage['/menubutton.js'].lineData[8]++;
+  MenuButton.Option = Option;
+  _$jscoverage['/menubutton.js'].lineData[9]++;
   return MenuButton;
 }, {
   requires: ['menubutton/control', 'menubutton/select', 'menubutton/option']});

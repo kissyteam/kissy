@@ -31,3 +31,4 @@
 
  - [*] support windows8 touch
  - [*] tap 允许 preventDefault 防止链接点击跳转
+ - [+] 增加 Event.global 全局事件源

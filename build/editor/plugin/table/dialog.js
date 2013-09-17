@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 16 18:18
+build time: Sep 17 23:06
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -307,7 +307,7 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Dialog4E, MenuButto
             d.cellpadding.val(parseInt(d.cellpadding.val()) || 0);
             if (self.selectedTd)self.selectedTd.css("padding", d.cellpadding.val());
             if (valid(d.tcaption.val())) {
-                var tcv = Editor.Utils.htmlEncode(trim(d.tcaption.val()));
+                var tcv = S.escapeHtml(trim(d.tcaption.val()));
                 if (caption && caption[0])
                     caption.html(tcv);
                 else {
@@ -375,7 +375,7 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Dialog4E, MenuButto
 
             html += ">";
             if (valid(d.tcaption.val())) {
-                html += "<caption><span>" + Editor.Utils.htmlEncode(trim(d.tcaption.val()))
+                html += "<caption><span>" + S.escapeHtml(trim(d.tcaption.val()))
                     + "</span></caption>";
             }
             if (d.thead.get("value")) {

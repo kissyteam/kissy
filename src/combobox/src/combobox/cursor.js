@@ -56,7 +56,7 @@ KISSY.add('combobox/cursor', function (S, Node) {
         if (!fake) {
             fake = $(FAKE_DIV_HTML);
         }
-        if (String(elem.type) == 'textarea') {
+        if (String(elem[0].type.toLowerCase()) == 'textarea') {
             fake.css("width", elem.css("width"));
         } else {
             // input does not wrap at all

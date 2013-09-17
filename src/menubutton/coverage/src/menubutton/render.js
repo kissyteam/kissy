@@ -229,17 +229,17 @@ if (! this._$jscoverage) {
 if (! _$jscoverage['/menubutton/render.js']) {
   _$jscoverage['/menubutton/render.js'] = {};
   _$jscoverage['/menubutton/render.js'].lineData = [];
-  _$jscoverage['/menubutton/render.js'].lineData[5] = 0;
-  _$jscoverage['/menubutton/render.js'].lineData[9] = 0;
-  _$jscoverage['/menubutton/render.js'].lineData[12] = 0;
-  _$jscoverage['/menubutton/render.js'].lineData[14] = 0;
+  _$jscoverage['/menubutton/render.js'].lineData[6] = 0;
+  _$jscoverage['/menubutton/render.js'].lineData[10] = 0;
+  _$jscoverage['/menubutton/render.js'].lineData[13] = 0;
   _$jscoverage['/menubutton/render.js'].lineData[15] = 0;
   _$jscoverage['/menubutton/render.js'].lineData[16] = 0;
   _$jscoverage['/menubutton/render.js'].lineData[17] = 0;
-  _$jscoverage['/menubutton/render.js'].lineData[19] = 0;
-  _$jscoverage['/menubutton/render.js'].lineData[26] = 0;
-  _$jscoverage['/menubutton/render.js'].lineData[33] = 0;
-  _$jscoverage['/menubutton/render.js'].lineData[36] = 0;
+  _$jscoverage['/menubutton/render.js'].lineData[18] = 0;
+  _$jscoverage['/menubutton/render.js'].lineData[20] = 0;
+  _$jscoverage['/menubutton/render.js'].lineData[27] = 0;
+  _$jscoverage['/menubutton/render.js'].lineData[34] = 0;
+  _$jscoverage['/menubutton/render.js'].lineData[37] = 0;
 }
 if (! _$jscoverage['/menubutton/render.js'].functionData) {
   _$jscoverage['/menubutton/render.js'].functionData = [];
@@ -251,40 +251,40 @@ if (! _$jscoverage['/menubutton/render.js'].functionData) {
 if (! _$jscoverage['/menubutton/render.js'].branchData) {
   _$jscoverage['/menubutton/render.js'].branchData = {};
 }
-_$jscoverage['/menubutton/render.js'].lineData[5]++;
+_$jscoverage['/menubutton/render.js'].lineData[6]++;
 KISSY.add("menubutton/render", function(S, Button, MenuButtonTpl, ContentRenderExtension) {
   _$jscoverage['/menubutton/render.js'].functionData[0]++;
-  _$jscoverage['/menubutton/render.js'].lineData[9]++;
+  _$jscoverage['/menubutton/render.js'].lineData[10]++;
   return Button.getDefaultRender().extend([ContentRenderExtension], {
   decorateDom: function(el) {
   _$jscoverage['/menubutton/render.js'].functionData[1]++;
-  _$jscoverage['/menubutton/render.js'].lineData[12]++;
+  _$jscoverage['/menubutton/render.js'].lineData[13]++;
   var control = this.control, prefixCls = control.get('prefixCls');
-  _$jscoverage['/menubutton/render.js'].lineData[14]++;
-  var popupMenuEl = el.one('.' + prefixCls + 'popupmenu');
   _$jscoverage['/menubutton/render.js'].lineData[15]++;
-  var docBody = popupMenuEl[0].ownerDocument.body;
+  var popupMenuEl = el.one('.' + prefixCls + 'popupmenu');
   _$jscoverage['/menubutton/render.js'].lineData[16]++;
-  docBody.insertBefore(popupMenuEl[0], docBody.firstChild);
+  var docBody = popupMenuEl[0].ownerDocument.body;
   _$jscoverage['/menubutton/render.js'].lineData[17]++;
+  docBody.insertBefore(popupMenuEl[0], docBody.firstChild);
+  _$jscoverage['/menubutton/render.js'].lineData[18]++;
   var PopupMenuClass = this.getComponentConstructorByNode(prefixCls, popupMenuEl);
-  _$jscoverage['/menubutton/render.js'].lineData[19]++;
+  _$jscoverage['/menubutton/render.js'].lineData[20]++;
   control.setInternal('menu', new PopupMenuClass({
   srcNode: popupMenuEl, 
   prefixCls: prefixCls}));
 }, 
   beforeCreateDom: function(renderData) {
   _$jscoverage['/menubutton/render.js'].functionData[2]++;
-  _$jscoverage['/menubutton/render.js'].lineData[26]++;
+  _$jscoverage['/menubutton/render.js'].lineData[27]++;
   S.mix(renderData.elAttrs, {
   'aria-expanded': false, 
   'aria-haspopup': true});
 }, 
   _onSetCollapsed: function(v) {
   _$jscoverage['/menubutton/render.js'].functionData[3]++;
-  _$jscoverage['/menubutton/render.js'].lineData[33]++;
+  _$jscoverage['/menubutton/render.js'].lineData[34]++;
   var self = this, el = self.$el, cls = self.getBaseCssClass("open");
-  _$jscoverage['/menubutton/render.js'].lineData[36]++;
+  _$jscoverage['/menubutton/render.js'].lineData[37]++;
   el[v ? 'removeClass' : 'addClass'](cls).attr("aria-expanded", !v);
 }}, {
   ATTRS: {

@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 16 15:18
+build time: Sep 17 23:09
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -11,6 +11,7 @@ build time: Sep 16 15:18
 */
 
 /**
+ * @ignore
  * scroll-view render
  * @author yiminghe@gmail.com
  */
@@ -155,6 +156,7 @@ KISSY.add('scroll-view/base/render', function (S, Node, Container, ContentRender
         'component/extension/content-render']
 });
 /**
+ * @ignore
  * scroll-view control
  * @author yiminghe@gmail.com
  */
@@ -181,6 +183,11 @@ KISSY.add('scroll-view/base', function (S, Node, Anim, Container, Render, undefi
         anim.scrollView.set(fx.prop, fx.val);
     }
 
+    /**
+     * Make container scrollable
+     * @class KISSY.ScrollView
+     * @extend KISSY.Component.Container
+     */
     return Container.extend({
         initializer: function () {
             this.scrollAnims = [];

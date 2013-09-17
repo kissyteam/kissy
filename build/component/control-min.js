@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 17 17:00
+build time: Sep 17 22:57
 */
 KISSY.add("component/control/process",function(c,l,d){function e(f){f.fire("beforeSyncUI");f.syncUI();f.__callPluginsMethod("pluginSyncUI");f.fire("afterSyncUI")}var i=d.Defer,d=l.prototype.__getHook,c=c.noop,j=l.extend({bindInternal:c,syncInternal:c,initializer:function(){this._renderedDefer=new i},createDom:c,renderUI:c,bindUI:c,syncUI:c,onRendered:function(f){return this._renderedDefer.promise.then(f)},create:function(){this.get("created")||(this.fire("beforeCreateDom"),this.createInternal(),this.__callPluginsMethod("pluginCreateDom"),
 this.fire("afterCreateDom"),this.setInternal("created",!0));return this},createInternal:function(){this.createDom()},render:function(){this.get("rendered")||(this.create(),this.fire("beforeRenderUI"),this.renderUI(),this.__callPluginsMethod("pluginRenderUI"),this.fire("afterRenderUI"),this.fire("beforeBindUI"),j.superclass.bindInternal.call(this),this.bindUI(),this.__callPluginsMethod("pluginBindUI"),this.fire("afterBindUI"),j.superclass.syncInternal.call(this),e(this),this.setInternal("rendered",

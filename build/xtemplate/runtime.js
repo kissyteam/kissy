@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 16 20:08
+build time: Sep 17 23:11
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -329,7 +329,7 @@ KISSY.add('xtemplate/runtime', function (S, commands, undefined) {
              *
              * command is not found
              *
-             *      @example
+             *
              *      '{{title}}'.render({t2:0})
              *
              *
@@ -364,8 +364,13 @@ KISSY.add('xtemplate/runtime', function (S, commands, undefined) {
     /**
      * XTemplate runtime. only accept tpl as function.
      *
+     *
      *      @example
-     *      new XTemplateRuntime(tplFunction, config);
+     *      KISSY.use('xtemplate/runtime',function(S, XTemplateRunTime){
+     *          document.writeln(
+     *              new XTemplateRunTime(function(scopes){ return scopes[0].title;}).render({title:2})
+     *          );
+     *      });
      *
      * @class KISSY.XTemplate.Runtime
      */

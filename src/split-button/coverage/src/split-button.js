@@ -229,15 +229,15 @@ if (! this._$jscoverage) {
 if (! _$jscoverage['/split-button.js']) {
   _$jscoverage['/split-button.js'] = {};
   _$jscoverage['/split-button.js'].lineData = [];
-  _$jscoverage['/split-button.js'].lineData[5] = 0;
-  _$jscoverage['/split-button.js'].lineData[7] = 0;
-  _$jscoverage['/split-button.js'].lineData[10] = 0;
+  _$jscoverage['/split-button.js'].lineData[6] = 0;
+  _$jscoverage['/split-button.js'].lineData[12] = 0;
   _$jscoverage['/split-button.js'].lineData[14] = 0;
-  _$jscoverage['/split-button.js'].lineData[15] = 0;
-  _$jscoverage['/split-button.js'].lineData[43] = 0;
-  _$jscoverage['/split-button.js'].lineData[46] = 0;
-  _$jscoverage['/split-button.js'].lineData[51] = 0;
-  _$jscoverage['/split-button.js'].lineData[54] = 0;
+  _$jscoverage['/split-button.js'].lineData[18] = 0;
+  _$jscoverage['/split-button.js'].lineData[19] = 0;
+  _$jscoverage['/split-button.js'].lineData[66] = 0;
+  _$jscoverage['/split-button.js'].lineData[69] = 0;
+  _$jscoverage['/split-button.js'].lineData[88] = 0;
+  _$jscoverage['/split-button.js'].lineData[91] = 0;
 }
 if (! _$jscoverage['/split-button.js'].functionData) {
   _$jscoverage['/split-button.js'].functionData = [];
@@ -250,25 +250,25 @@ if (! _$jscoverage['/split-button.js'].functionData) {
 }
 if (! _$jscoverage['/split-button.js'].branchData) {
   _$jscoverage['/split-button.js'].branchData = {};
-  _$jscoverage['/split-button.js'].branchData['14'] = [];
-  _$jscoverage['/split-button.js'].branchData['14'][1] = new BranchData();
+  _$jscoverage['/split-button.js'].branchData['18'] = [];
+  _$jscoverage['/split-button.js'].branchData['18'][1] = new BranchData();
 }
-_$jscoverage['/split-button.js'].branchData['14'][1].init(207, 11, 'alignWithEl');
-function visit1_14_1(result) {
-  _$jscoverage['/split-button.js'].branchData['14'][1].ranCondition(result);
+_$jscoverage['/split-button.js'].branchData['18'][1].init(207, 11, 'alignWithEl');
+function visit1_18_1(result) {
+  _$jscoverage['/split-button.js'].branchData['18'][1].ranCondition(result);
   return result;
-}_$jscoverage['/split-button.js'].lineData[5]++;
+}_$jscoverage['/split-button.js'].lineData[6]++;
 KISSY.add("split-button", function(S, Container) {
   _$jscoverage['/split-button.js'].functionData[0]++;
-  _$jscoverage['/split-button.js'].lineData[7]++;
+  _$jscoverage['/split-button.js'].lineData[12]++;
   return Container.extend({
   renderUI: function() {
   _$jscoverage['/split-button.js'].functionData[1]++;
-  _$jscoverage['/split-button.js'].lineData[10]++;
-  var self = this, alignWithEl = self.get("alignWithEl"), menuButton = self.get("children")[1], menu = menuButton.get("menu");
   _$jscoverage['/split-button.js'].lineData[14]++;
-  if (visit1_14_1(alignWithEl)) {
-    _$jscoverage['/split-button.js'].lineData[15]++;
+  var self = this, alignWithEl = self.get("alignWithEl"), menuButton = self.get("children")[1], menu = menuButton.get("menu");
+  _$jscoverage['/split-button.js'].lineData[18]++;
+  if (visit1_18_1(alignWithEl)) {
+    _$jscoverage['/split-button.js'].lineData[19]++;
     menu.get("align").node = self.$el;
   }
 }}, {
@@ -286,23 +286,23 @@ KISSY.add("split-button", function(S, Container) {
   menuButton: {
   getter: function() {
   _$jscoverage['/split-button.js'].functionData[2]++;
-  _$jscoverage['/split-button.js'].lineData[43]++;
+  _$jscoverage['/split-button.js'].lineData[66]++;
   return this.get('children')[1];
 }, 
   setter: function(v) {
   _$jscoverage['/split-button.js'].functionData[3]++;
-  _$jscoverage['/split-button.js'].lineData[46]++;
+  _$jscoverage['/split-button.js'].lineData[69]++;
   this.get('children')[1] = v;
 }}, 
   button: {
   getter: function() {
   _$jscoverage['/split-button.js'].functionData[4]++;
-  _$jscoverage['/split-button.js'].lineData[51]++;
+  _$jscoverage['/split-button.js'].lineData[88]++;
   return this.get('children')[0];
 }, 
   setter: function(v) {
   _$jscoverage['/split-button.js'].functionData[5]++;
-  _$jscoverage['/split-button.js'].lineData[54]++;
+  _$jscoverage['/split-button.js'].lineData[91]++;
   this.get('children')[0] = v;
 }}}, 
   xclass: 'split-button'});

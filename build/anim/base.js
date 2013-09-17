@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 16 15:06
+build time: Sep 17 22:56
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -237,10 +237,13 @@ KISSY.add('anim/base', function (S, Dom, Utils, CustomEvent, Q) {
     /**
      * superclass for transition anim and js anim
      * @class KISSY.Anim.Base
+     * @extend KISSY.Event.CustomEvent.Target
+     * @private
      */
     function AnimBase(config) {
         var self = this,
             complete;
+        AnimBase.superclass.constructor.apply(this,arguments);
         /**
          * config object of current anim instance
          * @type {Object}
@@ -268,7 +271,7 @@ KISSY.add('anim/base', function (S, Dom, Utils, CustomEvent, Q) {
         }
     }
 
-    S.augment(AnimBase, CustomEvent.Target, {
+    S.extend(AnimBase, CustomEvent.Target, {
         /**
          * prepare fx hook
          * @protected

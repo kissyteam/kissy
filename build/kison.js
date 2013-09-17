@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 16 15:17
+build time: Sep 17 23:08
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -17,15 +17,19 @@ build time: Sep 16 15:17
 */
 
 /**
+ * @ignore
  * utils for kison.
  * @author yiminghe@gmail.com
  */
 KISSY.add("kison/utils", function (S) {
-
     var doubleReg = /"/g, single = /'/g, escapeString;
 
+    /**
+     * utils for kison
+     * @class KISSY.Kison.Utils
+     * @singleton
+     */
     return {
-
         escapeString: escapeString = function (str, quote) {
             var regexp = single;
             if (quote == '"') {
@@ -41,7 +45,6 @@ KISSY.add("kison/utils", function (S) {
         },
 
         serializeObject: function serializeObject(obj, excludeReg) {
-
             var r;
 
             if (excludeReg &&
@@ -104,12 +107,16 @@ KISSY.add("kison/utils", function (S) {
 
 });
 /**
+ * @ignore
  * Item for KISON
  * @author yiminghe@gmail.com
  */
 KISSY.add("kison/item", function (S, Base) {
+    /**
+     * grammar item
+     * @class KISSY.Kison.Item
+     */
     return Base.extend({
-
         equals: function (other, ignoreLookAhead) {
             var self = this;
             if (!other.get("production").equals(self.get("production"))) {
@@ -143,7 +150,6 @@ KISSY.add("kison/item", function (S, Base) {
             });
             return ret;
         }
-
     }, {
         ATTRS: {
             production: {},
@@ -165,16 +171,17 @@ KISSY.add("kison/item", function (S, Base) {
     requires: ['base']
 });
 /**
+ * @ignore
  * Item Set for KISON
  * @author yiminghe@gmail.com
  */
 KISSY.add("kison/item-set", function (S, Base) {
+    /**
+     * ItemSet for grammar
+     * @class KISSY.Kison.ItemSet
+     */
     return Base.extend({
-
-        /**
-         * Insert item by order
-         * @param item
-         */
+        // Insert item by order
         addItem: function (item) {
             var items = this.get("items");
             for (var i = 0; i < items.length; i++) {
@@ -239,7 +246,6 @@ KISSY.add("kison/item-set", function (S, Base) {
             reverseGotos[symbol] = reverseGotos[symbol] || [];
             reverseGotos[symbol].push(item);
         }
-
     }, {
         ATTRS: {
             items: {
@@ -259,14 +265,16 @@ KISSY.add("kison/item-set", function (S, Base) {
     requires: ['base']
 });
 /**
+ * @ignore
  * NonTerminal Set for KISON
  * @author yiminghe@gmail.com
  */
 KISSY.add("kison/non-terminal", function (S, Base) {
-
-    return Base.extend({
-
-    }, {
+    /**
+     * non-terminal symbol for grammar
+     * @class KISSY.Kison.NonTerminal
+     */
+    return Base.extend({}, {
         ATTRS:{
             productions:{
                 value:[]
@@ -286,13 +294,16 @@ KISSY.add("kison/non-terminal", function (S, Base) {
     requires:['base']
 });
 /**
+ * @ignore
  * Lexer to scan token.
  * @author yiminghe@gmail.com
  */
 KISSY.add("kison/lexer", function (S, Utils) {
-
     var serializeObject = Utils.serializeObject,
-
+        /**
+         * Lexer generator
+         * @class KISSY.Kison.Lexer
+         */
         Lexer = function (cfg) {
 
             var self = this;
@@ -331,7 +342,6 @@ KISSY.add("kison/lexer", function (S, Utils) {
     };
 
     Lexer.prototype = {
-
         constructor: Lexer,
 
         resetInput: function (input) {
@@ -565,17 +575,20 @@ KISSY.add("kison/lexer", function (S, Utils) {
     };
 
     return Lexer;
-
 }, {
     requires: ['./utils']
 });
 /**
+ * @ignore
  * Production for KISON
  * @author yiminghe@gmail.com
  */
 KISSY.add("kison/production", function (S, Base) {
+    /**
+     * production for grammar
+     * @class KISSY.Kison.Production
+     */
    return Base.extend({
-
         equals: function (other) {
             var self = this;
             if (!S.equals(other.get("rhs"), self.get("rhs"))) {
@@ -599,7 +612,6 @@ KISSY.add("kison/production", function (S, Base) {
             }
             return this.get("symbol") + " => " + rhsStr;
         }
-
     }, {
         ATTRS: {
             firsts: {
@@ -624,6 +636,7 @@ KISSY.add("kison/production", function (S, Base) {
     requires: ['base']
 });
 /**
+ * @ignore
  * LALR grammar parser
  * @author yiminghe@gmail.com
  */
@@ -685,8 +698,11 @@ KISSY.add("kison/grammar", function (S, Base, Utils, Item, ItemSet, NonTerminal,
         }
     }
 
+    /**
+     * grammar generator
+     * @class KISSY.Kison.Grammar
+     */
     return Base.extend({
-
         build: function () {
             var self = this,
                 lexer = self.lexer,
@@ -991,10 +1007,7 @@ KISSY.add("kison/grammar", function (S, Base, Utils, Item, ItemSet, NonTerminal,
 
         },
 
-        /**
-         * build item set.
-         * algorithm: 4.53
-         */
+        // algorithm: 4.53
         buildItemSet: function () {
             var self = this,
                 lexer = self.lexer,
@@ -1466,17 +1479,18 @@ KISSY.add("kison/grammar", function (S, Base, Utils, Item, ItemSet, NonTerminal,
 });
 
 /**
+ * @ignore
  * Refer
  *   - Compilers: Principles,Techniques and Tools.
  *   - http://zaach.github.com/jison/
  *   - http://www.gnu.org/software/bison/
  */
 /**
+ * @ignore
  * Parser generator for kissy.
  * @author yiminghe@gmail.com
  */
 KISSY.add("kison", function (S, Grammar, Production, Lexer, Utils) {
-
     var Kison = {};
     Kison.Grammar = Grammar;
     Kison.Production = Production;

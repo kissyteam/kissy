@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 16 15:06
+build time: Sep 18 00:12
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -983,7 +983,7 @@ KISSY.add('combobox/cursor', function (S, Node) {
         if (!fake) {
             fake = $(FAKE_DIV_HTML);
         }
-        if (String(elem.type) == 'textarea') {
+        if (String(elem[0].type.toLowerCase()) == 'textarea') {
             fake.css("width", elem.css("width"));
         } else {
             // input does not wrap at all

@@ -561,7 +561,7 @@ KISSY.add("editor/plugin/bubble", function(S, Overlay, Editor) {
   _$jscoverage['/bubble.js'].functionData[0]++;
   _$jscoverage['/bubble.js'].lineData[7]++;
   var undefined = {}['a'], logger = S.getLogger('s/editor'), BUBBLE_CFG = {
-  zIndex: Editor.baseZIndex(Editor.zIndexManager.BUBBLE_VIEW), 
+  zIndex: Editor.baseZIndex(Editor.ZIndexManager.BUBBLE_VIEW), 
   elCls: "{prefixCls}editor-bubble", 
   prefixCls: "{prefixCls}editor-", 
   effect: {

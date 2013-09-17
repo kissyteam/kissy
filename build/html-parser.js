@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 16 15:17
+build time: Sep 17 23:08
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -778,7 +778,7 @@ KISSY.add("html-parser/lexer/index", function () {
     /**
      * Page index class.
      * @private
-     * @class KISSY.HtmlParse.Lexer.Index
+     * @class KISSY.HtmlParser.Lexer.Index
      */
     function Index() {
         this.lineCursors = [];
@@ -1154,7 +1154,7 @@ KISSY.add("html-parser/nodes/tag", function (S, Node, Attribute, Dtd) {
      * @param startPosition
      * @param endPosition
      * @param attributes
-     * @class KISSY.HtmlParse.Tag
+     * @class KISSY.HtmlParser.Tag
      */
     function Tag(page, startPosition, endPosition, attributes) {
         var self = this;
@@ -1543,7 +1543,7 @@ KISSY.add("html-parser/lexer/lexer", function (S, Cursor, Page, TextNode, CData,
      * Lexer for html parser
      * @param {String} text html content
      * @param {Object} cfg config object
-     * @class KISSY.HtmlParse.Lexer
+     * @class KISSY.HtmlParser.Lexer
      */
     function Lexer(text, cfg) {
         var self = this;
@@ -1693,13 +1693,13 @@ KISSY.add("html-parser/lexer/lexer", function (S, Cursor, Page, TextNode, CData,
 
         /**
          * parse tag node according to fsm
-         * state 0 - outside of any attribute</li>
-         * state 1 - within attribute name</li>
-         * state 2 - equals hit</li>
-         * state 3 - within naked attribute value.</li>
-         * state 4 - within single quoted attribute value</li>
-         * state 5 - within double quoted attribute value</li>
-         * state 6 - whitespaces after attribute name could lead to state 2 (=)or state 0</li>
+         * * state 0 - outside of any attribute
+         * * state 1 - within attribute name
+         * * state 2 - equals hit
+         * * state 3 - within naked attribute value.
+         * * state 4 - within single quoted attribute value
+         * * state 5 - within double quoted attribute value
+         * * state 6 - whitespaces after attribute name could lead to state 2 (=)or state 0
          */
         parseTag: function (start) {
             var done,
@@ -2170,15 +2170,15 @@ KISSY.add("html-parser/lexer/lexer", function (S, Cursor, Page, TextNode, CData,
                             case '/':
                                 // tagName = "textarea"
                                 // <textarea><div></div></textarea>
-                                /**
-                                 * 8.1.2.6 Restrictions on the contents of raw text and RCDATA elements
-                                 *
-                                 *   The text in raw text and RCDATA elements must not contain any occurrences
-                                 *   of the string "</" (U+003C LESS-THAN SIGN, U+002F SOLIDUS)
-                                 *   followed by characters that case-insensitively match the tag name of the element
-                                 *   followed by one of U+0009 CHARACTER TABULATION (tab),
-                                 *   U+000A LINE FEED (LF), U+000C FORM FEED (FF), U+000D CARRIAGE RETURN (CR),
-                                 *   U+0020 SPACE, U+003E GREATER-THAN SIGN (>), or U+002F SOLIDUS (/).
+                                /*
+                                  8.1.2.6 Restrictions on the contents of raw text and RCDATA elements
+
+                                    The text in raw text and RCDATA elements must not contain any occurrences
+                                    of the string "</" (U+003C LESS-THAN SIGN, U+002F SOLIDUS)
+                                    followed by characters that case-insensitively match the tag name of the element
+                                    followed by one of U+0009 CHARACTER TABULATION (tab),
+                                    U+000A LINE FEED (LF), U+000C FORM FEED (FF), U+000D CARRIAGE RETURN (CR),
+                                    U+0020 SPACE, U+003E GREATER-THAN SIGN (>), or U+002F SOLIDUS (/).
                                  */
                                 if (!tagName || (mPage.getText(mCursor.position,
                                     mCursor.position + tagName.length) === tagName && !(mPage.getText(mCursor.position + tagName.length,
@@ -2816,7 +2816,7 @@ KISSY.add("html-parser/parser", function (S, dtd, Tag, Fragment, Cursor, Lexer, 
      * Html Parse Class
      * @param html
      * @param opts
-     * @class KISSY.HtmlParse.Parse
+     * @class KISSY.HtmlParser.Parser
      */
     function Parser(html, opts) {
         // fake root node
@@ -3028,7 +3028,7 @@ KISSY.add("html-parser/writer/basic", function () {
 
     /**
      * BasicWriter for html content
-     * @class KISSY.HtmlParse.BasicWriter
+     * @class KISSY.HtmlParser.BasicWriter
      */
     function BasicWriter() {
         this.output = [];
@@ -3434,8 +3434,8 @@ KISSY.add("html-parser/writer/minify", function (S, BasicWriter, Utils) {
 
     /**
      * MinifyWriter for html content
-     * @class KISSY.HtmlParse.MinifyWriter
-     * @extends KISSY.HtmlParse.BasicWriter
+     * @class KISSY.HtmlParser.MinifyWriter
+     * @extends KISSY.HtmlParser.BasicWriter
      */
     function MinifyWriter() {
         var self = this;
@@ -3546,7 +3546,7 @@ KISSY.add("html-parser/writer/filter", function (S) {
 
     /**
      * Filter for Html Parse Writer
-     * @class KISSY.HtmlParse.Filter
+     * @class KISSY.HtmlParser.Filter
      */
     function Filter() {
         // {priority: ?, value:?}
@@ -3731,8 +3731,8 @@ KISSY.add("html-parser/writer/filter", function (S) {
     return Filter;
 });
 /**
- * @ignore
  * HtmlParser for KISSY (Editor)
+ * @ignore
  * @author yiminghe@gmail.com
  */
 KISSY.add("html-parser", function (S, DTD, Lexer, Parser, BasicWriter, BeautifyWriter, MinifyWriter, Filter, CData, Comment, Node, Tag, Text) {
@@ -3776,6 +3776,7 @@ KISSY.add("html-parser", function (S, DTD, Lexer, Parser, BasicWriter, BeautifyW
 });
 
 /**
+ * @ignore
  * refer
  *  - http://html-parser.sourceforge.net/
  *  - http://www.w3.org/TR/html5/syntax.html

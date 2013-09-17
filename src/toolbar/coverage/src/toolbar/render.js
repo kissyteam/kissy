@@ -229,9 +229,9 @@ if (! this._$jscoverage) {
 if (! _$jscoverage['/toolbar/render.js']) {
   _$jscoverage['/toolbar/render.js'] = {};
   _$jscoverage['/toolbar/render.js'].lineData = [];
-  _$jscoverage['/toolbar/render.js'].lineData[1] = 0;
-  _$jscoverage['/toolbar/render.js'].lineData[2] = 0;
-  _$jscoverage['/toolbar/render.js'].lineData[4] = 0;
+  _$jscoverage['/toolbar/render.js'].lineData[6] = 0;
+  _$jscoverage['/toolbar/render.js'].lineData[7] = 0;
+  _$jscoverage['/toolbar/render.js'].lineData[9] = 0;
 }
 if (! _$jscoverage['/toolbar/render.js'].functionData) {
   _$jscoverage['/toolbar/render.js'].functionData = [];
@@ -241,14 +241,14 @@ if (! _$jscoverage['/toolbar/render.js'].functionData) {
 if (! _$jscoverage['/toolbar/render.js'].branchData) {
   _$jscoverage['/toolbar/render.js'].branchData = {};
 }
-_$jscoverage['/toolbar/render.js'].lineData[1]++;
+_$jscoverage['/toolbar/render.js'].lineData[6]++;
 KISSY.add('toolbar/render', function(S, Container) {
   _$jscoverage['/toolbar/render.js'].functionData[0]++;
-  _$jscoverage['/toolbar/render.js'].lineData[2]++;
+  _$jscoverage['/toolbar/render.js'].lineData[7]++;
   return Container.getDefaultRender().extend({
   beforeCreateDom: function(renderData) {
   _$jscoverage['/toolbar/render.js'].functionData[1]++;
-  _$jscoverage['/toolbar/render.js'].lineData[4]++;
+  _$jscoverage['/toolbar/render.js'].lineData[9]++;
   renderData.elAttrs.role = 'toolbar';
 }});
 }, {

@@ -327,7 +327,7 @@ function visit494_133_1(result) {
   _$jscoverage['/meta/modules.js'].lineData[12]++;
   config({
   'anim/timer': {
-  requires: ['dom', 'event', 'anim/base']}});
+  requires: ['dom', 'anim/base']}});
   _$jscoverage['/meta/modules.js'].lineData[16]++;
   config({
   'anim/transition': {
@@ -469,7 +469,7 @@ function visit494_133_1(result) {
   _$jscoverage['/meta/modules.js'].lineData[173]++;
   config({
   'io': {
-  requires: ['dom', 'event']}});
+  requires: ['dom', 'event/custom', 'event']}});
   _$jscoverage['/meta/modules.js'].lineData[177]++;
   config({
   'kison': {

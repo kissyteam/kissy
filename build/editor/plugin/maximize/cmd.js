@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 16 18:17
+build time: Sep 17 23:04
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -236,11 +236,11 @@ KISSY.add("editor/plugin/maximize/cmd", function (S, Editor) {
 
             editorEl.css({
                 position: "absolute",
-                zIndex: Editor.baseZIndex(Editor.zIndexManager.MAXIMIZE),
+                zIndex: Editor.baseZIndex(Editor.ZIndexManager.MAXIMIZE),
                 width: viewportWidth + "px"
             });
             iframe.css({
-                zIndex: Editor.baseZIndex(Editor.zIndexManager.MAXIMIZE - 5),
+                zIndex: Editor.baseZIndex(Editor.ZIndexManager.MAXIMIZE - 5),
                 height: viewportHeight + "px",
                 width: viewportWidth + "px"
             });

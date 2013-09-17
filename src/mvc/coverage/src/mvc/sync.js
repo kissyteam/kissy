@@ -229,19 +229,19 @@ if (! this._$jscoverage) {
 if (! _$jscoverage['/mvc/sync.js']) {
   _$jscoverage['/mvc/sync.js'] = {};
   _$jscoverage['/mvc/sync.js'].lineData = [];
-  _$jscoverage['/mvc/sync.js'].lineData[5] = 0;
   _$jscoverage['/mvc/sync.js'].lineData[6] = 0;
-  _$jscoverage['/mvc/sync.js'].lineData[21] = 0;
+  _$jscoverage['/mvc/sync.js'].lineData[7] = 0;
   _$jscoverage['/mvc/sync.js'].lineData[22] = 0;
-  _$jscoverage['/mvc/sync.js'].lineData[30] = 0;
+  _$jscoverage['/mvc/sync.js'].lineData[23] = 0;
   _$jscoverage['/mvc/sync.js'].lineData[31] = 0;
-  _$jscoverage['/mvc/sync.js'].lineData[33] = 0;
+  _$jscoverage['/mvc/sync.js'].lineData[32] = 0;
   _$jscoverage['/mvc/sync.js'].lineData[34] = 0;
   _$jscoverage['/mvc/sync.js'].lineData[35] = 0;
-  _$jscoverage['/mvc/sync.js'].lineData[40] = 0;
+  _$jscoverage['/mvc/sync.js'].lineData[36] = 0;
   _$jscoverage['/mvc/sync.js'].lineData[41] = 0;
-  _$jscoverage['/mvc/sync.js'].lineData[44] = 0;
-  _$jscoverage['/mvc/sync.js'].lineData[47] = 0;
+  _$jscoverage['/mvc/sync.js'].lineData[42] = 0;
+  _$jscoverage['/mvc/sync.js'].lineData[45] = 0;
+  _$jscoverage['/mvc/sync.js'].lineData[48] = 0;
 }
 if (! _$jscoverage['/mvc/sync.js'].functionData) {
   _$jscoverage['/mvc/sync.js'].functionData = [];
@@ -250,77 +250,77 @@ if (! _$jscoverage['/mvc/sync.js'].functionData) {
 }
 if (! _$jscoverage['/mvc/sync.js'].branchData) {
   _$jscoverage['/mvc/sync.js'].branchData = {};
-  _$jscoverage['/mvc/sync.js'].branchData['30'] = [];
-  _$jscoverage['/mvc/sync.js'].branchData['30'][1] = new BranchData();
-  _$jscoverage['/mvc/sync.js'].branchData['33'] = [];
-  _$jscoverage['/mvc/sync.js'].branchData['33'][1] = new BranchData();
-  _$jscoverage['/mvc/sync.js'].branchData['35'] = [];
-  _$jscoverage['/mvc/sync.js'].branchData['35'][1] = new BranchData();
-  _$jscoverage['/mvc/sync.js'].branchData['40'] = [];
-  _$jscoverage['/mvc/sync.js'].branchData['40'][1] = new BranchData();
-  _$jscoverage['/mvc/sync.js'].branchData['40'][2] = new BranchData();
-  _$jscoverage['/mvc/sync.js'].branchData['40'][3] = new BranchData();
+  _$jscoverage['/mvc/sync.js'].branchData['31'] = [];
+  _$jscoverage['/mvc/sync.js'].branchData['31'][1] = new BranchData();
+  _$jscoverage['/mvc/sync.js'].branchData['34'] = [];
+  _$jscoverage['/mvc/sync.js'].branchData['34'][1] = new BranchData();
+  _$jscoverage['/mvc/sync.js'].branchData['36'] = [];
+  _$jscoverage['/mvc/sync.js'].branchData['36'][1] = new BranchData();
+  _$jscoverage['/mvc/sync.js'].branchData['41'] = [];
+  _$jscoverage['/mvc/sync.js'].branchData['41'][1] = new BranchData();
+  _$jscoverage['/mvc/sync.js'].branchData['41'][2] = new BranchData();
+  _$jscoverage['/mvc/sync.js'].branchData['41'][3] = new BranchData();
 }
-_$jscoverage['/mvc/sync.js'].branchData['40'][3].init(512, 18, 'method == \'update\'');
-function visit105_40_3(result) {
-  _$jscoverage['/mvc/sync.js'].branchData['40'][3].ranCondition(result);
+_$jscoverage['/mvc/sync.js'].branchData['41'][3].init(512, 18, 'method == \'update\'');
+function visit105_41_3(result) {
+  _$jscoverage['/mvc/sync.js'].branchData['41'][3].ranCondition(result);
   return result;
-}_$jscoverage['/mvc/sync.js'].branchData['40'][2].init(490, 18, 'method == \'create\'');
-function visit104_40_2(result) {
-  _$jscoverage['/mvc/sync.js'].branchData['40'][2].ranCondition(result);
+}_$jscoverage['/mvc/sync.js'].branchData['41'][2].init(490, 18, 'method == \'create\'');
+function visit104_41_2(result) {
+  _$jscoverage['/mvc/sync.js'].branchData['41'][2].ranCondition(result);
   return result;
-}_$jscoverage['/mvc/sync.js'].branchData['40'][1].init(490, 40, 'method == \'create\' || method == \'update\'');
-function visit103_40_1(result) {
-  _$jscoverage['/mvc/sync.js'].branchData['40'][1].ranCondition(result);
+}_$jscoverage['/mvc/sync.js'].branchData['41'][1].init(490, 40, 'method == \'create\' || method == \'update\'');
+function visit103_41_1(result) {
+  _$jscoverage['/mvc/sync.js'].branchData['41'][1].ranCondition(result);
   return result;
-}_$jscoverage['/mvc/sync.js'].branchData['35'][1].init(65, 22, 'typeof url == \'string\'');
-function visit102_35_1(result) {
-  _$jscoverage['/mvc/sync.js'].branchData['35'][1].ranCondition(result);
+}_$jscoverage['/mvc/sync.js'].branchData['36'][1].init(65, 22, 'typeof url == \'string\'');
+function visit102_36_1(result) {
+  _$jscoverage['/mvc/sync.js'].branchData['36'][1].ranCondition(result);
   return result;
-}_$jscoverage['/mvc/sync.js'].branchData['33'][1].init(302, 12, '!ioParam.url');
-function visit101_33_1(result) {
-  _$jscoverage['/mvc/sync.js'].branchData['33'][1].ranCondition(result);
+}_$jscoverage['/mvc/sync.js'].branchData['34'][1].init(302, 12, '!ioParam.url');
+function visit101_34_1(result) {
+  _$jscoverage['/mvc/sync.js'].branchData['34'][1].ranCondition(result);
   return result;
-}_$jscoverage['/mvc/sync.js'].branchData['30'][1].init(232, 18, 'ioParam.data || {}');
-function visit100_30_1(result) {
-  _$jscoverage['/mvc/sync.js'].branchData['30'][1].ranCondition(result);
+}_$jscoverage['/mvc/sync.js'].branchData['31'][1].init(232, 18, 'ioParam.data || {}');
+function visit100_31_1(result) {
+  _$jscoverage['/mvc/sync.js'].branchData['31'][1].ranCondition(result);
   return result;
-}_$jscoverage['/mvc/sync.js'].lineData[5]++;
+}_$jscoverage['/mvc/sync.js'].lineData[6]++;
 KISSY.add("mvc/sync", function(S, io, Json) {
   _$jscoverage['/mvc/sync.js'].functionData[0]++;
-  _$jscoverage['/mvc/sync.js'].lineData[6]++;
+  _$jscoverage['/mvc/sync.js'].lineData[7]++;
   var methodMap = {
   'create': 'POST', 
   'update': 'POST', 
   'delete': 'POST', 
   'read': 'GET'};
-  _$jscoverage['/mvc/sync.js'].lineData[21]++;
+  _$jscoverage['/mvc/sync.js'].lineData[22]++;
   function sync(self, method, options) {
     _$jscoverage['/mvc/sync.js'].functionData[1]++;
-    _$jscoverage['/mvc/sync.js'].lineData[22]++;
+    _$jscoverage['/mvc/sync.js'].lineData[23]++;
     var type = methodMap[method], ioParam = S.merge({
   type: type, 
   dataType: 'json'}, options), data, url;
-    _$jscoverage['/mvc/sync.js'].lineData[30]++;
-    data = ioParam.data = visit100_30_1(ioParam.data || {});
     _$jscoverage['/mvc/sync.js'].lineData[31]++;
+    data = ioParam.data = visit100_31_1(ioParam.data || {});
+    _$jscoverage['/mvc/sync.js'].lineData[32]++;
     data['_method'] = method;
-    _$jscoverage['/mvc/sync.js'].lineData[33]++;
-    if (visit101_33_1(!ioParam.url)) {
-      _$jscoverage['/mvc/sync.js'].lineData[34]++;
-      url = self.get("url");
+    _$jscoverage['/mvc/sync.js'].lineData[34]++;
+    if (visit101_34_1(!ioParam.url)) {
       _$jscoverage['/mvc/sync.js'].lineData[35]++;
-      ioParam.url = (visit102_35_1(typeof url == 'string')) ? url : url.call(self);
+      url = self.get("url");
+      _$jscoverage['/mvc/sync.js'].lineData[36]++;
+      ioParam.url = (visit102_36_1(typeof url == 'string')) ? url : url.call(self);
     }
-    _$jscoverage['/mvc/sync.js'].lineData[40]++;
-    if (visit103_40_1(visit104_40_2(method == 'create') || visit105_40_3(method == 'update'))) {
-      _$jscoverage['/mvc/sync.js'].lineData[41]++;
+    _$jscoverage['/mvc/sync.js'].lineData[41]++;
+    if (visit103_41_1(visit104_41_2(method == 'create') || visit105_41_3(method == 'update'))) {
+      _$jscoverage['/mvc/sync.js'].lineData[42]++;
       data.model = Json.stringify(self.toJSON());
     }
-    _$jscoverage['/mvc/sync.js'].lineData[44]++;
+    _$jscoverage['/mvc/sync.js'].lineData[45]++;
     return io(ioParam);
   }
-  _$jscoverage['/mvc/sync.js'].lineData[47]++;
+  _$jscoverage['/mvc/sync.js'].lineData[48]++;
   return sync;
 }, {
   requires: ['io', 'json']});

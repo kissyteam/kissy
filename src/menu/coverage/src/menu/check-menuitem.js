@@ -229,12 +229,12 @@ if (! this._$jscoverage) {
 if (! _$jscoverage['/menu/check-menuitem.js']) {
   _$jscoverage['/menu/check-menuitem.js'] = {};
   _$jscoverage['/menu/check-menuitem.js'].lineData = [];
-  _$jscoverage['/menu/check-menuitem.js'].lineData[5] = 0;
-  _$jscoverage['/menu/check-menuitem.js'].lineData[9] = 0;
-  _$jscoverage['/menu/check-menuitem.js'].lineData[11] = 0;
+  _$jscoverage['/menu/check-menuitem.js'].lineData[6] = 0;
+  _$jscoverage['/menu/check-menuitem.js'].lineData[10] = 0;
   _$jscoverage['/menu/check-menuitem.js'].lineData[12] = 0;
   _$jscoverage['/menu/check-menuitem.js'].lineData[13] = 0;
   _$jscoverage['/menu/check-menuitem.js'].lineData[14] = 0;
+  _$jscoverage['/menu/check-menuitem.js'].lineData[15] = 0;
 }
 if (! _$jscoverage['/menu/check-menuitem.js'].functionData) {
   _$jscoverage['/menu/check-menuitem.js'].functionData = [];
@@ -244,20 +244,20 @@ if (! _$jscoverage['/menu/check-menuitem.js'].functionData) {
 if (! _$jscoverage['/menu/check-menuitem.js'].branchData) {
   _$jscoverage['/menu/check-menuitem.js'].branchData = {};
 }
-_$jscoverage['/menu/check-menuitem.js'].lineData[5]++;
+_$jscoverage['/menu/check-menuitem.js'].lineData[6]++;
 KISSY.add('menu/check-menuitem', function(S, MenuItem, CheckMenuItemRender) {
   _$jscoverage['/menu/check-menuitem.js'].functionData[0]++;
-  _$jscoverage['/menu/check-menuitem.js'].lineData[9]++;
+  _$jscoverage['/menu/check-menuitem.js'].lineData[10]++;
   return MenuItem.extend({
   handleClickInternal: function() {
   _$jscoverage['/menu/check-menuitem.js'].functionData[1]++;
-  _$jscoverage['/menu/check-menuitem.js'].lineData[11]++;
-  var self = this;
   _$jscoverage['/menu/check-menuitem.js'].lineData[12]++;
-  self.set("checked", !self.get("checked"));
+  var self = this;
   _$jscoverage['/menu/check-menuitem.js'].lineData[13]++;
-  self.fire('click');
+  self.set("checked", !self.get("checked"));
   _$jscoverage['/menu/check-menuitem.js'].lineData[14]++;
+  self.fire('click');
+  _$jscoverage['/menu/check-menuitem.js'].lineData[15]++;
   return true;
 }}, {
   ATTRS: {

@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 16 15:19
+build time: Sep 17 23:10
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -10,6 +10,11 @@ build time: Sep 16 15:19
  toolbar
 */
 
+/**
+ * @ignore
+ * render for toolbar
+ * @author yiminghe@gmail.com
+ */
 KISSY.add('toolbar/render', function (S, Container) {
     return Container.getDefaultRender().extend({
         beforeCreateDom: function (renderData) {
@@ -20,6 +25,7 @@ KISSY.add('toolbar/render', function (S, Container) {
     requires: ['component/container']
 });
 /**
+ * @ignore
  * Toolbar for KISSY.
  * @author yiminghe@gmail.com
  */
@@ -99,6 +105,7 @@ KISSY.add("toolbar", function (S, Container, DelegateChildrenExtension, ToolbarR
     /**
      * Toolbar component for KISSY. xclass: 'toolbar'.
      * @class KISSY.Toolbar
+     * @extends KISSY.Component.Container
      */
     return Container.extend([DelegateChildrenExtension], {
         _onSetHighlightedItem: function (item, e) {

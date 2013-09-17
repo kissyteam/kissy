@@ -233,108 +233,107 @@ if (! _$jscoverage['/base/dom-event.js']) {
   _$jscoverage['/base/dom-event.js'].lineData[7] = 0;
   _$jscoverage['/base/dom-event.js'].lineData[9] = 0;
   _$jscoverage['/base/dom-event.js'].lineData[11] = 0;
-  _$jscoverage['/base/dom-event.js'].lineData[13] = 0;
-  _$jscoverage['/base/dom-event.js'].lineData[14] = 0;
-  _$jscoverage['/base/dom-event.js'].lineData[19] = 0;
-  _$jscoverage['/base/dom-event.js'].lineData[22] = 0;
-  _$jscoverage['/base/dom-event.js'].lineData[23] = 0;
-  _$jscoverage['/base/dom-event.js'].lineData[26] = 0;
-  _$jscoverage['/base/dom-event.js'].lineData[29] = 0;
-  _$jscoverage['/base/dom-event.js'].lineData[30] = 0;
-  _$jscoverage['/base/dom-event.js'].lineData[35] = 0;
-  _$jscoverage['/base/dom-event.js'].lineData[36] = 0;
+  _$jscoverage['/base/dom-event.js'].lineData[12] = 0;
+  _$jscoverage['/base/dom-event.js'].lineData[17] = 0;
+  _$jscoverage['/base/dom-event.js'].lineData[20] = 0;
+  _$jscoverage['/base/dom-event.js'].lineData[21] = 0;
+  _$jscoverage['/base/dom-event.js'].lineData[24] = 0;
+  _$jscoverage['/base/dom-event.js'].lineData[27] = 0;
+  _$jscoverage['/base/dom-event.js'].lineData[28] = 0;
+  _$jscoverage['/base/dom-event.js'].lineData[33] = 0;
+  _$jscoverage['/base/dom-event.js'].lineData[34] = 0;
+  _$jscoverage['/base/dom-event.js'].lineData[37] = 0;
   _$jscoverage['/base/dom-event.js'].lineData[39] = 0;
-  _$jscoverage['/base/dom-event.js'].lineData[41] = 0;
-  _$jscoverage['/base/dom-event.js'].lineData[42] = 0;
-  _$jscoverage['/base/dom-event.js'].lineData[46] = 0;
+  _$jscoverage['/base/dom-event.js'].lineData[40] = 0;
+  _$jscoverage['/base/dom-event.js'].lineData[44] = 0;
+  _$jscoverage['/base/dom-event.js'].lineData[47] = 0;
   _$jscoverage['/base/dom-event.js'].lineData[49] = 0;
   _$jscoverage['/base/dom-event.js'].lineData[51] = 0;
+  _$jscoverage['/base/dom-event.js'].lineData[52] = 0;
   _$jscoverage['/base/dom-event.js'].lineData[53] = 0;
   _$jscoverage['/base/dom-event.js'].lineData[54] = 0;
   _$jscoverage['/base/dom-event.js'].lineData[55] = 0;
-  _$jscoverage['/base/dom-event.js'].lineData[56] = 0;
   _$jscoverage['/base/dom-event.js'].lineData[57] = 0;
   _$jscoverage['/base/dom-event.js'].lineData[59] = 0;
-  _$jscoverage['/base/dom-event.js'].lineData[61] = 0;
-  _$jscoverage['/base/dom-event.js'].lineData[64] = 0;
-  _$jscoverage['/base/dom-event.js'].lineData[65] = 0;
+  _$jscoverage['/base/dom-event.js'].lineData[62] = 0;
+  _$jscoverage['/base/dom-event.js'].lineData[63] = 0;
+  _$jscoverage['/base/dom-event.js'].lineData[67] = 0;
   _$jscoverage['/base/dom-event.js'].lineData[69] = 0;
-  _$jscoverage['/base/dom-event.js'].lineData[71] = 0;
-  _$jscoverage['/base/dom-event.js'].lineData[72] = 0;
-  _$jscoverage['/base/dom-event.js'].lineData[77] = 0;
+  _$jscoverage['/base/dom-event.js'].lineData[70] = 0;
+  _$jscoverage['/base/dom-event.js'].lineData[75] = 0;
+  _$jscoverage['/base/dom-event.js'].lineData[78] = 0;
   _$jscoverage['/base/dom-event.js'].lineData[80] = 0;
-  _$jscoverage['/base/dom-event.js'].lineData[82] = 0;
+  _$jscoverage['/base/dom-event.js'].lineData[83] = 0;
   _$jscoverage['/base/dom-event.js'].lineData[85] = 0;
   _$jscoverage['/base/dom-event.js'].lineData[87] = 0;
   _$jscoverage['/base/dom-event.js'].lineData[89] = 0;
   _$jscoverage['/base/dom-event.js'].lineData[91] = 0;
-  _$jscoverage['/base/dom-event.js'].lineData[93] = 0;
-  _$jscoverage['/base/dom-event.js'].lineData[96] = 0;
-  _$jscoverage['/base/dom-event.js'].lineData[97] = 0;
+  _$jscoverage['/base/dom-event.js'].lineData[94] = 0;
+  _$jscoverage['/base/dom-event.js'].lineData[95] = 0;
+  _$jscoverage['/base/dom-event.js'].lineData[99] = 0;
+  _$jscoverage['/base/dom-event.js'].lineData[100] = 0;
   _$jscoverage['/base/dom-event.js'].lineData[101] = 0;
-  _$jscoverage['/base/dom-event.js'].lineData[102] = 0;
   _$jscoverage['/base/dom-event.js'].lineData[103] = 0;
-  _$jscoverage['/base/dom-event.js'].lineData[105] = 0;
+  _$jscoverage['/base/dom-event.js'].lineData[106] = 0;
   _$jscoverage['/base/dom-event.js'].lineData[108] = 0;
-  _$jscoverage['/base/dom-event.js'].lineData[110] = 0;
-  _$jscoverage['/base/dom-event.js'].lineData[111] = 0;
-  _$jscoverage['/base/dom-event.js'].lineData[115] = 0;
-  _$jscoverage['/base/dom-event.js'].lineData[132] = 0;
+  _$jscoverage['/base/dom-event.js'].lineData[109] = 0;
+  _$jscoverage['/base/dom-event.js'].lineData[118] = 0;
   _$jscoverage['/base/dom-event.js'].lineData[134] = 0;
-  _$jscoverage['/base/dom-event.js'].lineData[135] = 0;
   _$jscoverage['/base/dom-event.js'].lineData[136] = 0;
   _$jscoverage['/base/dom-event.js'].lineData[137] = 0;
   _$jscoverage['/base/dom-event.js'].lineData[138] = 0;
   _$jscoverage['/base/dom-event.js'].lineData[139] = 0;
-  _$jscoverage['/base/dom-event.js'].lineData[143] = 0;
-  _$jscoverage['/base/dom-event.js'].lineData[163] = 0;
-  _$jscoverage['/base/dom-event.js'].lineData[165] = 0;
-  _$jscoverage['/base/dom-event.js'].lineData[167] = 0;
-  _$jscoverage['/base/dom-event.js'].lineData[173] = 0;
-  _$jscoverage['/base/dom-event.js'].lineData[175] = 0;
+  _$jscoverage['/base/dom-event.js'].lineData[140] = 0;
+  _$jscoverage['/base/dom-event.js'].lineData[141] = 0;
+  _$jscoverage['/base/dom-event.js'].lineData[145] = 0;
+  _$jscoverage['/base/dom-event.js'].lineData[164] = 0;
+  _$jscoverage['/base/dom-event.js'].lineData[166] = 0;
+  _$jscoverage['/base/dom-event.js'].lineData[168] = 0;
+  _$jscoverage['/base/dom-event.js'].lineData[174] = 0;
   _$jscoverage['/base/dom-event.js'].lineData[176] = 0;
   _$jscoverage['/base/dom-event.js'].lineData[177] = 0;
-  _$jscoverage['/base/dom-event.js'].lineData[179] = 0;
+  _$jscoverage['/base/dom-event.js'].lineData[178] = 0;
   _$jscoverage['/base/dom-event.js'].lineData[180] = 0;
   _$jscoverage['/base/dom-event.js'].lineData[181] = 0;
   _$jscoverage['/base/dom-event.js'].lineData[182] = 0;
-  _$jscoverage['/base/dom-event.js'].lineData[189] = 0;
-  _$jscoverage['/base/dom-event.js'].lineData[204] = 0;
-  _$jscoverage['/base/dom-event.js'].lineData[221] = 0;
-  _$jscoverage['/base/dom-event.js'].lineData[239] = 0;
-  _$jscoverage['/base/dom-event.js'].lineData[241] = 0;
-  _$jscoverage['/base/dom-event.js'].lineData[247] = 0;
-  _$jscoverage['/base/dom-event.js'].lineData[249] = 0;
-  _$jscoverage['/base/dom-event.js'].lineData[251] = 0;
-  _$jscoverage['/base/dom-event.js'].lineData[256] = 0;
-  _$jscoverage['/base/dom-event.js'].lineData[259] = 0;
+  _$jscoverage['/base/dom-event.js'].lineData[183] = 0;
+  _$jscoverage['/base/dom-event.js'].lineData[190] = 0;
+  _$jscoverage['/base/dom-event.js'].lineData[205] = 0;
+  _$jscoverage['/base/dom-event.js'].lineData[222] = 0;
+  _$jscoverage['/base/dom-event.js'].lineData[240] = 0;
+  _$jscoverage['/base/dom-event.js'].lineData[242] = 0;
+  _$jscoverage['/base/dom-event.js'].lineData[248] = 0;
+  _$jscoverage['/base/dom-event.js'].lineData[250] = 0;
+  _$jscoverage['/base/dom-event.js'].lineData[252] = 0;
+  _$jscoverage['/base/dom-event.js'].lineData[257] = 0;
   _$jscoverage['/base/dom-event.js'].lineData[260] = 0;
-  _$jscoverage['/base/dom-event.js'].lineData[262] = 0;
-  _$jscoverage['/base/dom-event.js'].lineData[266] = 0;
-  _$jscoverage['/base/dom-event.js'].lineData[268] = 0;
-  _$jscoverage['/base/dom-event.js'].lineData[271] = 0;
-  _$jscoverage['/base/dom-event.js'].lineData[273] = 0;
+  _$jscoverage['/base/dom-event.js'].lineData[261] = 0;
+  _$jscoverage['/base/dom-event.js'].lineData[263] = 0;
+  _$jscoverage['/base/dom-event.js'].lineData[267] = 0;
+  _$jscoverage['/base/dom-event.js'].lineData[269] = 0;
+  _$jscoverage['/base/dom-event.js'].lineData[272] = 0;
   _$jscoverage['/base/dom-event.js'].lineData[274] = 0;
   _$jscoverage['/base/dom-event.js'].lineData[275] = 0;
-  _$jscoverage['/base/dom-event.js'].lineData[278] = 0;
+  _$jscoverage['/base/dom-event.js'].lineData[276] = 0;
   _$jscoverage['/base/dom-event.js'].lineData[279] = 0;
-  _$jscoverage['/base/dom-event.js'].lineData[284] = 0;
+  _$jscoverage['/base/dom-event.js'].lineData[280] = 0;
   _$jscoverage['/base/dom-event.js'].lineData[285] = 0;
   _$jscoverage['/base/dom-event.js'].lineData[286] = 0;
   _$jscoverage['/base/dom-event.js'].lineData[287] = 0;
-  _$jscoverage['/base/dom-event.js'].lineData[293] = 0;
-  _$jscoverage['/base/dom-event.js'].lineData[308] = 0;
-  _$jscoverage['/base/dom-event.js'].lineData[320] = 0;
-  _$jscoverage['/base/dom-event.js'].lineData[322] = 0;
+  _$jscoverage['/base/dom-event.js'].lineData[288] = 0;
+  _$jscoverage['/base/dom-event.js'].lineData[294] = 0;
+  _$jscoverage['/base/dom-event.js'].lineData[309] = 0;
+  _$jscoverage['/base/dom-event.js'].lineData[321] = 0;
   _$jscoverage['/base/dom-event.js'].lineData[323] = 0;
-  _$jscoverage['/base/dom-event.js'].lineData[325] = 0;
+  _$jscoverage['/base/dom-event.js'].lineData[324] = 0;
   _$jscoverage['/base/dom-event.js'].lineData[326] = 0;
-  _$jscoverage['/base/dom-event.js'].lineData[329] = 0;
-  _$jscoverage['/base/dom-event.js'].lineData[331] = 0;
+  _$jscoverage['/base/dom-event.js'].lineData[327] = 0;
+  _$jscoverage['/base/dom-event.js'].lineData[330] = 0;
   _$jscoverage['/base/dom-event.js'].lineData[332] = 0;
   _$jscoverage['/base/dom-event.js'].lineData[333] = 0;
-  _$jscoverage['/base/dom-event.js'].lineData[337] = 0;
-  _$jscoverage['/base/dom-event.js'].lineData[343] = 0;
+  _$jscoverage['/base/dom-event.js'].lineData[334] = 0;
+  _$jscoverage['/base/dom-event.js'].lineData[338] = 0;
+  _$jscoverage['/base/dom-event.js'].lineData[344] = 0;
 }
 if (! _$jscoverage['/base/dom-event.js'].functionData) {
   _$jscoverage['/base/dom-event.js'].functionData = [];
@@ -358,170 +357,170 @@ if (! _$jscoverage['/base/dom-event.js'].functionData) {
 }
 if (! _$jscoverage['/base/dom-event.js'].branchData) {
   _$jscoverage['/base/dom-event.js'].branchData = {};
-  _$jscoverage['/base/dom-event.js'].branchData['14'] = [];
-  _$jscoverage['/base/dom-event.js'].branchData['14'][1] = new BranchData();
-  _$jscoverage['/base/dom-event.js'].branchData['19'] = [];
-  _$jscoverage['/base/dom-event.js'].branchData['19'][1] = new BranchData();
-  _$jscoverage['/base/dom-event.js'].branchData['41'] = [];
-  _$jscoverage['/base/dom-event.js'].branchData['41'][1] = new BranchData();
-  _$jscoverage['/base/dom-event.js'].branchData['49'] = [];
-  _$jscoverage['/base/dom-event.js'].branchData['49'][1] = new BranchData();
-  _$jscoverage['/base/dom-event.js'].branchData['49'][2] = new BranchData();
-  _$jscoverage['/base/dom-event.js'].branchData['50'] = [];
-  _$jscoverage['/base/dom-event.js'].branchData['50'][1] = new BranchData();
-  _$jscoverage['/base/dom-event.js'].branchData['54'] = [];
-  _$jscoverage['/base/dom-event.js'].branchData['54'][1] = new BranchData();
-  _$jscoverage['/base/dom-event.js'].branchData['64'] = [];
-  _$jscoverage['/base/dom-event.js'].branchData['64'][1] = new BranchData();
-  _$jscoverage['/base/dom-event.js'].branchData['71'] = [];
-  _$jscoverage['/base/dom-event.js'].branchData['71'][1] = new BranchData();
+  _$jscoverage['/base/dom-event.js'].branchData['12'] = [];
+  _$jscoverage['/base/dom-event.js'].branchData['12'][1] = new BranchData();
+  _$jscoverage['/base/dom-event.js'].branchData['17'] = [];
+  _$jscoverage['/base/dom-event.js'].branchData['17'][1] = new BranchData();
+  _$jscoverage['/base/dom-event.js'].branchData['39'] = [];
+  _$jscoverage['/base/dom-event.js'].branchData['39'][1] = new BranchData();
+  _$jscoverage['/base/dom-event.js'].branchData['47'] = [];
+  _$jscoverage['/base/dom-event.js'].branchData['47'][1] = new BranchData();
+  _$jscoverage['/base/dom-event.js'].branchData['47'][2] = new BranchData();
+  _$jscoverage['/base/dom-event.js'].branchData['48'] = [];
+  _$jscoverage['/base/dom-event.js'].branchData['48'][1] = new BranchData();
+  _$jscoverage['/base/dom-event.js'].branchData['52'] = [];
+  _$jscoverage['/base/dom-event.js'].branchData['52'][1] = new BranchData();
+  _$jscoverage['/base/dom-event.js'].branchData['62'] = [];
+  _$jscoverage['/base/dom-event.js'].branchData['62'][1] = new BranchData();
+  _$jscoverage['/base/dom-event.js'].branchData['69'] = [];
+  _$jscoverage['/base/dom-event.js'].branchData['69'][1] = new BranchData();
+  _$jscoverage['/base/dom-event.js'].branchData['92'] = [];
+  _$jscoverage['/base/dom-event.js'].branchData['92'][1] = new BranchData();
   _$jscoverage['/base/dom-event.js'].branchData['94'] = [];
   _$jscoverage['/base/dom-event.js'].branchData['94'][1] = new BranchData();
-  _$jscoverage['/base/dom-event.js'].branchData['96'] = [];
-  _$jscoverage['/base/dom-event.js'].branchData['96'][1] = new BranchData();
-  _$jscoverage['/base/dom-event.js'].branchData['101'] = [];
-  _$jscoverage['/base/dom-event.js'].branchData['101'][1] = new BranchData();
-  _$jscoverage['/base/dom-event.js'].branchData['110'] = [];
-  _$jscoverage['/base/dom-event.js'].branchData['110'][1] = new BranchData();
-  _$jscoverage['/base/dom-event.js'].branchData['137'] = [];
-  _$jscoverage['/base/dom-event.js'].branchData['137'][1] = new BranchData();
-  _$jscoverage['/base/dom-event.js'].branchData['175'] = [];
-  _$jscoverage['/base/dom-event.js'].branchData['175'][1] = new BranchData();
-  _$jscoverage['/base/dom-event.js'].branchData['179'] = [];
-  _$jscoverage['/base/dom-event.js'].branchData['179'][1] = new BranchData();
-  _$jscoverage['/base/dom-event.js'].branchData['181'] = [];
-  _$jscoverage['/base/dom-event.js'].branchData['181'][1] = new BranchData();
-  _$jscoverage['/base/dom-event.js'].branchData['241'] = [];
-  _$jscoverage['/base/dom-event.js'].branchData['241'][1] = new BranchData();
-  _$jscoverage['/base/dom-event.js'].branchData['266'] = [];
-  _$jscoverage['/base/dom-event.js'].branchData['266'][1] = new BranchData();
-  _$jscoverage['/base/dom-event.js'].branchData['273'] = [];
-  _$jscoverage['/base/dom-event.js'].branchData['273'][1] = new BranchData();
-  _$jscoverage['/base/dom-event.js'].branchData['278'] = [];
-  _$jscoverage['/base/dom-event.js'].branchData['278'][1] = new BranchData();
-  _$jscoverage['/base/dom-event.js'].branchData['284'] = [];
-  _$jscoverage['/base/dom-event.js'].branchData['284'][1] = new BranchData();
-  _$jscoverage['/base/dom-event.js'].branchData['286'] = [];
-  _$jscoverage['/base/dom-event.js'].branchData['286'][1] = new BranchData();
-  _$jscoverage['/base/dom-event.js'].branchData['286'][2] = new BranchData();
-  _$jscoverage['/base/dom-event.js'].branchData['286'][3] = new BranchData();
-  _$jscoverage['/base/dom-event.js'].branchData['322'] = [];
-  _$jscoverage['/base/dom-event.js'].branchData['322'][1] = new BranchData();
-  _$jscoverage['/base/dom-event.js'].branchData['326'] = [];
-  _$jscoverage['/base/dom-event.js'].branchData['326'][1] = new BranchData();
-  _$jscoverage['/base/dom-event.js'].branchData['326'][2] = new BranchData();
+  _$jscoverage['/base/dom-event.js'].branchData['99'] = [];
+  _$jscoverage['/base/dom-event.js'].branchData['99'][1] = new BranchData();
+  _$jscoverage['/base/dom-event.js'].branchData['108'] = [];
+  _$jscoverage['/base/dom-event.js'].branchData['108'][1] = new BranchData();
+  _$jscoverage['/base/dom-event.js'].branchData['139'] = [];
+  _$jscoverage['/base/dom-event.js'].branchData['139'][1] = new BranchData();
+  _$jscoverage['/base/dom-event.js'].branchData['176'] = [];
+  _$jscoverage['/base/dom-event.js'].branchData['176'][1] = new BranchData();
+  _$jscoverage['/base/dom-event.js'].branchData['180'] = [];
+  _$jscoverage['/base/dom-event.js'].branchData['180'][1] = new BranchData();
+  _$jscoverage['/base/dom-event.js'].branchData['182'] = [];
+  _$jscoverage['/base/dom-event.js'].branchData['182'][1] = new BranchData();
+  _$jscoverage['/base/dom-event.js'].branchData['242'] = [];
+  _$jscoverage['/base/dom-event.js'].branchData['242'][1] = new BranchData();
+  _$jscoverage['/base/dom-event.js'].branchData['267'] = [];
+  _$jscoverage['/base/dom-event.js'].branchData['267'][1] = new BranchData();
+  _$jscoverage['/base/dom-event.js'].branchData['274'] = [];
+  _$jscoverage['/base/dom-event.js'].branchData['274'][1] = new BranchData();
+  _$jscoverage['/base/dom-event.js'].branchData['279'] = [];
+  _$jscoverage['/base/dom-event.js'].branchData['279'][1] = new BranchData();
+  _$jscoverage['/base/dom-event.js'].branchData['285'] = [];
+  _$jscoverage['/base/dom-event.js'].branchData['285'][1] = new BranchData();
+  _$jscoverage['/base/dom-event.js'].branchData['287'] = [];
+  _$jscoverage['/base/dom-event.js'].branchData['287'][1] = new BranchData();
+  _$jscoverage['/base/dom-event.js'].branchData['287'][2] = new BranchData();
+  _$jscoverage['/base/dom-event.js'].branchData['287'][3] = new BranchData();
+  _$jscoverage['/base/dom-event.js'].branchData['323'] = [];
+  _$jscoverage['/base/dom-event.js'].branchData['323'][1] = new BranchData();
+  _$jscoverage['/base/dom-event.js'].branchData['327'] = [];
+  _$jscoverage['/base/dom-event.js'].branchData['327'][1] = new BranchData();
+  _$jscoverage['/base/dom-event.js'].branchData['327'][2] = new BranchData();
 }
-_$jscoverage['/base/dom-event.js'].branchData['326'][2].init(307, 36, 'srcData === DomEventUtils.data(dest)');
-function visit28_326_2(result) {
-  _$jscoverage['/base/dom-event.js'].branchData['326'][2].ranCondition(result);
+_$jscoverage['/base/dom-event.js'].branchData['327'][2].init(307, 36, 'srcData === DomEventUtils.data(dest)');
+function visit28_327_2(result) {
+  _$jscoverage['/base/dom-event.js'].branchData['327'][2].ranCondition(result);
   return result;
-}_$jscoverage['/base/dom-event.js'].branchData['326'][1].init(296, 47, 'srcData && srcData === DomEventUtils.data(dest)');
-function visit27_326_1(result) {
-  _$jscoverage['/base/dom-event.js'].branchData['326'][1].ranCondition(result);
+}_$jscoverage['/base/dom-event.js'].branchData['327'][1].init(296, 47, 'srcData && srcData === DomEventUtils.data(dest)');
+function visit27_327_1(result) {
+  _$jscoverage['/base/dom-event.js'].branchData['327'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/dom-event.js'].branchData['322'][1].init(100, 83, '!(domEventObservablesHolder = DomEventObservable.getDomEventObservablesHolder(src))');
-function visit26_322_1(result) {
-  _$jscoverage['/base/dom-event.js'].branchData['322'][1].ranCondition(result);
+}_$jscoverage['/base/dom-event.js'].branchData['323'][1].init(100, 83, '!(domEventObservablesHolder = DomEventObservable.getDomEventObservablesHolder(src))');
+function visit26_323_1(result) {
+  _$jscoverage['/base/dom-event.js'].branchData['323'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/dom-event.js'].branchData['286'][3].init(126, 15, 'r !== undefined');
-function visit25_286_3(result) {
-  _$jscoverage['/base/dom-event.js'].branchData['286'][3].ranCondition(result);
+}_$jscoverage['/base/dom-event.js'].branchData['287'][3].init(126, 15, 'r !== undefined');
+function visit25_287_3(result) {
+  _$jscoverage['/base/dom-event.js'].branchData['287'][3].ranCondition(result);
   return result;
-}_$jscoverage['/base/dom-event.js'].branchData['286'][2].init(109, 13, 'ret !== false');
-function visit24_286_2(result) {
-  _$jscoverage['/base/dom-event.js'].branchData['286'][2].ranCondition(result);
+}_$jscoverage['/base/dom-event.js'].branchData['287'][2].init(109, 13, 'ret !== false');
+function visit24_287_2(result) {
+  _$jscoverage['/base/dom-event.js'].branchData['287'][2].ranCondition(result);
   return result;
-}_$jscoverage['/base/dom-event.js'].branchData['286'][1].init(109, 32, 'ret !== false && r !== undefined');
-function visit23_286_1(result) {
-  _$jscoverage['/base/dom-event.js'].branchData['286'][1].ranCondition(result);
+}_$jscoverage['/base/dom-event.js'].branchData['287'][1].init(109, 32, 'ret !== false && r !== undefined');
+function visit23_287_1(result) {
+  _$jscoverage['/base/dom-event.js'].branchData['287'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/dom-event.js'].branchData['284'][1].init(553, 18, 'domEventObservable');
-function visit22_284_1(result) {
-  _$jscoverage['/base/dom-event.js'].branchData['284'][1].ranCondition(result);
+}_$jscoverage['/base/dom-event.js'].branchData['285'][1].init(553, 18, 'domEventObservable');
+function visit22_285_1(result) {
+  _$jscoverage['/base/dom-event.js'].branchData['285'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/dom-event.js'].branchData['278'][1].init(265, 36, '!onlyHandlers && !domEventObservable');
-function visit21_278_1(result) {
-  _$jscoverage['/base/dom-event.js'].branchData['278'][1].ranCondition(result);
+}_$jscoverage['/base/dom-event.js'].branchData['279'][1].init(265, 36, '!onlyHandlers && !domEventObservable');
+function visit21_279_1(result) {
+  _$jscoverage['/base/dom-event.js'].branchData['279'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/dom-event.js'].branchData['273'][1].init(700, 6, 'i >= 0');
-function visit20_273_1(result) {
-  _$jscoverage['/base/dom-event.js'].branchData['273'][1].ranCondition(result);
+}_$jscoverage['/base/dom-event.js'].branchData['274'][1].init(700, 6, 'i >= 0');
+function visit20_274_1(result) {
+  _$jscoverage['/base/dom-event.js'].branchData['274'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/dom-event.js'].branchData['266'][1].init(485, 14, 's && s.typeFix');
-function visit19_266_1(result) {
-  _$jscoverage['/base/dom-event.js'].branchData['266'][1].ranCondition(result);
+}_$jscoverage['/base/dom-event.js'].branchData['267'][1].init(485, 14, 's && s.typeFix');
+function visit19_267_1(result) {
+  _$jscoverage['/base/dom-event.js'].branchData['267'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/dom-event.js'].branchData['241'][1].init(115, 15, 'eventData || {}');
-function visit18_241_1(result) {
-  _$jscoverage['/base/dom-event.js'].branchData['241'][1].ranCondition(result);
+}_$jscoverage['/base/dom-event.js'].branchData['242'][1].init(115, 15, 'eventData || {}');
+function visit18_242_1(result) {
+  _$jscoverage['/base/dom-event.js'].branchData['242'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/dom-event.js'].branchData['181'][1].init(125, 6, 'j >= 0');
-function visit17_181_1(result) {
-  _$jscoverage['/base/dom-event.js'].branchData['181'][1].ranCondition(result);
+}_$jscoverage['/base/dom-event.js'].branchData['182'][1].init(125, 6, 'j >= 0');
+function visit17_182_1(result) {
+  _$jscoverage['/base/dom-event.js'].branchData['182'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/dom-event.js'].branchData['179'][1].init(156, 34, 'cfg.deep && t.getElementsByTagName');
-function visit16_179_1(result) {
-  _$jscoverage['/base/dom-event.js'].branchData['179'][1].ranCondition(result);
+}_$jscoverage['/base/dom-event.js'].branchData['180'][1].init(156, 34, 'cfg.deep && t.getElementsByTagName');
+function visit16_180_1(result) {
+  _$jscoverage['/base/dom-event.js'].branchData['180'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/dom-event.js'].branchData['175'][1].init(276, 6, 'i >= 0');
-function visit15_175_1(result) {
-  _$jscoverage['/base/dom-event.js'].branchData['175'][1].ranCondition(result);
+}_$jscoverage['/base/dom-event.js'].branchData['176'][1].init(276, 6, 'i >= 0');
+function visit15_176_1(result) {
+  _$jscoverage['/base/dom-event.js'].branchData['176'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/dom-event.js'].branchData['137'][1].init(159, 6, 'i >= 0');
-function visit14_137_1(result) {
-  _$jscoverage['/base/dom-event.js'].branchData['137'][1].ranCondition(result);
+}_$jscoverage['/base/dom-event.js'].branchData['139'][1].init(159, 6, 'i >= 0');
+function visit14_139_1(result) {
+  _$jscoverage['/base/dom-event.js'].branchData['139'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/dom-event.js'].branchData['110'][1].init(684, 11, 'customEvent');
-function visit13_110_1(result) {
-  _$jscoverage['/base/dom-event.js'].branchData['110'][1].ranCondition(result);
+}_$jscoverage['/base/dom-event.js'].branchData['108'][1].init(684, 11, 'customEvent');
+function visit13_108_1(result) {
+  _$jscoverage['/base/dom-event.js'].branchData['108'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/dom-event.js'].branchData['101'][1].init(456, 5, '!type');
-function visit12_101_1(result) {
-  _$jscoverage['/base/dom-event.js'].branchData['101'][1].ranCondition(result);
+}_$jscoverage['/base/dom-event.js'].branchData['99'][1].init(456, 5, '!type');
+function visit12_99_1(result) {
+  _$jscoverage['/base/dom-event.js'].branchData['99'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/dom-event.js'].branchData['96'][1].init(317, 50, '!domEventObservablesHolder || !domEventObservables');
-function visit11_96_1(result) {
-  _$jscoverage['/base/dom-event.js'].branchData['96'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/base/dom-event.js'].branchData['94'][1].init(131, 31, 'domEventObservablesHolder || {}');
-function visit10_94_1(result) {
+}_$jscoverage['/base/dom-event.js'].branchData['94'][1].init(317, 50, '!domEventObservablesHolder || !domEventObservables');
+function visit11_94_1(result) {
   _$jscoverage['/base/dom-event.js'].branchData['94'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/dom-event.js'].branchData['71'][1].init(1690, 19, '!domEventObservable');
-function visit9_71_1(result) {
-  _$jscoverage['/base/dom-event.js'].branchData['71'][1].ranCondition(result);
+}_$jscoverage['/base/dom-event.js'].branchData['92'][1].init(131, 31, 'domEventObservablesHolder || {}');
+function visit10_92_1(result) {
+  _$jscoverage['/base/dom-event.js'].branchData['92'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/dom-event.js'].branchData['64'][1].init(1393, 62, '!(domEventObservables = domEventObservablesHolder.observables)');
-function visit8_64_1(result) {
-  _$jscoverage['/base/dom-event.js'].branchData['64'][1].ranCondition(result);
+}_$jscoverage['/base/dom-event.js'].branchData['69'][1].init(1690, 19, '!domEventObservable');
+function visit9_69_1(result) {
+  _$jscoverage['/base/dom-event.js'].branchData['69'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/dom-event.js'].branchData['54'][1].init(589, 18, 'domEventObservable');
-function visit7_54_1(result) {
-  _$jscoverage['/base/dom-event.js'].branchData['54'][1].ranCondition(result);
+}_$jscoverage['/base/dom-event.js'].branchData['62'][1].init(1393, 62, '!(domEventObservables = domEventObservablesHolder.observables)');
+function visit8_62_1(result) {
+  _$jscoverage['/base/dom-event.js'].branchData['62'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/dom-event.js'].branchData['50'][1].init(65, 27, 'typeof KISSY == \'undefined\'');
-function visit6_50_1(result) {
-  _$jscoverage['/base/dom-event.js'].branchData['50'][1].ranCondition(result);
+}_$jscoverage['/base/dom-event.js'].branchData['52'][1].init(589, 18, 'domEventObservable');
+function visit7_52_1(result) {
+  _$jscoverage['/base/dom-event.js'].branchData['52'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/dom-event.js'].branchData['49'][2].init(312, 41, 'DomEventObservable.triggeredEvent == type');
-function visit5_49_2(result) {
-  _$jscoverage['/base/dom-event.js'].branchData['49'][2].ranCondition(result);
+}_$jscoverage['/base/dom-event.js'].branchData['48'][1].init(65, 27, 'typeof KISSY == \'undefined\'');
+function visit6_48_1(result) {
+  _$jscoverage['/base/dom-event.js'].branchData['48'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/dom-event.js'].branchData['49'][1].init(312, 93, 'DomEventObservable.triggeredEvent == type || typeof KISSY == \'undefined\'');
-function visit4_49_1(result) {
-  _$jscoverage['/base/dom-event.js'].branchData['49'][1].ranCondition(result);
+}_$jscoverage['/base/dom-event.js'].branchData['47'][2].init(312, 41, 'DomEventObservable.triggeredEvent == type');
+function visit5_47_2(result) {
+  _$jscoverage['/base/dom-event.js'].branchData['47'][2].ranCondition(result);
   return result;
-}_$jscoverage['/base/dom-event.js'].branchData['41'][1].init(336, 44, '!(handle = domEventObservablesHolder.handle)');
-function visit3_41_1(result) {
-  _$jscoverage['/base/dom-event.js'].branchData['41'][1].ranCondition(result);
+}_$jscoverage['/base/dom-event.js'].branchData['47'][1].init(312, 93, 'DomEventObservable.triggeredEvent == type || typeof KISSY == \'undefined\'');
+function visit4_47_1(result) {
+  _$jscoverage['/base/dom-event.js'].branchData['47'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/dom-event.js'].branchData['19'][1].init(180, 42, '!cfg.originalType && (typeFix = s.typeFix)');
-function visit2_19_1(result) {
-  _$jscoverage['/base/dom-event.js'].branchData['19'][1].ranCondition(result);
+}_$jscoverage['/base/dom-event.js'].branchData['39'][1].init(336, 44, '!(handle = domEventObservablesHolder.handle)');
+function visit3_39_1(result) {
+  _$jscoverage['/base/dom-event.js'].branchData['39'][1].ranCondition(result);
   return result;
-}_$jscoverage['/base/dom-event.js'].branchData['14'][1].init(18, 19, 'Special[type] || {}');
-function visit1_14_1(result) {
-  _$jscoverage['/base/dom-event.js'].branchData['14'][1].ranCondition(result);
+}_$jscoverage['/base/dom-event.js'].branchData['17'][1].init(180, 42, '!cfg.originalType && (typeFix = s.typeFix)');
+function visit2_17_1(result) {
+  _$jscoverage['/base/dom-event.js'].branchData['17'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/base/dom-event.js'].branchData['12'][1].init(18, 19, 'Special[type] || {}');
+function visit1_12_1(result) {
+  _$jscoverage['/base/dom-event.js'].branchData['12'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/dom-event.js'].lineData[6]++;
 KISSY.add('event/dom/base/dom-event', function(S, BaseEvent, DomEventUtils, Dom, Special, DomEventObservable, DomEventObject) {
@@ -531,176 +530,174 @@ KISSY.add('event/dom/base/dom-event', function(S, BaseEvent, DomEventUtils, Dom,
   _$jscoverage['/base/dom-event.js'].lineData[9]++;
   var undefined = undefined;
   _$jscoverage['/base/dom-event.js'].lineData[11]++;
-  var DomEvent = {};
-  _$jscoverage['/base/dom-event.js'].lineData[13]++;
   function fixType(cfg, type) {
     _$jscoverage['/base/dom-event.js'].functionData[1]++;
-    _$jscoverage['/base/dom-event.js'].lineData[14]++;
-    var s = visit1_14_1(Special[type] || {}), typeFix;
-    _$jscoverage['/base/dom-event.js'].lineData[19]++;
-    if (visit2_19_1(!cfg.originalType && (typeFix = s.typeFix))) {
-      _$jscoverage['/base/dom-event.js'].lineData[22]++;
+    _$jscoverage['/base/dom-event.js'].lineData[12]++;
+    var s = visit1_12_1(Special[type] || {}), typeFix;
+    _$jscoverage['/base/dom-event.js'].lineData[17]++;
+    if (visit2_17_1(!cfg.originalType && (typeFix = s.typeFix))) {
+      _$jscoverage['/base/dom-event.js'].lineData[20]++;
       cfg.originalType = type;
-      _$jscoverage['/base/dom-event.js'].lineData[23]++;
+      _$jscoverage['/base/dom-event.js'].lineData[21]++;
       type = typeFix;
     }
-    _$jscoverage['/base/dom-event.js'].lineData[26]++;
+    _$jscoverage['/base/dom-event.js'].lineData[24]++;
     return type;
   }
-  _$jscoverage['/base/dom-event.js'].lineData[29]++;
+  _$jscoverage['/base/dom-event.js'].lineData[27]++;
   function addInternal(currentTarget, type, cfg) {
     _$jscoverage['/base/dom-event.js'].functionData[2]++;
-    _$jscoverage['/base/dom-event.js'].lineData[30]++;
+    _$jscoverage['/base/dom-event.js'].lineData[28]++;
     var domEventObservablesHolder, domEventObservable, domEventObservables, handle;
-    _$jscoverage['/base/dom-event.js'].lineData[35]++;
+    _$jscoverage['/base/dom-event.js'].lineData[33]++;
     cfg = S.merge(cfg);
-    _$jscoverage['/base/dom-event.js'].lineData[36]++;
+    _$jscoverage['/base/dom-event.js'].lineData[34]++;
     type = fixType(cfg, type);
-    _$jscoverage['/base/dom-event.js'].lineData[39]++;
+    _$jscoverage['/base/dom-event.js'].lineData[37]++;
     domEventObservablesHolder = DomEventObservable.getDomEventObservablesHolder(currentTarget, 1);
-    _$jscoverage['/base/dom-event.js'].lineData[41]++;
-    if (visit3_41_1(!(handle = domEventObservablesHolder.handle))) {
-      _$jscoverage['/base/dom-event.js'].lineData[42]++;
+    _$jscoverage['/base/dom-event.js'].lineData[39]++;
+    if (visit3_39_1(!(handle = domEventObservablesHolder.handle))) {
+      _$jscoverage['/base/dom-event.js'].lineData[40]++;
       handle = domEventObservablesHolder.handle = function(event) {
   _$jscoverage['/base/dom-event.js'].functionData[3]++;
-  _$jscoverage['/base/dom-event.js'].lineData[46]++;
+  _$jscoverage['/base/dom-event.js'].lineData[44]++;
   var type = event.type, domEventObservable, currentTarget = handle.currentTarget;
-  _$jscoverage['/base/dom-event.js'].lineData[49]++;
-  if (visit4_49_1(visit5_49_2(DomEventObservable.triggeredEvent == type) || visit6_50_1(typeof KISSY == 'undefined'))) {
-    _$jscoverage['/base/dom-event.js'].lineData[51]++;
+  _$jscoverage['/base/dom-event.js'].lineData[47]++;
+  if (visit4_47_1(visit5_47_2(DomEventObservable.triggeredEvent == type) || visit6_48_1(typeof KISSY == 'undefined'))) {
+    _$jscoverage['/base/dom-event.js'].lineData[49]++;
     return undefined;
   }
-  _$jscoverage['/base/dom-event.js'].lineData[53]++;
+  _$jscoverage['/base/dom-event.js'].lineData[51]++;
   domEventObservable = DomEventObservable.getDomEventObservable(currentTarget, type);
-  _$jscoverage['/base/dom-event.js'].lineData[54]++;
-  if (visit7_54_1(domEventObservable)) {
-    _$jscoverage['/base/dom-event.js'].lineData[55]++;
+  _$jscoverage['/base/dom-event.js'].lineData[52]++;
+  if (visit7_52_1(domEventObservable)) {
+    _$jscoverage['/base/dom-event.js'].lineData[53]++;
     event.currentTarget = currentTarget;
-    _$jscoverage['/base/dom-event.js'].lineData[56]++;
+    _$jscoverage['/base/dom-event.js'].lineData[54]++;
     event = new DomEventObject(event);
-    _$jscoverage['/base/dom-event.js'].lineData[57]++;
+    _$jscoverage['/base/dom-event.js'].lineData[55]++;
     return domEventObservable.notify(event);
   }
-  _$jscoverage['/base/dom-event.js'].lineData[59]++;
+  _$jscoverage['/base/dom-event.js'].lineData[57]++;
   return undefined;
 };
-      _$jscoverage['/base/dom-event.js'].lineData[61]++;
+      _$jscoverage['/base/dom-event.js'].lineData[59]++;
       handle.currentTarget = currentTarget;
     }
-    _$jscoverage['/base/dom-event.js'].lineData[64]++;
-    if (visit8_64_1(!(domEventObservables = domEventObservablesHolder.observables))) {
-      _$jscoverage['/base/dom-event.js'].lineData[65]++;
+    _$jscoverage['/base/dom-event.js'].lineData[62]++;
+    if (visit8_62_1(!(domEventObservables = domEventObservablesHolder.observables))) {
+      _$jscoverage['/base/dom-event.js'].lineData[63]++;
       domEventObservables = domEventObservablesHolder.observables = {};
     }
-    _$jscoverage['/base/dom-event.js'].lineData[69]++;
+    _$jscoverage['/base/dom-event.js'].lineData[67]++;
     domEventObservable = domEventObservables[type];
-    _$jscoverage['/base/dom-event.js'].lineData[71]++;
-    if (visit9_71_1(!domEventObservable)) {
-      _$jscoverage['/base/dom-event.js'].lineData[72]++;
+    _$jscoverage['/base/dom-event.js'].lineData[69]++;
+    if (visit9_69_1(!domEventObservable)) {
+      _$jscoverage['/base/dom-event.js'].lineData[70]++;
       domEventObservable = domEventObservables[type] = new DomEventObservable({
   type: type, 
   currentTarget: currentTarget});
-      _$jscoverage['/base/dom-event.js'].lineData[77]++;
+      _$jscoverage['/base/dom-event.js'].lineData[75]++;
       domEventObservable.setup();
     }
-    _$jscoverage['/base/dom-event.js'].lineData[80]++;
+    _$jscoverage['/base/dom-event.js'].lineData[78]++;
     domEventObservable.on(cfg);
-    _$jscoverage['/base/dom-event.js'].lineData[82]++;
+    _$jscoverage['/base/dom-event.js'].lineData[80]++;
     currentTarget = null;
   }
-  _$jscoverage['/base/dom-event.js'].lineData[85]++;
+  _$jscoverage['/base/dom-event.js'].lineData[83]++;
   function removeInternal(currentTarget, type, cfg) {
     _$jscoverage['/base/dom-event.js'].functionData[4]++;
-    _$jscoverage['/base/dom-event.js'].lineData[87]++;
+    _$jscoverage['/base/dom-event.js'].lineData[85]++;
     cfg = S.merge(cfg);
-    _$jscoverage['/base/dom-event.js'].lineData[89]++;
+    _$jscoverage['/base/dom-event.js'].lineData[87]++;
     var customEvent;
-    _$jscoverage['/base/dom-event.js'].lineData[91]++;
+    _$jscoverage['/base/dom-event.js'].lineData[89]++;
     type = fixType(cfg, type);
-    _$jscoverage['/base/dom-event.js'].lineData[93]++;
-    var domEventObservablesHolder = DomEventObservable.getDomEventObservablesHolder(currentTarget), domEventObservables = (visit10_94_1(domEventObservablesHolder || {})).observables;
-    _$jscoverage['/base/dom-event.js'].lineData[96]++;
-    if (visit11_96_1(!domEventObservablesHolder || !domEventObservables)) {
-      _$jscoverage['/base/dom-event.js'].lineData[97]++;
+    _$jscoverage['/base/dom-event.js'].lineData[91]++;
+    var domEventObservablesHolder = DomEventObservable.getDomEventObservablesHolder(currentTarget), domEventObservables = (visit10_92_1(domEventObservablesHolder || {})).observables;
+    _$jscoverage['/base/dom-event.js'].lineData[94]++;
+    if (visit11_94_1(!domEventObservablesHolder || !domEventObservables)) {
+      _$jscoverage['/base/dom-event.js'].lineData[95]++;
       return;
     }
-    _$jscoverage['/base/dom-event.js'].lineData[101]++;
-    if (visit12_101_1(!type)) {
-      _$jscoverage['/base/dom-event.js'].lineData[102]++;
+    _$jscoverage['/base/dom-event.js'].lineData[99]++;
+    if (visit12_99_1(!type)) {
+      _$jscoverage['/base/dom-event.js'].lineData[100]++;
       for (type in domEventObservables) {
-        _$jscoverage['/base/dom-event.js'].lineData[103]++;
+        _$jscoverage['/base/dom-event.js'].lineData[101]++;
         domEventObservables[type].detach(cfg);
       }
-      _$jscoverage['/base/dom-event.js'].lineData[105]++;
+      _$jscoverage['/base/dom-event.js'].lineData[103]++;
       return;
     }
-    _$jscoverage['/base/dom-event.js'].lineData[108]++;
+    _$jscoverage['/base/dom-event.js'].lineData[106]++;
     customEvent = domEventObservables[type];
-    _$jscoverage['/base/dom-event.js'].lineData[110]++;
-    if (visit13_110_1(customEvent)) {
-      _$jscoverage['/base/dom-event.js'].lineData[111]++;
+    _$jscoverage['/base/dom-event.js'].lineData[108]++;
+    if (visit13_108_1(customEvent)) {
+      _$jscoverage['/base/dom-event.js'].lineData[109]++;
       customEvent.detach(cfg);
     }
   }
-  _$jscoverage['/base/dom-event.js'].lineData[115]++;
-  S.mix(DomEvent, {
+  _$jscoverage['/base/dom-event.js'].lineData[118]++;
+  var DomEvent = {
   on: function(targets, type, fn, context) {
   _$jscoverage['/base/dom-event.js'].functionData[5]++;
-  _$jscoverage['/base/dom-event.js'].lineData[132]++;
-  targets = Dom.query(targets);
   _$jscoverage['/base/dom-event.js'].lineData[134]++;
+  targets = Dom.query(targets);
+  _$jscoverage['/base/dom-event.js'].lineData[136]++;
   BaseUtils.batchForType(function(targets, type, fn, context) {
   _$jscoverage['/base/dom-event.js'].functionData[6]++;
-  _$jscoverage['/base/dom-event.js'].lineData[135]++;
-  var cfg = BaseUtils.normalizeParam(type, fn, context), i, t;
-  _$jscoverage['/base/dom-event.js'].lineData[136]++;
-  type = cfg.type;
   _$jscoverage['/base/dom-event.js'].lineData[137]++;
-  for (i = targets.length - 1; visit14_137_1(i >= 0); i--) {
-    _$jscoverage['/base/dom-event.js'].lineData[138]++;
+  var cfg = BaseUtils.normalizeParam(type, fn, context), i, t;
+  _$jscoverage['/base/dom-event.js'].lineData[138]++;
+  type = cfg.type;
+  _$jscoverage['/base/dom-event.js'].lineData[139]++;
+  for (i = targets.length - 1; visit14_139_1(i >= 0); i--) {
+    _$jscoverage['/base/dom-event.js'].lineData[140]++;
     t = targets[i];
-    _$jscoverage['/base/dom-event.js'].lineData[139]++;
+    _$jscoverage['/base/dom-event.js'].lineData[141]++;
     addInternal(t, type, cfg);
   }
 }, 1, targets, type, fn, context);
-  _$jscoverage['/base/dom-event.js'].lineData[143]++;
+  _$jscoverage['/base/dom-event.js'].lineData[145]++;
   return targets;
 }, 
   detach: function(targets, type, fn, context) {
   _$jscoverage['/base/dom-event.js'].functionData[7]++;
-  _$jscoverage['/base/dom-event.js'].lineData[163]++;
+  _$jscoverage['/base/dom-event.js'].lineData[164]++;
   targets = Dom.query(targets);
-  _$jscoverage['/base/dom-event.js'].lineData[165]++;
+  _$jscoverage['/base/dom-event.js'].lineData[166]++;
   BaseUtils.batchForType(function(targets, singleType, fn, context) {
   _$jscoverage['/base/dom-event.js'].functionData[8]++;
-  _$jscoverage['/base/dom-event.js'].lineData[167]++;
+  _$jscoverage['/base/dom-event.js'].lineData[168]++;
   var cfg = BaseUtils.normalizeParam(singleType, fn, context), i, j, elChildren, t;
-  _$jscoverage['/base/dom-event.js'].lineData[173]++;
+  _$jscoverage['/base/dom-event.js'].lineData[174]++;
   singleType = cfg.type;
-  _$jscoverage['/base/dom-event.js'].lineData[175]++;
-  for (i = targets.length - 1; visit15_175_1(i >= 0); i--) {
-    _$jscoverage['/base/dom-event.js'].lineData[176]++;
-    t = targets[i];
+  _$jscoverage['/base/dom-event.js'].lineData[176]++;
+  for (i = targets.length - 1; visit15_176_1(i >= 0); i--) {
     _$jscoverage['/base/dom-event.js'].lineData[177]++;
+    t = targets[i];
+    _$jscoverage['/base/dom-event.js'].lineData[178]++;
     removeInternal(t, singleType, cfg);
-    _$jscoverage['/base/dom-event.js'].lineData[179]++;
-    if (visit16_179_1(cfg.deep && t.getElementsByTagName)) {
-      _$jscoverage['/base/dom-event.js'].lineData[180]++;
-      elChildren = t.getElementsByTagName('*');
+    _$jscoverage['/base/dom-event.js'].lineData[180]++;
+    if (visit16_180_1(cfg.deep && t.getElementsByTagName)) {
       _$jscoverage['/base/dom-event.js'].lineData[181]++;
-      for (j = elChildren.length - 1; visit17_181_1(j >= 0); j--) {
-        _$jscoverage['/base/dom-event.js'].lineData[182]++;
+      elChildren = t.getElementsByTagName('*');
+      _$jscoverage['/base/dom-event.js'].lineData[182]++;
+      for (j = elChildren.length - 1; visit17_182_1(j >= 0); j--) {
+        _$jscoverage['/base/dom-event.js'].lineData[183]++;
         removeInternal(elChildren[j], singleType, cfg);
       }
     }
   }
 }, 1, targets, type, fn, context);
-  _$jscoverage['/base/dom-event.js'].lineData[189]++;
+  _$jscoverage['/base/dom-event.js'].lineData[190]++;
   return targets;
 }, 
   delegate: function(targets, eventType, filter, fn, context) {
   _$jscoverage['/base/dom-event.js'].functionData[9]++;
-  _$jscoverage['/base/dom-event.js'].lineData[204]++;
+  _$jscoverage['/base/dom-event.js'].lineData[205]++;
   return DomEvent.on(targets, eventType, {
   fn: fn, 
   context: context, 
@@ -708,7 +705,7 @@ KISSY.add('event/dom/base/dom-event', function(S, BaseEvent, DomEventUtils, Dom,
 }, 
   undelegate: function(targets, eventType, filter, fn, context) {
   _$jscoverage['/base/dom-event.js'].functionData[10]++;
-  _$jscoverage['/base/dom-event.js'].lineData[221]++;
+  _$jscoverage['/base/dom-event.js'].lineData[222]++;
   return DomEvent.detach(targets, eventType, {
   fn: fn, 
   context: context, 
@@ -716,95 +713,95 @@ KISSY.add('event/dom/base/dom-event', function(S, BaseEvent, DomEventUtils, Dom,
 }, 
   fire: function(targets, eventType, eventData, onlyHandlers) {
   _$jscoverage['/base/dom-event.js'].functionData[11]++;
-  _$jscoverage['/base/dom-event.js'].lineData[239]++;
+  _$jscoverage['/base/dom-event.js'].lineData[240]++;
   var ret = undefined;
-  _$jscoverage['/base/dom-event.js'].lineData[241]++;
-  eventData = visit18_241_1(eventData || {});
-  _$jscoverage['/base/dom-event.js'].lineData[247]++;
+  _$jscoverage['/base/dom-event.js'].lineData[242]++;
+  eventData = visit18_242_1(eventData || {});
+  _$jscoverage['/base/dom-event.js'].lineData[248]++;
   eventData.synthetic = 1;
-  _$jscoverage['/base/dom-event.js'].lineData[249]++;
+  _$jscoverage['/base/dom-event.js'].lineData[250]++;
   BaseUtils.splitAndRun(eventType, function(eventType) {
   _$jscoverage['/base/dom-event.js'].functionData[12]++;
-  _$jscoverage['/base/dom-event.js'].lineData[251]++;
+  _$jscoverage['/base/dom-event.js'].lineData[252]++;
   var r, i, target, domEventObservable;
-  _$jscoverage['/base/dom-event.js'].lineData[256]++;
+  _$jscoverage['/base/dom-event.js'].lineData[257]++;
   BaseUtils.fillGroupsForEvent(eventType, eventData);
-  _$jscoverage['/base/dom-event.js'].lineData[259]++;
-  eventType = eventData.type;
   _$jscoverage['/base/dom-event.js'].lineData[260]++;
+  eventType = eventData.type;
+  _$jscoverage['/base/dom-event.js'].lineData[261]++;
   var s = Special[eventType];
-  _$jscoverage['/base/dom-event.js'].lineData[262]++;
+  _$jscoverage['/base/dom-event.js'].lineData[263]++;
   var originalType = eventType;
-  _$jscoverage['/base/dom-event.js'].lineData[266]++;
-  if (visit19_266_1(s && s.typeFix)) {
-    _$jscoverage['/base/dom-event.js'].lineData[268]++;
+  _$jscoverage['/base/dom-event.js'].lineData[267]++;
+  if (visit19_267_1(s && s.typeFix)) {
+    _$jscoverage['/base/dom-event.js'].lineData[269]++;
     originalType = s.typeFix;
   }
-  _$jscoverage['/base/dom-event.js'].lineData[271]++;
+  _$jscoverage['/base/dom-event.js'].lineData[272]++;
   targets = Dom.query(targets);
-  _$jscoverage['/base/dom-event.js'].lineData[273]++;
-  for (i = targets.length - 1; visit20_273_1(i >= 0); i--) {
-    _$jscoverage['/base/dom-event.js'].lineData[274]++;
-    target = targets[i];
+  _$jscoverage['/base/dom-event.js'].lineData[274]++;
+  for (i = targets.length - 1; visit20_274_1(i >= 0); i--) {
     _$jscoverage['/base/dom-event.js'].lineData[275]++;
+    target = targets[i];
+    _$jscoverage['/base/dom-event.js'].lineData[276]++;
     domEventObservable = DomEventObservable.getDomEventObservable(target, originalType);
-    _$jscoverage['/base/dom-event.js'].lineData[278]++;
-    if (visit21_278_1(!onlyHandlers && !domEventObservable)) {
-      _$jscoverage['/base/dom-event.js'].lineData[279]++;
+    _$jscoverage['/base/dom-event.js'].lineData[279]++;
+    if (visit21_279_1(!onlyHandlers && !domEventObservable)) {
+      _$jscoverage['/base/dom-event.js'].lineData[280]++;
       domEventObservable = new DomEventObservable({
   type: originalType, 
   currentTarget: target});
     }
-    _$jscoverage['/base/dom-event.js'].lineData[284]++;
-    if (visit22_284_1(domEventObservable)) {
-      _$jscoverage['/base/dom-event.js'].lineData[285]++;
-      r = domEventObservable.fire(eventData, onlyHandlers);
+    _$jscoverage['/base/dom-event.js'].lineData[285]++;
+    if (visit22_285_1(domEventObservable)) {
       _$jscoverage['/base/dom-event.js'].lineData[286]++;
-      if (visit23_286_1(visit24_286_2(ret !== false) && visit25_286_3(r !== undefined))) {
-        _$jscoverage['/base/dom-event.js'].lineData[287]++;
+      r = domEventObservable.fire(eventData, onlyHandlers);
+      _$jscoverage['/base/dom-event.js'].lineData[287]++;
+      if (visit23_287_1(visit24_287_2(ret !== false) && visit25_287_3(r !== undefined))) {
+        _$jscoverage['/base/dom-event.js'].lineData[288]++;
         ret = r;
       }
     }
   }
 });
-  _$jscoverage['/base/dom-event.js'].lineData[293]++;
+  _$jscoverage['/base/dom-event.js'].lineData[294]++;
   return ret;
 }, 
   fireHandler: function(targets, eventType, eventData) {
   _$jscoverage['/base/dom-event.js'].functionData[13]++;
-  _$jscoverage['/base/dom-event.js'].lineData[308]++;
+  _$jscoverage['/base/dom-event.js'].lineData[309]++;
   return DomEvent.fire(targets, eventType, eventData, 1);
 }, 
   clone: function(src, dest) {
   _$jscoverage['/base/dom-event.js'].functionData[14]++;
-  _$jscoverage['/base/dom-event.js'].lineData[320]++;
+  _$jscoverage['/base/dom-event.js'].lineData[321]++;
   var domEventObservablesHolder, domEventObservables;
-  _$jscoverage['/base/dom-event.js'].lineData[322]++;
-  if (visit26_322_1(!(domEventObservablesHolder = DomEventObservable.getDomEventObservablesHolder(src)))) {
-    _$jscoverage['/base/dom-event.js'].lineData[323]++;
+  _$jscoverage['/base/dom-event.js'].lineData[323]++;
+  if (visit26_323_1(!(domEventObservablesHolder = DomEventObservable.getDomEventObservablesHolder(src)))) {
+    _$jscoverage['/base/dom-event.js'].lineData[324]++;
     return;
   }
-  _$jscoverage['/base/dom-event.js'].lineData[325]++;
-  var srcData = DomEventUtils.data(src);
   _$jscoverage['/base/dom-event.js'].lineData[326]++;
-  if (visit27_326_1(srcData && visit28_326_2(srcData === DomEventUtils.data(dest)))) {
-    _$jscoverage['/base/dom-event.js'].lineData[329]++;
+  var srcData = DomEventUtils.data(src);
+  _$jscoverage['/base/dom-event.js'].lineData[327]++;
+  if (visit27_327_1(srcData && visit28_327_2(srcData === DomEventUtils.data(dest)))) {
+    _$jscoverage['/base/dom-event.js'].lineData[330]++;
     DomEventUtils.removeData(dest);
   }
-  _$jscoverage['/base/dom-event.js'].lineData[331]++;
-  domEventObservables = domEventObservablesHolder.observables;
   _$jscoverage['/base/dom-event.js'].lineData[332]++;
+  domEventObservables = domEventObservablesHolder.observables;
+  _$jscoverage['/base/dom-event.js'].lineData[333]++;
   S.each(domEventObservables, function(customEvent, type) {
   _$jscoverage['/base/dom-event.js'].functionData[15]++;
-  _$jscoverage['/base/dom-event.js'].lineData[333]++;
+  _$jscoverage['/base/dom-event.js'].lineData[334]++;
   S.each(customEvent.observers, function(observer) {
   _$jscoverage['/base/dom-event.js'].functionData[16]++;
-  _$jscoverage['/base/dom-event.js'].lineData[337]++;
+  _$jscoverage['/base/dom-event.js'].lineData[338]++;
   addInternal(dest, type, observer);
 });
 });
-}});
-  _$jscoverage['/base/dom-event.js'].lineData[343]++;
+}};
+  _$jscoverage['/base/dom-event.js'].lineData[344]++;
   return DomEvent;
 }, {
   requires: ['event/base', './utils', 'dom', './special', './observable', './object']});

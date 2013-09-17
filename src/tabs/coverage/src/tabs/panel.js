@@ -230,7 +230,7 @@ if (! _$jscoverage['/tabs/panel.js']) {
   _$jscoverage['/tabs/panel.js'] = {};
   _$jscoverage['/tabs/panel.js'].lineData = [];
   _$jscoverage['/tabs/panel.js'].lineData[6] = 0;
-  _$jscoverage['/tabs/panel.js'].lineData[13] = 0;
+  _$jscoverage['/tabs/panel.js'].lineData[12] = 0;
 }
 if (! _$jscoverage['/tabs/panel.js'].functionData) {
   _$jscoverage['/tabs/panel.js'].functionData = [];
@@ -242,7 +242,7 @@ if (! _$jscoverage['/tabs/panel.js'].branchData) {
 _$jscoverage['/tabs/panel.js'].lineData[6]++;
 KISSY.add("tabs/panel", function(S, Container, PanelRender) {
   _$jscoverage['/tabs/panel.js'].functionData[0]++;
-  _$jscoverage['/tabs/panel.js'].lineData[13]++;
+  _$jscoverage['/tabs/panel.js'].lineData[12]++;
   return Container.extend({
   isTabsPanel: 1}, {
   ATTRS: {

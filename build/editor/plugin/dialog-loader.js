@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 16 18:13
+build time: Sep 17 23:00
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -24,7 +24,7 @@ KISSY.add("editor/plugin/dialog-loader", function (S, Overlay, Editor) {
                         width:S.UA['ie'] == 6 ? S.DOM.docWidth() : "100%",
                         y:0,
                         // 指定全局 loading zIndex 值
-                        "zIndex":Editor.baseZIndex(Editor.zIndexManager.LOADING),
+                        "zIndex":Editor.baseZIndex(Editor.ZIndexManager.LOADING),
                         prefixCls:prefixCls+'editor-',
                         elCls:prefixCls+"editor-global-loading"
                     });

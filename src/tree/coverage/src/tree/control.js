@@ -229,16 +229,16 @@ if (! this._$jscoverage) {
 if (! _$jscoverage['/tree/control.js']) {
   _$jscoverage['/tree/control.js'] = {};
   _$jscoverage['/tree/control.js'].lineData = [];
-  _$jscoverage['/tree/control.js'].lineData[5] = 0;
-  _$jscoverage['/tree/control.js'].lineData[17] = 0;
-  _$jscoverage['/tree/control.js'].lineData[19] = 0;
+  _$jscoverage['/tree/control.js'].lineData[6] = 0;
+  _$jscoverage['/tree/control.js'].lineData[18] = 0;
   _$jscoverage['/tree/control.js'].lineData[20] = 0;
   _$jscoverage['/tree/control.js'].lineData[21] = 0;
-  _$jscoverage['/tree/control.js'].lineData[23] = 0;
-  _$jscoverage['/tree/control.js'].lineData[27] = 0;
+  _$jscoverage['/tree/control.js'].lineData[22] = 0;
+  _$jscoverage['/tree/control.js'].lineData[24] = 0;
   _$jscoverage['/tree/control.js'].lineData[28] = 0;
-  _$jscoverage['/tree/control.js'].lineData[31] = 0;
+  _$jscoverage['/tree/control.js'].lineData[29] = 0;
   _$jscoverage['/tree/control.js'].lineData[32] = 0;
+  _$jscoverage['/tree/control.js'].lineData[33] = 0;
 }
 if (! _$jscoverage['/tree/control.js'].functionData) {
   _$jscoverage['/tree/control.js'].functionData = [];
@@ -248,51 +248,51 @@ if (! _$jscoverage['/tree/control.js'].functionData) {
 }
 if (! _$jscoverage['/tree/control.js'].branchData) {
   _$jscoverage['/tree/control.js'].branchData = {};
-  _$jscoverage['/tree/control.js'].branchData['20'] = [];
-  _$jscoverage['/tree/control.js'].branchData['20'][1] = new BranchData();
-  _$jscoverage['/tree/control.js'].branchData['23'] = [];
-  _$jscoverage['/tree/control.js'].branchData['23'][1] = new BranchData();
-  _$jscoverage['/tree/control.js'].branchData['31'] = [];
-  _$jscoverage['/tree/control.js'].branchData['31'][1] = new BranchData();
+  _$jscoverage['/tree/control.js'].branchData['21'] = [];
+  _$jscoverage['/tree/control.js'].branchData['21'][1] = new BranchData();
+  _$jscoverage['/tree/control.js'].branchData['24'] = [];
+  _$jscoverage['/tree/control.js'].branchData['24'][1] = new BranchData();
+  _$jscoverage['/tree/control.js'].branchData['32'] = [];
+  _$jscoverage['/tree/control.js'].branchData['32'][1] = new BranchData();
 }
-_$jscoverage['/tree/control.js'].branchData['31'][1].init(130, 30, 'v && !self.get("selectedItem")');
-function visit17_31_1(result) {
-  _$jscoverage['/tree/control.js'].branchData['31'][1].ranCondition(result);
+_$jscoverage['/tree/control.js'].branchData['32'][1].init(130, 30, 'v && !self.get("selectedItem")');
+function visit17_32_1(result) {
+  _$jscoverage['/tree/control.js'].branchData['32'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tree/control.js'].branchData['23'][1].init(169, 43, 'current && current.handleKeyDownInternal(e)');
-function visit16_23_1(result) {
-  _$jscoverage['/tree/control.js'].branchData['23'][1].ranCondition(result);
+}_$jscoverage['/tree/control.js'].branchData['24'][1].init(169, 43, 'current && current.handleKeyDownInternal(e)');
+function visit16_24_1(result) {
+  _$jscoverage['/tree/control.js'].branchData['24'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tree/control.js'].branchData['20'][1].init(71, 16, 'current === this');
-function visit15_20_1(result) {
-  _$jscoverage['/tree/control.js'].branchData['20'][1].ranCondition(result);
+}_$jscoverage['/tree/control.js'].branchData['21'][1].init(71, 16, 'current === this');
+function visit15_21_1(result) {
+  _$jscoverage['/tree/control.js'].branchData['21'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tree/control.js'].lineData[5]++;
+}_$jscoverage['/tree/control.js'].lineData[6]++;
 KISSY.add("tree/control", function(S, TreeNode, TreeManager) {
   _$jscoverage['/tree/control.js'].functionData[0]++;
-  _$jscoverage['/tree/control.js'].lineData[17]++;
+  _$jscoverage['/tree/control.js'].lineData[18]++;
   return TreeNode.extend([TreeManager], {
   handleKeyDownInternal: function(e) {
   _$jscoverage['/tree/control.js'].functionData[1]++;
-  _$jscoverage['/tree/control.js'].lineData[19]++;
-  var current = this.get("selectedItem");
   _$jscoverage['/tree/control.js'].lineData[20]++;
-  if (visit15_20_1(current === this)) {
-    _$jscoverage['/tree/control.js'].lineData[21]++;
+  var current = this.get("selectedItem");
+  _$jscoverage['/tree/control.js'].lineData[21]++;
+  if (visit15_21_1(current === this)) {
+    _$jscoverage['/tree/control.js'].lineData[22]++;
     return this.callSuper(e);
   }
-  _$jscoverage['/tree/control.js'].lineData[23]++;
-  return visit16_23_1(current && current.handleKeyDownInternal(e));
+  _$jscoverage['/tree/control.js'].lineData[24]++;
+  return visit16_24_1(current && current.handleKeyDownInternal(e));
 }, 
   _onSetFocused: function(v) {
   _$jscoverage['/tree/control.js'].functionData[2]++;
-  _$jscoverage['/tree/control.js'].lineData[27]++;
-  var self = this;
   _$jscoverage['/tree/control.js'].lineData[28]++;
+  var self = this;
+  _$jscoverage['/tree/control.js'].lineData[29]++;
   self.callSuper(v);
-  _$jscoverage['/tree/control.js'].lineData[31]++;
-  if (visit17_31_1(v && !self.get("selectedItem"))) {
-    _$jscoverage['/tree/control.js'].lineData[32]++;
+  _$jscoverage['/tree/control.js'].lineData[32]++;
+  if (visit17_32_1(v && !self.get("selectedItem"))) {
+    _$jscoverage['/tree/control.js'].lineData[33]++;
     self.select();
   }
 }}, {

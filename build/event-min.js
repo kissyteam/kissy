@@ -1,6 +1,6 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 16 15:16
+build time: Sep 18 00:20
 */
-KISSY.add("event",function(a,c,b){a.EventTarget=b.Target;return a.Event=a.merge(c,b)},{requires:["event/dom","event/custom"]});
+KISSY.add("event",function(b,a,c){a=b.Event=b.merge(a,{DomEvent:a,CustomEvent:c});a.global=c.global;b.EventTarget=a.Target=c.targetObject;return a},{requires:["event/dom","event/custom"]});

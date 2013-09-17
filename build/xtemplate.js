@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 16 15:19
+build time: Sep 17 23:11
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -45,10 +45,12 @@ KISSY.add('xtemplate', function (S, XTemplateRuntime, compiler) {
     /**
      * xtemplate engine for KISSY.
      *
+     *
      *      @example
-     *      new XTemplate(tplString, config);
-     *      // or
-     *      new XTemplate(tplFunction, config);
+     *      KISSY.use('xtemplate',function(S, XTemplate){
+     *          document.writeln(new XTemplate('{{title}}').render({title:2}));
+     *      });
+     *
      *
      * @class KISSY.XTemplate
      * @extends KISSY.XTemplate.Runtime

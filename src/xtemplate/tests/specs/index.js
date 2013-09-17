@@ -1263,7 +1263,7 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
                 };
 
                 S.log = function (msg, type) {
-                    if (type == 'warn') {
+                    if (type == 'info') {
                         msg2 = msg;
                     }
                 };

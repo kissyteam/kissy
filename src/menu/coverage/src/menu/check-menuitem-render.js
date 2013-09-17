@@ -229,12 +229,12 @@ if (! this._$jscoverage) {
 if (! _$jscoverage['/menu/check-menuitem-render.js']) {
   _$jscoverage['/menu/check-menuitem-render.js'] = {};
   _$jscoverage['/menu/check-menuitem-render.js'].lineData = [];
-  _$jscoverage['/menu/check-menuitem-render.js'].lineData[5] = 0;
+  _$jscoverage['/menu/check-menuitem-render.js'].lineData[6] = 0;
   _$jscoverage['/menu/check-menuitem-render.js'].lineData[7] = 0;
+  _$jscoverage['/menu/check-menuitem-render.js'].lineData[9] = 0;
   _$jscoverage['/menu/check-menuitem-render.js'].lineData[10] = 0;
-  _$jscoverage['/menu/check-menuitem-render.js'].lineData[11] = 0;
-  _$jscoverage['/menu/check-menuitem-render.js'].lineData[16] = 0;
-  _$jscoverage['/menu/check-menuitem-render.js'].lineData[18] = 0;
+  _$jscoverage['/menu/check-menuitem-render.js'].lineData[15] = 0;
+  _$jscoverage['/menu/check-menuitem-render.js'].lineData[17] = 0;
 }
 if (! _$jscoverage['/menu/check-menuitem-render.js'].functionData) {
   _$jscoverage['/menu/check-menuitem-render.js'].functionData = [];
@@ -244,31 +244,31 @@ if (! _$jscoverage['/menu/check-menuitem-render.js'].functionData) {
 }
 if (! _$jscoverage['/menu/check-menuitem-render.js'].branchData) {
   _$jscoverage['/menu/check-menuitem-render.js'].branchData = {};
-  _$jscoverage['/menu/check-menuitem-render.js'].branchData['10'] = [];
-  _$jscoverage['/menu/check-menuitem-render.js'].branchData['10'][1] = new BranchData();
+  _$jscoverage['/menu/check-menuitem-render.js'].branchData['9'] = [];
+  _$jscoverage['/menu/check-menuitem-render.js'].branchData['9'][1] = new BranchData();
 }
-_$jscoverage['/menu/check-menuitem-render.js'].branchData['10'][1].init(18, 18, 'renderData.checked');
-function visit1_10_1(result) {
-  _$jscoverage['/menu/check-menuitem-render.js'].branchData['10'][1].ranCondition(result);
+_$jscoverage['/menu/check-menuitem-render.js'].branchData['9'][1].init(18, 18, 'renderData.checked');
+function visit1_9_1(result) {
+  _$jscoverage['/menu/check-menuitem-render.js'].branchData['9'][1].ranCondition(result);
   return result;
-}_$jscoverage['/menu/check-menuitem-render.js'].lineData[5]++;
+}_$jscoverage['/menu/check-menuitem-render.js'].lineData[6]++;
 KISSY.add('menu/check-menuitem-render', function(S, MenuItemRender, ContentRenderExtension, CheckMenuItemTpl) {
   _$jscoverage['/menu/check-menuitem-render.js'].functionData[0]++;
   _$jscoverage['/menu/check-menuitem-render.js'].lineData[7]++;
   return MenuItemRender.extend([ContentRenderExtension], {
   beforeCreateDom: function(renderData) {
   _$jscoverage['/menu/check-menuitem-render.js'].functionData[1]++;
-  _$jscoverage['/menu/check-menuitem-render.js'].lineData[10]++;
-  if (visit1_10_1(renderData.checked)) {
-    _$jscoverage['/menu/check-menuitem-render.js'].lineData[11]++;
+  _$jscoverage['/menu/check-menuitem-render.js'].lineData[9]++;
+  if (visit1_9_1(renderData.checked)) {
+    _$jscoverage['/menu/check-menuitem-render.js'].lineData[10]++;
     renderData.elCls.push(self.getBaseCssClasses("checked"));
   }
 }, 
   _onSetChecked: function(v) {
   _$jscoverage['/menu/check-menuitem-render.js'].functionData[2]++;
-  _$jscoverage['/menu/check-menuitem-render.js'].lineData[16]++;
+  _$jscoverage['/menu/check-menuitem-render.js'].lineData[15]++;
   var self = this, cls = self.getBaseCssClasses("checked");
-  _$jscoverage['/menu/check-menuitem-render.js'].lineData[18]++;
+  _$jscoverage['/menu/check-menuitem-render.js'].lineData[17]++;
   self.$el[v ? 'addClass' : 'removeClass'](cls);
 }}, {
   ATTRS: {

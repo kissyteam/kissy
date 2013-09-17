@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 16 15:16
+build time: Sep 18 00:20
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -85,7 +85,7 @@ KISSY.add('event/dom/base/special', function () {
 KISSY.add('event/dom/base/observer', function (S, Special, BaseEvent) {
     /**
      * observer for dom event
-     * @class KISSY.Event.DomEventObserver
+     * @class KISSY.Event.DomEvent.Observer
      * @extends KISSY.Event.Observer
      * @private
      */
@@ -136,11 +136,9 @@ KISSY.add('event/dom/base/observer', function (S, Special, BaseEvent) {
 
             return ret;
         }
-
     });
 
     return DomEventObserver;
-
 }, {
     requires: ['./special', 'event/base']
 });
@@ -234,7 +232,7 @@ KISSY.add('event/dom/base/object', function (S, BaseEvent, undefined) {
                         /**
                          * deltaX of mousewheel event
                          * @property deltaX
-                         * @member KISSY.Event.DomEventObject
+                         * @member KISSY.Event.DomEvent.Object
                          */
                         event.deltaX = deltaX;
                     }
@@ -243,7 +241,7 @@ KISSY.add('event/dom/base/object', function (S, BaseEvent, undefined) {
                         /**
                          * deltaY of mousewheel event
                          * @property deltaY
-                         * @member KISSY.Event.DomEventObject
+                         * @member KISSY.Event.DomEvent.Object
                          */
                         event.deltaY = deltaY;
                     }
@@ -252,7 +250,7 @@ KISSY.add('event/dom/base/object', function (S, BaseEvent, undefined) {
                         /**
                          * delta of mousewheel event
                          * @property delta
-                         * @member KISSY.Event.DomEventObject
+                         * @member KISSY.Event.DomEvent.Object
                          */
                         event.delta = delta;
                     }
@@ -321,8 +319,9 @@ KISSY.add('event/dom/base/object', function (S, BaseEvent, undefined) {
      * copied over and normalized to the new event object
      * according to [W3C standards](http://www.w3.org/TR/dom/#event).
      *
-     * @class KISSY.Event.DomEventObject
+     * @class KISSY.Event.DomEvent.Object
      * @extends KISSY.Event.Object
+     * @private
      * @param originalEvent native dom event
      */
     function DomEventObject(originalEvent) {
@@ -670,7 +669,7 @@ KISSY.add('event/dom/base/observable', function (S, Dom, Special, DomEventUtils,
      * custom event for dom
      * @param {Object} cfg
      * @private
-     * @class KISSY.Event.DomEventObservable
+     * @class KISSY.Event.DomEvent.Observable
      * @extends KISSY.Event.Observable
      */
     function DomEventObservable(cfg) {
@@ -709,7 +708,7 @@ KISSY.add('event/dom/base/observable', function (S, Dom, Special, DomEventUtils,
 
         /**
          * notify current event 's observers
-         * @param {KISSY.Event.DomEventObject} event
+         * @param {KISSY.Event.DomEvent.Object} event
          * @return {*} return false if one of custom event 's observers  else
          * return last value of custom event 's observers 's return value.
          */
@@ -814,7 +813,7 @@ KISSY.add('event/dom/base/observable', function (S, Dom, Special, DomEventUtils,
 
         /**
          * fire dom event from bottom to up , emulate dispatchEvent in Dom3 Events
-         * @param {Object|KISSY.Event.DomEventObject} [event] additional event data
+         * @param {Object|KISSY.Event.DomEvent.Object} [event] additional event data
          * @param {Boolean} [onlyHandlers] for internal usage
          */
         fire: function (event, onlyHandlers/*internal usage*/) {
@@ -914,7 +913,7 @@ KISSY.add('event/dom/base/observable', function (S, Dom, Special, DomEventUtils,
 
         /**
          * add a observer to custom event's observers
-         * @param {Object} cfg {@link KISSY.Event.DomEventObserver} 's config
+         * @param {Object} cfg {@link KISSY.Event.DomEvent.Observer} 's config
          */
         on: function (cfg) {
             var self = this,
@@ -929,7 +928,8 @@ KISSY.add('event/dom/base/observable', function (S, Dom, Special, DomEventUtils,
                 }
             }
 
-            if (self.findObserver(/**@type KISSY.Event.DomEventObserver*/observer) == -1) {
+            if (self.findObserver(/**@type KISSY.Event.DomEvent.Observer
+             @ignore*/observer) == -1) {
                 // 增加 listener
                 if (observer.filter) {
                     observers.splice(self.delegateCount, 0, observer);
@@ -951,7 +951,7 @@ KISSY.add('event/dom/base/observable', function (S, Dom, Special, DomEventUtils,
 
         /**
          * remove some observers from current event 's observers by observer config param
-         * @param {Object} cfg {@link KISSY.Event.DomEventObserver} 's config
+         * @param {Object} cfg {@link KISSY.Event.DomEvent.Observer} 's config
          */
         detach: function (cfg) {
             var groupsRe,
@@ -1070,7 +1070,7 @@ KISSY.add('event/dom/base/observable', function (S, Dom, Special, DomEventUtils,
      * get custom event from html node by event type.
      * @param {HTMLElement} node
      * @param {String} type event type
-     * @return {KISSY.Event.DomEventObservable}
+     * @return {KISSY.Event.DomEvent.Observable}
      */
     DomEventObservable.getDomEventObservable = function (node, type) {
 
@@ -1109,8 +1109,6 @@ KISSY.add('event/dom/base/dom-event', function (S, BaseEvent, DomEventUtils, Dom
     var BaseUtils = BaseEvent.Utils;
 
     var undefined = undefined;
-
-    var DomEvent = {};
 
     function fixType(cfg, type) {
         var s = Special[type] || {},
@@ -1214,11 +1212,15 @@ KISSY.add('event/dom/base/dom-event', function (S, BaseEvent, DomEventUtils, Dom
         }
     }
 
-    S.mix(DomEvent, {
+    /**
+     * Dom Event Management
+     * @private
+     * @class KISSY.Event.DomEvent
+     */
+    var DomEvent={
         /**
          * Adds an event listener.similar to addEventListener in Dom3 Events
          * @param targets KISSY selector
-         * @member KISSY.Event
          * @param type {String} The type of event to append.
          * use space to separate multiple event types.
          * @param fn {Function|Object} The event listener or event description object.
@@ -1248,7 +1250,6 @@ KISSY.add('event/dom/base/dom-event', function (S, BaseEvent, DomEventUtils, Dom
         /**
          * Detach an event or set of events from an element. similar to removeEventListener in Dom3 Events
          * @param targets KISSY selector
-         * @member KISSY.Event
          * @param {String|Boolean} [type] The type of event to remove.
          * use space to separate multiple event types.
          * or
@@ -1300,7 +1301,7 @@ KISSY.add('event/dom/base/dom-event', function (S, BaseEvent, DomEventUtils, Dom
          * use space to separate multiple event types.
          * @param {Function} [fn] The event listener.
          * @param {Object} [context] The context (this reference) in which the handler function is executed.
-         * @member KISSY.Event
+         * 
          */
         delegate: function (targets, eventType, filter, fn, context) {
             return DomEvent.on(targets, eventType, {
@@ -1317,7 +1318,7 @@ KISSY.add('event/dom/base/dom-event', function (S, BaseEvent, DomEventUtils, Dom
          * @param {String|Function} [filter] filter selector string or function to find right element
          * @param {Function} [fn] The event listener.
          * @param {Object} [context] The context (this reference) in which the handler function is executed.
-         * @member KISSY.Event
+         * 
          */
         undelegate: function (targets, eventType, filter, fn, context) {
             return DomEvent.detach(targets, eventType, {
@@ -1330,7 +1331,7 @@ KISSY.add('event/dom/base/dom-event', function (S, BaseEvent, DomEventUtils, Dom
         /**
          * fire event,simulate bubble in browser. similar to dispatchEvent in Dom3 Events
          * @param targets html nodes
-         * @member KISSY.Event
+         * 
          * @param {String} eventType event type
          * @param [eventData] additional event data
          * @param {Boolean} [onlyHandlers] for internal usage
@@ -1400,7 +1401,7 @@ KISSY.add('event/dom/base/dom-event', function (S, BaseEvent, DomEventUtils, Dom
          * - does not cause default behavior to occur.
          * - does not bubble up the Dom hierarchy.
          * @param targets html nodes
-         * @member KISSY.Event
+         * 
          * @param {String} eventType event type
          * @param [eventData] additional event data
          * @return {*} return false if one of custom event 's observers (include bubbled) else
@@ -1413,7 +1414,7 @@ KISSY.add('event/dom/base/dom-event', function (S, BaseEvent, DomEventUtils, Dom
 
         /**
          * copy event from src to dest
-         * @member KISSY.Event
+         * 
          * @param {HTMLElement} src srcElement
          * @param {HTMLElement} dest destElement
          * @private
@@ -1440,7 +1441,7 @@ KISSY.add('event/dom/base/dom-event', function (S, BaseEvent, DomEventUtils, Dom
                 });
             });
         }
-    });
+    };
 
     return DomEvent;
 }, {
@@ -1459,12 +1460,13 @@ KISSY.add('event/dom/base/dom-event', function (S, BaseEvent, DomEventUtils, Dom
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/dom/base/key-codes', function (S) {
-    /**
-     * @enum {Number} KISSY.Event.KeyCode
-     * All key codes.
-     */
     var UA = S.UA,
-        KeyCode = {
+        /**
+         * @enum {Number} KISSY.Event.DomEvent.KeyCode
+         * @alias KISSY.Event.KeyCode
+         * All key codes.
+         */
+            KeyCode = {
             /**
              * MAC_ENTER
              */
@@ -1887,23 +1889,20 @@ KISSY.add('event/dom/base/key-codes', function (S) {
             WIN_IME: 229
         };
 
-    /**
-     * whether text and modified key is entered at the same time.
-     * @param {KISSY.Event.DomEventObject} e event object
-     * @return {Boolean}
+    /*
+      whether text and modified key is entered at the same time.
      */
     KeyCode.isTextModifyingKeyEvent = function (e) {
-        if (e.altKey && !e.ctrlKey ||
-            e.metaKey ||
+        var keyCode = e.keyCode;
+        if (e.altKey && !e.ctrlKey || e.metaKey ||
             // Function keys don't generate text
-            e.keyCode >= KeyCode.F1 &&
-                e.keyCode <= KeyCode.F12) {
+            keyCode >= KeyCode.F1 && keyCode <= KeyCode.F12) {
             return false;
         }
 
         // The following keys are quite harmless, even in combination with
         // CTRL, ALT or SHIFT.
-        switch (e.keyCode) {
+        switch (keyCode) {
             case KeyCode.ALT:
             case KeyCode.CAPS_LOCK:
             case KeyCode.CONTEXT_MENU:
@@ -1933,10 +1932,8 @@ KISSY.add('event/dom/base/key-codes', function (S) {
         }
     };
 
-    /**
-     * whether character is entered.
-     * @param {KISSY.Event.KeyCode} keyCode
-     * @return {Boolean}
+    /*
+      whether character is entered.
      */
     KeyCode.isCharacterKey = function (keyCode) {
         if (keyCode >= KeyCode.ZERO &&
@@ -1984,7 +1981,6 @@ KISSY.add('event/dom/base/key-codes', function (S) {
     };
 
     return KeyCode;
-
 });
 /**
  * @ignore
@@ -1995,7 +1991,8 @@ KISSY.add('event/dom/base/gesture', function () {
 
     /**
      * gesture for event
-     * @enum {String} KISSY.Event.Gesture
+     * @enum {String} KISSY.Event.DomEvent.Gesture
+     * @alias KISSY.Event.Gesture
      */
     return {
         /**

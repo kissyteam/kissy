@@ -61,7 +61,10 @@
             var result = [], p, i;
 
             for (p in o) {
-                result.push(p);
+                // S.keys(new XX())
+                if (o.hasOwnProperty(p)) {
+                    result.push(p);
+                }
             }
 
             if (hasEnumBug) {
@@ -162,7 +165,6 @@
             var args = S.makeArray(arguments),
                 len = args.length - 2,
                 i = 1,
-                p,
                 proto,
                 arg,
                 ov = args[len],
@@ -181,15 +183,7 @@
             for (; i < len; i++) {
                 arg = args[i];
                 if (proto = arg.prototype) {
-                    arg = {};
-                    var protoArray = S.keys(proto);
-                    var protoLen = protoArray.length;
-                    for (var j = 0; j < protoLen; j++) {
-                        p = protoArray[j];
-                        if (p != 'constructor') {
-                            arg[p] = proto[p];
-                        }
-                    }
+                    arg = S.mix({}, proto, true, removeConstructor);
                 }
                 S.mix(r.prototype, arg, ov, wl);
             }
@@ -315,6 +309,10 @@
         }
 
         return r;
+    }
+
+    function removeConstructor(k, v) {
+        return k == 'constructor' ? undefined : v;
     }
 
     function _mix(p, r, s, ov, wl, deep, cache) {

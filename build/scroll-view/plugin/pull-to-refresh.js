@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 16 15:18
+build time: Sep 17 23:09
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -10,6 +10,7 @@ build time: Sep 16 15:18
 */
 
 /**
+ * @ignore
  * pull-to-refresh plugin for KISSY scroll-view
  * @author yiminghe@gmail.com
  */
@@ -18,8 +19,12 @@ KISSY.add('scroll-view/plugin/pull-to-refresh', function (S, Base) {
 
     var transformProperty = S.Features.getTransformProperty();
 
+    /**
+     * pull to refresh plugin for ScrollView
+     * @class KISSY.ScrollView.Plugin.PullToRefresh
+     * @extend KISSY.Base
+     */
     return Base.extend({
-
         pluginId: this.getName(),
 
         _onSetState: function (e) {

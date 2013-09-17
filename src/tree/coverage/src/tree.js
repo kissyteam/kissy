@@ -229,11 +229,11 @@ if (! this._$jscoverage) {
 if (! _$jscoverage['/tree.js']) {
   _$jscoverage['/tree.js'] = {};
   _$jscoverage['/tree.js'].lineData = [];
-  _$jscoverage['/tree.js'].lineData[5] = 0;
   _$jscoverage['/tree.js'].lineData[6] = 0;
   _$jscoverage['/tree.js'].lineData[7] = 0;
   _$jscoverage['/tree.js'].lineData[8] = 0;
   _$jscoverage['/tree.js'].lineData[9] = 0;
+  _$jscoverage['/tree.js'].lineData[10] = 0;
 }
 if (! _$jscoverage['/tree.js'].functionData) {
   _$jscoverage['/tree.js'].functionData = [];
@@ -242,16 +242,16 @@ if (! _$jscoverage['/tree.js'].functionData) {
 if (! _$jscoverage['/tree.js'].branchData) {
   _$jscoverage['/tree.js'].branchData = {};
 }
-_$jscoverage['/tree.js'].lineData[5]++;
+_$jscoverage['/tree.js'].lineData[6]++;
 KISSY.add('tree', function(S, Tree, TreeNode, CheckNode, CheckTree) {
   _$jscoverage['/tree.js'].functionData[0]++;
-  _$jscoverage['/tree.js'].lineData[6]++;
-  Tree.Node = TreeNode;
   _$jscoverage['/tree.js'].lineData[7]++;
-  Tree.CheckNode = CheckNode;
+  Tree.Node = TreeNode;
   _$jscoverage['/tree.js'].lineData[8]++;
-  Tree.CheckTree = CheckTree;
+  Tree.CheckNode = CheckNode;
   _$jscoverage['/tree.js'].lineData[9]++;
+  Tree.CheckTree = CheckTree;
+  _$jscoverage['/tree.js'].lineData[10]++;
   return Tree;
 }, {
-  requires: ["tree/control", "tree/node", "tree/check-node", "tree/check-tree"]});
+  requires: ['tree/control', 'tree/node', 'tree/check-node', 'tree/check-tree']});

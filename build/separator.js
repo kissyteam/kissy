@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 16 15:18
+build time: Sep 17 23:10
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -11,6 +11,7 @@ build time: Sep 16 15:18
 */
 
 /**
+ * @ignore
  * separator render def
  * @author yiminghe@gmail.com
  */
@@ -26,11 +27,11 @@ KISSY.add("separator/render", function (S, Control) {
     requires: ['component/control']
 });
 /**
+ * @ignore
  * separator def
  * @author yiminghe@gmail.com
  */
 KISSY.add("separator", function (S, Control, SeparatorRender) {
-
     /**
      * separator component for KISSY. xclass: 'separator'.
      * @extends KISSY.Component.Control
@@ -63,7 +64,6 @@ KISSY.add("separator", function (S, Control, SeparatorRender) {
         },
         xclass: 'separator'
     });
-
 }, {
     requires: ['component/control', 'separator/render']
 });

@@ -325,11 +325,11 @@ function visit65_108_1(result) {
 function visit64_87_1(result) {
   _$jscoverage['/combobox/cursor.js'].branchData['87'][1].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/cursor.js'].branchData['68'][1].init(415, 9, '!FAKE_DIV');
+}_$jscoverage['/combobox/cursor.js'].branchData['68'][1].init(432, 9, '!FAKE_DIV');
 function visit63_68_1(result) {
   _$jscoverage['/combobox/cursor.js'].branchData['68'][1].ranCondition(result);
   return result;
-}_$jscoverage['/combobox/cursor.js'].branchData['59'][1].init(115, 31, 'String(elem.type) == \'textarea\'');
+}_$jscoverage['/combobox/cursor.js'].branchData['59'][1].init(115, 48, 'String(elem[0].type.toLowerCase()) == \'textarea\'');
 function visit62_59_1(result) {
   _$jscoverage['/combobox/cursor.js'].branchData['59'][1].ranCondition(result);
   return result;
@@ -353,7 +353,7 @@ KISSY.add('combobox/cursor', function(S, Node) {
       fake = $(FAKE_DIV_HTML);
     }
     _$jscoverage['/combobox/cursor.js'].lineData[59]++;
-    if (visit62_59_1(String(elem.type) == 'textarea')) {
+    if (visit62_59_1(String(elem[0].type.toLowerCase()) == 'textarea')) {
       _$jscoverage['/combobox/cursor.js'].lineData[60]++;
       fake.css("width", elem.css("width"));
     } else {

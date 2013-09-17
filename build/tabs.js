@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 16 15:18
+build time: Sep 17 23:10
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -34,12 +34,12 @@ KISSY.add('tabs/bar-render', function (S, Toolbar) {
  * @author yiminghe@gmail.com
  */
 KISSY.add("tabs/bar", function (S, Toolbar, BarRender, undefined) {
-
     /**
-     * @ignore
+     * tab bar container for tab tabs.xclass: 'tabs-bar'.
+     * @class  KISSY.Tabs.Bar
+     * @extends KISSY.Toolbar
      */
     var TabBar = Toolbar.extend({
-
         bindUI: function () {
             var self = this;
             self.on("afterSelectedChange", function (e) {
@@ -126,7 +126,6 @@ KISSY.add("tabs/bar", function (S, Toolbar, BarRender, undefined) {
     };
 
     return TabBar;
-
 }, {
     requires: ['toolbar', './bar-render']
 });
@@ -136,9 +135,12 @@ KISSY.add("tabs/bar", function (S, Toolbar, BarRender, undefined) {
  * @author yiminghe@gmail.com
  */
 KISSY.add("tabs/body", function (S, Container, Extension, undefined) {
-
+    /**
+     * tab body container for tab panels.xclass: 'tabs-body'.
+     * @class  KISSY.Tabs.Body
+     * @extends KISSY.Component.Container
+     */
     var TabBody = Container.extend({
-
         bindUI: function () {
             var self = this;
             self.on("afterSelectedPanelIndexChange", function (e) {
@@ -182,7 +184,6 @@ KISSY.add("tabs/body", function (S, Container, Extension, undefined) {
                 this.renderChild(newIndex);
             }
         }
-
     }, {
         ATTRS: {
             selectedPanelIndex: {
@@ -218,7 +219,6 @@ KISSY.add("tabs/body", function (S, Container, Extension, undefined) {
     }
 
     return TabBody;
-
 }, {
     requires: ['component/container']
 });
@@ -262,14 +262,14 @@ KISSY.add("tabs/tab-render", function (S, Button) {
  * @author yiminghe@gmail.com
  */
 KISSY.add("tabs/tab", function (S, Button, TabRender) {
-
     /**
-     * KISSY.Tabs.Tab
+     * KISSY.Tabs.Tab. xclass:'tabs-tab'
      * @class KISSY.Tabs.Tab
      * @extends KISSY.Button
      */
     return Button.extend({
         isTabsTab: true,
+
         bindUI: function () {
             this.on("click", function () {
                 this.set("selected", true);
@@ -299,7 +299,6 @@ KISSY.add("tabs/tab", function (S, Button, TabRender) {
         },
         xclass: 'tabs-tab'
     });
-
 }, {
     requires: ['button', './tab-render']
 });
@@ -347,11 +346,10 @@ KISSY.add("tabs/panel-render", function (S, Container) {
  * @author yiminghe@gmail.com
  */
 KISSY.add("tabs/panel", function (S, Container, PanelRender) {
-
     /**
-     * KISSY.Tabs.Panel
+     * KISSY.Tabs.Panel.xclass: 'tabs-panel'.
      * @class  KISSY.Tabs.Panel
-     * @extends KISSY.Component.Control
+     * @extends KISSY.Component.Container
      */
     return Container.extend({
         isTabsPanel: 1
@@ -379,7 +377,6 @@ KISSY.add("tabs/panel", function (S, Container, PanelRender) {
         },
         xclass: 'tabs-panel'
     })
-
 }, {
     requires: ['component/container', './panel-render']
 });
@@ -441,10 +438,9 @@ KISSY.add("tabs", function (S, Container, Bar, Body, Tab, Panel, Render) {
     /**
      * Tabs for KISSY
      * @class KISSY.Tabs
-     * @extends KISSY.Component.Control
+     * @extends KISSY.Component.Container
      */
     var Tabs = Container.extend({
-
         initializer: function () {
             var self = this,
                 items = self.get('items');
@@ -704,7 +700,7 @@ KISSY.add("tabs", function (S, Container, Bar, Body, Tab, Panel, Render) {
              * fired when selected tab is changed
              * @event afterSelectedTabChange
              * @member KISSY.Tabs
-             * @param {KISSY.Event.CustomEventObject} e
+             * @param {KISSY.Event.CustomEvent.Object} e
              * @param {KISSY.Tabs.Tab} e.newVal selected tab
              */
 
@@ -713,11 +709,10 @@ KISSY.add("tabs", function (S, Container, Bar, Body, Tab, Panel, Render) {
              * fired before selected tab is changed
              * @event beforeSelectedTabChange
              * @member KISSY.Tabs
-             * @param {KISSY.Event.CustomEventObject} e
+             * @param {KISSY.Event.CustomEvent.Object} e
              * @param {KISSY.Tabs.Tab} e.newVal tab to be selected
              */
         }
-
     }, {
         ATTRS: {
 
@@ -741,8 +736,8 @@ KISSY.add("tabs", function (S, Container, Bar, Body, Tab, Panel, Render) {
             },
 
             /**
-             * tabs trigger event type, mouse or click
-             * @cfg {String} changeType
+             * whether allow tab to lazy render
+             * @cfg {Boolean} lazyRender
              */
             /**
              * @ignore

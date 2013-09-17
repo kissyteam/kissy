@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 16 15:19
+build time: Sep 17 23:10
 */
 KISSY.add("xtemplate/compiler/parser",function(){var h={},a=KISSY,g=function(c){this.rules=[];a.mix(this,c);this.resetInput(this.input)};g.prototype={constructor:function(c){this.rules=[];a.mix(this,c);this.resetInput(this.input)},resetInput:function(c){a.mix(this,{input:c,matched:"",stateStack:[g.STATIC.INITIAL],match:"",text:"",firstLine:1,lineNumber:1,lastLine:1,firstColumn:1,lastColumn:1})},getCurrentRules:function(){var c=this.stateStack[this.stateStack.length-1],b=[],c=this.mapState(c);a.each(this.rules,
 function(p){var f=p.state||p[3];f?a.inArray(c,f)&&b.push(p):c==g.STATIC.INITIAL&&b.push(p)});return b},pushState:function(c){this.stateStack.push(c)},popState:function(){return this.stateStack.pop()},getStateStack:function(){return this.stateStack},showDebugInfo:function(){var c=g.STATIC.DEBUG_CONTEXT_LIMIT,b=this.matched,a=this.match,f=this.input,b=b.slice(0,b.length-a.length),b=(b.length>c?"...":"")+b.slice(-c).replace(/\n/," "),a=a+f,a=a.slice(0,c)+(a.length>c?"...":"");return b+a+"\n"+Array(b.length+

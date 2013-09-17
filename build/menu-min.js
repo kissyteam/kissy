@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 16 15:17
+build time: Sep 17 23:08
 */
 KISSY.add("menu/menu-render",function(f,c){return c.getDefaultRender().extend({beforeCreateDom:function(c){c.elAttrs.role="menu"},containsElement:function(c){var b=this.$el;return b&&(b[0]===c||b.contains(c))}})},{requires:["component/container"]});
 KISSY.add("menu/control",function(f,c,h,b,a,i){function g(d){d.target.isMenu&&(d=d.newVal,this.el.setAttribute("aria-activedescendant",d&&d.el.id||""))}var j=c.KeyCode;return h.extend([b],{isMenu:1,_onSetHighlightedItem:function(d,a){var b;d&&a&&(b=a.prevVal)&&b.set("highlighted",!1,{data:{byPassSetHighlightedItem:1}})},_onSetVisible:function(d,a){this.callSuper(a);var b;!d&&(b=this.get("highlightedItem"))&&b.set("highlighted",!1)},bindUI:function(){this.on("afterHighlightedItemChange",g,this)},getRootMenu:function(){return this},

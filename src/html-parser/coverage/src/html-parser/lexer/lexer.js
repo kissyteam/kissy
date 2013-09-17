@@ -915,15 +915,15 @@ function visit156_662_1(result) {
 function visit155_660_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['660'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['648'][3].init(1038, 115, 'mPage.getText(mCursor.position, mCursor.position + tagName.length) === tagName');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['648'][3].init(996, 115, 'mPage.getText(mCursor.position, mCursor.position + tagName.length) === tagName');
 function visit154_648_3(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['648'][3].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['648'][2].init(1038, 258, 'mPage.getText(mCursor.position, mCursor.position + tagName.length) === tagName && !(mPage.getText(mCursor.position + tagName.length, mCursor.position + tagName.length + 1).match(/\\w/))');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['648'][2].init(996, 258, 'mPage.getText(mCursor.position, mCursor.position + tagName.length) === tagName && !(mPage.getText(mCursor.position + tagName.length, mCursor.position + tagName.length + 1).match(/\\w/))');
 function visit153_648_2(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['648'][2].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['648'][1].init(1025, 310, '!tagName || (mPage.getText(mCursor.position, mCursor.position + tagName.length) === tagName && !(mPage.getText(mCursor.position + tagName.length, mCursor.position + tagName.length + 1).match(/\\w/)))');
+}_$jscoverage['/html-parser/lexer/lexer.js'].branchData['648'][1].init(983, 310, '!tagName || (mPage.getText(mCursor.position, mCursor.position + tagName.length) === tagName && !(mPage.getText(mCursor.position + tagName.length, mCursor.position + tagName.length + 1).match(/\\w/)))');
 function visit152_648_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['648'][1].ranCondition(result);
   return result;

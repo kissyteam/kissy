@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 16 18:18
+build time: Sep 17 23:05
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -56,7 +56,7 @@ KISSY.add("editor/plugin/smiley", function (S, Editor, Overlay4E) {
                                     focus4e: false,
                                     width: 300,
                                     elCls: prefixCls + "editor-popup",
-                                    zIndex: Editor.baseZIndex(Editor.zIndexManager.POPUP_MENU),
+                                    zIndex: Editor.baseZIndex(Editor.ZIndexManager.POPUP_MENU),
                                     mask: false
                                 }).render();
                                 smiley.get("el").on("click", function (ev) {

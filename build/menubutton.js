@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 16 15:17
+build time: Sep 17 23:09
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -52,6 +52,7 @@ KISSY.add('menubutton/menubutton-xtpl', function () {
 });
 /**
  * render aria and drop arrow for menubutton
+ * @ignore
  * @author yiminghe@gmail.com
  */
 KISSY.add("menubutton/render", function (S, Button,
@@ -101,6 +102,7 @@ KISSY.add("menubutton/render", function (S, Button,
 });
 /**
  * combination of menu and button ,similar to native select
+ * @ignore
  * @author yiminghe@gmail.com
  */
 KISSY.add("menubutton/control", function (S, Node, Button, MenuButtonRender, Menu, undefined) {
@@ -161,7 +163,7 @@ KISSY.add("menubutton/control", function (S, Node, Button, MenuButtonRender, Men
          * If drop down menu is visible then handle event to menu.
          * Returns true if the event was handled, falsy otherwise.
          * Protected, should only be overridden by subclasses.
-         * @param {KISSY.Event.DomEventObject} e key event to handle.
+         * @param {KISSY.Event.DomEvent.Object} e key event to handle.
          * @return {Boolean|undefined} True Whether the key event was handled.
          * @protected
          */
@@ -217,7 +219,7 @@ KISSY.add("menubutton/control", function (S, Node, Button, MenuButtonRender, Men
         /**
          * Handles blur event.
          * When it loses keyboard focus, close the drop dow menu.
-         * @param {KISSY.Event.DomEventObject} e Blur event.
+         * @param {KISSY.Event.DomEvent.Object} e Blur event.
          * Protected, should only be overridden by subclasses.
          * @protected
          *
@@ -290,7 +292,10 @@ KISSY.add("menubutton/control", function (S, Node, Button, MenuButtonRender, Men
             /**
              * Whether drop down menu is same width with button.
              * Defaults to: true.
-             * @type {Boolean}
+             * @cfg {Boolean} matchElWidth
+             */
+            /**
+             * @ignore
              */
             matchElWidth: {
                 value: true
@@ -300,14 +305,27 @@ KISSY.add("menubutton/control", function (S, Node, Button, MenuButtonRender, Men
              * Whether hide drop down menu when click drop down menu item.
              * eg: u do not want to set true when menu has checked menuitem.
              * Defaults to: false
-             * @type {Boolean}
+             * @cfg {Boolean} collapseOnClick
+             */
+            /**
+             * @ignore
              */
             collapseOnClick: {
                 value: false
             },
             /**
              * Drop down menu associated with this menubutton.
-             * @type {Menu}
+             * @cfg {KISSY.Menu|Object} menu
+             */
+
+            /**
+             * Drop down menu associated with this menubutton.
+             * @property {KISSY.Menu} menu
+             */
+
+
+            /**
+             * @ignore
              */
             menu: {
                 value: {},
@@ -328,12 +346,16 @@ KISSY.add("menubutton/control", function (S, Node, Button, MenuButtonRender, Men
 
             /**
              * Whether drop menu is shown.
-             * @type {Boolean}
+             * @property {Boolean} collapsed
+             */
+            /**
+             * @ignore
              */
             collapsed: {
                 value: false,
                 view: 1
             },
+
             xrender: {
                 value: MenuButtonRender
             }
@@ -359,6 +381,7 @@ KISSY.add("menubutton/control", function (S, Node, Button, MenuButtonRender, Men
 });
 /**
  * represent a menu option , just make it selectable and can have select status
+ * @ignore
  * @author yiminghe@gmail.com
  */
 KISSY.add("menubutton/option", function (S, Menu) {
@@ -444,10 +467,8 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
         });
     }
 
-    /**
-     *  different from menubutton by highlighting the currently selected option
-     *  on open menu.
-     */
+
+    // different from menubutton by highlighting the currently selected option on open menu.
     function _handleMenuShow(e) {
         var self = this,
             selectedItem = getSelectedItem(self),
@@ -639,6 +660,7 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
  */
 /**
  * menubutton
+ * @ignore
  * @author yiminghe@gmail.com
  */
 KISSY.add("menubutton", function(S, MenuButton, Select, Option) {

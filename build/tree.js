@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 16 15:19
+build time: Sep 17 23:10
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -136,6 +136,7 @@ KISSY.add('tree/node-xtpl', function () {
     }
 });
 /**
+ * @ignore
  * common render for node
  * @author yiminghe@gmail.com
  */
@@ -305,6 +306,7 @@ KISSY.add("tree/node-render", function (S, Node, Container, TreeNodeTpl, Content
     requires: ['node', 'component/container', './node-xtpl', 'component/extension/content-render']
 });
 /**
+ * @ignore
  * abstraction of tree node ,root and other node will extend it
  * @author yiminghe@gmail.com
  */
@@ -315,7 +317,7 @@ KISSY.add("tree/node", function (S, Node, Container, TreeNodeRender) {
     /**
      * Tree Node. xclass: 'tree-node'.
      * @class KISSY.Tree.Node
-     * @extends KISSY.Component.Control
+     * @extends KISSY.Component.Container
      */
    return Container.extend({
         bindUI: function () {
@@ -558,7 +560,7 @@ KISSY.add("tree/node", function (S, Node, Container, TreeNodeRender) {
 
             /**
              * Whether current tree node is expanded.
-             * @type {Boolean.}
+             * @type {Boolean}
              * Defaults to: false.
              */
             expanded: {
@@ -577,7 +579,7 @@ KISSY.add("tree/node", function (S, Node, Container, TreeNodeRender) {
 
             /**
              * Tree instance current tree node belongs to.
-             * @type {Tree}
+             * @type {KISSY.Tree}
              */
             tree: {
                 getter: function () {
@@ -740,10 +742,12 @@ KISSY.add("tree/node", function (S, Node, Container, TreeNodeRender) {
 });
 
 /**
+ * @ignore
  * 2012-09-25
  *  - 去除 dblclick 支持，该交互会重复触发 click 事件，可能会重复执行逻辑
  */
 /**
+ * @ignore
  * tree management utils
  * @author yiminghe@gmail.com
  */
@@ -754,6 +758,10 @@ KISSY.add("tree/tree-manager", function (S, Node, DelegateChildrenExtension) {
         Gesture = Node.Gesture,
         isTouchEventSupported = Features.isTouchEventSupported();
 
+    /**
+     * Manage tree node for tree root
+     * @class KISSY.Tree.Manager
+     */
     function TreeManager() {
     }
 
@@ -761,7 +769,10 @@ KISSY.add("tree/tree-manager", function (S, Node, DelegateChildrenExtension) {
         /**
          * Whether show root node.
          * Defaults to: true.
-         * @type {Boolean}
+         * @cfg {Boolean} showRootNode
+         */
+        /**
+         * @ignore
          */
         showRootNode: {
             value: true,
@@ -769,8 +780,11 @@ KISSY.add("tree/tree-manager", function (S, Node, DelegateChildrenExtension) {
         },
         /**
          * Current selected tree node.
-         * @type {KISSY.Tree.Node}
+         * @property {KISSY.Tree.Node} selectedItem
          * @readonly
+         */
+        /**
+         * @ignore
          */
         selectedItem: {},
 
@@ -828,6 +842,7 @@ KISSY.add("tree/tree-manager", function (S, Node, DelegateChildrenExtension) {
     ]
 });
 /**
+ * @ignore
  * root node represent a simple tree
  * @author yiminghe@gmail.com
  */
@@ -903,6 +918,7 @@ KISSY.add("tree/control", function (S, TreeNode, TreeManager) {
  end : 移动到前序遍历最后一个节点
  */
 /**
+ * @ignore
  * checkable tree node
  * @author yiminghe@gmail.com
  */
@@ -1057,14 +1073,16 @@ KISSY.add("tree/check-node", function (S, Node, TreeNode) {
     requires: ['node', './node']
 });
 /**
+ * @ignore
  * root node represent a check tree
  * @author yiminghe@gmail.com
  */
 KISSY.add("tree/check-tree", function (S, CheckNode, TreeManager) {
     /**
      * KISSY Checked Tree. xclass: 'check-tree'.
-     * @extends Tree.CheckNode
+     * @extends KISSY.Tree.CheckNode
      * @class KISSY.Tree.CheckTree
+     * @mixins {KISSY.Tree.Manager}
      */
     return CheckNode.extend([TreeManager], {
         handleKeyDownInternal: function (e) {
@@ -1098,6 +1116,7 @@ KISSY.add("tree/check-tree", function (S, CheckNode, TreeManager) {
     requires: ['./check-node', './tree-manager']
 });
 /**
+ * @ignore
  * tree component for kissy
  * @author yiminghe@gmail.com
  */
@@ -1107,6 +1126,6 @@ KISSY.add('tree', function (S, Tree, TreeNode, CheckNode, CheckTree) {
     Tree.CheckTree = CheckTree;
     return Tree;
 }, {
-    requires: ["tree/control", "tree/node", "tree/check-node", "tree/check-tree"]
+    requires: ['tree/control', 'tree/node', 'tree/check-node', 'tree/check-tree']
 });
 

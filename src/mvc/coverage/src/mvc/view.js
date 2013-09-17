@@ -229,38 +229,38 @@ if (! this._$jscoverage) {
 if (! _$jscoverage['/mvc/view.js']) {
   _$jscoverage['/mvc/view.js'] = {};
   _$jscoverage['/mvc/view.js'].lineData = [];
-  _$jscoverage['/mvc/view.js'].lineData[5] = 0;
-  _$jscoverage['/mvc/view.js'].lineData[7] = 0;
-  _$jscoverage['/mvc/view.js'].lineData[9] = 0;
+  _$jscoverage['/mvc/view.js'].lineData[6] = 0;
+  _$jscoverage['/mvc/view.js'].lineData[8] = 0;
   _$jscoverage['/mvc/view.js'].lineData[10] = 0;
   _$jscoverage['/mvc/view.js'].lineData[11] = 0;
-  _$jscoverage['/mvc/view.js'].lineData[13] = 0;
-  _$jscoverage['/mvc/view.js'].lineData[21] = 0;
-  _$jscoverage['/mvc/view.js'].lineData[23] = 0;
+  _$jscoverage['/mvc/view.js'].lineData[12] = 0;
+  _$jscoverage['/mvc/view.js'].lineData[14] = 0;
+  _$jscoverage['/mvc/view.js'].lineData[22] = 0;
   _$jscoverage['/mvc/view.js'].lineData[24] = 0;
   _$jscoverage['/mvc/view.js'].lineData[25] = 0;
-  _$jscoverage['/mvc/view.js'].lineData[32] = 0;
+  _$jscoverage['/mvc/view.js'].lineData[26] = 0;
   _$jscoverage['/mvc/view.js'].lineData[33] = 0;
   _$jscoverage['/mvc/view.js'].lineData[34] = 0;
-  _$jscoverage['/mvc/view.js'].lineData[36] = 0;
-  _$jscoverage['/mvc/view.js'].lineData[40] = 0;
+  _$jscoverage['/mvc/view.js'].lineData[35] = 0;
+  _$jscoverage['/mvc/view.js'].lineData[37] = 0;
   _$jscoverage['/mvc/view.js'].lineData[41] = 0;
   _$jscoverage['/mvc/view.js'].lineData[42] = 0;
   _$jscoverage['/mvc/view.js'].lineData[43] = 0;
   _$jscoverage['/mvc/view.js'].lineData[44] = 0;
   _$jscoverage['/mvc/view.js'].lineData[45] = 0;
-  _$jscoverage['/mvc/view.js'].lineData[51] = 0;
+  _$jscoverage['/mvc/view.js'].lineData[46] = 0;
   _$jscoverage['/mvc/view.js'].lineData[52] = 0;
   _$jscoverage['/mvc/view.js'].lineData[53] = 0;
   _$jscoverage['/mvc/view.js'].lineData[54] = 0;
   _$jscoverage['/mvc/view.js'].lineData[55] = 0;
   _$jscoverage['/mvc/view.js'].lineData[56] = 0;
-  _$jscoverage['/mvc/view.js'].lineData[65] = 0;
-  _$jscoverage['/mvc/view.js'].lineData[72] = 0;
-  _$jscoverage['/mvc/view.js'].lineData[90] = 0;
+  _$jscoverage['/mvc/view.js'].lineData[57] = 0;
+  _$jscoverage['/mvc/view.js'].lineData[66] = 0;
+  _$jscoverage['/mvc/view.js'].lineData[73] = 0;
   _$jscoverage['/mvc/view.js'].lineData[91] = 0;
   _$jscoverage['/mvc/view.js'].lineData[92] = 0;
-  _$jscoverage['/mvc/view.js'].lineData[94] = 0;
+  _$jscoverage['/mvc/view.js'].lineData[93] = 0;
+  _$jscoverage['/mvc/view.js'].lineData[95] = 0;
 }
 if (! _$jscoverage['/mvc/view.js'].functionData) {
   _$jscoverage['/mvc/view.js'].functionData = [];
@@ -276,114 +276,114 @@ if (! _$jscoverage['/mvc/view.js'].functionData) {
 }
 if (! _$jscoverage['/mvc/view.js'].branchData) {
   _$jscoverage['/mvc/view.js'].branchData = {};
-  _$jscoverage['/mvc/view.js'].branchData['10'] = [];
-  _$jscoverage['/mvc/view.js'].branchData['10'][1] = new BranchData();
-  _$jscoverage['/mvc/view.js'].branchData['24'] = [];
-  _$jscoverage['/mvc/view.js'].branchData['24'][1] = new BranchData();
-  _$jscoverage['/mvc/view.js'].branchData['33'] = [];
-  _$jscoverage['/mvc/view.js'].branchData['33'][1] = new BranchData();
-  _$jscoverage['/mvc/view.js'].branchData['90'] = [];
-  _$jscoverage['/mvc/view.js'].branchData['90'][1] = new BranchData();
+  _$jscoverage['/mvc/view.js'].branchData['11'] = [];
+  _$jscoverage['/mvc/view.js'].branchData['11'][1] = new BranchData();
+  _$jscoverage['/mvc/view.js'].branchData['25'] = [];
+  _$jscoverage['/mvc/view.js'].branchData['25'][1] = new BranchData();
+  _$jscoverage['/mvc/view.js'].branchData['34'] = [];
+  _$jscoverage['/mvc/view.js'].branchData['34'][1] = new BranchData();
+  _$jscoverage['/mvc/view.js'].branchData['91'] = [];
+  _$jscoverage['/mvc/view.js'].branchData['91'][1] = new BranchData();
 }
-_$jscoverage['/mvc/view.js'].branchData['90'][1].init(26, 20, 'typeof s == \'string\'');
-function visit109_90_1(result) {
-  _$jscoverage['/mvc/view.js'].branchData['90'][1].ranCondition(result);
+_$jscoverage['/mvc/view.js'].branchData['91'][1].init(26, 20, 'typeof s == \'string\'');
+function visit109_91_1(result) {
+  _$jscoverage['/mvc/view.js'].branchData['91'][1].ranCondition(result);
   return result;
-}_$jscoverage['/mvc/view.js'].branchData['33'][1].init(56, 7, 'prevVal');
-function visit108_33_1(result) {
-  _$jscoverage['/mvc/view.js'].branchData['33'][1].ranCondition(result);
+}_$jscoverage['/mvc/view.js'].branchData['34'][1].init(56, 7, 'prevVal');
+function visit108_34_1(result) {
+  _$jscoverage['/mvc/view.js'].branchData['34'][1].ranCondition(result);
   return result;
-}_$jscoverage['/mvc/view.js'].branchData['24'][1].init(43, 27, 'events = this.get("events")');
-function visit107_24_1(result) {
-  _$jscoverage['/mvc/view.js'].branchData['24'][1].ranCondition(result);
+}_$jscoverage['/mvc/view.js'].branchData['25'][1].init(43, 27, 'events = this.get("events")');
+function visit107_25_1(result) {
+  _$jscoverage['/mvc/view.js'].branchData['25'][1].ranCondition(result);
   return result;
-}_$jscoverage['/mvc/view.js'].branchData['10'][1].init(14, 20, 'typeof f == \'string\'');
-function visit106_10_1(result) {
-  _$jscoverage['/mvc/view.js'].branchData['10'][1].ranCondition(result);
+}_$jscoverage['/mvc/view.js'].branchData['11'][1].init(14, 20, 'typeof f == \'string\'');
+function visit106_11_1(result) {
+  _$jscoverage['/mvc/view.js'].branchData['11'][1].ranCondition(result);
   return result;
-}_$jscoverage['/mvc/view.js'].lineData[5]++;
+}_$jscoverage['/mvc/view.js'].lineData[6]++;
 KISSY.add("mvc/view", function(S, Node, Base) {
   _$jscoverage['/mvc/view.js'].functionData[0]++;
-  _$jscoverage['/mvc/view.js'].lineData[7]++;
+  _$jscoverage['/mvc/view.js'].lineData[8]++;
   var $ = Node.all;
-  _$jscoverage['/mvc/view.js'].lineData[9]++;
+  _$jscoverage['/mvc/view.js'].lineData[10]++;
   function normFn(self, f) {
     _$jscoverage['/mvc/view.js'].functionData[1]++;
-    _$jscoverage['/mvc/view.js'].lineData[10]++;
-    if (visit106_10_1(typeof f == 'string')) {
-      _$jscoverage['/mvc/view.js'].lineData[11]++;
+    _$jscoverage['/mvc/view.js'].lineData[11]++;
+    if (visit106_11_1(typeof f == 'string')) {
+      _$jscoverage['/mvc/view.js'].lineData[12]++;
       return self[f];
     }
-    _$jscoverage['/mvc/view.js'].lineData[13]++;
+    _$jscoverage['/mvc/view.js'].lineData[14]++;
     return f;
   }
-  _$jscoverage['/mvc/view.js'].lineData[21]++;
+  _$jscoverage['/mvc/view.js'].lineData[22]++;
   return Base.extend({
   initializer: function() {
   _$jscoverage['/mvc/view.js'].functionData[2]++;
-  _$jscoverage['/mvc/view.js'].lineData[23]++;
-  var events;
   _$jscoverage['/mvc/view.js'].lineData[24]++;
-  if (visit107_24_1(events = this.get("events"))) {
-    _$jscoverage['/mvc/view.js'].lineData[25]++;
+  var events;
+  _$jscoverage['/mvc/view.js'].lineData[25]++;
+  if (visit107_25_1(events = this.get("events"))) {
+    _$jscoverage['/mvc/view.js'].lineData[26]++;
     this._afterEventsChange({
   newVal: events});
   }
 }, 
   _afterEventsChange: function(e) {
   _$jscoverage['/mvc/view.js'].functionData[3]++;
-  _$jscoverage['/mvc/view.js'].lineData[32]++;
-  var prevVal = e.prevVal;
   _$jscoverage['/mvc/view.js'].lineData[33]++;
-  if (visit108_33_1(prevVal)) {
-    _$jscoverage['/mvc/view.js'].lineData[34]++;
+  var prevVal = e.prevVal;
+  _$jscoverage['/mvc/view.js'].lineData[34]++;
+  if (visit108_34_1(prevVal)) {
+    _$jscoverage['/mvc/view.js'].lineData[35]++;
     this._removeEvents(prevVal);
   }
-  _$jscoverage['/mvc/view.js'].lineData[36]++;
+  _$jscoverage['/mvc/view.js'].lineData[37]++;
   this._addEvents(e.newVal);
 }, 
   _removeEvents: function(events) {
   _$jscoverage['/mvc/view.js'].functionData[4]++;
-  _$jscoverage['/mvc/view.js'].lineData[40]++;
-  var el = this.get("el");
   _$jscoverage['/mvc/view.js'].lineData[41]++;
+  var el = this.get("el");
+  _$jscoverage['/mvc/view.js'].lineData[42]++;
   for (var selector in events) {
-    _$jscoverage['/mvc/view.js'].lineData[42]++;
-    var event = events[selector];
     _$jscoverage['/mvc/view.js'].lineData[43]++;
+    var event = events[selector];
+    _$jscoverage['/mvc/view.js'].lineData[44]++;
     for (var type in event) {
-      _$jscoverage['/mvc/view.js'].lineData[44]++;
-      var callback = normFn(this, event[type]);
       _$jscoverage['/mvc/view.js'].lineData[45]++;
+      var callback = normFn(this, event[type]);
+      _$jscoverage['/mvc/view.js'].lineData[46]++;
       el.undelegate(type, selector, callback, this);
     }
   }
 }, 
   _addEvents: function(events) {
   _$jscoverage['/mvc/view.js'].functionData[5]++;
-  _$jscoverage['/mvc/view.js'].lineData[51]++;
-  var el = this.get("el");
   _$jscoverage['/mvc/view.js'].lineData[52]++;
+  var el = this.get("el");
+  _$jscoverage['/mvc/view.js'].lineData[53]++;
   for (var selector in events) {
-    _$jscoverage['/mvc/view.js'].lineData[53]++;
-    var event = events[selector];
     _$jscoverage['/mvc/view.js'].lineData[54]++;
+    var event = events[selector];
+    _$jscoverage['/mvc/view.js'].lineData[55]++;
     for (var type in event) {
-      _$jscoverage['/mvc/view.js'].lineData[55]++;
-      var callback = normFn(this, event[type]);
       _$jscoverage['/mvc/view.js'].lineData[56]++;
+      var callback = normFn(this, event[type]);
+      _$jscoverage['/mvc/view.js'].lineData[57]++;
       el.delegate(type, selector, callback, this);
     }
   }
 }, 
   render: function() {
   _$jscoverage['/mvc/view.js'].functionData[6]++;
-  _$jscoverage['/mvc/view.js'].lineData[65]++;
+  _$jscoverage['/mvc/view.js'].lineData[66]++;
   return this;
 }, 
   destroy: function() {
   _$jscoverage['/mvc/view.js'].functionData[7]++;
-  _$jscoverage['/mvc/view.js'].lineData[72]++;
+  _$jscoverage['/mvc/view.js'].lineData[73]++;
   this.get("el").remove();
 }}, {
   ATTRS: {
@@ -391,14 +391,14 @@ KISSY.add("mvc/view", function(S, Node, Base) {
   value: "<div />", 
   getter: function(s) {
   _$jscoverage['/mvc/view.js'].functionData[8]++;
-  _$jscoverage['/mvc/view.js'].lineData[90]++;
-  if (visit109_90_1(typeof s == 'string')) {
-    _$jscoverage['/mvc/view.js'].lineData[91]++;
-    s = $(s);
+  _$jscoverage['/mvc/view.js'].lineData[91]++;
+  if (visit109_91_1(typeof s == 'string')) {
     _$jscoverage['/mvc/view.js'].lineData[92]++;
+    s = $(s);
+    _$jscoverage['/mvc/view.js'].lineData[93]++;
     this.setInternal("el", s);
   }
-  _$jscoverage['/mvc/view.js'].lineData[94]++;
+  _$jscoverage['/mvc/view.js'].lineData[95]++;
   return s;
 }}, 
   events: {}}});

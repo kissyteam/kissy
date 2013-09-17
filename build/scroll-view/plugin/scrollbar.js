@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 16 15:18
+build time: Sep 17 23:09
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -96,6 +96,7 @@ KISSY.add('scroll-view/plugin/scrollbar/scrollbar-xtpl', function () {
     }
 });
 /**
+ * @ignore
  * render for scrollbar
  * @author yiminghe@gmail.com
  */
@@ -233,6 +234,7 @@ KISSY.add('scroll-view/plugin/scrollbar/render', function (S, Control, ScrollBar
     requires: ['component/control', './scrollbar-xtpl']
 });
 /**
+ * @ignore
  * scrollbar for KISSY scroll-view
  * @author yiminghe@gmail.com
  */
@@ -249,6 +251,8 @@ KISSY.add('scroll-view/plugin/scrollbar/control', function (S, Node, Control, Sc
 
     /**
      * @class KISSY.ScrollView.ScrollBar
+     * @extend KISSY.Component.Control
+     * @private
      */
     return Control.extend({
         initializer: function () {
@@ -522,10 +526,16 @@ KISSY.add('scroll-view/plugin/scrollbar/control', function (S, Node, Control, Sc
     requires: ['node', 'component/control', './render']
 });
 /**
+ * @ignore
  * scrollbar plugin for KISSY scroll-view
  * @author yiminghe@gmail.com
  */
 KISSY.add('scroll-view/plugin/scrollbar', function (S, Base, ScrollBar) {
+    /**
+     * ScrollBar plugin for ScrollView
+     * @class KISSY.ScrollView.Plugin.ScrollBar
+     * @extend KISSY.Base
+     */
     return Base.extend({
         pluginId: this.getName(),
 

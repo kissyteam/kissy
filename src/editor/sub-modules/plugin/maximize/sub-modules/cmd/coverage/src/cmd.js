@@ -697,11 +697,11 @@ KISSY.add("editor/plugin/maximize/cmd", function(S, Editor) {
   _$jscoverage['/cmd.js'].lineData[226]++;
   editorEl.css({
   position: "absolute", 
-  zIndex: Editor.baseZIndex(Editor.ZIndexManager.MAXIMIZE),
+  zIndex: Editor.baseZIndex(Editor.ZIndexManager.MAXIMIZE), 
   width: viewportWidth + "px"});
   _$jscoverage['/cmd.js'].lineData[231]++;
   iframe.css({
-  zIndex: Editor.baseZIndex(Editor.ZIndexManager.MAXIMIZE - 5),
+  zIndex: Editor.baseZIndex(Editor.ZIndexManager.MAXIMIZE - 5), 
   height: viewportHeight + "px", 
   width: viewportWidth + "px"});
   _$jscoverage['/cmd.js'].lineData[236]++;

@@ -28,7 +28,7 @@ KISSY.add(function (S, mvc) {
                         mods.push(new TreeNodeModel(v));
                     }
                     this.getChildren().set("models", mods);
-                    return S.Base.INVALID;
+                    return this.INVALID;
                 }
             }
         }

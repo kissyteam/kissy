@@ -229,8 +229,8 @@ if (! this._$jscoverage) {
 if (! _$jscoverage['/kison/non-terminal.js']) {
   _$jscoverage['/kison/non-terminal.js'] = {};
   _$jscoverage['/kison/non-terminal.js'].lineData = [];
-  _$jscoverage['/kison/non-terminal.js'].lineData[5] = 0;
-  _$jscoverage['/kison/non-terminal.js'].lineData[7] = 0;
+  _$jscoverage['/kison/non-terminal.js'].lineData[6] = 0;
+  _$jscoverage['/kison/non-terminal.js'].lineData[11] = 0;
 }
 if (! _$jscoverage['/kison/non-terminal.js'].functionData) {
   _$jscoverage['/kison/non-terminal.js'].functionData = [];
@@ -239,10 +239,10 @@ if (! _$jscoverage['/kison/non-terminal.js'].functionData) {
 if (! _$jscoverage['/kison/non-terminal.js'].branchData) {
   _$jscoverage['/kison/non-terminal.js'].branchData = {};
 }
-_$jscoverage['/kison/non-terminal.js'].lineData[5]++;
+_$jscoverage['/kison/non-terminal.js'].lineData[6]++;
 KISSY.add("kison/non-terminal", function(S, Base) {
   _$jscoverage['/kison/non-terminal.js'].functionData[0]++;
-  _$jscoverage['/kison/non-terminal.js'].lineData[7]++;
+  _$jscoverage['/kison/non-terminal.js'].lineData[11]++;
   return Base.extend({}, {
   ATTRS: {
   productions: {

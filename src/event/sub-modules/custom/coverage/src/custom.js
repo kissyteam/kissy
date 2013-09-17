@@ -230,20 +230,34 @@ if (! _$jscoverage['/custom.js']) {
   _$jscoverage['/custom.js'] = {};
   _$jscoverage['/custom.js'].lineData = [];
   _$jscoverage['/custom.js'].lineData[6] = 0;
-  _$jscoverage['/custom.js'].lineData[8] = 0;
+  _$jscoverage['/custom.js'].lineData[7] = 0;
+  _$jscoverage['/custom.js'].lineData[22] = 0;
 }
 if (! _$jscoverage['/custom.js'].functionData) {
   _$jscoverage['/custom.js'].functionData = [];
   _$jscoverage['/custom.js'].functionData[0] = 0;
+  _$jscoverage['/custom.js'].functionData[1] = 0;
 }
 if (! _$jscoverage['/custom.js'].branchData) {
   _$jscoverage['/custom.js'].branchData = {};
+  _$jscoverage['/custom.js'].branchData['22'] = [];
+  _$jscoverage['/custom.js'].branchData['22'][1] = new BranchData();
 }
-_$jscoverage['/custom.js'].lineData[6]++;
+_$jscoverage['/custom.js'].branchData['22'][1].init(21, 18, 'k == \'constructor\'');
+function visit57_22_1(result) {
+  _$jscoverage['/custom.js'].branchData['22'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/custom.js'].lineData[6]++;
 KISSY.add('event/custom', function(S, Target) {
   _$jscoverage['/custom.js'].functionData[0]++;
-  _$jscoverage['/custom.js'].lineData[8]++;
+  _$jscoverage['/custom.js'].lineData[7]++;
   return {
-  Target: Target};
+  Target: Target, 
+  global: new Target(), 
+  targetObject: S.mix({}, Target.prototype, true, function(k, v) {
+  _$jscoverage['/custom.js'].functionData[1]++;
+  _$jscoverage['/custom.js'].lineData[22]++;
+  return visit57_22_1(k == 'constructor') ? undefined : v;
+})};
 }, {
   requires: ['./custom/target']});

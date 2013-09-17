@@ -771,7 +771,7 @@ KISSY.add("editor/plugin/draft", function(S, Json, Editor, localStorage, Overlay
   content: help, 
   prefixCls: prefixCls + 'editor-', 
   width: help.width() + "px", 
-  zIndex: Editor.baseZIndex(Editor.ZIndexManager.OVERLAY),
+  zIndex: Editor.baseZIndex(Editor.ZIndexManager.OVERLAY), 
   mask: false}).render();
   _$jscoverage['/draft.js'].lineData[244]++;
   self.helpPopup.get("el").css("border", "none");

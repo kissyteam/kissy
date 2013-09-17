@@ -230,7 +230,7 @@ if (! _$jscoverage['/tabs/tab.js']) {
   _$jscoverage['/tabs/tab.js'] = {};
   _$jscoverage['/tabs/tab.js'].lineData = [];
   _$jscoverage['/tabs/tab.js'].lineData[6] = 0;
-  _$jscoverage['/tabs/tab.js'].lineData[13] = 0;
+  _$jscoverage['/tabs/tab.js'].lineData[12] = 0;
   _$jscoverage['/tabs/tab.js'].lineData[16] = 0;
   _$jscoverage['/tabs/tab.js'].lineData[17] = 0;
 }
@@ -246,7 +246,7 @@ if (! _$jscoverage['/tabs/tab.js'].branchData) {
 _$jscoverage['/tabs/tab.js'].lineData[6]++;
 KISSY.add("tabs/tab", function(S, Button, TabRender) {
   _$jscoverage['/tabs/tab.js'].functionData[0]++;
-  _$jscoverage['/tabs/tab.js'].lineData[13]++;
+  _$jscoverage['/tabs/tab.js'].lineData[12]++;
   return Button.extend({
   isTabsTab: true, 
   bindUI: function() {

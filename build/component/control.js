@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 17 17:00
+build time: Sep 17 22:57
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -58,7 +58,7 @@ KISSY.add('component/control/process', function (S, Base, Promise) {
                 /**
                  * @event beforeCreateDom
                  * fired before root node is created
-                 * @param {KISSY.Event.CustomEventObject} e
+                 * @param {KISSY.Event.CustomEvent.Object} e
                  */
                 self.fire('beforeCreateDom');
                 self.createInternal();
@@ -66,7 +66,7 @@ KISSY.add('component/control/process', function (S, Base, Promise) {
                 /**
                  * @event afterCreateDom
                  * fired when root node is created
-                 * @param {KISSY.Event.CustomEventObject} e
+                 * @param {KISSY.Event.CustomEvent.Object} e
                  */
                 self.fire('afterCreateDom');
 
@@ -92,7 +92,7 @@ KISSY.add('component/control/process', function (S, Base, Promise) {
                 /**
                  * @event beforeRenderUI
                  * fired when root node is ready
-                 * @param {KISSY.Event.CustomEventObject} e
+                 * @param {KISSY.Event.CustomEvent.Object} e
                  */
 
                 self.fire('beforeRenderUI');
@@ -102,14 +102,14 @@ KISSY.add('component/control/process', function (S, Base, Promise) {
                 /**
                  * @event afterRenderUI
                  * fired after root node is rendered into dom
-                 * @param {KISSY.Event.CustomEventObject} e
+                 * @param {KISSY.Event.CustomEvent.Object} e
                  */
                 self.fire('afterRenderUI');
 
                 /**
                  * @event beforeBindUI
                  * fired before component 's internal event is bind.
-                 * @param {KISSY.Event.CustomEventObject} e
+                 * @param {KISSY.Event.CustomEvent.Object} e
                  */
 
                 self.fire('beforeBindUI');
@@ -119,7 +119,7 @@ KISSY.add('component/control/process', function (S, Base, Promise) {
                 /**
                  * @event afterBindUI
                  * fired when component 's internal event is bind.
-                 * @param {KISSY.Event.CustomEventObject} e
+                 * @param {KISSY.Event.CustomEvent.Object} e
                  */
                 self.fire('afterBindUI');
 
@@ -203,7 +203,7 @@ KISSY.add('component/control/process', function (S, Base, Promise) {
         /**
          * @event beforeSyncUI
          * fired before component 's internal state is synchronized.
-         * @param {KISSY.Event.CustomEventObject} e
+         * @param {KISSY.Event.CustomEvent.Object} e
          */
         self.fire('beforeSyncUI');
         self.syncUI();
@@ -211,7 +211,7 @@ KISSY.add('component/control/process', function (S, Base, Promise) {
         /**
          * @event afterSyncUI
          * fired after component 's internal state is synchronized.
-         * @param {KISSY.Event.CustomEventObject} e
+         * @param {KISSY.Event.CustomEvent.Object} e
          */
         self.fire('afterSyncUI');
     }
@@ -1034,7 +1034,7 @@ KISSY.add("component/control", function (S, Node, ComponentProcess, Manager, Ren
              * By default, this performs its associated action by calling
              * {@link KISSY.Component.Control#handleClickInternal}.
              * @protected
-             * @param {KISSY.Event.DomEventObject} ev Dom event to handle.
+             * @param {KISSY.Event.DomEvent.Object} ev Dom event to handle.
              */
             handleDblClickInternal: function (ev) {
                 this.handleClickInternal(ev);
@@ -1049,7 +1049,7 @@ KISSY.add("component/control", function (S, Node, ComponentProcess, Manager, Ren
             /**
              * Handle mouseenter events. If the component is not disabled, highlights it.
              * @protected
-             * @param {KISSY.Event.DomEventObject} ev Dom event to handle.
+             * @param {KISSY.Event.DomEvent.Object} ev Dom event to handle.
              */
             handleMouseEnterInternal: function (ev) {
                 this.set("highlighted", !!ev);
@@ -1064,7 +1064,7 @@ KISSY.add("component/control", function (S, Node, ComponentProcess, Manager, Ren
             /**
              * Handle mouseleave events. If the component is not disabled, de-highlights it.
              * @protected
-             * @param {KISSY.Event.DomEventObject} ev Dom event to handle.
+             * @param {KISSY.Event.DomEvent.Object} ev Dom event to handle.
              */
             handleMouseLeaveInternal: function (ev) {
                 var self = this;
@@ -1085,7 +1085,7 @@ KISSY.add("component/control", function (S, Node, ComponentProcess, Manager, Ren
              * If the component is focusable, then focus it,
              * else prevent it from receiving keyboard focus.
              * @protected
-             * @param {KISSY.Event.DomEventObject} ev Dom event to handle.
+             * @param {KISSY.Event.DomEvent.Object} ev Dom event to handle.
              */
             handleMouseDownInternal: function (ev) {
                 var self = this,
@@ -1121,7 +1121,7 @@ KISSY.add("component/control", function (S, Node, ComponentProcess, Manager, Ren
              * If this component is not disabled, performs its associated action by calling
              * {@link KISSY.Component.Control#handleClickInternal}, then deactivates it.
              * @protected
-             * @param {KISSY.Event.DomEventObject} ev Dom event to handle.
+             * @param {KISSY.Event.DomEvent.Object} ev Dom event to handle.
              */
             handleMouseUpInternal: function (ev) {
                 var self = this;
@@ -1140,7 +1140,7 @@ KISSY.add("component/control", function (S, Node, ComponentProcess, Manager, Ren
             /**
              * Handles context menu.
              * @protected
-             * @param {KISSY.Event.DomEventObject} ev Dom event to handle.
+             * @param {KISSY.Event.DomEvent.Object} ev Dom event to handle.
              */
             handleContextMenuInternal: function (ev) {
             },
@@ -1187,7 +1187,7 @@ KISSY.add("component/control", function (S, Node, ComponentProcess, Manager, Ren
             /**
              * Handle enter keydown event to {@link KISSY.Component.Control#handleClickInternal}.
              * @protected
-             * @param {KISSY.Event.DomEventObject} ev Dom event to handle.
+             * @param {KISSY.Event.DomEvent.Object} ev Dom event to handle.
              */
             handleKeyDownInternal: function (ev) {
                 if (ev['keyCode'] == Node.KeyCode.ENTER) {
@@ -1205,7 +1205,7 @@ KISSY.add("component/control", function (S, Node, ComponentProcess, Manager, Ren
             /**
              * Performs the appropriate action when this component is activated by the user.
              * @protected
-             * @param {KISSY.Event.DomEventObject} ev Dom event to handle.
+             * @param {KISSY.Event.DomEvent.Object} ev Dom event to handle.
              */
             handleClickInternal: function (ev) {
             },
@@ -1600,10 +1600,6 @@ KISSY.add("component/control", function (S, Node, ComponentProcess, Manager, Ren
                  */
                 prefixXClass: {
                 },
-                /**
-                 * This component's xtype, xclass = prefixXClass + xtype.
-                 * @cfg {String} prefixXClass
-                 */
 
                 /**
                  * This component's parent component.

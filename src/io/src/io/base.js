@@ -478,7 +478,7 @@ KISSY.add('io/base', function (S, CustomEvent, undefined) {
         return self;
     }
 
-    S.mix(IO, new CustomEvent.Target());
+    S.mix(IO, CustomEvent.targetObject);
 
     S.mix(IO, {
         /**

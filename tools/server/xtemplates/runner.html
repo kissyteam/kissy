@@ -89,6 +89,8 @@
                     component:component,
                     path:location.pathname
                 }));
+            }else {
+                jasmine.kissyNext(self.results().failedCount);
             }
         });
     });

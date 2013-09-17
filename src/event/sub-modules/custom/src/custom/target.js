@@ -33,9 +33,6 @@ KISSY.add('event/custom/target', function (S, BaseEvent, CustomEventObservable) 
      * @class KISSY.Event.CustomEvent.Target
      */
     function Target() {
-        var self = this;
-        self[KS_BUBBLE_TARGETS] = [];
-        self[KS_CUSTOM_EVENTS] = {};
     }
 
     var KS_CUSTOM_EVENTS = '__~ks_custom_events';
@@ -53,9 +50,9 @@ KISSY.add('event/custom/target', function (S, BaseEvent, CustomEventObservable) 
          * @return {KISSY.Event.CustomEvent.CustomEventObservable}
          */
         getCustomEventObservable: function (type, create) {
-            var target = self,
+            var target = this,
                 customEvent,
-                customEventObservables = target[KS_CUSTOM_EVENTS];
+                customEventObservables = target.getCustomEvents();
             customEvent = customEventObservables && customEventObservables[type];
             if (!customEvent && create) {
                 customEvent = customEventObservables[type] = new CustomEventObservable({
@@ -188,7 +185,11 @@ KISSY.add('event/custom/target', function (S, BaseEvent, CustomEventObservable) 
          * @return {KISSY.Event.CustomEvent.Target[]}
          */
         getTargets: function () {
-            return self[KS_BUBBLE_TARGETS];
+            return this[KS_BUBBLE_TARGETS]||(this[KS_BUBBLE_TARGETS]=[]);
+        },
+
+        getCustomEvents:function(){
+            return this[KS_CUSTOM_EVENTS]||(this[KS_CUSTOM_EVENTS]={});
         },
 
         /**
@@ -234,7 +235,7 @@ KISSY.add('event/custom/target', function (S, BaseEvent, CustomEventObservable) 
                         customEvent.detach(cfg);
                     }
                 } else {
-                    customEvents = self[KS_CUSTOM_EVENTS];
+                    customEvents = self.getCustomEvents();
                     S.each(customEvents, function (customEvent) {
                         customEvent.detach(cfg);
                     });
@@ -244,6 +245,8 @@ KISSY.add('event/custom/target', function (S, BaseEvent, CustomEventObservable) 
             return self; // chain
         }
     };
+
+    return Target;
 }, {
     requires: ['event/base', './observable']
 });

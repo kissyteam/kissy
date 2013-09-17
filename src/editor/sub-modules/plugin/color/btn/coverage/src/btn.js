@@ -470,7 +470,7 @@ KISSY.add("editor/plugin/color/btn", function(S, Editor, Button, Overlay4E, Dial
   content: S.substitute(html, {
   prefixCls: prefixCls}), 
   width: 172, 
-  zIndex: Editor.baseZIndex(Editor.zIndexManager.POPUP_MENU)}).render();
+  zIndex: Editor.baseZIndex(Editor.ZIndexManager.POPUP_MENU)}).render();
   _$jscoverage['/btn.js'].lineData[96]++;
   var colorWin = self.colorWin;
   _$jscoverage['/btn.js'].lineData[97]++;

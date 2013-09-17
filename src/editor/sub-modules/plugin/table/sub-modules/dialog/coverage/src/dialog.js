@@ -541,7 +541,7 @@ function visit39_400_1(result) {
 function visit38_384_1(result) {
   _$jscoverage['/dialog.js'].branchData['384'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['382'][1].init(2167, 8, 'r < rows');
+}_$jscoverage['/dialog.js'].branchData['382'][1].init(2156, 8, 'r < rows');
 function visit37_382_1(result) {
   _$jscoverage['/dialog.js'].branchData['382'][1].ranCondition(result);
   return result;
@@ -549,7 +549,7 @@ function visit37_382_1(result) {
 function visit36_373_1(result) {
   _$jscoverage['/dialog.js'].branchData['373'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['370'][1].init(1775, 20, 'd.thead.get("value")');
+}_$jscoverage['/dialog.js'].branchData['370'][1].init(1764, 20, 'd.thead.get("value")');
 function visit35_370_1(result) {
   _$jscoverage['/dialog.js'].branchData['370'][1].ranCondition(result);
   return result;
@@ -601,11 +601,11 @@ function visit24_323_1(result) {
 function visit23_322_1(result) {
   _$jscoverage['/dialog.js'].branchData['322'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['312'][1].init(2422, 7, 'caption');
+}_$jscoverage['/dialog.js'].branchData['312'][1].init(2411, 7, 'caption');
 function visit22_312_1(result) {
   _$jscoverage['/dialog.js'].branchData['312'][1].ranCondition(result);
   return result;
-}_$jscoverage['/dialog.js'].branchData['300'][1].init(98, 21, 'caption && caption[0]');
+}_$jscoverage['/dialog.js'].branchData['300'][1].init(87, 21, 'caption && caption[0]');
 function visit21_300_1(result) {
   _$jscoverage['/dialog.js'].branchData['300'][1].ranCondition(result);
   return result;
@@ -882,7 +882,7 @@ KISSY.add("editor/plugin/table/dialog", function(S, Editor, Dialog4E, MenuButton
   _$jscoverage['/dialog.js'].lineData[298]++;
   if (visit20_298_1(valid(d.tcaption.val()))) {
     _$jscoverage['/dialog.js'].lineData[299]++;
-    var tcv = Editor.Utils.htmlEncode(trim(d.tcaption.val()));
+    var tcv = S.escapeHtml(trim(d.tcaption.val()));
     _$jscoverage['/dialog.js'].lineData[300]++;
     if (visit21_300_1(caption && caption[0])) {
       _$jscoverage['/dialog.js'].lineData[301]++;
@@ -954,7 +954,7 @@ KISSY.add("editor/plugin/table/dialog", function(S, Editor, Dialog4E, MenuButton
   _$jscoverage['/dialog.js'].lineData[366]++;
   if (visit34_366_1(valid(d.tcaption.val()))) {
     _$jscoverage['/dialog.js'].lineData[367]++;
-    html += "<caption><span>" + Editor.Utils.htmlEncode(trim(d.tcaption.val())) + "</span></caption>";
+    html += "<caption><span>" + S.escapeHtml(trim(d.tcaption.val())) + "</span></caption>";
   }
   _$jscoverage['/dialog.js'].lineData[370]++;
   if (visit35_370_1(d.thead.get("value"))) {

@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 16 19:20
+build time: Sep 17 22:59
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -94,7 +94,7 @@ KISSY.add('dom/base/api', function (S) {
             /**
              * Whether has been set a custom domain.
              * Note not perfect: localhost:8888, domain='localhost'
-             * @param {window} [win] Test window. Default current window.
+             * @param {Window} [win] Test window. Default current window.
              * @return {Boolean}
              */
             isCustomDomain: function (win) {
@@ -109,7 +109,7 @@ KISSY.add('dom/base/api', function (S) {
             /**
              * Get appropriate src for new empty iframe.
              * Consider custom domain.
-             * @param {window} [win] Window new iframe will be inserted into.
+             * @param {Window} [win] Window new iframe will be inserted into.
              * @return {String} Src for iframe.
              */
             getEmptyIframeSrc: function (win) {
@@ -132,8 +132,8 @@ KISSY.add('dom/base/api', function (S) {
              * Return corresponding window if elem is document or window.
              * Return global window if elem is undefined
              * Else return false.
-             * @param {undefined|window|HTMLDocument} [elem]
-             * @return {window|Boolean}
+             * @param {undefined|Window|HTMLDocument} [elem]
+             * @return {Window|Boolean}
              */
             getWindow: function (elem) {
                 if (!elem) {
@@ -158,7 +158,7 @@ KISSY.add('dom/base/api', function (S) {
 
             /**
              * Return corresponding document of this element.
-             * @param {Element|window|HTMLDocument} [elem]
+             * @param {HTMLElement|Window|HTMLDocument} [elem]
              * @return {HTMLDocument}
              */
             getDocument: function (elem) {
@@ -2133,7 +2133,7 @@ KISSY.add('dom/base/offset', function (S, Dom, undefined) {
              * which are integers indicating the new top and left coordinates for the elements.
              * @param {Number} [coordinates.left ] the new top and left coordinates for the elements.
              * @param {Number} [coordinates.top ] the new top and top coordinates for the elements.
-             * @param {window} [relativeWin] The window to measure relative to. If relativeWin
+             * @param {Window} [relativeWin] The window to measure relative to. If relativeWin
              *     is not in the ancestor frame chain of the element, we measure relative to
              *     the top-most window.
              * @return {Object|undefined} if Get, the format of returned value is same with coordinates.
@@ -2315,25 +2315,25 @@ KISSY.add('dom/base/offset', function (S, Dom, undefined) {
 
             /**
              * Get the width of document
-             * @param {window} [win=window] Window to be referred.
+             * @param {Window} [win=window] Window to be referred.
              * @method
              */
             docWidth: 0,
             /**
              * Get the height of document
-             * @param {window} [win=window] Window to be referred.
+             * @param {Window} [win=window] Window to be referred.
              * @method
              */
             docHeight: 0,
             /**
              * Get the height of window
-             * @param {window} [win=window] Window to be referred.
+             * @param {Window} [win=window] Window to be referred.
              * @method
              */
             viewportHeight: 0,
             /**
              * Get the width of document
-             * @param {window} [win=window] Window to be referred.
+             * @param {Window} [win=window] Window to be referred.
              * @method
              */
             viewportWidth: 0,
@@ -2341,7 +2341,7 @@ KISSY.add('dom/base/offset', function (S, Dom, undefined) {
              * Get the current vertical position of the scroll bar for the first element in the set of matched elements.
              * or
              * Set the current vertical position of the scroll bar for each of the set of matched elements.
-             * @param {HTMLElement[]|String|HTMLElement|window} selector matched elements
+             * @param {HTMLElement[]|String|HTMLElement|Window} selector matched elements
              * @param {Number} value An integer indicating the new position to set the scroll bar to.
              * @method
              */
@@ -2350,7 +2350,7 @@ KISSY.add('dom/base/offset', function (S, Dom, undefined) {
              * Get the current horizontal position of the scroll bar for the first element in the set of matched elements.
              * or
              * Set the current horizontal position of the scroll bar for each of the set of matched elements.
-             * @param {HTMLElement[]|String|HTMLElement|window} selector matched elements
+             * @param {HTMLElement[]|String|HTMLElement|Window} selector matched elements
              * @param {Number} value An integer indicating the new position to set the scroll bar to.
              * @method
              */
@@ -2851,7 +2851,7 @@ KISSY.add('dom/base/style', function (S, Dom, undefined) {
              * Creates a stylesheet from a text blob of rules.
              * These rules will be wrapped in a style tag and appended to the HEAD of the document.
              * if cssText does not contain css hacks, u can just use Dom.create('<style>xx</style>')
-             * @param {window} [refWin=window] Window which will accept this stylesheet
+             * @param {Window} [refWin=window] Window which will accept this stylesheet
              * @param {String} [cssText] The text containing the css rules
              * @param {String} [id] An id to add to the stylesheet for later removal
              */
@@ -3259,7 +3259,7 @@ KISSY.add('dom/base/style', function (S, Dom, undefined) {
  */
 /**
  * @ignore
- * selector
+ * simple selector for dom
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('dom/base/selector', function (S, Dom, undefined) {
@@ -3556,7 +3556,7 @@ KISSY.add('dom/base/selector', function (S, Dom, undefined) {
              * A string containing a selector expression.
              * or
              * array of HTMLElements.
-             * @param {String|HTMLElement[]|HTMLDocument|HTMLElement|window} [context] context under which to find elements matching selector.
+             * @param {String|HTMLElement[]|HTMLDocument|HTMLElement|Window} [context] context under which to find elements matching selector.
              * @return {HTMLElement} The first of found HTMLElements
              */
             get: function (selector, context) {
@@ -3689,6 +3689,7 @@ KISSY.add('dom/base/selector', function (S, Dom, undefined) {
     requires: ['./api']
 });
 /**
+ * @ignore
  * bachi selector optimize - 2013-07-17
  * - http://jsperf.com/queryselctor-vs-getelementbyclassname2
  * yiminghe@gmail.com - 2013-03-26

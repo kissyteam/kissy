@@ -229,9 +229,9 @@ if (! this._$jscoverage) {
 if (! _$jscoverage['/menubutton/option.js']) {
   _$jscoverage['/menubutton/option.js'] = {};
   _$jscoverage['/menubutton/option.js'].lineData = [];
-  _$jscoverage['/menubutton/option.js'].lineData[5] = 0;
   _$jscoverage['/menubutton/option.js'].lineData[6] = 0;
-  _$jscoverage['/menubutton/option.js'].lineData[13] = 0;
+  _$jscoverage['/menubutton/option.js'].lineData[7] = 0;
+  _$jscoverage['/menubutton/option.js'].lineData[14] = 0;
 }
 if (! _$jscoverage['/menubutton/option.js'].functionData) {
   _$jscoverage['/menubutton/option.js'].functionData = [];
@@ -240,12 +240,12 @@ if (! _$jscoverage['/menubutton/option.js'].functionData) {
 if (! _$jscoverage['/menubutton/option.js'].branchData) {
   _$jscoverage['/menubutton/option.js'].branchData = {};
 }
-_$jscoverage['/menubutton/option.js'].lineData[5]++;
+_$jscoverage['/menubutton/option.js'].lineData[6]++;
 KISSY.add("menubutton/option", function(S, Menu) {
   _$jscoverage['/menubutton/option.js'].functionData[0]++;
-  _$jscoverage['/menubutton/option.js'].lineData[6]++;
+  _$jscoverage['/menubutton/option.js'].lineData[7]++;
   var MenuItem = Menu.Item;
-  _$jscoverage['/menubutton/option.js'].lineData[13]++;
+  _$jscoverage['/menubutton/option.js'].lineData[14]++;
   return MenuItem.extend({}, {
   ATTRS: {
   selectable: {

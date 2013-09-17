@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 17 17:00
+build time: Sep 17 22:57
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -16,15 +16,8 @@ build time: Sep 17 17:00
  * @author yiminghe@gmail.com
  */
 KISSY.add('component/container/render', function (S, Control, Manager) {
-    /**
-     * User KISSY.Component.Container.getDefaultRender() to get this class
-     * @class KISSY.Component.Container.Render
-     */
     return Control.getDefaultRender().extend([], {
-        /**
-         * decorate child element from parent component's root element.
-         * @protected
-         */
+        // decorate child element from parent component's root element.
         decorateDom: function () {
             var self = this,
                 childrenContainerEl = self.getChildrenContainerEl(),
@@ -46,11 +39,8 @@ KISSY.add('component/container/render', function (S, Control, Manager) {
             });
             control.set('children', childrenComponents);
         },
-        /**
-         * Return the dom element into which child component to be rendered.
-         * @protected
-         * @return {KISSY.NodeList}
-         */
+
+        // Return the dom element into which child component to be rendered.
         getChildrenContainerEl: function () {
             return this.$el;
         }
@@ -275,7 +265,7 @@ KISSY.add('component/container', function (S, Control, ContainerRender) {
 
         /**
          * Removes every child component attached to current component.
-         * see {@link KISSY.Component.Control#removeChild}
+         * see {@link KISSY.Component.Container#removeChild}
          * @param {Boolean} [destroy] If true,
          * calls ``destroy()`` on the removed child component.
          * @chainable

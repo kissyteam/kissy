@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 16 18:14
+build time: Sep 17 23:01
 */
 KISSY.add("editor/plugin/flash-bridge",function(d,h,i){function e(a){this._init(a)}var f={};d.augment(e,d.EventTarget,{_init:function(a){var b=d.guid("flash-bridge-");a.id=b;a.attrs=a.attrs||{};a.params=a.params||{};var c=a.attrs,g=a.params,e=g.flashVars=g.flashVars||{};d.mix(c,{width:1,height:1},!1);d.mix(g,{allowScriptAccess:"always",allowNetworking:"all",scale:"noScale"},!1);d.mix(e,{shareData:!1,useCompression:!1},!1);c={YUISwfId:b,YUIBridgeCallback:"KISSY.require('editor').FlashBridge.EventHandler"};
 a.ajbridge&&(c={swfID:b,jsEntry:"KISSY.require('editor').FlashBridge.EventHandler"});d.mix(e,c);f[b]=this;this.id=b;this.swf=new h(a);this._expose(a.methods)},_expose:function(a){for(var b=this,c=0;c<a.length;c++)(function(a){b[a]=function(){return b._callSWF(a,d.makeArray(arguments))}})(a[c])},_callSWF:function(a,b){return this.swf.callSWF(a,b)},_eventHandler:function(a){var b=a.type;"log"===b?a.message:b&&this.fire(b,a)},ready:function(a){if(this._ready)a.call(this);else this.on("contentReady",

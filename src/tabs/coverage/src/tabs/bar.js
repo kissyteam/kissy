@@ -230,7 +230,7 @@ if (! _$jscoverage['/tabs/bar.js']) {
   _$jscoverage['/tabs/bar.js'] = {};
   _$jscoverage['/tabs/bar.js'].lineData = [];
   _$jscoverage['/tabs/bar.js'].lineData[6] = 0;
-  _$jscoverage['/tabs/bar.js'].lineData[11] = 0;
+  _$jscoverage['/tabs/bar.js'].lineData[12] = 0;
   _$jscoverage['/tabs/bar.js'].lineData[14] = 0;
   _$jscoverage['/tabs/bar.js'].lineData[15] = 0;
   _$jscoverage['/tabs/bar.js'].lineData[16] = 0;
@@ -313,7 +313,7 @@ function visit1_16_1(result) {
 }_$jscoverage['/tabs/bar.js'].lineData[6]++;
 KISSY.add("tabs/bar", function(S, Toolbar, BarRender, undefined) {
   _$jscoverage['/tabs/bar.js'].functionData[0]++;
-  _$jscoverage['/tabs/bar.js'].lineData[11]++;
+  _$jscoverage['/tabs/bar.js'].lineData[12]++;
   var TabBar = Toolbar.extend({
   bindUI: function() {
   _$jscoverage['/tabs/bar.js'].functionData[1]++;

@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 16 17:32
+build time: Sep 18 01:00
 */
 /**
  * @ignore
@@ -12,14 +12,12 @@ build time: Sep 16 17:32
 /**
  * The KISSY global namespace object. you can use
  *
- * for example:
- *      @example
+ *
  *      KISSY.each/mix
  *
  * to do basic operation. or
  *
- * for example:
- *      @example
+ *
  *      KISSY.use('overlay,node', function(S, Overlay, Node){
  *          //
  *      });
@@ -44,11 +42,12 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20130916173200' will replace with current timestamp when compressing.
+         * NOTICE: '20130918010018' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130916173200',
+        __BUILD_TIME: '20130918010018',
+
         /**
          * KISSY Environment.
          * @private
@@ -57,6 +56,7 @@ var KISSY = (function (undefined) {
         Env: {
             host: host
         },
+
         /**
          * KISSY Config.
          * If load kissy.js, Config.debug defaults to true.
@@ -80,16 +80,27 @@ var KISSY = (function (undefined) {
 
         /**
          * set KISSY configuration
-         * @param {Object|String}   configName Config object or config key.
-         * @param {String} configName.base   KISSY 's base path. Default: get from kissy(-min).js or seed(-min).js
-         * @param {String} configName.tag    KISSY 's timestamp for native module. Default: KISSY 's build time.
-         * @param {Boolean} configName.debug     whether to enable debug mod.
-         * @param {Boolean} configName.combine   whether to enable combo.
+         * @param {Object|String} configName Config object or config key.
+         * @param {String} configName.base KISSY 's base path. Default: get from kissy(-min).js or seed(-min).js
+         * @param {String} configName.tag KISSY 's timestamp for native module. Default: KISSY 's build time.
+         * @param {Boolean} configName.debug whether to enable debug mod.
+         * @param {Boolean} configName.combine whether to enable combo.
+         * @param {Object} configName.logger logger config
+         * @param {Object[]} configName.logger.excludes  exclude configs
+         * @param {Object} configName.logger.excludes.0 a single exclude config
+         * @param {RegExp} configName.logger.excludes.0.logger  matched logger will be excluded from logging
+         * @param {KISSY.Logger.Level} configName.logger.excludes.0.minLevel  minimum logger level
+         * @param {KISSY.Logger.Level} configName.logger.excludes.0.maxLevel  maximum logger level
+         * @param {Object[]} configName.logger.includes include configs
+         * @param {Object} configName.logger.includes.0 a single include config
+         * @param {RegExp} configName.logger.includes.0.logger  matched logger will be included from logging
+         * @param {KISSY.Logger.Level} configName.logger.excludes.0.minLevel  minimum logger level
+         * @param {KISSY.Logger.Level} configName.logger.excludes.0.maxLevel  maximum logger level
          * @param {Object} configName.packages Packages definition with package name as the key.
-         * @param {String} configName.packages.base    Package base path.
-         * @param {String} configName.packages.tag     Timestamp for this package's module file.
-         * @param {String} configName.packages.debug     Whether force debug mode for current package.
-         * @param {String} configName.packages.combine     Whether allow combine for current package modules.
+         * @param {String} configName.packages.base Package base path.
+         * @param {String} configName.packages.tag  Timestamp for this package's module file.
+         * @param {String} configName.packages.debug Whether force debug mode for current package.
+         * @param {String} configName.packages.combine Whether allow combine for current package modules.
          * @param {String} [configName.packages.ignorePackageNameInUri=false] whether remove packageName from module request uri,
          * can only be used in production mode.
          * @param {Array[]} configName.map file map      File url map configs.
@@ -199,8 +210,14 @@ var KISSY = (function (undefined) {
                     return msg;
                 }
             }
+            return undefined;
         },
 
+        /**
+         * get log instance for specified logger
+         * @param {String} logger logger name
+         * @returns {KISSY.Logger} log instance
+         */
         'getLogger': function (logger) {
             return getLogger(logger);
         },
@@ -230,9 +247,48 @@ var KISSY = (function (undefined) {
             excludes: [
                 {
                     logger: /^s\/.*/,
-                    maxLevel: 'info'
+                    maxLevel: 'info',
+                    minLevel: 'debug'
                 }
             ]
+        };
+
+        /**
+         * Log class for specified logger
+         * @class KISSY.Logger
+         * @private
+         */
+        function Logger() {
+
+        }
+
+        /**
+         * print debug log
+         * @method
+         * @param {String} str log str
+         */
+        Logger.prototype.debug = function (str) {
+        };
+        /**
+         * print info log
+         * @method
+         * @param {String} str log str
+         */
+        Logger.prototype.info = function (str) {
+        };
+        /**
+         * print warn log
+         * @method
+         * @param {String} str log str
+         */
+        Logger.prototype.warn = function (str) {
+        };
+        /**
+         * print error log
+         * @method
+         * @param {String} str log str
+         */
+        Logger.prototype.error = function (str) {
         };
     }
 
@@ -245,6 +301,32 @@ var KISSY = (function (undefined) {
         });
         return obj;
     }
+
+
+    /**
+     * Logger level enum
+     * @enum {String} KISSY.Logger.Level
+     */
+    S.Logger = /**@type Function
+     @ignore */{};
+    S.Logger.Level = {
+        /**
+         * debug level
+         */
+        'DEBUG': 'debug',
+        /**
+         * info level
+         */
+        INFO: 'info',
+        /**
+         * warn level
+         */
+        WARN: 'warn',
+        /**
+         * error level
+         */
+        ERROR: 'error'
+    };
 
     return S;
 })();/**
@@ -310,7 +392,10 @@ var KISSY = (function (undefined) {
             var result = [], p, i;
 
             for (p in o) {
-                result.push(p);
+                // S.keys(new XX())
+                if (o.hasOwnProperty(p)) {
+                    result.push(p);
+                }
             }
 
             if (hasEnumBug) {
@@ -411,7 +496,6 @@ var KISSY = (function (undefined) {
             var args = S.makeArray(arguments),
                 len = args.length - 2,
                 i = 1,
-                p,
                 proto,
                 arg,
                 ov = args[len],
@@ -430,15 +514,7 @@ var KISSY = (function (undefined) {
             for (; i < len; i++) {
                 arg = args[i];
                 if (proto = arg.prototype) {
-                    arg = {};
-                    var protoArray = S.keys(proto);
-                    var protoLen = protoArray.length;
-                    for (var j = 0; j < protoLen; j++) {
-                        p = protoArray[j];
-                        if (p != 'constructor') {
-                            arg[p] = proto[p];
-                        }
-                    }
+                    arg = S.mix({}, proto, true, removeConstructor);
                 }
                 S.mix(r.prototype, arg, ov, wl);
             }
@@ -564,6 +640,10 @@ var KISSY = (function (undefined) {
         }
 
         return r;
+    }
+
+    function removeConstructor(k, v) {
+        return k == 'constructor' ? undefined : v;
     }
 
     function _mix(p, r, s, ov, wl, deep, cache) {
@@ -1856,7 +1936,6 @@ var KISSY = (function (undefined) {
  * @author yiminghe@gmail.com
  */
 (function (S, undefined) {
-
     var PROMISE_VALUE = '__promise_value',
         logger= S.getLogger('s/promise'),
         PROMISE_PENDINGS = '__promise_pendings';
@@ -1899,7 +1978,7 @@ var KISSY = (function (undefined) {
 
     /**
      * @class KISSY.Defer
-     * Defer constructor For KISSY,implement Promise specification.
+     * Defer constructor For KISSY, implement Promise specification.
      */
     function Defer(promise) {
         var self = this;
@@ -2046,6 +2125,13 @@ var KISSY = (function (undefined) {
         }
     };
 
+    /**
+     * Reject promise
+     * @param {String|KISSY.Promise.Reject} reason reject reason
+     * @class KISSY.Promise.Reject
+     * @extend KISSY.Promise
+     * @private
+     */
     function Reject(reason) {
         if (reason instanceof Reject) {
             return reason;
@@ -2060,13 +2146,8 @@ var KISSY = (function (undefined) {
 
     S.extend(Reject, Promise);
 
-    /**
-     * wrap for promiseWhen
-     * @param value
-     * @ignore
-     * @param fulfilled
-     * @param [rejected]
-     */
+
+    // wrap for promiseWhen
     function when(value, fulfilled, rejected) {
         var defer = new Defer(),
             done = 0;
@@ -2155,12 +2236,7 @@ var KISSY = (function (undefined) {
     KISSY.Promise = Promise;
     Promise.Defer = Defer;
 
-    S.mix(Promise,
-        /**
-         * @class KISSY.PromiseMix
-         * @override KISSY.Promise
-         */
-        {
+    S.mix(Promise,{
             /**
              * register callbacks when obj as a promise is resolved
              * or call fulfilled callback directly when obj is not a promise object
@@ -2188,6 +2264,7 @@ var KISSY = (function (undefined) {
              *
              * @static
              * @method
+             * @member KISSY.Promise
              */
             when: when,
             /**
@@ -2196,6 +2273,7 @@ var KISSY = (function (undefined) {
              * @static
              * @param obj the tested object
              * @return {Boolean}
+             * @member KISSY.Promise
              */
             isPromise: isPromise,
             /**
@@ -2204,6 +2282,7 @@ var KISSY = (function (undefined) {
              * @static
              * @param obj the tested object
              * @return {Boolean}
+             * @member KISSY.Promise
              */
             isResolved: isResolved,
             /**
@@ -2212,6 +2291,7 @@ var KISSY = (function (undefined) {
              * @static
              * @param obj the tested object
              * @return {Boolean}
+             * @member KISSY.Promise
              */
             isRejected: isRejected,
             /**
@@ -2221,6 +2301,7 @@ var KISSY = (function (undefined) {
              * @param {KISSY.Promise[]} promises list of promises
              * @static
              * @return {KISSY.Promise}
+             * @member KISSY.Promise
              */
             all: function (promises) {
                 var count = promises.length;
@@ -2265,23 +2346,17 @@ var KISSY = (function (undefined) {
  * @author yiminghe@gmail.com
  */
 (function (S) {
-
     // [root, dir, basename, ext]
     var splitPathRe = /^(\/?)([\s\S]+\/(?!$)|\/)?((?:\.{1,2}$|[\s\S]+?)?(\.[^.\/]*)?)$/;
 
-    /**
-     * Remove .. and . in path array
-     * @ignore
-     * @param parts
-     * @param allowAboveRoot
-     * @return {*}
-     */
+
+    // Remove .. and . in path array
     function normalizeArray(parts, allowAboveRoot) {
         // level above root
         var up = 0,
             i = parts.length - 1,
-            // splice costs a lot in ie
-            // use new array instead
+        // splice costs a lot in ie
+        // use new array instead
             newParts = [],
             last;
 
@@ -2314,11 +2389,10 @@ var KISSY = (function (undefined) {
      * @class KISSY.Path
      * @singleton
      */
-    var Path = {
+    var Path = S.Path = {
 
         /**
          * resolve([from ...], to)
-         *
          * @return {String} Resolved path.
          */
         resolve: function () {
@@ -2349,8 +2423,7 @@ var KISSY = (function (undefined) {
          * normalize .. and . in path
          * @param {String} path Path tobe normalized
          *
-         * for example:
-         *      @example
+         *
          *      'x/y/../z' => 'x/z'
          *      'x/y/z/../' => 'x/y/'
          *
@@ -2392,8 +2465,7 @@ var KISSY = (function (undefined) {
          * @param {String} from
          * @param {String} to
          *
-         * for example:
-         *      @example
+         *
          *      relative('x/','x/y/z') => 'y/z'
          *      relative('x/t/z','x/') => '../../'
          *
@@ -2451,6 +2523,7 @@ var KISSY = (function (undefined) {
 
         /**
          * Get dirname of path
+         * @param {String} path
          * @return {String}
          */
         dirname: function (path) {
@@ -2479,11 +2552,7 @@ var KISSY = (function (undefined) {
         extname: function (path) {
             return (path.match(splitPathRe) || [])[4] || '';
         }
-
     };
-    if (Path) {
-        S.Path = Path;
-    }
 })(KISSY);
 /*
  Refer
@@ -2494,7 +2563,6 @@ var KISSY = (function (undefined) {
  * @author yiminghe@gmail.com
  */
 (function (S, undefined) {
-
     var reDisallowedInSchemeOrUserInfo = /[#\/\?@]/g,
         reDisallowedInPathName = /[#\?]/g,
         logger= S.getLogger('s/uri'),
@@ -2579,7 +2647,6 @@ var KISSY = (function (undefined) {
     function Query(query) {
         this._query = query || '';
     }
-
 
     Query.prototype = {
         constructor: Query,
@@ -2772,7 +2839,6 @@ var KISSY = (function (undefined) {
         });
     }
 
-
     /**
      * @class KISSY.Uri
      * Uri class for KISSY.
@@ -2848,7 +2914,6 @@ var KISSY = (function (undefined) {
     }
 
     Uri.prototype = {
-
         constructor: Uri,
 
         /**
@@ -3158,7 +3223,6 @@ var KISSY = (function (undefined) {
     };
 
     S.Uri = Uri;
-
 })(KISSY);
 /*
  Refer
@@ -3222,7 +3286,6 @@ var KISSY = (function (undefined) {
             s = [];
         /**
          * KISSY UA
-         * @member KISSY
          * @class KISSY.UA
          * @singleton
          */
@@ -3509,6 +3572,7 @@ var KISSY = (function (undefined) {
     }
 
     var UA = KISSY.UA = getDescriptorFromUserAgent(ua);
+
     // nodejs
     if (typeof process === 'object') {
         var versions, nodeVersion;
@@ -3581,7 +3645,6 @@ var KISSY = (function (undefined) {
  * @author yiminghe@gmail.com
  */
 (function (S, undefined) {
-
     var Env = S.Env,
         win = Env.host,
         UA = S.UA,
@@ -3637,7 +3700,7 @@ var KISSY = (function (undefined) {
     }
 
     /**
-     * test browser features
+     * browser features detection
      * @class KISSY.Features
      * @private
      * @singleton
@@ -3645,8 +3708,7 @@ var KISSY = (function (undefined) {
     S.Features = {
         // http://blogs.msdn.com/b/ie/archive/2011/09/20/touch-input-for-ie10-and-metro-style-apps.aspx
         /**
-         * @ignore
-         * whether support win8 pointer event.
+         * whether support microsoft pointer event.
          * @type {Boolean}
          */
         isMsPointerSupported: function () {
@@ -3655,17 +3717,24 @@ var KISSY = (function (undefined) {
 
         /**
          * whether support touch event.
-         * @method
          * @return {Boolean}
          */
         isTouchEventSupported: function () {
             return isTouchEventSupportedState;
         },
 
+        /**
+         * whether support device motion event
+         * @returns {boolean}
+         */
         isDeviceMotionSupported: function () {
             return !!win['DeviceMotionEvent'];
         },
 
+        /**
+         * whether support hashchange event
+         * @returns {boolean}
+         */
         'isHashChangeSupported': function () {
             // ie8 支持 hashchange
             // 但 ie8 以上切换浏览器模式到 ie7（兼容模式），
@@ -3673,40 +3742,77 @@ var KISSY = (function (undefined) {
             return ( 'onhashchange' in win) && (!ie || ie > 7);
         },
 
+        /**
+         * whether support css transition
+         * @returns {boolean}
+         */
         'isTransitionSupported': function () {
             return transitionPrefix !== undefined;
         },
 
+        /**
+         * whether support css transform
+         * @returns {boolean}
+         */
         'isTransformSupported': function () {
             return transformPrefix !== undefined;
         },
 
+        /**
+         * whether support class list api
+         * @returns {boolean}
+         */
         'isClassListSupported': function () {
             return isClassListSupportedState
         },
 
+        /**
+         * whether support querySelectorAll
+         * @returns {boolean}
+         */
         'isQuerySelectorSupported': function () {
             // force to use js selector engine
             return !S.config('dom/selector') &&
                 isQuerySelectorSupportedState;
         },
 
+        /**
+         * whether is ie and ie version is less than specified version
+         * @param {Number} v specified ie version to be compared
+         * @returns {boolean}
+         */
         'isIELessThan': function (v) {
-            return ie && ie < v;
+            return !!(ie && ie < v);
         },
 
+        /**
+         * get css transition browser prefix if support css transition
+         * @returns {String}
+         */
         'getTransitionPrefix': function () {
             return transitionPrefix;
         },
 
+        /**
+         * get css transform browser prefix if support css transform
+         * @returns {String}
+         */
         'getTransformPrefix': function () {
             return transformPrefix;
         },
 
+        /**
+         * get css transition property if support css transition
+         * @returns {String}
+         */
         'getTransitionProperty': function () {
             return transitionProperty;
         },
 
+        /**
+         * get css transform property if support css transform
+         * @returns {String}
+         */
         'getTransformProperty': function () {
             return transformProperty;
         }
@@ -3813,9 +3919,9 @@ var KISSY = (function (undefined) {
 
         /**
          * Get absolute path of dep module.similar to {@link KISSY.Path#resolve}
-         * @param moduleName current module 's name
-         * @param depName dep module 's name
-         * @return {string|Array}
+         * @param {String} moduleName current module 's name
+         * @param {String|String[]} depName dependency module 's name
+         * @return {String|String[]} normalized dependency module 's name
          */
         normalDepModuleName: function (moduleName, depName) {
             var i = 0, l;
@@ -3841,8 +3947,8 @@ var KISSY = (function (undefined) {
 
         /**
          * create modules info
-         * @param runtime
-         * @param modNames
+         * @param runtime Module container, such as KISSY
+         * @param {String[]} modNames to be created module names
          */
         createModulesInfo: function (runtime, modNames) {
             S.each(modNames, function (m) {
@@ -3852,9 +3958,9 @@ var KISSY = (function (undefined) {
 
         /**
          * create single module info
-         * @param runtime
-         * @param modName
-         * @param [cfg]
+         * @param runtime Module container, such as KISSY
+         * @param {String} modName to be created module name
+         * @param {Object} [cfg] module config
          * @return {KISSY.Loader.Module}
          */
         createModuleInfo: function (runtime, modName, cfg) {
@@ -3878,7 +3984,7 @@ var KISSY = (function (undefined) {
 
         /**
          * Whether modNames is attached.
-         * @param runtime
+         * @param runtime Module container, such as KISSY
          * @param modNames
          * @return {Boolean}
          */
@@ -3888,9 +3994,9 @@ var KISSY = (function (undefined) {
 
         /**
          * Get module values
-         * @param runtime
-         * @param modNames
-         * @return {Array}
+         * @param runtime Module container, such as KISSY
+         * @param {String[]} modNames module names
+         * @return {Array} module values
          */
         getModules: function (runtime, modNames) {
             var mods = [runtime], mod,
@@ -3918,6 +4024,15 @@ var KISSY = (function (undefined) {
             return mods;
         },
 
+        /**
+         * attach modules and their dependency modules recursively
+         * @param {String[]} modNames module names
+         * @param runtime Module container, such as KISSY
+         * @param {String[]} [stack] stack for detecting circular dependency
+         * @param {Array} [errorList] errors when attach mods
+         * @param {Object} [cache] cached modules to avoid duplicate check
+         * @returns whether success attach all modules
+         */
         attachModsRecursively: function (modNames, runtime, stack, errorList, cache) {
             // for debug. prevent circular dependency
             stack = stack || [];
@@ -3934,6 +4049,15 @@ var KISSY = (function (undefined) {
             return s;
         },
 
+        /**
+         * attach module and its dependency modules recursively
+         * @param {String} modName module name
+         * @param runtime Module container, such as KISSY
+         * @param {String[]} [stack] stack for detecting circular dependency
+         * @param {Array} [errorList] errors when attach mods
+         * @param {Object} [cache] cached modules to avoid duplicate check
+         * @returns whether success attach all modules
+         */
         attachModRecursively: function (modName, runtime, stack, errorList, cache) {
             var mods = runtime.Env.mods,
                 status,
@@ -3972,8 +4096,8 @@ var KISSY = (function (undefined) {
 
         /**
          * Attach specified mod.
-         * @param runtime
-         * @param mod
+         * @param runtime Module container, such as KISSY
+         * @param {KISSY.Loader.Module} mod module instance
          */
         attachMod: function (runtime, mod) {
             if (mod.status != LOADED) {
@@ -3995,7 +4119,7 @@ var KISSY = (function (undefined) {
 
         /**
          * Get mod names as array.
-         * @param modNames
+         * @param {String|String[]} modNames module names array or  module names string separated by ','
          * @return {String[]}
          */
         getModNamesAsArray: function (modNames) {
@@ -4006,7 +4130,7 @@ var KISSY = (function (undefined) {
         },
 
         /**
-         * Three effects:
+         * normalize module names
          * 1. add index : / => /index
          * 2. unalias : core => dom,event,ua
          * 3. relative to absolute : ./x => y/x
@@ -4014,7 +4138,7 @@ var KISSY = (function (undefined) {
          * @param {String|String[]} modNames Array of module names
          *  or module names string separated by comma
          * @param {String} [refModName]
-         * @return {String[]}
+         * @return {String[]} normalized module names
          */
         normalizeModNames: function (runtime, modNames, refModName) {
             return Utils.unalias(runtime,
@@ -4023,9 +4147,9 @@ var KISSY = (function (undefined) {
 
         /**
          * unalias module name.
-         * @param runtime
-         * @param names
-         * @return {Array}
+         * @param runtime Module container, such as KISSY
+         * @param {String} names moduleNames
+         * @return {String[]} unaliased module names
          */
         unalias: function (runtime, names) {
             var ret = [].concat(names),
@@ -4053,11 +4177,11 @@ var KISSY = (function (undefined) {
         },
 
         /**
-         * normalize module names
-         * @param runtime
-         * @param modNames
-         * @param [refModName]
-         * @return {Array}
+         * normalize module names with alias
+         * @param runtime Module container, such as KISSY
+         * @param {String[]} modNames module names
+         * @param [refModName] module to be referred if module name path is relative
+         * @return {String[]} normalize module names with alias
          */
         normalizeModNamesWithAlias: function (runtime, modNames, refModName) {
             var ret = [], i, l;
@@ -4080,13 +4204,12 @@ var KISSY = (function (undefined) {
 
         /**
          * register module with factory
-         * @param runtime
-         * @param name
-         * @param fn
-         * @param [config]
+         * @param runtime Module container, such as KISSY
+         * @param {String} name module name
+         * @param {Function|*} fn module's factory or value
+         * @param [config] module config, such as dependency
          */
         registerModule: function (runtime, name, fn, config) {
-
             name = indexMapStr(name);
 
             var mods = runtime.Env.mods,
@@ -4115,10 +4238,10 @@ var KISSY = (function (undefined) {
 
         /**
          * Get mapped path.
-         * @param runtime
-         * @param path
-         * @param [rules]
-         * @return {String}
+         * @param runtime Module container, such as KISSY
+         * @param {String} path module path
+         * @param [rules] map rules
+         * @return {String} mapped path
          */
         getMappedPath: function (runtime, path, rules) {
             var mappedRules = rules ||
@@ -4216,6 +4339,10 @@ var KISSY = (function (undefined) {
                 );
         },
 
+        /**
+         * get package uri
+         * @returns {KISSY.Uri}
+         */
         getPackageUri: function () {
             var self = this;
             if (self.packageUri) {
@@ -4241,7 +4368,7 @@ var KISSY = (function (undefined) {
         },
 
         /**
-         *  whether request mod file without package name
+         *  whether request mod file without insert package name into package base
          *  @return {Boolean}
          */
         isIgnorePackageNameInUri: function () {
@@ -4334,6 +4461,10 @@ var KISSY = (function (undefined) {
             return v;
         },
 
+        /**
+         * Get the fullpath uri of current module if load dynamically
+         * @return {KISSY.Uri}
+         */
         getFullPathUri: function () {
             var self = this,
                 t,
@@ -4436,7 +4567,7 @@ var KISSY = (function (undefined) {
         },
 
         /**
-         * Get module objects required by this one
+         * Get module objects required by this module
          * @return {KISSY.Loader.Module[]}
          */
         'getRequiredMods': function () {
@@ -4460,6 +4591,10 @@ var KISSY = (function (undefined) {
             return requiresWithAlias;
         },
 
+        /**
+         * Get module names required by this module
+         * @return {KISSY.Loader.Module[]}
+         */
         getNormalizedRequires: function () {
             var self = this,
                 normalizedRequires,
@@ -4496,7 +4631,7 @@ var KISSY = (function (undefined) {
         return name + min + extname;
     }
 
-    var systemPackage = new Loader.Package({
+    var systemPackage = new Package({
         name: '',
         runtime: S
     });
@@ -4528,28 +4663,6 @@ var KISSY = (function (undefined) {
         monitors = {
             // node.id:{callback:callback,node:node}
         };
-
-    /**
-     * @ignore
-     * References:
-     *  - http://unixpapa.com/js/dyna.html
-     *  - http://www.blaze.io/technical/ies-premature-execution-problem/
-     *
-     * `onload` event is supported in WebKit since 535.23
-     *  - https://bugs.webkit.org/show_activity.cgi?id=38995
-     * `onload/onerror` event is supported since Firefox 9.0
-     *  - https://bugzilla.mozilla.org/show_bug.cgi?id=185236
-     *  - https://developer.mozilla.org/en/HTML/Element/link#Stylesheet_load_events
-     *
-     * monitor css onload across browsers.issue about 404 failure.
-     *
-     *  - firefox not ok（4 is wrong）：
-     *    - http://yearofmoo.com/2011/03/cross-browser-stylesheet-preloading/
-     *  - all is ok
-     *    - http://lifesinger.org/lab/2011/load-js-css/css-preload.html
-     *  - others
-     *    - http://www.zachleat.com/web/load-css-dynamically/
-     */
 
     function startCssTimer() {
         if (!timer) {
@@ -4606,19 +4719,36 @@ var KISSY = (function (undefined) {
         }
     }
 
-    S.mix(Utils, {
-        pollCss: // refer : http://lifesinger.org/lab/2011/load-js-css/css-preload.html
-        // 暂时不考虑如何判断失败，如 404 等
-            function (node, callback) {
-                var href = node.href,
-                    arr;
-                arr = monitors[href] = {};
-                arr.node = node;
-                arr.callback = callback;
-                startCssTimer();
-            }
-    });
-})(KISSY);/**
+    // refer : http://lifesinger.org/lab/2011/load-js-css/css-preload.html
+    // 暂时不考虑如何判断失败，如 404 等
+    Utils.pollCss= function (node, callback) {
+        var href = node.href,
+            arr;
+        arr = monitors[href] = {};
+        arr.node = node;
+        arr.callback = callback;
+        startCssTimer();
+    };
+})(KISSY);
+/*
+ References:
+ - http://unixpapa.com/js/dyna.html
+ - http://www.blaze.io/technical/ies-premature-execution-problem/
+
+ `onload` event is supported in WebKit since 535.23
+  - https://bugs.webkit.org/show_activity.cgi?id=38995
+ `onload/onerror` event is supported since Firefox 9.0
+  - https://bugzilla.mozilla.org/show_bug.cgi?id=185236
+  - https://developer.mozilla.org/en/HTML/Element/link#Stylesheet_load_events
+
+ monitor css onload across browsers.issue about 404 failure.
+ - firefox not ok（4 is wrong）：
+ - http://yearofmoo.com/2011/03/cross-browser-stylesheet-preloading/
+    - all is ok
+ - http://lifesinger.org/lab/2011/load-js-css/css-preload.html
+ - others
+    - http://www.zachleat.com/web/load-css-dynamically/
+*//**
  * @ignore
  * implement getScript for nodejs synchronously.
  * so loader need not to be changed.
@@ -4626,42 +4756,39 @@ var KISSY = (function (undefined) {
  */
 (function (S) {
     var fs = require('fs'),
-        logger= S.getLogger('s/loader'),
+        logger = S.getLogger('s/loader'),
         vm = require('vm');
 
-    S.mix(S, {
+    S.getScript = function (url, success, charset) {
 
-        getScript: function (url, success, charset) {
+        var error;
 
-            var error;
-
-            if (S.isPlainObject(success)) {
-                charset = success.charset;
-                error = success.error;
-                success = success.success;
-            }
-
-            if (S.startsWith(S.Path.extname(url).toLowerCase(), '.css')) {
-                logger.warn('node js can not load css: ' + url);
-                success && success();
-                return;
-            }
-
-            var uri = new S.Uri(url),
-                path = uri.getPath();
-
-            try {
-                var mod = fs.readFileSync(path, charset);
-                var fn = vm.runInThisContext('(function(KISSY,require){' + mod + '})', url);
-                fn(S, require);
-                success && success();
-            } catch (e) {
-                logger.error('in file: ' + url);
-                logger.error(e.stack);
-                error && error(e);
-            }
+        if (S.isPlainObject(success)) {
+            charset = success.charset;
+            error = success.error;
+            success = success.success;
         }
-    });
+
+        if (S.startsWith(S.Path.extname(url).toLowerCase(), '.css')) {
+            logger.warn('node js can not load css: ' + url);
+            success && success();
+            return;
+        }
+
+        var uri = new S.Uri(url),
+            path = uri.getPath();
+
+        try {
+            var mod = fs.readFileSync(path, charset);
+            var fn = vm.runInThisContext('(function(KISSY,require){' + mod + '})', url);
+            fn(S, require);
+            success && success();
+        } catch (e) {
+            logger.error('in file: ' + url);
+            logger.error(e.stack);
+            error && error(e);
+        }
+    };
 })(KISSY);/**
  * @ignore
  * Declare config info for KISSY.
@@ -4680,17 +4807,6 @@ var KISSY = (function (undefined) {
         simulatedLocation = new S.Uri(locationHref)
     }
 
-    /*
-     modify current module path
-
-     [
-     [/(.+-)min(.js(\?t=\d+)?)$/, '$1$2'],
-     [/(.+-)min(.js(\?t=\d+)?)$/, function(_,m1,m2){
-     return m1+m2;
-     }]
-     ]
-
-     */
     configFns.map = function (rules) {
         var Config = this.Config;
         if (rules === false) {
@@ -4707,19 +4823,12 @@ var KISSY = (function (undefined) {
         return Config.mappedComboRules = (Config.mappedComboRules || []).concat(rules || []);
     };
 
-    /*
-     包声明
-     biz -> .
-     表示遇到 biz/x
-     在当前网页路径找 biz/x.js
-     @private
-     */
-    configFns.packages = function (cfgs) {
+    configFns.packages = function (config) {
         var name,
             Config = this.Config,
             ps = Config.packages = Config.packages || {};
-        if (cfgs) {
-            S.each(cfgs, function (cfg, key) {
+        if (config) {
+            S.each(config, function (cfg, key) {
                 // 兼容数组方式
                 name = cfg.name || key;
 
@@ -4738,7 +4847,7 @@ var KISSY = (function (undefined) {
                 }
             });
             return undefined;
-        } else if (cfgs === false) {
+        } else if (config === false) {
             Config.packages = {
             };
             return undefined;
@@ -4747,33 +4856,6 @@ var KISSY = (function (undefined) {
         }
     };
 
-    /*
-     只用来指定模块依赖信息.
-     <code>
-
-     KISSY.config({
-     base: '',
-     // dom-min.js
-     debug: '',
-     combine: true,
-     tag: '',
-     packages: {
-     'biz1': {
-     // path change to base
-     base: 'haha',
-     // x.js
-     debug: '',
-     tag: '',
-     combine: false,
-     }
-     },
-     modules: {
-     'biz1/main': {
-     requires: ['biz1/part1', 'biz1/part2']
-     }
-     }
-     });
-     */
     configFns.modules = function (modules) {
         var self = this,
             Env = self.Env;
@@ -4785,9 +4867,6 @@ var KISSY = (function (undefined) {
         }
     };
 
-    /*
-     KISSY 's base path.
-     */
     configFns.base = function (base) {
         var self = this,
             Config = self.Config,
@@ -4800,7 +4879,6 @@ var KISSY = (function (undefined) {
         Config.baseUri = baseUri;
         return undefined;
     };
-
 
     function normalizeBase(base) {
         var baseUri;
@@ -4992,13 +5070,8 @@ var KISSY = (function (undefined) {
         return str1.slice(0, i).join('/') + '/';
     }
 
-    /**
-     * Returns hash code of a string
-     * djb2 algorithm
-     * @param {String} str string to be hashed
-     * @private
-     * @return {String} the hash code
-     */
+
+   // Returns hash code of a stringdjb2 algorithm
     function getHash(str) {
         var hash = 5381,
             i;
@@ -5009,10 +5082,9 @@ var KISSY = (function (undefined) {
         return hash + '';
     }
 
-    // ----------------------- private end
     S.augment(ComboLoader, {
         /**
-         * use, _forceSync for kissy.js, initialize dom,event sync
+         * load modules asynchronously
          */
         use: function (normalizedModNames) {
             var self = this,
@@ -5084,10 +5156,6 @@ var KISSY = (function (undefined) {
 
         /**
          * calculate dependency
-         * @param modNames
-         * @param [cache]
-         * @param ret
-         * @return {Array}
          */
         calculate: function (modNames, cache, ret) {
             var i,
@@ -5134,6 +5202,9 @@ var KISSY = (function (undefined) {
             return ret;
         },
 
+        /**
+         * get combo mods for modNames
+         */
         getComboMods: function (modNames, comboPrefixes) {
             var comboMods = {},
                 packageUri,
@@ -5200,8 +5271,6 @@ var KISSY = (function (undefined) {
 
         /**
          * Get combo urls
-         * @param modNames
-         * @return {Object}
          */
         getComboUrls: function (modNames) {
             var runtime = this.runtime,
@@ -5383,8 +5452,7 @@ var KISSY = (function (undefined) {
          * @param success.x... used module values
          * @member KISSY
          *
-         * for example:
-         *      @example
+         *
          *      // loads and attached overlay,dd and its dependencies
          *      KISSY.use('overlay,dd', function(S, Overlay){});
          */
@@ -5574,11 +5642,10 @@ var KISSY = (function (undefined) {
             comboMaxFileNum: 40,
             charset: 'utf-8',
             lang: 'zh-cn',
-            tag: '20130916173200'
+            tag: '20130918010018'
         }, getBaseInfo()));
     }
 
-    // Initializes loader.
     Env.mods = {}; // all added mods
 })(KISSY);
 
@@ -5587,6 +5654,7 @@ var KISSY = (function (undefined) {
  - refactor merge combo loader and simple loader
  - support error callback
  *//**
+ * @ignore
  * i18n plugin for kissy loader
  * @author yiminghe@gmail.com
  */
@@ -5854,7 +5922,7 @@ config({
 });
 /*Generated By KISSY Module Compiler*/
 config({
-'anim/timer': {requires: ['dom','event','anim/base']}
+'anim/timer': {requires: ['dom','anim/base']}
 });
 /*Generated By KISSY Module Compiler*/
 config({
@@ -6015,7 +6083,7 @@ config({
 });
 /*Generated By KISSY Module Compiler*/
 config({
-'io': {requires: ['dom','event']}
+'io': {requires: ['dom','event/custom','event']}
 });
 /*Generated By KISSY Module Compiler*/
 config({
@@ -6122,7 +6190,6 @@ config({
  * 2. export light-weighted json parse
  */
 (function (S) {
-
     // empty mod for conditional loading
     S.add('empty', S.noop);
 
@@ -6194,5 +6261,4 @@ config({
         S.KISSY = S;
         module.exports = S;
     }
-
 })(KISSY);

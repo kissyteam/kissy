@@ -3,11 +3,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, Event) {
-    var EventTarget = Event.Target;
-
-    var CustomEventObservable = S.require('event/custom/observable');
-
-    var KS_CUSTOM_EVENTS = '__~ks_custom_events';
+    var EventTarget = Event.targetObject;
 
     var FIRST = '1', SECOND = '2', SEP = '=';
 
@@ -31,7 +27,7 @@ KISSY.add(function (S, Event) {
         it('support once', function () {
 
             var ret = [],
-                t = S.mix({}, Event.Target);
+                t = S.mix({}, EventTarget);
 
             t.on('click', {
                 once: 1,
@@ -52,7 +48,7 @@ KISSY.add(function (S, Event) {
 
             expect(ret).toEqual([1, 2]);
 
-            expect(t[KS_CUSTOM_EVENTS]['click'].hasObserver())
+            expect(t.getCustomEvents()['click'].hasObserver())
                 .toBeFalsy();
         });
 
@@ -93,7 +89,7 @@ KISSY.add(function (S, Event) {
                 });
             }
 
-            S.augment(Test, Event.Target);
+            S.augment(Test, EventTarget);
 
             var t = new Test();
 
@@ -118,7 +114,7 @@ KISSY.add(function (S, Event) {
                     });
                 }
 
-                S.augment(Test, Event.Target);
+                S.augment(Test, EventTarget);
 
                 var t = new Test();
 
@@ -153,10 +149,9 @@ KISSY.add(function (S, Event) {
             });
 
             it('can bubble default', function () {
-
-                var a = S.mix({}, Event.Target),
-                    c = S.mix({}, Event.Target),
-                    b = S.mix({}, Event.Target);
+                var a = S.mix({}, EventTarget),
+                    c = S.mix({}, EventTarget),
+                    b = S.mix({}, EventTarget);
                 a.id = 'a';
                 b.id = 'b';
                 c.id = 'c';
@@ -187,7 +182,7 @@ KISSY.add(function (S, Event) {
                     });
                 }
 
-                S.augment(Test, Event.Target);
+                S.augment(Test, EventTarget);
 
                 var t = new Test();
 
@@ -216,7 +211,7 @@ KISSY.add(function (S, Event) {
                     });
                 }
 
-                S.augment(Test, Event.Target);
+                S.augment(Test, EventTarget);
 
                 var t = new Test();
 
@@ -290,7 +285,7 @@ KISSY.add(function (S, Event) {
 
         it('should no memory leak for custom event', function () {
 
-            var eventTarget = S.mix({}, Event.Target),
+            var eventTarget = S.mix({}, EventTarget),
                 i,
                 noop = function () {
                 },
@@ -303,7 +298,7 @@ KISSY.add(function (S, Event) {
             eventTarget.on("click", noop3);
             eventTarget.on("keydown", noop);
             (function () {
-                var customEventObservables = eventTarget[KS_CUSTOM_EVENTS];
+                var customEventObservables = eventTarget.getCustomEvents();
 
                 var num = 0;
                 for (i in customEventObservables) {
@@ -319,7 +314,7 @@ KISSY.add(function (S, Event) {
             eventTarget.detach("click", noop);
 
             (function () {
-                var customEventObservables = eventTarget[KS_CUSTOM_EVENTS];
+                var customEventObservables = eventTarget.getCustomEvents();
                 var num = 0;
 
                 for (i in customEventObservables) {
@@ -337,7 +332,7 @@ KISSY.add(function (S, Event) {
             eventTarget.detach("click");
 
             (function () {
-                var customEventObservables = eventTarget[KS_CUSTOM_EVENTS];
+                var customEventObservables = eventTarget.getCustomEvents();
 
                 expect(customEventObservables['keydown'].hasObserver()).toBeTruthy();
                 var clickObserver = customEventObservables["click"];
@@ -347,7 +342,7 @@ KISSY.add(function (S, Event) {
             eventTarget.detach();
 
             (function () {
-                var customEventObservables = eventTarget[KS_CUSTOM_EVENTS];
+                var customEventObservables = eventTarget.getCustomEvents();
                 for (var o in customEventObservables) {
                     expect(customEventObservables[o].hasObserver()).toBeFalsy();
                 }
@@ -367,7 +362,7 @@ KISSY.add(function (S, Event) {
                     this.name = name;
                 }
 
-                S.augment(Dog, Event.Target, {
+                S.augment(Dog, EventTarget, {
                     run: function () {
                         return this.fire('running', {speed: SPEED});
                     }
@@ -442,7 +437,7 @@ KISSY.add(function (S, Event) {
 
                 }
 
-                S.augment(Target, Event.Target);
+                S.augment(Target, EventTarget);
 
                 it("should works with one group simply", function () {
 
@@ -597,7 +592,7 @@ KISSY.add(function (S, Event) {
 
                 it('support simple defaultFn', function () {
                     var ret = [],
-                        t = S.mix({}, Event.Target);
+                        t = S.mix({}, EventTarget);
 
                     t.publish('click', {
                         defaultFn: function (e) {
@@ -615,7 +610,7 @@ KISSY.add(function (S, Event) {
 
                 it('support simple defaultFn with listeners', function () {
                     var ret = [],
-                        t = S.mix({}, Event.Target);
+                        t = S.mix({}, EventTarget);
 
                     t.publish('click', {
                         defaultFn: function () {

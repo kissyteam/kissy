@@ -226,34 +226,34 @@ catch (e) {}
 if (! this._$jscoverage) {
   this._$jscoverage = {};
 }
-if (! _$jscoverage['/editor/zIndexManager.js']) {
-  _$jscoverage['/editor/zIndexManager.js'] = {};
-  _$jscoverage['/editor/zIndexManager.js'].lineData = [];
-  _$jscoverage['/editor/zIndexManager.js'].lineData[6] = 0;
-  _$jscoverage['/editor/zIndexManager.js'].lineData[11] = 0;
-  _$jscoverage['/editor/zIndexManager.js'].lineData[23] = 0;
-  _$jscoverage['/editor/zIndexManager.js'].lineData[24] = 0;
-  _$jscoverage['/editor/zIndexManager.js'].lineData[27] = 0;
+if (! _$jscoverage['/editor/z-index-manager.js']) {
+  _$jscoverage['/editor/z-index-manager.js'] = {};
+  _$jscoverage['/editor/z-index-manager.js'].lineData = [];
+  _$jscoverage['/editor/z-index-manager.js'].lineData[6] = 0;
+  _$jscoverage['/editor/z-index-manager.js'].lineData[11] = 0;
+  _$jscoverage['/editor/z-index-manager.js'].lineData[46] = 0;
+  _$jscoverage['/editor/z-index-manager.js'].lineData[47] = 0;
+  _$jscoverage['/editor/z-index-manager.js'].lineData[50] = 0;
 }
-if (! _$jscoverage['/editor/zIndexManager.js'].functionData) {
-  _$jscoverage['/editor/zIndexManager.js'].functionData = [];
-  _$jscoverage['/editor/zIndexManager.js'].functionData[0] = 0;
-  _$jscoverage['/editor/zIndexManager.js'].functionData[1] = 0;
+if (! _$jscoverage['/editor/z-index-manager.js'].functionData) {
+  _$jscoverage['/editor/z-index-manager.js'].functionData = [];
+  _$jscoverage['/editor/z-index-manager.js'].functionData[0] = 0;
+  _$jscoverage['/editor/z-index-manager.js'].functionData[1] = 0;
 }
-if (! _$jscoverage['/editor/zIndexManager.js'].branchData) {
-  _$jscoverage['/editor/zIndexManager.js'].branchData = {};
-  _$jscoverage['/editor/zIndexManager.js'].branchData['24'] = [];
-  _$jscoverage['/editor/zIndexManager.js'].branchData['24'][1] = new BranchData();
+if (! _$jscoverage['/editor/z-index-manager.js'].branchData) {
+  _$jscoverage['/editor/z-index-manager.js'].branchData = {};
+  _$jscoverage['/editor/z-index-manager.js'].branchData['47'] = [];
+  _$jscoverage['/editor/z-index-manager.js'].branchData['47'][1] = new BranchData();
 }
-_$jscoverage['/editor/zIndexManager.js'].branchData['24'][1].init(18, 36, 'Editor[\'Config\'].baseZIndex || 10000');
-function visit1137_24_1(result) {
-  _$jscoverage['/editor/zIndexManager.js'].branchData['24'][1].ranCondition(result);
+_$jscoverage['/editor/z-index-manager.js'].branchData['47'][1].init(18, 36, 'Editor[\'Config\'].baseZIndex || 10000');
+function visit1130_47_1(result) {
+  _$jscoverage['/editor/z-index-manager.js'].branchData['47'][1].ranCondition(result);
   return result;
-}_$jscoverage['/editor/zIndexManager.js'].lineData[6]++;
-KISSY.add("editor/zIndexManager", function(S, Editor) {
-  _$jscoverage['/editor/zIndexManager.js'].functionData[0]++;
-  _$jscoverage['/editor/zIndexManager.js'].lineData[11]++;
-  var zIndexManager = Editor.zIndexManager = {
+}_$jscoverage['/editor/z-index-manager.js'].lineData[6]++;
+KISSY.add("editor/z-index-manager", function(S, Editor) {
+  _$jscoverage['/editor/z-index-manager.js'].functionData[0]++;
+  _$jscoverage['/editor/z-index-manager.js'].lineData[11]++;
+  var ZIndexManager = Editor.ZIndexManager = {
   BUBBLE_VIEW: (1100), 
   POPUP_MENU: (1200), 
   STORE_FLASH_SHOW: (99999), 
@@ -262,13 +262,13 @@ KISSY.add("editor/zIndexManager", function(S, Editor) {
   LOADING: (11000), 
   LOADING_CANCEL: 12000, 
   SELECT: (1200)};
-  _$jscoverage['/editor/zIndexManager.js'].lineData[23]++;
+  _$jscoverage['/editor/z-index-manager.js'].lineData[46]++;
   Editor.baseZIndex = function(z) {
-  _$jscoverage['/editor/zIndexManager.js'].functionData[1]++;
-  _$jscoverage['/editor/zIndexManager.js'].lineData[24]++;
-  return (visit1137_24_1(Editor['Config'].baseZIndex || 10000)) + z;
+  _$jscoverage['/editor/z-index-manager.js'].functionData[1]++;
+  _$jscoverage['/editor/z-index-manager.js'].lineData[47]++;
+  return (visit1130_47_1(Editor['Config'].baseZIndex || 10000)) + z;
 };
-  _$jscoverage['/editor/zIndexManager.js'].lineData[27]++;
-  return zIndexManager;
+  _$jscoverage['/editor/z-index-manager.js'].lineData[50]++;
+  return ZIndexManager;
 }, {
   requires: ['./base']});

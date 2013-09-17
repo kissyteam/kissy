@@ -229,9 +229,9 @@ if (! this._$jscoverage) {
 if (! _$jscoverage['/separator/render.js']) {
   _$jscoverage['/separator/render.js'] = {};
   _$jscoverage['/separator/render.js'].lineData = [];
-  _$jscoverage['/separator/render.js'].lineData[5] = 0;
-  _$jscoverage['/separator/render.js'].lineData[7] = 0;
-  _$jscoverage['/separator/render.js'].lineData[9] = 0;
+  _$jscoverage['/separator/render.js'].lineData[6] = 0;
+  _$jscoverage['/separator/render.js'].lineData[8] = 0;
+  _$jscoverage['/separator/render.js'].lineData[10] = 0;
 }
 if (! _$jscoverage['/separator/render.js'].functionData) {
   _$jscoverage['/separator/render.js'].functionData = [];
@@ -241,14 +241,14 @@ if (! _$jscoverage['/separator/render.js'].functionData) {
 if (! _$jscoverage['/separator/render.js'].branchData) {
   _$jscoverage['/separator/render.js'].branchData = {};
 }
-_$jscoverage['/separator/render.js'].lineData[5]++;
+_$jscoverage['/separator/render.js'].lineData[6]++;
 KISSY.add("separator/render", function(S, Control) {
   _$jscoverage['/separator/render.js'].functionData[0]++;
-  _$jscoverage['/separator/render.js'].lineData[7]++;
+  _$jscoverage['/separator/render.js'].lineData[8]++;
   return Control.getDefaultRender().extend({
   beforeCreateDom: function(renderData) {
   _$jscoverage['/separator/render.js'].functionData[1]++;
-  _$jscoverage['/separator/render.js'].lineData[9]++;
+  _$jscoverage['/separator/render.js'].lineData[10]++;
   renderData.elAttrs.role = 'separator';
 }});
 }, {

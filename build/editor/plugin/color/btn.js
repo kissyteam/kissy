@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 16 18:13
+build time: Sep 17 23:00
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -101,7 +101,7 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, Dia
                     prefixCls: prefixCls
                 }),
                 width: 172,
-                zIndex: Editor.baseZIndex(Editor.zIndexManager.POPUP_MENU)
+                zIndex: Editor.baseZIndex(Editor.ZIndexManager.POPUP_MENU)
             }).render();
 
             var colorWin = self.colorWin;

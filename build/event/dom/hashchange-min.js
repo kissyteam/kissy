@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 16 15:16
+build time: Sep 18 00:20
 */
 KISSY.add("event/dom/hashchange",function(e,c,h){var d=e.UA,q=c.Special,g=e.Env.host,f=g.document,r=f&&f.documentMode,l="__replace_history_"+e.now(),d=r||d.ie;c.REPLACE_HISTORY=l;var s="<html><head><title>"+(f&&f.title||"")+" - {hash}</title>{head}</head><body>{hash}</body></html>",i=function(){return"#"+(new e.Uri(location.href)).getFragment()},b,j,m=function(){var a=i(),c;if(c=e.endsWith(a,l))a=a.slice(0,-l.length),location.hash=a;a!==j&&(j=a,n(a,c));b=setTimeout(m,50)},n=d&&8>d?function(c,b){var d=
 e.substitute(s,{hash:e.escapeHtml(c),head:h.isCustomDomain()?"<script>document.domain = '"+f.domain+"';<\/script>":""}),k=a.contentWindow.document;try{b?k.open("text/html","replace"):k.open(),k.write(d),k.close()}catch(g){}}:function(){c.fireHandler(g,"hashchange")},o=function(){b||m()},p=function(){b&&clearTimeout(b);b=0},a;d&&8>d&&(o=function(){if(!a){var b=h.getEmptyIframeSrc();a=h.create("<iframe "+(b?'src="'+b+'"':"")+' style="display: none" height="0" width="0" tabindex="-1" title="empty"/>');

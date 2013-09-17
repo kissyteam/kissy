@@ -436,7 +436,7 @@ function visit88_17_1(result) {
   _$jscoverage['/timer.js'].branchData['17'][1].ranCondition(result);
   return result;
 }_$jscoverage['/timer.js'].lineData[6]++;
-KISSY.add('anim/timer', function(S, Dom, Event, AnimBase, Easing, AM, Fx, SHORT_HANDS) {
+KISSY.add('anim/timer', function(S, Dom, AnimBase, Easing, AM, Fx, SHORT_HANDS) {
   _$jscoverage['/timer.js'].functionData[0]++;
   _$jscoverage['/timer.js'].lineData[7]++;
   var camelCase = Dom._camelCase, NUMBER_REG = /^([+\-]=)?([\d+.\-]+)([a-z%]*)$/i;
@@ -648,4 +648,4 @@ KISSY.add('anim/timer', function(S, Dom, Event, AnimBase, Easing, AM, Fx, SHORT_
   _$jscoverage['/timer.js'].lineData[188]++;
   return Anim;
 }, {
-  requires: ['dom', 'event', './base', './timer/easing', './timer/manager', './timer/fx', './timer/short-hand', './timer/color', './timer/transform']});
+  requires: ['dom', './base', './timer/easing', './timer/manager', './timer/fx', './timer/short-hand', './timer/color', './timer/transform']});

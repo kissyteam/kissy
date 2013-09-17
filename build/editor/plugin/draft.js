@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 16 18:13
+build time: Sep 17 23:01
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -248,7 +248,7 @@ KISSY.add("editor/plugin/draft", function (S, Json, Editor, localStorage, Overla
                 content: help,
                 prefixCls: prefixCls + 'editor-',
                 width: help.width() + "px",
-                zIndex: Editor.baseZIndex(Editor.zIndexManager.OVERLAY),
+                zIndex: Editor.baseZIndex(Editor.ZIndexManager.OVERLAY),
                 mask: false
             }).render();
             self.helpPopup.get("el")

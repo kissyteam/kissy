@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 16 15:16
+build time: Sep 17 23:08
 */
 KISSY.add("filter-menu/render-xtpl",function(){return function(e,b,d){var b=this.config.utils,c=b.getExpression,f=b.getPropertyOrRunCommand,b='<div id="ks-filter-menu-input-wrap-',a=f(this,e,{},"id",0,1,d,!1),b=b+c(a,!0),b=b+'"\r\n     class="',a={},i=[];i.push("input-wrap");a.params=i;a=f(this,e,a,"getBaseCssClasses",0,2,!0,d);b=b+a+'">\r\n    <div id="ks-filter-menu-placeholder-';a=f(this,e,{},"id",0,3,d,!1);b+=c(a,!0);b+='"\r\n         class="';a={};i=[];i.push("placeholder");a.params=i;a=f(this,
 e,a,"getBaseCssClasses",0,4,!0,d);b=b+a+'">\r\n        ';a=f(this,e,{},"placeholder",0,5,d,!1);b+=c(a,!0);b+='\r\n    </div>\r\n    <input id="ks-filter-menu-input-';a=f(this,e,{},"id",0,7,d,!1);b+=c(a,!0);b+='"\r\n           class="';c={};a=[];a.push("input");c.params=a;c=f(this,e,c,"getBaseCssClasses",0,8,!0,d);b=b+c+'"\r\n            autocomplete="off"/>\r\n</div>\r\n';c={};a=[];a.push("component/extension/content-render/content-xtpl");c.params=a;e=f(this,e,c,"include",0,11,!1,d);return b+e}});

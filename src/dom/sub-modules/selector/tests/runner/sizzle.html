@@ -270,7 +270,7 @@
 </dl>
 <br id="last"/>
 <script>
-    var S=KISSY;
+    var S = KISSY;
     var loc = new S.Uri(location.href);
     var component = 'dom/selector';
     if (loc.getQuery().has('coverage')) {
@@ -320,7 +320,10 @@
                     report: json,
                     path: location.pathname
                 }));
+            } else {
+                jasmine.kissyNext(self.results().failedCount);
             }
+
         });
     });
 </script>

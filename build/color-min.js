@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 16 15:06
+build time: Sep 17 22:57
 */
 KISSY.add("color",function(l,q){function n(a){var b=Math.min(Math.round(a.h),359),c=Math.max(0,Math.min(1,a.s)),a=Math.max(0,Math.min(1,a.v)),d,e,f,i=Math.floor(b/60%6),o=b/60-i,b=a*(1-c),h=a*(1-o*c),c=a*(1-(1-o)*c);switch(i){case 0:d=a;e=c;f=b;break;case 1:d=h;e=a;f=b;break;case 2:d=b;e=a;f=c;break;case 3:d=b;e=h;f=a;break;case 4:d=c;e=b;f=a;break;case 5:d=a,e=b,f=h}return{r:g(255*d),g:g(255*e),b:g(255*f)}}function p(a){var b=Math.min(Math.round(a.h),359),c=Math.max(0,Math.min(1,a.s)),d=Math.max(0,
 Math.min(1,a.l)),e,f=[];e=Math.abs;a=Math.floor;if(0==c||null==b)f=[d,d,d];else{b/=60;c*=1-e(2*d-1);e=c*(1-e(b-2*a(b/2)-1));d-=c/2;switch(a(b)){case 0:f=[c,e,0];break;case 1:f=[e,c,0];break;case 2:f=[0,c,e];break;case 3:f=[0,e,c];break;case 4:f=[e,0,c];break;case 5:f=[c,0,e]}f=[f[0]+d,f[1]+d,f[2]+d]}l.each(f,function(a,b){f[b]=255*a});return{r:f[0],g:f[1],b:f[2]}}function m(a){2!=a.length&&(a="0"+a);return a}function j(a){return Math.round(100*a)+"%"}function g(a){return Math.max(0,Math.min(a,255))}

@@ -230,112 +230,112 @@ if (! _$jscoverage['/promise.js']) {
   _$jscoverage['/promise.js'] = {};
   _$jscoverage['/promise.js'].lineData = [];
   _$jscoverage['/promise.js'].lineData[6] = 0;
-  _$jscoverage['/promise.js'].lineData[8] = 0;
-  _$jscoverage['/promise.js'].lineData[17] = 0;
-  _$jscoverage['/promise.js'].lineData[19] = 0;
+  _$jscoverage['/promise.js'].lineData[7] = 0;
+  _$jscoverage['/promise.js'].lineData[16] = 0;
+  _$jscoverage['/promise.js'].lineData[18] = 0;
+  _$jscoverage['/promise.js'].lineData[20] = 0;
   _$jscoverage['/promise.js'].lineData[21] = 0;
-  _$jscoverage['/promise.js'].lineData[22] = 0;
-  _$jscoverage['/promise.js'].lineData[24] = 0;
-  _$jscoverage['/promise.js'].lineData[27] = 0;
+  _$jscoverage['/promise.js'].lineData[23] = 0;
+  _$jscoverage['/promise.js'].lineData[26] = 0;
+  _$jscoverage['/promise.js'].lineData[31] = 0;
   _$jscoverage['/promise.js'].lineData[32] = 0;
-  _$jscoverage['/promise.js'].lineData[33] = 0;
+  _$jscoverage['/promise.js'].lineData[35] = 0;
   _$jscoverage['/promise.js'].lineData[36] = 0;
-  _$jscoverage['/promise.js'].lineData[37] = 0;
-  _$jscoverage['/promise.js'].lineData[43] = 0;
-  _$jscoverage['/promise.js'].lineData[45] = 0;
+  _$jscoverage['/promise.js'].lineData[42] = 0;
+  _$jscoverage['/promise.js'].lineData[44] = 0;
+  _$jscoverage['/promise.js'].lineData[51] = 0;
   _$jscoverage['/promise.js'].lineData[52] = 0;
   _$jscoverage['/promise.js'].lineData[53] = 0;
   _$jscoverage['/promise.js'].lineData[54] = 0;
-  _$jscoverage['/promise.js'].lineData[55] = 0;
-  _$jscoverage['/promise.js'].lineData[63] = 0;
-  _$jscoverage['/promise.js'].lineData[66] = 0;
-  _$jscoverage['/promise.js'].lineData[75] = 0;
+  _$jscoverage['/promise.js'].lineData[62] = 0;
+  _$jscoverage['/promise.js'].lineData[65] = 0;
+  _$jscoverage['/promise.js'].lineData[74] = 0;
+  _$jscoverage['/promise.js'].lineData[76] = 0;
   _$jscoverage['/promise.js'].lineData[77] = 0;
-  _$jscoverage['/promise.js'].lineData[78] = 0;
+  _$jscoverage['/promise.js'].lineData[81] = 0;
   _$jscoverage['/promise.js'].lineData[82] = 0;
   _$jscoverage['/promise.js'].lineData[83] = 0;
   _$jscoverage['/promise.js'].lineData[84] = 0;
   _$jscoverage['/promise.js'].lineData[85] = 0;
-  _$jscoverage['/promise.js'].lineData[86] = 0;
-  _$jscoverage['/promise.js'].lineData[88] = 0;
-  _$jscoverage['/promise.js'].lineData[96] = 0;
+  _$jscoverage['/promise.js'].lineData[87] = 0;
+  _$jscoverage['/promise.js'].lineData[95] = 0;
+  _$jscoverage['/promise.js'].lineData[99] = 0;
   _$jscoverage['/promise.js'].lineData[100] = 0;
-  _$jscoverage['/promise.js'].lineData[101] = 0;
+  _$jscoverage['/promise.js'].lineData[110] = 0;
   _$jscoverage['/promise.js'].lineData[111] = 0;
-  _$jscoverage['/promise.js'].lineData[112] = 0;
+  _$jscoverage['/promise.js'].lineData[113] = 0;
   _$jscoverage['/promise.js'].lineData[114] = 0;
-  _$jscoverage['/promise.js'].lineData[115] = 0;
-  _$jscoverage['/promise.js'].lineData[117] = 0;
-  _$jscoverage['/promise.js'].lineData[121] = 0;
-  _$jscoverage['/promise.js'].lineData[132] = 0;
-  _$jscoverage['/promise.js'].lineData[140] = 0;
+  _$jscoverage['/promise.js'].lineData[116] = 0;
+  _$jscoverage['/promise.js'].lineData[120] = 0;
+  _$jscoverage['/promise.js'].lineData[131] = 0;
+  _$jscoverage['/promise.js'].lineData[139] = 0;
+  _$jscoverage['/promise.js'].lineData[148] = 0;
   _$jscoverage['/promise.js'].lineData[149] = 0;
-  _$jscoverage['/promise.js'].lineData[150] = 0;
-  _$jscoverage['/promise.js'].lineData[152] = 0;
-  _$jscoverage['/promise.js'].lineData[168] = 0;
+  _$jscoverage['/promise.js'].lineData[151] = 0;
+  _$jscoverage['/promise.js'].lineData[167] = 0;
+  _$jscoverage['/promise.js'].lineData[169] = 0;
   _$jscoverage['/promise.js'].lineData[170] = 0;
-  _$jscoverage['/promise.js'].lineData[171] = 0;
-  _$jscoverage['/promise.js'].lineData[177] = 0;
-  _$jscoverage['/promise.js'].lineData[187] = 0;
-  _$jscoverage['/promise.js'].lineData[193] = 0;
-  _$jscoverage['/promise.js'].lineData[197] = 0;
-  _$jscoverage['/promise.js'].lineData[198] = 0;
-  _$jscoverage['/promise.js'].lineData[199] = 0;
-  _$jscoverage['/promise.js'].lineData[201] = 0;
-  _$jscoverage['/promise.js'].lineData[202] = 0;
+  _$jscoverage['/promise.js'].lineData[176] = 0;
+  _$jscoverage['/promise.js'].lineData[186] = 0;
+  _$jscoverage['/promise.js'].lineData[192] = 0;
   _$jscoverage['/promise.js'].lineData[203] = 0;
   _$jscoverage['/promise.js'].lineData[204] = 0;
-  _$jscoverage['/promise.js'].lineData[206] = 0;
+  _$jscoverage['/promise.js'].lineData[205] = 0;
+  _$jscoverage['/promise.js'].lineData[207] = 0;
+  _$jscoverage['/promise.js'].lineData[208] = 0;
   _$jscoverage['/promise.js'].lineData[209] = 0;
-  _$jscoverage['/promise.js'].lineData[218] = 0;
+  _$jscoverage['/promise.js'].lineData[210] = 0;
+  _$jscoverage['/promise.js'].lineData[212] = 0;
+  _$jscoverage['/promise.js'].lineData[215] = 0;
   _$jscoverage['/promise.js'].lineData[219] = 0;
-  _$jscoverage['/promise.js'].lineData[223] = 0;
+  _$jscoverage['/promise.js'].lineData[220] = 0;
   _$jscoverage['/promise.js'].lineData[224] = 0;
   _$jscoverage['/promise.js'].lineData[225] = 0;
-  _$jscoverage['/promise.js'].lineData[230] = 0;
+  _$jscoverage['/promise.js'].lineData[226] = 0;
   _$jscoverage['/promise.js'].lineData[231] = 0;
-  _$jscoverage['/promise.js'].lineData[235] = 0;
+  _$jscoverage['/promise.js'].lineData[232] = 0;
   _$jscoverage['/promise.js'].lineData[236] = 0;
   _$jscoverage['/promise.js'].lineData[237] = 0;
-  _$jscoverage['/promise.js'].lineData[244] = 0;
+  _$jscoverage['/promise.js'].lineData[238] = 0;
   _$jscoverage['/promise.js'].lineData[245] = 0;
-  _$jscoverage['/promise.js'].lineData[249] = 0;
+  _$jscoverage['/promise.js'].lineData[246] = 0;
   _$jscoverage['/promise.js'].lineData[250] = 0;
   _$jscoverage['/promise.js'].lineData[251] = 0;
   _$jscoverage['/promise.js'].lineData[252] = 0;
-  _$jscoverage['/promise.js'].lineData[254] = 0;
+  _$jscoverage['/promise.js'].lineData[253] = 0;
   _$jscoverage['/promise.js'].lineData[255] = 0;
-  _$jscoverage['/promise.js'].lineData[257] = 0;
+  _$jscoverage['/promise.js'].lineData[256] = 0;
   _$jscoverage['/promise.js'].lineData[258] = 0;
-  _$jscoverage['/promise.js'].lineData[261] = 0;
+  _$jscoverage['/promise.js'].lineData[259] = 0;
   _$jscoverage['/promise.js'].lineData[262] = 0;
   _$jscoverage['/promise.js'].lineData[263] = 0;
   _$jscoverage['/promise.js'].lineData[264] = 0;
   _$jscoverage['/promise.js'].lineData[265] = 0;
-  _$jscoverage['/promise.js'].lineData[267] = 0;
-  _$jscoverage['/promise.js'].lineData[269] = 0;
-  _$jscoverage['/promise.js'].lineData[272] = 0;
-  _$jscoverage['/promise.js'].lineData[277] = 0;
-  _$jscoverage['/promise.js'].lineData[280] = 0;
-  _$jscoverage['/promise.js'].lineData[282] = 0;
-  _$jscoverage['/promise.js'].lineData[296] = 0;
+  _$jscoverage['/promise.js'].lineData[266] = 0;
+  _$jscoverage['/promise.js'].lineData[268] = 0;
+  _$jscoverage['/promise.js'].lineData[270] = 0;
+  _$jscoverage['/promise.js'].lineData[273] = 0;
+  _$jscoverage['/promise.js'].lineData[278] = 0;
+  _$jscoverage['/promise.js'].lineData[281] = 0;
+  _$jscoverage['/promise.js'].lineData[283] = 0;
   _$jscoverage['/promise.js'].lineData[297] = 0;
-  _$jscoverage['/promise.js'].lineData[302] = 0;
+  _$jscoverage['/promise.js'].lineData[298] = 0;
   _$jscoverage['/promise.js'].lineData[303] = 0;
   _$jscoverage['/promise.js'].lineData[304] = 0;
-  _$jscoverage['/promise.js'].lineData[306] = 0;
-  _$jscoverage['/promise.js'].lineData[374] = 0;
+  _$jscoverage['/promise.js'].lineData[305] = 0;
+  _$jscoverage['/promise.js'].lineData[307] = 0;
   _$jscoverage['/promise.js'].lineData[375] = 0;
   _$jscoverage['/promise.js'].lineData[376] = 0;
-  _$jscoverage['/promise.js'].lineData[378] = 0;
+  _$jscoverage['/promise.js'].lineData[377] = 0;
   _$jscoverage['/promise.js'].lineData[379] = 0;
   _$jscoverage['/promise.js'].lineData[380] = 0;
   _$jscoverage['/promise.js'].lineData[381] = 0;
   _$jscoverage['/promise.js'].lineData[382] = 0;
   _$jscoverage['/promise.js'].lineData[383] = 0;
-  _$jscoverage['/promise.js'].lineData[386] = 0;
-  _$jscoverage['/promise.js'].lineData[391] = 0;
-  _$jscoverage['/promise.js'].lineData[395] = 0;
+  _$jscoverage['/promise.js'].lineData[384] = 0;
+  _$jscoverage['/promise.js'].lineData[387] = 0;
+  _$jscoverage['/promise.js'].lineData[392] = 0;
+  _$jscoverage['/promise.js'].lineData[396] = 0;
 }
 if (! _$jscoverage['/promise.js'].functionData) {
   _$jscoverage['/promise.js'].functionData = [];
@@ -372,455 +372,455 @@ if (! _$jscoverage['/promise.js'].functionData) {
 }
 if (! _$jscoverage['/promise.js'].branchData) {
   _$jscoverage['/promise.js'].branchData = {};
-  _$jscoverage['/promise.js'].branchData['19'] = [];
-  _$jscoverage['/promise.js'].branchData['19'][1] = new BranchData();
-  _$jscoverage['/promise.js'].branchData['21'] = [];
-  _$jscoverage['/promise.js'].branchData['21'][1] = new BranchData();
-  _$jscoverage['/promise.js'].branchData['32'] = [];
-  _$jscoverage['/promise.js'].branchData['32'][1] = new BranchData();
-  _$jscoverage['/promise.js'].branchData['36'] = [];
-  _$jscoverage['/promise.js'].branchData['36'][1] = new BranchData();
-  _$jscoverage['/promise.js'].branchData['43'] = [];
-  _$jscoverage['/promise.js'].branchData['43'][1] = new BranchData();
-  _$jscoverage['/promise.js'].branchData['54'] = [];
-  _$jscoverage['/promise.js'].branchData['54'][1] = new BranchData();
-  _$jscoverage['/promise.js'].branchData['63'] = [];
-  _$jscoverage['/promise.js'].branchData['63'][1] = new BranchData();
-  _$jscoverage['/promise.js'].branchData['77'] = [];
-  _$jscoverage['/promise.js'].branchData['77'][1] = new BranchData();
-  _$jscoverage['/promise.js'].branchData['101'] = [];
-  _$jscoverage['/promise.js'].branchData['101'][1] = new BranchData();
-  _$jscoverage['/promise.js'].branchData['115'] = [];
-  _$jscoverage['/promise.js'].branchData['115'][1] = new BranchData();
-  _$jscoverage['/promise.js'].branchData['174'] = [];
-  _$jscoverage['/promise.js'].branchData['174'][1] = new BranchData();
-  _$jscoverage['/promise.js'].branchData['198'] = [];
-  _$jscoverage['/promise.js'].branchData['198'][1] = new BranchData();
-  _$jscoverage['/promise.js'].branchData['203'] = [];
-  _$jscoverage['/promise.js'].branchData['203'][1] = new BranchData();
-  _$jscoverage['/promise.js'].branchData['230'] = [];
-  _$jscoverage['/promise.js'].branchData['230'][1] = new BranchData();
-  _$jscoverage['/promise.js'].branchData['244'] = [];
-  _$jscoverage['/promise.js'].branchData['244'][1] = new BranchData();
-  _$jscoverage['/promise.js'].branchData['250'] = [];
-  _$jscoverage['/promise.js'].branchData['250'][1] = new BranchData();
-  _$jscoverage['/promise.js'].branchData['254'] = [];
-  _$jscoverage['/promise.js'].branchData['254'][1] = new BranchData();
-  _$jscoverage['/promise.js'].branchData['261'] = [];
-  _$jscoverage['/promise.js'].branchData['261'][1] = new BranchData();
-  _$jscoverage['/promise.js'].branchData['263'] = [];
-  _$jscoverage['/promise.js'].branchData['263'][1] = new BranchData();
-  _$jscoverage['/promise.js'].branchData['282'] = [];
-  _$jscoverage['/promise.js'].branchData['282'][1] = new BranchData();
+  _$jscoverage['/promise.js'].branchData['18'] = [];
+  _$jscoverage['/promise.js'].branchData['18'][1] = new BranchData();
+  _$jscoverage['/promise.js'].branchData['20'] = [];
+  _$jscoverage['/promise.js'].branchData['20'][1] = new BranchData();
+  _$jscoverage['/promise.js'].branchData['31'] = [];
+  _$jscoverage['/promise.js'].branchData['31'][1] = new BranchData();
+  _$jscoverage['/promise.js'].branchData['35'] = [];
+  _$jscoverage['/promise.js'].branchData['35'][1] = new BranchData();
+  _$jscoverage['/promise.js'].branchData['42'] = [];
+  _$jscoverage['/promise.js'].branchData['42'][1] = new BranchData();
+  _$jscoverage['/promise.js'].branchData['53'] = [];
+  _$jscoverage['/promise.js'].branchData['53'][1] = new BranchData();
+  _$jscoverage['/promise.js'].branchData['62'] = [];
+  _$jscoverage['/promise.js'].branchData['62'][1] = new BranchData();
+  _$jscoverage['/promise.js'].branchData['76'] = [];
+  _$jscoverage['/promise.js'].branchData['76'][1] = new BranchData();
+  _$jscoverage['/promise.js'].branchData['100'] = [];
+  _$jscoverage['/promise.js'].branchData['100'][1] = new BranchData();
+  _$jscoverage['/promise.js'].branchData['114'] = [];
+  _$jscoverage['/promise.js'].branchData['114'][1] = new BranchData();
+  _$jscoverage['/promise.js'].branchData['173'] = [];
+  _$jscoverage['/promise.js'].branchData['173'][1] = new BranchData();
+  _$jscoverage['/promise.js'].branchData['204'] = [];
+  _$jscoverage['/promise.js'].branchData['204'][1] = new BranchData();
+  _$jscoverage['/promise.js'].branchData['209'] = [];
+  _$jscoverage['/promise.js'].branchData['209'][1] = new BranchData();
+  _$jscoverage['/promise.js'].branchData['231'] = [];
+  _$jscoverage['/promise.js'].branchData['231'][1] = new BranchData();
+  _$jscoverage['/promise.js'].branchData['245'] = [];
+  _$jscoverage['/promise.js'].branchData['245'][1] = new BranchData();
+  _$jscoverage['/promise.js'].branchData['251'] = [];
+  _$jscoverage['/promise.js'].branchData['251'][1] = new BranchData();
+  _$jscoverage['/promise.js'].branchData['255'] = [];
+  _$jscoverage['/promise.js'].branchData['255'][1] = new BranchData();
+  _$jscoverage['/promise.js'].branchData['262'] = [];
+  _$jscoverage['/promise.js'].branchData['262'][1] = new BranchData();
+  _$jscoverage['/promise.js'].branchData['264'] = [];
+  _$jscoverage['/promise.js'].branchData['264'][1] = new BranchData();
   _$jscoverage['/promise.js'].branchData['283'] = [];
   _$jscoverage['/promise.js'].branchData['283'][1] = new BranchData();
-  _$jscoverage['/promise.js'].branchData['285'] = [];
-  _$jscoverage['/promise.js'].branchData['285'][1] = new BranchData();
-  _$jscoverage['/promise.js'].branchData['285'][2] = new BranchData();
-  _$jscoverage['/promise.js'].branchData['289'] = [];
-  _$jscoverage['/promise.js'].branchData['289'][1] = new BranchData();
-  _$jscoverage['/promise.js'].branchData['297'] = [];
-  _$jscoverage['/promise.js'].branchData['297'][1] = new BranchData();
+  _$jscoverage['/promise.js'].branchData['284'] = [];
+  _$jscoverage['/promise.js'].branchData['284'][1] = new BranchData();
+  _$jscoverage['/promise.js'].branchData['286'] = [];
+  _$jscoverage['/promise.js'].branchData['286'][1] = new BranchData();
+  _$jscoverage['/promise.js'].branchData['286'][2] = new BranchData();
+  _$jscoverage['/promise.js'].branchData['290'] = [];
+  _$jscoverage['/promise.js'].branchData['290'][1] = new BranchData();
   _$jscoverage['/promise.js'].branchData['298'] = [];
   _$jscoverage['/promise.js'].branchData['298'][1] = new BranchData();
-  _$jscoverage['/promise.js'].branchData['298'][2] = new BranchData();
-  _$jscoverage['/promise.js'].branchData['375'] = [];
-  _$jscoverage['/promise.js'].branchData['375'][1] = new BranchData();
-  _$jscoverage['/promise.js'].branchData['379'] = [];
-  _$jscoverage['/promise.js'].branchData['379'][1] = new BranchData();
-  _$jscoverage['/promise.js'].branchData['383'] = [];
-  _$jscoverage['/promise.js'].branchData['383'][1] = new BranchData();
+  _$jscoverage['/promise.js'].branchData['299'] = [];
+  _$jscoverage['/promise.js'].branchData['299'][1] = new BranchData();
+  _$jscoverage['/promise.js'].branchData['299'][2] = new BranchData();
+  _$jscoverage['/promise.js'].branchData['376'] = [];
+  _$jscoverage['/promise.js'].branchData['376'][1] = new BranchData();
+  _$jscoverage['/promise.js'].branchData['380'] = [];
+  _$jscoverage['/promise.js'].branchData['380'][1] = new BranchData();
+  _$jscoverage['/promise.js'].branchData['384'] = [];
+  _$jscoverage['/promise.js'].branchData['384'][1] = new BranchData();
 }
-_$jscoverage['/promise.js'].branchData['383'][1].init(84, 13, '--count === 0');
-function visit558_383_1(result) {
-  _$jscoverage['/promise.js'].branchData['383'][1].ranCondition(result);
+_$jscoverage['/promise.js'].branchData['384'][1].init(84, 13, '--count === 0');
+function visit557_384_1(result) {
+  _$jscoverage['/promise.js'].branchData['384'][1].ranCondition(result);
   return result;
-}_$jscoverage['/promise.js'].branchData['379'][1].init(202, 19, 'i < promises.length');
-function visit557_379_1(result) {
-  _$jscoverage['/promise.js'].branchData['379'][1].ranCondition(result);
+}_$jscoverage['/promise.js'].branchData['380'][1].init(202, 19, 'i < promises.length');
+function visit556_380_1(result) {
+  _$jscoverage['/promise.js'].branchData['380'][1].ranCondition(result);
   return result;
-}_$jscoverage['/promise.js'].branchData['375'][1].init(68, 6, '!count');
-function visit556_375_1(result) {
-  _$jscoverage['/promise.js'].branchData['375'][1].ranCondition(result);
+}_$jscoverage['/promise.js'].branchData['376'][1].init(68, 6, '!count');
+function visit555_376_1(result) {
+  _$jscoverage['/promise.js'].branchData['376'][1].ranCondition(result);
   return result;
-}_$jscoverage['/promise.js'].branchData['298'][2].init(51, 35, 'obj[PROMISE_PENDINGS] === undefined');
-function visit555_298_2(result) {
-  _$jscoverage['/promise.js'].branchData['298'][2].ranCondition(result);
+}_$jscoverage['/promise.js'].branchData['299'][2].init(51, 35, 'obj[PROMISE_PENDINGS] === undefined');
+function visit554_299_2(result) {
+  _$jscoverage['/promise.js'].branchData['299'][2].ranCondition(result);
   return result;
-}_$jscoverage['/promise.js'].branchData['298'][1].init(31, 91, '(obj[PROMISE_PENDINGS] === undefined) && (obj[PROMISE_VALUE] instanceof Reject)');
-function visit554_298_1(result) {
+}_$jscoverage['/promise.js'].branchData['299'][1].init(31, 91, '(obj[PROMISE_PENDINGS] === undefined) && (obj[PROMISE_VALUE] instanceof Reject)');
+function visit553_299_1(result) {
+  _$jscoverage['/promise.js'].branchData['299'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/promise.js'].branchData['298'][1].init(17, 123, 'isPromise(obj) && (obj[PROMISE_PENDINGS] === undefined) && (obj[PROMISE_VALUE] instanceof Reject)');
+function visit552_298_1(result) {
   _$jscoverage['/promise.js'].branchData['298'][1].ranCondition(result);
   return result;
-}_$jscoverage['/promise.js'].branchData['297'][1].init(17, 123, 'isPromise(obj) && (obj[PROMISE_PENDINGS] === undefined) && (obj[PROMISE_VALUE] instanceof Reject)');
-function visit553_297_1(result) {
-  _$jscoverage['/promise.js'].branchData['297'][1].ranCondition(result);
+}_$jscoverage['/promise.js'].branchData['290'][1].init(-1, 206, '!isPromise(obj[PROMISE_VALUE]) || isResolved(obj[PROMISE_VALUE])');
+function visit551_290_1(result) {
+  _$jscoverage['/promise.js'].branchData['290'][1].ranCondition(result);
   return result;
-}_$jscoverage['/promise.js'].branchData['289'][1].init(-1, 206, '!isPromise(obj[PROMISE_VALUE]) || isResolved(obj[PROMISE_VALUE])');
-function visit552_289_1(result) {
-  _$jscoverage['/promise.js'].branchData['289'][1].ranCondition(result);
+}_$jscoverage['/promise.js'].branchData['286'][2].init(154, 35, 'obj[PROMISE_PENDINGS] === undefined');
+function visit550_286_2(result) {
+  _$jscoverage['/promise.js'].branchData['286'][2].ranCondition(result);
   return result;
-}_$jscoverage['/promise.js'].branchData['285'][2].init(154, 35, 'obj[PROMISE_PENDINGS] === undefined');
-function visit551_285_2(result) {
-  _$jscoverage['/promise.js'].branchData['285'][2].ranCondition(result);
+}_$jscoverage['/promise.js'].branchData['286'][1].init(64, 405, '(obj[PROMISE_PENDINGS] === undefined) && (!isPromise(obj[PROMISE_VALUE]) || isResolved(obj[PROMISE_VALUE]))');
+function visit549_286_1(result) {
+  _$jscoverage['/promise.js'].branchData['286'][1].ranCondition(result);
   return result;
-}_$jscoverage['/promise.js'].branchData['285'][1].init(64, 405, '(obj[PROMISE_PENDINGS] === undefined) && (!isPromise(obj[PROMISE_VALUE]) || isResolved(obj[PROMISE_VALUE]))');
-function visit550_285_1(result) {
-  _$jscoverage['/promise.js'].branchData['285'][1].ranCondition(result);
+}_$jscoverage['/promise.js'].branchData['284'][1].init(32, 470, 'isPromise(obj) && (obj[PROMISE_PENDINGS] === undefined) && (!isPromise(obj[PROMISE_VALUE]) || isResolved(obj[PROMISE_VALUE]))');
+function visit548_284_1(result) {
+  _$jscoverage['/promise.js'].branchData['284'][1].ranCondition(result);
   return result;
-}_$jscoverage['/promise.js'].branchData['283'][1].init(32, 470, 'isPromise(obj) && (obj[PROMISE_PENDINGS] === undefined) && (!isPromise(obj[PROMISE_VALUE]) || isResolved(obj[PROMISE_VALUE]))');
-function visit549_283_1(result) {
+}_$jscoverage['/promise.js'].branchData['283'][1].init(53, 503, '!isRejected(obj) && isPromise(obj) && (obj[PROMISE_PENDINGS] === undefined) && (!isPromise(obj[PROMISE_VALUE]) || isResolved(obj[PROMISE_VALUE]))');
+function visit547_283_1(result) {
   _$jscoverage['/promise.js'].branchData['283'][1].ranCondition(result);
   return result;
-}_$jscoverage['/promise.js'].branchData['282'][1].init(53, 503, '!isRejected(obj) && isPromise(obj) && (obj[PROMISE_PENDINGS] === undefined) && (!isPromise(obj[PROMISE_VALUE]) || isResolved(obj[PROMISE_VALUE]))');
-function visit548_282_1(result) {
-  _$jscoverage['/promise.js'].branchData['282'][1].ranCondition(result);
+}_$jscoverage['/promise.js'].branchData['264'][1].init(22, 4, 'done');
+function visit546_264_1(result) {
+  _$jscoverage['/promise.js'].branchData['264'][1].ranCondition(result);
   return result;
-}_$jscoverage['/promise.js'].branchData['263'][1].init(22, 4, 'done');
-function visit547_263_1(result) {
-  _$jscoverage['/promise.js'].branchData['263'][1].ranCondition(result);
+}_$jscoverage['/promise.js'].branchData['262'][1].init(1311, 25, 'value instanceof Promise');
+function visit545_262_1(result) {
+  _$jscoverage['/promise.js'].branchData['262'][1].ranCondition(result);
   return result;
-}_$jscoverage['/promise.js'].branchData['261'][1].init(1311, 25, 'value instanceof Promise');
-function visit546_261_1(result) {
-  _$jscoverage['/promise.js'].branchData['261'][1].ranCondition(result);
+}_$jscoverage['/promise.js'].branchData['255'][1].init(138, 24, 'value instanceof Promise');
+function visit544_255_1(result) {
+  _$jscoverage['/promise.js'].branchData['255'][1].ranCondition(result);
   return result;
-}_$jscoverage['/promise.js'].branchData['254'][1].init(138, 24, 'value instanceof Promise');
-function visit545_254_1(result) {
-  _$jscoverage['/promise.js'].branchData['254'][1].ranCondition(result);
+}_$jscoverage['/promise.js'].branchData['251'][1].init(18, 4, 'done');
+function visit543_251_1(result) {
+  _$jscoverage['/promise.js'].branchData['251'][1].ranCondition(result);
   return result;
-}_$jscoverage['/promise.js'].branchData['250'][1].init(18, 4, 'done');
-function visit544_250_1(result) {
-  _$jscoverage['/promise.js'].branchData['250'][1].ranCondition(result);
+}_$jscoverage['/promise.js'].branchData['245'][1].init(87, 12, 'e.stack || e');
+function visit542_245_1(result) {
+  _$jscoverage['/promise.js'].branchData['245'][1].ranCondition(result);
   return result;
-}_$jscoverage['/promise.js'].branchData['244'][1].init(87, 12, 'e.stack || e');
-function visit543_244_1(result) {
-  _$jscoverage['/promise.js'].branchData['244'][1].ranCondition(result);
+}_$jscoverage['/promise.js'].branchData['231'][1].init(87, 12, 'e.stack || e');
+function visit541_231_1(result) {
+  _$jscoverage['/promise.js'].branchData['231'][1].ranCondition(result);
   return result;
-}_$jscoverage['/promise.js'].branchData['230'][1].init(87, 12, 'e.stack || e');
-function visit542_230_1(result) {
-  _$jscoverage['/promise.js'].branchData['230'][1].ranCondition(result);
+}_$jscoverage['/promise.js'].branchData['209'][1].init(161, 38, 'self[PROMISE_VALUE] instanceof Promise');
+function visit540_209_1(result) {
+  _$jscoverage['/promise.js'].branchData['209'][1].ranCondition(result);
   return result;
-}_$jscoverage['/promise.js'].branchData['203'][1].init(161, 38, 'self[PROMISE_VALUE] instanceof Promise');
-function visit541_203_1(result) {
-  _$jscoverage['/promise.js'].branchData['203'][1].ranCondition(result);
+}_$jscoverage['/promise.js'].branchData['204'][1].init(14, 24, 'reason instanceof Reject');
+function visit539_204_1(result) {
+  _$jscoverage['/promise.js'].branchData['204'][1].ranCondition(result);
   return result;
-}_$jscoverage['/promise.js'].branchData['198'][1].init(14, 24, 'reason instanceof Reject');
-function visit540_198_1(result) {
-  _$jscoverage['/promise.js'].branchData['198'][1].ranCondition(result);
+}_$jscoverage['/promise.js'].branchData['173'][1].init(238, 21, 'fulfilled || rejected');
+function visit538_173_1(result) {
+  _$jscoverage['/promise.js'].branchData['173'][1].ranCondition(result);
   return result;
-}_$jscoverage['/promise.js'].branchData['174'][1].init(238, 21, 'fulfilled || rejected');
-function visit539_174_1(result) {
-  _$jscoverage['/promise.js'].branchData['174'][1].ranCondition(result);
+}_$jscoverage['/promise.js'].branchData['114'][1].init(125, 15, 'v === undefined');
+function visit537_114_1(result) {
+  _$jscoverage['/promise.js'].branchData['114'][1].ranCondition(result);
   return result;
-}_$jscoverage['/promise.js'].branchData['115'][1].init(125, 15, 'v === undefined');
-function visit538_115_1(result) {
-  _$jscoverage['/promise.js'].branchData['115'][1].ranCondition(result);
+}_$jscoverage['/promise.js'].branchData['100'][1].init(18, 29, 'obj && obj instanceof Promise');
+function visit536_100_1(result) {
+  _$jscoverage['/promise.js'].branchData['100'][1].ranCondition(result);
   return result;
-}_$jscoverage['/promise.js'].branchData['101'][1].init(18, 29, 'obj && obj instanceof Promise');
-function visit537_101_1(result) {
-  _$jscoverage['/promise.js'].branchData['101'][1].ranCondition(result);
+}_$jscoverage['/promise.js'].branchData['76'][1].init(86, 39, '!(pendings = promise[PROMISE_PENDINGS])');
+function visit535_76_1(result) {
+  _$jscoverage['/promise.js'].branchData['76'][1].ranCondition(result);
   return result;
-}_$jscoverage['/promise.js'].branchData['77'][1].init(86, 39, '!(pendings = promise[PROMISE_PENDINGS])');
-function visit536_77_1(result) {
-  _$jscoverage['/promise.js'].branchData['77'][1].ranCondition(result);
+}_$jscoverage['/promise.js'].branchData['62'][1].init(344, 24, 'promise || new Promise()');
+function visit534_62_1(result) {
+  _$jscoverage['/promise.js'].branchData['62'][1].ranCondition(result);
   return result;
-}_$jscoverage['/promise.js'].branchData['63'][1].init(344, 24, 'promise || new Promise()');
-function visit535_63_1(result) {
-  _$jscoverage['/promise.js'].branchData['63'][1].ranCondition(result);
+}_$jscoverage['/promise.js'].branchData['53'][1].init(40, 24, '!(self instanceof Defer)');
+function visit533_53_1(result) {
+  _$jscoverage['/promise.js'].branchData['53'][1].ranCondition(result);
   return result;
-}_$jscoverage['/promise.js'].branchData['54'][1].init(40, 24, '!(self instanceof Defer)');
-function visit534_54_1(result) {
-  _$jscoverage['/promise.js'].branchData['54'][1].ranCondition(result);
+}_$jscoverage['/promise.js'].branchData['42'][1].init(191, 25, 'fulfilled && fulfilled(v)');
+function visit532_42_1(result) {
+  _$jscoverage['/promise.js'].branchData['42'][1].ranCondition(result);
   return result;
-}_$jscoverage['/promise.js'].branchData['43'][1].init(191, 25, 'fulfilled && fulfilled(v)');
-function visit533_43_1(result) {
-  _$jscoverage['/promise.js'].branchData['43'][1].ranCondition(result);
+}_$jscoverage['/promise.js'].branchData['35'][1].init(607, 12, 'isPromise(v)');
+function visit531_35_1(result) {
+  _$jscoverage['/promise.js'].branchData['35'][1].ranCondition(result);
   return result;
-}_$jscoverage['/promise.js'].branchData['36'][1].init(607, 12, 'isPromise(v)');
-function visit532_36_1(result) {
-  _$jscoverage['/promise.js'].branchData['36'][1].ranCondition(result);
+}_$jscoverage['/promise.js'].branchData['31'][1].init(475, 8, 'pendings');
+function visit530_31_1(result) {
+  _$jscoverage['/promise.js'].branchData['31'][1].ranCondition(result);
   return result;
-}_$jscoverage['/promise.js'].branchData['32'][1].init(475, 8, 'pendings');
-function visit531_32_1(result) {
-  _$jscoverage['/promise.js'].branchData['32'][1].ranCondition(result);
+}_$jscoverage['/promise.js'].branchData['20'][1].init(89, 9, '!rejected');
+function visit529_20_1(result) {
+  _$jscoverage['/promise.js'].branchData['20'][1].ranCondition(result);
   return result;
-}_$jscoverage['/promise.js'].branchData['21'][1].init(89, 9, '!rejected');
-function visit530_21_1(result) {
-  _$jscoverage['/promise.js'].branchData['21'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/promise.js'].branchData['19'][1].init(47, 25, 'promise instanceof Reject');
-function visit529_19_1(result) {
-  _$jscoverage['/promise.js'].branchData['19'][1].ranCondition(result);
+}_$jscoverage['/promise.js'].branchData['18'][1].init(47, 25, 'promise instanceof Reject');
+function visit528_18_1(result) {
+  _$jscoverage['/promise.js'].branchData['18'][1].ranCondition(result);
   return result;
 }_$jscoverage['/promise.js'].lineData[6]++;
 (function(S, undefined) {
   _$jscoverage['/promise.js'].functionData[0]++;
-  _$jscoverage['/promise.js'].lineData[8]++;
+  _$jscoverage['/promise.js'].lineData[7]++;
   var PROMISE_VALUE = '__promise_value', logger = S.getLogger('s/promise'), PROMISE_PENDINGS = '__promise_pendings';
-  _$jscoverage['/promise.js'].lineData[17]++;
+  _$jscoverage['/promise.js'].lineData[16]++;
   function promiseWhen(promise, fulfilled, rejected) {
     _$jscoverage['/promise.js'].functionData[1]++;
-    _$jscoverage['/promise.js'].lineData[19]++;
-    if (visit529_19_1(promise instanceof Reject)) {
-      _$jscoverage['/promise.js'].lineData[21]++;
-      if (visit530_21_1(!rejected)) {
-        _$jscoverage['/promise.js'].lineData[22]++;
+    _$jscoverage['/promise.js'].lineData[18]++;
+    if (visit528_18_1(promise instanceof Reject)) {
+      _$jscoverage['/promise.js'].lineData[20]++;
+      if (visit529_20_1(!rejected)) {
+        _$jscoverage['/promise.js'].lineData[21]++;
         S.error('no rejected callback!');
       }
-      _$jscoverage['/promise.js'].lineData[24]++;
+      _$jscoverage['/promise.js'].lineData[23]++;
       return rejected(promise[PROMISE_VALUE]);
     }
-    _$jscoverage['/promise.js'].lineData[27]++;
+    _$jscoverage['/promise.js'].lineData[26]++;
     var v = promise[PROMISE_VALUE], pendings = promise[PROMISE_PENDINGS];
-    _$jscoverage['/promise.js'].lineData[32]++;
-    if (visit531_32_1(pendings)) {
-      _$jscoverage['/promise.js'].lineData[33]++;
+    _$jscoverage['/promise.js'].lineData[31]++;
+    if (visit530_31_1(pendings)) {
+      _$jscoverage['/promise.js'].lineData[32]++;
       pendings.push([fulfilled, rejected]);
     } else {
-      _$jscoverage['/promise.js'].lineData[36]++;
-      if (visit532_36_1(isPromise(v))) {
-        _$jscoverage['/promise.js'].lineData[37]++;
+      _$jscoverage['/promise.js'].lineData[35]++;
+      if (visit531_35_1(isPromise(v))) {
+        _$jscoverage['/promise.js'].lineData[36]++;
         promiseWhen(v, fulfilled, rejected);
       } else {
-        _$jscoverage['/promise.js'].lineData[43]++;
-        return visit533_43_1(fulfilled && fulfilled(v));
+        _$jscoverage['/promise.js'].lineData[42]++;
+        return visit532_42_1(fulfilled && fulfilled(v));
       }
     }
-    _$jscoverage['/promise.js'].lineData[45]++;
+    _$jscoverage['/promise.js'].lineData[44]++;
     return undefined;
   }
-  _$jscoverage['/promise.js'].lineData[52]++;
+  _$jscoverage['/promise.js'].lineData[51]++;
   function Defer(promise) {
     _$jscoverage['/promise.js'].functionData[2]++;
-    _$jscoverage['/promise.js'].lineData[53]++;
+    _$jscoverage['/promise.js'].lineData[52]++;
     var self = this;
-    _$jscoverage['/promise.js'].lineData[54]++;
-    if (visit534_54_1(!(self instanceof Defer))) {
-      _$jscoverage['/promise.js'].lineData[55]++;
+    _$jscoverage['/promise.js'].lineData[53]++;
+    if (visit533_53_1(!(self instanceof Defer))) {
+      _$jscoverage['/promise.js'].lineData[54]++;
       return new Defer(promise);
     }
-    _$jscoverage['/promise.js'].lineData[63]++;
-    self.promise = visit535_63_1(promise || new Promise());
+    _$jscoverage['/promise.js'].lineData[62]++;
+    self.promise = visit534_62_1(promise || new Promise());
   }
-  _$jscoverage['/promise.js'].lineData[66]++;
+  _$jscoverage['/promise.js'].lineData[65]++;
   Defer.prototype = {
   constructor: Defer, 
   resolve: function(value) {
   _$jscoverage['/promise.js'].functionData[3]++;
-  _$jscoverage['/promise.js'].lineData[75]++;
+  _$jscoverage['/promise.js'].lineData[74]++;
   var promise = this.promise, pendings;
-  _$jscoverage['/promise.js'].lineData[77]++;
-  if (visit536_77_1(!(pendings = promise[PROMISE_PENDINGS]))) {
-    _$jscoverage['/promise.js'].lineData[78]++;
+  _$jscoverage['/promise.js'].lineData[76]++;
+  if (visit535_76_1(!(pendings = promise[PROMISE_PENDINGS]))) {
+    _$jscoverage['/promise.js'].lineData[77]++;
     return null;
   }
-  _$jscoverage['/promise.js'].lineData[82]++;
+  _$jscoverage['/promise.js'].lineData[81]++;
   promise[PROMISE_VALUE] = value;
-  _$jscoverage['/promise.js'].lineData[83]++;
+  _$jscoverage['/promise.js'].lineData[82]++;
   pendings = [].concat(pendings);
-  _$jscoverage['/promise.js'].lineData[84]++;
+  _$jscoverage['/promise.js'].lineData[83]++;
   promise[PROMISE_PENDINGS] = undefined;
-  _$jscoverage['/promise.js'].lineData[85]++;
+  _$jscoverage['/promise.js'].lineData[84]++;
   S.each(pendings, function(p) {
   _$jscoverage['/promise.js'].functionData[4]++;
-  _$jscoverage['/promise.js'].lineData[86]++;
+  _$jscoverage['/promise.js'].lineData[85]++;
   promiseWhen(promise, p[0], p[1]);
 });
-  _$jscoverage['/promise.js'].lineData[88]++;
+  _$jscoverage['/promise.js'].lineData[87]++;
   return value;
 }, 
   reject: function(reason) {
   _$jscoverage['/promise.js'].functionData[5]++;
-  _$jscoverage['/promise.js'].lineData[96]++;
+  _$jscoverage['/promise.js'].lineData[95]++;
   return this.resolve(new Reject(reason));
 }};
-  _$jscoverage['/promise.js'].lineData[100]++;
+  _$jscoverage['/promise.js'].lineData[99]++;
   function isPromise(obj) {
     _$jscoverage['/promise.js'].functionData[6]++;
-    _$jscoverage['/promise.js'].lineData[101]++;
-    return visit537_101_1(obj && obj instanceof Promise);
+    _$jscoverage['/promise.js'].lineData[100]++;
+    return visit536_100_1(obj && obj instanceof Promise);
   }
-  _$jscoverage['/promise.js'].lineData[111]++;
+  _$jscoverage['/promise.js'].lineData[110]++;
   function Promise(v) {
     _$jscoverage['/promise.js'].functionData[7]++;
-    _$jscoverage['/promise.js'].lineData[112]++;
+    _$jscoverage['/promise.js'].lineData[111]++;
     var self = this;
-    _$jscoverage['/promise.js'].lineData[114]++;
+    _$jscoverage['/promise.js'].lineData[113]++;
     self[PROMISE_VALUE] = v;
-    _$jscoverage['/promise.js'].lineData[115]++;
-    if (visit538_115_1(v === undefined)) {
-      _$jscoverage['/promise.js'].lineData[117]++;
+    _$jscoverage['/promise.js'].lineData[114]++;
+    if (visit537_114_1(v === undefined)) {
+      _$jscoverage['/promise.js'].lineData[116]++;
       self[PROMISE_PENDINGS] = [];
     }
   }
-  _$jscoverage['/promise.js'].lineData[121]++;
+  _$jscoverage['/promise.js'].lineData[120]++;
   Promise.prototype = {
   constructor: Promise, 
   then: function(fulfilled, rejected) {
   _$jscoverage['/promise.js'].functionData[8]++;
-  _$jscoverage['/promise.js'].lineData[132]++;
+  _$jscoverage['/promise.js'].lineData[131]++;
   return when(this, fulfilled, rejected);
 }, 
   fail: function(rejected) {
   _$jscoverage['/promise.js'].functionData[9]++;
-  _$jscoverage['/promise.js'].lineData[140]++;
+  _$jscoverage['/promise.js'].lineData[139]++;
   return when(this, 0, rejected);
 }, 
   fin: function(callback) {
   _$jscoverage['/promise.js'].functionData[10]++;
-  _$jscoverage['/promise.js'].lineData[149]++;
+  _$jscoverage['/promise.js'].lineData[148]++;
   return when(this, function(value) {
   _$jscoverage['/promise.js'].functionData[11]++;
-  _$jscoverage['/promise.js'].lineData[150]++;
+  _$jscoverage['/promise.js'].lineData[149]++;
   return callback(value, true);
 }, function(reason) {
   _$jscoverage['/promise.js'].functionData[12]++;
-  _$jscoverage['/promise.js'].lineData[152]++;
+  _$jscoverage['/promise.js'].lineData[151]++;
   return callback(reason, false);
 });
 }, 
   done: function(fulfilled, rejected) {
   _$jscoverage['/promise.js'].functionData[13]++;
-  _$jscoverage['/promise.js'].lineData[168]++;
+  _$jscoverage['/promise.js'].lineData[167]++;
   var self = this, onUnhandledError = function(error) {
   _$jscoverage['/promise.js'].functionData[14]++;
-  _$jscoverage['/promise.js'].lineData[170]++;
+  _$jscoverage['/promise.js'].lineData[169]++;
   setTimeout(function() {
   _$jscoverage['/promise.js'].functionData[15]++;
-  _$jscoverage['/promise.js'].lineData[171]++;
+  _$jscoverage['/promise.js'].lineData[170]++;
   throw error;
 }, 0);
-}, promiseToHandle = visit539_174_1(fulfilled || rejected) ? self.then(fulfilled, rejected) : self;
-  _$jscoverage['/promise.js'].lineData[177]++;
+}, promiseToHandle = visit538_173_1(fulfilled || rejected) ? self.then(fulfilled, rejected) : self;
+  _$jscoverage['/promise.js'].lineData[176]++;
   promiseToHandle.fail(onUnhandledError);
 }, 
   isResolved: function() {
   _$jscoverage['/promise.js'].functionData[16]++;
-  _$jscoverage['/promise.js'].lineData[187]++;
+  _$jscoverage['/promise.js'].lineData[186]++;
   return isResolved(this);
 }, 
   isRejected: function() {
   _$jscoverage['/promise.js'].functionData[17]++;
-  _$jscoverage['/promise.js'].lineData[193]++;
+  _$jscoverage['/promise.js'].lineData[192]++;
   return isRejected(this);
 }};
-  _$jscoverage['/promise.js'].lineData[197]++;
+  _$jscoverage['/promise.js'].lineData[203]++;
   function Reject(reason) {
     _$jscoverage['/promise.js'].functionData[18]++;
-    _$jscoverage['/promise.js'].lineData[198]++;
-    if (visit540_198_1(reason instanceof Reject)) {
-      _$jscoverage['/promise.js'].lineData[199]++;
+    _$jscoverage['/promise.js'].lineData[204]++;
+    if (visit539_204_1(reason instanceof Reject)) {
+      _$jscoverage['/promise.js'].lineData[205]++;
       return reason;
     }
-    _$jscoverage['/promise.js'].lineData[201]++;
+    _$jscoverage['/promise.js'].lineData[207]++;
     var self = this;
-    _$jscoverage['/promise.js'].lineData[202]++;
+    _$jscoverage['/promise.js'].lineData[208]++;
     Promise.apply(self, arguments);
-    _$jscoverage['/promise.js'].lineData[203]++;
-    if (visit541_203_1(self[PROMISE_VALUE] instanceof Promise)) {
-      _$jscoverage['/promise.js'].lineData[204]++;
+    _$jscoverage['/promise.js'].lineData[209]++;
+    if (visit540_209_1(self[PROMISE_VALUE] instanceof Promise)) {
+      _$jscoverage['/promise.js'].lineData[210]++;
       S.error('assert.not(this.__promise_value instanceof promise) in Reject constructor');
     }
-    _$jscoverage['/promise.js'].lineData[206]++;
+    _$jscoverage['/promise.js'].lineData[212]++;
     return self;
   }
-  _$jscoverage['/promise.js'].lineData[209]++;
+  _$jscoverage['/promise.js'].lineData[215]++;
   S.extend(Reject, Promise);
-  _$jscoverage['/promise.js'].lineData[218]++;
+  _$jscoverage['/promise.js'].lineData[219]++;
   function when(value, fulfilled, rejected) {
     _$jscoverage['/promise.js'].functionData[19]++;
-    _$jscoverage['/promise.js'].lineData[219]++;
+    _$jscoverage['/promise.js'].lineData[220]++;
     var defer = new Defer(), done = 0;
-    _$jscoverage['/promise.js'].lineData[223]++;
+    _$jscoverage['/promise.js'].lineData[224]++;
     function _fulfilled(value) {
       _$jscoverage['/promise.js'].functionData[20]++;
-      _$jscoverage['/promise.js'].lineData[224]++;
+      _$jscoverage['/promise.js'].lineData[225]++;
       try {
-        _$jscoverage['/promise.js'].lineData[225]++;
+        _$jscoverage['/promise.js'].lineData[226]++;
         return fulfilled ? fulfilled(value) : value;
       }      catch (e) {
-  _$jscoverage['/promise.js'].lineData[230]++;
-  logger.error(visit542_230_1(e.stack || e));
   _$jscoverage['/promise.js'].lineData[231]++;
+  logger.error(visit541_231_1(e.stack || e));
+  _$jscoverage['/promise.js'].lineData[232]++;
   return new Reject(e);
 }
     }
-    _$jscoverage['/promise.js'].lineData[235]++;
+    _$jscoverage['/promise.js'].lineData[236]++;
     function _rejected(reason) {
       _$jscoverage['/promise.js'].functionData[21]++;
-      _$jscoverage['/promise.js'].lineData[236]++;
+      _$jscoverage['/promise.js'].lineData[237]++;
       try {
-        _$jscoverage['/promise.js'].lineData[237]++;
+        _$jscoverage['/promise.js'].lineData[238]++;
         return rejected ? rejected(reason) : new Reject(reason);
       }      catch (e) {
-  _$jscoverage['/promise.js'].lineData[244]++;
-  logger.error(visit543_244_1(e.stack || e));
   _$jscoverage['/promise.js'].lineData[245]++;
+  logger.error(visit542_245_1(e.stack || e));
+  _$jscoverage['/promise.js'].lineData[246]++;
   return new Reject(e);
 }
     }
-    _$jscoverage['/promise.js'].lineData[249]++;
+    _$jscoverage['/promise.js'].lineData[250]++;
     function finalFulfill(value) {
       _$jscoverage['/promise.js'].functionData[22]++;
-      _$jscoverage['/promise.js'].lineData[250]++;
-      if (visit544_250_1(done)) {
-        _$jscoverage['/promise.js'].lineData[251]++;
-        S.error('already done at fulfilled');
+      _$jscoverage['/promise.js'].lineData[251]++;
+      if (visit543_251_1(done)) {
         _$jscoverage['/promise.js'].lineData[252]++;
+        S.error('already done at fulfilled');
+        _$jscoverage['/promise.js'].lineData[253]++;
         return;
       }
-      _$jscoverage['/promise.js'].lineData[254]++;
-      if (visit545_254_1(value instanceof Promise)) {
-        _$jscoverage['/promise.js'].lineData[255]++;
+      _$jscoverage['/promise.js'].lineData[255]++;
+      if (visit544_255_1(value instanceof Promise)) {
+        _$jscoverage['/promise.js'].lineData[256]++;
         S.error('assert.not(value instanceof Promise) in when');
       }
-      _$jscoverage['/promise.js'].lineData[257]++;
-      done = 1;
       _$jscoverage['/promise.js'].lineData[258]++;
+      done = 1;
+      _$jscoverage['/promise.js'].lineData[259]++;
       defer.resolve(_fulfilled(value));
     }
-    _$jscoverage['/promise.js'].lineData[261]++;
-    if (visit546_261_1(value instanceof Promise)) {
-      _$jscoverage['/promise.js'].lineData[262]++;
+    _$jscoverage['/promise.js'].lineData[262]++;
+    if (visit545_262_1(value instanceof Promise)) {
+      _$jscoverage['/promise.js'].lineData[263]++;
       promiseWhen(value, finalFulfill, function(reason) {
   _$jscoverage['/promise.js'].functionData[23]++;
-  _$jscoverage['/promise.js'].lineData[263]++;
-  if (visit547_263_1(done)) {
-    _$jscoverage['/promise.js'].lineData[264]++;
-    S.error('already done at rejected');
+  _$jscoverage['/promise.js'].lineData[264]++;
+  if (visit546_264_1(done)) {
     _$jscoverage['/promise.js'].lineData[265]++;
+    S.error('already done at rejected');
+    _$jscoverage['/promise.js'].lineData[266]++;
     return;
   }
-  _$jscoverage['/promise.js'].lineData[267]++;
+  _$jscoverage['/promise.js'].lineData[268]++;
   done = 1;
-  _$jscoverage['/promise.js'].lineData[269]++;
+  _$jscoverage['/promise.js'].lineData[270]++;
   defer.resolve(_rejected(reason));
 });
     } else {
-      _$jscoverage['/promise.js'].lineData[272]++;
+      _$jscoverage['/promise.js'].lineData[273]++;
       finalFulfill(value);
     }
-    _$jscoverage['/promise.js'].lineData[277]++;
+    _$jscoverage['/promise.js'].lineData[278]++;
     return defer.promise;
   }
-  _$jscoverage['/promise.js'].lineData[280]++;
+  _$jscoverage['/promise.js'].lineData[281]++;
   function isResolved(obj) {
     _$jscoverage['/promise.js'].functionData[24]++;
-    _$jscoverage['/promise.js'].lineData[282]++;
-    return visit548_282_1(!isRejected(obj) && visit549_283_1(isPromise(obj) && visit550_285_1((visit551_285_2(obj[PROMISE_PENDINGS] === undefined)) && (visit552_289_1(!isPromise(obj[PROMISE_VALUE]) || isResolved(obj[PROMISE_VALUE]))))));
+    _$jscoverage['/promise.js'].lineData[283]++;
+    return visit547_283_1(!isRejected(obj) && visit548_284_1(isPromise(obj) && visit549_286_1((visit550_286_2(obj[PROMISE_PENDINGS] === undefined)) && (visit551_290_1(!isPromise(obj[PROMISE_VALUE]) || isResolved(obj[PROMISE_VALUE]))))));
   }
-  _$jscoverage['/promise.js'].lineData[296]++;
+  _$jscoverage['/promise.js'].lineData[297]++;
   function isRejected(obj) {
     _$jscoverage['/promise.js'].functionData[25]++;
-    _$jscoverage['/promise.js'].lineData[297]++;
-    return visit553_297_1(isPromise(obj) && visit554_298_1((visit555_298_2(obj[PROMISE_PENDINGS] === undefined)) && (obj[PROMISE_VALUE] instanceof Reject)));
+    _$jscoverage['/promise.js'].lineData[298]++;
+    return visit552_298_1(isPromise(obj) && visit553_299_1((visit554_299_2(obj[PROMISE_PENDINGS] === undefined)) && (obj[PROMISE_VALUE] instanceof Reject)));
   }
-  _$jscoverage['/promise.js'].lineData[302]++;
-  KISSY.Defer = Defer;
   _$jscoverage['/promise.js'].lineData[303]++;
-  KISSY.Promise = Promise;
+  KISSY.Defer = Defer;
   _$jscoverage['/promise.js'].lineData[304]++;
+  KISSY.Promise = Promise;
+  _$jscoverage['/promise.js'].lineData[305]++;
   Promise.Defer = Defer;
-  _$jscoverage['/promise.js'].lineData[306]++;
+  _$jscoverage['/promise.js'].lineData[307]++;
   S.mix(Promise, {
   when: when, 
   isPromise: isPromise, 
@@ -828,38 +828,38 @@ function visit529_19_1(result) {
   isRejected: isRejected, 
   all: function(promises) {
   _$jscoverage['/promise.js'].functionData[26]++;
-  _$jscoverage['/promise.js'].lineData[374]++;
-  var count = promises.length;
   _$jscoverage['/promise.js'].lineData[375]++;
-  if (visit556_375_1(!count)) {
-    _$jscoverage['/promise.js'].lineData[376]++;
+  var count = promises.length;
+  _$jscoverage['/promise.js'].lineData[376]++;
+  if (visit555_376_1(!count)) {
+    _$jscoverage['/promise.js'].lineData[377]++;
     return null;
   }
-  _$jscoverage['/promise.js'].lineData[378]++;
-  var defer = Defer();
   _$jscoverage['/promise.js'].lineData[379]++;
-  for (var i = 0; visit557_379_1(i < promises.length); i++) {
-    _$jscoverage['/promise.js'].lineData[380]++;
+  var defer = Defer();
+  _$jscoverage['/promise.js'].lineData[380]++;
+  for (var i = 0; visit556_380_1(i < promises.length); i++) {
+    _$jscoverage['/promise.js'].lineData[381]++;
     (function(promise, i) {
   _$jscoverage['/promise.js'].functionData[27]++;
-  _$jscoverage['/promise.js'].lineData[381]++;
+  _$jscoverage['/promise.js'].lineData[382]++;
   when(promise, function(value) {
   _$jscoverage['/promise.js'].functionData[28]++;
-  _$jscoverage['/promise.js'].lineData[382]++;
-  promises[i] = value;
   _$jscoverage['/promise.js'].lineData[383]++;
-  if (visit558_383_1(--count === 0)) {
-    _$jscoverage['/promise.js'].lineData[386]++;
+  promises[i] = value;
+  _$jscoverage['/promise.js'].lineData[384]++;
+  if (visit557_384_1(--count === 0)) {
+    _$jscoverage['/promise.js'].lineData[387]++;
     defer.resolve(promises);
   }
 }, function(r) {
   _$jscoverage['/promise.js'].functionData[29]++;
-  _$jscoverage['/promise.js'].lineData[391]++;
+  _$jscoverage['/promise.js'].lineData[392]++;
   defer.reject(r);
 });
 })(promises[i], i);
   }
-  _$jscoverage['/promise.js'].lineData[395]++;
+  _$jscoverage['/promise.js'].lineData[396]++;
   return defer.promise;
 }});
 })(KISSY);

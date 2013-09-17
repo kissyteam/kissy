@@ -12,7 +12,6 @@ KISSY.add('io/jsonp', function (S, IO) {
             return S.guid('jsonp');
         }
     });
-
     IO.on('start', function (e) {
         var io = e.io,
             c = io.config,

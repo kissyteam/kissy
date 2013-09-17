@@ -246,7 +246,7 @@ if (! _$jscoverage['/base/observer.js']) {
   _$jscoverage['/base/observer.js'].lineData[52] = 0;
   _$jscoverage['/base/observer.js'].lineData[56] = 0;
   _$jscoverage['/base/observer.js'].lineData[58] = 0;
-  _$jscoverage['/base/observer.js'].lineData[63] = 0;
+  _$jscoverage['/base/observer.js'].lineData[62] = 0;
 }
 if (! _$jscoverage['/base/observer.js'].functionData) {
   _$jscoverage['/base/observer.js'].functionData = [];
@@ -333,7 +333,7 @@ KISSY.add('event/dom/base/observer', function(S, Special, BaseEvent) {
   _$jscoverage['/base/observer.js'].lineData[58]++;
   return ret;
 }});
-  _$jscoverage['/base/observer.js'].lineData[63]++;
+  _$jscoverage['/base/observer.js'].lineData[62]++;
   return DomEventObserver;
 }, {
   requires: ['./special', 'event/base']});

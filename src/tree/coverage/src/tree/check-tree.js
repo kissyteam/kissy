@@ -229,16 +229,16 @@ if (! this._$jscoverage) {
 if (! _$jscoverage['/tree/check-tree.js']) {
   _$jscoverage['/tree/check-tree.js'] = {};
   _$jscoverage['/tree/check-tree.js'].lineData = [];
-  _$jscoverage['/tree/check-tree.js'].lineData[5] = 0;
-  _$jscoverage['/tree/check-tree.js'].lineData[11] = 0;
+  _$jscoverage['/tree/check-tree.js'].lineData[6] = 0;
   _$jscoverage['/tree/check-tree.js'].lineData[13] = 0;
-  _$jscoverage['/tree/check-tree.js'].lineData[14] = 0;
   _$jscoverage['/tree/check-tree.js'].lineData[15] = 0;
+  _$jscoverage['/tree/check-tree.js'].lineData[16] = 0;
   _$jscoverage['/tree/check-tree.js'].lineData[17] = 0;
-  _$jscoverage['/tree/check-tree.js'].lineData[21] = 0;
-  _$jscoverage['/tree/check-tree.js'].lineData[22] = 0;
-  _$jscoverage['/tree/check-tree.js'].lineData[25] = 0;
-  _$jscoverage['/tree/check-tree.js'].lineData[26] = 0;
+  _$jscoverage['/tree/check-tree.js'].lineData[19] = 0;
+  _$jscoverage['/tree/check-tree.js'].lineData[23] = 0;
+  _$jscoverage['/tree/check-tree.js'].lineData[24] = 0;
+  _$jscoverage['/tree/check-tree.js'].lineData[27] = 0;
+  _$jscoverage['/tree/check-tree.js'].lineData[28] = 0;
 }
 if (! _$jscoverage['/tree/check-tree.js'].functionData) {
   _$jscoverage['/tree/check-tree.js'].functionData = [];
@@ -248,51 +248,51 @@ if (! _$jscoverage['/tree/check-tree.js'].functionData) {
 }
 if (! _$jscoverage['/tree/check-tree.js'].branchData) {
   _$jscoverage['/tree/check-tree.js'].branchData = {};
-  _$jscoverage['/tree/check-tree.js'].branchData['14'] = [];
-  _$jscoverage['/tree/check-tree.js'].branchData['14'][1] = new BranchData();
-  _$jscoverage['/tree/check-tree.js'].branchData['17'] = [];
-  _$jscoverage['/tree/check-tree.js'].branchData['17'][1] = new BranchData();
-  _$jscoverage['/tree/check-tree.js'].branchData['25'] = [];
-  _$jscoverage['/tree/check-tree.js'].branchData['25'][1] = new BranchData();
+  _$jscoverage['/tree/check-tree.js'].branchData['16'] = [];
+  _$jscoverage['/tree/check-tree.js'].branchData['16'][1] = new BranchData();
+  _$jscoverage['/tree/check-tree.js'].branchData['19'] = [];
+  _$jscoverage['/tree/check-tree.js'].branchData['19'][1] = new BranchData();
+  _$jscoverage['/tree/check-tree.js'].branchData['27'] = [];
+  _$jscoverage['/tree/check-tree.js'].branchData['27'][1] = new BranchData();
 }
-_$jscoverage['/tree/check-tree.js'].branchData['25'][1].init(133, 30, 'v && !self.get("selectedItem")');
-function visit14_25_1(result) {
-  _$jscoverage['/tree/check-tree.js'].branchData['25'][1].ranCondition(result);
+_$jscoverage['/tree/check-tree.js'].branchData['27'][1].init(133, 30, 'v && !self.get("selectedItem")');
+function visit14_27_1(result) {
+  _$jscoverage['/tree/check-tree.js'].branchData['27'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tree/check-tree.js'].branchData['17'][1].init(169, 43, 'current && current.handleKeyDownInternal(e)');
-function visit13_17_1(result) {
-  _$jscoverage['/tree/check-tree.js'].branchData['17'][1].ranCondition(result);
+}_$jscoverage['/tree/check-tree.js'].branchData['19'][1].init(169, 43, 'current && current.handleKeyDownInternal(e)');
+function visit13_19_1(result) {
+  _$jscoverage['/tree/check-tree.js'].branchData['19'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tree/check-tree.js'].branchData['14'][1].init(71, 16, 'current === this');
-function visit12_14_1(result) {
-  _$jscoverage['/tree/check-tree.js'].branchData['14'][1].ranCondition(result);
+}_$jscoverage['/tree/check-tree.js'].branchData['16'][1].init(71, 16, 'current === this');
+function visit12_16_1(result) {
+  _$jscoverage['/tree/check-tree.js'].branchData['16'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tree/check-tree.js'].lineData[5]++;
+}_$jscoverage['/tree/check-tree.js'].lineData[6]++;
 KISSY.add("tree/check-tree", function(S, CheckNode, TreeManager) {
   _$jscoverage['/tree/check-tree.js'].functionData[0]++;
-  _$jscoverage['/tree/check-tree.js'].lineData[11]++;
+  _$jscoverage['/tree/check-tree.js'].lineData[13]++;
   return CheckNode.extend([TreeManager], {
   handleKeyDownInternal: function(e) {
   _$jscoverage['/tree/check-tree.js'].functionData[1]++;
-  _$jscoverage['/tree/check-tree.js'].lineData[13]++;
+  _$jscoverage['/tree/check-tree.js'].lineData[15]++;
   var current = this.get("selectedItem");
-  _$jscoverage['/tree/check-tree.js'].lineData[14]++;
-  if (visit12_14_1(current === this)) {
-    _$jscoverage['/tree/check-tree.js'].lineData[15]++;
+  _$jscoverage['/tree/check-tree.js'].lineData[16]++;
+  if (visit12_16_1(current === this)) {
+    _$jscoverage['/tree/check-tree.js'].lineData[17]++;
     return this.callSuper(e);
   }
-  _$jscoverage['/tree/check-tree.js'].lineData[17]++;
-  return visit13_17_1(current && current.handleKeyDownInternal(e));
+  _$jscoverage['/tree/check-tree.js'].lineData[19]++;
+  return visit13_19_1(current && current.handleKeyDownInternal(e));
 }, 
   _onSetFocused: function(v, e) {
   _$jscoverage['/tree/check-tree.js'].functionData[2]++;
-  _$jscoverage['/tree/check-tree.js'].lineData[21]++;
+  _$jscoverage['/tree/check-tree.js'].lineData[23]++;
   var self = this;
-  _$jscoverage['/tree/check-tree.js'].lineData[22]++;
+  _$jscoverage['/tree/check-tree.js'].lineData[24]++;
   self.callSuper(v, e);
-  _$jscoverage['/tree/check-tree.js'].lineData[25]++;
-  if (visit14_25_1(v && !self.get("selectedItem"))) {
-    _$jscoverage['/tree/check-tree.js'].lineData[26]++;
+  _$jscoverage['/tree/check-tree.js'].lineData[27]++;
+  if (visit14_27_1(v && !self.get("selectedItem"))) {
+    _$jscoverage['/tree/check-tree.js'].lineData[28]++;
     self.select();
   }
 }}, {

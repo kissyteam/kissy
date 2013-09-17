@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 16 15:17
+build time: Sep 17 23:09
 */
 KISSY.add("menubutton/menubutton-xtpl",function(){return function(e,c,g){var i=this.config.utils.getPropertyOrRunCommand,c="",a={},f=[];f.push("component/extension/content-render/content-xtpl");a.params=f;a=i(this,e,a,"include",0,1,!1,g);c=c+a+'\r\n<div class="';a={};f=[];f.push("dropdown");a.params=f;a=i(this,e,a,"getBaseCssClasses",0,2,!0,g);c=c+a+'">\r\n    <div class="';a={};f=[];f.push("dropdown-inner");a.params=f;e=i(this,e,a,"getBaseCssClasses",0,3,!0,g);return c+e+'">\r\n    </div>\r\n</div>'}});
 KISSY.add("menubutton/render",function(e,c,g,i){return c.getDefaultRender().extend([i],{decorateDom:function(a){var f=this.control,c=f.get("prefixCls"),a=a.one("."+c+"popupmenu"),e=a[0].ownerDocument.body;e.insertBefore(a[0],e.firstChild);e=this.getComponentConstructorByNode(c,a);f.setInternal("menu",new e({srcNode:a,prefixCls:c}))},beforeCreateDom:function(a){e.mix(a.elAttrs,{"aria-expanded":!1,"aria-haspopup":!0})},_onSetCollapsed:function(a){var e=this.$el,c=this.getBaseCssClass("open");e[a?"removeClass":

@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 16 15:19
+build time: Sep 17 23:10
 */
 KISSY.add("tree/node-xtpl",function(){return function(d,g,f){var a,c=this;a=this.config.utils;var g=a.runBlockCommand,i=a.getExpression,h=a.getPropertyOrRunCommand;a='<div id="ks-tree-node-row-';var b=h(c,d,{},"id",0,1,f,!1);a+=i(b,!0);a+='"\r\n     class="';var b={},e=[];e.push("row");b.params=e;b=h(c,d,b,"getBaseCssClasses",0,2,!0,f);a=a+b+"\r\n     ";var b={},e=[],j=h(c,d,{},"selected",0,3,f,!0);e.push(j);b.params=e;b.fn=function(b){var a;a="\r\n        ";var i={},e=[];e.push("selected");i.params=
 e;b=h(c,b,i,"getBaseCssClasses",0,4,!0,f);return a+b+"\r\n     "};a+=g(c,d,b,"if",3);a+='\r\n     ">\r\n    <div id="ks-tree-node-expand-icon-';b=h(c,d,{},"id",0,7,f,!1);a+=i(b,!0);a+='"\r\n         class="';b={};e=[];e.push("expand-icon");b.params=e;b=h(c,d,b,"getBaseCssClasses",0,8,!0,f);a=a+b+'">\r\n    </div>\r\n    ';b={};e=[];j=h(c,d,{},"checkable",0,10,f,!0);e.push(j);b.params=e;b.fn=function(b){var a;a='\r\n    <div id="ks-tree-node-checked-';var e=h(c,b,{},"id",0,11,f,!1);a+=i(e,!0);a+='"\r\n         class="';

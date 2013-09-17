@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 16 15:06
+build time: Sep 17 22:56
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -25,8 +25,8 @@ KISSY.add('anim', function (S, Dom, AnimBase, TimerAnim, TransitionAnim) {
     /**
      * @class KISSY.Anim
      * A class for constructing animation instances.
-     * @mixins KISSY.Event.Target
-     * @cfg {HTMLElement|window} node html dom node or window
+     * @extend KISSY.Event.CustomEvent.Target
+     * @cfg {HTMLElement|Window} node html dom node or window
      * (window can only animate scrollTop/scrollLeft)
      * @cfg {Object} props end css style value.
      * @cfg {Number} [duration=1] duration(second) or anim config

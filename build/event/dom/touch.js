@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 16 15:16
+build time: Sep 18 00:20
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -198,7 +198,7 @@ KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, DomEvent, Single
              * native touch property **only for touch event**.
              *
              * @property touch
-             * @member KISSY.DomEvent.DomEventObject
+             * @member KISSY.Event.DomEvent.Object
              */
             touch: touch,
             /**
@@ -207,7 +207,7 @@ KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, DomEvent, Single
              *
              * can be one of 'up' 'down' 'left' 'right'
              * @property {String} direction
-             * @member KISSY.DomEvent.DomEventObject
+             * @member KISSY.Event.DomEvent.Object
              */
             direction: direction,
             /**
@@ -216,7 +216,7 @@ KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, DomEvent, Single
              *
              * the distance swipe gesture costs
              * @property {Number} distance
-             * @member KISSY.DomEvent.DomEventObject
+             * @member KISSY.Event.DomEvent.Object
              */
             distance: distance,
             /**
@@ -225,7 +225,7 @@ KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, DomEvent, Single
              *
              * the duration swipe gesture costs
              * @property {Number} duration
-             * @member KISSY.DomEvent.DomEventObject
+             * @member KISSY.Event.DomEvent.Object
              */
             duration: (e.timeStamp - self.startTime) / 1000
         });

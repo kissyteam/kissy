@@ -230,7 +230,7 @@ if (! _$jscoverage['/base/gesture.js']) {
   _$jscoverage['/base/gesture.js'] = {};
   _$jscoverage['/base/gesture.js'].lineData = [];
   _$jscoverage['/base/gesture.js'].lineData[6] = 0;
-  _$jscoverage['/base/gesture.js'].lineData[12] = 0;
+  _$jscoverage['/base/gesture.js'].lineData[13] = 0;
 }
 if (! _$jscoverage['/base/gesture.js'].functionData) {
   _$jscoverage['/base/gesture.js'].functionData = [];
@@ -242,7 +242,7 @@ if (! _$jscoverage['/base/gesture.js'].branchData) {
 _$jscoverage['/base/gesture.js'].lineData[6]++;
 KISSY.add('event/dom/base/gesture', function() {
   _$jscoverage['/base/gesture.js'].functionData[0]++;
-  _$jscoverage['/base/gesture.js'].lineData[12]++;
+  _$jscoverage['/base/gesture.js'].lineData[13]++;
   return {
   start: 'mousedown', 
   move: 'mousemove', 

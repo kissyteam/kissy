@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 16 15:17
+build time: Sep 17 23:08
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -55,7 +55,7 @@ KISSY.add("menu/control", function (S, Node, Container, DelegateChildrenExtensio
      * KISSY Menu.
      * xclass: 'menu'.
      * @class KISSY.Menu
-     * @extends KISSY.Component.Control
+     * @extends KISSY.Component.Container
      */
     return Container.extend([
         DelegateChildrenExtension
@@ -141,7 +141,7 @@ KISSY.add("menu/control", function (S, Node, Container, DelegateChildrenExtensio
          * calls the child control's {@code handleKeydown} method to give the control
          * a chance to handle the event first.
          * Protected, should only be overridden by subclasses.
-         * @param {KISSY.Event.DomEventObject} e Key event to handle.
+         * @param {KISSY.Event.DomEvent.Object} e Key event to handle.
          * @return {Boolean|undefined} Whether the event was handled by the container (or one of
          *     its children).
          * @protected
@@ -520,12 +520,11 @@ KISSY.add('menu/check-menuitem-xtpl', function () {
 });
 /**
  * checkable menu item render
+ * @ignore
  * @author yiminghe@gmail.com
  */
 KISSY.add('menu/check-menuitem-render', function (S, MenuItemRender, ContentRenderExtension, CheckMenuItemTpl) {
-
     return MenuItemRender.extend([ContentRenderExtension], {
-
         beforeCreateDom: function (renderData) {
             if (renderData.checked) {
                 renderData.elCls.push(self.getBaseCssClasses("checked"));
@@ -537,7 +536,6 @@ KISSY.add('menu/check-menuitem-render', function (S, MenuItemRender, ContentRend
                 cls = self.getBaseCssClasses("checked");
             self.$el[v ? 'addClass' : 'removeClass'](cls);
         }
-
     }, {
         ATTRS: {
             contentTpl: {
@@ -554,6 +552,7 @@ KISSY.add('menu/check-menuitem-render', function (S, MenuItemRender, ContentRend
 });
 /**
  * checkable menu item
+ * @ignore
  * @author yiminghe@gmail.com
  */
 KISSY.add('menu/check-menuitem', function (S, MenuItem, CheckMenuItemRender) {
@@ -775,7 +774,7 @@ KISSY.add("menu/submenu", function (S, Node, MenuItem, SubMenuRender) {
              * and delegates further key events to its menu until it is dismissed OR the
              * left key is pressed.
              * Protected for subclass overridden.
-             * @param {KISSY.Event.DomEventObject} e key event.
+             * @param {KISSY.Event.DomEvent.Object} e key event.
              * @protected
              * @return {Boolean|undefined} Whether the event was handled.
              */
@@ -945,7 +944,6 @@ KISSY.add("menu/popupmenu", function (S, AlignExtension,Shim, Menu, PopupMenuRen
      * xclass: 'popupmenu'.
      * @class KISSY.Menu.PopupMenu
      * @extends KISSY.Menu
-     * @mixins KISSY.Component.Extension.Position
      * @mixins KISSY.Component.Extension.Align
      */
     return Menu.extend([

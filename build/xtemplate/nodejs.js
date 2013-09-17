@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 16 15:19
+build time: Sep 17 23:10
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -10,6 +10,7 @@ build time: Sep 16 15:19
 */
 
 /**
+ * @ignore
  * load tpl from file in nodejs
  * @author yiminghe@gmail.com
  */
@@ -17,7 +18,18 @@ KISSY.add('xtemplate/nodejs', function (S, XTemplate) {
     var fs = require('fs');
     var cached = {};
 
+    /**
+     * load xtemplate from file on nodejs
+     * @class KISSY.XTemplate.Nodejs
+     * @singleton
+     */
     return  {
+        /**
+         * load xtemplate module on nodejs and return xtemplate instance
+         * @param {String} moduleName xtemplate module name
+         * @param config xtemplate config object
+         * @returns {KISSY.XTemplate} xtemplate instance
+         */
         loadFromModuleName: function (moduleName, config) {
             config = S.merge(config, {
                 cacheFile: 1

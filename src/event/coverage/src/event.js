@@ -230,8 +230,10 @@ if (! _$jscoverage['/event.js']) {
   _$jscoverage['/event.js'] = {};
   _$jscoverage['/event.js'].lineData = [];
   _$jscoverage['/event.js'].lineData[6] = 0;
-  _$jscoverage['/event.js'].lineData[10] = 0;
-  _$jscoverage['/event.js'].lineData[12] = 0;
+  _$jscoverage['/event.js'].lineData[13] = 0;
+  _$jscoverage['/event.js'].lineData[34] = 0;
+  _$jscoverage['/event.js'].lineData[37] = 0;
+  _$jscoverage['/event.js'].lineData[39] = 0;
 }
 if (! _$jscoverage['/event.js'].functionData) {
   _$jscoverage['/event.js'].functionData = [];
@@ -241,11 +243,17 @@ if (! _$jscoverage['/event.js'].branchData) {
   _$jscoverage['/event.js'].branchData = {};
 }
 _$jscoverage['/event.js'].lineData[6]++;
-KISSY.add('event', function(S, DomEvent, CustomEvent) {
+KISSY.add('event', function(S, DomEvent, CustomEvent, undefined) {
   _$jscoverage['/event.js'].functionData[0]++;
-  _$jscoverage['/event.js'].lineData[10]++;
-  S.EventTarget = CustomEvent.Target;
-  _$jscoverage['/event.js'].lineData[12]++;
-  return S.Event = S.merge(DomEvent, CustomEvent);
+  _$jscoverage['/event.js'].lineData[13]++;
+  var Event = S.Event = S.merge(DomEvent, {
+  DomEvent: DomEvent, 
+  CustomEvent: CustomEvent});
+  _$jscoverage['/event.js'].lineData[34]++;
+  Event.global = CustomEvent.global;
+  _$jscoverage['/event.js'].lineData[37]++;
+  S.EventTarget = Event.Target = CustomEvent.targetObject;
+  _$jscoverage['/event.js'].lineData[39]++;
+  return Event;
 }, {
   requires: ['event/dom', 'event/custom']});

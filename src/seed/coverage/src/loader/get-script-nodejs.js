@@ -232,24 +232,24 @@ if (! _$jscoverage['/loader/get-script-nodejs.js']) {
   _$jscoverage['/loader/get-script-nodejs.js'].lineData[7] = 0;
   _$jscoverage['/loader/get-script-nodejs.js'].lineData[8] = 0;
   _$jscoverage['/loader/get-script-nodejs.js'].lineData[12] = 0;
+  _$jscoverage['/loader/get-script-nodejs.js'].lineData[14] = 0;
   _$jscoverage['/loader/get-script-nodejs.js'].lineData[16] = 0;
+  _$jscoverage['/loader/get-script-nodejs.js'].lineData[17] = 0;
   _$jscoverage['/loader/get-script-nodejs.js'].lineData[18] = 0;
   _$jscoverage['/loader/get-script-nodejs.js'].lineData[19] = 0;
-  _$jscoverage['/loader/get-script-nodejs.js'].lineData[20] = 0;
-  _$jscoverage['/loader/get-script-nodejs.js'].lineData[21] = 0;
+  _$jscoverage['/loader/get-script-nodejs.js'].lineData[22] = 0;
+  _$jscoverage['/loader/get-script-nodejs.js'].lineData[23] = 0;
   _$jscoverage['/loader/get-script-nodejs.js'].lineData[24] = 0;
   _$jscoverage['/loader/get-script-nodejs.js'].lineData[25] = 0;
-  _$jscoverage['/loader/get-script-nodejs.js'].lineData[26] = 0;
-  _$jscoverage['/loader/get-script-nodejs.js'].lineData[27] = 0;
-  _$jscoverage['/loader/get-script-nodejs.js'].lineData[30] = 0;
+  _$jscoverage['/loader/get-script-nodejs.js'].lineData[28] = 0;
+  _$jscoverage['/loader/get-script-nodejs.js'].lineData[31] = 0;
+  _$jscoverage['/loader/get-script-nodejs.js'].lineData[32] = 0;
   _$jscoverage['/loader/get-script-nodejs.js'].lineData[33] = 0;
   _$jscoverage['/loader/get-script-nodejs.js'].lineData[34] = 0;
   _$jscoverage['/loader/get-script-nodejs.js'].lineData[35] = 0;
-  _$jscoverage['/loader/get-script-nodejs.js'].lineData[36] = 0;
   _$jscoverage['/loader/get-script-nodejs.js'].lineData[37] = 0;
+  _$jscoverage['/loader/get-script-nodejs.js'].lineData[38] = 0;
   _$jscoverage['/loader/get-script-nodejs.js'].lineData[39] = 0;
-  _$jscoverage['/loader/get-script-nodejs.js'].lineData[40] = 0;
-  _$jscoverage['/loader/get-script-nodejs.js'].lineData[41] = 0;
 }
 if (! _$jscoverage['/loader/get-script-nodejs.js'].functionData) {
   _$jscoverage['/loader/get-script-nodejs.js'].functionData = [];
@@ -258,36 +258,36 @@ if (! _$jscoverage['/loader/get-script-nodejs.js'].functionData) {
 }
 if (! _$jscoverage['/loader/get-script-nodejs.js'].branchData) {
   _$jscoverage['/loader/get-script-nodejs.js'].branchData = {};
-  _$jscoverage['/loader/get-script-nodejs.js'].branchData['18'] = [];
-  _$jscoverage['/loader/get-script-nodejs.js'].branchData['18'][1] = new BranchData();
+  _$jscoverage['/loader/get-script-nodejs.js'].branchData['16'] = [];
+  _$jscoverage['/loader/get-script-nodejs.js'].branchData['16'][1] = new BranchData();
+  _$jscoverage['/loader/get-script-nodejs.js'].branchData['22'] = [];
+  _$jscoverage['/loader/get-script-nodejs.js'].branchData['22'][1] = new BranchData();
   _$jscoverage['/loader/get-script-nodejs.js'].branchData['24'] = [];
   _$jscoverage['/loader/get-script-nodejs.js'].branchData['24'][1] = new BranchData();
-  _$jscoverage['/loader/get-script-nodejs.js'].branchData['26'] = [];
-  _$jscoverage['/loader/get-script-nodejs.js'].branchData['26'][1] = new BranchData();
-  _$jscoverage['/loader/get-script-nodejs.js'].branchData['37'] = [];
-  _$jscoverage['/loader/get-script-nodejs.js'].branchData['37'][1] = new BranchData();
-  _$jscoverage['/loader/get-script-nodejs.js'].branchData['41'] = [];
-  _$jscoverage['/loader/get-script-nodejs.js'].branchData['41'][1] = new BranchData();
+  _$jscoverage['/loader/get-script-nodejs.js'].branchData['35'] = [];
+  _$jscoverage['/loader/get-script-nodejs.js'].branchData['35'][1] = new BranchData();
+  _$jscoverage['/loader/get-script-nodejs.js'].branchData['39'] = [];
+  _$jscoverage['/loader/get-script-nodejs.js'].branchData['39'][1] = new BranchData();
 }
-_$jscoverage['/loader/get-script-nodejs.js'].branchData['41'][1].init(108, 17, 'error && error(e)');
-function visit403_41_1(result) {
-  _$jscoverage['/loader/get-script-nodejs.js'].branchData['41'][1].ranCondition(result);
+_$jscoverage['/loader/get-script-nodejs.js'].branchData['39'][1].init(96, 17, 'error && error(e)');
+function visit403_39_1(result) {
+  _$jscoverage['/loader/get-script-nodejs.js'].branchData['39'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/get-script-nodejs.js'].branchData['37'][1].init(204, 20, 'success && success()');
-function visit402_37_1(result) {
-  _$jscoverage['/loader/get-script-nodejs.js'].branchData['37'][1].ranCondition(result);
+}_$jscoverage['/loader/get-script-nodejs.js'].branchData['35'][1].init(188, 20, 'success && success()');
+function visit402_35_1(result) {
+  _$jscoverage['/loader/get-script-nodejs.js'].branchData['35'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/get-script-nodejs.js'].branchData['26'][1].init(84, 20, 'success && success()');
-function visit401_26_1(result) {
-  _$jscoverage['/loader/get-script-nodejs.js'].branchData['26'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/loader/get-script-nodejs.js'].branchData['24'][1].init(236, 55, 'S.startsWith(S.Path.extname(url).toLowerCase(), \'.css\')');
-function visit400_24_1(result) {
+}_$jscoverage['/loader/get-script-nodejs.js'].branchData['24'][1].init(76, 20, 'success && success()');
+function visit401_24_1(result) {
   _$jscoverage['/loader/get-script-nodejs.js'].branchData['24'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/get-script-nodejs.js'].branchData['18'][1].init(46, 24, 'S.isPlainObject(success)');
-function visit399_18_1(result) {
-  _$jscoverage['/loader/get-script-nodejs.js'].branchData['18'][1].ranCondition(result);
+}_$jscoverage['/loader/get-script-nodejs.js'].branchData['22'][1].init(208, 55, 'S.startsWith(S.Path.extname(url).toLowerCase(), \'.css\')');
+function visit400_22_1(result) {
+  _$jscoverage['/loader/get-script-nodejs.js'].branchData['22'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/loader/get-script-nodejs.js'].branchData['16'][1].init(38, 24, 'S.isPlainObject(success)');
+function visit399_16_1(result) {
+  _$jscoverage['/loader/get-script-nodejs.js'].branchData['16'][1].ranCondition(result);
   return result;
 }_$jscoverage['/loader/get-script-nodejs.js'].lineData[7]++;
 (function(S) {
@@ -295,48 +295,47 @@ function visit399_18_1(result) {
   _$jscoverage['/loader/get-script-nodejs.js'].lineData[8]++;
   var fs = require('fs'), logger = S.getLogger('s/loader'), vm = require('vm');
   _$jscoverage['/loader/get-script-nodejs.js'].lineData[12]++;
-  S.mix(S, {
-  getScript: function(url, success, charset) {
+  S.getScript = function(url, success, charset) {
   _$jscoverage['/loader/get-script-nodejs.js'].functionData[1]++;
-  _$jscoverage['/loader/get-script-nodejs.js'].lineData[16]++;
+  _$jscoverage['/loader/get-script-nodejs.js'].lineData[14]++;
   var error;
-  _$jscoverage['/loader/get-script-nodejs.js'].lineData[18]++;
-  if (visit399_18_1(S.isPlainObject(success))) {
-    _$jscoverage['/loader/get-script-nodejs.js'].lineData[19]++;
+  _$jscoverage['/loader/get-script-nodejs.js'].lineData[16]++;
+  if (visit399_16_1(S.isPlainObject(success))) {
+    _$jscoverage['/loader/get-script-nodejs.js'].lineData[17]++;
     charset = success.charset;
-    _$jscoverage['/loader/get-script-nodejs.js'].lineData[20]++;
+    _$jscoverage['/loader/get-script-nodejs.js'].lineData[18]++;
     error = success.error;
-    _$jscoverage['/loader/get-script-nodejs.js'].lineData[21]++;
+    _$jscoverage['/loader/get-script-nodejs.js'].lineData[19]++;
     success = success.success;
   }
-  _$jscoverage['/loader/get-script-nodejs.js'].lineData[24]++;
-  if (visit400_24_1(S.startsWith(S.Path.extname(url).toLowerCase(), '.css'))) {
-    _$jscoverage['/loader/get-script-nodejs.js'].lineData[25]++;
+  _$jscoverage['/loader/get-script-nodejs.js'].lineData[22]++;
+  if (visit400_22_1(S.startsWith(S.Path.extname(url).toLowerCase(), '.css'))) {
+    _$jscoverage['/loader/get-script-nodejs.js'].lineData[23]++;
     logger.warn('node js can not load css: ' + url);
-    _$jscoverage['/loader/get-script-nodejs.js'].lineData[26]++;
-    visit401_26_1(success && success());
-    _$jscoverage['/loader/get-script-nodejs.js'].lineData[27]++;
+    _$jscoverage['/loader/get-script-nodejs.js'].lineData[24]++;
+    visit401_24_1(success && success());
+    _$jscoverage['/loader/get-script-nodejs.js'].lineData[25]++;
     return;
   }
-  _$jscoverage['/loader/get-script-nodejs.js'].lineData[30]++;
+  _$jscoverage['/loader/get-script-nodejs.js'].lineData[28]++;
   var uri = new S.Uri(url), path = uri.getPath();
-  _$jscoverage['/loader/get-script-nodejs.js'].lineData[33]++;
+  _$jscoverage['/loader/get-script-nodejs.js'].lineData[31]++;
   try {
-    _$jscoverage['/loader/get-script-nodejs.js'].lineData[34]++;
+    _$jscoverage['/loader/get-script-nodejs.js'].lineData[32]++;
     var mod = fs.readFileSync(path, charset);
-    _$jscoverage['/loader/get-script-nodejs.js'].lineData[35]++;
+    _$jscoverage['/loader/get-script-nodejs.js'].lineData[33]++;
     var fn = vm.runInThisContext('(function(KISSY,require){' + mod + '})', url);
-    _$jscoverage['/loader/get-script-nodejs.js'].lineData[36]++;
+    _$jscoverage['/loader/get-script-nodejs.js'].lineData[34]++;
     fn(S, require);
-    _$jscoverage['/loader/get-script-nodejs.js'].lineData[37]++;
-    visit402_37_1(success && success());
+    _$jscoverage['/loader/get-script-nodejs.js'].lineData[35]++;
+    visit402_35_1(success && success());
   }  catch (e) {
-  _$jscoverage['/loader/get-script-nodejs.js'].lineData[39]++;
+  _$jscoverage['/loader/get-script-nodejs.js'].lineData[37]++;
   logger.error('in file: ' + url);
-  _$jscoverage['/loader/get-script-nodejs.js'].lineData[40]++;
+  _$jscoverage['/loader/get-script-nodejs.js'].lineData[38]++;
   logger.error(e.stack);
-  _$jscoverage['/loader/get-script-nodejs.js'].lineData[41]++;
-  visit403_41_1(error && error(e));
+  _$jscoverage['/loader/get-script-nodejs.js'].lineData[39]++;
+  visit403_39_1(error && error(e));
 }
-}});
+};
 })(KISSY);

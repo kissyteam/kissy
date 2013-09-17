@@ -230,32 +230,32 @@ if (! _$jscoverage['/tabs/body.js']) {
   _$jscoverage['/tabs/body.js'] = {};
   _$jscoverage['/tabs/body.js'].lineData = [];
   _$jscoverage['/tabs/body.js'].lineData[6] = 0;
-  _$jscoverage['/tabs/body.js'].lineData[8] = 0;
-  _$jscoverage['/tabs/body.js'].lineData[11] = 0;
   _$jscoverage['/tabs/body.js'].lineData[12] = 0;
-  _$jscoverage['/tabs/body.js'].lineData[13] = 0;
-  _$jscoverage['/tabs/body.js'].lineData[17] = 0;
-  _$jscoverage['/tabs/body.js'].lineData[18] = 0;
-  _$jscoverage['/tabs/body.js'].lineData[19] = 0;
+  _$jscoverage['/tabs/body.js'].lineData[14] = 0;
+  _$jscoverage['/tabs/body.js'].lineData[15] = 0;
+  _$jscoverage['/tabs/body.js'].lineData[16] = 0;
+  _$jscoverage['/tabs/body.js'].lineData[20] = 0;
   _$jscoverage['/tabs/body.js'].lineData[21] = 0;
-  _$jscoverage['/tabs/body.js'].lineData[27] = 0;
-  _$jscoverage['/tabs/body.js'].lineData[29] = 0;
+  _$jscoverage['/tabs/body.js'].lineData[22] = 0;
+  _$jscoverage['/tabs/body.js'].lineData[24] = 0;
   _$jscoverage['/tabs/body.js'].lineData[30] = 0;
-  _$jscoverage['/tabs/body.js'].lineData[31] = 0;
   _$jscoverage['/tabs/body.js'].lineData[32] = 0;
+  _$jscoverage['/tabs/body.js'].lineData[33] = 0;
   _$jscoverage['/tabs/body.js'].lineData[34] = 0;
-  _$jscoverage['/tabs/body.js'].lineData[39] = 0;
-  _$jscoverage['/tabs/body.js'].lineData[43] = 0;
-  _$jscoverage['/tabs/body.js'].lineData[47] = 0;
-  _$jscoverage['/tabs/body.js'].lineData[48] = 0;
+  _$jscoverage['/tabs/body.js'].lineData[35] = 0;
+  _$jscoverage['/tabs/body.js'].lineData[37] = 0;
+  _$jscoverage['/tabs/body.js'].lineData[42] = 0;
+  _$jscoverage['/tabs/body.js'].lineData[46] = 0;
   _$jscoverage['/tabs/body.js'].lineData[50] = 0;
-  _$jscoverage['/tabs/body.js'].lineData[78] = 0;
-  _$jscoverage['/tabs/body.js'].lineData[79] = 0;
+  _$jscoverage['/tabs/body.js'].lineData[51] = 0;
+  _$jscoverage['/tabs/body.js'].lineData[53] = 0;
   _$jscoverage['/tabs/body.js'].lineData[80] = 0;
   _$jscoverage['/tabs/body.js'].lineData[81] = 0;
   _$jscoverage['/tabs/body.js'].lineData[82] = 0;
-  _$jscoverage['/tabs/body.js'].lineData[85] = 0;
-  _$jscoverage['/tabs/body.js'].lineData[88] = 0;
+  _$jscoverage['/tabs/body.js'].lineData[83] = 0;
+  _$jscoverage['/tabs/body.js'].lineData[84] = 0;
+  _$jscoverage['/tabs/body.js'].lineData[87] = 0;
+  _$jscoverage['/tabs/body.js'].lineData[90] = 0;
 }
 if (! _$jscoverage['/tabs/body.js'].functionData) {
   _$jscoverage['/tabs/body.js'].functionData = [];
@@ -271,104 +271,104 @@ if (! _$jscoverage['/tabs/body.js'].functionData) {
 }
 if (! _$jscoverage['/tabs/body.js'].branchData) {
   _$jscoverage['/tabs/body.js'].branchData = {};
-  _$jscoverage['/tabs/body.js'].branchData['17'] = [];
-  _$jscoverage['/tabs/body.js'].branchData['17'][1] = new BranchData();
-  _$jscoverage['/tabs/body.js'].branchData['18'] = [];
-  _$jscoverage['/tabs/body.js'].branchData['18'][1] = new BranchData();
-  _$jscoverage['/tabs/body.js'].branchData['30'] = [];
-  _$jscoverage['/tabs/body.js'].branchData['30'][1] = new BranchData();
-  _$jscoverage['/tabs/body.js'].branchData['48'] = [];
-  _$jscoverage['/tabs/body.js'].branchData['48'][1] = new BranchData();
-  _$jscoverage['/tabs/body.js'].branchData['79'] = [];
-  _$jscoverage['/tabs/body.js'].branchData['79'][1] = new BranchData();
+  _$jscoverage['/tabs/body.js'].branchData['20'] = [];
+  _$jscoverage['/tabs/body.js'].branchData['20'][1] = new BranchData();
+  _$jscoverage['/tabs/body.js'].branchData['21'] = [];
+  _$jscoverage['/tabs/body.js'].branchData['21'][1] = new BranchData();
+  _$jscoverage['/tabs/body.js'].branchData['33'] = [];
+  _$jscoverage['/tabs/body.js'].branchData['33'][1] = new BranchData();
+  _$jscoverage['/tabs/body.js'].branchData['51'] = [];
+  _$jscoverage['/tabs/body.js'].branchData['51'][1] = new BranchData();
   _$jscoverage['/tabs/body.js'].branchData['81'] = [];
   _$jscoverage['/tabs/body.js'].branchData['81'][1] = new BranchData();
+  _$jscoverage['/tabs/body.js'].branchData['83'] = [];
+  _$jscoverage['/tabs/body.js'].branchData['83'][1] = new BranchData();
 }
-_$jscoverage['/tabs/body.js'].branchData['81'][1].init(68, 18, '!c.get(\'selected\')');
-function visit12_81_1(result) {
+_$jscoverage['/tabs/body.js'].branchData['83'][1].init(68, 18, '!c.get(\'selected\')');
+function visit12_83_1(result) {
+  _$jscoverage['/tabs/body.js'].branchData['83'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/tabs/body.js'].branchData['81'][1].init(14, 22, 'self.get(\'lazyRender\')');
+function visit11_81_1(result) {
   _$jscoverage['/tabs/body.js'].branchData['81'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tabs/body.js'].branchData['79'][1].init(14, 22, 'self.get(\'lazyRender\')');
-function visit11_79_1(result) {
-  _$jscoverage['/tabs/body.js'].branchData['79'][1].ranCondition(result);
+}_$jscoverage['/tabs/body.js'].branchData['51'][1].init(85, 22, 'this.get(\'lazyRender\')');
+function visit10_51_1(result) {
+  _$jscoverage['/tabs/body.js'].branchData['51'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tabs/body.js'].branchData['48'][1].init(85, 22, 'this.get(\'lazyRender\')');
-function visit10_48_1(result) {
-  _$jscoverage['/tabs/body.js'].branchData['48'][1].ranCondition(result);
+}_$jscoverage['/tabs/body.js'].branchData['33'][1].init(22, 17, 'c.get("selected")');
+function visit9_33_1(result) {
+  _$jscoverage['/tabs/body.js'].branchData['33'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tabs/body.js'].branchData['30'][1].init(22, 17, 'c.get("selected")');
-function visit9_30_1(result) {
-  _$jscoverage['/tabs/body.js'].branchData['30'][1].ranCondition(result);
+}_$jscoverage['/tabs/body.js'].branchData['21'][1].init(26, 31, 'hidePanel = children[e.prevVal]');
+function visit8_21_1(result) {
+  _$jscoverage['/tabs/body.js'].branchData['21'][1].ranCondition(result);
   return result;
-}_$jscoverage['/tabs/body.js'].branchData['18'][1].init(26, 31, 'hidePanel = children[e.prevVal]');
-function visit8_18_1(result) {
-  _$jscoverage['/tabs/body.js'].branchData['18'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/tabs/body.js'].branchData['17'][1].init(182, 18, 'children[newIndex]');
-function visit7_17_1(result) {
-  _$jscoverage['/tabs/body.js'].branchData['17'][1].ranCondition(result);
+}_$jscoverage['/tabs/body.js'].branchData['20'][1].init(182, 18, 'children[newIndex]');
+function visit7_20_1(result) {
+  _$jscoverage['/tabs/body.js'].branchData['20'][1].ranCondition(result);
   return result;
 }_$jscoverage['/tabs/body.js'].lineData[6]++;
 KISSY.add("tabs/body", function(S, Container, Extension, undefined) {
   _$jscoverage['/tabs/body.js'].functionData[0]++;
-  _$jscoverage['/tabs/body.js'].lineData[8]++;
+  _$jscoverage['/tabs/body.js'].lineData[12]++;
   var TabBody = Container.extend({
   bindUI: function() {
   _$jscoverage['/tabs/body.js'].functionData[1]++;
-  _$jscoverage['/tabs/body.js'].lineData[11]++;
+  _$jscoverage['/tabs/body.js'].lineData[14]++;
   var self = this;
-  _$jscoverage['/tabs/body.js'].lineData[12]++;
+  _$jscoverage['/tabs/body.js'].lineData[15]++;
   self.on("afterSelectedPanelIndexChange", function(e) {
   _$jscoverage['/tabs/body.js'].functionData[2]++;
-  _$jscoverage['/tabs/body.js'].lineData[13]++;
+  _$jscoverage['/tabs/body.js'].lineData[16]++;
   var showPanel, children = self.get('children'), newIndex = e.newVal, hidePanel;
-  _$jscoverage['/tabs/body.js'].lineData[17]++;
-  if (visit7_17_1(children[newIndex])) {
-    _$jscoverage['/tabs/body.js'].lineData[18]++;
-    if (visit8_18_1(hidePanel = children[e.prevVal])) {
-      _$jscoverage['/tabs/body.js'].lineData[19]++;
+  _$jscoverage['/tabs/body.js'].lineData[20]++;
+  if (visit7_20_1(children[newIndex])) {
+    _$jscoverage['/tabs/body.js'].lineData[21]++;
+    if (visit8_21_1(hidePanel = children[e.prevVal])) {
+      _$jscoverage['/tabs/body.js'].lineData[22]++;
       hidePanel.set("selected", false);
     }
-    _$jscoverage['/tabs/body.js'].lineData[21]++;
+    _$jscoverage['/tabs/body.js'].lineData[24]++;
     self.selectPanelByIndex(newIndex);
   }
 });
 }, 
   syncUI: function() {
   _$jscoverage['/tabs/body.js'].functionData[3]++;
-  _$jscoverage['/tabs/body.js'].lineData[27]++;
+  _$jscoverage['/tabs/body.js'].lineData[30]++;
   var self = this, children = self.get("children");
-  _$jscoverage['/tabs/body.js'].lineData[29]++;
+  _$jscoverage['/tabs/body.js'].lineData[32]++;
   S.each(children, function(c, i) {
   _$jscoverage['/tabs/body.js'].functionData[4]++;
-  _$jscoverage['/tabs/body.js'].lineData[30]++;
-  if (visit9_30_1(c.get("selected"))) {
-    _$jscoverage['/tabs/body.js'].lineData[31]++;
+  _$jscoverage['/tabs/body.js'].lineData[33]++;
+  if (visit9_33_1(c.get("selected"))) {
+    _$jscoverage['/tabs/body.js'].lineData[34]++;
     self.set("selectedPanelIndex", i);
-    _$jscoverage['/tabs/body.js'].lineData[32]++;
+    _$jscoverage['/tabs/body.js'].lineData[35]++;
     return false;
   }
-  _$jscoverage['/tabs/body.js'].lineData[34]++;
+  _$jscoverage['/tabs/body.js'].lineData[37]++;
   return undefined;
 });
 }, 
   createChild: function(index) {
   _$jscoverage['/tabs/body.js'].functionData[5]++;
-  _$jscoverage['/tabs/body.js'].lineData[39]++;
+  _$jscoverage['/tabs/body.js'].lineData[42]++;
   return checkLazy(this, 'createChild', index);
 }, 
   renderChild: function(index) {
   _$jscoverage['/tabs/body.js'].functionData[6]++;
-  _$jscoverage['/tabs/body.js'].lineData[43]++;
+  _$jscoverage['/tabs/body.js'].lineData[46]++;
   return checkLazy(this, 'renderChild', index);
 }, 
   selectPanelByIndex: function(newIndex) {
   _$jscoverage['/tabs/body.js'].functionData[7]++;
-  _$jscoverage['/tabs/body.js'].lineData[47]++;
+  _$jscoverage['/tabs/body.js'].lineData[50]++;
   this.get('children')[newIndex].set("selected", true);
-  _$jscoverage['/tabs/body.js'].lineData[48]++;
-  if (visit10_48_1(this.get('lazyRender'))) {
-    _$jscoverage['/tabs/body.js'].lineData[50]++;
+  _$jscoverage['/tabs/body.js'].lineData[51]++;
+  if (visit10_51_1(this.get('lazyRender'))) {
+    _$jscoverage['/tabs/body.js'].lineData[53]++;
     this.renderChild(newIndex);
   }
 }}, {
@@ -385,23 +385,23 @@ KISSY.add("tabs/body", function(S, Container, Extension, undefined) {
   value: {
   xclass: 'tabs-panel'}}}, 
   xclass: 'tabs-body'});
-  _$jscoverage['/tabs/body.js'].lineData[78]++;
+  _$jscoverage['/tabs/body.js'].lineData[80]++;
   function checkLazy(self, method, index) {
     _$jscoverage['/tabs/body.js'].functionData[8]++;
-    _$jscoverage['/tabs/body.js'].lineData[79]++;
-    if (visit11_79_1(self.get('lazyRender'))) {
-      _$jscoverage['/tabs/body.js'].lineData[80]++;
+    _$jscoverage['/tabs/body.js'].lineData[81]++;
+    if (visit11_81_1(self.get('lazyRender'))) {
+      _$jscoverage['/tabs/body.js'].lineData[82]++;
       var c = self.get('children')[index];
-      _$jscoverage['/tabs/body.js'].lineData[81]++;
-      if (visit12_81_1(!c.get('selected'))) {
-        _$jscoverage['/tabs/body.js'].lineData[82]++;
+      _$jscoverage['/tabs/body.js'].lineData[83]++;
+      if (visit12_83_1(!c.get('selected'))) {
+        _$jscoverage['/tabs/body.js'].lineData[84]++;
         return c;
       }
     }
-    _$jscoverage['/tabs/body.js'].lineData[85]++;
+    _$jscoverage['/tabs/body.js'].lineData[87]++;
     return TabBody.superclass[method].call(self, index);
   }
-  _$jscoverage['/tabs/body.js'].lineData[88]++;
+  _$jscoverage['/tabs/body.js'].lineData[90]++;
   return TabBody;
 }, {
   requires: ['component/container']});

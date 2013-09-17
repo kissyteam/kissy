@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 16 18:12
+build time: Sep 17 23:00
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -18,7 +18,7 @@ KISSY.add("editor/plugin/bubble", function (S, Overlay, Editor) {
     var undefined = {}['a'],
         logger= S.getLogger('s/editor'),
         BUBBLE_CFG = {
-            zIndex: Editor.baseZIndex(Editor.zIndexManager.BUBBLE_VIEW),
+            zIndex: Editor.baseZIndex(Editor.ZIndexManager.BUBBLE_VIEW),
             elCls: "{prefixCls}editor-bubble",
             prefixCls: "{prefixCls}editor-",
             effect: {

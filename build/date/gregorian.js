@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 16 15:07
+build time: Sep 17 22:58
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -261,33 +261,36 @@ KISSY.add('date/gregorian/utils', function (S, Const) {
  * @author yiminghe@gmail.com
  */
 KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined) {
-
     var toInt = parseInt;
 
     /**
      * GregorianCalendar class.
+     *
      * - no arguments:
-     *  Constructs a default GregorianCalendar using the current time
-     *  in the default time zone with the default locale.
+     *   Constructs a default GregorianCalendar using the current time
+     *   in the default time zone with the default locale.
      * - one argument timezoneOffset:
-     *  Constructs a GregorianCalendar based on the current time
-     *  in the given timezoneOffset with the default locale.
+     *   Constructs a GregorianCalendar based on the current time
+     *   in the given timezoneOffset with the default locale.
      * - one argument locale:
-     *  Constructs a GregorianCalendar
-     *  based on the current time in the default time zone with the given locale.
-     * - two arguments:
-     *  - zone - the given time zone.
-     *  - aLocale - the given locale.
-     *  Constructs a GregorianCalendar
-     *  based on the current time in the given time zone with the given locale.
+     *   Constructs a GregorianCalendar
+     *   based on the current time in the default time zone with the given locale.
+     * - two arguments
+     *   Constructs a GregorianCalendar based on the current time in the given time zone with the given locale.
+     *      - zone - the given time zone.
+     *      - aLocale - the given locale.
+     *
      * - 3 to 6 arguments:
-     *  - year - the value used to set the YEAR calendar field in the calendar.
-     *  - month - the value used to set the MONTH calendar field in the calendar. Month value is 0-based. e.g., 0 for January.
-     *  - dayOfMonth - the value used to set the DAY_OF_MONTH calendar field in the calendar.
-     *  - hourOfDay - the value used to set the HOUR_OF_DAY calendar field in the calendar.
-     *  - minute - the value used to set the MINUTE calendar field in the calendar.
-     *  - second - the value used to set the SECONDS calendar field in the calendar.
-     *  Constructs a GregorianCalendar with the given date and time set for the default time zone with the default locale.
+     *   Constructs a GregorianCalendar with the given date and time set for the default time zone with the default locale.
+     *      - year - the value used to set the YEAR calendar field in the calendar.
+     *      - month - the value used to set the MONTH calendar field in the calendar. Month value is 0-based. e.g.,
+     *        0 for January.
+     *      - dayOfMonth - the value used to set the DAY_OF_MONTH calendar field in the calendar.
+     *      - hourOfDay - the value used to set the HOUR_OF_DAY calendar field in the calendar.
+     *      - minute - the value used to set the MINUTE calendar field in the calendar.
+     *      - second - the value used to set the SECONDS calendar field in the calendar.
+     *
+     *
      * @class KISSY.Date.Gregorian
      */
     function GregorianCalendar(timezoneOffset, locale) {
@@ -511,8 +514,8 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
          * Returns true if the given year is a leap year. To specify BC year numbers,
          * 1 - year number must be given. For example, year BC 4 is specified as -3.
          * @returns {Boolean} true if the given year is a leap year; false otherwise.
-         * @static
          * @method
+         * @member KISSY.Date.Gregorian
          */
         isLeapYear: function () {
             return isLeapYear(this.getYear());
@@ -839,7 +842,7 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
 
         /**
          * Returns this Calendar's time value in milliseconds
-         * @member KISSY.GregorianCalendar
+         * @member KISSY.Date.Gregorian
          * @returns {Number} the current time as UTC milliseconds from the epoch.
          */
         getTime: function () {
@@ -1058,17 +1061,20 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
          *  smaller unit of time. HOUR_OF_DAY is a smaller field than
          *  DAY_OF_MONTH. No adjustment is made to smaller fields
          *  that are not expected to be invariant. The calendar system
-         *  determines what fields are expected to be invariant.</p>
-         *
+         *  determines what fields are expected to be invariant.
          *
          *
          *      @example
-         *      var d = new GregorianCalendar();
-         *      d.set(2012, GregorianCalendar.JANUARY, 31);
-         *      d.add(Gregorian.MONTH,1);
-         *      // 2012-2-29
-         *      d.add(Gregorian.MONTH,12);
-         *      // 2013-2-28
+         *      KISSY.use('date/gregorian',function(S, GregorianCalendar){
+         *          var d = new GregorianCalendar();
+         *          d.set(2012, GregorianCalendar.JANUARY, 31);
+         *          d.add(Gregorian.MONTH,1);
+         *          // 2012-2-29
+         *          document.writeln('<p>'+d.getYear()+'-'+d.getMonth()+'-'+d.getDayOfWeek())
+         *          d.add(Gregorian.MONTH,12);
+         *          // 2013-2-28
+         *          document.writeln('<p>'+d.getYear()+'-'+d.getMonth()+'-'+d.getDayOfWeek())
+         *      });
          *
          * @param field the calendar field.
          * @param {Number} amount he amount of date or time to be added to the field.
@@ -1472,8 +1478,7 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
          *
          * @param weekYear    the week year
          * @param weekOfYear  the week number based on weekYear
-         * @param dayOfWeek   the day of week value: one of the constants
-         *                    for the {@link DAY_OF_WEEK} field:
+         * @param dayOfWeek   the day of week value
          */
         'setWeekDate': function (weekYear, weekOfYear, dayOfWeek) {
             if (dayOfWeek < GregorianCalendar.SUNDAY || dayOfWeek > GregorianCalendar.SATURDAY) {
@@ -1505,7 +1510,7 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
         },
         /**
          * Creates and returns a copy of this object.
-         * @returns {KISSY.GregorianCalendar}
+         * @returns {KISSY.Date.Gregorian}
          */
         clone: function () {
             if (this.time === undefined) {
@@ -1521,7 +1526,7 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
          * The result is true if and only if the argument is a GregorianCalendar object
          * that represents the same time value (millisecond offset from the Epoch)
          * under the same Calendar parameters and Gregorian change date as this object.
-         * @param {KISSY.GregorianCalendar} obj the object to compare with.
+         * @param {KISSY.Date.Gregorian} obj the object to compare with.
          * @returns {boolean} true if this object is equal to obj; false otherwise.
          */
         equals: function (obj) {
@@ -1672,7 +1677,6 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
     // ------------------- private end
 
     return GregorianCalendar;
-
 }, {
     requires: ['i18n!date', './gregorian/utils', './gregorian/const']
 });

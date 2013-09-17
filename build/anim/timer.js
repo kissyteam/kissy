@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 16 15:06
+build time: Sep 17 22:56
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -1055,7 +1055,7 @@ KISSY.add('anim/timer/transform', function (S, Dom, Fx) {
  * @author yiminghe@gmail.com
  * @ignore
  */
-KISSY.add('anim/timer', function (S, Dom, Event, AnimBase, Easing, AM, Fx, SHORT_HANDS) {
+KISSY.add('anim/timer', function (S, Dom, AnimBase, Easing, AM, Fx, SHORT_HANDS) {
     var camelCase = Dom._camelCase,
         NUMBER_REG = /^([+\-]=)?([\d+.\-]+)([a-z%]*)$/i;
 
@@ -1240,7 +1240,7 @@ KISSY.add('anim/timer', function (S, Dom, Event, AnimBase, Easing, AM, Fx, SHORT
     return Anim;
 }, {
     requires: [
-        'dom', 'event', './base',
+        'dom', './base',
         './timer/easing', './timer/manager',
         './timer/fx', './timer/short-hand'
         , './timer/color' , './timer/transform'

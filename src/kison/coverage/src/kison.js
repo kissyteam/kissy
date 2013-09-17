@@ -229,7 +229,7 @@ if (! this._$jscoverage) {
 if (! _$jscoverage['/kison.js']) {
   _$jscoverage['/kison.js'] = {};
   _$jscoverage['/kison.js'].lineData = [];
-  _$jscoverage['/kison.js'].lineData[5] = 0;
+  _$jscoverage['/kison.js'].lineData[6] = 0;
   _$jscoverage['/kison.js'].lineData[7] = 0;
   _$jscoverage['/kison.js'].lineData[8] = 0;
   _$jscoverage['/kison.js'].lineData[9] = 0;
@@ -249,11 +249,11 @@ if (! _$jscoverage['/kison.js'].branchData) {
   _$jscoverage['/kison.js'].branchData['12'] = [];
   _$jscoverage['/kison.js'].branchData['12'][1] = new BranchData();
 }
-_$jscoverage['/kison.js'].branchData['12'][1].init(151, 9, '\'@DEBUG@\'');
+_$jscoverage['/kison.js'].branchData['12'][1].init(149, 9, '\'@DEBUG@\'');
 function visit142_12_1(result) {
   _$jscoverage['/kison.js'].branchData['12'][1].ranCondition(result);
   return result;
-}_$jscoverage['/kison.js'].lineData[5]++;
+}_$jscoverage['/kison.js'].lineData[6]++;
 KISSY.add("kison", function(S, Grammar, Production, Lexer, Utils) {
   _$jscoverage['/kison.js'].functionData[0]++;
   _$jscoverage['/kison.js'].lineData[7]++;

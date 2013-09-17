@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 16 15:17
+build time: Sep 17 23:57
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -114,11 +114,10 @@ KISSY.add('io/form-serializer', function (S, Dom) {
  * a scalable client io framework
  * @author yiminghe@gmail.com
  */
-KISSY.add('io/base', function (S, Event, undefined) {
-
+KISSY.add('io/base', function (S, CustomEvent, undefined) {
     var rlocalProtocol = /^(?:about|app|app\-storage|.+\-extension|file|widget)$/,
         rspace = /\s+/,
-        logger= S.getLogger('s/io'),
+        logger = S.getLogger('s/io'),
         mirror = function (s) {
             return s;
         },
@@ -152,8 +151,8 @@ KISSY.add('io/base', function (S, Event, undefined) {
                     xml: S.parseXML
                 }
             },
-            headers:{
-                'X-Requested-With':'XMLHttpRequest'
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
             },
             contents: {
                 xml: /xml/,
@@ -219,7 +218,7 @@ KISSY.add('io/base', function (S, Event, undefined) {
          * @event complete
          * @member KISSY.IO
          * @static
-         * @param {KISSY.Event.CustomEventObject} e
+         * @param {KISSY.Event.CustomEvent.Object} e
          * @param {KISSY.IO} e.io current io
          */
 
@@ -228,7 +227,7 @@ KISSY.add('io/base', function (S, Event, undefined) {
          * @event success
          * @member KISSY.IO
          * @static
-         * @param {KISSY.Event.CustomEventObject} e
+         * @param {KISSY.Event.CustomEvent.Object} e
          * @param {KISSY.IO} e.io current io
          */
 
@@ -237,7 +236,7 @@ KISSY.add('io/base', function (S, Event, undefined) {
          * @event error
          * @member KISSY.IO
          * @static
-         * @param {KISSY.Event.CustomEventObject} e
+         * @param {KISSY.Event.CustomEvent.Object} e
          * @param {KISSY.IO} e.io current io
          */
         IO.fire(eventType, {
@@ -492,7 +491,7 @@ KISSY.add('io/base', function (S, Event, undefined) {
          * @event start
          * @member KISSY.IO
          * @static
-         * @param {KISSY.Event.CustomEventObject} e
+         * @param {KISSY.Event.CustomEvent.Object} e
          * @param {KISSY.IO} e.io current io
          */
 
@@ -559,7 +558,7 @@ KISSY.add('io/base', function (S, Event, undefined) {
          * @event send
          * @member KISSY.IO
          * @static
-         * @param {KISSY.Event.CustomEventObject} e
+         * @param {KISSY.Event.CustomEvent.Object} e
          * @param {KISSY.IO} e.io current io
          */
 
@@ -590,59 +589,58 @@ KISSY.add('io/base', function (S, Event, undefined) {
         return self;
     }
 
-    S.mix(IO, Event.Target);
+    S.mix(IO, CustomEvent.targetObject);
 
-    S.mix(IO,
-        {
-            /**
-             * whether current application is a local application
-             * (protocal is file://,widget://,about://)
-             * @type {Boolean}
-             * @member KISSY.IO
-             * @static
-             */
-            isLocal: isLocal,
-            /**
-             * name-value object that set default config value for io class
-             * @param {Object} setting
-             * @member KISSY.IO
-             * @static
-             */
-            setupConfig: function (setting) {
-                S.mix(defaultConfig, setting, {
-                    deep: true
-                });
-            },
-            /**
-             * @private
-             * @member KISSY.IO
-             * @static
-             */
-            'setupTransport': function (name, fn) {
-                transports[name] = fn;
-            },
-            /**
-             * @private
-             * @member KISSY.IO
-             * @static
-             */
-            'getTransport': function (name) {
-                return transports[name];
-            },
-            /**
-             * get default config value for io request
-             * @return {Object}
-             * @member KISSY.IO
-             * @static
-             */
-            getConfig: function () {
-                return defaultConfig;
-            }
-        });
+    S.mix(IO, {
+        /**
+         * whether current application is a local application
+         * (protocal is file://,widget://,about://)
+         * @type {Boolean}
+         * @member KISSY.IO
+         * @static
+         */
+        isLocal: isLocal,
+        /**
+         * name-value object that set default config value for io class
+         * @param {Object} setting
+         * @member KISSY.IO
+         * @static
+         */
+        setupConfig: function (setting) {
+            S.mix(defaultConfig, setting, {
+                deep: true
+            });
+        },
+        /**
+         * @private
+         * @member KISSY.IO
+         * @static
+         */
+        'setupTransport': function (name, fn) {
+            transports[name] = fn;
+        },
+        /**
+         * @private
+         * @member KISSY.IO
+         * @static
+         */
+        'getTransport': function (name) {
+            return transports[name];
+        },
+        /**
+         * get default config value for io request
+         * @return {Object}
+         * @member KISSY.IO
+         * @static
+         */
+        getConfig: function () {
+            return defaultConfig;
+        }
+    });
 
     return IO;
 }, {
-    requires: ['event']
+    requires: ['event/custom']
 });
 
 /*

@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 16 18:20
+build time: Sep 17 23:07
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -19,7 +19,7 @@ build time: Sep 16 18:20
  editor/selection
  editor/domIterator
  editor/styles
- editor/zIndexManager
+ editor/z-index-manager
  editor/clipboard
  editor/enterKey
  editor/htmlDataProcessor
@@ -263,8 +263,7 @@ KISSY.add("editor/base", function (S, HtmlParser, Control, EditorRender) {
  * common utils for kissy editor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/utils", function (S,Editor) {
-
+KISSY.add("editor/utils", function (S, Editor) {
     var TRUE = true,
         FALSE = false,
         NULL = null,
@@ -277,12 +276,7 @@ KISSY.add("editor/utils", function (S,Editor) {
          * @class KISSY.Editor.Utils
          * @singleton
          */
-            Utils ={
-            /**
-             *
-             * @param url
-             * @return {String}
-             */
+            Utils = {
             debugUrl: function (url) {
                 var Config = S.Config;
                 if (!Config.debug) {
@@ -299,12 +293,6 @@ KISSY.add("editor/utils", function (S,Editor) {
                 return Config.base + "editor/" + url;
             },
 
-            /**
-             * 懒惰一下
-             * @param obj {Object} 包含方法的对象
-             * @param before {string} 准备方法
-             * @param after {string} 真正方法
-             */
             lazyRun: function (obj, before, after) {
                 var b = obj[before], a = obj[after];
                 obj[before] = function () {
@@ -314,9 +302,6 @@ KISSY.add("editor/utils", function (S,Editor) {
                 };
             },
 
-            /**
-             * editor 元素在主窗口的位置
-             */
             getXY: function (offset, editor) {
                 var x = offset.left,
                     y = offset.top,
@@ -333,11 +318,6 @@ KISSY.add("editor/utils", function (S,Editor) {
                 return {left: x, top: y};
             },
 
-            /**
-             * 执行一系列函数
-             * @param {Function...} var_args
-             * @return {*} 得到成功的返回
-             */
             tryThese: function (var_args) {
                 var returnValue;
                 for (var i = 0, length = arguments.length; i < length; i++) {
@@ -352,68 +332,24 @@ KISSY.add("editor/utils", function (S,Editor) {
                 return returnValue;
             },
 
-            /**
-             * 是否两个数组完全相同
-             * @param arrayA {Array}
-             * @param arrayB {Array}
-             * @return {Boolean}
-             */
-            arrayCompare: function (arrayA, arrayB) {
-                if (!arrayA && !arrayB)
-                    return TRUE;
-
-                if (!arrayA || !arrayB || arrayA.length != arrayB.length)
-                    return FALSE;
-
-                for (var i = 0; i < arrayA.length; i++) {
-                    if (arrayA[ i ] !== arrayB[ i ])
-                        return FALSE;
-                }
-
-                return TRUE;
-            },
-
-            /**
-             * @param database {Object}
-             */
             clearAllMarkers: function (database) {
                 for (var i in database) {
-
                     database[i]._4e_clearMarkers(database, TRUE, undefined);
-
                 }
             },
 
-            /**
-             *
-             * @param str {string}
-             * @return {string}
-             */
             ltrim: function (str) {
                 return str.replace(/^\s+/, "");
             },
 
-            /**
-             *
-             * @param str {string}
-             * @return {string}
-             */
             rtrim: function (str) {
                 return str.replace(/\s+$/, "");
             },
 
-            /**
-             *
-             */
             isNumber: function (n) {
                 return /^\d+(.\d+)?$/.test(S.trim(n));
             },
 
-            /**
-             *
-             * @param inputs {Array.<Node>}
-             * @return {Boolean} 是否验证成功
-             */
             verifyInputs: function (inputs) {
                 for (var i = 0; i < inputs.length; i++) {
                     var input = new Node(inputs[i]),
@@ -428,20 +364,11 @@ KISSY.add("editor/utils", function (S,Editor) {
                 return TRUE;
             },
 
-            /**
-             *
-             * @param editor {KISSY.Editor}
-             * @param plugin {Object}
-             */
             sourceDisable: function (editor, plugin) {
                 editor.on("sourceMode", plugin.disable, plugin);
                 editor.on("wysiwygMode", plugin.enable, plugin);
             },
 
-            /**
-             *
-             * @param inp {KISSY.NodeList}
-             */
             resetInput: function (inp) {
                 var placeholder = inp.attr("placeholder");
                 if (placeholder && UA['ie']) {
@@ -452,11 +379,6 @@ KISSY.add("editor/utils", function (S,Editor) {
                 }
             },
 
-            /**
-             *
-             * @param inp  {KISSY.NodeList}
-             * @param [val]
-             */
             valInput: function (inp, val) {
                 if (val === undefined) {
                     if (inp.hasClass("ks-editor-input-tip")) {
@@ -468,13 +390,9 @@ KISSY.add("editor/utils", function (S,Editor) {
                     inp.removeClass("ks-editor-input-tip");
                     inp.val(val);
                 }
+                return undefined;
             },
 
-            /**
-             *
-             * @param inp {KISSY.NodeList}
-             * @param tip {string}
-             */
             placeholder: function (inp, tip) {
                 inp.attr("placeholder", tip);
                 if (!UA['ie']) {
@@ -495,16 +413,6 @@ KISSY.add("editor/utils", function (S,Editor) {
             },
 
             /**
-             * Convert certain characters (&, <, >, and ') to their HTML character equivalents
-             *  for literal display in web pages.
-             * @param {string} value The string to encode
-             * @return {string} The encoded text
-             */
-            htmlEncode: function (value) {
-                return !value ? value : String(value).replace(/&/g, "&amp;").replace(/>/g, "&gt;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
-            },
-
-            /**
              *
              * @param params {Object}
              * @return {Object}
@@ -520,16 +428,6 @@ KISSY.add("editor/utils", function (S,Editor) {
 
                 }
                 return params;
-            },
-
-            /**
-             *
-             */
-            map: function (arr, callback) {
-                for (var i = 0; i < arr.length; i++) {
-                    arr[i] = callback(arr[i]);
-                }
-                return arr;
             },
 
             //直接判断引擎，防止兼容性模式影响
@@ -548,9 +446,6 @@ KISSY.add("editor/utils", function (S,Editor) {
                 }
             },
 
-            /**
-             *
-             */
             injectDom: function (editorDom) {
                 S.mix(Dom, editorDom);
                 for (var dm in editorDom) {
@@ -574,18 +469,12 @@ KISSY.add("editor/utils", function (S,Editor) {
                 }
             },
 
-            /**
-             *
-             */
             addRes: function () {
                 this.__res = this.__res || [];
                 var res = this.__res;
                 res.push.apply(res, S.makeArray(arguments));
             },
 
-            /**
-             *
-             */
             destroyRes: function () {
                 var res = this.__res || [];
                 for (var i = 0; i < res.length; i++) {
@@ -604,9 +493,6 @@ KISSY.add("editor/utils", function (S,Editor) {
                 this.__res = [];
             },
 
-            /**
-             *
-             */
             getQueryCmd: function (cmd) {
                 return "query" + ("-" + cmd).replace(/-(\w)/g, function (m, m1) {
                     return m1.toUpperCase()
@@ -618,7 +504,7 @@ KISSY.add("editor/utils", function (S,Editor) {
 
     return Utils;
 }, {
-    requires: ['./base','node']
+    requires: ['./base', 'node']
 });
 /**
  * @ignore
@@ -685,10 +571,10 @@ KISSY.add("editor/dom", function (S, Editor, Utils) {
     var KEP = Editor.PositionType;
 
     /*
-     * Anything whose display computed style is block, list-item, table,
-     * table-row-group, table-header-group, table-footer-group, table-row,
-     * table-column-group, table-column, table-cell, table-caption, or whose node
-     * name is hr, br (when enterMode is br only) is a block boundary.
+      Anything whose display computed style is block, list-item, table,
+      table-row-group, table-header-group, table-footer-group, table-row,
+      table-column-group, table-column, table-cell, table-caption, or whose node
+      name is hr, br (when enterMode is br only) is a block boundary.
      */
     var blockBoundaryDisplayMatch = {
             "block": 1,
@@ -704,48 +590,27 @@ KISSY.add("editor/dom", function (S, Editor, Utils) {
             'table-caption': 1
         },
         blockBoundaryNodeNameMatch = { "hr": 1 },
-        /**
-         * @param el {(Node)}
-         */
             normalElDom = function (el) {
             return el && (el[0] || el);
         },
-        /**
-         * @param el {(Node)}
-         */
             normalEl = function (el) {
             return new Node(el);
         },
         editorDom = {
-
-            /**
-             * Whether two nodes are on the same level.
-             * @param el1
-             * @param [el2]
-             * @return {Boolean}
-             * @private
-             */
+            // Whether two nodes are on the same level.
             _4e_sameLevel: function (el1, el2) {
                 el2 = normalElDom(el2);
                 var e1p = el1.parentNode;
                 return e1p && e1p == el2.parentNode;
             },
 
-            /**
-             * 是否是块状元素或块状元素边界
-             * @param el
-             * @param [customNodeNames]
-             */
+          // 是否是块状元素或块状元素边界
             _4e_isBlockBoundary: function (el, customNodeNames) {
                 var nodeNameMatches = S.merge(blockBoundaryNodeNameMatch, customNodeNames);
                 return !!(blockBoundaryDisplayMatch[ Dom.css(el, 'display') ] || nodeNameMatches[ Dom.nodeName(el) ]);
             },
 
-            /**
-             * 返回当前元素在父元素中所有儿子节点中的序号
-             * @param [el]
-             * @param [normalized]
-             */
+            // 返回当前元素在父元素中所有儿子节点中的序号
             _4e_index: function (el, normalized) {
                 var siblings = el.parentNode.childNodes,
                     candidate,
@@ -771,12 +636,8 @@ KISSY.add("editor/dom", function (S, Editor, Utils) {
                 return -1;
             },
 
-            /**
-             * 把 thisElement 移到 target 的前面或后面
-             * @param thisElement
-             * @param target
-             * @param toStart
-             */
+
+           // 把 thisElement 移到 target 的前面或后面
             _4e_move: function (thisElement, target, toStart) {
                 target = normalElDom(target);
                 if (toStart) {
@@ -786,11 +647,8 @@ KISSY.add("editor/dom", function (S, Editor, Utils) {
                 }
             },
 
-            /**
-             * 两个元素是否名称和属性都相同
-             * @param thisElement
-             * @param otherElement
-             */
+
+            // 两个元素是否名称和属性都相同
             _4e_isIdentical: function (thisElement, otherElement) {
                 if (!otherElement) {
                     return FALSE;
@@ -838,10 +696,7 @@ KISSY.add("editor/dom", function (S, Editor, Utils) {
                 return TRUE;
             },
 
-            /**
-             * inline 元素是否没有包含有效文字内容
-             * @param thisElement
-             */
+           // inline 元素是否没有包含有效文字内容
             _4e_isEmptyInlineRemovable: function (thisElement) {
                 if (!xhtml_dtd.$removeEmpty[Dom.nodeName(thisElement)]) {
                     return false;
@@ -864,12 +719,7 @@ KISSY.add("editor/dom", function (S, Editor, Utils) {
                 return TRUE;
             },
 
-            /**
-             * 把 thisElement 的所有儿子节点都插入到 target 节点的前面或后面
-             * @param thisElement
-             * @param target
-             * @param toStart
-             */
+            // 把 thisElement 的所有儿子节点都插入到 target 节点的前面或后面
             _4e_moveChildren: function (thisElement, target, toStart) {
                 target = normalElDom(target);
 
@@ -890,12 +740,12 @@ KISSY.add("editor/dom", function (S, Editor, Utils) {
                 }
             },
 
-            /**
-             * 将当前元素和周围的元素合并
-             *      @example
-             *      <b><i>1</i></b><b><i>3</i></b>
-             *      <!-- => -->
-             *      <b><i>13</i></b>
+            /*
+             将当前元素和周围的元素合并
+
+                  <b><i>1</i></b><b><i>3</i></b>
+                  <!-- => -->
+                  <b><i>13</i></b>
              */
             _4e_mergeSiblings: function (thisElement) {
                 thisElement = normalEl(thisElement);
@@ -906,12 +756,8 @@ KISSY.add("editor/dom", function (S, Editor, Utils) {
                 }
             },
 
-            /**
-             * 将一个字符串节点拆散为两个字符串节点，并返回最后一个。
-             * 如果 offset 为 0，仍然拆成两个！第一个字符串为空文字节点。
-             * @param el
-             * @param offset
-             */
+            // 将一个字符串节点拆散为两个字符串节点，并返回最后一个。
+            // 如果 offset 为 0，仍然拆成两个！第一个字符串为空文字节点。
             _4e_splitText: function (el, offset) {
                 var doc = el.ownerDocument;
 
@@ -945,11 +791,8 @@ KISSY.add("editor/dom", function (S, Editor, Utils) {
                 return ret;
             },
 
-            /**
-             * 得到该节点的所有附近节点集合（包括自身）
-             * @param node
-             * @param closerFirst
-             */
+
+           // 得到该节点的所有附近节点集合（包括自身）
             _4e_parents: function (node, closerFirst) {
                 var parents = [];
                 parents.__IS_NODELIST = 1;
@@ -959,13 +802,8 @@ KISSY.add("editor/dom", function (S, Editor, Utils) {
                 return parents;
             },
 
-            /**
-             * 得到该节点在前序遍历下的下一个节点
-             * @param el
-             * @param [startFromSibling]
-             * @param [nodeType]
-             * @param [guard]
-             */
+
+           // 得到该节点在前序遍历下的下一个节点
             _4e_nextSourceNode: function (el, startFromSibling, nodeType, guard) {
                 // If "guard" is a node, transform it in a function.
                 if (guard && !guard.call) {
@@ -1012,13 +850,8 @@ KISSY.add("editor/dom", function (S, Editor, Utils) {
                 return node;
             },
 
-            /**
-             * 得到该节点在从右向左前序遍历下的下一个节点( rtl 情况)
-             * @param el
-             * @param startFromSibling
-             * @param nodeType
-             * @param guard
-             */
+
+            // 得到该节点在从右向左前序遍历下的下一个节点( rtl 情况)
             _4e_previousSourceNode: function (el, startFromSibling, nodeType, guard) {
                 if (guard && !guard.call) {
                     var guardNode = normalElDom(guard);
@@ -1063,11 +896,8 @@ KISSY.add("editor/dom", function (S, Editor, Utils) {
                 return node;
             },
 
-            /**
-             * 得到两个节点的公共祖先节点
-             * @param el
-             * @param node
-             */
+
+           // 得到两个节点的公共祖先节点
             _4e_commonAncestor: function (el, node) {
 
                 node = normalElDom(node);
@@ -1091,9 +921,7 @@ KISSY.add("editor/dom", function (S, Editor, Utils) {
                 return NULL;
             },
 
-            /**
-             * 判断当前元素是否有设置过属性
-             */
+            // 判断当前元素是否有设置过属性
             _4e_hasAttributes: Utils.ieEngine < 9 ?
                 function (el) {
                     var attributes = el.attributes;
@@ -1126,14 +954,9 @@ KISSY.add("editor/dom", function (S, Editor, Utils) {
                 return el.hasAttributes();
             },
 
-            /**
-             * 得到两个元素的位置关系，参见
-             * <a href='https://developer.mozilla.org/en/Dom/Node.compareDocumentPosition'>
-             *     compareDocumentPosition
-             * </a>
-             * 注意：这里的 following 和 preceding 和 mdc 相反！
-             * @param el
-             * @param otherNode
+            /*
+              得到两个元素的位置关系，https://developer.mozilla.org/en/Dom/Node.compareDocumentPosition
+              注意：这里的 following 和 preceding 和 mdc 相反！
              */
             _4e_position: function (el, otherNode) {
                 var $other = normalElDom(otherNode);
@@ -1188,11 +1011,8 @@ KISSY.add("editor/dom", function (S, Editor, Utils) {
                     KEP.POSITION_IS_CONTAINED + KEP.POSITION_FOLLOWING;
             },
 
-            /**
-             * 得到元素及其所有祖先元素在其兄弟节点中的序号。
-             * @param el
-             * @param [normalized]
-             */
+
+           // 得到元素及其所有祖先元素在其兄弟节点中的序号。
             _4e_address: function (el, normalized) {
                 var address = [],
                     $documentElement = el.ownerDocument.documentElement,
@@ -1206,11 +1026,8 @@ KISSY.add("editor/dom", function (S, Editor, Utils) {
                 return address;
             },
 
-            /**
-             * 删除一个元素
-             * @param el
-             * @param preserveChildren 是否保留其子元素（将子元素插入到当前元素之前）
-             */
+
+            // 删除一个元素
             _4e_remove: function (el, preserveChildren) {
                 var parent = el.parentNode;
                 if (parent) {
@@ -1225,19 +1042,15 @@ KISSY.add("editor/dom", function (S, Editor, Utils) {
                 return el;
             },
 
-            /**
-             * 清除左右空的字符串节点
-             * @param el
-             */
+
+           // 清除左右空的字符串节点
             _4e_trim: function (el) {
                 Dom._4e_ltrim(el);
                 Dom._4e_rtrim(el);
             },
 
-            /**
-             * 清除左边空的字符串节点
-             * @param el
-             */
+
+           // 清除左边空的字符串节点
             _4e_ltrim: function (el) {
                 var child;
                 while (child = el.firstChild) {
@@ -1259,10 +1072,8 @@ KISSY.add("editor/dom", function (S, Editor, Utils) {
                 }
             },
 
-            /**
-             * 清除右边空的字符串节点
-             * @param el
-             */
+
+           // 清除右边空的字符串节点
             _4e_rtrim: function (el) {
                 var child;
                 while (child = el.lastChild) {
@@ -1292,10 +1103,8 @@ KISSY.add("editor/dom", function (S, Editor, Utils) {
                 }
             },
 
-            /**
-             * 将一个 bogus 元素添加到元素末尾
-             * @param el
-             */
+
+            // 将一个 bogus 元素添加到元素末尾
             _4e_appendBogus: function (el) {
                 var lastChild = el.lastChild, bogus;
 
@@ -1319,13 +1128,7 @@ KISSY.add("editor/dom", function (S, Editor, Utils) {
                 }
             },
 
-            /**
-             * 设置元素的自定义 data 值，并记录
-             * @param element
-             * @param database
-             * @param name
-             * @param value
-             */
+            // 设置元素的自定义 data 值，并记录
             _4e_setMarker: function (element, database, name, value) {
                 element = normalEl(element);
                 var id = element.data('list_marker_id') ||
@@ -1337,12 +1140,8 @@ KISSY.add("editor/dom", function (S, Editor, Utils) {
                 return element.data(name, value);
             },
 
-            /**
-             * 清除元素设置的自定义 data 值。
-             * @param element
-             * @param database
-             * @param removeFromDatabase
-             */
+
+            // 清除元素设置的自定义 data 值。
             _4e_clearMarkers: function (element, database, removeFromDatabase) {
                 element = normalEl(element);
                 var names = element.data('list_marker_names'),
@@ -1357,12 +1156,8 @@ KISSY.add("editor/dom", function (S, Editor, Utils) {
                 }
             },
 
-            /**
-             * 把属性从 target 复制到 el 上.
-             * @param el
-             * @param target
-             * @param skipAttributes
-             */
+
+           // 把属性从 target 复制到 el 上.
             _4e_copyAttributes: function (el, target, skipAttributes) {
                 target = normalEl(target);
                 var attributes = el.attributes;
@@ -1400,10 +1195,7 @@ KISSY.add("editor/dom", function (S, Editor, Utils) {
                 }
             },
 
-            /**
-             * 当前元素是否可以被编辑
-             * @param el
-             */
+          // 当前元素是否可以被编辑
             _4e_isEditable: function (el) {
                 // Get the element DTD (defaults to span for unknown elements).
                 var name = Dom.nodeName(el),
@@ -1413,13 +1205,7 @@ KISSY.add("editor/dom", function (S, Editor, Utils) {
                 return dtd && dtd['#text'];
             },
 
-            /**
-             * 根据dom路径得到某个节点
-             * @param doc
-             * @param address
-             * @param [normalized]
-             * @return {KISSY.NodeList}
-             */
+            // 根据dom路径得到某个节点
             _4e_getByAddress: function (doc, address, normalized) {
                 var $ = doc.documentElement;
 
@@ -1455,7 +1241,6 @@ KISSY.add("editor/dom", function (S, Editor, Utils) {
                 return $;
             }
         };
-
 
     function mergeElements(element, isNext) {
         var sibling = element[isNext ? "next" : "prev"](undefined, 1);
@@ -1758,7 +1543,7 @@ KISSY.add("editor/walker", function (S, Editor) {
     /**
      * Walker for Dom.
      * @class KISSY.Editor.Walker
-     * @param {Editor.Range} range
+     * @param {KISSY.Editor.Range} range
      */
     function Walker(range) {
         this.range = range;
@@ -2239,13 +2024,11 @@ KISSY.add("editor/range", function (S, Editor, Utils, Walker, ElementPath) {
     }
 
 
-    /**
-     * Extract html content within range.
-     * @param {KISSY.Editor} self
-     * @param {Number} action
-     * 0 : delete
-     * 1 : extract
-     * 2 : clone
+    /*
+      Extract html content within range.
+      0 : delete
+      1 : extract
+      2 : clone
      */
     function execContentsAction(self, action) {
         var startNode = self.startContainer,
@@ -2827,7 +2610,7 @@ KISSY.add("editor/range", function (S, Editor, Utils, Walker, ElementPath) {
 
         /**
          * Clone current range.
-         * @return {Editor.Range}
+         * @return {KISSY.Editor.Range}
          */
         clone: function () {
             var self = this,
@@ -3953,9 +3736,9 @@ KISSY.add("editor/selection", function (S,Editor) {
             cache: {}
         };
 
-        /**
-         * IE BUG: The selection's document may be a different document than the
-         * editor document. Return NULL if that's the case.
+        /*
+         IE BUG: The selection's document may be a different document than the
+         editor document. Return NULL if that's the case.
          */
         if (OLD_IE) {
             try {
@@ -4080,11 +3863,6 @@ KISSY.add("editor/selection", function (S,Editor) {
             (function () {
                 // Finds the container and offset for a specific boundary
                 // of an IE range.
-                /**
-                 *
-                 * @param {TextRange} range
-                 * @param {Boolean=} start
-                 */
                 var getBoundaryInformation = function (range, start) {
                     // Creates a collapsed range at the requested boundary.
                     range = range.duplicate();
@@ -5076,6 +4854,7 @@ KISSY.add("editor/styles", function (S, Editor) {
         KESelection = Editor.Selection,
         KEP = Editor.PositionType,
         KERange = Editor.Range,
+        KEST,
     //Walker = Editor.Walker,
         Node = S.Node,
         UA = S.UA,
@@ -5120,8 +4899,17 @@ KISSY.add("editor/styles", function (S, Editor) {
      * @enum {number} KISSY.Editor.StyleType
      */
     Editor.StyleType = KEST ={
+        /**
+         * block type
+         */
         STYLE_BLOCK: 1,
+        /**
+         * inline type
+         */
         STYLE_INLINE: 2,
+        /**
+         * object type
+         */
         STYLE_OBJECT: 3
     };
 
@@ -5850,9 +5638,9 @@ KISSY.add("editor/styles", function (S, Editor) {
                         styleNode[0].normalize();
                 }
                 // Style already inherit from parents, left just to clear up any internal overrides. (#5931)
-                /**
-                 * from koubei
-                 *1.输入ab
+                /*
+                 from koubei
+                 1.输入ab
                  2.ctrl-a 设置字体大小 x
                  3.选中b设置字体大小 y
                  4.保持选中b,设置字体大小 x
@@ -6398,20 +6186,43 @@ KISSY.add("editor/styles", function (S, Editor) {
  * z-index management
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/zIndexManager", function (S, Editor) {
+KISSY.add("editor/z-index-manager", function (S, Editor) {
     /**
      * z-index manager
-     * @enum {number} KISSY.Editor.zIndexManager
+     * @enum {number} KISSY.Editor.ZIndexManager
      */
-    var zIndexManager = Editor.zIndexManager = {
+    var ZIndexManager = Editor.ZIndexManager = {
+        /**
+         * bubble view
+         */
         BUBBLE_VIEW: (1100),
+        /**
+         * bubble view
+         */
         POPUP_MENU: (1200),
-        // flash 存储设置最高
+        /**
+         * bubble view
+         */
         STORE_FLASH_SHOW: (99999),
+        /**
+         * bubble view
+         */
         MAXIMIZE: (900),
+        /**
+         * bubble view
+         */
         OVERLAY: (9999),
+        /**
+         * bubble view
+         */
         LOADING: (11000),
+        /**
+         * bubble view
+         */
         LOADING_CANCEL: 12000,
+        /**
+         * bubble view
+         */
         SELECT: (1200)
     };
 
@@ -6419,7 +6230,7 @@ KISSY.add("editor/zIndexManager", function (S, Editor) {
         return (Editor['Config'].baseZIndex || 10000) + z;
     };
 
-    return zIndexManager;
+    return ZIndexManager;
 }, {
     requires: ['./base']
 });
@@ -9602,7 +9413,7 @@ KISSY.add('editor', function (S, Node, iframeContentTpl, Editor, Utils, focusMan
         'editor/utils',
         'editor/focusManager',
         'editor/styles',
-        'editor/zIndexManager',
+        'editor/z-index-manager',
         'editor/clipboard',
         'editor/enterKey',
         'editor/htmlDataProcessor',

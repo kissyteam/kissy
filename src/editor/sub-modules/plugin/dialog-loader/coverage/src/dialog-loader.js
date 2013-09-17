@@ -294,7 +294,7 @@ KISSY.add("editor/plugin/dialog-loader", function(S, Overlay, Editor) {
   x: 0, 
   width: visit2_13_1(S.UA['ie'] == 6) ? S.DOM.docWidth() : "100%", 
   y: 0, 
-  "zIndex": Editor.baseZIndex(Editor.ZIndexManager.LOADING),
+  "zIndex": Editor.baseZIndex(Editor.ZIndexManager.LOADING), 
   prefixCls: prefixCls + 'editor-', 
   elCls: prefixCls + "editor-global-loading"});
   }
