@@ -585,7 +585,7 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
 
         /**
          * Returns this Calendar's time value in milliseconds
-         * @member KISSY.GregorianCalendar
+         * @member KISSY.Date.Gregorian
          * @returns {Number} the current time as UTC milliseconds from the epoch.
          */
         getTime: function () {
@@ -1253,7 +1253,7 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
         },
         /**
          * Creates and returns a copy of this object.
-         * @returns {KISSY.GregorianCalendar}
+         * @returns {KISSY.Date.Gregorian}
          */
         clone: function () {
             if (this.time === undefined) {
@@ -1269,7 +1269,7 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
          * The result is true if and only if the argument is a GregorianCalendar object
          * that represents the same time value (millisecond offset from the Epoch)
          * under the same Calendar parameters and Gregorian change date as this object.
-         * @param {KISSY.GregorianCalendar} obj the object to compare with.
+         * @param {KISSY.Date.Gregorian} obj the object to compare with.
          * @returns {boolean} true if this object is equal to obj; false otherwise.
          */
         equals: function (obj) {
