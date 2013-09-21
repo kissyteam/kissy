@@ -6,17 +6,18 @@
 (function (S) {
     var MILLISECONDS_OF_SECOND = 1000,
         doc = S.Env.host.document,
+        logger = S.getLogger('s/loader/getScript'),
         Utils = S.Loader.Utils,
         Path = S.Path,
         jsCssCallbacks = {},
-        headNode,
-        UA = S.UA,
+        headNode;
+    //UA = S.UA;
     // onload for webkit 535.23  Firefox 9.0
     // https://bugs.webkit.org/show_activity.cgi?id=38995
     // https://bugzilla.mozilla.org/show_bug.cgi?id=185236
     // https://developer.mozilla.org/en/HTML/Element/link#Stylesheet_load_events
     // phantomjs 1.7 == webkit 534.34
-        isOldWebKit = UA.webkit < 536;
+    //isNewWebkit = UA.webkit && UA.webkit >= 536;
 
     /**
      * Load a javascript/css file from the server using a GET HTTP request,
@@ -106,21 +107,22 @@
         callbacks.node = node;
 
         var end = function (error) {
-                var index = error,
-                    fn;
-                clearTimer();
-                S.each(jsCssCallbacks[url], function (callback) {
-                    if (fn = callback[index]) {
-                        fn.call(node);
-                    }
-                });
-                delete jsCssCallbacks[url];
-            },
-            useNative = 'onload' in node;
+            var index = error,
+                fn;
+            clearTimer();
+            S.each(jsCssCallbacks[url], function (callback) {
+                if (fn = callback[index]) {
+                    fn.call(node);
+                }
+            });
+            delete jsCssCallbacks[url];
+        };
 
-        if (css && isOldWebKit) {
-            useNative = false;
-        }
+        var useNative = 'onload' in node;
+
+//        if (css && !isNewWebkit) {
+//            useNative = false;
+//        }
 
         function onload() {
             var readyState = node.readyState;
@@ -128,7 +130,7 @@
                 readyState == "loaded" ||
                 readyState == "complete") {
                 node.onreadystatechange = node.onload = null;
-                end(0)
+                end(0);
             }
         }
 
@@ -164,6 +166,13 @@
         } else {
             // can use js in head
             headNode.insertBefore(node, headNode.firstChild);
+        }
+        // first check to avoid cache?
+        // https://github.com/kissyteam/kissy/issues/481
+        if (css && Utils.isCssLoaded(node, url)) {
+            logger.debug('load css after insert immediately from cache: ' + url);
+            end(0);
+            return node;
         }
         return node;
     };
