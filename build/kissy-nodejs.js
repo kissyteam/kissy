@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.32
 MIT Licensed
-build time: Sep 4 21:11
+build time: Sep 21 17:06
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130904211117' will replace with current timestamp when compressing.
+         * NOTICE: '20130921170643' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130904211117',
+        __BUILD_TIME: '20130921170643',
         /**
          * KISSY Environment.
          * @private
@@ -4330,9 +4330,13 @@ var KISSY = (function (undefined) {
  * @author yiminghe@gmail.com
  */
 (function (S) {
-
     var CSS_POLL_INTERVAL = 30,
-        UA= S.UA,
+        UA = S.UA,
+        logger = {
+            debug: function (str) {
+                S.log(str, 'info', 's/loader/getScript')
+            }
+        },
         Utils = S.Loader.Utils,
     // central poll for link node
         timer = 0,
@@ -4340,72 +4344,48 @@ var KISSY = (function (undefined) {
             // node.id:{callback:callback,node:node}
         };
 
-
-    /**
-     * @ignore
-     * References:
-     *  - http://unixpapa.com/js/dyna.html
-     *  - http://www.blaze.io/technical/ies-premature-execution-problem/
-     *
-     * `onload` event is supported in WebKit since 535.23
-     *  - https://bugs.webkit.org/show_activity.cgi?id=38995
-     * `onload/onerror` event is supported since Firefox 9.0
-     *  - https://bugzilla.mozilla.org/show_bug.cgi?id=185236
-     *  - https://developer.mozilla.org/en/HTML/Element/link#Stylesheet_load_events
-     *
-     * monitor css onload across browsers.issue about 404 failure.
-     *
-     *  - firefox not ok（4 is wrong）：
-     *    - http://yearofmoo.com/2011/03/cross-browser-stylesheet-preloading/
-     *  - all is ok
-     *    - http://lifesinger.org/lab/2011/load-js-css/css-preload.html
-     *  - others
-     *    - http://www.zachleat.com/web/load-css-dynamically/
-     */
-
     function startCssTimer() {
         if (!timer) {
-            // S.log('start css polling');
             cssPoll();
         }
     }
 
-    // single thread is ok
-    function cssPoll() {
-
-        for (var url in monitors) {
-
-            var callbackObj = monitors[url],
-                node = callbackObj.node,
-                exName,
-                loaded = 0;
-            if (UA.webkit) {
-                // http://www.w3.org/TR/Dom-Level-2-Style/stylesheets.html
-                if (node['sheet']) {
-                    S.log('webkit loaded : ' + url);
+    function isCssLoaded(node, url) {
+        var loaded = 0;
+        if (UA.webkit) {
+            // http://www.w3.org/TR/Dom-Level-2-Style/stylesheets.html
+            if (node['sheet']) {
+                logger.debug('webkit loaded: ' + url);
+                loaded = 1;
+            }
+        } else if (node['sheet']) {
+            try {
+                var cssRules = node['sheet'].cssRules;
+                if (cssRules) {
+                    logger.debug('same domain loaded: ' + url);
                     loaded = 1;
                 }
-            } else if (node['sheet']) {
-                try {
-                    var cssRules = node['sheet'].cssRules;
-                    if (cssRules) {
-                        S.log('same domain firefox loaded : ' + url);
-                        loaded = 1;
-                    }
-                } catch (ex) {
-                    exName = ex.name;
-                    S.log('firefox getStyle : ' + exName + ' ' + ex.code + ' ' + url);
-                    // http://www.w3.org/TR/dom/#dom-domexception-code
-                    if (// exName == 'SecurityError' ||
-                    // for old firefox
-                        exName == 'NS_ERROR_DOM_SECURITY_ERR') {
-                        S.log(exName + ' firefox loaded : ' + url);
-                        loaded = 1;
-                    }
+            } catch (ex) {
+                var exName = ex.name;
+                logger.debug('css exception: ' + exName + ' ' + ex.code + ' ' + url);
+                // http://www.w3.org/TR/dom/#dom-domexception-code
+                if (// exName == 'SecurityError' ||
+                // for old firefox
+                    exName == 'NS_ERROR_DOM_SECURITY_ERR') {
+                    logger.debug('css exception: ' + exName + 'loaded : ' + url);
+                    loaded = 1;
                 }
             }
+        }
+        return loaded;
+    }
 
-            if (loaded) {
+    // single thread is ok
+    function cssPoll() {
+        for (var url in monitors) {
+            var callbackObj = monitors[url],
+                node = callbackObj.node;
+            if (isCssLoaded(node, url)) {
                 if (callbackObj.callback) {
                     callbackObj.callback.call(node);
                 }
@@ -4416,26 +4396,44 @@ var KISSY = (function (undefined) {
 
         if (S.isEmptyObject(monitors)) {
             timer = 0;
-            // S.log('end css polling');
         } else {
+            //noinspection JSUnresolvedFunction
             timer = setTimeout(cssPoll, CSS_POLL_INTERVAL);
         }
     }
 
-    S.mix(Utils, {
-        pollCss: // refer : http://lifesinger.org/lab/2011/load-js-css/css-preload.html
-        // 暂时不考虑如何判断失败，如 404 等
-            function (node, callback) {
-                var href = node.href,
-                    arr;
-                arr = monitors[href] = {};
-                arr.node = node;
-                arr.callback = callback;
-                startCssTimer();
-            }
+    // refer : http://lifesinger.org/lab/2011/load-js-css/css-preload.html
+    // 暂时不考虑如何判断失败，如 404 等
+    Utils.pollCss = function (node, callback) {
+        var href = node.href,
+            arr;
+        arr = monitors[href] = {};
+        arr.node = node;
+        arr.callback = callback;
+        startCssTimer();
+    };
 
-    });
-})(KISSY);/**
+    Utils.isCssLoaded = isCssLoaded;
+})(KISSY);
+/*
+ References:
+ - http://unixpapa.com/js/dyna.html
+ - http://www.blaze.io/technical/ies-premature-execution-problem/
+
+ `onload` event is supported in WebKit since 535.23
+ - https://bugs.webkit.org/show_activity.cgi?id=38995
+ `onload/onerror` event is supported since Firefox 9.0
+ - https://bugzilla.mozilla.org/show_bug.cgi?id=185236
+ - https://developer.mozilla.org/en/HTML/Element/link#Stylesheet_load_events
+
+ monitor css onload across browsers.issue about 404 failure.
+ - firefox not ok（4 is wrong）：
+ - http://yearofmoo.com/2011/03/cross-browser-stylesheet-preloading/
+ - all is ok
+ - http://lifesinger.org/lab/2011/load-js-css/css-preload.html
+ - others
+ - http://www.zachleat.com/web/load-css-dynamically/
+ *//**
  * @ignore
  * implement getScript for nodejs synchronously.
  * so loader need not to be changed.
@@ -5553,7 +5551,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20130904211117'
+            tag: '20130921170643'
         }, getBaseInfo()));
     }
 
