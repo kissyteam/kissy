@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.32
 MIT Licensed
-build time: Sep 21 17:58
+build time: Sep 21 22:06
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130921175821' will replace with current timestamp when compressing.
+         * NOTICE: '20130921220640' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130921175821',
+        __BUILD_TIME: '20130921220640',
         /**
          * KISSY Environment.
          * @private
@@ -4333,8 +4333,8 @@ var KISSY = (function (undefined) {
     var CSS_POLL_INTERVAL = 30,
         UA = S.UA,
         logger = {
-            debug: function (str) {
-                S.log(str, 'info', 's/loader/getScript')
+            debug:function(str){
+                S.log(str,undefined,'s/loader/getScript');
             }
         },
         Utils = S.Loader.Utils,
@@ -4346,6 +4346,7 @@ var KISSY = (function (undefined) {
 
     function startCssTimer() {
         if (!timer) {
+            logger.debug('start css poll timer');
             cssPoll();
         }
     }
@@ -4355,24 +4356,24 @@ var KISSY = (function (undefined) {
         if (UA.webkit) {
             // http://www.w3.org/TR/Dom-Level-2-Style/stylesheets.html
             if (node['sheet']) {
-                logger.debug('webkit loaded: ' + url);
+                logger.debug('webkit css poll loaded: ' + url);
                 loaded = 1;
             }
         } else if (node['sheet']) {
             try {
                 var cssRules = node['sheet'].cssRules;
                 if (cssRules) {
-                    logger.debug('same domain loaded: ' + url);
+                    logger.debug('same domain css poll loaded: ' + url);
                     loaded = 1;
                 }
             } catch (ex) {
                 var exName = ex.name;
-                logger.debug('css exception: ' + exName + ' ' + ex.code + ' ' + url);
+                logger.debug('css poll exception: ' + exName + ' ' + ex.code + ' ' + url);
                 // http://www.w3.org/TR/dom/#dom-domexception-code
                 if (// exName == 'SecurityError' ||
                 // for old firefox
                     exName == 'NS_ERROR_DOM_SECURITY_ERR') {
-                    logger.debug('css exception: ' + exName + 'loaded : ' + url);
+                    logger.debug('css poll exception: ' + exName + 'loaded : ' + url);
                     loaded = 1;
                 }
             }
@@ -4391,13 +4392,12 @@ var KISSY = (function (undefined) {
                 }
                 delete monitors[url];
             }
-
         }
 
         if (S.isEmptyObject(monitors)) {
+            logger.debug('clear css poll timer');
             timer = 0;
         } else {
-            //noinspection JSUnresolvedFunction
             timer = setTimeout(cssPoll, CSS_POLL_INTERVAL);
         }
     }
@@ -5551,7 +5551,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20130921175821'
+            tag: '20130921220640'
         }, getBaseInfo()));
     }
 

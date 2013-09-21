@@ -6,22 +6,11 @@
 (function (S) {
     var MILLISECONDS_OF_SECOND = 1000,
         doc = S.Env.host.document,
-        logger = {
-            debug: function (str) {
-                S.log(str, 'info', 's/loader/getScript')
-            }
-        },
         Utils = S.Loader.Utils,
         Path = S.Path,
         jsCssCallbacks = {},
         headNode,
-        UA = S.UA,
-    // onload for webkit 535.23  Firefox 9.0
-    // https://bugs.webkit.org/show_activity.cgi?id=38995
-    // https://bugzilla.mozilla.org/show_bug.cgi?id=185236
-    // https://developer.mozilla.org/en/HTML/Element/link#Stylesheet_load_events
-    // phantomjs 1.7 == webkit 534.34
-        isOldWebkit = UA.webkit && UA.webkit < 536;
+        UA = S.UA;
 
     /**
      * Load a javascript/css file from the server using a GET HTTP request,
@@ -48,7 +37,7 @@
      * @param {Number} [success.timeout] timeout (s)
      * @param {String} [success.charset] charset of current resource
      * @param {String} [charset] charset of current resource
-     * @return {Element} script/style node
+     * @return {HTMLElement} script/style node
      * @member KISSY
      */
     S.getScript = function (url, success, charset) {
@@ -123,8 +112,14 @@
         };
 
         var useNative = 'onload' in node;
+        // onload for webkit 535.23  Firefox 9.0
+        // https://bugs.webkit.org/show_activity.cgi?id=38995
+        // https://bugzilla.mozilla.org/show_bug.cgi?id=185236
+        // https://developer.mozilla.org/en/HTML/Element/link#Stylesheet_load_events
+        // phantomjs 1.7 == webkit 534.34
+        var forceCssPoll = S.Config['forceCssPoll'] || (UA.webkit && UA.webkit < 536);
 
-        if (css && isOldWebkit && useNative) {
+        if (css && forceCssPoll && useNative) {
             useNative = false;
         }
 
@@ -170,13 +165,6 @@
         } else {
             // can use js in head
             headNode.insertBefore(node, headNode.firstChild);
-        }
-        // first check to avoid cache?
-        // https://github.com/kissyteam/kissy/issues/481
-        if (css && Utils.isCssLoaded(node, url)) {
-            logger.debug('load css after insert immediately from cache: ' + url);
-            end(0);
-            return node;
         }
         return node;
     };
