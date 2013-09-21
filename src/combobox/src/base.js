@@ -346,10 +346,14 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
 
             destructor: function () {
                 var self = this,
+                    menu = self.get('menu'),
                     repositionBuffer = self.__repositionBuffer;
                 if (repositionBuffer) {
                     win.detach("resize", repositionBuffer, self);
                     repositionBuffer.stop();
+                }
+                if (menu && menu.destroy) {
+                    menu.destroy();
                 }
             }
         },

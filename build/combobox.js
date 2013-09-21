@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.32
 MIT Licensed
-build time: Aug 15 00:00
+build time: Sep 21 14:47
 */
 /**
  * @ignore
@@ -351,10 +351,14 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
 
             destructor: function () {
                 var self = this,
+                    menu = self.get('menu'),
                     repositionBuffer = self.__repositionBuffer;
                 if (repositionBuffer) {
                     win.detach("resize", repositionBuffer, self);
                     repositionBuffer.stop();
+                }
+                if (menu && menu.destroy) {
+                    menu.destroy();
                 }
             }
         },
