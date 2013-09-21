@@ -14,14 +14,14 @@
         Utils = S.Loader.Utils,
         Path = S.Path,
         jsCssCallbacks = {},
-        headNode;
-    //UA = S.UA;
+        headNode,
+        UA = S.UA,
     // onload for webkit 535.23  Firefox 9.0
     // https://bugs.webkit.org/show_activity.cgi?id=38995
     // https://bugzilla.mozilla.org/show_bug.cgi?id=185236
     // https://developer.mozilla.org/en/HTML/Element/link#Stylesheet_load_events
     // phantomjs 1.7 == webkit 534.34
-    //isNewWebkit = UA.webkit && UA.webkit >= 536;
+        isOldWebkit = UA.webkit && UA.webkit < 536;
 
     /**
      * Load a javascript/css file from the server using a GET HTTP request,
@@ -124,9 +124,9 @@
 
         var useNative = 'onload' in node;
 
-//        if (css && !isNewWebkit) {
-//            useNative = false;
-//        }
+        if (css && isOldWebkit && useNative) {
+            useNative = false;
+        }
 
         function onload() {
             var readyState = node.readyState;

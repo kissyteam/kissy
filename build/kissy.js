@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.32
 MIT Licensed
-build time: Sep 21 17:06
+build time: Sep 21 17:58
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130921170643' will replace with current timestamp when compressing.
+         * NOTICE: '20130921175821' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130921170643',
+        __BUILD_TIME: '20130921175821',
         /**
          * KISSY Environment.
          * @private
@@ -4449,14 +4449,14 @@ var KISSY = (function (undefined) {
         Utils = S.Loader.Utils,
         Path = S.Path,
         jsCssCallbacks = {},
-        headNode;
-    //UA = S.UA;
+        headNode,
+        UA = S.UA,
     // onload for webkit 535.23  Firefox 9.0
     // https://bugs.webkit.org/show_activity.cgi?id=38995
     // https://bugzilla.mozilla.org/show_bug.cgi?id=185236
     // https://developer.mozilla.org/en/HTML/Element/link#Stylesheet_load_events
     // phantomjs 1.7 == webkit 534.34
-    //isNewWebkit = UA.webkit && UA.webkit >= 536;
+        isOldWebkit = UA.webkit && UA.webkit < 536;
 
     /**
      * Load a javascript/css file from the server using a GET HTTP request,
@@ -4559,9 +4559,9 @@ var KISSY = (function (undefined) {
 
         var useNative = 'onload' in node;
 
-//        if (css && !isNewWebkit) {
-//            useNative = false;
-//        }
+        if (css && isOldWebkit && useNative) {
+            useNative = false;
+        }
 
         function onload() {
             var readyState = node.readyState;
@@ -5695,7 +5695,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20130921170643'
+            tag: '20130921175821'
         }, getBaseInfo()));
     }
 
