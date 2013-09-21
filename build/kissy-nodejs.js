@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 21 17:00
+build time: Sep 21 17:56
 */
 /**
  * @ignore
@@ -42,11 +42,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20130921170029' will replace with current timestamp when compressing.
+         * NOTICE: '20130921175554' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130921170029',
+        __BUILD_TIME: '20130921175554',
 
         /**
          * KISSY Environment.
@@ -5646,7 +5646,7 @@ var KISSY = (function (undefined) {
             comboMaxFileNum: 40,
             charset: 'utf-8',
             lang: 'zh-cn',
-            tag: '20130921170029'
+            tag: '20130921175554'
         }, getBaseInfo()));
     }
 

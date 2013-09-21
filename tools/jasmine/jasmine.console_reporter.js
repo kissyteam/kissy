@@ -91,6 +91,7 @@
         for (var i = 0; i < items.length; i++) {
             var trace = items[i].trace.stack || items[i].trace;
             this.log(trace, color);
+            this.log(items[i], color);
         }
     };
 
