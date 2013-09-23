@@ -4,9 +4,29 @@
  */
 KISSY.add( function (S, Dom, Event) {
     describe("focus", function () {
+        it('fire is special', function () {
+            var n = Dom.create('<input />');
+            Dom.append(n, 'body');
+            var ret = 0;
+            Event.on(n, 'focus', function () {
+                ret++;
+            });
+            Event.fire(n, 'focus');
+            waits(100);
+            runs(function () {
+                expect(ret).toBe(1);
+                expect(document.activeElement).toBe(n);
+                Event.fire(n, 'focus');
+            });
+            waits(100);
+            runs(function () {
+                expect(ret).toBe(2);
+                expect(document.activeElement).toBe(n);
+                Dom.remove(n);
+            });
+        });
 
         it('fired in correct order', function () {
-
             var outer = Dom.create("<div class='outer'>" +
                 "<div class='inner'>" +
                 "<input type='input'/>" +
@@ -56,12 +76,9 @@ KISSY.add( function (S, Dom, Event) {
                 ret = [];
                 Dom.remove(outer);
             });
-
         });
 
-
         it('fired handlers in correct order', function () {
-
             var outer = Dom.create("<div class='outer'>" +
                 "<div class='inner'>" +
                 "<input type='input'/>" +
@@ -113,11 +130,8 @@ KISSY.add( function (S, Dom, Event) {
                 ret = [];
                 Dom.remove(outer);
             });
-
         });
-
     });
-
 },{
     requires:['dom','event/dom/base']
 });
