@@ -4,42 +4,32 @@
  * Generate parser function using LALR algorithm.
  * @author yiminghe@gmail.com
  */
-var argv = require('optimist')
-        .demand('g')
-        .alias('g', 'grammar')
-        .describe('g', 'kison grammar file')
-        .alias('p', 'path')
-        .describe('p', 'generated file path')
-        .alias('m', 'module')
-        .describe('m', 'generated kissy module name')
-        .describe('e', 'xtemplate file encoding')
-        .alias('encoding', 'e')
-        .describe('w', 'watch xtemplate file change')
-        .boolean('w')
-        .describe('compressSymbol', 'compress symbol')
-        .boolean('compressSymbol')
-        .default('compressSymbol', true)
-        .describe('compressLexerState', 'compress lexer state')
-        .boolean('compressLexerState')
-        .default('compressLexerState', false)
-        .alias('watch', 'w')
-        .usage('generate kissy module file from kison grammar file.\n' +
-        'usage: $0 -g [grammar file] -m [module name]').argv,
+var program = require('../tools/commander/');
+program
+    .option('-g, --grammar <grammar>', 'Set kison grammar file')
+    .option('-p, --path <path>', 'Set generated file path')
+    .option('-e, --encoding [encoding]', 'Set grammar file encoding', 'utf-8')
+    .option('-m, --module [module]', 'Set generated kissy module name', '')
+    .option('-w, --watch', 'Watch grammar file change')
+    // defaults bool true
+    .option('--no-compressSymbol', 'Set compress symbol', true)
+    .option('--compressLexerState', 'Set compress lexer state')
+    .parse(process.argv);
 
-    S = require('../build/kissy-nodejs'),
-
+var S = require('../build/kissy-nodejs'),
     js_beautify = require('js-beautify').js_beautify,
     fs = require('fs'),
-    m_path = argv.path,
+    m_path = program.path,
     path = require('path'),
-    grammar = path.resolve(argv.grammar),
-    encoding = argv.e || 'utf-8';
-
+    grammar = path.resolve(program.grammar),
+    encoding = program.encoding;
 
 var kisonCfg = {
-    compressLexerState: argv.compressLexerState,
-    compressSymbol: argv.compressSymbol
+    compressLexerState: program.compressLexerState,
+    compressSymbol: program.compressSymbol
 };
+
+console.log(kisonCfg)
 
 // S.log('*********** grammar:');
 // S.log(grammar);
@@ -70,7 +60,7 @@ var codeTemplate = '' +
     '{code}\n' +
     '});';
 
-var module = argv.module || '';
+var module = program.module;
 
 if (module) {
     module = '"' + module + '",';
@@ -114,7 +104,7 @@ S.use('kison', function (S, KISON) {
 
     var bufferCompile = S.buffer(genParser);
 
-    if (argv.watch) {
+    if (program.watch) {
         fs.watch(grammar, bufferCompile);
         genParser();
     } else {

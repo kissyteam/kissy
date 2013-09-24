@@ -6,7 +6,6 @@
 require('../test/gen-tc');
 require('./gen-package');
 
-// var mkdirp = require('mkdirp');
 var path = require('path');
 var fs = require('fs');
 //noinspection JSUnresolvedVariable

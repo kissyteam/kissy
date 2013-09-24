@@ -1,1 +1,1 @@
-node ../../xtemplate -n test -p ./ -w
+node ../../kissy-xtemplate -n test -p ./ -w

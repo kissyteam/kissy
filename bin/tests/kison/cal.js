@@ -15,33 +15,63 @@ KISSY.add("tests/cal", function () {
 
         var self = this;
 
-        /**
-         * lex rules.
-         * @type {Object[]}
-         * @example
-         * [
-         *  {
-         *   regexp:'\\w+',
-         *   state:['xx'],
-         *   token:'c',
-         *   // this => lex
-         *   action:function(){}
-         *  }
-         * ]
-         */
+        /*
+             lex rules.
+             @type {Object[]}
+             @example
+             [
+             {
+             regexp:'\\w+',
+             state:['xx'],
+             token:'c',
+             // this => lex
+             action:function(){}
+             }
+             ]
+             */
         self.rules = [];
 
         S.mix(self, cfg);
 
-        /**
-         * Input languages
-         * @type {String}
-         */
+        /*
+             Input languages
+             @type {String}
+             */
 
         self.resetInput(self.input);
 
     };
     Lexer.prototype = {
+        'constructor': function (cfg) {
+
+            var self = this;
+
+            /*
+             lex rules.
+             @type {Object[]}
+             @example
+             [
+             {
+             regexp:'\\w+',
+             state:['xx'],
+             token:'c',
+             // this => lex
+             action:function(){}
+             }
+             ]
+             */
+            self.rules = [];
+
+            S.mix(self, cfg);
+
+            /*
+             Input languages
+             @type {String}
+             */
+
+            self.resetInput(self.input);
+
+        },
         'resetInput': function (input) {
             S.mix(this, {
                 input: input,
@@ -89,9 +119,11 @@ KISSY.add("tests/cal", function () {
                 match = self.match,
                 input = self.input;
             matched = matched.slice(0, matched.length - match.length);
-            var past = (matched.length > DEBUG_CONTEXT_LIMIT ? "..." : "") + matched.slice(-DEBUG_CONTEXT_LIMIT).replace(/\n/, " "),
+            var past = (matched.length > DEBUG_CONTEXT_LIMIT ? "..." : "") +
+                matched.slice(-DEBUG_CONTEXT_LIMIT).replace(/\n/, " "),
                 next = match + input;
-            next = next.slice(0, DEBUG_CONTEXT_LIMIT) + (next.length > DEBUG_CONTEXT_LIMIT ? "..." : "");
+            next = next.slice(0, DEBUG_CONTEXT_LIMIT) +
+                (next.length > DEBUG_CONTEXT_LIMIT ? "..." : "");
             return past + next + "\n" + new Array(past.length + 1).join("-") + "^";
         },
         'mapSymbol': function (t) {
@@ -139,7 +171,7 @@ KISSY.add("tests/cal", function () {
 
             self.match = self.text = "";
 
-            if (!S.trim(input)) {
+            if (!input) {
                 return self.mapSymbol(Lexer.STATIC.END_TAG);
             }
 
@@ -188,6 +220,7 @@ KISSY.add("tests/cal", function () {
             }
 
             S.error("lex error at line " + self.lineNumber + ":\n" + self.showDebugInfo());
+            return undefined;
         }
     };
     Lexer.STATIC = {
@@ -218,15 +251,21 @@ KISSY.add("tests/cal", function () {
     parser.productions = [
         [6, [7]],
         [7, [8]],
-        [8, [8, 4, 8], function () {
-            return this.$1 - this.$3;
-        }],
-        [8, [8, 3, 8], function () {
-            return this.$1 + this.$3;
-        }],
-        [8, [2], function () {
-            return Number(this.$1);
-        }]
+        [8, [8, 4, 8],
+            function () {
+                return this.$1 - this.$3;
+            }
+        ],
+        [8, [8, 3, 8],
+            function () {
+                return this.$1 + this.$3;
+            }
+        ],
+        [8, [2],
+            function () {
+                return Number(this.$1);
+            }
+        ]
     ];
     parser.table = {
         'gotos': {
@@ -243,41 +282,40 @@ KISSY.add("tests/cal", function () {
         },
         'action': {
             '0': {
-                '2': [1, 0, 1]
+                '2': [1, undefined, 1]
             },
             '1': {
-                '1': [2, 4, 0],
-                '3': [2, 4, 0],
-                '4': [2, 4, 0]
+                '1': [2, 4],
+                '3': [2, 4],
+                '4': [2, 4]
             },
             '2': {
-                '1': [0, 0, 0]
+                '1': [0]
             },
             '3': {
-                '1': [2, 1, 0],
-                '3': [1, 0, 4],
-                '4': [1, 0, 5]
+                '1': [2, 1],
+                '3': [1, undefined, 4],
+                '4': [1, undefined, 5]
             },
             '4': {
-                '2': [1, 0, 1]
+                '2': [1, undefined, 1]
             },
             '5': {
-                '2': [1, 0, 1]
+                '2': [1, undefined, 1]
             },
             '6': {
-                '1': [2, 3, 0],
-                '3': [2, 3, 0],
-                '4': [2, 3, 0]
+                '1': [2, 3],
+                '3': [1, undefined, 4],
+                '4': [1, undefined, 5]
             },
             '7': {
-                '1': [2, 2, 0],
-                '3': [2, 2, 0],
-                '4': [2, 2, 0]
+                '1': [2, 2],
+                '3': [1, undefined, 4],
+                '4': [1, undefined, 5]
             }
         }
     };
     parser.parse = function parse(input) {
-
         var self = this,
             lexer = self.lexer,
             state,
@@ -301,7 +339,7 @@ KISSY.add("tests/cal", function () {
             }
 
             if (!symbol) {
-                S.log("it is not a valid input: " + input, "error");
+                S.log("it is not a valid input: " + input, 'error');
                 return false;
             }
 
@@ -316,15 +354,15 @@ KISSY.add("tests/cal", function () {
                         expected.push(self.lexer.mapReverseSymbol(symbol));
                     });
                 }
-                error = "parse error at line " + lexer.lineNumber + ":\n" + lexer.showDebugInfo() + "\n" + "expect " + expected.join(", ");
+                error = "Syntax error at line " + lexer.lineNumber +
+                    ":\n" + lexer.showDebugInfo() +
+                    "\n" + "expect " + expected.join(", ");
                 S.error(error);
                 return false;
             }
 
             switch (action[GrammarConst.TYPE_INDEX]) {
-
             case GrammarConst.SHIFT_TYPE:
-
                 stack.push(symbol);
 
                 valueStack.push(lexer.text);
@@ -338,19 +376,18 @@ KISSY.add("tests/cal", function () {
                 break;
 
             case GrammarConst.REDUCE_TYPE:
-
                 var production = productions[action[GrammarConst.PRODUCTION_INDEX]],
                     reducedSymbol = production.symbol || production[0],
                     reducedAction = production.action || production[2],
                     reducedRhs = production.rhs || production[1],
                     len = reducedRhs.length,
-                    i,
-                    ret,
+                    i = 0,
+                    ret = undefined,
                     $$ = valueStack[valueStack.length - len]; // default to $$ = $1
 
                 self.$$ = $$;
 
-                for (i = 0; i < len; i++) {
+                for (; i < len; i++) {
                     self["$" + (len - i)] = valueStack[valueStack.length - 1 - i];
                 }
 
@@ -365,8 +402,8 @@ KISSY.add("tests/cal", function () {
                 }
 
                 if (len) {
-                    stack = stack.slice(0, - 1 * len * 2);
-                    valueStack = valueStack.slice(0, - 1 * len);
+                    stack = stack.slice(0, -1 * len * 2);
+                    valueStack = valueStack.slice(0, -1 * len);
                 }
 
                 stack.push(reducedSymbol);
@@ -380,14 +417,12 @@ KISSY.add("tests/cal", function () {
                 break;
 
             case GrammarConst.ACCEPT_TYPE:
-
                 return $$;
             }
 
         }
 
         return undefined;
-
     };
-    return parser;;
+    return parser;
 });

@@ -4,35 +4,28 @@
  * Generate xtemplate function by xtemplate file using kissy xtemplate.
  * @author yiminghe@gmail.com
  */
-var argv = require('optimist')
-        .demand('packageName')
-        .alias('n', 'packageName')
-        .describe('n', 'kissy package name')
-        .demand('packagePath')
-        .alias('p', 'packagePath')
-        .describe('p', 'kissy package path')
-        .describe('e', 'xtemplate file encoding')
-        .alias('encoding', 'e')
-        .describe('w', 'watch xtemplate file change')
-        .boolean('w')
-        .alias('watch', 'w')
-        .describe('k', 'kissy src module format')
-        .boolean('k')
-        .alias('kissy', 'k')
-        .usage('generate kissy module file from kissy xtemplate file.\n' +
-            'usage: $0 -name [package name] -path [package path]').argv,
-    S = require('../build/kissy-nodejs'),
+var program = require('../tools/commander/');
+program
+    .option('-n, --package-name <packageName>', 'Set kissy package name')
+    .option('-p, --package-path <packagePath>', 'Set kissy package path')
+    .option('-e, --encoding [encoding]', 'Set xtemplate file encoding', 'utf-8')
+    .option('-w, --watch', 'Watch xtemplate file change')
+    .option('-k, --kissy', 'Set kissy src module format')
+    .parse(process.argv);
+
+console.log(program)
+
+var S = require('../build/kissy-nodejs'),
     chokidar = require('chokidar'),
     js_beautify = require('js-beautify').js_beautify,
     fs = require('fs'),
-    tpl = argv.tpl,
     path = require('path'),
-    packageName = argv.packageName,
-    packagePath = argv.packagePath,
-    encoding = argv.e || 'utf-8',
+    packageName = program.packageName,
+    packagePath = program.packagePath,
+    encoding = program.encoding,
     cwd = process.cwd();
 
-if (argv.k) {
+if (program.kissy) {
     var slashIndex = packageName.lastIndexOf('/');
     if (slashIndex === -1) {
         packageName = '';
@@ -104,7 +97,7 @@ S.use('xtemplate/compiler', function (S, XTemplateCompiler) {
         }
     }
 
-    if (argv.watch) {
+    if (program.watch) {
         var watcher = chokidar.watch(packagePath, {ignored: /^\./, persistent: true});
         watcher.on('add', process).on('change', process);
         watcher.close();

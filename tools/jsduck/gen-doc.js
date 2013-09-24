@@ -5,7 +5,7 @@ var jsduckDir = normalizeSlash(path.resolve(cwd, 'tools/jsduck') + '/');
 var saveTo = jsduckDir + 'jsduck.json';
 var tplJson = jsduckDir + 'jsduck.tpl.json';
 var base = '/kissy/src/';
-var fs = require('fs-extra');
+var fs = require('fs');
 var S = global.KISSY = global.S = require(cwd + '/build/kissy-nodejs');
 var config = JSON.parse(fs.readFileSync(tplJson, {
     encoding: 'utf-8'

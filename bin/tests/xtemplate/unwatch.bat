@@ -1,2 +1,2 @@
-call kissy-xtemplate -n test -p ./
+call kissy xtemplate -n test -p ./
 pause
