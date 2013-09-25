@@ -576,8 +576,8 @@ KISSY.use("json,ajax", function (S, JSON, IO) {
                     error: function () {
                         var args = S.makeArray(arguments);
                         // security error
-                        expect(args[2].status).toBe(0);
-                        expect(S.inArray(args[1], ['', 'Security Violation.'])).toBe(true);
+                        expect(args[2].status).not.toBe(200);
+                        expect(S.inArray(args[1], ['', 'Security Violation.','未指明的错误。',undefined])).toBe(true);
                         ret = 1;
                     }
                 });
@@ -797,7 +797,7 @@ KISSY.use("json,ajax", function (S, JSON, IO) {
                         var args = S.makeArray(arguments);
                         // security error
                         expect(args[2].status).toBe(0);
-                        expect(S.inArray(args[1], ['', 'Security Violation.'])).toBe(true);
+                        expect(S.inArray(args[1], ['', 'Security Violation.','未指明的错误。',undefined])).toBe(true);
                         ret = 1;
                     }
                 });

@@ -276,26 +276,20 @@ describe("KISSY ComboLoader", function () {
 
             window.TEST_A = 0;
 
-            var ret = 0, order = [];
+            var ret = 0;
 
             S.use('tests2/a', function (S, a) {
-                order.push(1);
                 expect(a).toBe(7);
-                ret = 1;
+                ret++;
             });
 
             S.use('tests2/a', function (S, a) {
-                order.push(2);
                 expect(a).toBe(7);
-                ret = 2;
+                ret++;
             });
 
             waitsFor(function () {
                 return ret == 2;
-            });
-
-            runs(function () {
-                expect(order).toEqual([1, 2]);
             });
         });
     });
