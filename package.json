@@ -25,7 +25,9 @@
         "node": "~0.10"
     },
     "bin": {
-        "kissy": "./bin/kissy.js"
+        "kissy": "./bin/kissy.js",
+        "kissy-xtemplate": "./bin/kissy-xtemplate.js",
+        "kissy-kison": "./bin/kissy-kison.js"
     },
     "directories": {
         "lib": "./build/"
