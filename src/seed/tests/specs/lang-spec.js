@@ -6,6 +6,24 @@ describe('lang.js', function () {
         fn = function () {
         };
 
+    it('S.setImmediate works', function () {
+        var order = [];
+        S.setImmediate(function () {
+            order.push(2);
+            S.setImmediate(function () {
+                order.push(4);
+            });
+        });
+        S.setImmediate(function () {
+            order.push(3);
+        });
+        order.push(1);
+        waits(100);
+        runs(function () {
+            expect(order).toEqual([1, 2, 3, 4]);
+        });
+    });
+
     it('S.makeArray', function () {
         var o;
 
@@ -96,7 +114,6 @@ describe('lang.js', function () {
         expect(S.escapeHtml('"')).toBe("&quot;");
     });
 
-
     it("S.unEscapeHtml", function () {
         expect(S.unEscapeHtml("&lt;")).toBe("<");
         expect(S.unEscapeHtml("&gt;")).toBe(">");
@@ -104,7 +121,6 @@ describe('lang.js', function () {
         expect(S.unEscapeHtml('&quot;')).toBe('"');
         expect(S.unEscapeHtml('&#' + "b".charCodeAt(0) + ';')).toBe('b');
     });
-
 
     it('S.fromUnicode', function () {
         expect(S.fromUnicode("ab\\u627F\\u7389c")).toBe("ab承玉c");
@@ -513,7 +529,6 @@ describe('lang.js', function () {
         expect(ret.length).toBe(2);
     });
 
-
     it('S.map', function () {
         function makePseudoPlural(single) {
             return single.replace(/o/g, "e");
@@ -533,7 +548,6 @@ describe('lang.js', function () {
 
     });
 
-
     it('S.reduce', function () {
         var r = S.reduce([0, 1, 2, 3, 4], function (previousValue, currentValue, index, array) {
             return previousValue + currentValue;
@@ -546,7 +560,6 @@ describe('lang.js', function () {
         }, 10);
         expect(r).toBe(20);
     });
-
 
     it("S.bind", function () {
 
@@ -592,7 +605,6 @@ describe('lang.js', function () {
         }
     });
 
-
     it("S.rbind", function () {
         function x() {
             expect(this).toBe(window);
@@ -623,7 +635,6 @@ describe('lang.js', function () {
         S.rbind(z, context, 1, 2)(3);
     });
 
-
     it("S.throttle", function () {
         var i = 0, x = {};
 
@@ -651,7 +662,6 @@ describe('lang.js', function () {
         });
     });
 
-
     it("S.buffer", function () {
         var i = 0, x = {};
 
@@ -675,7 +685,6 @@ describe('lang.js', function () {
         });
     });
 
-
     it("S.every", function () {
         function isBigEnough(element, index, array) {
             return (element >= 10);
@@ -686,7 +695,6 @@ describe('lang.js', function () {
         passed = S.every([12, 54, 18, 130, 44], isBigEnough);
         expect(passed).toBe(true);
     });
-
 
     it("S.some", function () {
         function isBigEnough(element, index, array) {

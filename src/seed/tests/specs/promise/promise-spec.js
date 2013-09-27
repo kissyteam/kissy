@@ -2,6 +2,25 @@ describe("KISSY.Defer", function () {
     var S = KISSY,
         Promise = S.Promise;
 
+    it('is always async', function () {
+        var d = S.Defer(),
+            p = d.promise,
+            order = [];
+
+        p.then(function (v) {
+            order.push(v);
+        });
+
+        d.resolve(2);
+
+        order.push(1);
+
+        waits(100);
+
+        runs(function () {
+            expect(order).toEqual([1, 2]);
+        });
+    });
 
     it("works for simple value", function () {
         var r, r2;
@@ -292,7 +311,6 @@ describe("KISSY.Defer", function () {
         });
     });
 
-
     it("all works", function () {
         var defer1 = S.Defer();
         var defer2 = S.Defer();
@@ -325,6 +343,4 @@ describe("KISSY.Defer", function () {
         });
 
     });
-
-
 });

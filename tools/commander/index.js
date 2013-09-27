@@ -377,7 +377,7 @@ Command.prototype.parse = function (argv) {
     var error = 0;
     var self = this;
     this.options.forEach(function (option) {
-        if (option.required && !(option.name() in self)) {
+        if (option.required && !(camelcase(option.name()) in self)) {
             self.optionMissingArgument(option, undefined, 1);
             error = 1;
         }
@@ -392,6 +392,7 @@ Command.prototype.parse = function (argv) {
 
     return result;
 };
+
 
 /**
  * Execute a sub-command executable.

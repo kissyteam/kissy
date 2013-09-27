@@ -101,40 +101,6 @@ KISSY.add('io/base', function (S, CustomEvent, undefined) {
         return c;
     }
 
-    function fire(eventType, self) {
-        /**
-         * fired after request completes (success or error)
-         * @event complete
-         * @member KISSY.IO
-         * @static
-         * @param {KISSY.Event.CustomEvent.Object} e
-         * @param {KISSY.IO} e.io current io
-         */
-
-        /**
-         * fired after request succeeds
-         * @event success
-         * @member KISSY.IO
-         * @static
-         * @param {KISSY.Event.CustomEvent.Object} e
-         * @param {KISSY.IO} e.io current io
-         */
-
-        /**
-         * fired after request occurs error
-         * @event error
-         * @member KISSY.IO
-         * @static
-         * @param {KISSY.Event.CustomEvent.Object} e
-         * @param {KISSY.IO} e.io current io
-         */
-        IO.fire(eventType, {
-            // 兼容
-            ajaxConfig: self.config,
-            io: self
-        });
-    }
-
     /**
      * Return a io object and send request by config.
      *
@@ -383,8 +349,11 @@ KISSY.add('io/base', function (S, CustomEvent, undefined) {
          * @param {KISSY.Event.CustomEvent.Object} e
          * @param {KISSY.IO} e.io current io
          */
-
-        fire('start', self);
+        IO.fire('start', {
+            // 兼容
+            ajaxConfig: c,
+            io: self
+        });
 
         transportConstructor = transports[c.dataType[0]] || transports['*'];
         transport = new transportConstructor(self);
@@ -396,7 +365,6 @@ KISSY.add('io/base', function (S, CustomEvent, undefined) {
         }
 
         var dataType = c.dataType[0],
-            timeoutTimer,
             i,
             timeout = c.timeout,
             context = c.context,
@@ -423,23 +391,6 @@ KISSY.add('io/base', function (S, CustomEvent, undefined) {
             return self;
         }
 
-        function genHandler(handleStr) {
-            return function (v) {
-                if (timeoutTimer = self.timeoutTimer) {
-                    clearTimeout(timeoutTimer);
-                    self.timeoutTimer = 0;
-                }
-                var h = c[handleStr];
-                h && h.apply(context, v);
-                fire(handleStr, self);
-            };
-        }
-
-        // fix: easy error report
-        self.done(genHandler('success'), genHandler('error'));
-
-        self.fin(genHandler('complete'));
-
         self.readyState = 1;
 
         /**
@@ -451,7 +402,11 @@ KISSY.add('io/base', function (S, CustomEvent, undefined) {
          * @param {KISSY.IO} e.io current io
          */
 
-        fire('send', self);
+        IO.fire('send', {
+            // 兼容
+            ajaxConfig: c,
+            io: self
+        });
 
         // Timeout
         if (c.async && timeout > 0) {

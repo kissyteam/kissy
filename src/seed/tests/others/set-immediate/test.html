@@ -1,0 +1,15 @@
+<script src="/kissy/build/seed.js"></script>
+<script>
+    var S = KISSY;
+    var order = [];
+    S.setImmediate(function () {
+        order.push(2);
+        S.setImmediate(function () {
+            order.push(4);
+        });
+    });
+    S.setImmediate(function () {
+        order.push(3);
+    });
+    order.push(1);
+</script>

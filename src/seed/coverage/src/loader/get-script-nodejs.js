@@ -270,23 +270,23 @@ if (! _$jscoverage['/loader/get-script-nodejs.js'].branchData) {
   _$jscoverage['/loader/get-script-nodejs.js'].branchData['39'][1] = new BranchData();
 }
 _$jscoverage['/loader/get-script-nodejs.js'].branchData['39'][1].init(96, 17, 'error && error(e)');
-function visit403_39_1(result) {
+function visit410_39_1(result) {
   _$jscoverage['/loader/get-script-nodejs.js'].branchData['39'][1].ranCondition(result);
   return result;
 }_$jscoverage['/loader/get-script-nodejs.js'].branchData['35'][1].init(188, 20, 'success && success()');
-function visit402_35_1(result) {
+function visit409_35_1(result) {
   _$jscoverage['/loader/get-script-nodejs.js'].branchData['35'][1].ranCondition(result);
   return result;
 }_$jscoverage['/loader/get-script-nodejs.js'].branchData['24'][1].init(76, 20, 'success && success()');
-function visit401_24_1(result) {
+function visit408_24_1(result) {
   _$jscoverage['/loader/get-script-nodejs.js'].branchData['24'][1].ranCondition(result);
   return result;
 }_$jscoverage['/loader/get-script-nodejs.js'].branchData['22'][1].init(208, 55, 'S.startsWith(S.Path.extname(url).toLowerCase(), \'.css\')');
-function visit400_22_1(result) {
+function visit407_22_1(result) {
   _$jscoverage['/loader/get-script-nodejs.js'].branchData['22'][1].ranCondition(result);
   return result;
 }_$jscoverage['/loader/get-script-nodejs.js'].branchData['16'][1].init(38, 24, 'S.isPlainObject(success)');
-function visit399_16_1(result) {
+function visit406_16_1(result) {
   _$jscoverage['/loader/get-script-nodejs.js'].branchData['16'][1].ranCondition(result);
   return result;
 }_$jscoverage['/loader/get-script-nodejs.js'].lineData[7]++;
@@ -300,7 +300,7 @@ function visit399_16_1(result) {
   _$jscoverage['/loader/get-script-nodejs.js'].lineData[14]++;
   var error;
   _$jscoverage['/loader/get-script-nodejs.js'].lineData[16]++;
-  if (visit399_16_1(S.isPlainObject(success))) {
+  if (visit406_16_1(S.isPlainObject(success))) {
     _$jscoverage['/loader/get-script-nodejs.js'].lineData[17]++;
     charset = success.charset;
     _$jscoverage['/loader/get-script-nodejs.js'].lineData[18]++;
@@ -309,11 +309,11 @@ function visit399_16_1(result) {
     success = success.success;
   }
   _$jscoverage['/loader/get-script-nodejs.js'].lineData[22]++;
-  if (visit400_22_1(S.startsWith(S.Path.extname(url).toLowerCase(), '.css'))) {
+  if (visit407_22_1(S.startsWith(S.Path.extname(url).toLowerCase(), '.css'))) {
     _$jscoverage['/loader/get-script-nodejs.js'].lineData[23]++;
     logger.warn('node js can not load css: ' + url);
     _$jscoverage['/loader/get-script-nodejs.js'].lineData[24]++;
-    visit401_24_1(success && success());
+    visit408_24_1(success && success());
     _$jscoverage['/loader/get-script-nodejs.js'].lineData[25]++;
     return;
   }
@@ -328,14 +328,14 @@ function visit399_16_1(result) {
     _$jscoverage['/loader/get-script-nodejs.js'].lineData[34]++;
     fn(S, require);
     _$jscoverage['/loader/get-script-nodejs.js'].lineData[35]++;
-    visit402_35_1(success && success());
+    visit409_35_1(success && success());
   }  catch (e) {
   _$jscoverage['/loader/get-script-nodejs.js'].lineData[37]++;
   logger.error('in file: ' + url);
   _$jscoverage['/loader/get-script-nodejs.js'].lineData[38]++;
   logger.error(e.stack);
   _$jscoverage['/loader/get-script-nodejs.js'].lineData[39]++;
-  visit403_39_1(error && error(e));
+  visit410_39_1(error && error(e));
 }
 };
 })(KISSY);

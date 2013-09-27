@@ -5,8 +5,15 @@
  */
 (function (S, undefined) {
     var PROMISE_VALUE = '__promise_value',
-        logger= S.getLogger('s/promise'),
+        processImmediate = S.setImmediate,
+        logger = S.getLogger('s/promise'),
         PROMISE_PENDINGS = '__promise_pendings';
+
+    function logError(str) {
+        if (typeof console !== 'undefined' && console.error) {
+            console.error(str);
+        }
+    }
 
     /*
      two effects:
@@ -18,30 +25,35 @@
         if (promise instanceof Reject) {
             // if there is a rejected , should always has! see when()
             if (!rejected) {
-                S.error('no rejected callback!');
+                logger.error('no rejected callback!');
             }
-            return rejected(promise[PROMISE_VALUE]);
-        }
-
-        var v = promise[PROMISE_VALUE],
-            pendings = promise[PROMISE_PENDINGS];
-
-        // unresolved
-        // pushed to pending list
-        if (pendings) {
-            pendings.push([fulfilled, rejected]);
-        }
-        // rejected or nested promise
-        else if (isPromise(v)) {
-            promiseWhen(v, fulfilled, rejected);
+            processImmediate(function () {
+                rejected(promise[PROMISE_VALUE]);
+            });
         } else {
-            // fulfilled value
-            // normal value represents ok
-            // need return user's return value
-            // if return promise then forward
-            return fulfilled && fulfilled(v);
+            var v = promise[PROMISE_VALUE],
+                pendings = promise[PROMISE_PENDINGS];
+
+            // unresolved
+            // pushed to pending list
+            if (pendings) {
+                pendings.push([fulfilled, rejected]);
+            }
+            // rejected or nested promise
+            else if (isPromise(v)) {
+                promiseWhen(v, fulfilled, rejected);
+            } else {
+                // fulfilled value
+                // normal value represents ok
+                // need return user's return value
+                // if return promise then forward
+                if (fulfilled) {
+                    processImmediate(function () {
+                        fulfilled(v);
+                    });
+                }
+            }
         }
-        return undefined;
     }
 
     /**
@@ -119,6 +131,7 @@
 
     Promise.prototype = {
         constructor: Promise,
+
         /**
          * register callbacks when this promise object is resolved
          * @param {Function} fulfilled called when resolved successfully,pass a resolved value to this function and
@@ -165,9 +178,9 @@
          */
         done: function (fulfilled, rejected) {
             var self = this,
-                onUnhandledError = function (error) {
+                onUnhandledError = function (e) {
                     setTimeout(function () {
-                        throw error;
+                        throw e;
                     }, 0);
                 },
                 promiseToHandle = fulfilled || rejected ?
@@ -207,7 +220,7 @@
         var self = this;
         Promise.apply(self, arguments);
         if (self[PROMISE_VALUE] instanceof Promise) {
-            S.error('assert.not(this.__promise_value instanceof promise) in Reject constructor');
+            logger.error('assert.not(this.__promise_value instanceof promise) in Reject constructor');
         }
         return self;
     }
@@ -227,8 +240,10 @@
                     // propagate
                     value;
             } catch (e) {
+                // can not use logger.error
+                // must expose to user
                 // print stack info for firefox/chrome
-                logger.error(e.stack || e);
+                logError(e.stack || e);
                 return new Reject(e);
             }
         }
@@ -242,18 +257,19 @@
                     new Reject(reason);
             } catch (e) {
                 // print stack info for firefox/chrome
-                logger.error(e.stack || e);
+                logError(e.stack || e);
                 return new Reject(e);
             }
         }
 
         function finalFulfill(value) {
             if (done) {
-                S.error('already done at fulfilled');
+                logger.error('already done at fulfilled');
                 return;
             }
             if (value instanceof Promise) {
-                S.error('assert.not(value instanceof Promise) in when')
+                logger.error('assert.not(value instanceof Promise) in when');
+                return;
             }
             done = 1;
             defer.resolve(_fulfilled(value));
@@ -262,7 +278,7 @@
         if (value instanceof  Promise) {
             promiseWhen(value, finalFulfill, function (reason) {
                 if (done) {
-                    S.error('already done at rejected');
+                    logger.error('already done at rejected');
                     return;
                 }
                 done = 1;
@@ -304,98 +320,98 @@
     KISSY.Promise = Promise;
     Promise.Defer = Defer;
 
-    S.mix(Promise,{
-            /**
-             * register callbacks when obj as a promise is resolved
-             * or call fulfilled callback directly when obj is not a promise object
-             * @param {KISSY.Promise|*} obj a promise object or value of any type
-             * @param {Function} fulfilled called when obj resolved successfully,pass a resolved value to this function and
-             * return a value (could be promise object) for the new promise 's resolved value.
-             * @param {Function} [rejected] called when error occurs in obj,pass error reason to this function and
-             * return a new reason for the new promise 's error reason
-             * @return {KISSY.Promise} a new promise object
-             *
-             * for example:
-             *      @example
-             *      function check(p) {
+    S.mix(Promise, {
+        /**
+         * register callbacks when obj as a promise is resolved
+         * or call fulfilled callback directly when obj is not a promise object
+         * @param {KISSY.Promise|*} obj a promise object or value of any type
+         * @param {Function} fulfilled called when obj resolved successfully,pass a resolved value to this function and
+         * return a value (could be promise object) for the new promise 's resolved value.
+         * @param {Function} [rejected] called when error occurs in obj,pass error reason to this function and
+         * return a new reason for the new promise 's error reason
+         * @return {KISSY.Promise} a new promise object
+         *
+         * for example:
+         *      @example
+         *      function check(p) {
              *          S.Promise.when(p, function(v){
              *              alert(v === 1);
              *          });
              *      }
-             *
-             *      var defer = S.Defer();
-             *      defer.resolve(1);
-             *
-             *      check(1); // => alert(true)
-             *
-             *      check(defer.promise); //=> alert(true);
-             *
-             * @static
-             * @method
-             * @member KISSY.Promise
-             */
-            when: when,
-            /**
-             * whether the given object is a promise
-             * @method
-             * @static
-             * @param obj the tested object
-             * @return {Boolean}
-             * @member KISSY.Promise
-             */
-            isPromise: isPromise,
-            /**
-             * whether the given object is a resolved promise
-             * @method
-             * @static
-             * @param obj the tested object
-             * @return {Boolean}
-             * @member KISSY.Promise
-             */
-            isResolved: isResolved,
-            /**
-             * whether the given object is a rejected promise
-             * @method
-             * @static
-             * @param obj the tested object
-             * @return {Boolean}
-             * @member KISSY.Promise
-             */
-            isRejected: isRejected,
-            /**
-             * return a new promise
-             * which is resolved when all promises is resolved
-             * and rejected when any one of promises is rejected
-             * @param {KISSY.Promise[]} promises list of promises
-             * @static
-             * @return {KISSY.Promise}
-             * @member KISSY.Promise
-             */
-            all: function (promises) {
-                var count = promises.length;
-                if (!count) {
-                    return null;
-                }
-                var defer = Defer();
-                for (var i = 0; i < promises.length; i++) {
-                    (function (promise, i) {
-                        when(promise, function (value) {
-                            promises[i] = value;
-                            if (--count === 0) {
-                                // if all is resolved
-                                // then resolve final returned promise with all value
-                                defer.resolve(promises);
-                            }
-                        }, function (r) {
-                            // if any one is rejected
-                            // then reject final return promise with first reason
-                            defer.reject(r);
-                        });
-                    })(promises[i], i);
-                }
-                return defer.promise;
+         *
+         *      var defer = S.Defer();
+         *      defer.resolve(1);
+         *
+         *      check(1); // => alert(true)
+         *
+         *      check(defer.promise); //=> alert(true);
+         *
+         * @static
+         * @method
+         * @member KISSY.Promise
+         */
+        when: when,
+        /**
+         * whether the given object is a promise
+         * @method
+         * @static
+         * @param obj the tested object
+         * @return {Boolean}
+         * @member KISSY.Promise
+         */
+        isPromise: isPromise,
+        /**
+         * whether the given object is a resolved promise
+         * @method
+         * @static
+         * @param obj the tested object
+         * @return {Boolean}
+         * @member KISSY.Promise
+         */
+        isResolved: isResolved,
+        /**
+         * whether the given object is a rejected promise
+         * @method
+         * @static
+         * @param obj the tested object
+         * @return {Boolean}
+         * @member KISSY.Promise
+         */
+        isRejected: isRejected,
+        /**
+         * return a new promise
+         * which is resolved when all promises is resolved
+         * and rejected when any one of promises is rejected
+         * @param {KISSY.Promise[]} promises list of promises
+         * @static
+         * @return {KISSY.Promise}
+         * @member KISSY.Promise
+         */
+        all: function (promises) {
+            var count = promises.length;
+            if (!count) {
+                return null;
             }
-        });
+            var defer = Defer();
+            for (var i = 0; i < promises.length; i++) {
+                (function (promise, i) {
+                    when(promise, function (value) {
+                        promises[i] = value;
+                        if (--count === 0) {
+                            // if all is resolved
+                            // then resolve final returned promise with all value
+                            defer.resolve(promises);
+                        }
+                    }, function (r) {
+                        // if any one is rejected
+                        // then reject final return promise with first reason
+                        defer.reject(r);
+                    });
+                })(promises[i], i);
+            }
+            return defer.promise;
+        }
+    });
 
 })(KISSY);
 

@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 21 22:04
+build time: Sep 27 18:05
 */
 /**
  * @ignore
@@ -42,11 +42,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20130921220350' will replace with current timestamp when compressing.
+         * NOTICE: '20130927180531' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130921220350',
+        __BUILD_TIME: '20130927180531',
 
         /**
          * KISSY Environment.
@@ -1930,6 +1930,81 @@ var KISSY = (function (undefined) {
         }
     });
     S.isArray = Array.isArray || S.isArray;
+})(KISSY);/*
+ setImmediate polyfill inspired by Q
+ @author yiminghe@gmail.com
+ */
+(function (S) {
+    var queue = [];
+
+    var flushing = 0;
+
+    function flush() {
+        var i = 0, item;
+        while (item = queue[i++]) {
+            try {
+                item();
+            } catch (e) {
+                setTimeout(function () {
+                    throw e;
+                }, 0);
+            }
+        }
+        if (i > 1) {
+            queue = [];
+        }
+        flushing = 0;
+    }
+
+    /*
+      setImmediate for loader and promise
+      @param {Function} fn async function to call
+      @private
+     */
+    S.setImmediate = function (fn) {
+        queue.push(fn);
+        if (!flushing) {
+            flushing = 1;
+            requestFlush();
+        }
+    };
+
+    var requestFlush;
+    if (typeof setImmediate === "function") {
+        requestFlush = function () {
+            setImmediate(flush);
+        };
+    } else if (typeof process !== 'undefined' && typeof  process.nextTick == 'function') {
+        requestFlush = function () {
+            process.nextTick(flush);
+        };
+    } else if (typeof MessageChannel !== "undefined") {
+        // modern browsers
+        // http://msdn.microsoft.com/en-us/library/windows/apps/hh441303.aspx
+        var channel = new MessageChannel();
+        // At least Safari Version 6.0.5 (8536.30.1) intermittently cannot create
+        // working message ports the first time a page loads.
+        channel.port1.onmessage = function () {
+            requestFlush = realRequestFlush;
+            channel.port1.onmessage = flush;
+            flush();
+        };
+        var realRequestFlush = function () {
+            // Opera requires us to provide a message payload, regardless of
+            // whether we use it.
+            channel.port2.postMessage(0);
+        };
+        requestFlush = function () {
+            setTimeout(flush, 0);
+            realRequestFlush();
+        };
+
+    } else {
+        // old browsers
+        requestFlush = function () {
+            setTimeout(flush, 0);
+        };
+    }
 })(KISSY);/**
  * @ignore
  * implement Promise specification by KISSY
@@ -1937,8 +2012,15 @@ var KISSY = (function (undefined) {
  */
 (function (S, undefined) {
     var PROMISE_VALUE = '__promise_value',
-        logger= S.getLogger('s/promise'),
+        processImmediate = S.setImmediate,
+        logger = S.getLogger('s/promise'),
         PROMISE_PENDINGS = '__promise_pendings';
+
+    function logError(str) {
+        if (typeof console !== 'undefined' && console.error) {
+            console.error(str);
+        }
+    }
 
     /*
      two effects:
@@ -1950,30 +2032,35 @@ var KISSY = (function (undefined) {
         if (promise instanceof Reject) {
             // if there is a rejected , should always has! see when()
             if (!rejected) {
-                S.error('no rejected callback!');
+                logger.error('no rejected callback!');
             }
-            return rejected(promise[PROMISE_VALUE]);
-        }
-
-        var v = promise[PROMISE_VALUE],
-            pendings = promise[PROMISE_PENDINGS];
-
-        // unresolved
-        // pushed to pending list
-        if (pendings) {
-            pendings.push([fulfilled, rejected]);
-        }
-        // rejected or nested promise
-        else if (isPromise(v)) {
-            promiseWhen(v, fulfilled, rejected);
+            processImmediate(function () {
+                rejected(promise[PROMISE_VALUE]);
+            });
         } else {
-            // fulfilled value
-            // normal value represents ok
-            // need return user's return value
-            // if return promise then forward
-            return fulfilled && fulfilled(v);
+            var v = promise[PROMISE_VALUE],
+                pendings = promise[PROMISE_PENDINGS];
+
+            // unresolved
+            // pushed to pending list
+            if (pendings) {
+                pendings.push([fulfilled, rejected]);
+            }
+            // rejected or nested promise
+            else if (isPromise(v)) {
+                promiseWhen(v, fulfilled, rejected);
+            } else {
+                // fulfilled value
+                // normal value represents ok
+                // need return user's return value
+                // if return promise then forward
+                if (fulfilled) {
+                    processImmediate(function () {
+                        fulfilled(v);
+                    });
+                }
+            }
         }
-        return undefined;
     }
 
     /**
@@ -2051,6 +2138,7 @@ var KISSY = (function (undefined) {
 
     Promise.prototype = {
         constructor: Promise,
+
         /**
          * register callbacks when this promise object is resolved
          * @param {Function} fulfilled called when resolved successfully,pass a resolved value to this function and
@@ -2097,9 +2185,9 @@ var KISSY = (function (undefined) {
          */
         done: function (fulfilled, rejected) {
             var self = this,
-                onUnhandledError = function (error) {
+                onUnhandledError = function (e) {
                     setTimeout(function () {
-                        throw error;
+                        throw e;
                     }, 0);
                 },
                 promiseToHandle = fulfilled || rejected ?
@@ -2139,7 +2227,7 @@ var KISSY = (function (undefined) {
         var self = this;
         Promise.apply(self, arguments);
         if (self[PROMISE_VALUE] instanceof Promise) {
-            S.error('assert.not(this.__promise_value instanceof promise) in Reject constructor');
+            logger.error('assert.not(this.__promise_value instanceof promise) in Reject constructor');
         }
         return self;
     }
@@ -2159,8 +2247,10 @@ var KISSY = (function (undefined) {
                     // propagate
                     value;
             } catch (e) {
+                // can not use logger.error
+                // must expose to user
                 // print stack info for firefox/chrome
-                logger.error(e.stack || e);
+                logError(e.stack || e);
                 return new Reject(e);
             }
         }
@@ -2174,18 +2264,19 @@ var KISSY = (function (undefined) {
                     new Reject(reason);
             } catch (e) {
                 // print stack info for firefox/chrome
-                logger.error(e.stack || e);
+                logError(e.stack || e);
                 return new Reject(e);
             }
         }
 
         function finalFulfill(value) {
             if (done) {
-                S.error('already done at fulfilled');
+                logger.error('already done at fulfilled');
                 return;
             }
             if (value instanceof Promise) {
-                S.error('assert.not(value instanceof Promise) in when')
+                logger.error('assert.not(value instanceof Promise) in when');
+                return;
             }
             done = 1;
             defer.resolve(_fulfilled(value));
@@ -2194,7 +2285,7 @@ var KISSY = (function (undefined) {
         if (value instanceof  Promise) {
             promiseWhen(value, finalFulfill, function (reason) {
                 if (done) {
-                    S.error('already done at rejected');
+                    logger.error('already done at rejected');
                     return;
                 }
                 done = 1;
@@ -2236,98 +2327,98 @@ var KISSY = (function (undefined) {
     KISSY.Promise = Promise;
     Promise.Defer = Defer;
 
-    S.mix(Promise,{
-            /**
-             * register callbacks when obj as a promise is resolved
-             * or call fulfilled callback directly when obj is not a promise object
-             * @param {KISSY.Promise|*} obj a promise object or value of any type
-             * @param {Function} fulfilled called when obj resolved successfully,pass a resolved value to this function and
-             * return a value (could be promise object) for the new promise 's resolved value.
-             * @param {Function} [rejected] called when error occurs in obj,pass error reason to this function and
-             * return a new reason for the new promise 's error reason
-             * @return {KISSY.Promise} a new promise object
-             *
-             * for example:
-             *      @example
-             *      function check(p) {
+    S.mix(Promise, {
+        /**
+         * register callbacks when obj as a promise is resolved
+         * or call fulfilled callback directly when obj is not a promise object
+         * @param {KISSY.Promise|*} obj a promise object or value of any type
+         * @param {Function} fulfilled called when obj resolved successfully,pass a resolved value to this function and
+         * return a value (could be promise object) for the new promise 's resolved value.
+         * @param {Function} [rejected] called when error occurs in obj,pass error reason to this function and
+         * return a new reason for the new promise 's error reason
+         * @return {KISSY.Promise} a new promise object
+         *
+         * for example:
+         *      @example
+         *      function check(p) {
              *          S.Promise.when(p, function(v){
              *              alert(v === 1);
              *          });
              *      }
-             *
-             *      var defer = S.Defer();
-             *      defer.resolve(1);
-             *
-             *      check(1); // => alert(true)
-             *
-             *      check(defer.promise); //=> alert(true);
-             *
-             * @static
-             * @method
-             * @member KISSY.Promise
-             */
-            when: when,
-            /**
-             * whether the given object is a promise
-             * @method
-             * @static
-             * @param obj the tested object
-             * @return {Boolean}
-             * @member KISSY.Promise
-             */
-            isPromise: isPromise,
-            /**
-             * whether the given object is a resolved promise
-             * @method
-             * @static
-             * @param obj the tested object
-             * @return {Boolean}
-             * @member KISSY.Promise
-             */
-            isResolved: isResolved,
-            /**
-             * whether the given object is a rejected promise
-             * @method
-             * @static
-             * @param obj the tested object
-             * @return {Boolean}
-             * @member KISSY.Promise
-             */
-            isRejected: isRejected,
-            /**
-             * return a new promise
-             * which is resolved when all promises is resolved
-             * and rejected when any one of promises is rejected
-             * @param {KISSY.Promise[]} promises list of promises
-             * @static
-             * @return {KISSY.Promise}
-             * @member KISSY.Promise
-             */
-            all: function (promises) {
-                var count = promises.length;
-                if (!count) {
-                    return null;
-                }
-                var defer = Defer();
-                for (var i = 0; i < promises.length; i++) {
-                    (function (promise, i) {
-                        when(promise, function (value) {
-                            promises[i] = value;
-                            if (--count === 0) {
-                                // if all is resolved
-                                // then resolve final returned promise with all value
-                                defer.resolve(promises);
-                            }
-                        }, function (r) {
-                            // if any one is rejected
-                            // then reject final return promise with first reason
-                            defer.reject(r);
-                        });
-                    })(promises[i], i);
-                }
-                return defer.promise;
+         *
+         *      var defer = S.Defer();
+         *      defer.resolve(1);
+         *
+         *      check(1); // => alert(true)
+         *
+         *      check(defer.promise); //=> alert(true);
+         *
+         * @static
+         * @method
+         * @member KISSY.Promise
+         */
+        when: when,
+        /**
+         * whether the given object is a promise
+         * @method
+         * @static
+         * @param obj the tested object
+         * @return {Boolean}
+         * @member KISSY.Promise
+         */
+        isPromise: isPromise,
+        /**
+         * whether the given object is a resolved promise
+         * @method
+         * @static
+         * @param obj the tested object
+         * @return {Boolean}
+         * @member KISSY.Promise
+         */
+        isResolved: isResolved,
+        /**
+         * whether the given object is a rejected promise
+         * @method
+         * @static
+         * @param obj the tested object
+         * @return {Boolean}
+         * @member KISSY.Promise
+         */
+        isRejected: isRejected,
+        /**
+         * return a new promise
+         * which is resolved when all promises is resolved
+         * and rejected when any one of promises is rejected
+         * @param {KISSY.Promise[]} promises list of promises
+         * @static
+         * @return {KISSY.Promise}
+         * @member KISSY.Promise
+         */
+        all: function (promises) {
+            var count = promises.length;
+            if (!count) {
+                return null;
             }
-        });
+            var defer = Defer();
+            for (var i = 0; i < promises.length; i++) {
+                (function (promise, i) {
+                    when(promise, function (value) {
+                        promises[i] = value;
+                        if (--count === 0) {
+                            // if all is resolved
+                            // then resolve final returned promise with all value
+                            defer.resolve(promises);
+                        }
+                    }, function (r) {
+                        // if any one is rejected
+                        // then reject final return promise with first reason
+                        defer.reject(r);
+                    });
+                })(promises[i], i);
+            }
+            return defer.promise;
+        }
+    });
 
 })(KISSY);
 
@@ -5527,6 +5618,7 @@ var KISSY = (function (undefined) {
         Env = S.Env,
         logger = S.getLogger('s/loader'),
         Utils = Loader.Utils,
+        processImmediate = S.setImmediate,
         ComboLoader = Loader.ComboLoader;
 
     function WaitingModules(fn) {
@@ -5634,9 +5726,9 @@ var KISSY = (function (undefined) {
                             success.apply(S, Utils.getModules(S, modNames));
                         } else {
                             // standalone error trace
-                            setTimeout(function () {
+                            processImmediate(function () {
                                 success.apply(S, Utils.getModules(S, modNames));
-                            }, 0);
+                            });
                         }
                     }
                 } else if (errorList.length) {
@@ -5644,9 +5736,9 @@ var KISSY = (function (undefined) {
                         if (sync) {
                             error.apply(S, errorList);
                         } else {
-                            setTimeout(function () {
+                            processImmediate(function () {
                                 error.apply(S, errorList);
-                            }, 0);
+                            });
                         }
                     }
                 } else {
@@ -5664,9 +5756,9 @@ var KISSY = (function (undefined) {
             if (sync) {
                 waitingModules.notifyAll();
             } else {
-                setTimeout(function () {
+                processImmediate(function () {
                     waitingModules.notifyAll();
-                }, 0);
+                });
             }
             return S;
         },
@@ -5785,7 +5877,7 @@ var KISSY = (function (undefined) {
             comboMaxFileNum: 40,
             charset: 'utf-8',
             lang: 'zh-cn',
-            tag: '20130921220350'
+            tag: '20130927180531'
         }, getBaseInfo()));
     }
 

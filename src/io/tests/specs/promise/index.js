@@ -1,11 +1,9 @@
 KISSY.add(function (S, io) {
-
     var Promise = S.Promise;
 
     var URL = '/kissy/src/io/tests/specs/promise/gen-json.jss';
 
     describe("S.io as a promise", function () {
-
         it('context should works as before', function () {
             var c = {}, ok = 0;
             io({
@@ -205,7 +203,6 @@ KISSY.add(function (S, io) {
         });
 
         it("should support Promise.all", function () {
-
             var r = io({
                 url: URL,
                 context: {},
@@ -235,12 +232,8 @@ KISSY.add(function (S, io) {
             waitsFor(function () {
                 return ret;
             }, 2000);
-
         });
-
     });
-
-},
-    {
-        requires:['io']
-    });
+}, {
+    requires: ['io']
+});

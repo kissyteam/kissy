@@ -38,7 +38,7 @@
             <ac:isset property="component.src.dir.exists"/>
             <ac:then>
                 <exec executable="node">
-                    <arg value="${bin.dir}/xtemplate"/>
+                    <arg value="${bin.dir}/kissy-xtemplate"/>
                     <arg value="-n"/>
                     <arg value="${component.name}"/>
                     <arg value="-p"/>

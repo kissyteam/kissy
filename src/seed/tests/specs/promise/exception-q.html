@@ -1,0 +1,76 @@
+<script src='/kissy/tools/third-party/q.js'></script>
+<script>
+    (function x() {
+        Q.longStackSupport = true;
+        var defer = Q.defer();
+        defer.promise.then(function () {
+
+
+            ({}).x();
+
+
+
+
+
+            console.log(1);
+            console.log(1);
+            console.log(1);
+            console.log(1);
+            console.log(1);console.log(1);
+            console.log(1);
+            console.log(1);
+            console.log(1);
+
+            console.log(1);
+            console.log(1);
+            console.log(1);
+            console.log(1);
+            console.log(1);
+            console.log(1);
+            console.log(1);
+            console.log(1);console.log(1);
+
+            console.log(1);
+            console.log(1);
+
+            console.log(1);
+            console.log(1);
+
+            console.log(1);
+            console.log(1);
+
+            console.log(1);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        }).then(function(){}).then(function(){
+                }).
+
+                fail(function(){
+
+
+                    ({}).y();
+                }).
+                fail(function(e){
+                    console.log(e.stack);
+                }).done();
+
+        setTimeout(function () {
+            defer.resolve(1);
+        }, 100);
+    })();
+</script>

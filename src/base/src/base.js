@@ -330,10 +330,10 @@ KISSY.add('base', function (S, Attribute, CustomEvent) {
          *
          * for example:
          *
-         *      var parent = RichBase.extend({
+         *      var Parent = Base.extend({
          *          isParent: 1
          *      });
-         *      var child = parent.extend({
+         *      var Child = Parent.extend({
          *          isChild: 1,
          *          isParent: 0
          *      })

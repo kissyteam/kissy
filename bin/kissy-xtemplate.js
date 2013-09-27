@@ -13,8 +13,6 @@ program
     .option('-k, --kissy', 'Set kissy src module format')
     .parse(process.argv);
 
-console.log(program)
-
 var S = require('../build/kissy-nodejs'),
     chokidar = require('chokidar'),
     js_beautify = require('js-beautify').js_beautify,

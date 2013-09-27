@@ -1,0 +1,14 @@
+<script src='/kissy/build/seed.js' charset="utf-8"></script>
+<script src="../../others/clear.js"></script>
+<script>
+    (function (S) {
+        var defer = S.Defer();
+        defer.promise.then(function () {
+            ({}).x();
+        }).done();
+
+        setTimeout(function () {
+            defer.resolve(1);
+        }, 100);
+    })(KISSY);
+</script>

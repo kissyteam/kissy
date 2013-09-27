@@ -8,6 +8,7 @@
         Env = S.Env,
         logger = S.getLogger('s/loader'),
         Utils = Loader.Utils,
+        processImmediate = S.setImmediate,
         ComboLoader = Loader.ComboLoader;
 
     function WaitingModules(fn) {
@@ -115,9 +116,9 @@
                             success.apply(S, Utils.getModules(S, modNames));
                         } else {
                             // standalone error trace
-                            setTimeout(function () {
+                            processImmediate(function () {
                                 success.apply(S, Utils.getModules(S, modNames));
-                            }, 0);
+                            });
                         }
                     }
                 } else if (errorList.length) {
@@ -125,9 +126,9 @@
                         if (sync) {
                             error.apply(S, errorList);
                         } else {
-                            setTimeout(function () {
+                            processImmediate(function () {
                                 error.apply(S, errorList);
-                            }, 0);
+                            });
                         }
                     }
                 } else {
@@ -145,9 +146,9 @@
             if (sync) {
                 waitingModules.notifyAll();
             } else {
-                setTimeout(function () {
+                processImmediate(function () {
                     waitingModules.notifyAll();
-                }, 0);
+                });
             }
             return S;
         },

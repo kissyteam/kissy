@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 17 23:57
+build time: Sep 27 14:21
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -210,40 +210,6 @@ KISSY.add('io/base', function (S, CustomEvent, undefined) {
             }
         }
         return c;
-    }
-
-    function fire(eventType, self) {
-        /**
-         * fired after request completes (success or error)
-         * @event complete
-         * @member KISSY.IO
-         * @static
-         * @param {KISSY.Event.CustomEvent.Object} e
-         * @param {KISSY.IO} e.io current io
-         */
-
-        /**
-         * fired after request succeeds
-         * @event success
-         * @member KISSY.IO
-         * @static
-         * @param {KISSY.Event.CustomEvent.Object} e
-         * @param {KISSY.IO} e.io current io
-         */
-
-        /**
-         * fired after request occurs error
-         * @event error
-         * @member KISSY.IO
-         * @static
-         * @param {KISSY.Event.CustomEvent.Object} e
-         * @param {KISSY.IO} e.io current io
-         */
-        IO.fire(eventType, {
-            // 兼容
-            ajaxConfig: self.config,
-            io: self
-        });
     }
 
     /**
@@ -494,8 +460,11 @@ KISSY.add('io/base', function (S, CustomEvent, undefined) {
          * @param {KISSY.Event.CustomEvent.Object} e
          * @param {KISSY.IO} e.io current io
          */
-
-        fire('start', self);
+        IO.fire('start', {
+            // 兼容
+            ajaxConfig: c,
+            io: self
+        });
 
         transportConstructor = transports[c.dataType[0]] || transports['*'];
         transport = new transportConstructor(self);
@@ -507,7 +476,6 @@ KISSY.add('io/base', function (S, CustomEvent, undefined) {
         }
 
         var dataType = c.dataType[0],
-            timeoutTimer,
             i,
             timeout = c.timeout,
             context = c.context,
@@ -534,23 +502,6 @@ KISSY.add('io/base', function (S, CustomEvent, undefined) {
             return self;
         }
 
-        function genHandler(handleStr) {
-            return function (v) {
-                if (timeoutTimer = self.timeoutTimer) {
-                    clearTimeout(timeoutTimer);
-                    self.timeoutTimer = 0;
-                }
-                var h = c[handleStr];
-                h && h.apply(context, v);
-                fire(handleStr, self);
-            };
-        }
-
-        // fix: easy error report
-        self.done(genHandler('success'), genHandler('error'));
-
-        self.fin(genHandler('complete'));
-
         self.readyState = 1;
 
         /**
@@ -562,7 +513,11 @@ KISSY.add('io/base', function (S, CustomEvent, undefined) {
          * @param {KISSY.IO} e.io current io
          */
 
-        fire('send', self);
+        IO.fire('send', {
+            // 兼容
+            ajaxConfig: c,
+            io: self
+        });
 
         // Timeout
         if (c.async && timeout > 0) {
@@ -1437,7 +1392,6 @@ KISSY.add('io/jsonp', function (S, IO) {
             return S.guid('jsonp');
         }
     });
-
     IO.on('start', function (e) {
         var io = e.io,
             c = io.config,
@@ -1847,7 +1801,7 @@ KISSY.add('io/iframe-transport', function (S, Dom, Event, IO) {
  */
 KISSY.add('io/methods', function (S, IO, undefined) {
     var OK_CODE = 200,
-        logger= S.getLogger('s/logger'),
+        logger = S.getLogger('s/logger'),
         Promise = S.Promise,
         MULTIPLE_CHOICES = 300,
         NOT_MODIFIED = 304,
@@ -2056,8 +2010,57 @@ KISSY.add('io/methods', function (S, IO, undefined) {
                 self.status = status;
                 self.statusText = statusText;
 
-                var defer = self._defer;
-                defer[isSuccess ? 'resolve' : 'reject']([self.responseData, statusText, self]);
+                var defer = self._defer,
+                    config = self.config,
+                    timeoutTimer;
+                if (timeoutTimer = self.timeoutTimer) {
+                    clearTimeout(timeoutTimer);
+                    self.timeoutTimer = 0;
+                }
+                /**
+                 * fired after request completes (success or error)
+                 * @event complete
+                 * @member KISSY.IO
+                 * @static
+                 * @param {KISSY.Event.CustomEvent.Object} e
+                 * @param {KISSY.IO} e.io current io
+                 */
+
+                /**
+                 * fired after request succeeds
+                 * @event success
+                 * @member KISSY.IO
+                 * @static
+                 * @param {KISSY.Event.CustomEvent.Object} e
+                 * @param {KISSY.IO} e.io current io
+                 */
+
+                /**
+                 * fired after request occurs error
+                 * @event error
+                 * @member KISSY.IO
+                 * @static
+                 * @param {KISSY.Event.CustomEvent.Object} e
+                 * @param {KISSY.IO} e.io current io
+                 */
+                var handler = isSuccess ? 'success' : 'error',
+                    h,
+                    v = [self.responseData, statusText, self],
+                    context = config.context,
+                    eventObject = {
+                        // 兼容
+                        ajaxConfig: config,
+                        io: self
+                    };
+                if (h = config[handler]) {
+                    h.apply(context, v);
+                }
+                if (h = config.complete) {
+                    h.apply(context, v);
+                }
+                IO.fire(handler, eventObject);
+                IO.fire('complete', eventObject);
+                defer[isSuccess ? 'resolve' : 'reject'](v);
             },
 
             _getUrlForSend: function () {
@@ -2071,7 +2074,7 @@ KISSY.add('io/methods', function (S, IO, undefined) {
                 var c = this.config,
                     uri = c.uri,
                     originalQuery = S.Uri.getComponents(c.url).query || "",
-                    url = uri.toString.call(uri,c.serializeArray);
+                    url = uri.toString.call(uri, c.serializeArray);
 
                 return url + (originalQuery ?
                     ((uri.query.has() ? '&' : '?') + originalQuery) :

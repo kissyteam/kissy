@@ -33,6 +33,7 @@
             <path location="${component.src.dir}/lang/lang.js"/>
             <path location="${component.src.dir}/lang/string.js"/>
             <path location="${component.src.dir}/lang/type.js"/>
+            <path location="${component.src.dir}/lang/set-immediate.js"/>
             <!-- kissy lang end-->
 
             <path location="${component.src.dir}/promise.js"/>
@@ -72,6 +73,7 @@
             <path location="${component.src.dir}/lang/lang.js"/>
             <path location="${component.src.dir}/lang/string.js"/>
             <path location="${component.src.dir}/lang/type.js"/>
+            <path location="${component.src.dir}/lang/set-immediate.js"/>
             <!-- kissy lang end-->
 
             <path location="${component.src.dir}/promise.js"/>

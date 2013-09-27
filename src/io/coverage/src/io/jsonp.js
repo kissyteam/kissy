@@ -233,33 +233,33 @@ if (! _$jscoverage['/io/jsonp.js']) {
   _$jscoverage['/io/jsonp.js'].lineData[7] = 0;
   _$jscoverage['/io/jsonp.js'].lineData[8] = 0;
   _$jscoverage['/io/jsonp.js'].lineData[12] = 0;
+  _$jscoverage['/io/jsonp.js'].lineData[15] = 0;
   _$jscoverage['/io/jsonp.js'].lineData[16] = 0;
-  _$jscoverage['/io/jsonp.js'].lineData[17] = 0;
-  _$jscoverage['/io/jsonp.js'].lineData[20] = 0;
+  _$jscoverage['/io/jsonp.js'].lineData[19] = 0;
+  _$jscoverage['/io/jsonp.js'].lineData[22] = 0;
   _$jscoverage['/io/jsonp.js'].lineData[23] = 0;
-  _$jscoverage['/io/jsonp.js'].lineData[24] = 0;
-  _$jscoverage['/io/jsonp.js'].lineData[32] = 0;
-  _$jscoverage['/io/jsonp.js'].lineData[35] = 0;
+  _$jscoverage['/io/jsonp.js'].lineData[31] = 0;
+  _$jscoverage['/io/jsonp.js'].lineData[34] = 0;
+  _$jscoverage['/io/jsonp.js'].lineData[37] = 0;
   _$jscoverage['/io/jsonp.js'].lineData[38] = 0;
-  _$jscoverage['/io/jsonp.js'].lineData[39] = 0;
-  _$jscoverage['/io/jsonp.js'].lineData[42] = 0;
+  _$jscoverage['/io/jsonp.js'].lineData[41] = 0;
+  _$jscoverage['/io/jsonp.js'].lineData[45] = 0;
   _$jscoverage['/io/jsonp.js'].lineData[46] = 0;
   _$jscoverage['/io/jsonp.js'].lineData[47] = 0;
   _$jscoverage['/io/jsonp.js'].lineData[48] = 0;
   _$jscoverage['/io/jsonp.js'].lineData[49] = 0;
-  _$jscoverage['/io/jsonp.js'].lineData[50] = 0;
-  _$jscoverage['/io/jsonp.js'].lineData[53] = 0;
-  _$jscoverage['/io/jsonp.js'].lineData[56] = 0;
+  _$jscoverage['/io/jsonp.js'].lineData[52] = 0;
+  _$jscoverage['/io/jsonp.js'].lineData[55] = 0;
+  _$jscoverage['/io/jsonp.js'].lineData[59] = 0;
   _$jscoverage['/io/jsonp.js'].lineData[60] = 0;
-  _$jscoverage['/io/jsonp.js'].lineData[61] = 0;
+  _$jscoverage['/io/jsonp.js'].lineData[68] = 0;
   _$jscoverage['/io/jsonp.js'].lineData[69] = 0;
   _$jscoverage['/io/jsonp.js'].lineData[70] = 0;
-  _$jscoverage['/io/jsonp.js'].lineData[71] = 0;
-  _$jscoverage['/io/jsonp.js'].lineData[73] = 0;
-  _$jscoverage['/io/jsonp.js'].lineData[76] = 0;
+  _$jscoverage['/io/jsonp.js'].lineData[72] = 0;
+  _$jscoverage['/io/jsonp.js'].lineData[75] = 0;
+  _$jscoverage['/io/jsonp.js'].lineData[77] = 0;
   _$jscoverage['/io/jsonp.js'].lineData[78] = 0;
-  _$jscoverage['/io/jsonp.js'].lineData[79] = 0;
-  _$jscoverage['/io/jsonp.js'].lineData[83] = 0;
+  _$jscoverage['/io/jsonp.js'].lineData[82] = 0;
 }
 if (! _$jscoverage['/io/jsonp.js'].functionData) {
   _$jscoverage['/io/jsonp.js'].functionData = [];
@@ -272,48 +272,48 @@ if (! _$jscoverage['/io/jsonp.js'].functionData) {
 }
 if (! _$jscoverage['/io/jsonp.js'].branchData) {
   _$jscoverage['/io/jsonp.js'].branchData = {};
-  _$jscoverage['/io/jsonp.js'].branchData['20'] = [];
-  _$jscoverage['/io/jsonp.js'].branchData['20'][1] = new BranchData();
-  _$jscoverage['/io/jsonp.js'].branchData['27'] = [];
-  _$jscoverage['/io/jsonp.js'].branchData['27'][1] = new BranchData();
-  _$jscoverage['/io/jsonp.js'].branchData['38'] = [];
-  _$jscoverage['/io/jsonp.js'].branchData['38'][1] = new BranchData();
-  _$jscoverage['/io/jsonp.js'].branchData['48'] = [];
-  _$jscoverage['/io/jsonp.js'].branchData['48'][1] = new BranchData();
-  _$jscoverage['/io/jsonp.js'].branchData['53'] = [];
-  _$jscoverage['/io/jsonp.js'].branchData['53'][1] = new BranchData();
-  _$jscoverage['/io/jsonp.js'].branchData['61'] = [];
-  _$jscoverage['/io/jsonp.js'].branchData['61'][1] = new BranchData();
-  _$jscoverage['/io/jsonp.js'].branchData['70'] = [];
-  _$jscoverage['/io/jsonp.js'].branchData['70'][1] = new BranchData();
+  _$jscoverage['/io/jsonp.js'].branchData['19'] = [];
+  _$jscoverage['/io/jsonp.js'].branchData['19'][1] = new BranchData();
+  _$jscoverage['/io/jsonp.js'].branchData['26'] = [];
+  _$jscoverage['/io/jsonp.js'].branchData['26'][1] = new BranchData();
+  _$jscoverage['/io/jsonp.js'].branchData['37'] = [];
+  _$jscoverage['/io/jsonp.js'].branchData['37'][1] = new BranchData();
+  _$jscoverage['/io/jsonp.js'].branchData['47'] = [];
+  _$jscoverage['/io/jsonp.js'].branchData['47'][1] = new BranchData();
+  _$jscoverage['/io/jsonp.js'].branchData['52'] = [];
+  _$jscoverage['/io/jsonp.js'].branchData['52'][1] = new BranchData();
+  _$jscoverage['/io/jsonp.js'].branchData['60'] = [];
+  _$jscoverage['/io/jsonp.js'].branchData['60'][1] = new BranchData();
+  _$jscoverage['/io/jsonp.js'].branchData['69'] = [];
+  _$jscoverage['/io/jsonp.js'].branchData['69'][1] = new BranchData();
 }
-_$jscoverage['/io/jsonp.js'].branchData['70'][1].init(22, 9, '!response');
-function visit72_70_1(result) {
-  _$jscoverage['/io/jsonp.js'].branchData['70'][1].ranCondition(result);
+_$jscoverage['/io/jsonp.js'].branchData['69'][1].init(22, 9, '!response');
+function visit70_69_1(result) {
+  _$jscoverage['/io/jsonp.js'].branchData['69'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/jsonp.js'].branchData['61'][1].init(1551, 23, 'converters.script || {}');
-function visit71_61_1(result) {
-  _$jscoverage['/io/jsonp.js'].branchData['61'][1].ranCondition(result);
+}_$jscoverage['/io/jsonp.js'].branchData['60'][1].init(1551, 23, 'converters.script || {}');
+function visit69_60_1(result) {
+  _$jscoverage['/io/jsonp.js'].branchData['60'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/jsonp.js'].branchData['53'][1].init(266, 8, 'response');
-function visit70_53_1(result) {
-  _$jscoverage['/io/jsonp.js'].branchData['53'][1].ranCondition(result);
+}_$jscoverage['/io/jsonp.js'].branchData['52'][1].init(266, 8, 'response');
+function visit68_52_1(result) {
+  _$jscoverage['/io/jsonp.js'].branchData['52'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/jsonp.js'].branchData['48'][1].init(72, 22, 'previous === undefined');
-function visit69_48_1(result) {
-  _$jscoverage['/io/jsonp.js'].branchData['48'][1].ranCondition(result);
+}_$jscoverage['/io/jsonp.js'].branchData['47'][1].init(72, 22, 'previous === undefined');
+function visit67_47_1(result) {
+  _$jscoverage['/io/jsonp.js'].branchData['47'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/jsonp.js'].branchData['38'][1].init(122, 20, 'arguments.length > 1');
-function visit68_38_1(result) {
-  _$jscoverage['/io/jsonp.js'].branchData['38'][1].ranCondition(result);
+}_$jscoverage['/io/jsonp.js'].branchData['37'][1].init(122, 20, 'arguments.length > 1');
+function visit66_37_1(result) {
+  _$jscoverage['/io/jsonp.js'].branchData['37'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/jsonp.js'].branchData['27'][1].init(126, 36, 'typeof cJsonpCallback === \'function\'');
-function visit67_27_1(result) {
-  _$jscoverage['/io/jsonp.js'].branchData['27'][1].ranCondition(result);
+}_$jscoverage['/io/jsonp.js'].branchData['26'][1].init(126, 36, 'typeof cJsonpCallback === \'function\'');
+function visit65_26_1(result) {
+  _$jscoverage['/io/jsonp.js'].branchData['26'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/jsonp.js'].branchData['20'][1].init(102, 22, 'dataType[0] == \'jsonp\'');
-function visit66_20_1(result) {
-  _$jscoverage['/io/jsonp.js'].branchData['20'][1].ranCondition(result);
+}_$jscoverage['/io/jsonp.js'].branchData['19'][1].init(102, 22, 'dataType[0] == \'jsonp\'');
+function visit64_19_1(result) {
+  _$jscoverage['/io/jsonp.js'].branchData['19'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io/jsonp.js'].lineData[6]++;
 KISSY.add('io/jsonp', function(S, IO) {
@@ -328,75 +328,75 @@ KISSY.add('io/jsonp', function(S, IO) {
   _$jscoverage['/io/jsonp.js'].lineData[12]++;
   return S.guid('jsonp');
 }});
-  _$jscoverage['/io/jsonp.js'].lineData[16]++;
+  _$jscoverage['/io/jsonp.js'].lineData[15]++;
   IO.on('start', function(e) {
   _$jscoverage['/io/jsonp.js'].functionData[2]++;
-  _$jscoverage['/io/jsonp.js'].lineData[17]++;
+  _$jscoverage['/io/jsonp.js'].lineData[16]++;
   var io = e.io, c = io.config, dataType = c.dataType;
-  _$jscoverage['/io/jsonp.js'].lineData[20]++;
-  if (visit66_20_1(dataType[0] == 'jsonp')) {
-    _$jscoverage['/io/jsonp.js'].lineData[23]++;
+  _$jscoverage['/io/jsonp.js'].lineData[19]++;
+  if (visit64_19_1(dataType[0] == 'jsonp')) {
+    _$jscoverage['/io/jsonp.js'].lineData[22]++;
     delete c.contentType;
-    _$jscoverage['/io/jsonp.js'].lineData[24]++;
-    var response, cJsonpCallback = c.jsonpCallback, converters, jsonpCallback = visit67_27_1(typeof cJsonpCallback === 'function') ? cJsonpCallback() : cJsonpCallback, previous = win[jsonpCallback];
-    _$jscoverage['/io/jsonp.js'].lineData[32]++;
+    _$jscoverage['/io/jsonp.js'].lineData[23]++;
+    var response, cJsonpCallback = c.jsonpCallback, converters, jsonpCallback = visit65_26_1(typeof cJsonpCallback === 'function') ? cJsonpCallback() : cJsonpCallback, previous = win[jsonpCallback];
+    _$jscoverage['/io/jsonp.js'].lineData[31]++;
     c.uri.query.set(c.jsonp, jsonpCallback);
-    _$jscoverage['/io/jsonp.js'].lineData[35]++;
+    _$jscoverage['/io/jsonp.js'].lineData[34]++;
     win[jsonpCallback] = function(r) {
   _$jscoverage['/io/jsonp.js'].functionData[3]++;
-  _$jscoverage['/io/jsonp.js'].lineData[38]++;
-  if (visit68_38_1(arguments.length > 1)) {
-    _$jscoverage['/io/jsonp.js'].lineData[39]++;
+  _$jscoverage['/io/jsonp.js'].lineData[37]++;
+  if (visit66_37_1(arguments.length > 1)) {
+    _$jscoverage['/io/jsonp.js'].lineData[38]++;
     r = S.makeArray(arguments);
   }
-  _$jscoverage['/io/jsonp.js'].lineData[42]++;
+  _$jscoverage['/io/jsonp.js'].lineData[41]++;
   response = [r];
 };
-    _$jscoverage['/io/jsonp.js'].lineData[46]++;
+    _$jscoverage['/io/jsonp.js'].lineData[45]++;
     io.fin(function() {
   _$jscoverage['/io/jsonp.js'].functionData[4]++;
-  _$jscoverage['/io/jsonp.js'].lineData[47]++;
+  _$jscoverage['/io/jsonp.js'].lineData[46]++;
   win[jsonpCallback] = previous;
-  _$jscoverage['/io/jsonp.js'].lineData[48]++;
-  if (visit69_48_1(previous === undefined)) {
-    _$jscoverage['/io/jsonp.js'].lineData[49]++;
+  _$jscoverage['/io/jsonp.js'].lineData[47]++;
+  if (visit67_47_1(previous === undefined)) {
+    _$jscoverage['/io/jsonp.js'].lineData[48]++;
     try {
-      _$jscoverage['/io/jsonp.js'].lineData[50]++;
+      _$jscoverage['/io/jsonp.js'].lineData[49]++;
       delete win[jsonpCallback];
     }    catch (e) {
 }
   } else {
-    _$jscoverage['/io/jsonp.js'].lineData[53]++;
-    if (visit70_53_1(response)) {
-      _$jscoverage['/io/jsonp.js'].lineData[56]++;
+    _$jscoverage['/io/jsonp.js'].lineData[52]++;
+    if (visit68_52_1(response)) {
+      _$jscoverage['/io/jsonp.js'].lineData[55]++;
       previous(response[0]);
     }
   }
 });
-    _$jscoverage['/io/jsonp.js'].lineData[60]++;
+    _$jscoverage['/io/jsonp.js'].lineData[59]++;
     converters = c.converters;
-    _$jscoverage['/io/jsonp.js'].lineData[61]++;
-    converters.script = visit71_61_1(converters.script || {});
-    _$jscoverage['/io/jsonp.js'].lineData[69]++;
+    _$jscoverage['/io/jsonp.js'].lineData[60]++;
+    converters.script = visit69_60_1(converters.script || {});
+    _$jscoverage['/io/jsonp.js'].lineData[68]++;
     converters.script.json = function() {
   _$jscoverage['/io/jsonp.js'].functionData[5]++;
-  _$jscoverage['/io/jsonp.js'].lineData[70]++;
-  if (visit72_70_1(!response)) {
-    _$jscoverage['/io/jsonp.js'].lineData[71]++;
+  _$jscoverage['/io/jsonp.js'].lineData[69]++;
+  if (visit70_69_1(!response)) {
+    _$jscoverage['/io/jsonp.js'].lineData[70]++;
     S.error(' not call jsonpCallback: ' + jsonpCallback);
   }
-  _$jscoverage['/io/jsonp.js'].lineData[73]++;
+  _$jscoverage['/io/jsonp.js'].lineData[72]++;
   return response[0];
 };
-    _$jscoverage['/io/jsonp.js'].lineData[76]++;
+    _$jscoverage['/io/jsonp.js'].lineData[75]++;
     dataType.length = 2;
-    _$jscoverage['/io/jsonp.js'].lineData[78]++;
+    _$jscoverage['/io/jsonp.js'].lineData[77]++;
     dataType[0] = 'script';
-    _$jscoverage['/io/jsonp.js'].lineData[79]++;
+    _$jscoverage['/io/jsonp.js'].lineData[78]++;
     dataType[1] = 'json';
   }
 });
-  _$jscoverage['/io/jsonp.js'].lineData[83]++;
+  _$jscoverage['/io/jsonp.js'].lineData[82]++;
   return IO;
 }, {
   requires: ['./base']});

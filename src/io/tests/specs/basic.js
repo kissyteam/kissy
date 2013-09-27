@@ -3,12 +3,8 @@
  * @author lijing00333@163.com, yiminghe@gmail.com
  */
 KISSY.add(function (S,  IO) {
-
     describe('IO', function () {
-
-
         describe('404/301', function () {
-
             it('404 get error', function () {
                 var ret404, o404 = 0;
 
@@ -36,7 +32,6 @@ KISSY.add(function (S,  IO) {
                     expect(ret404).toBe(0);
                 });
             });
-
 
             it('301 get success', function () {
 
@@ -180,7 +175,6 @@ KISSY.add(function (S,  IO) {
                     return ret404 == 0;
                 });
             });
-
         });
 
         describe('jsonp', function () {
@@ -334,7 +328,6 @@ KISSY.add(function (S,  IO) {
 
 
         });
-
 
         describe('post', function () {
 
@@ -904,9 +897,7 @@ KISSY.add(function (S,  IO) {
                 });
             });
         });
-
     });
-},
-    {
+},{
         requires:['io']
     });

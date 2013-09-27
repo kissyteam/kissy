@@ -5,7 +5,7 @@
  */
 KISSY.add('io/methods', function (S, IO, undefined) {
     var OK_CODE = 200,
-        logger= S.getLogger('s/logger'),
+        logger = S.getLogger('s/logger'),
         Promise = S.Promise,
         MULTIPLE_CHOICES = 300,
         NOT_MODIFIED = 304,
@@ -214,8 +214,57 @@ KISSY.add('io/methods', function (S, IO, undefined) {
                 self.status = status;
                 self.statusText = statusText;
 
-                var defer = self._defer;
-                defer[isSuccess ? 'resolve' : 'reject']([self.responseData, statusText, self]);
+                var defer = self._defer,
+                    config = self.config,
+                    timeoutTimer;
+                if (timeoutTimer = self.timeoutTimer) {
+                    clearTimeout(timeoutTimer);
+                    self.timeoutTimer = 0;
+                }
+                /**
+                 * fired after request completes (success or error)
+                 * @event complete
+                 * @member KISSY.IO
+                 * @static
+                 * @param {KISSY.Event.CustomEvent.Object} e
+                 * @param {KISSY.IO} e.io current io
+                 */
+
+                /**
+                 * fired after request succeeds
+                 * @event success
+                 * @member KISSY.IO
+                 * @static
+                 * @param {KISSY.Event.CustomEvent.Object} e
+                 * @param {KISSY.IO} e.io current io
+                 */
+
+                /**
+                 * fired after request occurs error
+                 * @event error
+                 * @member KISSY.IO
+                 * @static
+                 * @param {KISSY.Event.CustomEvent.Object} e
+                 * @param {KISSY.IO} e.io current io
+                 */
+                var handler = isSuccess ? 'success' : 'error',
+                    h,
+                    v = [self.responseData, statusText, self],
+                    context = config.context,
+                    eventObject = {
+                        // 兼容
+                        ajaxConfig: config,
+                        io: self
+                    };
+                if (h = config[handler]) {
+                    h.apply(context, v);
+                }
+                if (h = config.complete) {
+                    h.apply(context, v);
+                }
+                IO.fire(handler, eventObject);
+                IO.fire('complete', eventObject);
+                defer[isSuccess ? 'resolve' : 'reject'](v);
             },
 
             _getUrlForSend: function () {
@@ -229,7 +278,7 @@ KISSY.add('io/methods', function (S, IO, undefined) {
                 var c = this.config,
                     uri = c.uri,
                     originalQuery = S.Uri.getComponents(c.url).query || "",
-                    url = uri.toString.call(uri,c.serializeArray);
+                    url = uri.toString.call(uri, c.serializeArray);
 
                 return url + (originalQuery ?
                     ((uri.query.has() ? '&' : '?') + originalQuery) :
