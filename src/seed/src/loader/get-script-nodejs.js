@@ -5,16 +5,11 @@
  * @author yiminghe@gmail.com
  */
 (function (S) {
-    if (!S.UA.nodejs) {
-        return;
-    }
-
     var fs = require('fs'),
         logger = S.getLogger('s/loader'),
         vm = require('vm');
 
     S.getScript = function (url, success, charset) {
-
         var error;
 
         if (S.isPlainObject(success)) {

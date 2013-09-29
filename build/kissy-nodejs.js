@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 29 17:37
+build time: Sep 29 18:47
 */
 /**
  * @ignore
@@ -42,11 +42,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20130929173718' will replace with current timestamp when compressing.
+         * NOTICE: '20130929184652' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130929173718',
+        __BUILD_TIME: '20130929184652',
 
         /**
          * KISSY Environment.
@@ -4852,10 +4852,6 @@ var KISSY = (function (undefined) {
  * @author yiminghe@gmail.com
  */
 (function (S) {
-    if (!S.UA.nodejs) {
-        return;
-    }
-
     var fs = require('fs'),
         logger = S.getLogger('s/loader'),
         vm = require('vm');
@@ -5738,14 +5734,14 @@ var KISSY = (function (undefined) {
             }
         }
 
-        logger.error('must load kissy by file name: seed.js or seed-min.js');
+        logger.error('must load kissy by file name in browser environment: seed.js or seed-min.js');
         return null;
     }
 
     S.config({
         charset: 'utf-8',
         lang: 'zh-cn',
-        tag: '20130929173718'
+        tag: '20130929184652'
     });
 
     if (S.UA.nodejs) {
