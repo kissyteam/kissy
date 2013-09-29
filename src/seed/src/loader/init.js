@@ -2,7 +2,7 @@
  * init loader, set config
  */
 (function (S) {
-    var doc = S.Env.host;
+    var doc = S.Env.host && S.Env.host.document;
     var logger = S.getLogger('s/loader');
 
     function returnJson(s) {
@@ -84,7 +84,7 @@
             }
         }
 
-        logger.error('must load kissy by file name: seed.js or seed-min.js');
+        logger.error('must load kissy by file name in browser environment: seed.js or seed-min.js');
         return null;
     }
 
@@ -102,7 +102,7 @@
             base: __dirname.replace(/\\/g, '/').replace(/\/$/, '') + '/'
         });
         // ejecta
-    } else if (doc.getElementsByTagName) {
+    } else if (doc && doc.getElementsByTagName) {
         // will transform base to absolute path
         S.config(S.mix({
             // 2k(2048) url length

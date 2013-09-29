@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 29 16:55
+build time: Sep 29 17:37
 */
 /**
  * @ignore
@@ -42,11 +42,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20130929165541' will replace with current timestamp when compressing.
+         * NOTICE: '20130929173718' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130929165541',
+        __BUILD_TIME: '20130929173718',
 
         /**
          * KISSY Environment.
@@ -5656,7 +5656,7 @@ var KISSY = (function (undefined) {
  * init loader, set config
  */
 (function (S) {
-    var doc = S.Env.host;
+    var doc = S.Env.host && S.Env.host.document;
     var logger = S.getLogger('s/loader');
 
     function returnJson(s) {
@@ -5745,7 +5745,7 @@ var KISSY = (function (undefined) {
     S.config({
         charset: 'utf-8',
         lang: 'zh-cn',
-        tag: '20130929165541'
+        tag: '20130929173718'
     });
 
     if (S.UA.nodejs) {
@@ -5756,7 +5756,7 @@ var KISSY = (function (undefined) {
             base: __dirname.replace(/\\/g, '/').replace(/\/$/, '') + '/'
         });
         // ejecta
-    } else if (doc.getElementsByTagName) {
+    } else if (doc && doc.getElementsByTagName) {
         // will transform base to absolute path
         S.config(S.mix({
             // 2k(2048) url length
