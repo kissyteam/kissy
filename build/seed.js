@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 27 18:05
+build time: Sep 29 16:55
 */
 /**
  * @ignore
@@ -42,11 +42,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20130927180531' will replace with current timestamp when compressing.
+         * NOTICE: '20130929165541' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130927180531',
+        __BUILD_TIME: '20130929165541',
 
         /**
          * KISSY Environment.
@@ -3508,7 +3508,8 @@ var KISSY = (function (undefined) {
             nodejs: undefined
         };
 
-        if (div) {
+        // ejecta
+        if (div && div.getElementsByTagName) {
             // try to use IE-Conditional-Comment detect IE more accurately
             // IE10 doesn't support this method, @ref: http://blogs.msdn.com/b/ie/archive/2011/07/06/html5-parsing-in-ie10.aspx
             div.innerHTML = IE_DETECT_TPL.replace(VERSION_PLACEHOLDER, '');
@@ -5778,6 +5779,20 @@ var KISSY = (function (undefined) {
         }
     });
 
+    Env.mods = {}; // all added mods
+})(KISSY);
+
+/*
+ 2013-06-04 yiminghe@gmail.com
+ - refactor merge combo loader and simple loader
+ - support error callback
+ *//**
+ * init loader, set config
+ */
+(function (S) {
+    var doc = S.Env.host;
+    var logger = S.getLogger('s/loader');
+
     function returnJson(s) {
         return (new Function('return ' + s))();
     }
@@ -5847,7 +5862,7 @@ var KISSY = (function (undefined) {
     function getBaseInfo() {
         // get base from current script file path
         // notice: timestamp
-        var scripts = Env.host.document.getElementsByTagName('script'),
+        var scripts = doc.getElementsByTagName('script'),
             i,
             info;
 
@@ -5857,38 +5872,34 @@ var KISSY = (function (undefined) {
             }
         }
 
-        S.error('must load kissy by file name: seed.js or seed-min.js');
+        logger.error('must load kissy by file name: seed.js or seed-min.js');
         return null;
     }
 
+    S.config({
+        charset: 'utf-8',
+        lang: 'zh-cn',
+        tag: '20130929165541'
+    });
+
     if (S.UA.nodejs) {
         // nodejs: no tag
-        //noinspection JSUnresolvedVariable
+        // noinspection JSUnresolvedVariable
         S.config({
             charset: 'utf-8',
             base: __dirname.replace(/\\/g, '/').replace(/\/$/, '') + '/'
         });
-    } else {
+        // ejecta
+    } else if (doc.getElementsByTagName) {
         // will transform base to absolute path
         S.config(S.mix({
             // 2k(2048) url length
             comboMaxUrlLength: 2000,
             // file limit number for a single combo url
-            comboMaxFileNum: 40,
-            charset: 'utf-8',
-            lang: 'zh-cn',
-            tag: '20130927180531'
+            comboMaxFileNum: 40
         }, getBaseInfo()));
     }
-
-    Env.mods = {}; // all added mods
-})(KISSY);
-
-/*
- 2013-06-04 yiminghe@gmail.com
- - refactor merge combo loader and simple loader
- - support error callback
- *//**
+})(KISSY);/**
  * @ignore
  * i18n plugin for kissy loader
  * @author yiminghe@gmail.com

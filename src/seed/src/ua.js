@@ -183,7 +183,8 @@
             nodejs: undefined
         };
 
-        if (div) {
+        // ejecta
+        if (div && div.getElementsByTagName) {
             // try to use IE-Conditional-Comment detect IE more accurately
             // IE10 doesn't support this method, @ref: http://blogs.msdn.com/b/ie/archive/2011/07/06/html5-parsing-in-ie10.aspx
             div.innerHTML = IE_DETECT_TPL.replace(VERSION_PLACEHOLDER, '');
