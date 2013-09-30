@@ -1,0 +1,25 @@
+{
+  "name": "kissy",
+  "version": "1.3.2",
+  "homepage": "http://kissyui.com",
+  "authors": [
+    "yiminghe <yiminghe@gmail.com>"
+  ],
+  "description": "A Powerful Javascript Framework",
+  "main": "build/seed-min.js",
+  "keywords": [
+    "javascript",
+    "framework",
+    "library"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "docs",
+    "reports",
+    "tools",
+    "node_modules",
+    "bower_components",
+    "src"
+  ]
+}
