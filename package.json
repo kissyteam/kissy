@@ -44,10 +44,7 @@
     "dependencies": {
         "js-beautify": "~1.4.0",
         "express": "3.3.4",
-        "request": "~2.27.0",
-        "chokidar": "~0.6.3",
-        "walk": "~2.2.1",
-        "commander": "~2.0.0"
+        "request": "~2.27.0"
     },
     "notes": [
         "express 3.3.8-3.4.0 cors bug"
