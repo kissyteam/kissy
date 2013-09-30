@@ -1,3 +1,4 @@
+nohup.out
 *.iml
 .idea/
 .ipr
@@ -5,6 +6,7 @@
 *~
 ~*
 *.diff
+*.log
 *.patch
 *.bak
 .DS_Store
