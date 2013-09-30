@@ -374,7 +374,6 @@ Command.prototype.parse = function(argv){
     self.options.forEach(function (option) {
         if (option.required && !(camelcase(option.name()) in self)) {
             self.optionMissingArgument(option);
-            error = 1;
         }
     });
 
