@@ -71,7 +71,13 @@
         if (modules) {
             S.each(modules, function (modCfg, modName) {
                 Utils.createModuleInfo(self, modName, modCfg);
-                S.mix(Env.mods[modName], modCfg);
+                var modObj = Env.mods[modName];
+
+                if(modObj && modObj.requires){
+                    delete modCfg.requires;
+                }
+
+                S.mix(modObj, modCfg);
             });
         }
     };
