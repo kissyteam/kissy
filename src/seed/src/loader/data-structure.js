@@ -66,7 +66,6 @@
 
         /**
          * get package uri
-         * @returns {KISSY.Uri}
          */
         getPackageUri: function () {
             var self = this;
@@ -164,7 +163,7 @@
          * Set the value of current module
          * @param v value to be set
          */
-        setValue: function (v) {
+        'setValue': function (v) {
             this.value = v;
         },
 

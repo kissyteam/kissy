@@ -66,12 +66,14 @@
     };
 
     configFns.modules = function (modules) {
-        var self = this,
-            Env = self.Env;
+        var self = this;
         if (modules) {
             S.each(modules, function (modCfg, modName) {
-                Utils.createModuleInfo(self, modName, modCfg);
-                S.mix(Env.mods[modName], modCfg);
+                var mod = Utils.createModuleInfo(self, modName, modCfg);
+                // #485, invalid after add
+                if (mod.status !== Loader.Status.INIT) {
+                    S.mix(mod, modCfg);
+                }
             });
         }
     };

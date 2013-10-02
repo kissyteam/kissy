@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 29 18:47
+build time: Oct 8 11:13
 */
 /**
  * @ignore
@@ -42,11 +42,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20130929184652' will replace with current timestamp when compressing.
+         * NOTICE: '20131008111314' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130929184652',
+        __BUILD_TIME: '20131008111314',
 
         /**
          * KISSY Environment.
@@ -3948,7 +3948,6 @@ var KISSY = (function (undefined) {
         ATTACHED = data.ATTACHED,
         LOADED = data.LOADED,
         ERROR = data.ERROR,
-    // LOADING = data.LOADING,
         /**
          * @class KISSY.Loader.Utils
          * Utils for KISSY Loader
@@ -4433,7 +4432,6 @@ var KISSY = (function (undefined) {
 
         /**
          * get package uri
-         * @returns {KISSY.Uri}
          */
         getPackageUri: function () {
             var self = this;
@@ -4531,7 +4529,7 @@ var KISSY = (function (undefined) {
          * Set the value of current module
          * @param v value to be set
          */
-        setValue: function (v) {
+        'setValue': function (v) {
             this.value = v;
         },
 
@@ -4857,7 +4855,6 @@ var KISSY = (function (undefined) {
         vm = require('vm');
 
     S.getScript = function (url, success, charset) {
-
         var error;
 
         if (S.isPlainObject(success)) {
@@ -4954,12 +4951,14 @@ var KISSY = (function (undefined) {
     };
 
     configFns.modules = function (modules) {
-        var self = this,
-            Env = self.Env;
+        var self = this;
         if (modules) {
             S.each(modules, function (modCfg, modName) {
-                Utils.createModuleInfo(self, modName, modCfg);
-                S.mix(Env.mods[modName], modCfg);
+                var mod = Utils.createModuleInfo(self, modName, modCfg);
+                // #485, invalid after add
+                if (mod.status !== Loader.Status.INIT) {
+                    S.mix(mod, modCfg);
+                }
             });
         }
     };
@@ -4995,7 +4994,8 @@ var KISSY = (function (undefined) {
         }
         return baseUri;
     }
-})(KISSY);/**
+})(KISSY);
+/**
  * combo loader for KISSY. using combo to load module files.
  * @ignore
  * @author yiminghe@gmail.com
@@ -5741,7 +5741,7 @@ var KISSY = (function (undefined) {
     S.config({
         charset: 'utf-8',
         lang: 'zh-cn',
-        tag: '20130929184652'
+        tag: '20131008111314'
     });
 
     if (S.UA.nodejs) {

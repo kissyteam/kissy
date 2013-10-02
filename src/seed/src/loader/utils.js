@@ -13,7 +13,6 @@
         ATTACHED = data.ATTACHED,
         LOADED = data.LOADED,
         ERROR = data.ERROR,
-    // LOADING = data.LOADING,
         /**
          * @class KISSY.Loader.Utils
          * Utils for KISSY Loader
