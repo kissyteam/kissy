@@ -330,18 +330,33 @@ if (! _$jscoverage['/promise.js']) {
   _$jscoverage['/promise.js'].lineData[320] = 0;
   _$jscoverage['/promise.js'].lineData[321] = 0;
   _$jscoverage['/promise.js'].lineData[323] = 0;
-  _$jscoverage['/promise.js'].lineData[391] = 0;
-  _$jscoverage['/promise.js'].lineData[392] = 0;
-  _$jscoverage['/promise.js'].lineData[393] = 0;
   _$jscoverage['/promise.js'].lineData[395] = 0;
   _$jscoverage['/promise.js'].lineData[396] = 0;
   _$jscoverage['/promise.js'].lineData[397] = 0;
-  _$jscoverage['/promise.js'].lineData[398] = 0;
   _$jscoverage['/promise.js'].lineData[399] = 0;
   _$jscoverage['/promise.js'].lineData[400] = 0;
+  _$jscoverage['/promise.js'].lineData[401] = 0;
+  _$jscoverage['/promise.js'].lineData[402] = 0;
   _$jscoverage['/promise.js'].lineData[403] = 0;
-  _$jscoverage['/promise.js'].lineData[408] = 0;
+  _$jscoverage['/promise.js'].lineData[404] = 0;
+  _$jscoverage['/promise.js'].lineData[407] = 0;
   _$jscoverage['/promise.js'].lineData[412] = 0;
+  _$jscoverage['/promise.js'].lineData[416] = 0;
+  _$jscoverage['/promise.js'].lineData[424] = 0;
+  _$jscoverage['/promise.js'].lineData[425] = 0;
+  _$jscoverage['/promise.js'].lineData[427] = 0;
+  _$jscoverage['/promise.js'].lineData[428] = 0;
+  _$jscoverage['/promise.js'].lineData[430] = 0;
+  _$jscoverage['/promise.js'].lineData[431] = 0;
+  _$jscoverage['/promise.js'].lineData[433] = 0;
+  _$jscoverage['/promise.js'].lineData[435] = 0;
+  _$jscoverage['/promise.js'].lineData[436] = 0;
+  _$jscoverage['/promise.js'].lineData[438] = 0;
+  _$jscoverage['/promise.js'].lineData[441] = 0;
+  _$jscoverage['/promise.js'].lineData[442] = 0;
+  _$jscoverage['/promise.js'].lineData[445] = 0;
+  _$jscoverage['/promise.js'].lineData[446] = 0;
+  _$jscoverage['/promise.js'].lineData[449] = 0;
 }
 if (! _$jscoverage['/promise.js'].functionData) {
   _$jscoverage['/promise.js'].functionData = [];
@@ -378,6 +393,11 @@ if (! _$jscoverage['/promise.js'].functionData) {
   _$jscoverage['/promise.js'].functionData[30] = 0;
   _$jscoverage['/promise.js'].functionData[31] = 0;
   _$jscoverage['/promise.js'].functionData[32] = 0;
+  _$jscoverage['/promise.js'].functionData[33] = 0;
+  _$jscoverage['/promise.js'].functionData[34] = 0;
+  _$jscoverage['/promise.js'].functionData[35] = 0;
+  _$jscoverage['/promise.js'].functionData[36] = 0;
+  _$jscoverage['/promise.js'].functionData[37] = 0;
 }
 if (! _$jscoverage['/promise.js'].branchData) {
   _$jscoverage['/promise.js'].branchData = {};
@@ -436,24 +456,30 @@ if (! _$jscoverage['/promise.js'].branchData) {
   _$jscoverage['/promise.js'].branchData['315'] = [];
   _$jscoverage['/promise.js'].branchData['315'][1] = new BranchData();
   _$jscoverage['/promise.js'].branchData['315'][2] = new BranchData();
-  _$jscoverage['/promise.js'].branchData['392'] = [];
-  _$jscoverage['/promise.js'].branchData['392'][1] = new BranchData();
   _$jscoverage['/promise.js'].branchData['396'] = [];
   _$jscoverage['/promise.js'].branchData['396'][1] = new BranchData();
   _$jscoverage['/promise.js'].branchData['400'] = [];
   _$jscoverage['/promise.js'].branchData['400'][1] = new BranchData();
+  _$jscoverage['/promise.js'].branchData['404'] = [];
+  _$jscoverage['/promise.js'].branchData['404'][1] = new BranchData();
+  _$jscoverage['/promise.js'].branchData['435'] = [];
+  _$jscoverage['/promise.js'].branchData['435'][1] = new BranchData();
 }
-_$jscoverage['/promise.js'].branchData['400'][1].init(76, 13, '--count === 0');
-function visit572_400_1(result) {
+_$jscoverage['/promise.js'].branchData['435'][1].init(296, 11, 'result.done');
+function visit573_435_1(result) {
+  _$jscoverage['/promise.js'].branchData['435'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/promise.js'].branchData['404'][1].init(76, 13, '--count === 0');
+function visit572_404_1(result) {
+  _$jscoverage['/promise.js'].branchData['404'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/promise.js'].branchData['400'][1].init(178, 19, 'i < promises.length');
+function visit571_400_1(result) {
   _$jscoverage['/promise.js'].branchData['400'][1].ranCondition(result);
   return result;
-}_$jscoverage['/promise.js'].branchData['396'][1].init(178, 19, 'i < promises.length');
-function visit571_396_1(result) {
+}_$jscoverage['/promise.js'].branchData['396'][1].init(60, 6, '!count');
+function visit570_396_1(result) {
   _$jscoverage['/promise.js'].branchData['396'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/promise.js'].branchData['392'][1].init(60, 6, '!count');
-function visit570_392_1(result) {
-  _$jscoverage['/promise.js'].branchData['392'][1].ranCondition(result);
   return result;
 }_$jscoverage['/promise.js'].branchData['315'][2].init(51, 35, 'obj[PROMISE_PENDINGS] === undefined');
 function visit569_315_2(result) {
@@ -869,38 +895,82 @@ function visit541_13_1(result) {
   isRejected: isRejected, 
   all: function(promises) {
   _$jscoverage['/promise.js'].functionData[29]++;
-  _$jscoverage['/promise.js'].lineData[391]++;
+  _$jscoverage['/promise.js'].lineData[395]++;
   var count = promises.length;
-  _$jscoverage['/promise.js'].lineData[392]++;
-  if (visit570_392_1(!count)) {
-    _$jscoverage['/promise.js'].lineData[393]++;
+  _$jscoverage['/promise.js'].lineData[396]++;
+  if (visit570_396_1(!count)) {
+    _$jscoverage['/promise.js'].lineData[397]++;
     return null;
   }
-  _$jscoverage['/promise.js'].lineData[395]++;
+  _$jscoverage['/promise.js'].lineData[399]++;
   var defer = Defer();
-  _$jscoverage['/promise.js'].lineData[396]++;
-  for (var i = 0; visit571_396_1(i < promises.length); i++) {
-    _$jscoverage['/promise.js'].lineData[397]++;
+  _$jscoverage['/promise.js'].lineData[400]++;
+  for (var i = 0; visit571_400_1(i < promises.length); i++) {
+    _$jscoverage['/promise.js'].lineData[401]++;
     (function(promise, i) {
   _$jscoverage['/promise.js'].functionData[30]++;
-  _$jscoverage['/promise.js'].lineData[398]++;
+  _$jscoverage['/promise.js'].lineData[402]++;
   when(promise, function(value) {
   _$jscoverage['/promise.js'].functionData[31]++;
-  _$jscoverage['/promise.js'].lineData[399]++;
+  _$jscoverage['/promise.js'].lineData[403]++;
   promises[i] = value;
-  _$jscoverage['/promise.js'].lineData[400]++;
-  if (visit572_400_1(--count === 0)) {
-    _$jscoverage['/promise.js'].lineData[403]++;
+  _$jscoverage['/promise.js'].lineData[404]++;
+  if (visit572_404_1(--count === 0)) {
+    _$jscoverage['/promise.js'].lineData[407]++;
     defer.resolve(promises);
   }
 }, function(r) {
   _$jscoverage['/promise.js'].functionData[32]++;
-  _$jscoverage['/promise.js'].lineData[408]++;
+  _$jscoverage['/promise.js'].lineData[412]++;
   defer.reject(r);
 });
 })(promises[i], i);
   }
-  _$jscoverage['/promise.js'].lineData[412]++;
+  _$jscoverage['/promise.js'].lineData[416]++;
   return defer.promise;
+}, 
+  async: function(generatorFunc) {
+  _$jscoverage['/promise.js'].functionData[33]++;
+  _$jscoverage['/promise.js'].lineData[424]++;
+  return function() {
+  _$jscoverage['/promise.js'].functionData[34]++;
+  _$jscoverage['/promise.js'].lineData[425]++;
+  var generator = generatorFunc.apply(this, arguments);
+  _$jscoverage['/promise.js'].lineData[427]++;
+  function doAction(action, arg) {
+    _$jscoverage['/promise.js'].functionData[35]++;
+    _$jscoverage['/promise.js'].lineData[428]++;
+    var result;
+    _$jscoverage['/promise.js'].lineData[430]++;
+    try {
+      _$jscoverage['/promise.js'].lineData[431]++;
+      result = generator[action](arg);
+    }    catch (e) {
+  _$jscoverage['/promise.js'].lineData[433]++;
+  return new Reject(e);
+}
+    _$jscoverage['/promise.js'].lineData[435]++;
+    if (visit573_435_1(result.done)) {
+      _$jscoverage['/promise.js'].lineData[436]++;
+      return result.value;
+    }
+    _$jscoverage['/promise.js'].lineData[438]++;
+    return when(result.value, next, throwEx);
+  }
+  _$jscoverage['/promise.js'].lineData[441]++;
+  function next(v) {
+    _$jscoverage['/promise.js'].functionData[36]++;
+    _$jscoverage['/promise.js'].lineData[442]++;
+    return doAction('next', v);
+  }
+  _$jscoverage['/promise.js'].lineData[445]++;
+  function throwEx(e) {
+    _$jscoverage['/promise.js'].functionData[37]++;
+    _$jscoverage['/promise.js'].lineData[446]++;
+    return doAction('throw', e);
+  }
+  _$jscoverage['/promise.js'].lineData[449]++;
+  return next();
+};
 }});
 })(KISSY);

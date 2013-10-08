@@ -351,6 +351,7 @@
          * @member KISSY.Promise
          */
         when: when,
+
         /**
          * whether the given object is a promise
          * @method
@@ -360,6 +361,7 @@
          * @member KISSY.Promise
          */
         isPromise: isPromise,
+
         /**
          * whether the given object is a resolved promise
          * @method
@@ -369,6 +371,7 @@
          * @member KISSY.Promise
          */
         isResolved: isResolved,
+
         /**
          * whether the given object is a rejected promise
          * @method
@@ -378,6 +381,7 @@
          * @member KISSY.Promise
          */
         isRejected: isRejected,
+
         /**
          * return a new promise
          * which is resolved when all promises is resolved
@@ -410,6 +414,40 @@
                 })(promises[i], i);
             }
             return defer.promise;
+        },
+
+        /**
+         * provide es6 generator
+         * @param generatorFunc es6 generator function which has yielded promise
+         */
+        async: function (generatorFunc) {
+            return function () {
+                var generator = generatorFunc.apply(this, arguments);
+
+                function doAction(action, arg) {
+                    var result;
+                    // in case error on first
+                    try {
+                        result = generator[action](arg);
+                    } catch (e) {
+                        return new Reject(e);
+                    }
+                    if (result.done) {
+                        return result.value;
+                    }
+                    return when(result.value, next, throwEx);
+                }
+
+                function next(v) {
+                    return doAction('next', v);
+                }
+
+                function throwEx(e) {
+                    return doAction('throw', e);
+                }
+
+                return next();
+            };
         }
     });
 

@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Oct 8 11:21
+build time: Oct 8 17:26
 */
 /**
  * @ignore
@@ -42,11 +42,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20131008112140' will replace with current timestamp when compressing.
+         * NOTICE: '20131008172635' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20131008112140',
+        __BUILD_TIME: '20131008172635',
 
         /**
          * KISSY Environment.
@@ -2358,6 +2358,7 @@ var KISSY = (function (undefined) {
          * @member KISSY.Promise
          */
         when: when,
+
         /**
          * whether the given object is a promise
          * @method
@@ -2367,6 +2368,7 @@ var KISSY = (function (undefined) {
          * @member KISSY.Promise
          */
         isPromise: isPromise,
+
         /**
          * whether the given object is a resolved promise
          * @method
@@ -2376,6 +2378,7 @@ var KISSY = (function (undefined) {
          * @member KISSY.Promise
          */
         isResolved: isResolved,
+
         /**
          * whether the given object is a rejected promise
          * @method
@@ -2385,6 +2388,7 @@ var KISSY = (function (undefined) {
          * @member KISSY.Promise
          */
         isRejected: isRejected,
+
         /**
          * return a new promise
          * which is resolved when all promises is resolved
@@ -2417,6 +2421,40 @@ var KISSY = (function (undefined) {
                 })(promises[i], i);
             }
             return defer.promise;
+        },
+
+        /**
+         * provide es6 generator
+         * @param generatorFunc es6 generator function which has yielded promise
+         */
+        async: function (generatorFunc) {
+            return function () {
+                var generator = generatorFunc.apply(this, arguments);
+
+                function doAction(action, arg) {
+                    var result;
+                    // in case error on first
+                    try {
+                        result = generator[action](arg);
+                    } catch (e) {
+                        return new Reject(e);
+                    }
+                    if (result.done) {
+                        return result.value;
+                    }
+                    return when(result.value, next, throwEx);
+                }
+
+                function next(v) {
+                    return doAction('next', v);
+                }
+
+                function throwEx(e) {
+                    return doAction('throw', e);
+                }
+
+                return next();
+            };
         }
     });
 
@@ -5880,7 +5918,7 @@ var KISSY = (function (undefined) {
     S.config({
         charset: 'utf-8',
         lang: 'zh-cn',
-        tag: '20131008112140'
+        tag: '20131008172635'
     });
 
     if (S.UA.nodejs) {
