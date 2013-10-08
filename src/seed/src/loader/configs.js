@@ -71,7 +71,7 @@
             S.each(modules, function (modCfg, modName) {
                 var mod = Utils.createModuleInfo(self, modName, modCfg);
                 // #485, invalid after add
-                if (mod.status !== Loader.Status.INIT) {
+                if (mod.status == Loader.Status.INIT) {
                     S.mix(mod, modCfg);
                 }
             });

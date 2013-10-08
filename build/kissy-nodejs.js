@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Oct 8 11:13
+build time: Oct 8 11:21
 */
 /**
  * @ignore
@@ -42,11 +42,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20131008111314' will replace with current timestamp when compressing.
+         * NOTICE: '20131008112140' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20131008111314',
+        __BUILD_TIME: '20131008112140',
 
         /**
          * KISSY Environment.
@@ -4956,7 +4956,7 @@ var KISSY = (function (undefined) {
             S.each(modules, function (modCfg, modName) {
                 var mod = Utils.createModuleInfo(self, modName, modCfg);
                 // #485, invalid after add
-                if (mod.status !== Loader.Status.INIT) {
+                if (mod.status == Loader.Status.INIT) {
                     S.mix(mod, modCfg);
                 }
             });
@@ -5741,7 +5741,7 @@ var KISSY = (function (undefined) {
     S.config({
         charset: 'utf-8',
         lang: 'zh-cn',
-        tag: '20131008111314'
+        tag: '20131008112140'
     });
 
     if (S.UA.nodejs) {

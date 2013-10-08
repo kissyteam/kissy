@@ -357,7 +357,7 @@ function visit368_97_1(result) {
 function visit367_85_1(result) {
   _$jscoverage['/loader/configs.js'].branchData['85'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/configs.js'].branchData['74'][1].init(140, 33, 'mod.status !== Loader.Status.INIT');
+}_$jscoverage['/loader/configs.js'].branchData['74'][1].init(140, 32, 'mod.status == Loader.Status.INIT');
 function visit366_74_1(result) {
   _$jscoverage['/loader/configs.js'].branchData['74'][1].ranCondition(result);
   return result;
@@ -518,7 +518,7 @@ function visit351_15_1(result) {
   _$jscoverage['/loader/configs.js'].lineData[72]++;
   var mod = Utils.createModuleInfo(self, modName, modCfg);
   _$jscoverage['/loader/configs.js'].lineData[74]++;
-  if (visit366_74_1(mod.status !== Loader.Status.INIT)) {
+  if (visit366_74_1(mod.status == Loader.Status.INIT)) {
     _$jscoverage['/loader/configs.js'].lineData[75]++;
     S.mix(mod, modCfg);
   }
