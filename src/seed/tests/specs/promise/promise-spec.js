@@ -1,6 +1,23 @@
 describe("KISSY.Defer", function () {
     var S = KISSY,
+        Defer= S.Defer,
         Promise = S.Promise;
+
+    it('progress works',function(){
+        var defer=new Defer();
+        var ret=[];
+        defer.promise.progress(function(v){
+            ret.push(v);
+        });
+        defer.notify(1);
+        defer.resolve(2);
+        // invalid after resolve
+        defer.notify(2);
+        waits(500);
+        runs(function(){
+           expect(ret).toEqual([1]);
+        });
+    });
 
     it('is always async', function () {
         var d = S.Defer(),

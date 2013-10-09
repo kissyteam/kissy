@@ -7,6 +7,7 @@
     var PROMISE_VALUE = '__promise_value',
         processImmediate = S.setImmediate,
         logger = S.getLogger('s/promise'),
+        PROMISE_PROGRESS_LISTENERS = '__promise_progress_listeners',
         PROMISE_PENDINGS = '__promise_pendings';
 
     function logError(str) {
@@ -24,9 +25,6 @@
         // simply call rejected
         if (promise instanceof Reject) {
             // if there is a rejected , should always has! see when()
-            if (!rejected) {
-                logger.error('no rejected callback!');
-            }
             processImmediate(function () {
                 rejected(promise[PROMISE_VALUE]);
             });
@@ -93,6 +91,7 @@
             promise[PROMISE_VALUE] = value;
             pendings = [].concat(pendings);
             promise[PROMISE_PENDINGS] = undefined;
+            promise[PROMISE_PROGRESS_LISTENERS] = undefined;
             S.each(pendings, function (p) {
                 promiseWhen(promise, p[0], p[1]);
             });
@@ -105,6 +104,17 @@
          */
         reject: function (reason) {
             return this.resolve(new Reject(reason));
+        },
+        /**
+         * notify promise 's progress listeners
+         * @param message
+         */
+        notify: function (message) {
+            S.each(this.promise[PROMISE_PROGRESS_LISTENERS], function (listener) {
+                processImmediate(function () {
+                    listener(message);
+                });
+            });
         }
     };
 
@@ -126,6 +136,7 @@
         if (v === undefined) {
             // unresolved
             self[PROMISE_PENDINGS] = [];
+            self[PROMISE_PROGRESS_LISTENERS] = [];
         }
     }
 
@@ -138,10 +149,24 @@
          * return a value (could be promise object) for the new promise 's resolved value.
          * @param {Function} [rejected] called when error occurs,pass error reason to this function and
          * return a new reason for the new promise 's error reason
+         * @param {Function} [progressListener] progress listener
          * @return {KISSY.Promise} a new promise object
          */
-        then: function (fulfilled, rejected) {
+        then: function (fulfilled, rejected, progressListener) {
+            if (progressListener) {
+                this.progress(progressListener);
+            }
             return when(this, fulfilled, rejected);
+        },
+        /**
+         * call progress listener when defer.notify is called
+         * @param {Function} [progressListener] progress listener
+         */
+        progress: function (progressListener) {
+            if (this[PROMISE_PROGRESS_LISTENERS]) {
+                this[PROMISE_PROGRESS_LISTENERS].push(progressListener);
+            }
+            return this;
         },
         /**
          * call rejected callback when this promise object is rejected

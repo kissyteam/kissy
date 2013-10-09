@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Oct 8 17:26
+build time: Oct 9 19:49
 */
 /**
  * @ignore
@@ -42,11 +42,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20131008172635' will replace with current timestamp when compressing.
+         * NOTICE: '20131009194851' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20131008172635',
+        __BUILD_TIME: '20131009194851',
 
         /**
          * KISSY Environment.
@@ -2014,6 +2014,7 @@ var KISSY = (function (undefined) {
     var PROMISE_VALUE = '__promise_value',
         processImmediate = S.setImmediate,
         logger = S.getLogger('s/promise'),
+        PROMISE_PROGRESS_LISTENERS = '__promise_progress_listeners',
         PROMISE_PENDINGS = '__promise_pendings';
 
     function logError(str) {
@@ -2031,9 +2032,6 @@ var KISSY = (function (undefined) {
         // simply call rejected
         if (promise instanceof Reject) {
             // if there is a rejected , should always has! see when()
-            if (!rejected) {
-                logger.error('no rejected callback!');
-            }
             processImmediate(function () {
                 rejected(promise[PROMISE_VALUE]);
             });
@@ -2100,6 +2098,7 @@ var KISSY = (function (undefined) {
             promise[PROMISE_VALUE] = value;
             pendings = [].concat(pendings);
             promise[PROMISE_PENDINGS] = undefined;
+            promise[PROMISE_PROGRESS_LISTENERS] = undefined;
             S.each(pendings, function (p) {
                 promiseWhen(promise, p[0], p[1]);
             });
@@ -2112,6 +2111,17 @@ var KISSY = (function (undefined) {
          */
         reject: function (reason) {
             return this.resolve(new Reject(reason));
+        },
+        /**
+         * notify promise 's progress listeners
+         * @param message
+         */
+        notify: function (message) {
+            S.each(this.promise[PROMISE_PROGRESS_LISTENERS], function (listener) {
+                processImmediate(function () {
+                    listener(message);
+                });
+            });
         }
     };
 
@@ -2133,6 +2143,7 @@ var KISSY = (function (undefined) {
         if (v === undefined) {
             // unresolved
             self[PROMISE_PENDINGS] = [];
+            self[PROMISE_PROGRESS_LISTENERS] = [];
         }
     }
 
@@ -2145,10 +2156,24 @@ var KISSY = (function (undefined) {
          * return a value (could be promise object) for the new promise 's resolved value.
          * @param {Function} [rejected] called when error occurs,pass error reason to this function and
          * return a new reason for the new promise 's error reason
+         * @param {Function} [progressListener] progress listener
          * @return {KISSY.Promise} a new promise object
          */
-        then: function (fulfilled, rejected) {
+        then: function (fulfilled, rejected, progressListener) {
+            if (progressListener) {
+                this.progress(progressListener);
+            }
             return when(this, fulfilled, rejected);
+        },
+        /**
+         * call progress listener when defer.notify is called
+         * @param {Function} [progressListener] progress listener
+         */
+        progress: function (progressListener) {
+            if (this[PROMISE_PROGRESS_LISTENERS]) {
+                this[PROMISE_PROGRESS_LISTENERS].push(progressListener);
+            }
+            return this;
         },
         /**
          * call rejected callback when this promise object is rejected
@@ -5918,7 +5943,7 @@ var KISSY = (function (undefined) {
     S.config({
         charset: 'utf-8',
         lang: 'zh-cn',
-        tag: '20131008172635'
+        tag: '20131009194851'
     });
 
     if (S.UA.nodejs) {
