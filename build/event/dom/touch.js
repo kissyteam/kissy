@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 18 00:20
+build time: Oct 10 13:54
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -884,13 +884,12 @@ KISSY.add('event/dom/touch/handle', function (S, Dom, eventHandleMap, DomEvent) 
                 // remember x/y of last touch
                 var lt = {x: t.clientX, y: t.clientY};
                 lts.push(lt);
-                var fn = (function (lts, lt) {
+                setTimeout(function () {
                     var i = lts.indexOf(lt);
                     if (i > -1) {
                         lts.splice(i, 1);
                     }
-                }).bind(null, lts, lt);
-                setTimeout(fn, DUP_TIMEOUT);
+                }, DUP_TIMEOUT);
             }
         },
 
@@ -952,12 +951,15 @@ KISSY.add('event/dom/touch/handle', function (S, Dom, eventHandleMap, DomEvent) 
             } else {
                 throw new Error('unrecognized touch event: ' + event.type);
             }
+
+
             for (e in eventHandle) {
                 h = eventHandle[e].handle;
                 h.isActive = 1;
             }
             // if preventDefault, will not trigger click event
             self.callEventHandle('onTouchStart', event);
+
         },
 
         onTouchMove: function (event) {

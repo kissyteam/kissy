@@ -5,7 +5,7 @@
  *
  */
 (function (S, undefined) {
-
+    // ios Function.prototype.bind === undefined
     function bindFn(r, fn, obj) {
         var slice = [].slice,
             args = slice.call(arguments, 3),

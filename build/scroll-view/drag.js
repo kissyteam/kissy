@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 17 23:09
+build time: Oct 10 13:54
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -301,12 +301,18 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, Node, Anim) {
             if (lockX && dragInitDirection == 'left' && !self.allowScroll[dragInitDirection]) {
                 //S.log('not in right direction');
                 self.isScrolling = 0;
+                if (self.get('preventDefaultX')) {
+                    e.preventDefault();
+                }
                 return;
             }
 
             if (lockY && dragInitDirection == 'top' && !self.allowScroll[dragInitDirection]) {
                 //S.log('not in right direction');
                 self.isScrolling = 0;
+                if (self.get('preventDefaultY')) {
+                    e.preventDefault();
+                }
                 return;
             }
         }
@@ -499,6 +505,9 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, Node, Anim) {
                 lockX: {
                     value: true
                 },
+                preventDefaultX: {
+                    value: true
+                },
                 /**
                  * whether allow drag in y direction when content size is less than container size.
                  * Defaults to: false, allow.
@@ -508,6 +517,9 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, Node, Anim) {
                  * @ignore
                  */
                 lockY: {
+                    value: false
+                },
+                preventDefaultY: {
                     value: false
                 },
                 /**
