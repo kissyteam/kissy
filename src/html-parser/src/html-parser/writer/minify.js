@@ -5,6 +5,7 @@
  */
 KISSY.add("html-parser/writer/minify", function (S, BasicWriter, Utils) {
     var trim = S.trim,
+        isBooleanAttribute = Utils.isBooleanAttribute,
         collapseWhitespace = Utils.collapseWhitespace,
         reEmptyAttribute = new RegExp(
             '^(?:class|id|style|title|lang|dir|on' +
@@ -25,9 +26,6 @@ KISSY.add("html-parser/writer/minify", function (S, BasicWriter, Utils) {
         return 0;
     }
 
-    function isBooleanAttribute(attrName) {
-        return (/^(?:checked|disabled|selected|readonly|defer|multiple|nohref|noshape|nowrap|noresize|compact|ismap)$/i).test(attrName);
-    }
 
     function canRemoveAttributeQuotes(value) {
         // http://www.w3.org/TR/html5/syntax.html#unquoted
@@ -240,6 +238,6 @@ KISSY.add("html-parser/writer/minify", function (S, BasicWriter, Utils) {
 });
 
 /*
-  refer :
-   - https://github.com/kangax/html-minifier/
+ refer :
+ - https://github.com/kangax/html-minifier/
  */

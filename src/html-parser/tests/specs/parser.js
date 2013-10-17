@@ -210,24 +210,82 @@ KISSY.add(function (S, HtmlParser) {
         });
 
         describe('writer', function () {
-
-            it('works for empty attribute', function () {
-
+            it('does not change attribute value for empty attribute', function () {
                 var html = "<img alt='' />",
                     parser = new Parser(html),
                     node = parser.parse(),
                     writer = new HtmlParser.BasicWriter();
                 node.writeHtml(writer);
-                expect(writer.getHtml()).toBe('<img alt="alt" />');
+                expect(writer.getHtml()).toBe('<img alt="" />');
 
 
                 var beatifyWriter = new HtmlParser.BeautifyWriter();
                 node.writeHtml(beatifyWriter);
-                expect(beatifyWriter.getHtml()).toBe('<img alt="alt" />');
+                expect(beatifyWriter.getHtml()).toBe('<img alt="" />');
 
                 var minifyWriter = new HtmlParser.MinifyWriter();
                 node.writeHtml(minifyWriter);
                 expect(minifyWriter.getHtml()).toBe('<img alt="" />');
+            });
+
+            it('does not change attribute value for empty attribute 2', function () {
+                var html = "<img alt />",
+                    parser = new Parser(html),
+                    node = parser.parse(),
+                    writer = new HtmlParser.BasicWriter();
+                node.writeHtml(writer);
+                expect(writer.getHtml()).toBe('<img alt="" />');
+
+
+                var beatifyWriter = new HtmlParser.BeautifyWriter();
+                node.writeHtml(beatifyWriter);
+                expect(beatifyWriter.getHtml()).toBe('<img alt="" />');
+
+                var minifyWriter = new HtmlParser.MinifyWriter();
+                node.writeHtml(minifyWriter);
+                expect(minifyWriter.getHtml()).toBe('<img alt="" />');
+            });
+
+            it('change attribute value for empty attribute checked',function(){
+                var html = "<input checked />",
+                    parser = new Parser(html),
+                    node = parser.parse(),
+                    writer = new HtmlParser.BasicWriter();
+                node.writeHtml(writer);
+                expect(writer.getHtml()).toBe('<input ' +
+                    'checked="checked" />');
+
+
+                var beatifyWriter = new HtmlParser.BeautifyWriter();
+                node.writeHtml(beatifyWriter);
+                expect(beatifyWriter.getHtml()).toBe('<input ' +
+                    'checked="checked" />');
+
+                var minifyWriter = new HtmlParser.MinifyWriter();
+                node.writeHtml(minifyWriter);
+                expect(minifyWriter.getHtml()).toBe('<input ' +
+                    'checked />');
+            });
+
+            it('change attribute value for empty attribute checked2',function(){
+                var html = "<input checked='' />",
+                    parser = new Parser(html),
+                    node = parser.parse(),
+                    writer = new HtmlParser.BasicWriter();
+                node.writeHtml(writer);
+                expect(writer.getHtml()).toBe('<input ' +
+                    'checked="checked" />');
+
+
+                var beatifyWriter = new HtmlParser.BeautifyWriter();
+                node.writeHtml(beatifyWriter);
+                expect(beatifyWriter.getHtml()).toBe('<input ' +
+                    'checked="checked" />');
+
+                var minifyWriter = new HtmlParser.MinifyWriter();
+                node.writeHtml(minifyWriter);
+                expect(minifyWriter.getHtml()).toBe('<input ' +
+                    'checked />');
             });
 
             it("does not lower case", function () {

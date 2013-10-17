@@ -3,18 +3,24 @@
  * utils about language for html parser
  * @author yiminghe@gmail.com
  */
-KISSY.add("html-parser/utils", function() {
+KISSY.add("html-parser/utils", function () {
     return {
-        collapseWhitespace:function (str) {
+        isBooleanAttribute: function (attrName) {
+            return (/^(?:checked|disabled|selected|readonly|defer|multiple|nohref|noshape|nowrap|noresize|compact|ismap)$/i).test(attrName);
+        },
+
+        collapseWhitespace: function (str) {
             return str.replace(/[\s\xa0]+/g, ' ');
         },
-        isLetter:function(ch) {
+
+        isLetter: function (ch) {
             return 'a' <= ch && 'z' >= ch || 'A' <= ch && 'Z' >= ch;
         },
+
         /*
-          refer: http://www.w3.org/TR/html5/syntax.html#attributes-0
+         refer: http://www.w3.org/TR/html5/syntax.html#attributes-0
          */
-        isValidAttributeNameStartChar:function(ch) {
+        isValidAttributeNameStartChar: function (ch) {
             return !this.isWhitespace(ch) &&
                 ch != '"' &&
                 ch != "'" &&
@@ -24,7 +30,7 @@ KISSY.add("html-parser/utils", function() {
                 ch != '=';
         },
 
-        isWhitespace:function(ch) {
+        isWhitespace: function (ch) {
             // http://yiminghe.iteye.com/admin/blogs/722786
             // http://yiminghe.iteye.com/admin/blogs/788929
             // 相比平时的空格（&#32;），nbsp拥有不间断（non-breaking）特性。
@@ -37,6 +43,6 @@ KISSY.add("html-parser/utils", function() {
     };
 });
 /*
-  refer:
-   -  http://www.w3.org/TR/html5/syntax.html
+ refer:
+ -  http://www.w3.org/TR/html5/syntax.html
  */

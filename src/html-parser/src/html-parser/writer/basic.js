@@ -3,7 +3,9 @@
  * basic writer for inheritance
  * @author yiminghe@gmail.com
  */
-KISSY.add("html-parser/writer/basic", function () {
+KISSY.add("html-parser/writer/basic", function (S, Utils) {
+    var isBooleanAttribute = Utils.isBooleanAttribute;
+
     function escapeAttrValue(str) {
         return String(str).replace(/"/g, "&quote;");
     }
@@ -52,10 +54,15 @@ KISSY.add("html-parser/writer/basic", function () {
         },
 
         attribute: function (attr) {
+            var value = attr.value||'',
+                name = attr.name;
+            if (isBooleanAttribute(name) && !value) {
+                value = name;
+            }
             this.append(" ",
-                attr.name,
+                name,
                 "=\"",
-                escapeAttrValue(attr.value || attr.name),
+                escapeAttrValue(value),
                 "\"");
         },
 
@@ -78,4 +85,6 @@ KISSY.add("html-parser/writer/basic", function () {
     };
 
     return BasicWriter;
+}, {
+    requires: ['../utils']
 });

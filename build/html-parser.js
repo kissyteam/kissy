@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 17 23:08
+build time: Oct 17 00:48
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -1066,18 +1066,24 @@ KISSY.add("html-parser/nodes/cdata", function (S, Text) {
  * utils about language for html parser
  * @author yiminghe@gmail.com
  */
-KISSY.add("html-parser/utils", function() {
+KISSY.add("html-parser/utils", function () {
     return {
-        collapseWhitespace:function (str) {
+        isBooleanAttribute: function (attrName) {
+            return (/^(?:checked|disabled|selected|readonly|defer|multiple|nohref|noshape|nowrap|noresize|compact|ismap)$/i).test(attrName);
+        },
+
+        collapseWhitespace: function (str) {
             return str.replace(/[\s\xa0]+/g, ' ');
         },
-        isLetter:function(ch) {
+
+        isLetter: function (ch) {
             return 'a' <= ch && 'z' >= ch || 'A' <= ch && 'Z' >= ch;
         },
+
         /*
-          refer: http://www.w3.org/TR/html5/syntax.html#attributes-0
+         refer: http://www.w3.org/TR/html5/syntax.html#attributes-0
          */
-        isValidAttributeNameStartChar:function(ch) {
+        isValidAttributeNameStartChar: function (ch) {
             return !this.isWhitespace(ch) &&
                 ch != '"' &&
                 ch != "'" &&
@@ -1087,7 +1093,7 @@ KISSY.add("html-parser/utils", function() {
                 ch != '=';
         },
 
-        isWhitespace:function(ch) {
+        isWhitespace: function (ch) {
             // http://yiminghe.iteye.com/admin/blogs/722786
             // http://yiminghe.iteye.com/admin/blogs/788929
             // 相比平时的空格（&#32;），nbsp拥有不间断（non-breaking）特性。
@@ -1100,8 +1106,8 @@ KISSY.add("html-parser/utils", function() {
     };
 });
 /*
-  refer:
-   -  http://www.w3.org/TR/html5/syntax.html
+ refer:
+ -  http://www.w3.org/TR/html5/syntax.html
  */
 /**
  * @ignore
@@ -3021,7 +3027,9 @@ KISSY.add("html-parser/parser", function (S, dtd, Tag, Fragment, Cursor, Lexer, 
  * basic writer for inheritance
  * @author yiminghe@gmail.com
  */
-KISSY.add("html-parser/writer/basic", function () {
+KISSY.add("html-parser/writer/basic", function (S, Utils) {
+    var isBooleanAttribute = Utils.isBooleanAttribute;
+
     function escapeAttrValue(str) {
         return String(str).replace(/"/g, "&quote;");
     }
@@ -3070,10 +3078,15 @@ KISSY.add("html-parser/writer/basic", function () {
         },
 
         attribute: function (attr) {
+            var value = attr.value||'',
+                name = attr.name;
+            if (isBooleanAttribute(name) && !value) {
+                value = name;
+            }
             this.append(" ",
-                attr.name,
+                name,
                 "=\"",
-                escapeAttrValue(attr.value || attr.name),
+                escapeAttrValue(value),
                 "\"");
         },
 
@@ -3096,6 +3109,8 @@ KISSY.add("html-parser/writer/basic", function () {
     };
 
     return BasicWriter;
+}, {
+    requires: ['../utils']
 });
 /**
  * @ignore
@@ -3299,6 +3314,7 @@ KISSY.add("html-parser/writer/beautify", function (S, BasicWriter, dtd, Utils) {
  */
 KISSY.add("html-parser/writer/minify", function (S, BasicWriter, Utils) {
     var trim = S.trim,
+        isBooleanAttribute = Utils.isBooleanAttribute,
         collapseWhitespace = Utils.collapseWhitespace,
         reEmptyAttribute = new RegExp(
             '^(?:class|id|style|title|lang|dir|on' +
@@ -3319,9 +3335,6 @@ KISSY.add("html-parser/writer/minify", function (S, BasicWriter, Utils) {
         return 0;
     }
 
-    function isBooleanAttribute(attrName) {
-        return (/^(?:checked|disabled|selected|readonly|defer|multiple|nohref|noshape|nowrap|noresize|compact|ismap)$/i).test(attrName);
-    }
 
     function canRemoveAttributeQuotes(value) {
         // http://www.w3.org/TR/html5/syntax.html#unquoted
@@ -3534,8 +3547,8 @@ KISSY.add("html-parser/writer/minify", function (S, BasicWriter, Utils) {
 });
 
 /*
-  refer :
-   - https://github.com/kangax/html-minifier/
+ refer :
+ - https://github.com/kangax/html-minifier/
  */
 /**
  * @ignore
