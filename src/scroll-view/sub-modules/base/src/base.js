@@ -131,10 +131,7 @@ KISSY.add('scroll-view/base', function (S, Node, Anim, Container, Render, undefi
                 if (scrollTop <= min && deltaY > 0 || scrollTop >= max && deltaY < 0) {
                 } else {
                     self.scrollToWithBounds({top: scrollTop - e.deltaY * scrollStep['top']});
-                    // no need for pointer event
-                    if (isTouchEventSupported) {
-                        e.preventDefault();
-                    }
+                    e.preventDefault();
                 }
             }
 
@@ -145,9 +142,7 @@ KISSY.add('scroll-view/base', function (S, Node, Anim, Container, Render, undefi
                 if (scrollLeft <= min && deltaX > 0 || scrollLeft >= max && deltaX < 0) {
                 } else {
                     self.scrollToWithBounds({left: scrollLeft - e.deltaX * scrollStep['left']});
-                    if (isTouchEventSupported) {
-                        e.preventDefault();
-                    }
+                    e.preventDefault();
                 }
             }
         },
