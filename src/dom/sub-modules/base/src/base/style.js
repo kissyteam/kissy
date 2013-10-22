@@ -456,6 +456,7 @@ KISSY.add('dom/base/style', function (S, Dom, undefined) {
                     if (isAutoPosition && position === "relative") {
                         return "0px";
                     }
+                    // https://github.com/kissyteam/kissy/issues/493
                     if (isAutoPosition || NO_PX_REG.test(val)) {
                         val = getPosition(el)[name] + 'px';
                     }
