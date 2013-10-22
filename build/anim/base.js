@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 17 22:56
+build time: Oct 22 13:57
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -243,7 +243,7 @@ KISSY.add('anim/base', function (S, Dom, Utils, CustomEvent, Q) {
     function AnimBase(config) {
         var self = this,
             complete;
-        AnimBase.superclass.constructor.apply(this,arguments);
+        AnimBase.superclass.constructor.apply(this, arguments);
         /**
          * config object of current anim instance
          * @type {Object}
@@ -378,10 +378,15 @@ KISSY.add('anim/base', function (S, Dom, Utils, CustomEvent, Q) {
             }
 
             self.startTime = S.now();
-
-            self.prepareFx();
-
-            self.doStart();
+            if (S.isEmptyObject(_propsData)) {
+                self.__totalTime = defaultDuration * 1000;
+                self.__waitTimeout = setTimeout(function () {
+                    self.stop(1);
+                }, self.__totalTime);
+            } else {
+                self.prepareFx();
+                self.doStart();
+            }
         },
 
         /**
@@ -410,9 +415,14 @@ KISSY.add('anim/base', function (S, Dom, Utils, CustomEvent, Q) {
             if (self.isRunning()) {
                 // already run time
                 self._runTime = S.now() - self.startTime;
+                self.__totalTime -= self._runTime;
                 Utils.removeRunningAnim(self);
                 Utils.savePausedAnim(self);
-                self.doStop();
+                if (self.__waitTimeout) {
+                    clearTimeout(self.__waitTimeout);
+                } else {
+                    self.doStop();
+                }
             }
             return self;
         },
@@ -442,8 +452,14 @@ KISSY.add('anim/base', function (S, Dom, Utils, CustomEvent, Q) {
                 self.startTime = S.now() - self._runTime;
                 Utils.removePausedAnim(self);
                 Utils.saveRunningAnim(self);
-                self['beforeResume']();
-                self.doStart();
+                if (self.__waitTimeout) {
+                    self.__waitTimeout = setTimeout(function () {
+                        self.stop(1);
+                    }, self.__totalTime);
+                } else {
+                    self['beforeResume']();
+                    self.doStart();
+                }
             }
             return self;
         },
@@ -491,6 +507,11 @@ KISSY.add('anim/base', function (S, Dom, Utils, CustomEvent, Q) {
 
             if (self.__stopped) {
                 return self;
+            }
+
+            if (self.__waitTimeout) {
+                clearTimeout(self.__waitTimeout);
+                self.__waitTimeout = 0;
             }
 
             if (!self.isRunning() && !self.isPaused()) {

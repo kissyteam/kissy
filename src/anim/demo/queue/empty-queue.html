@@ -1,0 +1,18 @@
+<script src="/kissy/build/seed.js"></script>
+<script src="/kissy/src/package.js"></script>
+<script>
+    KISSY.use('node', function (S, Node) {
+        var start = S.now();
+        var body = Node.all('body');
+        body.animate({}, {
+            duration: 1
+            //useTransition: 1
+        }).animate({}, {
+                    duration: 1,
+                    //useTransition: 1,
+                    complete: function () {
+                        S.log(S.now() - start);
+                    }
+                });
+    });
+</script>
