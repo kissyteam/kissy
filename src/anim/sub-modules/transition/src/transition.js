@@ -114,7 +114,7 @@ KISSY.add('anim/transition', function (S, Dom, Event, AnimBase) {
             }
             propsData[e.propertyName].pos = 1;
             S.each(propsData, function (propData) {
-                if (propData.pos!==1) {
+                if (propData.pos !== 1) {
                     allCompleted = 0;
                     return false;
                 }
@@ -148,19 +148,14 @@ KISSY.add('anim/transition', function (S, Dom, Event, AnimBase) {
                         '$1'))
                 .replace(/^,|,,|,$/g, '') || 'none';
 
-            // S.log('before end: '+elStyle[TRANSITION]);
             elStyle[TRANSITION] = clear;
-            // S.log('after end: '+elStyle[TRANSITION]);
-
-
             Dom.css(node, propsCss);
         }
     });
 
     return TransitionAnim;
-
 }, {
-    requires: ['dom', 'event', './base']
+    requires: ['dom', 'event/dom', './base']
 });
 /*
  refer:

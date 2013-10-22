@@ -26,7 +26,7 @@
         if (promise instanceof Reject) {
             // if there is a rejected , should always has! see when()
             processImmediate(function () {
-                rejected(promise[PROMISE_VALUE]);
+                rejected.call(promise, promise[PROMISE_VALUE]);
             });
         } else {
             var v = promise[PROMISE_VALUE],
@@ -47,7 +47,7 @@
                 // if return promise then forward
                 if (fulfilled) {
                     processImmediate(function () {
-                        fulfilled(v);
+                        fulfilled.call(promise, v);
                     });
                 }
             }
@@ -70,6 +70,7 @@
          * @type {KISSY.Promise}
          */
         self.promise = promise || new Promise();
+        self.promise.defer = self;
     }
 
     Defer.prototype = {
@@ -261,7 +262,7 @@
         // wrap user's callback to catch exception
         function _fulfilled(value) {
             try {
-                return fulfilled ? fulfilled(value) :
+                return fulfilled ? fulfilled.call(this, value) :
                     // propagate
                     value;
             } catch (e) {
@@ -277,7 +278,7 @@
             try {
                 return rejected ?
                     // error recovery
-                    rejected(reason) :
+                    rejected.call(this, reason) :
                     // propagate
                     new Reject(reason);
             } catch (e) {
@@ -297,7 +298,7 @@
                 return;
             }
             done = 1;
-            defer.resolve(_fulfilled(value));
+            defer.resolve(_fulfilled.call(this, value));
         }
 
         if (value instanceof  Promise) {
@@ -308,7 +309,7 @@
                 }
                 done = 1;
                 // _reject may return non-Reject object for error recovery
-                defer.resolve(_rejected(reason));
+                defer.resolve(_rejected.call(this, reason));
             });
         } else {
             finalFulfill(value);

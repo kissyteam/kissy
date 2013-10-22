@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Oct 22 13:57
+build time: Oct 22 17:03
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -476,7 +476,8 @@ KISSY.add('anim/timer/manager', function (S, undefined) {
  * @author yiminghe@gmail.com
  */
 KISSY.add('anim/timer/fx', function (S, Dom, undefined) {
-    var logger= S.getLogger('s/aim/timer/fx');
+    var logger = S.getLogger('s/aim/timer/fx');
+
     function load(self, cfg) {
         S.mix(self, cfg);
         self.pos = 0;
@@ -1192,19 +1193,24 @@ KISSY.add('anim/timer', function (S, Dom, AnimBase, Easing, AM, Fx, SHORT_HANDS)
                 fx,
                 _propData,
                 _propsData = self._propsData;
-
             for (prop in _propsData) {
                 _propData = _propsData[prop];
                 fx = _propData.fx;
                 fx.frame();
                 // in case call stop in frame
-                if (self.__stopped) {
+                if (self.isRejected() || self.isResolved()) {
                     return;
                 }
                 end &= fx.pos == 1;
             }
-
-            if ((self.fire('step') === false) || end) {
+            var currentTime = S.now(),
+                duration = self.config.duration * 1000,
+                remaining = Math.max(0,
+                    self.startTime + duration - currentTime),
+                temp = remaining / duration || 0,
+                percent = 1 - temp;
+            self.defer.notify([self, percent, remaining]);
+            if (end) {
                 // complete 事件只在动画到达最后一帧时才触发
                 self['stop'](end);
             }

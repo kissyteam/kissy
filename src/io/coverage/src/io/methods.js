@@ -429,15 +429,15 @@ _$jscoverage['/io/methods.js'].branchData['280'][1].init(91, 38, 'S.Uri.getCompo
 function visit112_280_1(result) {
   _$jscoverage['/io/methods.js'].branchData['280'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/methods.js'].branchData['262'][1].init(3177, 19, 'h = config.complete');
+}_$jscoverage['/io/methods.js'].branchData['262'][1].init(3176, 19, 'h = config.complete');
 function visit111_262_1(result) {
   _$jscoverage['/io/methods.js'].branchData['262'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/methods.js'].branchData['259'][1].init(3072, 19, 'h = config[handler]');
+}_$jscoverage['/io/methods.js'].branchData['259'][1].init(3071, 19, 'h = config[handler]');
 function visit110_259_1(result) {
   _$jscoverage['/io/methods.js'].branchData['259'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/methods.js'].branchData['220'][1].init(1585, 32, 'timeoutTimer = self.timeoutTimer');
+}_$jscoverage['/io/methods.js'].branchData['220'][1].init(1584, 32, 'timeoutTimer = self.timeoutTimer');
 function visit109_220_1(result) {
   _$jscoverage['/io/methods.js'].branchData['220'][1].ranCondition(result);
   return result;
@@ -825,7 +825,7 @@ KISSY.add('io/methods', function(S, IO, undefined) {
   _$jscoverage['/io/methods.js'].lineData[215]++;
   self.statusText = statusText;
   _$jscoverage['/io/methods.js'].lineData[217]++;
-  var defer = self._defer, config = self.config, timeoutTimer;
+  var defer = self.defer, config = self.config, timeoutTimer;
   _$jscoverage['/io/methods.js'].lineData[220]++;
   if (visit109_220_1(timeoutTimer = self.timeoutTimer)) {
     _$jscoverage['/io/methods.js'].lineData[221]++;

@@ -1,8 +1,10 @@
-KISSY.add(function(S,Simple,Queue){
+KISSY.add(function (S, Simple, Queue) {
     Simple.run();
     Queue.run();
-},{
-    requires:['src/anim/tests/specs/simple',
+}, {
+    requires: ['src/anim/tests/specs/simple',
         'src/anim/tests/specs/queue',
-        './frame','./pause','./scroll']
+        'src/anim/tests/specs/promise',
+        './promise',
+        './frame', './pause', './scroll']
 });

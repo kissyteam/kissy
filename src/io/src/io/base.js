@@ -333,10 +333,10 @@ KISSY.add('io/base', function (S, CustomEvent, undefined) {
              * @type String
              */
             status: 0,
-            transport: null,
-            _defer: new S.Defer(this)
+            transport: null
         });
 
+        S.Defer(self);
 
         var transportConstructor,
             transport;

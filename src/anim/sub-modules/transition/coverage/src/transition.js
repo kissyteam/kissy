@@ -293,9 +293,9 @@ if (! _$jscoverage['/transition.js']) {
   _$jscoverage['/transition.js'].lineData[140] = 0;
   _$jscoverage['/transition.js'].lineData[142] = 0;
   _$jscoverage['/transition.js'].lineData[146] = 0;
+  _$jscoverage['/transition.js'].lineData[151] = 0;
   _$jscoverage['/transition.js'].lineData[152] = 0;
   _$jscoverage['/transition.js'].lineData[156] = 0;
-  _$jscoverage['/transition.js'].lineData[160] = 0;
 }
 if (! _$jscoverage['/transition.js'].functionData) {
   _$jscoverage['/transition.js'].functionData = [];
@@ -350,11 +350,11 @@ function visit13_149_1(result) {
 function visit12_139_1(result) {
   _$jscoverage['/transition.js'].branchData['139'][1].ranCondition(result);
   return result;
-}_$jscoverage['/transition.js'].branchData['123'][1].init(584, 12, 'allCompleted');
+}_$jscoverage['/transition.js'].branchData['123'][1].init(586, 12, 'allCompleted');
 function visit11_123_1(result) {
   _$jscoverage['/transition.js'].branchData['123'][1].ranCondition(result);
   return result;
-}_$jscoverage['/transition.js'].branchData['117'][1].init(22, 16, 'propData.pos !== 1');
+}_$jscoverage['/transition.js'].branchData['117'][1].init(22, 18, 'propData.pos !== 1');
 function visit10_117_1(result) {
   _$jscoverage['/transition.js'].branchData['117'][1].ranCondition(result);
   return result;
@@ -567,12 +567,12 @@ KISSY.add('anim/transition', function(S, Dom, Event, AnimBase) {
 });
   _$jscoverage['/transition.js'].lineData[146]++;
   clear = visit13_149_1(S.trim(elStyle[TRANSITION].replace(new RegExp('(^|,)' + '\\s*(?:' + propList.join('|') + ')\\s+[^,]+', 'gi'), '$1')).replace(/^,|,,|,$/g, '') || 'none');
-  _$jscoverage['/transition.js'].lineData[152]++;
+  _$jscoverage['/transition.js'].lineData[151]++;
   elStyle[TRANSITION] = clear;
-  _$jscoverage['/transition.js'].lineData[156]++;
+  _$jscoverage['/transition.js'].lineData[152]++;
   Dom.css(node, propsCss);
 }});
-  _$jscoverage['/transition.js'].lineData[160]++;
+  _$jscoverage['/transition.js'].lineData[156]++;
   return TransitionAnim;
 }, {
-  requires: ['dom', 'event', './base']});
+  requires: ['dom', 'event/dom', './base']});

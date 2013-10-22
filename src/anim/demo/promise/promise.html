@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>kissy anim promise demo</title>
+</head>
+<body>
+<script src="/kissy/build/seed.js"></script>
+<script src="/kissy/src/package.js"></script>
+<div style="border:1px solid red;width: 100px;height: 100px" id="t">
+
+</div>
+<script>
+    KISSY.use('node,anim', function (S, Node, Anim) {
+        var start = S.now();
+        var t = Node.all('#t')[0];
+        var anim = new Anim(t, {width: 200}, {
+            duration: 1,
+            complete: function () {
+                S.log('first');
+                S.log(this);
+                S.log(S.now() - start);
+            }
+        }).run()
+                .progress(function(){
+                    S.log(arguments[0]);
+                })
+                .then(function () {
+                    S.log('second');
+                    S.log(anim);
+                    S.log(S.now() - start);
+                });
+    });
+</script>
+</body>
+</html>

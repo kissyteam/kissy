@@ -4,7 +4,8 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add('anim/timer/fx', function (S, Dom, undefined) {
-    var logger= S.getLogger('s/aim/timer/fx');
+    var logger = S.getLogger('s/aim/timer/fx');
+
     function load(self, cfg) {
         S.mix(self, cfg);
         self.pos = 0;

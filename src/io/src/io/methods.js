@@ -214,7 +214,7 @@ KISSY.add('io/methods', function (S, IO, undefined) {
                 self.status = status;
                 self.statusText = statusText;
 
-                var defer = self._defer,
+                var defer = self.defer,
                     config = self.config,
                     timeoutTimer;
                 if (timeoutTimer = self.timeoutTimer) {

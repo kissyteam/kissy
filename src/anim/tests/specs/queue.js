@@ -91,9 +91,11 @@ KISSY.add(function (S, Dom, Anim, Node) {
                     var t = $('<div></div>');
                     var time = 0;
                     var start = S.now();
-                    t.animate({}, {duration: 100})
+                    t.animate({}, {
+                        duration: 0.1
+                    })
                         .animate({}, {
-                            duration: 100,
+                            duration: 0.1,
                             complete: function () {
                                 time = S.now() - start;
                             }

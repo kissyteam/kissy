@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 27 14:21
+build time: Oct 22 17:03
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -444,10 +444,10 @@ KISSY.add('io/base', function (S, CustomEvent, undefined) {
              * @type String
              */
             status: 0,
-            transport: null,
-            _defer: new S.Defer(this)
+            transport: null
         });
 
+        S.Defer(self);
 
         var transportConstructor,
             transport;
@@ -2010,7 +2010,7 @@ KISSY.add('io/methods', function (S, IO, undefined) {
                 self.status = status;
                 self.statusText = statusText;
 
-                var defer = self._defer,
+                var defer = self.defer,
                     config = self.config,
                     timeoutTimer;
                 if (timeoutTimer = self.timeoutTimer) {

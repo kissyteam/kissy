@@ -3,8 +3,6 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, Dom, Anim, Node) {
-
-
     function matrix(transform) {
         transform = transform.split(")");
         var trim = S.trim,
@@ -107,7 +105,6 @@ KISSY.add(function (S, Dom, Anim, Node) {
     }
 
     function multipleMatrix(m1, m2) {
-
         if (arguments.length > 2) {
             var ret = m1;
             for (var i = 1; i < arguments.length; i++) {
