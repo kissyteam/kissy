@@ -3,7 +3,7 @@
  * event facade for event module.contains custom dom and touch event
  * @author yiminghe@gmail.com
  */
-KISSY.add('event', function (S, DomEvent, CustomEvent, undefined) {
+KISSY.add('event', function (S, DomEvent, CustomEvent) {
     /**
      * KISSY event utils. Provides event management.
      * @class KISSY.Event
