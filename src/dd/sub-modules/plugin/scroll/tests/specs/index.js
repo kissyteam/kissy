@@ -2,10 +2,10 @@
  * @module  scroll-spec
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, Dom,  Node, DD, Scroll,IO) {
+KISSY.add(function (S, Dom, Event, Node, DD, Scroll, IO) {
     var Draggable = DD.Draggable,
-        Gesture= S.Event.Gesture,
-        UA= S.UA,
+        Gesture = Event.Gesture,
+        UA = S.UA,
         $ = Node.all;
     var ie = document['documentMode'] || UA['ie'];
 
@@ -29,8 +29,8 @@ KISSY.add(function (S, Dom,  Node, DD, Scroll,IO) {
         dragContainer = $("#drag_scroll_container");
         drag = new Draggable({
             node: dragNode,
-            move:1,
-            groups:false
+            move: 1,
+            groups: false
         });
 
         drag.plug(new Scroll({
@@ -98,6 +98,6 @@ KISSY.add(function (S, Dom,  Node, DD, Scroll,IO) {
 
     });
 
-},{
-        requires:['dom','node','dd','dd/plugin/scroll','io']
-    });
+}, {
+    requires: ['dom', 'event', 'node', 'dd', 'dd/plugin/scroll', 'io']
+});

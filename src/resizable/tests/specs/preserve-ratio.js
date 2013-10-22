@@ -2,13 +2,13 @@
  * Resizable tc.
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, Resizable) {
+KISSY.add(function (S, Event, Resizable) {
     // ie9 mousemove does not fire
     if (document.documentMode == 9) {
         return;
     }
 
-    var Gesture = S.Event.Gesture;
+    var Gesture = Event.Gesture;
 
     var $ = S.all;
 
@@ -99,7 +99,6 @@ KISSY.add(function (S, Resizable) {
             });
         });
     });
-
-},{
-    requires:['resizable']
+}, {
+    requires: ['event', 'resizable']
 });

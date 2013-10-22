@@ -2,13 +2,13 @@
  * Resizable tc.
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, Resizable, ResizableProxyPlugin) {
+KISSY.add(function (S, Event, Resizable, ResizableProxyPlugin) {
     // ie9 mousemove does not fire
     if (document.documentMode == 9) {
         return;
     }
 
-    var Gesture = S.Event.Gesture;
+    var Gesture = Event.Gesture;
 
     var $ = S.all;
 
@@ -56,10 +56,10 @@ KISSY.add(function (S, Resizable, ResizableProxyPlugin) {
 
         var lNode = dom.one('.ks-resizable-handler-l');
 
-        function getRegion(dom){
+        function getRegion(dom) {
             return {
                 width: dom.width(),
-                    height: dom.height(),
+                height: dom.height(),
                 left: dom.offset().left,
                 top: dom.offset().top
             };
@@ -85,7 +85,7 @@ KISSY.add(function (S, Resizable, ResizableProxyPlugin) {
                     clientY: 110
                 });
             });
-            runs(function(){
+            runs(function () {
                 expect(originRegion).toEqual(getRegion(dom));
                 expect(originRegion).not
                     .toEqual(getRegion(resizable
@@ -102,10 +102,10 @@ KISSY.add(function (S, Resizable, ResizableProxyPlugin) {
             waits(200);
             runs(function () {
                 expect(getRegion(dom)).toEqual({
-                    width:120,
-                    height:120,
-                    left:80,
-                    top:100
+                    width: 120,
+                    height: 120,
+                    left: 80,
+                    top: 100
                 });
             });
         });
@@ -118,5 +118,5 @@ KISSY.add(function (S, Resizable, ResizableProxyPlugin) {
         });
     });
 }, {
-    requires: ['resizable', 'resizable/plugin/proxy']
+    requires: ['event', 'resizable', 'resizable/plugin/proxy']
 });

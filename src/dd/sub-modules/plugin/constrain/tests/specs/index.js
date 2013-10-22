@@ -4,7 +4,7 @@
  */
 KISSY.add(function (S, Event, DD, Constrain) {
     var Draggable = DD.Draggable,
-        Gesture = S.Event.Gesture,
+        Gesture = Event.Gesture,
         $ = S.all;
 
     window.scrollTo(0, 0);

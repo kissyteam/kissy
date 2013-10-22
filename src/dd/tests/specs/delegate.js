@@ -2,10 +2,10 @@
  * @module  delegate-spec
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, Node, DD, Dom, Proxy, IO) {
+KISSY.add(function (S, Event, Node, DD, Dom, Proxy, IO) {
     var $ = Node.all,
         UA = S.UA,
-        Gesture = S.Event.Gesture,
+        Gesture = Event.Gesture,
         DraggableDelegate = DD.DraggableDelegate,
         DroppableDelegate = DD.DroppableDelegate;
 
@@ -258,7 +258,7 @@ KISSY.add(function (S, Node, DD, Dom, Proxy, IO) {
     });
 
 }, {
-    requires: ['node', 'dd', 'dom',
+    requires: ['event', 'node', 'dd', 'dom',
         'dd/plugin/proxy',
         'io']
 });

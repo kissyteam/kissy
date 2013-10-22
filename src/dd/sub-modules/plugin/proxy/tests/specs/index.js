@@ -2,10 +2,10 @@
  * @module  proxy-spec
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, Node, DD, Proxy) {
+KISSY.add(function (S, Node,Event, DD, Proxy) {
     var UA = S.UA;
     var Draggable = DD.Draggable,
-        Gesture = S.Event.Gesture,
+        Gesture = Event.Gesture,
         Dom = S.DOM;
     var ie = document['documentMode'] || UA['ie'];
 
@@ -80,5 +80,5 @@ KISSY.add(function (S, Node, DD, Proxy) {
 
     });
 }, {
-    requires: ['node', 'dd', 'dd/plugin/proxy']
+    requires: ['node','event', 'dd', 'dd/plugin/proxy']
 });

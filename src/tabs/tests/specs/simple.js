@@ -3,10 +3,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S, Tabs) {
-
     var $ = S.all;
-
-    var Gesture = S.Event.Gesture;
 
     describe("tabs", function () {
 
@@ -227,7 +224,6 @@ KISSY.add(function (S, Tabs) {
 
 
     });
-
 },{
     requires:['tabs']
 });

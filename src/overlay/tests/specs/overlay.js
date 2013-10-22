@@ -2,9 +2,10 @@
  * testcases for overlay
  * @author yiminghe@gmail.com
  */
-KISSY.add(
-    function (S, UA, Node, Overlay, ResizePlugin) {
-    var Dom = S.DOM, $ = Node.all, Gesture = S.Event.Gesture;
+KISSY.add(function (S, Event, UA, Node, Overlay, ResizePlugin) {
+    var Dom = S.DOM,
+        $ = Node.all,
+        Gesture = Event.Gesture;
 
     beforeEach(function () {
         this.addMatchers({
@@ -392,7 +393,6 @@ KISSY.add(
 
 
     });
-
-},{
-        requires:"ua,node,overlay,component/plugin/resize".split(',')
-    });
+}, {
+    requires: "event,ua,node,overlay,component/plugin/resize".split(',')
+});

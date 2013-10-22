@@ -3,9 +3,9 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(
-    function (S, UA, Node, Overlay, ConstrainPlugin, DragPlugin) {
+    function (S, Event,UA, Node, Overlay, ConstrainPlugin, DragPlugin) {
         var Dom = S.DOM, $ = Node.all;
-        var Gesture = S.Event.Gesture;
+        var Gesture = Event.Gesture;
         var Dialog = Overlay.Dialog;
 
         describe("dialog", function () {
@@ -217,5 +217,5 @@ KISSY.add(
 
         });
     },{
-        requires:"ua,node,overlay,dd/plugin/constrain,component/plugin/drag".split(',')
+        requires:"event,ua,node,overlay,dd/plugin/constrain,component/plugin/drag".split(',')
     });

@@ -2,17 +2,15 @@
  * @module  droppable-spec
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S,  Node, DD, Droppable,IO) {
+KISSY.add(function (S, Event, Node, DD, Droppable, IO) {
     var Dom = S.DOM,
-        UA= S.UA,
+        UA = S.UA,
         DDM = DD.DDM,
-        Gesture = S.Event.Gesture,
-        Draggable = DD.Draggable;
-
-        var $=Node.all;
+        Gesture = Event.Gesture,
+        Draggable = DD.Draggable,
+        $ = Node.all;
 
     var ie = document['documentMode'] || UA['ie'];
-
 
     describe("droppable", function () {
 
@@ -36,7 +34,6 @@ KISSY.add(function (S,  Node, DD, Droppable,IO) {
             //});
 
 
-
             //afterEach(function () {
             //    container.remove();
             //});
@@ -44,7 +41,7 @@ KISSY.add(function (S,  Node, DD, Droppable,IO) {
             var drag, drop, dragNode, dragXy, dropNode, dropXy;
             drag = new Draggable({
                 mode: 'point',
-                move:1,
+                move: 1,
                 node: '#drag_mode'
             });
 
@@ -121,9 +118,9 @@ KISSY.add(function (S,  Node, DD, Droppable,IO) {
                     return;
                 }
 
-                var callCount=0;
+                var callCount = 0;
 
-                var dragoverSpy = function(){
+                var dragoverSpy = function () {
                     callCount++;
                 };
 
@@ -247,8 +244,6 @@ KISSY.add(function (S,  Node, DD, Droppable,IO) {
 
         });
     });
-
-},
-    {
-        requires:['node','dd','dd/droppable','io']
-    });
+}, {
+    requires: ['event', 'node', 'dd', 'dd/droppable', 'io']
+});
