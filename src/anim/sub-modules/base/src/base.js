@@ -75,7 +75,7 @@ KISSY.add('anim/base', function (S, Dom, Utils, Promise, Q) {
         /**
          * prepare fx hook
          * @protected
-         * @function
+         * @method
          */
         prepareFx: noop,
 
@@ -224,14 +224,14 @@ KISSY.add('anim/base', function (S, Dom, Utils, Promise, Q) {
         /**
          * stop by dom operation
          * @protected
-         * @function
+         * @method
          */
         doStop: noop,
 
         /**
          * start by dom operation
          * @protected
-         * @function
+         * @method
          */
         doStart: noop,
 
@@ -261,7 +261,7 @@ KISSY.add('anim/base', function (S, Dom, Utils, Promise, Q) {
         /**
          * before resume hook
          * @protected
-         * @function
+         * @method
          */
         'beforeResume': noop,
 

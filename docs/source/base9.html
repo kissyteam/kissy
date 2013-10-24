@@ -43,9 +43,10 @@ KISSY.add('scroll-view/base', function (S, Node, Anim, Container, Render, undefi
         anim.scrollView.set(fx.prop, fx.val);
     }
 
-<span id='KISSY-ScrollView'>    /**
-</span>     * Make container scrollable
-     * @class KISSY.ScrollView
+<span id='KISSY-ScrollView-Base'>    /**
+</span>     * Make container scrollable.
+     * module scroll-view will be this class on non-touch device
+     * @class KISSY.ScrollView.Base
      * @extend KISSY.Component.Container
      */
     return Container.extend({
@@ -148,10 +149,7 @@ KISSY.add('scroll-view/base', function (S, Node, Anim, Container, Render, undefi
                 if (scrollTop &lt;= min &amp;&amp; deltaY &gt; 0 || scrollTop &gt;= max &amp;&amp; deltaY &lt; 0) {
                 } else {
                     self.scrollToWithBounds({top: scrollTop - e.deltaY * scrollStep['top']});
-                    // no need for pointer event
-                    if (isTouchEventSupported) {
-                        e.preventDefault();
-                    }
+                    e.preventDefault();
                 }
             }
 
@@ -162,9 +160,7 @@ KISSY.add('scroll-view/base', function (S, Node, Anim, Container, Render, undefi
                 if (scrollLeft &lt;= min &amp;&amp; deltaX &gt; 0 || scrollLeft &gt;= max &amp;&amp; deltaX &lt; 0) {
                 } else {
                     self.scrollToWithBounds({left: scrollLeft - e.deltaX * scrollStep['left']});
-                    if (isTouchEventSupported) {
-                        e.preventDefault();
-                    }
+                    e.preventDefault();
                 }
             }
         },
@@ -273,12 +269,36 @@ KISSY.add('scroll-view/base', function (S, Node, Anim, Container, Render, undefi
         }
     }, {
         ATTRS: {
+<span id='KISSY-ScrollView-Base-property-contentEl'>            /**
+</span>             * content element of scroll view component
+             * @property contentEl
+             * @type {KISSY.NodeList}
+             */
+<span id='global-property-contentEl'>            /**
+</span>             * @ignore
+             */
             contentEl: {
             },
+<span id='KISSY-ScrollView-Base-property-scrollLeft'>            /**
+</span>             * scrollLeft of scroll view
+             * @property scrollLeft
+             * @type {Number}
+             */
+<span id='global-property-scrollLeft'>            /**
+</span>             * @ignore
+             */
             scrollLeft: {
                 view: 1,
                 value: 0
             },
+<span id='KISSY-ScrollView-Base-property-scrollTop'>            /**
+</span>             * scrollTop of scroll view
+             * @property scrollTop
+             * @type {Number}
+             */
+<span id='global-property-scrollTop'>            /**
+</span>             * @ignore
+             */
             scrollTop: {
                 view: 1,
                 value: 0
@@ -293,15 +313,24 @@ KISSY.add('scroll-view/base', function (S, Node, Anim, Container, Render, undefi
             handleMouseEvents: {
                 value: false
             },
+<span id='KISSY-ScrollView-Base-cfg-snap'>            /**
+</span>             * whether to allow snap effect
+             * @cfg {Boolean} snap
+             */
+<span id='global-property-snap'>            /**
+</span>             * @ignore
+             */
             snap: {
                 value: false
             },
-            snapDuration: {
-                value: 0.3
-            },
-            snapEasing: {
-                value: 'easeOut'
-            },
+<span id='KISSY-ScrollView-Base-property-pageIndex'>            /**
+</span>             * pageIndex, current pageIndex if allow snap
+             * @property pageIndex
+             * @type {Number}
+             */
+<span id='global-property-pageIndex'>            /**
+</span>             * @ignore
+             */
             pageIndex: {
                 value: 0
             },

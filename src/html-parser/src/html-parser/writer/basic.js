@@ -78,10 +78,13 @@ KISSY.add("html-parser/writer/basic", function (S, Utils) {
             this.append("<!--" + comment + "-->");
         },
 
+        /**
+         * get the html content written to this writer
+         * @returns {string}
+         */
         getHtml: function () {
             return this.output.join("");
         }
-
     };
 
     return BasicWriter;

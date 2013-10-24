@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * init loader, set config
  */
 (function (S) {

@@ -20,7 +20,9 @@
  * basic writer for inheritance
  * @author yiminghe@gmail.com
  */
-KISSY.add(&quot;html-parser/writer/basic&quot;, function () {
+KISSY.add(&quot;html-parser/writer/basic&quot;, function (S, Utils) {
+    var isBooleanAttribute = Utils.isBooleanAttribute;
+
     function escapeAttrValue(str) {
         return String(str).replace(/&quot;/g, &quot;&amp;quote;&quot;);
     }
@@ -69,10 +71,15 @@ KISSY.add(&quot;html-parser/writer/basic&quot;, function () {
         },
 
         attribute: function (attr) {
+            var value = attr.value||'',
+                name = attr.name;
+            if (isBooleanAttribute(name) &amp;&amp; !value) {
+                value = name;
+            }
             this.append(&quot; &quot;,
-                attr.name,
+                name,
                 &quot;=\&quot;&quot;,
-                escapeAttrValue(attr.value || attr.name),
+                escapeAttrValue(value),
                 &quot;\&quot;&quot;);
         },
 
@@ -88,13 +95,18 @@ KISSY.add(&quot;html-parser/writer/basic&quot;, function () {
             this.append(&quot;&lt;!--&quot; + comment + &quot;--&gt;&quot;);
         },
 
+<span id='KISSY-HtmlParser-BasicWriter-method-getHtml'>        /**
+</span>         * get the html content written to this writer
+         * @returns {string}
+         */
         getHtml: function () {
             return this.output.join(&quot;&quot;);
         }
-
     };
 
     return BasicWriter;
+}, {
+    requires: ['../utils']
 });</pre>
 </body>
 </html>

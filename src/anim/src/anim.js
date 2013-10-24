@@ -14,10 +14,23 @@ KISSY.add('anim', function (S, Dom, AnimBase, TimerAnim, TransitionAnim) {
     /**
      * @class KISSY.Anim
      * A class for constructing animation instances.
-     * @extend KISSY.Event.CustomEvent.Target
+     *
+     *      @example
+     *      KISSY.use('dom,anim',function(S,Dom,Anim){
+     *          var d=Dom.create('<div style="width:50px;height:50px;border:1px solid red;">running</div>');
+     *          document.body.appendChild(d);
+     *          new Anim({
+     *              node: d,
+     *              to: {width:100,height:100}
+     *          }).run().then(function(){
+     *              d.innerHTML='completed';
+     *          });
+     *      });
+     *
+     * @extend KISSY.Promise
      * @cfg {HTMLElement|Window} node html dom node or window
      * (window can only animate scrollTop/scrollLeft)
-     * @cfg {Object} props end css style value.
+     * @cfg {Object} to end css style value.
      * @cfg {Number} [duration=1] duration(second) or anim config
      * @cfg {String|Function} [easing='easeNone'] easing fn or string
      * @cfg {Function} [complete] callback function when this animation is complete

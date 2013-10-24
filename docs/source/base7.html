@@ -118,40 +118,6 @@ KISSY.add('io/base', function (S, CustomEvent, undefined) {
         return c;
     }
 
-    function fire(eventType, self) {
-<span id='KISSY-IO-static-event-complete'>        /**
-</span>         * fired after request completes (success or error)
-         * @event complete
-         * @member KISSY.IO
-         * @static
-         * @param {KISSY.Event.CustomEvent.Object} e
-         * @param {KISSY.IO} e.io current io
-         */
-
-<span id='KISSY-IO-static-event-success'>        /**
-</span>         * fired after request succeeds
-         * @event success
-         * @member KISSY.IO
-         * @static
-         * @param {KISSY.Event.CustomEvent.Object} e
-         * @param {KISSY.IO} e.io current io
-         */
-
-<span id='KISSY-IO-static-event-error'>        /**
-</span>         * fired after request occurs error
-         * @event error
-         * @member KISSY.IO
-         * @static
-         * @param {KISSY.Event.CustomEvent.Object} e
-         * @param {KISSY.IO} e.io current io
-         */
-        IO.fire(eventType, {
-            // 兼容
-            ajaxConfig: self.config,
-            io: self
-        });
-    }
-
 <span id='KISSY-IO-cfg-xdr'><span id='KISSY-IO-cfg-password'><span id='KISSY-IO-cfg-username'><span id='KISSY-IO-cfg-xhrFields'><span id='KISSY-IO-cfg-serializeArray'><span id='KISSY-IO-cfg-timeout'><span id='KISSY-IO-cfg-complete'><span id='KISSY-IO-cfg-error'><span id='KISSY-IO-cfg-success'><span id='KISSY-IO-cfg-beforeSend'><span id='KISSY-IO-cfg-scriptCharset'><span id='KISSY-IO-cfg-processData'><span id='KISSY-IO-cfg-ifModified'><span id='KISSY-IO-cfg-mimeType'><span id='KISSY-IO-cfg-jsonpCallback'><span id='KISSY-IO-cfg-jsonp'><span id='KISSY-IO-cfg-headers'><span id='KISSY-IO-cfg-dataType'><span id='KISSY-IO-cfg-data'><span id='KISSY-IO-cfg-crossDomain'><span id='KISSY-IO-cfg-converters'><span id='KISSY-IO-cfg-context'><span id='KISSY-IO-cfg-contents'><span id='KISSY-IO-cfg-cache'><span id='KISSY-IO-cfg-async'><span id='KISSY-IO-cfg-accepts'><span id='KISSY-IO-cfg-contentType'><span id='KISSY-IO-cfg-type'><span id='KISSY-IO-cfg-url'><span id='KISSY-IO'>    /**
 </span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span>     * Return a io object and send request by config.
      *
@@ -384,10 +350,10 @@ KISSY.add('io/base', function (S, CustomEvent, undefined) {
              * @type String
              */
             status: 0,
-            transport: null,
-            _defer: new S.Defer(this)
+            transport: null
         });
 
+        S.Defer(self);
 
         var transportConstructor,
             transport;
@@ -400,8 +366,11 @@ KISSY.add('io/base', function (S, CustomEvent, undefined) {
          * @param {KISSY.Event.CustomEvent.Object} e
          * @param {KISSY.IO} e.io current io
          */
-
-        fire('start', self);
+        IO.fire('start', {
+            // 兼容
+            ajaxConfig: c,
+            io: self
+        });
 
         transportConstructor = transports[c.dataType[0]] || transports['*'];
         transport = new transportConstructor(self);
@@ -413,7 +382,6 @@ KISSY.add('io/base', function (S, CustomEvent, undefined) {
         }
 
         var dataType = c.dataType[0],
-            timeoutTimer,
             i,
             timeout = c.timeout,
             context = c.context,
@@ -440,23 +408,6 @@ KISSY.add('io/base', function (S, CustomEvent, undefined) {
             return self;
         }
 
-        function genHandler(handleStr) {
-            return function (v) {
-                if (timeoutTimer = self.timeoutTimer) {
-                    clearTimeout(timeoutTimer);
-                    self.timeoutTimer = 0;
-                }
-                var h = c[handleStr];
-                h &amp;&amp; h.apply(context, v);
-                fire(handleStr, self);
-            };
-        }
-
-        // fix: easy error report
-        self.done(genHandler('success'), genHandler('error'));
-
-        self.fin(genHandler('complete'));
-
         self.readyState = 1;
 
 <span id='KISSY-IO-static-event-send'>        /**
@@ -468,7 +419,11 @@ KISSY.add('io/base', function (S, CustomEvent, undefined) {
          * @param {KISSY.IO} e.io current io
          */
 
-        fire('send', self);
+        IO.fire('send', {
+            // 兼容
+            ajaxConfig: c,
+            io: self
+        });
 
         // Timeout
         if (c.async &amp;&amp; timeout &gt; 0) {

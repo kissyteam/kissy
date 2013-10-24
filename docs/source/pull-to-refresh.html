@@ -129,21 +129,48 @@ KISSY.add('scroll-view/plugin/pull-to-refresh', function (S, Base) {
         }
     }, {
         ATTRS: {
+<span id='KISSY-ScrollView-Plugin-PullToRefresh-cfg-pullingHtml'>            /**
+</span>             * pulling hint html.
+             * Defaults to: Pull down to refresh...
+             * @cfg {String} pullingHtml
+             */
+<span id='global-property-pullingHtml'>            /**
+</span>             * @ignore
+             */
             pullingHtml: {
                 value: 'Pull down to refresh...'
             },
-
+<span id='KISSY-ScrollView-Plugin-PullToRefresh-cfg-releasingHtml'>            /**
+</span>             * releasing hint html.
+             * Defaults to: release to refresh...
+             * @cfg {String} releasingHtml
+             */
+<span id='global-property-releasingHtml'>            /**
+</span>             * @ignore
+             */
             releasingHtml: {
                 value: 'release to refresh...'
             },
-
+<span id='KISSY-ScrollView-Plugin-PullToRefresh-cfg-loadingHtml'>            /**
+</span>             * loading hint html.
+             * Defaults to: loading...
+             * @cfg {String} loadingHtml
+             */
+<span id='global-property-loadingHtml'>            /**
+</span>             * @ignore
+             */
             loadingHtml: {
                 value: 'loading...'
             },
-
+<span id='KISSY-ScrollView-Plugin-PullToRefresh-cfg-loadFn'>            /**
+</span>             * load function to load data asynchronously
+             * @cfg {Function} loadFn
+             */
+<span id='global-property-loadFn'>            /**
+</span>             * @ignore
+             */
             loadFn: {
             },
-
             state: {
                 value: 'pulling'
             }

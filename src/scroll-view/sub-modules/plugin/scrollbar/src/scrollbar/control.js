@@ -193,6 +193,14 @@ KISSY.add('scroll-view/plugin/scrollbar/control', function (S, Node, Control, Sc
         }
     }, {
         ATTRS: {
+            /**
+             * minimum scrollbar length.
+             * Defaults to 20.
+             * @cfg {Number} minLength
+             */
+            /**
+             * @ignore
+             */
             minLength: {
                 value: MIN_BAR_LENGTH
             },

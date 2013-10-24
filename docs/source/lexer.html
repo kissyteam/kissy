@@ -46,6 +46,11 @@ KISSY.add(&quot;html-parser/lexer/lexer&quot;, function (S, Cursor, Page, TextNo
             return this.cursor.position;
         },
 
+<span id='KISSY-HtmlParser-Lexer-method-nextNode'>        /**
+</span>         * get next node parsed from content
+         * @param quoteSmart
+         * @returns {KISSY.HtmlParse.Node}
+         */
         nextNode: function (quoteSmart) {
             var start ,
                 ch,
@@ -126,11 +131,7 @@ KISSY.add(&quot;html-parser/lexer/lexer&quot;, function (S, Cursor, Page, TextNo
             return ret;
         },
 
-<span id='KISSY-HtmlParser-Lexer-method-makeCData'>        /**
-</span>         * different from text node : space does matter
-         * @param start
-         * @param end
-         */
+       // different from text node : space does matter
         makeCData: function (start, end) {
             var ret = null, l;
             l = end - start;
@@ -173,15 +174,15 @@ KISSY.add(&quot;html-parser/lexer/lexer&quot;, function (S, Cursor, Page, TextNo
             return new CommentNode(page, start, end);
         },
 
-<span id='KISSY-HtmlParser-Lexer-method-parseTag'>        /**
-</span>         * parse tag node according to fsm
-         * * state 0 - outside of any attribute
-         * * state 1 - within attribute name
-         * * state 2 - equals hit
-         * * state 3 - within naked attribute value.
-         * * state 4 - within single quoted attribute value
-         * * state 5 - within double quoted attribute value
-         * * state 6 - whitespaces after attribute name could lead to state 2 (=)or state 0
+        /*
+          parse tag node according to fsm
+          state 0 - outside of any attribute
+          state 1 - within attribute name
+          state 2 - equals hit
+          state 3 - within naked attribute value.
+          state 4 - within single quoted attribute value
+          state 5 - within double quoted attribute value
+          state 6 - whitespaces after attribute name could lead to state 2 (=)or state 0
          */
         parseTag: function (start) {
             var done,
@@ -202,11 +203,11 @@ KISSY.add(&quot;html-parser/lexer/lexer&quot;, function (S, Cursor, Page, TextNo
                     }
                 };
             }
-<span id='KISSY-HtmlParser-Lexer-property-bookmarks[0]'>            /**
-</span>             * record state position
-             *
-             * states 0 -&gt; bookmarks[1]
-             * states 1 -&gt; bookmarks[2]
+            /*
+              record state position
+
+              states 0 -&gt; bookmarks[1]
+              states 1 -&gt; bookmarks[2]
              */
             bookmarks[0] = cursor.position;
             while (!done) {
@@ -357,15 +358,13 @@ KISSY.add(&quot;html-parser/lexer/lexer&quot;, function (S, Cursor, Page, TextNo
             return this.makeTag(start, cursor.position, attributes);
         },
 
-<span id='KISSY-HtmlParser-Lexer-method-parseComment'>        /**
-</span>         * Parse a comment.
-         * state 0 - prior to the first open delimiter (first dash)
-         * state 1 - prior to the second open delimiter (second dash)
-         * state 2 - prior to the first closing delimiter (first dash)
-         * state 3 - prior to the second closing delimiter (second dash)
-         * state 4 - prior to the terminating
-         * @param start
-         * @param quoteSmart
+        /*
+          Parse a comment.
+          state 0 - prior to the first open delimiter (first dash)
+          state 1 - prior to the second open delimiter (second dash)
+          state 2 - prior to the first closing delimiter (first dash)
+          state 3 - prior to the second closing delimiter (second dash)
+          state 4 - prior to the terminating
          */
         parseComment: function (start, quoteSmart) {
             var done,
@@ -450,6 +449,7 @@ KISSY.add(&quot;html-parser/lexer/lexer&quot;, function (S, Cursor, Page, TextNo
 
 <span id='KISSY-HtmlParser-Lexer-method-parseString'>        /**
 </span>         * parse a string node
+         * @private
          * @param start
          * @param quoteSmart strings ignore quoted contents
          */
@@ -541,6 +541,7 @@ KISSY.add(&quot;html-parser/lexer/lexer&quot;, function (S, Cursor, Page, TextNo
 
 <span id='KISSY-HtmlParser-Lexer-method-parseCDATA'>        /**
 </span>         * parse cdata such as code in script
+         * @private
          * @param quoteSmart if set true end tag in quote
          * (but not in comment mode) does not end current tag ( &lt;script&gt;x=&quot;&lt;a&gt;taobao&lt;/a&gt;&quot;&lt;/script&gt; )
          * @param tagName
@@ -751,6 +752,7 @@ KISSY.add(&quot;html-parser/lexer/lexer&quot;, function (S, Cursor, Page, TextNo
 </span>         * Generate an single quoted attribute
          * @param attributes The list so far.
          * @param bookmarks The array of positions.
+         * @private
          */
         single_quote: function (attributes, bookmarks) {
             var page = this.page;
@@ -761,6 +763,7 @@ KISSY.add(&quot;html-parser/lexer/lexer&quot;, function (S, Cursor, Page, TextNo
 </span>         * Generate an double quoted attribute
          * @param attributes The list so far.
          * @param bookmarks The array of positions.
+         * @private
          */
         double_quote: function (attributes, bookmarks) {
             var page = this.page;
@@ -770,6 +773,7 @@ KISSY.add(&quot;html-parser/lexer/lexer&quot;, function (S, Cursor, Page, TextNo
 
 <span id='KISSY-HtmlParser-Lexer-method-standalone'>        /**
 </span>         * Generate a standalone attribute
+         * @private
          * @param attributes The list so far.
          * @param bookmarks The array of positions.
          */
@@ -780,6 +784,7 @@ KISSY.add(&quot;html-parser/lexer/lexer&quot;, function (S, Cursor, Page, TextNo
 
 <span id='KISSY-HtmlParser-Lexer-method-naked'>        /**
 </span>         * Generate an unquoted attribute
+         * @private
          * @param attributes The list so far.
          * @param bookmarks The array of positions.
          */

@@ -13,6 +13,13 @@ KISSY.add("html-parser/nodes/node", function (S) {
         return i;
     }
 
+    /**
+     * node structure from htmlparser
+     * @param page
+     * @param startPosition
+     * @param endPosition
+     * @class KISSY.HtmlParse.Node
+     */
     function Node(page, startPosition, endPosition) {
         this.parentNode = null;
         this.page = page;
@@ -34,11 +41,17 @@ KISSY.add("html-parser/nodes/node", function (S) {
 
         constructor: Node,
 
+        /**
+         * get outerHtml of current node
+         * @returns {String}
+         */
         toHtml: function () {
             if (this.page && this.page.getText) {
                 return this.page.getText(this.startPosition, this.endPosition);
             }
+            return '';
         },
+
         toString: function () {
             var ret = [],
                 self = this;

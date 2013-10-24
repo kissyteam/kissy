@@ -20,18 +20,24 @@
  * utils about language for html parser
  * @author yiminghe@gmail.com
  */
-KISSY.add(&quot;html-parser/utils&quot;, function() {
+KISSY.add(&quot;html-parser/utils&quot;, function () {
     return {
-        collapseWhitespace:function (str) {
+        isBooleanAttribute: function (attrName) {
+            return (/^(?:checked|disabled|selected|readonly|defer|multiple|nohref|noshape|nowrap|noresize|compact|ismap)$/i).test(attrName);
+        },
+
+        collapseWhitespace: function (str) {
             return str.replace(/[\s\xa0]+/g, ' ');
         },
-        isLetter:function(ch) {
+
+        isLetter: function (ch) {
             return 'a' &lt;= ch &amp;&amp; 'z' &gt;= ch || 'A' &lt;= ch &amp;&amp; 'Z' &gt;= ch;
         },
+
         /*
-          refer: http://www.w3.org/TR/html5/syntax.html#attributes-0
+         refer: http://www.w3.org/TR/html5/syntax.html#attributes-0
          */
-        isValidAttributeNameStartChar:function(ch) {
+        isValidAttributeNameStartChar: function (ch) {
             return !this.isWhitespace(ch) &amp;&amp;
                 ch != '&quot;' &amp;&amp;
                 ch != &quot;'&quot; &amp;&amp;
@@ -41,7 +47,7 @@ KISSY.add(&quot;html-parser/utils&quot;, function() {
                 ch != '=';
         },
 
-        isWhitespace:function(ch) {
+        isWhitespace: function (ch) {
             // http://yiminghe.iteye.com/admin/blogs/722786
             // http://yiminghe.iteye.com/admin/blogs/788929
             // 相比平时的空格（&amp;#32;），nbsp拥有不间断（non-breaking）特性。
@@ -54,8 +60,8 @@ KISSY.add(&quot;html-parser/utils&quot;, function() {
     };
 });
 /*
-  refer:
-   -  http://www.w3.org/TR/html5/syntax.html
+ refer:
+ -  http://www.w3.org/TR/html5/syntax.html
  */</pre>
 </body>
 </html>

@@ -150,6 +150,11 @@ KISSY.add('date/picker/control', function (S, Node, GregorianCalendar, locale, C
         });
     }
 
+<span id='KISSY-Date-Picker'>    /**
+</span>     * date picker ui component
+     * @class KISSY.Date.Picker
+     * @extends KISSY.Component.Control
+     */
     return Control.extend({
         bindUI: function () {
             var self = this;
@@ -248,6 +253,13 @@ KISSY.add('date/picker/control', function (S, Node, GregorianCalendar, locale, C
             focusable: {
                 value: true
             },
+<span id='KISSY-Date-Picker-cfg-value'>            /**
+</span>             * current selected value of current date picker
+             * @cfg {KISSY.Date.Gregorian} value
+             */
+<span id='global-property-value'>            /**
+</span>             * @ignore
+             */
             value: {
                 view: 1,
                 valueFn: function () {
@@ -264,15 +276,63 @@ KISSY.add('date/picker/control', function (S, Node, GregorianCalendar, locale, C
             nextMonthBtn: {},
             tbodyEl: {},
             todayBtnEl: {},
+<span id='KISSY-Date-Picker-cfg-dateRender'>            /**
+</span>             * function used to render a date cell
+             *
+             *      function(current){
+             *          return '&lt;a&gt;'+current.getDay()+'&lt;/a&gt;';
+             *      }
+             *
+             * @cfg {Function} dateRender
+             */
+<span id='global-property-dateRender'>            /**
+</span>             * @ignore
+             */
             dateRender: {},
+<span id='KISSY-Date-Picker-cfg-disabledDate'>            /**
+</span>             * function used to judge whether this date cell is disabled
+             *
+             *      function(current){
+             *          // before 2010 is disabled
+             *          return current.getYear()&lt;2010;
+             *      }
+             *
+             * @cfg {Function} disabledDate
+             */
+<span id='global-property-disabledDate'>            /**
+</span>             * @ignore
+             */
             disabledDate: {},
+<span id='KISSY-Date-Picker-cfg-locale'>            /**
+</span>             * locale object for date picker
+             * @cfg {Object} locale
+             */
+<span id='global-property-locale'>            /**
+</span>             * @ignore
+             */
             locale: {
                 value: locale
             },
+<span id='KISSY-Date-Picker-cfg-showToday'>            /**
+</span>             * whether to show today button.
+             * Defaults to true.
+             * @cfg {Boolean} showToday
+             */
+<span id='global-property-showToday'>            /**
+</span>             * @ignore
+             */
             showToday: {
                 view: 1,
                 value: true
             },
+<span id='KISSY-Date-Picker-cfg-showClear'>            /**
+</span>             * whether to show clear button.
+             * Defaults to true.
+             * @cfg {Boolean} showClear
+             */
+<span id='global-property-showClear'>            /**
+</span>             * @ignore
+             */
             showClear: {
                 view: 1,
                 value: true
@@ -281,6 +341,14 @@ KISSY.add('date/picker/control', function (S, Node, GregorianCalendar, locale, C
                 view: 1,
                 value: false
             },
+<span id='KISSY-Date-Picker-cfg-showWeekNumber'>            /**
+</span>             * whether to show week number column.
+             * Defaults to true.
+             * @cfg {Boolean} showWeekNumber
+             */
+<span id='global-property-showWeekNumber'>            /**
+</span>             * @ignore
+             */
             showWeekNumber: {
                 view: 1,
                 value: true

@@ -326,7 +326,9 @@ KISSY.add('base', function (S, Attribute, CustomEvent) {
          * @param {Function[]} [extensions] extension classes
          * @param {Object} [px] key-value map for prototype properties/methods.
          * @param {Object} [sx] key-value map for static properties/methods.
+         * @param {String} [sx.name] new Class's name.
          * @return {Function} new class which extend called, it also has a static extend method
+         * @static
          *
          * for example:
          *

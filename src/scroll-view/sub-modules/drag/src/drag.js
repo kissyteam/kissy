@@ -459,8 +459,10 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, Node, Anim) {
     }
 
     /**
-     * allow touch drag for scroll view
+     * allow touch drag for scroll view.
+     * module scroll-view will be this class on touch device
      * @class KISSY.ScrollView.Drag
+     * @extends KISSY.ScrollView.Base
      */
     return ScrollViewBase.extend({
             bindUI: function () {
@@ -494,6 +496,14 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, Node, Anim) {
                 lockX: {
                     value: true
                 },
+                /**
+                 * whether allow browser default action on x direction if reach x direction limitation.
+                 * Defaults to: true, does not allow.
+                 * @cfg {Boolean} preventDefaultX
+                 */
+                /**
+                 * @ignore
+                 */
                 preventDefaultX: {
                     value: true
                 },
@@ -508,8 +518,36 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, Node, Anim) {
                 lockY: {
                     value: false
                 },
+                /**
+                 * whether allow browser default action on y direction if reach y direction limitation.
+                 * Defaults to: true, does not allow.
+                 * @cfg {Boolean} preventDefaultY
+                 */
+                /**
+                 * @ignore
+                 */
                 preventDefaultY: {
                     value: false
+                },
+                /**
+                 * snapDuration, Defaults to 0.3
+                 * @cfg {Number} snapDuration
+                 */
+                /**
+                 * @ignore
+                 */
+                snapDuration: {
+                    value: 0.3
+                },
+                /**
+                 * snapEasing, Defaults to 'easeOut'
+                 * @cfg {String} snapEasing
+                 */
+                /**
+                 * @ignore
+                 */
+                snapEasing: {
+                    value: 'easeOut'
                 },
                 /**
                  * px diff to start x or y snap gesture

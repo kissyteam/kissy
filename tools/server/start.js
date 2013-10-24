@@ -117,6 +117,9 @@ S.use('xtemplate/nodejs', function (S, XTemplateNodeJs) {
                 var ua = req.get('User-Agent'),
                     $fragment,
                     query = req.query;
+                if ('print' in query) {
+                    query.mobile = query.print;
+                }
                 if ('mobile' in query) {
                     $fragment = query.mobile || '';
                 } else if (

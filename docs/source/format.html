@@ -21,12 +21,33 @@
  * Inspired by DateTimeFormat from JDK.
  * @author yiminghe@gmail.com
  */
-KISSY.add('date/format', function (S, GregorianCalendar, defaultLocale) {
-    var MAX_VALUE = Number.MAX_VALUE;
-    var logger= S.getLogger('s/date/format');
+KISSY.add('date/format', function (S, GregorianCalendar, defaultLocale, undefined) {
+    var MAX_VALUE = Number.MAX_VALUE,
+<span id='KISSY-Date-Formatter-Style'>        /**
+</span>         * date or time style enum
+         * @enum {Number} KISSY.Date.Formatter.Style
+         */
+            DateTimeStyle = {
+<span id='KISSY-Date-Formatter-Style-property-FULL'>            /**
+</span>             * full style
+             */
+            FULL: 0,
+<span id='KISSY-Date-Formatter-Style-property-LONG'>            /**
+</span>             * long style
+             */
+            LONG: 1,
+<span id='KISSY-Date-Formatter-Style-property-MEDIUM'>            /**
+</span>             * medium style
+             */
+            MEDIUM: 2,
+<span id='KISSY-Date-Formatter-Style-property-SHORT'>            /**
+</span>             * short style
+             */
+            SHORT: 3
+        },
+        logger = S.getLogger('s/date/format');
 
     /*
-
      Letter    Date or Time Component    Presentation    Examples
      G    Era designator    Text    AD
      y    Year    Year    1996; 96
@@ -204,6 +225,131 @@ KISSY.add('date/format', function (S, GregorianCalendar, defaultLocale) {
         return buffer.join('');
     }
 
+<span id='KISSY-Date-Formatter'>    /**
+</span>     *
+     * date time formatter for KISSY gregorian date.
+     *
+     *      @example
+     *      KISSY.use('date/format,date/gregorian',function(S, DateFormat, GregorianCalendar){
+     *          var calendar = new GregorianCalendar(2013,9,24);
+     *          // ' to escape
+     *          var formatter = new DateFormat(&quot;'today is' ''yyyy/MM/dd a''&quot;);
+     *          document.write(formatter.format(calendar));
+     *      });
+     *
+     * @class KISSY.Date.Formatter
+     * @param {String} pattern patter string of date formatter
+     *
+     * &lt;table border=&quot;1&quot;&gt;
+     * &lt;thead valign=&quot;bottom&quot;&gt;
+     * &lt;tr&gt;&lt;th class=&quot;head&quot;&gt;Letter&lt;/th&gt;
+     * &lt;th class=&quot;head&quot;&gt;Date or Time Component&lt;/th&gt;
+     * &lt;th class=&quot;head&quot;&gt;Presentation&lt;/th&gt;
+     * &lt;th class=&quot;head&quot;&gt;Examples&lt;/th&gt;
+     * &lt;/tr&gt;
+     * &lt;/thead&gt;
+     * &lt;tbody valign=&quot;top&quot;&gt;
+     * &lt;tr&gt;&lt;td&gt;G&lt;/td&gt;
+     * &lt;td&gt;Era designator&lt;/td&gt;
+     * &lt;td&gt;Text&lt;/td&gt;
+     * &lt;td&gt;AD&lt;/td&gt;
+     * &lt;/tr&gt;
+     * &lt;tr&gt;&lt;td&gt;y&lt;/td&gt;
+     * &lt;td&gt;Year&lt;/td&gt;
+     * &lt;td&gt;Year&lt;/td&gt;
+     * &lt;td&gt;1996; 96&lt;/td&gt;
+     * &lt;/tr&gt;
+     * &lt;tr&gt;&lt;td&gt;M&lt;/td&gt;
+     * &lt;td&gt;Month in year&lt;/td&gt;
+     * &lt;td&gt;Month&lt;/td&gt;
+     * &lt;td&gt;July; Jul; 07&lt;/td&gt;
+     * &lt;/tr&gt;
+     * &lt;tr&gt;&lt;td&gt;w&lt;/td&gt;
+     * &lt;td&gt;Week in year&lt;/td&gt;
+     * &lt;td&gt;Number&lt;/td&gt;
+     * &lt;td&gt;27&lt;/td&gt;
+     * &lt;/tr&gt;
+     * &lt;tr&gt;&lt;td&gt;W&lt;/td&gt;
+     * &lt;td&gt;Week in month&lt;/td&gt;
+     * &lt;td&gt;Number&lt;/td&gt;
+     * &lt;td&gt;2&lt;/td&gt;
+     * &lt;/tr&gt;
+     * &lt;tr&gt;&lt;td&gt;D&lt;/td&gt;
+     * &lt;td&gt;Day in year&lt;/td&gt;
+     * &lt;td&gt;Number&lt;/td&gt;
+     * &lt;td&gt;189&lt;/td&gt;
+     * &lt;/tr&gt;
+     * &lt;tr&gt;&lt;td&gt;d&lt;/td&gt;
+     * &lt;td&gt;Day in month&lt;/td&gt;
+     * &lt;td&gt;Number&lt;/td&gt;
+     * &lt;td&gt;10&lt;/td&gt;
+     * &lt;/tr&gt;
+     * &lt;tr&gt;&lt;td&gt;F&lt;/td&gt;
+     * &lt;td&gt;Day of week in month&lt;/td&gt;
+     * &lt;td&gt;Number&lt;/td&gt;
+     * &lt;td&gt;2&lt;/td&gt;
+     * &lt;/tr&gt;
+     * &lt;tr&gt;&lt;td&gt;E&lt;/td&gt;
+     * &lt;td&gt;Day in week&lt;/td&gt;
+     * &lt;td&gt;Text&lt;/td&gt;
+     * &lt;td&gt;Tuesday; Tue&lt;/td&gt;
+     * &lt;/tr&gt;
+     * &lt;tr&gt;&lt;td&gt;a&lt;/td&gt;
+     * &lt;td&gt;Am/pm marker&lt;/td&gt;
+     * &lt;td&gt;Text&lt;/td&gt;
+     * &lt;td&gt;PM&lt;/td&gt;
+     * &lt;/tr&gt;
+     * &lt;tr&gt;&lt;td&gt;H&lt;/td&gt;
+     *       &lt;td&gt;Hour in day (0-23)&lt;/td&gt;
+     * &lt;td&gt;Number&lt;/td&gt;
+     * &lt;td&gt;0&lt;/td&gt;
+     * &lt;/tr&gt;
+     * &lt;tr&gt;&lt;td&gt;k&lt;/td&gt;
+     *       &lt;td&gt;Hour in day (1-24)&lt;/td&gt;
+     * &lt;td&gt;Number&lt;/td&gt;
+     * &lt;td&gt;24&lt;/td&gt;
+     * &lt;/tr&gt;
+     * &lt;tr&gt;&lt;td&gt;K&lt;/td&gt;
+     * &lt;td&gt;Hour in am/pm (0-11)&lt;/td&gt;
+     * &lt;td&gt;Number&lt;/td&gt;
+     * &lt;td&gt;0&lt;/td&gt;
+     * &lt;/tr&gt;
+     * &lt;tr&gt;&lt;td&gt;h&lt;/td&gt;
+     * &lt;td&gt;Hour in am/pm (1-12)&lt;/td&gt;
+     * &lt;td&gt;Number&lt;/td&gt;
+     * &lt;td&gt;12&lt;/td&gt;
+     * &lt;/tr&gt;
+     * &lt;tr&gt;&lt;td&gt;m&lt;/td&gt;
+     * &lt;td&gt;Minute in hour&lt;/td&gt;
+     * &lt;td&gt;Number&lt;/td&gt;
+     * &lt;td&gt;30&lt;/td&gt;
+     * &lt;/tr&gt;
+     * &lt;tr&gt;&lt;td&gt;s&lt;/td&gt;
+     * &lt;td&gt;Second in minute&lt;/td&gt;
+     * &lt;td&gt;Number&lt;/td&gt;
+     * &lt;td&gt;55&lt;/td&gt;
+     * &lt;/tr&gt;
+     * &lt;tr&gt;&lt;td&gt;S&lt;/td&gt;
+     * &lt;td&gt;Millisecond&lt;/td&gt;
+     * &lt;td&gt;Number&lt;/td&gt;
+     * &lt;td&gt;978&lt;/td&gt;
+     * &lt;/tr&gt;
+     * &lt;tr&gt;&lt;td&gt;x/z&lt;/td&gt;
+     * &lt;td&gt;Time zone&lt;/td&gt;
+     * &lt;td&gt;General time zone&lt;/td&gt;
+     * &lt;td&gt;Pacific Standard Time; PST; GMT-08:00&lt;/td&gt;
+     * &lt;/tr&gt;
+     * &lt;tr&gt;&lt;td&gt;Z&lt;/td&gt;
+     * &lt;td&gt;Time zone&lt;/td&gt;
+     * &lt;td&gt;RFC 822 time zone&lt;/td&gt;
+     * &lt;td&gt;-0800&lt;/td&gt;
+     * &lt;/tr&gt;
+     * &lt;/tbody&gt;
+     * &lt;/table&gt;
+
+     * @param {Object} locale locale object
+     * @param {Number} timeZoneOffset time zone offset by minutes
+     */
     function DateTimeFormat(pattern, locale, timeZoneOffset) {
         this.locale = locale || defaultLocale;
         this.pattern = compile(pattern);
@@ -236,7 +382,7 @@ KISSY.add('date/format', function (S, GregorianCalendar, defaultLocale) {
                 }
                 break;
             case 'k':
-                current = zeroPaddingNumber(calendar.getHourOfDay()|| 24,
+                current = zeroPaddingNumber(calendar.getHourOfDay() || 24,
                     count);
                 break;
             case 'E':
@@ -385,11 +531,11 @@ KISSY.add('date/format', function (S, GregorianCalendar, defaultLocale) {
                     }
                 } else {
                     if (match = matchNumber(dateStr, startIndex, count, obeyCount)) {
-                        month = match.value-1;
+                        month = match.value - 1;
                     }
                 }
                 if (match) {
-                    calendar.setMonth( month);
+                    calendar.setMonth(month);
                 }
                 break;
             case 'k':
@@ -401,7 +547,7 @@ KISSY.add('date/format', function (S, GregorianCalendar, defaultLocale) {
                 if (match = matchField(dateStr, startIndex, locale[count &gt; 3 ?
                     'weekdays' :
                     'shortWeekdays'])) {
-                    calendar.setDayOfWeek( match.value);
+                    calendar.setDayOfWeek(match.value);
                 }
                 break;
             case 'a':
@@ -479,9 +625,15 @@ KISSY.add('date/format', function (S, GregorianCalendar, defaultLocale) {
     }
 
     DateTimeFormat.prototype = {
+<span id='KISSY-Date-Formatter-method-format'>        /**
+</span>         * format a GregorianDate instance according to specified pattern
+         * @param {KISSY.Date.Gregorian} calendar GregorianDate instance
+         * @returns {string} formatted string of GregorianDate instance
+         */
         format: function (calendar) {
             var time = calendar.getTime();
-            calendar = new GregorianCalendar(this.timezoneOffset, this.locale);
+<span id='global-property-'>            calendar = /**@type {KISSY.Date.Gregorian}
+</span>             @ignore*/new GregorianCalendar(this.timezoneOffset, this.locale);
             calendar.setTime(time);
             var i,
                 ret = [],
@@ -498,8 +650,14 @@ KISSY.add('date/format', function (S, GregorianCalendar, defaultLocale) {
             return ret.join('');
         },
 
+<span id='KISSY-Date-Formatter-method-parse'>        /**
+</span>         * parse a formatted string of GregorianDate instance according to specified pattern
+         * @param {String} dateStr formatted string of GregorianDate
+         * @returns {KISSY.Date.Gregorian}
+         */
         parse: function (dateStr) {
-            var calendar = new GregorianCalendar(this.timezoneOffset, this.locale),
+<span id='global-property-'>            var calendar = /**@type {KISSY.Date.Gregorian}
+</span>                 @ignore*/new GregorianCalendar(this.timezoneOffset, this.locale),
                 i,
                 j,
                 tmp = {},
@@ -566,20 +724,43 @@ KISSY.add('date/format', function (S, GregorianCalendar, defaultLocale) {
         }
     };
 
-    var DateTimeStyle = DateTimeFormat.Style = {
-        FULL: 0,
-        LONG: 1,
-        MEDIUM: 2,
-        SHORT: 3
-    };
-
     S.mix(DateTimeFormat, {
+        Style: DateTimeStyle,
+
+<span id='KISSY-Date-Formatter-static-method-getInstance'>        /**
+</span>         * get a formatter instance of short style pattern.
+         * en-us: M/d/yy h:mm a
+         * zh-cn: yy-M-d ah:mm
+         * @param {Object} locale locale object
+         * @param {Number} timeZoneOffset time zone offset by minutes
+         * @returns {KISSY.Date.Gregorian}
+         * @static
+         */
         getInstance: function (locale, timeZoneOffset) {
             return this.getDateTimeInstance(DateTimeStyle.SHORT, DateTimeStyle.SHORT, locale, timeZoneOffset);
         },
+
+<span id='KISSY-Date-Formatter-static-method-getDateInstance'>        /**
+</span>         * get a formatter instance of specified date style.
+         * @param {KISSY.Date.Formatter.Style} dateStyle date format style
+         * @param {Object} locale
+         * @param {Number} timeZoneOffset time zone offset by minutes
+         * @returns {KISSY.Date.Gregorian}
+         * @static
+         */
         'getDateInstance': function (dateStyle, locale, timeZoneOffset) {
             return this.getDateTimeInstance(dateStyle, undefined, locale, timeZoneOffset);
         },
+
+<span id='KISSY-Date-Formatter-static-method-getDateTimeInstance'>        /**
+</span>         * get a formatter instance of specified date style and time style.
+         * @param {KISSY.Date.Formatter.Style} dateStyle date format style
+         * @param {KISSY.Date.Formatter.Style} timeStyle time format style
+         * @param {Object} locale
+         * @param {Number} timeZoneOffset time zone offset by minutes
+         * @returns {KISSY.Date.Gregorian}
+         * @static
+         */
         getDateTimeInstance: function (dateStyle, timeStyle, locale, timeZoneOffset) {
             locale = locale || defaultLocale;
             var datePattern = '';
@@ -603,6 +784,15 @@ KISSY.add('date/format', function (S, GregorianCalendar, defaultLocale) {
             }
             return new DateTimeFormat(pattern, locale, timeZoneOffset);
         },
+
+<span id='KISSY-Date-Formatter-static-method-getTimeInstance'>        /**
+</span>         * get a formatter instance of specified time style.
+         * @param {KISSY.Date.Formatter.Style} timeStyle time format style
+         * @param {Object} locale
+         * @param {Number} timeZoneOffset time zone offset by minutes
+         * @returns {KISSY.Date.Gregorian}
+         * @static
+         */
         'getTimeInstance': function (timeStyle, locale, timeZoneOffset) {
             return this.getDateTimeInstance(undefined, timeStyle, locale, timeZoneOffset);
         }

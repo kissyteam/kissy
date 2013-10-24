@@ -27,8 +27,9 @@ KISSY.add('scroll-view/base', function (S, Node, Anim, Container, Render, undefi
     }
 
     /**
-     * Make container scrollable
-     * @class KISSY.ScrollView
+     * Make container scrollable.
+     * module scroll-view will be this class on non-touch device
+     * @class KISSY.ScrollView.Base
      * @extend KISSY.Component.Container
      */
     return Container.extend({
@@ -251,12 +252,36 @@ KISSY.add('scroll-view/base', function (S, Node, Anim, Container, Render, undefi
         }
     }, {
         ATTRS: {
+            /**
+             * content element of scroll view component
+             * @property contentEl
+             * @type {KISSY.NodeList}
+             */
+            /**
+             * @ignore
+             */
             contentEl: {
             },
+            /**
+             * scrollLeft of scroll view
+             * @property scrollLeft
+             * @type {Number}
+             */
+            /**
+             * @ignore
+             */
             scrollLeft: {
                 view: 1,
                 value: 0
             },
+            /**
+             * scrollTop of scroll view
+             * @property scrollTop
+             * @type {Number}
+             */
+            /**
+             * @ignore
+             */
             scrollTop: {
                 view: 1,
                 value: 0
@@ -271,15 +296,24 @@ KISSY.add('scroll-view/base', function (S, Node, Anim, Container, Render, undefi
             handleMouseEvents: {
                 value: false
             },
+            /**
+             * whether to allow snap effect
+             * @cfg {Boolean} snap
+             */
+            /**
+             * @ignore
+             */
             snap: {
                 value: false
             },
-            snapDuration: {
-                value: 0.3
-            },
-            snapEasing: {
-                value: 'easeOut'
-            },
+            /**
+             * pageIndex, current pageIndex if allow snap
+             * @property pageIndex
+             * @type {Number}
+             */
+            /**
+             * @ignore
+             */
             pageIndex: {
                 value: 0
             },

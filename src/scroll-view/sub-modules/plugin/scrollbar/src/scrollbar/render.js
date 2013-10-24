@@ -4,7 +4,6 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add('scroll-view/plugin/scrollbar/render', function (S, Control, ScrollBarTpl) {
-
     // http://www.html5rocks.com/en/tutorials/speed/html5/
     var supportCss3 = S.Features.isTransformSupported();
 
@@ -114,7 +113,6 @@ KISSY.add('scroll-view/plugin/scrollbar/render', function (S, Control, ScrollBar
     var transformProperty = S.Features.getTransformProperty();
 
     if (supportCss3) {
-
         methods._onSetDragLeft = function (v) {
             this.control.dragEl.style[transformProperty] = 'translateX(' + v + 'px) translateZ(0)';
         };
@@ -122,7 +120,6 @@ KISSY.add('scroll-view/plugin/scrollbar/render', function (S, Control, ScrollBar
         methods._onSetDragTop = function (v) {
             this.control.dragEl.style[transformProperty] = 'translateY(' + v + 'px) translateZ(0)';
         };
-
     }
 
     return Control.getDefaultRender().extend(methods, {
@@ -132,7 +129,6 @@ KISSY.add('scroll-view/plugin/scrollbar/render', function (S, Control, ScrollBar
             }
         }
     });
-
 }, {
     requires: ['component/control', './scrollbar-xtpl']
 });

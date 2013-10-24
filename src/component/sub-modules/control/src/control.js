@@ -837,6 +837,25 @@ KISSY.add("component/control", function (S, Node, ComponentProcess, Manager, Ren
 
     Control.getDefaultRender = getDefaultRender;
 
+    /**
+     * create a new control extend component/control, extensions and static/prototype properties/methods.
+     * @param {Function[]} [extensions] extension classes
+     * @param {Object} [px] key-value map for prototype properties/methods.
+     * @param {Object} [sx] key-value map for static properties/methods.
+     * @param {String} [sx.xclass] new Control 's xclass.
+     * @return {Function} new control which extend called, it also has a static extend method
+     * @static
+     *
+     * for example:
+     *
+     *      var Parent = Control.extend({
+     *          isParent: 1
+     *      });
+     *      var Child = Parent.extend({
+     *          isChild: 1,
+     *          isParent: 0
+     *      })
+     */
     Control.extend = function extend(extensions, px, sx) {
         var args = S.makeArray(arguments),
             baseClass = this,

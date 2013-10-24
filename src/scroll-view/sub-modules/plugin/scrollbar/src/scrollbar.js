@@ -5,7 +5,7 @@
  */
 KISSY.add('scroll-view/plugin/scrollbar', function (S, Base, ScrollBar) {
     /**
-     * ScrollBar plugin for ScrollView
+     * ScrollBar plugin for ScrollView.
      * @class KISSY.ScrollView.Plugin.ScrollBar
      * @extend KISSY.Base
      */
@@ -61,6 +61,40 @@ KISSY.add('scroll-view/plugin/scrollbar', function (S, Base, ScrollBar) {
             if (self.scrollBarY) {
                 self.scrollBarY.destroy();
                 self.scrollBarY = null;
+            }
+        }
+    }, {
+        ATTRS: {
+            /**
+             * minimum scrollbar length.
+             * Defaults to 20.
+             * @cfg {Number} minLength
+             */
+            /**
+             * @ignore
+             */
+            minLength: {
+
+            },
+            /**
+             * whether auto hide x scrollbar like ios
+             * @cfg {Boolean} autoHideX
+             */
+            /**
+             * @ignore
+             */
+            autoHideX: {
+
+            },
+            /**
+             * whether auto hide y scrollbar like ios
+             * @cfg {Boolean} autoHideY
+             */
+            /**
+             * @ignore
+             */
+            autoHideY: {
+
             }
         }
     });

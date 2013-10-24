@@ -93,14 +93,11 @@
 <div id="footer"></div>
 <script src="/kissy/src/package.js"></script>
 <script>
-
     // 本 demo 会在 ie10 模拟 ie7 下白屏，原因不明，请设置
     // <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-
     KISSY.use('scroll-view,scroll-view/plugin/scrollbar,' +
             'scroll-view/plugin/pull-to-refresh', function (S, ScrollView, ScrollbarPlugin, PullToRefresh) {
         S.ready(function () {
-
             var num = new S.Uri(location.href).getQuery().get('num') || '41';
 
             num = parseInt(num);

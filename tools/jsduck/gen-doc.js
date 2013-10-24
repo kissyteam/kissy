@@ -1,11 +1,12 @@
-var cwd = normalizeSlash(process.cwd());
 var path = require('path');
+var cwd = normalizeSlash(process.cwd());
+var apiDir = normalizeSlash(path.resolve(cwd, '../../kissyteam.github.com/1.4/api') + '/');
 var srcDir = normalizeSlash(path.resolve(cwd, 'src') + '/');
 var jsduckDir = normalizeSlash(path.resolve(cwd, 'tools/jsduck') + '/');
 var saveTo = jsduckDir + 'jsduck.json';
 var tplJson = jsduckDir + 'jsduck.tpl.json';
 var base = '/kissy/src/';
-var fs = require('fs');
+var fs = require('fs-extra');
 var S = global.KISSY = global.S = require(cwd + '/build/kissy-nodejs');
 var config = JSON.parse(fs.readFileSync(tplJson, {
     encoding: 'utf-8'
@@ -76,5 +77,6 @@ jsduck.on('close', function (code) {
 });
 
 function postDoc() {
-    fs.copy(jsduckDir + 'template', cwd + '/docs/');
+    fs.copySync(jsduckDir + 'template', cwd + '/docs/');
+    fs.copySync(cwd + '/docs/', apiDir);
 }

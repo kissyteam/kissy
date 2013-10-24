@@ -11,7 +11,7 @@ KISSY.add("filter-menu", function (S, Menu, FilterMenuRender) {
      * Filter Menu for KISSY.
      * xclass: 'filter-menu'.
      * @extends KISSY.Menu
-     * @class KISSY.Menu.FilterMenu
+     * @class KISSY.FilterMenu
      */
     return Menu.extend({
             bindUI: function () {

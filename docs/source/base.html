@@ -20,8 +20,10 @@
  * @author yiminghe@gmail.com
  * @ignore
  */
-KISSY.add('anim/base', function (S, Dom, Utils, CustomEvent, Q) {
+KISSY.add('anim/base', function (S, Dom, Utils, Promise, Q) {
     var NodeType = Dom.NodeType,
+        noop = S.noop,
+        logger = S.getLogger('s/anim'),
         specialVals = {
             toggle: 1,
             hide: 1,
@@ -31,13 +33,14 @@ KISSY.add('anim/base', function (S, Dom, Utils, CustomEvent, Q) {
 <span id='KISSY-Anim-Base'>    /**
 </span>     * superclass for transition anim and js anim
      * @class KISSY.Anim.Base
-     * @extend KISSY.Event.CustomEvent.Target
+     * @extend KISSY.Promise
      * @private
      */
     function AnimBase(config) {
         var self = this,
             complete;
-        AnimBase.superclass.constructor.apply(this,arguments);
+        AnimBase.superclass.constructor.call(self);
+        Promise.Defer(self);
 <span id='KISSY-Anim-Base-property-config'>        /**
 </span>         * config object of current anim instance
          * @type {Object}
@@ -50,28 +53,48 @@ KISSY.add('anim/base', function (S, Dom, Utils, CustomEvent, Q) {
         self.node = self.el = node;
         self._backupProps = {};
         self._propsData = {};
+        self.then(onComplete);
 
         if (complete = config.complete) {
-            self.on('complete', complete);
+            self.then(complete);
         }
     }
 
-    function onComplete(self) {
-        var _backupProps;
-
+    function onComplete(value) {
+        var _backupProps,
+            self = value[0];
         // only recover after complete anim
         if (!S.isEmptyObject(_backupProps = self._backupProps)) {
             Dom.css(self.node, _backupProps);
         }
     }
 
-    S.extend(AnimBase, CustomEvent.Target, {
+    S.extend(AnimBase, Promise, {
+<span id='KISSY-Anim-Base-method-on'>        /**
+</span>         * please use promise api instead
+         * @deprecated
+         */
+        on: function (name, fn) {
+            var self = this;
+            logger.warn('please use promise api of anim instead');
+            if (name == 'complete') {
+                self.then(fn);
+            } else if (name == 'end') {
+                self.fin(fn);
+            } else if (name == 'step') {
+                self.progress(fn);
+            } else {
+                logger.error('not supported event for anim: ' + name);
+            }
+            return self;
+        },
+
 <span id='KISSY-Anim-Base-method-prepareFx'>        /**
 </span>         * prepare fx hook
          * @protected
+         * @method
          */
-        prepareFx: function () {
-        },
+        prepareFx: noop,
 
         runInternal: function () {
             var self = this,
@@ -86,12 +109,6 @@ KISSY.add('anim/base', function (S, Dom, Utils, CustomEvent, Q) {
 
             // 进入该函数即代表执行（q[0] 已经是 ...）
             Utils.saveRunningAnim(self);
-
-            if (self.fire('beforeStart') === false) {
-                // no need to invoke complete
-                self.stop(0);
-                return;
-            }
 
             // 分离 easing
             S.each(to, function (val, prop) {
@@ -144,7 +161,7 @@ KISSY.add('anim/base', function (S, Dom, Utils, CustomEvent, Q) {
                     if (specialVals[val]) {
                         if (val == 'hide' &amp;&amp; hidden || val == 'show' &amp;&amp; !hidden) {
                             // need to invoke complete
-                            self.stop(1);
+                            self.stop(true);
                             return exit = false;
                         }
                         // backup original inline css value
@@ -172,10 +189,15 @@ KISSY.add('anim/base', function (S, Dom, Utils, CustomEvent, Q) {
             }
 
             self.startTime = S.now();
-
-            self.prepareFx();
-
-            self.doStart();
+            if (S.isEmptyObject(_propsData)) {
+                self.__totalTime = defaultDuration * 1000;
+                self.__waitTimeout = setTimeout(function () {
+                    self.stop(true);
+                }, self.__totalTime);
+            } else {
+                self.prepareFx();
+                self.doStart();
+            }
         },
 
 <span id='KISSY-Anim-Base-method-isRunning'>        /**
@@ -204,9 +226,14 @@ KISSY.add('anim/base', function (S, Dom, Utils, CustomEvent, Q) {
             if (self.isRunning()) {
                 // already run time
                 self._runTime = S.now() - self.startTime;
+                self.__totalTime -= self._runTime;
                 Utils.removeRunningAnim(self);
                 Utils.savePausedAnim(self);
-                self.doStop();
+                if (self.__waitTimeout) {
+                    clearTimeout(self.__waitTimeout);
+                } else {
+                    self.doStop();
+                }
             }
             return self;
         },
@@ -214,16 +241,16 @@ KISSY.add('anim/base', function (S, Dom, Utils, CustomEvent, Q) {
 <span id='KISSY-Anim-Base-method-doStop'>        /**
 </span>         * stop by dom operation
          * @protected
+         * @method
          */
-        doStop: function () {
-        },
+        doStop: noop,
 
 <span id='KISSY-Anim-Base-method-doStart'>        /**
 </span>         * start by dom operation
          * @protected
+         * @method
          */
-        doStart: function () {
-        },
+        doStart: noop,
 
 <span id='KISSY-Anim-Base-method-resume'>        /**
 </span>         * resume current anim
@@ -236,8 +263,14 @@ KISSY.add('anim/base', function (S, Dom, Utils, CustomEvent, Q) {
                 self.startTime = S.now() - self._runTime;
                 Utils.removePausedAnim(self);
                 Utils.saveRunningAnim(self);
-                self['beforeResume']();
-                self.doStart();
+                if (self.__waitTimeout) {
+                    self.__waitTimeout = setTimeout(function () {
+                        self.stop(true);
+                    }, self.__totalTime);
+                } else {
+                    self['beforeResume']();
+                    self.doStart();
+                }
             }
             return self;
         },
@@ -245,10 +278,9 @@ KISSY.add('anim/base', function (S, Dom, Utils, CustomEvent, Q) {
 <span id='KISSY-Anim-Base-method-beforeResume'>        /**
 </span>         * before resume hook
          * @protected
+         * @method
          */
-        'beforeResume': function () {
-
-        },
+        'beforeResume': noop,
 
 <span id='KISSY-Anim-Base-method-run'>        /**
 </span>         * start this animation
@@ -283,8 +315,13 @@ KISSY.add('anim/base', function (S, Dom, Utils, CustomEvent, Q) {
                 q,
                 queue = self.config.queue;
 
-            if (self.__stopped) {
+            if (self.isResolved() || self.isRejected()) {
                 return self;
+            }
+
+            if (self.__waitTimeout) {
+                clearTimeout(self.__waitTimeout);
+                self.__waitTimeout = 0;
             }
 
             if (!self.isRunning() &amp;&amp; !self.isPaused()) {
@@ -298,11 +335,12 @@ KISSY.add('anim/base', function (S, Dom, Utils, CustomEvent, Q) {
             self.doStop(finish);
             Utils.removeRunningAnim(self);
             Utils.removePausedAnim(self);
-            self.__stopped = 1;
 
+            var defer = self.defer;
             if (finish) {
-                onComplete(self);
-                self.fire('complete');
+                defer.resolve([self]);
+            } else {
+                defer.reject([self]);
             }
 
             if (queue !== false) {
@@ -312,7 +350,6 @@ KISSY.add('anim/base', function (S, Dom, Utils, CustomEvent, Q) {
                     q[0].runInternal();
                 }
             }
-            self.fire('end');
             return self;
         }
     });
@@ -322,7 +359,7 @@ KISSY.add('anim/base', function (S, Dom, Utils, CustomEvent, Q) {
 
     return AnimBase;
 }, {
-    requires: ['dom', './base/utils', 'event/custom', './base/queue']
+    requires: ['dom', './base/utils', 'promise', './base/queue']
 });</pre>
 </body>
 </html>

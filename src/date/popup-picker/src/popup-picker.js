@@ -11,6 +11,14 @@ KISSY.add('date/popup-picker', function (S, PopupPickerTpl, DatePicker, AlignExt
             }
         }
     });
+
+    /**
+     * popup date picker ui component
+     * @class KISSY.Date.PopupPicker
+     * @extends KISSY.Component.Control
+     * @mixins KISSY.Component.Extension.Shim
+     * @mixins KISSY.Component.Extension.Align
+     */
     return DatePicker.extend([Shim, AlignExtension], {
     }, {
         xclass: 'popup-date-picker',

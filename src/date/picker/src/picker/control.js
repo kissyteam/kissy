@@ -133,6 +133,11 @@ KISSY.add('date/picker/control', function (S, Node, GregorianCalendar, locale, C
         });
     }
 
+    /**
+     * date picker ui component
+     * @class KISSY.Date.Picker
+     * @extends KISSY.Component.Control
+     */
     return Control.extend({
         bindUI: function () {
             var self = this;
@@ -231,6 +236,13 @@ KISSY.add('date/picker/control', function (S, Node, GregorianCalendar, locale, C
             focusable: {
                 value: true
             },
+            /**
+             * current selected value of current date picker
+             * @cfg {KISSY.Date.Gregorian} value
+             */
+            /**
+             * @ignore
+             */
             value: {
                 view: 1,
                 valueFn: function () {
@@ -247,15 +259,63 @@ KISSY.add('date/picker/control', function (S, Node, GregorianCalendar, locale, C
             nextMonthBtn: {},
             tbodyEl: {},
             todayBtnEl: {},
+            /**
+             * function used to render a date cell
+             *
+             *      function(current){
+             *          return '<a>'+current.getDay()+'</a>';
+             *      }
+             *
+             * @cfg {Function} dateRender
+             */
+            /**
+             * @ignore
+             */
             dateRender: {},
+            /**
+             * function used to judge whether this date cell is disabled
+             *
+             *      function(current){
+             *          // before 2010 is disabled
+             *          return current.getYear()<2010;
+             *      }
+             *
+             * @cfg {Function} disabledDate
+             */
+            /**
+             * @ignore
+             */
             disabledDate: {},
+            /**
+             * locale object for date picker
+             * @cfg {Object} locale
+             */
+            /**
+             * @ignore
+             */
             locale: {
                 value: locale
             },
+            /**
+             * whether to show today button.
+             * Defaults to true.
+             * @cfg {Boolean} showToday
+             */
+            /**
+             * @ignore
+             */
             showToday: {
                 view: 1,
                 value: true
             },
+            /**
+             * whether to show clear button.
+             * Defaults to true.
+             * @cfg {Boolean} showClear
+             */
+            /**
+             * @ignore
+             */
             showClear: {
                 view: 1,
                 value: true
@@ -264,6 +324,14 @@ KISSY.add('date/picker/control', function (S, Node, GregorianCalendar, locale, C
                 view: 1,
                 value: false
             },
+            /**
+             * whether to show week number column.
+             * Defaults to true.
+             * @cfg {Boolean} showWeekNumber
+             */
+            /**
+             * @ignore
+             */
             showWeekNumber: {
                 view: 1,
                 value: true

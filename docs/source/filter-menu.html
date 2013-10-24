@@ -24,11 +24,11 @@ KISSY.add(&quot;filter-menu&quot;, function (S, Menu, FilterMenuRender) {
 
     var HIT_CLS = &quot;menuitem-hit&quot;;
 
-<span id='KISSY-Menu-FilterMenu'>    /**
+<span id='KISSY-FilterMenu'>    /**
 </span>     * Filter Menu for KISSY.
      * xclass: 'filter-menu'.
      * @extends KISSY.Menu
-     * @class KISSY.Menu.FilterMenu
+     * @class KISSY.FilterMenu
      */
     return Menu.extend({
             bindUI: function () {
@@ -77,7 +77,7 @@ KISSY.add(&quot;filter-menu&quot;, function (S, Menu, FilterMenuRender) {
                 this.filterItems(v);
             },
 
-<span id='KISSY-Menu-FilterMenu-method-filterItems'>            /**
+<span id='KISSY-FilterMenu-method-filterItems'>            /**
 </span>             * Specify how to filter items.
              * @param {String} str User input.
              */
@@ -171,7 +171,7 @@ KISSY.add(&quot;filter-menu&quot;, function (S, Menu, FilterMenuRender) {
                 });
             },
 
-<span id='KISSY-Menu-FilterMenu-method-reset'>            /**
+<span id='KISSY-FilterMenu-method-reset'>            /**
 </span>             * Reset user input.
              */
             reset: function () {
@@ -188,7 +188,7 @@ KISSY.add(&quot;filter-menu&quot;, function (S, Menu, FilterMenuRender) {
                     value: true
                 },
 
-<span id='KISSY-Menu-FilterMenu-cfg-placeholder'>                /**
+<span id='KISSY-FilterMenu-cfg-placeholder'>                /**
 </span>                 * Hit info string
                  * @cfg {String} placeholder
                  */
@@ -199,7 +199,7 @@ KISSY.add(&quot;filter-menu&quot;, function (S, Menu, FilterMenuRender) {
                     view: 1
                 },
 
-<span id='KISSY-Menu-FilterMenu-cfg-filterStr'>                /**
+<span id='KISSY-FilterMenu-cfg-filterStr'>                /**
 </span>                 * Filter string
                  * @cfg {String} filterStr
                  */
@@ -218,7 +218,7 @@ KISSY.add(&quot;filter-menu&quot;, function (S, Menu, FilterMenuRender) {
                     value: []
                 },
 
-<span id='KISSY-Menu-FilterMenu-cfg-allowMultiple'>                /**
+<span id='KISSY-FilterMenu-cfg-allowMultiple'>                /**
 </span>                 * Whether to allow input multiple.
                  * @cfg {Boolean} allowMultiple
                  */
