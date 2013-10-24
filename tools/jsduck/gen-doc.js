@@ -78,5 +78,6 @@ jsduck.on('close', function (code) {
 
 function postDoc() {
     fs.copySync(jsduckDir + 'template', cwd + '/docs/');
+    fs.unlinkSync(apiDir)
     fs.copySync(cwd + '/docs/', apiDir);
 }
