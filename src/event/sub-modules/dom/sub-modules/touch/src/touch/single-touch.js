@@ -11,11 +11,17 @@ KISSY.add('event/dom/touch/single-touch', function (S) {
         constructor: SingleTouch,
         requiredTouchCount: 1,
         onTouchStart: function (e) {
-            var self = this;
+            var self = this,
+                touches;
             if (e.touches.length != self.requiredTouchCount) {
                 return false;
             }
-            self.lastTouches = e.touches;
+            touches = self.lastTouches = e.touches;
+            // ios will share touches with touchmove...
+            self.lastXY = {
+                pageX: touches[0].pageX,
+                pageY: touches[0].pageY
+            };
             return undefined;
         },
         onTouchMove: S.noop,

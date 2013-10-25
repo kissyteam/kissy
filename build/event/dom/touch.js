@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Oct 25 11:43
+build time: Oct 25 12:24
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -40,11 +40,17 @@ KISSY.add('event/dom/touch/single-touch', function (S) {
         constructor: SingleTouch,
         requiredTouchCount: 1,
         onTouchStart: function (e) {
-            var self = this;
+            var self = this,
+                touches;
             if (e.touches.length != self.requiredTouchCount) {
                 return false;
             }
-            self.lastTouches = e.touches;
+            touches = self.lastTouches = e.touches;
+            // ios will share touches with touchmove...
+            self.lastXY = {
+                pageX: touches[0].pageX,
+                pageY: touches[0].pageY
+            };
             return undefined;
         },
         onTouchMove: S.noop,
@@ -75,13 +81,12 @@ KISSY.add('event/dom/touch/tap', function (S, eventHandleMap, DomEvent, SingleTo
 
     S.extend(Tap, SingleTouch, {
         onTouchMove: function (e) {
-            var lastTouches = this.lastTouches;
-            var firstTouch = lastTouches[0];
+            var firstTouchXY = this.lastXY;
             var currentTouch = e.changedTouches[0];
             // some sensitivity
             // android browser will trigger touchmove event finger is not moved ...
-            if (Math.abs(currentTouch.pageX - firstTouch.pageX) > sensitivity ||
-                Math.abs(currentTouch.pageY - firstTouch.pageY) > sensitivity) {
+            if (Math.abs(currentTouch.pageX - firstTouchXY.pageX) > sensitivity ||
+                Math.abs(currentTouch.pageY - firstTouchXY.pageY) > sensitivity) {
                 return false;
             }
             return undefined;
