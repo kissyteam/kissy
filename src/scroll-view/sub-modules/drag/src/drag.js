@@ -331,7 +331,7 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, Node, Anim) {
         var count = 0;
         var offsetX = startMousePos.pageX - e.pageX;
         var offsetY = startMousePos.pageY - e.pageY;
-        var snapThreshold = self.get('snapThreshold');
+        var snapThreshold = self._snapThresholdCfg;
         var allowX = self.allowScroll.left && Math.abs(offsetX) > snapThreshold;
         var allowY = self.allowScroll.top && Math.abs(offsetY) > snapThreshold;
         self.fire('dragend', {
@@ -356,9 +356,8 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, Node, Anim) {
                     return;
                 }
 
-                var snapThreshold = self.get('snapThreshold');
-                var snapDuration = self.get('snapDuration');
-                var snapEasing = self.get('snapEasing');
+                var snapDuration = self._snapDurationCfg;
+                var snapEasing = self._snapEasingCfg;
                 var pageIndex = self.get('pageIndex');
                 var scrollLeft = self.get('scrollLeft');
                 var scrollTop = self.get('scrollTop');
@@ -369,49 +368,55 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, Node, Anim) {
                     complete: scrollEnd
                 };
 
-                var pagesOffset = self.pagesOffset.concat([]);
+                var pagesOffset = self.pagesOffset;
+                var pagesOffsetLen = pagesOffset.length;
 
                 self.isScrolling = 0;
 
                 if (allowX || allowY) {
                     if (allowX && allowY) {
                         var prepareX = [],
+                            i,
                             newPageIndex = undefined;
                         var nowXY = {
                             left: scrollLeft,
                             top: scrollTop
                         };
-                        S.each(pagesOffset, function (offset) {
-                            if (!offset) {
-                                return;
+                        for (i = 0; i < pagesOffsetLen; i++) {
+                            var offset = pagesOffset[i];
+                            if (offset) {
+                                if (offsetX > 0 && offset.left > nowXY.left) {
+                                    prepareX.push(offset);
+                                } else if (offsetX < 0 && offset.left < nowXY.left) {
+                                    prepareX.push(offset);
+                                }
                             }
-                            if (offsetX > 0 && offset.left > nowXY.left) {
-                                prepareX.push(offset);
-                            } else if (offsetX < 0 && offset.left < nowXY.left) {
-                                prepareX.push(offset);
-                            }
-                        });
+                        }
                         var min;
+                        var prepareXLen = prepareX.length;
+                        var x;
                         if (offsetY > 0) {
                             min = Number.MAX_VALUE;
-                            S.each(prepareX, function (x) {
+                            for (i = 0; i < prepareXLen; i++) {
+                                x = prepareX[i];
                                 if (x.top > nowXY.top) {
                                     if (min < x.top - nowXY.top) {
                                         min = x.top - nowXY.top;
                                         newPageIndex = prepareX.index;
                                     }
                                 }
-                            });
+                            }
                         } else {
                             min = Number.MAX_VALUE;
-                            S.each(prepareX, function (x) {
+                            for (i = 0; i < prepareXLen; i++) {
+                                x = prepareX[i];
                                 if (x.top < nowXY.top) {
                                     if (min < nowXY.top - x.top) {
                                         min = nowXY.top - x.top;
                                         newPageIndex = prepareX.index;
                                     }
                                 }
-                            });
+                            }
                         }
                         if (newPageIndex != undefined) {
                             if (newPageIndex != pageIndex) {
@@ -430,7 +435,7 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, Node, Anim) {
                                 allowX ? offsetX : offsetY);
                             self.scrollToPage(toPageIndex, animCfg);
                         } else {
-                            self.scrollToPage(self.get('pageIndex'));
+                            self.scrollToPage(pageIndex);
                             scrollEnd();
                         }
                     }
@@ -465,6 +470,13 @@ KISSY.add('scroll-view/drag', function (S, ScrollViewBase, Node, Anim) {
      * @extends KISSY.ScrollView.Base
      */
     return ScrollViewBase.extend({
+            initializer: function () {
+                var self = this;
+                self._snapThresholdCfg = self.get('snapThreshold');
+                self._snapDurationCfg = self.get('snapDuration');
+                self._snapEasingCfg = self.get('snapEasing');
+            },
+
             bindUI: function () {
                 var self = this;
                 self.$contentEl.on('dragstart', preventDefault)

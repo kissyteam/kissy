@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Oct 10 13:54
+build time: Oct 25 12:57
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -101,7 +101,6 @@ KISSY.add('scroll-view/plugin/scrollbar/scrollbar-xtpl', function () {
  * @author yiminghe@gmail.com
  */
 KISSY.add('scroll-view/plugin/scrollbar/render', function (S, Control, ScrollBarTpl) {
-
     // http://www.html5rocks.com/en/tutorials/speed/html5/
     var supportCss3 = S.Features.isTransformSupported();
 
@@ -211,7 +210,6 @@ KISSY.add('scroll-view/plugin/scrollbar/render', function (S, Control, ScrollBar
     var transformProperty = S.Features.getTransformProperty();
 
     if (supportCss3) {
-
         methods._onSetDragLeft = function (v) {
             this.control.dragEl.style[transformProperty] = 'translateX(' + v + 'px) translateZ(0)';
         };
@@ -219,7 +217,6 @@ KISSY.add('scroll-view/plugin/scrollbar/render', function (S, Control, ScrollBar
         methods._onSetDragTop = function (v) {
             this.control.dragEl.style[transformProperty] = 'translateY(' + v + 'px) translateZ(0)';
         };
-
     }
 
     return Control.getDefaultRender().extend(methods, {
@@ -229,7 +226,6 @@ KISSY.add('scroll-view/plugin/scrollbar/render', function (S, Control, ScrollBar
             }
         }
     });
-
 }, {
     requires: ['component/control', './scrollbar-xtpl']
 });
@@ -428,6 +424,14 @@ KISSY.add('scroll-view/plugin/scrollbar/control', function (S, Node, Control, Sc
         }
     }, {
         ATTRS: {
+            /**
+             * minimum scrollbar length.
+             * Defaults to 20.
+             * @cfg {Number} minLength
+             */
+            /**
+             * @ignore
+             */
             minLength: {
                 value: MIN_BAR_LENGTH
             },
@@ -532,7 +536,7 @@ KISSY.add('scroll-view/plugin/scrollbar/control', function (S, Node, Control, Sc
  */
 KISSY.add('scroll-view/plugin/scrollbar', function (S, Base, ScrollBar) {
     /**
-     * ScrollBar plugin for ScrollView
+     * ScrollBar plugin for ScrollView.
      * @class KISSY.ScrollView.Plugin.ScrollBar
      * @extend KISSY.Base
      */
@@ -588,6 +592,40 @@ KISSY.add('scroll-view/plugin/scrollbar', function (S, Base, ScrollBar) {
             if (self.scrollBarY) {
                 self.scrollBarY.destroy();
                 self.scrollBarY = null;
+            }
+        }
+    }, {
+        ATTRS: {
+            /**
+             * minimum scrollbar length.
+             * Defaults to 20.
+             * @cfg {Number} minLength
+             */
+            /**
+             * @ignore
+             */
+            minLength: {
+
+            },
+            /**
+             * whether auto hide x scrollbar like ios
+             * @cfg {Boolean} autoHideX
+             */
+            /**
+             * @ignore
+             */
+            autoHideX: {
+
+            },
+            /**
+             * whether auto hide y scrollbar like ios
+             * @cfg {Boolean} autoHideY
+             */
+            /**
+             * @ignore
+             */
+            autoHideY: {
+
             }
         }
     });

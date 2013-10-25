@@ -312,15 +312,15 @@ if (! _$jscoverage['/scrollbar/control.js']) {
   _$jscoverage['/scrollbar/control.js'].lineData[186] = 0;
   _$jscoverage['/scrollbar/control.js'].lineData[190] = 0;
   _$jscoverage['/scrollbar/control.js'].lineData[191] = 0;
-  _$jscoverage['/scrollbar/control.js'].lineData[221] = 0;
-  _$jscoverage['/scrollbar/control.js'].lineData[238] = 0;
-  _$jscoverage['/scrollbar/control.js'].lineData[240] = 0;
-  _$jscoverage['/scrollbar/control.js'].lineData[241] = 0;
-  _$jscoverage['/scrollbar/control.js'].lineData[243] = 0;
-  _$jscoverage['/scrollbar/control.js'].lineData[250] = 0;
+  _$jscoverage['/scrollbar/control.js'].lineData[229] = 0;
+  _$jscoverage['/scrollbar/control.js'].lineData[246] = 0;
+  _$jscoverage['/scrollbar/control.js'].lineData[248] = 0;
+  _$jscoverage['/scrollbar/control.js'].lineData[249] = 0;
   _$jscoverage['/scrollbar/control.js'].lineData[251] = 0;
-  _$jscoverage['/scrollbar/control.js'].lineData[252] = 0;
-  _$jscoverage['/scrollbar/control.js'].lineData[254] = 0;
+  _$jscoverage['/scrollbar/control.js'].lineData[258] = 0;
+  _$jscoverage['/scrollbar/control.js'].lineData[259] = 0;
+  _$jscoverage['/scrollbar/control.js'].lineData[260] = 0;
+  _$jscoverage['/scrollbar/control.js'].lineData[262] = 0;
 }
 if (! _$jscoverage['/scrollbar/control.js'].functionData) {
   _$jscoverage['/scrollbar/control.js'].functionData = [];
@@ -380,18 +380,18 @@ if (! _$jscoverage['/scrollbar/control.js'].branchData) {
   _$jscoverage['/scrollbar/control.js'].branchData['183'][1] = new BranchData();
   _$jscoverage['/scrollbar/control.js'].branchData['190'] = [];
   _$jscoverage['/scrollbar/control.js'].branchData['190'][1] = new BranchData();
-  _$jscoverage['/scrollbar/control.js'].branchData['240'] = [];
-  _$jscoverage['/scrollbar/control.js'].branchData['240'][1] = new BranchData();
-  _$jscoverage['/scrollbar/control.js'].branchData['251'] = [];
-  _$jscoverage['/scrollbar/control.js'].branchData['251'][1] = new BranchData();
+  _$jscoverage['/scrollbar/control.js'].branchData['248'] = [];
+  _$jscoverage['/scrollbar/control.js'].branchData['248'][1] = new BranchData();
+  _$jscoverage['/scrollbar/control.js'].branchData['259'] = [];
+  _$jscoverage['/scrollbar/control.js'].branchData['259'][1] = new BranchData();
 }
-_$jscoverage['/scrollbar/control.js'].branchData['251'][1].init(86, 13, 'v < minLength');
-function visit19_251_1(result) {
-  _$jscoverage['/scrollbar/control.js'].branchData['251'][1].ranCondition(result);
+_$jscoverage['/scrollbar/control.js'].branchData['259'][1].init(86, 13, 'v < minLength');
+function visit19_259_1(result) {
+  _$jscoverage['/scrollbar/control.js'].branchData['259'][1].ranCondition(result);
   return result;
-}_$jscoverage['/scrollbar/control.js'].branchData['240'][1].init(88, 13, 'v < minLength');
-function visit18_240_1(result) {
-  _$jscoverage['/scrollbar/control.js'].branchData['240'][1].ranCondition(result);
+}_$jscoverage['/scrollbar/control.js'].branchData['248'][1].init(88, 13, 'v < minLength');
+function visit18_248_1(result) {
+  _$jscoverage['/scrollbar/control.js'].branchData['248'][1].ranCondition(result);
   return result;
 }_$jscoverage['/scrollbar/control.js'].branchData['190'][1].init(18, 7, 'this.dd');
 function visit17_190_1(result) {
@@ -702,7 +702,7 @@ KISSY.add('scroll-view/plugin/scrollbar/control', function(S, Node, Control, Scr
   visible: {
   valueFn: function() {
   _$jscoverage['/scrollbar/control.js'].functionData[18]++;
-  _$jscoverage['/scrollbar/control.js'].lineData[221]++;
+  _$jscoverage['/scrollbar/control.js'].lineData[229]++;
   return !this.get('autoHide');
 }}, 
   hideDelay: {
@@ -710,28 +710,28 @@ KISSY.add('scroll-view/plugin/scrollbar/control', function(S, Node, Control, Scr
   dragWidth: {
   setter: function(v) {
   _$jscoverage['/scrollbar/control.js'].functionData[19]++;
-  _$jscoverage['/scrollbar/control.js'].lineData[238]++;
+  _$jscoverage['/scrollbar/control.js'].lineData[246]++;
   var minLength = this.get('minLength');
-  _$jscoverage['/scrollbar/control.js'].lineData[240]++;
-  if (visit18_240_1(v < minLength)) {
-    _$jscoverage['/scrollbar/control.js'].lineData[241]++;
+  _$jscoverage['/scrollbar/control.js'].lineData[248]++;
+  if (visit18_248_1(v < minLength)) {
+    _$jscoverage['/scrollbar/control.js'].lineData[249]++;
     return minLength;
   }
-  _$jscoverage['/scrollbar/control.js'].lineData[243]++;
+  _$jscoverage['/scrollbar/control.js'].lineData[251]++;
   return v;
 }, 
   view: 1}, 
   dragHeight: {
   setter: function(v) {
   _$jscoverage['/scrollbar/control.js'].functionData[20]++;
-  _$jscoverage['/scrollbar/control.js'].lineData[250]++;
+  _$jscoverage['/scrollbar/control.js'].lineData[258]++;
   var minLength = this.get('minLength');
-  _$jscoverage['/scrollbar/control.js'].lineData[251]++;
-  if (visit19_251_1(v < minLength)) {
-    _$jscoverage['/scrollbar/control.js'].lineData[252]++;
+  _$jscoverage['/scrollbar/control.js'].lineData[259]++;
+  if (visit19_259_1(v < minLength)) {
+    _$jscoverage['/scrollbar/control.js'].lineData[260]++;
     return minLength;
   }
-  _$jscoverage['/scrollbar/control.js'].lineData[254]++;
+  _$jscoverage['/scrollbar/control.js'].lineData[262]++;
   return v;
 }, 
   view: 1}, 

@@ -222,9 +222,7 @@ KISSY.add('scroll-view/base', function (S, Node, Anim, Container, Render, undefi
                 left = cfg.left,
                 top = cfg.top;
             if (animCfg) {
-                var scrollLeft = self.get('scrollLeft'),
-                    scrollTop = self.get('scrollTop'),
-                    node = {},
+                var node = {},
                     to = {};
                 if (left !== undefined) {
                     to.scrollLeft = left;

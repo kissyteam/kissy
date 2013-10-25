@@ -17,7 +17,7 @@
             border: 0;
         }
 
-        #demo2 {
+        #demo2, #demo3 {
             width: 540px;
             height: 540px;
             border: 1px solid #B6D1E6;
@@ -26,21 +26,21 @@
             -ms-touch-action: pan-y;
         }
 
-        #demo2 .ks-scroll-view-content {
+        .ks-scroll-view-content {
             margin: 0;
             padding: 0;
             overflow: hidden;
             width: 2700px;
         }
 
-        #demo2 .my-slide-nav {
+        .my-slide-nav {
             position: absolute;
             bottom: 5px;
             right: 5px;
             z-index: 99;
         }
 
-        #demo2 .my-slide-nav li {
+        .my-slide-nav li {
             float: left;
             width: 16px;
             height: 16px;
@@ -54,7 +54,7 @@
 
         }
 
-        #demo2 .my-slide-nav li.ks-active {
+        .my-slide-nav li.ks-active {
             width: 18px;
             height: 18px;
             line-height: 18px;
@@ -64,7 +64,7 @@
             font-weight: bold;
         }
 
-        #demo2 .ks-scroll-view-content li {
+        .ks-scroll-view-content li {
             height: 540px;
             width: 540px;
             overflow: hidden;
@@ -186,6 +186,42 @@
         </li>
     </ol>
 </div>
+
+<div style="height: 100px"></div>
+
+<div id="demo3" class="ks-scroll-view">
+    <ol class="ks-scroll-view-content">
+
+        <li class="pic-item"
+            data-url="http://img04.taobaocdn.com/bao/uploaded/i4/12867029330434926/T1SarAFaxdXXXXXXXX_!!0-item_pic.jpg">
+                    <span class="img-wrap"><img
+                            src="http://img04.taobaocdn.com/bao/uploaded/i4/12867029330434926/T1SarAFaxdXXXXXXXX_!!0-item_pic.jpg_540x540.jpg"></span>&gt;
+        </li>
+        <li class="pic-item"
+            data-url="http://img04.taobaocdn.com/bao/uploaded/i4/12867028772473067/T10jJVFlFXXXXXXXXX_!!0-item_pic.jpg">
+                    <span class="img-wrap"><img
+                            src="http://img04.taobaocdn.com/bao/uploaded/i4/12867028772473067/T10jJVFlFXXXXXXXXX_!!0-item_pic.jpg_540x540.jpg"></span>&gt;
+        </li>
+        <li class="pic-item"
+            data-url="http://img02.taobaocdn.com/bao/uploaded/i2/153962867/T2Q7FrXyFaXXXXXXXX_!!153962867.jpg">
+                    <span class="img-wrap"><img
+                            src="http://img02.taobaocdn.com/bao/uploaded/i2/153962867/T2Q7FrXyFaXXXXXXXX_!!153962867.jpg_540x540.jpg"></span>&gt;
+
+        </li>
+        <li class="pic-item"
+            data-url="http://img01.taobaocdn.com/bao/uploaded/i1/153962867/T26v4tXudaXXXXXXXX_!!153962867.jpg">
+                    <span class="img-wrap"><img
+                            src="http://img01.taobaocdn.com/bao/uploaded/i1/153962867/T26v4tXudaXXXXXXXX_!!153962867.jpg_540x540.jpg"></span>&gt;
+
+        </li>
+        <li class="pic-item"
+            data-url="http://img03.taobaocdn.com/bao/uploaded/i3/153962867/T2FeBsXzlaXXXXXXXX_!!153962867.jpg">
+                   <span class="img-wrap"><img
+                           src="http://img03.taobaocdn.com/bao/uploaded/i3/153962867/T2FeBsXzlaXXXXXXXX_!!153962867.jpg_540x540.jpg"></span>&gt;
+
+        </li>
+    </ol>
+</div>
 <div style="height:1000px"></div>
 <script src="/kissy/build/seed.js"></script>
 <script src="/kissy/src/package.js"></script>
@@ -201,26 +237,27 @@
     });
     KISSY.use('node,slide,image-zoomer', function (S, Node, Slide, imageZoomer) {
         var $ = Node.all;
-        var slide = new Slide({
-            srcNode: '#demo2',
-            hasTrigger: true,
-            direction: 'y'
-        }).render();
-        slide.triggers.each(function (t, i) {
-            t.html(i + 1);
-        });
-        $('#demo2').delegate(Node.Gesture.tap, 'img',function (e) {
-            imageZoomer.showImage({
-                src: e.currentTarget.src,
-                width: 1200,
-                height: 1200
+
+        function init(selector) {
+            var slide = new Slide({
+                srcNode: selector,
+                hasTrigger: true,
+                direction: 'y'
+            }).render();
+            slide.triggers.each(function (t, i) {
+                t.html(i + 1);
             });
-        });
-//        .on('touchstart', function (e) {
-//                    // ios mousedown bug
-//                    e.preventDefault();
-//                });
-        window.slide = slide;
+            $(selector).delegate(Node.Gesture.tap, 'img', function (e) {
+                imageZoomer.showImage({
+                    src: e.currentTarget.src,
+                    width: 1200,
+                    height: 1200
+                });
+            });
+        }
+
+        init('#demo2');
+        init('#demo3');
         $('#wait').css({
             color: 'green'
         }).html('ok');

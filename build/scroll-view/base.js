@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Oct 21 19:41
+build time: Oct 25 12:56
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -184,8 +184,9 @@ KISSY.add('scroll-view/base', function (S, Node, Anim, Container, Render, undefi
     }
 
     /**
-     * Make container scrollable
-     * @class KISSY.ScrollView
+     * Make container scrollable.
+     * module scroll-view will be this class on non-touch device
+     * @class KISSY.ScrollView.Base
      * @extend KISSY.Component.Container
      */
     return Container.extend({
@@ -378,9 +379,7 @@ KISSY.add('scroll-view/base', function (S, Node, Anim, Container, Render, undefi
                 left = cfg.left,
                 top = cfg.top;
             if (animCfg) {
-                var scrollLeft = self.get('scrollLeft'),
-                    scrollTop = self.get('scrollTop'),
-                    node = {},
+                var node = {},
                     to = {};
                 if (left !== undefined) {
                     to.scrollLeft = left;
@@ -408,12 +407,36 @@ KISSY.add('scroll-view/base', function (S, Node, Anim, Container, Render, undefi
         }
     }, {
         ATTRS: {
+            /**
+             * content element of scroll view component
+             * @property contentEl
+             * @type {KISSY.NodeList}
+             */
+            /**
+             * @ignore
+             */
             contentEl: {
             },
+            /**
+             * scrollLeft of scroll view
+             * @property scrollLeft
+             * @type {Number}
+             */
+            /**
+             * @ignore
+             */
             scrollLeft: {
                 view: 1,
                 value: 0
             },
+            /**
+             * scrollTop of scroll view
+             * @property scrollTop
+             * @type {Number}
+             */
+            /**
+             * @ignore
+             */
             scrollTop: {
                 view: 1,
                 value: 0
@@ -428,15 +451,24 @@ KISSY.add('scroll-view/base', function (S, Node, Anim, Container, Render, undefi
             handleMouseEvents: {
                 value: false
             },
+            /**
+             * whether to allow snap effect
+             * @cfg {Boolean} snap
+             */
+            /**
+             * @ignore
+             */
             snap: {
                 value: false
             },
-            snapDuration: {
-                value: 0.3
-            },
-            snapEasing: {
-                value: 'easeOut'
-            },
+            /**
+             * pageIndex, current pageIndex if allow snap
+             * @property pageIndex
+             * @type {Number}
+             */
+            /**
+             * @ignore
+             */
             pageIndex: {
                 value: 0
             },

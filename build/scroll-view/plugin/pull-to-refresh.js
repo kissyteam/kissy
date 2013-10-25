@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Oct 10 13:54
+build time: Oct 25 12:57
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -123,21 +123,48 @@ KISSY.add('scroll-view/plugin/pull-to-refresh', function (S, Base) {
         }
     }, {
         ATTRS: {
+            /**
+             * pulling hint html.
+             * Defaults to: Pull down to refresh...
+             * @cfg {String} pullingHtml
+             */
+            /**
+             * @ignore
+             */
             pullingHtml: {
                 value: 'Pull down to refresh...'
             },
-
+            /**
+             * releasing hint html.
+             * Defaults to: release to refresh...
+             * @cfg {String} releasingHtml
+             */
+            /**
+             * @ignore
+             */
             releasingHtml: {
                 value: 'release to refresh...'
             },
-
+            /**
+             * loading hint html.
+             * Defaults to: loading...
+             * @cfg {String} loadingHtml
+             */
+            /**
+             * @ignore
+             */
             loadingHtml: {
                 value: 'loading...'
             },
-
+            /**
+             * load function to load data asynchronously
+             * @cfg {Function} loadFn
+             */
+            /**
+             * @ignore
+             */
             loadFn: {
             },
-
             state: {
                 value: 'pulling'
             }

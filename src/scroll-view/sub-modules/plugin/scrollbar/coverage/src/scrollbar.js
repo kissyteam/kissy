@@ -408,6 +408,10 @@ KISSY.add('scroll-view/plugin/scrollbar', function(S, Base, ScrollBar) {
     _$jscoverage['/scrollbar.js'].lineData[63]++;
     self.scrollBarY = null;
   }
-}});
+}}, {
+  ATTRS: {
+  minLength: {}, 
+  autoHideX: {}, 
+  autoHideY: {}}});
 }, {
   requires: ['base', './scrollbar/control']});
