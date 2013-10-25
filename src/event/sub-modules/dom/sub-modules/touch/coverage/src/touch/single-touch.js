@@ -230,14 +230,14 @@ if (! _$jscoverage['/touch/single-touch.js']) {
   _$jscoverage['/touch/single-touch.js'] = {};
   _$jscoverage['/touch/single-touch.js'].lineData = [];
   _$jscoverage['/touch/single-touch.js'].lineData[6] = 0;
-  _$jscoverage['/touch/single-touch.js'].lineData[8] = 0;
-  _$jscoverage['/touch/single-touch.js'].lineData[11] = 0;
+  _$jscoverage['/touch/single-touch.js'].lineData[7] = 0;
+  _$jscoverage['/touch/single-touch.js'].lineData[10] = 0;
+  _$jscoverage['/touch/single-touch.js'].lineData[14] = 0;
   _$jscoverage['/touch/single-touch.js'].lineData[15] = 0;
   _$jscoverage['/touch/single-touch.js'].lineData[16] = 0;
-  _$jscoverage['/touch/single-touch.js'].lineData[17] = 0;
+  _$jscoverage['/touch/single-touch.js'].lineData[18] = 0;
   _$jscoverage['/touch/single-touch.js'].lineData[19] = 0;
-  _$jscoverage['/touch/single-touch.js'].lineData[20] = 0;
-  _$jscoverage['/touch/single-touch.js'].lineData[26] = 0;
+  _$jscoverage['/touch/single-touch.js'].lineData[25] = 0;
 }
 if (! _$jscoverage['/touch/single-touch.js'].functionData) {
   _$jscoverage['/touch/single-touch.js'].functionData = [];
@@ -247,40 +247,40 @@ if (! _$jscoverage['/touch/single-touch.js'].functionData) {
 }
 if (! _$jscoverage['/touch/single-touch.js'].branchData) {
   _$jscoverage['/touch/single-touch.js'].branchData = {};
-  _$jscoverage['/touch/single-touch.js'].branchData['16'] = [];
-  _$jscoverage['/touch/single-touch.js'].branchData['16'][1] = new BranchData();
+  _$jscoverage['/touch/single-touch.js'].branchData['15'] = [];
+  _$jscoverage['/touch/single-touch.js'].branchData['15'][1] = new BranchData();
 }
-_$jscoverage['/touch/single-touch.js'].branchData['16'][1].init(48, 43, 'e.touches.length != self.requiredTouchCount');
-function visit70_16_1(result) {
-  _$jscoverage['/touch/single-touch.js'].branchData['16'][1].ranCondition(result);
+_$jscoverage['/touch/single-touch.js'].branchData['15'][1].init(48, 43, 'e.touches.length != self.requiredTouchCount');
+function visit70_15_1(result) {
+  _$jscoverage['/touch/single-touch.js'].branchData['15'][1].ranCondition(result);
   return result;
 }_$jscoverage['/touch/single-touch.js'].lineData[6]++;
 KISSY.add('event/dom/touch/single-touch', function(S) {
   _$jscoverage['/touch/single-touch.js'].functionData[0]++;
-  _$jscoverage['/touch/single-touch.js'].lineData[8]++;
+  _$jscoverage['/touch/single-touch.js'].lineData[7]++;
   function SingleTouch() {
     _$jscoverage['/touch/single-touch.js'].functionData[1]++;
   }
-  _$jscoverage['/touch/single-touch.js'].lineData[11]++;
+  _$jscoverage['/touch/single-touch.js'].lineData[10]++;
   SingleTouch.prototype = {
   constructor: SingleTouch, 
   requiredTouchCount: 1, 
   onTouchStart: function(e) {
   _$jscoverage['/touch/single-touch.js'].functionData[2]++;
-  _$jscoverage['/touch/single-touch.js'].lineData[15]++;
+  _$jscoverage['/touch/single-touch.js'].lineData[14]++;
   var self = this;
-  _$jscoverage['/touch/single-touch.js'].lineData[16]++;
-  if (visit70_16_1(e.touches.length != self.requiredTouchCount)) {
-    _$jscoverage['/touch/single-touch.js'].lineData[17]++;
+  _$jscoverage['/touch/single-touch.js'].lineData[15]++;
+  if (visit70_15_1(e.touches.length != self.requiredTouchCount)) {
+    _$jscoverage['/touch/single-touch.js'].lineData[16]++;
     return false;
   }
-  _$jscoverage['/touch/single-touch.js'].lineData[19]++;
+  _$jscoverage['/touch/single-touch.js'].lineData[18]++;
   self.lastTouches = e.touches;
-  _$jscoverage['/touch/single-touch.js'].lineData[20]++;
+  _$jscoverage['/touch/single-touch.js'].lineData[19]++;
   return undefined;
 }, 
   onTouchMove: S.noop, 
   onTouchEnd: S.noop};
-  _$jscoverage['/touch/single-touch.js'].lineData[26]++;
+  _$jscoverage['/touch/single-touch.js'].lineData[25]++;
   return SingleTouch;
 });

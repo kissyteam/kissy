@@ -4,7 +4,6 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/dom/touch/single-touch', function (S) {
-
     function SingleTouch() {
     }
 
@@ -24,5 +23,4 @@ KISSY.add('event/dom/touch/single-touch', function (S) {
     };
 
     return SingleTouch;
-
 });

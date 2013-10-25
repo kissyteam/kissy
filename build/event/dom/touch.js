@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Oct 10 13:54
+build time: Oct 25 11:43
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -33,7 +33,6 @@ KISSY.add('event/dom/touch/handle-map', function () {
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/dom/touch/single-touch', function (S) {
-
     function SingleTouch() {
     }
 
@@ -53,7 +52,6 @@ KISSY.add('event/dom/touch/single-touch', function (S) {
     };
 
     return SingleTouch;
-
 });
 /**
  * @ignore
@@ -65,6 +63,8 @@ KISSY.add('event/dom/touch/tap', function (S, eventHandleMap, DomEvent, SingleTo
         e.preventDefault();
     }
 
+    var sensitivity = 5;
+
     var event = 'tap';
 
     var DomEventObject = DomEvent.Object;
@@ -74,8 +74,17 @@ KISSY.add('event/dom/touch/tap', function (S, eventHandleMap, DomEvent, SingleTo
     }
 
     S.extend(Tap, SingleTouch, {
-        onTouchMove: function () {
-            return false;
+        onTouchMove: function (e) {
+            var lastTouches = this.lastTouches;
+            var firstTouch = lastTouches[0];
+            var currentTouch = e.changedTouches[0];
+            // some sensitivity
+            // android browser will trigger touchmove event finger is not moved ...
+            if (Math.abs(currentTouch.pageX - firstTouch.pageX) > sensitivity ||
+                Math.abs(currentTouch.pageY - firstTouch.pageY) > sensitivity) {
+                return false;
+            }
+            return undefined;
         },
 
         onTouchEnd: function (e) {
@@ -107,7 +116,6 @@ KISSY.add('event/dom/touch/tap', function (S, eventHandleMap, DomEvent, SingleTo
     };
 
     return Tap;
-
 }, {
     requires: ['./handle-map', 'event/dom/base', './single-touch']
 });

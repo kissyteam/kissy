@@ -4,7 +4,6 @@
  * @author qiaohua@taobao.com, yiminghe@gmail.com
  */
 KISSY.add('overlay/popup', function (S, Overlay, undefined) {
-
     /**
      * @class KISSY.Overlay.Popup
      * KISSY Popup Component.
@@ -12,7 +11,6 @@ KISSY.add('overlay/popup', function (S, Overlay, undefined) {
      * @extends KISSY.Overlay
      */
     return Overlay.extend({
-
         initializer: function () {
             var self = this,
             // 获取相关联的 Dom 节点
@@ -80,7 +78,7 @@ KISSY.add('overlay/popup', function (S, Overlay, undefined) {
         _bindTriggerClick: function () {
             var self = this;
             self.__clickPopup = function (ev) {
-                ev.halt();
+                ev.preventDefault();
                 if (self.get('toggle')) {
                     self[self.get('visible') ? '_hiding' : '_showing'](ev);
                 } else {
