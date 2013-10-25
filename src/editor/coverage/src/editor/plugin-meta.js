@@ -387,7 +387,7 @@ KISSY.add('editor/plugin-meta', function() {
   _$jscoverage['/editor/plugin-meta.js'].lineData[53]++;
   config({
   'editor/plugin/contextmenu': {
-  requires: ['editor', 'menu', 'editor/plugin/focus-fix']}});
+  requires: ['editor', 'menu', 'editor/plugin/focus-fix', 'event']}});
   _$jscoverage['/editor/plugin-meta.js'].lineData[57]++;
   config({
   'editor/plugin/dent-cmd': {
@@ -403,11 +403,11 @@ KISSY.add('editor/plugin-meta', function() {
   _$jscoverage['/editor/plugin-meta.js'].lineData[69]++;
   config({
   'editor/plugin/draft': {
-  requires: ['json', 'editor', 'editor/plugin/local-storage', 'overlay', 'editor/plugin/menubutton']}});
+  requires: ['event', 'json', 'editor', 'editor/plugin/local-storage', 'overlay', 'editor/plugin/menubutton']}});
   _$jscoverage['/editor/plugin-meta.js'].lineData[73]++;
   config({
   'editor/plugin/drag-upload': {
-  requires: ['editor']}});
+  requires: ['event', 'editor']}});
   _$jscoverage['/editor/plugin-meta.js'].lineData[77]++;
   config({
   'editor/plugin/element-path': {
@@ -419,7 +419,7 @@ KISSY.add('editor/plugin-meta', function() {
   _$jscoverage['/editor/plugin-meta.js'].lineData[85]++;
   config({
   'editor/plugin/flash-bridge': {
-  requires: ['swf', 'editor']}});
+  requires: ['swf', 'editor', 'event']}});
   _$jscoverage['/editor/plugin-meta.js'].lineData[89]++;
   config({
   'editor/plugin/flash-common/base-class': {
@@ -483,7 +483,7 @@ KISSY.add('editor/plugin-meta', function() {
   _$jscoverage['/editor/plugin-meta.js'].lineData[149]++;
   config({
   'editor/plugin/image': {
-  requires: ['editor', 'editor/plugin/button', 'editor/plugin/bubble', 'editor/plugin/contextmenu', 'editor/plugin/dialog-loader']}});
+  requires: ['event', 'editor', 'editor/plugin/button', 'editor/plugin/bubble', 'editor/plugin/contextmenu', 'editor/plugin/dialog-loader']}});
   _$jscoverage['/editor/plugin-meta.js'].lineData[153]++;
   config({
   'editor/plugin/image/dialog': {
@@ -567,7 +567,7 @@ KISSY.add('editor/plugin-meta', function() {
   _$jscoverage['/editor/plugin-meta.js'].lineData[233]++;
   config({
   'editor/plugin/maximize/cmd': {
-  requires: ['editor']}});
+  requires: ['event', 'editor']}});
   _$jscoverage['/editor/plugin-meta.js'].lineData[237]++;
   config({
   'editor/plugin/menubutton': {

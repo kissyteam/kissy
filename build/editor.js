@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Oct 25 16:49
+build time: Oct 25 16:56
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -7870,7 +7870,7 @@ KISSY.add("editor/selectionFix", function (S, Editor, Event) {
         }
     };
 }, {
-    requires: ['./base', 'event', '/selection', 'node']
+    requires: ['./base', 'event', './selection', 'node']
 });
 
 KISSY.add('editor/plugin-meta',function(){

@@ -462,5 +462,5 @@ KISSY.add("editor/selectionFix", function (S, Editor, Event) {
         }
     };
 }, {
-    requires: ['./base', 'event', '/selection', 'node']
+    requires: ['./base', 'event', './selection', 'node']
 });

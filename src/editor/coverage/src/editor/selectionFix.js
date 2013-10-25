@@ -1171,4 +1171,4 @@ KISSY.add("editor/selectionFix", function(S, Editor, Event) {
   monitorSelectionChange(editor);
 }};
 }, {
-  requires: ['./base', 'event', '/selection', 'node']});
+  requires: ['./base', 'event', './selection', 'node']});
