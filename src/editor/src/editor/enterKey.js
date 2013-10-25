@@ -7,11 +7,10 @@
  Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.html or http://ckeditor.com/license
  */
-KISSY.add("editor/enterKey", function (S,Editor,Walker,ElementPath,Event) {
+KISSY.add("editor/enterKey", function (S,Editor,Walker,ElementPath,Node,Event) {
     var UA = S.UA,
         headerTagRegex = /^h[1-6]$/,
-        dtd = Editor.XHTML_DTD,
-        Node = S.Node;
+        dtd = Editor.XHTML_DTD;
 
 
     function getRange(editor) {

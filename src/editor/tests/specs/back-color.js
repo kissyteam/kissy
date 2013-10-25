@@ -41,7 +41,7 @@ KISSY.add(function (S, Node, Color, Editor, init) {
                 } else {
                     expected = '<p>12<span style="background-color: ' + rgb + '">3</span>4567</p>';
                 }
-                // firefox
+
                 data = data.replace('<p>&nbsp;</p>', '');
                 expect(data).toBe(expected);
             });

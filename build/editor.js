@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Oct 25 16:56
+build time: Oct 25 17:03
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -6785,11 +6785,10 @@ KISSY.add("editor/clipboard", function (S, Editor, KERange, KES) {
  Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.html or http://ckeditor.com/license
  */
-KISSY.add("editor/enterKey", function (S,Editor,Walker,ElementPath,Event) {
+KISSY.add("editor/enterKey", function (S,Editor,Walker,ElementPath,Node,Event) {
     var UA = S.UA,
         headerTagRegex = /^h[1-6]$/,
-        dtd = Editor.XHTML_DTD,
-        Node = S.Node;
+        dtd = Editor.XHTML_DTD;
 
 
     function getRange(editor) {

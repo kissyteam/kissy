@@ -6,8 +6,6 @@
 KISSY.add(function (S, Node, DD, IO) {
     var $=Node.all;
     var Draggable = DD.Draggable, Dom = S.DOM;
-    var Event = S.Event;
-    var Gesture = Event.Gesture;
     var UA = S.UA;
     var ie = document['documentMode'] || UA['ie'];
 

@@ -2,7 +2,7 @@
  * Simple TC for KISSY ComboBox
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S, ComboBox) {
+KISSY.add(function (S, Event,ComboBox) {
 
     window.focus();
     document.body.focus();
@@ -20,7 +20,6 @@ KISSY.add(function (S, ComboBox) {
         });
 
         var data = ["1", "21", "31"];
-        var Event = S.Event;
         var KeyCode = Event.KeyCode;
 
         var comboBox = new ComboBox({
@@ -447,5 +446,5 @@ KISSY.add(function (S, ComboBox) {
 
     });
 },{
-    requires:['combobox']
+    requires:['event','combobox']
 });
