@@ -3,7 +3,6 @@
  * @refer https://github.com/yui/yui3/raw/master/src/event-simulate/js/event-simulate.js
  */
 (function () {
-
     'use strict';
 
     // shortcuts
@@ -33,6 +32,11 @@
 
     // mouse events supported
         mouseEvents = {
+            MSPointerOver: 1,
+            MSPointerOut: 1,
+            MSPointerDown: 1,
+            MSPointerUp: 1,
+            MSPointerMove: 1,
             click: 1,
             dblclick: 1,
             mouseover: 1,
@@ -317,7 +321,6 @@
      *      argument is ignored for all other events. The default is null.
      */
     function simulateMouseEvent(target /*:HTMLElement*/, type /*:String*/, bubbles /*:Boolean*/, cancelable /*:Boolean*/, view /*:Window*/, detail /*:int*/, screenX /*:int*/, screenY /*:int*/, clientX /*:int*/, clientY /*:int*/, ctrlKey /*:Boolean*/, altKey /*:Boolean*/, shiftKey /*:Boolean*/, metaKey /*:Boolean*/, button /*:int*/, relatedTarget /*:HTMLElement*/) /*:Void*/ {
-
         // check target
         if (!target) {
             throw "simulateMouseEvent(): Invalid target.";
@@ -325,8 +328,6 @@
 
         // check event type
         if (isString(type)) {
-            type = type.toLowerCase();
-
             // make sure it's a supported mouse event
             if (!mouseEvents[type]) {
                 throw "simulateMouseEvent(): Event type '" + type + "' not supported.";
@@ -622,7 +623,7 @@
             targetTouches = createTouchList(target, targetTouches);
         }
 
-        var UA = KISSY.UA, S = KISSY;
+        var UA = KISSY.UA;
 
         var customEvent;
 
@@ -935,11 +936,21 @@
      * @static
      */
     jasmine.simulate = function (target, type, options) {
-
         var UA = window.KISSY && window.KISSY.UA || {};
-
         options = options || {};
-
+        if (type == 'click') {
+            jasmine.simulate(target, 'mousedown', options);
+            jasmine.simulate(target, 'mouseup', options);
+        }
+        if (KISSY.Features.isMsPointerSupported()) {
+            if (type == 'mousedown') {
+                jasmine.simulate(target, 'MSPointerDown', options);
+            } else if (type == 'mouseup') {
+                jasmine.simulate(target, 'MSPointerUp', options);
+            } else if (type == 'mousemove') {
+                jasmine.simulate(target, 'MSPointerMove', options);
+            }
+        }
         if (mouseEvents[type]) {
             simulateMouseEvent(target, type, options.bubbles,
                 options.cancelable, options.view, options.detail, options.screenX,
@@ -969,34 +980,6 @@
             simulateDeviceMotionEvent(target, options);
         } else {
             throw "simulate(): Event '" + type + "' can't be simulated.";
-        }
-    };
-
-    jasmine.simulateForDrag = function (target, type, option) {
-        if(type=='KSPointerDown'){
-            type='touchstart';
-        }
-        if(type=='KSPointerMove'){
-            type='touchmove';
-        }
-        if(type=='KSPointerUp'){
-            type='touchend';
-        }
-        if (type.indexOf('mouse') != -1) {
-            jasmine.simulate(target, type, option);
-        } else if (type.indexOf('touch') != -1) {
-            option = option || {};
-            var touches = [option];
-            var changedTouches = touches;
-            var targetTouches = touches;
-            if (type == 'touchend') {
-                touches = targetTouches = [];
-            }
-            jasmine.simulate(target, type, {
-                touches: touches,
-                targetTouches: targetTouches,
-                changedTouches: changedTouches
-            });
         }
     };
 })();

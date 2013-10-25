@@ -4,50 +4,50 @@
  */
 KISSY.add(function (S, Dom, Event, Node, DD, Scroll, IO) {
     var Draggable = DD.Draggable,
-        Gesture = Event.Gesture,
         UA = S.UA,
         $ = Node.all;
     var ie = document['documentMode'] || UA['ie'];
 
     describe("scroll", function () {
-
         var drag, dragNode, dragContainer, dragOffset, containerOffset, scrollTop = 0;
 
-        var html = '';
+        var html;
 
         IO({
             url: '../specs/scroll.fragment.html',
-            async: false,
             success: function (data) {
                 html = data;
+                $('body').append(html);
             }
         });
 
-        $('body').append(html);
-
-        dragNode = $("#drag-scroll");
-        dragContainer = $("#drag_scroll_container");
-        drag = new Draggable({
-            node: dragNode,
-            move: 1,
-            groups: false
-        });
-
-        drag.plug(new Scroll({
-            node: dragContainer,
-            diff: [10, 10]
-        }));
-
-
-        dragOffset = dragNode.offset();
-        containerOffset = dragContainer.offset();
-
-        scrollTop = dragContainer[0].scrollTop;
-
         it("should make container auto scroll properly", function () {
+            waitsFor(function () {
+                return html;
+            });
 
             runs(function () {
-                jasmine.simulateForDrag(dragNode[0], Gesture.start, {
+                dragNode = $("#drag-scroll");
+                dragContainer = $("#drag_scroll_container");
+                drag = new Draggable({
+                    node: dragNode,
+                    move: 1,
+                    groups: false
+                });
+
+                drag.plug(new Scroll({
+                    node: dragContainer,
+                    diff: [10, 10]
+                }));
+
+                dragOffset = dragNode.offset();
+                containerOffset = dragContainer.offset();
+
+                scrollTop = dragContainer[0].scrollTop;
+            });
+
+            runs(function () {
+                jasmine.simulate(dragNode[0], 'mousedown', {
                     clientX: dragOffset.left + 20 - Dom.scrollLeft(),
                     clientY: dragOffset.top + 20 - Dom.scrollTop()
                 });
@@ -57,7 +57,7 @@ KISSY.add(function (S, Dom, Event, Node, DD, Scroll, IO) {
 
             // 10px move to start
             runs(function () {
-                jasmine.simulateForDrag(document, Gesture.move, {
+                jasmine.simulate(document, 'mousemove', {
                     clientX: dragOffset.left + 25 - Dom.scrollLeft(),
                     clientY: dragOffset.top + 25 - Dom.scrollTop()
                 });
@@ -66,20 +66,16 @@ KISSY.add(function (S, Dom, Event, Node, DD, Scroll, IO) {
             waits(100);
 
             runs(function () {
-
-                jasmine.simulateForDrag(document, Gesture.move, {
+                jasmine.simulate(document, 'mousemove', {
                     clientX: containerOffset.left + 50 - Dom.scrollLeft(),
                     clientY: containerOffset.top + dragContainer[0].offsetHeight - 10
                         + 2 - Dom.scrollTop()
                 });
-
-
             });
-
 
             waits(300);
             runs(function () {
-                jasmine.simulateForDrag(document, Gesture.end, {
+                jasmine.simulate(document, 'mouseup', {
                     clientX: containerOffset.left + 50 - Dom.scrollLeft(),
                     clientY: containerOffset.top + dragContainer[0].offsetHeight - 10
                         + 2 - Dom.scrollTop()
@@ -93,11 +89,8 @@ KISSY.add(function (S, Dom, Event, Node, DD, Scroll, IO) {
                     expect(dragContainer[0].scrollTop).not.toBe(scrollTop);
                 }
             });
-
         });
-
     });
-
 }, {
     requires: ['dom', 'event', 'node', 'dd', 'dd/plugin/scroll', 'io']
 });

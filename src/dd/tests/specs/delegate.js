@@ -5,14 +5,12 @@
 KISSY.add(function (S, Event, Node, DD, Dom, Proxy, IO) {
     var $ = Node.all,
         UA = S.UA,
-        Gesture = Event.Gesture,
         DraggableDelegate = DD.DraggableDelegate,
         DroppableDelegate = DD.DroppableDelegate;
 
     var ie = document['documentMode'] || UA['ie'];
 
     describe("delegate", function () {
-
         var html = '';
 
         IO({
@@ -31,7 +29,6 @@ KISSY.add(function (S, Event, Node, DD, Dom, Proxy, IO) {
         c3 = $("#c3");
 
         it("should delegate properly", function () {
-
             var proxy = new Proxy({
                 /**
                  * 如何产生替代节点
@@ -61,7 +58,6 @@ KISSY.add(function (S, Event, Node, DD, Dom, Proxy, IO) {
                 selector: '.component'
             });
 
-
             dragDelegate.on("dragover", function (ev) {
                 var drag = ev.drag;
                 var drop = ev.drop;
@@ -86,49 +82,49 @@ KISSY.add(function (S, Event, Node, DD, Dom, Proxy, IO) {
             });
 
             runs(function () {
-                jasmine.simulateForDrag(c2.one(".cheader")[0], Gesture.start, {
+                jasmine.simulate(c2.one(".cheader")[0], 'mousedown', {
                     clientX: c2.offset().left + 5 - Dom.scrollLeft(),
                     clientY: c2.offset().top + 5 - Dom.scrollTop()
                 });
             });
 
-            waits(100);
+            waits(400);
 
             // 10px move to start
             runs(function () {
-                jasmine.simulateForDrag(document, Gesture.move, {
+                jasmine.simulate(document, 'mousemove', {
                     clientX: c2.offset().left + 15 - Dom.scrollLeft(),
                     clientY: c2.offset().top + 15 - Dom.scrollTop()
                 });
             });
 
-            waits(100);
+            waits(400);
             runs(function () {
-                jasmine.simulateForDrag(document, Gesture.move, {
+                jasmine.simulate(document, 'mousemove', {
                     clientX: c1.offset().left + 5 - Dom.scrollLeft(),
                     clientY: c1.offset().top + 5 - Dom.scrollTop()
                 });
             });
 
 
-            waits(100);
+            waits(400);
             runs(function () {
-                jasmine.simulateForDrag(document, Gesture.move, {
+                jasmine.simulate(document, 'mousemove', {
                     clientX: c1.offset().left + 6 - Dom.scrollLeft(),
                     clientY: c1.offset().top + 6 - Dom.scrollTop()
                 });
             });
 
 
-            waits(100);
+            waits(400);
             runs(function () {
-                jasmine.simulateForDrag(document, Gesture.end, {
+                jasmine.simulate(document, 'mouseup', {
                     clientX: c1.offset().left + 6 - Dom.scrollLeft(),
                     clientY: c1.offset().top + 6 - Dom.scrollTop()
                 });
             });
 
-            waits(100);
+            waits(400);
             runs(function () {
                 expect($("#container2").children()[0]).toBe(c2[0]);
                 // restore
@@ -198,49 +194,49 @@ KISSY.add(function (S, Event, Node, DD, Dom, Proxy, IO) {
             });
 
             runs(function () {
-                jasmine.simulateForDrag(c2.one(".cheader")[0], Gesture.start, {
+                jasmine.simulate(c2.one(".cheader")[0], 'mousedown', {
                     clientX: c2.offset().left + 5 - Dom.scrollLeft(),
                     clientY: c2.offset().top + 5 - Dom.scrollTop()
                 });
             });
 
-            waits(100);
+            waits(400);
 
             // 10px move to start
             runs(function () {
-                jasmine.simulateForDrag(document, Gesture.move, {
+                jasmine.simulate(document, 'mousemove', {
                     clientX: c2.offset().left + 15 - Dom.scrollLeft(),
                     clientY: c2.offset().top + 15 - Dom.scrollTop()
                 });
             });
 
-            waits(100);
+            waits(400);
             runs(function () {
-                jasmine.simulateForDrag(document, Gesture.move, {
+                jasmine.simulate(document, 'mousemove', {
                     clientX: c1.offset().left + 5 - Dom.scrollLeft(),
                     clientY: c1.offset().top + 5 - Dom.scrollTop()
                 });
             });
 
 
-            waits(100);
+            waits(400);
             runs(function () {
-                jasmine.simulateForDrag(document, Gesture.move, {
+                jasmine.simulate(document, 'mousemove', {
                     clientX: c1.offset().left + 6 - Dom.scrollLeft(),
                     clientY: c1.offset().top + 6 - Dom.scrollTop()
                 });
             });
 
 
-            waits(100);
+            waits(400);
             runs(function () {
-                jasmine.simulateForDrag(document, Gesture.end, {
+                jasmine.simulate(document, 'mouseup', {
                     clientX: c1.offset().left + 6 - Dom.scrollLeft(),
                     clientY: c1.offset().top + 6 - Dom.scrollTop()
                 });
             });
 
-            waits(100);
+            waits(400);
             runs(function () {
                 expect($("#container2").children()[0]).toBe(c1[0]);
                 // restore

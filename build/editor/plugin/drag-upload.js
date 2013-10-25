@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 17 23:01
+build time: Oct 25 16:42
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -14,9 +14,8 @@ build time: Sep 17 23:01
  * drag file support for html5 file&dd
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/drag-upload", function (S, Editor) {
+KISSY.add("editor/plugin/drag-upload", function (S,Event, Editor) {
     var Node = S.Node,
-        Event = S.Event,
         Utils = Editor.Utils,
         Dom = S.DOM;
 
@@ -179,7 +178,7 @@ KISSY.add("editor/plugin/drag-upload", function (S, Editor) {
 
     return dragUpload;
 }, {
-    requires: ['editor']
+    requires: ['event','editor']
 });
 /**
  * @ignore

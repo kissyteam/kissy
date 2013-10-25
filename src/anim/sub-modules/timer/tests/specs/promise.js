@@ -22,7 +22,7 @@ KISSY.add(function (S, Node, Anim) {
             });
             runs(function () {
                 expect(ps.length).toBeGreaterThan(10);
-                expect(ps[0]).toBeLessThan(0.1);
+                expect(ps[0]).toBeLessThan(0.3);
                 expect(ps[ps.length - 1]).toBeGreaterThan(0.9);
             });
         });

@@ -58,27 +58,27 @@ KISSY.add(function (S, Event, Resizable) {
         var lNode = dom.one('.ks-resizable-handler-l');
 
         it('l resize works', function () {
-            jasmine.simulateForDrag(lNode[0], Gesture.start, {
+            jasmine.simulate(lNode[0], 'mousedown', {
                 clientX: 102,
                 clientY: 110
             });
             waits(200);
             runs(function () {
-                jasmine.simulateForDrag(document, Gesture.move, {
+                jasmine.simulate(document, 'mousemove', {
                     clientX: 92,
                     clientY: 110
                 });
             });
             waits(200);
             runs(function () {
-                jasmine.simulateForDrag(document, Gesture.move, {
+                jasmine.simulate(document, 'mousemove', {
                     clientX: 82,
                     clientY: 110
                 });
             });
             waits(200);
             runs(function () {
-                jasmine.simulateForDrag(document, Gesture.end, {
+                jasmine.simulate(document, 'mouseup', {
                     clientX: 82,
                     clientY: 110
                 });

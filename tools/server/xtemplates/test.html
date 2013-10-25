@@ -13,12 +13,14 @@
 <script src="/kissy/tools/test/test.js"></script>
 
 <script>
-    <!--
+    var t='';
     {{#each tests}}
-        tests.push('{{{.}}}');
+        t='{{{.}}}';
+        if(!KISSY.endsWith(t,'?coverage') && t!='/send-to-coveralls'){
+            tests.push(t);
+        }
     {{/each}}
     document.write(tests.join("<br>"));
-    -->
 </script>
 {{{include './footer'}}}
 </body>

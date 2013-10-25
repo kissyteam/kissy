@@ -36,41 +36,36 @@ KISSY.add(function (S, Node,Event, DD, Proxy) {
         }));
 
         it("should create proxy properly", function () {
-
-
             expect(drag.get("node")[0]).toBe(drag.get("dragNode")[0]);
 
             dragXy = dragNode.offset();
-            jasmine.simulateForDrag(dragNode[0], Gesture.start, {
+            jasmine.simulate(dragNode[0], 'mousedown', {
                 clientX: dragXy.left + 10 - Dom.scrollLeft(),
                 clientY: dragXy.top + 10 - Dom.scrollTop()
             });
-
 
             waits(100);
 
             // 10px move to start
             runs(function () {
-                jasmine.simulateForDrag(document, Gesture.move, {
+                jasmine.simulate(document, 'mousemove', {
                     clientX: dragXy.left + 15 - Dom.scrollLeft(),
                     clientY: dragXy.top + 15 - Dom.scrollTop()
                 });
             });
 
-            waits(100);
+            waits(400);
 
             runs(function () {
                 expect(drag.get("node")[0]).not.toBe(drag.get("dragNode")[0]);
             });
 
             runs(function () {
-                jasmine.simulateForDrag(document, Gesture.end, {
+                jasmine.simulate(document, 'mouseup', {
                     clientX: dragXy.left + 15 - Dom.scrollLeft(),
                     clientY: dragXy.top + 15 - Dom.scrollTop()
                 });
             });
-
-
         });
 
         runs(function () {

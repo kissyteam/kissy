@@ -4,8 +4,7 @@
  */
 KISSY.add(function (S, Event, UA, Node, Overlay, ResizePlugin) {
     var Dom = S.DOM,
-        $ = Node.all,
-        Gesture = Event.Gesture;
+        $ = Node.all;
 
     beforeEach(function () {
         this.addMatchers({
@@ -193,13 +192,13 @@ KISSY.add(function (S, Event, UA, Node, Overlay, ResizePlugin) {
                     height = o.get("el").outerHeight(),
                     hxy = h.offset();
 
-                jasmine.simulateForDrag(h[0], Gesture.start, {
+                jasmine.simulate(h[0], 'mousedown', {
                     clientX: hxy.left - 2,
                     clientY: hxy.top - 2
                 });
 
                 runs(function () {
-                    jasmine.simulateForDrag(document, Gesture.move, {
+                    jasmine.simulate(document, 'mousemove', {
                         clientX: hxy.left - 25,
                         clientY: hxy.top - 25
                     });
@@ -209,7 +208,7 @@ KISSY.add(function (S, Event, UA, Node, Overlay, ResizePlugin) {
                 waits(300);
 
                 runs(function () {
-                    jasmine.simulateForDrag(document, Gesture.move, {
+                    jasmine.simulate(document, 'mousemove', {
                         clientX: hxy.left - 100,
                         clientY: hxy.top - 100
                     });
@@ -219,7 +218,7 @@ KISSY.add(function (S, Event, UA, Node, Overlay, ResizePlugin) {
                 waits(100);
 
                 runs(function () {
-                    jasmine.simulateForDrag(document, Gesture.end, {
+                    jasmine.simulate(document, 'mouseup', {
                         clientX: hxy.left - 100,
                         clientY: hxy.top - 100
                     });

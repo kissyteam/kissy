@@ -69,9 +69,8 @@ KISSY.add(function (S, MVC) {
 
             expect(Router.hasRoute('/list2/what/item')).toBe(true);
 
-
             // restore hash to its original value
-            location.hash = '';
+            location.hash='';
 
 
             Router.start({
@@ -126,7 +125,8 @@ KISSY.add(function (S, MVC) {
         }
 
         // ie8 iframe 内 重复刷新！
-        if ((ie == 8 || ie == 9) && window.frameElement) {
+        // firefox
+        if ((ie == 8 || ie == 9) && window.frameElement || S.UA.firefox) {
             return;
         }
 

@@ -63,12 +63,7 @@ KISSY.add(function (S, Tabs) {
                     run_ed = 1;
                 });
 
-                if (S.Features.isTouchEventSupported()) {
-                    jasmine.simulateForDrag(tabB[0], "touchstart");
-                    jasmine.simulateForDrag(tabB[0], "touchend");
-                } else {
-                    jasmine.simulate(tabB[0], "click");
-                }
+                jasmine.simulate(tabB[0], "click");
 
                 runs(function () {
                     expect(run_ed).toBe(1);
@@ -224,6 +219,6 @@ KISSY.add(function (S, Tabs) {
 
 
     });
-},{
-    requires:['tabs']
+}, {
+    requires: ['tabs']
 });

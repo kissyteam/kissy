@@ -351,7 +351,7 @@ function visit1_20_1(result) {
   _$jscoverage['/flash-bridge.js'].branchData['20'][1].ranCondition(result);
   return result;
 }_$jscoverage['/flash-bridge.js'].lineData[6]++;
-KISSY.add("editor/plugin/flash-bridge", function(S, SWF, Editor) {
+KISSY.add("editor/plugin/flash-bridge", function(S, SWF, Editor, Event) {
   _$jscoverage['/flash-bridge.js'].functionData[0]++;
   _$jscoverage['/flash-bridge.js'].lineData[7]++;
   var instances = {};
@@ -364,7 +364,7 @@ KISSY.add("editor/plugin/flash-bridge", function(S, SWF, Editor) {
     this._init(cfg);
   }
   _$jscoverage['/flash-bridge.js'].lineData[14]++;
-  S.augment(FlashBridge, S.EventTarget, {
+  S.augment(FlashBridge, Event.Target, {
   _init: function(cfg) {
   _$jscoverage['/flash-bridge.js'].functionData[2]++;
   _$jscoverage['/flash-bridge.js'].lineData[16]++;
@@ -495,4 +495,4 @@ KISSY.add("editor/plugin/flash-bridge", function(S, SWF, Editor) {
   _$jscoverage['/flash-bridge.js'].lineData[109]++;
   return FlashBridge;
 }, {
-  requires: ['swf', 'editor']});
+  requires: ['swf', 'editor', 'event']});

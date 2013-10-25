@@ -2,18 +2,19 @@
  * test tap gesture by simulating touch event for ios/android
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S,Event) {
-    if (!window.DeviceMotionEvent) {
+KISSY.add(function (S, Event) {
+    // TODO firefox??
+    if (!window.DeviceMotionEvent || S.UA.firefox) {
         return;
     }
 
-    var $ = S.all, step = 10;
+    var $ = S.all;
 
     describe('shake', function () {
         it('fires', function () {
             var called = 0, fn;
 
-            Event.on(window,'shake', function () {
+            Event.on(window, 'shake', function () {
                 called = 1;
             });
 

@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 17 23:02
+build time: Oct 25 16:44
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -14,11 +14,10 @@ build time: Sep 17 23:02
  * insert image for kissy editor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/image", function (S, Editor, Button, Bubble, ContextMenu, DialogLoader) {
+KISSY.add("editor/plugin/image", function (S,Event, Editor, Button, Bubble, ContextMenu, DialogLoader) {
     var UA = S.UA,
         Node = KISSY.NodeList,
         $ = S.all,
-        Event = S.Event,
         checkImg = function (node) {
             node = $(node);
             if (node.nodeName() === 'img' &&
@@ -173,7 +172,9 @@ KISSY.add("editor/plugin/image", function (S, Editor, Button, Bubble, ContextMen
 
     return ImagePlugin;
 }, {
-    requires: ['editor',
+    requires: [
+        'event',
+        'editor',
         './button',
         './bubble',
         './contextmenu',

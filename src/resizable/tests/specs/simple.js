@@ -83,27 +83,27 @@ KISSY.add(function (S, Event, Resizable) {
 
         it('l resize works', function () {
 
-            jasmine.simulateForDrag(lNode[0], Gesture.start, {
+            jasmine.simulate(lNode[0], 'mousedown', {
                 clientX: 102,
                 clientY: 110
             });
             waits(200);
             runs(function () {
-                jasmine.simulateForDrag(document, Gesture.move, {
+                jasmine.simulate(document, 'mousemove', {
                     clientX: 92,
                     clientY: 110
                 });
             });
             waits(200);
             runs(function () {
-                jasmine.simulateForDrag(document, Gesture.move, {
+                jasmine.simulate(document, 'mousemove', {
                     clientX: 82,
                     clientY: 110
                 });
             });
             waits(200);
             runs(function () {
-                jasmine.simulateForDrag(document, Gesture.end, {
+                jasmine.simulate(document, 'mouseup', {
                     clientX: 82,
                     clientY: 110
                 });
@@ -122,27 +122,27 @@ KISSY.add(function (S, Event, Resizable) {
         });
 
         it('r resize works', function () {
-            jasmine.simulateForDrag(rNode[0], Gesture.start, {
+            jasmine.simulate(rNode[0], 'mousedown', {
                 clientX: 198,
                 clientY: 110
             });
             waits(200);
             runs(function () {
-                jasmine.simulateForDrag(document, Gesture.move, {
+                jasmine.simulate(document, 'mousemove', {
                     clientX: 208,
                     clientY: 110
                 });
             });
             waits(200);
             runs(function () {
-                jasmine.simulateForDrag(document, Gesture.move, {
+                jasmine.simulate(document, 'mousemove', {
                     clientX: 218,
                     clientY: 110
                 });
             });
             waits(200);
             runs(function () {
-                jasmine.simulateForDrag(document, Gesture.end, {
+                jasmine.simulate(document, 'mouseup', {
                     clientX: 218,
                     clientY: 110
                 });
@@ -160,27 +160,27 @@ KISSY.add(function (S, Event, Resizable) {
 
 
         it('t resize works', function () {
-            jasmine.simulateForDrag(tNode[0], Gesture.start, {
+            jasmine.simulate(tNode[0], 'mousedown', {
                 clientX: 102,
                 clientY: 102
             });
             waits(200);
             runs(function () {
-                jasmine.simulateForDrag(document, Gesture.move, {
+                jasmine.simulate(document, 'mousemove', {
                     clientX: 102,
                     clientY: 92
                 });
             });
             waits(200);
             runs(function () {
-                jasmine.simulateForDrag(document, Gesture.move, {
+                jasmine.simulate(document, 'mousemove', {
                     clientX: 102,
                     clientY: 82
                 });
             });
             waits(200);
             runs(function () {
-                jasmine.simulateForDrag(document, Gesture.end, {
+                jasmine.simulate(document, 'mouseup', {
                     clientX: 102,
                     clientY: 82
                 });
@@ -194,27 +194,27 @@ KISSY.add(function (S, Event, Resizable) {
 
 
         it('b resize works', function () {
-            jasmine.simulateForDrag(bNode[0], Gesture.start, {
+            jasmine.simulate(bNode[0], 'mousedown', {
                 clientX: 102,
                 clientY: 202
             });
             waits(200);
             runs(function () {
-                jasmine.simulateForDrag(document, Gesture.move, {
+                jasmine.simulate(document, 'mousemove', {
                     clientX: 102,
                     clientY: 212
                 });
             });
             waits(200);
             runs(function () {
-                jasmine.simulateForDrag(document, Gesture.move, {
+                jasmine.simulate(document, 'mousemove', {
                     clientX: 102,
                     clientY: 222
                 });
             });
             waits(200);
             runs(function () {
-                jasmine.simulateForDrag(document, Gesture.end, {
+                jasmine.simulate(document, 'mouseup', {
                     clientX: 102,
                     clientY: 222
                 });
@@ -228,27 +228,27 @@ KISSY.add(function (S, Event, Resizable) {
 
 
         it('bl resize works', function () {
-            jasmine.simulateForDrag(blNode[0], Gesture.start, {
+            jasmine.simulate(blNode[0], 'mousedown', {
                 clientX: 102,
                 clientY: 198
             });
             waits(200);
             runs(function () {
-                jasmine.simulateForDrag(document, Gesture.move, {
+                jasmine.simulate(document, 'mousemove', {
                     clientX: 92,
                     clientY: 208
                 });
             });
             waits(200);
             runs(function () {
-                jasmine.simulateForDrag(document, Gesture.move, {
+                jasmine.simulate(document, 'mousemove', {
                     clientX: 82,
                     clientY: 218
                 });
             });
             waits(200);
             runs(function () {
-                jasmine.simulateForDrag(document, Gesture.end, {
+                jasmine.simulate(document, 'mouseup', {
                     clientX: 82,
                     clientY: 218
                 });
@@ -268,27 +268,27 @@ KISSY.add(function (S, Event, Resizable) {
 
 
         it('tl resize works', function () {
-            jasmine.simulateForDrag(tlNode[0], Gesture.start, {
+            jasmine.simulate(tlNode[0], 'mousedown', {
                 clientX: 102,
                 clientY: 102
             });
             waits(200);
             runs(function () {
-                jasmine.simulateForDrag(document, Gesture.move, {
+                jasmine.simulate(document, 'mousemove', {
                     clientX: 112,
                     clientY: 112
                 });
             });
             waits(200);
             runs(function () {
-                jasmine.simulateForDrag(document, Gesture.move, {
+                jasmine.simulate(document, 'mousemove', {
                     clientX: 122,
                     clientY: 122
                 });
             });
             waits(200);
             runs(function () {
-                jasmine.simulateForDrag(document, Gesture.end, {
+                jasmine.simulate(document, 'mouseup', {
                     clientX: 122,
                     clientY: 122
                 });
@@ -304,27 +304,27 @@ KISSY.add(function (S, Event, Resizable) {
 
 
         it('tr resize works', function () {
-            jasmine.simulateForDrag(trNode[0], Gesture.start, {
+            jasmine.simulate(trNode[0], 'mousedown', {
                 clientX: 198,
                 clientY: 102
             });
             waits(200);
             runs(function () {
-                jasmine.simulateForDrag(document, Gesture.move, {
+                jasmine.simulate(document, 'mousemove', {
                     clientX: 208,
                     clientY: 92
                 });
             });
             waits(200);
             runs(function () {
-                jasmine.simulateForDrag(document, Gesture.move, {
+                jasmine.simulate(document, 'mousemove', {
                     clientX: 218,
                     clientY: 82
                 });
             });
             waits(200);
             runs(function () {
-                jasmine.simulateForDrag(document, Gesture.end, {
+                jasmine.simulate(document, 'mouseup', {
                     clientX: 218,
                     clientY: 82
                 });
@@ -340,27 +340,27 @@ KISSY.add(function (S, Event, Resizable) {
 
 
         it('br resize works', function () {
-            jasmine.simulateForDrag(brNode[0], Gesture.start, {
+            jasmine.simulate(brNode[0], 'mousedown', {
                 clientX: 198,
                 clientY: 198
             });
             waits(200);
             runs(function () {
-                jasmine.simulateForDrag(document, Gesture.move, {
+                jasmine.simulate(document, 'mousemove', {
                     clientX: 208,
                     clientY: 208
                 });
             });
             waits(200);
             runs(function () {
-                jasmine.simulateForDrag(document, Gesture.move, {
+                jasmine.simulate(document, 'mousemove', {
                     clientX: 218,
                     clientY: 218
                 });
             });
             waits(200);
             runs(function () {
-                jasmine.simulateForDrag(document, Gesture.end, {
+                jasmine.simulate(document, 'mouseup', {
                     clientX: 218,
                     clientY: 218
                 });
@@ -377,27 +377,27 @@ KISSY.add(function (S, Event, Resizable) {
 
         it('disabled works for true', function () {
             resizable.set('disabled', true);
-            jasmine.simulateForDrag(lNode[0], Gesture.start, {
+            jasmine.simulate(lNode[0], 'mousedown', {
                 clientX: 102,
                 clientY: 110
             });
             waits(200);
             runs(function () {
-                jasmine.simulateForDrag(document, Gesture.move, {
+                jasmine.simulate(document, 'mousemove', {
                     clientX: 92,
                     clientY: 110
                 });
             });
             waits(200);
             runs(function () {
-                jasmine.simulateForDrag(document, Gesture.move, {
+                jasmine.simulate(document, 'mousemove', {
                     clientX: 82,
                     clientY: 110
                 });
             });
             waits(200);
             runs(function () {
-                jasmine.simulateForDrag(document, Gesture.end, {
+                jasmine.simulate(document, 'mouseup', {
                     clientX: 82,
                     clientY: 110
                 });
@@ -413,27 +413,27 @@ KISSY.add(function (S, Event, Resizable) {
 
         it('disabled works for false', function () {
             resizable.set('disabled', false);
-            jasmine.simulateForDrag(lNode[0], Gesture.start, {
+            jasmine.simulate(lNode[0], 'mousedown', {
                 clientX: 102,
                 clientY: 110
             });
             waits(200);
             runs(function () {
-                jasmine.simulateForDrag(document, Gesture.move, {
+                jasmine.simulate(document, 'mousemove', {
                     clientX: 92,
                     clientY: 110
                 });
             });
             waits(200);
             runs(function () {
-                jasmine.simulateForDrag(document, Gesture.move, {
+                jasmine.simulate(document, 'mousemove', {
                     clientX: 82,
                     clientY: 110
                 });
             });
             waits(200);
             runs(function () {
-                jasmine.simulateForDrag(document, Gesture.end, {
+                jasmine.simulate(document, 'mouseup', {
                     clientX: 82,
                     clientY: 110
                 });

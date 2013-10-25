@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 17 23:00
+build time: Oct 25 16:42
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -14,7 +14,7 @@ build time: Sep 17 23:00
  * contextmenu for kissy editor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/contextmenu", function (S, Editor, Menu, focusFix) {
+KISSY.add("editor/plugin/contextmenu", function (S, Editor, Menu, focusFix,Event) {
 
     Editor.prototype.addContextMenu = function (id, filter, cfg) {
 
@@ -38,7 +38,7 @@ KISSY.add("editor/plugin/contextmenu", function (S, Editor, Menu, focusFix) {
 
         menu.on("afterRenderUI", function () {
             menu.get("el").on("keydown", function (e) {
-                if (e.keyCode == S.Event.KeyCode.ESC) {
+                if (e.keyCode == Event.KeyCode.ESC) {
                     menu.hide();
                 }
             });
@@ -102,6 +102,6 @@ KISSY.add("editor/plugin/contextmenu", function (S, Editor, Menu, focusFix) {
         return menu;
     };
 }, {
-    requires: ['editor', 'menu', './focus-fix']
+    requires: ['editor', 'menu', './focus-fix','event']
 });
 

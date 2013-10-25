@@ -3,12 +3,11 @@
  * Add maximizeWindow/restoreWindow to Editor.
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/maximize/cmd", function (S, Editor) {
+KISSY.add("editor/plugin/maximize/cmd", function (S, Event, Editor) {
     var UA = S.UA,
         ie = UA['ie'],
         doc = document,
         Node = S.Node,
-        Event = S.Event,
         Dom = S.DOM,
         iframe,
         MAXIMIZE_TOOLBAR_CLASS = "editor-toolbar-padding",
@@ -189,10 +188,10 @@ KISSY.add("editor/plugin/maximize/cmd", function (S, Editor) {
                 var element = sel.getStartElement();
                 //使用原生不行的，会使主窗口滚动
                 //element[0] && element[0].scrollIntoView(true);
-                element && element.scrollIntoView(undefined,{
-                    alignWithTop:false,
-                    allowHorizontalScroll:true,
-                    onlyScrollIfNeeded:true
+                element && element.scrollIntoView(undefined, {
+                    alignWithTop: false,
+                    allowHorizontalScroll: true,
+                    onlyScrollIfNeeded: true
                 });
             }
         },
@@ -319,5 +318,5 @@ KISSY.add("editor/plugin/maximize/cmd", function (S, Editor) {
         }
     };
 }, {
-    requires: ['editor']
+    requires: ['event', 'editor']
 });

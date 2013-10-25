@@ -3,7 +3,7 @@
  * contextmenu for kissy editor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/contextmenu", function (S, Editor, Menu, focusFix) {
+KISSY.add("editor/plugin/contextmenu", function (S, Editor, Menu, focusFix,Event) {
 
     Editor.prototype.addContextMenu = function (id, filter, cfg) {
 
@@ -27,7 +27,7 @@ KISSY.add("editor/plugin/contextmenu", function (S, Editor, Menu, focusFix) {
 
         menu.on("afterRenderUI", function () {
             menu.get("el").on("keydown", function (e) {
-                if (e.keyCode == S.Event.KeyCode.ESC) {
+                if (e.keyCode == Event.KeyCode.ESC) {
                     menu.hide();
                 }
             });
@@ -91,5 +91,5 @@ KISSY.add("editor/plugin/contextmenu", function (S, Editor, Menu, focusFix) {
         return menu;
     };
 }, {
-    requires: ['editor', 'menu', './focus-fix']
+    requires: ['editor', 'menu', './focus-fix','event']
 });

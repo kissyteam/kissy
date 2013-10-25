@@ -3,10 +3,9 @@
  * draft for kissy editor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/draft", function (S, Json, Editor, localStorage, Overlay, MenuButton) {
+KISSY.add("editor/plugin/draft", function (S, Event,Json, Editor, localStorage, Overlay, MenuButton) {
     var Node = S.Node,
         LIMIT = 5,
-        Event = S.Event,
         INTERVAL = 5,
         DRAFT_SAVE = "ks-editor-draft-save20110503";
 
@@ -377,5 +376,5 @@ KISSY.add("editor/plugin/draft", function (S, Json, Editor, localStorage, Overla
 
     return DraftPlugin;
 }, {
-    "requires": ['json', "editor", "./local-storage", "overlay", './menubutton']
+    "requires": ['event','json', "editor", "./local-storage", "overlay", './menubutton']
 });

@@ -7,19 +7,18 @@
  Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
  For licensing, see LICENSE.html or http://ckeditor.com/license
  */
-KISSY.add("editor/selectionFix", function (S, Editor) {
+KISSY.add("editor/selectionFix", function (S, Editor, Event) {
     var TRUE = true,
         FALSE = false,
         NULL = null,
         UA = S.UA,
-        Event = S.Event,
         Dom = S.DOM,
         Node = S.Node,
         KES = Editor.SelectionType;
 
     /*
-      2012-01-11 借鉴 tinymce
-      解决：ie 没有滚动条时，点击窗口空白区域，光标不能正确定位
+     2012-01-11 借鉴 tinymce
+     解决：ie 没有滚动条时，点击窗口空白区域，光标不能正确定位
      */
     function fixCursorForIE(editor) {
         var started,
@@ -326,7 +325,7 @@ KISSY.add("editor/selectionFix", function (S, Editor) {
     }
 
     /*
-      监控选择区域变化
+     监控选择区域变化
      */
     function monitorSelectionChange(editor) {
         // Matching an empty paragraph at the end of document.
@@ -357,7 +356,7 @@ KISSY.add("editor/selectionFix", function (S, Editor) {
         }
 
         /*
-          如果选择了body下面的直接inline元素，则新建p
+         如果选择了body下面的直接inline元素，则新建p
          */
         editor.on("selectionChange", function (ev) {
             // S.log("monitor selectionChange in selection/index.js");
@@ -402,15 +401,13 @@ KISSY.add("editor/selectionFix", function (S, Editor) {
                     if (isBlankParagraph(fixedBlock)) {
                         var element = fixedBlock.next(nextValidEl, 1);
                         if (element &&
-                            element[0].nodeType == Dom.NodeType.ELEMENT_NODE &&
-                            !cannotCursorPlaced[ element ]) {
+                            element[0].nodeType == Dom.NodeType.ELEMENT_NODE && !cannotCursorPlaced[ element ]) {
                             range.moveToElementEditablePosition(element);
                             fixedBlock._4e_remove();
                         } else {
                             element = fixedBlock.prev(nextValidEl, 1);
                             if (element &&
-                                element[0].nodeType == Dom.NodeType.ELEMENT_NODE &&
-                                !cannotCursorPlaced[element]) {
+                                element[0].nodeType == Dom.NodeType.ELEMENT_NODE && !cannotCursorPlaced[element]) {
                                 range.moveToElementEditablePosition(element,
                                     // 空行的话还是要移到开头的
                                     isBlankParagraph(element) ? FALSE : TRUE);
@@ -427,8 +424,8 @@ KISSY.add("editor/selectionFix", function (S, Editor) {
             }
 
             /*
-               当 table pre div 是 body 最后一个元素时，鼠标没法移到后面添加内容了
-               解决：增加新的 p
+             当 table pre div 是 body 最后一个元素时，鼠标没法移到后面添加内容了
+             解决：增加新的 p
              */
             var doc = editor.get("document")[0],
                 lastRange = new Editor.Range(doc),
@@ -465,5 +462,5 @@ KISSY.add("editor/selectionFix", function (S, Editor) {
         }
     };
 }, {
-    requires: ['./base', './selection','node']
+    requires: ['./base', 'event', '/selection', 'node']
 });

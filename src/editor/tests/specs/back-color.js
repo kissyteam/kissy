@@ -13,7 +13,7 @@ KISSY.add(function (S, Node, Color, Editor, init) {
         });
         it('can apply color', function () {
             editor.setData('<p>1234567</p>');
-            var color=Color.parse('rgb(255, 217, 102)').toHex();
+            var color = Color.parse('rgb(255, 217, 102)').toHex();
             waits(499);
             runs(function () {
                 editor.focus();
@@ -33,7 +33,7 @@ KISSY.add(function (S, Node, Color, Editor, init) {
             waits(199);
             runs(function () {
                 var data = editor.getData();
-                var hex =  Color.parse(color).toHex();
+                var hex = Color.parse(color).toHex();
                 var rgb = Color.parse(color).toRGB();
                 var expected;
                 if (data.indexOf('#') != -1) {
@@ -41,6 +41,8 @@ KISSY.add(function (S, Node, Color, Editor, init) {
                 } else {
                     expected = '<p>12<span style="background-color: ' + rgb + '">3</span>4567</p>';
                 }
+                // firefox
+                data = data.replace('<p>&nbsp;</p>', '');
                 expect(data).toBe(expected);
             });
         });

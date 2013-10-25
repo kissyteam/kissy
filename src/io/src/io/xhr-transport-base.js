@@ -6,7 +6,7 @@
 KISSY.add('io/xhr-transport-base', function (S, IO) {
     var OK_CODE = 200,
         win = S.Env.host,
-        logger= S.getLogger('s/io'),
+        logger = S.getLogger('s/io'),
     // http://msdn.microsoft.com/en-us/library/cc288060(v=vs.85).aspx
         _XDomainRequest = S.UA.ie > 7 && win['XDomainRequest'],
         NO_CONTENT_CODE = 204,
@@ -104,12 +104,6 @@ KISSY.add('io/xhr-transport-base', function (S, IO) {
                 }
             }
 
-            if (username = c['username']) {
-                nativeXhr.open(type, url, async, username, c.password)
-            } else {
-                nativeXhr.open(type, url, async);
-            }
-
             xhrFields = c['xhrFields'] || {};
 
             // must set after open in mobile!
@@ -122,10 +116,19 @@ KISSY.add('io/xhr-transport-base', function (S, IO) {
                 xhrFields.withCredentials = true;
             }
 
-            for (i in xhrFields) {
-                nativeXhr[ i ] = xhrFields[ i ];
+            if (username = c['username']) {
+                nativeXhr.open(type, url, async, username, c.password)
+            } else {
+                nativeXhr.open(type, url, async);
             }
 
+            for (i in xhrFields) {
+                try {
+                    nativeXhr[ i ] = xhrFields[ i ];
+                } catch (e) {
+                    logger.error(e);
+                }
+            }
             // Override mime type if supported
             if (mimeType && nativeXhr.overrideMimeType) {
                 nativeXhr.overrideMimeType(mimeType);

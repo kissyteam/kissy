@@ -3,13 +3,10 @@
  * @author shiran<shiran@taobao.com>
  */
 KISSY.add(function (S, Dom, Button, Node) {
-
     var $ = Node.all;
 
     describe('button', function () {
-
         it('create one button and make it checkable', function () {
-
             // setup
             $('<div id="b1"></div>').appendTo('body');
 
@@ -31,16 +28,20 @@ KISSY.add(function (S, Dom, Button, Node) {
                 expect(button.get('checked')).toBe(false);
                 // 模拟点击
                 jasmine.simulate(bEl, 'click');
-                expect(Dom.hasClass(bEl, 'ks-button-checked')).toBeTruthy();
-                expect(button.get('checked')).toBe(true);
-                // 模拟 enter 按键
-                jasmine.simulate(bEl, 'keydown', { keyCode: 13 });
-                expect(Dom.hasClass(bEl, 'ks-button-checked')).toBeFalsy();
-                expect(button.get('checked')).toBe(false);
-                // 模拟 space 按键
-                jasmine.simulate(bEl, 'keyup', { keyCode: 32 });
-                expect(Dom.hasClass(bEl, 'ks-button-checked')).toBeTruthy();
-                expect(button.get('checked')).toBe(true);
+
+                waits(100);
+                runs(function(){
+                    expect(Dom.hasClass(bEl, 'ks-button-checked')).toBeTruthy();
+                    expect(button.get('checked')).toBe(true);
+                    // 模拟 enter 按键
+                    jasmine.simulate(bEl, 'keydown', { keyCode: 13 });
+                    expect(Dom.hasClass(bEl, 'ks-button-checked')).toBeFalsy();
+                    expect(button.get('checked')).toBe(false);
+                    // 模拟 space 按键
+                    jasmine.simulate(bEl, 'keyup', { keyCode: 32 });
+                    expect(Dom.hasClass(bEl, 'ks-button-checked')).toBeTruthy();
+                    expect(button.get('checked')).toBe(true);
+                });
             });
 
             runs(function () {
@@ -58,6 +59,8 @@ KISSY.add(function (S, Dom, Button, Node) {
                 srcNode: '#b2'
             });
 
+            var bEl = Dom.get('#b2');
+
             button.render();
 
             waits(100);
@@ -66,16 +69,26 @@ KISSY.add(function (S, Dom, Button, Node) {
 
                 expect(button.get('content')).toBe('1');
 
-                var bEl = Dom.get('#b2');
+
                 expect(!Dom.attr(bEl, 'title')).toBeTruthy();
                 // 模拟点击
                 jasmine.simulate(bEl, 'click');
+
+            });
+
+            waits(100);
+            runs(function(){
                 expect(Dom.hasClass(bEl, 'ks-button-checked')).toBeFalsy();
 
                 expect(button.get('checked')).toBe(false);
                 // 设置可选
                 button.set('checkable', true);
                 jasmine.simulate(bEl, 'click');
+
+            });
+
+            waits(100);
+            runs(function(){
                 expect(Dom.hasClass(bEl, 'ks-button-checked')).toBeTruthy();
                 expect(button.get('checked')).toBe(true);
             });

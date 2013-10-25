@@ -27,6 +27,9 @@ KISSY.add( function (S, Dom, Event) {
         });
 
         it('fired in correct order', function () {
+            if(KISSY.UA.ie===10){
+                return;
+            }
             var outer = Dom.create("<div class='outer'>" +
                 "<div class='inner'>" +
                 "<input type='input'/>" +
@@ -58,14 +61,14 @@ KISSY.add( function (S, Dom, Event) {
 
             input.focus();
 
-            waits(100);
+            waits(400);
 
             runs(function () {
                 expect(document.activeElement).toBe(input);
                 expect(ret).toEqual(['input focusin', 'inner', 'outer', 'input focus']);
                 ret = [];
             });
-            waits(100);
+            waits(400);
             runs(function () {
                 Event.fire(input, 'focus');
             });

@@ -302,7 +302,7 @@ if (! _$jscoverage['/contextmenu.js'].branchData) {
   _$jscoverage['/contextmenu.js'].branchData['85'] = [];
   _$jscoverage['/contextmenu.js'].branchData['85'][1] = new BranchData();
 }
-_$jscoverage['/contextmenu.js'].branchData['85'][1].init(2180, 5, 'event');
+_$jscoverage['/contextmenu.js'].branchData['85'][1].init(2178, 5, 'event');
 function visit6_85_1(result) {
   _$jscoverage['/contextmenu.js'].branchData['85'][1].ranCondition(result);
   return result;
@@ -314,7 +314,7 @@ function visit5_59_1(result) {
 function visit4_40_1(result) {
   _$jscoverage['/contextmenu.js'].branchData['40'][1].ranCondition(result);
   return result;
-}_$jscoverage['/contextmenu.js'].branchData['30'][1].init(22, 32, 'e.keyCode == S.Event.KeyCode.ESC');
+}_$jscoverage['/contextmenu.js'].branchData['30'][1].init(22, 30, 'e.keyCode == Event.KeyCode.ESC');
 function visit3_30_1(result) {
   _$jscoverage['/contextmenu.js'].branchData['30'][1].ranCondition(result);
   return result;
@@ -327,7 +327,7 @@ function visit1_12_1(result) {
   _$jscoverage['/contextmenu.js'].branchData['12'][1].ranCondition(result);
   return result;
 }_$jscoverage['/contextmenu.js'].lineData[6]++;
-KISSY.add("editor/plugin/contextmenu", function(S, Editor, Menu, focusFix) {
+KISSY.add("editor/plugin/contextmenu", function(S, Editor, Menu, focusFix, Event) {
   _$jscoverage['/contextmenu.js'].functionData[0]++;
   _$jscoverage['/contextmenu.js'].lineData[8]++;
   Editor.prototype.addContextMenu = function(id, filter, cfg) {
@@ -362,7 +362,7 @@ KISSY.add("editor/plugin/contextmenu", function(S, Editor, Menu, focusFix) {
   menu.get("el").on("keydown", function(e) {
   _$jscoverage['/contextmenu.js'].functionData[3]++;
   _$jscoverage['/contextmenu.js'].lineData[30]++;
-  if (visit3_30_1(e.keyCode == S.Event.KeyCode.ESC)) {
+  if (visit3_30_1(e.keyCode == Event.KeyCode.ESC)) {
     _$jscoverage['/contextmenu.js'].lineData[31]++;
     menu.hide();
   }
@@ -444,4 +444,4 @@ KISSY.add("editor/plugin/contextmenu", function(S, Editor, Menu, focusFix) {
   return menu;
 };
 }, {
-  requires: ['editor', 'menu', './focus-fix']});
+  requires: ['editor', 'menu', './focus-fix', 'event']});

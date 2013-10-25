@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Sep 17 23:01
+build time: Oct 25 16:42
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -14,7 +14,7 @@ build time: Sep 17 23:01
  * simplified flash bridge for yui swf
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/flash-bridge", function (S, SWF, Editor) {
+KISSY.add("editor/plugin/flash-bridge", function (S, SWF, Editor,Event) {
     var instances = {};
     var logger = S.getLogger('s/editor/plugin/flash-bridge');
 
@@ -22,7 +22,7 @@ KISSY.add("editor/plugin/flash-bridge", function (S, SWF, Editor) {
         this._init(cfg)
     }
 
-    S.augment(FlashBridge, S.EventTarget, {
+    S.augment(FlashBridge, Event.Target, {
         _init: function (cfg) {
             var self = this,
                 id = S.guid("flash-bridge-"),
@@ -119,6 +119,6 @@ KISSY.add("editor/plugin/flash-bridge", function (S, SWF, Editor) {
 
     return FlashBridge;
 }, {
-    requires: ['swf', 'editor']
+    requires: ['swf', 'editor','event']
 });
 

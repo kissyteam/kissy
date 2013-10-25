@@ -20,10 +20,11 @@ KISSY.add(function (S, Node, DD, IO) {
             async: false,
             success: function (data) {
                 html = data;
+                $('body').append(html);
             }
         });
 
-        $('body').append(html);
+
 
         beforeEach(function () {
             this.addMatchers({
@@ -53,7 +54,7 @@ KISSY.add(function (S, Node, DD, IO) {
 
             waits(300);
             runs(function () {
-                jasmine.simulateForDrag(document, Event.Gesture.move, {
+                jasmine.simulate(document, 'mousemove', {
                     clientX: -100 - scrollLeft,
                     clientY: -100 - scrollTop
                 });
@@ -64,7 +65,7 @@ KISSY.add(function (S, Node, DD, IO) {
                 //if (ie == 7) expected += 2;
                 expect(drag.offset().top).toBeEqual(expected);
                 expect(drag.offset().left).toBeEqual(expected);
-                jasmine.simulateForDrag(document, Gesture.end);
+                jasmine.simulate(document, 'mouseup');
                 action.destroy();
             });
         });
@@ -86,7 +87,7 @@ KISSY.add(function (S, Node, DD, IO) {
 
             runs(function () {
 
-                jasmine.simulateForDrag(dragHeader[0], Gesture.start, {
+                jasmine.simulate(dragHeader[0], 'mousedown', {
                     clientX: xy.left - scrollLeft,
                     clientY: xy.top - scrollTop
                 });
@@ -98,7 +99,7 @@ KISSY.add(function (S, Node, DD, IO) {
                 // 10px move to start
                 runs(function () {
 
-                    jasmine.simulateForDrag(document, Gesture.move, {
+                    jasmine.simulate(document, 'mousemove', {
                         clientX: xy.left - 10 - scrollLeft,
                         clientY: xy.top - 10 - scrollTop
                     });
@@ -108,7 +109,7 @@ KISSY.add(function (S, Node, DD, IO) {
             waits(100);
             runs(function () {
 
-                jasmine.simulateForDrag(document, Gesture.move, {
+                jasmine.simulate(document, 'mousemove', {
                     clientX: xy.left - 100 - scrollLeft,
                     clientY: xy.top - 100 - scrollTop
                 });
@@ -117,7 +118,7 @@ KISSY.add(function (S, Node, DD, IO) {
             waits(300);
 
             runs(function () {
-                jasmine.simulateForDrag(document, Gesture.end, {
+                jasmine.simulate(document, 'mouseup', {
                     clientX: xy.left - 100 - scrollLeft,
                     clientY: xy.top - 100 - scrollTop
                 });
@@ -151,7 +152,7 @@ KISSY.add(function (S, Node, DD, IO) {
             var xy = dragHeader.offset();
 
             runs(function () {
-                jasmine.simulateForDrag(dragHeader[0], Gesture.start, {
+                jasmine.simulate(dragHeader[0], 'mousedown', {
                     clientX: xy.left - Dom.scrollLeft(),
                     clientY: xy.top - Dom.scrollTop()
                 });
@@ -162,7 +163,7 @@ KISSY.add(function (S, Node, DD, IO) {
 
             runs(function () {
 
-                jasmine.simulateForDrag(document, Gesture.move, {
+                jasmine.simulate(document, 'mousemove', {
                     clientX: xy.left + 100 - Dom.scrollLeft(),
                     clientY: xy.top + 100 - Dom.scrollTop()
                 });
@@ -171,7 +172,7 @@ KISSY.add(function (S, Node, DD, IO) {
             waits(100);
 
             runs(function () {
-                jasmine.simulateForDrag(document, Gesture.end, {
+                jasmine.simulate(document, 'mouseup', {
                     clientX: xy.left + 100 - Dom.scrollLeft(),
                     clientY: xy.top + 100 - Dom.scrollTop()
                 });
@@ -201,7 +202,7 @@ KISSY.add(function (S, Node, DD, IO) {
             var xy = dragHeader.offset();
 
             runs(function () {
-                jasmine.simulateForDrag(dragHeader[0], Gesture.start, {
+                jasmine.simulate(dragHeader[0], 'mousedown', {
                     clientX: xy.left - Dom.scrollLeft(),
                     clientY: xy.top - Dom.scrollTop()
                 });
@@ -210,7 +211,7 @@ KISSY.add(function (S, Node, DD, IO) {
 
             // 10px move to start
             runs(function () {
-                jasmine.simulateForDrag(document, Gesture.move, {
+                jasmine.simulate(document, 'mousemove', {
                     clientX: xy.left - 10 - Dom.scrollLeft(),
                     clientY: xy.top - 10 - Dom.scrollTop()
                 });
@@ -218,7 +219,7 @@ KISSY.add(function (S, Node, DD, IO) {
 
             waits(100);
             runs(function () {
-                jasmine.simulateForDrag(document, Gesture.move, {
+                jasmine.simulate(document, 'mousemove', {
                     clientX: xy.left + 100 - Dom.scrollLeft(),
                     clientY: xy.top + 100 - Dom.scrollTop()
                 });
@@ -226,14 +227,14 @@ KISSY.add(function (S, Node, DD, IO) {
             waits(300);
 
             runs(function () {
-                jasmine.simulateForDrag(document, Gesture.end, {
+                jasmine.simulate(document, 'mouseup', {
                     clientX: xy.left + 100 - Dom.scrollLeft(),
                     clientY: xy.top + 100 - Dom.scrollTop()
                 });
             });
             waits(300);
             runs(function () {
-                jasmine.simulateForDrag(document, Gesture.move, {
+                jasmine.simulate(document, 'mousemove', {
                     clientX: xy.left - 300 - Dom.scrollLeft(),
                     clientY: xy.top - 300 - Dom.scrollTop()
                 });
@@ -265,7 +266,7 @@ KISSY.add(function (S, Node, DD, IO) {
             var xy = dragHeader.offset();
 
             runs(function () {
-                jasmine.simulateForDrag(dragHeader[0], Gesture.start, {
+                jasmine.simulate(dragHeader[0], 'mousedown', {
                     clientX: xy.left - Dom.scrollLeft(),
                     clientY: xy.top - Dom.scrollTop()
                 });
@@ -276,7 +277,7 @@ KISSY.add(function (S, Node, DD, IO) {
 
             runs(function () {
 
-                jasmine.simulateForDrag(document, Gesture.move, {
+                jasmine.simulate(document, 'mousemove', {
                     clientX: xy.left + 100 - Dom.scrollLeft(),
                     clientY: xy.top + 100 - Dom.scrollTop()
                 });
@@ -285,7 +286,7 @@ KISSY.add(function (S, Node, DD, IO) {
             waits(100);
 
             runs(function () {
-                jasmine.simulateForDrag(document, Gesture.end, {
+                jasmine.simulate(document, 'mouseup', {
                     clientX: xy.left + 100 - Dom.scrollLeft(),
                     clientY: xy.top + 100 - Dom.scrollTop()
                 });
