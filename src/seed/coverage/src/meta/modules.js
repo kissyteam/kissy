@@ -309,7 +309,7 @@ _$jscoverage['/meta/modules.js'].branchData['211'][1].init(-1, 65, 'Features.isT
 function visit508_211_1(result) {
   _$jscoverage['/meta/modules.js'].branchData['211'][1].ranCondition(result);
   return result;
-}_$jscoverage['/meta/modules.js'].branchData['133'][1].init(45, 67, 'Features.isTouchEventSupported() || Features.isMsPointerSupported()');
+}_$jscoverage['/meta/modules.js'].branchData['133'][1].init(43, 67, 'Features.isTouchEventSupported() || Features.isMsPointerSupported()');
 function visit507_133_1(result) {
   _$jscoverage['/meta/modules.js'].branchData['133'][1].ranCondition(result);
   return result;
@@ -323,7 +323,7 @@ function visit507_133_1(result) {
   _$jscoverage['/meta/modules.js'].lineData[8]++;
   config({
   'anim/base': {
-  requires: ['dom', 'event/custom']}});
+  requires: ['dom', 'promise']}});
   _$jscoverage['/meta/modules.js'].lineData[12]++;
   config({
   'anim/timer': {
@@ -331,7 +331,7 @@ function visit507_133_1(result) {
   _$jscoverage['/meta/modules.js'].lineData[16]++;
   config({
   'anim/transition': {
-  requires: ['dom', 'event', 'anim/base']}});
+  requires: ['dom', 'event/dom', 'anim/base']}});
   _$jscoverage['/meta/modules.js'].lineData[20]++;
   config({
   'base': {
@@ -425,7 +425,7 @@ function visit507_133_1(result) {
   _$jscoverage['/meta/modules.js'].lineData[118]++;
   config({
   'editor': {
-  requires: ['node', 'html-parser', 'component/control']}});
+  requires: ['node', 'html-parser', 'component/control', 'event']}});
   _$jscoverage['/meta/modules.js'].lineData[122]++;
   config({
   'event': {

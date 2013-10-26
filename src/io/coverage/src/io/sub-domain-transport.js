@@ -288,27 +288,27 @@ if (! _$jscoverage['/io/sub-domain-transport.js'].branchData) {
   _$jscoverage['/io/sub-domain-transport.js'].branchData['58'] = [];
   _$jscoverage['/io/sub-domain-transport.js'].branchData['58'][1] = new BranchData();
 }
-_$jscoverage['/io/sub-domain-transport.js'].branchData['58'][1].init(342, 31, 'doc.body || doc.documentElement');
+_$jscoverage['/io/sub-domain-transport.js'].branchData['58'][1].init(334, 31, 'doc.body || doc.documentElement');
 function visit133_58_1(result) {
   _$jscoverage['/io/sub-domain-transport.js'].branchData['58'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/sub-domain-transport.js'].branchData['50'][1].init(848, 11, '!iframeDesc');
+}_$jscoverage['/io/sub-domain-transport.js'].branchData['50'][1].init(823, 11, '!iframeDesc');
 function visit132_50_1(result) {
   _$jscoverage['/io/sub-domain-transport.js'].branchData['50'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/sub-domain-transport.js'].branchData['42'][1].init(120, 14, 'self.nativeXhr');
+}_$jscoverage['/io/sub-domain-transport.js'].branchData['42'][1].init(118, 14, 'self.nativeXhr');
 function visit131_42_1(result) {
   _$jscoverage['/io/sub-domain-transport.js'].branchData['42'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/sub-domain-transport.js'].branchData['40'][1].init(463, 30, 'iframeDesc && iframeDesc.ready');
+}_$jscoverage['/io/sub-domain-transport.js'].branchData['40'][1].init(448, 30, 'iframeDesc && iframeDesc.ready');
 function visit130_40_1(result) {
   _$jscoverage['/io/sub-domain-transport.js'].branchData['40'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/sub-domain-transport.js'].branchData['36'][2].init(319, 52, 'c[\'xdr\'][\'subDomain\'] && c[\'xdr\'][\'subDomain\'].proxy');
+}_$jscoverage['/io/sub-domain-transport.js'].branchData['36'][2].init(308, 52, 'c[\'xdr\'][\'subDomain\'] && c[\'xdr\'][\'subDomain\'].proxy');
 function visit129_36_2(result) {
   _$jscoverage['/io/sub-domain-transport.js'].branchData['36'][2].ranCondition(result);
   return result;
-}_$jscoverage['/io/sub-domain-transport.js'].branchData['36'][1].init(307, 64, 'c[\'xdr\'] && c[\'xdr\'][\'subDomain\'] && c[\'xdr\'][\'subDomain\'].proxy');
+}_$jscoverage['/io/sub-domain-transport.js'].branchData['36'][1].init(296, 64, 'c[\'xdr\'] && c[\'xdr\'][\'subDomain\'] && c[\'xdr\'][\'subDomain\'].proxy');
 function visit128_36_1(result) {
   _$jscoverage['/io/sub-domain-transport.js'].branchData['36'][1].ranCondition(result);
   return result;

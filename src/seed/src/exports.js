@@ -7,10 +7,6 @@
     // empty mod for conditional loading
     S.add('empty', S.noop);
 
-    S.add('promise', function () {
-        return S.Promise;
-    });
-
     S.add('ua', function () {
         return S.UA;
     });

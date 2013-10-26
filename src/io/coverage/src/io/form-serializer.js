@@ -288,39 +288,39 @@ if (! _$jscoverage['/io/form-serializer.js'].branchData) {
   _$jscoverage['/io/form-serializer.js'].branchData['78'] = [];
   _$jscoverage['/io/form-serializer.js'].branchData['78'][1] = new BranchData();
 }
-_$jscoverage['/io/form-serializer.js'].branchData['78'][1].init(607, 20, 'vs && !S.isArray(vs)');
+_$jscoverage['/io/form-serializer.js'].branchData['78'][1].init(586, 20, 'vs && !S.isArray(vs)');
 function visit33_78_1(result) {
   _$jscoverage['/io/form-serializer.js'].branchData['78'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/form-serializer.js'].branchData['74'][1].init(489, 3, '!vs');
+}_$jscoverage['/io/form-serializer.js'].branchData['74'][1].init(472, 3, '!vs');
 function visit32_74_1(result) {
   _$jscoverage['/io/form-serializer.js'].branchData['74'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/form-serializer.js'].branchData['67'][1].init(265, 14, 'S.isArray(val)');
+}_$jscoverage['/io/form-serializer.js'].branchData['67'][1].init(255, 14, 'S.isArray(val)');
 function visit31_67_1(result) {
   _$jscoverage['/io/form-serializer.js'].branchData['67'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/form-serializer.js'].branchData['62'][1].init(147, 12, 'val === null');
+}_$jscoverage['/io/form-serializer.js'].branchData['62'][1].init(142, 12, 'val === null');
 function visit30_62_1(result) {
   _$jscoverage['/io/form-serializer.js'].branchData['62'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/form-serializer.js'].branchData['50'][1].init(93, 127, 'rselectTextarea.test(el.nodeName) || rinput.test(el.type)');
+}_$jscoverage['/io/form-serializer.js'].branchData['50'][1].init(91, 125, 'rselectTextarea.test(el.nodeName) || rinput.test(el.type)');
 function visit29_50_1(result) {
   _$jscoverage['/io/form-serializer.js'].branchData['50'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/form-serializer.js'].branchData['48'][1].init(-1, 221, 'el.checked || rselectTextarea.test(el.nodeName) || rinput.test(el.type)');
+}_$jscoverage['/io/form-serializer.js'].branchData['48'][1].init(-1, 217, 'el.checked || rselectTextarea.test(el.nodeName) || rinput.test(el.type)');
 function visit28_48_1(result) {
   _$jscoverage['/io/form-serializer.js'].branchData['48'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/form-serializer.js'].branchData['45'][1].init(60, 360, '!el.disabled && (el.checked || rselectTextarea.test(el.nodeName) || rinput.test(el.type))');
+}_$jscoverage['/io/form-serializer.js'].branchData['45'][1].init(58, 352, '!el.disabled && (el.checked || rselectTextarea.test(el.nodeName) || rinput.test(el.type))');
 function visit27_45_1(result) {
   _$jscoverage['/io/form-serializer.js'].branchData['45'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/form-serializer.js'].branchData['43'][1].init(49, 421, 'el.name && !el.disabled && (el.checked || rselectTextarea.test(el.nodeName) || rinput.test(el.type))');
+}_$jscoverage['/io/form-serializer.js'].branchData['43'][1].init(47, 411, 'el.name && !el.disabled && (el.checked || rselectTextarea.test(el.nodeName) || rinput.test(el.type))');
 function visit26_43_1(result) {
   _$jscoverage['/io/form-serializer.js'].branchData['43'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/form-serializer.js'].branchData['29'][1].init(81, 23, 'serializeArray || false');
+}_$jscoverage['/io/form-serializer.js'].branchData['29'][1].init(80, 23, 'serializeArray || false');
 function visit25_29_1(result) {
   _$jscoverage['/io/form-serializer.js'].branchData['29'][1].ranCondition(result);
   return result;

@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40dev
 MIT Licensed
-build time: Oct 25 16:28
+build time: Oct 26 10:33
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -114,14 +114,13 @@ KISSY.add('io/form-serializer', function (S, Dom) {
  * a scalable client io framework
  * @author yiminghe@gmail.com
  */
-KISSY.add('io/base', function (S, CustomEvent, undefined) {
+KISSY.add('io/base', function (S, CustomEvent, Promise,undefined) {
     var rlocalProtocol = /^(?:about|app|app\-storage|.+\-extension|file|widget)$/,
         rspace = /\s+/,
         logger = S.getLogger('s/io'),
         mirror = function (s) {
             return s;
         },
-        Promise = S.Promise,
         rnoContent = /^(?:GET|HEAD)$/,
         win = S.Env.host,
         location = win.location || {},
@@ -447,7 +446,7 @@ KISSY.add('io/base', function (S, CustomEvent, undefined) {
             transport: null
         });
 
-        S.Defer(self);
+        Promise.Defer(self);
 
         var transportConstructor,
             transport;
@@ -595,7 +594,7 @@ KISSY.add('io/base', function (S, CustomEvent, undefined) {
 
     return IO;
 }, {
-    requires: ['event/custom']
+    requires: ['event/custom','promise']
 });
 
 /*
@@ -1802,10 +1801,9 @@ KISSY.add('io/iframe-transport', function (S, Dom, Event, IO) {
  * encapsulation of io object. as transaction object in yui3
  * @author yiminghe@gmail.com
  */
-KISSY.add('io/methods', function (S, IO, undefined) {
+KISSY.add('io/methods', function (S, IO, Promise,undefined) {
     var OK_CODE = 200,
         logger = S.getLogger('s/logger'),
-        Promise = S.Promise,
         MULTIPLE_CHOICES = 300,
         NOT_MODIFIED = 304,
     // get individual response header from response header str
@@ -2086,7 +2084,7 @@ KISSY.add('io/methods', function (S, IO, undefined) {
         }
     );
 }, {
-    requires: ['./base']
+    requires: ['./base','promise']
 });
 /**
  * @ignore

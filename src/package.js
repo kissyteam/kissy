@@ -577,6 +577,10 @@ if (!loc.getQuery().has('build')) {
             "base": "/kissy/src/overlay/src/overlay",
             "ignorePackageNameInUri": 1
         },
+        "promise": {
+            "base": "/kissy/src/promise/src/promise",
+            "ignorePackageNameInUri": 1
+        },
         "resizable": {
             "base": "/kissy/src/resizable/src/resizable",
             "ignorePackageNameInUri": 1

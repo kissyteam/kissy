@@ -45,7 +45,7 @@ S.use('xtemplate/nodejs', function (S, XTemplateNodeJs) {
             }
         };
 
-        // app.use(express.compress());
+        app.use(express.compress());
         //noinspection JSUnresolvedFunction
         app.use(express.cookieParser());
         //noinspection JSUnresolvedFunction

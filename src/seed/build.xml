@@ -36,7 +36,6 @@
             <path location="${component.src.dir}/lang/set-immediate.js"/>
             <!-- kissy lang end-->
 
-            <path location="${component.src.dir}/promise.js"/>
             <path location="${component.src.dir}/path.js"/>
             <path location="${component.src.dir}/uri.js"/>
 
@@ -77,7 +76,6 @@
             <path location="${component.src.dir}/lang/set-immediate.js"/>
             <!-- kissy lang end-->
 
-            <path location="${component.src.dir}/promise.js"/>
             <path location="${component.src.dir}/path.js"/>
             <path location="${component.src.dir}/uri.js"/>
 

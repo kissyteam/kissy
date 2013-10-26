@@ -299,51 +299,51 @@ if (! _$jscoverage['/io/form.js'].branchData) {
   _$jscoverage['/io/form.js'].branchData['69'] = [];
   _$jscoverage['/io/form.js'].branchData['69'][1] = new BranchData();
 }
-_$jscoverage['/io/form.js'].branchData['69'][1].init(127, 8, 'd == \'*\'');
+_$jscoverage['/io/form.js'].branchData['69'][1].init(123, 8, 'd == \'*\'');
 function visit45_69_1(result) {
   _$jscoverage['/io/form.js'].branchData['69'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/form.js'].branchData['56'][1].init(119, 4, 'data');
+}_$jscoverage['/io/form.js'].branchData['56'][1].init(117, 4, 'data');
 function visit44_56_1(result) {
   _$jscoverage['/io/form.js'].branchData['56'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/form.js'].branchData['54'][1].init(201, 12, 'c.hasContent');
+}_$jscoverage['/io/form.js'].branchData['54'][1].init(197, 12, 'c.hasContent');
 function visit43_54_1(result) {
   _$jscoverage['/io/form.js'].branchData['54'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/form.js'].branchData['50'][1].init(976, 21, '!isUpload || FormData');
+}_$jscoverage['/io/form.js'].branchData['50'][1].init(949, 21, '!isUpload || FormData');
 function visit42_50_1(result) {
   _$jscoverage['/io/form.js'].branchData['50'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/form.js'].branchData['43'][1].init(28, 13, 'c.files || {}');
+}_$jscoverage['/io/form.js'].branchData['43'][1].init(27, 13, 'c.files || {}');
 function visit41_43_1(result) {
   _$jscoverage['/io/form.js'].branchData['43'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/form.js'].branchData['42'][1].init(702, 20, 'isUpload && FormData');
+}_$jscoverage['/io/form.js'].branchData['42'][1].init(683, 20, 'isUpload && FormData');
 function visit40_42_1(result) {
   _$jscoverage['/io/form.js'].branchData['42'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/form.js'].branchData['38'][2].init(284, 17, 'selected[0] || null');
+}_$jscoverage['/io/form.js'].branchData['38'][2].init(278, 17, 'selected[0] || null');
 function visit39_38_2(result) {
   _$jscoverage['/io/form.js'].branchData['38'][2].ranCondition(result);
   return result;
-}_$jscoverage['/io/form.js'].branchData['38'][1].init(250, 19, 'selected.length > 1');
+}_$jscoverage['/io/form.js'].branchData['38'][1].init(244, 19, 'selected.length > 1');
 function visit38_38_1(result) {
   _$jscoverage['/io/form.js'].branchData['38'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/form.js'].branchData['34'][1].init(64, 9, '!FormData');
+}_$jscoverage['/io/form.js'].branchData['34'][1].init(62, 9, '!FormData');
 function visit37_34_1(result) {
   _$jscoverage['/io/form.js'].branchData['34'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/form.js'].branchData['32'][1].init(62, 34, 'input.type.toLowerCase() == \'file\'');
+}_$jscoverage['/io/form.js'].branchData['32'][1].init(60, 34, 'input.type.toLowerCase() == \'file\'');
 function visit36_32_1(result) {
   _$jscoverage['/io/form.js'].branchData['32'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/form.js'].branchData['30'][1].init(233, 5, 'i < l');
+}_$jscoverage['/io/form.js'].branchData['30'][1].init(226, 5, 'i < l');
 function visit35_30_1(result) {
   _$jscoverage['/io/form.js'].branchData['30'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/form.js'].branchData['23'][1].init(228, 16, 'tmpForm = c.form');
+}_$jscoverage['/io/form.js'].branchData['23'][1].init(217, 16, 'tmpForm = c.form');
 function visit34_23_1(result) {
   _$jscoverage['/io/form.js'].branchData['23'][1].ranCondition(result);
   return result;

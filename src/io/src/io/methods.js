@@ -3,10 +3,9 @@
  * encapsulation of io object. as transaction object in yui3
  * @author yiminghe@gmail.com
  */
-KISSY.add('io/methods', function (S, IO, undefined) {
+KISSY.add('io/methods', function (S, IO, Promise,undefined) {
     var OK_CODE = 200,
         logger = S.getLogger('s/logger'),
-        Promise = S.Promise,
         MULTIPLE_CHOICES = 300,
         NOT_MODIFIED = 304,
     // get individual response header from response header str
@@ -287,5 +286,5 @@ KISSY.add('io/methods', function (S, IO, undefined) {
         }
     );
 }, {
-    requires: ['./base']
+    requires: ['./base','promise']
 });

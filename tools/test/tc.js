@@ -196,6 +196,10 @@ tests.push('/kissy/src/overlay/tests/runner/test.jss?build');
 
 tests.push('/kissy/src/overlay/tests/runner/test.jss?coverage');
 
+tests.push('/kissy/src/promise/tests/runner/test.jss');
+
+tests.push('/kissy/src/promise/tests/runner/test.jss?build');
+
 tests.push('/kissy/src/resizable/tests/runner/test.jss');
 
 tests.push('/kissy/src/resizable/tests/runner/test.jss?build');

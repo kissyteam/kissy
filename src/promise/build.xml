@@ -1,0 +1,4 @@
+<project name="promise.build" default="build" basedir=".">
+    <property name="component.name" value="promise"/>
+    <import file="../common.xml"/>
+</project>

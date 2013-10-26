@@ -3,7 +3,7 @@
  * implement Promise specification by KISSY
  * @author yiminghe@gmail.com
  */
-(function (S, undefined) {
+KISSY.add('promise',function (S, undefined) {
     var PROMISE_VALUE = '__promise_value',
         processImmediate = S.setImmediate,
         logger = S.getLogger('s/promise'),
@@ -476,8 +476,8 @@
             };
         }
     });
-
-})(KISSY);
+    return Promise;
+});
 
 /*
  refer:

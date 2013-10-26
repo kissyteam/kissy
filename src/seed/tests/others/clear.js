@@ -7,7 +7,6 @@ KISSY.clearLoader = function () {
     var ignore={
         empty:1,
         uri:1,
-        promise:1,
         ua:1,
         path:1
     };

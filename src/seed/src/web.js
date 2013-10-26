@@ -11,8 +11,8 @@
         docElem = doc && doc.documentElement,
         location = win.location,
         EMPTY = '',
-        readyDefer = new S.Defer(),
-        readyPromise = readyDefer.promise,
+        domReady = 0,
+        callbacks = [],
     // The number of poll times.
         POLL_RETIRES = 500,
     // The poll interval in milliseconds.
@@ -97,7 +97,17 @@
          * @member KISSY
          */
         ready: function (fn) {
-            readyPromise.done(fn);
+            if (domReady) {
+                try {
+                    fn(S);
+                } catch (e) {
+                    setTimeout(function () {
+                        throw e;
+                    }, 0);
+                }
+            } else {
+                callbacks.push(fn);
+            }
             return this;
         },
 
@@ -129,7 +139,16 @@
         if (doc && !UA.nodejs) {
             removeEventListener(win, LOAD_EVENT, fireReady);
         }
-        readyDefer.resolve(S);
+        domReady = 1;
+        for (var i = 0; i < callbacks.length; i++) {
+            try {
+                callbacks[i](S);
+            } catch (e) {
+                setTimeout(function () {
+                    throw e;
+                }, 0);
+            }
+        }
     }
 
     //  Binds ready events.

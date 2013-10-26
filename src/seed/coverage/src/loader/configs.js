@@ -341,83 +341,83 @@ if (! _$jscoverage['/loader/configs.js'].branchData) {
   _$jscoverage['/loader/configs.js'].branchData['105'] = [];
   _$jscoverage['/loader/configs.js'].branchData['105'][1] = new BranchData();
 }
-_$jscoverage['/loader/configs.js'].branchData['105'][1].init(97, 28, '!S.startsWith(base, \'file:\')');
+_$jscoverage['/loader/configs.js'].branchData['105'][1].init(94, 28, '!S.startsWith(base, \'file:\')');
 function visit370_105_1(result) {
   _$jscoverage['/loader/configs.js'].branchData['105'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/configs.js'].branchData['100'][1].init(167, 17, 'simulatedLocation');
+}_$jscoverage['/loader/configs.js'].branchData['100'][1].init(161, 17, 'simulatedLocation');
 function visit369_100_1(result) {
   _$jscoverage['/loader/configs.js'].branchData['100'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/configs.js'].branchData['97'][1].init(78, 35, 'base.charAt(base.length - 1) != \'/\'');
+}_$jscoverage['/loader/configs.js'].branchData['97'][1].init(75, 35, 'base.charAt(base.length - 1) != \'/\'');
 function visit368_97_1(result) {
   _$jscoverage['/loader/configs.js'].branchData['97'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/configs.js'].branchData['85'][1].init(97, 5, '!base');
+}_$jscoverage['/loader/configs.js'].branchData['85'][1].init(93, 5, '!base');
 function visit367_85_1(result) {
   _$jscoverage['/loader/configs.js'].branchData['85'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/configs.js'].branchData['74'][1].init(140, 32, 'mod.status == Loader.Status.INIT');
+}_$jscoverage['/loader/configs.js'].branchData['74'][1].init(137, 32, 'mod.status == Loader.Status.INIT');
 function visit366_74_1(result) {
   _$jscoverage['/loader/configs.js'].branchData['74'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/configs.js'].branchData['70'][1].init(40, 7, 'modules');
+}_$jscoverage['/loader/configs.js'].branchData['70'][1].init(38, 7, 'modules');
 function visit365_70_1(result) {
   _$jscoverage['/loader/configs.js'].branchData['70'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/configs.js'].branchData['59'][1].init(791, 16, 'config === false');
+}_$jscoverage['/loader/configs.js'].branchData['59'][1].init(767, 16, 'config === false');
 function visit364_59_1(result) {
   _$jscoverage['/loader/configs.js'].branchData['59'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/configs.js'].branchData['52'][1].init(380, 8, 'ps[name]');
+}_$jscoverage['/loader/configs.js'].branchData['52'][1].init(368, 8, 'ps[name]');
 function visit363_52_1(result) {
   _$jscoverage['/loader/configs.js'].branchData['52'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/configs.js'].branchData['45'][1].init(144, 20, 'cfg.base || cfg.path');
+}_$jscoverage['/loader/configs.js'].branchData['45'][1].init(139, 20, 'cfg.base || cfg.path');
 function visit362_45_1(result) {
   _$jscoverage['/loader/configs.js'].branchData['45'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/configs.js'].branchData['42'][1].init(52, 15, 'cfg.name || key');
+}_$jscoverage['/loader/configs.js'].branchData['42'][1].init(50, 15, 'cfg.name || key');
 function visit361_42_1(result) {
   _$jscoverage['/loader/configs.js'].branchData['42'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/configs.js'].branchData['39'][1].init(127, 6, 'config');
+}_$jscoverage['/loader/configs.js'].branchData['39'][1].init(123, 6, 'config');
 function visit360_39_1(result) {
   _$jscoverage['/loader/configs.js'].branchData['39'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/configs.js'].branchData['38'][1].init(80, 21, 'Config.packages || {}');
+}_$jscoverage['/loader/configs.js'].branchData['38'][1].init(78, 21, 'Config.packages || {}');
 function visit359_38_1(result) {
   _$jscoverage['/loader/configs.js'].branchData['38'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/configs.js'].branchData['32'][2].init(210, 11, 'rules || []');
+}_$jscoverage['/loader/configs.js'].branchData['32'][2].init(205, 11, 'rules || []');
 function visit358_32_2(result) {
   _$jscoverage['/loader/configs.js'].branchData['32'][2].ranCondition(result);
   return result;
-}_$jscoverage['/loader/configs.js'].branchData['32'][1].init(172, 29, 'Config.mappedComboRules || []');
+}_$jscoverage['/loader/configs.js'].branchData['32'][1].init(167, 29, 'Config.mappedComboRules || []');
 function visit357_32_1(result) {
   _$jscoverage['/loader/configs.js'].branchData['32'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/configs.js'].branchData['29'][1].init(49, 15, 'rules === false');
+}_$jscoverage['/loader/configs.js'].branchData['29'][1].init(47, 15, 'rules === false');
 function visit356_29_1(result) {
   _$jscoverage['/loader/configs.js'].branchData['29'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/configs.js'].branchData['24'][2].init(195, 11, 'rules || []');
+}_$jscoverage['/loader/configs.js'].branchData['24'][2].init(190, 11, 'rules || []');
 function visit355_24_2(result) {
   _$jscoverage['/loader/configs.js'].branchData['24'][2].ranCondition(result);
   return result;
-}_$jscoverage['/loader/configs.js'].branchData['24'][1].init(162, 24, 'Config.mappedRules || []');
+}_$jscoverage['/loader/configs.js'].branchData['24'][1].init(157, 24, 'Config.mappedRules || []');
 function visit354_24_1(result) {
   _$jscoverage['/loader/configs.js'].branchData['24'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/configs.js'].branchData['21'][1].init(49, 15, 'rules === false');
+}_$jscoverage['/loader/configs.js'].branchData['21'][1].init(47, 15, 'rules === false');
 function visit353_21_1(result) {
   _$jscoverage['/loader/configs.js'].branchData['21'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/configs.js'].branchData['15'][2].init(236, 42, 'location && (locationHref = location.href)');
+}_$jscoverage['/loader/configs.js'].branchData['15'][2].init(227, 42, 'location && (locationHref = location.href)');
 function visit352_15_2(result) {
   _$jscoverage['/loader/configs.js'].branchData['15'][2].ranCondition(result);
   return result;
-}_$jscoverage['/loader/configs.js'].branchData['15'][1].init(220, 58, '!S.UA.nodejs && location && (locationHref = location.href)');
+}_$jscoverage['/loader/configs.js'].branchData['15'][1].init(211, 58, '!S.UA.nodejs && location && (locationHref = location.href)');
 function visit351_15_1(result) {
   _$jscoverage['/loader/configs.js'].branchData['15'][1].ranCondition(result);
   return result;
