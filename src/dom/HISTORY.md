@@ -7,5 +7,4 @@
 
         Dom.css(t,'transform','rotate(39deg) skew(40deg)')
 
-
-
+ - [+] 透明支持 css3 选择器，去除 sizzle 模块.
