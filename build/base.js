@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40
 MIT Licensed
-build time: Sep 17 23:17
+build time: Oct 29 14:13
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -886,14 +886,16 @@ KISSY.add('base', function (S, Attribute, CustomEvent) {
          * @param {Function[]} [extensions] extension classes
          * @param {Object} [px] key-value map for prototype properties/methods.
          * @param {Object} [sx] key-value map for static properties/methods.
+         * @param {String} [sx.name] new Class's name.
          * @return {Function} new class which extend called, it also has a static extend method
+         * @static
          *
          * for example:
          *
-         *      var parent = RichBase.extend({
+         *      var Parent = Base.extend({
          *          isParent: 1
          *      });
-         *      var child = parent.extend({
+         *      var Child = Parent.extend({
          *          isChild: 1,
          *          isParent: 0
          *      })
@@ -1129,6 +1131,8 @@ KISSY.add('base', function (S, Attribute, CustomEvent) {
             }
         }
     }
+
+    S.Base = Base;
 
     return Base;
 }, {
