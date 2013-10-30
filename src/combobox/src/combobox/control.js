@@ -687,9 +687,9 @@ KISSY.add("combobox/control", function (S, Node, Control, ComboBoxRender, Menu, 
                     }
                 }
             }
-
-            self.fire('afterRenderData');
             self.set("collapsed", false);
+            // after menu is rendered
+            self.fire('afterRenderData');
         } else {
             self.set("collapsed", true);
         }

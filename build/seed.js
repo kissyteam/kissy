@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40
 MIT Licensed
-build time: Oct 30 21:30
+build time: Oct 30 22:14
 */
 /**
  * @ignore
@@ -42,11 +42,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20131030213041' will replace with current timestamp when compressing.
+         * NOTICE: '20131030221434' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20131030213041',
+        __BUILD_TIME: '20131030221434',
 
         /**
          * KISSY Environment.
@@ -5456,7 +5456,7 @@ var KISSY = (function (undefined) {
     S.config({
         charset: 'utf-8',
         lang: 'zh-cn',
-        tag: '20131030213041'
+        tag: '20131030221434'
     });
 
     if (S.UA.nodejs) {

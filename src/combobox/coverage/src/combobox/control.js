@@ -425,7 +425,7 @@ if (! _$jscoverage['/combobox/control.js']) {
   _$jscoverage['/combobox/control.js'].lineData[684] = 0;
   _$jscoverage['/combobox/control.js'].lineData[685] = 0;
   _$jscoverage['/combobox/control.js'].lineData[686] = 0;
-  _$jscoverage['/combobox/control.js'].lineData[691] = 0;
+  _$jscoverage['/combobox/control.js'].lineData[690] = 0;
   _$jscoverage['/combobox/control.js'].lineData[692] = 0;
   _$jscoverage['/combobox/control.js'].lineData[694] = 0;
   _$jscoverage['/combobox/control.js'].lineData[700] = 0;
@@ -1396,10 +1396,10 @@ KISSY.add("combobox/control", function(S, Node, Control, ComboBoxRender, Menu, u
           }
         }
       }
-      _$jscoverage['/combobox/control.js'].lineData[691]++;
-      self.fire('afterRenderData');
-      _$jscoverage['/combobox/control.js'].lineData[692]++;
+      _$jscoverage['/combobox/control.js'].lineData[690]++;
       self.set("collapsed", false);
+      _$jscoverage['/combobox/control.js'].lineData[692]++;
+      self.fire('afterRenderData');
     } else {
       _$jscoverage['/combobox/control.js'].lineData[694]++;
       self.set("collapsed", true);
