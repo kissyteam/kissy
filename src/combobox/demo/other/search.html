@@ -235,13 +235,13 @@ li {
     outline: none;
     position: absolute;
     z-index: 99999;
-    left:-9999px;
-    top:-9999px;
+    left: -9999px;
+    top: -9999px;
 }
+
 .search-popupmenu-hidden {
     visibility: hidden;
 }
-
 
 .search-menuitem {
     color: #404040;
@@ -593,7 +593,16 @@ li {
 <script src="/kissy/build/seed.js"></script>
 <script src="/kissy/src/package.js"></script>
 <script>
-    KISSY.use("event,combobox", function (S, Event, ComboBox) {
+    KISSY.config('packages', {
+        search: {
+            base: './'
+        }
+    });
+    var xclass;
+    if (new KISSY.Uri(location.href).getQuery().has('search')) {
+        xclass = 'search-menuitem';
+    }
+    KISSY.use("event,combobox,search/menuitem", function (S, Event, ComboBox, SearchMenuItem) {
 
         /*
          remote dataSource
@@ -627,15 +636,20 @@ li {
                 format: function (query, results) {
                     var ret = [];
                     S.each(results, function (r) {
-                        ret.push({
+                        var item = {
                             // 点击菜单项后要放入 input 中的内容
                             textContent: r[0],
+                            xclass: 'search-menuitem',
                             // 菜单项的
                             content: S.substitute(tmpl, {
                                 text: r[0],
                                 count: r[1]
                             })
-                        });
+                        };
+                        if (xclass) {
+                            item.xclass = xclass;
+                        }
+                        ret.push(item);
                     });
                     return ret;
                 }
@@ -672,7 +686,7 @@ li {
             });
 
             basicComboBox.on('click', function (e) {
-                S.log('search: '+basicComboBox.get('value'));
+                S.log('search: ' + basicComboBox.get('value'));
                 //S.all('#search')[0].click();
             });
 

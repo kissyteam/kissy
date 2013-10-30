@@ -572,8 +572,6 @@ KISSY.add('base', function (S, Attribute, CustomEvent) {
         }
     }
 
-    S.Base = Base;
-
     return Base;
 }, {
     requires: ['base/attribute', 'event/custom']

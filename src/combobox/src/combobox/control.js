@@ -642,8 +642,6 @@ KISSY.add("combobox/control", function (S, Node, Control, ComboBoxRender, Menu, 
 
         data = self['normalizeData'](data);
 
-        var start = S.now();
-
         menu.removeChildren(true);
 
         if (highlightedItem = menu.get('highlightedItem')) {
