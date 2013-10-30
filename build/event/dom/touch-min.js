@@ -1,10 +1,10 @@
 /*
-Copyright 2013, KISSY v1.40dev
+Copyright 2013, KISSY v1.40
 MIT Licensed
-build time: Oct 25 12:24
+build time: Oct 30 21:30
 */
 KISSY.add("event/dom/touch/handle-map",function(){return{}});KISSY.add("event/dom/touch/single-touch",function(a){function b(){}b.prototype={constructor:b,requiredTouchCount:1,onTouchStart:function(a){if(a.touches.length!=this.requiredTouchCount)return!1;a=this.lastTouches=a.touches;this.lastXY={pageX:a[0].pageX,pageY:a[0].pageY}},onTouchMove:a.noop,onTouchEnd:a.noop};return b});
-KISSY.add("event/dom/touch/tap",function(a,b,f,c){function d(a){a.preventDefault()}function e(){e.superclass.constructor.apply(this,arguments)}var m=f.Object;a.extend(e,c,{onTouchMove:function(a){var c=this.lastXY,a=a.changedTouches[0];if(5<Math.abs(a.pageX-c.pageX)||5<Math.abs(a.pageY-c.pageY))return!1},onTouchEnd:function(c){var b=c.changedTouches[0],c=c.target,h=new m({type:"tap",target:c,currentTarget:c});a.mix(h,{pageX:b.pageX,pageY:b.pageY,which:1,touch:b});f.fire(c,"tap",h);if(h.isDefaultPrevented())f.on(c,
+KISSY.add("event/dom/touch/tap",function(a,b,f,c){function d(a){a.preventDefault()}function e(){e.superclass.constructor.apply(this,arguments)}var m=f.Object;a.extend(e,c,{onTouchMove:function(a){var c=this.lastXY,a=a.changedTouches[0];if(!a||5<Math.abs(a.pageX-c.pageX)||5<Math.abs(a.pageY-c.pageY))return!1},onTouchEnd:function(c){var b=c.changedTouches[0],c=c.target,h=new m({type:"tap",target:c,currentTarget:c});a.mix(h,{pageX:b.pageX,pageY:b.pageY,which:1,touch:b});f.fire(c,"tap",h);if(h.isDefaultPrevented())f.on(c,
 "click",{fn:d,once:1})}});b.tap={handle:new e};return e},{requires:["./handle-map","event/dom/base","./single-touch"]});
 KISSY.add("event/dom/touch/swipe",function(a,b,f,c){function d(a,c,b){var l=c.changedTouches[0],i=l.pageX-a.startX,g=l.pageY-a.startY,d=Math.abs(i),e=Math.abs(g);if(b){if(a.isVertical&&a.isHorizontal){if(5>Math.max(d,e))return;e>d?a.isHorizontal=0:a.isVertical=0}}else if(a.isVertical&&e<o&&(a.isVertical=0),a.isHorizontal&&d<o)a.isHorizontal=0;if(a.isHorizontal)i=0>i?"left":"right";else if(a.isVertical)i=0>g?"up":"down",d=e;else return!1;f.fire(c.target,b?n:m,{originalEvent:c.originalEvent,pageX:l.pageX,
 pageY:l.pageY,which:1,touch:l,direction:i,distance:d,duration:(c.timeStamp-a.startTime)/1E3})}function e(){}var m="swipe",n="swiping",o=50;a.extend(e,c,{onTouchStart:function(a){if(!1===e.superclass.onTouchStart.apply(this,arguments))return!1;var c=a.touches[0];this.startTime=a.timeStamp;this.isVertical=this.isHorizontal=1;this.startX=c.pageX;this.startY=c.pageY;-1!=a.type.indexOf("mouse")&&a.preventDefault()},onTouchMove:function(a){var c=a.changedTouches[0],b=c.pageY-this.startY,c=Math.abs(c.pageX-

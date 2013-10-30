@@ -309,7 +309,7 @@ _$jscoverage['/meta/modules.js'].branchData['211'][1].init(-1, 65, 'Features.isT
 function visit508_211_1(result) {
   _$jscoverage['/meta/modules.js'].branchData['211'][1].ranCondition(result);
   return result;
-}_$jscoverage['/meta/modules.js'].branchData['133'][1].init(43, 67, 'Features.isTouchEventSupported() || Features.isMsPointerSupported()');
+}_$jscoverage['/meta/modules.js'].branchData['133'][1].init(45, 67, 'Features.isTouchEventSupported() || Features.isMsPointerSupported()');
 function visit507_133_1(result) {
   _$jscoverage['/meta/modules.js'].branchData['133'][1].ranCondition(result);
   return result;
@@ -469,7 +469,7 @@ function visit507_133_1(result) {
   _$jscoverage['/meta/modules.js'].lineData[173]++;
   config({
   'io': {
-  requires: ['dom', 'event/custom', 'event']}});
+  requires: ['dom', 'event/custom', 'promise', 'event']}});
   _$jscoverage['/meta/modules.js'].lineData[177]++;
   config({
   'kison': {

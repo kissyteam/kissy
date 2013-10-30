@@ -1,7 +1,7 @@
 /*
-Copyright 2013, KISSY v1.40dev
+Copyright 2013, KISSY v1.40
 MIT Licensed
-build time: Oct 25 12:24
+build time: Oct 30 21:30
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -85,7 +85,9 @@ KISSY.add('event/dom/touch/tap', function (S, eventHandleMap, DomEvent, SingleTo
             var currentTouch = e.changedTouches[0];
             // some sensitivity
             // android browser will trigger touchmove event finger is not moved ...
-            if (Math.abs(currentTouch.pageX - firstTouchXY.pageX) > sensitivity ||
+            // ie10 will has no touch when mouse
+            if (!currentTouch ||
+                Math.abs(currentTouch.pageX - firstTouchXY.pageX) > sensitivity ||
                 Math.abs(currentTouch.pageY - firstTouchXY.pageY) > sensitivity) {
                 return false;
             }

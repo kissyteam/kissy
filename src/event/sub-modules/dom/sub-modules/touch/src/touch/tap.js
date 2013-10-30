@@ -24,7 +24,9 @@ KISSY.add('event/dom/touch/tap', function (S, eventHandleMap, DomEvent, SingleTo
             var currentTouch = e.changedTouches[0];
             // some sensitivity
             // android browser will trigger touchmove event finger is not moved ...
-            if (Math.abs(currentTouch.pageX - firstTouchXY.pageX) > sensitivity ||
+            // ie10 will has no touch when mouse
+            if (!currentTouch ||
+                Math.abs(currentTouch.pageX - firstTouchXY.pageX) > sensitivity ||
                 Math.abs(currentTouch.pageY - firstTouchXY.pageY) > sensitivity) {
                 return false;
             }

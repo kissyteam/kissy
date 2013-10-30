@@ -279,47 +279,47 @@ if (! _$jscoverage['/lang/string.js'].branchData) {
   _$jscoverage['/lang/string.js'].branchData['81'][2] = new BranchData();
   _$jscoverage['/lang/string.js'].branchData['81'][3] = new BranchData();
 }
-_$jscoverage['/lang/string.js'].branchData['81'][3].init(82, 31, 'str.indexOf(suffix, ind) == ind');
+_$jscoverage['/lang/string.js'].branchData['81'][3].init(84, 31, 'str.indexOf(suffix, ind) == ind');
 function visit286_81_3(result) {
   _$jscoverage['/lang/string.js'].branchData['81'][3].ranCondition(result);
   return result;
-}_$jscoverage['/lang/string.js'].branchData['81'][2].init(70, 8, 'ind >= 0');
+}_$jscoverage['/lang/string.js'].branchData['81'][2].init(72, 8, 'ind >= 0');
 function visit285_81_2(result) {
   _$jscoverage['/lang/string.js'].branchData['81'][2].ranCondition(result);
   return result;
-}_$jscoverage['/lang/string.js'].branchData['81'][1].init(70, 43, 'ind >= 0 && str.indexOf(suffix, ind) == ind');
+}_$jscoverage['/lang/string.js'].branchData['81'][1].init(72, 43, 'ind >= 0 && str.indexOf(suffix, ind) == ind');
 function visit284_81_1(result) {
   _$jscoverage['/lang/string.js'].branchData['81'][1].ranCondition(result);
   return result;
-}_$jscoverage['/lang/string.js'].branchData['69'][1].init(20, 32, 'str.lastIndexOf(prefix, 0) === 0');
+}_$jscoverage['/lang/string.js'].branchData['69'][1].init(21, 32, 'str.lastIndexOf(prefix, 0) === 0');
 function visit283_69_1(result) {
   _$jscoverage['/lang/string.js'].branchData['69'][1].ranCondition(result);
   return result;
-}_$jscoverage['/lang/string.js'].branchData['48'][1].init(134, 21, 'o[name] === undefined');
+}_$jscoverage['/lang/string.js'].branchData['48'][1].init(138, 21, 'o[name] === undefined');
 function visit282_48_1(result) {
   _$jscoverage['/lang/string.js'].branchData['48'][1].ranCondition(result);
   return result;
-}_$jscoverage['/lang/string.js'].branchData['45'][1].init(21, 24, 'match.charAt(0) === \'\\\\\'');
+}_$jscoverage['/lang/string.js'].branchData['45'][1].init(22, 24, 'match.charAt(0) === \'\\\\\'');
 function visit281_45_1(result) {
   _$jscoverage['/lang/string.js'].branchData['45'][1].ranCondition(result);
   return result;
-}_$jscoverage['/lang/string.js'].branchData['44'][1].init(123, 24, 'regexp || SUBSTITUTE_REG');
+}_$jscoverage['/lang/string.js'].branchData['44'][1].init(128, 24, 'regexp || SUBSTITUTE_REG');
 function visit280_44_1(result) {
   _$jscoverage['/lang/string.js'].branchData['44'][1].ranCondition(result);
   return result;
-}_$jscoverage['/lang/string.js'].branchData['40'][2].init(17, 22, 'typeof str != \'string\'');
+}_$jscoverage['/lang/string.js'].branchData['40'][2].init(18, 22, 'typeof str != \'string\'');
 function visit279_40_2(result) {
   _$jscoverage['/lang/string.js'].branchData['40'][2].ranCondition(result);
   return result;
-}_$jscoverage['/lang/string.js'].branchData['40'][1].init(17, 28, 'typeof str != \'string\' || !o');
+}_$jscoverage['/lang/string.js'].branchData['40'][1].init(18, 28, 'typeof str != \'string\' || !o');
 function visit278_40_1(result) {
   _$jscoverage['/lang/string.js'].branchData['40'][1].ranCondition(result);
   return result;
-}_$jscoverage['/lang/string.js'].branchData['28'][1].init(24, 11, 'str == null');
+}_$jscoverage['/lang/string.js'].branchData['28'][1].init(25, 11, 'str == null');
 function visit277_28_1(result) {
   _$jscoverage['/lang/string.js'].branchData['28'][1].ranCondition(result);
   return result;
-}_$jscoverage['/lang/string.js'].branchData['25'][1].init(24, 11, 'str == null');
+}_$jscoverage['/lang/string.js'].branchData['25'][1].init(25, 11, 'str == null');
 function visit276_25_1(result) {
   _$jscoverage['/lang/string.js'].branchData['25'][1].ranCondition(result);
   return result;

@@ -308,55 +308,55 @@ if (! _$jscoverage['/loader/init.js'].branchData) {
   _$jscoverage['/loader/init.js'].branchData['106'] = [];
   _$jscoverage['/loader/init.js'].branchData['106'][1] = new BranchData();
 }
-_$jscoverage['/loader/init.js'].branchData['106'][1].init(2906, 31, 'doc && doc.getElementsByTagName');
+_$jscoverage['/loader/init.js'].branchData['106'][1].init(3007, 31, 'doc && doc.getElementsByTagName');
 function visit447_106_1(result) {
   _$jscoverage['/loader/init.js'].branchData['106'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/init.js'].branchData['98'][1].init(2652, 11, 'S.UA.nodejs');
+}_$jscoverage['/loader/init.js'].branchData['98'][1].init(2745, 11, 'S.UA.nodejs');
 function visit446_98_1(result) {
   _$jscoverage['/loader/init.js'].branchData['98'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/init.js'].branchData['83'][1].init(17, 43, 'info = getBaseInfoFromOneScript(scripts[i])');
+}_$jscoverage['/loader/init.js'].branchData['83'][1].init(18, 43, 'info = getBaseInfoFromOneScript(scripts[i])');
 function visit445_83_1(result) {
   _$jscoverage['/loader/init.js'].branchData['83'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/init.js'].branchData['82'][1].init(209, 6, 'i >= 0');
+}_$jscoverage['/loader/init.js'].branchData['82'][1].init(216, 6, 'i >= 0');
 function visit444_82_1(result) {
   _$jscoverage['/loader/init.js'].branchData['82'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/init.js'].branchData['51'][1].init(21, 23, 'part.match(baseTestReg)');
+}_$jscoverage['/loader/init.js'].branchData['51'][1].init(22, 23, 'part.match(baseTestReg)');
 function visit443_51_1(result) {
   _$jscoverage['/loader/init.js'].branchData['51'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/init.js'].branchData['46'][1].init(179, 35, 'base.charAt(base.length - 1) != \'/\'');
+}_$jscoverage['/loader/init.js'].branchData['46'][1].init(183, 35, 'base.charAt(base.length - 1) != \'/\'');
 function visit442_46_1(result) {
   _$jscoverage['/loader/init.js'].branchData['46'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/init.js'].branchData['40'][1].init(628, 11, 'index == -1');
+}_$jscoverage['/loader/init.js'].branchData['40'][1].init(652, 11, 'index == -1');
 function visit441_40_1(result) {
   _$jscoverage['/loader/init.js'].branchData['40'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/init.js'].branchData['33'][1].init(484, 24, 'baseInfo.comboSep || \',\'');
+}_$jscoverage['/loader/init.js'].branchData['33'][1].init(501, 24, 'baseInfo.comboSep || \',\'');
 function visit440_33_1(result) {
   _$jscoverage['/loader/init.js'].branchData['33'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/init.js'].branchData['32'][1].init(411, 28, 'baseInfo.comboPrefix || \'??\'');
+}_$jscoverage['/loader/init.js'].branchData['32'][1].init(427, 28, 'baseInfo.comboPrefix || \'??\'');
 function visit439_32_1(result) {
   _$jscoverage['/loader/init.js'].branchData['32'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/init.js'].branchData['26'][1].init(250, 8, 'baseInfo');
+}_$jscoverage['/loader/init.js'].branchData['26'][1].init(260, 8, 'baseInfo');
 function visit438_26_1(result) {
   _$jscoverage['/loader/init.js'].branchData['26'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/init.js'].branchData['20'][1].init(118, 23, '!src.match(baseTestReg)');
+}_$jscoverage['/loader/init.js'].branchData['20'][1].init(122, 23, '!src.match(baseTestReg)');
 function visit437_20_1(result) {
   _$jscoverage['/loader/init.js'].branchData['20'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/init.js'].branchData['19'][1].init(88, 16, 'script.src || \'\'');
+}_$jscoverage['/loader/init.js'].branchData['19'][1].init(91, 16, 'script.src || \'\'');
 function visit436_19_1(result) {
   _$jscoverage['/loader/init.js'].branchData['19'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/init.js'].branchData['6'][1].init(15, 33, 'S.Env.host && S.Env.host.document');
+}_$jscoverage['/loader/init.js'].branchData['6'][1].init(16, 33, 'S.Env.host && S.Env.host.document');
 function visit435_6_1(result) {
   _$jscoverage['/loader/init.js'].branchData['6'][1].ranCondition(result);
   return result;

@@ -384,107 +384,107 @@ if (! _$jscoverage['/lang/escape.js'].branchData) {
   _$jscoverage['/lang/escape.js'].branchData['252'] = [];
   _$jscoverage['/lang/escape.js'].branchData['252'][1] = new BranchData();
 }
-_$jscoverage['/lang/escape.js'].branchData['252'][1].init(25, 19, 'S.isArray(ret[key])');
+_$jscoverage['/lang/escape.js'].branchData['252'][1].init(26, 19, 'S.isArray(ret[key])');
 function visit149_252_1(result) {
   _$jscoverage['/lang/escape.js'].branchData['252'][1].ranCondition(result);
   return result;
-}_$jscoverage['/lang/escape.js'].branchData['251'][1].init(778, 10, 'key in ret');
+}_$jscoverage['/lang/escape.js'].branchData['251'][1].init(797, 10, 'key in ret');
 function visit148_251_1(result) {
   _$jscoverage['/lang/escape.js'].branchData['251'][1].ranCondition(result);
   return result;
-}_$jscoverage['/lang/escape.js'].branchData['247'][1].init(438, 21, 'S.endsWith(key, \'[]\')');
+}_$jscoverage['/lang/escape.js'].branchData['247'][1].init(448, 21, 'S.endsWith(key, \'[]\')');
 function visit147_247_1(result) {
   _$jscoverage['/lang/escape.js'].branchData['247'][1].ranCondition(result);
   return result;
-}_$jscoverage['/lang/escape.js'].branchData['234'][1].init(69, 13, 'eqIndex == -1');
+}_$jscoverage['/lang/escape.js'].branchData['234'][1].init(71, 13, 'eqIndex == -1');
 function visit146_234_1(result) {
   _$jscoverage['/lang/escape.js'].branchData['234'][1].ranCondition(result);
   return result;
-}_$jscoverage['/lang/escape.js'].branchData['232'][1].init(383, 7, 'i < len');
+}_$jscoverage['/lang/escape.js'].branchData['232'][1].init(396, 7, 'i < len');
 function visit145_232_1(result) {
   _$jscoverage['/lang/escape.js'].branchData['232'][1].ranCondition(result);
   return result;
-}_$jscoverage['/lang/escape.js'].branchData['224'][1].init(155, 8, 'eq || EQ');
+}_$jscoverage['/lang/escape.js'].branchData['224'][1].init(160, 8, 'eq || EQ');
 function visit144_224_1(result) {
   _$jscoverage['/lang/escape.js'].branchData['224'][1].ranCondition(result);
   return result;
-}_$jscoverage['/lang/escape.js'].branchData['223'][1].init(126, 10, 'sep || SEP');
+}_$jscoverage['/lang/escape.js'].branchData['223'][1].init(130, 10, 'sep || SEP');
 function visit143_223_1(result) {
   _$jscoverage['/lang/escape.js'].branchData['223'][1].ranCondition(result);
   return result;
-}_$jscoverage['/lang/escape.js'].branchData['220'][2].init(17, 22, 'typeof str != \'string\'');
+}_$jscoverage['/lang/escape.js'].branchData['220'][2].init(18, 22, 'typeof str != \'string\'');
 function visit142_220_2(result) {
   _$jscoverage['/lang/escape.js'].branchData['220'][2].ranCondition(result);
   return result;
-}_$jscoverage['/lang/escape.js'].branchData['220'][1].init(17, 46, 'typeof str != \'string\' || !(str = S.trim(str))');
+}_$jscoverage['/lang/escape.js'].branchData['220'][1].init(18, 46, 'typeof str != \'string\' || !(str = S.trim(str))');
 function visit141_220_1(result) {
   _$jscoverage['/lang/escape.js'].branchData['220'][1].ranCondition(result);
   return result;
-}_$jscoverage['/lang/escape.js'].branchData['190'][1].init(117, 15, 'v !== undefined');
+}_$jscoverage['/lang/escape.js'].branchData['190'][1].init(119, 15, 'v !== undefined');
 function visit140_190_1(result) {
   _$jscoverage['/lang/escape.js'].branchData['190'][1].ranCondition(result);
   return result;
-}_$jscoverage['/lang/escape.js'].branchData['188'][1].init(65, 20, 'isValidParamValue(v)');
+}_$jscoverage['/lang/escape.js'].branchData['188'][1].init(67, 20, 'isValidParamValue(v)');
 function visit139_188_1(result) {
   _$jscoverage['/lang/escape.js'].branchData['188'][1].ranCondition(result);
   return result;
-}_$jscoverage['/lang/escape.js'].branchData['186'][1].init(51, 7, 'i < len');
+}_$jscoverage['/lang/escape.js'].branchData['186'][1].init(52, 7, 'i < len');
 function visit138_186_1(result) {
   _$jscoverage['/lang/escape.js'].branchData['186'][1].ranCondition(result);
   return result;
-}_$jscoverage['/lang/escape.js'].branchData['185'][1].init(444, 28, 'S.isArray(val) && val.length');
+}_$jscoverage['/lang/escape.js'].branchData['185'][1].init(458, 28, 'S.isArray(val) && val.length');
 function visit137_185_1(result) {
   _$jscoverage['/lang/escape.js'].branchData['185'][1].ranCondition(result);
   return result;
-}_$jscoverage['/lang/escape.js'].branchData['179'][1].init(60, 17, 'val !== undefined');
+}_$jscoverage['/lang/escape.js'].branchData['179'][1].init(62, 17, 'val !== undefined');
 function visit136_179_1(result) {
   _$jscoverage['/lang/escape.js'].branchData['179'][1].ranCondition(result);
   return result;
-}_$jscoverage['/lang/escape.js'].branchData['177'][1].init(136, 22, 'isValidParamValue(val)');
+}_$jscoverage['/lang/escape.js'].branchData['177'][1].init(142, 22, 'isValidParamValue(val)');
 function visit135_177_1(result) {
   _$jscoverage['/lang/escape.js'].branchData['177'][1].ranCondition(result);
   return result;
-}_$jscoverage['/lang/escape.js'].branchData['166'][1].init(74, 28, 'serializeArray === undefined');
+}_$jscoverage['/lang/escape.js'].branchData['166'][1].init(77, 28, 'serializeArray === undefined');
 function visit134_166_1(result) {
   _$jscoverage['/lang/escape.js'].branchData['166'][1].ranCondition(result);
   return result;
-}_$jscoverage['/lang/escape.js'].branchData['165'][1].init(48, 8, 'eq || EQ');
+}_$jscoverage['/lang/escape.js'].branchData['165'][1].init(50, 8, 'eq || EQ');
 function visit133_165_1(result) {
   _$jscoverage['/lang/escape.js'].branchData['165'][1].ranCondition(result);
   return result;
-}_$jscoverage['/lang/escape.js'].branchData['164'][1].init(19, 10, 'sep || SEP');
+}_$jscoverage['/lang/escape.js'].branchData['164'][1].init(20, 10, 'sep || SEP');
 function visit132_164_1(result) {
   _$jscoverage['/lang/escape.js'].branchData['164'][1].ranCondition(result);
   return result;
-}_$jscoverage['/lang/escape.js'].branchData['142'][1].init(24, 42, 'htmlEntities[m] || String.fromCharCode(+n)');
+}_$jscoverage['/lang/escape.js'].branchData['142'][1].init(25, 42, 'htmlEntities[m] || String.fromCharCode(+n)');
 function visit131_142_1(result) {
   _$jscoverage['/lang/escape.js'].branchData['142'][1].ranCondition(result);
   return result;
-}_$jscoverage['/lang/escape.js'].branchData['59'][1].init(13, 11, 'unEscapeReg');
+}_$jscoverage['/lang/escape.js'].branchData['59'][1].init(14, 11, 'unEscapeReg');
 function visit130_59_1(result) {
   _$jscoverage['/lang/escape.js'].branchData['59'][1].ranCondition(result);
   return result;
-}_$jscoverage['/lang/escape.js'].branchData['47'][1].init(13, 9, 'escapeReg');
+}_$jscoverage['/lang/escape.js'].branchData['47'][1].init(14, 9, 'escapeReg');
 function visit129_47_1(result) {
   _$jscoverage['/lang/escape.js'].branchData['47'][1].ranCondition(result);
   return result;
-}_$jscoverage['/lang/escape.js'].branchData['43'][5].init(166, 16, 't !== \'function\'');
+}_$jscoverage['/lang/escape.js'].branchData['43'][5].init(169, 16, 't !== \'function\'');
 function visit128_43_5(result) {
   _$jscoverage['/lang/escape.js'].branchData['43'][5].ranCondition(result);
   return result;
-}_$jscoverage['/lang/escape.js'].branchData['43'][4].init(148, 14, 't !== \'object\'');
+}_$jscoverage['/lang/escape.js'].branchData['43'][4].init(151, 14, 't !== \'object\'');
 function visit127_43_4(result) {
   _$jscoverage['/lang/escape.js'].branchData['43'][4].ranCondition(result);
   return result;
-}_$jscoverage['/lang/escape.js'].branchData['43'][3].init(148, 34, 't !== \'object\' && t !== \'function\'');
+}_$jscoverage['/lang/escape.js'].branchData['43'][3].init(151, 34, 't !== \'object\' && t !== \'function\'');
 function visit126_43_3(result) {
   _$jscoverage['/lang/escape.js'].branchData['43'][3].ranCondition(result);
   return result;
-}_$jscoverage['/lang/escape.js'].branchData['43'][2].init(132, 11, 'val == null');
+}_$jscoverage['/lang/escape.js'].branchData['43'][2].init(135, 11, 'val == null');
 function visit125_43_2(result) {
   _$jscoverage['/lang/escape.js'].branchData['43'][2].ranCondition(result);
   return result;
-}_$jscoverage['/lang/escape.js'].branchData['43'][1].init(132, 51, 'val == null || (t !== \'object\' && t !== \'function\')');
+}_$jscoverage['/lang/escape.js'].branchData['43'][1].init(135, 51, 'val == null || (t !== \'object\' && t !== \'function\')');
 function visit124_43_1(result) {
   _$jscoverage['/lang/escape.js'].branchData['43'][1].ranCondition(result);
   return result;
