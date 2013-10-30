@@ -92,10 +92,10 @@ KISSY.add(function (S, Dom, Anim, Node) {
                     var time = 0;
                     var start = S.now();
                     t.animate({}, {
-                        duration: 0.1
+                        duration: 0.2
                     })
                         .animate({}, {
-                            duration: 0.1,
+                            duration: 0.2,
                             complete: function () {
                                 time = S.now() - start;
                             }
