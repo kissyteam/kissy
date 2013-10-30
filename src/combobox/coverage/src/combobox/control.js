@@ -1230,7 +1230,7 @@ KISSY.add("combobox/control", function(S, Node, Control, ComboBoxRender, Menu, u
     _$jscoverage['/combobox/control.js'].lineData[554]++;
     var combobox = this;
     _$jscoverage['/combobox/control.js'].lineData[556]++;
-    self.focus();
+    combobox.focus();
     _$jscoverage['/combobox/control.js'].lineData[558]++;
     clearDismissTimer(combobox);
   }

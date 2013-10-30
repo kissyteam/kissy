@@ -553,7 +553,7 @@ KISSY.add("combobox/control", function (S, Node, Control, ComboBoxRender, Menu, 
     function onMenuMouseOver() {
         var combobox = this;
         // trigger el focus
-        self.focus();
+        combobox.focus();
         // prevent menu from hiding
         clearDismissTimer(combobox);
     }

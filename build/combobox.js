@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40
 MIT Licensed
-build time: Oct 30 15:26
+build time: Oct 30 22:08
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -758,7 +758,7 @@ KISSY.add("combobox/control", function (S, Node, Control, ComboBoxRender, Menu, 
     function onMenuMouseOver() {
         var combobox = this;
         // trigger el focus
-        self.focus();
+        combobox.focus();
         // prevent menu from hiding
         clearDismissTimer(combobox);
     }
