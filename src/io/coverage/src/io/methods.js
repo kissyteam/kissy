@@ -425,171 +425,171 @@ if (! _$jscoverage['/io/methods.js'].branchData) {
   _$jscoverage['/io/methods.js'].branchData['279'] = [];
   _$jscoverage['/io/methods.js'].branchData['279'][1] = new BranchData();
 }
-_$jscoverage['/io/methods.js'].branchData['279'][1].init(89, 38, 'S.Uri.getComponents(c.url).query || ""');
+_$jscoverage['/io/methods.js'].branchData['279'][1].init(91, 38, 'S.Uri.getComponents(c.url).query || ""');
 function visit112_279_1(result) {
   _$jscoverage['/io/methods.js'].branchData['279'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/methods.js'].branchData['261'][1].init(3091, 19, 'h = config.complete');
+}_$jscoverage['/io/methods.js'].branchData['261'][1].init(3176, 19, 'h = config.complete');
 function visit111_261_1(result) {
   _$jscoverage['/io/methods.js'].branchData['261'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/methods.js'].branchData['258'][1].init(2989, 19, 'h = config[handler]');
+}_$jscoverage['/io/methods.js'].branchData['258'][1].init(3071, 19, 'h = config[handler]');
 function visit110_258_1(result) {
   _$jscoverage['/io/methods.js'].branchData['258'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/methods.js'].branchData['219'][1].init(1541, 32, 'timeoutTimer = self.timeoutTimer');
+}_$jscoverage['/io/methods.js'].branchData['219'][1].init(1584, 32, 'timeoutTimer = self.timeoutTimer');
 function visit109_219_1(result) {
   _$jscoverage['/io/methods.js'].branchData['219'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/methods.js'].branchData['208'][1].init(25, 10, 'status < 0');
+}_$jscoverage['/io/methods.js'].branchData['208'][1].init(26, 10, 'status < 0');
 function visit108_208_1(result) {
   _$jscoverage['/io/methods.js'].branchData['208'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/methods.js'].branchData['202'][1].init(42, 12, 'e.stack || e');
+}_$jscoverage['/io/methods.js'].branchData['202'][1].init(43, 12, 'e.stack || e');
 function visit107_202_1(result) {
   _$jscoverage['/io/methods.js'].branchData['202'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/methods.js'].branchData['193'][1].init(162, 22, 'status == NOT_MODIFIED');
+}_$jscoverage['/io/methods.js'].branchData['193'][1].init(165, 22, 'status == NOT_MODIFIED');
 function visit106_193_1(result) {
   _$jscoverage['/io/methods.js'].branchData['193'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/methods.js'].branchData['190'][5].init(461, 22, 'status == NOT_MODIFIED');
+}_$jscoverage['/io/methods.js'].branchData['190'][5].init(475, 22, 'status == NOT_MODIFIED');
 function visit105_190_5(result) {
   _$jscoverage['/io/methods.js'].branchData['190'][5].ranCondition(result);
   return result;
-}_$jscoverage['/io/methods.js'].branchData['190'][4].init(432, 25, 'status < MULTIPLE_CHOICES');
+}_$jscoverage['/io/methods.js'].branchData['190'][4].init(446, 25, 'status < MULTIPLE_CHOICES');
 function visit104_190_4(result) {
   _$jscoverage['/io/methods.js'].branchData['190'][4].ranCondition(result);
   return result;
-}_$jscoverage['/io/methods.js'].branchData['190'][3].init(411, 17, 'status >= OK_CODE');
+}_$jscoverage['/io/methods.js'].branchData['190'][3].init(425, 17, 'status >= OK_CODE');
 function visit103_190_3(result) {
   _$jscoverage['/io/methods.js'].branchData['190'][3].ranCondition(result);
   return result;
-}_$jscoverage['/io/methods.js'].branchData['190'][2].init(411, 46, 'status >= OK_CODE && status < MULTIPLE_CHOICES');
+}_$jscoverage['/io/methods.js'].branchData['190'][2].init(425, 46, 'status >= OK_CODE && status < MULTIPLE_CHOICES');
 function visit102_190_2(result) {
   _$jscoverage['/io/methods.js'].branchData['190'][2].ranCondition(result);
   return result;
-}_$jscoverage['/io/methods.js'].branchData['190'][1].init(411, 72, 'status >= OK_CODE && status < MULTIPLE_CHOICES || status == NOT_MODIFIED');
+}_$jscoverage['/io/methods.js'].branchData['190'][1].init(425, 72, 'status >= OK_CODE && status < MULTIPLE_CHOICES || status == NOT_MODIFIED');
 function visit101_190_1(result) {
   _$jscoverage['/io/methods.js'].branchData['190'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/methods.js'].branchData['184'][1].init(226, 15, 'self.state == 2');
+}_$jscoverage['/io/methods.js'].branchData['184'][1].init(234, 15, 'self.state == 2');
 function visit100_184_1(result) {
   _$jscoverage['/io/methods.js'].branchData['184'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/methods.js'].branchData['170'][1].init(52, 26, 'transport = this.transport');
+}_$jscoverage['/io/methods.js'].branchData['170'][1].init(54, 26, 'transport = this.transport');
 function visit99_170_1(result) {
   _$jscoverage['/io/methods.js'].branchData['170'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/methods.js'].branchData['156'][1].init(106, 14, 'self.transport');
+}_$jscoverage['/io/methods.js'].branchData['156'][1].init(109, 14, 'self.transport');
 function visit98_156_1(result) {
   _$jscoverage['/io/methods.js'].branchData['156'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/methods.js'].branchData['155'][1].init(63, 21, 'statusText || \'abort\'');
+}_$jscoverage['/io/methods.js'].branchData['155'][1].init(65, 21, 'statusText || \'abort\'');
 function visit97_155_1(result) {
   _$jscoverage['/io/methods.js'].branchData['155'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/methods.js'].branchData['141'][1].init(54, 11, '!self.state');
+}_$jscoverage['/io/methods.js'].branchData['141'][1].init(56, 11, '!self.state');
 function visit96_141_1(result) {
   _$jscoverage['/io/methods.js'].branchData['141'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/methods.js'].branchData['135'][1].init(536, 19, 'match === undefined');
+}_$jscoverage['/io/methods.js'].branchData['135'][1].init(547, 19, 'match === undefined');
 function visit95_135_1(result) {
   _$jscoverage['/io/methods.js'].branchData['135'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/methods.js'].branchData['127'][1].init(25, 41, '!(responseHeaders = self.responseHeaders)');
+}_$jscoverage['/io/methods.js'].branchData['127'][1].init(26, 41, '!(responseHeaders = self.responseHeaders)');
 function visit94_127_1(result) {
   _$jscoverage['/io/methods.js'].branchData['127'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/methods.js'].branchData['126'][1].init(78, 16, 'self.state === 2');
+}_$jscoverage['/io/methods.js'].branchData['126'][1].init(80, 16, 'self.state === 2');
 function visit93_126_1(result) {
   _$jscoverage['/io/methods.js'].branchData['126'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/methods.js'].branchData['115'][1].init(57, 16, 'self.state === 2');
+}_$jscoverage['/io/methods.js'].branchData['115'][1].init(59, 16, 'self.state === 2');
 function visit92_115_1(result) {
   _$jscoverage['/io/methods.js'].branchData['115'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/methods.js'].branchData['88'][1].init(127, 10, '!converter');
+}_$jscoverage['/io/methods.js'].branchData['88'][1].init(132, 10, '!converter');
 function visit91_88_1(result) {
   _$jscoverage['/io/methods.js'].branchData['88'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/methods.js'].branchData['86'][1].init(62, 46, 'converts[prevType] && converts[prevType][type]');
+}_$jscoverage['/io/methods.js'].branchData['86'][1].init(65, 46, 'converts[prevType] && converts[prevType][type]');
 function visit90_86_1(result) {
   _$jscoverage['/io/methods.js'].branchData['86'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/methods.js'].branchData['83'][1].init(2376, 19, 'i < dataType.length');
+}_$jscoverage['/io/methods.js'].branchData['83'][1].init(2445, 19, 'i < dataType.length');
 function visit89_83_1(result) {
   _$jscoverage['/io/methods.js'].branchData['83'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/methods.js'].branchData['73'][1].init(92, 18, 'prevType == \'text\'');
+}_$jscoverage['/io/methods.js'].branchData['73'][1].init(94, 18, 'prevType == \'text\'');
 function visit88_73_1(result) {
   _$jscoverage['/io/methods.js'].branchData['73'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/methods.js'].branchData['71'][1].init(153, 30, 'converter && rawData[prevType]');
+}_$jscoverage['/io/methods.js'].branchData['71'][1].init(156, 30, 'converter && rawData[prevType]');
 function visit87_71_1(result) {
   _$jscoverage['/io/methods.js'].branchData['71'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/methods.js'].branchData['70'][1].init(59, 46, 'converts[prevType] && converts[prevType][type]');
+}_$jscoverage['/io/methods.js'].branchData['70'][1].init(60, 46, 'converts[prevType] && converts[prevType][type]');
 function visit86_70_1(result) {
   _$jscoverage['/io/methods.js'].branchData['70'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/methods.js'].branchData['65'][1].init(1209, 13, '!responseData');
+}_$jscoverage['/io/methods.js'].branchData['65'][1].init(1245, 13, '!responseData');
 function visit85_65_1(result) {
   _$jscoverage['/io/methods.js'].branchData['65'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/methods.js'].branchData['59'][3].init(273, 17, 'xml !== undefined');
+}_$jscoverage['/io/methods.js'].branchData['59'][3].init(279, 17, 'xml !== undefined');
 function visit84_59_3(result) {
   _$jscoverage['/io/methods.js'].branchData['59'][3].ranCondition(result);
   return result;
-}_$jscoverage['/io/methods.js'].branchData['59'][2].init(237, 32, 'dataType[dataTypeIndex] == \'xml\'');
+}_$jscoverage['/io/methods.js'].branchData['59'][2].init(243, 32, 'dataType[dataTypeIndex] == \'xml\'');
 function visit83_59_2(result) {
   _$jscoverage['/io/methods.js'].branchData['59'][2].ranCondition(result);
   return result;
-}_$jscoverage['/io/methods.js'].branchData['59'][1].init(237, 53, 'dataType[dataTypeIndex] == \'xml\' && xml !== undefined');
+}_$jscoverage['/io/methods.js'].branchData['59'][1].init(243, 53, 'dataType[dataTypeIndex] == \'xml\' && xml !== undefined');
 function visit82_59_1(result) {
   _$jscoverage['/io/methods.js'].branchData['59'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/methods.js'].branchData['54'][3].init(58, 18, 'text !== undefined');
+}_$jscoverage['/io/methods.js'].branchData['54'][3].init(59, 18, 'text !== undefined');
 function visit81_54_3(result) {
   _$jscoverage['/io/methods.js'].branchData['54'][3].ranCondition(result);
   return result;
-}_$jscoverage['/io/methods.js'].branchData['54'][2].init(21, 33, 'dataType[dataTypeIndex] == \'text\'');
+}_$jscoverage['/io/methods.js'].branchData['54'][2].init(22, 33, 'dataType[dataTypeIndex] == \'text\'');
 function visit80_54_2(result) {
   _$jscoverage['/io/methods.js'].branchData['54'][2].ranCondition(result);
   return result;
-}_$jscoverage['/io/methods.js'].branchData['54'][1].init(21, 55, 'dataType[dataTypeIndex] == \'text\' && text !== undefined');
+}_$jscoverage['/io/methods.js'].branchData['54'][1].init(22, 55, 'dataType[dataTypeIndex] == \'text\' && text !== undefined');
 function visit79_54_1(result) {
   _$jscoverage['/io/methods.js'].branchData['54'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/methods.js'].branchData['53'][1].init(749, 31, 'dataTypeIndex < dataType.length');
+}_$jscoverage['/io/methods.js'].branchData['53'][1].init(773, 31, 'dataTypeIndex < dataType.length');
 function visit78_53_1(result) {
   _$jscoverage['/io/methods.js'].branchData['53'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/methods.js'].branchData['50'][1].init(660, 21, 'dataType[0] || \'text\'');
+}_$jscoverage['/io/methods.js'].branchData['50'][1].init(681, 21, 'dataType[0] || \'text\'');
 function visit77_50_1(result) {
   _$jscoverage['/io/methods.js'].branchData['50'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/methods.js'].branchData['42'][1].init(29, 19, 'dataType[0] != type');
+}_$jscoverage['/io/methods.js'].branchData['42'][1].init(30, 19, 'dataType[0] != type');
 function visit76_42_1(result) {
   _$jscoverage['/io/methods.js'].branchData['42'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/methods.js'].branchData['41'][1].init(25, 32, 'contents[type].test(contentType)');
+}_$jscoverage['/io/methods.js'].branchData['41'][1].init(26, 32, 'contents[type].test(contentType)');
 function visit75_41_1(result) {
   _$jscoverage['/io/methods.js'].branchData['41'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/methods.js'].branchData['38'][1].init(213, 16, '!dataType.length');
+}_$jscoverage['/io/methods.js'].branchData['38'][1].init(222, 16, '!dataType.length');
 function visit74_38_1(result) {
   _$jscoverage['/io/methods.js'].branchData['38'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/methods.js'].branchData['34'][1].init(126, 18, 'dataType[0] == \'*\'');
+}_$jscoverage['/io/methods.js'].branchData['34'][1].init(131, 18, 'dataType[0] == \'*\'');
 function visit73_34_1(result) {
   _$jscoverage['/io/methods.js'].branchData['34'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/methods.js'].branchData['31'][1].init(28, 51, 'io.mimeType || io.getResponseHeader(\'Content-Type\')');
+}_$jscoverage['/io/methods.js'].branchData['31'][1].init(30, 51, 'io.mimeType || io.getResponseHeader(\'Content-Type\')');
 function visit72_31_1(result) {
   _$jscoverage['/io/methods.js'].branchData['31'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/methods.js'].branchData['29'][1].init(414, 11, 'text || xml');
+}_$jscoverage['/io/methods.js'].branchData['29'][1].init(429, 11, 'text || xml');
 function visit71_29_1(result) {
   _$jscoverage['/io/methods.js'].branchData['29'][1].ranCondition(result);
   return result;

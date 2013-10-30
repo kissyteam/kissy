@@ -316,47 +316,47 @@ if (! _$jscoverage['/io/xdr-flash-transport.js'].branchData) {
   _$jscoverage['/io/xdr-flash-transport.js'].branchData['135'] = [];
   _$jscoverage['/io/xdr-flash-transport.js'].branchData['135'][1] = new BranchData();
 }
-_$jscoverage['/io/xdr-flash-transport.js'].branchData['135'][1].init(40, 29, 'xhr && xhr._xdrResponse(e, o)');
+_$jscoverage['/io/xdr-flash-transport.js'].branchData['135'][1].init(42, 29, 'xhr && xhr._xdrResponse(e, o)');
 function visit144_135_1(result) {
   _$jscoverage['/io/xdr-flash-transport.js'].branchData['135'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/xdr-flash-transport.js'].branchData['107'][1].init(1016, 3, 'ret');
+}_$jscoverage['/io/xdr-flash-transport.js'].branchData['107'][1].init(1047, 3, 'ret');
 function visit143_107_1(result) {
   _$jscoverage['/io/xdr-flash-transport.js'].branchData['107'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/xdr-flash-transport.js'].branchData['103'][1].init(101, 17, 'c.statusText || e');
+}_$jscoverage['/io/xdr-flash-transport.js'].branchData['103'][1].init(103, 17, 'c.statusText || e');
 function visit142_103_1(result) {
   _$jscoverage['/io/xdr-flash-transport.js'].branchData['103'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/xdr-flash-transport.js'].branchData['85'][1].init(254, 36, 'c && (responseText = c.responseText)');
+}_$jscoverage['/io/xdr-flash-transport.js'].branchData['85'][1].init(263, 36, 'c && (responseText = c.responseText)');
 function visit141_85_1(result) {
   _$jscoverage['/io/xdr-flash-transport.js'].branchData['85'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/xdr-flash-transport.js'].branchData['68'][2].init(118, 22, 'c.hasContent && c.data');
+}_$jscoverage['/io/xdr-flash-transport.js'].branchData['68'][2].init(122, 22, 'c.hasContent && c.data');
 function visit140_68_2(result) {
   _$jscoverage['/io/xdr-flash-transport.js'].branchData['68'][2].ranCondition(result);
   return result;
-}_$jscoverage['/io/xdr-flash-transport.js'].branchData['68'][1].init(118, 28, 'c.hasContent && c.data || {}');
+}_$jscoverage['/io/xdr-flash-transport.js'].branchData['68'][1].init(122, 28, 'c.hasContent && c.data || {}');
 function visit139_68_1(result) {
   _$jscoverage['/io/xdr-flash-transport.js'].branchData['68'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/xdr-flash-transport.js'].branchData['54'][1].init(278, 6, '!flash');
+}_$jscoverage['/io/xdr-flash-transport.js'].branchData['54'][1].init(286, 6, '!flash');
 function visit138_54_1(result) {
   _$jscoverage['/io/xdr-flash-transport.js'].branchData['54'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/xdr-flash-transport.js'].branchData['52'][1].init(182, 47, 'xdr.src || (S.Config.base + \'io/assets/io.swf\')');
+}_$jscoverage['/io/xdr-flash-transport.js'].branchData['52'][1].init(188, 47, 'xdr.src || (S.Config.base + \'io/assets/io.swf\')');
 function visit137_52_1(result) {
   _$jscoverage['/io/xdr-flash-transport.js'].branchData['52'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/xdr-flash-transport.js'].branchData['50'][1].init(99, 14, 'c[\'xdr\'] || {}');
+}_$jscoverage['/io/xdr-flash-transport.js'].branchData['50'][1].init(102, 14, 'c[\'xdr\'] || {}');
 function visit136_50_1(result) {
   _$jscoverage['/io/xdr-flash-transport.js'].branchData['50'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/xdr-flash-transport.js'].branchData['35'][1].init(616, 31, 'doc.body || doc.documentElement');
+}_$jscoverage['/io/xdr-flash-transport.js'].branchData['35'][1].init(633, 31, 'doc.body || doc.documentElement');
 function visit135_35_1(result) {
   _$jscoverage['/io/xdr-flash-transport.js'].branchData['35'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/xdr-flash-transport.js'].branchData['19'][1].init(13, 4, 'init');
+}_$jscoverage['/io/xdr-flash-transport.js'].branchData['19'][1].init(14, 4, 'init');
 function visit134_19_1(result) {
   _$jscoverage['/io/xdr-flash-transport.js'].branchData['19'][1].ranCondition(result);
   return result;

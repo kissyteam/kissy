@@ -287,31 +287,31 @@ if (! _$jscoverage['/io/jsonp.js'].branchData) {
   _$jscoverage['/io/jsonp.js'].branchData['69'] = [];
   _$jscoverage['/io/jsonp.js'].branchData['69'][1] = new BranchData();
 }
-_$jscoverage['/io/jsonp.js'].branchData['69'][1].init(21, 9, '!response');
+_$jscoverage['/io/jsonp.js'].branchData['69'][1].init(22, 9, '!response');
 function visit70_69_1(result) {
   _$jscoverage['/io/jsonp.js'].branchData['69'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/jsonp.js'].branchData['60'][1].init(1510, 23, 'converters.script || {}');
+}_$jscoverage['/io/jsonp.js'].branchData['60'][1].init(1551, 23, 'converters.script || {}');
 function visit69_60_1(result) {
   _$jscoverage['/io/jsonp.js'].branchData['60'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/jsonp.js'].branchData['52'][1].init(259, 8, 'response');
+}_$jscoverage['/io/jsonp.js'].branchData['52'][1].init(266, 8, 'response');
 function visit68_52_1(result) {
   _$jscoverage['/io/jsonp.js'].branchData['52'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/jsonp.js'].branchData['47'][1].init(70, 22, 'previous === undefined');
+}_$jscoverage['/io/jsonp.js'].branchData['47'][1].init(72, 22, 'previous === undefined');
 function visit67_47_1(result) {
   _$jscoverage['/io/jsonp.js'].branchData['47'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/jsonp.js'].branchData['37'][1].init(119, 20, 'arguments.length > 1');
+}_$jscoverage['/io/jsonp.js'].branchData['37'][1].init(122, 20, 'arguments.length > 1');
 function visit66_37_1(result) {
   _$jscoverage['/io/jsonp.js'].branchData['37'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/jsonp.js'].branchData['26'][1].init(123, 36, 'typeof cJsonpCallback === \'function\'');
+}_$jscoverage['/io/jsonp.js'].branchData['26'][1].init(126, 36, 'typeof cJsonpCallback === \'function\'');
 function visit65_26_1(result) {
   _$jscoverage['/io/jsonp.js'].branchData['26'][1].ranCondition(result);
   return result;
-}_$jscoverage['/io/jsonp.js'].branchData['19'][1].init(98, 22, 'dataType[0] == \'jsonp\'');
+}_$jscoverage['/io/jsonp.js'].branchData['19'][1].init(102, 22, 'dataType[0] == \'jsonp\'');
 function visit64_19_1(result) {
   _$jscoverage['/io/jsonp.js'].branchData['19'][1].ranCondition(result);
   return result;

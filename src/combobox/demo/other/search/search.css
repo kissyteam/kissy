@@ -1,0 +1,43 @@
+/* demo的样式 */
+#J_Search{
+    position: absolute;
+}
+.search-panel{
+}
+iframe{
+    border: none 0;
+    width: 1200px;
+    height: 1000px;
+}
+
+
+body {
+    font: 12px/1.5 tahoma, arial, "宋体b8b\4f53";
+    padding: 0;
+    margin: 0;
+}
+
+.search {
+    padding: 10px;
+}
+
+a {
+    color: #3e3e3e;
+    font-size: 12px;
+    text-decoration: none;
+}
+a:hover{
+    color: #f60;
+    text-decoration: underline;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    list-style-type: none;
+}
+
+/* demo样式结束  */

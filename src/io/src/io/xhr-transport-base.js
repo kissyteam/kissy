@@ -111,9 +111,6 @@ KISSY.add('io/xhr-transport-base', function (S, IO) {
                 if (!supportCORS) {
                     delete xhrFields.withCredentials;
                 }
-            } else if (supportCORS) {
-                // withCredentials defaults to true
-                xhrFields.withCredentials = true;
             }
 
             if (username = c['username']) {

@@ -1,7 +1,7 @@
 /*
-Copyright 2013, KISSY v1.40dev
+Copyright 2013, KISSY v1.40
 MIT Licensed
-build time: Oct 26 10:33
+build time: Oct 30 18:18
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -734,9 +734,6 @@ KISSY.add('io/xhr-transport-base', function (S, IO) {
                 if (!supportCORS) {
                     delete xhrFields.withCredentials;
                 }
-            } else if (supportCORS) {
-                // withCredentials defaults to true
-                xhrFields.withCredentials = true;
             }
 
             if (username = c['username']) {
