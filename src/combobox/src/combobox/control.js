@@ -13,7 +13,16 @@ KISSY.add("combobox/control", function (S, Node, Control, ComboBoxRender, Menu, 
      * @extends KISSY.Component.Control
      * @class KISSY.ComboBox
      */
-    ComboBox = Control.extend({
+    ComboBox = Control.extend([], {
+            initializer: function () {
+                /**
+                 * fired after data is rendered into combobox menu
+                 * @event afterRenderData
+                 */
+                this.publish('afterRenderData', {
+                    bubbles: false
+                });
+            },
 
             // user's input text.
             // for restore after press esc key
@@ -679,6 +688,7 @@ KISSY.add("combobox/control", function (S, Node, Control, ComboBoxRender, Menu, 
                 }
             }
 
+            self.fire('afterRenderData');
             self.set("collapsed", false);
         } else {
             self.set("collapsed", true);

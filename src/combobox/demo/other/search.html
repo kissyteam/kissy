@@ -639,7 +639,6 @@ li {
                         var item = {
                             // 点击菜单项后要放入 input 中的内容
                             textContent: r[0],
-                            xclass: 'search-menuitem',
                             // 菜单项的
                             content: S.substitute(tmpl, {
                                 text: r[0],
@@ -683,6 +682,10 @@ li {
                     footer.one(".tdg-input")
                             .val(basicComboBox.get("input").val())
                 }
+            });
+
+            basicComboBox.on('afterRenderData', function () {
+                S.log('afterRenderData');
             });
 
             basicComboBox.on('click', function (e) {

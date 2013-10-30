@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40
 MIT Licensed
-build time: Sep 18 00:12
+build time: Oct 30 15:26
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -218,7 +218,16 @@ KISSY.add("combobox/control", function (S, Node, Control, ComboBoxRender, Menu, 
      * @extends KISSY.Component.Control
      * @class KISSY.ComboBox
      */
-    ComboBox = Control.extend({
+    ComboBox = Control.extend([], {
+            initializer: function () {
+                /**
+                 * fired after data is rendered into combobox menu
+                 * @event afterRenderData
+                 */
+                this.publish('afterRenderData', {
+                    bubbles: false
+                });
+            },
 
             // user's input text.
             // for restore after press esc key
@@ -847,8 +856,6 @@ KISSY.add("combobox/control", function (S, Node, Control, ComboBoxRender, Menu, 
 
         data = self['normalizeData'](data);
 
-        var start = S.now();
-
         menu.removeChildren(true);
 
         if (highlightedItem = menu.get('highlightedItem')) {
@@ -886,6 +893,7 @@ KISSY.add("combobox/control", function (S, Node, Control, ComboBoxRender, Menu, 
                 }
             }
 
+            self.fire('afterRenderData');
             self.set("collapsed", false);
         } else {
             self.set("collapsed", true);
