@@ -50,7 +50,7 @@
                     };
                 }
             }
-            S.getScript(rs.fullpath, config);
+            S.Config.loadModFileFn(rs, config);
         });
     }
 
@@ -171,7 +171,7 @@
     }
 
 
-   // Returns hash code of a stringdjb2 algorithm
+    // Returns hash code of a stringdjb2 algorithm
     function getHash(str) {
         var hash = 5381,
             i;
@@ -219,7 +219,7 @@
                             var msg = mod.name +
                                 ' is not loaded! can not find module in path : ' +
                                 one.fullpath;
-                            S.log(msg,'error');
+                            S.log(msg, 'error');
                             mod.status = ERROR;
                             // notify all loader instance
                             mod.notifyAll();
@@ -243,7 +243,7 @@
                                 var msg = mod.name +
                                     ' is not loaded! can not find module in path : ' +
                                     one.fullpath;
-                                S.log(msg,'error');
+                                S.log(msg, 'error');
                                 mod.status = ERROR;
                             }
                             // notify all loader instance

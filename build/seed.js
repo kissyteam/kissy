@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40
 MIT Licensed
-build time: Oct 31 11:19
+build time: Oct 31 19:46
 */
 /**
  * @ignore
@@ -42,11 +42,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20131031111934' will replace with current timestamp when compressing.
+         * NOTICE: '20131031194610' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20131031111934',
+        __BUILD_TIME: '20131031194610',
 
         /**
          * KISSY Environment.
@@ -4615,6 +4615,10 @@ var KISSY = (function (undefined) {
         simulatedLocation = new S.Uri(locationHref)
     }
 
+    S.Config.loadModFileFn = function (rs, config) {
+        S.getScript(rs.fullpath, config);
+    };
+
     configFns.map = function (rules) {
         var Config = this.Config;
         if (rules === false) {
@@ -4761,7 +4765,7 @@ var KISSY = (function (undefined) {
                     };
                 }
             }
-            S.getScript(rs.fullpath, config);
+            S.Config.loadModFileFn(rs, config);
         });
     }
 
@@ -4882,7 +4886,7 @@ var KISSY = (function (undefined) {
     }
 
 
-   // Returns hash code of a stringdjb2 algorithm
+    // Returns hash code of a stringdjb2 algorithm
     function getHash(str) {
         var hash = 5381,
             i;
@@ -4930,7 +4934,7 @@ var KISSY = (function (undefined) {
                             var msg = mod.name +
                                 ' is not loaded! can not find module in path : ' +
                                 one.fullpath;
-                            S.log(msg,'error');
+                            S.log(msg, 'error');
                             mod.status = ERROR;
                             // notify all loader instance
                             mod.notifyAll();
@@ -4954,7 +4958,7 @@ var KISSY = (function (undefined) {
                                 var msg = mod.name +
                                     ' is not loaded! can not find module in path : ' +
                                     one.fullpath;
-                                S.log(msg,'error');
+                                S.log(msg, 'error');
                                 mod.status = ERROR;
                             }
                             // notify all loader instance
@@ -5456,7 +5460,7 @@ var KISSY = (function (undefined) {
     S.config({
         charset: 'utf-8',
         lang: 'zh-cn',
-        tag: '20131031111934'
+        tag: '20131031194610'
     });
 
     if (S.UA.nodejs) {
