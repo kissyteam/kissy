@@ -85,7 +85,7 @@
             }
         }
 
-        logger.error('must load kissy by file name in browser environment: seed.js or seed-min.js');
+        S.log('must load kissy by file name in browser environment: seed.js or seed-min.js','error');
         return null;
     }
 

@@ -308,11 +308,11 @@ if (! _$jscoverage['/loader/init.js'].branchData) {
   _$jscoverage['/loader/init.js'].branchData['106'] = [];
   _$jscoverage['/loader/init.js'].branchData['106'][1] = new BranchData();
 }
-_$jscoverage['/loader/init.js'].branchData['106'][1].init(3007, 31, 'doc && doc.getElementsByTagName');
+_$jscoverage['/loader/init.js'].branchData['106'][1].init(3008, 31, 'doc && doc.getElementsByTagName');
 function visit447_106_1(result) {
   _$jscoverage['/loader/init.js'].branchData['106'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/init.js'].branchData['98'][1].init(2745, 11, 'S.UA.nodejs');
+}_$jscoverage['/loader/init.js'].branchData['98'][1].init(2746, 11, 'S.UA.nodejs');
 function visit446_98_1(result) {
   _$jscoverage['/loader/init.js'].branchData['98'][1].ranCondition(result);
   return result;
@@ -447,7 +447,7 @@ function visit435_6_1(result) {
       }
     }
     _$jscoverage['/loader/init.js'].lineData[88]++;
-    logger.error('must load kissy by file name in browser environment: seed.js or seed-min.js');
+    S.log('must load kissy by file name in browser environment: seed.js or seed-min.js', 'error');
     _$jscoverage['/loader/init.js'].lineData[89]++;
     return null;
   }

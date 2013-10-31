@@ -219,7 +219,7 @@
                             var msg = mod.name +
                                 ' is not loaded! can not find module in path : ' +
                                 one.fullpath;
-                            logger.error(msg);
+                            S.log(msg,'error');
                             mod.status = ERROR;
                             // notify all loader instance
                             mod.notifyAll();
@@ -243,7 +243,7 @@
                                 var msg = mod.name +
                                     ' is not loaded! can not find module in path : ' +
                                     one.fullpath;
-                                logger.error(msg);
+                                S.log(msg,'error');
                                 mod.status = ERROR;
                             }
                             // notify all loader instance

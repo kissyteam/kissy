@@ -1017,7 +1017,7 @@ function visit304_10_1(result) {
   _$jscoverage['/loader/combo-loader.js'].lineData[219]++;
   var msg = mod.name + ' is not loaded! can not find module in path : ' + one.fullpath;
   _$jscoverage['/loader/combo-loader.js'].lineData[222]++;
-  logger.error(msg);
+  S.log(msg, 'error');
   _$jscoverage['/loader/combo-loader.js'].lineData[223]++;
   mod.status = ERROR;
   _$jscoverage['/loader/combo-loader.js'].lineData[225]++;
@@ -1048,7 +1048,7 @@ function visit304_10_1(result) {
     _$jscoverage['/loader/combo-loader.js'].lineData[243]++;
     var msg = mod.name + ' is not loaded! can not find module in path : ' + one.fullpath;
     _$jscoverage['/loader/combo-loader.js'].lineData[246]++;
-    logger.error(msg);
+    S.log(msg, 'error');
     _$jscoverage['/loader/combo-loader.js'].lineData[247]++;
     mod.status = ERROR;
   }

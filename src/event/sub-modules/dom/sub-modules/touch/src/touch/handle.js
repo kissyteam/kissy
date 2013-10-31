@@ -28,15 +28,16 @@ KISSY.add('event/dom/touch/handle', function (S, Dom, eventHandleMap, DomEvent) 
     var DUP_DIST = 25;
 
     if (Features.isTouchEventSupported()) {
-        gestureEndEvent = 'touchend touchcancel mouseup';
-        // allow touch and mouse both!
-        gestureStartEvent = 'touchstart mousedown';
-        gestureMoveEvent = 'touchmove mousemove';
         if (S.UA.ios) {
             // ios mousedown is buggy
             gestureEndEvent = 'touchend touchcancel';
             gestureStartEvent = 'touchstart';
             gestureMoveEvent = 'touchmove';
+        } else {
+            gestureEndEvent = 'touchend touchcancel mouseup';
+            // allow touch and mouse both!
+            gestureStartEvent = 'touchstart mousedown';
+            gestureMoveEvent = 'touchmove mousemove';
         }
     } else if (Features.isMsPointerSupported()) {
         gestureStartEvent = 'MSPointerDown';
@@ -70,7 +71,9 @@ KISSY.add('event/dom/touch/handle', function (S, Dom, eventHandleMap, DomEvent) 
             var self = this,
                 doc = self.doc;
             DomEvent.on(doc, gestureStartEvent, self.onTouchStart, self);
-            DomEvent.on(doc, gestureMoveEvent, self.onTouchMove, self);
+            if (!isMSPointerEvent(gestureMoveEvent)) {
+                DomEvent.on(doc, gestureMoveEvent, self.onTouchMove, self);
+            }
             DomEvent.on(doc, gestureEndEvent, self.onTouchEnd, self);
         },
 
@@ -197,10 +200,12 @@ KISSY.add('event/dom/touch/handle', function (S, Dom, eventHandleMap, DomEvent) 
                 self.touches = [event.originalEvent];
             } else if (isMSPointerEvent(type)) {
                 self.addTouch(event.originalEvent);
+                if (self.touches.length == 1) {
+                    DomEvent.on(self.doc, gestureMoveEvent, self.onTouchMove, self);
+                }
             } else {
                 throw new Error('unrecognized touch event: ' + event.type);
             }
-
 
             for (e in eventHandle) {
                 h = eventHandle[e].handle;
@@ -208,7 +213,6 @@ KISSY.add('event/dom/touch/handle', function (S, Dom, eventHandleMap, DomEvent) 
             }
             // if preventDefault, will not trigger click event
             self.callEventHandle('onTouchStart', event);
-
         },
 
         onTouchMove: function (event) {
@@ -237,6 +241,7 @@ KISSY.add('event/dom/touch/handle', function (S, Dom, eventHandleMap, DomEvent) 
                     return;
                 }
             }
+
             self.callEventHandle('onTouchEnd', event);
             if (isTouchEvent(type)) {
                 self.dupMouse(event);
@@ -247,6 +252,9 @@ KISSY.add('event/dom/touch/handle', function (S, Dom, eventHandleMap, DomEvent) 
                 self.touches = [];
             } else if (isMSPointerEvent(type)) {
                 self.removeTouch(event.originalEvent);
+                if (!self.touches.length) {
+                    DomEvent.detach(self.doc, gestureMoveEvent, self.onTouchMove, self);
+                }
             }
         },
 

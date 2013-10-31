@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40
 MIT Licensed
-build time: Oct 30 21:30
+build time: Oct 31 11:06
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -836,7 +836,9 @@ KISSY.add('event/dom/touch/handle', function (S, Dom, eventHandleMap, DomEvent) 
             var self = this,
                 doc = self.doc;
             DomEvent.on(doc, gestureStartEvent, self.onTouchStart, self);
-            DomEvent.on(doc, gestureMoveEvent, self.onTouchMove, self);
+            if (!isMSPointerEvent(gestureMoveEvent)) {
+                DomEvent.on(doc, gestureMoveEvent, self.onTouchMove, self);
+            }
             DomEvent.on(doc, gestureEndEvent, self.onTouchEnd, self);
         },
 
@@ -963,10 +965,12 @@ KISSY.add('event/dom/touch/handle', function (S, Dom, eventHandleMap, DomEvent) 
                 self.touches = [event.originalEvent];
             } else if (isMSPointerEvent(type)) {
                 self.addTouch(event.originalEvent);
+                if (self.touches.length == 1) {
+                    DomEvent.on(self.doc, gestureMoveEvent, self.onTouchMove, self);
+                }
             } else {
                 throw new Error('unrecognized touch event: ' + event.type);
             }
-
 
             for (e in eventHandle) {
                 h = eventHandle[e].handle;
@@ -974,7 +978,6 @@ KISSY.add('event/dom/touch/handle', function (S, Dom, eventHandleMap, DomEvent) 
             }
             // if preventDefault, will not trigger click event
             self.callEventHandle('onTouchStart', event);
-
         },
 
         onTouchMove: function (event) {
@@ -1003,6 +1006,7 @@ KISSY.add('event/dom/touch/handle', function (S, Dom, eventHandleMap, DomEvent) 
                     return;
                 }
             }
+
             self.callEventHandle('onTouchEnd', event);
             if (isTouchEvent(type)) {
                 self.dupMouse(event);
@@ -1013,6 +1017,9 @@ KISSY.add('event/dom/touch/handle', function (S, Dom, eventHandleMap, DomEvent) 
                 self.touches = [];
             } else if (isMSPointerEvent(type)) {
                 self.removeTouch(event.originalEvent);
+                if (!self.touches.length) {
+                    DomEvent.detach(self.doc, gestureMoveEvent, self.onTouchMove, self);
+                }
             }
         },
 

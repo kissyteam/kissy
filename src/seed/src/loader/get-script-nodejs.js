@@ -19,7 +19,7 @@
         }
 
         if (S.startsWith(S.Path.extname(url).toLowerCase(), '.css')) {
-            logger.warn('node js can not load css: ' + url);
+            S.log('node js can not load css: ' + url,'warn');
             success && success();
             return;
         }
@@ -33,8 +33,8 @@
             fn(S, require);
             success && success();
         } catch (e) {
-            logger.error('in file: ' + url);
-            logger.error(e.stack);
+            S.log('in file: ' + url,'error');
+            S.log(e.stack,'error');
             error && error(e);
         }
     };

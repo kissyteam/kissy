@@ -372,7 +372,7 @@
                 mod = mods[name];
 
             if (mod && mod.fn) {
-                logger.error(name + ' is defined more than once');
+                S.log(name + ' is defined more than once', 'warn');
                 return;
             }
 

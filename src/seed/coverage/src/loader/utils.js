@@ -1012,7 +1012,7 @@ function visit458_28_1(result) {
   _$jscoverage['/loader/utils.js'].lineData[374]++;
   if (visit498_374_1(mod && mod.fn)) {
     _$jscoverage['/loader/utils.js'].lineData[375]++;
-    logger.error(name + ' is defined more than once');
+    S.log(name + ' is defined more than once', 'warn');
     _$jscoverage['/loader/utils.js'].lineData[376]++;
     return;
   }

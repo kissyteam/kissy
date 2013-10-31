@@ -269,7 +269,7 @@ if (! _$jscoverage['/loader/get-script-nodejs.js'].branchData) {
   _$jscoverage['/loader/get-script-nodejs.js'].branchData['38'] = [];
   _$jscoverage['/loader/get-script-nodejs.js'].branchData['38'][1] = new BranchData();
 }
-_$jscoverage['/loader/get-script-nodejs.js'].branchData['38'][1].init(96, 17, 'error && error(e)');
+_$jscoverage['/loader/get-script-nodejs.js'].branchData['38'][1].init(98, 17, 'error && error(e)');
 function visit411_38_1(result) {
   _$jscoverage['/loader/get-script-nodejs.js'].branchData['38'][1].ranCondition(result);
   return result;
@@ -277,7 +277,7 @@ function visit411_38_1(result) {
 function visit410_34_1(result) {
   _$jscoverage['/loader/get-script-nodejs.js'].branchData['34'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/get-script-nodejs.js'].branchData['23'][1].init(76, 20, 'success && success()');
+}_$jscoverage['/loader/get-script-nodejs.js'].branchData['23'][1].init(77, 20, 'success && success()');
 function visit409_23_1(result) {
   _$jscoverage['/loader/get-script-nodejs.js'].branchData['23'][1].ranCondition(result);
   return result;
@@ -311,7 +311,7 @@ function visit407_15_1(result) {
   _$jscoverage['/loader/get-script-nodejs.js'].lineData[21]++;
   if (visit408_21_1(S.startsWith(S.Path.extname(url).toLowerCase(), '.css'))) {
     _$jscoverage['/loader/get-script-nodejs.js'].lineData[22]++;
-    logger.warn('node js can not load css: ' + url);
+    S.log('node js can not load css: ' + url, 'warn');
     _$jscoverage['/loader/get-script-nodejs.js'].lineData[23]++;
     visit409_23_1(success && success());
     _$jscoverage['/loader/get-script-nodejs.js'].lineData[24]++;
@@ -331,9 +331,9 @@ function visit407_15_1(result) {
     visit410_34_1(success && success());
   }  catch (e) {
   _$jscoverage['/loader/get-script-nodejs.js'].lineData[36]++;
-  logger.error('in file: ' + url);
+  S.log('in file: ' + url, 'error');
   _$jscoverage['/loader/get-script-nodejs.js'].lineData[37]++;
-  logger.error(e.stack);
+  S.log(e.stack, 'error');
   _$jscoverage['/loader/get-script-nodejs.js'].lineData[38]++;
   visit411_38_1(error && error(e));
 }

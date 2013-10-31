@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40
 MIT Licensed
-build time: Oct 30 22:14
+build time: Oct 31 11:19
 */
 /**
  * @ignore
@@ -42,11 +42,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20131030221434' will replace with current timestamp when compressing.
+         * NOTICE: '20131031111934' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20131030221434',
+        __BUILD_TIME: '20131031111934',
 
         /**
          * KISSY Environment.
@@ -3882,7 +3882,7 @@ var KISSY = (function (undefined) {
                 mod = mods[name];
 
             if (mod && mod.fn) {
-                logger.error(name + ' is defined more than once');
+                S.log(name + ' is defined more than once', 'warn');
                 return;
             }
 
@@ -4439,7 +4439,7 @@ var KISSY = (function (undefined) {
         }
 
         if (S.startsWith(S.Path.extname(url).toLowerCase(), '.css')) {
-            logger.warn('node js can not load css: ' + url);
+            S.log('node js can not load css: ' + url,'warn');
             success && success();
             return;
         }
@@ -4453,8 +4453,8 @@ var KISSY = (function (undefined) {
             fn(S, require);
             success && success();
         } catch (e) {
-            logger.error('in file: ' + url);
-            logger.error(e.stack);
+            S.log('in file: ' + url,'error');
+            S.log(e.stack,'error');
             error && error(e);
         }
     };
@@ -4791,7 +4791,7 @@ var KISSY = (function (undefined) {
                             var msg = mod.name +
                                 ' is not loaded! can not find module in path : ' +
                                 one.fullpath;
-                            logger.error(msg);
+                            S.log(msg,'error');
                             mod.status = ERROR;
                             // notify all loader instance
                             mod.notifyAll();
@@ -4815,7 +4815,7 @@ var KISSY = (function (undefined) {
                                 var msg = mod.name +
                                     ' is not loaded! can not find module in path : ' +
                                     one.fullpath;
-                                logger.error(msg);
+                                S.log(msg,'error');
                                 mod.status = ERROR;
                             }
                             // notify all loader instance
@@ -5310,14 +5310,14 @@ var KISSY = (function (undefined) {
             }
         }
 
-        logger.error('must load kissy by file name in browser environment: seed.js or seed-min.js');
+        S.log('must load kissy by file name in browser environment: seed.js or seed-min.js','error');
         return null;
     }
 
     S.config({
         charset: 'utf-8',
         lang: 'zh-cn',
-        tag: '20131030221434'
+        tag: '20131031111934'
     });
 
     if (S.UA.nodejs) {

@@ -252,7 +252,7 @@ if (! _$jscoverage['/touch/single-touch.js'].branchData) {
   _$jscoverage['/touch/single-touch.js'].branchData['16'][1] = new BranchData();
 }
 _$jscoverage['/touch/single-touch.js'].branchData['16'][1].init(74, 43, 'e.touches.length != self.requiredTouchCount');
-function visit70_16_1(result) {
+function visit73_16_1(result) {
   _$jscoverage['/touch/single-touch.js'].branchData['16'][1].ranCondition(result);
   return result;
 }_$jscoverage['/touch/single-touch.js'].lineData[6]++;
@@ -271,7 +271,7 @@ KISSY.add('event/dom/touch/single-touch', function(S) {
   _$jscoverage['/touch/single-touch.js'].lineData[14]++;
   var self = this, touches;
   _$jscoverage['/touch/single-touch.js'].lineData[16]++;
-  if (visit70_16_1(e.touches.length != self.requiredTouchCount)) {
+  if (visit73_16_1(e.touches.length != self.requiredTouchCount)) {
     _$jscoverage['/touch/single-touch.js'].lineData[17]++;
     return false;
   }
