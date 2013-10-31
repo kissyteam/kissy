@@ -54,41 +54,6 @@
         </exec>
     </target>
 
-
-    <target name="sync-dev">
-        <input addproperty="git.commit.message">
-            git commit message :
-        </input>
-        <ac:if>
-
-            <ac:not>
-                <equals arg1="${git.commit.message}" arg2="">
-                </equals>
-            </ac:not>
-
-            <ac:then>
-
-                <exec executable="cmd"
-                      failonerror="true">
-                    <arg line="/c git add ."/>
-                </exec>
-                <exec executable="cmd" failonerror="true">
-                    <arg line="/c git commit -am '${git.commit.message}'"/>
-                </exec>
-
-            </ac:then>
-        </ac:if>
-
-        <exec executable="cmd" failonerror="true">
-            <arg line="/c git push ${git.origin} ${git.dev}:${git.dev}"/>
-        </exec>
-
-        <exec executable="cmd" failonerror="true">
-            <arg line="/c git push ${git.remote} ${git.dev}:${git.dev}"/>
-        </exec>
-
-    </target>
-
     <target name="update-version">
         <replaceregexp match="v\d.\d\d"
                        replace="v${version}"
