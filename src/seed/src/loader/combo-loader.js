@@ -50,7 +50,7 @@
                     };
                 }
             }
-            S.Config.loadModFileFn(rs, config);
+            S.Config.loadModsFn(rs, config);
         });
     }
 

@@ -435,7 +435,7 @@ function visit351_15_1(result) {
     simulatedLocation = new S.Uri(locationHref);
   }
   _$jscoverage['/loader/configs.js'].lineData[19]++;
-  S.Config.loadModFileFn = function(rs, config) {
+  S.Config.loadModsFn = function(rs, config) {
   _$jscoverage['/loader/configs.js'].functionData[1]++;
   _$jscoverage['/loader/configs.js'].lineData[20]++;
   S.getScript(rs.fullpath, config);

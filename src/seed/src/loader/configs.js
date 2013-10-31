@@ -16,7 +16,7 @@
         simulatedLocation = new S.Uri(locationHref)
     }
 
-    S.Config.loadModFileFn = function (rs, config) {
+    S.Config.loadModsFn = function (rs, config) {
         S.getScript(rs.fullpath, config);
     };
 

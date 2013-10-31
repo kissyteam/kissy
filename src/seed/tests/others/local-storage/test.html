@@ -20,7 +20,7 @@
             return code;
         }
 
-        KISSY.config('loadModFileFn', function (rs, config) {
+        KISSY.config('loadModsFn', function (rs, config) {
             var fullpath = rs.fullpath, code;
             if (code = localStorage.getItem(fullpath)) {
                 code = processAnonymous(rs, code);

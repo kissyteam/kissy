@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40
 MIT Licensed
-build time: Oct 31 19:46
+build time: Oct 31 19:55
 */
 /**
  * @ignore
@@ -42,11 +42,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20131031194610' will replace with current timestamp when compressing.
+         * NOTICE: '20131031195534' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20131031194610',
+        __BUILD_TIME: '20131031195534',
 
         /**
          * KISSY Environment.
@@ -4615,7 +4615,7 @@ var KISSY = (function (undefined) {
         simulatedLocation = new S.Uri(locationHref)
     }
 
-    S.Config.loadModFileFn = function (rs, config) {
+    S.Config.loadModsFn = function (rs, config) {
         S.getScript(rs.fullpath, config);
     };
 
@@ -4765,7 +4765,7 @@ var KISSY = (function (undefined) {
                     };
                 }
             }
-            S.Config.loadModFileFn(rs, config);
+            S.Config.loadModsFn(rs, config);
         });
     }
 
@@ -5460,7 +5460,7 @@ var KISSY = (function (undefined) {
     S.config({
         charset: 'utf-8',
         lang: 'zh-cn',
-        tag: '20131031194610'
+        tag: '20131031195534'
     });
 
     if (S.UA.nodejs) {

@@ -823,7 +823,7 @@ function visit304_10_1(result) {
     }
   }
   _$jscoverage['/loader/combo-loader.js'].lineData[53]++;
-  S.Config.loadModFileFn(rs, config);
+  S.Config.loadModsFn(rs, config);
 });
   }
   _$jscoverage['/loader/combo-loader.js'].lineData[57]++;
