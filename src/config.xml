@@ -3,7 +3,6 @@
   @author yiminghe@gmail.com
 -->
 <project name="config">
-
     <!-- kissy 主目录 -->
     <property name="kissy.dir" location="${ant.file.config}/../../"/>
     <!-- kissy 工具目录 -->
@@ -29,9 +28,5 @@
 
     <property name="git.origin" value="origin"/>
     <property name="git.remote" value="remote"/>
-    <property name="git.gh-pages" value="gh-pages"/>
-    <property name="git.master" value="master"/>
-    <property name="git.dev" value="dev"/>
-    <!--<property name="bom" value="&#xFEFF;"/>-->
-
+    <property name="git.master" value="1.4.x"/>
 </project>
