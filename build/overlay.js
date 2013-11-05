@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40
 MIT Licensed
-build time: Oct 25 11:43
+build time: Nov 5 20:38
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -332,6 +332,11 @@ KISSY.add('overlay/overlay-render', function (S, Container,OverlayTpl, ContentRe
     return Container.getDefaultRender().extend([
         ContentRenderExtension
     ], {
+        createDom: function () {
+            this.fillChildrenElsBySelectors({
+                closeBtn: '#ks-overlay-close-{id}'
+            });
+        }
     }, {
         ATTRS:{
           contentTpl:{
@@ -539,7 +544,6 @@ KISSY.add('overlay/extension/overlay-effect', function (S) {
  */
 KISSY.add("overlay/control", function (S, Container,Shim, AlignExtension,
                                     Loading, Mask, OverlayRender, OverlayEffect) {
-
     var HIDE = "hide",
         actions = {
             hide: HIDE,
@@ -584,7 +588,6 @@ KISSY.add("overlay/control", function (S, Container,Shim, AlignExtension,
         }
     }, {
         ATTRS: {
-
             contentEl: {
             },
 
