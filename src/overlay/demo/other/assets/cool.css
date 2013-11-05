@@ -62,7 +62,7 @@
     background: white;
 }
 
-.ks-ext-mask {
+.ks-overlay-mask {
     background-color: #000;
     opacity: 0.3;
     filter: alpha(opacity = 15);

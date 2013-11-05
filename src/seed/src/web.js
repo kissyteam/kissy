@@ -135,6 +135,9 @@
     });
 
     function fireReady() {
+        if (domReady) {
+            return;
+        }
         // nodejs
         if (doc && !UA.nodejs) {
             removeEventListener(win, LOAD_EVENT, fireReady);

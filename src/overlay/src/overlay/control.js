@@ -5,7 +5,6 @@
  */
 KISSY.add("overlay/control", function (S, Container,Shim, AlignExtension,
                                     Loading, Mask, OverlayRender, OverlayEffect) {
-
     var HIDE = "hide",
         actions = {
             hide: HIDE,
@@ -50,7 +49,6 @@ KISSY.add("overlay/control", function (S, Container,Shim, AlignExtension,
         }
     }, {
         ATTRS: {
-
             contentEl: {
             },
 

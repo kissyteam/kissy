@@ -231,12 +231,14 @@ if (! _$jscoverage['/overlay/overlay-render.js']) {
   _$jscoverage['/overlay/overlay-render.js'].lineData = [];
   _$jscoverage['/overlay/overlay-render.js'].lineData[6] = 0;
   _$jscoverage['/overlay/overlay-render.js'].lineData[7] = 0;
-  _$jscoverage['/overlay/overlay-render.js'].lineData[18] = 0;
+  _$jscoverage['/overlay/overlay-render.js'].lineData[11] = 0;
+  _$jscoverage['/overlay/overlay-render.js'].lineData[23] = 0;
 }
 if (! _$jscoverage['/overlay/overlay-render.js'].functionData) {
   _$jscoverage['/overlay/overlay-render.js'].functionData = [];
   _$jscoverage['/overlay/overlay-render.js'].functionData[0] = 0;
   _$jscoverage['/overlay/overlay-render.js'].functionData[1] = 0;
+  _$jscoverage['/overlay/overlay-render.js'].functionData[2] = 0;
 }
 if (! _$jscoverage['/overlay/overlay-render.js'].branchData) {
   _$jscoverage['/overlay/overlay-render.js'].branchData = {};
@@ -245,14 +247,20 @@ _$jscoverage['/overlay/overlay-render.js'].lineData[6]++;
 KISSY.add('overlay/overlay-render', function(S, Container, OverlayTpl, ContentRenderExtension) {
   _$jscoverage['/overlay/overlay-render.js'].functionData[0]++;
   _$jscoverage['/overlay/overlay-render.js'].lineData[7]++;
-  return Container.getDefaultRender().extend([ContentRenderExtension], {}, {
+  return Container.getDefaultRender().extend([ContentRenderExtension], {
+  createDom: function() {
+  _$jscoverage['/overlay/overlay-render.js'].functionData[1]++;
+  _$jscoverage['/overlay/overlay-render.js'].lineData[11]++;
+  this.fillChildrenElsBySelectors({
+  closeBtn: '#ks-overlay-close-{id}'});
+}}, {
   ATTRS: {
   contentTpl: {
   value: OverlayTpl}}, 
   HTML_PARSER: {
   closeBtn: function(el) {
-  _$jscoverage['/overlay/overlay-render.js'].functionData[1]++;
-  _$jscoverage['/overlay/overlay-render.js'].lineData[18]++;
+  _$jscoverage['/overlay/overlay-render.js'].functionData[2]++;
+  _$jscoverage['/overlay/overlay-render.js'].lineData[23]++;
   return el.one("." + this.getBaseCssClass('close'));
 }}});
 }, {

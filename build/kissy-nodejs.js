@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40
 MIT Licensed
-build time: Oct 31 19:55
+build time: Nov 5 15:04
 */
 /**
  * @ignore
@@ -42,11 +42,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20131031195534' will replace with current timestamp when compressing.
+         * NOTICE: '20131105150430' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20131031195534',
+        __BUILD_TIME: '20131105150430',
 
         /**
          * KISSY Environment.
@@ -4580,7 +4580,8 @@ var KISSY = (function (undefined) {
  * @author yiminghe@gmail.com
  */
 (function (S, undefined) {
-    var ie = S.UA.ie;
+    // ie11 is a new one!
+    var oldIE = S.UA.ie && S.UA.ie < 10;
 
     function loadScripts(runtime, rss, callback, charset, timeout) {
         var count = rss && rss.length,
@@ -4618,7 +4619,7 @@ var KISSY = (function (undefined) {
                 if (mod.getType() == 'css') {
                     mod = undefined;
                 }
-                else if (ie) {
+                else if (oldIE) {
                     startLoadModName = mod.name;
                     startLoadModTime = S.now();
                     config.attrs = {
@@ -4664,10 +4665,10 @@ var KISSY = (function (undefined) {
         if (typeof name === 'function') {
             config = fn;
             fn = name;
-            if (ie) {
+            if (oldIE) {
                 // http://groups.google.com/group/commonjs/browse_thread/thread/5a3358ece35e688e/43145ceccfb1dc02#43145ceccfb1dc02
                 name = findModuleNameByInteractive();
-                // S.log('ie get modName by interactive: ' + name);
+                // S.log('oldIE get modName by interactive: ' + name);
                 Utils.registerModule(runtime, name, fn, config);
                 startLoadModName = null;
                 startLoadModTime = 0;
@@ -4679,7 +4680,7 @@ var KISSY = (function (undefined) {
                 };
             }
         } else {
-            if (ie) {
+            if (oldIE) {
                 startLoadModName = null;
                 startLoadModTime = 0;
             } else {
@@ -4689,7 +4690,7 @@ var KISSY = (function (undefined) {
         }
     };
 
-    // ie 特有，找到当前正在交互的脚本，根据脚本名确定模块名
+    // oldIE 特有，找到当前正在交互的脚本，根据脚本名确定模块名
     // 如果找不到，返回发送前那个脚本
     function findModuleNameByInteractive() {
         var scripts = S.Env.host.document.getElementsByTagName('script'),
@@ -5321,7 +5322,7 @@ var KISSY = (function (undefined) {
     S.config({
         charset: 'utf-8',
         lang: 'zh-cn',
-        tag: '20131031195534'
+        tag: '20131105150430'
     });
 
     if (S.UA.nodejs) {
@@ -5487,6 +5488,9 @@ KISSY.add('i18n', {
     });
 
     function fireReady() {
+        if (domReady) {
+            return;
+        }
         // nodejs
         if (doc && !UA.nodejs) {
             removeEventListener(win, LOAD_EVENT, fireReady);

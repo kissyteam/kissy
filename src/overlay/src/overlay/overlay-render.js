@@ -7,6 +7,11 @@ KISSY.add('overlay/overlay-render', function (S, Container,OverlayTpl, ContentRe
     return Container.getDefaultRender().extend([
         ContentRenderExtension
     ], {
+        createDom: function () {
+            this.fillChildrenElsBySelectors({
+                closeBtn: '#ks-overlay-close-{id}'
+            });
+        }
     }, {
         ATTRS:{
           contentTpl:{

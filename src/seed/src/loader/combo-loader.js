@@ -4,7 +4,8 @@
  * @author yiminghe@gmail.com
  */
 (function (S, undefined) {
-    var ie = S.UA.ie;
+    // ie11 is a new one!
+    var oldIE = S.UA.ie && S.UA.ie < 10;
 
     function loadScripts(runtime, rss, callback, charset, timeout) {
         var count = rss && rss.length,
@@ -42,7 +43,7 @@
                 if (mod.getType() == 'css') {
                     mod = undefined;
                 }
-                else if (ie) {
+                else if (oldIE) {
                     startLoadModName = mod.name;
                     startLoadModTime = S.now();
                     config.attrs = {
@@ -88,10 +89,10 @@
         if (typeof name === 'function') {
             config = fn;
             fn = name;
-            if (ie) {
+            if (oldIE) {
                 // http://groups.google.com/group/commonjs/browse_thread/thread/5a3358ece35e688e/43145ceccfb1dc02#43145ceccfb1dc02
                 name = findModuleNameByInteractive();
-                // S.log('ie get modName by interactive: ' + name);
+                // S.log('oldIE get modName by interactive: ' + name);
                 Utils.registerModule(runtime, name, fn, config);
                 startLoadModName = null;
                 startLoadModTime = 0;
@@ -103,7 +104,7 @@
                 };
             }
         } else {
-            if (ie) {
+            if (oldIE) {
                 startLoadModName = null;
                 startLoadModTime = 0;
             } else {
@@ -113,7 +114,7 @@
         }
     };
 
-    // ie 特有，找到当前正在交互的脚本，根据脚本名确定模块名
+    // oldIE 特有，找到当前正在交互的脚本，根据脚本名确定模块名
     // 如果找不到，返回发送前那个脚本
     function findModuleNameByInteractive() {
         var scripts = S.Env.host.document.getElementsByTagName('script'),
