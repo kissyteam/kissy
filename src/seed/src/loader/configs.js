@@ -16,6 +16,10 @@
         simulatedLocation = new S.Uri(locationHref)
     }
 
+    S.Config.loadModsFn = function (rs, config) {
+        S.getScript(rs.fullpath, config);
+    };
+
     configFns.map = function (rules) {
         var Config = this.Config;
         if (rules === false) {

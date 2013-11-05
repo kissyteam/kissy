@@ -246,7 +246,7 @@ if (! _$jscoverage['/meta/base.js'].branchData) {
   _$jscoverage['/meta/base.js'].branchData['21'][1] = new BranchData();
 }
 _$jscoverage['/meta/base.js'].branchData['21'][1].init(364, 30, 'typeof location != \'undefined\'');
-function visit506_21_1(result) {
+function visit508_21_1(result) {
   _$jscoverage['/meta/base.js'].branchData['21'][1].ranCondition(result);
   return result;
 }_$jscoverage['/meta/base.js'].lineData[6]++;
@@ -262,7 +262,7 @@ function visit506_21_1(result) {
   'rich-base': {
   alias: ['base']}}});
   _$jscoverage['/meta/base.js'].lineData[21]++;
-  if (visit506_21_1(typeof location != 'undefined')) {
+  if (visit508_21_1(typeof location != 'undefined')) {
     _$jscoverage['/meta/base.js'].lineData[22]++;
     var https = S.startsWith(location.href, 'https');
     _$jscoverage['/meta/base.js'].lineData[23]++;
