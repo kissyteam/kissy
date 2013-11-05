@@ -500,268 +500,268 @@ if (! _$jscoverage['/base/offset.js'].branchData) {
   _$jscoverage['/base/offset.js'].branchData['455'][1] = new BranchData();
 }
 _$jscoverage['/base/offset.js'].branchData['455'][1].init(24, 35, 'parseFloat(Dom.css(elem, key)) || 0');
-function visit319_455_1(result) {
+function visit325_455_1(result) {
   _$jscoverage['/base/offset.js'].branchData['455'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/offset.js'].branchData['446'][1].init(91, 36, 'Dom.css(elem, POSITION) === \'static\'');
-function visit318_446_1(result) {
+function visit324_446_1(result) {
   _$jscoverage['/base/offset.js'].branchData['446'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/offset.js'].branchData['437'][1].init(42, 88, '(currentEl = currentWin[\'frameElement\']) && (currentWin = currentWin.parent)');
-function visit317_437_1(result) {
+function visit323_437_1(result) {
   _$jscoverage['/base/offset.js'].branchData['437'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/offset.js'].branchData['436'][2].init(888, 25, 'currentWin != relativeWin');
-function visit316_436_2(result) {
+function visit322_436_2(result) {
   _$jscoverage['/base/offset.js'].branchData['436'][2].ranCondition(result);
   return result;
 }_$jscoverage['/base/offset.js'].branchData['436'][1].init(26, 131, 'currentWin != relativeWin && (currentEl = currentWin[\'frameElement\']) && (currentWin = currentWin.parent)');
-function visit315_436_1(result) {
+function visit321_436_1(result) {
   _$jscoverage['/base/offset.js'].branchData['436'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/offset.js'].branchData['435'][1].init(523, 158, 'currentWin && currentWin != relativeWin && (currentEl = currentWin[\'frameElement\']) && (currentWin = currentWin.parent)');
-function visit314_435_1(result) {
+function visit320_435_1(result) {
   _$jscoverage['/base/offset.js'].branchData['435'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/offset.js'].branchData['430'][1].init(299, 25, 'currentWin == relativeWin');
-function visit313_430_1(result) {
+function visit319_430_1(result) {
   _$jscoverage['/base/offset.js'].branchData['430'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/offset.js'].branchData['423'][1].init(297, 25, 'relativeWin || currentWin');
-function visit312_423_1(result) {
+function visit318_423_1(result) {
   _$jscoverage['/base/offset.js'].branchData['423'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/offset.js'].branchData['400'][2].init(1837, 19, 'body.clientTop || 0');
-function visit311_400_2(result) {
+function visit317_400_2(result) {
   _$jscoverage['/base/offset.js'].branchData['400'][2].ranCondition(result);
   return result;
 }_$jscoverage['/base/offset.js'].branchData['400'][1].init(1816, 40, 'docElem.clientTop || body.clientTop || 0');
-function visit310_400_1(result) {
+function visit316_400_1(result) {
   _$jscoverage['/base/offset.js'].branchData['400'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/offset.js'].branchData['399'][2].init(1780, 20, 'body.clientLeft || 0');
-function visit309_399_2(result) {
+function visit315_399_2(result) {
   _$jscoverage['/base/offset.js'].branchData['399'][2].ranCondition(result);
   return result;
 }_$jscoverage['/base/offset.js'].branchData['399'][1].init(1758, 42, 'docElem.clientLeft || body.clientLeft || 0');
-function visit308_399_1(result) {
+function visit314_399_1(result) {
   _$jscoverage['/base/offset.js'].branchData['399'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/offset.js'].branchData['362'][1].init(111, 27, '!elem.getBoundingClientRect');
-function visit307_362_1(result) {
+function visit313_362_1(result) {
   _$jscoverage['/base/offset.js'].branchData['362'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/offset.js'].branchData['353'][2].init(750, 20, 'body && body[prop]');
-function visit306_353_2(result) {
+function visit312_353_2(result) {
   _$jscoverage['/base/offset.js'].branchData['353'][2].ranCondition(result);
   return result;
 }_$jscoverage['/base/offset.js'].branchData['353'][1].init(90, 43, 'body && body[prop] || documentElementProp');
-function visit305_353_1(result) {
+function visit311_353_1(result) {
   _$jscoverage['/base/offset.js'].branchData['353'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/offset.js'].branchData['351'][3].init(657, 30, 'doc[compatMode] === CSS1Compat');
-function visit304_351_3(result) {
+function visit310_351_3(result) {
   _$jscoverage['/base/offset.js'].branchData['351'][3].ranCondition(result);
   return result;
 }_$jscoverage['/base/offset.js'].branchData['351'][2].init(657, 70, 'doc[compatMode] === CSS1Compat && documentElementProp');
-function visit303_351_2(result) {
+function visit309_351_2(result) {
   _$jscoverage['/base/offset.js'].branchData['351'][2].ranCondition(result);
   return result;
 }_$jscoverage['/base/offset.js'].branchData['351'][1].init(657, 134, 'doc[compatMode] === CSS1Compat && documentElementProp || body && body[prop] || documentElementProp');
-function visit302_351_1(result) {
+function visit308_351_1(result) {
   _$jscoverage['/base/offset.js'].branchData['351'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/offset.js'].branchData['340'][1].init(207, 16, 'UA.mobile && ret');
-function visit301_340_1(result) {
+function visit307_340_1(result) {
   _$jscoverage['/base/offset.js'].branchData['340'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/offset.js'].branchData['310'][1].init(176, 23, 'typeof ret !== \'number\'');
-function visit300_310_1(result) {
+function visit306_310_1(result) {
   _$jscoverage['/base/offset.js'].branchData['310'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/offset.js'].branchData['306'][1].init(232, 23, 'typeof ret !== \'number\'');
-function visit299_306_1(result) {
+function visit305_306_1(result) {
   _$jscoverage['/base/offset.js'].branchData['306'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/offset.js'].branchData['299'][1].init(184, 13, 'name == \'Top\'');
-function visit298_299_1(result) {
+function visit304_299_1(result) {
   _$jscoverage['/base/offset.js'].branchData['299'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/offset.js'].branchData['298'][1].init(117, 14, 'name == \'Left\'');
-function visit297_298_1(result) {
+function visit303_298_1(result) {
   _$jscoverage['/base/offset.js'].branchData['298'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/offset.js'].branchData['295'][1].init(60, 15, 'v !== undefined');
-function visit296_295_1(result) {
+function visit302_295_1(result) {
   _$jscoverage['/base/offset.js'].branchData['295'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/offset.js'].branchData['288'][1].init(22, 15, 'v !== undefined');
-function visit295_288_1(result) {
+function visit301_288_1(result) {
   _$jscoverage['/base/offset.js'].branchData['288'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/offset.js'].branchData['287'][2].init(281, 38, 'elem.nodeType == NodeType.ELEMENT_NODE');
-function visit294_287_2(result) {
+function visit300_287_2(result) {
   _$jscoverage['/base/offset.js'].branchData['287'][2].ranCondition(result);
   return result;
 }_$jscoverage['/base/offset.js'].branchData['287'][1].init(273, 46, 'elem && elem.nodeType == NodeType.ELEMENT_NODE');
-function visit293_287_1(result) {
+function visit299_287_1(result) {
   _$jscoverage['/base/offset.js'].branchData['287'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/offset.js'].branchData['278'][1].init(18, 24, 'typeof elem === \'number\'');
-function visit292_278_1(result) {
+function visit298_278_1(result) {
   _$jscoverage['/base/offset.js'].branchData['278'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/offset.js'].branchData['218'][1].init(122, 12, 'alignWithTop');
-function visit291_218_1(result) {
+function visit297_218_1(result) {
   _$jscoverage['/base/offset.js'].branchData['218'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/offset.js'].branchData['217'][1].init(41, 26, 'alignWithTop === undefined');
-function visit290_217_1(result) {
+function visit296_217_1(result) {
   _$jscoverage['/base/offset.js'].branchData['217'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/offset.js'].branchData['209'][1].init(79, 16, 'diffTop.left < 0');
-function visit289_209_1(result) {
+function visit295_209_1(result) {
   _$jscoverage['/base/offset.js'].branchData['209'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/offset.js'].branchData['205'][1].init(234, 22, 'alignWithTop === false');
-function visit288_205_1(result) {
+function visit294_205_1(result) {
   _$jscoverage['/base/offset.js'].branchData['205'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/offset.js'].branchData['203'][1].init(71, 21, 'alignWithTop === true');
-function visit287_203_1(result) {
+function visit293_203_1(result) {
   _$jscoverage['/base/offset.js'].branchData['203'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/offset.js'].branchData['201'][3].init(50, 19, 'diffBottom.left > 0');
-function visit286_201_3(result) {
+function visit292_201_3(result) {
   _$jscoverage['/base/offset.js'].branchData['201'][3].ranCondition(result);
   return result;
 }_$jscoverage['/base/offset.js'].branchData['201'][2].init(30, 16, 'diffTop.left < 0');
-function visit285_201_2(result) {
+function visit291_201_2(result) {
   _$jscoverage['/base/offset.js'].branchData['201'][2].ranCondition(result);
   return result;
 }_$jscoverage['/base/offset.js'].branchData['201'][1].init(30, 39, 'diffTop.left < 0 || diffBottom.left > 0');
-function visit284_201_1(result) {
+function visit290_201_1(result) {
   _$jscoverage['/base/offset.js'].branchData['201'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/offset.js'].branchData['200'][1].init(26, 18, 'onlyScrollIfNeeded');
-function visit283_200_1(result) {
+function visit289_200_1(result) {
   _$jscoverage['/base/offset.js'].branchData['200'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/offset.js'].branchData['199'][1].init(4942, 21, 'allowHorizontalScroll');
-function visit282_199_1(result) {
+function visit288_199_1(result) {
   _$jscoverage['/base/offset.js'].branchData['199'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/offset.js'].branchData['192'][1].init(114, 12, 'alignWithTop');
-function visit281_192_1(result) {
+function visit287_192_1(result) {
   _$jscoverage['/base/offset.js'].branchData['192'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/offset.js'].branchData['191'][1].init(37, 26, 'alignWithTop === undefined');
-function visit280_191_1(result) {
+function visit286_191_1(result) {
   _$jscoverage['/base/offset.js'].branchData['191'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/offset.js'].branchData['183'][1].init(71, 15, 'diffTop.top < 0');
-function visit279_183_1(result) {
+function visit285_183_1(result) {
   _$jscoverage['/base/offset.js'].branchData['183'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/offset.js'].branchData['179'][1].init(215, 22, 'alignWithTop === false');
-function visit278_179_1(result) {
+function visit284_179_1(result) {
   _$jscoverage['/base/offset.js'].branchData['179'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/offset.js'].branchData['177'][1].init(63, 21, 'alignWithTop === true');
-function visit277_177_1(result) {
+function visit283_177_1(result) {
   _$jscoverage['/base/offset.js'].branchData['177'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/offset.js'].branchData['175'][3].init(45, 18, 'diffBottom.top > 0');
-function visit276_175_3(result) {
+function visit282_175_3(result) {
   _$jscoverage['/base/offset.js'].branchData['175'][3].ranCondition(result);
   return result;
 }_$jscoverage['/base/offset.js'].branchData['175'][2].init(26, 15, 'diffTop.top < 0');
-function visit275_175_2(result) {
+function visit281_175_2(result) {
   _$jscoverage['/base/offset.js'].branchData['175'][2].ranCondition(result);
   return result;
 }_$jscoverage['/base/offset.js'].branchData['175'][1].init(26, 37, 'diffTop.top < 0 || diffBottom.top > 0');
-function visit274_175_1(result) {
+function visit280_175_1(result) {
   _$jscoverage['/base/offset.js'].branchData['175'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/offset.js'].branchData['174'][1].init(3664, 18, 'onlyScrollIfNeeded');
-function visit273_174_1(result) {
+function visit279_174_1(result) {
   _$jscoverage['/base/offset.js'].branchData['174'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/offset.js'].branchData['170'][1].init(61, 56, 'parseFloat(Dom.css(container, \'borderBottomWidth\')) || 0');
-function visit272_170_1(result) {
+function visit278_170_1(result) {
   _$jscoverage['/base/offset.js'].branchData['170'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/offset.js'].branchData['167'][1].init(62, 55, 'parseFloat(Dom.css(container, \'borderRightWidth\')) || 0');
-function visit271_167_1(result) {
+function visit277_167_1(result) {
   _$jscoverage['/base/offset.js'].branchData['167'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/offset.js'].branchData['162'][1].init(52, 53, 'parseFloat(Dom.css(container, \'borderTopWidth\')) || 0');
-function visit270_162_1(result) {
+function visit276_162_1(result) {
   _$jscoverage['/base/offset.js'].branchData['162'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/offset.js'].branchData['160'][1].init(53, 54, 'parseFloat(Dom.css(container, \'borderLeftWidth\')) || 0');
-function visit269_160_1(result) {
+function visit275_160_1(result) {
   _$jscoverage['/base/offset.js'].branchData['160'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/offset.js'].branchData['129'][1].init(1502, 5, 'isWin');
-function visit268_129_1(result) {
+function visit274_129_1(result) {
   _$jscoverage['/base/offset.js'].branchData['129'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/offset.js'].branchData['112'][1].init(911, 35, 'allowHorizontalScroll === undefined');
-function visit267_112_1(result) {
+function visit273_112_1(result) {
   _$jscoverage['/base/offset.js'].branchData['112'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/offset.js'].branchData['106'][1].init(597, 29, 'S.isPlainObject(alignWithTop)');
-function visit266_106_1(result) {
+function visit272_106_1(result) {
   _$jscoverage['/base/offset.js'].branchData['106'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/offset.js'].branchData['102'][1].init(452, 44, 'container.nodeType == NodeType.DOCUMENT_NODE');
-function visit265_102_1(result) {
+function visit271_102_1(result) {
   _$jscoverage['/base/offset.js'].branchData['102'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/offset.js'].branchData['97'][1].init(302, 10, '!container');
-function visit264_97_1(result) {
+function visit270_97_1(result) {
   _$jscoverage['/base/offset.js'].branchData['97'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/offset.js'].branchData['93'][1].init(194, 9, 'container');
-function visit263_93_1(result) {
+function visit269_93_1(result) {
   _$jscoverage['/base/offset.js'].branchData['93'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/offset.js'].branchData['89'][1].init(92, 27, '!(elem = Dom.get(selector))');
-function visit262_89_1(result) {
+function visit268_89_1(result) {
   _$jscoverage['/base/offset.js'].branchData['89'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/offset.js'].branchData['64'][1].init(448, 6, 'i >= 0');
-function visit261_64_1(result) {
+function visit267_64_1(result) {
   _$jscoverage['/base/offset.js'].branchData['64'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/offset.js'].branchData['57'][1].init(107, 4, 'elem');
-function visit260_57_1(result) {
+function visit266_57_1(result) {
   _$jscoverage['/base/offset.js'].branchData['57'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/offset.js'].branchData['54'][1].init(49, 25, 'coordinates === undefined');
-function visit259_54_1(result) {
+function visit265_54_1(result) {
   _$jscoverage['/base/offset.js'].branchData['54'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/offset.js'].branchData['12'][1].init(123, 26, 'doc && doc.documentElement');
-function visit258_12_1(result) {
+function visit264_12_1(result) {
   _$jscoverage['/base/offset.js'].branchData['12'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/offset.js'].lineData[6]++;
 KISSY.add('dom/base/offset', function(S, Dom, undefined) {
   _$jscoverage['/base/offset.js'].functionData[0]++;
   _$jscoverage['/base/offset.js'].lineData[8]++;
-  var win = S.Env.host, UA = S.UA, doc = win.document, NodeType = Dom.NodeType, docElem = visit258_12_1(doc && doc.documentElement), getWindow = Dom.getWindow, CSS1Compat = 'CSS1Compat', compatMode = 'compatMode', MAX = Math.max, POSITION = 'position', RELATIVE = 'relative', DOCUMENT = 'document', BODY = 'body', DOC_ELEMENT = 'documentElement', VIEWPORT = 'viewport', SCROLL = 'scroll', CLIENT = 'client', LEFT = 'left', TOP = 'top', SCROLL_LEFT = SCROLL + 'Left', SCROLL_TOP = SCROLL + 'Top';
+  var win = S.Env.host, UA = S.UA, doc = win.document, NodeType = Dom.NodeType, docElem = visit264_12_1(doc && doc.documentElement), getWindow = Dom.getWindow, CSS1Compat = 'CSS1Compat', compatMode = 'compatMode', MAX = Math.max, POSITION = 'position', RELATIVE = 'relative', DOCUMENT = 'document', BODY = 'body', DOC_ELEMENT = 'documentElement', VIEWPORT = 'viewport', SCROLL = 'scroll', CLIENT = 'client', LEFT = 'left', TOP = 'top', SCROLL_LEFT = SCROLL + 'Left', SCROLL_TOP = SCROLL + 'Top';
   _$jscoverage['/base/offset.js'].lineData[30]++;
   S.mix(Dom, {
   offset: function(selector, coordinates, relativeWin) {
   _$jscoverage['/base/offset.js'].functionData[1]++;
   _$jscoverage['/base/offset.js'].lineData[54]++;
-  if (visit259_54_1(coordinates === undefined)) {
+  if (visit265_54_1(coordinates === undefined)) {
     _$jscoverage['/base/offset.js'].lineData[55]++;
     var elem = Dom.get(selector), ret;
     _$jscoverage['/base/offset.js'].lineData[57]++;
-    if (visit260_57_1(elem)) {
+    if (visit266_57_1(elem)) {
       _$jscoverage['/base/offset.js'].lineData[58]++;
       ret = getOffset(elem, relativeWin);
     }
@@ -771,7 +771,7 @@ KISSY.add('dom/base/offset', function(S, Dom, undefined) {
   _$jscoverage['/base/offset.js'].lineData[63]++;
   var els = Dom.query(selector), i;
   _$jscoverage['/base/offset.js'].lineData[64]++;
-  for (i = els.length - 1; visit261_64_1(i >= 0); i--) {
+  for (i = els.length - 1; visit267_64_1(i >= 0); i--) {
     _$jscoverage['/base/offset.js'].lineData[65]++;
     elem = els[i];
     _$jscoverage['/base/offset.js'].lineData[66]++;
@@ -785,27 +785,27 @@ KISSY.add('dom/base/offset', function(S, Dom, undefined) {
   _$jscoverage['/base/offset.js'].lineData[86]++;
   var elem, onlyScrollIfNeeded;
   _$jscoverage['/base/offset.js'].lineData[89]++;
-  if (visit262_89_1(!(elem = Dom.get(selector)))) {
+  if (visit268_89_1(!(elem = Dom.get(selector)))) {
     _$jscoverage['/base/offset.js'].lineData[90]++;
     return;
   }
   _$jscoverage['/base/offset.js'].lineData[93]++;
-  if (visit263_93_1(container)) {
+  if (visit269_93_1(container)) {
     _$jscoverage['/base/offset.js'].lineData[94]++;
     container = Dom.get(container);
   }
   _$jscoverage['/base/offset.js'].lineData[97]++;
-  if (visit264_97_1(!container)) {
+  if (visit270_97_1(!container)) {
     _$jscoverage['/base/offset.js'].lineData[98]++;
     container = elem.ownerDocument;
   }
   _$jscoverage['/base/offset.js'].lineData[102]++;
-  if (visit265_102_1(container.nodeType == NodeType.DOCUMENT_NODE)) {
+  if (visit271_102_1(container.nodeType == NodeType.DOCUMENT_NODE)) {
     _$jscoverage['/base/offset.js'].lineData[103]++;
     container = getWindow(container);
   }
   _$jscoverage['/base/offset.js'].lineData[106]++;
-  if (visit266_106_1(S.isPlainObject(alignWithTop))) {
+  if (visit272_106_1(S.isPlainObject(alignWithTop))) {
     _$jscoverage['/base/offset.js'].lineData[107]++;
     allowHorizontalScroll = alignWithTop.allowHorizontalScroll;
     _$jscoverage['/base/offset.js'].lineData[108]++;
@@ -814,11 +814,11 @@ KISSY.add('dom/base/offset', function(S, Dom, undefined) {
     alignWithTop = alignWithTop.alignWithTop;
   }
   _$jscoverage['/base/offset.js'].lineData[112]++;
-  allowHorizontalScroll = visit267_112_1(allowHorizontalScroll === undefined) ? true : allowHorizontalScroll;
+  allowHorizontalScroll = visit273_112_1(allowHorizontalScroll === undefined) ? true : allowHorizontalScroll;
   _$jscoverage['/base/offset.js'].lineData[114]++;
   var isWin = S.isWindow(container), elemOffset = Dom.offset(elem), eh = Dom.outerHeight(elem), ew = Dom.outerWidth(elem), containerOffset, ch, cw, containerScroll, diffTop, diffBottom, win, winScroll, ww, wh;
   _$jscoverage['/base/offset.js'].lineData[129]++;
-  if (visit268_129_1(isWin)) {
+  if (visit274_129_1(isWin)) {
     _$jscoverage['/base/offset.js'].lineData[130]++;
     win = container;
     _$jscoverage['/base/offset.js'].lineData[131]++;
@@ -852,29 +852,29 @@ KISSY.add('dom/base/offset', function(S, Dom, undefined) {
   top: Dom.scrollTop(container)};
     _$jscoverage['/base/offset.js'].lineData[158]++;
     diffTop = {
-  left: elemOffset[LEFT] - (containerOffset[LEFT] + (visit269_160_1(parseFloat(Dom.css(container, 'borderLeftWidth')) || 0))), 
-  top: elemOffset[TOP] - (containerOffset[TOP] + (visit270_162_1(parseFloat(Dom.css(container, 'borderTopWidth')) || 0)))};
+  left: elemOffset[LEFT] - (containerOffset[LEFT] + (visit275_160_1(parseFloat(Dom.css(container, 'borderLeftWidth')) || 0))), 
+  top: elemOffset[TOP] - (containerOffset[TOP] + (visit276_162_1(parseFloat(Dom.css(container, 'borderTopWidth')) || 0)))};
     _$jscoverage['/base/offset.js'].lineData[164]++;
     diffBottom = {
-  left: elemOffset[LEFT] + ew - (containerOffset[LEFT] + cw + (visit271_167_1(parseFloat(Dom.css(container, 'borderRightWidth')) || 0))), 
-  top: elemOffset[TOP] + eh - (containerOffset[TOP] + ch + (visit272_170_1(parseFloat(Dom.css(container, 'borderBottomWidth')) || 0)))};
+  left: elemOffset[LEFT] + ew - (containerOffset[LEFT] + cw + (visit277_167_1(parseFloat(Dom.css(container, 'borderRightWidth')) || 0))), 
+  top: elemOffset[TOP] + eh - (containerOffset[TOP] + ch + (visit278_170_1(parseFloat(Dom.css(container, 'borderBottomWidth')) || 0)))};
   }
   _$jscoverage['/base/offset.js'].lineData[174]++;
-  if (visit273_174_1(onlyScrollIfNeeded)) {
+  if (visit279_174_1(onlyScrollIfNeeded)) {
     _$jscoverage['/base/offset.js'].lineData[175]++;
-    if (visit274_175_1(visit275_175_2(diffTop.top < 0) || visit276_175_3(diffBottom.top > 0))) {
+    if (visit280_175_1(visit281_175_2(diffTop.top < 0) || visit282_175_3(diffBottom.top > 0))) {
       _$jscoverage['/base/offset.js'].lineData[177]++;
-      if (visit277_177_1(alignWithTop === true)) {
+      if (visit283_177_1(alignWithTop === true)) {
         _$jscoverage['/base/offset.js'].lineData[178]++;
         Dom.scrollTop(container, containerScroll.top + diffTop.top);
       } else {
         _$jscoverage['/base/offset.js'].lineData[179]++;
-        if (visit278_179_1(alignWithTop === false)) {
+        if (visit284_179_1(alignWithTop === false)) {
           _$jscoverage['/base/offset.js'].lineData[180]++;
           Dom.scrollTop(container, containerScroll.top + diffBottom.top);
         } else {
           _$jscoverage['/base/offset.js'].lineData[183]++;
-          if (visit279_183_1(diffTop.top < 0)) {
+          if (visit285_183_1(diffTop.top < 0)) {
             _$jscoverage['/base/offset.js'].lineData[184]++;
             Dom.scrollTop(container, containerScroll.top + diffTop.top);
           } else {
@@ -886,9 +886,9 @@ KISSY.add('dom/base/offset', function(S, Dom, undefined) {
     }
   } else {
     _$jscoverage['/base/offset.js'].lineData[191]++;
-    alignWithTop = visit280_191_1(alignWithTop === undefined) ? true : !!alignWithTop;
+    alignWithTop = visit286_191_1(alignWithTop === undefined) ? true : !!alignWithTop;
     _$jscoverage['/base/offset.js'].lineData[192]++;
-    if (visit281_192_1(alignWithTop)) {
+    if (visit287_192_1(alignWithTop)) {
       _$jscoverage['/base/offset.js'].lineData[193]++;
       Dom.scrollTop(container, containerScroll.top + diffTop.top);
     } else {
@@ -897,23 +897,23 @@ KISSY.add('dom/base/offset', function(S, Dom, undefined) {
     }
   }
   _$jscoverage['/base/offset.js'].lineData[199]++;
-  if (visit282_199_1(allowHorizontalScroll)) {
+  if (visit288_199_1(allowHorizontalScroll)) {
     _$jscoverage['/base/offset.js'].lineData[200]++;
-    if (visit283_200_1(onlyScrollIfNeeded)) {
+    if (visit289_200_1(onlyScrollIfNeeded)) {
       _$jscoverage['/base/offset.js'].lineData[201]++;
-      if (visit284_201_1(visit285_201_2(diffTop.left < 0) || visit286_201_3(diffBottom.left > 0))) {
+      if (visit290_201_1(visit291_201_2(diffTop.left < 0) || visit292_201_3(diffBottom.left > 0))) {
         _$jscoverage['/base/offset.js'].lineData[203]++;
-        if (visit287_203_1(alignWithTop === true)) {
+        if (visit293_203_1(alignWithTop === true)) {
           _$jscoverage['/base/offset.js'].lineData[204]++;
           Dom.scrollLeft(container, containerScroll.left + diffTop.left);
         } else {
           _$jscoverage['/base/offset.js'].lineData[205]++;
-          if (visit288_205_1(alignWithTop === false)) {
+          if (visit294_205_1(alignWithTop === false)) {
             _$jscoverage['/base/offset.js'].lineData[206]++;
             Dom.scrollLeft(container, containerScroll.left + diffBottom.left);
           } else {
             _$jscoverage['/base/offset.js'].lineData[209]++;
-            if (visit289_209_1(diffTop.left < 0)) {
+            if (visit295_209_1(diffTop.left < 0)) {
               _$jscoverage['/base/offset.js'].lineData[210]++;
               Dom.scrollLeft(container, containerScroll.left + diffTop.left);
             } else {
@@ -925,9 +925,9 @@ KISSY.add('dom/base/offset', function(S, Dom, undefined) {
       }
     } else {
       _$jscoverage['/base/offset.js'].lineData[217]++;
-      alignWithTop = visit290_217_1(alignWithTop === undefined) ? true : !!alignWithTop;
+      alignWithTop = visit296_217_1(alignWithTop === undefined) ? true : !!alignWithTop;
       _$jscoverage['/base/offset.js'].lineData[218]++;
-      if (visit291_218_1(alignWithTop)) {
+      if (visit297_218_1(alignWithTop)) {
         _$jscoverage['/base/offset.js'].lineData[219]++;
         Dom.scrollLeft(container, containerScroll.left + diffTop.left);
       } else {
@@ -952,7 +952,7 @@ KISSY.add('dom/base/offset', function(S, Dom, undefined) {
   Dom[method] = function(elem, v) {
   _$jscoverage['/base/offset.js'].functionData[4]++;
   _$jscoverage['/base/offset.js'].lineData[278]++;
-  if (visit292_278_1(typeof elem === 'number')) {
+  if (visit298_278_1(typeof elem === 'number')) {
     _$jscoverage['/base/offset.js'].lineData[279]++;
     return arguments.callee(win, elem);
   }
@@ -961,9 +961,9 @@ KISSY.add('dom/base/offset', function(S, Dom, undefined) {
   _$jscoverage['/base/offset.js'].lineData[282]++;
   var ret, left, top, w, d;
   _$jscoverage['/base/offset.js'].lineData[287]++;
-  if (visit293_287_1(elem && visit294_287_2(elem.nodeType == NodeType.ELEMENT_NODE))) {
+  if (visit299_287_1(elem && visit300_287_2(elem.nodeType == NodeType.ELEMENT_NODE))) {
     _$jscoverage['/base/offset.js'].lineData[288]++;
-    if (visit295_288_1(v !== undefined)) {
+    if (visit301_288_1(v !== undefined)) {
       _$jscoverage['/base/offset.js'].lineData[289]++;
       elem[method] = parseFloat(v);
     } else {
@@ -974,26 +974,26 @@ KISSY.add('dom/base/offset', function(S, Dom, undefined) {
     _$jscoverage['/base/offset.js'].lineData[294]++;
     w = getWindow(elem);
     _$jscoverage['/base/offset.js'].lineData[295]++;
-    if (visit296_295_1(v !== undefined)) {
+    if (visit302_295_1(v !== undefined)) {
       _$jscoverage['/base/offset.js'].lineData[296]++;
       v = parseFloat(v);
       _$jscoverage['/base/offset.js'].lineData[298]++;
-      left = visit297_298_1(name == 'Left') ? v : Dom.scrollLeft(w);
+      left = visit303_298_1(name == 'Left') ? v : Dom.scrollLeft(w);
       _$jscoverage['/base/offset.js'].lineData[299]++;
-      top = visit298_299_1(name == 'Top') ? v : Dom.scrollTop(w);
+      top = visit304_299_1(name == 'Top') ? v : Dom.scrollTop(w);
       _$jscoverage['/base/offset.js'].lineData[300]++;
       w['scrollTo'](left, top);
     } else {
       _$jscoverage['/base/offset.js'].lineData[305]++;
       ret = w['page' + (i ? 'Y' : 'X') + 'Offset'];
       _$jscoverage['/base/offset.js'].lineData[306]++;
-      if (visit299_306_1(typeof ret !== 'number')) {
+      if (visit305_306_1(typeof ret !== 'number')) {
         _$jscoverage['/base/offset.js'].lineData[307]++;
         d = w[DOCUMENT];
         _$jscoverage['/base/offset.js'].lineData[309]++;
         ret = d[DOC_ELEMENT][method];
         _$jscoverage['/base/offset.js'].lineData[310]++;
-        if (visit300_310_1(typeof ret !== 'number')) {
+        if (visit306_310_1(typeof ret !== 'number')) {
           _$jscoverage['/base/offset.js'].lineData[312]++;
           ret = d[BODY][method];
         }
@@ -1027,14 +1027,14 @@ KISSY.add('dom/base/offset', function(S, Dom, undefined) {
   _$jscoverage['/base/offset.js'].lineData[338]++;
   var ret = win['inner' + name];
   _$jscoverage['/base/offset.js'].lineData[340]++;
-  if (visit301_340_1(UA.mobile && ret)) {
+  if (visit307_340_1(UA.mobile && ret)) {
     _$jscoverage['/base/offset.js'].lineData[341]++;
     return ret;
   }
   _$jscoverage['/base/offset.js'].lineData[344]++;
   var prop = CLIENT + name, doc = win[DOCUMENT], body = doc[BODY], documentElement = doc[DOC_ELEMENT], documentElementProp = documentElement[prop];
   _$jscoverage['/base/offset.js'].lineData[351]++;
-  return visit302_351_1(visit303_351_2(visit304_351_3(doc[compatMode] === CSS1Compat) && documentElementProp) || visit305_353_1(visit306_353_2(body && body[prop]) || documentElementProp));
+  return visit308_351_1(visit309_351_2(visit310_351_3(doc[compatMode] === CSS1Compat) && documentElementProp) || visit311_353_1(visit312_353_2(body && body[prop]) || documentElementProp));
 };
 });
   _$jscoverage['/base/offset.js'].lineData[357]++;
@@ -1043,7 +1043,7 @@ KISSY.add('dom/base/offset', function(S, Dom, undefined) {
     _$jscoverage['/base/offset.js'].lineData[358]++;
     var box, x, y, doc = elem.ownerDocument, body = doc.body;
     _$jscoverage['/base/offset.js'].lineData[362]++;
-    if (visit307_362_1(!elem.getBoundingClientRect)) {
+    if (visit313_362_1(!elem.getBoundingClientRect)) {
       _$jscoverage['/base/offset.js'].lineData[363]++;
       return {
   left: 0, 
@@ -1056,9 +1056,9 @@ KISSY.add('dom/base/offset', function(S, Dom, undefined) {
     _$jscoverage['/base/offset.js'].lineData[377]++;
     y = box[TOP];
     _$jscoverage['/base/offset.js'].lineData[399]++;
-    x -= visit308_399_1(docElem.clientLeft || visit309_399_2(body.clientLeft || 0));
+    x -= visit314_399_1(docElem.clientLeft || visit315_399_2(body.clientLeft || 0));
     _$jscoverage['/base/offset.js'].lineData[400]++;
-    y -= visit310_400_1(docElem.clientTop || visit311_400_2(body.clientTop || 0));
+    y -= visit316_400_1(docElem.clientTop || visit317_400_2(body.clientTop || 0));
     _$jscoverage['/base/offset.js'].lineData[402]++;
     return {
   left: x, 
@@ -1084,16 +1084,16 @@ KISSY.add('dom/base/offset', function(S, Dom, undefined) {
   left: 0, 
   top: 0}, currentWin = getWindow(el), offset, currentEl = el;
     _$jscoverage['/base/offset.js'].lineData[423]++;
-    relativeWin = visit312_423_1(relativeWin || currentWin);
+    relativeWin = visit318_423_1(relativeWin || currentWin);
     _$jscoverage['/base/offset.js'].lineData[425]++;
     do {
       _$jscoverage['/base/offset.js'].lineData[430]++;
-      offset = visit313_430_1(currentWin == relativeWin) ? getPageOffset(currentEl) : getClientPosition(currentEl);
+      offset = visit319_430_1(currentWin == relativeWin) ? getPageOffset(currentEl) : getClientPosition(currentEl);
       _$jscoverage['/base/offset.js'].lineData[433]++;
       position.left += offset.left;
       _$jscoverage['/base/offset.js'].lineData[434]++;
       position.top += offset.top;
-    } while (visit314_435_1(currentWin && visit315_436_1(visit316_436_2(currentWin != relativeWin) && visit317_437_1((currentEl = currentWin['frameElement']) && (currentWin = currentWin.parent)))));
+    } while (visit320_435_1(currentWin && visit321_436_1(visit322_436_2(currentWin != relativeWin) && visit323_437_1((currentEl = currentWin['frameElement']) && (currentWin = currentWin.parent)))));
     _$jscoverage['/base/offset.js'].lineData[440]++;
     return position;
   }
@@ -1101,7 +1101,7 @@ KISSY.add('dom/base/offset', function(S, Dom, undefined) {
   function setOffset(elem, offset) {
     _$jscoverage['/base/offset.js'].functionData[11]++;
     _$jscoverage['/base/offset.js'].lineData[446]++;
-    if (visit318_446_1(Dom.css(elem, POSITION) === 'static')) {
+    if (visit324_446_1(Dom.css(elem, POSITION) === 'static')) {
       _$jscoverage['/base/offset.js'].lineData[447]++;
       elem.style[POSITION] = RELATIVE;
     }
@@ -1110,7 +1110,7 @@ KISSY.add('dom/base/offset', function(S, Dom, undefined) {
     _$jscoverage['/base/offset.js'].lineData[454]++;
     for (key in offset) {
       _$jscoverage['/base/offset.js'].lineData[455]++;
-      current = visit319_455_1(parseFloat(Dom.css(elem, key)) || 0);
+      current = visit325_455_1(parseFloat(Dom.css(elem, key)) || 0);
       _$jscoverage['/base/offset.js'].lineData[456]++;
       ret[key] = current + offset[key] - old[key];
     }

@@ -2,8 +2,8 @@
  * test cases for data sub module of dom module
  * @author yiminghe@gmail.com
  */
-KISSY.add(function (S,  Dom) {
-    var UA= S.UA;
+KISSY.add(function (S, Dom) {
+    var UA = S.UA;
     var __EXPANDO = Dom.__EXPANDO;
     describe("Dom.data", function () {
         it("data should works", function () {
@@ -114,7 +114,22 @@ KISSY.add(function (S,  Dom) {
             //空对象
             expect(S.isEmptyObject(Dom.data(p))).toBe(true);
         });
+
+        it('cleanData works', function () {
+            var div = Dom.create('<div class="t"><div class="t2"></div></div>');
+            document.body.appendChild(div);
+            var div2=div.firstChild;
+            Dom.data(div2,'1',1);
+            Dom.data(div,'1',1);
+            Dom.cleanData(div);
+            expect(Dom.hasData(div)).toBe(false);
+            expect(Dom.hasData(div2)).toBe(true);
+            Dom.data(div,'1',1);
+            Dom.cleanData(div,'1',1);
+            expect(Dom.hasData(div)).toBe(false);
+            expect(Dom.hasData(div2)).toBe(false);
+        });
     });
-},{
-    requires:['dom']
+}, {
+    requires: ['dom']
 });

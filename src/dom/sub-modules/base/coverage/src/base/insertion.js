@@ -409,127 +409,127 @@ if (! _$jscoverage['/base/insertion.js'].branchData) {
   _$jscoverage['/base/insertion.js'].branchData['230'][1] = new BranchData();
 }
 _$jscoverage['/base/insertion.js'].branchData['230'][1].init(76, 15, 'contents.length');
-function visit257_230_1(result) {
+function visit263_230_1(result) {
   _$jscoverage['/base/insertion.js'].branchData['230'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/insertion.js'].branchData['201'][2].init(378, 15, 'c.nodeType == 1');
-function visit256_201_2(result) {
+function visit262_201_2(result) {
   _$jscoverage['/base/insertion.js'].branchData['201'][2].ranCondition(result);
   return result;
 }_$jscoverage['/base/insertion.js'].branchData['201'][1].init(347, 46, '(c = wrapperNode.firstChild) && c.nodeType == 1');
-function visit255_201_1(result) {
+function visit261_201_1(result) {
   _$jscoverage['/base/insertion.js'].branchData['201'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/insertion.js'].branchData['197'][1].init(180, 26, 'wrappedNodes[0].parentNode');
-function visit254_197_1(result) {
+function visit260_197_1(result) {
   _$jscoverage['/base/insertion.js'].branchData['197'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/insertion.js'].branchData['158'][1].init(26, 20, 'refNode[PARENT_NODE]');
-function visit253_158_1(result) {
+function visit259_158_1(result) {
   _$jscoverage['/base/insertion.js'].branchData['158'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/insertion.js'].branchData['144'][1].init(26, 20, 'refNode[PARENT_NODE]');
-function visit252_144_1(result) {
+function visit258_144_1(result) {
   _$jscoverage['/base/insertion.js'].branchData['144'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/insertion.js'].branchData['119'][1].init(243, 25, 'scripts && scripts.length');
-function visit251_119_1(result) {
+function visit257_119_1(result) {
   _$jscoverage['/base/insertion.js'].branchData['119'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/insertion.js'].branchData['116'][1].init(64, 5, 'i > 0');
-function visit250_116_1(result) {
+function visit256_116_1(result) {
   _$jscoverage['/base/insertion.js'].branchData['116'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/insertion.js'].branchData['114'][1].init(54, 7, 'newNode');
-function visit249_114_1(result) {
+function visit255_114_1(result) {
   _$jscoverage['/base/insertion.js'].branchData['114'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/insertion.js'].branchData['112'][1].init(1216, 18, 'i < refNodesLength');
-function visit248_112_1(result) {
+function visit254_112_1(result) {
   _$jscoverage['/base/insertion.js'].branchData['112'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/insertion.js'].branchData['107'][1].init(1062, 18, 'refNodesLength > 1');
-function visit247_107_1(result) {
+function visit253_107_1(result) {
   _$jscoverage['/base/insertion.js'].branchData['107'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/insertion.js'].branchData['98'][3].init(731, 27, '!scripts || !scripts.length');
-function visit246_98_3(result) {
+function visit252_98_3(result) {
   _$jscoverage['/base/insertion.js'].branchData['98'][3].ranCondition(result);
   return result;
 }_$jscoverage['/base/insertion.js'].branchData['98'][2].init(711, 48, '!newNodesLength && (!scripts || !scripts.length)');
-function visit245_98_2(result) {
+function visit251_98_2(result) {
   _$jscoverage['/base/insertion.js'].branchData['98'][2].ranCondition(result);
   return result;
 }_$jscoverage['/base/insertion.js'].branchData['98'][1].init(711, 68, '(!newNodesLength && (!scripts || !scripts.length)) || !refNodesLength');
-function visit244_98_1(result) {
+function visit250_98_1(result) {
   _$jscoverage['/base/insertion.js'].branchData['98'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/insertion.js'].branchData['84'][1].init(364, 24, 'Dom._fixInsertionChecked');
-function visit243_84_1(result) {
+function visit249_84_1(result) {
   _$jscoverage['/base/insertion.js'].branchData['84'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/insertion.js'].branchData['75'][1].init(57, 7, 'scripts');
-function visit242_75_1(result) {
+function visit248_75_1(result) {
   _$jscoverage['/base/insertion.js'].branchData['75'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/insertion.js'].branchData['65'][1].init(99, 4, 'code');
-function visit241_65_1(result) {
+function visit247_65_1(result) {
   _$jscoverage['/base/insertion.js'].branchData['65'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/insertion.js'].branchData['64'][3].init(43, 18, 'el.innerHTML || \'\'');
-function visit240_64_3(result) {
+function visit246_64_3(result) {
   _$jscoverage['/base/insertion.js'].branchData['64'][3].ranCondition(result);
   return result;
 }_$jscoverage['/base/insertion.js'].branchData['64'][2].init(25, 36, 'el.textContent || el.innerHTML || \'\'');
-function visit239_64_2(result) {
+function visit245_64_2(result) {
   _$jscoverage['/base/insertion.js'].branchData['64'][2].ranCondition(result);
   return result;
 }_$jscoverage['/base/insertion.js'].branchData['64'][1].init(32, 47, 'el.text || el.textContent || el.innerHTML || \'\'');
-function visit238_64_1(result) {
+function visit244_64_1(result) {
   _$jscoverage['/base/insertion.js'].branchData['64'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/insertion.js'].branchData['61'][1].init(14, 6, 'el.src');
-function visit237_61_1(result) {
+function visit243_61_1(result) {
   _$jscoverage['/base/insertion.js'].branchData['61'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/insertion.js'].branchData['47'][1].init(66, 7, 'isJs(s)');
-function visit236_47_1(result) {
+function visit242_47_1(result) {
   _$jscoverage['/base/insertion.js'].branchData['47'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/insertion.js'].branchData['45'][1].init(190, 13, 'j < ss.length');
-function visit235_45_1(result) {
+function visit241_45_1(result) {
   _$jscoverage['/base/insertion.js'].branchData['45'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/insertion.js'].branchData['38'][2].init(22, 36, 'el.nodeType == NodeType.ELEMENT_NODE');
-function visit234_38_2(result) {
+function visit240_38_2(result) {
   _$jscoverage['/base/insertion.js'].branchData['38'][2].ranCondition(result);
   return result;
 }_$jscoverage['/base/insertion.js'].branchData['38'][1].init(22, 159, 'el.nodeType == NodeType.ELEMENT_NODE && !RE_FORM_EL.test(nodeName)');
-function visit233_38_1(result) {
+function visit239_38_1(result) {
   _$jscoverage['/base/insertion.js'].branchData['38'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/insertion.js'].branchData['34'][1].init(209, 7, 'scripts');
-function visit232_34_1(result) {
+function visit238_34_1(result) {
   _$jscoverage['/base/insertion.js'].branchData['34'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/insertion.js'].branchData['31'][1].init(101, 13, 'el.parentNode');
-function visit231_31_1(result) {
+function visit237_31_1(result) {
   _$jscoverage['/base/insertion.js'].branchData['31'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/insertion.js'].branchData['29'][2].init(250, 21, 'nodeName === \'script\'');
-function visit230_29_2(result) {
+function visit236_29_2(result) {
   _$jscoverage['/base/insertion.js'].branchData['29'][2].ranCondition(result);
   return result;
 }_$jscoverage['/base/insertion.js'].branchData['29'][1].init(250, 33, 'nodeName === \'script\' && isJs(el)');
-function visit229_29_1(result) {
+function visit235_29_1(result) {
   _$jscoverage['/base/insertion.js'].branchData['29'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/insertion.js'].branchData['27'][1].init(87, 46, 'el.nodeType == NodeType.DOCUMENT_FRAGMENT_NODE');
-function visit228_27_1(result) {
+function visit234_27_1(result) {
   _$jscoverage['/base/insertion.js'].branchData['27'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/insertion.js'].branchData['18'][1].init(17, 39, '!el.type || R_SCRIPT_TYPE.test(el.type)');
-function visit227_18_1(result) {
+function visit233_18_1(result) {
   _$jscoverage['/base/insertion.js'].branchData['18'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/insertion.js'].lineData[6]++;
@@ -541,7 +541,7 @@ KISSY.add('dom/base/insertion', function(S, Dom) {
   function isJs(el) {
     _$jscoverage['/base/insertion.js'].functionData[1]++;
     _$jscoverage['/base/insertion.js'].lineData[18]++;
-    return visit227_18_1(!el.type || R_SCRIPT_TYPE.test(el.type));
+    return visit233_18_1(!el.type || R_SCRIPT_TYPE.test(el.type));
   }
   _$jscoverage['/base/insertion.js'].lineData[22]++;
   function filterScripts(nodes, scripts) {
@@ -555,33 +555,33 @@ KISSY.add('dom/base/insertion', function(S, Dom) {
       _$jscoverage['/base/insertion.js'].lineData[26]++;
       nodeName = getNodeName(el);
       _$jscoverage['/base/insertion.js'].lineData[27]++;
-      if (visit228_27_1(el.nodeType == NodeType.DOCUMENT_FRAGMENT_NODE)) {
+      if (visit234_27_1(el.nodeType == NodeType.DOCUMENT_FRAGMENT_NODE)) {
         _$jscoverage['/base/insertion.js'].lineData[28]++;
         ret.push.apply(ret, filterScripts(makeArray(el.childNodes), scripts));
       } else {
         _$jscoverage['/base/insertion.js'].lineData[29]++;
-        if (visit229_29_1(visit230_29_2(nodeName === 'script') && isJs(el))) {
+        if (visit235_29_1(visit236_29_2(nodeName === 'script') && isJs(el))) {
           _$jscoverage['/base/insertion.js'].lineData[31]++;
-          if (visit231_31_1(el.parentNode)) {
+          if (visit237_31_1(el.parentNode)) {
             _$jscoverage['/base/insertion.js'].lineData[32]++;
             el.parentNode.removeChild(el);
           }
           _$jscoverage['/base/insertion.js'].lineData[34]++;
-          if (visit232_34_1(scripts)) {
+          if (visit238_34_1(scripts)) {
             _$jscoverage['/base/insertion.js'].lineData[35]++;
             scripts.push(el);
           }
         } else {
           _$jscoverage['/base/insertion.js'].lineData[38]++;
-          if (visit233_38_1(visit234_38_2(el.nodeType == NodeType.ELEMENT_NODE) && !RE_FORM_EL.test(nodeName))) {
+          if (visit239_38_1(visit240_38_2(el.nodeType == NodeType.ELEMENT_NODE) && !RE_FORM_EL.test(nodeName))) {
             _$jscoverage['/base/insertion.js'].lineData[41]++;
             var tmp = [], s, j, ss = el.getElementsByTagName('script');
             _$jscoverage['/base/insertion.js'].lineData[45]++;
-            for (j = 0; visit235_45_1(j < ss.length); j++) {
+            for (j = 0; visit241_45_1(j < ss.length); j++) {
               _$jscoverage['/base/insertion.js'].lineData[46]++;
               s = ss[j];
               _$jscoverage['/base/insertion.js'].lineData[47]++;
-              if (visit236_47_1(isJs(s))) {
+              if (visit242_47_1(isJs(s))) {
                 _$jscoverage['/base/insertion.js'].lineData[48]++;
                 tmp.push(s);
               }
@@ -601,14 +601,14 @@ KISSY.add('dom/base/insertion', function(S, Dom) {
   function evalScript(el) {
     _$jscoverage['/base/insertion.js'].functionData[3]++;
     _$jscoverage['/base/insertion.js'].lineData[61]++;
-    if (visit237_61_1(el.src)) {
+    if (visit243_61_1(el.src)) {
       _$jscoverage['/base/insertion.js'].lineData[62]++;
       S.getScript(el.src);
     } else {
       _$jscoverage['/base/insertion.js'].lineData[64]++;
-      var code = S.trim(visit238_64_1(el.text || visit239_64_2(el.textContent || visit240_64_3(el.innerHTML || ''))));
+      var code = S.trim(visit244_64_1(el.text || visit245_64_2(el.textContent || visit246_64_3(el.innerHTML || ''))));
       _$jscoverage['/base/insertion.js'].lineData[65]++;
-      if (visit241_65_1(code)) {
+      if (visit247_65_1(code)) {
         _$jscoverage['/base/insertion.js'].lineData[66]++;
         S.globalEval(code);
       }
@@ -620,14 +620,14 @@ KISSY.add('dom/base/insertion', function(S, Dom) {
     _$jscoverage['/base/insertion.js'].lineData[73]++;
     newNodes = Dom.query(newNodes);
     _$jscoverage['/base/insertion.js'].lineData[75]++;
-    if (visit242_75_1(scripts)) {
+    if (visit248_75_1(scripts)) {
       _$jscoverage['/base/insertion.js'].lineData[76]++;
       scripts = [];
     }
     _$jscoverage['/base/insertion.js'].lineData[80]++;
     newNodes = filterScripts(newNodes, scripts);
     _$jscoverage['/base/insertion.js'].lineData[84]++;
-    if (visit243_84_1(Dom._fixInsertionChecked)) {
+    if (visit249_84_1(Dom._fixInsertionChecked)) {
       _$jscoverage['/base/insertion.js'].lineData[85]++;
       Dom._fixInsertionChecked(newNodes);
     }
@@ -636,32 +636,32 @@ KISSY.add('dom/base/insertion', function(S, Dom) {
     _$jscoverage['/base/insertion.js'].lineData[90]++;
     var newNodesLength = newNodes.length, newNode, i, refNode, node, clonedNode, refNodesLength = refNodes.length;
     _$jscoverage['/base/insertion.js'].lineData[98]++;
-    if (visit244_98_1((visit245_98_2(!newNodesLength && (visit246_98_3(!scripts || !scripts.length)))) || !refNodesLength)) {
+    if (visit250_98_1((visit251_98_2(!newNodesLength && (visit252_98_3(!scripts || !scripts.length)))) || !refNodesLength)) {
       _$jscoverage['/base/insertion.js'].lineData[99]++;
       return;
     }
     _$jscoverage['/base/insertion.js'].lineData[105]++;
     newNode = Dom._nodeListToFragment(newNodes);
     _$jscoverage['/base/insertion.js'].lineData[107]++;
-    if (visit247_107_1(refNodesLength > 1)) {
+    if (visit253_107_1(refNodesLength > 1)) {
       _$jscoverage['/base/insertion.js'].lineData[108]++;
       clonedNode = Dom.clone(newNode, true);
       _$jscoverage['/base/insertion.js'].lineData[109]++;
       refNodes = S.makeArray(refNodes);
     }
     _$jscoverage['/base/insertion.js'].lineData[112]++;
-    for (i = 0; visit248_112_1(i < refNodesLength); i++) {
+    for (i = 0; visit254_112_1(i < refNodesLength); i++) {
       _$jscoverage['/base/insertion.js'].lineData[113]++;
       refNode = refNodes[i];
       _$jscoverage['/base/insertion.js'].lineData[114]++;
-      if (visit249_114_1(newNode)) {
+      if (visit255_114_1(newNode)) {
         _$jscoverage['/base/insertion.js'].lineData[116]++;
-        node = visit250_116_1(i > 0) ? Dom.clone(clonedNode, true) : newNode;
+        node = visit256_116_1(i > 0) ? Dom.clone(clonedNode, true) : newNode;
         _$jscoverage['/base/insertion.js'].lineData[117]++;
         fn(node, refNode);
       }
       _$jscoverage['/base/insertion.js'].lineData[119]++;
-      if (visit251_119_1(scripts && scripts.length)) {
+      if (visit257_119_1(scripts && scripts.length)) {
         _$jscoverage['/base/insertion.js'].lineData[120]++;
         S.each(scripts, evalScript);
       }
@@ -676,7 +676,7 @@ KISSY.add('dom/base/insertion', function(S, Dom) {
   insertion(newNodes, refNodes, function(newNode, refNode) {
   _$jscoverage['/base/insertion.js'].functionData[6]++;
   _$jscoverage['/base/insertion.js'].lineData[144]++;
-  if (visit252_144_1(refNode[PARENT_NODE])) {
+  if (visit258_144_1(refNode[PARENT_NODE])) {
     _$jscoverage['/base/insertion.js'].lineData[145]++;
     refNode[PARENT_NODE].insertBefore(newNode, refNode);
   }
@@ -688,7 +688,7 @@ KISSY.add('dom/base/insertion', function(S, Dom) {
   insertion(newNodes, refNodes, function(newNode, refNode) {
   _$jscoverage['/base/insertion.js'].functionData[8]++;
   _$jscoverage['/base/insertion.js'].lineData[158]++;
-  if (visit253_158_1(refNode[PARENT_NODE])) {
+  if (visit259_158_1(refNode[PARENT_NODE])) {
     _$jscoverage['/base/insertion.js'].lineData[159]++;
     refNode[PARENT_NODE].insertBefore(newNode, refNode[NEXT_SIBLING]);
   }
@@ -719,14 +719,14 @@ KISSY.add('dom/base/insertion', function(S, Dom) {
   _$jscoverage['/base/insertion.js'].lineData[196]++;
   wrappedNodes = Dom.query(wrappedNodes);
   _$jscoverage['/base/insertion.js'].lineData[197]++;
-  if (visit254_197_1(wrappedNodes[0].parentNode)) {
+  if (visit260_197_1(wrappedNodes[0].parentNode)) {
     _$jscoverage['/base/insertion.js'].lineData[198]++;
     Dom.insertBefore(wrapperNode, wrappedNodes[0]);
   }
   _$jscoverage['/base/insertion.js'].lineData[200]++;
   var c;
   _$jscoverage['/base/insertion.js'].lineData[201]++;
-  while (visit255_201_1((c = wrapperNode.firstChild) && visit256_201_2(c.nodeType == 1))) {
+  while (visit261_201_1((c = wrapperNode.firstChild) && visit262_201_2(c.nodeType == 1))) {
     _$jscoverage['/base/insertion.js'].lineData[202]++;
     wrapperNode = c;
   }
@@ -758,7 +758,7 @@ KISSY.add('dom/base/insertion', function(S, Dom) {
   _$jscoverage['/base/insertion.js'].lineData[229]++;
   var contents = w.childNodes;
   _$jscoverage['/base/insertion.js'].lineData[230]++;
-  if (visit257_230_1(contents.length)) {
+  if (visit263_230_1(contents.length)) {
     _$jscoverage['/base/insertion.js'].lineData[231]++;
     Dom.wrapAll(contents, wrapperNode);
   } else {

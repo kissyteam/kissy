@@ -402,11 +402,13 @@ if (! _$jscoverage['/base/attr.js']) {
   _$jscoverage['/base/attr.js'].lineData[565] = 0;
   _$jscoverage['/base/attr.js'].lineData[566] = 0;
   _$jscoverage['/base/attr.js'].lineData[567] = 0;
-  _$jscoverage['/base/attr.js'].lineData[569] = 0;
+  _$jscoverage['/base/attr.js'].lineData[568] = 0;
   _$jscoverage['/base/attr.js'].lineData[570] = 0;
+  _$jscoverage['/base/attr.js'].lineData[573] = 0;
   _$jscoverage['/base/attr.js'].lineData[574] = 0;
   _$jscoverage['/base/attr.js'].lineData[578] = 0;
   _$jscoverage['/base/attr.js'].lineData[582] = 0;
+  _$jscoverage['/base/attr.js'].lineData[586] = 0;
 }
 if (! _$jscoverage['/base/attr.js'].functionData) {
   _$jscoverage['/base/attr.js'].functionData = [];
@@ -585,22 +587,28 @@ if (! _$jscoverage['/base/attr.js'].branchData) {
   _$jscoverage['/base/attr.js'].branchData['562'][1] = new BranchData();
   _$jscoverage['/base/attr.js'].branchData['565'] = [];
   _$jscoverage['/base/attr.js'].branchData['565'][1] = new BranchData();
-  _$jscoverage['/base/attr.js'].branchData['569'] = [];
-  _$jscoverage['/base/attr.js'].branchData['569'][1] = new BranchData();
-  _$jscoverage['/base/attr.js'].branchData['569'][2] = new BranchData();
-  _$jscoverage['/base/attr.js'].branchData['569'][3] = new BranchData();
+  _$jscoverage['/base/attr.js'].branchData['567'] = [];
+  _$jscoverage['/base/attr.js'].branchData['567'][1] = new BranchData();
+  _$jscoverage['/base/attr.js'].branchData['573'] = [];
+  _$jscoverage['/base/attr.js'].branchData['573'][1] = new BranchData();
+  _$jscoverage['/base/attr.js'].branchData['573'][2] = new BranchData();
+  _$jscoverage['/base/attr.js'].branchData['573'][3] = new BranchData();
 }
-_$jscoverage['/base/attr.js'].branchData['569'][3].init(377, 39, 'nodeType == NodeType.CDATA_SECTION_NODE');
-function visit99_569_3(result) {
-  _$jscoverage['/base/attr.js'].branchData['569'][3].ranCondition(result);
+_$jscoverage['/base/attr.js'].branchData['573'][3].init(557, 39, 'nodeType == NodeType.CDATA_SECTION_NODE');
+function visit100_573_3(result) {
+  _$jscoverage['/base/attr.js'].branchData['573'][3].ranCondition(result);
   return result;
-}_$jscoverage['/base/attr.js'].branchData['569'][2].init(343, 30, 'nodeType == NodeType.TEXT_NODE');
-function visit98_569_2(result) {
-  _$jscoverage['/base/attr.js'].branchData['569'][2].ranCondition(result);
+}_$jscoverage['/base/attr.js'].branchData['573'][2].init(523, 30, 'nodeType == NodeType.TEXT_NODE');
+function visit99_573_2(result) {
+  _$jscoverage['/base/attr.js'].branchData['573'][2].ranCondition(result);
   return result;
-}_$jscoverage['/base/attr.js'].branchData['569'][1].init(343, 73, 'nodeType == NodeType.TEXT_NODE || nodeType == NodeType.CDATA_SECTION_NODE');
-function visit97_569_1(result) {
-  _$jscoverage['/base/attr.js'].branchData['569'][1].ranCondition(result);
+}_$jscoverage['/base/attr.js'].branchData['573'][1].init(523, 73, 'nodeType == NodeType.TEXT_NODE || nodeType == NodeType.CDATA_SECTION_NODE');
+function visit98_573_1(result) {
+  _$jscoverage['/base/attr.js'].branchData['573'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/base/attr.js'].branchData['567'][1].init(108, 19, '\'textContent\' in el');
+function visit97_567_1(result) {
+  _$jscoverage['/base/attr.js'].branchData['567'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/attr.js'].branchData['565'][1].init(117, 33, 'nodeType == NodeType.ELEMENT_NODE');
 function visit96_565_1(result) {
@@ -1407,27 +1415,33 @@ KISSY.add('dom/base/attr', function(S, Dom, undefined) {
       _$jscoverage['/base/attr.js'].lineData[565]++;
       if (visit96_565_1(nodeType == NodeType.ELEMENT_NODE)) {
         _$jscoverage['/base/attr.js'].lineData[566]++;
-        Dom.empty(el);
+        Dom.cleanData(el.getElementsByTagName('*'));
         _$jscoverage['/base/attr.js'].lineData[567]++;
-        el.appendChild(el.ownerDocument.createTextNode(val));
-      } else {
-        _$jscoverage['/base/attr.js'].lineData[569]++;
-        if (visit97_569_1(visit98_569_2(nodeType == NodeType.TEXT_NODE) || visit99_569_3(nodeType == NodeType.CDATA_SECTION_NODE))) {
+        if (visit97_567_1('textContent' in el)) {
+          _$jscoverage['/base/attr.js'].lineData[568]++;
+          el.textContent = val;
+        } else {
           _$jscoverage['/base/attr.js'].lineData[570]++;
+          el.innerText = val;
+        }
+      } else {
+        _$jscoverage['/base/attr.js'].lineData[573]++;
+        if (visit98_573_1(visit99_573_2(nodeType == NodeType.TEXT_NODE) || visit100_573_3(nodeType == NodeType.CDATA_SECTION_NODE))) {
+          _$jscoverage['/base/attr.js'].lineData[574]++;
           el.nodeValue = val;
         }
       }
     }
   }
-  _$jscoverage['/base/attr.js'].lineData[574]++;
+  _$jscoverage['/base/attr.js'].lineData[578]++;
   return undefined;
 }, 
   _getText: function(el) {
   _$jscoverage['/base/attr.js'].functionData[23]++;
-  _$jscoverage['/base/attr.js'].lineData[578]++;
+  _$jscoverage['/base/attr.js'].lineData[582]++;
   return el.textContent;
 }});
-  _$jscoverage['/base/attr.js'].lineData[582]++;
+  _$jscoverage['/base/attr.js'].lineData[586]++;
   return Dom;
 }, {
   requires: ['./api']});

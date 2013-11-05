@@ -27,14 +27,6 @@ KISSY.add('dom/base/create', function (S, Dom, undefined) {
         return el.getElementsByTagName(tag);
     }
 
-    function cleanData(els) {
-        var DOMEvent = S.require('event/dom');
-        if (DOMEvent) {
-            DOMEvent.detach(els);
-        }
-        Dom.removeData(els);
-    }
-
     function getHolderDiv(ownerDoc) {
         var holder = ownerDoc && ownerDoc != doc ?
             ownerDoc.createElement(DIV) :
@@ -73,12 +65,12 @@ KISSY.add('dom/base/create', function (S, Dom, undefined) {
             // In IE quirks mode, PARAM nodes as children of OBJECT/APPLET nodes have a removeNode method that does nothing and
             // the parent node has canHaveChildren=false even though removeChild correctly removes the PARAM children.
             // In IE, SVG/strict nodes don't have a removeNode method nor a canHaveChildren boolean.
-            if (oldIE && parent.canHaveChildren && "removeNode" in node) {
+            if (oldIE && parent['canHaveChildren'] && "removeNode" in node) {
                 // in IE quirks, node.canHaveChildren can be false but firstChild can be non-null (OBJECT/APPLET)
                 if (node.firstChild) {
                     _empty(node);
                 }
-                node.removeNode(false)
+                node['removeNode'](false)
             } else {
                 parent.removeChild(node);
             }
@@ -95,7 +87,8 @@ KISSY.add('dom/base/create', function (S, Dom, undefined) {
 
             /**
              * Creates Dom elements on the fly from the provided string of raw HTML.
-             * @param {String} html A string of HTML to create on the fly. Note that this parses HTML, not XML.
+             * @param {String|HTMLElement} html A string of HTML to create on the fly.
+             * Note that this parses HTML, not XML.
              * @param {Object} [props] An map of attributes on the newly-created element.
              * @param {HTMLDocument} [ownerDoc] A document in which the new elements will be created
              * @param {Boolean} [_trim]
@@ -236,7 +229,7 @@ KISSY.add('dom/base/create', function (S, Dom, undefined) {
                             for (i = els.length - 1; i >= 0; i--) {
                                 elem = els[i];
                                 if (elem.nodeType == NodeType.ELEMENT_NODE) {
-                                    cleanData(getElementsByTagName(elem, '*'));
+                                    Dom.cleanData(getElementsByTagName(elem, '*'));
                                     elem.innerHTML = htmlString;
                                 }
                             }
@@ -290,8 +283,7 @@ KISSY.add('dom/base/create', function (S, Dom, undefined) {
                         for (i = length - 1; i >= 0; i--) {
                             el = els[i];
                             if (el.nodeType == NodeType.ELEMENT_NODE) {
-                                cleanData(el);
-                                cleanData(getElementsByTagName(el, '*'));
+                                Dom.cleanData(el,1);
                                 el.outerHTML = htmlString;
                             }
                         }

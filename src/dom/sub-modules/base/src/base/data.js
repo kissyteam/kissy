@@ -196,7 +196,6 @@ KISSY.add('dom/base/data', function (S, Dom, undefined) {
              * @return {Object|undefined}
              */
             data: function (selector, name, data) {
-
                 var elems = Dom.query(selector), elem = elems[0];
 
                 // supports hash
@@ -249,6 +248,31 @@ KISSY.add('dom/base/data', function (S, Dom, undefined) {
                     } else {
                         // window
                         objectOps.removeData(elem, name);
+                    }
+                }
+            },
+            /**
+             * clean data from element
+             * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
+             * @param {Boolean} deep whether clean descendant nodes
+             */
+            cleanData: function (selector, deep) {
+                var els = Dom.query(selector), elem, i;
+                var DOMEvent = S.require('event/dom');
+                for (i = els.length - 1; i >= 0; i--) {
+                    elem = els[i];
+                    if (elem.nodeType) {
+                        var descendants = deep && S.makeArray(elem.getElementsByTagName('*')) || [];
+                        descendants.push(elem);
+                        for (var j = 0, len = descendants.length; j < len; j++) {
+                            domOps.removeData(descendants[j]);
+                        }
+                        if (DOMEvent) {
+                            DOMEvent.detach(descendants);
+                        }
+                    } else {
+                        // window
+                        objectOps.removeData(elem);
                     }
                 }
             }

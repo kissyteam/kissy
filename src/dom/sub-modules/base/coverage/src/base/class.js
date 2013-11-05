@@ -304,51 +304,51 @@ if (! _$jscoverage['/base/class.js'].branchData) {
   _$jscoverage['/base/class.js'].branchData['89'][3] = new BranchData();
 }
 _$jscoverage['/base/class.js'].branchData['89'][3].init(80, 38, 'elem.nodeType == NodeType.ELEMENT_NODE');
-function visit111_89_3(result) {
+function visit112_89_3(result) {
   _$jscoverage['/base/class.js'].branchData['89'][3].ranCondition(result);
   return result;
 }_$jscoverage['/base/class.js'].branchData['89'][2].init(80, 84, 'elem.nodeType == NodeType.ELEMENT_NODE && Dom._hasClass(elem, strToArray(className))');
-function visit110_89_2(result) {
+function visit111_89_2(result) {
   _$jscoverage['/base/class.js'].branchData['89'][2].ranCondition(result);
   return result;
 }_$jscoverage['/base/class.js'].branchData['89'][1].init(72, 92, 'elem && elem.nodeType == NodeType.ELEMENT_NODE && Dom._hasClass(elem, strToArray(className))');
-function visit109_89_1(result) {
+function visit110_89_1(result) {
   _$jscoverage['/base/class.js'].branchData['89'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/class.js'].branchData['64'][1].init(82, 43, 'className && !classList.contains(className)');
-function visit108_64_1(result) {
+function visit109_64_1(result) {
   _$jscoverage['/base/class.js'].branchData['64'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/class.js'].branchData['62'][1].init(57, 5, 'i < l');
-function visit107_62_1(result) {
+function visit108_62_1(result) {
   _$jscoverage['/base/class.js'].branchData['62'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/class.js'].branchData['61'][1].init(88, 16, 'classList.length');
-function visit106_61_1(result) {
+function visit107_61_1(result) {
   _$jscoverage['/base/class.js'].branchData['61'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/class.js'].branchData['45'][1].init(22, 38, 'elem.nodeType == NodeType.ELEMENT_NODE');
-function visit105_45_1(result) {
+function visit106_45_1(result) {
   _$jscoverage['/base/class.js'].branchData['45'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/class.js'].branchData['33'][1].init(22, 25, 'className = classNames[i]');
-function visit104_33_1(result) {
+function visit105_33_1(result) {
   _$jscoverage['/base/class.js'].branchData['33'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/class.js'].branchData['32'][1].init(200, 5, 'i < l');
-function visit103_32_1(result) {
+function visit104_32_1(result) {
   _$jscoverage['/base/class.js'].branchData['32'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/class.js'].branchData['19'][1].init(18, 10, 'v = arr[i]');
-function visit102_19_1(result) {
+function visit103_19_1(result) {
   _$jscoverage['/base/class.js'].branchData['19'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/class.js'].branchData['18'][1].init(169, 5, 'i < l');
-function visit101_18_1(result) {
+function visit102_18_1(result) {
   _$jscoverage['/base/class.js'].branchData['18'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/class.js'].branchData['13'][1].init(23, 9, 'str || \'\'');
-function visit100_13_1(result) {
+function visit101_13_1(result) {
   _$jscoverage['/base/class.js'].branchData['13'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/class.js'].lineData[6]++;
@@ -360,13 +360,13 @@ KISSY.add('dom/base/class', function(S, Dom) {
   function strToArray(str) {
     _$jscoverage['/base/class.js'].functionData[1]++;
     _$jscoverage['/base/class.js'].lineData[13]++;
-    str = S.trim(visit100_13_1(str || ''));
+    str = S.trim(visit101_13_1(str || ''));
     _$jscoverage['/base/class.js'].lineData[14]++;
     var arr = str.split(RE_SPLIT), newArr = [], v, l = arr.length, i = 0;
     _$jscoverage['/base/class.js'].lineData[18]++;
-    for (; visit101_18_1(i < l); i++) {
+    for (; visit102_18_1(i < l); i++) {
       _$jscoverage['/base/class.js'].lineData[19]++;
-      if (visit102_19_1(v = arr[i])) {
+      if (visit103_19_1(v = arr[i])) {
         _$jscoverage['/base/class.js'].lineData[20]++;
         newArr.push(v);
       }
@@ -383,9 +383,9 @@ KISSY.add('dom/base/class', function(S, Dom) {
   _$jscoverage['/base/class.js'].lineData[28]++;
   var i, l, className, classList = elem.classList, extraArgs = slice.call(arguments, 2);
   _$jscoverage['/base/class.js'].lineData[32]++;
-  for (i = 0 , l = classNames.length; visit103_32_1(i < l); i++) {
+  for (i = 0 , l = classNames.length; visit104_32_1(i < l); i++) {
     _$jscoverage['/base/class.js'].lineData[33]++;
-    if (visit104_33_1(className = classNames[i])) {
+    if (visit105_33_1(className = classNames[i])) {
       _$jscoverage['/base/class.js'].lineData[34]++;
       classList[method].apply(classList, [className].concat(extraArgs));
     }
@@ -404,7 +404,7 @@ KISSY.add('dom/base/class', function(S, Dom) {
   Dom.query(selector).each(function(elem) {
   _$jscoverage['/base/class.js'].functionData[6]++;
   _$jscoverage['/base/class.js'].lineData[45]++;
-  if (visit105_45_1(elem.nodeType == NodeType.ELEMENT_NODE)) {
+  if (visit106_45_1(elem.nodeType == NodeType.ELEMENT_NODE)) {
     _$jscoverage['/base/class.js'].lineData[46]++;
     Dom[method].apply(Dom, [elem, classNames].concat(extraArgs));
   }
@@ -418,13 +418,13 @@ KISSY.add('dom/base/class', function(S, Dom) {
   _$jscoverage['/base/class.js'].lineData[60]++;
   var i, l, className, classList = elem.classList;
   _$jscoverage['/base/class.js'].lineData[61]++;
-  if (visit106_61_1(classList.length)) {
+  if (visit107_61_1(classList.length)) {
     _$jscoverage['/base/class.js'].lineData[62]++;
-    for (i = 0 , l = classNames.length; visit107_62_1(i < l); i++) {
+    for (i = 0 , l = classNames.length; visit108_62_1(i < l); i++) {
       _$jscoverage['/base/class.js'].lineData[63]++;
       className = classNames[i];
       _$jscoverage['/base/class.js'].lineData[64]++;
-      if (visit108_64_1(className && !classList.contains(className))) {
+      if (visit109_64_1(className && !classList.contains(className))) {
         _$jscoverage['/base/class.js'].lineData[65]++;
         return false;
       }
@@ -443,7 +443,7 @@ KISSY.add('dom/base/class', function(S, Dom) {
   _$jscoverage['/base/class.js'].lineData[88]++;
   var elem = Dom.get(selector);
   _$jscoverage['/base/class.js'].lineData[89]++;
-  return visit109_89_1(elem && visit110_89_2(visit111_89_3(elem.nodeType == NodeType.ELEMENT_NODE) && Dom._hasClass(elem, strToArray(className))));
+  return visit110_89_1(elem && visit111_89_2(visit112_89_3(elem.nodeType == NodeType.ELEMENT_NODE) && Dom._hasClass(elem, strToArray(className))));
 }, 
   replaceClass: function(selector, oldClassName, newClassName) {
   _$jscoverage['/base/class.js'].functionData[9]++;

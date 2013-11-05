@@ -1,7 +1,7 @@
 /*
-Copyright 2013, KISSY v1.40dev
+Copyright 2013, KISSY v1.40
 MIT Licensed
-build time: Sep 17 22:59
+build time: Nov 5 23:50
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -778,8 +778,12 @@ KISSY.add('dom/base/attr', function (S, Dom, undefined) {
                         el = els[i];
                         nodeType = el.nodeType;
                         if (nodeType == NodeType.ELEMENT_NODE) {
-                            Dom.empty(el);
-                            el.appendChild(el.ownerDocument.createTextNode(val));
+                            Dom.cleanData(el.getElementsByTagName('*'));
+                            if ('textContent' in el) {
+                                el.textContent = val;
+                            } else {
+                                el.innerText = val;
+                            }
                         }
                         else if (nodeType == NodeType.TEXT_NODE || nodeType == NodeType.CDATA_SECTION_NODE) {
                             el.nodeValue = val;
@@ -1008,14 +1012,6 @@ KISSY.add('dom/base/create', function (S, Dom, undefined) {
         return el.getElementsByTagName(tag);
     }
 
-    function cleanData(els) {
-        var DOMEvent = S.require('event/dom');
-        if (DOMEvent) {
-            DOMEvent.detach(els);
-        }
-        Dom.removeData(els);
-    }
-
     function getHolderDiv(ownerDoc) {
         var holder = ownerDoc && ownerDoc != doc ?
             ownerDoc.createElement(DIV) :
@@ -1054,12 +1050,12 @@ KISSY.add('dom/base/create', function (S, Dom, undefined) {
             // In IE quirks mode, PARAM nodes as children of OBJECT/APPLET nodes have a removeNode method that does nothing and
             // the parent node has canHaveChildren=false even though removeChild correctly removes the PARAM children.
             // In IE, SVG/strict nodes don't have a removeNode method nor a canHaveChildren boolean.
-            if (oldIE && parent.canHaveChildren && "removeNode" in node) {
+            if (oldIE && parent['canHaveChildren'] && "removeNode" in node) {
                 // in IE quirks, node.canHaveChildren can be false but firstChild can be non-null (OBJECT/APPLET)
                 if (node.firstChild) {
                     _empty(node);
                 }
-                node.removeNode(false)
+                node['removeNode'](false)
             } else {
                 parent.removeChild(node);
             }
@@ -1076,7 +1072,8 @@ KISSY.add('dom/base/create', function (S, Dom, undefined) {
 
             /**
              * Creates Dom elements on the fly from the provided string of raw HTML.
-             * @param {String} html A string of HTML to create on the fly. Note that this parses HTML, not XML.
+             * @param {String|HTMLElement} html A string of HTML to create on the fly.
+             * Note that this parses HTML, not XML.
              * @param {Object} [props] An map of attributes on the newly-created element.
              * @param {HTMLDocument} [ownerDoc] A document in which the new elements will be created
              * @param {Boolean} [_trim]
@@ -1217,7 +1214,7 @@ KISSY.add('dom/base/create', function (S, Dom, undefined) {
                             for (i = els.length - 1; i >= 0; i--) {
                                 elem = els[i];
                                 if (elem.nodeType == NodeType.ELEMENT_NODE) {
-                                    cleanData(getElementsByTagName(elem, '*'));
+                                    Dom.cleanData(getElementsByTagName(elem, '*'));
                                     elem.innerHTML = htmlString;
                                 }
                             }
@@ -1271,8 +1268,7 @@ KISSY.add('dom/base/create', function (S, Dom, undefined) {
                         for (i = length - 1; i >= 0; i--) {
                             el = els[i];
                             if (el.nodeType == NodeType.ELEMENT_NODE) {
-                                cleanData(el);
-                                cleanData(getElementsByTagName(el, '*'));
+                                Dom.cleanData(el,1);
                                 el.outerHTML = htmlString;
                             }
                         }
@@ -1735,7 +1731,6 @@ KISSY.add('dom/base/data', function (S, Dom, undefined) {
              * @return {Object|undefined}
              */
             data: function (selector, name, data) {
-
                 var elems = Dom.query(selector), elem = elems[0];
 
                 // supports hash
@@ -1788,6 +1783,31 @@ KISSY.add('dom/base/data', function (S, Dom, undefined) {
                     } else {
                         // window
                         objectOps.removeData(elem, name);
+                    }
+                }
+            },
+            /**
+             * clean data from element
+             * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
+             * @param {Boolean} deep whether clean descendant nodes
+             */
+            cleanData: function (selector, deep) {
+                var els = Dom.query(selector), elem, i;
+                var DOMEvent = S.require('event/dom');
+                for (i = els.length - 1; i >= 0; i--) {
+                    elem = els[i];
+                    if (elem.nodeType) {
+                        var descendants = deep && S.makeArray(elem.getElementsByTagName('*')) || [];
+                        descendants.push(elem);
+                        for (var j = 0, len = descendants.length; j < len; j++) {
+                            domOps.removeData(descendants[j]);
+                        }
+                        if (DOMEvent) {
+                            DOMEvent.detach(descendants);
+                        }
+                    } else {
+                        // window
+                        objectOps.removeData(elem);
                     }
                 }
             }
@@ -3029,6 +3049,7 @@ KISSY.add('dom/base/style', function (S, Dom, undefined) {
                     if (isAutoPosition && position === "relative") {
                         return "0px";
                     }
+                    // https://github.com/kissyteam/kissy/issues/493
                     if (isAutoPosition || NO_PX_REG.test(val)) {
                         val = getPosition(el)[name] + 'px';
                     }

@@ -563,8 +563,12 @@ KISSY.add('dom/base/attr', function (S, Dom, undefined) {
                         el = els[i];
                         nodeType = el.nodeType;
                         if (nodeType == NodeType.ELEMENT_NODE) {
-                            Dom.empty(el);
-                            el.appendChild(el.ownerDocument.createTextNode(val));
+                            Dom.cleanData(el.getElementsByTagName('*'));
+                            if ('textContent' in el) {
+                                el.textContent = val;
+                            } else {
+                                el.innerText = val;
+                            }
                         }
                         else if (nodeType == NodeType.TEXT_NODE || nodeType == NodeType.CDATA_SECTION_NODE) {
                             el.nodeValue = val;

@@ -248,7 +248,7 @@ KISSY.add(function (S, Dom) {
                 expect(Dom.attr(disabledTest, "disabled")).not.toBe(true);
             });
 
-            it("should set/get correctly even encouter same input name", function () {
+            it("should set/get correctly even encounter same input name", function () {
                 var d = Dom.create("<form >	\
 	        <input name='custom110829' id='custom110829' value='yy'/> \
 	    </form>");
