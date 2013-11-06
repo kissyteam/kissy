@@ -1,7 +1,7 @@
 /*
-Copyright 2013, KISSY v1.40
+Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 6 22:20
+build time: Nov 6 22:30
 */
 KISSY.add("base/attribute",function(g,j){function p(a,b){return"string"==typeof b?a[b]:b}function n(a,b,d,e,c,f,i,h){i=i||d;return a.fire(b+g.ucfirst(d)+"Change",g.mix({attrName:i,subAttrName:f,prevVal:e,newVal:c},h))}function l(a,b,d){var e=a[b];!d&&!e&&(a[b]=e={});return e||{}}function u(a,b){for(var d=0,e=b.length;a!=j&&d<e;d++)a=a[b[d]];return a}function v(a){var b;-1!==a.indexOf(".")&&(b=a.split("."),a=b.shift());return{path:b,name:a}}function w(a,b,d){var e=d;if(b){var a=e=a===j?{}:g.clone(a),
 c=b.length-1;if(0<=c){for(var f=0;f<c;f++)a=a[b[f]];a!=j&&(a[b[f]]=d)}}return e}function s(a,b,d,e,c){var f,i,h;f=v(b);var x=b,b=f.name;f=f.path;h=a.get(b);var m=b,y=l(a,"__defaultBeforeFns");y[m]||(y[m]=1,m="before"+g.ucfirst(m)+"Change",a.publish(m,{defaultFn:t}));f&&(i=u(h,f));if(!e.force&&(!f&&h===d||f&&i===d))return j;d=w(h,f,d);d=g.mix({attrName:b,subAttrName:x,prevVal:h,newVal:d,_opts:e,_attrs:c,target:a},e.data);if(e.silent){if(k===t.call(a,d))return k}else if(k===a.fire("before"+g.ucfirst(b)+
