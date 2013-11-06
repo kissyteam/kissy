@@ -413,6 +413,21 @@
                 }
             }
             return path;
+        },
+
+        /**
+         * Returns hash code of a string djb2 algorithm
+         * @param {String} str
+         * @returns {String} hash code
+         */
+        getHash:function (str) {
+            var hash = 5381,
+                i;
+            for (i = str.length; --i > -1;) {
+                hash = ((hash << 5) + hash) + str.charCodeAt(i);
+                /* hash * 33 + char */
+            }
+            return hash + '';
         }
     });
 

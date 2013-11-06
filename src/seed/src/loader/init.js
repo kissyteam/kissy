@@ -4,7 +4,9 @@
  */
 (function (S) {
     var doc = S.Env.host && S.Env.host.document;
-    var logger = S.getLogger('s/loader');
+    // var logger = S.getLogger('s/loader');
+    var Utils = S.Loader.Utils;
+    var TIMESTAMP = '@TIMESTAMP@';
 
     function returnJson(s) {
         return (new Function('return ' + s))();
@@ -57,7 +59,9 @@
         }
 
         return S.mix({
-            base: base
+            base: base,
+            // kissy 's tag will be determined by build time and user specified url
+            tag: Utils.getHash(TIMESTAMP + src)
         }, baseInfo);
     }
 
@@ -85,14 +89,14 @@
             }
         }
 
-        S.log('must load kissy by file name in browser environment: seed.js or seed-min.js','error');
+        S.log('must load kissy by file name in browser environment: seed.js or seed-min.js', 'error');
         return null;
     }
 
     S.config({
         charset: 'utf-8',
         lang: 'zh-cn',
-        tag: '@TIMESTAMP@'
+        tag: TIMESTAMP
     });
 
     if (S.UA.nodejs) {

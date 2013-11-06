@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40
 MIT Licensed
-build time: Nov 5 15:04
+build time: Nov 6 11:49
 */
 /**
  * @ignore
@@ -42,11 +42,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20131105150430' will replace with current timestamp when compressing.
+         * NOTICE: '20131106114901' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20131105150430',
+        __BUILD_TIME: '20131106114901',
 
         /**
          * KISSY Environment.
@@ -3923,6 +3923,21 @@ var KISSY = (function (undefined) {
                 }
             }
             return path;
+        },
+
+        /**
+         * Returns hash code of a string djb2 algorithm
+         * @param {String} str
+         * @returns {String} hash code
+         */
+        getHash:function (str) {
+            var hash = 5381,
+                i;
+            for (i = str.length; --i > -1;) {
+                hash = ((hash << 5) + hash) + str.charCodeAt(i);
+                /* hash * 33 + char */
+            }
+            return hash + '';
         }
     });
 
@@ -4774,6 +4789,7 @@ var KISSY = (function (undefined) {
         logger = S.getLogger('s/loader'),
         Status = Loader.Status,
         Utils = Loader.Utils,
+        getHash=Utils.getHash,
         LOADING = Status.LOADING,
         LOADED = Status.LOADED,
         ERROR = Status.ERROR,
@@ -4884,18 +4900,6 @@ var KISSY = (function (undefined) {
             }
         }
         return str1.slice(0, i).join('/') + '/';
-    }
-
-
-    // Returns hash code of a stringdjb2 algorithm
-    function getHash(str) {
-        var hash = 5381,
-            i;
-        for (i = str.length; --i > -1;) {
-            hash = ((hash << 5) + hash) + str.charCodeAt(i);
-            /* hash * 33 + char */
-        }
-        return hash + '';
     }
 
     S.augment(ComboLoader, {
@@ -5373,7 +5377,9 @@ var KISSY = (function (undefined) {
  */
 (function (S) {
     var doc = S.Env.host && S.Env.host.document;
-    var logger = S.getLogger('s/loader');
+    // var logger = S.getLogger('s/loader');
+    var Utils = S.Loader.Utils;
+    var TIMESTAMP = '20131106114901';
 
     function returnJson(s) {
         return (new Function('return ' + s))();
@@ -5426,7 +5432,9 @@ var KISSY = (function (undefined) {
         }
 
         return S.mix({
-            base: base
+            base: base,
+            // kissy 's tag will be determined by build time and user specified url
+            tag: Utils.getHash(TIMESTAMP + src)
         }, baseInfo);
     }
 
@@ -5454,14 +5462,14 @@ var KISSY = (function (undefined) {
             }
         }
 
-        S.log('must load kissy by file name in browser environment: seed.js or seed-min.js','error');
+        S.log('must load kissy by file name in browser environment: seed.js or seed-min.js', 'error');
         return null;
     }
 
     S.config({
         charset: 'utf-8',
         lang: 'zh-cn',
-        tag: '20131105150430'
+        tag: TIMESTAMP
     });
 
     if (S.UA.nodejs) {

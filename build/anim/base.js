@@ -1,7 +1,7 @@
 /*
-Copyright 2013, KISSY v1.40dev
+Copyright 2013, KISSY v1.40
 MIT Licensed
-build time: Oct 22 17:03
+build time: Nov 6 11:50
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -243,8 +243,7 @@ KISSY.add('anim/base', function (S, Dom, Utils, Promise, Q) {
      * @private
      */
     function AnimBase(config) {
-        var self = this,
-            complete;
+        var self = this;
         AnimBase.superclass.constructor.call(self);
         Promise.Defer(self);
         /**
@@ -259,19 +258,17 @@ KISSY.add('anim/base', function (S, Dom, Utils, Promise, Q) {
         self.node = self.el = node;
         self._backupProps = {};
         self._propsData = {};
-        self.then(onComplete);
-
-        if (complete = config.complete) {
-            self.then(complete);
-        }
     }
 
-    function onComplete(value) {
-        var _backupProps,
-            self = value[0];
+    // stop(true) will run complete function synchronously
+    function syncComplete(self) {
+        var _backupProps, complete;
         // only recover after complete anim
         if (!S.isEmptyObject(_backupProps = self._backupProps)) {
             Dom.css(self.node, _backupProps);
+        }
+        if (complete = self.config.complete) {
+            complete.call(self);
         }
     }
 
@@ -298,7 +295,7 @@ KISSY.add('anim/base', function (S, Dom, Utils, Promise, Q) {
         /**
          * prepare fx hook
          * @protected
-         * @function
+         * @method
          */
         prepareFx: noop,
 
@@ -447,14 +444,14 @@ KISSY.add('anim/base', function (S, Dom, Utils, Promise, Q) {
         /**
          * stop by dom operation
          * @protected
-         * @function
+         * @method
          */
         doStop: noop,
 
         /**
          * start by dom operation
          * @protected
-         * @function
+         * @method
          */
         doStart: noop,
 
@@ -484,7 +481,7 @@ KISSY.add('anim/base', function (S, Dom, Utils, Promise, Q) {
         /**
          * before resume hook
          * @protected
-         * @function
+         * @method
          */
         'beforeResume': noop,
 
@@ -544,6 +541,7 @@ KISSY.add('anim/base', function (S, Dom, Utils, Promise, Q) {
 
             var defer = self.defer;
             if (finish) {
+                syncComplete(self);
                 defer.resolve([self]);
             } else {
                 defer.reject([self]);

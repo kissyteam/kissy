@@ -4,37 +4,46 @@
     <meta charset="gbk">
     <script src="/kissy/build/seed.js"></script>
     <script src="/kissy/src/package.js"></script>
-    <style>
-
-    </style>
+    <!--<script src="http://g.tbcdn.cn/kissy/k/1.3.2/seed.js?t=20131105-2"></script>-->
     <style>
         .ks-overlay {
-            position: absolute;
-            left: -9999px;
-            top: -9999px;
+            position:absolute;
+            left:-9999px;
+            top:-9999px;
+            z-index: 100;
+        }
+        .ks-overlay-hidden {
+            visibility: hidden;
         }
 
+        .ks-overlay-mask-hidden {
+            display: none;
+        }
+
+        .ks-overlay-shown {
+            visibility: visible;
+        }
+
+        .ks-overlay-mask-shown{
+            display: block;
+        }
         body {
             padding: 5px;
         }
-
         ul {
             padding: 0;
             margin: 0;
         }
-
         .shop-rank {
             width: 300px;
             font-size: 12px;
         }
-
         .shop-rank  li {
             border-bottom: 1px dashed #EEEEEE;
             height: 42px;
             overflow: hidden;
             padding: 9px 0;
         }
-
         .shop-rank .pic {
             border: 1px solid #CCCCCC;
             float: left;
@@ -43,7 +52,6 @@
             text-align: center;
             width: 40px;
         }
-
         .shop-rank .pic a {
             display: table-cell;
             height: 40px;
@@ -51,11 +59,9 @@
             vertical-align: middle;
             width: 40px;
         }
-
         .shop-rank .pic img {
             vertical-align: middle;
         }
-
         .shop-rank .desc, .shop-rank .price {
             float: left;
             height: 14px;
@@ -64,228 +70,122 @@
             text-align: left;
             width: 120px;
         }
-
         .shop-rank .collecter, .shop-rank .sale {
             float: left;
             line-height: 1.4;
             overflow: hidden;
             width: 120px;
         }
-
-        .bigpic-box {
-            border: 2px solid gray;
-            line-height: 0;
-            height: 120px;
-            width: 120px;
+        #popup3 {
+            background: white;
         }
-
     </style>
 </head>
 <body>
-<div class="J_TModule">
-    <div class="J_TWidget shop-rank" data-widget-type="Popup" data-widget-config="{
-                                 'type': 'multi-one',
-                                 'trigger':'.popup-trigger',
-                                 'content': '.popup-content',
-                                 'align':{
-                                         'offset':[0,0],
-                                         'points' : ['tr', 'tl']
-                                         } ,
-                                 'effect':{
-                                   'effect': 'slide',
-                                   'easing' : 'easeNone',
-                                   'duration': 0.5
-                                 }
-           }">
-        <ul>
-            <li>
-                <div class="pic">
-                    <a class="popup-trigger" target="_blank" href="http://item.taobao.com/item.htm?id=3231736190">
-                        <img src="http://img03.taobaocdn.com/bao/uploaded/i7/T1ftRxXnRvXXalxZ.T_010955.jpg_40x40.jpg">
-                    </a>
-
-
-                </div>
-                <textarea style="display:none" class="popup-content">
-                    <div class="bigpic-box">
-                        <img src="http://img03.taobaocdn.com/bao/uploaded/i7/T1ftRxXnRvXXalxZ.T_010955.jpg_120x120.jpg">
-                    </div>
-                </textarea>
-
-                <div class="desc">
-                    <a target="_blank" title="他她Tata 正品人气奢华皮草风牛皮女及踝靴FTJ23D火爆款"
-                       href="http://item.taobao.com/item.htm?id=3231736190">他她Tata 正品人气奢华皮草风牛皮女及踝靴FTJ23D火爆款</a>
-                </div>
-                <div class="price">
-                    <i></i>298.00元 i7/T1ftRxXnRvXXalxZ.T_010955.jpg
-                </div>
-                <div class="sale">
-                    <i></i>已售出 <strong>3799</strong> 笔
-                </div>
-            </li>
-            <li>
-                <div class="pic">
-                    <a class="popup-trigger" target="_blank" href="http://item.taobao.com/item.htm?id=9543317408">
-                        <img src="http://img01.taobaocdn.com/bao/uploaded/i1/T1n_p9Xm4jXXcYEmEY_030526.jpg_40x40.jpg">
-                    </a>
-
-                </div>
-                <textarea style="display:none" class="popup-content">
-                    <div class="bigpic-box">
-                        <img src="http://img01.taobaocdn.com/bao/uploaded/i1/T1n_p9Xm4jXXcYEmEY_030526.jpg_120x120.jpg">
-                    </div>
-                </textarea>
-
-                <div class="desc">
-                    <a target="_blank" title="百丽belle 正品2011春季 高跟 粉色黑色漆牛皮女单鞋 3PQ04D"
-                       href="http://item.taobao.com/item.htm?id=9543317408">百丽belle 正品2011春季 高跟 粉色黑色漆牛皮女单鞋 3PQ04D</a>
-                </div>
-                <div class="price">
-                    <i></i>458.00元 i1/T1n_p9Xm4jXXcYEmEY_030526.jpg
-                </div>
-                <div class="sale">
-                    <i></i>已售出 <strong>1815</strong> 笔
-                </div>
-            </li>
-            <li>
-                <div class="pic">
-                    <a class="popup-trigger" target="_blank" href="http://item.taobao.com/item.htm?id=9138154640">
-                        <img src="http://img03.taobaocdn.com/bao/uploaded/i7/T1aJXZXfFsXXbGzYHb_092930.jpg_40x40.jpg">
-                    </a>
-
-
-                </div>
-                <textarea style="display:none" class="popup-content">
-                    <div class="bigpic-box">
-                        <img src="http://img03.taobaocdn.com/bao/uploaded/i7/T1aJXZXfFsXXbGzYHb_092930.jpg_120x120.jpg">
-                    </div>
-                </textarea>
-
-                <div class="desc">
-                    <a target="_blank" title="商城母亲节包邮 百丽正品女鞋 belle 2011牛皮中跟 女单鞋 113-15"
-                       href="http://item.taobao.com/item.htm?id=9138154640">商城母亲节包邮 百丽正品女鞋 belle 2011牛皮中跟 女单鞋 113-15</a>
-                </div>
-                <div class="price">
-                    <i></i>358.00元 i7/T1aJXZXfFsXXbGzYHb_092930.jpg
-                </div>
-                <div class="sale">
-                    <i></i>已售出 <strong>1587</strong> 笔
-                </div>
-            </li>
-            <li>
-                <div class="pic">
-                    <a class="popup-trigger" target="_blank" href="http://item.taobao.com/item.htm?id=9172959292">
-                        <img src="http://img04.taobaocdn.com/bao/uploaded/i4/T1Iy0ZXnBhXXbWYAQ2_044742.jpg_40x40.jpg">
-                    </a>
-
-
-                </div>
-                <textarea style="display:none" class="popup-content">
-                    <div class="bigpic-box">
-                        <img src="http://img04.taobaocdn.com/bao/uploaded/i4/T1Iy0ZXnBhXXbWYAQ2_044742.jpg_120x120.jpg">
-                    </div>
-                </textarea>
-
-                <div class="desc">
-                    <a target="_blank" title="他她tata 2011春季超高跟防水台女单鞋 J53-8D"
-                       href="http://item.taobao.com/item.htm?id=9172959292">他她tata 2011春季超高跟防水台女单鞋 J53-8D</a>
-                </div>
-                <div class="price">
-                    <i></i>398.00元 i4/T1Iy0ZXnBhXXbWYAQ2_044742.jpg
-                </div>
-                <div class="sale">
-                    <i></i>已售出 <strong>1583</strong> 笔
-                </div>
-            </li>
-            <li>
-                <div class="pic">
-                    <a class="popup-trigger" target="_blank" href="http://item.taobao.com/item.htm?id=5057404618">
-                        <img src="http://img04.taobaocdn.com/bao/uploaded/i8/T1wSFAXoxdXXbtWvsU_014508.jpg_40x40.jpg">
-                    </a>
-                </div>
-                <textarea style="display:none" class="popup-content">
-                    <div class="bigpic-box">
-                        <img src="http://img04.taobaocdn.com/bao/uploaded/i8/T1wSFAXoxdXXbtWvsU_014508.jpg_120x120.jpg">
-                    </div>
-                </textarea>
-
-                <div class="desc">
-                    <a target="_blank" title="百丽belle正品 夏季新款 坡跟绵羊皮镶钻女凉鞋 3LC04D"
-                       href="http://item.taobao.com/item.htm?id=5057404618">百丽belle正品 夏季新款 坡跟绵羊皮镶钻女凉鞋 3LC04D</a>
-                </div>
-                <div class="price">
-                    <i></i>298.00元 i8/T1wSFAXoxdXXbtWvsU_014508.jpg
-                </div>
-                <div class="sale">
-                    <i></i>已售出 <strong>1547</strong> 笔
-                </div>
-            </li>
-        </ul>
-
-
-    </div>
+<div class="shop-rank" id="multi">
+    <ul>
+        <li>
+            <div class="pic">
+                <a target="_blank" href="http://item.taobao.com/item.htm?id=3231736190"><img src="http://img03.taobaocdn.com/bao/uploaded/i7/T1ftRxXnRvXXalxZ.T_010955.jpg_40x40.jpg" bigpicurl="http://img03.taobaocdn.com/bao/uploaded/i7/T1ftRxXnRvXXalxZ.T_010955.jpg_120x120.jpg"></a>
+            </div>
+            <div class="desc">
+                <a target="_blank" title="他她Tata 正品人气奢华皮草风牛皮女及踝靴FTJ23D火爆款" href="http://item.taobao.com/item.htm?id=3231736190">他她Tata 正品人气奢华皮草风牛皮女及踝靴FTJ23D火爆款</a>
+            </div>
+            <div class="price">
+                <i></i>298.00元 i7/T1ftRxXnRvXXalxZ.T_010955.jpg
+            </div>
+            <div class="sale">
+                <i></i>已售出 <strong>3799</strong> 笔
+            </div>
+        </li>
+        <li>
+            <div class="pic">
+                <a target="_blank" href="http://item.taobao.com/item.htm?id=9543317408"><img src="http://img01.taobaocdn.com/bao/uploaded/i1/T1n_p9Xm4jXXcYEmEY_030526.jpg_40x40.jpg" bigpicurl="http://img01.taobaocdn.com/bao/uploaded/i1/T1n_p9Xm4jXXcYEmEY_030526.jpg_120x120.jpg"></a>
+            </div>
+            <div class="desc">
+                <a target="_blank" title="百丽belle 正品2011春季 高跟 粉色黑色漆牛皮女单鞋 3PQ04D" href="http://item.taobao.com/item.htm?id=9543317408">百丽belle 正品2011春季 高跟 粉色黑色漆牛皮女单鞋 3PQ04D</a>
+            </div>
+            <div class="price">
+                <i></i>458.00元 i1/T1n_p9Xm4jXXcYEmEY_030526.jpg
+            </div>
+            <div class="sale">
+                <i></i>已售出 <strong>1815</strong> 笔
+            </div>
+        </li>
+        <li>
+            <div class="pic">
+                <a target="_blank" href="http://item.taobao.com/item.htm?id=9138154640"><img src="http://img03.taobaocdn.com/bao/uploaded/i7/T1aJXZXfFsXXbGzYHb_092930.jpg_40x40.jpg" bigpicurl="http://img03.taobaocdn.com/bao/uploaded/i7/T1aJXZXfFsXXbGzYHb_092930.jpg_120x120.jpg"></a>
+            </div>
+            <div class="desc">
+                <a target="_blank" title="商城母亲节包邮 百丽正品女鞋 belle 2011牛皮中跟 女单鞋 113-15" href="http://item.taobao.com/item.htm?id=9138154640">商城母亲节包邮 百丽正品女鞋 belle 2011牛皮中跟 女单鞋 113-15</a>
+            </div>
+            <div class="price">
+                <i></i>358.00元 i7/T1aJXZXfFsXXbGzYHb_092930.jpg
+            </div>
+            <div class="sale">
+                <i></i>已售出 <strong>1587</strong> 笔
+            </div>
+        </li>
+        <li>
+            <div class="pic">
+                <a target="_blank" href="http://item.taobao.com/item.htm?id=9172959292"><img src="http://img04.taobaocdn.com/bao/uploaded/i4/T1Iy0ZXnBhXXbWYAQ2_044742.jpg_40x40.jpg" bigpicurl="http://img04.taobaocdn.com/bao/uploaded/i4/T1Iy0ZXnBhXXbWYAQ2_044742.jpg_120x120.jpg"></a>
+            </div>
+            <div class="desc">
+                <a target="_blank" title="他她tata 2011春季超高跟防水台女单鞋 J53-8D" href="http://item.taobao.com/item.htm?id=9172959292">他她tata 2011春季超高跟防水台女单鞋 J53-8D</a>
+            </div>
+            <div class="price">
+                <i></i>398.00元 i4/T1Iy0ZXnBhXXbWYAQ2_044742.jpg
+            </div>
+            <div class="sale">
+                <i></i>已售出 <strong>1583</strong> 笔
+            </div>
+        </li>
+        <li>
+            <div class="pic">
+                <a target="_blank" href="http://item.taobao.com/item.htm?id=5057404618"><img src="http://img04.taobaocdn.com/bao/uploaded/i8/T1wSFAXoxdXXbtWvsU_014508.jpg_40x40.jpg" bigpicurl="http://img04.taobaocdn.com/bao/uploaded/i8/T1wSFAXoxdXXbtWvsU_014508.jpg_120x120.jpg"></a>
+            </div>
+            <div class="desc">
+                <a target="_blank" title="百丽belle正品 夏季新款 坡跟绵羊皮镶钻女凉鞋 3LC04D" href="http://item.taobao.com/item.htm?id=5057404618">百丽belle正品 夏季新款 坡跟绵羊皮镶钻女凉鞋 3LC04D</a>
+            </div>
+            <div class="price">
+                <i></i>298.00元 i8/T1wSFAXoxdXXbtWvsU_014508.jpg
+            </div>
+            <div class="sale">
+                <i></i>已售出 <strong>1547</strong> 笔
+            </div>
+        </li>
+    </ul>
 </div>
 <script>
-    KISSY.use("node,overlay", function (S, Node, O) {
-        var Dom = S.DOM, Event = S.Event;
-        var elem = S.get('.J_TWidget');
-
-        var type = elem.getAttribute('data-widget-type'), config;
-
-        config = elem.getAttribute('data-widget-config');
-        if (config) config = config.replace(/'/g, '"');
-        config = S.parseJson(config);
-
-        // 兼容之前没有markupType时的写法
-        if (!('type' in config)) {
-            if (config.contentCls) {
-                config.type = "one-one";
-            } else {
-                config.type = "multi-one";
-            }
-        }
-
-        if (!config.triggerType) config.triggerType = "mouse";   // 之前overlay组件默认的是mouse现在改成了click, 店铺这边过滤一下
-
-        if (!config.zIndex || config.zIndex > 299 || config.zIndex < 200)  config.zIndex = 299;
-
-        if (config.type == "multi-one") {
-            // config.trigger type: string, 设计师得给出统一的选择器，选择器的规范得写出来告诉设计师
-            var popup = new O({
-                "zIndex": config.zIndex
-            });
-
-            // 注意：需要坚持content和trigger的个数是否相当和匹配，这点可以参考switchable
-            var container = Dom.get(config.container),
-                    triggers = Dom.query(config.trigger, container),
-                    contents = Dom.query(config.content, container);
-
-            Event.on(document, 'click', function () {
-                popup.hide();
-            });
-            S.each(triggers, function (trigger, index) {
-                Event.on(trigger, "click", function (e) {
-                    e.halt();
-                    popup.hide();
-                    if (popup.wangpuTarget == trigger) {
-                        popup.wangpuTarget = 0;
-                        return;
-                    }
-                    if (contents[index]) {
-                        //如果当前这个元素不存在也不显示了
-                        popup.set('content', contents[index].value);
-                        popup.set('align', S.merge(config.align, {
-                            node: trigger
-                        }));
-                        popup.set('effect', S.merge(config.effect, {
-                            target: trigger
-                        }));
-                        popup.wangpuTarget = trigger;
-                        popup.show();
+    KISSY.use("node, overlay", function (S, Node, O) {
+        //新建共享popup层
+        var $ = Node.all,
+                popup = new O({
+                    elStyle:{
+                        border:"2px solid gray",
+                        lineHeight:0
+                    },
+                    width:120, //配置高和宽
+                    height:120,
+                    effect:{
+                        effect:"slide", //popup层显示动画效果，slide是展开，也可以"fade"渐变
+                        duration:0.5
                     }
                 });
+        // 注意：使用定制的显示/隐藏方式
+        $("#multi").delegate("mouseenter", "img", function (e) {
+            var t = $(e.target);
+            popup.set("content", '<img src="' + t.attr('bigpicurl') + '"/>');
+            popup.set('align', {
+                node:t,
+                points:["tr", "tl"]
             });
-        }
+            popup.show();
+        });
+
+        $("#multi").delegate("mouseleave", "img", function (e) {
+            popup.hide();
+        });
     });
 </script>
 </body>
