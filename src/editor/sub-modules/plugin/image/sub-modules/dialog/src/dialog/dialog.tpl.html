@@ -17,10 +17,10 @@
         <div class='{prefixCls}img-tabs-panel {prefixCls}img-tabs-panel-selected'>
             <label>
         <span class='{prefixCls}image-title'>
-        图片地址：  
+        图片地址：
         </span>
                 <input
-                        data-verify='^(https?:/)?/[^\s]'
+                        data-verify='^(https?:/)?/[^\\s]'
                         data-warning='网址格式为：http:// 或 /'
                         class='{prefixCls}img-url {prefixCls}input'
                         style='width:390px;vertical-align:middle;'
@@ -33,13 +33,13 @@
                     <input class='{prefixCls}input {prefixCls}img-local-url'
                            readonly='readonly'
                            style='margin-right: 15px;
-            vertical-align: middle;  
-            width: 368px; 
+            vertical-align: middle;
+            width: 368px;
             color:#969696;'/>
                     <a
                             style='padding:3px 11px;
-            position:absolute; 
-            left:390px; 
+            position:absolute;
+            left:390px;
             top:0;
             z-index:1;'
                             class='{prefixCls}image-up {prefixCls}button ks-inline-block'>浏览...</a>
@@ -51,7 +51,7 @@
         </div>
     </div>
 </div>
-<div style=' 
+<div style='
             padding:0 20px 5px 20px;'>
     <table
             style='width:100%;margin-top:8px;'
@@ -62,7 +62,7 @@
                     宽度：
                 </label>
                 <input
-                        data-verify='^(自动|((?!0$)\d+))?$'
+                        data-verify='^(自动|((?!0$)\\d+))?$'
                         data-warning='宽度请输入正整数'
                         class='{prefixCls}img-width {prefixCls}input'
                         style='vertical-align:middle;width:60px'
@@ -74,7 +74,7 @@
                     高度：
                     <label>
                         <input
-                                data-verify='^(自动|((?!0$)\d+))?$'
+                                data-verify='^(自动|((?!0$)\\d+))?$'
                                 data-warning='高度请输入正整数'
                                 class='{prefixCls}img-height {prefixCls}input'
                                 style='vertical-align:middle;width:60px'
@@ -105,7 +105,7 @@
                 间距：
             </label>
                 <input
-                        data-verify='^\d+$'
+                        data-verify='^\\d+$'
                         data-warning='间距请输入非负整数'
                         class='{prefixCls}img-margin {prefixCls}input'
                         style='width:60px'/> 像素
@@ -120,7 +120,7 @@
                 <input
                         class='{prefixCls}img-link {prefixCls}input'
                         style='width:235px;vertical-align:middle;'
-                        data-verify='^(?:(?:\s*)|(?:https?://[^\s])|(?:#.))$'
+                        data-verify='^(?:(?:\\s*)|(?:https?://[^\\s])|(?:#.))$'
                         data-warning='请输入合适的网址格式'
                         />
 
