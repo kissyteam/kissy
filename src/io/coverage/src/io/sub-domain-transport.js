@@ -289,27 +289,27 @@ if (! _$jscoverage['/io/sub-domain-transport.js'].branchData) {
   _$jscoverage['/io/sub-domain-transport.js'].branchData['58'][1] = new BranchData();
 }
 _$jscoverage['/io/sub-domain-transport.js'].branchData['58'][1].init(342, 31, 'doc.body || doc.documentElement');
-function visit133_58_1(result) {
+function visit131_58_1(result) {
   _$jscoverage['/io/sub-domain-transport.js'].branchData['58'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io/sub-domain-transport.js'].branchData['50'][1].init(848, 11, '!iframeDesc');
-function visit132_50_1(result) {
+function visit130_50_1(result) {
   _$jscoverage['/io/sub-domain-transport.js'].branchData['50'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io/sub-domain-transport.js'].branchData['42'][1].init(120, 14, 'self.nativeXhr');
-function visit131_42_1(result) {
+function visit129_42_1(result) {
   _$jscoverage['/io/sub-domain-transport.js'].branchData['42'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io/sub-domain-transport.js'].branchData['40'][1].init(463, 30, 'iframeDesc && iframeDesc.ready');
-function visit130_40_1(result) {
+function visit128_40_1(result) {
   _$jscoverage['/io/sub-domain-transport.js'].branchData['40'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io/sub-domain-transport.js'].branchData['36'][2].init(319, 52, 'c[\'xdr\'][\'subDomain\'] && c[\'xdr\'][\'subDomain\'].proxy');
-function visit129_36_2(result) {
+function visit127_36_2(result) {
   _$jscoverage['/io/sub-domain-transport.js'].branchData['36'][2].ranCondition(result);
   return result;
 }_$jscoverage['/io/sub-domain-transport.js'].branchData['36'][1].init(307, 64, 'c[\'xdr\'] && c[\'xdr\'][\'subDomain\'] && c[\'xdr\'][\'subDomain\'].proxy');
-function visit128_36_1(result) {
+function visit126_36_1(result) {
   _$jscoverage['/io/sub-domain-transport.js'].branchData['36'][1].ranCondition(result);
   return result;
 }_$jscoverage['/io/sub-domain-transport.js'].lineData[6]++;
@@ -338,16 +338,16 @@ KISSY.add('io/sub-domain-transport', function(S, XhrTransportBase, Event, Dom) {
   _$jscoverage['/io/sub-domain-transport.js'].lineData[34]++;
   var proxy = PROXY_PAGE;
   _$jscoverage['/io/sub-domain-transport.js'].lineData[36]++;
-  if (visit128_36_1(c['xdr'] && visit129_36_2(c['xdr']['subDomain'] && c['xdr']['subDomain'].proxy))) {
+  if (visit126_36_1(c['xdr'] && visit127_36_2(c['xdr']['subDomain'] && c['xdr']['subDomain'].proxy))) {
     _$jscoverage['/io/sub-domain-transport.js'].lineData[37]++;
     proxy = c['xdr']['subDomain'].proxy;
   }
   _$jscoverage['/io/sub-domain-transport.js'].lineData[40]++;
-  if (visit130_40_1(iframeDesc && iframeDesc.ready)) {
+  if (visit128_40_1(iframeDesc && iframeDesc.ready)) {
     _$jscoverage['/io/sub-domain-transport.js'].lineData[41]++;
     self.nativeXhr = XhrTransportBase.nativeXhr(0, iframeDesc.iframe.contentWindow);
     _$jscoverage['/io/sub-domain-transport.js'].lineData[42]++;
-    if (visit131_42_1(self.nativeXhr)) {
+    if (visit129_42_1(self.nativeXhr)) {
       _$jscoverage['/io/sub-domain-transport.js'].lineData[43]++;
       self.sendInternal();
     } else {
@@ -358,7 +358,7 @@ KISSY.add('io/sub-domain-transport', function(S, XhrTransportBase, Event, Dom) {
     return;
   }
   _$jscoverage['/io/sub-domain-transport.js'].lineData[50]++;
-  if (visit132_50_1(!iframeDesc)) {
+  if (visit130_50_1(!iframeDesc)) {
     _$jscoverage['/io/sub-domain-transport.js'].lineData[51]++;
     iframeDesc = iframeMap[hostname] = {};
     _$jscoverage['/io/sub-domain-transport.js'].lineData[52]++;
@@ -369,7 +369,7 @@ KISSY.add('io/sub-domain-transport', function(S, XhrTransportBase, Event, Dom) {
   left: '-9999px', 
   top: '-9999px'});
     _$jscoverage['/io/sub-domain-transport.js'].lineData[58]++;
-    Dom.prepend(iframe, visit133_58_1(doc.body || doc.documentElement));
+    Dom.prepend(iframe, visit131_58_1(doc.body || doc.documentElement));
     _$jscoverage['/io/sub-domain-transport.js'].lineData[59]++;
     iframeUri = new S.Uri();
     _$jscoverage['/io/sub-domain-transport.js'].lineData[60]++;

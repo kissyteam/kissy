@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40
 MIT Licensed
-build time: Oct 30 18:18
+build time: Nov 6 21:31
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -532,7 +532,9 @@ KISSY.add('io/base', function (S, CustomEvent, Promise,undefined) {
         } catch (e) {
             // Propagate exception as error if not done
             if (self.state < 2) {
-                logger.error(e.stack || e);
+                setTimeout(function(){
+                    throw e;
+                },0);
                 self._ioReady(-1, e.message);
                 // Simply rethrow otherwise
             } else {
@@ -919,10 +921,14 @@ KISSY.add('io/xhr-transport-base', function (S, IO) {
                         io._ioReady(status, statusText);
                     }
                 }
-            } catch (firefoxAccessException) {
+            } catch (e) {
+                // success throw error
+                setTimeout(function () {
+                    throw e;
+                }, 0);
                 nativeXhr.onreadystatechange = S.noop;
                 if (!abort) {
-                    io._ioReady(-1, firefoxAccessException);
+                    io._ioReady(-1, e);
                 }
             }
         }
@@ -1994,7 +2000,9 @@ KISSY.add('io/methods', function (S, IO, Promise,undefined) {
                             statusText = 'success';
                             isSuccess = true;
                         } catch (e) {
-                            logger.error(e.stack || e);
+                            setTimeout(function(){
+                                throw e;
+                            },0);
                             statusText = 'parser error';
                         }
                     }

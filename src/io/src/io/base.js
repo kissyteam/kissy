@@ -421,7 +421,9 @@ KISSY.add('io/base', function (S, CustomEvent, Promise,undefined) {
         } catch (e) {
             // Propagate exception as error if not done
             if (self.state < 2) {
-                logger.error(e.stack || e);
+                setTimeout(function(){
+                    throw e;
+                },0);
                 self._ioReady(-1, e.message);
                 // Simply rethrow otherwise
             } else {
