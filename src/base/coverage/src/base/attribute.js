@@ -790,7 +790,7 @@ function visit1_13_1(result) {
   _$jscoverage['/base/attribute.js'].branchData['13'][1].ranCondition(result);
   return result;
 }_$jscoverage['/base/attribute.js'].lineData[6]++;
-KISSY.add('base/attribute', function(S, undefined) {
+KISSY.add(function(S, undefined) {
   _$jscoverage['/base/attribute.js'].functionData[0]++;
   _$jscoverage['/base/attribute.js'].lineData[8]++;
   var INVALID = {};

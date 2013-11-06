@@ -114,7 +114,7 @@ class LiveVariablesAnalysis extends
 
   LiveVariablesAnalysis(ControlFlowGraph<Node> cfg, Scope jsScope,
       AbstractCompiler compiler) {
-    callSuper(cfg, new LiveVariableJoinOp());
+    super(cfg, new LiveVariableJoinOp());
     this.jsScope = jsScope;
     this.escaped = Sets.newHashSet();
     computeEscaped(jsScope, escaped, compiler);

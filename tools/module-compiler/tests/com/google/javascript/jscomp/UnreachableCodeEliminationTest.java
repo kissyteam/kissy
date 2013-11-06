@@ -29,7 +29,7 @@ public class UnreachableCodeEliminationTest extends CompilerTestCase {
   }
 
   @Override public void setUp() throws Exception {
-    callSuper.setUp();
+    super.setUp();
     removeNoOpStatements = true;
   }
 

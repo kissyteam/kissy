@@ -45,13 +45,13 @@ public class ReplaceStringsTest extends CompilerTestCase {
     "goog.debug.Logger.getLogger = function(name){};\n";
 
   public ReplaceStringsTest() {
-    callSuper(EXTERNS, true);
+    super(EXTERNS, true);
     enableNormalize();
   }
 
   @Override
   protected CompilerOptions getOptions() {
-    CompilerOptions options = callSuper.getOptions();
+    CompilerOptions options = super.getOptions();
     options.setWarningLevel(
         DiagnosticGroups.MISSING_PROPERTIES, CheckLevel.OFF);
     return options;
@@ -59,9 +59,9 @@ public class ReplaceStringsTest extends CompilerTestCase {
 
   @Override
   protected void setUp() throws Exception {
-    callSuper.setUp();
-    callSuper.enableLineNumberCheck(false);
-    callSuper.enableTypeCheck(CheckLevel.OFF);
+    super.setUp();
+    super.enableLineNumberCheck(false);
+    super.enableTypeCheck(CheckLevel.OFF);
   }
 
   @Override

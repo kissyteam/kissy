@@ -71,7 +71,7 @@ public class JsMessageExtractor {
     private final List<JsMessage> messages = Lists.newLinkedList();
 
     private ExtractMessagesVisitor(AbstractCompiler compiler) {
-      callSuper(compiler, true, style, idGenerator);
+      super(compiler, true, style, idGenerator);
     }
 
     @Override

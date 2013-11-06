@@ -77,7 +77,7 @@ public abstract class Graph<N, E> implements AdjacencyGraph<N, E> {
     private static final long serialVersionUID = 1L;
 
     public GraphAnnotationState(int size) {
-      callSuper(size);
+      super(size);
     }
   }
 

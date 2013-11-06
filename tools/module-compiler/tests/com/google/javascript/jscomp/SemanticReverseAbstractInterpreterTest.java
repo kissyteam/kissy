@@ -32,7 +32,7 @@ public class SemanticReverseAbstractInterpreterTest
 
   @Override
   protected void setUp() throws Exception {
-    callSuper.setUp();
+    super.setUp();
 
     interpreter = new SemanticReverseAbstractInterpreter(
         codingConvention, registry);

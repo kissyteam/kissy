@@ -33,16 +33,16 @@ public class PeepholeSubstituteAlternateSyntaxTest extends CompilerTestCase {
 
   // TODO(user): Remove this when we no longer need to do string comparison.
   private PeepholeSubstituteAlternateSyntaxTest(boolean compareAsTree) {
-    callSuper(FOLD_CONSTANTS_TEST_EXTERNS, compareAsTree);
+    super(FOLD_CONSTANTS_TEST_EXTERNS, compareAsTree);
   }
 
   public PeepholeSubstituteAlternateSyntaxTest() {
-    callSuper(FOLD_CONSTANTS_TEST_EXTERNS);
+    super(FOLD_CONSTANTS_TEST_EXTERNS);
   }
 
   @Override
   public void setUp() throws Exception {
-    callSuper.setUp();
+    super.setUp();
 
     enableLineNumberCheck(true);
   }

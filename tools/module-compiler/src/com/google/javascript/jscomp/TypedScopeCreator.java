@@ -1208,7 +1208,7 @@ final class TypedScopeCreator implements ScopeCreator {
       // Function prototypes are special.
       // It's a common JS idiom to do:
       // F.prototype = { ... };
-      // So if F does not have an explicitly declared callSuper type,
+      // So if F does not have an explicitly declared super type,
       // allow F.prototype to be redefined arbitrarily.
       if ("prototype".equals(propName)) {
         Var qVar = scope.getVar(qName);
@@ -1431,7 +1431,7 @@ final class TypedScopeCreator implements ScopeCreator {
   private final class GlobalScopeBuilder extends AbstractScopeBuilder {
 
     private GlobalScopeBuilder(Scope scope) {
-      callSuper(scope);
+      super(scope);
     }
 
     /**
@@ -1443,7 +1443,7 @@ final class TypedScopeCreator implements ScopeCreator {
      * @param parent The parent of n
      */
     @Override public void visit(NodeTraversal t, Node n, Node parent) {
-      callSuper.visit(t, n, parent);
+      super.visit(t, n, parent);
 
       switch (n.getType()) {
 
@@ -1467,7 +1467,7 @@ final class TypedScopeCreator implements ScopeCreator {
         NodeTraversal t, JSDocInfo info,
         Node n, Node parent, Node rhsValue) {
       checkForTypedef(t, n, info);
-      callSuper.maybeDeclareQualifiedName(t, info, n, parent, rhsValue);
+      super.maybeDeclareQualifiedName(t, info, n, parent, rhsValue);
     }
 
     /**
@@ -1550,7 +1550,7 @@ final class TypedScopeCreator implements ScopeCreator {
      * @param scope The scope that we're builidng.
      */
     private LocalScopeBuilder(Scope scope) {
-      callSuper(scope);
+      super(scope);
     }
 
     /**
@@ -1576,7 +1576,7 @@ final class TypedScopeCreator implements ScopeCreator {
         return;
       }
 
-      callSuper.visit(t, n, parent);
+      super.visit(t, n, parent);
     }
 
     /** Handle bleeding functions and function parameters. */

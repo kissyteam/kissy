@@ -335,7 +335,7 @@ public final class ByteString {
      * Constructs a new output with the given initial capacity.
      */
     private Output(final ByteArrayOutputStream bout) {
-      callSuper(bout);
+      super(bout);
       this.bout = bout;
     }
 

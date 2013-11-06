@@ -120,7 +120,7 @@ class ClosureReverseAbstractInterpreter
    */
   ClosureReverseAbstractInterpreter(CodingConvention convention,
       final JSTypeRegistry typeRegistry) {
-    callSuper(convention, typeRegistry);
+    super(convention, typeRegistry);
     this.restricters =
       new ImmutableMap.Builder<String, Function<TypeRestriction, JSType>>()
       .put("isDef", new Function<TypeRestriction, JSType>() {

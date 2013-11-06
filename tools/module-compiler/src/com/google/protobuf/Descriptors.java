@@ -1543,7 +1543,7 @@ public final class Descriptors {
     private DescriptorValidationException(
         final GenericDescriptor problemDescriptor,
         final String description) {
-      callSuper(problemDescriptor.getFullName() + ": " + description);
+      super(problemDescriptor.getFullName() + ": " + description);
 
       // Note that problemDescriptor may be partially uninitialized, so we
       // don't want to expose it directly to the user.  So, we only provide
@@ -1564,7 +1564,7 @@ public final class Descriptors {
     private DescriptorValidationException(
         final FileDescriptor problemDescriptor,
         final String description) {
-      callSuper(problemDescriptor.getName() + ": " + description);
+      super(problemDescriptor.getName() + ": " + description);
 
       // Note that problemDescriptor may be partially uninitialized, so we
       // don't want to expose it directly to the user.  So, we only provide

@@ -9,8 +9,6 @@ import java.io.File;
  * @author yiminghe@gmail.com
  */
 public class Test {
-
-
     public static void testKISSY1_3_Packager() {
         Main main = new Main();
         String path;
@@ -39,6 +37,24 @@ public class Test {
         main.setOutputDependency("D:\\code\\kissy_git\\kissy\\src\\anim\\sub-modules\\base\\meta\\deps.js");
         main.setRequire("anim/base");
         main.getPackages().initByPackageUrls("anim/base="+path+"base");
+        main.setCompact(true);
+        main.run();
+    }
+
+
+
+    public static void testKISSY1_4_Packager2() {
+        Main main = new Main();
+        String path;
+        path = "D:\\code\\kissy_git\\kissy\\kissy\\src\\base\\src\\";
+        String output = "D:\\code\\kissy_git\\kissy\\kissy\\build\\base\\";
+
+        new File(output).mkdirs();
+
+        main.setOutput(output + "base-pkg.js");
+        main.setOutputDependency("D:\\code\\kissy_git\\kissy\\kissy\\src\\base\\meta\\deps.js");
+        main.setRequire("base");
+        main.getPackages().initByPackageUrls("base="+path+"base");
         main.setCompact(true);
         main.run();
     }
@@ -76,6 +92,23 @@ public class Test {
         main.run();
     }
 
+
+    public static void testKISSY1_4_MainPackageUrl() {
+        Main main = new Main();
+        String path;
+        path = ExtractDependency.class.getResource("/").getFile() +
+                "../../../kissy/tools/module-compiler/tests/tb_kissy_1.4/src/";
+        String output = path + "../build/";
+
+        new File(output).mkdirs();
+
+        main.setOutput(output + "run.js");
+        main.setOutputDependency(output + "run.dep.js");
+        main.setRequire("biz");
+        main.getPackages().initByPackageUrls(path + "biz/");
+        main.run();
+    }
+
     public static void testKISSY1_3_ExtractDependency() throws Exception {
         ExtractDependency m = new ExtractDependency();
         String path;
@@ -108,11 +141,6 @@ public class Test {
 
 
     public static void main(String[] args) throws Exception {
-        testKISSY1_3_ExtractDependency();
-        //testKISSY1_3_Packager2();
-              // testKISSY1_3_MainPackageUrl();
-    // testKISSY1_3_ExtractDependencyPackageUrl();
-//        testKISSY1_3_ExtractDependency();
-//        testKISSY1_3_Main();
+        testKISSY1_4_Packager2();
     }
 }

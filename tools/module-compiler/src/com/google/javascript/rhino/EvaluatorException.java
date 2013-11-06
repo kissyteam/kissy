@@ -48,7 +48,7 @@ public class EvaluatorException extends RhinoException
 
     public EvaluatorException(String detail)
     {
-        callSuper(detail);
+        super(detail);
     }
 
     /**
@@ -84,7 +84,7 @@ public class EvaluatorException extends RhinoException
     public EvaluatorException(String detail, String sourceName, int lineNumber,
                               String lineSource, int columnNumber)
     {
-        callSuper(detail);
+        super(detail);
         recordErrorOrigin(sourceName, lineNumber, lineSource, columnNumber);
     }
 }

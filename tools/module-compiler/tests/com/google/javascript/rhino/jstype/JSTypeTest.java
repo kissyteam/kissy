@@ -91,7 +91,7 @@ public class JSTypeTest extends BaseJSTypeTestCase {
 
   @Override
   protected void setUp() throws Exception {
-    callSuper.setUp();
+    super.setUp();
 
     RecordTypeBuilder builder = new RecordTypeBuilder(registry);
     builder.addProperty("a", NUMBER_TYPE, null);

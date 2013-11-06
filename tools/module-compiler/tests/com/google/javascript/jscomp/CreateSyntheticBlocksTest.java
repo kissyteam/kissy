@@ -27,12 +27,12 @@ public class CreateSyntheticBlocksTest extends CompilerTestCase {
 
   public CreateSyntheticBlocksTest() {
     // Can't use compare as a tree because of the added synthetic blocks.
-    callSuper("", false);
+    super("", false);
   }
 
   @Override
   public void setUp() {
-    callSuper.enableLineNumberCheck(false);
+    super.enableLineNumberCheck(false);
   }
 
   @Override

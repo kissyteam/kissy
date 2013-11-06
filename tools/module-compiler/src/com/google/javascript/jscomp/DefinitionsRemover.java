@@ -155,7 +155,7 @@ class DefinitionsRemover {
     private final Node lValue;
 
     IncompleteDefinition(Node lValue, boolean inExterns) {
-      callSuper(inExterns);
+      super(inExterns);
       Preconditions.checkNotNull(lValue);
       Preconditions.checkArgument(
           ALLOWED_TYPES.contains(lValue.getType()),
@@ -179,7 +179,7 @@ class DefinitionsRemover {
    */
   static final class UnknownDefinition extends IncompleteDefinition {
     UnknownDefinition(Node lValue, boolean inExterns) {
-      callSuper(lValue, inExterns);
+      super(lValue, inExterns);
     }
 
     @Override
@@ -195,7 +195,7 @@ class DefinitionsRemover {
   static final class ExternalNameOnlyDefinition extends IncompleteDefinition {
 
     ExternalNameOnlyDefinition(Node lValue) {
-      callSuper(lValue, true);
+      super(lValue, true);
     }
 
     @Override
@@ -212,7 +212,7 @@ class DefinitionsRemover {
     FunctionArgumentDefinition(Node function,
         Node argumentName,
         boolean inExterns) {
-      callSuper(argumentName, inExterns);
+      super(argumentName, inExterns);
       Preconditions.checkArgument(NodeUtil.isFunction(function));
       Preconditions.checkArgument(NodeUtil.isName(argumentName));
     }
@@ -232,7 +232,7 @@ class DefinitionsRemover {
     protected final Node function;
 
     FunctionDefinition(Node node, boolean inExterns) {
-      callSuper(inExterns);
+      super(inExterns);
       Preconditions.checkArgument(NodeUtil.isFunction(node));
       function = node;
     }
@@ -254,7 +254,7 @@ class DefinitionsRemover {
    */
   static final class NamedFunctionDefinition extends FunctionDefinition {
     NamedFunctionDefinition(Node node, boolean inExterns) {
-      callSuper(node, inExterns);
+      super(node, inExterns);
     }
 
     @Override
@@ -269,7 +269,7 @@ class DefinitionsRemover {
    */
   static final class FunctionExpressionDefinition extends FunctionDefinition {
     FunctionExpressionDefinition(Node node, boolean inExterns) {
-      callSuper(node, inExterns);
+      super(node, inExterns);
       Preconditions.checkArgument(
           NodeUtil.isFunctionExpression(node));
     }
@@ -289,7 +289,7 @@ class DefinitionsRemover {
     private final Node assignment;
 
     AssignmentDefinition(Node node, boolean inExterns) {
-      callSuper(inExterns);
+      super(inExterns);
       Preconditions.checkArgument(NodeUtil.isAssign(node));
       assignment = node;
     }
@@ -326,7 +326,7 @@ class DefinitionsRemover {
 
     ObjectLiteralPropertyDefinition(Node lit, Node name, Node value,
           boolean isExtern) {
-      callSuper(isExtern);
+      super(isExtern);
 
       this.literal = lit;
       this.name = name;
@@ -375,7 +375,7 @@ class DefinitionsRemover {
   static final class VarDefinition extends Definition {
     private final Node name;
     VarDefinition(Node node, boolean inExterns) {
-      callSuper(inExterns);
+      super(inExterns);
       Preconditions.checkArgument(NodeUtil.isVarDeclaration(node));
       Preconditions.checkArgument(node.hasChildren(),
           "VAR Declaration of " + node.getString() +

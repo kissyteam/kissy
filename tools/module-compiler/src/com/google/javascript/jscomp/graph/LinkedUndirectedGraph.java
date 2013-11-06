@@ -354,7 +354,7 @@ public class LinkedUndirectedGraph<N, E>
     protected Annotation annotation;
 
     AnnotatedLinkedUndirectedGraphNode(N nodeValue) {
-      callSuper(nodeValue);
+      super(nodeValue);
     }
 
     @SuppressWarnings("unchecked")
@@ -452,7 +452,7 @@ public class LinkedUndirectedGraph<N, E>
     AnnotatedLinkedUndirectedGraphEdge(
         UndiGraphNode<N, E> nodeA, E edgeValue,
         UndiGraphNode<N, E> nodeB) {
-      callSuper(nodeA, edgeValue, nodeB);
+      super(nodeA, edgeValue, nodeB);
     }
 
     @SuppressWarnings("unchecked")

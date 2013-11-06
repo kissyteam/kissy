@@ -12,6 +12,7 @@ import java.util.ArrayList;
  */
 public class ModuleUtils {
 
+    static long COUNT = System.currentTimeMillis();
 
     /**
      * @param moduleName      event/ie
@@ -52,13 +53,54 @@ public class ModuleUtils {
 
     /**
      * startWith '#' has special meaning
+     *
      * @param astRoot ast root
      * @param name    module name
      * @return String[] required processedModules 's name
      */
     public static String[] getRequiresFromAst(Node astRoot, String name) {
         ArrayList<String> re = new ArrayList<String>();
-        Node r = astRoot.getFirstChild().getFirstChild().getLastChild();
+        Node func = astRoot.getFirstChild().getFirstChild();
+        Node r = func.getLastChild();
+        if (r.getType() != Token.OBJECTLIT) {
+            //KISSY.add(function(){ KISSY.require('./x')});
+            ArrayList<Node> nodes = new ArrayList<Node>();
+            ArrayList<String> ids = new ArrayList<String>();
+            ArrayList<Node> cleans = new ArrayList<Node>();
+            findKISSY_require(astRoot, nodes, ids, cleans);
+            for (Node clean : cleans) {
+                clean.detachFromParent();
+            }
+            if (nodes.size() > 0) {
+                Node config = new Node(Token.OBJECTLIT);
+                Node require = Node.newString("requires");
+                Node requireVal = new Node(Token.ARRAYLIT);
+                for (Node node : nodes) {
+                    node.detachFromParent();
+                    requireVal.addChildrenToBack(node);
+                }
+                config.addChildrenToBack(require);
+                require.addChildrenToBack(requireVal);
+                func.addChildrenToBack(config);
+                Node fn = func.getChildAtIndex(1);
+                if (fn.getType() != Token.FUNCTION) {
+                    fn = fn.getNext();
+                }
+                if (fn.getType() == Token.FUNCTION) {
+                    Node lp = fn.getChildAtIndex(1);
+                    if (!lp.hasChildren()) {
+                        lp.addChildrenToBack(Node.newString(Token.NAME, "S"));
+                    }
+                    Node before = lp.getFirstChild();
+                    for (String id : ids) {
+                        Node newChild = Node.newString(Token.NAME, id);
+                        lp.addChildAfter(newChild, before);
+                        before = newChild;
+                    }
+                }
+            }
+        }
+        r = func.getLastChild();
         if (r.getType() == Token.OBJECTLIT) {
             Node first = r.getFirstChild();
             while (first != null) {
@@ -93,5 +135,33 @@ public class ModuleUtils {
             }
         }
         return re.toArray(new String[re.size()]);
+    }
+
+    static void findKISSY_require(Node root, ArrayList<Node> nodes, ArrayList<String> ids, ArrayList<Node> cleans) {
+        if (root.getType() == Token.CALL) {
+            Node first = root.getFirstChild();
+            if (first.getType() == Token.GETPROP) {
+                Node name = first.getFirstChild();
+                Node method = name.getNext();
+                if (name.getType() == Token.NAME &&
+                        method.getType() == Token.STRING &&
+                        name.getString().equals("KISSY") && method.getString().equals("require")) {
+                    nodes.add(first.getNext());
+                    if (root.getParent().getType() == Token.NAME) {
+                        ids.add(root.getParent().getString());
+                        cleans.add(root.getParent().getParent());
+                    } else {
+                        ids.add("KISSY_" + (COUNT++));
+                        cleans.add(root.getParent());
+                    }
+                    return;
+                }
+            }
+        }
+        Node firstChild = root.getFirstChild();
+        while (firstChild != null) {
+            findKISSY_require(firstChild, nodes, ids, cleans);
+            firstChild = firstChild.getNext();
+        }
     }
 }

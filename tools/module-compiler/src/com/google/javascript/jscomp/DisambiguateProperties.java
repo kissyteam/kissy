@@ -588,7 +588,7 @@ class DisambiguateProperties<T> implements CompilerPass {
 
     /**
      * Returns a set of types that should be skipped given the given type.
-     * This is necessary for interfaces when using JSTypes, as all callSuper
+     * This is necessary for interfaces when using JSTypes, as all super
      * interfaces must also be skipped.
      */
     ImmutableSet<T> getTypesToSkipForType(T type);

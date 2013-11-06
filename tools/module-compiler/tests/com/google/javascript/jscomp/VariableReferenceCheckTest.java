@@ -33,7 +33,7 @@ public class VariableReferenceCheckTest extends CompilerTestCase {
 
   @Override
   public CompilerOptions getOptions() {
-    CompilerOptions options = callSuper.getOptions();
+    CompilerOptions options = super.getOptions();
     if (enableAmbiguousFunctionCheck) {
       options.setWarningLevel(
           DiagnosticGroups.AMBIGUOUS_FUNCTION_DECL, CheckLevel.WARNING);
@@ -49,7 +49,7 @@ public class VariableReferenceCheckTest extends CompilerTestCase {
 
   @Override
   public void setUp() throws Exception {
-    callSuper.setUp();
+    super.setUp();
     enableAmbiguousFunctionCheck = false;
   }
 

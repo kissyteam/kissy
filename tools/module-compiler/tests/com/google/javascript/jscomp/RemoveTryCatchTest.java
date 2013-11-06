@@ -21,7 +21,7 @@ public class RemoveTryCatchTest extends CompilerTestCase {
 
   public RemoveTryCatchTest() {
     // do not compare as tree because we use synthetic blocks
-    callSuper("", false);
+    super("", false);
   }
 
   @Override public CompilerPass getProcessor(Compiler compiler) {

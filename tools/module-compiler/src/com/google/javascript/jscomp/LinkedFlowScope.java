@@ -362,7 +362,7 @@ class LinkedFlowScope implements FlowScope {
     final LinkedFlowSlot parent;
 
     LinkedFlowSlot(String name, JSType type, LinkedFlowSlot parent) {
-      callSuper(name, type, true);
+      super(name, type, true);
       this.parent = parent;
     }
   }

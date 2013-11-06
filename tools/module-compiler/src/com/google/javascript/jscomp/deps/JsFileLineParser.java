@@ -58,7 +58,7 @@ public abstract class JsFileLineParser {
      * @param fatal Whether the exception is recoverable.
      */
     public ParseException(String message, boolean fatal) {
-      callSuper(message);
+      super(message);
       this.fatal = fatal;
     }
 

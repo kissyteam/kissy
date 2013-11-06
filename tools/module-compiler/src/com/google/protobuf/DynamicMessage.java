@@ -274,7 +274,7 @@ public final class DynamicMessage extends AbstractMessage {
 
     public Builder mergeFrom(Message other) {
       if (other instanceof DynamicMessage) {
-        // This should be somewhat faster than calling callSuper.mergeFrom().
+        // This should be somewhat faster than calling super.mergeFrom().
         DynamicMessage otherDynamicMessage = (DynamicMessage) other;
         if (otherDynamicMessage.type != type) {
           throw new IllegalArgumentException(
@@ -284,7 +284,7 @@ public final class DynamicMessage extends AbstractMessage {
         mergeUnknownFields(otherDynamicMessage.unknownFields);
         return this;
       } else {
-        return callSuper.mergeFrom(other);
+        return super.mergeFrom(other);
       }
     }
 

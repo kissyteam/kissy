@@ -44,11 +44,11 @@ public class ScriptOrFnNode extends Node {
     private static final long serialVersionUID = 1L;
 
     public ScriptOrFnNode(int nodeType) {
-        callSuper(nodeType);
+        super(nodeType);
     }
 
     public ScriptOrFnNode(int nodeType, int lineno, int charno) {
-        callSuper(nodeType, lineno, charno);
+        super(nodeType, lineno, charno);
     }
 
     public final String getSourceName() { return sourceName; }

@@ -174,6 +174,8 @@
                     } else {
                         mods.push(null);
                     }
+                } else {
+                    mods.push(undefined);
                 }
             });
 
@@ -265,7 +267,10 @@
             if (typeof fn === 'function') {
                 // 需要解开 index，相对路径
                 // 但是需要保留 alias，防止值不对应
+                // record current mod for KISSY.require
+                Loader.attachingModName = mod.name;
                 mod.value = fn.apply(mod, Utils.getModules(runtime, mod.getRequiresWithAlias()));
+                Loader.attachingModName = undefined;
             } else {
                 mod.value = fn;
             }
@@ -420,7 +425,7 @@
          * @param {String} str
          * @returns {String} hash code
          */
-        getHash:function (str) {
+        getHash: function (str) {
             var hash = 5381,
                 i;
             for (i = str.length; --i > -1;) {

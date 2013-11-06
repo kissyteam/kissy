@@ -22,7 +22,7 @@ package com.google.javascript.jscomp;
 public class ProcessTweaksTest extends CompilerTestCase {
 
   public ProcessTweaksTest() {
-    callSuper("var externMethod;");
+    super("var externMethod;");
   }
 
   @Override

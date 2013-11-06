@@ -238,7 +238,7 @@ public class TokenStream
                     if (c=='f') { X="float";id=Id_float; }
                     else if (c=='s') { X="short";id=Id_short; }
                     break L;
-                case 'p': X="callSuper";id=Id_super; break L;
+                case 'p': X="super";id=Id_super; break L;
                 case 'r': X="throw";id=Id_throw; break L;
                 case 't': X="catch";id=Id_catch; break L;
                 } break L;

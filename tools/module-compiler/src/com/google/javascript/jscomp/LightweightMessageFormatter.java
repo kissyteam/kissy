@@ -36,7 +36,7 @@ public class LightweightMessageFormatter extends AbstractMessageFormatter {
    * A constructor for when the client doesn't care about source information.
    */
   private LightweightMessageFormatter() {
-    callSuper(null);
+    super(null);
     this.excerpt = LINE;
   }
 
@@ -46,7 +46,7 @@ public class LightweightMessageFormatter extends AbstractMessageFormatter {
 
   public LightweightMessageFormatter(SourceExcerptProvider source,
       SourceExcerpt excerpt) {
-    callSuper(source);
+    super(source);
     Preconditions.checkNotNull(source);
     this.excerpt = excerpt;
   }

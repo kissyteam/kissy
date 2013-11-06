@@ -33,7 +33,7 @@ public class OptimizeReturnsTest extends CompilerTestCase {
     "var extern;extern.externalMethod";
 
   public OptimizeReturnsTest() {
-    callSuper(EXTERNAL_SYMBOLS);
+    super(EXTERNAL_SYMBOLS);
   }
 
   @Override
@@ -44,8 +44,8 @@ public class OptimizeReturnsTest extends CompilerTestCase {
 
   @Override
   protected void setUp() throws Exception {
-    callSuper.setUp();
-    callSuper.enableLineNumberCheck(true);
+    super.setUp();
+    super.enableLineNumberCheck(true);
     disableTypeCheck();
   }
 

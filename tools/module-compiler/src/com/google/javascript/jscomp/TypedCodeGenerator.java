@@ -34,7 +34,7 @@ import java.util.Set;
  */
 class TypedCodeGenerator extends CodeGenerator {
   TypedCodeGenerator(CodeConsumer consumer, Charset outputCharset) {
-    callSuper(consumer, outputCharset);
+    super(consumer, outputCharset);
   }
 
   @Override
@@ -56,7 +56,7 @@ class TypedCodeGenerator extends CodeGenerator {
       }
     }
 
-    callSuper.add(n, context);
+    super.add(n, context);
   }
 
   private String getTypeAnnotation(Node node) {

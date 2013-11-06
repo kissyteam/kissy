@@ -25,7 +25,7 @@ public class MinimizeExitPointsTest extends CompilerTestCase {
 
   @Override
   public void setUp() {
-    callSuper.enableLineNumberCheck(true);
+    super.enableLineNumberCheck(true);
   }
 
   @Override

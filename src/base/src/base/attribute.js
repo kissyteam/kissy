@@ -1,9 +1,9 @@
-/**
+/**!
  * @ignore
  * attribute management
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
-KISSY.add('base/attribute', function (S, undefined) {
+KISSY.add(function (S, undefined) {
     // atomic flag
     var INVALID = {};
 

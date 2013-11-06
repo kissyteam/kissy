@@ -32,7 +32,6 @@ public class AstUtils {
 		return ci.getAstRoot(compiler);
 	}
 
-
 	/**
 	 * get javascript source from root node of its ast
 	 *
@@ -56,43 +55,21 @@ public class AstUtils {
 	}
 
 	public static void main(String[] args) {
-		String code = "var xyz=1+2+3;alert(xyz);alert(z);";
-		String code2 = "var z=2;";
-		String kissy = "KISSY.add('event',function(){},{requires:['dom','event']});";
-		String seajs = "module.declare('x',['z','p'],function(){require('2');});";
-
-		Node k = parse(kissy,"kissy");
-
-
-		//System.out.println(k.toStringTree());
-
-
-		Node sea = parse(seajs,"seajs");
-
-
-		System.out.println(sea.toStringTree());
-//		System.out.println(sea.getFirstChild().getFirstChild().getChildAtIndex(1).toStringTree());
-//		System.out.println(sea.getFirstChild().getFirstChild().getChildAtIndex(1).getChildAtIndex(2)
-//		.getFirstChild().getFirstChild().getFirstChild().getType()
-//		);
-		//get ast
-		Node n = parse(code,"test");
-
-		//add ast
-		Node n2 = parse(code2,"test");
-
-		//use cloneTree to get a node with its children and children's children
-		Node newChild = n2.getFirstChild().cloneTree();
-
-		//add one node from tree1 to tree2
-		n.addChildAfter(newChild, n.getFirstChild());
-
-		Node nn = Node.newString("program generated");
-		n.addChildToBack(nn);
-
-		//serialize
-		//System.out.println(toSource(n));
-
+		String kissyCjs = "KISSY.add(function(S){ " +
+                "var t = KISSY.require('my');" +
+                "var t2 = KISSY.require(a+b);" +
+                "KISSY.require('z');" +
+                "KISSY.require('z2');" +
+                "t.done();" +
+                "});";
+		Node k = parse(kissyCjs,"kissy");
+        System.out.println(k.toStringTree());
+        if(true){
+           // return;
+        }
+        ModuleUtils.getRequiresFromAst(k,"k");
+        System.out.println(k.toStringTree());
+        System.out.println(AstUtils.toSource(k));
 
 	}
 }

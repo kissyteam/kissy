@@ -384,7 +384,7 @@ public abstract class GeneratedMessage extends AbstractMessage {
 
     @Override
     public boolean isInitialized() {
-      return callSuper.isInitialized() && extensionsAreInitialized();
+      return super.isInitialized() && extensionsAreInitialized();
     }
 
     /**
@@ -450,7 +450,7 @@ public abstract class GeneratedMessage extends AbstractMessage {
 
     @Override
     public Map<FieldDescriptor, Object> getAllFields() {
-      final Map<FieldDescriptor, Object> result = callSuper.getAllFieldsMutable();
+      final Map<FieldDescriptor, Object> result = super.getAllFieldsMutable();
       result.putAll(extensions.getAllFields());
       return Collections.unmodifiableMap(result);
     }
@@ -461,7 +461,7 @@ public abstract class GeneratedMessage extends AbstractMessage {
         verifyContainingType(field);
         return extensions.hasField(field);
       } else {
-        return callSuper.hasField(field);
+        return super.hasField(field);
       }
     }
 
@@ -482,7 +482,7 @@ public abstract class GeneratedMessage extends AbstractMessage {
           return value;
         }
       } else {
-        return callSuper.getField(field);
+        return super.getField(field);
       }
     }
 
@@ -492,7 +492,7 @@ public abstract class GeneratedMessage extends AbstractMessage {
         verifyContainingType(field);
         return extensions.getRepeatedFieldCount(field);
       } else {
-        return callSuper.getRepeatedFieldCount(field);
+        return super.getRepeatedFieldCount(field);
       }
     }
 
@@ -503,7 +503,7 @@ public abstract class GeneratedMessage extends AbstractMessage {
         verifyContainingType(field);
         return extensions.getRepeatedField(field, index);
       } else {
-        return callSuper.getRepeatedField(field, index);
+        return super.getRepeatedField(field, index);
       }
     }
 
@@ -672,7 +672,7 @@ public abstract class GeneratedMessage extends AbstractMessage {
         message.extensions.setField(field, value);
         return (BuilderType) this;
       } else {
-        return callSuper.setField(field, value);
+        return super.setField(field, value);
       }
     }
 
@@ -684,7 +684,7 @@ public abstract class GeneratedMessage extends AbstractMessage {
         message.extensions.clearField(field);
         return (BuilderType) this;
       } else {
-        return callSuper.clearField(field);
+        return super.clearField(field);
       }
     }
 
@@ -697,7 +697,7 @@ public abstract class GeneratedMessage extends AbstractMessage {
         message.extensions.setRepeatedField(field, index, value);
         return (BuilderType) this;
       } else {
-        return callSuper.setRepeatedField(field, index, value);
+        return super.setRepeatedField(field, index, value);
       }
     }
 
@@ -710,7 +710,7 @@ public abstract class GeneratedMessage extends AbstractMessage {
         message.extensions.addRepeatedField(field, value);
         return (BuilderType) this;
       } else {
-        return callSuper.addRepeatedField(field, value);
+        return super.addRepeatedField(field, value);
       }
     }
 
@@ -1176,7 +1176,7 @@ public abstract class GeneratedMessage extends AbstractMessage {
           final FieldDescriptor descriptor, final String camelCaseName,
           final Class<? extends GeneratedMessage> messageClass,
           final Class<? extends Builder> builderClass) {
-        callSuper(descriptor, camelCaseName, messageClass, builderClass);
+        super(descriptor, camelCaseName, messageClass, builderClass);
 
         valueOfMethod = getMethodOrDie(type, "valueOf",
                                        EnumValueDescriptor.class);
@@ -1189,11 +1189,11 @@ public abstract class GeneratedMessage extends AbstractMessage {
 
       @Override
       public Object get(final GeneratedMessage message) {
-        return invokeOrDie(getValueDescriptorMethod, callSuper.get(message));
+        return invokeOrDie(getValueDescriptorMethod, super.get(message));
       }
       @Override
       public void set(final Builder builder, final Object value) {
-        callSuper.set(builder, invokeOrDie(valueOfMethod, null, value));
+        super.set(builder, invokeOrDie(valueOfMethod, null, value));
       }
     }
 
@@ -1203,7 +1203,7 @@ public abstract class GeneratedMessage extends AbstractMessage {
           final FieldDescriptor descriptor, final String camelCaseName,
           final Class<? extends GeneratedMessage> messageClass,
           final Class<? extends Builder> builderClass) {
-        callSuper(descriptor, camelCaseName, messageClass, builderClass);
+        super(descriptor, camelCaseName, messageClass, builderClass);
 
         valueOfMethod = getMethodOrDie(type, "valueOf",
                                        EnumValueDescriptor.class);
@@ -1218,7 +1218,7 @@ public abstract class GeneratedMessage extends AbstractMessage {
       @SuppressWarnings("unchecked")
       public Object get(final GeneratedMessage message) {
         final List newList = new ArrayList();
-        for (final Object element : (List) callSuper.get(message)) {
+        for (final Object element : (List) super.get(message)) {
           newList.add(invokeOrDie(getValueDescriptorMethod, element));
         }
         return Collections.unmodifiableList(newList);
@@ -1227,17 +1227,17 @@ public abstract class GeneratedMessage extends AbstractMessage {
       public Object getRepeated(final GeneratedMessage message,
                                 final int index) {
         return invokeOrDie(getValueDescriptorMethod,
-          callSuper.getRepeated(message, index));
+          super.getRepeated(message, index));
       }
       @Override
       public void setRepeated(final Builder builder,
                               final int index, final Object value) {
-        callSuper.setRepeated(builder, index, invokeOrDie(valueOfMethod, null,
+        super.setRepeated(builder, index, invokeOrDie(valueOfMethod, null,
                           value));
       }
       @Override
       public void addRepeated(final Builder builder, final Object value) {
-        callSuper.addRepeated(builder, invokeOrDie(valueOfMethod, null, value));
+        super.addRepeated(builder, invokeOrDie(valueOfMethod, null, value));
       }
     }
 
@@ -1249,7 +1249,7 @@ public abstract class GeneratedMessage extends AbstractMessage {
           final FieldDescriptor descriptor, final String camelCaseName,
           final Class<? extends GeneratedMessage> messageClass,
           final Class<? extends Builder> builderClass) {
-        callSuper(descriptor, camelCaseName, messageClass, builderClass);
+        super(descriptor, camelCaseName, messageClass, builderClass);
 
         newBuilderMethod = getMethodOrDie(type, "newBuilder");
       }
@@ -1271,7 +1271,7 @@ public abstract class GeneratedMessage extends AbstractMessage {
 
       @Override
       public void set(final Builder builder, final Object value) {
-        callSuper.set(builder, coerceType(value));
+        super.set(builder, coerceType(value));
       }
       @Override
       public Message.Builder newBuilder() {
@@ -1285,7 +1285,7 @@ public abstract class GeneratedMessage extends AbstractMessage {
           final FieldDescriptor descriptor, final String camelCaseName,
           final Class<? extends GeneratedMessage> messageClass,
           final Class<? extends Builder> builderClass) {
-        callSuper(descriptor, camelCaseName, messageClass, builderClass);
+        super(descriptor, camelCaseName, messageClass, builderClass);
 
         newBuilderMethod = getMethodOrDie(type, "newBuilder");
       }
@@ -1308,11 +1308,11 @@ public abstract class GeneratedMessage extends AbstractMessage {
       @Override
       public void setRepeated(final Builder builder,
                               final int index, final Object value) {
-        callSuper.setRepeated(builder, index, coerceType(value));
+        super.setRepeated(builder, index, coerceType(value));
       }
       @Override
       public void addRepeated(final Builder builder, final Object value) {
-        callSuper.addRepeated(builder, coerceType(value));
+        super.addRepeated(builder, coerceType(value));
       }
       @Override
       public Message.Builder newBuilder() {

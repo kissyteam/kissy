@@ -31,7 +31,7 @@ import java.util.Map;
 public class ProcessDefinesTest extends CompilerTestCase {
 
   public ProcessDefinesTest() {
-    callSuper("var externMethod;");
+    super("var externMethod;");
 
     // ProcessDefines emits warnings if the user tries to re-define a constant,
     // but the constant is not defined anywhere in the binary.
@@ -43,7 +43,7 @@ public class ProcessDefinesTest extends CompilerTestCase {
 
   @Override
   public void setUp() throws Exception {
-    callSuper.setUp();
+    super.setUp();
     overrides.clear();
   }
 

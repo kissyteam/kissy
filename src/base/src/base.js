@@ -1,9 +1,12 @@
-/**
+/**!
  * @ignore
  * KISSY Class System
  * @author yiminghe@gmail.com
  */
-KISSY.add('base', function (S, Attribute, CustomEvent) {
+KISSY.add(function (S) {
+    var Attribute = KISSY.require('base/attribute');
+    var CustomEvent = KISSY.require('event/custom');
+
     var ATTRS = 'ATTRS',
         ucfirst = S.ucfirst,
         ON_SET = '_onSet',
@@ -573,8 +576,6 @@ KISSY.add('base', function (S, Attribute, CustomEvent) {
     }
 
     return Base;
-}, {
-    requires: ['base/attribute', 'event/custom']
 });
 /**
  * @ignore

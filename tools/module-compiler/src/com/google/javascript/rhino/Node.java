@@ -241,12 +241,12 @@ public class Node implements Cloneable, Serializable {
     private static final long serialVersionUID = 1L;
 
     NumberNode(double number) {
-      callSuper(Token.NUMBER);
+      super(Token.NUMBER);
       this.number = number;
     }
 
     public NumberNode(double number, int lineno, int charno) {
-      callSuper(Token.NUMBER, lineno, charno);
+      super(Token.NUMBER, lineno, charno);
       this.number = number;
     }
 
@@ -274,7 +274,7 @@ public class Node implements Cloneable, Serializable {
     private static final long serialVersionUID = 1L;
 
     StringNode(int type, String str) {
-      callSuper(type);
+      super(type);
       if (null == str) {
         throw new IllegalArgumentException("StringNode: str is null");
       }
@@ -282,7 +282,7 @@ public class Node implements Cloneable, Serializable {
     }
 
     StringNode(int type, String str, int lineno, int charno) {
-      callSuper(type, lineno, charno);
+      super(type, lineno, charno);
       if (null == str) {
         throw new IllegalArgumentException("StringNode: str is null");
       }
@@ -1846,7 +1846,7 @@ public class Node implements Cloneable, Serializable {
   public Node cloneNode() {
     Node result;
     try {
-      result = (Node) callSuper.clone();
+      result = (Node) super.clone();
       // PropListItem lists are immutable and can be shared so there is no
       // need to clone them here.
       result.next = null;

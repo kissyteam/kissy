@@ -141,7 +141,7 @@ final class FunctionTypeBuilder {
         reportWarning(EXTENDS_NON_OBJECT, fnName, type.toString());
       } else if (objectType.isUnknownType() &&
           // If this has a supertype that hasn't been resolved yet,
-          // then we can assume this type will be ok once the callSuper
+          // then we can assume this type will be ok once the super
           // type resolves.
           (objectType.getImplicitPrototype() == null ||
            objectType.getImplicitPrototype().isResolved())) {
@@ -161,7 +161,7 @@ final class FunctionTypeBuilder {
         reportError(BAD_IMPLEMENTED_TYPE, fnName);
       } else if (objectType.isUnknownType() &&
           // If this has a supertype that hasn't been resolved yet,
-          // then we can assume this type will be ok once the callSuper
+          // then we can assume this type will be ok once the super
           // type resolves.
           (objectType.getImplicitPrototype() == null ||
            objectType.getImplicitPrototype().isResolved())) {

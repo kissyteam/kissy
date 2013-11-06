@@ -198,7 +198,7 @@ public final class ExtensionRegistry extends ExtensionRegistryLite {
   }
 
   private ExtensionRegistry(ExtensionRegistry other) {
-    callSuper(other);
+    super(other);
     this.extensionsByName = Collections.unmodifiableMap(other.extensionsByName);
     this.extensionsByNumber =
         Collections.unmodifiableMap(other.extensionsByNumber);
@@ -208,7 +208,7 @@ public final class ExtensionRegistry extends ExtensionRegistryLite {
   private final Map<DescriptorIntPair, ExtensionInfo> extensionsByNumber;
 
   private ExtensionRegistry(boolean empty) {
-    callSuper(ExtensionRegistryLite.getEmptyRegistry());
+    super(ExtensionRegistryLite.getEmptyRegistry());
     this.extensionsByName = Collections.<String, ExtensionInfo>emptyMap();
     this.extensionsByNumber =
         Collections.<DescriptorIntPair, ExtensionInfo>emptyMap();

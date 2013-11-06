@@ -43,7 +43,7 @@ public class JSModuleGraphTest extends TestCase {
 
   @Override
   public void setUp() throws Exception {
-    callSuper.setUp();
+    super.setUp();
     B.addDependency(A);  //     __A__
     C.addDependency(A);  //    /  |  \
     D.addDependency(B);  //   B   C  |

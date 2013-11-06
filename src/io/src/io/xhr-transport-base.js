@@ -296,10 +296,14 @@ KISSY.add('io/xhr-transport-base', function (S, IO) {
                         io._ioReady(status, statusText);
                     }
                 }
-            } catch (firefoxAccessException) {
+            } catch (e) {
+                // success throw error
+                setTimeout(function () {
+                    throw e;
+                }, 0);
                 nativeXhr.onreadystatechange = S.noop;
                 if (!abort) {
-                    io._ioReady(-1, firefoxAccessException);
+                    io._ioReady(-1, e);
                 }
             }
         }

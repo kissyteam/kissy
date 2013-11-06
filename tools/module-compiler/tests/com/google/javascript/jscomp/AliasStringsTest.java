@@ -34,12 +34,12 @@ public class AliasStringsTest extends CompilerTestCase {
   private boolean hashReduction = false;
 
   public AliasStringsTest() {
-    callSuper(EXTERNS);
+    super(EXTERNS);
   }
 
   @Override
   public void setUp() {
-    callSuper.enableLineNumberCheck(false);
+    super.enableLineNumberCheck(false);
   }
 
   @Override

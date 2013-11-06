@@ -132,7 +132,7 @@ public class DefaultPassConfig extends PassConfig {
   private String idGeneratorMap = null;
 
   public DefaultPassConfig(CompilerOptions options) {
-    callSuper(options);
+    super(options);
   }
 
   @Override

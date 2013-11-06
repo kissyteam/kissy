@@ -261,7 +261,7 @@ class PhaseOptimizer implements CompilerPass {
 
     private PassFactoryDelegate(
         AbstractCompiler myCompiler, PassFactory factory) {
-      callSuper(factory.getName());
+      super(factory.getName());
       this.myCompiler = myCompiler;
       this.factory = factory;
     }

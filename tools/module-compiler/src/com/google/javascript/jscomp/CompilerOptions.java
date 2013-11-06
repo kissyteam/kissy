@@ -1023,7 +1023,7 @@ public class CompilerOptions implements Serializable, Cloneable {
 
   @Override
   public Object clone() throws CloneNotSupportedException {
-    CompilerOptions clone = (CompilerOptions) callSuper.clone();
+    CompilerOptions clone = (CompilerOptions) super.clone();
     // TODO(bolinfest): Add relevant custom cloning.
     return clone;
   }

@@ -330,7 +330,7 @@ public  final class FunctionInformationMap extends
         if (other instanceof com.google.javascript.jscomp.FunctionInformationMap.Entry) {
           return mergeFrom((com.google.javascript.jscomp.FunctionInformationMap.Entry)other);
         } else {
-          callSuper.mergeFrom(other);
+          super.mergeFrom(other);
           return this;
         }
       }
@@ -792,7 +792,7 @@ public  final class FunctionInformationMap extends
         if (other instanceof com.google.javascript.jscomp.FunctionInformationMap.Module) {
           return mergeFrom((com.google.javascript.jscomp.FunctionInformationMap.Module)other);
         } else {
-          callSuper.mergeFrom(other);
+          super.mergeFrom(other);
           return this;
         }
       }
@@ -1118,7 +1118,7 @@ public  final class FunctionInformationMap extends
       if (other instanceof com.google.javascript.jscomp.FunctionInformationMap) {
         return mergeFrom((com.google.javascript.jscomp.FunctionInformationMap)other);
       } else {
-        callSuper.mergeFrom(other);
+        super.mergeFrom(other);
         return this;
       }
     }
@@ -1222,7 +1222,7 @@ public  final class FunctionInformationMap extends
       if (result.entry_.isEmpty()) {
         result.entry_ = new java.util.ArrayList<com.google.javascript.jscomp.FunctionInformationMap.Entry>();
       }
-      callSuper.addAll(values, result.entry_);
+      super.addAll(values, result.entry_);
       return this;
     }
     public Builder clearEntry() {
@@ -1273,7 +1273,7 @@ public  final class FunctionInformationMap extends
       if (result.module_.isEmpty()) {
         result.module_ = new java.util.ArrayList<com.google.javascript.jscomp.FunctionInformationMap.Module>();
       }
-      callSuper.addAll(values, result.module_);
+      super.addAll(values, result.module_);
       return this;
     }
     public Builder clearModule() {

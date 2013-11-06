@@ -53,7 +53,7 @@ final class IndexedType extends ProxyObjectType {
 
   IndexedType(
       JSTypeRegistry registry, ObjectType objectType, JSType indexType) {
-    callSuper(registry, objectType);
+    super(registry, objectType);
     this.indexType = indexType;
   }
 

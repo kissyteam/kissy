@@ -23,7 +23,7 @@ public class RenamePrototypesTest extends CompilerTestCase {
   private RenamePrototypes renamePrototypes;
 
   public RenamePrototypesTest() {
-    callSuper(EXTERNS);
+    super(EXTERNS);
     enableNormalize();
   }
 
@@ -35,7 +35,7 @@ public class RenamePrototypesTest extends CompilerTestCase {
 
   @Override
   protected void tearDown() throws Exception {
-    callSuper.tearDown();
+    super.tearDown();
 
     prevUsedRenameMap = null;
   }

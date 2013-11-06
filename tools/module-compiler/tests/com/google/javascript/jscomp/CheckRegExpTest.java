@@ -23,7 +23,7 @@ public class CheckRegExpTest extends CompilerTestCase {
   CheckRegExp last = null;
 
   public CheckRegExpTest() {
-    callSuper("var RegExp;", true);
+    super("var RegExp;", true);
   }
 
   @Override

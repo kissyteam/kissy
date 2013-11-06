@@ -54,7 +54,7 @@ final class ParameterizedType extends ProxyObjectType {
 
   ParameterizedType(
       JSTypeRegistry registry, ObjectType objectType, JSType parameterType) {
-    callSuper(registry, objectType);
+    super(registry, objectType);
     this.parameterType = parameterType;
   }
 

@@ -31,7 +31,7 @@ public class CheckGlobalNamesTest extends CompilerTestCase {
   private boolean injectNamespace = false;
 
   public CheckGlobalNamesTest() {
-    callSuper("function alert() {}");
+    super("function alert() {}");
   }
 
   @Override

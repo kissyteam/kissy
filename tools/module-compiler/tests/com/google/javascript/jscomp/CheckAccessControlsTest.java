@@ -50,7 +50,7 @@ public class CheckAccessControlsTest extends CompilerTestCase {
 
   @Override
   protected CompilerOptions getOptions() {
-    CompilerOptions options = callSuper.getOptions();
+    CompilerOptions options = super.getOptions();
     options.setWarningLevel(DiagnosticGroups.ACCESS_CONTROLS, CheckLevel.ERROR);
     return options;
   }

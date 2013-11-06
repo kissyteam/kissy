@@ -25,7 +25,7 @@ public class NameAnonymousFunctionsTest extends CompilerTestCase {
   private static final String EXTERNS = "var document;";
 
   public NameAnonymousFunctionsTest() {
-    callSuper(EXTERNS);
+    super(EXTERNS);
   }
 
   @Override public CompilerPass getProcessor(Compiler compiler) {

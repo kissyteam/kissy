@@ -29,7 +29,7 @@ public class StripCodeTest extends CompilerTestCase {
   private static final String EXTERNS = "";
 
   public StripCodeTest() {
-    callSuper(EXTERNS, true);
+    super(EXTERNS, true);
   }
 
   /**

@@ -23,12 +23,12 @@ package com.google.javascript.jscomp;
 public class PeepholeRemoveDeadCodeTest extends CompilerTestCase {
 
   public PeepholeRemoveDeadCodeTest() {
-    callSuper("");
+    super("");
   }
 
   @Override
   public void setUp() throws Exception {
-    callSuper.setUp();
+    super.setUp();
     enableLineNumberCheck(true);
   }
 

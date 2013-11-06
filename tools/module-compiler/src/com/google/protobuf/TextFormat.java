@@ -777,7 +777,7 @@ public final class TextFormat {
     private static final long serialVersionUID = 3196188060225107702L;
 
     public ParseException(final String message) {
-      callSuper(message);
+      super(message);
     }
   }
 
@@ -1160,7 +1160,7 @@ public final class TextFormat {
     private static final long serialVersionUID = -8164033650142593304L;
 
     InvalidEscapeSequenceException(final String description) {
-      callSuper(description);
+      super(description);
     }
   }
 

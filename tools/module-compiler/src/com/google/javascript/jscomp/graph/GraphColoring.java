@@ -30,9 +30,9 @@ import java.util.List;
 /**
  * Annotates the graph with a color in a way that no connected node will have
  * the same color. Nodes of the same color cab then be partitioned together and
- * be represented by a callSuper node. This class will merely annotate the nodes
+ * be represented by a super node. This class will merely annotate the nodes
  * with a color using {@link GraphNode#setAnnotation(Annotation)} and provide
- * a node to callSuper node mapping with {@link #getPartitionSuperNode(Object)}. The
+ * a node to super node mapping with {@link #getPartitionSuperNode(Object)}. The
  * give graph itself will not be modified.
  *
  * <p>This algorithm is <b>NOT</b> deterministic by default. Passes that
@@ -65,8 +65,8 @@ public abstract class GraphColoring<N, E> {
 
   /**
    * Using the coloring as partitions, finds the node that represents that
-   * partition as the callSuper node. The first to retrieve its partition will
-   * become the callSuper node.
+   * partition as the super node. The first to retrieve its partition will
+   * become the super node.
    */
   public N getPartitionSuperNode(N node) {
     Preconditions.checkNotNull(colorToNodeMap,
@@ -123,7 +123,7 @@ public abstract class GraphColoring<N, E> {
      */
     public GreedyGraphColoring(
         AdjacencyGraph<N, E> graph, Comparator<N> tieBreaker) {
-      callSuper(graph);
+      super(graph);
       this.tieBreaker = tieBreaker;
     }
 

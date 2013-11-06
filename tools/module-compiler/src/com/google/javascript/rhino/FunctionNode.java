@@ -44,12 +44,12 @@ public class FunctionNode extends ScriptOrFnNode {
     private static final long serialVersionUID = 1L;
 
     public FunctionNode(String name) {
-        callSuper(Token.FUNCTION);
+        super(Token.FUNCTION);
         functionName = name;
     }
 
     public FunctionNode(String name, int lineno, int charno) {
-        callSuper(Token.FUNCTION, lineno, charno);
+        super(Token.FUNCTION, lineno, charno);
         functionName = name;
     }
 

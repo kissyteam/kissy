@@ -28,13 +28,13 @@ public class NameAnalyzerTest extends CompilerTestCase {
       "var window, top; var Function; var externfoo; methods.externfoo;";
 
   public NameAnalyzerTest() {
-    callSuper(kExterns);
+    super(kExterns);
   }
 
   @Override
   protected void setUp() {
-    callSuper.enableNormalize();
-    callSuper.enableLineNumberCheck(true);
+    super.enableNormalize();
+    super.enableLineNumberCheck(true);
   }
 
   @Override

@@ -397,7 +397,7 @@ class TypeValidator {
    *
    * @param t The node traversal.
    * @param n The node where warnings should point to.
-   * @param superObject The expected callSuper instance type.
+   * @param superObject The expected super instance type.
    * @param subObject The sub instance type.
    */
   void expectSuperType(NodeTraversal t, Node n, ObjectType superObject,
@@ -419,7 +419,7 @@ class TypeValidator {
             superObject, declaredSuper);
       }
 
-      // Correct the callSuper type.
+      // Correct the super type.
       if (!subCtor.hasCachedValues()) {
         subCtor.setPrototypeBasedOn(superObject);
       }

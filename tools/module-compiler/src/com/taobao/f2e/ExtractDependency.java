@@ -12,7 +12,6 @@ import java.util.regex.Pattern;
  * @author yiminghe@gmail.com
  */
 public class ExtractDependency {
-
     /**
      * whether overwrite module's file with module name added.
      */
@@ -74,7 +73,6 @@ public class ExtractDependency {
     }
 
     private boolean processSingle(String path) {
-
         Module m = this.getPackages().getModuleFromPath(path);
 
         if (m == null) {

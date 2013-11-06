@@ -82,7 +82,7 @@ public class CombinedCompilerPassTest extends TestCase  {
 
   @Override
   public void setUp() throws Exception {
-    callSuper.setUp();
+    super.setUp();
     compiler = new Compiler();
   }
 

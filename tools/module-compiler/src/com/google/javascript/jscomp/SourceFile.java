@@ -298,9 +298,9 @@ public abstract class SourceFile {
     }
 
     Preloaded(String fileName, String originalPath, String code) {
-      callSuper(fileName);
-      callSuper.setOriginalPath(originalPath);
-      callSuper.setCode(code);
+      super(fileName);
+      super.setOriginalPath(originalPath);
+      super.setCode(code);
     }
   }
 
@@ -313,17 +313,17 @@ public abstract class SourceFile {
 
     // Not private, so that LazyInput can extend it.
     Generated(String fileName, Generator generator) {
-      callSuper(fileName);
+      super(fileName);
       this.generator = generator;
     }
 
     @Override
     public synchronized String getCode() throws IOException {
-      String cachedCode = callSuper.getCode();
+      String cachedCode = super.getCode();
 
       if (cachedCode == null) {
         cachedCode = generator.getCode();
-        callSuper.setCode(cachedCode);
+        super.setCode(cachedCode);
       }
       return cachedCode;
     }
@@ -332,7 +332,7 @@ public abstract class SourceFile {
     // regenerate it if we ever need it again.
     @Override
     public void clearCachedSource() {
-      callSuper.setCode(null);
+      super.setCode(null);
     }
   }
 
@@ -358,17 +358,17 @@ public abstract class SourceFile {
 
     // No Charset provided?
     OnDisk(File file) {
-      callSuper(file.getPath());
+      super(file.getPath());
       this.file = file;
     }
 
     @Override
     public synchronized String getCode() throws IOException {
-      String cachedCode = callSuper.getCode();
+      String cachedCode = super.getCode();
 
       if (cachedCode == null) {
         cachedCode = Files.toString(file, this.getCharset());
-        callSuper.setCode(cachedCode);
+        super.setCode(cachedCode);
       }
       return cachedCode;
     }
@@ -379,7 +379,7 @@ public abstract class SourceFile {
     @Override
     public Reader getCodeReader() throws IOException {
       if (hasSourceInMemory()) {
-        return callSuper.getCodeReader();
+        return super.getCodeReader();
       } else {
         // If we haven't pulled the code into memory yet, don't.
         return new FileReader(file);
@@ -390,7 +390,7 @@ public abstract class SourceFile {
     // if we need it again.
     @Override
     public void clearCachedSource() {
-      callSuper.setCode(null);
+      super.setCode(null);
     }
 
     /**

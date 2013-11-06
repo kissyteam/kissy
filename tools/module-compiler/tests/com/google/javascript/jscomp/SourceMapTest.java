@@ -650,7 +650,7 @@ public class SourceMapTest extends TestCase {
     private static final long serialVersionUID = 1L;
 
     public SourceMapParseException(String message) {
-      callSuper(message);
+      super(message);
     }
   }
 

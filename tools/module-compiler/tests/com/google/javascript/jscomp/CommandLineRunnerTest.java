@@ -93,7 +93,7 @@ public class CommandLineRunnerTest extends TestCase {
 
   @Override
   public void setUp() throws Exception {
-    callSuper.setUp();
+    super.setUp();
     externs = DEFAULT_EXTERNS;
     lastCompiler = null;
     outReader = new ByteArrayOutputStream();
@@ -106,7 +106,7 @@ public class CommandLineRunnerTest extends TestCase {
 
   @Override
   public void tearDown() throws Exception {
-    callSuper.tearDown();
+    super.tearDown();
   }
 
   public void testTypeCheckingOffByDefault() {

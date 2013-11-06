@@ -10,7 +10,7 @@ KISSY.add(function (S, GregorianCalendar) {
     var ONE_DAY = 24 * ONE_HOUR;
     // var ONE_WEEK = 7 * ONE_DAY;
 
-    var Utils = S.require('date/gregorian/utils');
+    var Utils = GregorianCalendar.Utils;
 
     var day1 = new Date(1, 0, 1);
     day1.setFullYear(1);

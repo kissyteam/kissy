@@ -68,7 +68,7 @@ public class EnumType extends PrototypeObjectType {
    * @param elementsType the base type of the individual elements
    */
   EnumType(JSTypeRegistry registry, String name, JSType elementsType) {
-    callSuper(registry, "enum{" + name + "}", null);
+    super(registry, "enum{" + name + "}", null);
     this.elementsType = new EnumElementType(registry, elementsType, name);
   }
 
@@ -111,7 +111,7 @@ public class EnumType extends PrototypeObjectType {
 
   @Override
   public TernaryValue testForEquality(JSType that) {
-    TernaryValue result = callSuper.testForEquality(that);
+    TernaryValue result = super.testForEquality(that);
     if (result != null) {
       return result;
     }
@@ -163,6 +163,6 @@ public class EnumType extends PrototypeObjectType {
   @Override
   JSType resolveInternal(ErrorReporter t, StaticScope<JSType> scope) {
     elementsType = (EnumElementType) elementsType.resolve(t, scope);
-    return callSuper.resolveInternal(t, scope);
+    return super.resolveInternal(t, scope);
   }
 }

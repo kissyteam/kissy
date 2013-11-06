@@ -47,7 +47,7 @@ public class MarkNoSideEffectCallsTest extends CompilerTestCase {
       "/**@nosideeffects*/externObj.nsef3;";
 
   public MarkNoSideEffectCallsTest() {
-    callSuper(kExterns);
+    super(kExterns);
   }
 
   @Override
@@ -58,7 +58,7 @@ public class MarkNoSideEffectCallsTest extends CompilerTestCase {
 
   @Override
   protected void tearDown() throws Exception {
-    callSuper.tearDown();
+    super.tearDown();
     noSideEffectCalls.clear();
   }
 

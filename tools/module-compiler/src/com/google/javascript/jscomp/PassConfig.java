@@ -216,7 +216,7 @@ public abstract class PassConfig {
     private final PassConfig delegate;
 
     PassConfigDelegate(PassConfig delegate) {
-      callSuper(delegate.options);
+      super(delegate.options);
       this.delegate = delegate;
     }
 

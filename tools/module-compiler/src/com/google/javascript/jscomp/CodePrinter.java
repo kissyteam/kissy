@@ -208,7 +208,7 @@ public class CodePrinter {
         int lineLengthThreshold,
         boolean createSourceMap,
         SourceMap.DetailLevel sourceMapDetailLevel) {
-      callSuper(lineLengthThreshold, createSourceMap, sourceMapDetailLevel);
+      super(lineLengthThreshold, createSourceMap, sourceMapDetailLevel);
     }
 
     /**
@@ -282,7 +282,7 @@ public class CodePrinter {
 
     @Override
     void endFunction(boolean statementContext) {
-      callSuper.endFunction(statementContext);
+      super.endFunction(statementContext);
       if (statementContext) {
         startNewLine();
       }
@@ -290,14 +290,14 @@ public class CodePrinter {
 
     @Override
     void beginCaseBody() {
-      callSuper.beginCaseBody();
+      super.beginCaseBody();
       indent++;
       endLine();
     }
 
     @Override
     void endCaseBody() {
-      callSuper.endCaseBody();
+      super.endCaseBody();
       indent--;
       endStatement();
     }
@@ -401,7 +401,7 @@ public class CodePrinter {
    */
     private CompactCodePrinter(boolean lineBreak, int lineLengthThreshold,
         boolean createSrcMap, SourceMap.DetailLevel sourceMapDetailLevel) {
-      callSuper(lineLengthThreshold, createSrcMap, sourceMapDetailLevel);
+      super(lineLengthThreshold, createSrcMap, sourceMapDetailLevel);
       this.lineBreak = lineBreak;
     }
 

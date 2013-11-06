@@ -134,7 +134,7 @@ class RhinoErrorReporter {
       implements ErrorReporter {
 
     private OldRhinoErrorReporter(AbstractCompiler compiler) {
-      callSuper(compiler);
+      super(compiler);
     }
 
     public EvaluatorException runtimeError(String message, String sourceName,
@@ -148,7 +148,7 @@ class RhinoErrorReporter {
       implements com.google.javascript.jscomp.mozilla.rhino.ErrorReporter {
 
     private NewRhinoErrorReporter(AbstractCompiler compiler) {
-      callSuper(compiler);
+      super(compiler);
     }
 
     public com.google.javascript.jscomp.mozilla.rhino.EvaluatorException

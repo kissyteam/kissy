@@ -108,7 +108,7 @@ public class EcmaError extends RhinoException
     }
 
     /**
-     * @deprecated Use {@link RhinoException#sourceName()} from the callSuper class.
+     * @deprecated Use {@link RhinoException#sourceName()} from the super class.
      */
     @Deprecated
     public String getSourceName()
@@ -117,7 +117,7 @@ public class EcmaError extends RhinoException
     }
 
     /**
-     * @deprecated Use {@link RhinoException#lineNumber()} from the callSuper class.
+     * @deprecated Use {@link RhinoException#lineNumber()} from the super class.
      */
     @Deprecated
     public int getLineNumber()
@@ -127,7 +127,7 @@ public class EcmaError extends RhinoException
 
     /**
      * @deprecated
-     * Use {@link RhinoException#columnNumber()} from the callSuper class.
+     * Use {@link RhinoException#columnNumber()} from the super class.
      */
     @Deprecated
     public int getColumnNumber() {
@@ -135,7 +135,7 @@ public class EcmaError extends RhinoException
     }
 
     /**
-     * @deprecated Use {@link RhinoException#lineSource()} from the callSuper class.
+     * @deprecated Use {@link RhinoException#lineSource()} from the super class.
      */
     @Deprecated
     public String getLineSource() {

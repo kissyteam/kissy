@@ -90,6 +90,8 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
     S.mix(GregorianCalendar, Const);
 
     S.mix(GregorianCalendar, {
+        Utils:Utils,
+
         /**
          * Determines if the given year is a leap year.
          * Returns true if the given year is a leap year. To specify BC year numbers,

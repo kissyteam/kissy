@@ -56,7 +56,7 @@ class InlineSimpleMethods extends MethodCompilerPass {
       Logger.getLogger(InlineSimpleMethods.class.getName());
 
   InlineSimpleMethods(AbstractCompiler compiler) {
-    callSuper(compiler);
+    super(compiler);
   }
 
   /**

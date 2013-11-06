@@ -42,7 +42,7 @@ public class ExternExportsPassTest extends TestCase {
 
   @Override
   public void setUp() throws Exception {
-    callSuper.setUp();
+    super.setUp();
 
     setRunCheckTypes(true);
   }

@@ -58,7 +58,7 @@ import java.util.logging.Level;
  * class MyCommandLineRunner extends
  *     AbstractCommandLineRunner<MyCompiler, MyOptions> {
  *   MyCommandLineRunner(String[] args) {
- *     callSuper(args);
+ *     super(args);
  *   }
  *
  *   &#064;Override
@@ -287,7 +287,7 @@ abstract class AbstractCommandLineRunner<A extends Compiler,
     private static final long serialVersionUID = 1L;
 
     FlagUsageException(String message) {
-      callSuper(message);
+      super(message);
     }
   }
 

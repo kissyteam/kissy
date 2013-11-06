@@ -112,7 +112,7 @@ class SemanticReverseAbstractInterpreter
    */
   SemanticReverseAbstractInterpreter(CodingConvention convention,
       JSTypeRegistry typeRegistry) {
-    callSuper(convention, typeRegistry);
+    super(convention, typeRegistry);
   }
 
   public FlowScope getPreciserScopeKnowingConditionOutcome(Node condition,

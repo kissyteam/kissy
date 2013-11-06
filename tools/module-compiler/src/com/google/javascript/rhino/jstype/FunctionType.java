@@ -122,7 +122,7 @@ public class FunctionType extends PrototypeObjectType {
   FunctionType(JSTypeRegistry registry, String name, Node source,
       ArrowType arrowType, ObjectType typeOfThis,
       String templateTypeName,  boolean isConstructor, boolean nativeType) {
-    callSuper(registry, name,
+    super(registry, name,
         registry.getNativeObjectType(JSTypeNative.FUNCTION_INSTANCE_TYPE),
         nativeType);
     Preconditions.checkArgument(source == null ||
@@ -144,7 +144,7 @@ public class FunctionType extends PrototypeObjectType {
 
   /** Creates an instance for a function that is an interface. */
   private FunctionType(JSTypeRegistry registry, String name, Node source) {
-    callSuper(registry, name,
+    super(registry, name,
         registry.getNativeObjectType(JSTypeNative.FUNCTION_INSTANCE_TYPE));
     Preconditions.checkArgument(source == null ||
         Token.FUNCTION == source.getType());
@@ -357,12 +357,12 @@ public class FunctionType extends PrototypeObjectType {
 
   @Override
   public boolean hasProperty(String name) {
-    return callSuper.hasProperty(name) || "prototype".equals(name);
+    return super.hasProperty(name) || "prototype".equals(name);
   }
 
   @Override
   public boolean hasOwnProperty(String name) {
-    return callSuper.hasOwnProperty(name) || "prototype".equals(name);
+    return super.hasOwnProperty(name) || "prototype".equals(name);
   }
 
   @Override
@@ -419,7 +419,7 @@ public class FunctionType extends PrototypeObjectType {
         }
       }
 
-      return callSuper.getPropertyType(name);
+      return super.getPropertyType(name);
     }
   }
 
@@ -439,13 +439,13 @@ public class FunctionType extends PrototypeObjectType {
         return false;
       }
     }
-    return callSuper.defineProperty(name, type, inferred, inExterns, propertyNode);
+    return super.defineProperty(name, type, inferred, inExterns, propertyNode);
   }
 
   @Override
   public boolean isPropertyTypeInferred(String property) {
     return "prototype".equals(property) ||
-        callSuper.isPropertyTypeInferred(property);
+        super.isPropertyTypeInferred(property);
   }
 
   @Override
@@ -540,8 +540,8 @@ public class FunctionType extends PrototypeObjectType {
     }
 
     return leastSuper ?
-        callSuper.getLeastSupertype(that) :
-        callSuper.getGreatestSubtype(that);
+        super.getLeastSupertype(that) :
+        super.getGreatestSubtype(that);
   }
 
   /**
@@ -864,7 +864,7 @@ public class FunctionType extends PrototypeObjectType {
 
   @Override
   public boolean hasCachedValues() {
-    return prototype != null || callSuper.hasCachedValues();
+    return prototype != null || super.hasCachedValues();
   }
 
   /**
@@ -918,13 +918,13 @@ public class FunctionType extends PrototypeObjectType {
       }
     }
 
-    return callSuper.resolveInternal(t, scope);
+    return super.resolveInternal(t, scope);
   }
 
   @Override
   public String toDebugHashCodeString() {
     if (this == registry.getNativeType(JSTypeNative.FUNCTION_INSTANCE_TYPE)) {
-      return callSuper.toDebugHashCodeString();
+      return super.toDebugHashCodeString();
     }
 
     StringBuilder b = new StringBuilder(32);

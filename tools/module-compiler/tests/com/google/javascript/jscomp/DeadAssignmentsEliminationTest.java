@@ -25,12 +25,12 @@ import com.google.javascript.rhino.Node;
 public class DeadAssignmentsEliminationTest extends CompilerTestCase {
 
   public DeadAssignmentsEliminationTest() {
-    callSuper("var extern;");
+    super("var extern;");
   }
 
   @Override
   public void setUp() {
-    callSuper.enableLineNumberCheck(true);
+    super.enableLineNumberCheck(true);
   }
 
   @Override

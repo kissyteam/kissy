@@ -23,12 +23,12 @@ package com.google.javascript.jscomp;
 public class OptimizeArgumentsArrayTest extends CompilerTestCase {
 
   public OptimizeArgumentsArrayTest() {
-    callSuper("var arguments, alert" /* Externs */);
+    super("var arguments, alert" /* Externs */);
   }
 
   @Override
   public void setUp() {
-    callSuper.enableLineNumberCheck(false);
+    super.enableLineNumberCheck(false);
   }
 
   @Override

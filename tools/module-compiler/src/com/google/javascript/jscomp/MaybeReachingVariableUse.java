@@ -48,7 +48,7 @@ class MaybeReachingVariableUse extends
 
   MaybeReachingVariableUse(
       ControlFlowGraph<Node> cfg, Scope jsScope, AbstractCompiler compiler) {
-    callSuper(cfg, new ReachingUsesJoinOp());
+    super(cfg, new ReachingUsesJoinOp());
     this.jsScope = jsScope;
     this.escaped = Sets.newHashSet();
 

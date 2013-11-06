@@ -426,7 +426,7 @@ public class DataFlowAnalysisTest extends TestCase {
      * @param targetCfg Control Flow Graph.
      */
     DummyConstPropagation(ControlFlowGraph<Instruction> targetCfg) {
-      callSuper(targetCfg, new ConstPropJoinOp());
+      super(targetCfg, new ConstPropJoinOp());
     }
 
     @Override
@@ -635,7 +635,7 @@ public class DataFlowAnalysisTest extends TestCase {
       BranchedForwardDataFlowAnalysis<Instruction, ConstPropLatticeElement> {
 
     BranchedDummyConstPropagation(ControlFlowGraph<Instruction> targetCfg) {
-      callSuper(targetCfg, new ConstPropJoinOp());
+      super(targetCfg, new ConstPropJoinOp());
     }
 
     @Override

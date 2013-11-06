@@ -31,7 +31,7 @@ public class CollapsePropertiesTest extends CompilerTestCase {
   private boolean collapsePropertiesOnExternTypes = false;
 
   public CollapsePropertiesTest() {
-    callSuper(EXTERNS);
+    super(EXTERNS);
   }
 
   @Override public CompilerPass getProcessor(Compiler compiler) {

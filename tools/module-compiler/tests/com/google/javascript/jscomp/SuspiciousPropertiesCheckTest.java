@@ -36,7 +36,7 @@ public class SuspiciousPropertiesCheckTest extends CompilerTestCase {
     "var google = { gears: { factory: {}, workerPool: {} } };";
 
   public SuspiciousPropertiesCheckTest() {
-    callSuper(EXTERNS);
+    super(EXTERNS);
   }
 
   @Override

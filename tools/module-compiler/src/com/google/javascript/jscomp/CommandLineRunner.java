@@ -56,11 +56,11 @@ import java.util.zip.ZipInputStream;
  * <pre>
  * class MyCommandLineRunner extends CommandLineRunner {
  *   MyCommandLineRunner(String[] args) {
- *     callSuper(args);
+ *     super(args);
  *   }
  *
  *   {@code @Override} protected CompilerOptions createOptions() {
- *     CompilerOptions options = callSuper.createOptions();
+ *     CompilerOptions options = super.createOptions();
  *     addMyCrazyCompilerPassThatOutputsAnExtraFile(options);
  *     return options;
  *   }
@@ -325,8 +325,8 @@ public class CommandLineRunner extends
 
       public BooleanOptionHandler(
           CmdLineParser parser, OptionDef option,
-          Setter<? callSuper Boolean> setter) {
-        callSuper(parser, option, setter);
+          Setter<? super Boolean> setter) {
+        super(parser, option, setter);
       }
 
       @Override
@@ -391,12 +391,12 @@ public class CommandLineRunner extends
    * method should instantiate it.
    */
   protected CommandLineRunner(String[] args) {
-    callSuper();
+    super();
     initConfigFromFlags(args, System.err);
   }
 
   protected CommandLineRunner(String[] args, PrintStream out, PrintStream err) {
-    callSuper(out, err);
+    super(out, err);
     initConfigFromFlags(args, err);
   }
 
@@ -510,7 +510,7 @@ public class CommandLineRunner extends
   @Override
   protected List<JSSourceFile> createExterns() throws FlagUsageException,
       IOException {
-    List<JSSourceFile> externs = callSuper.createExterns();
+    List<JSSourceFile> externs = super.createExterns();
     if (flags.use_only_custom_externs || isInTestMode()) {
       return externs;
     } else {

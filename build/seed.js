@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40
 MIT Licensed
-build time: Nov 6 11:49
+build time: Nov 6 21:56
 */
 /**
  * @ignore
@@ -42,11 +42,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20131106114901' will replace with current timestamp when compressing.
+         * NOTICE: '20131106215606' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20131106114901',
+        __BUILD_TIME: '20131106215606',
 
         /**
          * KISSY Environment.
@@ -3684,6 +3684,8 @@ var KISSY = (function (undefined) {
                     } else {
                         mods.push(null);
                     }
+                } else {
+                    mods.push(undefined);
                 }
             });
 
@@ -3775,7 +3777,10 @@ var KISSY = (function (undefined) {
             if (typeof fn === 'function') {
                 // 需要解开 index，相对路径
                 // 但是需要保留 alias，防止值不对应
+                // record current mod for KISSY.require
+                Loader.attachingModName = mod.name;
                 mod.value = fn.apply(mod, Utils.getModules(runtime, mod.getRequiresWithAlias()));
+                Loader.attachingModName = undefined;
             } else {
                 mod.value = fn;
             }
@@ -3930,7 +3935,7 @@ var KISSY = (function (undefined) {
          * @param {String} str
          * @returns {String} hash code
          */
-        getHash:function (str) {
+        getHash: function (str) {
             var hash = 5381,
                 i;
             for (i = str.length; --i > -1;) {
@@ -4789,7 +4794,7 @@ var KISSY = (function (undefined) {
         logger = S.getLogger('s/loader'),
         Status = Loader.Status,
         Utils = Loader.Utils,
-        getHash=Utils.getHash,
+        getHash = Utils.getHash,
         LOADING = Status.LOADING,
         LOADED = Status.LOADED,
         ERROR = Status.ERROR,
@@ -4816,10 +4821,40 @@ var KISSY = (function (undefined) {
     var startLoadModName;
     var startLoadModTime;
 
+    var commentRegExp = /(\/\*([\s\S]*?)\*\/|([^:]|^)\/\/(.*)$)/mg,
+        requireRegExp = /[^.'"]\s*KISSY.require\s*\((.+)\);/g;
+
+    function getRequireVal(str) {
+        var m;
+        // simple string
+        if (m = str.match(/^\s*["']([^'"\s]+)["']\s*$/)) {
+            return m[1];
+        } else {
+            // expression
+            return new Function('return (' + str + ')')();
+        }
+    }
+
     ComboLoader.add = function (name, fn, config, runtime) {
         if (typeof name === 'function') {
             config = fn;
             fn = name;
+            // use KISSY.require primitive statement
+            if (!config || !config.requires) {
+                var requires = [];
+                //Remove comments from the callback string,
+                //look for require calls, and pull them into the dependencies,
+                //but only if there are function args.
+                fn.toString()
+                    .replace(commentRegExp, '')
+                    .replace(requireRegExp, function (match, dep) {
+                        requires.push(getRequireVal(dep));
+                    });
+                if (requires.length) {
+                    config = config || {};
+                    config.requires = requires;
+                }
+            }
             if (oldIE) {
                 // http://groups.google.com/group/commonjs/browse_thread/thread/5a3358ece35e688e/43145ceccfb1dc02#43145ceccfb1dc02
                 name = findModuleNameByInteractive();
@@ -5356,7 +5391,7 @@ var KISSY = (function (undefined) {
          * @return {*} value of module which name is moduleName
          */
         require: function (moduleName) {
-            var moduleNames = Utils.unalias(S, Utils.normalizeModNamesWithAlias(S, [moduleName]));
+            var moduleNames = Utils.unalias(S, Utils.normalizeModNamesWithAlias(S, [moduleName],Loader.attachingModName));
             if (Utils.attachModsRecursively(moduleNames, S)) {
                 return Utils.getModules(S, moduleNames)[1];
             }
@@ -5379,7 +5414,7 @@ var KISSY = (function (undefined) {
     var doc = S.Env.host && S.Env.host.document;
     // var logger = S.getLogger('s/loader');
     var Utils = S.Loader.Utils;
-    var TIMESTAMP = '20131106114901';
+    var TIMESTAMP = '20131106215606';
 
     function returnJson(s) {
         return (new Function('return ' + s))();

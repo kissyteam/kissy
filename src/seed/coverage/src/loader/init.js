@@ -310,62 +310,62 @@ if (! _$jscoverage['/loader/init.js'].branchData) {
   _$jscoverage['/loader/init.js'].branchData['110'][1] = new BranchData();
 }
 _$jscoverage['/loader/init.js'].branchData['110'][1].init(3212, 31, 'doc && doc.getElementsByTagName');
-function visit448_110_1(result) {
+function visit452_110_1(result) {
   _$jscoverage['/loader/init.js'].branchData['110'][1].ranCondition(result);
   return result;
 }_$jscoverage['/loader/init.js'].branchData['102'][1].init(2950, 11, 'S.UA.nodejs');
-function visit447_102_1(result) {
+function visit451_102_1(result) {
   _$jscoverage['/loader/init.js'].branchData['102'][1].ranCondition(result);
   return result;
 }_$jscoverage['/loader/init.js'].branchData['87'][1].init(18, 43, 'info = getBaseInfoFromOneScript(scripts[i])');
-function visit446_87_1(result) {
+function visit450_87_1(result) {
   _$jscoverage['/loader/init.js'].branchData['87'][1].ranCondition(result);
   return result;
 }_$jscoverage['/loader/init.js'].branchData['86'][1].init(216, 6, 'i >= 0');
-function visit445_86_1(result) {
+function visit449_86_1(result) {
   _$jscoverage['/loader/init.js'].branchData['86'][1].ranCondition(result);
   return result;
 }_$jscoverage['/loader/init.js'].branchData['53'][1].init(22, 23, 'part.match(baseTestReg)');
-function visit444_53_1(result) {
+function visit448_53_1(result) {
   _$jscoverage['/loader/init.js'].branchData['53'][1].ranCondition(result);
   return result;
 }_$jscoverage['/loader/init.js'].branchData['48'][1].init(183, 35, 'base.charAt(base.length - 1) != \'/\'');
-function visit443_48_1(result) {
+function visit447_48_1(result) {
   _$jscoverage['/loader/init.js'].branchData['48'][1].ranCondition(result);
   return result;
 }_$jscoverage['/loader/init.js'].branchData['42'][1].init(652, 11, 'index == -1');
-function visit442_42_1(result) {
+function visit446_42_1(result) {
   _$jscoverage['/loader/init.js'].branchData['42'][1].ranCondition(result);
   return result;
 }_$jscoverage['/loader/init.js'].branchData['35'][1].init(501, 24, 'baseInfo.comboSep || \',\'');
-function visit441_35_1(result) {
+function visit445_35_1(result) {
   _$jscoverage['/loader/init.js'].branchData['35'][1].ranCondition(result);
   return result;
 }_$jscoverage['/loader/init.js'].branchData['34'][1].init(427, 28, 'baseInfo.comboPrefix || \'??\'');
-function visit440_34_1(result) {
+function visit444_34_1(result) {
   _$jscoverage['/loader/init.js'].branchData['34'][1].ranCondition(result);
   return result;
 }_$jscoverage['/loader/init.js'].branchData['28'][1].init(260, 8, 'baseInfo');
-function visit439_28_1(result) {
+function visit443_28_1(result) {
   _$jscoverage['/loader/init.js'].branchData['28'][1].ranCondition(result);
   return result;
 }_$jscoverage['/loader/init.js'].branchData['22'][1].init(122, 23, '!src.match(baseTestReg)');
-function visit438_22_1(result) {
+function visit442_22_1(result) {
   _$jscoverage['/loader/init.js'].branchData['22'][1].ranCondition(result);
   return result;
 }_$jscoverage['/loader/init.js'].branchData['21'][1].init(91, 16, 'script.src || \'\'');
-function visit437_21_1(result) {
+function visit441_21_1(result) {
   _$jscoverage['/loader/init.js'].branchData['21'][1].ranCondition(result);
   return result;
 }_$jscoverage['/loader/init.js'].branchData['6'][1].init(16, 33, 'S.Env.host && S.Env.host.document');
-function visit436_6_1(result) {
+function visit440_6_1(result) {
   _$jscoverage['/loader/init.js'].branchData['6'][1].ranCondition(result);
   return result;
 }_$jscoverage['/loader/init.js'].lineData[5]++;
 (function(S) {
   _$jscoverage['/loader/init.js'].functionData[0]++;
   _$jscoverage['/loader/init.js'].lineData[6]++;
-  var doc = visit436_6_1(S.Env.host && S.Env.host.document);
+  var doc = visit440_6_1(S.Env.host && S.Env.host.document);
   _$jscoverage['/loader/init.js'].lineData[8]++;
   var Utils = S.Loader.Utils;
   _$jscoverage['/loader/init.js'].lineData[9]++;
@@ -382,16 +382,16 @@ function visit436_6_1(result) {
   function getBaseInfoFromOneScript(script) {
     _$jscoverage['/loader/init.js'].functionData[2]++;
     _$jscoverage['/loader/init.js'].lineData[21]++;
-    var src = visit437_21_1(script.src || '');
+    var src = visit441_21_1(script.src || '');
     _$jscoverage['/loader/init.js'].lineData[22]++;
-    if (visit438_22_1(!src.match(baseTestReg))) {
+    if (visit442_22_1(!src.match(baseTestReg))) {
       _$jscoverage['/loader/init.js'].lineData[23]++;
       return 0;
     }
     _$jscoverage['/loader/init.js'].lineData[26]++;
     var baseInfo = script.getAttribute('data-config');
     _$jscoverage['/loader/init.js'].lineData[28]++;
-    if (visit439_28_1(baseInfo)) {
+    if (visit443_28_1(baseInfo)) {
       _$jscoverage['/loader/init.js'].lineData[29]++;
       baseInfo = returnJson(baseInfo);
     } else {
@@ -399,20 +399,20 @@ function visit436_6_1(result) {
       baseInfo = {};
     }
     _$jscoverage['/loader/init.js'].lineData[34]++;
-    var comboPrefix = baseInfo.comboPrefix = visit440_34_1(baseInfo.comboPrefix || '??');
+    var comboPrefix = baseInfo.comboPrefix = visit444_34_1(baseInfo.comboPrefix || '??');
     _$jscoverage['/loader/init.js'].lineData[35]++;
-    var comboSep = baseInfo.comboSep = visit441_35_1(baseInfo.comboSep || ',');
+    var comboSep = baseInfo.comboSep = visit445_35_1(baseInfo.comboSep || ',');
     _$jscoverage['/loader/init.js'].lineData[37]++;
     var parts, base, index = src.indexOf(comboPrefix);
     _$jscoverage['/loader/init.js'].lineData[42]++;
-    if (visit442_42_1(index == -1)) {
+    if (visit446_42_1(index == -1)) {
       _$jscoverage['/loader/init.js'].lineData[43]++;
       base = src.replace(baseReg, '$1');
     } else {
       _$jscoverage['/loader/init.js'].lineData[45]++;
       base = src.substring(0, index);
       _$jscoverage['/loader/init.js'].lineData[48]++;
-      if (visit443_48_1(base.charAt(base.length - 1) != '/')) {
+      if (visit447_48_1(base.charAt(base.length - 1) != '/')) {
         _$jscoverage['/loader/init.js'].lineData[49]++;
         base += '/';
       }
@@ -422,7 +422,7 @@ function visit436_6_1(result) {
       S.each(parts, function(part) {
   _$jscoverage['/loader/init.js'].functionData[3]++;
   _$jscoverage['/loader/init.js'].lineData[53]++;
-  if (visit444_53_1(part.match(baseTestReg))) {
+  if (visit448_53_1(part.match(baseTestReg))) {
     _$jscoverage['/loader/init.js'].lineData[54]++;
     base += part.replace(baseReg, '$1');
     _$jscoverage['/loader/init.js'].lineData[55]++;
@@ -443,9 +443,9 @@ function visit436_6_1(result) {
     _$jscoverage['/loader/init.js'].lineData[82]++;
     var scripts = doc.getElementsByTagName('script'), i, info;
     _$jscoverage['/loader/init.js'].lineData[86]++;
-    for (i = scripts.length - 1; visit445_86_1(i >= 0); i--) {
+    for (i = scripts.length - 1; visit449_86_1(i >= 0); i--) {
       _$jscoverage['/loader/init.js'].lineData[87]++;
-      if (visit446_87_1(info = getBaseInfoFromOneScript(scripts[i]))) {
+      if (visit450_87_1(info = getBaseInfoFromOneScript(scripts[i]))) {
         _$jscoverage['/loader/init.js'].lineData[88]++;
         return info;
       }
@@ -461,14 +461,14 @@ function visit436_6_1(result) {
   lang: 'zh-cn', 
   tag: TIMESTAMP});
   _$jscoverage['/loader/init.js'].lineData[102]++;
-  if (visit447_102_1(S.UA.nodejs)) {
+  if (visit451_102_1(S.UA.nodejs)) {
     _$jscoverage['/loader/init.js'].lineData[105]++;
     S.config({
   charset: 'utf-8', 
   base: __dirname.replace(/\\/g, '/').replace(/\/$/, '') + '/'});
   } else {
     _$jscoverage['/loader/init.js'].lineData[110]++;
-    if (visit448_110_1(doc && doc.getElementsByTagName)) {
+    if (visit452_110_1(doc && doc.getElementsByTagName)) {
       _$jscoverage['/loader/init.js'].lineData[112]++;
       S.config(S.mix({
   comboMaxUrlLength: 2000, 

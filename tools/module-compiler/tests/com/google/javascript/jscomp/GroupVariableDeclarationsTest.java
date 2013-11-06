@@ -20,7 +20,7 @@ public class GroupVariableDeclarationsTest extends CompilerTestCase {
 
   @Override
   protected void setUp() {
-    callSuper.enableLineNumberCheck(false);
+    super.enableLineNumberCheck(false);
   }
 
   public void testGroupingUninitializedVarsInScope() {

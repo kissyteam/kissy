@@ -224,13 +224,13 @@ public abstract class AbstractMessageLite implements MessageLite {
       private int limit;
 
       LimitedInputStream(InputStream in, int limit) {
-        callSuper(in);
+        super(in);
         this.limit = limit;
       }
 
       @Override
       public int available() throws IOException {
-        return Math.min(callSuper.available(), limit);
+        return Math.min(super.available(), limit);
       }
 
       @Override
@@ -238,7 +238,7 @@ public abstract class AbstractMessageLite implements MessageLite {
         if (limit <= 0) {
           return -1;
         }
-        final int result = callSuper.read();
+        final int result = super.read();
         if (result >= 0) {
           --limit;
         }
@@ -252,7 +252,7 @@ public abstract class AbstractMessageLite implements MessageLite {
           return -1;
         }
         len = Math.min(len, limit);
-        final int result = callSuper.read(b, off, len);
+        final int result = super.read(b, off, len);
         if (result >= 0) {
           limit -= result;
         }
@@ -261,7 +261,7 @@ public abstract class AbstractMessageLite implements MessageLite {
 
       @Override
       public long skip(final long n) throws IOException {
-        final long result = callSuper.skip(Math.min(n, limit));
+        final long result = super.skip(Math.min(n, limit));
         if (result >= 0) {
           limit -= result;
         }
@@ -306,7 +306,7 @@ public abstract class AbstractMessageLite implements MessageLite {
      * null.
      */
     protected static <T> void addAll(final Iterable<T> values,
-                                     final Collection<? callSuper T> list) {
+                                     final Collection<? super T> list) {
       for (final T value : values) {
         if (value == null) {
           throw new NullPointerException();

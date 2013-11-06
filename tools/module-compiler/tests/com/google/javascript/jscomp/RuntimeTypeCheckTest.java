@@ -28,13 +28,13 @@ public class RuntimeTypeCheckTest extends CompilerTestCase {
   private Node runtimeTypeCheckCode = null;
 
   public RuntimeTypeCheckTest() {
-    callSuper("/** @const */ var undefined;");
+    super("/** @const */ var undefined;");
     enableTypeCheck(CheckLevel.WARNING);
   }
 
   @Override
   protected void setUp() {
-    callSuper.enableLineNumberCheck(false);
+    super.enableLineNumberCheck(false);
     enableNormalize();
   }
 

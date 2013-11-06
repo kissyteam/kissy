@@ -996,7 +996,7 @@ final class ControlFlowAnalysis implements Callback, CompilerPass {
     private AstControlFlowGraph(Node entry,
         Map<DiGraphNode<Node, Branch>, Integer> priorities,
         boolean edgeAnnotations) {
-      callSuper(entry,
+      super(entry,
           true /* node annotations */, edgeAnnotations);
       this.priorities = priorities;
     }
