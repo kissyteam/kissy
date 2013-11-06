@@ -1,7 +1,7 @@
 /*
-Copyright 2013, KISSY v1.40dev
+Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Sep 17 22:58
+build time: Nov 6 22:38
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -347,6 +347,8 @@ KISSY.add('date/gregorian', function (S, defaultLocale, Utils, Const, undefined)
     S.mix(GregorianCalendar, Const);
 
     S.mix(GregorianCalendar, {
+        Utils:Utils,
+
         /**
          * Determines if the given year is a leap year.
          * Returns true if the given year is a leap year. To specify BC year numbers,

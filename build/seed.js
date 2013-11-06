@@ -1,7 +1,7 @@
 /*
-Copyright 2013, KISSY v1.40
+Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 6 21:56
+build time: Nov 6 22:39
 */
 /**
  * @ignore
@@ -42,11 +42,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20131106215606' will replace with current timestamp when compressing.
+         * NOTICE: '20131106223903' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20131106215606',
+        __BUILD_TIME: '20131106223903',
 
         /**
          * KISSY Environment.
@@ -73,10 +73,10 @@ var KISSY = (function (undefined) {
 
         /**
          * The version of the library.
-         * NOTICE: '1.40' will replace with current version when compressing.
+         * NOTICE: '1.50dev' will replace with current version when compressing.
          * @type {String}
          */
-        version: '1.40',
+        version: '1.50dev',
 
         /**
          * set KISSY configuration
@@ -5414,7 +5414,7 @@ var KISSY = (function (undefined) {
     var doc = S.Env.host && S.Env.host.document;
     // var logger = S.getLogger('s/loader');
     var Utils = S.Loader.Utils;
-    var TIMESTAMP = '20131106215606';
+    var TIMESTAMP = '20131106223903';
 
     function returnJson(s) {
         return (new Function('return ' + s))();
