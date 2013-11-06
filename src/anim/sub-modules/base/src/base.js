@@ -20,8 +20,7 @@ KISSY.add('anim/base', function (S, Dom, Utils, Promise, Q) {
      * @private
      */
     function AnimBase(config) {
-        var self = this,
-            complete;
+        var self = this;
         AnimBase.superclass.constructor.call(self);
         Promise.Defer(self);
         /**
@@ -36,19 +35,17 @@ KISSY.add('anim/base', function (S, Dom, Utils, Promise, Q) {
         self.node = self.el = node;
         self._backupProps = {};
         self._propsData = {};
-        self.then(onComplete);
-
-        if (complete = config.complete) {
-            self.then(complete);
-        }
     }
 
-    function onComplete(value) {
-        var _backupProps,
-            self = value[0];
+    // stop(true) will run complete function synchronously
+    function syncComplete(self) {
+        var _backupProps, complete;
         // only recover after complete anim
         if (!S.isEmptyObject(_backupProps = self._backupProps)) {
             Dom.css(self.node, _backupProps);
+        }
+        if (complete = self.config.complete) {
+            complete.call(self);
         }
     }
 
@@ -321,6 +318,7 @@ KISSY.add('anim/base', function (S, Dom, Utils, Promise, Q) {
 
             var defer = self.defer;
             if (finish) {
+                syncComplete(self);
                 defer.resolve([self]);
             } else {
                 defer.reject([self]);

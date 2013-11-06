@@ -1,0 +1,50 @@
+<script src="/kissy/build/seed.js"></script>
+<script>
+    var S = KISSY;
+    (function () {
+        function xhr(url, success) {
+            var req = new XMLHttpRequest();
+            req.open('get', url, true);
+            req.onload = function () {
+                success(req.responseText);
+            };
+            req.send();
+        }
+
+        function processAnonymous(rs, code) {
+            if (rs.mods.length == 1) {
+                // in case encounter anonymous module
+                code = code.replace('KISSY.add(function',
+                        'KISSY.add("' + rs.mods[0].getName() + '",function');
+            }
+            return code;
+        }
+
+        KISSY.config('loadModsFn', function (rs, config) {
+            var fullpath = rs.fullpath, code;
+            if (code = localStorage.getItem(fullpath)) {
+                code = processAnonymous(rs, code);
+                eval(code);
+                config.success();
+            } else {
+                xhr(fullpath, function (code) {
+                    code = processAnonymous(rs, code);
+                    localStorage.setItem(fullpath, code);
+                    eval(code);
+                    config.success();
+                });
+            }
+        });
+    })();
+
+    S.config('packages', {
+        test: {
+            base: './',
+            ignorePackageNameInUri: true
+        }
+    });
+    var start = S.now();
+    S.use('test/t', function (S, t) {
+        alert('load ' + t + ' in ' + (S.now() - start) + ' ms');
+    });
+</script>

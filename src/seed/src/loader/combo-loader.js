@@ -59,6 +59,7 @@
         logger = S.getLogger('s/loader'),
         Status = Loader.Status,
         Utils = Loader.Utils,
+        getHash=Utils.getHash,
         LOADING = Status.LOADING,
         LOADED = Status.LOADED,
         ERROR = Status.ERROR,
@@ -169,18 +170,6 @@
             }
         }
         return str1.slice(0, i).join('/') + '/';
-    }
-
-
-    // Returns hash code of a stringdjb2 algorithm
-    function getHash(str) {
-        var hash = 5381,
-            i;
-        for (i = str.length; --i > -1;) {
-            hash = ((hash << 5) + hash) + str.charCodeAt(i);
-            /* hash * 33 + char */
-        }
-        return hash + '';
     }
 
     S.augment(ComboLoader, {

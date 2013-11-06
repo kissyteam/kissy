@@ -1,10 +1,6 @@
 {
   "name": "kissy",
-  "subdomain": "dev-kissy",
-  "domains": [
-    "dev.kissyui.com"
-  ],
-  "version": "1.4.0-12",
+  "version": "1.4.0-13",
   "description": "KISSY",
   "author": "yiminghe <yiminghe@gmail.com>",
   "homepage": "http://docs.kissyui.com",
