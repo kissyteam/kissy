@@ -1,5 +1,4 @@
 describe("css-combo", function () {
-
     it("works for css and js", function () {
         var S = KISSY;
 
@@ -11,7 +10,6 @@ describe("css-combo", function () {
             "</div>").appendTo("body");
 
         KISSY.config({
-
             packages: {
                 x: {
                     base: window['specsPath'] || "../specs/css-combo/"
@@ -19,7 +17,7 @@ describe("css-combo", function () {
             },
             modules: {
                 "x/x1": {
-                    requires: ["x/x1.css", "x/x2"]
+                    requires: ["x/x2","x/x1.css"]
                 },
                 "x/x2": {
                     requires: ["x/x2.css"]
@@ -46,7 +44,6 @@ describe("css-combo", function () {
             $('link[href*="x1.css"]').remove();
 
         });
-
     });
 
     it("works for css and js when taged", function () {
@@ -91,5 +88,4 @@ describe("css-combo", function () {
         });
 
     });
-
 });

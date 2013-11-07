@@ -3,8 +3,7 @@ describe('it support KISSY.require', function () {
         var S = KISSY;
         S.config('packages', {
             cjs: {
-                base: './',
-                ignorePackageNameInUri: 1
+                base: '/kissy/src/seed/tests/specs'
             }
         });
         var ret;
