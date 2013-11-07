@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 6 22:39
+build time: Nov 7 22:23
 */
 /**
  * @ignore
@@ -42,11 +42,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20131106223903' will replace with current timestamp when compressing.
+         * NOTICE: '20131107222313' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20131106223903',
+        __BUILD_TIME: '20131107222313',
 
         /**
          * KISSY Environment.
@@ -5414,7 +5414,9 @@ var KISSY = (function (undefined) {
     var doc = S.Env.host && S.Env.host.document;
     // var logger = S.getLogger('s/loader');
     var Utils = S.Loader.Utils;
-    var TIMESTAMP = '20131106223903';
+    var TIMESTAMP = '20131107222313';
+    var defaultComboPrefix = '??';
+    var defaultComboSep = ',';
 
     function returnJson(s) {
         return (new Function('return ' + s))();
@@ -5439,8 +5441,8 @@ var KISSY = (function (undefined) {
             baseInfo = {};
         }
 
-        var comboPrefix = baseInfo.comboPrefix = baseInfo.comboPrefix || '??';
-        var comboSep = baseInfo.comboSep = baseInfo.comboSep || ',';
+        var comboPrefix = baseInfo.comboPrefix || defaultComboPrefix;
+        var comboSep = baseInfo.comboSep || defaultComboSep;
 
         var parts ,
             base,
@@ -5502,6 +5504,8 @@ var KISSY = (function (undefined) {
     }
 
     S.config({
+        comboPrefix: defaultComboPrefix,
+        comboSep: defaultComboSep,
         charset: 'utf-8',
         lang: 'zh-cn',
         tag: TIMESTAMP

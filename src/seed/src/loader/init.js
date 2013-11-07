@@ -7,6 +7,8 @@
     // var logger = S.getLogger('s/loader');
     var Utils = S.Loader.Utils;
     var TIMESTAMP = '@TIMESTAMP@';
+    var defaultComboPrefix = '??';
+    var defaultComboSep = ',';
 
     function returnJson(s) {
         return (new Function('return ' + s))();
@@ -31,8 +33,8 @@
             baseInfo = {};
         }
 
-        var comboPrefix = baseInfo.comboPrefix = baseInfo.comboPrefix || '??';
-        var comboSep = baseInfo.comboSep = baseInfo.comboSep || ',';
+        var comboPrefix = baseInfo.comboPrefix || defaultComboPrefix;
+        var comboSep = baseInfo.comboSep || defaultComboSep;
 
         var parts ,
             base,
@@ -94,6 +96,8 @@
     }
 
     S.config({
+        comboPrefix: defaultComboPrefix,
+        comboSep: defaultComboSep,
         charset: 'utf-8',
         lang: 'zh-cn',
         tag: TIMESTAMP
