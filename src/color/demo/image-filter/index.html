@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <title>image-filter</title>
+    <link rel="stylesheet" href="demo.css"/>
+</head>
+<body>
+<h1>adjust hsl of image</h1>
+
+<p><label> select image:
+    <input type="file" id="upload" disabled/>
+</label></p>
+
+<p>
+    <label>h: <input type="range" min="10" max="500" value="100" id="h" disabled></label>
+    <label>s: <input type="range" min="10" max="500" value="100" id="s" disabled></label>
+    <label>l: <input type="range" min="10" max="500" value="100" id="l" disabled></label>
+</p>
+
+<p>
+    <button id="filter" disabled>filter</button>
+    <button id="restore" disabled>restore</button>
+</p>
+<canvas id="canvas"></canvas>
+<script src="/kissy/build/seed.js"></script>
+<script src="/kissy/src/package.js"></script>
+<script type="loading" id="loading">
+    <div id="circularG">
+        <div id="circularG_1" class="circularG">
+        </div>
+        <div id="circularG_2" class="circularG">
+        </div>
+        <div id="circularG_3" class="circularG">
+        </div>
+        <div id="circularG_4" class="circularG">
+        </div>
+        <div id="circularG_5" class="circularG">
+        </div>
+        <div id="circularG_6" class="circularG">
+        </div>
+        <div id="circularG_7" class="circularG">
+        </div>
+        <div id="circularG_8" class="circularG">
+        </div>
+    </div>
+</script>
+<script src="demo.js"></script>
+</body>
+</html>

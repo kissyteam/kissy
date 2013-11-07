@@ -4,7 +4,6 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add('io/form', function (S, IO, Dom, FormSerializer) {
-
     var win = S.Env.host,
         slice = Array.prototype.slice,
         FormData = win['FormData'];

@@ -217,7 +217,7 @@ KISSY.add("editor/selectionFix", function (S, Editor, Event) {
 
         // IE before version 8 will leave cursor blinking inside the document after
         // editor blurred unless we clean up the selection. (#4716)
-// http://yiminghe.github.com/lite-ext/playground/iframe_selection_ie/demo.html
+// http://yiminghe.github.com/lite-ext/playground/iframe_selection_ie/index.html
 // 需要第一个 hack
 //            editor.on('blur', function () {
 //                // 把选择区域与光标清除

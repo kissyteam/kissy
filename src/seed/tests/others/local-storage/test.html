@@ -11,24 +11,13 @@
             req.send();
         }
 
-        function processAnonymous(rs, code) {
-            if (rs.mods.length == 1) {
-                // in case encounter anonymous module
-                code = code.replace('KISSY.add(function',
-                        'KISSY.add("' + rs.mods[0].getName() + '",function');
-            }
-            return code;
-        }
-
         KISSY.config('loadModsFn', function (rs, config) {
             var fullpath = rs.fullpath, code;
             if (code = localStorage.getItem(fullpath)) {
-                code = processAnonymous(rs, code);
                 eval(code);
                 config.success();
             } else {
                 xhr(fullpath, function (code) {
-                    code = processAnonymous(rs, code);
                     localStorage.setItem(fullpath, code);
                     eval(code);
                     config.success();
