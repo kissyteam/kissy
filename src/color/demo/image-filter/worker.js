@@ -6,7 +6,7 @@ function log(str) {
 
 self.onmessage = function (e) {
     importScripts('http://' + e.data.host + '/kissy/build/seed.js');
-    KISSY.config('base', 'http://localhost:8888/kissy/build/');
+    KISSY.config('base', 'http://' + e.data.host + '/kissy/build/');
     KISSY.config('loadModsFn', function (rs, config) {
         importScripts(rs.fullpath);
         config.success();

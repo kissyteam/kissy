@@ -1,0 +1,15 @@
+<script>
+    var worker = new Worker('worker.js');
+    worker.postMessage({
+        host: location.host
+    });
+    worker.onmessage = function (e) {
+        if (e.data.complete) {
+            worker.postMessage({
+                color: '#fef245'
+            });
+        } else {
+            console.log(e.data.color)
+        }
+    }
+</script>
