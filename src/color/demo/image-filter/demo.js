@@ -2,14 +2,15 @@ KISSY.use('node,overlay', function (S, Node, Overlay) {
     var $ = Node.all;
     var overlay = new Overlay({
         content: $('#loading').html(),
-        mask:true,
-        align:{
-            points: ['cc','cc']
+        mask: true,
+        align: {
+            points: ['cc', 'cc']
         }
     });
     var canvas = $('#canvas')[0];
     var upload = $('#upload');
     var filter = $('#filter');
+    var download = $('#download');
     var h = $('#h');
     var s = $('#s');
     var l = $('#l');
@@ -34,7 +35,7 @@ KISSY.use('node,overlay', function (S, Node, Overlay) {
     var worker = new Worker('worker.js');
 
     worker.postMessage({
-        host:location.host
+        host: location.host
     });
 
     worker.onmessage = function (e) {
@@ -65,6 +66,7 @@ KISSY.use('node,overlay', function (S, Node, Overlay) {
                 pixelsData[i] = data[i];
             }
             ctx.putImageData(pixels, 0, 0);
+            download.attr('href', canvas.toDataURL());
             delete window[callback];
         };
         overlay.show();
@@ -85,6 +87,7 @@ KISSY.use('node,overlay', function (S, Node, Overlay) {
 
     restore.on('click', function () {
         ctx.putImageData(originalImage, 0, 0);
+        download.attr('href', canvas.toDataURL());
     });
 
     upload.on('change', function () {
@@ -103,6 +106,7 @@ KISSY.use('node,overlay', function (S, Node, Overlay) {
                 //img.crossOrigin = "Anonymous";
                 img.title = theFile.name;
                 img.src = e.target.result;
+                download.attr('download', theFile.name);
 
                 //img.src='http://localhost:9999/kissy/src/color/demo/backdrop.png';
                 img.onload = function () {
@@ -114,6 +118,7 @@ KISSY.use('node,overlay', function (S, Node, Overlay) {
                     ctx.drawImage(img, 0, 0);
                     originalImage = ctx.getImageData(0, 0, originalWidth, originalHeight);
                     originalImageData = originalImage.data;
+                    download.attr('href', canvas.toDataURL());
                 };
             };
         })(f);
