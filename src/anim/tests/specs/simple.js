@@ -292,7 +292,6 @@ KISSY.add(function (S, Dom, Anim, Node) {
                     });
                 });
 
-
                 it("works for width/height", function () {
                     var div = $("<div style='border:1px solid red;'>" +
                         "<div style='width:100px;height: 100px;'>" +
@@ -339,7 +338,6 @@ KISSY.add(function (S, Dom, Anim, Node) {
                     });
                 });
 
-
                 it("works for string props", function () {
                     var div = $("<div style='border:1px solid red;'>" +
                         "<div style='width:100px;height: 100px;'>" +
@@ -370,43 +368,44 @@ KISSY.add(function (S, Dom, Anim, Node) {
                         div.remove();
                     });
                 });
-                    it('support transform animation', function () {
-                        var div = Dom.create('<div style="position: absolute;' +
-                            'border:1px solid red;' +
-                            'left:100px;' +
-                            'top:100px;' +
-                            'width: 100px;height: 100px;"></div>');
-                        document.body.appendChild(div);
 
-                        expect(Dom.css(div, 'transform')).toBe('none');
-                        var val = 'rotate(30deg)';
-                        var expectedMatrix = matrix(val);
-                        var ok = 0;
+                it('support transform animation', function () {
+                    var div = Dom.create('<div style="position: absolute;' +
+                        'border:1px solid red;' +
+                        'left:100px;' +
+                        'top:100px;' +
+                        'width: 100px;height: 100px;"></div>');
+                    document.body.appendChild(div);
 
-                        new Anim(div, {
-                            transform: val
-                        }, {
-                            duration: 1,
-                            complete: function () {
-                                ok = 1;
-                            }
-                        }).run();
+                    expect(Dom.css(div, 'transform')).toBe('none');
+                    var val = 'rotate(30deg)';
+                    var expectedMatrix = matrix(val);
+                    var ok = 0;
 
-                        waitsFor(function () {
-                            return ok;
-                        });
+                    new Anim(div, {
+                        transform: val
+                    }, {
+                        duration: 1,
+                        complete: function () {
+                            ok = 1;
+                        }
+                    }).run();
 
-                        waits(199);
-
-                        runs(function () {
-                            expect(matrix(Dom.css(div, 'transform')))
-                                .toBeAlmostEqualMatrix(expectedMatrix)
-                        });
-
-                        runs(function () {
-                            Dom.remove(div);
-                        });
+                    waitsFor(function () {
+                        return ok;
                     });
+
+                    waits(199);
+
+                    runs(function () {
+                        expect(matrix(Dom.css(div, 'transform')))
+                            .toBeAlmostEqualMatrix(expectedMatrix)
+                    });
+
+                    runs(function () {
+                        Dom.remove(div);
+                    });
+                });
             });
         }};
 }, {

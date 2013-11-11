@@ -3,27 +3,29 @@
  * special patch for making color gradual change
  * @author yiminghe@gmail.com
  */
-KISSY.add('anim/timer/color', function (S, Dom, Fx,SHORT_HANDS) {
+KISSY.add(function (S) {
+    var Fx = KISSY.require('./fx');
+    var SHORT_HANDS = KISSY.require('./short-hand');
     var HEX_BASE = 16,
-        logger= S.getLogger('s/anim/timer/color'),
+        logger = S.getLogger('s/anim/timer/color'),
         floor = Math.floor,
         KEYWORDS = {
-            'black':[0, 0, 0],
-            'silver':[192, 192, 192],
-            'gray':[128, 128, 128],
-            'white':[255, 255, 255],
-            'maroon':[128, 0, 0],
-            'red':[255, 0, 0],
-            'purple':[128, 0, 128],
-            'fuchsia':[255, 0, 255],
-            'green':[0, 128, 0],
-            'lime':[0, 255, 0],
-            'olive':[128, 128, 0],
-            'yellow':[255, 255, 0],
-            'navy':[0, 0, 128],
-            'blue':[0, 0, 255],
-            'teal':[0, 128, 128],
-            'aqua':[0, 255, 255]
+            'black': [0, 0, 0],
+            'silver': [192, 192, 192],
+            'gray': [128, 128, 128],
+            'white': [255, 255, 255],
+            'maroon': [128, 0, 0],
+            'red': [255, 0, 0],
+            'purple': [128, 0, 128],
+            'fuchsia': [255, 0, 255],
+            'green': [0, 128, 0],
+            'lime': [0, 255, 0],
+            'olive': [128, 128, 0],
+            'yellow': [255, 255, 0],
+            'navy': [0, 0, 128],
+            'blue': [0, 0, 255],
+            'teal': [0, 128, 128],
+            'aqua': [0, 255, 255]
         },
         re_RGB = /^rgb\(([0-9]+)\s*,\s*([0-9]+)\s*,\s*([0-9]+)\)$/i,
         re_RGBA = /^rgba\(([0-9]+)\s*,\s*([0-9]+)\s*,\s*([0-9]+),\s*([0-9]+)\)$/i,
@@ -116,7 +118,7 @@ KISSY.add('anim/timer/color', function (S, Dom, Fx,SHORT_HANDS) {
     }
 
     S.extend(ColorFx, Fx, {
-        load:function () {
+        load: function () {
             var self = this;
             ColorFx.superclass.load.apply(self, arguments);
             if (self.from) {
@@ -127,7 +129,7 @@ KISSY.add('anim/timer/color', function (S, Dom, Fx,SHORT_HANDS) {
             }
         },
 
-        interpolate:function (from, to, pos) {
+        interpolate: function (from, to, pos) {
             var interpolate = ColorFx.superclass.interpolate;
             if (from.length == 3 && to.length == 3) {
                 return 'rgb(' + [
@@ -145,6 +147,7 @@ KISSY.add('anim/timer/color', function (S, Dom, Fx,SHORT_HANDS) {
                 ].join(', ') + ')';
             } else {
                 logger.warn('unknown value : ' + from);
+                return undefined;
             }
         }
     });
@@ -153,11 +156,11 @@ KISSY.add('anim/timer/color', function (S, Dom, Fx,SHORT_HANDS) {
         Fx.Factories[color] = ColorFx;
     });
 
+    Fx.FxTypes.color = ColorFx;
+
     return ColorFx;
-}, {
-    requires:['dom','./fx','./short-hand']
 });
 /*
  refer
-   - https://developer.mozilla.org/en-US/docs/Web/CSS/color_value
-*/
+ - https://developer.mozilla.org/en-US/docs/Web/CSS/color_value
+ */

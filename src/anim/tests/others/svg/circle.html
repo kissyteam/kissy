@@ -1,0 +1,29 @@
+<!doctype>
+<html>
+<head>
+
+</head>
+<body>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+    <circle cx="100" cy="50" r="40" stroke="black"
+            id='t'
+            stroke-width="2" fill="#000"/>
+</svg>
+<script src="/kissy/build/seed.js"></script>
+<script src="/kissy/src/package.js"></script>
+<script>
+    KISSY.use('anim', function (S, Anim) {
+        new Anim(document.getElementById('t'), {
+            fill: {
+                type:'attr',
+                fxType:'color',
+                value:'#fff'
+            }
+        }, {
+            duration: 2
+        }).run();
+    });
+
+</script>
+</body>
+</html>

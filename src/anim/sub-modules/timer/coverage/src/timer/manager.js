@@ -311,52 +311,52 @@ if (! _$jscoverage['/timer/manager.js'].branchData) {
   _$jscoverage['/timer/manager.js'].branchData['108'][1] = new BranchData();
 }
 _$jscoverage['/timer/manager.js'].branchData['108'][1].init(426, 18, 'flag === undefined');
-function visit77_108_1(result) {
+function visit79_108_1(result) {
   _$jscoverage['/timer/manager.js'].branchData['108'][1].ranCondition(result);
   return result;
 }_$jscoverage['/timer/manager.js'].branchData['88'][1].init(81, 1, 't');
-function visit76_88_1(result) {
+function visit78_88_1(result) {
   _$jscoverage['/timer/manager.js'].branchData['88'][1].ranCondition(result);
   return result;
 }_$jscoverage['/timer/manager.js'].branchData['76'][1].init(26, 16, 'self.runFrames()');
-function visit75_76_1(result) {
+function visit77_76_1(result) {
   _$jscoverage['/timer/manager.js'].branchData['76'][1].ranCondition(result);
   return result;
 }_$jscoverage['/timer/manager.js'].branchData['74'][1].init(48, 11, '!self.timer');
-function visit74_74_1(result) {
+function visit76_74_1(result) {
   _$jscoverage['/timer/manager.js'].branchData['74'][1].ranCondition(result);
   return result;
 }_$jscoverage['/timer/manager.js'].branchData['59'][1].init(122, 30, 'S.isEmptyObject(self.runnings)');
-function visit73_59_1(result) {
+function visit75_59_1(result) {
   _$jscoverage['/timer/manager.js'].branchData['59'][1].ranCondition(result);
   return result;
 }_$jscoverage['/timer/manager.js'].branchData['44'][1].init(83, 17, 'self.runnings[kv]');
-function visit72_44_1(result) {
+function visit74_44_1(result) {
   _$jscoverage['/timer/manager.js'].branchData['44'][1].ranCondition(result);
   return result;
 }_$jscoverage['/timer/manager.js'].branchData['24'][1].init(121, 108, 'win[vendors[x] + \'CancelAnimationFrame\'] || win[vendors[x] + \'CancelRequestAnimationFrame\']');
-function visit71_24_1(result) {
+function visit73_24_1(result) {
   _$jscoverage['/timer/manager.js'].branchData['24'][1].ranCondition(result);
   return result;
 }_$jscoverage['/timer/manager.js'].branchData['22'][2].init(207, 18, 'x < vendors.length');
-function visit70_22_2(result) {
+function visit72_22_2(result) {
   _$jscoverage['/timer/manager.js'].branchData['22'][2].ranCondition(result);
   return result;
 }_$jscoverage['/timer/manager.js'].branchData['22'][1].init(207, 46, 'x < vendors.length && !requestAnimationFrameFn');
-function visit69_22_1(result) {
+function visit71_22_1(result) {
   _$jscoverage['/timer/manager.js'].branchData['22'][1].ranCondition(result);
   return result;
 }_$jscoverage['/timer/manager.js'].branchData['18'][1].init(447, 1, '0');
-function visit68_18_1(result) {
+function visit70_18_1(result) {
   _$jscoverage['/timer/manager.js'].branchData['18'][1].ranCondition(result);
   return result;
 }_$jscoverage['/timer/manager.js'].lineData[6]++;
-KISSY.add('anim/timer/manager', function(S, undefined) {
+KISSY.add(function(S) {
   _$jscoverage['/timer/manager.js'].functionData[0]++;
   _$jscoverage['/timer/manager.js'].lineData[7]++;
   var stamp = S.stamp, win = S.Env.host, INTERVAL = 15, requestAnimationFrameFn, cancelAnimationFrameFn;
   _$jscoverage['/timer/manager.js'].lineData[18]++;
-  if (visit68_18_1(0)) {
+  if (visit70_18_1(0)) {
     _$jscoverage['/timer/manager.js'].lineData[19]++;
     requestAnimationFrameFn = win['requestAnimationFrame'];
     _$jscoverage['/timer/manager.js'].lineData[20]++;
@@ -364,11 +364,11 @@ KISSY.add('anim/timer/manager', function(S, undefined) {
     _$jscoverage['/timer/manager.js'].lineData[21]++;
     var vendors = ['ms', 'moz', 'webkit', 'o'];
     _$jscoverage['/timer/manager.js'].lineData[22]++;
-    for (var x = 0; visit69_22_1(visit70_22_2(x < vendors.length) && !requestAnimationFrameFn); ++x) {
+    for (var x = 0; visit71_22_1(visit72_22_2(x < vendors.length) && !requestAnimationFrameFn); ++x) {
       _$jscoverage['/timer/manager.js'].lineData[23]++;
       requestAnimationFrameFn = win[vendors[x] + 'RequestAnimationFrame'];
       _$jscoverage['/timer/manager.js'].lineData[24]++;
-      cancelAnimationFrameFn = visit71_24_1(win[vendors[x] + 'CancelAnimationFrame'] || win[vendors[x] + 'CancelRequestAnimationFrame']);
+      cancelAnimationFrameFn = visit73_24_1(win[vendors[x] + 'CancelAnimationFrame'] || win[vendors[x] + 'CancelRequestAnimationFrame']);
     }
   } else {
     _$jscoverage['/timer/manager.js'].lineData[28]++;
@@ -393,7 +393,7 @@ KISSY.add('anim/timer/manager', function(S, undefined) {
   _$jscoverage['/timer/manager.js'].lineData[42]++;
   var self = this, kv = stamp(anim);
   _$jscoverage['/timer/manager.js'].lineData[44]++;
-  if (visit72_44_1(self.runnings[kv])) {
+  if (visit74_44_1(self.runnings[kv])) {
     _$jscoverage['/timer/manager.js'].lineData[45]++;
     return;
   }
@@ -414,7 +414,7 @@ KISSY.add('anim/timer/manager', function(S, undefined) {
   _$jscoverage['/timer/manager.js'].lineData[58]++;
   delete self.runnings[kv];
   _$jscoverage['/timer/manager.js'].lineData[59]++;
-  if (visit73_59_1(S.isEmptyObject(self.runnings))) {
+  if (visit75_59_1(S.isEmptyObject(self.runnings))) {
     _$jscoverage['/timer/manager.js'].lineData[60]++;
     self.stopTimer();
   }
@@ -434,12 +434,12 @@ KISSY.add('anim/timer/manager', function(S, undefined) {
   _$jscoverage['/timer/manager.js'].lineData[73]++;
   var self = this;
   _$jscoverage['/timer/manager.js'].lineData[74]++;
-  if (visit74_74_1(!self.timer)) {
+  if (visit76_74_1(!self.timer)) {
     _$jscoverage['/timer/manager.js'].lineData[75]++;
     self.timer = requestAnimationFrameFn(function run() {
   _$jscoverage['/timer/manager.js'].functionData[9]++;
   _$jscoverage['/timer/manager.js'].lineData[76]++;
-  if (visit75_76_1(self.runFrames())) {
+  if (visit77_76_1(self.runFrames())) {
     _$jscoverage['/timer/manager.js'].lineData[77]++;
     self.stopTimer();
   } else {
@@ -454,7 +454,7 @@ KISSY.add('anim/timer/manager', function(S, undefined) {
   _$jscoverage['/timer/manager.js'].lineData[86]++;
   var self = this, t = self.timer;
   _$jscoverage['/timer/manager.js'].lineData[88]++;
-  if (visit76_88_1(t)) {
+  if (visit78_88_1(t)) {
     _$jscoverage['/timer/manager.js'].lineData[89]++;
     cancelAnimationFrameFn(t);
     _$jscoverage['/timer/manager.js'].lineData[90]++;
@@ -478,6 +478,6 @@ KISSY.add('anim/timer/manager', function(S, undefined) {
     break;
   }
   _$jscoverage['/timer/manager.js'].lineData[108]++;
-  return visit77_108_1(flag === undefined);
+  return visit79_108_1(flag === undefined);
 }};
 });

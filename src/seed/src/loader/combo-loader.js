@@ -100,26 +100,33 @@
         }
     }
 
+    function checkKISSYRequire(config, fn) {
+        // use KISSY.require primitive statement
+        if ((!config || !config.requires) && typeof fn == 'function') {
+            var requires = [];
+            // Remove comments from the callback string,
+            // look for require calls, and pull them into the dependencies,
+            // but only if there are function args.
+            fn.toString()
+                .replace(commentRegExp, '')
+                .replace(requireRegExp, function (match, dep) {
+                    requires.push(getRequireVal(dep));
+                });
+            if (requires.length) {
+                config = config || {};
+                config.requires = requires;
+            }
+        }
+        return config;
+    }
+
     ComboLoader.add = function (name, fn, config, runtime) {
-        if (typeof name === 'function') {
+        if (typeof name === 'function' ||
+            // KISSY.add('xx');
+            arguments.length == 1) {
             config = fn;
             fn = name;
-            // use KISSY.require primitive statement
-            if (!config || !config.requires) {
-                var requires = [];
-                //Remove comments from the callback string,
-                //look for require calls, and pull them into the dependencies,
-                //but only if there are function args.
-                fn.toString()
-                    .replace(commentRegExp, '')
-                    .replace(requireRegExp, function (match, dep) {
-                        requires.push(getRequireVal(dep));
-                    });
-                if (requires.length) {
-                    config = config || {};
-                    config.requires = requires;
-                }
-            }
+            config = checkKISSYRequire(config, fn);
             if (oldIE) {
                 // http://groups.google.com/group/commonjs/browse_thread/thread/5a3358ece35e688e/43145ceccfb1dc02#43145ceccfb1dc02
                 name = findModuleNameByInteractive();
@@ -141,6 +148,7 @@
             } else {
                 currentMod = undefined;
             }
+            config = checkKISSYRequire(config, fn);
             Utils.registerModule(runtime, name, fn, config);
         }
     };

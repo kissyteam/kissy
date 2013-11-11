@@ -3,7 +3,10 @@
  * animation for transform property
  * @author yiminghe@gmail.com
  */
-KISSY.add('anim/timer/transform', function (S, Dom, Fx) {
+KISSY.add(function (S) {
+    var Dom = KISSY.require('dom');
+    var Fx = KISSY.require('./fx');
+
     function toMatrixArray(matrix) {
         matrix = matrix.split(/,/);
         matrix = S.map(matrix, function (v) {
@@ -173,8 +176,6 @@ KISSY.add('anim/timer/transform', function (S, Dom, Fx) {
     Fx.Factories.transform = TransformFx;
 
     return TransformFx;
-}, {
-    requires: ['dom', './fx']
 });
 /**
  * @ignore

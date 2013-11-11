@@ -3,7 +3,7 @@
  * single timer for the whole anim module
  * @author yiminghe@gmail.com
  */
-KISSY.add('anim/timer/manager', function (S, undefined) {
+KISSY.add(function (S) {
     var stamp = S.stamp,
         win = S.Env.host,
     // note in background tab, interval is set to 1s in chrome/firefox

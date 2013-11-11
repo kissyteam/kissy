@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 7 22:23
+build time: Nov 11 23:10
 */
 /**
  * @ignore
@@ -42,11 +42,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20131107222313' will replace with current timestamp when compressing.
+         * NOTICE: '20131111230948' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20131107222313',
+        __BUILD_TIME: '20131111230948',
 
         /**
          * KISSY Environment.
@@ -4696,26 +4696,33 @@ var KISSY = (function (undefined) {
         }
     }
 
+    function checkKISSYRequire(config, fn) {
+        // use KISSY.require primitive statement
+        if ((!config || !config.requires) && typeof fn == 'function') {
+            var requires = [];
+            // Remove comments from the callback string,
+            // look for require calls, and pull them into the dependencies,
+            // but only if there are function args.
+            fn.toString()
+                .replace(commentRegExp, '')
+                .replace(requireRegExp, function (match, dep) {
+                    requires.push(getRequireVal(dep));
+                });
+            if (requires.length) {
+                config = config || {};
+                config.requires = requires;
+            }
+        }
+        return config;
+    }
+
     ComboLoader.add = function (name, fn, config, runtime) {
-        if (typeof name === 'function') {
+        if (typeof name === 'function' ||
+            // KISSY.add('xx');
+            arguments.length == 1) {
             config = fn;
             fn = name;
-            // use KISSY.require primitive statement
-            if (!config || !config.requires) {
-                var requires = [];
-                //Remove comments from the callback string,
-                //look for require calls, and pull them into the dependencies,
-                //but only if there are function args.
-                fn.toString()
-                    .replace(commentRegExp, '')
-                    .replace(requireRegExp, function (match, dep) {
-                        requires.push(getRequireVal(dep));
-                    });
-                if (requires.length) {
-                    config = config || {};
-                    config.requires = requires;
-                }
-            }
+            config = checkKISSYRequire(config, fn);
             if (oldIE) {
                 // http://groups.google.com/group/commonjs/browse_thread/thread/5a3358ece35e688e/43145ceccfb1dc02#43145ceccfb1dc02
                 name = findModuleNameByInteractive();
@@ -4737,6 +4744,7 @@ var KISSY = (function (undefined) {
             } else {
                 currentMod = undefined;
             }
+            config = checkKISSYRequire(config, fn);
             Utils.registerModule(runtime, name, fn, config);
         }
     };
@@ -5275,7 +5283,7 @@ var KISSY = (function (undefined) {
     var doc = S.Env.host && S.Env.host.document;
     // var logger = S.getLogger('s/loader');
     var Utils = S.Loader.Utils;
-    var TIMESTAMP = '20131107222313';
+    var TIMESTAMP = '20131111230948';
     var defaultComboPrefix = '??';
     var defaultComboSep = ',';
 

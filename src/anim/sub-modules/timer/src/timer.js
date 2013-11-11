@@ -3,7 +3,16 @@
  * @author yiminghe@gmail.com
  * @ignore
  */
-KISSY.add('anim/timer', function (S, Dom, AnimBase, Easing, AM, Fx, SHORT_HANDS) {
+KISSY.add(function (S) {
+    var Dom = KISSY.require('dom');
+    var AnimBase = KISSY.require('./base');
+    var Easing = KISSY.require('./timer/easing');
+    var AM = KISSY.require('./timer/manager');
+    var Fx = KISSY.require('./timer/fx');
+    var SHORT_HANDS = KISSY.require('./timer/short-hand');
+    KISSY.require('./timer/color');
+    KISSY.require('./timer/transform');
+
     var camelCase = Dom._camelCase,
         NUMBER_REG = /^([+\-]=)?([\d+.\-]+)([a-z%]*)$/i;
 
@@ -87,9 +96,10 @@ KISSY.add('anim/timer', function (S, Dom, AnimBase, Easing, AM, Fx, SHORT_HANDS)
                     isCustomFx: isCustomFx,
                     prop: prop,
                     anim: self,
+                    fxType: _propData.fxType,
+                    type: _propData.type,
                     propData: _propData
                 };
-
                 fx = Fx.getFx(propCfg);
 
                 to = val;
@@ -191,13 +201,6 @@ KISSY.add('anim/timer', function (S, Dom, AnimBase, Easing, AM, Fx, SHORT_HANDS)
     Anim.Fx = Fx;
 
     return Anim;
-}, {
-    requires: [
-        'dom', './base',
-        './timer/easing', './timer/manager',
-        './timer/fx', './timer/short-hand'
-        , './timer/color' , './timer/transform'
-    ]
 });
 /*
  2013-09

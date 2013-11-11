@@ -3,7 +3,7 @@
  * @author yiminghe@gmail.com
  * @ignore
  */
-KISSY.add('anim/timer/short-hand', function () {
+KISSY.add(function () {
     // shorthand css properties
     return {
         // http://www.w3.org/Style/CSS/Tracker/issues/9

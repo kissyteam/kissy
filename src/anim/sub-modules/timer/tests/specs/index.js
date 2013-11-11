@@ -6,5 +6,5 @@ KISSY.add(function (S, Simple, Queue) {
         'src/anim/tests/specs/queue',
         'src/anim/tests/specs/promise',
         './promise',
-        './frame', './pause', './scroll']
+        './frame', './pause', './scroll', './svg']
 });

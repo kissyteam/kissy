@@ -3,8 +3,9 @@
  * animate on single property
  * @author yiminghe@gmail.com
  */
-KISSY.add('anim/timer/fx', function (S, Dom, undefined) {
+KISSY.add(function (S) {
     var logger = S.getLogger('s/aim/timer/fx');
+    var Dom = KISSY.require('dom');
 
     function load(self, cfg) {
         S.mix(self, cfg);
@@ -80,7 +81,7 @@ KISSY.add('anim/timer/fx', function (S, Dom, undefined) {
                     val += self.unit;
                 }
                 self.val = val;
-                if (isAttr(node, prop)) {
+                if (self.type == 'attr') {
                     Dom.attr(node, prop, val, 1);
                 } else {
                     Dom.css(node, prop, val);
@@ -113,12 +114,16 @@ KISSY.add('anim/timer/fx', function (S, Dom, undefined) {
         cur: function () {
             var self = this,
                 prop = self.prop,
+                type,
                 node = self.anim.node;
             //不是css 或者 attribute 的缓动
             if (self.isCustomFx) {
                 return node[prop] || 0;
             }
-            else if (isAttr(node, prop)) {
+            if (!(type = self.type)) {
+                type = self.type = isAttr(node, prop) ? 'attr' : 'css';
+            }
+            if (type == 'attr') {
                 return Dom.attr(node, prop, undefined, 1);
             } else {
                 var parsed,
@@ -159,19 +164,22 @@ KISSY.add('anim/timer/fx', function (S, Dom, undefined) {
     }
 
     Fx.Factories = {};
+    Fx.FxTypes = {};
 
     Fx.getFx = function (cfg) {
         var Constructor = Fx,
+            fxType,
             SubClass;
-        if (!cfg.isCustomFx && (SubClass = Fx.Factories[cfg.prop])) {
+        if (fxType = cfg.fxType) {
+            Constructor = Fx.FxTypes[fxType];
+        }
+        else if (!cfg.isCustomFx && (SubClass = Fx.Factories[cfg.prop])) {
             Constructor = SubClass
         }
         return new Constructor(cfg);
     };
 
     return Fx;
-}, {
-    requires: ['dom']
 });
 /*
  TODO

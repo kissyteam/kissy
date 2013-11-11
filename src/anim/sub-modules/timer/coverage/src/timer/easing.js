@@ -495,7 +495,7 @@ function visit17_67_1(result) {
   _$jscoverage['/timer/easing.js'].branchData['67'][1].ranCondition(result);
   return result;
 }_$jscoverage['/timer/easing.js'].lineData[6]++;
-KISSY.add('anim/timer/easing', function() {
+KISSY.add(function() {
   _$jscoverage['/timer/easing.js'].functionData[0]++;
   _$jscoverage['/timer/easing.js'].lineData[17]++;
   var PI = Math.PI, pow = Math.pow, sin = Math.sin, parseNumber = parseFloat, CUBIC_BEZIER_REG = /^cubic-bezier\(([^,]+),([^,]+),([^,]+),([^,]+)\)$/i, BACK_CONST = 1.70158;

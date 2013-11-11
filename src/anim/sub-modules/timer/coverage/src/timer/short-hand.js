@@ -240,7 +240,7 @@ if (! _$jscoverage['/timer/short-hand.js'].branchData) {
   _$jscoverage['/timer/short-hand.js'].branchData = {};
 }
 _$jscoverage['/timer/short-hand.js'].lineData[6]++;
-KISSY.add('anim/timer/short-hand', function() {
+KISSY.add(function() {
   _$jscoverage['/timer/short-hand.js'].functionData[0]++;
   _$jscoverage['/timer/short-hand.js'].lineData[8]++;
   return {
