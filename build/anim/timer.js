@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 11 23:17
+build time: Nov 11 23:43
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -266,7 +266,7 @@ KISSY.add("anim/timer/fx", function(S, Dom) {
       return undefined
     }
   }, cur:function() {
-    var self = this, prop = self.prop, type, node = self.anim.node;
+    var self = this, prop = self.prop, type, parsed, r, node = self.anim.node;
     if(self.isCustomFx) {
       return node[prop] || 0
     }
@@ -274,11 +274,11 @@ KISSY.add("anim/timer/fx", function(S, Dom) {
       type = self.type = isAttr(node, prop) ? "attr" : "css"
     }
     if(type == "attr") {
-      return Dom.attr(node, prop, undefined, 1)
+      r = Dom.attr(node, prop, undefined, 1)
     }else {
-      var parsed, r = Dom.css(node, prop);
-      return isNaN(parsed = parseFloat(r)) ? !r || r === "auto" ? 0 : r : parsed
+      r = Dom.css(node, prop)
     }
+    return isNaN(parsed = parseFloat(r)) ? !r || r === "auto" ? 0 : r : parsed
   }};
   function isAttr(node, prop) {
     if((!node.style || node.style[prop] == null) && Dom.attr(node, prop, undefined, 1) != null) {
@@ -501,7 +501,7 @@ KISSY.add("anim/timer/transform", function(S, Dom, Fx) {
   Fx.Factories.transform = TransformFx;
   return TransformFx
 }, {requires:["dom", "./fx"]});
-KISSY.add("anim/timer", function(S, Dom, AnimBase, Easing, AM, Fx, SHORT_HANDS, KISSY_1384183045015, KISSY_1384183045016) {
+KISSY.add("anim/timer", function(S, Dom, AnimBase, Easing, AM, Fx, SHORT_HANDS, KISSY_1384184612672, KISSY_1384184612673) {
   var camelCase = Dom._camelCase, NUMBER_REG = /^([+\-]=)?([\d+.\-]+)([a-z%]*)$/i;
   function Anim() {
     var self = this, to;

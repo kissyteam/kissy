@@ -115,6 +115,8 @@ KISSY.add(function (S) {
             var self = this,
                 prop = self.prop,
                 type,
+                parsed,
+                r,
                 node = self.anim.node;
             //不是css 或者 attribute 的缓动
             if (self.isCustomFx) {
@@ -124,17 +126,16 @@ KISSY.add(function (S) {
                 type = self.type = isAttr(node, prop) ? 'attr' : 'css';
             }
             if (type == 'attr') {
-                return Dom.attr(node, prop, undefined, 1);
+                r = Dom.attr(node, prop, undefined, 1);
             } else {
-                var parsed,
-                    r = Dom.css(node, prop);
-                // Empty strings, null, undefined and 'auto' are converted to 0,
-                // complex values such as 'rotate(1rad)' or '0px 10px' are returned as is,
-                // simple values such as '10px' are parsed to Float.
-                return isNaN(parsed = parseFloat(r)) ?
-                    !r || r === 'auto' ? 0 : r
-                    : parsed;
+                r = Dom.css(node, prop);
             }
+            // Empty strings, null, undefined and 'auto' are converted to 0,
+            // complex values such as 'rotate(1rad)' or '0px 10px' are returned as is,
+            // simple values such as '10px' are parsed to Float.
+            return isNaN(parsed = parseFloat(r)) ?
+                !r || r === 'auto' ? 0 : r
+                : parsed;
         }
     };
 
