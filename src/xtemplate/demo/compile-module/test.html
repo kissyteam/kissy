@@ -1,0 +1,15 @@
+<script src="/kissy/build/seed.js"></script>
+<script src="/kissy/src/package.js"></script>
+<script>
+    KISSY.config('packages', {
+        'templates': {
+            base: './',
+            ignorePackageNameInUri: 1
+        }
+    });
+    KISSY.use('templates/a-xtpl,xtemplate/runtime', function (S, A, XTemplate) {
+        alert(new XTemplate(A,{
+            name:'templates/a-xtpl'
+        }).render());
+    });
+</script>

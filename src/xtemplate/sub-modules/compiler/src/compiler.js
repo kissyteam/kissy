@@ -16,9 +16,6 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime, unde
         return str + (variableId++);
     }
 
-    /**
-     * @ignore
-     */
     function escapeString(str, isCode) {
         if (isCode) {
             str = escapeSingleQuoteInCodeString(str, false);
@@ -49,10 +46,8 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime, unde
     }
 
     var gen = {
-
         // ------------ helper generation function start
-
-        genFunction: function (statements, global) {
+        genFunction: function (statements, global, includes) {
             var source = [];
             if (!global) {
                 source.push('function(scopes) {');
@@ -78,7 +73,7 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime, unde
             }
             if (statements) {
                 for (var i = 0, len = statements.length; i < len; i++) {
-                    pushToArray(source, this[statements[i].type](statements[i]));
+                    pushToArray(source, this[statements[i].type](statements[i], includes));
                 }
             }
             source.push('return buffer;');
@@ -88,12 +83,13 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime, unde
             } else {
                 return {
                     params: ['scopes', 'S', 'undefined'],
-                    source: source
+                    source: source,
+                    includes: includes
                 };
             }
         },
 
-        genId: function (idNode, tplNode, preserveUndefined) {
+        genId: function (idNode, tplNode, preserveUndefined, includes) {
             var source = [],
                 depth = idNode.depth,
                 idParts = idNode.parts,
@@ -113,6 +109,11 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime, unde
 
             // variable {{variable.subVariable}}
             var idString = self.getIdStringFromIdParts(source, idParts);
+
+            // collect includes modules
+            if (includes && idString == 'include') {
+                includes.push(tplNode.params[0].value);
+            }
 
             source.push('var ' + idName +
                 ' = getPropertyOrRunCommandUtil(engine,scopes,' +
@@ -179,9 +180,9 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime, unde
         genConfig: function (tplNode) {
             var source = [],
                 configName,
-                params, hash,
+                params,
+                hash,
                 self = this;
-
 
             if (tplNode) {
                 params = tplNode.params;
@@ -227,7 +228,6 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime, unde
 
             return [configName, source];
         },
-
         // ------------ helper generation function end
 
         conditionalOrExpression: function (e) {
@@ -342,9 +342,9 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime, unde
             return ['buffer += \'' + escapeString(contentNode.value, false) + '\';'];
         },
 
-        'tpl': function (tplNode) {
+        'tpl': function (tplNode, includes) {
             var source = [],
-                genIdCode = this.genId(tplNode.path, tplNode);
+                genIdCode = this.genId(tplNode.path, tplNode, undefined, includes);
             pushToArray(source, genIdCode[1]);
             source.push('buffer += ' + genIdCode[0] + ';');
             return source;
@@ -425,15 +425,27 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime, unde
                 func.source.join('\n') +
                 '}';
         },
+        compileToModule: function (tpl, includes) {
+            var func = this.compile(tpl, includes);
+            var requires = '';
+            if (includes && includes.length) {
+                requires += includes.join('","');
+                requires = ', {requires:["' + requires + '"]}';
+            }
+            return 'KISSY.add(function(){ return function(' + func.params.join(',') + '){\n' +
+                func.source.join('\n') +
+                '};}' + requires + ');';
+        },
         /**
          * get template function json format
          * @param {String} tpl
+         * @param {String[]} [includes] included modules
          * @return {Object}
          */
-        compile: function (tpl) {
+        compile: function (tpl, includes) {
             var root = this.parse(tpl);
             variableId = 0;
-            return gen.genFunction(root.statements, true);
+            return gen.genFunction(root.statements, true, includes);
         },
         /**
          * get template function
