@@ -868,615 +868,615 @@ if (! _$jscoverage['/html-parser/lexer/lexer.js'].branchData) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['709'][1] = new BranchData();
 }
 _$jscoverage['/html-parser/lexer/lexer.js'].branchData['709'][1].init(207, 9, '\'>\' == ch');
-function visit166_709_1(result) {
+function visit168_709_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['709'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['707'][1].init(100, 8, '-1 == ch');
-function visit165_707_1(result) {
+function visit167_707_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['707'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['705'][1].init(191, 9, '\'-\' == ch');
-function visit164_705_1(result) {
+function visit166_705_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['705'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['703'][1].init(92, 8, '-1 == ch');
-function visit163_703_1(result) {
+function visit165_703_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['703'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['701'][1].init(175, 9, '\'-\' == ch');
-function visit162_701_1(result) {
+function visit164_701_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['701'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['699'][1].init(84, 8, '-1 == ch');
-function visit161_699_1(result) {
+function visit163_699_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['699'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['685'][1].init(175, 18, 'Utils.isLetter(ch)');
-function visit160_685_1(result) {
+function visit162_685_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['685'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['683'][1].init(84, 8, '-1 == ch');
-function visit159_683_1(result) {
+function visit161_683_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['683'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['667'][1].init(223, 9, '\'-\' == ch');
-function visit158_667_1(result) {
+function visit160_667_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['667'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['665'][1].init(108, 8, '-1 == ch');
-function visit157_665_1(result) {
+function visit159_665_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['665'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['663'][1].init(215, 9, '\'-\' == ch');
-function visit156_663_1(result) {
+function visit158_663_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['663'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['661'][1].init(108, 8, '-1 == ch');
-function visit155_661_1(result) {
+function visit157_661_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['661'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['649'][3].init(996, 115, 'mPage.getText(mCursor.position, mCursor.position + tagName.length) === tagName');
-function visit154_649_3(result) {
+function visit156_649_3(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['649'][3].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['649'][2].init(996, 258, 'mPage.getText(mCursor.position, mCursor.position + tagName.length) === tagName && !(mPage.getText(mCursor.position + tagName.length, mCursor.position + tagName.length + 1).match(/\\w/))');
-function visit153_649_2(result) {
+function visit155_649_2(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['649'][2].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['649'][1].init(983, 310, '!tagName || (mPage.getText(mCursor.position, mCursor.position + tagName.length) === tagName && !(mPage.getText(mCursor.position + tagName.length, mCursor.position + tagName.length + 1).match(/\\w/)))');
-function visit152_649_1(result) {
+function visit154_649_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['649'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['619'][1].init(42, 11, '\'\' == quote');
-function visit151_619_1(result) {
+function visit153_619_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['619'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['618'][1].init(46, 10, 'quoteSmart');
-function visit150_618_1(result) {
+function visit152_618_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['618'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['606'][3].init(616, 10, '\'/\' !== ch');
-function visit149_606_3(result) {
+function visit151_606_3(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['606'][3].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['606'][2].init(601, 9, '-1 !== ch');
-function visit148_606_2(result) {
+function visit150_606_2(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['606'][2].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['606'][1].init(553, 26, '(-1 !== ch) && (\'/\' !== ch)');
-function visit147_606_1(result) {
+function visit149_606_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['606'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['603'][1].init(352, 9, 'ch == \'*\'');
-function visit146_603_1(result) {
+function visit148_603_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['603'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['601'][3].init(208, 10, '\'*\' !== ch');
-function visit145_601_3(result) {
+function visit147_601_3(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['601'][3].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['601'][2].init(193, 9, '-1 !== ch');
-function visit144_601_2(result) {
+function visit146_601_2(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['601'][2].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['601'][1].init(141, 26, '(-1 !== ch) && (\'*\' !== ch)');
-function visit143_601_1(result) {
+function visit145_601_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['601'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['597'][1].init(468, 9, '\'*\' == ch');
-function visit142_597_1(result) {
+function visit144_597_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['597'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['595'][1].init(341, 9, '\'/\' == ch');
-function visit141_595_1(result) {
+function visit143_595_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['595'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['593'][1].init(218, 8, '-1 == ch');
-function visit140_593_1(result) {
+function visit142_593_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['593'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['590'][1].init(42, 11, '\'\' == quote');
-function visit139_590_1(result) {
+function visit141_590_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['590'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['589'][1].init(46, 10, 'quoteSmart');
-function visit138_589_1(result) {
+function visit140_589_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['589'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['581'][3].init(293, 12, 'ch !== quote');
-function visit137_581_3(result) {
+function visit139_581_3(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['581'][3].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['581'][2].init(276, 11, 'ch !== \'\\\\\'');
-function visit136_581_2(result) {
+function visit138_581_2(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['581'][2].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['581'][1].init(276, 30, '(ch !== \'\\\\\') && (ch !== quote)');
-function visit135_581_1(result) {
+function visit137_581_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['581'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['579'][1].init(152, 8, '-1 == ch');
-function visit134_579_1(result) {
+function visit136_579_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['579'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['577'][1].init(42, 12, '\'\' !== quote');
-function visit133_577_1(result) {
+function visit135_577_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['577'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['576'][1].init(47, 10, 'quoteSmart');
-function visit132_576_1(result) {
+function visit134_576_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['576'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['570'][1].init(182, 12, '\'"\' == quote');
-function visit131_570_1(result) {
+function visit133_570_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['570'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['568'][1].init(42, 11, '\'\' == quote');
-function visit130_568_1(result) {
+function visit132_568_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['568'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['567'][1].init(46, 22, 'quoteSmart && !comment');
-function visit129_567_1(result) {
+function visit131_567_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['567'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['561'][1].init(183, 13, '\'\\\'\' == quote');
-function visit128_561_1(result) {
+function visit130_561_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['561'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['559'][1].init(42, 11, '\'\' == quote');
-function visit127_559_1(result) {
+function visit129_559_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['559'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['558'][1].init(47, 22, 'quoteSmart && !comment');
-function visit126_558_1(result) {
+function visit128_558_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['558'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['509'][1].init(81, 9, '\'?\' == ch');
-function visit125_509_1(result) {
+function visit127_509_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['509'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['507'][2].init(342, 9, '\'!\' == ch');
-function visit124_507_2(result) {
+function visit126_507_2(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['507'][2].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['507'][1].init(46, 91, '\'!\' == ch || \'?\' == ch');
-function visit123_507_1(result) {
+function visit125_507_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['507'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['506'][1].init(37, 138, 'Utils.isLetter(ch) || \'!\' == ch || \'?\' == ch');
-function visit122_506_1(result) {
+function visit124_506_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['506'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['505'][2].init(254, 9, '\'/\' == ch');
-function visit121_505_2(result) {
+function visit123_505_2(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['505'][2].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['505'][1].init(254, 176, '\'/\' == ch || Utils.isLetter(ch) || \'!\' == ch || \'?\' == ch');
-function visit120_505_1(result) {
+function visit122_505_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['505'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['501'][1].init(74, 8, '-1 == ch');
-function visit119_501_1(result) {
+function visit121_501_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['501'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['499'][3].init(2413, 9, '\'<\' == ch');
-function visit118_499_3(result) {
+function visit120_499_3(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['499'][3].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['499'][2].init(2397, 10, '0 == quote');
-function visit117_499_2(result) {
+function visit119_499_2(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['499'][2].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['499'][1].init(2397, 26, '(0 == quote) && (\'<\' == ch)');
-function visit116_499_1(result) {
+function visit118_499_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['499'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['493'][3].init(484, 10, '\'/\' !== ch');
-function visit115_493_3(result) {
+function visit117_493_3(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['493'][3].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['493'][2].init(469, 9, '-1 !== ch');
-function visit114_493_2(result) {
+function visit116_493_2(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['493'][2].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['493'][1].init(441, 26, '(-1 !== ch) && (\'/\' !== ch)');
-function visit113_493_1(result) {
+function visit115_493_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['493'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['489'][1].init(252, 9, 'ch == \'*\'');
-function visit112_489_1(result) {
+function visit114_489_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['489'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['487'][3].init(150, 10, '\'*\' !== ch');
-function visit111_487_3(result) {
+function visit113_487_3(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['487'][3].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['487'][2].init(135, 9, '-1 !== ch');
-function visit110_487_2(result) {
+function visit112_487_2(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['487'][2].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['487'][1].init(103, 26, '(-1 !== ch) && (\'*\' !== ch)');
-function visit109_487_1(result) {
+function visit111_487_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['487'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['482'][1].init(573, 9, '\'*\' == ch');
-function visit108_482_1(result) {
+function visit110_482_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['482'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['480'][3].init(138, 11, '\'\\n\' !== ch');
-function visit107_480_3(result) {
+function visit109_480_3(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['480'][3].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['480'][2].init(123, 9, '-1 !== ch');
-function visit106_480_2(result) {
+function visit108_480_2(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['480'][2].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['480'][1].init(95, 27, '(-1 !== ch) && (\'\\n\' !== ch)');
-function visit105_480_1(result) {
+function visit107_480_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['480'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['477'][1].init(355, 9, '\'/\' == ch');
-function visit104_477_1(result) {
+function visit106_477_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['477'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['474'][1].init(254, 8, '-1 == ch');
-function visit103_474_1(result) {
+function visit105_474_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['474'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['469'][4].init(1134, 9, 'ch == \'/\'');
-function visit102_469_4(result) {
+function visit104_469_4(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['469'][4].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['469'][3].init(1118, 10, '0 == quote');
-function visit101_469_3(result) {
+function visit103_469_3(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['469'][3].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['469'][2].init(1118, 26, '(0 == quote) && (ch == \'/\')');
-function visit100_469_2(result) {
+function visit102_469_2(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['469'][2].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['469'][1].init(1103, 41, 'quoteSmart && (0 == quote) && (ch == \'/\')');
-function visit99_469_1(result) {
+function visit101_469_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['469'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['466'][2].init(988, 11, 'ch == quote');
-function visit98_466_2(result) {
+function visit100_466_2(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['466'][2].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['466'][1].init(973, 27, 'quoteSmart && (ch == quote)');
-function visit97_466_1(result) {
+function visit99_466_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['466'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['460'][1].init(62, 12, 'ch !== quote');
-function visit96_460_1(result) {
+function visit98_460_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['460'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['459'][2].init(142, 11, '\'\\\\\' !== ch');
-function visit95_459_2(result) {
+function visit97_459_2(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['459'][2].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['459'][1].init(39, 76, '(\'\\\\\' !== ch) && (ch !== quote)');
-function visit94_459_1(result) {
+function visit96_459_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['459'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['458'][2].init(100, 9, '-1 !== ch');
-function visit93_458_2(result) {
+function visit95_458_2(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['458'][2].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['458'][1].init(100, 116, '(-1 !== ch) && (\'\\\\\' !== ch) && (ch !== quote)');
-function visit92_458_1(result) {
+function visit94_458_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['458'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['456'][4].init(449, 11, '\'\\\\\' === ch');
-function visit91_456_4(result) {
+function visit93_456_4(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['456'][4].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['456'][3].init(432, 11, '0 !== quote');
-function visit90_456_3(result) {
+function visit92_456_3(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['456'][3].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['456'][2].init(432, 29, '(0 !== quote) && (\'\\\\\' === ch)');
-function visit89_456_2(result) {
+function visit91_456_2(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['456'][2].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['456'][1].init(417, 44, 'quoteSmart && (0 !== quote) && (\'\\\\\' === ch)');
-function visit88_456_1(result) {
+function visit90_456_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['456'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['452'][3].init(53, 9, '\'"\' == ch');
-function visit87_452_3(result) {
+function visit89_452_3(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['452'][3].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['452'][2].init(37, 10, '\'\\\'\' == ch');
-function visit86_452_2(result) {
+function visit88_452_2(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['452'][2].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['452'][1].init(37, 26, '(\'\\\'\' == ch) || (\'"\' == ch)');
-function visit85_452_1(result) {
+function visit87_452_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['452'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['451'][3].init(170, 10, '0 == quote');
-function visit84_451_3(result) {
+function visit86_451_3(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['451'][3].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['451'][2].init(170, 65, '(0 == quote) && ((\'\\\'\' == ch) || (\'"\' == ch))');
-function visit83_451_2(result) {
+function visit85_451_2(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['451'][2].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['451'][1].init(155, 80, 'quoteSmart && (0 == quote) && ((\'\\\'\' == ch) || (\'"\' == ch))');
-function visit82_451_1(result) {
+function visit84_451_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['451'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['448'][1].init(66, 8, '-1 == ch');
-function visit81_448_1(result) {
+function visit83_448_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['448'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['415'][1].init(199, 22, 'Utils.isWhitespace(ch)');
-function visit80_415_1(result) {
+function visit82_415_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['415'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['412'][1].init(70, 9, '\'>\' == ch');
-function visit79_412_1(result) {
+function visit81_412_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['412'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['404'][1].init(81, 9, '\'-\' == ch');
-function visit78_404_1(result) {
+function visit80_404_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['404'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['399'][1].init(207, 8, '-1 == ch');
-function visit77_399_1(result) {
+function visit79_399_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['399'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['396'][1].init(80, 9, '\'-\' == ch');
-function visit76_396_1(result) {
+function visit78_396_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['396'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['383'][1].init(309, 9, '\'>\' == ch');
-function visit75_383_1(result) {
+function visit77_383_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['383'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['380'][1].init(169, 8, '-1 == ch');
-function visit74_380_1(result) {
+function visit76_380_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['380'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['377'][1].init(78, 9, '\'-\' == ch');
-function visit73_377_1(result) {
+function visit75_377_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['377'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['371'][1].init(167, 9, '\'-\' == ch');
-function visit72_371_1(result) {
+function visit74_371_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['371'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['369'][1].init(77, 9, '\'>\' == ch');
-function visit71_369_1(result) {
+function visit73_369_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['369'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['363'][1].init(66, 8, '-1 == ch');
-function visit70_363_1(result) {
+function visit72_363_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['363'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['316'][1].init(623, 9, '\'=\' == ch');
-function visit69_316_1(result) {
+function visit71_316_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['316'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['313'][1].init(495, 22, 'Utils.isWhitespace(ch)');
-function visit68_313_1(result) {
+function visit70_313_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['313'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['306'][1].init(144, 8, '-1 == ch');
-function visit67_306_1(result) {
+function visit69_306_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['306'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['295'][1].init(276, 9, '\'"\' == ch');
-function visit66_295_1(result) {
+function visit68_295_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['295'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['291'][1].init(76, 8, '-1 == ch');
-function visit65_291_1(result) {
+function visit67_291_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['291'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['284'][1].init(276, 10, '\'\\\'\' == ch');
-function visit64_284_1(result) {
+function visit66_284_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['284'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['280'][1].init(76, 8, '-1 == ch');
-function visit63_280_1(result) {
+function visit65_280_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['280'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['273'][1].init(265, 22, 'Utils.isWhitespace(ch)');
-function visit62_273_1(result) {
+function visit64_273_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['273'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['269'][3].init(83, 9, '\'>\' == ch');
-function visit61_269_3(result) {
+function visit63_269_3(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['269'][3].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['269'][2].init(69, 8, '-1 == ch');
-function visit60_269_2(result) {
+function visit62_269_2(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['269'][2].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['269'][1].init(69, 24, '(-1 == ch) || (\'>\' == ch)');
-function visit59_269_1(result) {
+function visit61_269_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['269'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['260'][1].init(599, 22, 'Utils.isWhitespace(ch)');
-function visit58_260_1(result) {
+function visit60_260_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['260'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['256'][1].init(426, 9, '\'"\' == ch');
-function visit57_256_1(result) {
+function visit59_256_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['256'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['252'][1].init(252, 10, '\'\\\'\' == ch');
-function visit56_252_1(result) {
+function visit58_252_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['252'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['248'][3].init(65, 9, '\'>\' == ch');
-function visit55_248_3(result) {
+function visit57_248_3(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['248'][3].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['248'][2].init(51, 8, '-1 == ch');
-function visit54_248_2(result) {
+function visit56_248_2(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['248'][2].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['248'][1].init(51, 24, '(-1 == ch) || (\'>\' == ch)');
-function visit53_248_1(result) {
+function visit55_248_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['248'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['243'][1].init(986, 9, '\'=\' == ch');
-function visit52_243_1(result) {
+function visit54_243_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['243'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['237'][1].init(581, 22, 'Utils.isWhitespace(ch)');
-function visit51_237_1(result) {
+function visit53_237_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['237'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['229'][1].init(34, 9, '\'<\' == ch');
-function visit50_229_1(result) {
+function visit52_229_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['229'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['228'][5].init(116, 9, '\'<\' == ch');
-function visit49_228_5(result) {
+function visit51_228_5(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['228'][5].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['228'][4].init(101, 9, '\'>\' == ch');
-function visit48_228_4(result) {
+function visit50_228_4(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['228'][4].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['228'][3].init(101, 25, '(\'>\' == ch) || (\'<\' == ch)');
-function visit47_228_3(result) {
+function visit49_228_3(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['228'][3].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['228'][2].init(87, 8, '-1 == ch');
-function visit46_228_2(result) {
+function visit48_228_2(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['228'][2].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['228'][1].init(87, 39, '(-1 == ch) || (\'>\' == ch) || (\'<\' == ch)');
-function visit45_228_1(result) {
+function visit47_228_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['228'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['220'][2].init(441, 9, 'ch == "/"');
-function visit44_220_2(result) {
+function visit46_220_2(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['220'][2].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['220'][1].init(441, 52, 'ch == "/" || Utils.isValidAttributeNameStartChar(ch)');
-function visit43_220_1(result) {
+function visit45_220_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['220'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['215'][2].init(81, 9, 'ch == "/"');
-function visit42_215_2(result) {
+function visit44_215_2(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['215'][2].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['215'][1].init(81, 52, 'ch == "/" || Utils.isValidAttributeNameStartChar(ch)');
-function visit41_215_1(result) {
+function visit43_215_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['215'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['213'][1].init(90, 18, '!attributes.length');
-function visit40_213_1(result) {
+function visit42_213_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['213'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['205'][1].init(34, 9, '\'<\' == ch');
-function visit39_205_1(result) {
+function visit41_205_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['205'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['204'][5].init(114, 9, '\'<\' == ch');
-function visit38_204_5(result) {
+function visit40_204_5(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['204'][5].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['204'][4].init(101, 9, '\'>\' == ch');
-function visit37_204_4(result) {
+function visit39_204_4(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['204'][4].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['204'][3].init(101, 22, '\'>\' == ch || \'<\' == ch');
-function visit36_204_3(result) {
+function visit38_204_3(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['204'][3].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['204'][2].init(89, 8, 'ch == -1');
-function visit35_204_2(result) {
+function visit37_204_2(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['204'][2].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['204'][1].init(89, 34, 'ch == -1 || \'>\' == ch || \'<\' == ch');
-function visit34_204_1(result) {
+function visit36_204_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['204'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['183'][3].init(36, 9, 'ch === -1');
-function visit33_183_3(result) {
+function visit35_183_3(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['183'][3].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['183'][2].init(36, 30, 'ch === -1 && attributes.length');
-function visit32_183_2(result) {
+function visit34_183_2(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['183'][2].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['183'][1].init(26, 40, 'strict && ch === -1 && attributes.length');
-function visit31_183_1(result) {
+function visit33_183_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['183'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['181'][1].init(340, 6, 'strict');
-function visit30_181_1(result) {
+function visit32_181_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['181'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['132'][1].init(92, 10, '2 > length');
-function visit29_132_1(result) {
+function visit31_132_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['132'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['131'][1].init(100, 12, '0 !== length');
-function visit28_131_1(result) {
+function visit30_131_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['131'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['121'][1].init(80, 5, 'l > 0');
-function visit27_121_1(result) {
+function visit29_121_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['121'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['111'][1].init(80, 5, 'l > 0');
-function visit26_111_1(result) {
+function visit28_111_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['111'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['96'][1].init(92, 10, '2 > length');
-function visit25_96_1(result) {
+function visit27_96_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['96'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['95'][1].init(85, 12, '0 !== length');
-function visit24_95_1(result) {
+function visit26_95_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['95'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['67'][1].init(124, 9, '\'-\' == ch');
-function visit23_67_1(result) {
+function visit25_67_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['67'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['63'][1].init(34, 9, '\'>\' == ch');
-function visit22_63_1(result) {
+function visit24_63_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['63'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['60'][1].init(82, 8, 'ch == -1');
-function visit21_60_1(result) {
+function visit23_60_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['60'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['58'][3].init(382, 9, '\'?\' == ch');
-function visit20_58_3(result) {
+function visit22_58_3(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['58'][3].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['58'][2].init(369, 9, '\'!\' == ch');
-function visit19_58_2(result) {
+function visit21_58_2(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['58'][2].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['58'][1].init(369, 22, '\'!\' == ch || \'?\' == ch');
-function visit18_58_1(result) {
+function visit20_58_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['58'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['55'][2].init(199, 9, 'ch == \'/\'');
-function visit17_55_2(result) {
+function visit19_55_2(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['55'][2].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['55'][1].init(199, 31, 'ch == \'/\' || Utils.isLetter(ch)');
-function visit16_55_1(result) {
+function visit18_55_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['55'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['53'][1].init(82, 8, 'ch == -1');
-function visit15_53_1(result) {
+function visit17_53_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['53'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].branchData['18'][1].init(155, 9, 'cfg || {}');
-function visit14_18_1(result) {
+function visit16_18_1(result) {
   _$jscoverage['/html-parser/lexer/lexer.js'].branchData['18'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/lexer/lexer.js'].lineData[6]++;
@@ -1494,7 +1494,7 @@ KISSY.add("html-parser/lexer/lexer", function(S, Cursor, Page, TextNode, CData, 
     _$jscoverage['/html-parser/lexer/lexer.js'].lineData[17]++;
     self.nodeFactory = this;
     _$jscoverage['/html-parser/lexer/lexer.js'].lineData[18]++;
-    this.cfg = visit14_18_1(cfg || {});
+    this.cfg = visit16_18_1(cfg || {});
   }
   _$jscoverage['/html-parser/lexer/lexer.js'].lineData[21]++;
   Lexer.prototype = {
@@ -1528,35 +1528,35 @@ KISSY.add("html-parser/lexer/lexer", function(S, Cursor, Page, TextNode, CData, 
       _$jscoverage['/html-parser/lexer/lexer.js'].lineData[52]++;
       ch = page.getChar(cursor);
       _$jscoverage['/html-parser/lexer/lexer.js'].lineData[53]++;
-      if (visit15_53_1(ch == -1)) {
+      if (visit17_53_1(ch == -1)) {
         _$jscoverage['/html-parser/lexer/lexer.js'].lineData[54]++;
         ret = this.makeString(start, cursor.position);
       } else {
         _$jscoverage['/html-parser/lexer/lexer.js'].lineData[55]++;
-        if (visit16_55_1(visit17_55_2(ch == '/') || Utils.isLetter(ch))) {
+        if (visit18_55_1(visit19_55_2(ch == '/') || Utils.isLetter(ch))) {
           _$jscoverage['/html-parser/lexer/lexer.js'].lineData[56]++;
           page.ungetChar(cursor);
           _$jscoverage['/html-parser/lexer/lexer.js'].lineData[57]++;
           ret = this.parseTag(start);
         } else {
           _$jscoverage['/html-parser/lexer/lexer.js'].lineData[58]++;
-          if (visit18_58_1(visit19_58_2('!' == ch) || visit20_58_3('?' == ch))) {
+          if (visit20_58_1(visit21_58_2('!' == ch) || visit22_58_3('?' == ch))) {
             _$jscoverage['/html-parser/lexer/lexer.js'].lineData[59]++;
             ch = page.getChar(cursor);
             _$jscoverage['/html-parser/lexer/lexer.js'].lineData[60]++;
-            if (visit21_60_1(ch == -1)) {
+            if (visit23_60_1(ch == -1)) {
               _$jscoverage['/html-parser/lexer/lexer.js'].lineData[61]++;
               ret = this.makeString(start, cursor.position);
             } else {
               _$jscoverage['/html-parser/lexer/lexer.js'].lineData[63]++;
-              if (visit22_63_1('>' == ch)) {
+              if (visit24_63_1('>' == ch)) {
                 _$jscoverage['/html-parser/lexer/lexer.js'].lineData[64]++;
                 ret = this.makeComment(start, cursor.position);
               } else {
                 _$jscoverage['/html-parser/lexer/lexer.js'].lineData[66]++;
                 page.ungetChar(cursor);
                 _$jscoverage['/html-parser/lexer/lexer.js'].lineData[67]++;
-                if (visit23_67_1('-' == ch)) {
+                if (visit25_67_1('-' == ch)) {
                   _$jscoverage['/html-parser/lexer/lexer.js'].lineData[68]++;
                   ret = this.parseComment(start, quoteSmart);
                 } else {
@@ -1595,9 +1595,9 @@ KISSY.add("html-parser/lexer/lexer", function(S, Cursor, Page, TextNode, CData, 
   _$jscoverage['/html-parser/lexer/lexer.js'].lineData[94]++;
   length = end - start;
   _$jscoverage['/html-parser/lexer/lexer.js'].lineData[95]++;
-  if (visit24_95_1(0 !== length)) {
+  if (visit26_95_1(0 !== length)) {
     _$jscoverage['/html-parser/lexer/lexer.js'].lineData[96]++;
-    if (visit25_96_1(2 > length)) {
+    if (visit27_96_1(2 > length)) {
       _$jscoverage['/html-parser/lexer/lexer.js'].lineData[98]++;
       return (this.makeString(start, end));
     }
@@ -1617,7 +1617,7 @@ KISSY.add("html-parser/lexer/lexer", function(S, Cursor, Page, TextNode, CData, 
   _$jscoverage['/html-parser/lexer/lexer.js'].lineData[110]++;
   l = end - start;
   _$jscoverage['/html-parser/lexer/lexer.js'].lineData[111]++;
-  if (visit26_111_1(l > 0)) {
+  if (visit28_111_1(l > 0)) {
     _$jscoverage['/html-parser/lexer/lexer.js'].lineData[112]++;
     ret = this.nodeFactory.createStringNode(this.page, start, end);
   }
@@ -1631,7 +1631,7 @@ KISSY.add("html-parser/lexer/lexer", function(S, Cursor, Page, TextNode, CData, 
   _$jscoverage['/html-parser/lexer/lexer.js'].lineData[120]++;
   l = end - start;
   _$jscoverage['/html-parser/lexer/lexer.js'].lineData[121]++;
-  if (visit27_121_1(l > 0)) {
+  if (visit29_121_1(l > 0)) {
     _$jscoverage['/html-parser/lexer/lexer.js'].lineData[122]++;
     ret = this.nodeFactory.createCDataNode(this.page, start, end);
   }
@@ -1645,9 +1645,9 @@ KISSY.add("html-parser/lexer/lexer", function(S, Cursor, Page, TextNode, CData, 
   _$jscoverage['/html-parser/lexer/lexer.js'].lineData[130]++;
   length = end - start;
   _$jscoverage['/html-parser/lexer/lexer.js'].lineData[131]++;
-  if (visit28_131_1(0 !== length)) {
+  if (visit30_131_1(0 !== length)) {
     _$jscoverage['/html-parser/lexer/lexer.js'].lineData[132]++;
-    if (visit29_132_1(2 > length)) {
+    if (visit31_132_1(2 > length)) {
       _$jscoverage['/html-parser/lexer/lexer.js'].lineData[134]++;
       return (this.makeString(start, end));
     }
@@ -1685,12 +1685,12 @@ KISSY.add("html-parser/lexer/lexer", function(S, Cursor, Page, TextNode, CData, 
   _$jscoverage['/html-parser/lexer/lexer.js'].lineData[171]++;
   var done, bookmarks = [], attributes = [], ch, cfg = this.cfg, strict = cfg.strict, checkError = S.noop, page = this.page, state = 0, cursor = this.cursor;
   _$jscoverage['/html-parser/lexer/lexer.js'].lineData[181]++;
-  if (visit30_181_1(strict)) {
+  if (visit32_181_1(strict)) {
     _$jscoverage['/html-parser/lexer/lexer.js'].lineData[182]++;
     checkError = function() {
   _$jscoverage['/html-parser/lexer/lexer.js'].functionData[14]++;
   _$jscoverage['/html-parser/lexer/lexer.js'].lineData[183]++;
-  if (visit31_183_1(strict && visit32_183_2(visit33_183_3(ch === -1) && attributes.length))) {
+  if (visit33_183_1(strict && visit34_183_2(visit35_183_3(ch === -1) && attributes.length))) {
     _$jscoverage['/html-parser/lexer/lexer.js'].lineData[184]++;
     throw new Error(attributes[0].name + ' syntax error at row ' + (page.row(cursor) + 1) + ' , col ' + (page.col(cursor) + 1));
   }
@@ -1708,9 +1708,9 @@ KISSY.add("html-parser/lexer/lexer", function(S, Cursor, Page, TextNode, CData, 
     switch (state) {
       case 0:
         _$jscoverage['/html-parser/lexer/lexer.js'].lineData[204]++;
-        if (visit34_204_1(visit35_204_2(ch == -1) || visit36_204_3(visit37_204_4('>' == ch) || visit38_204_5('<' == ch)))) {
+        if (visit36_204_1(visit37_204_2(ch == -1) || visit38_204_3(visit39_204_4('>' == ch) || visit40_204_5('<' == ch)))) {
           _$jscoverage['/html-parser/lexer/lexer.js'].lineData[205]++;
-          if (visit39_205_1('<' == ch)) {
+          if (visit41_205_1('<' == ch)) {
             _$jscoverage['/html-parser/lexer/lexer.js'].lineData[207]++;
             page.ungetChar(cursor);
             _$jscoverage['/html-parser/lexer/lexer.js'].lineData[208]++;
@@ -1720,15 +1720,15 @@ KISSY.add("html-parser/lexer/lexer", function(S, Cursor, Page, TextNode, CData, 
           done = true;
         } else {
           _$jscoverage['/html-parser/lexer/lexer.js'].lineData[213]++;
-          if (visit40_213_1(!attributes.length)) {
+          if (visit42_213_1(!attributes.length)) {
             _$jscoverage['/html-parser/lexer/lexer.js'].lineData[215]++;
-            if (visit41_215_1(visit42_215_2(ch == "/") || Utils.isValidAttributeNameStartChar(ch))) {
+            if (visit43_215_1(visit44_215_2(ch == "/") || Utils.isValidAttributeNameStartChar(ch))) {
               _$jscoverage['/html-parser/lexer/lexer.js'].lineData[216]++;
               state = 1;
             }
           } else {
             _$jscoverage['/html-parser/lexer/lexer.js'].lineData[220]++;
-            if (visit43_220_1(visit44_220_2(ch == "/") || Utils.isValidAttributeNameStartChar(ch))) {
+            if (visit45_220_1(visit46_220_2(ch == "/") || Utils.isValidAttributeNameStartChar(ch))) {
               _$jscoverage['/html-parser/lexer/lexer.js'].lineData[221]++;
               state = 1;
             }
@@ -1738,9 +1738,9 @@ KISSY.add("html-parser/lexer/lexer", function(S, Cursor, Page, TextNode, CData, 
         break;
       case 1:
         _$jscoverage['/html-parser/lexer/lexer.js'].lineData[228]++;
-        if (visit45_228_1((visit46_228_2(-1 == ch)) || visit47_228_3((visit48_228_4('>' == ch)) || (visit49_228_5('<' == ch))))) {
+        if (visit47_228_1((visit48_228_2(-1 == ch)) || visit49_228_3((visit50_228_4('>' == ch)) || (visit51_228_5('<' == ch))))) {
           _$jscoverage['/html-parser/lexer/lexer.js'].lineData[229]++;
-          if (visit50_229_1('<' == ch)) {
+          if (visit52_229_1('<' == ch)) {
             _$jscoverage['/html-parser/lexer/lexer.js'].lineData[231]++;
             page.ungetChar(cursor);
             _$jscoverage['/html-parser/lexer/lexer.js'].lineData[232]++;
@@ -1752,14 +1752,14 @@ KISSY.add("html-parser/lexer/lexer", function(S, Cursor, Page, TextNode, CData, 
           done = true;
         } else {
           _$jscoverage['/html-parser/lexer/lexer.js'].lineData[237]++;
-          if (visit51_237_1(Utils.isWhitespace(ch))) {
+          if (visit53_237_1(Utils.isWhitespace(ch))) {
             _$jscoverage['/html-parser/lexer/lexer.js'].lineData[240]++;
             bookmarks[6] = bookmarks[2];
             _$jscoverage['/html-parser/lexer/lexer.js'].lineData[241]++;
             state = 6;
           } else {
             _$jscoverage['/html-parser/lexer/lexer.js'].lineData[243]++;
-            if (visit52_243_1('=' == ch)) {
+            if (visit54_243_1('=' == ch)) {
               _$jscoverage['/html-parser/lexer/lexer.js'].lineData[244]++;
               state = 2;
             }
@@ -1769,28 +1769,28 @@ KISSY.add("html-parser/lexer/lexer", function(S, Cursor, Page, TextNode, CData, 
         break;
       case 2:
         _$jscoverage['/html-parser/lexer/lexer.js'].lineData[248]++;
-        if (visit53_248_1((visit54_248_2(-1 == ch)) || (visit55_248_3('>' == ch)))) {
+        if (visit55_248_1((visit56_248_2(-1 == ch)) || (visit57_248_3('>' == ch)))) {
           _$jscoverage['/html-parser/lexer/lexer.js'].lineData[249]++;
           this.standalone(attributes, bookmarks);
           _$jscoverage['/html-parser/lexer/lexer.js'].lineData[250]++;
           done = true;
         } else {
           _$jscoverage['/html-parser/lexer/lexer.js'].lineData[252]++;
-          if (visit56_252_1('\'' == ch)) {
+          if (visit58_252_1('\'' == ch)) {
             _$jscoverage['/html-parser/lexer/lexer.js'].lineData[253]++;
             state = 4;
             _$jscoverage['/html-parser/lexer/lexer.js'].lineData[254]++;
             bookmarks[4] = bookmarks[3];
           } else {
             _$jscoverage['/html-parser/lexer/lexer.js'].lineData[256]++;
-            if (visit57_256_1('"' == ch)) {
+            if (visit59_256_1('"' == ch)) {
               _$jscoverage['/html-parser/lexer/lexer.js'].lineData[257]++;
               state = 5;
               _$jscoverage['/html-parser/lexer/lexer.js'].lineData[258]++;
               bookmarks[5] = bookmarks[3];
             } else {
               _$jscoverage['/html-parser/lexer/lexer.js'].lineData[260]++;
-              if (visit58_260_1(Utils.isWhitespace(ch))) {
+              if (visit60_260_1(Utils.isWhitespace(ch))) {
               } else {
                 _$jscoverage['/html-parser/lexer/lexer.js'].lineData[266]++;
                 state = 3;
@@ -1802,14 +1802,14 @@ KISSY.add("html-parser/lexer/lexer", function(S, Cursor, Page, TextNode, CData, 
         break;
       case 3:
         _$jscoverage['/html-parser/lexer/lexer.js'].lineData[269]++;
-        if (visit59_269_1((visit60_269_2(-1 == ch)) || (visit61_269_3('>' == ch)))) {
+        if (visit61_269_1((visit62_269_2(-1 == ch)) || (visit63_269_3('>' == ch)))) {
           _$jscoverage['/html-parser/lexer/lexer.js'].lineData[270]++;
           this.naked(attributes, bookmarks);
           _$jscoverage['/html-parser/lexer/lexer.js'].lineData[271]++;
           done = true;
         } else {
           _$jscoverage['/html-parser/lexer/lexer.js'].lineData[273]++;
-          if (visit62_273_1(Utils.isWhitespace(ch))) {
+          if (visit64_273_1(Utils.isWhitespace(ch))) {
             _$jscoverage['/html-parser/lexer/lexer.js'].lineData[274]++;
             this.naked(attributes, bookmarks);
             _$jscoverage['/html-parser/lexer/lexer.js'].lineData[275]++;
@@ -1822,14 +1822,14 @@ KISSY.add("html-parser/lexer/lexer", function(S, Cursor, Page, TextNode, CData, 
         break;
       case 4:
         _$jscoverage['/html-parser/lexer/lexer.js'].lineData[280]++;
-        if (visit63_280_1(-1 == ch)) {
+        if (visit65_280_1(-1 == ch)) {
           _$jscoverage['/html-parser/lexer/lexer.js'].lineData[281]++;
           this.single_quote(attributes, bookmarks);
           _$jscoverage['/html-parser/lexer/lexer.js'].lineData[282]++;
           done = true;
         } else {
           _$jscoverage['/html-parser/lexer/lexer.js'].lineData[284]++;
-          if (visit64_284_1('\'' == ch)) {
+          if (visit66_284_1('\'' == ch)) {
             _$jscoverage['/html-parser/lexer/lexer.js'].lineData[285]++;
             this.single_quote(attributes, bookmarks);
             _$jscoverage['/html-parser/lexer/lexer.js'].lineData[286]++;
@@ -1842,14 +1842,14 @@ KISSY.add("html-parser/lexer/lexer", function(S, Cursor, Page, TextNode, CData, 
         break;
       case 5:
         _$jscoverage['/html-parser/lexer/lexer.js'].lineData[291]++;
-        if (visit65_291_1(-1 == ch)) {
+        if (visit67_291_1(-1 == ch)) {
           _$jscoverage['/html-parser/lexer/lexer.js'].lineData[292]++;
           this.double_quote(attributes, bookmarks);
           _$jscoverage['/html-parser/lexer/lexer.js'].lineData[293]++;
           done = true;
         } else {
           _$jscoverage['/html-parser/lexer/lexer.js'].lineData[295]++;
-          if (visit66_295_1('"' == ch)) {
+          if (visit68_295_1('"' == ch)) {
             _$jscoverage['/html-parser/lexer/lexer.js'].lineData[296]++;
             this.double_quote(attributes, bookmarks);
             _$jscoverage['/html-parser/lexer/lexer.js'].lineData[297]++;
@@ -1862,7 +1862,7 @@ KISSY.add("html-parser/lexer/lexer", function(S, Cursor, Page, TextNode, CData, 
         break;
       case 6:
         _$jscoverage['/html-parser/lexer/lexer.js'].lineData[306]++;
-        if (visit67_306_1(-1 == ch)) {
+        if (visit69_306_1(-1 == ch)) {
           _$jscoverage['/html-parser/lexer/lexer.js'].lineData[308]++;
           this.standalone(attributes, bookmarks);
           _$jscoverage['/html-parser/lexer/lexer.js'].lineData[309]++;
@@ -1873,10 +1873,10 @@ KISSY.add("html-parser/lexer/lexer", function(S, Cursor, Page, TextNode, CData, 
           state = 0;
         } else {
           _$jscoverage['/html-parser/lexer/lexer.js'].lineData[313]++;
-          if (visit68_313_1(Utils.isWhitespace(ch))) {
+          if (visit70_313_1(Utils.isWhitespace(ch))) {
           } else {
             _$jscoverage['/html-parser/lexer/lexer.js'].lineData[316]++;
-            if (visit69_316_1('=' == ch)) {
+            if (visit71_316_1('=' == ch)) {
               _$jscoverage['/html-parser/lexer/lexer.js'].lineData[318]++;
               bookmarks[2] = bookmarks[6];
               _$jscoverage['/html-parser/lexer/lexer.js'].lineData[319]++;
@@ -1920,7 +1920,7 @@ KISSY.add("html-parser/lexer/lexer", function(S, Cursor, Page, TextNode, CData, 
     _$jscoverage['/html-parser/lexer/lexer.js'].lineData[362]++;
     ch = page.getChar(cursor);
     _$jscoverage['/html-parser/lexer/lexer.js'].lineData[363]++;
-    if (visit70_363_1(-1 == ch)) {
+    if (visit72_363_1(-1 == ch)) {
       _$jscoverage['/html-parser/lexer/lexer.js'].lineData[364]++;
       done = true;
     } else {
@@ -1928,12 +1928,12 @@ KISSY.add("html-parser/lexer/lexer", function(S, Cursor, Page, TextNode, CData, 
       switch (state) {
         case 0:
           _$jscoverage['/html-parser/lexer/lexer.js'].lineData[369]++;
-          if (visit71_369_1('>' == ch)) {
+          if (visit73_369_1('>' == ch)) {
             _$jscoverage['/html-parser/lexer/lexer.js'].lineData[370]++;
             done = true;
           }
           _$jscoverage['/html-parser/lexer/lexer.js'].lineData[371]++;
-          if (visit72_371_1('-' == ch)) {
+          if (visit74_371_1('-' == ch)) {
             _$jscoverage['/html-parser/lexer/lexer.js'].lineData[372]++;
             state = 1;
           } else {
@@ -1944,16 +1944,16 @@ KISSY.add("html-parser/lexer/lexer", function(S, Cursor, Page, TextNode, CData, 
           break;
         case 1:
           _$jscoverage['/html-parser/lexer/lexer.js'].lineData[377]++;
-          if (visit73_377_1('-' == ch)) {
+          if (visit75_377_1('-' == ch)) {
             _$jscoverage['/html-parser/lexer/lexer.js'].lineData[379]++;
             ch = page.getChar(cursor);
             _$jscoverage['/html-parser/lexer/lexer.js'].lineData[380]++;
-            if (visit74_380_1(-1 == ch)) {
+            if (visit76_380_1(-1 == ch)) {
               _$jscoverage['/html-parser/lexer/lexer.js'].lineData[381]++;
               done = true;
             } else {
               _$jscoverage['/html-parser/lexer/lexer.js'].lineData[383]++;
-              if (visit75_383_1('>' == ch)) {
+              if (visit77_383_1('>' == ch)) {
                 _$jscoverage['/html-parser/lexer/lexer.js'].lineData[384]++;
                 done = true;
               } else {
@@ -1971,12 +1971,12 @@ KISSY.add("html-parser/lexer/lexer", function(S, Cursor, Page, TextNode, CData, 
           break;
         case 2:
           _$jscoverage['/html-parser/lexer/lexer.js'].lineData[396]++;
-          if (visit76_396_1('-' == ch)) {
+          if (visit78_396_1('-' == ch)) {
             _$jscoverage['/html-parser/lexer/lexer.js'].lineData[397]++;
             state = 3;
           } else {
             _$jscoverage['/html-parser/lexer/lexer.js'].lineData[399]++;
-            if (visit77_399_1(-1 == ch)) {
+            if (visit79_399_1(-1 == ch)) {
               _$jscoverage['/html-parser/lexer/lexer.js'].lineData[400]++;
               return this.parseString(start, quoteSmart);
             }
@@ -1985,7 +1985,7 @@ KISSY.add("html-parser/lexer/lexer", function(S, Cursor, Page, TextNode, CData, 
           break;
         case 3:
           _$jscoverage['/html-parser/lexer/lexer.js'].lineData[404]++;
-          if (visit78_404_1('-' == ch)) {
+          if (visit80_404_1('-' == ch)) {
             _$jscoverage['/html-parser/lexer/lexer.js'].lineData[405]++;
             state = 4;
           } else {
@@ -1996,12 +1996,12 @@ KISSY.add("html-parser/lexer/lexer", function(S, Cursor, Page, TextNode, CData, 
           break;
         case 4:
           _$jscoverage['/html-parser/lexer/lexer.js'].lineData[412]++;
-          if (visit79_412_1('>' == ch)) {
+          if (visit81_412_1('>' == ch)) {
             _$jscoverage['/html-parser/lexer/lexer.js'].lineData[413]++;
             done = true;
           } else {
             _$jscoverage['/html-parser/lexer/lexer.js'].lineData[415]++;
-            if (visit80_415_1(Utils.isWhitespace(ch))) {
+            if (visit82_415_1(Utils.isWhitespace(ch))) {
             } else {
               _$jscoverage['/html-parser/lexer/lexer.js'].lineData[421]++;
               state = 2;
@@ -2027,64 +2027,64 @@ KISSY.add("html-parser/lexer/lexer", function(S, Cursor, Page, TextNode, CData, 
     _$jscoverage['/html-parser/lexer/lexer.js'].lineData[447]++;
     ch = page.getChar(cursor);
     _$jscoverage['/html-parser/lexer/lexer.js'].lineData[448]++;
-    if (visit81_448_1(-1 == ch)) {
+    if (visit83_448_1(-1 == ch)) {
       _$jscoverage['/html-parser/lexer/lexer.js'].lineData[449]++;
       done = 1;
     } else {
       _$jscoverage['/html-parser/lexer/lexer.js'].lineData[451]++;
-      if (visit82_451_1(quoteSmart && visit83_451_2((visit84_451_3(0 == quote)) && (visit85_452_1((visit86_452_2('\'' == ch)) || (visit87_452_3('"' == ch))))))) {
+      if (visit84_451_1(quoteSmart && visit85_451_2((visit86_451_3(0 == quote)) && (visit87_452_1((visit88_452_2('\'' == ch)) || (visit89_452_3('"' == ch))))))) {
         _$jscoverage['/html-parser/lexer/lexer.js'].lineData[453]++;
         quote = ch;
       } else {
         _$jscoverage['/html-parser/lexer/lexer.js'].lineData[456]++;
-        if (visit88_456_1(quoteSmart && visit89_456_2((visit90_456_3(0 !== quote)) && (visit91_456_4('\\' === ch))))) {
+        if (visit90_456_1(quoteSmart && visit91_456_2((visit92_456_3(0 !== quote)) && (visit93_456_4('\\' === ch))))) {
           _$jscoverage['/html-parser/lexer/lexer.js'].lineData[457]++;
           ch = page.getChar(cursor);
           _$jscoverage['/html-parser/lexer/lexer.js'].lineData[458]++;
-          if (visit92_458_1((visit93_458_2(-1 !== ch)) && visit94_459_1((visit95_459_2('\\' !== ch)) && (visit96_460_1(ch !== quote))))) {
+          if (visit94_458_1((visit95_458_2(-1 !== ch)) && visit96_459_1((visit97_459_2('\\' !== ch)) && (visit98_460_1(ch !== quote))))) {
             _$jscoverage['/html-parser/lexer/lexer.js'].lineData[463]++;
             page.ungetChar(cursor);
           }
         } else {
           _$jscoverage['/html-parser/lexer/lexer.js'].lineData[466]++;
-          if (visit97_466_1(quoteSmart && (visit98_466_2(ch == quote)))) {
+          if (visit99_466_1(quoteSmart && (visit100_466_2(ch == quote)))) {
             _$jscoverage['/html-parser/lexer/lexer.js'].lineData[467]++;
             quote = 0;
           } else {
             _$jscoverage['/html-parser/lexer/lexer.js'].lineData[469]++;
-            if (visit99_469_1(quoteSmart && visit100_469_2((visit101_469_3(0 == quote)) && (visit102_469_4(ch == '/'))))) {
+            if (visit101_469_1(quoteSmart && visit102_469_2((visit103_469_3(0 == quote)) && (visit104_469_4(ch == '/'))))) {
               _$jscoverage['/html-parser/lexer/lexer.js'].lineData[473]++;
               ch = page.getChar(cursor);
               _$jscoverage['/html-parser/lexer/lexer.js'].lineData[474]++;
-              if (visit103_474_1(-1 == ch)) {
+              if (visit105_474_1(-1 == ch)) {
                 _$jscoverage['/html-parser/lexer/lexer.js'].lineData[475]++;
                 done = 1;
               } else {
                 _$jscoverage['/html-parser/lexer/lexer.js'].lineData[477]++;
-                if (visit104_477_1('/' == ch)) {
+                if (visit106_477_1('/' == ch)) {
                   _$jscoverage['/html-parser/lexer/lexer.js'].lineData[478]++;
                   do {
                     _$jscoverage['/html-parser/lexer/lexer.js'].lineData[479]++;
                     ch = page.getChar(cursor);
-                  } while (visit105_480_1((visit106_480_2(-1 !== ch)) && (visit107_480_3('\n' !== ch))));
+                  } while (visit107_480_1((visit108_480_2(-1 !== ch)) && (visit109_480_3('\n' !== ch))));
                 } else {
                   _$jscoverage['/html-parser/lexer/lexer.js'].lineData[482]++;
-                  if (visit108_482_1('*' == ch)) {
+                  if (visit110_482_1('*' == ch)) {
                     _$jscoverage['/html-parser/lexer/lexer.js'].lineData[483]++;
                     do {
                       _$jscoverage['/html-parser/lexer/lexer.js'].lineData[485]++;
                       do {
                         _$jscoverage['/html-parser/lexer/lexer.js'].lineData[486]++;
                         ch = page.getChar(cursor);
-                      } while (visit109_487_1((visit110_487_2(-1 !== ch)) && (visit111_487_3('*' !== ch))));
+                      } while (visit111_487_1((visit112_487_2(-1 !== ch)) && (visit113_487_3('*' !== ch))));
                       _$jscoverage['/html-parser/lexer/lexer.js'].lineData[488]++;
                       ch = page.getChar(cursor);
                       _$jscoverage['/html-parser/lexer/lexer.js'].lineData[489]++;
-                      if (visit112_489_1(ch == '*')) {
+                      if (visit114_489_1(ch == '*')) {
                         _$jscoverage['/html-parser/lexer/lexer.js'].lineData[490]++;
                         page.ungetChar(cursor);
                       }
-                    } while (visit113_493_1((visit114_493_2(-1 !== ch)) && (visit115_493_3('/' !== ch))));
+                    } while (visit115_493_1((visit116_493_2(-1 !== ch)) && (visit117_493_3('/' !== ch))));
                   } else {
                     _$jscoverage['/html-parser/lexer/lexer.js'].lineData[496]++;
                     page.ungetChar(cursor);
@@ -2093,16 +2093,16 @@ KISSY.add("html-parser/lexer/lexer", function(S, Cursor, Page, TextNode, CData, 
               }
             } else {
               _$jscoverage['/html-parser/lexer/lexer.js'].lineData[499]++;
-              if (visit116_499_1((visit117_499_2(0 == quote)) && (visit118_499_3('<' == ch)))) {
+              if (visit118_499_1((visit119_499_2(0 == quote)) && (visit120_499_3('<' == ch)))) {
                 _$jscoverage['/html-parser/lexer/lexer.js'].lineData[500]++;
                 ch = page.getChar(cursor);
                 _$jscoverage['/html-parser/lexer/lexer.js'].lineData[501]++;
-                if (visit119_501_1(-1 == ch)) {
+                if (visit121_501_1(-1 == ch)) {
                   _$jscoverage['/html-parser/lexer/lexer.js'].lineData[502]++;
                   done = 1;
                 } else {
                   _$jscoverage['/html-parser/lexer/lexer.js'].lineData[505]++;
-                  if (visit120_505_1(visit121_505_2('/' == ch) || visit122_506_1(Utils.isLetter(ch) || visit123_507_1(visit124_507_2('!' == ch) || visit125_509_1('?' == ch))))) {
+                  if (visit122_505_1(visit123_505_2('/' == ch) || visit124_506_1(Utils.isLetter(ch) || visit125_507_1(visit126_507_2('!' == ch) || visit127_509_1('?' == ch))))) {
                     _$jscoverage['/html-parser/lexer/lexer.js'].lineData[510]++;
                     done = 1;
                     _$jscoverage['/html-parser/lexer/lexer.js'].lineData[511]++;
@@ -2154,14 +2154,14 @@ KISSY.add("html-parser/lexer/lexer", function(S, Cursor, Page, TextNode, CData, 
             break;
           case '\'':
             _$jscoverage['/html-parser/lexer/lexer.js'].lineData[558]++;
-            if (visit126_558_1(quoteSmart && !comment)) {
+            if (visit128_558_1(quoteSmart && !comment)) {
               _$jscoverage['/html-parser/lexer/lexer.js'].lineData[559]++;
-              if (visit127_559_1('' == quote)) {
+              if (visit129_559_1('' == quote)) {
                 _$jscoverage['/html-parser/lexer/lexer.js'].lineData[560]++;
                 quote = '\'';
               } else {
                 _$jscoverage['/html-parser/lexer/lexer.js'].lineData[561]++;
-                if (visit128_561_1('\'' == quote)) {
+                if (visit130_561_1('\'' == quote)) {
                   _$jscoverage['/html-parser/lexer/lexer.js'].lineData[562]++;
                   quote = '';
                 }
@@ -2171,14 +2171,14 @@ KISSY.add("html-parser/lexer/lexer", function(S, Cursor, Page, TextNode, CData, 
             break;
           case '"':
             _$jscoverage['/html-parser/lexer/lexer.js'].lineData[567]++;
-            if (visit129_567_1(quoteSmart && !comment)) {
+            if (visit131_567_1(quoteSmart && !comment)) {
               _$jscoverage['/html-parser/lexer/lexer.js'].lineData[568]++;
-              if (visit130_568_1('' == quote)) {
+              if (visit132_568_1('' == quote)) {
                 _$jscoverage['/html-parser/lexer/lexer.js'].lineData[569]++;
                 quote = '"';
               } else {
                 _$jscoverage['/html-parser/lexer/lexer.js'].lineData[570]++;
-                if (visit131_570_1('"' == quote)) {
+                if (visit133_570_1('"' == quote)) {
                   _$jscoverage['/html-parser/lexer/lexer.js'].lineData[571]++;
                   quote = '';
                 }
@@ -2188,18 +2188,18 @@ KISSY.add("html-parser/lexer/lexer", function(S, Cursor, Page, TextNode, CData, 
             break;
           case '\\':
             _$jscoverage['/html-parser/lexer/lexer.js'].lineData[576]++;
-            if (visit132_576_1(quoteSmart)) {
+            if (visit134_576_1(quoteSmart)) {
               _$jscoverage['/html-parser/lexer/lexer.js'].lineData[577]++;
-              if (visit133_577_1('' !== quote)) {
+              if (visit135_577_1('' !== quote)) {
                 _$jscoverage['/html-parser/lexer/lexer.js'].lineData[578]++;
                 ch = mPage.getChar(mCursor);
                 _$jscoverage['/html-parser/lexer/lexer.js'].lineData[579]++;
-                if (visit134_579_1(-1 == ch)) {
+                if (visit136_579_1(-1 == ch)) {
                   _$jscoverage['/html-parser/lexer/lexer.js'].lineData[580]++;
                   done = true;
                 } else {
                   _$jscoverage['/html-parser/lexer/lexer.js'].lineData[581]++;
-                  if (visit135_581_1((visit136_581_2(ch !== '\\')) && (visit137_581_3(ch !== quote)))) {
+                  if (visit137_581_1((visit138_581_2(ch !== '\\')) && (visit139_581_3(ch !== quote)))) {
                     _$jscoverage['/html-parser/lexer/lexer.js'].lineData[583]++;
                     mPage.ungetChar(mCursor);
                   }
@@ -2210,38 +2210,38 @@ KISSY.add("html-parser/lexer/lexer", function(S, Cursor, Page, TextNode, CData, 
             break;
           case '/':
             _$jscoverage['/html-parser/lexer/lexer.js'].lineData[589]++;
-            if (visit138_589_1(quoteSmart)) {
+            if (visit140_589_1(quoteSmart)) {
               _$jscoverage['/html-parser/lexer/lexer.js'].lineData[590]++;
-              if (visit139_590_1('' == quote)) {
+              if (visit141_590_1('' == quote)) {
                 _$jscoverage['/html-parser/lexer/lexer.js'].lineData[592]++;
                 ch = mPage.getChar(mCursor);
                 _$jscoverage['/html-parser/lexer/lexer.js'].lineData[593]++;
-                if (visit140_593_1(-1 == ch)) {
+                if (visit142_593_1(-1 == ch)) {
                   _$jscoverage['/html-parser/lexer/lexer.js'].lineData[594]++;
                   done = true;
                 } else {
                   _$jscoverage['/html-parser/lexer/lexer.js'].lineData[595]++;
-                  if (visit141_595_1('/' == ch)) {
+                  if (visit143_595_1('/' == ch)) {
                     _$jscoverage['/html-parser/lexer/lexer.js'].lineData[596]++;
                     comment = true;
                   } else {
                     _$jscoverage['/html-parser/lexer/lexer.js'].lineData[597]++;
-                    if (visit142_597_1('*' == ch)) {
+                    if (visit144_597_1('*' == ch)) {
                       _$jscoverage['/html-parser/lexer/lexer.js'].lineData[598]++;
                       do {
                         _$jscoverage['/html-parser/lexer/lexer.js'].lineData[599]++;
                         do {
                           _$jscoverage['/html-parser/lexer/lexer.js'].lineData[600]++;
                           ch = mPage.getChar(mCursor);
-                        } while (visit143_601_1((visit144_601_2(-1 !== ch)) && (visit145_601_3('*' !== ch))));
+                        } while (visit145_601_1((visit146_601_2(-1 !== ch)) && (visit147_601_3('*' !== ch))));
                         _$jscoverage['/html-parser/lexer/lexer.js'].lineData[602]++;
                         ch = mPage.getChar(mCursor);
                         _$jscoverage['/html-parser/lexer/lexer.js'].lineData[603]++;
-                        if (visit146_603_1(ch == '*')) {
+                        if (visit148_603_1(ch == '*')) {
                           _$jscoverage['/html-parser/lexer/lexer.js'].lineData[604]++;
                           mPage.ungetChar(mCursor);
                         }
-                      } while (visit147_606_1((visit148_606_2(-1 !== ch)) && (visit149_606_3('/' !== ch))));
+                      } while (visit149_606_1((visit150_606_2(-1 !== ch)) && (visit151_606_3('/' !== ch))));
                     } else {
                       _$jscoverage['/html-parser/lexer/lexer.js'].lineData[609]++;
                       mPage.ungetChar(mCursor);
@@ -2259,9 +2259,9 @@ KISSY.add("html-parser/lexer/lexer", function(S, Cursor, Page, TextNode, CData, 
             break;
           case '<':
             _$jscoverage['/html-parser/lexer/lexer.js'].lineData[618]++;
-            if (visit150_618_1(quoteSmart)) {
+            if (visit152_618_1(quoteSmart)) {
               _$jscoverage['/html-parser/lexer/lexer.js'].lineData[619]++;
-              if (visit151_619_1('' == quote)) {
+              if (visit153_619_1('' == quote)) {
                 _$jscoverage['/html-parser/lexer/lexer.js'].lineData[620]++;
                 state = 1;
               }
@@ -2287,7 +2287,7 @@ KISSY.add("html-parser/lexer/lexer", function(S, Cursor, Page, TextNode, CData, 
             break;
           case '/':
             _$jscoverage['/html-parser/lexer/lexer.js'].lineData[649]++;
-            if (visit152_649_1(!tagName || (visit153_649_2(visit154_649_3(mPage.getText(mCursor.position, mCursor.position + tagName.length) === tagName) && !(mPage.getText(mCursor.position + tagName.length, mCursor.position + tagName.length + 1).match(/\w/)))))) {
+            if (visit154_649_1(!tagName || (visit155_649_2(visit156_649_3(mPage.getText(mCursor.position, mCursor.position + tagName.length) === tagName) && !(mPage.getText(mCursor.position + tagName.length, mCursor.position + tagName.length + 1).match(/\w/)))))) {
               _$jscoverage['/html-parser/lexer/lexer.js'].lineData[653]++;
               state = 2;
             } else {
@@ -2300,21 +2300,21 @@ KISSY.add("html-parser/lexer/lexer", function(S, Cursor, Page, TextNode, CData, 
             _$jscoverage['/html-parser/lexer/lexer.js'].lineData[660]++;
             ch = mPage.getChar(mCursor);
             _$jscoverage['/html-parser/lexer/lexer.js'].lineData[661]++;
-            if (visit155_661_1(-1 == ch)) {
+            if (visit157_661_1(-1 == ch)) {
               _$jscoverage['/html-parser/lexer/lexer.js'].lineData[662]++;
               done = true;
             } else {
               _$jscoverage['/html-parser/lexer/lexer.js'].lineData[663]++;
-              if (visit156_663_1('-' == ch)) {
+              if (visit158_663_1('-' == ch)) {
                 _$jscoverage['/html-parser/lexer/lexer.js'].lineData[664]++;
                 ch = mPage.getChar(mCursor);
                 _$jscoverage['/html-parser/lexer/lexer.js'].lineData[665]++;
-                if (visit157_665_1(-1 == ch)) {
+                if (visit159_665_1(-1 == ch)) {
                   _$jscoverage['/html-parser/lexer/lexer.js'].lineData[666]++;
                   done = true;
                 } else {
                   _$jscoverage['/html-parser/lexer/lexer.js'].lineData[667]++;
-                  if (visit158_667_1('-' == ch)) {
+                  if (visit160_667_1('-' == ch)) {
                     _$jscoverage['/html-parser/lexer/lexer.js'].lineData[668]++;
                     state = 3;
                   } else {
@@ -2341,12 +2341,12 @@ KISSY.add("html-parser/lexer/lexer", function(S, Cursor, Page, TextNode, CData, 
         _$jscoverage['/html-parser/lexer/lexer.js'].lineData[682]++;
         comment = false;
         _$jscoverage['/html-parser/lexer/lexer.js'].lineData[683]++;
-        if (visit159_683_1(-1 == ch)) {
+        if (visit161_683_1(-1 == ch)) {
           _$jscoverage['/html-parser/lexer/lexer.js'].lineData[684]++;
           done = true;
         } else {
           _$jscoverage['/html-parser/lexer/lexer.js'].lineData[685]++;
-          if (visit160_685_1(Utils.isLetter(ch))) {
+          if (visit162_685_1(Utils.isLetter(ch))) {
             _$jscoverage['/html-parser/lexer/lexer.js'].lineData[688]++;
             done = true;
             _$jscoverage['/html-parser/lexer/lexer.js'].lineData[690]++;
@@ -2366,30 +2366,30 @@ KISSY.add("html-parser/lexer/lexer", function(S, Cursor, Page, TextNode, CData, 
         _$jscoverage['/html-parser/lexer/lexer.js'].lineData[698]++;
         comment = false;
         _$jscoverage['/html-parser/lexer/lexer.js'].lineData[699]++;
-        if (visit161_699_1(-1 == ch)) {
+        if (visit163_699_1(-1 == ch)) {
           _$jscoverage['/html-parser/lexer/lexer.js'].lineData[700]++;
           done = true;
         } else {
           _$jscoverage['/html-parser/lexer/lexer.js'].lineData[701]++;
-          if (visit162_701_1('-' == ch)) {
+          if (visit164_701_1('-' == ch)) {
             _$jscoverage['/html-parser/lexer/lexer.js'].lineData[702]++;
             ch = mPage.getChar(mCursor);
             _$jscoverage['/html-parser/lexer/lexer.js'].lineData[703]++;
-            if (visit163_703_1(-1 == ch)) {
+            if (visit165_703_1(-1 == ch)) {
               _$jscoverage['/html-parser/lexer/lexer.js'].lineData[704]++;
               done = true;
             } else {
               _$jscoverage['/html-parser/lexer/lexer.js'].lineData[705]++;
-              if (visit164_705_1('-' == ch)) {
+              if (visit166_705_1('-' == ch)) {
                 _$jscoverage['/html-parser/lexer/lexer.js'].lineData[706]++;
                 ch = mPage.getChar(mCursor);
                 _$jscoverage['/html-parser/lexer/lexer.js'].lineData[707]++;
-                if (visit165_707_1(-1 == ch)) {
+                if (visit167_707_1(-1 == ch)) {
                   _$jscoverage['/html-parser/lexer/lexer.js'].lineData[708]++;
                   done = true;
                 } else {
                   _$jscoverage['/html-parser/lexer/lexer.js'].lineData[709]++;
-                  if (visit166_709_1('>' == ch)) {
+                  if (visit168_709_1('>' == ch)) {
                     _$jscoverage['/html-parser/lexer/lexer.js'].lineData[711]++;
                     state = 0;
                   } else {

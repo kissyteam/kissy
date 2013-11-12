@@ -4,7 +4,6 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add("html-parser/lexer/index", function () {
-
     /**
      * Page index class.
      * @private
@@ -18,11 +17,10 @@ KISSY.add("html-parser/lexer/index", function () {
         constructor: Index,
 
         add: function (cursor) {
-            if (indexOfCursor(this.lineCursors, cursor) !== -1) {
-                return;
-            }
             var index = indexOfCursorForInsert(this.lineCursors, cursor);
-            this.lineCursors.splice(index, 0, cursor);
+            if (index != -1) {
+                this.lineCursors.splice(index, 0, cursor.clone());
+            }
         },
 
         remove: function (cursor) {
@@ -58,17 +56,27 @@ KISSY.add("html-parser/lexer/index", function () {
     };
 
     function indexOfCursor(cs, c) {
+        var cPosition = c.position;
         for (var i = 0; i < cs.length; i++) {
-            if (cs[i].position === c.position) {
+            var iPosition = cs[i].position;
+            if (iPosition === cPosition) {
                 return i;
+            }
+            else if (iPosition < cPosition) {
+                return -1;
             }
         }
         return -1;
     }
 
     function indexOfCursorForInsert(cs, c) {
+        var cPosition = c.position;
         for (var i = 0; i < cs.length; i++) {
-            if (cs[i].position > c.position) {
+            var iPosition = cs[i].position;
+            if (iPosition === cPosition) {
+                return -1;
+            }
+            else if (iPosition > cPosition) {
                 return i;
             }
         }
@@ -76,5 +84,4 @@ KISSY.add("html-parser/lexer/index", function () {
     }
 
     return Index;
-
 });

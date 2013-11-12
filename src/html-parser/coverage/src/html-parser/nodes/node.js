@@ -288,23 +288,23 @@ if (! _$jscoverage['/html-parser/nodes/node.js'].branchData) {
   _$jscoverage['/html-parser/nodes/node.js'].branchData['61'][1] = new BranchData();
 }
 _$jscoverage['/html-parser/nodes/node.js'].branchData['61'][1].init(18, 30, 'this.page && this.page.getText');
-function visit194_61_1(result) {
+function visit196_61_1(result) {
   _$jscoverage['/html-parser/nodes/node.js'].branchData['61'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/nodes/node.js'].branchData['48'][1].init(22, 17, '\'endLine\' in this');
-function visit193_48_1(result) {
+function visit195_48_1(result) {
   _$jscoverage['/html-parser/nodes/node.js'].branchData['48'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/nodes/node.js'].branchData['47'][1].init(18, 9, 'this.page');
-function visit192_47_1(result) {
+function visit194_47_1(result) {
   _$jscoverage['/html-parser/nodes/node.js'].branchData['47'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/nodes/node.js'].branchData['38'][1].init(22, 19, '\'startLine\' in this');
-function visit191_38_1(result) {
+function visit193_38_1(result) {
   _$jscoverage['/html-parser/nodes/node.js'].branchData['38'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/nodes/node.js'].branchData['37'][1].init(18, 9, 'this.page');
-function visit190_37_1(result) {
+function visit192_37_1(result) {
   _$jscoverage['/html-parser/nodes/node.js'].branchData['37'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/nodes/node.js'].lineData[6]++;
@@ -348,9 +348,9 @@ KISSY.add("html-parser/nodes/node", function(S) {
   getStartLine: function() {
   _$jscoverage['/html-parser/nodes/node.js'].functionData[4]++;
   _$jscoverage['/html-parser/nodes/node.js'].lineData[37]++;
-  if (visit190_37_1(this.page)) {
+  if (visit192_37_1(this.page)) {
     _$jscoverage['/html-parser/nodes/node.js'].lineData[38]++;
-    if (visit191_38_1('startLine' in this)) {
+    if (visit193_38_1('startLine' in this)) {
       _$jscoverage['/html-parser/nodes/node.js'].lineData[39]++;
       return this.startLine;
     }
@@ -363,9 +363,9 @@ KISSY.add("html-parser/nodes/node", function(S) {
   getEndLine: function() {
   _$jscoverage['/html-parser/nodes/node.js'].functionData[5]++;
   _$jscoverage['/html-parser/nodes/node.js'].lineData[47]++;
-  if (visit192_47_1(this.page)) {
+  if (visit194_47_1(this.page)) {
     _$jscoverage['/html-parser/nodes/node.js'].lineData[48]++;
-    if (visit193_48_1('endLine' in this)) {
+    if (visit195_48_1('endLine' in this)) {
       _$jscoverage['/html-parser/nodes/node.js'].lineData[49]++;
       return this.endLine;
     }
@@ -378,7 +378,7 @@ KISSY.add("html-parser/nodes/node", function(S) {
   toHtml: function() {
   _$jscoverage['/html-parser/nodes/node.js'].functionData[6]++;
   _$jscoverage['/html-parser/nodes/node.js'].lineData[61]++;
-  if (visit194_61_1(this.page && this.page.getText)) {
+  if (visit196_61_1(this.page && this.page.getText)) {
     _$jscoverage['/html-parser/nodes/node.js'].lineData[62]++;
     return this.page.getText(this.startPosition, this.endPosition);
   }

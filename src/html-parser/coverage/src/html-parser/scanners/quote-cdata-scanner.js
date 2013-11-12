@@ -250,7 +250,7 @@ if (! _$jscoverage['/html-parser/scanners/quote-cdata-scanner.js'].branchData) {
   _$jscoverage['/html-parser/scanners/quote-cdata-scanner.js'].branchData['9'][1] = new BranchData();
 }
 _$jscoverage['/html-parser/scanners/quote-cdata-scanner.js'].branchData['9'][1].init(21, 10, 'opts || {}');
-function visit282_9_1(result) {
+function visit284_9_1(result) {
   _$jscoverage['/html-parser/scanners/quote-cdata-scanner.js'].branchData['9'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/scanners/quote-cdata-scanner.js'].lineData[6]++;
@@ -261,7 +261,7 @@ KISSY.add("html-parser/scanners/quote-cdata-scanner", function(S, CDataScanner, 
   scan: function(tag, lexer, opts) {
   _$jscoverage['/html-parser/scanners/quote-cdata-scanner.js'].functionData[1]++;
   _$jscoverage['/html-parser/scanners/quote-cdata-scanner.js'].lineData[9]++;
-  opts = visit282_9_1(opts || {});
+  opts = visit284_9_1(opts || {});
   _$jscoverage['/html-parser/scanners/quote-cdata-scanner.js'].lineData[10]++;
   opts.quoteSmart = 1;
   _$jscoverage['/html-parser/scanners/quote-cdata-scanner.js'].lineData[11]++;
