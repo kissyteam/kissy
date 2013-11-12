@@ -7,9 +7,15 @@ KISSY.add(function () {
         var runBlockCommandUtil = utils["runBlockCommand"],
             getExpressionUtil = utils["getExpression"],
             getPropertyOrRunCommandUtil = utils["getPropertyOrRunCommand"];
-        buffer += '<div>\r\n    \\\\\r\n    ';
-        buffer += getExpressionUtil(('\'2    \\') + (2), true);
-        buffer += '\r\n    \r\n</div>';
+        buffer += '1';
+        var config1 = {};
+        var params2 = [];
+        params2.push('./b-xtpl');
+        config1.params = params2;
+        var id0 = getPropertyOrRunCommandUtil(engine, scopes, config1, "include", 0, 1, true, undefined);
+        buffer += id0;
         return buffer;
     };
+}, {
+    requires: ["./b-xtpl"]
 });

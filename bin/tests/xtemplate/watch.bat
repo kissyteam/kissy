@@ -1,1 +1,1 @@
-kissy xtemplate -n test -p ./ -w
+kissy xtemplate -p ./ -w

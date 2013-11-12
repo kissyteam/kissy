@@ -3,7 +3,7 @@
  * @author yiminghe@gmail.com
  * @ignore
  */
-KISSY.add("xtemplate/runtime/commands", function (S) {
+KISSY.add("xtemplate/runtime/commands", function (S, Path) {
     var commands;
 
     return commands = {
@@ -103,7 +103,7 @@ KISSY.add("xtemplate/runtime/commands", function (S) {
                     S.error('parent template does not have name' + ' for relative sub tpl name: ' + subTplName);
                     return '';
                 }
-                subTplName = S.Path.resolve(myName, '../', subTplName);
+                subTplName = Path.resolve(myName, '../', subTplName);
             }
 
             var tpl = this.config.loader.call(this, subTplName);
@@ -156,4 +156,6 @@ KISSY.add("xtemplate/runtime/commands", function (S) {
             return commands.include.call(this, [], config);
         }
     };
+}, {
+    requires: ['path']
 });

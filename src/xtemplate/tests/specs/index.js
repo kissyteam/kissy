@@ -717,12 +717,18 @@ KISSY.add(function (S, XTemplate, XTemplateNodeJs) {
 
                     KISSY.add('xtemplate-test/sub-tpl-1', '{{title}}');
 
-
                     var render = new XTemplate(tpl).render(data);
 
                     expect(render).toBe('1');
                 });
 
+                it('support sub template compile',function(){
+                    var tpl='{{include "./x"}}';
+                    var code=XTemplate.compiler.compileToModule(tpl);
+                    expect(code.indexOf('requires:')).toBe(-1);
+                    code=XTemplate.compiler.compileToModule(tpl,[]);
+                    expect(code.indexOf('requires:["./x"]')).not.toBe(-1);
+                });
 
                 it('support relative sub template name', function () {
                     var tpl = '{{include "./sub-tpl-3"}}';
