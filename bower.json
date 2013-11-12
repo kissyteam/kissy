@@ -18,6 +18,7 @@
     "docs",
     "reports",
     "tools",
+    "bin",
     "node_modules",
     "bower_components",
     "src"
