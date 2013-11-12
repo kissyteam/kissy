@@ -1,4 +1,5 @@
 src/
+*-min.*
 tools/
 docs/
 node_modules/

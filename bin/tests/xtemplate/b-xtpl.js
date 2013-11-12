@@ -1,3 +1,4 @@
+/** Compiled By kissy-xtemplate */
 KISSY.add(function () {
     return function (scopes, S, undefined) {
         var buffer = "",

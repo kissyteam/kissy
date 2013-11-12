@@ -4,7 +4,7 @@
   command management
   @author yiminghe@gmail.com
  */
-var program = require('../tools/commander/');
+var program = require('./lib/commander');
 
 program
     .version(require('../package.json').version)

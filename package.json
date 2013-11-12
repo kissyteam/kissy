@@ -1,9 +1,5 @@
 {
   "name": "kissy",
-  "subdomain": "dev-kissy",
-  "domains": [
-    "dev.kissyui.com"
-  ],
   "version": "1.5.0dev",
   "description": "KISSY",
   "author": "yiminghe <yiminghe@gmail.com>",
@@ -38,13 +34,12 @@
     "start": "node ./tools/server/start",
     "stop": "node ./tools/server/stop"
   },
-  "optionalDependencies": {
-    "jsdom": "~0.8.4"
+  "devDependencies": {
+    "express": "3.3.4",
+    "request": "~2.27.0"
   },
   "dependencies": {
     "js-beautify": "~1.4.0",
-    "express": "3.3.4",
-    "request": "~2.27.0",
     "fs-extra": "~0.8.0"
   },
   "notes": [
