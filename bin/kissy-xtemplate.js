@@ -4,7 +4,7 @@
  * Generate xtemplate function by xtemplate file using kissy xtemplate.
  * @author yiminghe@gmail.com
  */
-var program = require('../tools/commander/');
+var program = require('./lib/commander');
 program
     .option('-p, --package-path <packagePath>', 'Set kissy package path')
     .option('-e, --encoding [encoding]', 'Set xtemplate file encoding', 'utf-8')

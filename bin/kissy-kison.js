@@ -4,7 +4,7 @@
  * Generate parser function using LALR algorithm.
  * @author yiminghe@gmail.com
  */
-var program = require('../tools/commander/');
+var program = require('./lib/commander');
 program
     .option('-g, --grammar <grammar>', 'Set kison grammar file')
     .option('-p, --path <path>', 'Set generated file path')
