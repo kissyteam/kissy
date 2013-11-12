@@ -1,0 +1,1 @@
+kissy kison -g cal-grammar.kison -m tests/cal -p ./ -w
