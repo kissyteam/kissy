@@ -52,7 +52,7 @@ KISSY.add("html-parser/lexer/page", function (S, Index) {
             cursor.retreat();
             var i = cursor.position,
                 ch = source.charAt(i);
-            if (ch === '\n' && 0 != i) {
+            if (ch === '\n' && 0 !== i) {
                 ch = source.charAt(i - 1);
                 if ('\r' === ch) {
                     cursor.retreat();

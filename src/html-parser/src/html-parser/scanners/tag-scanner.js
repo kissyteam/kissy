@@ -90,7 +90,7 @@ KISSY.add("html-parser/scanners/tag-scanner", function (S, dtd, Tag, SpecialScan
             } else {
 
                 // if can not include text as its child , then discard
-                if (c.nodeType != 1) {
+                if (c.nodeType !== 1) {
                     continue;
                 }
 
@@ -299,7 +299,7 @@ KISSY.add("html-parser/scanners/tag-scanner", function (S, dtd, Tag, SpecialScan
                                 }
                             }
 
-                            if (index != -1) {
+                            if (index !== -1) {
                                 // <div><span> <a> </div>
                                 // tag==a
                                 stack[stack.length - 1].appendChild(tag);

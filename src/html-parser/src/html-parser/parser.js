@@ -41,7 +41,7 @@ KISSY.add("html-parser/parser", function (S, dtd, Tag, Fragment, Cursor, Lexer, 
 
             doc = root = lexer.nextNode();
 
-            if (root.tagName != 'document') {
+            if (root.tagName !== 'document') {
                 doc = new Document();
                 doc.appendChild(root);
             }
@@ -93,11 +93,11 @@ KISSY.add("html-parser/parser", function (S, dtd, Tag, Fragment, Cursor, Lexer, 
             var parent = body.parentNode,
                 silbing = parent.childNodes,
                 bodyIndex = S.indexOf(body, silbing);
-            if (bodyIndex != silbing.length - 1) {
+            if (bodyIndex !== silbing.length - 1) {
                 var fixes = silbing.slice(bodyIndex + 1, silbing.length);
                 for (var i = 0; i < fixes.length; i++) {
                     parent.removeChild(fixes[i]);
-                    if (fixes[i].tagName == "body") {
+                    if (fixes[i].tagName === "body") {
                         S.each(fixes[i].childNodes, function (c) {
                             body.appendChild(c);
                         });

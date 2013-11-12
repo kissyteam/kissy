@@ -92,7 +92,7 @@ KISSY.add("html-parser/lexer/lexer", function (S, Cursor, Page, TextNode, CData,
             var length, ret;
 
             length = end - start;
-            if (0 != length) {   // return tag based on second character, '/', '%', Letter (ch), '!'
+            if (0 !== length) {   // return tag based on second character, '/', '%', Letter (ch), '!'
                 if (2 > length) {
                     // this is an error
                     return (this.makeString(start, end));
@@ -128,7 +128,7 @@ KISSY.add("html-parser/lexer/lexer", function (S, Cursor, Page, TextNode, CData,
             var length,
                 ret;
             length = end - start;
-            if (0 != length) {   // return tag based on second character, '/', '%', Letter (ch), '!'
+            if (0 !== length) {   // return tag based on second character, '/', '%', Letter (ch), '!'
                 if (2 > length) {
                     // this is an error
                     return (this.makeString(start, end));
@@ -453,11 +453,11 @@ KISSY.add("html-parser/lexer/lexer", function (S, Cursor, Page, TextNode, CData,
                     quote = ch; // enter quoted state
                 }
                 // patch from Gernot Fricke to handle escaped closing quote
-                else if (quoteSmart && (0 != quote) && ('\\' == ch)) {
+                else if (quoteSmart && (0 !== quote) && ('\\' === ch)) {
                     ch = page.getChar(cursor); // try to consume escape
-                    if ((-1 != ch)
-                        && ('\\' != ch) // escaped backslash
-                        && (ch != quote)) // escaped quote character
+                    if ((-1 !== ch)
+                        && ('\\' !== ch) // escaped backslash
+                        && (ch !== quote)) // escaped quote character
                     {
                         // ( reflects ["] or [']  whichever opened the quotation)
                         page.ungetChar(cursor); // unconsume char if char not an escape
@@ -477,20 +477,20 @@ KISSY.add("html-parser/lexer/lexer", function (S, Cursor, Page, TextNode, CData,
                     else if ('/' == ch) {
                         do {
                             ch = page.getChar(cursor);
-                        } while ((-1 != ch) && ('\n' != ch));
+                        } while ((-1 !== ch) && ('\n' !== ch));
                     }
                     else if ('*' == ch) {
                         do
                         {
                             do {
                                 ch = page.getChar(cursor);
-                            } while ((-1 != ch) && ('*' != ch));
+                            } while ((-1 !== ch) && ('*' !== ch));
                             ch = page.getChar(cursor);
                             if (ch == '*') {
                                 page.ungetChar(cursor);
                             }
                         }
-                        while ((-1 != ch) && ('/' != ch));
+                        while ((-1 !== ch) && ('/' !== ch));
                     }
                     else {
                         page.ungetChar(cursor);
@@ -574,11 +574,11 @@ KISSY.add("html-parser/lexer/lexer", function (S, Cursor, Page, TextNode, CData,
                                 break;
                             case '\\':
                                 if (quoteSmart) {
-                                    if ('' != quote) {
+                                    if ('' !== quote) {
                                         ch = mPage.getChar(mCursor); // try to consume escaped character
                                         if (-1 == ch) {
                                             done = true;
-                                        } else if ((ch != '\\') && (ch != quote)) {
+                                        } else if ((ch !== '\\') && (ch !== quote)) {
                                             // unconsume char if character was not an escapable char.
                                             mPage.ungetChar(mCursor);
                                         }
@@ -598,12 +598,12 @@ KISSY.add("html-parser/lexer/lexer", function (S, Cursor, Page, TextNode, CData,
                                             do {
                                                 do
                                                     ch = mPage.getChar(mCursor);
-                                                while ((-1 != ch) && ('*' != ch));
+                                                while ((-1 !== ch) && ('*' !== ch));
                                                 ch = mPage.getChar(mCursor);
                                                 if (ch == '*') {
                                                     mPage.ungetChar(mCursor);
                                                 }
-                                            } while ((-1 != ch) && ('/' != ch));
+                                            } while ((-1 !== ch) && ('/' !== ch));
                                         }
                                         else {
                                             mPage.ungetChar(mCursor);

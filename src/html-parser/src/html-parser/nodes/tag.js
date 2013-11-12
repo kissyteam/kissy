@@ -125,13 +125,13 @@ KISSY.add("html-parser/nodes/tag", function (S, Node, Attribute, Dtd) {
         },
 
         equals: function (tag) {
-            if (!tag || this.nodeName != tag.nodeName) {
+            if (!tag || this.nodeName !== tag.nodeName) {
                 return 0;
             }
-            if (this.nodeType != tag.nodeType) {
+            if (this.nodeType !== tag.nodeType) {
                 return 0;
             }
-            if (this.attributes.length != tag.attributes.length) {
+            if (this.attributes.length !== tag.attributes.length) {
                 return 0;
             }
             for (var i = 0; i < this.attributes.length; i++) {

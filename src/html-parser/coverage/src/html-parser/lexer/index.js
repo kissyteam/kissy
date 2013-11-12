@@ -322,11 +322,11 @@ function visit8_43_1(result) {
 function visit7_42_1(result) {
   _$jscoverage['/html-parser/lexer/index.js'].branchData['42'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/index.js'].branchData['31'][1].init(124, 11, 'index != -1');
+}_$jscoverage['/html-parser/lexer/index.js'].branchData['31'][1].init(124, 12, 'index !== -1');
 function visit6_31_1(result) {
   _$jscoverage['/html-parser/lexer/index.js'].branchData['31'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/index.js'].branchData['21'][1].init(18, 45, 'indexOfCursor(this.lineCursors, cursor) != -1');
+}_$jscoverage['/html-parser/lexer/index.js'].branchData['21'][1].init(18, 46, 'indexOfCursor(this.lineCursors, cursor) !== -1');
 function visit5_21_1(result) {
   _$jscoverage['/html-parser/lexer/index.js'].branchData['21'][1].ranCondition(result);
   return result;
@@ -345,7 +345,7 @@ KISSY.add("html-parser/lexer/index", function() {
   add: function(cursor) {
   _$jscoverage['/html-parser/lexer/index.js'].functionData[2]++;
   _$jscoverage['/html-parser/lexer/index.js'].lineData[21]++;
-  if (visit5_21_1(indexOfCursor(this.lineCursors, cursor) != -1)) {
+  if (visit5_21_1(indexOfCursor(this.lineCursors, cursor) !== -1)) {
     _$jscoverage['/html-parser/lexer/index.js'].lineData[22]++;
     return;
   }
@@ -361,7 +361,7 @@ KISSY.add("html-parser/lexer/index", function() {
   _$jscoverage['/html-parser/lexer/index.js'].lineData[30]++;
   var index = indexOfCursor(this.lineCursors, cursor);
   _$jscoverage['/html-parser/lexer/index.js'].lineData[31]++;
-  if (visit6_31_1(index != -1)) {
+  if (visit6_31_1(index !== -1)) {
     _$jscoverage['/html-parser/lexer/index.js'].lineData[32]++;
     cs.splice(index, 1);
   }

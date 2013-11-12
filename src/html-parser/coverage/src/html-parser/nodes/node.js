@@ -230,32 +230,38 @@ if (! _$jscoverage['/html-parser/nodes/node.js']) {
   _$jscoverage['/html-parser/nodes/node.js'] = {};
   _$jscoverage['/html-parser/nodes/node.js'].lineData = [];
   _$jscoverage['/html-parser/nodes/node.js'].lineData[6] = 0;
+  _$jscoverage['/html-parser/nodes/node.js'].lineData[7] = 0;
   _$jscoverage['/html-parser/nodes/node.js'].lineData[8] = 0;
-  _$jscoverage['/html-parser/nodes/node.js'].lineData[9] = 0;
   _$jscoverage['/html-parser/nodes/node.js'].lineData[10] = 0;
   _$jscoverage['/html-parser/nodes/node.js'].lineData[11] = 0;
   _$jscoverage['/html-parser/nodes/node.js'].lineData[13] = 0;
-  _$jscoverage['/html-parser/nodes/node.js'].lineData[16] = 0;
-  _$jscoverage['/html-parser/nodes/node.js'].lineData[17] = 0;
-  _$jscoverage['/html-parser/nodes/node.js'].lineData[18] = 0;
-  _$jscoverage['/html-parser/nodes/node.js'].lineData[19] = 0;
-  _$jscoverage['/html-parser/nodes/node.js'].lineData[20] = 0;
-  _$jscoverage['/html-parser/nodes/node.js'].lineData[21] = 0;
-  _$jscoverage['/html-parser/nodes/node.js'].lineData[22] = 0;
   _$jscoverage['/html-parser/nodes/node.js'].lineData[23] = 0;
   _$jscoverage['/html-parser/nodes/node.js'].lineData[24] = 0;
   _$jscoverage['/html-parser/nodes/node.js'].lineData[25] = 0;
   _$jscoverage['/html-parser/nodes/node.js'].lineData[26] = 0;
+  _$jscoverage['/html-parser/nodes/node.js'].lineData[27] = 0;
   _$jscoverage['/html-parser/nodes/node.js'].lineData[28] = 0;
   _$jscoverage['/html-parser/nodes/node.js'].lineData[29] = 0;
+  _$jscoverage['/html-parser/nodes/node.js'].lineData[30] = 0;
   _$jscoverage['/html-parser/nodes/node.js'].lineData[33] = 0;
+  _$jscoverage['/html-parser/nodes/node.js'].lineData[37] = 0;
   _$jscoverage['/html-parser/nodes/node.js'].lineData[38] = 0;
   _$jscoverage['/html-parser/nodes/node.js'].lineData[39] = 0;
+  _$jscoverage['/html-parser/nodes/node.js'].lineData[41] = 0;
   _$jscoverage['/html-parser/nodes/node.js'].lineData[43] = 0;
-  _$jscoverage['/html-parser/nodes/node.js'].lineData[45] = 0;
+  _$jscoverage['/html-parser/nodes/node.js'].lineData[47] = 0;
+  _$jscoverage['/html-parser/nodes/node.js'].lineData[48] = 0;
+  _$jscoverage['/html-parser/nodes/node.js'].lineData[49] = 0;
   _$jscoverage['/html-parser/nodes/node.js'].lineData[51] = 0;
-  _$jscoverage['/html-parser/nodes/node.js'].lineData[52] = 0;
-  _$jscoverage['/html-parser/nodes/node.js'].lineData[56] = 0;
+  _$jscoverage['/html-parser/nodes/node.js'].lineData[53] = 0;
+  _$jscoverage['/html-parser/nodes/node.js'].lineData[61] = 0;
+  _$jscoverage['/html-parser/nodes/node.js'].lineData[62] = 0;
+  _$jscoverage['/html-parser/nodes/node.js'].lineData[64] = 0;
+  _$jscoverage['/html-parser/nodes/node.js'].lineData[68] = 0;
+  _$jscoverage['/html-parser/nodes/node.js'].lineData[70] = 0;
+  _$jscoverage['/html-parser/nodes/node.js'].lineData[76] = 0;
+  _$jscoverage['/html-parser/nodes/node.js'].lineData[77] = 0;
+  _$jscoverage['/html-parser/nodes/node.js'].lineData[81] = 0;
 }
 if (! _$jscoverage['/html-parser/nodes/node.js'].functionData) {
   _$jscoverage['/html-parser/nodes/node.js'].functionData = [];
@@ -265,35 +271,49 @@ if (! _$jscoverage['/html-parser/nodes/node.js'].functionData) {
   _$jscoverage['/html-parser/nodes/node.js'].functionData[3] = 0;
   _$jscoverage['/html-parser/nodes/node.js'].functionData[4] = 0;
   _$jscoverage['/html-parser/nodes/node.js'].functionData[5] = 0;
+  _$jscoverage['/html-parser/nodes/node.js'].functionData[6] = 0;
+  _$jscoverage['/html-parser/nodes/node.js'].functionData[7] = 0;
 }
 if (! _$jscoverage['/html-parser/nodes/node.js'].branchData) {
   _$jscoverage['/html-parser/nodes/node.js'].branchData = {};
-  _$jscoverage['/html-parser/nodes/node.js'].branchData['24'] = [];
-  _$jscoverage['/html-parser/nodes/node.js'].branchData['24'][1] = new BranchData();
-  _$jscoverage['/html-parser/nodes/node.js'].branchData['28'] = [];
-  _$jscoverage['/html-parser/nodes/node.js'].branchData['28'][1] = new BranchData();
+  _$jscoverage['/html-parser/nodes/node.js'].branchData['37'] = [];
+  _$jscoverage['/html-parser/nodes/node.js'].branchData['37'][1] = new BranchData();
   _$jscoverage['/html-parser/nodes/node.js'].branchData['38'] = [];
   _$jscoverage['/html-parser/nodes/node.js'].branchData['38'][1] = new BranchData();
+  _$jscoverage['/html-parser/nodes/node.js'].branchData['47'] = [];
+  _$jscoverage['/html-parser/nodes/node.js'].branchData['47'][1] = new BranchData();
+  _$jscoverage['/html-parser/nodes/node.js'].branchData['48'] = [];
+  _$jscoverage['/html-parser/nodes/node.js'].branchData['48'][1] = new BranchData();
+  _$jscoverage['/html-parser/nodes/node.js'].branchData['61'] = [];
+  _$jscoverage['/html-parser/nodes/node.js'].branchData['61'][1] = new BranchData();
 }
-_$jscoverage['/html-parser/nodes/node.js'].branchData['38'][1].init(18, 30, 'this.page && this.page.getText');
-function visit192_38_1(result) {
+_$jscoverage['/html-parser/nodes/node.js'].branchData['61'][1].init(18, 30, 'this.page && this.page.getText');
+function visit194_61_1(result) {
+  _$jscoverage['/html-parser/nodes/node.js'].branchData['61'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/html-parser/nodes/node.js'].branchData['48'][1].init(22, 17, '\'endLine\' in this');
+function visit193_48_1(result) {
+  _$jscoverage['/html-parser/nodes/node.js'].branchData['48'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/html-parser/nodes/node.js'].branchData['47'][1].init(18, 9, 'this.page');
+function visit192_47_1(result) {
+  _$jscoverage['/html-parser/nodes/node.js'].branchData['47'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/html-parser/nodes/node.js'].branchData['38'][1].init(22, 19, '\'startLine\' in this');
+function visit191_38_1(result) {
   _$jscoverage['/html-parser/nodes/node.js'].branchData['38'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/nodes/node.js'].branchData['28'][1].init(447, 14, 'S.Config.debug');
-function visit191_28_1(result) {
-  _$jscoverage['/html-parser/nodes/node.js'].branchData['28'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/html-parser/nodes/node.js'].branchData['24'][1].init(263, 4, 'page');
-function visit190_24_1(result) {
-  _$jscoverage['/html-parser/nodes/node.js'].branchData['24'][1].ranCondition(result);
+}_$jscoverage['/html-parser/nodes/node.js'].branchData['37'][1].init(18, 9, 'this.page');
+function visit190_37_1(result) {
+  _$jscoverage['/html-parser/nodes/node.js'].branchData['37'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/nodes/node.js'].lineData[6]++;
 KISSY.add("html-parser/nodes/node", function(S) {
   _$jscoverage['/html-parser/nodes/node.js'].functionData[0]++;
-  _$jscoverage['/html-parser/nodes/node.js'].lineData[8]++;
+  _$jscoverage['/html-parser/nodes/node.js'].lineData[7]++;
   function lineCount(str) {
     _$jscoverage['/html-parser/nodes/node.js'].functionData[1]++;
-    _$jscoverage['/html-parser/nodes/node.js'].lineData[9]++;
+    _$jscoverage['/html-parser/nodes/node.js'].lineData[8]++;
     var i = 0;
     _$jscoverage['/html-parser/nodes/node.js'].lineData[10]++;
     str.replace(/\n/g, function() {
@@ -304,58 +324,78 @@ KISSY.add("html-parser/nodes/node", function(S) {
     _$jscoverage['/html-parser/nodes/node.js'].lineData[13]++;
     return i;
   }
-  _$jscoverage['/html-parser/nodes/node.js'].lineData[16]++;
+  _$jscoverage['/html-parser/nodes/node.js'].lineData[23]++;
   function Node(page, startPosition, endPosition) {
     _$jscoverage['/html-parser/nodes/node.js'].functionData[3]++;
-    _$jscoverage['/html-parser/nodes/node.js'].lineData[17]++;
-    this.parentNode = null;
-    _$jscoverage['/html-parser/nodes/node.js'].lineData[18]++;
-    this.page = page;
-    _$jscoverage['/html-parser/nodes/node.js'].lineData[19]++;
-    this.startPosition = startPosition;
-    _$jscoverage['/html-parser/nodes/node.js'].lineData[20]++;
-    this.endPosition = endPosition;
-    _$jscoverage['/html-parser/nodes/node.js'].lineData[21]++;
-    this.nodeName = null;
-    _$jscoverage['/html-parser/nodes/node.js'].lineData[22]++;
-    this.previousSibling = null;
-    _$jscoverage['/html-parser/nodes/node.js'].lineData[23]++;
-    this.nextSibling = null;
     _$jscoverage['/html-parser/nodes/node.js'].lineData[24]++;
-    if (visit190_24_1(page)) {
-      _$jscoverage['/html-parser/nodes/node.js'].lineData[25]++;
-      this.startLine = lineCount(this.page.getText(0, startPosition));
-      _$jscoverage['/html-parser/nodes/node.js'].lineData[26]++;
-      this.endLine = lineCount(this.page.getText(0, endPosition));
-    }
+    this.parentNode = null;
+    _$jscoverage['/html-parser/nodes/node.js'].lineData[25]++;
+    this.page = page;
+    _$jscoverage['/html-parser/nodes/node.js'].lineData[26]++;
+    this.startPosition = startPosition;
+    _$jscoverage['/html-parser/nodes/node.js'].lineData[27]++;
+    this.endPosition = endPosition;
     _$jscoverage['/html-parser/nodes/node.js'].lineData[28]++;
-    if (visit191_28_1(S.Config.debug)) {
-      _$jscoverage['/html-parser/nodes/node.js'].lineData[29]++;
-      this.toHTMLContent = this.toHtml();
-    }
+    this.nodeName = null;
+    _$jscoverage['/html-parser/nodes/node.js'].lineData[29]++;
+    this.previousSibling = null;
+    _$jscoverage['/html-parser/nodes/node.js'].lineData[30]++;
+    this.nextSibling = null;
   }
   _$jscoverage['/html-parser/nodes/node.js'].lineData[33]++;
   Node.prototype = {
   constructor: Node, 
-  toHtml: function() {
+  getStartLine: function() {
   _$jscoverage['/html-parser/nodes/node.js'].functionData[4]++;
-  _$jscoverage['/html-parser/nodes/node.js'].lineData[38]++;
-  if (visit192_38_1(this.page && this.page.getText)) {
-    _$jscoverage['/html-parser/nodes/node.js'].lineData[39]++;
+  _$jscoverage['/html-parser/nodes/node.js'].lineData[37]++;
+  if (visit190_37_1(this.page)) {
+    _$jscoverage['/html-parser/nodes/node.js'].lineData[38]++;
+    if (visit191_38_1('startLine' in this)) {
+      _$jscoverage['/html-parser/nodes/node.js'].lineData[39]++;
+      return this.startLine;
+    }
+    _$jscoverage['/html-parser/nodes/node.js'].lineData[41]++;
+    this.startLine = lineCount(this.page.getText(0, this.startPosition));
+  }
+  _$jscoverage['/html-parser/nodes/node.js'].lineData[43]++;
+  return -1;
+}, 
+  getEndLine: function() {
+  _$jscoverage['/html-parser/nodes/node.js'].functionData[5]++;
+  _$jscoverage['/html-parser/nodes/node.js'].lineData[47]++;
+  if (visit192_47_1(this.page)) {
+    _$jscoverage['/html-parser/nodes/node.js'].lineData[48]++;
+    if (visit193_48_1('endLine' in this)) {
+      _$jscoverage['/html-parser/nodes/node.js'].lineData[49]++;
+      return this.endLine;
+    }
+    _$jscoverage['/html-parser/nodes/node.js'].lineData[51]++;
+    this.endLine = lineCount(this.page.getText(0, this.endPosition));
+  }
+  _$jscoverage['/html-parser/nodes/node.js'].lineData[53]++;
+  return -1;
+}, 
+  toHtml: function() {
+  _$jscoverage['/html-parser/nodes/node.js'].functionData[6]++;
+  _$jscoverage['/html-parser/nodes/node.js'].lineData[61]++;
+  if (visit194_61_1(this.page && this.page.getText)) {
+    _$jscoverage['/html-parser/nodes/node.js'].lineData[62]++;
     return this.page.getText(this.startPosition, this.endPosition);
   }
+  _$jscoverage['/html-parser/nodes/node.js'].lineData[64]++;
+  return '';
 }, 
-  toString: function() {
-  _$jscoverage['/html-parser/nodes/node.js'].functionData[5]++;
-  _$jscoverage['/html-parser/nodes/node.js'].lineData[43]++;
+  toDebugString: function() {
+  _$jscoverage['/html-parser/nodes/node.js'].functionData[7]++;
+  _$jscoverage['/html-parser/nodes/node.js'].lineData[68]++;
   var ret = [], self = this;
-  _$jscoverage['/html-parser/nodes/node.js'].lineData[45]++;
-  ret.push(self.nodeName + "  [ " + self.startPosition + "|" + self.startLine + " : " + self.endPosition + "|" + self.endLine + " ]\n");
-  _$jscoverage['/html-parser/nodes/node.js'].lineData[51]++;
+  _$jscoverage['/html-parser/nodes/node.js'].lineData[70]++;
+  ret.push(self.nodeName + "  [ " + self.startPosition + "|" + self.getStartLine() + " : " + self.endPosition + "|" + self.getEndLine() + " ]\n");
+  _$jscoverage['/html-parser/nodes/node.js'].lineData[76]++;
   ret.push(self.toHtml());
-  _$jscoverage['/html-parser/nodes/node.js'].lineData[52]++;
+  _$jscoverage['/html-parser/nodes/node.js'].lineData[77]++;
   return ret.join("");
 }};
-  _$jscoverage['/html-parser/nodes/node.js'].lineData[56]++;
+  _$jscoverage['/html-parser/nodes/node.js'].lineData[81]++;
   return Node;
 });

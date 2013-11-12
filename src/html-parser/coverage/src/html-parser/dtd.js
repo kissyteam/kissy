@@ -259,7 +259,7 @@ if (! _$jscoverage['/html-parser/dtd.js'].branchData) {
   _$jscoverage['/html-parser/dtd.js'].branchData['696'] = [];
   _$jscoverage['/html-parser/dtd.js'].branchData['696'][1] = new BranchData();
 }
-_$jscoverage['/html-parser/dtd.js'].branchData['696'][1].init(466, 20, 'i < html_tags.length');
+_$jscoverage['/html-parser/dtd.js'].branchData['696'][1].init(467, 20, 'i < html_tags.length');
 function visit3_696_1(result) {
   _$jscoverage['/html-parser/dtd.js'].branchData['696'][1].ranCondition(result);
   return result;
@@ -267,7 +267,7 @@ function visit3_696_1(result) {
 function visit2_689_1(result) {
   _$jscoverage['/html-parser/dtd.js'].branchData['689'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/dtd.js'].branchData['688'][1].init(22, 11, 'p2 == "div"');
+}_$jscoverage['/html-parser/dtd.js'].branchData['688'][1].init(22, 12, 'p2 === "div"');
 function visit1_688_1(result) {
   _$jscoverage['/html-parser/dtd.js'].branchData['688'][1].ranCondition(result);
   return result;
@@ -660,7 +660,7 @@ KISSY.add("html-parser/dtd", function(S) {
     _$jscoverage['/html-parser/dtd.js'].lineData[687]++;
     for (var p2 in dtd[p]) {
       _$jscoverage['/html-parser/dtd.js'].lineData[688]++;
-      if (visit1_688_1(p2 == "div")) {
+      if (visit1_688_1(p2 === "div")) {
         _$jscoverage['/html-parser/dtd.js'].lineData[689]++;
         for (i = 0; visit2_689_1(i < html_tags.length); i++) {
           _$jscoverage['/html-parser/dtd.js'].lineData[690]++;

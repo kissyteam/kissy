@@ -22,12 +22,12 @@ KISSY.add("html-parser/utils", function () {
          */
         isValidAttributeNameStartChar: function (ch) {
             return !this.isWhitespace(ch) &&
-                ch != '"' &&
-                ch != "'" &&
-                ch != '>' &&
-                ch != "<" &&
-                ch != '/' &&
-                ch != '=';
+                ch !== '"' &&
+                ch !== "'" &&
+                ch !== '>' &&
+                ch !== "<" &&
+                ch !== '/' &&
+                ch !== '=';
         },
 
         isWhitespace: function (ch) {

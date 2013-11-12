@@ -13,7 +13,7 @@ KISSY.add("html-parser/scanners/cdata-scanner", function () {
                 node = lexer.nextNode();
             if (node) {
                 // 这段应该永远不会执行到的
-                if (node.nodeType != 1 ||
+                if (node.nodeType !== 1 ||
                     !(node.isEndTag() &&
                         node.tagName == tag.tagName)) {
                     lexer.setPosition(position);

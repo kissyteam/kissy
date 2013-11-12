@@ -276,80 +276,80 @@ if (! _$jscoverage['/html-parser/utils.js'].branchData) {
   _$jscoverage['/html-parser/utils.js'].branchData['30'] = [];
   _$jscoverage['/html-parser/utils.js'].branchData['30'][1] = new BranchData();
 }
-_$jscoverage['/html-parser/utils.js'].branchData['30'][1].init(29, 9, 'ch != \'=\'');
-function visit341_30_1(result) {
+_$jscoverage['/html-parser/utils.js'].branchData['30'][1].init(30, 10, 'ch !== \'=\'');
+function visit343_30_1(result) {
   _$jscoverage['/html-parser/utils.js'].branchData['30'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/utils.js'].branchData['29'][2].init(190, 9, 'ch != \'/\'');
-function visit340_29_2(result) {
+}_$jscoverage['/html-parser/utils.js'].branchData['29'][2].init(194, 10, 'ch !== \'/\'');
+function visit342_29_2(result) {
   _$jscoverage['/html-parser/utils.js'].branchData['29'][2].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/utils.js'].branchData['29'][1].init(29, 39, 'ch != \'/\' && ch != \'=\'');
-function visit339_29_1(result) {
+}_$jscoverage['/html-parser/utils.js'].branchData['29'][1].init(30, 41, 'ch !== \'/\' && ch !== \'=\'');
+function visit341_29_1(result) {
   _$jscoverage['/html-parser/utils.js'].branchData['29'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/utils.js'].branchData['28'][2].init(159, 9, 'ch != "<"');
-function visit338_28_2(result) {
+}_$jscoverage['/html-parser/utils.js'].branchData['28'][2].init(162, 10, 'ch !== "<"');
+function visit340_28_2(result) {
   _$jscoverage['/html-parser/utils.js'].branchData['28'][2].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/utils.js'].branchData['28'][1].init(29, 69, 'ch != "<" && ch != \'/\' && ch != \'=\'');
-function visit337_28_1(result) {
+}_$jscoverage['/html-parser/utils.js'].branchData['28'][1].init(30, 72, 'ch !== "<" && ch !== \'/\' && ch !== \'=\'');
+function visit339_28_1(result) {
   _$jscoverage['/html-parser/utils.js'].branchData['28'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/utils.js'].branchData['27'][2].init(128, 9, 'ch != \'>\'');
-function visit336_27_2(result) {
+}_$jscoverage['/html-parser/utils.js'].branchData['27'][2].init(130, 10, 'ch !== \'>\'');
+function visit338_27_2(result) {
   _$jscoverage['/html-parser/utils.js'].branchData['27'][2].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/utils.js'].branchData['27'][1].init(29, 99, 'ch != \'>\' && ch != "<" && ch != \'/\' && ch != \'=\'');
-function visit335_27_1(result) {
+}_$jscoverage['/html-parser/utils.js'].branchData['27'][1].init(30, 103, 'ch !== \'>\' && ch !== "<" && ch !== \'/\' && ch !== \'=\'');
+function visit337_27_1(result) {
   _$jscoverage['/html-parser/utils.js'].branchData['27'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/utils.js'].branchData['26'][2].init(97, 9, 'ch != "\'"');
-function visit334_26_2(result) {
+}_$jscoverage['/html-parser/utils.js'].branchData['26'][2].init(98, 10, 'ch !== "\'"');
+function visit336_26_2(result) {
   _$jscoverage['/html-parser/utils.js'].branchData['26'][2].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/utils.js'].branchData['26'][1].init(29, 129, 'ch != "\'" && ch != \'>\' && ch != "<" && ch != \'/\' && ch != \'=\'');
-function visit333_26_1(result) {
+}_$jscoverage['/html-parser/utils.js'].branchData['26'][1].init(30, 134, 'ch !== "\'" && ch !== \'>\' && ch !== "<" && ch !== \'/\' && ch !== \'=\'');
+function visit335_26_1(result) {
   _$jscoverage['/html-parser/utils.js'].branchData['26'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/utils.js'].branchData['25'][2].init(66, 9, 'ch != \'"\'');
-function visit332_25_2(result) {
+}_$jscoverage['/html-parser/utils.js'].branchData['25'][2].init(66, 10, 'ch !== \'"\'');
+function visit334_25_2(result) {
   _$jscoverage['/html-parser/utils.js'].branchData['25'][2].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/utils.js'].branchData['25'][1].init(42, 159, 'ch != \'"\' && ch != "\'" && ch != \'>\' && ch != "<" && ch != \'/\' && ch != \'=\'');
-function visit331_25_1(result) {
+}_$jscoverage['/html-parser/utils.js'].branchData['25'][1].init(42, 165, 'ch !== \'"\' && ch !== "\'" && ch !== \'>\' && ch !== "<" && ch !== \'/\' && ch !== \'=\'');
+function visit333_25_1(result) {
   _$jscoverage['/html-parser/utils.js'].branchData['25'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/utils.js'].branchData['24'][1].init(21, 202, '!this.isWhitespace(ch) && ch != \'"\' && ch != "\'" && ch != \'>\' && ch != "<" && ch != \'/\' && ch != \'=\'');
-function visit330_24_1(result) {
+}_$jscoverage['/html-parser/utils.js'].branchData['24'][1].init(21, 208, '!this.isWhitespace(ch) && ch !== \'"\' && ch !== "\'" && ch !== \'>\' && ch !== "<" && ch !== \'/\' && ch !== \'=\'');
+function visit332_24_1(result) {
   _$jscoverage['/html-parser/utils.js'].branchData['24'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/utils.js'].branchData['17'][7].init(60, 9, '\'Z\' >= ch');
-function visit329_17_7(result) {
+function visit331_17_7(result) {
   _$jscoverage['/html-parser/utils.js'].branchData['17'][7].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/utils.js'].branchData['17'][6].init(47, 9, '\'A\' <= ch');
-function visit328_17_6(result) {
+function visit330_17_6(result) {
   _$jscoverage['/html-parser/utils.js'].branchData['17'][6].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/utils.js'].branchData['17'][5].init(47, 22, '\'A\' <= ch && \'Z\' >= ch');
-function visit327_17_5(result) {
+function visit329_17_5(result) {
   _$jscoverage['/html-parser/utils.js'].branchData['17'][5].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/utils.js'].branchData['17'][4].init(34, 9, '\'z\' >= ch');
-function visit326_17_4(result) {
+function visit328_17_4(result) {
   _$jscoverage['/html-parser/utils.js'].branchData['17'][4].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/utils.js'].branchData['17'][3].init(21, 9, '\'a\' <= ch');
-function visit325_17_3(result) {
+function visit327_17_3(result) {
   _$jscoverage['/html-parser/utils.js'].branchData['17'][3].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/utils.js'].branchData['17'][2].init(21, 22, '\'a\' <= ch && \'z\' >= ch');
-function visit324_17_2(result) {
+function visit326_17_2(result) {
   _$jscoverage['/html-parser/utils.js'].branchData['17'][2].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/utils.js'].branchData['17'][1].init(21, 48, '\'a\' <= ch && \'z\' >= ch || \'A\' <= ch && \'Z\' >= ch');
-function visit323_17_1(result) {
+function visit325_17_1(result) {
   _$jscoverage['/html-parser/utils.js'].branchData['17'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/utils.js'].lineData[6]++;
@@ -370,12 +370,12 @@ KISSY.add("html-parser/utils", function() {
   isLetter: function(ch) {
   _$jscoverage['/html-parser/utils.js'].functionData[3]++;
   _$jscoverage['/html-parser/utils.js'].lineData[17]++;
-  return visit323_17_1(visit324_17_2(visit325_17_3('a' <= ch) && visit326_17_4('z' >= ch)) || visit327_17_5(visit328_17_6('A' <= ch) && visit329_17_7('Z' >= ch)));
+  return visit325_17_1(visit326_17_2(visit327_17_3('a' <= ch) && visit328_17_4('z' >= ch)) || visit329_17_5(visit330_17_6('A' <= ch) && visit331_17_7('Z' >= ch)));
 }, 
   isValidAttributeNameStartChar: function(ch) {
   _$jscoverage['/html-parser/utils.js'].functionData[4]++;
   _$jscoverage['/html-parser/utils.js'].lineData[24]++;
-  return visit330_24_1(!this.isWhitespace(ch) && visit331_25_1(visit332_25_2(ch != '"') && visit333_26_1(visit334_26_2(ch != "'") && visit335_27_1(visit336_27_2(ch != '>') && visit337_28_1(visit338_28_2(ch != "<") && visit339_29_1(visit340_29_2(ch != '/') && visit341_30_1(ch != '=')))))));
+  return visit332_24_1(!this.isWhitespace(ch) && visit333_25_1(visit334_25_2(ch !== '"') && visit335_26_1(visit336_26_2(ch !== "'") && visit337_27_1(visit338_27_2(ch !== '>') && visit339_28_1(visit340_28_2(ch !== "<") && visit341_29_1(visit342_29_2(ch !== '/') && visit343_30_1(ch !== '=')))))));
 }, 
   isWhitespace: function(ch) {
   _$jscoverage['/html-parser/utils.js'].functionData[5]++;

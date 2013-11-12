@@ -495,151 +495,151 @@ if (! _$jscoverage['/html-parser/nodes/tag.js'].branchData) {
   _$jscoverage['/html-parser/nodes/tag.js'].branchData['347'][1] = new BranchData();
 }
 _$jscoverage['/html-parser/nodes/tag.js'].branchData['347'][1].init(22, 26, 'attributes[i].name == name');
-function visit229_347_1(result) {
+function visit231_347_1(result) {
   _$jscoverage['/html-parser/nodes/tag.js'].branchData['347'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/nodes/tag.js'].branchData['346'][1].init(30, 21, 'i < attributes.length');
-function visit228_346_1(result) {
+function visit230_346_1(result) {
   _$jscoverage['/html-parser/nodes/tag.js'].branchData['346'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/nodes/tag.js'].branchData['345'][1].init(14, 31, 'attributes && attributes.length');
-function visit227_345_1(result) {
+function visit229_345_1(result) {
   _$jscoverage['/html-parser/nodes/tag.js'].branchData['345'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/nodes/tag.js'].branchData['321'][1].init(2165, 16, '!el.isSelfClosed');
-function visit226_321_1(result) {
+function visit228_321_1(result) {
   _$jscoverage['/html-parser/nodes/tag.js'].branchData['321'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/nodes/tag.js'].branchData['311'][1].init(307, 38, 'filter.onAttribute(attr, el) === false');
-function visit225_311_1(result) {
+function visit227_311_1(result) {
   _$jscoverage['/html-parser/nodes/tag.js'].branchData['311'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/nodes/tag.js'].branchData['306'][1].init(76, 50, '!(attrName = filter.onAttributeName(attrName, el))');
-function visit224_306_1(result) {
+function visit226_306_1(result) {
   _$jscoverage['/html-parser/nodes/tag.js'].branchData['306'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/nodes/tag.js'].branchData['304'][1].init(104, 6, 'filter');
-function visit223_304_1(result) {
+function visit225_304_1(result) {
   _$jscoverage['/html-parser/nodes/tag.js'].branchData['304'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/nodes/tag.js'].branchData['301'][1].init(1443, 21, 'i < attributes.length');
-function visit222_301_1(result) {
+function visit224_301_1(result) {
   _$jscoverage['/html-parser/nodes/tag.js'].branchData['301'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/nodes/tag.js'].branchData['291'][1].init(724, 11, '!el.tagName');
-function visit221_291_1(result) {
+function visit223_291_1(result) {
   _$jscoverage['/html-parser/nodes/tag.js'].branchData['291'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/nodes/tag.js'].branchData['285'][1].init(525, 17, 'el.nodeType !== 1');
-function visit220_285_1(result) {
+function visit222_285_1(result) {
   _$jscoverage['/html-parser/nodes/tag.js'].branchData['285'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/nodes/tag.js'].branchData['280'][1].init(394, 3, 'tmp');
-function visit219_280_1(result) {
+function visit221_280_1(result) {
   _$jscoverage['/html-parser/nodes/tag.js'].branchData['280'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/nodes/tag.js'].branchData['275'][1].init(277, 13, 'tmp === false');
-function visit218_275_1(result) {
+function visit220_275_1(result) {
   _$jscoverage['/html-parser/nodes/tag.js'].branchData['275'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/nodes/tag.js'].branchData['267'][1].init(80, 38, '!(tagName = filter.onTagName(tagName))');
-function visit217_267_1(result) {
+function visit219_267_1(result) {
   _$jscoverage['/html-parser/nodes/tag.js'].branchData['267'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/nodes/tag.js'].branchData['265'][1].init(430, 6, 'filter');
-function visit216_265_1(result) {
+function visit218_265_1(result) {
   _$jscoverage['/html-parser/nodes/tag.js'].branchData['265'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/nodes/tag.js'].branchData['256'][1].init(178, 21, 'tagName == "!doctype"');
-function visit215_256_1(result) {
+function visit217_256_1(result) {
   _$jscoverage['/html-parser/nodes/tag.js'].branchData['256'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/nodes/tag.js'].branchData['231'][1].init(48, 24, '!self.isChildrenFiltered');
-function visit214_231_1(result) {
+function visit216_231_1(result) {
   _$jscoverage['/html-parser/nodes/tag.js'].branchData['231'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/nodes/tag.js'].branchData['220'][1].init(86, 4, 'attr');
-function visit213_220_1(result) {
+function visit215_220_1(result) {
   _$jscoverage['/html-parser/nodes/tag.js'].branchData['220'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/nodes/tag.js'].branchData['211'][1].init(86, 4, 'attr');
-function visit212_211_1(result) {
+function visit214_211_1(result) {
   _$jscoverage['/html-parser/nodes/tag.js'].branchData['211'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/nodes/tag.js'].branchData['206'][1].init(89, 18, 'attr && attr.value');
-function visit211_206_1(result) {
+function visit213_206_1(result) {
   _$jscoverage['/html-parser/nodes/tag.js'].branchData['206'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/nodes/tag.js'].branchData['185'][1].init(122, 27, 'index == silbing.length - 1');
-function visit210_185_1(result) {
+function visit212_185_1(result) {
   _$jscoverage['/html-parser/nodes/tag.js'].branchData['185'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/nodes/tag.js'].branchData['138'][1].init(22, 45, '!this.attributes[i].equals(tag.attributes[i])');
-function visit209_138_1(result) {
+function visit211_138_1(result) {
   _$jscoverage['/html-parser/nodes/tag.js'].branchData['138'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/nodes/tag.js'].branchData['137'][1].init(332, 26, 'i < this.attributes.length');
-function visit208_137_1(result) {
+}_$jscoverage['/html-parser/nodes/tag.js'].branchData['137'][1].init(335, 26, 'i < this.attributes.length');
+function visit210_137_1(result) {
   _$jscoverage['/html-parser/nodes/tag.js'].branchData['137'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/nodes/tag.js'].branchData['134'][1].init(210, 47, 'this.attributes.length != tag.attributes.length');
-function visit207_134_1(result) {
+}_$jscoverage['/html-parser/nodes/tag.js'].branchData['134'][1].init(212, 48, 'this.attributes.length !== tag.attributes.length');
+function visit209_134_1(result) {
   _$jscoverage['/html-parser/nodes/tag.js'].branchData['134'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/nodes/tag.js'].branchData['131'][1].init(118, 29, 'this.nodeType != tag.nodeType');
-function visit206_131_1(result) {
+}_$jscoverage['/html-parser/nodes/tag.js'].branchData['131'][1].init(119, 30, 'this.nodeType !== tag.nodeType');
+function visit208_131_1(result) {
   _$jscoverage['/html-parser/nodes/tag.js'].branchData['131'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/nodes/tag.js'].branchData['128'][2].init(26, 29, 'this.nodeName != tag.nodeName');
-function visit205_128_2(result) {
+}_$jscoverage['/html-parser/nodes/tag.js'].branchData['128'][2].init(26, 30, 'this.nodeName !== tag.nodeName');
+function visit207_128_2(result) {
   _$jscoverage['/html-parser/nodes/tag.js'].branchData['128'][2].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/nodes/tag.js'].branchData['128'][1].init(18, 37, '!tag || this.nodeName != tag.nodeName');
-function visit204_128_1(result) {
+}_$jscoverage['/html-parser/nodes/tag.js'].branchData['128'][1].init(18, 38, '!tag || this.nodeName !== tag.nodeName');
+function visit206_128_1(result) {
   _$jscoverage['/html-parser/nodes/tag.js'].branchData['128'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/nodes/tag.js'].branchData['122'][1].init(95, 1, 'v');
-function visit203_122_1(result) {
+function visit205_122_1(result) {
   _$jscoverage['/html-parser/nodes/tag.js'].branchData['122'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/nodes/tag.js'].branchData['91'][1].init(181, 18, '!self.isSelfClosed');
-function visit202_91_1(result) {
+function visit204_91_1(result) {
   _$jscoverage['/html-parser/nodes/tag.js'].branchData['91'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/nodes/tag.js'].branchData['76'][1].init(30, 16, 'i < c.length - 1');
-function visit201_76_1(result) {
+function visit203_76_1(result) {
   _$jscoverage['/html-parser/nodes/tag.js'].branchData['76'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/nodes/tag.js'].branchData['75'][1].init(259, 12, 'c.length > 1');
-function visit200_75_1(result) {
+function visit202_75_1(result) {
   _$jscoverage['/html-parser/nodes/tag.js'].branchData['75'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/nodes/tag.js'].branchData['71'][1].init(124, 13, 'c.length >= 1');
-function visit199_71_1(result) {
+function visit201_71_1(result) {
   _$jscoverage['/html-parser/nodes/tag.js'].branchData['71'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/nodes/tag.js'].branchData['57'][1].init(838, 30, 'self.isSelfClosed || lastSlash');
-function visit198_57_1(result) {
+function visit200_57_1(result) {
   _$jscoverage['/html-parser/nodes/tag.js'].branchData['57'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/nodes/tag.js'].branchData['52'][1].init(681, 9, 'lastSlash');
-function visit197_52_1(result) {
+function visit199_52_1(result) {
   _$jscoverage['/html-parser/nodes/tag.js'].branchData['52'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/nodes/tag.js'].branchData['50'][1].init(81, 37, 'lastAttr && /\\/$/.test(lastAttr.name)');
-function visit196_50_1(result) {
+function visit198_50_1(result) {
   _$jscoverage['/html-parser/nodes/tag.js'].branchData['50'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/nodes/tag.js'].branchData['41'][1].init(182, 13, 'attributes[0]');
-function visit195_41_1(result) {
+function visit197_41_1(result) {
   _$jscoverage['/html-parser/nodes/tag.js'].branchData['41'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/nodes/tag.js'].branchData['33'][1].init(213, 23, 'typeof page == \'string\'');
-function visit194_33_1(result) {
+function visit196_33_1(result) {
   _$jscoverage['/html-parser/nodes/tag.js'].branchData['33'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/nodes/tag.js'].branchData['30'][1].init(152, 16, 'attributes || []');
-function visit193_30_1(result) {
+function visit195_30_1(result) {
   _$jscoverage['/html-parser/nodes/tag.js'].branchData['30'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/nodes/tag.js'].lineData[6]++;
@@ -671,11 +671,11 @@ KISSY.add("html-parser/nodes/tag", function(S, Node, Attribute, Dtd) {
     _$jscoverage['/html-parser/nodes/tag.js'].lineData[29]++;
     self.lastChild = null;
     _$jscoverage['/html-parser/nodes/tag.js'].lineData[30]++;
-    self.attributes = visit193_30_1(attributes || []);
+    self.attributes = visit195_30_1(attributes || []);
     _$jscoverage['/html-parser/nodes/tag.js'].lineData[31]++;
     self.nodeType = 1;
     _$jscoverage['/html-parser/nodes/tag.js'].lineData[33]++;
-    if (visit194_33_1(typeof page == 'string')) {
+    if (visit196_33_1(typeof page == 'string')) {
       _$jscoverage['/html-parser/nodes/tag.js'].lineData[34]++;
       createTag.apply(null, [self].concat(S.makeArray(arguments)));
     } else {
@@ -684,7 +684,7 @@ KISSY.add("html-parser/nodes/tag", function(S, Node, Attribute, Dtd) {
       _$jscoverage['/html-parser/nodes/tag.js'].lineData[38]++;
       attributes = self.attributes;
       _$jscoverage['/html-parser/nodes/tag.js'].lineData[41]++;
-      if (visit195_41_1(attributes[0])) {
+      if (visit197_41_1(attributes[0])) {
         _$jscoverage['/html-parser/nodes/tag.js'].lineData[42]++;
         self.nodeName = attributes[0].name.toLowerCase();
         _$jscoverage['/html-parser/nodes/tag.js'].lineData[44]++;
@@ -695,14 +695,14 @@ KISSY.add("html-parser/nodes/tag", function(S, Node, Attribute, Dtd) {
         attributes.splice(0, 1);
       }
       _$jscoverage['/html-parser/nodes/tag.js'].lineData[49]++;
-      var lastAttr = attributes[attributes.length - 1], lastSlash = !!(visit196_50_1(lastAttr && /\/$/.test(lastAttr.name)));
+      var lastAttr = attributes[attributes.length - 1], lastSlash = !!(visit198_50_1(lastAttr && /\/$/.test(lastAttr.name)));
       _$jscoverage['/html-parser/nodes/tag.js'].lineData[52]++;
-      if (visit197_52_1(lastSlash)) {
+      if (visit199_52_1(lastSlash)) {
         _$jscoverage['/html-parser/nodes/tag.js'].lineData[53]++;
         attributes.length = attributes.length - 1;
       }
       _$jscoverage['/html-parser/nodes/tag.js'].lineData[57]++;
-      self.isSelfClosed = visit198_57_1(self.isSelfClosed || lastSlash);
+      self.isSelfClosed = visit200_57_1(self.isSelfClosed || lastSlash);
       _$jscoverage['/html-parser/nodes/tag.js'].lineData[61]++;
       self['closed'] = self.isSelfClosed;
     }
@@ -721,16 +721,16 @@ KISSY.add("html-parser/nodes/tag", function(S, Node, Attribute, Dtd) {
     _$jscoverage['/html-parser/nodes/tag.js'].lineData[70]++;
     self.lastChild = c[c.length - 1];
     _$jscoverage['/html-parser/nodes/tag.js'].lineData[71]++;
-    if (visit199_71_1(c.length >= 1)) {
+    if (visit201_71_1(c.length >= 1)) {
       _$jscoverage['/html-parser/nodes/tag.js'].lineData[72]++;
       c[0].nextSibling = c[0].nextSibling = null;
       _$jscoverage['/html-parser/nodes/tag.js'].lineData[73]++;
       c[0].parentNode = self;
     }
     _$jscoverage['/html-parser/nodes/tag.js'].lineData[75]++;
-    if (visit200_75_1(c.length > 1)) {
+    if (visit202_75_1(c.length > 1)) {
       _$jscoverage['/html-parser/nodes/tag.js'].lineData[76]++;
-      for (var i = 0; visit201_76_1(i < c.length - 1); i++) {
+      for (var i = 0; visit203_76_1(i < c.length - 1); i++) {
         _$jscoverage['/html-parser/nodes/tag.js'].lineData[77]++;
         c[i].nextSibling = c[i + 1];
         _$jscoverage['/html-parser/nodes/tag.js'].lineData[78]++;
@@ -751,7 +751,7 @@ KISSY.add("html-parser/nodes/tag", function(S, Node, Attribute, Dtd) {
   _$jscoverage['/html-parser/nodes/tag.js'].lineData[90]++;
   self.isSelfClosed = !!(Dtd.$empty[self.nodeName]);
   _$jscoverage['/html-parser/nodes/tag.js'].lineData[91]++;
-  if (visit202_91_1(!self.isSelfClosed)) {
+  if (visit204_91_1(!self.isSelfClosed)) {
     _$jscoverage['/html-parser/nodes/tag.js'].lineData[92]++;
     self.isSelfClosed = /\/$/.test(self.nodeName);
   }
@@ -791,7 +791,7 @@ KISSY.add("html-parser/nodes/tag", function(S, Node, Attribute, Dtd) {
   _$jscoverage['/html-parser/nodes/tag.js'].lineData[121]++;
   self.nodeName = self.tagName = v;
   _$jscoverage['/html-parser/nodes/tag.js'].lineData[122]++;
-  if (visit203_122_1(v)) {
+  if (visit205_122_1(v)) {
     _$jscoverage['/html-parser/nodes/tag.js'].lineData[123]++;
     self._updateSelfClosed();
   }
@@ -799,24 +799,24 @@ KISSY.add("html-parser/nodes/tag", function(S, Node, Attribute, Dtd) {
   equals: function(tag) {
   _$jscoverage['/html-parser/nodes/tag.js'].functionData[9]++;
   _$jscoverage['/html-parser/nodes/tag.js'].lineData[128]++;
-  if (visit204_128_1(!tag || visit205_128_2(this.nodeName != tag.nodeName))) {
+  if (visit206_128_1(!tag || visit207_128_2(this.nodeName !== tag.nodeName))) {
     _$jscoverage['/html-parser/nodes/tag.js'].lineData[129]++;
     return 0;
   }
   _$jscoverage['/html-parser/nodes/tag.js'].lineData[131]++;
-  if (visit206_131_1(this.nodeType != tag.nodeType)) {
+  if (visit208_131_1(this.nodeType !== tag.nodeType)) {
     _$jscoverage['/html-parser/nodes/tag.js'].lineData[132]++;
     return 0;
   }
   _$jscoverage['/html-parser/nodes/tag.js'].lineData[134]++;
-  if (visit207_134_1(this.attributes.length != tag.attributes.length)) {
+  if (visit209_134_1(this.attributes.length !== tag.attributes.length)) {
     _$jscoverage['/html-parser/nodes/tag.js'].lineData[135]++;
     return 0;
   }
   _$jscoverage['/html-parser/nodes/tag.js'].lineData[137]++;
-  for (var i = 0; visit208_137_1(i < this.attributes.length); i++) {
+  for (var i = 0; visit210_137_1(i < this.attributes.length); i++) {
     _$jscoverage['/html-parser/nodes/tag.js'].lineData[138]++;
-    if (visit209_138_1(!this.attributes[i].equals(tag.attributes[i]))) {
+    if (visit211_138_1(!this.attributes[i].equals(tag.attributes[i]))) {
       _$jscoverage['/html-parser/nodes/tag.js'].lineData[139]++;
       return 0;
     }
@@ -877,7 +877,7 @@ KISSY.add("html-parser/nodes/tag", function(S, Node, Attribute, Dtd) {
   _$jscoverage['/html-parser/nodes/tag.js'].lineData[183]++;
   var silbing = ref.parentNode.childNodes, index = S.indexOf(ref, silbing);
   _$jscoverage['/html-parser/nodes/tag.js'].lineData[185]++;
-  if (visit210_185_1(index == silbing.length - 1)) {
+  if (visit212_185_1(index == silbing.length - 1)) {
     _$jscoverage['/html-parser/nodes/tag.js'].lineData[186]++;
     ref.parentNode.appendChild(this);
   } else {
@@ -906,14 +906,14 @@ KISSY.add("html-parser/nodes/tag", function(S, Node, Attribute, Dtd) {
   _$jscoverage['/html-parser/nodes/tag.js'].lineData[205]++;
   var attr = findAttributeByName(this.attributes, name);
   _$jscoverage['/html-parser/nodes/tag.js'].lineData[206]++;
-  return visit211_206_1(attr && attr.value);
+  return visit213_206_1(attr && attr.value);
 }, 
   setAttribute: function(name, value) {
   _$jscoverage['/html-parser/nodes/tag.js'].functionData[20]++;
   _$jscoverage['/html-parser/nodes/tag.js'].lineData[210]++;
   var attr = findAttributeByName(this.attributes, name);
   _$jscoverage['/html-parser/nodes/tag.js'].lineData[211]++;
-  if (visit212_211_1(attr)) {
+  if (visit214_211_1(attr)) {
     _$jscoverage['/html-parser/nodes/tag.js'].lineData[212]++;
     attr.value = value;
   } else {
@@ -926,7 +926,7 @@ KISSY.add("html-parser/nodes/tag", function(S, Node, Attribute, Dtd) {
   _$jscoverage['/html-parser/nodes/tag.js'].lineData[219]++;
   var attr = findAttributeByName(this.attributes, name);
   _$jscoverage['/html-parser/nodes/tag.js'].lineData[220]++;
-  if (visit213_220_1(attr)) {
+  if (visit215_220_1(attr)) {
     _$jscoverage['/html-parser/nodes/tag.js'].lineData[221]++;
     var index = S.indexOf(attr, this.attributes);
     _$jscoverage['/html-parser/nodes/tag.js'].lineData[222]++;
@@ -938,7 +938,7 @@ KISSY.add("html-parser/nodes/tag", function(S, Node, Attribute, Dtd) {
   _$jscoverage['/html-parser/nodes/tag.js'].lineData[230]++;
   var self = this;
   _$jscoverage['/html-parser/nodes/tag.js'].lineData[231]++;
-  if (visit214_231_1(!self.isChildrenFiltered)) {
+  if (visit216_231_1(!self.isChildrenFiltered)) {
     _$jscoverage['/html-parser/nodes/tag.js'].lineData[232]++;
     var writer = new (S.require('html-parser/writer/basic'))();
     _$jscoverage['/html-parser/nodes/tag.js'].lineData[233]++;
@@ -962,7 +962,7 @@ KISSY.add("html-parser/nodes/tag", function(S, Node, Attribute, Dtd) {
   _$jscoverage['/html-parser/nodes/tag.js'].lineData[250]++;
   var el = this, tmp, attrName, tagName = el.tagName;
   _$jscoverage['/html-parser/nodes/tag.js'].lineData[256]++;
-  if (visit215_256_1(tagName == "!doctype")) {
+  if (visit217_256_1(tagName == "!doctype")) {
     _$jscoverage['/html-parser/nodes/tag.js'].lineData[257]++;
     writer.append(this.toHtml() + "\n");
     _$jscoverage['/html-parser/nodes/tag.js'].lineData[258]++;
@@ -973,9 +973,9 @@ KISSY.add("html-parser/nodes/tag", function(S, Node, Attribute, Dtd) {
   _$jscoverage['/html-parser/nodes/tag.js'].lineData[262]++;
   el.isChildrenFiltered = 0;
   _$jscoverage['/html-parser/nodes/tag.js'].lineData[265]++;
-  if (visit216_265_1(filter)) {
+  if (visit218_265_1(filter)) {
     _$jscoverage['/html-parser/nodes/tag.js'].lineData[267]++;
-    if (visit217_267_1(!(tagName = filter.onTagName(tagName)))) {
+    if (visit219_267_1(!(tagName = filter.onTagName(tagName)))) {
       _$jscoverage['/html-parser/nodes/tag.js'].lineData[268]++;
       return;
     }
@@ -984,24 +984,24 @@ KISSY.add("html-parser/nodes/tag", function(S, Node, Attribute, Dtd) {
     _$jscoverage['/html-parser/nodes/tag.js'].lineData[273]++;
     tmp = filter.onTag(el);
     _$jscoverage['/html-parser/nodes/tag.js'].lineData[275]++;
-    if (visit218_275_1(tmp === false)) {
+    if (visit220_275_1(tmp === false)) {
       _$jscoverage['/html-parser/nodes/tag.js'].lineData[276]++;
       return;
     }
     _$jscoverage['/html-parser/nodes/tag.js'].lineData[280]++;
-    if (visit219_280_1(tmp)) {
+    if (visit221_280_1(tmp)) {
       _$jscoverage['/html-parser/nodes/tag.js'].lineData[281]++;
       el = tmp;
     }
     _$jscoverage['/html-parser/nodes/tag.js'].lineData[285]++;
-    if (visit220_285_1(el.nodeType !== 1)) {
+    if (visit222_285_1(el.nodeType !== 1)) {
       _$jscoverage['/html-parser/nodes/tag.js'].lineData[286]++;
       el.writeHtml(writer, filter);
       _$jscoverage['/html-parser/nodes/tag.js'].lineData[287]++;
       return;
     }
     _$jscoverage['/html-parser/nodes/tag.js'].lineData[291]++;
-    if (visit221_291_1(!el.tagName)) {
+    if (visit223_291_1(!el.tagName)) {
       _$jscoverage['/html-parser/nodes/tag.js'].lineData[292]++;
       el._writeChildrenHTML(writer);
       _$jscoverage['/html-parser/nodes/tag.js'].lineData[293]++;
@@ -1013,22 +1013,22 @@ KISSY.add("html-parser/nodes/tag", function(S, Node, Attribute, Dtd) {
   _$jscoverage['/html-parser/nodes/tag.js'].lineData[300]++;
   var attributes = el.attributes;
   _$jscoverage['/html-parser/nodes/tag.js'].lineData[301]++;
-  for (var i = 0; visit222_301_1(i < attributes.length); i++) {
+  for (var i = 0; visit224_301_1(i < attributes.length); i++) {
     _$jscoverage['/html-parser/nodes/tag.js'].lineData[302]++;
     var attr = attributes[i];
     _$jscoverage['/html-parser/nodes/tag.js'].lineData[303]++;
     attrName = attr.name;
     _$jscoverage['/html-parser/nodes/tag.js'].lineData[304]++;
-    if (visit223_304_1(filter)) {
+    if (visit225_304_1(filter)) {
       _$jscoverage['/html-parser/nodes/tag.js'].lineData[306]++;
-      if (visit224_306_1(!(attrName = filter.onAttributeName(attrName, el)))) {
+      if (visit226_306_1(!(attrName = filter.onAttributeName(attrName, el)))) {
         _$jscoverage['/html-parser/nodes/tag.js'].lineData[307]++;
         continue;
       }
       _$jscoverage['/html-parser/nodes/tag.js'].lineData[309]++;
       attr.name = attrName;
       _$jscoverage['/html-parser/nodes/tag.js'].lineData[311]++;
-      if (visit225_311_1(filter.onAttribute(attr, el) === false)) {
+      if (visit227_311_1(filter.onAttribute(attr, el) === false)) {
         _$jscoverage['/html-parser/nodes/tag.js'].lineData[312]++;
         continue;
       }
@@ -1039,7 +1039,7 @@ KISSY.add("html-parser/nodes/tag", function(S, Node, Attribute, Dtd) {
   _$jscoverage['/html-parser/nodes/tag.js'].lineData[319]++;
   writer.openTagClose(el);
   _$jscoverage['/html-parser/nodes/tag.js'].lineData[321]++;
-  if (visit226_321_1(!el.isSelfClosed)) {
+  if (visit228_321_1(!el.isSelfClosed)) {
     _$jscoverage['/html-parser/nodes/tag.js'].lineData[322]++;
     el._writeChildrenHTML(writer);
     _$jscoverage['/html-parser/nodes/tag.js'].lineData[324]++;
@@ -1061,11 +1061,11 @@ KISSY.add("html-parser/nodes/tag", function(S, Node, Attribute, Dtd) {
   function findAttributeByName(attributes, name) {
     _$jscoverage['/html-parser/nodes/tag.js'].functionData[27]++;
     _$jscoverage['/html-parser/nodes/tag.js'].lineData[345]++;
-    if (visit227_345_1(attributes && attributes.length)) {
+    if (visit229_345_1(attributes && attributes.length)) {
       _$jscoverage['/html-parser/nodes/tag.js'].lineData[346]++;
-      for (var i = 0; visit228_346_1(i < attributes.length); i++) {
+      for (var i = 0; visit230_346_1(i < attributes.length); i++) {
         _$jscoverage['/html-parser/nodes/tag.js'].lineData[347]++;
-        if (visit229_347_1(attributes[i].name == name)) {
+        if (visit231_347_1(attributes[i].name == name)) {
           _$jscoverage['/html-parser/nodes/tag.js'].lineData[348]++;
           return attributes[i];
         }

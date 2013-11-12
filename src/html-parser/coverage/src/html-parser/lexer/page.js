@@ -292,7 +292,7 @@ _$jscoverage['/html-parser/lexer/page.js'].branchData['57'][1].init(66, 11, '\'\
 function visit174_57_1(result) {
   _$jscoverage['/html-parser/lexer/page.js'].branchData['57'][1].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/page.js'].branchData['55'][3].init(181, 6, '0 != i');
+}_$jscoverage['/html-parser/lexer/page.js'].branchData['55'][3].init(181, 7, '0 !== i');
 function visit173_55_3(result) {
   _$jscoverage['/html-parser/lexer/page.js'].branchData['55'][3].ranCondition(result);
   return result;
@@ -300,7 +300,7 @@ function visit173_55_3(result) {
 function visit172_55_2(result) {
   _$jscoverage['/html-parser/lexer/page.js'].branchData['55'][2].ranCondition(result);
   return result;
-}_$jscoverage['/html-parser/lexer/page.js'].branchData['55'][1].init(166, 21, 'ch === \'\\n\' && 0 != i');
+}_$jscoverage['/html-parser/lexer/page.js'].branchData['55'][1].init(166, 22, 'ch === \'\\n\' && 0 !== i');
 function visit171_55_1(result) {
   _$jscoverage['/html-parser/lexer/page.js'].branchData['55'][1].ranCondition(result);
   return result;
@@ -380,7 +380,7 @@ KISSY.add("html-parser/lexer/page", function(S, Index) {
   _$jscoverage['/html-parser/lexer/page.js'].lineData[53]++;
   var i = cursor.position, ch = source.charAt(i);
   _$jscoverage['/html-parser/lexer/page.js'].lineData[55]++;
-  if (visit171_55_1(visit172_55_2(ch === '\n') && visit173_55_3(0 != i))) {
+  if (visit171_55_1(visit172_55_2(ch === '\n') && visit173_55_3(0 !== i))) {
     _$jscoverage['/html-parser/lexer/page.js'].lineData[56]++;
     ch = source.charAt(i - 1);
     _$jscoverage['/html-parser/lexer/page.js'].lineData[57]++;

@@ -22,7 +22,7 @@
         S.log(html);
         var lexer = new Lexer(html),node;
         while (node = lexer.nextNode()) {
-            S.log(node.toString());
+            S.log(node.toDebugString());
             if (node.nodeType == 1) {
                 S.log("attribute length:" + (node.attributes.length));
             }

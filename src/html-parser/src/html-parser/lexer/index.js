@@ -18,7 +18,7 @@ KISSY.add("html-parser/lexer/index", function () {
         constructor: Index,
 
         add: function (cursor) {
-            if (indexOfCursor(this.lineCursors, cursor) != -1) {
+            if (indexOfCursor(this.lineCursors, cursor) !== -1) {
                 return;
             }
             var index = indexOfCursorForInsert(this.lineCursors, cursor);
@@ -28,7 +28,7 @@ KISSY.add("html-parser/lexer/index", function () {
         remove: function (cursor) {
             var cs = this.lineCursors;
             var index = indexOfCursor(this.lineCursors, cursor);
-            if (index != -1) {
+            if (index !== -1) {
                 cs.splice(index, 1);
             }
         },
