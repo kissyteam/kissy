@@ -4,9 +4,10 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S) {
-    var module=this;
+    var module = this;
     var Attribute = module.require('base/attribute');
     var CustomEvent = module.require('event/custom');
+    module.exports = Base;
 
     var ATTRS = 'ATTRS',
         ucfirst = S.ucfirst,
@@ -575,8 +576,6 @@ KISSY.add(function (S) {
             }
         }
     }
-
-    return Base;
 });
 /**
  * @ignore
