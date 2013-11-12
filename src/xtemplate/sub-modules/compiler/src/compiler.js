@@ -432,7 +432,8 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime, unde
                 requires += includes.join('","');
                 requires = ', {requires:["' + requires + '"]}';
             }
-            return 'KISSY.add(function(){ return function(' + func.params.join(',') + '){\n' +
+            return '/** Compiled By kissy-xtemplate */\n' +
+                'KISSY.add(function(){ return function(' + func.params.join(',') + '){\n' +
                 func.source.join('\n') +
                 '};}' + requires + ');';
         },

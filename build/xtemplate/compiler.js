@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 12 12:28
+build time: Nov 12 12:31
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -2645,7 +2645,8 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime, unde
                 requires += includes.join('","');
                 requires = ', {requires:["' + requires + '"]}';
             }
-            return 'KISSY.add(function(){ return function(' + func.params.join(',') + '){\n' +
+            return '/** Compiled By kissy-xtemplate */\n' +
+                'KISSY.add(function(){ return function(' + func.params.join(',') + '){\n' +
                 func.source.join('\n') +
                 '};}' + requires + ');';
         },
