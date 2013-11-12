@@ -4,14 +4,15 @@
  * @ignore
  */
 KISSY.add(function (S) {
-    var Dom = KISSY.require('dom');
-    var AnimBase = KISSY.require('./base');
-    var Easing = KISSY.require('./timer/easing');
-    var AM = KISSY.require('./timer/manager');
-    var Fx = KISSY.require('./timer/fx');
-    var SHORT_HANDS = KISSY.require('./timer/short-hand');
-    KISSY.require('./timer/color');
-    KISSY.require('./timer/transform');
+    var module=this;
+    var Dom = module.require('dom');
+    var AnimBase = module.require('./base');
+    var Easing = module.require('./timer/easing');
+    var AM = module.require('./timer/manager');
+    var Fx = module.require('./timer/fx');
+    var SHORT_HANDS = module.require('./timer/short-hand');
+    module.require('./timer/color');
+    module.require('./timer/transform');
 
     var camelCase = Dom._camelCase,
         NUMBER_REG = /^([+\-]=)?([\d+.\-]+)([a-z%]*)$/i;

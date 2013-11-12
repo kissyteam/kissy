@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 12 16:36
+build time: Nov 12 22:43
 */
 /**
  * @ignore
@@ -42,11 +42,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20131112163553' will replace with current timestamp when compressing.
+         * NOTICE: '20131112224247' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20131112163553',
+        __BUILD_TIME: '20131112224247',
 
         /**
          * KISSY Environment.
@@ -3517,8 +3517,9 @@ var KISSY = (function (undefined) {
 (function (S) {
     var Loader = S.Loader,
         Path = S.Path,
-        logger = S.getLogger('s/loader'),
         host = S.Env.host,
+        TRUE = !0,
+        FALSE = !1,
         startsWith = S.startsWith,
         data = Loader.Status,
         ATTACHED = data.ATTACHED,
@@ -3634,19 +3635,19 @@ var KISSY = (function (undefined) {
             modName = indexMapStr(modName);
 
             var mods = runtime.Env.mods,
-                mod = mods[modName];
+                module = mods[modName];
 
-            if (mod) {
-                return mod;
+            if (module) {
+                return module;
             }
 
             // 防止 cfg 里有 tag，构建 fullpath 需要
-            mods[modName] = mod = new Loader.Module(S.mix({
+            mods[modName] = module = new Loader.Module(S.mix({
                 name: modName,
                 runtime: runtime
             }, cfg));
 
-            return mod;
+            return module;
         },
 
         /**
@@ -3660,28 +3661,28 @@ var KISSY = (function (undefined) {
         },
 
         /**
-         * Get module values
+         * Get modules exports
          * @param runtime Module container, such as KISSY
          * @param {String[]} modNames module names
-         * @return {Array} module values
+         * @return {Array} modules exports
          */
         getModules: function (runtime, modNames) {
-            var mods = [runtime], mod,
+            var mods = [runtime], module,
                 unalias,
                 allOk,
                 m,
                 runtimeMods = runtime.Env.mods;
 
             S.each(modNames, function (modName) {
-                mod = runtimeMods[modName];
-                if (!mod || mod.getType() != 'css') {
+                module = runtimeMods[modName];
+                if (!module || module.getType() != 'css') {
                     unalias = Utils.unalias(runtime, modName);
                     allOk = S.reduce(unalias, function (a, n) {
                         m = runtimeMods[n];
                         return a && m && m.status == ATTACHED;
                     }, true);
                     if (allOk) {
-                        mods.push(runtimeMods[unalias[0]].value);
+                        mods.push(runtimeMods[unalias[0]].exports);
                     } else {
                         mods.push(null);
                     }
@@ -3700,7 +3701,7 @@ var KISSY = (function (undefined) {
          * @param {String[]} [stack] stack for detecting circular dependency
          * @param {Array} [errorList] errors when attach mods
          * @param {Object} [cache] cached modules to avoid duplicate check
-         * @returns whether success attach all modules
+         * @returns {Boolean} whether success attach all modules
          */
         attachModsRecursively: function (modNames, runtime, stack, errorList, cache) {
             // for debug. prevent circular dependency
@@ -3715,7 +3716,7 @@ var KISSY = (function (undefined) {
                 s = s && Utils.attachModRecursively(modNames[i], runtime, stack, errorList, cache);
                 stack.length = stackDepth;
             }
-            return s;
+            return !!s;
         },
 
         /**
@@ -3725,7 +3726,7 @@ var KISSY = (function (undefined) {
          * @param {String[]} [stack] stack for detecting circular dependency
          * @param {Array} [errorList] errors when attach mods
          * @param {Object} [cache] cached modules to avoid duplicate check
-         * @returns whether success attach all modules
+         * @returns {Boolean} whether success attach all modules
          */
         attachModRecursively: function (modName, runtime, stack, errorList, cache) {
             var mods = runtime.Env.mods,
@@ -3735,62 +3736,66 @@ var KISSY = (function (undefined) {
                 return cache[modName];
             }
             if (!m) {
-                return cache[modName] = 0;
+                return cache[modName] = FALSE;
             }
             status = m.status;
             if (status == ATTACHED) {
-                return cache[modName] = 1;
+                return cache[modName] = TRUE;
             }
             if (status == ERROR) {
                 errorList.push(m);
             }
             if (status != LOADED) {
-                return cache[modName] = 0;
+                return cache[modName] = FALSE;
             }
             if ('@DEBUG@') {
                 if (S.inArray(modName, stack)) {
                     stack.push(modName);
                     S.error('find cyclic dependency between mods: ' + stack);
-                    return cache[modName] = 0;
+                    return cache[modName] = FALSE;
                 }
                 stack.push(modName);
             }
             if (Utils.attachModsRecursively(m.getNormalizedRequires(),
                 runtime, stack, errorList, cache)) {
                 Utils.attachMod(runtime, m);
-                return cache[modName] = 1;
+                return cache[modName] = TRUE;
             }
-            return cache[modName] = 0;
+            return cache[modName] = FALSE;
         },
 
         /**
-         * Attach specified mod.
+         * Attach specified module.
          * @param runtime Module container, such as KISSY
-         * @param {KISSY.Loader.Module} mod module instance
+         * @param {KISSY.Loader.Module} module module instance
          */
-        attachMod: function (runtime, mod) {
-            if (mod.status != LOADED) {
+        attachMod: function (runtime, module) {
+            if (module.status != LOADED) {
                 return;
             }
 
-            var fn = mod.fn;
+            var fn = module.fn,
+                exports = undefined;
 
             if (typeof fn === 'function') {
                 // 需要解开 index，相对路径
                 // 但是需要保留 alias，防止值不对应
-                // record current mod for KISSY.require
-                Loader.attachingModName = mod.name;
-                mod.value = fn.apply(mod, Utils.getModules(runtime, mod.getRequiresWithAlias()));
-                Loader.attachingModName = undefined;
+                //noinspection JSUnresolvedFunction
+                exports = fn.apply(module, Utils.getModules(runtime, module.getRequiresWithAlias()));
+                if (exports !== undefined) {
+                    //noinspection JSUndefinedPropertyAssignment
+                    module.exports = exports;
+                }
             } else {
-                mod.value = fn;
+                //noinspection JSUndefinedPropertyAssignment
+                module.exports = fn;
             }
 
-            mod.status = ATTACHED;
+            module.status = ATTACHED;
         },
 
         /**
-         * Get mod names as array.
+         * Get module names as array.
          * @param {String|String[]} modNames module names array or  module names string separated by ','
          * @return {String[]}
          */
@@ -3820,8 +3825,8 @@ var KISSY = (function (undefined) {
         /**
          * unalias module name.
          * @param runtime Module container, such as KISSY
-         * @param {String} names moduleNames
-         * @return {String[]} unaliased module names
+         * @param {String|String[]} names moduleNames
+         * @return {String[]} unalias module names
          */
         unalias: function (runtime, names) {
             var ret = [].concat(names),
@@ -3878,16 +3883,16 @@ var KISSY = (function (undefined) {
          * register module with factory
          * @param runtime Module container, such as KISSY
          * @param {String} name module name
-         * @param {Function|*} fn module's factory or value
+         * @param {Function|*} fn module's factory or exports
          * @param [config] module config, such as dependency
          */
         registerModule: function (runtime, name, fn, config) {
             name = indexMapStr(name);
 
             var mods = runtime.Env.mods,
-                mod = mods[name];
+                module = mods[name];
 
-            if (mod && mod.fn) {
+            if (module && module.fn) {
                 S.log(name + ' is defined more than once', 'warn');
                 return;
             }
@@ -3895,17 +3900,17 @@ var KISSY = (function (undefined) {
             // 没有 use，静态载入的 add 可能执行
             Utils.createModuleInfo(runtime, name);
 
-            mod = mods[name];
+            module = mods[name];
 
             // 注意：通过 S.add(name[, fn[, config]]) 注册的代码，无论是页面中的代码，
             // 还是 js 文件里的代码，add 执行时，都意味着该模块已经 LOADED
-            S.mix(mod, {
+            S.mix(module, {
                 name: name,
                 status: LOADED,
                 fn: fn
             });
 
-            S.mix(mod, config);
+            S.mix(module, config);
         },
 
         /**
@@ -3949,12 +3954,12 @@ var KISSY = (function (undefined) {
 
     function isStatus(runtime, modNames, status) {
         var mods = runtime.Env.mods,
-            mod,
+            module,
             i;
         modNames = S.makeArray(modNames);
         for (i = 0; i < modNames.length; i++) {
-            mod = mods[modNames[i]];
-            if (!mod || mod.status !== status) {
+            module = mods[modNames[i]];
+            if (!module || module.status !== status) {
                 return 0;
             }
         }
@@ -3968,6 +3973,7 @@ var KISSY = (function (undefined) {
 (function (S) {
     var Loader = S.Loader,
         Path = S.Path,
+        undefined = undefined,
         IGNORE_PACKAGE_NAME_IN_URI = 'ignorePackageNameInUri',
         Utils = Loader.Utils;
 
@@ -3986,7 +3992,9 @@ var KISSY = (function (undefined) {
         S.mix(this, cfg);
     }
 
-    S.augment(Package, {
+    Package.prototype = {
+        constructor: Package,
+
         reset: function (cfg) {
             S.mix(this, cfg);
         },
@@ -4018,7 +4026,7 @@ var KISSY = (function (undefined) {
 
         getPrefixUriForCombo: function () {
             var self = this,
-                packageName = self.getName();
+                packageName = self.name;
             return self.getBase() + (
                 packageName && !self.isIgnorePackageNameInUri() ?
                     (packageName + '/') :
@@ -4084,7 +4092,7 @@ var KISSY = (function (undefined) {
         getGroup: function () {
             return forwardSystemPackage(this, 'group');
         }
-    });
+    };
 
     Loader.Package = Package;
 
@@ -4094,12 +4102,43 @@ var KISSY = (function (undefined) {
      * This class should not be instantiated manually.
      */
     function Module(cfg) {
-        this.status = Loader.Status.INIT;
-        S.mix(this, cfg);
-        this.waitedCallbacks = [];
+        var module = this;
+        /**
+         * exports of this module
+         */
+        module.exports = {};
+
+        /**
+         * status of current modules
+         */
+        module.status = Loader.Status.INIT;
+
+        /**
+         * name of this module
+         */
+        module.name = undefined;
+        /**
+         * factory of this module
+         * @type {null}
+         */
+        module.fn = undefined;
+        S.mix(module, cfg);
+        module.waitedCallbacks = [];
     }
 
-    S.augment(Module, {
+    Module.prototype = {
+        constructor: Module,
+
+        /**
+         * require other modules from current modules
+         * @param {String} moduleName name of module to be required
+         * @returns {*} required module exports
+         */
+        require: function (moduleName) {
+            var moduleNames = Utils.normalizeModNamesWithAlias(S, [moduleName], this.name);
+            return Utils.getModules(S, moduleNames)[1];
+        },
+
         wait: function (callback) {
             this.waitedCallbacks.push(callback);
         },
@@ -4120,14 +4159,6 @@ var KISSY = (function (undefined) {
                 }
             }
             this.waitedCallbacks = [];
-        },
-
-        /**
-         * Set the value of current module
-         * @param v value to be set
-         */
-        'setValue': function (v) {
-            this.value = v;
         },
 
         /**
@@ -4170,7 +4201,7 @@ var KISSY = (function (undefined) {
                     // #262
                     if (packageInfo.isIgnorePackageNameInUri() &&
                         // native mod does not allow ignore package name
-                        (packageName = packageInfo.getName())) {
+                        (packageName = packageInfo.name)) {
                         path = Path.relative(packageName, path);
                     }
                     fullPathUri = packageBaseUri.resolve(path);
@@ -4206,14 +4237,6 @@ var KISSY = (function (undefined) {
             var self = this;
             return self.path ||
                 (self.path = defaultComponentJsName(self))
-        },
-
-        /**
-         * Get the value of current module
-         * @return {*}
-         */
-        getValue: function () {
-            return this.value;
         },
 
         /**
@@ -4254,17 +4277,9 @@ var KISSY = (function (undefined) {
         },
 
         /**
-         * Get module objects required by this module
-         * @return {KISSY.Loader.Module[]}
+         * get alias required module names
+         * @returns {String[]} alias required module names
          */
-        'getRequiredMods': function () {
-            var self = this,
-                runtime = self.runtime;
-            return S.map(self.getNormalizedRequires(), function (r) {
-                return Utils.createModuleInfo(runtime, r);
-            });
-        },
-
         getRequiresWithAlias: function () {
             var self = this,
                 requiresWithAlias = self.requiresWithAlias,
@@ -4280,7 +4295,7 @@ var KISSY = (function (undefined) {
 
         /**
          * Get module names required by this module
-         * @return {KISSY.Loader.Module[]}
+         * @return {String[]}
          */
         getNormalizedRequires: function () {
             var self = this,
@@ -4300,7 +4315,7 @@ var KISSY = (function (undefined) {
                     Utils.normalizeModNames(self.runtime, requires, self.name);
             }
         }
-    });
+    };
 
     Loader.Module = Module;
 
@@ -4448,7 +4463,6 @@ var KISSY = (function (undefined) {
  */
 (function (S) {
     var fs = require('fs'),
-        logger = S.getLogger('s/loader'),
         vm = require('vm');
 
     S.getScript = function (url, success, charset) {
@@ -4471,6 +4485,7 @@ var KISSY = (function (undefined) {
 
         try {
             var mod = fs.readFileSync(path, charset);
+            //noinspection JSUnresolvedFunction
             var fn = vm.runInThisContext('(function(KISSY,require){' + mod + '})', url);
             fn(S, require);
             success && success();
@@ -4685,7 +4700,7 @@ var KISSY = (function (undefined) {
     var startLoadModTime;
 
     var commentRegExp = /(\/\*([\s\S]*?)\*\/|([^:]|^)\/\/(.*)$)/mg,
-        requireRegExp = /[^.'"]\s*KISSY.require\s*\((.+)\);/g;
+        requireRegExp = /[^.'"]\s*module.require\s*\((.+)\);/g;
 
     function getRequireVal(str) {
         var m;
@@ -4699,7 +4714,7 @@ var KISSY = (function (undefined) {
     }
 
     function checkKISSYRequire(config, fn) {
-        // use KISSY.require primitive statement
+        // use module.require primitive statement
         if ((!config || !config.requires) && typeof fn == 'function') {
             var requires = [];
             // Remove comments from the callback string,
@@ -4834,7 +4849,7 @@ var KISSY = (function (undefined) {
 
                     S.each(success, function (one) {
                         S.each(one.mods, function (mod) {
-                            Utils.registerModule(runtime, mod.getName(), S.noop);
+                            Utils.registerModule(runtime, mod.name, S.noop);
                             // notify all loader instance
                             mod.notifyAll();
                         });
@@ -4915,7 +4930,7 @@ var KISSY = (function (undefined) {
                             ret[m] = 1;
                         }
                         mod.wait(function (mod) {
-                            waitingModules.remove(mod.getName());
+                            waitingModules.remove(mod.name);
                             // notify current loader instance
                             waitingModules.notifyAll();
                         });
@@ -4947,7 +4962,7 @@ var KISSY = (function (undefined) {
                 type = mod.getType();
                 fullpath = mod.getFullPath();
                 packageInfo = mod.getPackage();
-                packageName = packageInfo.getName();
+                packageName = packageInfo.name;
                 charset = packageInfo.getCharset();
                 tag = packageInfo.getTag();
                 group = packageInfo.getGroup();
@@ -5153,7 +5168,7 @@ var KISSY = (function (undefined) {
          * @param {String} name module name.
          * it must be set if combine is true in {@link KISSY#config}
          * @param {Function} fn module definition function that is used to return
-         * this module value
+         * exports of this module
          * @param {KISSY} fn.S KISSY global instance
          * @param {Object} [cfg] module optional config data
          * @param {String[]} cfg.requires this module's required module name list
@@ -5176,7 +5191,7 @@ var KISSY = (function (undefined) {
          * @param {Function} success callback function executed
          * when KISSY has the required functionality.
          * @param {KISSY} success.S KISSY instance
-         * @param success.x... used module values
+         * @param success.x... modules exports
          * @member KISSY
          *
          *
@@ -5256,13 +5271,13 @@ var KISSY = (function (undefined) {
         },
 
         /**
-         * get module value from KISSY module cache
+         * get module exports from KISSY module cache
          * @param {String} moduleName module name
          * @member KISSY
-         * @return {*} value of module which name is moduleName
+         * @return {*} exports of specified module
          */
         require: function (moduleName) {
-            var moduleNames = Utils.unalias(S, Utils.normalizeModNamesWithAlias(S, [moduleName],Loader.attachingModName));
+            var moduleNames = Utils.unalias(S, Utils.normalizeModNamesWithAlias(S, [moduleName]));
             if (Utils.attachModsRecursively(moduleNames, S)) {
                 return Utils.getModules(S, moduleNames)[1];
             }
@@ -5285,7 +5300,7 @@ var KISSY = (function (undefined) {
     var doc = S.Env.host && S.Env.host.document;
     // var logger = S.getLogger('s/loader');
     var Utils = S.Loader.Utils;
-    var TIMESTAMP = '20131112163553';
+    var TIMESTAMP = '20131112224247';
     var defaultComboPrefix = '??';
     var defaultComboSep = ',';
 

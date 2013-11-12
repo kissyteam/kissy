@@ -6,8 +6,9 @@
 (function (S) {
     var Loader = S.Loader,
         Path = S.Path,
-        logger = S.getLogger('s/loader'),
         host = S.Env.host,
+        TRUE = !0,
+        FALSE = !1,
         startsWith = S.startsWith,
         data = Loader.Status,
         ATTACHED = data.ATTACHED,
@@ -123,19 +124,19 @@
             modName = indexMapStr(modName);
 
             var mods = runtime.Env.mods,
-                mod = mods[modName];
+                module = mods[modName];
 
-            if (mod) {
-                return mod;
+            if (module) {
+                return module;
             }
 
             // 防止 cfg 里有 tag，构建 fullpath 需要
-            mods[modName] = mod = new Loader.Module(S.mix({
+            mods[modName] = module = new Loader.Module(S.mix({
                 name: modName,
                 runtime: runtime
             }, cfg));
 
-            return mod;
+            return module;
         },
 
         /**
@@ -149,28 +150,28 @@
         },
 
         /**
-         * Get module values
+         * Get modules exports
          * @param runtime Module container, such as KISSY
          * @param {String[]} modNames module names
-         * @return {Array} module values
+         * @return {Array} modules exports
          */
         getModules: function (runtime, modNames) {
-            var mods = [runtime], mod,
+            var mods = [runtime], module,
                 unalias,
                 allOk,
                 m,
                 runtimeMods = runtime.Env.mods;
 
             S.each(modNames, function (modName) {
-                mod = runtimeMods[modName];
-                if (!mod || mod.getType() != 'css') {
+                module = runtimeMods[modName];
+                if (!module || module.getType() != 'css') {
                     unalias = Utils.unalias(runtime, modName);
                     allOk = S.reduce(unalias, function (a, n) {
                         m = runtimeMods[n];
                         return a && m && m.status == ATTACHED;
                     }, true);
                     if (allOk) {
-                        mods.push(runtimeMods[unalias[0]].value);
+                        mods.push(runtimeMods[unalias[0]].exports);
                     } else {
                         mods.push(null);
                     }
@@ -189,7 +190,7 @@
          * @param {String[]} [stack] stack for detecting circular dependency
          * @param {Array} [errorList] errors when attach mods
          * @param {Object} [cache] cached modules to avoid duplicate check
-         * @returns whether success attach all modules
+         * @returns {Boolean} whether success attach all modules
          */
         attachModsRecursively: function (modNames, runtime, stack, errorList, cache) {
             // for debug. prevent circular dependency
@@ -204,7 +205,7 @@
                 s = s && Utils.attachModRecursively(modNames[i], runtime, stack, errorList, cache);
                 stack.length = stackDepth;
             }
-            return s;
+            return !!s;
         },
 
         /**
@@ -214,7 +215,7 @@
          * @param {String[]} [stack] stack for detecting circular dependency
          * @param {Array} [errorList] errors when attach mods
          * @param {Object} [cache] cached modules to avoid duplicate check
-         * @returns whether success attach all modules
+         * @returns {Boolean} whether success attach all modules
          */
         attachModRecursively: function (modName, runtime, stack, errorList, cache) {
             var mods = runtime.Env.mods,
@@ -224,62 +225,66 @@
                 return cache[modName];
             }
             if (!m) {
-                return cache[modName] = 0;
+                return cache[modName] = FALSE;
             }
             status = m.status;
             if (status == ATTACHED) {
-                return cache[modName] = 1;
+                return cache[modName] = TRUE;
             }
             if (status == ERROR) {
                 errorList.push(m);
             }
             if (status != LOADED) {
-                return cache[modName] = 0;
+                return cache[modName] = FALSE;
             }
             if ('@DEBUG@') {
                 if (S.inArray(modName, stack)) {
                     stack.push(modName);
                     S.error('find cyclic dependency between mods: ' + stack);
-                    return cache[modName] = 0;
+                    return cache[modName] = FALSE;
                 }
                 stack.push(modName);
             }
             if (Utils.attachModsRecursively(m.getNormalizedRequires(),
                 runtime, stack, errorList, cache)) {
                 Utils.attachMod(runtime, m);
-                return cache[modName] = 1;
+                return cache[modName] = TRUE;
             }
-            return cache[modName] = 0;
+            return cache[modName] = FALSE;
         },
 
         /**
-         * Attach specified mod.
+         * Attach specified module.
          * @param runtime Module container, such as KISSY
-         * @param {KISSY.Loader.Module} mod module instance
+         * @param {KISSY.Loader.Module} module module instance
          */
-        attachMod: function (runtime, mod) {
-            if (mod.status != LOADED) {
+        attachMod: function (runtime, module) {
+            if (module.status != LOADED) {
                 return;
             }
 
-            var fn = mod.fn;
+            var fn = module.fn,
+                exports = undefined;
 
             if (typeof fn === 'function') {
                 // 需要解开 index，相对路径
                 // 但是需要保留 alias，防止值不对应
-                // record current mod for KISSY.require
-                Loader.attachingModName = mod.name;
-                mod.value = fn.apply(mod, Utils.getModules(runtime, mod.getRequiresWithAlias()));
-                Loader.attachingModName = undefined;
+                //noinspection JSUnresolvedFunction
+                exports = fn.apply(module, Utils.getModules(runtime, module.getRequiresWithAlias()));
+                if (exports !== undefined) {
+                    //noinspection JSUndefinedPropertyAssignment
+                    module.exports = exports;
+                }
             } else {
-                mod.value = fn;
+                //noinspection JSUndefinedPropertyAssignment
+                module.exports = fn;
             }
 
-            mod.status = ATTACHED;
+            module.status = ATTACHED;
         },
 
         /**
-         * Get mod names as array.
+         * Get module names as array.
          * @param {String|String[]} modNames module names array or  module names string separated by ','
          * @return {String[]}
          */
@@ -309,8 +314,8 @@
         /**
          * unalias module name.
          * @param runtime Module container, such as KISSY
-         * @param {String} names moduleNames
-         * @return {String[]} unaliased module names
+         * @param {String|String[]} names moduleNames
+         * @return {String[]} unalias module names
          */
         unalias: function (runtime, names) {
             var ret = [].concat(names),
@@ -367,16 +372,16 @@
          * register module with factory
          * @param runtime Module container, such as KISSY
          * @param {String} name module name
-         * @param {Function|*} fn module's factory or value
+         * @param {Function|*} fn module's factory or exports
          * @param [config] module config, such as dependency
          */
         registerModule: function (runtime, name, fn, config) {
             name = indexMapStr(name);
 
             var mods = runtime.Env.mods,
-                mod = mods[name];
+                module = mods[name];
 
-            if (mod && mod.fn) {
+            if (module && module.fn) {
                 S.log(name + ' is defined more than once', 'warn');
                 return;
             }
@@ -384,17 +389,17 @@
             // 没有 use，静态载入的 add 可能执行
             Utils.createModuleInfo(runtime, name);
 
-            mod = mods[name];
+            module = mods[name];
 
             // 注意：通过 S.add(name[, fn[, config]]) 注册的代码，无论是页面中的代码，
             // 还是 js 文件里的代码，add 执行时，都意味着该模块已经 LOADED
-            S.mix(mod, {
+            S.mix(module, {
                 name: name,
                 status: LOADED,
                 fn: fn
             });
 
-            S.mix(mod, config);
+            S.mix(module, config);
         },
 
         /**
@@ -438,12 +443,12 @@
 
     function isStatus(runtime, modNames, status) {
         var mods = runtime.Env.mods,
-            mod,
+            module,
             i;
         modNames = S.makeArray(modNames);
         for (i = 0; i < modNames.length; i++) {
-            mod = mods[modNames[i]];
-            if (!mod || mod.status !== status) {
+            module = mods[modNames[i]];
+            if (!module || module.status !== status) {
                 return 0;
             }
         }

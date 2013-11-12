@@ -87,7 +87,7 @@
     var startLoadModTime;
 
     var commentRegExp = /(\/\*([\s\S]*?)\*\/|([^:]|^)\/\/(.*)$)/mg,
-        requireRegExp = /[^.'"]\s*KISSY.require\s*\((.+)\);/g;
+        requireRegExp = /[^.'"]\s*module.require\s*\((.+)\);/g;
 
     function getRequireVal(str) {
         var m;
@@ -101,7 +101,7 @@
     }
 
     function checkKISSYRequire(config, fn) {
-        // use KISSY.require primitive statement
+        // use module.require primitive statement
         if ((!config || !config.requires) && typeof fn == 'function') {
             var requires = [];
             // Remove comments from the callback string,
@@ -236,7 +236,7 @@
 
                     S.each(success, function (one) {
                         S.each(one.mods, function (mod) {
-                            Utils.registerModule(runtime, mod.getName(), S.noop);
+                            Utils.registerModule(runtime, mod.name, S.noop);
                             // notify all loader instance
                             mod.notifyAll();
                         });
@@ -317,7 +317,7 @@
                             ret[m] = 1;
                         }
                         mod.wait(function (mod) {
-                            waitingModules.remove(mod.getName());
+                            waitingModules.remove(mod.name);
                             // notify current loader instance
                             waitingModules.notifyAll();
                         });
@@ -349,7 +349,7 @@
                 type = mod.getType();
                 fullpath = mod.getFullPath();
                 packageInfo = mod.getPackage();
-                packageName = packageInfo.getName();
+                packageName = packageInfo.name;
                 charset = packageInfo.getCharset();
                 tag = packageInfo.getTag();
                 group = packageInfo.getGroup();

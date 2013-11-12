@@ -4,8 +4,9 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S) {
-    var Dom = KISSY.require('dom');
-    var Fx = KISSY.require('./fx');
+    var module=this;
+    var Dom = module.require('dom');
+    var Fx = module.require('./fx');
 
     function toMatrixArray(matrix) {
         matrix = matrix.split(/,/);

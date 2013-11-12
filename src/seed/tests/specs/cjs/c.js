@@ -1,3 +1,4 @@
 KISSY.add(function(){
-   return '3';
+    var module=this;
+   module.exports= '3';
 });

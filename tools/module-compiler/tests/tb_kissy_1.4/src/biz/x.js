@@ -1,7 +1,8 @@
 KISSY.add(function () {
-    KISSY.require('overlay');
-    KISSY.require('node');
-    KISSY.require('./x.css');
+    var module=this;
+    module.require('overlay');
+    module.require('node');
+    module.require('./x.css');
     return"x + overlay +  node"
 });
 

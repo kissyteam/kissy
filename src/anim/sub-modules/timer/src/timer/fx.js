@@ -4,8 +4,9 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S) {
+    var module=this;
     var logger = S.getLogger('s/aim/timer/fx');
-    var Dom = KISSY.require('dom');
+    var Dom = module.require('dom');
 
     function load(self, cfg) {
         S.mix(self, cfg);

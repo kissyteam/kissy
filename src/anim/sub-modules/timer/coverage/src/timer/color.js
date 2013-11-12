@@ -233,49 +233,50 @@ if (! _$jscoverage['/timer/color.js']) {
   _$jscoverage['/timer/color.js'].lineData[7] = 0;
   _$jscoverage['/timer/color.js'].lineData[8] = 0;
   _$jscoverage['/timer/color.js'].lineData[9] = 0;
-  _$jscoverage['/timer/color.js'].lineData[44] = 0;
-  _$jscoverage['/timer/color.js'].lineData[46] = 0;
-  _$jscoverage['/timer/color.js'].lineData[53] = 0;
-  _$jscoverage['/timer/color.js'].lineData[60] = 0;
-  _$jscoverage['/timer/color.js'].lineData[64] = 0;
-  _$jscoverage['/timer/color.js'].lineData[68] = 0;
-  _$jscoverage['/timer/color.js'].lineData[72] = 0;
-  _$jscoverage['/timer/color.js'].lineData[77] = 0;
+  _$jscoverage['/timer/color.js'].lineData[10] = 0;
+  _$jscoverage['/timer/color.js'].lineData[45] = 0;
+  _$jscoverage['/timer/color.js'].lineData[47] = 0;
+  _$jscoverage['/timer/color.js'].lineData[54] = 0;
+  _$jscoverage['/timer/color.js'].lineData[61] = 0;
+  _$jscoverage['/timer/color.js'].lineData[65] = 0;
+  _$jscoverage['/timer/color.js'].lineData[69] = 0;
+  _$jscoverage['/timer/color.js'].lineData[73] = 0;
   _$jscoverage['/timer/color.js'].lineData[78] = 0;
   _$jscoverage['/timer/color.js'].lineData[79] = 0;
   _$jscoverage['/timer/color.js'].lineData[80] = 0;
   _$jscoverage['/timer/color.js'].lineData[81] = 0;
-  _$jscoverage['/timer/color.js'].lineData[87] = 0;
+  _$jscoverage['/timer/color.js'].lineData[82] = 0;
   _$jscoverage['/timer/color.js'].lineData[88] = 0;
-  _$jscoverage['/timer/color.js'].lineData[95] = 0;
+  _$jscoverage['/timer/color.js'].lineData[89] = 0;
   _$jscoverage['/timer/color.js'].lineData[96] = 0;
   _$jscoverage['/timer/color.js'].lineData[97] = 0;
   _$jscoverage['/timer/color.js'].lineData[98] = 0;
-  _$jscoverage['/timer/color.js'].lineData[101] = 0;
-  _$jscoverage['/timer/color.js'].lineData[107] = 0;
+  _$jscoverage['/timer/color.js'].lineData[99] = 0;
+  _$jscoverage['/timer/color.js'].lineData[102] = 0;
   _$jscoverage['/timer/color.js'].lineData[108] = 0;
-  _$jscoverage['/timer/color.js'].lineData[112] = 0;
+  _$jscoverage['/timer/color.js'].lineData[109] = 0;
   _$jscoverage['/timer/color.js'].lineData[113] = 0;
-  _$jscoverage['/timer/color.js'].lineData[116] = 0;
+  _$jscoverage['/timer/color.js'].lineData[114] = 0;
   _$jscoverage['/timer/color.js'].lineData[117] = 0;
-  _$jscoverage['/timer/color.js'].lineData[120] = 0;
-  _$jscoverage['/timer/color.js'].lineData[122] = 0;
+  _$jscoverage['/timer/color.js'].lineData[118] = 0;
+  _$jscoverage['/timer/color.js'].lineData[121] = 0;
   _$jscoverage['/timer/color.js'].lineData[123] = 0;
   _$jscoverage['/timer/color.js'].lineData[124] = 0;
   _$jscoverage['/timer/color.js'].lineData[125] = 0;
-  _$jscoverage['/timer/color.js'].lineData[127] = 0;
+  _$jscoverage['/timer/color.js'].lineData[126] = 0;
   _$jscoverage['/timer/color.js'].lineData[128] = 0;
-  _$jscoverage['/timer/color.js'].lineData[133] = 0;
+  _$jscoverage['/timer/color.js'].lineData[129] = 0;
   _$jscoverage['/timer/color.js'].lineData[134] = 0;
   _$jscoverage['/timer/color.js'].lineData[135] = 0;
-  _$jscoverage['/timer/color.js'].lineData[140] = 0;
+  _$jscoverage['/timer/color.js'].lineData[136] = 0;
   _$jscoverage['/timer/color.js'].lineData[141] = 0;
-  _$jscoverage['/timer/color.js'].lineData[149] = 0;
+  _$jscoverage['/timer/color.js'].lineData[142] = 0;
   _$jscoverage['/timer/color.js'].lineData[150] = 0;
-  _$jscoverage['/timer/color.js'].lineData[155] = 0;
+  _$jscoverage['/timer/color.js'].lineData[151] = 0;
   _$jscoverage['/timer/color.js'].lineData[156] = 0;
-  _$jscoverage['/timer/color.js'].lineData[159] = 0;
-  _$jscoverage['/timer/color.js'].lineData[161] = 0;
+  _$jscoverage['/timer/color.js'].lineData[157] = 0;
+  _$jscoverage['/timer/color.js'].lineData[160] = 0;
+  _$jscoverage['/timer/color.js'].lineData[162] = 0;
 }
 if (! _$jscoverage['/timer/color.js'].functionData) {
   _$jscoverage['/timer/color.js'].functionData = [];
@@ -288,106 +289,108 @@ if (! _$jscoverage['/timer/color.js'].functionData) {
 }
 if (! _$jscoverage['/timer/color.js'].branchData) {
   _$jscoverage['/timer/color.js'].branchData = {};
-  _$jscoverage['/timer/color.js'].branchData['80'] = [];
-  _$jscoverage['/timer/color.js'].branchData['80'][1] = new BranchData();
-  _$jscoverage['/timer/color.js'].branchData['87'] = [];
-  _$jscoverage['/timer/color.js'].branchData['87'][1] = new BranchData();
-  _$jscoverage['/timer/color.js'].branchData['95'] = [];
-  _$jscoverage['/timer/color.js'].branchData['95'][1] = new BranchData();
+  _$jscoverage['/timer/color.js'].branchData['81'] = [];
+  _$jscoverage['/timer/color.js'].branchData['81'][1] = new BranchData();
+  _$jscoverage['/timer/color.js'].branchData['88'] = [];
+  _$jscoverage['/timer/color.js'].branchData['88'][1] = new BranchData();
   _$jscoverage['/timer/color.js'].branchData['96'] = [];
   _$jscoverage['/timer/color.js'].branchData['96'][1] = new BranchData();
   _$jscoverage['/timer/color.js'].branchData['97'] = [];
   _$jscoverage['/timer/color.js'].branchData['97'][1] = new BranchData();
-  _$jscoverage['/timer/color.js'].branchData['107'] = [];
-  _$jscoverage['/timer/color.js'].branchData['107'][1] = new BranchData();
-  _$jscoverage['/timer/color.js'].branchData['124'] = [];
-  _$jscoverage['/timer/color.js'].branchData['124'][1] = new BranchData();
-  _$jscoverage['/timer/color.js'].branchData['127'] = [];
-  _$jscoverage['/timer/color.js'].branchData['127'][1] = new BranchData();
-  _$jscoverage['/timer/color.js'].branchData['134'] = [];
-  _$jscoverage['/timer/color.js'].branchData['134'][1] = new BranchData();
-  _$jscoverage['/timer/color.js'].branchData['134'][2] = new BranchData();
-  _$jscoverage['/timer/color.js'].branchData['134'][3] = new BranchData();
-  _$jscoverage['/timer/color.js'].branchData['140'] = [];
-  _$jscoverage['/timer/color.js'].branchData['140'][1] = new BranchData();
-  _$jscoverage['/timer/color.js'].branchData['140'][2] = new BranchData();
-  _$jscoverage['/timer/color.js'].branchData['140'][3] = new BranchData();
-  _$jscoverage['/timer/color.js'].branchData['146'] = [];
-  _$jscoverage['/timer/color.js'].branchData['146'][1] = new BranchData();
-  _$jscoverage['/timer/color.js'].branchData['146'][2] = new BranchData();
+  _$jscoverage['/timer/color.js'].branchData['98'] = [];
+  _$jscoverage['/timer/color.js'].branchData['98'][1] = new BranchData();
+  _$jscoverage['/timer/color.js'].branchData['108'] = [];
+  _$jscoverage['/timer/color.js'].branchData['108'][1] = new BranchData();
+  _$jscoverage['/timer/color.js'].branchData['125'] = [];
+  _$jscoverage['/timer/color.js'].branchData['125'][1] = new BranchData();
+  _$jscoverage['/timer/color.js'].branchData['128'] = [];
+  _$jscoverage['/timer/color.js'].branchData['128'][1] = new BranchData();
+  _$jscoverage['/timer/color.js'].branchData['135'] = [];
+  _$jscoverage['/timer/color.js'].branchData['135'][1] = new BranchData();
+  _$jscoverage['/timer/color.js'].branchData['135'][2] = new BranchData();
+  _$jscoverage['/timer/color.js'].branchData['135'][3] = new BranchData();
+  _$jscoverage['/timer/color.js'].branchData['141'] = [];
+  _$jscoverage['/timer/color.js'].branchData['141'][1] = new BranchData();
+  _$jscoverage['/timer/color.js'].branchData['141'][2] = new BranchData();
+  _$jscoverage['/timer/color.js'].branchData['141'][3] = new BranchData();
+  _$jscoverage['/timer/color.js'].branchData['147'] = [];
+  _$jscoverage['/timer/color.js'].branchData['147'][1] = new BranchData();
+  _$jscoverage['/timer/color.js'].branchData['147'][2] = new BranchData();
 }
-_$jscoverage['/timer/color.js'].branchData['146'][2].init(272, 10, 'to[3] || 1');
-function visit16_146_2(result) {
-  _$jscoverage['/timer/color.js'].branchData['146'][2].ranCondition(result);
+_$jscoverage['/timer/color.js'].branchData['147'][2].init(272, 10, 'to[3] || 1');
+function visit16_147_2(result) {
+  _$jscoverage['/timer/color.js'].branchData['147'][2].ranCondition(result);
   return result;
-}_$jscoverage['/timer/color.js'].branchData['146'][1].init(258, 12, 'from[3] || 1');
-function visit15_146_1(result) {
-  _$jscoverage['/timer/color.js'].branchData['146'][1].ranCondition(result);
+}_$jscoverage['/timer/color.js'].branchData['147'][1].init(258, 12, 'from[3] || 1');
+function visit15_147_1(result) {
+  _$jscoverage['/timer/color.js'].branchData['147'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/color.js'].branchData['140'][3].init(421, 14, 'to.length == 4');
-function visit14_140_3(result) {
-  _$jscoverage['/timer/color.js'].branchData['140'][3].ranCondition(result);
+}_$jscoverage['/timer/color.js'].branchData['141'][3].init(421, 14, 'to.length == 4');
+function visit14_141_3(result) {
+  _$jscoverage['/timer/color.js'].branchData['141'][3].ranCondition(result);
   return result;
-}_$jscoverage['/timer/color.js'].branchData['140'][2].init(401, 16, 'from.length == 4');
-function visit13_140_2(result) {
-  _$jscoverage['/timer/color.js'].branchData['140'][2].ranCondition(result);
+}_$jscoverage['/timer/color.js'].branchData['141'][2].init(401, 16, 'from.length == 4');
+function visit13_141_2(result) {
+  _$jscoverage['/timer/color.js'].branchData['141'][2].ranCondition(result);
   return result;
-}_$jscoverage['/timer/color.js'].branchData['140'][1].init(401, 34, 'from.length == 4 || to.length == 4');
-function visit12_140_1(result) {
-  _$jscoverage['/timer/color.js'].branchData['140'][1].ranCondition(result);
+}_$jscoverage['/timer/color.js'].branchData['141'][1].init(401, 34, 'from.length == 4 || to.length == 4');
+function visit12_141_1(result) {
+  _$jscoverage['/timer/color.js'].branchData['141'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/color.js'].branchData['134'][3].init(101, 14, 'to.length == 3');
-function visit11_134_3(result) {
-  _$jscoverage['/timer/color.js'].branchData['134'][3].ranCondition(result);
+}_$jscoverage['/timer/color.js'].branchData['135'][3].init(101, 14, 'to.length == 3');
+function visit11_135_3(result) {
+  _$jscoverage['/timer/color.js'].branchData['135'][3].ranCondition(result);
   return result;
-}_$jscoverage['/timer/color.js'].branchData['134'][2].init(81, 16, 'from.length == 3');
-function visit10_134_2(result) {
-  _$jscoverage['/timer/color.js'].branchData['134'][2].ranCondition(result);
+}_$jscoverage['/timer/color.js'].branchData['135'][2].init(81, 16, 'from.length == 3');
+function visit10_135_2(result) {
+  _$jscoverage['/timer/color.js'].branchData['135'][2].ranCondition(result);
   return result;
-}_$jscoverage['/timer/color.js'].branchData['134'][1].init(81, 34, 'from.length == 3 && to.length == 3');
-function visit9_134_1(result) {
-  _$jscoverage['/timer/color.js'].branchData['134'][1].ranCondition(result);
+}_$jscoverage['/timer/color.js'].branchData['135'][1].init(81, 34, 'from.length == 3 && to.length == 3');
+function visit9_135_1(result) {
+  _$jscoverage['/timer/color.js'].branchData['135'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/color.js'].branchData['127'][1].init(208, 7, 'self.to');
-function visit8_127_1(result) {
-  _$jscoverage['/timer/color.js'].branchData['127'][1].ranCondition(result);
+}_$jscoverage['/timer/color.js'].branchData['128'][1].init(208, 7, 'self.to');
+function visit8_128_1(result) {
+  _$jscoverage['/timer/color.js'].branchData['128'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/color.js'].branchData['124'][1].init(109, 9, 'self.from');
-function visit7_124_1(result) {
-  _$jscoverage['/timer/color.js'].branchData['124'][1].ranCondition(result);
+}_$jscoverage['/timer/color.js'].branchData['125'][1].init(109, 9, 'self.from');
+function visit7_125_1(result) {
+  _$jscoverage['/timer/color.js'].branchData['125'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/color.js'].branchData['107'][1].init(917, 33, 'KEYWORDS[val = val.toLowerCase()]');
-function visit6_107_1(result) {
-  _$jscoverage['/timer/color.js'].branchData['107'][1].ranCondition(result);
+}_$jscoverage['/timer/color.js'].branchData['108'][1].init(917, 33, 'KEYWORDS[val = val.toLowerCase()]');
+function visit6_108_1(result) {
+  _$jscoverage['/timer/color.js'].branchData['108'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/color.js'].branchData['97'][1].init(22, 19, 'match[i].length < 2');
-function visit5_97_1(result) {
+}_$jscoverage['/timer/color.js'].branchData['98'][1].init(22, 19, 'match[i].length < 2');
+function visit5_98_1(result) {
+  _$jscoverage['/timer/color.js'].branchData['98'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/timer/color.js'].branchData['97'][1].init(30, 16, 'i < match.length');
+function visit4_97_1(result) {
   _$jscoverage['/timer/color.js'].branchData['97'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/color.js'].branchData['96'][1].init(30, 16, 'i < match.length');
-function visit4_96_1(result) {
+}_$jscoverage['/timer/color.js'].branchData['96'][1].init(513, 25, 'match = val.match(re_hex)');
+function visit3_96_1(result) {
   _$jscoverage['/timer/color.js'].branchData['96'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/color.js'].branchData['95'][1].init(513, 25, 'match = val.match(re_hex)');
-function visit3_95_1(result) {
-  _$jscoverage['/timer/color.js'].branchData['95'][1].ranCondition(result);
+}_$jscoverage['/timer/color.js'].branchData['88'][1].init(268, 26, 'match = val.match(re_RGBA)');
+function visit2_88_1(result) {
+  _$jscoverage['/timer/color.js'].branchData['88'][1].ranCondition(result);
   return result;
-}_$jscoverage['/timer/color.js'].branchData['87'][1].init(268, 26, 'match = val.match(re_RGBA)');
-function visit2_87_1(result) {
-  _$jscoverage['/timer/color.js'].branchData['87'][1].ranCondition(result);
-  return result;
-}_$jscoverage['/timer/color.js'].branchData['80'][1].init(61, 25, 'match = val.match(re_RGB)');
-function visit1_80_1(result) {
-  _$jscoverage['/timer/color.js'].branchData['80'][1].ranCondition(result);
+}_$jscoverage['/timer/color.js'].branchData['81'][1].init(61, 25, 'match = val.match(re_RGB)');
+function visit1_81_1(result) {
+  _$jscoverage['/timer/color.js'].branchData['81'][1].ranCondition(result);
   return result;
 }_$jscoverage['/timer/color.js'].lineData[6]++;
 KISSY.add(function(S) {
   _$jscoverage['/timer/color.js'].functionData[0]++;
   _$jscoverage['/timer/color.js'].lineData[7]++;
-  var Fx = KISSY.require('./fx');
+  var module = this;
   _$jscoverage['/timer/color.js'].lineData[8]++;
-  var SHORT_HANDS = KISSY.require('./short-hand');
+  var Fx = module.require('./fx');
   _$jscoverage['/timer/color.js'].lineData[9]++;
+  var SHORT_HANDS = module.require('./short-hand');
+  _$jscoverage['/timer/color.js'].lineData[10]++;
   var HEX_BASE = 16, logger = S.getLogger('s/anim/timer/color'), floor = Math.floor, KEYWORDS = {
   'black': [0, 0, 0], 
   'silver': [192, 192, 192], 
@@ -405,116 +408,116 @@ KISSY.add(function(S) {
   'blue': [0, 0, 255], 
   'teal': [0, 128, 128], 
   'aqua': [0, 255, 255]}, re_RGB = /^rgb\(([0-9]+)\s*,\s*([0-9]+)\s*,\s*([0-9]+)\)$/i, re_RGBA = /^rgba\(([0-9]+)\s*,\s*([0-9]+)\s*,\s*([0-9]+),\s*([0-9]+)\)$/i, re_hex = /^#?([0-9A-F]{1,2})([0-9A-F]{1,2})([0-9A-F]{1,2})$/i, COLORS = ['backgroundColor', 'borderBottomColor', 'borderLeftColor', 'borderRightColor', 'borderTopColor', 'color', 'outlineColor'];
-  _$jscoverage['/timer/color.js'].lineData[44]++;
+  _$jscoverage['/timer/color.js'].lineData[45]++;
   SHORT_HANDS['background'].push('backgroundColor');
-  _$jscoverage['/timer/color.js'].lineData[46]++;
+  _$jscoverage['/timer/color.js'].lineData[47]++;
   SHORT_HANDS['borderColor'] = ['borderBottomColor', 'borderLeftColor', 'borderRightColor', 'borderTopColor'];
-  _$jscoverage['/timer/color.js'].lineData[53]++;
+  _$jscoverage['/timer/color.js'].lineData[54]++;
   SHORT_HANDS['border'].push('borderBottomColor', 'borderLeftColor', 'borderRightColor', 'borderTopColor');
-  _$jscoverage['/timer/color.js'].lineData[60]++;
+  _$jscoverage['/timer/color.js'].lineData[61]++;
   SHORT_HANDS['borderBottom'].push('borderBottomColor');
-  _$jscoverage['/timer/color.js'].lineData[64]++;
+  _$jscoverage['/timer/color.js'].lineData[65]++;
   SHORT_HANDS['borderLeft'].push('borderLeftColor');
-  _$jscoverage['/timer/color.js'].lineData[68]++;
+  _$jscoverage['/timer/color.js'].lineData[69]++;
   SHORT_HANDS['borderRight'].push('borderRightColor');
-  _$jscoverage['/timer/color.js'].lineData[72]++;
+  _$jscoverage['/timer/color.js'].lineData[73]++;
   SHORT_HANDS['borderTop'].push('borderTopColor');
-  _$jscoverage['/timer/color.js'].lineData[77]++;
+  _$jscoverage['/timer/color.js'].lineData[78]++;
   function numericColor(val) {
     _$jscoverage['/timer/color.js'].functionData[1]++;
-    _$jscoverage['/timer/color.js'].lineData[78]++;
-    val = (val + '');
     _$jscoverage['/timer/color.js'].lineData[79]++;
-    var match;
+    val = (val + '');
     _$jscoverage['/timer/color.js'].lineData[80]++;
-    if (visit1_80_1(match = val.match(re_RGB))) {
-      _$jscoverage['/timer/color.js'].lineData[81]++;
+    var match;
+    _$jscoverage['/timer/color.js'].lineData[81]++;
+    if (visit1_81_1(match = val.match(re_RGB))) {
+      _$jscoverage['/timer/color.js'].lineData[82]++;
       return [parseInt(match[1]), parseInt(match[2]), parseInt(match[3])];
     } else {
-      _$jscoverage['/timer/color.js'].lineData[87]++;
-      if (visit2_87_1(match = val.match(re_RGBA))) {
-        _$jscoverage['/timer/color.js'].lineData[88]++;
+      _$jscoverage['/timer/color.js'].lineData[88]++;
+      if (visit2_88_1(match = val.match(re_RGBA))) {
+        _$jscoverage['/timer/color.js'].lineData[89]++;
         return [parseInt(match[1]), parseInt(match[2]), parseInt(match[3]), parseInt(match[4])];
       } else {
-        _$jscoverage['/timer/color.js'].lineData[95]++;
-        if (visit3_95_1(match = val.match(re_hex))) {
-          _$jscoverage['/timer/color.js'].lineData[96]++;
-          for (var i = 1; visit4_96_1(i < match.length); i++) {
-            _$jscoverage['/timer/color.js'].lineData[97]++;
-            if (visit5_97_1(match[i].length < 2)) {
-              _$jscoverage['/timer/color.js'].lineData[98]++;
+        _$jscoverage['/timer/color.js'].lineData[96]++;
+        if (visit3_96_1(match = val.match(re_hex))) {
+          _$jscoverage['/timer/color.js'].lineData[97]++;
+          for (var i = 1; visit4_97_1(i < match.length); i++) {
+            _$jscoverage['/timer/color.js'].lineData[98]++;
+            if (visit5_98_1(match[i].length < 2)) {
+              _$jscoverage['/timer/color.js'].lineData[99]++;
               match[i] += match[i];
             }
           }
-          _$jscoverage['/timer/color.js'].lineData[101]++;
+          _$jscoverage['/timer/color.js'].lineData[102]++;
           return [parseInt(match[1], HEX_BASE), parseInt(match[2], HEX_BASE), parseInt(match[3], HEX_BASE)];
         }
       }
     }
-    _$jscoverage['/timer/color.js'].lineData[107]++;
-    if (visit6_107_1(KEYWORDS[val = val.toLowerCase()])) {
-      _$jscoverage['/timer/color.js'].lineData[108]++;
+    _$jscoverage['/timer/color.js'].lineData[108]++;
+    if (visit6_108_1(KEYWORDS[val = val.toLowerCase()])) {
+      _$jscoverage['/timer/color.js'].lineData[109]++;
       return KEYWORDS[val];
     }
-    _$jscoverage['/timer/color.js'].lineData[112]++;
-    logger.warn('only allow rgb or hex color string : ' + val);
     _$jscoverage['/timer/color.js'].lineData[113]++;
+    logger.warn('only allow rgb or hex color string : ' + val);
+    _$jscoverage['/timer/color.js'].lineData[114]++;
     return [255, 255, 255];
   }
-  _$jscoverage['/timer/color.js'].lineData[116]++;
+  _$jscoverage['/timer/color.js'].lineData[117]++;
   function ColorFx() {
     _$jscoverage['/timer/color.js'].functionData[2]++;
-    _$jscoverage['/timer/color.js'].lineData[117]++;
+    _$jscoverage['/timer/color.js'].lineData[118]++;
     ColorFx.superclass.constructor.apply(this, arguments);
   }
-  _$jscoverage['/timer/color.js'].lineData[120]++;
+  _$jscoverage['/timer/color.js'].lineData[121]++;
   S.extend(ColorFx, Fx, {
   load: function() {
   _$jscoverage['/timer/color.js'].functionData[3]++;
-  _$jscoverage['/timer/color.js'].lineData[122]++;
-  var self = this;
   _$jscoverage['/timer/color.js'].lineData[123]++;
-  ColorFx.superclass.load.apply(self, arguments);
+  var self = this;
   _$jscoverage['/timer/color.js'].lineData[124]++;
-  if (visit7_124_1(self.from)) {
-    _$jscoverage['/timer/color.js'].lineData[125]++;
+  ColorFx.superclass.load.apply(self, arguments);
+  _$jscoverage['/timer/color.js'].lineData[125]++;
+  if (visit7_125_1(self.from)) {
+    _$jscoverage['/timer/color.js'].lineData[126]++;
     self.from = numericColor(self.from);
   }
-  _$jscoverage['/timer/color.js'].lineData[127]++;
-  if (visit8_127_1(self.to)) {
-    _$jscoverage['/timer/color.js'].lineData[128]++;
+  _$jscoverage['/timer/color.js'].lineData[128]++;
+  if (visit8_128_1(self.to)) {
+    _$jscoverage['/timer/color.js'].lineData[129]++;
     self.to = numericColor(self.to);
   }
 }, 
   interpolate: function(from, to, pos) {
   _$jscoverage['/timer/color.js'].functionData[4]++;
-  _$jscoverage['/timer/color.js'].lineData[133]++;
-  var interpolate = ColorFx.superclass.interpolate;
   _$jscoverage['/timer/color.js'].lineData[134]++;
-  if (visit9_134_1(visit10_134_2(from.length == 3) && visit11_134_3(to.length == 3))) {
-    _$jscoverage['/timer/color.js'].lineData[135]++;
+  var interpolate = ColorFx.superclass.interpolate;
+  _$jscoverage['/timer/color.js'].lineData[135]++;
+  if (visit9_135_1(visit10_135_2(from.length == 3) && visit11_135_3(to.length == 3))) {
+    _$jscoverage['/timer/color.js'].lineData[136]++;
     return 'rgb(' + [floor(interpolate(from[0], to[0], pos)), floor(interpolate(from[1], to[1], pos)), floor(interpolate(from[2], to[2], pos))].join(', ') + ')';
   } else {
-    _$jscoverage['/timer/color.js'].lineData[140]++;
-    if (visit12_140_1(visit13_140_2(from.length == 4) || visit14_140_3(to.length == 4))) {
-      _$jscoverage['/timer/color.js'].lineData[141]++;
-      return 'rgba(' + [floor(interpolate(from[0], to[0], pos)), floor(interpolate(from[1], to[1], pos)), floor(interpolate(from[2], to[2], pos)), floor(interpolate(visit15_146_1(from[3] || 1), visit16_146_2(to[3] || 1), pos))].join(', ') + ')';
+    _$jscoverage['/timer/color.js'].lineData[141]++;
+    if (visit12_141_1(visit13_141_2(from.length == 4) || visit14_141_3(to.length == 4))) {
+      _$jscoverage['/timer/color.js'].lineData[142]++;
+      return 'rgba(' + [floor(interpolate(from[0], to[0], pos)), floor(interpolate(from[1], to[1], pos)), floor(interpolate(from[2], to[2], pos)), floor(interpolate(visit15_147_1(from[3] || 1), visit16_147_2(to[3] || 1), pos))].join(', ') + ')';
     } else {
-      _$jscoverage['/timer/color.js'].lineData[149]++;
-      logger.warn('unknown value : ' + from);
       _$jscoverage['/timer/color.js'].lineData[150]++;
+      logger.warn('unknown value : ' + from);
+      _$jscoverage['/timer/color.js'].lineData[151]++;
       return undefined;
     }
   }
 }});
-  _$jscoverage['/timer/color.js'].lineData[155]++;
+  _$jscoverage['/timer/color.js'].lineData[156]++;
   S.each(COLORS, function(color) {
   _$jscoverage['/timer/color.js'].functionData[5]++;
-  _$jscoverage['/timer/color.js'].lineData[156]++;
+  _$jscoverage['/timer/color.js'].lineData[157]++;
   Fx.Factories[color] = ColorFx;
 });
-  _$jscoverage['/timer/color.js'].lineData[159]++;
+  _$jscoverage['/timer/color.js'].lineData[160]++;
   Fx.FxTypes.color = ColorFx;
-  _$jscoverage['/timer/color.js'].lineData[161]++;
+  _$jscoverage['/timer/color.js'].lineData[162]++;
   return ColorFx;
 });

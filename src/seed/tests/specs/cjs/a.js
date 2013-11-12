@@ -1,5 +1,6 @@
 KISSY.add(function(){
-    var b=KISSY.require('./b');
-    var c=KISSY.require(1>2?'./c':'');
-    return b+1;
+    var module=this;
+    var b=module.require('./b');
+    var c=module.require(1>2?'./c':'');
+    module.exports=b+1;
 });

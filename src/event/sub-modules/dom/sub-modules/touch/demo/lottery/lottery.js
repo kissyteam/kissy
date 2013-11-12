@@ -1,9 +1,10 @@
-KISSY.add(function (S) {
-    var Node = KISSY.require('node');
-    var Base = KISSY.require('base');
-    var Event = KISSY.require('event');
-    var Color = KISSY.require('color');
-    var Overlay = KISSY.require('overlay');
+KISSY.add(function () {
+    var module=this;
+    var Node = module.require('node');
+    var Base = module.require('base');
+    var Event = module.require('event');
+    var Color = module.require('color');
+    var Overlay = module.require('overlay');
 
     var $ = Node.all, Gesture = Event.Gesture;
 

@@ -630,11 +630,11 @@ function visit352_388_2(result) {
 function visit351_388_1(result) {
   _$jscoverage['/loader/combo-loader.js'].branchData['388'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/combo-loader.js'].branchData['383'][1].init(1830, 32, '!(mods = typedCombos[comboName])');
+}_$jscoverage['/loader/combo-loader.js'].branchData['383'][1].init(1825, 32, '!(mods = typedCombos[comboName])');
 function visit350_383_1(result) {
   _$jscoverage['/loader/combo-loader.js'].branchData['383'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/combo-loader.js'].branchData['382'][1].init(1786, 21, 'comboMods[type] || {}');
+}_$jscoverage['/loader/combo-loader.js'].branchData['382'][1].init(1781, 21, 'comboMods[type] || {}');
 function visit349_382_1(result) {
   _$jscoverage['/loader/combo-loader.js'].branchData['382'][1].ranCondition(result);
   return result;
@@ -646,11 +646,11 @@ function visit348_368_1(result) {
 function visit347_367_1(result) {
   _$jscoverage['/loader/combo-loader.js'].branchData['367'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/combo-loader.js'].branchData['361'][2].init(764, 83, 'packageInfo.isCombine() && S.startsWith(fullpath, packagePath)');
+}_$jscoverage['/loader/combo-loader.js'].branchData['361'][2].init(759, 83, 'packageInfo.isCombine() && S.startsWith(fullpath, packagePath)');
 function visit346_361_2(result) {
   _$jscoverage['/loader/combo-loader.js'].branchData['361'][2].ranCondition(result);
   return result;
-}_$jscoverage['/loader/combo-loader.js'].branchData['361'][1].init(744, 113, '(mod.canBeCombined = packageInfo.isCombine() && S.startsWith(fullpath, packagePath)) && group');
+}_$jscoverage['/loader/combo-loader.js'].branchData['361'][1].init(739, 113, '(mod.canBeCombined = packageInfo.isCombine() && S.startsWith(fullpath, packagePath)) && group');
 function visit345_361_1(result) {
   _$jscoverage['/loader/combo-loader.js'].branchData['361'][1].ranCondition(result);
   return result;
@@ -766,15 +766,15 @@ function visit318_116_1(result) {
 function visit317_115_1(result) {
   _$jscoverage['/loader/combo-loader.js'].branchData['115'][1].ranCondition(result);
   return result;
-}_$jscoverage['/loader/combo-loader.js'].branchData['105'][3].init(97, 23, 'typeof fn == \'function\'');
+}_$jscoverage['/loader/combo-loader.js'].branchData['105'][3].init(98, 23, 'typeof fn == \'function\'');
 function visit316_105_3(result) {
   _$jscoverage['/loader/combo-loader.js'].branchData['105'][3].ranCondition(result);
   return result;
-}_$jscoverage['/loader/combo-loader.js'].branchData['105'][2].init(65, 27, '!config || !config.requires');
+}_$jscoverage['/loader/combo-loader.js'].branchData['105'][2].init(66, 27, '!config || !config.requires');
 function visit315_105_2(result) {
   _$jscoverage['/loader/combo-loader.js'].branchData['105'][2].ranCondition(result);
   return result;
-}_$jscoverage['/loader/combo-loader.js'].branchData['105'][1].init(65, 55, '(!config || !config.requires) && typeof fn == \'function\'');
+}_$jscoverage['/loader/combo-loader.js'].branchData['105'][1].init(66, 55, '(!config || !config.requires) && typeof fn == \'function\'');
 function visit314_105_1(result) {
   _$jscoverage['/loader/combo-loader.js'].branchData['105'][1].ranCondition(result);
   return result;
@@ -909,7 +909,7 @@ function visit305_8_1(result) {
   _$jscoverage['/loader/combo-loader.js'].lineData[87]++;
   var startLoadModTime;
   _$jscoverage['/loader/combo-loader.js'].lineData[89]++;
-  var commentRegExp = /(\/\*([\s\S]*?)\*\/|([^:]|^)\/\/(.*)$)/mg, requireRegExp = /[^.'"]\s*KISSY.require\s*\((.+)\);/g;
+  var commentRegExp = /(\/\*([\s\S]*?)\*\/|([^:]|^)\/\/(.*)$)/mg, requireRegExp = /[^.'"]\s*module.require\s*\((.+)\);/g;
   _$jscoverage['/loader/combo-loader.js'].lineData[92]++;
   function getRequireVal(str) {
     _$jscoverage['/loader/combo-loader.js'].functionData[7]++;
@@ -1098,7 +1098,7 @@ function visit305_8_1(result) {
   S.each(one.mods, function(mod) {
   _$jscoverage['/loader/combo-loader.js'].functionData[20]++;
   _$jscoverage['/loader/combo-loader.js'].lineData[239]++;
-  Utils.registerModule(runtime, mod.getName(), S.noop);
+  Utils.registerModule(runtime, mod.name, S.noop);
   _$jscoverage['/loader/combo-loader.js'].lineData[241]++;
   mod.notifyAll();
 });
@@ -1197,7 +1197,7 @@ function visit305_8_1(result) {
         mod.wait(function(mod) {
   _$jscoverage['/loader/combo-loader.js'].functionData[28]++;
   _$jscoverage['/loader/combo-loader.js'].lineData[320]++;
-  waitingModules.remove(mod.getName());
+  waitingModules.remove(mod.name);
   _$jscoverage['/loader/combo-loader.js'].lineData[322]++;
   waitingModules.notifyAll();
 });
@@ -1228,7 +1228,7 @@ function visit305_8_1(result) {
     _$jscoverage['/loader/combo-loader.js'].lineData[351]++;
     packageInfo = mod.getPackage();
     _$jscoverage['/loader/combo-loader.js'].lineData[352]++;
-    packageName = packageInfo.getName();
+    packageName = packageInfo.name;
     _$jscoverage['/loader/combo-loader.js'].lineData[353]++;
     charset = packageInfo.getCharset();
     _$jscoverage['/loader/combo-loader.js'].lineData[354]++;

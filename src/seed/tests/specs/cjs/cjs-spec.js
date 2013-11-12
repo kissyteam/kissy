@@ -1,4 +1,4 @@
-describe('it support KISSY.require', function () {
+describe('it support module.require', function () {
     it('can load module from dependencies', function () {
         var S = KISSY;
         S.config('packages', {

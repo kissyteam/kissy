@@ -6,7 +6,6 @@
  */
 (function (S) {
     var fs = require('fs'),
-        logger = S.getLogger('s/loader'),
         vm = require('vm');
 
     S.getScript = function (url, success, charset) {
@@ -29,6 +28,7 @@
 
         try {
             var mod = fs.readFileSync(path, charset);
+            //noinspection JSUnresolvedFunction
             var fn = vm.runInThisContext('(function(KISSY,require){' + mod + '})', url);
             fn(S, require);
             success && success();

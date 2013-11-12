@@ -26,7 +26,7 @@ describe("loader", function () {
             });
 
             runs(function () {
-                expect(mods["t/t"].getValue()).toBe(1);
+                expect(mods["t/t"].exports).toBe(1);
             });
 
             runs(function () {

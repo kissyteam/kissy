@@ -51,7 +51,7 @@
          * @param {String} name module name.
          * it must be set if combine is true in {@link KISSY#config}
          * @param {Function} fn module definition function that is used to return
-         * this module value
+         * exports of this module
          * @param {KISSY} fn.S KISSY global instance
          * @param {Object} [cfg] module optional config data
          * @param {String[]} cfg.requires this module's required module name list
@@ -74,7 +74,7 @@
          * @param {Function} success callback function executed
          * when KISSY has the required functionality.
          * @param {KISSY} success.S KISSY instance
-         * @param success.x... used module values
+         * @param success.x... modules exports
          * @member KISSY
          *
          *
@@ -154,13 +154,13 @@
         },
 
         /**
-         * get module value from KISSY module cache
+         * get module exports from KISSY module cache
          * @param {String} moduleName module name
          * @member KISSY
-         * @return {*} value of module which name is moduleName
+         * @return {*} exports of specified module
          */
         require: function (moduleName) {
-            var moduleNames = Utils.unalias(S, Utils.normalizeModNamesWithAlias(S, [moduleName],Loader.attachingModName));
+            var moduleNames = Utils.unalias(S, Utils.normalizeModNamesWithAlias(S, [moduleName]));
             if (Utils.attachModsRecursively(moduleNames, S)) {
                 return Utils.getModules(S, moduleNames)[1];
             }

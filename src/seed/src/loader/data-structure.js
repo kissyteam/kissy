@@ -6,6 +6,7 @@
 (function (S) {
     var Loader = S.Loader,
         Path = S.Path,
+        undefined = undefined,
         IGNORE_PACKAGE_NAME_IN_URI = 'ignorePackageNameInUri',
         Utils = Loader.Utils;
 
@@ -24,7 +25,9 @@
         S.mix(this, cfg);
     }
 
-    S.augment(Package, {
+    Package.prototype = {
+        constructor: Package,
+
         reset: function (cfg) {
             S.mix(this, cfg);
         },
@@ -56,7 +59,7 @@
 
         getPrefixUriForCombo: function () {
             var self = this,
-                packageName = self.getName();
+                packageName = self.name;
             return self.getBase() + (
                 packageName && !self.isIgnorePackageNameInUri() ?
                     (packageName + '/') :
@@ -122,7 +125,7 @@
         getGroup: function () {
             return forwardSystemPackage(this, 'group');
         }
-    });
+    };
 
     Loader.Package = Package;
 
@@ -132,12 +135,43 @@
      * This class should not be instantiated manually.
      */
     function Module(cfg) {
-        this.status = Loader.Status.INIT;
-        S.mix(this, cfg);
-        this.waitedCallbacks = [];
+        var module = this;
+        /**
+         * exports of this module
+         */
+        module.exports = {};
+
+        /**
+         * status of current modules
+         */
+        module.status = Loader.Status.INIT;
+
+        /**
+         * name of this module
+         */
+        module.name = undefined;
+        /**
+         * factory of this module
+         * @type {null}
+         */
+        module.fn = undefined;
+        S.mix(module, cfg);
+        module.waitedCallbacks = [];
     }
 
-    S.augment(Module, {
+    Module.prototype = {
+        constructor: Module,
+
+        /**
+         * require other modules from current modules
+         * @param {String} moduleName name of module to be required
+         * @returns {*} required module exports
+         */
+        require: function (moduleName) {
+            var moduleNames = Utils.normalizeModNamesWithAlias(S, [moduleName], this.name);
+            return Utils.getModules(S, moduleNames)[1];
+        },
+
         wait: function (callback) {
             this.waitedCallbacks.push(callback);
         },
@@ -158,14 +192,6 @@
                 }
             }
             this.waitedCallbacks = [];
-        },
-
-        /**
-         * Set the value of current module
-         * @param v value to be set
-         */
-        'setValue': function (v) {
-            this.value = v;
         },
 
         /**
@@ -208,7 +234,7 @@
                     // #262
                     if (packageInfo.isIgnorePackageNameInUri() &&
                         // native mod does not allow ignore package name
-                        (packageName = packageInfo.getName())) {
+                        (packageName = packageInfo.name)) {
                         path = Path.relative(packageName, path);
                     }
                     fullPathUri = packageBaseUri.resolve(path);
@@ -244,14 +270,6 @@
             var self = this;
             return self.path ||
                 (self.path = defaultComponentJsName(self))
-        },
-
-        /**
-         * Get the value of current module
-         * @return {*}
-         */
-        getValue: function () {
-            return this.value;
         },
 
         /**
@@ -292,17 +310,9 @@
         },
 
         /**
-         * Get module objects required by this module
-         * @return {KISSY.Loader.Module[]}
+         * get alias required module names
+         * @returns {String[]} alias required module names
          */
-        'getRequiredMods': function () {
-            var self = this,
-                runtime = self.runtime;
-            return S.map(self.getNormalizedRequires(), function (r) {
-                return Utils.createModuleInfo(runtime, r);
-            });
-        },
-
         getRequiresWithAlias: function () {
             var self = this,
                 requiresWithAlias = self.requiresWithAlias,
@@ -318,7 +328,7 @@
 
         /**
          * Get module names required by this module
-         * @return {KISSY.Loader.Module[]}
+         * @return {String[]}
          */
         getNormalizedRequires: function () {
             var self = this,
@@ -338,7 +348,7 @@
                     Utils.normalizeModNames(self.runtime, requires, self.name);
             }
         }
-    });
+    };
 
     Loader.Module = Module;
 

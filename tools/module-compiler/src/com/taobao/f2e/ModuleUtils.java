@@ -67,7 +67,7 @@ public class ModuleUtils {
             ArrayList<Node> nodes = new ArrayList<Node>();
             ArrayList<String> ids = new ArrayList<String>();
             ArrayList<Node> cleans = new ArrayList<Node>();
-            findKISSY_require(astRoot, nodes, ids, cleans);
+            findModuleRequire(astRoot, nodes, ids, cleans);
             for (Node clean : cleans) {
                 clean.detachFromParent();
             }
@@ -137,7 +137,7 @@ public class ModuleUtils {
         return re.toArray(new String[re.size()]);
     }
 
-    static void findKISSY_require(Node root, ArrayList<Node> nodes, ArrayList<String> ids, ArrayList<Node> cleans) {
+    static void findModuleRequire(Node root, ArrayList<Node> nodes, ArrayList<String> ids, ArrayList<Node> cleans) {
         if (root.getType() == Token.CALL) {
             Node first = root.getFirstChild();
             if (first.getType() == Token.GETPROP) {
@@ -145,13 +145,13 @@ public class ModuleUtils {
                 Node method = name.getNext();
                 if (name.getType() == Token.NAME &&
                         method.getType() == Token.STRING &&
-                        name.getString().equals("KISSY") && method.getString().equals("require")) {
+                        name.getString().equals("module") && method.getString().equals("require")) {
                     nodes.add(first.getNext());
                     if (root.getParent().getType() == Token.NAME) {
                         ids.add(root.getParent().getString());
                         cleans.add(root.getParent().getParent());
                     } else {
-                        ids.add("KISSY_" + (COUNT++));
+                        ids.add("module" + (COUNT++));
                         cleans.add(root.getParent());
                     }
                     return;
@@ -160,7 +160,7 @@ public class ModuleUtils {
         }
         Node firstChild = root.getFirstChild();
         while (firstChild != null) {
-            findKISSY_require(firstChild, nodes, ids, cleans);
+            findModuleRequire(firstChild, nodes, ids, cleans);
             firstChild = firstChild.getNext();
         }
     }

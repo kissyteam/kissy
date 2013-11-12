@@ -323,7 +323,7 @@ if (! _$jscoverage['/loader/loader.js'].branchData) {
   _$jscoverage['/loader/loader.js'].branchData['164'] = [];
   _$jscoverage['/loader/loader.js'].branchData['164'][1] = new BranchData();
 }
-_$jscoverage['/loader/loader.js'].branchData['164'][1].init(142, 43, 'Utils.attachModsRecursively(moduleNames, S)');
+_$jscoverage['/loader/loader.js'].branchData['164'][1].init(118, 43, 'Utils.attachModsRecursively(moduleNames, S)');
 function visit468_164_1(result) {
   _$jscoverage['/loader/loader.js'].branchData['164'][1].ranCondition(result);
   return result;
@@ -510,7 +510,7 @@ function visit459_27_1(result) {
   require: function(moduleName) {
   _$jscoverage['/loader/loader.js'].functionData[12]++;
   _$jscoverage['/loader/loader.js'].lineData[163]++;
-  var moduleNames = Utils.unalias(S, Utils.normalizeModNamesWithAlias(S, [moduleName], Loader.attachingModName));
+  var moduleNames = Utils.unalias(S, Utils.normalizeModNamesWithAlias(S, [moduleName]));
   _$jscoverage['/loader/loader.js'].lineData[164]++;
   if (visit468_164_1(Utils.attachModsRecursively(moduleNames, S))) {
     _$jscoverage['/loader/loader.js'].lineData[165]++;

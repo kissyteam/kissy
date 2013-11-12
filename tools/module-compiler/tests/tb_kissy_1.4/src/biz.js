@@ -1,4 +1,5 @@
 KISSY.add(function () {
-    var y = KISSY.require('biz/y');
+    var module=this;
+    var y = module.require('biz/y');
     return"run + " + y
 });

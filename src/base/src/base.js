@@ -4,8 +4,9 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S) {
-    var Attribute = KISSY.require('base/attribute');
-    var CustomEvent = KISSY.require('event/custom');
+    var module=this;
+    var Attribute = module.require('base/attribute');
+    var CustomEvent = module.require('event/custom');
 
     var ATTRS = 'ATTRS',
         ucfirst = S.ucfirst,

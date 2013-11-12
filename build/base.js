@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 6 22:30
+build time: Nov 12 22:45
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -291,6 +291,7 @@ KISSY.add("base/attribute", function(S, undefined) {
   }
 });
 KISSY.add("base", function(S, Attribute, CustomEvent) {
+  var module = this;
   var ATTRS = "ATTRS", ucfirst = S.ucfirst, ON_SET = "_onSet", noop = S.noop, RE_DASH = /(?:^|-)([a-z])/ig;
   function replaceToUpper() {
     return arguments[1].toUpperCase()

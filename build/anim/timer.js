@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Nov 11 23:43
+build time: Nov 12 22:45
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -215,6 +215,7 @@ KISSY.add("anim/timer/manager", function(S) {
   }}
 });
 KISSY.add("anim/timer/fx", function(S, Dom) {
+  var module = this;
   var logger = S.getLogger("s/aim/timer/fx");
   function load(self, cfg) {
     S.mix(self, cfg);
@@ -318,6 +319,7 @@ KISSY.add("anim/timer/short-hand", function() {
   return{background:[], border:["borderBottomWidth", "borderLeftWidth", "borderRightWidth", "borderTopWidth"], borderBottom:["borderBottomWidth"], borderLeft:["borderLeftWidth"], borderTop:["borderTopWidth"], borderRight:["borderRightWidth"], font:["fontSize", "fontWeight"], margin:["marginBottom", "marginLeft", "marginRight", "marginTop"], padding:["paddingBottom", "paddingLeft", "paddingRight", "paddingTop"]}
 });
 KISSY.add("anim/timer/color", function(S, Fx, SHORT_HANDS) {
+  var module = this;
   var HEX_BASE = 16, logger = S.getLogger("s/anim/timer/color"), floor = Math.floor, KEYWORDS = {black:[0, 0, 0], silver:[192, 192, 192], gray:[128, 128, 128], white:[255, 255, 255], maroon:[128, 0, 0], red:[255, 0, 0], purple:[128, 0, 128], fuchsia:[255, 0, 255], green:[0, 128, 0], lime:[0, 255, 0], olive:[128, 128, 0], yellow:[255, 255, 0], navy:[0, 0, 128], blue:[0, 0, 255], teal:[0, 128, 128], aqua:[0, 255, 255]}, re_RGB = /^rgb\(([0-9]+)\s*,\s*([0-9]+)\s*,\s*([0-9]+)\)$/i, re_RGBA = /^rgba\(([0-9]+)\s*,\s*([0-9]+)\s*,\s*([0-9]+),\s*([0-9]+)\)$/i, 
   re_hex = /^#?([0-9A-F]{1,2})([0-9A-F]{1,2})([0-9A-F]{1,2})$/i, COLORS = ["backgroundColor", "borderBottomColor", "borderLeftColor", "borderRightColor", "borderTopColor", "color", "outlineColor"];
   SHORT_HANDS["background"].push("backgroundColor");
@@ -384,6 +386,7 @@ KISSY.add("anim/timer/color", function(S, Fx, SHORT_HANDS) {
   return ColorFx
 }, {requires:["./fx", "./short-hand"]});
 KISSY.add("anim/timer/transform", function(S, Dom, Fx) {
+  var module = this;
   function toMatrixArray(matrix) {
     matrix = matrix.split(/,/);
     matrix = S.map(matrix, function(v) {
@@ -501,7 +504,8 @@ KISSY.add("anim/timer/transform", function(S, Dom, Fx) {
   Fx.Factories.transform = TransformFx;
   return TransformFx
 }, {requires:["dom", "./fx"]});
-KISSY.add("anim/timer", function(S, Dom, AnimBase, Easing, AM, Fx, SHORT_HANDS, KISSY_1384184612672, KISSY_1384184612673) {
+KISSY.add("anim/timer", function(S, Dom, AnimBase, Easing, AM, Fx, SHORT_HANDS, module1384267547941, module1384267547942) {
+  var module = this;
   var camelCase = Dom._camelCase, NUMBER_REG = /^([+\-]=)?([\d+.\-]+)([a-z%]*)$/i;
   function Anim() {
     var self = this, to;

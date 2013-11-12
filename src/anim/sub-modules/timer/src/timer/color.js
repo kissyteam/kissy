@@ -4,8 +4,9 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(function (S) {
-    var Fx = KISSY.require('./fx');
-    var SHORT_HANDS = KISSY.require('./short-hand');
+    var module=this;
+    var Fx = module.require('./fx');
+    var SHORT_HANDS = module.require('./short-hand');
     var HEX_BASE = 16,
         logger = S.getLogger('s/anim/timer/color'),
         floor = Math.floor,
