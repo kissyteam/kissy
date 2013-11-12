@@ -297,6 +297,7 @@ KISSY.add('io/xhr-transport-base', function (S, IO) {
                     }
                 }
             } catch (e) {
+                S.log(e.stack || e, 'error');
                 // success throw error
                 setTimeout(function () {
                     throw e;

@@ -199,6 +199,7 @@ KISSY.add('io/methods', function (S, IO, Promise,undefined) {
                             statusText = 'success';
                             isSuccess = true;
                         } catch (e) {
+                            S.log(e.stack || e, 'error');
                             setTimeout(function(){
                                 throw e;
                             },0);

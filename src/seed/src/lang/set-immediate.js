@@ -13,6 +13,7 @@
             try {
                 item();
             } catch (e) {
+                S.log(e.stack || e, 'error');
                 setTimeout(function () {
                     throw e;
                 }, 0);

@@ -151,6 +151,7 @@
                 try {
                     callback(this);
                 } catch (e) {
+                    S.log(e.stack || e, 'error');
                     setTimeout(function () {
                         throw e;
                     }, 0);

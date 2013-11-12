@@ -414,7 +414,7 @@ KISSY.add('editor', function (S, Node, iframeContentTpl, Editor, Utils, focusMan
             customStyle += "\n" + cssText;
             self.set('customStyle', customStyle);
             if (win) {
-                win.addStyleSheet(win, cssText, id);
+                win['addStyleSheet'](cssText, id);
             }
         },
 
@@ -1044,7 +1044,7 @@ KISSY.add('editor', function (S, Node, iframeContentTpl, Editor, Utils, focusMan
                 href: customLink[i]
             });
         }
-        return S.substitute(iframeContentTpl,{
+        return S.substitute(iframeContentTpl, {
             // kissy-editor #12
             // IE8 doesn't support carets behind images(empty content after image's block)
             // setting ie7 compatible mode would force IE8+ to run in IE7 compat mode.

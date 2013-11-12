@@ -101,6 +101,7 @@
                 try {
                     fn(S);
                 } catch (e) {
+                    S.log(e.stack || e, 'error');
                     setTimeout(function () {
                         throw e;
                     }, 0);
@@ -147,6 +148,7 @@
             try {
                 callbacks[i](S);
             } catch (e) {
+                S.log(e.stack || e, 'error');
                 setTimeout(function () {
                     throw e;
                 }, 0);

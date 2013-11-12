@@ -260,61 +260,63 @@ if (! _$jscoverage['/web.js']) {
   _$jscoverage['/web.js'].lineData[102] = 0;
   _$jscoverage['/web.js'].lineData[104] = 0;
   _$jscoverage['/web.js'].lineData[105] = 0;
-  _$jscoverage['/web.js'].lineData[109] = 0;
-  _$jscoverage['/web.js'].lineData[111] = 0;
-  _$jscoverage['/web.js'].lineData[121] = 0;
+  _$jscoverage['/web.js'].lineData[106] = 0;
+  _$jscoverage['/web.js'].lineData[110] = 0;
+  _$jscoverage['/web.js'].lineData[112] = 0;
   _$jscoverage['/web.js'].lineData[122] = 0;
   _$jscoverage['/web.js'].lineData[123] = 0;
   _$jscoverage['/web.js'].lineData[124] = 0;
   _$jscoverage['/web.js'].lineData[125] = 0;
   _$jscoverage['/web.js'].lineData[126] = 0;
-  _$jscoverage['/web.js'].lineData[128] = 0;
+  _$jscoverage['/web.js'].lineData[127] = 0;
   _$jscoverage['/web.js'].lineData[129] = 0;
   _$jscoverage['/web.js'].lineData[130] = 0;
   _$jscoverage['/web.js'].lineData[131] = 0;
-  _$jscoverage['/web.js'].lineData[137] = 0;
+  _$jscoverage['/web.js'].lineData[132] = 0;
   _$jscoverage['/web.js'].lineData[138] = 0;
   _$jscoverage['/web.js'].lineData[139] = 0;
-  _$jscoverage['/web.js'].lineData[142] = 0;
+  _$jscoverage['/web.js'].lineData[140] = 0;
   _$jscoverage['/web.js'].lineData[143] = 0;
-  _$jscoverage['/web.js'].lineData[145] = 0;
+  _$jscoverage['/web.js'].lineData[144] = 0;
   _$jscoverage['/web.js'].lineData[146] = 0;
   _$jscoverage['/web.js'].lineData[147] = 0;
   _$jscoverage['/web.js'].lineData[148] = 0;
-  _$jscoverage['/web.js'].lineData[150] = 0;
+  _$jscoverage['/web.js'].lineData[149] = 0;
   _$jscoverage['/web.js'].lineData[151] = 0;
-  _$jscoverage['/web.js'].lineData[158] = 0;
-  _$jscoverage['/web.js'].lineData[161] = 0;
-  _$jscoverage['/web.js'].lineData[162] = 0;
+  _$jscoverage['/web.js'].lineData[152] = 0;
+  _$jscoverage['/web.js'].lineData[153] = 0;
+  _$jscoverage['/web.js'].lineData[160] = 0;
   _$jscoverage['/web.js'].lineData[163] = 0;
-  _$jscoverage['/web.js'].lineData[167] = 0;
-  _$jscoverage['/web.js'].lineData[170] = 0;
-  _$jscoverage['/web.js'].lineData[171] = 0;
+  _$jscoverage['/web.js'].lineData[164] = 0;
+  _$jscoverage['/web.js'].lineData[165] = 0;
+  _$jscoverage['/web.js'].lineData[169] = 0;
   _$jscoverage['/web.js'].lineData[172] = 0;
   _$jscoverage['/web.js'].lineData[173] = 0;
-  _$jscoverage['/web.js'].lineData[176] = 0;
-  _$jscoverage['/web.js'].lineData[180] = 0;
-  _$jscoverage['/web.js'].lineData[181] = 0;
+  _$jscoverage['/web.js'].lineData[174] = 0;
+  _$jscoverage['/web.js'].lineData[175] = 0;
+  _$jscoverage['/web.js'].lineData[178] = 0;
   _$jscoverage['/web.js'].lineData[182] = 0;
   _$jscoverage['/web.js'].lineData[183] = 0;
-  _$jscoverage['/web.js'].lineData[189] = 0;
-  _$jscoverage['/web.js'].lineData[193] = 0;
-  _$jscoverage['/web.js'].lineData[196] = 0;
-  _$jscoverage['/web.js'].lineData[197] = 0;
+  _$jscoverage['/web.js'].lineData[184] = 0;
+  _$jscoverage['/web.js'].lineData[185] = 0;
+  _$jscoverage['/web.js'].lineData[191] = 0;
+  _$jscoverage['/web.js'].lineData[195] = 0;
+  _$jscoverage['/web.js'].lineData[198] = 0;
   _$jscoverage['/web.js'].lineData[199] = 0;
-  _$jscoverage['/web.js'].lineData[203] = 0;
-  _$jscoverage['/web.js'].lineData[204] = 0;
+  _$jscoverage['/web.js'].lineData[201] = 0;
   _$jscoverage['/web.js'].lineData[205] = 0;
+  _$jscoverage['/web.js'].lineData[206] = 0;
   _$jscoverage['/web.js'].lineData[207] = 0;
-  _$jscoverage['/web.js'].lineData[208] = 0;
+  _$jscoverage['/web.js'].lineData[209] = 0;
   _$jscoverage['/web.js'].lineData[210] = 0;
-  _$jscoverage['/web.js'].lineData[213] = 0;
-  _$jscoverage['/web.js'].lineData[219] = 0;
-  _$jscoverage['/web.js'].lineData[220] = 0;
-  _$jscoverage['/web.js'].lineData[227] = 0;
+  _$jscoverage['/web.js'].lineData[212] = 0;
+  _$jscoverage['/web.js'].lineData[215] = 0;
+  _$jscoverage['/web.js'].lineData[221] = 0;
+  _$jscoverage['/web.js'].lineData[222] = 0;
   _$jscoverage['/web.js'].lineData[229] = 0;
-  _$jscoverage['/web.js'].lineData[230] = 0;
   _$jscoverage['/web.js'].lineData[231] = 0;
+  _$jscoverage['/web.js'].lineData[232] = 0;
+  _$jscoverage['/web.js'].lineData[233] = 0;
 }
 if (! _$jscoverage['/web.js'].functionData) {
   _$jscoverage['/web.js'].functionData = [];
@@ -361,153 +363,165 @@ if (! _$jscoverage['/web.js'].branchData) {
   _$jscoverage['/web.js'].branchData['87'][1] = new BranchData();
   _$jscoverage['/web.js'].branchData['100'] = [];
   _$jscoverage['/web.js'].branchData['100'][1] = new BranchData();
-  _$jscoverage['/web.js'].branchData['124'] = [];
-  _$jscoverage['/web.js'].branchData['124'][1] = new BranchData();
-  _$jscoverage['/web.js'].branchData['129'] = [];
-  _$jscoverage['/web.js'].branchData['129'][1] = new BranchData();
-  _$jscoverage['/web.js'].branchData['138'] = [];
-  _$jscoverage['/web.js'].branchData['138'][1] = new BranchData();
-  _$jscoverage['/web.js'].branchData['142'] = [];
-  _$jscoverage['/web.js'].branchData['142'][1] = new BranchData();
-  _$jscoverage['/web.js'].branchData['146'] = [];
-  _$jscoverage['/web.js'].branchData['146'][1] = new BranchData();
-  _$jscoverage['/web.js'].branchData['161'] = [];
-  _$jscoverage['/web.js'].branchData['161'][1] = new BranchData();
-  _$jscoverage['/web.js'].branchData['161'][2] = new BranchData();
-  _$jscoverage['/web.js'].branchData['170'] = [];
-  _$jscoverage['/web.js'].branchData['170'][1] = new BranchData();
-  _$jscoverage['/web.js'].branchData['181'] = [];
-  _$jscoverage['/web.js'].branchData['181'][1] = new BranchData();
-  _$jscoverage['/web.js'].branchData['194'] = [];
-  _$jscoverage['/web.js'].branchData['194'][1] = new BranchData();
-  _$jscoverage['/web.js'].branchData['197'] = [];
-  _$jscoverage['/web.js'].branchData['197'][1] = new BranchData();
-  _$jscoverage['/web.js'].branchData['203'] = [];
-  _$jscoverage['/web.js'].branchData['203'][1] = new BranchData();
-  _$jscoverage['/web.js'].branchData['219'] = [];
-  _$jscoverage['/web.js'].branchData['219'][1] = new BranchData();
-  _$jscoverage['/web.js'].branchData['219'][2] = new BranchData();
-  _$jscoverage['/web.js'].branchData['219'][3] = new BranchData();
-  _$jscoverage['/web.js'].branchData['229'] = [];
-  _$jscoverage['/web.js'].branchData['229'][1] = new BranchData();
+  _$jscoverage['/web.js'].branchData['104'] = [];
+  _$jscoverage['/web.js'].branchData['104'][1] = new BranchData();
+  _$jscoverage['/web.js'].branchData['125'] = [];
+  _$jscoverage['/web.js'].branchData['125'][1] = new BranchData();
+  _$jscoverage['/web.js'].branchData['130'] = [];
+  _$jscoverage['/web.js'].branchData['130'][1] = new BranchData();
+  _$jscoverage['/web.js'].branchData['139'] = [];
+  _$jscoverage['/web.js'].branchData['139'][1] = new BranchData();
+  _$jscoverage['/web.js'].branchData['143'] = [];
+  _$jscoverage['/web.js'].branchData['143'][1] = new BranchData();
+  _$jscoverage['/web.js'].branchData['147'] = [];
+  _$jscoverage['/web.js'].branchData['147'][1] = new BranchData();
+  _$jscoverage['/web.js'].branchData['151'] = [];
+  _$jscoverage['/web.js'].branchData['151'][1] = new BranchData();
+  _$jscoverage['/web.js'].branchData['163'] = [];
+  _$jscoverage['/web.js'].branchData['163'][1] = new BranchData();
+  _$jscoverage['/web.js'].branchData['163'][2] = new BranchData();
+  _$jscoverage['/web.js'].branchData['172'] = [];
+  _$jscoverage['/web.js'].branchData['172'][1] = new BranchData();
+  _$jscoverage['/web.js'].branchData['183'] = [];
+  _$jscoverage['/web.js'].branchData['183'][1] = new BranchData();
+  _$jscoverage['/web.js'].branchData['196'] = [];
+  _$jscoverage['/web.js'].branchData['196'][1] = new BranchData();
+  _$jscoverage['/web.js'].branchData['199'] = [];
+  _$jscoverage['/web.js'].branchData['199'][1] = new BranchData();
+  _$jscoverage['/web.js'].branchData['205'] = [];
+  _$jscoverage['/web.js'].branchData['205'][1] = new BranchData();
+  _$jscoverage['/web.js'].branchData['221'] = [];
+  _$jscoverage['/web.js'].branchData['221'][1] = new BranchData();
+  _$jscoverage['/web.js'].branchData['221'][2] = new BranchData();
+  _$jscoverage['/web.js'].branchData['221'][3] = new BranchData();
+  _$jscoverage['/web.js'].branchData['231'] = [];
+  _$jscoverage['/web.js'].branchData['231'][1] = new BranchData();
 }
-_$jscoverage['/web.js'].branchData['229'][1].init(7496, 5, 'UA.ie');
-function visit665_229_1(result) {
-  _$jscoverage['/web.js'].branchData['229'][1].ranCondition(result);
+_$jscoverage['/web.js'].branchData['231'][1].init(7594, 5, 'UA.ie');
+function visit669_231_1(result) {
+  _$jscoverage['/web.js'].branchData['231'][1].ranCondition(result);
   return result;
-}_$jscoverage['/web.js'].branchData['219'][3].init(7205, 24, 'location.search || EMPTY');
-function visit664_219_3(result) {
-  _$jscoverage['/web.js'].branchData['219'][3].ranCondition(result);
+}_$jscoverage['/web.js'].branchData['221'][3].init(7303, 24, 'location.search || EMPTY');
+function visit668_221_3(result) {
+  _$jscoverage['/web.js'].branchData['221'][3].ranCondition(result);
   return result;
-}_$jscoverage['/web.js'].branchData['219'][2].init(7205, 52, '(location.search || EMPTY).indexOf(\'ks-debug\') !== -1');
-function visit663_219_2(result) {
-  _$jscoverage['/web.js'].branchData['219'][2].ranCondition(result);
+}_$jscoverage['/web.js'].branchData['221'][2].init(7303, 52, '(location.search || EMPTY).indexOf(\'ks-debug\') !== -1');
+function visit667_221_2(result) {
+  _$jscoverage['/web.js'].branchData['221'][2].ranCondition(result);
   return result;
-}_$jscoverage['/web.js'].branchData['219'][1].init(7192, 65, 'location && (location.search || EMPTY).indexOf(\'ks-debug\') !== -1');
-function visit662_219_1(result) {
-  _$jscoverage['/web.js'].branchData['219'][1].ranCondition(result);
+}_$jscoverage['/web.js'].branchData['221'][1].init(7290, 65, 'location && (location.search || EMPTY).indexOf(\'ks-debug\') !== -1');
+function visit666_221_1(result) {
+  _$jscoverage['/web.js'].branchData['221'][1].ranCondition(result);
   return result;
-}_$jscoverage['/web.js'].branchData['203'][1].init(934, 20, 'doScroll && notframe');
-function visit661_203_1(result) {
-  _$jscoverage['/web.js'].branchData['203'][1].ranCondition(result);
+}_$jscoverage['/web.js'].branchData['205'][1].init(934, 20, 'doScroll && notframe');
+function visit665_205_1(result) {
+  _$jscoverage['/web.js'].branchData['205'][1].ranCondition(result);
   return result;
-}_$jscoverage['/web.js'].branchData['197'][1].init(30, 28, 'win[\'frameElement\'] === null');
-function visit660_197_1(result) {
-  _$jscoverage['/web.js'].branchData['197'][1].ranCondition(result);
+}_$jscoverage['/web.js'].branchData['199'][1].init(30, 28, 'win[\'frameElement\'] === null');
+function visit664_199_1(result) {
+  _$jscoverage['/web.js'].branchData['199'][1].ranCondition(result);
   return result;
-}_$jscoverage['/web.js'].branchData['194'][1].init(41, 27, 'docElem && docElem.doScroll');
-function visit659_194_1(result) {
-  _$jscoverage['/web.js'].branchData['194'][1].ranCondition(result);
+}_$jscoverage['/web.js'].branchData['196'][1].init(41, 27, 'docElem && docElem.doScroll');
+function visit663_196_1(result) {
+  _$jscoverage['/web.js'].branchData['196'][1].ranCondition(result);
   return result;
-}_$jscoverage['/web.js'].branchData['181'][1].init(22, 27, 'doc.readyState === COMPLETE');
-function visit658_181_1(result) {
-  _$jscoverage['/web.js'].branchData['181'][1].ranCondition(result);
+}_$jscoverage['/web.js'].branchData['183'][1].init(22, 27, 'doc.readyState === COMPLETE');
+function visit662_183_1(result) {
+  _$jscoverage['/web.js'].branchData['183'][1].ranCondition(result);
   return result;
-}_$jscoverage['/web.js'].branchData['170'][1].init(373, 18, 'standardEventModel');
-function visit657_170_1(result) {
-  _$jscoverage['/web.js'].branchData['170'][1].ranCondition(result);
+}_$jscoverage['/web.js'].branchData['172'][1].init(373, 18, 'standardEventModel');
+function visit661_172_1(result) {
+  _$jscoverage['/web.js'].branchData['172'][1].ranCondition(result);
   return result;
-}_$jscoverage['/web.js'].branchData['161'][2].init(128, 27, 'doc.readyState === COMPLETE');
-function visit656_161_2(result) {
-  _$jscoverage['/web.js'].branchData['161'][2].ranCondition(result);
+}_$jscoverage['/web.js'].branchData['163'][2].init(128, 27, 'doc.readyState === COMPLETE');
+function visit660_163_2(result) {
+  _$jscoverage['/web.js'].branchData['163'][2].ranCondition(result);
   return result;
-}_$jscoverage['/web.js'].branchData['161'][1].init(120, 35, '!doc || doc.readyState === COMPLETE');
-function visit655_161_1(result) {
-  _$jscoverage['/web.js'].branchData['161'][1].ranCondition(result);
+}_$jscoverage['/web.js'].branchData['163'][1].init(120, 35, '!doc || doc.readyState === COMPLETE');
+function visit659_163_1(result) {
+  _$jscoverage['/web.js'].branchData['163'][1].ranCondition(result);
   return result;
-}_$jscoverage['/web.js'].branchData['146'][1].init(232, 20, 'i < callbacks.length');
-function visit654_146_1(result) {
-  _$jscoverage['/web.js'].branchData['146'][1].ranCondition(result);
+}_$jscoverage['/web.js'].branchData['151'][1].init(24, 12, 'e.stack || e');
+function visit658_151_1(result) {
+  _$jscoverage['/web.js'].branchData['151'][1].ranCondition(result);
   return result;
-}_$jscoverage['/web.js'].branchData['142'][1].init(90, 17, 'doc && !UA.nodejs');
-function visit653_142_1(result) {
-  _$jscoverage['/web.js'].branchData['142'][1].ranCondition(result);
+}_$jscoverage['/web.js'].branchData['147'][1].init(232, 20, 'i < callbacks.length');
+function visit657_147_1(result) {
+  _$jscoverage['/web.js'].branchData['147'][1].ranCondition(result);
   return result;
-}_$jscoverage['/web.js'].branchData['138'][1].init(14, 8, 'domReady');
-function visit652_138_1(result) {
-  _$jscoverage['/web.js'].branchData['138'][1].ranCondition(result);
+}_$jscoverage['/web.js'].branchData['143'][1].init(90, 17, 'doc && !UA.nodejs');
+function visit656_143_1(result) {
+  _$jscoverage['/web.js'].branchData['143'][1].ranCondition(result);
   return result;
-}_$jscoverage['/web.js'].branchData['129'][1].init(211, 4, 'node');
-function visit651_129_1(result) {
-  _$jscoverage['/web.js'].branchData['129'][1].ranCondition(result);
+}_$jscoverage['/web.js'].branchData['139'][1].init(14, 8, 'domReady');
+function visit655_139_1(result) {
+  _$jscoverage['/web.js'].branchData['139'][1].ranCondition(result);
   return result;
-}_$jscoverage['/web.js'].branchData['124'][1].init(22, 27, '++retryCount > POLL_RETIRES');
-function visit650_124_1(result) {
-  _$jscoverage['/web.js'].branchData['124'][1].ranCondition(result);
+}_$jscoverage['/web.js'].branchData['130'][1].init(211, 4, 'node');
+function visit654_130_1(result) {
+  _$jscoverage['/web.js'].branchData['130'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/web.js'].branchData['125'][1].init(22, 27, '++retryCount > POLL_RETIRES');
+function visit653_125_1(result) {
+  _$jscoverage['/web.js'].branchData['125'][1].ranCondition(result);
+  return result;
+}_$jscoverage['/web.js'].branchData['104'][1].init(28, 12, 'e.stack || e');
+function visit652_104_1(result) {
+  _$jscoverage['/web.js'].branchData['104'][1].ranCondition(result);
   return result;
 }_$jscoverage['/web.js'].branchData['100'][1].init(18, 8, 'domReady');
-function visit649_100_1(result) {
+function visit651_100_1(result) {
   _$jscoverage['/web.js'].branchData['100'][1].ranCondition(result);
   return result;
 }_$jscoverage['/web.js'].branchData['87'][1].init(-1, 106, 'win.execScript || function(data) {\n  win[\'eval\'].call(win, data);\n}');
-function visit648_87_1(result) {
+function visit650_87_1(result) {
   _$jscoverage['/web.js'].branchData['87'][1].ranCondition(result);
   return result;
 }_$jscoverage['/web.js'].branchData['84'][1].init(18, 36, 'data && RE_NOT_WHITESPACE.test(data)');
-function visit647_84_1(result) {
+function visit649_84_1(result) {
   _$jscoverage['/web.js'].branchData['84'][1].ranCondition(result);
   return result;
 }_$jscoverage['/web.js'].branchData['73'][2].init(689, 70, '!xml.documentElement || xml.getElementsByTagName(\'parsererror\').length');
-function visit646_73_2(result) {
+function visit648_73_2(result) {
   _$jscoverage['/web.js'].branchData['73'][2].ranCondition(result);
   return result;
 }_$jscoverage['/web.js'].branchData['73'][1].init(681, 78, '!xml || !xml.documentElement || xml.getElementsByTagName(\'parsererror\').length');
-function visit645_73_1(result) {
+function visit647_73_1(result) {
   _$jscoverage['/web.js'].branchData['73'][1].ranCondition(result);
   return result;
 }_$jscoverage['/web.js'].branchData['61'][1].init(51, 16, 'win[\'DOMParser\']');
-function visit644_61_1(result) {
+function visit646_61_1(result) {
   _$jscoverage['/web.js'].branchData['61'][1].ranCondition(result);
   return result;
 }_$jscoverage['/web.js'].branchData['55'][1].init(48, 20, 'data.documentElement');
-function visit643_55_1(result) {
+function visit645_55_1(result) {
   _$jscoverage['/web.js'].branchData['55'][1].ranCondition(result);
   return result;
 }_$jscoverage['/web.js'].branchData['45'][3].init(36, 17, 'obj == obj.window');
-function visit642_45_3(result) {
+function visit644_45_3(result) {
   _$jscoverage['/web.js'].branchData['45'][3].ranCondition(result);
   return result;
 }_$jscoverage['/web.js'].branchData['45'][2].init(21, 11, 'obj != null');
-function visit641_45_2(result) {
+function visit643_45_2(result) {
   _$jscoverage['/web.js'].branchData['45'][2].ranCondition(result);
   return result;
 }_$jscoverage['/web.js'].branchData['45'][1].init(21, 32, 'obj != null && obj == obj.window');
-function visit640_45_1(result) {
+function visit642_45_1(result) {
   _$jscoverage['/web.js'].branchData['45'][1].ranCondition(result);
   return result;
 }_$jscoverage['/web.js'].branchData['23'][1].init(521, 27, 'doc && doc.addEventListener');
-function visit639_23_1(result) {
+function visit641_23_1(result) {
   _$jscoverage['/web.js'].branchData['23'][1].ranCondition(result);
   return result;
 }_$jscoverage['/web.js'].branchData['11'][1].init(132, 26, 'doc && doc.documentElement');
-function visit638_11_1(result) {
+function visit640_11_1(result) {
   _$jscoverage['/web.js'].branchData['11'][1].ranCondition(result);
   return result;
 }_$jscoverage['/web.js'].lineData[6]++;
 (function(S, undefined) {
   _$jscoverage['/web.js'].functionData[0]++;
   _$jscoverage['/web.js'].lineData[7]++;
-  var win = S.Env.host, logger = S.getLogger('s/web'), UA = S.UA, doc = win['document'], docElem = visit638_11_1(doc && doc.documentElement), location = win.location, EMPTY = '', domReady = 0, callbacks = [], POLL_RETIRES = 500, POLL_INTERVAL = 40, RE_ID_STR = /^#?([\w-]+)$/, RE_NOT_WHITESPACE = /\S/, standardEventModel = !!(visit639_23_1(doc && doc.addEventListener)), DOM_READY_EVENT = 'DOMContentLoaded', READY_STATE_CHANGE_EVENT = 'readystatechange', LOAD_EVENT = 'load', COMPLETE = 'complete', addEventListener = standardEventModel ? function(el, type, fn) {
+  var win = S.Env.host, logger = S.getLogger('s/web'), UA = S.UA, doc = win['document'], docElem = visit640_11_1(doc && doc.documentElement), location = win.location, EMPTY = '', domReady = 0, callbacks = [], POLL_RETIRES = 500, POLL_INTERVAL = 40, RE_ID_STR = /^#?([\w-]+)$/, RE_NOT_WHITESPACE = /\S/, standardEventModel = !!(visit641_23_1(doc && doc.addEventListener)), DOM_READY_EVENT = 'DOMContentLoaded', READY_STATE_CHANGE_EVENT = 'readystatechange', LOAD_EVENT = 'load', COMPLETE = 'complete', addEventListener = standardEventModel ? function(el, type, fn) {
   _$jscoverage['/web.js'].functionData[1]++;
   _$jscoverage['/web.js'].lineData[29]++;
   el.addEventListener(type, fn, false);
@@ -529,12 +543,12 @@ function visit638_11_1(result) {
   isWindow: function(obj) {
   _$jscoverage['/web.js'].functionData[5]++;
   _$jscoverage['/web.js'].lineData[45]++;
-  return visit640_45_1(visit641_45_2(obj != null) && visit642_45_3(obj == obj.window));
+  return visit642_45_1(visit643_45_2(obj != null) && visit644_45_3(obj == obj.window));
 }, 
   parseXML: function(data) {
   _$jscoverage['/web.js'].functionData[6]++;
   _$jscoverage['/web.js'].lineData[55]++;
-  if (visit643_55_1(data.documentElement)) {
+  if (visit645_55_1(data.documentElement)) {
     _$jscoverage['/web.js'].lineData[56]++;
     return data;
   }
@@ -543,7 +557,7 @@ function visit638_11_1(result) {
   _$jscoverage['/web.js'].lineData[59]++;
   try {
     _$jscoverage['/web.js'].lineData[61]++;
-    if (visit644_61_1(win['DOMParser'])) {
+    if (visit646_61_1(win['DOMParser'])) {
       _$jscoverage['/web.js'].lineData[62]++;
       xml = new DOMParser().parseFromString(data, 'text/xml');
     } else {
@@ -563,7 +577,7 @@ function visit638_11_1(result) {
   xml = undefined;
 }
   _$jscoverage['/web.js'].lineData[73]++;
-  if (visit645_73_1(!xml || visit646_73_2(!xml.documentElement || xml.getElementsByTagName('parsererror').length))) {
+  if (visit647_73_1(!xml || visit648_73_2(!xml.documentElement || xml.getElementsByTagName('parsererror').length))) {
     _$jscoverage['/web.js'].lineData[74]++;
     S.error('Invalid XML: ' + data);
   }
@@ -573,9 +587,9 @@ function visit638_11_1(result) {
   globalEval: function(data) {
   _$jscoverage['/web.js'].functionData[7]++;
   _$jscoverage['/web.js'].lineData[84]++;
-  if (visit647_84_1(data && RE_NOT_WHITESPACE.test(data))) {
+  if (visit649_84_1(data && RE_NOT_WHITESPACE.test(data))) {
     _$jscoverage['/web.js'].lineData[87]++;
-    (visit648_87_1(win.execScript || function(data) {
+    (visit650_87_1(win.execScript || function(data) {
   _$jscoverage['/web.js'].functionData[8]++;
   _$jscoverage['/web.js'].lineData[88]++;
   win['eval'].call(win, data);
@@ -585,165 +599,169 @@ function visit638_11_1(result) {
   ready: function(fn) {
   _$jscoverage['/web.js'].functionData[9]++;
   _$jscoverage['/web.js'].lineData[100]++;
-  if (visit649_100_1(domReady)) {
+  if (visit651_100_1(domReady)) {
     _$jscoverage['/web.js'].lineData[101]++;
     try {
       _$jscoverage['/web.js'].lineData[102]++;
       fn(S);
     }    catch (e) {
   _$jscoverage['/web.js'].lineData[104]++;
+  S.log(visit652_104_1(e.stack || e), 'error');
+  _$jscoverage['/web.js'].lineData[105]++;
   setTimeout(function() {
   _$jscoverage['/web.js'].functionData[10]++;
-  _$jscoverage['/web.js'].lineData[105]++;
+  _$jscoverage['/web.js'].lineData[106]++;
   throw e;
 }, 0);
 }
   } else {
-    _$jscoverage['/web.js'].lineData[109]++;
+    _$jscoverage['/web.js'].lineData[110]++;
     callbacks.push(fn);
   }
-  _$jscoverage['/web.js'].lineData[111]++;
+  _$jscoverage['/web.js'].lineData[112]++;
   return this;
 }, 
   available: function(id, fn) {
   _$jscoverage['/web.js'].functionData[11]++;
-  _$jscoverage['/web.js'].lineData[121]++;
-  id = (id + EMPTY).match(RE_ID_STR)[1];
   _$jscoverage['/web.js'].lineData[122]++;
-  var retryCount = 1;
+  id = (id + EMPTY).match(RE_ID_STR)[1];
   _$jscoverage['/web.js'].lineData[123]++;
+  var retryCount = 1;
+  _$jscoverage['/web.js'].lineData[124]++;
   var timer = S.later(function() {
   _$jscoverage['/web.js'].functionData[12]++;
-  _$jscoverage['/web.js'].lineData[124]++;
-  if (visit650_124_1(++retryCount > POLL_RETIRES)) {
-    _$jscoverage['/web.js'].lineData[125]++;
-    timer.cancel();
+  _$jscoverage['/web.js'].lineData[125]++;
+  if (visit653_125_1(++retryCount > POLL_RETIRES)) {
     _$jscoverage['/web.js'].lineData[126]++;
+    timer.cancel();
+    _$jscoverage['/web.js'].lineData[127]++;
     return;
   }
-  _$jscoverage['/web.js'].lineData[128]++;
-  var node = doc.getElementById(id);
   _$jscoverage['/web.js'].lineData[129]++;
-  if (visit651_129_1(node)) {
-    _$jscoverage['/web.js'].lineData[130]++;
-    fn(node);
+  var node = doc.getElementById(id);
+  _$jscoverage['/web.js'].lineData[130]++;
+  if (visit654_130_1(node)) {
     _$jscoverage['/web.js'].lineData[131]++;
+    fn(node);
+    _$jscoverage['/web.js'].lineData[132]++;
     timer.cancel();
   }
 }, POLL_INTERVAL, true);
 }});
-  _$jscoverage['/web.js'].lineData[137]++;
+  _$jscoverage['/web.js'].lineData[138]++;
   function fireReady() {
     _$jscoverage['/web.js'].functionData[13]++;
-    _$jscoverage['/web.js'].lineData[138]++;
-    if (visit652_138_1(domReady)) {
-      _$jscoverage['/web.js'].lineData[139]++;
+    _$jscoverage['/web.js'].lineData[139]++;
+    if (visit655_139_1(domReady)) {
+      _$jscoverage['/web.js'].lineData[140]++;
       return;
     }
-    _$jscoverage['/web.js'].lineData[142]++;
-    if (visit653_142_1(doc && !UA.nodejs)) {
-      _$jscoverage['/web.js'].lineData[143]++;
+    _$jscoverage['/web.js'].lineData[143]++;
+    if (visit656_143_1(doc && !UA.nodejs)) {
+      _$jscoverage['/web.js'].lineData[144]++;
       removeEventListener(win, LOAD_EVENT, fireReady);
     }
-    _$jscoverage['/web.js'].lineData[145]++;
-    domReady = 1;
     _$jscoverage['/web.js'].lineData[146]++;
-    for (var i = 0; visit654_146_1(i < callbacks.length); i++) {
-      _$jscoverage['/web.js'].lineData[147]++;
+    domReady = 1;
+    _$jscoverage['/web.js'].lineData[147]++;
+    for (var i = 0; visit657_147_1(i < callbacks.length); i++) {
+      _$jscoverage['/web.js'].lineData[148]++;
       try {
-        _$jscoverage['/web.js'].lineData[148]++;
+        _$jscoverage['/web.js'].lineData[149]++;
         callbacks[i](S);
       }      catch (e) {
-  _$jscoverage['/web.js'].lineData[150]++;
+  _$jscoverage['/web.js'].lineData[151]++;
+  S.log(visit658_151_1(e.stack || e), 'error');
+  _$jscoverage['/web.js'].lineData[152]++;
   setTimeout(function() {
   _$jscoverage['/web.js'].functionData[14]++;
-  _$jscoverage['/web.js'].lineData[151]++;
+  _$jscoverage['/web.js'].lineData[153]++;
   throw e;
 }, 0);
 }
     }
   }
-  _$jscoverage['/web.js'].lineData[158]++;
+  _$jscoverage['/web.js'].lineData[160]++;
   function bindReady() {
     _$jscoverage['/web.js'].functionData[15]++;
-    _$jscoverage['/web.js'].lineData[161]++;
-    if (visit655_161_1(!doc || visit656_161_2(doc.readyState === COMPLETE))) {
-      _$jscoverage['/web.js'].lineData[162]++;
+    _$jscoverage['/web.js'].lineData[163]++;
+    if (visit659_163_1(!doc || visit660_163_2(doc.readyState === COMPLETE))) {
+      _$jscoverage['/web.js'].lineData[164]++;
       fireReady();
-      _$jscoverage['/web.js'].lineData[163]++;
+      _$jscoverage['/web.js'].lineData[165]++;
       return;
     }
-    _$jscoverage['/web.js'].lineData[167]++;
+    _$jscoverage['/web.js'].lineData[169]++;
     addEventListener(win, LOAD_EVENT, fireReady);
-    _$jscoverage['/web.js'].lineData[170]++;
-    if (visit657_170_1(standardEventModel)) {
-      _$jscoverage['/web.js'].lineData[171]++;
+    _$jscoverage['/web.js'].lineData[172]++;
+    if (visit661_172_1(standardEventModel)) {
+      _$jscoverage['/web.js'].lineData[173]++;
       var domReady = function() {
   _$jscoverage['/web.js'].functionData[16]++;
-  _$jscoverage['/web.js'].lineData[172]++;
+  _$jscoverage['/web.js'].lineData[174]++;
   removeEventListener(doc, DOM_READY_EVENT, domReady);
-  _$jscoverage['/web.js'].lineData[173]++;
+  _$jscoverage['/web.js'].lineData[175]++;
   fireReady();
 };
-      _$jscoverage['/web.js'].lineData[176]++;
+      _$jscoverage['/web.js'].lineData[178]++;
       addEventListener(doc, DOM_READY_EVENT, domReady);
     } else {
-      _$jscoverage['/web.js'].lineData[180]++;
+      _$jscoverage['/web.js'].lineData[182]++;
       var stateChange = function() {
   _$jscoverage['/web.js'].functionData[17]++;
-  _$jscoverage['/web.js'].lineData[181]++;
-  if (visit658_181_1(doc.readyState === COMPLETE)) {
-    _$jscoverage['/web.js'].lineData[182]++;
+  _$jscoverage['/web.js'].lineData[183]++;
+  if (visit662_183_1(doc.readyState === COMPLETE)) {
+    _$jscoverage['/web.js'].lineData[184]++;
     removeEventListener(doc, READY_STATE_CHANGE_EVENT, stateChange);
-    _$jscoverage['/web.js'].lineData[183]++;
+    _$jscoverage['/web.js'].lineData[185]++;
     fireReady();
   }
 };
-      _$jscoverage['/web.js'].lineData[189]++;
+      _$jscoverage['/web.js'].lineData[191]++;
       addEventListener(doc, READY_STATE_CHANGE_EVENT, stateChange);
-      _$jscoverage['/web.js'].lineData[193]++;
-      var notframe, doScroll = visit659_194_1(docElem && docElem.doScroll);
-      _$jscoverage['/web.js'].lineData[196]++;
+      _$jscoverage['/web.js'].lineData[195]++;
+      var notframe, doScroll = visit663_196_1(docElem && docElem.doScroll);
+      _$jscoverage['/web.js'].lineData[198]++;
       try {
-        _$jscoverage['/web.js'].lineData[197]++;
-        notframe = (visit660_197_1(win['frameElement'] === null));
+        _$jscoverage['/web.js'].lineData[199]++;
+        notframe = (visit664_199_1(win['frameElement'] === null));
       }      catch (e) {
-  _$jscoverage['/web.js'].lineData[199]++;
+  _$jscoverage['/web.js'].lineData[201]++;
   notframe = false;
 }
-      _$jscoverage['/web.js'].lineData[203]++;
-      if (visit661_203_1(doScroll && notframe)) {
-        _$jscoverage['/web.js'].lineData[204]++;
+      _$jscoverage['/web.js'].lineData[205]++;
+      if (visit665_205_1(doScroll && notframe)) {
+        _$jscoverage['/web.js'].lineData[206]++;
         var readyScroll = function() {
   _$jscoverage['/web.js'].functionData[18]++;
-  _$jscoverage['/web.js'].lineData[205]++;
+  _$jscoverage['/web.js'].lineData[207]++;
   try {
-    _$jscoverage['/web.js'].lineData[207]++;
+    _$jscoverage['/web.js'].lineData[209]++;
     doScroll('left');
-    _$jscoverage['/web.js'].lineData[208]++;
+    _$jscoverage['/web.js'].lineData[210]++;
     fireReady();
   }  catch (ex) {
-  _$jscoverage['/web.js'].lineData[210]++;
+  _$jscoverage['/web.js'].lineData[212]++;
   setTimeout(readyScroll, POLL_INTERVAL);
 }
 };
-        _$jscoverage['/web.js'].lineData[213]++;
+        _$jscoverage['/web.js'].lineData[215]++;
         readyScroll();
       }
     }
   }
-  _$jscoverage['/web.js'].lineData[219]++;
-  if (visit662_219_1(location && visit663_219_2((visit664_219_3(location.search || EMPTY)).indexOf('ks-debug') !== -1))) {
-    _$jscoverage['/web.js'].lineData[220]++;
+  _$jscoverage['/web.js'].lineData[221]++;
+  if (visit666_221_1(location && visit667_221_2((visit668_221_3(location.search || EMPTY)).indexOf('ks-debug') !== -1))) {
+    _$jscoverage['/web.js'].lineData[222]++;
     S.Config.debug = true;
   }
-  _$jscoverage['/web.js'].lineData[227]++;
-  bindReady();
   _$jscoverage['/web.js'].lineData[229]++;
-  if (visit665_229_1(UA.ie)) {
-    _$jscoverage['/web.js'].lineData[230]++;
+  bindReady();
+  _$jscoverage['/web.js'].lineData[231]++;
+  if (visit669_231_1(UA.ie)) {
+    _$jscoverage['/web.js'].lineData[232]++;
     try {
-      _$jscoverage['/web.js'].lineData[231]++;
+      _$jscoverage['/web.js'].lineData[233]++;
       doc.execCommand('BackgroundImageCache', false, true);
     }    catch (e) {
 }
