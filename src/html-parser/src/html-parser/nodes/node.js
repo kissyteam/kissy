@@ -4,9 +4,9 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add("html-parser/nodes/node", function (S) {
-
     function lineCount(str) {
         var i = 0;
+        // cpu!
         str.replace(/\n/g, function () {
             i++;
         });
@@ -28,18 +28,30 @@ KISSY.add("html-parser/nodes/node", function (S) {
         this.nodeName = null;
         this.previousSibling = null;
         this.nextSibling = null;
-        if (page) {
-            this.startLine = lineCount(this.page.getText(0, startPosition));
-            this.endLine = lineCount(this.page.getText(0, endPosition));
-        }
-        if (S.Config.debug) {
-            this.toHTMLContent = this.toHtml();
-        }
     }
 
     Node.prototype = {
-
         constructor: Node,
+
+        getStartLine: function () {
+            if (this.page) {
+                if ('startLine' in this) {
+                    return this.startLine;
+                }
+                this.startLine = lineCount(this.page.getText(0, this.startPosition));
+            }
+            return -1;
+        },
+
+        getEndLine: function () {
+            if (this.page) {
+                if ('endLine' in this) {
+                    return this.endLine;
+                }
+                this.endLine = lineCount(this.page.getText(0, this.endPosition));
+            }
+            return -1;
+        },
 
         /**
          * get outerHtml of current node
@@ -52,14 +64,14 @@ KISSY.add("html-parser/nodes/node", function (S) {
             return '';
         },
 
-        toString: function () {
+        toDebugString: function () {
             var ret = [],
                 self = this;
             ret.push(self.nodeName +
                 "  [ " + self.startPosition + "|" +
-                self.startLine +
+                self.getStartLine() +
                 " : " + self.endPosition +
-                "|" + self.endLine +
+                "|" + self.getEndLine() +
                 " ]\n");
             ret.push(self.toHtml());
             return ret.join("");

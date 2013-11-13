@@ -205,6 +205,7 @@ KISSY.add('promise',function (S, undefined) {
         done: function (fulfilled, rejected) {
             var self = this,
                 onUnhandledError = function (e) {
+                    S.log(e.stack || e, 'error');
                     setTimeout(function () {
                         throw e;
                     }, 0);

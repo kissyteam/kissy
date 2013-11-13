@@ -254,7 +254,7 @@ if (! _$jscoverage['/html-parser/nodes/fragment.js'].branchData) {
   _$jscoverage['/html-parser/nodes/fragment.js'].branchData['17'][1] = new BranchData();
 }
 _$jscoverage['/html-parser/nodes/fragment.js'].branchData['17'][1].init(97, 6, 'filter');
-function visit189_17_1(result) {
+function visit191_17_1(result) {
   _$jscoverage['/html-parser/nodes/fragment.js'].branchData['17'][1].ranCondition(result);
   return result;
 }_$jscoverage['/html-parser/nodes/fragment.js'].lineData[6]++;
@@ -279,7 +279,7 @@ KISSY.add("html-parser/nodes/fragment", function(S, Tag) {
   _$jscoverage['/html-parser/nodes/fragment.js'].lineData[16]++;
   this.isChildrenFiltered = 0;
   _$jscoverage['/html-parser/nodes/fragment.js'].lineData[17]++;
-  if (visit189_17_1(filter)) {
+  if (visit191_17_1(filter)) {
     _$jscoverage['/html-parser/nodes/fragment.js'].lineData[18]++;
     filter.onFragment(this);
   }

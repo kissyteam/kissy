@@ -1753,7 +1753,7 @@ KISSY.add('editor', function(S, Node, iframeContentTpl, Editor, Utils, focusMana
   _$jscoverage['/editor.js'].lineData[416]++;
   if (visit1161_416_1(win)) {
     _$jscoverage['/editor.js'].lineData[417]++;
-    win.addStyleSheet(win, cssText, id);
+    win['addStyleSheet'](cssText, id);
   }
 }, 
   removeCustomStyle: function(id) {

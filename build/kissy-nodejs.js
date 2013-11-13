@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40
 MIT Licensed
-build time: Nov 6 11:53
+build time: Nov 13 21:54
 */
 /**
  * @ignore
@@ -42,11 +42,11 @@ var KISSY = (function (undefined) {
     S = {
         /**
          * The build time of the library.
-         * NOTICE: '20131106115336' will replace with current timestamp when compressing.
+         * NOTICE: '20131113215356' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20131106115336',
+        __BUILD_TIME: '20131113215356',
 
         /**
          * KISSY Environment.
@@ -4107,6 +4107,7 @@ var KISSY = (function (undefined) {
                 try {
                     callback(this);
                 } catch (e) {
+                    S.log(e.stack || e, 'error');
                     setTimeout(function () {
                         throw e;
                     }, 0);
@@ -5240,7 +5241,7 @@ var KISSY = (function (undefined) {
     var doc = S.Env.host && S.Env.host.document;
     // var logger = S.getLogger('s/loader');
     var Utils = S.Loader.Utils;
-    var TIMESTAMP = '20131106115336';
+    var TIMESTAMP = '20131113215356';
 
     function returnJson(s) {
         return (new Function('return ' + s))();
@@ -5462,6 +5463,7 @@ KISSY.add('i18n', {
                 try {
                     fn(S);
                 } catch (e) {
+                    S.log(e.stack || e, 'error');
                     setTimeout(function () {
                         throw e;
                     }, 0);
@@ -5508,6 +5510,7 @@ KISSY.add('i18n', {
             try {
                 callbacks[i](S);
             } catch (e) {
+                S.log(e.stack || e, 'error');
                 setTimeout(function () {
                     throw e;
                 }, 0);

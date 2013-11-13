@@ -1,7 +1,7 @@
 /*
-Copyright 2013, KISSY v1.40dev
+Copyright 2013, KISSY v1.40
 MIT Licensed
-build time: Oct 25 17:03
+build time: Nov 13 21:53
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -7624,7 +7624,7 @@ KISSY.add("editor/selectionFix", function (S, Editor, Event) {
 
         // IE before version 8 will leave cursor blinking inside the document after
         // editor blurred unless we clean up the selection. (#4716)
-// http://yiminghe.github.com/lite-ext/playground/iframe_selection_ie/demo.html
+// http://yiminghe.github.com/lite-ext/playground/iframe_selection_ie/index.html
 // 需要第一个 hack
 //            editor.on('blur', function () {
 //                // 把选择区域与光标清除
@@ -8648,7 +8648,7 @@ KISSY.add('editor', function (S, Node, iframeContentTpl, Editor, Utils, focusMan
             customStyle += "\n" + cssText;
             self.set('customStyle', customStyle);
             if (win) {
-                win.addStyleSheet(win, cssText, id);
+                win['addStyleSheet'](cssText, id);
             }
         },
 
@@ -9278,7 +9278,7 @@ KISSY.add('editor', function (S, Node, iframeContentTpl, Editor, Utils, focusMan
                 href: customLink[i]
             });
         }
-        return S.substitute(iframeContentTpl,{
+        return S.substitute(iframeContentTpl, {
             // kissy-editor #12
             // IE8 doesn't support carets behind images(empty content after image's block)
             // setting ie7 compatible mode would force IE8+ to run in IE7 compat mode.

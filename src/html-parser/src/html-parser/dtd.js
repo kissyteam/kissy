@@ -685,7 +685,7 @@ KISSY.add("html-parser/dtd", function(S) {
 
         for (var p in dtd) {
             for (var p2 in dtd[p]) {
-                if (p2 == "div") {
+                if (p2 === "div") {
                     for (i = 0; i < html_tags.length; i++) {
                         dtd[p][html_tags[i]] = dtd[p][p2];
                     }

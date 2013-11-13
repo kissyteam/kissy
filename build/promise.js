@@ -1,7 +1,7 @@
 /*
-Copyright 2013, KISSY v1.40dev
+Copyright 2013, KISSY v1.40
 MIT Licensed
-build time: Oct 28 10:16
+build time: Nov 13 21:50
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -216,6 +216,7 @@ KISSY.add('promise',function (S, undefined) {
         done: function (fulfilled, rejected) {
             var self = this,
                 onUnhandledError = function (e) {
+                    S.log(e.stack || e, 'error');
                     setTimeout(function () {
                         throw e;
                     }, 0);

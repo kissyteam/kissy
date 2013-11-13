@@ -48,10 +48,10 @@ KISSY.add("html-parser/writer/filter", function (S) {
                 return false;
             }
             // node can be replaced with another node
-            if (el && ret && ret != el) {
+            if (el && ret && ret !== el) {
                 // text filter can return string value directly
                 if (typeof ret == 'string') {
-                    if (el.toHtml() == ret) {
+                    if (el.toHtml() === ret) {
                         return el;
                     }
                     el.nodeValue = ret;
@@ -174,7 +174,7 @@ KISSY.add("html-parser/writer/filter", function (S) {
                             return false;
                         }
                         // node is replaced with another node
-                        if (ret && ret != el) {
+                        if (ret && ret !== el) {
                             return this.onNode(ret);
                         }
                         // node is removed (children preserved)

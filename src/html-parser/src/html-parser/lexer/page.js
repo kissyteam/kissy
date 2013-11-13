@@ -10,7 +10,6 @@ KISSY.add("html-parser/lexer/page", function (S, Index) {
     }
 
     Page.prototype = {
-
         constructor: Page,
 
         getChar: function (cursor) {
@@ -40,7 +39,7 @@ KISSY.add("html-parser/lexer/page", function (S, Index) {
 
             // update line Index
             if ('\n' === ret) {
-                this.lineIndex.add(cursor.clone());
+                this.lineIndex.add(cursor);
             }
 
             return ret;
@@ -52,7 +51,7 @@ KISSY.add("html-parser/lexer/page", function (S, Index) {
             cursor.retreat();
             var i = cursor.position,
                 ch = source.charAt(i);
-            if (ch === '\n' && 0 != i) {
+            if (ch === '\n' && 0 !== i) {
                 ch = source.charAt(i - 1);
                 if ('\r' === ch) {
                     cursor.retreat();

@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY v1.40
 MIT Licensed
-build time: Nov 6 21:31
+build time: Nov 13 21:48
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -114,7 +114,7 @@ KISSY.add('io/form-serializer', function (S, Dom) {
  * a scalable client io framework
  * @author yiminghe@gmail.com
  */
-KISSY.add('io/base', function (S, CustomEvent, Promise,undefined) {
+KISSY.add('io/base', function (S, CustomEvent, Promise, undefined) {
     var rlocalProtocol = /^(?:about|app|app\-storage|.+\-extension|file|widget)$/,
         rspace = /\s+/,
         logger = S.getLogger('s/io'),
@@ -532,9 +532,10 @@ KISSY.add('io/base', function (S, CustomEvent, Promise,undefined) {
         } catch (e) {
             // Propagate exception as error if not done
             if (self.state < 2) {
-                setTimeout(function(){
+                S.log(e.stack || e, 'error');
+                setTimeout(function () {
                     throw e;
-                },0);
+                }, 0);
                 self._ioReady(-1, e.message);
                 // Simply rethrow otherwise
             } else {
@@ -596,7 +597,7 @@ KISSY.add('io/base', function (S, CustomEvent, Promise,undefined) {
 
     return IO;
 }, {
-    requires: ['event/custom','promise']
+    requires: ['event/custom', 'promise']
 });
 
 /*
@@ -922,6 +923,7 @@ KISSY.add('io/xhr-transport-base', function (S, IO) {
                     }
                 }
             } catch (e) {
+                S.log(e.stack || e, 'error');
                 // success throw error
                 setTimeout(function () {
                     throw e;
@@ -2000,6 +2002,7 @@ KISSY.add('io/methods', function (S, IO, Promise,undefined) {
                             statusText = 'success';
                             isSuccess = true;
                         } catch (e) {
+                            S.log(e.stack || e, 'error');
                             setTimeout(function(){
                                 throw e;
                             },0);
