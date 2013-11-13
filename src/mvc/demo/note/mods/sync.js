@@ -81,7 +81,12 @@ KISSY.add(function (S, mvc, Json) {
             }
 
             if (method != 'read' && window.localStorage) {
-                window.localStorage.setItem(KEY, Json.stringify(store));
+                try {
+                    window.localStorage.setItem(KEY, Json.stringify(store));
+                } catch (e) {
+                    // QUOTA_EXCEEDED_ERR
+                    KISSY.log(e,'error');
+                }
             }
 
             STORE = store;

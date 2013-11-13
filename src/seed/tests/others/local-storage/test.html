@@ -18,7 +18,12 @@
                 config.success();
             } else {
                 xhr(fullpath, function (code) {
+                    try{
                     localStorage.setItem(fullpath, code);
+                    }catch (e){
+                        // QUOTA_EXCEEDED_ERR
+                        KISSY.log(e,'error');
+                    }
                     eval(code);
                     config.success();
                 });
