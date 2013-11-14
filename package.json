@@ -1,6 +1,6 @@
 {
   "name": "kissy",
-  "version": "1.4.0-21",
+  "version": "1.4.0-22",
   "description": "KISSY",
   "author": "yiminghe <yiminghe@gmail.com>",
   "homepage": "http://docs.kissyui.com",
@@ -40,7 +40,8 @@
   },
   "dependencies": {
     "js-beautify": "~1.4.0",
-    "fs-extra": "~0.8.0"
+    "fs-extra": "~0.8.0",
+    "chokidar": "~0.7.0"
   },
   "notes": [
     "express 3.3.8-3.4.0 cors bug"
