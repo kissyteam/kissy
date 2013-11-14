@@ -4,11 +4,9 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/dom/touch/multi-touch', function (S, Dom) {
-
     function MultiTouch() {}
 
     MultiTouch.prototype = {
-
         constructor: MultiTouch,
 
         requiredTouchCount: 2,
@@ -18,7 +16,6 @@ KISSY.add('event/dom/touch/multi-touch', function (S, Dom) {
                 requiredTouchesCount = self.requiredTouchCount,
                 touches = e.touches,
                 touchesCount = touches.length;
-
             if (touchesCount === requiredTouchesCount) {
                 self.start();
             }
@@ -80,7 +77,6 @@ KISSY.add('event/dom/touch/multi-touch', function (S, Dom) {
     };
 
     return MultiTouch;
-
 }, {
     requires: ['dom']
 });

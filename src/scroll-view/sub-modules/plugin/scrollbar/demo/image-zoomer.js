@@ -1,4 +1,28 @@
 KISSY.add(function (S, Node, ScrollView, ScrollbarPlugin) {
+    function has3d() {
+        var el = Node.all('<p></p>').prependTo(document.body),
+            has3d;
+        // Add it to the body to get the computed style.
+        el.css('transform', "translate3d(1px,1px,1px)");
+        has3d = el.css('transform');
+        el.remove();
+        return (has3d !== undefined && has3d.length > 0 && has3d !== "none");
+    }
+
+    var setScale;
+
+    if (has3d()) {
+        setScale = function (imgStyle, scale) {
+            imgStyle[transformProperty] = 'translate3d(0,0,0) scaleX(' +
+                scale + ')' + ' ' + 'scaleY(' + scale + ')';
+        }
+    } else {
+        setScale = function (imgStyle, scale) {
+            imgStyle[transformProperty] = 'scale(' + scale + ')';
+        }
+    }
+
+
     var $ = Node.all;
     var win = $(window);
 
@@ -32,10 +56,6 @@ KISSY.add(function (S, Node, ScrollView, ScrollbarPlugin) {
     var MASK_CLASS = ZOOMER_CLASS + '-mask';
     var MASK_HTML = '<div class="' + MASK_CLASS + '"></div>';
 
-    function prevent(e) {
-        e.preventDefault();
-    }
-
     function initScrollView() {
         if (scrollView) {
             return;
@@ -50,10 +70,36 @@ KISSY.add(function (S, Node, ScrollView, ScrollbarPlugin) {
             plugins: [ScrollbarPlugin]
         }).render();
 
+        // no fixed for android 4.3
+        win.on('resize', function () {
+            if (scrollView.get('visible')) {
+                scrollView.get('el').css({
+                    width: win.width(),
+                    height: win.height()
+                });
+                maskEl.css({
+                    width: win.width(),
+                    height: win.height()
+                });
+            }
+        });
+
         function onScrollViewShow(e) {
             maskEl[e.newVal ? 'show' : 'hide']();
             $([document.documentElement, document.body])[e.newVal ? 'addClass' :
                 'removeClass'](HIDE_SCROLLBAR_CLASS);
+            maskEl.css({
+                width: win.width(),
+                height: win.height(),
+                left: win.scrollLeft(),
+                top: win.scrollTop()
+            });
+            scrollView.get('el').css({
+                width: win.width(),
+                height: win.height(),
+                left: win.scrollLeft(),
+                top: win.scrollTop()
+            });
         }
 
         contentEl = scrollView.get('contentEl');
@@ -80,9 +126,7 @@ KISSY.add(function (S, Node, ScrollView, ScrollbarPlugin) {
         // tap(touch down is buggy on safari ios)
         closeEl.on(tap, close);
         contentEl.on(tap, close);
-        // ios mousedown bug
-        //closeEl.on('touchstart', prevent);
-        //contentEl.on('touchstart', prevent);
+
         $(window).on('resize orientationchange', function () {
             if (scrollView.get('visible')) {
                 scrollView.sync();
@@ -116,7 +160,7 @@ KISSY.add(function (S, Node, ScrollView, ScrollbarPlugin) {
             top: 0
         };
         currentScale = initialScale = 1;
-        imgStyle[transformProperty] = 'translate3d(0,0,0) scaleX(1)' + ' ' + 'scaleY(' + currentScale + ')';
+        setScale(imgStyle, 1);
     }
 
     // finger centerOffset relative to left top of image
@@ -174,8 +218,7 @@ KISSY.add(function (S, Node, ScrollView, ScrollbarPlugin) {
                 left: 0,
                 top: 0
             };
-            currentScale = 1;
-            imgStyle[transformProperty] = 'translate3d(0,0,0) scaleX(1) scaleY(1)';
+            setScale(imgStyle, currentScale = 1);
             markerStyle.width = contentRegion.width + 'px';
             markerStyle.height = contentRegion.height + 'px';
             scrollView.scrollTo(currentScroll);
@@ -196,7 +239,7 @@ KISSY.add(function (S, Node, ScrollView, ScrollbarPlugin) {
         };
 
         // translate3d 3d acceleration
-        imgStyle[transformProperty] = 'translate3d(0,0,0) scaleX(' + currentScale + ')' + ' ' + 'scaleY(' + currentScale + ')';
+        setScale(imgStyle, currentScale);
         markerStyle.width = contentRegion.width * currentScale + 'px';
         markerStyle.height = contentRegion.height * currentScale + 'px';
 
@@ -205,13 +248,6 @@ KISSY.add(function (S, Node, ScrollView, ScrollbarPlugin) {
     }
 
     return {
-        /**
-         *
-         * @param cfg
-         * @param cfg.width
-         * @param cfg.height
-         * @param cfg.src
-         */
         showImage: function (cfg) {
             initScrollView();
             resetStatus(cfg);

@@ -4,7 +4,6 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/dom/touch/pinch', function (S, eventHandleMap, DomEvent, MultiTouch) {
-
     var PINCH = 'pinch',
         PINCH_START = 'pinchStart',
         PINCH_END = 'pinchEnd';
@@ -19,7 +18,6 @@ KISSY.add('event/dom/touch/pinch', function (S, eventHandleMap, DomEvent, MultiT
     }
 
     S.extend(Pinch, MultiTouch, {
-
         onTouchMove: function (e) {
             var self = this;
 
@@ -28,6 +26,14 @@ KISSY.add('event/dom/touch/pinch', function (S, eventHandleMap, DomEvent, MultiT
             }
 
             var touches = e.touches;
+
+            // error report in android 2.3
+            if (touches[0].pageX > 0 && touches[0].pageY > 0 && touches[1].pageX > 0 && touches[1].pageY > 0) {
+
+            } else {
+                return;
+            }
+
             var distance = getDistance(touches[0], touches[1]);
 
             self.lastTouches = touches;
@@ -56,7 +62,6 @@ KISSY.add('event/dom/touch/pinch', function (S, eventHandleMap, DomEvent, MultiT
                 touches: self.lastTouches
             }));
         }
-
     });
 
     var p = new Pinch();
@@ -85,7 +90,6 @@ KISSY.add('event/dom/touch/pinch', function (S, eventHandleMap, DomEvent, MultiT
     };
 
     return Pinch;
-
 }, {
     requires: ['./handle-map', 'event/dom/base', './multi-touch']
 });

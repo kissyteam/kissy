@@ -1,7 +1,7 @@
 /*
-Copyright 2013, KISSY v1.40
+Copyright 2013, KISSY v1.50dev
 MIT Licensed
-build time: Oct 31 11:06
+build time: Nov 14 14:46
 */
 /*
  Combined processedModules by KISSY Module Compiler: 
@@ -415,11 +415,9 @@ KISSY.add('event/dom/touch/double-tap', function (S, eventHandleMap, DomEvent, S
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/dom/touch/multi-touch', function (S, Dom) {
-
     function MultiTouch() {}
 
     MultiTouch.prototype = {
-
         constructor: MultiTouch,
 
         requiredTouchCount: 2,
@@ -429,7 +427,6 @@ KISSY.add('event/dom/touch/multi-touch', function (S, Dom) {
                 requiredTouchesCount = self.requiredTouchCount,
                 touches = e.touches,
                 touchesCount = touches.length;
-
             if (touchesCount === requiredTouchesCount) {
                 self.start();
             }
@@ -491,7 +488,6 @@ KISSY.add('event/dom/touch/multi-touch', function (S, Dom) {
     };
 
     return MultiTouch;
-
 }, {
     requires: ['dom']
 });
@@ -501,7 +497,6 @@ KISSY.add('event/dom/touch/multi-touch', function (S, Dom) {
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/dom/touch/pinch', function (S, eventHandleMap, DomEvent, MultiTouch) {
-
     var PINCH = 'pinch',
         PINCH_START = 'pinchStart',
         PINCH_END = 'pinchEnd';
@@ -516,7 +511,6 @@ KISSY.add('event/dom/touch/pinch', function (S, eventHandleMap, DomEvent, MultiT
     }
 
     S.extend(Pinch, MultiTouch, {
-
         onTouchMove: function (e) {
             var self = this;
 
@@ -525,6 +519,14 @@ KISSY.add('event/dom/touch/pinch', function (S, eventHandleMap, DomEvent, MultiT
             }
 
             var touches = e.touches;
+
+            // error report in android 2.3
+            if (touches[0].pageX > 0 && touches[0].pageY > 0 && touches[1].pageX > 0 && touches[1].pageY > 0) {
+
+            } else {
+                return;
+            }
+
             var distance = getDistance(touches[0], touches[1]);
 
             self.lastTouches = touches;
@@ -553,7 +555,6 @@ KISSY.add('event/dom/touch/pinch', function (S, eventHandleMap, DomEvent, MultiT
                 touches: self.lastTouches
             }));
         }
-
     });
 
     var p = new Pinch();
@@ -582,7 +583,6 @@ KISSY.add('event/dom/touch/pinch', function (S, eventHandleMap, DomEvent, MultiT
     };
 
     return Pinch;
-
 }, {
     requires: ['./handle-map', 'event/dom/base', './multi-touch']
 });
@@ -794,15 +794,16 @@ KISSY.add('event/dom/touch/handle', function (S, Dom, eventHandleMap, DomEvent) 
     var DUP_DIST = 25;
 
     if (Features.isTouchEventSupported()) {
-        gestureEndEvent = 'touchend touchcancel mouseup';
-        // allow touch and mouse both!
-        gestureStartEvent = 'touchstart mousedown';
-        gestureMoveEvent = 'touchmove mousemove';
         if (S.UA.ios) {
             // ios mousedown is buggy
             gestureEndEvent = 'touchend touchcancel';
             gestureStartEvent = 'touchstart';
             gestureMoveEvent = 'touchmove';
+        } else {
+            gestureEndEvent = 'touchend touchcancel mouseup';
+            // allow touch and mouse both!
+            gestureStartEvent = 'touchstart mousedown';
+            gestureMoveEvent = 'touchmove mousemove';
         }
     } else if (Features.isMsPointerSupported()) {
         gestureStartEvent = 'MSPointerDown';

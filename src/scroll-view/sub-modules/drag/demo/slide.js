@@ -20,8 +20,8 @@ KISSY.add(function (S, Node, Base, ScrollView, XTemplate) {
             self.scrollView = new ScrollView({
                 srcNode: srcNode,
                 snap: true,
-                lockX: direction == 'x',
-                lockY: direction == 'y',
+                lockX: direction == 'y',
+                lockY: direction == 'x',
                 bounce: self.get('bounce')
             }).render();
             self.content = self.scrollView.get('contentEl');
@@ -65,7 +65,7 @@ KISSY.add(function (S, Node, Base, ScrollView, XTemplate) {
                 value: true
             },
             direction: {
-                value: 'y'
+                value: 'x'
             },
             easing: {
                 value: 'easeNone'

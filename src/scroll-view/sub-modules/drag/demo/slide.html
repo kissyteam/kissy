@@ -17,7 +17,7 @@
             border: 0;
         }
 
-        #demo2, #demo3 {
+        .slider {
             width: 540px;
             height: 540px;
             border: 1px solid #B6D1E6;
@@ -26,11 +26,11 @@
             -ms-touch-action: pan-y;
         }
 
-        .ks-scroll-view-content {
+        .slider .ks-scroll-view-content {
             margin: 0;
             padding: 0;
-            overflow: hidden;
             width: 2700px;
+            overflow: hidden;
         }
 
         .my-slide-nav {
@@ -64,7 +64,7 @@
             font-weight: bold;
         }
 
-        .ks-scroll-view-content li {
+        .slider .ks-scroll-view-content li {
             height: 540px;
             width: 540px;
             overflow: hidden;
@@ -115,7 +115,8 @@
         .ks-image-zoomer {
             left: 0;
             top: 0;
-            position: fixed;
+            /*support android 2.3*/
+            position: absolute;
             width: 100%;
             height: 100%;
             z-index: 10;
@@ -136,16 +137,18 @@
         .ks-image-zoomer-mask {
             left: 0;
             top: 0;
-            position: fixed;
+            position: absolute;
             width: 100%;
             height: 100%;
             z-index: 9;
             background-color: #333;
             opacity: 0.6;
+            user-select:none;
         }
 
         .ks-image-zoomer img {
-            position: fixed;
+            position: absolute;
+            user-select:none;
             left: 0;
             top: 0;
         }
@@ -156,7 +159,7 @@
 
 <h2 id="wait" style="color:red">please wait, loading ....</h2>
 
-<div id="demo2" class="ks-scroll-view">
+<div id="demo2" class="ks-scroll-view slider">
     <ol class="ks-scroll-view-content">
         <li>
             <img
@@ -189,7 +192,7 @@
 
 <div style="height: 100px"></div>
 
-<div id="demo3" class="ks-scroll-view">
+<div id="demo3" class="ks-scroll-view slider">
     <ol class="ks-scroll-view-content">
 
         <li class="pic-item"
@@ -242,7 +245,7 @@
             var slide = new Slide({
                 srcNode: selector,
                 hasTrigger: true,
-                direction: 'y'
+                direction: 'x'
             }).render();
             slide.triggers.each(function (t, i) {
                 t.html(i + 1);

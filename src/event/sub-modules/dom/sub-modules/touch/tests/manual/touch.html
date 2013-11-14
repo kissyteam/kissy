@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html>
 <head>
@@ -42,6 +41,7 @@
     function monitorTouch(t) {
 
         return function (e) {
+            log(e.type + ' : ' + e.touches.length);
             console.log(t.id + ' monitor ' + e.type + ' ........');
             console.log("e.target: " + e.target.id);
             console.log("e.pageX: " + e.pageX);
