@@ -70,7 +70,7 @@ KISSY.add(function (S, Node, ScrollView, ScrollbarPlugin) {
             plugins: [ScrollbarPlugin]
         }).render();
 
-        // no fixed for android 4.3
+        // no fixed for android 2.3
         win.on('resize', function () {
             if (scrollView.get('visible')) {
                 scrollView.get('el').css({
